@@ -1,2 +1,7 @@
-# swap.react
-swamp with new design and react
+# Swap.Online
+## ReDisign
+
+### Development mode
+```
+npm run start
+```

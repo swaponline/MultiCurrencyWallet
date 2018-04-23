@@ -1,0 +1,298 @@
+<!doctype html>
+<html class="no-js" lang="ru">
+<head>
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<div class="wrapper">
+    <div id="root"></div>
+    <main class="main" id="main">
+        <div class="header">
+            <div class="container">
+                <div class="toolbar">
+                    <h1 class="logo"><img src=<%= require("./img/logo.svg")%> alt="swap.online logo"></h1>
+
+                    <div class="search-cont">
+                        <span class="search-btn"><img src=<%= require("./img/search.svg")%> alt=""></span>
+                    </div>
+
+                    <div class="trades-filter">
+                        <a href="#" class="trades-filter__link trades-filter__link_active">All</a>
+                        <a href="#" class="trades-filter__link">Balances</a>
+                        <a href="#" class="trades-filter__link">History</a>
+                    </div>
+                </div><!-- .toolbar -->
+                <div class="user-cont">
+                    <a href="#" class="user-cont__help">?</a>
+                    <a href="#" class="user-cont__add-user"><img src=<%=require("./img/add.svg")%> alt=""></a>
+
+                    <div class="users">
+                        <div class="users__user">
+                            <span class="users__user-letter">K</span>
+                            <span class="users__user-status"></span>
+                        </div>
+                    </div>
+
+                    <div class="user-tooltip">
+                        <div class="user-tooltip__info">
+                            <div class="user-tooltip__info-title">User want to swap</div>
+                            <div class="user-tooltip__currency">
+                                <span class="user-tooltip__from">10 <span class="user-tooltip__coin">eth</span></span>
+                                <span class="user-tooltip__arrow"><img src=<%=require("./img/arrow-right.svg")%> alt=""></span>
+                                <span class="user-tooltip__to">1 <span class="user-tooltip__coin">btc</span></span>
+                            </div>
+                        </div>
+
+                        <div class="user-tooltip__checked">
+                            <img src=<%=require("./img/accept.svg")%> alt="">
+                        </div>
+                    </div>
+                </div><!-- .user-cont -->
+            </div><!-- .container -->
+        </div><!-- .header -->
+
+        <div class="description">
+            <div class="container">
+                <h2 class="description__title">SWAP.ONLINE</h2>
+                <h3 class="description__sub-title">Instant BTC for ETH and ERC20, <br> p2p exchange without commission</h3>
+            </div><!-- .container -->
+        </div><!-- .description -->
+
+        <div class="search-trade">
+            <div class="container">
+                <div class="trade-panel">
+                    <div class="trade-panel__want">
+                        <div class="trade-panel__title"><span>You want</span> <span class="question" data-toggle="tooltip" data-placement="top" title="Enter the amount and the address. Transfer your coins and let the magic happen.">?</span></div>
+
+                        <div class="trade-panel__group">
+                            <input type="number" placeholder="0" class="trade-panel__input">
+
+                            <label for="want" class="trade-panel__label">
+                                <select class="js-example-basic-single js-states form-control js-example-responsive" id="want" style="width: 100%;">
+                                    <option value=""></option>
+                                    <option value="coin-1">BTC</option>
+                                    <option value="coin-2">ETH</option>
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+
+                    <a href="#" class="trade-panel__change"><img src=<%= require("./img/flip.svg")%> alt=""></a>
+
+                    <div class="trade-panel__have">
+                        <div class="trade-panel__title"><span>You have</span> <span class="question" data-toggle="tooltip" data-placement="top" title="Enter the amount and the address. Transfer your coins and let the magic happen.">?</span></div>
+
+                        <div class="trade-panel__group">
+                            <input type="number" placeholder="0" class="trade-panel__input">
+
+                            <label for="have" class="trade-panel__label">
+                                <select class="js-example-basic-single js-states form-control js-example-responsive" id="have">
+                                    <option value=""></option>
+                                    <option value="coin-1">BTC</option>
+                                    <option value="coin-2">ETH</option>
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+
+                    <a href="#" class="trade-panel__search">Search</a>
+                </div><!-- .trade-panel -->
+            </div><!-- .container -->
+        </div><!-- .search-trade -->
+
+        <div class="trades-table">
+            <div class="container">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th><div class="table__headers"><span class="table__titles">Exchange</span></div></th>
+                        <th><div class="table__headers"><span class="table__titles">Price</span> <span class="question">?</span></div></th>
+                        <th><div class="table__headers"><span class="table__titles">Limits</span></div></th>
+                        <th><div class="table__headers"><span class="table__titles">Rating</span> <span class="question">?</span></div></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr>
+                        <td>
+                            <div class="table__coins">
+                                <span class="table__coin-left coin-btc"><img src=<%= require("./img/coin-1.svg")%> alt=""></span>
+                                <span class="table__coin-right coin-eth"><img src=<%= require("./img/coin-2.svg")%> alt=""></span>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="table__price">0.055777 <span class="table__currency">eth</span></div>
+                        </td>
+
+                        <td>
+                            <div class="table__limits">21,400 - 22,051 <span class="table__currency">btc</span></div>
+                        </td>
+
+                        <td>
+                            <div class="table__rating">98% <span class="table__currency">10 000+</span></div>
+                        </td>
+
+                        <td>
+                            <a href="#" class="table__link">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="7" height="10" viewBox="0 0 7 10">
+                                    <path class="table__link-arrow" fill="none" fill-rule="evenodd" stroke="#7c1de9" stroke-linecap="round" stroke-width="2" d="M1 9l4-4-4-4"/>
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+
+                    <tr class="active">
+                        <td>
+                            <div class="table__coins">
+                                <span class="table__coin-left coin-btc"><img src=<%= require("./img/coin-1.svg")%> alt=""></span>
+                                <span class="table__coin-right coin-eth"><img src=<%= require("./img/coin-2.svg")%> alt=""></span>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="table__price">0.055777 <span class="table__currency">eth</span></div>
+                        </td>
+
+                        <td>
+                            <div class="table__limits">21,400 - 22,051 <span class="table__currency">btc</span></div>
+                        </td>
+
+                        <td>
+                            <div class="table__rating">98% <span class="table__currency">10 000+</span></div>
+                        </td>
+
+                        <td>
+                            <a href="#" class="table__link">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="7" height="10" viewBox="0 0 7 10">
+                                    <path class="table__link-arrow" fill="none" fill-rule="evenodd" stroke="#7c1de9" stroke-linecap="round" stroke-width="2" d="M1 9l4-4-4-4"/>
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="table__coins">
+                                <span class="table__coin-left coin-btc"><img src=<%= require("./img/coin-1.svg")%> alt=""></span>
+                                <span class="table__coin-right coin-eth"><img src=<%= require("./img/coin-2.svg")%> alt=""></span>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="table__price">0.055777 <span class="table__currency">eth</span></div>
+                        </td>
+
+                        <td>
+                            <div class="table__limits">21,400 - 22,051 <span class="table__currency">btc</span></div>
+                        </td>
+
+                        <td>
+                            <div class="table__rating">98% <span class="table__currency">10 000+</span></div>
+                        </td>
+
+                        <td>
+                            <a href="#" class="table__link">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="7" height="10" viewBox="0 0 7 10">
+                                    <path class="table__link-arrow" fill="none" fill-rule="evenodd" stroke="#7c1de9" stroke-linecap="round" stroke-width="2" d="M1 9l4-4-4-4"/>
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="table__coins">
+                                <span class="table__coin-left coin-btc"><img src=<%= require("./img/coin-1.svg")%> alt=""></span>
+                                <span class="table__coin-right coin-eth"><img src=<%= require("./img/coin-2.svg")%> alt=""></span>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="table__price">0.055777 <span class="table__currency">eth</span></div>
+                        </td>
+
+                        <td>
+                            <div class="table__limits">21,400 - 22,051 <span class="table__currency">btc</span></div>
+                        </td>
+
+                        <td>
+                            <div class="table__rating">98% <span class="table__currency">10 000+</span></div>
+                        </td>
+
+                        <td>
+                            <a href="#" class="table__link">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="7" height="10" viewBox="0 0 7 10">
+                                    <path class="table__link-arrow" fill="none" fill-rule="evenodd" stroke="#7c1de9" stroke-linecap="round" stroke-width="2" d="M1 9l4-4-4-4"/>
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="table__coins">
+                                <span class="table__coin-left coin-btc"><img src=<%= require("./img/coin-1.svg")%> alt=""></span>
+                                <span class="table__coin-right coin-eth"><img src=<%= require("./img/coin-2.svg")%> alt=""></span>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="table__price">0.055777 <span class="table__currency">eth</span></div>
+                        </td>
+
+                        <td>
+                            <div class="table__limits">21,400 - 22,051 <span class="table__currency">btc</span></div>
+                        </td>
+
+                        <td>
+                            <div class="table__rating">98% <span class="table__currency">10 000+</span></div>
+                        </td>
+
+                        <td>
+                            <a href="#" class="table__link">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="7" height="10" viewBox="0 0 7 10">
+                                    <path class="table__link-arrow" fill="none" fill-rule="evenodd" stroke="#7c1de9" stroke-linecap="round" stroke-width="2" d="M1 9l4-4-4-4"/>
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="table__coins">
+                                <span class="table__coin-left coin-btc"><img src=<%= require("./img/coin-1.svg")%> alt=""></span>
+                                <span class="table__coin-right coin-eth"><img src=<%= require("./img/coin-2.svg")%> alt=""></span>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="table__price">0.055777 <span class="table__currency">eth</span></div>
+                        </td>
+
+                        <td>
+                            <div class="table__limits">21,400 - 22,051 <span class="table__currency">btc</span></div>
+                        </td>
+
+                        <td>
+                            <div class="table__rating">98% <span class="table__currency">10 000+</span></div>
+                        </td>
+
+                        <td>
+                            <a href="#" class="table__link">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="7" height="10" viewBox="0 0 7 10">
+                                    <path class="table__link-arrow" fill="none" fill-rule="evenodd" stroke="#7c1de9" stroke-linecap="round" stroke-width="2" d="M1 9l4-4-4-4"/>
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div><!-- .container -->
+        </div><!-- .trades-table -->
+    </main><!-- .main -->
+</div><!-- .wrapper -->
+</body>
+</html>
