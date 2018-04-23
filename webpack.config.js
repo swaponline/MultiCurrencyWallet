@@ -45,7 +45,7 @@ let cssConfig = isPro ? cssPro : cssDev;
 const config = {
     mode: env || 'development',
     entry: [
-        './src/js/app.js',
+        './src/client/app.js',
         'tether',
         'font-awesome/scss/font-awesome.scss',
     ],
@@ -95,6 +95,7 @@ const config = {
                 exclude: /node_modules/,
                 loader: 'babel-loader',
                 query: {
+                    presets: ['react', 'es2015', 'react-hmre'],
                     cacheDirectory: true,
                 }
             },
@@ -111,6 +112,9 @@ const config = {
                 test: /bootstrap\/dist\/js\/umd\//, use: 'imports-loader?jQuery=jquery'
             }
         ]
+    },
+    resolve: {
+        extensions: ['*', '.js', '.jsx']
     },
     devtool: 'inline-source-map', // any "source-map"-like devtool is possible
     devServer: {
@@ -156,8 +160,9 @@ const config = {
             disable: !isPro,
             allChunks: true
         }),
+        new webpack.optimize.OccurrenceOrderPlugin(),
+        new webpack.HotModuleReplacementPlugin(),
         new webpack.NamedModulesPlugin(),
-        new webpack.HotModuleReplacementPlugin()
         // new FaviconsWebpackPlugin({
         //     logo: './src/img/favicon.ico',
         //     prefix: 'img/favicon/',
