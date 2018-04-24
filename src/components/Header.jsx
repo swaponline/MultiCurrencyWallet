@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom'
+
 import LogoSvg from './../img/logo.svg';
 import SearchSvg from './../img/search.svg';
 import AddSvg from './../img/add.svg';
@@ -17,8 +19,17 @@ class Header extends Component {
                         </div>
 
                         <div className="trades-filter">
-                            <a href="#" className="trades-filter__link trades-filter__link_active">All</a>
-                            <a href="#" className="trades-filter__link">Balances</a>
+                            <NavLink 
+                            exact
+                            to="/" 
+                            className="trades-filter__link"
+                            activeClassName="trades-filter__link_active"
+                            >All</NavLink>
+                            <NavLink 
+                            to="/balance" 
+                            className="trades-filter__link"
+                            activeClassName="trades-filter__link_active"
+                            >Balances</NavLink>
                             <a href="#" className="trades-filter__link">History</a>
                         </div>
                     </div>

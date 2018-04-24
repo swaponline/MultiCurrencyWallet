@@ -91,7 +91,6 @@ button:focus,
 
 .logo img {
     display: block;
-    width: 100%;
     height: auto;
 }
 
@@ -132,6 +131,7 @@ button:focus,
 .trades-filter__link_active {
     color: #fff;
     font-weight: 700;
+    border-bottom: 2px solid #fff;
 }
 
 .user-cont {
@@ -270,12 +270,15 @@ button:focus,
     width: 1100px;
 }
 
+.description {
+    padding-top: 70px;
+}
 .description__title {
     font-size: 16px;
     text-transform: uppercase;
     font-weight: 700;
     color: #7c1de9;
-    margin: 70px 0 30px;
+    margin: 0px 0 30px;
 }
 
 .description__sub-title {

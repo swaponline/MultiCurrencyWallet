@@ -1,18 +1,24 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
+
 import Header from './Header';
-import Description from './Description';
-import SearchTrade from './SearchTrade';
-import TradesTable from "./TradesTable";
+import All from './All'
+import Balances from './Balances'
+import NotFound from './NotFound'
 
 class App extends Component {
     render() {
         return (
-            <main className="main">
-                <Header/>
-                <Description/>
-                <SearchTrade/>
-                <TradesTable/>
-            </main>
+            <Router>
+                <main className="main" id="main">
+                    <Header/>
+                    <Switch>
+                        <Route exact path="/" component={ All } />
+                        <Route path="/balance" component={ Balances } />
+                        <Route component={ NotFound } />
+                    </Switch>
+                </main>
+            </Router>
         )
     }
 }
