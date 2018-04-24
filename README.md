@@ -10,5 +10,5 @@ npm run start
 ### Production mode
 ```
 npm install
-nmp run clean && webpack --mode production
+npm run clean && webpack --mode production
 ```
