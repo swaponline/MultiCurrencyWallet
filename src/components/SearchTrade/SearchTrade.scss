@@ -1,0 +1,37 @@
+.trade-panel {
+    width: 100%;
+}
+
+.trade-panel_row {
+    display: flex;
+    justify-content: left;
+    align-items: flex-end;
+    margin-bottom: 75px;
+}
+
+.trade-panel__want_row {
+    margin: 0 20px 0 0;
+}
+.trade-panel__have_row {
+    margin: 0 20px;
+}
+
+.trade-panel__search {
+    width: 130px;
+    height: 58px;
+    border-radius: 6px;
+    background: #7c1de9;
+    line-height: 58px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+    display: inline-block;
+}
+
+.trade-panel__change {
+    display: flex;
+    align-items: center;
+    height: 58px;
+    width: 32px;
+}

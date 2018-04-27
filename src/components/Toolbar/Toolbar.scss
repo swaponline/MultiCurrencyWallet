@@ -1,0 +1,68 @@
+.toolbar {
+    float: left;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    height: 88px;
+}
+
+.search-btn {
+    margin-right: 15px;
+    display: block;
+    width: 17px;
+    height: 17px;
+    cursor: pointer;
+}
+
+.search-btn img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.trades-filter__link {
+    margin-right: 15px;
+    color: #dccef7;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.trades-filter__link:hover {
+    color: #fff;
+}
+
+.tradesFilterlinkActive {
+    color: #fff;
+    font-weight: 700;
+    border-bottom: 2px solid #fff;
+}
+
+.logo {
+    width: 32px;
+    height: 30px;
+    margin: 0 30px 0 0;
+    float: left;
+}
+
+.logo img {
+    display: block;
+    height: auto;
+}
+
+/************************************** MEDIA QUERIES **************************************/
+
+@media all and (max-width: 1280px) {
+    .logo {
+        margin: 20px 0 30px 20px;
+        width: 300px;
+    }
+}
+
+@media all and (max-width: 768px) {
+    .logo {
+        width: 80%;
+        float: none;
+        margin: 20px auto;
+    }
+}

@@ -1,0 +1,28 @@
+.confirm__row {
+    margin-bottom: 25px;
+}
+
+.confirm__title {
+    text-transform: uppercase;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-align: center;
+    color: #b2b2b2;
+    margin-bottom: 10px;
+}
+
+.confirm__cur {
+    color: #b2b2b2;
+}
+
+.confirm__from-to,
+.confirm__rate,
+.confirm__fee {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+}

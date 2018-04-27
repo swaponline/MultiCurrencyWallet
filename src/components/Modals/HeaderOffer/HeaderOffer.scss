@@ -1,0 +1,26 @@
+.offer-popup__header {
+    height: 88px;
+    border-bottom: 1px solid #f2f2f2;
+    width: 100%;
+}
+
+.offer-popup__logo {
+    float: left;
+    margin-top: 33px;
+}
+
+.offer-popup__close {
+    float: right;
+    margin-top: 24px;
+    background: url("./close.jpg") no-repeat center center;
+    width: 40px;
+    height: 40px;
+    background-size: contain;
+    border-radius: 20px;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+}
+
+.offer-popup__close:hover {
+    opacity: 1;
+}

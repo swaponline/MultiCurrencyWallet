@@ -1,0 +1,52 @@
+.table__coins {
+    font-size: 0;
+}
+
+.table__coin-left {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+}
+
+.table__coin-right {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    transform: translateX(-5px);
+}
+
+.table__price,
+.table__limits,
+.table__rating {
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.table__currency {
+    color: #b2b2b2;
+}
+
+.table__link {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    background: #f8f3fe;
+    margin: 0 auto;
+}
+
+.table__link-arrow {
+    width: 4px;
+    height: 8px;
+}
+
+tr.active .table__link {
+    background: #7c1de9;
+}
+
+tr.active .table__link-arrow {
+    stroke: #fff;
+}

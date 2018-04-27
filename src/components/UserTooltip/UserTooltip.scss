@@ -1,0 +1,62 @@
+.user-tooltip {
+    position: absolute;
+    width: 320px;
+    height: 88px;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 3px 9px 0 rgba(0,0,0,0.06);
+    bottom: -78px;
+    right: 0;
+    padding: 0 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.user-tooltip__info-title {
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.user-tooltip__currency {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.user-tooltip__coin {
+    color: #b4b4b4;
+}
+
+.user-tooltip__arrow {
+    display: inline-block;
+    width: 5px;
+}
+
+.user-tooltip__arrow img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.user-tooltip__checked {
+    width: 40px;
+    height: 40px;
+    background: #f2f9f2;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-tooltip__check-icon {
+    width: 12px;
+    height: 8px;
+    border: solid 2px #3bb33b;
+}
