@@ -3,8 +3,6 @@ import React from 'react'
 import CSSModules from 'react-css-modules'
 import styles from './Input.scss'
 
-import Select from 'react-select'
-
 const Input = ({ icon, currency, row = '' }) => (
     <div styleName={'trade-panel__group ' + row}>
         <input type="number" placeholder="0" styleName="trade-panel__input" />

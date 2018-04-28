@@ -7,8 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "webpack --watch",
     "start": "webpack-dev-server --config ./webpack.config.js --mode development",
-    "build": "webpack --mode production",
-    "serve": "nodemon client/server.client"
+    "build": "npm run clean && webpack --mode production",
+    "serve": "nodemon client/server.client",
+    "clean": "rimraf dist"
   },
   "keywords": [],
   "author": "@sylogex",
@@ -43,6 +44,7 @@
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "resolve-url-loader": "^2.3.0",
+    "rimraf": "^2.6.2",
     "sass-loader": "^7.0.1",
     "select2": "^4.0.6-rc.1",
     "style-loader": "^0.21.0",

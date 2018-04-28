@@ -51,10 +51,6 @@ html {
     box-sizing: inherit;
 }
 
-a {
-    transition: all 0.3s ease;
-}
-
 a:hover,
 a:focus,
 a:active {

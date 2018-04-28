@@ -44,6 +44,7 @@
     justify-content: center;
     align-items: center;
     background: #fff;
+    cursor: pointer;
 }
 
 .users__user-letter {
@@ -61,4 +62,9 @@
     height: 10px;
     border-radius: 5px;
     background: #e91db4;
+}
+
+.hidden{
+    opacity: 0;
+    visibility: hidden;
 }
