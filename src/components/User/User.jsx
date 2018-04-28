@@ -8,7 +8,7 @@ import UserTooltip from '../UserTooltip/UserTooltip'
 
 const User = ({ isOpen }) => {
     function Open(event){
-        event.preventdefault()
+        event.preventDefault()
         isOpen()
     }   
     return (<div styleName="user-cont">
