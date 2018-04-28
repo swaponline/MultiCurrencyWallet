@@ -99,7 +99,7 @@ const config = {
             },
             {
                 test: /\.html/,
-                use: ['html-loader'],
+                use: ['underscore-template-loader'],
             },
             {
                 test: /\.(js|jsx)$/,
@@ -145,7 +145,7 @@ const config = {
             },
             hash: true,
             favicon: './src/img/favicon.ico',
-            template: './src/index.ejs'
+            template: './src/index.html'
         }),
         new webpack.ProvidePlugin({
             $: 'jquery',
@@ -176,23 +176,6 @@ const config = {
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NamedModulesPlugin(),
-        // new FaviconsWebpackPlugin({
-        //     logo: './src/img/favicon.ico',
-        //     prefix: 'icons-[hash]/',
-        //     background: 'transparent',
-        //     icons: {
-        //         android: false,
-        //         appleIcon: false,
-        //         appleStartup: false,
-        //         coast: false,
-        //         favicons: true,
-        //         firefox: false,
-        //         opengraph: false,
-        //         twitter: false,
-        //         yandex: false,
-        //         windows: false
-        //     }
-        // })
     ]
 };
 

@@ -3,7 +3,7 @@ import React from 'react'
 import CSSModules from 'react-css-modules'
 import styles from './AddOffer.scss'
 
-import TradePanel from '../TradePanel/TradePanel'
+import TradePanel from '../../TradePanel/TradePanel'
 
 function AddOffer({ isNext }) {
     function Next(event) {

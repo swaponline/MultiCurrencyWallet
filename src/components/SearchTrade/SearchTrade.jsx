@@ -4,7 +4,7 @@ import FlipSvg from './flip.svg';
 import CSSModules from 'react-css-modules'
 import styles from './SearchTrade.scss'
 
-import TradePanel from '../Modals/TradePanel/TradePanel'
+import TradePanel from '../TradePanel/TradePanel'
 
 class SearchTrade extends Component {
     render() {
