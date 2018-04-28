@@ -43,18 +43,20 @@
 
 .trade-panel__select {
     height: 58px;
-    width: 100%;
+    width: 40%;
 }
 
-.trade-panel__select .dropdown-menu {
+.trade-panel__select{
     border: 0;
     border-radius: 6px;
-    margin-top: 10px;
     padding: 0;
+    padding-left: 15px;
     background: #fff;
     box-shadow: 0 3px 9px 0 rgba(0, 0, 0, 0.06);
-    width: 100%;
-    min-width: 100%;
+}
+
+.trade-panel__select:focus {
+    outline: none
 }
 
 .trade-panel__select .dropdown-item {
