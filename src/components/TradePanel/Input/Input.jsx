@@ -3,8 +3,8 @@ import React from 'react'
 import CSSModules from 'react-css-modules'
 import styles from './Input.scss'
 
-const Input = ({ icon, currency }) => (
-    <div styleName="trade-panel__group">
+const Input = ({ icon, currency, row = '' }) => (
+    <div styleName={'trade-panel__group ' + row}>
         <input type="number" placeholder="0" styleName="trade-panel__input" />
 
         <div styleName="trade-panel__label trade-panel__label_row">

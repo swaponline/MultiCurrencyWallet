@@ -16,6 +16,7 @@ const SearchTrade = () => (
                     name="You want"
                     icon="icon-btc"
                     currency="BTC"
+                    row="trade-panel__group_row"
                 />
                 <a href="#" styleName="trade-panel__change"><img src={FlipSvg} alt="" /></a>
 
@@ -25,6 +26,7 @@ const SearchTrade = () => (
                     name="You have"
                     icon="icon-eth"
                     currency="ETH"
+                    row="trade-panel__group_row"
                 />
                 <a href="#" styleName="trade-panel__search">Search</a>
             </div>
