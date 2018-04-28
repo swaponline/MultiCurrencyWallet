@@ -9,19 +9,17 @@ import Rating from './Rating/Rating'
 import Gas from './Gas/Gas'
 import Button from './Button/Button'
 
-function ConfirmOffer({ isBack }) {
-    return(
-        <div styleName="offer-popup__form">
-            <h2 styleName="offer-popup__title">Confirm</h2>
-            <div className="confirm">
-                <Coin />
-                <Exchange />
-                <Rating />
-                <Gas />
-                <Button isBack={isBack}/>
-            </div> 
-        </div>
-    )
-}
+const ConfirmOffer = ({isBack}) => (
+    <div styleName="offer-popup__form">
+        <h2 styleName="offer-popup__title">Confirm</h2>
+        <div className="confirm">
+            <Coin />
+            <Exchange />
+            <Rating />
+            <Gas />
+            <Button isBack={isBack}/>
+        </div> 
+    </div>
+)
 
 export default CSSModules(ConfirmOffer, styles)

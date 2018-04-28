@@ -6,24 +6,22 @@ import styles from './Head.scss'
 
 const titles = ['EXCHANGE','PRICE','LIMITS','RATING']
 
-function Head() {
-    return (
-        <thead>
-            <tr>
-            { titles.map((item, index) => 
-                <th key={index}>
-                    <div styleName="table__headers">
-                        <span styleName="table__titles">{ item }</span>
-                        { item === 'RATING' || item === 'PRICE' ?
-                            <span styleName="question">?</span> : ''
-                        }
-                    </div>
-                </th>
-            ) }
-            </tr>
-        </thead>         
-    )
-}
+const Head = () => (
+    <thead>
+        <tr>
+        { titles.map((item, index) => 
+            <th key={index}>
+                <div styleName="table__headers">
+                    <span styleName="table__titles">{ item }</span>
+                    { item === 'RATING' || item === 'PRICE' ?
+                        <span styleName="question">?</span> : ''
+                    }
+                </div>
+            </th>
+        ) }
+        </tr>
+    </thead>         
+)
 
 Head.proptypes = {
 

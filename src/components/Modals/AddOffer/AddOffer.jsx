@@ -5,8 +5,8 @@ import styles from './AddOffer.scss'
 
 import TradePanel from '../../TradePanel/TradePanel'
 
-function AddOffer({ isNext }) {
-    function Next(event) {
+const AddOffer = ({isNext}) => {
+    const Next = event => {
         event.preventDefault()
         isNext()
     }
@@ -33,8 +33,7 @@ function AddOffer({ isNext }) {
                 />
                 <a href="#" styleName="trade-panel__next" onClick={ Next }>Next</a>
             </div>
-        </div>
-    )
+        </div>)
 }
 
 export default CSSModules(AddOffer, styles,{ allowMultiple: true })
