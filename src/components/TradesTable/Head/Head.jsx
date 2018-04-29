@@ -4,9 +4,7 @@ import proptypes from 'prop-types'
 import CSSModules from 'react-css-modules'
 import styles from './Head.scss'
 
-const titles = ['EXCHANGE','PRICE','LIMITS','RATING']
-
-const Head = () => (
+const Head = ({ titles }) => (
     <thead>
         <tr>
         { titles.map((item, index) => 

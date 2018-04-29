@@ -11,6 +11,9 @@ import Description from '../Description/Description'
 import SearchTrade from '../SearchTrade/SearchTrade'
 import NotFound from '../NotFound/NotFound'
 import Offer from '../Modals/Offer/Offer'
+import History from '../History/History'
+
+const titles = ['EXCHANGE','PRICE','LIMITS','RATING']
 
 class App extends Component {
 
@@ -35,17 +38,15 @@ class App extends Component {
                     { this.state.visible ? <Offer isClose={this.handleChange}/> : '' }
                     <Header isOpen={this.handleChange}/>
                     <Switch>
-                        <Route exact path="/" render={ () => 
-                            <section >
-                                <Description 
-                                    subtitle="Instant BTC for ETH and ERC20, 
-                                    p2p exchange without commission"
-                                    title="SWAP.ONLINE" /> 
+                        <Route exact path="/" >
+                            <section>
+                                <Description subtitle="Instant BTC for ETH and ERC20, p2p exchange without commission" title="SWAP.ONLINE" /> 
                                 <SearchTrade /> 
-                                <TradesTable />
-                            </section>   
-                        } />
+                                <TradesTable titles={titles} history={false}/>
+                            </section>
+                        </Route>
                         <Route path="/balance" component={ Balances } />
+                        <Route path="/history" component={ History } />
                         <Route component={ NotFound } />
                     </Switch>
                 </main>

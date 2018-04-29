@@ -1,0 +1,88 @@
+.table__coin-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    float: left;
+    margin-right: 18px;
+}
+
+.table__coin-eth {
+    background-image: url("./coin-2.svg");
+}
+
+.table__coin-btc {
+    background-image: url("./coin-1.svg");
+}
+
+.table__coin-abbr {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.1;
+    text-transform: uppercase;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.table__coin-name {
+    font-size: 14px;
+    line-height: 1.2;
+    color: #666;
+}
+
+.table__status-stat {
+    font-size: 16px;
+    line-height: 1;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.table__status-stat_sent {
+    color: #ff4e34;
+}
+
+.table__status-stat_received {
+    color: #3bb33b;
+}
+
+.table__status-date {
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.table__status-address {
+    font-size: 14px;
+    font-weight: 500;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.table__status-address-hash {
+    color: #000;
+}
+
+.table__amount {
+    display: inline-block;
+    height: 40px;
+    border-radius: 20px;
+    font-size: 16px;
+    line-height: 40px;
+    font-weight: 500;
+    padding: 0 25px;
+    background-color: #ccc;
+}
+
+.table__amount_sent {
+    background: #fff6f5;
+    color: #ff4e34;
+}
+
+.table__amount_received {
+    background: #f5fbf5;
+    color: #3bb33b;
+}
+
+
