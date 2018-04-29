@@ -11,27 +11,27 @@ const AddOffer = ({isNext}) => {
         isNext()
     }
     return(
-        <div styleName="offer-popup__form">
-            <h2 styleName="offer-popup__title">Add offer</h2>
-            <div styleName="trade-panel trade-panel_offer">
+        <div className="offer-popup__form">
+            <h2 className="offer-popup__title">Add offer</h2>
+            <div className="trade-panel trade-panel_offer">
                 <TradePanel 
                     className="trade-panel__want " 
-                    styleName="trade-panel__want_offer" 
+                    className="trade-panel__want_offer"
                     name="You want"
                     icon="icon-btc"
                     currency="BTC"
                 />
-                <a href="#" styleName="trade-panel__change">
+                <a href="#" className="trade-panel__change">
                     <img src="img/flip.svg" alt="" />
                 </a>
                 <TradePanel 
                     className="trade-panel__have" 
-                    styleName="trade-panel__have_offer" 
+                    className="trade-panel__have_offer"
                     name="You sell"
                     icon="icon-eth"
                     currency="ETH"
                 />
-                <a href="#" styleName="trade-panel__next" onClick={ Next }>Next</a>
+                <a href="#" className="trade-panel__next" onClick={ Next }>Next</a>
             </div>
         </div>)
 }

@@ -25,15 +25,15 @@ class User extends React.Component {
      
     render() {
         return (
-            <div styleName="user-cont">
-                <a href="#" styleName="user-cont__help">?</a>
-                <a href="" styleName="user-cont__add-user" onClick={ this.isOpen }>
+            <div className="user-cont">
+                <a href="#" className="user-cont__help">?</a>
+                <a href="" className="user-cont__add-user" onClick={ this.isOpen }>
                     <img src={AddSvg} alt=""/>
                 </a>
                 <div className="users" onClick={ () => this.setState({ visible: !this.state.visible }) }>
-                    <div styleName="users__user">
-                        <span styleName="users__user-letter">K</span>
-                        <span styleName="users__user-status"> </span>
+                    <div className="users__user">
+                        <span className="users__user-letter">K</span>
+                        <span className="users__user-status"> </span>
                     </div>
                 </div>
                 { this.state.visible ? <UserTooltip /> : '' }

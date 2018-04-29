@@ -5,11 +5,11 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "webpack --watch",
-    "start": "webpack-dev-server --config ./webpack.config.js --mode development",
+    "start": "webpack-dev-server -d --config ./webpack.config.js --mode development",
     "build": "npm run clean && webpack --mode production",
     "serve": "nodemon client/server.client",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "webpack": "webpack"
   },
   "keywords": [],
   "author": "@sylogex",

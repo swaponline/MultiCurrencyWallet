@@ -25,9 +25,9 @@ class Offer extends React.Component {
 
     render() {
         return(
-            <div styleName="offer-popup">
+            <div className="offer-popup">
                 <HeaderOffer isClose={this.props.isClose} />
-                <div styleName="offer-popup__center">
+                <div className="offer-popup__center">
                 
                     { this.state.visible ? <AddOffer isNext={this.handleChange} /> : <ConfirmOffer  isBack={this.handleChange}/> }
 

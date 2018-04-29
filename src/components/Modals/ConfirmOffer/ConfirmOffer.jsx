@@ -10,8 +10,8 @@ import Gas from './Gas/Gas'
 import Button from './Button/Button'
 
 const ConfirmOffer = ({isBack}) => (
-    <div styleName="offer-popup__form">
-        <h2 styleName="offer-popup__title">Confirm</h2>
+    <div className="offer-popup__form">
+        <h2 className="offer-popup__title">Confirm</h2>
         <div className="confirm">
             <Coin />
             <Exchange />

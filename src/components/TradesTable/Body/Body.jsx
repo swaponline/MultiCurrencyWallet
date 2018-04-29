@@ -25,43 +25,43 @@ class Body extends React.Component {
     render() {
         return (
             <tbody>
-                <tr styleName={ this.state.active ? 'active' : '' } 
+                <tr className={ this.state.active ? 'active' : '' }
                     onMouseEnter={ this.handleChange }
                     onMouseLeave={ this.handleChange }
                 >
                     <td>
-                        <div styleName="table__coins">
-                            <span styleName="table__coin-left">
+                        <div className="table__coins">
+                            <span className="table__coin-left">
                                 <img src={Coin1Svg} alt="" /> 
                             </span>
-                            <span styleName="table__coin-right">
+                            <span className="table__coin-right">
                                 <img src={Coin2Svg} alt="" /> 
                             </span>
                         </div>
                     </td>
         
                     <td>
-                        <div styleName="table__price">0.055777 
-                            <span styleName="table__currency">eth</span>
+                        <div className="table__price">0.055777
+                            <span className="table__currency">eth</span>
                         </div>
                     </td>
         
                     <td>
-                        <div styleName="table__limits">21,400 - 22,051 
-                            <span styleName="table__currency">btc</span>
+                        <div className="table__limits">21,400 - 22,051
+                            <span className="table__currency">btc</span>
                         </div>
                     </td>
         
                     <td>
-                        <div styleName="table__rating">98% 
-                            <span styleName="table__currency">10 000+</span>
+                        <div className="table__rating">98%
+                            <span className="table__currency">10 000+</span>
                         </div>
                     </td>
         
                     <td>
-                        <a href="#" styleName="table__link">
+                        <a href="#" className="table__link">
                             <svg xmlns="http://www.w3.org/2000/svg" width="7" height="10" viewBox="0 0 7 10">
-                                <path styleName="table__link-arrow" fill="none" fillRule="evenodd"
+                                <path className="table__link-arrow" fill="none" fillRule="evenodd"
                                         stroke="#7c1de9" strokeLinecap="round" strokeWidth="2"
                                         d="M1 9l4-4-4-4"/>
                             </svg>

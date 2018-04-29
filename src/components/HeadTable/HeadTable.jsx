@@ -6,20 +6,18 @@ import styles from './HeadTable.scss'
 
 const HeadTable = ({ titles }) => (
     <thead>
-        <tr>
-        { titles.map((item, index) => 
+        <tr>{titles.map((item, index) =>
             <th key={index}>
-                <div styleName="table__headers">
-                    <span styleName="table__titles">{ item }</span>
-                    { item === 'RATING' || item === 'PRICE' ?
-                        <span styleName="question">?</span> : ''
+                <div className="table__headers">
+                    <span className="table__titles">{item}</span>
+                    {item === 'RATING' || item === 'PRICE' ?
+                        <span className="question">?</span> : ''
                     }
                 </div>
             </th>
-        ) }
-        </tr>
+        )}</tr>
     </thead>         
-)
+);
 
 HeadTable.proptypes = {
 

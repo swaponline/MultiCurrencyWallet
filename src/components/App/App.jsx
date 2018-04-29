@@ -34,7 +34,7 @@ class App extends Component {
     render() {
         return (
             <Router>
-                <main styleName="main" id="main">
+                <main className="main" id="main">
                     { this.state.visible ? <Offer isClose={this.handleChange}/> : '' }
                     <Header isOpen={this.handleChange}/>
                     <Switch>

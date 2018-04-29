@@ -5,7 +5,7 @@ import CSSModules from 'react-css-modules'
 import styles from './Toolbar.scss'
 
 const ToolbarLink = ({ name, ...rest }) => (
-    <NavLink styleName="trades-filter__link" 
+    <NavLink className="trades-filter__link"
         activeClassName={styles.tradesFilterlinkActive} {...rest}>
         { name }
     </NavLink>

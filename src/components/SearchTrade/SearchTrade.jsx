@@ -9,26 +9,26 @@ import TradePanel from '../TradePanel/TradePanel'
 const SearchTrade = () => (
     <div className="search-trade">
         <div className="container">
-            <div styleName="trade-panel trade-panel_row">
+            <div className="trade-panel trade-panel_row">
                 <TradePanel 
-                    styleName="trade-panel__want_row" 
+                    className="trade-panel__want_row"
                     className="trade-panel__want" 
                     name="You want"
                     icon="icon-btc"
                     currency="BTC"
                     row="trade-panel__group_row"
                 />
-                <a href="#" styleName="trade-panel__change"><img src={FlipSvg} alt="" /></a>
+                <a href="#" className="trade-panel__change"><img src={FlipSvg} alt="" /></a>
 
                 <TradePanel 
-                    styleName="trade-panel__have_row" 
+                    className="trade-panel__have_row"
                     className="trade-panel__have" 
                     name="You have"
                     icon="icon-eth"
                     currency="ETH"
                     row="trade-panel__group_row"
                 />
-                <a href="#" styleName="trade-panel__search">Search</a>
+                <a href="#" className="trade-panel__search">Search</a>
             </div>
         </div>
     </div>

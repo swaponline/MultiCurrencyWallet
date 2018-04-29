@@ -1,7 +1,5 @@
 const path = require('path');
 const webpack = require('webpack');
-const autoprefixer = require('autoprefixer');
-const precss = require('precss');
 
 const TransferWebpackPlugin = require('transfer-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -9,42 +7,8 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 
-// const bootstrap = require('bootstrap');
-
 const env = process.env.WEBPACK_MODE;
 const isPro = env === 'production';
-
-let cssLoaders = [{
-    loader: 'style-loader', // inject CSS to page
-}, {
-    loader: 'css-loader',
-    query: {
-        modules: true,
-        localIdentName: '[name]__[local]___[hash:base64:5]'
-    }  // translates CSS into CommonJS modules
-}, {
-    loader: 'postcss-loader', // Run post css actions
-    options: {
-        plugins: function () { // post css plugins, can be exported to postcss.config.js
-            return [
-                precss,
-                autoprefixer
-            ];
-        }
-    }
-}, {
-    loader: 'sass-loader' // compiles Sass to CSS
-}];
-
-let cssDev = cssLoaders;
-
-let cssPro = ExtractTextPlugin.extract({
-    fallback: 'style-loader',
-    use: cssLoaders,
-    publicPath: 'dist'
-});
-
-let cssConfig = isPro ? cssPro : cssDev;
 
 const config = {
     mode: env || 'development',
@@ -55,8 +19,7 @@ const config = {
     ],
     output: {
         filename: '[name].bundle.js',
-        path: path.resolve(__dirname, 'dist'),
-        publicPath: '/'
+        path: path.resolve(__dirname, 'build'),
     },
     module: {
         rules: [
@@ -69,7 +32,23 @@ const config = {
             },
             {
                 test: /\.scss$/,
-                use: cssConfig
+                use: [{
+                    loader: 'style-loader', // inject CSS to page
+                }, {
+                    loader: 'css-loader',
+                }, {
+                    loader: 'postcss-loader', // Run post css actions
+                    options: {
+                        plugins: function () { // post css plugins, can be exported to postcss.config.js
+                            return [
+                                require('precss'),
+                                require('autoprefixer')
+                            ];
+                        }
+                    }
+                }, {
+                    loader: 'sass-loader' // compiles Sass to CSS
+                }],
             },
             {
                 test: /\.(png|svg|jpe?g|gif)$/i,
@@ -117,10 +96,6 @@ const config = {
                     { loader: 'style-loader' },
                     { loader: 'font-awesome-loader' }
                 ]
-            },
-            // Bootstrap 4
-            {
-                test: /bootstrap\/dist\/js\/umd\//, use: 'imports-loader?jQuery=jquery'
             }
         ]
     },
@@ -129,7 +104,7 @@ const config = {
     },
     devtool: 'inline-source-map', // any "source-map"-like devtool is possible
     devServer: {
-        contentBase: path.join(__dirname, "dist"),
+        contentBase: path.join(__dirname, "build"),
         compress: true,
         historyApiFallback: true,
         hot: true,
@@ -156,21 +131,21 @@ const config = {
             'window.Tether': 'tether',
             Popper: ['popper.js', 'default'],
             'window.Tether': 'tether',
-            Alert: 'exports-loader?Alert!bootstrap/js/dist/alert',
-            Button: 'exports-loader?Button!bootstrap/js/dist/button',
-            Carousel: 'exports-loader?Carousel!bootstrap/js/dist/carousel',
-            Collapse: 'exports-loader?Collapse!bootstrap/js/dist/collapse',
-            Dropdown: 'exports-loader?Dropdown!bootstrap/js/dist/dropdown',
-            Modal: 'exports-loader?Modal!bootstrap/js/dist/modal',
-            Popover: 'exports-loader?Popover!bootstrap/js/dist/popover',
-            Scrollspy: 'exports-loader?Scrollspy!bootstrap/js/dist/scrollspy',
-            Tab: 'exports-loader?Tab!bootstrap/js/dist/tab',
-            Tooltip: "exports-loader?Tooltip!bootstrap/js/dist/tooltip",
-            Util: 'exports-loader?Util!bootstrap/js/dist/util'
+            Alert: 'exports-loader?Alert!bootstrap/js/build/alert',
+            Button: 'exports-loader?Button!bootstrap/js/build/button',
+            Carousel: 'exports-loader?Carousel!bootstrap/js/build/carousel',
+            Collapse: 'exports-loader?Collapse!bootstrap/js/build/collapse',
+            Dropdown: 'exports-loader?Dropdown!bootstrap/js/build/dropdown',
+            Modal: 'exports-loader?Modal!bootstrap/js/build/modal',
+            Popover: 'exports-loader?Popover!bootstrap/js/build/popover',
+            Scrollspy: 'exports-loader?Scrollspy!bootstrap/js/build/scrollspy',
+            Tab: 'exports-loader?Tab!bootstrap/js/build/tab',
+            Tooltip: "exports-loader?Tooltip!bootstrap/js/build/tooltip",
+            Util: 'exports-loader?Util!bootstrap/js/build/util'
         }),
         new ExtractTextPlugin({
             filename: 'app.css',
-            disable: !isPro,
+            disable: false,
             allChunks: true
         }),
         new webpack.optimize.OccurrenceOrderPlugin(),

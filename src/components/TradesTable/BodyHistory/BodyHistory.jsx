@@ -34,22 +34,22 @@ const BodyHistory = () => (
         <tr key={index}>
             <td>
                 <div className="table__coin">
-                    <div styleName={item.classCoin}></div>
-                    <div styleName="table__coin-abbr">{item.name}</div>
-                    <div styleName="table__coin-name">{item.fullName}</div>
+                    <div className={item.classCoin}></div>
+                    <div className="table__coin-abbr">{item.name}</div>
+                    <div className="table__coin-name">{item.fullName}</div>
                 </div>
             </td>
 
             <td>
                 <div className="table__status">
-                    <div styleName={item.classSent ? 'table__status-stat table__status-stat_received' : 'table__status-stat table__status-stat_sent'} >{item.status}</div>
-                    <div styleName="table__status-date">{item.date}</div>
-                    <div styleName="table__status-address">Address: <span styleName="table__status-address-hash">{item.address}</span></div>
+                    <div className={item.classSent ? 'table__status-stat table__status-stat_received' : 'table__status-stat table__status-stat_sent'} >{item.status}</div>
+                    <div className="table__status-date">{item.date}</div>
+                    <div className="table__status-address">Address: <span className="table__status-address-hash">{item.address}</span></div>
                 </div>
             </td>
 
             <td>
-                <span href="#" styleName={ item.classAmount ? 'table__amount table__amount_received' : 'table__amount table__amount_sent' }>{item.amount}</span>
+                <span href="#" className={ item.classAmount ? 'table__amount table__amount_received' : 'table__amount table__amount_sent' }>{item.amount}</span>
             </td>
         </tr>
         )}

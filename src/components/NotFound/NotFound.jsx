@@ -5,7 +5,7 @@ import styles from './NotFound.scss'
 
 const NotFound = () => (
     <div className="container">
-        <h2 styleName="description__sub-title">Такой страницы не существует</h2>
+        <h2 className="description__sub-title">Такой страницы не существует</h2>
     </div>
 )
 

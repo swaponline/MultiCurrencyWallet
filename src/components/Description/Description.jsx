@@ -6,10 +6,10 @@ import styles from './Description.scss'
 import Filter from './Filter/Filter'
 
 const Description = ({ title, subtitle, filter = false  }) => (
-    <div styleName="description">
+    <div className="description">
         <div className="container">
-            { title !== '' ? <h2 styleName="description__title">{title}</h2> : '' }
-            <h3 styleName="description__sub-title">{subtitle}</h3>
+            { title !== '' ? <h2 className="description__title">{title}</h2> : '' }
+            <h3 className="description__sub-title">{subtitle}</h3>
             {filter ? <Filter /> : ''}
         </div>
     </div>

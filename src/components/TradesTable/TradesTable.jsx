@@ -17,6 +17,6 @@ const TradesTable = ({ titles, body = false, history = false, balance = false })
             </table>
         </div>
     </div>
-)
+);
 
 export default TradesTable
