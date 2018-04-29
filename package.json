@@ -5,8 +5,8 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/client/server.js",
-    "build": "webpack -p --config webpack.prod.js"
+    "start": "npm i && nodemon src/client/server.js",
+    "build": "npm i && webpack -p --config webpack.prod.js"
   },
   "keywords": [],
   "author": "@sylogex",
