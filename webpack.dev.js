@@ -1,12 +1,13 @@
 const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
-const autoprefixer = require('autoprefixer');
-const precss = require('precss');
-const webpack = require('webpack');
+const path = require('path');
 
 module.exports = merge(common, {
     mode: 'development',
-    devtool: 'inline-source-map',
+    output: {
+        filename: '[name].bundle.js',
+        path: path.resolve(__dirname, 'build'),
+    },
     module: {
         rules: [
             {
@@ -14,22 +15,30 @@ module.exports = merge(common, {
                 use: [{
                     loader: 'style-loader',
                 }, {
-                    loader: 'postcss-loader', // Run post scss actions
+                    loader: 'css-loader',
+                }, {
+                    loader: 'postcss-loader',
                     options: {
                         plugins: function () {
                             return [
-                                precss,
-                                autoprefixer,
+                                require('precss'),
+                                require('autoprefixer'),
                             ];
                         }
                     }
                 }, {
-                    loader: 'sass-loader' // compiles Sass to CSS
-                }]
+                    loader: 'sass-loader',
+                }],
             },
-        ],
+        ]
     },
-    plugins: [
-        new webpack.HotModuleReplacementPlugin(),
-    ]
+    devtool: 'inline-source-map',
+    devServer: {
+        contentBase: path.join(__dirname, "build"),
+        compress: true,
+        historyApiFallback: true,
+        hot: true,
+        port: 9001,
+        open: true,
+    }
 });

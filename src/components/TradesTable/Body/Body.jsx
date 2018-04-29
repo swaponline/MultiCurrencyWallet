@@ -69,7 +69,7 @@ class Body extends React.Component {
                     </td>
                 </tr>
             </tbody>
-            )
+        )
     }
 }
 

@@ -12,6 +12,6 @@ const TradePanel = ({ name, icon, currency, row, ...rest }) => (
             row={row}
         />
     </div>
-)
+);
 
 export default TradePanel

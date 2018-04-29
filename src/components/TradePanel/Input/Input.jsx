@@ -11,6 +11,6 @@ const Input = ({ icon, currency, row = '' }) => (
             <option value="BTC">BTC</option>
         </select>
     </div>
-)
+);
 
 export default CSSModules(Input, styles, { allowMultiple: true })

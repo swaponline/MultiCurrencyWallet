@@ -13,7 +13,7 @@ import NotFound from '../NotFound/NotFound'
 import Offer from '../Modals/Offer/Offer'
 import History from '../History/History'
 
-const titles = ['EXCHANGE','PRICE','LIMITS','RATING']
+const titles = ['EXCHANGE','PRICE','LIMITS','RATING'];
 
 class App extends Component {
 
@@ -53,6 +53,6 @@ class App extends Component {
             </Router>
         )
     }
-}
+};
 
-export default CSSModules(App, styles)
+export default CSSModules(App, styles);

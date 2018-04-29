@@ -1,12 +1,11 @@
 import _ from 'lodash';
 import 'bootstrap';
+import './../scss/app.scss'
 import 'font-awesome/scss/font-awesome.scss';
-import '../css/normalize.css';
-import '../css/all.css';
+import '../scss/normalize.scss';
 import React from 'react';
 import { render } from 'react-dom';
-import App from './../components/App/App'
-import './../scss/app.scss'
+import App from './../components/App/App';
 
 render(
     <App/>,

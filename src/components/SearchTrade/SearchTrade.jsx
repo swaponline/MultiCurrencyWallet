@@ -11,8 +11,7 @@ const SearchTrade = () => (
         <div className="container">
             <div className="trade-panel trade-panel_row">
                 <TradePanel 
-                    className="trade-panel__want_row"
-                    className="trade-panel__want" 
+                    className="trade-panel__want_row trade-panel__want"
                     name="You want"
                     icon="icon-btc"
                     currency="BTC"
@@ -21,8 +20,7 @@ const SearchTrade = () => (
                 <a href="#" className="trade-panel__change"><img src={FlipSvg} alt="" /></a>
 
                 <TradePanel 
-                    className="trade-panel__have_row"
-                    className="trade-panel__have" 
+                    className="trade-panel__have_row trade-panel__have"
                     name="You have"
                     icon="icon-eth"
                     currency="ETH"
@@ -32,6 +30,6 @@ const SearchTrade = () => (
             </div>
         </div>
     </div>
-)
+);
     
 export default CSSModules(SearchTrade, styles, { allowMultiple: true })

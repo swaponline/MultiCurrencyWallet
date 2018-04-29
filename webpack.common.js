@@ -1,18 +1,21 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
     entry: [
         './src/client/app.js',
     ],
-    output: {
-        filename: '[name].bundle.js',
-        path: path.resolve(__dirname, 'build'),
-        publicPath: '/'
-    },
     module: {
         rules: [
+            {
+                test: /\.css$/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                ]
+            },
             {
                 test: /\.(png|svg|jpe?g|gif)$/i,
                 use: [
@@ -52,29 +55,21 @@ module.exports = {
                     cacheDirectory: true,
                 }
             },
-            {
-                test: /font-awesome\.config\.js/,
-                use: [
-                    { loader: 'style-loader' },
-                    { loader: 'font-awesome-loader' }
-                ]
-            },
-            {
-                test: /bootstrap\/dist\/js\/umd\//, use: 'imports-loader?jQuery=jquery'
-            }
         ]
     },
     resolve: {
         extensions: ['*', '.js', '.jsx']
     },
     plugins: [
+        new CleanWebpackPlugin(['build']),
         new HtmlWebpackPlugin({
             title: 'Swap.Design',
             minify: {
                 collapseWhitespace: true
             },
             hash: true,
-            favicon: path.resolve(__dirname, 'src/img/favicon.ico')
+            favicon: path.resolve(__dirname, 'src/img/favicon.ico'),
+            template: './src/index.html'
         }),
         new webpack.ProvidePlugin({
             $: 'jquery',
@@ -85,19 +80,20 @@ module.exports = {
             'window.Tether': 'tether',
             Popper: ['popper.js', 'default'],
             'window.Tether': 'tether',
-            Alert: 'exports-loader?Alert!bootstrap/js/dist/alert',
-            Button: 'exports-loader?Button!bootstrap/js/dist/button',
-            Carousel: 'exports-loader?Carousel!bootstrap/js/dist/carousel',
-            Collapse: 'exports-loader?Collapse!bootstrap/js/dist/collapse',
-            Dropdown: 'exports-loader?Dropdown!bootstrap/js/dist/dropdown',
-            Modal: 'exports-loader?Modal!bootstrap/js/dist/modal',
-            Popover: 'exports-loader?Popover!bootstrap/js/dist/popover',
-            Scrollspy: 'exports-loader?Scrollspy!bootstrap/js/dist/scrollspy',
-            Tab: 'exports-loader?Tab!bootstrap/js/dist/tab',
-            Tooltip: "exports-loader?Tooltip!bootstrap/js/dist/tooltip",
-            Util: 'exports-loader?Util!bootstrap/js/dist/util'
+            Alert: 'exports-loader?Alert!bootstrap/js/build/alert',
+            Button: 'exports-loader?Button!bootstrap/js/build/button',
+            Carousel: 'exports-loader?Carousel!bootstrap/js/build/carousel',
+            Collapse: 'exports-loader?Collapse!bootstrap/js/build/collapse',
+            Dropdown: 'exports-loader?Dropdown!bootstrap/js/build/dropdown',
+            Modal: 'exports-loader?Modal!bootstrap/js/build/modal',
+            Popover: 'exports-loader?Popover!bootstrap/js/build/popover',
+            Scrollspy: 'exports-loader?Scrollspy!bootstrap/js/build/scrollspy',
+            Tab: 'exports-loader?Tab!bootstrap/js/build/tab',
+            Tooltip: "exports-loader?Tooltip!bootstrap/js/build/tooltip",
+            Util: 'exports-loader?Util!bootstrap/js/build/util'
         }),
         new webpack.optimize.OccurrenceOrderPlugin(),
-        new webpack.NamedModulesPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NamedModulesPlugin(),
     ]
 };

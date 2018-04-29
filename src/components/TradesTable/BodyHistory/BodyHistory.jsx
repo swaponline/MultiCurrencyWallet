@@ -54,6 +54,6 @@ const BodyHistory = () => (
         </tr>
         )}
     </tbody>
-)
+);
 
 export default CSSModules(BodyHistory, styles, { allowMultiple: true })
