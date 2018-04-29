@@ -2,9 +2,9 @@ import React from 'react'
 import proptypes from 'prop-types'
 
 import CSSModules from 'react-css-modules'
-import styles from './Head.scss'
+import styles from './HeadTable.scss'
 
-const Head = ({ titles }) => (
+const HeadTable = ({ titles }) => (
     <thead>
         <tr>
         { titles.map((item, index) => 
@@ -21,8 +21,8 @@ const Head = ({ titles }) => (
     </thead>         
 )
 
-Head.proptypes = {
+HeadTable.proptypes = {
 
 }
 
-export default CSSModules(Head, styles)
+export default CSSModules(HeadTable, styles)

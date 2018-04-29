@@ -2,20 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import Description from '../Description/Description'
-import Head from './Head/Head'
-import Body from './Body/Body'
+import TradesTable from '../TradesTable/TradesTable'
+
+const titles = ['Coin', 'Name', 'Available balance', 'Rating']
 
 const Balances = () => (
     <section >
         <Description subtitle="Balances" />
-        <div className="trades-table">
-            <div className="container">
-                <table className="table">
-                    <Head />
-                    <Body />
-                </table>
-            </div>
-        </div>
+        <TradesTable titles={titles} balance={true} />
     </section>
 )
 

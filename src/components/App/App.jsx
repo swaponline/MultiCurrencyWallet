@@ -42,7 +42,7 @@ class App extends Component {
                             <section>
                                 <Description subtitle="Instant BTC for ETH and ERC20, p2p exchange without commission" title="SWAP.ONLINE" /> 
                                 <SearchTrade /> 
-                                <TradesTable titles={titles} history={false}/>
+                                <TradesTable titles={titles} body={true}/>
                             </section>
                         </Route>
                         <Route path="/balance" component={ Balances } />

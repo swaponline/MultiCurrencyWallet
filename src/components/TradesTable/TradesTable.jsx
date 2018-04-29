@@ -1,15 +1,19 @@
 import React from 'react'
 
-import Head from './Head/Head'
+import HeadTable from '../HeadTable/HeadTable'
 import Body from './Body/Body'
 import BodyHistory from './BodyHistory/BodyHistory'
+import BodyBalances from './BodyBalances/BodyBalances'
 
-const TradesTable = (props) => (
+
+const TradesTable = ({ titles, body = false, history = false, balance = false }) => (
     <div className="trades-table">
         <div className="container">
             <table className="table">
-                <Head titles={props.titles} />
-                { props.history ? <BodyHistory /> : <Body />}
+                <HeadTable titles={titles} />
+                { body ? <Body /> : '' }
+                { history ? <BodyHistory /> : '' }
+                { balance ? <BodyBalances /> : '' }
             </table>
         </div>
     </div>

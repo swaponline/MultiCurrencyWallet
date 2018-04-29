@@ -2,11 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import CSSModules from 'react-css-modules'
-import styles from './Body.scss'
+import styles from './BodyBalances.scss'
 
 import Coin from './coin-1.svg'
 
-const Body = () => (
+const BodyBalances = () => (
     <tbody>
         <tr>
             <td>
@@ -32,9 +32,9 @@ const Body = () => (
     </tbody>
 )
 
-Body.propTypes = {
+BodyBalances.propTypes = {
 
 };
 
-export default CSSModules(Body, styles)
+export default CSSModules(BodyBalances, styles)
 
