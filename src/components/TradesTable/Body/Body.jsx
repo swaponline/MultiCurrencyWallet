@@ -3,8 +3,7 @@ import React from 'react'
 import Coin1Svg from './coin-1.svg'
 import Coin2Svg from './coin-2.svg'
 
-import CSSModules from 'react-css-modules'
-import styles from './Body.scss'
+import './Body.scss'
 
 class Body extends React.Component {
 
@@ -73,4 +72,4 @@ class Body extends React.Component {
     }
 }
 
-export default CSSModules(Body, styles)
+export default Body

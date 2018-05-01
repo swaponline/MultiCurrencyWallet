@@ -1,7 +1,6 @@
 import React from 'react'
 
-import CSSModules from 'react-css-modules'
-import styles from './Exchange.scss'
+import './Exchange.scss'
 
 const Exchange = () => (
     <div className="confirm__row">
@@ -14,4 +13,4 @@ const Exchange = () => (
     </div>
 )
 
-export default CSSModules(Exchange, styles)
+export default Exchange

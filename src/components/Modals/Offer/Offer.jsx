@@ -1,7 +1,6 @@
 import React from 'react'
 
-import CSSModules from 'react-css-modules'
-import styles from './Offer.scss'
+import './Offer.scss'
 
 import HeaderOffer from '../HeaderOffer/HeaderOffer'
 import ConfirmOffer from '../ConfirmOffer/ConfirmOffer'
@@ -37,4 +36,4 @@ class Offer extends React.Component {
     }
 }
 
-export default CSSModules(Offer, styles)
+export default Offer

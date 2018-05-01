@@ -1,7 +1,6 @@
 import React from 'react'
 
-import CSSModules from 'react-css-modules'
-import styles from './Coin.scss'
+import './Coin.scss'
 
 import coin1 from './coin-1.svg'
 import coin2 from './coin-2.svg'
@@ -13,4 +12,4 @@ const Coin = () =>  (
     </div>
 )
 
-export default CSSModules(Coin, styles)
+export default Coin

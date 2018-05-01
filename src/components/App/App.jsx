@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
-
-import CSSModules from 'react-css-modules'
-import styles from './App.scss'
+import './App.scss'
 
 import Header from '../Header/Header'
 import Balances from '../Balances/Balances'
@@ -55,4 +53,4 @@ class App extends Component {
     }
 };
 
-export default CSSModules(App, styles);
+export default App

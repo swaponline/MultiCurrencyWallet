@@ -1,7 +1,6 @@
 import React from 'react'
 
-import CSSModules from 'react-css-modules'
-import styles from './NotFound.scss'
+import './NotFound.scss'
 
 const NotFound = () => (
     <div className="container">
@@ -9,4 +8,4 @@ const NotFound = () => (
     </div>
 )
 
-export default CSSModules(NotFound, styles)
+export default NotFound

@@ -1,7 +1,6 @@
 import React from 'react'
 
-import CSSModules from 'react-css-modules'
-import styles from './Header.scss'
+import './Header.scss'
 
 import User from '../User/User'
 import Toolbar from '../Toolbar/Toolbar'
@@ -15,4 +14,4 @@ const Header = ({isOpen}) => (
     </div>
 )
 
-export default CSSModules(Header, styles)
+export default Header

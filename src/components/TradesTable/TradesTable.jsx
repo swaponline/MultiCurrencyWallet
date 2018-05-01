@@ -10,10 +10,15 @@ const TradesTable = ({ titles, body = false, history = false, balance = false })
     <div className="trades-table">
         <div className="container">
             <table className="table">
+
                 <HeadTable titles={titles} />
-                { body ? <Body /> : '' }
-                { history ? <BodyHistory /> : '' }
-                { balance ? <BodyBalances /> : '' }
+
+                { body ? <Body /> : <tbody></tbody> }
+
+                { history ? <BodyHistory /> : <tbody></tbody> }
+
+                { balance ? <BodyBalances /> : <tbody></tbody> }
+                
             </table>
         </div>
     </div>

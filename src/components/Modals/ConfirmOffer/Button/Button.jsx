@@ -1,7 +1,6 @@
 import React from 'react'
 
-import CSSModules from 'react-css-modules'
-import styles from './Button.scss'
+import './Button.scss'
 
 const Button = ({isBack}) => (
     <div className="confirm__buttons">
@@ -10,5 +9,5 @@ const Button = ({isBack}) => (
     </div>
 )
 
-export default CSSModules(Button, styles)
+export default Button
 

@@ -1,8 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import CSSModules from 'react-css-modules'
-import styles from './BodyBalances.scss'
+import './BodyBalances.scss'
 
 import Coin from './coin-1.svg'
 
@@ -36,5 +35,5 @@ BodyBalances.propTypes = {
 
 };
 
-export default CSSModules(BodyBalances, styles)
+export default BodyBalances
 

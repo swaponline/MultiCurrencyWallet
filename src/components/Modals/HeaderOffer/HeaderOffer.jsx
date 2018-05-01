@@ -1,7 +1,6 @@
 import React from 'react'
 
-import CSSModules from 'react-css-modules'
-import styles from './HeaderOffer.scss'
+import './HeaderOffer.scss'
 
 const HeaderOffer = ({isClose}) => (
     <div className="offer-popup__header">
@@ -18,4 +17,4 @@ const HeaderOffer = ({isClose}) => (
     </div>
 )
 
-export default CSSModules(HeaderOffer, styles)
+export default HeaderOffer

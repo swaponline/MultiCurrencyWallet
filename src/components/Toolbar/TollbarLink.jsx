@@ -1,14 +1,13 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
-import CSSModules from 'react-css-modules'
-import styles from './Toolbar.scss'
+import './Toolbar.scss'
 
 const ToolbarLink = ({ name, ...rest }) => (
     <NavLink className="trades-filter__link"
-        activeClassName={styles.tradesFilterlinkActive} {...rest}>
+        activeClassName="trades-filter__link-active" {...rest}>
         { name }
     </NavLink>
 ) 
 
-export default CSSModules(ToolbarLink, styles)
+export default ToolbarLink

@@ -1,7 +1,6 @@
 import React from 'react'
 
-import CSSModules from 'react-css-modules'
-import styles from './BodyHistory.scss'
+import './BodyHistory.scss'
 
 const coin = [
     {
@@ -56,4 +55,4 @@ const BodyHistory = () => (
     </tbody>
 );
 
-export default CSSModules(BodyHistory, styles, { allowMultiple: true })
+export default BodyHistory

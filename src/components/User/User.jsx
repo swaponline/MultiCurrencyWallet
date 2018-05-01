@@ -1,8 +1,7 @@
 import React from 'react'
 import AddSvg from './add.svg'
 
-import CSSModules from 'react-css-modules'
-import styles from './User.scss'
+import './User.scss'
 
 import UserTooltip from '../UserTooltip/UserTooltip'
 
@@ -42,4 +41,4 @@ class User extends React.Component {
     }
 }
 
-export default CSSModules(User, styles)
+export default User

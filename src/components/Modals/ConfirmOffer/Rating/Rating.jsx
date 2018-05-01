@@ -1,7 +1,6 @@
 import React from 'react'
 
-import CSSModules from 'react-css-modules'
-import styles from './Rating.scss'
+import './Rating.scss'
 
 const Rating = () => (
     <div className="confirm__row">
@@ -14,4 +13,4 @@ const Rating = () => (
     </div>
 )
 
-export default CSSModules(Rating, styles)
+export default Rating

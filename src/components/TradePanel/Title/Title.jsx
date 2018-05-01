@@ -1,7 +1,6 @@
 import React from 'react'
 
-import CSSModules from 'react-css-modules'
-import styles from './Title.scss'
+import './Title.scss'
 
 const Title = ({name}) => (
     <div className="trade-panel__title">
@@ -12,4 +11,4 @@ const Title = ({name}) => (
     </div>
 )
 
-export default CSSModules(Title, styles)
+export default Title

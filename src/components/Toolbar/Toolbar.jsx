@@ -1,7 +1,6 @@
 import React from 'react';
 
-import CSSModules from 'react-css-modules'
-import styles from './Toolbar.scss'
+import './Toolbar.scss'
 
 import LogoSvg from './logo.svg';
 import SearchSvg from './search.svg';
@@ -22,4 +21,4 @@ const Toolbar = () => (
     </div>
 )
 
-export default CSSModules(Toolbar, styles)
+export default Toolbar

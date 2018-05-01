@@ -1,7 +1,5 @@
 import React from 'react'
-
-import CSSModules from 'react-css-modules'
-import styles from './UserTooltip.scss'
+import './UserTooltip.scss'
 
 import ArrowRightSvg from './arrow-right.svg'
 import AcceptSvg from './accept.svg'
@@ -36,4 +34,4 @@ class UserTooltip extends React.Component {
     }
 }
 
-export default CSSModules(UserTooltip, styles)
+export default UserTooltip

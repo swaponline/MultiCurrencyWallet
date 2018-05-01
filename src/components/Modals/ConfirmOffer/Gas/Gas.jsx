@@ -1,7 +1,6 @@
 import React from 'react'
 
-import CSSModules from 'react-css-modules'
-import styles from './Gas.scss'
+import './Gas.scss'
 
 const Gas = () => (
     <div className="confirm__row">
@@ -11,5 +10,5 @@ const Gas = () => (
 )
 
 
-export default CSSModules(Gas, styles)
+export default Gas
 

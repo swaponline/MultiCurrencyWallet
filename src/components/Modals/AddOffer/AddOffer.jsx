@@ -1,7 +1,6 @@
 import React from 'react'
 
-import CSSModules from 'react-css-modules'
-import styles from './AddOffer.scss'
+import './AddOffer.scss'
 
 import TradePanel from '../../TradePanel/TradePanel'
 
@@ -36,4 +35,4 @@ const AddOffer = ({isNext}) => {
         </div>)
 }
 
-export default CSSModules(AddOffer, styles,{ allowMultiple: true })
+export default AddOffer

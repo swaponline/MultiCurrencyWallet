@@ -1,7 +1,6 @@
 import React from 'react'
 
-import CSSModules from 'react-css-modules'
-import styles from './Filter.scss'
+import './Filter.scss'
 
 const Filter = () => (
     <div className="history-filter">
@@ -11,4 +10,4 @@ const Filter = () => (
     </div>
 )
 
-export default CSSModules(Filter, styles, { allowMultiple: true })
+export default Filter

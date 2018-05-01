@@ -1,8 +1,7 @@
 import React from 'react';
 import FlipSvg from './flip.svg';
 
-import CSSModules from 'react-css-modules'
-import styles from './SearchTrade.scss'
+import './SearchTrade.scss'
 
 import TradePanel from '../TradePanel/TradePanel'
 
@@ -32,4 +31,4 @@ const SearchTrade = () => (
     </div>
 );
     
-export default CSSModules(SearchTrade, styles, { allowMultiple: true })
+export default SearchTrade

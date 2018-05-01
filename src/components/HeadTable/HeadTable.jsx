@@ -1,21 +1,19 @@
 import React from 'react'
 import proptypes from 'prop-types'
 
-import CSSModules from 'react-css-modules'
-import styles from './HeadTable.scss'
+import './HeadTable.scss'
 
 const HeadTable = ({ titles }) => (
     <thead>
         <tr>{titles.map((item, index) =>
-            <th key={index}>
+            <th key={index}>    
                 <div className="table__headers">
                     <span className="table__titles">{item}</span>
                     {item === 'RATING' || item === 'PRICE' ?
-                        <span className="question">?</span> : ''
-                    }
+                        <span className="question">?</span> : ''}
                 </div>
-            </th>
-        )}</tr>
+            </th>)}
+        </tr>
     </thead>         
 );
 
@@ -23,4 +21,4 @@ HeadTable.proptypes = {
 
 }
 
-export default CSSModules(HeadTable, styles)
+export default HeadTable

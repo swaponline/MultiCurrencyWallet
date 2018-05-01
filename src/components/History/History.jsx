@@ -1,7 +1,6 @@
 import React from 'react'
 
-import CSSModules from 'react-css-modules'
-import styles from './History.scss'
+import './History.scss'
 
 import Description from '../Description/Description'
 import TradesTable from '../TradesTable/TradesTable'
@@ -15,4 +14,4 @@ const History = () => (
     </section>
 )
 
-export default CSSModules(History, styles)
+export default History

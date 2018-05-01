@@ -1,7 +1,6 @@
 import React from 'react'
 
-import CSSModules from 'react-css-modules'
-import styles from './ConfirmOffer.scss'
+import './ConfirmOffer.scss'
 
 import Coin from './Coin/Coin'
 import Exchange from './Exchange/Exchange'
@@ -22,4 +21,4 @@ const ConfirmOffer = ({isBack}) => (
     </div>
 )
 
-export default CSSModules(ConfirmOffer, styles)
+export default ConfirmOffer

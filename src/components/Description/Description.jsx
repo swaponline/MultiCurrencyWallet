@@ -1,7 +1,5 @@
 import React from 'react'
-
-import CSSModules from 'react-css-modules'
-import styles from './Description.scss'
+import './Description.scss'
 
 import Filter from './Filter/Filter'
 
@@ -15,4 +13,4 @@ const Description = ({ title, subtitle, filter = false  }) => (
     </div>
 )
 
-export default CSSModules(Description, styles)
+export default Description

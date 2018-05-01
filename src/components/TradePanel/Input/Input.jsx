@@ -1,7 +1,6 @@
 import React from 'react'
 
-import CSSModules from 'react-css-modules'
-import styles from './Input.scss'
+import './Input.scss'
 
 const Input = ({ icon, currency, row = '' }) => (
     <div className={'trade-panel__group ' + row}>
@@ -13,4 +12,4 @@ const Input = ({ icon, currency, row = '' }) => (
     </div>
 );
 
-export default CSSModules(Input, styles, { allowMultiple: true })
+export default Input
