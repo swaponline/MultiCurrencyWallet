@@ -1,14 +1,14 @@
 import React from 'react'
 import './Description.scss'
 
-import Filter from './Filter/Filter'
+import FilterContainer from './../../containers/FilterContainer'
 
 const Description = ({ title, subtitle, filter = false  }) => (
     <div className="description">
         <div className="container">
             { title !== '' ? <h2 className="description__title">{title}</h2> : '' }
             <h3 className="description__sub-title">{subtitle}</h3>
-            {filter ? <Filter /> : ''}
+            {filter ? <FilterContainer /> : ''}
         </div>
     </div>
 )

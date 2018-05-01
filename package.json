@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm i && nodemon src/client/server.js",
+    "start": "npm i && nodemon src/bin/server.js",
     "build": "npm i && webpack -p --config webpack.prod.js"
   },
   "keywords": [],
@@ -37,8 +37,13 @@
     "prop-types": "^15.6.1",
     "react-css-modules": "^4.7.2",
     "react-hot-loader": "^4.1.1",
+    "react-redux": "^5.0.7",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
+    "redux": "^4.0.0",
+    "redux-logger": "^3.0.6",
+    "redux-promise": "^0.5.3",
+    "redux-thunk": "^2.2.0",
     "resolve-url-loader": "^2.3.0",
     "rimraf": "^2.6.2",
     "sass-loader": "^7.0.1",

@@ -2,7 +2,7 @@ import React from 'react'
 
 import HeadTable from '../HeadTable/HeadTable'
 import Body from './Body/Body'
-import BodyHistory from './BodyHistory/BodyHistory'
+import HistoryContainer from './../../containers/HistoryContainer'
 import BodyBalances from './BodyBalances/BodyBalances'
 
 
@@ -15,7 +15,7 @@ const TradesTable = ({ titles, body = false, history = false, balance = false })
 
                 { body ? <Body /> : <tbody></tbody> }
 
-                { history ? <BodyHistory /> : <tbody></tbody> }
+                { history ? <HistoryContainer /> : <tbody></tbody> }
 
                 { balance ? <BodyBalances /> : <tbody></tbody> }
                 

@@ -2,34 +2,9 @@ import React from 'react'
 
 import './BodyHistory.scss'
 
-const coin = [
-    {
-        name: 'ETH',
-        fullName: 'Ethereum',
-        classCoin: 'table__coin-img table__coin-eth',
-        status: 'Sent',
-        classSent: true,
-        date: 'December 13 2017 @12:11AM',
-        address: '0x5ee7c14f62786add137fe729a88e870e8187b92d',
-        amount: '0.00616362',
-        classAmount: true
-    },
-    {
-        name: 'BTC',
-        fullName: 'Bitcoin',
-        classCoin: 'table__coin-img table__coin-btc',
-        status: 'Sent',
-        classSent: false,
-        date: 'December 14 2017 @12:11AM',
-        address: '0x5ee7c14f62786add137fe729a88e870e8187b92d',
-        amount: '0.00216362',
-        classAmount: false
-    }
-]
-
-const BodyHistory = () => (
+const BodyHistory = ({ history }) => (
     <tbody>
-        { coin.map((item, index) => 
+        { history.map((item, index) => 
         <tr key={index}>
             <td>
                 <div className="table__coin">

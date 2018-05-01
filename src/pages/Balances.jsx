@@ -1,21 +1,15 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
-import Description from '../Description/Description'
-import TradesTable from '../TradesTable/TradesTable'
+import Description from '../components/Description/Description'
+import TradesTable from '../components/TradesTable/TradesTable'
 
 const titles = ['Coin', 'Name', 'Available balance', 'Rating']
 
 const Balances = () => (
-    <section >
+    <section>
         <Description subtitle="Balances" />
         <TradesTable titles={titles} balance={true} />
     </section>
 )
 
-Balances.propTypes = {
-
-};
-
 export default Balances
-

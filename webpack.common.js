@@ -68,8 +68,8 @@ module.exports = {
                 collapseWhitespace: true
             },
             hash: true,
-            favicon: path.resolve(__dirname, 'src/img/favicon.ico'),
-            template: './src/index.html'
+            favicon: path.resolve(__dirname, 'src/client/img/favicon.ico'),
+            template: './src/client/index.html'
         }),
         new webpack.ProvidePlugin({
             $: 'jquery',
