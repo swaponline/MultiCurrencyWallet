@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 
 import { getHistory } from '../redux/actions'
-import { getFilteredHistory } from '../redux/redusers'
+import { getFilteredHistory } from '../redux/reduсers'
 import BodyHistory from './../components/TradesTable/BodyHistory/BodyHistory'
 
 function mapStateToProps(state, ownProps) {
