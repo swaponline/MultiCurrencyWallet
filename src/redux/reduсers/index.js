@@ -7,7 +7,7 @@ import filter from './filter'
 const reducer = combineReducers({
     history,
     filter,
-    routing: routerReducer
+    router: routerReducer
 })
 
 export default reducer
