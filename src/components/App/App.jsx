@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Router, Route, Switch } from "react-router-dom"
+import { BrowserRouter, Route, Switch } from "react-router-dom"
 import './App.scss'
 
 import Header from '../Header/Header'
@@ -30,7 +30,7 @@ class App extends Component {
     render() {
         const { history } = this.props
         return (
-            <Router history={history}>
+            <BrowserRouter history={history}>
                 <main className="main" id="main">
                     { this.state.visible ? <Offer isClose={this.handleChange}/> : '' }
                     <Header isOpen={this.handleChange}/>
@@ -41,7 +41,7 @@ class App extends Component {
                         <Route component={ NotFound } />
                     </Switch>
                 </main>
-            </Router>
+            </BrowserRouter>
         )
     }
 };
