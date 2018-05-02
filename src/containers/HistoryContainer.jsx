@@ -4,7 +4,7 @@ import { getHistory } from '../redux/actions'
 import { getFilteredHistory } from '../redux/redusers'
 import BodyHistory from './../components/TradesTable/BodyHistory/BodyHistory'
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
     return {
         history: getFilteredHistory(state)
     };

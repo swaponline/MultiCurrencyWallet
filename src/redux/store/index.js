@@ -1,9 +1,13 @@
-import { createStore, applyMiddleware } from 'redux';
-import reducer from './../redusers';
-import promise from 'redux-promise';
-import thunk from 'redux-thunk';
-import logger from 'redux-logger';
+import { createStore, applyMiddleware } from 'redux'
+import { routerMiddleware, push } from 'react-router-redux'
+import { browserHistory } from 'react-router'
 
-const store = createStore(reducer, applyMiddleware(promise, thunk, logger));
+import reducer from './../redusers'
+import promise from 'redux-promise'
+import thunk from 'redux-thunk'
+import logger from 'redux-logger'
+
+const middleware = routerMiddleware(browserHistory)
+const store = createStore(reducer, applyMiddleware(promise, thunk, middleware, logger))
 
 export default store;

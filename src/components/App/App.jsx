@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
+import { Router, Route, Switch } from "react-router-dom"
 import './App.scss'
 
 import Header from '../Header/Header'
@@ -11,10 +11,9 @@ import Balances from '../../pages/Balances'
 import History from '../../pages/History'
 import Main from '../../pages/Main'
 
-
 class App extends Component {
 
-    constructor(){
+    constructor() {
         super()
 
         this.state = {
@@ -29,8 +28,9 @@ class App extends Component {
     }
 
     render() {
+        const { history } = this.props
         return (
-            <Router>
+            <Router history={history}>
                 <main className="main" id="main">
                     { this.state.visible ? <Offer isClose={this.handleChange}/> : '' }
                     <Header isOpen={this.handleChange}/>

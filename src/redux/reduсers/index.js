@@ -1,11 +1,13 @@
 import { combineReducers } from 'redux'
+import { routerReducer } from 'react-router-redux'
 
 import history, * as fromHistory from './history'
 import filter from './filter'
 
 const reducer = combineReducers({
     history,
-    filter
+    filter,
+    routing: routerReducer
 })
 
 export default reducer
