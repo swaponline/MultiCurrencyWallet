@@ -1,8 +1,8 @@
-import React from 'react';
-import FlipSvg from './flip.svg';
-
+import React from 'react'
 import './SearchTrade.scss'
 
+import Flip from '../controls/Flip/Flip'
+import Button from '../controls/Button/Button'
 import TradePanel from '../TradePanel/TradePanel'
 
 const SearchTrade = () => (
@@ -16,8 +16,7 @@ const SearchTrade = () => (
                     currency="BTC"
                     row="trade-panel__group_row"
                 />
-                <a href="#" className="trade-panel__change"><img src={FlipSvg} alt="" /></a>
-
+                <Flip />
                 <TradePanel 
                     className="trade-panel__have_row trade-panel__have"
                     name="You have"
@@ -25,7 +24,7 @@ const SearchTrade = () => (
                     currency="ETH"
                     row="trade-panel__group_row"
                 />
-                <a href="#" className="trade-panel__search">Search</a>
+                <Button className="trade-panel__search" text="Search" />
             </div>
         </div>
     </div>

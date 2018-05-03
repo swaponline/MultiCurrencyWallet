@@ -1,8 +1,8 @@
 import React from 'react'
 
-import './BodyHistory.scss'
+import './History.scss'
 
-const BodyHistory = ({ history }) => (
+const History = ({ history }) => (
     <tbody>
         { history.map((item, index) => 
         <tr key={index}>
@@ -30,4 +30,4 @@ const BodyHistory = ({ history }) => (
     </tbody>
 );
 
-export default BodyHistory
+export default History

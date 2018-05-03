@@ -3,9 +3,10 @@ import React from 'react'
 import Coin1Svg from './coin-1.svg'
 import Coin2Svg from './coin-2.svg'
 
-import './Body.scss'
+import './Main.scss'
+import Swap from '../controls/Swap/Swap'
 
-class Body extends React.Component {
+class Main extends React.Component {
 
     constructor() {
         super()
@@ -58,13 +59,7 @@ class Body extends React.Component {
                     </td>
         
                     <td>
-                        <a href="#" className="table__link">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="7" height="10" viewBox="0 0 7 10">
-                                <path className="table__link-arrow" fill="none" fillRule="evenodd"
-                                        stroke="#7c1de9" strokeLinecap="round" strokeWidth="2"
-                                        d="M1 9l4-4-4-4"/>
-                            </svg>
-                        </a>
+                        <Swap />
                     </td>
                 </tr>
             </tbody>
@@ -72,4 +67,4 @@ class Body extends React.Component {
     }
 }
 
-export default Body
+export default Main

@@ -5,11 +5,11 @@ import './Header.scss'
 import User from '../User/User'
 import Toolbar from '../Toolbar/Toolbar'
 
-const Header = ({isOpen}) => (
+const Header = () => (
     <div className="header">
         <div className="container" >
             <Toolbar />
-            <User isOpen={isOpen}/>
+            <User />
         </div>
     </div>
 )

@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 
 import { getHistory } from '../redux/actions'
 import { getFilteredHistory } from '../redux/reduсers'
-import BodyHistory from './../components/TradesTable/BodyHistory/BodyHistory'
+import History from './../components/History/History'
 
 function mapStateToProps(state, ownProps) {
     return {
@@ -10,6 +10,6 @@ function mapStateToProps(state, ownProps) {
     };
 }
 
-const HistoryContainer = connect(mapStateToProps, null)(BodyHistory);
+const HistoryContainer = connect(mapStateToProps, null)(History);
 
 export default HistoryContainer;

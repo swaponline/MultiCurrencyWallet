@@ -5,15 +5,6 @@ import ArrowRightSvg from './arrow-right.svg'
 import AcceptSvg from './accept.svg'
 
 class UserTooltip extends React.Component {
-
-    constructor() {
-        super()
-
-        this.state = {
-            checked: false
-        }
-    }
-
     render() {
         return(
             <div className="user-tooltip">
@@ -26,8 +17,8 @@ class UserTooltip extends React.Component {
                     </div>
                 </div>
         
-                <div className="user-tooltip__checked" onClick={ () => this.setState({ checked: true }) }>
-                    { this.state.checked ? <img src={AcceptSvg} alt=""/> : '' }
+                <div className="user-tooltip__checked" >
+                    <img src={AcceptSvg} alt=""/>
                 </div>
             </div>
         )

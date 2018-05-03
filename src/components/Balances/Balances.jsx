@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
-import './BodyBalances.scss'
+import './Balances.scss'
 
 import Coin from './coin-1.svg'
+import Withdraw from '../controls/Withdraw/Withdraw'
 
-const BodyBalances = () => (
+const Balances = () => (
     <tbody>
         <tr>
             <td>
@@ -25,15 +25,15 @@ const BodyBalances = () => (
                 <div className="table__key">0x5ee7c14f62786add137fe729a88e870e8187b92d</div>
             </td>
             <td>
-                <a href="#" className="table__withdraw">Withdraw</a>
+                <Withdraw />
             </td>
         </tr>                        
     </tbody>
 )
 
-BodyBalances.propTypes = {
+Balances.propTypes = {
 
 };
 
-export default BodyBalances
+export default Balances
 

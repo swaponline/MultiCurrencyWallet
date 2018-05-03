@@ -10,7 +10,7 @@ const History = () => (
     <section>
         <Description subtitle="Instant BTC for ETH and ERC20, p2p exchange without commission" title="SWAP.ONLINE" /> 
         <SearchTrade /> 
-        <TradesTable titles={titles} body={true}/>
+        <TradesTable titles={titles} main={true}/>
     </section>
 )
 

@@ -1,0 +1,28 @@
+.users__user {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+    cursor: pointer;
+}
+
+.users__user-letter {
+    font-size: 16px;
+    text-transform: uppercase;
+    color: #7c1de9;
+    font-weight: 500;
+}
+
+.users__user-status {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background: #e91db4;
+}

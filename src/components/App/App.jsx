@@ -12,4 +12,5 @@ const App = ({ history, children }) => (
         </main>
     </ConnectedRouter>
 )
+
 export default App
