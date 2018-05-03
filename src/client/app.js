@@ -8,6 +8,7 @@ import './../client/scss/normalize.scss'
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
+import routes from '../routes/routes'
 
 import data from './../bin/history.json'
 import store, { history } from './../redux/store'
@@ -20,7 +21,9 @@ store.dispatch(getHistory(data))
 
 render(
     <Provider store={store} >
-        <App history={history}/>
+        <App history={history}>
+            { routes } 
+        </App>
     </Provider>,
     document.getElementById('app')
 );
