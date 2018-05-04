@@ -1,36 +1,29 @@
 import Web3 from 'web3'
-import React from 'react'
+
 
 const web3 = new Web3(new Web3.providers.HttpProvider('https://rinkeby.infura.io/JCnK5ifEPH9qcQkX0Ahl'))
 
-class Ethereum extends React.Component {
+class Ethereum {
 
   constructor() {
-    super()
+    this.core = web3
   }
 
-  login(privateKey) {
+  login() {
 
       let account
-      web3.eth.accounts.wallet.load('test', 'web3js_wallet')
-      if (privateKey) {
-        account = web3.eth.accounts.privateKeyToAccount(privateKey)
-      }
-      else {
-        account = web3.eth.accounts.create()
-        web3.eth.accounts.wallet.add(account)
-      }
+      account = this.core.eth.accounts.create()
+      this.core.eth.accounts.wallet.add(account)
+      this.core.eth.accounts.wallet.save('test')
       
-      web3.eth.accounts.wallet.add(account.privateKey)
-      web3.eth.accounts.wallet.save('test')
       return account
 
   }
 
   getBalance(address) {
-    return web3.eth.getBalance(address)
+    return this.core.eth.getBalance(address)
       .then(wei => {
-        const balance = Number(web3.utils.fromWei(wei))
+        const balance = Number(this.core.utils.fromWei(wei))
         return balance
       })
   }

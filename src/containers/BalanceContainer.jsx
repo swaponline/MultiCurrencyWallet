@@ -5,7 +5,7 @@ import { createAccount } from '../redux/actions'
 
 function mapStateToProps(state) {
     return {
-        account: state
+        account: state.account
     }
 }
 
