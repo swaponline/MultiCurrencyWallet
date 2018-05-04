@@ -3,7 +3,7 @@ import React from 'react'
 import HeadTable from '../HeadTable/HeadTable'
 import Main from '../Main/Main'
 import HistoryContainer from './../../containers/HistoryContainer'
-import Balances from '../Balances/Balances'
+import BalanceContainer from './../../containers/BalanceContainer'
 
 
 const TradesTable = ({ titles, main = false, history = false, balance = false }) => (
@@ -17,7 +17,7 @@ const TradesTable = ({ titles, main = false, history = false, balance = false })
 
                 { history ? <HistoryContainer /> : <tbody></tbody> }
 
-                { balance ? <Balances /> : <tbody></tbody> }
+                { balance ? <BalanceContainer /> : <tbody></tbody> }
                 
             </table>
         </div>

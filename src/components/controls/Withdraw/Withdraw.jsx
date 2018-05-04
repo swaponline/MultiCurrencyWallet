@@ -1,8 +1,8 @@
 import React from 'react'
 import './Withdraw.scss'
 
-const Withdraw = () => (
-    <a href="#" className="table__withdraw">Withdraw</a>
+const Withdraw = ({ text, ...rest }) => (
+    <a href="#" className="table__withdraw" {...rest} >{text }</a>
 )
 
 export default Withdraw

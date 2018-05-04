@@ -6,6 +6,6 @@ export function getHistory(history) {
         dispatch({
             type: GET_HISTORY,
             history   
-        });
+        })
     }
 }

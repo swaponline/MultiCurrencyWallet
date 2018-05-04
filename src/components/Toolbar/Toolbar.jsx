@@ -4,7 +4,7 @@ import './Toolbar.scss'
 
 import LogoSvg from './logo.svg';
 import SearchSvg from './search.svg';
-
+import Button from '../controls/Button/Button'
 import ToolbarLink from './TollbarLink'
 
 const Toolbar = () => (
@@ -17,6 +17,7 @@ const Toolbar = () => (
             <ToolbarLink exact to="/"  name="All" />
             <ToolbarLink to="/balance" name="Balances" />
             <ToolbarLink to="/history" name="History" />
+            <Button text="Get demo ETH" />
         </div>
     </div>
 )
