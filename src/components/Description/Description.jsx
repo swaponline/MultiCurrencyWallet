@@ -1,7 +1,7 @@
 import React from 'react'
 import './Description.scss'
 
-import FilterContainer from '../../redux/containers/FilterContainer'
+import FilterContainer from '../../containers/FilterContainer'
 
 const Description = ({ title, subtitle, filter = false  }) => (
     <div className="description">

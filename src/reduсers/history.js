@@ -1,4 +1,4 @@
-import { GET_HISTORY } from '../actions';
+import { GET_HISTORY } from '../actions/index';
 
 export default function reducer(state = [], action) {
     switch (action.type) {

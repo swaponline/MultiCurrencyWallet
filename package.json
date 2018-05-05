@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm i && nodemon src/bin/server.js",
+    "start": "nodemon src/bin/server.js",
     "build": "npm i && webpack -p --config webpack.prod.js"
   },
   "keywords": [],

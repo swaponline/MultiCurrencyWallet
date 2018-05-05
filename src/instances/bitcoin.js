@@ -5,7 +5,7 @@ import bitcoin from 'bitcoinjs-lib'
 class Bitcoin {
 
   constructor() {
-    this.core = bitcoin
+    this.core = bitcoin;
     this.testnet = bitcoin.networks.testnet
   }
 
@@ -13,19 +13,19 @@ class Bitcoin {
     let keyPair;
 
     if (privateKey) {
-      const hash  = this.core.crypto.sha256(privateKey)
-      const d     = BigInteger.fromBuffer(hash)
+      const hash  = this.core.crypto.sha256(privateKey);
+      const d     = BigInteger.fromBuffer(hash);
 
       keyPair     = new this.core.ECPair(d, null, { network: this.testnet })
     }
     else {
-      keyPair     = this.core.ECPair.makeRandom({ network: this.testnet })
+      keyPair     = this.core.ECPair.makeRandom({ network: this.testnet });
       privateKey  = keyPair.toWIF()
     }
 
-    const address     = keyPair.getAddress()
-    const account     = new this.core.ECPair.fromWIF(privateKey, this.testnet)
-    const publicKey   = account.getPublicKeyBuffer().toString('hex')
+    const address     = keyPair.getAddress();
+    const account     = new this.core.ECPair.fromWIF(privateKey, this.testnet);
+    const publicKey   = account.getPublicKeyBuffer().toString('hex');
 
     const data = {
       account,
@@ -61,7 +61,6 @@ class Bitcoin {
     })
   }
 }
-
 
 export default new Bitcoin()
 

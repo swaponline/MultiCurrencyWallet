@@ -1,11 +1,11 @@
-const stopPropagation = (event) => event.stopPropagation()
+const stopPropagation = (event) => event.stopPropagation();
 
-const preventDefault = (event) => event.preventDefault()
+const preventDefault = (event) => event.preventDefault();
 
 const cancel = (event) => {
-  stopPropagation(event)
+  stopPropagation(event);
   preventDefault(event)
-}
+};
 
 export default {
   stopPropagation,

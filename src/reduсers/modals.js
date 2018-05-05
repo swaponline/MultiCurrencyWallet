@@ -1,4 +1,4 @@
-import { OPEN_MODALS, CLOSE_MODALS } from '../actions'
+import { OPEN_MODALS, CLOSE_MODALS } from '../actions/index'
 
 function reducer(state = {}, action) {
     switch(action.type) {

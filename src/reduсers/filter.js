@@ -1,4 +1,4 @@
-import { SET_FILTER } from '../actions'
+import { SET_FILTER } from '../actions/index'
 
 function reducer(state = 'ALL', action) {
     switch (action.type) {

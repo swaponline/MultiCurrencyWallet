@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 
-import { updateModal, closeModal } from '../redux/actions'
-import ModalRoot from './../components/Modals/Modals'
+import { updateModal, closeModal } from '../actions/index'
+import ModalRoot from '../components/Modals/Modals'
 
 function mapStateToProps(state) {
     return {

@@ -14,6 +14,6 @@ const routes = (
         <Route path="/history" component={ History } />
         <Route component={ NotFound } />
     </Switch>
-)
+);
 
 export default routes

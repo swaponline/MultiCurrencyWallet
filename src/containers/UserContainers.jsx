@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 
-import User from './../components/User/User'
-import { openModal } from '../redux/actions'
+import User from '../components/User/User'
+import { openModal } from '../actions/index'
 
 function mapStateToDispatch(dispatch) {
     return {

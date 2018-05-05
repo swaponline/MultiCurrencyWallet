@@ -9,13 +9,14 @@ import { Provider } from 'react-redux'
 import routes from '../routes/routes'
 
 import data from './../bin/history.json'
-import store, { history } from './../redux/store'
-import {createAccount, getHistory} from './../redux/actions'
+import configureStore, { history } from '../store/configureStore'
+import {getHistory} from '../actions'
 
 import App from './../components/App/App'
+import './../logix/wallets'
 
+const store = configureStore()
 store.dispatch(getHistory(data));
-store.dispatch(createAccount());
 
 render(
     <Provider store={store} >

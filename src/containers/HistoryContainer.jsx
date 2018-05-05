@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 
 import { getHistory } from '../actions/index'
 import { getFilteredHistory } from '../reduсers/index'
-import History from '../../components/History/History'
+import History from '../components/History/History'
 
 function mapStateToProps(state) {
     return {
