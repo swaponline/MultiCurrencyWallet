@@ -6,22 +6,22 @@ export default function reducer(state = [], action) {
             return action.history;
 
         default:
-            return state;
+            return state
     }
 }
 
 export function getFilteredHistory(state, filter) {
     switch (filter) {
         case 'ALL':
-            return state;
+            return state
         
         case 'SENT':
-            return state.filter(history => history.classSent);
+            return state.filter(history => history.classSent)
 
         case 'RECEIVED':
-            return state.filter(history => !history.classSent);
+            return state.filter(history => !history.classSent)
 
         default:
-            return state;
+            return state
     }
 }

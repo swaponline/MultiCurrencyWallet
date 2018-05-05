@@ -4,10 +4,10 @@ import { getHistory } from '../redux/actions'
 import { getFilteredHistory } from '../redux/reduсers'
 import History from './../components/History/History'
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
     return {
         history: getFilteredHistory(state)
-    };
+    }
 }
 
 const HistoryContainer = connect(mapStateToProps, null)(History);

@@ -2,7 +2,7 @@ import React from 'react'
 
 import './HeaderOffer.scss'
 
-const HeaderOffer = () => (
+const HeaderOffer = ({ close }) => (
     <div className="offer-popup__header">
         <div className="container">
             <div className="offer-popup__logo">
@@ -12,7 +12,7 @@ const HeaderOffer = () => (
                     </g>
                 </svg>
             </div>
-            <div className="offer-popup__close"></div>
+            <div className="offer-popup__close" onClick={close}></div>
         </div>
     </div>
 )

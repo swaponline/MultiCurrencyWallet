@@ -4,11 +4,13 @@ import { routerReducer } from 'react-router-redux'
 import history, * as fromHistory from './history'
 import filter from './filter'
 import account from './account'
+import modals from './modals'
 
 const reducer = combineReducers({
     history,
     filter,
     account,
+    modals,
     router: routerReducer
 })
 

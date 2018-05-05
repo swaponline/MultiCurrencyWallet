@@ -7,7 +7,6 @@ const cancel = (event) => {
   preventDefault(event)
 }
 
-
 export default {
   stopPropagation,
   preventDefault,

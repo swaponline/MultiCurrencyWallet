@@ -8,7 +8,7 @@ import Rating from './Rating/Rating'
 import Gas from './Gas/Gas'
 import Button from './Button/Button'
 
-const ConfirmOffer = () => (
+const ConfirmOffer = ({ back }) => (
     <div className="offer-popup__form">
         <h2 className="offer-popup__title">Confirm</h2>
         <div className="confirm">
@@ -16,7 +16,7 @@ const ConfirmOffer = () => (
             <Exchange />
             <Rating />
             <Gas />
-            <Button />
+            <Button back={back}/>
         </div> 
     </div>
 )

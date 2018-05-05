@@ -4,7 +4,7 @@ import './AddOffer.scss'
 
 import TradePanel from '../../TradePanel/TradePanel'
 
-const AddOffer = () => {
+const AddOffer = ({ next }) => {
     return(
         <div className="offer-popup__form">
             <h2 className="offer-popup__title">Add offer</h2>
@@ -26,7 +26,7 @@ const AddOffer = () => {
                     icon="icon-eth"
                     currency="ETH"
                 />
-                <a href="#" className="trade-panel__next" >Next</a>
+                <a href="#" className="trade-panel__next" onClick={ next }>Next</a>
             </div>
         </div>)
 }
