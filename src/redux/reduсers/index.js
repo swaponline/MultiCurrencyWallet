@@ -12,7 +12,7 @@ const reducer = combineReducers({
     account,
     modals,
     router: routerReducer
-})
+});
 
 export default reducer
 

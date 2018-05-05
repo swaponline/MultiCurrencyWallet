@@ -1,8 +1,8 @@
 import React from 'react'
 
-import Description from '../components/Description/Description'
-import TradesTable from '../components/TradesTable/TradesTable'
-import SearchTrade from '../components/SearchTrade/SearchTrade'
+import Description from '../Description/Description'
+import TradesTable from '../TradesTable/TradesTable'
+import SearchTrade from '../SearchTrade/SearchTrade'
 
 const titles = ['EXCHANGE','PRICE','LIMITS','RATING']
 

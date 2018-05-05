@@ -1,4 +1,4 @@
-export const CREATE_ACCOUNT = 'CREATE_ACCOUNT'
+export const CREATE_ACCOUNT = 'CREATE_ACCOUNT';
 
 export const createAccount = account => {
     return dispatch => {
@@ -7,4 +7,4 @@ export const createAccount = account => {
             account 
         })
     }
-}
+};

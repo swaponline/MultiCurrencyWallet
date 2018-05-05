@@ -7,9 +7,9 @@ import promise from 'redux-promise'
 import thunk from 'redux-thunk'
 import logger from 'redux-logger'
 
-export const history = createHistory()
-const middleware = routerMiddleware(history)
+export const history = createHistory();
+const middleware = routerMiddleware(history);
 
-const store = createStore(reducer, applyMiddleware(promise, thunk, middleware, logger))
+const store = createStore(reducer, applyMiddleware(promise, thunk, middleware, logger));
 
 export default store;

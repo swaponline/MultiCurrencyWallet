@@ -13,6 +13,6 @@ const App = ({ history, children }) => (
             <ModalsContainer />
         </main>
     </ConnectedRouter>
-)
+);
 
 export default App

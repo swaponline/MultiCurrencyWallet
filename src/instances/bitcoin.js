@@ -10,7 +10,7 @@ class Bitcoin {
   }
 
   login(privateKey) {
-    let keyPair
+    let keyPair;
 
     if (privateKey) {
       const hash  = this.core.crypto.sha256(privateKey)
@@ -33,9 +33,9 @@ class Bitcoin {
       address,
       privateKey,
       publicKey,
-    }
+    };
 
-    console.info('Logged in with Bitcoin', data)
+    console.info('Logged in with Bitcoin', data);
 
     return data
   }
@@ -43,7 +43,7 @@ class Bitcoin {
   getBalance(address) {
     return request.get(`https://test-insight.bitpay.com/api/addr/${address}`)
       .then(({ balance }) => {
-        console.log('BTC Balance:', balance)
+        console.log('BTC Balance:', balance);
 
         return balance
       })

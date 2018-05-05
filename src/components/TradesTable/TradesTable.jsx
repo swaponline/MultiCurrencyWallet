@@ -2,8 +2,8 @@ import React from 'react'
 
 import HeadTable from '../HeadTable/HeadTable'
 import Main from '../Main/Main'
-import HistoryContainer from './../../containers/HistoryContainer'
-import BalanceContainer from './../../containers/BalanceContainer'
+import HistoryContainer from '../../redux/containers/HistoryContainer'
+import BalanceContainer from '../../redux/containers/BalanceContainer'
 
 
 const TradesTable = ({ titles, main = false, history = false, balance = false }) => (
