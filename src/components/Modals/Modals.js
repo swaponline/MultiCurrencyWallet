@@ -9,7 +9,7 @@ const MODAL_COMPONENTS = {
 
 const ModalRoot = ({modals, ...rest}) => {
     if (!modals.name) {
-        return <span /> // after React v15 you can return null here
+        return <span /> 
     }
     
     const SPECIFIC_MODAL = MODAL_COMPONENTS[modals.name]

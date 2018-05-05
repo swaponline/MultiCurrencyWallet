@@ -11,18 +11,17 @@ const SearchTrade = () => (
             <div className="trade-panel trade-panel_row">
                 <TradePanel 
                     className="trade-panel__want_row trade-panel__want"
-                    name="You want"
-                    icon="icon-btc"
-                    currency="BTC"
                     row="trade-panel__group_row"
+                    name="You want"
+                    currency="BTC"
                 />
                 <Flip />
+
                 <TradePanel 
                     className="trade-panel__have_row trade-panel__have"
-                    name="You have"
-                    icon="icon-eth"
-                    currency="ETH"
                     row="trade-panel__group_row"
+                    name="You have"
+                    currency="ETH"
                 />
                 <Button className="trade-panel__search" text="Search" />
             </div>
