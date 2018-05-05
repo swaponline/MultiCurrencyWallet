@@ -1,6 +1,6 @@
 import Web3 from 'web3'
 
-const web3 = new Web3(new Web3.providers.HttpProvider('https://rinkeby.infura.io/JCnK5ifEPH9qcQkX0Ahl'))
+const web3 = new Web3(new Web3.providers.HttpProvider('https://mainnet.infura.io/5lcMmHUURYg8F20GLGSr'))
 
 class Ethereum {
 
@@ -22,7 +22,7 @@ class Ethereum {
   getBalance(address) {
     return this.core.eth.getBalance(address)
       .then(wei => {
-        const balance = Number(this.core.utils.fromWei(wei))
+        const balance = this.core.utils.fromWei(wei,"ether")
         return balance
       })
   }

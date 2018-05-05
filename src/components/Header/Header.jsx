@@ -1,5 +1,4 @@
 import React from 'react'
-
 import './Header.scss'
 
 import UserContainer from '../../containers/UserContainers'
