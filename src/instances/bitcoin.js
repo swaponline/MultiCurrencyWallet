@@ -1,7 +1,6 @@
 import BigInteger from 'bigi'
 import bitcoin from 'bitcoinjs-lib'
 
-
 class Bitcoin {
 
   constructor() {
@@ -40,14 +39,14 @@ class Bitcoin {
     return data
   }
 
-  getBalance(address) {
-    return request.get(`https://test-insight.bitpay.com/api/addr/${address}`)
-      .then(({ balance }) => {
-        console.log('BTC Balance:', balance);
-
-        return balance
-      })
-  }
+  // getBalance(address) {
+  //   return "?"
+  //   // return request.get(`https://test-insight.bitpay.com/api/addr/${address}`)
+  //   //   .then(({ balance }) => {
+  //   //     console.log('BTC Balance:', balance);
+  //   //     return balance
+  //   //   })
+  // }
 
   fetchUnspents(address) {
     return request.get(`https://test-insight.bitpay.com/api/addr/${address}/utxo`)

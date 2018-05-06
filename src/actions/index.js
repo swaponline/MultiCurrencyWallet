@@ -5,15 +5,12 @@ export const GET_HISTORY = 'GET_HISTORY'
 export const OPEN_MODALS = 'OPEN_MODALS'
 export const CLOSE_MODALS = 'CLOSE_MODALS'
 
-export const addWallet = (coinImg, currency, balance, address) => ({
+export const addWallet = (wallets) => ({
     type: ADD_WALLET,
-    coinImg,
-    currency,
-    balance,
-    address
+    wallets
 })
 
-export const setFilter = filter => ({
+export const setFilter = (filter) => ({
     type: SET_FILTER,
     filter
 })

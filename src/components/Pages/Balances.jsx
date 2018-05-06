@@ -3,7 +3,7 @@ import React from 'react'
 import Description from '../Description/Description'
 import TradesTable from '../TradesTable/TradesTable'
 
-const titles = ['Coin', 'Name', 'Available balance', 'Rating'];
+const titles = ['Coin', 'Name', 'Available balance', 'Address'];
 
 const Balances = () => (
     <section>

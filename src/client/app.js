@@ -10,16 +10,22 @@ import routes from '../routes/routes'
 
 import data from './../bin/history.json'
 import configureStore, { history } from '../store/configureStore'
-import {getHistory} from '../actions'
+import {addWallet, getHistory} from "../actions";
 
 import App from './../components/App/App'
-import './../logix/wallets'
 
 const store = configureStore()
-store.dispatch(getHistory(data));
+
+store.dispatch(getHistory(data))
+
+// todo REFACTOR
+import getWalletsData from './../logix/wallets'
+let dataWallets = getWalletsData()
+console.log(dataWallets)
+store.dispatch(addWallet(dataWallets))
 
 render(
-    <Provider store={store} >
+    <Provider store={store}>
         <App history={history}>
             { routes } 
         </App>

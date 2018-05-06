@@ -1,39 +1,51 @@
 import bitcoin from '../instances/bitcoin'
 import ethereum from '../instances/ethereum'
 
-// import {createAccount} from "../redux/actions";
-// import store from "../redux/store";
-// import user from '../instances/user'
-
 let privateBtcKey = localStorage.getItem('privateBtcKey');
-let privateEthKey = localStorage.getItem('privateEthKey');
+let privateEthKey = localStorage.getItem('privateEthKey')
+let addressBtc, addressEth
 
-//store.dispatch(createAccount());
-if (!privateBtcKey) {
-    console.log('Creating BTC adress...');
-    let bitcoinData = bitcoin.login(privateBtcKey);
-    localStorage.setItem('privateBtcKey', bitcoinData.privateKey);
-} else {
-    console.log('BTC address already exist!');
+function getWalletsData() {
+    // bitcoinData.account
+    // bitcoinData.keyPair
+    // bitcoinData.address
+    // bitcoinData.privateKey
+    // bitcoinData.publicKey
+    if (!privateBtcKey) {
+        console.log('Creating BTC address...');
+        let bitcoinData = bitcoin.login(privateBtcKey);
+        privateBtcKey = bitcoinData.privateKey
+        addressBtc = bitcoinData.address
+        localStorage.setItem('privateBtcKey', privateBtcKey);
+        localStorage.setItem('addressBtc', addressBtc);
+    } else {
+        addressBtc = localStorage.getItem('addressBtc');
+        console.log('BTC address already exist!');
+    }
+
+    if (!privateEthKey) {
+        console.log('Creating ETH address...');
+        let ethAccount = ethereum.login(privateEthKey);
+        addressEth = ethAccount.address
+        localStorage.setItem('privateEthKey', ethAccount.privateKey);
+        localStorage.setItem('addressEth', addressEth);
+    } else {
+        addressEth = localStorage.getItem('addressEth');
+        console.log('ETH address already exist!');
+    }
+
+    return [
+        {
+            "currency": "BTC",
+            "balance": "under construction",
+            "address": addressBtc,
+        },
+        {
+            "currency": "ETH",
+            "balance": "under construction",
+            "address": addressEth,
+        },
+    ]
 }
 
-if (!privateEthKey) {
-    console.log('Creating ETH adress...');
-    let ethAccount = ethereum.login(privateEthKey);
-    localStorage.setItem('privateEthKey', ethAccount.privateKey);
-} else {
-    console.log('ETH address already exist!');
-}
-
-
-// let bitcoinData = bitcoin.login(privateBtcKey);
-// localStorage.setItem("myKey", serialObj);
-
-// bitcoinData.account
-// bitcoinData.keyPair
-// bitcoinData.address
-// bitcoinData.privateKey
-// bitcoinData.publicKey
-
-// let serialObj = JSON.stringify(obj); //сериализуем его
-
+export default getWalletsData

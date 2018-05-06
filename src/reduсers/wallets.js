@@ -1,18 +1,11 @@
-import { CREATE_ACCOUNT } from '../actions/index'
+import { ADD_WALLET } from '../actions/index'
 
-const wallets = (state = [], action)  => {
+export default function reducer(state = [], action) {
     switch (action.type) {
-        case CREATE_ACCOUNT:
-            return [
-                ...state,
-                {
-                    walletEth: action.walletEth,
-                    walletBtc: action.walletBtc,
-                }
-            ];
+        case ADD_WALLET:
+            return action.wallets
+
         default:
             return state
     }
-};
-
-export default wallets
+}

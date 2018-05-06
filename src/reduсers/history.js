@@ -3,7 +3,7 @@ import { GET_HISTORY } from '../actions/index';
 export default function reducer(state = [], action) {
     switch (action.type) {
         case GET_HISTORY:
-            return action.history;
+            return action.history
 
         default:
             return state

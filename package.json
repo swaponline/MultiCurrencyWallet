@@ -73,6 +73,7 @@
     "precss": "^3.1.2",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
+    "superagent": "^3.8.3",
     "tether": "^1.4.4"
   }
 }
