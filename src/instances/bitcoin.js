@@ -69,7 +69,7 @@ class Bitcoin {
             resolve(transactions)
           }
           else {
-            console.log('res:status BTC false', res)
+            console.error('res:status BTC false', res)
           }
         })
 

@@ -25,7 +25,7 @@ console.log(dataWallets)
 store.dispatch(addWallet(dataWallets))
 
 User.sign()
-console.log(User.getTransactions())
+User.getTransactions()
 
 render(
     <Provider store={store}>

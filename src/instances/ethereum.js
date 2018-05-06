@@ -35,16 +35,14 @@ class Ethereum {
 
 	getTransaction(address) {
 		return new Promise((resolve) => {
-			if (address) {
-			const url =`http://api.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${config.apiKeys.eth}`
+			const url = `http://api.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${config.apiKeys.eth}`
 			let transactions
 
 			request.get(url)
 				.then((res) => {
-					if (res.status) {
+					if (res.status === false) {
 						transactions = res.result
 						.filter((item) => {
-
 							return item.value > 0
 							}).map((item) => ({
 									status: item.blockHash != null ? 1 : 0,
@@ -55,9 +53,8 @@ class Ethereum {
 								}))
 
 						resolve(transactions)
-					} else { console.log('res:status ETH false', res) }
+					} else { console.error('res:status ETH false', res) }
 				})
-			}
 		})
 	}
 }
