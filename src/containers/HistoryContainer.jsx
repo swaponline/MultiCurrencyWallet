@@ -10,6 +10,7 @@ function mapStateToProps(state) {
     }
 }
 
-const HistoryContainer = connect(mapStateToProps, null)(History);
-
-export default HistoryContainer;
+export default connect(
+    mapStateToProps,
+    null
+)(History)

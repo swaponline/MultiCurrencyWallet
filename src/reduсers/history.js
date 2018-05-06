@@ -1,6 +1,6 @@
 import { GET_HISTORY } from '../actions/index';
 
-export default function reducer(state = [], action) {
+export default (state = [], action) => {
     switch (action.type) {
         case GET_HISTORY:
             return action.history
@@ -10,16 +10,16 @@ export default function reducer(state = [], action) {
     }
 }
 
-export function getFilteredHistory(state, filter) {
+export const getFilteredHistory = (state, filter) => {
     switch (filter) {
         case 'ALL':
             return state
         
         case 'SENT':
-            return state.filter(history => history.classSent)
+            return state.filter(h => h.classSent)
 
         case 'RECEIVED':
-            return state.filter(history => !history.classSent)
+            return state.filter(h => !h.classSent)
 
         default:
             return state

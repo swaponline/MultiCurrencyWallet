@@ -1,6 +1,6 @@
 import { OPEN_MODALS, CLOSE_MODALS } from '../actions/index'
 
-function reducer(state = {}, action) {
+export default (state = {}, action) => {
     switch(action.type) {
         case OPEN_MODALS:
             return state = { name: action.name, open: action.open }
@@ -12,5 +12,3 @@ function reducer(state = {}, action) {
             return state
     }
 }
-
-export default reducer

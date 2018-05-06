@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import { updateModal, closeModal } from '../actions/index'
+import { closeModal } from '../actions/index'
 import ModalRoot from '../components/Modals/Modals'
 
 function mapStateToProps(state) {
@@ -14,7 +14,7 @@ function mapStateToDispatch(dispatch) {
         isClose: () => dispatch(closeModal())
     }
 }
-
-const ModalsContainer = connect(mapStateToProps, mapStateToDispatch)(ModalRoot);
-
-export default ModalsContainer;
+export default connect(
+    mapStateToProps, 
+    mapStateToDispatch
+)(ModalRoot)

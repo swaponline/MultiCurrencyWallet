@@ -6,15 +6,13 @@ import filter from './filter'
 import wallets from './wallets'
 import modals from './modals'
 
-const reducer = combineReducers({
+export default combineReducers({
     history,
     filter,
     wallets,
     modals,
     router: routerReducer
 });
-
-export default reducer
 
 export function getFilteredHistory(state) {
     return fromHistory.getFilteredHistory(state.history, state.filter);

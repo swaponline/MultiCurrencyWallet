@@ -9,6 +9,7 @@ function mapStateToDispatch(dispatch) {
     }
 }
 
-const UserContainer = connect(null, mapStateToDispatch)(User);
-
-export default UserContainer;
+export default connect(
+    null,
+    mapStateToDispatch
+)(User);

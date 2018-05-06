@@ -1,7 +1,7 @@
-import React from 'react';
+import React from 'react'
 import './Filter.scss'
 
-function FilterLink({ name, active, onClick }) {
+const FilterLink = ({ name, active, onClick }) => {
 
     function click(event) {
         event.preventDefault()
