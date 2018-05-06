@@ -9,9 +9,8 @@ class Ethereum {
   }
 
   login() {
-      let ethAccount = this.core.eth.accounts.create();
-      this.core.eth.accounts.wallet.add(ethAccount);
-      this.core.eth.accounts.wallet.save('test');
+      let ethAccount = this.core.eth.accounts.create()
+      this.core.eth.accounts.wallet.add(ethAccount)
       
       return ethAccount
   }
@@ -19,7 +18,7 @@ class Ethereum {
   getBalance(address) {
     return this.core.eth.getBalance(address)
       .then(wei => {
-        const balance = this.core.utils.fromWei(wei,"ether");
+        const balance = this.core.utils.fromWei(wei,"ether")
         return balance
       })
   }
