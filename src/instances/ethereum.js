@@ -40,7 +40,7 @@ class Ethereum {
 
 			request.get(url)
 				.then((res) => {
-					if (res.status === false) {
+					if (res.status) {
 						transactions = res.result
 						.filter((item) => {
 							return item.value > 0

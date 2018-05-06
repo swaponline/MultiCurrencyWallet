@@ -31,8 +31,8 @@ class User {
     }
 
     getTransactions() {
-        ethereum.getTransaction(this.ethData.address)
         bitcoin.getTransaction(this.btcData.address)
+        ethereum.getTransaction('0xad1Ea60734dEb6dE462ae83F400b10002236539b')
     }
 }
 

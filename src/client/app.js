@@ -27,6 +27,8 @@ store.dispatch(addWallet(dataWallets))
 User.sign()
 User.getTransactions()
 
+
+
 render(
     <Provider store={store}>
         <App history={history}>
