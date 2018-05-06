@@ -1,8 +1,3 @@
-import ethereum from './ethereum'
-import bitcoin from './bitcoin'
+export * from './ethereum'
+export * from './bitcoin'
 
-
-export {
-  ethereum,
-  bitcoin,
-}

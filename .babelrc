@@ -1,5 +1,5 @@
 {
-  "presets": ["env", "stage-0", "react", "react-hmre"],
+  "presets": ["es2015", "stage-0", "react", "react-hmre" ],
   "plugins": [
     ["transform-object-rest-spread", { "useBuiltIns": true }]
   ]

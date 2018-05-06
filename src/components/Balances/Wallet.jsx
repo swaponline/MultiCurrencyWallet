@@ -28,6 +28,7 @@ const Wallet = ({ wallet }) => (
         </td>
     </tr>
 )
+
 //
 // Wallet.propTypes = {
 //     currency: PropTypes.string.isRequired,

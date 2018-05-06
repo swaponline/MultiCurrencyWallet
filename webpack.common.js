@@ -5,7 +5,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
     entry: [
-        './src/client/app.js',
+        'babel-polyfill', './src/client/app.js'
     ],
     module: {
         rules: [
@@ -49,10 +49,7 @@ module.exports = {
             {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
-                loader: 'babel-loader',
-                query: {
-                    cacheDirectory: true,
-                }
+                loader: 'babel-loader'
             },
         ]
     },

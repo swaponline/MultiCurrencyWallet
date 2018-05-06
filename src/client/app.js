@@ -1,4 +1,4 @@
-import 'bootstrap';
+import 'bootstrap'
 import './../client/scss/app.scss'
 import 'font-awesome/scss/font-awesome.scss'
 import './../client/scss/normalize.scss'
@@ -8,21 +8,24 @@ import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import routes from '../routes/routes'
 
-import data from './../bin/history.json'
+import User from '../instances/user'
+// import data from './../bin/history.json'
 import configureStore, { history } from '../store/configureStore'
-import {addWallet, getHistory} from "../actions";
+import { addWallet, getHistory } from "../actions"
 
 import App from './../components/App/App'
 
 const store = configureStore()
 
-store.dispatch(getHistory(data))
-
 // todo REFACTOR
 import getWalletsData from './../logix/wallets'
+import UserTooltip from '../components/UserTooltip/UserTooltip';
 let dataWallets = getWalletsData()
 console.log(dataWallets)
 store.dispatch(addWallet(dataWallets))
+
+User.sign()
+console.log(User.getTransactions())
 
 render(
     <Provider store={store}>
