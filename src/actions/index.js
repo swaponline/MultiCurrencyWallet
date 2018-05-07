@@ -6,10 +6,19 @@ export const OPEN_MODALS = 'OPEN_MODALS'
 export const CLOSE_MODALS = 'CLOSE_MODALS'
 export const UPDATE_BALANCE = 'UPDATE_BALANCE'
 
-export const addWallet = (wallets) => ({
-    type: ADD_WALLET,
-    wallets
-})
+export const addWallet = (data) => {
+    return dispatch => {
+        dispatch({
+            type: ADD_WALLET,
+            data
+        })
+    
+        dispatch({
+            type: GET_HISTORY,
+            data
+        })
+    }
+}
 
 export const updateBalance = (balance) => ({
     type: UPDATE_BALANCE,
@@ -19,11 +28,6 @@ export const updateBalance = (balance) => ({
 export const setFilter = (filter) => ({
     type: SET_FILTER,
     filter
-})
-
-export const getHistory = (history) => ({
-    type: GET_HISTORY,
-    history
 })
 
 export const openModal = (name, open = true) => ({

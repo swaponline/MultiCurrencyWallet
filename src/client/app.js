@@ -14,14 +14,9 @@ import { addWallet, getHistory } from '../actions'
 
 import App from './../components/App/App'
 
-
 User.getData()
     .then(data => 
         store.dispatch(addWallet(data)))
-
-User.getTransactions()
-        .then(data =>
-            store.dispatch(getHistory(data)))
 
 render(
     <Provider store={store}>

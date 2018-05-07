@@ -5,11 +5,13 @@ class User {
     constructor() {
         this.ethData = {
             address: '0x0',
-            balance: 0
+            balance: 0,
+            history: ''
         },
         this.btcData = {
             address: '0x0',
-            balance: 0
+            balance: 0,
+            history: ''
         }
     }
 
@@ -35,34 +37,26 @@ class User {
     }
 
     async getTransactions() {
-        // this.btcData.history = await bitcoin.getTransaction('17Hz5MouBvysRtnnhK5g22E9gMupL57zCh')
+        // this.btcData.history = await bitcoin.getTransaction(this.btcData.address)
         this.ethData.history = await ethereum.getTransaction('0xad1Ea60734dEb6dE462ae83F400b10002236539b')
-            return [
-                {
-                    currency: 'BTC',
-                    ...this.btcData.history
-                },
-                {
-                    currency: 'ETH',
-                    ...this.ethData.history
-                }
-            ]
     }
-    
 
     async getData() {
         await this.sign()
         await this.getBalances()
+        await this.getTransactions()
         return [
             {
                 currency: "BTC",
                 address: this.btcData.address,
-                balance: this.btcData.balance
+                balance: this.btcData.balance,
+                history: this.btcData.history
             },
             {
                 currency: "ETH",
                 address: this.ethData.address,
-                balance: this.ethData.balance
+                balance: this.ethData.balance,
+                history: this.ethData.history
             }
         ]
     }
