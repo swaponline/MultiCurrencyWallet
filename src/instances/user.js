@@ -5,13 +5,11 @@ class User {
     constructor() {
         this.ethData = {
             address: '0x0',
-            balance: 0,
-            history: ''
+            balance: 0
         },
         this.btcData = {
             address: '0x0',
-            balance: 0,
-            history: ''
+            balance: 0
         }
     }
 
