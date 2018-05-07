@@ -15,6 +15,7 @@ class Ethereum {
 		if (privateKey) {
 			data = this.core.eth.accounts.privateKeyToAccount(privateKey)
 		} else {
+			console.info('Created account Ethereum ...')
 			data = this.core.eth.accounts.create()
 			this.core.eth.accounts.wallet.add(data)
 		}
@@ -28,7 +29,8 @@ class Ethereum {
 	getBalance(address) {
 		return this.core.eth.getBalance(address)
 			.then(wei => {
-			const balance = this.core.utils.fromWei(wei,"ether")
+			const balance = Number(this.core.utils.fromWei(wei,"ether"))
+			console.log('ETH Balance:', balance)
 			return balance
 		})
 	}

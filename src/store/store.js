@@ -11,7 +11,7 @@ export const history = createHistory()
 
 const middleware = routerMiddleware(history)
 
-const configureStore = () => createStore(
+const store = createStore(
     reducer,
     applyMiddleware(
         promise,
@@ -21,4 +21,4 @@ const configureStore = () => createStore(
     )
 )
 
-export default configureStore
+export default store

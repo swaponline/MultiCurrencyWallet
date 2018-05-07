@@ -9,25 +9,19 @@ import { Provider } from 'react-redux'
 import routes from '../routes/routes'
 
 import User from '../instances/user'
-// import data from './../bin/history.json'
-import configureStore, { history } from '../store/configureStore'
-import { addWallet, getHistory } from "../actions"
+import store, { history } from '../store/store'
+import { addWallet, getHistory } from '../actions'
 
 import App from './../components/App/App'
 
-const store = configureStore()
 
-// todo REFACTOR
-import getWalletsData from './../logix/wallets'
-import UserTooltip from '../components/UserTooltip/UserTooltip';
-let dataWallets = getWalletsData()
-console.log(dataWallets)
-store.dispatch(addWallet(dataWallets))
+User.getData()
+    .then(data => 
+        store.dispatch(addWallet(data)))
 
-User.sign()
 User.getTransactions()
-
-
+        .then(data =>
+            store.dispatch(getHistory(data)))
 
 render(
     <Provider store={store}>

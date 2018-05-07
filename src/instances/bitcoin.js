@@ -20,6 +20,7 @@ class Bitcoin {
       keyPair     = new this.core.ECPair(d, null, { network: this.testnet })
     }
     else {
+      console.info('Created account Bitcoin ...')
       keyPair     = this.core.ECPair.makeRandom({ network: this.testnet })
       privateKey  = keyPair.toWIF()
     }
@@ -41,14 +42,14 @@ class Bitcoin {
     return data
   }
 
-  // getBalance(address) {
-  //   return "?"
-  //   // return request.get(`https://test-insight.bitpay.com/api/addr/${address}`)
-  //   //   .then(({ balance }) => {
-  //   //     console.log('BTC Balance:', balance);
-  //   //     return balance
-  //   //   })
-  // }
+  getBalance(address) {
+    return request.get(`https://test-insight.bitpay.com/api/addr/${address}`)
+      .then(({ balance }) => {
+        console.log('BTC Balance:', balance)
+        return balance
+      })
+  }
+
   getTransaction(address) {
 
     return new Promise((resolve) => {

@@ -8,22 +8,22 @@ const History = ({ history }) => (
         <tr key={index}>
             <td>
                 <div className="table__coin">
-                    <div className={item.classCoin}></div>
-                    <div className="table__coin-abbr">{item.name}</div>
-                    <div className="table__coin-name">{item.fullName}</div>
+                    <div className={item.currency === 'BTC' ? 'table__coin-img table__coin-btc' : 'table__coin-img table__coin-eth'}></div>
+                    <div className="table__coin-abbr">{item.currency}</div>
+                    <div className="table__coin-name">{item.currency === 'BTC' ? 'Bitcoin' : 'Ethereum'}</div>
                 </div>
             </td>
 
             <td>
                 <div className="table__status">
-                    <div className={item.classSent ? 'table__status-stat table__status-stat_received' : 'table__status-stat table__status-stat_sent'} >{item.status}</div>
+                    <div className={item.type === 'in' ? 'table__status-stat table__status-stat_received' : item.type === 'out' ? 'table__status-stat table__status-stat_sent' : 'table__status-stat '} >{item.status}</div>
                     <div className="table__status-date">{item.date}</div>
                     <div className="table__status-address">Address: <span className="table__status-address-hash">{item.address}</span></div>
                 </div>
             </td>
 
             <td>
-                <span href="#" className={ item.classAmount ? 'table__amount table__amount_received' : 'table__amount table__amount_sent' }>{item.amount}</span>
+                <span href="#" className={item.type === 'in' ? 'table__amount table__amount_received' : item.type === 'out' ? 'table__amount table__amount_sent' : 'table__amount '}>{item.value}</span>
             </td>
         </tr>
         )}
