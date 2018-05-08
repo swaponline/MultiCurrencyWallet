@@ -6,7 +6,7 @@ import History from '../components/History/History'
 
 function mapStateToProps(state) {
     return {
-        history: getFilteredHistory(state)
+        wallets: getFilteredHistory(state)
     }
 }
 

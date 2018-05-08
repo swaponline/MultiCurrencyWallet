@@ -1,5 +1,5 @@
 import BigInteger from 'bigi'
-import request from './request'
+import request from '../bin/request'
 import config from '../helpers/config'
 import bitcoin from 'bitcoinjs-lib'
 

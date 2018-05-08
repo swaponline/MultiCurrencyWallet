@@ -1,13 +1,12 @@
 import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
 
-import history, * as fromHistory from './history'
+import * as fromHistory from './history'
 import filter from './filter'
 import wallets from './wallets'
 import modals from './modals'
 
 export default combineReducers({
-    history,
     filter,
     wallets,
     modals,
@@ -15,5 +14,5 @@ export default combineReducers({
 });
 
 export function getFilteredHistory(state) {
-    return fromHistory.getFilteredHistory(state.history, state.filter);
+    return fromHistory.getFilteredHistory(state.wallets, state.filter);
 }
