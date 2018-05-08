@@ -18,6 +18,10 @@ User.getData()
     .then(data => 
         store.dispatch(addWallet(data)))
 
+User.getTransactions()
+        .then(data =>
+            store.dispatch(getHistory(data)))
+
 render(
     <Provider store={store}>
         <App history={history}>

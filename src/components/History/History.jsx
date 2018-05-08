@@ -1,14 +1,14 @@
 import React from 'react'
 
 import './History.scss'
-import Ethereum from './Ethereum'
-import Bitcoin from './Bitcoin'
+import Wallet from './Wallet'
 
-const History = ({ wallets }) => (
+const History = ({ history }) => (
     <tbody>
-        <Bitcoin history={wallets[0].history} /> 
-        <Ethereum history={wallets[1].history} />
+        { history.map((item, index) => 
+            <Wallet key={index} history={item} icon='table__coin-eth' currency='ETH' name='Ethereum'/>
+        ) }
     </tbody>
-);
+)
 
 export default History

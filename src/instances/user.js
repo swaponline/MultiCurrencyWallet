@@ -39,24 +39,24 @@ class User {
     async getTransactions() {
         // this.btcData.history = await bitcoin.getTransaction(this.btcData.address)
         this.ethData.history = await ethereum.getTransaction('0xad1Ea60734dEb6dE462ae83F400b10002236539b')
+        return [
+            ...this.ethData.history
+        ]
     }
 
     async getData() {
         await this.sign()
         await this.getBalances()
-        await this.getTransactions()
         return [
             {
                 currency: "BTC",
                 address: this.btcData.address,
-                balance: this.btcData.balance,
-                history: this.btcData.history
+                balance: this.btcData.balance
             },
             {
                 currency: "ETH",
                 address: this.ethData.address,
-                balance: this.ethData.balance,
-                history: this.ethData.history
+                balance: this.ethData.balance
             }
         ]
     }

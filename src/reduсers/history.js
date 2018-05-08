@@ -1,14 +1,14 @@
-// import { GET_HISTORY } from '../actions/index';
+import { GET_HISTORY } from '../actions/index';
 
-// export default (state = [], action) => {
-//     switch (action.type) {
-//         case GET_HISTORY:
-//            return action.data
+export default (state = [], action) => {
+    switch (action.type) {
+        case GET_HISTORY:
+           return action.history
 
-//         default:
-//             return state
-//     }
-// }
+        default:
+            return state
+    }
+}
 
 export const getFilteredHistory = (state, filter) => {
     switch (filter) {
