@@ -15,5 +15,5 @@ export default combineReducers({
 });
 
 export function getFilteredHistory(state) {
-    return fromHistory.getFilteredHistory(state, state.filter)
+    return fromHistory.getFilteredHistory(state.history, state.filter)
 }

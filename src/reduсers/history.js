@@ -14,12 +14,12 @@ export const getFilteredHistory = (state, filter) => {
     switch (filter) {
         case 'ALL':
             return state
-        
+
         case 'SENT':
-            return state.filter(h => h.classSent)
+            return state.filter(h => h.type === 'in')
 
         case 'RECEIVED':
-            return state.filter(h => !h.classSent)
+            return state.filter(h => h.type === 'out')
 
         default:
             return state
