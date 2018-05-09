@@ -5,28 +5,25 @@ import './../client/scss/normalize.scss'
 
 import React from 'react'
 import { render } from 'react-dom'
-import { Provider } from 'react-redux'
 import routes from '../routes/routes'
-
-import User from '../instances/user'
-import store, { history } from '../store/store'
-import { addWallet, getHistory } from '../actions'
+import configureStore, { history } from '../store/store'
 
 import App from './../components/App/App'
 
+const store = configureStore()
+
+// refactor
+import { addWallet, getHistory } from '../actions'
+import User from '../instances/user'
 User.getData()
     .then(data => 
         store.dispatch(addWallet(data)))
-
 User.getTransactions()
-        .then(data =>
-            store.dispatch(getHistory(data)))
+// this
 
 render(
-    <Provider store={store}>
-        <App history={history}>
-            { routes } 
-        </App>
-    </Provider>,
+    <App history={history} store={store}>
+        { routes } 
+    </App>,
     document.getElementById('app')
-);
+)

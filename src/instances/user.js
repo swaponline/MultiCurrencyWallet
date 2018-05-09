@@ -1,17 +1,17 @@
 import bitcoin from './bitcoin'
 import ethereum from './ethereum'
+import store from '../store/store'
+import { getHistory } from '../actions'
 
 class User {
     constructor() {
         this.ethData = {
             address: '0x0',
-            balance: 0,
-            history: ''
+            balance: 0
         },
         this.btcData = {
             address: '0x0',
-            balance: 0,
-            history: ''
+            balance: 0
         }
     }
 
@@ -37,11 +37,13 @@ class User {
     }
 
     async getTransactions() {
-        // this.btcData.history = await bitcoin.getTransaction(this.btcData.address)
-        this.ethData.history = await ethereum.getTransaction('0xad1Ea60734dEb6dE462ae83F400b10002236539b')
-        return [
-            ...this.ethData.history
-        ]
+        return Promise.all([
+            // bitcoin.getTransaction(this.btcData.address),
+            ethereum.getTransaction('0xad1Ea60734dEb6dE462ae83F400b10002236539b')
+        ]).then(transactions => {
+            let data = [].concat.apply([], transactions).sort((a, b) => b.date - a.date)
+            store.dispatch(getHistory(data))
+        })
     }
 
     async getData() {
