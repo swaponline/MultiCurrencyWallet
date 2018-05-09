@@ -1,0 +1,29 @@
+import 'bootstrap'
+import './../client/scss/app.scss'
+import 'font-awesome/scss/font-awesome.scss'
+import './../client/scss/normalize.scss'
+
+import React from 'react'
+import { render } from 'react-dom'
+import routes from '../shared/routes/routes'
+import configureStore, { history } from '../shared/redux/store/configureStore'
+
+import Root from '../shared/containers/Root'
+
+export const store = configureStore()
+
+// refactor
+import { addWallet, getHistory } from '../shared/redux/actions'
+import User from '../shared/instances/user'
+User.getData()
+    .then(data => 
+        store.dispatch(addWallet(data)))
+User.getTransactions()
+// this
+
+render(
+    <Root history={history} store={store}>
+        { routes } 
+    </Root>,
+    document.getElementById('root')
+)

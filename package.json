@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "swap.online",
   "private": true,
+  "main": "./bin/server",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/bin/server.js",
+    "start": "nodemon bin/server",
     "build": "npm i && webpack -p --config webpack.prod.js"
   },
   "keywords": [],
