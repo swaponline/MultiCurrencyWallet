@@ -1,3 +1,7 @@
+import './../../client/scss/app.scss'
+import 'bootstrap'
+import 'font-awesome/scss/font-awesome.scss'
+
 import React from 'react'
 import { ConnectedRouter } from 'react-router-redux'
 import { Provider } from 'react-redux'

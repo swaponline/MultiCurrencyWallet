@@ -54,6 +54,11 @@ module.exports = {
         ]
     },
     resolve: {
+        modules: [
+            path.resolve(__dirname, '../client'),
+            path.resolve(__dirname, '../shared'),
+            'node_modules',
+        ],
         extensions: ['*', '.js', '.jsx']
     },
     plugins: [

@@ -1,8 +1,3 @@
-import 'bootstrap'
-import './../client/scss/app.scss'
-import 'font-awesome/scss/font-awesome.scss'
-import './../client/scss/normalize.scss'
-
 import React from 'react'
 import { render } from 'react-dom'
 import routes from '../shared/routes/routes'
