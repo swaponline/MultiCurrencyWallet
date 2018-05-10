@@ -3,7 +3,7 @@ const webpack               = require('webpack');
 const bodyParser            = require('body-parser');
 const historyApiFallback    = require('connect-history-api-fallback');
 const webpackMiddleware     = require('webpack-dev-middleware');
-const webpackConfig         = require('../../webpack/development');
+const webpackConfig         = require('../../webpack/index');
 
 const port      = 9001;
 const app       = express();
