@@ -10,8 +10,10 @@ import ModalsContainer from '../containers/ModalsContainer'
 
 class Root extends React.Component {
 
-    componentDidMount() {
-        this.props.updateLoader()
+    componentWillMount() {
+        setTimeout(() => {
+            this.props.updateLoader()
+        }, 4000)
     }
 
     render() {
@@ -20,13 +22,13 @@ class Root extends React.Component {
             <Provider store={store}>
                 <ConnectedRouter history={history}>
                 { loader === true ? 
+                    <Loader /> 
+                        :
                     <main className="main" id="main">
                         <Header />
                         { children }
                         <ModalsContainer />
                     </main> 
-                        :
-                    <Loader /> 
                 }
                 </ConnectedRouter>
             </Provider>

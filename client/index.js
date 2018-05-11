@@ -19,11 +19,6 @@ User.getData()
     store.dispatch(addWallet(data)))
 User.getTransactions()
 
-setTimeout(() => {
-    store.dispatch(updateLoader())
-}, 3000)
-
-
 // this
 
 render(
