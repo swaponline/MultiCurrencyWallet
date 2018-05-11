@@ -10,12 +10,12 @@ const Wallet = ({ wallet }) => (
         <td>
             <div className="table__coins">
                 <span className="table__coin-left">
-                    { wallet.currency === 'ETH' ? <img src={CoinETH} alt=""/> : <img src={CoinBTC} alt=""/> }
+                    { wallet.currency === 'eth' ? <img src={CoinETH} alt=""/> : <img src={CoinBTC} alt=""/> }
                 </span>
             </div>
         </td>
         <td>
-            <div className="table__name">{wallet.currency}</div>
+            <div className="table__name">{wallet.currency.toUpperCase()}</div>
         </td>
         <td>
             <div className="table__balance">{wallet.balance}</div>
