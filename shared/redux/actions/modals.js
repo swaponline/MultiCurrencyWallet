@@ -10,3 +10,4 @@ export const openModal = (name, open = true) => ({
 export const closeModal = () => ({
     type: CLOSE_MODALS
 })
+

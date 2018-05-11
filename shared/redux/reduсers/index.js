@@ -5,8 +5,10 @@ import history, * as fromHistory from './history'
 import filter from './filter'
 import wallets from './wallets'
 import modals from './modals'
+import loader from './loader'
 
 export default combineReducers({
+    loader,
     history,
     filter,
     wallets,
