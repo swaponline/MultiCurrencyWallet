@@ -1,7 +1,9 @@
 import BigInteger from 'bigi'
-import request from '../../bin/request'
+import request from '../../local_modules/request'
 import config from '../helpers/config'
 import bitcoin from 'bitcoinjs-lib'
+
+
 
 class Bitcoin {
 
@@ -51,22 +53,28 @@ class Bitcoin {
   }
 
   getTransaction(address) {
-
     return new Promise((resolve) => {
 
-        const url = `https://api.blocktrail.com/v1/tBTC/address/${address}/transactions?api_key=${config.apiKeys.blocktrail}`
+        const url =`https://api.blocktrail.com/v1/tBTC/address/${address}/transactions?api_key=${config.apiKeys.blocktrail}`
         let transactions
+
+        let options = {
+          month: 'long',
+          day: 'numeric',
+          hour: 'numeric',
+          minute: 'numeric'
+        }
+
         request.get(url).then((res) => {
+          console.log(res)
           if (res.total) {
             transactions = res.data.map((item) => ({
               status: item.block_hash != null ? 1 : 0,
               value: item.outputs[0].value / 1e8,
               address: item.outputs[0].address,
-              date: item.time,
+              date: new Date(Date.parse(item.time)).toLocaleString("en-US", options),
               type: address.toLocaleLowerCase() === item.outputs[0].address.toLocaleLowerCase() ? 'in' : 'out'
             }))
-
-            EA.dispatch('btc:updateTransactions', transactions.reverse())
             resolve(transactions)
           }
           else {

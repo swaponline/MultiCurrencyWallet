@@ -1,6 +1,6 @@
 import Web3 from 'web3'
 import config from '../helpers/config'
-import request from '../../bin/request'
+import request from '../../local_modules/request'
 
 const web3 = new Web3(new Web3.providers.HttpProvider('https://mainnet.infura.io/5lcMmHUURYg8F20GLGSr'));
 
@@ -39,7 +39,14 @@ class Ethereum {
 		return new Promise((resolve) => {
 			const url = `http://api.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${config.apiKeys.eth}`
 			let transactions
-
+			
+            let options = {
+                month: 'long',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: 'numeric'
+			}
+			
 			request.get(url)
 				.then((res) => {
 					if (res.status) {
@@ -50,10 +57,9 @@ class Ethereum {
 									status: item.blockHash != null ? 1 : 0,
 									value: this.core.utils.fromWei(item.value),
 									address: item.to,
-									date: new Date(item.timeStamp * 1000),
+									date: new Date(item.timeStamp * 1000).toLocaleString("en-US", options),
 									type: address.toLowerCase() === item.to.toLowerCase() ? 'in' : 'out'
-								}))
-
+								}))	
 						resolve(transactions)
 					} else { console.error('res:status ETH false', res) }
 				})
