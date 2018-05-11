@@ -3,7 +3,7 @@ import { OPEN_MODALS, CLOSE_MODALS } from '../actions/index'
 export default (state = {}, action) => {
     switch(action.type) {
         case OPEN_MODALS:
-            return state = { name: action.name, open: action.open }
+            return state = { name: action.name, open: action.open, ...action.data}
 
         case CLOSE_MODALS:
             return state = { }

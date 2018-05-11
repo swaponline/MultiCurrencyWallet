@@ -51,15 +51,15 @@ html {
   box-sizing: inherit;
 }
 
+.modal {
+  display: block !important;
+}
+
 a:hover,
 a:focus,
 a:active {
   text-decoration: none;
   outline: none;
-}
-
-a:hover{
-  color: #fff;
 }
 
 button:hover,

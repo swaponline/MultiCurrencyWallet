@@ -1,10 +1,11 @@
 import React from 'react'
 
 import Offer from '../Offer/Offer'
-import UserTooltip from '../UserTooltip/UserTooltip'
+import BalanceCard from '../BalanceCard/BalanceCard'
 
 const MODAL_COMPONENTS = {
-    'OFFER': Offer
+    'OFFER': Offer,
+    'CARD': BalanceCard
 }
 
 const ModalRoot = ({modals, ...rest}) => {
