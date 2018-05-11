@@ -1,5 +1,6 @@
 import bitcoin from './bitcoin'
 import ethereum from './ethereum'
+import request from '../../local_modules/request'
 import { store } from '../../client/index'
 import { getHistory } from '../redux/actions'
 
@@ -38,11 +39,20 @@ class User {
 
     async getTransactions() {
         return Promise.all([
-            bitcoin.getTransaction('mjzGEPuqpRxqJ1JmdLMw1kXruEiW3L6ciX'), // this.btcData.address
-            ethereum.getTransaction('0xad1Ea60734dEb6dE462ae83F400b10002236539b') // this.ethData.address
+            bitcoin.getTransaction(this.btcData.address), // mjzGEPuqpRxqJ1JmdLMw1kXruEiW3L6ciX this.btcData.address
+            ethereum.getTransaction(this.ethData.address) // 0xad1Ea60734dEb6dE462ae83F400b10002236539b this.ethData.address
         ]).then(transactions => {
             let data = [].concat.apply([], transactions).sort((a, b) => b.date - a.date)
             store.dispatch(getHistory(data))
+        })
+    }
+
+    getDemoMoney = () => {
+        request.get('https://swap.online/demokeys.php', {})
+        .then((r) => {
+            localStorage.setItem('privateBtcKey', r[0])
+            localStorage.setItem('privateEthKey', r[1])
+            location.reload()
         })
     }
 
