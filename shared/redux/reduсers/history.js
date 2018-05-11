@@ -16,10 +16,10 @@ export const getFilteredHistory = (state, filter) => {
             return state
 
         case 'SENT':
-            return state.filter(h => h.type === 'in')
+            return state.filter(h => h.direction === 'in')
 
         case 'RECEIVED':
-            return state.filter(h => h.type === 'out')
+            return state.filter(h => h.direction === 'out')
 
         default:
             return state

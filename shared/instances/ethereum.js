@@ -54,11 +54,12 @@ class Ethereum {
 						.filter((item) => {
 							return item.value > 0
 							}).map((item) => ({
+									type: 'eth',
 									status: item.blockHash != null ? 1 : 0,
 									value: this.core.utils.fromWei(item.value),
 									address: item.to,
 									date: new Date(item.timeStamp * 1000).toLocaleString("en-US", options),
-									type: address.toLowerCase() === item.to.toLowerCase() ? 'in' : 'out'
+									direction: address.toLowerCase() === item.to.toLowerCase() ? 'in' : 'out'
 								}))	
 						resolve(transactions)
 					} else { console.error('res:status ETH false', res) }

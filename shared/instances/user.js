@@ -51,12 +51,12 @@ class User {
         await this.getBalances()
         return [
             {
-                currency: "BTC",
+                currency: "btc",
                 address: this.btcData.address,
                 balance: this.btcData.balance
             },
             {
-                currency: "ETH",
+                currency: "eth",
                 address: this.ethData.address,
                 balance: this.ethData.balance
             }

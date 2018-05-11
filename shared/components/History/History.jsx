@@ -5,17 +5,17 @@ import Wallet from './Wallet'
 
 const History = ({ history }) => (
     <tbody>
-        { history.map((item, index) => 
-            <Wallet 
+        { history.map((item, index) => {
+            return <Wallet 
                 key={index} 
-                type={item.type}
+                direction={item.direction}
                 date={item.date}
                 value={Number(item.value)}
                 address={item.address} 
-                icon='table__coin-eth' 
-                currency='ETH' 
-                name='Ethereum'
+                type={item.type}
             />
+        }
+            
         ) }
     </tbody>
 )
