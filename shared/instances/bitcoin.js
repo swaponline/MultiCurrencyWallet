@@ -86,6 +86,51 @@ class Bitcoin {
     })
   }
 
+  send(from, to, amount, keyPair) {
+    return new Promise((resolve, reject) => {
+      const newtx = {
+        inputs: [
+          {
+            addresses: [from],
+          },
+        ],
+        outputs: [
+          {
+            addresses: [to],
+            value: amount * 100000000,
+          },
+        ],
+      }
+      console.log('withdraw 0');
+      request.post('https://api.blockcypher.com/v1/btc/test3/txs/new', {
+        body: JSON.stringify(newtx),
+      }).then((d) => {
+        console.log('withdraw 1')
+          // convert response body to JSON
+          let tmptx = d
+
+          // attribute to store public keys
+          tmptx.pubkeys = []
+
+
+          // build signer from WIF
+          let keys = new this.core.ECPair.fromWIF(keyPair.toWIF(), this.testnet)
+
+        // iterate and sign each transaction and add it in signatures while store corresponding public key in pubkeys
+          tmptx.signatures = tmptx.tosign.map((tosign, n) => {
+            tmptx.pubkeys.push(keys.getPublicKeyBuffer().toString('hex'));
+
+            return keys.sign(BigInteger.fromHex(tosign.toString('hex')).toBuffer()).toDER().toString('hex')
+          })
+
+          return request.post('https://api.blockcypher.com/v1/btc/test3/txs/send', {
+            body: JSON.stringify(tmptx),
+          })
+        })
+        .then((res) => resolve(res)).catch((e) => console.log(e))
+    })
+  }
+
   fetchUnspents(address) {
     return request.get(`https://test-insight.bitpay.com/api/addr/${address}/utxo`)
   }

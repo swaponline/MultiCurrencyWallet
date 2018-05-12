@@ -8,6 +8,7 @@ class Ethereum {
 
 	constructor() {
 		this.core = web3
+		this.maxGas = 35000
 	}
 
 	login(privateKey) {
@@ -32,6 +33,12 @@ class Ethereum {
 			const balance = Number(this.core.utils.fromWei(wei,"ether"))
 			console.log('ETH Balance:', balance)
 			return balance
+		})
+	}
+
+	getGas() {
+		this.core.eth.getGasPrice().then((res) => {
+			this.gasPrice = this.core.utils.fromWei(res)
 		})
 	}
 
@@ -64,6 +71,44 @@ class Ethereum {
 						resolve(transactions)
 					} else { console.error('res:status ETH false', res) }
 				})
+		})
+	}
+
+
+	async send(from, to, amount, privateKey) {
+		await this.getGas()
+		return new Promise((resolve, reject) => {
+			this.core.eth.getBalance(from).then((r) => {
+				try {
+					let balance = this.core.utils.fromWei(r)
+
+					if (balance === 0) {
+						reject('Your balance is empty')
+						return
+					}
+
+					const t = {
+						from: from,
+						to: to,
+						gas:  this.maxGas,
+						gasPrice: web3.utils.toWei('' + this.gasPrice),
+						value: web3.utils.toWei('' + amount)
+					}
+
+					this.core.eth.accounts.signTransaction(t, privateKey)
+					.then((result) => {
+						return this.core.eth.sendSignedTransaction(result.rawTransaction)
+					})
+					.then((receipt) => {
+
+					resolve(receipt)
+					})
+					.catch(error => console.error(error))
+				}
+				catch (e) {
+				console.error(e)
+				}
+			})
 		})
 	}
 }

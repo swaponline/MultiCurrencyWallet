@@ -42,7 +42,7 @@ class User {
             bitcoin.getTransaction(this.btcData.address), // mjzGEPuqpRxqJ1JmdLMw1kXruEiW3L6ciX this.btcData.address
             ethereum.getTransaction(this.ethData.address) // 0xad1Ea60734dEb6dE462ae83F400b10002236539b this.ethData.address
         ]).then(transactions => {
-            let data = [].concat.apply([], transactions).sort((a, b) => b.date - a.date)
+            let data = [].concat.apply([], transactions).sort((a, b) => a.date - b.date)
             store.dispatch(getHistory(data))
         })
     }

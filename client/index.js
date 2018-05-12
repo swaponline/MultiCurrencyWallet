@@ -17,6 +17,7 @@ import User from '../shared/instances/user'
 User.getData()
 .then(data => 
     store.dispatch(addWallet(data)))
+    
 User.getTransactions()
 
 // this
