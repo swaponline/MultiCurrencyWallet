@@ -1,7 +1,7 @@
 import React from 'react'
 
 import Offer from '../Offer/Offer'
-import BalanceCard from '../BalanceCard/BalanceCard'
+import BalanceCard from '../BalanceCard/Card'
 
 const MODAL_COMPONENTS = {
     'OFFER': Offer,
