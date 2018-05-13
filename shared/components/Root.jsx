@@ -13,15 +13,17 @@ import User from '../instances/user'
 class Root extends React.Component {
 
     componentWillMount() {
-        User.getData()
+        if(Object.keys((localStorage['redux-store'])).length == 0) {
+            User.getData()
             .then(data => this.props.addWallet(data))
     
-        User.getTransactions()
-            .then(data => this.props.getHistory(data))
-            
-        setTimeout(() => {
-            this.props.updateLoader()
-        }, 4000)
+            User.getTransactions()
+                .then(data => this.props.getHistory(data))
+                
+            setTimeout(() => {
+                this.props.updateLoader()
+            }, 4000)
+        }
     }
     
     render() {
