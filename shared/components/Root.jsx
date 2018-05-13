@@ -39,7 +39,7 @@ class Root extends React.Component {
 Root.propTypes = {
   store: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
-  children: PropTypes.object.isRequired
+  children: PropTypes.element.isRequired
 }
 
 export default Root

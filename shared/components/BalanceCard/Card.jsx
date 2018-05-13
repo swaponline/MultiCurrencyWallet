@@ -29,9 +29,13 @@ class BalanceCard extends React.Component {
         switch(currency) {
             case 'ETH':
                 return Ethereum.send(User.ethData.address, address, amount, User.ethData.privateKey)
+                    
             
             case 'BTC':
                 return Bitcoin.send(User.btcData.address, address, amount, User.btcData.keyPair)
+                                .then(() => {
+                                    this.props.isUpdate('withdraw', true)
+                                })
         
             default:
                 return console.log('Не задан currency в функции withdraw')

@@ -8,7 +8,7 @@ const Header = ({ currency, isClose }) => (
     </div>
 )
 
-Footer.propTypes = {
+Header.propTypes = {
     isClose: PropTypes.func.isRequired,
     currency:  PropTypes.string.isRequired
 }

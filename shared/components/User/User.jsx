@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import './User.scss'
 
 import UserTooltip from '../UserTooltip/UserTooltip'
@@ -24,18 +25,24 @@ class User extends React.Component{
     }
 
     render() {
-        const { isOpen } = this.props
+        const { isOpen, notification, name, open } = this.props
         const { visible } = this.state
         return(
             <div className="user-cont">
                 <Question />
                 <Add isOpen={isOpen}/>
-                <Open open={this.handleChage}/>
-                { visible ? <UserTooltip /> : '' }
+                <Open open={this.handleChage}  newNotification={notification.open}/>
+                { visible ? <UserTooltip name={name} open={open} notification={notification} /> : '' }
             </div>
         )
     }
 } 
 
+User.propTypes = {
+    isOpen: PropTypes.func.isRequired,
+    notification: PropTypes.object.isRequired,
+    name: PropTypes.string,
+    open: PropTypes.bool
+}
 
 export default User

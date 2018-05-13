@@ -6,8 +6,10 @@ import filter from './filter'
 import wallets from './wallets'
 import modals from './modals'
 import loader from './loader'
+import notification from './notification'
 
 export default combineReducers({
+    notification,
     loader,
     history,
     filter,

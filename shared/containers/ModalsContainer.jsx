@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import { closeModal } from '../redux/actions'
+import { closeModal, updateNotification } from '../redux/actions'
 import ModalRoot from '../components/Modals/Modals'
 
 function mapStateToProps(state) {
@@ -12,7 +12,8 @@ function mapStateToProps(state) {
 
 function mapStateToDispatch(dispatch) {
     return {
-        isClose: () => dispatch(closeModal())
+        isClose: () => dispatch(closeModal()),
+        isUpdate: (name, open, data) => dispatch(updateNotification(name, open, data))
     }
 }
 export default connect(

@@ -16,7 +16,7 @@ Footer.propTypes = {
     withdraw: PropTypes.func.isRequired,
     address: PropTypes.string.isRequired,
     currency:  PropTypes.string.isRequired,
-    amount:  PropTypes.number.isRequired
+    amount:  PropTypes.string.isRequired
 }
 
 export default Footer
