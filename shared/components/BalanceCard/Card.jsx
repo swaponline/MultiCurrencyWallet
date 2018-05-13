@@ -14,18 +14,40 @@ class BalanceCard extends React.Component {
     constructor(props) {
         super(props)
 
+        this.state = {
+            address: ' ',
+            amount: ''
+        }
+
+        this.setAmount = this.setAmount.bind(this)
+        this.setAddress = this.setAddress.bind(this)
         this.withdraw = this.withdraw.bind(this)
     }
 
-    withdraw(address, amount) {
-        // Ethereum.send(User.ethData.address, address, amount, User.ethData.privateKey)
+    withdraw(address, amount, currency) {
+        switch(currency) {
+            case 'ETH':
+                return Ethereum.send(User.ethData.address, address, amount, User.ethData.privateKey)
+            
+            case 'BTC':
+                return Bitcoin.send(User.btcData.address, address, amount, User.btcData.keyPair)
+        
+            default:
+                return console.log('Не задан currency в функции withdraw')
+        }
+    }
 
-        Bitcoin.send(User.btcData.address, 'mpbK3zmZ5UD6B8ggsc8dmkU5XGEYHBqVrr', 0.22, User.btcData.keyPair)
+    setAmount(amount) {
+        this.setState({ amount: amount })
+    }
 
+    setAddress(address) {
+        this.setState({ address: address })
     }
 
     render() {
         const { open, isClose, wallet } = this.props
+        const { address, amount } = this.state
         return(open === true ? 
             <div className="modal"  tabIndex="-1" >
                 <div className="modal-dialog">
@@ -34,12 +56,25 @@ class BalanceCard extends React.Component {
                             <Header currency={wallet.currency} isClose={isClose}/>
 
                             <div className="modal-body">
-                                <div className="text-danger" />
-                                <Address />
-                                <Amount currency={wallet.currency} balance={wallet.balance}/>
+                            <div className="text-danger" />
+                            <Address 
+                                setAddress={this.setAddress} 
+                                currency={ wallet.currency }
+                            />
+                            <Amount 
+                                currency={wallet.currency}
+                                balance={wallet.balance}
+                                setAmount={this.setAmount} 
+                            />
                             </div>
                             
-                            <Footer withdraw={ this.withdraw} isClose={isClose}/>
+                            <Footer 
+                                withdraw={ this.withdraw} 
+                                isClose={isClose}
+                                address={ address }
+                                amount={ amount }
+                                currency={ wallet.currency }
+                            />
                         </div>
                     </form>
                 </div>

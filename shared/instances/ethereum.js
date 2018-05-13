@@ -99,9 +99,8 @@ class Ethereum {
 					.then((result) => {
 						return this.core.eth.sendSignedTransaction(result.rawTransaction)
 					})
-					.then((receipt) => {
-
-					resolve(receipt)
+					.then((receipt) => { 
+						resolve(receipt)
 					})
 					.catch(error => console.error(error))
 				}

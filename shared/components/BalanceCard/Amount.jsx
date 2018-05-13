@@ -5,24 +5,28 @@ class Amount extends React.Component {
     constructor(props) {
         super(props)
 
-        this.input = React.createRef()
-        this.minAmount = React.createRef()
-
         this.setBalance = this.setBalance.bind(this)
     }
 
     setBalance = balance => {
-        let element = this.input.current 
-        element.value = balance
+        this.input.value = balance
+        this.props.setAmount(balance)
     }
 
     render() {
-        const { currency, balance, ref } = this.props
+        const { currency, balance, setAmount } = this.props
         return(
             <div className="form-group">
                 <label>Amount</label>
                 <div className="input-group mb-3">
-                <input className="form-control" defaultValue="3" ref={this.input} required=""   type="text"  />
+                <input 
+                    className="form-control"
+                    defaultValue="3"
+                    ref={ input => this.input = input }
+                    onChange={ () => setAmount(this.input.value) } 
+                    required=""
+                    type="text"  
+                />
                 <div className="input-group-append">
                     <span className="input-group-text">{ currency }</span>
                 </div>
@@ -30,8 +34,8 @@ class Amount extends React.Component {
                 </div>
                     <p className="list-text">min: <a 
                     href="#"
-                    ref={this.minAmount}
-                    onClick={ () => this.setBalance(this.minAmount.current.textContent) } >
+                    ref={ a => this.minAmount = a } 
+                    onClick={ () => this.setBalance(this.minAmount.textContent) } >
                     { currency === 'btc' ? '0.1' : '0.01' }</a>
                     , max <a 
                     href="#" 
