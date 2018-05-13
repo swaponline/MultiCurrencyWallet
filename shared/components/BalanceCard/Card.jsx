@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import User from '../../instances/user'
 import Ethereum from '../../instances/ethereum'
@@ -82,4 +83,11 @@ class BalanceCard extends React.Component {
         )
     }
 }
+
+BalanceCard.propTypes = {
+    open: PropTypes.bool.isRequired,
+    wallet: PropTypes.object.isRequired,
+    isClose: PropTypes.func.isRequired
+}
+
 export default BalanceCard

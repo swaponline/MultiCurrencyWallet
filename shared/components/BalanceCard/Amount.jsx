@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 class Amount extends React.Component {
 
@@ -44,6 +45,12 @@ class Amount extends React.Component {
             </div>
         )
     }    
+}
+
+Amount.propTypes = {
+    currency: PropTypes.string.isRequired,
+    balance: PropTypes.number.isRequired,
+    setAmount: PropTypes.func.isRequired
 }
 
 export default Amount

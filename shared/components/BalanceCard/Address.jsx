@@ -24,7 +24,8 @@ class Address extends React.Component {
 }
 
 Address.propTypes = {
-    setAddress: PropTypes.func.isRequired
+    setAddress: PropTypes.func.isRequired,
+    currency:  PropTypes.string.isRequired
 }
 
 export default Address

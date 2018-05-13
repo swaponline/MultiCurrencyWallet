@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const Footer = ({ isClose, withdraw, address, amount, currency }) => (
     <div className="modal-footer">
@@ -9,5 +10,13 @@ const Footer = ({ isClose, withdraw, address, amount, currency }) => (
         }  } className="btn btn-primary">Transfer</button>
     </div>
 )
+
+Footer.propTypes = {
+    isClose: PropTypes.func.isRequired,
+    withdraw: PropTypes.func.isRequired,
+    address: PropTypes.string.isRequired,
+    currency:  PropTypes.string.isRequired,
+    amount:  PropTypes.number.isRequired
+}
 
 export default Footer

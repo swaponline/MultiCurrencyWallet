@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const Header = ({ currency, isClose }) => (
     <div className="modal-header">
@@ -6,5 +7,10 @@ const Header = ({ currency, isClose }) => (
         <button type="button" className="close" onClick={ () => isClose() } >&times;</button>
     </div>
 )
+
+Footer.propTypes = {
+    isClose: PropTypes.func.isRequired,
+    currency:  PropTypes.string.isRequired
+}
 
 export default Header
