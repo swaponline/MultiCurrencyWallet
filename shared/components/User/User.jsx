@@ -29,7 +29,7 @@ class User extends React.Component{
         const { visible } = this.state
         return(
             <div className="user-cont">
-                <Question />
+                {/*<Question />*/}
                 <Add isOpen={isOpen}/>
                 <Open open={this.handleChage}  newNotification={notification.open}/>
                 { visible ? <UserTooltip name={name} open={open} notification={notification} /> : '' }

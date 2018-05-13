@@ -5,8 +5,6 @@ import LogoSvg from './logo.svg'
 import SearchSvg from './search.svg'
 import ToolbarLink from './TollbarLink'
 
-import User from '../../instances/user'
-
 const Toolbar = () => (
     <div className="toolbar" >
         <h1 className="logo" ><img src={LogoSvg} alt="swap.online logo"/></h1>
@@ -18,7 +16,7 @@ const Toolbar = () => (
             <ToolbarLink to="/balance" name="Balances" />
             <ToolbarLink to="/history" name="History" />
         </div>
-        <a href="#" onClick={ User.getDemoMoney }> Get demo money</a>
+
     </div>
 )
 

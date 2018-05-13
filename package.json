@@ -71,6 +71,7 @@
     "babel-preset-react-hmre": "^1.1.1",
     "bitcoinjs-lib": "^3.3.2",
     "font-awesome": "^4.7.0",
+    "ipfs": "^0.28.2",
     "jquery": "^3.3.1",
     "lodash": "^4.17.5",
     "npm": "^5.8.0",

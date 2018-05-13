@@ -9,7 +9,7 @@ const titles = ['EXCHANGE','PRICE','LIMITS','RATING']
 const History = () => (
     <section>
         <Description subtitle="Instant BTC for ETH and ERC20, p2p exchange without commission" title="SWAP.ONLINE" /> 
-        <SearchTrade /> 
+        {/*<SearchTrade /> */}
         <TradesTable titles={titles} main={true}/>
     </section>
 )
