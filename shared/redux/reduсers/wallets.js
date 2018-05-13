@@ -1,4 +1,4 @@
-import { ADD_WALLET, GET_HISTORY } from '../actions/index'
+import { ADD_WALLET } from '../actions/index'
 
 export default (state = [], action) => {
     switch (action.type) {

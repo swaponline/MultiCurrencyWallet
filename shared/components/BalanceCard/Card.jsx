@@ -17,7 +17,7 @@ class BalanceCard extends React.Component {
 
         this.state = {
             address: ' ',
-            amount: ''
+            amount: 0
         }
 
         this.setAmount = this.setAmount.bind(this)
@@ -30,7 +30,6 @@ class BalanceCard extends React.Component {
             case 'ETH':
                 return Ethereum.send(User.ethData.address, address, amount, User.ethData.privateKey)
                     
-            
             case 'BTC':
                 return Bitcoin.send(User.btcData.address, address, amount, User.btcData.keyPair)
                                 .then(() => {

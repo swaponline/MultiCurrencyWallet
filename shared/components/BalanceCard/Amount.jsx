@@ -11,7 +11,7 @@ class Amount extends React.Component {
 
     setBalance = balance => {
         this.input.value = balance
-        this.props.setAmount(balance)
+        this.props.setAmount(Number(balance))
     }
 
     render() {
@@ -24,7 +24,7 @@ class Amount extends React.Component {
                     className="form-control"
                     defaultValue="3"
                     ref={ input => this.input = input }
-                    onChange={ () => setAmount(this.input.value) } 
+                    onChange={ () => setAmount(Number(this.input.value)) } 
                     required=""
                     type="text"  
                 />
