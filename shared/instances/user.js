@@ -1,8 +1,6 @@
 import bitcoin from './bitcoin'
 import ethereum from './ethereum'
 import request from '../../local_modules/request'
-import { store } from '../../client/index'
-import { getHistory } from '../redux/actions'
 
 class User {
     constructor() {
@@ -43,7 +41,7 @@ class User {
             ethereum.getTransaction(this.ethData.address) // 0xad1Ea60734dEb6dE462ae83F400b10002236539b this.ethData.address
         ]).then(transactions => {
             let data = [].concat.apply([], transactions).sort((a, b) => Date.parse(b.date) - Date.parse(a.date))
-            store.dispatch(getHistory(data))
+            return data
         })
     }
 

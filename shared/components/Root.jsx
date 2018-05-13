@@ -7,15 +7,23 @@ import Header from './Header/Header'
 import Loader from './Loader/Loader'
 
 import ModalsContainer from '../containers/ModalsContainer'
+import User from '../instances/user'
+
 
 class Root extends React.Component {
 
     componentWillMount() {
+        User.getData()
+            .then(data => this.props.addWallet(data))
+    
+        User.getTransactions()
+            .then(data => this.props.getHistory(data))
+            
         setTimeout(() => {
             this.props.updateLoader()
         }, 4000)
     }
-
+    
     render() {
         const { history, children, store, loader } = this.props
         return(
