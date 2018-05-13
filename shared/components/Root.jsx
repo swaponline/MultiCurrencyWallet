@@ -13,7 +13,7 @@ import User from '../instances/user'
 class Root extends React.Component {
 
     componentWillMount() {
-        if(Object.keys((localStorage['redux-store'])).length == 0) {
+        if(!(localStorage['redux-store'])) {
             User.getData()
             .then(data => this.props.addWallet(data))
     
