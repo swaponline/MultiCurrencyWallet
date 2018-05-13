@@ -11,28 +11,28 @@ import Loader from './Loader/Loader'
 import ModalsContainer from '../containers/ModalsContainer'
 import User from '../instances/user'
 
-// const app = window.app = new SwapApp({
-//     me: {
-//         reputation: 0,
-//         eth: {
-//             address: '0x0',
-//             publicKey: '0x0',
-//         },
-//         btc: {
-//             address: '0x0',
-//             publicKey: '0x0',
-//         },
-//     },
-//     config: {
-//         ipfs: {
-//             Addresses: {
-//                 Swarm: [
-//                     '/dns4/ws-star.discovery.libp2p.io/tcp/443/wss/p2p-websocket-star',
-//                 ],
-//             },
-//         },
-//     },
-// })
+const app = window.app = new SwapApp({
+    me: {
+        reputation: 0,
+        eth: {
+            address: '0x0',
+            publicKey: '0x0',
+        },
+        btc: {
+            address: '0x0',
+            publicKey: '0x0',
+        },
+    },
+    config: {
+        ipfs: {
+            Addresses: {
+                Swarm: [
+                    '/dns4/ws-star.discovery.libp2p.io/tcp/443/wss/p2p-websocket-star',
+                ],
+            },
+        },
+    },
+})
 
 class Root extends React.Component {
 
