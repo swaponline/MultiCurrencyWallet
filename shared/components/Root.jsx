@@ -11,44 +11,72 @@ import Loader from './Loader/Loader'
 import ModalsContainer from '../containers/ModalsContainer'
 import User from '../instances/user'
 
-const app = window.app = new SwapApp({
-    me: {
-        reputation: 0,
-        eth: {
-            address: '0x0',
-            publicKey: '0x0',
-        },
-        btc: {
-            address: '0x0',
-            publicKey: '0x0',
-        },
-    },
-    config: {
-        ipfs: {
-            Addresses: {
-                Swarm: [
-                    '/dns4/ws-star.discovery.libp2p.io/tcp/443/wss/p2p-websocket-star',
-                ],
-            },
-        },
-    },
-})
+let app = window.app
 
 class Root extends React.Component {
 
     componentWillMount() {
         User.getData()
         .then(data => this.props.addWallet(data))
-            .then( data => console.log('Wallet data loaded!\n' + data) )
+           // .then( data => console.log('Wallet data loaded!\n' + JSON.stringify(data)) )
+
+        app = new SwapApp({
+            me: {
+                reputation: 10,
+                eth: {
+                    address: User.ethData.address,
+                    publicKey: User.ethData.publicKey,
+                },
+                btc: {
+                    address: User.btcData.address,
+                    publicKey: User.btcData.publicKey,
+                },
+            },
+            config: {
+                ipfs: {
+                    Addresses: {
+                        Swarm: [
+                            '/dns4/discovery.libp2p.array.io/tcp/9091/wss/p2p-websocket-star/',
+                        ],
+                    },
+                },
+            },
+        })
+
+        app.on('ready', () => {
+            console.log('swapApp ready')
+            console.log('initial orders', app.getOrders())
+        })
+
+        app.on('user online', (peer) => {
+            console.log('user online', peer)
+        })
+
+        app.on('user offline', (peer) => {
+            console.log('user offline', peer)
+        })
+
+        app.on('new orders', (swaps) => {
+            console.log('new orders', swaps)
+        })
+
+        app.on('new order', (swap) => {
+            console.log('new order', swap)
+        })
+
+        app.on('remove order', (swap) => {
+            console.log('remove order', swap)
+        })
+
+        app.on('new order request', ({ swapId, participant }) => {
+            console.error(`user ${participant.peer} requesting swap`, {
+                swap: app.orderCollection.getByKey(swapId),
+                participant,
+            })
+        })
 
         User.getTransactions()
             .then(data => this.props.getHistory(data))
-
-        this.props.updateLoader()
-
-        // setTimeout(() => {
-        //     this.props.updateLoader()
-        // }, 4000)
     }
     
     render() {
