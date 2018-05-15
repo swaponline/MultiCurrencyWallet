@@ -1,10 +1,18 @@
-import { GET_HISTORY } from '../actions/index'
+import { GET_HISTORY, GET_HISTORY_REQUEST } from '../constants'
 
-export default (state = [], action) => {
+const initialState = {
+    fetching: false,
+    transactions: []
+}
+
+export default (state = initialState, action) => {
     switch (action.type) {
+        case GET_HISTORY_REQUEST:
+            return { ...state, fetching: true }
+        
         case GET_HISTORY:
-           return action.history
-
+            return { ...state, transactions: action.payload, fetching: true }  
+  
         default:
             return state
     }

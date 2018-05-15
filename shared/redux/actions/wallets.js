@@ -1,19 +1,38 @@
-export const ADD_WALLET = 'ADD_WALLET'
-export const GET_HISTORY = 'GET_HISTORY'
-export const UPDATE_BALANCE = 'UPDATE_BALANCE'
+import { 
+    GET_WALLET,
+    GET_HISTORY,
+    GET_HISTORY_REQUEST, 
+    GET_WALLET_REQUEST
+} from '../constants'
 
-export const addWallet = (wallets) => ({
-    type: ADD_WALLET,
-    wallets
-})
+import User from '../../instances/user'
 
-export const updateBalance = (balance) => ({
-    type: UPDATE_BALANCE,
-    balance
-})
+export function addWallet() {
+    return dispatch => {
+        dispatch({
+            type: GET_WALLET_REQUEST
+        })
 
-export const getHistory = (history) => ({
-    type: GET_HISTORY,
-    history
-})
+        User.getData()
+            .then(data => dispatch({
+                type: GET_WALLET,
+                payload: data
+            }))
+    }
+}
+
+export function getHistory() {
+    return dispatch => {
+        dispatch({
+            type: GET_HISTORY_REQUEST
+        })
+
+        User.getTransactions()
+            .then(data => dispatch({
+                type: GET_HISTORY,
+                payload: data
+            }))
+    }
+}
+
 

@@ -3,9 +3,10 @@ import './Balances.scss'
 
 import Wallet from './Wallet'
 
-const Balance = ({ wallets, openModal }) => (
+const Balance = ({ wallets, openModal, fetching }) => (
     <tbody>
-        { wallets.map((wallet, index) =>
+    { fetching  ? 
+        wallets.map((wallet, index) =>
             <Wallet 
                 key={ index }
                 balance={ wallet.balance }
@@ -13,7 +14,7 @@ const Balance = ({ wallets, openModal }) => (
                 address={ wallet.address }
                 openModal={() => openModal('CARD', true, { wallet })}  
             />
-        )}
+        ) : <tr><td>Идет загрузка данных...</td></tr>}
     </tbody>
 );
 

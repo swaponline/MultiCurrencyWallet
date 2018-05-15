@@ -16,9 +16,13 @@ let app = window.app
 class Root extends React.Component {
 
     componentWillMount() {
-        User.getData()
-        .then(data => this.props.addWallet(data))
-           // .then( data => console.log('Wallet data loaded!\n' + JSON.stringify(data)) )
+
+        this.props.addWallet()
+        this.props.getHistory()
+
+        setTimeout(() => {
+            this.props.updateLoader()
+        }, 2000)
 
         app = new SwapApp({
             me: {
@@ -74,9 +78,6 @@ class Root extends React.Component {
                 participant,
             })
         })
-
-        User.getTransactions()
-            .then(data => this.props.getHistory(data))
     }
     
     render() {

@@ -6,8 +6,8 @@ import { openModal } from '../redux/actions'
 
 function mapStateToProps(state) {
     return {
-        wallets: state.wallets
-        
+        wallets: state.wallets.wallet,
+        fetching: state.wallets.fetching
     }
 }
 

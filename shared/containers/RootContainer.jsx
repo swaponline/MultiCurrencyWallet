@@ -1,19 +1,19 @@
 import { connect } from 'react-redux'
 
-import { updateLoader, addWallet, getHistory } from '../redux/actions'
+import { addWallet, getHistory, updateLoader } from '../redux/actions'
 import Root from '../components/Root'
 
 function mapStateToProps(state) {
     return {
-        loader: state.loader
+        loader: state.loader.visible
     }
 }
 
 function mapStateToDispatch(dispatch) {
     return {
-        updateLoader: () => dispatch(updateLoader()),
-        addWallet: (data) => dispatch(addWallet(data)),
-        getHistory: (data) => dispatch(getHistory(data))
+        addWallet: () => dispatch(addWallet()),
+        getHistory: () => dispatch(getHistory()),
+        updateLoader: () => dispatch(updateLoader())
     }
 }
 

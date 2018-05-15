@@ -1,4 +1,4 @@
-import { OPEN_MODALS, CLOSE_MODALS } from '../actions/index'
+import { OPEN_MODALS, CLOSE_MODALS } from '../constants'
 
 export default (state = {}, action) => {
     switch(action.type) {

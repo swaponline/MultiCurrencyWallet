@@ -1,5 +1,6 @@
-export const UPDATE_LOADER = 'CLOSE_LOADER'
+import { CLOSE_LOADER } from '../constants'
 
-export const updateLoader = () => ({
-    type: UPDATE_LOADER
+export const updateLoader = (action) => ({
+    type: CLOSE_LOADER,
+    payload: action 
 })

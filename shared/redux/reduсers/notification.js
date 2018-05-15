@@ -1,4 +1,4 @@
-import { UPDATE_NOTIFICATION } from '../actions/index'
+import { UPDATE_NOTIFICATION } from '../constants'
 
 export default (state = {}, action) => {
     switch(action.type) {

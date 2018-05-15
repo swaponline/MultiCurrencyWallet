@@ -8,16 +8,18 @@ import modals from './modals'
 import loader from './loader'
 import notification from './notification'
 
-export default combineReducers({
-    notification,
-    loader,
-    history,
+const reducers =  combineReducers({ 
+    router: routerReducer,
+    notification, 
+    loader, 
+    history, 
     filter,
     wallets,
-    modals,
-    router: routerReducer
-});
+    modals
+})
 
 export function getFilteredHistory(state) {
-    return fromHistory.getFilteredHistory(state.history, state.filter)
+    return fromHistory.getFilteredHistory(state.history.transactions, state.filter)
 }
+
+export default reducers

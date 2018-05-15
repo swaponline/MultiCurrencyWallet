@@ -1,0 +1,11 @@
+export const GET_WALLET             = 'GET_WALLET'
+export const GET_WALLET_REQUEST     = 'GET_WALLET_REQUEST'
+export const GET_HISTORY            = 'GET_HISTORY'
+export const GET_HISTORY_REQUEST    = 'GET_HISTORY_REQUEST'
+export const SET_FILTER             = 'SET_FILTER'
+export const OPEN_MODALS            = 'OPEN_MODALS'
+export const CLOSE_MODALS           = 'CLOSE_MODALS'
+export const CLOSE_LOADER           = 'CLOSE_LOADER'
+export const UPDATE_BALANCE         = 'UPDATE_BALANCE'
+export const UPDATE_NOTIFICATION    = 'UPDATE_NOTIFICATION'
+

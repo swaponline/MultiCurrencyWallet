@@ -3,9 +3,9 @@ import React from 'react'
 import './History.scss'
 import Wallet from './Wallet'
 
-const History = ({ history }) => (
+const History = ({ transactions, fetching }) => (
     <tbody>
-        { history.map((item, index) => {
+        {fetching ? transactions.map((item, index) => {
             return <Wallet 
                 key={index} 
                 direction={item.direction}
@@ -16,7 +16,7 @@ const History = ({ history }) => (
             />
         }
             
-        ) }
+        ) : <tr><td>Идет загрузка ....</td></tr> }
     </tbody>
 )
 

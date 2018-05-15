@@ -1,9 +1,14 @@
-import { UPDATE_LOADER } from '../actions/index'
+import { CLOSE_LOADER } from '../constants'
 
-export default (state = true, action) => {
+const initialState = {
+    visible: true
+}
+
+
+export default (state = initialState, action) => {
     switch (action.type) {
-        case UPDATE_LOADER:
-            return state = false
+        case CLOSE_LOADER:
+            return {  ...state, visible: action.payload }
 
         default:
             return state

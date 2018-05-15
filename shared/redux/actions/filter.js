@@ -1,6 +1,6 @@
-export const SET_FILTER = 'SET_FILTER'
+import { SET_FILTER } from '../constants'
 
 export const setFilter = (filter) => ({
     type: SET_FILTER,
-    filter
+    payload: filter
 })
