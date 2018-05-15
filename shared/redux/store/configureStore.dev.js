@@ -12,13 +12,11 @@ export const history = createHistory()
 
 const middleware = routerMiddleware(history)
 
-const initialState = (localStorage['redux-store']) ? 
-JSON.parse(localStorage['redux-store']) : {}
-
-export default function configureStore(initialState) {
+const configureStore = () => {
 	const store = createStore(
 		reducers,
-		initialState,
+		(localStorage['redux-store']) ? 
+		JSON.parse(localStorage['redux-store']) : {},
 		applyMiddleware(
 			promise, 
 			thunk, 
@@ -30,4 +28,6 @@ export default function configureStore(initialState) {
 
 	return store
 }
+
+export default configureStore
 

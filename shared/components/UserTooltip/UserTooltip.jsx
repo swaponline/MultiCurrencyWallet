@@ -5,21 +5,15 @@ import './UserTooltip.scss'
 import ArrowRightSvg from './arrow-right.svg'
 import AcceptSvg from './accept.svg'
 
-class UserTooltip extends React.Component {
-    render() {
-        const { notification, open, name } = this.props
-        return(
-            <div className="user-tooltip">
-                { open === true ? <p>Money withdraw</p> : '' }
-            </div>
-        )
-    }
-}
+const UserTooltip = ({ open }) => (
+    <div className="user-tooltip">
+        { open === true ? <p>Money withdraw</p> : '' }
+    </div>
+)
+
 
 UserTooltip.propTypes = {
-    notification: PropTypes.object,
-    name: PropTypes.string,
-    open: PropTypes.bool
+    notification: PropTypes.bool.isRequired
 }
 
 export default UserTooltip

@@ -1,5 +1,5 @@
 import React from 'react'
-
+import PropTypes from 'prop-types'
 import './Button.scss'
 
 const Button = ({ back }) => (
@@ -8,6 +8,10 @@ const Button = ({ back }) => (
         <a href="#" className="confirm__submit" >Confirm</a>
     </div>
 )
+
+Button.propTypes = {
+    back: PropTypes.func.isRequired
+}
 
 export default Button
 

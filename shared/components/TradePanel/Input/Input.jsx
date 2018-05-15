@@ -1,5 +1,5 @@
 import React from 'react'
-
+import PropTypes from 'prop-types'
 import './Input.scss'
 
 const Input = ({ currency, row = ''}) => (
@@ -10,6 +10,11 @@ const Input = ({ currency, row = ''}) => (
             <option value="BTC">BTC</option>
         </select>
     </div>
-);
+)
+
+Input.propTypes = {
+    currency: PropTypes.string.isRequired,
+    row: PropTypes.string
+}
 
 export default Input

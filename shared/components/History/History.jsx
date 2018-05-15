@@ -1,6 +1,7 @@
 import React from 'react'
-
+import PropTypes from 'prop-types'
 import './History.scss'
+
 import Wallet from './Wallet'
 
 const History = ({ transactions, fetching }) => (
@@ -19,5 +20,10 @@ const History = ({ transactions, fetching }) => (
         ) : <tr><td>Идет загрузка ....</td></tr> }
     </tbody>
 )
+
+History.propTypes = {
+    transactions: PropTypes.array.isRequired,
+    fetching: PropTypes.bool.isRequired
+}
 
 export default History

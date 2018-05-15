@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import './Description.scss'
 
 import FilterContainer from '../../containers/FilterContainer'
@@ -12,5 +13,11 @@ const Description = ({ title, subtitle, filter = false  }) => (
         </div>
     </div>
 )
+
+Description.propTypes = {
+    title: PropTypes.string,
+    subtitle: PropTypes.string.isRequired,
+    filter: PropTypes.bool
+}
 
 export default Description

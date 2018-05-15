@@ -1,5 +1,5 @@
 import React from 'react'
-
+import PropTypes from 'prop-types'
 import './ConfirmOffer.scss'
 
 import Coin from './Coin/Coin'
@@ -20,5 +20,9 @@ const ConfirmOffer = ({ back }) => (
         </div> 
     </div>
 )
+
+ConfirmOffer.propTypes = {
+    back: PropTypes.func.isRequired
+}
 
 export default ConfirmOffer

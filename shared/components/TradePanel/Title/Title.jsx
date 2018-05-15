@@ -1,5 +1,5 @@
 import React from 'react'
-
+import PropTypes from 'prop-types'
 import './Title.scss'
 
 const Title = ({name}) => (
@@ -10,5 +10,9 @@ const Title = ({name}) => (
         ?</span>
     </div>
 )
+
+Title.propTypes = {
+    name: PropTypes.string.isRequired
+}
 
 export default Title

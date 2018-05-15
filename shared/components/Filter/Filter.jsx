@@ -1,6 +1,7 @@
 import React from 'react'
-
+import PropTypes from 'prop-types'
 import './Filter.scss'
+
 import FilterLink from './FilterLink'
 
 const Filter = ({ onSetFilter, activeFilter }) => (
@@ -22,5 +23,10 @@ const Filter = ({ onSetFilter, activeFilter }) => (
         />
     </div>
 )
+
+Filter.propTypes = {
+    onSetFilter: PropTypes.func.isRequired,
+    activeFilter: PropTypes.string.isRequired
+}
 
 export default Filter

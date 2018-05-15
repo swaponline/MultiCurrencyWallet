@@ -1,5 +1,5 @@
 import React from 'react'
-
+import PropTypes from 'prop-types'
 import './HeaderOffer.scss'
 
 const HeaderOffer = ({ close }) => (
@@ -16,5 +16,9 @@ const HeaderOffer = ({ close }) => (
         </div>
     </div>
 )
+
+HeaderOffer.propTypes = {
+    close: PropTypes.func.isRequired
+}
 
 export default HeaderOffer

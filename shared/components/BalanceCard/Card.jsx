@@ -90,7 +90,7 @@ class BalanceCard extends React.Component {
 BalanceCard.propTypes = {
     open: PropTypes.bool.isRequired,
     wallet: PropTypes.object.isRequired,
-    isClose: PropTypes.func.isRequired
+    isClose: PropTypes.func.isRequired,
 }
 
 export default BalanceCard

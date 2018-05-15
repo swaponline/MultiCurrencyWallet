@@ -25,14 +25,18 @@ class User extends React.Component{
     }
 
     render() {
-        const { isOpen, notification, name, open } = this.props
+        const { isOpen, isUpdate, open, name } = this.props
         const { visible } = this.state
         return(
             <div className="user-cont">
                 {/*<Question />*/}
                 <Add isOpen={isOpen}/>
-                <Open open={this.handleChage}  newNotification={notification.open}/>
-                { visible ? <UserTooltip name={name} open={open} notification={notification} /> : '' }
+                <Open 
+                    open={this.handleChage} 
+                    isUpdate={isUpdate} 
+                    notification={open}
+                />
+                { visible ? <UserTooltip open={visible} /> : '' }
             </div>
         )
     }
@@ -40,9 +44,9 @@ class User extends React.Component{
 
 User.propTypes = {
     isOpen: PropTypes.func.isRequired,
-    notification: PropTypes.object.isRequired,
-    name: PropTypes.string,
-    open: PropTypes.bool
+    isUpdate: PropTypes.func.isRequired,
+    name: PropTypes.string.isRequired,
+    open: PropTypes.bool.isRequired
 }
 
 export default User

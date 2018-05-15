@@ -13,7 +13,7 @@ function mapStateToDispatch(dispatch) {
     return {
         addWallet: () => dispatch(addWallet()),
         getHistory: () => dispatch(getHistory()),
-        updateLoader: () => dispatch(updateLoader())
+        updateLoader: (action) => dispatch(updateLoader(action))
     }
 }
 

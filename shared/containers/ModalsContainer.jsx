@@ -5,7 +5,8 @@ import ModalRoot from '../components/Modals/Modals'
 
 function mapStateToProps(state) {
     return {
-        modals: state.modals,
+        name: state.modals.name,
+        open: state.modals.open,
         ...state.modals
     }
 }

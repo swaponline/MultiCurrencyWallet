@@ -1,5 +1,5 @@
 import React from 'react'
-import proptypes from 'prop-types'
+import PropTypes from 'prop-types'
 
 import './HeadTable.scss'
 
@@ -18,7 +18,7 @@ const HeadTable = ({ titles }) => (
 );
 
 HeadTable.proptypes = {
-
+    titles: PropTypes.array.isRequired
 }
 
 export default HeadTable

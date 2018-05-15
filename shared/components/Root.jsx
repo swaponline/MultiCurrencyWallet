@@ -21,7 +21,7 @@ class Root extends React.Component {
         this.props.getHistory()
 
         setTimeout(() => {
-            this.props.updateLoader()
+            this.props.updateLoader(false)
         }, 2000)
 
         app = new SwapApp({
@@ -103,7 +103,11 @@ class Root extends React.Component {
 Root.propTypes = {
   store: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
-  children: PropTypes.element.isRequired
+  children: PropTypes.element.isRequired,
+  addWallet: PropTypes.func.isRequired,
+  updateLoader: PropTypes.func.isRequired,
+  getHistory: PropTypes.func.isRequired,
+  loader: PropTypes.bool.isRequired,
 }
 
 export default Root

@@ -1,9 +1,9 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import HeadTable from '../HeadTable/HeadTable'
 import HistoryContainer from '../../containers/HistoryContainer'
 import BalanceContainer from '../../containers/BalanceContainer'
-
 
 const TradesTable = ({ titles, main = false, history = false, balance = false }) => (
     <div className="trades-table">
@@ -19,6 +19,10 @@ const TradesTable = ({ titles, main = false, history = false, balance = false })
             </table>
         </div>
     </div>
-);
+)
+
+TradesTable.propTypes = {
+    titles: PropTypes.array.isRequired,
+}
 
 export default TradesTable

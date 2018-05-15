@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import './Filter.scss'
 
 const FilterLink = ({ name, active, onClick }) => {
@@ -16,7 +17,12 @@ const FilterLink = ({ name, active, onClick }) => {
             'history-filter__item' }
         onClick={click}
         >{name}</a>
-    );
+    )
 }
 
-export default FilterLink;
+FilterLink.propTypes = {
+    name: PropTypes.string.isRequired,
+    active: PropTypes.bool.isRequired,
+}
+
+export default FilterLink

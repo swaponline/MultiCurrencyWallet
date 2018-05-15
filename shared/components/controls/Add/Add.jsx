@@ -1,5 +1,5 @@
 import React from 'react'
-
+import PropTypes from 'prop-types'
 import AddSvg from './add.svg'
 import './add.scss'
 
@@ -11,5 +11,9 @@ const Add = ({ isOpen }) => (
         <img src={AddSvg} alt=""/>
     </a>
 )
+
+Add.propTypes = {
+    isOpen: PropTypes.func.isRequired
+}
 
 export default Add
