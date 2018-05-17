@@ -6,6 +6,7 @@
   "main": "./bin/server",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "eslint": "eslint --cache ./shared --ext js",
     "start": "nodemon bin/server",
     "build": "npm i && webpack -p --config webpack.prod.js"
   },
@@ -15,6 +16,7 @@
   "devDependencies": {
     "babel": "^6.23.0",
     "babel-core": "^6.26.3",
+    "babel-eslint": "^8.2.3",
     "babel-loader": "^7.1.4",
     "babel-plugin-add-module-exports": "^0.2.1",
     "babel-polyfill": "^6.26.0",
@@ -27,6 +29,12 @@
     "bootstrap": "^4.0.0",
     "clean-webpack-plugin": "^0.1.19",
     "css-loader": "^0.28.11",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-babel": "^5.1.0",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.8.2",
     "exports-loader": "^0.7.0",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "file-loader": "^1.1.11",

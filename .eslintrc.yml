@@ -1,0 +1,121 @@
+root: true
+
+globals:
+  React: true
+  describe: true
+  it: true
+
+parser: babel-eslint
+
+plugins:
+  - jsx-a11y
+  - react
+  - import
+  - babel
+
+env:
+  browser: true
+  es6: true
+
+parserOptions:
+  ecmaVersion: 8
+  sourceType: module
+  ecmaFeatures:
+    experimentalObjectRestSpread: true
+    jsx: true
+    restParams: true
+    spread: true
+    arrowFunctions: true
+    classes: true
+    defaultParams: true
+    templateStrings: true
+
+extends: ['eslint-config-airbnb']
+
+rules:
+  indent:
+    - error
+    - 2
+    - SwitchCase: 1
+  linebreak-style:
+    - error
+    - unix
+  quotes:
+    - error
+    - single
+    - allowTemplateLiterals: true
+  semi:
+    - error
+    - never
+
+  # rewrite airbnb config
+
+  array-callback-return: warn
+  no-debugger: 2
+  no-console: 0
+  default-case: warn
+  dot-location: [warn, property]
+  eqeqeq: 2
+  comma-dangle:
+    - error
+    - always-multiline
+  max-len:
+    - error
+    - code: 180
+
+  no-multi-spaces: 0
+  no-return-assign: 0
+  no-underscore-dangle: 0
+  no-lonely-if: 0
+  no-param-reassign: 0
+  no-confusing-arrow: 0
+  no-extra-boolean-cast: 0
+  no-plusplus: 0
+  no-nested-ternary: 0
+  no-mixed-operators: 0
+  no-shadow: 0
+  no-cond-assign: 0
+  no-use-before-define: 0
+  no-template-curly-in-string: 0
+  no-unused-vars: 0
+
+  func-names: 0
+  padded-blocks: 0
+  object-curly-newline: 0
+  quote-props: 0
+  array-bracket-spacing: 0
+  brace-style: 0
+  arrow-parens: 0
+  key-spacing: 0
+  consistent-return: 0
+  function-paren-newline: 0
+  class-methods-use-this: 0
+  object-property-newline: 0
+  prefer-const: 0
+  prefer-promise-reject-errors: 0
+
+  react/default-props-match-prop-types: 0
+  react/require-default-props: 0
+  react/jsx-filename-extension: 0
+  react/display-name: 0
+  react/prop-types: 0
+  react/forbid-prop-types: 0
+  react/sort-comp: 0
+  react/jsx-closing-bracket-location: 0
+  react/no-array-index-key: 0
+  react/no-danger: 0
+  react/no-unused-state: 0
+
+  import/extensions: 0
+  import/no-unresolved: 0
+  import/first: 0
+  import/no-extraneous-dependencies: 0
+  import/newline-after-import: 0
+  import/no-dynamic-require: 0
+
+  jsx-a11y/no-static-element-interactions: 0
+  jsx-a11y/click-events-have-key-events: 0
+  jsx-a11y/media-has-caption: 0
+  jsx-a11y/aria-role: 0
+  jsx-a11y/label-has-for: 0
+
