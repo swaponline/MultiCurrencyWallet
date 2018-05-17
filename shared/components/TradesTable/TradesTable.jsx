@@ -6,23 +6,23 @@ import HistoryContainer from '../../containers/HistoryContainer'
 import BalanceContainer from '../../containers/BalanceContainer'
 
 const TradesTable = ({ titles, main = false, history = false, balance = false }) => (
-    <div className="trades-table">
-        <div className="container">
-            <table className="table">
+  <div className="trades-table">
+    <div className="container">
+      <table className="table">
 
-                <HeadTable titles={titles} />
+        <HeadTable titles={titles} />
 
-                { history ? <HistoryContainer /> : <tbody></tbody> }
+        { history ? <HistoryContainer /> : <tbody /> }
 
-                { balance ? <BalanceContainer /> : <tbody></tbody> }
-                
-            </table>
-        </div>
+        { balance ? <BalanceContainer /> : <tbody /> }
+
+      </table>
     </div>
+  </div>
 )
 
 TradesTable.propTypes = {
-    titles: PropTypes.array.isRequired,
+  titles: PropTypes.array.isRequired,
 }
 
 export default TradesTable

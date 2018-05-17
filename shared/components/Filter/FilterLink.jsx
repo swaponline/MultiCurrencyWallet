@@ -4,25 +4,27 @@ import './Filter.scss'
 
 const FilterLink = ({ name, active, onClick }) => {
 
-    function click(event) {
-        event.preventDefault()
-        onClick()
-    }
+  function click(event) {
+    event.preventDefault()
+    onClick()
+  }
 
-    return (
-        <a href="" 
-        className={ active ? 
-            'history-filter__item  history-filter__item_active' 
-            : 
-            'history-filter__item' }
-        onClick={click}
-        >{name}</a>
-    )
+  return (
+    <a
+      href=""
+      className={active ?
+        'history-filter__item  history-filter__item_active'
+        :
+        'history-filter__item'}
+      onClick={click}
+    >{name}
+    </a>
+  )
 }
 
 FilterLink.propTypes = {
-    name: PropTypes.string.isRequired,
-    active: PropTypes.bool.isRequired,
+  name: PropTypes.string.isRequired,
+  active: PropTypes.bool.isRequired,
 }
 
 export default FilterLink

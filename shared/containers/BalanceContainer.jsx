@@ -5,19 +5,19 @@ import Balance from '../components/Balances/Balance'
 import { openModal } from '../redux/actions'
 
 function mapStateToProps(state) {
-    return {
-        wallets: state.wallets.wallet,
-        fetching: state.wallets.fetching
-    }
+  return {
+    wallets: state.wallets.wallet,
+    fetching: state.wallets.fetching,
+  }
 }
 
 function mapStateToDispatch(dispatch) {
-    return {
-        openModal: (name, open, data) => dispatch(openModal(name, open, data))
-    }
+  return {
+    openModal: (name, open, data) => dispatch(openModal(name, open, data)),
+  }
 }
 
 export default connect(
-    mapStateToProps,
-    mapStateToDispatch
+  mapStateToProps,
+  mapStateToDispatch
 )(Balance)

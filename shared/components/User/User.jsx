@@ -8,45 +8,45 @@ import Add from '../controls/Add/Add'
 import Question from '../controls/Question/Question'
 import Open from '../controls/Open/Open'
 
-class User extends React.Component{
+class User extends React.Component {
 
-    constructor() {
-        super()
+  constructor() {
+    super()
 
-        this.state = {
-            visible: false
-        }
-
-        this.handleChage = this.handleChage.bind(this)
+    this.state = {
+      visible: false,
     }
 
-    handleChage() {
-        this.setState({ visible: !this.state.visible })
-    }
+    this.handleChage = this.handleChage.bind(this)
+  }
 
-    render() {
-        const { isOpen, isUpdate, open, name } = this.props
-        const { visible } = this.state
-        return(
-            <div className="user-cont">
-                {/*<Question />*/}
-                <Add isOpen={isOpen}/>
-                <Open 
-                    open={this.handleChage} 
-                    isUpdate={isUpdate} 
-                    notification={open}
-                />
-                { visible ? <UserTooltip open={visible} /> : '' }
-            </div>
-        )
-    }
-} 
+  handleChage() {
+    this.setState({ visible: !this.state.visible })
+  }
+
+  render() {
+    const { isOpen, isUpdate, open, name } = this.props
+    const { visible } = this.state
+    return (
+      <div className="user-cont">
+        {/* <Question /> */}
+        <Add isOpen={isOpen} />
+        <Open
+          open={this.handleChage}
+          isUpdate={isUpdate}
+          notification={open}
+        />
+        { visible ? <UserTooltip open={visible} /> : '' }
+      </div>
+    )
+  }
+}
 
 User.propTypes = {
-    isOpen: PropTypes.func.isRequired,
-    isUpdate: PropTypes.func.isRequired,
-    name: PropTypes.string.isRequired,
-    open: PropTypes.bool.isRequired
+  isOpen: PropTypes.func.isRequired,
+  isUpdate: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  open: PropTypes.bool.isRequired,
 }
 
 export default User

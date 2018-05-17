@@ -5,13 +5,13 @@ import { getFilteredHistory } from '../redux/reduсers'
 import History from '../components/History/History'
 
 function mapStateToProps(state) {
-    return {
-        transactions: getFilteredHistory(state),
-        fetching: state.history.fetching
-    }
+  return {
+    transactions: getFilteredHistory(state),
+    fetching: state.history.fetching,
+  }
 }
 
 export default connect(
-    mapStateToProps,
-    null
+  mapStateToProps,
+  null
 )(History)

@@ -6,10 +6,10 @@ import TradesTable from '../TradesTable/TradesTable'
 const titles = ['COIN', 'STATUS', 'AMOUNT']
 
 const History = () => (
-    <section>
-        <Description subtitle="History" filter={true}/>
-        <TradesTable titles={titles} history={true} />
-    </section>
+  <section>
+    <Description subtitle="History" filter />
+    <TradesTable titles={titles} history />
+  </section>
 )
 
 export default History

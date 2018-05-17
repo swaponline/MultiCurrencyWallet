@@ -6,14 +6,13 @@ import ArrowRightSvg from './arrow-right.svg'
 import AcceptSvg from './accept.svg'
 
 const UserTooltip = ({ open }) => (
-    <div className="user-tooltip">
-        { open === true ? <p>Money withdraw</p> : '' }
-    </div>
+  <div className="user-tooltip">
+    { open === true ? <p>Money withdraw</p> : '' }
+  </div>
 )
 
-
 UserTooltip.propTypes = {
-    notification: PropTypes.bool.isRequired
+  open: PropTypes.bool.isRequired,
 }
 
 export default UserTooltip
@@ -27,7 +26,7 @@ export default UserTooltip
 //         <span className="user-tooltip__to">1 <span className="user-tooltip__coin">btc</span></span>
 //     </div>
 // </div>
-    
+
 // <div className="user-tooltip__checked" >
 //     <img src={AcceptSvg} alt=""/>
 // </div>
