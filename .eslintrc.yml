@@ -48,6 +48,8 @@ rules:
     - error
     - never
 
+  import/newline-after-import: [error, { "count": 2 }]
+
   # rewrite airbnb config
 
   array-callback-return: warn
