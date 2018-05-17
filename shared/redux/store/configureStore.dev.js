@@ -13,20 +13,20 @@ export const history = createHistory()
 const middleware = routerMiddleware(history)
 
 const configureStore = () => {
-	const store = createStore(
-		reducers,
-		(localStorage['redux-store']) ? 
-		JSON.parse(localStorage['redux-store']) : {},
-		applyMiddleware(
-			promise, 
-			thunk, 
-			middleware, 
-			saver, 
-			createLogger()
-		)
-	)
+  const store = createStore(
+    reducers,
+    (localStorage['redux-store']) ?
+      JSON.parse(localStorage['redux-store']) : {},
+    applyMiddleware(
+      promise,
+      thunk,
+      middleware,
+      saver,
+      createLogger()
+    )
+  )
 
-	return store
+  return store
 }
 
 export default configureStore

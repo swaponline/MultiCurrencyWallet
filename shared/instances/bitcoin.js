@@ -4,7 +4,6 @@ import config from '../helpers/config'
 import bitcoin from 'bitcoinjs-lib'
 
 
-
 class Bitcoin {
 
   constructor() {
@@ -28,7 +27,7 @@ class Bitcoin {
     }
 
     const address     = keyPair.getAddress()
-    const account     = new this.core.ECPair.fromWIF(privateKey, this.testnet)
+    const account     = new this.core.ECPair.FromWIF(privateKey, this.testnet)
     const publicKey   = account.getPublicKeyBuffer().toString('hex')
 
     const data = {
@@ -37,9 +36,9 @@ class Bitcoin {
       address,
       privateKey,
       publicKey,
-    };
+    }
 
-    console.info('Logged in with Bitcoin', data);
+    console.info('Logged in with Bitcoin', data)
 
     return data
   }
@@ -55,33 +54,33 @@ class Bitcoin {
   getTransaction(address) {
     return new Promise((resolve) => {
 
-        const url =`https://api.blocktrail.com/v1/tBTC/address/${address}/transactions?api_key=${config.apiKeys.blocktrail}`
-        let transactions
+      const url = `https://api.blocktrail.com/v1/tBTC/address/${address}/transactions?api_key=${config.apiKeys.blocktrail}`
+      let transactions
 
-        let options = {
-          month: 'long',
-          day: 'numeric',
-          hour: 'numeric',
-          minute: 'numeric'
+      let options = {
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+      }
+
+      request.get(url).then((res) => {
+        console.log(res)
+        if (res.total) {
+          transactions = res.data.map((item) => ({
+            type: 'btc',
+            status: item.block_hash != null ? 1 : 0,
+            value: item.outputs[0].value / 1e8,
+            address: item.outputs[0].address,
+            date: new Date(Date.parse(item.time)).toLocaleString('en-US', options),
+            direction: address.toLocaleLowerCase() === item.outputs[0].address.toLocaleLowerCase() ? 'in' : 'out',
+          }))
+          resolve(transactions)
         }
-
-        request.get(url).then((res) => {
-          console.log(res)
-          if (res.total) {
-            transactions = res.data.map((item) => ({
-              type: 'btc',
-              status: item.block_hash != null ? 1 : 0,
-              value: item.outputs[0].value / 1e8,
-              address: item.outputs[0].address,
-              date: new Date(Date.parse(item.time)).toLocaleString("en-US", options),
-              direction: address.toLocaleLowerCase() === item.outputs[0].address.toLocaleLowerCase() ? 'in' : 'out'
-            }))
-            resolve(transactions)
-          }
-          else {
-            console.error('res:status BTC false', res)
-          }
-        })
+        else {
+          console.error('res:status BTC false', res)
+        }
+      })
 
     })
   }
@@ -101,32 +100,32 @@ class Bitcoin {
           },
         ],
       }
-      console.log('withdraw 0');
+      console.log('withdraw 0')
       request.post('https://api.blockcypher.com/v1/btc/test3/txs/new', {
         body: JSON.stringify(newtx),
       }).then((d) => {
         console.log('withdraw 1')
-          // convert response body to JSON
-          let tmptx = d
+        // convert response body to JSON
+        let tmptx = d
 
-          // attribute to store public keys
-          tmptx.pubkeys = []
+        // attribute to store public keys
+        tmptx.pubkeys = []
 
 
-          // build signer from WIF
-          let keys = new this.core.ECPair.fromWIF(keyPair.toWIF(), this.testnet)
+        // build signer from WIF
+        let keys = new this.core.ECPair.FromWIF(keyPair.toWIF(), this.testnet)
 
         // iterate and sign each transaction and add it in signatures while store corresponding public key in pubkeys
-          tmptx.signatures = tmptx.tosign.map((tosign, n) => {
-            tmptx.pubkeys.push(keys.getPublicKeyBuffer().toString('hex'));
+        tmptx.signatures = tmptx.tosign.map((tosign, n) => {
+          tmptx.pubkeys.push(keys.getPublicKeyBuffer().toString('hex'))
 
-            return keys.sign(BigInteger.fromHex(tosign.toString('hex')).toBuffer()).toDER().toString('hex')
-          })
-
-          return request.post('https://api.blockcypher.com/v1/btc/test3/txs/send', {
-            body: JSON.stringify(tmptx),
-          })
+          return keys.sign(BigInteger.fromHex(tosign.toString('hex')).toBuffer()).toDER().toString('hex')
         })
+
+        return request.post('https://api.blockcypher.com/v1/btc/test3/txs/send', {
+          body: JSON.stringify(tmptx),
+        })
+      })
         .then((res) => resolve(res)).catch((e) => console.log(e))
     })
   }

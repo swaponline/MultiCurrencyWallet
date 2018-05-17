@@ -1,15 +1,15 @@
 import { CLOSE_LOADER } from '../constants'
 
 const initialState = {
-    visible: true
+  visible: true,
 }
 
 export default (state = initialState, action) => {
-    switch (action.type) {
-        case CLOSE_LOADER:
-            return {  ...state, visible: action.payload }
+  switch (action.type) {
+    case CLOSE_LOADER:
+      return {  ...state, visible: action.payload }
 
-        default:
-            return state
-    }
+    default:
+      return state
+  }
 }
