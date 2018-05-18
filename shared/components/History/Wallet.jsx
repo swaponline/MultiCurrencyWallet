@@ -1,33 +1,35 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import './History.scss'
 
-export default function Wallet({ direction, type, value, address, date }) {
+import CSSModules from 'react-css-modules'
+import styles from './History.scss'
+
+function Wallet({ direction, type, value, address, date }) {
   return (
     <tr >
       <td>
         <div className="table__coin">
-          <div className={type === 'btc'
+          <div styleName={type === 'btc'
             ? 'table__coin-img table__coin-btc'
             : 'table__coin-img table__coin-eth'} />
-          <div className="table__coin-abbr">{type === 'btc' ? 'Btc' : 'Eth' }</div>
-          <div className="table__coin-name">{type === 'btc' ? 'Bitcoin' : 'Ethereum'}</div>
+          <div styleName="table__coin-abbr">{type === 'btc' ? 'Btc' : 'Eth' }</div>
+          <div styleName="table__coin-name">{type === 'btc' ? 'Bitcoin' : 'Ethereum'}</div>
         </div>
       </td>
       <td>
         <div className="table__status">
-          <div className={direction === 'in'
+          <div styleName={direction === 'in'
             ? 'table__status-stat table__status-stat_received'
             : 'table__status-stat table__status-stat_sent'} >Sent
           </div>
-          <div className="table__status-date">{date}</div>
-          <div className="table__status-address">Address: <span className="table__status-address-hash">{address}</span></div>
+          <div styleName="table__status-date">{date}</div>
+          <div styleName="table__status-address">Address: <span styleName="table__status-address-hash">{address}</span></div>
         </div>
       </td>
       <td>
         <span
           href="#"
-          className={direction === 'in'
+          styleName={direction === 'in'
             ? 'table__amount table__amount_received'
             : 'table__amount table__amount_sent'}>{ value}
         </span>
@@ -44,3 +46,4 @@ Wallet.propTypes = {
   direction: PropTypes.string.isRequired,
 }
 
+export default CSSModules(Wallet, styles, { allowMultiple: true })

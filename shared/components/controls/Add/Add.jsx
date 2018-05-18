@@ -1,13 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import AddSvg from './add.svg'
-import './add.scss'
 
-export default function Add({ isOpen }) {
+import CSSModules from 'react-css-modules'
+import styles from './add.scss'
+
+import AddSvg from './add.svg'
+
+function Add({ isOpen }) {
   return (
     <a
       href="#"
-      className="user-cont__add-user"
+      styleName="user-cont__add-user"
       onClick={(event) => {
         event.preventDefault()
         return isOpen('OFFER')
@@ -20,4 +23,6 @@ export default function Add({ isOpen }) {
 Add.propTypes = {
   isOpen: PropTypes.func.isRequired,
 }
+
+export default CSSModules(Add, styles)
 

@@ -1,13 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import './Title.scss'
 
-export default function Title({ name }) {
+import CSSModules from 'react-css-modules'
+import styles from './Title.scss'
+
+function Title({ name }) {
   return (
-    <div className="trade-panel__title">
+    <div styleName="trade-panel__title">
       <span>{name}</span>
       <span
-        className="question"
+        styleName="question"
         data-toggle="tooltip"
         data-placement="top"
         title="Enter the amount and the address. Transfer your coins and let the magic happen.">
@@ -20,4 +22,6 @@ export default function Title({ name }) {
 Title.propTypes = {
   name: PropTypes.string.isRequired,
 }
+
+export default CSSModules(Title, styles)
 

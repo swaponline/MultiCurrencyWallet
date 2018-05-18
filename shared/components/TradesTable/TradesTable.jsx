@@ -1,15 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import CSSModules from 'react-css-modules'
+import styles from './Table.scss'
+
 import HeadTable from '../HeadTable/HeadTable'
 import HistoryContainer from '../../containers/HistoryContainer'
 import BalanceContainer from '../../containers/BalanceContainer'
 
-export default function TradesTable({ titles, main = false, history = false, balance = false }) {
+function TradesTable({ titles, main = false, history = false, balance = false }) {
   return (
     <div className="trades-table">
       <div className="container">
-        <table className="table">
+        <table styleName="table" >
           <HeadTable titles={titles} />
           { history ? <HistoryContainer /> : <tbody /> }
           { balance ? <BalanceContainer /> : <tbody /> }
@@ -23,3 +26,4 @@ TradesTable.propTypes = {
   titles: PropTypes.array.isRequired,
 }
 
+export default CSSModules(TradesTable, styles)

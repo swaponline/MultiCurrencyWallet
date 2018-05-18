@@ -3,7 +3,6 @@ import { render } from 'react-dom'
 import routes from '../shared/routes/routes'
 import configureStore, { history } from '../shared/redux/store/configureStore'
 import RootContainer from '../shared/containers/RootContainer'
-import './scss/app.scss'
 
 const store = configureStore()
 

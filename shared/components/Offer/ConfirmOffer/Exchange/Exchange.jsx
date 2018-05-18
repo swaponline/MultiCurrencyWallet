@@ -1,17 +1,20 @@
 import React from 'react'
 
-import './Exchange.scss'
+import CSSModules from 'react-css-modules'
+import styles from './Exchange.scss'
 
-export default function Exchange() {
+function Exchange() {
   return (
-    <div className="confirm__row">
-      <div className="confirm__title">Exchange</div>
-      <div className="confirm__from-to">
-        <span className="confirm__from">12.278079 <span className="confirm__cur">eth</span></span>
-        <span className="confirm__arrow"><img src="img/arrow-right.svg" alt="" /></span>
-        <span className="confirm__to">7.75056072 <span className="confirm__cur">icx</span></span>
+    <div styleName="confirm__row">
+      <div styleName="confirm__title">Exchange</div>
+      <div styleName="confirm__from-to">
+        <span className="confirm__from">12.278079 <span styleName="confirm__cur">eth</span></span>
+        <span styleName="confirm__arrow"><img src="img/arrow-right.svg" alt="" /></span>
+        <span className="confirm__to">7.75056072 <span styleName="confirm__cur">icx</span></span>
       </div>
     </div>
   )
 }
+
+export default CSSModules(Exchange, styles)
 

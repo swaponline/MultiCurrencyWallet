@@ -14,7 +14,8 @@ export default function FilterLink({ name, active, onClick }) {
       href=""
       className={active ? 'history-filter__item  history-filter__item_active' : 'history-filter__item'}
       onClick={click}
-    >{name}
+    >
+      {name}
     </a>
   )
 }

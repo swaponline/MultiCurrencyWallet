@@ -90,6 +90,17 @@ input[type=number]::-webkit-outer-spin-button {
   padding-top: 88px;
 }
 
+.table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 1rem;
+  background-color: transparent;
+  display: table;
+  border-collapse: separate;
+  border-spacing: 2px;
+  border-color: grey;
+}
+
 .table tbody tr td {
   height: 114px;
   vertical-align: middle;

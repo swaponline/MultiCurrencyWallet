@@ -27,3 +27,4 @@ Address.propTypes = {
   setAddress: PropTypes.func.isRequired,
   currency:  PropTypes.string.isRequired,
 }
+

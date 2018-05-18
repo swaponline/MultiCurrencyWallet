@@ -3,12 +3,15 @@ import { ConnectedRouter } from 'react-router-redux'
 import { Provider } from 'react-redux'
 import PropTypes from 'prop-types'
 
+import CSSModules from 'react-css-modules'
+import styles from '../../client/scss/app.scss'
+
 import Header from './Header/Header'
 import Loader from './Loader/Loader'
 
 import ModalsContainer from '../containers/ModalsContainer'
-import user from '../instances/user'
 
+@CSSModules(styles)
 export default class Root extends React.Component {
 
   componentWillMount() {
@@ -29,7 +32,7 @@ export default class Root extends React.Component {
           { loader === true ?
             <Loader />
             :
-            <main className="main" id="main">
+            <main styleName="main" id="main">
               <Header />
               { children }
               <ModalsContainer />

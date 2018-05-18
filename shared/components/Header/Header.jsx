@@ -1,17 +1,21 @@
 import React from 'react'
-import './Header.scss'
+
+import CSSModules from 'react-css-modules'
+import styles from './Header.scss'
 
 import UserContainer from '../../containers/UserContainers'
 import Toolbar from '../Toolbar/Toolbar'
 
-export default function Header() {
-  return (
-    <div className="header">
-      <div className="container" >
-        <Toolbar />
-        <UserContainer />
+@CSSModules(styles)
+export default class Header extends React.Component {
+  render() {
+    return (
+      <div styleName="header">
+        <div className="container" >
+          <Toolbar />
+          <UserContainer />
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
 }
-

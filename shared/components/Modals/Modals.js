@@ -12,7 +12,7 @@ const MODAL_COMPONENTS = {
 export default function ModalRoot({ name, open, ...rest }) {
   if (!name) { return null }
   const SpecificModal = MODAL_COMPONENTS[name]
-  return <SpecificModal {...rest} open={open} />
+  return <SpecificModal {...rest} open />
 }
 
 ModalRoot.propTypes = {

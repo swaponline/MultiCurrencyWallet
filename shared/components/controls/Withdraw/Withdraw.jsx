@@ -10,7 +10,9 @@ export default function Withdraw({ text, isOpen }) {
       onClick={(event) => {
         event.preventDefault()
         return isOpen()
-      }}>{text }
+      }}
+    >
+      {text}
     </a>
   )
 }

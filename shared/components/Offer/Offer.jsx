@@ -1,11 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import './Offer.scss'
+
+import CSSModules from 'react-css-modules'
+import styles from './Offer.scss'
 
 import HeaderOffer from './HeaderOffer/HeaderOffer'
 import ConfirmOffer from './ConfirmOffer/ConfirmOffer'
 import AddOffer from './AddOffer/AddOffer'
 
+@CSSModules(styles)
 export default class Offer extends React.Component {
   constructor(props) {
     super(props)
@@ -25,9 +28,9 @@ export default class Offer extends React.Component {
     const { open, isClose } = this.props
     const { visible } = this.state
     return (open === true ?
-      <div className="offer-popup">
+      <div styleName="offer-popup">
         <HeaderOffer close={isClose} />
-        <div className="offer-popup__center">
+        <div styleName="offer-popup__center">
           { visible
             ? <AddOffer next={this.handleChange} />
             : <ConfirmOffer back={this.handleChange} /> }

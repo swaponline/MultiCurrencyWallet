@@ -1,0 +1,23 @@
+.table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1rem;
+    background-color: transparent;
+    display: table;
+    border-collapse: separate;
+    border-spacing: 2px;
+    border-color: grey;
+  }
+  
+  .table tbody tr td {
+    height: 114px;
+    vertical-align: middle;
+  }
+  
+  .table thead {
+    box-shadow: 0 3px 3px 0 rgba(0,0,0,0.03);
+  }
+  
+  .table > thead > tr > th {
+    border: 0;
+  }

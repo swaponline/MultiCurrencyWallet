@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import './History.scss'
 
 import Wallet from './Wallet'
 
@@ -15,8 +14,8 @@ export default function History({ transactions, fetching }) {
           value={Number(item.value)}
           address={item.address}
           type={item.type}
-        />)
-      ) : <tr><td>Идет загрузка ....</td></tr> }
+        />))
+        : <tr><td>Идет загрузка ....</td></tr> }
     </tbody>
   )
 }

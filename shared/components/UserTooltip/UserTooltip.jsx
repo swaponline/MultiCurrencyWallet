@@ -1,13 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import './UserTooltip.scss'
+
+import CSSModules from 'react-css-modules'
+import styles from './UserTooltip.scss'
 
 import ArrowRightSvg from './arrow-right.svg'
 import AcceptSvg from './accept.svg'
 
-export default function UserTooltip({ open }) {
+function UserTooltip({ open }) {
   return (
-    <div className="user-tooltip">
+    <div styleName="user-tooltip">
       { open === true ? <p>Money withdraw</p> : '' }
     </div>
   )
@@ -17,6 +19,7 @@ UserTooltip.propTypes = {
   open: PropTypes.bool.isRequired,
 }
 
+export default CSSModules(UserTooltip, styles)
 // swap notification
 // <div className="user-tooltip__info">
 //     <div className="user-tooltip__info-title">User want to swap</div>

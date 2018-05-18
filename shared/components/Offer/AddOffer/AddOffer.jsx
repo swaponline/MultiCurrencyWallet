@@ -1,29 +1,33 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import FlipIcon from './flip.svg'
-import './AddOffer.scss'
+
+import CSSModules from 'react-css-modules'
+import styles from './AddOffer.scss'
 
 import TradePanel from '../../TradePanel/TradePanel'
 
-export default function AddOffer({ next }) {
+function AddOffer({ next }) {
   return (
-    <div className="offer-popup__form">
-      <h2 className="offer-popup__title">Add offer</h2>
-      <div className="trade-panel trade-panel_offer">
+    <div styleName="offer-popup__form">
+      <h2 styleName="offer-popup__title">Add offer</h2>
+      <div styleName="trade-panel trade-panel_offer">
         <TradePanel
-          className="trade-panel__want trade-panel__want_offer"
+          className="trade-panel__want"
+          styleName="trade-panel__want_offer"
           name="You want"
           currency="BTC"
         />
-        <a href="#" className="trade-panel__change">
+        <a href="#" styleName="trade-panel__change">
           <img src={FlipIcon} alt="" />
         </a>
         <TradePanel
-          className="trade-panel__have trade-panel__have_offer"
+          className="trade-panel__have"
+          styleName="trade-panel__have_offer"
           name="You sell"
           currency="ETH"
         />
-        <a href="#" className="trade-panel__next" onClick={next}>Next</a>
+        <a href="#" styleName="trade-panel__next" onClick={next}>Next</a>
       </div>
     </div>
   )
@@ -32,4 +36,6 @@ export default function AddOffer({ next }) {
 AddOffer.propTypes = {
   next: PropTypes.func.isRequired,
 }
+
+export default CSSModules(AddOffer, styles, { allowMultiple: true })
 

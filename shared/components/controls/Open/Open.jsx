@@ -1,17 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import './Open.scss'
 
-export default function Open({ open, notification = false, isUpdate }) {
+import CSSModules from 'react-css-modules'
+import styles from './Open.scss'
+
+function Open({ open, notification = false, isUpdate }) {
   return (
     <div
       className="users"
       onClick={open}
       onMouseUp={() => isUpdate('', false)}>
-      <div className="users__user">
-        <span className="users__user-letter">K</span>
+      <div styleName="users__user">
+        <span styleName="users__user-letter">K</span>
         { notification === true ?
-          <span className="users__user-status" />  : ''}
+          <span styleName="users__user-status" />  : ''}
       </div>
     </div>
   )
@@ -22,4 +24,6 @@ Open.propTypes = {
   notification: PropTypes.bool.isRequired,
   isUpdate: PropTypes.func.isRequired,
 }
+
+export default CSSModules(Open, styles)
 

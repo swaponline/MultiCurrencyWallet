@@ -1,14 +1,16 @@
 import React from 'react'
-import './Toolbar.scss'
+
+import CSSModules from 'react-css-modules'
+import styles from './Toolbar.scss'
 
 import LogoSvg from './logo.svg'
 import SearchSvg from './search.svg'
 import ToolbarLink from './TollbarLink'
 
-export default function Toolbar() {
+function Toolbar() {
   return (
-    <div className="toolbar" >
-      <h1 className="logo" ><img src={LogoSvg} alt="swap.online logo" /></h1>
+    <div styleName="toolbar" >
+      <h1 styleName="logo" ><img src={LogoSvg} alt="swap.online logo" /></h1>
       {/* <div className="search-cont"> */}
       {/* <span className="search-btn"><img src={SearchSvg} alt=""/></span> */}
       {/* </div> */}
@@ -21,3 +23,4 @@ export default function Toolbar() {
   )
 }
 
+export default CSSModules(Toolbar, styles)

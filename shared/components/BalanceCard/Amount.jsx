@@ -31,17 +31,19 @@ export default class Amount extends React.Component {
             <div className="input-group-append">
               <span className="input-group-text">{ currency }</span>
             </div>
-
           </div>
           <p className="list-text">min:
             <a
               href="#"
               ref={a => this.minAmount = a}
               onClick={() => this.setBalance(this.minAmount.textContent)}
-            >
-              { currency === 'btc' ? '0.1' : '0.01' }
-            </a>, max
-            <a href="#" onClick={() => this.setBalance(balance)}>{ balance } </a>
+            > { currency === 'btc' ? '0.1' : '0.01' }
+            </a>
+            , max
+            <a
+              href="#"
+              onClick={() => this.setBalance(balance)}>{balance}
+            </a>
           </p>
         </div>
       )

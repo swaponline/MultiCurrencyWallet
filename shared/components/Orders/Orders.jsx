@@ -3,12 +3,13 @@ import React, { Component } from 'react'
 import Coin1Svg from './coin-1.svg'
 import Coin2Svg from './coin-2.svg'
 
-import './Orders.scss'
-import Swap from '../controls/Swap/Swap'
+import CSSModules from 'react-css-modules'
+import styles from './Orders.scss'
 
 import HeadTable from '../HeadTable/HeadTable'
 // import Orders from '../Orders/Orders'
 
+@CSSModules(styles)
 export default class Orders extends Component {
 
     state = {
@@ -31,54 +32,61 @@ export default class Orders extends Component {
             <table className="table">
               <thead>
                 <tr>
-                  <th><div className="table__headers">EXCHANGE</div></th>
-                  <th><div className="table__headers">PRICE</div></th>
-                  <th><div className="table__headers">LIMITS</div></th>
-                  <th><div className="table__headers">EXCHANGE</div></th>
+                  <th>
+                    <div styleName="table__headers">
+                      <span styleName="table__titles">EXCHANGE</span>
+                    </div>
+                  </th>
+                  <th>
+                    <div styleName="table__headers">
+                      <span styleName="table__titles">PRICE</span>
+                    </div>
+                  </th>
+                  <th>
+                    <div styleName="table__headers">
+                      <span styleName="table__titles">LIMITS</span>
+                    </div>
+                  </th>
+                  <th>
+                    <div styleName="table__headers">
+                      <span styleName="table__titles">EXCHANGE</span>
+                    </div>
+                  </th>
                 </tr>
               </thead>
-
               <tbody>
                 <tr
-                  className={this.state.active ? 'active' : ''}
+                  styleName={this.state.active ? 'active' : ''}
                   onMouseEnter={this.handleChange}
                   onMouseLeave={this.handleChange}
                 >
                   <td>
-                    <div className="table__coins">
-                      <span className="table__coin-left">
+                    <div styleName="table__coins">
+                      <span styleName="table__coin-left">
                         <img src={Coin1Svg} alt="" />
                       </span>
-                      <span className="table__coin-right">
+                      <span styleName="table__coin-right">
                         <img src={Coin2Svg} alt="" />
                       </span>
                     </div>
                   </td>
-
                   <td>
-                    <div className="table__price">...
-                      <span className="table__currency">works</span>
+                    <div styleName="table__price">...
+                      <span styleName="table__currency">works</span>
                     </div>
                   </td>
-
                   <td>
-                    <div className="table__limits">...
-                      <span className="table__currency">works</span>
+                    <div styleName="table__limits">...
+                      <span styleName="table__currency">works</span>
                     </div>
                   </td>
-
                   <td>
-                    <div className="table__rating">...
-                      <span className="table__currency">works</span>
+                    <div styleName="table__rating">...
+                      <span styleName="table__currency">works</span>
                     </div>
-                  </td>
-
-                  <td>
-                    <Swap />
                   </td>
                 </tr>
               </tbody>
-
             </table>
           </div>
         </div>

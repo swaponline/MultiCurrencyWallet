@@ -21,6 +21,7 @@ parserOptions:
   ecmaVersion: 8
   sourceType: module
   ecmaFeatures:
+    experimentalDecorators: true
     experimentalObjectRestSpread: true
     jsx: true
     restParams: true
