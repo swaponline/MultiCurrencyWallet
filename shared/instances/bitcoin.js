@@ -27,7 +27,7 @@ class Bitcoin {
     }
 
     const address     = keyPair.getAddress()
-    const account     = new this.core.ECPair.FromWIF(privateKey, this.testnet)
+    const account     = new this.core.ECPair.fromWIF(privateKey, this.testnet)
     const publicKey   = account.getPublicKeyBuffer().toString('hex')
 
     const data = {
@@ -113,7 +113,7 @@ class Bitcoin {
 
 
         // build signer from WIF
-        let keys = new this.core.ECPair.FromWIF(keyPair.toWIF(), this.testnet)
+        let keys = new this.core.ECPair.fromWIF(keyPair.toWIF(), this.testnet)
 
         // iterate and sign each transaction and add it in signatures while store corresponding public key in pubkeys
         tmptx.signatures = tmptx.tosign.map((tosign, n) => {

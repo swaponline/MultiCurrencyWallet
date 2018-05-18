@@ -2,18 +2,18 @@ import React from 'react'
 
 import Description from '../Description/Description'
 import TradesTable from '../TradesTable/TradesTable'
-import User from '../../instances/user'
+import user from '../../instances/user'
 
 const titles = ['Coin', 'Name', 'Available balance', 'Address']
 
-const Balances = () => (
-  <section>
-    <Description subtitle="Balances" />
-    <div className="container">
-      <a href="#" onClick={User.getDemoMoney}> Get demo money</a><br /><br />
-    </div>
-    <TradesTable titles={titles} balance />
-  </section>
-)
-
-export default Balances
+export default function Balances() {
+  return (
+    <section>
+      <Description subtitle="Balances" />
+      <div className="container">
+        <a href="#" onClick={user.getDemoMoney}> Get demo money</a><br /><br />
+      </div>
+      <TradesTable titles={titles} balance />
+    </section>
+  )
+}

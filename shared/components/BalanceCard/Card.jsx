@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import User from '../../instances/user'
+import user from '../../instances/user'
 import ethereum from '../../instances/ethereum'
 import bitcoin from '../../instances/bitcoin'
 
@@ -10,7 +10,7 @@ import Footer from './Footer'
 import Address from './Address'
 import Amount from './Amount'
 
-class BalanceCard extends React.Component {
+export default class BalanceCard extends React.Component {
 
   constructor(props) {
     super(props)
@@ -28,10 +28,10 @@ class BalanceCard extends React.Component {
   withdraw(address, amount, currency) {
     switch (currency) {
       case 'ETH':
-        return ethereum.send(User.ethData.address, address, amount, User.ethData.privateKey)
+        return ethereum.send(user.ethData.address, address, amount, user.ethData.privateKey)
 
       case 'BTC':
-        return bitcoin.send(User.btcData.address, address, amount, User.btcData.keyPair)
+        return bitcoin.send(user.btcData.address, address, amount, user.btcData.keyPair)
           .then(() => {
             this.props.isUpdate('withdraw', true)
           })
@@ -93,4 +93,3 @@ BalanceCard.propTypes = {
   isClose: PropTypes.func.isRequired,
 }
 
-export default BalanceCard

@@ -8,8 +8,8 @@ import './scss/app.scss'
 const store = configureStore()
 
 render(
-    <RootContainer history={history} store={store}>
-        { routes } 
-    </RootContainer>,
-    document.getElementById('root')
+  <RootContainer history={history} store={store}>
+    { routes }
+  </RootContainer>,
+  document.getElementById('root')
 )

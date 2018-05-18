@@ -7,9 +7,9 @@ import Header from './Header/Header'
 import Loader from './Loader/Loader'
 
 import ModalsContainer from '../containers/ModalsContainer'
-import User from '../instances/user'
+import user from '../instances/user'
 
-class Root extends React.Component {
+export default class Root extends React.Component {
 
   componentWillMount() {
 
@@ -51,4 +51,3 @@ Root.propTypes = {
   loader: PropTypes.bool.isRequired,
 }
 
-export default Root

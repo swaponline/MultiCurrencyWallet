@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-class Address extends React.Component {
+export default class Address extends React.Component {
   render() {
     const { setAddress, currency } = this.props
     return (
@@ -27,5 +27,3 @@ Address.propTypes = {
   setAddress: PropTypes.func.isRequired,
   currency:  PropTypes.string.isRequired,
 }
-
-export default Address

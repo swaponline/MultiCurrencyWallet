@@ -9,11 +9,8 @@ const MODAL_COMPONENTS = {
   'CARD': BalanceCard,
 }
 
-const ModalRoot = ({ name, open, ...rest }) => {
-  if (!name) {
-    return null
-  }
-
+export default function ModalRoot({ name, open, ...rest }) {
+  if (!name) { return null }
   const SpecificModal = MODAL_COMPONENTS[name]
   return <SpecificModal {...rest} open={open} />
 }
@@ -24,5 +21,3 @@ ModalRoot.propTypes = {
   name: PropTypes.string.isRequired,
   open: PropTypes.bool.isRequired,
 }
-
-export default ModalRoot

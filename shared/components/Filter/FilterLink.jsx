@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import './Filter.scss'
 
-const FilterLink = ({ name, active, onClick }) => {
+export default function FilterLink({ name, active, onClick }) {
 
   function click(event) {
     event.preventDefault()
@@ -12,10 +12,7 @@ const FilterLink = ({ name, active, onClick }) => {
   return (
     <a
       href=""
-      className={active ?
-        'history-filter__item  history-filter__item_active'
-        :
-        'history-filter__item'}
+      className={active ? 'history-filter__item  history-filter__item_active' : 'history-filter__item'}
       onClick={click}
     >{name}
     </a>
@@ -27,4 +24,3 @@ FilterLink.propTypes = {
   active: PropTypes.bool.isRequired,
 }
 
-export default FilterLink

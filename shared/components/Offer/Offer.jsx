@@ -1,12 +1,12 @@
 import React from 'react'
-
+import PropTypes from 'prop-types'
 import './Offer.scss'
 
 import HeaderOffer from './HeaderOffer/HeaderOffer'
 import ConfirmOffer from './ConfirmOffer/ConfirmOffer'
 import AddOffer from './AddOffer/AddOffer'
 
-class Offer extends React.Component {
+export default class Offer extends React.Component {
   constructor(props) {
     super(props)
 
@@ -28,15 +28,16 @@ class Offer extends React.Component {
       <div className="offer-popup">
         <HeaderOffer close={isClose} />
         <div className="offer-popup__center">
-          { visible ?
-            <AddOffer next={this.handleChange} />
-            :
-            <ConfirmOffer back={this.handleChange} /> }
+          { visible
+            ? <AddOffer next={this.handleChange} />
+            : <ConfirmOffer back={this.handleChange} /> }
         </div>
-      </div> : ''
+      </div> : null
     )
-
   }
 }
 
-export default Offer
+Offer.propTypes = {
+  open: PropTypes.bool.isRequired,
+  isClose: PropTypes.func.isRequired,
+}

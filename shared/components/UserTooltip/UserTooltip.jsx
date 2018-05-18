@@ -5,17 +5,17 @@ import './UserTooltip.scss'
 import ArrowRightSvg from './arrow-right.svg'
 import AcceptSvg from './accept.svg'
 
-const UserTooltip = ({ open }) => (
-  <div className="user-tooltip">
-    { open === true ? <p>Money withdraw</p> : '' }
-  </div>
-)
+export default function UserTooltip({ open }) {
+  return (
+    <div className="user-tooltip">
+      { open === true ? <p>Money withdraw</p> : '' }
+    </div>
+  )
+}
 
 UserTooltip.propTypes = {
   open: PropTypes.bool.isRequired,
 }
-
-export default UserTooltip
 
 // swap notification
 // <div className="user-tooltip__info">

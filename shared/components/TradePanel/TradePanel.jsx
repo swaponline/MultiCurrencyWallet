@@ -4,12 +4,14 @@ import PropTypes from 'prop-types'
 import Title from './Title/Title'
 import Input from './Input/Input'
 
-const TradePanel = ({ name, currency, row, className }) => (
-  <div className={className} >
-    <Title name={name} />
-    <Input currency={currency} row={row} />
-  </div>
-)
+export default function TradePanel({ name, currency, row, className }) {
+  return (
+    <div className={className} >
+      <Title name={name} />
+      <Input currency={currency} row={row} />
+    </div>
+  )
+}
 
 TradePanel.propTypes = {
   name: PropTypes.string.isRequired,
@@ -18,4 +20,3 @@ TradePanel.propTypes = {
   className: PropTypes.string.isRequired,
 }
 
-export default TradePanel

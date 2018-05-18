@@ -8,7 +8,7 @@ import Add from '../controls/Add/Add'
 import Question from '../controls/Question/Question'
 import Open from '../controls/Open/Open'
 
-class User extends React.Component {
+export default class User extends React.Component {
 
   constructor() {
     super()
@@ -49,4 +49,3 @@ User.propTypes = {
   open: PropTypes.bool.isRequired,
 }
 
-export default User

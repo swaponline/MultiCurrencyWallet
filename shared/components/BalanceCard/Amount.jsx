@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-class Amount extends React.Component {
+export default class Amount extends React.Component {
 
   constructor(props) {
     super(props)
@@ -54,4 +54,3 @@ Amount.propTypes = {
   setAmount: PropTypes.func.isRequired,
 }
 
-export default Amount
