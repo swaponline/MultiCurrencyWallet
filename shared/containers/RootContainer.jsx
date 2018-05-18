@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 
 import { addWallet, getHistory, updateLoader } from '../redux/actions'
-import Root from '../components/Root'
+import Root from '../components/Root/Root'
 
 function mapStateToProps(state) {
   return {

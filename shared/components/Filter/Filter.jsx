@@ -1,12 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import './Filter.scss'
+
+import CSSModules from 'react-css-modules'
+import styles from './Filter.scss'
 
 import FilterLink from './FilterLink'
 
-export default function Filter({ onSetFilter, activeFilter }) {
+function Filter({ onSetFilter, activeFilter }) {
   return (
-    <div className="history-filter">
+    <div styleName="history-filter">
       <FilterLink
         name="All"
         onClick={() => onSetFilter('ALL')}
@@ -31,3 +33,4 @@ Filter.propTypes = {
   activeFilter: PropTypes.string.isRequired,
 }
 
+export default CSSModules(Filter, styles)

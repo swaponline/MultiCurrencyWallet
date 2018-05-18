@@ -1,12 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import './Withdraw.scss'
 
-export default function Withdraw({ text, isOpen }) {
+import CSSModules from 'react-css-modules'
+import styles from './Withdraw.scss'
+
+function Withdraw({ text, isOpen }) {
   return (
     <a
       href="#"
-      className="table__withdraw"
+      styleName="table__withdraw"
       onClick={(event) => {
         event.preventDefault()
         return isOpen()
@@ -22,3 +24,4 @@ Withdraw.propTypes = {
   isOpen: PropTypes.func.isRequired,
 }
 
+export default CSSModules(Withdraw, styles)

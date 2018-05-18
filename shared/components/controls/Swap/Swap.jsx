@@ -1,12 +1,14 @@
 import React from 'react'
-import './Swap.scss'
 
-export default function Swap() {
+import CSSModules from 'react-css-modules'
+import styles from './Swap.scss'
+
+function Swap() {
   return (
-    <a href="#" className="table__link">
+    <a href="#" styleName="table__link">
       <svg xmlns="http://www.w3.org/2000/svg" width="7" height="10" viewBox="0 0 7 10">
         <path
-          className="table__link-arrow"
+          styleName="table__link-arrow"
           fill="none"
           fillRule="evenodd"
           stroke="#7c1de9"
@@ -17,4 +19,6 @@ export default function Swap() {
     </a>
   )
 }
+
+export default CSSModules(Swap, styles)
 

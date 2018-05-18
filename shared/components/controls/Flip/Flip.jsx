@@ -1,8 +1,11 @@
 import React from 'react'
 import FlipSvg from './flip.svg'
-import './Flip.scss'
 
-export default function Flip() {
-  return <a href="#" className="trade-panel__change"><img src={FlipSvg} alt="" /></a>
+import CSSModules from 'react-css-modules'
+import styles from './Flip.scss'
+
+function Flip() {
+  return <a href="#" styleName="trade-panel__change"><img src={FlipSvg} alt="" /></a>
 }
 
+export default CSSModules(Flip, styles)
