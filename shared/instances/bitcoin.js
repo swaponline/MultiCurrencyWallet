@@ -89,12 +89,12 @@ class Bitcoin {
       const newtx = {
         inputs: [
           {
-            addresses: [from],
+            addresses: [ from ],
           },
         ],
         outputs: [
           {
-            addresses: [to],
+            addresses: [ to ],
             value: amount * 100000000,
           },
         ],
