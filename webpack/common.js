@@ -55,7 +55,7 @@ module.exports = {
   },
   resolve: {
     alias: {
-      SwapCore: path.resolve(__dirname, '../../swap-core/src/'),
+      'swap-core': path.resolve(__dirname, '../../swap-core/src/'),
     },
     modules: [
       path.resolve(__dirname, '../client'),

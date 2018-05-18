@@ -5,6 +5,7 @@ import { connect } from 'redaction'
 import Offer from '../Offer/Offer'
 import BalanceCard from '../BalanceCard/Card'
 
+
 const MODAL_COMPONENTS = {
   'OFFER': Offer,
   'CARD': BalanceCard,

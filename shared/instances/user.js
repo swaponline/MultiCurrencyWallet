@@ -2,6 +2,7 @@ import bitcoin from './bitcoin'
 import ethereum from './ethereum'
 import request from '../../local_modules/request'
 
+
 class User {
   constructor() {
     this.ethData = {

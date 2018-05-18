@@ -7,6 +7,7 @@ import History from 'components/Pages/History'
 import Main from 'components/Pages/Main'
 import NotFound from 'components/Pages/NotFound'
 
+
 const routes = (
   <Switch>
     <Route exact path="/" component={Main} />
