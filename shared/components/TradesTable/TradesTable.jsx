@@ -11,7 +11,7 @@ import BalanceContainer from '../../containers/BalanceContainer'
 function TradesTable({ titles, main = false, history = false, balance = false }) {
   return (
     <div className="trades-table">
-      <div className="container">
+      <div styleName="container">
         <table styleName="table" >
           <HeadTable titles={titles} />
           { history ? <HistoryContainer /> : <tbody /> }

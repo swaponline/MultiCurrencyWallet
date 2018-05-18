@@ -11,7 +11,7 @@ export default class Header extends React.Component {
   render() {
     return (
       <div styleName="header">
-        <div className="container" >
+        <div styleName="container" >
           <Toolbar />
           <UserContainer />
         </div>

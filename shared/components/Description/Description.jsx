@@ -9,7 +9,7 @@ import FilterContainer from '../../containers/FilterContainer'
 function Description({ title, subtitle, filter = false  }) {
   return (
     <div styleName="description">
-      <div className="container">
+      <div styleName="container">
         { title !== '' ? <h2 styleName="description__title">{title}</h2> : '' }
         <h3 styleName="description__sub-title">{subtitle}</h3>
         {filter ? <FilterContainer /> : ''}

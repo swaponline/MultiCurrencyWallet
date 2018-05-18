@@ -28,8 +28,8 @@ export default class Orders extends Component {
 
       return (
         <div className="trades-table">
-          <div className="container">
-            <table className="table">
+          <div styleName="container">
+            <table styleName="table">
               <thead>
                 <tr>
                   <th>
