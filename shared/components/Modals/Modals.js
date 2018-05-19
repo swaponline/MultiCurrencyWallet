@@ -15,9 +15,9 @@ export default function ModalRoot({ name, open, ...rest }) {
   return <SpecificModal {...rest} open />
 }
 
-ModalRoot.propTypes = {
-  isClose: PropTypes.func.isRequired,
-  isUpdate: PropTypes.func.isRequired,
-  name: PropTypes.string.isRequired,
-  open: PropTypes.bool.isRequired,
-}
+// ModalRoot.propTypes = {
+//   isClose: PropTypes.func.isRequired,
+//   isUpdate: PropTypes.func.isRequired,
+//   name: PropTypes.string.isRequired,
+//   open: PropTypes.bool.isRequired,
+// }

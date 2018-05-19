@@ -65,7 +65,6 @@ class Bitcoin {
       }
 
       request.get(url).then((res) => {
-        console.log(res)
         if (res.total) {
           transactions = res.data.map((item) => ({
             type: 'btc',

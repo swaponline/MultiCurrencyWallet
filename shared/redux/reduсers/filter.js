@@ -1,11 +1,10 @@
-import { SET_FILTER } from '../constants'
+import { fromJS } from 'immutable'
 
-export default (state = 'ALL', action) => {
-  switch (action.type) {
-    case SET_FILTER:
-      return  action.payload
+// export const initialState = fromJS({
+//   filter: 'ALL'
+// })
 
-    default:
-      return state
-  }
-}
+// export const setFilter = (state, payload) => 
+
+//   state.update('filter', action => fi  )
+

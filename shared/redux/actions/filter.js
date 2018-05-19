@@ -1,6 +1,6 @@
-import { SET_FILTER } from '../constants'
+import reducers from '../core/Reducers'
 
-export const setFilter = (filter) => ({
-  type: SET_FILTER,
-  payload: filter,
-})
+export const setFilter = (filter) => {
+  reducers.filter.setFilter(filter)
+}
+

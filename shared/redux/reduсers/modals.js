@@ -1,23 +1,17 @@
-import { OPEN_MODALS, CLOSE_MODALS } from '../constants'
-
-const initialState = {
+export const initialState = {
   name: '',
   open: false,
 }
 
-export default (state = initialState, action) => {
-  switch (action.type) {
-    case OPEN_MODALS:
-      return { ...state,
-        name: action.name,
-        open: action.open,
-        ...action.data,
-      }
+export const openModal = (state, payload) => ({
+  ...state,
+  name: payload.name,
+  open: payload.open,
+  ...payload.data,
+})
 
-    case CLOSE_MODALS:
-      return initialState
-
-    default:
-      return state
-  }
-}
+export const closeModal = (state, payload) => ({
+  ...state,
+  name: '',
+  open: false,
+})

@@ -1,6 +1,6 @@
-import { CLOSE_LOADER } from '../constants'
+import reducers from '../core/Reducers'
 
-export const updateLoader = (action) => ({
-  type: CLOSE_LOADER,
-  payload: action,
-})
+export const updateLoader = (action) => {
+  reducers.loader.updateLoader(action)
+}
+

@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import actions from '../../../redux/actions'
 
 import CSSModules from 'react-css-modules'
 import styles from './add.scss'
@@ -13,16 +14,16 @@ function Add({ isOpen }) {
       styleName="user-cont__add-user"
       onClick={(event) => {
         event.preventDefault()
-        return isOpen('OFFER')
+        return actions.modals.openModal('OFFER')
       }}>
       <img src={AddSvg} alt="" />
     </a>
   )
 }
 
-Add.propTypes = {
-  isOpen: PropTypes.func.isRequired,
-}
+// Add.propTypes = {
+//   isOpen: PropTypes.func.isRequired,
+// }
 
 export default CSSModules(Add, styles)
 

@@ -19,11 +19,11 @@ function Open({ open, notification = false, isUpdate }) {
   )
 }
 
-Open.propTypes = {
-  open: PropTypes.func.isRequired,
-  notification: PropTypes.bool.isRequired,
-  isUpdate: PropTypes.func.isRequired,
-}
+// Open.propTypes = {
+//   open: PropTypes.func.isRequired,
+//   notification: PropTypes.bool.isRequired,
+//   isUpdate: PropTypes.func.isRequired,
+// }
 
 export default CSSModules(Open, styles)
 

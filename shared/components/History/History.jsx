@@ -1,23 +1,31 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'redaction'
 
 import Wallet from './Wallet'
 
-export default function History({ transactions, fetching }) {
-  return (
-    <tbody>
-      {fetching ? transactions.map((item, index) => (
-        <Wallet
-          key={index}
-          direction={item.direction}
-          date={item.date}
-          value={Number(item.value)}
-          address={item.address}
-          type={item.type}
-        />))
-        : <tr><td>Идет загрузка ....</td></tr> }
-    </tbody>
-  )
+@connect({
+  transactions: 'history.transactions',
+  fetching: 'history.fetching',
+})
+export default class History extends Component {
+  render() {
+    const { transactions, fetching } = this.props
+    return (
+      <tbody>
+        {transactions.map((item, index) => (
+          <Wallet
+            key={index}
+            direction={item.direction}
+            date={item.date}
+            value={Number(item.value)}
+            address={item.address}
+            type={item.type}
+          />))
+        }
+      </tbody>
+    )
+  }
 }
 
 History.propTypes = {

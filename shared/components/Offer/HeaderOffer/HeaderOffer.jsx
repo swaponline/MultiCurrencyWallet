@@ -7,7 +7,7 @@ import styles from './HeaderOffer.scss'
 function HeaderOffer({ close }) {
   return (
     <div styleName="offer-popup__header">
-      <div className="container">
+      <div styleName="container">
         <div styleName="offer-popup__logo">
           <svg xmlns="http://www.w3.org/2000/svg" width="32" height="30" viewBox="0 0 32 30">
             <g fill="#9a2ff0" fillRule="evenodd">

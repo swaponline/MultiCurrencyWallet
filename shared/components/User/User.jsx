@@ -45,10 +45,10 @@ export default class User extends React.Component {
   }
 }
 
-User.propTypes = {
-  isOpen: PropTypes.func.isRequired,
-  isUpdate: PropTypes.func.isRequired,
-  name: PropTypes.string.isRequired,
-  open: PropTypes.bool.isRequired,
-}
+// User.propTypes = {
+//   isOpen: PropTypes.func.isRequired,
+//   isUpdate: PropTypes.func.isRequired,
+//   name: PropTypes.string.isRequired,
+//   open: PropTypes.bool.isRequired,
+// }
 

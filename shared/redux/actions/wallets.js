@@ -1,37 +1,13 @@
-import {
-  GET_WALLET,
-  GET_HISTORY,
-  GET_HISTORY_REQUEST,
-  GET_WALLET_REQUEST,
-} from '../constants'
+import user from 'instances/user'
+import reducers from 'redux/core/reducers'
 
-import User from '../../instances/user'
-
-export function addWallet() {
-  return dispatch => {
-    dispatch({
-      type: GET_WALLET_REQUEST,
-    })
-
-    User.getData()
-      .then(data => dispatch({
-        type: GET_WALLET,
-        payload: data,
-      }))
-  }
+export const setWallets = () => {
+  user.getData()
+    .then(data => reducers.wallets.setWallets(data))
 }
 
-export function getHistory() {
-  return dispatch => {
-    dispatch({
-      type: GET_HISTORY_REQUEST,
-    })
-
-    User.getTransactions()
-      .then(data => dispatch({
-        type: GET_HISTORY,
-        payload: data,
-      }))
-  }
+export const getHistory = () => {
+  user.getTransactions()
+    .then(data =>
+      reducers.history.getHistory(data, false))
 }
-

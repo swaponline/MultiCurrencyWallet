@@ -1,28 +1,34 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'redaction'
 
 import Wallet from './Wallet'
 
-export default function Balance({ wallets, openModal, fetching }) {
-  return (
-    <tbody>
-      { fetching  ?
-        wallets.map((wallet, index) =>
+@connect({
+  wallets:  'wallets.wallet',
+  fetching: 'wallets.fetching',
+})
+export default class Balance extends Component {
+  render() {
+    const { wallets, openModal, fetching } = this.props
+    return (
+      <tbody>
+        { wallets.map((item, index) =>
           (<Wallet
             key={index}
-            balance={wallet.balance}
-            currency={wallet.currency}
-            address={wallet.address}
-            openModal={() => openModal('CARD', true, { wallet })}
+            balance={item.balance}
+            currency={item.currency}
+            address={item.address}
+            openModal={() => openModal('CARD', true, { item })}
           />)
-        ) : <tr><td>Идет загрузка данных...</td></tr>
-      }
-    </tbody>
-  )
+        )}
+      </tbody>
+    )
+  }
 }
 
-Balance.propTypes = {
-  wallets: PropTypes.array.isRequired,
-  openModal: PropTypes.func.isRequired,
-  fetching: PropTypes.bool.isRequired,
-}
+// Balance.propTypes = {
+//   wallets: PropTypes.array.isRequired,
+//   openModal: PropTypes.func.isRequired,
+//   fetching: PropTypes.bool.isRequired,
+// }

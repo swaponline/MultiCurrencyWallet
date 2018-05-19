@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import CSSModules from 'react-css-modules'
 import styles from './Description.scss'
 
-import FilterContainer from '../../containers/FilterContainer'
+import Filter from '../Filter/Filter'
 
 function Description({ title, subtitle, filter = false  }) {
   return (
@@ -12,7 +12,7 @@ function Description({ title, subtitle, filter = false  }) {
       <div styleName="container">
         { title !== '' ? <h2 styleName="description__title">{title}</h2> : '' }
         <h3 styleName="description__sub-title">{subtitle}</h3>
-        {filter ? <FilterContainer /> : ''}
+        {filter ? <Filter /> : ''}
       </div>
     </div>
   )

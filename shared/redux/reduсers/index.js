@@ -1,25 +1,16 @@
-import { combineReducers } from 'redux'
-import { routerReducer } from 'react-router-redux'
+import * as history from './history'
+import * as filter from './filter'
+import * as wallets from './wallets'
+import * as modals from './modals'
+import * as loader from './loader'
+import * as notification from './notification'
 
-import history, * as fromHistory from './history'
-import filter from './filter'
-import wallets from './wallets'
-import modals from './modals'
-import loader from './loader'
-import notification from './notification'
-
-const reducers =  combineReducers({
-  router: routerReducer,
-  notification,
-  loader,
+export default{
   history,
   filter,
   wallets,
   modals,
-})
-
-export function getFilteredHistory(state) {
-  return fromHistory.getFilteredHistory(state.history.transactions, state.filter)
+  loader,
+  notification,
 }
 
-export default reducers

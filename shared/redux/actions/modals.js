@@ -1,13 +1,10 @@
-import { CLOSE_MODALS, OPEN_MODALS } from '../constants'
+import reducers from '../core/Reducers'
 
-export const openModal = (name, open = true, data) => ({
-  type: OPEN_MODALS,
-  name,
-  open,
-  data,
-})
+export const openModal = (name, open = true, data) => {
+  reducers.modals.openModal(name, open, data)
+}
 
-export const closeModal = () => ({
-  type: CLOSE_MODALS,
-})
+export const closeModal = () => {
+  reducers.modals.closeModal()
+}
 

@@ -1,8 +1,5 @@
-import { UPDATE_NOTIFICATION } from '../constants'
+import reducers from '../core/Reducers'
 
-export const updateNotification = (name, open = false, data) => ({
-  type: UPDATE_NOTIFICATION,
-  name,
-  open,
-  data,
-})
+export const updateNotification = (name, open = false, data) => {
+  reducers.loader.updateNotification(name, open, data)
+}

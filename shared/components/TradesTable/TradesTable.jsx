@@ -5,8 +5,8 @@ import CSSModules from 'react-css-modules'
 import styles from './Table.scss'
 
 import HeadTable from '../HeadTable/HeadTable'
-import HistoryContainer from '../../containers/HistoryContainer'
-import BalanceContainer from '../../containers/BalanceContainer'
+import Balance from '../../components/Balances/Balance'
+import History from '../../components/History/History'
 
 function TradesTable({ titles, main = false, history = false, balance = false }) {
   return (
@@ -14,8 +14,8 @@ function TradesTable({ titles, main = false, history = false, balance = false })
       <div styleName="container">
         <table styleName="table" >
           <HeadTable titles={titles} />
-          { history ? <HistoryContainer /> : <tbody /> }
-          { balance ? <BalanceContainer /> : <tbody /> }
+          { history ? <History /> : <tbody /> }
+          { balance ? <Balance /> : <tbody /> }
         </table>
       </div>
     </div>

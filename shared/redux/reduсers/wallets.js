@@ -1,19 +1,13 @@
-import { GET_WALLET, GET_WALLET_REQUEST } from '../constants'
+import { fromJS } from 'immutable'
 
-const initialState = {
-  fetching: false,
+export const initialState = fromJS({
+  fetching: true,
   wallet: [],
-}
+})
 
-export default (state = initialState, action) => {
-  switch (action.type) {
-    case GET_WALLET_REQUEST:
-      return { ...state, fetching: true }
+// export const getWalletsRequest = (state, payload) =>
+//   state.set('fetching', false)
 
-    case GET_WALLET:
-      return { ...state, wallet: action.payload, fetching: true }
+export const setWallets = (state, payload) =>
+  state.set('wallet', fromJS(payload))
 
-    default:
-      return state
-  }
-}

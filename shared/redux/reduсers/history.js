@@ -1,22 +1,15 @@
-import { GET_HISTORY, GET_HISTORY_REQUEST } from '../constants'
+import { fromJS } from 'immutable'
 
-const initialState = {
-  fetching: false,
+export const initialState = {
+  fetching: true,
   transactions: [],
 }
 
-export default (state = initialState, action) => {
-  switch (action.type) {
-    case GET_HISTORY_REQUEST:
-      return { ...state, fetching: true }
+// export const getHistoryRequest = (state, payload) =>
+//   state.set('fetching', false)
 
-    case GET_HISTORY:
-      return { ...state, transactions: action.payload, fetching: true }
-
-    default:
-      return state
-  }
-}
+export const getHistory = (state, payload) =>
+  state.set('transactions', fromJS(payload))
 
 export const getFilteredHistory = (state, filter) => {
   switch (filter) {
