@@ -1,0 +1,96 @@
+$media-desktop-rule                       : "(min-width: " + $media-desktop-start + ")";
+$media-tablet-landscape-rule              : "(min-width: " + $media-tablet-landscape-start + ") and (max-width: " + $media-tablet-landscape-end + ")";
+$media-tablet-rule                        : "(min-width: " + $media-tablet-portrait-start + ") and (max-width: " + $media-tablet-landscape-end ")";
+$media-tablet-portrait-rule               : "(min-width: " + $media-tablet-portrait-start + ") and (max-width: " + $media-tablet-portrait-end + ")";
+$media-mobile-rule                        : "(max-width: " + $media-mobile-end + ")";
+$media-tablet-landscape-and-higher-rule   : "(min-width: " + $media-tablet-landscape-start + ")";
+$media-tablet-landscape-and-lower-rule    : "(max-width: " + $media-tablet-landscape-end + ")";
+$media-except-mobile-rule                 : "(min-width: " + $media-tablet-portrait-start + ")";
+$media-except-desktop-rule                : "(max-width: " + $media-tablet-landscape-end +  ")";
+$media-tablet-portrait-and-higher-rule    : "(min-width: " + $media-tablet-portrait-start +  ")";
+$media-tablet-portrait-and-lower-rule     : "(max-width: " + $media-tablet-portrait-end +  ")";
+
+
+@mixin media-desktop {
+  @media #{$media-desktop-rule} {
+    @content;
+  }
+}
+
+@mixin media-tablet-landscape {
+  @media #{$media-tablet-landscape-rule} {
+    @content;
+  }
+}
+
+@mixin media-tablet {
+  @media #{$media-tablet-rule} {
+    @content;
+  }
+}
+
+@mixin media-tablet-portrait {
+  @media #{$media-tablet-portrait-rule} {
+    @content;
+  }
+}
+
+@mixin media-mobile {
+  @media #{$media-mobile-rule} {
+    @content;
+  }
+}
+
+// * and higher
+
+@mixin media-tablet-landscape-and-higher {
+  @media #{$media-tablet-landscape-and-higher-rule} {
+    @content;
+  }
+}
+
+@mixin media-tablet-portrait-and-higher {
+  @media #{$media-tablet-portrait-and-higher-rule} {
+    @content;
+  }
+}
+
+@mixin media-except-mobile {
+  @media #{$media-except-mobile-rule} {
+    @content;
+  }
+}
+
+
+// * and lower
+
+@mixin media-except-desktop {
+  @media #{$media-except-desktop-rule} {
+    @content;
+  }
+}
+
+@mixin media-tablet-portrait-and-lower {
+  @media #{$media-tablet-portrait-and-lower-rule} {
+    @content;
+  }
+}
+
+@mixin media-tablet-landscape-and-lower {
+  @media #{$media-tablet-landscape-and-lower-rule} {
+    @content;
+  }
+}
+
+
+// retina
+
+@mixin media-retina {
+  $retina-variable: "only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-resolution: 144dpi)";
+  @media #{$retina-variable} { @content; }
+}
+
+@mixin media-retina-3x {
+  $retina-variable: "only screen and (-webkit-min-device-pixel-ratio: 2.5), only screen and (min-resolution: 288dpi)";
+  @media #{$retina-variable} { @content; }
+}

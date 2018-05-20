@@ -8,12 +8,14 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "eslint": "eslint  --fix --cache ./shared --ext jsx",
     "start": "nodemon bin/server",
+    "dev": "nodemon bin/server",
     "build": "npm i && webpack -p --config webpack.prod.js"
   },
   "keywords": [],
   "author": "@sylogex",
   "license": "ISC",
   "devDependencies": {
+    "autoprefixer": "^8.5.0",
     "babel": "^6.23.0",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.3",
@@ -77,9 +79,9 @@
     "webpack-merge": "^4.1.2"
   },
   "dependencies": {
-    "autoprefixer": "^8.3.0",
     "babel-preset-react-hmre": "^1.1.1",
     "bitcoinjs-lib": "^3.3.2",
+    "classnames": "^2.2.5",
     "font-awesome": "^4.7.0",
     "ipfs": "^0.28.2",
     "jquery": "^3.3.1",
@@ -90,6 +92,7 @@
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "react-scripts": "^1.1.4",
+    "sanitize.scss": "^1.0.0",
     "tether": "^1.4.4"
   }
 }

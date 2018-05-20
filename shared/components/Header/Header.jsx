@@ -3,16 +3,20 @@ import React from 'react'
 import CSSModules from 'react-css-modules'
 import styles from './Header.scss'
 
-import User from '../User/User'
-import Toolbar from '../Toolbar/Toolbar'
+import WidthContainer from 'components/WidthContainer/WidthContainer'
+import Logo from './Logo/Logo'
+import Nav from './Nav/Nav'
+import User from './User/User'
+
 
 function Header() {
   return (
     <div styleName="header">
-      <div styleName="container" >
-        <Toolbar />
+      <WidthContainer styleName="container">
+        <Logo />
+        <Nav />
         <User />
-      </div>
+      </WidthContainer>
     </div>
   )
 }

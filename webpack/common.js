@@ -1,9 +1,10 @@
-const path = require('path')
-const webpack = require('webpack')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
+import path from 'path'
+import webpack from 'webpack'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
+import CleanWebpackPlugin from 'clean-webpack-plugin'
 
-module.exports = {
+
+export default {
   entry: [
     'babel-polyfill', './client/index.js',
   ],
@@ -62,7 +63,7 @@ module.exports = {
       path.resolve(__dirname, '../shared'),
       'node_modules',
     ],
-    extensions: ['*', '.js', '.jsx'],
+    extensions: [ '*', '.js', '.jsx' ],
   },
   plugins: [
     new CleanWebpackPlugin(['build']),

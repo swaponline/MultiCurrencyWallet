@@ -1,0 +1,14 @@
+@mixin ff {
+  font-family: 'CerebriSans';
+  font-weight: normal;
+}
+
+@mixin ff-semibold {
+  font-family: 'CerebriSans Semibold';
+  font-weight: 600;
+}
+
+@mixin ff-bold {
+  font-family: 'CerebriSans Bold';
+  font-weight: 700;
+}

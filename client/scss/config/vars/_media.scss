@@ -1,0 +1,6 @@
+$media-mobile-end                   : 568px;
+$media-tablet-portrait-start        : $media-mobile-end + 1px;
+$media-tablet-portrait-end          : 768px;
+$media-tablet-landscape-start       : $media-tablet-portrait-end + 1px;
+$media-tablet-landscape-end         : 1024px;
+$media-desktop-start                : $media-tablet-landscape-end + 1px;

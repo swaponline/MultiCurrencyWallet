@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+
 import './TradePanel.scss'
 
 import Title from './Title/Title'
-import Input from './Input/Input'
+
 
 const TradePanel = ({ name, currency, row, className }) => (
   <div className={className} >

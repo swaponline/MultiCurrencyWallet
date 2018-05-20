@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'redaction'
 
 import CSSModules from 'react-css-modules'
@@ -7,9 +6,10 @@ import styles from './User.scss'
 
 import UserTooltip from 'components/UserTooltip/UserTooltip'
 
-import Add from 'components/controls/Add/Add'
+import AddOfferButton from 'components/controls/AddOfferButton/AddOfferButton'
 import Question from 'components/controls/Question/Question'
 import Open from 'components/controls/Open/Open'
+
 
 @connect({
   open: 'notification.open',
@@ -18,42 +18,36 @@ import Open from 'components/controls/Open/Open'
 @CSSModules(styles)
 export default class User extends React.Component {
 
-  constructor() {
-    super()
-
-    this.state = {
-      visible: false,
-    }
-
-    this.handleChage = this.handleChage.bind(this)
+  state = {
+    isVisible: false,
   }
 
-  handleChage() {
-    this.setState({ visible: !this.state.visible })
+  handleChange = () => {
+    const { isVisible } = this.state
+
+    this.setState({
+      isVisible: !isVisible,
+    })
   }
 
   render() {
     const { open, name } = this.props
-    const { visible } = this.state
+    const { isVisible } = this.state
     return (
       <div styleName="user-cont">
         {/* <Question /> */}
-        <Add  />
+        <AddOfferButton />
         <Open
-          isOpen={this.handleChage}
+          isOpen={this.handleChange}
           open={open}
           name={name}
         />
-        { visible ? <UserTooltip visible /> : '' }
+        {
+          isVisible && (
+            <UserTooltip isVisible />
+          )
+        }
       </div>
     )
   }
 }
-
-// User.propTypes = {
-//   isOpen: PropTypes.func.isRequired,
-//   isUpdate: PropTypes.func.isRequired,
-//   name: PropTypes.string.isRequired,
-//   open: PropTypes.bool.isRequired,
-// }
-

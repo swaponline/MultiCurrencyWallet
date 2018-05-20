@@ -1,8 +1,10 @@
-const merge = require('webpack-merge')
-const common = require('./common.js')
-const path = require('path')
+import path from 'path'
+import autoprefixer from 'autoprefixer'
+import merge from 'webpack-merge'
+import common from './common'
 
-module.exports = merge(common, {
+
+export default merge(common, {
   mode: 'development',
   output: {
     filename: '[name].bundle.js',
@@ -12,27 +14,47 @@ module.exports = merge(common, {
     rules: [
       {
         test: /\.scss$/,
-        use: [{
-          loader: 'style-loader',
-        }, {
-          loader: 'css-loader',
-          options: {
-            modules: true,
-            localIdentName: '[name]__[local]___[hash:base64:5]',
+        use: [
+          {
+            loader: 'style-loader',
+            options: { sourceMap: true },
           },
-        }, {
-          loader: 'postcss-loader',
-          options: {
-            plugins() {
-              return [
-                require('precss'),
-                require('autoprefixer'),
-              ]
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true,
+              modules: true,
+              localIdentName: '[local]__[hash:base64:3]',
             },
           },
-        }, {
-          loader: 'sass-loader',
-        }],
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true,
+              plugins: () => [
+                autoprefixer([
+                  'Android >= 4',
+                  'iOS >= 8',
+                  'Chrome >= 30',
+                  'Firefox >= 30',
+                  'Explorer >= 10',
+                  'Safari >= 8',
+                  'Opera >= 20',
+                ]),
+              ],
+            },
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true,
+              data: '@import "scss/config/index";',
+              includePaths: [
+                path.join(process.cwd(), 'client'),
+              ],
+            },
+          },
+        ],
       },
     ],
   },
@@ -44,5 +66,8 @@ module.exports = merge(common, {
     hot: true,
     port: 9001,
     open: true,
+    stats: 'errors-only',
+    noInfo: true,
+    lazy: false,
   },
 })

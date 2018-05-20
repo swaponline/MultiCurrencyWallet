@@ -1,0 +1,57 @@
+.widthContainer {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.widthContainerIn {
+
+  &.relative {
+    position: relative;
+  }
+}
+
+.fullHeight {
+  height: 100%;
+}
+
+
+
+@include media-mobile {
+
+  .widthContainer {
+    padding-left: vw(15);
+    padding-right: vw(15);
+
+    &.main {
+      padding-top: vw(30);
+      padding-bottom: vw(40);
+    }
+  }
+}
+
+@include media-except-mobile {
+
+  .widthContainer {
+
+    &.main {
+      padding-top: 30px;
+      padding-bottom: 40px;
+    }
+  }
+}
+
+@include media-tablet {
+
+  .widthContainer {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+}
+
+@include media-desktop {
+
+  .widthContainer {
+    padding-left: 2%;
+    padding-right: 2%;
+  }
+}

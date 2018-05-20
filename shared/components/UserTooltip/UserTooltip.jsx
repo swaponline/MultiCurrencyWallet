@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'redaction'
 
 import CSSModules from 'react-css-modules'
@@ -7,6 +6,7 @@ import styles from './UserTooltip.scss'
 
 import ArrowRightSvg from './arrow-right.svg'
 import AcceptSvg from './accept.svg'
+
 
 @connect(state => ({
   open: state.notification.open,
@@ -16,17 +16,13 @@ import AcceptSvg from './accept.svg'
 @CSSModules(styles)
 export default class UserTooltip extends Component {
   render() {
-    const { visible, data, name } = this.props
+    const { data, name } = this.props
     return (
       <div styleName="user-tooltip">
-        { visible === true ? <p>Money {name}</p> : '' }
+        <p>Money {name}</p>
       </div>
     )
   }
-}
-
-UserTooltip.propTypes = {
-  visible: PropTypes.bool.isRequired,
 }
 
 // swap notification

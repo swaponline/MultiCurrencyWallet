@@ -1,10 +1,11 @@
-const merge = require('webpack-merge')
-const common = require('./common')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const path = require('path')
+import path from 'path'
+import merge from 'webpack-merge'
+import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
+import ExtractTextPlugin from 'extract-text-webpack-plugin'
+import common from './common'
 
-module.exports = merge(common, {
+
+export default merge(common, {
   mode: 'production',
   output: {
     crossOriginLoading: 'anonymous',
@@ -24,12 +25,10 @@ module.exports = merge(common, {
           }, {
             loader: 'postcss-loader',
             options: {
-              plugins() {
-                return [
-                  require('precss'),
-                  require('autoprefixer'),
-                ]
-              },
+              plugins: () => [
+                require('precss'), // eslint-disable-line
+                require('autoprefixer'), // eslint-disable-line
+              ],
             },
           }, {
             loader: 'sass-loader',
