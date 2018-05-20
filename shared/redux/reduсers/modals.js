@@ -1,17 +1,19 @@
 export const initialState = {
-  name: '',
   open: false,
+  name: '',
+  data: {},
 }
 
-export const openModal = (state, payload) => ({
+export const open = (state, { name, open, data }) => ({
   ...state,
-  name: payload.name,
-  open: payload.open,
-  ...payload.data,
+  open,
+  name,
+  data: { ...data },
 })
 
-export const closeModal = (state, payload) => ({
+export const close = (state, payload) => ({
   ...state,
-  name: '',
   open: false,
+  name: '',
+  data: {},
 })

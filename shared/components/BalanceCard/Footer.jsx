@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import actions from 'redux/actions'
 
-export default function Footer({ isClose, withdraw, address, amount, currency }) {
+export default function Footer({ withdraw, address, amount, currency }) {
   return (
     <div className="modal-footer">
-      <button type="button" onClick={() => isClose()}className="btn btn-secondary" >Close</button>
+      <button type="button" onClick={actions.modals.close}className="btn btn-secondary" >Close</button>
       <button
         type="submit"
         onClick={event => {
@@ -18,7 +19,6 @@ export default function Footer({ isClose, withdraw, address, amount, currency })
 }
 
 Footer.propTypes = {
-  isClose: PropTypes.func.isRequired,
   withdraw: PropTypes.func.isRequired,
   address: PropTypes.string.isRequired,
   currency:  PropTypes.string.isRequired,

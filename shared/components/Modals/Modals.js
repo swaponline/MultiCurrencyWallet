@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'redaction'
 
 import Offer from '../Offer/Offer'
 import BalanceCard from '../BalanceCard/Card'
@@ -9,10 +10,20 @@ const MODAL_COMPONENTS = {
   'CARD': BalanceCard,
 }
 
-export default function ModalRoot({ name, open, ...rest }) {
-  if (!name) { return null }
-  const SpecificModal = MODAL_COMPONENTS[name]
-  return <SpecificModal {...rest} open />
+@connect(state => ({
+  name: state.modals.name,
+  open: state.modals.open,
+  data: state.modals.data,
+}))
+export default class ModalRoot extends Component {
+  render() {
+    const { name, open, data } = this.props
+    const SpecialModal = MODAL_COMPONENTS[name]
+    if (!name) {
+      return null
+    }
+    return <SpecialModal  {...data} open />
+  }
 }
 
 // ModalRoot.propTypes = {

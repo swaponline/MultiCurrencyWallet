@@ -25,11 +25,11 @@ export default class Offer extends React.Component {
   }
 
   render() {
-    const { open, isClose } = this.props
+    const { open } = this.props
     const { visible } = this.state
     return (open === true ?
       <div styleName="offer-popup">
-        <HeaderOffer close={isClose} />
+        <HeaderOffer />
         <div styleName="offer-popup__center">
           { visible
             ? <AddOffer next={this.handleChange} />
@@ -42,5 +42,4 @@ export default class Offer extends React.Component {
 
 Offer.propTypes = {
   open: PropTypes.bool.isRequired,
-  isClose: PropTypes.func.isRequired,
 }

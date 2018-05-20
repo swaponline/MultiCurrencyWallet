@@ -1,6 +1,6 @@
-import reducers from '../core/Reducers'
+import reducers from '../core/reducers'
 
 export const setFilter = (filter) => {
-  reducers.filter.setFilter(filter)
+  reducers.history.setFilter(filter)
 }
 

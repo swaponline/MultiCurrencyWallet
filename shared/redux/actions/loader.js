@@ -1,6 +1,6 @@
-import reducers from '../core/Reducers'
+import reducers from '../core/reducers'
 
-export const updateLoader = (action) => {
-  reducers.loader.updateLoader(action)
+export const update = () => {
+  reducers.loader.update()
 }
 

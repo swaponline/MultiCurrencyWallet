@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'redaction'
 
 import CSSModules from 'react-css-modules'
 import styles from './UserTooltip.scss'
@@ -7,19 +8,27 @@ import styles from './UserTooltip.scss'
 import ArrowRightSvg from './arrow-right.svg'
 import AcceptSvg from './accept.svg'
 
-function UserTooltip({ open }) {
-  return (
-    <div styleName="user-tooltip">
-      { open === true ? <p>Money withdraw</p> : '' }
-    </div>
-  )
+@connect(state => ({
+  open: state.notification.open,
+  name: state.notification.name,
+  data: { ...state.notification.data },
+}))
+@CSSModules(styles)
+export default class UserTooltip extends Component {
+  render() {
+    const { visible, data, name } = this.props
+    return (
+      <div styleName="user-tooltip">
+        { visible === true ? <p>Money {name}</p> : '' }
+      </div>
+    )
+  }
 }
 
 UserTooltip.propTypes = {
-  open: PropTypes.bool.isRequired,
+  visible: PropTypes.bool.isRequired,
 }
 
-export default CSSModules(UserTooltip, styles)
 // swap notification
 // <div className="user-tooltip__info">
 //     <div className="user-tooltip__info-title">User want to swap</div>

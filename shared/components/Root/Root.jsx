@@ -3,6 +3,7 @@ import { ConnectedRouter } from 'react-router-redux'
 import { Provider } from 'react-redux'
 import PropTypes from 'prop-types'
 import actions from 'redux/actions'
+import { connect } from 'redaction'
 
 import CSSModules from 'react-css-modules'
 import styles from './Root.scss'
@@ -12,12 +13,18 @@ import Loader from '../Loader/Loader'
 
 import Modals from '../Modals/Modals'
 
+@connect({
+  loader: 'loader.visible',
+})
 @CSSModules(styles)
 export default class Root extends React.Component {
 
   componentWillMount() {
     actions.wallets.setWallets()
     actions.wallets.getHistory()
+    setTimeout(() => {
+      actions.loader.update()
+    }, 3000)
   }
 
   render() {

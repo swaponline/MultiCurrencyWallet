@@ -1,15 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'redaction'
+import actions from 'redux/actions'
 
-import user from '../../instances/user'
-import ethereum from '../../instances/ethereum'
-import bitcoin from '../../instances/bitcoin'
+import user from 'instances/user'
+import ethereum from 'instances/ethereum'
+import bitcoin from 'instances/bitcoin'
 
 import Header from './Header'
 import Footer from './Footer'
 import Address from './Address'
 import Amount from './Amount'
 
+@connect(state => ({
+  wallet: state.modals.data,
+}))
 export default class BalanceCard extends React.Component {
 
   constructor(props) {
@@ -33,7 +38,7 @@ export default class BalanceCard extends React.Component {
       case 'BTC':
         return bitcoin.send(user.btcData.address, address, amount, user.btcData.keyPair)
           .then(() => {
-            this.props.isUpdate('withdraw', true)
+            actions.notification.update('withdraw', true, {})
           })
 
       default:
@@ -50,14 +55,15 @@ export default class BalanceCard extends React.Component {
   }
 
   render() {
-    const { open, isClose, wallet } = this.props
+    const { open, wallet } = this.props
     const { address, amount } = this.state
+    console.log('wallet', wallet)
     return (open === true ?
       <div className="modal"  tabIndex="-1" >
         <div className="modal-dialog">
           <form action="" >
             <div className="modal-content">
-              <Header currency={wallet.currency} isClose={isClose} />
+              <Header currency={wallet.currency} />
 
               <div className="modal-body">
                 <div className="text-danger" />
@@ -74,7 +80,6 @@ export default class BalanceCard extends React.Component {
 
               <Footer
                 withdraw={this.withdraw}
-                isClose={isClose}
                 address={address}
                 amount={amount}
                 currency={wallet.currency}
@@ -88,8 +93,7 @@ export default class BalanceCard extends React.Component {
 }
 
 BalanceCard.propTypes = {
-  open: PropTypes.bool.isRequired,
-  wallet: PropTypes.object.isRequired,
-  isClose: PropTypes.func.isRequired,
+  open: PropTypes.bool,
+  wallet: PropTypes.object,
 }
 

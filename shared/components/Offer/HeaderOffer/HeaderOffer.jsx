@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import actions from 'redux/actions'
 
 import CSSModules from 'react-css-modules'
 import styles from './HeaderOffer.scss'
 
-function HeaderOffer({ close }) {
+function HeaderOffer() {
   return (
     <div styleName="offer-popup__header">
       <div styleName="container">
@@ -15,14 +16,14 @@ function HeaderOffer({ close }) {
             </g>
           </svg>
         </div>
-        <div styleName="offer-popup__close" onClick={close} />
+        <div styleName="offer-popup__close" onClick={() => actions.modals.close()} />
       </div>
     </div>
   )
 }
 
 HeaderOffer.propTypes = {
-  close: PropTypes.func.isRequired,
+
 }
 
 export default CSSModules(HeaderOffer, styles)

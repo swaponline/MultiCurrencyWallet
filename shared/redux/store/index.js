@@ -1,7 +1,6 @@
-import { fromJS } from 'immutable'
 import { routerMiddleware } from 'react-router-redux'
 import createHistory from 'history/createBrowserHistory'
-import { createStore, combineReducers } from 'redaction/immutable'
+import { createStore, combineReducers } from 'redaction'
 import localReducers from '../reduсers'
 
 import promise from 'redux-promise'
@@ -10,9 +9,7 @@ import { saver } from '../middleware'
 
 export const history = createHistory()
 const middleware = routerMiddleware(history)
-const initialState = fromJS((localStorage['redux-store']) ? JSON.parse(localStorage['redux-store']) : {})
-
-console.log(initialState.toJS())
+const initialState = (localStorage['redux-store']) ? JSON.parse(localStorage['redux-store']) : {}
 
 const store = createStore({
   reducers: {

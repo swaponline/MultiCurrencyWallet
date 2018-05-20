@@ -1,10 +1,10 @@
-import reducers from '../core/Reducers'
+import reducers from '../core/reducers'
 
-export const openModal = (name, open = true, data) => {
-  reducers.modals.openModal(name, open, data)
+export const open = (name, open, data) => {
+  reducers.modals.open({ name, open, data })
 }
 
-export const closeModal = () => {
-  reducers.modals.closeModal()
+export const close = () => {
+  reducers.modals.close()
 }
 

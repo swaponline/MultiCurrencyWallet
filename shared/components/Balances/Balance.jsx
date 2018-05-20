@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'redaction'
+import actions from 'redux/actions'
 
 import Wallet from './Wallet'
 
@@ -13,22 +14,22 @@ export default class Balance extends Component {
     const { wallets, openModal, fetching } = this.props
     return (
       <tbody>
-        { wallets.map((item, index) =>
+        {fetching ? wallets.map((wallet, index) =>
           (<Wallet
             key={index}
-            balance={item.balance}
-            currency={item.currency}
-            address={item.address}
-            openModal={() => openModal('CARD', true, { item })}
+            balance={wallet.balance}
+            currency={wallet.currency}
+            address={wallet.address}
+            openModal={() => actions.modals.open('CARD', true, { ...wallet })}
           />)
-        )}
+        ) : <tr><td>Идет загрузка... </td></tr> }
       </tbody>
     )
   }
 }
 
-// Balance.propTypes = {
-//   wallets: PropTypes.array.isRequired,
-//   openModal: PropTypes.func.isRequired,
-//   fetching: PropTypes.bool.isRequired,
-// }
+Balance.propTypes = {
+  wallets: PropTypes.array,
+  openModal: PropTypes.func,
+  fetching: PropTypes.bool,
+}

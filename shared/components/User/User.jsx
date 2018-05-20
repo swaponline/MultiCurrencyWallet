@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'redaction'
 
 import CSSModules from 'react-css-modules'
 import styles from './User.scss'
@@ -10,6 +11,10 @@ import Add from '../controls/Add/Add'
 import Question from '../controls/Question/Question'
 import Open from '../controls/Open/Open'
 
+@connect({
+  open: 'notification.open',
+  name: 'notification.name',
+})
 @CSSModules(styles)
 export default class User extends React.Component {
 
@@ -28,18 +33,18 @@ export default class User extends React.Component {
   }
 
   render() {
-    const { isOpen, isUpdate, open, name } = this.props
+    const { open, name } = this.props
     const { visible } = this.state
     return (
       <div styleName="user-cont">
         {/* <Question /> */}
-        <Add isOpen={isOpen} />
+        <Add  />
         <Open
-          open={this.handleChage}
-          isUpdate={isUpdate}
-          notification={open}
+          isOpen={this.handleChage}
+          open={open}
+          name={name}
         />
-        { visible ? <UserTooltip open={visible} /> : '' }
+        { visible ? <UserTooltip visible /> : '' }
       </div>
     )
   }

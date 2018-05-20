@@ -1,5 +1,5 @@
-import reducers from '../core/Reducers'
+import reducers from '../core/reducers'
 
-export const updateNotification = (name, open = false, data) => {
-  reducers.loader.updateNotification(name, open, data)
-}
+export const update = (name, open, data) =>
+  reducers.notification.update({ name, open, data })
+

@@ -4,9 +4,10 @@ export const initialState = {
   data: {},
 }
 
-export const updateNotification = (state, payload) => ({
+export const update = (state, { name, open, data }) => ({
   ...state,
-  name: payload.name,
-  open: payload.open,
-  data: payload.data,
+  name,
+  open,
+  data: { ...data },
 })
+

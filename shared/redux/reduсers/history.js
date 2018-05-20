@@ -1,28 +1,17 @@
-import { fromJS } from 'immutable'
-
 export const initialState = {
-  fetching: true,
+  fetching: false,
   transactions: [],
+  filter: 'ALL',
 }
 
-// export const getHistoryRequest = (state, payload) =>
-//   state.set('fetching', false)
+export const getHistory = (state, payload) => ({
+  ...state,
+  fetching: true,
+  transactions: payload,
+})
 
-export const getHistory = (state, payload) =>
-  state.set('transactions', fromJS(payload))
+export const setFilter = (state, payload) => ({
+  ...state,
+  filter: payload,
+})
 
-export const getFilteredHistory = (state, filter) => {
-  switch (filter) {
-    case 'ALL':
-      return state
-
-    case 'SENT':
-      return state.filter(h => h.direction === 'in')
-
-    case 'RECEIVED':
-      return state.filter(h => h.direction === 'out')
-
-    default:
-      return state
-  }
-}

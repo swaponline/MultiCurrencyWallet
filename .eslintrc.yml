@@ -17,12 +17,13 @@ env:
   browser: true
   es6: true
 
+
 parserOptions:
   ecmaVersion: 8
   sourceType: module
   ecmaFeatures:
-    experimentalDecorators: true
     experimentalObjectRestSpread: true
+    experimentalDecorators: true
     jsx: true
     restParams: true
     spread: true
