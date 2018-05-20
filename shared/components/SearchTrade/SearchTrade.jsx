@@ -3,9 +3,9 @@ import React from 'react'
 import CSSModules from 'react-css-modules'
 import styles from './SearchTrade.scss'
 
-import Flip from '../controls/Flip/Flip'
-import Button from '../controls/Button/Button'
-import TradePanel from '../TradePanel/TradePanel'
+import Flip from 'components/controls/Flip/Flip'
+import Button from 'components/controls/Button/Button'
+import TradePanel from 'components/TradePanel/TradePanel'
 
 function SearchTrade() {
   return (

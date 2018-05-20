@@ -5,11 +5,11 @@ import { connect } from 'redaction'
 import CSSModules from 'react-css-modules'
 import styles from './User.scss'
 
-import UserTooltip from '../UserTooltip/UserTooltip'
+import UserTooltip from 'components/UserTooltip/UserTooltip'
 
-import Add from '../controls/Add/Add'
-import Question from '../controls/Question/Question'
-import Open from '../controls/Open/Open'
+import Add from 'components/controls/Add/Add'
+import Question from 'components/controls/Question/Question'
+import Open from 'components/controls/Open/Open'
 
 @connect({
   open: 'notification.open',

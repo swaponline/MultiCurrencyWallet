@@ -5,7 +5,7 @@ import FlipIcon from './flip.svg'
 import CSSModules from 'react-css-modules'
 import styles from './AddOffer.scss'
 
-import TradePanel from '../../TradePanel/TradePanel'
+import TradePanel from 'components/TradePanel/TradePanel'
 
 function AddOffer({ next }) {
   return (

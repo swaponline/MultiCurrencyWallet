@@ -8,10 +8,10 @@ import { connect } from 'redaction'
 import CSSModules from 'react-css-modules'
 import styles from './Root.scss'
 
-import Header from '../Header/Header'
-import Loader from '../Loader/Loader'
+import Header from 'components/Header/Header'
+import Loader from 'components/Loader/Loader'
 
-import Modals from '../Modals/Modals'
+import Modals from 'components/Modals/Modals'
 
 @connect({
   loader: 'loader.visible',

@@ -1,7 +1,7 @@
 import React from 'react'
 
-import Description from '../Description/Description'
-import TradesTable from '../TradesTable/TradesTable'
+import Description from 'components/Description/Description'
+import TradesTable from 'components/TradesTable/TradesTable'
 
 const titles = ['COIN', 'STATUS', 'AMOUNT']
 

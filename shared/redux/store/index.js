@@ -1,7 +1,7 @@
 import { routerMiddleware } from 'react-router-redux'
 import createHistory from 'history/createBrowserHistory'
 import { createStore, combineReducers } from 'redaction'
-import localReducers from '../reduсers'
+import localReducers from 'redux/reduсers'
 
 import promise from 'redux-promise'
 import { createLogger } from 'redux-logger'
