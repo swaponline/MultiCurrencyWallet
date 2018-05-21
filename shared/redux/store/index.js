@@ -4,7 +4,7 @@ import { createStore, combineReducers } from 'redaction'
 import { createLogger } from 'redux-logger'
 import promise from 'redux-promise'
 import localReducers from 'redux/reduсers'
-import { saver } from 'redux/middleware'
+// import { saver } from 'redux/middleware'
 
 
 export const history = createBrowserHistory()
@@ -18,7 +18,6 @@ const store = createStore({
   middleware: [
     promise,
     middleware,
-    saver,
     createLogger(),
   ],
   initialState,

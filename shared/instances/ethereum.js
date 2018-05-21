@@ -1,6 +1,5 @@
 import Web3 from 'web3'
-import config from '../helpers/config'
-import request from '../../local_modules/request'
+import { config, request } from 'helpers'
 
 
 const web3 = new Web3(new Web3.providers.HttpProvider('https://mainnet.infura.io/5lcMmHUURYg8F20GLGSr'))

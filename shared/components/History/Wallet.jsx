@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import CSSModules from 'react-css-modules'
 import styles from './History.scss'
 
+
 function Wallet({ direction, type, value, address, date }) {
   return (
     <tr >

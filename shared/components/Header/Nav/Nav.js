@@ -4,12 +4,14 @@ import { NavLink } from 'react-router-dom'
 import cssModules from 'react-css-modules'
 import styles from './Nav.scss'
 
+import actions from 'redux/actions'
+
 
 const nav = [
   { title: 'All', link: '/' },
   { title: 'Balances', link: '/balance' },
   { title: 'History', link: '/history' },
-  { title: 'Get demo money', onClick: () => { /* get demo money */ } },
+  { title: 'Get demo money', onClick: () => actions.user.getDemoMoney() },
 ]
 
 const Nav = () => (
@@ -18,6 +20,7 @@ const Nav = () => (
       nav.map(({ title, link, onClick }) => (
         link ? (
           <NavLink
+            exact
             key={title}
             styleName="link"
             to={link}

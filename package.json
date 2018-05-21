@@ -86,12 +86,14 @@
     "ipfs": "^0.28.2",
     "jquery": "^3.3.1",
     "lodash": "^4.17.5",
+    "node-gyp": "^3.6.2",
     "npm": "^5.8.0",
     "popper.js": "^1.14.3",
     "precss": "^3.1.2",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "react-scripts": "^1.1.4",
+    "rebuild": "^0.1.2",
     "sanitize.scss": "^1.0.0",
     "tether": "^1.4.4"
   }

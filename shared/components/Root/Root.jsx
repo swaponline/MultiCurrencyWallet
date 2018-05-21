@@ -13,15 +13,14 @@ import Loader from 'components/Loader/Loader'
 
 import Modals from 'components/Modals/Modals'
 
-@connect({
-  loader: 'loader.visible',
-})
+@connect(state => ({
+  loader: state.loader.visible,
+}))
 @CSSModules(styles)
 export default class Root extends React.Component {
 
   componentWillMount() {
-    actions.wallets.setWallets()
-    actions.wallets.getHistory()
+    actions.user.sign()
     setTimeout(() => {
       actions.loader.update()
     }, 3000)

@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'redaction'
-
 import Wallet from './Wallet'
+import actions from 'redux/actions'
+
 
 const getFilteredHistory = (state, filter) => {
   switch (filter) {
@@ -25,14 +26,21 @@ const getFilteredHistory = (state, filter) => {
     state.history.transactions,
     state.history.filter,
   ),
-  fetching: state.history.fetching,
+  ethAddress: state.user.ethData.address,
+  btcAddress: state.user.btcData.address,
 }))
 export default class History extends Component {
+
+  componentWillMount() {
+    const { ethAddress, btcAddress } = this.props
+    actions.user.setTransactions(ethAddress, btcAddress)
+  }
+
   render() {
     const { transactions, fetching } = this.props
     return (
       <tbody>
-        { fetching ? transactions.map((item, index) => (
+        { transactions.map((item, index) => (
           <Wallet
             key={index}
             direction={item.direction}
@@ -40,7 +48,7 @@ export default class History extends Component {
             value={Number(item.value)}
             address={item.address}
             type={item.type}
-          />)) : <tr><td>Идет загрузка... </td></tr>
+          />))
         }
       </tbody>
     )

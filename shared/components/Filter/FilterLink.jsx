@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import CSSModules from 'react-css-modules'
 import styles from './Filter.scss'
 
+
 function FilterLink({ name, active, onClick }) {
 
   function click(event) {

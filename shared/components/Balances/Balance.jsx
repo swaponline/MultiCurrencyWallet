@@ -5,16 +5,25 @@ import actions from 'redux/actions'
 
 import Wallet from './Wallet'
 
-@connect({
-  wallets:  'wallets.wallet',
-  fetching: 'wallets.fetching',
-})
+
+@connect(state => ({
+  wallets:  [].concat(state.user.ethData, state.user.btcData),
+  ethAddress: state.user.ethData.address,
+  btcAddress: state.user.btcData.address,
+}))
 export default class Balance extends Component {
+
+  componentWillMount() {
+    const { ethAddress, btcAddress } = this.props
+    actions.user.getBalances(ethAddress, btcAddress)
+  }
+
   render() {
-    const { wallets, openModal, fetching } = this.props
+    const { wallets } = this.props
+    console.log('wallets', wallets)
     return (
       <tbody>
-        {fetching ? wallets.map((wallet, index) =>
+        {wallets.map((wallet, index) =>
           (<Wallet
             key={index}
             balance={wallet.balance}
@@ -22,7 +31,7 @@ export default class Balance extends Component {
             address={wallet.address}
             openModal={() => actions.modals.open('CARD', true, { ...wallet })}
           />)
-        ) : <tr><td>Идет загрузка... </td></tr> }
+        )}
       </tbody>
     )
   }
@@ -30,6 +39,4 @@ export default class Balance extends Component {
 
 Balance.propTypes = {
   wallets: PropTypes.array,
-  openModal: PropTypes.func,
-  fetching: PropTypes.bool,
 }

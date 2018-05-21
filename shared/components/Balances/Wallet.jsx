@@ -8,13 +8,14 @@ import CoinBTC from './coin-1.svg'
 import CoinETH from './coin-2.svg'
 import Withdraw from '../controls/Withdraw/Withdraw'
 
+
 function Wallet({ currency, balance, address, openModal }) {
   return (
     <tr>
       <td>
         <div styleName="table__coins">
           <span styleName="table__coin-left">
-            { currency === 'eth' ? <img src={CoinETH} alt="" /> : <img src={CoinBTC} alt="" /> }
+            { currency.toLowerCase() === 'eth' ? <img src={CoinETH} alt="" /> : <img src={CoinBTC} alt="" /> }
           </span>
         </div>
       </td>

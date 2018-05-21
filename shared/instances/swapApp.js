@@ -1,7 +1,6 @@
 import bitcoinJsLib from 'bitcoinjs-lib'
 import { SwapApp, setupEnv } from 'swap-core'
-import { web3 } from 'instances/ethereum'
-import user from 'instances/user'
+import user, { web3 } from 'instances'
 
 
 setupEnv({
