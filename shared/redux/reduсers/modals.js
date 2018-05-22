@@ -1,19 +1,21 @@
-export const initialState = {
-  open: false,
-  name: '',
-  data: {},
+// this is necessary to arrange the modals in the opening order, not alphabetical
+let zIndex = 305
+
+export const initialState = {}
+
+export const open = (state, { name, data = {} }) => ({
+  ...state,
+  [name]: {
+    name,
+    data,
+    zIndex: ++zIndex,
+  },
+})
+
+export const close = (state, name) => {
+  const { [name]: closingModal, ...otherModals }
+
+  zIndex -= 1
+
+  return otherModals
 }
-
-export const open = (state, { name, open, data }) => ({
-  ...state,
-  open,
-  name,
-  data: { ...data },
-})
-
-export const close = (state, payload) => ({
-  ...state,
-  open: false,
-  name: '',
-  data: {},
-})

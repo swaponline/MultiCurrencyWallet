@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import actions from 'redux/actions'
+import { constants } from 'helpers'
 
 import CSSModules from 'react-css-modules'
 import styles from './AddOfferButton.scss'
@@ -9,7 +10,7 @@ import styles from './AddOfferButton.scss'
 export default class AddOfferButton extends Component {
 
   handleClick = () => {
-    actions.modals.open('OFFER', true, {})
+    actions.modals.open(constants.modals.offer, true, {})
   }
 
   render() {

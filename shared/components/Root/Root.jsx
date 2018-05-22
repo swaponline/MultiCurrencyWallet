@@ -10,7 +10,7 @@ import styles from './Root.scss'
 
 import Header from 'components/Header/Header'
 import Loader from 'components/Loader/Loader'
-import Modals from 'components/Modals/Modals'
+import ModalConductor from 'components/modal/ModalConductor/ModalConductor'
 
 
 @connect({
@@ -18,6 +18,12 @@ import Modals from 'components/Modals/Modals'
 })
 @CSSModules(styles)
 export default class Root extends React.Component {
+
+  propTypes = {
+    store: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
+    children: PropTypes.element.isRequired,
+  }
 
   componentWillMount() {
     actions.user.sign()
@@ -31,24 +37,19 @@ export default class Root extends React.Component {
     return (
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          { loader === true ?
-            <Loader />
-            :
-            <main styleName="main" id="main">
-              <Header />
-              { children }
-              <Modals />
-            </main>
+          {
+            loader === true ? (
+              <Loader />
+            ) : (
+              <main styleName="main" id="main">
+                <Header />
+                {children}
+                <ModalConductor />
+              </main>
+            )
           }
         </ConnectedRouter>
       </Provider>
     )
   }
 }
-
-Root.propTypes = {
-  store: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
-  children: PropTypes.element.isRequired,
-}
-

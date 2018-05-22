@@ -1,11 +1,6 @@
 import reducers from 'redux/core/reducers'
 
 
-export const open = (name, open, data) => {
-  reducers.modals.open({ name, open, data })
-}
+export const open = (name, data) => reducers.modals.open({ name, data })
 
-export const close = () => {
-  reducers.modals.close()
-}
-
+export const close = (name) => reducers.modals.close(name)
