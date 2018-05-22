@@ -1,0 +1,90 @@
+.modal {
+  position: relative;
+  vertical-align: top;
+  cursor: default;
+}
+
+.header {
+  line-height: 22px;
+}
+
+.closeButton {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  opacity: .5;
+  transition: opacity .33s $ease-out-quadratic;
+
+  &:hover {
+    opacity: 1;
+    transition: none;
+  }
+}
+
+.title {
+  display: block;
+  text-align: center;
+
+  &.uppercase {
+    text-transform: uppercase;
+  }
+}
+
+.content {
+  text-align: center;
+  font-size: 16px;
+}
+
+.subText {
+  margin-top: 20px;
+  font-size: 12px;
+}
+
+
+@include media-mobile {
+
+  .modal {
+    padding: 0 20px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .closeButton {
+    top: 15px;
+    right: 15px;
+  }
+
+  .title {
+    margin-top: vw(-20);
+    margin-bottom: vw(20);
+    font-size: vw(20);
+    line-height: vw(22);
+  }
+}
+
+@include media-except-mobile {
+
+  .modal {
+    min-width: 440px;
+    max-width: 600px;
+    margin: 30px 0;
+    padding: 50px 50px 40px;
+  }
+
+  .closeButton {
+    top: 14px;
+    right: 20px;
+  }
+
+  .title {
+    margin-top: -20px;
+    margin-bottom: 30px;
+    font-size: 24px;
+    line-height: 27px;
+  }
+}

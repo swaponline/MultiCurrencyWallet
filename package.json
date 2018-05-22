@@ -29,7 +29,6 @@
     "babel-preset-stage-0": "^6.24.1",
     "bigi": "^1.4.2",
     "bitcoinjs-lib": "^3.3.2",
-    "bootstrap": "^4.0.0",
     "clean-webpack-plugin": "^0.1.19",
     "css-loader": "^0.28.11",
     "eslint": "^4.19.1",

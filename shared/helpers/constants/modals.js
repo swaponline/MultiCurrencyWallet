@@ -1,4 +1,4 @@
 export default {
-  withdraw: 'WithdrawModal',
-  offer: 'OfferModal',
+  Withdraw: 'WithdrawModal',
+  Offer: 'OfferModal',
 }

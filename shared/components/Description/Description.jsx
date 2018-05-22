@@ -6,14 +6,21 @@ import styles from './Description.scss'
 
 import Filter from '../Filter/Filter'
 
-function Description({ title, subtitle, filter = false  }) {
+
+function Description({ title, subtitle, filter = false }) {
   return (
     <div styleName="description">
-      <div styleName="container">
-        { title !== '' ? <h2 styleName="description__title">{title}</h2> : '' }
-        <h3 styleName="description__sub-title">{subtitle}</h3>
-        {filter ? <Filter /> : ''}
-      </div>
+      {
+        title && (
+          <h2 styleName="description__title">{title}</h2>
+        )
+      }
+      <h3 styleName="description__sub-title">{subtitle}</h3>
+      {
+        filter && (
+          <Filter />
+        )
+      }
     </div>
   )
 }

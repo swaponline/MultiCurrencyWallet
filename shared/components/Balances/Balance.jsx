@@ -30,7 +30,9 @@ export default class Balance extends Component {
               balance={wallet.balance}
               currency={wallet.currency}
               address={wallet.address}
-              openModal={() => actions.modals.open(constants.modals.withdraw, wallet)}
+              openModal={() => {
+                actions.modals.open(constants.modals.Withdraw, wallet)
+              }}
             />
           ))
         }

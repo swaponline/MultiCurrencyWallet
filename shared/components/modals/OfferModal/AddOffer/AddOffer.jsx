@@ -7,10 +7,10 @@ import styles from './AddOffer.scss'
 
 import TradePanel from 'components/TradePanel/TradePanel'
 
+
 function AddOffer({ next }) {
   return (
     <div styleName="offer-popup__form">
-      <h2 styleName="offer-popup__title">Add offer</h2>
       <div styleName="trade-panel trade-panel_offer">
         <TradePanel
           className="trade-panel__want"

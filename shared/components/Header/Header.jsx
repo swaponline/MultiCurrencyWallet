@@ -3,7 +3,7 @@ import React from 'react'
 import CSSModules from 'react-css-modules'
 import styles from './Header.scss'
 
-import WidthContainer from 'components/WidthContainer/WidthContainer'
+import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import Logo from './Logo/Logo'
 import Nav from './Nav/Nav'
 import User from './User/User'

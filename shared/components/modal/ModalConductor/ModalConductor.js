@@ -1,5 +1,4 @@
-import React, { Component, Fragment } from 'react'
-import Portal from 'react-portal'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'redaction'
 import { getScrollBarWidth, getPageOffset } from 'helpers'
@@ -58,25 +57,24 @@ export default class ModalConductor extends Component {
   render() {
     const { modals } = this.props
 
-    return (
-      <Portal isOpened>
-        {/* this wrapper is needed bcs Portal v3 waiting for one element in children */}
-        <Fragment>
-          {
-            Object.keys(modals).map((key) => {
-              const { name, data = {}, zIndex = 0 } = modals[key]
+    const modalNames = Object.keys(modals)
+    const areModalsExist = Boolean(modalNames.length)
 
-              return (
-                <div key={name} styleName="modalConductor" style={{ zIndex }}>
-                  {
-                    React.createElement(Modals[name], { data })
-                  }
-                </div>
-              )
+    return areModalsExist && (
+      <div styleName="modalConductor">
+        {
+          modalNames.map((key) => {
+            const { name, data = {}, zIndex } = modals[key]
+
+            return React.createElement(Modals[name], {
+              key: name,
+              name,
+              data,
+              style: { zIndex },
             })
-          }
-        </Fragment>
-      </Portal>
+          })
+        }
+      </div>
     )
   }
 }

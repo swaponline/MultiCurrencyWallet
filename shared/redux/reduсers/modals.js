@@ -13,7 +13,7 @@ export const open = (state, { name, data = {} }) => ({
 })
 
 export const close = (state, name) => {
-  const { [name]: closingModal, ...otherModals }
+  const { [name]: closingModal, ...otherModals } = state
 
   zIndex -= 1
 

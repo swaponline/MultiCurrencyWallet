@@ -9,7 +9,7 @@ import localReducers from 'redux/reduсers'
 
 export const history = createBrowserHistory()
 const middleware = routerMiddleware(history)
-const initialState = (localStorage['redux-store']) ? JSON.parse(localStorage['redux-store']) : {}
+const initialState = {} // (localStorage['redux-store']) ? JSON.parse(localStorage['redux-store']) : {}
 
 const store = createStore({
   reducers: {
