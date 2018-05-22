@@ -33,11 +33,13 @@ export default class History extends Component {
 
   componentWillMount() {
     const { ethAddress, btcAddress } = this.props
+    console.log('ethAddress', ethAddress)
+    console.log('btcAddress', btcAddress)
     actions.user.setTransactions(ethAddress, btcAddress)
   }
 
   render() {
-    const { transactions, fetching } = this.props
+    const { transactions } = this.props
     return (
       <tbody>
         { transactions.map((item, index) => (
@@ -57,6 +59,5 @@ export default class History extends Component {
 
 History.propTypes = {
   transactions: PropTypes.array,
-  fetching: PropTypes.bool,
 }
 

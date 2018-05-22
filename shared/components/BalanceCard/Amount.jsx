@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+
 export default class Amount extends React.Component {
 
   constructor(props) {

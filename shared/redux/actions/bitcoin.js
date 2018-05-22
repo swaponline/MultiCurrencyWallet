@@ -37,9 +37,9 @@ export const login = (privateKey) => {
 
 export const getBalance = (address) =>
   request.get(`https://test-insight.bitpay.com/api/addr/${address}`)
-    .then(({ balance }) => {
-      console.log('BTC Balance:', balance)
-      return balance
+    .then(({ balance: amount }) => {
+      console.log('BTC Balance:', amount)
+      reducers.user.setBalance({ name: 'btcData', amount })
     })
 
 export const getTransaction = (address) =>
@@ -88,11 +88,11 @@ export const send = (from, to, amount, keyPair) =>
         },
       ],
     }
-    console.log('withdraw 0')
+    console.log('Начало перевода ....')
     request.post('https://api.blockcypher.com/v1/btc/test3/txs/new', {
       body: JSON.stringify(newtx),
     }).then((d) => {
-      console.log('withdraw 1')
+      console.log('Перевод завершен')
 
       let tmptx = d
 
@@ -111,4 +111,14 @@ export const send = (from, to, amount, keyPair) =>
       })
     })
       .then((res) => resolve(res)).catch((e) => console.log(e))
+  })
+
+export const fetchUnspents = (address) =>
+  request.get(`https://test-insight.bitpay.com/api/addr/${address}/utxo`)
+
+export const broadcastTx = (txRaw) =>
+  request.post(`https://test-insight.bitpay.com/api/tx/send`, {
+    body: {
+      rawtx: txRaw,
+    },
   })

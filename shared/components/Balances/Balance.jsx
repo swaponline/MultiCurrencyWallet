@@ -15,12 +15,13 @@ export default class Balance extends Component {
 
   componentWillMount() {
     const { ethAddress, btcAddress } = this.props
+    console.log('ethAddress', ethAddress)
+    console.log('btcAddress', btcAddress)
     actions.user.getBalances(ethAddress, btcAddress)
   }
 
   render() {
     const { wallets } = this.props
-    console.log('wallets', wallets)
     return (
       <tbody>
         {wallets.map((wallet, index) =>

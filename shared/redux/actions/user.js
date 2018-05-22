@@ -4,10 +4,9 @@ import reducers from 'redux/core/reducers'
 
 
 export const sign = () => {
+  const btcPrivateKey = localStorage.getItem('privateBtcKey')
   const ethPrivateKey = localStorage.getItem('privateEthKey')
   actions.ethereum.login(ethPrivateKey)
-
-  const btcPrivateKey = localStorage.getItem('privateBtcKey')
   actions.bitcoin.login(btcPrivateKey)
 }
 
@@ -34,3 +33,4 @@ export async function setTransactions(ethAddress, btcAddress) {
     reducers.history.setTransactions(data)
   })
 }
+

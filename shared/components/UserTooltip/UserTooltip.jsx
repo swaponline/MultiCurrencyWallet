@@ -19,7 +19,7 @@ export default class UserTooltip extends Component {
     const { data, name } = this.props
     return (
       <div styleName="user-tooltip">
-        <p>Money {name}</p>
+        <p>{ name === '' ? 'Nothing' : name }</p>
       </div>
     )
   }

@@ -10,12 +10,12 @@ import styles from './Root.scss'
 
 import Header from 'components/Header/Header'
 import Loader from 'components/Loader/Loader'
-
 import Modals from 'components/Modals/Modals'
 
-@connect(state => ({
-  loader: state.loader.visible,
-}))
+
+@connect({
+  loader: state => state.loader.visible,
+})
 @CSSModules(styles)
 export default class Root extends React.Component {
 

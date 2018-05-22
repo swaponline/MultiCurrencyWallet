@@ -12,6 +12,6 @@ export const setTransactions = (state, payload) => ({
   ...state,
   transactions: [
     ...state.transactions,
-    payload,
+    ...payload,
   ],
 })

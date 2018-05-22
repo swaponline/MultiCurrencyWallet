@@ -25,6 +25,6 @@ export const setBalance = (state, { name, amount }) => ({
   ...state,
   [name]: {
     ...state[name],
-    amount,
+    balance: amount,
   },
 })

@@ -9,7 +9,7 @@ import styles from './AddOfferButton.scss'
 export default class AddOfferButton extends Component {
 
   handleClick = () => {
-    // actions.modals.open('OFFER', true, {})
+    actions.modals.open('OFFER', true, {})
   }
 
   render() {

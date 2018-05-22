@@ -5,6 +5,7 @@ import actions from 'redux/actions'
 import CSSModules from 'react-css-modules'
 import styles from './HeaderOffer.scss'
 
+
 function HeaderOffer() {
   return (
     <div styleName="offer-popup__header">

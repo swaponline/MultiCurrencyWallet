@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import actions from 'redux/actions'
 
+
 export default function Footer({ withdraw, address, amount, currency }) {
   return (
     <div className="modal-footer">

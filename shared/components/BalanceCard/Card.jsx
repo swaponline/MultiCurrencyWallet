@@ -3,17 +3,16 @@ import PropTypes from 'prop-types'
 import { connect } from 'redaction'
 import actions from 'redux/actions'
 
-import user from 'instances/user'
-import ethereum from 'instances/ethereum'
-import bitcoin from 'instances/bitcoin'
-
 import Header from './Header'
 import Footer from './Footer'
 import Address from './Address'
 import Amount from './Amount'
 
+
 @connect(state => ({
   wallet: state.modals.data,
+  ethData: state.user.ethData,
+  btcData: state.user.btcData,
 }))
 export default class BalanceCard extends React.Component {
 
@@ -31,14 +30,15 @@ export default class BalanceCard extends React.Component {
   }
 
   withdraw(address, amount, currency) {
+    const { ethData, btcData } = this.props
     switch (currency) {
       case 'ETH':
-        return ethereum.send(user.ethData.address, address, amount, user.ethData.privateKey)
+        return actions.ethereum.send(ethData.address, address, amount, ethData.privateKey)
 
       case 'BTC':
-        return bitcoin.send(user.btcData.address, address, amount, user.btcData.keyPair)
+        return actions.bitcoin.send(btcData.address, address, amount, btcData.keyPair)
           .then(() => {
-            actions.notification.update('withdraw', true, {})
+            actions.notification.update('Money withdraw', true, {})
           })
 
       default:

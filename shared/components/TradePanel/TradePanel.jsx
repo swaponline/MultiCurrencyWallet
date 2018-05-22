@@ -13,7 +13,7 @@ const TradePanel = ({ name, currency, row, className }) => (
       <input type="number" placeholder="0" className="trade-panel__input" />
       <div className="trade-panel__label trade-panel__label_row">
         <label className="btn-group trade-panel__select">
-          <span className="trade-panel__icon icon-btc" />
+          <span className="trade-panel__icon icon-btc"  />
           <select
             className="trade-panel__search-field"
             dir="rtl"

@@ -67,7 +67,7 @@ export const getTransaction = (address) =>
   })
 
 export async function send(from, to, amount, privateKey) {
-  await this.getGas()
+  await getGas()
   return new Promise((resolve, reject) => {
     web3.eth.getBalance(from).then((r) => {
       try {
@@ -81,12 +81,12 @@ export async function send(from, to, amount, privateKey) {
         const t = {
           from,
           to,
-          gas:  this.maxGas,
+          gas,
           gasPrice: web3.utils.toWei(`${this.gasPrice}`),
           value: web3.utils.toWei(`${amount}`),
         }
 
-        this.core.eth.accounts.signTransaction(t, privateKey)
+        web3.eth.accounts.signTransaction(t, privateKey)
           .then((result) => web3.eth.sendSignedTransaction(result.rawTransaction))
           .then((receipt) => {
             resolve(receipt)
