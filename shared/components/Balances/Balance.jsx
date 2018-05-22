@@ -15,8 +15,6 @@ export default class Balance extends Component {
 
   componentWillMount() {
     const { ethAddress, btcAddress } = this.props
-    console.log('ethAddress', ethAddress)
-    console.log('btcAddress', btcAddress)
     actions.user.getBalances(ethAddress, btcAddress)
   }
 

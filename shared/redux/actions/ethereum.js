@@ -3,8 +3,9 @@ import { config, request } from 'helpers'
 import reducers from 'redux/core/reducers'
 
 
-const web3 = new Web3(new Web3.providers.HttpProvider('https://mainnet.infura.io/5lcMmHUURYg8F20GLGSr'))
-let gas = 35000
+const web3 = new Web3(new Web3.providers.HttpProvider('https://rinkeby.infura.io/JCnK5ifEPH9qcQkX0Ahl'))
+
+let gas
 
 export const login = (privateKey) => {
   let data
@@ -25,10 +26,10 @@ export const login = (privateKey) => {
 export const getBalance = (address) =>
   web3.eth.getBalance(address)
     .then(wei => {
-      const amount = Number(web3.utils.fromWei(wei, 'ether'))
+      const amount = Number(web3.utils.fromWei(wei))
       console.log('ETH Balance:', amount)
       reducers.user.setBalance({ name: 'ethData', amount })
-    })
+    }).catch(r => console.log('app:showError', 'Ethereum service isn\'t available, try later'))
 
 
 export const getGas = () => {
@@ -39,7 +40,7 @@ export const getGas = () => {
 
 export const getTransaction = (address) =>
   new Promise((resolve) => {
-    const url = `http://api.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${config.apiKeys.eth}`
+    const url = `https://api-rinkeby.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${config.apiKeys.eth}`
     let transactions
 
     let options = {
@@ -51,6 +52,7 @@ export const getTransaction = (address) =>
 
     request.get(url)
       .then((res) => {
+        console.log('res', res)
         if (res.status) {
           transactions = res.result
             .filter((item) => item.value > 0).map((item) => ({
@@ -67,7 +69,7 @@ export const getTransaction = (address) =>
   })
 
 export async function send(from, to, amount, privateKey) {
-  await getGas()
+  // await getGas()
   return new Promise((resolve, reject) => {
     web3.eth.getBalance(from).then((r) => {
       try {
@@ -81,8 +83,8 @@ export async function send(from, to, amount, privateKey) {
         const t = {
           from,
           to,
-          gas,
-          gasPrice: web3.utils.toWei(`${this.gasPrice}`),
+          gasPrice: '20000000000',
+          gas: '21000',
           value: web3.utils.toWei(`${amount}`),
         }
 

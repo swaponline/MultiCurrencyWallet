@@ -34,11 +34,13 @@ export default class BalanceCard extends React.Component {
     switch (currency) {
       case 'ETH':
         return actions.ethereum.send(ethData.address, address, amount, ethData.privateKey)
-
+          .then(() => {
+            actions.notification.update('Money withdraw ETH', true, {})
+          })
       case 'BTC':
         return actions.bitcoin.send(btcData.address, address, amount, btcData.keyPair)
           .then(() => {
-            actions.notification.update('Money withdraw', true, {})
+            actions.notification.update('Money withdraw BTC', true, {})
           })
 
       default:
@@ -57,7 +59,6 @@ export default class BalanceCard extends React.Component {
   render() {
     const { open, wallet } = this.props
     const { address, amount } = this.state
-    console.log('wallet', wallet)
     return (open === true ?
       <div className="modal"  tabIndex="-1" >
         <div className="modal-dialog">

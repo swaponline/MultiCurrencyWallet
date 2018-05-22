@@ -29,7 +29,7 @@ export async function setTransactions(ethAddress, btcAddress) {
     actions.bitcoin.getTransaction(btcAddress),
     actions.ethereum.getTransaction(ethAddress),
   ]).then(transactions => {
-    let data = [].concat.apply([], ...transactions).sort((a, b) => Date.parse(b.date) - Date.parse(a.date))
+    let data = [].concat([], ...transactions).sort((a, b) => Date.parse(b.date) - Date.parse(a.date))
     reducers.history.setTransactions(data)
   })
 }
