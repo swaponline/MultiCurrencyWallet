@@ -61,6 +61,7 @@ export default {
     modules: [
       path.resolve(__dirname, '../client'),
       path.resolve(__dirname, '../shared'),
+      path.resolve(__dirname, '../local_modules'),
       'node_modules',
     ],
     extensions: [ '*', '.js', '.jsx' ],

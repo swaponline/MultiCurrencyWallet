@@ -3,15 +3,15 @@
   height: 40px;
   line-height: 40px;
   padding: 0 20px;
-  background: #e91db4;
+  background-color: #e91db4;
   margin-right: 10px;
+  cursor: pointer;
   font-size: 18px;
   color: #fff;
   text-transform: uppercase;
   border-radius: 20px;
 
   &:hover {
-    background: #e91db4;
-    color: #fff;
+    background-color: #ff1fc5;
   }
 }

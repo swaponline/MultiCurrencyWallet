@@ -5,7 +5,12 @@ import store, { history } from 'redux/store'
 
 import Root from 'components/Root/Root'
 
+import './ipfs'
+import IpfsRoom from './ipfs-pubsub-room'
 import './scss/app.scss'
+
+
+window.IpfsRoom = IpfsRoom
 
 
 ReactDOM.render(

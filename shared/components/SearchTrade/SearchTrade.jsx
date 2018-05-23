@@ -4,7 +4,6 @@ import CSSModules from 'react-css-modules'
 import styles from './SearchTrade.scss'
 
 import Flip from 'components/controls/Flip/Flip'
-import Button from 'components/controls/Button/Button'
 import TradePanel from 'components/TradePanel/TradePanel'
 
 function SearchTrade() {
@@ -25,7 +24,7 @@ function SearchTrade() {
             name="You have"
             currency="ETH"
           />
-          <Button styleName="trade-panel__search" text="Search" />
+          <div styleName="trade-panel__search">Search</div>
         </div>
       </div>
     </div>

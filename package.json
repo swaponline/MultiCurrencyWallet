@@ -80,6 +80,7 @@
     "webpack-merge": "^4.1.2"
   },
   "dependencies": {
+    "autosize": "^4.0.2",
     "babel-preset-react-hmre": "^1.1.1",
     "bitcoinjs-lib": "^3.3.2",
     "classnames": "^2.2.5",
@@ -93,9 +94,11 @@
     "precss": "^3.1.2",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
+    "react-input-mask": "^2.0.1",
     "react-scripts": "^1.1.4",
     "rebuild": "^0.1.2",
     "sanitize.scss": "^1.0.0",
-    "tether": "^1.4.4"
+    "tether": "^1.4.4",
+    "valuelink": "^1.5.5"
   }
 }
