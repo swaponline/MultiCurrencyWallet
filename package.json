@@ -9,7 +9,8 @@
     "eslint": "eslint  --fix --cache ./shared --ext jsx",
     "start": "nodemon bin/server",
     "dev": "nodemon bin/server",
-    "build": "npm i && webpack -p --config webpack.prod.js"
+    "clean": "rimraf ./build",
+    "build": "npm run clean && node ./bin/compile"
   },
   "keywords": [],
   "author": "@sylogex",
