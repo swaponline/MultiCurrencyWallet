@@ -14,28 +14,36 @@ export default class Offer extends React.Component {
   }
 
   state = {
-    view: 'addOffer', // addOffer / confirmOffer
+    view: 'editOffer', // editOffer / confirmOffer
+    offer: {},
   }
 
-  handleChangeView = (name) => {
+  handleMoveToConfirmation = (offer) => {
     this.setState({
-      view: name,
+      view: 'confirmOffer',
+      offer,
+    })
+  }
+
+  handleMoveToOfferEditing = () => {
+    this.setState({
+      view: 'editOffer',
     })
   }
 
   render() {
-    const { view } = this.state
+    const { view, offer } = this.state
     const { name } = this.props
 
-    const title = view === 'addOffer' ? 'Add offer' : 'Confirm offer'
+    const title = view === 'editOffer' ? 'Add offer' : 'Confirm offer'
 
     return (
       <Modal name={name} title={title}>
         {
-          view === 'addOffer' ? (
-            <AddOffer next={() => this.handleChangeView('confirmOffer')} />
+          view === 'editOffer' ? (
+            <AddOffer initialData={offer} onNext={this.handleMoveToConfirmation} />
           ) : (
-            <ConfirmOffer back={() => this.handleChangeView('addOffer')} />
+            <ConfirmOffer offer={offer} onBack={this.handleMoveToOfferEditing} />
           )
         }
       </Modal>

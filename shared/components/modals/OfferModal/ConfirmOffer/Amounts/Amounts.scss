@@ -1,0 +1,4 @@
+.arrow {
+  @include arrow('right', 6px, 2px, #000);
+  margin: 0 12px 0 10px;
+}
