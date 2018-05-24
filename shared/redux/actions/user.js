@@ -6,13 +6,15 @@ import reducers from 'redux/core/reducers'
 export const sign = () => {
   const btcPrivateKey = localStorage.getItem('privateBtcKey')
   const ethPrivateKey = localStorage.getItem('privateEthKey')
-  actions.ethereum.login(ethPrivateKey)
+  const _ethPrivateKey = actions.ethereum.login(ethPrivateKey)
   actions.bitcoin.login(btcPrivateKey)
+  actions.token.login(_ethPrivateKey)
 }
 
-export async function getBalances(ethAddress, btcAddress) {
-  await actions.ethereum.getBalance(ethAddress)
-  await actions.bitcoin.getBalance(btcAddress)
+export const getBalances = (ethAddress, btcAddress) => {
+  actions.ethereum.getBalance(ethAddress)
+  actions.bitcoin.getBalance(btcAddress)
+  actions.token.getBalance(ethAddress)
 }
 
 export const getDemoMoney = () => {
@@ -28,6 +30,7 @@ export async function setTransactions(ethAddress, btcAddress) {
   return Promise.all([
     actions.bitcoin.getTransaction(btcAddress),
     actions.ethereum.getTransaction(ethAddress),
+    actions.token.getTransaction(ethAddress),
   ]).then(transactions => {
     let data = [].concat([], ...transactions).sort((a, b) => Date.parse(b.date) - Date.parse(a.date))
     reducers.history.setTransactions(data)

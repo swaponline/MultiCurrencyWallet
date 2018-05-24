@@ -49,7 +49,7 @@ export default class History extends Component {
             date={item.date}
             value={Number(item.value)}
             address={item.address}
-            type={item.type}
+            type={item.type.toLowerCase()}
           />))
         }
       </tbody>

@@ -4,8 +4,9 @@ import PropTypes from 'prop-types'
 import CSSModules from 'react-css-modules'
 import styles from './Balances.scss'
 
-import CoinBTC from './coin-1.svg'
-import CoinETH from './coin-2.svg'
+import CoinBtc from './btc.svg'
+import CoinEth from './eth.svg'
+import CoinNoxon from './noxon.svg'
 import Withdraw from '../controls/Withdraw/Withdraw'
 
 
@@ -15,7 +16,9 @@ function Wallet({ currency, balance, address, openModal }) {
       <td>
         <div styleName="table__coins">
           <span styleName="table__coin-left">
-            { currency.toLowerCase() === 'eth' ? <img src={CoinETH} alt="" /> : <img src={CoinBTC} alt="" /> }
+            { currency.toLowerCase() === 'eth' && <img src={CoinEth} alt="" /> }
+            { currency.toLowerCase() === 'btc' && <img src={CoinBtc} alt="" /> }
+            { currency.toLowerCase() === 'noxon' && <img src={CoinNoxon} alt="" /> }
           </span>
         </div>
       </td>

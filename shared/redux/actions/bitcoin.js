@@ -45,15 +45,8 @@ export const getBalance = (address) =>
 export const getTransaction = (address) =>
   new Promise((resolve) => {
 
-    const url = `https://api.blocktrail.com/v1/tBTC/address/${address}/transactions?api_key=${config.apiKeys.blocktrail}`
+    const url = `${config.api.blocktrail}/address/${address}/transactions?api_key=${config.apiKeys.blocktrail}`
     let transactions
-
-    let options = {
-      month: 'long',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-    }
 
     request.get(url).then((res) => {
       if (res.total) {
@@ -62,7 +55,7 @@ export const getTransaction = (address) =>
           status: item.block_hash != null ? 1 : 0,
           value: item.outputs[0].value / 1e8,
           address: item.outputs[0].address,
-          date: new Date(Date.parse(item.time)).toLocaleString('en-US', options),
+          date: new Date(Date.parse(item.time)).toLocaleString('en-US',  config.date),
           direction: address.toLocaleLowerCase() === item.outputs[0].address.toLocaleLowerCase() ? 'in' : 'out',
         }))
         resolve(transactions)

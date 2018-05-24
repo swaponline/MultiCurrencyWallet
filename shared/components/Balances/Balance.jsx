@@ -8,7 +8,7 @@ import Wallet from './Wallet'
 
 
 @connect(state => ({
-  wallets:  [].concat(state.user.ethData, state.user.btcData),
+  wallets:  [].concat(state.user.ethData, state.user.btcData, state.user.tokenData),
   ethAddress: state.user.ethData.address,
   btcAddress: state.user.btcData.address,
 }))

@@ -5,6 +5,7 @@ import * as filter from './filter'
 import * as user from './user'
 import * as bitcoin from './bitcoin'
 import * as ethereum from './ethereum'
+import * as token from './token'
 
 
 export default {
@@ -15,4 +16,5 @@ export default {
   user,
   bitcoin,
   ethereum,
+  token,
 }

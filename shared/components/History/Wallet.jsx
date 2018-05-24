@@ -10,11 +10,17 @@ function Wallet({ direction, type, value, address, date }) {
     <tr >
       <td>
         <div className="table__coin">
-          <div styleName={type === 'btc'
-            ? 'table__coin-img table__coin-btc'
-            : 'table__coin-img table__coin-eth'} />
-          <div styleName="table__coin-abbr">{type === 'btc' ? 'Btc' : 'Eth' }</div>
-          <div styleName="table__coin-name">{type === 'btc' ? 'Bitcoin' : 'Ethereum'}</div>
+          { type === 'btc' && <div styleName="table__coin-img table__coin-btc" /> }
+          { type === 'eth' && <div styleName="table__coin-img table__coin-eth" /> }
+          { type === 'noxon' && <div styleName="table__coin-img table__coin-noxon" /> }
+
+          { type === 'btc' && <div styleName="table__coin-abbr">BTC</div> }
+          { type === 'eth' && <div styleName="table__coin-abbr">ETH</div> }
+          { type === 'noxon' && <div styleName="table__coin-abbr">NOXON</div> }
+
+          { type === 'btc' && <div styleName="table__coin-name">Bitcoin</div> }
+          { type === 'eth' && <div styleName="table__coin-name">Ethereum</div> }
+          { type === 'noxon' && <div styleName="table__coin-name">Noxon</div> }
         </div>
       </td>
       <td>

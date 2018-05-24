@@ -1,5 +1,5 @@
 export const initialState = {
-  visible: true,
+  visible: false,
 }
 
 export const update = (state, payload) => ({

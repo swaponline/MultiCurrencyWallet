@@ -9,8 +9,6 @@ import './scss/app.scss'
 
 
 ReactDOM.render(
-  <Root history={history} store={store}>
-    {routes}
-  </Root>,
+  <Root history={history} store={store} routes={routes} />,
   document.getElementById('root')
 )

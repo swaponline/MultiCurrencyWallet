@@ -1,11 +1,9 @@
-import Web3 from 'web3'
 import { config, request } from 'helpers'
+import web3 from 'helpers/web3'
 import reducers from 'redux/core/reducers'
+import actions from 'redux/actions'
 
-
-const web3 = new Web3(new Web3.providers.HttpProvider('https://rinkeby.infura.io/JCnK5ifEPH9qcQkX0Ahl'))
-
-let gas
+// let gas
 
 export const login = (privateKey) => {
   let data
@@ -21,6 +19,7 @@ export const login = (privateKey) => {
   console.info('Logged in with Ethereum', data)
 
   reducers.user.setAuthData({ name: 'ethData', data })
+  return data.privateKey
 }
 
 export const getBalance = (address) =>
@@ -32,23 +31,16 @@ export const getBalance = (address) =>
     }).catch(r => console.log('app:showError', 'Ethereum service isn\'t available, try later'))
 
 
-export const getGas = () => {
-  web3.eth.getGasPrice().then((res) => {
-    gas = web3.utils.fromWei(res)
-  })
-}
+// export const getGas = () => {
+//   web3.eth.getGasPrice().then((res) => {
+//     gas = web3.utils.fromWei(res)
+//   })
+// }
 
 export const getTransaction = (address) =>
   new Promise((resolve) => {
-    const url = `https://api-rinkeby.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${config.apiKeys.eth}`
+    const url = `${config.api.ethpay}?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${config.apiKeys.blocktrail}`
     let transactions
-
-    let options = {
-      month: 'long',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-    }
 
     request.get(url)
       .then((res) => {
@@ -60,7 +52,7 @@ export const getTransaction = (address) =>
               status: item.blockHash != null ? 1 : 0,
               value: web3.utils.fromWei(item.value),
               address: item.to,
-              date: new Date(item.timeStamp * 1000).toLocaleString('en-US', options),
+              date: new Date(item.timeStamp * 1000).toLocaleString('en-US', config.date),
               direction: address.toLowerCase() === item.to.toLowerCase() ? 'in' : 'out',
             }))
           resolve(transactions)
@@ -68,9 +60,9 @@ export const getTransaction = (address) =>
       })
   })
 
-export async function send(from, to, amount, privateKey) {
+export const send = (from, to, amount, privateKey) =>
   // await getGas()
-  return new Promise((resolve, reject) => {
+  new Promise((resolve, reject) => {
     web3.eth.getBalance(from).then((r) => {
       try {
         let balance = web3.utils.fromWei(r)
@@ -100,5 +92,4 @@ export async function send(from, to, amount, privateKey) {
       }
     })
   })
-}
 
