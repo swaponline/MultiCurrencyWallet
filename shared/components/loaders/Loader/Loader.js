@@ -1,12 +1,11 @@
 import React from 'react'
-import { connect } from 'redaction'
 
 import CSSModules from 'react-css-modules'
 import styles from './Loader.scss'
 
 
-const Loader = ({ isFetching }) => isFetching && (
-  <div styleName="overlay">
+const Loader = ({ className }) => (
+  <div styleName="overlay" className={className}>
     <div styleName="loader center">
       <div styleName="loader1" />
       <div styleName="loader2" />
@@ -16,6 +15,4 @@ const Loader = ({ isFetching }) => isFetching && (
 )
 
 
-export default connect({
-  isFetching: 'loader.visible',
-})(CSSModules(Loader, styles, { allowMultiple: true }))
+export default CSSModules(Loader, styles, { allowMultiple: true })

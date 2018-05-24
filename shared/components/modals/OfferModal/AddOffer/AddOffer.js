@@ -35,13 +35,13 @@ export default class AddOffer extends Component {
   handleBuyCurrencySelect = ({ value }) => {
     let { buyCurrency, sellCurrency } = this.state
 
+    // init:    buyCurrency = ETH, sellCurrency = BTC, value = BTC
+    // result:  buyCurrency = BTC, sellCurrency = ETH
     if (value === sellCurrency) {
-      buyCurrency = value
       sellCurrency = buyCurrency
     }
-    else {
-      buyCurrency = value
-    }
+
+    buyCurrency = value
 
     const exchangeRate = this.getExchangeRate(buyCurrency, sellCurrency)
 
@@ -57,11 +57,9 @@ export default class AddOffer extends Component {
 
     if (value === buyCurrency) {
       buyCurrency = sellCurrency
-      sellCurrency = value
     }
-    else {
-      sellCurrency = value
-    }
+
+    sellCurrency = value
 
     const exchangeRate = this.getExchangeRate(buyCurrency, sellCurrency)
 

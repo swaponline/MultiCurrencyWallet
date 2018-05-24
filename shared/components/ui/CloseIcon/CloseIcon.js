@@ -13,9 +13,9 @@ const CloseIcon = ({ whiteColor, brandColor, ...rest }) => {
   })
 
   return (
-    <button styleName={styleName} {...rest} role="closeButton">
+    <div styleName={styleName} {...rest} role="closeButton">
       <div styleName="icon" role="closeIcon" />
-    </button>
+    </div>
   )
 }
 

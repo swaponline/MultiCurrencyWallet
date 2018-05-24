@@ -1,7 +1,8 @@
 export const initialState = {
-  visible: false,
+  isVisible: false,
 }
 
-export const update = (state, payload) => ({
-  ...state, visible: false,
+export const setVisibility = (state, payload) => ({
+  ...state,
+  isVisible: payload,
 })

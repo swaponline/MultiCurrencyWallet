@@ -5,17 +5,6 @@
   outline: none;
   -webkit-tap-highlight-color: transparent;
 
-  &::before {
-    // make minumum clickable size
-    content: '';
-    margin: auto;
-    position: absolute;
-    top: -100%;
-    bottom: -100%;
-    right: -100%;
-    left: -100%;
-  }
-
   &.whiteColor {
 
     .icon {

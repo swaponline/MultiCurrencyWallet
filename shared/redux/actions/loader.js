@@ -1,6 +1,11 @@
 import reducers from 'redux/core/reducers'
 
 
-export const update = () => {
-  reducers.loader.update()
+const show = () => reducers.loader.setVisibility(true)
+const hide = () => reducers.loader.setVisibility(false)
+
+
+export default {
+  show,
+  hide,
 }

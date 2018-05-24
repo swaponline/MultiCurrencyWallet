@@ -6,7 +6,10 @@ import cx from 'classnames'
 import cssModules from 'react-css-modules'
 import styles from './Modal.scss'
 
-import ModalContainer from 'components/modal/ModalContainer/ModalContainer'
+import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
+import Overlay from 'components/layout/Overlay/Overlay'
+import Logo from 'components/Logo/Logo'
+import Center from 'components/layout/Center/Center'
 import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 
 
@@ -16,17 +19,12 @@ export default class Modal extends Component {
   static propTypes = {
     children: PropTypes.node,
     name: PropTypes.string.isRequired,
-    id: PropTypes.string,
     title: PropTypes.any,
-    className: PropTypes.string,
     showCloseButton: PropTypes.bool,
     data: PropTypes.object,
-    fullWidth: PropTypes.bool,
     disableClose: PropTypes.bool,
-    disableCloseOverlay: PropTypes.bool,
     titleUppercase: PropTypes.bool,
     onClose: PropTypes.func,
-    onClick: PropTypes.func,
   }
 
   static defaultProps = {
@@ -55,38 +53,39 @@ export default class Modal extends Component {
   }
 
   render() {
-    const { name, className, onClick, title, showCloseButton, fullWidth,
-      disableCloseOverlay, disableClose, children, id, titleUppercase } = this.props
+    const { title, showCloseButton, disableClose, children, titleUppercase } = this.props
 
     const titleStyleName = cx('title', {
       'uppercase': titleUppercase,
     })
 
     return (
-      <ModalContainer
-        name={name}
-        fullWidth={fullWidth}
-        disableClose={disableCloseOverlay}
-        onClose={this.close}
-      >
-        <div styleName="modal" className={className} onClick={onClick} id={id}>
+      <Overlay>
+        <div styleName="modal">
           {
             Boolean(title || showCloseButton) && (
               <div styleName="header">
-                {
-                  showCloseButton && !disableClose && (
-                    <CloseIcon styleName="closeButton" onClick={this.close} data-testid="modalCloseIcon" />
-                  )
-                }
-                <div styleName={titleStyleName}>{title}</div>
+                <WidthContainer styleName="headerContent">
+                  <Logo colored />
+                  <div styleName={titleStyleName}>{title}</div>
+                  {
+                    showCloseButton && !disableClose && (
+                      <CloseIcon styleName="closeButton" onClick={this.close} data-testid="modalCloseIcon" />
+                    )
+                  }
+                </WidthContainer>
               </div>
             )
           }
-          <div styleName="content">
-            {children}
+          <div styleName="contentContainer">
+            <Center scrollable>
+              <div styleName="content">
+                {children}
+              </div>
+            </Center>
           </div>
         </div>
-      </ModalContainer>
+      </Overlay>
     )
   }
 }

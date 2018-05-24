@@ -8,8 +8,9 @@ import DropDown from 'components/ui/DropDown/DropDown'
 import Option from './Option/Option'
 
 
-const CurrencySelect = ({ selectedValue, onSelect }) => (
+const CurrencySelect = ({ className, selectedValue, onSelect }) => (
   <DropDown
+    className={className}
     items={[
       { title: 'ETH', icon: 'eth', value: 'eth' },
       { title: 'BTC', icon: 'btc', value: 'btc' },
