@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 import actions from 'redux/actions'
 
 
-export default function Footer({ withdraw, address, amount, currency }) {
+export default function Footer({ name, withdraw, address, amount, currency }) {
   return (
     <div className="modal-footer">
-      <button type="button" onClick={actions.modals.close}className="btn btn-secondary" >Close</button>
+      <button type="button" onClick={() => actions.modals.close(name)}className="btn btn-secondary" >Close</button>
       <button
         type="submit"
         onClick={event => {

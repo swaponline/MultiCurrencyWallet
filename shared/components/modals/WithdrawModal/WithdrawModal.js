@@ -77,6 +77,7 @@ export default class WithdrawModal extends React.Component {
           address={address}
           amount={amount}
           currency={data.currency}
+          name={name}
         />
       </Modal>
     )
