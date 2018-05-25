@@ -52,6 +52,7 @@
     "nodemon": "^1.17.3",
     "postcss-loader": "^2.1.4",
     "prop-types": "^15.6.1",
+    "raw-loader": "^0.5.1",
     "react-css-modules": "^4.7.2",
     "react-hot-loader": "^4.1.1",
     "react-redux": "^5.0.7",

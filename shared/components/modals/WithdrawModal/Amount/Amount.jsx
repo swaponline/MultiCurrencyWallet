@@ -30,7 +30,7 @@ export default class Amount extends React.Component {
               type="text"
             />
             <div className="input-group-append">
-              <span className="input-group-text">{ currency }</span>
+              <span className="input-group-text"> {currency}</span>
             </div>
           </div>
           <p className="list-text">min:

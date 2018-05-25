@@ -1,0 +1,20 @@
+.txt {
+	border: 1px solid #e2e2e2;
+	background: #fff;
+	width: 90%;
+	padding: 7px 5px;
+	transition-duration: 0.2s;
+	transition-property: all;
+	color: #0e0f11;
+	resize: none;
+	height: 40px;
+	text-align: left;
+}
+
+.wrap {
+	margin: 10px 0px;
+	width: 700px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}

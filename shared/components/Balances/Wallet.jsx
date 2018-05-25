@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 import CSSModules from 'react-css-modules'
 import styles from './Balances.scss'
 
-import CoinBtc from './btc.svg'
-import CoinEth from './eth.svg'
+import CoinBtc from './coin-1.svg'
+import CoinEth from './coin-2.svg'
 import CoinNoxon from './noxon.svg'
 import Withdraw from '../controls/Withdraw/Withdraw'
 

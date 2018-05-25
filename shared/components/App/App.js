@@ -3,6 +3,7 @@ import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 import actions from 'redux/actions'
 import { connect } from 'redaction'
+import { constants } from 'helpers'
 
 import CSSModules from 'react-css-modules'
 import styles from './App.scss'
@@ -19,6 +20,7 @@ import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
   ethAddress: 'user.ethData.address',
   btcAddress: 'user.btcData.address',
   tokenAddress: 'user.tokenData.address',
+  isVisible: 'loader.isVisible',
 })
 @CSSModules(styles)
 export default class App extends React.Component {
@@ -31,10 +33,16 @@ export default class App extends React.Component {
     actions.user.sign()
   }
 
+  componentDidMount() {
+    const { isVisible } = this.props
+    if (!isVisible) {
+      actions.modals.open(constants.modals.Key, {})
+    }
+  }
+
   render() {
     const { children, ethAddress, btcAddress, tokenAddress } = this.props
     const isFetching = !ethAddress || !btcAddress || !tokenAddress
-
     if (isFetching) {
       return <Loader />
     }

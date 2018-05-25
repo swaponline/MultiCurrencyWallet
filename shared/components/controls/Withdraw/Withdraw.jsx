@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import CSSModules from 'react-css-modules'
 import styles from './Withdraw.scss'
 
+
 function Withdraw({ text, isOpen }) {
   return (
     <a

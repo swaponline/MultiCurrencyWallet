@@ -18,6 +18,10 @@ export default {
         ],
       },
       {
+        test: /\.txt$/,
+        use: 'raw-loader',
+      },
+      {
         test: /\.(png|svg|jpe?g|gif)$/i,
         use: [
           {
