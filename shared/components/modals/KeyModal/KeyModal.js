@@ -29,8 +29,17 @@ export default class KeyModal extends React.PureComponent {
         >
         Download instruction
         </a>
-        { ethData.privateKey && <TextLabel name={ethData.currency} privateKey={ethData.privateKey} isSave={this.isSave} /> }
-        { btcData.privateKey && <TextLabel name={btcData.currency} privateKey={btcData.privateKey} isSave={this.isSave} /> }
+        <TextLabel
+          name={ethData.currency}
+          privateKey={ethData.privateKey}
+          isSave={this.isSave}
+        />
+
+        <TextLabel
+          name={btcData.currency}
+          privateKey={btcData.privateKey}
+          isSave={this.isSave}
+        />
         <p>You will continue after save</p>
       </Modal>
     )
