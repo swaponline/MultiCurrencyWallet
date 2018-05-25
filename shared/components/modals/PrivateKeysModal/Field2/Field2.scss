@@ -1,14 +1,17 @@
 .container {
-  background-color: #e24d4d;
   margin-top: 10px;
-  display: flex;
-  align-items: center;
-  padding: 6px;
-  border-radius: 6px;
 
   &:first-child {
     margin-top: 0;
   }
+}
+
+.section {
+  background-color: #e24d4d;
+  display: flex;
+  align-items: center;
+  padding: 6px;
+  border-radius: 6px;
 }
 
 .label {
@@ -25,4 +28,10 @@
 .button {
   min-width: 100px;
   margin-left: 10px;
+}
+
+.error {
+  margin-top: 10px;
+  font-size: 24px;
+  @include ff-bold;
 }

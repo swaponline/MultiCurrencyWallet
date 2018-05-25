@@ -29,6 +29,7 @@ export default class Modal extends Component {
 
   static defaultProps = {
     data: {},
+    whiteLogo: false,
     showCloseButton: true,
     fullWidth: false,
     disableClose: false,
@@ -53,7 +54,7 @@ export default class Modal extends Component {
   }
 
   render() {
-    const { className, title, showCloseButton, disableClose, children, titleUppercase } = this.props
+    const { className, whiteLogo, title, showCloseButton, disableClose, children, titleUppercase } = this.props
 
     const titleStyleName = cx('title', {
       'uppercase': titleUppercase,
@@ -66,7 +67,7 @@ export default class Modal extends Component {
             Boolean(title || showCloseButton) && (
               <div styleName="header">
                 <WidthContainer styleName="headerContent">
-                  <Logo colored />
+                  <Logo colored={!whiteLogo} />
                   <div styleName={titleStyleName} role="title">{title}</div>
                   {
                     showCloseButton && !disableClose && (

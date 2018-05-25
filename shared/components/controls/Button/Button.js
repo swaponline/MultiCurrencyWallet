@@ -9,13 +9,15 @@ import styles from './Button.scss'
 const Button = (props) => {
   const {
     children, className,
-    fullWidth, brand, gray, disabled,
+    fullWidth, brand, green, white, gray, disabled,
     onClick,
   } = props
 
   const styleName = cx('button', {
     'fullWidth': fullWidth,
     'brand': brand,
+    'green': green,
+    'white': white,
     'gray': gray,
     'disabled': disabled,
   })
@@ -37,6 +39,8 @@ Button.propTypes = {
   className: PropTypes.string,
   fullWidth: PropTypes.bool,
   brand: PropTypes.bool,
+  green: PropTypes.bool,
+  white: PropTypes.bool,
   gray: PropTypes.bool,
   disabled: PropTypes.bool,
   onClick: PropTypes.func,
