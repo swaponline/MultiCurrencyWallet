@@ -5,7 +5,7 @@ import * as notification from './notification'
 import * as user from './user'
 
 
-export default{
+export default {
   history,
   modals,
   loader,

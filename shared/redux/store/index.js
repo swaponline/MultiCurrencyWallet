@@ -2,9 +2,7 @@ import { routerMiddleware } from 'react-router-redux'
 import { createBrowserHistory } from 'history'
 import { createStore, combineReducers } from 'redaction'
 import { createLogger } from 'redux-logger'
-import promise from 'redux-promise'
 import localReducers from 'redux/reduсers'
-// import { saver } from 'redux/middleware'
 
 
 export const history = createBrowserHistory()
@@ -16,7 +14,6 @@ const store = createStore({
     ...combineReducers(localReducers),
   },
   middleware: [
-    promise,
     middleware,
     createLogger(),
   ],

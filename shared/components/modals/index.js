@@ -1,10 +1,10 @@
 import OfferModal from './OfferModal/OfferModal'
 import WithdrawModal from './WithdrawModal/WithdrawModal'
-import KeyModal from './KeyModal/KeyModal'
+import PrivateKeysModal from './PrivateKeysModal/PrivateKeysModal'
 
 
 export default {
   OfferModal,
   WithdrawModal,
-  KeyModal,
+  PrivateKeysModal,
 }

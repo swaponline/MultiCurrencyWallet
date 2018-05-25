@@ -1,7 +1,6 @@
 import { wrapReducers } from 'redaction'
-import reduсers from 'redux/reduсers'
+import reducers from 'redux/reduсers'
 import store from 'redux/store'
 
 
-export default wrapReducers(reduсers, store.dispatch)
-
+export default wrapReducers(reducers, store.dispatch)

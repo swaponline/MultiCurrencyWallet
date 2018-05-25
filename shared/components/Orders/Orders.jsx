@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 
-import Coin1Svg from './coin-1.svg'
-import Coin2Svg from './coin-2.svg'
-
 import CSSModules from 'react-css-modules'
 import styles from './Orders.scss'
 
+import Coin1Svg from './images/coin-1.svg'
+import Coin2Svg from './images/coin-2.svg'
+
 import HeadTable from '../HeadTable/HeadTable'
 // import Orders from '../Orders/Orders'
+
 
 @CSSModules(styles)
 export default class Orders extends Component {

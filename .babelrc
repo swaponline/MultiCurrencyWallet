@@ -1,8 +1,9 @@
 {
-  "presets": ["es2015", "stage-0", "react", "react-hmre" ],
+  "presets": [ "react", [ "es2015", { "loose": true } ], "stage-0" ],
   "plugins": [
-    ["transform-object-rest-spread", { "useBuiltIns": true }],
+    [ "transform-object-rest-spread", { "useBuiltIns": true } ],
     "add-module-exports",
+    "transform-runtime",
     "transform-decorators-legacy"
   ]
 }

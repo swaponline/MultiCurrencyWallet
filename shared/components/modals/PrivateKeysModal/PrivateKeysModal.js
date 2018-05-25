@@ -3,7 +3,10 @@ import PropTypes from 'prop-types'
 import { connect } from 'redaction'
 import actions from 'redux/actions'
 
-import TextLabel from './TextLabel/TextLabel'
+import cssModules from 'react-css-modules'
+import styles from './PrivateKeysModal.scss'
+
+import Field from './Field/Field'
 import Modal from 'components/modal/Modal/Modal'
 
 
@@ -11,7 +14,8 @@ import Modal from 'components/modal/Modal/Modal'
   ethData: 'user.ethData',
   btcData: 'user.btcData',
 })
-export default class KeyModal extends React.PureComponent {
+@cssModules(styles)
+export default class PrivateKeysModal extends React.PureComponent {
 
   static propTypes = {
     name: PropTypes.string,
@@ -21,8 +25,14 @@ export default class KeyModal extends React.PureComponent {
 
   render() {
     const { name, ethData, btcData } = this.props
+
     return (
-      <Modal name={name} showCloseButton={false} title="Save private key">
+      <Modal
+        styleName="modal"
+        name={name}
+        showCloseButton={false}
+        title="CAUTION!"
+      >
         <a
           href="./time.txt"
           download
@@ -30,16 +40,13 @@ export default class KeyModal extends React.PureComponent {
         >
         Download instruction
         </a>
-        <TextLabel
-          name={ethData.currency}
+        <Field
+          label={ethData.currency}
           privateKey={ethData.privateKey}
-          isSave={this.isSave}
         />
-
-        <TextLabel
-          name={btcData.currency}
+        <Field
+          label={btcData.currency}
           privateKey={btcData.privateKey}
-          isSave={this.isSave}
         />
         <p>You will continue after save</p>
       </Modal>

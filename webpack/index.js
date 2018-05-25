@@ -1,5 +1,13 @@
-if (process.env.NODE_ENV === 'production') {
-  module.exports = require('./production.js')
-} else {
-  module.exports = require('./development.js')
-}
+import config from 'app-config'
+import commonCfg from './common'
+import development from './development'
+import production from './production'
+
+
+const envCfg = ({
+  'development': development,
+  'production': production,
+})[config.env || 'development']
+
+
+export default envCfg(commonCfg)

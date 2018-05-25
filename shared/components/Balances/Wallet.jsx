@@ -4,10 +4,11 @@ import PropTypes from 'prop-types'
 import CSSModules from 'react-css-modules'
 import styles from './Balances.scss'
 
-import CoinBtc from './coin-1.svg'
-import CoinEth from './coin-2.svg'
-import CoinNoxon from './noxon.svg'
-import Withdraw from '../controls/Withdraw/Withdraw'
+import Withdraw from 'components/controls/Withdraw/Withdraw'
+
+import CoinBtc from './images/coin-1.svg'
+import CoinEth from './images/coin-2.svg'
+import CoinNoxon from './images/noxon.svg'
 
 
 function Wallet({ currency, balance, address, openModal }) {

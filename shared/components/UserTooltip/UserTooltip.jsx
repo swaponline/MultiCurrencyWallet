@@ -4,8 +4,8 @@ import { connect } from 'redaction'
 import CSSModules from 'react-css-modules'
 import styles from './UserTooltip.scss'
 
-import ArrowRightSvg from './arrow-right.svg'
-import AcceptSvg from './accept.svg'
+// import ArrowRightSvg from './images/arrow-right.svg'
+// import AcceptSvg from './images/accept.svg'
 
 
 @connect(state => ({

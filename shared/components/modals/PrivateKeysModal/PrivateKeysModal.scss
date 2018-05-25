@@ -1,0 +1,8 @@
+.modal {
+  background-color: #ff6161;
+
+  [role="title"] {
+    font-size: 40px;
+    @include ff-bold;
+  }
+}

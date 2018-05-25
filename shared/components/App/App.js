@@ -36,7 +36,7 @@ export default class App extends React.Component {
   componentDidMount() {
     const { isVisible } = this.props
     if (!isVisible) {
-      actions.modals.open(constants.modals.Key, {})
+      actions.modals.open(constants.modals.PrivateKeys)
     }
   }
 
