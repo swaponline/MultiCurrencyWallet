@@ -9,14 +9,16 @@ export const history = createBrowserHistory()
 const middleware = routerMiddleware(history)
 const initialState = {} // (localStorage['redux-store']) ? JSON.parse(localStorage['redux-store']) : {}
 
+
 const store = createStore({
   reducers: {
     ...combineReducers(localReducers),
   },
   middleware: [
     middleware,
+  ].concat(process.env.NODE_ENV === 'production' ? [] : [
     createLogger(),
-  ],
+  ]),
   initialState,
 })
 

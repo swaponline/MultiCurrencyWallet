@@ -1,3 +1,6 @@
+import config from 'app-config'
+
+
 const resolveRule = (options) => ([
   {
     test: /fonts.*\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -25,5 +28,5 @@ export const development = resolveRule({
 export const production = resolveRule({
   name: '[name].[ext]',
   outputPath: 'fonts/',
-  publicPath: '/assets/fonts/',
+  publicPath: `${config.publicPath}fonts/`,
 })

@@ -1,9 +1,16 @@
-import HtmlWebpackPlugin from 'html-webpack-plugin'
 // import BundleAnalyzer from 'webpack-bundle-analyzer'
 import config from 'app-config'
 
 
 export default (webpackConfig) => {
+
+  webpackConfig.output = {
+    path: config.paths.base('build'),
+    filename: '[name].js',
+    chunkFilename: '[id].chunk.js',
+    publicPath: config.publicPath,
+  }
+
   webpackConfig.devtool = 'cheap-module-source-map'
 
   webpackConfig.devServer = {
@@ -14,15 +21,6 @@ export default (webpackConfig) => {
   }
 
   webpackConfig.plugins.push(
-    new HtmlWebpackPlugin({
-      title: 'Swap.Online',
-      template: config.paths.client('index.html'),
-      // favicon: config.paths.site('assets/favicon-32x32.png'),
-      hash: false,
-      filename: 'index.html',
-      inject: 'body',
-    }),
-
     // new BundleAnalyzer.BundleAnalyzerPlugin({
     //   // Can be `server`, `static` or `disabled`.
     //   // In `server` mode analyzer will start HTTP server to show bundle report.

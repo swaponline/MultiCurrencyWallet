@@ -1,3 +1,6 @@
+import config from 'app-config'
+
+
 const resolveRule = (options) => ([
   {
     test: /images.*\.(png|ico|jpg|jpeg|gif|svg|mp4)(\?.*)?$/,
@@ -14,5 +17,5 @@ export const development = resolveRule({
 export const production = resolveRule({
   name: '[name]_[hash:6].[ext]',
   outputPath: 'images/',
-  publicPath: `/assets/`,
+  publicPath: `${config.publicPath}images/`,
 })

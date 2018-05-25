@@ -7,6 +7,7 @@ export const sign = () => {
   const btcPrivateKey = localStorage.getItem('privateBtcKey')
   const ethPrivateKey = localStorage.getItem('privateEthKey')
   const _ethPrivateKey = actions.ethereum.login(ethPrivateKey)
+
   actions.bitcoin.login(btcPrivateKey)
   actions.token.login(_ethPrivateKey)
 }

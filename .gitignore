@@ -5,4 +5,4 @@
 *-lock.*
 
 node_modules
-dist
+build-*

@@ -25,7 +25,7 @@ if (env) {
 }
 
 try {
-  defaultConfig = require(defaultConfigPath)
+  defaultConfig = require(defaultConfigPath).default
 }
 catch (err) {
   defaultConfig = {} // no default specified
@@ -33,7 +33,7 @@ catch (err) {
 
 try {
   if (envConfigPath) {
-    envConfig = require(envConfigPath)
+    envConfig = require(envConfigPath).default
   }
 }
 catch (err) {

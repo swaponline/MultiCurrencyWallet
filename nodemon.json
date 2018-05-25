@@ -9,7 +9,6 @@
     "package.json"
   ],
   "env": {
-    "NODE_ENV": "development",
     "DEBUG": "app:*"
   }
 }

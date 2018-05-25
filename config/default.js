@@ -7,6 +7,7 @@ const basePath = path.resolve(__dirname, '../')
 const config = {
   propENV: process.env.NODE_ENV,
   env: process.env.NODE_ENV,
+  webpack: process.env.WEBPACK,
 
   paths: {
     root:     (file = '') => path.join(rootPath, file),
@@ -15,7 +16,7 @@ const config = {
     client:   (file = '') => path.join(basePath, 'client', file),
   },
 
-  publicPath: '/assets/',
+  publicPath: '/',
 
   http: {
     host: 'localhost',

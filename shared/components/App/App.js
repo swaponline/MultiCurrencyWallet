@@ -34,8 +34,7 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    const { isVisible } = this.props
-    if (!isVisible) {
+    if (localStorage.getItem(constants.localStorage.privateKeysSaved)) {
       actions.modals.open(constants.modals.PrivateKeys)
     }
   }
@@ -43,8 +42,11 @@ export default class App extends React.Component {
   render() {
     const { children, ethAddress, btcAddress, tokenAddress } = this.props
     const isFetching = !ethAddress || !btcAddress || !tokenAddress
+
     if (isFetching) {
-      return <Loader />
+      return (
+        <Loader />
+      )
     }
 
     return (

@@ -1,5 +1,6 @@
 import webpack from 'webpack'
 import ProgressBarPlugin from 'progress-bar-webpack-plugin'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
 import AppConfigPlugin from 'app-config/webpack'
 import config from 'app-config'
 import rulesMap from './rules'
@@ -11,22 +12,19 @@ const rules = Object.keys(rulesMap)
   .reduce((result, rule) => result.concat(rule), [])
 
 const globals = {
-  'process.env.NODE_ENV': JSON.stringify(config.env),
+  'process.env': {
+    'NODE_ENV': JSON.stringify(config.env),
+    'WEBPACK': JSON.stringify(config.webpack),
+  },
   // TODO fix __CONFIG__ - remove it and check app-config/webpack to resolve in /client.js
   __CONFIG__: JSON.stringify(config),
 }
 
 
 const webpackConfig = {
+
   entry: {
     'app': config.paths.client('index.js'),
-  },
-
-  output: {
-    path: config.paths.base('site-build'),
-    filename: '[name].js',
-    chunkFilename: '[id].chunk.js',
-    publicPath: config.publicPath,
   },
 
   module: {
@@ -52,6 +50,14 @@ const webpackConfig = {
     new webpack.DefinePlugin(globals),
     new webpack.NoEmitOnErrorsPlugin(),
     new ProgressBarPlugin({ clear: false }),
+    new HtmlWebpackPlugin({
+      title: 'Swap.Online',
+      template: config.paths.client('index.html'),
+      // favicon: config.paths.site('assets/favicon-32x32.png'),
+      hash: false,
+      filename: 'index.html',
+      inject: 'body',
+    }),
   ],
 }
 

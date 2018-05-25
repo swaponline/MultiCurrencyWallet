@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'redaction'
 import actions from 'redux/actions'
 import Link from 'sw-valuelink'
+import { localStorage, constants } from 'helpers'
 
 import cssModules from 'react-css-modules'
 import styles from './PrivateKeysModal.scss'
@@ -41,6 +42,7 @@ export default class PrivateKeysModal extends React.PureComponent {
   close = () => {
     const { name } = this.props
 
+    localStorage.setItem(constants.localStorage.privateKeysSaved, true)
     actions.modals.close(name)
   }
 

@@ -1,9 +1,18 @@
 import webpack from 'webpack'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
+import config from 'app-config'
 
 
 export default (webpackConfig) => {
+
+  webpackConfig.output = {
+    path: config.paths.base('build-mainnet'),
+    filename: '[name].js',
+    chunkFilename: '[id].chunk.js',
+    publicPath: config.publicPath,
+  }
+
   webpackConfig.plugins.push(
     new UglifyJsPlugin({
       sourceMap: true,
@@ -15,10 +24,6 @@ export default (webpackConfig) => {
         warnings: false,
         screw_ie8: true,
       },
-    }),
-    new webpack.SourceMapDevToolPlugin({
-      filename: '[file].map',
-      append: `\n//# sourceMappingURL=[url]`,
     }),
   )
 
@@ -38,7 +43,7 @@ export default (webpackConfig) => {
       allChunks: true,
     }),
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'redux-new-page-vendor',
+      name: 'vendor',
       // this assumes your vendor imports exist in the node_modules directory
       minChunks: (module) => module.context && module.context.indexOf('node_modules') >= 0,
     }),
