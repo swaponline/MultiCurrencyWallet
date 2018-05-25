@@ -27,12 +27,13 @@ export default class TextLabel extends React.Component {
     const { privateKey, name } = this.props
     return (
       <div styleName="wrap">
+        <p styleName="name">{name.toUpperCase()}</p>
         <textarea
           styleName="txt"
           readOnly="readonly"
           ref={textarea => this.key = textarea}
           wrap="off"
-          defaultValue={`${name}: ${privateKey}`} />
+          defaultValue={privateKey} />
         <a href="#" onClick={this.isSave}> Copy</a>
       </div>
     )
