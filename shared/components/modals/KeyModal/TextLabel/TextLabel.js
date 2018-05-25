@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'redaction'
 import actions from 'redux/actions'
 
 import Modal from 'components/modal/Modal/Modal'
@@ -12,6 +11,11 @@ import styles from './TextLabel.scss'
 @CSSModules(styles)
 export default class TextLabel extends React.Component {
 
+  static propTypes = {
+    privateKey: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+  }
+
   isSave = () => {
     const { key } = this
     key.focus()
@@ -20,7 +24,7 @@ export default class TextLabel extends React.Component {
   }
 
   render() {
-    const { privateKey, isSave, name } = this.props
+    const { privateKey, name } = this.props
     return (
       <div styleName="wrap">
         <textarea

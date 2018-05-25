@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'redaction'
 import actions from 'redux/actions'
-import { constants } from 'helpers'
 
 import TextLabel from './TextLabel/TextLabel'
 import Modal from 'components/modal/Modal/Modal'
@@ -16,6 +15,8 @@ export default class KeyModal extends React.PureComponent {
 
   static propTypes = {
     name: PropTypes.string,
+    ethData: PropTypes.object.isRequired,
+    btcData: PropTypes.object.isRequired,
   }
 
   render() {
