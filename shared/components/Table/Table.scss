@@ -1,0 +1,33 @@
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 0;
+
+  thead {
+    box-shadow: rgba(#000 ,0.03) 0 3px 3px 0;
+  }
+
+  th, td {
+    border: 0;
+    text-align: left;
+    white-space: nowrap;
+
+    &:first-child {
+      padding-left: 0;
+    }
+
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+
+  th {
+    padding: 10px;
+    font-size: 14px;
+    color: #bbb;
+  }
+
+  td {
+    padding: 20px 10px;
+  }
+}

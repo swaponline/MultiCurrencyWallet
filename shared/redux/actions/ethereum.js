@@ -51,7 +51,7 @@ const getTransaction = (address) =>
               status: item.blockHash != null ? 1 : 0,
               value: web3.utils.fromWei(item.value),
               address: item.to,
-              date: new Date(item.timeStamp * 1000).toLocaleString('en-US', config.i18nDate),
+              date: item.timeStamp * 1000,
               direction: address.toLowerCase() === item.to.toLowerCase() ? 'in' : 'out',
             }))
           resolve(transactions)

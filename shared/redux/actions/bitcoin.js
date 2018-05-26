@@ -1,7 +1,8 @@
 import BigInteger from 'bigi'
-import { config, request } from 'helpers'
+import { request } from 'helpers'
 import bitcoin from 'bitcoinjs-lib'
 import reducers from 'redux/core/reducers'
+import config from 'app-config'
 
 
 const login = (privateKey) => {
@@ -55,7 +56,7 @@ const getTransaction = (address) =>
           status: item.block_hash != null ? 1 : 0,
           value: item.outputs[0].value / 1e8,
           address: item.outputs[0].address,
-          date: new Date(Date.parse(item.time)).toLocaleString('en-US',  config.date),
+          date: new Date(Date.parse(item.time)).getTime(),
           direction: address.toLocaleLowerCase() === item.outputs[0].address.toLocaleLowerCase() ? 'in' : 'out',
         }))
         resolve(transactions)

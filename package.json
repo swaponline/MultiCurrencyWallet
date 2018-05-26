@@ -78,6 +78,7 @@
     "history": "^4.7.2",
     "human-standard-token-abi": "^1.0.2",
     "lodash": "^4.17.5",
+    "moment": "^2.22.1",
     "prop-types": "^15.6.1",
     "react": "^16.3.2",
     "react-copy-to-clipboard": "^5.0.1",

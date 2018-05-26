@@ -1,7 +1,8 @@
 import abi from 'human-standard-token-abi'
-import { config, request } from 'helpers'
+import { request } from 'helpers'
 import web3 from 'helpers/web3'
 import reducers from 'redux/core/reducers'
+import config from 'app-config'
 
 
 let noxonContract
@@ -13,11 +14,11 @@ const setupContract = (ethAddress) => {
 
   const options = {
     from: ethAddress,
-    gas: `${config.token.gas}`,
-    gasPrice: `${config.token.gasPrice}`,
+    gas: `${config.services.web3.gas}`,
+    gasPrice: `${config.services.web3.gasPrice}`,
   }
 
-  noxonContract = new web3.eth.Contract(abi, config.token.noxonToken, options)
+  noxonContract = new web3.eth.Contract(abi, config.services.web3.noxonToken, options)
   reducers.user.setTokenData({
     name: 'tokenData',
     contract: noxonContract,
@@ -54,7 +55,7 @@ const getTransaction = (address) =>
   new Promise((resolve) => {
     const url = [
       `https://api-rinkeby.etherscan.io/api?module=account&action=tokentx`,
-      `&contractaddress=${config.token.noxonToken}`,
+      `&contractaddress=${config.services.web3.noxonToken}`,
       `&address=${address}`,
       `&startblock=0&endblock=99999999`,
       `&sort=asc&apikey=${config.apiKeys.blocktrail}`,
@@ -73,7 +74,7 @@ const getTransaction = (address) =>
               status: item.blockHash != null ? 1 : 0,
               value: item.value,
               address: item.to,
-              date:  new Date(item.timeStamp * 1000).toLocaleString('en-US', config.date),
+              date: item.timeStamp * 1000,
               direction: address.toLowerCase() === item.to.toLowerCase() ? 'in' : 'out',
             }))
           resolve(transactions)

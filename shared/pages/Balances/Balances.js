@@ -1,15 +1,42 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { connect } from 'redaction'
+import actions from 'redux/actions'
 
 import PageHeadline from 'components/PageHeadline/PageHeadline'
-import TradesTable from 'components/TradesTable/TradesTable'
+import Table from 'components/Table/Table'
 
-const titles = ['Coin', 'Name', 'Available balance', 'Address']
+import Row from './Row/Row'
 
-export default function Balances() {
-  return (
-    <section>
-      <PageHeadline subtitle="Balances" />
-      <TradesTable titles={titles} balance />
-    </section>
-  )
+
+@connect(({ user: { ethData, btcData, tokenData } }) => ({
+  items: [].concat(ethData, btcData, tokenData),
+  ethAddress: ethData.address,
+  btcAddress: btcData.address,
+}))
+export default class Balances extends Component {
+
+  componentWillMount() {
+    const { ethAddress, btcAddress } = this.props
+
+    actions.user.getBalances(ethAddress, btcAddress)
+  }
+
+  render() {
+    const { items } = this.props
+
+    const titles = [ 'Coin', 'Name', 'Balance', 'Address', '' ]
+
+    return (
+      <section>
+        <PageHeadline subtitle="Balances" />
+        <Table
+          titles={titles}
+          rows={items}
+          rowRender={(row, index) => (
+            <Row key={index} {...row} />
+          )}
+        />
+      </section>
+    )
+  }
 }

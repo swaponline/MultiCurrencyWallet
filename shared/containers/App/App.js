@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import actions from 'redux/actions'
 import { connect } from 'redaction'
 import { constants } from 'helpers'
+import moment from 'moment'
 
 import CSSModules from 'react-css-modules'
 import styles from './App.scss'
@@ -15,6 +16,8 @@ import RequestLoader from 'components/loaders/RequestLoader/RequestLoader'
 import ModalConductor from 'components/modal/ModalConductor/ModalConductor'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 
+
+moment.locale('en-gb')
 
 @withRouter
 @connect({

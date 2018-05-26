@@ -5,8 +5,8 @@ import styles from './ConfirmOffer.scss'
 
 import ButtonsInRow from 'components/controls/ButtonsInRow/ButtonsInRow'
 import Button from 'components/controls/Button/Button'
+import Coins from 'components/Coins/Coins'
 
-import Coins from './Coins/Coins'
 import Amounts from './Amounts/Amounts'
 import ExchangeRate from './ExchangeRate/ExchangeRate'
 import Fee from './Fee/Fee'
@@ -24,7 +24,7 @@ export default class ConfirmOffer extends Component {
 
     return (
       <Fragment>
-        <Coins {...{ buyCurrency, sellCurrency }} />
+        <Coins styleName="coins" names={[ buyCurrency, sellCurrency ]} />
         <Amounts {...{ buyAmount, sellAmount, buyCurrency, sellCurrency }} />
         <ExchangeRate {...{ value: exchangeRate, buyCurrency, sellCurrency }} />
         <Fee amount={0.0001} currency={sellCurrency} />
