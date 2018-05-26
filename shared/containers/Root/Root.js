@@ -3,7 +3,7 @@ import { ConnectedRouter } from 'react-router-redux'
 import { Provider } from 'react-redux'
 import PropTypes from 'prop-types'
 
-import App from 'components/App/App'
+import App from 'containers/App/App'
 
 
 export default class Root extends React.PureComponent {

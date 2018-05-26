@@ -1,20 +1,22 @@
 import React from 'react'
 import { Route } from 'react-router'
 import { Switch } from 'react-router-dom'
+import { links } from 'helpers'
 
-import Balances from 'components/Pages/Balances'
-import History from 'components/Pages/History'
-import Main from 'components/Pages/Main'
-import NotFound from 'components/Pages/NotFound'
+import Home from 'pages/Home/Home'
+import Balances from 'pages/Balances/Balances'
+import History from 'pages/History/History'
+import NotFound from 'pages/NotFound/NotFound'
 
 
 const routes = (
   <Switch>
-    <Route exact path="/" component={Main} />
-    <Route path="/balance" component={Balances} />
-    <Route path="/history" component={History} />
+    <Route exact path={links.home} component={Home} />
+    <Route path={links.balance} component={Balances} />
+    <Route path={links.history} component={History} />
     <Route component={NotFound} />
   </Switch>
 )
+
 
 export default routes

@@ -5,9 +5,7 @@ const rootPath = path.resolve(process.cwd(), '../')
 const basePath = path.resolve(__dirname, '../')
 
 const config = {
-  propENV: process.env.NODE_ENV,
-  env: process.env.NODE_ENV,
-  webpack: process.env.WEBPACK,
+  propENV: process.env.CONFIG, // from package.json
 
   paths: {
     root:     (file = '') => path.join(rootPath, file),
@@ -16,12 +14,20 @@ const config = {
     client:   (file = '') => path.join(basePath, 'client', file),
   },
 
-  publicPath: '/',
+  publicPath: '/assets/',
 
   http: {
     host: 'localhost',
     port: process.env.PORT || 9001,
   },
+
+  i18nDate: {
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+  },
 }
+
 
 export default config

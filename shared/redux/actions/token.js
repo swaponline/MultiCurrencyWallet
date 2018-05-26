@@ -6,7 +6,7 @@ import reducers from 'redux/core/reducers'
 
 let noxonContract
 
-export async function setupContract(ethAddress) {
+const setupContract = (ethAddress) => {
   if (!web3.eth.accounts.wallet[ethAddress]) {
     throw new Error('web3 does not have given address')
   }
@@ -25,7 +25,7 @@ export async function setupContract(ethAddress) {
   })
 }
 
-export const login = (privateKey) => {
+const login = (privateKey) => {
   let data
   if (privateKey) {
     data = web3.eth.accounts.privateKeyToAccount(privateKey)
@@ -42,7 +42,7 @@ export const login = (privateKey) => {
   setupContract(data.address)
 }
 
-export const getBalance = (ethAddress) =>
+const getBalance = (ethAddress) =>
   request.get(`${config.api.ethpay}?module=account&action=tokenbalance&contractaddress=${noxonContract._address}&address=${ethAddress}`)
     .then(({ result: amount }) => {
       console.log('tokenAddress', noxonContract._address)
@@ -50,7 +50,7 @@ export const getBalance = (ethAddress) =>
       reducers.user.setBalance({ name: 'tokenData', amount })
     }).catch(r => console.error('Token service isn\'t available, try later'))
 
-export const getTransaction = (address) =>
+const getTransaction = (address) =>
   new Promise((resolve) => {
     const url = [
       `https://api-rinkeby.etherscan.io/api?module=account&action=tokentx`,
@@ -81,7 +81,7 @@ export const getTransaction = (address) =>
       })
   })
 
-export async function withdraw(to, amount, contract) {
+async function withdraw(to, amount, contract) {
   await this.setupContract()
 
   if (this.balance <= 0) {
@@ -118,7 +118,7 @@ export async function withdraw(to, amount, contract) {
   )
 }
 
-// export const send = (from, amount, privateKey, to) =>
+// const send = (from, amount, privateKey, to) =>
 //   new Promise((resolve, reject) => {
 //     web3.eth.getBalance(from).then((r) => {
 //       try {
@@ -152,3 +152,10 @@ export async function withdraw(to, amount, contract) {
 //     })
 //   })
 
+
+export default {
+  login,
+  getBalance,
+  getTransaction,
+  withdraw,
+}

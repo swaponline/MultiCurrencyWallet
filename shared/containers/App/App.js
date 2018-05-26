@@ -7,6 +7,7 @@ import { constants } from 'helpers'
 
 import CSSModules from 'react-css-modules'
 import styles from './App.scss'
+import 'scss/app.scss'
 
 import Header from 'components/Header/Header'
 import Loader from 'components/loaders/Loader/Loader'
@@ -17,6 +18,7 @@ import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 
 @withRouter
 @connect({
+  isPrivateKeysSaved: () => localStorage.getItem(constants.localStorage.privateKeysSaved),
   ethAddress: 'user.ethData.address',
   btcAddress: 'user.btcData.address',
   tokenAddress: 'user.tokenData.address',
@@ -29,13 +31,13 @@ export default class App extends React.Component {
     children: PropTypes.element.isRequired,
   }
 
-  componentWillMount() {
-    actions.user.sign()
-  }
-
   componentDidMount() {
-    if (localStorage.getItem(constants.localStorage.privateKeysSaved)) {
-      actions.modals.open(constants.modals.PrivateKeys)
+    const { isPrivateKeysSaved } = this.props
+
+    actions.user.sign()
+
+    if (!isPrivateKeysSaved) {
+      // actions.modals.open(constants.modals.PrivateKeys)
     }
   }
 

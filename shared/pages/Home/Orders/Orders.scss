@@ -1,0 +1,76 @@
+.table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 1rem;
+  background-color: transparent;
+  display: table;
+  border-collapse: separate;
+  border-spacing: 2px;
+  border-color: grey;
+
+  thead {
+    box-shadow: rgba(#000 ,0.03) 0 3px 3px 0;
+  }
+
+  tr {
+
+    &.active {
+
+      .link {
+        background: #7c1de9;
+      }
+
+      .link-arrow {
+        stroke: #fff;
+      }
+    }
+  }
+
+  th {
+    border: 0;
+  }
+
+  td {
+    height: 114px;
+    vertical-align: middle;
+  }
+}
+
+.coins {
+  font-size: 0;
+}
+
+.headers {
+  display: flex;
+}
+
+.titles {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #b2b2b2;
+}
+
+.coin-left {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+}
+
+.coin-right {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  transform: translateX(-5px);
+}
+
+.price,
+.limits,
+.rating {
+  font-size: 16px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.currency {
+  color: #b2b2b2;
+}

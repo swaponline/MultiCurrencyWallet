@@ -4,7 +4,7 @@ import bitcoin from 'bitcoinjs-lib'
 import reducers from 'redux/core/reducers'
 
 
-export const login = (privateKey) => {
+const login = (privateKey) => {
   let keyPair
 
   if (privateKey) {
@@ -35,14 +35,14 @@ export const login = (privateKey) => {
   reducers.user.setAuthData({ name: 'btcData', data })
 }
 
-export const getBalance = (address) =>
+const getBalance = (address) =>
   request.get(`https://test-insight.bitpay.com/api/addr/${address}`)
     .then(({ balance: amount }) => {
       console.log('BTC Balance:', amount)
       reducers.user.setBalance({ name: 'btcData', amount })
     })
 
-export const getTransaction = (address) =>
+const getTransaction = (address) =>
   new Promise((resolve) => {
 
     const url = `${config.api.blocktrail}/address/${address}/transactions?api_key=${config.apiKeys.blocktrail}`
@@ -66,7 +66,7 @@ export const getTransaction = (address) =>
     })
   })
 
-export const send = (from, to, amount, keyPair) =>
+const send = (from, to, amount, keyPair) =>
   new Promise((resolve, reject) => {
     const newtx = {
       inputs: [
@@ -81,37 +81,46 @@ export const send = (from, to, amount, keyPair) =>
         },
       ],
     }
-    console.log('Начало перевода ....')
     request.post('https://api.blockcypher.com/v1/btc/test3/txs/new', {
       body: JSON.stringify(newtx),
-    }).then((d) => {
-      console.log('Перевод завершен')
-
-      let tmptx = d
-
-      tmptx.pubkeys = []
-
-      let keys = new bitcoin.ECPair.fromWIF(keyPair.toWIF(), bitcoin.networks.testnet) // eslint-disable-line
-
-      tmptx.signatures = tmptx.tosign.map((tosign, n) => {
-        tmptx.pubkeys.push(keys.getPublicKeyBuffer().toString('hex'))
-
-        return keys.sign(BigInteger.fromHex(tosign.toString('hex')).toBuffer()).toDER().toString('hex')
-      })
-
-      return request.post('https://api.blockcypher.com/v1/btc/test3/txs/send', {
-        body: JSON.stringify(tmptx),
-      })
     })
+      .then((d) => {
+        const tmptx = {
+          ...d,
+          pubkeys: [],
+        }
+
+        const keys = new bitcoin.ECPair.fromWIF(keyPair.toWIF(), bitcoin.networks.testnet) // eslint-disable-line
+
+        tmptx.signatures = tmptx.tosign.map((toSign) => {
+          tmptx.pubkeys.push(keys.getPublicKeyBuffer().toString('hex'))
+
+          return keys.sign(BigInteger.fromHex(toSign.toString('hex')).toBuffer()).toDER().toString('hex')
+        })
+
+        return request.post('https://api.blockcypher.com/v1/btc/test3/txs/send', {
+          body: JSON.stringify(tmptx),
+        })
+      })
       .then((res) => resolve(res)).catch((e) => console.log(e))
   })
 
-export const fetchUnspents = (address) =>
+const fetchUnspents = (address) =>
   request.get(`https://test-insight.bitpay.com/api/addr/${address}/utxo`)
 
-export const broadcastTx = (txRaw) =>
+const broadcastTx = (txRaw) =>
   request.post(`https://test-insight.bitpay.com/api/tx/send`, {
     body: {
       rawtx: txRaw,
     },
   })
+
+
+export default {
+  login,
+  getBalance,
+  getTransaction,
+  send,
+  fetchUnspents,
+  broadcastTx,
+}

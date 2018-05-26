@@ -1,7 +1,8 @@
 import Web3 from 'web3'
+import config from 'app-config'
 
 
-const web3 = new Web3(new Web3.providers.HttpProvider('https://rinkeby.infura.io/JCnK5ifEPH9qcQkX0Ahl'))
+const web3 = new Web3(new Web3.providers.HttpProvider(config.services.web3Provider))
 
 export default web3
 

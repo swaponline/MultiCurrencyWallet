@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Description from 'components/Description/Description'
+import PageHeadline from 'components/PageHeadline/PageHeadline'
 import TradesTable from 'components/TradesTable/TradesTable'
 
 const titles = ['COIN', 'STATUS', 'AMOUNT']
@@ -8,7 +8,7 @@ const titles = ['COIN', 'STATUS', 'AMOUNT']
 export default function History() {
   return (
     <section>
-      <Description subtitle="History" filter />
+      <PageHeadline subtitle="History" filter />
       <TradesTable titles={titles} history />
     </section>
   )

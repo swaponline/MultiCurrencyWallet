@@ -1,11 +1,10 @@
-import { config, request } from 'helpers'
+import { request } from 'helpers'
 import web3 from 'helpers/web3'
 import reducers from 'redux/core/reducers'
-import actions from 'redux/actions'
+import config from 'app-config'
 
-// let gas
 
-export const login = (privateKey) => {
+const login = (privateKey) => {
   let data
   if (privateKey) {
     data = web3.eth.accounts.privateKeyToAccount(privateKey)
@@ -22,7 +21,7 @@ export const login = (privateKey) => {
   return data.privateKey
 }
 
-export const getBalance = (address) =>
+const getBalance = (address) =>
   web3.eth.getBalance(address)
     .then(wei => {
       const amount = Number(web3.utils.fromWei(wei))
@@ -37,7 +36,7 @@ export const getBalance = (address) =>
 //   })
 // }
 
-export const getTransaction = (address) =>
+const getTransaction = (address) =>
   new Promise((resolve) => {
     const url = `${config.api.ethpay}?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${config.apiKeys.blocktrail}`
     let transactions
@@ -52,7 +51,7 @@ export const getTransaction = (address) =>
               status: item.blockHash != null ? 1 : 0,
               value: web3.utils.fromWei(item.value),
               address: item.to,
-              date: new Date(item.timeStamp * 1000).toLocaleString('en-US', config.date),
+              date: new Date(item.timeStamp * 1000).toLocaleString('en-US', config.i18nDate),
               direction: address.toLowerCase() === item.to.toLowerCase() ? 'in' : 'out',
             }))
           resolve(transactions)
@@ -60,7 +59,7 @@ export const getTransaction = (address) =>
       })
   })
 
-export const send = (from, to, amount, privateKey) =>
+const send = (from, to, amount, privateKey) =>
   // await getGas()
   new Promise((resolve, reject) => {
     web3.eth.getBalance(from).then((r) => {
@@ -93,3 +92,10 @@ export const send = (from, to, amount, privateKey) =>
     })
   })
 
+
+export default {
+  login,
+  getBalance,
+  getTransaction,
+  send,
+}

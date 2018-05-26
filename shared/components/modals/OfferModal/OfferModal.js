@@ -1,12 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import cssModules from 'react-css-modules'
+import styles from './OfferModal.scss'
+
 import Modal from 'components/modal/Modal/Modal'
 
 import ConfirmOffer from './ConfirmOffer/ConfirmOffer'
 import AddOffer from './AddOffer/AddOffer'
 
 
+@cssModules(styles)
 export default class Offer extends React.Component {
 
   static propTypes = {
@@ -39,13 +43,15 @@ export default class Offer extends React.Component {
 
     return (
       <Modal name={name} title={title}>
-        {
-          view === 'editOffer' ? (
-            <AddOffer initialData={offer} onNext={this.handleMoveToConfirmation} />
-          ) : (
-            <ConfirmOffer offer={offer} onBack={this.handleMoveToOfferEditing} />
-          )
-        }
+        <div styleName="content">
+          {
+            view === 'editOffer' ? (
+              <AddOffer initialData={offer} onNext={this.handleMoveToConfirmation} />
+            ) : (
+              <ConfirmOffer offer={offer} onBack={this.handleMoveToOfferEditing} />
+            )
+          }
+        </div>
       </Modal>
     )
   }

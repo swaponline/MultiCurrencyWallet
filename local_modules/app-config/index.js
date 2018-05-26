@@ -4,7 +4,7 @@ import path from 'path'
 import { merge } from 'lodash'
 
 
-const env = process.env.NODE_ENV
+const env = process.env.CONFIG
 
 let envConfigPath
 let defaultConfig

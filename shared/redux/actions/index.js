@@ -1,11 +1,11 @@
-import * as modals from  './modals'
-import * as loader from  './loader'
-import * as notification from  './notification'
-import * as filter from './filter'
-import * as user from './user'
-import * as bitcoin from './bitcoin'
-import * as ethereum from './ethereum'
-import * as token from './token'
+import modals from  './modals'
+import loader from  './loader'
+import notification from  './notification'
+import filter from './filter'
+import user from './user'
+import bitcoin from './bitcoin'
+import ethereum from './ethereum'
+import token from './token'
 
 
 export default {

@@ -8,11 +8,14 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "eslint": "eslint  --fix --cache ./shared --ext jsx",
     "start": "npm run dev",
-    "dev": "cross-env WEBPACK=development NODE_ENV=development nodemon",
+    "dev": "npm run dev:testnet",
+    "prod": "npm run dev:mainnet",
+    "dev:testnet": "cross-env CONFIG=testnet.dev nodemon",
+    "dev:mainnet": "cross-env CONFIG=mainnet.dev nodemon",
     "clean:testnet": "rimraf ./build-testnet",
     "clean:mainnet": "rimraf ./build-mainnet",
-    "build:testnet": "npm run clean:testnet && cross-env DEBUG=app:* WEBPACK=testnet NODE_ENV=testnet node ./bin/compile",
-    "build:mainnet": "npm run clean:mainnet && cross-env DEBUG=app:* WEBPACK=mainnet NODE_ENV=mainnet node ./bin/compile"
+    "build:testnet": "npm run clean:testnet && cross-env DEBUG=app:* CONFIG=testnet.prod node ./bin/compile",
+    "build:mainnet": "npm run clean:mainnet && cross-env DEBUG=app:* CONFIG=mainnet.prod node ./bin/compile"
   },
   "keywords": [],
   "author": "@sylogex",

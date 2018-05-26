@@ -11,8 +11,11 @@ const nav = [
   { title: 'All', link: '/' },
   { title: 'Balances', link: '/balance' },
   { title: 'History', link: '/history' },
-  { title: 'Get demo money', onClick: () => actions.user.getDemoMoney() },
 ]
+
+if (process.env.TESTNET) {
+  nav.push({ title: 'Get demo money', onClick: () => actions.user.getDemoMoney() })
+}
 
 const Nav = () => (
   <div styleName="nav">

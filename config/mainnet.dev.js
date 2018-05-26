@@ -2,9 +2,10 @@ import baseConfig from './default'
 
 
 export default {
-  env: 'production',
+  env: 'development',
+  entry: 'mainnet',
 
-  publicPath: `https://alpha.swaponline.com${baseConfig.publicPath}`,
+  publicPath: `http://localhost:${baseConfig.http.port}/`,
 
   services: {
     base: 'https://alpha.swaponline.com/',

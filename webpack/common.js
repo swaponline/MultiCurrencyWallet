@@ -15,6 +15,8 @@ const globals = {
   'process.env': {
     'NODE_ENV': JSON.stringify(config.env),
     'WEBPACK': JSON.stringify(config.webpack),
+    'TESTNET': config.webpack === 'testnet',
+    'MAINNET': config.webpack === 'mainnet',
   },
   // TODO fix __CONFIG__ - remove it and check app-config/webpack to resolve in /client.js
   __CONFIG__: JSON.stringify(config),
@@ -60,5 +62,6 @@ const webpackConfig = {
     }),
   ],
 }
+
 
 export default webpackConfig

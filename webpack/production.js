@@ -7,7 +7,7 @@ import config from 'app-config'
 export default (webpackConfig) => {
 
   webpackConfig.output = {
-    path: config.paths.base('build-testnet'),
+    path: config.paths.base(`build-${config.entry}`),
     filename: '[name].js',
     chunkFilename: '[id].chunk.js',
     publicPath: config.publicPath,

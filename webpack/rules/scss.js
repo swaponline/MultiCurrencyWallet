@@ -1,6 +1,6 @@
 import config from 'app-config'
 import autoprefixer from 'autoprefixer'
-import { AUTOPREFIXER as AUTOPREFIXER_CONFIG } from '../config/index'
+import { AUTOPREFIXER } from '../util'
 
 
 const compile         = config.env === 'development' ? 'sourceMap' : 'minimize'
@@ -29,7 +29,7 @@ export default [
         options: {
           sourceMap: true,
           plugins: () => [
-            autoprefixer(AUTOPREFIXER_CONFIG),
+            autoprefixer(AUTOPREFIXER),
           ],
         },
       },
