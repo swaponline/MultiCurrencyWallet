@@ -5,7 +5,7 @@ import eth from './images/eth.svg'
 import icx from './images/icx.svg'
 import waves from './images/waves.svg'
 import xrp from './images/xrp.svg'
-
+import nim from './images/nim.svg'
 
 const icons = {
   btc,
@@ -13,6 +13,7 @@ const icons = {
   icx,
   waves,
   xrp,
+  nim,
   noxon: xrp,
 }
 

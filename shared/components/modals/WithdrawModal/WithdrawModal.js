@@ -27,7 +27,7 @@ export default class WithdrawModal extends React.Component {
   }
 
   withdraw = (address, amount, currency) => {
-    const { ethData, btcData } = this.props
+    const { ethData, btcData, nimData } = this.props
     switch (currency) {
       case 'ETH':
         return actions.ethereum.send(ethData.address, address, amount, ethData.privateKey)
@@ -39,6 +39,11 @@ export default class WithdrawModal extends React.Component {
         return actions.bitcoin.send(btcData.address, address, amount, btcData.keyPair)
           .then(() => {
             actions.notification.update('Money withdraw BTC', true, {})
+          })
+      case 'NIM':
+        return actions.nimiq.send(null, address, amount)
+          .then(() => {
+            actions.notification.update('Money withdraw NIM', true, {})
           })
 
       case 'NOXON':
