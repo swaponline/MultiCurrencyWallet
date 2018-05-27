@@ -57,11 +57,9 @@ export default class App extends React.Component {
     return (
       <Fragment>
         <Header />
-        <main styleName="main" id="main">
-          <WidthContainer>
-            {children}
-          </WidthContainer>
-        </main>
+        <WidthContainer styleName="main">
+          {children}
+        </WidthContainer>
         <RequestLoader />
         <ModalConductor />
       </Fragment>

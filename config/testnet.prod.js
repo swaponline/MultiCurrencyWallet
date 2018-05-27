@@ -5,11 +5,10 @@ export default {
   env: 'production',
   entry: 'testnet',
 
-  publicPath: `https://alpha.swaponline.com${baseConfig.publicPath}`,
+  base: 'https://wallet.swap.online/',
+  publicPath: `https://wallet.swap.online${baseConfig.publicPath}`,
 
   services: {
-    base: 'https://wallet.swap.online/',
-    rest: 'https://wallet.swap.online/rest/',
     web3Provider: 'https://rinkeby.infura.io/JCnK5ifEPH9qcQkX0Ahl',
   },
 

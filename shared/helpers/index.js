@@ -1,5 +1,4 @@
 import links from './links'
-import config from './config'
 import request from './request'
 import constants from './constants'
 import localStorage from './localStorage'
@@ -14,7 +13,6 @@ import getScrollBarWidth from './getScrollBarWidth'
 
 export {
   links,
-  config,
   request,
   constants,
   localStorage,

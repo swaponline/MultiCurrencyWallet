@@ -44,7 +44,7 @@ const login = (privateKey) => {
 }
 
 const getBalance = (ethAddress) =>
-  request.get(`${config.api.ethpay}?module=account&action=tokenbalance&contractaddress=${noxonContract._address}&address=${ethAddress}`)
+  request.get(`${config.api.etherscan}?module=account&action=tokenbalance&contractaddress=${noxonContract._address}&address=${ethAddress}`)
     .then(({ result: amount }) => {
       console.log('tokenAddress', noxonContract._address)
       console.log('result', amount)

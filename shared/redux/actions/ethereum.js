@@ -6,29 +6,37 @@ import config from 'app-config'
 
 const login = (privateKey) => {
   let data
+
   if (privateKey) {
     data = web3.eth.accounts.privateKeyToAccount(privateKey)
-  } else {
+  }
+  else {
     console.info('Created account Ethereum ...')
     data = web3.eth.accounts.create()
     web3.eth.accounts.wallet.add(data)
   }
 
   web3.eth.accounts.wallet.add(data.privateKey)
+  reducers.user.setAuthData({ name: 'ethData', data })
+
   console.info('Logged in with Ethereum', data)
 
-  reducers.user.setAuthData({ name: 'ethData', data })
   return data.privateKey
 }
 
-const getBalance = (address) =>
-  web3.eth.getBalance(address)
-    .then(wei => {
-      const amount = Number(web3.utils.fromWei(wei))
-      console.log('ETH Balance:', amount)
-      reducers.user.setBalance({ name: 'ethData', amount })
-    }).catch(r => console.log('app:showError', 'Ethereum service isn\'t available, try later'))
+const getBalance = (address) => {
+  const url = `${config.api.etherscan}?module=account&action=balance&address=${address}&tag=latest&apikey=${config.apiKeys.etherscan}`
 
+  return request.get(url)
+    .then(({ result }) => {
+      const amount = Number(web3.utils.fromWei(result))
+
+      reducers.user.setBalance({ name: 'ethData', amount })
+    })
+    .catch(() => {
+      console.log('app:showError', 'Ethereum service isn\'t available, try later')
+    })
+}
 
 // export const getGas = () => {
 //   web3.eth.getGasPrice().then((res) => {
@@ -38,12 +46,11 @@ const getBalance = (address) =>
 
 const getTransaction = (address) =>
   new Promise((resolve) => {
-    const url = `${config.api.ethpay}?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${config.apiKeys.blocktrail}`
+    const url = `${config.api.etherscan}?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${config.apiKeys.etherscan}`
     let transactions
 
     request.get(url)
       .then((res) => {
-        console.log('res', res)
         if (res.status) {
           transactions = res.result
             .filter((item) => item.value > 0).map((item) => ({
@@ -55,16 +62,18 @@ const getTransaction = (address) =>
               direction: address.toLowerCase() === item.to.toLowerCase() ? 'in' : 'out',
             }))
           resolve(transactions)
-        } else { console.error('res:status ETH false', res) }
+        }
+        else {
+          console.error('res:status ETH false', res)
+        }
       })
   })
 
 const send = (from, to, amount, privateKey) =>
-  // await getGas()
   new Promise((resolve, reject) => {
-    web3.eth.getBalance(from).then((r) => {
+    web3.eth.getBalance(from).then((result) => {
       try {
-        let balance = web3.utils.fromWei(r)
+        const balance = web3.utils.fromWei(result)
 
         if (balance === 0) {
           reject('Your balance is empty')
@@ -86,8 +95,8 @@ const send = (from, to, amount, privateKey) =>
           })
           .catch(error => console.error(error))
       }
-      catch (e) {
-        console.error(e)
+      catch (err) {
+        console.error(err)
       }
     })
   })

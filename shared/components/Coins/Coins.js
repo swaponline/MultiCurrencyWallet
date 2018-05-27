@@ -6,8 +6,8 @@ import styles from './Coins.scss'
 import Coin from 'components/Coin/Coin'
 
 
-const Coins = ({ names, size = 40 }) => (
-  <div styleName="coins">
+const Coins = ({ className, names, size = 40 }) => (
+  <div styleName="coins" className={className}>
     <Coin name={names[0]} size={size} />
     <Coin name={names[1]} size={size} />
   </div>

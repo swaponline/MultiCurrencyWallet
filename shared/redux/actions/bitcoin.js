@@ -37,7 +37,7 @@ const login = (privateKey) => {
 }
 
 const getBalance = (address) =>
-  request.get(`https://test-insight.bitpay.com/api/addr/${address}`)
+  request.get(`${config.api.bitpay}/addr/${address}`)
     .then(({ balance: amount }) => {
       console.log('BTC Balance:', amount)
       reducers.user.setBalance({ name: 'btcData', amount })
@@ -107,10 +107,10 @@ const send = (from, to, amount, keyPair) =>
   })
 
 const fetchUnspents = (address) =>
-  request.get(`https://test-insight.bitpay.com/api/addr/${address}/utxo`)
+  request.get(`${config.api.bitpay}/addr/${address}/utxo`)
 
 const broadcastTx = (txRaw) =>
-  request.post(`https://test-insight.bitpay.com/api/tx/send`, {
+  request.post(`${config.api.bitpay}/tx/send`, {
     body: {
       rawtx: txRaw,
     },

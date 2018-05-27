@@ -24,7 +24,7 @@ export default class ConfirmOffer extends Component {
 
     return (
       <Fragment>
-        <Coins styleName="coins" names={[ buyCurrency, sellCurrency ]} />
+        <Coins styleName="coins" names={[ buyCurrency, sellCurrency ]} size={100} />
         <Amounts {...{ buyAmount, sellAmount, buyCurrency, sellCurrency }} />
         <ExchangeRate {...{ value: exchangeRate, buyCurrency, sellCurrency }} />
         <Fee amount={0.0001} currency={sellCurrency} />
