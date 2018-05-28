@@ -1,11 +1,13 @@
 import { nimiq } from 'helpers/nimiq'
 import reducers from 'redux/core/reducers'
+import config from 'app-config'
+
+const NETWORK = config.entry === 'mainnet' ? 'main' : 'test'
 
 const login = async (ethPrivateKey) => {
-  let data = await nimiq.login(ethPrivateKey)
+  let data = await nimiq.login(ethPrivateKey, NETWORK)
 
   reducers.user.setAuthData({ name: 'nimData', data })
-  console.info('Logged in with Nimiq', data)
 
   return data
 }

@@ -1,14 +1,14 @@
 const $ = {}
 let _loading, _Nimiq
 
-async function initNimiq() {
+async function initNimiq(network = 'test') {
   if (_Nimiq) return _Nimiq
   if (!Nimiq) throw new Error('Nimiq not present, add from CDN: https://cdn.nimiq.com/nimiq.js')
 
   _Nimiq = new Promise( resolve => {
     Nimiq.init(async function () {
       console.info('Logged in with Nimiq')
-      Nimiq.GenesisConfig.test()
+      Nimiq.GenesisConfig.init(Nimiq.GenesisConfig.CONFIGS[network])
       resolve(true)
     })
   })
@@ -16,8 +16,8 @@ async function initNimiq() {
   return _Nimiq
 }
 
-async function login(privateKey) {
-  await initNimiq()
+async function login(privateKey, network) {
+  await initNimiq(network)
 
   $.wallet = await initWallet(privateKey)
 
