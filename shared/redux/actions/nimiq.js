@@ -18,7 +18,12 @@ const getBalance = async (address) => {
 }
 
 const getTransaction = () => {}
-const send = async (from, to, amount) => await nimiq.withdraw(to, amount)
+const send = (from, to, amount) => {
+  let tx_sent = nimiq.withdraw(to, amount)
+  tx_sent.then(() => getBalance())
+
+  return tx_sent
+}
 
 export default {
   login,
