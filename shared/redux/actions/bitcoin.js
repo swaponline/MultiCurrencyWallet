@@ -12,11 +12,11 @@ const login = (privateKey) => {
     const hash  = bitcoin.crypto.sha256(privateKey)
     const d     = BigInteger.fromBuffer(hash)
 
-    keyPair     = new bitcoin.ECPair(d, null, btc.network)
+    keyPair     = new bitcoin.ECPair(d, null, { network: btc.network })
   }
   else {
     console.info('Created account Bitcoin ...')
-    keyPair     = bitcoin.ECPair.makeRandom(btc.network)
+    keyPair     = bitcoin.ECPair.makeRandom({ network: btc.network })
     privateKey  = keyPair.toWIF()
     localStorage.setItem(constants.privateKeyNames.btc, privateKey)
   }
