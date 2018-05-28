@@ -1,6 +1,6 @@
 import modals from  './modals'
 import loader from  './loader'
-import notification from  './notification'
+import notifications from  './notifications'
 import filter from './filter'
 import user from './user'
 import bitcoin from './bitcoin'
@@ -13,7 +13,7 @@ export default {
   filter,
   modals,
   loader,
-  notification,
+  notifications,
   user,
   bitcoin,
   ethereum,

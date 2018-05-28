@@ -1,0 +1,10 @@
+.notificationConductor {
+  display: flex;
+  max-height: 100%;
+  flex-direction: column;
+  flex-wrap: wrap-reverse;
+  position: fixed;
+  top: 0;
+  right: 5px;
+  z-index: 306;
+}

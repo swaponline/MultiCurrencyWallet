@@ -77,7 +77,7 @@ const getTransaction = (address) =>
       })
   })
 
-const send = (to, amount) =>
+const send = (from, to, amount) =>
   new Promise((resolve, reject) =>
     noxonContract.methods.transfer(to, amount).send()
       .then(receipt => {

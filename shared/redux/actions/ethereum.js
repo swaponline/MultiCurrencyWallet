@@ -1,4 +1,5 @@
 import { request, constants } from 'helpers'
+import { getState } from 'redux/core'
 import web3 from 'helpers/web3'
 import reducers from 'redux/core/reducers'
 import config from 'app-config'
@@ -69,16 +70,18 @@ const getTransaction = (address) =>
       })
   })
 
-const send = (from, to, amount, privateKey) =>
+const send = (from, to, amount) =>
   new Promise((resolve, reject) => {
-    const t = {
-      to,
+    const { user: { ethData: { privateKey } } } = getState()
+
+    const params = {
+      to: String(to).trim(),
       gasPrice: '20000000000',
       gas: '21000',
-      value: web3.utils.toWei(`${amount}`),
+      value: web3.utils.toWei(String(amount)),
     }
 
-    web3.eth.accounts.signTransaction(t, privateKey)
+    web3.eth.accounts.signTransaction(params, privateKey)
       .then(result => web3.eth.sendSignedTransaction(result.rawTransaction))
       .then(receipt => {
         resolve(receipt)

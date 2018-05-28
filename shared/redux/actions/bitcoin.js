@@ -1,5 +1,6 @@
 import BigInteger from 'bigi'
 import { btc, request, constants } from 'helpers'
+import { getState } from 'redux/core'
 import bitcoin from 'bitcoinjs-lib'
 import reducers from 'redux/core/reducers'
 import config from 'app-config'
@@ -12,7 +13,7 @@ const login = (privateKey) => {
     const hash  = bitcoin.crypto.sha256(privateKey)
     const d     = BigInteger.fromBuffer(hash)
 
-    keyPair     = new bitcoin.ECPair(d, null, { network: btc.network })
+    keyPair     = new bitcoin.ECPair(d, null, { network: bitcoin.networks.bitcoin })
   }
   else {
     console.info('Created account Bitcoin ...')
@@ -69,8 +70,10 @@ const getTransaction = (address) =>
     })
   })
 
-const send = (from, to, amount, keyPair) =>
+const send = (from, to, amount) =>
   new Promise((resolve, reject) => {
+    const { user: { btcData: { privateKey } } } = getState()
+
     const newtx = {
       inputs: [
         {
@@ -93,7 +96,7 @@ const send = (from, to, amount, keyPair) =>
           pubkeys: [],
         }
 
-        const keys = new bitcoin.ECPair.fromWIF(keyPair.toWIF(), btc.network) // eslint-disable-line
+        const keys = new bitcoin.ECPair.fromWIF(privateKey, btc.network) // eslint-disable-line
 
         tmptx.signatures = tmptx.tosign.map((toSign) => {
           tmptx.pubkeys.push(keys.getPublicKeyBuffer().toString('hex'))

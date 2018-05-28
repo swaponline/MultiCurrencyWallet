@@ -4,11 +4,20 @@
   border: 1px solid #fff;
   position: relative;
   border-radius: 50%;
+}
 
-  img {
-    height: 50%;
-    display: block;
-    position: absolute;
-    @include absolute-centring;
-  }
+.icon {
+  height: 50%;
+  display: block;
+  @include absolute-centring;
+}
+
+.text {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  text-align: center;
+  @include ff-semibold;
+  color: #fff;
 }
