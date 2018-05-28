@@ -1,5 +1,5 @@
 import BigInteger from 'bigi'
-import { request } from 'helpers'
+import { btc, request, constants } from 'helpers'
 import bitcoin from 'bitcoinjs-lib'
 import reducers from 'redux/core/reducers'
 import config from 'app-config'
@@ -12,17 +12,17 @@ const login = (privateKey) => {
     const hash  = bitcoin.crypto.sha256(privateKey)
     const d     = BigInteger.fromBuffer(hash)
 
-    keyPair     = new bitcoin.ECPair(d, null, { network: bitcoin.networks.testnet })
+    keyPair     = new bitcoin.ECPair(d, null, { network: btc.network })
   }
   else {
     console.info('Created account Bitcoin ...')
-    keyPair     = bitcoin.ECPair.makeRandom({ network: bitcoin.networks.testnet })
+    keyPair     = bitcoin.ECPair.makeRandom({ network: btc.network })
     privateKey  = keyPair.toWIF()
-    localStorage.setItem('privateBtcKey', privateKey)
+    localStorage.setItem(constants.privateKeyNames.btc, privateKey)
   }
 
   const address     = keyPair.getAddress()
-  const account     = new bitcoin.ECPair.fromWIF(privateKey, bitcoin.networks.testnet) // eslint-disable-line
+  const account     = new bitcoin.ECPair.fromWIF(privateKey, btc.network) // eslint-disable-line
   const publicKey   = account.getPublicKeyBuffer().toString('hex')
 
   const data = {
@@ -92,7 +92,7 @@ const send = (from, to, amount, keyPair) =>
           pubkeys: [],
         }
 
-        const keys = new bitcoin.ECPair.fromWIF(keyPair.toWIF(), bitcoin.networks.testnet) // eslint-disable-line
+        const keys = new bitcoin.ECPair.fromWIF(keyPair.toWIF(), btc.network) // eslint-disable-line
 
         tmptx.signatures = tmptx.tosign.map((toSign) => {
           tmptx.pubkeys.push(keys.getPublicKeyBuffer().toString('hex'))

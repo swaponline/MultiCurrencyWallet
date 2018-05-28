@@ -1,11 +1,11 @@
-import { request } from 'helpers'
+import { request, constants } from 'helpers'
 import actions from 'redux/actions'
 import reducers from 'redux/core/reducers'
 
 
 const sign = () => {
-  const btcPrivateKey = localStorage.getItem('privateBtcKey')
-  const ethPrivateKey = localStorage.getItem('privateEthKey')
+  const btcPrivateKey = localStorage.getItem(constants.privateKeyNames.btc)
+  const ethPrivateKey = localStorage.getItem(constants.privateKeyNames.eth)
   const _ethPrivateKey = actions.ethereum.login(ethPrivateKey)
 
   actions.bitcoin.login(btcPrivateKey)
@@ -21,8 +21,8 @@ const getBalances = (ethAddress, btcAddress) => {
 const getDemoMoney = process.env.MAINNET ? () => {} : () => {
   request.get('https://swap.online/demokeys.php', {})
     .then((r) => {
-      localStorage.setItem('privateBtcKey', r[0])
-      localStorage.setItem('privateEthKey', r[1])
+      localStorage.setItem(constants.privateKeyNames.btc, r[0])
+      localStorage.setItem(constants.privateKeyNames.eth, r[1])
       global.location.reload()
     })
 }

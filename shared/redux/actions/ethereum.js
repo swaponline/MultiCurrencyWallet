@@ -1,4 +1,4 @@
-import { request } from 'helpers'
+import { request, constants } from 'helpers'
 import web3 from 'helpers/web3'
 import reducers from 'redux/core/reducers'
 import config from 'app-config'
@@ -13,7 +13,7 @@ const login = (privateKey) => {
   else {
     console.info('Created account Ethereum ...')
     data = web3.eth.accounts.create()
-    localStorage.setItem('privateEthKey', data.privateKey)
+    localStorage.setItem(constants.privateKeyNames.eth, data.privateKey)
   }
 
   web3.eth.accounts.wallet.add(data.privateKey)
