@@ -15,7 +15,6 @@ export const initialState = {
     address: '',
     balance: 0,
     currency: 'NOXON',
-    contract: {},
   },
 }
 
@@ -35,10 +34,9 @@ export const setBalance = (state, { name, amount }) => ({
   },
 })
 
-export const setTokenData = (state, { name, contract }) => ({
+export const setTokenData = (state, { name }) => ({
   ...state,
   [name]: {
     ...state[name],
-    contract,
   },
 })

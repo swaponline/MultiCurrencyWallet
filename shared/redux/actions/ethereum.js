@@ -79,11 +79,8 @@ const send = (from, to, amount, privateKey) =>
     }
 
     web3.eth.accounts.signTransaction(t, privateKey)
-      .then((result) => {
-        console.log('result', result)
-        return web3.eth.sendSignedTransaction(result.rawTransaction)
-      })
-      .then((receipt) => {
+      .then(result => web3.eth.sendSignedTransaction(result.rawTransaction))
+      .then(receipt => {
         resolve(receipt)
       })
   })

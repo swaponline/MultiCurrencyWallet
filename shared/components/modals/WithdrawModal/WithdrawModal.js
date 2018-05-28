@@ -42,7 +42,7 @@ export default class WithdrawModal extends React.Component {
           })
 
       case 'NOXON':
-        return actions.token.send(ethData.address, address, amount, ethData.privateKey)
+        return actions.token.send(address, amount)
           .then(() => {
             actions.notification.update('Money withdraw NOXON', true, {})
           })

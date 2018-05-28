@@ -19,11 +19,6 @@ const setupContract = (ethAddress) => {
   }
 
   noxonContract = new web3.eth.Contract(abi, config.services.web3.noxonToken, options)
-  reducers.user.setTokenData({
-    name: 'tokenData',
-    contract: noxonContract,
-    address: ethAddress,
-  })
 }
 
 const login = (privateKey) => {
@@ -82,59 +77,17 @@ const getTransaction = (address) =>
       })
   })
 
-function withdraw(to, amount, contract) {
-
-  if (this.balance <= 0) {
-    throw new Error('Your balance is empty')
-
-  }
-
-  if (this.balance <= amount) {
-    throw new Error('not enough money')
-
-  }
-
-  console.log('transfer amount', amount, 'to', to)
-  let transfer = contract.methods.transfer(to, amount).send()
-
-  console.log(transfer)
-
-  return new Promise((resolve, reject) =>
-    transfer
-      .then(receipt => console.log('receipt', receipt))
-      .then(hash => console.log('hash', hash))
-      .then(confirmationNumber => console.log('confirmationNumber', confirmationNumber))
-      .catch(error => console.log(error.message || error))
+const send = (to, amount) =>
+  new Promise((resolve, reject) =>
+    noxonContract.methods.transfer(to, amount).send()
+      .then(receipt => {
+        resolve(receipt)
+      })
   )
-}
-
-const send = (from, amount, privateKey, to) =>
-  new Promise((resolve, reject) => {
-    web3.eth.getBalance(from).then((r) => {
-      try {
-        let balance = web3.utils.fromWei(r)
-        if (balance === 0) {
-          reject('Your balance is empty')
-          return
-        }
-
-        let abi = [ {} ] // redacted on purpose
-        let contract =  new web3.eth.Contract(abi, to)
-
-        const receipt =  contract.methods.withdraw(to, amount, contract).send()
-        return
-      }
-      catch (e) {
-        console.error(e)
-      }
-    })
-  })
-
 
 export default {
   login,
   getBalance,
   getTransaction,
-  withdraw,
   send,
 }
