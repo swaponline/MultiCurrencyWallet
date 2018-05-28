@@ -34,10 +34,17 @@ export default class WithdrawModal extends React.Component {
           .then(() => {
             actions.notification.update('Money withdraw ETH', true, {})
           })
+
       case 'BTC':
         return actions.bitcoin.send(btcData.address, address, amount, btcData.keyPair)
           .then(() => {
             actions.notification.update('Money withdraw BTC', true, {})
+          })
+
+      case 'NOXON':
+        return actions.token.send(ethData.address, address, amount, ethData.privateKey)
+          .then(() => {
+            actions.notification.update('Money withdraw NOXON', true, {})
           })
 
       default:

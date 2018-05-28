@@ -18,6 +18,7 @@ const login = (privateKey) => {
     console.info('Created account Bitcoin ...')
     keyPair     = bitcoin.ECPair.makeRandom({ network: bitcoin.networks.testnet })
     privateKey  = keyPair.toWIF()
+    localStorage.setItem('privateBtcKey', privateKey)
   }
 
   const address     = keyPair.getAddress()

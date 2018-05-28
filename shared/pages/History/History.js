@@ -4,6 +4,7 @@ import actions from 'redux/actions'
 
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import Table from 'components/Table/Table'
+import Filter from 'components/Filter/Filter'
 
 import Row from './Row/Row'
 
@@ -25,7 +26,7 @@ const filterHistory = (items, filter) => {
   ethAddress: ethData.address,
   btcAddress: btcData.address,
 }))
-export default class Balances extends Component {
+export default class History extends Component {
 
   componentDidMount() {
     const { ethAddress, btcAddress } = this.props
@@ -40,7 +41,8 @@ export default class Balances extends Component {
 
     return (
       <section>
-        <PageHeadline subtitle="Balances" />
+        <PageHeadline subtitle="History" />
+        <Filter />
         <Table
           titles={titles}
           rows={items}

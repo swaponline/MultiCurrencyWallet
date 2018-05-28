@@ -20,9 +20,9 @@ app.use(bodyParser.json({ strict: true, limit: '10mb' }))
 app.use(historyApiFallback())
 app.use(webpackMiddleware(compiler, webpackConfig.devServer))
 
-app.listen(port, '0.0.0.0', (err) => {
+app.listen(port, 'localhost', (err) => {
   if (err) {
     debug(chalk.red(err))
   }
-  debug('Listening on port %s. Open up http://0.0.0.0:%s/ in your browser.', port, port)
+  debug('Listening on port %s. Open up http://localhost:%s/ in your browser.', port, port)
 })

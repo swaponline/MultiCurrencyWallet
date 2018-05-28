@@ -26,6 +26,6 @@ export default {
 
   apiKeys: {
     etherscan: 'RHHFPNMAZMD6I4ZWBZBF6FA11CMW9AXZNM',
-    // ???? blocktrail: '1835368c0fa8e71907ca26f3c978ab742a7db42e',
+    blocktrail: '1835368c0fa8e71907ca26f3c978ab742a7db42e',
   },
 }

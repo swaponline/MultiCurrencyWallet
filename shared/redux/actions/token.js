@@ -82,8 +82,7 @@ const getTransaction = (address) =>
       })
   })
 
-async function withdraw(to, amount, contract) {
-  await this.setupContract()
+function withdraw(to, amount, contract) {
 
   if (this.balance <= 0) {
     throw new Error('Your balance is empty')
@@ -102,56 +101,34 @@ async function withdraw(to, amount, contract) {
 
   return new Promise((resolve, reject) =>
     transfer
-      .on('transactionHash', (hash) => {
-        let transUrl = `https://rinkeby.etherscan.io/tx/${hash}`
-        console.log('ETH Swap > transactionHash', transUrl)
-
-        resolve(transUrl)
-      })
-      .on('confirmation', (confirmationNumber) => {
-        console.log('ETH Swap > confirmation', confirmationNumber)
-      })
-      .on('error', (err) => {
-        console.error('ETH Swap > receipt', err)
-
-        reject()
-      })
+      .then(receipt => console.log('receipt', receipt))
+      .then(hash => console.log('hash', hash))
+      .then(confirmationNumber => console.log('confirmationNumber', confirmationNumber))
+      .catch(error => console.log(error.message || error))
   )
 }
 
-// const send = (from, amount, privateKey, to) =>
-//   new Promise((resolve, reject) => {
-//     web3.eth.getBalance(from).then((r) => {
-//       try {
-//         let balance = web3.utils.fromWei(r)
-//         if (balance === 0) {
-//           reject('Your balance is empty')
-//           return
-//         }
+const send = (from, amount, privateKey, to) =>
+  new Promise((resolve, reject) => {
+    web3.eth.getBalance(from).then((r) => {
+      try {
+        let balance = web3.utils.fromWei(r)
+        if (balance === 0) {
+          reject('Your balance is empty')
+          return
+        }
 
-//         let abi = [ {} ] // redacted on purpose
-//         let contract =  new web3.eth.Contract(abi, to)
+        let abi = [ {} ] // redacted on purpose
+        let contract =  new web3.eth.Contract(abi, to)
 
-//         const receipt =  contract.methods.withdraw(secret, ownerAddress).send(params)
-//           .on('transactionHash', (hash) => {
-//             console.log('ETH Swap > transactionHash', `https://rinkeby.etherscan.io/tx/${hash}`)
-//             handleTransaction && handleTransaction(`https://rinkeby.etherscan.io/tx/${hash}`)
-//           })
-//           .on('confirmation', (confirmationNumber) => {
-//             // console.log('ETH Swap > confirmation', confirmationNumber)
-//           })
-//           .on('error', (err) => {
-//             console.error('ETH Swap > receipt', err)
-//             reject()
-//           })
-
-//         return
-//       }
-//       catch (e) {
-//         console.error(e)
-//       }
-//     })
-//   })
+        const receipt =  contract.methods.withdraw(to, amount, contract).send()
+        return
+      }
+      catch (e) {
+        console.error(e)
+      }
+    })
+  })
 
 
 export default {
@@ -159,4 +136,5 @@ export default {
   getBalance,
   getTransaction,
   withdraw,
+  send,
 }

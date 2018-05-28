@@ -13,7 +13,7 @@ const login = (privateKey) => {
   else {
     console.info('Created account Ethereum ...')
     data = web3.eth.accounts.create()
-    web3.eth.accounts.wallet.add(data)
+    localStorage.setItem('privateEthKey', data.privateKey)
   }
 
   web3.eth.accounts.wallet.add(data.privateKey)
@@ -71,34 +71,21 @@ const getTransaction = (address) =>
 
 const send = (from, to, amount, privateKey) =>
   new Promise((resolve, reject) => {
-    web3.eth.getBalance(from).then((result) => {
-      try {
-        const balance = web3.utils.fromWei(result)
+    const t = {
+      to,
+      gasPrice: '20000000000',
+      gas: '21000',
+      value: web3.utils.toWei(`${amount}`),
+    }
 
-        if (balance === 0) {
-          reject('Your balance is empty')
-          return
-        }
-
-        const t = {
-          from,
-          to,
-          gasPrice: '20000000000',
-          gas: '21000',
-          value: web3.utils.toWei(`${amount}`),
-        }
-
-        web3.eth.accounts.signTransaction(t, privateKey)
-          .then((result) => web3.eth.sendSignedTransaction(result.rawTransaction))
-          .then((receipt) => {
-            resolve(receipt)
-          })
-          .catch(error => console.error(error))
-      }
-      catch (err) {
-        console.error(err)
-      }
-    })
+    web3.eth.accounts.signTransaction(t, privateKey)
+      .then((result) => {
+        console.log('result', result)
+        return web3.eth.sendSignedTransaction(result.rawTransaction)
+      })
+      .then((receipt) => {
+        resolve(receipt)
+      })
   })
 
 

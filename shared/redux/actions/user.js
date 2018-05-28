@@ -34,7 +34,7 @@ const setTransactions = (ethAddress, btcAddress) =>
     actions.token.getTransaction(ethAddress),
   ])
     .then(transactions => {
-      let data = [].concat([], ...transactions).sort((a, b) => Date.parse(b.date) - Date.parse(a.date))
+      let data = [].concat([], ...transactions).sort((a, b) => b.date - a.date)
       reducers.history.setTransactions(data)
     })
 
