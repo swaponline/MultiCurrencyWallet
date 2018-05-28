@@ -15,6 +15,7 @@ import Loader from 'components/loaders/Loader/Loader'
 import RequestLoader from 'components/loaders/RequestLoader/RequestLoader'
 import ModalConductor from 'components/modal/ModalConductor/ModalConductor'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
+import NotificationConductor from 'components/notification/NotificationConductor/NotificationConductor'
 
 
 moment.locale('en-gb')
@@ -62,6 +63,7 @@ export default class App extends React.Component {
         </WidthContainer>
         <RequestLoader />
         <ModalConductor />
+        <NotificationConductor />
       </Fragment>
     )
   }

@@ -1,4 +1,5 @@
 import baseConfig from './default'
+import config from './_mainnet'
 
 
 export default {
@@ -8,7 +9,5 @@ export default {
   base: 'https://alpha.swaponline.com/',
   publicPath: `https://alpha.swaponline.com${baseConfig.publicPath}`,
 
-  services: {
-
-  },
+  ...config,
 }

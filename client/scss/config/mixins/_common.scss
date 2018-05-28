@@ -53,11 +53,7 @@
 }
 
 @mixin brand-color($property: color, $important: null) {
-  #{$property}: $color-brand-female $important;
-
-  :global(.body-male) & {
-    #{$property}: $color-brand-male $important;
-  }
+  #{$property}: $color-brand $important;
 }
 
 @mixin brand-f-color {
@@ -125,6 +121,8 @@
     content: '';
     display: block;
     padding-bottom: 100%;
+    line-height: 0;
+    font-size: 0;
   }
 }
 

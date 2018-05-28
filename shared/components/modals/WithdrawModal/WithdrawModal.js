@@ -1,19 +1,24 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'redaction'
+import { constants } from 'helpers'
 import actions from 'redux/actions'
+import Link from 'sw-valuelink'
+
+import cssModules from 'react-css-modules'
+import styles from './WithdrawModal.scss'
 
 import Modal from 'components/modal/Modal/Modal'
-
-import Footer from './Footer/Footer'
-import Address from './Address/Address'
-import Amount from './Amount/Amount'
+import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
+import Input from 'components/forms/Input/Input'
+import Button from 'components/controls/Button/Button'
 
 
 @connect({
   ethData: 'user.ethData',
   btcData: 'user.btcData',
 })
+@cssModules(styles)
 export default class WithdrawModal extends React.Component {
 
   static propTypes = {
@@ -22,34 +27,50 @@ export default class WithdrawModal extends React.Component {
   }
 
   state = {
+    isSubmitted: false,
     address: ' ',
-    amount: 0,
+    amount: '',
   }
 
-  withdraw = (address, amount, currency) => {
-    const { ethData, btcData } = this.props
-    switch (currency) {
-      case 'ETH':
-        return actions.ethereum.send(ethData.address, address, amount, ethData.privateKey)
-          .then(() => {
-            actions.notification.update('Money withdraw ETH', true, {})
-          })
+  handleSubmit = () => {
+    const { address: to, amount } = this.state
+    const { ethData, btcData, data: { currency } } = this.props
 
-      case 'BTC':
-        return actions.bitcoin.send(btcData.address, address, amount, btcData.keyPair)
-          .then(() => {
-            actions.notification.update('Money withdraw BTC', true, {})
-          })
-
-      case 'NOXON':
-        return actions.token.send(address, amount)
-          .then(() => {
-            actions.notification.update('Money withdraw NOXON', true, {})
-          })
-
-      default:
-        return console.log('Не задан currency в функции withdraw')
+    if (!to || !amount || amount < 0.01) {
+      this.setState({
+        isSubmitted: true,
+      })
+      return
     }
+
+    let action
+    let from
+
+    if (currency === 'ETH') {
+      action = actions.ethereum
+      from = ethData.address
+    }
+    else if (currency === 'BTC') {
+      action = actions.bitcoin
+      from = btcData.address
+    }
+    else if (currency === 'NOXON') {
+      action = actions.token
+    }
+
+    actions.loader.show()
+
+    action.send(from, to, Number(amount))
+      .then(() => {
+        actions.loader.hide()
+        action.getBalance()
+
+        actions.notifications.show(constants.notifications.SuccessWithdraw, {
+          amount,
+          currency,
+          address: to,
+        })
+      })
   }
 
   setAmount = (amount) => {
@@ -65,27 +86,36 @@ export default class WithdrawModal extends React.Component {
   }
 
   render() {
-    const { address, amount } = this.state
+    const { isSubmitted, address, amount } = this.state
     const { name, data } = this.props
+
+    const linked = Link.all(this, 'address', 'amount')
+    const isDisabled = !address || !amount
+
+    if (isSubmitted) {
+      linked.amount.check((value) => value >= 0.01, 'Amount must be greater than 0.01')
+    }
 
     return (
       <Modal name={name} title={`Withdraw ${data.currency.toUpperCase()}`}>
-        <Address
-          setAddress={this.setAddress}
-          currency={data.currency}
-        />
-        <Amount
-          currency={data.currency}
-          balance={data.balance}
-          setAmount={this.setAmount}
-        />
-        <Footer
-          withdraw={this.withdraw}
-          address={address}
-          amount={amount}
-          currency={data.currency}
-          name={name}
-        />
+        <FieldLabel inRow>Address</FieldLabel>
+        <Input valueLink={linked.address} />
+        <FieldLabel inRow>Amount</FieldLabel>
+        <Input valueLink={linked.amount} pattern="0-9\." />
+        {
+          !linked.amount.error && (
+            <div styleName="note">No less than 0.01</div>
+          )
+        }
+        <Button
+          styleName="button"
+          brand
+          fullWidth
+          disabled={isDisabled}
+          onClick={this.handleSubmit}
+        >
+          Transfer
+        </Button>
       </Modal>
     )
   }

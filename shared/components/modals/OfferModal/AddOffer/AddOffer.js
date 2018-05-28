@@ -122,7 +122,6 @@ export default class AddOffer extends Component {
     return (
       <Fragment>
         <Group
-          styleName="buyGroup"
           label="Exchange rate"
           inputValueLink={linked.exchangeRate}
           currency={false}

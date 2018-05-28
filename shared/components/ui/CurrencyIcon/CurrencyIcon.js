@@ -13,12 +13,18 @@ const icons = {
   icx,
   waves,
   xrp,
-  noxon: xrp,
 }
+
+const iconNames = Object.keys(icons)
 
 
 const CurrencyIcon = ({ className, name }) => (
   <img className={className} src={icons[name]} alt={`${name} icon`} />
 )
+
+
+export {
+  iconNames,
+}
 
 export default CurrencyIcon
