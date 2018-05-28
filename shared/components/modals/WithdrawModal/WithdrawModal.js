@@ -17,7 +17,7 @@ import Button from 'components/controls/Button/Button'
 @connect({
   ethData: 'user.ethData',
   btcData: 'user.btcData',
-  nimiqData: 'user.nimiqData',
+  nimData: 'user.nimData',
 })
 @cssModules(styles)
 export default class WithdrawModal extends React.Component {
@@ -55,9 +55,9 @@ export default class WithdrawModal extends React.Component {
       action = actions.bitcoin
       from = btcData.address
     }
-    else if (currency === 'NIMIQ') {
+    else if (currency === 'NIM') {
       action = actions.nimiq
-      from = nimiqData.address
+      from = nimData.address
     }
     else if (currency === 'NOXON') {
       action = actions.token
