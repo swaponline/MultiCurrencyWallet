@@ -16,6 +16,11 @@ export const initialState = {
     balance: 0,
     currency: 'NOXON',
   },
+  nimData: {
+    address: '',
+    balance: 0,
+    currency: 'NIM',
+  },
 }
 
 export const setAuthData = (state, { name, data }) => ({

@@ -6,6 +6,7 @@ import user from './user'
 import bitcoin from './bitcoin'
 import ethereum from './ethereum'
 import token from './token'
+import nimiq from './nimiq'
 
 
 export default {
@@ -17,4 +18,5 @@ export default {
   bitcoin,
   ethereum,
   token,
+  nimiq,
 }

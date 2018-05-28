@@ -10,12 +10,14 @@ const sign = () => {
 
   actions.bitcoin.login(btcPrivateKey)
   actions.token.login(_ethPrivateKey)
+  actions.nimiq.login(_ethPrivateKey)
 }
 
 const getBalances = (ethAddress, btcAddress) => {
   actions.ethereum.getBalance(ethAddress)
   actions.bitcoin.getBalance(btcAddress)
   actions.token.getBalance(ethAddress)
+  actions.nimiq.getBalance()
 }
 
 const getDemoMoney = process.env.MAINNET ? () => {} : () => {
