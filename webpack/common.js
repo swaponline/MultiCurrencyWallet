@@ -14,9 +14,9 @@ const rules = Object.keys(rulesMap)
 const globals = {
   'process.env': {
     'NODE_ENV': JSON.stringify(config.env),
-    'WEBPACK': JSON.stringify(config.webpack),
-    'TESTNET': config.webpack === 'testnet',
-    'MAINNET': config.webpack === 'mainnet',
+    'ENTRY': JSON.stringify(config.entry),
+    'TESTNET': config.entry === 'testnet',
+    'MAINNET': config.entry === 'mainnet',
   },
   // TODO fix __CONFIG__ - remove it and check app-config/webpack to resolve in /client.js
   __CONFIG__: JSON.stringify(config),
