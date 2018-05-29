@@ -11,31 +11,32 @@ const Coin = ({ className, size = 40, name }) => {
     width: size ? `${size}px` : null,
   }
 
+  let iconProps = {
+    name: name.toLowerCase(),
+  }
+
   const isIconExist = iconNames.includes(name.toLowerCase())
-  let content
 
   if (isIconExist) {
-    content = (
-      <CurrencyIcon styleName="icon" name={name.toLowerCase()} />
-    )
+    iconProps = {
+      ...iconProps,
+      styleName: 'icon',
+    }
   }
   else {
-    content = (
-      <div
-        styleName="text"
-        style={{
-          lineHeight: `${size}px`,
-          fontSize: `${size / 2}px`,
-        }}
-      >
-        {name.charAt(0).toUpperCase()}
-      </div>
-    )
+    iconProps = {
+      ...iconProps,
+      styleName: 'text',
+      style: {
+        lineHeight: `${size}px`,
+        fontSize: `${size / 2}px`,
+      },
+    }
   }
 
   return (
     <div styleName="coin" className={className} style={style}>
-      {content}
+      <CurrencyIcon {...iconProps} />
     </div>
   )
 }

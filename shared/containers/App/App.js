@@ -3,7 +3,6 @@ import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 import actions from 'redux/actions'
 import { connect } from 'redaction'
-import { constants } from 'helpers'
 import moment from 'moment'
 
 import CSSModules from 'react-css-modules'
@@ -22,10 +21,9 @@ moment.locale('en-gb')
 
 @withRouter
 @connect({
-  isPrivateKeysSaved: () => localStorage.getItem(constants.localStorage.privateKeysSaved),
   ethAddress: 'user.ethData.address',
   btcAddress: 'user.btcData.address',
-  nimAddress: 'user.nimData.address',
+  // nimAddress: 'user.nimData.address',
   tokenAddress: 'user.tokenData.address',
   isVisible: 'loader.isVisible',
 })
@@ -40,16 +38,11 @@ export default class App extends React.Component {
     const { isPrivateKeysSaved } = this.props
 
     actions.user.sign()
-      .then(() => {
-        if (!isPrivateKeysSaved) {
-          actions.modals.open(constants.modals.PrivateKeys)
-        }
-      })
   }
 
   render() {
-    const { children, ethAddress, btcAddress, nimAddress, tokenAddress } = this.props
-    const isFetching = !ethAddress || !btcAddress || !nimAddress || !tokenAddress
+    const { children, ethAddress, btcAddress, tokenAddress } = this.props
+    const isFetching = !ethAddress || !btcAddress || !tokenAddress
 
     if (isFetching) {
       return (

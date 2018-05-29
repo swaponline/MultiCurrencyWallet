@@ -8,7 +8,6 @@ import { localStorage, constants } from 'helpers'
 import cssModules from 'react-css-modules'
 import styles from './PrivateKeysModal.scss'
 
-import Field from './Field/Field'
 import Field2 from './Field2/Field2'
 import Modal from 'components/modal/Modal/Modal'
 import Button from 'components/controls/Button/Button'
@@ -46,6 +45,62 @@ export default class PrivateKeysModal extends React.PureComponent {
     actions.modals.close(name)
   }
 
+  getText = () => {
+    const { ethData, btcData } = this.props
+
+    const text = `
+swap.online emergency instruction
+
+
+#ETHEREUM
+
+Ethereum address: ${ethData.address}  
+Private key: ${ethData.privateKey}
+
+How to access tokens and ethers: 
+1. Go here https://www.myetherwallet.com/#send-transaction 
+2. Select 'Private key'
+3. paste private key to input and click "unlock"
+
+
+# BITCOIN
+
+Bitcoin address: ${btcData.address}
+Private key: ${btcData.privateKey}
+
+1. Go to blockchain.info
+2. login
+3. Go to settings > addresses > import
+4. paste private key and click "Ok"
+
+
+* We don\`t store your private keys and will not be able to restore them!    
+    `
+
+    return text
+  }
+
+  handleDownload = () => {
+    const element = document.createElement('a')
+    const text = this.getText()
+
+    element.setAttribute('href', `data:text/plaincharset=utf-8,${encodeURIComponent(text)}`)
+    element.setAttribute('download', 'instruction.txt')
+
+    element.style.display = 'none'
+    document.body.appendChild(element)
+    element.click()
+    document.body.removeChild(element)
+
+    this.changeView('checkKeys')
+  }
+
+  handleSendByEmail = () => {
+    const text = this.getText()
+
+    window.open(`mailto:?subject=Your_Subject&body=${text}`)
+  }
+
   render() {
     const { view } = this.state
     const { name, ethData, btcData } = this.props
@@ -72,21 +127,13 @@ export default class PrivateKeysModal extends React.PureComponent {
                   there is a big chance you`ll loose your money.
                 </div>
                 <div styleName="subTitle">We don`t store your private keys and will not be able to restore them!</div>
-                <a styleName="link" href="./time.txt" target="_blank">Download instruction</a>
-                <Field
-                  label={ethData.currency}
-                  privateKey={ethData.privateKey}
-                />
-                <Field
-                  label={btcData.currency}
-                  privateKey={btcData.privateKey}
-                />
-                <div styleName="link black" onClick={() => this.changeView('checkKeys')}>I did it! Continue</div>
+                <Button brand styleName="button" onClick={this.handleDownload}>Download instruction</Button>
+                {/* <Button brand styleName="button" onClick={this.handleSendByEmail}>Send by email</Button> */}
               </Fragment>
             ) : (
               <Fragment>
                 <div styleName="title">
-                  Please fill information below. We`d like to be sure that you saved the private keys
+                  Please fill information below from instruction.txt file. We`d like to be sure that you saved the private keys
                   before you can continue to the site.
                 </div>
                 <Field2
@@ -100,10 +147,8 @@ export default class PrivateKeysModal extends React.PureComponent {
                   valueLink={btcValidated}
                 />
                 {
-                  isValidated ? (
+                  isValidated && (
                     <Button white styleName="button" onClick={this.close}>GO TO THE SITE!</Button>
-                  ) : (
-                    <div styleName="link black" onClick={() => this.changeView('saveKeys')}>...Go back</div>
                   )
                 }
               </Fragment>

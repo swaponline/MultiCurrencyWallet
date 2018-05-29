@@ -10,7 +10,7 @@ const sign = async () => {
 
   actions.bitcoin.login(btcPrivateKey)
   actions.token.login(_ethPrivateKey)
-  await actions.nimiq.login(_ethPrivateKey)
+  // await actions.nimiq.login(_ethPrivateKey)
 }
 
 const getBalances = (ethAddress, btcAddress) => {

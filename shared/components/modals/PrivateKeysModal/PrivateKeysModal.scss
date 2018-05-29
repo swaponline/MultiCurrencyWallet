@@ -1,10 +1,9 @@
 .modal {
-  background-color: #ff6161;
 
   [role="title"] {
     font-size: 40px;
     @include ff-bold;
-    color: #fff;
+    color: #ff354b;
   }
 }
 
@@ -16,7 +15,7 @@
 
 .title {
   margin-bottom: 30px;
-  color: #fff;
+  color: #ff354b;
   font-size: 24px;
 }
 
@@ -25,23 +24,6 @@
   @include ff-bold;
   font-size: 30px;
   color: #000;
-}
-
-.link {
-  @include inline-block;
-  margin: 40px 0;
-  cursor: pointer;
-  color: #fff !important;
-  font-size: 26px;
-  text-decoration: underline;
-
-  &.black {
-    color: #000 !important;
-  }
-
-  &:hover {
-    text-decoration: none;
-  }
 }
 
 .button {

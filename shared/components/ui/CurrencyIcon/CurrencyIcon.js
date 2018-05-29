@@ -1,11 +1,15 @@
 import React from 'react'
 
+import cssModules from 'react-css-modules'
+import styles from './CurrencyIcon.scss'
+
 import btc from './images/btc.svg'
 import eth from './images/eth.svg'
 import icx from './images/icx.svg'
 import waves from './images/waves.svg'
 import xrp from './images/xrp.svg'
 import nim from './images/nim.svg'
+
 
 const icons = {
   btc,
@@ -16,16 +20,33 @@ const icons = {
   nim,
 }
 
-const iconNames = Object.keys(icons)
+export const iconNames = Object.keys(icons)
 
 
-const CurrencyIcon = ({ className, name }) => (
-  <img className={className} src={icons[name]} alt={`${name} icon`} />
-)
+const CurrencyIcon = ({ className, name }) => {
+  const isIconExist = iconNames.includes(name.toLowerCase())
 
+  if (isIconExist) {
+    return (
+      <img
+        className={className}
+        src={icons[name]}
+        alt={`${name} icon`}
+        role="image"
+      />
+    )
+  }
 
-export {
-  iconNames,
+  return (
+    <span
+      role="letter"
+      styleName="text"
+      className={className}
+    >
+      {name.charAt(0).toUpperCase()}
+    </span>
+  )
 }
 
-export default CurrencyIcon
+
+export default cssModules(CurrencyIcon, styles)

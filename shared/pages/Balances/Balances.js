@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'redaction'
+import { constants } from 'helpers'
 import actions from 'redux/actions'
 
 import PageHeadline from 'components/PageHeadline/PageHeadline'
@@ -9,7 +10,7 @@ import Row from './Row/Row'
 
 
 @connect(({ user: { ethData, btcData, tokenData, nimData } }) => ({
-  items: [ ethData, btcData, tokenData, nimData ],
+  items: [ ethData, btcData, tokenData/* , nimData */ ],
   ethAddress: ethData.address,
   btcAddress: btcData.address,
 }))
@@ -19,6 +20,10 @@ export default class Balances extends Component {
     const { ethAddress, btcAddress } = this.props
 
     actions.user.getBalances(ethAddress, btcAddress)
+
+    if (!localStorage.getItem(constants.localStorage.privateKeysSaved)) {
+      // actions.modals.open(constants.modals.PrivateKeys)
+    }
   }
 
   render() {

@@ -8,8 +8,8 @@ export default (webpackConfig) => {
 
   webpackConfig.output = {
     path: config.paths.base(`build-${config.entry}`),
-    filename: '[name].js',
-    chunkFilename: '[id].chunk.js',
+    filename: '[name].[hash:6].js',
+    chunkFilename: '[id].[hash:6].chunk.js',
     publicPath: config.publicPath,
   }
 
@@ -45,10 +45,10 @@ export default (webpackConfig) => {
         },
       },
     }),
-    new webpack.SourceMapDevToolPlugin({
-      filename: '[file].map',
-      append: `\n//# sourceMappingURL=[url]`,
-    }),
+    // new webpack.SourceMapDevToolPlugin({
+    //   filename: '[file].[hash:6].map',
+    //   append: `\n//# sourceMappingURL=[url]`,
+    // }),
   )
 
   webpackConfig.module.rules = webpackConfig.module.rules.map((loader) => {
@@ -63,7 +63,7 @@ export default (webpackConfig) => {
 
   webpackConfig.plugins.push(
     new ExtractTextPlugin({
-      filename: '[name].css',
+      filename: '[name].[hash:6].css',
       allChunks: true,
     }),
     new webpack.optimize.CommonsChunkPlugin({
