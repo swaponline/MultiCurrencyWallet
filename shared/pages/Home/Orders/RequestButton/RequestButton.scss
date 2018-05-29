@@ -1,0 +1,21 @@
+.button {
+  width: 40px;
+  height: 40px;
+  background-color: #e91db4;
+  position: relative;
+  cursor: pointer;
+  opacity: 0.5;
+  border-radius: 50%;
+
+  &::after {
+    @include arrow('right', 10px, 3px, #fff);
+    margin: -5px 0 0 -7px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+}

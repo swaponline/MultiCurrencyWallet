@@ -1,5 +1,6 @@
 import abi from 'human-standard-token-abi'
 import { request } from 'helpers'
+import { getState } from 'redux/core'
 import web3 from 'helpers/web3'
 import reducers from 'redux/core/reducers'
 import config from 'app-config'
@@ -38,13 +39,16 @@ const login = (privateKey) => {
   setupContract(data.address)
 }
 
-const getBalance = (ethAddress) =>
-  request.get(`${config.api.etherscan}?module=account&action=tokenbalance&contractaddress=${noxonContract._address}&address=${ethAddress}`)
+const getBalance = () => {
+  const { user: { ethData: { address } } } = getState()
+
+  return request.get(`${config.api.etherscan}?module=account&action=tokenbalance&contractaddress=${noxonContract._address}&address=${address}`)
     .then(({ result: amount }) => {
       console.log('tokenAddress', noxonContract._address)
       console.log('result', amount)
       reducers.user.setBalance({ name: 'tokenData', amount })
     }).catch(r => console.error('Token service isn\'t available, try later'))
+}
 
 const getTransaction = (address) =>
   new Promise((resolve) => {

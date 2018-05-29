@@ -26,7 +26,7 @@ const Coin = ({ className, size = 40, name }) => {
   else {
     iconProps = {
       ...iconProps,
-      styleName: 'text',
+      styleName: 'letter',
       style: {
         lineHeight: `${size}px`,
         fontSize: `${size / 2}px`,

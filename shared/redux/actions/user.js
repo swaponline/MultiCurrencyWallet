@@ -13,11 +13,11 @@ const sign = async () => {
   // await actions.nimiq.login(_ethPrivateKey)
 }
 
-const getBalances = (ethAddress, btcAddress) => {
-  actions.ethereum.getBalance(ethAddress)
-  actions.bitcoin.getBalance(btcAddress)
-  actions.token.getBalance(ethAddress)
-  actions.nimiq.getBalance()
+const getBalances = () => {
+  actions.ethereum.getBalance()
+  actions.bitcoin.getBalance()
+  actions.token.getBalance()
+  // actions.nimiq.getBalance()
 }
 
 const getDemoMoney = process.env.MAINNET ? () => {} : () => {

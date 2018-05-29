@@ -1,23 +1,29 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 
 import CSSModules from 'react-css-modules'
 import styles from './PageHeadline.scss'
 
-import Filter from '../Filter/Filter'
+import Title from './Title/Title'
+import SubTitle from './SubTitle/SubTitle'
 
 
-const PageHeadline = ({ title, subtitle, filter = false }) => (
-  <div styleName="description">
+const PageHeadline = ({ children, title, subTitle }) => (
+  <div styleName="headline">
     {
-      title && (
-        <h2 styleName="description__title">{title}</h2>
-      )
-    }
-    <h3 styleName="description__sub-title">{subtitle}</h3>
-    {
-      filter && (
-        <Filter />
+      children || (
+        <Fragment>
+          {
+            title && (
+              <Title>{title}</Title>
+            )
+          }
+          {
+            subTitle && (
+              <SubTitle>{subTitle}</SubTitle>
+            )
+          }
+        </Fragment>
       )
     }
   </div>
@@ -25,8 +31,7 @@ const PageHeadline = ({ title, subtitle, filter = false }) => (
 
 PageHeadline.propTypes = {
   title: PropTypes.string,
-  subtitle: PropTypes.string.isRequired,
-  filter: PropTypes.bool,
+  subTitle: PropTypes.string.isRequired,
 }
 
 export default CSSModules(PageHeadline, styles)

@@ -7,6 +7,17 @@
     box-shadow: rgba(#000 ,0.03) 0 3px 3px 0;
   }
 
+  tbody {
+
+    tr {
+      border-top: 1px solid #f5f5f5;
+
+      &:first-child {
+        border-top: 0;
+      }
+    }
+  }
+
   th, td {
     border: 0;
     text-align: left;

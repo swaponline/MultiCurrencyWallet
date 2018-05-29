@@ -6,42 +6,43 @@ const createResponseHandler = (req, opts) => {
 
   return new Promise((fulfill, reject) => req.end((err, res) => {
     let serverError
-    let body = res.body
+    let body = res.body // eslint-disable-line
 
-    if (!body) {
-      try {
+    try {
+      if (!body) {
         body = JSON.parse(res.text)
       }
-      catch (err) {
-        throw err
+
+      // Errors
+
+      if (!res && !err) {
+        serverError = `Connection failed: ${debug}`
       }
-    }
+      else if (!res || res.statusCode >= 500) {
+        serverError = 'We`re having technical issues at that moment. Please try again later'
+      }
 
-    // Errors
+      if (serverError) {
+        throw new Error(serverError)
+      }
 
-    if (!res && !err) {
-      serverError = `Connection failed: ${debug}`
-    }
-    else if (!res || res.statusCode >= 500) {
-      serverError = 'We`re having technical issues at that moment. Please try again later'
-    }
+      if (err) {
+        // TODO write Error notifier
+        opts.onComplete()
+        return reject({ resData: body, err, res })
+      }
 
-    if (serverError) {
-      throw new Error(serverError)
-    }
+      const resData = opts.modifyResult(body)
 
-    if (err) {
-      // TODO write Error notifier
+      // Resolve
+
+      fulfill(resData, res)
       opts.onComplete()
-      return reject({ resData: body, err, res })
     }
-
-    const resData = opts.modifyResult(body)
-
-    // Resolve
-
-    fulfill(resData, res)
-    opts.onComplete()
+    catch (err) {
+      console.log(err)
+      reject(err)
+    }
   }))
 }
 

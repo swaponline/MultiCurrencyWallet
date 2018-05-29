@@ -41,7 +41,7 @@ export default class History extends Component {
 
     return (
       <section>
-        <PageHeadline subtitle="History" />
+        <PageHeadline subTitle="History" />
         <Filter />
         <Table
           titles={titles}

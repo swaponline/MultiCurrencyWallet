@@ -1,5 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import { links } from 'helpers'
 
 import cssModules from 'react-css-modules'
 import styles from './Nav.scss'
@@ -8,9 +9,9 @@ import actions from 'redux/actions'
 
 
 const nav = [
-  { title: 'All', link: '/' },
-  { title: 'Balances', link: '/balance' },
-  { title: 'History', link: '/history' },
+  { title: 'Orders', link: links.home },
+  { title: 'Balances', link: links.balance },
+  { title: 'History', link: links.history },
 ]
 
 if (process.env.TESTNET) {

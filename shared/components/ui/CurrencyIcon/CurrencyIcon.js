@@ -23,7 +23,7 @@ const icons = {
 export const iconNames = Object.keys(icons)
 
 
-const CurrencyIcon = ({ className, name }) => {
+const CurrencyIcon = ({ className, style, name }) => {
   const isIconExist = iconNames.includes(name.toLowerCase())
 
   if (isIconExist) {
@@ -42,6 +42,7 @@ const CurrencyIcon = ({ className, name }) => {
       role="letter"
       styleName="text"
       className={className}
+      style={style}
     >
       {name.charAt(0).toUpperCase()}
     </span>

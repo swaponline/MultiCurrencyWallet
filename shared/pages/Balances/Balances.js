@@ -19,7 +19,7 @@ export default class Balances extends Component {
   componentWillMount() {
     const { ethAddress, btcAddress } = this.props
 
-    actions.user.getBalances(ethAddress, btcAddress)
+    actions.user.getBalances()
 
     if (!localStorage.getItem(constants.localStorage.privateKeysSaved)) {
       // actions.modals.open(constants.modals.PrivateKeys)
@@ -27,18 +27,19 @@ export default class Balances extends Component {
   }
 
   render() {
-    const { items } = this.props
+    const { items, ethAddress, btcAddress } = this.props
 
     const titles = [ 'Coin', 'Name', 'Balance', 'Address', '' ]
+    const addresses = { ethAddress, btcAddress }
 
     return (
       <section>
-        <PageHeadline subtitle="Balances" />
+        <PageHeadline subTitle="Balances" />
         <Table
           titles={titles}
           rows={items}
           rowRender={(row, index) => (
-            <Row key={index} {...row} />
+            <Row key={index} addresses={addresses} {...row} />
           )}
         />
       </section>

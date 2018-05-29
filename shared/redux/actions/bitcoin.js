@@ -38,12 +38,15 @@ const login = (privateKey) => {
   reducers.user.setAuthData({ name: 'btcData', data })
 }
 
-const getBalance = (address) =>
-  request.get(`${config.api.bitpay}/addr/${address}`)
+const getBalance = () => {
+  const { user: { btcData: { address } } } = getState()
+
+  return request.get(`${config.api.bitpay}/addr/${address}`)
     .then(({ balance: amount }) => {
       console.log('BTC Balance:', amount)
       reducers.user.setBalance({ name: 'btcData', amount })
-    })
+    }, () => Promise.reject())
+}
 
 const getTransaction = (address) =>
   new Promise((resolve) => {
