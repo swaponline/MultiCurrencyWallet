@@ -35,7 +35,7 @@ export default class WithdrawModal extends React.Component {
 
   handleSubmit = () => {
     const { address: to, amount } = this.state
-    const { ethData, btcData, data: { currency } } = this.props
+    const { ethData, btcData, nimData, data: { currency } } = this.props
 
     if (!to || !amount || amount < 0.01) {
       this.setState({

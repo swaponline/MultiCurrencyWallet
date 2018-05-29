@@ -23,7 +23,7 @@ moment.locale('en-gb')
 @connect({
   ethAddress: 'user.ethData.address',
   btcAddress: 'user.btcData.address',
-  // nimAddress: 'user.nimData.address',
+  nimAddress: 'user.nimData.address',
   tokenAddress: 'user.tokenData.address',
   isVisible: 'loader.isVisible',
 })
@@ -41,8 +41,8 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { children, ethAddress, btcAddress, tokenAddress } = this.props
-    const isFetching = !ethAddress || !btcAddress || !tokenAddress
+    const { children, ethAddress, btcAddress, nimAddress, tokenAddress } = this.props
+    const isFetching = !ethAddress || !btcAddress || !nimAddress || !tokenAddress
 
     if (isFetching) {
       return (
