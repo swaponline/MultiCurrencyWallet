@@ -4,65 +4,80 @@ import { ethKeyToKeyPair, followTransaction, prepareTransaction } from 'helpers/
 
 
 const $ = {}
-let _loading
-let _Nimiq
+let initNimiqPromise
+let isNimiqInitialized = false
+let initPromise
+let isInitialized = false
+
+const NETWORK = config.entry === 'mainnet' ? 'main' : 'test'
 
 
-async function initNimiq(network = 'test') {
-  if (_Nimiq) return _Nimiq
-  if (!window.Nimiq) throw new Error('Nimiq not present, add from CDN: https://cdn.nimiq.com/nimiq.js')
+const initNimiq = async () => {
+  if (initNimiqPromise) {
+    return initNimiqPromise
+  }
+  else if (isNimiqInitialized) {
+    return Promise.resolve()
+  }
 
-  _Nimiq = new Promise((resolve) => {
-    window.Nimiq.init(() => {
-      let CONFIG = window.Nimiq.GenesisConfig.CONFIGS[network]
-
-      window.Nimiq.GenesisConfig.init(CONFIG)
-      resolve(true)
-    })
+  initNimiqPromise = new Promise((resolve, reject) => {
+    if (!window.Nimiq) {
+      console.error('Nimiq not present, add from CDN: https://cdn.nimiq.com/nimiq.js')
+      reject()
+    }
+    else {
+      window.Nimiq.init(() => {
+        isNimiqInitialized = true
+        window.Nimiq.GenesisConfig.init(window.Nimiq.GenesisConfig.CONFIGS[NETWORK])
+        resolve()
+      })
+    }
   })
 
-  return _Nimiq
+  return initNimiqPromise
 }
 
 async function initWallet(privateKey) {
-  await initNimiq()
+  const keyPair = ethKeyToKeyPair(privateKey)
 
-  let keyPair = ethKeyToKeyPair(privateKey)
   return new window.Nimiq.Wallet(keyPair)
 }
 
 async function init() {
   await initNimiq()
 
-  if (_loading) return _loading
+  if (initPromise) {
+    return initPromise
+  }
+  else if (isInitialized) {
+    return Promise.resolve()
+  }
 
-  _loading = new Promise(async (resolve) => {
+  initPromise = new Promise(async (resolve) => {
     window.nim = $
 
-    $.consensus = await window.Nimiq.Consensus.nano()
-    $.blockchain = $.consensus.blockchain
-    $.mempool = $.consensus.mempool
-    $.network = $.consensus.network
+    $.consensus   = await window.Nimiq.Consensus.nano()
+    $.blockchain  = $.consensus.blockchain
+    $.accounts    = $.blockchain.accounts
+    $.mempool     = $.consensus.mempool
+    $.network     = $.consensus.network
 
-    $.consensus.on('established', () => resolve())
+    $.consensus.on('established', () => {
+      window.Nimiq.Log.i('Consensus', `Current state: height=${$.blockchain.height}, headHash=${$.blockchain.headHash}`)
+      resolve()
+    })
     $.network.connect()
   })
 
-  return _loading
+  return initPromise
 }
 
 const login = async (ethPrivateKey) => {
-  const NETWORK = config.entry === 'mainnet' ? 'main' : 'test'
-
-  await initNimiq(NETWORK)
+  await init()
 
   $.wallet = await initWallet(ethPrivateKey)
 
-  init()
-    .then(() => window.Nimiq.Log.i('Consensus', `Current state: height=${$.blockchain.height}, headHash=${$.blockchain.headHash}`))
-    .then(() => getBalance())
-
-  let data = {
+  const data = {
     balance: 0,
     address: $.wallet.address.toUserFriendlyAddress(),
   }
@@ -73,11 +88,11 @@ const login = async (ethPrivateKey) => {
   return data
 }
 
-const getBalance = async (address) => {
+const getBalance = async () => {
   await init()
 
-  let account = await $.consensus.getAccount($.wallet.address)
-  let amount = window.Nimiq.Policy.satoshisToCoins(account.balance).toFixed(0)
+  const account = await $.consensus.getAccount($.wallet.address)
+  const amount = window.Nimiq.Policy.satoshisToCoins(account.balance).toFixed(0)
 
   reducers.user.setBalance({ name: 'nimData', amount })
 
@@ -85,11 +100,12 @@ const getBalance = async (address) => {
 }
 
 const getTransaction = () => {}
+
 const send = async (from, address, amount) => {
   await init()
 
-  let { addr, value, fee, height } = prepareTransaction($, address, amount)
-  let tx = $.wallet.createTransaction(addr, value, fee, height)
+  const { addr, value, fee, height } = prepareTransaction($, address, amount)
+  const tx = $.wallet.createTransaction(addr, value, fee, height)
 
   $.consensus.relayTransaction(tx)
   $.consensus.subscribeAccounts([tx.recipient])

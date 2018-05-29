@@ -3,14 +3,14 @@ import actions from 'redux/actions'
 import reducers from 'redux/core/reducers'
 
 
-const sign = () => {
+const sign = async () => {
   const btcPrivateKey = localStorage.getItem(constants.privateKeyNames.btc)
   const ethPrivateKey = localStorage.getItem(constants.privateKeyNames.eth)
   const _ethPrivateKey = actions.ethereum.login(ethPrivateKey)
 
   actions.bitcoin.login(btcPrivateKey)
   actions.token.login(_ethPrivateKey)
-  actions.nimiq.login(_ethPrivateKey)
+  await actions.nimiq.login(_ethPrivateKey)
 }
 
 const getBalances = (ethAddress, btcAddress) => {
