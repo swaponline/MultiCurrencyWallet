@@ -1,7 +1,13 @@
+import web3 from 'helpers/web3'
+import { getState } from 'redux/core'
 import bitcoinJsLib from 'bitcoinjs-lib'
 import { SwapApp, setupEnv } from 'swap-core'
-import user, { web3 } from 'instances'
 
+
+const { user: { ethData, btcData  } } = getState()
+
+console.log('ethData', ethData)
+console.log('btcData', btcData)
 
 setupEnv({
   web3,
@@ -10,16 +16,16 @@ setupEnv({
   IpfsRoom: global.IpfsRoom,
 })
 
-const swapApp = new SwapApp({
+const swapApp = window.swapApp =new SwapApp({
   me: {
     reputation: 10,
     eth: {
-      address: user.ethData.address,
-      publicKey: user.ethData.publicKey,
+      address: ethData.address,
+      publicKey: ethData.publicKey,
     },
     btc: {
-      address: user.btcData.address,
-      publicKey: user.btcData.publicKey,
+      address: btcData.address,
+      publicKey: btcData.publicKey,
     },
   },
   config: {
@@ -27,12 +33,14 @@ const swapApp = new SwapApp({
       EXPERIMENTAL: {
         pubsub: true,
       },
-      Addresses: {
-        Swarm: [
-          // '/dns4/ws-star.discovery.libp2p.io/tcp/443/wss/p2p-websocket-star',
-          '/dns4/star.wpmix.net/tcp/443/wss/p2p-websocket-star',
-        ],
-      },
+      config: {
+        Addresses: {
+          Swarm: [
+            // '/dns4/ws-star.discovery.libp2p.io/tcp/443/wss/p2p-websocket-star',
+            '/dns4/star.wpmix.net/tcp/443/wss/p2p-websocket-star',
+          ],
+        },
+      }
     },
   },
 })
@@ -69,5 +77,7 @@ swapApp.on('new order request', ({ swapId, participant }) => {
   })
 })
 
+export {
+  swapApp
+}
 
-export default swapApp
