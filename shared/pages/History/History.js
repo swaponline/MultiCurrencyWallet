@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'redaction'
 import actions from 'redux/actions'
-
+import { generate } from 'shortid'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import Table from 'components/Table/Table'
 import Filter from 'components/Filter/Filter'
@@ -46,8 +46,8 @@ export default class History extends Component {
         <Table
           titles={titles}
           rows={items}
-          rowRender={(row, index) => (
-            <Row key={index} {...row} />
+          rowRender={row => (
+            <Row key={generate()} {...row} />
           )}
         />
       </section>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
+import { generate } from 'shortid'
 
 import cssModules from 'react-css-modules'
 import styles from './DropDown.scss'
@@ -115,7 +116,7 @@ export default class DropDown extends Component {
               {
                 items.map((item) => (
                   <div
-                    key={item.value}
+                    key={generate()}
                     styleName="option"
                     onClick={() => this.handleOptionClick(item)}
                   >

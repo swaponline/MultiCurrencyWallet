@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { links } from 'helpers'
-
+import { generate } from 'shortid'
 import cssModules from 'react-css-modules'
 import styles from './Nav.scss'
 
@@ -25,7 +25,7 @@ const Nav = () => (
         link ? (
           <NavLink
             exact
-            key={title}
+            key={generate()}
             styleName="link"
             to={link}
             activeClassName={styles.active}
@@ -34,7 +34,7 @@ const Nav = () => (
           </NavLink>
         ) : (
           <div
-            key={title}
+            key={generate()}
             styleName="link"
             onClick={onClick}
           >
