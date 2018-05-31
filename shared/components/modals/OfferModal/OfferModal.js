@@ -36,6 +36,7 @@ export default class Offer extends React.Component {
   }
 
   render() {
+    console.log('test');
     const { view, offer } = this.state
     const { name } = this.props
 
