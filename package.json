@@ -6,7 +6,7 @@
   "main": "./bin/server",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "eslint": "eslint  --fix --cache ./shared --ext jsx",
+    "eslint": "eslint  --fix --cache ./shared --ext js",
     "start": "npm run dev",
     "dev": "npm run dev:testnet",
     "prod": "npm run dev:mainnet",

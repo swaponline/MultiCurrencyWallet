@@ -44,6 +44,7 @@ export default class App extends React.Component {
     const { children, ethAddress, btcAddress, nimAddress, tokenAddress } = this.props
     const isFetching = !ethAddress || !btcAddress || !nimAddress || !tokenAddress
 
+
     if (isFetching) {
       return (
         <Loader />
