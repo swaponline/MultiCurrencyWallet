@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { generate } from 'shortid'
 import actions from 'redux/actions'
 import { connect } from 'redaction'
 import { swapApp, createSwapApp } from 'instances/swap'
@@ -38,9 +39,9 @@ export default class Orders extends Component {
       <Table
         titles={titles}
         rows={orders}
-        rowRender={(row, index) => (
+        rowRender={row => (
           <Row
-            key={index}
+            key={generate()}
             row={row}
           />
         )}
