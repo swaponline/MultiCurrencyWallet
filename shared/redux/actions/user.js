@@ -10,14 +10,14 @@ const sign = async () => {
 
   actions.bitcoin.login(btcPrivateKey)
   actions.token.login(_ethPrivateKey)
-  await actions.nimiq.login(_ethPrivateKey)
+  // await actions.nimiq.login(_ethPrivateKey)
 }
 
 const getBalances = () => {
   actions.ethereum.getBalance()
   actions.bitcoin.getBalance()
   actions.token.getBalance()
-  actions.nimiq.getBalance()
+  // actions.nimiq.getBalance()
 }
 
 const getDemoMoney = process.env.MAINNET ? () => {} : () => {

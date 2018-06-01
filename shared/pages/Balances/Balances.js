@@ -10,7 +10,7 @@ import Row from './Row/Row'
 
 
 @connect(({ user: { ethData, btcData, tokenData, nimData } }) => ({
-  items: [ ethData, btcData, tokenData, nimData ],
+  items: [ ethData, btcData, tokenData/* , nimData */ ],
   ethAddress: ethData.address,
   btcAddress: btcData.address,
 }))

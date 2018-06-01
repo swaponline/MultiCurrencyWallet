@@ -3,7 +3,7 @@ import { storage } from './Storage'
 
 
 class Ws {
-
+  
   constructor(address) {
     this.events       = new Events()
     this.connection   = new WebSocket(address)
@@ -32,7 +32,7 @@ class Ws {
         this.events.dispatch('message', message)
       }
       else if (typeof messageData === 'object') {
-        const { event, data } = messageData
+        const {event, data} = messageData
 
         // console.log('WS: new message:', event, data)
 

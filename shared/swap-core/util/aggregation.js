@@ -5,7 +5,7 @@
 const aggregation = (baseClass, ...mixins) => {
 
   let base = class _Combined extends baseClass {
-    constructor(...args) {
+    constructor (...args) {
       super(...args)
       mixins.forEach((mixin) => {
         mixin.prototype.initializer.call(this)
@@ -18,7 +18,7 @@ const aggregation = (baseClass, ...mixins) => {
       .concat(Object.getOwnPropertySymbols(source))
       .forEach((prop) => {
         if (prop.match(/^(?:constructor|prototype|arguments|caller|name|bind|call|apply|toString|length)$/))
-        { return }
+          return
         Object.defineProperty(target, prop, Object.getOwnPropertyDescriptor(source, prop))
       })
   }

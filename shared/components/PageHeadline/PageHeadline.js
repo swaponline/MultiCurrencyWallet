@@ -31,7 +31,7 @@ const PageHeadline = ({ children, title, subTitle }) => (
 
 PageHeadline.propTypes = {
   title: PropTypes.string,
-  subTitle: PropTypes.string.isRequired,
+  subTitle: PropTypes.string,
 }
 
 export default CSSModules(PageHeadline, styles)

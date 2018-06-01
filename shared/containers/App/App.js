@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import actions from 'redux/actions'
 import { connect } from 'redaction'
 import moment from 'moment'
+import { createSwapApp } from 'instances/swap'
 
 import CSSModules from 'react-css-modules'
 import styles from './App.scss'
@@ -23,7 +24,9 @@ moment.locale('en-gb')
 @connect({
   ethAddress: 'user.ethData.address',
   btcAddress: 'user.btcData.address',
-  nimAddress: 'user.nimData.address',
+  ethData: 'user.ethData',
+  btcData: 'user.btcData',
+  // nimAddress: 'user.nimData.address',
   tokenAddress: 'user.tokenData.address',
   isVisible: 'loader.isVisible',
 })
@@ -38,11 +41,12 @@ export default class App extends React.Component {
     const { isPrivateKeysSaved } = this.props
 
     actions.user.sign()
+    createSwapApp()
   }
 
   render() {
-    const { children, ethAddress, btcAddress, nimAddress, tokenAddress } = this.props
-    const isFetching = !ethAddress || !btcAddress || !nimAddress || !tokenAddress
+    const { children, ethAddress, btcAddress, tokenAddress } = this.props
+    const isFetching = !ethAddress || !btcAddress || !tokenAddress
 
 
     if (isFetching) {

@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react'
+import actions from 'redux/actions'
 
 import cssModules from 'react-css-modules'
 import styles from './ConfirmOffer.scss'
@@ -16,7 +17,21 @@ import Fee from './Fee/Fee'
 export default class ConfirmOffer extends Component {
 
   handleConfirm = () => {
-    alert('This functionality will be available soon! :)')
+    this.createOrder()
+    actions.modals.close('OfferModal')
+  }
+
+  createOrder = () => {
+    const { offer: { buyAmount, sellAmount, buyCurrency, sellCurrency } } = this.props
+    const data = {
+      buyCurrency: `${buyCurrency}`,
+      sellCurrency: `${sellCurrency}`,
+      buyAmount: Number(buyAmount),
+      sellAmount: Number(sellAmount),
+    }
+
+    actions.swap.create(data)
+    actions.swap.update()
   }
 
   render() {

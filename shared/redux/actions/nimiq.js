@@ -38,8 +38,6 @@ const initNimiq = async () => {
 }
 
 async function initWallet(privateKey) {
-  await init()
-
   const keyPair = ethKeyToKeyPair(privateKey)
 
   return new window.Nimiq.Wallet(keyPair)
@@ -75,11 +73,9 @@ async function init() {
 }
 
 const login = async (ethPrivateKey) => {
-  await initNimiq()
+  await init()
 
   $.wallet = await initWallet(ethPrivateKey)
-
-  init()
 
   const data = {
     balance: 0,
@@ -96,8 +92,7 @@ const getBalance = async () => {
   await init()
 
   const account = await $.consensus.getAccount($.wallet.address)
-  const balance = (account != null) ? account.balance : 0
-  const amount = window.Nimiq.Policy.satoshisToCoins(balance).toFixed(0)
+  const amount = window.Nimiq.Policy.satoshisToCoins(account.balance).toFixed(0)
 
   reducers.user.setBalance({ name: 'nimData', amount })
 
