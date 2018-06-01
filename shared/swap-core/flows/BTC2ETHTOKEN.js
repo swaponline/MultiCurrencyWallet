@@ -122,7 +122,7 @@ class BTC2ETH extends Flow {
 
       async () => {
         const { participant } = this.swap
-
+      
         const data = {
           myAddress:      storage.me.eth.address,
           ownerAddress:   participant.eth.address,

@@ -7,14 +7,11 @@ import styles from './RequestButton.scss'
 @cssModules(styles, { allowMultiple: true })
 export default class RequestButton extends Component {
 
-  handleClick = () => {
-    alert('This functionality will be available soon! :)')
-  }
-
   render() {
+    const { sendRequest } = this.props
 
     return (
-      <div styleName="button" onClick={this.handleClick} />
+      <div styleName="button" onClick={sendRequest} />
     )
   }
 }

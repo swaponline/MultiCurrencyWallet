@@ -24,7 +24,7 @@ class OrderCollection extends Collection {
 
       if (myOrders.length) {
         // clean orders from other additional props
-        myOrders = this.items.map((item) => pullProps(
+        myOrders = myOrders.map((item) => pullProps(
           item,
           'id',
           'owner',

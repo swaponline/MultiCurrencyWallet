@@ -167,7 +167,7 @@ class Order {
 
     const requests = [
       ...this.requests.slice(0, index),
-      ...this.requests.slice(index + 1),
+      ...this.requests.slice(index + 1)
     ]
 
     this.update({
