@@ -63,6 +63,7 @@
     "resolve-url-loader": "^2.3.0",
     "rimraf": "^2.6.2",
     "sass-loader": "^7.0.1",
+    "shortid": "^2.2.8",
     "style-loader": "^0.21.0",
     "uglify-js": "^2.8.29",
     "uglifyjs-webpack-plugin": "^0.4.6",

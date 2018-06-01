@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'redaction'
 import { constants } from 'helpers'
 import actions from 'redux/actions'
+import { generate } from 'shortid'
 
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import Table from 'components/Table/Table'
@@ -38,8 +39,8 @@ export default class Balances extends Component {
         <Table
           titles={titles}
           rows={items}
-          rowRender={(row, index) => (
-            <Row key={index} addresses={addresses} {...row} />
+          rowRender={row => (
+            <Row key={generate()} addresses={addresses} {...row} />
           )}
         />
       </section>

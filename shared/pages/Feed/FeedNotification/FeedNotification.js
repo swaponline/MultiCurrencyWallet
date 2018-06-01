@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-
+import { generate } from 'shortid'
 import { connect } from 'redaction'
 import { swapApp } from 'instances/swap'
 import actions from 'redux/actions'
@@ -23,7 +23,7 @@ export default class FeedNotification extends Component {
               <Fragment>
                 {
                   requests.map(({ peer, reputation }) => (
-                    <div key={peer}>
+                    <div key={generate()}>
                         User {peer} with <b>{reputation}</b> reputation wants to swap.
                       <button onClick={() => this.acceptRequest(id, peer)}>ACCEPT</button>
                       <button onClick={() => this.declineRequest(id, peer)}>DECLINE</button>

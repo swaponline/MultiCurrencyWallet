@@ -1,6 +1,8 @@
 import React from 'react'
 
 import cssModules from 'react-css-modules'
+import { generate } from 'shortid'
+
 import styles from './Table.scss'
 
 
@@ -10,7 +12,7 @@ const Table = ({ titles, rows, rowRender }) => (
       <tr>
         {
           titles.map((title, index) => (
-            <th key={index}>{title}</th>
+            <th key={generate()}>{title}</th>
           ))
         }
       </tr>
