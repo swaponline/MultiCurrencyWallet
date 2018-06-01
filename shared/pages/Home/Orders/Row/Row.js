@@ -1,23 +1,33 @@
 import React, { Component, Fragment } from 'react'
+
 import actions from 'redux/actions'
 import PropTypes from 'prop-types'
+import { swapApp } from 'instances/swap'
+
+import { Link } from 'react-router-dom'
+import { links } from 'helpers'
 
 import Coins from 'components/Coins/Coins'
 import RequestButton from '../RequestButton/RequestButton'
 import RemoveButton from '../RemoveButton/RemoveButton'
-import {swapApp} from 'instances/swap'
 
 
 export default class Row extends Component {
 
   static propTypes = {
-    buyCurrency: PropTypes.string,
-    sellCurrency: PropTypes.string,
-    buyAmount: PropTypes.number,
-    sellAmount: PropTypes.number,
-    owner: PropTypes.shape({
-      reputation: PropTypes.number,
-    }),
+    row: PropTypes.object,
+  }
+
+  componentWillMount() {
+    swapApp.on('new order request', this.updateOrders)
+  }
+
+  componentWillUnmount() {
+    swapApp.off('new order request', this.updateOrders)
+  }
+
+  updateOrders = () => {
+    actions.swap.update()
   }
 
   removeOrder = (id) => {
@@ -59,7 +69,7 @@ export default class Row extends Component {
               <Fragment>
                 {
                   Boolean(requests && requests.length) ? (
-                    <p>Перейти к сделке ?</p>
+                    <Link to={links.feed} >Go to the swap</Link>
                   ) : (
                     <RemoveButton removeOrder={() => this.removeOrder(id)} />
                   )

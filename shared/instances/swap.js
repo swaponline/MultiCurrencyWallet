@@ -40,7 +40,7 @@ const createSwapApp = () => {
               '/dns4/star.wpmix.net/tcp/443/wss/p2p-websocket-star',
             ],
           },
-        }
+        },
       },
     },
   })

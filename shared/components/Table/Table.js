@@ -5,8 +5,8 @@ import styles from './Table.scss'
 
 
 const Table = ({ titles, rows, rowRender }) => (
-    <table styleName="table">
-      <thead>
+  <table styleName="table">
+    <thead>
       <tr>
         {
           titles.map((title, index) => (
@@ -14,8 +14,8 @@ const Table = ({ titles, rows, rowRender }) => (
           ))
         }
       </tr>
-      </thead>
-      <tbody>
+    </thead>
+    <tbody>
       {
         rows.map((row, rowIndex) => {
           if (typeof rowRender === 'function') {
@@ -23,10 +23,9 @@ const Table = ({ titles, rows, rowRender }) => (
           }
         })
       }
-      </tbody>
-    </table>
+    </tbody>
+  </table>
 )
-
 
 
 export default cssModules(Table, styles)

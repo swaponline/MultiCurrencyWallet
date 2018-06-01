@@ -1,21 +1,28 @@
-import React from 'react'
+import React, { Component } from 'react'
+
+import { createSwapApp } from 'instances/swap'
 
 import PageHeadline from 'components/PageHeadline/PageHeadline'
-import Title from 'components/PageHeadline/Title/Title'
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
-import Href from 'components/Href/Href'
+import FeedNotification from './FeedNotification/FeedNotification'
 
 
-const Feed = () => (
-  <section>
-    <PageHeadline>
-      <SubTitle>
-        Feed notification<br />
-      </SubTitle>
-    </PageHeadline>
-  </section>
-)
+export default class Feed extends Component {
 
-export default Feed
+  componentWillMount() {
+    createSwapApp()
+  }
 
-
+  render() {
+    return (
+      <section>
+        <PageHeadline>
+          <SubTitle>
+            Feed notification<br />
+          </SubTitle>
+        </PageHeadline>
+        <FeedNotification  />
+      </section>
+    )
+  }
+}
