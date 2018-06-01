@@ -41,7 +41,7 @@ class SwapRoom {
           {
             event: value,
             swapId: this.swapId,
-          },
+          }
         ]))
       }
       // value - messages
@@ -65,7 +65,7 @@ class SwapRoom {
             swapId: this.swapId,
             ...message,
           },
-        },
+        }
       ]))
     }
   }

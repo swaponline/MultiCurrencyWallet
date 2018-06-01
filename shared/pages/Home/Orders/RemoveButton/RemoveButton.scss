@@ -1,0 +1,26 @@
+.button {
+  width: 40px;
+  height: 40px;
+  background-color: #e91db4;
+  cursor: pointer;
+  position: relative;
+  opacity: 0.5;
+  border-radius: 50%;
+  text-align: center;
+
+  &::after {
+    content: '';
+    background: url('./images/delete.svg') 50% 50%;
+    background-size: contain;
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    width: 20px;
+    height: 20px;
+  }
+
+
+  &:hover {
+    opacity: 1;
+  }
+}

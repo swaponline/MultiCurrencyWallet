@@ -48,6 +48,14 @@ const getBalance = () => {
     }, () => Promise.reject())
 }
 
+const fetchBalance = (address) =>
+  request.get(`https://test-insight.bitpay.com/api/addr/${address}`)
+    .then(({ balance }) => {
+      console.log('BTC Balance:', balance)
+
+      return balance
+    })
+
 const getTransaction = (address) =>
   new Promise((resolve) => {
 
@@ -132,4 +140,5 @@ export default {
   send,
   fetchUnspents,
   broadcastTx,
+  fetchBalance,
 }
