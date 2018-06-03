@@ -11,9 +11,7 @@ import Orders from './Orders/Orders'
 
 export default class Home extends Component {
 
-  componentWillMount() {
-    createSwapApp()
-  }
+  
 
   render() {
     return (

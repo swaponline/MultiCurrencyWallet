@@ -11,23 +11,11 @@ import styles from './UserTooltip.scss'
 import ArrowRightSvg from './images/arrow-right.svg'
 
 
-@CSSModules(styles)
+@CSSModules(styles, { allowMultiple: true })
 export default class UserTooltip extends Component {
 
-  constructor() {
-    super()
-
-    this.state = {
-      swap: swapApp.orderCollection.items,
-    }
-  }
-
-  componentWillMount() {
-    swapApp.on('new order request', this.updateOrders)
-  }
-
-  componentWillUnmount() {
-    swapApp.off('new order request', this.updateOrders)
+  state = {
+    swap: swapApp.orderCollection.items,
   }
 
   acceptRequest = (orderId, participantPeer) => {
@@ -51,10 +39,11 @@ export default class UserTooltip extends Component {
 
   render() {
     const { swap } = this.state
+    const { view } = this.props
     const mePeer = swapApp.storage.me.peer
 
     return (
-      <div styleName="userTooltip">
+      <div styleName={view ? 'userTooltip' : 'userTooltip hide'} >
         {
           swap.filter(rows => rows.requests.length !== 0)
             .map(row => {
