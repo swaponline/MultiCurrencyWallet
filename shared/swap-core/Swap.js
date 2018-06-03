@@ -24,8 +24,9 @@ class Swap {
   }
 
   _persistState() {
+    console.log('THIS ID', this.id)
     const order = localStorage.getItem(`swap.${this.id}`) || orderCollection.getByKey(this.id)
-
+    console.log('ORDER', order)
     // if no `order` that means that participant is offline
     // TODO it's better to create swapCollection and store all swaps data there
     // TODO bcs if user offline and I'd like to continue Flow steps I don't need to w8 him
@@ -49,7 +50,9 @@ class Swap {
         sellAmount: isMy ? sellAmount : buyAmount,
       }
 
-      if (!data.participant && !isMy) {
+      console.log('DATA', data)
+
+      if (!data.participant && isMy) {
         data.participant = data.owner
       }
 
@@ -64,6 +67,7 @@ class Swap {
 
   _saveState() {
     const data = pullProps(
+      this,
       'id',
       'isMy',
       'owner',

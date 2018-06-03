@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+
 import { swapApp } from 'instances/swap'
 
 import BtcToEth from './BtcToEth'
@@ -14,14 +15,17 @@ const swapComponents = {
   'btcethtoken': BtcToEthToken,
 }
 
+
 export default class Swap extends Component {
 
   state = {
-    swap: null // app.createSwap({ orderId: 'QmZ1aTi5Jod3iuPB8SwPSLuWUs6TJV5upmzH1h9YnzqpSQ-1525181053520' }),
+    swap: null,
   }
 
   componentWillReceiveProps({ orderId }) {
     const { swap } = this.state
+
+    console.log('orderId', orderId)
 
     if (!swap && orderId) {
       const swap = swapApp.createSwap({ orderId })
@@ -42,7 +46,7 @@ export default class Swap extends Component {
     console.log('Swap data:', swap)
 
     const { isMy: isMyOrder, buyCurrency, sellCurrency } = swap
-    // TODO dynamically resolve Swap component to use
+
     const firstPart     = isMyOrder ? sellCurrency : buyCurrency
     const lastPart      = isMyOrder ? buyCurrency : sellCurrency
     const SwapComponent = swapComponents[`${firstPart.toLowerCase()}${lastPart.toLowerCase()}`]

@@ -4,6 +4,12 @@ import bitcoinJsLib from 'bitcoinjs-lib'
 import { SwapApp, setupEnv } from 'swap-core'
 
 
+const localClear = localStorage.clear.bind(localStorage)
+
+localStorage.clear = () => {
+  localClear()
+}
+
 let swapApp
 
 const createSwapApp = () => {

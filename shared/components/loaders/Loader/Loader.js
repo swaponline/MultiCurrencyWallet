@@ -4,8 +4,8 @@ import CSSModules from 'react-css-modules'
 import styles from './Loader.scss'
 
 
-const Loader = ({ overlayClassName, className }) => (
-  <div styleName="overlay" className={overlayClassName}>
+const Loader = ({ overlayClassName, className, overlay = true }) => (
+  <div styleName={overlay ?  'overlay' : ''} className={overlayClassName}>
     <div styleName="loader center" className={className}>
       <div styleName="loader1" />
       <div styleName="loader2" />

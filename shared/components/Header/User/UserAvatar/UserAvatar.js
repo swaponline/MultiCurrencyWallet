@@ -4,8 +4,8 @@ import CSSModules from 'react-css-modules'
 import styles from './UserAvatar.scss'
 
 
-const UserAvatar = () => (
-  <div styleName="user">
+const UserAvatar = ({ isOpen }) => (
+  <div styleName="user" onClick={isOpen}>
     <span styleName="name">K</span>
   </div>
 )

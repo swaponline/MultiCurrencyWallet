@@ -43,10 +43,7 @@ const getBalance = () => {
 
 const fetchBalance = (address) =>
   web3.eth.getBalance(address)
-    .then((wei) => {
-      return Number(this.core.utils.fromWei(wei))
-    })
-
+    .then((wei) => Number(web3.utils.fromWei(wei)))
 
 // export const getGas = () => {
 //   web3.eth.getGasPrice().then((res) => {

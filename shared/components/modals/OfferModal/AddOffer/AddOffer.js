@@ -15,7 +15,7 @@ const exchangeRates = {
   'ethnoxon': 1,
   'noxoneth': 1,
   'btcnoxon': 1000,
-  'noxonbtc': 1000,
+  'noxonbtc': 0.001,
 }
 
 @cssModules(styles, { allowMultiple: true })

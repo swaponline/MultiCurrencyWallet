@@ -1,11 +1,10 @@
 import React, { Component, Fragment } from 'react'
 
-import actions from 'redux/actions'
 import PropTypes from 'prop-types'
 import { swapApp } from 'instances/swap'
 
-import { Link } from 'react-router-dom'
 import { links } from 'helpers'
+import { Link } from 'react-router-dom'
 
 import Coins from 'components/Coins/Coins'
 import RequestButton from '../RequestButton/RequestButton'
@@ -18,24 +17,20 @@ export default class Row extends Component {
     row: PropTypes.object,
   }
 
-  componentWillMount() {
-    swapApp.on('new order request', this.updateOrders)
+  removeOrder = (orderId) => {
+    swapApp.removeOrder(orderId)
+
+    this.props.update()
   }
 
-  componentWillUnmount() {
-    swapApp.off('new order request', this.updateOrders)
-  }
+  sendRequest = (orderId) => {
+    const order = swapApp.orderCollection.getByKey(orderId)
 
-  updateOrders = () => {
-    actions.swap.update()
-  }
+    order.sendRequest((isAccepted) => {
+      console.log(`user ${order.owner.peer} ${isAccepted ? 'accepted' : 'declined'} your request`)
+    })
 
-  removeOrder = (id) => {
-    actions.swap.remove(id)
-  }
-
-  sendRequest = (id) => {
-    actions.swap.sendRequest(id)
+    this.props.update()
   }
 
   render() {
@@ -45,8 +40,8 @@ export default class Row extends Component {
       return null
     }
 
-    const { id, buyCurrency, requests, sellCurrency, buyAmount, sellAmount, isRequested,
-      owner :{  peer: ownerPeer, reputation } } = { ...row }
+    const { id, buyCurrency, sellCurrency, buyAmount, sellAmount, isRequested,
+      owner :{  peer: ownerPeer, reputation } } = row
     const mePeer = swapApp.storage.me.peer
 
     return (
@@ -66,22 +61,16 @@ export default class Row extends Component {
         <td>
           {
             mePeer === ownerPeer ? (
-              <Fragment>
-                {
-                  Boolean(requests && requests.length) ? (
-                    <Link to={links.feed} >Go to the swap</Link>
-                  ) : (
-                    <RemoveButton removeOrder={() => this.removeOrder(id)} />
-                  )
-                }
-              </Fragment>
+              <RemoveButton removeOrder={() => this.removeOrder(id)} />
             ) : (
               <Fragment>
                 {
                   isRequested ? (
                     <div style={{ color: 'red' }}>REQUESTING</div>
                   ) : (
-                    <RequestButton sendRequest={() => this.sendRequest(id)} />
+                    <Link to={`${links.swap}/${id}`}>
+                      <RequestButton sendRequest={() => this.sendRequest(id)} />
+                    </Link>
                   )
                 }
               </Fragment>

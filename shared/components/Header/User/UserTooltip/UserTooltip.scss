@@ -1,6 +1,6 @@
-.user-tooltip {
+.userTooltip {
     position: absolute;
-    width: 320px;
+    min-width: 360px;
     height: 88px;
     border-radius: 8px;
     background: #fff;
@@ -13,7 +13,7 @@
     justify-content: space-between;
 }
 
-.user-tooltip__info-title {
+.title {
     font-size: 13px;
     font-weight: 500;
     line-height: 1;
@@ -21,31 +21,32 @@
     margin-bottom: 5px;
 }
 
-.user-tooltip__currency {
+.currency {
     font-size: 14px;
     font-weight: 700;
+    width: 220px;
     text-transform: uppercase;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.user-tooltip__coin {
+.coin {
     color: #b4b4b4;
 }
 
-.user-tooltip__arrow {
+.arrow {
     display: inline-block;
     width: 5px;
 }
 
-.user-tooltip__arrow img {
+.arrow img {
     display: block;
     width: 100%;
     height: auto;
 }
 
-.user-tooltip__checked {
+.checked {
     width: 40px;
     height: 40px;
     background: #f2f9f2;
@@ -53,10 +54,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
+
+    &:hover {
+        background: #f2f9f2 url('./images/accept.svg') 50% 50% no-repeat;
+    }
 }
 
-.user-tooltip__check-icon {
+.icon {
     width: 12px;
     height: 8px;
     border: solid 2px #3bb33b;
 }
+
+

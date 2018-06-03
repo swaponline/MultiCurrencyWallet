@@ -3,7 +3,6 @@ import * as modals from './modals'
 import * as history from './history'
 import * as loader from './loader'
 import * as user from './user'
-import * as swap from './swap'
 
 
 export default {
@@ -12,5 +11,4 @@ export default {
   history,
   loader,
   user,
-  swap,
 }

@@ -1,22 +1,23 @@
 import React, { Component } from 'react'
 import actions from 'redux/actions'
-import { connect } from 'redaction'
-import { swapApp, createSwapApp } from 'instances/swap'
+import { swapApp } from 'instances/swap'
 
 import Row from './Row/Row'
 import Table from 'components/Table/Table'
 
 
-@connect({
-  orders: 'swap.orders',
-})
 export default class Orders extends Component {
+
+  state = {
+    orders: swapApp.orderCollection.items,
+  }
 
   componentWillMount() {
     swapApp.on('new orders', this.updateOrders)
     swapApp.on('new order', this.updateOrders)
     swapApp.on('order update', this.updateOrders)
     swapApp.on('remove order', this.updateOrders)
+    swapApp.on('new order request', this.updateOrders)
   }
 
   componentWillUnmount() {
@@ -24,15 +25,18 @@ export default class Orders extends Component {
     swapApp.off('new order', this.updateOrders)
     swapApp.off('order update', this.updateOrders)
     swapApp.off('remove order', this.updateOrders)
+    swapApp.off('new order request', this.updateOrders)
   }
 
   updateOrders = () => {
-    actions.swap.update()
+    this.setState({
+      orders: swapApp.orderCollection.items,
+    })
   }
 
   render() {
     const titles = [ 'EXCHANGE', 'BUY', 'SELL', 'EXCHANGE RATE', '' ]
-    const { orders } = this.props
+    const { orders } = this.state
 
     return (
       <Table
@@ -42,6 +46,7 @@ export default class Orders extends Component {
           <Row
             key={index}
             row={row}
+            update={this.updateOrders}
           />
         )}
       />

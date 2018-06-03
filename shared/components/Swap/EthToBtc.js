@@ -112,7 +112,7 @@ export default class EthToBtc extends Component {
             ) : (
               <Fragment>
                 <h3>The order creator is offline. Waiting for him..</h3>
-                <Loader />
+                <Loader overlay={false} />
               </Fragment>
             )
           )
@@ -122,7 +122,7 @@ export default class EthToBtc extends Component {
           flow.isWaitingForOwner && (
             <Fragment>
               <h3>Waiting for other user when he connect to the order</h3>
-              <Loader />
+              <Loader overlay={false} />
             </Fragment>
           )
         }
@@ -163,7 +163,7 @@ export default class EthToBtc extends Component {
                     }
                     {
                       flow.isSignFetching && (
-                        <Loader />
+                        <Loader overlay={false} />
                       )
                     }
                   </Fragment>
@@ -181,7 +181,7 @@ export default class EthToBtc extends Component {
               <h3>2. Waiting BTC Owner creates Secret Key, creates BTC Script and charges it</h3>
               {
                 flow.step === 2 && (
-                  <Loader />
+                  <Loader overlay={false} />
                 )
               }
 
@@ -260,7 +260,7 @@ export default class EthToBtc extends Component {
                 flow.step === 4 && flow.isBalanceFetching && (
                   <Fragment>
                     <div>Checking balance..</div>
-                    <Loader />
+                    <Loader overlay={false} />
                   </Fragment>
                 )
               }
@@ -288,7 +288,7 @@ export default class EthToBtc extends Component {
               }
               {
                 flow.step === 5 && (
-                  <Loader />
+                  <Loader overlay={false} />
                 )
               }
 
@@ -298,7 +298,7 @@ export default class EthToBtc extends Component {
                     <h3>5. Waiting BTC Owner adds Secret Key to ETH Contact</h3>
                     {
                       !flow.isEthWithdrawn && (
-                        <Loader />
+                        <Loader overlay={false} />
                       )
                     }
                   </Fragment>
@@ -328,7 +328,7 @@ export default class EthToBtc extends Component {
               }
               {
                 flow.step === 7 && (
-                  <Loader />
+                  <Loader overlay={false} />
                 )
               }
 

@@ -120,7 +120,7 @@ export default class BtcToEth extends Component {
             ) : (
               <Fragment>
                 <h3>The order creator is offline. Waiting for him..</h3>
-                <Loader />
+                <Loader overlay={false} />
               </Fragment>
             )
           )
@@ -130,7 +130,7 @@ export default class BtcToEth extends Component {
           flow.isWaitingForOwner && (
             <Fragment>
               <h3>Waiting for other user when he connect to the order</h3>
-              <Loader />
+              <Loader overlay={false} />
             </Fragment>
           )
         }
@@ -139,7 +139,7 @@ export default class BtcToEth extends Component {
           (flow.step === 1 || flow.isMeSigned) && (
             <Fragment>
               <h3>1. Waiting participant confirm this swap</h3>
-              <Loader />
+              <Loader overlay={false} />
             </Fragment>
           )
         }
@@ -186,7 +186,7 @@ export default class BtcToEth extends Component {
                 flow.step === 3 && flow.isBalanceFetching && (
                   <Fragment>
                     <div>Checking balance..</div>
-                    <Loader />
+                    <Loader overlay={false} />
                   </Fragment>
                 )
               }
@@ -197,7 +197,7 @@ export default class BtcToEth extends Component {
                     <h3>3. Creating Bitcoin Script. Please wait, it will take a while</h3>
                     {
                       !flow.btcScriptValues && (
-                        <Loader />
+                        <Loader overlay={false} />
                       )
                     }
                   </Fragment>
@@ -210,7 +210,7 @@ export default class BtcToEth extends Component {
                     <h3>4. ETH Owner received Bitcoin Script and Secret Hash. Waiting when he creates ETH Contract</h3>
                     {
                       !flow.isEthContractFunded && (
-                        <Loader />
+                        <Loader overlay={false} />
                       )
                     }
                   </Fragment>

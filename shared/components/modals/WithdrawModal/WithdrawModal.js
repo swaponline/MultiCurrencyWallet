@@ -33,17 +33,9 @@ export default class WithdrawModal extends React.Component {
     amount: '',
   }
 
-  componentDidMount() {
-    actions.notifications.show(constants.notifications.SuccessWithdraw, {
-      amount: 1,
-      currency: 'ETH',
-      address: '0x0',
-    })
-  }
-
   handleSubmit = () => {
     const { address: to, amount } = this.state
-    const { ethData, btcData, data: { currency } } = this.props
+    const { ethData, btcData, nimData, data: { currency } } = this.props
 
     if (!to || !amount || amount < 0.01) {
       this.setState({
