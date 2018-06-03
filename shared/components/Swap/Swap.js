@@ -37,6 +37,10 @@ export default class Swap extends Component {
     }
   }
 
+  shouldComponentUpdate() {
+    return false
+  }
+
   render() {
     const { swap } = this.state
 
