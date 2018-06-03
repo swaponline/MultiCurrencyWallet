@@ -52,7 +52,7 @@ class Swap {
 
       console.log('DATA', data)
 
-      if (!data.participant && isMy) {
+      if (!data.participant && !isMy) {
         data.participant = data.owner
       }
 
