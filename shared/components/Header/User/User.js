@@ -3,6 +3,7 @@ import React from 'react'
 import CSSModules from 'react-css-modules'
 import styles from './User.scss'
 
+import { createSwapApp } from 'instances/swap'
 // import Question from './controls/Question/Question'
 import AddOfferButton from './AddOfferButton/AddOfferButton'
 import UserAvatar from './UserAvatar/UserAvatar'
@@ -16,15 +17,13 @@ export default class User extends React.Component {
     view: false,
   }
 
-  handleOpenTooltip = () => {
-    this.setState({
-      view: true,
-    })
+  componentWillMount() {
+    createSwapApp()
   }
 
-  handleCloseTooltip = () => {
+  handleToggleTooltip = () => {
     this.setState({
-      view: false,
+      view: !this.state.view,
     })
   }
 
@@ -35,8 +34,8 @@ export default class User extends React.Component {
       <div styleName="user-cont">
         {/* <Question /> */}
         <AddOfferButton />
-        <UserAvatar isOpen={this.handleOpenTooltip} />
-        { view &&  <UserTooltip isClose={this.handleCloseTooltip} /> }
+        <UserAvatar isOpen={this.handleToggleTooltip} />
+        <UserTooltip isClose={this.handleToggleTooltip} view={view} />
       </div>
     )
   }

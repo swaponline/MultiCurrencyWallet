@@ -22,10 +22,11 @@ export default class Swap extends Component {
     swap: null,
   }
 
-  componentWillReceiveProps({ orderId }) {
+  componentWillMount() {
     const { swap } = this.state
+    const { orderId } = this.props
 
-    console.log('componentWillReceiveProps', orderId)
+    console.log('componentWillMount', orderId)
 
     if (!swap && orderId) {
       const swap = swapApp.createSwap({ orderId })
