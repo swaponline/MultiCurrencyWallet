@@ -6,8 +6,8 @@ export default {
   env: 'production',
   entry: 'testnet',
 
-  base: 'https://wallet.swap.online/',
-  publicPath: `https://wallet.swap.online${baseConfig.publicPath}`,
+  base: 'https://testnet.swap.online/',
+  publicPath: `https://testnet.swap.online${baseConfig.publicPath}`,
 
   ...config,
 }
