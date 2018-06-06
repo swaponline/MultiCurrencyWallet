@@ -11,7 +11,7 @@ import styles from './FeedNotificaton.scss'
 import ArrowRightSvg from './images/arrow-right.svg'
 
 
-const FeedNotificaton = ({ feeds, mePeer, acceptRequest }) => (
+const FeedNotificaton = ({ feeds, mePeer, acceptRequest, declineRequest }) => (
   feeds.map(row => {
     const { request, content: { buyAmount, buyCurrency, sellAmount, sellCurrency },  id, peer: ownerPeer } = row
 
@@ -25,9 +25,12 @@ const FeedNotificaton = ({ feeds, mePeer, acceptRequest }) => (
             <span styleName="arrow"><img src={ArrowRightSvg} alt="" /></span>
             <span>{sellAmount} <span styleName="coin">{sellCurrency}</span></span>
           </div>
-          <Link to={`${links.swap}/${id}`}>
-            <div styleName="withdrawButton" onClick={() => acceptRequest(id, peer)} >Accept</div>
-          </Link>
+          <div styleName="buttons">
+            <div styleName="withdrawButton" onClick={() => declineRequest(id, peer)} >Decline</div>
+            <Link to={`${links.swap}/${id}`}>
+              <div styleName="withdrawButton" onClick={() => acceptRequest(id, peer)} >Accept</div>
+            </Link>
+          </div>
         </div>
       ))
     )

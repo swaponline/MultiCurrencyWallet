@@ -20,6 +20,12 @@ export default class Feed extends React.Component {
     order.acceptRequest(participantPeer)
   }
 
+  declineRequest = (orderId, participantPeer) => {
+    const order = swapApp.orderCollection.getByKey(orderId)
+
+    order.declineRequest(participantPeer)
+  }
+
   render() {
     const { feeds } = this.props
     const mePeer = swapApp.storage.me.peer
@@ -35,6 +41,7 @@ export default class Feed extends React.Component {
           feeds={feeds}
           mePeer={mePeer}
           acceptRequest={this.acceptRequest}
+          declineRequest={this.declineRequest}
           update={this.updateOrders}
         />
       </section>

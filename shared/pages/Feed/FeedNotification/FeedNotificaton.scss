@@ -21,7 +21,7 @@
 .currency {
   font-size: 14px;
   font-weight: 700;
-  width: 220px;
+  min-width: 120px;
   text-transform: uppercase;
   display: flex;
   align-items: center;
@@ -30,6 +30,12 @@
 
 .coin {
   color: #b4b4b4;
+}
+
+.buttons {
+  width: 250px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .arrow {

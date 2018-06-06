@@ -21,13 +21,8 @@ export default class UserAvatar extends Component {
 
   componentWillReceiveProps(nextProps) {
     const { feeds, soundClick } = this.props
-
-    let update
-    if (feeds.length !== 0) {
-      update = nextProps.feeds.length > feeds.length
-    }
-
-    if (update) {
+    
+    if (nextProps.feeds.length > feeds.length) {
 
       this.setState({
         feeds: nextProps.feeds,
