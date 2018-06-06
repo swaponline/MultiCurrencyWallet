@@ -103,10 +103,11 @@ export default class AddOffer extends Component {
   }
 
   handleNext = () => {
-    const { exchangeRate, buyAmount, sellAmount } = this.state
+    const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency } = this.state
+    const forbidden = (`${buyCurrency}${sellCurrency}` === 'noxoneth') || (`${buyCurrency}${sellCurrency}` === 'ethnoxon')
     const { onNext } = this.props
 
-    const isDisabled = !exchangeRate || !buyAmount || !sellAmount
+    const isDisabled = !exchangeRate || !buyAmount || !sellAmount || forbidden
 
     if (!isDisabled) {
       onNext(this.state)
@@ -115,9 +116,10 @@ export default class AddOffer extends Component {
 
   render() {
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency } = this.state
+    const forbidden = (`${buyCurrency}${sellCurrency}` === 'noxoneth') || (`${buyCurrency}${sellCurrency}` === 'ethnoxon')
 
     const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
-    const isDisabled = !exchangeRate || !buyAmount && !sellAmount
+    const isDisabled = !exchangeRate || forbidden || !buyAmount && !sellAmount
 
     return (
       <Fragment>
