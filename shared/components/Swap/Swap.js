@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 
 import { swapApp } from 'instances/swap'
 
@@ -16,7 +16,7 @@ const swapComponents = {
 }
 
 
-export default class Swap extends Component {
+export default class Swap extends PureComponent {
 
   state = {
     swap: null,
@@ -35,10 +35,6 @@ export default class Swap extends Component {
         swap,
       })
     }
-  }
-
-  shouldComponentUpdate() {
-    return false
   }
 
   render() {

@@ -86,6 +86,7 @@
     "react-css-modules": "^4.7.3",
     "react-dom": "^16.3.2",
     "react-input-mask": "^2.0.1",
+    "react-paginate": "^5.2.3",
     "react-redux": "^5.0.7",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",

@@ -7,6 +7,7 @@ import bitcoin from './bitcoin'
 import ethereum from './ethereum'
 import token from './token'
 import nimiq from './nimiq'
+import feed from './feed'
 
 
 export default {
@@ -19,4 +20,5 @@ export default {
   ethereum,
   token,
   nimiq,
+  feed,
 }

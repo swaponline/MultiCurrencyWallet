@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
 
+import actions from 'redux/actions'
 import PropTypes from 'prop-types'
 import { swapApp } from 'instances/swap'
 
@@ -19,6 +20,7 @@ export default class Row extends Component {
 
   removeOrder = (orderId) => {
     swapApp.removeOrder(orderId)
+    actions.feed.deleteItemToFeed(orderId)
 
     this.props.update()
   }
@@ -66,7 +68,10 @@ export default class Row extends Component {
               <Fragment>
                 {
                   isRequested ? (
-                    <div style={{ color: 'red' }}>REQUESTING</div>
+                    <Fragment>
+                      <div style={{ color: 'red' }}>REQUESTING</div>
+                      <Link to={`${links.swap}/${id}`}> Go to the swap</Link>
+                    </Fragment>
                   ) : (
                     <Link to={`${links.swap}/${id}`}>
                       <RequestButton sendRequest={() => this.sendRequest(id)} />

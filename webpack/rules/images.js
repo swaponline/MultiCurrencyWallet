@@ -7,6 +7,10 @@ const resolveRule = (options) => ([
     loader: 'file-loader',
     options,
   },
+  {
+    test: /\.mp4$/,
+    loader: 'url-loader?limit=8192'
+  },
 ])
 
 

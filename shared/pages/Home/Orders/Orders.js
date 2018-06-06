@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import actions from 'redux/actions'
 import { swapApp } from 'instances/swap'
+import actions from 'redux/actions'
 
 import Row from './Row/Row'
 import Table from 'components/Table/Table'
@@ -32,6 +32,12 @@ export default class Orders extends Component {
     this.setState({
       orders: swapApp.orderCollection.items,
     })
+
+    const { orders } = this.state
+
+    if (orders.length !== 0) {
+      actions.feed.getFeedDataFromOrder(orders)
+    }
   }
 
   render() {

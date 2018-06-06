@@ -3,6 +3,7 @@ import * as modals from './modals'
 import * as history from './history'
 import * as loader from './loader'
 import * as user from './user'
+import * as feeds from './feeds'
 
 
 export default {
@@ -11,4 +12,5 @@ export default {
   history,
   loader,
   user,
+  feeds,
 }

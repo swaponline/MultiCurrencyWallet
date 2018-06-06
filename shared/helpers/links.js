@@ -3,4 +3,5 @@ export default {
   balance: '/balance',
   history: '/history',
   swap: '/swap',
+  feed: '/feed',
 }
