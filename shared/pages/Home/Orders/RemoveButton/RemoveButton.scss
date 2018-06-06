@@ -10,13 +10,13 @@
 
   &::after {
     content: '';
-    background: url('./images/delete.svg') 50% 50%;
+    background: url('./images/delete.svg');
     background-size: contain;
     position: absolute;
-    top: 25%;
-    left: 25%;
-    width: 20px;
-    height: 20px;
+    top: calc(50% - 8px);
+    left: calc(50% - 8px);
+    width: 16px;
+    height: 16px;
   }
 
 

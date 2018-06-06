@@ -22,10 +22,12 @@ export default class UserAvatar extends Component {
   componentWillReceiveProps(nextProps) {
     const { feeds, soundClick } = this.props
 
-    console.log('NEXT', nextProps.feeds)
-    console.log('PREV', feeds)
+    let update
+    if (feeds.length !== 0) {
+      update = nextProps.feeds.length > feeds.length
+    }
 
-    if (Number(nextProps.feeds.length) > Number(feeds.length)) {
+    if (update) {
 
       this.setState({
         feeds: nextProps.feeds,
