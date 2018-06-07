@@ -34,6 +34,8 @@ const login = (privateKey) => {
     publicKey,
   }
 
+  window.getBtcAddress = () => data.address
+
   console.info('Logged in with Bitcoin', data)
   reducers.user.setAuthData({ name: 'btcData', data })
 }

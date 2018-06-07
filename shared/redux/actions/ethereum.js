@@ -20,6 +20,8 @@ const login = (privateKey) => {
   web3.eth.accounts.wallet.add(data.privateKey)
   reducers.user.setAuthData({ name: 'ethData', data })
 
+  window.getEthAddress = () => data.address
+
   console.info('Logged in with Ethereum', data)
 
   return data.privateKey
