@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import actions from 'redux/actions'
 import { connect } from 'redaction'
 import moment from 'moment'
+import { constants } from 'helpers'
 
 import { createSwapApp } from 'instances/swap'
 
@@ -36,9 +37,15 @@ export default class App extends React.Component {
     children: PropTypes.element.isRequired,
   }
 
-  componentDidMount() {
-    const { isPrivateKeysSaved } = this.props
+  componentWillMount() {
+    const isPrivateKeysSaved = localStorage.getItem(constants.localStorage.privateKeysSaved)
 
+    if (!isPrivateKeysSaved) {
+      actions.modals.open(constants.modals.PrivateKeys, {})
+    }
+  }
+
+  componentDidMount() {
     actions.user.sign()
   }
 

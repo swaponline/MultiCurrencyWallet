@@ -71,7 +71,9 @@ export default class Field2 extends React.Component {
         </div>
         {
           error && (
-            <div styleName="error">You should pass correct value!</div>
+            <div styleName="error">You should pass correct value!
+              Reload page and enter key again
+            </div>
           )
         }
       </div>

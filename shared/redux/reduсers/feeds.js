@@ -12,7 +12,5 @@ export const addItems = (state, payload) => ({
 
 export const deleteItems = (state, payload) => ({
   ...state,
-  items:[
-    payload,
-  ],
+  items: payload,
 })

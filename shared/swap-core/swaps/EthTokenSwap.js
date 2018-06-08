@@ -24,9 +24,6 @@ class EthTokenSwap {
    * @param {function} handleTransaction
    */
   sign({ myAddress, participantAddress }, handleTransaction) {
-    console.log('address', this.address)
-    console.log('contract', this.contract)
-    console.log('ERC20', this.ERC20)
     return new Promise(async (resolve, reject) => {
       const params = {
         from: myAddress,

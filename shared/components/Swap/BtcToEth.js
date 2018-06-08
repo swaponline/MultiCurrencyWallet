@@ -101,6 +101,8 @@ export default class BtcToEth extends Component {
     const { secret, flow } = this.state
     const { swap } = this.props
 
+    console.log('BTC2ETH', swap.isMy)
+
     return (
       <div>
         {
@@ -234,7 +236,7 @@ export default class BtcToEth extends Component {
               }
               {
                 flow.step === 6 && (
-                  <Loader />
+                  <Loader overlay={false} />
                 )
               }
 

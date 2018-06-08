@@ -11,8 +11,8 @@ import BtcToEthToken from './BtcToEthToken'
 const swapComponents = {
   'btceth': BtcToEth,
   'ethbtc': EthToBtc,
-  'ethtokenbtc': EthTokenToBtc,
-  'btcethtoken': BtcToEthToken,
+  'noxonbtc': EthTokenToBtc,
+  'btcnoxon': BtcToEthToken,
 }
 
 
@@ -48,9 +48,12 @@ export default class Swap extends PureComponent {
 
     const { isMy: isMyOrder, buyCurrency, sellCurrency } = swap
 
-    const firstPart     = isMyOrder ? sellCurrency : buyCurrency
-    const lastPart      = isMyOrder ? buyCurrency : sellCurrency
-    const SwapComponent = swapComponents[`${firstPart.toLowerCase()}${lastPart.toLowerCase()}`]
+    console.log('isMyOrder', isMyOrder)
+    console.log('buyCurrency', buyCurrency)
+    console.log('sellCurrency', sellCurrency)
+
+    const SwapComponent = swapComponents[`${sellCurrency.toLowerCase()}${buyCurrency.toLowerCase()}`]
+
 
     return (
       <div style={{ paddingLeft: '30px' }}>

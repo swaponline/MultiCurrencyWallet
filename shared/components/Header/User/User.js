@@ -1,7 +1,8 @@
 import React from 'react'
 
 import { connect } from 'redaction'
-import { createSwapApp, swapApp } from 'instances/swap'
+import { swapApp } from 'instances/swap'
+import actions from 'redux/actions'
 
 import CSSModules from 'react-css-modules'
 import styles from './User.scss'
@@ -25,7 +26,23 @@ export default class User extends React.Component {
   }
 
   componentWillMount() {
-    createSwapApp()
+    swapApp.on('new order request', this.updateOrders)
+  }
+
+  componentWillUnmount() {
+    swapApp.off('new order request', this.updateOrders)
+  }
+
+  updateOrders = () => {
+    this.setState({
+      orders: swapApp.orderCollection.items,
+    })
+
+    const { orders } = this.state
+
+    if (orders.length !== 0) {
+      actions.feed.getFeedDataFromOrder(orders)
+    }
   }
 
   handleToggleTooltip = () => {

@@ -4,6 +4,7 @@ import * as history from './history'
 import * as loader from './loader'
 import * as user from './user'
 import * as feeds from './feeds'
+import * as orders from './orders'
 
 
 export default {
@@ -13,4 +14,5 @@ export default {
   loader,
   user,
   feeds,
+  orders,
 }

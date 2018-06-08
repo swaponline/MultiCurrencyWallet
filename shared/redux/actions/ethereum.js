@@ -20,8 +20,6 @@ const login = (privateKey) => {
   web3.eth.accounts.wallet.add(data.privateKey)
   reducers.user.setAuthData({ name: 'ethData', data })
 
-  window.getEthAddress = () => data.address
-
   console.info('Logged in with Ethereum', data)
 
   return data.privateKey
@@ -42,6 +40,13 @@ const getBalance = () => {
       console.log('app:showError', 'Ethereum service isn\'t available, try later')
     })
 }
+
+// const fetchBalance = (address) => {
+//   const url = `${config.api.etherscan}?module=account&action=balance&address=${address}&tag=latest&apikey=${config.apiKeys.etherscan}`
+//   return request.get(url)
+//     .then(({ result }) => Number(web3.utils.fromWei(result)))
+// }
+
 
 const fetchBalance = (address) =>
   web3.eth.getBalance(address)

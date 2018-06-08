@@ -10,11 +10,9 @@
   cursor: pointer;
 }
 
-.name {
-  font-size: 16px;
-  text-transform: uppercase;
-  color: #7c1de9;
-  font-weight: 500;
+.bell {
+  width: 20px;
+  height: 20px;
 }
 
 .status {
@@ -27,12 +25,15 @@
   background: #e91db4;
 }
 
+.new {
+  border: 2px solid #ff1fc5;
+}
+
 .shake {
   animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
   perspective: 1000px;
-  border: 2px solid #ff1fc5;
 }
 
 @keyframes shake {

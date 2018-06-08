@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 
 import CSSModules from 'react-css-modules'
 import styles from './UserAvatar.scss'
+import bell from './images/avatar.svg'
 
 
 @CSSModules(styles, { allowMultiple: true })
@@ -16,22 +17,25 @@ export default class UserAvatar extends Component {
     const { isToggle } = this.props
 
     isToggle()
+    this.setState({
+      animation: 'user',
+    })
   }
 
 
   componentWillReceiveProps(nextProps) {
     const { feeds, soundClick } = this.props
-    
+
     if (nextProps.feeds.length > feeds.length) {
 
       this.setState({
         feeds: nextProps.feeds,
-        animation: 'user shake',
+        animation: 'user shake new',
       })
 
       setTimeout(() => {
         this.setState({
-          animation: 'user',
+          animation: 'user new',
         })
       }, 820)
 
@@ -45,7 +49,7 @@ export default class UserAvatar extends Component {
 
     return (
       <div styleName={animation} onClick={this.handleClick} >
-        <span styleName="name">K</span>
+        <img styleName="bell" src={bell} alt="Bell" />
       </div>
     )
   }

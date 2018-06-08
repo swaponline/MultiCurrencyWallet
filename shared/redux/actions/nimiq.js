@@ -82,8 +82,6 @@ const login = async (ethPrivateKey) => {
     address: $.wallet.address.toUserFriendlyAddress(),
   }
 
-  window.getNimAddress = () => data.address
-
   console.info('Logged in with Nimiq', data)
   reducers.user.setAuthData({ name: 'nimData', data })
 

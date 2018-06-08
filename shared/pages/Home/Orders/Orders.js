@@ -17,7 +17,6 @@ export default class Orders extends Component {
     swapApp.on('new order', this.updateOrders)
     swapApp.on('order update', this.updateOrders)
     swapApp.on('remove order', this.updateOrders)
-    swapApp.on('new order request', this.updateOrders)
   }
 
   componentWillUnmount() {
@@ -25,7 +24,6 @@ export default class Orders extends Component {
     swapApp.off('new order', this.updateOrders)
     swapApp.off('order update', this.updateOrders)
     swapApp.off('remove order', this.updateOrders)
-    swapApp.off('new order request', this.updateOrders)
   }
 
   updateOrders = () => {
@@ -40,14 +38,19 @@ export default class Orders extends Component {
     }
   }
 
+  filterOrders = (orders, filter) =>
+    orders.filter(f => (`${f.buyCurrency}${f.sellCurrency}` === filter))
+
   render() {
     const titles = [ 'EXCHANGE', 'BUY', 'SELL', 'EXCHANGE RATE', '' ]
     const { orders } = this.state
+    const { filter } = this.props
+    const filteredOrders = this.filterOrders(orders, filter)
 
     return (
       <Table
         titles={titles}
-        rows={orders}
+        rows={filteredOrders}
         rowRender={(row, index) => (
           <Row
             key={index}

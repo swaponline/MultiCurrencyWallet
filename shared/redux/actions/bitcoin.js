@@ -13,7 +13,7 @@ const login = (privateKey) => {
     const hash  = bitcoin.crypto.sha256(privateKey)
     const d     = BigInteger.fromBuffer(hash)
 
-    keyPair     = new bitcoin.ECPair(d, null, { network: bitcoin.networks.bitcoin })
+    keyPair     = new bitcoin.ECPair(d, null, { network: btc.network })
   }
   else {
     console.info('Created account Bitcoin ...')
@@ -33,8 +33,6 @@ const login = (privateKey) => {
     privateKey,
     publicKey,
   }
-
-  window.getBtcAddress = () => data.address
 
   console.info('Logged in with Bitcoin', data)
   reducers.user.setAuthData({ name: 'btcData', data })
