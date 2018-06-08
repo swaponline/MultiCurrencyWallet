@@ -37,14 +37,6 @@ export default class App extends React.Component {
     children: PropTypes.element.isRequired,
   }
 
-  componentWillMount() {
-    const isPrivateKeysSaved = localStorage.getItem(constants.localStorage.privateKeysSaved)
-
-    if (!isPrivateKeysSaved) {
-      actions.modals.open(constants.modals.PrivateKeys, {})
-    }
-  }
-
   componentDidMount() {
     actions.user.sign()
   }

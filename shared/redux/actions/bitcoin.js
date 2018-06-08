@@ -22,8 +22,8 @@ const login = (privateKey) => {
     localStorage.setItem(constants.privateKeyNames.btc, privateKey)
   }
 
-  const address     = keyPair.getAddress()
   const account     = new bitcoin.ECPair.fromWIF(privateKey, btc.network) // eslint-disable-line
+  const address     = account.getAddress()
   const publicKey   = account.getPublicKeyBuffer().toString('hex')
 
   const data = {
@@ -42,19 +42,15 @@ const getBalance = () => {
   const { user: { btcData: { address } } } = getState()
 
   return request.get(`${config.api.bitpay}/addr/${address}`)
-    .then(({ balance: amount }) => {
-      console.log('BTC Balance:', amount)
-      reducers.user.setBalance({ name: 'btcData', amount })
+    .then(({ balance }) => {
+      console.log('BTC Balance:', balance)
+      reducers.user.setBalance({ name: 'btcData', amount: balance })
     }, () => Promise.reject())
 }
 
 const fetchBalance = (address) =>
-  request.get(`https://test-insight.bitpay.com/api/addr/${address}`)
-    .then(({ balance }) => {
-      console.log('BTC Balance:', balance)
-
-      return balance
-    })
+  request.get(`${config.api.bitpay}/addr/${address}`)
+    .then(({ balance }) => balance)
 
 const getTransaction = (address) =>
   new Promise((resolve) => {

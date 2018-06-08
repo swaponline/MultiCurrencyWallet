@@ -105,9 +105,9 @@ export default class BtcToEthToken extends Component {
         {
           swap.id && (
             swap.isMy ? (
-              <strong>{swap.sellAmount} {swap.sellCurrency} &#10230; {swap.buyAmount} {swap.buyCurrency}</strong>
-            ) : (
               <strong>{swap.buyAmount} {swap.buyCurrency} &#10230; {swap.sellAmount} {swap.sellCurrency}</strong>
+            ) : (
+              <strong>{swap.sellAmount} {swap.sellCurrency} &#10230; {swap.buyAmount} {swap.buyCurrency}</strong>
             )
           )
         }

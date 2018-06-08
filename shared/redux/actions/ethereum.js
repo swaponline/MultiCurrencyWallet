@@ -18,6 +18,7 @@ const login = (privateKey) => {
   }
 
   web3.eth.accounts.wallet.add(data.privateKey)
+
   reducers.user.setAuthData({ name: 'ethData', data })
 
   console.info('Logged in with Ethereum', data)
@@ -41,16 +42,16 @@ const getBalance = () => {
     })
 }
 
-// const fetchBalance = (address) => {
-//   const url = `${config.api.etherscan}?module=account&action=balance&address=${address}&tag=latest&apikey=${config.apiKeys.etherscan}`
-//   return request.get(url)
-//     .then(({ result }) => Number(web3.utils.fromWei(result)))
-// }
+const fetchBalance = (address) => {
+  const url = `${config.api.etherscan}?module=account&action=balance&address=${address}&tag=latest&apikey=${config.apiKeys.etherscan}`
+  return request.get(url)
+    .then(({ result }) => Number(web3.utils.fromWei(result)))
+}
 
 
-const fetchBalance = (address) =>
-  web3.eth.getBalance(address)
-    .then((wei) => Number(web3.utils.fromWei(wei)))
+// const fetchBalance = (address) =>
+//   web3.eth.getBalance(address)
+//     .then((wei) => Number(web3.utils.fromWei(wei)))
 
 // export const getGas = () => {
 //   web3.eth.getGasPrice().then((res) => {

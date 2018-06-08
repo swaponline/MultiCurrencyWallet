@@ -7,7 +7,7 @@ import { BTC2ETH } from 'swap-core/flows'
 import Loader from 'components/loaders/Loader/Loader'
 
 
-@connect(state =>({
+@connect(state => ({
   btcData: state.user.btcData,
 }))
 export default class BtcToEth extends Component {
@@ -18,7 +18,7 @@ export default class BtcToEth extends Component {
   }
 
   componentWillMount() {
-    const { btcData } = this.props
+    const { btcData, ethData } = this.props
     // TODO this might be from url query
     const { swap } = this.props
 
@@ -26,11 +26,16 @@ export default class BtcToEth extends Component {
       gasLimit: 3e6,
     })
 
+    console.log('btcData', btcData)
+
     const btcSwap = new BtcSwap({
       account: btcData.account,
+      address: btcData.address,
       fetchUnspents: (scriptAddress) => actions.bitcoin.fetchUnspents(scriptAddress),
       broadcastTx: (txRaw) => actions.bitcoin.broadcastTx(txRaw),
     })
+
+    console.log('BtcSwap', btcSwap)
 
     const fetchBalance = () => actions.bitcoin.fetchBalance(btcData.address)
 
@@ -39,6 +44,8 @@ export default class BtcToEth extends Component {
       btcSwap,
       fetchBalance,
     })
+
+    console.log('FLOOOW', flow)
 
     this.state.flow = flow.state
 

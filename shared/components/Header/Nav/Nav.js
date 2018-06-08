@@ -18,13 +18,13 @@ const nav = [
 ]
 
 if (process.env.TESTNET) {
-  nav.push({ title: 'Get demo money', target: '_blank', link: 'https://wiki.swap.online/get-free-bitcoins-and-ether', onClick: () => actions.user.getDemoMoney() })
+  nav.push({ title: 'Get demo money',  target: '_blank', onClick: () => actions.user.getDemoMoney() })
 }
 
 const Nav = () => (
   <div styleName="nav">
     {
-      nav.map(({ title, link, onClick, target = '' }) => (
+      nav.map(({ title, link, onClick, target }) => (
         link ? (
           <NavLink
             exact
@@ -32,19 +32,19 @@ const Nav = () => (
             styleName="link"
             to={link}
             activeClassName={styles.active}
-            onClick={onClick}
-            target={target}
           >
             {title}
           </NavLink>
         ) : (
-          <div
+          <a
             key={title}
             styleName="link"
+            target={target}
             onClick={onClick}
+            href="https://wiki.swap.online/get-free-bitcoins-and-ether"
           >
             {title}
-          </div>
+          </a>
         )
       ))
     }
