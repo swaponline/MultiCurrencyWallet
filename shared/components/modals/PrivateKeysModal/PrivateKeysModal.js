@@ -50,7 +50,7 @@ export default class PrivateKeysModal extends React.PureComponent {
     const { ethData, btcData } = this.props
 
     const text = `
-swap.online emergency instruction
+${window.location.hostname} emergency instruction
 
 
 #ETHEREUM
