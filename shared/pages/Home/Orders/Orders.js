@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { swapApp } from 'instances/swap'
+import { swapApp } from 'instances/newSwap'
 import actions from 'redux/actions'
 
 import Row from './Row/Row'
@@ -9,26 +9,28 @@ import Table from 'components/Table/Table'
 export default class Orders extends Component {
 
   state = {
-    orders: swapApp.orderCollection.items,
+    orders: swapApp.services.orders.items,
   }
 
   componentWillMount() {
-    swapApp.on('new orders', this.updateOrders)
-    swapApp.on('new order', this.updateOrders)
-    swapApp.on('order update', this.updateOrders)
-    swapApp.on('remove order', this.updateOrders)
+    swapApp.services.orders
+      .on('new orders', this.updateOrders)
+      .on('new order', this.updateOrders)
+      .on('order update', this.updateOrders)
+      .on('remove order', this.updateOrders)
   }
 
   componentWillUnmount() {
-    swapApp.off('new orders', this.updateOrders)
-    swapApp.off('new order', this.updateOrders)
-    swapApp.off('order update', this.updateOrders)
-    swapApp.off('remove order', this.updateOrders)
+    swapApp.services.orders
+      .off('new orders', this.updateOrders)
+      .off('new order', this.updateOrders)
+      .off('order update', this.updateOrders)
+      .off('remove order', this.updateOrders)
   }
 
   updateOrders = () => {
     this.setState({
-      orders: swapApp.orderCollection.items,
+      orders: swapApp.services.orders.items,
     })
 
     const { orders } = this.state

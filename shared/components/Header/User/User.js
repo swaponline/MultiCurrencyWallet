@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { connect } from 'redaction'
-import { swapApp } from 'instances/swap'
+import { swapApp } from 'instances/newSwap'
 import actions from 'redux/actions'
 
 import CSSModules from 'react-css-modules'
@@ -26,16 +26,18 @@ export default class User extends React.Component {
   }
 
   componentWillMount() {
-    swapApp.on('new order request', this.updateOrders)
+    swapApp.services.orders
+      .on('new order request', this.updateOrders)
   }
 
   componentWillUnmount() {
-    swapApp.off('new order request', this.updateOrders)
+    swapApp.services.orders
+      .off('new order request', this.updateOrders)
   }
 
   updateOrders = () => {
     this.setState({
-      orders: swapApp.orderCollection.items,
+      orders: swapApp.services.orders.items,
     })
 
     const { orders } = this.state
@@ -52,13 +54,15 @@ export default class User extends React.Component {
   }
 
   acceptRequest = (orderId, participantPeer) => {
-    const order = swapApp.orderCollection.getByKey(orderId)
+    const order = swapApp.services.orders.getByKey(orderId)
 
     order.acceptRequest(participantPeer)
 
     setTimeout(() => {
       this.handleToggleTooltip()
     }, 800)
+
+    this.updateOrders()
   }
 
   soundClick = () => {
@@ -70,7 +74,7 @@ export default class User extends React.Component {
   render() {
     const { view } = this.state
     const { feeds } = this.props
-    const mePeer = swapApp.storage.me.peer
+    const mePeer = swapApp.services.room.peer
 
     return (
       <div styleName="user-cont">

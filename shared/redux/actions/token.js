@@ -50,6 +50,11 @@ const getBalance = () => {
     }).catch(r => console.error('Token service isn\'t available, try later'))
 }
 
+const fetchBalance = (address) =>
+  request.get(`https://rinkeby.etherscan.io/api?module=account&action=tokenbalance&contractaddress=0x60c205722c6c797c725a996cf9cca11291f90749&address=${address}`)
+    .then(({ result }) => result)
+
+
 const getTransaction = (address) =>
   new Promise((resolve) => {
     const url = [
@@ -94,4 +99,5 @@ export default {
   getBalance,
   getTransaction,
   send,
+  fetchBalance,
 }

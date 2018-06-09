@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 
 import actions from 'redux/actions'
-import { swapApp } from 'instances/swap'
+import { swapApp } from 'instances/newSwap'
 
 import cssModules from 'react-css-modules'
 import styles from './ConfirmOffer.scss'
@@ -32,7 +32,7 @@ export default class ConfirmOffer extends Component {
       sellAmount: Number(sellAmount),
     }
 
-    swapApp.createOrder(data)
+    swapApp.services.orders.create(data)
   }
 
   render() {

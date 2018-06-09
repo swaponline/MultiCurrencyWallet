@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { createSwapApp, swapApp } from 'instances/swap'
+import { swapApp } from 'instances/newSwap'
 import { connect } from 'redaction'
 
 import PageHeadline from 'components/PageHeadline/PageHeadline'
@@ -15,20 +15,20 @@ import FeedNotification from './FeedNotification/FeedNotification'
 export default class Feed extends React.Component {
 
   acceptRequest = (orderId, participantPeer) => {
-    const order = swapApp.orderCollection.getByKey(orderId)
+    const order = swapApp.services.orders.getByKey(orderId)
 
     order.acceptRequest(participantPeer)
   }
 
   declineRequest = (orderId, participantPeer) => {
-    const order = swapApp.orderCollection.getByKey(orderId)
+    const order = swapApp.services.orders.getByKey(orderId)
 
     order.declineRequest(participantPeer)
   }
 
   render() {
     const { feeds } = this.props
-    const mePeer = swapApp.storage.me.peer
+    const mePeer = swapApp.services.room.peer
 
     return (
       <section>
