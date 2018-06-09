@@ -25,26 +25,26 @@ export default class PrivateKeysModal extends React.PureComponent {
     name: PropTypes.string,
     ethData: PropTypes.object.isRequired,
     btcData: PropTypes.object.isRequired,
-  };
+  }
 
   state = {
     view: 'saveKeys', // saveKeys, checkKeys
     ethValidated: false,
     btcValidated: false,
-  };
+  }
 
   changeView = (view) => {
     this.setState({
       view,
     })
-  };
+  }
 
   close = () => {
     const { name } = this.props
 
     localStorage.setItem(constants.localStorage.privateKeysSaved, true)
     actions.modals.close(name)
-  };
+  }
 
   getText = () => {
     const { ethData, btcData } = this.props
@@ -79,7 +79,7 @@ Private key: ${btcData.privateKey}
     `
 
     return text
-  };
+  }
 
   handleDownload = () => {
     const element = document.createElement('a')
@@ -94,13 +94,13 @@ Private key: ${btcData.privateKey}
     document.body.removeChild(element)
 
     this.changeView('checkKeys')
-  };
+  }
 
   handleSendByEmail = () => {
     const text = this.getText()
 
     window.open(`mailto:?subject=Your_Subject&body=${text}`)
-  };
+  }
 
   render() {
     const { view } = this.state
