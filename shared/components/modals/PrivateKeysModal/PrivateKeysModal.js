@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'redaction'
+import moment from 'moment'
 import actions from 'redux/actions'
 import Link from 'sw-valuelink'
 import { localStorage, constants } from 'helpers'
@@ -49,7 +50,7 @@ export default class PrivateKeysModal extends React.PureComponent {
     const { ethData, btcData } = this.props
 
     const text = `
-swap.online emergency instruction
+${window.location.hostname} emergency instruction
 
 
 #ETHEREUM
@@ -85,7 +86,7 @@ Private key: ${btcData.privateKey}
     const text = this.getText()
 
     element.setAttribute('href', `data:text/plaincharset=utf-8,${encodeURIComponent(text)}`)
-    element.setAttribute('download', 'instruction.txt')
+    element.setAttribute('download', `${window.location.hostname}_keys_${moment().format('DD.MM.YYYY')}.txt`)
 
     element.style.display = 'none'
     document.body.appendChild(element)
