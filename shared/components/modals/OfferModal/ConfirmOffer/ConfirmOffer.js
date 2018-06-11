@@ -31,7 +31,7 @@ export default class ConfirmOffer extends Component {
       buyAmount: Number(buyAmount),
       sellAmount: Number(sellAmount),
     }
-
+    actions.analytics.dataEvent('orderbook-addoffer-click-confirm-button')
     swapApp.services.orders.create(data)
   }
 

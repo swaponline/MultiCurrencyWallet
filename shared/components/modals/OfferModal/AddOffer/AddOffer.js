@@ -1,6 +1,6 @@
 import React, { Fragment, Component } from 'react'
 import Link from 'sw-valuelink'
-
+import actions from 'redux/actions'
 import cssModules from 'react-css-modules'
 import styles from './AddOffer.scss'
 
@@ -32,6 +32,7 @@ export default class AddOffer extends Component {
       sellAmount: sellAmount || '',
       buyCurrency: buyCurrency || 'eth',
       sellCurrency: sellCurrency || 'btc',
+      EventWasSend: false
     }
   }
 
@@ -39,6 +40,8 @@ export default class AddOffer extends Component {
     exchangeRates[`${buyCurrency.toLowerCase()}${sellCurrency.toLowerCase()}`]
 
   handleBuyCurrencySelect = ({ value }) => {
+
+
     let { buyCurrency, sellCurrency, buyAmount, sellAmount } = this.state
 
     // init:    buyCurrency = ETH, sellCurrency = BTC, value = BTC
@@ -89,6 +92,10 @@ export default class AddOffer extends Component {
   handleBuyAmountChange = (value) => {
     const { exchangeRate } = this.state
 
+    if(!this.EventWasSend) {
+      actions.analytics.dataEvent('orderbook-addoffer-enter-ordervalue')
+      this.EventWasSend =true
+    }
     this.setState({
       sellAmount: value * exchangeRate,
     })
@@ -96,6 +103,11 @@ export default class AddOffer extends Component {
 
   handleSellAmountChange = (value) => {
     const { exchangeRate } = this.state
+
+    if(!this.EventWasSend) {
+      actions.analytics.dataEvent('orderbook-addoffer-enter-ordervalue')
+      this.EventWasSend =true
+    }
 
     this.setState({
       buyAmount: value / exchangeRate,
@@ -106,6 +118,8 @@ export default class AddOffer extends Component {
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency } = this.state
     const forbidden = (`${buyCurrency}${sellCurrency}` === 'noxoneth') || (`${buyCurrency}${sellCurrency}` === 'ethnoxon')
     const { onNext } = this.props
+
+    actions.analytics.dataEvent('orderbook-addoffer-click-next-button')
 
     const isDisabled = !exchangeRate || !buyAmount || !sellAmount || forbidden
 

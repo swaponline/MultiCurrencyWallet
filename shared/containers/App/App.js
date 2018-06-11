@@ -20,6 +20,8 @@ import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import NotificationConductor from 'components/notification/NotificationConductor/NotificationConductor'
 
 
+
+
 moment.locale('en-gb')
 
 @withRouter
@@ -39,6 +41,8 @@ export default class App extends React.Component {
 
   componentDidMount() {
     actions.user.sign()
+
+
   }
 
   render() {
