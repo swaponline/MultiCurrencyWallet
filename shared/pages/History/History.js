@@ -11,10 +11,12 @@ import Row from './Row/Row'
 
 const filterHistory = (items, filter) => {
   if (filter === 'SENT') {
+
     return items.filter(({ direction }) => direction === 'out')
   }
 
   if (filter === 'RECEIVED') {
+
     return items.filter(({ direction }) => direction === 'in')
   }
 
@@ -30,7 +32,7 @@ export default class History extends Component {
 
   componentDidMount() {
     const { ethAddress, btcAddress } = this.props
-
+    actions.analytics.dataEvent('open-page-history')
     actions.user.setTransactions(ethAddress, btcAddress)
   }
 
