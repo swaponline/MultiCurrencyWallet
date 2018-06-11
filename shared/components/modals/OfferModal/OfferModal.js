@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import cssModules from 'react-css-modules'
 import styles from './OfferModal.scss'
-
+import actions from 'redux/actions'
 import Modal from 'components/modal/Modal/Modal'
 
 import ConfirmOffer from './ConfirmOffer/ConfirmOffer'
@@ -30,6 +30,7 @@ export default class Offer extends React.Component {
   }
 
   handleMoveToOfferEditing = () => {
+    actions.analytics.dataEvent('orderbook-addoffer-click-confirm-button')
     this.setState({
       view: 'editOffer',
     })

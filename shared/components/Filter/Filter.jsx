@@ -20,17 +20,17 @@ export default class Filter extends Component {
       <div styleName="history-filter">
         <FilterLink
           name="All"
-          onClick={() => actions.filter.setFilter('ALL')}
+          onClick={() => {actions.filter.setFilter('ALL');  actions.analytics.dataEvent('history-click-all')}}
           active={activeFilter === 'ALL'}
         />
         <FilterLink
           name="Sent"
-          onClick={() => actions.filter.setFilter('SENT')}
+          onClick={() => {actions.filter.setFilter('SENT'); actions.analytics.dataEvent('history-click-sent')}}
           active={activeFilter === 'SENT'}
         />
         <FilterLink
           name="Received"
-          onClick={() => actions.filter.setFilter('RECEIVED')}
+          onClick={() => { actions.filter.setFilter('RECEIVED'); actions.analytics.dataEvent('history-click-received')}}
           active={activeFilter === 'RECEIVED'}
         />
       </div>

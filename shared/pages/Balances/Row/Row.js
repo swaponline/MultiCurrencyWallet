@@ -31,12 +31,15 @@ export default class Row extends Component {
 
     if (currency === 'eth') {
       action = actions.ethereum.getBalance
+      actions.analytics.dataEvent('balances-update-eth')
     }
     else if (currency === 'btc') {
       action = actions.bitcoin.getBalance
+      actions.analytics.dataEvent('balances-update-btc')
     }
     else if (currency === 'noxon') {
       action = actions.token.getBalance
+      actions.analytics.dataEvent('balances-update-noxon')
     }
 
     this.setState({

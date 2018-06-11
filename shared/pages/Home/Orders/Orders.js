@@ -13,6 +13,7 @@ export default class Orders extends Component {
   }
 
   componentWillMount() {
+    actions.analytics.dataEvent('open-page-orders')
     swapApp.services.orders
       .on('new orders', this.updateOrders)
       .on('new order', this.updateOrders)
