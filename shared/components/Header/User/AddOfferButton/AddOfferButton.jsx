@@ -11,6 +11,7 @@ export default class AddOfferButton extends Component {
 
   handleClick = () => {
     actions.modals.open(constants.modals.Offer, {})
+    actions.analytics.dataEvent('orderbook-click-addoffer-button')
   }
 
   render() {

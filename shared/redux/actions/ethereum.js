@@ -21,6 +21,8 @@ const login = (privateKey) => {
 
   reducers.user.setAuthData({ name: 'ethData', data })
 
+  window.getEthAddress = () => data.address
+
   console.info('Logged in with Ethereum', data)
 
   return data.privateKey

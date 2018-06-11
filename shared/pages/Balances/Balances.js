@@ -17,9 +17,8 @@ import Row from './Row/Row'
 export default class Balances extends Component {
 
   componentWillMount() {
-    const { ethAddress, btcAddress } = this.props
-
     actions.user.getBalances()
+    console.log(actions.user.getBalances())
 
     if (!localStorage.getItem(constants.localStorage.privateKeysSaved)) {
       actions.modals.open(constants.modals.PrivateKeys)

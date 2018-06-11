@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 
-import SwapApp from 'swap/swap.app'
+import SwapApp from 'swap.app/swap.app'
 
 import BtcToEth from './BtcToEth'
 import EthToBtc from './EthToBtc'

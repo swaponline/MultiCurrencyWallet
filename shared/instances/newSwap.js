@@ -2,11 +2,11 @@
 import web3 from 'helpers/web3'
 import bitcoin from 'bitcoinjs-lib'
 
-import swapApp from 'swap/swap.app'
-import SwapAuth from 'swap/services/swap.auth'
-import SwapRoom from 'swap/services/swap.room'
-import SwapOrders from 'swap/services/swap.orders'
-import { EthSwap, EthTokenSwap, BtcSwap } from 'swap/swap.swaps'
+import swapApp from 'swap.app/swap.app'
+import SwapAuth from 'swap.app/services/swap.auth'
+import SwapRoom from 'swap.app/services/swap.room'
+import SwapOrders from 'swap.app/services/swap.orders'
+import { EthSwap, EthTokenSwap, BtcSwap } from 'swap.app/swap.swaps'
 
 import actions from 'redux/actions'
 

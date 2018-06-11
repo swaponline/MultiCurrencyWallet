@@ -8,6 +8,7 @@ import ethereum from './ethereum'
 import token from './token'
 import nimiq from './nimiq'
 import feed from './feed'
+import analytics from './analytics'
 
 
 export default {
@@ -21,4 +22,5 @@ export default {
   token,
   nimiq,
   feed,
+  analytics,
 }

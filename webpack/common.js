@@ -36,6 +36,7 @@ const webpackConfig = {
   resolve: {
     alias: {
       shared: config.paths.base('shared'),
+      'swap.app': config.paths.base('shared/swap.app'),
     },
     modules: [
       config.paths.base('client'),
