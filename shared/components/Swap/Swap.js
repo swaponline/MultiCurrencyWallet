@@ -31,6 +31,8 @@ export default class Swap extends PureComponent {
     const lastPart      = isMyOrder ? buyCurrency : sellCurrency
     const SwapComponent = swapComponents[`${firstPart.toLowerCase()}${lastPart.toLowerCase()}`]
 
+    console.log('first', firstPart)
+    console.log('last', lastPart)
 
     return (
       <div style={{ paddingLeft: '30px' }}>
