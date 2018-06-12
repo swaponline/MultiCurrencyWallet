@@ -30,7 +30,7 @@ class Swap {
     // TODO bcs if user offline and I'd like to continue Flow steps I don't need to w8 him
     // TODO so no need to get data from SwapOrders
     if (order) {
-      const { isMy, buyAmount, sellAmount, ...rest } = util.pullProps(
+      const { isMy, buyAmount, sellAmount, buyCurrency, sellCurrency, ...rest } = util.pullProps(
         order,
         'isMy',
         'owner',
@@ -46,6 +46,8 @@ class Swap {
         isMy,
         buyAmount: isMy ? buyAmount : sellAmount,
         sellAmount: isMy ? sellAmount : buyAmount,
+        sellCurrency: isMy ? sellCurrency : buyCurrency,
+        buyCurrency: isMy ? buyCurrency : sellCurrency,
       }
 
       if (!data.participant && !isMy) {
