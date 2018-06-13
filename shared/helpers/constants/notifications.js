@@ -1,4 +1,4 @@
 export default {
   SuccessWithdraw: 'SuccessWithdraw',
-  SwapRequests: 'SwapRequests',
+  Message: 'Message',
 }

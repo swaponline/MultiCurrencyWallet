@@ -7,7 +7,7 @@ import actions from 'redux/actions'
 import CSSModules from 'react-css-modules'
 import styles from './User.scss'
 
-import Sound from './file/Sound.mp4'
+import Sound from 'helpers/Sound/Sound.mp4'
 
 // import Question from './controls/Question/Question'
 import AddOfferButton from './AddOfferButton/AddOfferButton'

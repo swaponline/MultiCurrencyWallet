@@ -6,6 +6,8 @@ import actions from 'redux/actions'
 import cssModules from 'react-css-modules'
 import styles from './Notification.scss'
 
+import Sound from 'helpers/Sound/Sound.mp4'
+
 
 @cssModules(styles, { allowMultiple: true })
 export default class Notification extends Component {
@@ -20,6 +22,7 @@ export default class Notification extends Component {
   }
 
   componentDidMount() {
+    this.soundClick()
     setTimeout(() => {
       this.setState({
         mounted: true,
@@ -39,6 +42,12 @@ export default class Notification extends Component {
         actions.notifications.hide(name)
       }, 300)
     })
+  }
+
+  soundClick = () => {
+    let audio = new Audio()
+    audio.src = Sound
+    audio.autoplay = true
   }
 
   render() {

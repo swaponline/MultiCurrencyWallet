@@ -1,8 +1,8 @@
 import SuccessWithdraw from './SuccessWithdraw/SuccessWithdraw'
-import SwapRequests from './SwapRequests/SwapRequests'
+import Message from './Message/Message'
 
 
 export default {
   SuccessWithdraw,
-  SwapRequests,
+  Message,
 }

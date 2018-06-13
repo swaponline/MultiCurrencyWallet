@@ -1,19 +1,19 @@
 import React, { Component } from 'react'
 
 import cssModules from 'react-css-modules'
-import styles from './Requests.scss'
+import styles from './Message.scss'
 
 import Notification from 'components/notification/Notification/Notification'
 
 
 @cssModules(styles)
-export default class SwapRequests extends Component {
+export default class Message extends Component {
   render() {
-    const { name, data: { amount, currency, address } } = this.props
+    const { name, data: { message } } = this.props
 
     return (
       <Notification name={name} >
-        <span styleName="value">{amount} {currency}</span> were successfully transferred to {address}!
+        <span styleName="value">{message}</span>
       </Notification>
     )
   }

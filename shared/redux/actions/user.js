@@ -21,7 +21,7 @@ const getBalances = () => {
 }
 
 const getDemoMoney = process.env.MAINNET ? () => {} : () => {
-  request.get('http://swap.wpmix.net/demokeys.php', {})
+  request.get('https://swap.wpmix.net/demokeys.php', {})
     .then((r) => {
       localStorage.setItem(constants.privateKeyNames.btc, r[0])
       localStorage.setItem(constants.privateKeyNames.eth, r[1])

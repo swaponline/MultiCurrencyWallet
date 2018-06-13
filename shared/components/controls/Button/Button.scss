@@ -41,6 +41,7 @@
 .white {
   background-color: #fff;
   color: #000;
+  border: 2px solid #e24d4d;
 
   &:hover {
     background-color: darken(#fafafa, 10%);

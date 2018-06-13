@@ -90,6 +90,7 @@ Private key: ${btcData.privateKey}\r\n
   handleDownload = () => {
     const element = document.createElement('a')
     const text = this.getText()
+    const message = 'Check your browser downloads'
 
     element.setAttribute('href', `data:text/plaincharset=utf-8,${encodeURIComponent(text)}`)
     element.setAttribute('download', `${window.location.hostname}_keys_${moment().format('DD.MM.YYYY')}.txt`)
@@ -100,6 +101,10 @@ Private key: ${btcData.privateKey}\r\n
     document.body.removeChild(element)
 
     this.changeView('checkKeys')
+
+    actions.notifications.show(constants.notifications.Message, {
+      message,
+    })
   }
 
   handleSendByEmail = () => {
@@ -135,7 +140,7 @@ Private key: ${btcData.privateKey}\r\n
                 </div>
                 <div styleName="subTitle">We don`t store your private keys and will not be able to restore them!</div>
                 <Button brand styleName="button" onClick={this.handleDownload}>Download instruction</Button>
-                {/* <Button brand styleName="button" onClick={this.handleSendByEmail}>Send by email</Button> */}
+                {/*<Button brand styleName="button" onClick={this.handleSendByEmail}>Send by email</Button>*/}
               </Fragment>
             ) : (
               <Fragment>
