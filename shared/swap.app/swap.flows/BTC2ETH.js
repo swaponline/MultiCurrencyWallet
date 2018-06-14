@@ -34,7 +34,6 @@ class BTC2ETH extends Flow {
       isBalanceEnough: false,
       balance: null,
 
-      ethSwapCreationTransactionUrl: null,
       isEthContractFunded: false,
 
       isEthWithdrawn: false,
@@ -81,14 +80,19 @@ class BTC2ETH extends Flow {
       async () => {
         const { sellAmount, participant } = flow.swap
 
-        const { script: btcScript, ...scriptValues } = flow.btcSwap.createScript({
+        // TODO move this somewhere!
+        const utcNow = () => Math.floor(Date.now() / 1000)
+        const getLockTime = () => utcNow() + 3600 * 3 // 3 days from now
+
+        const scriptValues = {
           secretHash:         flow.state.secretHash,
           btcOwnerPublicKey:  SwapApp.services.auth.accounts.btc.getPublicKey(),
           ethOwnerPublicKey:  participant.btc.publicKey,
-        })
+          lockTime:           getLockTime(),
+        }
 
         await flow.btcSwap.fundScript({
-          script: btcScript,
+          scriptValues,
           amount: sellAmount,
         })
 
@@ -105,10 +109,9 @@ class BTC2ETH extends Flow {
       // 5. Wait participant creates ETH Contract
 
       () => {
-        flow.swap.room.once('create eth contract', ({ ethSwapCreationTransactionUrl }) => {
+        flow.swap.room.once('create eth contract', () => {
           flow.finishStep({
             isEthContractFunded: true,
-            ethSwapCreationTransactionUrl,
           })
         })
       },
@@ -117,7 +120,7 @@ class BTC2ETH extends Flow {
 
       async () => {
         const { participant } = flow.swap
-      
+
         const data = {
           ownerAddress:   participant.eth.address,
           secret:         flow.state.secret,

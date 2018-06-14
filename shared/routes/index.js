@@ -7,7 +7,7 @@ import Home from 'pages/Home/Home'
 import Balances from 'pages/Balances/Balances'
 import History from 'pages/History/History'
 import NotFound from 'pages/NotFound/NotFound'
-import PageSwap from 'pages/PageSwap/PageSwap'
+import Swap from 'pages/Swap/Swap'
 import Feed from 'pages/Feed/Feed'
 
 
@@ -17,7 +17,7 @@ const routes = (
     <Route path={links.balance} component={Balances} />
     <Route path={links.history} component={History} />
     <Route path={links.feed} component={Feed} />
-    <Route path={`${links.swap}/:orderId`} component={PageSwap} />
+    <Route path={`${links.swap}/:orderId`} component={Swap} />
     <Route component={NotFound} />
   </Switch>
 )

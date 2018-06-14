@@ -19,9 +19,9 @@ const login = (_privateKey) => {
   return account
 }
 
-const getPublicData = ({ address, publicKey }) => ({
-  address,
-  publicKey,
+const getPublicData = (account) => ({
+  address: account.address,
+  publicKey: null,
 })
 
 

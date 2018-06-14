@@ -95,9 +95,7 @@ class ETH2BTC extends Flow {
           })
         })
 
-        flow.swap.room.sendMessage('create eth contract', {
-          ethSwapCreationTransactionUrl: flow.state.ethSwapCreationTransactionUrl,
-        })
+        flow.swap.room.sendMessage('create eth contract')
 
         flow.finishStep({
           isEthContractFunded: true,
@@ -127,10 +125,8 @@ class ETH2BTC extends Flow {
 
         await flow.ethSwap.close(myAndParticipantData)
 
-        const { script } = flow.btcSwap.createScript(flow.state.btcScriptValues)
-
         await flow.btcSwap.withdraw({
-          script,
+          scriptValues: flow.state.btcScriptValues,
           secret,
         }, (transactionUrl) => {
           flow.setState({

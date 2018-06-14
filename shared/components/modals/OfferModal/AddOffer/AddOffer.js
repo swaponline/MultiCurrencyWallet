@@ -32,16 +32,26 @@ export default class AddOffer extends Component {
       sellAmount: sellAmount || '',
       buyCurrency: buyCurrency || 'eth',
       sellCurrency: sellCurrency || 'btc',
-      EventWasSend: false
+      EventWasSend: false,
     }
   }
 
   getExchangeRate = (buyCurrency, sellCurrency) =>
     exchangeRates[`${buyCurrency.toLowerCase()}${sellCurrency.toLowerCase()}`]
 
+  handleExchangeRateChange = (value) => {
+    let { buyAmount, sellAmount } = this.state
+
+    buyAmount = buyAmount || 0
+    sellAmount = buyAmount * Number(value || 0)
+
+    this.setState({
+      buyAmount,
+      sellAmount,
+    })
+  }
+
   handleBuyCurrencySelect = ({ value }) => {
-
-
     let { buyCurrency, sellCurrency, buyAmount, sellAmount } = this.state
 
     // init:    buyCurrency = ETH, sellCurrency = BTC, value = BTC
@@ -92,9 +102,9 @@ export default class AddOffer extends Component {
   handleBuyAmountChange = (value) => {
     const { exchangeRate } = this.state
 
-    if(!this.EventWasSend) {
+    if (!this.EventWasSend) {
       actions.analytics.dataEvent('orderbook-addoffer-enter-ordervalue')
-      this.EventWasSend =true
+      this.EventWasSend = true
     }
     this.setState({
       sellAmount: value * exchangeRate,
@@ -104,9 +114,9 @@ export default class AddOffer extends Component {
   handleSellAmountChange = (value) => {
     const { exchangeRate } = this.state
 
-    if(!this.EventWasSend) {
+    if (!this.EventWasSend) {
       actions.analytics.dataEvent('orderbook-addoffer-enter-ordervalue')
-      this.EventWasSend =true
+      this.EventWasSend = true
     }
 
     this.setState({
@@ -139,7 +149,7 @@ export default class AddOffer extends Component {
       <Fragment>
         <Group
           label="Exchange rate"
-          inputValueLink={linked.exchangeRate}
+          inputValueLink={linked.exchangeRate.onChange(this.handleExchangeRateChange)}
           currency={false}
         />
         <Group

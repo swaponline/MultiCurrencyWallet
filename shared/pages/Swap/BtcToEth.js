@@ -1,9 +1,11 @@
 import React, { Component, Fragment } from 'react'
+import config from 'app-config'
 
 import { BTC2ETH } from 'swap.app/swap.flows'
 import Swap from 'swap.app/swap.swap'
 
-import Loader from 'components/loaders/Loader/Loader'
+import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
+import Button from 'components/controls/Button/Button'
 
 
 export default class BtcToEth extends Component {
@@ -61,26 +63,26 @@ export default class BtcToEth extends Component {
             ) : (
               <Fragment>
                 <h3>The order creator is offline. Waiting for him..</h3>
-                <Loader overlay={false} />
+                <InlineLoader />
               </Fragment>
             )
           )
         }
-        
+
         {
           flow.isWaitingForOwner && (
             <Fragment>
               <h3>Waiting for other user when he connect to the order</h3>
-              <Loader />
+              <InlineLoader />
             </Fragment>
           )
         }
-        
+
         {
           (flow.step === 1 || flow.isMeSigned) && (
             <Fragment>
               <h3>1. Waiting participant confirm this swap</h3>
-              <Loader overlay={false} />
+              <InlineLoader />
             </Fragment>
           )
         }
@@ -97,7 +99,7 @@ export default class BtcToEth extends Component {
                   <Fragment>
                     <input type="text" placeholder="Secret Key" defaultValue={secret} />
                     <br />
-                    <button onClick={this.submitSecret}>Confirm</button>
+                    <Button brand onClick={this.submitSecret}>Confirm</Button>
                   </Fragment>
                 ) : (
                   <Fragment>
@@ -119,7 +121,7 @@ export default class BtcToEth extends Component {
                       <span>{flow.address}</span>
                     </div>
                     <br />
-                    <button type="button" onClick={this.updateBalance}>Continue</button>
+                    <Button brand onClick={this.updateBalance}>Continue</Button>
                   </Fragment>
                 )
               }
@@ -127,7 +129,7 @@ export default class BtcToEth extends Component {
                 flow.step === 3 && flow.isBalanceFetching && (
                   <Fragment>
                     <div>Checking balance..</div>
-                    <Loader overlay={false} />
+                    <InlineLoader />
                   </Fragment>
                 )
               }
@@ -138,7 +140,7 @@ export default class BtcToEth extends Component {
                     <h3>3. Creating Bitcoin Script. Please wait, it will take a while</h3>
                     {
                       !flow.btcScriptValues && (
-                        <Loader overlay={false} />
+                        <InlineLoader />
                       )
                     }
                   </Fragment>
@@ -151,7 +153,7 @@ export default class BtcToEth extends Component {
                     <h3>4. ETH Owner received Bitcoin Script and Secret Hash. Waiting when he creates ETH Contract</h3>
                     {
                       !flow.isEthContractFunded && (
-                        <Loader overlay={false} />
+                        <InlineLoader />
                       )
                     }
                   </Fragment>
@@ -168,14 +170,20 @@ export default class BtcToEth extends Component {
                   <div>
                     Transaction:
                     <strong>
-                      <a href={flow.ethSwapWithdrawTransactionUrl} target="_blank">{flow.ethSwapWithdrawTransactionUrl}</a>
+                      <a
+                        href={`https://${config.entry === 'mainnet' ? '' : 'rinkeby.'}etherscan.io/tx/${flow.ethSwapWithdrawTransactionUrl}`}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                      >
+                        {flow.ethSwapWithdrawTransactionUrl}
+                      </a>
                     </strong>
                   </div>
                 )
               }
               {
                 flow.step === 6 && (
-                  <Loader overlay={false} />
+                  <InlineLoader />
                 )
               }
 

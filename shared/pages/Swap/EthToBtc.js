@@ -1,9 +1,11 @@
 import React, { Component, Fragment } from 'react'
+import config from 'app-config'
 
 import { ETH2BTC } from 'swap.app/swap.flows'
 import Swap from 'swap.app/swap.swap'
 
-import Loader from 'components/loaders/Loader/Loader'
+import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
+import Button from 'components/controls/Button/Button'
 
 
 export default class EthToBtc extends Component {
@@ -62,7 +64,7 @@ export default class EthToBtc extends Component {
             ) : (
               <Fragment>
                 <h3>The order creator is offline. Waiting for him..</h3>
-                <Loader overlay={false} />
+                <InlineLoader />
               </Fragment>
             )
           )
@@ -72,7 +74,7 @@ export default class EthToBtc extends Component {
           flow.isWaitingForOwner && (
             <Fragment>
               <h3>Waiting for other user when he connect to the order</h3>
-              <Loader overlay={false} />
+              <InlineLoader />
             </Fragment>
           )
         }
@@ -93,7 +95,7 @@ export default class EthToBtc extends Component {
                 !flow.isSignFetching && !flow.isMeSigned && (
                   <Fragment>
                     <br />
-                    <button onClick={this.signSwap}>Confirm</button>
+                    <Button brand onClick={this.signSwap}>Confirm</Button>
                   </Fragment>
                 )
               }
@@ -106,14 +108,20 @@ export default class EthToBtc extends Component {
                         <div>
                           Transaction:
                           <strong>
-                            <a href={flow.signTransactionUrl} rel="noopener noreferrer" target="_blank">{flow.signTransactionUrl}</a>
+                            <a
+                              href={`https://${config.entry === 'mainnet' ? '' : 'rinkeby.'}etherscan.io/tx/${flow.signTransactionUrl}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              {flow.signTransactionUrl}
+                            </a>
                           </strong>
                         </div>
                       )
                     }
                     {
                       flow.isSignFetching && (
-                        <Loader overlay={false} />
+                        <InlineLoader />
                       )
                     }
                   </Fragment>
@@ -131,7 +139,7 @@ export default class EthToBtc extends Component {
               <h3>2. Waiting BTC Owner creates Secret Key, creates BTC Script and charges it</h3>
               {
                 flow.step === 2 && (
-                  <Loader overlay={false} />
+                  <InlineLoader />
                 )
               }
 
@@ -149,7 +157,7 @@ export default class EthToBtc extends Component {
                           rel="noopener noreferrer"
                         >
                           {flow.btcScriptValues.address}
-                          </a>
+                        </a>
                       </strong>
                     </div>
                     <br />
@@ -183,7 +191,7 @@ export default class EthToBtc extends Component {
                       flow.step === 3 && (
                         <Fragment>
                           <br />
-                          <button onClick={this.confirmBTCScriptChecked}>Everything is OK. Continue</button>
+                          <Button brand onClick={this.confirmBTCScriptChecked}>Everything is OK. Continue</Button>
                         </Fragment>
                       )
                     }
@@ -202,7 +210,7 @@ export default class EthToBtc extends Component {
                       <span>{flow.address}</span>
                     </div>
                     <br />
-                    <button type="button" onClick={this.updateBalance}>Continue</button>
+                    <Button brand onClick={this.updateBalance}>Continue</Button>
                   </Fragment>
                 )
               }
@@ -210,7 +218,7 @@ export default class EthToBtc extends Component {
                 flow.step === 4 && flow.isBalanceFetching && (
                   <Fragment>
                     <div>Checking balance..</div>
-                    <Loader overlay={false} />
+                    <InlineLoader />
                   </Fragment>
                 )
               }
@@ -226,7 +234,7 @@ export default class EthToBtc extends Component {
                     Transaction:
                     <strong>
                       <a
-                        href={flow.ethSwapCreationTransactionUrl}
+                        href={`https://${config.entry === 'mainnet' ? '' : 'rinkeby.'}etherscan.io/tx/${flow.ethSwapCreationTransactionUrl}`}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
@@ -238,7 +246,7 @@ export default class EthToBtc extends Component {
               }
               {
                 flow.step === 5 && (
-                  <Loader overlay={false} />
+                  <InlineLoader />
                 )
               }
 
@@ -248,7 +256,7 @@ export default class EthToBtc extends Component {
                     <h3>5. Waiting BTC Owner adds Secret Key to ETH Contact</h3>
                     {
                       !flow.isEthWithdrawn && (
-                        <Loader overlay={false} />
+                        <InlineLoader />
                       )
                     }
                   </Fragment>
@@ -266,7 +274,7 @@ export default class EthToBtc extends Component {
                     Transaction:
                     <strong>
                       <a
-                        href="https://www.blocktrail.com/tBTC/tx/{flow.btcSwapWithdrawTransactionUrl}"
+                        href={`https://www.blocktrail.com/tBTC/tx/${flow.btcSwapWithdrawTransactionUrl}`}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
@@ -278,7 +286,7 @@ export default class EthToBtc extends Component {
               }
               {
                 flow.step === 7 && (
-                  <Loader overlay={false} />
+                  <InlineLoader />
                 )
               }
 

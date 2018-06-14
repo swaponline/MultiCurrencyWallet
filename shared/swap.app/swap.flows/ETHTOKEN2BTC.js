@@ -44,10 +44,6 @@ class ETHTOKEN2BTC extends Flow {
     this._persistState()
   }
 
-  _persistState() {
-    super._persistState()
-  }
-
   _getSteps() {
     const flow = this
 
@@ -62,7 +58,7 @@ class ETHTOKEN2BTC extends Flow {
       // 2. Wait participant create, fund BTC Script
 
       () => {
-        this.swap.room.once('create btc script', ({ scriptValues }) => {
+        flow.swap.room.once('create btc script', ({ scriptValues }) => {
           flow.finishStep({
             secretHash: scriptValues.secretHash,
             btcScriptValues: scriptValues,
@@ -85,7 +81,7 @@ class ETHTOKEN2BTC extends Flow {
       // 5. Create ETH Contract
 
       async () => {
-        const { participant, sellAmount } = this.swap
+        const { participant, sellAmount } = flow.swap
 
         const swapData = {
           participantAddress:   participant.eth.address,
@@ -93,19 +89,19 @@ class ETHTOKEN2BTC extends Flow {
           amount:               sellAmount,
         }
 
-        await this.ethSwap.approve({
+        await flow.ethSwap.approve({
           amount: sellAmount,
         })
 
-        await this.ethSwap.create(swapData, (transactionUrl) => {
-          this.setState({
+        await flow.ethSwap.create(swapData, (transactionUrl) => {
+          flow.setState({
             ethSwapCreationTransactionUrl: transactionUrl,
           })
         })
 
-        this.swap.room.sendMessage('create eth contract')
+        flow.swap.room.sendMessage('create eth contract')
 
-        this.finishStep({
+        flow.finishStep({
           isEthContractFunded: true,
         })
       },
@@ -113,7 +109,7 @@ class ETHTOKEN2BTC extends Flow {
       // 6. Wait participant withdraw
 
       () => {
-        this.swap.room.once('finish eth withdraw', () => {
+        flow.swap.room.once('finish eth withdraw', () => {
           flow.finishStep({
             isEthWithdrawn: true,
           })
@@ -123,23 +119,18 @@ class ETHTOKEN2BTC extends Flow {
       // 7. Withdraw
 
       async () => {
-        const { participant } = this.swap
+        const { participant } = flow.swap
 
         const myAndParticipantData = {
           participantAddress: participant.eth.address,
         }
 
-        const secret = await this.ethSwap.getSecret(myAndParticipantData)
+        const secret = await flow.ethSwap.getSecret(myAndParticipantData)
 
-        await this.ethSwap.close(myAndParticipantData)
-
-        const { script } = flow.btcSwap.createScript(flow.state.btcScriptValues)
+        await flow.ethSwap.close(myAndParticipantData)
 
         await flow.btcSwap.withdraw({
-          // TODO here is the problem... now in `btcData` stored bitcoinjs-lib instance with additional functionality
-          // TODO need to rewrite this - check instances/bitcoin.js and core/swaps/btcSwap.js:185
-          btcData: SwapApp.services.auth.accounts.btcData,
-          script,
+          scriptValues: flow.state.btcScriptValues,
           secret,
         }, (transactionUrl) => {
           flow.setState({

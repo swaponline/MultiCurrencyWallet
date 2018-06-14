@@ -1,3 +1,5 @@
+/* eslint new-cap: 0, no-proto: 0 */
+
 import SwapApp from '../../swap.app'
 
 
@@ -21,7 +23,7 @@ const login = (_privateKey) => {
 }
 
 const getPublicData = (account) => ({
-  address: account.address,
+  address: account.getAddress(),
   publicKey: account.getPublicKey(),
 })
 

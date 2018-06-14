@@ -1,6 +1,7 @@
 /* eslint-disable import/no-mutable-exports,max-len */
 import web3 from 'helpers/web3'
 import bitcoin from 'bitcoinjs-lib'
+import { constants } from 'helpers'
 
 import swapApp from 'swap.app/swap.app'
 import SwapAuth from 'swap.app/services/swap.auth'
@@ -34,8 +35,9 @@ swapApp.setup({
   },
   services: [
     new SwapAuth({
-      eth: localStorage.getItem('testnet:eth:privateKey'),
-      btc: localStorage.getItem('testnet:btc:privateKey'),
+      // TODO need init swapApp only after private keys created!!!!!!!!!!!!!!!!!!!
+      eth: localStorage.getItem(constants.privateKeyNames.eth),
+      btc: localStorage.getItem(constants.privateKeyNames.btc),
     }),
     new SwapRoom({
       EXPERIMENTAL: {
@@ -72,6 +74,8 @@ swapApp.setup({
     }),
   ],
 })
+
+console.log('swapApp public data', swapApp.services.auth.getPublicData())
 
 
 export {
