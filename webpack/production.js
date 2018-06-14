@@ -43,6 +43,19 @@ export default (webpackConfig) => {
           sequences: true,
           booleans: true,
         },
+        mangle: {
+          reserved: [
+            'Buffer',
+            'BigInteger',
+            'Point',
+            'ECPubKey',
+            'ECKey',
+            'sha512_asm',
+            'asm',
+            'ECPair',
+            'HDNode',
+          ],
+        },
       },
     }),
     // new webpack.SourceMapDevToolPlugin({
