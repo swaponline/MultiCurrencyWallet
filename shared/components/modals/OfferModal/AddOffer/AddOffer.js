@@ -1,6 +1,10 @@
+/* eslint-disable */
 import React, { Fragment, Component } from 'react'
+
 import Link from 'sw-valuelink'
 import actions from 'redux/actions'
+import { BigNumber } from 'bignumber.js'
+
 import cssModules from 'react-css-modules'
 import styles from './AddOffer.scss'
 
@@ -8,6 +12,7 @@ import Button from 'components/controls/Button/Button'
 
 import Group from './Group/Group'
 
+BigNumber.config({ DECIMAL_PLACES: 4, ROUNDING_MODE: 4, EXPONENTIAL_AT: [-7, 14], RANGE: 1e+7, CRYPTO: true })
 
 const exchangeRates = {
   'ethbtc': 0.001,
@@ -42,8 +47,8 @@ export default class AddOffer extends Component {
   handleExchangeRateChange = (value) => {
     let { buyAmount, sellAmount } = this.state
 
-    buyAmount = buyAmount || 0
-    sellAmount = buyAmount * Number(value || 0)
+    buyAmount = new BigNumber(buyAmount)
+    sellAmount = buyAmount.multipliedBy(new BigNumber(value))
 
     this.setState({
       buyAmount,
@@ -65,7 +70,7 @@ export default class AddOffer extends Component {
     const exchangeRate = this.getExchangeRate(buyCurrency, sellCurrency)
 
     if (buyAmount) {
-      sellAmount = buyAmount * exchangeRate
+      sellAmount = new BigNumber(buyAmount).multipliedBy(exchangeRate).toNumber()
     }
 
     this.setState({
@@ -88,7 +93,7 @@ export default class AddOffer extends Component {
     const exchangeRate = this.getExchangeRate(buyCurrency, sellCurrency)
 
     if (buyAmount) {
-      sellAmount = buyAmount * exchangeRate
+      sellAmount = new BigNumber(buyAmount).multipliedBy(exchangeRate).toNumber()
     }
 
     this.setState({
@@ -106,9 +111,16 @@ export default class AddOffer extends Component {
       actions.analytics.dataEvent('orderbook-addoffer-enter-ordervalue')
       this.EventWasSend = true
     }
-    this.setState({
-      sellAmount: value * exchangeRate,
-    })
+
+    if (value === '') {
+      this.setState({
+        sellAmount: new BigNumber(0)
+      })
+    } else {
+      this.setState({
+        sellAmount: new BigNumber(value).multipliedBy(exchangeRate).toNumber(),
+      })
+    }
   }
 
   handleSellAmountChange = (value) => {
@@ -119,9 +131,15 @@ export default class AddOffer extends Component {
       this.EventWasSend = true
     }
 
-    this.setState({
-      buyAmount: value / exchangeRate,
-    })
+    if (value === '') {
+      this.setState({
+        buyAmount: new BigNumber(0)
+      })
+    } else {
+      this.setState({
+        buyAmount: new BigNumber(value).dividedBy(exchangeRate).toNumber(),
+      })
+    }
   }
 
   handleNext = () => {
@@ -132,6 +150,8 @@ export default class AddOffer extends Component {
     actions.analytics.dataEvent('orderbook-addoffer-click-next-button')
 
     const isDisabled = !exchangeRate || !buyAmount || !sellAmount || forbidden
+
+    console.log(this.state)
 
     if (!isDisabled) {
       onNext(this.state)
