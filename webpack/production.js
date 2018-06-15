@@ -13,29 +13,29 @@ export default (webpackConfig) => {
     publicPath: config.publicPath,
   }
 
-  webpackConfig.plugins.push(
-    new UglifyJsPlugin({
-      uglifyOptions: {
-        mangle: {
-          reserved: [
-            'Buffer',
-            'BigInteger',
-            'Point',
-            'ECPubKey',
-            'ECKey',
-            'sha512_asm',
-            'asm',
-            'ECPair',
-            'HDNode',
-          ],
-        },
-      },
-    }),
-    // new webpack.SourceMapDevToolPlugin({
-    //   filename: '[file].[hash:6].map',
-    //   append: `\n//# sourceMappingURL=[url]`,
-    // }),
-  )
+  // webpackConfig.plugins.push(
+  //   new UglifyJsPlugin({
+  //     uglifyOptions: {
+  //       mangle: {
+  //         reserved: [
+  //           'Buffer',
+  //           'BigInteger',
+  //           'Point',
+  //           'ECPubKey',
+  //           'ECKey',
+  //           'sha512_asm',
+  //           'asm',
+  //           'ECPair',
+  //           'HDNode',
+  //         ],
+  //       },
+  //     },
+  //   }),
+  //   // new webpack.SourceMapDevToolPlugin({
+  //   //   filename: '[file].[hash:6].map',
+  //   //   append: `\n//# sourceMappingURL=[url]`,
+  //   // }),
+  // )
 
   webpackConfig.module.rules = webpackConfig.module.rules.map((loader) => {
     if (loader.test.test('*.css') || loader.test.test('*.scss')) {
