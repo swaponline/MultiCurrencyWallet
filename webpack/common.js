@@ -36,7 +36,13 @@ const webpackConfig = {
   resolve: {
     alias: {
       shared: config.paths.base('shared'),
-      'swap.app': config.paths.base('shared/swap.app'),
+      'swap.auth':  config.paths.base('shared/swap.app/swap.auth'),
+      'swap.orders':  config.paths.base('shared/swap.app/swap.orders'),
+      'swap.room':  config.paths.base('shared/swap.app/swap.room'),
+      'swap.app':  config.paths.base('shared/swap.app/swap.app'),
+      'swap.flows':  config.paths.base('shared/swap.app/swap.flows'),
+      'swap.swap':  config.paths.base('shared/swap.app/swap.swap'),
+      'swap.swaps':  config.paths.base('shared/swap.app/swap.swaps'),
     },
     modules: [
       config.paths.base('client'),
@@ -51,6 +57,15 @@ const webpackConfig = {
   plugins: [
     new AppConfigPlugin(),
     new webpack.DefinePlugin(globals),
+    new webpack.ProvidePlugin({
+      'swap.auth': 'swap.auth',
+      'swap.orders': 'swap.orders',
+      'swap.room': 'swap.room',
+      'swap.app': 'swap.app',
+      'swap.flows': 'swap.flows',
+      'swap.swap': 'swap.swap',
+      'swap.swaps': 'swap.swaps',
+    }),
     new webpack.NoEmitOnErrorsPlugin(),
     new ProgressBarPlugin({ clear: false }),
     new HtmlWebpackPlugin({

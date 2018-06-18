@@ -100,6 +100,4 @@ class SwapApp {
 }
 
 
-window.app = new SwapApp()
-
-export default window.app
+export default new SwapApp()

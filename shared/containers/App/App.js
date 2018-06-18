@@ -6,8 +6,6 @@ import { connect } from 'redaction'
 import moment from 'moment'
 import { constants } from 'helpers'
 
-import { createSwapApp } from 'instances/swap'
-
 import CSSModules from 'react-css-modules'
 import styles from './App.scss'
 import 'scss/app.scss'

@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react'
 import config from 'app-config'
 
-import { ETH2BTC } from 'swap.app/swap.flows'
-import Swap from 'swap.app/swap.swap'
+import { ETH2BTC } from 'swap.flows'
+import Swap from 'swap.swap'
 
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import Button from 'components/controls/Button/Button'
@@ -53,7 +53,7 @@ export default class EthToBtc extends Component {
       <div>
         {
           this.swap.id && (
-            <strong>{this.swap.sellAmount} {this.swap.sellCurrency} &#10230; {this.swap.buyAmount} {this.swap.buyCurrency}</strong>
+            <strong>{this.swap.sellAmount.toString()} {this.swap.sellCurrency.toString()} &#10230; {this.swap.buyAmount.toString()} {this.swap.buyCurrency.toString()}</strong>
           )
         }
 

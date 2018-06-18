@@ -19,7 +19,7 @@ const Table = ({ titles, rows, rowRender }) => (
       {
         rows.map((row, rowIndex) => {
           if (typeof rowRender === 'function') {
-            return rowRender(row, row.id || rowIndex)
+            return rowRender(row, rowIndex)
           }
         })
       }

@@ -10,7 +10,7 @@ const Button = (props) => {
   const {
     children, className,
     fullWidth, brand, green, white, gray, disabled,
-    onClick,
+    onClick, id = '',
   } = props
 
   const styleName = cx('button', {
@@ -28,6 +28,7 @@ const Button = (props) => {
       className={className}
       role="button"
       onClick={onClick}
+      id={id}
     >
       {children}
     </div>

@@ -1,4 +1,5 @@
-import SwapApp, { Events, util } from '../swap.app'
+import BigNumber from 'bignumber.js'
+import SwapApp, { Events, util } from 'swap.app'
 import Room from './Room'
 
 
@@ -14,8 +15,8 @@ class Swap {
     this.participant    = null
     this.buyCurrency    = null
     this.sellCurrency   = null
-    this.buyAmount      = null // not same as in order - for each user own
-    this.sellAmount     = null // not same as in order - for each user own
+    this.buyAmount      = null
+    this.sellAmount     = null
 
     this._persistState()
 
@@ -23,42 +24,48 @@ class Swap {
   }
 
   _persistState() {
-    const order = SwapApp.env.storage.getItem(`swap.${this.id}`) || SwapApp.services.orders.getByKey(this.id)
+    let swap = SwapApp.env.storage.getItem(`swap.${this.id}`)
 
     // if no `order` that means that participant is offline
     // TODO it's better to create swapCollection and store all swaps data there
     // TODO bcs if user offline and I'd like to continue Flow steps I don't need to w8 him
     // TODO so no need to get data from SwapOrders
-    if (order) {
-      const { isMy, buyAmount, sellAmount, buyCurrency, sellCurrency, ...rest } = util.pullProps(
-        order,
-        'isMy',
-        'owner',
-        'participant',
-        'buyCurrency',
-        'sellCurrency',
-        'buyAmount',
-        'sellAmount',
-      )
+    if (!swap) {
+      const order = SwapApp.services.orders.getByKey(this.id)
 
-      const data = {
-        ...rest,
-        isMy,
-        buyAmount: isMy ? buyAmount : sellAmount,
-        sellAmount: isMy ? sellAmount : buyAmount,
-        sellCurrency: isMy ? sellCurrency : buyCurrency,
-        buyCurrency: isMy ? buyCurrency : sellCurrency,
+      if (order) {
+        const { isMy, buyCurrency, sellCurrency, buyAmount, sellAmount, ...rest } = util.pullProps(
+          order,
+          'isMy',
+          'owner',
+          'participant',
+          'buyCurrency',
+          'sellCurrency',
+          'buyAmount',
+          'sellAmount',
+        )
+
+        swap = {
+          ...rest,
+          isMy,
+          buyCurrency: isMy ? buyCurrency : sellCurrency,
+          sellCurrency: isMy ? sellCurrency : buyCurrency,
+          buyAmount: isMy ? buyAmount : sellAmount,
+          sellAmount: isMy ? sellAmount : buyAmount,
+        }
+
+        if (!swap.participant && !isMy) {
+          swap.participant = swap.owner
+        }
       }
+    }
 
-      if (!data.participant && !isMy) {
-        data.participant = data.owner
-      }
-
+    if (swap) {
       this.room = new Room({
-        participantPeer: data.participant.peer,
+        participantPeer: swap.participant.peer,
       })
 
-      this.update(data)
+      this.update(swap)
       this._saveState()
     }
   }
@@ -76,14 +83,17 @@ class Swap {
       'sellAmount',
     )
 
-    console.log('New Swap state:', data)
-
     SwapApp.env.storage.setItem(`swap.${this.id}`, data)
   }
 
   update(values) {
     Object.keys(values).forEach((key) => {
-      this[key] = values[key]
+      if (key === 'buyAmount' || key === 'sellAmount') {
+        this[key] = new BigNumber(values[key])
+      }
+      else {
+        this[key] = values[key]
+      }
     })
     this._saveState()
   }

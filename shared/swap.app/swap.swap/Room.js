@@ -1,7 +1,9 @@
-import SwapApp from '../swap.app'
+import SwapApp from 'swap.app'
 
 
 class Room {
+
+  // TODO add destroy method with all events unsubscribe (when swap is finished)
 
   constructor({ swapId, participantPeer }) {
     this.swapId = swapId
@@ -9,7 +11,7 @@ class Room {
   }
 
   subscribe(eventName, handler) {
-    SwapApp.services.room.events.subscribe(eventName, ({ fromPeer, swapId, ...values }) => {
+    SwapApp.services.room.subscribe(eventName, ({ fromPeer, swapId, ...values }) => {
       if (fromPeer === this.peer && swapId === this.swapId) {
         handler(values)
       }
@@ -19,10 +21,8 @@ class Room {
   once(eventName, handler) {
     const self = this
 
-    SwapApp.services.room.events.subscribe(eventName, function ({ fromPeer, swapId, ...values }) {
+    SwapApp.services.room.subscribe(eventName, function ({ fromPeer, swapId, ...values }) {
       if (fromPeer === self.peer && swapId === self.swapId) {
-        console.error(`INCOME SwapSwapApp.services.room event "${eventName}"`)
-
         this.unsubscribe()
         handler(values)
       }
@@ -35,38 +35,30 @@ class Room {
 
       // value - eventName
       if (typeof value === 'string') {
-        console.error(`OUTCOME SwapSwapApp.services.room event "${value}"`)
-
-        SwapApp.services.room.connection.sendTo(this.peer, JSON.stringify([
+        SwapApp.services.room.sendMessage(this.peer, [
           {
             event: value,
             swapId: this.swapId,
-          }
-        ]))
+          },
+        ])
       }
       // value - messages
       else if (Array.isArray(value)) {
-        value.forEach(({ event }) => {
-          console.log(`OUTCOME SwapSwapApp.services.room event "${event}"`)
-        })
-
-        SwapApp.services.room.connection.sendTo(this.peer, JSON.stringify(value))
+        SwapApp.services.room.sendMessage(this.peer, value)
       }
     }
     else {
       const [ eventName, message ] = args
 
-      console.log(`OUTCOME SwapSwapApp.services.room event "${eventName}"`)
-
-      SwapApp.services.room.connection.sendTo(this.peer, JSON.stringify([
+      SwapApp.services.room.sendMessage(this.peer, [
         {
           event: eventName,
           data: {
             swapId: this.swapId,
             ...message,
           },
-        }
-      ]))
+        },
+      ])
     }
   }
 }

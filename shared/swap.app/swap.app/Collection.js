@@ -58,27 +58,17 @@ class Collection {
    * @returns {*}
    */
   removeByKey(key) {
-    console.log('removeByKey', key)
-    console.log('items', [ ...this.items ])
-    console.log('itemIds', { ...this.itemIds })
-
     const index = this.itemIds[key]
-
-    console.log('index', index)
 
     if (index !== undefined) {
       this.items.splice(index, 1)
       delete this.itemIds[key]
-
-      console.log('items after removing', [ ...this.items ])
 
       Object.keys(this.itemIds).forEach((key) => {
         if (this.itemIds[key] > index) {
           this.itemIds[key]--
         }
       })
-
-      console.log('items after reindexing', [ ...this.items ])
     }
   }
 

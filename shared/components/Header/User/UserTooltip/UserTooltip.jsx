@@ -24,9 +24,9 @@ const UserTooltip = ({ feeds, mePeer, acceptRequest }) => (
               <div key={peer}>
                 <div styleName="title">User with <b>{reputation}</b> reputation wants to swap</div>
                 <div styleName="currency">
-                  <span>{buyAmount} <span styleName="coin">{buyCurrency}</span></span>
+                  <span>{buyAmount.toString()} <span styleName="coin">{buyCurrency}</span></span>
                   <span styleName="arrow"><img src={ArrowRightSvg} alt="" /></span>
-                  <span>{sellAmount} <span styleName="coin">{sellCurrency}</span></span>
+                  <span>{sellAmount.toString()} <span styleName="coin">{sellCurrency}</span></span>
                 </div>
               </div>
               <Link to={`${links.swap}/${id}`}>

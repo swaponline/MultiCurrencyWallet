@@ -178,6 +178,7 @@ export default class AddOffer extends Component {
           inputValueLink={linked.buyAmount.onChange(this.handleBuyAmountChange)}
           selectedCurrencyValue={buyCurrency}
           onCurrencySelect={this.handleBuyCurrencySelect}
+          id="Buy"
         />
         <Group
           label="Sell"

@@ -46,7 +46,7 @@ export default class ConfirmOffer extends Component {
         <Fee amount={0.0001} currency={sellCurrency} />
         <ButtonsInRow styleName="buttonsInRow">
           <Button styleName="button" gray onClick={onBack}>Back</Button>
-          <Button styleName="button" brand onClick={this.handleConfirm}>Confirm</Button>
+          <Button styleName="button" id="confirm" brand onClick={this.handleConfirm}>Add</Button>
         </ButtonsInRow>
       </Fragment>
     )

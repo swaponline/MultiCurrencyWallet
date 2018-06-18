@@ -8,7 +8,6 @@ import constants from './constants'
 import util from './util'
 
 
-
 export default SwapApp
 
 export {

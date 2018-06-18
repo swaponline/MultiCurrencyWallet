@@ -25,6 +25,8 @@ class StorageFactory {
       return JSON.parse(value)
     }
     catch (err) {
+      console.error(`SwapApp.env.storage.getItem(${key}) parse error. Looks like the value was created w/o setItem method`)
+      console.error(err)
       return undefined
     }
   }

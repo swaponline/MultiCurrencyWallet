@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react'
-import SwapApp from 'swap.app/swap.app'
+import SwapApp from 'swap.app'
 
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 
@@ -12,8 +12,8 @@ import BtcToEthToken from './BtcToEthToken'
 const swapComponents = {
   'btceth': BtcToEth,
   'ethbtc': EthToBtc,
-  'noxonbtc': EthTokenToBtc,
-  'btcnoxon': BtcToEthToken,
+  'ethtokenbtc': EthTokenToBtc,
+  'btcethtoken': BtcToEthToken,
 }
 
 
@@ -42,7 +42,7 @@ export default class Swap extends PureComponent {
     const SwapComponent = swapComponents[`${firstPart.toLowerCase()}${lastPart.toLowerCase()}`]
 
     return (
-      <div style={{ paddingLeft: '30px' }}>
+      <div style={{ paddingLeft: '30px', paddingTop: '30px' }}>
         <SwapComponent orderId={this.order.id} />
       </div>
     )
