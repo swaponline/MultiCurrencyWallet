@@ -89,7 +89,7 @@ class Swap {
   update(values) {
     Object.keys(values).forEach((key) => {
       if (key === 'buyAmount' || key === 'sellAmount') {
-        this[key] = new BigNumber(values[key])
+        this[key] = new BigNumber(String(values[key]))
       }
       else {
         this[key] = values[key]

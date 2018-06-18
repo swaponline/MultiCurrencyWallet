@@ -173,8 +173,8 @@ class SwapOrders extends aggregation(ServiceInterface, Collection) {
 
     const order = new Order(this, {
       id: id || getUniqueId(),
-      buyAmount: new BigNumber(buyAmount),
-      sellAmount: new BigNumber(sellAmount),
+      buyAmount: new BigNumber(String(buyAmount)),
+      sellAmount: new BigNumber(String(sellAmount)),
       ...rest,
     })
 

@@ -47,8 +47,8 @@ export default class AddOffer extends Component {
   handleExchangeRateChange = (value) => {
     let { buyAmount, sellAmount } = this.state
 
-    buyAmount = new BigNumber(buyAmount)
-    sellAmount = buyAmount.multipliedBy(new BigNumber(value))
+    buyAmount = new BigNumber(String(buyAmount) || 0)
+    sellAmount = buyAmount.multipliedBy(new BigNumber(String(value) || 0))
 
     this.setState({
       buyAmount,
@@ -70,7 +70,7 @@ export default class AddOffer extends Component {
     const exchangeRate = this.getExchangeRate(buyCurrency, sellCurrency)
 
     if (buyAmount) {
-      sellAmount = new BigNumber(buyAmount).multipliedBy(exchangeRate).toNumber()
+      sellAmount = new BigNumber(String(buyAmount)).multipliedBy(exchangeRate).toNumber()
     }
 
     this.setState({
@@ -93,7 +93,7 @@ export default class AddOffer extends Component {
     const exchangeRate = this.getExchangeRate(buyCurrency, sellCurrency)
 
     if (buyAmount) {
-      sellAmount = new BigNumber(buyAmount).multipliedBy(exchangeRate).toNumber()
+      sellAmount = new BigNumber(String(buyAmount)).multipliedBy(exchangeRate).toNumber()
     }
 
     this.setState({
@@ -112,15 +112,10 @@ export default class AddOffer extends Component {
       this.EventWasSend = true
     }
 
-    if (value === '') {
-      this.setState({
-        sellAmount: new BigNumber(0)
-      })
-    } else {
-      this.setState({
-        sellAmount: new BigNumber(value).multipliedBy(exchangeRate).toNumber(),
-      })
-    }
+    this.setState({
+      sellAmount: new BigNumber(String(value) || 0).multipliedBy(exchangeRate).toNumber()
+    })
+
   }
 
   handleSellAmountChange = (value) => {
@@ -131,15 +126,9 @@ export default class AddOffer extends Component {
       this.EventWasSend = true
     }
 
-    if (value === '') {
-      this.setState({
-        buyAmount: new BigNumber(0)
-      })
-    } else {
-      this.setState({
-        buyAmount: new BigNumber(value).dividedBy(exchangeRate).toNumber(),
-      })
-    }
+    this.setState({
+      buyAmount: new BigNumber(String(value) || 0).dividedBy(exchangeRate).toNumber()
+    })
   }
 
   handleNext = () => {
