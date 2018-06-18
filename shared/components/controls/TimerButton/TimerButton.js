@@ -57,7 +57,7 @@ export default class TimerButton extends Component {
     const { children } = this.props
 
     return (
-      <Button onClick={this.handleClick}>{children}. Auto click in {timeLeft}s</Button>
+      <Button brand onClick={this.handleClick}>{children}. Auto click in {timeLeft}s</Button>
     )
   }
 }
