@@ -4,9 +4,10 @@ import CSSModules from 'react-css-modules'
 import styles from './SearchSwap.scss'
 
 import CurrencySelect from 'components/ui/CurrencySelect/CurrencySelect'
+import Flip from 'components/controls/Flip/Flip'
 
 
-const SearchSwap = ({ buyCurrency, sellCurrency, updateFilter }) => (
+const SearchSwap = ({ buyCurrency, sellCurrency, updateFilter, flipCurrency }) => (
   <div styleName="choice">
     <div styleName="row">
       <p styleName="text" >You want buy</p>
@@ -16,7 +17,7 @@ const SearchSwap = ({ buyCurrency, sellCurrency, updateFilter }) => (
         onSelect={updateFilter}
       />
     </div>
-
+    <Flip onClick={flipCurrency} />
     <div styleName="row">
       <p styleName="text" >You want sell</p>
       <CurrencySelect

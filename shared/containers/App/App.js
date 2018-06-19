@@ -18,8 +18,6 @@ import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import NotificationConductor from 'components/notification/NotificationConductor/NotificationConductor'
 
 
-
-
 moment.locale('en-gb')
 
 @withRouter
@@ -37,10 +35,16 @@ export default class App extends React.Component {
     children: PropTypes.element.isRequired,
   }
 
+  componentWillMount() {
+    // actions.loader.show()
+  }
+
   componentDidMount() {
     actions.user.sign()
 
-
+    // setTimeout(() => {
+    //   actions.loader.hide()
+    // }, 2800)
   }
 
   render() {

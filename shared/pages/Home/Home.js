@@ -37,6 +37,16 @@ export default class Home extends Component {
       sellCurrency,
     })
   }
+
+  flipCurrency = () => {
+    let { buyCurrency, sellCurrency } = this.state
+
+    this.setState({
+      buyCurrency: sellCurrency,
+      sellCurrency: buyCurrency,
+    })
+  }
+
   handleClickTelegram = () => {
     actions.analytics.dataEvent('orders-click-telegram-group')
     actions.analytics.dataEvent('orders-click-start-swap')
@@ -64,6 +74,7 @@ export default class Home extends Component {
           updateFilter={this.handleSellCurrencySelect}
           buyCurrency={buyCurrency}
           sellCurrency={sellCurrency}
+          flipCurrency={this.flipCurrency}
         />
         <Orders filter={filterOrders} />
       </section>
