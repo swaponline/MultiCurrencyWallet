@@ -5,7 +5,7 @@ import { BTC2ETH } from 'swap.flows'
 import Swap from 'swap.swap'
 
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
-import Button from 'components/controls/Button/Button'
+import TimerButton from 'components/controls/TimerButton/TimerButton'
 
 
 export default class BtcToEth extends Component {
@@ -99,7 +99,7 @@ export default class BtcToEth extends Component {
                   <Fragment>
                     <input type="text" placeholder="Secret Key" defaultValue={secret} />
                     <br />
-                    <Button brand onClick={this.submitSecret}>Confirm</Button>
+                    <TimerButton brand onClick={this.submitSecret}>Confirm</TimerButton>
                   </Fragment>
                 ) : (
                   <Fragment>
@@ -116,12 +116,12 @@ export default class BtcToEth extends Component {
                     <h3>Not enough money for this swap. Please charge the balance</h3>
                     <div>
                       <div>Your balance: <strong>{flow.balance}</strong> {this.swap.sellCurrency}</div>
-                      <div>Required balance: <strong>{this.swap.sellAmount}</strong> {this.swap.sellCurrency}</div>
+                      <div>Required balance: <strong>{this.swap.sellAmount.toString()}</strong> {this.swap.sellCurrency}</div>
                       <hr />
                       <span>{flow.address}</span>
                     </div>
                     <br />
-                    <Button brand onClick={this.updateBalance}>Continue</Button>
+                    <TimerButton brand onClick={this.updateBalance}>Continue</TimerButton>
                   </Fragment>
                 )
               }

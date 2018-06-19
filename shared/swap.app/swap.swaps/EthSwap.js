@@ -162,7 +162,7 @@ class EthSwap extends SwapInterface {
         .on('error', (err) => {
           reject(err)
         })
-
+      console.log(receipt)
       resolve(receipt)
     })
   }

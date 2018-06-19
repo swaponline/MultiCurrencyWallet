@@ -6,8 +6,8 @@ export default {
   env: 'production',
   entry: 'local',
 
-  base: `http://localhost:${baseConfig.http.port}/`,
-  publicPath: `http://localhost:${baseConfig.http.port}${baseConfig.publicPath}`,
+  base: `./`,
+  publicPath: `./`,
 
   ...config,
 }

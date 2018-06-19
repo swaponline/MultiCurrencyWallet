@@ -3,7 +3,8 @@ import React, { Component, Fragment } from 'react'
 import { BTC2ETHTOKEN } from 'swap.flows'
 import Swap from 'swap.swap'
 
-import Loader from 'components/loaders/Loader/Loader'
+import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
+import TimerButton from 'components/controls/TimerButton/TimerButton'
 
 
 export default class BtcToEthToken extends Component {
@@ -50,7 +51,7 @@ export default class BtcToEthToken extends Component {
       <div>
         {
           this.swap.id && (
-            <strong>{this.swap.sellAmount} {this.swap.sellCurrency} &#10230; {this.swap.buyAmount} {this.swap.buyCurrency}</strong>
+            <strong>{this.swap.sellAmount.toString()} {this.swap.sellCurrency} &#10230; {this.swap.buyAmount.toString()} {this.swap.buyCurrency}</strong>
           )
         }
 
@@ -61,7 +62,7 @@ export default class BtcToEthToken extends Component {
             ) : (
               <Fragment>
                 <h3>The order creator is offline. Waiting for him..</h3>
-                <Loader overlay={false} />
+                <InlineLoader />
               </Fragment>
             )
           )
@@ -71,7 +72,7 @@ export default class BtcToEthToken extends Component {
           flow.isWaitingForOwner && (
             <Fragment>
               <h3>Waiting for other user when he connect to the order</h3>
-              <Loader overlay={false} />
+              <InlineLoader />
             </Fragment>
           )
         }
@@ -80,7 +81,7 @@ export default class BtcToEthToken extends Component {
           (flow.step === 1 || flow.isMeSigned) && (
             <Fragment>
               <h3>1. Waiting participant confirm this swap</h3>
-              <Loader overlay={false} />
+              <InlineLoader />
             </Fragment>
           )
         }
@@ -97,7 +98,7 @@ export default class BtcToEthToken extends Component {
                   <Fragment>
                     <input type="text" placeholder="Secret Key" defaultValue={secret} />
                     <br />
-                    <button onClick={this.submitSecret}>Confirm</button>
+                    <TimerButton onClick={this.submitSecret}>Confirm</TimerButton>
                   </Fragment>
                 ) : (
                   <Fragment>
@@ -114,12 +115,12 @@ export default class BtcToEthToken extends Component {
                     <h3>Not enough money for this swap. Please charge the balance</h3>
                     <div>
                       <div>Your balance: <strong>{flow.balance}</strong> {this.swap.sellCurrency}</div>
-                      <div>Required balance: <strong>{this.swap.sellAmount}</strong> {this.swap.sellCurrency}</div>
+                      <div>Required balance: <strong>{this.swap.sellAmount.toString()}</strong> {this.swap.sellCurrency}</div>
                       <hr />
                       <span>{flow.address}</span>
                     </div>
                     <br />
-                    <button type="button" onClick={this.updateBalance}>Continue</button>
+                    <TimerButton type="button" onClick={this.updateBalance}>Continue</TimerButton>
                   </Fragment>
                 )
               }
@@ -127,7 +128,7 @@ export default class BtcToEthToken extends Component {
                 flow.step === 3 && flow.isBalanceFetching && (
                   <Fragment>
                     <div>Checking balance..</div>
-                    <Loader overlay={false} />
+                    <InlineLoader />
                   </Fragment>
                 )
               }
@@ -138,7 +139,7 @@ export default class BtcToEthToken extends Component {
                     <h3>3. Creating Bitcoin Script. Please wait, it will take a while</h3>
                     {
                       !flow.btcScriptValues && (
-                        <Loader overlay={false} />
+                        <InlineLoader />
                       )
                     }
                   </Fragment>
@@ -151,7 +152,7 @@ export default class BtcToEthToken extends Component {
                     <h3>4. ETH Owner received Bitcoin Script and Secret Hash. Waiting when he creates ETH Contract</h3>
                     {
                       !flow.isEthContractFunded && (
-                        <Loader overlay={false} />
+                        <InlineLoader />
                       )
                     }
                   </Fragment>
@@ -175,7 +176,7 @@ export default class BtcToEthToken extends Component {
               }
               {
                 flow.step === 6 && (
-                  <Loader overlay={false} />
+                  <InlineLoader />
                 )
               }
 

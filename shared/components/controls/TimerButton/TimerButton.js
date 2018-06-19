@@ -25,7 +25,7 @@ export default class TimerButton extends Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.tick()
   }
 
@@ -42,6 +42,10 @@ export default class TimerButton extends Component {
     }
     else {
       this.timer = setTimeout(this.tick, 1000)
+      this.setState({
+        timeLeft: newTimeLeft,
+      })
+      console.log('time', timeLeft)
     }
   }
 
@@ -57,7 +61,7 @@ export default class TimerButton extends Component {
     const { children } = this.props
 
     return (
-      <Button brand onClick={this.handleClick}>{children}. Auto click in {timeLeft}s</Button>
+      <Button brand onClick={this.handleClick}>{children} {timeLeft}s</Button>
     )
   }
 }

@@ -5,7 +5,7 @@ import { ETH2BTC } from 'swap.flows'
 import Swap from 'swap.swap'
 
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
-import Button from 'components/controls/Button/Button'
+import TimerButton from 'components/controls/TimerButton/TimerButton'
 
 
 export default class EthToBtc extends Component {
@@ -95,7 +95,7 @@ export default class EthToBtc extends Component {
                 !flow.isSignFetching && !flow.isMeSigned && (
                   <Fragment>
                     <br />
-                    <Button brand onClick={this.signSwap}>Confirm</Button>
+                    <TimerButton brand onClick={this.signSwap}>Confirm</TimerButton>
                   </Fragment>
                 )
               }
@@ -191,7 +191,7 @@ export default class EthToBtc extends Component {
                       flow.step === 3 && (
                         <Fragment>
                           <br />
-                          <Button brand onClick={this.confirmBTCScriptChecked}>Everything is OK. Continue</Button>
+                          <TimerButton brand onClick={this.confirmBTCScriptChecked}>Everything is OK. Continue</TimerButton>
                         </Fragment>
                       )
                     }
@@ -205,12 +205,12 @@ export default class EthToBtc extends Component {
                     <h3>Not enough money for this swap. Please fund the balance</h3>
                     <div>
                       <div>Your balance: <strong>{flow.balance}</strong> {this.swap.sellCurrency}</div>
-                      <div>Required balance: <strong>{this.swap.sellAmount}</strong> {this.swap.sellCurrency}</div>
+                      <div>Required balance: <strong>{this.swap.sellAmount.toString()}</strong> {this.swap.sellCurrency}</div>
                       <hr />
                       <span>{flow.address}</span>
                     </div>
                     <br />
-                    <Button brand onClick={this.updateBalance}>Continue</Button>
+                    <TimerButton brand onClick={this.updateBalance}>Continue</TimerButton>
                   </Fragment>
                 )
               }
