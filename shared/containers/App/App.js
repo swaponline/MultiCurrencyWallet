@@ -35,16 +35,8 @@ export default class App extends React.Component {
     children: PropTypes.element.isRequired,
   }
 
-  componentWillMount() {
-    // actions.loader.show()
-  }
-
   componentDidMount() {
     actions.user.sign()
-
-    // setTimeout(() => {
-    //   actions.loader.hide()
-    // }, 2800)
   }
 
   render() {
