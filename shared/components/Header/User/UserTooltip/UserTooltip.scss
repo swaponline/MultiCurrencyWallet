@@ -68,16 +68,12 @@
 .checked {
   width: 40px;
   height: 40px;
-  background: #f2f9f2;
+  background: #f2f9f2 url('./images/accept.svg') 50% 50% no-repeat;
   border-radius: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-
-  &:hover {
-      background: #f2f9f2 url('./images/accept.svg') 50% 50% no-repeat;
-  }
 }
 
 .icon {

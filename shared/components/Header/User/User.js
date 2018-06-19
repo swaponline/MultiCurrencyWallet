@@ -22,7 +22,7 @@ import UserTooltip from './UserTooltip/UserTooltip'
 export default class User extends React.Component {
 
   state = {
-    view: false,
+    view: true,
   }
 
   componentWillMount() {
