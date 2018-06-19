@@ -78,7 +78,6 @@
   },
   "dependencies": {
     "@nimiq/core": "^1.1.2",
-    "@redux-offline/redux-offline": "^2.3.3",
     "autosize": "^4.0.2",
     "bitcoinjs-lib": "^3.3.2",
     "classnames": "^2.2.5",

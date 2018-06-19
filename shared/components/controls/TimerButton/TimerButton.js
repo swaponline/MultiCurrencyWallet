@@ -25,7 +25,7 @@ export default class TimerButton extends Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.tick()
   }
 
@@ -45,7 +45,6 @@ export default class TimerButton extends Component {
       this.setState({
         timeLeft: newTimeLeft,
       })
-      console.log('time', timeLeft)
     }
   }
 
