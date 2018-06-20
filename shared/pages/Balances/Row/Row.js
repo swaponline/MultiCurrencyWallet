@@ -21,7 +21,7 @@ export default class Row extends Component {
     const { isBalanceFetching } = this.state
 
     if (isBalanceFetching) {
-      return
+      return null
     }
 
     let { currency } = this.props

@@ -1,5 +1,6 @@
 /* eslint-disable */
 import React, { Fragment, Component } from 'react'
+import { connect } from 'redaction'
 
 import Link from 'sw-valuelink'
 import actions from 'redux/actions'
@@ -11,6 +12,7 @@ import styles from './AddOffer.scss'
 import Button from 'components/controls/Button/Button'
 
 import Group from './Group/Group'
+import Select from './Select/Select'
 
 BigNumber.config({ DECIMAL_PLACES: 4, ROUNDING_MODE: 4, EXPONENTIAL_AT: [-7, 14], RANGE: 1e+7, CRYPTO: true })
 
@@ -23,6 +25,9 @@ const exchangeRates = {
   'noxonbtc': 0.001,
 }
 
+@connect(({ user: { ethData, btcData, tokenData } }) => ({
+  items: [ethData, btcData, tokenData]
+}))
 @cssModules(styles, { allowMultiple: true })
 export default class AddOffer extends Component {
 
@@ -147,12 +152,25 @@ export default class AddOffer extends Component {
     }
   }
 
+  changeBalance = (value) => {
+    this.setState({
+      buyAmount: value,
+    })
+    this.handleBuyAmountChange(value)
+  }
+
+  componentWillMount() {
+    actions.user.getBalances()
+  }
+
   render() {
+    const { items } = this.props
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency } = this.state
     const forbidden = (`${buyCurrency}${sellCurrency}` === 'noxoneth') || (`${buyCurrency}${sellCurrency}` === 'ethnoxon')
 
     const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
     const isDisabled = !exchangeRate || forbidden || !buyAmount && !sellAmount
+    const item = items.filter(item => item.currency.toLowerCase() === buyCurrency)
 
     return (
       <Fragment>
@@ -160,6 +178,11 @@ export default class AddOffer extends Component {
           label="Exchange rate"
           inputValueLink={linked.exchangeRate.onChange(this.handleExchangeRateChange)}
           currency={false}
+        />
+        <Select
+          changeBalance={this.changeBalance}
+          balance={item[0].balance}
+          currency={item[0].currency}
         />
         <Group
           styleName="buyGroup"

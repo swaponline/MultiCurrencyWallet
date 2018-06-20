@@ -42,7 +42,7 @@ export default class Orders extends Component {
   }
 
   filterOrders = (orders, filter) =>
-    orders.filter(f => (`${f.buyCurrency}${f.sellCurrency}` === filter))
+    orders.filter(f => (`${f.buyCurrency.toLowerCase()}${f.sellCurrency.toLowerCase()}` === filter))
 
   render() {
     const titles = [ 'EXCHANGE', 'BUY', 'SELL', 'EXCHANGE RATE', '' ]
