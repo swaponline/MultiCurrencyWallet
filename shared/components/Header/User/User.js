@@ -35,6 +35,12 @@ export default class User extends React.Component {
       .off('new order request', this.updateOrders)
   }
 
+  handleChangeView = () => {
+    this.setState({
+      view: true,
+    })
+  }
+
   updateOrders = () => {
     this.setState({
       orders: swapApp.services.orders.items,
@@ -85,6 +91,7 @@ export default class User extends React.Component {
           feeds={feeds}
           mePeer={mePeer}
           soundClick={this.soundClick}
+          changeView={this.handleChangeView}
         />
         {
           view && <UserTooltip

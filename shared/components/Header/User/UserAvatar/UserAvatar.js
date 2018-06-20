@@ -22,11 +22,11 @@ export default class UserAvatar extends Component {
     })
   }
 
-
   componentWillReceiveProps(nextProps) {
-    const { feeds, soundClick } = this.props
+    const { feeds, soundClick, changeView } = this.props
 
     if (nextProps.feeds.length > feeds.length) {
+      changeView()
 
       this.setState({
         feeds: nextProps.feeds,

@@ -11,9 +11,9 @@ import styles from './UserTooltip.scss'
 import ArrowRightSvg from './images/arrow-right.svg'
 
 
-const UserTooltip = ({ feeds, mePeer, acceptRequest }) => (
+const UserTooltip = ({ feeds, mePeer, acceptRequest, view }) => (
   <div styleName="column" >
-    { feeds.length < 3  ? (
+    { view && feeds.length < 3  ? (
       feeds.map(row => {
         const { request, content: { buyAmount, buyCurrency, sellAmount, sellCurrency },  id, peer: ownerPeer } = row
 
