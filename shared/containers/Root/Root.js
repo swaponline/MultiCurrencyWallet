@@ -5,7 +5,6 @@ import PropTypes from 'prop-types'
 
 import App from 'containers/App/App'
 
-
 export default class Root extends React.PureComponent {
 
   static propTypes = {

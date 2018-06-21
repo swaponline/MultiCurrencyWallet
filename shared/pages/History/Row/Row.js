@@ -6,6 +6,7 @@ import cssModules from 'react-css-modules'
 import styles from './Row.scss'
 
 import Coin from 'components/Coin/Coin'
+import LinkTransaction from '../LinkTransaction/LinkTransaction'
 
 
 const Row = ({ type, date, direction, address, value }) => {
@@ -22,7 +23,7 @@ const Row = ({ type, date, direction, address, value }) => {
       <td>
         <div styleName={statusStyleName}>{direction === 'in' ? 'Received' : 'Sent'}</div>
         <div styleName="date">{moment(date).format('MM/DD/YYYY hh:mm A')}</div>
-        <div styleName="address">{address}</div>
+        <LinkTransaction type={type} styleName="address" address={address} >{address}</LinkTransaction>
       </td>
       <td>
         <div styleName="amount">{value}</div>
