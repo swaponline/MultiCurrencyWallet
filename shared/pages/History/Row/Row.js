@@ -9,7 +9,7 @@ import Coin from 'components/Coin/Coin'
 import LinkTransaction from '../LinkTransaction/LinkTransaction'
 
 
-const Row = ({ type, date, direction, address, value }) => {
+const Row = ({ type, date, direction, hash, value }) => {
   const statusStyleName = cx('status', {
     'in': direction === 'in',
     'out': direction !== 'in',
@@ -23,7 +23,7 @@ const Row = ({ type, date, direction, address, value }) => {
       <td>
         <div styleName={statusStyleName}>{direction === 'in' ? 'Received' : 'Sent'}</div>
         <div styleName="date">{moment(date).format('MM/DD/YYYY hh:mm A')}</div>
-        <LinkTransaction type={type} styleName="address" address={address} >{address}</LinkTransaction>
+        <LinkTransaction type={type} styleName="address" hash={hash} >{hash}</LinkTransaction>
       </td>
       <td>
         <div styleName="amount">{value}</div>

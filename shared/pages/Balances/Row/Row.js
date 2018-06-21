@@ -9,6 +9,8 @@ import WithdrawButton from 'components/controls/WithdrawButton/WithdrawButton'
 import ReloadButton from 'components/controls/ReloadButton/ReloadButton'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 
+import LinkAccount from '../LinkAccount/LinkAcount'
+
 
 @cssModules(styles)
 export default class Row extends Component {
@@ -77,7 +79,7 @@ export default class Row extends Component {
             )
           }
         </td>
-        <td>{address}</td>
+        <td><LinkAccount address={address} type={currency.toLowerCase()} >{address}</LinkAccount></td>
         <td>
           <ReloadButton styleName="reloadButton" onClick={this.handleReloadBalance} />
           <WithdrawButton data={{ currency, balance, address }} />

@@ -64,6 +64,7 @@ const getTransaction = (address) =>
       if (res.total) {
         transactions = res.data.map((item) => ({
           type: 'btc',
+          hash: item.hash,
           status: item.block_hash != null ? 1 : 0,
           value: item.outputs[0].value / 1e8,
           address: item.outputs[0].address,

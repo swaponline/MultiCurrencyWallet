@@ -72,6 +72,7 @@ const getTransaction = (address) =>
           transactions = res.result
             .filter((item) => item.value > 0).map((item) => ({
               type: 'eth',
+              hash: item.hash,
               status: item.blockHash != null ? 1 : 0,
               value: web3.utils.fromWei(item.value),
               address: item.to,

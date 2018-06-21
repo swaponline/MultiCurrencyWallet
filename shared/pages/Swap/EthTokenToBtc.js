@@ -50,8 +50,6 @@ export default class EthToBtc extends Component {
   render() {
     const { flow } = this.state
 
-    console.log(flow)
-
     return (
       <div>
         {

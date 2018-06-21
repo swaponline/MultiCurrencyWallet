@@ -69,11 +69,11 @@ const getTransaction = (address) =>
 
     request.get(url)
       .then((res) => {
-        console.log('res', res)
         if (res.status) {
           transactions = res.result
             .filter((item) => item.value > 0).map((item) => ({
               type: item.tokenName,
+              hash: item.hash,
               contractAddress: item.contractAddress,
               status: item.blockHash != null ? 1 : 0,
               value: item.value,

@@ -48,8 +48,6 @@ export default class BtcToEthToken extends Component {
   render() {
     const { secret, flow } = this.state
 
-    console.log(flow)
-
     return (
       <div>
         {
