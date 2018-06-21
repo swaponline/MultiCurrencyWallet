@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react'
+import config from 'app-config'
 
 import { BTC2ETHTOKEN } from 'swap.flows'
 import Swap from 'swap.swap'
@@ -46,6 +47,8 @@ export default class BtcToEthToken extends Component {
 
   render() {
     const { secret, flow } = this.state
+
+    console.log(flow)
 
     return (
       <div>
@@ -145,6 +148,22 @@ export default class BtcToEthToken extends Component {
                   </Fragment>
                 )
               }
+              {
+                flow.btcScriptCreatingTransactionHash && (
+                  <div>
+                    Transaction:
+                    <strong>
+                      <a
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        href={`${config.link.bitpay}/tx/${flow.btcScriptCreatingTransactionHash}`}
+                      >
+                        {flow.btcScriptCreatingTransactionHash}
+                      </a>
+                    </strong>
+                  </div>
+                )
+              }
 
               {
                 (flow.step === 5 || flow.isEthContractFunded) && (
@@ -165,11 +184,17 @@ export default class BtcToEthToken extends Component {
                 )
               }
               {
-                flow.ethSwapWithdrawTransactionUrl && (
+                flow.ethSwapWithdrawTransactionHash && (
                   <div>
-                    Transaction:
+                  Transaction:
                     <strong>
-                      <a href={flow.ethSwapWithdrawTransactionUrl} target="_blank">{flow.ethSwapWithdrawTransactionUrl}</a>
+                      <a
+                        href={`${config.link.etherscan}/tx/${flow.ethSwapWithdrawTransactionHash}`}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                      >
+                        {flow.ethSwapWithdrawTransactionHash}
+                      </a>
                     </strong>
                   </div>
                 )

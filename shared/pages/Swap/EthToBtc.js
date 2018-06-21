@@ -100,25 +100,25 @@ export default class EthToBtc extends Component {
                 )
               }
               {
-                (flow.isSignFetching || flow.signTransactionUrl) && (
+                flow.signTransactionHash && (
+                  <div>
+                    Transaction:
+                    <strong>
+                      <a
+                        href={`${config.link.etherscan}/tx/${flow.signTransactionHash}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {flow.signTransactionHash}
+                      </a>
+                    </strong>
+                  </div>
+                )
+              }
+              {
+                flow.isSignFetching && (
                   <Fragment>
                     <h4>Please wait. Confirmation processing</h4>
-                    {
-                      flow.signTransactionUrl && (
-                        <div>
-                          Transaction:
-                          <strong>
-                            <a
-                              href={`https://${config.entry === 'mainnet' ? '' : 'rinkeby.'}etherscan.io/tx/${flow.signTransactionUrl}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              {flow.signTransactionUrl}
-                            </a>
-                          </strong>
-                        </div>
-                      )
-                    }
                     {
                       flow.isSignFetching && (
                         <InlineLoader />
@@ -148,18 +148,6 @@ export default class EthToBtc extends Component {
                   <Fragment>
                     <h3>3. Bitcoin Script created and charged. Please check the information below</h3>
                     <div>Secret Hash: <strong>{flow.secretHash}</strong></div>
-                    <div>
-                      Script address:
-                      <strong>
-                        <a
-                          href={`https://www.blocktrail.com/tBTC/address/${flow.btcScriptValues.address}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          {flow.btcScriptValues.address}
-                        </a>
-                      </strong>
-                    </div>
                     <br />
                     <pre>
                       <code className="code">{`
@@ -229,16 +217,16 @@ export default class EthToBtc extends Component {
                 )
               }
               {
-                flow.ethSwapCreationTransactionUrl && (
+                flow.ethSwapCreationTransactionHash && (
                   <div>
                     Transaction:
                     <strong>
                       <a
-                        href={`https://${config.entry === 'mainnet' ? '' : 'rinkeby.'}etherscan.io/tx/${flow.ethSwapCreationTransactionUrl}`}
+                        href={`${config.link.etherscan}/tx/${flow.ethSwapCreationTransactionHash}`}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        {flow.ethSwapCreationTransactionUrl}
+                        {flow.ethSwapCreationTransactionHash}
                       </a>
                     </strong>
                   </div>
@@ -269,16 +257,16 @@ export default class EthToBtc extends Component {
                 )
               }
               {
-                flow.btcSwapWithdrawTransactionUrl && (
+                flow.btcSwapWithdrawTransactionHash && (
                   <div>
                     Transaction:
                     <strong>
                       <a
-                        href={`https://www.blocktrail.com/tBTC/tx/${flow.btcSwapWithdrawTransactionUrl}`}
+                        href={`${config.link.bitpay}/tx/${flow.btcSwapWithdrawTransactionHash}`}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        {flow.btcSwapWithdrawTransactionUrl}
+                        {flow.btcSwapWithdrawTransactionHash}
                       </a>
                     </strong>
                   </div>

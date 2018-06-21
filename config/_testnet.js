@@ -9,6 +9,11 @@ export default {
     },
   },
 
+  link: {
+    bitpay: 'https://test-insight.bitpay.com',
+    etherscan: 'https://rinkeby.etherscan.io',
+  },
+
   api: {
     blocktrail: 'https://api.blocktrail.com/v1/tBTC',
     bitpay: 'https://test-insight.bitpay.com/api',

@@ -9,6 +9,11 @@ export default {
     },
   },
 
+  link: {
+    bitpay: 'https://insight.bitpay.com',
+    etherscan: 'https://etherscan.io',
+  },
+
   api: {
     blocktrail: 'https://api.blocktrail.com/v1/BTC',
     bitpay: 'https://insight.bitpay.com/api',

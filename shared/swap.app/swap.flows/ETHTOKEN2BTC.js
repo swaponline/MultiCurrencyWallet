@@ -189,7 +189,7 @@ class ETHTOKEN2BTC extends Flow {
         // if there is no secret in state then request it
         if (!secret) {
           try {
-            secret = await flow.ethSwap.getSecret(data)
+            secret = await flow.ethTokenSwap.getSecret(data)
 
             flow.setState({
               secret,

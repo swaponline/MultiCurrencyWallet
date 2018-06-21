@@ -139,6 +139,22 @@ export default class BtcToEth extends Component {
                   <Fragment>
                     <h3>3. Creating Bitcoin Script. Please wait, it will take a while</h3>
                     {
+                      flow.btcScriptCreatingTransactionHash && (
+                        <div>
+                          Transaction:
+                          <strong>
+                            <a
+                              target="_blank"
+                              rel="noreferrer noopener"
+                              href={`${config.link.bitpay}/tx/${flow.btcScriptCreatingTransactionHash}`}
+                            >
+                              {flow.btcScriptCreatingTransactionHash}
+                            </a>
+                          </strong>
+                        </div>
+                      )
+                    }
+                    {
                       !flow.btcScriptValues && (
                         <InlineLoader />
                       )
@@ -166,16 +182,16 @@ export default class BtcToEth extends Component {
                 )
               }
               {
-                flow.ethSwapWithdrawTransactionUrl && (
+                flow.ethSwapWithdrawTransactionHash && (
                   <div>
                     Transaction:
                     <strong>
                       <a
-                        href={`https://${config.entry === 'mainnet' ? '' : 'rinkeby.'}etherscan.io/tx/${flow.ethSwapWithdrawTransactionUrl}`}
+                        href={`${config.link.etherscan}/tx/${flow.ethSwapWithdrawTransactionHash}`}
                         target="_blank"
                         rel="noreferrer noopener"
                       >
-                        {flow.ethSwapWithdrawTransactionUrl}
+                        {flow.ethSwapWithdrawTransactionHash}
                       </a>
                     </strong>
                   </div>
@@ -186,10 +202,11 @@ export default class BtcToEth extends Component {
                   <InlineLoader />
                 )
               }
-
               {
                 flow.isEthWithdrawn && (
                   <Fragment>
+                    { console.log(flow) }
+                    { console.log(this.swap) }
                     <h3>6. Money was transferred to your wallet. Check the balance.</h3>
                     <h2>Thank you for using Swap.Online!</h2>
                   </Fragment>

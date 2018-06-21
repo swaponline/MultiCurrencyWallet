@@ -6,6 +6,8 @@ import Swap from 'swap.swap'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import TimerButton from 'components/controls/TimerButton/TimerButton'
 
+import config from 'app-config'
+
 
 export default class EthToBtc extends Component {
 
@@ -47,6 +49,8 @@ export default class EthToBtc extends Component {
 
   render() {
     const { flow } = this.state
+
+    console.log(flow)
 
     return (
       <div>
@@ -99,15 +103,21 @@ export default class EthToBtc extends Component {
                 )
               }
               {
-                (flow.isSignFetching || flow.signTransactionUrl) && (
+                (flow.isSignFetching || flow.signTransactionHash) && (
                   <Fragment>
                     <h4>Please wait. Confirmation processing</h4>
                     {
-                      flow.signTransactionUrl && (
+                      flow.signTransactionHash && (
                         <div>
                           Transaction:
                           <strong>
-                            <a href={flow.signTransactionUrl} rel="noopener noreferrer" target="_blank">{flow.signTransactionUrl}</a>
+                            <a
+                              href={`${config.link.etherscan}/tx/${flow.signTransactionHash}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              {flow.signTransactionHash}
+                            </a>
                           </strong>
                         </div>
                       )
@@ -141,18 +151,6 @@ export default class EthToBtc extends Component {
                   <Fragment>
                     <h3>3. Bitcoin Script created and charged. Please check the information below</h3>
                     <div>Secret Hash: <strong>{flow.secretHash}</strong></div>
-                    <div>
-                      Script address:
-                      <strong>
-                        <a
-                          href={`https://www.blocktrail.com/tBTC/address/${flow.btcScriptValues.address}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          {flow.btcScriptValues.address}
-                          </a>
-                      </strong>
-                    </div>
                     <br />
                     <pre>
                       <code className="code">{`
@@ -222,27 +220,26 @@ export default class EthToBtc extends Component {
                 )
               }
               {
-                flow.ethSwapCreationTransactionUrl && (
+                flow.step === 5 && (
+                  <InlineLoader />
+                )
+              }
+              {
+                flow.ethSwapCreationTransactionHash && (
                   <div>
                     Transaction:
                     <strong>
                       <a
-                        href={flow.ethSwapCreationTransactionUrl}
+                        href={`${config.link.etherscan}/tx/${flow.ethSwapCreationTransactionHash}`}
                         target="_blank"
-                        rel="noopener noreferrer"
+                        rel="noreferrer noopener"
                       >
-                        {flow.ethSwapCreationTransactionUrl}
+                        {flow.hash}
                       </a>
                     </strong>
                   </div>
                 )
               }
-              {
-                flow.step === 5 && (
-                  <InlineLoader />
-                )
-              }
-
               {
                 (flow.step === 6 || flow.isEthWithdrawn) && (
                   <Fragment>
@@ -262,16 +259,16 @@ export default class EthToBtc extends Component {
                 )
               }
               {
-                flow.btcSwapWithdrawTransactionUrl && (
+                flow.btcSwapWithdrawTransactionHash && (
                   <div>
                     Transaction:
                     <strong>
                       <a
-                        href="https://www.blocktrail.com/tBTC/tx/{flow.btcSwapWithdrawTransactionUrl}"
+                        href={`${config.link.bitpay}/tx/${flow.btcSwapWithdrawTransactionHash}`}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        {flow.btcSwapWithdrawTransactionUrl}
+                        {flow.btcSwapWithdrawTransactionHash}
                       </a>
                     </strong>
                   </div>
