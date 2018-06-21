@@ -205,8 +205,6 @@ export default class BtcToEth extends Component {
               {
                 flow.isEthWithdrawn && (
                   <Fragment>
-                    { console.log(flow) }
-                    { console.log(this.swap) }
                     <h3>6. Money was transferred to your wallet. Check the balance.</h3>
                     <h2>Thank you for using Swap.Online!</h2>
                   </Fragment>

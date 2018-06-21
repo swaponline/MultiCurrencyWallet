@@ -27,7 +27,7 @@ const FeedNotificaton = ({ feeds, mePeer, acceptRequest, declineRequest }) => (
           </div>
           <div styleName="buttons">
             <div styleName="withdrawButton" onClick={() => declineRequest(id, peer)} >Decline</div>
-            <Link to={`${links.swap}/${id}`}>
+            <Link to={`${links.swap}/${sellCurrency}-${buyCurrency}/${id}`}>
               <div styleName="withdrawButton" onClick={() => acceptRequest(id, peer)} >Accept</div>
             </Link>
           </div>

@@ -19,13 +19,14 @@ const swapComponents = {
 
 export default class Swap extends PureComponent {
 
-  constructor({ match: { params : { orderId } } }) {
+  constructor({ match: { params: { orderId } } }) {
     super()
 
     this.order = SwapApp.services.orders.getByKey(orderId)
   }
 
   render() {
+    const { match : { params : { sell, buy } } } = this.props
     if (!this.order) {
       return (
         <div>
@@ -34,12 +35,7 @@ export default class Swap extends PureComponent {
         </div>
       )
     }
-
-    const { isMy: isMyOrder, buyCurrency, sellCurrency } = this.order
-
-    const firstPart     = isMyOrder ? sellCurrency : buyCurrency
-    const lastPart      = isMyOrder ? buyCurrency : sellCurrency
-    const SwapComponent = swapComponents[`${firstPart.toLowerCase()}${lastPart.toLowerCase()}`]
+    const SwapComponent = swapComponents[`${buy.toLowerCase()}${sell.toLowerCase()}`]
 
     return (
       <div style={{ paddingLeft: '30px', paddingTop: '30px' }}>

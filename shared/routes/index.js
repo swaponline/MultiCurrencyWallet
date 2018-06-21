@@ -17,7 +17,7 @@ const routes = (
     <Route path={links.balance} component={Balances} />
     <Route path={links.history} component={History} />
     <Route path={links.feed} component={Feed} />
-    <Route path={`${links.swap}/:orderId`} component={Swap} />
+    <Route path={`${links.swap}/:buy-:sell/:orderId`} component={Swap} />
     <Route component={NotFound} />
   </Switch>
 )

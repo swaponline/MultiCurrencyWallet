@@ -71,10 +71,10 @@ export default class Row extends Component {
                   isRequested ? (
                     <Fragment>
                       <div style={{ color: 'red' }}>REQUESTING</div>
-                      <Link to={`${links.swap}/${id}`}> Go to the swap</Link>
+                      <Link to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`}> Go to the swap</Link>
                     </Fragment>
                   ) : (
-                    <Link to={`${links.swap}/${id}`}>
+                    <Link to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`}>
                       <RequestButton sendRequest={() => this.sendRequest(id)} />
                     </Link>
                   )

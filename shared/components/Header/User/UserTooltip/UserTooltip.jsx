@@ -29,7 +29,7 @@ const UserTooltip = ({ feeds, mePeer, acceptRequest, view }) => (
                   <span>{sellAmount.toString()} <span styleName="coin">{sellCurrency}</span></span>
                 </div>
               </div>
-              <Link to={`${links.swap}/${id}`}>
+              <Link to={`${links.swap}/${sellCurrency}-${buyCurrency}/${id}`}>
                 <div styleName="checked" onClick={() => acceptRequest(id, peer)} />
               </Link>
             </div>

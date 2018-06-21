@@ -11,12 +11,10 @@ import Row from './Row/Row'
 
 const filterHistory = (items, filter) => {
   if (filter === 'SENT') {
-
     return items.filter(({ direction }) => direction === 'out')
   }
 
   if (filter === 'RECEIVED') {
-
     return items.filter(({ direction }) => direction === 'in')
   }
 

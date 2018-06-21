@@ -1,0 +1,14 @@
+.row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-top: 5px;
+
+  & p {
+    margin: 0;
+  }
+}
+
+.attention {
+
+}
