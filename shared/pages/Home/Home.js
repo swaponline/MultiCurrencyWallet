@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import actions from 'redux/actions'
 import { connect } from 'redaction'
 
-import { localStorage, constants } from 'helpers'
+import { localStorage, constants, links } from 'helpers'
 import moment from 'moment/moment'
 
 import PageHeadline from 'components/PageHeadline/PageHeadline'
@@ -16,6 +16,8 @@ import ButtonsInRow from 'components/controls/ButtonsInRow/ButtonsInRow'
 
 import Orders from './Orders/Orders'
 import Field from './Field/Field'
+
+import { Link } from 'react-router-dom'
 
 
 @connect({
@@ -109,8 +111,6 @@ Private key: ${btcData.privateKey}\r\n
 
     this.changeView('confirm')
 
-    localStorage.setItem(constants.localStorage.privateKeysSaved, true)
-
     actions.notifications.show(constants.notifications.Message, {
       message,
     })
@@ -118,6 +118,7 @@ Private key: ${btcData.privateKey}\r\n
 
   handleConfirm = () => {
     this.changeView('checkKeys')
+    localStorage.setItem(constants.localStorage.privateKeysSaved, true)
   }
 
   handleSellCurrencySelect = ({ value }) => {
@@ -133,6 +134,8 @@ Private key: ${btcData.privateKey}\r\n
       buyCurrency,
       sellCurrency,
     })
+
+    return <Link to={`${links.home}/${buyCurrency}-${sellCurrency}`} />
   }
 
   flipCurrency = () => {
@@ -162,12 +165,47 @@ Private key: ${btcData.privateKey}\r\n
     return (
       <section>
         <PageHeadline>
-          <Title>Swap.Online</Title>
-          <SubTitle>
-            In the alpha mode, please trade <br />
-            on small amount and contact admin for any issues.<br />
-            Subscribe to <a href="https://t.me/swaponlineint" onClick={this.handleClickTelegram} target="_blank">telegram</a> and <a href="/" target="_blank"  onClick={this.handleClickMailing}>mailing list</a>
-          </SubTitle>
+          {
+            view === 'saveKeys' ? (
+              <Fragment>
+                <SubTitle>
+                  Your private keys.<br />
+                  Download the keys by clicking on the this button <br />
+                  or take a screenshot of this page, then confirm it.
+                </SubTitle>
+                <Field
+                  label={ethData.currency}
+                  privateKey={ethData.privateKey}
+                />
+                <Field
+                  label={btcData.currency}
+                  privateKey={btcData.privateKey}
+                />
+                <br />
+                <div style={{ width: '300px', display: 'flex', justifyContent: 'space-between' }}>
+                  <Button brand onClick={this.handleDownload}>Download</Button>
+                  <Button brand onClick={() => this.changeView('confirm')}>Confirm</Button>
+                </div>
+              </Fragment>
+            ) : view === 'confirm' ? (
+              <div style={{ width: '450px', display: 'flex', justifyContent: 'space-around' }}>
+                <SubTitle>
+                  Are you sure?
+                </SubTitle>
+                <Button brand onClick={this.handleConfirm}>Yes</Button>
+                <Button brand onClick={() => this.changeView('saveKeys')}>No</Button>
+              </div>
+            ) : (
+              <Fragment>
+                <Title>Swap.Online</Title>
+                <SubTitle>
+                  In the alpha mode, please trade <br />
+                  on small amount and contact admin for any issues.<br />
+                  {/*Subscribe to <a href="https://t.me/swaponlineint" onClick={this.handleClickTelegram} target="_blank">telegram</a> and <a href="/" target="_blank"  onClick={this.handleClickMailing}>mailing list</a>*/}
+                </SubTitle>
+              </Fragment>
+            )
+          }
         </PageHeadline>
         <SearchSwap
           updateFilter={this.handleSellCurrencySelect}
@@ -180,24 +218,3 @@ Private key: ${btcData.privateKey}\r\n
     )
   }
 }
-
-// view === 'saveKeys' ? (
-//   <Fragment>
-//     <SubTitle>
-//       Your private keys.<br />
-//       Download the keys by clicking on the this button <br />
-//       or take a screenshot of this page, then confirm it
-//     </SubTitle>
-//     <Field
-//       label={ethData.currency}
-//       privateKey={ethData.privateKey}
-//     />
-//     <Field
-//       label={btcData.currency}
-//       privateKey={btcData.privateKey}
-//     />
-//     <br />
-//     <Button brand onClick={this.handleDownload}>Download</Button>
-//   </Fragment>
-// ) : (
-//   <Fragment>

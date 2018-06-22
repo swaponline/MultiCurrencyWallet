@@ -36,13 +36,13 @@ const webpackConfig = {
   resolve: {
     alias: {
       shared: config.paths.base('shared'),
-      'swap.auth':  config.paths.base('shared/swap.app/swap.auth'),
-      'swap.orders':  config.paths.base('shared/swap.app/swap.orders'),
-      'swap.room':  config.paths.base('shared/swap.app/swap.room'),
-      'swap.app':  config.paths.base('shared/swap.app/swap.app'),
-      'swap.flows':  config.paths.base('shared/swap.app/swap.flows'),
-      'swap.swap':  config.paths.base('shared/swap.app/swap.swap'),
-      'swap.swaps':  config.paths.base('shared/swap.app/swap.swaps'),
+      'swap.auth':  config.paths.lib('swap.app/swap.auth'),
+      'swap.orders':  config.paths.lib('swap.app/swap.orders'),
+      'swap.room':  config.paths.lib('swap.app/swap.room'),
+      'swap.app':  config.paths.lib('swap.app/swap.app'),
+      'swap.flows':  config.paths.lib('swap.app/swap.flows'),
+      'swap.swap':  config.paths.lib('swap.app/swap.swap'),
+      'swap.swaps':  config.paths.lib('swap.app/swap.swaps'),
     },
     modules: [
       config.paths.base('client'),

@@ -12,6 +12,7 @@ const config = {
     base:     (file = '') => path.join(basePath, file),
     shared:   (file = '') => path.join(basePath, 'shared', file),
     client:   (file = '') => path.join(basePath, 'client', file),
+    lib:      (file = '') => path.join(rootPath, 'lib', file),
   },
 
   publicPath: '/',
