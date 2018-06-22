@@ -13,7 +13,8 @@ import Feed from 'pages/Feed/Feed'
 
 const routes = (
   <Switch>
-    <Route exact path={links.home} component={Home} />
+    <Route path={`${links.home}/:buy-:sell`} component={Home} />
+    <Route path={links.home} component={Home} />
     <Route path={links.balance} component={Balances} />
     <Route path={links.history} component={History} />
     <Route path={links.feed} component={Feed} />

@@ -31,14 +31,14 @@ export default class Home extends Component {
     btcData: PropTypes.object.isRequired,
   }
 
-  constructor({ initialData }) {
+  constructor({ initialData, match: { params: { buy, sell } } }) {
     super()
 
     const { buyCurrency, sellCurrency } = initialData || {}
 
     this.state = {
-      buyCurrency: buyCurrency || 'eth',
-      sellCurrency: sellCurrency || 'btc',
+      buyCurrency: buy || buyCurrency || 'eth',
+      sellCurrency: sell || sellCurrency || 'btc',
       view: 'saveKeys',
     }
   }
@@ -134,8 +134,6 @@ Private key: ${btcData.privateKey}\r\n
       buyCurrency,
       sellCurrency,
     })
-
-    return <Link to={`${links.home}/${buyCurrency}-${sellCurrency}`} />
   }
 
   flipCurrency = () => {
