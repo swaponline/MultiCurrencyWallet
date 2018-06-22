@@ -1,0 +1,29 @@
+.confirm {
+  width: 500px;
+  padding: 25px 40px;
+  border-radius: 10px;
+  justify-content: space-around;
+  box-shadow: 0 3px 9px 0 rgba(0,0,0,0.06);
+  display: none;
+  position: absolute;
+  top: 250px;
+  left: calc(50% - 300px);
+  z-index: 999;
+}
+
+.animation {
+  display: flex;
+  animation: open 0.8s ease-in-out forwards;
+}
+
+@keyframes open {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

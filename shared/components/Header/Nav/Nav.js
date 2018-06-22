@@ -45,16 +45,13 @@ const Nav = () => (
       ))
     }
     {
-      process.env.TESTNET && <a
+      process.env.TESTNET && <div
         key="Get demo money"
         style={style}
-        target="_blank"
-        rel="noopener noreferrer"
         onClick={() => actions.user.getDemoMoney()}
-        href="https://wiki.swap.online/get-free-bitcoins-and-ether"
       >
         Get demo money
-      </a>
+      </div>
     }
   </div>
 )

@@ -11,13 +11,10 @@ import PageHeadline from 'components/PageHeadline/PageHeadline'
 import Title from 'components/PageHeadline/Title/Title'
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import SearchSwap from 'components/SearchSwap/SearchSwap'
-import Button from 'components/controls/Button/Button'
-import ButtonsInRow from 'components/controls/ButtonsInRow/ButtonsInRow'
 
 import Orders from './Orders/Orders'
-import Field from './Field/Field'
-
-import { Link } from 'react-router-dom'
+import Confirm from 'components/Confirm/Confirm'
+import SaveKeys from 'components/SaveKeys/SaveKeys'
 
 
 @connect({
@@ -161,57 +158,41 @@ Private key: ${btcData.privateKey}\r\n
     const filterOrders = `${buyCurrency}${sellCurrency}`
 
     return (
-      <section>
-        <PageHeadline>
+      <section style={{ position: 'relative' }}>
+        <PageHeadline >
           {
-            view === 'saveKeys' ? (
-              <Fragment>
-                <SubTitle>
-                  Your private keys.<br />
-                  Download the keys by clicking on the this button <br />
-                  or take a screenshot of this page, then confirm it.
-                </SubTitle>
-                <Field
-                  label={ethData.currency}
-                  privateKey={ethData.privateKey}
-                />
-                <Field
-                  label={btcData.currency}
-                  privateKey={btcData.privateKey}
-                />
-                <br />
-                <div style={{ width: '300px', display: 'flex', justifyContent: 'space-between' }}>
-                  <Button brand onClick={this.handleDownload}>Download</Button>
-                  <Button brand onClick={() => this.changeView('confirm')}>Confirm</Button>
-                </div>
-              </Fragment>
-            ) : view === 'confirm' ? (
-              <div style={{ width: '450px', display: 'flex', justifyContent: 'space-around' }}>
-                <SubTitle>
-                  Are you sure?
-                </SubTitle>
-                <Button brand onClick={this.handleConfirm}>Yes</Button>
-                <Button brand onClick={() => this.changeView('saveKeys')}>No</Button>
-              </div>
+            view !== 'checkKeys' ? (
+              <SaveKeys
+                isChange={() => this.changeView('confirm')}
+                isDownload={this.handleDownload}
+                ethData={ethData}
+                btcData={btcData}
+              />
             ) : (
               <Fragment>
                 <Title>Swap.Online</Title>
                 <SubTitle>
                   In the alpha mode, please trade <br />
                   on small amount and contact admin for any issues.<br />
-                  {/*Subscribe to <a href="https://t.me/swaponlineint" onClick={this.handleClickTelegram} target="_blank">telegram</a> and <a href="/" target="_blank"  onClick={this.handleClickMailing}>mailing list</a>*/}
+                  {/* Subscribe to <a href="https://t.me/swaponlineint" onClick={this.handleClickTelegram} target="_blank">telegram</a> and <a href="/" target="_blank"  onClick={this.handleClickMailing}>mailing list</a> */}
                 </SubTitle>
+                <SearchSwap
+                  updateFilter={this.handleSellCurrencySelect}
+                  buyCurrency={buyCurrency}
+                  sellCurrency={sellCurrency}
+                  flipCurrency={this.flipCurrency}
+                />
+                <Orders filter={filterOrders} />
               </Fragment>
             )
           }
+          <Confirm
+            title="Are you sure ?"
+            isConfirm={() => this.handleConfirm()}
+            isReject={() => this.changeView('saveKeys')}
+            animation={view === 'confirm'}
+          />
         </PageHeadline>
-        <SearchSwap
-          updateFilter={this.handleSellCurrencySelect}
-          buyCurrency={buyCurrency}
-          sellCurrency={sellCurrency}
-          flipCurrency={this.flipCurrency}
-        />
-        <Orders filter={filterOrders} />
       </section>
     )
   }

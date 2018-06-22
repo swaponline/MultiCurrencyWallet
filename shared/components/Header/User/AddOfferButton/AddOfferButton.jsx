@@ -17,8 +17,7 @@ export default class AddOfferButton extends Component {
   render() {
     return (
       <div
-        href="#"
-        styleName="createOffer"
+        styleName="button"
         onClick={this.handleClick}
       >
         Add offer

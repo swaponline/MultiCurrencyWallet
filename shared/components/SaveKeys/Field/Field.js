@@ -6,7 +6,7 @@ import styles from './Field.scss'
 
 const Field = ({ privateKey, label }) => (
   <div styleName="row" >
-    <p>{`${label} ${privateKey}`}</p>
+    <p><strong>{label}: </strong>{privateKey}</p>
   </div>
 )
 
