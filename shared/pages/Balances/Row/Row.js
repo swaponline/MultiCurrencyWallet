@@ -43,6 +43,11 @@ export default class Row extends Component {
       action = actions.token.getBalance
       actions.analytics.dataEvent('balances-update-noxon')
     }
+    else if (currency === 'eos') {
+      action = actions.eos.getBalance
+      actions.analytics.dataEvent('balances-update-eos')
+    }
+
 
     this.setState({
       isBalanceFetching: true,

@@ -9,8 +9,8 @@ import Table from 'components/Table/Table'
 import Row from './Row/Row'
 
 
-@connect(({ user: { ethData, btcData, tokenData, nimData } }) => ({
-  items: [ ethData, btcData, tokenData/* , nimData */ ],
+@connect(({ user: { ethData, btcData, tokenData, eosData, nimData } }) => ({
+  items: [ ethData, btcData, tokenData, eosData, /* , nimData */ ],
   ethAddress: ethData.address,
   btcAddress: btcData.address,
 }))
