@@ -14,23 +14,6 @@ export default (webpackConfig) => {
   }
 
   // webpackConfig.plugins.push(
-  //   new UglifyJsPlugin({
-  //     uglifyOptions: {
-  //       mangle: {
-  //         reserved: [
-  //           'Buffer',
-  //           'BigInteger',
-  //           'Point',
-  //           'ECPubKey',
-  //           'ECKey',
-  //           'sha512_asm',
-  //           'asm',
-  //           'ECPair',
-  //           'HDNode',
-  //         ],
-  //       },
-  //     },
-  //   }),
   //   // new webpack.SourceMapDevToolPlugin({
   //   //   filename: '[file].[hash:6].map',
   //   //   append: `\n//# sourceMappingURL=[url]`,
@@ -48,6 +31,7 @@ export default (webpackConfig) => {
   })
 
   webpackConfig.plugins.push(
+    // new UglifyJsPlugin(),
     new ExtractTextPlugin({
       filename: '[name].[hash:6].css',
       allChunks: true,

@@ -10,7 +10,7 @@ import Flip from 'components/controls/Flip/Flip'
 const SearchSwap = ({ buyCurrency, sellCurrency, updateFilter, flipCurrency }) => (
   <div styleName="choice">
     <div styleName="row">
-      <p styleName="text" >You want buy</p>
+      <p styleName="text" >You want to buy</p>
       <CurrencySelect
         styleName="currencySelect"
         selectedValue={buyCurrency}
@@ -19,7 +19,7 @@ const SearchSwap = ({ buyCurrency, sellCurrency, updateFilter, flipCurrency }) =
     </div>
     <Flip onClick={flipCurrency} />
     <div styleName="row">
-      <p styleName="text" >You want sell</p>
+      <p styleName="text" >You want to sell</p>
       <CurrencySelect
         styleName="currencySelect"
         selectedValue={sellCurrency}
