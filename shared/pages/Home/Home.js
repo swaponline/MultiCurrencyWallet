@@ -176,16 +176,16 @@ Private key: ${btcData.privateKey}\r\n
                   on small amount and contact admin for any issues.<br />
                   {/* Subscribe to <a href="https://t.me/swaponlineint" onClick={this.handleClickTelegram} target="_blank">telegram</a> and <a href="/" target="_blank"  onClick={this.handleClickMailing}>mailing list</a> */}
                 </SubTitle>
-                <SearchSwap
-                  updateFilter={this.handleSellCurrencySelect}
-                  buyCurrency={buyCurrency}
-                  sellCurrency={sellCurrency}
-                  flipCurrency={this.flipCurrency}
-                />
-                <Orders filter={filterOrders} />
               </Fragment>
             )
           }
+          <SearchSwap
+            updateFilter={this.handleSellCurrencySelect}
+            buyCurrency={buyCurrency}
+            sellCurrency={sellCurrency}
+            flipCurrency={this.flipCurrency}
+          />
+          <Orders filter={filterOrders} />
           <Confirm
             title="Are you sure ?"
             isConfirm={() => this.handleConfirm()}

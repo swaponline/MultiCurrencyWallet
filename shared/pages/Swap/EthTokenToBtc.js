@@ -157,11 +157,11 @@ export default class EthToBtc extends Component {
     Buffer.from('${flow.btcScriptValues.secretHash}', 'hex'),
     bitcoin.core.opcodes.OP_EQUALVERIFY,
 
-    Buffer.from('${flow.btcScriptValues.ethOwnerPublicKey}', 'hex'),
+    Buffer.from('${flow.btcScriptValues.recipientPublicKey}', 'hex'),
     bitcoin.core.opcodes.OP_EQUAL,
     bitcoin.core.opcodes.OP_IF,
 
-    Buffer.from('${flow.btcScriptValues.ethOwnerPublicKey}', 'hex'),
+    Buffer.from('${flow.btcScriptValues.recipientPublicKey}', 'hex'),
     bitcoin.core.opcodes.OP_CHECKSIG,
 
     bitcoin.core.opcodes.OP_ELSE,
@@ -169,7 +169,7 @@ export default class EthToBtc extends Component {
     bitcoin.core.script.number.encode(${flow.btcScriptValues.lockTime}),
     bitcoin.core.opcodes.OP_CHECKLOCKTIMEVERIFY,
     bitcoin.core.opcodes.OP_DROP,
-    Buffer.from('${flow.btcScriptValues.btcOwnerPublicKey}', 'hex'),
+    Buffer.from('${flow.btcScriptValues.ownerPublicKey}', 'hex'),
     bitcoin.core.opcodes.OP_CHECKSIG,
 
     bitcoin.core.opcodes.OP_ENDIF,

@@ -9,6 +9,7 @@ import token from './token'
 import nimiq from './nimiq'
 import feed from './feed'
 import analytics from './analytics'
+import htls from './htls'
 
 
 export default {
@@ -23,4 +24,5 @@ export default {
   nimiq,
   feed,
   analytics,
+  htls,
 }

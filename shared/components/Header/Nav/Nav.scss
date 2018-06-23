@@ -29,3 +29,31 @@
     color: #fff;
   }
 }
+
+.button {
+  padding: 0 16px;
+  height: 56px;
+  cursor: pointer;
+  margin-left: 20px;
+  line-height: 56px;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 16px;
+  border-radius: 6px;
+  display: inline-block;
+  background-color: #E72BB3;
+  color: #ffffff;
+}
+
+@media screen and (max-width: 860px){
+  .link {
+    display: none;
+  }
+  .nav {
+    padding: 0;
+  }
+
+  .button {
+    display: none;
+  }
+}

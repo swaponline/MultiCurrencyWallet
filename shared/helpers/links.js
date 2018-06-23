@@ -1,5 +1,5 @@
 export default {
-  home: '/orders',
+  home: '/',
   balance: '/balance',
   history: '/history',
   swap: '/swap',

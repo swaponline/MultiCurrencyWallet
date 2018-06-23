@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import actions from 'redux/actions'
 import { constants } from 'helpers'
 
@@ -16,12 +16,18 @@ export default class AddOfferButton extends Component {
 
   render() {
     return (
-      <div
-        styleName="button"
-        onClick={this.handleClick}
-      >
-        Add offer
-      </div>
+      <Fragment>
+        <div
+          styleName="button"
+          onClick={this.handleClick}
+        >
+          Add offer
+        </div>
+        <div
+          styleName="buttonMobile"
+          onClick={this.handleClick}
+        />
+      </Fragment>
     )
   }
 }

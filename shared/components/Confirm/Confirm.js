@@ -12,8 +12,10 @@ const Confirm = ({ isConfirm, isReject, title, animation }) => (
     <SubTitle>
       {title}
     </SubTitle>
-    <Button brand onClick={isConfirm}>Yes</Button>
-    <Button brand onClick={isReject}>No</Button>
+    <div styleName="row" >
+      <Button brand onClick={isConfirm}>Yes</Button>
+      <Button brand onClick={isReject}>No</Button>
+    </div>
   </div>
 )
 

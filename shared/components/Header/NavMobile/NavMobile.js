@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom'
 import { links } from 'helpers'
 
 import cssModules from 'react-css-modules'
-import styles from './Nav.scss'
+import styles from './NavMobile.scss'
 
 
 const nav = [
@@ -14,8 +14,8 @@ const nav = [
   { title: 'History', link: links.history },
 ]
 
-const Nav = () => (
-  <div styleName="nav">
+const NavMobile = ({ view }) => (
+  <div styleName={view ? 'nav' : 'nav hide'} >
     {
       nav.map(({ title, link }) => (
         <NavLink
@@ -41,4 +41,4 @@ const Nav = () => (
   </div>
 )
 
-export default cssModules(Nav, styles)
+export default cssModules(NavMobile, styles, { allowMultiple: true })

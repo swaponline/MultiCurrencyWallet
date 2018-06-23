@@ -17,14 +17,14 @@ const SaveKeys = ({ ethData, btcData, isChange, isDownload }) => (
     </div>
     <div styleName="row" >
       <Button brand onClick={isDownload}>Download</Button>
-      <div style={{ marginLeft: '15px' }} >
+      <div style={{ marginLeft: '15px', marginTop: '10px' }} >
         <Field
           label={ethData.currency}
-          privateKey={ethData.privateKey}
+          privateKey={ethData.privateKey.toString()}
         />
         <Field
           label={btcData.currency}
-          privateKey={btcData.privateKey}
+          privateKey={btcData.privateKey.toString()}
         />
       </div>
     </div>

@@ -12,6 +12,7 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import LinkAccount from '../LinkAccount/LinkAcount'
 
 
+
 @cssModules(styles)
 export default class Row extends Component {
 
@@ -43,6 +44,9 @@ export default class Row extends Component {
       action = actions.token.getBalance
       actions.analytics.dataEvent('balances-update-noxon')
     }
+    else if (currency === 'Lightning network BTC') {
+      action = actions.htls.getBalance
+    }
 
     this.setState({
       isBalanceFetching: true,
@@ -62,7 +66,7 @@ export default class Row extends Component {
 
   render() {
     const { isBalanceFetching } = this.state
-    const { currency, balance, address } = this.props
+    const { currency, balance, address, img = false, light } = this.props
 
     return (
       <tr>
@@ -79,10 +83,12 @@ export default class Row extends Component {
             )
           }
         </td>
-        <td><LinkAccount address={address} type={currency.toLowerCase()} >{address}</LinkAccount></td>
+        <td>
+          {address} <br />
+        </td>
         <td>
           <ReloadButton styleName="reloadButton" onClick={this.handleReloadBalance} />
-          <WithdrawButton data={{ currency, balance, address }} />
+          <WithdrawButton data={{ currency, balance, address }} title="Withdraw" />
         </td>
       </tr>
     )

@@ -6,7 +6,7 @@ import CSSModules from 'react-css-modules'
 import styles from './WithdrawButton.scss'
 
 
-const WithdrawButton = ({ data }) => (
+const WithdrawButton = ({ title, data }) => (
   <div
     styleName="withdrawButton"
     onClick={() => {
@@ -15,7 +15,7 @@ const WithdrawButton = ({ data }) => (
       actions.modals.open(constants.modals.Withdraw, data)
     }}
   >
-    Withdraw
+    {title}
   </div>
 )
 

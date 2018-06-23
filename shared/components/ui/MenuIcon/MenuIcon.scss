@@ -1,0 +1,25 @@
+.menu {
+  min-width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: none;
+  cursor: pointer;
+  background-color: #E72BB3;
+  background-size: contain;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-right: 10px;
+}
+
+.menuImg {
+  width: 18px;
+  height: 18px;
+}
+
+@media screen and (max-width: 860px) {
+  .menu {
+    display: flex;
+  }
+}

@@ -1,4 +1,4 @@
-.button {
+.button, .buttonMobile {
   min-width: 40px;
   height: 40px;
   line-height: 40px;
@@ -10,8 +10,25 @@
   color: #fff;
   text-transform: uppercase;
   border-radius: 20px;
+  position: relative;
 
   &:hover {
     background-color: #ff1fc5;
+  }
+}
+
+.buttonMobile {
+  background: #e91db4 url('./images/add.svg') 50% 50% no-repeat;
+  padding: 0;
+  display: none;
+}
+
+@media screen and (max-width: 860px){
+  .buttonMobile {
+    display: block;
+  }
+  
+  .button {
+    display: none;
   }
 }
