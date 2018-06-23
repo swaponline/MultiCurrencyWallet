@@ -7,11 +7,19 @@ export default {
       gas: 1e5,
       gasPrice: '20000000000',
     },
+
+    eos: {
+      chainId: '',
+      httpEndpoint: '',
+      keyProvider: '',
+      serviceAccount: '',
+    },
   },
 
   link: {
     bitpay: 'https://insight.bitpay.com',
     etherscan: 'https://etherscan.io',
+    eos: '',
   },
 
   api: {

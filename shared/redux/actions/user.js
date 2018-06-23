@@ -11,12 +11,16 @@ const sign = async () => {
   actions.bitcoin.login(btcPrivateKey)
   actions.token.login(_ethPrivateKey)
   // await actions.nimiq.login(_ethPrivateKey)
+
+  const eosMasterPrivateKey = localStorage.getItem(constants.privateKeyNames.eos)
+  await actions.eos.login(eosMasterPrivateKey)
 }
 
 const getBalances = () => {
   actions.ethereum.getBalance()
   actions.bitcoin.getBalance()
   actions.token.getBalance()
+  actions.eos.getBalance()
   // actions.nimiq.getBalance()
 }
 

@@ -21,6 +21,11 @@ export const initialState = {
     balance: 0,
     currency: 'NIM',
   },
+  eosData: {
+    address: '',
+    balance: 0,
+    currency: 'EOS',
+  },
 }
 
 export const setAuthData = (state, { name, data }) => ({
