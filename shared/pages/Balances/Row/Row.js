@@ -44,9 +44,17 @@ export default class Row extends Component {
       action = actions.token.getBalance
       actions.analytics.dataEvent('balances-update-noxon')
     }
+<<<<<<< HEAD
     else if (currency === 'Lightning network BTC') {
       action = actions.htls.getBalance
     }
+=======
+    else if (currency === 'eos') {
+      action = actions.eos.getBalance
+      actions.analytics.dataEvent('balances-update-eos')
+    }
+
+>>>>>>> 845703fcc7f01176231a27337e157e755b10473a
 
     this.setState({
       isBalanceFetching: true,

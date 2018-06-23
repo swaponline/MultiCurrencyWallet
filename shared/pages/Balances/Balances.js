@@ -12,8 +12,8 @@ import styles from './balance.scss'
 import Images from './images/qr.png'
 
 
-@connect(({ user: { ethData, btcData, tokenData, nimData } }) => ({
-  items: [ ethData, btcData, tokenData/* , nimData */ ],
+@connect(({ user: { ethData, btcData, tokenData, eosData, nimData } }) => ({
+  items: [ ethData, btcData, tokenData, eosData, /* , nimData */ ],
   ethAddress: ethData.address,
   btcAddress: btcData.address,
 }))
