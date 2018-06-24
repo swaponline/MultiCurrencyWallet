@@ -72,6 +72,7 @@ const getTransaction = (address) =>
         if (res.status) {
           transactions = res.result
             .filter((item) => item.value > 0).map((item) => ({
+              confirmations: item.confirmations > 0 ? 'Confirm' : 'Unconfirmed',
               type: item.tokenName,
               hash: item.hash,
               contractAddress: item.contractAddress,

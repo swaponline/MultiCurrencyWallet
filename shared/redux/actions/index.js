@@ -10,7 +10,6 @@ import nimiq from './nimiq'
 import eos from './eos'
 import feed from './feed'
 import analytics from './analytics'
-import htls from './htls'
 
 
 export default {
@@ -26,5 +25,4 @@ export default {
   nimiq,
   feed,
   analytics,
-  htls,
 }

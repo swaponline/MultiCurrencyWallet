@@ -29,7 +29,7 @@ export default class WithdrawModal extends React.Component {
 
   state = {
     isSubmitted: false,
-    address: ' ',
+    address: '',
     amount: '',
   }
 

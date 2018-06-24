@@ -18,6 +18,7 @@ export default class Row extends Component {
 
   state = {
     isBalanceFetching: false,
+    viewText: false,
   }
 
   handleReloadBalance = () => {
@@ -44,17 +45,13 @@ export default class Row extends Component {
       action = actions.token.getBalance
       actions.analytics.dataEvent('balances-update-noxon')
     }
-<<<<<<< HEAD
     else if (currency === 'Lightning network BTC') {
       action = actions.htls.getBalance
     }
-=======
     else if (currency === 'eos') {
       action = actions.eos.getBalance
       actions.analytics.dataEvent('balances-update-eos')
     }
-
->>>>>>> 845703fcc7f01176231a27337e157e755b10473a
 
     this.setState({
       isBalanceFetching: true,
@@ -72,9 +69,24 @@ export default class Row extends Component {
       })
   }
 
+  handleCopiedAddress = () => {
+    this.setState({ viewText: true })
+    const el = document.createElement('textarea')
+    el.value = this.textAddress.innerText
+    el.style.position = 'absolute'
+    el.style.left = '-9999px'
+    document.body.appendChild(el)
+    el.select()
+    document.execCommand('copy')
+    document.body.removeChild(el)
+    setTimeout(() => {
+      this.setState({ viewText: false })
+    }, 800)
+  }
+
   render() {
-    const { isBalanceFetching } = this.state
-    const { currency, balance, address, img = false, light } = this.props
+    const { isBalanceFetching, viewText } = this.state
+    const { currency, balance, address } = this.props
 
     return (
       <tr>
@@ -91,12 +103,14 @@ export default class Row extends Component {
             )
           }
         </td>
-        <td>
-          {address} <br />
+        <td ref={td => this.textAddress = td}>
+          <LinkAccount type={currency} address={address} >{address}</LinkAccount>
         </td>
-        <td>
+        <td style={{ position: 'relative' }} >
+          <button styleName="button" onClick={this.handleCopiedAddress} >Copy</button>
           <ReloadButton styleName="reloadButton" onClick={this.handleReloadBalance} />
-          <WithdrawButton data={{ currency, balance, address }} title="Withdraw" />
+          <WithdrawButton data={{ currency, balance, address }} />
+          { viewText && <p styleName="copied" >Address copied to clipboard</p> }
         </td>
       </tr>
     )

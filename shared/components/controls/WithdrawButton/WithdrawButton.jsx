@@ -6,16 +6,15 @@ import CSSModules from 'react-css-modules'
 import styles from './WithdrawButton.scss'
 
 
-const WithdrawButton = ({ title, data }) => (
+const WithdrawButton = ({ data }) => (
   <div
     styleName="withdrawButton"
     onClick={() => {
-
       actions.analytics.dataEvent('balances-withdraw-'+data.currency.toLowerCase())
       actions.modals.open(constants.modals.Withdraw, data)
     }}
   >
-    {title}
+    Withdraw
   </div>
 )
 

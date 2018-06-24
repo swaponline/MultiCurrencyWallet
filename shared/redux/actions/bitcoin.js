@@ -57,19 +57,20 @@ const fetchBalance = (address) =>
 const getTransaction = (address) =>
   new Promise((resolve) => {
 
-    const url = `${config.api.blocktrail}/address/${address}/transactions?api_key=${config.apiKeys.blocktrail}`
+    const url = `${config.api.bitpay}/txs/?address=${address}`
     let transactions
 
     request.get(url).then((res) => {
-      if (res.total) {
-        transactions = res.data.map((item) => ({
+      console.log('BTC', res)
+      if (res) {
+        transactions = res.txs.map((item) => ({
           type: 'btc',
           hash: item.hash,
-          status: item.block_hash != null ? 1 : 0,
-          value: item.outputs[0].value / 1e8,
-          address: item.outputs[0].address,
-          date: new Date(Date.parse(item.time)).getTime(),
-          direction: address.toLocaleLowerCase() === item.outputs[0].address.toLocaleLowerCase() ? 'in' : 'out',
+          confirmations: item.confirmations > 0 ? 'Confirm' : 'Unconfirmed',
+          status: item.blockhash != null ? 1 : 0,
+          value: item.vout[0].value,
+          date: item.time * 1000,
+          direction: address.toLocaleLowerCase() === item.vout[0].scriptPubKey.addresses[0].toLocaleLowerCase() ? 'in' : 'out',
         }))
         resolve(transactions)
       }
