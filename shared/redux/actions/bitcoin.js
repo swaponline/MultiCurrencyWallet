@@ -65,9 +65,8 @@ const getTransaction = (address) =>
       if (res) {
         transactions = res.txs.map((item) => ({
           type: 'btc',
-          hash: item.hash,
+          hash: item.txid,
           confirmations: item.confirmations > 0 ? 'Confirm' : 'Unconfirmed',
-          status: item.blockhash != null ? 1 : 0,
           value: item.vout[0].value,
           date: item.time * 1000,
           direction: address.toLocaleLowerCase() === item.vout[0].scriptPubKey.addresses[0].toLocaleLowerCase() ? 'in' : 'out',
