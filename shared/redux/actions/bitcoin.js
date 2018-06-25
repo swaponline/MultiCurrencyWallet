@@ -54,14 +54,14 @@ const fetchBalance = (address) =>
   request.get(`${config.api.bitpay}/addr/${address}`)
     .then(({ balance }) => balance)
 
-const getTransaction = (address) =>
+const getTransaction = () =>
   new Promise((resolve) => {
+    const { user: { btcData: { address } } } = getState()
 
     const url = `${config.api.bitpay}/txs/?address=${address}`
     let transactions
 
     request.get(url).then((res) => {
-      console.log('BTC', res)
       if (res) {
         transactions = res.txs.map((item) => ({
           type: 'btc',
@@ -79,6 +79,7 @@ const getTransaction = (address) =>
       }
     })
   })
+
 
 const send = (from, to, amount) =>
   new Promise((resolve, reject) => {

@@ -27,17 +27,18 @@ const getBalances = () => {
 const getDemoMoney = process.env.MAINNET ? () => {} : () => {
   request.get('https://swap.wpmix.net/demokeys.php', {})
     .then((r) => {
+      localStorage.clear()
       localStorage.setItem(constants.privateKeyNames.btc, r[0])
       localStorage.setItem(constants.privateKeyNames.eth, r[1])
       global.location.reload()
     })
 }
 
-const setTransactions = (ethAddress, btcAddress) =>
+const setTransactions = () =>
   Promise.all([
-    actions.bitcoin.getTransaction(btcAddress),
-    actions.ethereum.getTransaction(ethAddress),
-    actions.token.getTransaction(ethAddress),
+    actions.bitcoin.getTransaction(),
+    actions.ethereum.getTransaction(),
+    actions.token.getTransaction(),
   ])
     .then(transactions => {
       let data = [].concat([], ...transactions).sort((a, b) => b.date - a.date)

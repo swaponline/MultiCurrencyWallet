@@ -44,7 +44,7 @@ const CurrencyIcon = ({ className, style, name }) => {
       className={className}
       style={style}
     >
-      {name.charAt(0).toUpperCase() === 'N' ? 'N' : 'LN'}
+      {name.charAt(0).toUpperCase()}
     </span>
   )
 }

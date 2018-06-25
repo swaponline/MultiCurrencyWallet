@@ -61,8 +61,10 @@ const fetchBalance = (address) => {
 //   })
 // }
 
-const getTransaction = (address) =>
+const getTransaction = () =>
   new Promise((resolve) => {
+    const { user: { ethData: { address } } } = getState()
+
     const url = `${config.api.etherscan}?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${config.apiKeys.etherscan}`
     let transactions
 

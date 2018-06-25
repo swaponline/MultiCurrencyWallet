@@ -6,7 +6,7 @@ import reducers from 'redux/core/reducers'
 import config from 'app-config'
 
 
-let noxonContract
+let tokenContract
 
 const setupContract = (ethAddress) => {
   if (!web3.eth.accounts.wallet[ethAddress]) {
@@ -19,7 +19,7 @@ const setupContract = (ethAddress) => {
     gasPrice: `${config.services.web3.gasPrice}`,
   }
 
-  noxonContract = new web3.eth.Contract(abi, config.services.web3.noxonToken, options)
+  tokenContract = new web3.eth.Contract(abi, config.services.web3.noxonToken, options)
 }
 
 const login = (privateKey) => {
@@ -42,9 +42,9 @@ const login = (privateKey) => {
 const getBalance = () => {
   const { user: { ethData: { address } } } = getState()
 
-  return request.get(`${config.api.etherscan}?module=account&action=tokenbalance&contractaddress=${noxonContract._address}&address=${address}`)
+  return request.get(`${config.api.etherscan}?module=account&action=tokenbalance&contractaddress=${tokenContract._address}&address=${address}`)
     .then(({ result: amount }) => {
-      console.log('tokenAddress', noxonContract._address)
+      console.log('tokenAddress', tokenContract._address)
       console.log('result', amount)
       reducers.user.setBalance({ name: 'tokenData', amount })
     }).catch(r => console.error('Token service isn\'t available, try later'))
@@ -55,11 +55,13 @@ const fetchBalance = (address) =>
     .then(({ result }) => result)
 
 
-const getTransaction = (address) =>
+const getTransaction = () =>
   new Promise((resolve) => {
+    const { user: { ethData: { address } } } = getState()
+
     const url = [
       `https://api-rinkeby.etherscan.io/api?module=account&action=tokentx`,
-      `&contractaddress=${config.services.web3.noxonToken}`,
+      `&contractaddress=${tokenContract._address}`,
       `&address=${address}`,
       `&startblock=0&endblock=99999999`,
       `&sort=asc&apikey=${config.apiKeys.blocktrail}`,
@@ -89,7 +91,7 @@ const getTransaction = (address) =>
 
 const send = (from, to, amount) =>
   new Promise((resolve, reject) =>
-    noxonContract.methods.transfer(to, amount).send()
+    tokenContract.methods.transfer(to, amount).send()
       .then(receipt => {
         resolve(receipt)
       })

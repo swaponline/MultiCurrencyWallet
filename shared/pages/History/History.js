@@ -23,15 +23,12 @@ const filterHistory = (items, filter) => {
 
 @connect(({ user: { ethData, btcData, tokenData }, history: { transactions, filter } }) => ({
   items: filterHistory(transactions, filter),
-  ethAddress: ethData.address,
-  btcAddress: btcData.address,
 }))
 export default class History extends Component {
 
   componentDidMount() {
-    const { ethAddress, btcAddress } = this.props
     actions.analytics.dataEvent('open-page-history')
-    actions.user.setTransactions(ethAddress, btcAddress)
+    actions.user.setTransactions()
   }
 
   render() {
