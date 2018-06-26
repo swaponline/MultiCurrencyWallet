@@ -21,12 +21,6 @@ Alice wants to sell BTC and buy ETH, Bob owerthise wants to sell ETH and buy BTC
  
 ## Swap  React
 
-### Development mode
-```
-npm run start
-```
-
-### Production mode
-```
-nmp run build
-```
+1) Clone [swap.core](https://github.com/swaponline/swap.core) to same directory where `swap.react` is <br />
+2) Do `npm i` <br />
+3) For dev mode `npm run start`, for prod `npm run build`
