@@ -12,6 +12,15 @@ import RequestButton from '../RequestButton/RequestButton'
 import RemoveButton from '../RemoveButton/RemoveButton'
 
 
+const exchangeRates = {
+  'ethbtc': 0.001,
+  'btceth': 1000,
+  'ethnoxon': 1,
+  'noxoneth': 1,
+  'btcnoxon': 1000,
+  'noxonbtc': 0.001,
+}
+
 export default class Row extends Component {
 
   static propTypes = {
@@ -44,7 +53,7 @@ export default class Row extends Component {
     }
 
     const { id, buyCurrency, sellCurrency, buyAmount, sellAmount, isRequested,
-      owner :{  peer: ownerPeer, reputation } } = row
+      owner :{  peer: ownerPeer } } = row
     const mePeer = swapApp.services.room.peer
 
     return (
@@ -59,7 +68,7 @@ export default class Row extends Component {
           {`${sellCurrency.toUpperCase()} ${sellAmount}`}
         </td>
         <td>
-          { reputation }
+          { exchangeRates[`${buyCurrency.toLowerCase()}${sellCurrency.toLowerCase()}`] }
         </td>
         <td>
           {
@@ -87,4 +96,3 @@ export default class Row extends Component {
     )
   }
 }
-
