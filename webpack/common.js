@@ -36,13 +36,13 @@ const webpackConfig = {
   resolve: {
     alias: {
       shared: config.paths.base('shared'),
-      'swap.auth':  config.paths.lib('swap.app/swap.auth'),
-      'swap.orders':  config.paths.lib('swap.app/swap.orders'),
-      'swap.room':  config.paths.lib('swap.app/swap.room'),
-      'swap.app':  config.paths.lib('swap.app/swap.app'),
-      'swap.flows':  config.paths.lib('swap.app/swap.flows'),
-      'swap.swap':  config.paths.lib('swap.app/swap.swap'),
-      'swap.swaps':  config.paths.lib('swap.app/swap.swaps'),
+      'swap.auth':  config.paths.lib('swap.auth'),
+      'swap.orders':  config.paths.lib('swap.orders'),
+      'swap.room':  config.paths.lib('swap.room'),
+      'swap.app':  config.paths.lib('swap.app'),
+      'swap.flows':  config.paths.lib('swap.flows'),
+      'swap.swap':  config.paths.lib('swap.swap'),
+      'swap.swaps':  config.paths.lib('swap.swaps'),
     },
     modules: [
       config.paths.base('client'),
