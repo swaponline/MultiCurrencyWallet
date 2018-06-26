@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react'
+import config from  'app-config'
 
 import actions from 'redux/actions'
 import PropTypes from 'prop-types'
@@ -11,15 +12,6 @@ import Coins from 'components/Coins/Coins'
 import RequestButton from '../RequestButton/RequestButton'
 import RemoveButton from '../RemoveButton/RemoveButton'
 
-
-const exchangeRates = {
-  'ethbtc': 0.001,
-  'btceth': 1000,
-  'ethnoxon': 1,
-  'noxoneth': 1,
-  'btcnoxon': 1000,
-  'noxonbtc': 0.001,
-}
 
 export default class Row extends Component {
 
@@ -68,7 +60,7 @@ export default class Row extends Component {
           {`${sellCurrency.toUpperCase()} ${sellAmount}`}
         </td>
         <td>
-          { exchangeRates[`${buyCurrency.toLowerCase()}${sellCurrency.toLowerCase()}`] }
+          { config.exchangeRates[`${buyCurrency.toLowerCase()}${sellCurrency.toLowerCase()}`] }
         </td>
         <td>
           {

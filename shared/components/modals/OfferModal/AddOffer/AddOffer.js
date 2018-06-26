@@ -1,6 +1,7 @@
 /* eslint-disable */
 import React, { Fragment, Component } from 'react'
 import { connect } from 'redaction'
+import config from 'app-config'
 
 import Link from 'sw-valuelink'
 import actions from 'redux/actions'
@@ -16,14 +17,6 @@ import Select from './Select/Select'
 
 BigNumber.config({ DECIMAL_PLACES: 4, ROUNDING_MODE: 4, EXPONENTIAL_AT: [-7, 14], RANGE: 1e+7, CRYPTO: true })
 
-const exchangeRates = {
-  'ethbtc': 0.001,
-  'btceth': 1000,
-  'ethnoxon': 1,
-  'noxoneth': 1,
-  'btcnoxon': 1000,
-  'noxonbtc': 0.001,
-}
 
 @connect(({ user: { ethData, btcData, tokenData } }) => ({
   items: [ethData, btcData, tokenData]
@@ -37,7 +30,7 @@ export default class AddOffer extends Component {
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency } = initialData || {}
 
     this.state = {
-      exchangeRate: exchangeRate || exchangeRates.ethbtc,
+      exchangeRate: exchangeRate || config.exchangeRates.ethbtc,
       buyAmount: buyAmount || '',
       sellAmount: sellAmount || '',
       buyCurrency: buyCurrency || 'eth',
@@ -47,7 +40,7 @@ export default class AddOffer extends Component {
   }
 
   getExchangeRate = (buyCurrency, sellCurrency) =>
-    exchangeRates[`${buyCurrency.toLowerCase()}${sellCurrency.toLowerCase()}`]
+    config.exchangeRates[`${buyCurrency.toLowerCase()}${sellCurrency.toLowerCase()}`]
 
   handleExchangeRateChange = (value) => {
     let { buyAmount, sellAmount } = this.state

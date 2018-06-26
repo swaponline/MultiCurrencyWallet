@@ -28,6 +28,15 @@ const config = {
     hour: 'numeric',
     minute: 'numeric',
   },
+
+  exchangeRates: {
+    'ethbtc': 0.001,
+    'btceth': 1000,
+    'ethnoxon': 1,
+    'noxoneth': 1,
+    'btcnoxon': 1000,
+    'noxonbtc': 0.001,
+  },
 }
 
 
