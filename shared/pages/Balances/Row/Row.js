@@ -32,50 +32,42 @@ export default class Row extends Component {
       isBalanceFetching: true,
     })
 
-    let { currency } = this.props
+    let { currency, contractAddress } = this.props
+    let action
 
     currency = currency.toLowerCase()
 
     if (currency === 'eth') {
-      actions.ethereum.getBalance()
-        .then(() => {
-          this.setState({
-            isBalanceFetching: false,
-          })
-        })
+      action = actions.ethereum.getBalance
       actions.analytics.dataEvent('balances-update-eth')
     }
     else if (currency === 'btc') {
-      actions.bitcoin.getBalance()
-        .then(() => {
-          this.setState({
-            isBalanceFetching: false,
-          })
-        })
+      action = actions.bitcoin.getBalance
       actions.analytics.dataEvent('balances-update-btc')
     }
     else if (currency === 'noxon') {
-      actions.token.getBalance(config.services.tokens.noxon, currency)
-        .then(() => {
-          this.setState({
-            isBalanceFetching: false,
-          })
-        })
+      action = actions.token.getBalance
       actions.analytics.dataEvent('balances-update-noxon')
     }
     else if (currency === 'swap') {
-      actions.token.getBalance(config.services.tokens.swap, currency)
+      action  = actions.token.getBalance
       actions.analytics.dataEvent('balances-update-swap')
     }
     else if (currency === 'eos') {
-      actions.eos.getBalance()
-        .then(() => {
-          this.setState({
-            isBalanceFetching: false,
-          })
-        })
+      action = actions.eos.getBalance
       actions.analytics.dataEvent('balances-update-eos')
     }
+
+    action(contractAddress, currency)
+      .then(() => {
+        this.setState({
+          isBalanceFetching: false,
+        })
+      }, () => {
+        this.setState({
+          isBalanceFetching: false,
+        })
+      })
   }
 
   handleCopiedAddress = () => {
