@@ -11,8 +11,10 @@ const sign = async () => {
 
   actions.bitcoin.login(btcPrivateKey)
 
-  actions.token.login(_ethPrivateKey, config.services.tokens.noxon, 'noxon')
-  actions.token.login(_ethPrivateKey, config.services.tokens.swap, 'swap')
+  Object.keys(config.services.tokens)
+    .forEach(name => {
+      actions.token.login(_ethPrivateKey, config.services.tokens[name], name)
+    })
   // await actions.nimiq.login(_ethPrivateKey)
 
   // const eosMasterPrivateKey = localStorage.getItem(constants.privateKeyNames.eos)
@@ -20,13 +22,10 @@ const sign = async () => {
 }
 
 const getBalances = () => {
-
   actions.ethereum.getBalance()
   actions.bitcoin.getBalance()
-
   actions.token.getBalance(config.services.tokens.noxon, 'noxon')
   actions.token.getBalance(config.services.tokens.swap, 'swap')
-
   // actions.eos.getBalance()
   // actions.nimiq.getBalance()
 }
