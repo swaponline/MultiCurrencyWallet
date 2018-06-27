@@ -92,7 +92,7 @@ const getTransaction = (contractAddress) =>
   })
 
 
-const send = (contractAddress, from, to, amount) => {
+const send = (from, to, amount) => {
   const { user: { ethData: { address } } } = getState()
   let tokenContract
 
@@ -102,7 +102,7 @@ const send = (contractAddress, from, to, amount) => {
     gasPrice: `${config.services.web3.gasPrice}`,
   }
 
-  tokenContract = new web3.eth.Contract(abi, contractAddress, options)
+  tokenContract = new web3.eth.Contract(abi, from, options)
 
   return new Promise((resolve, reject) =>
     tokenContract.methods.transfer(to, amount).send()

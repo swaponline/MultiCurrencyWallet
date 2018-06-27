@@ -95,7 +95,7 @@ export default class Row extends Component {
 
   render() {
     const { isBalanceFetching, viewText } = this.state
-    const { currency, balance, address } = this.props
+    const { currency, balance, address, contractAddress } = this.props
 
     return (
       <tr>
@@ -118,7 +118,7 @@ export default class Row extends Component {
         <td style={{ position: 'relative' }} >
           <button styleName="button" onClick={this.handleCopiedAddress} >Copy</button>
           <ReloadButton styleName="reloadButton" onClick={this.handleReloadBalance} />
-          <WithdrawButton data={{ currency, balance, address }} />
+          <WithdrawButton data={{ currency, balance, address, contractAddress }} />
           { viewText && <p styleName="copied" >Address copied to clipboard</p> }
         </td>
       </tr>
