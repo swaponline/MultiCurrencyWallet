@@ -2,11 +2,14 @@ export default {
   services: {
     web3: {
       provider: 'https://rinkeby.infura.io/JCnK5ifEPH9qcQkX0Ahl',
-      noxonToken: '0x60c205722c6c797c725a996cf9cca11291f90749',
-      swapToken: '0x5f53dc58cad6101d943b26ffb9427723aeb816f9',
       rate: 0.1,
       gas: 1e5,
       gasPrice: '20000000000',
+    },
+
+    tokens: {
+      swap: '0x5f53dc58cad6101d943b26ffb9427723aeb816f9',
+      noxon: '0x60c205722c6c797c725a996cf9cca11291f90749',
     },
 
     eos: {

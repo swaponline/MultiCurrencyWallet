@@ -11,11 +11,6 @@ export const initialState = {
     balance: 0,
     currency: 'BTC',
   },
-  tokenData:{
-    address: '',
-    balance: 0,
-    currency: 'NOXON',
-  },
   nimData: {
     address: '',
     balance: 0,
@@ -26,27 +21,49 @@ export const initialState = {
     balance: 0,
     currency: 'EOS',
   },
+  tokensData: {},
 }
 
 export const setAuthData = (state, { name, data }) => ({
   ...state,
+  tokensData: {
+    ...state.tokensData,
+  },
   [name]: {
     ...state[name],
     ...data,
   },
 })
 
+export const setTokenAuthData = (state, { name, data }) => ({
+  ...state,
+  tokensData: {
+    ...state.tokensData,
+    [name]: {
+      ...state[name],
+      ...data,
+    },
+  },
+})
+
 export const setBalance = (state, { name, amount }) => ({
   ...state,
+  tokensData: {
+    ...state.tokensData,
+  },
   [name]: {
     ...state[name],
     balance: Number(amount),
   },
 })
 
-export const setTokenData = (state, { name }) => ({
+export const setTokenBalance = (state, { name, amount }) => ({
   ...state,
-  [name]: {
-    ...state[name],
+  tokensData: {
+    ...state.tokensData,
+    [name]: {
+      ...state.tokensData[name],
+      balance: amount,
+    },
   },
 })

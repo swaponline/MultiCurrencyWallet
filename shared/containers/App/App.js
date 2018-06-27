@@ -25,8 +25,8 @@ moment.locale('en-gb')
   ethAddress: 'user.ethData.address',
   btcAddress: 'user.btcData.address',
   // nimAddress: 'user.nimData.address',
-  tokenAddress: 'user.tokenData.address',
-  eosAddress: 'user.eosData.address',
+  tokenAddress: 'user.tokensData.noxon.address',
+  // eosAddress: 'user.eosData.address',
   isVisible: 'loader.isVisible',
 })
 @CSSModules(styles)
@@ -41,8 +41,8 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { children, ethAddress, btcAddress, tokenAddress, eosAddress } = this.props
-    const isFetching = !ethAddress || !btcAddress || !tokenAddress || !eosAddress
+    const { children, ethAddress, btcAddress, tokenAddress /* eosAddress */ } = this.props
+    const isFetching = !ethAddress || !btcAddress || !tokenAddress
 
 
     if (isFetching) {

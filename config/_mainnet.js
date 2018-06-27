@@ -2,11 +2,14 @@ export default {
   services: {
     web3: {
       provider: 'https://mainnet.infura.io/5lcMmHUURYg8F20GLGSr',
-      noxonToken: '0x9E4AD79049282F942c1b4c9b418F0357A0637017',
-      swapToken: '0x14a52cf6B4F68431bd5D9524E4fcD6F41ce4ADe9',
       rate: 0.1,
       gas: 1e5,
       gasPrice: '20000000000',
+    },
+
+    tokens: {
+      swap: '0x14a52cf6B4F68431bd5D9524E4fcD6F41ce4ADe9',
+      noxon: '0x9E4AD79049282F942c1b4c9b418F0357A0637017',
     },
 
     eos: {

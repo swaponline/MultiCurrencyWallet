@@ -21,7 +21,7 @@ const filterHistory = (items, filter) => {
   return items
 }
 
-@connect(({ user: { ethData, btcData, tokenData }, history: { transactions, filter } }) => ({
+@connect(({ history: { transactions, filter } }) => ({
   items: filterHistory(transactions, filter),
 }))
 export default class History extends Component {

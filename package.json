@@ -81,8 +81,6 @@
     "autosize": "^4.0.2",
     "bitcoinjs-lib": "^3.3.2",
     "classnames": "^2.2.5",
-    "eosjs": "^14.1.0",
-    "eosjs-keygen": "^1.3.2",
     "history": "^4.7.2",
     "human-standard-token-abi": "^1.0.2",
     "lodash": "^4.17.5",

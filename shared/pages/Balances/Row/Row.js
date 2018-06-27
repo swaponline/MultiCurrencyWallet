@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import actions from 'redux/actions'
+import config from 'app-config'
 
 import cssModules from 'react-css-modules'
 import styles from './Row.scss'
@@ -10,7 +11,6 @@ import ReloadButton from 'components/controls/ReloadButton/ReloadButton'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 
 import LinkAccount from '../LinkAccount/LinkAcount'
-
 
 
 @cssModules(styles)
@@ -28,45 +28,54 @@ export default class Row extends Component {
       return null
     }
 
-    let { currency } = this.props
-    let action
-
-    currency = currency.toLowerCase()
-
-    if (currency === 'eth') {
-      action = actions.ethereum.getBalance
-      actions.analytics.dataEvent('balances-update-eth')
-    }
-    else if (currency === 'btc') {
-      action = actions.bitcoin.getBalance
-      actions.analytics.dataEvent('balances-update-btc')
-    }
-    else if (currency === 'noxon') {
-      action = actions.token.getBalance
-      actions.analytics.dataEvent('balances-update-noxon')
-    }
-    else if (currency === 'Lightning network BTC') {
-      action = actions.htls.getBalance
-    }
-    else if (currency === 'eos') {
-      action = actions.eos.getBalance
-      actions.analytics.dataEvent('balances-update-eos')
-    }
-
     this.setState({
       isBalanceFetching: true,
     })
 
-    action()
-      .then(() => {
-        this.setState({
-          isBalanceFetching: false,
+    let { currency } = this.props
+
+    currency = currency.toLowerCase()
+
+    if (currency === 'eth') {
+      actions.ethereum.getBalance()
+        .then(() => {
+          this.setState({
+            isBalanceFetching: false,
+          })
         })
-      }, () => {
-        this.setState({
-          isBalanceFetching: false,
+      actions.analytics.dataEvent('balances-update-eth')
+    }
+    else if (currency === 'btc') {
+      actions.bitcoin.getBalance()
+        .then(() => {
+          this.setState({
+            isBalanceFetching: false,
+          })
         })
-      })
+      actions.analytics.dataEvent('balances-update-btc')
+    }
+    else if (currency === 'noxon') {
+      actions.token.getBalance(config.services.tokens.noxon, currency)
+        .then(() => {
+          this.setState({
+            isBalanceFetching: false,
+          })
+        })
+      actions.analytics.dataEvent('balances-update-noxon')
+    }
+    else if (currency === 'swap') {
+      actions.token.getBalance(config.services.tokens.swap, currency)
+      actions.analytics.dataEvent('balances-update-swap')
+    }
+    else if (currency === 'eos') {
+      actions.eos.getBalance()
+        .then(() => {
+          this.setState({
+            isBalanceFetching: false,
+          })
+        })
+      actions.analytics.dataEvent('balances-update-eos')
+    }
   }
 
   handleCopiedAddress = () => {
