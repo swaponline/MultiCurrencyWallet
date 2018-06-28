@@ -63,7 +63,7 @@ export const setTokenBalance = (state, { name, amount }) => ({
     ...state.tokensData,
     [name]: {
       ...state.tokensData[name],
-      balance: amount,
+      balance: Number(amount),
     },
   },
 })

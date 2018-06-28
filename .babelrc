@@ -1,3 +1,33 @@
+//{
+//  "presets": [
+//    ["@babel/preset-env", {
+//      "targets": {
+//        "chrome": 52,
+//        "browsers": ["last 2 versions", "safari 7"]
+//      }
+//    }],
+//    "@babel/react"
+//  ],
+//  "plugins": [
+//    ["@babel/plugin-transform-runtime", {
+//      "helpers": false,
+//      "polyfill": false,
+//      "regenerator": true,
+//      "moduleName": "@babel/runtime"
+//    }],
+//    ["@babel/plugin-proposal-decorators", { "legacy": true }],
+//    ["@babel/plugin-proposal-class-properties", { "loose": true }]
+//  ],
+//  "env": {
+//    "development": {
+//      "plugins": ["react-hot-loader/babel"]
+//    },
+//    "production": {
+//      "plugins": ["@babel/plugin-transform-classes"]
+//    }
+//  }
+//}
+
 {
   "presets": [ "react", [ "es2015", { "loose": true } ], "stage-0" ],
   "plugins": [

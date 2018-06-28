@@ -31,7 +31,12 @@ export default (webpackConfig) => {
   })
 
   webpackConfig.plugins.push(
-    // new UglifyJsPlugin(),
+    // new UglifyJsPlugin({
+    //   uglifyOptions: {
+    //     ecma: 6,
+    //     warnings: true,
+    //   },
+    // }),
     new ExtractTextPlugin({
       filename: '[name].[hash:6].css',
       allChunks: true,

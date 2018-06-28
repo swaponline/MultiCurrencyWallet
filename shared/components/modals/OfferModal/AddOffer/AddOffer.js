@@ -18,8 +18,9 @@ import Select from './Select/Select'
 BigNumber.config({ DECIMAL_PLACES: 4, ROUNDING_MODE: 4, EXPONENTIAL_AT: [-7, 14], RANGE: 1e+7, CRYPTO: true })
 
 
-@connect(({ user: { ethData, btcData, tokenData } }) => ({
-  items: [ethData, btcData, tokenData]
+@connect(({ user: { ethData, btcData, tokensData } }) => ({
+  items: [ethData, btcData ],
+  tokensData,
 }))
 @cssModules(styles, { allowMultiple: true })
 export default class AddOffer extends Component {
@@ -131,12 +132,14 @@ export default class AddOffer extends Component {
 
   handleNext = () => {
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency } = this.state
-    const forbidden = (`${buyCurrency}${sellCurrency}` === 'noxoneth') || (`${buyCurrency}${sellCurrency}` === 'ethnoxon')
+    const noxoneth = (`${buyCurrency}${sellCurrency}` === 'noxoneth') || (`${buyCurrency}${sellCurrency}` === 'ethnoxon')
+    const btcnoxon = (`${buyCurrency}${sellCurrency}` === 'noxonbtc') || (`${buyCurrency}${sellCurrency}` === 'btcnoxon')
+
     const { onNext } = this.props
 
     actions.analytics.dataEvent('orderbook-addoffer-click-next-button')
 
-    const isDisabled = !exchangeRate || !buyAmount || !sellAmount || forbidden
+    const isDisabled = !exchangeRate || !buyAmount || !sellAmount || noxoneth || btcnoxon
 
     console.log(this.state)
 
@@ -147,9 +150,9 @@ export default class AddOffer extends Component {
 
   changeBalance = (value) => {
     this.setState({
-      buyAmount: value,
+      sellAmount: value,
     })
-    this.handleBuyAmountChange(value)
+    this.handleSellAmountChange(value)
   }
 
   componentWillMount() {
@@ -157,13 +160,17 @@ export default class AddOffer extends Component {
   }
 
   render() {
-    const { items } = this.props
+    const { items, tokensData } = this.props
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency } = this.state
-    const forbidden = (`${buyCurrency}${sellCurrency}` === 'noxoneth') || (`${buyCurrency}${sellCurrency}` === 'ethnoxon')
+
+    const noxoneth = (`${buyCurrency}${sellCurrency}` === 'noxoneth') || (`${buyCurrency}${sellCurrency}` === 'ethnoxon')
+    const btcnoxon = (`${buyCurrency}${sellCurrency}` === 'noxonbtc') || (`${buyCurrency}${sellCurrency}` === 'btcnoxon')
 
     const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
-    const isDisabled = !exchangeRate || forbidden || !buyAmount && !sellAmount
-    const item = items.filter(item => item.currency.toLowerCase() === buyCurrency)
+    const isDisabled = !exchangeRate || noxoneth || btcnoxon || !buyAmount && !sellAmount
+
+    Object.keys(tokensData).map(k => items.push(tokensData[k]))
+    const item = items.filter(item => item.currency.toLowerCase() === `${sellCurrency}`)
 
     return (
       <Fragment>
@@ -178,18 +185,18 @@ export default class AddOffer extends Component {
           currency={item[0].currency}
         />
         <Group
-          styleName="buyGroup"
+          styleName="sellGroup"
+          label="Sell"
+          inputValueLink={linked.sellAmount.onChange(this.handleSellAmountChange)}
+          selectedCurrencyValue={sellCurrency}
+          onCurrencySelect={this.handleSellCurrencySelect}
+        />
+        <Group
           label="Buy"
           inputValueLink={linked.buyAmount.onChange(this.handleBuyAmountChange)}
           selectedCurrencyValue={buyCurrency}
           onCurrencySelect={this.handleBuyCurrencySelect}
           id="Buy"
-        />
-        <Group
-          label="Sell"
-          inputValueLink={linked.sellAmount.onChange(this.handleSellAmountChange)}
-          selectedCurrencyValue={sellCurrency}
-          onCurrencySelect={this.handleSellCurrencySelect}
         />
         <Button
           styleName="button"

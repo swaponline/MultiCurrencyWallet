@@ -43,8 +43,9 @@ const setupContract = (ethAddress, contractAddress, nameContract) => {
 
 const getBalance = (contractAddress, name) => {
   const { user: { ethData: { address } } } = getState()
+  const url = `${config.api.etherscan}?module=account&action=tokenbalance&contractaddress=${contractAddress}&address=${address}`
 
-  return request.get(`${config.api.etherscan}?module=account&action=tokenbalance&contractaddress=${contractAddress}&address=${address}`)
+  return request.get(url)
     .then(({ result: amount }) => {
       reducers.user.setTokenBalance({ name, amount })
     }).catch(r => console.error('Token service isn\'t available, try later'))
