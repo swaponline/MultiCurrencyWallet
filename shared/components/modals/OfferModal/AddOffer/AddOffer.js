@@ -40,6 +40,10 @@ export default class AddOffer extends Component {
     }
   }
 
+  componentWillMount() {
+    actions.user.getBalances()
+  }
+
   getExchangeRate = (buyCurrency, sellCurrency) =>
     config.exchangeRates[`${buyCurrency.toLowerCase()}${sellCurrency.toLowerCase()}`]
 
@@ -50,8 +54,8 @@ export default class AddOffer extends Component {
     sellAmount = buyAmount.multipliedBy(new BigNumber(String(value) || 0))
 
     this.setState({
-      buyAmount,
-      sellAmount,
+      buyAmount: buyAmount.toNumber(),
+      sellAmount: sellAmount.toNumber(),
     })
   }
 
@@ -112,9 +116,8 @@ export default class AddOffer extends Component {
     }
 
     this.setState({
-      sellAmount: new BigNumber(String(value) || 0).multipliedBy(exchangeRate).toNumber()
+      sellAmount: new BigNumber(String(value) || 0).multipliedBy(exchangeRate).toNumber(),
     })
-
   }
 
   handleSellAmountChange = (value) => {
@@ -126,20 +129,25 @@ export default class AddOffer extends Component {
     }
 
     this.setState({
-      buyAmount: new BigNumber(String(value) || 0).dividedBy(exchangeRate).toNumber()
+      buyAmount: new BigNumber(String(value) || 0).dividedBy(exchangeRate).toNumber(),
     })
   }
 
   handleNext = () => {
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency } = this.state
-    const noxoneth = `${buyCurrency}${sellCurrency}` === 'noxoneth' || 'ethnoxon'
-    const btcnoxon = `${buyCurrency}${sellCurrency}` === 'noxonbtc' || 'btcnoxon'
+    let blocked
+
+    if (process.env.MAINNET) {
+      const noxoneth = `${buyCurrency}${sellCurrency}` === 'noxoneth' ||  `${buyCurrency}${sellCurrency}` === 'ethnoxon'
+      const btcnoxon = `${buyCurrency}${sellCurrency}` === 'noxonbtc' || `${buyCurrency}${sellCurrency}` === 'btcnoxon'
+      blocked = !noxoneth && !btcnoxon
+    }
 
     const { onNext } = this.props
 
     actions.analytics.dataEvent('orderbook-addoffer-click-next-button')
 
-    const isDisabled = !exchangeRate || !buyAmount || !sellAmount || noxoneth || btcnoxon
+    const isDisabled = !exchangeRate || !buyAmount || !sellAmount || !blocked
 
     console.log(this.state)
 
@@ -155,22 +163,23 @@ export default class AddOffer extends Component {
     this.handleSellAmountChange(value)
   }
 
-  componentWillMount() {
-    actions.user.getBalances()
-  }
-
   render() {
     const { items, tokensData } = this.props
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency } = this.state
+    let blocked
 
-    const noxoneth = `${buyCurrency}${sellCurrency}` === 'noxoneth' ||  'ethnoxon'
-    const btcnoxon = `${buyCurrency}${sellCurrency}` === 'noxonbtc' || 'btcnoxon'
+    if (process.env.MAINNET) {
+      const noxoneth = `${buyCurrency}${sellCurrency}` === 'noxoneth' ||  `${buyCurrency}${sellCurrency}` === 'ethnoxon'
+      const btcnoxon = `${buyCurrency}${sellCurrency}` === 'noxonbtc' || `${buyCurrency}${sellCurrency}` === 'btcnoxon'
+      blocked = !noxoneth && !btcnoxon
+    }
 
     const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
-    const isDisabled = !exchangeRate || noxoneth || btcnoxon || !buyAmount && !sellAmount
+    const isDisabled = !exchangeRate || !blocked || !buyAmount && !sellAmount
 
     Object.keys(tokensData).map(k => items.push(tokensData[k]))
     const item = items.filter(item => item.currency.toLowerCase() === `${sellCurrency}`)
+
 
     return (
       <Fragment>

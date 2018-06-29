@@ -25,7 +25,7 @@ localStorage.clear = () => {
 }
 
 swapApp.setup({
-  network: 'testnet',
+  network: 'mainnet',
   env: {
     web3,
     bitcoin,
