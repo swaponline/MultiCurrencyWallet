@@ -8,8 +8,14 @@ export default {
     },
 
     tokens: {
-      swap: '0x5f53dc58cad6101d943b26ffb9427723aeb816f9',
-      noxon: '0x60c205722c6c797c725a996cf9cca11291f90749',
+      swap: {
+        address: '0x5f53dc58cad6101d943b26ffb9427723aeb816f9',
+        decimals: 18,
+      },
+      noxon: {
+        address: '0x60c205722c6c797c725a996cf9cca11291f90749',
+        decimals: 18,
+      },
     },
 
     eos: {

@@ -1,8 +1,9 @@
 import React from 'react'
 
 import { connect } from 'redaction'
-import { swapApp } from 'instances/newSwap'
+import SwapApp from 'swap.app'
 import actions from 'redux/actions'
+import { constants } from 'helpers'
 
 import CSSModules from 'react-css-modules'
 import styles from './User.scss'
@@ -29,13 +30,20 @@ export default class User extends React.Component {
   }
 
   componentWillMount() {
-    swapApp.services.orders
+    SwapApp.services.orders
       .on('new order request', this.updateOrders)
   }
 
   componentWillUnmount() {
-    swapApp.services.orders
+    SwapApp.services.orders
       .off('new order request', this.updateOrders)
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+      const peer = SwapApp.services.room.connection._peers.length
+      actions.notifications.show(constants.notifications.Message, { message: `IPFS: ${peer} peers connected` })
+    }, 8000)
   }
 
   handleChangeView = () => {
@@ -46,7 +54,7 @@ export default class User extends React.Component {
 
   updateOrders = () => {
     this.setState({
-      orders: swapApp.services.orders.items,
+      orders: SwapApp.services.orders.items,
     })
 
     const { orders } = this.state
@@ -63,7 +71,7 @@ export default class User extends React.Component {
   }
 
   acceptRequest = (orderId, participantPeer) => {
-    const order = swapApp.services.orders.getByKey(orderId)
+    const order = SwapApp.services.orders.getByKey(orderId)
 
     order.acceptRequest(participantPeer)
 
@@ -84,7 +92,7 @@ export default class User extends React.Component {
   render() {
     const { view, menuVisible } = this.state
     const { feeds } = this.props
-    const mePeer = swapApp.services.room.peer
+    const mePeer = SwapApp.services.room.peer
 
     return (
       <div styleName="user-cont">

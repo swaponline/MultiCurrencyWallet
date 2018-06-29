@@ -13,7 +13,7 @@ const sign = async () => {
 
   Object.keys(config.services.tokens)
     .forEach(name => {
-      actions.token.login(_ethPrivateKey, config.services.tokens[name], name)
+      actions.token.login(_ethPrivateKey, config.services.tokens[name].address, name)
     })
   // await actions.nimiq.login(_ethPrivateKey)
 
@@ -27,7 +27,7 @@ const getBalances = () => {
 
   Object.keys(config.services.tokens)
     .forEach(name => {
-      actions.token.getBalance(config.services.tokens[name], name)
+      actions.token.getBalance(config.services.tokens[name].address, name)
     })
   // actions.eos.getBalance()
   // actions.nimiq.getBalance()
@@ -46,8 +46,8 @@ const setTransactions = () =>
   Promise.all([
     actions.bitcoin.getTransaction(),
     actions.ethereum.getTransaction(),
-    actions.token.getTransaction(config.services.tokens.swap),
-    actions.token.getTransaction(config.services.tokens.noxon),
+    actions.token.getTransaction(config.services.tokens.swap.address),
+    actions.token.getTransaction(config.services.tokens.noxon.address),
   ])
     .then(transactions => {
       let data = [].concat([], ...transactions).sort((a, b) => b.date - a.date)

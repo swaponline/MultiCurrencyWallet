@@ -135,7 +135,7 @@ export default class AddOffer extends Component {
 
   handleNext = () => {
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency } = this.state
-    let blocked
+    let blocked = true
 
     if (process.env.MAINNET) {
       const noxoneth = `${buyCurrency}${sellCurrency}` === 'noxoneth' ||  `${buyCurrency}${sellCurrency}` === 'ethnoxon'
@@ -166,7 +166,7 @@ export default class AddOffer extends Component {
   render() {
     const { items, tokensData } = this.props
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency } = this.state
-    let blocked
+    let blocked = true
 
     if (process.env.MAINNET) {
       const noxoneth = `${buyCurrency}${sellCurrency}` === 'noxoneth' ||  `${buyCurrency}${sellCurrency}` === 'ethnoxon'

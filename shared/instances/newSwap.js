@@ -24,8 +24,10 @@ localStorage.clear = () => {
   localStorage.setItem('testnet:btc:privateKey', btcPrivateKey)
 }
 
+
+
 swapApp.setup({
-  network: 'mainnet',
+  network: process.env.MAINNET ? 'mainnet' : 'testnet',
   env: {
     web3,
     bitcoin,
