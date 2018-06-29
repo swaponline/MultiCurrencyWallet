@@ -19,6 +19,9 @@ export default class Balances extends Component {
 
   componentWillMount() {
     actions.user.getDemoMoney()
+  }
+
+  componentDidMount() {
     actions.user.getBalances()
     actions.analytics.dataEvent('open-page-balances')
     // if (!localStorage.getItem(constants.localStorage.privateKeysSaved)) {
