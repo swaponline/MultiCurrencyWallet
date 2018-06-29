@@ -44,7 +44,7 @@ const setupContract = (ethAddress, contractAddress, nameContract) => {
 const getBalance = (contractAddress, name) => {
   const { user: { ethData: { address } } } = getState()
   const url = `${config.api.etherscan}?module=account&action=tokenbalance&contractaddress=${contractAddress}&address=${address}`
-
+  console.log(url)
   return request.get(url)
     .then(({ result: amount }) => {
       reducers.user.setTokenBalance({ name, amount })

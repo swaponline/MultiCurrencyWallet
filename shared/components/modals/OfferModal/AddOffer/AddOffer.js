@@ -1,7 +1,7 @@
-/* eslint-disable */
 import React, { Fragment, Component } from 'react'
 import { connect } from 'redaction'
 import config from 'app-config'
+import { request } from 'helpers'
 
 import Link from 'sw-valuelink'
 import actions from 'redux/actions'
@@ -15,8 +15,8 @@ import Button from 'components/controls/Button/Button'
 import Group from './Group/Group'
 import Select from './Select/Select'
 
-BigNumber.config({ DECIMAL_PLACES: 4, ROUNDING_MODE: 4, EXPONENTIAL_AT: [-7, 14], RANGE: 1e+7, CRYPTO: true })
 
+BigNumber.config({ DECIMAL_PLACES: 4, ROUNDING_MODE: 4, EXPONENTIAL_AT: [-7, 14], RANGE: 1e+7, CRYPTO: true })
 
 @connect(({ user: { ethData, btcData, tokensData } }) => ({
   items: [ethData, btcData ],
@@ -132,8 +132,8 @@ export default class AddOffer extends Component {
 
   handleNext = () => {
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency } = this.state
-    const noxoneth = (`${buyCurrency}${sellCurrency}` === 'noxoneth') || (`${buyCurrency}${sellCurrency}` === 'ethnoxon')
-    const btcnoxon = (`${buyCurrency}${sellCurrency}` === 'noxonbtc') || (`${buyCurrency}${sellCurrency}` === 'btcnoxon')
+    const noxoneth = `${buyCurrency}${sellCurrency}` === 'noxoneth' || 'ethnoxon'
+    const btcnoxon = `${buyCurrency}${sellCurrency}` === 'noxonbtc' || 'btcnoxon'
 
     const { onNext } = this.props
 
@@ -163,8 +163,8 @@ export default class AddOffer extends Component {
     const { items, tokensData } = this.props
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency } = this.state
 
-    const noxoneth = (`${buyCurrency}${sellCurrency}` === 'noxoneth') || (`${buyCurrency}${sellCurrency}` === 'ethnoxon')
-    const btcnoxon = (`${buyCurrency}${sellCurrency}` === 'noxonbtc') || (`${buyCurrency}${sellCurrency}` === 'btcnoxon')
+    const noxoneth = `${buyCurrency}${sellCurrency}` === 'noxoneth' ||  'ethnoxon'
+    const btcnoxon = `${buyCurrency}${sellCurrency}` === 'noxonbtc' || 'btcnoxon'
 
     const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
     const isDisabled = !exchangeRate || noxoneth || btcnoxon || !buyAmount && !sellAmount

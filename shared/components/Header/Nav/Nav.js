@@ -1,5 +1,4 @@
 import React from 'react'
-import actions from 'redux/actions'
 
 import { NavLink } from 'react-router-dom'
 import { links } from 'helpers'
@@ -28,15 +27,6 @@ const Nav = () => (
           {title}
         </NavLink>
       ))
-    }
-    {
-      process.env.TESTNET && <div
-        key="Get demo money"
-        styleName="button"
-        onClick={() => actions.user.getDemoMoney()}
-      >
-        Get demo money
-      </div>
     }
   </div>
 )
