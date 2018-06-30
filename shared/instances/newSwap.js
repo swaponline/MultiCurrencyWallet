@@ -24,7 +24,18 @@ localStorage.clear = () => {
   localStorage.setItem('testnet:btc:privateKey', btcPrivateKey)
 }
 
+window.createOrder = ({ buyCurrency, sellCurrency, buyAmount, sellAmount }) => {
+  const data = {
+    buyCurrency: `${buyCurrency}`,
+    sellCurrency: `${sellCurrency}`,
+    buyAmount: Number(buyAmount),
+    sellAmount: Number(sellAmount),
+  }
 
+  swapApp.services.orders.create(data)
+
+  return 'Order create'
+}
 
 swapApp.setup({
   network: process.env.MAINNET ? 'mainnet' : 'testnet',

@@ -187,6 +187,7 @@ export default class AddOffer extends Component {
           label="Exchange rate"
           inputValueLink={linked.exchangeRate.onChange(this.handleExchangeRateChange)}
           currency={false}
+          id="exchangeRate"
         />
         <Select
           changeBalance={this.changeBalance}
@@ -199,13 +200,14 @@ export default class AddOffer extends Component {
           inputValueLink={linked.sellAmount.onChange(this.handleSellAmountChange)}
           selectedCurrencyValue={sellCurrency}
           onCurrencySelect={this.handleSellCurrencySelect}
+          id="sellAmount"
         />
         <Group
           label="Buy"
           inputValueLink={linked.buyAmount.onChange(this.handleBuyAmountChange)}
           selectedCurrencyValue={buyCurrency}
           onCurrencySelect={this.handleBuyCurrencySelect}
-          id="Buy"
+          id="buyAmount"
         />
         <Button
           styleName="button"

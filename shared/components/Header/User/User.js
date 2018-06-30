@@ -39,13 +39,6 @@ export default class User extends React.Component {
       .off('new order request', this.updateOrders)
   }
 
-  componentDidMount() {
-    setTimeout(() => {
-      const peer = SwapApp.services.room.connection._peers.length
-      actions.notifications.show(constants.notifications.Message, { message: `IPFS: ${peer} peers connected` })
-    }, 8000)
-  }
-
   handleChangeView = () => {
     this.setState({
       view: true,

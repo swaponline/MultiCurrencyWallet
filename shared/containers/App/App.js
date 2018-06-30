@@ -11,6 +11,7 @@ import styles from './App.scss'
 import 'scss/app.scss'
 
 import Header from 'components/Header/Header'
+import Footer from 'components/Footer/Footer'
 import Loader from 'components/loaders/Loader/Loader'
 import RequestLoader from 'components/loaders/RequestLoader/RequestLoader'
 import ModalConductor from 'components/modal/ModalConductor/ModalConductor'
@@ -57,6 +58,7 @@ export default class App extends React.Component {
         <WidthContainer styleName="main">
           {children}
         </WidthContainer>
+        <Footer />
         <RequestLoader />
         <ModalConductor />
         <NotificationConductor />

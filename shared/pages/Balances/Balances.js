@@ -18,7 +18,9 @@ import Row from './Row/Row'
 export default class Balances extends Component {
 
   componentWillMount() {
-    actions.user.getDemoMoney()
+    if (!localStorage.getItem(constants.localStorage.demoMoneyReceived)) {
+      actions.user.getDemoMoney()
+    }
   }
 
   componentDidMount() {
@@ -36,7 +38,6 @@ export default class Balances extends Component {
 
     Object.keys(tokensData).map(k => items.push(tokensData[k]))
 
-    console.log(items)
     return (
       <section>
         <PageHeadline subTitle="Balances" />

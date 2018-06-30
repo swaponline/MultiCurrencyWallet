@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom'
 
 import Coins from 'components/Coins/Coins'
 import RequestButton from '../RequestButton/RequestButton'
-import RemoveButton from '../RemoveButton/RemoveButton'
+import RemoveButton from 'components/controls/RemoveButton/RemoveButton'
 
 
 export default class Row extends Component {

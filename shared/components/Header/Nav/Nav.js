@@ -11,6 +11,7 @@ const nav = [
   { title: 'Orders', link: links.home },
   { title: 'Balances', link: links.balance },
   { title: 'History', link: links.history },
+  { title: 'Feeds', link: links.feed },
 ]
 
 const Nav = () => (
