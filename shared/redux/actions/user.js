@@ -43,6 +43,19 @@ const getDemoMoney = process.env.MAINNET ? () => {} : () => {
     })
 }
 
+const setExchangeRate = (buyCurrency, sellCurrency) => {
+  const url = `https://api.coinbase.com/v2/exchange-rates?currency=${buyCurrency.toUpperCase()}`
+
+  return request.get(url)
+    .then(({ data: { rates } })  =>
+      Object.keys(rates)
+        .filter(k => k === sellCurrency.toUpperCase())
+        .map((k) => rates[k])
+    ).catch(() =>
+      config.exchangeRates[`${buyCurrency.toLowerCase()}${sellCurrency.toLowerCase()}`]
+    )
+}
+
 const setTransactions = () =>
   Promise.all([
     actions.bitcoin.getTransaction(),
@@ -60,5 +73,6 @@ export default {
   sign,
   getBalances,
   getDemoMoney,
+  setExchangeRate,
   setTransactions,
 }

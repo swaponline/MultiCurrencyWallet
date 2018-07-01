@@ -30,6 +30,7 @@ const config = {
   },
 
   exchangeRates: {
+    'etheth': 1,
     'ethbtc': 0.07,
     'btceth': 14,
     'ethnoxon': 1,

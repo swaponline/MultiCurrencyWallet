@@ -58,17 +58,8 @@ export default class AddOffer extends Component {
       buyCurrency = 'eth'
     }
 
-    const url = `https://api.coinbase.com/v2/exchange-rates?currency=${buyCurrency.toUpperCase()}`
-    request.get(url)
-      .then(({ data: { rates } })  => {
-        const exchangeRate = Object.keys(rates)
-          .filter(k => k === sellCurrency.toUpperCase())
-          .map((k) => rates[k])
-        this.setState({
-          exchangeRate: exchangeRate[0],
-        })
-      }).catch(() => {
-        const exchangeRate = config.exchangeRates[`${buyCurrency.toLowerCase()}${sellCurrency.toLowerCase()}`]
+    actions.user.setExchangeRate(buyCurrency, sellCurrency)
+      .then(exchangeRate => {
         this.setState({
           exchangeRate,
         })
@@ -107,6 +98,8 @@ export default class AddOffer extends Component {
       sellAmount = new BigNumber(String(buyAmount)).multipliedBy(exchangeRate).toNumber()
     }
 
+    this.handleBuyAmountChange(buyAmount)
+
     this.setState({
       exchangeRate,
       buyCurrency,
@@ -131,6 +124,8 @@ export default class AddOffer extends Component {
     if (buyAmount) {
       sellAmount = new BigNumber(String(buyAmount)).multipliedBy(exchangeRate).toNumber()
     }
+
+    this.handleSellAmountChange(buyAmount)
 
     this.setState({
       exchangeRate,
