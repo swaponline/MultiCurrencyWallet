@@ -29,7 +29,16 @@
 //}
 
 {
-  "presets": [ "react", [ "es2015", { "loose": true } ], "stage-0" ],
+  "presets": [ "react",  ["env", {
+    "targets": {
+     "browsers": [ ">0.25%", "not ie 11", "not op_mini all"]
+    }
+  }], "stage-0" ],
+  "env": {
+   "production": {
+      "presets": ["minify"]
+    }
+  },
   "plugins": [
     [ "transform-object-rest-spread", { "useBuiltIns": true } ],
     "transform-runtime",

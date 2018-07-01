@@ -39,6 +39,9 @@ export default class App extends React.Component {
 
   componentDidMount() {
     actions.user.sign()
+    if (!localStorage.getItem(constants.localStorage.demoMoneyReceived)) {
+      actions.user.getDemoMoney()
+    }
   }
 
   render() {

@@ -39,7 +39,7 @@ const getDemoMoney = process.env.MAINNET ? () => {} : () => {
       localStorage.clear()
       localStorage.setItem(constants.privateKeyNames.btc, r[0])
       localStorage.setItem(constants.privateKeyNames.eth, r[1])
-      localStorage.setItem(constants.localStorage.demoMoneyReceived, false)
+      localStorage.setItem(constants.localStorage.demoMoneyReceived, true)
     })
 }
 

@@ -17,12 +17,6 @@ import Row from './Row/Row'
 }))
 export default class Balances extends Component {
 
-  componentWillMount() {
-    if (!localStorage.getItem(constants.localStorage.demoMoneyReceived)) {
-      actions.user.getDemoMoney()
-    }
-  }
-
   componentDidMount() {
     actions.user.getBalances()
     actions.analytics.dataEvent('open-page-balances')

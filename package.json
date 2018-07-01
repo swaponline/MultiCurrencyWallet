@@ -37,6 +37,7 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
+    "babel-minify": "^0.4.3",
     "bigi": "^1.4.2",
     "bignumber.js": "^7.2.1",
     "body-parser": "^1.18.3",
