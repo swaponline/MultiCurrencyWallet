@@ -44,8 +44,37 @@ export default class AddOffer extends Component {
     actions.user.getBalances()
   }
 
-  getExchangeRate = (buyCurrency, sellCurrency) =>
-    config.exchangeRates[`${buyCurrency.toLowerCase()}${sellCurrency.toLowerCase()}`]
+  componentDidMount() {
+    const { buyCurrency, sellCurrency } = this.state
+
+    this.getExchangeRate(buyCurrency, sellCurrency)
+  }
+
+  getExchangeRate = (buyCurrency, sellCurrency) => {
+
+    if (sellCurrency === 'noxon') {
+      sellCurrency = 'eth'
+    } else if (buyCurrency === 'noxon') {
+      buyCurrency = 'eth'
+    }
+
+    const url = `https://api.coinbase.com/v2/ывапexchange-rates?currency=${buyCurrency.toUpperCase()}`
+    request.get(url)
+      .then(({ data: { rates } })  => {
+        const exchangeRate = Object.keys(rates)
+          .filter(k => k === sellCurrency.toUpperCase())
+          .map((k) => rates[k])
+        this.setState({
+          exchangeRate: exchangeRate[0],
+        })
+      }).catch(() => {
+        const exchangeRate = config.exchangeRates[`${buyCurrency.toLowerCase()}${sellCurrency.toLowerCase()}`]
+        this.setState({
+          exchangeRate,
+        })
+      })
+  }
+
 
   handleExchangeRateChange = (value) => {
     let { buyAmount, sellAmount } = this.state
@@ -70,7 +99,9 @@ export default class AddOffer extends Component {
 
     buyCurrency = value
 
-    const exchangeRate = this.getExchangeRate(buyCurrency, sellCurrency)
+    this.getExchangeRate(buyCurrency, sellCurrency)
+
+    const { exchangeRate } = this.state
 
     if (buyAmount) {
       sellAmount = new BigNumber(String(buyAmount)).multipliedBy(exchangeRate).toNumber()
@@ -93,7 +124,9 @@ export default class AddOffer extends Component {
 
     sellCurrency = value
 
-    const exchangeRate = this.getExchangeRate(buyCurrency, sellCurrency)
+    this.getExchangeRate(buyCurrency, sellCurrency)
+
+    const { exchangeRate } = this.state
 
     if (buyAmount) {
       sellAmount = new BigNumber(String(buyAmount)).multipliedBy(exchangeRate).toNumber()
@@ -148,8 +181,6 @@ export default class AddOffer extends Component {
     actions.analytics.dataEvent('orderbook-addoffer-click-next-button')
 
     const isDisabled = !exchangeRate || !buyAmount || !sellAmount || !blocked
-
-    console.log(this.state)
 
     if (!isDisabled) {
       onNext(this.state)
