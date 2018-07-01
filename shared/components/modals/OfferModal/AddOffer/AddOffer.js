@@ -58,7 +58,7 @@ export default class AddOffer extends Component {
       buyCurrency = 'eth'
     }
 
-    const url = `https://api.coinbase.com/v2/ывапexchange-rates?currency=${buyCurrency.toUpperCase()}`
+    const url = `https://api.coinbase.com/v2/exchange-rates?currency=${buyCurrency.toUpperCase()}`
     request.get(url)
       .then(({ data: { rates } })  => {
         const exchangeRate = Object.keys(rates)
