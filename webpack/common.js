@@ -1,5 +1,6 @@
 import webpack from 'webpack'
 import ProgressBarPlugin from 'progress-bar-webpack-plugin'
+import WebappWebpackPlugin from 'webapp-webpack-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import AppConfigPlugin from 'app-config/webpack'
 import config from 'app-config'
@@ -69,10 +70,10 @@ const webpackConfig = {
     }),
     new webpack.NoEmitOnErrorsPlugin(),
     new ProgressBarPlugin({ clear: false }),
+    new WebappWebpackPlugin(config.paths.client('favicon.png')),
     new HtmlWebpackPlugin({
       title: 'Swap.Online',
       template: config.paths.client('index.html'),
-      // favicon: config.paths.site('assets/favicon-32x32.png'),
       hash: false,
       filename: 'index.html',
       inject: 'body',
