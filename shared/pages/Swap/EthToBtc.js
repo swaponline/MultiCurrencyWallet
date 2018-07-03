@@ -153,7 +153,6 @@ export default class EthToBtc extends Component {
               {
                 flow.secretHash && flow.btcScriptValues && (
                   <Fragment>
-                    { console.log(flow, 'flow') }
                     <h3>3. Bitcoin Script created and charged. Please check the information below</h3>
                     <div>Secret Hash: <strong>{flow.secretHash}</strong></div>
                     <br />

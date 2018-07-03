@@ -39,6 +39,10 @@ export default class App extends React.Component {
     children: PropTypes.element.isRequired,
   }
 
+  state = {
+    fetching: false,
+  }
+
   componentWillMount() {
     if (!localStorage.getItem(constants.localStorage.demoMoneyReceived)) {
       actions.user.getDemoMoney()
@@ -49,10 +53,12 @@ export default class App extends React.Component {
   componentDidMount() {
     setTimeout(() => {
       actions.user.sign()
+      createSwapApp()
     }, 1000)
   }
 
   render() {
+    const { fetching } = this.state
     const { children, ethAddress, btcAddress, tokenAddress /* eosAddress */ } = this.props
     const isFetching = !ethAddress || !btcAddress || !tokenAddress
 

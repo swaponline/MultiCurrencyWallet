@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import actions from 'redux/actions'
 import { connect } from 'redaction'
-
+import SwapApp from 'swap.app'
 
 import { localStorage, constants, links } from 'helpers'
 import moment from 'moment/moment'
@@ -156,6 +156,7 @@ Private key: ${btcData.privateKey}\r\n
     const { buyCurrency, sellCurrency, view } = this.state
     const { ethData, btcData } = this.props
     const filterOrders = `${buyCurrency}${sellCurrency}`
+    console.log('swapApp public data', SwapApp.services.auth.getPublicData())
 
     return (
       <section style={{ position: 'relative' }}>
