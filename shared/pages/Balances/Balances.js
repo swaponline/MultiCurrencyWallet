@@ -25,6 +25,12 @@ export default class Balances extends Component {
     // }
   }
 
+  handleClear = (event) => {
+    event.preventDefault()
+    window.localStorage.clear()
+    window.location.reload()
+  }
+
   render() {
     const { items, ethAddress, btcAddress, tokensData } = this.props
     const titles = [ 'Coin', 'Name', 'Balance', 'Address', '' ]
@@ -35,6 +41,7 @@ export default class Balances extends Component {
     return (
       <section>
         <PageHeadline subTitle="Balances" />
+        <a href="" onClick={this.handleClear} >Clear all data</a>
         <Table
           titles={titles}
           rows={items}

@@ -1,0 +1,51 @@
+.userTooltip {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.delete {
+  color: #e32950;
+  cursor: pointer;
+}
+
+.currency {
+  font-size: 14px;
+  font-weight: 700;
+  min-width: 150px;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.coin {
+  text-transform: uppercase;
+}
+
+.buy {
+  color: #3de25b;
+}
+
+.sell {
+  color: #e32950;
+}
+
+.buttons {
+  width: 250px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.arrow {
+  display: inline-block;
+  width: 5px;
+  margin: 5px;
+}
+
+.arrow img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+

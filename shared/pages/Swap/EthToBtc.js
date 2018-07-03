@@ -6,6 +6,8 @@ import Swap from 'swap.swap'
 
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import TimerButton from 'components/controls/TimerButton/TimerButton'
+import Button from 'components/controls/Button/Button'
+import Timer from './Timer/Timer'
 
 
 export default class EthToBtc extends Component {
@@ -17,6 +19,7 @@ export default class EthToBtc extends Component {
 
     this.state = {
       flow: this.swap.flow.state,
+      enabledButton: true,
     }
   }
 
@@ -44,6 +47,10 @@ export default class EthToBtc extends Component {
 
   updateBalance = () => {
     this.swap.flow.syncBalance()
+  }
+
+  tryRefund = () => {
+    this.swap.flow.tryRefund()
   }
 
   render() {
@@ -288,6 +295,33 @@ export default class EthToBtc extends Component {
                 )
               }
             </Fragment>
+          )
+        }
+        {
+          flow.step >= 7 && (
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <Button brand disabled onClick={this.tryRefund}>TRY REFUND</Button>
+              <Timer
+                lockTime={flow.btcScriptValues.lockTime * 1000}
+                enabledButton={() => this.setState({ enabledButton: false })}
+              />
+            </div>
+          )
+        }
+        {
+          flow.refundTransactionHash && (
+            <div>
+              Transaction:
+              <strong>
+                <a
+                  href={`https://www.blocktrail.com/tBTC/tx/${flow.refundTransactionHash}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {flow.refundTransactionHash}
+                </a>
+              </strong>
+            </div>
           )
         }
       </div>

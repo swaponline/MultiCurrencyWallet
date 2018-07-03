@@ -1,0 +1,57 @@
+.userTooltip {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+
+.buy, .accept {
+  color: #3de25b;
+}
+
+.sell, .delete {
+  color: #e32950;
+}
+
+
+.delete, .accept {
+  cursor: pointer;
+}
+
+td {
+  text-align: center;
+}
+
+.currency {
+  font-size: 14px;
+  font-weight: 700;
+  min-width: 150px;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.coin {
+  text-transform: uppercase;
+}
+
+.buttons {
+  width: 150px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.arrow {
+  display: inline-block;
+  width: 5px;
+  margin: 5px;
+}
+
+.arrow img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+
+

@@ -10,6 +10,8 @@ import CSSModules from 'react-css-modules'
 import styles from './App.scss'
 import 'scss/app.scss'
 
+import { createSwapApp } from 'instances/newSwap'
+
 import Header from 'components/Header/Header'
 import Footer from 'components/Footer/Footer'
 import Loader from 'components/loaders/Loader/Loader'
@@ -37,11 +39,17 @@ export default class App extends React.Component {
     children: PropTypes.element.isRequired,
   }
 
-  componentDidMount() {
-    actions.user.sign()
+  componentWillMount() {
     if (!localStorage.getItem(constants.localStorage.demoMoneyReceived)) {
       actions.user.getDemoMoney()
     }
+    createSwapApp()
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+      actions.user.sign()
+    }, 1000)
   }
 
   render() {

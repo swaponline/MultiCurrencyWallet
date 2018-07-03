@@ -8,41 +8,41 @@ const createResponseHandler = (req, opts) => {
     let serverError
     let body = res.body // eslint-disable-line
 
-    try {
-      if (!body) {
+    // Errors
+
+    if (!res && !err) {
+      serverError = `Connection failed: ${debug}`
+    }
+    else if (!res || res.statusCode >= 500) {
+      serverError = 'We`re having technical issues at that moment. Please try again later'
+    }
+
+    if (serverError) {
+      throw new Error(serverError)
+    }
+
+    if (err) {
+      // TODO write Error notifier
+      opts.onComplete()
+      return reject({ resData: body, err, res })
+    }
+
+    if (!body) {
+      try {
         body = JSON.parse(res.text)
       }
-
-      // Errors
-
-      if (!res && !err) {
-        serverError = `Connection failed: ${debug}`
+      catch (err) {
+        return reject(err)
       }
-      else if (!res || res.statusCode >= 500) {
-        serverError = 'We`re having technical issues at that moment. Please try again later'
-      }
-
-      if (serverError) {
-        throw new Error(serverError)
-      }
-
-      if (err) {
-        // TODO write Error notifier
-        opts.onComplete()
-        return reject({ resData: body, err, res })
-      }
-
-      const resData = opts.modifyResult(body)
-
-      // Resolve
-
-      fulfill(resData, res)
-      opts.onComplete()
     }
-    catch (err) {
-      console.log(err)
-      reject(err)
-    }
+
+    const resData = opts.modifyResult(body)
+
+    // Resolve
+
+    fulfill(resData, res)
+    opts.onComplete()
+
   }))
 }
 

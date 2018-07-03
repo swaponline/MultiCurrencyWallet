@@ -97,9 +97,7 @@ export default class AddOffer extends Component {
     if (buyAmount) {
       sellAmount = new BigNumber(String(buyAmount)).multipliedBy(exchangeRate).toNumber()
     }
-
-    this.handleBuyAmountChange(buyAmount)
-
+    console.log(sellAmount)
     this.setState({
       exchangeRate,
       buyCurrency,
@@ -107,6 +105,8 @@ export default class AddOffer extends Component {
       sellAmount,
     })
   }
+
+
 
   handleSellCurrencySelect = ({ value }) => {
     let { buyCurrency, sellCurrency, buyAmount, sellAmount } = this.state
@@ -124,8 +124,6 @@ export default class AddOffer extends Component {
     if (buyAmount) {
       sellAmount = new BigNumber(String(buyAmount)).multipliedBy(exchangeRate).toNumber()
     }
-
-    this.handleSellAmountChange(buyAmount)
 
     this.setState({
       exchangeRate,
@@ -172,6 +170,8 @@ export default class AddOffer extends Component {
     }
 
     const { onNext } = this.props
+
+    console.log(this.state)
 
     actions.analytics.dataEvent('orderbook-addoffer-click-next-button')
 

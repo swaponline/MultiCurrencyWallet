@@ -11,7 +11,6 @@ import moment from 'moment/moment'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import Title from 'components/PageHeadline/Title/Title'
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
-import SearchSwap from 'components/SearchSwap/SearchSwap'
 
 import Orders from './Orders/Orders'
 import Confirm from 'components/Confirm/Confirm'
@@ -180,13 +179,13 @@ Private key: ${btcData.privateKey}\r\n
               </Fragment>
             )
           }
-          <SearchSwap
-            updateFilter={this.handleSellCurrencySelect}
+          <Orders
+            filter={filterOrders}
+            handleSellCurrencySelect={this.handleSellCurrencySelect}
             buyCurrency={buyCurrency}
             sellCurrency={sellCurrency}
             flipCurrency={this.flipCurrency}
           />
-          <Orders filter={filterOrders} />
           <Confirm
             title="Are you sure ?"
             isConfirm={() => this.handleConfirm()}

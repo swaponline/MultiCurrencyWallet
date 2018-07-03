@@ -6,6 +6,8 @@ import Swap from 'swap.swap'
 
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import TimerButton from 'components/controls/TimerButton/TimerButton'
+import Button from 'components/controls/Button/Button'
+import Timer from './Timer/Timer'
 
 
 export default class BtcToEth extends Component {
@@ -18,6 +20,8 @@ export default class BtcToEth extends Component {
     this.state = {
       flow: this.swap.flow.state,
       secret: 'c0809ce9f484fdcdfb2d5aabd609768ce0374ee97a1a5618ce4cd3f16c00a078',
+      refundTxHex: null,
+      enabledButton: true,
     }
   }
 
@@ -45,8 +49,33 @@ export default class BtcToEth extends Component {
     this.swap.flow.syncBalance()
   }
 
+  tryRefund = () => {
+    this.swap.flow.tryRefund()
+  }
+
+  getRefundTxHex = () => {
+    const { refundTxHex, flow, secret } = this.state
+
+    if (refundTxHex) {
+      return refundTxHex
+    }
+    else if (flow.btcScriptValues) {
+      this.swap.flow.btcSwap.getRefundHexTransaction({
+        scriptValues: flow.btcScriptValues,
+        secret,
+      })
+        .then((txHex) => {
+          this.setState({
+            refundTxHex: txHex,
+          })
+        })
+    }
+  }
+
   render() {
-    const { secret, flow } = this.state
+    const { secret, flow, enabledButton } = this.state
+    // const refundTxHex = this.getRefundTxHex()
+
 
     return (
       <div>
@@ -162,7 +191,14 @@ export default class BtcToEth extends Component {
                   </Fragment>
                 )
               }
-
+              {/*{*/}
+                {/*refundTxHex && (*/}
+                  {/*<div>*/}
+                    {/*<h3>Refund hex transaction:</h3>*/}
+                    {/*{refundTxHex}*/}
+                  {/*</div>*/}
+                {/*)*/}
+              {/*}*/}
               {
                 (flow.step === 5 || flow.isEthContractFunded) && (
                   <Fragment>
@@ -211,6 +247,33 @@ export default class BtcToEth extends Component {
                 )
               }
             </Fragment>
+          )
+        }
+        {
+          flow.step >= 6 && (
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <Button brand disabled={enabledButton} onClick={this.tryRefund}>TRY REFUND</Button>
+              <Timer
+                lockTime={flow.btcScriptValues.lockTime * 1000}
+                enabledButton={() => this.setState({ enabledButton: false })}
+              />
+            </div>
+          )
+        }
+        {
+          flow.refundTransactionHash && (
+            <div>
+              Transaction:
+              <strong>
+                <a
+                  href={`https://www.blocktrail.com/tBTC/tx/${flow.refundTransactionHash}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {flow.refundTransactionHash}
+                </a>
+              </strong>
+            </div>
           )
         }
       </div>

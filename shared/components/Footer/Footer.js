@@ -14,12 +14,17 @@ export default class Footer extends Component {
 
   state = {
     userOnline: 0,
+    connected: false,
   }
 
   componentWillMount() {
     setTimeout(() => {
-      SwapApp.services.room.connection
-        .on('peer joined', this.handleUserJoin)
+      const connected = SwapApp.services.room.connection._ipfs.isOnline()
+
+      SwapApp.services.room.connection.on('peer joined', this.handleUserJoin)
+      this.setState({
+        connected,
+      })
     }, 8000)
   }
 
@@ -45,8 +50,9 @@ export default class Footer extends Component {
   }
 
   render() {
-    const { userOnline } = this.state
+    const { userOnline, connected } = this.state
     const server = SwapApp.services.room._config.config.Addresses.Swarm[0].split('/')[2]
+    console.log(SwapApp)
 
     return (
       <div styleName="footer">
@@ -54,6 +60,7 @@ export default class Footer extends Component {
           <Info
             serverAddress={server}
             userOnline={userOnline}
+            connected
           />
         </WidthContainer>
       </div>

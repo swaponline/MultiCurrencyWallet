@@ -19,6 +19,37 @@ export default class Row extends Component {
     row: PropTypes.object,
   }
 
+  state = {
+    exchangeRate: null,
+  }
+
+  componentWillMount() {
+    const { row } = this.props
+
+    if (row === undefined) {
+      return null
+    }
+    const { buyCurrency, sellCurrency } = row
+
+    this.getExchangeRate(buyCurrency, sellCurrency)
+  }
+
+  getExchangeRate = (buyCurrency, sellCurrency) => {
+
+    if (sellCurrency === 'noxon') {
+      sellCurrency = 'eth'
+    } else if (buyCurrency === 'noxon') {
+      buyCurrency = 'eth'
+    }
+
+    actions.user.setExchangeRate(buyCurrency, sellCurrency)
+      .then(exchangeRate => {
+        this.setState({
+          exchangeRate,
+        })
+      })
+  }
+
   removeOrder = (orderId) => {
     swapApp.services.orders.remove(orderId)
     actions.feed.deleteItemToFeed(orderId)
@@ -39,6 +70,7 @@ export default class Row extends Component {
 
   render() {
     const { row } = this.props
+    const { exchangeRate } = this.state
 
     if (row === undefined) {
       return null
@@ -60,7 +92,7 @@ export default class Row extends Component {
           {`${sellCurrency.toUpperCase()} ${sellAmount}`}
         </td>
         <td>
-          { config.exchangeRates[`${buyCurrency.toLowerCase()}${sellCurrency.toLowerCase()}`] }
+          { exchangeRate}
         </td>
         <td>
           {
