@@ -156,7 +156,6 @@ Private key: ${btcData.privateKey}\r\n
     const { buyCurrency, sellCurrency, view } = this.state
     const { ethData, btcData } = this.props
     const filterOrders = `${buyCurrency}${sellCurrency}`
-    console.log('swapApp public data', SwapApp.services.auth.getPublicData())
 
     return (
       <section style={{ position: 'relative' }}>

@@ -47,20 +47,23 @@ export default class App extends React.Component {
     if (!localStorage.getItem(constants.localStorage.demoMoneyReceived)) {
       actions.user.getDemoMoney()
     }
-    createSwapApp()
   }
 
   componentDidMount() {
     setTimeout(() => {
       actions.user.sign()
       createSwapApp()
+
+      this.setState({
+        fetching: true,
+      })
     }, 1000)
   }
 
   render() {
     const { fetching } = this.state
     const { children, ethAddress, btcAddress, tokenAddress /* eosAddress */ } = this.props
-    const isFetching = !ethAddress || !btcAddress || !tokenAddress
+    const isFetching = !ethAddress || !btcAddress || !tokenAddress || !fetching
 
 
     if (isFetching) {
