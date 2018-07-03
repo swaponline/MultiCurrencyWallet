@@ -21,7 +21,7 @@ export default class BtcToEth extends Component {
       flow: this.swap.flow.state,
       secret: 'c0809ce9f484fdcdfb2d5aabd609768ce0374ee97a1a5618ce4cd3f16c00a078',
       refundTxHex: null,
-      enabledButton: true,
+      enabledButton: false,
     }
   }
 
@@ -75,7 +75,7 @@ export default class BtcToEth extends Component {
   render() {
     const { secret, flow, enabledButton } = this.state
     // const refundTxHex = this.getRefundTxHex()
-
+    console.log(flow)
 
     return (
       <div>
@@ -252,10 +252,10 @@ export default class BtcToEth extends Component {
         {
           flow.step >= 6 && (
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <Button brand disabled={enabledButton} onClick={this.tryRefund}>TRY REFUND</Button>
+              { enabledButton &&  <Button brand onClick={this.tryRefund}>TRY REFUND</Button> }
               <Timer
                 lockTime={flow.btcScriptValues.lockTime * 1000}
-                enabledButton={() => this.setState({ enabledButton: false })}
+                enabledButton={() => this.setState({ enabledButton: true })}
               />
             </div>
           )

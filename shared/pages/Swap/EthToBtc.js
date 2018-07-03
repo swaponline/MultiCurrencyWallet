@@ -19,7 +19,7 @@ export default class EthToBtc extends Component {
 
     this.state = {
       flow: this.swap.flow.state,
-      enabledButton: true,
+      enabledButton: false,
     }
   }
 
@@ -54,7 +54,7 @@ export default class EthToBtc extends Component {
   }
 
   render() {
-    const { flow } = this.state
+    const { flow, enabledButton } = this.state
 
     return (
       <div>
@@ -300,10 +300,10 @@ export default class EthToBtc extends Component {
         {
           flow.step >= 7 && (
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <Button brand disabled onClick={this.tryRefund}>TRY REFUND</Button>
+              { enabledButton &&  <Button brand onClick={this.tryRefund}>TRY REFUND</Button> }
               <Timer
                 lockTime={flow.btcScriptValues.lockTime * 1000}
-                enabledButton={() => this.setState({ enabledButton: false })}
+                enabledButton={() => this.setState({ enabledButton: true })}
               />
             </div>
           )
@@ -314,7 +314,7 @@ export default class EthToBtc extends Component {
               Transaction:
               <strong>
                 <a
-                  href={`https://www.blocktrail.com/tBTC/tx/${flow.refundTransactionHash}`}
+                  href={`${config.link.etherscan}/tx/${flow.refundTransactionHash}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >

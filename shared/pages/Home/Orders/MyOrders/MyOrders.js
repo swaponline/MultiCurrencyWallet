@@ -39,6 +39,8 @@ export default class MyOrders extends PureComponent {
       return null
     }
 
+    console.log(orders)
+
     return (
       <Fragment>
         <h3 style={{ marginTop: '50px' }} >Your orders</h3>
