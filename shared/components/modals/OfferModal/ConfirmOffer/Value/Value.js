@@ -6,8 +6,8 @@ import styles from './Value.scss'
 
 const Value = ({ value, currency }) => (
   <span styleName="value">
-    <span>{value}</span>
-    <span styleName="currency">{currency.toUpperCase()}</span>
+    <span>{value} </span>
+    <span styleName="currency"> {currency.toUpperCase()}</span>
   </span>
 )
 

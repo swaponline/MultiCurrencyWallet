@@ -46,7 +46,6 @@ export default class AddOffer extends Component {
 
   componentDidMount() {
     const { buyCurrency, sellCurrency } = this.state
-
     this.getExchangeRate(buyCurrency, sellCurrency)
   }
 
@@ -97,7 +96,7 @@ export default class AddOffer extends Component {
     if (buyAmount) {
       sellAmount = new BigNumber(String(buyAmount)).multipliedBy(exchangeRate).toNumber()
     }
-    console.log(sellAmount)
+
     this.setState({
       exchangeRate,
       buyCurrency,
@@ -116,7 +115,7 @@ export default class AddOffer extends Component {
     }
 
     sellCurrency = value
-
+    console.log(buyCurrency, buyAmount)
     this.getExchangeRate(buyCurrency, sellCurrency)
 
     const { exchangeRate } = this.state
@@ -134,7 +133,7 @@ export default class AddOffer extends Component {
   }
 
   handleBuyAmountChange = (value) => {
-    const { exchangeRate } = this.state
+    const { exchangeRate, buyCurrency } = this.state
 
     if (!this.EventWasSend) {
       actions.analytics.dataEvent('orderbook-addoffer-enter-ordervalue')
@@ -171,8 +170,6 @@ export default class AddOffer extends Component {
 
     const { onNext } = this.props
 
-    console.log(this.state)
-
     actions.analytics.dataEvent('orderbook-addoffer-click-next-button')
 
     const isDisabled = !exchangeRate || !buyAmount || !sellAmount || !blocked
@@ -191,7 +188,7 @@ export default class AddOffer extends Component {
 
   render() {
     const { items, tokensData } = this.props
-    const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency } = this.state
+    let { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency } = this.state
     let blocked = true
 
     if (process.env.MAINNET) {

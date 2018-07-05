@@ -18,13 +18,41 @@ import Fee from './Fee/Fee'
 @cssModules(styles)
 export default class ConfirmOffer extends Component {
 
+  state = {
+    buyAmount: null,
+    sellAmount: null,
+    sellCurrency: null,
+    buyCurrency: null,
+    exchangeRate: null,
+  }
+
+  componentWillMount() {
+    const { offer: { sellAmount, buyAmount, sellCurrency, buyCurrency, exchangeRate } } = this.props
+    this.setState({ sellAmount, buyAmount, buyCurrency, sellCurrency, exchangeRate })
+
+    if (process.env.MAINNET) {
+      if (sellCurrency === 'eth' && sellAmount > 0.1) {
+        this.setState({
+          sellAmount: 0.1,
+          buyAmount: 0.007,
+        })
+      } else if (sellCurrency === 'btc' && sellAmount > 0.007) {
+        this.setState({
+          sellAmount: 0.007,
+          buyAmount: 0.1,
+        })
+      }
+    }
+  }
+
   handleConfirm = () => {
     this.createOrder()
     actions.modals.close('OfferModal')
   }
 
   createOrder = () => {
-    const { offer: { buyAmount, sellAmount, buyCurrency, sellCurrency } } = this.props
+    const {  buyAmount, sellAmount, buyCurrency, sellCurrency } = this.state
+
     const data = {
       buyCurrency: `${buyCurrency}`,
       sellCurrency: `${sellCurrency}`,
@@ -32,12 +60,12 @@ export default class ConfirmOffer extends Component {
       sellAmount: Number(sellAmount),
     }
     actions.analytics.dataEvent('orderbook-addoffer-click-confirm-button')
-    console.log(data)
     swapApp.services.orders.create(data)
   }
 
   render() {
-    const { offer: { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency }, onBack } = this.props
+    const { onBack } = this.props
+    const {  buyAmount, sellAmount, buyCurrency, sellCurrency, exchangeRate } = this.state
 
     return (
       <Fragment>

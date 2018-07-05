@@ -25,7 +25,7 @@ export default class Balances extends Component {
     // }
   }
 
-  handleClear = (event) => {
+  handleClear = process.env.MAINNET ? () => {} : (event) => {
     event.preventDefault()
     window.localStorage.clear()
     window.location.reload()
@@ -41,7 +41,7 @@ export default class Balances extends Component {
     return (
       <section>
         <PageHeadline subTitle="Balances" />
-        <a href="" onClick={this.handleClear} >Clear all data</a>
+        { process.env.TESTNET && <a href="" onClick={this.handleClear} >Clear all data</a> }
         <Table
           titles={titles}
           rows={items}
