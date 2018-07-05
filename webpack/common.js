@@ -70,7 +70,10 @@ const webpackConfig = {
     }),
     new webpack.NoEmitOnErrorsPlugin(),
     new ProgressBarPlugin({ clear: false }),
-    new WebappWebpackPlugin(config.paths.client('favicon.png')),
+    new WebappWebpackPlugin({
+      logo: config.paths.client('favicon.png'),
+      prefix: `${config.publicPath}assets/`,
+    }),
     new HtmlWebpackPlugin({
       title: 'Swap.Online',
       template: config.paths.client('index.html'),
