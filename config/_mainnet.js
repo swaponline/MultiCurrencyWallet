@@ -14,7 +14,7 @@ export default {
       },
       noxon: {
         address: '0x9E4AD79049282F942c1b4c9b418F0357A0637017',
-        decimals: 18,
+        decimals: 0,
       },
     },
 

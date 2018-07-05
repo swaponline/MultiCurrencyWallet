@@ -13,7 +13,7 @@ const sign = async () => {
 
   Object.keys(config.services.tokens)
     .forEach(name => {
-      actions.token.login(_ethPrivateKey, config.services.tokens[name].address, name)
+      actions.token.login(_ethPrivateKey, config.services.tokens[name].address, name, config.services.tokens[name].decimals)
     })
   // await actions.nimiq.login(_ethPrivateKey)
 
@@ -27,7 +27,7 @@ const getBalances = () => {
 
   Object.keys(config.services.tokens)
     .forEach(name => {
-      actions.token.getBalance(config.services.tokens[name].address, name)
+      actions.token.getBalance(config.services.tokens[name].address, name, config.services.tokens[name].decimals)
     })
   // actions.eos.getBalance()
   // actions.nimiq.getBalance()

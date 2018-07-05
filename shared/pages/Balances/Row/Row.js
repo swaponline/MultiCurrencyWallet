@@ -32,7 +32,7 @@ export default class Row extends Component {
       isBalanceFetching: true,
     })
 
-    let { currency, contractAddress } = this.props
+    let { currency, contractAddress, decimals } = this.props
     let action
 
     currency = currency.toLowerCase()
@@ -45,20 +45,16 @@ export default class Row extends Component {
       action = actions.bitcoin.getBalance
       actions.analytics.dataEvent('balances-update-btc')
     }
-    else if (currency === 'noxon') {
-      action = actions.token.getBalance
-      actions.analytics.dataEvent('balances-update-noxon')
-    }
-    else if (currency === 'swap') {
-      action  = actions.token.getBalance
-      actions.analytics.dataEvent('balances-update-swap')
-    }
     else if (currency === 'eos') {
       action = actions.eos.getBalance
       actions.analytics.dataEvent('balances-update-eos')
     }
+    else {
+      action = actions.token.getBalance
+      actions.analytics.dataEvent('balances-update-token')
+    }
 
-    action(contractAddress, currency)
+    action(contractAddress, currency, decimals)
       .then(() => {
         this.setState({
           isBalanceFetching: false,
@@ -87,7 +83,7 @@ export default class Row extends Component {
 
   render() {
     const { isBalanceFetching, viewText } = this.state
-    const { currency, balance, address, contractAddress } = this.props
+    const { currency, balance, address, contractAddress, decimals } = this.props
 
     return (
       <tr>
@@ -110,7 +106,7 @@ export default class Row extends Component {
         <td style={{ position: 'relative' }} >
           <button styleName="button" onClick={this.handleCopiedAddress} >Copy</button>
           <ReloadButton styleName="reloadButton" onClick={this.handleReloadBalance} />
-          <WithdrawButton data={{ currency, balance, address, contractAddress }} />
+          <WithdrawButton data={{ currency, balance, address, contractAddress, decimals }} />
           { viewText && <p styleName="copied" >Address copied to clipboard</p> }
         </td>
       </tr>

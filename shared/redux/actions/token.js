@@ -4,9 +4,13 @@ import { getState } from 'redux/core'
 import web3 from 'helpers/web3'
 import reducers from 'redux/core/reducers'
 import config from 'app-config'
+import { BigNumber } from 'bignumber.js'
 
 
-const login = (privateKey, contractAddress, nameContract) => {
+BigNumber.config({ DECIMAL_PLACES: 21 })
+
+
+const login = (privateKey, contractAddress, nameContract, decimals) => {
   let data
   if (privateKey) {
     data = web3.eth.accounts.privateKeyToAccount(privateKey)
@@ -20,11 +24,11 @@ const login = (privateKey, contractAddress, nameContract) => {
   console.info('Logged in with ETH Token', data)
 
 
-  setupContract(data.address, contractAddress, nameContract)
+  setupContract(data.address, contractAddress, nameContract, decimals)
 }
 
 
-const setupContract = (ethAddress, contractAddress, nameContract) => {
+const setupContract = (ethAddress, contractAddress, nameContract, decimals) => {
   if (!web3.eth.accounts.wallet[ethAddress]) {
     throw new Error('web3 does not have given address')
   }
@@ -35,18 +39,22 @@ const setupContract = (ethAddress, contractAddress, nameContract) => {
     name: nameContract,
     currency: nameContract.toUpperCase(),
     contractAddress,
+    decimals,
   }
 
   reducers.user.setTokenAuthData({ name: data.name, data })
 }
 
 
-const getBalance = (contractAddress, name) => {
+const getBalance = (contractAddress, name, decimals) => {
   const { user: { ethData: { address } } } = getState()
   const url = `${config.api.etherscan}?module=account&action=tokenbalance&contractaddress=${contractAddress}&address=${address}`
-  console.log(url)
+
   return request.get(url)
-    .then(({ result: amount }) => {
+    .then(({ result }) => {
+      const amount = new BigNumber(String(result))
+        .dividedBy(new BigNumber(String(10)).pow(decimals)).toNumber()
+
       reducers.user.setTokenBalance({ name, amount })
     }).catch(r => console.error('Token service isn\'t available, try later'))
 }
@@ -93,7 +101,7 @@ const getTransaction = (contractAddress) =>
   })
 
 
-const send = (from, to, amount) => {
+const send = (from, to, amount, decimals) => {
   const { user: { ethData: { address } } } = getState()
   let tokenContract
 
@@ -105,8 +113,10 @@ const send = (from, to, amount) => {
 
   tokenContract = new web3.eth.Contract(abi, from, options)
 
+  const newAmount = new BigNumber(String(amount)).times(new BigNumber('10').pow(new BigNumber(String(decimals))))
+
   return new Promise((resolve, reject) =>
-    tokenContract.methods.transfer(to, amount).send()
+    tokenContract.methods.transfer(to, newAmount).send()
       .then(receipt => {
         resolve(receipt)
       })

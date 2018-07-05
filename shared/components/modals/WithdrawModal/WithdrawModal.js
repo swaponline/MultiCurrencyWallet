@@ -30,7 +30,7 @@ export default class WithdrawModal extends React.Component {
 
   handleSubmit = () => {
     const { address: to, amount } = this.state
-    const { data: { currency, contractAddress, address } } = this.props
+    const { data: { currency, contractAddress, address, decimals } } = this.props
 
     if (!to || !amount || amount < 0.01) {
       this.setState({
@@ -50,13 +50,13 @@ export default class WithdrawModal extends React.Component {
     else if (currency === 'NIM') {
       action = actions.nimiq
     }
-    else if (currency === 'NOXON') {
+    else {
       action = actions.token
     }
 
     actions.loader.show()
 
-    action.send(contractAddress || address, to, Number(amount))
+    action.send(contractAddress || address, to, Number(amount), decimals)
       .then(() => {
         actions.loader.hide()
 
