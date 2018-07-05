@@ -105,8 +105,6 @@ export default class AddOffer extends Component {
     })
   }
 
-
-
   handleSellCurrencySelect = ({ value }) => {
     let { buyCurrency, sellCurrency, buyAmount, sellAmount } = this.state
 
@@ -115,7 +113,7 @@ export default class AddOffer extends Component {
     }
 
     sellCurrency = value
-    console.log(buyCurrency, buyAmount)
+
     this.getExchangeRate(buyCurrency, sellCurrency)
 
     const { exchangeRate } = this.state
@@ -133,7 +131,7 @@ export default class AddOffer extends Component {
   }
 
   handleBuyAmountChange = (value) => {
-    const { exchangeRate, buyCurrency } = this.state
+    const { exchangeRate } = this.state
 
     if (!this.EventWasSend) {
       actions.analytics.dataEvent('orderbook-addoffer-enter-ordervalue')
@@ -188,7 +186,7 @@ export default class AddOffer extends Component {
 
   render() {
     const { items, tokensData } = this.props
-    let { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency } = this.state
+    const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency } = this.state
     let blocked = true
 
     if (process.env.MAINNET) {
