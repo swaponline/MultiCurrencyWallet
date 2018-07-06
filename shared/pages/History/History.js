@@ -71,7 +71,7 @@ export default class History extends Component {
   render() {
     const { items } = this.props
     const { orders } = this.state
-    const titles = [ 'Coin', 'Status', 'Amount' ]
+    const titles = [ 'Coin', 'Status', 'Statement', 'Amount' ]
     const mePeer = SwapApp.services.room.peer
     const historyOrders = orders.filter(order => mePeer === order.owner.peer)
 

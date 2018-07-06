@@ -10,12 +10,23 @@
   }
 }
 
+.cell {
+  border-radius: 20px;
+  padding: 0px 25px;
+  line-height: 40px;
+  height: 40px;
+  text-align: center;
+  display: inline-block;
+}
+
 .confirm {
-  color: #3bb33b;
+  color: #ffffff;
+  background: rgba(61, 226, 91, 0.7);
 }
 
 .unconfirmed {
   color: #ff354b;
+  background: rgba(255, 53, 75, 0.4);
 }
 
 .date {

@@ -4,7 +4,6 @@ import { NavLink } from 'react-router-dom'
 import { links } from 'helpers'
 import CSSModules from 'react-css-modules'
 
-import cssModules from 'react-css-modules'
 import styles from './Nav.scss'
 
 
@@ -15,21 +14,13 @@ const nav = [
 ]
 
 @CSSModules(styles)
-
 export default class Nav extends Component {
 
-  handleScrollTo = () => {
-
-    function scrollToTop(scrollDuration) {
-        var scrollStep = -window.scrollY / (scrollDuration / 15),
-            scrollInterval = setInterval(function(){
-            if ( window.scrollY != 0 ) {
-                window.scrollBy( 0, scrollStep );
-            }
-            else clearInterval(scrollInterval); 
-        },15);
-    }
-    scrollToTop(300);
+  handleScrollTo = (scrollDuration) => {
+    const scrollStep = -window.scrollY / (scrollDuration / 15)
+    const scrollInterval = setInterval(() => {
+      window.scrollY !== 0 ? window.scrollBy(0, scrollStep) : clearInterval(scrollInterval)
+    }, 15)
   }
 
   render() {
@@ -38,7 +29,7 @@ export default class Nav extends Component {
         {
           nav.map(({ title, link }) => (
             <NavLink
-              onClick={this.handleScrollTo}
+              onClick={() => this.handleScrollTo(500)}
               exact
               key={title}
               styleName="link"
@@ -53,7 +44,3 @@ export default class Nav extends Component {
     )
   }
 }
-
-//export default Nav
-
-//export default cssModules(Nav, styles)

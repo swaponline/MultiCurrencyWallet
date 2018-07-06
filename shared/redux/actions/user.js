@@ -11,7 +11,7 @@ const sign = async () => {
 
   actions.bitcoin.login(btcPrivateKey)
 
-  Object.keys(config.services.tokens)
+  Object.keys(config.tokens)
     .forEach(name => {
       actions.token.login(_ethPrivateKey, config.tokens[name].address, name, config.tokens[name].decimals)
     })
@@ -25,7 +25,7 @@ const getBalances = () => {
   actions.ethereum.getBalance()
   actions.bitcoin.getBalance()
 
-  Object.keys(config.services.tokens)
+  Object.keys(config.tokens)
     .forEach(name => {
       actions.token.getBalance(config.tokens[name].address, name, config.tokens[name].decimals)
     })
