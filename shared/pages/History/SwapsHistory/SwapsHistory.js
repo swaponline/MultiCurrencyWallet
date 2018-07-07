@@ -1,4 +1,4 @@
-import React, { Fragment, PureComponent } from 'react'
+import React, { PureComponent } from 'react'
 
 import Table from 'components/Table/Table'
 import RowHistory from './RowHistory/RowHistory'
@@ -15,7 +15,7 @@ export default class SwapsHistory extends PureComponent {
     }
 
     return (
-      <Fragment>
+      <div style={{ marginBottom: '50px' }}>
         <h3>Swaps history</h3>
         <Table
           titles={titles}
@@ -27,7 +27,7 @@ export default class SwapsHistory extends PureComponent {
             />
           )}
         />
-      </Fragment>
+      </div>
     )
   }
 }

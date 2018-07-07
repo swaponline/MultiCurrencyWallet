@@ -1,7 +1,9 @@
 import { request, constants } from 'helpers'
 import actions from 'redux/actions'
+import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
 import config from 'app-config'
+import moment from 'moment/moment'
 
 
 const sign = async () => {
@@ -68,6 +70,64 @@ const setTransactions = () =>
       reducers.history.setTransactions(data)
     })
 
+const getText = () => {
+  const { user : { ethData, btcData } } = getState()
+
+
+  const text = `
+${window.location.hostname} emergency instruction
+\r\n
+\r\n
+#ETHEREUM
+\r\n
+\r\n
+Ethereum address: ${ethData.address}  \r\n
+Private key: ${ethData.privateKey}\r\n
+\r\n
+\r\n
+How to access tokens and ethers: \r\n
+1. Go here https://www.myetherwallet.com/#send-transaction \r\n
+2. Select 'Private key'\r\n
+3. paste private key to input and click "unlock"\r\n
+\r\n
+\r\n
+\r\n
+# BITCOIN\r\n
+\r\n
+\r\n
+Bitcoin address: ${btcData.address}\r\n
+Private key: ${btcData.privateKey}\r\n
+\r\n
+\r\n
+1. Go to blockchain.info\r\n
+2. login\r\n
+3. Go to settings > addresses > import\r\n
+4. paste private key and click "Ok"\r\n
+\r\n
+\r\n
+* We don\`t store your private keys and will not be able to restore them!  
+    `
+
+  return text
+}
+
+const downloadPrivateKeys = () => {
+  const element = document.createElement('a')
+  const text = getText()
+  const message = 'Check your browser downloads'
+
+  element.setAttribute('href', `data:text/plaincharset=utf-8,${encodeURIComponent(text)}`)
+  element.setAttribute('download', `${window.location.hostname}_keys_${moment().format('DD.MM.YYYY')}.txt`)
+
+  element.style.display = 'none'
+  document.body.appendChild(element)
+  element.click()
+  document.body.removeChild(element)
+
+  actions.notifications.show(constants.notifications.Message, {
+    message,
+  })
+}
 
 export default {
   sign,
@@ -75,4 +135,5 @@ export default {
   getDemoMoney,
   setExchangeRate,
   setTransactions,
+  downloadPrivateKeys,
 }

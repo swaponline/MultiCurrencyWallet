@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import actions from 'redux/actions'
-import config from 'app-config'
 
 import cssModules from 'react-css-modules'
 import styles from './Row.scss'

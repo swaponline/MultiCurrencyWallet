@@ -11,10 +11,10 @@ import config from 'app-config'
 
 export default class EthToBtc extends Component {
 
-  constructor({ orderId }) {
+  constructor({ orderId, tokenName }) {
     super()
 
-    this.swap = new Swap(orderId, ETHTOKEN2BTC)
+    this.swap = new Swap(orderId, ETHTOKEN2BTC(tokenName))
 
     this.state = {
       flow: this.swap.flow.state,

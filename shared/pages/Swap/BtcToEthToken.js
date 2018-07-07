@@ -10,10 +10,10 @@ import TimerButton from 'components/controls/TimerButton/TimerButton'
 
 export default class BtcToEthToken extends Component {
 
-  constructor({ orderId }) {
+  constructor({ orderId, tokenName }) {
     super()
 
-    this.swap = new Swap(orderId, BTC2ETHTOKEN)
+    this.swap = new Swap(orderId, BTC2ETHTOKEN(tokenName))
 
     this.state = {
       flow: this.swap.flow.state,

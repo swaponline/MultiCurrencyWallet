@@ -19,14 +19,34 @@ const swapComponents = {
 
 export default class Swap extends PureComponent {
 
+  state = {
+    tokenName: 'noxon',
+  }
+
   constructor({ match: { params: { orderId } } }) {
     super()
 
     this.order = SwapApp.services.orders.getByKey(orderId)
   }
 
-  render() {
+  componentWillMount() {
     const { match : { params : { sell, buy } } } = this.props
+
+    if (sell === 'noxon' || buy === 'noxon') {
+      this.setState({
+        tokenName: 'noxon',
+      })
+    } else {
+      this.setState({
+        tokenName: 'swap',
+      })
+    }
+  }
+
+  render() {
+    const { tokenName } = this.state
+    const { match : { params : { sell, buy } } } = this.props
+
     if (!this.order) {
       return (
         <div>
@@ -39,7 +59,7 @@ export default class Swap extends PureComponent {
 
     return (
       <div style={{ paddingLeft: '30px', paddingTop: '30px' }}>
-        <SwapComponent orderId={this.order.id} />
+        <SwapComponent orderId={this.order.id} tokenName={tokenName} />
       </div>
     )
   }

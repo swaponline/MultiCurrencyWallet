@@ -79,7 +79,7 @@ export default class History extends Component {
       <section>
         <PageHeadline subTitle="History" />
         <SwapsHistory orders={historyOrders} />
-        <h3 style={{ marginTop: '50px' }}>All transactions</h3>
+        <h3 >All transactions</h3>
         <Filter />
         <Table
           titles={titles}

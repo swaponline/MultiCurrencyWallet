@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react'
-import config from  'app-config'
 
 import actions from 'redux/actions'
 import PropTypes from 'prop-types'

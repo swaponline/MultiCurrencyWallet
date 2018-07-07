@@ -4,6 +4,8 @@ import { constants } from 'helpers'
 import actions from 'redux/actions'
 
 import PageHeadline from 'components/PageHeadline/PageHeadline'
+import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
+import SaveKeys from 'components/SaveKeys/SaveKeys'
 import Table from 'components/Table/Table'
 
 import Row from './Row/Row'
@@ -12,8 +14,6 @@ import Row from './Row/Row'
 @connect(({ user: { ethData, btcData, tokensData, eosData, nimData } }) => ({
   items: [ ethData, btcData /* eosData  nimData */ ],
   tokensData,
-  ethAddress: ethData.address,
-  btcAddress: btcData.address,
 }))
 export default class Balances extends Component {
 
@@ -32,23 +32,25 @@ export default class Balances extends Component {
   }
 
   render() {
-    const { items, ethAddress, btcAddress, tokensData } = this.props
+    const { items, tokensData } = this.props
     const titles = [ 'Coin', 'Name', 'Balance', 'Address', '' ]
-    const addresses = { ethAddress, btcAddress }
 
     Object.keys(tokensData).map(k => items.push(tokensData[k]))
 
     return (
       <section>
-        <PageHeadline subTitle="Balances" />
-        { process.env.TESTNET && <a href="" onClick={this.handleClear} >Clear all data</a> }
+        <PageHeadline>
+          <SubTitle>Balances</SubTitle>
+          <SaveKeys isDownload={() => actions.user.downloadPrivateKeys()} />
+        </PageHeadline>
         <Table
           titles={titles}
           rows={items}
           rowRender={(row, index) => (
-            <Row key={index} addresses={addresses} {...row} />
+            <Row key={index} {...row} />
           )}
         />
+        { process.env.TESTNET && <a href="" onClick={this.handleClear} >Exit (clear localstorage)</a> }
       </section>
     )
   }
