@@ -6,7 +6,7 @@ const createResponseHandler = (req, opts) => {
 
   return new Promise((fulfill, reject) => req.end((err, res) => {
     let serverError
-    let body = res.body // eslint-disable-line
+    let body = res.body
 
     // Errors
 
@@ -42,7 +42,6 @@ const createResponseHandler = (req, opts) => {
 
     fulfill(resData, res)
     opts.onComplete()
-
   }))
 }
 

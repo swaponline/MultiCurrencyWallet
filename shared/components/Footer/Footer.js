@@ -53,8 +53,6 @@ export default class Footer extends Component {
     const { userOnline, connected } = this.state
     const server = SwapApp.services.room._config.config.Addresses.Swarm[0].split('/')[2]
 
-    console.log(SwapApp)
-
     return (
       <div styleName="footer">
         <WidthContainer styleName="container">

@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 
 import actions from 'redux/actions'
-import { swapApp } from 'instances/newSwap'
+import SwapApp from 'swap.app'
 
 import cssModules from 'react-css-modules'
 import styles from './ConfirmOffer.scss'
@@ -60,7 +60,7 @@ export default class ConfirmOffer extends Component {
       sellAmount: Number(sellAmount),
     }
     actions.analytics.dataEvent('orderbook-addoffer-click-confirm-button')
-    swapApp.services.orders.create(data)
+    SwapApp.services.orders.create(data)
   }
 
   render() {
