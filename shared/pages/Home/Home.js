@@ -100,7 +100,7 @@ export default class Home extends Component {
               <Fragment>
                 <Title>Swap.Online</Title>
                 <SubTitle>
-                  Crypto-currency market (we working directly with bitcoin!). We <font color=red>♥</a> IPFS, JavaScript and ⚡Lightning Network. Check our <a href="https://wiki.swap.online/en.pdf" onClick={this.handleClickSummary}>summary.pdf</a>. Contact team@swap.online for any issues 
+                  Crypto-currency market (we working directly with bitcoin!). We <font color="red">♥</font> IPFS, JavaScript and ⚡Lightning Network. Check our <a href="https://wiki.swap.online/en.pdf" onClick={this.handleClickSummary}>summary.pdf</a>. Contact team@swap.online for any issues
                   {/* Subscribe to <a href="https://t.me/swaponlineint" onClick={this.handleClickTelegram} target="_blank">telegram</a> and <a href="/" target="_blank"  onClick={this.handleClickMailing}>mailing list</a> */}
                 </SubTitle>
               </Fragment>
