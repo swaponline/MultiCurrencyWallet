@@ -30,7 +30,6 @@ const login = (privateKey) => {
 
 const getBalance = () => {
   const { user: { ethData: { address } } } = getState()
-
   const url = `${config.api.etherscan}?module=account&action=balance&address=${address}&tag=latest&apikey=${config.apiKeys.etherscan}`
 
   return request.get(url)
@@ -75,7 +74,7 @@ const getTransaction = () =>
           transactions = res.result
             .filter((item) => item.value > 0).map((item) => ({
               type: 'eth',
-              confirmations: item.confirmations > 0 ? 'Confirm' : 'Unconfirmed',
+              confirmations: item.confirmations > 0 ? 'Confirmed' : 'Unconfirmed',
               hash: item.hash,
               status: item.blockHash != null ? 1 : 0,
               value: web3.utils.fromWei(item.value),

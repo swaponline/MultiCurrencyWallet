@@ -9,13 +9,44 @@ import { Link } from 'react-router-dom'
 
 import Coins from 'components/Coins/Coins'
 import RequestButton from '../RequestButton/RequestButton'
-import RemoveButton from '../RemoveButton/RemoveButton'
+import RemoveButton from 'components/controls/RemoveButton/RemoveButton'
 
 
 export default class Row extends Component {
 
   static propTypes = {
     row: PropTypes.object,
+  }
+
+  state = {
+    exchangeRate: null,
+  }
+
+  componentWillMount() {
+    const { row } = this.props
+
+    if (row === undefined) {
+      return null
+    }
+    const { buyCurrency, sellCurrency } = row
+
+    this.getExchangeRate(buyCurrency, sellCurrency)
+  }
+
+  getExchangeRate = (buyCurrency, sellCurrency) => {
+
+    if (sellCurrency === 'noxon') {
+      sellCurrency = 'eth'
+    } else if (buyCurrency === 'noxon') {
+      buyCurrency = 'eth'
+    }
+
+    actions.user.setExchangeRate(buyCurrency, sellCurrency)
+      .then(exchangeRate => {
+        this.setState({
+          exchangeRate,
+        })
+      })
   }
 
   removeOrder = (orderId) => {
@@ -38,13 +69,14 @@ export default class Row extends Component {
 
   render() {
     const { row } = this.props
+    const { exchangeRate } = this.state
 
     if (row === undefined) {
       return null
     }
 
     const { id, buyCurrency, sellCurrency, buyAmount, sellAmount, isRequested,
-      owner :{  peer: ownerPeer, reputation } } = row
+      owner :{  peer: ownerPeer } } = row
     const mePeer = swapApp.services.room.peer
 
     return (
@@ -59,7 +91,7 @@ export default class Row extends Component {
           {`${sellCurrency.toUpperCase()} ${sellAmount}`}
         </td>
         <td>
-          { reputation }
+          { exchangeRate}
         </td>
         <td>
           {
@@ -87,4 +119,3 @@ export default class Row extends Component {
     )
   }
 }
-

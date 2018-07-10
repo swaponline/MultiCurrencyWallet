@@ -48,7 +48,7 @@ context('Connectors', () => {
     cy.get('.connectors-list>li').then(($lis) => {
       expect($lis).to.have.length(3)
       expect($lis.eq(0)).to.contain('Walk the dog')
-      expect($lis.eq(1)).to.contain('Feed the cat')
+      expect($lis.eq(1)).to.contain('SwapHistory the cat')
       expect($lis.eq(2)).to.contain('Write JavaScript')
     })
   })

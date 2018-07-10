@@ -1,5 +1,6 @@
 import webpack from 'webpack'
 import ProgressBarPlugin from 'progress-bar-webpack-plugin'
+import WebappWebpackPlugin from 'webapp-webpack-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import AppConfigPlugin from 'app-config/webpack'
 import config from 'app-config'
@@ -36,19 +37,20 @@ const webpackConfig = {
   resolve: {
     alias: {
       shared: config.paths.base('shared'),
-      'swap.auth':  config.paths.lib('swap.auth'),
-      'swap.orders':  config.paths.lib('swap.orders'),
-      'swap.room':  config.paths.lib('swap.room'),
-      'swap.app':  config.paths.lib('swap.app'),
-      'swap.flows':  config.paths.lib('swap.flows'),
-      'swap.swap':  config.paths.lib('swap.swap'),
-      'swap.swaps':  config.paths.lib('swap.swaps'),
+      'swap.auth': config.paths.swapCore('src/swap.auth'),
+      'swap.orders': config.paths.swapCore('src/swap.orders'),
+      'swap.room': config.paths.swapCore('src/swap.room'),
+      'swap.app': config.paths.swapCore('src/swap.app'),
+      'swap.flows': config.paths.swapCore('src/swap.flows'),
+      'swap.swap': config.paths.swapCore('src/swap.swap'),
+      'swap.swaps': config.paths.swapCore('src/swap.swaps'),
     },
     modules: [
       config.paths.base('client'),
       config.paths.base('shared'),
       config.paths.base('local_modules'),
       'node_modules',
+      config.paths.swapCore('src/node_modules'),
     ],
     extensions: [ '.js', '.jsx', '.scss' ],
     plugins: [],
@@ -68,10 +70,13 @@ const webpackConfig = {
     }),
     new webpack.NoEmitOnErrorsPlugin(),
     new ProgressBarPlugin({ clear: false }),
+    new WebappWebpackPlugin({
+      logo: config.paths.client('favicon.png'),
+      prefix: `${config.publicPath}assets/`,
+    }),
     new HtmlWebpackPlugin({
       title: 'Swap.Online',
       template: config.paths.client('index.html'),
-      // favicon: config.paths.site('assets/favicon-32x32.png'),
       hash: false,
       filename: 'index.html',
       inject: 'body',

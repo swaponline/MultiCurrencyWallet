@@ -4,25 +4,13 @@ import { getState } from 'redux/core'
 import web3 from 'helpers/web3'
 import reducers from 'redux/core/reducers'
 import config from 'app-config'
+import { BigNumber } from 'bignumber.js'
 
 
-let tokenContract
+BigNumber.config({ DECIMAL_PLACES: 21 })
 
-const setupContract = (ethAddress) => {
-  if (!web3.eth.accounts.wallet[ethAddress]) {
-    throw new Error('web3 does not have given address')
-  }
 
-  const options = {
-    from: ethAddress,
-    gas: `${config.services.web3.gas}`,
-    gasPrice: `${config.services.web3.gasPrice}`,
-  }
-
-  tokenContract = new web3.eth.Contract(abi, config.services.web3.noxonToken, options)
-}
-
-const login = (privateKey) => {
+const login = (privateKey, contractAddress, nameContract, decimals) => {
   let data
   if (privateKey) {
     data = web3.eth.accounts.privateKeyToAccount(privateKey)
@@ -35,18 +23,39 @@ const login = (privateKey) => {
   web3.eth.accounts.wallet.add(data.privateKey)
   console.info('Logged in with ETH Token', data)
 
-  reducers.user.setAuthData({ name: 'tokenData', data })
-  setupContract(data.address)
+
+  setupContract(data.address, contractAddress, nameContract, decimals)
 }
 
-const getBalance = () => {
-  const { user: { ethData: { address } } } = getState()
 
-  return request.get(`${config.api.etherscan}?module=account&action=tokenbalance&contractaddress=${tokenContract._address}&address=${address}`)
-    .then(({ result: amount }) => {
-      console.log('tokenAddress', tokenContract._address)
-      console.log('result', amount)
-      reducers.user.setBalance({ name: 'tokenData', amount })
+const setupContract = (ethAddress, contractAddress, nameContract, decimals) => {
+  if (!web3.eth.accounts.wallet[ethAddress]) {
+    throw new Error('web3 does not have given address')
+  }
+
+  const data = {
+    address: ethAddress,
+    balance: 0,
+    name: nameContract,
+    currency: nameContract.toUpperCase(),
+    contractAddress,
+    decimals,
+  }
+
+  reducers.user.setTokenAuthData({ name: data.name, data })
+}
+
+
+const getBalance = (contractAddress, name, decimals) => {
+  const { user: { ethData: { address } } } = getState()
+  const url = `${config.api.etherscan}?module=account&action=tokenbalance&contractaddress=${contractAddress}&address=${address}`
+
+  return request.get(url)
+    .then(({ result }) => {
+      const amount = new BigNumber(String(result))
+        .dividedBy(new BigNumber(String(10)).pow(decimals)).toNumber()
+
+      reducers.user.setTokenBalance({ name, amount })
     }).catch(r => console.error('Token service isn\'t available, try later'))
 }
 
@@ -55,13 +64,13 @@ const fetchBalance = (address) =>
     .then(({ result }) => result)
 
 
-const getTransaction = () =>
+const getTransaction = (contractAddress) =>
   new Promise((resolve) => {
     const { user: { ethData: { address } } } = getState()
 
     const url = [
       `https://api-rinkeby.etherscan.io/api?module=account&action=tokentx`,
-      `&contractaddress=${tokenContract._address}`,
+      `&contractaddress=${contractAddress}`,
       `&address=${address}`,
       `&startblock=0&endblock=99999999`,
       `&sort=asc&apikey=${config.apiKeys.blocktrail}`,
@@ -71,10 +80,11 @@ const getTransaction = () =>
 
     request.get(url)
       .then((res) => {
+        console.log(res)
         if (res.status) {
           transactions = res.result
             .filter((item) => item.value > 0).map((item) => ({
-              confirmations: item.confirmations > 0 ? 'Confirm' : 'Unconfirmed',
+              confirmations: item.confirmations > 0 ? 'Confirmed' : 'Unconfirmed',
               type: item.tokenName,
               hash: item.hash,
               contractAddress: item.contractAddress,
@@ -85,17 +95,34 @@ const getTransaction = () =>
               direction: address.toLowerCase() === item.to.toLowerCase() ? 'in' : 'out',
             }))
           resolve(transactions)
+          console.log('TOKEN', transactions)
         } else { console.error('res:status ETH false', res) }
       })
   })
 
-const send = (from, to, amount) =>
-  new Promise((resolve, reject) =>
-    tokenContract.methods.transfer(to, amount).send()
+
+const send = (from, to, amount, decimals) => {
+  const { user: { ethData: { address } } } = getState()
+  let tokenContract
+
+  const options = {
+    from: address,
+    gas: `${config.services.web3.gas}`,
+    gasPrice: `${config.services.web3.gasPrice}`,
+  }
+
+  tokenContract = new web3.eth.Contract(abi, from, options)
+
+  const newAmount = new BigNumber(String(amount)).times(new BigNumber('10').pow(new BigNumber(String(decimals))))
+
+  return new Promise((resolve, reject) =>
+    tokenContract.methods.transfer(to, newAmount).send()
       .then(receipt => {
         resolve(receipt)
       })
   )
+}
+
 
 export default {
   login,

@@ -1,8 +1,5 @@
 import React, { Component, Fragment } from 'react'
 
-import { ETHTOKEN2BTC } from 'swap.flows'
-import Swap from 'swap.swap'
-
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import TimerButton from 'components/controls/TimerButton/TimerButton'
 
@@ -11,10 +8,10 @@ import config from 'app-config'
 
 export default class EthToBtc extends Component {
 
-  constructor({ orderId }) {
+  constructor({ swap }) {
     super()
 
-    this.swap = new Swap(orderId, ETHTOKEN2BTC)
+    this.swap = swap
 
     this.state = {
       flow: this.swap.flow.state,

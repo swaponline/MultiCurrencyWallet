@@ -7,8 +7,7 @@ import Home from 'pages/Home/Home'
 import Balances from 'pages/Balances/Balances'
 import History from 'pages/History/History'
 import NotFound from 'pages/NotFound/NotFound'
-import Swap from 'pages/Swap/Swap'
-import Feed from 'pages/Feed/Feed'
+import SwapComponent from 'pages/Swap/Swap'
 
 
 const routes = (
@@ -17,8 +16,7 @@ const routes = (
     <Route exact path={links.home} component={Home} />
     <Route path={links.balance} component={Balances} />
     <Route path={links.history} component={History} />
-    <Route path={links.feed} component={Feed} />
-    <Route path={`${links.swap}/:buy-:sell/:orderId`} component={Swap} />
+    <Route path={`${links.swap}/:buy-:sell/:orderId`} component={SwapComponent} />
     <Route component={NotFound} />
   </Switch>
 )

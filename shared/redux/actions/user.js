@@ -1,6 +1,9 @@
 import { request, constants } from 'helpers'
 import actions from 'redux/actions'
+import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
+import config from 'app-config'
+import moment from 'moment/moment'
 
 
 const sign = async () => {
@@ -9,46 +12,128 @@ const sign = async () => {
   const _ethPrivateKey = actions.ethereum.login(ethPrivateKey)
 
   actions.bitcoin.login(btcPrivateKey)
-  actions.token.login(_ethPrivateKey)
+
+  Object.keys(config.tokens)
+    .forEach(name => {
+      actions.token.login(_ethPrivateKey, config.tokens[name].address, name, config.tokens[name].decimals)
+    })
   // await actions.nimiq.login(_ethPrivateKey)
 
-  const eosMasterPrivateKey = localStorage.getItem(constants.privateKeyNames.eos)
-  await actions.eos.login(eosMasterPrivateKey)
+  // const eosMasterPrivateKey = localStorage.getItem(constants.privateKeyNames.eos)
+  // await actions.eos.login(eosMasterPrivateKey)
 }
 
 const getBalances = () => {
   actions.ethereum.getBalance()
   actions.bitcoin.getBalance()
-  actions.token.getBalance()
-  actions.eos.getBalance()
+
+  Object.keys(config.tokens)
+    .forEach(name => {
+      actions.token.getBalance(config.tokens[name].address, name, config.tokens[name].decimals)
+    })
+  // actions.eos.getBalance()
   // actions.nimiq.getBalance()
 }
 
 const getDemoMoney = process.env.MAINNET ? () => {} : () => {
   request.get('https://swap.wpmix.net/demokeys.php', {})
     .then((r) => {
-      localStorage.clear()
+      window.localStorage.clear()
       localStorage.setItem(constants.privateKeyNames.btc, r[0])
       localStorage.setItem(constants.privateKeyNames.eth, r[1])
-      global.location.reload()
+      localStorage.setItem(constants.localStorage.demoMoneyReceived, true)
     })
+}
+
+const setExchangeRate = (buyCurrency, sellCurrency) => {
+  const url = `https://api.coinbase.com/v2/exchange-rates?currency=${buyCurrency.toUpperCase()}`
+
+  return request.get(url)
+    .then(({ data: { rates } })  =>
+      Object.keys(rates)
+        .filter(k => k === sellCurrency.toUpperCase())
+        .map((k) => rates[k])
+    ).catch(() =>
+      config.exchangeRates[`${buyCurrency.toLowerCase()}${sellCurrency.toLowerCase()}`]
+    )
 }
 
 const setTransactions = () =>
   Promise.all([
     actions.bitcoin.getTransaction(),
     actions.ethereum.getTransaction(),
-    actions.token.getTransaction(),
+    actions.token.getTransaction(config.tokens.swap.address),
+    actions.token.getTransaction(config.tokens.noxon.address),
   ])
     .then(transactions => {
       let data = [].concat([], ...transactions).sort((a, b) => b.date - a.date)
       reducers.history.setTransactions(data)
     })
 
+const getText = () => {
+  const { user : { ethData, btcData } } = getState()
+
+
+  const text = `
+${window.location.hostname} emergency instruction
+\r\n
+\r\n
+#ETHEREUM
+\r\n
+\r\n
+Ethereum address: ${ethData.address}  \r\n
+Private key: ${ethData.privateKey}\r\n
+\r\n
+\r\n
+How to access tokens and ethers: \r\n
+1. Go here https://www.myetherwallet.com/#send-transaction \r\n
+2. Select 'Private key'\r\n
+3. paste private key to input and click "unlock"\r\n
+\r\n
+\r\n
+\r\n
+# BITCOIN\r\n
+\r\n
+\r\n
+Bitcoin address: ${btcData.address}\r\n
+Private key: ${btcData.privateKey}\r\n
+\r\n
+\r\n
+1. Go to blockchain.info\r\n
+2. login\r\n
+3. Go to settings > addresses > import\r\n
+4. paste private key and click "Ok"\r\n
+\r\n
+\r\n
+* We don\`t store your private keys and will not be able to restore them!  
+    `
+
+  return text
+}
+
+const downloadPrivateKeys = () => {
+  const element = document.createElement('a')
+  const text = getText()
+  const message = 'Check your browser downloads'
+
+  element.setAttribute('href', `data:text/plaincharset=utf-8,${encodeURIComponent(text)}`)
+  element.setAttribute('download', `${window.location.hostname}_keys_${moment().format('DD.MM.YYYY')}.txt`)
+
+  element.style.display = 'none'
+  document.body.appendChild(element)
+  element.click()
+  document.body.removeChild(element)
+
+  actions.notifications.show(constants.notifications.Message, {
+    message,
+  })
+}
 
 export default {
   sign,
   getBalances,
   getDemoMoney,
+  setExchangeRate,
   setTransactions,
+  downloadPrivateKeys,
 }

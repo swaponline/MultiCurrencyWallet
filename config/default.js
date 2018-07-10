@@ -12,7 +12,7 @@ const config = {
     base:     (file = '') => path.join(basePath, file),
     shared:   (file = '') => path.join(basePath, 'shared', file),
     client:   (file = '') => path.join(basePath, 'client', file),
-    lib:      (file = '') => path.join(basePath, 'lib', file),
+    swapCore: (file = '') => path.join(rootPath, 'swap.core', file),
   },
 
   publicPath: '/',
@@ -27,6 +27,16 @@ const config = {
     day: 'numeric',
     hour: 'numeric',
     minute: 'numeric',
+  },
+
+  exchangeRates: {
+    'etheth': 1,
+    'ethbtc': 0.07,
+    'btceth': 14,
+    'ethnoxon': 1,
+    'noxoneth': 1,
+    'btcnoxon': 14,
+    'noxonbtc': 0.07,
   },
 }
 

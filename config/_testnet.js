@@ -2,8 +2,6 @@ export default {
   services: {
     web3: {
       provider: 'https://rinkeby.infura.io/JCnK5ifEPH9qcQkX0Ahl',
-      noxonToken: '0x60c205722c6c797c725a996cf9cca11291f90749',
-      swapToken: '0x5f53dc58cad6101d943b26ffb9427723aeb816f9',
       rate: 0.1,
       gas: 1e5,
       gasPrice: '20000000000',
@@ -14,6 +12,25 @@ export default {
       httpEndpoint: 'https://jungle.eosio.cr',
       keyProvider: '5JYP2L1NMcZ6ZhQD4WZAtsV8t6UdkzGFob3ca676m7zD7gm2Lmj',
       serviceAccount: 'swaponline',
+    },
+  },
+
+  token: {
+    contract: '0xBA5c6DC3CAcdE8EA754e47c817846f771944518F',
+  },
+
+  eth: {
+    contract : '0xdbC2395f753968a93465487022B0e5D8730633Ec', //  0x025dce2d39a46296766db7cac8c322e8f59cd5d9
+  },
+
+  tokens: {
+    swap: {
+      address: '0x5f53dc58cad6101d943b26ffb9427723aeb816f9',
+      decimals: 18,
+    },
+    noxon: {
+      address: '0x60c205722c6c797c725a996cf9cca11291f90749',
+      decimals: 0,
     },
   },
 

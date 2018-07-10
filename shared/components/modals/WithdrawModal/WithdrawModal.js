@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'redaction'
 import { constants } from 'helpers'
 import actions from 'redux/actions'
 import Link from 'sw-valuelink'
@@ -14,11 +13,7 @@ import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
 
 
-@connect({
-  ethData: 'user.ethData',
-  btcData: 'user.btcData',
-  nimData: 'user.nimData',
-})
+
 @cssModules(styles)
 export default class WithdrawModal extends React.Component {
 
@@ -35,7 +30,7 @@ export default class WithdrawModal extends React.Component {
 
   handleSubmit = () => {
     const { address: to, amount } = this.state
-    const { ethData, btcData, nimData, data: { currency } } = this.props
+    const { data: { currency, contractAddress, address, decimals } } = this.props
 
     if (!to || !amount || amount < 0.01) {
       this.setState({
@@ -45,30 +40,25 @@ export default class WithdrawModal extends React.Component {
     }
 
     let action
-    let from
 
     if (currency === 'ETH') {
       action = actions.ethereum
-      from = ethData.address
     }
     else if (currency === 'BTC') {
       action = actions.bitcoin
-      from = btcData.address
     }
     else if (currency === 'NIM') {
       action = actions.nimiq
-      from = nimData.address
     }
-    else if (currency === 'NOXON') {
+    else {
       action = actions.token
     }
 
     actions.loader.show()
 
-    action.send(from, to, Number(amount))
+    action.send(contractAddress || address, to, Number(amount), decimals)
       .then(() => {
         actions.loader.hide()
-        action.getBalance()
 
         actions.notifications.show(constants.notifications.SuccessWithdraw, {
           amount,

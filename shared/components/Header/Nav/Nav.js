@@ -1,10 +1,9 @@
-import React from 'react'
-import actions from 'redux/actions'
+import React, { Component } from 'react'
 
 import { NavLink } from 'react-router-dom'
 import { links } from 'helpers'
+import CSSModules from 'react-css-modules'
 
-import cssModules from 'react-css-modules'
 import styles from './Nav.scss'
 
 
@@ -14,31 +13,34 @@ const nav = [
   { title: 'History', link: links.history },
 ]
 
-const Nav = () => (
-  <div styleName="nav">
-    {
-      nav.map(({ title, link }) => (
-        <NavLink
-          exact
-          key={title}
-          styleName="link"
-          to={link}
-          activeClassName={styles.active}
-        >
-          {title}
-        </NavLink>
-      ))
-    }
-    {
-      process.env.TESTNET && <div
-        key="Get demo money"
-        styleName="button"
-        onClick={() => actions.user.getDemoMoney()}
-      >
-        Get demo money
-      </div>
-    }
-  </div>
-)
+@CSSModules(styles)
+export default class Nav extends Component {
 
-export default cssModules(Nav, styles)
+  handleScrollTo = (scrollDuration) => {
+    const scrollStep = -window.scrollY / (scrollDuration / 15)
+    const scrollInterval = setInterval(() => {
+      window.scrollY !== 0 ? window.scrollBy(0, scrollStep) : clearInterval(scrollInterval)
+    }, 15)
+  }
+
+  render() {
+    return (
+      <div styleName="nav">
+        {
+          nav.map(({ title, link }) => (
+            <NavLink
+              onClick={() => this.handleScrollTo(500)}
+              exact
+              key={title}
+              styleName="link"
+              to={link}
+              activeClassName={styles.active}
+            >
+              {title}
+            </NavLink>
+          ))
+        }
+      </div>
+    )
+  }
+}

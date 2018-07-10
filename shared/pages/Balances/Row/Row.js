@@ -12,7 +12,6 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import LinkAccount from '../LinkAccount/LinkAcount'
 
 
-
 @cssModules(styles)
 export default class Row extends Component {
 
@@ -28,7 +27,11 @@ export default class Row extends Component {
       return null
     }
 
-    let { currency } = this.props
+    this.setState({
+      isBalanceFetching: true,
+    })
+
+    let { currency, contractAddress, decimals } = this.props
     let action
 
     currency = currency.toLowerCase()
@@ -41,23 +44,16 @@ export default class Row extends Component {
       action = actions.bitcoin.getBalance
       actions.analytics.dataEvent('balances-update-btc')
     }
-    else if (currency === 'noxon') {
-      action = actions.token.getBalance
-      actions.analytics.dataEvent('balances-update-noxon')
-    }
-    else if (currency === 'Lightning network BTC') {
-      action = actions.htls.getBalance
-    }
     else if (currency === 'eos') {
       action = actions.eos.getBalance
       actions.analytics.dataEvent('balances-update-eos')
     }
+    else {
+      action = actions.token.getBalance
+      actions.analytics.dataEvent('balances-update-token')
+    }
 
-    this.setState({
-      isBalanceFetching: true,
-    })
-
-    action()
+    action(contractAddress, currency, decimals)
       .then(() => {
         this.setState({
           isBalanceFetching: false,
@@ -86,7 +82,7 @@ export default class Row extends Component {
 
   render() {
     const { isBalanceFetching, viewText } = this.state
-    const { currency, balance, address } = this.props
+    const { currency, balance, address, contractAddress, decimals } = this.props
 
     return (
       <tr>
@@ -109,7 +105,7 @@ export default class Row extends Component {
         <td style={{ position: 'relative' }} >
           <button styleName="button" onClick={this.handleCopiedAddress} >Copy</button>
           <ReloadButton styleName="reloadButton" onClick={this.handleReloadBalance} />
-          <WithdrawButton data={{ currency, balance, address }} />
+          <WithdrawButton data={{ currency, balance, address, contractAddress, decimals }} />
           { viewText && <p styleName="copied" >Address copied to clipboard</p> }
         </td>
       </tr>

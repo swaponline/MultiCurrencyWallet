@@ -1,22 +1,22 @@
 import React, { Component, Fragment } from 'react'
 import config from 'app-config'
 
-import { ETH2BTC } from 'swap.flows'
-import Swap from 'swap.swap'
-
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import TimerButton from 'components/controls/TimerButton/TimerButton'
+import Button from 'components/controls/Button/Button'
+import Timer from './Timer/Timer'
 
 
 export default class EthToBtc extends Component {
 
-  constructor({ orderId }) {
+  constructor({ swap }) {
     super()
 
-    this.swap = new Swap(orderId, ETH2BTC)
+    this.swap = swap
 
     this.state = {
       flow: this.swap.flow.state,
+      enabledButton: false,
     }
   }
 
@@ -46,8 +46,12 @@ export default class EthToBtc extends Component {
     this.swap.flow.syncBalance()
   }
 
+  tryRefund = () => {
+    this.swap.flow.tryRefund()
+  }
+
   render() {
-    const { flow } = this.state
+    const { flow, enabledButton } = this.state
 
     return (
       <div>
@@ -146,7 +150,6 @@ export default class EthToBtc extends Component {
               {
                 flow.secretHash && flow.btcScriptValues && (
                   <Fragment>
-                    { console.log(flow, 'flow') }
                     <h3>3. Bitcoin Script created and charged. Please check the information below</h3>
                     <div>Secret Hash: <strong>{flow.secretHash}</strong></div>
                     <br />
@@ -288,6 +291,33 @@ export default class EthToBtc extends Component {
                 )
               }
             </Fragment>
+          )
+        }
+        {
+          flow.step >= 7 && (
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              { enabledButton &&  <Button brand onClick={this.tryRefund}>TRY REFUND</Button> }
+              <Timer
+                lockTime={flow.btcScriptValues.lockTime * 1000}
+                enabledButton={() => this.setState({ enabledButton: true })}
+              />
+            </div>
+          )
+        }
+        {
+          flow.refundTransactionHash && (
+            <div>
+              Transaction:
+              <strong>
+                <a
+                  href={`${config.link.etherscan}/tx/${flow.refundTransactionHash}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {flow.refundTransactionHash}
+                </a>
+              </strong>
+            </div>
           )
         }
       </div>

@@ -1,19 +1,16 @@
 import React, { Component, Fragment } from 'react'
 import config from 'app-config'
 
-import { BTC2ETHTOKEN } from 'swap.flows'
-import Swap from 'swap.swap'
-
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import TimerButton from 'components/controls/TimerButton/TimerButton'
 
 
 export default class BtcToEthToken extends Component {
 
-  constructor({ orderId }) {
+  constructor({ swap }) {
     super()
 
-    this.swap = new Swap(orderId, BTC2ETHTOKEN)
+    this.swap = swap
 
     this.state = {
       flow: this.swap.flow.state,

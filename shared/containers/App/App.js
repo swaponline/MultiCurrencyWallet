@@ -10,7 +10,10 @@ import CSSModules from 'react-css-modules'
 import styles from './App.scss'
 import 'scss/app.scss'
 
+import { createSwapApp } from 'instances/newSwap'
+
 import Header from 'components/Header/Header'
+import Footer from 'components/Footer/Footer'
 import Loader from 'components/loaders/Loader/Loader'
 import RequestLoader from 'components/loaders/RequestLoader/RequestLoader'
 import ModalConductor from 'components/modal/ModalConductor/ModalConductor'
@@ -25,8 +28,8 @@ moment.locale('en-gb')
   ethAddress: 'user.ethData.address',
   btcAddress: 'user.btcData.address',
   // nimAddress: 'user.nimData.address',
-  tokenAddress: 'user.tokenData.address',
-  eosAddress: 'user.eosData.address',
+  tokenAddress: 'user.tokensData.noxon.address',
+  // eosAddress: 'user.eosData.address',
   isVisible: 'loader.isVisible',
 })
 @CSSModules(styles)
@@ -36,13 +39,31 @@ export default class App extends React.Component {
     children: PropTypes.element.isRequired,
   }
 
+  state = {
+    fetching: false,
+  }
+
+  componentWillMount() {
+    if (!localStorage.getItem(constants.localStorage.demoMoneyReceived)) {
+      actions.user.getDemoMoney()
+    }
+  }
+
   componentDidMount() {
-    actions.user.sign()
+    setTimeout(() => {
+      actions.user.sign()
+      createSwapApp()
+
+      this.setState({
+        fetching: true,
+      })
+    }, 1000)
   }
 
   render() {
-    const { children, ethAddress, btcAddress, tokenAddress, eosAddress } = this.props
-    const isFetching = !ethAddress || !btcAddress || !tokenAddress || !eosAddress
+    const { fetching } = this.state
+    const { children, ethAddress, btcAddress, tokenAddress /* eosAddress */ } = this.props
+    const isFetching = !ethAddress || !btcAddress || !tokenAddress || !fetching
 
 
     if (isFetching) {
@@ -57,6 +78,7 @@ export default class App extends React.Component {
         <WidthContainer styleName="main">
           {children}
         </WidthContainer>
+        <Footer />
         <RequestLoader />
         <ModalConductor />
         <NotificationConductor />

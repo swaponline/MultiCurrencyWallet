@@ -1,6 +1,6 @@
 export default {
   home: '/',
-  balance: '/balance',
+  balance: '/balances',
   history: '/history',
   swap: '/swap',
   feed: '/feed',
