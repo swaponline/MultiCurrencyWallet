@@ -19,19 +19,24 @@ const sign = async () => {
     })
   // await actions.nimiq.login(_ethPrivateKey)
 
-  // const eosMasterPrivateKey = localStorage.getItem(constants.privateKeyNames.eos)
-  // await actions.eos.login(eosMasterPrivateKey)
+  const eosMasterPrivateKey = localStorage.getItem(constants.privateKeyNames.eos)
+  const eosAccount = localStorage.getItem(constants.privateKeyNames.eosAccount)
+  if(eosMasterPrivateKey && eosAccount) {
+    await actions.eos.init()
+    await actions.eos.login(eosAccount, eosMasterPrivateKey)
+    await actions.eos.getBalance()
+  }
 }
 
 const getBalances = () => {
   actions.ethereum.getBalance()
   actions.bitcoin.getBalance()
+  actions.eos.getBalance()
 
   Object.keys(config.tokens)
     .forEach(name => {
       actions.token.getBalance(config.tokens[name].address, name, config.tokens[name].decimals)
     })
-  // actions.eos.getBalance()
   // actions.nimiq.getBalance()
 }
 

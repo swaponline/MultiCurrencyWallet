@@ -9,10 +9,8 @@ export default {
 
     eos: {
       chainId: '',
-      httpEndpoint: '',
-      keyProvider: '',
-      serviceAccount: '',
-    },
+      httpEndpoint: ''
+    }
   },
 
   token: {

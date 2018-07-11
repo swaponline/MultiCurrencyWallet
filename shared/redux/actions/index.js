@@ -7,6 +7,7 @@ import bitcoin from './bitcoin'
 import ethereum from './ethereum'
 import token from './token'
 import nimiq from './nimiq'
+import eos from './eos'
 import feed from './feed'
 import analytics from './analytics'
 
@@ -21,6 +22,7 @@ export default {
   ethereum,
   token,
   nimiq,
+  eos,
   feed,
   analytics,
 }

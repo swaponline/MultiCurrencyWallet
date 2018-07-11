@@ -10,9 +10,8 @@ import Table from 'components/Table/Table'
 
 import Row from './Row/Row'
 
-
 @connect(({ user: { ethData, btcData, tokensData, eosData, nimData } }) => ({
-  items: [ ethData, btcData /* eosData  nimData */ ],
+  items: [ ethData, btcData, eosData /* eosData  nimData */ ],
   tokensData,
 }))
 export default class Balances extends Component {

@@ -1,83 +1,69 @@
 import { getState } from 'redux/core'
 import config from 'app-config'
 import reducers from 'redux/core/reducers'
-
-import eos from 'helpers/eos'
 import constants from 'helpers/constants'
+
+import Eos from 'eosjs'
 
 import { Keygen } from 'eosjs-keygen'
 
-// Pure function to generate account associated with user,
-// because multiple accounts can be owned by one authority in eos
-const generateAccountName = (publicKey) => {
-  const account = Array.prototype.map.call(
-    publicKey.substr(0, 12).toLowerCase(),
-    (char) => (Number.isNaN(Number.parseInt(char, 10)) || char < 5) ? char : char - 4
-  ).join('')
+let eos = null;
 
-  return account
+const keyProvider = () => {
+  return localStorage.getItem(constants.privateKeyNames.eos)
 }
 
-const createAccount = (keys, name) => {
-  const serviceAccount = config.services.eos.serviceAccount
+const init = async () => {
+  if(eos === null) {
+    const { chainId, httpEndpoint } = config.services.eos
 
-  return eos.transaction(tx => {
-    tx.newaccount({
-      creator: serviceAccount,
-      owner: keys.publicKeys.owner,
-      active: keys.publicKeys.active,
-      name,
-    })
+    if (!chainId || !httpEndpoint )
+      throw new Error('Invalid config')
 
-    tx.buyrambytes({
-      payer: serviceAccount,
-      receiver: name,
-      bytes: 8192,
+    eos = Eos({
+      chainId,
+      httpEndpoint,
+      keyProvider
     })
-  })
+  }
 }
 
-const login = (privateKey) => {
-  Keygen.generateMasterKeys(privateKey).then(keys => {
-    const accountName = generateAccountName(keys.publicKeys.active)
+const register = async (accountName, privateKey) => {
+  const keys = await Keygen.generateMasterKeys(privateKey)
 
-    const data = { ...keys, address: accountName }
+  if (keys.masterPrivateKey !== privateKey)
+    throw new Error('Invalid private key')
 
-    // we suppose that user has already registered account
-    // when function is being called with correct private key
-    if (keys.masterPrivateKey === privateKey) {
-      return data
-    }
+  localStorage.setItem(constants.privateKeyNames.eos, privateKey)
+  localStorage.setItem(constants.privateKeyNames.eosAccount, accountName)
 
-    return createAccount(keys, accountName).then(result => {
-      console.info(`Created EOS account ${accountName} at ${result.transaction_id}`)
-
-      localStorage.setItem(constants.privateKeyNames.eos, keys.masterPrivateKey)
-
-      return data
-    })
-  }).then(data => {
-    reducers.user.setAuthData({ name: 'eosData', data })
-  })
+  reducers.user.setAuthData({ name: 'eosData', data: { ...keys, address: accountName } } )
 }
 
-const getBalance = () => {
+const login = async (accountName, masterPrivateKey) => {
+  reducers.user.setAuthData({ name: 'eosData', data: { masterPrivateKey, address: accountName } })
+}
+
+const getBalance = async () => {
   const { user: { eosData: { address } } } = getState()
 
-  console.log(`EOS ADDRESS: ${address}`)
+  if(eos === null || address == '')
+    return;
 
-  return eos.getCurrencyBalance({
+  const balance = await eos.getCurrencyBalance({
     code: 'eosio.token',
     symbol: 'EOS',
-    account: address,
-  }).then(result => {
-    const amount = Number.parseFloat(result[0]) || 0
-
-    reducers.user.setBalance({ name: 'eosData', amount })
+    account: address
   })
+
+  const amount = Number.parseFloat(balance[0]) || 0
+
+  reducers.user.setBalance({ name: 'eosData', amount })
 }
 
 export default {
+  init,
   login,
-  getBalance,
+  register,
+  getBalance
 }
