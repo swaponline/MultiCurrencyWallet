@@ -9,14 +9,15 @@ import Button from 'components/controls/Button/Button'
 
 
 
-@connect(({ user: { ethData, btcData } }) => ({
+@connect(({ user: { ethData, btcData, eosData } }) => ({
   btcData,
   ethData,
+  eosData
 }))
 @CSSModules(styles)
 export default class SaveKeys extends Component {
   render() {
-    const { ethData, btcData, isChange, isDownload } = this.props
+    const { ethData, btcData, eosData, isChange, isDownload } = this.props
 
     return (
       <Fragment>
@@ -36,6 +37,12 @@ export default class SaveKeys extends Component {
               label={btcData.currency}
               privateKey={btcData.privateKey.toString()}
             />
+            { typeof eosData.masterPrivateKey === 'string' &&
+              <Field
+                label={eosData.currency}
+                privateKey={eosData.masterPrivateKey.toString()}
+              />
+            }
           </div>
         </div>
       </Fragment>

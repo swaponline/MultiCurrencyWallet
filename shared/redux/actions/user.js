@@ -76,7 +76,7 @@ const setTransactions = () =>
     })
 
 const getText = () => {
-  const { user : { ethData, btcData } } = getState()
+  const { user : { ethData, btcData, eosData } } = getState()
 
 
   const text = `
@@ -111,7 +111,14 @@ Private key: ${btcData.privateKey}\r\n
 \r\n
 \r\n
 * We don\`t store your private keys and will not be able to restore them!  
-    `
+\r\n
+\r\n
+\r\n
+# EOS\r\n
+\r\n
+EOS Master Private Key: ${eosData.masterPrivateKey}\r\n
+Account name: ${eosData.address}\r\n
+`
 
   return text
 }
