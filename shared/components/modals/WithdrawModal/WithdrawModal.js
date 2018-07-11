@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'redaction'
 import { constants } from 'helpers'
 import actions from 'redux/actions'
 import Link from 'sw-valuelink'
@@ -12,8 +13,12 @@ import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
 
-
-
+@connect({
+  ethData: 'user.ethData',
+  btcData: 'user.btcData',
+  nimData: 'user.nimData',
+  eosData: 'user.eosData'
+})
 @cssModules(styles)
 export default class WithdrawModal extends React.Component {
 
@@ -24,13 +29,13 @@ export default class WithdrawModal extends React.Component {
 
   state = {
     isSubmitted: false,
-    address: '',
+    address: ' ',
     amount: '',
   }
 
   handleSubmit = () => {
     const { address: to, amount } = this.state
-    const { data: { currency, contractAddress, address, decimals } } = this.props
+    const { ethData, btcData, nimData, eosData, data: { currency } } = this.props
 
     if (!to || !amount || amount < 0.01) {
       this.setState({
@@ -40,25 +45,34 @@ export default class WithdrawModal extends React.Component {
     }
 
     let action
+    let from
 
     if (currency === 'ETH') {
       action = actions.ethereum
+      from = ethData.address
     }
     else if (currency === 'BTC') {
       action = actions.bitcoin
+      from = btcData.address
     }
     else if (currency === 'NIM') {
       action = actions.nimiq
+      from = nimData.address
     }
-    else {
+    else if (currency === 'EOS') {
+      action = actions.eos
+      from = eosData.address
+    }
+    else if (currency === 'NOXON') {
       action = actions.token
     }
 
     actions.loader.show()
 
-    action.send(contractAddress || address, to, Number(amount), decimals)
+    action.send(from, to, Number(amount))
       .then(() => {
         actions.loader.hide()
+        action.getBalance()
 
         actions.notifications.show(constants.notifications.SuccessWithdraw, {
           amount,

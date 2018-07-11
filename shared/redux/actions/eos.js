@@ -9,8 +9,14 @@ import { Keygen } from 'eosjs-keygen'
 
 let eos = null;
 
-const keyProvider = () => {
-  return localStorage.getItem(constants.privateKeyNames.eos)
+const keyProvider = ({ transaction, pubkeys }) => {
+  const { user: { eosData: { privateKeys, publicKeys } } } = getState()
+
+  if (!pubkeys) {
+    return [publicKeys.active]
+  }
+
+  return [privateKeys.active]
 }
 
 const init = async () => {
@@ -41,7 +47,8 @@ const register = async (accountName, privateKey) => {
 }
 
 const login = async (accountName, masterPrivateKey) => {
-  reducers.user.setAuthData({ name: 'eosData', data: { masterPrivateKey, address: accountName } })
+  const keys = await Keygen.generateMasterKeys(masterPrivateKey)
+  reducers.user.setAuthData({ name: 'eosData', data: { ...keys, address: accountName } })
 }
 
 const getBalance = async () => {
@@ -61,9 +68,40 @@ const getBalance = async () => {
   reducers.user.setBalance({ name: 'eosData', amount })
 }
 
+const send = async (from, to, amount) => {
+  const { user: { eosData: { address } } } = getState()
+
+  if (eos === null || address == '')
+    return;
+
+  const transfer = await eos.transaction(
+    {
+      actions: [{
+        account: 'eosio.token',
+        name: 'transfer',
+        authorization: [{
+          actor: from,
+          permission: 'active'
+        }],
+        data: {
+          from: from,
+          to: to.trim(),
+          quantity: `${amount}.0000 EOS`,
+          memo: ''
+        }
+      }]
+    }
+  )
+
+  const tx = transfer.transaction
+
+  console.log(tx)
+}
+
 export default {
   init,
   login,
   register,
-  getBalance
+  getBalance,
+  send
 }
