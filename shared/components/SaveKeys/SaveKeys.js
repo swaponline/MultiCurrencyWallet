@@ -23,7 +23,7 @@ export default class SaveKeys extends Component {
         <div styleName="title" >
           These are your private keys. Download the keys by  clicking on <br />
           the button or take a screenshot of this page, then confirm it and click here. <br />
-          { isChange && <a href="" onClick={(event) => { event.preventDefault(); isChange() }}>I saved the keys in a safe place</a> }
+          <a href="" onClick={(event) => { event.preventDefault(); isChange() }}>I saved the keys in a safe place</a>
         </div>
         <div styleName="row" >
           <Button brand onClick={isDownload}>Download</Button>

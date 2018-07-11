@@ -16,7 +16,6 @@ const RowHistory = ({ row }) => {
   if (row === 'undefined') {
     return null
   }
-  console.log(row)
 
   const { buyAmount, buyCurrency, sellAmount, isProcessing, sellCurrency, isMy,  id } = row
 

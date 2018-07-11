@@ -7,15 +7,26 @@ import PageHeadline from 'components/PageHeadline/PageHeadline'
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import SaveKeys from 'components/SaveKeys/SaveKeys'
 import Table from 'components/Table/Table'
+import Confirm from 'components/Confirm/Confirm'
 
 import Row from './Row/Row'
 
 
 @connect(({ user: { ethData, btcData, tokensData, eosData, nimData } }) => ({
+  tokens: Object.keys(tokensData).map(k => (tokensData[k])),
   items: [ ethData, btcData /* eosData  nimData */ ],
-  tokensData,
 }))
 export default class Balances extends Component {
+
+  state = {
+    view: 'off',
+  }
+
+  componentWillMount() {
+    if (localStorage.getItem(constants.localStorage.privateKeysSaved)) {
+      this.changeView('checkKeys')
+    }
+  }
 
   componentDidMount() {
     actions.user.getBalances()
@@ -31,21 +42,42 @@ export default class Balances extends Component {
     window.location.reload()
   }
 
-  render() {
-    const { items, tokensData } = this.props
-    const titles = [ 'Coin', 'Name', 'Balance', 'Address', '' ]
+  handleDownload = () => {
+    actions.user.downloadPrivateKeys()
+    this.changeView('checkKeys')
+  }
 
-    Object.keys(tokensData).map(k => items.push(tokensData[k]))
+  handleConfirm = () => {
+    this.changeView('checkKeys')
+    localStorage.setItem(constants.localStorage.privateKeysSaved, true)
+  }
+
+  changeView = (view) => {
+    this.setState({
+      view,
+    })
+  }
+
+  render() {
+    const { view } = this.state
+    const { items, tokens } = this.props
+    const titles = [ 'Coin', 'Name', 'Balance', 'Address', '' ]
 
     return (
       <section>
         <PageHeadline>
           <SubTitle>Balances</SubTitle>
-          <SaveKeys isDownload={() => actions.user.downloadPrivateKeys()} />
+          { view === 'off' && <SaveKeys isDownload={this.handleDownload} isChange={() => this.changeView('on')} /> }
         </PageHeadline>
+        <Confirm
+          title="Are you sure ?"
+          isConfirm={() => this.handleConfirm()}
+          isReject={() => this.changeView('off')}
+          animation={view === 'on'}
+        />
         <Table
           titles={titles}
-          rows={items}
+          rows={[].concat(items, tokens)}
           rowRender={(row, index) => (
             <Row key={index} {...row} />
           )}

@@ -29,7 +29,9 @@ window.createOrder = ({ buyCurrency, sellCurrency, buyAmount, sellAmount }) => {
 
 const createSwapApp = () => {
   swapApp.setup({
+
     network: process.env.MAINNET ? 'mainnet' : 'testnet',
+
     env: {
       web3,
       bitcoin,
@@ -37,6 +39,7 @@ const createSwapApp = () => {
       IpfsRoom: window.IpfsRoom,
       storage: window.localStorage,
     },
+
     services: [
       new SwapAuth({
         // TODO need init swapApp only after private keys created!!!!!!!!!!!!!!!!!!!
@@ -59,6 +62,7 @@ const createSwapApp = () => {
       }),
       new SwapOrders(),
     ],
+
     swaps: [
       new EthSwap({
         address: config.eth.contract,
