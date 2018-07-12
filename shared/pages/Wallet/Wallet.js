@@ -15,7 +15,7 @@ import Row from './Row/Row'
   tokens: Object.keys(tokensData).map(k => (tokensData[k])),
   items: [ ethData, btcData, eosData /* eosData  nimData */ ],
 }))
-export default class Balances extends Component {
+export default class Wallet extends Component {
 
   state = {
     view: 'off',

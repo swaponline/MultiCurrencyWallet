@@ -4,7 +4,7 @@ import { Switch } from 'react-router-dom'
 import { links } from 'helpers'
 
 import Home from 'pages/Home/Home'
-import Balances from 'pages/Balances/Balances'
+import Wallet from 'pages/Wallet/Wallet'
 import History from 'pages/History/History'
 import NotFound from 'pages/NotFound/NotFound'
 import SwapComponent from 'pages/Swap/Swap'
@@ -14,7 +14,7 @@ const routes = (
   <Switch>
     <Route path={`${links.home}orders/:buy-:sell`} component={Home} />
     <Route exact path={links.home} component={Home} />
-    <Route path={links.balance} component={Balances} />
+    <Route path={links.wallet} component={Wallet} />
     <Route path={links.history} component={History} />
     <Route path={`${links.swap}/:buy-:sell/:orderId`} component={SwapComponent} />
     <Route component={NotFound} />
