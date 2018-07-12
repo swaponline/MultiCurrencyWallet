@@ -21,26 +21,7 @@ const swapComponents = {
 
 export default class SwapComponent extends PureComponent {
 
-  state = {
-    tokenName: 'noxon',
-  }
-
-  componentWillMount() {
-    const { match : { params : { sell, buy } } } = this.props
-
-    if (sell === 'noxon' || buy === 'noxon') {
-      this.setState({
-        tokenName: 'noxon',
-      })
-    } else {
-      this.setState({
-        tokenName: 'swap',
-      })
-    }
-  }
-
   render() {
-    const { tokenName } = this.state
     const { match : { params : { orderId } } } = this.props
 
     if (!orderId) {
@@ -57,7 +38,7 @@ export default class SwapComponent extends PureComponent {
 
     return (
       <div style={{ paddingLeft: '30px', paddingTop: '30px' }}>
-        <SwapComponent swap={swap} tokenName={tokenName} />
+        <SwapComponent swap={swap} />
       </div>
     )
   }

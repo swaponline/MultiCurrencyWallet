@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 
 import actions from 'redux/actions'
 import PropTypes from 'prop-types'
-import { swapApp } from 'instances/newSwap'
+import SwapApp from 'swap.app'
 
 import { links } from 'helpers'
 import { Link } from 'react-router-dom'
@@ -50,14 +50,14 @@ export default class Row extends Component {
   }
 
   removeOrder = (orderId) => {
-    swapApp.services.orders.remove(orderId)
+    SwapApp.services.orders.remove(orderId)
     actions.feed.deleteItemToFeed(orderId)
 
     this.props.update()
   }
 
   sendRequest = (orderId) => {
-    const order = swapApp.services.orders.getByKey(orderId)
+    const order = SwapApp.services.orders.getByKey(orderId)
 
     order.sendRequest((isAccepted) => {
       console.log(`user ${order.owner.peer} ${isAccepted ? 'accepted' : 'declined'} your request`)
@@ -65,6 +65,7 @@ export default class Row extends Component {
     })
 
     this.props.update()
+    // actions.analytics.dataEvent('orders-click-start-swap')
   }
 
   render() {
@@ -77,7 +78,7 @@ export default class Row extends Component {
 
     const { id, buyCurrency, sellCurrency, buyAmount, sellAmount, isRequested,
       owner :{  peer: ownerPeer } } = row
-    const mePeer = swapApp.services.room.peer
+    const mePeer = SwapApp.services.room.peer
 
     return (
       <tr>
