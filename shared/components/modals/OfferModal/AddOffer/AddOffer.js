@@ -81,8 +81,6 @@ export default class AddOffer extends Component {
   handleBuyCurrencySelect = ({ value }) => {
     let { buyCurrency, sellCurrency, buyAmount, sellAmount } = this.state
 
-    // init:    buyCurrency = ETH, sellCurrency = BTC, value = BTC
-    // result:  buyCurrency = BTC, sellCurrency = ETH
     if (value === sellCurrency) {
       sellCurrency = buyCurrency
     }
@@ -93,12 +91,10 @@ export default class AddOffer extends Component {
 
     const { exchangeRate } = this.state
 
-    if (buyAmount) {
-      sellAmount = new BigNumber(String(buyAmount)).multipliedBy(exchangeRate).toNumber()
-    }
+    sellAmount = new BigNumber(String(buyAmount) || 0).dividedBy(exchangeRate)
+
 
     this.setState({
-      exchangeRate,
       buyCurrency,
       sellCurrency,
       sellAmount,
@@ -106,27 +102,24 @@ export default class AddOffer extends Component {
   }
 
   handleSellCurrencySelect = ({ value }) => {
-    let { buyCurrency, sellCurrency, buyAmount, sellAmount } = this.state
+    let { buyCurrency, sellCurrency, sellAmount, buyAmount } = this.state
 
     if (value === buyCurrency) {
       buyCurrency = sellCurrency
     }
 
     sellCurrency = value
-
     this.getExchangeRate(buyCurrency, sellCurrency)
 
     const { exchangeRate } = this.state
 
-    if (buyAmount) {
-      sellAmount = new BigNumber(String(buyAmount)).multipliedBy(exchangeRate).toNumber()
-    }
+    buyAmount = new BigNumber(String(sellAmount) || 0).multipliedBy(exchangeRate)
+
 
     this.setState({
-      exchangeRate,
       buyCurrency,
       sellCurrency,
-      sellAmount,
+      buyAmount,
     })
   }
 

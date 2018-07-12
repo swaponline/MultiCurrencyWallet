@@ -1,6 +1,9 @@
 import React, { Component, Fragment } from 'react'
 
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
+import TimerButton from 'components/controls/TimerButton/TimerButton'
+import Button from 'components/controls/Button/Button'
+import Timer from './Timer/Timer'
 
 
 export default class EthToBtc extends Component {
@@ -12,6 +15,7 @@ export default class EthToBtc extends Component {
 
     this.state = {
       flow: this.swap.flow.state,
+      enabledButton: false,
     }
   }
 
@@ -46,7 +50,7 @@ export default class EthToBtc extends Component {
   }
 
   render() {
-    const { flow } = this.state
+    const { flow, enabledButton } = this.state
     console.log('FLOW', flow)
 
     return (
@@ -115,7 +119,7 @@ export default class EthToBtc extends Component {
                 !flow.isSignFetching && !flow.isMeSigned && (
                   <Fragment>
                     <br />
-                    <button onClick={this.signSwap}>Confirm</button>
+                    <TimerButton brand onClick={this.signSwap}>Confirm</TimerButton>
                   </Fragment>
                 )
               }
@@ -211,7 +215,7 @@ export default class EthToBtc extends Component {
                       flow.step === 3 && (
                         <Fragment>
                           <br />
-                          <button onClick={this.confirmBTCScriptChecked}>Everything is OK. Continue</button>
+                          <TimerButton brand onClick={this.confirmBTCScriptChecked}>Everything is OK. Continue</TimerButton>
                         </Fragment>
                       )
                     }
@@ -230,7 +234,7 @@ export default class EthToBtc extends Component {
                       <span>{flow.address}</span>
                     </div>
                     <br />
-                    <button type="button" onClick={this.updateBalance}>Continue</button>
+                    <Button brand onClick={this.updateBalance}>Continue</Button>
                   </Fragment>
                 )
               }
@@ -267,6 +271,17 @@ export default class EthToBtc extends Component {
               {
                 flow.step === 5 && (
                   <InlineLoader />
+                )
+              }
+              {
+                flow.step >= 6 && (
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    { enabledButton &&  <Button brand onClick={this.tryRefund}>TRY REFUND</Button> }
+                    <Timer
+                      lockTime={flow.btcScriptValues.lockTime * 1000}
+                      enabledButton={() => this.setState({ enabledButton: true })}
+                    />
+                  </div>
                 )
               }
 

@@ -1,6 +1,9 @@
 import React, { Component, Fragment } from 'react'
 
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
+import TimerButton from 'components/controls/TimerButton/TimerButton'
+import Button from 'components/controls/Button/Button'
+import Timer from './Timer/Timer'
 
 
 export default class BtcToEth extends Component {
@@ -14,6 +17,7 @@ export default class BtcToEth extends Component {
       flow: this.swap.flow.state,
       secret: 'c0809ce9f484fdcdfb2d5aabd609768ce0374ee97a1a5618ce4cd3f16c00a078',
       refundTxHex: null,
+      enabledButton: false,
     }
   }
 
@@ -65,9 +69,9 @@ export default class BtcToEth extends Component {
   }
 
   render() {
-    const { secret, flow } = this.state
-    const refundTxHex = this.getRefundTxHex()
+    const { secret, flow, enabledButton } = this.state
     console.log('FLOW', flow)
+    // const refundTxHex = this.getRefundTxHex()
 
     return (
       <div>
@@ -140,7 +144,7 @@ export default class BtcToEth extends Component {
                   <Fragment>
                     <input type="text" placeholder="Secret Key" defaultValue={secret} />
                     <br />
-                    <button onClick={this.submitSecret}>Confirm</button>
+                    <TimerButton brand onClick={this.submitSecret}>Confirm</TimerButton>
                   </Fragment>
                 ) : (
                   <Fragment>
@@ -162,7 +166,7 @@ export default class BtcToEth extends Component {
                       <span>{flow.address}</span>
                     </div>
                     <br />
-                    <button type="button" onClick={this.updateBalance}>Continue</button>
+                    <Button brand onClick={this.updateBalance}>Continue</Button>
                   </Fragment>
                 )
               }
@@ -204,14 +208,14 @@ export default class BtcToEth extends Component {
                 )
               }
 
-              {
-                refundTxHex && (
-                  <div>
-                    <h3>Refund hex transaction:</h3>
-                    {refundTxHex}
-                  </div>
-                )
-              }
+              {/* { */}
+              {/* refundTxHex && ( */}
+              {/* <div> */}
+              {/* <h3>Refund hex transaction:</h3> */}
+              {/* {refundTxHex} */}
+              {/* </div> */}
+              {/* ) */}
+              {/* } */}
 
               {
                 (flow.step === 5 || flow.isEthContractFunded) && (
@@ -225,7 +229,17 @@ export default class BtcToEth extends Component {
                   </Fragment>
                 )
               }
-
+              {
+                flow.step >= 5 && (
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    { enabledButton &&  <Button brand onClick={this.tryRefund}>TRY REFUND</Button> }
+                    <Timer
+                      lockTime={flow.btcScriptValues.lockTime * 1000}
+                      enabledButton={() => this.setState({ enabledButton: true })}
+                    />
+                  </div>
+                )
+              }
               {
                 (flow.step === 6 || flow.isEthWithdrawn) && (
                   <h3>5. ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait</h3>
