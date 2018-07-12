@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import actions from 'redux/actions'
+import { constants } from 'helpers'
 
 import cssModules from 'react-css-modules'
 import styles from './Row.scss'
@@ -80,6 +81,10 @@ export default class Row extends Component {
     }, 800)
   }
 
+  handleEosLogin = () => {
+    actions.modals.open(constants.modals.Eos, {})
+  }
+
   render() {
     const { isBalanceFetching, viewText } = this.state
     const { currency, balance, address, contractAddress, decimals } = this.props
@@ -101,12 +106,19 @@ export default class Row extends Component {
         </td>
         <td ref={td => this.textAddress = td}>
           <LinkAccount type={currency} address={address} >{address}</LinkAccount>
+          { currency === 'EOS' && address === '' &&
+            <button styleName="button" onClick={this.handleEosLogin}>Login with your account</button>
+          }
         </td>
         <td style={{ position: 'relative' }} >
-          <button styleName="button" onClick={this.handleCopiedAddress} >Copy</button>
-          <ReloadButton styleName="reloadButton" onClick={this.handleReloadBalance} />
-          <WithdrawButton data={{ currency, balance, address, contractAddress, decimals }} />
-          { viewText && <p styleName="copied" >Address copied to clipboard</p> }
+          {address !== '' &&
+            <div>
+              <button styleName="button" onClick={this.handleCopiedAddress}>Copy</button>
+              <ReloadButton styleName="reloadButton" onClick={this.handleReloadBalance} />
+              <WithdrawButton data={{ currency, balance, address, contractAddress, decimals }} />
+              { viewText && <p styleName="copied" >Address copied to clipboard</p> }
+            </div>
+          }
         </td>
       </tr>
     )

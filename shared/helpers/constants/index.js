@@ -7,5 +7,5 @@ export default {
   localStorage,
   privateKeyNames,
   notifications,
-  modals,
+  modals
 }

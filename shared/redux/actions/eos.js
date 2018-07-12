@@ -1,83 +1,117 @@
 import { getState } from 'redux/core'
 import config from 'app-config'
 import reducers from 'redux/core/reducers'
-
-import eos from 'helpers/eos'
 import constants from 'helpers/constants'
 
 import { Keygen } from 'eosjs-keygen'
 
-// Pure function to generate account associated with user,
-// because multiple accounts can be owned by one authority in eos
-const generateAccountName = (publicKey) => {
-  const account = Array.prototype.map.call(
-    publicKey.substr(0, 12).toLowerCase(),
-    (char) => (Number.isNaN(Number.parseInt(char, 10)) || char < 5) ? char : char - 4
-  ).join('')
+let eos = null
+let ecc = null
 
-  return account
+const keyProvider = ({ transaction, pubkeys }) => {
+  const { user: { eosData: { privateKeys, publicKeys } } } = getState()
+
+  if (!pubkeys) {
+    return [publicKeys.active]
+  }
+
+  return [privateKeys.active]
 }
 
-const createAccount = (keys, name) => {
-  const serviceAccount = config.services.eos.serviceAccount
+const init = async () => {
+  if(eos === null) {
+    const EOSLibrary = await import('eosjs')
 
-  return eos.transaction(tx => {
-    tx.newaccount({
-      creator: serviceAccount,
-      owner: keys.publicKeys.owner,
-      active: keys.publicKeys.active,
-      name,
+    const { chainId, httpEndpoint } = config.services.eos
+
+    if (!chainId || !httpEndpoint )
+      throw new Error('Invalid config')
+
+    eos = EOSLibrary({
+      chainId,
+      httpEndpoint,
+      keyProvider
     })
 
-    tx.buyrambytes({
-      payer: serviceAccount,
-      receiver: name,
-      bytes: 8192,
-    })
-  })
+    ecc = EOSLibrary.modules.ecc
+  }
 }
 
-const login = (privateKey) => {
-  Keygen.generateMasterKeys(privateKey).then(keys => {
-    const accountName = generateAccountName(keys.publicKeys.active)
+const register = async (accountName, privateKey) => {
+  const keys = await Keygen.generateMasterKeys(privateKey)
 
-    const data = { ...keys, address: accountName }
+  if (keys.masterPrivateKey !== privateKey)
+    throw new Error('Invalid private key')
 
-    // we suppose that user has already registered account
-    // when function is being called with correct private key
-    if (keys.masterPrivateKey === privateKey) {
-      return data
-    }
+  const { permissions } = await eos.getAccount(accountName)
 
-    return createAccount(keys, accountName).then(result => {
-      console.info(`Created EOS account ${accountName} at ${result.transaction_id}`)
+  const providedKey = ecc.privateToPublic(keys.privateKeys.active)
 
-      localStorage.setItem(constants.privateKeyNames.eos, keys.masterPrivateKey)
+  const requiredKey =
+    permissions.find(item => item.perm_name === 'active')
+      .required_auth.keys[0].key
 
-      return data
-    })
-  }).then(data => {
-    reducers.user.setAuthData({ name: 'eosData', data })
-  })
+  if (providedKey !== requiredKey)
+    throw new Error('Invalid accounts permissions')
+
+  localStorage.setItem(constants.privateKeyNames.eos, privateKey)
+  localStorage.setItem(constants.privateKeyNames.eosAccount, accountName)
+
+  reducers.user.setAuthData({ name: 'eosData', data: { ...keys, address: accountName } } )
 }
 
-const getBalance = () => {
+const login = async (accountName, masterPrivateKey) => {
+  const keys = await Keygen.generateMasterKeys(masterPrivateKey)
+  reducers.user.setAuthData({ name: 'eosData', data: { ...keys, address: accountName } })
+}
+
+const getBalance = async () => {
   const { user: { eosData: { address } } } = getState()
 
-  console.log(`EOS ADDRESS: ${address}`)
+  if(eos === null || address == '')
+    return;
 
-  return eos.getCurrencyBalance({
+  const balance = await eos.getCurrencyBalance({
     code: 'eosio.token',
     symbol: 'EOS',
-    account: address,
-  }).then(result => {
-    const amount = Number.parseFloat(result[0]) || 0
-
-    reducers.user.setBalance({ name: 'eosData', amount })
+    account: address
   })
+
+  const amount = Number.parseFloat(balance[0]) || 0
+
+  reducers.user.setBalance({ name: 'eosData', amount })
+}
+
+const send = async (from, to, amount) => {
+  const { user: { eosData: { address } } } = getState()
+
+  if (eos === null || address == '')
+    return;
+
+  const transfer = await eos.transaction(
+    {
+      actions: [{
+        account: 'eosio.token',
+        name: 'transfer',
+        authorization: [{
+          actor: from,
+          permission: 'active'
+        }],
+        data: {
+          from: from,
+          to: to.trim(),
+          quantity: `${amount}.0000 EOS`,
+          memo: ''
+        }
+      }]
+    }
+  )
 }
 
 export default {
+  init,
   login,
+  register,
   getBalance,
+  send
 }

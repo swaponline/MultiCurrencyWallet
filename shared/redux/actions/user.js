@@ -19,19 +19,24 @@ const sign = async () => {
     })
   // await actions.nimiq.login(_ethPrivateKey)
 
-  // const eosMasterPrivateKey = localStorage.getItem(constants.privateKeyNames.eos)
-  // await actions.eos.login(eosMasterPrivateKey)
+  const eosMasterPrivateKey = localStorage.getItem(constants.privateKeyNames.eos)
+  const eosAccount = localStorage.getItem(constants.privateKeyNames.eosAccount)
+  if(eosMasterPrivateKey && eosAccount) {
+    await actions.eos.init()
+    await actions.eos.login(eosAccount, eosMasterPrivateKey)
+    await actions.eos.getBalance()
+  }
 }
 
 const getBalances = () => {
   actions.ethereum.getBalance()
   actions.bitcoin.getBalance()
+  actions.eos.getBalance()
 
   Object.keys(config.tokens)
     .forEach(name => {
       actions.token.getBalance(config.tokens[name].address, name, config.tokens[name].decimals)
     })
-  // actions.eos.getBalance()
   // actions.nimiq.getBalance()
 }
 
@@ -71,7 +76,7 @@ const setTransactions = () =>
     })
 
 const getText = () => {
-  const { user : { ethData, btcData } } = getState()
+  const { user : { ethData, btcData, eosData } } = getState()
 
 
   const text = `
@@ -106,7 +111,14 @@ Private key: ${btcData.privateKey}\r\n
 \r\n
 \r\n
 * We don\`t store your private keys and will not be able to restore them!  
-    `
+\r\n
+\r\n
+\r\n
+# EOS\r\n
+\r\n
+EOS Master Private Key: ${eosData.masterPrivateKey}\r\n
+Account name: ${eosData.address}\r\n
+`
 
   return text
 }
