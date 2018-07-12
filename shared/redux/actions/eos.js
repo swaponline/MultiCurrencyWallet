@@ -3,12 +3,10 @@ import config from 'app-config'
 import reducers from 'redux/core/reducers'
 import constants from 'helpers/constants'
 
-import Eos from 'eosjs'
-const {ecc} = Eos.modules
-
 import { Keygen } from 'eosjs-keygen'
 
-let eos = null;
+let eos = null
+let ecc = null
 
 const keyProvider = ({ transaction, pubkeys }) => {
   const { user: { eosData: { privateKeys, publicKeys } } } = getState()
@@ -22,16 +20,20 @@ const keyProvider = ({ transaction, pubkeys }) => {
 
 const init = async () => {
   if(eos === null) {
+    const EOSLibrary = await import('eosjs')
+
     const { chainId, httpEndpoint } = config.services.eos
 
     if (!chainId || !httpEndpoint )
       throw new Error('Invalid config')
 
-    eos = Eos({
+    eos = EOSLibrary({
       chainId,
       httpEndpoint,
       keyProvider
     })
+
+    ecc = EOSLibrary.modules.ecc
   }
 }
 
