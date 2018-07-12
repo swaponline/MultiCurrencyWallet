@@ -5,7 +5,7 @@ import { localStorage, constants, links } from 'helpers'
 
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import Title from 'components/PageHeadline/Title/Title'
-import SubTitle from 'components/PageHeadLine/SubTitle/SubTitle'
+import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 
 import Orders from './Orders/Orders'
 
