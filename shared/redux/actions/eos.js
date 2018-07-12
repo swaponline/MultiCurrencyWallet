@@ -4,6 +4,7 @@ import reducers from 'redux/core/reducers'
 import constants from 'helpers/constants'
 
 import Eos from 'eosjs'
+const {ecc} = Eos.modules
 
 import { Keygen } from 'eosjs-keygen'
 
@@ -39,6 +40,17 @@ const register = async (accountName, privateKey) => {
 
   if (keys.masterPrivateKey !== privateKey)
     throw new Error('Invalid private key')
+
+  const { permissions } = await eos.getAccount(accountName)
+
+  const providedKey = ecc.privateToPublic(keys.privateKeys.active)
+
+  const requiredKey =
+    permissions.find(item => item.perm_name === 'active')
+      .required_auth.keys[0].key
+
+  if (providedKey !== requiredKey)
+    throw new Error('Invalid accounts permissions')
 
   localStorage.setItem(constants.privateKeyNames.eos, privateKey)
   localStorage.setItem(constants.privateKeyNames.eosAccount, accountName)
@@ -92,10 +104,6 @@ const send = async (from, to, amount) => {
       }]
     }
   )
-
-  const tx = transfer.transaction
-
-  console.log(tx)
 }
 
 export default {
