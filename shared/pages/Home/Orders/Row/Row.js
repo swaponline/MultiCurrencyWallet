@@ -35,14 +35,14 @@ export default class Row extends Component {
     const currency = isMy ? buyCurrency : sellCurrency
 
     if (currency.toLowerCase() === 'eth') {
-      actions.ethereum.fetchBalance()
+      actions.ethereum.getBalance()
         .then(balance => {
           this.setState({
             balance,
           })
         })
     } else {
-      actions.bitcoin.fetchBalance()
+      actions.bitcoin.getBalance()
         .then(balance => {
           this.setState({
             balance,
@@ -80,7 +80,7 @@ export default class Row extends Component {
     this.props.update()
   }
 
-  sendRequest = async (orderId) => {
+  sendRequest = (orderId) => {
     const order = SwapApp.services.orders.getByKey(orderId)
 
     order.sendRequest((isAccepted) => {

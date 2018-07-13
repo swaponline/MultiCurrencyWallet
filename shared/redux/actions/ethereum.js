@@ -35,17 +35,15 @@ const getBalance = () => {
   return request.get(url)
     .then(({ result }) => {
       const amount = Number(web3.utils.fromWei(result))
-
       reducers.user.setBalance({ name: 'ethData', amount })
+      return result
     })
     .catch(() => {
       console.log('app:showError', 'Ethereum service isn\'t available, try later')
     })
 }
 
-const fetchBalance = () => {
-  const { user: { ethData: { address } } } = getState()
-
+const fetchBalance = (address) => {
   const url = `${config.api.etherscan}?module=account&action=balance&address=${address}&tag=latest&apikey=${config.apiKeys.etherscan}`
   return request.get(url)
     .then(({ result }) => Number(web3.utils.fromWei(result)))

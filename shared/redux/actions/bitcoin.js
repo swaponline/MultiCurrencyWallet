@@ -47,15 +47,13 @@ const getBalance = () => {
     .then(({ balance }) => {
       console.log('BTC Balance:', balance)
       reducers.user.setBalance({ name: 'btcData', amount: balance })
+      return balance
     }, () => Promise.reject())
 }
 
-const fetchBalance = () => {
-  const { user: { btcData: { address } } } = getState()
-
-  return request.get(`${config.api.bitpay}/addr/${address}`)
+const fetchBalance = (address) =>
+  request.get(`${config.api.bitpay}/addr/${address}`)
     .then(({ balance }) => balance)
-}
 
 
 const getTransaction = () =>
