@@ -147,7 +147,7 @@ export default class Row extends Component {
                         <RequestButton sendRequest={() => this.sendRequest(id)} />
                       </Link>
                     ) : (
-                      <p>Your no enough money</p>
+                      <span>Insufficient funds</span>
                     )
                   )
                 }
