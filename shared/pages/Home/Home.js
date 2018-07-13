@@ -68,7 +68,7 @@ export default class Home extends Component {
           <Fragment>
             <Title>Swap.Online - CRYPTO-CURRENCY <abbr title="Over-The-Counter Market">OTC MARKET</abbr></Title>
             <SubTitle>
-              We ♥️ IPFS, JavaScript and ⚡️Lightning Network. <br /> Check out our <a href="https://wiki.swap.online/en.pdf" target="_balnk" rel="noreferrer noopener">project brief</a> and participate in <a href="http://swap.wpmix.net/#airdrop" traget="landframe">smart airdrop.</a>
+              Check out our <a href="https://wiki.swap.online/en.pdf" target="_balnk" rel="noreferrer noopener">project brief</a> and participate in <a href="http://swap.wpmix.net/#airdrop" traget="landframe">smart airdrop.</a>
               {/* Subscribe to <a href="https://t.me/swaponlineint" onClick={this.handleClickTelegram} target="_blank">telegram</a> and <a href="/" target="_blank"  onClick={this.handleClickMailing}>mailing list</a> */}
             </SubTitle>
           </Fragment>

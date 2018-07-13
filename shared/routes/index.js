@@ -4,16 +4,19 @@ import { Switch } from 'react-router-dom'
 import { links } from 'helpers'
 
 import Home from 'pages/Home/Home'
+
 import Wallet from 'pages/Wallet/Wallet'
+import SwapComponent from 'pages/Swap/Swap'
 import History from 'pages/History/History'
 import NotFound from 'pages/NotFound/NotFound'
-import SwapComponent from 'pages/Swap/Swap'
+import Affiliate from 'pages/Affiliate/Affiliate'
 
 
 const routes = (
   <Switch>
     <Route path={`${links.home}orders/:buy-:sell`} component={Home} />
     <Route exact path={links.home} component={Home} />
+    <Route exact path={links.affiliate} component={Affiliate} />
     <Route path={links.wallet} component={Wallet} />
     <Route path={links.history} component={History} />
     <Route path={`${links.swap}/:buy-:sell/:orderId`} component={SwapComponent} />

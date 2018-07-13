@@ -65,7 +65,7 @@ export default class Wallet extends Component {
     return (
       <section>
         <PageHeadline>
-          <SubTitle>Balances</SubTitle>
+          <SubTitle>Wallet</SubTitle>
           { view === 'off' && <SaveKeys isDownload={this.handleDownload} isChange={() => this.changeView('on')} /> }
         </PageHeadline>
         <Confirm

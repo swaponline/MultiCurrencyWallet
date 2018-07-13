@@ -30,13 +30,15 @@ const NavMobile = ({ view }) => (
       ))
     }
     {
-      process.env.TESTNET && <div
-        key="Get demo money"
-        styleName="button"
-        onClick={() => actions.user.getDemoMoney()}
-      >
-        Get demo money
-      </div>
+      process.env.TESTNET && (
+        <div
+          key="Get demo money"
+          styleName="button"
+          onClick={() => actions.user.getDemoMoney()}
+        >
+          Get demo money
+        </div>
+      )
     }
   </div>
 )

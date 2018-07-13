@@ -43,7 +43,9 @@ const getBalance = () => {
     })
 }
 
-const fetchBalance = (address) => {
+const fetchBalance = () => {
+  const { user: { ethData: { address } } } = getState()
+
   const url = `${config.api.etherscan}?module=account&action=balance&address=${address}&tag=latest&apikey=${config.apiKeys.etherscan}`
   return request.get(url)
     .then(({ result }) => Number(web3.utils.fromWei(result)))

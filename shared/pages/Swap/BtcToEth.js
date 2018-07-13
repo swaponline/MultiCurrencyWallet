@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from 'react'
 
+import config from 'app-config'
+
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import TimerButton from 'components/controls/TimerButton/TimerButton'
 import Button from 'components/controls/Button/Button'
@@ -70,31 +72,10 @@ export default class BtcToEth extends Component {
 
   render() {
     const { secret, flow, enabledButton } = this.state
-    console.log('FLOW', flow)
-    // const refundTxHex = this.getRefundTxHex()
+    const refundTxHex = this.getRefundTxHex()
 
     return (
       <div>
-        <button onClick={this.tryRefund}>TRY REFUND</button>
-        {
-          flow.refundTransactionHash && (
-            <div>
-              Transaction:
-              <strong>
-                <a
-                  href={`https://www.blocktrail.com/tBTC/tx/${flow.refundTransactionHash}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {flow.refundTransactionHash}
-                </a>
-              </strong>
-            </div>
-          )
-        }
-        <br />
-        <br />
-
         {
           this.swap.id && (
             <strong>{this.swap.sellAmount.toNumber()} {this.swap.sellCurrency} &#10230; {this.swap.buyAmount.toNumber()} {this.swap.buyCurrency}</strong>
@@ -189,7 +170,7 @@ export default class BtcToEth extends Component {
                           Transaction:
                           <strong>
                             <a
-                              href={`https://www.blocktrail.com/tBTC/tx/${flow.btcScriptCreatingTransactionHash}`}
+                              href={`${config.link.bitpay}/tx/${flow.btcScriptCreatingTransactionHash}`}
                               target="_blank"
                               rel="noopener noreferrer"
                             >
@@ -208,14 +189,22 @@ export default class BtcToEth extends Component {
                 )
               }
 
-              {/* { */}
-              {/* refundTxHex && ( */}
-              {/* <div> */}
-              {/* <h3>Refund hex transaction:</h3> */}
-              {/* {refundTxHex} */}
-              {/* </div> */}
-              {/* ) */}
-              {/* } */}
+              {
+                flow.refundTransactionHash && (
+                  <div>
+                    Transaction:
+                    <strong>
+                      <a
+                        href={`${config.link.bitpay}/tx/${flow.refundTransactionHash}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {flow.refundTransactionHash}
+                      </a>
+                    </strong>
+                  </div>
+                )
+              }
 
               {
                 (flow.step === 5 || flow.isEthContractFunded) && (
@@ -251,7 +240,7 @@ export default class BtcToEth extends Component {
                     Transaction:
                     <strong>
                       <a
-                        href={`https://rinkeby.etherscan.io/tx/${flow.ethSwapWithdrawTransactionHash}`}
+                        href={`${config.link.etherscan}/tx/${flow.ethSwapWithdrawTransactionHash}`}
                         target="_blank"
                         rel="noreferrer noopener"
                       >

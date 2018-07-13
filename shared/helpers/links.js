@@ -4,4 +4,5 @@ export default {
   history: '/history',
   swap: '/swap',
   feed: '/feed',
+  affiliate: '/affiliate',
 }

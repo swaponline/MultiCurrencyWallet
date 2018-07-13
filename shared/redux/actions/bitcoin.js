@@ -50,9 +50,13 @@ const getBalance = () => {
     }, () => Promise.reject())
 }
 
-const fetchBalance = (address) =>
-  request.get(`${config.api.bitpay}/addr/${address}`)
+const fetchBalance = () => {
+  const { user: { btcData: { address } } } = getState()
+
+  return request.get(`${config.api.bitpay}/addr/${address}`)
     .then(({ balance }) => balance)
+}
+
 
 const getTransaction = () =>
   new Promise((resolve) => {

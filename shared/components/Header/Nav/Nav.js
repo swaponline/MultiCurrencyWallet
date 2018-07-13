@@ -8,9 +8,10 @@ import styles from './Nav.scss'
 
 
 const nav = [
-  { title: 'Orders', link: links.home },
-  { title: 'Wallet', link: links.wallet },
-  { title: 'History', link: links.history },
+  { title: 'Orders',    link: links.home      },
+  { title: 'Wallet',    link: links.wallet    },
+  { title: 'History',   link: links.history   },
+  { title: 'Affiliate', link: links.affiliate },
 ]
 
 @CSSModules(styles)

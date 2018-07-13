@@ -20,6 +20,8 @@ export default class Row extends Component {
 
   state = {
     exchangeRate: null,
+    balance: null,
+    amount: null,
   }
 
   componentWillMount() {
@@ -28,7 +30,29 @@ export default class Row extends Component {
     if (row === undefined) {
       return null
     }
-    const { buyCurrency, sellCurrency } = row
+    const { buyCurrency, sellCurrency, sellAmount, buyAmount, isMy } = row
+    const amount = isMy ? buyAmount : sellAmount
+    const currency = isMy ? buyCurrency : sellCurrency
+
+    if (currency.toLowerCase() === 'eth') {
+      actions.ethereum.fetchBalance()
+        .then(balance => {
+          this.setState({
+            balance,
+          })
+        })
+    } else {
+      actions.bitcoin.fetchBalance()
+        .then(balance => {
+          this.setState({
+            balance,
+          })
+        })
+    }
+
+    this.setState({
+      amount: amount.toNumber(),
+    })
 
     this.getExchangeRate(buyCurrency, sellCurrency)
   }
@@ -56,12 +80,11 @@ export default class Row extends Component {
     this.props.update()
   }
 
-  sendRequest = (orderId) => {
+  sendRequest = async (orderId) => {
     const order = SwapApp.services.orders.getByKey(orderId)
 
     order.sendRequest((isAccepted) => {
       console.log(`user ${order.owner.peer} ${isAccepted ? 'accepted' : 'declined'} your request`)
-
     })
 
     this.props.update()
@@ -70,13 +93,13 @@ export default class Row extends Component {
 
   render() {
     const { row } = this.props
-    const { exchangeRate } = this.state
+    const { exchangeRate, amount, balance } = this.state
 
     if (row === undefined) {
       return null
     }
 
-    const { id, buyCurrency, sellCurrency, buyAmount, sellAmount, isRequested,
+    const { id, buyCurrency, sellCurrency, isMy, buyAmount, sellAmount, isRequested,
       owner :{  peer: ownerPeer } } = row
     const mePeer = SwapApp.services.room.peer
 
@@ -86,10 +109,22 @@ export default class Row extends Component {
           <Coins names={[buyCurrency, sellCurrency]}  />
         </td>
         <td>
-          {`${buyCurrency.toUpperCase()} ${buyAmount}`}
+          {
+            isMy ? (
+              `${buyCurrency.toUpperCase()} ${buyAmount}`
+            ) : (
+              `${sellCurrency.toUpperCase()} ${sellAmount}`
+            )
+          }
         </td>
         <td>
-          {`${sellCurrency.toUpperCase()} ${sellAmount}`}
+          {
+            isMy ? (
+              `${sellCurrency.toUpperCase()} ${sellAmount}`
+            ) : (
+              `${buyCurrency.toUpperCase()} ${buyAmount}`
+            )
+          }
         </td>
         <td>
           { exchangeRate}
@@ -107,9 +142,13 @@ export default class Row extends Component {
                       <Link to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`}> Go to the swap</Link>
                     </Fragment>
                   ) : (
-                    <Link to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`}>
-                      <RequestButton sendRequest={() => this.sendRequest(id)} />
-                    </Link>
+                    balance > amount ? (
+                      <Link to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`} >
+                        <RequestButton sendRequest={() => this.sendRequest(id)} />
+                      </Link>
+                    ) : (
+                      <p>Your no enough money</p>
+                    )
                   )
                 }
               </Fragment>
