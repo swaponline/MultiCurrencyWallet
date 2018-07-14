@@ -18,7 +18,7 @@ export default {
   },
 
   eth: {
-    contract : '0xdbC2395f753968a93465487022B0e5D8730633Ec',
+    contract : '0x830aef165b900fa7dc6b219f062c5784f6436d67', // 0xdbC2395f753968a93465487022B0e5D8730633Ec
   },
 
   tokens: {

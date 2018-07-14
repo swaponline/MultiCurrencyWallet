@@ -11,7 +11,6 @@ export const setFilter = (state, payload) => ({
 export const setTransactions = (state, payload) => ({
   ...state,
   transactions: [
-    ...state.transactions,
     ...payload,
   ],
 })

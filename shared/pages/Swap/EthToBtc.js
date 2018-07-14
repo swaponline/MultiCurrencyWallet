@@ -85,26 +85,26 @@ export default class EthToBtc extends Component {
           )
         }
 
-        {
-          (flow.step === 1 || flow.isMeSigned) && (
-            <h3>1. Please confirm your participation to begin the deal</h3>
-          )
-        }
+        {/*{*/}
+          {/*(flow.step === 1 || flow.isMeSigned) && (*/}
+            {/*<h3>1. Please confirm your participation to begin the deal</h3>*/}
+          {/*)*/}
+        {/*}*/}
         {
           flow.step === 1 && (
             <Fragment>
               <div>
-                Confirmation of the transaction is necessary for crediting the reputation.
-                If a user does not bring the deal to the end he gets a negative reputation.
+         Confirmation of the transaction is necessary for crediting the reputation.
+         If a user does not bring the deal to the end he gets a negative reputation.
               </div>
-              {
-                !flow.isSignFetching && !flow.isMeSigned && (
-                  <Fragment>
-                    <br />
-                    <TimerButton brand onClick={this.signSwap}>Confirm</TimerButton>
-                  </Fragment>
-                )
-              }
+              {/*{*/}
+                {/*!flow.isSignFetching && !flow.isMeSigned && (*/}
+                  {/*<Fragment>*/}
+                    {/*<br />*/}
+                    {/*<TimerButton brand onClick={this.signSwap}>Confirm</TimerButton>*/}
+                  {/*</Fragment>*/}
+                {/*)*/}
+              {/*}*/}
               {
                 (flow.isSignFetching || flow.signTransactionHash) && (
                   <Fragment>
@@ -191,7 +191,8 @@ export default class EthToBtc extends Component {
 
     bitcoin.core.opcodes.OP_ENDIF,
   ])
-                      `}</code>
+                      `}
+                      </code>
                     </pre>
                     {
                       flow.step === 3 && (

@@ -99,8 +99,7 @@ export default class Row extends Component {
       return null
     }
 
-    const { id, buyCurrency, sellCurrency, isMy, buyAmount, sellAmount, isRequested,
-      owner :{  peer: ownerPeer } } = row
+    const { id, buyCurrency, sellCurrency, isMy, buyAmount, sellAmount, isRequested, owner :{  peer: ownerPeer } } = row
     const mePeer = SwapApp.services.room.peer
 
     return (

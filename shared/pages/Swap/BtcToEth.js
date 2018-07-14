@@ -95,23 +95,23 @@ export default class BtcToEth extends Component {
           )
         }
 
-        {
-          flow.isWaitingForOwner && (
-            <Fragment>
-              <h3>Waiting for other user when he connect to the order</h3>
-              <InlineLoader />
-            </Fragment>
-          )
-        }
+        {/* { */}
+        {/* flow.isWaitingForOwner && ( */}
+        {/* <Fragment> */}
+        {/* <h3>Waiting for other user when he connect to the order</h3> */}
+        {/* <InlineLoader /> */}
+        {/* </Fragment> */}
+        {/* ) */}
+        {/* } */}
 
-        {
-          (flow.step === 1 || flow.isMeSigned) && (
-            <Fragment>
-              <h3>1. Waiting participant confirm this swap</h3>
-              <InlineLoader />
-            </Fragment>
-          )
-        }
+        {/* { */}
+        {/* (flow.step === 1 || flow.isMeSigned) && ( */}
+        {/* <Fragment> */}
+        {/* <h3>1. Waiting participant confirm this swap</h3> */}
+        {/* <InlineLoader /> */}
+        {/* </Fragment> */}
+        {/* ) */}
+        {/* } */}
 
         {/* ----------------------------------------------------------- */}
 
