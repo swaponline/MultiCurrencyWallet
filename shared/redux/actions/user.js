@@ -1,10 +1,10 @@
 import { request, constants } from 'helpers'
+import { setupEOS } from 'helpers/eos'
 import actions from 'redux/actions'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
 import config from 'app-config'
 import moment from 'moment/moment'
-
 
 const sign = async () => {
   const btcPrivateKey = localStorage.getItem(constants.privateKeyNames.btc)
@@ -22,7 +22,7 @@ const sign = async () => {
   const eosMasterPrivateKey = localStorage.getItem(constants.privateKeyNames.eos)
   const eosAccount = localStorage.getItem(constants.privateKeyNames.eosAccount)
   if(eosMasterPrivateKey && eosAccount) {
-    await actions.eos.init()
+    await setupEOS()
     await actions.eos.login(eosAccount, eosMasterPrivateKey)
     await actions.eos.getBalance()
   }
