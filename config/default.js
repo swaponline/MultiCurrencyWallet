@@ -14,6 +14,9 @@ const config = {
     client:   (file = '') => path.join(basePath, 'client', file),
     swapCore: (file = '') => path.join(rootPath, 'swap.core', file),
   },
+  referral: {
+    url:'https://wiki.swap.online/affiliate.php'
+  },
 
   publicPath: '/',
 
