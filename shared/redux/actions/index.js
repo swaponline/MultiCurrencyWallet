@@ -10,6 +10,7 @@ import nimiq from './nimiq'
 import eos from './eos'
 import feed from './feed'
 import analytics from './analytics'
+import referral from './referral'
 
 
 export default {
@@ -25,4 +26,5 @@ export default {
   eos,
   feed,
   analytics,
+  referral
 }
