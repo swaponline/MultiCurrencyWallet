@@ -84,27 +84,10 @@ export default class EthToBtc extends Component {
             </Fragment>
           )
         }
-
-        {/*{*/}
-          {/*(flow.step === 1 || flow.isMeSigned) && (*/}
-            {/*<h3>1. Please confirm your participation to begin the deal</h3>*/}
-          {/*)*/}
-        {/*}*/}
         {
           flow.step === 1 && (
             <Fragment>
-              <div>
-         Confirmation of the transaction is necessary for crediting the reputation.
-         If a user does not bring the deal to the end he gets a negative reputation.
-              </div>
-              {/*{*/}
-                {/*!flow.isSignFetching && !flow.isMeSigned && (*/}
-                  {/*<Fragment>*/}
-                    {/*<br />*/}
-                    {/*<TimerButton brand onClick={this.signSwap}>Confirm</TimerButton>*/}
-                  {/*</Fragment>*/}
-                {/*)*/}
-              {/*}*/}
+              <div>Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation.</div>
               {
                 (flow.isSignFetching || flow.signTransactionHash) && (
                   <Fragment>
@@ -112,7 +95,7 @@ export default class EthToBtc extends Component {
                     {
                       flow.signTransactionHash && (
                         <div>
-                          Transaction:
+                        Transaction:
                           <strong>
                             <a
                               href={`${config.link.etherscan}/tx/${flow.signTransactionHash}`}
@@ -136,9 +119,6 @@ export default class EthToBtc extends Component {
             </Fragment>
           )
         }
-
-        {/* -------------------------------------------------------------- */}
-
         {
           flow.isMeSigned && (
             <Fragment>

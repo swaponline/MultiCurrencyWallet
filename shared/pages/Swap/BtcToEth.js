@@ -72,7 +72,7 @@ export default class BtcToEth extends Component {
 
   render() {
     const { secret, flow, enabledButton } = this.state
-    const refundTxHex = this.getRefundTxHex()
+    // const refundTxHex = this.getRefundTxHex()
 
     return (
       <div>
@@ -94,27 +94,6 @@ export default class BtcToEth extends Component {
             )
           )
         }
-
-        {/* { */}
-        {/* flow.isWaitingForOwner && ( */}
-        {/* <Fragment> */}
-        {/* <h3>Waiting for other user when he connect to the order</h3> */}
-        {/* <InlineLoader /> */}
-        {/* </Fragment> */}
-        {/* ) */}
-        {/* } */}
-
-        {/* { */}
-        {/* (flow.step === 1 || flow.isMeSigned) && ( */}
-        {/* <Fragment> */}
-        {/* <h3>1. Waiting participant confirm this swap</h3> */}
-        {/* <InlineLoader /> */}
-        {/* </Fragment> */}
-        {/* ) */}
-        {/* } */}
-
-        {/* ----------------------------------------------------------- */}
-
         {
           flow.isParticipantSigned && (
             <Fragment>

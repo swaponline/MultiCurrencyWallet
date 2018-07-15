@@ -2,8 +2,7 @@ import React from 'react'
 
 import { Modal } from 'components/modal'
 import { Button } from 'components/controls'
-import { FieldLabel } from 'components/forms'
-import { Input } from 'components/forms'
+import { FieldLabel, Input } from 'components/forms'
 
 import Link from 'sw-valuelink'
 
@@ -18,7 +17,7 @@ export default class EosModal extends React.Component {
   state = {
     accountName: '',
     privateKey: '',
-    error: ''
+    error: '',
   }
 
   handleSubmit = async () => {
@@ -32,7 +31,7 @@ export default class EosModal extends React.Component {
       await actions.eos.getBalance()
 
       actions.modals.close(constants.modals.Eos)
-    } catch(e) {
+    } catch (e) {
       console.error(e)
       this.setState({ error: e.toString() })
     }
@@ -42,7 +41,7 @@ export default class EosModal extends React.Component {
 
   render() {
     const { accountName, privateKey, error } = this.state
-    const { name, data } = this.props
+    const { name } = this.props
 
     const linked = Link.all(this, 'accountName', 'privateKey')
     const isDisabled = !accountName || !privateKey
@@ -53,12 +52,16 @@ export default class EosModal extends React.Component {
         <Input valueLink={linked.accountName} />
         <FieldLabel inRow>Private key</FieldLabel>
         <Input valueLink={linked.privateKey} />
-        { error &&
-          <div styleName="error">Sorry, error occured during activation</div>
+        { error && (
+            <div styleName="error">Sorry, error occured during activation</div>
+          )
         }
-        <Button styleName="button" brand fullWidth
-                disabled={isDisabled}
-                onClick={this.handleSubmit}
+        <Button
+          styleName="button"
+          brand
+          fullWidth
+          disabled={isDisabled}
+          onClick={this.handleSubmit}
         >
           Login
         </Button>
