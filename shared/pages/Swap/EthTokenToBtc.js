@@ -50,34 +50,6 @@ export default class EthToBtc extends Component {
     return (
       <div>
         {
-          this.swap.id && (
-            <strong>{this.swap.sellAmount.toString()} {this.swap.sellCurrency} &#10230; {this.swap.buyAmount.toString()} {this.swap.buyCurrency}</strong>
-          )
-        }
-
-        {
-          !this.swap.id && (
-            this.swap.isMy ? (
-              <h3>This order doesn't have a buyer</h3>
-            ) : (
-              <Fragment>
-                <h3>The order creator is offline. Waiting for him..</h3>
-                <InlineLoader />
-              </Fragment>
-            )
-          )
-        }
-
-        {
-          flow.isWaitingForOwner && (
-            <Fragment>
-              <h3>Waiting for other user when he connect to the order</h3>
-              <InlineLoader />
-            </Fragment>
-          )
-        }
-
-        {
           (flow.step === 1 || flow.isMeSigned) && (
             <h3>1. Please confirm your participation to begin the deal</h3>
           )

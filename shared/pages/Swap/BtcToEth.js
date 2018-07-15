@@ -77,24 +77,6 @@ export default class BtcToEth extends Component {
     return (
       <div>
         {
-          this.swap.id && (
-            <strong>{this.swap.sellAmount.toNumber()} {this.swap.sellCurrency} &#10230; {this.swap.buyAmount.toNumber()} {this.swap.buyCurrency}</strong>
-          )
-        }
-
-        {
-          !this.swap.id && (
-            this.swap.isMy ? (
-              <h3>This order doesn't have a buyer</h3>
-            ) : (
-              <Fragment>
-                <h3>The order creator is offline. Waiting for him..</h3>
-                <InlineLoader />
-              </Fragment>
-            )
-          )
-        }
-        {
           flow.isParticipantSigned && (
             <Fragment>
               <h3>2. Create a secret key</h3>

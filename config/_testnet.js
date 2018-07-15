@@ -21,6 +21,10 @@ export default {
     contract : '0x830aef165b900fa7dc6b219f062c5784f6436d67', // 0xdbC2395f753968a93465487022B0e5D8730633Ec
   },
 
+  eos: {
+    contract: 'swaponline11'
+  },
+
   tokens: {
     swap: {
       address: '0x5f53dc58cad6101d943b26ffb9427723aeb816f9',
