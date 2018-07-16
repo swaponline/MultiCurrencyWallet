@@ -50,12 +50,17 @@ const getBalance = (contractAddress, name, decimals) => {
   const { user: { ethData: { address } } } = getState()
   const url = `${config.api.etherscan}?module=account&action=tokenbalance&contractaddress=${contractAddress}&address=${address}`
 
+  if (name === undefined) {
+    return null
+  }
+
   return request.get(url)
     .then(({ result }) => {
       const amount = new BigNumber(String(result))
         .dividedBy(new BigNumber(String(10)).pow(decimals)).toNumber()
 
       reducers.user.setTokenBalance({ name, amount })
+      return result
     }).catch(r => console.error('Token service isn\'t available, try later'))
 }
 

@@ -1,9 +1,11 @@
 import React, { Component, Fragment } from 'react'
 
+import config from 'app-config'
+
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import TimerButton from 'components/controls/TimerButton/TimerButton'
-
-import config from 'app-config'
+import Button from 'components/controls/Button/Button'
+import Timer from './Timer/Timer'
 
 
 export default class EthToBtc extends Component {
@@ -15,6 +17,7 @@ export default class EthToBtc extends Component {
 
     this.state = {
       flow: this.swap.flow.state,
+      enabledButton: false,
     }
   }
 
@@ -44,14 +47,19 @@ export default class EthToBtc extends Component {
     this.swap.flow.syncBalance()
   }
 
+  tryRefund = () => {
+    this.swap.flow.tryRefund()
+  }
+
   render() {
-    const { flow } = this.state
+    const { flow, enabledButton } = this.state
+    console.log('FLOW ETH_BTC', flow)
 
     return (
       <div>
         {
           this.swap.id && (
-            <strong>{this.swap.sellAmount.toString()} {this.swap.sellCurrency} &#10230; {this.swap.buyAmount.toString()} {this.swap.buyCurrency}</strong>
+            <strong>{this.swap.sellAmount.toNumber()} {this.swap.sellCurrency} &#10230; {this.swap.buyAmount.toNumber()} {this.swap.buyCurrency}</strong>
           )
         }
 
@@ -76,27 +84,10 @@ export default class EthToBtc extends Component {
             </Fragment>
           )
         }
-
-        {
-          (flow.step === 1 || flow.isMeSigned) && (
-            <h3>1. Please confirm your participation to begin the deal</h3>
-          )
-        }
         {
           flow.step === 1 && (
             <Fragment>
-              <div>
-                Confirmation of the transaction is necessary for crediting the reputation.
-                If a user does not bring the deal to the end he gets a negative reputation.
-              </div>
-              {
-                !flow.isSignFetching && !flow.isMeSigned && (
-                  <Fragment>
-                    <br />
-                    <TimerButton onClick={this.signSwap}>Confirm</TimerButton>
-                  </Fragment>
-                )
-              }
+              <div>Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation.</div>
               {
                 (flow.isSignFetching || flow.signTransactionHash) && (
                   <Fragment>
@@ -128,9 +119,6 @@ export default class EthToBtc extends Component {
             </Fragment>
           )
         }
-
-        {/* -------------------------------------------------------------- */}
-
         {
           flow.isMeSigned && (
             <Fragment>
@@ -146,6 +134,22 @@ export default class EthToBtc extends Component {
                   <Fragment>
                     <h3>3. Bitcoin Script created and charged. Please check the information below</h3>
                     <div>Secret Hash: <strong>{flow.secretHash}</strong></div>
+                    <div>
+                      Script address:
+                      <strong>
+                        {
+                          flow.btcScriptCreatingTransactionHash && (
+                            <a
+                              href={`${config.link.bitpay}/tx/${flow.btcScriptCreatingTransactionHash}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              {flow.btcScriptCreatingTransactionHash}
+                            </a>
+                          )
+                        }
+                      </strong>
+                    </div>
                     <br />
                     <pre>
                       <code className="code">{`
@@ -171,13 +175,14 @@ export default class EthToBtc extends Component {
 
     bitcoin.core.opcodes.OP_ENDIF,
   ])
-                      `}</code>
+                      `}
+                      </code>
                     </pre>
                     {
                       flow.step === 3 && (
                         <Fragment>
                           <br />
-                          <TimerButton onClick={this.confirmBTCScriptChecked}>Everything is OK. Continue</TimerButton>
+                          <TimerButton brand onClick={this.confirmBTCScriptChecked}>Everything is OK. Continue</TimerButton>
                         </Fragment>
                       )
                     }
@@ -191,12 +196,12 @@ export default class EthToBtc extends Component {
                     <h3>Not enough money for this swap. Please fund the balance</h3>
                     <div>
                       <div>Your balance: <strong>{flow.balance}</strong> {this.swap.sellCurrency}</div>
-                      <div>Required balance: <strong>{this.swap.sellAmount.toString()}</strong> {this.swap.sellCurrency}</div>
+                      <div>Required balance: <strong>{this.swap.sellAmount.toNumber()}</strong> {this.swap.sellCurrency}</div>
                       <hr />
                       <span>{flow.address}</span>
                     </div>
                     <br />
-                    <TimerButton type="button" onClick={this.updateBalance}>Continue</TimerButton>
+                    <Button brand onClick={this.updateBalance}>Continue</Button>
                   </Fragment>
                 )
               }
@@ -210,13 +215,10 @@ export default class EthToBtc extends Component {
               }
 
               {
-                (flow.step === 5 || flow.isEthContractFunded) && (
-                  <h3>4. Creating Ethereum Contract. Please wait, it will take a while</h3>
-                )
-              }
-              {
-                flow.step === 5 && (
-                  <InlineLoader />
+                (flow.step >= 5 || flow.isEthContractFunded) && (
+                  <Fragment>
+                    <h3>4. Creating Ethereum Contract. Please wait, it will take a while</h3>
+                  </Fragment>
                 )
               }
               {
@@ -225,11 +227,32 @@ export default class EthToBtc extends Component {
                     Transaction:
                     <strong>
                       <a
-                        href={`${config.link.etherscan}/tx/${flow.ethSwapCreationTransactionHash}`}
+                        href={`https://rinkeby.etherscan.io/tx/${flow.ethSwapCreationTransactionHash}`}
                         target="_blank"
-                        rel="noreferrer noopener"
+                        rel="noopener noreferrer"
                       >
-                        {flow.hash}
+                        {flow.ethSwapCreationTransactionHash}
+                      </a>
+                    </strong>
+                  </div>
+                )
+              }
+              {
+                flow.step === 5 && (
+                  <InlineLoader />
+                )
+              }
+              {
+                flow.refundTransactionHash && (
+                  <div>
+                    Transaction:
+                    <strong>
+                      <a
+                        href={`https://rinkeby.etherscan.io/tx/${flow.refundTransactionHash}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {flow.refundTransactionHash}
                       </a>
                     </strong>
                   </div>
@@ -281,6 +304,17 @@ export default class EthToBtc extends Component {
                     <h3>7. Money was transferred to your wallet. Check the balance.</h3>
                     <h2>Thank you for using Swap.Online!</h2>
                   </Fragment>
+                )
+              }
+              {
+                flow.step >= 6 && (
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    { enabledButton &&  <Button brand onClick={this.tryRefund}>TRY REFUND</Button> }
+                    <Timer
+                      lockTime={flow.btcScriptValues.lockTime * 1000}
+                      enabledButton={() => this.setState({ enabledButton: true })}
+                    />
+                  </div>
                 )
               }
             </Fragment>

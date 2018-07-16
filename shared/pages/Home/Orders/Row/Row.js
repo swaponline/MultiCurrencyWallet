@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react'
+import config from 'app-config'
 
 import actions from 'redux/actions'
 import PropTypes from 'prop-types'
@@ -32,17 +33,26 @@ export default class Row extends Component {
     }
     const { buyCurrency, sellCurrency, sellAmount, buyAmount, isMy } = row
     const amount = isMy ? buyAmount : sellAmount
-    const currency = isMy ? buyCurrency : sellCurrency
+    let currency = isMy ? sellCurrency : buyCurrency
+    currency = currency.toLowerCase()
 
-    if (currency.toLowerCase() === 'eth') {
+    if (currency === 'eth') {
       actions.ethereum.getBalance()
         .then(balance => {
           this.setState({
             balance,
           })
         })
-    } else {
+    } else if (currency === 'btc') {
       actions.bitcoin.getBalance()
+        .then(balance => {
+          this.setState({
+            balance,
+          })
+        })
+    } else if (currency !== undefined) {
+      console.log('currency Orders', currency)
+      actions.token.getBalance(config.tokens[currency].address, currency, config.tokens[currency].decimals)
         .then(balance => {
           this.setState({
             balance,

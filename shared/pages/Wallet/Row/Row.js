@@ -49,7 +49,8 @@ export default class Row extends Component {
       action = actions.eos.getBalance
       actions.analytics.dataEvent('balances-update-eos')
     }
-    else {
+    else if (currency !== undefined) {
+      console.log('currency Waller', currency)
       action = actions.token.getBalance
       actions.analytics.dataEvent('balances-update-token')
     }
@@ -94,7 +95,7 @@ export default class Row extends Component {
         <td>
           <Coin name={currency} size={40} />
         </td>
-        <td>{currency.toUpperCase()}</td>
+        <td>{currency}</td>
         <td style={{ minWidth: '80px' }}>
           {
             isBalanceFetching ? (
@@ -111,14 +112,12 @@ export default class Row extends Component {
           }
         </td>
         <td style={{ position: 'relative' }} >
-          {address !== '' &&
-            <div>
-              <button styleName="button" onClick={this.handleCopiedAddress}>Copy</button>
-              <ReloadButton styleName="reloadButton" onClick={this.handleReloadBalance} />
-              <WithdrawButton data={{ currency, balance, address, contractAddress, decimals }} />
-              { viewText && <p styleName="copied" >Address copied to clipboard</p> }
-            </div>
-          }
+          <div>
+            <button styleName="button" onClick={this.handleCopiedAddress}>Copy</button>
+            <ReloadButton styleName="reloadButton" onClick={this.handleReloadBalance} />
+            <WithdrawButton data={{ currency, address, contractAddress, decimals }} />
+            { viewText && <p styleName="copied" >Address copied to clipboard</p> }
+          </div>
         </td>
       </tr>
     )

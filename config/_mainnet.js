@@ -9,8 +9,8 @@ export default {
 
     eos: {
       chainId: '',
-      httpEndpoint: ''
-    }
+      httpEndpoint: '',
+    },
   },
 
   token: {

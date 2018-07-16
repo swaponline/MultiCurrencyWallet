@@ -65,7 +65,7 @@ export default class Modal extends Component {
     })
 
     return (
-      <Fragment>
+      <Overlay>
         <div styleName="modal" className={className}>
           {
             Boolean(title || showCloseButton) && (
@@ -90,7 +90,7 @@ export default class Modal extends Component {
             </Center>
           </div>
         </div>
-      </Fragment>
+      </Overlay>
     )
   }
 }

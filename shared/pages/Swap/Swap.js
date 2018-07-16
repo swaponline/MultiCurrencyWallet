@@ -21,7 +21,28 @@ const swapComponents = {
 
 export default class SwapComponent extends PureComponent {
 
+  state = {
+    tokenName: null,
+  }
+
+  componentWillMount() {
+    const { match : { params : { sell, buy } } } = this.props
+    let tokenName
+
+    if (sell !== 'ETH' && sell !== 'BTC') {
+      tokenName = sell
+    }
+    else if (buy !== 'ETH' && buy !== 'BTC') {
+      tokenName = buy
+    }
+
+    this.setState({
+      tokenName,
+    })
+  }
+
   render() {
+    const { tokenName } = this.state
     const { match : { params : { orderId } } } = this.props
 
     if (!orderId) {
@@ -38,7 +59,7 @@ export default class SwapComponent extends PureComponent {
 
     return (
       <div style={{ paddingLeft: '30px', paddingTop: '30px' }}>
-        <SwapComponent swap={swap} />
+        <SwapComponent swap={swap} tokenName={tokenName} />
       </div>
     )
   }
