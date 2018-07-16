@@ -72,7 +72,7 @@ export default class BtcToEth extends Component {
 
   render() {
     const { secret, flow, enabledButton } = this.state
-    // const refundTxHex = this.getRefundTxHex()
+    const refundTxHex = this.getRefundTxHex()
 
     return (
       <div>
@@ -167,7 +167,14 @@ export default class BtcToEth extends Component {
                   </Fragment>
                 )
               }
-
+              {
+                refundTxHex && (
+                  <div>
+                    <h3>Refund hex transaction:</h3>
+                    {refundTxHex}
+                  </div>
+                )
+              }
               {
                 flow.refundTransactionHash && (
                   <div>
@@ -198,13 +205,18 @@ export default class BtcToEth extends Component {
                 )
               }
               {
-                flow.step >= 5 && (
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
-                    { enabledButton &&  <Button brand onClick={this.tryRefund}>TRY REFUND</Button> }
-                    <Timer
-                      lockTime={flow.btcScriptValues.lockTime * 1000}
-                      enabledButton={() => this.setState({ enabledButton: true })}
-                    />
+                flow.ethSwapCreationTransactionHash && (
+                  <div>
+                    Transaction:
+                    <strong>
+                      <a
+                        href={`${config.link.etherscan}/tx/${flow.ethSwapCreationTransactionHash}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {flow.ethSwapCreationTransactionHash}
+                      </a>
+                    </strong>
                   </div>
                 )
               }
@@ -241,6 +253,17 @@ export default class BtcToEth extends Component {
                     <h3>6. Money was transferred to your wallet. Check the balance.</h3>
                     <h2>Thank you for using Swap.Online!</h2>
                   </Fragment>
+                )
+              }
+              {
+                flow.step >= 5 && (
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    { enabledButton &&  <Button brand onClick={this.tryRefund}>TRY REFUND</Button> }
+                    <Timer
+                      lockTime={flow.btcScriptValues.lockTime * 1000}
+                      enabledButton={() => this.setState({ enabledButton: true })}
+                    />
+                  </div>
                 )
               }
             </Fragment>

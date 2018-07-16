@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import actions from 'redux/actions'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
@@ -40,7 +40,7 @@ export default class Modal extends Component {
   close = () => {
     const { name, data, onClose, disableClose } = this.props
 
-    if(name === 'OfferModal') {
+    if (name === 'OfferModal') {
       actions.analytics.dataEvent('orderbook-addoffer-click-exit-button')
     }
 
@@ -65,7 +65,7 @@ export default class Modal extends Component {
     })
 
     return (
-      <Overlay>
+      <Fragment>
         <div styleName="modal" className={className}>
           {
             Boolean(title || showCloseButton) && (
@@ -90,7 +90,7 @@ export default class Modal extends Component {
             </Center>
           </div>
         </div>
-      </Overlay>
+      </Fragment>
     )
   }
 }

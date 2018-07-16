@@ -53,6 +53,7 @@ export default class EthToBtc extends Component {
 
   render() {
     const { flow, enabledButton } = this.state
+    console.log('FLOW ETH_BTC', flow)
 
     return (
       <div>
@@ -135,15 +136,19 @@ export default class EthToBtc extends Component {
                     <h3>3. Bitcoin Script created and charged. Please check the information below</h3>
                     <div>Secret Hash: <strong>{flow.secretHash}</strong></div>
                     <div>
-                      Script address:
+                        Script address:
                       <strong>
-                        <a
-                          href={`${config.link.bitpay}address/${flow.btcScriptValues.address}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          {flow.btcScriptValues.address}
-                        </a>
+                        {
+                          flow.btcScriptCreatingTransactionHash && (
+                            <a
+                              href={`${config.link.bitpay}/tx/${flow.btcScriptCreatingTransactionHash}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              {flow.btcScriptCreatingTransactionHash}
+                            </a>
+                          )
+                        }
                       </strong>
                     </div>
                     <br />
@@ -211,8 +216,10 @@ export default class EthToBtc extends Component {
               }
 
               {
-                (flow.step === 5 || flow.isEthContractFunded) && (
-                  <h3>4. Creating Ethereum Contract. Please wait, it will take a while</h3>
+                (flow.step >= 5 || flow.isEthContractFunded) && (
+                  <Fragment>
+                    <h3>4. Creating Ethereum Contract. Please wait, it will take a while</h3>
+                  </Fragment>
                 )
               }
               {
@@ -221,7 +228,7 @@ export default class EthToBtc extends Component {
                     Transaction:
                     <strong>
                       <a
-                        href={`${config.link.etherscan}/tx/${flow.ethSwapCreationTransactionHash}`}
+                        href={`https://rinkeby.etherscan.io/tx/${flow.ethSwapCreationTransactionHash}`}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
@@ -237,17 +244,21 @@ export default class EthToBtc extends Component {
                 )
               }
               {
-                flow.step >= 6 && (
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
-                    { enabledButton &&  <Button brand onClick={this.tryRefund}>TRY REFUND</Button> }
-                    <Timer
-                      lockTime={flow.btcScriptValues.lockTime * 1000}
-                      enabledButton={() => this.setState({ enabledButton: true })}
-                    />
+                flow.refundTransactionHash && (
+                  <div>
+                    Transaction:
+                    <strong>
+                      <a
+                        href={`https://rinkeby.etherscan.io/tx/${flow.refundTransactionHash}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {flow.refundTransactionHash}
+                      </a>
+                    </strong>
                   </div>
                 )
               }
-
               {
                 (flow.step === 6 || flow.isEthWithdrawn) && (
                   <Fragment>
@@ -294,6 +305,17 @@ export default class EthToBtc extends Component {
                     <h3>7. Money was transferred to your wallet. Check the balance.</h3>
                     <h2>Thank you for using Swap.Online!</h2>
                   </Fragment>
+                )
+              }
+              {
+                flow.step >= 6 && (
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    { enabledButton &&  <Button brand onClick={this.tryRefund}>TRY REFUND</Button> }
+                    <Timer
+                      lockTime={flow.btcScriptValues.lockTime * 1000}
+                      enabledButton={() => this.setState({ enabledButton: true })}
+                    />
+                  </div>
                 )
               }
             </Fragment>
