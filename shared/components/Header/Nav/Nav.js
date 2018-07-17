@@ -12,6 +12,7 @@ const nav = [
   { title: 'Wallet',    link: links.wallet    },
   { title: 'History',   link: links.history   },
   { title: 'Affiliate', link: links.affiliate },
+  { title: 'Listing', link: links.listing },
 ]
 
 @CSSModules(styles)
