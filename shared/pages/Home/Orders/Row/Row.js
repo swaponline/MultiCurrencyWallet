@@ -31,8 +31,9 @@ export default class Row extends Component {
     if (row === undefined) {
       return null
     }
+
     const { buyCurrency, sellCurrency, sellAmount, buyAmount, isMy } = row
-    const amount = isMy ? buyAmount : sellAmount
+    const amount = isMy ? sellAmount : buyAmount
     let currency = isMy ? sellCurrency : buyCurrency
     currency = currency.toLowerCase()
 
@@ -51,7 +52,6 @@ export default class Row extends Component {
           })
         })
     } else if (currency !== undefined) {
-      console.log('currency Orders', currency)
       actions.token.getBalance(config.tokens[currency].address, currency, config.tokens[currency].decimals)
         .then(balance => {
           this.setState({
@@ -108,6 +108,9 @@ export default class Row extends Component {
     if (row === undefined) {
       return null
     }
+
+    console.log(balance)
+    console.log(amount)
 
     const { id, buyCurrency, sellCurrency, isMy, buyAmount, sellAmount, isRequested, owner :{  peer: ownerPeer } } = row
     const mePeer = SwapApp.services.room.peer

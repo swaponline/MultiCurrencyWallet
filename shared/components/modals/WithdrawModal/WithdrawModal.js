@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'redaction'
 import { constants } from 'helpers'
 import actions from 'redux/actions'
 import Link from 'sw-valuelink'
@@ -13,12 +12,7 @@ import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
 
-@connect({
-  ethData: 'user.ethData',
-  btcData: 'user.btcData',
-  nimData: 'user.nimData',
-  eosData: 'user.eosData',
-})
+
 @cssModules(styles)
 export default class WithdrawModal extends React.Component {
 
@@ -29,7 +23,7 @@ export default class WithdrawModal extends React.Component {
 
   state = {
     isSubmitted: false,
-    address: ' ',
+    address: '',
     amount: '',
   }
 
@@ -102,6 +96,7 @@ export default class WithdrawModal extends React.Component {
 
     return (
       <Modal name={name} title={`Withdraw ${data.currency.toUpperCase()}`}>
+        <p style={{ fontSize: '16px' }}>Please wait, it takes from 3 to 5 minutes to complete the transaction.</p>
         <FieldLabel inRow>Address</FieldLabel>
         <Input valueLink={linked.address} />
         <FieldLabel inRow>Amount</FieldLabel>

@@ -113,13 +113,14 @@ const send = (from, to, amount, decimals) => {
   const options = {
     from: address,
     gas: `${config.services.web3.gas}`,
-    gasPrice: `${config.services.web3.gasPrice}`,
   }
 
   tokenContract = new web3.eth.Contract(abi, from, options)
 
-  const newAmount = new BigNumber(String(amount)).times(new BigNumber('10').pow(new BigNumber(String(decimals))))
-
+  const newDecimals = new BigNumber(10).pow(new BigNumber(String(decimals)))
+  console.log('newDecimals', newDecimals)
+  const newAmount = new BigNumber(String(amount)).times(newDecimals)
+  console.log('newAmount', newAmount)
   return new Promise((resolve, reject) =>
     tokenContract.methods.transfer(to, newAmount).send()
       .then(receipt => {
