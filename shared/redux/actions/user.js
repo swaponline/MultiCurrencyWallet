@@ -35,7 +35,6 @@ const getBalances = () => {
 
   Object.keys(config.tokens)
     .forEach(name => {
-      console.log('USER', name)
       actions.token.getBalance(config.tokens[name].address, name, config.tokens[name].decimals)
     })
   // actions.nimiq.getBalance()
@@ -51,16 +50,15 @@ const getDemoMoney = process.env.MAINNET ? () => {} : () => {
     })
 }
 
-const setExchangeRate = (buyCurrency, sellCurrency) => {
-  const url = `https://api.coinbase.com/v2/exchange-rates?currency=${buyCurrency.toUpperCase()}`
-
+const setExchangeRate = (buyCurrency, sellCurrency, setState) => {
+  const url = `https://api.cryptonator.com/api/full/${buyCurrency}-${sellCurrency}`
+  console.log(url)
   return request.get(url)
-    .then(({ data: { rates } })  =>
-      Object.keys(rates)
-        .filter(k => k === sellCurrency.toUpperCase())
-        .map((k) => rates[k])
-    ).catch(() =>
-      config.exchangeRates[`${buyCurrency.toLowerCase()}${sellCurrency.toLowerCase()}`]
+    .then(({ ticker: { price: exchangeRate } })  => {
+      setState(exchangeRate)
+    })
+    .catch(() =>
+      setState(config.exchangeRates[`${buyCurrency.toLowerCase()}${sellCurrency.toLowerCase()}`])
     )
 }
 

@@ -52,8 +52,6 @@ export default class Orders extends Component {
     const titles = [ 'EXCHANGE', 'YOU BUY', 'YOU SELL', 'EXCHANGE RATE', 'ACTIONS' ]
     const { orders } = this.state
 
-    console.log(orders)
-
     const filteredOrders = this.filterOrders(orders, filter)
     const mePeer = SwapApp.services.room.peer
     const myOrders = orders.filter(order => order.owner.peer === mePeer)

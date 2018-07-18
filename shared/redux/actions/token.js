@@ -86,7 +86,6 @@ const getTransaction = (contractAddress) =>
     request.get(url)
       .then((res) => {
         if (res.status) {
-          console.log(res.result)
           transactions = res.result
             .filter((item) => item.value > 0).map((item) => ({
               confirmations: item.confirmations > 0 ? 'Confirmed' : 'Unconfirmed',
