@@ -85,16 +85,16 @@ const getTransaction = (contractAddress) =>
 
     request.get(url)
       .then((res) => {
-        console.log(res)
         if (res.status) {
+          console.log(res.result)
           transactions = res.result
             .filter((item) => item.value > 0).map((item) => ({
               confirmations: item.confirmations > 0 ? 'Confirmed' : 'Unconfirmed',
-              type: item.tokenName,
+              type: item.tokenSymbol,
               hash: item.hash,
               contractAddress: item.contractAddress,
               status: item.blockHash != null ? 1 : 0,
-              value: item.value,
+              value: new BigNumber(String(item.value)).dividedBy(new BigNumber(10).pow(Number(item.tokenDecimal))).toNumber(),
               address: item.to,
               date: item.timeStamp * 1000,
               direction: address.toLowerCase() === item.to.toLowerCase() ? 'in' : 'out',
@@ -113,6 +113,7 @@ const send = (from, to, amount, decimals) => {
   const options = {
     from: address,
     gas: `${config.services.web3.gas}`,
+    gasPrice: `${config.services.web3.gasPrice}`,
   }
 
   tokenContract = new web3.eth.Contract(abi, from, options)

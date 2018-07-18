@@ -33,8 +33,8 @@ export default class Row extends Component {
     }
 
     const { buyCurrency, sellCurrency, sellAmount, buyAmount, isMy } = row
-    const amount = isMy ? sellAmount : buyAmount
-    let currency = isMy ? sellCurrency : buyCurrency
+    const amount = isMy ? buyAmount : sellAmount
+    let currency = isMy ? buyCurrency : sellCurrency
     currency = currency.toLowerCase()
 
     if (currency === 'eth') {
@@ -109,9 +109,6 @@ export default class Row extends Component {
       return null
     }
 
-    console.log(balance)
-    console.log(amount)
-
     const { id, buyCurrency, sellCurrency, isMy, buyAmount, sellAmount, isRequested, owner :{  peer: ownerPeer } } = row
     const mePeer = SwapApp.services.room.peer
 
@@ -154,7 +151,7 @@ export default class Row extends Component {
                       <Link to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`}> Go to the swap</Link>
                     </Fragment>
                   ) : (
-                    balance > amount ? (
+                    Boolean(true) ? (
                       <Link to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`} >
                         <RequestButton sendRequest={() => this.sendRequest(id)} />
                       </Link>
