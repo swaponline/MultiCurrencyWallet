@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 
 import { NavLink } from 'react-router-dom'
 import { links } from 'helpers'
-import CSSModules from 'react-css-modules'
 
+import CSSModules from 'react-css-modules'
 import styles from './Nav.scss'
 
 
@@ -14,6 +14,7 @@ const nav = [
   { title: 'Affiliate', link: links.affiliate },
   { title: 'Listing', link: links.listing },
 ]
+
 
 @CSSModules(styles)
 export default class Nav extends Component {
@@ -28,20 +29,27 @@ export default class Nav extends Component {
   render() {
     return (
       <div styleName="nav">
-        {
-          nav.map(({ title, link }) => (
-            <NavLink
-              onClick={() => this.handleScrollTo(500)}
-              exact
-              key={title}
-              styleName="link"
-              to={link}
-              activeClassName={styles.active}
-            >
-              {title}
-            </NavLink>
-          ))
-        }
+        <Fragment>
+          {
+            nav.map(({ title, link }) => (
+              <NavLink
+                onClick={() => this.handleScrollTo(500)}
+                exact
+                key={title}
+                styleName="link"
+                to={link}
+                activeClassName={styles.active}
+              >
+                {title}
+              </NavLink>
+            ))
+          }
+          {
+            process.env.MAINNET && (
+              <a styleName="link" target="_blank" rel="noreferrer noopener" href={links.testnet}> Testnet</a>
+            )
+          }
+        </Fragment>
       </div>
     )
   }
