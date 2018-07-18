@@ -29,7 +29,7 @@ const Row = ({ type, date, direction, hash, value, confirmations }) => {
         <div styleName={confirmations === 'Confirmed' ? 'confirm cell' : 'unconfirmed cell'}>{confirmations}</div>
       </td>
       <td>
-        <div styleName="amount">{value}</div>
+        <div styleName="amount">{value} {type.toUpperCase()}</div>
       </td>
     </tr>
   )
