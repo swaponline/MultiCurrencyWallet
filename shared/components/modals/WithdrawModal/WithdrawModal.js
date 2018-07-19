@@ -56,7 +56,7 @@ export default class WithdrawModal extends React.Component {
       action = actions.token
     }
 
-    actions.loader.show()
+    actions.loader.show(true, true)
 
     action.send(contractAddress || address, to, Number(amount), decimals)
       .then(() => {
@@ -96,7 +96,6 @@ export default class WithdrawModal extends React.Component {
 
     return (
       <Modal name={name} title={`Withdraw ${data.currency.toUpperCase()}`}>
-        <p style={{ fontSize: '16px' }}>Please wait, it takes from 3 to 5 minutes to complete the transaction.</p>
         <FieldLabel inRow>Address</FieldLabel>
         <Input valueLink={linked.address} />
         <FieldLabel inRow>Amount</FieldLabel>

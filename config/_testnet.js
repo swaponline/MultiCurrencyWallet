@@ -30,6 +30,10 @@ export default {
       address: '0x60c205722c6c797c725a996cf9cca11291f90749',
       decimals: 0,
     },
+    jot: {
+      address: '0x9070e2fDb61887c234D841c95D1709288EBbB9a0',
+      decimals: 18,
+    },
   },
 
   link: {

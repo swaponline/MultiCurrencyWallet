@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import actions from 'redux/actions'
-import { constants } from 'helpers'
+import { constants, web3 } from 'helpers'
 
 import cssModules from 'react-css-modules'
 import styles from './Row.scss'
@@ -19,6 +19,17 @@ export default class Row extends Component {
   state = {
     isBalanceFetching: false,
     viewText: false,
+    approve: false,
+  }
+
+  componentWillMount() {
+    const { contractAddress } = this.props
+    actions.token.allowance(contractAddress)
+      .then(result => {
+        this.setState({
+          approve: result > 0,
+        })
+      })
   }
 
   handleReloadBalance = () => {
@@ -50,7 +61,6 @@ export default class Row extends Component {
       actions.analytics.dataEvent('balances-update-eos')
     }
     else if (currency !== undefined) {
-      console.log('currency Waller', currency)
       action = actions.token.getBalance
       actions.analytics.dataEvent('balances-update-token')
     }
@@ -86,8 +96,17 @@ export default class Row extends Component {
     actions.modals.open(constants.modals.Eos, {})
   }
 
+  handleApproveToken = (decimals, contractAddress) => {
+    const data = {
+      contractAddress,
+      decimals,
+    }
+
+    actions.modals.open(constants.modals.Approve, data)
+  }
+
   render() {
-    const { isBalanceFetching, viewText } = this.state
+    const { isBalanceFetching, viewText, approve } = this.state
     const { currency, balance, address, contractAddress, decimals } = this.props
 
     return (
@@ -106,9 +125,19 @@ export default class Row extends Component {
           }
         </td>
         <td ref={td => this.textAddress = td}>
-          <LinkAccount type={currency} address={address} >{address}</LinkAccount>
-          { currency === 'EOS' && address === '' &&
-            <button styleName="button" onClick={this.handleEosLogin}>Login with your account</button>
+          {
+            !contractAddress ? (
+              <LinkAccount type={currency} address={address} >{address}</LinkAccount>
+            ) : (
+              !approve ? (
+                <button styleName="button" onClick={() => this.handleApproveToken(decimals, contractAddress)}>Approve token</button>
+              ) : (
+                <LinkAccount type={currency} contractAddress={contractAddress} address={address} >{address}</LinkAccount>
+              )
+            )
+          }
+          {
+            currency === 'EOS' && address === '' && <button styleName="button" onClick={this.handleEosLogin}>Login with your account</button>
           }
         </td>
         <td style={{ position: 'relative' }} >
