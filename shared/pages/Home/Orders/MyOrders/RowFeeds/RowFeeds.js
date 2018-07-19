@@ -15,7 +15,7 @@ const RowFeeds = ({ row, mePeer, acceptRequest, declineRequest, removeOrder }) =
   if (row === 'undefined') {
     return null
   }
-  console.log(row)
+
   const { requests, buyAmount, buyCurrency, sellAmount, sellCurrency, exchangeRate, id } = row
 
   return (

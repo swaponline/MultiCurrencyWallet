@@ -118,7 +118,6 @@ const send = (from, to, amount, decimals) => {
   tokenContract = new web3.eth.Contract(abi, from, options)
 
   const newAmount = new BigNumber(String(amount)).times(new BigNumber(10).pow(decimals)).decimalPlaces(decimals).toNumber()
-  console.log(newAmount)
 
   return new Promise((resolve, reject) =>
     tokenContract.methods.transfer(to, newAmount).send()
