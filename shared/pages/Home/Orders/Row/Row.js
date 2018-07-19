@@ -55,22 +55,27 @@ export default class Row extends Component {
         <td>
           {
             isMy ? (
-              `${buyCurrency.toUpperCase()} ${buyAmount}`
+              `${buyAmount} ${buyCurrency} `
             ) : (
-              `${sellCurrency.toUpperCase()} ${sellAmount}`
+              `${sellAmount} ${sellCurrency} `
             )
           }
         </td>
         <td>
           {
             isMy ? (
-              `${sellCurrency.toUpperCase()} ${sellAmount}`
+              `${sellAmount} ${sellCurrency} `
             ) : (
-              `${buyCurrency.toUpperCase()} ${buyAmount}`
+              `${buyAmount} ${buyCurrency} `
             )
           }
         </td>
-        <td>{exchangeRate}</td>
+        <td>
+          {exchangeRate}
+          {
+            isMy ? `${buyCurrency}-${sellCurrency}` : `${sellCurrency}-${buyCurrency}`
+          }
+        </td>
         <td>
           {
             mePeer === ownerPeer ? (

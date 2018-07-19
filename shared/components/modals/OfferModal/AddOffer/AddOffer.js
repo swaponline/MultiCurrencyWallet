@@ -46,7 +46,7 @@ export default class AddOffer extends Component {
 
   componentDidMount() {
     const { buyCurrency, sellCurrency } = this.state
-    actions.user.setExchangeRate(buyCurrency, sellCurrency, this.changeExchangeRate)
+    this.getExchangeRate(buyCurrency, sellCurrency)
   }
 
   changeExchangeRate = (value) => {
