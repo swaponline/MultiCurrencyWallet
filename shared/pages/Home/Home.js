@@ -24,18 +24,15 @@ export default class Home extends Component {
     }
   }
 
-  handleSellCurrencySelect = ({ value }) => {
-    let { buyCurrency, sellCurrency } = this.state
-
-    if (value === sellCurrency) {
-      sellCurrency = buyCurrency
-    }
-
-    buyCurrency = value
-
+  handleBuyCurrencySelect = ({ value }) => {
     this.setState({
-      buyCurrency,
-      sellCurrency,
+      buyCurrency: value,
+    })
+  }
+
+  handleSellCurrencySelect = ({ value }) => {
+    this.setState({
+      sellCurrency: value,
     })
   }
 
@@ -75,6 +72,7 @@ export default class Home extends Component {
           <Orders
             filter={filterOrders}
             handleSellCurrencySelect={this.handleSellCurrencySelect}
+            handleBuyCurrencySelect={this.handleBuyCurrencySelect}
             buyCurrency={buyCurrency}
             sellCurrency={sellCurrency}
             flipCurrency={this.flipCurrency}

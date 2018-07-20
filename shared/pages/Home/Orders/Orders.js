@@ -45,10 +45,14 @@ export default class Orders extends Component {
   }
 
   filterOrders = (orders, filter) =>
-    orders.filter(f => (`${f.buyCurrency.toLowerCase()}${f.sellCurrency.toLowerCase()}` === filter))
+    orders.filter(f => f.isMy ? (
+      `${f.buyCurrency.toLowerCase()}${f.sellCurrency.toLowerCase()}` === filter
+    ) : (
+      `${f.sellCurrency.toLowerCase()}${f.buyCurrency.toLowerCase()}` === filter
+    ))
 
   render() {
-    const { filter, sellCurrency, buyCurrency, handleSellCurrencySelect, flipCurrency } = this.props
+    const { filter, sellCurrency, buyCurrency, handleSellCurrencySelect, handleBuyCurrencySelect, flipCurrency } = this.props
     const titles = [ 'EXCHANGE', 'YOU BUY', 'YOU SELL', 'EXCHANGE RATE', 'ACTIONS' ]
     const { orders } = this.state
 
@@ -63,7 +67,8 @@ export default class Orders extends Component {
           updateOrders={this.updateOrders}
         />
         <SearchSwap
-          updateFilter={handleSellCurrencySelect}
+          handleSellCurrencySelect={handleSellCurrencySelect}
+          handleBuyCurrencySelect={handleBuyCurrencySelect}
           buyCurrency={buyCurrency}
           sellCurrency={sellCurrency}
           flipCurrency={flipCurrency}

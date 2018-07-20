@@ -140,7 +140,7 @@ export default class Row extends Component {
           <div>
             <button styleName="button" onClick={this.handleCopiedAddress}>Copy</button>
             <ReloadButton styleName="reloadButton" onClick={this.handleReloadBalance} />
-            <WithdrawButton data={{ currency, address, contractAddress, decimals }} />
+            <WithdrawButton data={{ currency, address, contractAddress, decimals, balance }} />
             { viewText && <p styleName="copied" >Address copied to clipboard</p> }
           </div>
         </td>
