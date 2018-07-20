@@ -59,8 +59,10 @@ export default class Home extends Component {
   }
 
   render() {
-    const { buyCurrency, sellCurrency, view } = this.state
+    const { buyCurrency, sellCurrency } = this.state
     const filterOrders = `${buyCurrency}${sellCurrency}`
+    console.log(crypto)
+
 
     return (
       <section style={{ position: 'relative' }}>
