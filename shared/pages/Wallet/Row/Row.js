@@ -19,17 +19,14 @@ export default class Row extends Component {
   state = {
     isBalanceFetching: false,
     viewText: false,
-    approve: false,
   }
 
-  componentWillMount() {
-    const { contractAddress } = this.props
-    actions.token.allowance(contractAddress)
-      .then(result => {
-        this.setState({
-          approve: result > 0,
-        })
-      })
+  componentDidMount() {
+    const { contractAddress, name } = this.props
+
+    if (name !== undefined) {
+      actions.token.allowance(contractAddress, name)
+    }
   }
 
   handleReloadBalance = () => {
@@ -96,18 +93,17 @@ export default class Row extends Component {
     actions.modals.open(constants.modals.Eos, {})
   }
 
-  handleApproveToken = (decimals, contractAddress) => {
-    const data = {
+  handleApproveToken = (decimals, contractAddress, name) => {
+    actions.modals.open(constants.modals.Approve, {
       contractAddress,
       decimals,
-    }
-
-    actions.modals.open(constants.modals.Approve, data)
+      name,
+    })
   }
 
   render() {
-    const { isBalanceFetching, viewText, approve } = this.state
-    const { currency, balance, address, contractAddress, decimals } = this.props
+    const { isBalanceFetching, viewText } = this.state
+    const { currency, name, balance, address, contractAddress, decimals, approve } = this.props
 
     return (
       <tr>
@@ -130,7 +126,7 @@ export default class Row extends Component {
               <LinkAccount type={currency} address={address} >{address}</LinkAccount>
             ) : (
               !approve ? (
-                <button styleName="button" onClick={() => this.handleApproveToken(decimals, contractAddress)}>Approve token</button>
+                <button styleName="button" onClick={() => this.handleApproveToken(decimals, contractAddress, name)}>Approve token</button>
               ) : (
                 <LinkAccount type={currency} contractAddress={contractAddress} address={address} >{address}</LinkAccount>
               )

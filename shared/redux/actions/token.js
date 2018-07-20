@@ -127,7 +127,7 @@ const send = (contractAddress, to, amount, decimals) => {
   )
 }
 
-const approve = (contractAddress, amount, decimals) => {
+const approve = (contractAddress, amount, decimals, name) => {
   const { user: { ethData: { address } } } = getState()
 
   const newAmount = new BigNumber(String(amount)).times(new BigNumber(10).pow(decimals)).decimalPlaces(decimals).toNumber()
@@ -150,9 +150,12 @@ const approve = (contractAddress, amount, decimals) => {
       reject(err)
     }
   })
+    .then(() => {
+      reducers.user.setTokenApprove({ name, approve: true  })
+    })
 }
 
-const allowance = (contractAddress) => {
+const allowance = (contractAddress, name) => {
   const { user: { ethData: { address } } } = getState()
   const ERC20     = new web3.eth.Contract(abi, contractAddress)
 
@@ -161,6 +164,7 @@ const allowance = (contractAddress) => {
 
     console.log('💸 allowance:', allowance)
 
+    reducers.user.setTokenApprove({ name, approve: allowance > 0 })
 
     resolve(allowance)
   })

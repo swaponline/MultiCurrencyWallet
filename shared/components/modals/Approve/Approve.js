@@ -27,12 +27,12 @@ export default class Offer extends React.Component {
 
   handleApprove = () => {
     const { amount } = this.state
-    const { data: { decimals, contractAddress } } = this.props
+    const { data: { decimals, contractAddress, name } } = this.props
     const message = `Your approve ${amount} tokens on contract address ${contractAddress}`
 
     actions.loader.show(true, true)
 
-    actions.token.approve(contractAddress, amount, decimals)
+    actions.token.approve(contractAddress, amount, decimals, name)
       .then(() => {
         actions.loader.hide()
         actions.notifications.show(constants.notifications.Message, { message })

@@ -67,3 +67,14 @@ export const setTokenBalance = (state, { name, amount }) => ({
     },
   },
 })
+
+export const setTokenApprove = (state, { name, approve }) => ({
+  ...state,
+  tokensData: {
+    ...state.tokensData,
+    [name]: {
+      ...state.tokensData[name],
+      approve,
+    },
+  },
+})
