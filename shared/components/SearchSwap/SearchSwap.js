@@ -12,15 +12,17 @@ const SearchSwap = ({ buyCurrency, sellCurrency, flipCurrency, handleBuyCurrency
     <div styleName="row">
       <p styleName="text" >You want to buy</p>
       <CurrencySelect
+        id="buyCurrency"
         styleName="currencySelect"
         selectedValue={buyCurrency}
         onSelect={handleBuyCurrencySelect}
       />
     </div>
-    <Flip onClick={flipCurrency} />
+    <Flip id="flipExchange" onClick={flipCurrency} />
     <div styleName="row">
       <p styleName="text" >You want to sell</p>
       <CurrencySelect
+        id="sellCurrency"
         styleName="currencySelect"
         selectedValue={sellCurrency}
         onSelect={handleSellCurrencySelect}

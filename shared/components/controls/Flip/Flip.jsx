@@ -6,8 +6,8 @@ import styles from './Flip.scss'
 import FlipSvg from './images/flip.svg'
 
 
-function Flip({ onClick }) {
-  return <img src={FlipSvg} alt="" onClick={onClick} styleName="trade-panel__change" />
+function Flip({ onClick, id }) {
+  return <img src={FlipSvg} id={id || null} alt="" onClick={onClick} styleName="trade-panel__change" />
 }
 
 export default CSSModules(Flip, styles)
