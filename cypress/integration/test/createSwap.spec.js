@@ -1,4 +1,7 @@
-describe('Testing order form', () => {
+describe('Test order form', () => {
+  // beforeEach(() => {
+  //   cy.visit('/')
+  // })
   it('Open order modal', () => {
     cy.visit('/')
     cy.get('#order__btn').click()
