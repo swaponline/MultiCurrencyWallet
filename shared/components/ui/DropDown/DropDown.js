@@ -98,7 +98,7 @@ export default class DropDown extends Component {
   }
 
   render() {
-    const { className, items, isToggleActive, id } = this.props
+    const { className, items, isToggleActive, id=null } = this.props
 
     const dropDownStyleName = cx('dropDown', {
       'active': isToggleActive,
