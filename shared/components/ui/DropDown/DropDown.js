@@ -21,6 +21,7 @@ export default class DropDown extends Component {
       PropTypes.string,
       PropTypes.number,
     ]),
+    id:PropTypes.string,
     items: PropTypes.arrayOf(PropTypes.shape({
       title: PropTypes.string.isRequired,
       value: PropTypes.oneOfType([
@@ -97,7 +98,7 @@ export default class DropDown extends Component {
   }
 
   render() {
-    const { className, items, isToggleActive } = this.props
+    const { className, items, isToggleActive, id=null } = this.props
 
     const dropDownStyleName = cx('dropDown', {
       'active': isToggleActive,
@@ -105,7 +106,7 @@ export default class DropDown extends Component {
 
     return (
       <div styleName={dropDownStyleName} className={className}>
-        <div styleName="selectedItem" onClick={this.toggle}>
+        <div  id={id} styleName="selectedItem" onClick={this.toggle}>
           <div styleName="arrow" />
           {this.renderSelectedItem()}
         </div>
