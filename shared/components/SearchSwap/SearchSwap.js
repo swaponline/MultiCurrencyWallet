@@ -7,14 +7,14 @@ import CurrencySelect from 'components/ui/CurrencySelect/CurrencySelect'
 import Flip from 'components/controls/Flip/Flip'
 
 
-const SearchSwap = ({ buyCurrency, sellCurrency, updateFilter, flipCurrency }) => (
+const SearchSwap = ({ buyCurrency, sellCurrency, flipCurrency, handleBuyCurrencySelect, handleSellCurrencySelect }) => (
   <div styleName="choice">
     <div styleName="row">
       <p styleName="text" >You want to buy</p>
       <CurrencySelect
         styleName="currencySelect"
         selectedValue={buyCurrency}
-        onSelect={updateFilter}
+        onSelect={handleBuyCurrencySelect}
       />
     </div>
     <Flip onClick={flipCurrency} />
@@ -23,7 +23,7 @@ const SearchSwap = ({ buyCurrency, sellCurrency, updateFilter, flipCurrency }) =
       <CurrencySelect
         styleName="currencySelect"
         selectedValue={sellCurrency}
-        onSelect={updateFilter}
+        onSelect={handleSellCurrencySelect}
       />
     </div>
   </div>

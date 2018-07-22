@@ -33,6 +33,12 @@ const config = {
   },
 
   exchangeRates: {
+    'swapeth': 1,
+    'ethswap': 1,
+    'swapnoxon': 1,
+    'noxonswap': 1,
+    'swapbtc': 0.07,
+    'btcswap': 14,
     'etheth': 1,
     'ethbtc': 0.07,
     'btceth': 14,

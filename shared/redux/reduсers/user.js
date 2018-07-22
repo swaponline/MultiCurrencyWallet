@@ -89,7 +89,18 @@ export const setMetaMaskData = (state, { name, value }) => {
     ...state,
     metaMask: {
       ...state.metaMask,
-      [name]: value
-    }
+      [name]: value,
+    },
   }
 }
+
+export const setTokenApprove = (state, { name, approve }) => ({
+  ...state,
+  tokensData: {
+    ...state.tokensData,
+    [name]: {
+      ...state.tokensData[name],
+      approve,
+    },
+  },
+})

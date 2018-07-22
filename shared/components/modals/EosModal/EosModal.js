@@ -23,7 +23,7 @@ export default class EosModal extends React.Component {
   handleSubmit = async () => {
     const { accountName, privateKey } = this.state
 
-    actions.loader.show()
+    actions.loader.show(true)
 
     try {
       await actions.eos.init()
@@ -53,8 +53,8 @@ export default class EosModal extends React.Component {
         <FieldLabel inRow>Private key</FieldLabel>
         <Input valueLink={linked.privateKey} />
         { error && (
-            <div styleName="error">Sorry, error occured during activation</div>
-          )
+          <div styleName="error">Sorry, error occured during activation</div>
+        )
         }
         <Button
           styleName="button"

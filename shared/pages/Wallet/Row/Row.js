@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import actions from 'redux/actions'
+import { constants, web3 } from 'helpers'
 import { connect } from 'redaction'
-import { constants } from 'helpers'
 
 import cssModules from 'react-css-modules'
 import styles from './Row.scss'
@@ -21,6 +21,14 @@ export default class Row extends Component {
   state = {
     isBalanceFetching: false,
     viewText: false,
+  }
+
+  componentDidMount() {
+    const { contractAddress, name } = this.props
+
+    if (name !== undefined) {
+      actions.token.allowance(contractAddress, name)
+    }
   }
 
   handleReloadBalance = () => {
@@ -52,7 +60,6 @@ export default class Row extends Component {
       actions.analytics.dataEvent('balances-update-eos')
     }
     else if (currency !== undefined) {
-      console.log('currency Waller', currency)
       action = actions.token.getBalance
       actions.analytics.dataEvent('balances-update-token')
     }
@@ -101,9 +108,17 @@ export default class Row extends Component {
     return <div>MetaMask detected. You need to login</div>
   }
 
+  handleApproveToken = (decimals, contractAddress, name) => {
+    actions.modals.open(constants.modals.Approve, {
+      contractAddress,
+      decimals,
+      name,
+    })
+  }
+
   render() {
     const { isBalanceFetching, viewText } = this.state
-    const { currency, balance, address, contractAddress, decimals } = this.props
+    const { currency, name, balance, address, contractAddress, decimals, approve } = this.props
 
     return (
       <tr>
@@ -121,17 +136,26 @@ export default class Row extends Component {
           }
         </td>
         <td ref={td => this.textAddress = td}>
-          <LinkAccount type={currency} address={address} >{address}</LinkAccount>
-          { currency === 'EOS' && address === '' &&
-            <button styleName="button" onClick={this.handleEosLogin}>Login with your account</button>
+          {
+            !contractAddress ? (
+              <LinkAccount type={currency} address={address} >{address}</LinkAccount>
+            ) : (
+              !approve ? (
+                <button styleName="button" onClick={() => this.handleApproveToken(decimals, contractAddress, name)}>Approve token</button>
+              ) : (
+                <LinkAccount type={currency} contractAddress={contractAddress} address={address} >{address}</LinkAccount>
+              )
+            )
           }
-          { this.renderMetaMaskLoginButton() }
+          {
+            currency === 'EOS' && address === '' && <button styleName="button" onClick={this.handleEosLogin}>Login with your account</button>
+          }
         </td>
         <td style={{ position: 'relative' }} >
           <div>
             <button styleName="button" onClick={this.handleCopiedAddress}>Copy</button>
             <ReloadButton styleName="reloadButton" onClick={this.handleReloadBalance} />
-            <WithdrawButton data={{ currency, address, contractAddress, decimals }} />
+            <WithdrawButton data={{ currency, address, contractAddress, decimals, balance }} />
             { viewText && <p styleName="copied" >Address copied to clipboard</p> }
           </div>
         </td>

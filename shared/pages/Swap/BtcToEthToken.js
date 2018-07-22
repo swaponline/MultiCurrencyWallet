@@ -7,6 +7,8 @@ import TimerButton from 'components/controls/TimerButton/TimerButton'
 import Button from 'components/controls/Button/Button'
 import Timer from './Timer/Timer'
 
+import crypto from 'crypto'
+
 
 export default class BtcToEthToken extends Component {
 
@@ -17,8 +19,7 @@ export default class BtcToEthToken extends Component {
 
     this.state = {
       flow: this.swap.flow.state,
-      secret: 'c0809ce9f484fdcdfb2d5aabd609768ce0374ee97a1a5618ce4cd3f16c00a078',
-      refundTxHex: null,
+      secret: crypto.randomBytes(32).toString('hex'),
       enabledButton: false,
     }
   }
@@ -45,10 +46,6 @@ export default class BtcToEthToken extends Component {
 
   updateBalance = () => {
     this.swap.flow.syncBalance()
-  }
-
-  tryRefund = () => {
-    this.swap.flow.tryRefund()
   }
 
   getRefundTxHex = () => {
@@ -83,17 +80,25 @@ export default class BtcToEthToken extends Component {
         }
 
         {
-          !this.swap.id && (
-            this.swap.isMy ? (
-              <h3>This order doesn't have a buyer</h3>
-            ) : (
-              <Fragment>
-                <h3>The order creator is offline. Waiting for him..</h3>
-                <InlineLoader />
-              </Fragment>
-            )
+          flow.isWaitingForOwner && (
+            <Fragment>
+              <h3>Waiting for other user when he connect to the order</h3>
+              <InlineLoader />
+            </Fragment>
           )
         }
+
+        {
+          (flow.step === 1 || flow.isMeSigned) && (
+            <Fragment>
+              <h3>1. Waiting participant confirm this swap</h3>
+              <InlineLoader />
+            </Fragment>
+          )
+        }
+
+        {/* ----------------------------------------------------------- */}
+
         {
           flow.isParticipantSigned && (
             <Fragment>
@@ -126,7 +131,7 @@ export default class BtcToEthToken extends Component {
                       <span>{flow.address}</span>
                     </div>
                     <br />
-                    <Button brand onClick={this.updateBalance}>Continue</Button>
+                    <TimerButton brand onClick={this.updateBalance}>Continue</TimerButton>
                   </Fragment>
                 )
               }
@@ -192,6 +197,7 @@ export default class BtcToEthToken extends Component {
                 )
               }
 
+
               {
                 (flow.step === 5 || flow.isEthContractFunded) && (
                   <Fragment>
@@ -220,6 +226,7 @@ export default class BtcToEthToken extends Component {
                   </div>
                 )
               }
+
               {
                 (flow.step === 6 || flow.isEthWithdrawn) && (
                   <h3>5. ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait</h3>

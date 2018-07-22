@@ -51,13 +51,14 @@ export default class ConfirmOffer extends Component {
   }
 
   createOrder = () => {
-    const {  buyAmount, sellAmount, buyCurrency, sellCurrency } = this.state
+    const {  buyAmount, sellAmount, buyCurrency, sellCurrency, exchangeRate } = this.state
 
     const data = {
       buyCurrency: `${buyCurrency}`,
       sellCurrency: `${sellCurrency}`,
       buyAmount: Number(buyAmount),
       sellAmount: Number(sellAmount),
+      exchangeRate: Number(exchangeRate),
     }
     actions.analytics.dataEvent('orderbook-addoffer-click-confirm-button')
     SwapApp.services.orders.create(data)

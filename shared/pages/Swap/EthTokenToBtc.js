@@ -53,26 +53,12 @@ export default class EthTokenToBtc extends Component {
 
   render() {
     const { flow, enabledButton } = this.state
-    console.log('FLOW ETH_BTC', flow)
 
     return (
       <div>
         {
           this.swap.id && (
             <strong>{this.swap.sellAmount.toNumber()} {this.swap.sellCurrency} &#10230; {this.swap.buyAmount.toNumber()} {this.swap.buyCurrency}</strong>
-          )
-        }
-
-        {
-          !this.swap.id && (
-            this.swap.isMy ? (
-              <h3>This order doesn't have a buyer</h3>
-            ) : (
-              <Fragment>
-                <h3>The order creator is offline. Waiting for him..</h3>
-                <InlineLoader />
-              </Fragment>
-            )
           )
         }
 
@@ -84,10 +70,27 @@ export default class EthTokenToBtc extends Component {
             </Fragment>
           )
         }
+
+        {
+          (flow.step === 1 || flow.isMeSigned) && (
+            <h3>1. Please confirm your participation to begin the deal</h3>
+          )
+        }
         {
           flow.step === 1 && (
             <Fragment>
-              <div>Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation.</div>
+              <div>
+                Confirmation of the transaction is necessary for crediting the reputation.
+                If a user does not bring the deal to the end he gets a negative reputation.
+              </div>
+              {
+                !flow.isSignFetching && !flow.isMeSigned && (
+                  <Fragment>
+                    <br />
+                    <TimerButton brand onClick={this.signSwap}>Confirm</TimerButton>
+                  </Fragment>
+                )
+              }
               {
                 (flow.isSignFetching || flow.signTransactionHash) && (
                   <Fragment>
@@ -119,6 +122,9 @@ export default class EthTokenToBtc extends Component {
             </Fragment>
           )
         }
+
+        {/* -------------------------------------------------------------- */}
+
         {
           flow.isMeSigned && (
             <Fragment>
@@ -175,8 +181,7 @@ export default class EthTokenToBtc extends Component {
 
     bitcoin.core.opcodes.OP_ENDIF,
   ])
-                      `}
-                      </code>
+                      `}</code>
                     </pre>
                     {
                       flow.step === 3 && (
@@ -201,7 +206,7 @@ export default class EthTokenToBtc extends Component {
                       <span>{flow.address}</span>
                     </div>
                     <br />
-                    <Button brand onClick={this.updateBalance}>Continue</Button>
+                    <TimerButton brand onClick={this.updateBalance}>Continue</TimerButton>
                   </Fragment>
                 )
               }
@@ -213,12 +218,9 @@ export default class EthTokenToBtc extends Component {
                   </Fragment>
                 )
               }
-
               {
                 (flow.step >= 5 || flow.isEthContractFunded) && (
-                  <Fragment>
-                    <h3>4. Creating Ethereum Contract. Please wait, it will take a while</h3>
-                  </Fragment>
+                  <h3>4. Creating Ethereum Contract. Please wait, it will take a while</h3>
                 )
               }
               {
@@ -227,7 +229,7 @@ export default class EthTokenToBtc extends Component {
                     Transaction:
                     <strong>
                       <a
-                        href={`https://rinkeby.etherscan.io/tx/${flow.ethSwapCreationTransactionHash}`}
+                        href={`${config.link.etherscan}/tx/${flow.ethSwapCreationTransactionHash}`}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
@@ -258,6 +260,7 @@ export default class EthTokenToBtc extends Component {
                   </div>
                 )
               }
+
               {
                 (flow.step === 6 || flow.isEthWithdrawn) && (
                   <Fragment>

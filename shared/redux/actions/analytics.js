@@ -1,6 +1,7 @@
 import reducers from 'redux/core/reducers'
 import TagManager from 'react-gtm-module'
 
+
 const addEvent = (name) => reducers.addEvent(name) //@ToDo ???
 const dataEvent = (eventName) => {
 
@@ -12,12 +13,12 @@ const dataEvent = (eventName) => {
 
 const tagManagerArgs = {
   gtmId: 'GTM-WK72GSV',
-  dataLayerName: 'dataLayer'
+  dataLayerName: 'dataLayer',
 }
 
 TagManager.initialize(tagManagerArgs)
 
 export default {
   addEvent,
-  dataEvent
+  dataEvent,
 }

@@ -97,16 +97,15 @@ const getTransaction = (contractAddress) =>
 
     request.get(url)
       .then((res) => {
-        console.log(res)
         if (res.status) {
           transactions = res.result
             .filter((item) => item.value > 0).map((item) => ({
               confirmations: item.confirmations > 0 ? 'Confirmed' : 'Unconfirmed',
-              type: item.tokenName,
+              type: item.tokenSymbol,
               hash: item.hash,
               contractAddress: item.contractAddress,
               status: item.blockHash != null ? 1 : 0,
-              value: item.value,
+              value: new BigNumber(String(item.value)).dividedBy(new BigNumber(10).pow(Number(item.tokenDecimal))).toNumber(),
               address: item.to,
               date: item.timeStamp * 1000,
               direction: address.toLowerCase() === item.to.toLowerCase() ? 'in' : 'out',
@@ -118,7 +117,7 @@ const getTransaction = (contractAddress) =>
   })
 
 
-const send = (from, to, amount, decimals) => {
+const send = (contractAddress, to, amount, decimals) => {
   const { user: { ethData: { address } } } = getState()
   let tokenContract
 
@@ -128,9 +127,9 @@ const send = (from, to, amount, decimals) => {
     gasPrice: `${config.services.web3.gasPrice}`,
   }
 
-  tokenContract = new web3.eth.Contract(abi, from, options)
+  tokenContract = new web3.eth.Contract(abi, contractAddress, options)
 
-  const newAmount = new BigNumber(String(amount)).times(new BigNumber('10').pow(new BigNumber(String(decimals))))
+  const newAmount = new BigNumber(String(amount)).times(new BigNumber(10).pow(decimals)).decimalPlaces(decimals).toNumber()
 
   return new Promise((resolve, reject) =>
     tokenContract.methods.transfer(to, newAmount).send()
@@ -140,6 +139,50 @@ const send = (from, to, amount, decimals) => {
   )
 }
 
+const approve = (contractAddress, amount, decimals, name) => {
+  const { user: { ethData: { address } } } = getState()
+
+  const newAmount = new BigNumber(String(amount)).times(new BigNumber(10).pow(decimals)).decimalPlaces(decimals).toNumber()
+  const ERC20     = new web3.eth.Contract(abi, contractAddress)
+
+  return new Promise(async (resolve, reject) => {
+    try {
+      const result = await ERC20.methods.approve(config.token.contract, newAmount).send({
+        from: address,
+        gas: `${config.services.web3.gas}`,
+        gasPrice: `${config.services.web3.gasPrice}`,
+      })
+        .on('error', err => {
+          reject(err)
+        })
+
+      resolve(result)
+    }
+    catch (err) {
+      reject(err)
+    }
+  })
+    .then(() => {
+      reducers.user.setTokenApprove({ name, approve: true  })
+    })
+}
+
+const allowance = (contractAddress, name) => {
+  const { user: { ethData: { address } } } = getState()
+  const ERC20     = new web3.eth.Contract(abi, contractAddress)
+
+  return new Promise(async (resolve, reject) => {
+    let allowance = await ERC20.methods.allowance(address, config.token.contract).call()
+
+    console.log('💸 allowance:', allowance)
+
+    reducers.user.setTokenApprove({ name, approve: allowance > 0 })
+
+    resolve(allowance)
+  })
+
+}
+
 
 export default {
   login,
@@ -147,4 +190,6 @@ export default {
   getTransaction,
   send,
   fetchBalance,
+  approve,
+  allowance,
 }

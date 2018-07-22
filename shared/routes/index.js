@@ -10,6 +10,7 @@ import SwapComponent from 'pages/Swap/Swap'
 import History from 'pages/History/History'
 import NotFound from 'pages/NotFound/NotFound'
 import Affiliate from 'pages/Affiliate/Affiliate'
+import Listing from 'pages/Listing/Listing'
 
 
 const routes = (
@@ -17,6 +18,7 @@ const routes = (
     <Route path={`${links.home}orders/:buy-:sell`} component={Home} />
     <Route exact path={links.home} component={Home} />
     <Route exact path={links.affiliate} component={Affiliate} />
+    <Route path={links.listing} component={Listing} />
     <Route path={links.wallet} component={Wallet} />
     <Route path={links.history} component={History} />
     <Route path={`${links.swap}/:buy-:sell/:orderId`} component={SwapComponent} />
