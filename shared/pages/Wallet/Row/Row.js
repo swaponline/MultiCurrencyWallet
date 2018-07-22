@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import actions from 'redux/actions'
 import { constants, web3 } from 'helpers'
+import { connect } from 'redaction'
 
 import cssModules from 'react-css-modules'
 import styles from './Row.scss'
@@ -13,6 +14,7 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import LinkAccount from '../LinkAccount/LinkAcount'
 
 
+@connect(({ user: { metaMask } }) => ({ metaMask }))
 @cssModules(styles)
 export default class Row extends Component {
 
@@ -91,6 +93,19 @@ export default class Row extends Component {
 
   handleEosLogin = () => {
     actions.modals.open(constants.modals.Eos, {})
+  }
+
+  renderMetaMaskLoginButton = () => {
+    if (this.props.currency !== 'ETH') {
+      return null
+    }
+    if (!this.props.metaMask.exists) {
+      return null
+    }
+    if (this.props.metaMask.loggedIn) {
+      return null
+    }
+    return <div>MetaMask detected. You need to login</div>
   }
 
   handleApproveToken = (decimals, contractAddress, name) => {

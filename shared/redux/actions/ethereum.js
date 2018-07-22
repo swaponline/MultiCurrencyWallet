@@ -1,4 +1,5 @@
 import { request, constants } from 'helpers'
+import actions from 'redux/actions'
 import { getState } from 'redux/core'
 import web3 from 'helpers/web3'
 import reducers from 'redux/core/reducers'
@@ -6,8 +7,79 @@ import config from 'app-config'
 import referral from './referral'
 
 
+const initMetaMask = () => {
+  if (!window.web3) {
+    return
+  }
+
+  reducers.user.setMetaMaskData({ name: 'exists', value: true })
+
+  const setAuthData = (address) => {
+    reducers.user.setMetaMaskData({ name: 'address', value: address })
+
+    const data = { address }
+
+    reducers.user.setAuthData({ name: 'ethData', data })
+
+    window.getEthAddress = () => data.address
+
+    referral.newReferral(data.address)
+
+    console.info('Logged in with MetaMask', data)
+  }
+
+  web3.eth.getAccounts((err, accounts) => {
+    const loggedIn = !!accounts.length
+
+    if (loggedIn) {
+      setAuthData(accounts[0])
+
+      reducers.user.setMetaMaskData({ name: 'loggedIn', value: loggedIn })
+    }
+  })
+
+  setInterval(() => {
+    web3.eth.getAccounts((err, accounts) => {
+      const { user: { metaMask } } = getState()
+
+      const loggedIn = !!accounts.length
+
+      if (loggedIn) {
+        if (accounts[0] !== metaMask.address) {
+          reducers.user.resetEthData()
+
+          setAuthData(accounts[0])
+
+          actions.ethereum.getBalance()
+        }
+      }
+
+      if (!metaMask.loggedIn && loggedIn) {
+        // login
+        reducers.user.setMetaMaskData({ name: 'loggedIn', value: true })
+      }
+
+      if (metaMask.loggedIn && !loggedIn) {
+        // logout
+        reducers.user.setMetaMaskData({ name: 'address', value: null })
+        reducers.user.setMetaMaskData({ name: 'loggedIn', value: false })
+
+        actions.user.sign().then(() => {
+          actions.ethereum.getBalance()
+        })
+      }
+    })
+  }, 1000)
+}
+
 const login = (privateKey) => {
   let data
+
+  const { user: { metaMask } } = getState()
+
+  if (metaMask.loggedIn) {
+    return null
+  }
 
   if (privateKey) {
     data = web3.eth.accounts.privateKeyToAccount(privateKey)
@@ -24,7 +96,7 @@ const login = (privateKey) => {
 
   window.getEthAddress = () => data.address
 
-  referral.newReferral(data.address);
+  referral.newReferral(data.address)
 
   console.info('Logged in with Ethereum', data)
 
@@ -83,7 +155,7 @@ const getTransaction = () =>
               value: web3.utils.fromWei(item.value),
               address: item.to,
               date: item.timeStamp * 1000,
-              direction: address.toLowerCase() === item.to.toLowerCase() ? 'in' : 'out',
+              direction: address.toLowerCase() === item.to.toLowerCase() ? 'in' : 'out'
             }))
           resolve(transactions)
         }
@@ -95,7 +167,7 @@ const getTransaction = () =>
 
 const send = (from, to, amount) =>
   new Promise((resolve, reject) => {
-    const { user: { ethData: { privateKey } } } = getState()
+    const { user: { ethData: { privateKey }, metaMask } } = getState()
 
     const params = {
       to: String(to).trim(),
@@ -104,18 +176,27 @@ const send = (from, to, amount) =>
       value: web3.utils.toWei(String(amount)),
     }
 
-    web3.eth.accounts.signTransaction(params, privateKey)
-      .then(result => web3.eth.sendSignedTransaction(result.rawTransaction))
-      .then(receipt => {
+    if (metaMask.loggedIn) {
+      web3.eth.sendTransaction(Object.assign({ from }, params)).then(receipt => {
+        console.log(receipt)
         resolve(receipt)
       })
+    } else {
+      web3.eth.accounts.signTransaction(params, privateKey)
+        .then(result => web3.eth.sendSignedTransaction(result.rawTransaction))
+        .then(receipt => {
+          console.log(receipt)
+          resolve(receipt)
+        })
+    }
   })
 
 
 export default {
+  initMetaMask,
   login,
   getBalance,
   getTransaction,
   send,
-  fetchBalance,
+  fetchBalance
 }

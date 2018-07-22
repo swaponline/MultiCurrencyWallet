@@ -1,10 +1,12 @@
+const initEthData = {
+  address: '0x0',
+  publicKey: '0x0',
+  balance: 0,
+  currency: 'ETH',
+}
+
 export const initialState = {
-  ethData: {
-    address: '0x0',
-    publicKey: '0x0',
-    balance: 0,
-    currency: 'ETH',
-  },
+  ethData: initEthData,
   btcData: {
     address: '0x0',
     publicKey: '0x0',
@@ -22,6 +24,11 @@ export const initialState = {
     currency: 'EOS',
   },
   tokensData: {},
+  metaMask: {
+    exists: false,
+    loggedIn: false,
+    address: null,
+  },
 }
 
 export const setAuthData = (state, { name, data }) => ({
@@ -34,6 +41,15 @@ export const setAuthData = (state, { name, data }) => ({
     ...data,
   },
 })
+
+export const resetEthData = (state) => {
+  console.log(Object.assign({}, state, {
+    ethData: Object.assign({}, initEthData),
+  }))
+  return Object.assign({}, state, {
+    ethData: Object.assign({}, initEthData),
+  })
+}
 
 export const setTokenAuthData = (state, { name, data }) => ({
   ...state,
@@ -67,6 +83,16 @@ export const setTokenBalance = (state, { name, amount }) => ({
     },
   },
 })
+
+export const setMetaMaskData = (state, { name, value }) => {
+  return {
+    ...state,
+    metaMask: {
+      ...state.metaMask,
+      [name]: value,
+    },
+  }
+}
 
 export const setTokenApprove = (state, { name, approve }) => ({
   ...state,

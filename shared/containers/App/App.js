@@ -50,6 +50,7 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
+    actions.ethereum.initMetaMask()
     setTimeout(() => {
       actions.user.sign()
       createSwapApp()
