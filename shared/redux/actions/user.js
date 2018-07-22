@@ -5,7 +5,6 @@ import reducers from 'redux/core/reducers'
 import config from 'app-config'
 import moment from 'moment/moment'
 
-
 const sign = async () => {
   const btcPrivateKey = localStorage.getItem(constants.privateKeyNames.btc)
   const ethPrivateKey = localStorage.getItem(constants.privateKeyNames.eth)
@@ -41,7 +40,8 @@ const getBalances = () => {
   // actions.nimiq.getBalance()
 }
 
-const getDemoMoney = process.env.MAINNET ? () => {} : () => {
+const getDemoMoney = process.env.MAINNET ? () => {
+} : () => {
   request.get('https://swap.wpmix.net/demokeys.php', {})
     .then((r) => {
       window.localStorage.clear()
@@ -55,7 +55,7 @@ const setExchangeRate = (buyCurrency, sellCurrency) => {
   const url = `https://api.coinbase.com/v2/exchange-rates?currency=${buyCurrency.toUpperCase()}`
 
   return request.get(url)
-    .then(({ data: { rates } })  =>
+    .then(({ data: { rates } }) =>
       Object.keys(rates)
         .filter(k => k === sellCurrency.toUpperCase())
         .map((k) => rates[k])
@@ -69,7 +69,7 @@ const setTransactions = () =>
     actions.bitcoin.getTransaction(),
     actions.ethereum.getTransaction(),
     actions.token.getTransaction(config.tokens.swap.address),
-    actions.token.getTransaction(config.tokens.noxon.address),
+    actions.token.getTransaction(config.tokens.noxon.address)
   ])
     .then(transactions => {
       let data = [].concat([], ...transactions).sort((a, b) => b.date - a.date)
@@ -77,14 +77,14 @@ const setTransactions = () =>
     })
 
 const getText = () => {
-  const { user : { ethData, btcData, eosData } } = getState()
+  const { user: { ethData, btcData, eosData, metaMask } } = getState()
 
-
-  const text = `
+  let text = `
 ${window.location.hostname} emergency instruction
 \r\n
-\r\n
-#ETHEREUM
+\r\n`
+  if (!metaMask.loggedIn) {
+    text += `#ETHEREUM
 \r\n
 \r\n
 Ethereum address: ${ethData.address}  \r\n
@@ -97,8 +97,9 @@ How to access tokens and ethers: \r\n
 3. paste private key to input and click "unlock"\r\n
 \r\n
 \r\n
-\r\n
-# BITCOIN\r\n
+\r\n`
+  }
+  text += `# BITCOIN\r\n
 \r\n
 \r\n
 Bitcoin address: ${btcData.address}\r\n
@@ -138,7 +139,7 @@ const downloadPrivateKeys = () => {
   document.body.removeChild(element)
 
   actions.notifications.show(constants.notifications.Message, {
-    message,
+    message
   })
 }
 
@@ -148,5 +149,5 @@ export default {
   getDemoMoney,
   setExchangeRate,
   setTransactions,
-  downloadPrivateKeys,
+  downloadPrivateKeys
 }

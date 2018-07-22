@@ -47,28 +47,32 @@ export default class PrivateKeysModal extends React.PureComponent {
   }
 
   getText = () => {
-    const { ethData, btcData } = this.props
+    const { ethData, btcData, metaMask } = this.props
 
 
-    const text = `
+    let text = `
 ${window.location.hostname} emergency instruction
 \r\n
-\r\n
-#ETHEREUM
-\r\n
-\r\n
-Ethereum address: ${ethData.address}  \r\n
-Private key: ${ethData.privateKey}\r\n
+\r\n`
+
+    if (!metaMask.loggedIn) {
+      text += `#ETHEREUM
 \r\n
 \r\n
-How to access tokens and ethers: \r\n
-1. Go here https://www.myetherwallet.com/#send-transaction \r\n
-2. Select 'Private key'\r\n
-3. paste private key to input and click "unlock"\r\n
+    Ethereum address: ${ethData.address}  \r\n
+    Private key: ${ethData.privateKey}\r\n
 \r\n
 \r\n
+    How to access tokens and ethers: \r\n
+    1. Go here https://www.myetherwallet.com/#send-transaction \r\n
+      2. Select 'Private key'\r\n
+    3. paste private key to input and click "unlock"\r\n
 \r\n
-# BITCOIN\r\n
+\r\n
+\r\n`
+    }
+
+    text += `# BITCOIN\r\n
 \r\n
 \r\n
 Bitcoin address: ${btcData.address}\r\n
