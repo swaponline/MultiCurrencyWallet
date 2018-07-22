@@ -12,25 +12,37 @@ BigNumber.config({ DECIMAL_PLACES: 21 })
 
 const login = (privateKey, contractAddress, nameContract, decimals) => {
   let data
+
+  const { user: { metaMask } } = getState()
+
   if (privateKey) {
     data = web3.eth.accounts.privateKeyToAccount(privateKey)
   } else {
-    console.info('Created account ETH Token ...')
-    data = web3.eth.accounts.create()
-    web3.eth.accounts.wallet.add(data)
+    if (metaMask.loggedIn) {
+      console.info('Logged in with ETH MetaMask', data)
+      setupContract(metaMask.address, contractAddress, nameContract, decimals)
+      return
+    } else {
+      console.info('Created account ETH Token ...')
+      data = web3.eth.accounts.create()
+      web3.eth.accounts.wallet.add(data)
+    }
   }
 
   web3.eth.accounts.wallet.add(data.privateKey)
   console.info('Logged in with ETH Token', data)
-
 
   setupContract(data.address, contractAddress, nameContract, decimals)
 }
 
 
 const setupContract = (ethAddress, contractAddress, nameContract, decimals) => {
-  if (!web3.eth.accounts.wallet[ethAddress]) {
-    throw new Error('web3 does not have given address')
+  const { user: { metaMask } } = getState()
+
+  if (!metaMask.loggedIn) {
+    if (!web3.eth.accounts.wallet[ethAddress]) {
+      throw new Error('web3 does not have given address')
+    }
   }
 
   const data = {
