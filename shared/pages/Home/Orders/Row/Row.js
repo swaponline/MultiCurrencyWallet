@@ -73,7 +73,7 @@ export default class Row extends Component {
         <td>
           {exchangeRate}
           {
-            isMy ? `${buyCurrency}-${sellCurrency}` : `${sellCurrency}-${buyCurrency}`
+            isMy ? `${buyCurrency}/${sellCurrency}` : `${sellCurrency}/${buyCurrency}`
           }
         </td>
         <td>

@@ -21,7 +21,7 @@ export default class MyOrders extends PureComponent {
 
     order.declineRequest(participantPeer)
     this.props.updateOrders()
-  }
+  } 
 
   removeOrder = (orderId) => {
     SwapApp.services.orders.remove(orderId)
