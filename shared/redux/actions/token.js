@@ -7,8 +7,7 @@ import config from 'app-config'
 import { BigNumber } from 'bignumber.js'
 
 
-BigNumber.config({ DECIMAL_PLACES: 64 })
-
+BigNumber.config({ RANGE: [-1e+9, 1e+9], POW_PRECISION: 0  })
 
 const login = (privateKey, contractAddress, nameContract, decimals) => {
   let data
