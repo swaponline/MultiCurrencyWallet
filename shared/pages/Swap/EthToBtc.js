@@ -309,7 +309,7 @@ export default class EthToBtc extends Component {
                 )
               }
               {
-                flow.step >= 6 && (
+                flow.step >= 6 && !flow.finishSwap && (
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     { enabledButton &&  <Button brand onClick={this.tryRefund}>TRY REFUND</Button> }
                     <Timer

@@ -7,7 +7,7 @@ import config from 'app-config'
 import { BigNumber } from 'bignumber.js'
 
 
-BigNumber.config({ DECIMAL_PLACES: 21 })
+BigNumber.config({ DECIMAL_PLACES: 64 })
 
 
 const login = (privateKey, contractAddress, nameContract, decimals) => {

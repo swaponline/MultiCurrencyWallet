@@ -53,7 +53,10 @@ const getBalance = () => {
 
 const fetchBalance = (address) =>
   request.get(`${config.api.bitpay}/addr/${address}`)
-    .then(({ balance }) => balance)
+    .then(({ balance }) => {
+      console.log('BALANCE')
+      return balance
+    })
 
 
 const getTransaction = () =>
