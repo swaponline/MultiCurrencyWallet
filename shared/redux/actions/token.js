@@ -64,9 +64,12 @@ const getBalance = (contractAddress, name, decimals) => {
     }).catch(r => console.error('Token service isn\'t available, try later'))
 }
 
-const fetchBalance = (address) =>
-  request.get(`https://rinkeby.etherscan.io/api?module=account&action=tokenbalance&contractaddress=0x60c205722c6c797c725a996cf9cca11291f90749&address=${address}`)
+const fetchBalance = (tokenAddress) => {
+  const { user: { ethData: { address } } } = getState()
+
+  return request.get(`https://rinkeby.etherscan.io/api?module=account&action=tokenbalance&contractaddress=${tokenAddress}&address=${address}`)
     .then(({ result }) => result)
+}
 
 
 const getTransaction = (contractAddress) =>

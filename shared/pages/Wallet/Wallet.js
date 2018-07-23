@@ -67,7 +67,6 @@ export default class Wallet extends Component {
       <section>
         <PageHeadline>
           <SubTitle>Wallet</SubTitle>
-          <p style={{ fontSize: '18px' }}>Please notice, that you need to have minimum 0.01 amount of the ETH on your wallet, to use it for Ethereum miners fee</p>
           { view === 'off' && <SaveKeys isDownload={this.handleDownload} isChange={() => this.changeView('on')} /> }
         </PageHeadline>
         <Confirm

@@ -86,6 +86,7 @@ export default class WithdrawModal extends React.Component {
 
     return (
       <Modal name={name} title={`Withdraw ${data.currency.toUpperCase()}`}>
+        <p style={{ fontSize: '16px' }}>Please notice, that you need to have minimum 0.01 amount <br /> of the ETH on your wallet, to use it for Ethereum miners fee</p>
         <FieldLabel inRow>Address</FieldLabel>
         <Input valueLink={linked.address} pattern="0-9a-zA-Z" />
         <FieldLabel inRow>Amount</FieldLabel>
