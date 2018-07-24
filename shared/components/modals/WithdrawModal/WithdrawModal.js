@@ -56,8 +56,6 @@ export default class WithdrawModal extends React.Component {
       action = actions.token
     }
 
-    actions.loader.show(true, true)
-
     action.send(contractAddress || address, to, Number(amount), decimals)
       .then(() => {
         actions.loader.hide()

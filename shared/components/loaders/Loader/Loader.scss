@@ -148,8 +148,15 @@
 }
 
 .text {
+   position: absolute;
+   font-size: 16px;
+   left: calc(50% - 245.5px);
+   top: 65%;
+ }
+
+.link {
   position: absolute;
   font-size: 16px;
-  left: calc(50% - 245.5px);
-  top: 65%;
+  left: calc(50% - 408.5px);
+  top: 70%;
 }

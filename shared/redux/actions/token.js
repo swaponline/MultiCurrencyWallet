@@ -1,6 +1,7 @@
 import abi from 'human-standard-token-abi'
 import { request } from 'helpers'
 import { getState } from 'redux/core'
+import actions from 'redux/actions'
 import web3 from 'helpers/web3'
 import reducers from 'redux/core/reducers'
 import config from 'app-config'
@@ -121,12 +122,18 @@ const send = (contractAddress, to, amount, decimals) => {
 
   const newAmount = new BigNumber(String(amount)).times(new BigNumber(10).pow(decimals)).decimalPlaces(decimals).toNumber()
 
-  return new Promise((resolve, reject) =>
-    tokenContract.methods.transfer(to, newAmount).send()
-      .then(receipt => {
-        resolve(receipt)
+  return new Promise(async (resolve, reject) => {
+    const receipt = await tokenContract.methods.transfer(to, newAmount).send()
+      .on('transactionHash', (hash) => {
+        const txId = `${config.link.etherscan}/tx/${hash}`
+        actions.loader.show(true, true, txId)
       })
-  )
+      .on('error', (err) => {
+        reject(err)
+      })
+
+    resolve(receipt)
+  })
 }
 
 const approve = (contractAddress, amount, decimals, name) => {

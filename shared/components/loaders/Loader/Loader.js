@@ -4,7 +4,7 @@ import CSSModules from 'react-css-modules'
 import styles from './Loader.scss'
 
 
-const Loader = ({ overlayClassName, className, text = false }) => (
+const Loader = ({ overlayClassName, className, text = false, txId }) => (
   <div styleName="overlay" className={overlayClassName}>
     <div styleName="loader center" className={className}>
       <div styleName="loader1" />
@@ -13,6 +13,9 @@ const Loader = ({ overlayClassName, className, text = false }) => (
     </div>
     {
       text && <p styleName="text">Please wait, it takes from 3 to 5 minutes to complete the transaction.</p>
+    }
+    {
+      txId && <a href={txId} styleName="link" target="_blank" rel="noopener noreferrer" >{txId}</a>
     }
   </div>
 )
