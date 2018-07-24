@@ -4,7 +4,7 @@ import cssModules from 'react-css-modules'
 import styles from './Table.scss'
 
 
-const Table = ({ titles, rows, rowRender }) => (
+const Table = ({ titles, rows, rowRender, textIfEmpty }) => (
   <table styleName="table">
     <thead>
       <tr>
@@ -16,12 +16,13 @@ const Table = ({ titles, rows, rowRender }) => (
       </tr>
     </thead>
     <tbody>
-      {
+      { rows[0] ?
         rows.map((row, rowIndex) => {
           if (typeof rowRender === 'function') {
             return rowRender(row, rowIndex)
           }
-        })
+        }) :
+        <tr><td>{textIfEmpty}</td></tr>
       }
     </tbody>
   </table>

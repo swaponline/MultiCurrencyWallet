@@ -54,6 +54,7 @@ export default class Orders extends Component {
   render() {
     const { filter, sellCurrency, buyCurrency, handleSellCurrencySelect, handleBuyCurrencySelect, flipCurrency } = this.props
     const titles = [ 'EXCHANGE', 'YOU BUY', 'YOU SELL', 'EXCHANGE RATE', 'ACTIONS' ]
+    const textIfEmpty = "The orderbook is empty now"
     const { orders } = this.state
 
     const filteredOrders = this.filterOrders(orders, filter)
@@ -77,6 +78,7 @@ export default class Orders extends Component {
         <Table
           titles={titles}
           rows={filteredOrders}
+          textIfEmpty={textIfEmpty}
           rowRender={(row, index) => (
             <Row
               key={index}
@@ -89,4 +91,3 @@ export default class Orders extends Component {
     )
   }
 }
-
