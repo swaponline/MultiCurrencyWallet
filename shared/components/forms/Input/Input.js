@@ -45,7 +45,7 @@ export default class Input extends Component {
     const {
       className, inputContainerClassName, inputClassName,
       valueLink: { error }, valueLink,
-      multiline, focusOnInit, disabled, readOnly, ...rest
+      multiline, focusOnInit, disabled, readOnly, type, ...rest
     } = this.props
 
     const inputContainerStyleName = cx('inputContainer', {
@@ -61,6 +61,7 @@ export default class Input extends Component {
               styleName: 'input',
               className: inputClassName,
               valueLink,
+              type,
               disabled: disabled || readOnly,
               autoFocus: !!focusOnInit,
               dir: 'auto',

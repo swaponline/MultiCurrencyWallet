@@ -90,7 +90,7 @@ export default class WithdrawModal extends React.Component {
         <FieldLabel inRow>Address</FieldLabel>
         <Input valueLink={linked.address} pattern="0-9a-zA-Z" />
         <FieldLabel inRow>Amount</FieldLabel>
-        <Input valueLink={linked.amount} pattern="0-9\." />
+        <Input valueLink={linked.amount} type="number" />
         {
           !linked.amount.error && (
             <div styleName="note">No less than 0.01</div>
