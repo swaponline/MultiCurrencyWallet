@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import actions from 'redux/actions'
+import { connect } from 'redaction'
 import { constants, web3 } from 'helpers'
 
 import cssModules from 'react-css-modules'
@@ -13,6 +14,7 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import LinkAccount from '../LinkAccount/LinkAcount'
 
 
+@connect(({ user: { metaMask } }) => ({ metaMask }))
 @cssModules(styles)
 export default class Row extends Component {
 
@@ -101,6 +103,19 @@ export default class Row extends Component {
     })
   }
 
+  renderMetaMaskLoginButton = () => {
+    if (this.props.currency !== 'ETH') {
+      return null
+    }
+    if (!this.props.metaMask.exists) {
+      return null
+    }
+    if (this.props.metaMask.loggedIn) {
+      return null
+    }
+    return <div>MetaMask detected. You need to login</div>
+  }
+
   render() {
     const { isBalanceFetching, viewText } = this.state
     const { currency, name, balance, address, contractAddress, decimals, approve } = this.props
@@ -135,6 +150,7 @@ export default class Row extends Component {
           {
             currency === 'EOS' && address === '' && <button styleName="button" onClick={this.handleEosLogin}>Login with your account</button>
           }
+          { this.renderMetaMaskLoginButton() }
         </td>
         <td style={{ position: 'relative' }} >
           <div>

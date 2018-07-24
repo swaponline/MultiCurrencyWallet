@@ -75,14 +75,14 @@ const setTransactions = () =>
     })
 
 const getText = () => {
-  const { user : { ethData, btcData, eosData } } = getState()
+  const { user: { ethData, btcData, eosData, metaMask } } = getState()
 
-
-  const text = `
+  let text = `
 ${window.location.hostname} emergency instruction
 \r\n
-\r\n
-#ETHEREUM
+\r\n`
+  if (!metaMask.loggedIn) {
+    text += `#ETHEREUM
 \r\n
 \r\n
 Ethereum address: ${ethData.address}  \r\n
@@ -95,8 +95,9 @@ How to access tokens and ethers: \r\n
 3. paste private key to input and click "unlock"\r\n
 \r\n
 \r\n
-\r\n
-# BITCOIN\r\n
+\r\n`
+  }
+  text += `# BITCOIN\r\n
 \r\n
 \r\n
 Bitcoin address: ${btcData.address}\r\n

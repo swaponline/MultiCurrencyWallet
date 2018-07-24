@@ -16,6 +16,22 @@ import Button from 'components/controls/Button/Button'
 }))
 @CSSModules(styles)
 export default class SaveKeys extends Component {
+
+  renderEthField = () => {
+    const { ethData } = this.props
+
+    if (!ethData.privateKey) {
+      return null
+    }
+
+    return (
+      <Field
+        label={ethData.currency}
+        privateKey={ethData.privateKey.toString()}
+      />
+    )
+  }
+
   render() {
     const { ethData, btcData, eosData, isChange, isDownload } = this.props
 
@@ -29,10 +45,7 @@ export default class SaveKeys extends Component {
         <div styleName="row" >
           <Button brand onClick={isDownload}>Download</Button>
           <div style={{ marginLeft: '15px', marginTop: '10px' }} >
-            <Field
-              label={ethData.currency}
-              privateKey={ethData.privateKey.toString()}
-            />
+            { this.renderEthField() }
             <Field
               label={btcData.currency}
               privateKey={btcData.privateKey.toString()}
