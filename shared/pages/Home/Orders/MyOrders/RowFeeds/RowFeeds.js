@@ -23,9 +23,9 @@ const RowFeeds = ({ row, mePeer, acceptRequest, declineRequest, removeOrder }) =
       <td>
         <Coins names={[buyCurrency, sellCurrency]}  />
       </td>
-      <td>{`${buyAmount} ${buyCurrency}`}</td>
-      <td>{`${sellAmount} ${sellCurrency}`}</td>
-      <td>{`${exchangeRate} ${buyCurrency}/${sellCurrency}`}</td>
+      <td>{`${buyAmount.toFixed(5)} ${buyCurrency}`}</td>
+      <td>{`${sellAmount.toFixed(5)} ${sellCurrency}`}</td>
+      <td>{`${(exchangeRate || (buyAmount/sellAmount)).toFixed(5)} ${buyCurrency}/${sellCurrency}`}</td>
       <td>
         {
           Boolean(requests && requests.length) ? (
