@@ -8,7 +8,7 @@ import Input from 'components/forms/Input/Input'
 import CurrencySelect from 'components/ui/CurrencySelect/CurrencySelect'
 
 
-const Group = ({ className, label, id, inputValueLink, currency = true, selectedCurrencyValue, onCurrencySelect }) => (
+const Group = ({ className, label, id, inputValueLink, currency = true, selectedCurrencyValue, onCurrencySelect, placeholder }) => (
   <Fragment>
     <FieldLabel inRow>{label}</FieldLabel>
     <div styleName="groupField" className={className}>
@@ -18,6 +18,7 @@ const Group = ({ className, label, id, inputValueLink, currency = true, selected
         valueLink={inputValueLink}
         pattern="0-9\."
         id={id}
+        placeholder={placeholder}
       />
       {
         currency && (
