@@ -38,7 +38,6 @@ export default class MyOrders extends PureComponent {
       return null
     }
 
-    console.log(orders)
 
     return (
       <Fragment>
