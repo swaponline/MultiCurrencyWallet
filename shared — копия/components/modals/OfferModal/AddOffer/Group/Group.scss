@@ -1,0 +1,20 @@
+.groupField {
+  width: 100%;
+  display: flex;
+  box-shadow: rgba(#000, 0.08) 0 3px 9px 0;
+  border-radius: 6px;
+}
+
+.inputRoot {
+  min-width: 0;
+  flex: auto 1 1;
+}
+
+.inputContainer {
+  border-radius: 6px 0 0 6px !important;
+  box-shadow: none !important;
+}
+
+.currencySelect {
+  border-radius: 0 6px 6px 0 !important;
+}

@@ -1,0 +1,24 @@
+
+@include media-mobile {
+
+  .widthContainerCompensator {
+    margin-right: vw(-15);
+    margin-left: vw(-15);
+  }
+}
+
+@include media-tablet {
+
+  .widthContainer {
+    margin-right: -40px;
+    margin-left: -40px;
+  }
+}
+
+@include media-desktop {
+
+  .widthContainerCompensator {
+    margin-right: -2%;
+    margin-left: -2%;
+  }
+}

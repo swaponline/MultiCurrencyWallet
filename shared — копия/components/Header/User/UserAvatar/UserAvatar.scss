@@ -1,0 +1,55 @@
+.user {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+  cursor: pointer;
+}
+
+.bell {
+  width: 20px;
+  height: 20px;
+}
+
+.status {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background: #e91db4;
+}
+
+.new {
+  border: 2px solid #ff1fc5;
+}
+
+.shake {
+  animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}

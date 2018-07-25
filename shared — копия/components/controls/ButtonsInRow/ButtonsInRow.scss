@@ -1,0 +1,32 @@
+.twoButtonsInRow {
+  display: flex;
+}
+
+
+@include media-mobile {
+
+  .twoButtonsInRow {
+    margin-top: vw(-8);
+    flex-direction: column;
+
+    [role="button"] {
+      width: 100%;
+      margin-top: vw(8);
+    }
+  }
+}
+
+@include media-except-mobile {
+
+  .twoButtonsInRow {
+    justify-content: center;
+
+    [role="button"] {
+      margin-left: 8px;
+
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+}

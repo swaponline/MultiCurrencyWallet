@@ -1,0 +1,28 @@
+.container {
+  background-color: #e24d4d;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  padding: 6px;
+  border-radius: 6px;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+.label {
+  padding: 0 20px 0 14px;
+  font-size: 18px;
+  color: #fff;
+}
+
+.input {
+  min-width: 0;
+  flex: auto 1 1;
+}
+
+.button {
+  min-width: 100px;
+  margin-left: 10px;
+}

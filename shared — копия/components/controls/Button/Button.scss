@@ -1,0 +1,64 @@
+.button {
+  height: 56px;
+  padding: 0 16px;
+  @include inline-block;
+  cursor: pointer;
+  line-height: 56px;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 18px;
+  border-radius: 6px;
+  @include no-user-select;
+  transition:
+    background-color 0.23s ease,
+    color 0.23s ease;
+}
+
+.fullWidth {
+  width: 100%;
+  display: block;
+  padding: 0;
+}
+
+.brand {
+  background-color: #E72BB3;
+  color: #fff;
+
+  &:hover {
+    background-color: lighten(#E72BB3, 5%);
+  }
+}
+
+.green {
+  background-color: #3de25b;
+  color: #000;
+
+  &:hover {
+    background-color: lighten(#3de25b, 5%);
+  }
+}
+
+.white {
+  background-color: #fff;
+  color: #000;
+  border: 2px solid #e24d4d;
+
+  &:hover {
+    background-color: darken(#fafafa, 10%);
+  }
+}
+
+.gray {
+  background-color: #F2F2F2;
+  color: #000;
+
+  &:hover {
+    background-color: darken(#F2F2F2, 10%);
+  }
+}
+
+.disabled {
+  background-color: #dbdbdb !important;
+  cursor: default !important;
+  color: #626262 !important;
+}

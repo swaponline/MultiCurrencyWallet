@@ -1,0 +1,102 @@
+.button {
+  cursor: pointer;
+  background: none;
+  border: 0;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+
+  &.whiteColor {
+
+    .icon {
+
+      &::before,
+      &::after {
+        background-color: #fff;
+      }
+    }
+
+    &:hover {
+
+      .icon {
+
+        &::before,
+        &::after {
+          background-color: $color-brand;
+        }
+      }
+    }
+  }
+
+  &.brandColor {
+
+    .icon {
+
+      &::before,
+      &::after {
+        background-color: $color-brand;
+      }
+    }
+
+    &:hover {
+
+      .icon {
+
+        &::before,
+        &::after {
+          background-color: #000;
+        }
+      }
+    }
+  }
+}
+
+.icon {
+  width: inherit;
+  height: inherit;
+  position: relative;
+  overflow: hidden;
+  pointer-events: none;
+
+  &::before,
+  &::after {
+    content: '';
+    width: 50px;
+    height: 1px;
+    display: block;
+    background-color: #000;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+  }
+
+  &::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  &::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+}
+
+
+@include media-mobile {
+
+  .button {
+
+    &::before {
+      width: vw(36);
+      height: vw(36);
+    }
+  }
+}
+
+@include media-except-mobile {
+
+  .button {
+
+    &::before {
+      width: 36px;
+      height: 36px;
+    }
+  }
+}

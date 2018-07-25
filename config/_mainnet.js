@@ -13,6 +13,11 @@ export default {
     },
   },
 
+  ipfs: {
+    swarm: '/dns4/discovery.libp2p.array.io/tcp/9091/wss/p2p-websocket-star/',
+    server: 'discovery.libp2p.array.io',
+  },
+
   token: {
     contract: '0x8D880dff55a0c5620Cc617B0a34c83B87946783c', // пока под вопросом
   },

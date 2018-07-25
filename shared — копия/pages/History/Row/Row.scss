@@ -1,0 +1,52 @@
+.status {
+  font-size: 16px;
+
+  &.in {
+    color: #3bb33b;
+  }
+
+  &.out {
+    color: #ff4e34;
+  }
+}
+
+.cell {
+  border-radius: 20px;
+  padding: 0px 25px;
+  width: 145px;
+  line-height: 40px;
+  height: 40px;
+  text-align: center;
+  display: inline-block;
+}
+
+.confirm {
+  color: #ffffff;
+  background: rgba(61, 226, 91, 0.7);
+}
+
+.unconfirmed {
+  color: #ff354b;
+  background: rgba(255, 53, 75, 0.4);
+}
+
+.date {
+  font-size: 14px;
+  font-weight: 500;
+  color: #aaa;
+}
+
+.address {
+  margin-top: 5px;
+  font-size: 14px;
+}
+
+.amount {
+  @include inline-block;
+  height: 40px;
+  background-color: #f2f2f2;
+  padding: 0 25px;
+  line-height: 40px;
+  font-size: 16px;
+  border-radius: 20px;
+}

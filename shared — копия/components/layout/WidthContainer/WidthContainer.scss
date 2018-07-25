@@ -1,0 +1,60 @@
+.widthContainer {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.widthContainerIn {
+
+  &.relative {
+    position: relative;
+  }
+}
+
+.fullHeight {
+  height: 100%;
+}
+
+.centeringContent {
+  text-align: center;
+}
+
+
+@include media-mobile {
+
+  .widthContainer {
+    padding-right: vw(15);
+    padding-left: vw(15);
+
+    &.main {
+      padding-top: vw(30);
+      padding-bottom: vw(40);
+    }
+  }
+}
+
+@include media-except-mobile {
+
+  .widthContainer {
+
+    &.main {
+      padding-top: 30px;
+      padding-bottom: 40px;
+    }
+  }
+}
+
+@include media-tablet {
+
+  .widthContainer {
+    padding-right: 40px;
+    padding-left: 40px;
+  }
+}
+
+@include media-desktop {
+
+  .widthContainer {
+    padding-right: 2%;
+    padding-left: 2%;
+  }
+}

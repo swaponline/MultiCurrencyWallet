@@ -1,0 +1,31 @@
+.modal {
+
+  [role="title"] {
+    font-size: 40px;
+    @include ff-bold;
+    color: #ff354b;
+  }
+}
+
+.content {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.title {
+  margin-bottom: 30px;
+  color: #ff354b;
+  font-size: 24px;
+}
+
+.subTitle {
+  text-transform: uppercase;
+  @include ff-bold;
+  font-size: 30px;
+  color: #000;
+}
+
+.button {
+  margin-top: 40px;
+}

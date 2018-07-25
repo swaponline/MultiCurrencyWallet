@@ -1,0 +1,6 @@
+.title {
+  text-transform: uppercase;
+  @include ff-bold;
+  color: $color-brand;
+  font-size: 16px;
+}

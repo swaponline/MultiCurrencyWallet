@@ -1,0 +1,13 @@
+.user-cont {
+    float: right;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    height: 88px;
+    position: relative;
+}
+
+.hidden{
+    opacity: 0;
+    visibility: hidden;
+}

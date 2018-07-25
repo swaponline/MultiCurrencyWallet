@@ -1,0 +1,16 @@
+.coins {
+  display: flex;
+
+  > div {
+
+    &:first-child {
+      transform: translateX(5px);
+      z-index: 1;
+    }
+
+    &:last-child {
+      transform: translateX(-5px);
+      z-index: 2;
+    }
+  }
+}

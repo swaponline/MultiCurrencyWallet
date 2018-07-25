@@ -1,0 +1,24 @@
+.coin {
+  @include square-block;
+  background-color: #47454a;
+  border: 1px solid #fff;
+  position: relative;
+  border-radius: 50%;
+}
+
+.icon {
+  height: 50%;
+  display: block;
+  @include absolute-centring;
+}
+
+.letter {
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  text-align: center;
+  color: #fff;
+}
