@@ -16,13 +16,18 @@ const Table = ({ titles, rows, rowRender, textIfEmpty }) => (
       </tr>
     </thead>
     <tbody>
-      { (rows && rows.length > 0) ?
-        rows.map((row, rowIndex) => {
-          if (typeof rowRender === 'function') {
-            return rowRender(row, rowIndex)
-          }
-        }) :
-        <tr><td style={{ color: "#bbb" }}>{textIfEmpty}</td></tr>
+      {
+        rows && rows.length > 0 ? (
+          rows.map((row, rowIndex) => {
+            if (typeof rowRender === 'function') {
+              return rowRender(row, rowIndex)
+            }
+          })
+        ) : (
+          <tr>
+            <td styleName="color">{textIfEmpty}</td>
+          </tr>
+        )
       }
     </tbody>
   </table>
@@ -30,7 +35,7 @@ const Table = ({ titles, rows, rowRender, textIfEmpty }) => (
 
 
 Table.defaultProps = {
-  textIfEmpty: "The table is empty",
+  textIfEmpty: 'The table is empty',
 }
 
 export default cssModules(Table, styles)
