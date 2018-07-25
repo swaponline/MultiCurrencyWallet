@@ -9,13 +9,13 @@ import TelegramImg from './images/telegram.png'
 
 const FeedBack = ({link}) => (
     <div styleName="FeedBack">
-       <h2 styleName="FeedBack__heading">Contacts</h2> 
-       <div styleName="FeedBack__contact">
+       <h2 styleName="heading">Contacts</h2> 
+       <div styleName="contact">
            <img src={TelegramImg} alt="" />
            <Href tab={link}>{link}</Href> 
-           <span styleName="FeedBack__text">or</span>
+           <span styleName="text">or</span>
            <Href tab="mailto:team@swap.online">team@swap.online</Href> 
-           <span styleName="FeedBack__text">to find out further actions</span>
+           <span styleName="text">to find out further actions</span>
        </div>
     </div>
 )

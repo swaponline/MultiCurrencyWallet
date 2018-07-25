@@ -1,15 +1,16 @@
 
 .FeedBack {
 	width: 100%;
-	&__heading {
-		margin-bottom: 20px;
-		margin-top: 50px;
-	}
-	&__text {
-		margin: 0 6px;
-		font-weight: bold;
-	}
-	&__contact {
+}
+.heading {
+	margin-bottom: 20px;
+	margin-top: 50px;
+}
+.text {
+	margin: 0 6px;
+	font-weight: bold;
+}
+.contact {
 	display: flex;
 	position: relative;
 	align-items: center;
@@ -18,27 +19,26 @@
 			margin-right: 10px;
 		}
 	}
-	@include media-tablet {
-		&__text {
-			&:last-child {
-				position: absolute;
-				top: 30px;
-				left: 40px;
-			}
+@include media-tablet {
+	.text {
+		&:last-child {
+			position: absolute;
+			top: 30px;
+			left: 40px;
 		}
 	}
-	@include media-mobile {
-		&__contact {
-			flex-direction: column;
-			img {
-				margin-right: 0;
-				margin-bottom: 10px;
-			}
+}
+@include media-mobile {
+	.contact {
+		flex-direction: column;
+		img {
+			margin-right: 0;
+			margin-bottom: 10px;
 		}
-		&__heading {
-			text-align: center;
-			margin-bottom: 20px;
-		}
+	}
+	.heading {
+		text-align: center;
+		margin-bottom: 20px;
 	}
 }
 
