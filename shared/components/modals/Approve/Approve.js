@@ -22,7 +22,7 @@ export default class Offer extends React.Component {
   }
 
   state = {
-    amount: '',
+    amount: 999,
   }
 
   handleApprove = () => {
@@ -51,7 +51,7 @@ export default class Offer extends React.Component {
         <div styleName="content">
           <p>Please set the amount limit that the swap smart contract can deduct from your account. We do not recommend setting any limits.</p>
           <FieldLabel inRow>Amount</FieldLabel>
-          <Input valueLink={linked.amount} />
+          <Input valueLink={linked.amount} type="number" />
           <Button
             styleName="button"
             brand

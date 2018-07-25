@@ -82,7 +82,7 @@ export default class BtcToEthToken extends Component {
         {
           flow.isWaitingForOwner && (
             <Fragment>
-              <h3>Waiting for other user when he connect to the order</h3>
+              <h3>We are waiting for a market maker. If it does not appear within 5 minutes, the swap will be canceled automatically.</h3>
               <InlineLoader />
             </Fragment>
           )

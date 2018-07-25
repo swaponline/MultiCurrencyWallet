@@ -97,6 +97,14 @@ export default class BtcToEth extends Component {
           )
         }
         {
+          !flow.isParticipantSigned && (
+            <Fragment>
+              <h3>We are waiting for a market maker. If it does not appear within 5 minutes, the swap will be canceled automatically.</h3>
+              <InlineLoader />
+            </Fragment>
+          )
+        }
+        {
           flow.isParticipantSigned && (
             <Fragment>
               <h3>2. Create a secret key</h3>

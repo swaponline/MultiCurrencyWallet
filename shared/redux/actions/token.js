@@ -120,7 +120,7 @@ const send = (contractAddress, to, amount, decimals) => {
 
   tokenContract = new web3.eth.Contract(abi, contractAddress, options)
 
-  const newAmount = new BigNumber(String(amount)).times(new BigNumber(10).pow(decimals)).decimalPlaces(decimals).toNumber()
+  const newAmount = new BigNumber(String(amount)).times(new BigNumber(10).pow(decimals)).integerValue().toNumber()
 
   return new Promise(async (resolve, reject) => {
     const receipt = await tokenContract.methods.transfer(to, newAmount).send()
@@ -139,12 +139,14 @@ const send = (contractAddress, to, amount, decimals) => {
 const approve = (contractAddress, amount, decimals, name) => {
   const { user: { ethData: { address } } } = getState()
 
-  const newAmount = new BigNumber(String(amount)).times(new BigNumber(10).pow(decimals)).decimalPlaces(decimals).toNumber()
+  const number = new BigNumber(String(amount)).shiftedBy(decimals)
+  console.log('number', number.toNumber())
+  const newAmount = new BigNumber(String(amount)).times(new BigNumber(10).pow(decimals - amount.length)).decimalPlaces(decimals).toNumber()
   const ERC20     = new web3.eth.Contract(abi, contractAddress)
-
+  console.log('newAmount', newAmount)
   return new Promise(async (resolve, reject) => {
     try {
-      const result = await ERC20.methods.approve(config.token.contract, newAmount).send({
+      const result = await ERC20.methods.approve(config.token.contract, number.toNumber()).send({
         from: address,
         gas: `${config.services.web3.gas}`,
         gasPrice: `${config.services.web3.gasPrice}`,

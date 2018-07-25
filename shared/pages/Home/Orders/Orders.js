@@ -44,11 +44,12 @@ export default class Orders extends Component {
     }
   }
 
-  filterOrders = (orders, filter) =>
-    orders.filter(f => f.isMy ? (
-      `${f.buyCurrency.toLowerCase()}${f.sellCurrency.toLowerCase()}` === filter
+  filterOrders = (orders, filter) => orders
+    .filter(order => order.isProcessing === false)
+    .filter(order => order.isMy ? (
+      `${order.buyCurrency.toLowerCase()}${order.sellCurrency.toLowerCase()}` === filter
     ) : (
-      `${f.sellCurrency.toLowerCase()}${f.buyCurrency.toLowerCase()}` === filter
+      `${order.sellCurrency.toLowerCase()}${order.buyCurrency.toLowerCase()}` === filter
     ))
 
   render() {

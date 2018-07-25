@@ -1,6 +1,6 @@
 import { request, constants } from 'helpers'
 import { getState } from 'redux/core'
-import actions from 'redux/actions'
+import  actions from 'redux/actions'
 import web3 from 'helpers/web3'
 import reducers from 'redux/core/reducers'
 import config from 'app-config'
@@ -20,11 +20,9 @@ const login = (privateKey) => {
   }
 
   web3.eth.accounts.wallet.add(data.privateKey)
-
   reducers.user.setAuthData({ name: 'ethData', data })
 
   window.getEthAddress = () => data.address
-
   referral.newReferral(data.address)
 
   console.info('Logged in with Ethereum', data)
