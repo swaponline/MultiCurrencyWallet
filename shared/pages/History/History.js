@@ -72,7 +72,6 @@ export default class History extends Component {
     const { items } = this.props
     const { orders } = this.state
     const titles = [ 'Coin', 'Status', 'Statement', 'Amount' ]
-    const textIfEmpty = "The list of transactions is empty now"
     const mePeer = SwapApp.services.room.peer
     const historyOrders = orders.filter(order => mePeer === order.owner.peer)
 
@@ -85,7 +84,6 @@ export default class History extends Component {
         <Table
           titles={titles}
           rows={items}
-          textIfEmpty={textIfEmpty}
           rowRender={(row, index) => (
             <Row key={index} {...row} />
           )}

@@ -16,17 +16,21 @@ const Table = ({ titles, rows, rowRender, textIfEmpty }) => (
       </tr>
     </thead>
     <tbody>
-      { rows[0] ?
+      { (rows && rows.length > 0) ?
         rows.map((row, rowIndex) => {
           if (typeof rowRender === 'function') {
             return rowRender(row, rowIndex)
           }
         }) :
-        <tr><td>{textIfEmpty}</td></tr>
+        <tr><td style={{ color: "#bbb" }}>{textIfEmpty}</td></tr>
       }
     </tbody>
   </table>
 )
 
+
+Table.defaultProps = {
+  textIfEmpty: "The table is empty",
+}
 
 export default cssModules(Table, styles)
