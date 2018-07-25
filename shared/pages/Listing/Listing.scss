@@ -1,17 +1,20 @@
 .listingImg {
-	img {
-		max-width: 100%;
-	}
+  img {
+    max-width: 100%;
+  }
 }
+
 .listingForm {
-	width: 400px;
-	margin-top: 100px;
+  width: 400px;
+  margin-top: 100px;
 }
+
 .listingBtn {
-	margin-top: 50px;
+  margin-top: 50px;
 }
+
 @include media-mobile {
-	.listingForm {
-		width: 100%;
-	}
+  .listingForm {
+    width: 100%;
+  }
 }
