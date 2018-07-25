@@ -1,0 +1,46 @@
+
+.FeedBack {
+	width: 100%;
+}
+.heading {
+	margin-bottom: 20px;
+	margin-top: 50px;
+}
+.text {
+	margin: 0 6px;
+	font-weight: bold;
+}
+.contact {
+	display: flex;
+	position: relative;
+	align-items: center;
+		img {
+			width: 35px;
+			margin-right: 10px;
+		}
+	}
+@include media-tablet {
+	.text {
+		&:last-child {
+			position: absolute;
+			top: 30px;
+			left: 40px;
+		}
+	}
+}
+@include media-mobile {
+	.contact {
+		flex-direction: column;
+		img {
+			margin-right: 0;
+			margin-bottom: 10px;
+		}
+	}
+	.heading {
+		text-align: center;
+		margin-bottom: 20px;
+	}
+}
+
+
+
