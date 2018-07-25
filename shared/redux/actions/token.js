@@ -56,20 +56,20 @@ const getBalance = (contractAddress, name, decimals) => {
 
   return request.get(url)
     .then(({ result }) => {
-      const amount = new BigNumber(String(result))
-        .dividedBy(new BigNumber(String(10)).pow(decimals)).toNumber()
+      const amount = new BigNumber(String(result)).dividedBy(new BigNumber(String(10)).pow(decimals)).toNumber()
 
       reducers.user.setTokenBalance({ name, amount })
       return result
     }).catch(r => console.error('Token service isn\'t available, try later'))
 }
 
-const fetchBalance = (tokenAddress) => {
-  const { user: { ethData: { address } } } = getState()
+const fetchBalance = (address, tokenAddress, decimals) =>
+  request.get(`https://rinkeby.etherscan.io/api?module=account&action=tokenbalance&contractaddress=${tokenAddress}&address=${address}`)
+    .then(({ result }) => {
+      const amount = new BigNumber(String(result)).dividedBy(new BigNumber(String(10)).pow(decimals)).toNumber()
 
-  return request.get(`https://rinkeby.etherscan.io/api?module=account&action=tokenbalance&contractaddress=${tokenAddress}&address=${address}`)
-    .then(({ result }) => result)
-}
+      return amount
+    })
 
 
 const getTransaction = (contractAddress) =>
