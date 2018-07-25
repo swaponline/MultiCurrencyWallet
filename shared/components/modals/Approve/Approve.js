@@ -22,7 +22,7 @@ export default class Offer extends React.Component {
   }
 
   state = {
-    amount: 9999,
+    amount: 999999,
   }
 
   handleApprove = () => {
