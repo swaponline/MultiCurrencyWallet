@@ -4,9 +4,8 @@ import actions from 'redux/actions'
 
 import Row from './Row/Row'
 import Table from 'components/Table/Table'
-
-import SearchSwap from 'components/SearchSwap/SearchSwap'
 import MyOrders from './MyOrders/MyOrders'
+import SearchSwap from 'components/SearchSwap/SearchSwap'
 
 
 export default class Orders extends Component {
@@ -44,11 +43,16 @@ export default class Orders extends Component {
     }
   }
 
-  filterOrders = (orders, filter) =>
-    orders.filter(f => (`${f.buyCurrency.toLowerCase()}${f.sellCurrency.toLowerCase()}` === filter))
+  filterOrders = (orders, filter) => orders
+    .filter(order => order.isProcessing === false)
+    .filter(order => order.isMy ? (
+      `${order.buyCurrency.toLowerCase()}${order.sellCurrency.toLowerCase()}` === filter
+    ) : (
+      `${order.sellCurrency.toLowerCase()}${order.buyCurrency.toLowerCase()}` === filter
+    ))
 
   render() {
-    const { filter, sellCurrency, buyCurrency, handleSellCurrencySelect, flipCurrency } = this.props
+    const { filter, sellCurrency, buyCurrency, handleSellCurrencySelect, handleBuyCurrencySelect, flipCurrency } = this.props
     const titles = [ 'EXCHANGE', 'YOU BUY', 'YOU SELL', 'EXCHANGE RATE', 'ACTIONS' ]
     const { orders } = this.state
 
@@ -63,7 +67,8 @@ export default class Orders extends Component {
           updateOrders={this.updateOrders}
         />
         <SearchSwap
-          updateFilter={handleSellCurrencySelect}
+          handleSellCurrencySelect={handleSellCurrencySelect}
+          handleBuyCurrencySelect={handleBuyCurrencySelect}
           buyCurrency={buyCurrency}
           sellCurrency={sellCurrency}
           flipCurrency={flipCurrency}
@@ -84,4 +89,3 @@ export default class Orders extends Component {
     )
   }
 }
-

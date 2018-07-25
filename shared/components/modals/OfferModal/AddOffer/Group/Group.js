@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react'
 
-import cssModules from 'react-css-modules'
 import styles from './Group.scss'
+import cssModules from 'react-css-modules'
 
-import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
+import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import CurrencySelect from 'components/ui/CurrencySelect/CurrencySelect'
 
 

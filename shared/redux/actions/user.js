@@ -21,7 +21,7 @@ const sign = async () => {
 
   const eosMasterPrivateKey = localStorage.getItem(constants.privateKeyNames.eos)
   const eosAccount = localStorage.getItem(constants.privateKeyNames.eosAccount)
-  if(eosMasterPrivateKey && eosAccount) {
+  if (eosMasterPrivateKey && eosAccount) {
     await actions.eos.init()
     await actions.eos.login(eosAccount, eosMasterPrivateKey)
     await actions.eos.getBalance()
@@ -50,16 +50,15 @@ const getDemoMoney = process.env.MAINNET ? () => {} : () => {
     })
 }
 
-const setExchangeRate = (buyCurrency, sellCurrency) => {
-  const url = `https://api.coinbase.com/v2/exchange-rates?currency=${buyCurrency.toUpperCase()}`
+const setExchangeRate = (buyCurrency, sellCurrency, setState) => {
+  const url = `https://api.cryptonator.com/api/full/${buyCurrency}-${sellCurrency}`
 
   return request.get(url)
-    .then(({ data: { rates } })  =>
-      Object.keys(rates)
-        .filter(k => k === sellCurrency.toUpperCase())
-        .map((k) => rates[k])
-    ).catch(() =>
-      config.exchangeRates[`${buyCurrency.toLowerCase()}${sellCurrency.toLowerCase()}`]
+    .then(({ ticker: { price: exchangeRate } })  => {
+      setState(exchangeRate)
+    })
+    .catch(() =>
+      setState(config.exchangeRates[`${buyCurrency.toLowerCase()}${sellCurrency.toLowerCase()}`])
     )
 }
 

@@ -1,9 +1,10 @@
 import BigInteger from 'bigi'
-import { btc, request, constants } from 'helpers'
-import { getState } from 'redux/core'
-import bitcoin from 'bitcoinjs-lib'
-import reducers from 'redux/core/reducers'
+
 import config from 'app-config'
+import bitcoin from 'bitcoinjs-lib'
+import { getState } from 'redux/core'
+import reducers from 'redux/core/reducers'
+import { btc, request, constants } from 'helpers'
 
 
 const login = (privateKey) => {
@@ -53,7 +54,10 @@ const getBalance = () => {
 
 const fetchBalance = (address) =>
   request.get(`${config.api.bitpay}/addr/${address}`)
-    .then(({ balance }) => balance)
+    .then(({ balance }) => {
+      console.log('BALANCE')
+      return balance
+    })
 
 
 const getTransaction = () =>

@@ -9,8 +9,13 @@ export default {
 
     eos: {
       chainId: '',
-      httpEndpoint: ''
-    }
+      httpEndpoint: '',
+    },
+  },
+
+  ipfs: {
+    swarm: '/dns4/discovery.libp2p.array.io/tcp/9091/wss/p2p-websocket-star/',
+    server: 'discovery.libp2p.array.io',
   },
 
   token: {
@@ -29,6 +34,10 @@ export default {
     noxon: {
       address: '0x9E4AD79049282F942c1b4c9b418F0357A0637017',
       decimals: 0,
+    },
+    jot: {
+      address: '0xdb455c71c1bc2de4e80ca451184041ef32054001',
+      decimals: 18,
     },
   },
 

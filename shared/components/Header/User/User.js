@@ -1,21 +1,19 @@
 import React from 'react'
 
-import { connect } from 'redaction'
-import SwapApp from 'swap.app'
+import SwapApp  from 'swap.app'
 import actions from 'redux/actions'
+import { connect } from 'redaction'
 import { constants } from 'helpers'
 
-import CSSModules from 'react-css-modules'
 import styles from './User.scss'
-
+import CSSModules from 'react-css-modules'
 import Sound from 'helpers/Sound/Sound.mp4'
-// import Question from './controls/Question/Question'
-import AddOfferButton from './AddOfferButton/AddOfferButton'
+
+import NavMobile from '../NavMobile/NavMobile'
 import UserAvatar from './UserAvatar/UserAvatar'
 import UserTooltip from './UserTooltip/UserTooltip'
-
 import MenuIcon from 'components/ui/MenuIcon/MenuIcon'
-import NavMobile from '../NavMobile/NavMobile'
+import AddOfferButton from './AddOfferButton/AddOfferButton'
 
 
 @connect({
@@ -30,19 +28,15 @@ export default class User extends React.Component {
   }
 
   componentWillMount() {
-    SwapApp.services.orders
-      .on('new order request', this.updateOrders)
+    SwapApp.services.orders.on('new order request', this.updateOrders)
   }
 
   componentWillUnmount() {
-    SwapApp.services.orders
-      .off('new order request', this.updateOrders)
+    SwapApp.services.orders.off('new order request', this.updateOrders)
   }
 
   handleChangeView = () => {
-    this.setState({
-      view: true,
-    })
+    this.setState({ view: true })
   }
 
   updateOrders = () => {
@@ -63,9 +57,14 @@ export default class User extends React.Component {
     })
   }
 
+  handleToggleMenu = () => {
+    this.setState({
+      menuVisible: !this.state.menuVisible,
+    })
+  }
+
   acceptRequest = (orderId, participantPeer) => {
     const order = SwapApp.services.orders.getByKey(orderId)
-
     order.acceptRequest(participantPeer)
 
     setTimeout(() => {
@@ -89,8 +88,7 @@ export default class User extends React.Component {
 
     return (
       <div styleName="user-cont">
-        {/*/!* <Question /> *!/*/}
-        <MenuIcon onClick={() => this.setState({ menuVisible: !menuVisible })} />
+        <MenuIcon onClick={this.handleToggleMenu} />
         <NavMobile view={menuVisible} />
         <AddOfferButton />
         <UserAvatar

@@ -53,7 +53,7 @@ export default class EthToBtc extends Component {
 
   render() {
     const { flow, enabledButton } = this.state
-    console.log('FLOW ETH_BTC', flow)
+    console.log('eth 2 btc', this.swap)
 
     return (
       <div>
@@ -89,6 +89,7 @@ export default class EthToBtc extends Component {
           flow.step === 1 && (
             <Fragment>
               <div>Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation.</div>
+              <TimerButton brand onClick={this.signSwap}>Sign</TimerButton>
               {
                 (flow.isSignFetching || flow.signTransactionHash) && (
                   <Fragment>
@@ -308,7 +309,7 @@ export default class EthToBtc extends Component {
                 )
               }
               {
-                flow.step >= 6 && (
+                flow.step >= 6 && !flow.finishSwap && (
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     { enabledButton &&  <Button brand onClick={this.tryRefund}>TRY REFUND</Button> }
                     <Timer

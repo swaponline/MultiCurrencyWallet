@@ -11,6 +11,7 @@ import Confirm from 'components/Confirm/Confirm'
 
 import Row from './Row/Row'
 
+
 @connect(({ user: { ethData, btcData, tokensData, eosData, nimData } }) => ({
   tokens: Object.keys(tokensData).map(k => (tokensData[k])),
   items: [ ethData, btcData, eosData /* eosData  nimData */ ],
@@ -50,7 +51,7 @@ export default class Wallet extends Component {
     this.changeView('checkKeys')
     localStorage.setItem(constants.localStorage.privateKeysSaved, true)
   }
-  
+
   changeView = (view) => {
     this.setState({
       view,

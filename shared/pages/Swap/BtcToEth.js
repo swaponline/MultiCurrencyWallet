@@ -7,6 +7,9 @@ import TimerButton from 'components/controls/TimerButton/TimerButton'
 import Button from 'components/controls/Button/Button'
 import Timer from './Timer/Timer'
 
+import crypto from 'crypto'
+import actions from 'redux/actions'
+
 
 export default class BtcToEth extends Component {
 
@@ -17,7 +20,7 @@ export default class BtcToEth extends Component {
 
     this.state = {
       flow: this.swap.flow.state,
-      secret: 'c0809ce9f484fdcdfb2d5aabd609768ce0374ee97a1a5618ce4cd3f16c00a078',
+      secret: crypto.randomBytes(32).toString('hex'),
       refundTxHex: null,
       enabledButton: false,
     }
@@ -70,9 +73,16 @@ export default class BtcToEth extends Component {
     }
   }
 
+  removeOrder = (orderId) => {
+    SwapApp.services.orders.remove(orderId)
+    actions.feed.deleteItemToFeed(orderId)
+  }
+
   render() {
     const { secret, flow, enabledButton } = this.state
     const refundTxHex = this.getRefundTxHex()
+
+    console.log('btc 2 eth', this.swap)
 
     return (
       <div>
@@ -92,6 +102,14 @@ export default class BtcToEth extends Component {
                 <InlineLoader />
               </Fragment>
             )
+          )
+        }
+        {
+          !flow.isParticipantSigned && (
+            <Fragment>
+              <h3>We are waiting for a market maker. If it does not appear within 5 minutes, the swap will be canceled automatically.</h3>
+              <InlineLoader />
+            </Fragment>
           )
         }
         {
@@ -256,7 +274,7 @@ export default class BtcToEth extends Component {
                 )
               }
               {
-                flow.step >= 5 && (
+                flow.step >= 5 && !flow.finishSwap && (
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     { enabledButton &&  <Button brand onClick={this.tryRefund}>TRY REFUND</Button> }
                     <Timer

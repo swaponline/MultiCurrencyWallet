@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import actions from 'redux/actions'
-import { constants } from 'helpers'
+import { constants, web3 } from 'helpers'
 
 import cssModules from 'react-css-modules'
 import styles from './Row.scss'
@@ -19,6 +19,14 @@ export default class Row extends Component {
   state = {
     isBalanceFetching: false,
     viewText: false,
+  }
+
+  componentDidMount() {
+    const { contractAddress, name } = this.props
+
+    if (name !== undefined) {
+      actions.token.allowance(contractAddress, name)
+    }
   }
 
   handleReloadBalance = () => {
@@ -49,7 +57,7 @@ export default class Row extends Component {
       action = actions.eos.getBalance
       actions.analytics.dataEvent('balances-update-eos')
     }
-    else {
+    else if (currency !== undefined) {
       action = actions.token.getBalance
       actions.analytics.dataEvent('balances-update-token')
     }
@@ -85,16 +93,37 @@ export default class Row extends Component {
     actions.modals.open(constants.modals.Eos, {})
   }
 
+  handleApproveToken = (decimals, contractAddress, name) => {
+    actions.modals.open(constants.modals.Approve, {
+      contractAddress,
+      decimals,
+      name,
+    })
+  }
+
+  handleWithdraw = () => {
+    const { currency, address, contractAddress, decimals, balance } = this.props
+
+    actions.analytics.dataEvent(`balances-withdraw-${currency.toLowerCase()}`)
+    actions.modals.open(constants.modals.Withdraw, {
+      currency,
+      address,
+      contractAddress,
+      decimals,
+      balance,
+    })
+  }
+
   render() {
     const { isBalanceFetching, viewText } = this.state
-    const { currency, balance, address, contractAddress, decimals } = this.props
+    const { currency, name, balance, address, contractAddress, decimals, approve } = this.props
 
     return (
       <tr>
         <td>
           <Coin name={currency} size={40} />
         </td>
-        <td>{currency.toUpperCase()}</td>
+        <td>{currency}</td>
         <td style={{ minWidth: '80px' }}>
           {
             isBalanceFetching ? (
@@ -105,20 +134,30 @@ export default class Row extends Component {
           }
         </td>
         <td ref={td => this.textAddress = td}>
-          <LinkAccount type={currency} address={address} >{address}</LinkAccount>
-          { currency === 'EOS' && address === '' &&
-            <button styleName="button" onClick={this.handleEosLogin}>Login with your account</button>
+          {
+            !contractAddress ? (
+              <LinkAccount type={currency} address={address} >{address}</LinkAccount>
+            ) : (
+              !approve ? (
+                <button styleName="button" onClick={() => this.handleApproveToken(decimals, contractAddress, name)}>Approve token</button>
+              ) : (
+                <LinkAccount type={currency} contractAddress={contractAddress} address={address} >{address}</LinkAccount>
+              )
+            )
+          }
+          {
+            currency === 'EOS' && address === '' && <button styleName="button" onClick={this.handleEosLogin}>Login with your account</button>
           }
         </td>
         <td style={{ position: 'relative' }} >
-          {address !== '' &&
-            <div>
-              <button styleName="button" onClick={this.handleCopiedAddress}>Copy</button>
-              <ReloadButton styleName="reloadButton" onClick={this.handleReloadBalance} />
-              <WithdrawButton data={{ currency, balance, address, contractAddress, decimals }} />
-              { viewText && <p styleName="copied" >Address copied to clipboard</p> }
-            </div>
-          }
+          <div>
+            <button styleName="button" onClick={this.handleCopiedAddress}>Copy</button>
+            <ReloadButton styleName="reloadButton" onClick={this.handleReloadBalance} />
+            <WithdrawButton onClick={this.handleWithdraw} >
+              Withdraw
+            </WithdrawButton>
+            { viewText && <p styleName="copied" >Address copied to clipboard</p> }
+          </div>
         </td>
       </tr>
     )

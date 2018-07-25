@@ -1,6 +1,6 @@
 export const initialState = {
   transactions: [],
-  filter: 'ALL',
+  filter: 'all',
 }
 
 export const setFilter = (state, payload) => ({

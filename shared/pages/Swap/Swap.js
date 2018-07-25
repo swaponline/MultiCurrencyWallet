@@ -1,8 +1,6 @@
 import React, { PureComponent } from 'react'
 import Swap from 'swap.swap'
 
-import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
-
 import BtcToEth from './BtcToEth'
 import EthToBtc from './EthToBtc'
 import EthTokenToBtc from './EthTokenToBtc'
@@ -18,19 +16,13 @@ const swapComponents = {
   'BTC2SWAP': BtcToEthToken,
 }
 
-
 export default class SwapComponent extends PureComponent {
 
   render() {
     const { match : { params : { orderId } } } = this.props
 
     if (!orderId) {
-      return (
-        <div>
-          <h3>The order creator is offline. Waiting for him..</h3>
-          <InlineLoader />
-        </div>
-      )
+      return null
     }
 
     const swap = new Swap(orderId)

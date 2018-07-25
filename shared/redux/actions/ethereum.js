@@ -1,5 +1,6 @@
 import { request, constants } from 'helpers'
 import { getState } from 'redux/core'
+import  actions from 'redux/actions'
 import web3 from 'helpers/web3'
 import reducers from 'redux/core/reducers'
 import config from 'app-config'
@@ -19,12 +20,10 @@ const login = (privateKey) => {
   }
 
   web3.eth.accounts.wallet.add(data.privateKey)
-
   reducers.user.setAuthData({ name: 'ethData', data })
 
   window.getEthAddress = () => data.address
-
-  referral.newReferral(data.address);
+  referral.newReferral(data.address)
 
   console.info('Logged in with Ethereum', data)
 
@@ -94,7 +93,7 @@ const getTransaction = () =>
   })
 
 const send = (from, to, amount) =>
-  new Promise((resolve, reject) => {
+  new Promise(async (resolve, reject) => {
     const { user: { ethData: { privateKey } } } = getState()
 
     const params = {
@@ -103,12 +102,22 @@ const send = (from, to, amount) =>
       gas: '21000',
       value: web3.utils.toWei(String(amount)),
     }
+    let txRaw
 
-    web3.eth.accounts.signTransaction(params, privateKey)
-      .then(result => web3.eth.sendSignedTransaction(result.rawTransaction))
-      .then(receipt => {
-        resolve(receipt)
+    await web3.eth.accounts.signTransaction(params, privateKey)
+      .then(result => {
+        txRaw = web3.eth.sendSignedTransaction(result.rawTransaction)
       })
+
+    const receipt = await txRaw.on('transactionHash', (hash) => {
+      const txId = `${config.link.etherscan}/tx/${hash}`
+      actions.loader.show(true, true, txId)
+    })
+      .on('error', (err) => {
+        reject(err)
+      })
+
+    resolve(receipt)
   })
 
 

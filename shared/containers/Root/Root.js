@@ -1,7 +1,7 @@
 import React from 'react'
-import { ConnectedRouter } from 'react-router-redux'
-import { Provider } from 'react-redux'
 import PropTypes from 'prop-types'
+import { Provider } from 'react-redux'
+import { ConnectedRouter } from 'react-router-redux'
 
 import App from 'containers/App/App'
 

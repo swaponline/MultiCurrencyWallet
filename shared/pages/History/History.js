@@ -4,20 +4,19 @@ import actions from 'redux/actions'
 
 import SwapApp from 'swap.app'
 
-import PageHeadline from 'components/PageHeadline/PageHeadline'
+import Row from './Row/Row'
 import Table from 'components/Table/Table'
 import Filter from 'components/Filter/Filter'
-
-import Row from './Row/Row'
 import SwapsHistory from './SwapsHistory/SwapsHistory'
+import PageHeadline from 'components/PageHeadline/PageHeadline'
 
 
 const filterHistory = (items, filter) => {
-  if (filter === 'SENT') {
+  if (filter === 'sent') {
     return items.filter(({ direction }) => direction === 'out')
   }
 
-  if (filter === 'RECEIVED') {
+  if (filter === 'received') {
     return items.filter(({ direction }) => direction === 'in')
   }
 

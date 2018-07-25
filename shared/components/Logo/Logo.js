@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { links } from 'helpers'
 
 import cssModules from 'react-css-modules'
@@ -18,9 +18,9 @@ const Logo = ({ colored, withLink }) => {
 
   if (withLink) {
     return (
-      <NavLink styleName="logo" to={links.home}>
+      <Link styleName="logo" to={links.home}>
         {imgNode}
-      </NavLink>
+      </Link>
     )
   }
 

@@ -1,17 +1,15 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-import cssModules from 'react-css-modules'
+import CSSModules from 'react-css-modules'
 import styles from './RemoveButton.scss'
 
+import RemoveIcon from 'components/ui/RemoveIcon/RemoveIcon'
 
-@cssModules(styles, { allowMultiple: true })
-export default class RemoveButton extends Component {
 
-  render() {
-    const { removeOrder } = this.props
+const RemoveButton = ({ className, onClick }) => (
+  <div styleName="removeButton" className={className} onClick={onClick}>
+    <RemoveIcon styleName="icon" />
+  </div>
+)
 
-    return (
-      <div styleName="button" onClick={removeOrder} />
-    )
-  }
-}
+export default CSSModules(RemoveButton, styles)

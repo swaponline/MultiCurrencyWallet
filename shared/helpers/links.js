@@ -5,5 +5,6 @@ export default {
   swap: '/swap',
   feed: '/feed',
   affiliate: '/affiliate',
-  listing: '/listing'
+  listing: '/listing',
+  testnet: 'https:/testnet.swap.online',
 }

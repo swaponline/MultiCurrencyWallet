@@ -3,8 +3,8 @@ import React, { Component, Fragment } from 'react'
 import actions from 'redux/actions'
 import { localStorage, constants, links } from 'helpers'
 
-import PageHeadline from 'components/PageHeadline/PageHeadline'
 import Title from 'components/PageHeadline/Title/Title'
+import PageHeadline from 'components/PageHeadline/PageHeadline'
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 
 import Orders from './Orders/Orders'
@@ -24,18 +24,15 @@ export default class Home extends Component {
     }
   }
 
-  handleSellCurrencySelect = ({ value }) => {
-    let { buyCurrency, sellCurrency } = this.state
-
-    if (value === sellCurrency) {
-      sellCurrency = buyCurrency
-    }
-
-    buyCurrency = value
-
+  handleBuyCurrencySelect = ({ value }) => {
     this.setState({
-      buyCurrency,
-      sellCurrency,
+      buyCurrency: value,
+    })
+  }
+
+  handleSellCurrencySelect = ({ value }) => {
+    this.setState({
+      sellCurrency: value,
     })
   }
 
@@ -59,7 +56,7 @@ export default class Home extends Component {
   }
 
   render() {
-    const { buyCurrency, sellCurrency, view } = this.state
+    const { buyCurrency, sellCurrency } = this.state
     const filterOrders = `${buyCurrency}${sellCurrency}`
 
     return (
@@ -75,6 +72,7 @@ export default class Home extends Component {
           <Orders
             filter={filterOrders}
             handleSellCurrencySelect={this.handleSellCurrencySelect}
+            handleBuyCurrencySelect={this.handleBuyCurrencySelect}
             buyCurrency={buyCurrency}
             sellCurrency={sellCurrency}
             flipCurrency={this.flipCurrency}
