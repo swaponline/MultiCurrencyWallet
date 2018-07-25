@@ -61,7 +61,6 @@ export default class Listing extends Component {
      		  	</p>
                 <FeedBack 
                     link="https://t.me/sashanoxon"
-                    mailto="mailto:team@swap.online"
                 />
      		</div>
         )
