@@ -4,6 +4,7 @@ import styles from './Listing.scss'
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import Href from 'components/Href/Href'
+import FeedBack from 'components/FeedBack/FeedBack'
 import { Button } from 'components/controls'
 import { FieldLabel, Input } from 'components/forms'
 import Link from 'sw-valuelink'
@@ -11,6 +12,7 @@ import actions from 'redux/actions'
 
 
 import ListingImg from './images/listing-screen.png'
+
 
 
 @CSSModules(styles)
@@ -57,21 +59,10 @@ export default class Listing extends Component {
      		  		<strong>Grow with us.</strong> <br/>
      		  		<strong>Earn with us.</strong> <br/>
      		  	</p>
-     		  	<div styleName="listingForm">
-     		  		<FieldLabel inRow>Enter the address of your contract</FieldLabel>
-     				<Input valueLink={linked.address} />
-                    <FieldLabel inRow>Team position</FieldLabel>
-                    <Input valueLink={linked.teamPosition} />
-                    <FieldLabel inRow>Icon link</FieldLabel>
-                    <Input valueLink={linked.linkIcon} />
-                    <Button 
-                       styleName="listingBtn"
-                       brand
-                       onClick={this.handleSend}
-                     >
-                       Send
-                     </Button>
-     		  	</div>
+                <FeedBack 
+                    link="https://t.me/sashanoxon"
+                    mailto="mailto:team@swap.online"
+                />
      		</div>
         )
   }
