@@ -89,4 +89,3 @@ export default class Orders extends Component {
     )
   }
 }
-
