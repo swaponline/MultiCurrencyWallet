@@ -76,7 +76,7 @@ const getTransaction = () =>
           transactions = res.result
             .filter((item) => item.value > 0).map((item) => ({
               type: 'eth',
-              confirmations: item.confirmations > 0 ? 'Confirmed' : 'Unconfirmed',
+              confirmations: item.confirmations,
               hash: item.hash,
               status: item.blockHash != null ? 1 : 0,
               value: web3.utils.fromWei(item.value),

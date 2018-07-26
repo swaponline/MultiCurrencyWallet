@@ -73,11 +73,6 @@ export default class BtcToEth extends Component {
     }
   }
 
-  removeOrder = (orderId) => {
-    SwapApp.services.orders.remove(orderId)
-    actions.feed.deleteItemToFeed(orderId)
-  }
-
   render() {
     const { secret, flow, enabledButton } = this.state
     const refundTxHex = this.getRefundTxHex()
