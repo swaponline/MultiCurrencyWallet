@@ -23,6 +23,7 @@ export default class BtcToEth extends Component {
       secret: crypto.randomBytes(32).toString('hex'),
       refundTxHex: null,
       enabledButton: false,
+      gwei: 2,
     }
   }
 
@@ -77,8 +78,6 @@ export default class BtcToEth extends Component {
     const { secret, flow, enabledButton } = this.state
     const refundTxHex = this.getRefundTxHex()
 
-    console.log('btc 2 eth', this.swap)
-
     return (
       <div>
         {
@@ -86,7 +85,6 @@ export default class BtcToEth extends Component {
             <strong>{this.swap.sellAmount.toNumber()} {this.swap.sellCurrency} &#10230; {this.swap.buyAmount.toNumber()} {this.swap.buyCurrency}</strong>
           )
         }
-
         {
           !this.swap.id && (
             this.swap.isMy ? (
@@ -269,7 +267,7 @@ export default class BtcToEth extends Component {
                 )
               }
               {
-                flow.step >= 5 && !flow.finishSwap && (
+                flow.step >= 5 && !flow.isFinished && (
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     { enabledButton &&  <Button brand onClick={this.tryRefund}>TRY REFUND</Button> }
                     <Timer

@@ -24,7 +24,6 @@ export default class User extends React.Component {
 
   state = {
     view: true,
-    menuVisible: false,
   }
 
   componentWillMount() {
@@ -57,12 +56,6 @@ export default class User extends React.Component {
     })
   }
 
-  handleToggleMenu = () => {
-    this.setState({
-      menuVisible: !this.state.menuVisible,
-    })
-  }
-
   acceptRequest = (orderId, participantPeer) => {
     const order = SwapApp.services.orders.getByKey(orderId)
     order.acceptRequest(participantPeer)
@@ -82,14 +75,12 @@ export default class User extends React.Component {
 
 
   render() {
-    const { view, menuVisible } = this.state
+    const { view } = this.state
     const { feeds } = this.props
     const mePeer = SwapApp.services.room.peer
 
     return (
       <div styleName="user-cont">
-        <MenuIcon onClick={this.handleToggleMenu} />
-        <NavMobile view={menuVisible} />
         <AddOfferButton />
         <UserAvatar
           isToggle={this.handleToggleTooltip}

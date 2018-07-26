@@ -11,18 +11,16 @@ const nav = [
   { title: 'Orders',    link: links.home      },
   { title: 'Wallet',    link: links.wallet    },
   { title: 'History',   link: links.history   },
-  { title: 'Affiliate', link: links.affiliate },
-  { title: 'Listing',   link: links.listing   },
 ]
 
-const NavMobile = ({ view }) => (
-  <div styleName={view ? 'nav' : 'nav hide'} >
+const NavMobile = () => (
+  <div styleName="navMobile" >
     {
       nav.map(({ title, link }) => (
         <NavLink
           exact
           key={title}
-          styleName="link"
+          styleName="linkMobile"
           to={link}
           activeClassName={styles.active}
         >
@@ -32,7 +30,7 @@ const NavMobile = ({ view }) => (
     }
     {
       process.env.MAINNET && (
-        <a styleName="link" target="_blank" rel="noreferrer noopener" href={links.testnet}> Testnet</a>
+        <a styleName="linkMobile" target="_blank" rel="noreferrer noopener" href={links.testnet}> Testnet</a>
       )
     }
   </div>
