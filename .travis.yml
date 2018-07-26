@@ -1,0 +1,7 @@
+sudo: false
+language: js
+node_js:
+  - stable
+script:
+  - npm run build:testnet
+
