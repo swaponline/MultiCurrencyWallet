@@ -39,6 +39,10 @@ export default {
       address: '0xdb455c71c1bc2de4e80ca451184041ef32054001',
       decimals: 18,
     },
+    btrm: {
+      address: '0xae72146eb535607Ee79f5D8834303ea18751845f',
+      decimals: 18,
+    },
   },
 
   link: {
