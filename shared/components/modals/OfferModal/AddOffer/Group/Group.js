@@ -8,7 +8,7 @@ import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import CurrencySelect from 'components/ui/CurrencySelect/CurrencySelect'
 
 
-const Group = ({ className, label, id, inputValueLink, currency = true, selectedCurrencyValue, onCurrencySelect, placeholder }) => (
+const Group = ({ className, label, id, inputValueLink, selectedCurrencyValue, onCurrencySelect, placeholder, currency = true }) => (
   <Fragment>
     <FieldLabel inRow>{label}</FieldLabel>
     <div styleName="groupField" className={className}>

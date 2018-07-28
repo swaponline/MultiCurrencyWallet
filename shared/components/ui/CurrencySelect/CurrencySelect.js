@@ -3,9 +3,8 @@ import React from 'react'
 import cssModules from 'react-css-modules'
 import styles from './CurrencySelect.scss'
 
-import DropDown from 'components/ui/DropDown/DropDown'
-
 import Option from './Option/Option'
+import DropDown from 'components/ui/DropDown/DropDown'
 
 
 const CurrencySelect = ({ className, selectedValue, onSelect }) => (

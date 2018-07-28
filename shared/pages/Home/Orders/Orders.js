@@ -50,15 +50,16 @@ export default class Orders extends Component {
     ) : (
       `${order.sellCurrency.toLowerCase()}${order.buyCurrency.toLowerCase()}` === filter
     ))
+    .sort((a, b) => b.exchangeRate - a.exchangeRate)
 
   render() {
     const { filter, sellCurrency, buyCurrency, handleSellCurrencySelect, handleBuyCurrencySelect, flipCurrency } = this.props
     const titles = [ 'EXCHANGE', 'YOU BUY', 'YOU SELL', 'EXCHANGE RATE', 'ACTIONS' ]
     const { orders } = this.state
 
-    const filteredOrders = this.filterOrders(orders, filter)
     const mePeer = SwapApp.services.room.peer
-    const myOrders = orders.filter(order => order.owner.peer === mePeer)
+    const filteredOrders = this.filterOrders(orders, filter)
+    const myOrders = orders.filter(order => order.owner.peer === mePeer).sort((a, b) => b.exchangeRate - a.exchangeRate)
 
     return (
       <Fragment>

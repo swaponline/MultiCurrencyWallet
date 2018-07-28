@@ -32,8 +32,8 @@ export default class AddOffer extends Component {
       exchangeRate: exchangeRate || config.exchangeRates.ethbtc,
       buyAmount: buyAmount || '',
       sellAmount: sellAmount || '',
-      buyCurrency: buyCurrency || 'eth',
-      sellCurrency: sellCurrency || 'btc',
+      buyCurrency: buyCurrency || 'btc',
+      sellCurrency: sellCurrency || 'eth',
       EventWasSend: false,
       isSubmitted: false,
     }
@@ -44,8 +44,8 @@ export default class AddOffer extends Component {
   }
 
   componentDidMount() {
-    const { buyCurrency, sellCurrency } = this.state
-    this.getExchangeRate(buyCurrency, sellCurrency)
+    const { sellCurrency, buyCurrency } = this.state
+    this.getExchangeRate(sellCurrency, buyCurrency)
   }
 
   changeExchangeRate = (value) => {
@@ -54,8 +54,8 @@ export default class AddOffer extends Component {
     })
   }
 
-  getExchangeRate = (buyCurrency, sellCurrency) => {
-    actions.user.setExchangeRate(buyCurrency, sellCurrency, this.changeExchangeRate)
+  getExchangeRate = (sellCurrency, buyCurrency) => {
+    actions.user.setExchangeRate(sellCurrency, buyCurrency, this.changeExchangeRate)
   }
 
 
@@ -71,7 +71,7 @@ export default class AddOffer extends Component {
     }
 
     this.setState({
-      buyAmount: buyAmount.toNumber(),
+      buyAmount,
       sellAmount: sellAmount.toNumber(),
     })
   }
@@ -84,11 +84,9 @@ export default class AddOffer extends Component {
     }
 
     buyCurrency = value
-
-    this.getExchangeRate(buyCurrency, sellCurrency)
+    this.getExchangeRate(sellCurrency, buyCurrency)
 
     const { exchangeRate } = this.state
-
     sellAmount = new BigNumber(String(buyAmount) || 0).dividedBy(exchangeRate)
 
 
@@ -107,10 +105,9 @@ export default class AddOffer extends Component {
     }
 
     sellCurrency = value
-    this.getExchangeRate(buyCurrency, sellCurrency)
+    this.getExchangeRate(sellCurrency, buyCurrency)
 
     const { exchangeRate } = this.state
-
     buyAmount = new BigNumber(String(sellAmount) || 0).multipliedBy(exchangeRate)
 
 
