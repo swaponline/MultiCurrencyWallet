@@ -65,14 +65,14 @@ export default class AddOffer extends Component {
     sellAmount = new BigNumber(String(sellAmount) || 0)
 
     if (value === 0 || !value) {
-      buyAmount = 0
+      buyAmount = new BigNumber(String(0))
     } else {
       buyAmount = sellAmount.dividedBy(new BigNumber(String(value)))
     }
 
     this.setState({
       buyAmount,
-      sellAmount: sellAmount.toNumber(),
+      sellAmount,
     })
   }
 
@@ -119,7 +119,7 @@ export default class AddOffer extends Component {
   }
 
   handleBuyAmountChange = (value) => {
-    const { exchangeRate } = this.state
+    const { exchangeRate, buyAmount } = this.state
 
     if (!this.EventWasSend) {
       actions.analytics.dataEvent('orderbook-addoffer-enter-ordervalue')
@@ -127,12 +127,12 @@ export default class AddOffer extends Component {
     }
 
     this.setState({
-      sellAmount: new BigNumber(String(value) || 0).multipliedBy(exchangeRate).toNumber(),
+      sellAmount: new BigNumber(String(value) || 0).multipliedBy(exchangeRate),
     })
   }
 
   handleSellAmountChange = (value) => {
-    const { exchangeRate } = this.state
+    const { exchangeRate, sellAmount } = this.state
 
     if (!this.EventWasSend) {
       actions.analytics.dataEvent('orderbook-addoffer-enter-ordervalue')
@@ -140,7 +140,8 @@ export default class AddOffer extends Component {
     }
 
     this.setState({
-      buyAmount: new BigNumber(String(value) || 0).multipliedBy(exchangeRate).toNumber(),
+      buyAmount: new BigNumber(String(value) || 0).multipliedBy(exchangeRate),
+      sellAmount: new BigNumber(String(sellAmount)),
     })
   }
 
@@ -166,7 +167,7 @@ export default class AddOffer extends Component {
 
   changeBalance = (value) => {
     this.setState({
-      sellAmount: value,
+      sellAmount: new BigNumber(String(value)),
     })
     this.handleSellAmountChange(value)
   }

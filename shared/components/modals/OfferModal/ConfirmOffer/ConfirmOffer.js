@@ -4,6 +4,7 @@ import actions from 'redux/actions'
 import SwapApp from 'swap.app'
 
 import { links } from 'helpers'
+import { BigNumber } from 'bignumber.js'
 import { Link } from 'react-router-dom'
 
 import cssModules from 'react-css-modules'
@@ -30,8 +31,16 @@ export default class ConfirmOffer extends Component {
   }
 
   componentWillMount() {
-    const { offer: { sellAmount, buyAmount, sellCurrency, buyCurrency, exchangeRate } } = this.props
-    this.setState({ sellAmount, buyAmount, buyCurrency, sellCurrency, exchangeRate })
+    let { offer: { sellAmount, buyAmount, sellCurrency, buyCurrency, exchangeRate } } = this.props
+    sellAmount = new BigNumber(String(sellAmount))
+    buyAmount = new BigNumber(String(buyAmount))
+    this.setState({
+      sellAmount,
+      buyAmount,
+      buyCurrency,
+      sellCurrency,
+      exchangeRate,
+    })
 
     if (process.env.MAINNET) {
       if (sellCurrency === 'eth' && sellAmount > 0.1) {
@@ -69,7 +78,9 @@ export default class ConfirmOffer extends Component {
 
   render() {
     const { onBack } = this.props
-    const {  buyAmount, sellAmount, buyCurrency, sellCurrency, exchangeRate } = this.state
+    let {  buyAmount, sellAmount, buyCurrency, sellCurrency, exchangeRate } = this.state
+    buyAmount   = buyAmount.toNumber().toFixed(5)
+    sellAmount  = sellAmount.toNumber().toFixed(5)
 
     return (
       <Fragment>
