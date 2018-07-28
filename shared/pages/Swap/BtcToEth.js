@@ -25,9 +25,6 @@ export default class BtcToEth extends Component {
   }
 
   componentWillMount() {
-    const { secret } = this.state
-
-    console.log('secret', secret)
     this.swap.on('state update', this.handleFlowStateUpdate)
   }
 

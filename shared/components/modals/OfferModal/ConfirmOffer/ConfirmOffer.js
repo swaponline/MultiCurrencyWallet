@@ -3,6 +3,9 @@ import React, { Component, Fragment } from 'react'
 import actions from 'redux/actions'
 import SwapApp from 'swap.app'
 
+import { links } from 'helpers'
+import { Link } from 'react-router-dom'
+
 import cssModules from 'react-css-modules'
 import styles from './ConfirmOffer.scss'
 
@@ -76,7 +79,9 @@ export default class ConfirmOffer extends Component {
         <Fee amount={0.0001} currency={sellCurrency} />
         <ButtonsInRow styleName="buttonsInRow">
           <Button styleName="button" gray onClick={onBack}>Back</Button>
-          <Button styleName="button" id="confirm" brand onClick={this.handleConfirm}>Add</Button>
+          <Link styleName="link" to={`${links.home}orders/${buyCurrency.toLowerCase()}-${sellCurrency.toLowerCase()}`}>
+            <Button styleName="button" id="confirm" brand onClick={this.handleConfirm} >Add</Button>
+          </Link>
         </ButtonsInRow>
       </Fragment>
     )

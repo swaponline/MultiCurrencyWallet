@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 
 import { NavLink } from 'react-router-dom'
-import { links, navigation } from 'helpers'
+import { links } from 'helpers'
 
 import CSSModules from 'react-css-modules'
 import styles from './Nav.scss'
