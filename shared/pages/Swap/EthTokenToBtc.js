@@ -6,6 +6,7 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import TimerButton from 'components/controls/TimerButton/TimerButton'
 import Button from 'components/controls/Button/Button'
 import Timer from './Timer/Timer'
+import {BigNumber} from "bignumber.js/bignumber";
 
 
 export default class EthTokenToBtc extends Component {
@@ -52,12 +53,8 @@ export default class EthTokenToBtc extends Component {
   }
 
   addGasPrice = () => {
-    let { gwei } = this.state
-    gwei += 1
+    const gwei =  new BigNumber(String(this.swap.flow.ethSwap.gasPrice)).plus(new BigNumber(1e9))
     this.swap.flow.ethSwap.addGasPrice(gwei)
-    this.setState({
-      gwei,
-    })
   }
 
   render() {

@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react'
 
 import crypto from 'crypto'
 import config from 'app-config'
+import { BigNumber } from 'bignumber.js'
 
 import Timer from './Timer/Timer'
 import Button from 'components/controls/Button/Button'
@@ -20,7 +21,6 @@ export default class BtcToEth extends Component {
       flow: this.swap.flow.state,
       secret: crypto.randomBytes(32).toString('hex'),
       enabledButton: false,
-      gwei: 2,
     }
   }
 
@@ -49,12 +49,8 @@ export default class BtcToEth extends Component {
   }
 
   addGasPrice = () => {
-    let { gwei } = this.state
-    gwei += 1
+    const gwei =  new BigNumber(String(this.swap.flow.ethSwap.gasPrice)).plus(new BigNumber(1e9))
     this.swap.flow.ethSwap.addGasPrice(gwei)
-    this.setState({
-      gwei,
-    })
   }
 
   tryRefund = () => {

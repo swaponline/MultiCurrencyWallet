@@ -8,6 +8,7 @@ import Button from 'components/controls/Button/Button'
 import Timer from './Timer/Timer'
 
 import crypto from 'crypto'
+import {BigNumber} from "bignumber.js/bignumber";
 
 
 export default class BtcToEthToken extends Component {
@@ -49,12 +50,8 @@ export default class BtcToEthToken extends Component {
   }
 
   addGasPrice = () => {
-    let { gwei } = this.state
-    gwei += 1
+    const gwei =  new BigNumber(String(this.swap.flow.ethSwap.gasPrice)).plus(new BigNumber(1e9))
     this.swap.flow.ethSwap.addGasPrice(gwei)
-    this.setState({
-      gwei,
-    })
   }
 
   getRefundTxHex = () => {
