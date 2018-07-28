@@ -48,6 +48,15 @@ export default class BtcToEthToken extends Component {
     this.swap.flow.syncBalance()
   }
 
+  addGasPrice = () => {
+    let { gwei } = this.state
+    gwei += 1
+    this.swap.flow.ethSwap.addGasPrice(gwei)
+    this.setState({
+      gwei,
+    })
+  }
+
   getRefundTxHex = () => {
     const { flow } = this.state
 
@@ -69,7 +78,6 @@ export default class BtcToEthToken extends Component {
             <strong>{this.swap.sellAmount.toNumber()} {this.swap.sellCurrency} &#10230; {this.swap.buyAmount.toNumber()} {this.swap.buyCurrency}</strong>
           )
         }
-
         {
           flow.isWaitingForOwner && (
             <Fragment>
@@ -78,7 +86,8 @@ export default class BtcToEthToken extends Component {
             </Fragment>
           )
         }
-
+        <br />
+        <Button white onClick={this.addGasPrice}>Add gas price</Button>
         {
           (flow.step === 1 || flow.isMeSigned) && (
             <Fragment>

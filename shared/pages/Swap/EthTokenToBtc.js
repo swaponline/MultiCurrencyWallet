@@ -51,6 +51,15 @@ export default class EthTokenToBtc extends Component {
     this.swap.flow.tryRefund()
   }
 
+  addGasPrice = () => {
+    let { gwei } = this.state
+    gwei += 1
+    this.swap.flow.ethSwap.addGasPrice(gwei)
+    this.setState({
+      gwei,
+    })
+  }
+
   render() {
     const { flow, enabledButton } = this.state
 
@@ -70,6 +79,8 @@ export default class EthTokenToBtc extends Component {
             </Fragment>
           )
         }
+        <br />
+        <Button white onClick={this.addGasPrice}>Add gas price</Button>
 
         {
           (flow.step === 1 || flow.isMeSigned) && (

@@ -51,9 +51,17 @@ export default class EthToBtc extends Component {
     this.swap.flow.tryRefund()
   }
 
+  addGasPrice = () => {
+    let { gwei } = this.state
+    gwei += 1
+    this.swap.flow.ethSwap.addGasPrice(gwei)
+    this.setState({
+      gwei,
+    })
+  }
+
   render() {
     const { flow, enabledButton } = this.state
-    console.log('eth 2 btc', this.swap)
 
     return (
       <div>
@@ -76,6 +84,8 @@ export default class EthToBtc extends Component {
             )
           )
         }
+        <br />
+        <Button white onClick={this.addGasPrice}>Add gas price</Button>
 
         {
           flow.isWaitingForOwner && (
