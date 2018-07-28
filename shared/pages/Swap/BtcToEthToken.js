@@ -118,6 +118,7 @@ export default class BtcToEthToken extends Component {
                     <div>
                       <div>Your balance: <strong>{flow.balance}</strong> {this.swap.sellCurrency}</div>
                       <div>Required balance: <strong>{this.swap.sellAmount.toNumber()}</strong> {this.swap.sellCurrency}</div>
+                      <div>Your address: {this.swap.flow.myBtcAddress}</div>
                       <hr />
                       <span>{flow.address}</span>
                     </div>
