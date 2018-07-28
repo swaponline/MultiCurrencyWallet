@@ -87,7 +87,7 @@ export default class AddOffer extends Component {
     this.getExchangeRate(sellCurrency, buyCurrency)
 
     const { exchangeRate } = this.state
-    sellAmount = new BigNumber(String(buyAmount) || 0).dividedBy(exchangeRate)
+    sellAmount = new BigNumber(String(buyAmount) || 0).multipliedBy(exchangeRate)
 
 
     this.setState({
@@ -140,7 +140,7 @@ export default class AddOffer extends Component {
     }
 
     this.setState({
-      buyAmount: new BigNumber(String(value) || 0).dividedBy(exchangeRate).toNumber(),
+      buyAmount: new BigNumber(String(value) || 0).multipliedBy(exchangeRate).toNumber(),
     })
   }
 

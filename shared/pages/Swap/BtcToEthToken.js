@@ -49,27 +49,18 @@ export default class BtcToEthToken extends Component {
   }
 
   getRefundTxHex = () => {
-    const { refundTxHex, flow, secret } = this.state
+    const { flow } = this.state
 
-    if (refundTxHex) {
-      return refundTxHex
+    if (flow.refundTxHex) {
+      return flow.refundTxHex
     }
     else if (flow.btcScriptValues) {
-      this.swap.flow.btcSwap.getRefundHexTransaction({
-        scriptValues: flow.btcScriptValues,
-        secret,
-      })
-        .then((txHex) => {
-          this.setState({
-            refundTxHex: txHex,
-          })
-        })
+      this.swap.flow.getRefundTxHex()
     }
   }
 
   render() {
     const { secret, flow, enabledButton } = this.state
-    const refundTxHex = this.getRefundTxHex()
 
     return (
       <div>
@@ -173,31 +164,23 @@ export default class BtcToEthToken extends Component {
                 )
               }
               {
-                refundTxHex && (
-                  <div>
-                    <h3>Refund hex transaction:</h3>
-                    {refundTxHex}
-                  </div>
+                flow.btcScriptValues && (
+                  <Fragment>
+                    <br />
+                    { !flow.refundTxHex && <Button brand onClick={this.getRefundTxHex}> Create refund hex</Button> }
+                    {
+                      flow.refundTxHex && (
+                        <div>
+                          Refund hex transaction:
+                          <strong>
+                            {flow.refundTxHex}
+                          </strong>
+                        </div>
+                      )
+                    }
+                  </Fragment>
                 )
               }
-              {
-                flow.refundTransactionHash && (
-                  <div>
-                    Transaction:
-                    <strong>
-                      <a
-                        href={`${config.link.bitpay}/tx/${flow.refundTransactionHash}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {flow.refundTransactionHash}
-                      </a>
-                    </strong>
-                  </div>
-                )
-              }
-
-
               {
                 (flow.step === 5 || flow.isEthContractFunded) && (
                   <Fragment>

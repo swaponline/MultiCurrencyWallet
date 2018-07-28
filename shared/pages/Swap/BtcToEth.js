@@ -1,14 +1,12 @@
 import React, { Component, Fragment } from 'react'
 
+import crypto from 'crypto'
 import config from 'app-config'
 
+import Timer from './Timer/Timer'
+import Button from 'components/controls/Button/Button'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import TimerButton from 'components/controls/TimerButton/TimerButton'
-import Button from 'components/controls/Button/Button'
-import Timer from './Timer/Timer'
-
-import crypto from 'crypto'
-import actions from 'redux/actions'
 
 
 export default class BtcToEth extends Component {
@@ -21,13 +19,15 @@ export default class BtcToEth extends Component {
     this.state = {
       flow: this.swap.flow.state,
       secret: crypto.randomBytes(32).toString('hex'),
-      refundTxHex: null,
       enabledButton: false,
       gwei: 2,
     }
   }
 
   componentWillMount() {
+    const { secret } = this.state
+
+    console.log('secret', secret)
     this.swap.on('state update', this.handleFlowStateUpdate)
   }
 
@@ -56,27 +56,20 @@ export default class BtcToEth extends Component {
   }
 
   getRefundTxHex = () => {
-    const { refundTxHex, flow, secret } = this.state
+    const { flow } = this.state
 
-    if (refundTxHex) {
-      return refundTxHex
+    if (flow.refundTxHex) {
+      return flow.refundTxHex
     }
     else if (flow.btcScriptValues) {
-      this.swap.flow.btcSwap.getRefundHexTransaction({
-        scriptValues: flow.btcScriptValues,
-        secret,
-      })
-        .then((txHex) => {
-          this.setState({
-            refundTxHex: txHex,
-          })
-        })
+      this.swap.flow.getRefundTxHex()
     }
   }
 
+
   render() {
     const { secret, flow, enabledButton } = this.state
-    const refundTxHex = this.getRefundTxHex()
+    console.log(flow)
 
     return (
       <div>
@@ -179,30 +172,23 @@ export default class BtcToEth extends Component {
                 )
               }
               {
-                refundTxHex && (
-                  <div>
-                    <h3>Refund hex transaction:</h3>
-                    {refundTxHex}
-                  </div>
+                flow.btcScriptValues && (
+                  <Fragment>
+                    <br />
+                    { !flow.refundTxHex && <Button brand onClick={this.getRefundTxHex}> Create refund hex</Button> }
+                    {
+                      flow.refundTxHex && (
+                        <div>
+                          Refund hex transaction:
+                          <strong>
+                            {flow.refundTxHex}
+                          </strong>
+                        </div>
+                      )
+                    }
+                  </Fragment>
                 )
               }
-              {
-                flow.refundTransactionHash && (
-                  <div>
-                    Transaction:
-                    <strong>
-                      <a
-                        href={`${config.link.bitpay}/tx/${flow.refundTransactionHash}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {flow.refundTransactionHash}
-                      </a>
-                    </strong>
-                  </div>
-                )
-              }
-
               {
                 (flow.step === 5 || flow.isEthContractFunded) && (
                   <Fragment>
