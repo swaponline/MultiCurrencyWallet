@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react'
 import Swap from 'swap.swap'
 
+import EmergencySave from './EmergencySave'
+
 import BtcToEth from './BtcToEth'
 import EthToBtc from './EthToBtc'
 import EthTokenToBtc from './EthTokenToBtc'
@@ -34,6 +36,7 @@ export default class SwapComponent extends PureComponent {
     return (
       <div style={{ paddingLeft: '30px', paddingTop: '30px' }}>
         <SwapComponent swap={swap} />
+        <EmergencySave swap={swap} />
       </div>
     )
   }
