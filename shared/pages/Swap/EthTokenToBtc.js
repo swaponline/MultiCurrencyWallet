@@ -166,7 +166,7 @@ export default class EthTokenToBtc extends Component {
                     </div>
                     <br />
                     <pre>
-                      <code className="code">{`
+                      <code>{`
   bitcoinjs.script.compile([
     bitcoin.core.opcodes.OP_RIPEMD160,
     Buffer.from('${flow.btcScriptValues.secretHash}', 'hex'),

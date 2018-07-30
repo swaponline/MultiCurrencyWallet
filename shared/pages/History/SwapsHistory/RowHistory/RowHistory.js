@@ -16,8 +16,7 @@ const RowHistory = ({ row }) => {
     return null
   }
 
-  const { buyAmount, buyCurrency, sellAmount, isProcessing, isMy, sellCurrency, isFinished,  id } = row
-  console.log(row)
+  const { buyAmount, buyCurrency, sellAmount, isMy, sellCurrency, isFinished,  id } = row
 
   return (
     <tr>
