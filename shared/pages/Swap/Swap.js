@@ -1,6 +1,8 @@
 import React, { PureComponent } from 'react'
 import Swap from 'swap.swap'
 
+import EmergencySave from './EmergencySave'
+
 import BtcToEth from './BtcToEth'
 import EthToBtc from './EthToBtc'
 import EthTokenToBtc from './EthTokenToBtc'
@@ -50,9 +52,13 @@ export default class SwapComponent extends PureComponent {
     const swap = new Swap(orderId)
     const SwapComponent = swapComponents[swap.flow._flowName.toUpperCase()]
 
+    // for debug and emergency save
+    window.swap = swap
+
     return (
       <div style={{ paddingLeft: '30px', paddingTop: '30px' }}>
         <SwapComponent swap={swap} />
+        <EmergencySave flow={swap.flow} />
       </div>
     )
   }
