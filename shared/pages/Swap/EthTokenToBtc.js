@@ -53,7 +53,7 @@ export default class EthTokenToBtc extends Component {
   }
 
   addGasPrice = () => {
-    const gwei =  new BigNumber(String(this.swap.flow.ethSwap.gasPrice)).plus(new BigNumber(1e9))
+    const gwei =  new BigNumber(String(this.swap.flow.ethSwap.gasPrice)).plus(new BigNumber(1e10))
     this.swap.flow.ethSwap.addGasPrice(gwei)
   }
 

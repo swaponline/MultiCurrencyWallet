@@ -30,7 +30,8 @@ export default class History extends Component {
 
   state = {
     orders: SwapApp.services.orders.items,
-  }
+    historySwap: null,
+  };
 
   componentDidMount() {
     actions.analytics.dataEvent('open-page-history')
@@ -38,6 +39,7 @@ export default class History extends Component {
   }
 
   componentWillMount() {
+    this.getSwapHistory()
     SwapApp.services.orders
       .on('new orders', this.updateOrders)
       .on('new order', this.updateOrders)
@@ -55,6 +57,24 @@ export default class History extends Component {
       .off('new order request', this.updateOrders)
   }
 
+  getSwapHistory = () => {
+    const swapId = JSON.parse(localStorage.getItem('swapId'))
+
+    if (swapId === null || swapId.length === 0) {
+      return
+    }
+
+    const historySwap = swapId.map(item =>  this.getSwap(item))
+    this.setState({
+      historySwap,
+    })
+  }
+
+  getSwap = (swapId) => ({
+    ...SwapApp.env.storage.getItem(`swap.${swapId}`),
+    ...SwapApp.env.storage.getItem(`flow.${swapId}`),
+  })
+
   updateOrders = () => {
     this.setState({
       orders: SwapApp.services.orders.items,
@@ -69,15 +89,14 @@ export default class History extends Component {
 
   render() {
     const { items } = this.props
-    const { orders } = this.state
+    const { historySwap } = this.state
     const titles = [ 'Coin', 'Status', 'Statement', 'Amount' ]
-    const mePeer = SwapApp.services.room.peer
-    const historyOrders = orders.filter(order => mePeer === order.owner.peer)
+    console.log('historySwap', historySwap)
 
     return (
       <section>
         <PageHeadline subTitle="History" />
-        <SwapsHistory orders={historyOrders} />
+        <SwapsHistory orders={historySwap} />
         <h3 >All transactions</h3>
         <Filter />
         <Table

@@ -18,6 +18,28 @@ const swapComponents = {
 
 export default class SwapComponent extends PureComponent {
 
+  componentWillMount() {
+    const { match : { params : { orderId } } } = this.props
+    this.setSaveSwapId(orderId)
+  }
+
+  setSaveSwapId = (orderId) => {
+    let swapsId = JSON.parse(localStorage.getItem('swapId'))
+
+    if (swapsId === null || swapsId.length === 0) {
+      swapsId = []
+      swapsId.push(orderId)
+    }
+
+    swapsId.map(item => {
+      if (item !== orderId) {
+        swapsId.push(orderId)
+      }
+    })
+
+    localStorage.setItem('swapId', JSON.stringify(swapsId))
+  }
+
   render() {
     const { match : { params : { orderId } } } = this.props
 

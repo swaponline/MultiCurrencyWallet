@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import config from 'app-config'
 
 import { links } from 'helpers'
 import { Link } from 'react-router-dom'
@@ -17,7 +16,8 @@ const RowHistory = ({ row }) => {
     return null
   }
 
-  const { buyAmount, buyCurrency, sellAmount, isProcessing, sellCurrency, isMy,  id } = row
+  const { buyAmount, buyCurrency, sellAmount, isProcessing, isMy, sellCurrency, isFinished,  id } = row
+  console.log(row)
 
   return (
     <tr>
@@ -25,16 +25,28 @@ const RowHistory = ({ row }) => {
         <Coins names={[buyCurrency, sellCurrency]}  />
       </td>
       <td>
-        {`${buyCurrency.toUpperCase()} ${buyAmount.toNumber().toFixed(3)}`}
+        {
+          isMy ? (
+            `${sellAmount} ${sellCurrency.toUpperCase()}`
+          ) : (
+            `${buyAmount} ${buyCurrency.toUpperCase()}`
+          )
+        }
       </td>
       <td>
-        {`${sellCurrency.toUpperCase()} ${sellAmount.toNumber().toFixed(3)}`}
+        {
+          isMy ? (
+            `${buyAmount} ${buyCurrency.toUpperCase()}`
+          ) : (
+            `${sellAmount} ${sellCurrency.toUpperCase()}`
+          )
+        }
       </td>
       <td>
-        { config.exchangeRates[`${buyCurrency.toLowerCase()}${sellCurrency.toLowerCase()}`] }
+        { (sellAmount / buyAmount).toFixed(5) }{ ` ${sellCurrency}/${buyCurrency}`}
       </td>
       <td>
-        { isProcessing ? 'Completed' : 'Uncompleted' }
+        { isFinished ? 'Finished' : 'Uncompleted' }
       </td>
       <td>
         {

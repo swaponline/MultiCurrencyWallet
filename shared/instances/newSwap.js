@@ -27,9 +27,8 @@ window.createOrder = ({ buyCurrency, sellCurrency, buyAmount, sellAmount }) => {
   return 'Order create'
 }
 
-const createSwapApp = () => {
+const createSwapApp = async () => {
   swapApp.setup({
-
     network: process.env.MAINNET ? 'mainnet' : 'testnet',
 
     env: {

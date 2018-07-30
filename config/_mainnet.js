@@ -19,7 +19,7 @@ export default {
   },
 
   token: {
-    contract: '0x8D880dff55a0c5620Cc617B0a34c83B87946783c', // пока под вопросом
+    contract: '0x85F806b0df30709886C22ed1be338d2c647Abd6B',
   },
 
   eth: {

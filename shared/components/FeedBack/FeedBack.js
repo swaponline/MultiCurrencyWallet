@@ -8,7 +8,7 @@ import Href from 'components/Href/Href'
 
 
 const FeedBack = ({ link }) => (
-  <div styleName="FeedBack">
+  <div styleName="feedback">
     <h2 styleName="heading">Contacts</h2>
     <div styleName="contact">
       <img src={TelegramImg} alt="" />
