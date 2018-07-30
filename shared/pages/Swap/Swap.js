@@ -36,7 +36,7 @@ export default class SwapComponent extends PureComponent {
     return (
       <div style={{ paddingLeft: '30px', paddingTop: '30px' }}>
         <SwapComponent swap={swap} />
-        <EmergencySave swap={swap} />
+        <EmergencySave flow={swap.flow} />
       </div>
     )
   }

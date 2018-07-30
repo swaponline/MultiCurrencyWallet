@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+
 import Button from 'components/controls/Button/Button'
+
 
 export default class EmergencySave extends Component {
 
@@ -20,7 +22,7 @@ export default class EmergencySave extends Component {
 
   render() {
     const { isShowEmergency } = this.state
-    const { flow: { state } } = this.props.swap
+    const { flow: { state } } = this.props
 
     return (
       <div style={{ marginTop: '30%' }}>
