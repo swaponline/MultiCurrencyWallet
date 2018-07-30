@@ -1,23 +1,25 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import CSSModules from 'react-css-modules'
+import styles from './EmergencySave.scss'
+
 import Button from 'components/controls/Button/Button'
 
 
+@CSSModules(styles)
 export default class EmergencySave extends Component {
 
   static propTypes = {
-    swap: PropTypes.any
+    flow: PropTypes.object,
   }
 
   state = {
-    isShowEmergency: false
+    isShowEmergency: false,
   }
 
   showEmergency = () => {
-    const { isShowEmergency } = this.state
-
-    this.setState({ isShowEmergency: !isShowEmergency })
+    this.setState(isShowEmergency => !isShowEmergency)
   }
 
   render() {
@@ -25,17 +27,17 @@ export default class EmergencySave extends Component {
     const { flow: { state } } = this.props
 
     return (
-      <div style={{ marginTop: '30%' }}>
+      <div styleName="block">
         <Button brand onClick={this.showEmergency}>
           SHOW EMERGENCY INFORMATION
         </Button>
         {
           isShowEmergency && (
             <pre>
-              <code className="code">
-              {
-                JSON.stringify(state, false, 4)
-              }
+              <code>
+                {
+                  JSON.stringify(state, false, 4)
+                }
               </code>
             </pre>
           )

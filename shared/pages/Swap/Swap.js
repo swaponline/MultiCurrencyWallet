@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import Swap from 'swap.swap'
 
-import EmergencySave from './EmergencySave'
+import EmergencySave from './EmergencySave/EmergencySave'
 
 import BtcToEth from './BtcToEth'
 import EthToBtc from './EthToBtc'
