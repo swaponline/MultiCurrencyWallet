@@ -48,6 +48,7 @@ export default class Footer extends Component {
     return (
       <div styleName="footer">
         <WidthContainer styleName="container">
+          <a href="https://t.me/swaponline" target="_blank">Need help? Join Telegram chat @swaponline</a>
           <Info serverAddress={server} userOnline={userOnline} connected={connected} />
         </WidthContainer>
       </div>
