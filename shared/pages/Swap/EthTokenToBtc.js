@@ -77,7 +77,7 @@ export default class EthTokenToBtc extends Component {
           )
         }
         <br />
-        <Button white onClick={this.addGasPrice}>Add gas price</Button>
+        { !flow.isFinished && <Button white onClick={this.addGasPrice}>Add gas price</Button> }
 
         {
           (flow.step === 1 || flow.isMeSigned) && (
