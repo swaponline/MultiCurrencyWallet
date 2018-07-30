@@ -19,7 +19,9 @@ export default class EmergencySave extends Component {
   }
 
   showEmergency = () => {
-    this.setState(isShowEmergency => !isShowEmergency)
+    this.setState({
+      isShowEmergency: !this.state.isShowEmergency,
+    })
   }
 
   render() {
