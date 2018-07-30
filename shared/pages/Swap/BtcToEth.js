@@ -178,15 +178,16 @@ export default class BtcToEth extends Component {
               {
                 flow.btcScriptValues && (
                   <Fragment>
-                    <br />
                     { !flow.refundTxHex && <Button brand onClick={this.getRefundTxHex}> Create refund hex</Button> }
                     {
                       flow.refundTxHex && (
                         <div>
-                          Refund hex transaction:
-                          <strong>
+                          <div>
+                            Refund hex transaction:
+                          </div>
+                          <code>
                             {flow.refundTxHex}
-                          </strong>
+                          </code>
                         </div>
                       )
                     }
