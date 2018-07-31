@@ -1,7 +1,6 @@
 cache:
   directories:
     - node_modules
-    - ~/.npm
     - ~/.cache
   yarn: true
 language: node_js
@@ -14,9 +13,10 @@ env:
   - STAGE=build_mainnet
   before_script:
     - git submodule update --init --recursive
-    - yarn install
+    - echo "YARN install" - echo "STAGE:" $STAGE && yarn install
     - if [[ $STAGE == "test" ]]; then yarn start &; fi
   script:
+    - echo "STAGE:" $STAGE
     - if [[ $STAGE == "test" ]]; then cypress install&&$(npm bin)/cypress run --record; fi
     - if [[ $STAGE == "lint" ]]; then yarn eslint; fi
     - if [[ $STAGE == "build_mainnet" ]];then  yarn build:mainnet &; fi
