@@ -8,7 +8,7 @@ language: node_js
 node_js:
   - "8"
 matrix:
-  iclude:
+  include:
   - name: "Test"
     env: STAGE=test
   - name: "Lint"
@@ -20,6 +20,6 @@ matrix:
   script:
     - yarn install
     - if [[ "$STAGE" == "test" ]]; then yarn start &; fi
-    - if [[ "$STAGE" == "test" ]]; then $(npm bin)/cypress run --record; fi
+    - if [[ "$STAGE" == "test" ]]; then cypress install&&$(npm bin)/cypress run --record; fi
     - if [[ "$STAGE" == "lint" ]]; then yarn eslint; fi
     - if [[ "$STAGE" == "build:mainnet" ]];then  yarn $STAGE &; fi
