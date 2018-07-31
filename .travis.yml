@@ -4,6 +4,6 @@ node_js:
   - "8"
 script:
   - yarn lint
-  - yarn test --coverage --silent
+  - yarn test
   - yarn build
   
