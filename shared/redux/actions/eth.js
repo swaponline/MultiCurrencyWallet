@@ -1,4 +1,5 @@
 import { request, constants } from 'helpers'
+import abi from 'human-standard-token-abi'
 import { getState } from 'redux/core'
 import  actions from 'redux/actions'
 import web3 from 'helpers/web3'
@@ -32,35 +33,26 @@ const login = (privateKey) => {
 
 const getBalance = () => {
   const { user: { ethData: { address } } } = getState()
-  const url = `${config.api.etherscan}?module=account&action=balance&address=${address}&tag=latest&apikey=${config.apiKeys.etherscan}`
-
-  return request.get(url)
-    .then(({ result }) => {
+  web3.eth.getBalance(address)
+    .then(result => {
       const amount = Number(web3.utils.fromWei(result))
+
       reducers.user.setBalance({ name: 'ethData', amount })
       return amount
     })
-    .catch(() => {
-      console.log('app:showError', 'Ethereum service isn\'t available, try later')
+    .catch((e) => {
+      console.log('Web3 doesn\'t work please again later ',  e.error)
     })
 }
 
 const fetchBalance = (address) => {
-  const url = `${config.api.etherscan}?module=account&action=balance&address=${address}&tag=latest&apikey=${config.apiKeys.etherscan}`
-  return request.get(url)
-    .then(({ result }) => Number(web3.utils.fromWei(result)))
+  web3.eth.getBalance(address)
+    .then(result => Number(web3.utils.fromWei(result)))
+    .catch((e) => {
+      console.log('Web3 doesn\'t work please again later ', e.error)
+    })
 }
 
-
-// const fetchBalance = (address) =>
-//   web3.eth.getBalance(address)
-//     .then((wei) => Number(web3.utils.fromWei(wei)))
-
-// export const getGas = () => {
-//   web3.eth.getGasPrice().then((res) => {
-//     gas = web3.utils.fromWei(res)
-//   })
-// }
 
 const getTransaction = () =>
   new Promise((resolve) => {
@@ -122,9 +114,9 @@ const send = (from, to, amount) =>
 
 
 export default {
+  send,
   login,
   getBalance,
-  getTransaction,
-  send,
   fetchBalance,
+  getTransaction,
 }
