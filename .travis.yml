@@ -4,9 +4,9 @@ node_js:
   - "8"
 script:
   - git submodule update --init --recursive
-  - yarn add app-module-path
   - ls
   - yarn install
   #- npm test
   - yarn eslint
-  - yarn start
+  - yarn build:mainnet
+  
