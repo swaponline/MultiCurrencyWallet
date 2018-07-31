@@ -1,6 +1,6 @@
 import React from 'react'
 
-import styles from './Feedback.scss'
+import styles from './FeedBack.scss'
 import cssModules from 'react-css-modules'
 import TelegramImg from './images/telegram.png'
 
