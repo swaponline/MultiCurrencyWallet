@@ -35,12 +35,12 @@ export default class AddOffer extends Component {
       buyCurrency: buyCurrency || 'btc',
       sellCurrency: sellCurrency || 'eth',
       EventWasSend: false,
-      isSubmitted: false,
+      min: 0.05,
     }
   }
 
   componentWillMount() {
-    actions.user.getBalances()
+    this.checkBalance()
   }
 
   componentDidMount() {
@@ -51,6 +51,15 @@ export default class AddOffer extends Component {
   changeExchangeRate = (value) => {
     this.setState({
       exchangeRate: value,
+    })
+  }
+
+  checkBalance = async () => {
+    const { sellCurrency } = this.state
+    const balance = await actions[sellCurrency.toLowerCase()].getBalance()
+
+    this.setState({
+      balance,
     })
   }
 
@@ -146,24 +155,11 @@ export default class AddOffer extends Component {
     })
   }
 
-  checkBalance = async (sellCurrency) => {
-    const balance = await actions[sellCurrency.toLowerCase()].getBalance()
-
-    this.setState({
-      balance,
-    })
-  }
-
   handleNext = () => {
-    const { exchangeRate, buyAmount, sellAmount, sellCurrency } = this.state
+    const { exchangeRate, buyAmount, sellAmount, balance, min } = this.state
     const { onNext } = this.props
 
-    console.log(actions)
-
-    this.checkBalance(sellCurrency)
-
-    const { balance } = this.state
-    const isDisabled = !exchangeRate || !buyAmount || !sellAmount || sellAmount > balance
+    const isDisabled = !exchangeRate || !buyAmount || !sellAmount || sellAmount > balance || sellAmount < min
 
     if (!isDisabled) {
       actions.analytics.dataEvent('orderbook-addoffer-click-next-button')
@@ -180,10 +176,14 @@ export default class AddOffer extends Component {
 
   render() {
     const { items, tokens } = this.props
-    const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency, balance } = this.state
+    const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency, balance, min } = this.state
 
     const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
-    const isDisabled = !exchangeRate || !buyAmount && !sellAmount || sellAmount > balance
+
+    linked.sellAmount.check((value) => value > 0.05, `Amount must be greater than 0.01 `)
+    linked.sellAmount.check((value) => value < balance, `Amount must be bigger your balance`)
+
+    const isDisabled = !exchangeRate || !buyAmount && !sellAmount || sellAmount > balance || sellAmount < min
     const data = [].concat(tokens, items).filter(item => item.currency.toLowerCase() === `${sellCurrency}`)
 
     return (
