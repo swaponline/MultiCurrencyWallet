@@ -167,7 +167,7 @@ export default class AddOffer extends Component {
 
   changeBalance = (value) => {
     this.setState({
-      sellAmount: new BigNumber(String(value)),
+      sellAmount: value,
     })
     this.handleSellAmountChange(value)
   }

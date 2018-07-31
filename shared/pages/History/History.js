@@ -23,14 +23,14 @@ const filterHistory = (items, filter) => {
   return items
 }
 
-@connect(({ history: { transactions, filter } }) => ({
+@connect(({ history: { transactions, filter, swapHistory } }) => ({
   items: filterHistory(transactions, filter),
+  swapHistory,
 }))
 export default class History extends Component {
 
   state = {
     orders: SwapApp.services.orders.items,
-    historySwap: null,
   };
 
   componentDidMount() {
@@ -39,7 +39,7 @@ export default class History extends Component {
   }
 
   componentWillMount() {
-    this.getSwapHistory()
+    actions.user.getSwapHistory()
     SwapApp.services.orders
       .on('new orders', this.updateOrders)
       .on('new order', this.updateOrders)
@@ -57,24 +57,6 @@ export default class History extends Component {
       .off('new order request', this.updateOrders)
   }
 
-  getSwapHistory = () => {
-    const swapId = JSON.parse(localStorage.getItem('swapId'))
-
-    if (swapId === null || swapId.length === 0) {
-      return
-    }
-
-    const historySwap = swapId.map(item =>  this.getSwap(item))
-    this.setState({
-      historySwap,
-    })
-  }
-
-  getSwap = (swapId) => ({
-    ...SwapApp.env.storage.getItem(`swap.${swapId}`),
-    ...SwapApp.env.storage.getItem(`flow.${swapId}`),
-  })
-
   updateOrders = () => {
     this.setState({
       orders: SwapApp.services.orders.items,
@@ -88,15 +70,13 @@ export default class History extends Component {
   }
 
   render() {
-    const { items } = this.props
-    const { historySwap } = this.state
+    const { items, swapHistory } = this.props
     const titles = [ 'Coin', 'Status', 'Statement', 'Amount' ]
-    console.log('historySwap', historySwap)
 
     return (
       <section>
         <PageHeadline subTitle="History" />
-        <SwapsHistory orders={historySwap} />
+        <SwapsHistory orders={swapHistory} />
         <h3 >All transactions</h3>
         <Filter />
         <Table

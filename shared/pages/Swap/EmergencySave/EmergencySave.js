@@ -31,7 +31,7 @@ export default class EmergencySave extends Component {
     return (
       <div styleName="block">
         <span styleName="button"  onClick={this.showEmergency}>
-          Information
+          Information about swap
         </span>
         {
           isShowEmergency && (

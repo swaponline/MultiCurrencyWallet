@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment } from 'react'
+import React, { PureComponent } from 'react'
 import Swap from 'swap.swap'
 
 import EmergencySave from './EmergencySave/EmergencySave'
@@ -51,11 +51,11 @@ export default class SwapComponent extends PureComponent {
       swapsId.push(orderId)
     }
 
-    swapsId.map(item => {
-      if (item !== orderId) {
-        swapsId.push(orderId)
-      }
-    })
+    const boolean = swapsId.map(item => item !== orderId)
+
+    if (Boolean(...boolean)) {
+      swapsId.push(orderId)
+    }
 
     localStorage.setItem('swapId', JSON.stringify(swapsId))
   }

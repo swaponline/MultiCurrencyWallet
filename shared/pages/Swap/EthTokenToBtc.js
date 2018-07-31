@@ -1,12 +1,12 @@
 import React, { Component, Fragment } from 'react'
 
 import config from 'app-config'
+import { BigNumber } from 'bignumber.js'
 
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import TimerButton from 'components/controls/TimerButton/TimerButton'
 import Button from 'components/controls/Button/Button'
 import Timer from './Timer/Timer'
-import {BigNumber} from "bignumber.js/bignumber";
 
 
 export default class EthTokenToBtc extends Component {
@@ -55,6 +55,7 @@ export default class EthTokenToBtc extends Component {
   addGasPrice = () => {
     const gwei =  new BigNumber(String(this.swap.flow.ethSwap.gasPrice)).plus(new BigNumber(1e10))
     this.swap.flow.ethSwap.addGasPrice(gwei)
+    this.swap.flow.restartStep()
   }
 
   render() {
@@ -77,9 +78,6 @@ export default class EthTokenToBtc extends Component {
             </Fragment>
           )
         }
-        <br />
-        { !flow.isFinished && <Button white onClick={this.addGasPrice}>Add gas price</Button> }
-
         {
           (flow.step === 1 || flow.isMeSigned) && (
             <h3>1. Please confirm your participation to begin the deal</h3>
@@ -333,6 +331,8 @@ export default class EthTokenToBtc extends Component {
             </Fragment>
           )
         }
+        <br />
+        { !flow.isFinished && <Button white onClick={this.addGasPrice}>Add gas price</Button> }
         { children }
       </div>
     )

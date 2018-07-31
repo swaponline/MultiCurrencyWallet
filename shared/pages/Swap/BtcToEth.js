@@ -51,6 +51,7 @@ export default class BtcToEth extends Component {
   addGasPrice = () => {
     const gwei =  new BigNumber(String(this.swap.flow.ethSwap.gasPrice)).plus(new BigNumber(1e9))
     this.swap.flow.ethSwap.addGasPrice(gwei)
+    this.swap.flow.restartStep()
   }
 
   tryRefund = () => {
@@ -92,8 +93,6 @@ export default class BtcToEth extends Component {
             )
           )
         }
-        <br />
-        { !flow.isFinished && <Button white onClick={this.addGasPrice}>Add gas price</Button> }
         {
           !flow.isParticipantSigned && (
             <Fragment>
@@ -271,6 +270,8 @@ export default class BtcToEth extends Component {
             </Fragment>
           )
         }
+        <br />
+        { !flow.isFinished && <Button green onClick={this.addGasPrice}>Add gas price</Button> }
         { children }
       </div>
     )

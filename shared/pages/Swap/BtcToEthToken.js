@@ -1,14 +1,13 @@
 import React, { Component, Fragment } from 'react'
 
+import crypto from 'crypto'
 import config from 'app-config'
+import { BigNumber } from 'bignumber.js'
 
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import TimerButton from 'components/controls/TimerButton/TimerButton'
 import Button from 'components/controls/Button/Button'
 import Timer from './Timer/Timer'
-
-import crypto from 'crypto'
-import {BigNumber} from "bignumber.js/bignumber";
 
 
 export default class BtcToEthToken extends Component {
@@ -85,8 +84,6 @@ export default class BtcToEthToken extends Component {
             </Fragment>
           )
         }
-        <br />
-        { !flow.isFinished && <Button white onClick={this.addGasPrice}>Add gas price</Button> }
         {
           (flow.step === 1 || flow.isMeSigned) && (
             <Fragment>
@@ -273,6 +270,8 @@ export default class BtcToEthToken extends Component {
             </Fragment>
           )
         }
+        <br />
+        { !flow.isFinished && <Button green onClick={this.addGasPrice}>Add gas price</Button> }
         { children }
       </div>
     )

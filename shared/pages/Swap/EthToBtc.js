@@ -1,12 +1,12 @@
 import React, { Component, Fragment } from 'react'
 
 import config from 'app-config'
+import { BigNumber } from 'bignumber.js'
 
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import TimerButton from 'components/controls/TimerButton/TimerButton'
 import Button from 'components/controls/Button/Button'
 import Timer from './Timer/Timer'
-import {BigNumber} from "bignumber.js/bignumber";
 
 
 export default class EthToBtc extends Component {
@@ -83,9 +83,6 @@ export default class EthToBtc extends Component {
             )
           )
         }
-        <br />
-        { !flow.isFinished && <Button white onClick={this.addGasPrice}>Add gas price</Button> }
-
         {
           flow.isWaitingForOwner && (
             <Fragment>
@@ -332,6 +329,8 @@ export default class EthToBtc extends Component {
             </Fragment>
           )
         }
+        <br />
+        { !flow.isFinished && <Button white onClick={this.addGasPrice}>Add gas price</Button> }
         { children }
       </div>
     )

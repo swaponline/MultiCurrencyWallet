@@ -17,7 +17,7 @@ const Table = ({ titles, rows, rowRender, textIfEmpty }) => (
     </thead>
     <tbody>
       {
-        rows && rows.length > 0 ? (
+        rows.length > 0 ? (
           rows.map((row, rowIndex) => {
             if (typeof rowRender === 'function') {
               return rowRender(row, rowIndex)
