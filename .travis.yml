@@ -8,7 +8,11 @@ node_js:
   - "8"
 before_script:
   - git submodule update --init --recursive
-  - yarn add coveralls mocha jest react-test-renderer --save-dev
+  - yarn add coveralls --save-dev
+  - yarn add mocha jsdom jest react-test-renderer --save-dev
+  - yarn add jsdom --save-dev
+  - yarn add jest --save-dev
+  - yarn add react-test-renderer --save-dev
   - echo "_________YARN install___________"
   - yarn install
   - echo "__________YARN start____________"
