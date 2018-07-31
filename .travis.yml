@@ -4,7 +4,7 @@ node_js:
   - "8"
 script:
   - git submodule update --init --recursive
-  - npm install app-module-path --save
+  - yarn install app-module-path --save
   - ls
   - yarn install
   #- npm test
