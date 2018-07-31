@@ -10,15 +10,13 @@ matrix:
     env: STAGE=test
   - name: "Lint"
     env: STAGE=lint
-  - name: "Test"
-    env: STAGE=testbuild:mainnet
+  - name: "Build"
+    env: STAGE=build:mainnet
   before_script:
     - git submodule update --init --recursive
-    - yarn build
-    - yarn start --silent &
+    - if [[ "$STAGE" == "test" ]]; yarn start &; fi
   install: yarn install --frozen-lockfile
   script:
-    # run unit tests:
-    - yarn tests
-    # run E2E tests:
-    - $(npm bin)/cypress run --record
+    - if [[ "$STAGE" == "test" ]]; $(npm bin)/cypress run --record; fi
+    - if [[ "$STAGE" == "lint" ]]; yarn eslint; fi
+    - if [[ "$STAGE" == "build:mainnet" ]]; yarn $STAGE &; fi
