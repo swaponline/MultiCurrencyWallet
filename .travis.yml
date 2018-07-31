@@ -2,10 +2,10 @@ cache: yarn
 language: node_js
 node_js:
   - "8"
+before_script:
+  - git submodule --init --recursive
 script:
-  - git clone https://github.com/swaponline/swap.core
   - yarn install
   #- npm test
   - yarn eslint
   - yarn start
-  
