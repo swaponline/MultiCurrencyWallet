@@ -1,8 +1,9 @@
+cache: yarn
 language: node_js
 node_js:
   - "8"
 script:
-  - npm run lint
-  - npm run test
-  - npm run build
+  - yarn lint
+  - yarn test --coverage --silent
+  - yarn build
   
