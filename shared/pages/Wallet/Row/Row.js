@@ -46,11 +46,11 @@ export default class Row extends Component {
     currency = currency.toLowerCase()
 
     if (currency === 'eth') {
-      action = actions.ethereum.getBalance
+      action = actions.eth.getBalance
       actions.analytics.dataEvent('balances-update-eth')
     }
     else if (currency === 'btc') {
-      action = actions.bitcoin.getBalance
+      action = actions.btc.getBalance
       actions.analytics.dataEvent('balances-update-btc')
     }
     else if (currency === 'eos') {

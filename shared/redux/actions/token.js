@@ -23,7 +23,6 @@ const login = (privateKey, contractAddress, nameContract, decimals) => {
   web3.eth.accounts.wallet.add(data.privateKey)
   console.info('Logged in with ETH Token', data)
 
-
   setupContract(data.address, contractAddress, nameContract, decimals)
 }
 
@@ -59,7 +58,7 @@ const getBalance = (contractAddress, name, decimals) => {
       const amount = new BigNumber(String(result)).dividedBy(new BigNumber(String(10)).pow(decimals)).toNumber()
 
       reducers.user.setTokenBalance({ name, amount })
-      return result
+      return amount
     }).catch(r => console.error('Token service isn\'t available, try later'))
 }
 

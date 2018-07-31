@@ -1,16 +1,20 @@
 import modals from './modals'
 import loader from './loader'
 import notifications from './notifications'
-import filter from './filter'
+
 import user from './user'
-import bitcoin from './bitcoin'
-import ethereum from './ethereum'
+import feed from './feed'
+import filter from './filter'
+
+import btc from './btc'
+import eth from './eth'
+import eos from './eos'
 import token from './token'
 import nimiq from './nimiq'
-import eos from './eos'
-import feed from './feed'
-import analytics from './analytics'
+
+
 import referral from './referral'
+import analytics from './analytics'
 
 
 export default {
@@ -19,12 +23,12 @@ export default {
   loader,
   notifications,
   user,
-  bitcoin,
-  ethereum,
+  btc,
+  eth,
   token,
   nimiq,
   eos,
   feed,
   analytics,
-  referral
+  referral,
 }

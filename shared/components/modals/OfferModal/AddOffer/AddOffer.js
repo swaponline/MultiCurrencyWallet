@@ -128,6 +128,7 @@ export default class AddOffer extends Component {
 
     this.setState({
       sellAmount: new BigNumber(String(value) || 0).multipliedBy(exchangeRate),
+      buyAmount: new BigNumber(String(buyAmount)),
     })
   }
 
@@ -145,22 +146,27 @@ export default class AddOffer extends Component {
     })
   }
 
+  checkBalance = async (sellCurrency) => {
+    const balance = await actions[sellCurrency.toLowerCase()].getBalance()
+
+    this.setState({
+      balance,
+    })
+  }
+
   handleNext = () => {
     const { exchangeRate, buyAmount, sellAmount, sellCurrency } = this.state
     const { onNext } = this.props
 
-    if ((sellAmount < 0.01 && sellCurrency === 'ETH') || (sellAmount < 0.001 && sellCurrency === 'BTC')) {
-      this.setState({
-        isSubmitted: true,
-      })
-      return
-    }
+    console.log(actions)
 
-    actions.analytics.dataEvent('orderbook-addoffer-click-next-button')
+    this.checkBalance(sellCurrency)
 
-    const isDisabled = !exchangeRate || !buyAmount || !sellAmount || (sellAmount < 0.01 && sellCurrency === 'ETH') || (sellAmount < 0.001 && sellCurrency === 'BTC')
+    const { balance } = this.state
+    const isDisabled = !exchangeRate || !buyAmount || !sellAmount || sellAmount > balance
 
     if (!isDisabled) {
+      actions.analytics.dataEvent('orderbook-addoffer-click-next-button')
       onNext(this.state)
     }
   }
@@ -174,17 +180,11 @@ export default class AddOffer extends Component {
 
   render() {
     const { items, tokens } = this.props
-    const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency, isSubmitted } = this.state
+    const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency, balance } = this.state
 
     const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
-    const isDisabled = !exchangeRate || !buyAmount && !sellAmount
-
+    const isDisabled = !exchangeRate || !buyAmount && !sellAmount || sellAmount > balance
     const data = [].concat(tokens, items).filter(item => item.currency.toLowerCase() === `${sellCurrency}`)
-
-    if (isSubmitted) {
-      linked.amount.check((value) => value <= 0.01, `Amount must be greater than 0.01 `)
-    }
-
 
     return (
       <Fragment>

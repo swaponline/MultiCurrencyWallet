@@ -42,11 +42,11 @@ export default class WithdrawModal extends React.Component {
 
     switch (currency) {
       case 'ETH':
-        action = actions.ethereum
+        action = actions.eth
         break
 
       case 'BTC':
-        action = actions.bitcoin
+        action = actions.btc
         break
 
       case 'NIM':
@@ -93,7 +93,7 @@ export default class WithdrawModal extends React.Component {
         <FieldLabel inRow>Address</FieldLabel>
         <Input valueLink={linked.address} pattern="0-9a-zA-Z" />
         <FieldLabel inRow>Amount</FieldLabel>
-        <Input valueLink={linked.amount} pettern="0-9\." />
+        <Input valueLink={linked.amount} pattern="0-9\." />
         {
           !linked.amount.error && (
             <div styleName="note">No less than 0.01</div>

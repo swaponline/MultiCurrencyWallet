@@ -12,9 +12,9 @@ import reducers from 'redux/core/reducers'
 const sign = async () => {
   const btcPrivateKey = localStorage.getItem(constants.privateKeyNames.btc)
   const ethPrivateKey = localStorage.getItem(constants.privateKeyNames.eth)
-  const _ethPrivateKey = actions.ethereum.login(ethPrivateKey)
+  const _ethPrivateKey = actions.eth.login(ethPrivateKey)
 
-  actions.bitcoin.login(btcPrivateKey)
+  actions.btc.login(btcPrivateKey)
 
   Object.keys(config.tokens)
     .forEach(name => {
@@ -32,8 +32,8 @@ const sign = async () => {
 }
 
 const getBalances = () => {
-  actions.ethereum.getBalance()
-  actions.bitcoin.getBalance()
+  actions.eth.getBalance()
+  actions.btc.getBalance()
   actions.eos.getBalance()
 
   Object.keys(config.tokens)
@@ -75,8 +75,8 @@ const setExchangeRate = (sellCurrency, buyCurrency, setState) => {
 
 const setTransactions = () =>
   Promise.all([
-    actions.bitcoin.getTransaction(),
-    actions.ethereum.getTransaction(),
+    actions.btc.getTransaction(),
+    actions.eth.getTransaction(),
     actions.token.getTransaction(config.tokens.swap.address),
     actions.token.getTransaction(config.tokens.noxon.address),
   ])

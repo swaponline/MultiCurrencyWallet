@@ -38,7 +38,7 @@ const getBalance = () => {
     .then(({ result }) => {
       const amount = Number(web3.utils.fromWei(result))
       reducers.user.setBalance({ name: 'ethData', amount })
-      return result
+      return amount
     })
     .catch(() => {
       console.log('app:showError', 'Ethereum service isn\'t available, try later')
