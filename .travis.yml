@@ -2,9 +2,8 @@ cache: yarn
 language: node_js
 node_js:
   - "8"
-before_script:
-  - git submodule update --init --recursive
 script:
+  - git submodule update --init --recursive
   - yarn install
   #- npm test
   - yarn eslint
