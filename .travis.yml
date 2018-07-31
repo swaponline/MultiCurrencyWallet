@@ -15,8 +15,8 @@ env:
   before_script:
     - git submodule update --init --recursive
     - yarn install
-    - if [[ "$STAGE" == "test" ]]; then yarn start &; fi
+    - if [[ $STAGE == "test" ]]; then yarn start &; fi
   script:
-    - if [[ "$STAGE" == "test" ]]; then cypress install&&$(npm bin)/cypress run --record; fi
-    - if [[ "$STAGE" == "lint" ]]; then yarn eslint; fi
-    - if [[ "$STAGE" == "build:mainnet" ]];then  yarn build:mainnet &; fi
+    - if [[ $STAGE == "test" ]]; then cypress install&&$(npm bin)/cypress run --record; fi
+    - if [[ $STAGE == "lint" ]]; then yarn eslint; fi
+    - if [[ $STAGE == "build_mainnet" ]];then  yarn build:mainnet &; fi
