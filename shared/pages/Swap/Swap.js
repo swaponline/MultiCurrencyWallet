@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { PureComponent, Fragment } from 'react'
 import Swap from 'swap.swap'
 
 import EmergencySave from './EmergencySave/EmergencySave'
@@ -20,9 +20,27 @@ const swapComponents = {
 
 export default class SwapComponent extends PureComponent {
 
+  state = {
+    swap: null,
+    SwapComponent: null,
+  }
+
   componentWillMount() {
     const { match : { params : { orderId } } } = this.props
+
+    const swap = new Swap(orderId)
+    const SwapComponent = swapComponents[swap.flow._flowName.toUpperCase()]
+
+    this.setState({
+      SwapComponent,
+      swap,
+    })
+
     this.setSaveSwapId(orderId)
+
+    // for debug and emergency save
+    window.swap = swap
+
   }
 
   setSaveSwapId = (orderId) => {
@@ -43,22 +61,17 @@ export default class SwapComponent extends PureComponent {
   }
 
   render() {
-    const { match : { params : { orderId } } } = this.props
+    const { swap, SwapComponent } = this.state
 
-    if (!orderId) {
+    if (!swap || !SwapComponent) {
       return null
     }
 
-    const swap = new Swap(orderId)
-    const SwapComponent = swapComponents[swap.flow._flowName.toUpperCase()]
-
-    // for debug and emergency save
-    window.swap = swap
-
     return (
       <div style={{ paddingLeft: '30px', paddingTop: '30px' }}>
-        <SwapComponent swap={swap} />
-        <EmergencySave flow={swap.flow} />
+        <SwapComponent swap={swap} >
+          <EmergencySave flow={swap.flow} />
+        </SwapComponent>
       </div>
     )
   }

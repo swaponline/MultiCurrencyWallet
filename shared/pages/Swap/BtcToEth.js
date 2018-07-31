@@ -70,7 +70,9 @@ export default class BtcToEth extends Component {
 
 
   render() {
+    const { children } = this.props
     const { secret, flow, enabledButton } = this.state
+    console.log(children)
 
     return (
       <div>
@@ -91,6 +93,7 @@ export default class BtcToEth extends Component {
             )
           )
         }
+        { children }
         <br />
         { !flow.isFinished && <Button white onClick={this.addGasPrice}>Add gas price</Button> }
         {
@@ -184,9 +187,9 @@ export default class BtcToEth extends Component {
                       flow.refundTxHex && (
                         <div>
                           Refund hex transaction:
-                          <strong>
+                          <code>
                             {flow.refundTxHex}
-                          </strong>
+                          </code>
                         </div>
                       )
                     }

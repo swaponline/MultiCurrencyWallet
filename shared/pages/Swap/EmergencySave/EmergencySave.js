@@ -30,9 +30,9 @@ export default class EmergencySave extends Component {
 
     return (
       <div styleName="block">
-        <Button brand onClick={this.showEmergency}>
-          SHOW EMERGENCY INFORMATION
-        </Button>
+        <span styleName="button"  onClick={this.showEmergency}>
+          Information
+        </span>
         {
           isShowEmergency && (
             <pre>

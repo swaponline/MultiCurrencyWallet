@@ -180,9 +180,9 @@ export default class BtcToEthToken extends Component {
                       flow.refundTxHex && (
                         <div>
                           Refund hex transaction:
-                          <strong>
+                          <code>
                             {flow.refundTxHex}
-                          </strong>
+                          </code>
                         </div>
                       )
                     }
