@@ -1,12 +1,24 @@
 cache: yarn
+  directories:
+    - node_modules
 language: node_js
 node_js:
   - "8"
-env:
-  - test
-  - lint
-  - build:mainnet
-script:
-  - git submodule update --init --recursive
-  - ls
-  - yarn $ENV
+matrix:
+  iclude:
+  - name: "Test"
+    env: STAGE=test
+  - name: "Lint"
+    env: STAGE=lint
+  - name: "Test"
+    env: STAGE=testbuild:mainnet
+  before_script:
+    - git submodule update --init --recursive
+    - yarn build
+    - yarn start --silent &
+  install: yarn install --frozen-lockfile
+  script:
+    # run unit tests:
+    - yarn tests
+    # run E2E tests:
+    - $(npm bin)/cypress run --record
