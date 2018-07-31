@@ -51,4 +51,4 @@ deploy:
     - build-testnet.tgz
     - build-local.tgz
   on:
-    repo: General-Beck/swap.react
+    tags: true
