@@ -5,7 +5,7 @@
   "private": true,
   "main": "./bin/server",
   "scripts": {
-    "test": "cypress run",
+    "test": "cypress run --record",
     "eslint": "eslint  --fix --cache ./shared --ext js",
     "start": "npm run dev",
     "dev": "npm run dev:testnet",
@@ -18,7 +18,7 @@
     "build:local": "npm run clean:local && cross-env DEBUG=app:* CONFIG=local.prod node ./bin/compile",
     "build:testnet": "npm run clean:testnet && cross-env DEBUG=app:* CONFIG=testnet.prod node ./bin/compile",
     "build:mainnet": "npm run clean:mainnet && cross-env DEBUG=app:* CONFIG=mainnet.prod node ./bin/compile",
-    "test:unit": "mocha --require babel-core/register --require ./test/helpers.js --require ./test/dom.js ",
+    "test:unit": "mocha --require babel-core/register --require ./test/helpers.js --require ./test/dom.js --require ignore-styles 'src/**/*.spec.js'",
     "test:snapshot": "jest --config ./test/jest.config.json",
     "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls"
   },
