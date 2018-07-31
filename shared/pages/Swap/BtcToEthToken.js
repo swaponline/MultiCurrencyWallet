@@ -67,6 +67,7 @@ export default class BtcToEthToken extends Component {
   }
 
   render() {
+    const { children } = this.props
     const { secret, flow, enabledButton } = this.state
 
     return (
@@ -272,6 +273,7 @@ export default class BtcToEthToken extends Component {
             </Fragment>
           )
         }
+        { children }
       </div>
     )
   }

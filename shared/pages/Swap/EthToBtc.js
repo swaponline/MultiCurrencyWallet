@@ -59,6 +59,7 @@ export default class EthToBtc extends Component {
   }
 
   render() {
+    const { children } = this.props
     const { flow, enabledButton } = this.state
 
     return (
@@ -331,6 +332,7 @@ export default class EthToBtc extends Component {
             </Fragment>
           )
         }
+        { children }
       </div>
     )
   }
