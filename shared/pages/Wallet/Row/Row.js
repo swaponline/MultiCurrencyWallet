@@ -46,11 +46,11 @@ export default class Row extends Component {
     currency = currency.toLowerCase()
 
     if (currency === 'eth') {
-      action = actions.ethereum.getBalance
+      action = actions.eth.getBalance
       actions.analytics.dataEvent('balances-update-eth')
     }
     else if (currency === 'btc') {
-      action = actions.bitcoin.getBalance
+      action = actions.btc.getBalance
       actions.analytics.dataEvent('balances-update-btc')
     }
     else if (currency === 'eos') {
@@ -101,6 +101,19 @@ export default class Row extends Component {
     })
   }
 
+  handleWithdraw = () => {
+    const { currency, address, contractAddress, decimals, balance } = this.props
+
+    actions.analytics.dataEvent(`balances-withdraw-${currency.toLowerCase()}`)
+    actions.modals.open(constants.modals.Withdraw, {
+      currency,
+      address,
+      contractAddress,
+      decimals,
+      balance,
+    })
+  }
+
   render() {
     const { isBalanceFetching, viewText } = this.state
     const { currency, name, balance, address, contractAddress, decimals, approve } = this.props
@@ -140,7 +153,9 @@ export default class Row extends Component {
           <div>
             <button styleName="button" onClick={this.handleCopiedAddress}>Copy</button>
             <ReloadButton styleName="reloadButton" onClick={this.handleReloadBalance} />
-            <WithdrawButton data={{ currency, address, contractAddress, decimals, balance }} />
+            <WithdrawButton onClick={this.handleWithdraw} >
+              Withdraw
+            </WithdrawButton>
             { viewText && <p styleName="copied" >Address copied to clipboard</p> }
           </div>
         </td>

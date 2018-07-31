@@ -4,34 +4,34 @@ import actions from 'redux/actions'
 
 import SwapApp from 'swap.app'
 
-import PageHeadline from 'components/PageHeadline/PageHeadline'
+import Row from './Row/Row'
 import Table from 'components/Table/Table'
 import Filter from 'components/Filter/Filter'
-
-import Row from './Row/Row'
 import SwapsHistory from './SwapsHistory/SwapsHistory'
+import PageHeadline from 'components/PageHeadline/PageHeadline'
 
 
 const filterHistory = (items, filter) => {
-  if (filter === 'SENT') {
+  if (filter === 'sent') {
     return items.filter(({ direction }) => direction === 'out')
   }
 
-  if (filter === 'RECEIVED') {
+  if (filter === 'received') {
     return items.filter(({ direction }) => direction === 'in')
   }
 
   return items
 }
 
-@connect(({ history: { transactions, filter } }) => ({
+@connect(({ history: { transactions, filter, swapHistory } }) => ({
   items: filterHistory(transactions, filter),
+  swapHistory,
 }))
 export default class History extends Component {
 
   state = {
     orders: SwapApp.services.orders.items,
-  }
+  };
 
   componentDidMount() {
     actions.analytics.dataEvent('open-page-history')
@@ -39,6 +39,7 @@ export default class History extends Component {
   }
 
   componentWillMount() {
+    actions.user.getSwapHistory()
     SwapApp.services.orders
       .on('new orders', this.updateOrders)
       .on('new order', this.updateOrders)
@@ -69,16 +70,13 @@ export default class History extends Component {
   }
 
   render() {
-    const { items } = this.props
-    const { orders } = this.state
+    const { items, swapHistory } = this.props
     const titles = [ 'Coin', 'Status', 'Statement', 'Amount' ]
-    const mePeer = SwapApp.services.room.peer
-    const historyOrders = orders.filter(order => mePeer === order.owner.peer)
 
     return (
       <section>
         <PageHeadline subTitle="History" />
-        <SwapsHistory orders={historyOrders} />
+        <SwapsHistory orders={swapHistory} />
         <h3 >All transactions</h3>
         <Filter />
         <Table

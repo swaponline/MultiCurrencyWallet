@@ -1,26 +1,18 @@
-.button {
+.removeButton {
   width: 40px;
   height: 40px;
   background-color: #e91db4;
   cursor: pointer;
-  position: relative;
+  @include inline-block;
   opacity: 0.5;
   border-radius: 50%;
   text-align: center;
 
-  &::after {
-    content: '';
-    background: url('./images/delete.svg');
-    background-size: contain;
-    position: absolute;
-    top: calc(50% - 8px);
-    left: calc(50% - 8px);
-    width: 16px;
-    height: 16px;
-  }
-
-
   &:hover {
     opacity: 1;
   }
+}
+
+.icon {
+  height: 16px;
 }

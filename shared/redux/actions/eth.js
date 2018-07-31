@@ -1,6 +1,7 @@
 import { request, constants } from 'helpers'
+import abi from 'human-standard-token-abi'
 import { getState } from 'redux/core'
-import actions from 'redux/actions'
+import  actions from 'redux/actions'
 import web3 from 'helpers/web3'
 import reducers from 'redux/core/reducers'
 import config from 'app-config'
@@ -20,11 +21,9 @@ const login = (privateKey) => {
   }
 
   web3.eth.accounts.wallet.add(data.privateKey)
-
   reducers.user.setAuthData({ name: 'ethData', data })
 
   window.getEthAddress = () => data.address
-
   referral.newReferral(data.address)
 
   console.info('Logged in with Ethereum', data)
@@ -34,35 +33,26 @@ const login = (privateKey) => {
 
 const getBalance = () => {
   const { user: { ethData: { address } } } = getState()
-  const url = `${config.api.etherscan}?module=account&action=balance&address=${address}&tag=latest&apikey=${config.apiKeys.etherscan}`
-
-  return request.get(url)
-    .then(({ result }) => {
+  return web3.eth.getBalance(address)
+    .then(result => {
       const amount = Number(web3.utils.fromWei(result))
+
       reducers.user.setBalance({ name: 'ethData', amount })
-      return result
+      return amount
     })
-    .catch(() => {
-      console.log('app:showError', 'Ethereum service isn\'t available, try later')
+    .catch((e) => {
+      console.log('Web3 doesn\'t work please again later ',  e.error)
     })
 }
 
 const fetchBalance = (address) => {
-  const url = `${config.api.etherscan}?module=account&action=balance&address=${address}&tag=latest&apikey=${config.apiKeys.etherscan}`
-  return request.get(url)
-    .then(({ result }) => Number(web3.utils.fromWei(result)))
+  web3.eth.getBalance(address)
+    .then(result => Number(web3.utils.fromWei(result)))
+    .catch((e) => {
+      console.log('Web3 doesn\'t work please again later ', e.error)
+    })
 }
 
-
-// const fetchBalance = (address) =>
-//   web3.eth.getBalance(address)
-//     .then((wei) => Number(web3.utils.fromWei(wei)))
-
-// export const getGas = () => {
-//   web3.eth.getGasPrice().then((res) => {
-//     gas = web3.utils.fromWei(res)
-//   })
-// }
 
 const getTransaction = () =>
   new Promise((resolve) => {
@@ -78,7 +68,7 @@ const getTransaction = () =>
           transactions = res.result
             .filter((item) => item.value > 0).map((item) => ({
               type: 'eth',
-              confirmations: item.confirmations > 0 ? 'Confirmed' : 'Unconfirmed',
+              confirmations: item.confirmations,
               hash: item.hash,
               status: item.blockHash != null ? 1 : 0,
               value: web3.utils.fromWei(item.value),
@@ -124,9 +114,9 @@ const send = (from, to, amount) =>
 
 
 export default {
+  send,
   login,
   getBalance,
-  getTransaction,
-  send,
   fetchBalance,
+  getTransaction,
 }

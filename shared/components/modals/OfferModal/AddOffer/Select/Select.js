@@ -1,7 +1,7 @@
 import React from 'react'
 
-import cssModules from 'react-css-modules'
 import styles from './Select.scss'
+import cssModules from 'react-css-modules'
 
 
 const Select = ({ balance, currency,  changeBalance }) => (

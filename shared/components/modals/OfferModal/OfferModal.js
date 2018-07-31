@@ -1,9 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import actions from 'redux/actions'
+
 import cssModules from 'react-css-modules'
 import styles from './OfferModal.scss'
-import actions from 'redux/actions'
+
 import Modal from 'components/modal/Modal/Modal'
 
 import ConfirmOffer from './ConfirmOffer/ConfirmOffer'

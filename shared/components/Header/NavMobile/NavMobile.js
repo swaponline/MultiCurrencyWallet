@@ -1,5 +1,4 @@
 import React from 'react'
-import actions from 'redux/actions'
 
 import { NavLink } from 'react-router-dom'
 import { links } from 'helpers'
@@ -9,19 +8,19 @@ import styles from './NavMobile.scss'
 
 
 const nav = [
-  { title: 'Orders', link: links.home },
-  { title: 'Wallet', link: links.wallet },
-  { title: 'History', link: links.history },
+  { title: 'Orders',    link: links.home      },
+  { title: 'Wallet',    link: links.wallet    },
+  { title: 'History',   link: links.history   },
 ]
 
-const NavMobile = ({ view }) => (
-  <div styleName={view ? 'nav' : 'nav hide'} >
+const NavMobile = () => (
+  <div styleName="navMobile" >
     {
       nav.map(({ title, link }) => (
         <NavLink
           exact
           key={title}
-          styleName="link"
+          styleName="linkMobile"
           to={link}
           activeClassName={styles.active}
         >
@@ -30,14 +29,8 @@ const NavMobile = ({ view }) => (
       ))
     }
     {
-      process.env.TESTNET && (
-        <div
-          key="Get demo money"
-          styleName="button"
-          onClick={() => actions.user.getDemoMoney()}
-        >
-          Get demo money
-        </div>
+      process.env.MAINNET && (
+        <a styleName="linkMobile" target="_blank" rel="noreferrer noopener" href={links.testnet}> Testnet</a>
       )
     }
   </div>

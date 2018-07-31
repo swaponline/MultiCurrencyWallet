@@ -1,9 +1,8 @@
 import React, { Component, Fragment } from 'react'
-import config from 'app-config'
-
-import actions from 'redux/actions'
 import PropTypes from 'prop-types'
+
 import SwapApp from 'swap.app'
+import actions from 'redux/actions'
 
 import { links } from 'helpers'
 import { Link } from 'react-router-dom'
@@ -71,9 +70,17 @@ export default class Row extends Component {
           }
         </td>
         <td>
-          {(exchangeRate || (buyAmount/sellAmount)).toFixed(5)}
+          {(exchangeRate || (buyAmount / sellAmount)).toFixed(5)}
           {
-            isMy ? `${buyCurrency}/${sellCurrency}` : `${sellCurrency}/${buyCurrency}`
+            buyCurrency === 'BTC' ? (
+              `${sellCurrency}/${buyCurrency}`
+            ) : (
+              sellCurrency === 'BTC' ? (
+                `${buyCurrency}/${sellCurrency}`
+              ) : (
+                `${sellCurrency}/${buyCurrency}`
+              )
+            )
           }
         </td>
         <td>

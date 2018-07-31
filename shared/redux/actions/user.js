@@ -1,17 +1,20 @@
-import { request, constants } from 'helpers'
-import actions from 'redux/actions'
-import { getState } from 'redux/core'
-import reducers from 'redux/core/reducers'
 import config from 'app-config'
 import moment from 'moment/moment'
+import { request, constants } from 'helpers'
+
+import actions from 'redux/actions'
+import { getState } from 'redux/core'
+
+import SwapApp from 'swap.app'
+import reducers from 'redux/core/reducers'
 
 
 const sign = async () => {
   const btcPrivateKey = localStorage.getItem(constants.privateKeyNames.btc)
   const ethPrivateKey = localStorage.getItem(constants.privateKeyNames.eth)
-  const _ethPrivateKey = actions.ethereum.login(ethPrivateKey)
+  const _ethPrivateKey = actions.eth.login(ethPrivateKey)
 
-  actions.bitcoin.login(btcPrivateKey)
+  actions.btc.login(btcPrivateKey)
 
   Object.keys(config.tokens)
     .forEach(name => {
@@ -29,8 +32,8 @@ const sign = async () => {
 }
 
 const getBalances = () => {
-  actions.ethereum.getBalance()
-  actions.bitcoin.getBalance()
+  actions.eth.getBalance()
+  actions.btc.getBalance()
   actions.eos.getBalance()
 
   Object.keys(config.tokens)
@@ -50,22 +53,30 @@ const getDemoMoney = process.env.MAINNET ? () => {} : () => {
     })
 }
 
-const setExchangeRate = (buyCurrency, sellCurrency, setState) => {
-  const url = `https://api.cryptonator.com/api/full/${buyCurrency}-${sellCurrency}`
+const setExchangeRate = (sellCurrency, buyCurrency, setState) => {
+  let url
 
+  if (sellCurrency === 'btc') {
+    url = `https://api.cryptonator.com/api/full/${buyCurrency}-btc`
+  } else {
+    url = `https://api.cryptonator.com/api/full/${sellCurrency}-btc`
+  }
+
+  console.log('rate', url)
   return request.get(url)
     .then(({ ticker: { price: exchangeRate } })  => {
+      console.log('rate', exchangeRate)
       setState(exchangeRate)
     })
     .catch(() =>
-      setState(config.exchangeRates[`${buyCurrency.toLowerCase()}${sellCurrency.toLowerCase()}`])
+      setState(config.exchangeRates[`${sellCurrency.toLowerCase()}btc`])
     )
 }
 
 const setTransactions = () =>
   Promise.all([
-    actions.bitcoin.getTransaction(),
-    actions.ethereum.getTransaction(),
+    actions.btc.getTransaction(),
+    actions.eth.getTransaction(),
     actions.token.getTransaction(config.tokens.swap.address),
     actions.token.getTransaction(config.tokens.noxon.address),
   ])
@@ -140,10 +151,26 @@ const downloadPrivateKeys = () => {
   })
 }
 
+const getSwapHistory = () => {
+  const swapId = JSON.parse(localStorage.getItem('swapId'))
+
+  if (swapId === null || swapId.length === 0) {
+    return
+  }
+
+  const historySwap = swapId.map(item => ({
+    ...SwapApp.env.storage.getItem(`swap.${item}`),
+    ...SwapApp.env.storage.getItem(`flow.${item}`),
+  }))
+  reducers.history.setSwapHistory(historySwap)
+}
+
+
 export default {
   sign,
   getBalances,
   getDemoMoney,
+  getSwapHistory,
   setExchangeRate,
   setTransactions,
   downloadPrivateKeys,

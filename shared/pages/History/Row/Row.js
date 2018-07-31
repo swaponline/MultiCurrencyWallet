@@ -40,7 +40,7 @@ const Row = ({ type, date, direction, hash, value, confirmations }) => {
         <LinkTransaction type={type} styleName="address" hash={hash} >{hash}</LinkTransaction>
       </td>
       <td>
-        <div styleName={confirmations === 'Confirmed' ? 'confirm cell' : 'unconfirmed cell'}>{confirmations}</div>
+        <div styleName={confirmations > 0 ? 'confirm cell' : 'unconfirmed cell'}>{confirmations > 0 ? `Confirm ${confirmations}` : 'Unconfirmed' }</div>
       </td>
       <td>
         <div styleName="amount">{value} {type.toUpperCase()}</div>

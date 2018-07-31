@@ -4,9 +4,8 @@ import actions from 'redux/actions'
 
 import Row from './Row/Row'
 import Table from 'components/Table/Table'
-
-import SearchSwap from 'components/SearchSwap/SearchSwap'
 import MyOrders from './MyOrders/MyOrders'
+import SearchSwap from 'components/SearchSwap/SearchSwap'
 
 
 export default class Orders extends Component {
@@ -44,21 +43,23 @@ export default class Orders extends Component {
     }
   }
 
-  filterOrders = (orders, filter) =>
-    orders.filter(f => f.isMy ? (
-      `${f.buyCurrency.toLowerCase()}${f.sellCurrency.toLowerCase()}` === filter
+  filterOrders = (orders, filter) => orders
+    .filter(order => order.isProcessing === false)
+    .filter(order => order.isMy ? (
+      `${order.buyCurrency.toLowerCase()}${order.sellCurrency.toLowerCase()}` === filter
     ) : (
-      `${f.sellCurrency.toLowerCase()}${f.buyCurrency.toLowerCase()}` === filter
+      `${order.sellCurrency.toLowerCase()}${order.buyCurrency.toLowerCase()}` === filter
     ))
+    .sort((a, b) => b.exchangeRate - a.exchangeRate)
 
   render() {
     const { filter, sellCurrency, buyCurrency, handleSellCurrencySelect, handleBuyCurrencySelect, flipCurrency } = this.props
     const titles = [ 'EXCHANGE', 'YOU BUY', 'YOU SELL', 'EXCHANGE RATE', 'ACTIONS' ]
     const { orders } = this.state
 
-    const filteredOrders = this.filterOrders(orders, filter)
     const mePeer = SwapApp.services.room.peer
-    const myOrders = orders.filter(order => order.owner.peer === mePeer)
+    const filteredOrders = this.filterOrders(orders, filter)
+    const myOrders = orders.filter(order => order.owner.peer === mePeer).sort((a, b) => b.exchangeRate - a.exchangeRate)
 
     return (
       <Fragment>

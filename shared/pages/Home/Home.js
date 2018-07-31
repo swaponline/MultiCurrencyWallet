@@ -3,8 +3,8 @@ import React, { Component, Fragment } from 'react'
 import actions from 'redux/actions'
 import { localStorage, constants, links } from 'helpers'
 
-import PageHeadline from 'components/PageHeadline/PageHeadline'
 import Title from 'components/PageHeadline/Title/Title'
+import PageHeadline from 'components/PageHeadline/PageHeadline'
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 
 import Orders from './Orders/Orders'

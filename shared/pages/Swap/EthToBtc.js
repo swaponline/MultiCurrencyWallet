@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 
 import config from 'app-config'
+import { BigNumber } from 'bignumber.js'
 
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import TimerButton from 'components/controls/TimerButton/TimerButton'
@@ -51,9 +52,15 @@ export default class EthToBtc extends Component {
     this.swap.flow.tryRefund()
   }
 
+  addGasPrice = () => {
+    const gwei =  new BigNumber(String(this.swap.flow.ethSwap.gasPrice)).plus(new BigNumber(1e9))
+    this.swap.flow.ethSwap.addGasPrice(gwei)
+    this.swap.flow.restartStep()
+  }
+
   render() {
+    const { children } = this.props
     const { flow, enabledButton } = this.state
-    console.log('FLOW ETH_BTC', flow)
 
     return (
       <div>
@@ -76,7 +83,6 @@ export default class EthToBtc extends Component {
             )
           )
         }
-
         {
           flow.isWaitingForOwner && (
             <Fragment>
@@ -154,7 +160,7 @@ export default class EthToBtc extends Component {
                     </div>
                     <br />
                     <pre>
-                      <code className="code">{`
+                      <code>{`
   bitcoinjs.script.compile([
     bitcoin.core.opcodes.OP_RIPEMD160,
     Buffer.from('${flow.btcScriptValues.secretHash}', 'hex'),
@@ -199,6 +205,7 @@ export default class EthToBtc extends Component {
                     <div>
                       <div>Your balance: <strong>{flow.balance}</strong> {this.swap.sellCurrency}</div>
                       <div>Required balance: <strong>{this.swap.sellAmount.toNumber()}</strong> {this.swap.sellCurrency}</div>
+                      <div>Your address: {this.swap.flow.myEthAddress}</div>
                       <hr />
                       <span>{flow.address}</span>
                     </div>
@@ -309,7 +316,7 @@ export default class EthToBtc extends Component {
                 )
               }
               {
-                flow.step >= 6 && !flow.finishSwap && (
+                flow.step >= 6 && !flow.isFinished && (
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     { enabledButton &&  <Button brand onClick={this.tryRefund}>TRY REFUND</Button> }
                     <Timer
@@ -322,6 +329,9 @@ export default class EthToBtc extends Component {
             </Fragment>
           )
         }
+        <br />
+        { !flow.isFinished && <Button white onClick={this.addGasPrice}>Add gas price</Button> }
+        { children }
       </div>
     )
   }

@@ -40,20 +40,25 @@ export default class WithdrawModal extends React.Component {
 
     let action
 
-    if (currency === 'ETH') {
-      action = actions.ethereum
-    }
-    else if (currency === 'BTC') {
-      action = actions.bitcoin
-    }
-    else if (currency === 'NIM') {
-      action = actions.nimiq
-    }
-    else if (currency === 'EOS') {
-      action = actions.eos
-    }
-    else {
-      action = actions.token
+    switch (currency) {
+      case 'ETH':
+        action = actions.eth
+        break
+
+      case 'BTC':
+        action = actions.btc
+        break
+
+      case 'NIM':
+        action = actions.nimiq
+        break
+
+      case 'EOS':
+        action = actions.eos
+        break
+
+      default:
+        action = actions.token
     }
 
     action.send(contractAddress || address, to, Number(amount), decimals)
@@ -78,8 +83,8 @@ export default class WithdrawModal extends React.Component {
     const isDisabled = !address || !amount
 
     if (isSubmitted) {
-      linked.amount.check((value) => value >= 0.01, `Amount must be greater than 0.01 `)
-      linked.amount.check((value) => value < balance, `Amount must be smaller your balance`)
+      linked.amount.check((value) => value > 0.01, `Amount must be greater than 0.01 `)
+      linked.amount.check((value) => value < balance, `Amount must be bigger your balance`)
     }
 
     return (
@@ -88,7 +93,7 @@ export default class WithdrawModal extends React.Component {
         <FieldLabel inRow>Address</FieldLabel>
         <Input valueLink={linked.address} pattern="0-9a-zA-Z" />
         <FieldLabel inRow>Amount</FieldLabel>
-        <Input valueLink={linked.amount} type="number" />
+        <Input valueLink={linked.amount} pattern="0-9\." />
         {
           !linked.amount.error && (
             <div styleName="note">No less than 0.01</div>
