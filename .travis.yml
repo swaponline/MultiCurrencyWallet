@@ -21,7 +21,8 @@ before_script:
 - yarn start &
 script:
 - echo "____________TEST________________"
-- yarn test:unit -- --coverage && yarn test:snapshot -- --coverage
+- yarn test:unit -- --coverage
+- yarn test:snapshot -- --coverage
 - yarn test
 - echo "____________LINT________________"
 - yarn eslint
@@ -44,6 +45,6 @@ deploy:
   file:
     - build-mainnet.tar.gz
     - build-testnet.tar.gz
-    - build-testnet.tar.gz
+    - build-local.tar.gz
   on:
     tags: General-Beck/swap.react
