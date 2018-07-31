@@ -1,8 +1,8 @@
-cache:
-  directories:
-    - node_modules
-    - ~/.cache
-  yarn: true
+#cache:
+#  directories:
+#    - node_modules
+#    - ~/.cache
+#  yarn: true
 language: node_js
 node_js:
   - "8"
