@@ -8,12 +8,14 @@ node_js:
   - "8"
 before_script:
   - git submodule update --init --recursive
+  - yarn add coveralls mocha jest react-test-renderer --save-dev
   - echo "_________YARN install___________"
   - yarn install
   - echo "__________YARN start____________"
   - yarn start &
 script:
   - echo "____________TEST________________"
+  - yarn test:unit -- --coverage && yarn test:snapshot -- --coverage
   - yarn test
   - echo "____________LINT________________"
   - yarn eslint
@@ -24,3 +26,5 @@ script:
   - echo "_________Build local____________"
   - yarn build:local
   - ls
+after_script:
+  - COVERALLS_REPO_TOKEN=$coveralls_repo_token yarn coveralls
