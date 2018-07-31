@@ -1,21 +1,26 @@
-#cache:
-#  directories:
-#    - node_modules
-#    - ~/.cache
-#  yarn: true
+cache:
+  directories:
+    - node_modules
+    - ~/.cache
+  yarn: true
 language: node_js
 node_js:
   - "8"
 before_script:
   - git submodule update --init --recursive
-  - echo "YARN install"
+  - echo "_________YARN install___________"
   - yarn install
-  - echo "YARN start"
+  - echo "__________YARN start____________"
   - yarn start &
 script:
-  - echo "TEST"
+  - echo "____________TEST________________"
   - yarn test
-  - echo "LINT"
+  - echo "____________LINT________________"
   - yarn eslint
-  - echo "Build mainnet"
+  - echo "________Build mainnet___________"
   - yarn build:mainnet
+  - echo "________Build testnet___________"
+  - yarn build:testnet
+  - echo "_________Build local____________"
+  - yarn build:local
+  - ls
