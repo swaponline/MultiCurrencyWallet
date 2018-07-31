@@ -4,8 +4,8 @@ node_js:
   - "8"
 script:
   - git clone https://github.com/swaponline/swap.core
-  - npm install
+  - yarn install
   #- npm test
-  - npm eslint
-  - npm start
+  - yarn eslint
+  - yarn start
   
