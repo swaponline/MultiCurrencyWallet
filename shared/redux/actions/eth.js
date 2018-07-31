@@ -33,7 +33,7 @@ const login = (privateKey) => {
 
 const getBalance = () => {
   const { user: { ethData: { address } } } = getState()
-  web3.eth.getBalance(address)
+  return web3.eth.getBalance(address)
     .then(result => {
       const amount = Number(web3.utils.fromWei(result))
 

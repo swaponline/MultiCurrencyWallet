@@ -180,6 +180,8 @@ export default class AddOffer extends Component {
 
     const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
 
+    console.log(balance)
+
     linked.sellAmount.check((value) => value > min, `Amount must be greater than 0.01 `)
     linked.sellAmount.check((value) => value < balance, `Amount must be bigger your balance`)
 
