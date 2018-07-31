@@ -7,19 +7,16 @@ cache:
 language: node_js
 node_js:
   - "8"
-matrix:
-  include:
-  - name: "Test"
-    env: STAGE=test
-  - name: "Lint"
-    env: STAGE=lint
-  - name: "Build"
-    env: STAGE=build:mainnet
+env:
+  matrix:
+  - STAGE=test
+  - STAGE=lint
+  - STAGE=build_mainnet
   before_script:
     - git submodule update --init --recursive
-  script:
     - yarn install
     - if [[ "$STAGE" == "test" ]]; then yarn start &; fi
+  script:
     - if [[ "$STAGE" == "test" ]]; then cypress install&&$(npm bin)/cypress run --record; fi
     - if [[ "$STAGE" == "lint" ]]; then yarn eslint; fi
-    - if [[ "$STAGE" == "build:mainnet" ]];then  yarn $STAGE &; fi
+    - if [[ "$STAGE" == "build:mainnet" ]];then  yarn build:mainnet &; fi
