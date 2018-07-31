@@ -10,6 +10,7 @@ before_script:
   - git submodule update --init --recursive
   - yarn add coveralls --save-dev
   - yarn add mocha jsdom jest react-test-renderer --save-dev
+  - yarn add chai --save-dev
   - yarn add jsdom --save-dev
   - yarn add jest --save-dev
   - yarn add react-test-renderer --save-dev
