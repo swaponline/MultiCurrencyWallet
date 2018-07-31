@@ -2,11 +2,11 @@ cache: yarn
 language: node_js
 node_js:
   - "8"
+env:
+  - test
+  - lint
+  - build:mainnet
 script:
   - git submodule update --init --recursive
   - ls
-  - yarn install
-  #- npm test
-  - yarn eslint
-  - yarn build:mainnet
-  
+  - yarn $ENV
