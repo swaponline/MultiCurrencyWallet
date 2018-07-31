@@ -15,8 +15,8 @@ matrix:
     env: STAGE=build:mainnet
   before_script:
     - git submodule update --init --recursive
-    - if [[ "$STAGE" == "test" ]]; yarn start &; fi
+    - if [[ "$STAGE" == "test" ]]; then yarn start &; fi
   script:
-    - if [[ "$STAGE" == "test" ]]; $(npm bin)/cypress run --record; fi
-    - if [[ "$STAGE" == "lint" ]]; yarn eslint; fi
-    - if [[ "$STAGE" == "build:mainnet" ]]; yarn $STAGE &; fi
+    - if [[ "$STAGE" == "test" ]]; then $(npm bin)/cypress run --record; fi
+    - if [[ "$STAGE" == "lint" ]]; then yarn eslint; fi
+    - if [[ "$STAGE" == "build:mainnet" ]];then  yarn $STAGE &; fi
