@@ -5,7 +5,7 @@ node_js:
 script:
   - git clone https://github.com/swaponline/swap.core
   - npm install
-  - npm test
+  #- npm test
   - npm eslint
   - npm start
   
