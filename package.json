@@ -5,7 +5,7 @@
   "private": true,
   "main": "./bin/server",
   "scripts": {
-    "test": "cypress open",
+    "test": "cypress run --record",
     "eslint": "eslint  --fix --cache ./shared --ext js",
     "start": "npm run dev",
     "dev": "npm run dev:testnet",
@@ -17,7 +17,10 @@
     "clean:local": "rimraf ./build-local",
     "build:local": "npm run clean:local && cross-env DEBUG=app:* CONFIG=local.prod node ./bin/compile",
     "build:testnet": "npm run clean:testnet && cross-env DEBUG=app:* CONFIG=testnet.prod node ./bin/compile",
-    "build:mainnet": "npm run clean:mainnet && cross-env DEBUG=app:* CONFIG=mainnet.prod node ./bin/compile"
+    "build:mainnet": "npm run clean:mainnet && cross-env DEBUG=app:* CONFIG=mainnet.prod node ./bin/compile",
+    "test:unit": "mocha --require babel-core/register --require ./test/helpers.js --require ./test/dom.js --require ignore-styles 'src/**/*.spec.js'",
+    "test:snapshot": "jest --config ./test/jest.config.json",
+    "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls"
   },
   "keywords": [],
   "author": "@sylogex",
@@ -47,7 +50,7 @@
     "connect-history-api-fallback": "^1.5.0",
     "cross-env": "^5.1.6",
     "css-loader": "^0.28.11",
-    "cypress": "^3.0.1",
+    "cypress": "^3.0.3",
     "debug": "^3.1.0",
     "eosjs": "^15.0.3",
     "eslint": "^4.19.1",

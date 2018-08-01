@@ -1,0 +1,3 @@
+[submodule "swap.core"]
+	path = swap.core
+	url = https://github.com/swaponline/swap.core
