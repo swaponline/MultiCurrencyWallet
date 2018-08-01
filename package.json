@@ -23,7 +23,7 @@
     "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls"
   },
   "keywords": [],
-  "author": "@sylogex",
+  "author": "@nikdementev",
   "license": "ISC",
   "devDependencies": {
     "app-module-path": "^2.2.0",
