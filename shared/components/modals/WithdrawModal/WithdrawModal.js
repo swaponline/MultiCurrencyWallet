@@ -83,7 +83,7 @@ export default class WithdrawModal extends React.Component {
     const isDisabled = !address || !amount
 
     if (isSubmitted) {
-      linked.amount.check((value) => value > 0.01, `Amount must be greater than 0.01 `)
+      linked.amount.check((value) => value > 0.01, `Amount must be greater than 0.05 `)
       linked.amount.check((value) => value < balance, `Amount must be bigger your balance`)
     }
 
