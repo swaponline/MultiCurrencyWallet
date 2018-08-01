@@ -40,7 +40,7 @@ export default class AddOffer extends Component {
   }
 
   componentWillMount() {
-    this.checkBalance()
+    this.checkBalance('eth')
   }
 
   componentDidMount() {
@@ -54,9 +54,8 @@ export default class AddOffer extends Component {
     })
   }
 
-  checkBalance = async () => {
-    const { sellCurrency } = this.state
-    const balance = await actions[sellCurrency.toLowerCase()].getBalance()
+  checkBalance = async (sellCurrency) => {
+    const balance = await actions[sellCurrency].getBalance()
 
     this.setState({
       balance,
@@ -93,6 +92,8 @@ export default class AddOffer extends Component {
     }
 
     buyCurrency = value
+
+    this.checkBalance(sellCurrency)
     this.getExchangeRate(sellCurrency, buyCurrency)
 
     const { exchangeRate } = this.state
@@ -114,6 +115,8 @@ export default class AddOffer extends Component {
     }
 
     sellCurrency = value
+
+    this.checkBalance(sellCurrency)
     this.getExchangeRate(sellCurrency, buyCurrency)
 
     const { exchangeRate } = this.state

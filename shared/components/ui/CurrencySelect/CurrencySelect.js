@@ -13,8 +13,8 @@ const CurrencySelect = ({ className, selectedValue, onSelect }) => (
     items={[
       { title: 'ETH', icon: 'eth', value: 'eth' },
       { title: 'BTC', icon: 'btc', value: 'btc' },
-      { title: 'NOXON', icon: 'noxon', value: 'noxon' },
-      { title: 'SWAP', icon: 'swap', value: 'swap' },
+      // { title: 'NOXON', icon: 'noxon', value: 'noxon' },
+      // { title: 'SWAP', icon: 'swap', value: 'swap' },
     ]}
     selectedValue={selectedValue}
     selectedItemRender={(item) => <Option {...item} />}

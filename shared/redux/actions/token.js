@@ -56,6 +56,8 @@ const getBalance = async (tokenAddress, name, decimals) => {
   return amount
 }
 
+
+
 const fetchBalance = async (address, tokenAddress, decimals) => {
   const ERC20 = new web3.eth.Contract(abi, tokenAddress)
   const result = await ERC20.methods.balanceOf(address).call()
