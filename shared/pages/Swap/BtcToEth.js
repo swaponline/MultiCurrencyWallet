@@ -271,7 +271,7 @@ export default class BtcToEth extends Component {
           )
         }
         <br />
-        { !flow.isFinished && <Button green onClick={this.addGasPrice}>Add gas price</Button> }
+        {/*{ !flow.isFinished && <Button green onClick={this.addGasPrice}>Add gas price</Button> }*/}
         { children }
       </div>
     )
