@@ -87,6 +87,47 @@ const getTransaction = () =>
     })
   })
 
+const createScript = (data) => {
+  const { secretHash, ownerPublicKey, recipientPublicKey, lockTime } = data
+
+  const network = (
+    process.env.MAINNET
+      ? bitcoin.networks.bitcoin
+      : bitcoin.networks.testnet
+  )
+
+  const script = bitcoin.script.compile([
+
+    bitcoin.opcodes.OP_RIPEMD160,
+    Buffer.from(secretHash, 'hex'),
+    bitcoin.opcodes.OP_EQUALVERIFY,
+
+    Buffer.from(recipientPublicKey, 'hex'),
+    bitcoin.opcodes.OP_EQUAL,
+    bitcoin.opcodes.OP_IF,
+
+    Buffer.from(recipientPublicKey, 'hex'),
+    bitcoin.opcodes.OP_CHECKSIG,
+
+    bitcoin.opcodes.OP_ELSE,
+
+    bitcoin.script.number.encode(lockTime),
+    bitcoin.opcodes.OP_CHECKLOCKTIMEVERIFY,
+    bitcoin.opcodes.OP_DROP,
+    Buffer.from(ownerPublicKey, 'hex'),
+    bitcoin.opcodes.OP_CHECKSIG,
+
+    bitcoin.opcodes.OP_ENDIF,
+  ])
+
+  const scriptPubKey  = bitcoin.script.scriptHash.output.encode(bitcoin.crypto.hash160(script))
+  const scriptAddress = bitcoin.address.fromOutputScript(scriptPubKey, network)
+
+  return {
+    scriptAddress,
+  }
+}
+
 
 const send = (from, to, amount) =>
   new Promise((resolve, reject) => {
@@ -146,6 +187,7 @@ export default {
   getTransaction,
   send,
   fetchUnspents,
+  createScript,
   broadcastTx,
   fetchBalance,
 }

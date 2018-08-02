@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import actions from 'redux/actions'
 
 import { links } from 'helpers'
 import { Link } from 'react-router-dom'
@@ -19,7 +20,6 @@ const RowHistory = ({ row }) => {
 
   const { buyAmount, buyCurrency, sellAmount, btcScriptValues, isRefunded, isMy, sellCurrency, isFinished,  id } = row
 
-  console.log('row', row)
   return (
     <tr>
       <td>
@@ -48,7 +48,7 @@ const RowHistory = ({ row }) => {
       </td>
       <td>
         {
-          btcScriptValues && !isRefunded ? (
+          btcScriptValues && !isRefunded && !isFinished ? (
             <Timer
               lockTime={btcScriptValues.lockTime * 1000}
               enabledButton={() => {}}
