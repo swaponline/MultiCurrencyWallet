@@ -183,7 +183,7 @@ export default class AddOffer extends Component {
 
     const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
 
-    linked.sellAmount.check((value) => value > min, `Amount must be greater than 0.01 `)
+    linked.sellAmount.check((value) => value > min, `Amount must be greater than 0.05 `)
     linked.sellAmount.check((value) => value < balance, `Amount must be bigger your balance`)
 
     const isDisabled = !exchangeRate || !buyAmount && !sellAmount || sellAmount > balance || sellAmount < min
