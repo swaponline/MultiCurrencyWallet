@@ -8,6 +8,7 @@ import CSSModules from 'react-css-modules'
 import styles from './RowHistory.scss'
 
 import Coins from 'components/Coins/Coins'
+import Timer from 'pages/Swap/Timer/Timer'
 
 
 const RowHistory = ({ row }) => {
@@ -16,8 +17,9 @@ const RowHistory = ({ row }) => {
     return null
   }
 
-  const { buyAmount, buyCurrency, sellAmount, isMy, sellCurrency, isFinished,  id } = row
+  const { buyAmount, buyCurrency, sellAmount, btcScriptValues, isRefunded, isMy, sellCurrency, isFinished,  id } = row
 
+  console.log('row', row)
   return (
     <tr>
       <td>
@@ -43,6 +45,18 @@ const RowHistory = ({ row }) => {
       </td>
       <td>
         { (sellAmount / buyAmount).toFixed(5) }{ ` ${sellCurrency}/${buyCurrency}`}
+      </td>
+      <td>
+        {
+          btcScriptValues && !isRefunded ? (
+            <Timer
+              lockTime={btcScriptValues.lockTime * 1000}
+              enabledButton={() => {}}
+            />
+          ) : (
+            <span>Refund not available</span>
+          )
+        }
       </td>
       <td>
         { isFinished ? 'Finished' : 'Uncompleted' }
