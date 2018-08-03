@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
+import { connect } from 'redaction'
 
+import actions from 'redux/actions'
 import SwapApp from 'swap.app'
 import config from 'app-config'
 
@@ -9,47 +11,36 @@ import styles from './Footer.scss'
 import Info from './Info/Info'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 
-
+@connect({
+  ipfs: 'ipfs',
+})
 @CSSModules(styles)
 export default class Footer extends Component {
-
-  state = {
-    userOnline: 0,
-    connected: false,
-    server: config.ipfs.server,
-  }
-
   componentWillMount() {
     setTimeout(() => {
-      const connected = SwapApp.services.room.connection._ipfs.isOnline()
-
-      SwapApp.services.room.connection.on('peer joined', this.userJoin)
-      this.setState({
-        connected,
-      })
+      const isOnline = SwapApp.services.room.connection._ipfs.isOnline()
+      SwapApp.services.room.connection.on('peer joined', actions.ipfs.userJoined)
+      setTimeout(() => {
+        actions.ipfs.set({
+          isOnline,
+          server: config.ipfs.server
+        })
+      }, 1000)
     }, 8000)
   }
 
   componentWillUnmount() {
-    SwapApp.services.room.connection.off('peer joined', this.userLeft)
-  }
-
-  userJoin = () => {
-    this.setState(userOnline => userOnline--)
-  }
-
-  userLeft = () => {
-    this.setState(userOnline => userOnline++)
+    SwapApp.services.room.connection.off('peer joined', actions.ipfs.userLeft)
   }
 
   render() {
-    const { userOnline, connected, server } = this.state
+    const { ipfs: { onlineUsers, isOnline, server } } = this.props
 
     return (
       <div styleName="footer">
         <WidthContainer styleName="container">
           <a href="https://t.me/swaponline" target="_blank">Need help? Join Telegram chat @swaponline</a>
-          <Info serverAddress={server} userOnline={userOnline} connected={connected} />
+          <Info serverAddress={server} onlineUsers={onlineUsers} isOnline={isOnline} />
         </WidthContainer>
       </div>
     )
