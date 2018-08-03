@@ -202,8 +202,11 @@ export default class AddOffer extends Component {
           currency={false}
           id="exchangeRate"
           placeholder="Enter exchange rate amount"
+          buyCurrency={buyCurrency}
+          sellCurrency={sellCurrency}
         />
         <Select
+          label="Available amount"
           changeBalance={this.changeBalance}
           balance={data[0].balance}
           currency={data[0].currency}

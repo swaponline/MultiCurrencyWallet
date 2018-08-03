@@ -3,7 +3,6 @@
 }
 
 .choice {
-  width: 700px;
   margin-bottom: 20px;
   margin-top: 50px;
   display: flex;
@@ -15,6 +14,10 @@
   display: flex;
   align-items: center;
 
+  &:last-child {
+    width: 40%;
+    justify-content: flex-end;
+  }
 }
 
 .text {
