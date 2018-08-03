@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react'
+import { connect } from 'redaction'
 import SwapApp from 'swap.app'
 import actions from 'redux/actions'
 
@@ -7,7 +8,9 @@ import Table from 'components/Table/Table'
 import MyOrders from './MyOrders/MyOrders'
 import SearchSwap from 'components/SearchSwap/SearchSwap'
 
-
+@connect({
+  ipfs: 'ipfs',
+})
 export default class Orders extends Component {
 
   state = {
@@ -56,6 +59,7 @@ export default class Orders extends Component {
     const { filter, sellCurrency, buyCurrency, handleSellCurrencySelect, handleBuyCurrencySelect, flipCurrency } = this.props
     const titles = [ 'EXCHANGE', 'YOU BUY', 'YOU SELL', 'EXCHANGE RATE', 'ACTIONS' ]
     const { orders } = this.state
+    const { ipfs: { isOnline }} = this.props
 
     const mePeer = SwapApp.services.room.peer
     const filteredOrders = this.filterOrders(orders, filter)
@@ -85,6 +89,7 @@ export default class Orders extends Component {
               update={this.updateOrders}
             />
           )}
+          isLoading={!isOnline}
         />
       </Fragment>
     )
