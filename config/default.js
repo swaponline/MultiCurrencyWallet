@@ -1,7 +1,7 @@
 import path from 'path'
 
 
-const rootPath = path.resolve(process.cwd(), '../')
+const rootPath = path.resolve(process.cwd())
 const basePath = path.resolve(__dirname, '../')
 
 const config = {
