@@ -61,10 +61,16 @@ export default class Home extends Component {
 
   flipCurrency = () => {
     let { buyCurrency, sellCurrency } = this.state
+    const value = sellCurrency
+
+    sellCurrency = buyCurrency
+    buyCurrency = value
+
+    this.handelReplaceHistory(sellCurrency, buyCurrency)
 
     this.setState({
-      buyCurrency: sellCurrency,
-      sellCurrency: buyCurrency,
+      buyCurrency,
+      sellCurrency,
     })
   }
 

@@ -57,7 +57,6 @@ const getBalance = async (tokenAddress, name, decimals) => {
 }
 
 
-
 const fetchBalance = async (address, tokenAddress, decimals) => {
   const ERC20 = new web3.eth.Contract(abi, tokenAddress)
   const result = await ERC20.methods.balanceOf(address).call()
@@ -78,26 +77,24 @@ const getTransaction = (contractAddress) =>
       `&sort=asc&apikey=${config.apiKeys.blocktrail}`,
     ].join('')
 
-    let transactions
-
-    request.get(url)
+    return request.get(url)
       .then((res) => {
-        if (res.status) {
-          transactions = res.result
-            .filter((item) => item.value > 0).map((item) => ({
-              confirmations: item.confirmations,
-              type: item.tokenSymbol,
-              hash: item.hash,
-              contractAddress: item.contractAddress,
-              status: item.blockHash != null ? 1 : 0,
-              value: new BigNumber(String(item.value)).dividedBy(new BigNumber(10).pow(Number(item.tokenDecimal))).toNumber(),
-              address: item.to,
-              date: item.timeStamp * 1000,
-              direction: address.toLowerCase() === item.to.toLowerCase() ? 'in' : 'out',
-            }))
-          resolve(transactions)
-          console.log('TOKEN', transactions)
-        } else { console.error('res:status ETH false', res) }
+        const transactions = res.result
+          .filter((item) => item.value > 0).map((item) => ({
+            confirmations: item.confirmations,
+            type: item.tokenSymbol,
+            hash: item.hash,
+            contractAddress: item.contractAddress,
+            status: item.blockHash != null ? 1 : 0,
+            value: new BigNumber(String(item.value)).dividedBy(new BigNumber(10).pow(Number(item.tokenDecimal))).toNumber(),
+            address: item.to,
+            date: item.timeStamp * 1000,
+            direction: address.toLowerCase() === item.to.toLowerCase() ? 'in' : 'out',
+          }))
+        resolve(transactions)
+      })
+      .catch(() => {
+        resolve([])
       })
   })
 

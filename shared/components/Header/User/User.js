@@ -1,6 +1,7 @@
 import React from 'react'
 
 import SwapApp  from 'swap.app'
+
 import actions from 'redux/actions'
 import { connect } from 'redaction'
 import { constants } from 'helpers'
@@ -9,10 +10,8 @@ import styles from './User.scss'
 import CSSModules from 'react-css-modules'
 import Sound from 'helpers/Sound/Sound.mp4'
 
-import NavMobile from '../NavMobile/NavMobile'
 import UserAvatar from './UserAvatar/UserAvatar'
 import UserTooltip from './UserTooltip/UserTooltip'
-import MenuIcon from 'components/ui/MenuIcon/MenuIcon'
 import AddOfferButton from './AddOfferButton/AddOfferButton'
 
 
