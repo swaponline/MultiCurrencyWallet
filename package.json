@@ -95,6 +95,7 @@
     "human-standard-token-abi": "^1.0.2",
     "lodash": "^4.17.5",
     "moment": "^2.22.1",
+    "moment-with-locales-es6": "^1.0.1",
     "node-gyp": "^3.7.0",
     "prop-types": "^15.6.1",
     "react": "^16.3.2",
