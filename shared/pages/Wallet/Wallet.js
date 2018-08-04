@@ -84,10 +84,7 @@ export default class Wallet extends Component {
             <Row key={index} {...row} />
           )}
         />
-        { process.env.TESTNET &&  (
-          <WithdrawButton onClick={this.handleClear} >Exit</WithdrawButton>
-        )
-        }
+        { process.env.TESTNET && <WithdrawButton onClick={this.handleClear} >Exit</WithdrawButton> }
         <WithdrawButton onClick={this.handleDownload}>Download keys</WithdrawButton>
       </section>
     )
