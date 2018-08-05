@@ -116,7 +116,7 @@ export default class Row extends Component {
 
   render() {
     const { isBalanceFetching, viewText } = this.state
-    const { currency, name, balance, address, contractAddress, decimals, approve } = this.props
+    const { currency, name, balance, isBalanceFetched, address, contractAddress, decimals, approve } = this.props
 
     return (
       <tr>
@@ -126,7 +126,7 @@ export default class Row extends Component {
         <td>{currency}</td>
         <td style={{ minWidth: '80px' }}>
           {
-            isBalanceFetching ? (
+            !isBalanceFetched || isBalanceFetching ? (
               <InlineLoader />
             ) : (
               balance
