@@ -54,22 +54,14 @@ const getDemoMoney = process.env.MAINNET ? () => {} : () => {
 }
 
 const setExchangeRate = (sellCurrency, buyCurrency, setState) => {
-  let url
+  const url = `https://api.cryptonator.com/api/full/${sellCurrency}-${buyCurrency}`
 
-  if (sellCurrency === 'btc') {
-    url = `https://api.cryptonator.com/api/full/${buyCurrency}-btc`
-  } else {
-    url = `https://api.cryptonator.com/api/full/${sellCurrency}-btc`
-  }
-
-  console.log('rate', url)
   return request.get(url)
     .then(({ ticker: { price: exchangeRate } })  => {
-      console.log('rate', exchangeRate)
       setState(exchangeRate)
     })
     .catch(() =>
-      setState(config.exchangeRates[`${sellCurrency.toLowerCase()}btc`])
+      setState(config.exchangeRates[`${sellCurrency.toLowerCase()}${buyCurrency.toLowerCase()}`])
     )
 }
 

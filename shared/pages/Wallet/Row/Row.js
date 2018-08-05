@@ -139,14 +139,14 @@ export default class Row extends Component {
               <LinkAccount type={currency} address={address} >{address}</LinkAccount>
             ) : (
               !approve ? (
-                <button styleName="button" onClick={() => this.handleApproveToken(decimals, contractAddress, name)}>Approve token</button>
+                <button styleName="button" onClick={() => this.handleApproveToken(decimals, contractAddress, name)}>Approve</button>
               ) : (
                 <LinkAccount type={currency} contractAddress={contractAddress} address={address} >{address}</LinkAccount>
               )
             )
           }
           {
-            currency === 'EOS' && address === '' && <button styleName="button" onClick={this.handleEosLogin}>Login with your account</button>
+            currency === 'EOS' && address === '' && <button styleName="button" onClick={this.handleEosLogin}>Login</button>
           }
         </td>
         <td style={{ position: 'relative' }} >

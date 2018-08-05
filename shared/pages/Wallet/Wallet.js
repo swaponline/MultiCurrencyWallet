@@ -1,13 +1,15 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
+
 import { connect } from 'redaction'
 import { constants } from 'helpers'
 import actions from 'redux/actions'
 
-import PageHeadline from 'components/PageHeadline/PageHeadline'
-import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
-import SaveKeys from 'components/SaveKeys/SaveKeys'
 import Table from 'components/Table/Table'
 import Confirm from 'components/Confirm/Confirm'
+import SaveKeys from 'components/SaveKeys/SaveKeys'
+import PageHeadline from 'components/PageHeadline/PageHeadline'
+import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
+import { WithdrawButton } from 'components/controls'
 
 import Row from './Row/Row'
 
@@ -82,7 +84,8 @@ export default class Wallet extends Component {
             <Row key={index} {...row} />
           )}
         />
-        { process.env.TESTNET && <a href="" onClick={this.handleClear} >Exit (clear localstorage)</a> }
+        { process.env.TESTNET && <WithdrawButton onClick={this.handleClear} >Exit</WithdrawButton> }
+        <WithdrawButton onClick={this.handleDownload}>Download keys</WithdrawButton>
       </section>
     )
   }

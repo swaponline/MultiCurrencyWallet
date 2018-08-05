@@ -25,23 +25,52 @@ export default class Home extends Component {
   }
 
   handleBuyCurrencySelect = ({ value }) => {
+    let { sellCurrency, buyCurrency } = this.state
+
+    if (value === sellCurrency) {
+      sellCurrency = buyCurrency
+    }
+
+    this.handelReplaceHistory(sellCurrency, value)
+
     this.setState({
       buyCurrency: value,
+      sellCurrency,
     })
   }
 
   handleSellCurrencySelect = ({ value }) => {
+    let { sellCurrency, buyCurrency } = this.state
+
+    if (value === buyCurrency) {
+      buyCurrency = sellCurrency
+    }
+
+    this.handelReplaceHistory(value, buyCurrency)
+
     this.setState({
+      buyCurrency,
       sellCurrency: value,
     })
   }
 
+  handelReplaceHistory = (sellCurrency, buyCurrency) => {
+    const { history } = this.props
+    history.replace((`${links.home}orders/${buyCurrency}-${sellCurrency}`))
+  }
+
   flipCurrency = () => {
     let { buyCurrency, sellCurrency } = this.state
+    const value = sellCurrency
+
+    sellCurrency = buyCurrency
+    buyCurrency = value
+
+    this.handelReplaceHistory(sellCurrency, buyCurrency)
 
     this.setState({
-      buyCurrency: sellCurrency,
-      sellCurrency: buyCurrency,
+      buyCurrency,
+      sellCurrency,
     })
   }
 
@@ -59,6 +88,7 @@ export default class Home extends Component {
     const { buyCurrency, sellCurrency } = this.state
     const filterOrders = `${buyCurrency}${sellCurrency}`
 
+
     return (
       <section style={{ position: 'relative' }}>
         <PageHeadline >
@@ -66,7 +96,6 @@ export default class Home extends Component {
             <Title>Swap.Online - Decentralized Exchange Based on Atomic Swap Protocol</Title>
             <SubTitle>
               Check out our <a href="https://wiki.swap.online/en.pdf" target="_balnk" rel="noreferrer noopener">project brief</a> and participate in <a href="http://swap.wpmix.net/#airdrop" traget="landframe">smart airdrop.</a>
-              {/* Subscribe to <a href="https://t.me/swaponlineint" onClick={this.handleClickTelegram} target="_blank">telegram</a> and <a href="/" target="_blank"  onClick={this.handleClickMailing}>mailing list</a> */}
             </SubTitle>
           </Fragment>
           <Orders

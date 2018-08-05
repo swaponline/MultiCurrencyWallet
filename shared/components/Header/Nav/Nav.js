@@ -46,7 +46,7 @@ export default class Nav extends Component {
           }
           {
             process.env.MAINNET && (
-              <a styleName="link" target="_blank" rel="noreferrer noopener" href={links.testnet}> Testnet</a>
+              <a href={links.test} styleName="link" target="_blank" rel="noreferrer noopener" >Testnet</a>
             )
           }
         </Fragment>

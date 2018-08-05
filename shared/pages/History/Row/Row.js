@@ -1,13 +1,12 @@
 import React from 'react'
 import cx from 'classnames'
-import moment from 'moment'
+import moment from 'moment-with-locales-es6'
 
 import cssModules from 'react-css-modules'
 import styles from './Row.scss'
 
 import Coin from 'components/Coin/Coin'
 import LinkTransaction from '../LinkTransaction/LinkTransaction'
-
 
 const Row = ({ type, date, direction, hash, value, confirmations }) => {
   const statusStyleName = cx('status', {
@@ -22,7 +21,7 @@ const Row = ({ type, date, direction, hash, value, confirmations }) => {
       </td>
       <td>
         <div styleName={statusStyleName}>{direction === 'in' ? 'Received ' : 'Sent '}</div>
-        <div styleName="date">{moment(date).format('MM/DD/YYYY hh:mm A')}</div>
+        <div styleName="date">{moment(date).format('LLLL')}</div>
         <LinkTransaction type={type} styleName="address" hash={hash} >{hash}</LinkTransaction>
       </td>
       <td>

@@ -258,7 +258,7 @@ export default class EthTokenToBtc extends Component {
                     Transaction:
                     <strong>
                       <a
-                        href={`https://rinkeby.etherscan.io/tx/${flow.refundTransactionHash}`}
+                        href={`${config.link.etherscan}/tx/${flow.refundTransactionHash}`}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
