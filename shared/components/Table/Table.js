@@ -16,11 +16,25 @@ const Table = ({ titles, rows, rowRender, textIfEmpty, isLoading, loadingText })
       </tr>
     </thead>
     <tbody>
-      { isLoading && <tr><td styleName="color">{loadingText}</td></tr> }
-      { !isLoading && !rows.length && <tr><td styleName="color">{textIfEmpty}</td></tr> }
-      { !isLoading && !!rows.length && rows.map((row, rowIndex) => {
-        return typeof rowRender === 'function' && rowRender(row, rowIndex)
-      }) }
+      {
+        isLoading && (
+          <tr>
+            <td styleName="color">{loadingText}</td>
+          </tr>
+        )
+      }
+      {
+        !isLoading && !rows.length && (
+          <tr>
+            <td styleName="color">{textIfEmpty}</td>
+          </tr>
+        )
+      }
+      {
+        !isLoading && !!rows.length && rows.map((row, rowIndex) => (
+          typeof rowRender === 'function' && rowRender(row, rowIndex)
+        ))
+      }
     </tbody>
   </table>
 )
