@@ -5,10 +5,9 @@ import cssModules from 'react-css-modules'
 
 import Input from 'components/forms/Input/Input'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
-import CurrencySelect from 'components/ui/CurrencySelect/CurrencySelect'
 
 
-const Group = ({ className, label, id, inputValueLink, selectedCurrencyValue, onCurrencySelect, placeholder, currency = true }) => (
+const Group = ({ className, label, id, inputValueLink, placeholder, children }) => (
   <Fragment>
     <FieldLabel inRow>{label}</FieldLabel>
     <div styleName="groupField" className={className}>
@@ -20,17 +19,10 @@ const Group = ({ className, label, id, inputValueLink, selectedCurrencyValue, on
         id={id}
         placeholder={placeholder}
       />
-      {
-        currency && (
-          <CurrencySelect
-            styleName="currencySelect"
-            selectedValue={selectedCurrencyValue}
-            onSelect={onCurrencySelect}
-          />
-        )
-      }
+      {children}
     </div>
   </Fragment>
 )
 
 export default cssModules(Group, styles)
+

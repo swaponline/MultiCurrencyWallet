@@ -1,18 +1,19 @@
 import React, { Fragment, Component } from 'react'
 
-import config from 'app-config'
-import { request } from 'helpers'
+import actions from 'redux/actions'
 import { connect } from 'redaction'
 
 import Link from 'sw-valuelink'
-import actions from 'redux/actions'
+import config from 'app-config'
+
 import { BigNumber } from 'bignumber.js'
 
 import styles from './AddOffer.scss'
 import cssModules from 'react-css-modules'
 
-import Group from './Group/Group'
 import Select from './Select/Select'
+import ExchangeRateGroup from './ExchangeRateGroup/ExchangeRateGroup'
+import SelectGroup from './SelectGroup/SelectGroup'
 
 import Button from 'components/controls/Button/Button'
 
@@ -197,19 +198,22 @@ export default class AddOffer extends Component {
 
     return (
       <Fragment>
-        <Group
+        <ExchangeRateGroup
           label="Exchange rate"
           inputValueLink={linked.exchangeRate.onChange(this.handleExchangeRateChange)}
           currency={false}
           id="exchangeRate"
           placeholder="Enter exchange rate amount"
+          buyCurrency={buyCurrency}
+          sellCurrency={sellCurrency}
         />
         <Select
+          label="Available amount"
           changeBalance={this.changeBalance}
           balance={data[0].balance}
           currency={data[0].currency}
         />
-        <Group
+        <SelectGroup
           styleName="sellGroup"
           label="Sell"
           inputValueLink={linked.sellAmount.onChange(this.handleSellAmountChange)}
@@ -218,7 +222,7 @@ export default class AddOffer extends Component {
           id="sellAmount"
           placeholder="Enter sell amount"
         />
-        <Group
+        <SelectGroup
           label="Buy"
           inputValueLink={linked.buyAmount.onChange(this.handleBuyAmountChange)}
           selectedCurrencyValue={buyCurrency}
