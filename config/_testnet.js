@@ -23,7 +23,7 @@ export default {
   },
 
   eth: {
-    contract : '0x830aef165b900fa7dc6b219f062c5784f6436d67', // 0xdbC2395f753968a93465487022B0e5D8730633Ec
+    contract : '0x4356152f044e3a1ce1a57566b2e0bee57949c1b2', // 0x830aef165b900fa7dc6b219f062c5784f6436d67
   },
 
   tokens: {
@@ -42,14 +42,14 @@ export default {
   },
 
   link: {
-    bitpay: 'https://test-insight.bitpay.com',
+    bitpay: 'http://testnet.y000r.world/insight',  // https://test-insight.bitpay.com
     etherscan: 'https://rinkeby.etherscan.io',
     eos: 'http://jungle.cryptolions.io/#accountInfo',
   },
 
   api: {
     blocktrail: 'https://api.blocktrail.com/v1/tBTC',
-    bitpay: 'https://test-insight.bitpay.com/api',
+    bitpay: 'http://testnet.y000r.world/insight-api',  // https://test-insight.bitpay.com/api
     etherscan: 'https://rinkeby.etherscan.io/api',
   },
 

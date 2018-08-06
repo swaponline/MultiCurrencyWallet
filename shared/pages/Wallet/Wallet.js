@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 
 import { connect } from 'redaction'
 import { constants } from 'helpers'
@@ -54,6 +54,10 @@ export default class Wallet extends Component {
     localStorage.setItem(constants.localStorage.privateKeysSaved, true)
   }
 
+  handleImportKeys = () => {
+    actions.modals.open(constants.modals.ImportKeys, {})
+  }
+
   changeView = (view) => {
     this.setState({
       view,
@@ -86,6 +90,7 @@ export default class Wallet extends Component {
         />
         { process.env.TESTNET && <WithdrawButton onClick={this.handleClear} >Exit</WithdrawButton> }
         <WithdrawButton onClick={this.handleDownload}>Download keys</WithdrawButton>
+        <WithdrawButton onClick={this.handleImportKeys}>Import keys</WithdrawButton>
       </section>
     )
   }

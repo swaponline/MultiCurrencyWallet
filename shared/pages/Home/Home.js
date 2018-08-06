@@ -56,7 +56,7 @@ export default class Home extends Component {
 
   handelReplaceHistory = (sellCurrency, buyCurrency) => {
     const { history } = this.props
-    history.replace((`${links.home}orders/${buyCurrency}-${sellCurrency}`))
+    history.replace((`${links.orders}/${buyCurrency}-${sellCurrency}`))
   }
 
   flipCurrency = () => {

@@ -8,11 +8,11 @@ import styles from './Nav.scss'
 
 
 const nav = [
-  { title: 'Orders',    link: links.home      },
-  { title: 'Wallet',    link: links.wallet    },
+  { title: 'Wallet',    link: links.home      },
+  { title: 'Orders',    link: links.orders    },
   { title: 'History',   link: links.history   },
   { title: 'Affiliate', link: links.affiliate },
-  { title: 'Listing', link: links.listing     },
+  { title: 'Listing',   link: links.listing   },
 ]
 
 

@@ -4,4 +4,5 @@ export default {
   PrivateKeys: 'PrivateKeysModal',
   Eos: 'EosModal',
   Approve: 'Approve',
+  ImportKeys: 'ImportKeys',
 }
