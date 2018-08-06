@@ -1,7 +1,6 @@
 import React, { Fragment, Component } from 'react'
 import { connect } from 'redaction'
 import config from 'app-config'
-import { request } from 'helpers'
 
 import Link from 'sw-valuelink'
 import actions from 'redux/actions'
@@ -12,8 +11,9 @@ import styles from './AddOffer.scss'
 
 import Button from 'components/controls/Button/Button'
 
-import Group from './Group/Group'
 import Select from './Select/Select'
+import ExchangeRateGroup from './ExchangeRateGroup/ExchangeRateGroup'
+import SelectGroup from './SelectGroup/SelectGroup'
 
 
 @connect(({ user: { ethData, btcData, tokensData } }) => ({
@@ -196,7 +196,7 @@ export default class AddOffer extends Component {
 
     return (
       <Fragment>
-        <Group
+        <ExchangeRateGroup
           label="Exchange rate"
           inputValueLink={linked.exchangeRate.onChange(this.handleExchangeRateChange)}
           currency={false}
@@ -211,7 +211,7 @@ export default class AddOffer extends Component {
           balance={data[0].balance}
           currency={data[0].currency}
         />
-        <Group
+        <SelectGroup
           styleName="sellGroup"
           label="Sell"
           inputValueLink={linked.sellAmount.onChange(this.handleSellAmountChange)}
@@ -220,7 +220,7 @@ export default class AddOffer extends Component {
           id="sellAmount"
           placeholder="Enter sell amount"
         />
-        <Group
+        <SelectGroup
           label="Buy"
           inputValueLink={linked.buyAmount.onChange(this.handleBuyAmountChange)}
           selectedCurrencyValue={buyCurrency}
