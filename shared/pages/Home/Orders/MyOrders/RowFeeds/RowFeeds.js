@@ -25,6 +25,9 @@ const RowFeeds = ({ row, mePeer, acceptRequest, declineRequest, removeOrder }) =
       </td>
       <td>{`${buyAmount.toFixed(5)} ${buyCurrency}`}</td>
       <td>{`${sellAmount.toFixed(5)} ${sellCurrency}`}</td>
+      <td>
+        <a href={`${links.swap}/${sellCurrency}-${buyCurrency}/${id}`} >Link on swap</a>
+      </td>
       <td>{`${(exchangeRate || (buyAmount/sellAmount)).toFixed(5)} ${buyCurrency}/${sellCurrency}`}</td>
       <td>
         {

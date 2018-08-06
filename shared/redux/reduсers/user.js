@@ -63,7 +63,7 @@ export const setBalance = (state, { name, amount, unconfirmedBalance }) => ({
   },
 })
 
-export const setTokenBalance = (state, { name, amount, unconfirmedBalance }) => ({
+export const setTokenBalance = (state, { name, amount }) => ({
   ...state,
   tokensData: {
     ...state.tokensData,
