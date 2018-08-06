@@ -9,7 +9,7 @@ import MyOrders from './MyOrders/MyOrders'
 import SearchSwap from 'components/SearchSwap/SearchSwap'
 
 @connect({
-  ipfs: 'ipfs',
+  isOnline: 'ipfs.isOnline',
 })
 export default class Orders extends Component {
 
@@ -59,7 +59,7 @@ export default class Orders extends Component {
     const { filter, sellCurrency, buyCurrency, handleSellCurrencySelect, handleBuyCurrencySelect, flipCurrency } = this.props
     const titles = [ 'EXCHANGE', 'YOU BUY', 'YOU SELL', 'EXCHANGE RATE', 'ACTIONS' ]
     const { orders } = this.state
-    const { ipfs: { isOnline }} = this.props
+    const { isOnline } = this.props
 
     const mePeer = SwapApp.services.room.peer
     const filteredOrders = this.filterOrders(orders, filter)

@@ -16,14 +16,16 @@ import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 })
 @CSSModules(styles)
 export default class Footer extends Component {
+
   componentWillMount() {
     setTimeout(() => {
       const isOnline = SwapApp.services.room.connection._ipfs.isOnline()
+
       SwapApp.services.room.connection.on('peer joined', actions.ipfs.userJoined)
       setTimeout(() => {
         actions.ipfs.set({
           isOnline,
-          server: config.ipfs.server
+          server: config.ipfs.server,
         })
       }, 1000)
     }, 8000)
@@ -39,7 +41,7 @@ export default class Footer extends Component {
     return (
       <div styleName="footer">
         <WidthContainer styleName="container">
-          <span style={{ fontSize: '14px' }} >Need help? Join Telegram chat <a href="https://t.me/swaponline" target="_blank" rel="noreferrer noopener">@swaponline</a></span>
+          <span styleName="text" >Need help? Join Telegram chat <a href="https://t.me/swaponline" target="_blank" rel="noreferrer noopener">@swaponline</a></span>
           <Info serverAddress={server} onlineUsers={onlineUsers} isOnline={isOnline} />
         </WidthContainer>
       </div>

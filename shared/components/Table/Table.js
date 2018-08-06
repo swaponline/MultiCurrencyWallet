@@ -42,7 +42,7 @@ const Table = ({ titles, rows, rowRender, textIfEmpty, isLoading, loadingText })
 
 Table.defaultProps = {
   textIfEmpty: 'The table is empty',
-  loadingText: 'Loading...'
+  loadingText: 'Loading...',
 }
 
 export default cssModules(Table, styles)

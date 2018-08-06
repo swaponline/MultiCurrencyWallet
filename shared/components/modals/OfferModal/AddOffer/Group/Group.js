@@ -14,7 +14,7 @@ const Group = ({ className, label, id, inputValueLink, selectedCurrencyValue, on
     <div styleName="groupField" className={className}>
       <Input
         styleName="inputRoot"
-        inputContainerClassName={styles.inputContainer}
+        inputContainerClassName="inputContainer"
         valueLink={inputValueLink}
         pattern="0-9\."
         id={id}

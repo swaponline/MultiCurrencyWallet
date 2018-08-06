@@ -1,5 +1,6 @@
 import reducers from 'redux/core/reducers'
 
+
 const set = payload => {
   reducers.ipfs.set(payload)
 }
@@ -15,5 +16,5 @@ const userLeft = () => {
 export default {
   set,
   userJoined,
-  userLeft
+  userLeft,
 }

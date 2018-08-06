@@ -1,12 +1,12 @@
 export const initialState = {
   isOnline: false,
   onlineUsers: 0,
-  server: null
+  server: null,
 }
 
 export const set = (state, payload) => ({
   ...state,
-  ...payload
+  ...payload,
 })
 
 /**
@@ -14,7 +14,7 @@ export const set = (state, payload) => ({
  */
 export const userJoined = state => ({
   ...state,
-  onlineUsers: state.onlineUsers + 1
+  onlineUsers: state.onlineUsers + 1,
 })
 
 /**
@@ -22,5 +22,5 @@ export const userJoined = state => ({
  */
 export const userLeft = state => ({
   ...state,
-  onlineUsers: state.onlineUsers - 1
+  onlineUsers: state.onlineUsers - 1,
 })

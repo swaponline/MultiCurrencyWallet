@@ -130,8 +130,8 @@ export default class Row extends Component {
               <InlineLoader />
             ) : (
               <Fragment>
-                <p>{balance}</p>
-                { currency === 'BTC' &&  <span style={{ fontSize: '14px', color: '#c9c9c9' }}>Unconfirmed {unconfirmedBalance}</span> }
+                <span>{balance}</span> <br />
+                { currency === 'BTC' &&  <span style={{ fontSize: '12px', color: '#c9c9c9' }}>Unconfirmed {unconfirmedBalance}</span> }
               </Fragment>
             )
           }
