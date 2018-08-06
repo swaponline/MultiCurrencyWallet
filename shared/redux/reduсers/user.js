@@ -3,22 +3,26 @@ export const initialState = {
     address: '0x0',
     publicKey: '0x0',
     balance: 0,
+    isBalanceFetched: false,
     currency: 'ETH',
   },
   btcData: {
     address: '0x0',
     publicKey: '0x0',
     balance: 0,
+    isBalanceFetched: false,
     currency: 'BTC',
   },
   nimData: {
     address: '',
     balance: 0,
+    isBalanceFetched: false,
     currency: 'NIM',
   },
   eosData: {
     address: '',
     balance: 0,
+    isBalanceFetched: true,
     currency: 'EOS',
   },
   tokensData: {},
@@ -46,7 +50,7 @@ export const setTokenAuthData = (state, { name, data }) => ({
   },
 })
 
-export const setBalance = (state, { name, amount }) => ({
+export const setBalance = (state, { name, amount, unconfirmedBalance }) => ({
   ...state,
   tokensData: {
     ...state.tokensData,
@@ -54,6 +58,8 @@ export const setBalance = (state, { name, amount }) => ({
   [name]: {
     ...state[name],
     balance: Number(amount),
+    unconfirmedBalance,
+    isBalanceFetched: true,
   },
 })
 
@@ -64,6 +70,7 @@ export const setTokenBalance = (state, { name, amount }) => ({
     [name]: {
       ...state.tokensData[name],
       balance: Number(amount),
+      isBalanceFetched: true,
     },
   },
 })

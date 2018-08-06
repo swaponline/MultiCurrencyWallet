@@ -4,12 +4,12 @@ import cssModules from 'react-css-modules'
 import styles from './Info.scss'
 
 
-const Info = ({ userOnline, connected, serverAddress }) => (
+const Info = ({ onlineUsers, isOnline, serverAddress }) => (
   <div styleName="title">
-    <span styleName={connected ? 'connect' : 'disconnect'}>
-      {connected ? 'Connected ' : 'Loading or not available '}
+    <span styleName={isOnline ? 'connect' : 'disconnect'}>
+      {isOnline ? 'Connected ' : 'Loading or not available '}
     </span>
-    to IPFS signal {serverAddress} / peers online: {userOnline}
+    to IPFS signal {serverAddress} / peers online: {onlineUsers}
   </div>
 )
 

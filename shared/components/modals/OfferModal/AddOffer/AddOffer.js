@@ -1,19 +1,21 @@
 import React, { Fragment, Component } from 'react'
+
+import actions from 'redux/actions'
 import { connect } from 'redaction'
-import config from 'app-config'
 
 import Link from 'sw-valuelink'
-import actions from 'redux/actions'
+import config from 'app-config'
+
 import { BigNumber } from 'bignumber.js'
 
-import cssModules from 'react-css-modules'
 import styles from './AddOffer.scss'
-
-import Button from 'components/controls/Button/Button'
+import cssModules from 'react-css-modules'
 
 import Select from './Select/Select'
 import ExchangeRateGroup from './ExchangeRateGroup/ExchangeRateGroup'
 import SelectGroup from './SelectGroup/SelectGroup'
+
+import Button from 'components/controls/Button/Button'
 
 
 @connect(({ user: { ethData, btcData, tokensData } }) => ({
@@ -70,12 +72,12 @@ export default class AddOffer extends Component {
   handleExchangeRateChange = (value) => {
     let { buyAmount, sellAmount } = this.state
 
-    sellAmount = new BigNumber(String(sellAmount) || 0)
-
-    if (value === 0 || !value) {
-      buyAmount = new BigNumber(String(0))
+    if (value == 0 || !value) { // eslint-disable-line
+      buyAmount   = new BigNumber(0)
+      sellAmount  = new BigNumber(0)
     } else {
-      buyAmount = sellAmount.dividedBy(new BigNumber(String(value)))
+      buyAmount  = new BigNumber(String(sellAmount) || 0).multipliedBy(value)
+      sellAmount = new BigNumber(String(buyAmount) || 0).dividedBy(value)
     }
 
     this.setState({
@@ -120,7 +122,7 @@ export default class AddOffer extends Component {
     this.getExchangeRate(sellCurrency, buyCurrency)
 
     const { exchangeRate } = this.state
-    buyAmount = new BigNumber(String(sellAmount) || 0).multipliedBy(exchangeRate)
+    buyAmount = new BigNumber(String(sellAmount) || 0).dividedBy(exchangeRate)
 
 
     this.setState({
@@ -131,7 +133,7 @@ export default class AddOffer extends Component {
   }
 
   handleBuyAmountChange = (value) => {
-    const { exchangeRate, buyAmount } = this.state
+    const { exchangeRate } = this.state
 
     if (!this.EventWasSend) {
       actions.analytics.dataEvent('orderbook-addoffer-enter-ordervalue')
@@ -139,13 +141,13 @@ export default class AddOffer extends Component {
     }
 
     this.setState({
-      sellAmount: new BigNumber(String(value) || 0).multipliedBy(exchangeRate),
-      buyAmount: new BigNumber(String(buyAmount)),
+      sellAmount: new BigNumber(String(value) || 0).dividedBy(exchangeRate || 0),
+      buyAmount: new BigNumber(String(value)),
     })
   }
 
   handleSellAmountChange = (value) => {
-    const { exchangeRate, sellAmount } = this.state
+    const { exchangeRate } = this.state
 
     if (!this.EventWasSend) {
       actions.analytics.dataEvent('orderbook-addoffer-enter-ordervalue')
@@ -153,8 +155,8 @@ export default class AddOffer extends Component {
     }
 
     this.setState({
-      buyAmount: new BigNumber(String(value) || 0).multipliedBy(exchangeRate),
-      sellAmount: new BigNumber(String(sellAmount)),
+      buyAmount: new BigNumber(String(value) || 0).multipliedBy(exchangeRate || 0),
+      sellAmount: new BigNumber(String(value)),
     })
   }
 

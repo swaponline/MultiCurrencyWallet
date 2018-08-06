@@ -61,7 +61,7 @@ const register = async (accountName, privateKey) => {
   localStorage.setItem(constants.privateKeyNames.eos, privateKey)
   localStorage.setItem(constants.privateKeyNames.eosAccount, accountName)
 
-  reducers.user.setAuthData({ name: 'eosData', data: { ...keys, address: accountName } } )
+  reducers.user.setAuthData({ name: 'eosData', data: { ...keys, address: accountName } })
 }
 
 const login = async (accountName, masterPrivateKey) => {

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import actions from 'redux/actions'
 import { constants, web3 } from 'helpers'
 
@@ -116,7 +116,7 @@ export default class Row extends Component {
 
   render() {
     const { isBalanceFetching, viewText } = this.state
-    const { currency, name, balance, address, contractAddress, decimals, approve } = this.props
+    const { currency, name, balance, isBalanceFetched, address, contractAddress, decimals, approve, unconfirmedBalance } = this.props
 
     return (
       <tr>
@@ -126,10 +126,13 @@ export default class Row extends Component {
         <td>{currency}</td>
         <td style={{ minWidth: '80px' }}>
           {
-            isBalanceFetching ? (
+            !isBalanceFetched || isBalanceFetching ? (
               <InlineLoader />
             ) : (
-              balance
+              <Fragment>
+                <p>{balance}</p>
+                { currency === 'BTC' &&  <span style={{ fontSize: '14px', color: '#c9c9c9' }}>Unconfirmed {unconfirmedBalance}</span> }
+              </Fragment>
             )
           }
         </td>
@@ -139,14 +142,14 @@ export default class Row extends Component {
               <LinkAccount type={currency} address={address} >{address}</LinkAccount>
             ) : (
               !approve ? (
-                <button styleName="button" onClick={() => this.handleApproveToken(decimals, contractAddress, name)}>Approve token</button>
+                <button styleName="button" onClick={() => this.handleApproveToken(decimals, contractAddress, name)}>Approve</button>
               ) : (
                 <LinkAccount type={currency} contractAddress={contractAddress} address={address} >{address}</LinkAccount>
               )
             )
           }
           {
-            currency === 'EOS' && address === '' && <button styleName="button" onClick={this.handleEosLogin}>Login with your account</button>
+            currency === 'EOS' && address === '' && <button styleName="button" onClick={this.handleEosLogin}>Login</button>
           }
         </td>
         <td style={{ position: 'relative' }} >

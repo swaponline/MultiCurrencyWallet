@@ -58,28 +58,25 @@ const getTransaction = () =>
     const { user: { ethData: { address } } } = getState()
 
     const url = `${config.api.etherscan}?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${config.apiKeys.etherscan}`
-    let transactions
 
-    request.get(url)
+    return request.get(url)
       .then((res) => {
-        console.log(res)
-        if (res.status) {
-          transactions = res.result
-            .filter((item) => item.value > 0).map((item) => ({
-              type: 'eth',
-              confirmations: item.confirmations,
-              hash: item.hash,
-              status: item.blockHash != null ? 1 : 0,
-              value: web3.utils.fromWei(item.value),
-              address: item.to,
-              date: item.timeStamp * 1000,
-              direction: address.toLowerCase() === item.to.toLowerCase() ? 'in' : 'out',
-            }))
-          resolve(transactions)
-        }
-        else {
-          console.error('res:status ETH false', res)
-        }
+        const transactions = res.result
+          .filter((item) => item.value > 0).map((item) => ({
+            type: 'eth',
+            confirmations: item.confirmations,
+            hash: item.hash,
+            status: item.blockHash != null ? 1 : 0,
+            value: web3.utils.fromWei(item.value),
+            address: item.to,
+            date: item.timeStamp * 1000,
+            direction: address.toLowerCase() === item.to.toLowerCase() ? 'in' : 'out',
+          }))
+
+        resolve(transactions)
+      })
+      .catch(() => {
+        resolve([])
       })
   })
 

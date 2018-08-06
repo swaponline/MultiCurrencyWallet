@@ -4,7 +4,7 @@ import cssModules from 'react-css-modules'
 import styles from './Table.scss'
 
 
-const Table = ({ titles, rows, rowRender, textIfEmpty }) => (
+const Table = ({ titles, rows, rowRender, textIfEmpty, isLoading, loadingText }) => (
   <table styleName="table">
     <thead>
       <tr>
@@ -17,17 +17,23 @@ const Table = ({ titles, rows, rowRender, textIfEmpty }) => (
     </thead>
     <tbody>
       {
-        rows.length > 0 ? (
-          rows.map((row, rowIndex) => {
-            if (typeof rowRender === 'function') {
-              return rowRender(row, rowIndex)
-            }
-          })
-        ) : (
+        isLoading && (
+          <tr>
+            <td styleName="color">{loadingText}</td>
+          </tr>
+        )
+      }
+      {
+        !isLoading && !rows.length && (
           <tr>
             <td styleName="color">{textIfEmpty}</td>
           </tr>
         )
+      }
+      {
+        !isLoading && !!rows.length && rows.map((row, rowIndex) => (
+          typeof rowRender === 'function' && rowRender(row, rowIndex)
+        ))
       }
     </tbody>
   </table>
@@ -36,6 +42,7 @@ const Table = ({ titles, rows, rowRender, textIfEmpty }) => (
 
 Table.defaultProps = {
   textIfEmpty: 'The table is empty',
+  loadingText: 'Loading...'
 }
 
 export default cssModules(Table, styles)

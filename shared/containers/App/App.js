@@ -3,7 +3,7 @@ import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 import actions from 'redux/actions'
 import { connect } from 'redaction'
-import moment from 'moment'
+import moment from 'moment-with-locales-es6'
 import { constants } from 'helpers'
 
 import CSSModules from 'react-css-modules'
@@ -21,7 +21,8 @@ import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import NotificationConductor from 'components/notification/NotificationConductor/NotificationConductor'
 
 
-moment.locale('en-gb')
+const userLanguage = (navigator.userLanguage || navigator.language || 'en-gb').split('-')[0]
+moment.locale(userLanguage)
 
 @withRouter
 @connect({

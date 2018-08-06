@@ -45,9 +45,10 @@ const getBalance = () => {
   const { user: { btcData: { address } } } = getState()
 
   return request.get(`${config.api.bitpay}/addr/${address}`)
-    .then(({ balance }) => {
+    .then(({ balance, unconfirmedBalance }) => {
       console.log('BTC Balance:', balance)
-      reducers.user.setBalance({ name: 'btcData', amount: balance })
+      console.log('BTC unconfirmedBalance Balance:', unconfirmedBalance)
+      reducers.user.setBalance({ name: 'btcData', amount: balance, unconfirmedBalance })
       return balance
     }, () => Promise.reject())
 }
@@ -66,11 +67,10 @@ const getTransaction = () =>
     const { user: { btcData: { address } } } = getState()
 
     const url = `${config.api.bitpay}/txs/?address=${address}`
-    let transactions
 
-    request.get(url).then((res) => {
-      if (res) {
-        transactions = res.txs.map((item) => ({
+    return request.get(url)
+      .then((res) => {
+        const transactions = res.txs.map((item) => ({
           type: 'btc',
           hash: item.txid,
           confirmations: item.confirmations,
@@ -79,12 +79,10 @@ const getTransaction = () =>
           direction: address.toLocaleLowerCase() === item.vout[0].scriptPubKey.addresses[0].toLocaleLowerCase() ? 'in' : 'out',
         }))
         resolve(transactions)
-      }
-      else {
+      })
+      .catch(() => {
         resolve([])
-        console.error('res:status BTC false', res)
-      }
-    })
+      })
   })
 
 const createScript = (data) => {

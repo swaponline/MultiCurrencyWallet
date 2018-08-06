@@ -16,6 +16,7 @@ import nimiq from './nimiq'
 import referral from './referral'
 import analytics from './analytics'
 
+import ipfs from './ipfs'
 
 export default {
   filter,
@@ -31,4 +32,5 @@ export default {
   feed,
   analytics,
   referral,
+  ipfs,
 }
