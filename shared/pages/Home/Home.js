@@ -88,14 +88,13 @@ export default class Home extends Component {
     const { buyCurrency, sellCurrency } = this.state
     const filterOrders = `${buyCurrency}${sellCurrency}`
 
-
     return (
       <section style={{ position: 'relative' }}>
         <PageHeadline >
           <Fragment>
             <Title>Swap.Online - Decentralized Exchange Based on Atomic Swap Protocol</Title>
             <SubTitle>
-              Check out our <a href="https://wiki.swap.online/en.pdf" target="_balnk" rel="noreferrer noopener">project brief</a> and participate in <a href="http://swap.wpmix.net/#airdrop" traget="landframe">smart airdrop.</a>
+              Check out our <a href="https://wiki.swap.online/en.pdf" target="_balnk" rel="noreferrer noopener">project brief</a> and participate in smart airdrop.
             </SubTitle>
           </Fragment>
           <Orders

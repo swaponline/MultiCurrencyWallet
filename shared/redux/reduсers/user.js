@@ -22,7 +22,7 @@ export const initialState = {
   eosData: {
     address: '',
     balance: 0,
-    isBalanceFetched: false,
+    isBalanceFetched: true,
     currency: 'EOS',
   },
   tokensData: {},
@@ -50,7 +50,7 @@ export const setTokenAuthData = (state, { name, data }) => ({
   },
 })
 
-export const setBalance = (state, { name, amount }) => ({
+export const setBalance = (state, { name, amount, unconfirmedBalance }) => ({
   ...state,
   tokensData: {
     ...state.tokensData,
@@ -58,11 +58,12 @@ export const setBalance = (state, { name, amount }) => ({
   [name]: {
     ...state[name],
     balance: Number(amount),
+    unconfirmedBalance,
     isBalanceFetched: true,
   },
 })
 
-export const setTokenBalance = (state, { name, amount }) => ({
+export const setTokenBalance = (state, { name, amount, unconfirmedBalance }) => ({
   ...state,
   tokensData: {
     ...state.tokensData,

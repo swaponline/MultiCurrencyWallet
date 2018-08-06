@@ -20,6 +20,7 @@ import ModalConductor from 'components/modal/ModalConductor/ModalConductor'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import NotificationConductor from 'components/notification/NotificationConductor/NotificationConductor'
 
+
 const userLanguage = (navigator.userLanguage || navigator.language || 'en-gb').split('-')[0]
 moment.locale(userLanguage)
 
