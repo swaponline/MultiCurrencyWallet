@@ -52,6 +52,12 @@ export default class EthTokenToBtc extends Component {
     this.swap.flow.tryRefund()
   }
 
+  toggleBitcoinScript = () => {
+    this.setState({
+      isShowingBitcoinScript: !this.state.isShowingBitcoinScript,
+    })
+  }
+
   addGasPrice = () => {
     const gwei =  new BigNumber(String(this.swap.flow.ethSwap.gasPrice)).plus(new BigNumber(1e10))
     this.swap.flow.ethSwap.addGasPrice(gwei)
@@ -60,7 +66,7 @@ export default class EthTokenToBtc extends Component {
 
   render() {
     const { children } = this.props
-    const { flow, enabledButton } = this.state
+    const { flow, enabledButton, isShowingBitcoinScript } = this.state
 
     return (
       <div>
@@ -163,7 +169,11 @@ export default class EthTokenToBtc extends Component {
                         }
                       </strong>
                     </div>
+
                     <br />
+                    <Fragment>
+                      { flow.btcScriptValues &&   <span styleName="button" onClick={this.toggleBitcoinScript}>Show bitcoin script</span> }
+                      { isShowingBitcoinScript && (
                     <pre>
                       <code>{`
   bitcoinjs.script.compile([
@@ -190,6 +200,14 @@ export default class EthTokenToBtc extends Component {
   ])
                       `}</code>
                     </pre>
+                      )
+                      }
+                    </Fragment>
+
+                    <br />
+                    <br />
+
+
                     {
                       flow.step === 3 && (
                         <Fragment>
