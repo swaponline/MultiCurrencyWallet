@@ -11,6 +11,7 @@ import styles from './App.scss'
 import 'scss/app.scss'
 
 import { createSwapApp } from 'instances/newSwap'
+import Core from 'containers/Core/Core'
 
 import Header from 'components/Header/Header'
 import Footer from 'components/Footer/Footer'
@@ -78,6 +79,7 @@ export default class App extends React.Component {
         <WidthContainer styleName="main">
           {children}
         </WidthContainer>
+        <Core />
         <Footer />
         <RequestLoader />
         <ModalConductor />

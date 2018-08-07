@@ -8,7 +8,7 @@ import styles from './Nav.scss'
 
 
 const nav = [
-  { title: 'Wallet',    link: links.home      },
+  { title: 'Wallet',    link: links.home,     exact: 'exact' },
   { title: 'Orders',    link: links.orders    },
   { title: 'History',   link: links.history   },
   { title: 'Affiliate', link: links.affiliate },
@@ -31,11 +31,11 @@ export default class Nav extends Component {
       <div styleName="nav">
         <Fragment>
           {
-            nav.map(({ title, link }) => (
+            nav.map(({ title, link, exact }) => (
               <NavLink
                 onClick={() => this.handleScrollTo(500)}
-                exact
                 key={title}
+                exact={exact}
                 styleName="link"
                 to={link}
                 activeClassName={styles.active}

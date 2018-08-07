@@ -14,8 +14,6 @@ const deleteItemToFeed = (orderId) => {
     .map(k => feeds[k])
     .filter(f => f.id === orderId)
 
-  console.log(filteredFeeds)
-
   reducers.feeds.deleteItems(filteredFeeds)
 }
 

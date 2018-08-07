@@ -50,7 +50,7 @@ const getBalance = async (tokenAddress, name, decimals) => {
   const ERC20 = new web3.eth.Contract(abi, tokenAddress)
 
   const result = await ERC20.methods.balanceOf(address).call()
-  const amount = new BigNumber(String(result)).dividedBy(new BigNumber(String(10)).pow(decimals)).toNumber()
+  let amount = new BigNumber(String(result)).dividedBy(new BigNumber(String(10)).pow(decimals)).toNumber()
 
   reducers.user.setTokenBalance({ name, amount })
   return amount

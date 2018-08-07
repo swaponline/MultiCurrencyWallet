@@ -17,20 +17,13 @@ import AddOfferButton from './AddOfferButton/AddOfferButton'
 
 @connect({
   feeds: 'feeds.items',
+  peer: 'ipfs.peer',
 })
 @CSSModules(styles)
 export default class User extends React.Component {
 
   state = {
     view: true,
-  }
-
-  componentWillMount() {
-    SwapApp.services.orders.on('new order request', this.updateOrders)
-  }
-
-  componentWillUnmount() {
-    SwapApp.services.orders.off('new order request', this.updateOrders)
   }
 
   handleChangeView = () => {
@@ -56,14 +49,7 @@ export default class User extends React.Component {
   }
 
   acceptRequest = (orderId, participantPeer) => {
-    const order = SwapApp.services.orders.getByKey(orderId)
-    order.acceptRequest(participantPeer)
-
-    setTimeout(() => {
-      this.handleToggleTooltip()
-    }, 800)
-
-    this.updateOrders()
+    actions.core.acceptRequest(orderId, participantPeer)
   }
 
   soundClick = () => {
@@ -75,8 +61,7 @@ export default class User extends React.Component {
 
   render() {
     const { view } = this.state
-    const { feeds } = this.props
-    const mePeer = SwapApp.services.room.peer
+    const { feeds, peer } = this.props
 
     return (
       <div styleName="user-cont">
@@ -84,7 +69,7 @@ export default class User extends React.Component {
         <UserAvatar
           isToggle={this.handleToggleTooltip}
           feeds={feeds}
-          mePeer={mePeer}
+          mePeer={peer}
           soundClick={this.soundClick}
           changeView={this.handleChangeView}
         />
@@ -92,7 +77,7 @@ export default class User extends React.Component {
           view && <UserTooltip
             view={view}
             feeds={feeds}
-            mePeer={mePeer}
+            mePeer={peer}
             acceptRequest={this.acceptRequest}
           />
         }

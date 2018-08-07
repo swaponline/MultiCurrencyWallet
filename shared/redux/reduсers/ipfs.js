@@ -2,6 +2,7 @@ export const initialState = {
   isOnline: false,
   onlineUsers: 0,
   server: null,
+  peer: '',
 }
 
 export const set = (state, payload) => ({

@@ -8,7 +8,7 @@ import styles from './NavMobile.scss'
 
 
 const nav = [
-  { title: 'Wallet',    link: links.home      },
+  { title: 'Wallet',    link: links.home,     exact: 'exact' },
   { title: 'Orders',    link: links.orders    },
   { title: 'History',   link: links.history   },
 ]
@@ -16,9 +16,9 @@ const nav = [
 const NavMobile = () => (
   <div styleName="navMobile" >
     {
-      nav.map(({ title, link }) => (
+      nav.map(({ title, link, exact }) => (
         <NavLink
-          exact
+          exact={exact}
           key={title}
           styleName="linkMobile"
           to={link}

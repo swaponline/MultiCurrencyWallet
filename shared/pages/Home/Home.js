@@ -24,6 +24,10 @@ export default class Home extends Component {
     }
   }
 
+  componentWillReceiveProps() {
+    this.setState({})
+  }
+
   handleBuyCurrencySelect = ({ value }) => {
     let { sellCurrency, buyCurrency } = this.state
 
@@ -56,6 +60,8 @@ export default class Home extends Component {
 
   handelReplaceHistory = (sellCurrency, buyCurrency) => {
     const { history } = this.props
+
+    this.setFilter(`${sellCurrency}${buyCurrency}`)
     history.replace((`${links.orders}/${buyCurrency}-${sellCurrency}`))
   }
 
@@ -74,6 +80,10 @@ export default class Home extends Component {
     })
   }
 
+  setFilter = (filter) => {
+    actions.core.setFilter(filter)
+  }
+
   handleClickTelegram = () => {
     actions.analytics.dataEvent('orders-click-telegram-group')
     actions.analytics.dataEvent('orders-click-start-swap')
@@ -86,7 +96,6 @@ export default class Home extends Component {
 
   render() {
     const { buyCurrency, sellCurrency } = this.state
-    const filterOrders = `${buyCurrency}${sellCurrency}`
 
     return (
       <section style={{ position: 'relative' }}>
@@ -98,7 +107,6 @@ export default class Home extends Component {
             </SubTitle>
           </Fragment>
           <Orders
-            filter={filterOrders}
             handleSellCurrencySelect={this.handleSellCurrencySelect}
             handleBuyCurrencySelect={this.handleBuyCurrencySelect}
             buyCurrency={buyCurrency}

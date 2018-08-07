@@ -1,0 +1,60 @@
+import React, { Component } from 'react'
+
+import SwapApp from 'swap.app'
+import actions from 'redux/actions'
+
+import config from 'app-config'
+
+
+export default class Core extends Component {
+
+  componentWillMount() {
+    SwapApp.services.orders
+      .on('new orders', this.updateOrders)
+      .on('new order', this.updateOrders)
+      .on('order update', this.updateOrders)
+      .on('remove order', this.updateOrders)
+      .on('new order request', this.updateOrders)
+    this.setIpfs()
+  }
+
+  componentWillUnmount() {
+    SwapApp.services.orders
+      .off('new orders', this.updateOrders)
+      .off('new order', this.updateOrders)
+      .off('order update', this.updateOrders)
+      .off('remove order', this.updateOrders)
+      .off('new order request', this.updateOrders)
+
+    SwapApp.services.room.connection
+      .off('peer joined', actions.ipfs.userLeft)
+  }
+
+  setIpfs = () => {
+    setTimeout(() => {
+      const isOnline = SwapApp.services.room.connection._ipfs.isOnline()
+      const peer = SwapApp.services.room.peer
+
+      SwapApp.services.room.connection.on('peer joined', actions.ipfs.userJoined)
+      setTimeout(() => {
+        actions.ipfs.set({
+          isOnline,
+          peer,
+          server: config.ipfs.server,
+        })
+      }, 1000)
+    }, 8000)
+  }
+
+  updateOrders = () => {
+    const orders = SwapApp.services.orders.items
+
+    if (orders.length > 0) {
+      actions.core.updateCore(orders)
+    }
+  }
+
+  render() {
+    return null
+  }
+}

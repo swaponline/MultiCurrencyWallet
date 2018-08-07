@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 
-import SwapApp from 'swap.app'
+import { connect } from 'redaction'
 import actions from 'redux/actions'
 
 import { links } from 'helpers'
@@ -12,6 +12,9 @@ import RequestButton from '../RequestButton/RequestButton'
 import RemoveButton from 'components/controls/RemoveButton/RemoveButton'
 
 
+@connect({
+  peer: 'ipfs.peer',
+})
 export default class Row extends Component {
 
   static propTypes = {
@@ -19,32 +22,15 @@ export default class Row extends Component {
   }
 
   removeOrder = (orderId) => {
-    SwapApp.services.orders.remove(orderId)
-    actions.feed.deleteItemToFeed(orderId)
-
-    this.props.update()
+    actions.core.removeOrder(orderId)
   }
 
   sendRequest = (orderId) => {
-    const order = SwapApp.services.orders.getByKey(orderId)
-
-    order.sendRequest((isAccepted) => {
-      console.log(`user ${order.owner.peer} ${isAccepted ? 'accepted' : 'declined'} your request`)
-    })
-
-    this.props.update()
-    // actions.analytics.dataEvent('orders-click-start-swap')
+    actions.core.sendRequest(orderId)
   }
 
   render() {
-    const { row } = this.props
-
-    if (row === undefined) {
-      return null
-    }
-
-    const { id, buyCurrency, sellCurrency, isMy, buyAmount, sellAmount, isRequested, exchangeRate, owner :{  peer: ownerPeer } } = row
-    const mePeer = SwapApp.services.room.peer
+    const { row: { id, buyCurrency, sellCurrency, isMy, buyAmount, sellAmount, isRequested, exchangeRate, owner :{  peer: ownerPeer } }, peer } = this.props
 
     return (
       <tr>
@@ -85,7 +71,7 @@ export default class Row extends Component {
         </td>
         <td>
           {
-            mePeer === ownerPeer ? (
+            peer === ownerPeer ? (
               <RemoveButton removeOrder={() => this.removeOrder(id)} />
             ) : (
               <Fragment>
