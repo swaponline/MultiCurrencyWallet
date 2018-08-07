@@ -143,26 +143,11 @@ const downloadPrivateKeys = () => {
   })
 }
 
-const getSwapHistory = () => {
-  const swapId = JSON.parse(localStorage.getItem('swapId'))
-
-  if (swapId === null || swapId.length === 0) {
-    return
-  }
-
-  const historySwap = swapId.map(item => ({
-    ...SwapApp.env.storage.getItem(`swap.${item}`),
-    ...SwapApp.env.storage.getItem(`flow.${item}`),
-  }))
-  reducers.history.setSwapHistory(historySwap)
-}
-
 
 export default {
   sign,
   getBalances,
   getDemoMoney,
-  getSwapHistory,
   setExchangeRate,
   setTransactions,
   downloadPrivateKeys,

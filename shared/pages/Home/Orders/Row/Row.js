@@ -23,10 +23,12 @@ export default class Row extends Component {
 
   removeOrder = (orderId) => {
     actions.core.removeOrder(orderId)
+    actions.core.updateCore()
   }
 
   sendRequest = (orderId) => {
     actions.core.sendRequest(orderId)
+    actions.core.updateCore()
   }
 
   render() {
@@ -58,14 +60,10 @@ export default class Row extends Component {
         <td>
           {(exchangeRate || (buyAmount / sellAmount)).toFixed(5)}
           {
-            buyCurrency === 'BTC' ? (
+            isMy ? (
               `${sellCurrency}/${buyCurrency}`
             ) : (
-              sellCurrency === 'BTC' ? (
-                `${buyCurrency}/${sellCurrency}`
-              ) : (
-                `${sellCurrency}/${buyCurrency}`
-              )
+              `${buyCurrency}/${sellCurrency}`
             )
           }
         </td>

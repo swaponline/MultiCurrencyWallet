@@ -8,6 +8,12 @@ import config from 'app-config'
 
 export default class Core extends Component {
 
+  componentWillReceiveProps(nextState) {
+    if (nextState !== this.state) {
+      this.setState()
+    }
+  }
+
   componentWillMount() {
     SwapApp.services.orders
       .on('new orders', this.updateOrders)
@@ -48,6 +54,8 @@ export default class Core extends Component {
 
   updateOrders = () => {
     const orders = SwapApp.services.orders.items
+
+    this.setState({})
 
     if (orders.length > 0) {
       actions.core.updateCore(orders)

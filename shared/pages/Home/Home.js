@@ -24,8 +24,10 @@ export default class Home extends Component {
     }
   }
 
-  componentWillReceiveProps() {
-    this.setState({})
+  componentWillReceiveProps(nextProps) {
+    if (nextProps !== this.props) {
+      this.setState()
+    }
   }
 
   handleBuyCurrencySelect = ({ value }) => {
@@ -61,7 +63,7 @@ export default class Home extends Component {
   handelReplaceHistory = (sellCurrency, buyCurrency) => {
     const { history } = this.props
 
-    this.setFilter(`${sellCurrency}${buyCurrency}`)
+    this.setFilter(`${buyCurrency}${sellCurrency}`)
     history.replace((`${links.orders}/${buyCurrency}-${sellCurrency}`))
   }
 

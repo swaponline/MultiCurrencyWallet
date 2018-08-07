@@ -25,6 +25,12 @@ const filterOrders = (orders, filter) => orders
 }))
 export default class Orders extends Component {
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps !== this.props) {
+      this.setState()
+    }
+  }
+
   render() {
     const { sellCurrency, buyCurrency, handleSellCurrencySelect, handleBuyCurrencySelect, flipCurrency } = this.props
     const titles = [ 'EXCHANGE', 'YOU BUY', 'YOU SELL', 'EXCHANGE RATE', 'ACTIONS' ]
@@ -32,7 +38,7 @@ export default class Orders extends Component {
 
     return (
       <Fragment>
-        <MyOrders myOrders={myOrders} />
+        <MyOrders myOrders={myOrders} update={this.updateState} />
         <SearchSwap
           handleSellCurrencySelect={handleSellCurrencySelect}
           handleBuyCurrencySelect={handleBuyCurrencySelect}

@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react'
 
 import actions from 'redux/actions'
-import SwapApp from 'swap.app'
 
 import { links } from 'helpers'
 import { BigNumber } from 'bignumber.js'
@@ -73,7 +72,7 @@ export default class ConfirmOffer extends Component {
       exchangeRate: Number(exchangeRate),
     }
     actions.analytics.dataEvent('orderbook-addoffer-click-confirm-button')
-    SwapApp.services.orders.create(data)
+    actions.core.createOrder(data)
   }
 
   render() {

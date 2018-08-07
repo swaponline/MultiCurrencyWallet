@@ -1,7 +1,5 @@
 import React from 'react'
 
-import SwapApp  from 'swap.app'
-
 import actions from 'redux/actions'
 import { connect } from 'redaction'
 import { constants } from 'helpers'
@@ -28,18 +26,6 @@ export default class User extends React.Component {
 
   handleChangeView = () => {
     this.setState({ view: true })
-  }
-
-  updateOrders = () => {
-    this.setState({
-      orders: SwapApp.services.orders.items,
-    })
-
-    const { orders } = this.state
-
-    if (orders.length !== 0) {
-      actions.feed.getFeedDataFromOrder(orders)
-    }
   }
 
   handleToggleTooltip = () => {

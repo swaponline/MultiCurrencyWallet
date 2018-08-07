@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import actions from 'redux/actions'
 
 import { links } from 'helpers'
 import { Link } from 'react-router-dom'

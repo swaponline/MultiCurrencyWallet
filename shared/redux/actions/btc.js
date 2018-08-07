@@ -8,16 +8,18 @@ import { btc, request, constants } from 'helpers'
 
 
 const login = (privateKey) => {
+  let keyPair
 
   if (privateKey) {
     const hash  = bitcoin.crypto.sha256(privateKey)
     const d     = BigInteger.fromBuffer(hash)
 
-    privateKey      = new bitcoin.ECPair(d, null, { network: btc.network }).toWIF()
+    keyPair     = new bitcoin.ECPair(d, null, { network: btc.network })
   }
   else {
     console.info('Created account Bitcoin ...')
-    privateKey      = bitcoin.ECPair.makeRandom({ network: btc.network }).toWIF()
+    keyPair     = bitcoin.ECPair.makeRandom({ network: btc.network })
+    privateKey  = keyPair.toWIF()
   }
 
   localStorage.setItem(constants.privateKeyNames.btc, privateKey)
@@ -28,6 +30,7 @@ const login = (privateKey) => {
 
   const data = {
     account,
+    keyPair,
     address,
     privateKey,
     publicKey,
