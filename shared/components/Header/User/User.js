@@ -24,6 +24,12 @@ export default class User extends React.Component {
     view: true,
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps !== this.props) {
+      this.setState()
+    }
+  }
+
   handleChangeView = () => {
     this.setState({ view: true })
   }
@@ -36,6 +42,8 @@ export default class User extends React.Component {
 
   acceptRequest = (orderId, participantPeer) => {
     actions.core.acceptRequest(orderId, participantPeer)
+    actions.core.updateCore()
+    this.handleToggleTooltip()
   }
 
   soundClick = () => {
