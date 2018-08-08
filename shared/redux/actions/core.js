@@ -15,10 +15,6 @@ const setFilter = (filter) => {
 const acceptRequest = (orderId, participantPeer) => {
   const order = SwapApp.services.orders.getByKey(orderId)
   order.acceptRequest(participantPeer)
-
-  setTimeout(() => {
-    this.handleToggleTooltip()
-  }, 800)
 }
 
 const declineRequest = (orderId, participantPeer) => {

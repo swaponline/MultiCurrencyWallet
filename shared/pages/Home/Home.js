@@ -64,7 +64,7 @@ export default class Home extends Component {
     const { history } = this.props
 
     this.setFilter(`${buyCurrency}${sellCurrency}`)
-    history.replace((`${links.orders}/${buyCurrency}-${sellCurrency}`))
+    history.replace((`${links.exchange}/${buyCurrency}-${sellCurrency}`))
   }
 
   flipCurrency = () => {
@@ -103,9 +103,9 @@ export default class Home extends Component {
       <section style={{ position: 'relative' }}>
         <PageHeadline >
           <Fragment>
-            <Title>Swap.Online - Decentralized Exchange Based on Atomic Swap Protocol</Title>
+            <Title>SWAP.ONLINE - CRYPTOCURRENCY WALLET WITH ATOMIC SWAP EXCHANGE</Title>
             <SubTitle>
-              Check out our <a href="https://wiki.swap.online/en.pdf" target="_balnk" rel="noreferrer noopener">project brief</a> and participate in smart airdrop.
+              Choose the direction of exchange
             </SubTitle>
           </Fragment>
           <Orders

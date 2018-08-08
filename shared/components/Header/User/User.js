@@ -24,12 +24,6 @@ export default class User extends React.Component {
     view: true,
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps !== this.props) {
-      this.setState()
-    }
-  }
-
   handleChangeView = () => {
     this.setState({ view: true })
   }
@@ -40,10 +34,24 @@ export default class User extends React.Component {
     })
   }
 
+  declineRequest = (orderId, participantPeer) => {
+    actions.core.declineRequest(orderId, participantPeer)
+    actions.core.updateCore()
+  }
+
   acceptRequest = (orderId, participantPeer) => {
     actions.core.acceptRequest(orderId, participantPeer)
     actions.core.updateCore()
     this.handleToggleTooltip()
+  }
+
+  autoAcceptRequest = (orderId, participantPeer, link) => {
+    console.log(this.props)
+
+    this.acceptRequest(orderId, participantPeer)
+    setTimeout(() => {
+      this.props.history.push(link)
+    }, 1000)
   }
 
   soundClick = () => {
@@ -72,7 +80,9 @@ export default class User extends React.Component {
             view={view}
             feeds={feeds}
             mePeer={peer}
+            autoAcceptRequest={this.autoAcceptRequest}
             acceptRequest={this.acceptRequest}
+            declineRequest={this.declineRequest}
           />
         }
       </div>

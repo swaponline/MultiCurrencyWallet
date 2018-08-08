@@ -1,6 +1,7 @@
 import React from 'react'
 
 import PropTypes from 'prop-types'
+import { TimerButton } from 'components/controls'
 
 import { links } from 'helpers'
 import { Link } from 'react-router-dom'
@@ -11,7 +12,7 @@ import styles from './UserTooltip.scss'
 import ArrowRightSvg from './images/arrow-right.svg'
 
 
-const UserTooltip = ({ feeds, mePeer, acceptRequest, view }) => (
+const UserTooltip = ({ feeds, mePeer, acceptRequest, view, autoAcceptRequest, declineRequest }) => (
   <div styleName="column" >
     { view && feeds.length < 3  ? (
       feeds.map(row => {
@@ -29,6 +30,8 @@ const UserTooltip = ({ feeds, mePeer, acceptRequest, view }) => (
                   <span>{sellAmount.toString()} <span styleName="coin">{sellCurrency}</span></span>
                 </div>
               </div>
+              <TimerButton isButton={false} onClick={() => autoAcceptRequest(id, peer, `${links.swap}/${sellCurrency}-${buyCurrency}/${id}`)} />
+              <span styleName="decline" onClick={() => declineRequest(id, peer)} />
               <Link to={`${links.swap}/${sellCurrency}-${buyCurrency}/${id}`}>
                 <div styleName="checked" onClick={() => acceptRequest(id, peer)} />
               </Link>

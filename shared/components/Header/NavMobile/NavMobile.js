@@ -9,7 +9,7 @@ import styles from './NavMobile.scss'
 
 const nav = [
   { title: 'Wallet',    link: links.home,     exact: true },
-  { title: 'Orders',    link: links.orders    },
+  { title: 'Exchange',    link: links.exchange    },
   { title: 'History',   link: links.history   },
 ]
 

@@ -340,7 +340,7 @@ export default class EthTokenToBtc extends Component {
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     { enabledButton &&  <Button brand onClick={this.tryRefund}>TRY REFUND</Button> }
                     <Timer
-                      lockTime={flow.btcScriptValues.lockTime - 5400 * 1000}
+                      lockTime={(flow.btcScriptValues.lockTime - 5400) * 1000}
                       enabledButton={() => this.setState({ enabledButton: true })}
                     />
                   </div>
