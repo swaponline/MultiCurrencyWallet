@@ -1,4 +1,4 @@
-import { request, constants } from 'helpers'
+import { request, constants, api } from 'helpers'
 import abi from 'human-standard-token-abi'
 import { getState } from 'redux/core'
 import  actions from 'redux/actions'
@@ -57,7 +57,7 @@ const getTransaction = () =>
   new Promise((resolve) => {
     const { user: { ethData: { address } } } = getState()
 
-    const url = `${config.api.etherscan}?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${config.apiKeys.etherscan}`
+    const url = `${api.getApiServer('etherscan')}?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${config.apiKeys.etherscan}`
 
     return request.get(url)
       .then((res) => {

@@ -1,5 +1,8 @@
 import React, { PureComponent } from 'react'
 import Swap from 'swap.swap'
+import config from 'app-config'
+
+import { api } from 'helpers'
 
 import EmergencySave from './EmergencySave/EmergencySave'
 
@@ -23,9 +26,10 @@ export default class SwapComponent extends PureComponent {
   state = {
     swap: null,
     SwapComponent: null,
+    errors: false
   }
 
-  componentWillMount() {
+  createSwap() {
     const { match : { params : { orderId } } } = this.props
 
     const swap = new Swap(orderId)
@@ -40,6 +44,32 @@ export default class SwapComponent extends PureComponent {
 
     // for debug and emergency save
     window.swap = swap
+  }
+
+  componentWillMount() {
+    this.setState({
+      errors: false
+    });
+    Promise.all(
+      Object.keys(config.apiAlternatives).map(provider => {
+        return Promise.race(
+          config.apiAlternatives[provider].map(
+            (server)=> new Promise((resolve, reject) => {
+              fetch(`${server}/status`).then(()=>resolve(server)).catch(e=>reject(e));
+            })
+          )
+        ).then(chosen => {
+          api.switchApiServer(provider, chosen);
+          console.log(`[${provider}] ${chosen} is OK, using it`)
+        })
+      })
+    ).then(()=> {
+      console.log('All servers is OK.');
+      this.createSwap();
+    }).catch(e => {
+      this.setState({errors: true})
+    });
+
   }
 
   setSaveSwapId = (orderId) => {
@@ -60,17 +90,18 @@ export default class SwapComponent extends PureComponent {
   }
 
   render() {
-    const { swap, SwapComponent } = this.state
-
-    if (!swap || !SwapComponent) {
-      return null
-    }
+    const { swap, SwapComponent, errors } = this.state
 
     return (
       <div style={{ paddingLeft: '30px', paddingTop: '30px' }}>
-        <SwapComponent swap={swap} >
-          <EmergencySave flow={swap.flow} />
-        </SwapComponent>
+        {
+          swap && <SwapComponent swap={swap} >
+            <EmergencySave flow={swap.flow} />
+          </SwapComponent>
+        }
+        {
+          errors && <div><h2>Error!</h2>Can't reach payments provider server. Please, try again later</div>
+        }
       </div>
     )
   }
