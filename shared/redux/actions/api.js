@@ -1,5 +1,4 @@
 import reducers from 'redux/core/reducers'
-import { getState } from 'redux/core'
 import config from 'app-config'
 
 const checkServers = () => Promise.all(
@@ -11,7 +10,7 @@ const checkServers = () => Promise.all(
         })
       )
     ).then(chosen => {
-      api.switchApiServer(provider, chosen);
+      reducers.api.switchApiServer(provider, chosen);
       console.log(`[${provider}] ${chosen} is OK, using it`)
     })
   })
