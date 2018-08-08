@@ -1,12 +1,11 @@
 import config from 'app-config'
+import { getState } from 'redux/core'
 
-let switchedApi = {};
-
-const switchApiServer = (provider, server) => switchedApi[provider] = server
-
-const getApiServer = (provider) => switchedApi[provider] || config.api[provider]
+const getApiServer = (provider) => {
+  const { apiServers } = getState()
+  return (apiServers || {})[provider] || config.api[provider]
+}
 
 export default {
-  switchApiServer,
   getApiServer
 }

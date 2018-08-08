@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import Swap from 'swap.swap'
 import config from 'app-config'
 
-import { api } from 'helpers'
+import actions from 'redux/actions'
 
 import EmergencySave from './EmergencySave/EmergencySave'
 
@@ -47,29 +47,11 @@ export default class SwapComponent extends PureComponent {
   }
 
   componentWillMount() {
-    this.setState({
-      errors: false
-    });
-    Promise.all(
-      Object.keys(config.apiAlternatives).map(provider => {
-        return Promise.race(
-          config.apiAlternatives[provider].map(
-            (server)=> new Promise((resolve, reject) => {
-              fetch(`${server}/status`).then(()=>resolve(server)).catch(e=>reject(e));
-            })
-          )
-        ).then(chosen => {
-          api.switchApiServer(provider, chosen);
-          console.log(`[${provider}] ${chosen} is OK, using it`)
-        })
-      })
-    ).then(()=> {
-      console.log('All servers is OK.');
+    actions.api.checkServers().then(() => {
       this.createSwap();
     }).catch(e => {
       this.setState({errors: true})
     });
-
   }
 
   setSaveSwapId = (orderId) => {

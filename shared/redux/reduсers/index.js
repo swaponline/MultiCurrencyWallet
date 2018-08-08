@@ -5,7 +5,7 @@ import * as loader from './loader'
 import * as user from './user'
 import * as feeds from './feeds'
 import * as ipfs from './ipfs'
-
+import * as api from './api'
 
 export default {
   notifications,
@@ -15,4 +15,5 @@ export default {
   user,
   feeds,
   ipfs,
+  api
 }
