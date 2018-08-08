@@ -89,7 +89,7 @@ export default class ConfirmOffer extends Component {
         <Fee amount={0.0001} currency={sellCurrency} />
         <ButtonsInRow styleName="buttonsInRow">
           <Button styleName="button" gray onClick={onBack}>Back</Button>
-          <Link styleName="link" to={`${links.home}orders/${buyCurrency.toLowerCase()}-${sellCurrency.toLowerCase()}`}>
+          <Link styleName="link" to={`${links.exchange}/${buyCurrency.toLowerCase()}-${sellCurrency.toLowerCase()}`}>
             <Button styleName="button" id="confirm" brand onClick={this.handleConfirm} >Add</Button>
           </Link>
         </ButtonsInRow>
