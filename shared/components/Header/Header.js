@@ -10,13 +10,13 @@ import Logo from 'components/Logo/Logo'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 
 
-const Header = () => (
+const Header = ({ history }) => (
   <div styleName="header">
     <WidthContainer styleName="container">
       <Logo withLink />
       <NavMobile />
       <Nav />
-      <User />
+      <User history={history} />
     </WidthContainer>
   </div>
 )

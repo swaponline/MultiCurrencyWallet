@@ -46,8 +46,6 @@ export default class User extends React.Component {
   }
 
   autoAcceptRequest = (orderId, participantPeer, link) => {
-    console.log(this.props)
-
     this.acceptRequest(orderId, participantPeer)
     setTimeout(() => {
       this.props.history.push(link)

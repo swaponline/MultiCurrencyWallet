@@ -69,7 +69,7 @@ export default class App extends React.Component {
 
   render() {
     const { fetching } = this.state
-    const { children, ethAddress, btcAddress, tokenAddress /* eosAddress */ } = this.props
+    const { children, ethAddress, btcAddress, tokenAddress, history /* eosAddress */ } = this.props
     const isFetching = !ethAddress || !btcAddress || !tokenAddress || !fetching
 
     if (isFetching) {
@@ -80,7 +80,7 @@ export default class App extends React.Component {
 
     return (
       <Fragment>
-        <Header />
+        <Header history={history} />
         <WidthContainer styleName="main">
           {children}
         </WidthContainer>
