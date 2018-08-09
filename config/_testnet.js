@@ -41,6 +41,13 @@ export default {
     },
   },
 
+  apiAlternatives: {
+    bitpay: [
+      'https://testnet.y000r.world/insight-api',
+      'https://test-insight.bitpay.com/api'
+    ]
+  },
+
   link: {
     bitpay: 'https://testnet.y000r.world/insight',  // https://test-insight.bitpay.com
     etherscan: 'https://rinkeby.etherscan.io',

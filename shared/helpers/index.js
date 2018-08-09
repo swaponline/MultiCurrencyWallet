@@ -4,6 +4,7 @@ import links from './links'
 import request from './request'
 import constants from './constants'
 import localStorage from './localStorage'
+import api from './api'
 
 // Methods
 import ignoreProps from './ignoreProps'
@@ -20,6 +21,7 @@ export {
   request,
   constants,
   localStorage,
+  api,
 
   // Methods
   ignoreProps,
