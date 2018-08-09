@@ -167,7 +167,7 @@ export default class EthToBtc extends Component {
                     </div>
                     <br />
                     <Fragment>
-                      { flow.btcScriptValues &&   <span styleName="button" onClick={this.toggleBitcoinScript}>Show bitcoin script</span> }
+                      { flow.btcScriptValues && <span onClick={this.toggleBitcoinScript}>Show bitcoin script</span> }
                       { isShowingBitcoinScript && (
                     <pre>
                       <code>{`
@@ -337,7 +337,7 @@ export default class EthToBtc extends Component {
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     { enabledButton &&  <Button brand onClick={this.tryRefund}>TRY REFUND</Button> }
                     <Timer
-                      lockTime={flow.btcScriptValues.lockTime * 1000}
+                      lockTime={(flow.btcScriptValues.lockTime - 5400) * 1000}
                       enabledButton={() => this.setState({ enabledButton: true })}
                     />
                   </div>

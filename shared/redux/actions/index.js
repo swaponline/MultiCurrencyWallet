@@ -4,6 +4,7 @@ import notifications from './notifications'
 
 import user from './user'
 import feed from './feed'
+import core from './core'
 import filter from './filter'
 
 import btc from './btc'
@@ -18,12 +19,14 @@ import analytics from './analytics'
 
 import ipfs from './ipfs'
 
+
 export default {
   filter,
   modals,
   loader,
   notifications,
   user,
+  core,
   btc,
   eth,
   token,
@@ -33,4 +36,5 @@ export default {
   analytics,
   referral,
   ipfs,
+  api
 }

@@ -46,6 +46,7 @@ const createSwapApp = () => {
         btc: localStorage.getItem(privateKeys.privateKeyNames.btc),
       }),
       new SwapRoom({
+        repo: './data/messaging/DataBase',
         EXPERIMENTAL: {
           pubsub: true,
         },

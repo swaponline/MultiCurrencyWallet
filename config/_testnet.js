@@ -14,8 +14,8 @@ export default {
   },
 
   ipfs: {
-    swarm: '/dns4/discovery.libp2p.array.io/tcp/9091/wss/p2p-websocket-star/',
-    server: 'discovery.libp2p.array.io',
+    swarm: '/dns4/ws-star.discovery.libp2p.io/tcp/443/wss/p2p-websocket-star', // '/dns4/discovery.libp2p.array.io/tcp/9091/wss/p2p-websocket-star/'
+    server: 'discovery.libp2p.io',
   },
 
   token: {
@@ -49,14 +49,14 @@ export default {
   },
 
   link: {
-    bitpay: 'https://test-insight.bitpay.com',  // https://test-insight.bitpay.com
+    bitpay: 'https://testnet.y000r.world/insight',  // https://test-insight.bitpay.com
     etherscan: 'https://rinkeby.etherscan.io',
     eos: 'http://jungle.cryptolions.io/#accountInfo',
   },
 
   api: {
     blocktrail: 'https://api.blocktrail.com/v1/tBTC',
-    bitpay: 'https://test-insight.bitpay.com/api',  // https://test-insight.bitpay.com/api
+    bitpay: 'https://test-insight.bitpay.com/api',  //  https://testnet.y000r.world/insight-api
     etherscan: 'https://rinkeby.etherscan.io/api',
   },
 

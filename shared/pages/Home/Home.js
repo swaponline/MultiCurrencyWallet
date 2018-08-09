@@ -24,6 +24,12 @@ export default class Home extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps !== this.props) {
+      this.setState()
+    }
+  }
+
   handleBuyCurrencySelect = ({ value }) => {
     let { sellCurrency, buyCurrency } = this.state
 
@@ -56,7 +62,9 @@ export default class Home extends Component {
 
   handelReplaceHistory = (sellCurrency, buyCurrency) => {
     const { history } = this.props
-    history.replace((`${links.orders}/${buyCurrency}-${sellCurrency}`))
+
+    this.setFilter(`${buyCurrency}${sellCurrency}`)
+    history.replace((`${links.exchange}/${buyCurrency}-${sellCurrency}`))
   }
 
   flipCurrency = () => {
@@ -74,6 +82,10 @@ export default class Home extends Component {
     })
   }
 
+  setFilter = (filter) => {
+    actions.core.setFilter(filter)
+  }
+
   handleClickTelegram = () => {
     actions.analytics.dataEvent('orders-click-telegram-group')
     actions.analytics.dataEvent('orders-click-start-swap')
@@ -86,19 +98,17 @@ export default class Home extends Component {
 
   render() {
     const { buyCurrency, sellCurrency } = this.state
-    const filterOrders = `${buyCurrency}${sellCurrency}`
 
     return (
       <section style={{ position: 'relative' }}>
         <PageHeadline >
           <Fragment>
-            <Title>Swap.Online - Decentralized Exchange Based on Atomic Swap Protocol</Title>
+            <Title>{buyCurrency}/{sellCurrency} exchange with 0% comission</Title>
             <SubTitle>
-              Check out our <a href="https://wiki.swap.online/en.pdf" target="_balnk" rel="noreferrer noopener">project brief</a> and participate in smart airdrop.
+              Choose the direction of exchange
             </SubTitle>
           </Fragment>
           <Orders
-            filter={filterOrders}
             handleSellCurrencySelect={this.handleSellCurrencySelect}
             handleBuyCurrencySelect={this.handleBuyCurrencySelect}
             buyCurrency={buyCurrency}

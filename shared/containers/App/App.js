@@ -11,6 +11,7 @@ import styles from './App.scss'
 import 'scss/app.scss'
 
 import { createSwapApp } from 'instances/newSwap'
+import Core from 'containers/Core/Core'
 
 import Header from 'components/Header/Header'
 import Footer from 'components/Footer/Footer'
@@ -42,6 +43,7 @@ export default class App extends React.Component {
 
   state = {
     fetching: false,
+    core: false,
   }
 
   componentWillMount() {
@@ -60,11 +62,15 @@ export default class App extends React.Component {
     }, 1000)
   }
 
+  addCore = () => {
+    createSwapApp()
+    this.setState({ core: !this.state.core })
+  }
+
   render() {
     const { fetching } = this.state
-    const { children, ethAddress, btcAddress, tokenAddress /* eosAddress */ } = this.props
+    const { children, ethAddress, btcAddress, tokenAddress, history /* eosAddress */ } = this.props
     const isFetching = !ethAddress || !btcAddress || !tokenAddress || !fetching
-
 
     if (isFetching) {
       return (
@@ -74,10 +80,11 @@ export default class App extends React.Component {
 
     return (
       <Fragment>
-        <Header />
+        <Header history={history} />
         <WidthContainer styleName="main">
           {children}
         </WidthContainer>
+        <Core />
         <Footer />
         <RequestLoader />
         <ModalConductor />

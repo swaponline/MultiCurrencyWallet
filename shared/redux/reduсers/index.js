@@ -4,6 +4,7 @@ import * as history from './history'
 import * as loader from './loader'
 import * as user from './user'
 import * as feeds from './feeds'
+import * as core from './core'
 import * as ipfs from './ipfs'
 import * as api from './api'
 
@@ -12,6 +13,7 @@ export default {
   modals,
   history,
   loader,
+  core,
   user,
   feeds,
   ipfs,

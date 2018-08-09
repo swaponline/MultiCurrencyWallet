@@ -1,6 +1,6 @@
 export default {
   home: '/',
-  orders: '/orders',
+  exchange: '/exchange',
   history: '/history',
   swap: '/swap',
   feed: '/feed',

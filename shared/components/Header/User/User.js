@@ -1,7 +1,5 @@
 import React from 'react'
 
-import SwapApp  from 'swap.app'
-
 import actions from 'redux/actions'
 import { connect } from 'redaction'
 import { constants } from 'helpers'
@@ -17,6 +15,7 @@ import AddOfferButton from './AddOfferButton/AddOfferButton'
 
 @connect({
   feeds: 'feeds.items',
+  peer: 'ipfs.peer',
 })
 @CSSModules(styles)
 export default class User extends React.Component {
@@ -25,28 +24,8 @@ export default class User extends React.Component {
     view: true,
   }
 
-  componentWillMount() {
-    SwapApp.services.orders.on('new order request', this.updateOrders)
-  }
-
-  componentWillUnmount() {
-    SwapApp.services.orders.off('new order request', this.updateOrders)
-  }
-
   handleChangeView = () => {
     this.setState({ view: true })
-  }
-
-  updateOrders = () => {
-    this.setState({
-      orders: SwapApp.services.orders.items,
-    })
-
-    const { orders } = this.state
-
-    if (orders.length !== 0) {
-      actions.feed.getFeedDataFromOrder(orders)
-    }
   }
 
   handleToggleTooltip = () => {
@@ -55,15 +34,22 @@ export default class User extends React.Component {
     })
   }
 
+  declineRequest = (orderId, participantPeer) => {
+    actions.core.declineRequest(orderId, participantPeer)
+    actions.core.updateCore()
+  }
+
   acceptRequest = (orderId, participantPeer) => {
-    const order = SwapApp.services.orders.getByKey(orderId)
-    order.acceptRequest(participantPeer)
+    actions.core.acceptRequest(orderId, participantPeer)
+    actions.core.updateCore()
+    this.handleToggleTooltip()
+  }
 
+  autoAcceptRequest = (orderId, participantPeer, link) => {
+    this.acceptRequest(orderId, participantPeer)
     setTimeout(() => {
-      this.handleToggleTooltip()
-    }, 800)
-
-    this.updateOrders()
+      this.props.history.push(link)
+    }, 1000)
   }
 
   soundClick = () => {
@@ -75,8 +61,7 @@ export default class User extends React.Component {
 
   render() {
     const { view } = this.state
-    const { feeds } = this.props
-    const mePeer = SwapApp.services.room.peer
+    const { feeds, peer } = this.props
 
     return (
       <div styleName="user-cont">
@@ -84,7 +69,7 @@ export default class User extends React.Component {
         <UserAvatar
           isToggle={this.handleToggleTooltip}
           feeds={feeds}
-          mePeer={mePeer}
+          mePeer={peer}
           soundClick={this.soundClick}
           changeView={this.handleChangeView}
         />
@@ -92,8 +77,10 @@ export default class User extends React.Component {
           view && <UserTooltip
             view={view}
             feeds={feeds}
-            mePeer={mePeer}
+            mePeer={peer}
+            autoAcceptRequest={this.autoAcceptRequest}
             acceptRequest={this.acceptRequest}
+            declineRequest={this.declineRequest}
           />
         }
       </div>

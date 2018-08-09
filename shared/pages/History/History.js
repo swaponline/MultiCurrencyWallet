@@ -29,10 +29,6 @@ const filterHistory = (items, filter) => {
 }))
 export default class History extends Component {
 
-  componentWillMount() {
-    actions.user.getSwapHistory()
-  }
-
   componentDidMount() {
     actions.analytics.dataEvent('open-page-history')
     actions.user.setTransactions()

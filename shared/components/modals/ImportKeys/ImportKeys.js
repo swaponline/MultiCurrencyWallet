@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 
 import actions from 'redux/actions'
-import bitcoin from 'bitcoinjs-lib'
 
 import Link from 'sw-valuelink'
 import { constants } from 'helpers'
@@ -21,66 +20,63 @@ export default class ImportKeys extends Component {
   state = {
     ethKey: '',
     btcKey: '',
+
     isSubmittedEth: false,
     isSubmittedBtc: false,
+
     isImportedEth: false,
     isImportedBtc: false,
-    isValidNetwork: false,
+
     isDisabled: true,
   }
 
   handleEthImportKey = () => {
     const { ethKey } = this.state
 
-    console.log(ethKey.length < 40)
-
     if (!ethKey || ethKey.length < 40) {
-      this.setState({
-        isSubmittedEth: true,
-      })
+      this.setState({ isSubmittedEth: true })
+      return
     } else {
+      this.setState({ isDisabled: false })
+    }
+
+    try {
+      actions.eth.login(ethKey)
       this.setState({
-        isDisabled: false,
         isImportedEth: true,
+        isDisabled: false,
       })
+    } catch (e) {
+      this.setState({ isSubmittedEth: true })
     }
   }
 
   handleBtcImportKey = () => {
     const { btcKey } = this.state
 
-    const network = (
-      process.env.MAINNET
-        ? bitcoin.networks.bitcoin
-        : bitcoin.networks.testnet
-    )
-
     if (!btcKey || btcKey.length < 27) {
-      this.setState({
-        isSubmittedBtc: true,
-      })
+      this.setState({ isSubmittedBtc: true })
+      return
     } else {
-      this.setState({
-        isDisabled: false,
-        isImportedBtc: true,
-      })
+      this.setState({ isDisabled: false })
     }
 
     try {
-      new bitcoin.ECPair.fromWIF(btcKey, network) // eslint-disable-line
-    } catch (e) {
+      actions.btc.login(btcKey)
       this.setState({
-        isValidNetwork: true,
+        isImportedBtc: true,
+        isDisabled: false,
       })
+    } catch (e) {
+      this.setState({ isSubmittedBtc: true })
     }
   }
 
+
   handleImportKeys = () => {
-    const { ethKey, btcKey, isDisabled, isImportedEth, isImportedBtc } = this.state
+    const { isDisabled } = this.state
 
     if (!isDisabled) {
-      isImportedEth && localStorage.setItem(constants.privateKeyNames.eth, ethKey)
-      isImportedBtc && localStorage.setItem(constants.privateKeyNames.btc, btcKey)
       window.location.reload()
     }
   }
@@ -90,21 +86,17 @@ export default class ImportKeys extends Component {
   }
 
   render() {
-    const { isSubmittedEth, isSubmittedBtc, isValidNetwork, isDisabled, isImportedBtc, isImportedEth } = this.state
+    const { isSubmittedEth, isSubmittedBtc, isImportedEth, isImportedBtc, isDisabled } = this.state
     const linked = Link.all(this, 'ethKey', 'btcKey')
 
     if (isSubmittedEth) {
       linked.ethKey.check((value) => value !== '', 'Please enter ETH private key')
-      linked.ethKey.check((value) => value.length > 27, 'Please valid ETH private key')
+      linked.ethKey.check((value) => value.length > 40, 'Please valid ETH private key')
     }
 
     if (isSubmittedBtc) {
       linked.btcKey.check((value) => value !== '', 'Please enter BTC private key')
-      linked.btcKey.check((value) => value.length > 40, 'Please valid BTC private key')
-    }
-
-    if (isValidNetwork) {
-      linked.btcKey.check((value) => !value, 'Please enter another network private key')
+      linked.btcKey.check((value) => value.length > 27, 'Please valid BTC private key')
     }
 
     return (
