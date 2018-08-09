@@ -7,9 +7,22 @@ Atomic swap cryptocurrency protocol. Live version here: https://swap.online. Ato
 ### Install
 
 1) Clone [swap.core](https://github.com/swaponline/swap.core) to same directory where `swap.react` is <br />
+```
+swap.core/...
+swap.react/...
+```
+
 2) Do `npm i` <br />
+```
+cd swap.react
+npm i
+```
+
 3) For dev mode `npm run start`, for prod `npm run build`
 
+```
+npm run start
+```
 
 ## how it works?
 
