@@ -52,15 +52,11 @@ export default class Row extends Component {
     const { balance } = this.state
     const { row: { id, buyCurrency, sellCurrency, isMy, buyAmount,
       sellAmount, isRequested, exchangeRate,
-      owner :{  peer: ownerPeer } }, peer } = this.props
+      owner :{  peer: ownerPeer } }, peer, orderId } = this.props
     const amount = isMy ? sellAmount : buyAmount
 
-    console.log(amount.toNumber())
-    console.log(balance)
-    console.log(amount.toNumber() > amount)
-
     return (
-      <tr>
+      <tr style={orderId === id ? { background: 'red' } : { color: 'green' }}>
         <td>
           <Coins names={[buyCurrency, sellCurrency]}  />
         </td>
@@ -117,6 +113,9 @@ export default class Row extends Component {
               </Fragment>
             )
           }
+        </td>
+        <td>
+          <a href={`${links.exchange}/${buyCurrency.toLowerCase()}-${sellCurrency.toLowerCase()}/${id}`}> link</a>
         </td>
       </tr>
     )

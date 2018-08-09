@@ -97,6 +97,7 @@ export default class Home extends Component {
   }
 
   render() {
+    const { match: { params: { orderId } } } = this.props
     const { buyCurrency, sellCurrency } = this.state
 
     return (
@@ -114,6 +115,7 @@ export default class Home extends Component {
             buyCurrency={buyCurrency}
             sellCurrency={sellCurrency}
             flipCurrency={this.flipCurrency}
+            orderId={orderId}
           />
         </PageHeadline>
       </section>

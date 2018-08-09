@@ -44,8 +44,8 @@ export default {
   apiAlternatives: {
     bitpay: [
       'https://testnet.y000r.world/insight-api',
-      'https://test-insight.bitpay.com/api'
-    ]
+      'https://test-insight.bitpay.com/api',
+    ],
   },
 
   link: {

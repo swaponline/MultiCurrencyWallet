@@ -34,7 +34,7 @@ export default class Orders extends Component {
   render() {
     const { sellCurrency, buyCurrency, handleSellCurrencySelect, handleBuyCurrencySelect, flipCurrency } = this.props
     const titles = [ 'EXCHANGE', 'YOU BUY', 'YOU SELL', 'EXCHANGE RATE', 'ACTIONS' ]
-    const { isOnline, orders, myOrders } = this.props
+    let { isOnline, orders, myOrders, orderId } = this.props
 
     return (
       <Fragment>
@@ -53,6 +53,7 @@ export default class Orders extends Component {
           rowRender={(row, index) => (
             <Row
               key={index}
+              orderId={orderId}
               row={row}
             />
           )}
