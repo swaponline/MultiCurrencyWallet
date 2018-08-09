@@ -5,6 +5,7 @@ import { BigNumber } from 'bignumber.js'
 
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import TimerButton from 'components/controls/TimerButton/TimerButton'
+import OverProgress from 'components/loaders/OverProgress/OverProgress'
 import Button from 'components/controls/Button/Button'
 import Timer from './Timer/Timer'
 
@@ -68,9 +69,14 @@ export default class EthToBtc extends Component {
   render() {
     const { children } = this.props
     const { flow, enabledButton, isShowingBitcoinScript } = this.state
+    let progress = Math.floor(100 / 7 * flow.step);
+
+    //alert(flow.step);
+    //console.log(flow.step);
 
     return (
       <div>
+        <OverProgress text={flow.step} progress={progress}/>
 
         {
           this.swap.id && (
