@@ -103,7 +103,7 @@ export default class Home extends Component {
       <section style={{ position: 'relative' }}>
         <PageHeadline >
           <Fragment>
-            <Title>SWAP.ONLINE - CRYPTOCURRENCY WALLET WITH ATOMIC SWAP EXCHANGE</Title>
+            <Title>{buyCurrency}/{sellCurrency} exchange with 0% comission</Title>
             <SubTitle>
               Choose the direction of exchange
             </SubTitle>

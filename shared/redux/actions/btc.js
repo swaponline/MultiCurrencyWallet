@@ -128,46 +128,39 @@ const createScript = (data) => {
 }
 
 
-const send = (from, to, amount) =>
-  new Promise((resolve, reject) => {
-    const { user: { btcData: { privateKey } } } = getState()
+const send = async (from, to, amount) => {
 
-    const newtx = {
-      inputs: [
-        {
-          addresses: [ from ],
-        },
-      ],
-      outputs: [
-        {
-          addresses: [ to ],
-          value: amount * 100000000,
-        },
-      ],
-    }
-    request.post('https://api.blockcypher.com/v1/btc/test3/txs/new', {
-      body: JSON.stringify(newtx),
-    })
-      .then((d) => {
-        const tmptx = {
-          ...d,
-          pubkeys: [],
-        }
+  const tx            = new bitcoin.TransactionBuilder(this.network)
+  const unspents      = await this.fetchUnspents(from)
+  const feeValue      = 15000
+  const totalUnspent  = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
 
-        const keys = new bitcoin.ECPair.fromWIF(privateKey, btc.network) // eslint-disable-line
+  unspents.forEach(({ txid, vout }) => tx.addInput(txid, vout, 0xfffffffe))
+  tx.addOutput(to, totalUnspent - feeValue)
 
-        tmptx.signatures = tmptx.tosign.map((toSign) => {
-          tmptx.pubkeys.push(keys.getPublicKeyBuffer().toString('hex'))
+  const txRaw = tx.buildIncomplete()
 
-          return keys.sign(BigInteger.fromHex(toSign.toString('hex')).toBuffer()).toDER().toString('hex')
-        })
+}
 
-        return request.post('https://api.blockcypher.com/v1/btc/test3/txs/send', {
-          body: JSON.stringify(tmptx),
-        })
-      })
-      .then((res) => resolve(res)).catch((e) => console.log(e))
-  })
+const signTransaction = (data) => {
+  const { user: { btcData :{ account } } } = getState()
+  const { script, txRaw, secret } = data
+
+  const hashType      = bitcoin.Transaction.SIGHASH_ALL
+  const signatureHash = txRaw.hashForSignature(0, script, hashType)
+  const signature     = account.btc.sign(signatureHash).toScriptSignature(hashType)
+
+  const scriptSig = bitcoin.script.scriptHash.input.encode(
+    [
+      signature,
+      account.btc.getPublicKeyBuffer(),
+      Buffer.from(secret.replace(/^0x/, ''), 'hex'),
+    ],
+    script,
+  )
+
+  txRaw.setInputScript(0, scriptSig)
+}
 
 const fetchUnspents = (address) =>
   request.get(`${config.api.bitpay}/addr/${address}/utxo`)

@@ -31,7 +31,6 @@ export default (webpackConfig) => {
   })
 
   webpackConfig.plugins.push(
-    new webpack.optimize.UglifyJsPlugin(),
     // new UglifyJsPlugin({
     //   uglifyOptions: {
     //     ecma: 6,

@@ -49,7 +49,7 @@ export default {
 
   api: {
     blocktrail: 'https://api.blocktrail.com/v1/tBTC',
-    bitpay: 'https://testnet.y000r.world/insight-api',  // https://test-insight.bitpay.com/api
+    bitpay: 'https://test-insight.bitpay.com/api',  //  https://testnet.y000r.world/insight-api
     etherscan: 'https://rinkeby.etherscan.io/api',
   },
 

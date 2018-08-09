@@ -21,6 +21,23 @@ export default class Row extends Component {
     row: PropTypes.object,
   }
 
+  state = {
+    balance: 0,
+  }
+
+  componentWillMount() {
+    const { row: {  sellCurrency } } = this.props
+    this.checkBalance(sellCurrency)
+  }
+
+  checkBalance = async (sellCurrency) => {
+    const balance = await actions[sellCurrency.toLowerCase()].getBalance()
+
+    this.setState({
+      balance,
+    })
+  }
+
   removeOrder = (orderId) => {
     actions.core.removeOrder(orderId)
     actions.core.updateCore()
@@ -32,7 +49,11 @@ export default class Row extends Component {
   }
 
   render() {
-    const { row: { id, buyCurrency, sellCurrency, isMy, buyAmount, sellAmount, isRequested, exchangeRate, owner :{  peer: ownerPeer } }, peer } = this.props
+    const { balance } = this.state
+    const { row: { id, buyCurrency, sellCurrency, isMy, buyAmount,
+      sellAmount, isRequested, exchangeRate,
+      owner :{  peer: ownerPeer } }, peer } = this.props
+    const amount = isMy ? sellAmount : buyAmount
 
     return (
       <tr>
@@ -80,12 +101,16 @@ export default class Row extends Component {
                       <Link to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`}> Go to the swap</Link>
                     </Fragment>
                   ) : (
-                    Boolean(true) ? (
-                      <Link to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`} >
-                        <RequestButton sendRequest={() => this.sendRequest(id)} />
-                      </Link>
+                    balance > amount ? (
+                      Boolean(true) ? (
+                        <Link to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`} >
+                          <RequestButton sendRequest={() => this.sendRequest(id)} />
+                        </Link>
+                      ) : (
+                        <span>Insufficient funds</span>
+                      )
                     ) : (
-                      <span>Insufficient funds</span>
+                      <span>no money</span>
                     )
                   )
                 }
