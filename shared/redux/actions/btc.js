@@ -5,7 +5,7 @@ import config from 'app-config'
 import bitcoin from 'bitcoinjs-lib'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
-import { btc, request, constants } from 'helpers'
+import { btc, request, constants, api } from 'helpers'
 
 
 const login = (privateKey) => {
@@ -46,7 +46,7 @@ const login = (privateKey) => {
 const getBalance = () => {
   const { user: { btcData: { address } } } = getState()
 
-  return request.get(`${config.api.bitpay}/addr/${address}`)
+  return request.get(`${api.getApiServer('bitpay')}/addr/${address}`)
     .then(({ balance, unconfirmedBalance }) => {
       console.log('BTC Balance:', balance)
       console.log('BTC unconfirmedBalance Balance:', unconfirmedBalance)
@@ -56,7 +56,7 @@ const getBalance = () => {
 }
 
 const fetchBalance = (address) =>
-  request.get(`${config.api.bitpay}/addr/${address}`)
+  request.get(`${api.getApiServer('bitpay')}/addr/${address}`)
     .then(({ balance, unconfirmedBalance }) => {
       console.log('BALANCE', balance)
       console.log('unconfirmedBalance', unconfirmedBalance)
@@ -68,7 +68,7 @@ const getTransaction = () =>
   new Promise((resolve) => {
     const { user: { btcData: { address } } } = getState()
 
-    const url = `${config.api.bitpay}/txs/?address=${address}`
+    const url = `${api.getApiServer('bitpay')}/txs/?address=${address}`
 
     return request.get(url)
       .then((res) => {
@@ -150,10 +150,10 @@ const send = async (from, to, amount) => {
 
 
 const fetchUnspents = (address) =>
-  request.get(`${config.api.bitpay}/addr/${address}/utxo`)
+  request.get(`${api.getApiServer('bitpay')}/addr/${address}/utxo`)
 
 const broadcastTx = (txRaw) =>
-  request.post(`${config.api.bitpay}/tx/send`, {
+  request.post(`${api.getApiServer('bitpay')}/tx/send`, {
     body: {
       rawtx: txRaw,
     },

@@ -12,6 +12,7 @@ import eth from './eth'
 import eos from './eos'
 import token from './token'
 import nimiq from './nimiq'
+import api from './api'
 
 import referral from './referral'
 import analytics from './analytics'
@@ -35,4 +36,5 @@ export default {
   analytics,
   referral,
   ipfs,
+  api
 }
