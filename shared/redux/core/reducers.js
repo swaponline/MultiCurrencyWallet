@@ -1,5 +1,5 @@
 import { wrapReducers } from 'redaction'
-import reducers from 'redux/reduсers'
+import reducers from 'redux/reducers'
 import store from 'redux/store'
 
 
