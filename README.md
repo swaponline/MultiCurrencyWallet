@@ -6,6 +6,8 @@ Atomic swap cryptocurrency protocol. Live version here: https://swap.online. Ato
 
 ### Install
 
+[link on install](https://youtu.be/EX2TomioHiU)
+
 1) Clone [swap.core](https://github.com/swaponline/swap.core) to same directory where `swap.react` is <br />
 ```
 swap.core/...
