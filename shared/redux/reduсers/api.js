@@ -1,10 +1,11 @@
 import config from 'app-config'
 
 export const initialState = {
-  apiServers: config.api
+  servers: config.api
 }
 
-export const setApiServer = (state, payload) => ({
+export const setApiServer = (state, {provider, server}) => ({
   ...state,
-  apiServers: { ...payload }
+  servers: { ...state.servers, [provider]: server },
+  updatedServers: { ...state.updatedServers, [provider]: server}
 })
