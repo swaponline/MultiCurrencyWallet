@@ -131,7 +131,7 @@ export default class Row extends Component {
             ) : (
               <Fragment>
                 <span>{balance}</span> <br />
-                { currency === 'BTC' && unconfirmedBalance > 0 && <span style={{ fontSize: '12px', color: '#c9c9c9' }}>Unconfirmed {unconfirmedBalance}</span> }
+                { currency === 'BTC' && unconfirmedBalance !== 0 && <span style={{ fontSize: '12px', color: '#c9c9c9' }}>Unconfirmed {unconfirmedBalance}</span> }
               </Fragment>
             )
           }

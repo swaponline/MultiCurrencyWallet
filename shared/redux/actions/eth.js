@@ -1,5 +1,4 @@
 import { request, constants } from 'helpers'
-import abi from 'human-standard-token-abi'
 import { getState } from 'redux/core'
 import  actions from 'redux/actions'
 import web3 from 'helpers/web3'

@@ -1,5 +1,6 @@
 import BigInteger from 'bigi'
 
+import { BigNumber } from 'bignumber.js'
 import config from 'app-config'
 import bitcoin from 'bitcoinjs-lib'
 import { getState } from 'redux/core'
@@ -89,12 +90,6 @@ const getTransaction = () =>
 const createScript = (data) => {
   const { secretHash, ownerPublicKey, recipientPublicKey, lockTime } = data
 
-  const network = (
-    process.env.MAINNET
-      ? bitcoin.networks.bitcoin
-      : bitcoin.networks.testnet
-  )
-
   const script = bitcoin.script.compile([
 
     bitcoin.opcodes.OP_RIPEMD160,
@@ -120,7 +115,7 @@ const createScript = (data) => {
   ])
 
   const scriptPubKey  = bitcoin.script.scriptHash.output.encode(bitcoin.crypto.hash160(script))
-  const scriptAddress = bitcoin.address.fromOutputScript(scriptPubKey, network)
+  const scriptAddress = bitcoin.address.fromOutputScript(scriptPubKey, { network: btc.network })
 
   return {
     scriptAddress,
@@ -129,38 +124,30 @@ const createScript = (data) => {
 
 
 const send = async (from, to, amount) => {
+  const { user: { btcData: { privateKey } } } = getState()
+  const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
 
-  const tx            = new bitcoin.TransactionBuilder(this.network)
-  const unspents      = await this.fetchUnspents(from)
+  const tx            = new bitcoin.TransactionBuilder(btc.network)
+  const unspents      = await fetchUnspents(from)
+
+  const fundValue     = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
   const feeValue      = 15000
   const totalUnspent  = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
+  const skipValue     = totalUnspent - feeValue - fundValue
 
   unspents.forEach(({ txid, vout }) => tx.addInput(txid, vout, 0xfffffffe))
-  tx.addOutput(to, totalUnspent - feeValue)
+  tx.addOutput(to, fundValue)
+  tx.addOutput(from, skipValue)
+
+  tx.inputs.forEach((input, index) => {
+    tx.sign(index, keyPair)
+  })
 
   const txRaw = tx.buildIncomplete()
 
+  broadcastTx(txRaw.toHex())
 }
 
-const signTransaction = (data) => {
-  const { user: { btcData :{ account } } } = getState()
-  const { script, txRaw, secret } = data
-
-  const hashType      = bitcoin.Transaction.SIGHASH_ALL
-  const signatureHash = txRaw.hashForSignature(0, script, hashType)
-  const signature     = account.btc.sign(signatureHash).toScriptSignature(hashType)
-
-  const scriptSig = bitcoin.script.scriptHash.input.encode(
-    [
-      signature,
-      account.btc.getPublicKeyBuffer(),
-      Buffer.from(secret.replace(/^0x/, ''), 'hex'),
-    ],
-    script,
-  )
-
-  txRaw.setInputScript(0, scriptSig)
-}
 
 const fetchUnspents = (address) =>
   request.get(`${config.api.bitpay}/addr/${address}/utxo`)

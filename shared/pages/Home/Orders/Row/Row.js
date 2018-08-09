@@ -26,8 +26,8 @@ export default class Row extends Component {
   }
 
   componentWillMount() {
-    const { row: {  sellCurrency } } = this.props
-    this.checkBalance(sellCurrency)
+    const { row: {  sellCurrency, isMy, buyCurrency } } = this.props
+    isMy ? this.checkBalance(sellCurrency) : this.checkBalance(buyCurrency)
   }
 
   checkBalance = async (sellCurrency) => {
@@ -55,6 +55,10 @@ export default class Row extends Component {
       owner :{  peer: ownerPeer } }, peer } = this.props
     const amount = isMy ? sellAmount : buyAmount
 
+    console.log(amount.toNumber())
+    console.log(balance)
+    console.log(amount.toNumber() > amount)
+
     return (
       <tr>
         <td>
@@ -79,7 +83,7 @@ export default class Row extends Component {
           }
         </td>
         <td>
-          {(exchangeRate || (buyAmount / sellAmount)).toFixed(5)}
+          { exchangeRate || (buyAmount.dividedBy(sellAmount)).toNumber().toFixed(5)}
           {
             isMy ? (
               `${sellCurrency}/${buyCurrency}`
@@ -91,7 +95,7 @@ export default class Row extends Component {
         <td>
           {
             peer === ownerPeer ? (
-              <RemoveButton removeOrder={() => this.removeOrder(id)} />
+              <RemoveButton onClick={() => this.removeOrder(id)} />
             ) : (
               <Fragment>
                 {
@@ -101,16 +105,12 @@ export default class Row extends Component {
                       <Link to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`}> Go to the swap</Link>
                     </Fragment>
                   ) : (
-                    balance > amount ? (
-                      Boolean(true) ? (
-                        <Link to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`} >
-                          <RequestButton sendRequest={() => this.sendRequest(id)} />
-                        </Link>
-                      ) : (
-                        <span>Insufficient funds</span>
-                      )
+                    balance > amount.toNumber() ? (
+                      <Link to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`} >
+                        <RequestButton sendRequest={() => this.sendRequest(id)} />
+                      </Link>
                     ) : (
-                      <span>no money</span>
+                      <span>Insufficient funds</span>
                     )
                   )
                 }

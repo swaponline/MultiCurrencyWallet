@@ -42,14 +42,14 @@ export default {
   },
 
   link: {
-    bitpay: 'https://testnet.y000r.world/insight',  // https://test-insight.bitpay.com
+    bitpay: 'https://test-insight.swap.online/insight',  // https://test-insight.bitpay.com
     etherscan: 'https://rinkeby.etherscan.io',
     eos: 'http://jungle.cryptolions.io/#accountInfo',
   },
 
   api: {
     blocktrail: 'https://api.blocktrail.com/v1/tBTC',
-    bitpay: 'https://test-insight.bitpay.com/api',  //  https://testnet.y000r.world/insight-api
+    bitpay: 'https://test-insight.swap.online/insight-api',  //  https://test-insight.bitpay.com/api https://testnet.y000r.world/insight-api
     etherscan: 'https://rinkeby.etherscan.io/api',
   },
 
