@@ -42,9 +42,26 @@ const clear = () => {
   }
 }
 
+const subscribe = (key, originalListener) => {
+  const listener = (event) => {
+    if (event.storageArea === window.localStorage
+      && event.key === key) {
+      originalListener(event.newValue, event.oldValue);
+    }
+  }
+  window.addEventListener('storage', listener, false);
+  return listener;
+}
+
+const unsubscribe = (listener) => {
+  window.removeEventListener('storage', listener, false);
+}
+
 export default {
   setItem,
   getItem,
   removeItem,
   clear,
+  subscribe,
+  unsubscribe
 }

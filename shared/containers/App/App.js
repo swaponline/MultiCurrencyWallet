@@ -2,9 +2,10 @@ import React, { Fragment } from 'react'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 import actions from 'redux/actions'
+import { getState } from 'redux/core'
 import { connect } from 'redaction'
 import moment from 'moment-with-locales-es6'
-import { constants } from 'helpers'
+import { constants, localStorage } from 'helpers'
 
 import CSSModules from 'react-css-modules'
 import styles from './App.scss'
@@ -16,6 +17,7 @@ import Core from 'containers/Core/Core'
 import Header from 'components/Header/Header'
 import Footer from 'components/Footer/Footer'
 import Loader from 'components/loaders/Loader/Loader'
+import PreventMultiTabs from 'components/PreventMultiTabs/PreventMultiTabs'
 import RequestLoader from 'components/loaders/RequestLoader/RequestLoader'
 import ModalConductor from 'components/modal/ModalConductor/ModalConductor'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
@@ -41,15 +43,30 @@ export default class App extends React.Component {
     children: PropTypes.element.isRequired,
   }
 
+  localStorageListener;
+
   state = {
     fetching: false,
     core: false,
+    multiTabs: false
   }
 
   componentWillMount() {
+    if(!getState().site.tabId) {
+      localStorage.setItem(constants.localStorage.activeTabId, actions.site.generateTabId());
+    }
+    this.localStorageListener = localStorage.subscribe(constants.localStorage.activeTabId, (newValue, oldValue)=> {
+        if(newValue != getState().site.tabId) {
+          this.setState({multiTabs: true});
+        }
+    });
+
     if (!localStorage.getItem(constants.localStorage.demoMoneyReceived)) {
       actions.user.getDemoMoney()
     }
+  }
+  componentWillUnmount() {
+    localStorage.unsubscribe(this.localStorageListener);
   }
 
   componentDidMount() {
@@ -68,27 +85,33 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { fetching } = this.state
+    const { fetching, multiTabs } = this.state
     const { children, ethAddress, btcAddress, tokenAddress, history /* eosAddress */ } = this.props
     const isFetching = !ethAddress || !btcAddress || !tokenAddress || !fetching
 
-    if (isFetching) {
-      return (
-        <Loader />
-      )
-    }
+    const reloaded = window.performance.navigation.type === PerformanceNavigation.TYPE_RELOAD;
 
     return (
       <Fragment>
-        <Header history={history} />
-        <WidthContainer styleName="main">
-          {children}
-        </WidthContainer>
-        <Core />
-        <Footer />
-        <RequestLoader />
-        <ModalConductor />
-        <NotificationConductor />
+      {
+        multiTabs && <PreventMultiTabs />
+      }
+      {
+        isFetching && !multiTabs && <Loader />
+      }
+      {
+        !isFetching && !multiTabs && <Fragment>
+          <Header history={history} />
+          <WidthContainer styleName="main">
+            {children}
+          </WidthContainer>
+          <Core />
+          <Footer />
+          <RequestLoader />
+          <ModalConductor />
+          <NotificationConductor />
+        </Fragment>
+      }
       </Fragment>
     )
   }
