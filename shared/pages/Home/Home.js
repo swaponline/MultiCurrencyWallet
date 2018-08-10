@@ -20,13 +20,6 @@ export default class Home extends Component {
     this.state = {
       buyCurrency: buy || buyCurrency || 'eth',
       sellCurrency: sell || sellCurrency || 'btc',
-      view: 'saveKeys',
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps !== this.props) {
-      this.setState()
     }
   }
 
@@ -105,9 +98,7 @@ export default class Home extends Component {
         <PageHeadline >
           <Fragment>
             <Title>{buyCurrency}/{sellCurrency} exchange with 0% comission</Title>
-            <SubTitle>
-              Choose the direction of exchange
-            </SubTitle>
+            <SubTitle>Choose the direction of exchange</SubTitle>
           </Fragment>
           <Orders
             handleSellCurrencySelect={this.handleSellCurrencySelect}

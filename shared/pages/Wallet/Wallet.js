@@ -74,9 +74,8 @@ export default class Wallet extends Component {
     return (
       <section>
         <PageHeadline>
-          <Title>SWAP.ONLINE - CRYPTOCURRENCY WALLET WITH ATOMIC SWAP EXCHANGE</Title>
           <SubTitle>
-            Check out our <a href="https://wiki.swap.online/en.pdf" target="_balnk" rel="noreferrer noopener">project brief</a> and participate in smart airdrop.
+            Swap.Online - Cryptocurrency Wallet with Atomic Swap Exchange
           </SubTitle>
         </PageHeadline>
         <Confirm

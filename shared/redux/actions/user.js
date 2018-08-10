@@ -5,7 +5,6 @@ import { request, constants } from 'helpers'
 import actions from 'redux/actions'
 import { getState } from 'redux/core'
 
-import SwapApp from 'swap.app'
 import reducers from 'redux/core/reducers'
 
 
