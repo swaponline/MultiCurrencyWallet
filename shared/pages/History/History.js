@@ -7,6 +7,7 @@ import Row from './Row/Row'
 import SwapsHistory from './SwapsHistory/SwapsHistory'
 
 import Table from 'components/Table/Table'
+import styles from 'components/Table/Table.scss'
 import Filter from 'components/Filter/Filter'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 
@@ -45,6 +46,7 @@ export default class History extends Component {
         <h3 >All transactions</h3>
         <Filter />
         <Table
+          classTitle={styles.history}
           titles={titles}
           rows={items}
           rowRender={(row, index) => (

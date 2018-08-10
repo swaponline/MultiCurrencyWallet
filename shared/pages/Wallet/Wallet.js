@@ -5,6 +5,7 @@ import { constants } from 'helpers'
 import actions from 'redux/actions'
 
 import Table from 'components/Table/Table'
+import styles from 'components/Table/Table.scss'
 import Confirm from 'components/Confirm/Confirm'
 import SaveKeys from 'components/SaveKeys/SaveKeys'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
@@ -83,6 +84,7 @@ export default class Wallet extends Component {
           animation={view === 'on'}
         />
         <Table
+          classTitle={styles.wallet}
           titles={titles}
           rows={[].concat(items, tokens)}
           rowRender={(row, index) => (

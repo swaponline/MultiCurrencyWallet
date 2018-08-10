@@ -4,8 +4,8 @@ import cssModules from 'react-css-modules'
 import styles from './Table.scss'
 
 
-const Table = ({ titles, rows, rowRender, textIfEmpty, isLoading, loadingText }) => (
-  <table styleName="table">
+const Table = ({ titles, rows, rowRender, classTitle, textIfEmpty, isLoading, loadingText }) => (
+  <table styleName="table" className={classTitle}>
     <thead>
       <tr>
         {
