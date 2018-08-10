@@ -2,7 +2,8 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'redaction'
 
 import Row from './Row/Row'
-import Table from 'components/tables/Table/Table'
+import Table from 'components/Table/Table'
+import styles from 'components/Table/Table.scss'
 import MyOrders from './MyOrders/MyOrders'
 import SearchSwap from 'components/SearchSwap/SearchSwap'
 
@@ -51,6 +52,7 @@ export default class Orders extends Component {
         />
         <h3>All orders</h3>
         <Table
+          classTitle={styles.exchange}
           titles={titles}
           rows={orders}
           rowRender={(row, index) => (

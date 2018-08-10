@@ -6,6 +6,8 @@ import actions from 'redux/actions'
 import Row from './Row/Row'
 import SwapsHistory from './SwapsHistory/SwapsHistory'
 
+import Table from 'components/Table/Table'
+import styles from 'components/Table/Table.scss'
 import Filter from 'components/Filter/Filter'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import InfiniteScrollTable from 'components/tables/InfiniteScrollTable/InfiniteScrollTable'
@@ -63,6 +65,7 @@ export default class History extends Component {
         <h3>All transactions</h3>
         <Filter />
         <InfiniteScrollTable
+          classTitle={styles.history}
           titles={titles}
           bottomOffset={400}
           getMore={this.loadMore}
