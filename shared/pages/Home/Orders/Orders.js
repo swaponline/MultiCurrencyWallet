@@ -33,7 +33,7 @@ export default class Orders extends Component {
 
   render() {
     const { sellCurrency, buyCurrency, handleSellCurrencySelect, handleBuyCurrencySelect, flipCurrency } = this.props
-    const titles = [ 'EXCHANGE', 'YOU BUY', 'YOU SELL', 'EXCHANGE RATE', 'ACTIONS' ]
+    const titles = [ 'EXCHANGE', 'YOU BUY', 'YOU SELL', 'EXCHANGE RATE', 'ACTIONS', 'Link' ]
     let { isOnline, orders, myOrders, orderId } = this.props
 
     return (

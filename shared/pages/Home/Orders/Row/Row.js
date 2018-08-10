@@ -55,8 +55,9 @@ export default class Row extends Component {
       owner :{  peer: ownerPeer } }, peer, orderId } = this.props
     const amount = isMy ? sellAmount : buyAmount
 
+
     return (
-      <tr style={orderId === id ? { background: 'red' } : { color: 'green' }}>
+      <tr style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}>
         <td>
           <Coins names={[buyCurrency, sellCurrency]}  />
         </td>
