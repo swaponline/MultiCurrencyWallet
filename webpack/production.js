@@ -1,6 +1,5 @@
 import webpack from 'webpack'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
-import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
 import config from 'app-config'
 
 
