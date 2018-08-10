@@ -32,7 +32,8 @@ export default class Core extends Component {
       .off('remove order', this.updateOrders)
       .off('new order request', this.updateOrders)
 
-    SwapApp.services.room.off('peer joined', actions.ipfs.userLeft)
+    //TODO: There is no off method
+    //SwapApp.services.room.connection.off('peer joined', actions.ipfs.userLeft)
   }
 
   setIpfs = () => {
