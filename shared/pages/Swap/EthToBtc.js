@@ -169,8 +169,8 @@ export default class EthToBtc extends Component {
                     <Fragment>
                       { flow.btcScriptValues && <span onClick={this.toggleBitcoinScript}>Show bitcoin script</span> }
                       { isShowingBitcoinScript && (
-                    <pre>
-                      <code>{`
+                        <pre>
+                          <code>{`
   bitcoinjs.script.compile([
     bitcoin.core.opcodes.OP_RIPEMD160,
     Buffer.from('${flow.btcScriptValues.secretHash}', 'hex'),
@@ -194,8 +194,8 @@ export default class EthToBtc extends Component {
     bitcoin.core.opcodes.OP_ENDIF,
   ])
                       `}
-                      </code>
-                    </pre>
+                          </code>
+                        </pre>
                       )
                       }
                     </Fragment>
@@ -335,7 +335,7 @@ export default class EthToBtc extends Component {
               {
                 flow.step >= 6 && !flow.isFinished && (
                   <div style={{ display: 'flex', alignItems: 'center' }}>
-                    { enabledButton &&  <Button brand onClick={this.tryRefund}>TRY REFUND</Button> }
+                    { enabledButton && !flow.isBtcWithdrawn && <Button brand onClick={this.tryRefund}>TRY REFUND</Button> }
                     <Timer
                       lockTime={(flow.btcScriptValues.lockTime - 5400) * 1000}
                       enabledButton={() => this.setState({ enabledButton: true })}
@@ -347,7 +347,7 @@ export default class EthToBtc extends Component {
           )
         }
         <br />
-        {/*{ !flow.isFinished && <Button white onClick={this.addGasPrice}>Add gas price</Button> }*/}
+        {/* { !flow.isFinished && <Button white onClick={this.addGasPrice}>Add gas price</Button> } */}
         { children }
       </div>
     )
