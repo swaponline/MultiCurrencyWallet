@@ -5,7 +5,7 @@ import styles from './SubTitle.scss'
 
 
 const SubTitle = ({ children }) => (
-  <div styleName="subTitle">{children}</div>
+  <h1 styleName="subTitle">{children}</h1>
 )
 
 export default cssModules(SubTitle, styles)

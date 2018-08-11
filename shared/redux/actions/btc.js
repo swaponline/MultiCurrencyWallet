@@ -1,7 +1,6 @@
 import BigInteger from 'bigi'
 
 import { BigNumber } from 'bignumber.js'
-import config from 'app-config'
 import bitcoin from 'bitcoinjs-lib'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
@@ -57,11 +56,7 @@ const getBalance = () => {
 
 const fetchBalance = (address) =>
   request.get(`${api.getApiServer('bitpay')}/addr/${address}`)
-    .then(({ balance, unconfirmedBalance }) => {
-      console.log('BALANCE', balance)
-      console.log('unconfirmedBalance', unconfirmedBalance)
-      return balance
-    })
+    .then(({ balance }) => balance)
 
 
 const getTransaction = () =>

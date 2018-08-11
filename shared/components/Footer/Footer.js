@@ -22,8 +22,8 @@ export default class Footer extends Component {
     return (
       <div styleName="footer">
         <WidthContainer styleName="container">
-          <span styleName="text" >Need help? Join Telegram chat <a href="https://t.me/swaponline" target="_blank" rel="noreferrer noopener">@swaponline</a></span>
           <Info serverAddress={server} onlineUsers={onlineUsers} isOnline={isOnline} />
+          <span styleName="text" >Need help? Join Telegram chat <a href="https://t.me/swaponline" target="_blank" rel="noreferrer noopener">@swaponline</a></span>
         </WidthContainer>
       </div>
     )

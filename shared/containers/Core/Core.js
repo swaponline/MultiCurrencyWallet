@@ -31,15 +31,14 @@ export default class Core extends Component {
       .off('order update', this.updateOrders)
       .off('remove order', this.updateOrders)
       .off('new order request', this.updateOrders)
-
-    //TODO: There is no off method
-    //SwapApp.services.room.connection.off('peer joined', actions.ipfs.userLeft)
   }
 
   setIpfs = () => {
     setTimeout(() => {
       const isOnline = SwapApp.services.room.connection._ipfs.isOnline()
       const peer = SwapApp.services.room.peer
+
+      console.log(SwapApp.services)
 
       SwapApp.services.room.connection.on('peer joined', actions.ipfs.userJoined)
       SwapApp.services.room.connection.on('peer left', actions.ipfs.userLeft)

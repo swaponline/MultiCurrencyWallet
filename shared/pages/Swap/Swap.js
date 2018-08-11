@@ -26,10 +26,10 @@ export default class SwapComponent extends PureComponent {
   state = {
     swap: null,
     SwapComponent: null,
-    errors: false
+    // errors: false,
   }
 
-  createSwap() {
+  componentWillMount() {
     const { match : { params : { orderId } } } = this.props
 
     const swap = new Swap(orderId)
@@ -46,13 +46,15 @@ export default class SwapComponent extends PureComponent {
     window.swap = swap
   }
 
-  componentWillMount() {
-    actions.api.checkServers().then(() => {
-      this.createSwap();
-    }).catch(e => {
-      this.setState({errors: true})
-    });
-  }
+  // componentWillMount() {
+  //   actions.api.checkServers()
+  //     .then(() => {
+  //       this.createSwap()
+  //     })
+  //     .catch(e => {
+  //       this.setState({ errors: true })
+  //     })
+  // }
 
   setSaveSwapId = (orderId) => {
     let swapsId = JSON.parse(localStorage.getItem('swapId'))
@@ -74,16 +76,16 @@ export default class SwapComponent extends PureComponent {
   render() {
     const { swap, SwapComponent, errors } = this.state
 
+    if (!swap || !SwapComponent) {
+      return null
+    }
+
     return (
       <div style={{ paddingLeft: '30px', paddingTop: '30px' }}>
-        {
-          swap && <SwapComponent swap={swap} >
-            <EmergencySave flow={swap.flow} />
-          </SwapComponent>
-        }
-        {
-          errors && <div><h2>Error!</h2>Can't reach payments provider server. Please, try again later</div>
-        }
+        <SwapComponent swap={swap} >
+          <EmergencySave flow={swap.flow} />
+        </SwapComponent>
+        {/*{ errors && <div><h2>Error!</h2>Can't reach payments provider server. Please, try again later</div> }*/}
       </div>
     )
   }
