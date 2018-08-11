@@ -7,6 +7,7 @@ import * as feeds from './feeds'
 import * as core from './core'
 import * as ipfs from './ipfs'
 import * as api from './api'
+import * as site from './site'
 
 export default {
   notifications,
@@ -17,5 +18,6 @@ export default {
   user,
   feeds,
   ipfs,
-  api
+  api,
+  site
 }
