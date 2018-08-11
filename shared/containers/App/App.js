@@ -2,7 +2,6 @@ import React, { Fragment } from 'react'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 import actions from 'redux/actions'
-import { getState } from 'redux/core'
 import { connect } from 'redaction'
 import moment from 'moment-with-locales-es6'
 import { constants, localStorage } from 'helpers'
@@ -35,6 +34,7 @@ moment.locale(userLanguage)
   tokenAddress: 'user.tokensData.noxon.address',
   // eosAddress: 'user.eosData.address',
   isVisible: 'loader.isVisible',
+  tabId: 'site.tabId'
 })
 @CSSModules(styles)
 export default class App extends React.Component {
@@ -52,11 +52,11 @@ export default class App extends React.Component {
   }
 
   componentWillMount() {
-    if(!getState().site.tabId) {
+    if(!this.props.tabId) {
       localStorage.setItem(constants.localStorage.activeTabId, actions.site.generateTabId());
     }
     this.localStorageListener = localStorage.subscribe(constants.localStorage.activeTabId, (newValue, oldValue)=> {
-        if(newValue != getState().site.tabId) {
+        if(newValue != this.props.tabId) {
           this.setState({multiTabs: true});
         }
     });

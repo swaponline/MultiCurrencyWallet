@@ -42,6 +42,7 @@ export default class Core extends Component {
       const peer = SwapApp.services.room.peer
 
       SwapApp.services.room.connection.on('peer joined', actions.ipfs.userJoined)
+      SwapApp.services.room.connection.on('peer left', actions.ipfs.userLeft)
       setTimeout(() => {
         actions.ipfs.set({
           isOnline,
