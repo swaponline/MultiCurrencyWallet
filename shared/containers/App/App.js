@@ -43,7 +43,6 @@ export default class App extends React.Component {
 
   state = {
     fetching: false,
-    core: false,
   }
 
   componentWillMount() {
@@ -56,15 +55,8 @@ export default class App extends React.Component {
     setTimeout(() => {
       actions.user.sign()
       createSwapApp()
-      this.setState({
-        fetching: true,
-      })
+      this.setState({ fetching: true })
     }, 1000)
-  }
-
-  addCore = () => {
-    createSwapApp()
-    this.setState({ core: !this.state.core })
   }
 
   render() {
