@@ -13,7 +13,6 @@ import eos from './eos'
 import token from './token'
 import nimiq from './nimiq'
 import api from './api'
-import site from './site'
 
 import referral from './referral'
 import analytics from './analytics'
@@ -38,5 +37,4 @@ export default {
   referral,
   ipfs,
   api,
-  site
 }

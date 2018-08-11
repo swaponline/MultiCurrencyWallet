@@ -14,19 +14,6 @@ import { EthSwap, EthTokenSwap, BtcSwap } from 'swap.swaps'
 import { ETH2BTC, BTC2ETH, ETHTOKEN2BTC, BTC2ETHTOKEN } from 'swap.flows'
 
 
-window.createOrder = ({ buyCurrency, sellCurrency, buyAmount, sellAmount }) => {
-  const data = {
-    buyCurrency: `${buyCurrency}`,
-    sellCurrency: `${sellCurrency}`,
-    buyAmount: Number(buyAmount),
-    sellAmount: Number(sellAmount),
-  }
-
-  swapApp.services.orders.create(data)
-
-  return 'Order create'
-}
-
 const createSwapApp = () => {
   swapApp.setup({
     network: process.env.MAINNET ? 'mainnet' : 'testnet',
@@ -46,14 +33,15 @@ const createSwapApp = () => {
         btc: localStorage.getItem(privateKeys.privateKeyNames.btc),
       }),
       new SwapRoom({
-        repo: './data/messaging/DataBase',
         EXPERIMENTAL: {
           pubsub: true,
         },
         config: {
           Addresses: {
             Swarm: [
-              config.ipfs.swarm,
+              '/dns4/signal1.dao.casino/tcp/443/wss/p2p-websocket-star/',
+              '/dns4/signal2.dao.casino/tcp/443/wss/p2p-websocket-star/',
+              '/dns4/signal3.dao.casino/tcp/443/wss/p2p-websocket-star/',
             ],
           },
         },

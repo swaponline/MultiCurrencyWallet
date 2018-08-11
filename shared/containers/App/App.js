@@ -28,13 +28,10 @@ moment.locale(userLanguage)
 
 @withRouter
 @connect({
+  isVisible: 'loader.isVisible',
   ethAddress: 'user.ethData.address',
   btcAddress: 'user.btcData.address',
-  // nimAddress: 'user.nimData.address',
   tokenAddress: 'user.tokensData.noxon.address',
-  // eosAddress: 'user.eosData.address',
-  isVisible: 'loader.isVisible',
-  tabId: 'site.tabId'
 })
 @CSSModules(styles)
 export default class App extends React.Component {
@@ -43,30 +40,35 @@ export default class App extends React.Component {
     children: PropTypes.element.isRequired,
   }
 
-  localStorageListener;
+  constructor() {
+    super()
 
-  state = {
-    fetching: false,
-    core: false,
-    multiTabs: false
+    this.localStorageListener = null
+
+    this.state = {
+      fetching: false,
+      multiTabs: false,
+    }
   }
 
   componentWillMount() {
-    if(!this.props.tabId) {
-      localStorage.setItem(constants.localStorage.activeTabId, actions.site.generateTabId());
+    if (localStorage.getItem(constants.localStorage.activeTabId)) {
+      localStorage.setItem(constants.localStorage.activeTabId, Date.now())
     }
-    this.localStorageListener = localStorage.subscribe(constants.localStorage.activeTabId, (newValue, oldValue)=> {
-        if(newValue != this.props.tabId) {
-          this.setState({multiTabs: true});
-        }
-    });
+
+    this.localStorageListener = localStorage.subscribe(constants.localStorage.activeTabId, (newValue) => {
+      if (newValue !== localStorage.getItem(constants.localStorage.activeTabId)) {
+        this.setState({ multiTabs: true })
+      }
+    })
 
     if (!localStorage.getItem(constants.localStorage.demoMoneyReceived)) {
       actions.user.getDemoMoney()
     }
   }
+
   componentWillUnmount() {
-    localStorage.unsubscribe(this.localStorageListener);
+    localStorage.unsubscribe(this.localStorageListener)
   }
 
   componentDidMount() {
@@ -82,29 +84,25 @@ export default class App extends React.Component {
     const { children, ethAddress, btcAddress, tokenAddress, history /* eosAddress */ } = this.props
     const isFetching = !ethAddress || !btcAddress || !tokenAddress || !fetching
 
-    const reloaded = window.performance.navigation.type === PerformanceNavigation.TYPE_RELOAD;
+    if (multiTabs) {
+      return <PreventMultiTabs />
+    }
+
+    if (isFetching) {
+      return <Loader />
+    }
 
     return (
       <Fragment>
-      {
-        multiTabs && <PreventMultiTabs />
-      }
-      {
-        isFetching && !multiTabs && <Loader />
-      }
-      {
-        !isFetching && !multiTabs && <Fragment>
-          <Header history={history} />
-          <WidthContainer styleName="main">
-            {children}
-          </WidthContainer>
-          <Core />
-          <Footer />
-          <RequestLoader />
-          <ModalConductor />
-          <NotificationConductor />
-        </Fragment>
-      }
+        <Header history={history} />
+        <WidthContainer styleName="main">
+          {children}
+        </WidthContainer>
+        <Core />
+        <Footer />
+        <RequestLoader />
+        <ModalConductor />
+        <NotificationConductor />
       </Fragment>
     )
   }

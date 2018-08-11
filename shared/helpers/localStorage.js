@@ -44,17 +44,16 @@ const clear = () => {
 
 const subscribe = (key, originalListener) => {
   const listener = (event) => {
-    if (event.storageArea === window.localStorage
-      && event.key === key) {
-      originalListener(event.newValue, event.oldValue);
+    if (event.storageArea === window.localStorage && event.key === key) {
+      originalListener(event.newValue, event.oldValue)
     }
   }
-  window.addEventListener('storage', listener, false);
-  return listener;
+  window.addEventListener('storage', listener, false)
+  return listener
 }
 
 const unsubscribe = (listener) => {
-  window.removeEventListener('storage', listener, false);
+  window.removeEventListener('storage', listener, false)
 }
 
 export default {
@@ -63,5 +62,5 @@ export default {
   removeItem,
   clear,
   subscribe,
-  unsubscribe
+  unsubscribe,
 }
