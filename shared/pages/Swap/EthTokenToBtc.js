@@ -96,6 +96,7 @@ export default class EthTokenToBtc extends Component {
                 Confirmation of the transaction is necessary for crediting the reputation.
                 If a user does not bring the deal to the end he gets a negative reputation.
               </div>
+              <div>{flow.isSwapExists && 'Cannot sign: swap already exists! Please refund it.'}</div>
               {
                 !flow.isSignFetching && !flow.isMeSigned && (
                   <Fragment>
