@@ -59,8 +59,8 @@ export default {
 
   apiAlternatives: {
     bitpay: [
-      'https://insight.bitpay.com/api'
-    ]
+      'https://insight.bitpay.com/api',
+    ],
   },
 
   apiKeys: {

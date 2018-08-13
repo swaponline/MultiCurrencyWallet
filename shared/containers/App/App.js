@@ -52,6 +52,8 @@ export default class App extends React.Component {
   }
 
   componentWillMount() {
+    localStorage.setItem(constants.localStorage.activeTabId, Date.now())
+
     if (localStorage.getItem(constants.localStorage.activeTabId)) {
       localStorage.setItem(constants.localStorage.activeTabId, Date.now())
     }
