@@ -22,7 +22,7 @@ export default class Row extends Component {
   }
 
   componentDidMount() {
-    const { contractAddress, name } = this.props
+    const { contractAddress, name, balance } = this.props
 
     if (name !== undefined) {
       actions.token.allowance(contractAddress, name)
@@ -39,6 +39,8 @@ export default class Row extends Component {
     this.setState({
       isBalanceFetching: true,
     })
+
+
 
     let { currency, contractAddress, decimals } = this.props
     let action
@@ -89,6 +91,12 @@ export default class Row extends Component {
     }, 800)
   }
 
+
+  balanceFloat = () => {
+    const { balance, currency } = this.props
+    return currency == "BTC" || currency == "ETH" ? balance.toFixed(8) : balance
+  }
+
   handleEosLogin = () => {
     actions.modals.open(constants.modals.Eos, {})
   }
@@ -117,7 +125,7 @@ export default class Row extends Component {
   render() {
     const { isBalanceFetching, viewText } = this.state
     const { currency, name, balance, isBalanceFetched, address, contractAddress, decimals, approve, unconfirmedBalance } = this.props
-
+  
     return (
       <tr>
         <td>
@@ -130,8 +138,8 @@ export default class Row extends Component {
               <InlineLoader />
             ) : (
               <Fragment>
-                <span>{balance}</span> <br />
-                { currency === 'BTC' && unconfirmedBalance > 0 && <span style={{ fontSize: '12px', color: '#c9c9c9' }}>Unconfirmed {unconfirmedBalance}</span> }
+                <span>{this.balanceFloat()}</span> <br />
+                { currency === 'BTC' && unconfirmedBalance !== 0 && <span style={{ fontSize: '12px', color: '#c9c9c9' }}>Unconfirmed {unconfirmedBalance}</span> }
               </Fragment>
             )
           }

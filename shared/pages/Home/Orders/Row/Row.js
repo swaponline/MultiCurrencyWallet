@@ -21,19 +21,42 @@ export default class Row extends Component {
     row: PropTypes.object,
   }
 
+  state = {
+    balance: 0,
+  }
+
+  componentWillMount() {
+    const { row: {  sellCurrency, isMy, buyCurrency } } = this.props
+    isMy ? this.checkBalance(sellCurrency) : this.checkBalance(buyCurrency)
+  }
+
+  checkBalance = async (sellCurrency) => {
+    const balance = await actions[sellCurrency.toLowerCase()].getBalance()
+
+    this.setState({
+      balance,
+    })
+  }
+
   removeOrder = (orderId) => {
     actions.core.removeOrder(orderId)
+    actions.core.updateCore()
   }
 
   sendRequest = (orderId) => {
     actions.core.sendRequest(orderId)
+    actions.core.updateCore()
   }
 
   render() {
-    const { row: { id, buyCurrency, sellCurrency, isMy, buyAmount, sellAmount, isRequested, exchangeRate, owner :{  peer: ownerPeer } }, peer } = this.props
+    const { balance } = this.state
+    const { orderId, row: { id, buyCurrency, sellCurrency, isMy, buyAmount,
+      sellAmount, isRequested, exchangeRate,
+      owner :{  peer: ownerPeer } }, peer } = this.props
+    const amount = isMy ? sellAmount : buyAmount
 
     return (
-      <tr>
+      <tr style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}>
         <td>
           <Coins names={[buyCurrency, sellCurrency]}  />
         </td>
@@ -56,23 +79,19 @@ export default class Row extends Component {
           }
         </td>
         <td>
-          {(exchangeRate || (buyAmount / sellAmount)).toFixed(5)}
+          { exchangeRate || (buyAmount.dividedBy(sellAmount)).toNumber().toFixed(5)}
           {
-            buyCurrency === 'BTC' ? (
+            isMy ? (
               `${sellCurrency}/${buyCurrency}`
             ) : (
-              sellCurrency === 'BTC' ? (
-                `${buyCurrency}/${sellCurrency}`
-              ) : (
-                `${sellCurrency}/${buyCurrency}`
-              )
+              `${buyCurrency}/${sellCurrency}`
             )
           }
         </td>
         <td>
           {
             peer === ownerPeer ? (
-              <RemoveButton removeOrder={() => this.removeOrder(id)} />
+              <RemoveButton onClick={() => this.removeOrder(id)} />
             ) : (
               <Fragment>
                 {
@@ -82,9 +101,9 @@ export default class Row extends Component {
                       <Link to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`}> Go to the swap</Link>
                     </Fragment>
                   ) : (
-                    Boolean(true) ? (
+                    balance > amount.toNumber() ? (
                       <Link to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`} >
-                        <RequestButton sendRequest={() => this.sendRequest(id)} />
+                        <RequestButton onClick={() => this.sendRequest(id)} />
                       </Link>
                     ) : (
                       <span>Insufficient funds</span>
@@ -94,6 +113,9 @@ export default class Row extends Component {
               </Fragment>
             )
           }
+        </td>
+        <td>
+          <a href={`${links.exchange}/${sellCurrency.toLowerCase()}-${buyCurrency.toLowerCase()}/${id}`}> link</a>
         </td>
       </tr>
     )

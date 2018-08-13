@@ -1,5 +1,8 @@
 import React, { PureComponent } from 'react'
 import Swap from 'swap.swap'
+import config from 'app-config'
+
+import actions from 'redux/actions'
 
 import EmergencySave from './EmergencySave/EmergencySave'
 
@@ -8,6 +11,9 @@ import EthToBtc from './EthToBtc'
 import EthTokenToBtc from './EthTokenToBtc'
 import BtcToEthToken from './BtcToEthToken'
 
+import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
+
+import { connect } from 'redaction'
 
 const swapComponents = {
   'BTC2ETH': BtcToEth,
@@ -17,15 +23,18 @@ const swapComponents = {
   'SWAP2BTC': EthTokenToBtc,
   'BTC2SWAP': BtcToEthToken,
 }
-
+@connect({
+  errors: 'api.errors',
+  checked: 'api.checked'
+})
 export default class SwapComponent extends PureComponent {
 
   state = {
     swap: null,
-    SwapComponent: null,
+    SwapComponent: null
   }
 
-  componentWillMount() {
+  createSwap() {
     const { match : { params : { orderId } } } = this.props
 
     const swap = new Swap(orderId)
@@ -40,6 +49,13 @@ export default class SwapComponent extends PureComponent {
 
     // for debug and emergency save
     window.swap = swap
+  }
+
+  componentWillMount() {
+    actions.api.checkServers()
+      .then(() => {
+        this.createSwap()
+      })
   }
 
   setSaveSwapId = (orderId) => {
@@ -60,17 +76,16 @@ export default class SwapComponent extends PureComponent {
   }
 
   render() {
-    const { swap, SwapComponent } = this.state
-
-    if (!swap || !SwapComponent) {
-      return null
-    }
+    const { swap, SwapComponent, checkingServers } = this.state
+    const { checked, errors } = this.props
 
     return (
       <div style={{ paddingLeft: '30px', paddingTop: '30px' }}>
-        <SwapComponent swap={swap} >
+        {checked && !errors && swap && <SwapComponent swap={swap} >
           <EmergencySave flow={swap.flow} />
-        </SwapComponent>
+        </SwapComponent>}
+        { !checked && <div><InlineLoader />Checking available servers</div> }
+        { errors && <div><h2>Error!</h2>Can't reach payments provider server. Please, try again later</div> }
       </div>
     )
   }

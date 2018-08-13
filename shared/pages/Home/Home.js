@@ -20,12 +20,7 @@ export default class Home extends Component {
     this.state = {
       buyCurrency: buy || buyCurrency || 'eth',
       sellCurrency: sell || sellCurrency || 'btc',
-      view: 'saveKeys',
     }
-  }
-
-  componentWillReceiveProps() {
-    this.setState({})
   }
 
   handleBuyCurrencySelect = ({ value }) => {
@@ -61,8 +56,8 @@ export default class Home extends Component {
   handelReplaceHistory = (sellCurrency, buyCurrency) => {
     const { history } = this.props
 
-    this.setFilter(`${sellCurrency}${buyCurrency}`)
-    history.replace((`${links.orders}/${buyCurrency}-${sellCurrency}`))
+    this.setFilter(`${buyCurrency}${sellCurrency}`)
+    history.replace((`${links.exchange}/${buyCurrency}-${sellCurrency}`))
   }
 
   flipCurrency = () => {
@@ -95,16 +90,15 @@ export default class Home extends Component {
   }
 
   render() {
+    const { match: { params: { orderId } } } = this.props
     const { buyCurrency, sellCurrency } = this.state
 
     return (
       <section style={{ position: 'relative' }}>
         <PageHeadline >
           <Fragment>
-            <Title>Swap.Online - Decentralized Exchange Based on Atomic Swap Protocol</Title>
-            <SubTitle>
-              Check out our <a href="https://wiki.swap.online/en.pdf" target="_balnk" rel="noreferrer noopener">project brief</a> and participate in smart airdrop.
-            </SubTitle>
+            <Title>{buyCurrency}/{sellCurrency} exchange with 0% comission</Title>
+            <SubTitle>Choose the direction of exchange</SubTitle>
           </Fragment>
           <Orders
             handleSellCurrencySelect={this.handleSellCurrencySelect}
@@ -112,6 +106,7 @@ export default class Home extends Component {
             buyCurrency={buyCurrency}
             sellCurrency={sellCurrency}
             flipCurrency={this.flipCurrency}
+            orderId={orderId}
           />
         </PageHeadline>
       </section>

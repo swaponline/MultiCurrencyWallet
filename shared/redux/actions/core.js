@@ -15,26 +15,16 @@ const setFilter = (filter) => {
 const acceptRequest = (orderId, participantPeer) => {
   const order = SwapApp.services.orders.getByKey(orderId)
   order.acceptRequest(participantPeer)
-
-  setTimeout(() => {
-    this.handleToggleTooltip()
-  }, 800)
-
-  updateCore()
 }
 
 const declineRequest = (orderId, participantPeer) => {
   const order = SwapApp.services.orders.getByKey(orderId)
   order.declineRequest(participantPeer)
-
-  updateCore()
 }
 
 const removeOrder = (orderId) => {
   SwapApp.services.orders.remove(orderId)
   actions.feed.deleteItemToFeed(orderId)
-
-  updateCore()
 }
 
 const sendRequest = (orderId) => {
@@ -43,20 +33,42 @@ const sendRequest = (orderId) => {
   order.sendRequest((isAccepted) => {
     console.log(`user ${order.owner.peer} ${isAccepted ? 'accepted' : 'declined'} your request`)
   })
-
-  updateCore()
 }
 
-const updateCore = (orders) => {
+const createOrder = (data) => {
+  SwapApp.services.orders.create(data)
+}
+
+const updateCore = () => {
+  const orders = SwapApp.services.orders.items
+
   if (orders !== undefined && orders.length > 0) {
     getOrders(orders)
+    getSwapHistory()
     actions.feed.getFeedDataFromOrder(orders)
   }
+}
+
+const getSwapHistory = () => {
+  const swapId = JSON.parse(localStorage.getItem('swapId'))
+
+  if (swapId === null || swapId.length === 0) {
+    return
+  }
+
+  const historySwap = swapId.map(item => ({
+    ...SwapApp.env.storage.getItem(`swap.${item}`),
+    ...SwapApp.env.storage.getItem(`flow.${item}`),
+  }))
+
+  reducers.history.setSwapHistory(historySwap)
 }
 
 export default {
   getOrders,
   setFilter,
+  createOrder,
+  getSwapHistory,
   updateCore,
   sendRequest,
   acceptRequest,

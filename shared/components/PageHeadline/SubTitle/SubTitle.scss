@@ -1,9 +1,5 @@
 .subTitle {
   margin-top: 20px;
   @include ff-bold;
-  font-size: 32px;
-
-  &:first-child {
-    margin-top: 0;
-  }
+  font-size: 30px;
 }

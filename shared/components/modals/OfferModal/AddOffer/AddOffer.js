@@ -42,7 +42,8 @@ export default class AddOffer extends Component {
   }
 
   componentWillMount() {
-    this.checkBalance('eth')
+    const { sellCurrency } = this.state
+    this.checkBalance(sellCurrency)
   }
 
   componentDidMount() {
@@ -180,10 +181,9 @@ export default class AddOffer extends Component {
   }
 
   render() {
-    const { items, tokens } = this.props
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency, balance, min } = this.state
-
     const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
+    const isDisabled = !exchangeRate || !buyAmount && !sellAmount || sellAmount > balance || sellAmount < min
 
     if (sellCurrency === 'btc') {
       linked.sellAmount.check((value) => value > 0.004, `Amount must be greater than 0.004 `)
@@ -193,8 +193,6 @@ export default class AddOffer extends Component {
 
     linked.sellAmount.check((value) => value < balance, `Amount must be bigger your balance`)
 
-    const isDisabled = !exchangeRate || !buyAmount && !sellAmount || sellAmount > balance || sellAmount < min
-    const data = [].concat(tokens, items).filter(item => item.currency.toLowerCase() === `${sellCurrency}`)
 
     return (
       <Fragment>
@@ -208,10 +206,9 @@ export default class AddOffer extends Component {
           sellCurrency={sellCurrency}
         />
         <Select
-          label="Available amount"
           changeBalance={this.changeBalance}
-          balance={data[0].balance}
-          currency={data[0].currency}
+          balance={balance}
+          currency={sellCurrency}
         />
         <SelectGroup
           styleName="sellGroup"

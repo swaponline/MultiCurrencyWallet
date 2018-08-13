@@ -1,7 +1,5 @@
 import React from 'react'
 
-import SwapApp  from 'swap.app'
-
 import actions from 'redux/actions'
 import { connect } from 'redaction'
 import { constants } from 'helpers'
@@ -30,26 +28,28 @@ export default class User extends React.Component {
     this.setState({ view: true })
   }
 
-  updateOrders = () => {
-    this.setState({
-      orders: SwapApp.services.orders.items,
-    })
-
-    const { orders } = this.state
-
-    if (orders.length !== 0) {
-      actions.feed.getFeedDataFromOrder(orders)
-    }
-  }
-
   handleToggleTooltip = () => {
     this.setState({
       view: !this.state.view,
     })
   }
 
+  declineRequest = (orderId, participantPeer) => {
+    actions.core.declineRequest(orderId, participantPeer)
+    actions.core.updateCore()
+  }
+
   acceptRequest = (orderId, participantPeer) => {
     actions.core.acceptRequest(orderId, participantPeer)
+    actions.core.updateCore()
+    this.handleToggleTooltip()
+  }
+
+  autoAcceptRequest = (orderId, participantPeer, link) => {
+    this.acceptRequest(orderId, participantPeer)
+    setTimeout(() => {
+      this.props.history.push(link)
+    }, 1000)
   }
 
   soundClick = () => {
@@ -78,7 +78,9 @@ export default class User extends React.Component {
             view={view}
             feeds={feeds}
             mePeer={peer}
+            autoAcceptRequest={this.autoAcceptRequest}
             acceptRequest={this.acceptRequest}
+            declineRequest={this.declineRequest}
           />
         }
       </div>

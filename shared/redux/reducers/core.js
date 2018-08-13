@@ -1,6 +1,6 @@
 export const initialState = {
   orders: [],
-  filter: 'ALL',
+  filter: 'ethbtc',
 }
 
 

@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react'
 
 import actions from 'redux/actions'
-import SwapApp from 'swap.app'
 
 import { links } from 'helpers'
 import { BigNumber } from 'bignumber.js'
@@ -73,7 +72,7 @@ export default class ConfirmOffer extends Component {
       exchangeRate: Number(exchangeRate),
     }
     actions.analytics.dataEvent('orderbook-addoffer-click-confirm-button')
-    SwapApp.services.orders.create(data)
+    actions.core.createOrder(data)
   }
 
   render() {
@@ -90,7 +89,7 @@ export default class ConfirmOffer extends Component {
         <Fee amount={0.0001} currency={sellCurrency} />
         <ButtonsInRow styleName="buttonsInRow">
           <Button styleName="button" gray onClick={onBack}>Back</Button>
-          <Link styleName="link" to={`${links.home}orders/${buyCurrency.toLowerCase()}-${sellCurrency.toLowerCase()}`}>
+          <Link styleName="link" to={`${links.exchange}/${buyCurrency.toLowerCase()}-${sellCurrency.toLowerCase()}`}>
             <Button styleName="button" id="confirm" brand onClick={this.handleConfirm} >Add</Button>
           </Link>
         </ButtonsInRow>

@@ -2,6 +2,8 @@
 import web3 from 'helpers/web3'
 import bitcoin from 'bitcoinjs-lib'
 
+import Channel        from 'ipfs-pubsub-room'
+
 import config from 'app-config'
 import { constants as privateKeys } from 'helpers'
 import actions from 'redux/actions'
@@ -14,19 +16,6 @@ import { EthSwap, EthTokenSwap, BtcSwap } from 'swap.swaps'
 import { ETH2BTC, BTC2ETH, ETHTOKEN2BTC, BTC2ETHTOKEN } from 'swap.flows'
 
 
-window.createOrder = ({ buyCurrency, sellCurrency, buyAmount, sellAmount }) => {
-  const data = {
-    buyCurrency: `${buyCurrency}`,
-    sellCurrency: `${sellCurrency}`,
-    buyAmount: Number(buyAmount),
-    sellAmount: Number(sellAmount),
-  }
-
-  swapApp.services.orders.create(data)
-
-  return 'Order create'
-}
-
 const createSwapApp = () => {
   swapApp.setup({
     network: process.env.MAINNET ? 'mainnet' : 'testnet',
@@ -35,7 +24,7 @@ const createSwapApp = () => {
       web3,
       bitcoin,
       Ipfs: window.Ipfs,
-      IpfsRoom: window.IpfsRoom,
+      IpfsRoom: Channel,
       storage: window.localStorage,
     },
 

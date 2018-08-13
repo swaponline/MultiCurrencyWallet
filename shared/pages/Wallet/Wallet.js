@@ -7,6 +7,7 @@ import actions from 'redux/actions'
 import Table from 'components/Table/Table'
 import Confirm from 'components/Confirm/Confirm'
 import SaveKeys from 'components/SaveKeys/SaveKeys'
+import Title from 'components/PageHeadline/Title/Title'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import { WithdrawButton } from 'components/controls'
@@ -72,8 +73,9 @@ export default class Wallet extends Component {
     return (
       <section>
         <PageHeadline>
-          <SubTitle>Wallet</SubTitle>
-          { view === 'off' && <SaveKeys isDownload={this.handleDownload} isChange={() => this.changeView('on')} /> }
+          <SubTitle>
+            Swap.Online - Cryptocurrency Wallet with Atomic Swap Exchange
+          </SubTitle>
         </PageHeadline>
         <Confirm
           title="Are you sure ?"
@@ -88,6 +90,7 @@ export default class Wallet extends Component {
             <Row key={index} {...row} />
           )}
         />
+        { view === 'off' && <SaveKeys isDownload={this.handleDownload} isChange={() => this.changeView('on')} /> }
         { process.env.TESTNET && <WithdrawButton onClick={this.handleClear} >Exit</WithdrawButton> }
         <WithdrawButton onClick={this.handleDownload}>Download keys</WithdrawButton>
         <WithdrawButton onClick={this.handleImportKeys}>Import keys</WithdrawButton>

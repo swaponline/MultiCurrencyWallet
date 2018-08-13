@@ -8,6 +8,12 @@ import config from 'app-config'
 
 export default class Core extends Component {
 
+  componentWillReceiveProps(nextState) {
+    if (nextState !== this.state) {
+      this.setState()
+    }
+  }
+
   componentWillMount() {
     SwapApp.services.orders
       .on('new orders', this.updateOrders)
@@ -25,9 +31,6 @@ export default class Core extends Component {
       .off('order update', this.updateOrders)
       .off('remove order', this.updateOrders)
       .off('new order request', this.updateOrders)
-
-    SwapApp.services.room.connection
-      .off('peer joined', actions.ipfs.userLeft)
   }
 
   setIpfs = () => {
@@ -35,7 +38,10 @@ export default class Core extends Component {
       const isOnline = SwapApp.services.room.connection._ipfs.isOnline()
       const peer = SwapApp.services.room.peer
 
+      console.log(SwapApp.services)
+
       SwapApp.services.room.connection.on('peer joined', actions.ipfs.userJoined)
+      SwapApp.services.room.connection.on('peer left', actions.ipfs.userLeft)
       setTimeout(() => {
         actions.ipfs.set({
           isOnline,
@@ -48,6 +54,8 @@ export default class Core extends Component {
 
   updateOrders = () => {
     const orders = SwapApp.services.orders.items
+
+    this.setState({})
 
     if (orders.length > 0) {
       actions.core.updateCore(orders)

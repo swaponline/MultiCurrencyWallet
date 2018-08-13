@@ -170,7 +170,7 @@ export default class BtcToEthToken extends Component {
                 )
               }
               {
-                flow.btcScriptValues && !flow.isFinished && (
+                flow.btcScriptValues && !flow.isFinished && !flow.isEthWithdrawn && (
                   <Fragment>
                     <br />
                     { !flow.refundTxHex && <Button brand onClick={this.getRefundTxHex}> Create refund hex</Button> }
@@ -254,7 +254,7 @@ export default class BtcToEthToken extends Component {
               {
                 flow.step >= 5 && !flow.isFinished && (
                   <div style={{ display: 'flex', alignItems: 'center' }}>
-                    { enabledButton &&  <Button brand onClick={this.tryRefund}>TRY REFUND</Button> }
+                    { enabledButton && !flow.isEthWithdrawn && <Button brand onClick={this.tryRefund}>TRY REFUND</Button> }
                     <Timer
                       lockTime={flow.btcScriptValues.lockTime * 1000}
                       enabledButton={() => this.setState({ enabledButton: true })}

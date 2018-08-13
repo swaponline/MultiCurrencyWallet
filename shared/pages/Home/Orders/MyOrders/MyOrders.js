@@ -8,16 +8,23 @@ import RowFeeds from './RowFeeds/RowFeeds'
 
 export default class MyOrders extends PureComponent {
 
+  componentWillReceiveProps() {
+    this.setState()
+  }
+
   removeOrder = (orderId) => {
     actions.core.removeOrder(orderId)
+    actions.core.updateCore()
   }
 
   acceptRequest = (orderId, peer) => {
     actions.core.acceptRequest(orderId, peer)
+    actions.core.updateCore()
   }
 
   declineRequest = (orderId, peer) => {
     actions.core.declineRequest(orderId, peer)
+    actions.core.updateCore()
   }
 
   render() {

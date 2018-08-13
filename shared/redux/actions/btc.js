@@ -1,23 +1,25 @@
 import BigInteger from 'bigi'
 
-import config from 'app-config'
+import { BigNumber } from 'bignumber.js'
 import bitcoin from 'bitcoinjs-lib'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
-import { btc, request, constants } from 'helpers'
+import { btc, request, constants, api } from 'helpers'
 
 
 const login = (privateKey) => {
+  let keyPair
 
   if (privateKey) {
     const hash  = bitcoin.crypto.sha256(privateKey)
     const d     = BigInteger.fromBuffer(hash)
 
-    privateKey      = new bitcoin.ECPair(d, null, { network: btc.network }).toWIF()
+    keyPair     = new bitcoin.ECPair(d, null, { network: btc.network })
   }
   else {
     console.info('Created account Bitcoin ...')
-    privateKey      = bitcoin.ECPair.makeRandom({ network: btc.network }).toWIF()
+    keyPair     = bitcoin.ECPair.makeRandom({ network: btc.network })
+    privateKey  = keyPair.toWIF()
   }
 
   localStorage.setItem(constants.privateKeyNames.btc, privateKey)
@@ -28,6 +30,7 @@ const login = (privateKey) => {
 
   const data = {
     account,
+    keyPair,
     address,
     privateKey,
     publicKey,
@@ -42,7 +45,7 @@ const login = (privateKey) => {
 const getBalance = () => {
   const { user: { btcData: { address } } } = getState()
 
-  return request.get(`${config.api.bitpay}/addr/${address}`)
+  return request.get(`${api.getApiServer('bitpay')}/addr/${address}`)
     .then(({ balance, unconfirmedBalance }) => {
       console.log('BTC Balance:', balance)
       console.log('BTC unconfirmedBalance Balance:', unconfirmedBalance)
@@ -52,19 +55,15 @@ const getBalance = () => {
 }
 
 const fetchBalance = (address) =>
-  request.get(`${config.api.bitpay}/addr/${address}`)
-    .then(({ balance, unconfirmedBalance }) => {
-      console.log('BALANCE', balance)
-      console.log('unconfirmedBalance', unconfirmedBalance)
-      return balance
-    })
+  request.get(`${api.getApiServer('bitpay')}/addr/${address}`)
+    .then(({ balance }) => balance)
 
 
 const getTransaction = () =>
   new Promise((resolve) => {
     const { user: { btcData: { address } } } = getState()
 
-    const url = `${config.api.bitpay}/txs/?address=${address}`
+    const url = `${api.getApiServer('bitpay')}/txs/?address=${address}`
 
     return request.get(url)
       .then((res) => {
@@ -85,12 +84,6 @@ const getTransaction = () =>
 
 const createScript = (data) => {
   const { secretHash, ownerPublicKey, recipientPublicKey, lockTime } = data
-
-  const network = (
-    process.env.MAINNET
-      ? bitcoin.networks.bitcoin
-      : bitcoin.networks.testnet
-  )
 
   const script = bitcoin.script.compile([
 
@@ -117,7 +110,7 @@ const createScript = (data) => {
   ])
 
   const scriptPubKey  = bitcoin.script.scriptHash.output.encode(bitcoin.crypto.hash160(script))
-  const scriptAddress = bitcoin.address.fromOutputScript(scriptPubKey, network)
+  const scriptAddress = bitcoin.address.fromOutputScript(scriptPubKey, { network: btc.network })
 
   return {
     scriptAddress,
@@ -125,52 +118,37 @@ const createScript = (data) => {
 }
 
 
-const send = (from, to, amount) =>
-  new Promise((resolve, reject) => {
-    const { user: { btcData: { privateKey } } } = getState()
+const send = async (from, to, amount) => {
+  const { user: { btcData: { privateKey } } } = getState()
+  const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
 
-    const newtx = {
-      inputs: [
-        {
-          addresses: [ from ],
-        },
-      ],
-      outputs: [
-        {
-          addresses: [ to ],
-          value: amount * 100000000,
-        },
-      ],
-    }
-    request.post('https://api.blockcypher.com/v1/btc/test3/txs/new', {
-      body: JSON.stringify(newtx),
-    })
-      .then((d) => {
-        const tmptx = {
-          ...d,
-          pubkeys: [],
-        }
+  const tx            = new bitcoin.TransactionBuilder(btc.network)
+  const unspents      = await fetchUnspents(from)
 
-        const keys = new bitcoin.ECPair.fromWIF(privateKey, btc.network) // eslint-disable-line
+  const fundValue     = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
+  const feeValue      = 15000
+  const totalUnspent  = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
+  const skipValue     = totalUnspent - feeValue - fundValue
 
-        tmptx.signatures = tmptx.tosign.map((toSign) => {
-          tmptx.pubkeys.push(keys.getPublicKeyBuffer().toString('hex'))
+  unspents.forEach(({ txid, vout }) => tx.addInput(txid, vout, 0xfffffffe))
+  tx.addOutput(to, fundValue)
+  tx.addOutput(from, skipValue)
 
-          return keys.sign(BigInteger.fromHex(toSign.toString('hex')).toBuffer()).toDER().toString('hex')
-        })
-
-        return request.post('https://api.blockcypher.com/v1/btc/test3/txs/send', {
-          body: JSON.stringify(tmptx),
-        })
-      })
-      .then((res) => resolve(res)).catch((e) => console.log(e))
+  tx.inputs.forEach((input, index) => {
+    tx.sign(index, keyPair)
   })
 
+  const txRaw = tx.buildIncomplete()
+
+  broadcastTx(txRaw.toHex())
+}
+
+
 const fetchUnspents = (address) =>
-  request.get(`${config.api.bitpay}/addr/${address}/utxo`)
+  request.get(`${api.getApiServer('bitpay')}/addr/${address}/utxo`)
 
 const broadcastTx = (txRaw) =>
-  request.post(`${config.api.bitpay}/tx/send`, {
+  request.post(`${api.getApiServer('bitpay')}/tx/send`, {
     body: {
       rawtx: txRaw,
     },
