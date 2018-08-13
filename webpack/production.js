@@ -1,5 +1,6 @@
 import webpack from 'webpack'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
+import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
 import config from 'app-config'
 
 
@@ -30,12 +31,8 @@ export default (webpackConfig) => {
   })
 
   webpackConfig.plugins.push(
-    // new UglifyJsPlugin({
-    //   uglifyOptions: {
-    //     ecma: 6,
-    //     warnings: true,
-    //   },
-    // }),
+    new UglifyJsPlugin({
+    }),
     new ExtractTextPlugin({
       filename: '[name].[hash:6].css',
       allChunks: true,
