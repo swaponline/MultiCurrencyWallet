@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
+import ClickOutside from 'react-click-outside'
 
 import cssModules from 'react-css-modules'
 import styles from './DropDown.scss'
@@ -104,29 +105,33 @@ export default class DropDown extends Component {
     })
 
     return (
-      <div styleName={dropDownStyleName} className={className}>
-        <div styleName="selectedItem" onClick={this.toggle}>
-          <div styleName="arrow" />
-          {this.renderSelectedItem()}
+      <ClickOutside onClickOutside={() => {
+        isToggleActive && this.toggle()
+      }}>
+        <div styleName={dropDownStyleName} className={className}>
+          <div styleName="selectedItem" onClick={this.toggle}>
+            <div styleName="arrow" />
+            {this.renderSelectedItem()}
+          </div>
+          {
+            isToggleActive && (
+              <div styleName="select">
+                {
+                  items.map((item) => (
+                    <div
+                      key={item.value}
+                      styleName="option"
+                      onClick={() => this.handleOptionClick(item)}
+                    >
+                      {this.renderItem(item)}
+                    </div>
+                  ))
+                }
+              </div>
+            )
+          }
         </div>
-        {
-          isToggleActive && (
-            <div styleName="select">
-              {
-                items.map((item) => (
-                  <div
-                    key={item.value}
-                    styleName="option"
-                    onClick={() => this.handleOptionClick(item)}
-                  >
-                    {this.renderItem(item)}
-                  </div>
-                ))
-              }
-            </div>
-          )
-        }
-      </div>
+      </ClickOutside>
     )
   }
 }

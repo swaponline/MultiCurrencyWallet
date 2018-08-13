@@ -101,6 +101,7 @@
     "node-gyp": "^3.7.0",
     "prop-types": "^15.6.1",
     "react": "^16.3.2",
+    "react-click-outside": "github:tj/react-click-outside",
     "react-cookie": "^2.2.0",
     "react-copy-to-clipboard": "^5.0.1",
     "react-css-modules": "^4.7.3",
