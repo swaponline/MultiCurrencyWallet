@@ -2,6 +2,8 @@
 import web3 from 'helpers/web3'
 import bitcoin from 'bitcoinjs-lib'
 
+import Channel        from 'ipfs-pubsub-room'
+
 import config from 'app-config'
 import { constants as privateKeys } from 'helpers'
 import actions from 'redux/actions'
@@ -22,7 +24,7 @@ const createSwapApp = () => {
       web3,
       bitcoin,
       Ipfs: window.Ipfs,
-      IpfsRoom: window.IpfsRoom,
+      IpfsRoom: Channel,
       storage: window.localStorage,
     },
 
@@ -39,9 +41,7 @@ const createSwapApp = () => {
         config: {
           Addresses: {
             Swarm: [
-              '/dns4/signal1.dao.casino/tcp/443/wss/p2p-websocket-star/',
-              '/dns4/signal2.dao.casino/tcp/443/wss/p2p-websocket-star/',
-              '/dns4/signal3.dao.casino/tcp/443/wss/p2p-websocket-star/',
+              config.ipfs.swarm,
             ],
           },
         },
