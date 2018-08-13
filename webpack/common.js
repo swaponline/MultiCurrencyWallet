@@ -75,7 +75,7 @@ const webpackConfig = {
       prefix: `${config.publicPath}assets/`,
     }),
     new HtmlWebpackPlugin({
-      title: 'Swap.Online',
+      title: 'Swap.Online - Cryptocurrency Wallet with Atomic Swap Exchange',
       template: config.paths.client('index.html'),
       hash: false,
       filename: 'index.html',
