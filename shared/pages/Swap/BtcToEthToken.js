@@ -85,6 +85,12 @@ export default class BtcToEthToken extends Component {
           )
         }
         {
+          flow.isSwapExists && (<div>Cannot sign: swap already exists! Please refund it.</div>)
+        }
+        <div>
+          {(flow.isSwapExists) && <Button brand onClick={this.tryRefund}>TRY REFUND</Button>}
+        </div>
+        {
           (flow.step === 1 || flow.isMeSigned) && (
             <Fragment>
               <h3>1. Waiting participant confirm this swap</h3>
