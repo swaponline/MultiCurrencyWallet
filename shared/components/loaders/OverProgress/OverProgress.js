@@ -7,17 +7,17 @@ import styles from './OverProgress.scss'
 const OverProgress = ({ overlayClassName, className, progress, text }) => (
   <div styleName="overlay" className={overlayClassName}>
       <span styleName="text">step {text}</span>
-      <div styleName="ko-progress-circle" data-progress={progress}>
+      <div styleName="circle" data-progress={progress}>
           <div>
-              <div styleName="full ko-progress-circle__slice">
-                  <div styleName="ko-progress-circle__fill"></div>
+              <div styleName="full slice">
+                  <div styleName="fill"></div>
               </div>
-              <div styleName="ko-progress-circle__slice">
-                  <div styleName="ko-progress-circle__fill"></div>
-                  <div styleName="ko-progress-circle__fill ko-progress-circle__bar"></div>
+              <div styleName="slice">
+                  <div styleName="fill"></div>
+                  <div styleName="fill bar"></div>
               </div>
           </div>
-          <div styleName="ko-progress-circle__overlay"></div>
+          <div styleName="overlay"></div>
       </div>
   </div>
 )

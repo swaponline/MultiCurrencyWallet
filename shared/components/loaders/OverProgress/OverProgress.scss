@@ -26,7 +26,7 @@ $inset-size: 105px;
 $inset-color: #fbfbfb;
 $transition-length: 1s;
 
-.ko-progress-circle {
+.circle {
   margin: 20px auto;
   width:  $circle-size;
   height: $circle-size;
@@ -35,7 +35,7 @@ $transition-length: 1s;
   position: absolute;
   background-color: $circle-background;
   border-radius: 50%;
-    .ko-progress-circle__slice, .ko-progress-circle__fill {
+    .slice, .fill {
       width:    $circle-size;
       height:   $circle-size;
       position: absolute;
@@ -43,14 +43,14 @@ $transition-length: 1s;
       transition: transform $transition-length;
       border-radius: 50%;
     }
-    .ko-progress-circle__slice {
+    .slice {
       clip: rect(0px, $circle-size, $circle-size, $circle-size/2);
-      .ko-progress-circle__fill {
+      .fill {
         clip: rect(0px, $circle-size/2, $circle-size, 0px);
         background-color: $circle-color;
       }
   }
-  .ko-progress-circle__overlay {
+  .overlay {
     width:       $inset-size;
     height:      $inset-size;
     position:    absolute;
@@ -65,10 +65,10 @@ $transition-length: 1s;
   $increment: 180deg / 100;
   @while $i <= 100 {
     &[data-progress='#{$i}'] {
-        .ko-progress-circle__slice.full, .ko-progress-circle__fill {
+        .slice.full, .fill {
           transform: rotate($increment * $i);
         } 
-        .ko-progress-circle__fill.ko-progress-circle__bar {
+        .fill.bar {
           transform: rotate($increment * $i * 2);
         }
       $i: $i + 1;

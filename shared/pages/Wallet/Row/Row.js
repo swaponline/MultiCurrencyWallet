@@ -91,12 +91,6 @@ export default class Row extends Component {
     }, 800)
   }
 
-
-  balanceFloat = () => {
-    const { balance, currency } = this.props
-    return currency == "BTC" || currency == "ETH" ? balance.toFixed(8) : balance
-  }
-
   handleEosLogin = () => {
     actions.modals.open(constants.modals.Eos, {})
   }
@@ -138,7 +132,7 @@ export default class Row extends Component {
               <InlineLoader />
             ) : (
               <Fragment>
-                <span>{this.balanceFloat()}</span> <br />
+                <span>{balance.toFixed(8)}</span> <br />
                 { currency === 'BTC' && unconfirmedBalance !== 0 && <span style={{ fontSize: '12px', color: '#c9c9c9' }}>Unconfirmed {unconfirmedBalance}</span> }
               </Fragment>
             )
