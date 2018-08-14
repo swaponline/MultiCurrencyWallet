@@ -10,7 +10,6 @@ import SaveKeys from 'components/SaveKeys/SaveKeys'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import { WithdrawButton } from 'components/controls'
-import JsonLd from 'components/Seo/JsonLd'
 
 import Row from './Row/Row'
 
@@ -72,7 +71,6 @@ export default class Wallet extends Component {
 
     return (
       <section>
-        <JsonLd url="swap.online" title="Swap.Online - Cryptocurrency Wallet with Atomic Swap Exchange" description="Swap.Online - Cryptocurrency Wallet with Atomic Swap Exchange" />
         <PageHeadline>
           <SubTitle>
             Swap.Online - Cryptocurrency Wallet with Atomic Swap Exchange

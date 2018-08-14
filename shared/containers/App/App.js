@@ -21,6 +21,7 @@ import RequestLoader from 'components/loaders/RequestLoader/RequestLoader'
 import ModalConductor from 'components/modal/ModalConductor/ModalConductor'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import NotificationConductor from 'components/notification/NotificationConductor/NotificationConductor'
+import Seo from 'components/Seo/Seo'
 
 
 const userLanguage = (navigator.userLanguage || navigator.language || 'en-gb').split('-')[0]
@@ -96,6 +97,7 @@ export default class App extends React.Component {
 
     return (
       <Fragment>
+        <Seo location={history.location} />
         <Header history={history} />
         <WidthContainer styleName="main">
           {children}
