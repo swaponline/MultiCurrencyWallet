@@ -101,16 +101,11 @@ export default class EthToBtc extends Component {
           flow.step === 1 && (
             <Fragment>
               <div>Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation.</div>
-<<<<<<< Updated upstream
-              <div>{flow.isSwapExists && 'Cannot sign: swap already exists! Please refund it.'}</div>
-              <TimerButton brand onClick={this.signSwap}>Sign</TimerButton>
-=======
               {flow.isSwapExists && (<div>Cannot sign: swap already exists! Please refund it.</div>)}
               {flow.isSwapExists ?
                 (<div><Button brand onClick={this.tryRefund}>TRY REFUND</Button></div>) :
                 (<div><TimerButton brand onClick={this.signSwap}>Sign</TimerButton></div>)
               }
->>>>>>> Stashed changes
               {
                 (flow.isSignFetching || flow.signTransactionHash) && (
                   <Fragment>
