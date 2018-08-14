@@ -102,11 +102,23 @@ export default class EthTokenToBtc extends Component {
                 (<div><TimerButton brand onClick={this.signSwap}>Sign</TimerButton></div>)
               }
               {
-                !flow.isSignFetching && !flow.isMeSigned && (
+                !flow.isSignFetching && !flow.isSwapExists && !flow.isMeSigned && (
                   <Fragment>
                     <br />
                     <TimerButton brand onClick={this.signSwap}>Confirm</TimerButton>
                   </Fragment>
+                )
+              }
+              {flow.isSwapExists && (<div>Cannot sign: swap already exists! Please refund it.</div>)}
+              {
+                flow.isSwapExists && !flow.isFinished && (
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    { enabledButton && <Button brand onClick={this.tryRefund}>TRY REFUND</Button> }
+                    <Timer
+                      lockTime={(flow.lastSwapTime - 5400) * 1000}
+                      enabledButton={() => this.setState({ enabledButton: true })}
+                    />
+                  </div>
                 )
               }
               {

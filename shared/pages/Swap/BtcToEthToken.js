@@ -84,6 +84,18 @@ export default class BtcToEthToken extends Component {
             </Fragment>
           )
         }
+        {flow.isSwapExists && (<div>Cannot sign: swap already exists! Please refund it.</div>)}
+        {
+          flow.isSwapExists && !flow.isFinished && (
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              { enabledButton && <Button brand onClick={this.tryRefund}>TRY REFUND</Button> }
+              <Timer
+                lockTime={(flow.lastSwapTime - 5400) * 1000}
+                enabledButton={() => this.setState({ enabledButton: true })}
+              />
+            </div>
+          )
+        }
         {
           flow.isSwapExists && (<div>Cannot sign: swap already exists! Please refund it.</div>)
         }
