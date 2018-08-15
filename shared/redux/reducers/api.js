@@ -18,7 +18,7 @@ export const setErrors = (state, errors) => ({
   checked: true,
 })
 
-export const setApiServer = (state, {provider, server }) => ({
+export const setApiServer = (state, { provider, server }) => ({
   ...state,
   servers: {
     ...state.servers,
