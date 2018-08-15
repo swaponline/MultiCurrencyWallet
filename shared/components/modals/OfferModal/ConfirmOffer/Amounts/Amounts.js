@@ -9,9 +9,9 @@ import Value from '../Value/Value'
 
 const Amounts = ({ buyAmount, sellAmount, buyCurrency, sellCurrency }) => (
   <Row title="Exchange">
-    <Value value={sellAmount} currency={sellCurrency} />
+    <Value value={Number(sellAmount)} currency={sellCurrency} />
     <div styleName="arrow" />
-    <Value value={buyAmount} currency={buyCurrency} />
+    <Value value={Number(buyAmount)} currency={buyCurrency} />
   </Row>
 )
 

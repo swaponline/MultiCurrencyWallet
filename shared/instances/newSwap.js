@@ -24,7 +24,7 @@ const createSwapApp = () => {
       web3,
       bitcoin,
       Ipfs: window.Ipfs,
-      IpfsRoom: Channel,
+      IpfsRoom: window.IpfsRoom,
       storage: window.localStorage,
     },
 

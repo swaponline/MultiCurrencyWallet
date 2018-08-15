@@ -79,7 +79,7 @@ export default class Row extends Component {
           }
         </td>
         <td>
-          { exchangeRate.toFixed(5) || (buyAmount.dividedBy(sellAmount)).toFixed(5)}
+          { Number(exchangeRate).toFixed(5) || (buyAmount.dividedBy(sellAmount)).toFixed(5)}
           {
             isMy ? (
               `${sellCurrency}/${buyCurrency}`

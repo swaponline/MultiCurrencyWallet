@@ -43,7 +43,7 @@ export default {
 
   apiAlternatives: {
     bitpay: [
-      'https://test-insight.bitpay.com/api',
+      'https://test-insight.swap.online/insight',
     ],
   },
 

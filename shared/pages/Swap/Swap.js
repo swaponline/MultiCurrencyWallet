@@ -1,19 +1,17 @@
 import React, { PureComponent } from 'react'
 import Swap from 'swap.swap'
-import config from 'app-config'
 
+import { connect } from 'redaction'
 import actions from 'redux/actions'
 
 import EmergencySave from './EmergencySave/EmergencySave'
+import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 
 import BtcToEth from './BtcToEth'
 import EthToBtc from './EthToBtc'
 import EthTokenToBtc from './EthTokenToBtc'
 import BtcToEthToken from './BtcToEthToken'
 
-import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
-
-import { connect } from 'redaction'
 
 const swapComponents = {
   'BTC2ETH': BtcToEth,
@@ -23,18 +21,20 @@ const swapComponents = {
   'SWAP2BTC': EthTokenToBtc,
   'BTC2SWAP': BtcToEthToken,
 }
+
+
 @connect({
   errors: 'api.errors',
-  checked: 'api.checked'
+  checked: 'api.checked',
 })
 export default class SwapComponent extends PureComponent {
 
   state = {
     swap: null,
-    SwapComponent: null
+    SwapComponent: null,
   }
 
-  createSwap() {
+  componentWillMount() {
     const { match : { params : { orderId } } } = this.props
 
     const swap = new Swap(orderId)
@@ -51,12 +51,12 @@ export default class SwapComponent extends PureComponent {
     window.swap = swap
   }
 
-  componentWillMount() {
-    actions.api.checkServers()
-      .then(() => {
-        this.createSwap()
-      })
-  }
+  // componentWillMount() {
+  //   actions.api.checkServers()
+  //     .then(() => {
+  //
+  //     })
+  // }
 
   setSaveSwapId = (orderId) => {
     let swapsId = JSON.parse(localStorage.getItem('swapId'))
@@ -76,16 +76,17 @@ export default class SwapComponent extends PureComponent {
   }
 
   render() {
-    const { swap, SwapComponent, checkingServers } = this.state
-    const { checked, errors } = this.props
+    const { swap, SwapComponent } = this.state
+
+    if (!swap || !SwapComponent) {
+      return null
+    }
 
     return (
       <div style={{ paddingLeft: '30px', paddingTop: '30px' }}>
-        {checked && !errors && swap && <SwapComponent swap={swap} >
+        <SwapComponent swap={swap} >
           <EmergencySave flow={swap.flow} />
-        </SwapComponent>}
-        { !checked && <div><InlineLoader />Checking available servers</div> }
-        { errors && <div><h2>Error!</h2>Can't reach payments provider server. Please, try again later</div> }
+        </SwapComponent>
       </div>
     )
   }
