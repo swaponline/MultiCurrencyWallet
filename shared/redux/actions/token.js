@@ -47,6 +47,11 @@ const setupContract = (ethAddress, contractAddress, nameContract, decimals) => {
 
 const getBalance = async (currency) => {
   const { user: { tokensData } } = getState()
+
+  if (currency === undefined) {
+    return
+  }
+
   const { address, contractAddress, decimals, name  } = tokensData[currency.toLowerCase()]
 
   const ERC20 = new web3.eth.Contract(abi, contractAddress)
@@ -61,7 +66,7 @@ const getBalance = async (currency) => {
 
 const fetchBalance = async (currency) => {
   const { user: { tokensData } } = getState()
-  const { address, contractAddress, decimals } = tokensData[currency]
+  const { address, contractAddress, decimals } = tokensData[currency.toLowerCase()]
 
   const ERC20 = new web3.eth.Contract(abi, contractAddress)
   const result = await ERC20.methods.balanceOf(address).call()

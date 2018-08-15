@@ -40,14 +40,7 @@ export default class Row extends Component {
       isBalanceFetching: true,
     })
 
-<<<<<<< HEAD
     let { currency } = this.props
-=======
-
-
-    let { currency, contractAddress, decimals } = this.props
-    let action
->>>>>>> 31bd7b68db245fd3f34097867ce6a2ab0b1f9b77
 
     currency = currency.toLowerCase()
 
@@ -106,7 +99,7 @@ export default class Row extends Component {
   render() {
     const { isBalanceFetching, viewText } = this.state
     const { currency, name, balance, isBalanceFetched, address, contractAddress, decimals, approve, unconfirmedBalance } = this.props
-  
+
     return (
       <tr>
         <td>
