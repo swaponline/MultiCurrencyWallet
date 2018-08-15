@@ -36,7 +36,7 @@ export default class AddOffer extends Component {
       sellAmount: sellAmount || '',
       buyCurrency: buyCurrency || 'btc',
       sellCurrency: sellCurrency || 'eth',
-      EventWasSend: false,
+      isSending: false,
       min: 0.05,
     }
   }
@@ -136,9 +136,9 @@ export default class AddOffer extends Component {
   handleBuyAmountChange = (value) => {
     const { exchangeRate } = this.state
 
-    if (!this.EventWasSend) {
+    if (!this.isSending) {
       actions.analytics.dataEvent('orderbook-addoffer-enter-ordervalue')
-      this.EventWasSend = true
+      this.setState({ isSending: true })
     }
 
     this.setState({
@@ -150,9 +150,9 @@ export default class AddOffer extends Component {
   handleSellAmountChange = (value) => {
     const { exchangeRate } = this.state
 
-    if (!this.EventWasSend) {
+    if (!this.isSending) {
       actions.analytics.dataEvent('orderbook-addoffer-enter-ordervalue')
-      this.EventWasSend = true
+      this.setState({ isSending: true })
     }
 
     this.setState({
