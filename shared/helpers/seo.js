@@ -44,7 +44,7 @@ const seo = {
       title: 'Feed',
       description: 'Feed',
     },
-  ]
+  ],
 }
 
 export const getSeoPage = uri => seo.pages.find(p => p.uri === uri)

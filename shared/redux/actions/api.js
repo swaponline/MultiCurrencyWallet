@@ -3,7 +3,7 @@ import config from 'app-config'
 
 
 const checkServers = () => {
-  reducers.api.setChecked(false);
+  reducers.api.setChecked(false)
   return Promise.all(
     Object.keys(config.apiAlternatives).map(provider => Promise.race(
       config.apiAlternatives[provider].map(
@@ -17,9 +17,9 @@ const checkServers = () => {
     })
     )
   ).then(() => {
-    reducers.api.setChecked(true);
+    reducers.api.setChecked(true)
     console.log('All servers is OK.')
-  }).catch(e=>reducers.api.setErrors(true));
+  }).catch(e => reducers.api.setErrors(true))
 }
 
 export default {

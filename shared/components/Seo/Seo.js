@@ -5,9 +5,10 @@ import DocumentMeta from 'react-document-meta'
 import JsonLd from './JsonLd'
 import seo, { getSeoPage, getUrl } from 'helpers/seo'
 
+
 export default class Seo extends Component {
   static propTypes = {
-    location: PropTypes.object.isRequired
+    location: PropTypes.object.isRequired,
   }
 
   constructor(props) {
@@ -37,8 +38,8 @@ export default class Seo extends Component {
             'og:title': title,
             'og:description': description,
             'og:url': url,
-            'og:image': seo.config.logo
-          }
+            'og:image': seo.config.logo,
+          },
         }}
       >
         <JsonLd uri={uri} title={title} description={description} />
