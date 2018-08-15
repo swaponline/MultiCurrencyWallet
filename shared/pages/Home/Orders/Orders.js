@@ -11,13 +11,12 @@ import SearchSwap from 'components/SearchSwap/SearchSwap'
 const filterMyOrders = (orders, peer) => orders.filter(order => order.owner.peer === peer)
 
 const filterOrders = (orders, filter) => orders
-  .filter(order => order.isProcessing === false)
   .filter(order => order.isMy ? (
     `${order.buyCurrency.toLowerCase()}${order.sellCurrency.toLowerCase()}` === filter
   ) : (
     `${order.sellCurrency.toLowerCase()}${order.buyCurrency.toLowerCase()}` === filter
   ))
-  .sort((a, b) => b.exchangeRate - a.exchangeRate)
+  .sort((a, b) => Number(b.exchangeRate) - Number(a.exchangeRate))
 
 @connect(({  core: { orders, filter }, ipfs: { isOnline, peer } }) => ({
   orders: filterOrders(orders, filter),
