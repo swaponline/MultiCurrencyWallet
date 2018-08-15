@@ -42,7 +42,6 @@ export default class ConfirmOffer extends Component {
   render() {
     const { offer: { buyAmount, sellAmount, buyCurrency, sellCurrency, exchangeRate }, onBack } = this.props
 
-
     return (
       <Fragment>
         <Coins styleName="coins" names={[ buyCurrency, sellCurrency ]} size={100} />

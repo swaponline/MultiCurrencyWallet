@@ -45,9 +45,11 @@ const setupContract = (ethAddress, contractAddress, nameContract, decimals) => {
 }
 
 
-const getBalance = async (tokenAddress, name, decimals) => {
-  const { user: { ethData: { address } } } = getState()
-  const ERC20 = new web3.eth.Contract(abi, tokenAddress)
+const getBalance = async (currency) => {
+  const { user: { tokensData } } = getState()
+  const { address, contractAddress, decimals, name  } = tokensData[currency.toLowerCase()]
+
+  const ERC20 = new web3.eth.Contract(abi, contractAddress)
 
   const result = await ERC20.methods.balanceOf(address).call()
   let amount = new BigNumber(String(result)).dividedBy(new BigNumber(String(10)).pow(decimals)).toNumber()
@@ -57,8 +59,11 @@ const getBalance = async (tokenAddress, name, decimals) => {
 }
 
 
-const fetchBalance = async (address, tokenAddress, decimals) => {
-  const ERC20 = new web3.eth.Contract(abi, tokenAddress)
+const fetchBalance = async (currency) => {
+  const { user: { tokensData } } = getState()
+  const { address, contractAddress, decimals } = tokensData[currency]
+
+  const ERC20 = new web3.eth.Contract(abi, contractAddress)
   const result = await ERC20.methods.balanceOf(address).call()
 
   const amount = new BigNumber(String(result)).dividedBy(new BigNumber(String(10)).pow(decimals)).toNumber()
@@ -125,8 +130,9 @@ const send = (contractAddress, to, amount, decimals) => {
   })
 }
 
-const approve = (contractAddress, amount, decimals, name) => {
-  const { user: { ethData: { address } } } = getState()
+const approve = (name, amount) => {
+  const { user: { tokensData } } = getState()
+  const { address, contractAddress, decimals } = tokensData[name.toLowerCase()]
 
 
   const newAmount = new BigNumber(String(amount)).times(new BigNumber(10).pow(decimals)).integerValue()
@@ -150,7 +156,7 @@ const approve = (contractAddress, amount, decimals, name) => {
     }
   })
     .then(() => {
-      reducers.user.setTokenApprove({ name, approve: true  })
+      reducers.user.setTokenApprove({ name: name.toLowerCase(), approve: true  })
     })
 }
 

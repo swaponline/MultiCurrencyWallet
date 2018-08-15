@@ -37,7 +37,7 @@ const getBalances = () => {
 
   Object.keys(config.tokens)
     .forEach(name => {
-      actions.token.getBalance(config.tokens[name].address, name, config.tokens[name].decimals)
+      actions.token.getBalance(name)
     })
   // actions.nimiq.getBalance()
 }

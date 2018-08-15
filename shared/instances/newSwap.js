@@ -2,8 +2,6 @@
 import web3 from 'helpers/web3'
 import bitcoin from 'bitcoinjs-lib'
 
-import Channel        from 'ipfs-pubsub-room'
-
 import config from 'app-config'
 import { constants as privateKeys } from 'helpers'
 import actions from 'redux/actions'

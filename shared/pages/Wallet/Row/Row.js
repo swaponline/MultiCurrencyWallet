@@ -40,29 +40,11 @@ export default class Row extends Component {
       isBalanceFetching: true,
     })
 
-    let { currency, contractAddress, decimals } = this.props
-    let action
+    let { currency } = this.props
 
     currency = currency.toLowerCase()
 
-    if (currency === 'eth') {
-      action = actions.eth.getBalance
-      actions.analytics.dataEvent('balances-update-eth')
-    }
-    else if (currency === 'btc') {
-      action = actions.btc.getBalance
-      actions.analytics.dataEvent('balances-update-btc')
-    }
-    else if (currency === 'eos') {
-      action = actions.eos.getBalance
-      actions.analytics.dataEvent('balances-update-eos')
-    }
-    else if (currency !== undefined) {
-      action = actions.token.getBalance
-      actions.analytics.dataEvent('balances-update-token')
-    }
-
-    action(contractAddress, currency, decimals)
+    actions[currency].getBalance(currency)
       .then(() => {
         this.setState({
           isBalanceFetching: false,

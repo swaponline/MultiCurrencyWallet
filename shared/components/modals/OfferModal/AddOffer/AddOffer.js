@@ -58,7 +58,7 @@ export default class AddOffer extends Component {
   }
 
   checkBalance = async (sellCurrency) => {
-    const balance = await actions[sellCurrency].getBalance()
+    const balance = await actions[sellCurrency].getBalance(sellCurrency)
 
     this.setState({
       balance,
