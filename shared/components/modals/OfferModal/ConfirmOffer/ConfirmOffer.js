@@ -3,7 +3,6 @@ import React, { Component, Fragment } from 'react'
 import actions from 'redux/actions'
 
 import { links } from 'helpers'
-import { BigNumber } from 'bignumber.js'
 import { Link } from 'react-router-dom'
 
 import cssModules from 'react-css-modules'
@@ -21,48 +20,13 @@ import Fee from './Fee/Fee'
 @cssModules(styles)
 export default class ConfirmOffer extends Component {
 
-  state = {
-    buyAmount: null,
-    sellAmount: null,
-    sellCurrency: null,
-    buyCurrency: null,
-    exchangeRate: null,
-  }
-
-  componentWillMount() {
-    let { offer: { sellAmount, buyAmount, sellCurrency, buyCurrency, exchangeRate } } = this.props
-    sellAmount = new BigNumber(String(sellAmount))
-    buyAmount = new BigNumber(String(buyAmount))
-    this.setState({
-      sellAmount,
-      buyAmount,
-      buyCurrency,
-      sellCurrency,
-      exchangeRate,
-    })
-
-    if (process.env.MAINNET) {
-      if (sellCurrency === 'eth' && sellAmount > 0.1) {
-        this.setState({
-          sellAmount: 0.1,
-          buyAmount: 0.007,
-        })
-      } else if (sellCurrency === 'btc' && sellAmount > 0.007) {
-        this.setState({
-          sellAmount: 0.007,
-          buyAmount: 0.1,
-        })
-      }
-    }
-  }
-
   handleConfirm = () => {
     this.createOrder()
     actions.modals.close('OfferModal')
   }
 
   createOrder = () => {
-    const {  buyAmount, sellAmount, buyCurrency, sellCurrency, exchangeRate } = this.state
+    const { offer: { buyAmount, sellAmount, buyCurrency, sellCurrency, exchangeRate } } = this.props
 
     const data = {
       buyCurrency: `${buyCurrency}`,
@@ -76,10 +40,8 @@ export default class ConfirmOffer extends Component {
   }
 
   render() {
-    const { onBack } = this.props
-    let {  buyAmount, sellAmount, buyCurrency, sellCurrency, exchangeRate } = this.state
-    buyAmount   = buyAmount.toNumber().toFixed(5)
-    sellAmount  = sellAmount.toNumber().toFixed(5)
+    const { offer: { buyAmount, sellAmount, buyCurrency, sellCurrency, exchangeRate }, onBack } = this.props
+
 
     return (
       <Fragment>
