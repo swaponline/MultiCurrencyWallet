@@ -9,6 +9,8 @@ import styles from './RowFeeds.scss'
 
 import Coins from 'components/Coins/Coins'
 
+import ShareImg from './images/share-alt-solid.svg'
+
 
 @CSSModules(styles, { allowMultiple: true })
 export default class RowFeeds extends Component {
@@ -37,6 +39,7 @@ export default class RowFeeds extends Component {
           <a href={`${links.swap}/${sellCurrency}-${buyCurrency}/${id}`} >Link on swap</a>
         </td>
         <td>{`${(exchangeRate || (buyAmount/sellAmount)).toFixed(5)} ${buyCurrency}/${sellCurrency}`}</td>
+        <td><a href="#" styleName="share"><img src={ShareImg} styleName="img" alt="share" /><span>Share</span></a></td>
         <td>
           {
             Boolean(requests && requests.length) ? (

@@ -22,7 +22,7 @@ export default class Row extends Component {
   }
 
   componentDidMount() {
-    const { contractAddress, name } = this.props
+    const { contractAddress, name, balance } = this.props
 
     if (name !== undefined) {
       actions.token.allowance(contractAddress, name)
@@ -40,7 +40,14 @@ export default class Row extends Component {
       isBalanceFetching: true,
     })
 
+<<<<<<< HEAD
     let { currency } = this.props
+=======
+
+
+    let { currency, contractAddress, decimals } = this.props
+    let action
+>>>>>>> 31bd7b68db245fd3f34097867ce6a2ab0b1f9b77
 
     currency = currency.toLowerCase()
 
@@ -99,7 +106,7 @@ export default class Row extends Component {
   render() {
     const { isBalanceFetching, viewText } = this.state
     const { currency, name, balance, isBalanceFetched, address, contractAddress, decimals, approve, unconfirmedBalance } = this.props
-
+  
     return (
       <tr>
         <td>
@@ -112,7 +119,7 @@ export default class Row extends Component {
               <InlineLoader />
             ) : (
               <Fragment>
-                <span>{balance}</span> <br />
+                <span>{balance.toFixed(8)}</span> <br />
                 { currency === 'BTC' && unconfirmedBalance !== 0 && <span style={{ fontSize: '12px', color: '#c9c9c9' }}>Unconfirmed {unconfirmedBalance}</span> }
               </Fragment>
             )
