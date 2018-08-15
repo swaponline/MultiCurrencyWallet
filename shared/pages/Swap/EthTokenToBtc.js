@@ -351,7 +351,7 @@ export default class EthTokenToBtc extends Component {
           )
         }
         <br />
-        { !flow.isFinished && <Button white onClick={this.addGasPrice}>Add gas price</Button> }
+        {/*{ !flow.isFinished && <Button white onClick={this.addGasPrice}>Add gas price</Button> }*/}
         { children }
       </div>
     )
