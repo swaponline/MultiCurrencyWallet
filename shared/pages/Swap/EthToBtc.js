@@ -71,7 +71,6 @@ export default class EthToBtc extends Component {
 
     return (
       <div>
-
         {
           this.swap.id && (
             <strong>{this.swap.sellAmount.toNumber()} {this.swap.sellCurrency} &#10230; {this.swap.buyAmount.toNumber()} {this.swap.buyCurrency}</strong>
@@ -102,7 +101,19 @@ export default class EthToBtc extends Component {
           flow.step === 1 && (
             <Fragment>
               <div>Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation.</div>
-              <TimerButton brand onClick={this.signSwap}>Sign</TimerButton>
+              {flow.isSwapExists && (<div>Cannot sign: swap already exists! Please refund it.</div>)}
+              {!flow.isSwapExists && (<div><TimerButton brand onClick={this.signSwap}>Sign</TimerButton></div>)}
+              {
+                flow.isSwapExists && !flow.isFinished && (
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    { enabledButton && <Button brand onClick={this.tryRefund}>TRY REFUND</Button> }
+                    <Timer
+                      lockTime={(+flow.lastSwapTime + 5400) * 1000}
+                      enabledButton={() => this.setState({ enabledButton: true })}
+                    />
+                  </div>
+                )
+              }
               {
                 (flow.isSignFetching || flow.signTransactionHash) && (
                   <Fragment>

@@ -96,12 +96,29 @@ export default class EthTokenToBtc extends Component {
                 Confirmation of the transaction is necessary for crediting the reputation.
                 If a user does not bring the deal to the end he gets a negative reputation.
               </div>
+              {flow.isSwapExists && (<div>Cannot sign: swap already exists! Please refund it.</div>)}
+              {flow.isSwapExists ?
+                (<div><Button brand onClick={this.tryRefund}>TRY REFUND</Button></div>) :
+                (<div><TimerButton brand onClick={this.signSwap}>Sign</TimerButton></div>)
+              }
               {
-                !flow.isSignFetching && !flow.isMeSigned && (
+                !flow.isSignFetching && !flow.isSwapExists && !flow.isMeSigned && (
                   <Fragment>
                     <br />
                     <TimerButton brand onClick={this.signSwap}>Confirm</TimerButton>
                   </Fragment>
+                )
+              }
+              {flow.isSwapExists && (<div>Cannot sign: swap already exists! Please refund it.</div>)}
+              {
+                flow.isSwapExists && !flow.isFinished && (
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    { enabledButton && <Button brand onClick={this.tryRefund}>TRY REFUND</Button> }
+                    <Timer
+                      lockTime={(+flow.lastSwapTime + 5400) * 1000}
+                      enabledButton={() => this.setState({ enabledButton: true })}
+                    />
+                  </div>
                 )
               }
               {
