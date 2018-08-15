@@ -19,7 +19,7 @@ export default class SwapsHistory extends PureComponent {
         <h3>Swaps history</h3>
         <Table
           titles={titles}
-          rows={Object.values(orders).map(item => item)}
+          rows={Object.values(orders).filter(item => item.step >= 4)}
           rowRender={(row, index) => (
             <RowHistory
               key={index}
