@@ -44,7 +44,6 @@ export default {
   apiAlternatives: {
     bitpay: [
       'https://test-insight.swap.online/insight',
-      'https://test-insight.bitpay.com/api',
     ],
   },
 
