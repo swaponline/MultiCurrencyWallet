@@ -27,10 +27,11 @@ export default class ConfirmOffer extends Component {
     sellCurrency: null,
     buyCurrency: null,
     exchangeRate: null,
+    createdAt: null
   }
 
   componentWillMount() {
-    let { offer: { sellAmount, buyAmount, sellCurrency, buyCurrency, exchangeRate } } = this.props
+    let { offer: { sellAmount, buyAmount, sellCurrency, buyCurrency, exchangeRate, createdAt } } = this.props
     sellAmount = new BigNumber(String(sellAmount))
     buyAmount = new BigNumber(String(buyAmount))
     this.setState({
@@ -39,6 +40,7 @@ export default class ConfirmOffer extends Component {
       buyCurrency,
       sellCurrency,
       exchangeRate,
+      createdAt
     })
 
     if (process.env.MAINNET) {
@@ -62,7 +64,7 @@ export default class ConfirmOffer extends Component {
   }
 
   createOrder = () => {
-    const {  buyAmount, sellAmount, buyCurrency, sellCurrency, exchangeRate } = this.state
+    const {  buyAmount, sellAmount, buyCurrency, sellCurrency, exchangeRate, createdAt } = this.state
 
     const data = {
       buyCurrency: `${buyCurrency}`,
@@ -70,6 +72,7 @@ export default class ConfirmOffer extends Component {
       buyAmount: Number(buyAmount),
       sellAmount: Number(sellAmount),
       exchangeRate: Number(exchangeRate),
+      createdAt
     }
     actions.analytics.dataEvent('orderbook-addoffer-click-confirm-button')
     actions.core.createOrder(data)

@@ -32,6 +32,7 @@ export default class AddOffer extends Component {
 
     this.state = {
       exchangeRate: exchangeRate || config.exchangeRates.ethbtc,
+      createdAt: Date.now(),
       buyAmount: buyAmount || '',
       sellAmount: sellAmount || '',
       buyCurrency: buyCurrency || 'btc',

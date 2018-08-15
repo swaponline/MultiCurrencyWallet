@@ -8,7 +8,8 @@ import CSSModules from 'react-css-modules'
 import styles from './RowFeeds.scss'
 
 import Coins from 'components/Coins/Coins'
-
+import Identicon from 'components/Identicon/Identicon'
+import Moment from 'react-moment';
 
 @CSSModules(styles, { allowMultiple: true })
 export default class RowFeeds extends Component {
@@ -24,18 +25,20 @@ export default class RowFeeds extends Component {
   }
 
   render() {
-    const { row: { requests, buyAmount, buyCurrency, sellAmount, sellCurrency, exchangeRate, id }, declineRequest, acceptRequest, removeOrder } = this.props
+    const { row: { requests, buyAmount, buyCurrency, sellAmount, sellCurrency, exchangeRate, id, createdAt }, declineRequest, acceptRequest, removeOrder } = this.props
 
     return (
       <tr>
+        <td>
+        <a href={`${links.swap}/${sellCurrency}-${buyCurrency}/${id}`} >
+          <Identicon hash={id} />
+        </a>
+        </td>
         <td>
           <Coins names={[buyCurrency, sellCurrency]}  />
         </td>
         <td>{`${buyAmount.toFixed(5)} ${buyCurrency}`}</td>
         <td>{`${sellAmount.toFixed(5)} ${sellCurrency}`}</td>
-        <td>
-          <a href={`${links.swap}/${sellCurrency}-${buyCurrency}/${id}`} >Link on swap</a>
-        </td>
         <td>{`${(exchangeRate || (buyAmount/sellAmount)).toFixed(5)} ${buyCurrency}/${sellCurrency}`}</td>
         <td>
           {
@@ -50,6 +53,10 @@ export default class RowFeeds extends Component {
               <div styleName="delete" onClick={() => removeOrder(id)} > Delete order</div>
             )
           }
+        </td>
+        <td>
+           { createdAt && <Moment fromNow ago>{createdAt}</Moment> }
+           { !createdAt && 'A long time'} ago
         </td>
       </tr>
     )

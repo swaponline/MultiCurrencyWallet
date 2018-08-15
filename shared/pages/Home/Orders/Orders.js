@@ -28,9 +28,8 @@ export default class Orders extends Component {
 
   render() {
     const { sellCurrency, buyCurrency, handleSellCurrencySelect, handleBuyCurrencySelect, flipCurrency } = this.props
-    const titles = [ 'EXCHANGE', 'YOU BUY', 'YOU SELL', 'EXCHANGE RATE', 'ACTIONS', 'Link' ]
+    const titles = [ 'LINK', 'EXCHANGE', 'YOU BUY', 'YOU SELL', 'EXCHANGE RATE', 'ACTIONS', 'CREATED AT' ]
     const { isOnline, orders, myOrders, orderId } = this.props
-
     return (
       <Fragment>
         <MyOrders myOrders={myOrders} />
