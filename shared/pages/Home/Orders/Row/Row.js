@@ -11,6 +11,10 @@ import Coins from 'components/Coins/Coins'
 import RequestButton from '../RequestButton/RequestButton'
 import RemoveButton from 'components/controls/RemoveButton/RemoveButton'
 
+import Identicon from 'components/Identicon/Identicon'
+
+import Moment from 'react-moment';
+
 
 @connect({
   peer: 'ipfs.peer',
@@ -50,13 +54,18 @@ export default class Row extends Component {
 
   render() {
     const { balance } = this.state
-    const { orderId, row: { id, buyCurrency, sellCurrency, isMy, buyAmount,
+    const { orderId, row: { id, createdAt, buyCurrency, sellCurrency, isMy, buyAmount,
       sellAmount, isRequested, exchangeRate,
       owner :{  peer: ownerPeer } }, peer } = this.props
     const amount = isMy ? sellAmount : buyAmount
 
     return (
       <tr style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}>
+        <td>
+          <a href={`${links.exchange}/${sellCurrency.toLowerCase()+'-'+buyCurrency.toLowerCase()} /-${buyCurrency.toLowerCase()}/${id}`}>
+            <Identicon hash={id} />
+          </a>
+        </td>
         <td>
           <Coins names={[buyCurrency, sellCurrency]}  />
         </td>
@@ -115,7 +124,8 @@ export default class Row extends Component {
           }
         </td>
         <td>
-          <a href={`${links.exchange}/${sellCurrency.toLowerCase()}-${buyCurrency.toLowerCase()}/${id}`}> link</a>
+           { createdAt && <Moment fromNow ago>{createdAt}</Moment> }
+           { !createdAt && 'A long time'} ago
         </td>
       </tr>
     )
