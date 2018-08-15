@@ -263,8 +263,19 @@ export default class BtcToEthToken extends Component {
                 )
               }
               {
-                flow.finishSwap && (
-                  this.removeOrder(this.swap.id)
+                flow.refundTransactionHash && (
+                  <div>
+                    Transaction:
+                    <strong>
+                      <a
+                        href={`${config.link.bitpay}/tx/${flow.refundTransactionHash}`}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                      >
+                        {flow.refundTransactionHash}
+                      </a>
+                    </strong>
+                  </div>
                 )
               }
             </Fragment>
