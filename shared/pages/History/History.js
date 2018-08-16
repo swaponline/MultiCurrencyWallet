@@ -6,7 +6,7 @@ import actions from 'redux/actions'
 import Row from './Row/Row'
 import SwapsHistory from './SwapsHistory/SwapsHistory'
 
-import Table from 'components/Table/Table'
+import InfiniteScrollTable from 'components/tables/InfiniteScrollTable/InfiniteScrollTable'
 import Filter from 'components/Filter/Filter'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 
@@ -28,10 +28,24 @@ const filterHistory = (items, filter) => {
   swapHistory,
 }))
 export default class History extends Component {
+  state = {
+    renderedItems: 10
+  }
 
   componentDidMount() {
     actions.analytics.dataEvent('open-page-history')
     actions.user.setTransactions()
+  }
+
+  loadMore = () => {
+    const { items } = this.props
+    const { renderedItems } = this.state
+
+    if (renderedItems < items.length) {
+      this.setState(state => ({
+        renderedItems: state.renderedItems + Math.min(10, items.length - state.renderedItems)
+      }))
+    }
   }
 
   rowRender = (row) => (
@@ -46,11 +60,14 @@ export default class History extends Component {
       <section>
         <PageHeadline subTitle="History" />
         <SwapsHistory orders={Object.values(swapHistory).filter(item => item.step >= 4)} />
-        <h3 >All transactions</h3>
+        <h3>All transactions</h3>
         <Filter />
-        <Table
+        <InfiniteScrollTable
           titles={titles}
-          rows={items}
+          bottomOffset={400}
+          getMore={this.loadMore}
+          itemsCount={items.length}
+          items={items.slice(0, this.state.renderedItems)}
           rowRender={this.rowRender}
         />
       </section>
