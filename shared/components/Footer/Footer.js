@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import _ from 'lodash'
 import cx from 'classnames'
 import { connect } from 'redaction'
 import { withRouter } from 'react-router-dom'
