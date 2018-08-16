@@ -98,7 +98,7 @@ export default class App extends React.Component {
     return (
       <Fragment>
         <Seo location={history.location} />
-        <Header history={history} />
+        <Header />
         <WidthContainer styleName="main">
           {children}
         </WidthContainer>

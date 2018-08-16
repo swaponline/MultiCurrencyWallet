@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { withRouter } from 'react-router'
 import actions from 'redux/actions'
 import { connect } from 'redaction'
 import { constants } from 'helpers'
@@ -13,6 +14,7 @@ import UserTooltip from './UserTooltip/UserTooltip'
 import AddOfferButton from './AddOfferButton/AddOfferButton'
 
 
+@withRouter
 @connect({
   feeds: 'feeds.items',
   peer: 'ipfs.peer',
