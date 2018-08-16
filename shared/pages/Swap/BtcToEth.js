@@ -183,6 +183,13 @@ export default class BtcToEth extends Component {
                     {
                       flow.refundTxHex && (
                         <div>
+                          <a
+                            href="https://wiki.swap.online/faq/my-swap-got-stuck-and-my-bitcoin-has-been-withdrawn-what-to-do/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            How refund your money ?
+                          </a>
                           Refund hex transaction:
                           <code>
                             {flow.refundTxHex}
