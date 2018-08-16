@@ -3,3 +3,9 @@
   @include ff-bold;
   font-size: 30px;
 }
+
+@include media-mobile {
+  .subTitle {
+    font-size: 24px;
+  }
+}

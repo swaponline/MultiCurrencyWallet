@@ -20,3 +20,9 @@
   display: flex;
   align-items: center;
 }
+
+@include media-mobile {
+	.header {
+		display: flex;
+	}
+}
