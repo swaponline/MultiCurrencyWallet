@@ -51,7 +51,7 @@ export default class Row extends Component {
   render() {
     const { balance } = this.state
     const { orderId, row: { id, buyCurrency, sellCurrency, isMy, buyAmount,
-      sellAmount, isRequested, exchangeRate,
+      sellAmount, isRequested,
       owner :{  peer: ownerPeer } }, peer } = this.props
     const amount = isMy ? sellAmount : buyAmount
 
@@ -79,7 +79,7 @@ export default class Row extends Component {
           }
         </td>
         <td>
-          { exchangeRate || buyAmount.dividedBy(sellAmount).toFixed(5) }
+          { buyAmount.dividedBy(sellAmount).toFixed(5) }
           {
             isMy ? (
               `${sellCurrency}/${buyCurrency}`
