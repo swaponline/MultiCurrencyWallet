@@ -9,27 +9,27 @@ export default class SocialMenu extends React.Component {
     return (
       <ul styleName="social-menu">
         <li>
-          <a href={links.medium}>
+          <a href={links.medium} target="_blank">
             <i styleName="icon" className="fab fa-medium-m" />
           </a>
         </li>
         <li>
-          <a href={links.twitter}>
+          <a href={links.twitter} target="_blank">
             <i styleName="icon" className="fab fa-twitter" />
           </a>
         </li>
         <li>
-          <a href={links.facebook}>
+          <a href={links.facebook} target="_blank">
             <i styleName="icon" className="fab fa-facebook-f" />
           </a>
         </li>
         <li>
-          <a href={links.telegram}>
+          <a href={links.telegram} target="_blank">
             <i styleName="icon" className="fab fa-telegram-plane" />
           </a>
         </li>
         <li>
-          <a href={links.bitcointalk}>
+          <a href={links.bitcointalk} target="_blank">
             <i styleName="icon" className="fab fa-btc" />
           </a>
         </li>
