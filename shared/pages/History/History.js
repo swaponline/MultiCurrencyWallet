@@ -34,6 +34,10 @@ export default class History extends Component {
     actions.user.setTransactions()
   }
 
+  rowRender = (row) => (
+    <Row key={row.hash} {...row} />
+  )
+
   render() {
     const { items, swapHistory } = this.props
     const titles = [ 'Coin', 'Status', 'Statement', 'Amount' ]
@@ -47,9 +51,7 @@ export default class History extends Component {
         <Table
           titles={titles}
           rows={items}
-          rowRender={(row, index) => (
-            <Row key={index} {...row} />
-          )}
+          rowRender={this.rowRender}
         />
       </section>
     )
