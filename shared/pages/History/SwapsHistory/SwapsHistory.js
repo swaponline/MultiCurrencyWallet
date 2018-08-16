@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 
-import Table from 'components/Table/Table'
+import Table from 'components/tables/Table/Table'
 import RowHistory from './RowHistory/RowHistory'
 
 

@@ -4,7 +4,7 @@ import { connect } from 'redaction'
 import { constants } from 'helpers'
 import actions from 'redux/actions'
 
-import Table from 'components/Table/Table'
+import Table from 'components/tables/Table/Table'
 import Confirm from 'components/Confirm/Confirm'
 import SaveKeys from 'components/SaveKeys/SaveKeys'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
