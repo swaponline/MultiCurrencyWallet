@@ -10,7 +10,7 @@ export default class SwapsHistory extends PureComponent {
     let { orders } = this.props
     const titles = [ 'Exchange', 'You buy', 'You sell', 'Exchange rate', 'Status', 'Link' ]
 
-    if (Object.values(orders) === null || Object.values(orders).length === 0) {
+    if (orders === null || orders.length === 0) {
       return null
     }
 
@@ -19,7 +19,7 @@ export default class SwapsHistory extends PureComponent {
         <h3>Swaps history</h3>
         <Table
           titles={titles}
-          rows={Object.values(orders).filter(item => item.step >= 4)}
+          rows={orders}
           rowRender={(row, index) => (
             <RowHistory
               key={index}
