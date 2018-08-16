@@ -4,3 +4,9 @@
   padding-top: 88px;
   padding-bottom: 55px;
 }
+
+@include media-mobile {
+	.main {
+		padding-bottom: 30px;
+	}
+} 

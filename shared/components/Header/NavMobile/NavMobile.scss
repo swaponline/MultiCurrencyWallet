@@ -67,3 +67,9 @@
     display: none;
   }
 }
+
+@include media-mobile {
+  .navMobile {
+  	padding-left: 0;
+  }
+}

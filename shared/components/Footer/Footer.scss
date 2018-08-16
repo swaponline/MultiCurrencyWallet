@@ -61,3 +61,14 @@ $information-footer-height: 44px;
     color: rgba(51, 51, 51, 0.6)
   }
 }
+
+@include media-mobile {
+  .information-footer.fixed {
+    position: relative;
+    margin-bottom: 20px;
+  }
+
+  .default-footer {
+    margin-top: 30px;
+  }
+}
