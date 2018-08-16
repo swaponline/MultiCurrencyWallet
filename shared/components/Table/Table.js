@@ -1,48 +1,61 @@
 import React from 'react'
 
-import cssModules from 'react-css-modules'
+import CSSModules from 'react-css-modules'
 import styles from './Table.scss'
 
+@CSSModules(styles)
+export default class Table extends React.Component {
 
-const Table = ({ titles, rows, rowRender, textIfEmpty, isLoading, loadingText }) => (
-  <table styleName="table">
-    <thead>
-      <tr>
-        {
-          titles.map((title, index) => (
-            <th key={index}>{title}</th>
-          ))
-        }
-      </tr>
-    </thead>
-    <tbody>
-      {
-        isLoading && (
+  shouldComponentUpdate(nextProps, nextState) {
+    const { titles, rows, rowRender, textIfEmpty, isLoading, loadingText } = this.props
+    return (
+      isLoading !== nextProps.isLoading
+      || rows !== nextProps.rows
+    )
+  }
+
+  render() {
+    const { titles, rows, rowRender, textIfEmpty, isLoading, loadingText } = this.props
+
+    return (
+      <table styleName="table">
+        <thead>
           <tr>
-            <td styleName="color">{loadingText}</td>
+            {
+              titles.map((title, index) => (
+                <th key={index}>{title}</th>
+              ))
+            }
           </tr>
-        )
-      }
-      {
-        !isLoading && !rows.length && (
-          <tr>
-            <td styleName="color">{textIfEmpty}</td>
-          </tr>
-        )
-      }
-      {
-        !isLoading && !!rows.length && rows.map((row, rowIndex) => (
-          typeof rowRender === 'function' && rowRender(row, rowIndex)
-        ))
-      }
-    </tbody>
-  </table>
-)
+        </thead>
+        <tbody>
+          {
+            isLoading && (
+              <tr>
+                <td styleName="color">{loadingText}</td>
+              </tr>
+            )
+          }
+          {
+            !isLoading && !rows.length && (
+              <tr>
+                <td styleName="color">{textIfEmpty}</td>
+              </tr>
+            )
+          }
+          {
+            !isLoading && !!rows.length && rows.map((row, rowIndex) => (
+              typeof rowRender === 'function' && rowRender(row, rowIndex)
+            ))
+          }
+        </tbody>
+      </table>
+    )
+  }
+}
 
 
 Table.defaultProps = {
   textIfEmpty: 'The table is empty',
   loadingText: 'Loading...',
 }
-
-export default cssModules(Table, styles)
