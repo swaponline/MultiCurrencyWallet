@@ -114,9 +114,6 @@ export default class Row extends Component {
             )
           }
         </td>
-        <td>
-          <a href={`${links.exchange}/${sellCurrency.toLowerCase()}-${buyCurrency.toLowerCase()}/${id}`}> link</a>
-        </td>
       </tr>
     )
   }
