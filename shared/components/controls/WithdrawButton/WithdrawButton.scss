@@ -15,3 +15,10 @@
     background: #dfc5ff;
   }
 }
+
+@include media-mobile {
+  .withdrawButton {
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+}

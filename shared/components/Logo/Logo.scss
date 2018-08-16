@@ -7,3 +7,9 @@
     display: block;
   }
 }
+
+@include media-mobile {
+	.logo {
+		display: none;
+	}
+}
