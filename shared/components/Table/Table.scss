@@ -61,7 +61,7 @@
         z-index: 2;
         background: $color-f-brightest;
       }
-      
+
       &:nth-child(2) {
         position: absolute;
         z-index: 2;
@@ -121,13 +121,8 @@
     }
   }
 
-<<<<<<< HEAD
   // Exchange and Swap history
   .exchange, .historySwap {
-=======
-  // Exchange 
-  .exchange {
->>>>>>> e62ba0fab45bb4a44ab98d80b073cdbb09f54310
     th {
       &:first-child {
         position: absolute;
@@ -146,7 +141,7 @@
 
     td {
       height: 80px;
-      
+
       &:first-child {
         position: absolute;
         z-index: 2;
@@ -188,7 +183,7 @@
 
       &:nth-child(2) {
         display: block;
-        margin-left: 40px; 
+        margin-left: 40px;
       }
     }
 
@@ -235,4 +230,3 @@
     }
   }
 }
-
