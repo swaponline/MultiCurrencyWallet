@@ -29,7 +29,7 @@ export default class MyOrders extends PureComponent {
   }
 
   render() {
-    const titles = [ 'EXCHANGE', 'YOU BUY', 'YOU SELL', 'EXCHANGE RATE', 'ACTIONS' ]
+    const titles = [ 'EXCHANGE', 'YOU BUY', 'YOU SELL', 'EXCHANGE RATE', 'SHARE', 'ACTIONS' ]
     const { myOrders } = this.props
 
     if (myOrders.length === undefined || myOrders.length <= 0) {

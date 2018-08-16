@@ -1,6 +1,6 @@
 import webpack from 'webpack'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
-import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
+// import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
 import config from 'app-config'
 
 
@@ -31,11 +31,9 @@ export default (webpackConfig) => {
   })
 
   webpackConfig.plugins.push(
+    //  Perhaps it's the cause of errors during the swap process,
+    //  so temporary commented.
     // new UglifyJsPlugin({
-    //   uglifyOptions: {
-    //     ecma: 6,
-    //     warnings: true,
-    //   },
     // }),
     new ExtractTextPlugin({
       filename: '[name].[hash:6].css',

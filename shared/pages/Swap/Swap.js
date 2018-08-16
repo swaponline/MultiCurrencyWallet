@@ -1,10 +1,11 @@
 import React, { PureComponent } from 'react'
 import Swap from 'swap.swap'
-import config from 'app-config'
 
+import { connect } from 'redaction'
 import actions from 'redux/actions'
 
 import EmergencySave from './EmergencySave/EmergencySave'
+import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 
 import BtcToEth from './BtcToEth'
 import EthToBtc from './EthToBtc'
@@ -21,15 +22,19 @@ const swapComponents = {
   'BTC2SWAP': BtcToEthToken,
 }
 
+
+@connect({
+  errors: 'api.errors',
+  checked: 'api.checked',
+})
 export default class SwapComponent extends PureComponent {
 
   state = {
     swap: null,
     SwapComponent: null,
-    errors: false
   }
 
-  createSwap() {
+  componentWillMount() {
     const { match : { params : { orderId } } } = this.props
 
     const swap = new Swap(orderId)
@@ -46,13 +51,12 @@ export default class SwapComponent extends PureComponent {
     window.swap = swap
   }
 
-  componentWillMount() {
-    actions.api.checkServers().then(() => {
-      this.createSwap();
-    }).catch(e => {
-      this.setState({errors: true})
-    });
-  }
+  // componentWillMount() {
+  //   actions.api.checkServers()
+  //     .then(() => {
+  //
+  //     })
+  // }
 
   setSaveSwapId = (orderId) => {
     let swapsId = JSON.parse(localStorage.getItem('swapId'))
@@ -72,18 +76,17 @@ export default class SwapComponent extends PureComponent {
   }
 
   render() {
-    const { swap, SwapComponent, errors } = this.state
+    const { swap, SwapComponent } = this.state
+
+    if (!swap || !SwapComponent) {
+      return null
+    }
 
     return (
       <div style={{ paddingLeft: '30px', paddingTop: '30px' }}>
-        {
-          swap && <SwapComponent swap={swap} >
-            <EmergencySave flow={swap.flow} />
-          </SwapComponent>
-        }
-        {
-          errors && <div><h2>Error!</h2>Can't reach payments provider server. Please, try again later</div>
-        }
+        <SwapComponent swap={swap} >
+          <EmergencySave flow={swap.flow} />
+        </SwapComponent>
       </div>
     )
   }

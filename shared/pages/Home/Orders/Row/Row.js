@@ -50,13 +50,13 @@ export default class Row extends Component {
 
   render() {
     const { balance } = this.state
-    const { row: { id, buyCurrency, sellCurrency, isMy, buyAmount,
-      sellAmount, isRequested, exchangeRate,
-      owner :{  peer: ownerPeer } }, peer, orderId } = this.props
+    const { orderId, row: { id, buyCurrency, sellCurrency, isMy, buyAmount,
+      sellAmount, isRequested,
+      owner :{  peer: ownerPeer } }, peer } = this.props
     const amount = isMy ? sellAmount : buyAmount
 
     return (
-      <tr style={orderId === id ? { background: 'red' } : { color: 'green' }}>
+      <tr style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}>
         <td>
           <Coins names={[buyCurrency, sellCurrency]}  />
         </td>
@@ -79,7 +79,7 @@ export default class Row extends Component {
           }
         </td>
         <td>
-          { exchangeRate || (buyAmount.dividedBy(sellAmount)).toNumber().toFixed(5)}
+          { buyAmount.dividedBy(sellAmount).toFixed(5) }
           {
             isMy ? (
               `${sellCurrency}/${buyCurrency}`
@@ -103,7 +103,7 @@ export default class Row extends Component {
                   ) : (
                     balance > amount.toNumber() ? (
                       <Link to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`} >
-                        <RequestButton sendRequest={() => this.sendRequest(id)} />
+                        <RequestButton onClick={() => this.sendRequest(id)} />
                       </Link>
                     ) : (
                       <span>Insufficient funds</span>
@@ -113,9 +113,6 @@ export default class Row extends Component {
               </Fragment>
             )
           }
-        </td>
-        <td>
-          <a href={`${links.exchange}/${buyCurrency.toLowerCase()}-${sellCurrency.toLowerCase()}/${id}`}> link</a>
         </td>
       </tr>
     )

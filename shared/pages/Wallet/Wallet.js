@@ -8,7 +8,6 @@ import Table from 'components/Table/Table'
 import styles from 'components/Table/Table.scss'
 import Confirm from 'components/Confirm/Confirm'
 import SaveKeys from 'components/SaveKeys/SaveKeys'
-import Title from 'components/PageHeadline/Title/Title'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import { WithdrawButton } from 'components/controls'
@@ -74,9 +73,8 @@ export default class Wallet extends Component {
     return (
       <section>
         <PageHeadline>
-          <Title>SWAP.ONLINE - CRYPTOCURRENCY WALLET WITH ATOMIC SWAP EXCHANGE</Title>
           <SubTitle>
-            Check out our <a href="https://wiki.swap.online/en.pdf" target="_balnk" rel="noreferrer noopener">project brief</a> and participate in smart airdrop.
+            Swap.Online - Cryptocurrency Wallet with Atomic Swap Exchange
           </SubTitle>
         </PageHeadline>
         <Confirm

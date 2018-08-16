@@ -22,7 +22,7 @@ export default class Row extends Component {
   }
 
   componentDidMount() {
-    const { contractAddress, name } = this.props
+    const { contractAddress, name, balance } = this.props
 
     if (name !== undefined) {
       actions.token.allowance(contractAddress, name)
@@ -40,29 +40,11 @@ export default class Row extends Component {
       isBalanceFetching: true,
     })
 
-    let { currency, contractAddress, decimals } = this.props
-    let action
+    let { currency } = this.props
 
     currency = currency.toLowerCase()
 
-    if (currency === 'eth') {
-      action = actions.eth.getBalance
-      actions.analytics.dataEvent('balances-update-eth')
-    }
-    else if (currency === 'btc') {
-      action = actions.btc.getBalance
-      actions.analytics.dataEvent('balances-update-btc')
-    }
-    else if (currency === 'eos') {
-      action = actions.eos.getBalance
-      actions.analytics.dataEvent('balances-update-eos')
-    }
-    else if (currency !== undefined) {
-      action = actions.token.getBalance
-      actions.analytics.dataEvent('balances-update-token')
-    }
-
-    action(contractAddress, currency, decimals)
+    actions[currency].getBalance(currency)
       .then(() => {
         this.setState({
           isBalanceFetching: false,
@@ -130,7 +112,7 @@ export default class Row extends Component {
               <InlineLoader />
             ) : (
               <Fragment>
-                <span>{balance}</span> <br />
+                <span>{String(balance).length > 5 ? balance.toFixed(5) : balance}</span> <br />
                 { currency === 'BTC' && unconfirmedBalance !== 0 && <span style={{ fontSize: '12px', color: '#c9c9c9' }}>Unconfirmed {unconfirmedBalance}</span> }
               </Fragment>
             )

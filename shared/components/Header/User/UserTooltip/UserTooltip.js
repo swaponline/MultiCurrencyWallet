@@ -25,16 +25,16 @@ const UserTooltip = ({ feeds, mePeer, acceptRequest, view, autoAcceptRequest, de
               <div key={peer}>
                 <div styleName="title">User with <b>{reputation}</b> reputation wants to swap</div>
                 <div styleName="currency">
-                  <span>{buyAmount.toString()} <span styleName="coin">{buyCurrency}</span></span>
+                  <span>{buyAmount.toFixed(5)} <span styleName="coin">{buyCurrency}</span></span>
                   <span styleName="arrow"><img src={ArrowRightSvg} alt="" /></span>
-                  <span>{sellAmount.toString()} <span styleName="coin">{sellCurrency}</span></span>
+                  <span>{sellAmount.toFixed(5)} <span styleName="coin">{sellCurrency}</span></span>
                 </div>
               </div>
-              <TimerButton isButton={false} onClick={() => autoAcceptRequest(id, peer, `${links.swap}/${sellCurrency}-${buyCurrency}/${id}`)} />
               <span styleName="decline" onClick={() => declineRequest(id, peer)} />
               <Link to={`${links.swap}/${sellCurrency}-${buyCurrency}/${id}`}>
                 <div styleName="checked" onClick={() => acceptRequest(id, peer)} />
               </Link>
+              <TimerButton isButton={false} onClick={() => autoAcceptRequest(id, peer, `${links.swap}/${sellCurrency}-${buyCurrency}/${id}`)} />
             </div>
           ))
         )

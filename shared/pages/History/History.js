@@ -42,7 +42,7 @@ export default class History extends Component {
     return (
       <section>
         <PageHeadline subTitle="History" />
-        <SwapsHistory orders={swapHistory} />
+        <SwapsHistory orders={Object.values(swapHistory).filter(item => item.step >= 4)} />
         <h3 >All transactions</h3>
         <Filter />
         <Table

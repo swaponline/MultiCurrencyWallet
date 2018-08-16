@@ -5,7 +5,6 @@ import { request, constants } from 'helpers'
 import actions from 'redux/actions'
 import { getState } from 'redux/core'
 
-import SwapApp from 'swap.app'
 import reducers from 'redux/core/reducers'
 
 
@@ -38,7 +37,7 @@ const getBalances = () => {
 
   Object.keys(config.tokens)
     .forEach(name => {
-      actions.token.getBalance(config.tokens[name].address, name, config.tokens[name].decimals)
+      actions.token.getBalance(name)
     })
   // actions.nimiq.getBalance()
 }

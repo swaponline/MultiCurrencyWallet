@@ -17,7 +17,7 @@ const filterOrders = (orders, filter) => orders
   ) : (
     `${order.sellCurrency.toLowerCase()}${order.buyCurrency.toLowerCase()}` === filter
   ))
-  .sort((a, b) => b.exchangeRate - a.exchangeRate)
+  .sort((a, b) => Number(b.buyAmount.dividedBy(b.sellAmount)) - Number(a.buyAmount.dividedBy(a.sellAmount)))
 
 @connect(({  core: { orders, filter }, ipfs: { isOnline, peer } }) => ({
   orders: filterOrders(orders, filter),
@@ -26,20 +26,14 @@ const filterOrders = (orders, filter) => orders
 }))
 export default class Orders extends Component {
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps !== this.props) {
-      this.setState()
-    }
-  }
-
   render() {
     const { sellCurrency, buyCurrency, handleSellCurrencySelect, handleBuyCurrencySelect, flipCurrency } = this.props
     const titles = [ 'EXCHANGE', 'YOU BUY', 'YOU SELL', 'EXCHANGE RATE', 'ACTIONS' ]
-    let { isOnline, orders, myOrders, orderId } = this.props
+    const { isOnline, orders, myOrders, orderId } = this.props
 
     return (
       <Fragment>
-        <MyOrders myOrders={myOrders} update={this.updateState} />
+        <MyOrders myOrders={myOrders} />
         <SearchSwap
           handleSellCurrencySelect={handleSellCurrencySelect}
           handleBuyCurrencySelect={handleBuyCurrencySelect}

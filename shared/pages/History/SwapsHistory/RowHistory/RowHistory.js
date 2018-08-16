@@ -27,18 +27,18 @@ const RowHistory = ({ row }) => {
       <td>
         {
           isMy ? (
-            `${sellAmount} ${sellCurrency.toUpperCase()}`
+            `${sellAmount.toFixed(5)} ${sellCurrency.toUpperCase()}`
           ) : (
-            `${buyAmount} ${buyCurrency.toUpperCase()}`
+            `${buyAmount.toFixed(5)} ${buyCurrency.toUpperCase()}`
           )
         }
       </td>
       <td>
         {
           isMy ? (
-            `${buyAmount} ${buyCurrency.toUpperCase()}`
+            `${buyAmount.toFixed(5)} ${buyCurrency.toUpperCase()}`
           ) : (
-            `${sellAmount} ${sellCurrency.toUpperCase()}`
+            `${sellAmount.toFixed(5)} ${sellCurrency.toUpperCase()}`
           )
         }
       </td>

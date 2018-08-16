@@ -14,7 +14,7 @@ export default {
   },
 
   ipfs: {
-    swarm: '/dns4/discovery.libp2p.array.io/tcp/9091/wss/p2p-websocket-star/',
+    swarm: '/dns4/discovery.libp2p.array.io/tcp/9091/wss/p2p-websocket-star/', // '/dns4/discovery.libp2p.array.io/tcp/9091/wss/p2p-websocket-star/'
     server: 'discovery.libp2p.array.io',
   },
 
@@ -59,8 +59,8 @@ export default {
 
   apiAlternatives: {
     bitpay: [
-      'https://insight.bitpay.com/api'
-    ]
+      'https://insight.bitpay.com/api',
+    ],
   },
 
   apiKeys: {

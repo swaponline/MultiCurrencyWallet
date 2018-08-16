@@ -6,6 +6,7 @@ import { BigNumber } from 'bignumber.js'
 
 import Timer from './Timer/Timer'
 import Button from 'components/controls/Button/Button'
+import OverProgress from 'components/loaders/OverProgress/OverProgress'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import TimerButton from 'components/controls/TimerButton/TimerButton'
 
@@ -73,9 +74,11 @@ export default class BtcToEth extends Component {
   render() {
     const { children } = this.props
     const { secret, flow, enabledButton } = this.state
+    // let progress = Math.floor(100 / 7 * flow.step)
 
     return (
       <div>
+        {/*<OverProgress text={flow.step} progress={progress} />*/}
         {
           this.swap.id && (
             <strong>{this.swap.sellAmount.toNumber()} {this.swap.sellCurrency} &#10230; {this.swap.buyAmount.toNumber()} {this.swap.buyCurrency}</strong>
@@ -176,13 +179,20 @@ export default class BtcToEth extends Component {
                 )
               }
               {
-                flow.btcScriptValues && !flow.isFinished && (
+                flow.btcScriptValues && !flow.isFinished && !flow.isEthWithdrawn && (
                   <Fragment>
                     <br />
                     { !flow.refundTxHex && <Button brand onClick={this.getRefundTxHex}> Create refund hex</Button> }
                     {
                       flow.refundTxHex && (
                         <div>
+                          <a
+                            href="https://wiki.swap.online/faq/my-swap-got-stuck-and-my-bitcoin-has-been-withdrawn-what-to-do/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            How refund your money ?
+                          </a>
                           Refund hex transaction:
                           <code>
                             {flow.refundTxHex}
@@ -259,11 +269,27 @@ export default class BtcToEth extends Component {
               {
                 flow.step >= 5 && !flow.isFinished && (
                   <div style={{ display: 'flex', alignItems: 'center' }}>
-                    { enabledButton &&  <Button brand onClick={this.tryRefund}>TRY REFUND</Button> }
+                    { enabledButton && !flow.isEthWithdrawn && <Button brand onClick={this.tryRefund}>TRY REFUND</Button> }
                     <Timer
                       lockTime={flow.btcScriptValues.lockTime * 1000}
                       enabledButton={() => this.setState({ enabledButton: true })}
                     />
+                  </div>
+                )
+              }
+              {
+                flow.refundTransactionHash && (
+                  <div>
+                    Transaction:
+                    <strong>
+                      <a
+                        href={`${config.link.bitpay}/tx/${flow.refundTransactionHash}`}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                      >
+                        {flow.refundTransactionHash}
+                      </a>
+                    </strong>
                   </div>
                 )
               }

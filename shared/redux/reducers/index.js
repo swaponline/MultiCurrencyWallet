@@ -8,6 +8,7 @@ import * as core from './core'
 import * as ipfs from './ipfs'
 import * as api from './api'
 
+
 export default {
   notifications,
   modals,
@@ -17,5 +18,5 @@ export default {
   user,
   feeds,
   ipfs,
-  api
+  api,
 }

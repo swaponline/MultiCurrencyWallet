@@ -38,33 +38,10 @@ export default class WithdrawModal extends React.Component {
       return
     }
 
-    let action
-
-    switch (currency) {
-      case 'ETH':
-        action = actions.eth
-        break
-
-      case 'BTC':
-        action = actions.btc
-        break
-
-      case 'NIM':
-        action = actions.nimiq
-        break
-
-      case 'EOS':
-        action = actions.eos
-        break
-
-      default:
-        action = actions.token
-    }
-
-    action.send(contractAddress || address, to, Number(amount), decimals)
+    actions[currency.toLowerCase()].send(contractAddress || address, to, Number(amount), decimals)
       .then(() => {
         actions.loader.hide()
-        action.getBalance()
+        actions[currency.toLowerCase()].getBalance(currency)
 
         actions.notifications.show(constants.notifications.SuccessWithdraw, {
           amount,

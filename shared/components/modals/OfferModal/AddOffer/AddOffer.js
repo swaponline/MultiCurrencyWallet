@@ -1,7 +1,6 @@
 import React, { Fragment, Component } from 'react'
 
 import actions from 'redux/actions'
-import { connect } from 'redaction'
 
 import Link from 'sw-valuelink'
 import config from 'app-config'
@@ -18,10 +17,6 @@ import SelectGroup from './SelectGroup/SelectGroup'
 import Button from 'components/controls/Button/Button'
 
 
-@connect(({ user: { ethData, btcData, tokensData } }) => ({
-  items: [ethData, btcData ],
-  tokens: Object.keys(tokensData).map(k => (tokensData[k])),
-}))
 @cssModules(styles, { allowMultiple: true })
 export default class AddOffer extends Component {
 
@@ -36,7 +31,7 @@ export default class AddOffer extends Component {
       sellAmount: sellAmount || '',
       buyCurrency: buyCurrency || 'btc',
       sellCurrency: sellCurrency || 'eth',
-      EventWasSend: false,
+      isSending: false,
       min: 0.05,
     }
   }
@@ -58,7 +53,7 @@ export default class AddOffer extends Component {
   }
 
   checkBalance = async (sellCurrency) => {
-    const balance = await actions[sellCurrency].getBalance()
+    const balance = await actions[sellCurrency].getBalance(sellCurrency)
 
     this.setState({
       balance,
@@ -136,9 +131,9 @@ export default class AddOffer extends Component {
   handleBuyAmountChange = (value) => {
     const { exchangeRate } = this.state
 
-    if (!this.EventWasSend) {
+    if (!this.isSending) {
       actions.analytics.dataEvent('orderbook-addoffer-enter-ordervalue')
-      this.EventWasSend = true
+      this.setState({ isSending: true })
     }
 
     this.setState({
@@ -150,9 +145,9 @@ export default class AddOffer extends Component {
   handleSellAmountChange = (value) => {
     const { exchangeRate } = this.state
 
-    if (!this.EventWasSend) {
+    if (!this.isSending) {
       actions.analytics.dataEvent('orderbook-addoffer-enter-ordervalue')
-      this.EventWasSend = true
+      this.setState({ isSending: true })
     }
 
     this.setState({

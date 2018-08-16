@@ -4,6 +4,7 @@ import config from 'app-config'
 import { BigNumber } from 'bignumber.js'
 
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
+import OverProgress from 'components/loaders/OverProgress/OverProgress'
 import TimerButton from 'components/controls/TimerButton/TimerButton'
 import Button from 'components/controls/Button/Button'
 import Timer from './Timer/Timer'
@@ -68,9 +69,11 @@ export default class EthToBtc extends Component {
   render() {
     const { children } = this.props
     const { flow, enabledButton, isShowingBitcoinScript } = this.state
+    // let progress = Math.floor(100 / 7 * flow.step)
 
     return (
       <div>
+        {/*<OverProgress text={flow.step} progress={progress} />*/}
 
         {
           this.swap.id && (
@@ -169,8 +172,8 @@ export default class EthToBtc extends Component {
                     <Fragment>
                       { flow.btcScriptValues && <span onClick={this.toggleBitcoinScript}>Show bitcoin script</span> }
                       { isShowingBitcoinScript && (
-                    <pre>
-                      <code>{`
+                        <pre>
+                          <code>{`
   bitcoinjs.script.compile([
     bitcoin.core.opcodes.OP_RIPEMD160,
     Buffer.from('${flow.btcScriptValues.secretHash}', 'hex'),
@@ -194,8 +197,8 @@ export default class EthToBtc extends Component {
     bitcoin.core.opcodes.OP_ENDIF,
   ])
                       `}
-                      </code>
-                    </pre>
+                          </code>
+                        </pre>
                       )
                       }
                     </Fragment>
@@ -335,7 +338,7 @@ export default class EthToBtc extends Component {
               {
                 flow.step >= 6 && !flow.isFinished && (
                   <div style={{ display: 'flex', alignItems: 'center' }}>
-                    { enabledButton &&  <Button brand onClick={this.tryRefund}>TRY REFUND</Button> }
+                    { enabledButton && !flow.isBtcWithdrawn && <Button brand onClick={this.tryRefund}>TRY REFUND</Button> }
                     <Timer
                       lockTime={(flow.btcScriptValues.lockTime - 5400) * 1000}
                       enabledButton={() => this.setState({ enabledButton: true })}
@@ -343,11 +346,27 @@ export default class EthToBtc extends Component {
                   </div>
                 )
               }
+              {
+                flow.refundTransactionHash && (
+                  <div>
+                    Transaction:
+                    <strong>
+                      <a
+                        href={`${config.link.bitpay}/tx/${flow.refundTransactionHash}`}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                      >
+                        {flow.refundTransactionHash}
+                      </a>
+                    </strong>
+                  </div>
+                )
+              }
             </Fragment>
           )
         }
         <br />
-        {/*{ !flow.isFinished && <Button white onClick={this.addGasPrice}>Add gas price</Button> }*/}
+        {/* { !flow.isFinished && <Button white onClick={this.addGasPrice}>Add gas price</Button> } */}
         { children }
       </div>
     )

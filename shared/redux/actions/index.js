@@ -19,8 +19,17 @@ import analytics from './analytics'
 
 import ipfs from './ipfs'
 
+import btrm from './btrm'
+import swap from './swap'
+import noxon from './noxon'
+import jot from './jot'
+
 
 export default {
+  btrm,
+  swap,
+  noxon,
+  jot,
   filter,
   modals,
   loader,
@@ -36,5 +45,5 @@ export default {
   analytics,
   referral,
   ipfs,
-  api
+  api,
 }
