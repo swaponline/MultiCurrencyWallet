@@ -1,0 +1,26 @@
+.social-menu {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+
+  & li {
+    margin-right: 16px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.icon {
+  color: #7371ff;
+  font-size: 20px;
+  text-align: center;
+  transition: color 300ms ease;
+
+
+  &:hover {
+    color: #e91db4;
+  }
+}
