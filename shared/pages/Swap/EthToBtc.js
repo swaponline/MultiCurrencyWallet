@@ -69,11 +69,11 @@ export default class EthToBtc extends Component {
   render() {
     const { children } = this.props
     const { flow, enabledButton, isShowingBitcoinScript } = this.state
-    let progress = Math.floor(100 / 7 * flow.step)
+    // let progress = Math.floor(100 / 7 * flow.step)
 
     return (
       <div>
-        <OverProgress text={flow.step} progress={progress} />
+        {/*<OverProgress text={flow.step} progress={progress} />*/}
 
         {
           this.swap.id && (

@@ -11,6 +11,7 @@ import SearchSwap from 'components/SearchSwap/SearchSwap'
 const filterMyOrders = (orders, peer) => orders.filter(order => order.owner.peer === peer)
 
 const filterOrders = (orders, filter) => orders
+  .filter(order => order.isProcessing === false)
   .filter(order => order.isMy ? (
     `${order.buyCurrency.toLowerCase()}${order.sellCurrency.toLowerCase()}` === filter
   ) : (
