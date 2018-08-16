@@ -112,7 +112,7 @@ export default class Row extends Component {
               <InlineLoader />
             ) : (
               <Fragment>
-                <span>{balance.toFixed(8)}</span> <br />
+                <span>{String(balance).length > 5 ? balance.toFixed(5) : balance}</span> <br />
                 { currency === 'BTC' && unconfirmedBalance !== 0 && <span style={{ fontSize: '12px', color: '#c9c9c9' }}>Unconfirmed {unconfirmedBalance}</span> }
               </Fragment>
             )
