@@ -33,8 +33,6 @@ export default class Footer extends Component {
 
     const viewportBiggerThanPage = viewportHeight > pageHeight
 
-    console.log(viewportBiggerThanPage, viewportHeight, pageHeight)
-
     if (viewportBiggerThanPage) {
       return this.setFullFixed(true)
     }
@@ -70,6 +68,12 @@ export default class Footer extends Component {
   componentWillUnmount() {
     document.removeEventListener('scroll', this.calculateFooterHeight)
     window.removeEventListener('resize', this.calculateFooterHeight)
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if(prevProps.location.pathname !== this.props.location.pathname) {
+      this.calculateFooterHeight()
+    }
   }
 
   render() {
