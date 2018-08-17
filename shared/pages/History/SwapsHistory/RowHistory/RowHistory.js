@@ -17,7 +17,10 @@ const RowHistory = ({ row }) => {
     return null
   }
 
-  const { buyAmount, buyCurrency, sellAmount, btcScriptValues, isRefunded, isMy, sellCurrency, isFinished,  id } = row
+  let { buyAmount, buyCurrency, sellAmount, btcScriptValues, isRefunded, isMy, sellCurrency, isFinished,  id } = row
+
+  buyAmount   = Number(buyAmount)
+  sellAmount  = Number(sellAmount)
 
   return (
     <tr>

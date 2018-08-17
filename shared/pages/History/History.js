@@ -6,9 +6,9 @@ import actions from 'redux/actions'
 import Row from './Row/Row'
 import SwapsHistory from './SwapsHistory/SwapsHistory'
 
-import InfiniteScrollTable from 'components/tables/InfiniteScrollTable/InfiniteScrollTable'
 import Filter from 'components/Filter/Filter'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
+import InfiniteScrollTable from 'components/tables/InfiniteScrollTable/InfiniteScrollTable'
 
 
 const filterHistory = (items, filter) => {
