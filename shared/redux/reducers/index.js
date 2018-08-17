@@ -7,6 +7,7 @@ import * as feeds from './feeds'
 import * as core from './core'
 import * as ipfs from './ipfs'
 import * as api from './api'
+import * as currencies from './currencies'
 
 
 export default {
@@ -19,4 +20,5 @@ export default {
   feeds,
   ipfs,
   api,
+  currencies,
 }
