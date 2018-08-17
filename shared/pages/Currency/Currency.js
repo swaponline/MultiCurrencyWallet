@@ -5,7 +5,7 @@ import { connect } from 'redaction'
 import Title from 'components/PageHeadline/Title/Title'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
-import Table from 'components/Table/Table'
+import Table from 'components/tables/Table/Table'
 
 import Row from './Row/Row'
 

@@ -105,7 +105,7 @@ export default class Footer extends Component {
         <div styleName={defaultFooterStyles}>
           <WidthContainer styleName="container">
             <div styleName="copyright">
-              <img src={logo} styleName="copyright-logo" alt="logotype"/>
+              <img src={logo} styleName="copyright-logo" alt="logotype" />
               <span styleName="copyright-text">© 2018 Swap Online Harju maakond, Tallinn, Kesklinna linnaosa</span>
             </div>
             <SocialMenu />
