@@ -96,18 +96,11 @@ export default class Footer extends Component {
       <div ref={(node) => this.footerRef = node} styleName={footerStyles}>
         <div ref={(node) => this.infoFooterRef = node} styleName={informationFooterStyles}>
           <WidthContainer styleName="container">
-            <Info serverAddress={server} onlineUsers={onlineUsers} isOnline={isOnline} />
-            <span styleName="text">
-              Need help? Join Telegram chat <a href="https://t.me/swaponline" target="_blank" rel="noreferrer noopener">@swaponline</a>
-            </span>
-          </WidthContainer>
-        </div>
-        <div styleName={defaultFooterStyles}>
-          <WidthContainer styleName="container">
             <div styleName="copyright">
               <img src={logo} styleName="copyright-logo" alt="logotype" />
               <span styleName="copyright-text">© 2018 Swap Online Harju maakond, Tallinn, Kesklinna linnaosa</span>
             </div>
+            <Info serverAddress={server} onlineUsers={onlineUsers} isOnline={isOnline} />
             <SocialMenu />
           </WidthContainer>
         </div>
