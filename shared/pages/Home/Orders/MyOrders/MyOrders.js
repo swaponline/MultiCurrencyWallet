@@ -2,7 +2,7 @@ import React, { PureComponent, Fragment } from 'react'
 
 import actions from 'redux/actions'
 
-import Table from 'components/Table/Table'
+import Table from 'components/tables/Table/Table'
 import RowFeeds from './RowFeeds/RowFeeds'
 
 
