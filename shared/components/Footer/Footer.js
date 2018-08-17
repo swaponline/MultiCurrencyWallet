@@ -1,16 +1,17 @@
 import React, { Component } from 'react'
-import cx from 'classnames'
+
 import { connect } from 'redaction'
 import { withRouter } from 'react-router-dom'
 
-import CSSModules from 'react-css-modules'
+import cx from 'classnames'
 import styles from './Footer.scss'
+import logo from './images/logo.svg'
+import CSSModules from 'react-css-modules'
 
 import Info from './Info/Info'
-import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import SocialMenu from './SocialMenu/SocialMenu'
+import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 
-import logo from './images/logo.svg'
 
 @withRouter
 @connect(({ ipfs: { server, isOnline, onlineUsers } }) => ({
@@ -82,10 +83,6 @@ export default class Footer extends Component {
 
     const informationFooterStyles = cx('information-footer', {
       'fixed': fixed && !fullFixed,
-    })
-
-    const defaultFooterStyles = cx('default-footer', {
-      'margin': fixed && !fullFixed,
     })
 
     const footerStyles = cx('footer', {

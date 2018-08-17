@@ -7,15 +7,19 @@ import Option from './Option/Option'
 import DropDown from 'components/ui/DropDown/DropDown'
 
 
-const CurrencySelect = ({ className, selectedValue, onSelect, currencies }) => (
-  <DropDown
-    className={className}
-    items={currencies}
-    selectedValue={selectedValue}
-    selectedItemRender={(item) => <Option {...item} />}
-    itemRender={(item) => <Option {...item} />}
-    onSelect={onSelect}
-  />
-)
+const CurrencySelect = ({ className, selectedValue, onSelect, currencies }) => {
+  console.log('currencies', currencies)
+
+  return (
+    <DropDown
+      className={className}
+      items={currencies}
+      selectedValue={selectedValue}
+      selectedItemRender={(item) => <Option {...item} />}
+      itemRender={(item) => <Option {...item} />}
+      onSelect={onSelect}
+    />
+  )
+}
 
 export default cssModules(CurrencySelect, styles)
