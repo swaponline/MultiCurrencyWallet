@@ -20,6 +20,30 @@ const seo = {
       description: 'Exchange',
     },
     {
+      uri: '/exchange/btc',
+      title: 'Bitcoin',
+      description: 'Bitcoin',
+      h1: 'Bitcoin Trade'
+    },
+    {
+      uri: '/exchange/eth',
+      title: 'Ethereum',
+      description: 'Ethereum',
+      h1: 'Ethereum Trade'
+    },
+    {
+      uri: '/exchange/swap',
+      title: 'Swap',
+      description: 'Swap',
+      h1: 'Swap Trade'
+    },
+    {
+      uri: '/exchange/noxon',
+      title: 'Noxon',
+      description: 'Noxon',
+      h1: 'Noxon Trade'
+    },
+    {
       uri: '/history',
       title: 'History',
       description: 'History',
