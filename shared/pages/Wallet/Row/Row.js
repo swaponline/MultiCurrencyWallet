@@ -142,19 +142,17 @@ export default class Row extends Component {
         <td style={{ position: 'relative' }} >
           <div>
             <button styleName="button" onClick={this.handleCopiedAddress}>Copy</button>
-            <ReloadButton styleName="reloadButton" onClick={this.handleReloadBalance} />
-            <WithdrawButton onClick={this.handleWithdraw} >
+            <ReloadButton styleName="marginRight" onClick={this.handleReloadBalance} />
+            <WithdrawButton onClick={this.handleWithdraw} styleName="marginRight" >
               Withdraw
             </WithdrawButton>
             { viewText && <p styleName="copied" >Address copied to clipboard</p> }
+            {
+              tradeAllowed && (
+                <Link  styleName="button" to={`/exchange/${currency.toLowerCase()}`}>Trade</Link>
+              )
+            }
           </div>
-        </td>
-        <td>
-          {
-            tradeAllowed && (
-              <Link styleName="button" to={`/exchange/${currency.toLowerCase()}`}>Trade</Link>
-            )
-          }
         </td>
       </tr>
     )
