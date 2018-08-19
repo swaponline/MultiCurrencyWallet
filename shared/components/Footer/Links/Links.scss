@@ -1,7 +1,8 @@
 .column {
   display: flex;
   flex-direction: column;
-  width: 20%;
+  justify-content: space-around;
+  width: 24%;
 
   h4 {
     font-size: 18px;

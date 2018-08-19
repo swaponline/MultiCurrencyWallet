@@ -73,7 +73,7 @@ export default class Footer extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if(prevProps.location.pathname !== this.props.location.pathname) {
+    if (prevProps.location.pathname !== this.props.location.pathname) {
       this.calculateFooterHeight()
     }
   }
