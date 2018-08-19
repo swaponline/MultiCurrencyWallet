@@ -10,6 +10,7 @@ import CSSModules from 'react-css-modules'
 
 import Info from './Info/Info'
 import SocialMenu from './SocialMenu/SocialMenu'
+import Links from './Links/Links'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 
 
@@ -85,6 +86,10 @@ export default class Footer extends Component {
       'fixed': fixed && !fullFixed,
     })
 
+    const defaultFooterStyles = cx('default-footer', {
+      'margin': fixed && !fullFixed,
+    })
+
     const footerStyles = cx('footer', {
       'fixed': fullFixed,
     })
@@ -93,11 +98,18 @@ export default class Footer extends Component {
       <div ref={(node) => this.footerRef = node} styleName={footerStyles}>
         <div ref={(node) => this.infoFooterRef = node} styleName={informationFooterStyles}>
           <WidthContainer styleName="container">
+            <Info serverAddress={server} onlineUsers={onlineUsers} isOnline={isOnline} />
+          </WidthContainer>
+        </div>
+        <div styleName={defaultFooterStyles}>
+          <WidthContainer styleName="container container--links">
+            <Links />
+          </WidthContainer>
+          <WidthContainer styleName="container container--copyright">
             <div styleName="copyright">
               <img src={logo} styleName="copyright-logo" alt="logotype" />
               <span styleName="copyright-text">© 2018 Swap Online Harju maakond, Tallinn, Kesklinna linnaosa</span>
             </div>
-            <Info serverAddress={server} onlineUsers={onlineUsers} isOnline={isOnline} />
             <SocialMenu />
           </WidthContainer>
         </div>
