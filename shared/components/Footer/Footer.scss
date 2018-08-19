@@ -36,6 +36,14 @@ $information-footer-height: 44px;
   height: 100%;
   align-items: center;
   justify-content: space-between;
+
+  &--links {
+    align-items: flex-start;
+  }
+
+  &--copyright {
+    margin-top: 16px;
+  }
 }
 
 

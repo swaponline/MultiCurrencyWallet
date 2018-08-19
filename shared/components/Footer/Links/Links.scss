@@ -1,0 +1,27 @@
+.column {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+
+  h4 {
+    font-size: 18px;
+  }
+
+  a {
+    font-size: 14px;
+    color: #7371ff;
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: #e91db4;
+    }
+  }
+
+  span {
+    font-size: 14px;
+  }
+
+  &:last-child {
+    margin: 0;
+  }
+}
