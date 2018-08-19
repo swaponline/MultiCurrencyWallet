@@ -68,7 +68,7 @@ export default class Wallet extends Component {
   render() {
     const { view } = this.state
     const { items, tokens, currencies } = this.props
-    const titles = [ 'Coin', 'Name', 'Balance', 'Address', '' ]
+    const titles = [ 'Coin', 'Name', 'Balance', 'Address', 'Actions' ]
 
     return (
       <section>
@@ -90,10 +90,12 @@ export default class Wallet extends Component {
             <Row key={index} {...row} currencies={currencies} />
           )}
         />
-        { view === 'off' && <SaveKeys isDownload={this.handleDownload} isChange={() => this.changeView('on')} /> }
-        { process.env.TESTNET && <WithdrawButton onClick={this.handleClear} >Exit</WithdrawButton> }
-        <WithdrawButton onClick={this.handleDownload}>Download keys</WithdrawButton>
-        <WithdrawButton onClick={this.handleImportKeys}>Import keys</WithdrawButton>
+        <div>
+          { view === 'off' && <SaveKeys isDownload={this.handleDownload} isChange={() => this.changeView('on')} /> }
+          { process.env.TESTNET && <WithdrawButton onClick={this.handleClear} >Exit</WithdrawButton> }
+          <WithdrawButton onClick={this.handleDownload}>Download keys</WithdrawButton>
+          <WithdrawButton onClick={this.handleImportKeys}>Import keys</WithdrawButton>
+        </div>
       </section>
     )
   }

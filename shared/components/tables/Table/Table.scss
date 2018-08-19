@@ -25,6 +25,8 @@
 
     &:first-child {
       padding-left: 0;
+      display: flex;
+      align-items: center;
     }
 
     &:last-child {
@@ -39,7 +41,7 @@
   }
 
   td {
-    padding: 20px 10px;
+    padding: 15px 10px;
   }
 }
 

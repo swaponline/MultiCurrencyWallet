@@ -52,12 +52,7 @@ export default class Core extends Component {
 
   updateOrders = () => {
     const orders = SwapApp.services.orders.items
-
-    this.setState({})
-
-    if (orders.length > 0) {
-      actions.core.updateCore(orders)
-    }
+    actions.core.updateCore(orders)
   }
 
   render() {

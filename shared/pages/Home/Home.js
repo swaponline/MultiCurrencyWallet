@@ -79,25 +79,15 @@ export default class Home extends Component {
     actions.core.setFilter(filter)
   }
 
-  handleClickTelegram = () => {
-    actions.analytics.dataEvent('orders-click-telegram-group')
-    actions.analytics.dataEvent('orders-click-start-swap')
-  }
-
-  handleClickMailing = () => {
-    actions.analytics.dataEvent('orders-click-start-swap')
-    actions.analytics.dataEvent('orders-click-start-swap')
-  }
-
   render() {
     const { match: { params: { orderId } } } = this.props
     const { buyCurrency, sellCurrency } = this.state
 
     return (
-      <section style={{ position: 'relative' }}>
+      <section style={{ position: 'relative', width: '100%' }}>
         <PageHeadline >
           <Fragment>
-            <Title>{buyCurrency}/{sellCurrency} exchange with 0% comission</Title>
+            <Title>{buyCurrency}/{sellCurrency} exchange with 0 fee</Title>
             <SubTitle>Choose the direction of exchange</SubTitle>
           </Fragment>
           <Orders

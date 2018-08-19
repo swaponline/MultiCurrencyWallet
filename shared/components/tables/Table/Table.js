@@ -6,11 +6,10 @@ import styles from './Table.scss'
 @CSSModules(styles)
 export default class Table extends React.Component {
 
-  shouldComponentUpdate(nextProps, nextState) {
-    const { titles, rows, rowRender, textIfEmpty, isLoading, loadingText } = this.props
+  shouldComponentUpdate(nextProps) {
+    const { rows, isLoading } = this.props
     return (
-      isLoading !== nextProps.isLoading
-      || rows !== nextProps.rows
+      isLoading !== nextProps.isLoading || rows !== nextProps.rows
     )
   }
 
