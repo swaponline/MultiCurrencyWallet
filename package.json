@@ -88,6 +88,7 @@
   },
   "dependencies": {
     "@nimiq/core": "^1.1.2",
+    "abortcontroller-polyfill": "^1.1.9",
     "autosize": "^4.0.2",
     "bitcoinjs-lib": "^3.3.2",
     "classnames": "^2.2.5",
