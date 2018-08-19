@@ -99,9 +99,6 @@ export default class Footer extends Component {
         <div ref={(node) => this.infoFooterRef = node} styleName={informationFooterStyles}>
           <WidthContainer styleName="container">
             <Info serverAddress={server} onlineUsers={onlineUsers} isOnline={isOnline} />
-            <span styleName="text">
-              Need help? Join Telegram chat <a href="https://t.me/swaponline" target="_blank" rel="noreferrer noopener">@swaponline</a>
-            </span>
           </WidthContainer>
         </div>
         <div styleName={defaultFooterStyles}>
