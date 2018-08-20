@@ -44,6 +44,12 @@ const seo = {
       h1: 'Noxon Trade'
     },
     {
+      uri: '/exchange/jot',
+      title: 'Jot',
+      description: 'Jot',
+      h1: 'Jot Trade'
+    },
+    {
       uri: '/history',
       title: 'History',
       description: 'History',

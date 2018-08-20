@@ -24,5 +24,11 @@ export const initialState = {
       icon: 'swap',
       value: 'swap',
     },
-  ]
+    {
+      name: 'JOT',
+      title: 'JOT',
+      icon: 'jot',
+      value: 'jot',
+    },
+  ],
 }

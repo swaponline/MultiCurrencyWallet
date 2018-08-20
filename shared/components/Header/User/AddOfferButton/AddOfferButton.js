@@ -15,7 +15,7 @@ export default class AddOfferButton extends Component {
           styleName="button"
           onClick={() => pinkClick()}
         >
-          Sign up
+          Subscribe
         </div>
         <div
           styleName="buttonMobile"

@@ -8,6 +8,7 @@ import styles from './Row.scss'
 import Coin from 'components/Coin/Coin'
 import LinkTransaction from '../LinkTransaction/LinkTransaction'
 
+
 class Row extends React.PureComponent {
   render() {
     const { type, date, direction, hash, value, confirmations } = this.props
