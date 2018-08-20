@@ -148,6 +148,10 @@ const approve = (name, amount) => {
         gas: `${config.services.web3.gas}`,
         gasPrice: `${config.services.web3.gasPrice}`,
       })
+        .on('transactionHash', (hash) => {
+          const txId = `${config.link.etherscan}/tx/${hash}`
+          actions.loader.show(true, true, txId)
+        })
         .on('error', err => {
           reject(err)
         })
