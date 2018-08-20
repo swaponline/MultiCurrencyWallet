@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 
-import Table from 'components/Table/Table'
-import styles from 'components/Table/Table.scss'
+import Table from 'components/tables/Table/Table'
+import styles from 'components/tables/Table/Table.scss'
 import RowHistory from './RowHistory/RowHistory'
 
 

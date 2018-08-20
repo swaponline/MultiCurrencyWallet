@@ -2,8 +2,8 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'redaction'
 
 import Row from './Row/Row'
-import Table from 'components/Table/Table'
-import styles from 'components/Table/Table.scss'
+import Table from 'components/tables/Table/Table'
+import styles from 'components/tables/Table/Table.scss'
 import MyOrders from './MyOrders/MyOrders'
 import SearchSwap from 'components/SearchSwap/SearchSwap'
 

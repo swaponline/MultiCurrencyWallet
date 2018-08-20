@@ -7,17 +7,17 @@ import styles from './Table.scss'
 export default class Table extends React.Component {
 
   shouldComponentUpdate(nextProps) {
-    const { rows, isLoading } = this.props
+    const { rows, isLoading, classTitle } = this.props
     return (
       isLoading !== nextProps.isLoading || rows !== nextProps.rows
     )
   }
 
   render() {
-    const { titles, rows, rowRender, textIfEmpty, isLoading, loadingText } = this.props
+    const { titles, rows, rowRender, textIfEmpty, isLoading, loadingText, classTitle } = this.props
 
     return (
-      <table styleName="table">
+      <table styleName="table" className={classTitle}>
         <thead>
           <tr>
             {
