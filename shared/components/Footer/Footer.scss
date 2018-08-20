@@ -18,6 +18,7 @@ $information-footer-height: 44px;
   @include media-mobile {
     display: flex;
     justify-content: center;
+    text-align: center;
   }
 
   @include media-tablet {
