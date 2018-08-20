@@ -42,11 +42,9 @@ const createOrder = (data) => {
 const updateCore = () => {
   const orders = SwapApp.services.orders.items
 
-  if (orders !== undefined && orders.length > 0) {
-    getOrders(orders)
-    getSwapHistory()
-    actions.feed.getFeedDataFromOrder(orders)
-  }
+  getOrders(orders)
+  getSwapHistory()
+  actions.feed.getFeedDataFromOrder(orders)
 }
 
 const getSwapHistory = () => {

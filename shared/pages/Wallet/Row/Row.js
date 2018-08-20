@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import actions from 'redux/actions'
 import { constants, web3 } from 'helpers'
+import { Link } from 'react-router-dom'
 
 import cssModules from 'react-css-modules'
 import styles from './Row.scss'
@@ -19,14 +20,18 @@ export default class Row extends Component {
   state = {
     isBalanceFetching: false,
     viewText: false,
+    tradeAllowed: false
   }
 
   componentDidMount() {
-    const { contractAddress, name, balance } = this.props
+    const { contractAddress, name, balance, currency, currencies } = this.props
 
     if (name !== undefined) {
       actions.token.allowance(contractAddress, name)
     }
+    this.setState({
+      tradeAllowed: !!currencies.find(c => c.value === currency.toLowerCase())
+    })
   }
 
   handleReloadBalance = () => {
@@ -97,7 +102,7 @@ export default class Row extends Component {
   }
 
   render() {
-    const { isBalanceFetching, viewText } = this.state
+    const { isBalanceFetching, viewText, tradeAllowed } = this.state
     const { currency, name, balance, isBalanceFetched, address, contractAddress, decimals, approve, unconfirmedBalance } = this.props
 
     return (
@@ -137,11 +142,16 @@ export default class Row extends Component {
         <td style={{ position: 'relative' }} >
           <div>
             <button styleName="button" onClick={this.handleCopiedAddress}>Copy</button>
-            <ReloadButton styleName="reloadButton" onClick={this.handleReloadBalance} />
-            <WithdrawButton onClick={this.handleWithdraw} >
+            <ReloadButton styleName="marginRight" onClick={this.handleReloadBalance} />
+            <WithdrawButton onClick={this.handleWithdraw} styleName="marginRight" >
               Withdraw
             </WithdrawButton>
             { viewText && <p styleName="copied" >Address copied to clipboard</p> }
+            {
+              tradeAllowed && (
+                <Link  styleName="button" to={`/exchange/${currency.toLowerCase()}`}>Trade</Link>
+              )
+            }
           </div>
         </td>
       </tr>

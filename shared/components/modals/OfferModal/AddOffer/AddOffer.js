@@ -1,5 +1,6 @@
 import React, { Fragment, Component } from 'react'
 
+import { connect } from 'redaction'
 import actions from 'redux/actions'
 
 import Link from 'sw-valuelink'
@@ -17,6 +18,9 @@ import SelectGroup from './SelectGroup/SelectGroup'
 import Button from 'components/controls/Button/Button'
 
 
+@connect(({ currencies }) => ({
+  currencies: currencies.items
+}))
 @cssModules(styles, { allowMultiple: true })
 export default class AddOffer extends Component {
 
@@ -176,6 +180,7 @@ export default class AddOffer extends Component {
   }
 
   render() {
+    const { currencies } = this.props
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency, balance, min } = this.state
     const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
     const isDisabled = !exchangeRate || !buyAmount && !sellAmount || sellAmount > balance || sellAmount < min
@@ -212,6 +217,7 @@ export default class AddOffer extends Component {
           selectedCurrencyValue={sellCurrency}
           onCurrencySelect={this.handleSellCurrencySelect}
           id="sellAmount"
+          currencies={currencies}
           placeholder="Enter sell amount"
         />
         <SelectGroup
@@ -220,6 +226,7 @@ export default class AddOffer extends Component {
           selectedCurrencyValue={buyCurrency}
           onCurrencySelect={this.handleBuyCurrencySelect}
           id="buyAmount"
+          currencies={currencies}
           placeholder="Enter buy amount"
         />
         <Button

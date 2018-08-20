@@ -15,9 +15,10 @@ import { WithdrawButton } from 'components/controls'
 import Row from './Row/Row'
 
 
-@connect(({ user: { ethData, btcData, tokensData, eosData, nimData } }) => ({
+@connect(({ user: { ethData, btcData, tokensData, eosData, nimData } , currencies: { items: currencies }}) => ({
   tokens: Object.keys(tokensData).map(k => (tokensData[k])),
   items: [ ethData, btcData, eosData /* eosData  nimData */ ],
+  currencies,
 }))
 export default class Wallet extends Component {
 
@@ -67,8 +68,8 @@ export default class Wallet extends Component {
 
   render() {
     const { view } = this.state
-    const { items, tokens } = this.props
-    const titles = [ 'Coin', 'Name', 'Balance', 'Address', '' ]
+    const { items, tokens, currencies } = this.props
+    const titles = [ 'Coin', 'Name', 'Balance', 'Address', 'Actions' ]
 
     return (
       <section>
@@ -88,13 +89,15 @@ export default class Wallet extends Component {
           titles={titles}
           rows={[].concat(items, tokens)}
           rowRender={(row, index) => (
-            <Row key={index} {...row} />
+            <Row key={index} {...row} currencies={currencies} />
           )}
         />
-        { view === 'off' && <SaveKeys isDownload={this.handleDownload} isChange={() => this.changeView('on')} /> }
-        { process.env.TESTNET && <WithdrawButton onClick={this.handleClear} >Exit</WithdrawButton> }
-        <WithdrawButton onClick={this.handleDownload}>Download keys</WithdrawButton>
-        <WithdrawButton onClick={this.handleImportKeys}>Import keys</WithdrawButton>
+        <div>
+          { view === 'off' && <SaveKeys isDownload={this.handleDownload} isChange={() => this.changeView('on')} /> }
+          { process.env.TESTNET && <WithdrawButton onClick={this.handleClear} >Exit</WithdrawButton> }
+          <WithdrawButton onClick={this.handleDownload}>Download keys</WithdrawButton>
+          <WithdrawButton onClick={this.handleImportKeys}>Import keys</WithdrawButton>
+        </div>
       </section>
     )
   }

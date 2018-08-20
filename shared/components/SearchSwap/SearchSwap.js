@@ -20,7 +20,7 @@ export default class CreateOfferButton extends Component {
   }
 
   render() {
-    const { buyCurrency, sellCurrency, flipCurrency, handleBuyCurrencySelect, handleSellCurrencySelect } = this.props
+    const { buyCurrency, sellCurrency, flipCurrency, handleBuyCurrencySelect, handleSellCurrencySelect, currencies } = this.props
 
     return (
       <div styleName="choice">
@@ -30,6 +30,7 @@ export default class CreateOfferButton extends Component {
             styleName="currencySelect"
             selectedValue={buyCurrency}
             onSelect={handleBuyCurrencySelect}
+            currencies={currencies}
           />
         </div>
         <Flip onClick={flipCurrency} />
@@ -39,6 +40,7 @@ export default class CreateOfferButton extends Component {
             styleName="currencySelect"
             selectedValue={sellCurrency}
             onSelect={handleSellCurrencySelect}
+            currencies={currencies}
           />
         </div>
         <div styleName="row">

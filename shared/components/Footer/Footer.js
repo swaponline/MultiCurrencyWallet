@@ -1,16 +1,18 @@
 import React, { Component } from 'react'
-import cx from 'classnames'
+
 import { connect } from 'redaction'
 import { withRouter } from 'react-router-dom'
 
-import CSSModules from 'react-css-modules'
+import cx from 'classnames'
 import styles from './Footer.scss'
+import logo from './images/logo.svg'
+import CSSModules from 'react-css-modules'
 
 import Info from './Info/Info'
-import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import SocialMenu from './SocialMenu/SocialMenu'
+import Links from './Links/Links'
+import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 
-import logo from './images/logo.svg'
 
 @withRouter
 @connect(({ ipfs: { server, isOnline, onlineUsers } }) => ({
@@ -71,7 +73,7 @@ export default class Footer extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if(prevProps.location.pathname !== this.props.location.pathname) {
+    if (prevProps.location.pathname !== this.props.location.pathname) {
       this.calculateFooterHeight()
     }
   }
@@ -97,15 +99,15 @@ export default class Footer extends Component {
         <div ref={(node) => this.infoFooterRef = node} styleName={informationFooterStyles}>
           <WidthContainer styleName="container">
             <Info serverAddress={server} onlineUsers={onlineUsers} isOnline={isOnline} />
-            <span styleName="text">
-              Need help? Join Telegram chat <a href="https://t.me/swaponline" target="_blank" rel="noreferrer noopener">@swaponline</a>
-            </span>
           </WidthContainer>
         </div>
         <div styleName={defaultFooterStyles}>
-          <WidthContainer styleName="container">
+          <WidthContainer styleName="container container--links">
+            <Links />
+          </WidthContainer>
+          <WidthContainer styleName="container container--copyright">
             <div styleName="copyright">
-              <img src={logo} styleName="copyright-logo" alt="logotype"/>
+              <img src={logo} styleName="copyright-logo" alt="logotype" />
               <span styleName="copyright-text">© 2018 Swap Online Harju maakond, Tallinn, Kesklinna linnaosa</span>
             </div>
             <SocialMenu />

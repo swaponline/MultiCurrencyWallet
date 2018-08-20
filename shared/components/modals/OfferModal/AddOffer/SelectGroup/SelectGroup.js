@@ -7,7 +7,7 @@ import Group from '../Group/Group'
 import CurrencySelect from 'components/ui/CurrencySelect/CurrencySelect'
 
 
-const SelectGroup = ({ className, label, id, inputValueLink, placeholder, selectedCurrencyValue, onCurrencySelect }) => (
+const SelectGroup = ({ className, label, id, inputValueLink, placeholder, selectedCurrencyValue, onCurrencySelect, currencies }) => (
   <Group
     className={className}
     label={label}
@@ -18,6 +18,7 @@ const SelectGroup = ({ className, label, id, inputValueLink, placeholder, select
       styleName="currencySelect"
       selectedValue={selectedCurrencyValue}
       onSelect={onCurrencySelect}
+      currencies={currencies}
     />
   </Group>
 )

@@ -101,7 +101,7 @@ export default class Row extends Component {
                       <Link to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`}> Go to the swap</Link>
                     </Fragment>
                   ) : (
-                    balance > amount.toNumber() ? (
+                    balance > Number(amount) ? (
                       <Link to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`} >
                         <RequestButton onClick={() => this.sendRequest(id)} />
                       </Link>
