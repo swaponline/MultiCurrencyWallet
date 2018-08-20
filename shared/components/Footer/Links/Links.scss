@@ -1,28 +1,107 @@
+.links {
+  padding: 0 35px;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  @include media-desktop {
+    display: flex;
+  }
+}
+
 .column {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  width: 24%;
+  width: 100%;
+  margin-top: 16px;
+
+
+  @include media-tablet {
+    margin-top: 0;
+    width: 230px;
+  }
+
+  @include media-tablet-landscape {
+    margin-top: 0;
+    width: 45%;
+  }
+
+  @include media-desktop {
+    margin-top: 0;
+    width: 230px;
+  }
 
   h4 {
-    font-size: 18px;
+    font-size: 22px;
+
+    @include media-mobile {
+      text-align: center;
+    }
+
+    @include media-desktop {
+      font-size: 18px;
+    }
   }
 
   a {
-    font-size: 14px;
+    font-size: 18px;
     color: #7371ff;
     transition: all 0.3s ease;
 
     &:hover {
       color: #e91db4;
     }
+
+    @include media-desktop {
+      font-size: 14px;
+    }
+
+
   }
 
   span {
     font-size: 14px;
+
+    @include media-mobile {
+      font-size: 18px;
+    }
+  }
+}
+
+.left {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+
+  @include media-tablet {
+    justify-content: space-between;
+
+    & > .column {
+      &:last-child {
+        text-align: right;
+      }
+    }
+  }
+}
+
+.right {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  text-align: left;
+
+  @include media-tablet {
+    margin-top: 16px;
+    justify-content: space-between;
+
+    & > .column {
+      &:last-child {
+        text-align: right;
+      }
+    }
   }
 
-  &:last-child {
-    margin: 0;
+  @include media-desktop {
+    text-align: right;
   }
 }

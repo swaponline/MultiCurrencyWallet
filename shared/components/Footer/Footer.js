@@ -22,96 +22,25 @@ import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 }))
 @CSSModules(styles, { allowMultiple: true })
 export default class Footer extends Component {
-  state = { fixed: false, fullFixed: false }
-
-  __footerFullHeight = 0
-
-  calculateFooterHeight = () => {
-    const pageHeight = document.body.scrollHeight
-    const viewportHeight = document.documentElement.clientHeight
-    const scrolledHeight = document.documentElement.scrollTop
-
-    const pageWithoutFooter = pageHeight - (this.__footerFullHeight - this.infoFooterRef.clientHeight)
-
-    const viewportBiggerThanPage = viewportHeight > pageHeight
-
-    if (viewportBiggerThanPage) {
-      return this.setFullFixed(true)
-    }
-    this.setFullFixed(false)
-
-
-    if (pageWithoutFooter <= viewportHeight + scrolledHeight) {
-      this.setFixed(false)
-    } else {
-      this.setFixed(true)
-    }
-  }
-
-  setFullFixed = (value) => {
-    if (this.state.fullFixed !== value) {
-      this.setState({ fullFixed: value })
-    }
-  }
-
-  setFixed = (value) => {
-    if (this.state.fixed !== value) {
-      this.setState({ fixed: value })
-    }
-  }
-
-  componentDidMount() {
-    document.addEventListener('scroll', this.calculateFooterHeight)
-    window.addEventListener('resize', this.calculateFooterHeight)
-    this.__footerFullHeight = this.footerRef.clientHeight
-    this.calculateFooterHeight()
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('scroll', this.calculateFooterHeight)
-    window.removeEventListener('resize', this.calculateFooterHeight)
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.location.pathname !== this.props.location.pathname) {
-      this.calculateFooterHeight()
-    }
-  }
-
   render() {
     const { onlineUsers, isOnline, server } = this.props
-    const { fixed, fullFixed } = this.state
-
-    const informationFooterStyles = cx('information-footer', {
-      'fixed': fixed && !fullFixed,
-    })
-
-    const defaultFooterStyles = cx('default-footer', {
-      'margin': fixed && !fullFixed,
-    })
-
-    const footerStyles = cx('footer', {
-      'fixed': fullFixed,
-    })
 
     return (
-      <div ref={(node) => this.footerRef = node} styleName={footerStyles}>
-        <div ref={(node) => this.infoFooterRef = node} styleName={informationFooterStyles}>
+      <div styleName="footer">
+        <div styleName="information-footer">
           <WidthContainer styleName="container">
             <Info serverAddress={server} onlineUsers={onlineUsers} isOnline={isOnline} />
           </WidthContainer>
         </div>
-        <div styleName={defaultFooterStyles}>
-          <WidthContainer styleName="container container--links">
-            <Links />
-          </WidthContainer>
-          <WidthContainer styleName="container container--copyright">
+        <div styleName="default-footer">
+          <Links />
+          <div styleName="container--copyright">
             <div styleName="copyright">
               <img src={logo} styleName="copyright-logo" alt="logotype" />
               <span styleName="copyright-text">© 2018 Swap Online Harju maakond, Tallinn, Kesklinna linnaosa</span>
             </div>
             <SocialMenu />
-          </WidthContainer>
+          </div>
         </div>
       </div>
     )

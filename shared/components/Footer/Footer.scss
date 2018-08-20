@@ -3,13 +3,10 @@ $information-footer-height: 44px;
 .footer {
   width: 100%;
   background: #ffffff;
+  margin-top: 44px;
 
-  &.fixed {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 4;
+  @include media-desktop {
+    margin-bottom: $information-footer-height;
   }
 }
 
@@ -18,11 +15,21 @@ $information-footer-height: 44px;
   height: $information-footer-height;
   background: #ffffff;
 
-  &.fixed {
+  @include media-mobile {
+    display: flex;
+    justify-content: center;
+  }
+
+  @include media-tablet {
+    display: flex;
+    justify-content: center;
+  }
+
+  @include media-desktop {
     position: fixed;
-    bottom: 0;
     left: 0;
     right: 0;
+    bottom: 0;
     z-index: 4;
   }
 }
@@ -35,38 +42,95 @@ $information-footer-height: 44px;
   display: flex;
   height: 100%;
   align-items: center;
-  justify-content: space-between;
 
-  &--links {
-    align-items: flex-start;
+  @include media-desktop {
+    max-width: 1420px;
   }
 
   &--copyright {
+    display: flex;
+    justify-content: space-between;
     margin-top: 16px;
+    flex-wrap: wrap;
+
+    @include media-mobile {
+      justify-content: center;
+    }
+
+    @include media-tablet {
+      justify-content: center;
+    }
+
+    @include media-tablet-landscape {
+      padding: 0 35px;
+      justify-content: space-between;
+    }
+
+    @include media-desktop {
+      padding: 0 35px;
+      justify-content: space-between;
+    }
   }
 }
 
 
 .default-footer {
   padding-bottom: 8px;
-
-  &.margin {
-    margin-top: $information-footer-height;
-  }
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
 .copyright {
   display: flex;
   align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  @include media-mobile {
+    margin-top: 16px;
+    order: 1;
+  }
+
+  @include media-tablet {
+    order: 1;
+  }
+
+  @include media-tablet-landscape {
+    order: 0;
+  }
 
   &-logo {
     width: 40px;
     height: 25px;
+
+    @include media-mobile {
+      width: 80px;
+      height: 50px;
+    }
+
+    @include media-tablet {
+      width: 80px;
+      height: 50px;
+    }
+    @include media-tablet-landscape {
+      width: 60px;
+      height: 35px;
+    }
   }
 
   &-text {
     font-size: 12px;
-    color: rgba(51, 51, 51, 0.6)
+    color: rgba(51, 51, 51, 0.6);
+
+    @include media-mobile {
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    @include media-tablet {
+      margin-top: 8px;
+      text-align: center;
+    }
   }
 }
 
