@@ -27,7 +27,11 @@ export default class Row extends Component {
 
   componentWillMount() {
     const { row: {  sellCurrency, isMy, buyCurrency } } = this.props
-    isMy ? this.checkBalance(sellCurrency) : this.checkBalance(buyCurrency)
+    if (isMy) {
+      this.checkBalance(sellCurrency)
+    } else {
+      this.checkBalance(buyCurrency)
+    }
   }
 
   checkBalance = async (sellCurrency) => {

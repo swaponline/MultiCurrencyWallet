@@ -26,7 +26,6 @@ script:
 #Uncomment this when enable covaralls
 #- yarn test:unit -- --coverage
 #- yarn test:snapshot -- --coverage
-- yarn test
 - echo "____________LINT________________"
 - yarn eslint
 - echo "________Build mainnet___________"

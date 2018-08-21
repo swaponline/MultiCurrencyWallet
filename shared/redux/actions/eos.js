@@ -35,7 +35,7 @@ const init = async () => {
       keyProvider,
     })
 
-    ecc = EOSLibrary.modules.ecc
+    ecc = EOSLibrary.modules.ecc /* eslint-disable-line */
   }
 }
 

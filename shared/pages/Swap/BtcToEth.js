@@ -78,7 +78,7 @@ export default class BtcToEth extends Component {
 
     return (
       <div>
-        {/*<OverProgress text={flow.step} progress={progress} />*/}
+        {/* <OverProgress text={flow.step} progress={progress} /> */}
         {
           this.swap.id && (
             <strong>{this.swap.sellAmount.toNumber()} {this.swap.sellCurrency} &#10230; {this.swap.buyAmount.toNumber()} {this.swap.buyCurrency}</strong>
@@ -87,7 +87,7 @@ export default class BtcToEth extends Component {
         {
           !this.swap.id && (
             this.swap.isMy ? (
-              <h3>This order doesn't have a buyer</h3>
+              <h3>This order doesn&apos;t have a buyer</h3>
             ) : (
               <Fragment>
                 <h3>The order creator is offline. Waiting for him..</h3>
@@ -297,7 +297,7 @@ export default class BtcToEth extends Component {
           )
         }
         <br />
-        {/*{ !flow.isFinished && <Button green onClick={this.addGasPrice}>Add gas price</Button> }*/}
+        {/* { !flow.isFinished && <Button green onClick={this.addGasPrice}>Add gas price</Button> } */}
         { children }
       </div>
     )

@@ -105,9 +105,7 @@ export default class DropDown extends Component {
     })
 
     return (
-      <ClickOutside onClickOutside={() => {
-        isToggleActive && this.toggle()
-      }}>
+      <ClickOutside onClickOutside={isToggleActive ? () => this.toggle() : () => {}}>
         <div styleName={dropDownStyleName} className={className}>
           <div styleName="selectedItem" onClick={this.toggle}>
             <div styleName="arrow" />

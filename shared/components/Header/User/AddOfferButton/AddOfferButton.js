@@ -13,13 +13,11 @@ export default class AddOfferButton extends Component {
       <Fragment>
         <div
           styleName="button"
-          onClick={() => pinkClick()}
         >
           Subscribe
         </div>
         <div
           styleName="buttonMobile"
-          onClick={() => pinkClick()}
         />
       </Fragment>
     )

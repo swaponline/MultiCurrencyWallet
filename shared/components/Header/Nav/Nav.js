@@ -12,13 +12,17 @@ import styles from './Nav.scss'
 export default class Nav extends Component {
 
   static propTypes = {
-    menu: PropTypes.array.isRequired
+    menu: PropTypes.array.isRequired,
   }
 
   handleClick = () => {
     const scrollStep = -window.scrollY / (500 / 15)
     const scrollInterval = setInterval(() => {
-      window.scrollY !== 0 ? window.scrollBy(0, scrollStep) : clearInterval(scrollInterval)
+      if (window.scrollY !== 0) {
+        window.scrollBy(0, scrollStep)
+      } else {
+        clearInterval(scrollInterval)
+      }
     }, 15)
   }
 
