@@ -3,13 +3,13 @@ import PropTypes from 'prop-types'
 
 import { links } from 'helpers'
 import { Link } from 'react-router-dom'
+import CopyToClipboard from 'react-copy-to-clipboard'
 
-import CSSModules from 'react-css-modules'
 import styles from './RowFeeds.scss'
+import CSSModules from 'react-css-modules'
+import ShareImg from './images/share-alt-solid.svg'
 
 import Coins from 'components/Coins/Coins'
-
-import ShareImg from './images/share-alt-solid.svg'
 
 
 @CSSModules(styles, { allowMultiple: true })
@@ -20,7 +20,7 @@ export default class RowFeeds extends Component {
   }
 
   state = {
-    viewText: false,
+    isLinkCopied: false,
   }
 
   componentWillReceiveProps(nextProps) {
@@ -29,26 +29,20 @@ export default class RowFeeds extends Component {
     }
   }
 
-  handleCopiedLink = (event) => {
-    event.preventDefault()
-    this.setState({ viewText: true })
-
-    const el = document.createElement('textarea')
-    el.value = this.linkText.href
-    el.style.position = 'absolute'
-    el.style.left = '-9999px'
-    document.body.appendChild(el)
-    el.select()
-    document.execCommand('copy')
-    document.body.removeChild(el)
-
-    setTimeout(() => {
-      this.setState({ viewText: false })
-    }, 800)
+  handleCopyLink = () => {
+    this.setState({
+      isLinkCopied: true,
+    }, () => {
+      setTimeout(() => {
+        this.setState({
+          isLinkCopied: false,
+        })
+      }, 500)
+    })
   }
 
   render() {
-    const { viewText } = this.state
+    const { isLinkCopied } = this.state
     const { row: { requests, buyAmount, buyCurrency, sellAmount, sellCurrency, exchangeRate, id }, declineRequest, acceptRequest, removeOrder } = this.props
 
     return (
@@ -59,17 +53,15 @@ export default class RowFeeds extends Component {
         <td>{`${buyAmount.toFixed(5)} ${buyCurrency}`}</td>
         <td>{`${sellAmount.toFixed(5)} ${sellCurrency}`}</td>
         <td>{`${(exchangeRate || (buyAmount/sellAmount)).toFixed(5)} ${buyCurrency}/${sellCurrency}`}</td>
-        <td style={{ position: 'relative' }}>
-          { viewText && <span style={{ fontSize: '12px', position: 'absolute', top: '8px', left: 'calc(20%)' }}> Copied <br /></span>  }
-          <a
-            ref={a => this.linkText = a}
-            onClick={this.handleCopiedLink}
-            href={`${links.exchange}/${sellCurrency.toLowerCase()}-${buyCurrency.toLowerCase()}/${id}`}
-            styleName="share"
-          >
+        <CopyToClipboard
+          onCopy={this.handleCopyLink}
+          text={`${links.exchange}/${sellCurrency.toLowerCase()}-${buyCurrency.toLowerCase()}/${id}`}
+        >
+          <td style={{ position: 'relative', cursor: 'pointer' }}>
+            { isLinkCopied && <span style={{ fontSize: '12px', position: 'absolute', top: '8px', left: 'calc(20%)' }}> Copied <br /></span>  }
             <img src={ShareImg} styleName="img" alt="share" /><span>Share</span>
-          </a>
-        </td>
+          </td>
+        </CopyToClipboard>
         <td>
           {
             Boolean(requests && requests.length) ? (

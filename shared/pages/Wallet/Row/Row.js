@@ -6,10 +6,11 @@ import { Link } from 'react-router-dom'
 import cssModules from 'react-css-modules'
 import styles from './Row.scss'
 
+import CopyToClipboard from 'react-copy-to-clipboard'
+
 import Coin from 'components/Coin/Coin'
-import WithdrawButton from 'components/controls/WithdrawButton/WithdrawButton'
-import ReloadButton from 'components/controls/ReloadButton/ReloadButton'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
+import WithdrawButton from 'components/controls/WithdrawButton/WithdrawButton'
 
 import LinkAccount from '../LinkAccount/LinkAcount'
 
@@ -21,6 +22,7 @@ export default class Row extends Component {
     isBalanceFetching: false,
     viewText: false,
     tradeAllowed: false,
+    isAddressCopied: false,
   }
 
   componentWillMount() {
@@ -66,19 +68,16 @@ export default class Row extends Component {
       })
   }
 
-  handleCopiedAddress = () => {
-    this.setState({ viewText: true })
-    const el = document.createElement('textarea')
-    el.value = this.textAddress.innerText
-    el.style.position = 'absolute'
-    el.style.left = '-9999px'
-    document.body.appendChild(el)
-    el.select()
-    document.execCommand('copy')
-    document.body.removeChild(el)
-    setTimeout(() => {
-      this.setState({ viewText: false })
-    }, 800)
+  handleCopyAddress = () => {
+    this.setState({
+      isAddressCopied: true,
+    }, () => {
+      setTimeout(() => {
+        this.setState({
+          isAddressCopied: false,
+        })
+      }, 500)
+    })
   }
 
   handleEosLogin = () => {
@@ -107,7 +106,7 @@ export default class Row extends Component {
   }
 
   render() {
-    const { isBalanceFetching, viewText, tradeAllowed } = this.state
+    const { isBalanceFetching, tradeAllowed, isAddressCopied } = this.state
     const { currency, name, balance, isBalanceFetched, address, contractAddress, decimals, approve, unconfirmedBalance } = this.props
 
     return (
@@ -134,34 +133,39 @@ export default class Row extends Component {
             )
           }
         </td>
-        <td ref={td => this.textAddress = td}>
-          {
-            !contractAddress ? (
-              <Fragment>
-                { currency !== 'EOS' && <i className="far fa-copy" styleName="icon" onClick={this.handleCopiedAddress} /> }
-                <LinkAccount type={currency} address={address} >{address}</LinkAccount>
-              </Fragment>
-            ) : (
-              !approve ? (
-                <button styleName="button" onClick={() => this.handleApproveToken(decimals, contractAddress, name)}>Approve</button>
-              ) : (
+        <CopyToClipboard
+          text={address}
+          onCopy={this.handleCopyAddress}
+        >
+          <td style={{ position: 'relative' }}>
+            {
+              !contractAddress ? (
                 <Fragment>
-                  <i className="far fa-copy" styleName="icon" onClick={this.handleCopiedAddress} />
-                  <LinkAccount type={currency} contractAddress={contractAddress} address={address} >{address}</LinkAccount>
+                  { currency !== 'EOS' && <i className="far fa-copy" styleName="icon" onClick={this.handleCopiedAddress} /> }
+                  <LinkAccount type={currency} address={address} >{address}</LinkAccount>
                 </Fragment>
+              ) : (
+                !approve ? (
+                  <button styleName="button" onClick={() => this.handleApproveToken(decimals, contractAddress, name)}>Approve</button>
+                ) : (
+                  <Fragment>
+                    <i className="far fa-copy" styleName="icon" onClick={this.handleCopiedAddress} />
+                    <LinkAccount type={currency} contractAddress={contractAddress} address={address} >{address}</LinkAccount>
+                  </Fragment>
+                )
               )
-            )
-          }
-          {
-            currency === 'EOS' && address === '' && <button styleName="button" onClick={this.handleEosLogin}>Login</button>
-          }
-        </td>
-        <td style={{ position: 'relative' }} >
+            }
+            {
+              currency === 'EOS' && address === '' && <button styleName="button" onClick={this.handleEosLogin}>Login</button>
+            }
+            { isAddressCopied && <p styleName="copied" >Address copied to clipboard</p> }
+          </td>
+        </CopyToClipboard>
+        <td >
           <div>
             <WithdrawButton onClick={this.handleWithdraw} styleName="marginRight" >
               Withdraw
             </WithdrawButton>
-            { viewText && <p styleName="copied" >Address copied to clipboard</p> }
             {
               tradeAllowed && (
                 <Fragment>
