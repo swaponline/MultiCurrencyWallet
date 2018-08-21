@@ -164,7 +164,7 @@ export default class Row extends Component {
         <td >
           <div>
             <WithdrawButton onClick={this.handleWithdraw} styleName="marginRight" >
-              Withdraw
+              Send
             </WithdrawButton>
             {
               tradeAllowed && (

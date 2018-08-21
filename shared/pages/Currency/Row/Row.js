@@ -12,8 +12,8 @@ import Coins from 'components/Coins/Coins'
 export default class Row extends Component {
 
   static propTypes = {
-    from: PropTypes.object.isRequired,
-    to: PropTypes.object.isRequired
+    from: PropTypes.string.isRequired,
+    to: PropTypes.string.isRequired,
   }
 
   render() {
@@ -22,11 +22,11 @@ export default class Row extends Component {
     return (
       <tr>
         <td>
-          <Coins styleName="coins" names={[ from.name, to.name ]} size={40} />
+          <Coins styleName="coins" names={[ from, to ]} size={40} />
         </td>
-        <td>{`${from.name}-${to.name}`}</td>
+        <td>{`${from.toUpperCase()}-${to.toUpperCase()}`}</td>
         <td>
-          <Link styleName="button" to={`/exchange/${from.value}-${to.value}`}>Trade</Link>
+          <Link styleName="button" to={`/exchange/${from}-${to}`}>Trade</Link>
         </td>
       </tr>
     )

@@ -13,62 +13,41 @@ import { getSeoPage } from 'helpers/seo'
 
 
 @connect(({ currencies }) => ({
-  currencies: currencies.items
+  currencies: currencies.items,
 }))
 export default class Currency extends Component {
 
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      currency: props.match.params.currency
-    }
-
-    this.pageCurrency = !!props.match.params.currency && props.currencies.find(c => c.value === props.match.params.currency)
-    this.seoPage = getSeoPage(props.location.pathname)
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props.match.params.currency !== nextProps.match.params.currency) {
-      this.setState({
-        currency: nextProps.match.params.currency
-      })
-      this.pageCurrency = nextProps.match.params.currency && nextProps.currencies.find(c => c.value === nextProps.match.params.currency)
-    }
-    if (this.props.location.pathname !== nextProps.location.pathname) {
-      this.seoPage = getSeoPage(nextProps.location.pathname)
-    }
-  }
-
   getRows = () => {
-    const {
-      props: { currencies },
-      state: { currency }
-    } = this
+    let { match:{ params: { currency, trade } }, currencies } = this.props
+
+    if (currency === 'btc') {
+      currencies = currencies.filter(c => c.value !== currency)
+    } else {
+      currencies = currencies.filter(c => c.value === 'btc')
+    }
+
+    if (trade === 'sell') {
+      currencies = currencies.reduce((previous, current) =>
+        previous.concat({ from: current.value, to: currency }),
+      [])
+    } else {
+      currencies = currencies.reduce((previous, current) =>
+        previous.concat({ from: currency, to: current.value }),
+      [])
+    }
 
     return currencies
-      .filter(c => c.value !== currency)
-      .reduce((previous, current) => {
-        previous.push({
-          from: this.pageCurrency,
-          to: current
-        })
-        previous.push({
-          from: current,
-          to: this.pageCurrency
-        })
-
-        return previous
-      }, [])
   }
 
   render() {
+    const { match:{ params: { currency } } } = this.props
+
     return (
       <section>
         <PageHeadline>
           <Fragment>
-            <Title>{this.seoPage && this.seoPage.title}</Title>
-            <SubTitle>{this.seoPage && this.seoPage.h1}</SubTitle>
+            <Title>{currency}</Title>
+            <SubTitle>{currency.toUpperCase()} Trade</SubTitle>
           </Fragment>
         </PageHeadline>
         <Table
