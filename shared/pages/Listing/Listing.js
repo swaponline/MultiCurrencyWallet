@@ -13,7 +13,7 @@ import PageHeadline from 'components/PageHeadline/PageHeadline'
 
 
 const Listing = () => (
-  <div className="container">
+  <div styleName="container">
     <PageHeadline>
       <SubTitle>Listing</SubTitle>
     </PageHeadline>

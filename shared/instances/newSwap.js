@@ -16,8 +16,6 @@ import { EthSwap, EthTokenSwap, BtcSwap } from 'swap.swaps'
 import { ETH2BTC, BTC2ETH, ETHTOKEN2BTC, BTC2ETHTOKEN } from 'swap.flows'
 
 
-console.log('constants', constants)
-
 const createSwapApp = () => {
   swapApp.setup({
     network: process.env.MAINNET ? 'mainnet' : 'testnet',
