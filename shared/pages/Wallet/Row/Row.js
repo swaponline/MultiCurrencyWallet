@@ -34,13 +34,13 @@ export default class Row extends Component {
     })
   }
 
-  componentDidMount() {
-    const { contractAddress, name } = this.props
-
-    if (name !== undefined) {
-      actions.token.allowance(contractAddress, name)
-    }
-  }
+  // componentDidMount() {
+  //   const { contractAddress, name } = this.props
+  //
+  //   if (name !== undefined) {
+  //     actions.token.allowance(contractAddress, name)
+  //   }
+  // }
 
   handleReloadBalance = () => {
     const { isBalanceFetching } = this.state
@@ -85,13 +85,13 @@ export default class Row extends Component {
     actions.modals.open(constants.modals.Eos, {})
   }
 
-  handleApproveToken = (decimals, contractAddress, name) => {
-    actions.modals.open(constants.modals.Approve, {
-      contractAddress,
-      decimals,
-      name,
-    })
-  }
+  // handleApproveToken = (decimals, contractAddress, name) => {
+  //   actions.modals.open(constants.modals.Approve, {
+  //     contractAddress,
+  //     decimals,
+  //     name,
+  //   })
+  // }
 
   handleWithdraw = () => {
     const { currency, address, contractAddress, decimals, balance } = this.props
@@ -118,7 +118,7 @@ export default class Row extends Component {
 
   render() {
     const { isBalanceFetching, tradeAllowed, isAddressCopied } = this.state
-    const { currency, name, balance, isBalanceFetched, address, contractAddress, decimals, approve, unconfirmedBalance } = this.props
+    const { currency, balance, isBalanceFetched, address, contractAddress, unconfirmedBalance } = this.props
 
     return (
       <tr>
@@ -156,14 +156,10 @@ export default class Row extends Component {
                   <LinkAccount type={currency} address={address} >{address}</LinkAccount>
                 </Fragment>
               ) : (
-                !approve ? (
-                  <button styleName="button" onClick={() => this.handleApproveToken(decimals, contractAddress, name)}>Approve</button>
-                ) : (
-                  <Fragment>
-                    <i className="far fa-copy" styleName="icon" onClick={this.handleCopiedAddress} />
-                    <LinkAccount type={currency} contractAddress={contractAddress} address={address} >{address}</LinkAccount>
-                  </Fragment>
-                )
+                <Fragment>
+                  <i className="far fa-copy" styleName="icon" onClick={this.handleCopiedAddress} />
+                  <LinkAccount type={currency} contractAddress={contractAddress} address={address} >{address}</LinkAccount>
+                </Fragment>
               )
             }
             {
