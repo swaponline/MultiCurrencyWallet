@@ -4,9 +4,11 @@ import crypto from 'crypto'
 import config from 'app-config'
 import { BigNumber } from 'bignumber.js'
 
+import actions from 'redux/actions'
+
 import Timer from './Timer/Timer'
 import Button from 'components/controls/Button/Button'
-import OverProgress from 'components/loaders/OverProgress/OverProgress'
+import SwapProgress from 'components/loaders/SwapProgress/SwapProgress'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import TimerButton from 'components/controls/TimerButton/TimerButton'
 
@@ -37,6 +39,11 @@ export default class BtcToEth extends Component {
     this.setState({
       flow: values,
     })
+  }
+
+  overProgress = () => {
+    const { flow } = this.state
+    actions.loader.show(false, '', text, true)
   }
 
   submitSecret = () => {
@@ -74,11 +81,10 @@ export default class BtcToEth extends Component {
   render() {
     const { children } = this.props
     const { secret, flow, enabledButton } = this.state
-    // let progress = Math.floor(100 / 7 * flow.step)
 
     return (
       <div>
-        {/*<OverProgress text={flow.step} progress={progress} />*/}
+        {this.overProgress()}
         {
           this.swap.id && (
             <strong>{this.swap.sellAmount.toNumber()} {this.swap.sellCurrency} &#10230; {this.swap.buyAmount.toNumber()} {this.swap.buyCurrency}</strong>

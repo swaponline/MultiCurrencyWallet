@@ -2,21 +2,21 @@ import React from 'react'
 import { connect } from 'redaction'
 
 import Loader from 'components/loaders/Loader/Loader'
+import SwapProgress from 'components/loaders/SwapProgress/SwapProgress'
 
 
-const RequestLoader = ({ isVisible, text, txId }) => {
-  if (!isVisible) {
-    return null
-  }
-
+const RequestLoader = ({ isVisible, text, txId, swap, data}) => {
   return (
-    <Loader text={text} txId={txId} />
-  )
+   swap ? <SwapProgress data={data} /> : <Loader text={text} txId={txId} /> && isVisible
+  ) 
 }
+
 
 
 export default connect({
   isVisible: 'loader.isVisible',
   text: 'loader.text',
   txId: 'loader.txId',
+  swap: 'loader.swap',
+  data: 'loader.data',
 })(RequestLoader)
