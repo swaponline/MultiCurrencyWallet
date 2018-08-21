@@ -8,6 +8,7 @@ import * as core from './core'
 import * as ipfs from './ipfs'
 import * as api from './api'
 import * as currencies from './currencies'
+import * as menu from './menu'
 
 
 export default {
@@ -21,4 +22,5 @@ export default {
   ipfs,
   api,
   currencies,
+  menu,
 }
