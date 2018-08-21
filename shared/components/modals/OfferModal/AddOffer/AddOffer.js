@@ -18,8 +18,17 @@ import SelectGroup from './SelectGroup/SelectGroup'
 import Button from 'components/controls/Button/Button'
 
 
+const minAmount = {
+  eth: 0.05,
+  btc: 0.004,
+  noxon: 1,
+  swap: 1,
+  jot: 1,
+}
+
+
 @connect(({ currencies }) => ({
-  currencies: currencies.items
+  currencies: currencies.items,
 }))
 @cssModules(styles, { allowMultiple: true })
 export default class AddOffer extends Component {
@@ -36,7 +45,6 @@ export default class AddOffer extends Component {
       buyCurrency: buyCurrency || 'btc',
       sellCurrency: sellCurrency || 'eth',
       isSending: false,
-      min: 0.05,
     }
   }
 
@@ -161,10 +169,10 @@ export default class AddOffer extends Component {
   }
 
   handleNext = () => {
-    const { exchangeRate, buyAmount, sellAmount, balance, min } = this.state
+    const { exchangeRate, buyAmount, sellAmount, balance, sellCurrency } = this.state
     const { onNext } = this.props
 
-    const isDisabled = !exchangeRate || !buyAmount || !sellAmount || sellAmount > balance || sellAmount < min
+    const isDisabled = !exchangeRate || !buyAmount || !sellAmount || sellAmount > balance || sellAmount < minAmount[sellCurrency]
 
     if (!isDisabled) {
       actions.analytics.dataEvent('orderbook-addoffer-click-next-button')
@@ -181,17 +189,12 @@ export default class AddOffer extends Component {
 
   render() {
     const { currencies } = this.props
-    const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency, balance, min } = this.state
+    const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency, balance } = this.state
     const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
-    const isDisabled = !exchangeRate || !buyAmount && !sellAmount || sellAmount > balance || sellAmount < min
+    const isDisabled = !exchangeRate || !buyAmount && !sellAmount || sellAmount > balance || sellAmount < minAmount[sellCurrency]
 
-    if (sellCurrency === 'btc') {
-      linked.sellAmount.check((value) => value > 0.004, `Amount must be greater than 0.004 `)
-    } else {
-      linked.sellAmount.check((value) => value > min, `Amount must be greater than ${min} `)
-    }
-
-    linked.sellAmount.check((value) => value < balance, `Amount must be bigger your balance`)
+    linked.sellAmount.check((value) => value > minAmount[sellCurrency], `Amount must be greater than ${minAmount[sellCurrency]} `)
+    linked.sellAmount.check((value) => value <= balance, `Amount must be bigger your balance`)
 
 
     return (
