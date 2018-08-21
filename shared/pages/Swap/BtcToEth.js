@@ -42,10 +42,10 @@ export default class BtcToEth extends Component {
   }
 
   overProgress = () => {
-    const { flow } = this.state
-    actions.loader.show(false, '', text, true)
+    const swap = this.swap;
+    actions.loader.show(false, '', '', true, {swap});
   }
-
+  
   submitSecret = () => {
     const { secret } = this.state
 
