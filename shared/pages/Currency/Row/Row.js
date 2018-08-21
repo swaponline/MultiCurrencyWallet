@@ -24,7 +24,9 @@ export default class Row extends Component {
         <td>
           <Coins styleName="coins" names={[ from, to ]} size={40} />
         </td>
-        <td>{`${from.toUpperCase()}-${to.toUpperCase()}`}</td>
+        <td>
+          <span>{from.toUpperCase()}-{to.toUpperCase()}</span>
+        </td>
         <td>
           <Link styleName="button" to={`/exchange/${from}-${to}`}>Trade</Link>
         </td>

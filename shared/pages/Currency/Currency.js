@@ -18,7 +18,7 @@ import { getSeoPage } from 'helpers/seo'
 export default class Currency extends Component {
 
   getRows = () => {
-    let { match:{ params: { currency, trade } }, currencies } = this.props
+    let { match:{ params: { currency, exchange } }, currencies } = this.props
 
     if (currency === 'btc') {
       currencies = currencies.filter(c => c.value !== currency)
@@ -26,7 +26,7 @@ export default class Currency extends Component {
       currencies = currencies.filter(c => c.value === 'btc')
     }
 
-    if (trade === 'sell') {
+    if (exchange === 'sell') {
       currencies = currencies.reduce((previous, current) =>
         previous.concat({ from: current.value, to: currency }),
       [])
