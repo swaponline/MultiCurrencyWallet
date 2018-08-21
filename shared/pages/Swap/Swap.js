@@ -1,8 +1,11 @@
 import React, { PureComponent } from 'react'
+
 import Swap from 'swap.swap'
+import SwapApp from 'swap.app'
 
 import { connect } from 'redaction'
 import actions from 'redux/actions'
+import { links } from 'helpers'
 
 import EmergencySave from './EmergencySave/EmergencySave'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
@@ -37,7 +40,12 @@ export default class SwapComponent extends PureComponent {
   }
 
   componentWillMount() {
-    const { match : { params : { orderId } } } = this.props
+    const { match : { params : { orderId } }, history } = this.props
+    const data = SwapApp.services.orders.getByKey(orderId)
+
+    if (!data || !orderId) {
+      history.push(links.exchange)
+    }
 
     const swap = new Swap(orderId)
     const SwapComponent = swapComponents[swap.flow._flowName.toUpperCase()]
