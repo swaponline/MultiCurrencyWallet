@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { connect } from 'redaction'
+import { withRouter } from 'react-router-dom'
 
 import CSSModules from 'react-css-modules'
 import styles from './Header.scss'
@@ -10,15 +12,25 @@ import Logo from 'components/Logo/Logo'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 
 
-const Header = () => (
-  <div styleName="header">
-    <WidthContainer styleName="container">
-      <Logo withLink />
-      <NavMobile />
-      <Nav />
-      <User />
-    </WidthContainer>
-  </div>
-)
+@withRouter
+@connect(({ menu: { items: menu } }) => ({
+  menu,
+}))
+@CSSModules(styles)
+export default class Header extends Component {
+  render() {
+    const { menu } = this.props
 
-export default CSSModules(Header, styles)
+    return (
+      <div styleName="header">
+        <WidthContainer styleName="container">
+          <Logo withLink />
+          <NavMobile menu={menu} />
+          <Nav menu={menu} />
+          <Logo withLink mobile />
+          <User />
+        </WidthContainer>
+      </div>
+    )
+  }
+}
