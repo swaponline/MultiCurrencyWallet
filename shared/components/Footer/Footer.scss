@@ -4,35 +4,12 @@ $information-footer-height: 44px;
   width: 100%;
   background: #ffffff;
   margin-top: 44px;
-
-  @include media-desktop {
-    margin-bottom: $information-footer-height;
-  }
 }
 
 .information-footer {
   width: 100%;
   height: $information-footer-height;
   background: #ffffff;
-
-  @include media-mobile {
-    display: flex;
-    justify-content: center;
-    text-align: center;
-  }
-
-  @include media-tablet {
-    display: flex;
-    justify-content: center;
-  }
-
-  @include media-desktop {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 4;
-  }
 }
 
 .text {
@@ -48,14 +25,6 @@ $information-footer-height: 44px;
     display: flex;
     margin-top: 16px;
     flex-wrap: wrap;
-
-    @include media-mobile {
-      flex-direction: column-reverse;
-    }
-
-    @include media-tablet {
-      flex-direction: column-reverse;
-    }
   }
 
   &--social {
@@ -75,14 +44,6 @@ $information-footer-height: 44px;
   display: flex;
   align-items: center;
 
-  @include media-mobile {
-    margin-top: 16px;
-  }
-
-  @include media-tablet {
-    margin-top: 16px;
-  }
-
   &-logo {
     width: 80px;
     height: 50px;
@@ -96,12 +57,54 @@ $information-footer-height: 44px;
 }
 
 @include media-mobile {
-  .information-footer.fixed {
-    position: relative;
-    margin-bottom: 20px;
+  .information-footer {
+    display: flex;
+    justify-content: center;
+    text-align: center;
   }
 
   .default-footer {
     margin-top: 30px;
+  }
+
+  .copyright {
+    margin-top: 16px;
+  }
+
+  .container {
+    &--copyright {
+      flex-direction: column-reverse;
+    }
+  }
+}
+
+@include media-tablet {
+  .information-footer {
+    display: flex;
+    justify-content: center;
+  }
+
+  .container {
+    &--copyright {
+      flex-direction: column-reverse;
+    }
+  }
+
+  .copyright {
+    margin-top: 16px;
+  }
+}
+
+@include media-desktop {
+  .footer {
+    margin-bottom: $information-footer-height;
+  }
+
+  .information-footer {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 4;
   }
 }

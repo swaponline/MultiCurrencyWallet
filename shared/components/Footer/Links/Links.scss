@@ -10,34 +10,8 @@
   flex-direction: column;
   margin-top: 16px;
 
-  @include media-mobile {
-    width: 100%;
-  }
-
-  @include media-tablet {
-    flex: 0 45%;
-    margin-right: 5%;
-
-    &:nth-child(2n) {
-      margin-right: 0;
-    }
-  }
-
-  @include media-desktop {
-    margin-top: 0;
-    width: 240px;
-  }
-
   h4 {
     font-size: 22px;
-
-    @include media-mobile {
-      text-align: center;
-    }
-
-    @include media-desktop {
-      font-size: 20px;
-    }
   }
 
   a {
@@ -50,22 +24,54 @@
     &:hover {
       color: #e91db4;
     }
-
-    @include media-desktop {
-      font-size: 16px;
-    }
   }
 
   span {
     font-size: 16px;
     margin-top: 12px;
+  }
+}
 
-    @include media-mobile {
-      font-size: 18px;
+@include media-mobile {
+  .column {
+    width: 100%;
+
+    h4 {
+      text-align: center;
     }
 
-    @include media-tablet {
+    span {
       font-size: 18px;
     }
+  }
+}
+
+@include media-tablet {
+  .column {
+    flex: 0 45%;
+    margin-right: 5%;
+
+    &:nth-child(2n) {
+      margin-right: 0;
+    }
+
+    span {
+      font-size: 18px;
+    }
+  }
+}
+
+@include media-desktop {
+  .column {
+    margin-top: 0;
+    width: 240px;
+  }
+
+  h4 {
+    font-size: 20px;
+  }
+
+  a {
+    font-size: 16px;
   }
 }

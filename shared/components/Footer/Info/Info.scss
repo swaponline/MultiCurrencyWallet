@@ -2,10 +2,6 @@
   font-size: 14px;
   color: #b2b2b2;
 
-  @include media-tablet {
-    font-size: 16px;
-  }
-
   & span {
     font-weight: bold;
   }
@@ -17,4 +13,10 @@
 
 .disconnect {
   color: #e32950;
+}
+
+@include media-tablet {
+  .title {
+    font-size: 16px;
+  }
 }
