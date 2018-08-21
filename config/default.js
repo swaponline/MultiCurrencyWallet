@@ -12,7 +12,7 @@ const config = {
     base:     (file = '') => path.join(basePath, file),
     shared:   (file = '') => path.join(basePath, 'shared', file),
     client:   (file = '') => path.join(basePath, 'client', file),
-    swapCore: (file = '') => path.join(rootPath, 'swap.core', file),
+    swapCore: (file = '') => path.join(basePath, 'swap.core', file),
   },
   referral: {
     url:'https://wiki.swap.online/affiliate.php',
