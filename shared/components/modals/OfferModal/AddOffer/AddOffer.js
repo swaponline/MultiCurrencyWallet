@@ -117,12 +117,6 @@ export default class AddOffer extends Component {
     })
   }
 
-  handleChangeCurrencies(currency, currencies) {
-    return currency === 'btc'
-      ? currencies.filter(c => c.value !== currency)
-      : currencies.filter(c => c.value === 'btc')
-  }
-
   handleSellCurrencySelect = ({ value }) => {
     let { buyCurrency, sellCurrency, sellAmount, buyAmount } = this.state
 
@@ -226,7 +220,7 @@ export default class AddOffer extends Component {
           selectedCurrencyValue={sellCurrency}
           onCurrencySelect={this.handleSellCurrencySelect}
           id="sellAmount"
-          currencies={() => this.handleChangeCurrencies(sellCurrency, currencies)}
+          currencies={currencies}
           placeholder="Enter sell amount"
         />
         <SelectGroup
@@ -235,7 +229,7 @@ export default class AddOffer extends Component {
           selectedCurrencyValue={buyCurrency}
           onCurrencySelect={this.handleBuyCurrencySelect}
           id="buyAmount"
-          currencies={() => this.handleChangeCurrencies(buyCurrency, currencies)}
+          currencies={currencies}
           placeholder="Enter buy amount"
         />
         <Button
