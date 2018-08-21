@@ -9,7 +9,7 @@ export default class SwapsHistory extends PureComponent {
 
   render() {
     let { orders } = this.props
-    const titles = [ 'Exchange', 'You buy', 'You sell', 'Exchange rate', 'Status', 'Link' ]
+    const titles = [ 'Exchange', 'You buy', 'You sell', 'Exchange rate', 'Status refund', 'Status order', 'Link' ]
 
     if (orders === null || orders.length === 0) {
       return null

@@ -109,8 +109,6 @@ export default class Row extends Component {
   handleGoTrade = async (link) => {
     const balance = await actions.eth.getBalance()
 
-    console.log(this.props)
-
     if (balance > 0) {
       this.props.history.push(link)
     } else {
