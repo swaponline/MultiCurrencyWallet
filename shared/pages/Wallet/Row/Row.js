@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import actions from 'redux/actions'
-import { constants, web3 } from 'helpers'
-import { Link } from 'react-router-dom'
+import { constants } from 'helpers'
 
 import cssModules from 'react-css-modules'
 import styles from './Row.scss'
@@ -13,8 +12,10 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import WithdrawButton from 'components/controls/WithdrawButton/WithdrawButton'
 
 import LinkAccount from '../LinkAccount/LinkAcount'
+import { withRouter } from 'react-router'
 
 
+@withRouter
 @cssModules(styles)
 export default class Row extends Component {
 
@@ -105,6 +106,18 @@ export default class Row extends Component {
     })
   }
 
+  handleGoTrade = async (link) => {
+    const balance = await actions.eth.getBalance()
+
+    console.log(this.props)
+
+    if (balance > 0) {
+      this.props.history.push(link)
+    } else {
+      actions.modals.open(constants.modals.EthChecker, {})
+    }
+  }
+
   render() {
     const { isBalanceFetching, tradeAllowed, isAddressCopied } = this.state
     const { currency, name, balance, isBalanceFetched, address, contractAddress, decimals, approve, unconfirmedBalance } = this.props
@@ -169,8 +182,8 @@ export default class Row extends Component {
             {
               tradeAllowed && (
                 <Fragment>
-                  <Link  styleName="button" to={`/sell-${currency.toLowerCase()}`}>Sell</Link>
-                  <Link  styleName="button" to={`/buy-${currency.toLowerCase()}`}>Buy</Link>
+                  <div styleName="button" onClick={() => this.handleGoTrade(`/sell-${currency.toLowerCase()}`)}>Sell</div>
+                  <div styleName="button" onClick={() => this.handleGoTrade(`/buy-${currency.toLowerCase()}`)}>Buy</div>
                 </Fragment>
               )
             }

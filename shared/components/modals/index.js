@@ -4,6 +4,7 @@ import PrivateKeysModal from './PrivateKeysModal/PrivateKeysModal'
 import EosModal from './EosModal/EosModal'
 import Approve from './Approve/Approve'
 import ImportKeys from './ImportKeys/ImportKeys'
+import EthChecker from './EthChecker/EthChecker'
 
 
 export default {
@@ -13,4 +14,5 @@ export default {
   ImportKeys,
   EosModal,
   Approve,
+  EthChecker,
 }

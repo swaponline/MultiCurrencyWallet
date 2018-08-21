@@ -5,4 +5,5 @@ export default {
   Eos: 'EosModal',
   Approve: 'Approve',
   ImportKeys: 'ImportKeys',
+  EthChecker: 'EthChecker',
 }
