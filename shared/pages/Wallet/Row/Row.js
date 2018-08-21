@@ -20,18 +20,23 @@ export default class Row extends Component {
   state = {
     isBalanceFetching: false,
     viewText: false,
-    tradeAllowed: false
+    tradeAllowed: false,
+  }
+
+  componentWillMount() {
+    const { currency, currencies } = this.props
+
+    this.setState({
+      tradeAllowed: !!currencies.find(c => c.value === currency.toLowerCase()),
+    })
   }
 
   componentDidMount() {
-    const { contractAddress, name, balance, currency, currencies } = this.props
+    const { contractAddress, name } = this.props
 
     if (name !== undefined) {
       actions.token.allowance(contractAddress, name)
     }
-    this.setState({
-      tradeAllowed: !!currencies.find(c => c.value === currency.toLowerCase())
-    })
   }
 
   handleReloadBalance = () => {
@@ -111,14 +116,20 @@ export default class Row extends Component {
           <Coin name={currency} size={40} />
         </td>
         <td>{currency}</td>
-        <td style={{ minWidth: '80px' }}>
+        <td style={{ minWidth: '120px' }}>
           {
             !isBalanceFetched || isBalanceFetching ? (
               <InlineLoader />
             ) : (
               <Fragment>
-                <span>{String(balance).length > 5 ? balance.toFixed(5) : balance}</span> <br />
-                { currency === 'BTC' && unconfirmedBalance !== 0 && <span style={{ fontSize: '12px', color: '#c9c9c9' }}>Unconfirmed {unconfirmedBalance}</span> }
+                <i className="fas fa-sync-alt" styleName="icon" onClick={this.handleReloadBalance} />
+                <span>{String(balance).length > 5 ? balance.toFixed(5) : balance}</span>
+                { currency === 'BTC' && unconfirmedBalance !== 0 && (
+                  <Fragment>
+                    <br />
+                    <span style={{ fontSize: '12px', color: '#c9c9c9' }}>Unconfirmed {unconfirmedBalance}</span>
+                  </Fragment>
+                ) }
               </Fragment>
             )
           }
@@ -126,12 +137,18 @@ export default class Row extends Component {
         <td ref={td => this.textAddress = td}>
           {
             !contractAddress ? (
-              <LinkAccount type={currency} address={address} >{address}</LinkAccount>
+              <Fragment>
+                { currency !== 'EOS' && <i className="far fa-copy" styleName="icon" onClick={this.handleCopiedAddress} /> }
+                <LinkAccount type={currency} address={address} >{address}</LinkAccount>
+              </Fragment>
             ) : (
               !approve ? (
                 <button styleName="button" onClick={() => this.handleApproveToken(decimals, contractAddress, name)}>Approve</button>
               ) : (
-                <LinkAccount type={currency} contractAddress={contractAddress} address={address} >{address}</LinkAccount>
+                <Fragment>
+                  <i className="far fa-copy" styleName="icon" onClick={this.handleCopiedAddress} />
+                  <LinkAccount type={currency} contractAddress={contractAddress} address={address} >{address}</LinkAccount>
+                </Fragment>
               )
             )
           }
@@ -141,15 +158,16 @@ export default class Row extends Component {
         </td>
         <td style={{ position: 'relative' }} >
           <div>
-            <button styleName="button" onClick={this.handleCopiedAddress}>Copy</button>
-            <ReloadButton styleName="marginRight" onClick={this.handleReloadBalance} />
             <WithdrawButton onClick={this.handleWithdraw} styleName="marginRight" >
               Withdraw
             </WithdrawButton>
             { viewText && <p styleName="copied" >Address copied to clipboard</p> }
             {
               tradeAllowed && (
-                <Link  styleName="button" to={`/exchange/${currency.toLowerCase()}`}>Trade</Link>
+                <Fragment>
+                  <Link  styleName="button" to={`/sell-${currency.toLowerCase()}`}>Sell</Link>
+                  <Link  styleName="button" to={`/buy-${currency.toLowerCase()}`}>Buy</Link>
+                </Fragment>
               )
             }
           </div>

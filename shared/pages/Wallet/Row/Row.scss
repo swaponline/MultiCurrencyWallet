@@ -12,6 +12,10 @@
   border-radius: 20px;
 }
 
+.icon {
+  margin-right: 5px;
+}
+
 .button {
   @include inline-block;
   height: 40px;
