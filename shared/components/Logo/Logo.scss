@@ -8,6 +8,13 @@
   }
 }
 
+
+@include media-mobile {
+	.logo {
+		display: none;
+	}
+} 
+
 @media screen and (max-width: 860px){
   .logo {
     display: none;
@@ -29,3 +36,4 @@
     display: none;
   }
 }
+

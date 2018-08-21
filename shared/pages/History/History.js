@@ -6,6 +6,8 @@ import actions from 'redux/actions'
 import Row from './Row/Row'
 import SwapsHistory from './SwapsHistory/SwapsHistory'
 
+import Table from 'components/tables/Table/Table'
+import styles from 'components/tables/Table/Table.scss'
 import Filter from 'components/Filter/Filter'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import InfiniteScrollTable from 'components/tables/InfiniteScrollTable/InfiniteScrollTable'
@@ -29,7 +31,7 @@ const filterHistory = (items, filter) => {
 }))
 export default class History extends Component {
   state = {
-    renderedItems: 10
+    renderedItems: 10,
   }
 
   componentDidMount() {
@@ -53,7 +55,7 @@ export default class History extends Component {
   )
 
   render() {
-    const { items, swapHistory } = this.props
+    const { items, swapHistory, classTitle } = this.props
     const titles = [ 'Coin', 'Status', 'Statement', 'Amount' ]
 
     return (
@@ -63,6 +65,7 @@ export default class History extends Component {
         <h3>All transactions</h3>
         <Filter />
         <InfiniteScrollTable
+          classTitle={styles.history}
           titles={titles}
           bottomOffset={400}
           getMore={this.loadMore}
