@@ -36,12 +36,14 @@ export default class Footer extends Component {
           <WidthContainer>
             <Links />
           </WidthContainer>
+          <WidthContainer styleName="container--social">
+            <SocialMenu />
+          </WidthContainer>
           <WidthContainer styleName="container--copyright">
             <div styleName="copyright">
               <img src={logo} styleName="copyright-logo" alt="logotype" />
               <span styleName="copyright-text">© 2018 Swap Online Harju maakond, Tallinn, Kesklinna linnaosa</span>
             </div>
-            <SocialMenu />
           </WidthContainer>
         </div>
       </div>

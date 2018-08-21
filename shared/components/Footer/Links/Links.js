@@ -23,6 +23,13 @@ const Links = () => (
       <a href={links.research} target="_blank" rel="noopener noreferrer">DEX Trend Research</a>
     </div>
     <div styleName="column">
+      <h4>Resources</h4>
+      <a href={links.wiki} target="_blank" rel="noopener noreferrer">Wiki</a>
+      <a href={links.github} target="_blank" rel="noopener noreferrer">GitHub Core</a>
+      <a href={links.githubButton} target="_blank" rel="noopener noreferrer">GitHub Button</a>
+      <a href={links.bitcointalkSendTx} target="_blank" rel="noopener noreferrer">Send bitcoin transacton</a>
+    </div>
+    <div styleName="column">
       <h4>Press</h4>
       <span>
         Reuters:
@@ -31,13 +38,6 @@ const Links = () => (
         </a>
       </span>
       <a href={links.medium} target="_blank" rel="noopener noreferrer">Medium</a>
-    </div>
-    <div styleName="column">
-      <h4>Resources</h4>
-      <a href={links.wiki} target="_blank" rel="noopener noreferrer">Wiki</a>
-      <a href={links.github} target="_blank" rel="noopener noreferrer">GitHub Core</a>
-      <a href={links.githubButton} target="_blank" rel="noopener noreferrer">GitHub Button</a>
-      <a href={links.bitcointalkSendTx} target="_blank" rel="noopener noreferrer">Send bitcoin transacton</a>
     </div>
   </div>
 )

@@ -1,33 +1,31 @@
 .links {
+  display: flex;
   align-items: flex-start;
   justify-content: space-between;
   flex-wrap: wrap;
-
-  @include media-desktop {
-    display: flex;
-  }
 }
 
 .column {
   display: flex;
   flex-direction: column;
-  width: 100%;
   margin-top: 16px;
 
-
-  @include media-tablet {
-    margin-top: 0;
-    width: 230px;
+  @include media-mobile {
+    width: 100%;
   }
 
-  @include media-tablet-landscape {
-    margin-top: 0;
-    width: 45%;
+  @include media-tablet {
+    flex: 0 45%;
+    margin-right: 5%;
+
+    &:nth-child(2n) {
+      margin-right: 0;
+    }
   }
 
   @include media-desktop {
     margin-top: 0;
-    width: 230px;
+    width: 240px;
   }
 
   h4 {
@@ -38,7 +36,7 @@
     }
 
     @include media-desktop {
-      font-size: 18px;
+      font-size: 20px;
     }
   }
 
@@ -46,23 +44,27 @@
     font-size: 18px;
     color: #7371ff;
     transition: all 0.3s ease;
-    line-height: 26px;
+    line-height: 30px;
+    margin-top: 12px;
 
     &:hover {
       color: #e91db4;
     }
 
     @include media-desktop {
-      font-size: 14px;
+      font-size: 16px;
     }
-
-
   }
 
   span {
-    font-size: 14px;
+    font-size: 16px;
+    margin-top: 12px;
 
     @include media-mobile {
+      font-size: 18px;
+    }
+
+    @include media-tablet {
       font-size: 18px;
     }
   }

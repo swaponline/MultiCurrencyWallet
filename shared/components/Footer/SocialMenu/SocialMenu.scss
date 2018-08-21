@@ -4,28 +4,8 @@
   margin: 0;
   padding: 0;
 
-  @include media-mobile {
-    margin-top: 16px;
-  }
-
-  @include media-tablet {
-    width: 350px;
-  }
-
   & li {
-    margin-right: 16px;
-
-    @include media-mobile {
-      margin-right: 32px;
-    }
-
-    @include media-tablet {
-      margin-right: 32px;
-    }
-
-    @include media-tablet-landscape {
-      margin-right: 32px;
-    }
+    margin-right: 32px;
 
     &:last-child {
       margin-right: 0;
@@ -36,18 +16,10 @@
 
 .icon {
   color: #7371ff;
-  font-size: 20px;
+  font-size: 32px;
   text-align: center;
   transition: color 300ms ease;
   cursor: pointer;
-
-  @include media-mobile {
-    font-size: 32px;
-  }
-
-  @include media-tablet {
-    font-size: 32px;
-  }
 
   &:hover {
     color: #e91db4;
