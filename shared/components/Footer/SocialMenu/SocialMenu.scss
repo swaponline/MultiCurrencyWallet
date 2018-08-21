@@ -8,6 +8,10 @@
     margin-top: 16px;
   }
 
+  @include media-tablet {
+    width: 350px;
+  }
+
   & li {
     margin-right: 16px;
 
@@ -16,7 +20,7 @@
     }
 
     @include media-tablet {
-      margin-right: 50px;
+      margin-right: 32px;
     }
 
     @include media-tablet-landscape {

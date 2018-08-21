@@ -1,5 +1,4 @@
 .links {
-  padding: 0 35px;
   align-items: flex-start;
   justify-content: space-between;
   flex-wrap: wrap;
@@ -47,6 +46,7 @@
     font-size: 18px;
     color: #7371ff;
     transition: all 0.3s ease;
+    line-height: 26px;
 
     &:hover {
       color: #e91db4;
@@ -65,43 +65,5 @@
     @include media-mobile {
       font-size: 18px;
     }
-  }
-}
-
-.left {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-
-  @include media-tablet {
-    justify-content: space-between;
-
-    & > .column {
-      &:last-child {
-        text-align: right;
-      }
-    }
-  }
-}
-
-.right {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  text-align: left;
-
-  @include media-tablet {
-    margin-top: 16px;
-    justify-content: space-between;
-
-    & > .column {
-      &:last-child {
-        text-align: right;
-      }
-    }
-  }
-
-  @include media-desktop {
-    text-align: right;
   }
 }

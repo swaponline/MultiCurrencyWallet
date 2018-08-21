@@ -33,14 +33,16 @@ export default class Footer extends Component {
           </WidthContainer>
         </div>
         <div styleName="default-footer">
-          <Links />
-          <div styleName="container--copyright">
+          <WidthContainer>
+            <Links />
+          </WidthContainer>
+          <WidthContainer styleName="container--copyright">
             <div styleName="copyright">
               <img src={logo} styleName="copyright-logo" alt="logotype" />
               <span styleName="copyright-text">© 2018 Swap Online Harju maakond, Tallinn, Kesklinna linnaosa</span>
             </div>
             <SocialMenu />
-          </div>
+          </WidthContainer>
         </div>
       </div>
     )
