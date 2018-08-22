@@ -34,6 +34,28 @@ const webpackConfig = {
     rules,
   },
 
+  resolve: {
+    alias: {
+      shared: config.paths.base('shared'),
+      'swap.auth': config.paths.swapCoreProd('swap.core/lib/swap.auth'),
+      'swap.orders': config.paths.swapCoreProd('swap.core/lib/swap.orders'),
+      'swap.room': config.paths.swapCoreProd('swap.core/lib/swap.room'),
+      'swap.app': config.paths.swapCoreProd('swap.core/lib/swap.app'),
+      'swap.flows': config.paths.swapCoreProd('swap.core/lib/swap.flows'),
+      'swap.swap': config.paths.swapCoreProd('swap.core/lib/swap.swap'),
+      'swap.swaps': config.paths.swapCoreProd('swap.core/lib/swap.swaps'),
+    },
+    modules: [
+      config.paths.base('client'),
+      config.paths.base('shared'),
+      config.paths.base('local_modules'),
+      'node_modules',
+      config.paths.swapCoreProd('../node_modules'),
+    ],
+    extensions: [ '.js', '.jsx', '.scss' ],
+    plugins: [],
+  },
+
   plugins: [
     new AppConfigPlugin(),
     new webpack.DefinePlugin(globals),
