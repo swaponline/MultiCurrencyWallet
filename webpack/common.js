@@ -34,28 +34,6 @@ const webpackConfig = {
     rules,
   },
 
-  resolve: {
-    alias: {
-      shared: config.paths.base('shared'),
-      'swap.auth': config.paths.swapCore('src/swap.auth'),
-      'swap.orders': config.paths.swapCore('src/swap.orders'),
-      'swap.room': config.paths.swapCore('src/swap.room'),
-      'swap.app': config.paths.swapCore('src/swap.app'),
-      'swap.flows': config.paths.swapCore('src/swap.flows'),
-      'swap.swap': config.paths.swapCore('src/swap.swap'),
-      'swap.swaps': config.paths.swapCore('src/swap.swaps'),
-    },
-    modules: [
-      config.paths.base('client'),
-      config.paths.base('shared'),
-      config.paths.base('local_modules'),
-      'node_modules',
-      config.paths.swapCore('swap.core/src'),
-    ],
-    extensions: [ '.js', '.jsx', '.scss' ],
-    plugins: [],
-  },
-
   plugins: [
     new AppConfigPlugin(),
     new webpack.DefinePlugin(globals),

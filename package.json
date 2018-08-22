@@ -14,8 +14,6 @@
     "dev:mainnet": "cross-env CONFIG=mainnet.dev nodemon",
     "clean:testnet": "rimraf ./build-testnet",
     "clean:mainnet": "rimraf ./build-mainnet",
-    "clean:local": "rimraf ./build-local",
-    "build:local": "npm run clean:local && cross-env DEBUG=app:* CONFIG=local.prod node ./bin/compile",
     "build:testnet": "npm run clean:testnet && cross-env DEBUG=app:* CONFIG=testnet.prod node ./bin/compile",
     "build:mainnet": "npm run clean:mainnet && cross-env DEBUG=app:* CONFIG=mainnet.prod node ./bin/compile",
     "test:unit": "mocha --require babel-core/register --require ./test/helpers.js --require ./test/dom.js --require ignore-styles 'src/**/*.spec.js'",
