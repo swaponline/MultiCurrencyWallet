@@ -105,6 +105,7 @@
     "moment-with-locales-es6": "^1.0.1",
     "node-gyp": "^3.7.0",
     "prop-types": "^15.6.1",
+    "rc-progress": "^2.2.5",
     "react": "^16.3.2",
     "react-click-outside": "github:tj/react-click-outside",
     "react-cookie": "^2.2.0",
