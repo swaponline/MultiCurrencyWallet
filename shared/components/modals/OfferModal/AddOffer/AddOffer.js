@@ -5,6 +5,7 @@ import actions from 'redux/actions'
 
 import Link from 'sw-valuelink'
 import config from 'app-config'
+import { constants } from 'helpers'
 
 import { BigNumber } from 'bignumber.js'
 
@@ -44,6 +45,7 @@ export default class AddOffer extends Component {
       sellAmount: sellAmount || '',
       buyCurrency: buyCurrency || 'btc',
       sellCurrency: sellCurrency || 'eth',
+      ethBalance: null,
       isSending: false,
     }
   }
@@ -51,6 +53,7 @@ export default class AddOffer extends Component {
   componentWillMount() {
     const { sellCurrency } = this.state
     this.checkBalance(sellCurrency)
+    this.handleCheckEthBalance()
   }
 
   componentDidMount() {
@@ -64,8 +67,17 @@ export default class AddOffer extends Component {
     })
   }
 
+  handleCheckEthBalance = async () => {
+    const ethBalance = await actions.eth.getBalance()
+
+    this.setState({
+      ethBalance,
+    })
+  }
+
   checkBalance = async (sellCurrency) => {
     const balance = await actions[sellCurrency].getBalance(sellCurrency)
+    this.handleCheckEthBalance()
 
     this.setState({
       balance,
@@ -169,10 +181,11 @@ export default class AddOffer extends Component {
   }
 
   handleNext = () => {
-    const { exchangeRate, buyAmount, sellAmount, balance, sellCurrency } = this.state
+    const { exchangeRate, buyAmount, sellAmount, balance, sellCurrency, ethBalance } = this.state
     const { onNext } = this.props
 
     const isDisabled = !exchangeRate || !buyAmount || !sellAmount || sellAmount > balance || sellAmount < minAmount[sellCurrency]
+      || ethBalance < 0.02
 
     if (!isDisabled) {
       actions.analytics.dataEvent('orderbook-addoffer-click-next-button')
@@ -189,13 +202,14 @@ export default class AddOffer extends Component {
 
   render() {
     const { currencies } = this.props
-    const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency, balance } = this.state
+    const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency, balance, ethBalance } = this.state
     const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
-    const isDisabled = !exchangeRate || !buyAmount && !sellAmount || sellAmount > balance || sellAmount < minAmount[sellCurrency]
+    const isDisabled = !exchangeRate || !buyAmount && !sellAmount
+      || sellAmount > balance || sellAmount < minAmount[sellCurrency]
+      || ethBalance < 0.02
 
     linked.sellAmount.check((value) => value > minAmount[sellCurrency], `Amount must be greater than ${minAmount[sellCurrency]} `)
     linked.sellAmount.check((value) => value <= balance, `Amount must be bigger your balance`)
-
 
     return (
       <Fragment>
@@ -213,6 +227,7 @@ export default class AddOffer extends Component {
           balance={balance}
           currency={sellCurrency}
         />
+        { ethBalance <= 0.02 && <span styleName="error">For a swap, you need 0.02 ETH on your balance</span> }
         <SelectGroup
           styleName="sellGroup"
           label="Sell"
