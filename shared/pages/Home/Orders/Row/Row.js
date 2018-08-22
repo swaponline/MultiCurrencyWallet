@@ -34,8 +34,8 @@ export default class Row extends Component {
     }
   }
 
-  checkBalance = async (sellCurrency) => {
-    const balance = await actions[sellCurrency.toLowerCase()].getBalance()
+  checkBalance = async (currency) => {
+    const balance = await actions[currency.toLowerCase()].getBalance(currency)
 
     this.setState({
       balance,
