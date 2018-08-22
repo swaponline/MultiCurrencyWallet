@@ -13,11 +13,13 @@ export default class AddOfferButton extends Component {
       <Fragment>
         <div
           styleName="button"
+          onClick={() => pinkClick()} /* eslint-disable-line */
         >
           Subscribe
         </div>
         <div
           styleName="buttonMobile"
+          onClick={() => pinkClick()} /* eslint-disable-line */
         />
       </Fragment>
     )

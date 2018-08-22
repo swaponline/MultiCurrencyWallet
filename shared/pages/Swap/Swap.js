@@ -41,9 +41,8 @@ export default class SwapComponent extends PureComponent {
 
   componentWillMount() {
     const { match : { params : { orderId } }, history } = this.props
-    const data = SwapApp.services.orders.getByKey(orderId)
 
-    if (!data || !orderId) {
+    if (!orderId) {
       history.push(links.exchange)
     }
 

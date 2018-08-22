@@ -10,7 +10,7 @@ import SearchSwap from 'components/SearchSwap/SearchSwap'
 
 const filterMyOrders = (orders, peer) => orders.filter(order => order.owner.peer === peer)
 
-const filterOrders = (orders, filter) => orders
+const filterOrders = (orders, filter, peer) => orders
   .filter(order => order.isProcessing === false)
   .filter(order => order.isMy ? (
     `${order.buyCurrency.toLowerCase()}${order.sellCurrency.toLowerCase()}` === filter
@@ -20,7 +20,7 @@ const filterOrders = (orders, filter) => orders
   .sort((a, b) => Number(b.buyAmount.dividedBy(b.sellAmount)) - Number(a.buyAmount.dividedBy(a.sellAmount)))
 
 @connect(({  core: { orders, filter }, ipfs: { isOnline, peer }, currencies: { items: currencies } }) => ({
-  orders: filterOrders(orders, filter),
+  orders: filterOrders(orders, filter, peer),
   myOrders: filterMyOrders(orders, peer),
   isOnline,
   currencies,
