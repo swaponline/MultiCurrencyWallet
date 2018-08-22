@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import { connect } from 'redaction'
 import { withRouter } from 'react-router-dom'
 
-import cx from 'classnames'
 import styles from './Footer.scss'
 import logo from './images/logo.svg'
 import CSSModules from 'react-css-modules'

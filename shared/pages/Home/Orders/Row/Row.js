@@ -55,7 +55,7 @@ export default class Row extends Component {
   render() {
     const { balance } = this.state
     const { orderId, row: { id, buyCurrency, sellCurrency, isMy, buyAmount,
-      sellAmount, isRequested,
+      sellAmount, isRequested, isProcessing,
       owner :{  peer: ownerPeer } }, peer } = this.props
     const amount = isMy ? sellAmount : buyAmount
 
@@ -105,12 +105,16 @@ export default class Row extends Component {
                       <Link to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`}> Go to the swap</Link>
                     </Fragment>
                   ) : (
-                    balance > Number(amount) ? (
-                      <Link to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`} >
-                        <RequestButton onClick={() => this.sendRequest(id)} />
-                      </Link>
+                    isProcessing ? (
+                      <span>This order is in execution</span>
                     ) : (
-                      <span>Insufficient funds</span>
+                      balance > Number(amount) ? (
+                        <Link to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`} >
+                          <RequestButton onClick={() => this.sendRequest(id)} />
+                        </Link>
+                      ) : (
+                        <span>Insufficient funds</span>
+                      )
                     )
                   )
                 }
