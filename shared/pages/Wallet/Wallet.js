@@ -15,7 +15,7 @@ import { WithdrawButton } from 'components/controls'
 import Row from './Row/Row'
 
 
-@connect(({ user: { ethData, btcData, tokensData, eosData, nimData } , currencies: { items: currencies }}) => ({
+@connect(({ user: { ethData, btcData, tokensData, eosData, nimData }, currencies: { items: currencies } }) => ({
   tokens: Object.keys(tokensData).map(k => (tokensData[k])),
   items: [ ethData, btcData, eosData /* eosData  nimData */ ],
   currencies,

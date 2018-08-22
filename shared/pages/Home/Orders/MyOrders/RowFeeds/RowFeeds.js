@@ -52,7 +52,7 @@ export default class RowFeeds extends Component {
         </td>
         <td>{`${buyAmount.toFixed(5)} ${buyCurrency}`}</td>
         <td>{`${sellAmount.toFixed(5)} ${sellCurrency}`}</td>
-        <td>{`${(exchangeRate || (buyAmount/sellAmount)).toFixed(5)} ${buyCurrency}/${sellCurrency}`}</td>
+        <td>{`${(exchangeRate || (buyAmount / sellAmount)).toFixed(5)} ${buyCurrency}/${sellCurrency}`}</td>
         <CopyToClipboard
           onCopy={this.handleCopyLink}
           text={`${links.exchange}/${sellCurrency.toLowerCase()}-${buyCurrency.toLowerCase()}/${id}`}

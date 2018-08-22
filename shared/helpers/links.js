@@ -28,6 +28,6 @@ export default {
   wiki: 'https://wiki.swap.online',
   github: 'https://github.com/swaponline/swap.core',
   githubButton: 'https://github.com/swaponline/swap.button',
-  bitcointalkSendTx: 'https://bitcointalk.org/index.php?topic=1938621.0'
+  bitcointalkSendTx: 'https://bitcointalk.org/index.php?topic=1938621.0',
 
 }

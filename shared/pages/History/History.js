@@ -45,7 +45,7 @@ export default class History extends Component {
 
     if (renderedItems < items.length) {
       this.setState(state => ({
-        renderedItems: state.renderedItems + Math.min(10, items.length - state.renderedItems)
+        renderedItems: state.renderedItems + Math.min(10, items.length - state.renderedItems),
       }))
     }
   }
