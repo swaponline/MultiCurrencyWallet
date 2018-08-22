@@ -75,9 +75,9 @@ export default class SwapComponent extends PureComponent {
       swapsId.push(orderId)
     }
 
-    const boolean = swapsId.map(item => item !== orderId)
+    const boolean = swapsId.map(item => item === orderId)
 
-    if (Boolean(...boolean)) {
+    if (!Boolean(...boolean)) {
       swapsId.push(orderId)
     }
 

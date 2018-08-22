@@ -6,7 +6,7 @@ import actions from 'redux/actions'
 import Row from './Row/Row'
 import SwapsHistory from './SwapsHistory/SwapsHistory'
 
-import Table from 'components/tables/Table/Table'
+
 import styles from 'components/tables/Table/Table.scss'
 import Filter from 'components/Filter/Filter'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
@@ -55,8 +55,10 @@ export default class History extends Component {
   )
 
   render() {
-    const { items, swapHistory, classTitle } = this.props
+    const { items, swapHistory } = this.props
     const titles = [ 'Coin', 'Status', 'Statement', 'Amount' ]
+
+    console.log('swapHistory', swapHistory)
 
     return (
       <section>

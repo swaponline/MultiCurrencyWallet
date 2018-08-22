@@ -15,6 +15,7 @@ export default class Core extends Component {
   }
 
   componentWillMount() {
+    actions.core.getSwapHistory()
     SwapApp.services.orders
       .on('new orders', this.updateOrders)
       .on('new order', this.updateOrders)
