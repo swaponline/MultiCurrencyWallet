@@ -12,8 +12,8 @@ import swapApp, { constants } from 'swap.app'
 import SwapAuth from 'swap.auth'
 import SwapRoom from 'swap.room'
 import SwapOrders from 'swap.orders'
-import { EthSwap, EthTokenSwap, BtcSwap } from 'swap.swaps'
-import { ETH2BTC, BTC2ETH, ETHTOKEN2BTC, BTC2ETHTOKEN } from 'swap.flows'
+import { EthSwap, EthTokenSwap, BtcSwap, UsdtSwap } from 'swap.swaps'
+import { ETH2BTC, BTC2ETH, ETHTOKEN2BTC, BTC2ETHTOKEN, USDT2ETHTOKEN, ETHTOKEN2USDT } from 'swap.flows'
 
 
 const createSwapApp = () => {
@@ -62,6 +62,12 @@ const createSwapApp = () => {
         fetchUnspents: (scriptAddress) => actions.btc.fetchUnspents(scriptAddress),
         broadcastTx: (txRaw) => actions.btc.broadcastTx(txRaw),
       }),
+      new UsdtSwap({
+        assetId: 31, // USDT
+        fetchBalance: (address) => actions.btc.fetchOmniBalance(address),
+        fetchUnspents: (scriptAddress) => actions.btc.fetchUnspents(scriptAddress),
+        broadcastTx: (txRaw) => actions.btc.broadcastTx(txRaw),
+      }),
       new EthTokenSwap({
         name: constants.COINS.noxon,
         address: config.token.contract,
@@ -97,9 +103,12 @@ const createSwapApp = () => {
       ETHTOKEN2BTC(constants.COINS.noxon),
       BTC2ETHTOKEN(constants.COINS.noxon),
       ETHTOKEN2BTC(constants.COINS.swap),
-      BTC2ETHTOKEN(constants.COINS.swap),
+      ETHTOKEN2BTC(constants.COINS.swap),
       ETHTOKEN2BTC(constants.COINS.jot),
       BTC2ETHTOKEN(constants.COINS.jot),
+
+      ETHTOKEN2USDT(constants.COINS.swap),
+      USDT2ETHTOKEN(constants.COINS.swap),
     ],
   })
 }

@@ -20,7 +20,7 @@ const filterOrders = (orders, filter, peer) => orders
   .sort((a, b) => Number(b.buyAmount.dividedBy(b.sellAmount)) - Number(a.buyAmount.dividedBy(a.sellAmount)))
 
 @connect(({  core: { orders, filter }, ipfs: { isOnline, peer }, currencies: { items: currencies } }) => ({
-  orders: filterOrders(orders, filter, peer),
+  orders: orders, //filterOrders(orders, filter, peer),
   myOrders: filterMyOrders(orders, peer),
   isOnline,
   currencies,
