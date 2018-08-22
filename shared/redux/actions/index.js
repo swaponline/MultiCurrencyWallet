@@ -24,6 +24,8 @@ import swap from './swap'
 import noxon from './noxon'
 import jot from './jot'
 
+import usdt from './usdt'
+
 
 export default {
   btrm,
@@ -37,6 +39,7 @@ export default {
   user,
   core,
   btc,
+  usdt,
   eth,
   token,
   nimiq,

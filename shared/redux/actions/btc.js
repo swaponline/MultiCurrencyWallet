@@ -155,43 +155,6 @@ const broadcastTx = (txRaw) =>
   })
 
 
-const fetchOmniBalance = (address, assetId = 31) =>
-  request.post(`https://api.omniexplorer.info/v1/address/addr/`, {
-    json: true,
-    form: {
-      addr: address,
-    },
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    }
-  })
-  .then(response => {
-    const { error, balance } = response
-
-    if (error) throw new Error(`Omni Balance: ${error}`)
-
-    const findById = balance
-      .filter(asset => parseInt(asset.id) === assetId || asset.id === assetId)
-
-    if (!findById.length) {
-      return 0
-    }
-
-    console.log('Omni Balance:', findById[0].value)
-    console.log('Omni Balance pending:', findById[0].pendingpos)
-    console.log('Omni Balance pending:', findById[0].pendingneg)
-
-    const usdsatoshis = BigNumber(findById[0].value)
-
-    if (usdsatoshis) {
-      return usdsatoshis.dividedBy(1e8).toNumber()
-    } else {
-      return 0
-    }
-  })
-  .catch(error => console.error(error))
-
-
 export default {
   login,
   getBalance,
@@ -201,5 +164,4 @@ export default {
   createScript,
   broadcastTx,
   fetchBalance,
-  fetchOmniBalance,
 }

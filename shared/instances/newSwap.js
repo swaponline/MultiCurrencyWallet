@@ -64,7 +64,7 @@ const createSwapApp = () => {
       }),
       new UsdtSwap({
         assetId: 31, // USDT
-        fetchBalance: (address) => actions.btc.fetchOmniBalance(address),
+        fetchBalance: (address) => actions.usdt.fetchBalance(address, 31),
         fetchUnspents: (scriptAddress) => actions.btc.fetchUnspents(scriptAddress),
         broadcastTx: (txRaw) => actions.btc.broadcastTx(txRaw),
       }),

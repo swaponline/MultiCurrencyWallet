@@ -49,6 +49,7 @@ export default {
     bitpay: 'https://insight.bitpay.com',
     etherscan: 'https://etherscan.io',
     eos: '',
+    omniexplorer: 'https://www.omniexplorer.info',
   },
 
   api: {
