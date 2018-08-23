@@ -14,6 +14,7 @@ const sign = async () => {
   const _ethPrivateKey = actions.eth.login(ethPrivateKey)
 
   actions.btc.login(btcPrivateKey)
+  actions.usdt.login(btcPrivateKey)
 
   Object.keys(config.tokens)
     .forEach(name => {
@@ -33,6 +34,7 @@ const sign = async () => {
 const getBalances = () => {
   actions.eth.getBalance()
   actions.btc.getBalance()
+  actions.usdt.getBalance()
   actions.eos.getBalance()
 
   Object.keys(config.tokens)
@@ -111,7 +113,7 @@ Private key: ${btcData.privateKey}\r\n
 4. paste private key and click "Ok"\r\n
 \r\n
 \r\n
-* We don\`t store your private keys and will not be able to restore them!  
+* We don\`t store your private keys and will not be able to restore them!
 \r\n
 \r\n
 \r\n

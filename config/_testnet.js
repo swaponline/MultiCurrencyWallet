@@ -51,6 +51,7 @@ export default {
     bitpay: 'https://test-insight.swap.online/insight',  // https://test-insight.bitpay.com
     etherscan: 'https://rinkeby.etherscan.io',
     eos: 'http://jungle.cryptolions.io/#accountInfo',
+    omniexplorer: '',
   },
 
   api: {

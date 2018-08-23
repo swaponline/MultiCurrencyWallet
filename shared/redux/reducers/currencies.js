@@ -13,6 +13,12 @@ export const initialState = {
       value: 'btc',
     },
     {
+      name: 'USDT',
+      title: 'USDT',
+      icon: 'usdt',
+      value: 'usdt',
+    },
+    {
       name: 'NOXON',
       title: 'NOXON',
       icon: 'noxon',
