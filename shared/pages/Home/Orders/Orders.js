@@ -20,8 +20,6 @@ const filterOrders = (orders, filter) => orders
 
 @connect(({  core: { orders, filter }, ipfs: { isOnline, peer }, currencies: { items: currencies } }) => ({
   orders: filterOrders(orders, filter),
-  orders: filterOrders(orders, filter),
-
   myOrders: filterMyOrders(orders, peer),
   isOnline,
   currencies,
