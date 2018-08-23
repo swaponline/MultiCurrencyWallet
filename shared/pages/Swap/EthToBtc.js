@@ -105,7 +105,7 @@ export default class EthToBtc extends Component {
           flow.step === 1 && (
             <Fragment>
               <div>Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation.</div>
-              <TimerButton brand onClick={this.signSwap}>Sign</TimerButton>
+              <TimerButton timeLeft={5} brand onClick={this.signSwap}>Sign</TimerButton>
               {
                 (flow.isSignFetching || flow.signTransactionHash) && (
                   <Fragment>
@@ -210,7 +210,7 @@ export default class EthToBtc extends Component {
                       flow.step === 3 && (
                         <Fragment>
                           <br />
-                          <TimerButton brand onClick={this.confirmBTCScriptChecked}>Everything is OK. Continue</TimerButton>
+                          <TimerButton timeLeft={5} brand onClick={this.confirmBTCScriptChecked}>Everything is OK. Continue</TimerButton>
                         </Fragment>
                       )
                     }

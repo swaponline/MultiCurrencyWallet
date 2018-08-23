@@ -30,14 +30,7 @@ export default class NavMobile extends Component {
   }
 
   render() {
-    const {
-      props: {
-        menu,
-      },
-      state: {
-        isOpened,
-      },
-    } = this
+    const { props: { menu }, state: { isOpened } } = this
 
     return (
       <div styleName="navMobile">
@@ -66,8 +59,10 @@ export default class NavMobile extends Component {
                   ))
               }
               {
-                process.env.MAINNET && (
-                  <a styleName="linkMobile" target="_blank" rel="noreferrer noopener" href={links.testnet}> Testnet</a>
+                process.env.MAINNET ? (
+                  <a styleName="linkMobile" target="_blank" rel="noreferrer noopener" href={links.test}> Testnet</a>
+                ) : (
+                  <a styleName="linkMobile" target="_blank" rel="noreferrer noopener" href={links.main}> Mainnet</a>
                 )
               }
             </div>

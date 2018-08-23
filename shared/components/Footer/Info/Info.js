@@ -6,7 +6,8 @@ import styles from './Info.scss'
 
 
 class Info extends React.Component {
-  constructor(props) {
+
+  constructor() {
     super()
     this.state = { progressValue: 0 }
   }
@@ -44,7 +45,7 @@ class Info extends React.Component {
         </span>
         to IPFS signal {serverAddress} / peers online: {onlineUsers}
 
-        <Line strokeColor="#2181F7" percent={progressValue} strokeWidth="2" />
+        <Line strokeColor="#2181F7" percent={progressValue} strokeWidth="1" />
       </div>
     )
   }

@@ -105,7 +105,7 @@ export default class BtcToEthToken extends Component {
                   <Fragment>
                     <input type="text" placeholder="Secret Key" defaultValue={secret} />
                     <br />
-                    <TimerButton brand onClick={this.submitSecret}>Confirm</TimerButton>
+                    <TimerButton timeLeft={5} brand onClick={this.submitSecret}>Confirm</TimerButton>
                   </Fragment>
                 ) : (
                   <Fragment>
