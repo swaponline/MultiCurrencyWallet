@@ -7,7 +7,7 @@ import Input from 'components/forms/Input/Input'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 
 
-const Group = ({ className, label, id, inputValueLink, placeholder, children }) => (
+const Group = ({ className, label, id, inputValueLink, isInteger = false, placeholder, children }) => (
   <Fragment>
     <FieldLabel inRow>{label}</FieldLabel>
     <div styleName="groupField" className={className}>
@@ -15,7 +15,7 @@ const Group = ({ className, label, id, inputValueLink, placeholder, children }) 
         styleName="inputRoot"
         inputContainerClassName="inputContainer"
         valueLink={inputValueLink}
-        pattern="0-9\."
+        pattern={isInteger ? "0-9" : "0-9\."}
         id={id}
         placeholder={placeholder}
       />
