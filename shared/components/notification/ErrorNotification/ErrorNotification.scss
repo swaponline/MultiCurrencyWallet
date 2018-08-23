@@ -1,0 +1,35 @@
+.error-notification-container {
+  background-color:var(--light);
+  color: var(--danger);
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  padding: 20px 15px 10px 15px;
+  z-index: 5;
+  border-radius: 4px;
+
+  & .error-notification-close {
+    color: var(--gray);
+    position: absolute;
+    top: 0;
+    right: 5px;
+    cursor: pointer;
+    font-size: 21px;
+  }
+
+  & .error-notification-close:hover {
+    color: #b1b1b1;
+  }
+  
+  & .error-notification-heading {
+    font-size: 16px;
+  }
+
+  & .error-notification-text {
+    font-size: 14px;
+  }
+
+  p {
+    margin-bottom: 0;
+  }
+}
