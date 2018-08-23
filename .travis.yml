@@ -32,15 +32,12 @@ script:
 - yarn build:mainnet
 - echo "________Build testnet___________"
 - yarn build:testnet
-- echo "_________Build local____________"
-- yarn build:local
 - ls
 after_script:
 #Uncomment this when enable covaralls
 #- COVERALLS_REPO_TOKEN=$coveralls_repo_token yarn coveralls
 - tar -cvzf build-mainnet.tgz build-mainnet/
 - tar -cvzf build-testnet.tgz build-testnet/
-- tar -cvzf build-local.tgz build-local/
 deploy:
   provider:    releases
   api_key:
@@ -48,6 +45,5 @@ deploy:
   file:
   - build-mainnet.tgz
   - build-testnet.tgz
-  - build-local.tgz
   on:
     tags: true

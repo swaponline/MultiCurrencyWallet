@@ -13,30 +13,30 @@ import styles from './NavMobile.scss'
 export default class NavMobile extends Component {
 
   static propTypes = {
-    menu: PropTypes.array.isRequired
+    menu: PropTypes.array.isRequired,
   }
 
   constructor(props) {
     super(props)
     this.state = {
-      isOpened: false
+      isOpened: false,
     }
   }
 
   handleToggle = () => {
     this.setState({
-      isOpened: !this.state.isOpened
+      isOpened: !this.state.isOpened,
     })
   }
 
   render() {
     const {
       props: {
-        menu
+        menu,
       },
       state: {
-        isOpened
-      }
+        isOpened,
+      },
     } = this
 
     return (

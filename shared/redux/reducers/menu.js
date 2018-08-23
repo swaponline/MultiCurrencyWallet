@@ -1,5 +1,6 @@
 import links from 'helpers/links'
 
+
 export const initialState = {
   items: [
     {
@@ -17,11 +18,11 @@ export const initialState = {
     },
     {
       title: 'Affiliate',
-       link: links.affiliate,
+      link: links.affiliate,
     },
     {
-       title: 'Listing',
-       link: links.listing,
+      title: 'Listing',
+      link: links.listing,
     },
   ],
 }

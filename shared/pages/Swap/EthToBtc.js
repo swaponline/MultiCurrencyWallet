@@ -73,7 +73,7 @@ export default class EthToBtc extends Component {
 
     return (
       <div>
-        {/*<OverProgress text={flow.step} progress={progress} />*/}
+        {/* <OverProgress text={flow.step} progress={progress} /> */}
 
         {
           this.swap.id && (

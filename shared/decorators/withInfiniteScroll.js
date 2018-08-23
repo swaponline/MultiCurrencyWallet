@@ -1,14 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+
 export const withInfiniteScroll = () => Component => {
   class InfiniteScroll extends React.Component {
     componentDidMount() {
-      window.addEventListener("scroll", this.onScroll);
+      window.addEventListener('scroll', this.onScroll)
     }
 
     componentWillUnmount() {
-      window.removeEventListener("scroll", this.onScroll);
+      window.removeEventListener('scroll', this.onScroll)
     }
 
     onScroll = () => {
@@ -23,15 +24,15 @@ export const withInfiniteScroll = () => Component => {
 
     render() {
       const { getMore, bottomOffset, itemsCount, ...rest } = this.props
-      return <Component {...rest} />;
+      return <Component {...rest} />
     }
-  };
+  }
 
   InfiniteScroll.propTypes = {
     getMore: PropTypes.func,
     bottomOffset: PropTypes.number,
     items: PropTypes.array,
-    itemsCount: PropTypes.number
+    itemsCount: PropTypes.number,
   }
 
   return InfiniteScroll
