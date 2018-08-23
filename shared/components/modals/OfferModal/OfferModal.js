@@ -24,6 +24,10 @@ export default class Offer extends React.Component {
     offer: {},
   }
 
+  componentWillUnmount() {
+    window.scrollTo({top: 0})
+  }
+
   handleMoveToConfirmation = (offer) => {
     this.setState({
       view: 'confirmOffer',
