@@ -25,7 +25,7 @@ export default class Offer extends React.Component {
   }
 
   componentWillUnmount() {
-    window.scrollTo({top: 0})
+    window.scrollTo({ top: 0 })
   }
 
   handleMoveToConfirmation = (offer) => {
