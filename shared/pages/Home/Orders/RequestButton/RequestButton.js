@@ -1,17 +1,11 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import cssModules from 'react-css-modules'
 import styles from './RequestButton.scss'
 
 
-@cssModules(styles, { allowMultiple: true })
-export default class RequestButton extends Component {
+const RequestButton = ({ onClick }) =>  (
+  <div styleName="button" onClick={onClick} />
+)
 
-  render() {
-    const { sendRequest } = this.props
-
-    return (
-      <div styleName="button" onClick={sendRequest} />
-    )
-  }
-}
+export default cssModules(RequestButton, styles, { allowMultiple: true })

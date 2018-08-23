@@ -30,7 +30,7 @@ input, textarea {
 
 .input {
   width: 100%;
-  height: 56px;
+  height: 60px;
   padding: 0 16px;
   // TODO placeholder doesn't change. Check on Messages page in New Message textarea
   //+input-placeholder()
@@ -57,7 +57,7 @@ textarea.input {
 }
 
 .error {
-  margin-top: 6px;
+  margin-top: 8px;
   font-size: 14px;
   color: $color-f-error;
 

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+
 import actions from 'redux/actions'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
@@ -7,10 +8,10 @@ import cssModules from 'react-css-modules'
 import styles from './Modal.scss'
 
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
-import Overlay from 'components/layout/Overlay/Overlay'
-import Logo from 'components/Logo/Logo'
-import Center from 'components/layout/Center/Center'
 import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
+import Overlay from 'components/layout/Overlay/Overlay'
+import Center from 'components/layout/Center/Center'
+import Logo from 'components/Logo/Logo'
 
 
 @cssModules(styles, { allowMultiple: true })
@@ -40,7 +41,7 @@ export default class Modal extends Component {
   close = () => {
     const { name, data, onClose, disableClose } = this.props
 
-    if(name === 'OfferModal') {
+    if (name === 'OfferModal') {
       actions.analytics.dataEvent('orderbook-addoffer-click-exit-button')
     }
 

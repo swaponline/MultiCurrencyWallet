@@ -8,11 +8,8 @@ import Field from './Field/Field'
 import Button from 'components/controls/Button/Button'
 
 
-
 @connect(({ user: { ethData, btcData, eosData } }) => ({
-  btcData,
-  ethData,
-  eosData
+  btcData, ethData, eosData,
 }))
 @CSSModules(styles)
 export default class SaveKeys extends Component {
@@ -24,11 +21,11 @@ export default class SaveKeys extends Component {
         <div styleName="title" >
           These are your private keys. Download the keys by  clicking on <br />
           the button or take a screenshot of this page, then confirm it and click here. <br />
-          <a href="" onClick={(event) => { event.preventDefault(); isChange() }}>I saved the keys in a safe place</a>
+          <span styleName="linked" onClick={isChange}>I saved the keys in a safe place</span>
         </div>
         <div styleName="row" >
           <Button brand onClick={isDownload}>Download</Button>
-          <div style={{ marginLeft: '15px', marginTop: '10px' }} >
+          <div styleName="cell" >
             <Field
               label={ethData.currency}
               privateKey={ethData.privateKey.toString()}

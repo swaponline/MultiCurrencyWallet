@@ -7,3 +7,33 @@
     display: block;
   }
 }
+
+
+@include media-mobile {
+	.logo {
+		display: none;
+	}
+} 
+
+@media screen and (max-width: 860px){
+  .logo {
+    display: none;
+  }
+}
+
+.mobile {
+  width: 100%;
+  text-align: center;
+
+  img {
+    margin: 0 auto;
+    padding-left: 30px;
+  }
+}
+
+@media screen and (min-width: 860px){
+  .mobile {
+    display: none;
+  }
+}
+

@@ -3,11 +3,9 @@
 }
 
 .choice {
-  width: 700px;
   margin-bottom: 20px;
   margin-top: 50px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
 }
 
@@ -15,9 +13,29 @@
   display: flex;
   align-items: center;
 
+  &:last-child {
+    margin-left: 40px;
+    justify-content: flex-end;
+  }
 }
 
 .text {
   margin-bottom: 0px;
   margin-right: 25px;
 }
+
+@media screen and (max-width: 690px) {
+  .choice {
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+   .row {
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 15px;
+     &:last-child {
+      justify-content: center;
+      margin-left: 0;
+    }
+  }
+} 

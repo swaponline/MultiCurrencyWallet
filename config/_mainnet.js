@@ -9,16 +9,21 @@ export default {
 
     eos: {
       chainId: '',
-      httpEndpoint: ''
-    }
+      httpEndpoint: '',
+    },
+  },
+
+  ipfs: {
+    swarm: '/dns4/discovery.libp2p.array.io/tcp/9091/wss/p2p-websocket-star/', // '/dns4/discovery.libp2p.array.io/tcp/9091/wss/p2p-websocket-star/'
+    server: 'discovery.libp2p.array.io',
   },
 
   token: {
-    contract: '0x8D880dff55a0c5620Cc617B0a34c83B87946783c', // пока под вопросом
+    contract: '0x85F806b0df30709886C22ed1be338d2c647Abd6B',
   },
 
   eth: {
-    contract : '0x025dce2d39a46296766db7cac8c322e8f59cd5d9',
+    contract : '0x843FcaAeb0Cce5FFaf272F5F2ddFFf3603F9c2A0',
   },
 
   tokens: {
@@ -30,18 +35,33 @@ export default {
       address: '0x9E4AD79049282F942c1b4c9b418F0357A0637017',
       decimals: 0,
     },
+    jot: {
+      address: '0xdb455c71c1bc2de4e80ca451184041ef32054001',
+      decimals: 18,
+    },
+    btrm: {
+      address: '0xae72146eb535607Ee79f5D8834303ea18751845f',
+      decimals: 18,
+    },
   },
 
   link: {
     bitpay: 'https://insight.bitpay.com',
     etherscan: 'https://etherscan.io',
     eos: '',
+    omniexplorer: 'https://www.omniexplorer.info',
   },
 
   api: {
     blocktrail: 'https://api.blocktrail.com/v1/BTC',
     bitpay: 'https://insight.bitpay.com/api',
     etherscan: 'https://api.etherscan.io/api',
+  },
+
+  apiAlternatives: {
+    bitpay: [
+      'https://insight.bitpay.com/api',
+    ],
   },
 
   apiKeys: {

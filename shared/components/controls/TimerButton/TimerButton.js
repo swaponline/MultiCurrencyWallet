@@ -13,6 +13,7 @@ export default class TimerButton extends Component {
 
   static defaultProps = {
     timeLeft: 10,
+    isButton: true,
   }
 
   timer = null
@@ -57,10 +58,14 @@ export default class TimerButton extends Component {
 
   render() {
     const { timeLeft } = this.state
-    const { children } = this.props
+    const { children, isButton } = this.props
 
     return (
-      <Button brand onClick={this.handleClick}>{children} {timeLeft}s</Button>
+      isButton ? (
+        <Button brand onClick={this.handleClick}>{children} {timeLeft}s</Button>
+      ) : (
+        `${timeLeft}`
+      )
     )
   }
 }

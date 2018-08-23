@@ -2,5 +2,8 @@ export default {
   Withdraw: 'WithdrawModal',
   Offer: 'OfferModal',
   PrivateKeys: 'PrivateKeysModal',
-  Eos: 'EosModal'
+  Eos: 'EosModal',
+  Approve: 'Approve',
+  ImportKeys: 'ImportKeys',
+  EthChecker: 'EthChecker',
 }

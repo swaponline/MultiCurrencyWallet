@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 
-import CSSModules from 'react-css-modules'
 import styles from './UserAvatar.scss'
 import bell from './images/avatar.svg'
+import CSSModules from 'react-css-modules'
 
 
 @CSSModules(styles, { allowMultiple: true })

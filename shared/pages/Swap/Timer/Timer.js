@@ -59,7 +59,15 @@ export default class Timer extends React.Component {
     const min = Math.ceil(timeLeft / 1000 / 60)
 
     return (
-      <div styleName="timer">{min} minute left for refund</div>
+      <div styleName="timer">
+        {
+          min > 0 ? (
+            `${min} minute left for refund`
+          ) : (
+            'refund ready'
+          )
+        }
+      </div>
     )
   }
 

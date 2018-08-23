@@ -1,60 +1,33 @@
 import React from 'react'
 
-import { connect } from 'redaction'
-import SwapApp from 'swap.app'
+import { withRouter } from 'react-router'
 import actions from 'redux/actions'
+import { connect } from 'redaction'
 import { constants } from 'helpers'
 
-import CSSModules from 'react-css-modules'
 import styles from './User.scss'
-
+import CSSModules from 'react-css-modules'
 import Sound from 'helpers/Sound/Sound.mp4'
-// import Question from './controls/Question/Question'
-import AddOfferButton from './AddOfferButton/AddOfferButton'
+
 import UserAvatar from './UserAvatar/UserAvatar'
 import UserTooltip from './UserTooltip/UserTooltip'
-
-import MenuIcon from 'components/ui/MenuIcon/MenuIcon'
-import NavMobile from '../NavMobile/NavMobile'
+import AddOfferButton from './AddOfferButton/AddOfferButton'
 
 
+@withRouter
 @connect({
   feeds: 'feeds.items',
+  peer: 'ipfs.peer',
 })
 @CSSModules(styles)
 export default class User extends React.Component {
 
   state = {
     view: true,
-    menuVisible: false,
-  }
-
-  componentWillMount() {
-    SwapApp.services.orders
-      .on('new order request', this.updateOrders)
-  }
-
-  componentWillUnmount() {
-    SwapApp.services.orders
-      .off('new order request', this.updateOrders)
   }
 
   handleChangeView = () => {
-    this.setState({
-      view: true,
-    })
-  }
-
-  updateOrders = () => {
-    this.setState({
-      orders: SwapApp.services.orders.items,
-    })
-
-    const { orders } = this.state
-
-    if (orders.length !== 0) {
-      actions.feed.getFeedDataFromOrder(orders)
-    }
+    this.setState({ view: true })
   }
 
   handleToggleTooltip = () => {
@@ -63,16 +36,22 @@ export default class User extends React.Component {
     })
   }
 
+  declineRequest = (orderId, participantPeer) => {
+    actions.core.declineRequest(orderId, participantPeer)
+    actions.core.updateCore()
+  }
+
   acceptRequest = (orderId, participantPeer) => {
-    const order = SwapApp.services.orders.getByKey(orderId)
+    actions.core.acceptRequest(orderId, participantPeer)
+    actions.core.updateCore()
+    this.handleToggleTooltip()
+  }
 
-    order.acceptRequest(participantPeer)
-
+  autoAcceptRequest = (orderId, participantPeer, link) => {
+    this.acceptRequest(orderId, participantPeer)
     setTimeout(() => {
-      this.handleToggleTooltip()
-    }, 800)
-
-    this.updateOrders()
+      this.props.history.push(link)
+    }, 1000)
   }
 
   soundClick = () => {
@@ -83,20 +62,16 @@ export default class User extends React.Component {
 
 
   render() {
-    const { view, menuVisible } = this.state
-    const { feeds } = this.props
-    const mePeer = SwapApp.services.room.peer
+    const { view } = this.state
+    const { feeds, peer } = this.props
 
     return (
       <div styleName="user-cont">
-        {/*/!* <Question /> *!/*/}
-        <MenuIcon onClick={() => this.setState({ menuVisible: !menuVisible })} />
-        <NavMobile view={menuVisible} />
         <AddOfferButton />
         <UserAvatar
           isToggle={this.handleToggleTooltip}
           feeds={feeds}
-          mePeer={mePeer}
+          mePeer={peer}
           soundClick={this.soundClick}
           changeView={this.handleChangeView}
         />
@@ -104,8 +79,10 @@ export default class User extends React.Component {
           view && <UserTooltip
             view={view}
             feeds={feeds}
-            mePeer={mePeer}
+            mePeer={peer}
+            autoAcceptRequest={this.autoAcceptRequest}
             acceptRequest={this.acceptRequest}
+            declineRequest={this.declineRequest}
           />
         }
       </div>

@@ -76,6 +76,18 @@
   cursor: pointer;
 }
 
+.decline {
+  width: 40px;
+  height: 40px;
+  background: #f2f9f2 url('./images/close.jpg') 50% 50% no-repeat;
+  background-size: contain;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
 .icon {
   width: 12px;
   height: 8px;

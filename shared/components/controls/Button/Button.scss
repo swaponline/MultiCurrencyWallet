@@ -44,7 +44,7 @@
   border: 2px solid #e24d4d;
 
   &:hover {
-    background-color: darken(#fafafa, 10%);
+    background-color: darken(#e24d4d, 10%);
   }
 }
 
@@ -62,3 +62,10 @@
   cursor: default !important;
   color: #626262 !important;
 }
+
+@include media-mobile {
+  .button {
+    height: 46px;
+    line-height: 46px;
+  }
+} 

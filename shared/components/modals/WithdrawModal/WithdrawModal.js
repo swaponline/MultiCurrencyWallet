@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'redaction'
 import { constants } from 'helpers'
 import actions from 'redux/actions'
 import Link from 'sw-valuelink'
@@ -13,12 +12,7 @@ import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
 
-@connect({
-  ethData: 'user.ethData',
-  btcData: 'user.btcData',
-  nimData: 'user.nimData',
-  eosData: 'user.eosData'
-})
+
 @cssModules(styles)
 export default class WithdrawModal extends React.Component {
 
@@ -29,50 +23,25 @@ export default class WithdrawModal extends React.Component {
 
   state = {
     isSubmitted: false,
-    address: ' ',
+    address: '',
     amount: '',
   }
 
   handleSubmit = () => {
     const { address: to, amount } = this.state
-    const { ethData, btcData, nimData, eosData, data: { currency } } = this.props
+    const { data: { currency, contractAddress, address, decimals, balance } } = this.props
 
-    if (!to || !amount || amount < 0.01) {
+    if (!to || !amount || amount < 0.01 || amount > balance) {
       this.setState({
         isSubmitted: true,
       })
       return
     }
 
-    let action
-    let from
-
-    if (currency === 'ETH') {
-      action = actions.ethereum
-      from = ethData.address
-    }
-    else if (currency === 'BTC') {
-      action = actions.bitcoin
-      from = btcData.address
-    }
-    else if (currency === 'NIM') {
-      action = actions.nimiq
-      from = nimData.address
-    }
-    else if (currency === 'EOS') {
-      action = actions.eos
-      from = eosData.address
-    }
-    else if (currency === 'NOXON') {
-      action = actions.token
-    }
-
-    actions.loader.show()
-
-    action.send(from, to, Number(amount))
+    actions[currency.toLowerCase()].send(contractAddress || address, to, Number(amount), decimals)
       .then(() => {
         actions.loader.hide()
-        action.getBalance()
+        actions[currency.toLowerCase()].getBalance(currency)
 
         actions.notifications.show(constants.notifications.SuccessWithdraw, {
           amount,
@@ -82,33 +51,24 @@ export default class WithdrawModal extends React.Component {
       })
   }
 
-  setAmount = (amount) => {
-    this.setState({
-      amount,
-    })
-  }
-
-  setAddress = (address) => {
-    this.setState({
-      address,
-    })
-  }
-
   render() {
     const { isSubmitted, address, amount } = this.state
     const { name, data } = this.props
+    const { balance } = data
 
     const linked = Link.all(this, 'address', 'amount')
     const isDisabled = !address || !amount
 
     if (isSubmitted) {
-      linked.amount.check((value) => value >= 0.01, 'Amount must be greater than 0.01')
+      linked.amount.check((value) => value > 0.01, `Amount must be greater than 0.05 `)
+      linked.amount.check((value) => value < balance, `Amount must be bigger your balance`)
     }
 
     return (
       <Modal name={name} title={`Withdraw ${data.currency.toUpperCase()}`}>
+        <p style={{ fontSize: '16px' }}>Please notice, that you need to have minimum 0.01 amount <br /> of the ETH on your wallet, to use it for Ethereum miners fee</p>
         <FieldLabel inRow>Address</FieldLabel>
-        <Input valueLink={linked.address} />
+        <Input valueLink={linked.address} pattern="0-9a-zA-Z" />
         <FieldLabel inRow>Amount</FieldLabel>
         <Input valueLink={linked.amount} pattern="0-9\." />
         {

@@ -1,67 +1,50 @@
 import React, { Component } from 'react'
 
-import SwapApp from 'swap.app'
+import { connect } from 'redaction'
+import { withRouter } from 'react-router-dom'
 
-import CSSModules from 'react-css-modules'
 import styles from './Footer.scss'
+import logo from './images/logo.svg'
+import CSSModules from 'react-css-modules'
 
 import Info from './Info/Info'
+import SocialMenu from './SocialMenu/SocialMenu'
+import Links from './Links/Links'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 
 
-@CSSModules(styles)
+@withRouter
+@connect(({ ipfs: { server, isOnline, onlineUsers } }) => ({
+  server,
+  isOnline,
+  onlineUsers,
+}))
+@CSSModules(styles, { allowMultiple: true })
 export default class Footer extends Component {
-
-  state = {
-    userOnline: 0,
-    connected: false,
-  }
-
-  componentWillMount() {
-    setTimeout(() => {
-      const connected = SwapApp.services.room.connection._ipfs.isOnline()
-
-      SwapApp.services.room.connection.on('peer joined', this.handleUserJoin)
-      this.setState({
-        connected,
-      })
-    }, 8000)
-  }
-
-  componentWillUnmount() {
-    SwapApp.services.room.connection
-      .off('peer joined', this.handleUserLeft)
-  }
-
-  handleUserJoin = () => {
-    let { userOnline } = this.state
-    userOnline++
-    this.setState({
-      userOnline,
-    })
-  }
-
-  handleUserLeft = () => {
-    let { userOnline } = this.state
-    userOnline--
-    this.setState({
-      userOnline,
-    })
-  }
-
   render() {
-    const { userOnline, connected } = this.state
-    const server = SwapApp.services.room._config.config.Addresses.Swarm[0].split('/')[2]
+    const { onlineUsers, isOnline, server } = this.props
 
     return (
       <div styleName="footer">
-        <WidthContainer styleName="container">
-          <Info
-            serverAddress={server}
-            userOnline={userOnline}
-            connected={connected}
-          />
-        </WidthContainer>
+        <div styleName="information-footer">
+          <WidthContainer styleName="container">
+            <Info serverAddress={server} onlineUsers={onlineUsers} isOnline={isOnline} />
+          </WidthContainer>
+        </div>
+        <div styleName="default-footer">
+          <WidthContainer>
+            <Links />
+          </WidthContainer>
+          <WidthContainer styleName="container--social">
+            <SocialMenu />
+          </WidthContainer>
+          <WidthContainer styleName="container--copyright">
+            <div styleName="copyright">
+              <img src={logo} styleName="copyright-logo" alt="logotype" />
+              <span styleName="copyright-text">© 2018 Swap Online Harju maakond, Tallinn, Kesklinna linnaosa</span>
+            </div>
+          </WidthContainer>
+        </div>
       </div>
     )
   }

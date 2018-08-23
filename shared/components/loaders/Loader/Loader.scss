@@ -146,3 +146,17 @@
     transform: translate3d(-37%, -37%, 0) rotate(40deg);
   }
 }
+
+.text {
+   position: absolute;
+   font-size: 16px;
+   left: calc(50% - 245.5px);
+   top: 65%;
+ }
+
+.link {
+  position: absolute;
+  font-size: 16px;
+  left: calc(50% - 408.5px);
+  top: 70%;
+}

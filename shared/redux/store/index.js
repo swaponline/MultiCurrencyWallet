@@ -1,8 +1,8 @@
-import { routerMiddleware } from 'react-router-redux'
+import { routerMiddleware, routerReducer } from 'react-router-redux'
 import { createBrowserHistory } from 'history'
 import { createStore, combineReducers } from 'redaction'
 import { createLogger } from 'redux-logger'
-import localReducers from 'redux/reduсers'
+import localReducers from 'redux/reducers'
 
 
 export const history = createBrowserHistory()
@@ -12,7 +12,7 @@ const initialState = {} // (localStorage['redux-store']) ? JSON.parse(localStora
 
 const store = createStore({
   reducers: {
-    ...combineReducers(localReducers),
+    ...combineReducers(localReducers, routerReducer),
   },
   middleware: [
     middleware,

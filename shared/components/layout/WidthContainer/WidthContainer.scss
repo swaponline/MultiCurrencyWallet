@@ -1,5 +1,5 @@
 .widthContainer {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -22,8 +22,8 @@
 @include media-mobile {
 
   .widthContainer {
-    padding-right: vw(15);
-    padding-left: vw(15);
+    padding-right: 20px;
+    padding-left: 20px;
 
     &.main {
       padding-top: vw(30);

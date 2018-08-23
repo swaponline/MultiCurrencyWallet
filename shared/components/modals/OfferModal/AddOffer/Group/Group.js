@@ -1,35 +1,28 @@
 import React, { Fragment } from 'react'
 
-import cssModules from 'react-css-modules'
 import styles from './Group.scss'
+import cssModules from 'react-css-modules'
 
-import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
-import CurrencySelect from 'components/ui/CurrencySelect/CurrencySelect'
+import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 
 
-const Group = ({ className, label, id, inputValueLink, currency = true, selectedCurrencyValue, onCurrencySelect }) => (
+const Group = ({ className, label, id, inputValueLink, placeholder, children }) => (
   <Fragment>
     <FieldLabel inRow>{label}</FieldLabel>
     <div styleName="groupField" className={className}>
       <Input
         styleName="inputRoot"
-        inputContainerClassName={styles.inputContainer}
+        inputContainerClassName="inputContainer"
         valueLink={inputValueLink}
         pattern="0-9\."
         id={id}
+        placeholder={placeholder}
       />
-      {
-        currency && (
-          <CurrencySelect
-            styleName="currencySelect"
-            selectedValue={selectedCurrencyValue}
-            onSelect={onCurrencySelect}
-          />
-        )
-      }
+      {children}
     </div>
   </Fragment>
 )
 
 export default cssModules(Group, styles)
+

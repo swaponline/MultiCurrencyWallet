@@ -12,7 +12,11 @@ const config = {
     base:     (file = '') => path.join(basePath, file),
     shared:   (file = '') => path.join(basePath, 'shared', file),
     client:   (file = '') => path.join(basePath, 'client', file),
+    // swapCore: (file = '') => path.join(basePath, 'node_modules', file),
     swapCore: (file = '') => path.join(rootPath, 'swap.core', file),
+  },
+  referral: {
+    url:'https://wiki.swap.online/affiliate.php',
   },
 
   publicPath: '/',
@@ -30,12 +34,18 @@ const config = {
   },
 
   exchangeRates: {
+    'swapeth': 1,
+    'ethswap': 1,
+    'swapnoxon': 1,
+    'noxonswap': 1,
+    'swapbtc': 0.07,
+    'btcswap': 0.07,
     'etheth': 1,
     'ethbtc': 0.07,
     'btceth': 14,
     'ethnoxon': 1,
     'noxoneth': 1,
-    'btcnoxon': 14,
+    'btcnoxon': 0.07,
     'noxonbtc': 0.07,
   },
 }

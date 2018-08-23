@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { links } from 'helpers'
 
 import cssModules from 'react-css-modules'
@@ -9,7 +9,7 @@ import logoImage from './images/logo.svg'
 import coloredLogoImage from './images/logo-colored.svg'
 
 
-const Logo = ({ colored, withLink }) => {
+const Logo = ({ colored, withLink, mobile }) => {
   const imgNode = React.createElement('img', {
     styleName: !withLink && 'logo',
     src: colored ? coloredLogoImage : logoImage,
@@ -18,9 +18,9 @@ const Logo = ({ colored, withLink }) => {
 
   if (withLink) {
     return (
-      <NavLink styleName="logo" to={links.home}>
+      <Link styleName={mobile ? 'mobile' : 'logo'} to={links.home}>
         {imgNode}
-      </NavLink>
+      </Link>
     )
   }
 

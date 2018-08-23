@@ -1,0 +1,49 @@
+cache:
+  directories:
+  - node_modules
+  - "~/.cache"
+  - "~/.npm"
+  yarn:        true
+language:      node_js
+node_js:
+- '8'
+before_script:
+- git submodule update --init --recursive
+#Uncomment this when enable covaralls
+#- yarn add coveralls --save-dev
+#- yarn add mocha --save-dev
+#- yarn add chai --save-dev
+#- yarn add jsdom --save-dev
+#- yarn add jest --save-dev
+#- yarn add react-test-renderer --save-dev
+#- yarn add ignore-styles --save-dev
+- echo "_________YARN install___________"
+- yarn install
+- echo "__________YARN start____________"
+- yarn start &
+script:
+- echo "____________TEST________________"
+#Uncomment this when enable covaralls
+#- yarn test:unit -- --coverage
+#- yarn test:snapshot -- --coverage
+- echo "____________LINT________________"
+- yarn eslint
+- echo "________Build mainnet___________"
+- yarn build:mainnet
+- echo "________Build testnet___________"
+- yarn build:testnet
+- ls
+after_script:
+#Uncomment this when enable covaralls
+#- COVERALLS_REPO_TOKEN=$coveralls_repo_token yarn coveralls
+- tar -cvzf build-mainnet.tgz build-mainnet/
+- tar -cvzf build-testnet.tgz build-testnet/
+deploy:
+  provider:    releases
+  api_key:
+    secure:    PaxYbs26pnUamQyk5FxiEWz58dD9Z3VFpCMfw7mP52y8H0J5mIlS728dLDYag7Xah6/vwuz/EmDucM3IcNrDyzSHt7uJoqqCwXdC7xEeP8ZP7li+W8UED7UEwfJzT6d9mNlsz4TJsuDVmH2DmmO46Op/PwrxbNi6FOTtJKCMnOPZxPIimvsyA3M+PJ9y+jbs3J10I9L0fUfFxEXpjiDjf7wgIoX2VOAHLIsePV1zl8dzM3pcBYKFMTo+BDwsX5ECctUOeL73+OgkyXKuDSbnmt5QKJS4LVqjN1ptu8Sfg+pwTkcQSg9eH5UdRLOVZiqEKQtpmzZokruqck7wSJw0QEBbruWwYrb+teFbqvyd2oSB8IjIhM1On4zgLu/nYKv4iU5z7S90sUtp14Dkr2zBP6rboaHAN/Eln9NPDOgpxrewkRwGxEn3K9TwCCdKVaLyVWYVzR3vXyANdc0hNrmgXoEtMaUbzNuJZuyfXWBD6JnpgoqMzpgaIT7TTbZuzohcK8tn3NaRhoyXuq5vZiP6WMfvogO4oHhBBiH90SgjI7XtpMEjERkYgJ0uI7/qbtpZueVSIbnvx7Ye0VGMUuHazCdM4/YlIhr2R28Te80dJVpVpFW5JjHdotoH0O/SbMS0nU8ntgnrTf/Olh0rNla0KUIOIdsmY7cNG++wSGEcqX4=
+  file:
+  - build-mainnet.tgz
+  - build-testnet.tgz
+  on:
+    tags: true

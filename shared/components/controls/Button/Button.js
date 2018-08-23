@@ -29,6 +29,7 @@ const Button = (props) => {
       role="button"
       onClick={onClick}
       id={id}
+      disabled={disabled}
     >
       {children}
     </div>
