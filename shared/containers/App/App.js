@@ -22,6 +22,7 @@ import ModalConductor from 'components/modal/ModalConductor/ModalConductor'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import NotificationConductor from 'components/notification/NotificationConductor/NotificationConductor'
 import Seo from 'components/Seo/Seo'
+import ErrorNotification from 'components/notification/ErrorNotification/ErrorNotification'
 
 
 const userLanguage = (navigator.userLanguage || navigator.language || 'en-gb').split('-')[0]
@@ -49,10 +50,15 @@ export default class App extends React.Component {
     this.state = {
       fetching: false,
       multiTabs: false,
+      error: '',
+      fallbackUiError: ''
     }
+
+    this.hideErrorNotification = this.hideErrorNotification.bind(this)
   }
 
   componentWillMount() {
+
     localStorage.setItem(constants.localStorage.activeTabId, Date.now())
 
     if (localStorage.getItem(constants.localStorage.activeTabId)) {
@@ -75,6 +81,10 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
+    window.onerror = (error) => {
+      this.setState({error})
+    }
+
     setTimeout(() => {
       actions.user.sign()
       createSwapApp()
@@ -82,8 +92,16 @@ export default class App extends React.Component {
     }, 1000)
   }
 
+  hideErrorNotification() {
+    this.setState({error: '', fallbackUiError: ''})
+  }
+
+  componentDidCatch(error) {
+    this.setState({fallbackUiError: error.message})
+  }
+
   render() {
-    const { fetching, multiTabs } = this.state
+    const { fetching, multiTabs, error, fallbackUiError } = this.state
     const { children, ethAddress, btcAddress, tokenAddress, history /* eosAddress */ } = this.props
     const isFetching = !ethAddress || !btcAddress || !tokenAddress || !fetching
 
@@ -95,8 +113,13 @@ export default class App extends React.Component {
       return <Loader />
     }
 
+    if (fallbackUiError) {
+      return <ErrorNotification hideErrorNotification={this.hideErrorNotification} error={error} />
+    }
+
     return (
       <Fragment>
+        {error && <ErrorNotification hideErrorNotification={this.hideErrorNotification} error={error} />}
         <Seo location={history.location} />
         <Header />
         <WidthContainer styleName="main">
