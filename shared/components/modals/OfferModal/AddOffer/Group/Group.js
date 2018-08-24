@@ -15,7 +15,7 @@ const Group = ({ className, label, id, inputValueLink, isInteger = false, placeh
         styleName="inputRoot"
         inputContainerClassName="inputContainer"
         valueLink={inputValueLink}
-        pattern={isInteger ? "0-9" : "0-9\."}
+        pattern={isInteger ? '0-9' : '0-9.'}
         id={id}
         placeholder={placeholder}
       />

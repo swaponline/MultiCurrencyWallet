@@ -47,7 +47,7 @@ export default class AddOffer extends Component {
       ethBalance: null,
       isSending: false,
       isSellFieldInteger: false,
-      isBuyFieldInteger: false
+      isBuyFieldInteger: false,
     }
   }
 
@@ -124,7 +124,7 @@ export default class AddOffer extends Component {
     const isBuyFieldInteger = config.tokens[buyCurrency] && config.tokens[buyCurrency].decimals === 0
 
     if (isBuyFieldInteger)
-      buyAmount = new BigNumber(String(buyAmount) || 0).dp(0, BigNumber.ROUND_HALF_EVEN)
+    { buyAmount = new BigNumber(String(buyAmount) || 0).dp(0, BigNumber.ROUND_HALF_EVEN) }
 
     this.setState({
       buyCurrency,
@@ -154,7 +154,7 @@ export default class AddOffer extends Component {
     const isSellFieldInteger = config.tokens[sellCurrency] && config.tokens[sellCurrency].decimals === 0
 
     if (isSellFieldInteger)
-      sellAmount = new BigNumber(String(sellAmount) || 0).dp(0, BigNumber.ROUND_HALF_EVEN)
+    { sellAmount = new BigNumber(String(sellAmount) || 0).dp(0, BigNumber.ROUND_HALF_EVEN) }
 
 
     this.setState({
