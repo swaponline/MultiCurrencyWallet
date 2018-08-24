@@ -123,7 +123,9 @@ export default class App extends React.Component {
         <Seo location={history.location} />
         <Header />
         <WidthContainer styleName="main">
-          {children}
+          <main style={{ marginTop: '88px' }}>
+            {children}
+          </main>
         </WidthContainer>
         <Core />
         <Footer />
