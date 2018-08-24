@@ -33,7 +33,6 @@ const minAmount = {
 }))
 @cssModules(styles, { allowMultiple: true })
 export default class AddOffer extends Component {
-
   constructor({ initialData }) {
     super()
 
@@ -90,7 +89,6 @@ export default class AddOffer extends Component {
     actions.user.setExchangeRate(sellCurrency, buyCurrency, this.changeExchangeRate)
   }
 
-
   handleExchangeRateChange = (value) => {
     let { buyAmount, sellAmount } = this.state
 
@@ -123,12 +121,18 @@ export default class AddOffer extends Component {
     const { exchangeRate } = this.state
     sellAmount = new BigNumber(String(buyAmount) || 0).multipliedBy(exchangeRate)
 
+    const isBuyFieldInteger = config.tokens[buyCurrency] && config.tokens[buyCurrency].decimals === 0
+
+    if (isBuyFieldInteger)
+      buyAmount = new BigNumber(String(buyAmount) || 0).dp(0, BigNumber.ROUND_HALF_EVEN)
+
     this.setState({
       buyCurrency,
       sellCurrency,
       sellAmount,
+      buyAmount,
       isSellFieldInteger: config.tokens[sellCurrency] && config.tokens[sellCurrency].decimals === 0,
-      isBuyFieldInteger: config.tokens[buyCurrency] && config.tokens[buyCurrency].decimals === 0,
+      isBuyFieldInteger,
     })
   }
 
@@ -147,12 +151,18 @@ export default class AddOffer extends Component {
     const { exchangeRate } = this.state
     buyAmount = new BigNumber(String(sellAmount) || 0).dividedBy(exchangeRate)
 
+    const isSellFieldInteger = config.tokens[sellCurrency] && config.tokens[sellCurrency].decimals === 0
+
+    if (isSellFieldInteger)
+      sellAmount = new BigNumber(String(sellAmount) || 0).dp(0, BigNumber.ROUND_HALF_EVEN)
+
 
     this.setState({
       buyCurrency,
       sellCurrency,
       buyAmount,
-      isSellFieldInteger: config.tokens[sellCurrency] && config.tokens[sellCurrency].decimals === 0,
+      sellAmount,
+      isSellFieldInteger,
       isBuyFieldInteger: config.tokens[buyCurrency] && config.tokens[buyCurrency].decimals === 0,
     })
   }
