@@ -33,7 +33,6 @@ const minAmount = {
 }))
 @cssModules(styles, { allowMultiple: true })
 export default class AddOffer extends Component {
-
   constructor({ initialData }) {
     super()
 
@@ -47,6 +46,8 @@ export default class AddOffer extends Component {
       sellCurrency: sellCurrency || 'eth',
       ethBalance: null,
       isSending: false,
+      isSellFieldInteger: false,
+      isBuyFieldInteger: false,
     }
   }
 
@@ -88,7 +89,6 @@ export default class AddOffer extends Component {
     actions.user.setExchangeRate(sellCurrency, buyCurrency, this.changeExchangeRate)
   }
 
-
   handleExchangeRateChange = (value) => {
     let { buyAmount, sellAmount } = this.state
 
@@ -121,11 +121,19 @@ export default class AddOffer extends Component {
     const { exchangeRate } = this.state
     sellAmount = new BigNumber(String(buyAmount) || 0).multipliedBy(exchangeRate)
 
+    const isBuyFieldInteger = config.tokens[buyCurrency] && config.tokens[buyCurrency].decimals === 0
+
+    if (isBuyFieldInteger) {
+      buyAmount = new BigNumber(String(buyAmount) || 0).dp(0, BigNumber.ROUND_HALF_EVEN)
+    }
 
     this.setState({
       buyCurrency,
       sellCurrency,
       sellAmount,
+      buyAmount,
+      isSellFieldInteger: config.tokens[sellCurrency] && config.tokens[sellCurrency].decimals === 0,
+      isBuyFieldInteger,
     })
   }
 
@@ -144,16 +152,32 @@ export default class AddOffer extends Component {
     const { exchangeRate } = this.state
     buyAmount = new BigNumber(String(sellAmount) || 0).dividedBy(exchangeRate)
 
+    const isSellFieldInteger = config.tokens[sellCurrency] && config.tokens[sellCurrency].decimals === 0
+
+    if (isSellFieldInteger) {
+      sellAmount = new BigNumber(String(sellAmount) || 0).dp(0, BigNumber.ROUND_HALF_EVEN)
+    }
+
 
     this.setState({
       buyCurrency,
       sellCurrency,
       buyAmount,
+      sellAmount,
+      isSellFieldInteger,
+      isBuyFieldInteger: config.tokens[buyCurrency] && config.tokens[buyCurrency].decimals === 0,
     })
   }
 
-  handleBuyAmountChange = (value) => {
+  handleBuyAmountChange = (value, prev) => {
     const { exchangeRate } = this.state
+
+    const firstDot = value.indexOf('.')
+    const secondDot = value.lastIndexOf('.')
+
+    if (firstDot !== secondDot) {
+      return undefined
+    }
 
     if (!this.isSending) {
       actions.analytics.dataEvent('orderbook-addoffer-enter-ordervalue')
@@ -164,10 +188,19 @@ export default class AddOffer extends Component {
       sellAmount: new BigNumber(String(value) || 0).dividedBy(exchangeRate || 0),
       buyAmount: new BigNumber(String(value)),
     })
+
+    return value
   }
 
   handleSellAmountChange = (value) => {
     const { exchangeRate } = this.state
+
+    const firstDot = value.indexOf('.')
+    const secondDot = value.lastIndexOf('.')
+
+    if (firstDot !== secondDot) {
+      return undefined
+    }
 
     if (!this.isSending) {
       actions.analytics.dataEvent('orderbook-addoffer-enter-ordervalue')
@@ -178,6 +211,8 @@ export default class AddOffer extends Component {
       buyAmount: new BigNumber(String(value) || 0).multipliedBy(exchangeRate || 0),
       sellAmount: new BigNumber(String(value)),
     })
+
+    return value
   }
 
   handleNext = () => {
@@ -202,7 +237,7 @@ export default class AddOffer extends Component {
 
   render() {
     const { currencies } = this.props
-    const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency, balance, ethBalance } = this.state
+    const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency, balance, isBuyFieldInteger, isSellFieldInteger, ethBalance } = this.state
     const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
     const isDisabled = !exchangeRate || !buyAmount && !sellAmount
       || sellAmount > balance || sellAmount < minAmount[sellCurrency]
@@ -231,20 +266,22 @@ export default class AddOffer extends Component {
         <SelectGroup
           styleName="sellGroup"
           label="Sell"
-          inputValueLink={linked.sellAmount.onChange(this.handleSellAmountChange)}
+          inputValueLink={linked.sellAmount.pipe(this.handleSellAmountChange)}
           selectedCurrencyValue={sellCurrency}
           onCurrencySelect={this.handleSellCurrencySelect}
           id="sellAmount"
           currencies={currencies}
+          isInteger={isSellFieldInteger}
           placeholder="Enter sell amount"
         />
         <SelectGroup
           label="Buy"
-          inputValueLink={linked.buyAmount.onChange(this.handleBuyAmountChange)}
+          inputValueLink={linked.buyAmount.pipe(this.handleBuyAmountChange)}
           selectedCurrencyValue={buyCurrency}
           onCurrencySelect={this.handleBuyCurrencySelect}
           id="buyAmount"
           currencies={currencies}
+          isInteger={isBuyFieldInteger}
           placeholder="Enter buy amount"
         />
         <Button

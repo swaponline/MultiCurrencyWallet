@@ -51,7 +51,7 @@ export default class App extends React.Component {
       fetching: false,
       multiTabs: false,
       error: '',
-      fallbackUiError: ''
+      fallbackUiError: '',
     }
 
     this.hideErrorNotification = this.hideErrorNotification.bind(this)
@@ -82,7 +82,7 @@ export default class App extends React.Component {
 
   componentDidMount() {
     window.onerror = (error) => {
-      this.setState({error})
+      this.setState({ error })
     }
 
     setTimeout(() => {
@@ -93,11 +93,11 @@ export default class App extends React.Component {
   }
 
   hideErrorNotification() {
-    this.setState({error: '', fallbackUiError: ''})
+    this.setState({ error: '', fallbackUiError: '' })
   }
 
   componentDidCatch(error) {
-    this.setState({fallbackUiError: error.message})
+    this.setState({ fallbackUiError: error.message })
   }
 
   render() {
