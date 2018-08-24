@@ -19,10 +19,12 @@ export const initialState = {
     {
       title: 'Affiliate',
       link: links.affiliate,
+      isMobile: false,
     },
     {
       title: 'Listing',
       link: links.listing,
+      isMobile: false,
     },
   ],
 }

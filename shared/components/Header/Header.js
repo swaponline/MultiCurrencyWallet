@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'redaction'
 import { withRouter } from 'react-router-dom'
+import { isMobile } from 'react-device-detect'
 
 import CSSModules from 'react-css-modules'
 import styles from './Header.scss'
@@ -21,11 +22,14 @@ export default class Header extends Component {
   render() {
     const { menu } = this.props
 
+    if (isMobile) {
+      return <NavMobile menu={menu} />
+    }
+
     return (
       <div styleName="header">
         <WidthContainer styleName="container">
           <Logo withLink />
-          <NavMobile menu={menu} />
           <Nav menu={menu} />
           <Logo withLink mobile />
           <User />

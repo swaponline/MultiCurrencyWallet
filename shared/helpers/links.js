@@ -7,6 +7,7 @@ export default {
   affiliate: '/affiliate',
   listing: '/listing',
   test: 'https://testnet.swap.online',
+  main: 'https://swap.online/',
 
   // social networks
   medium: 'https://medium.com/swaponline',
