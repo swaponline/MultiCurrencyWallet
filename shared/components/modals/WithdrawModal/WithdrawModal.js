@@ -29,7 +29,7 @@ export default class WithdrawModal extends React.Component {
 
   handleSubmit = () => {
     const { address: to, amount } = this.state
-    const { data: { currency, contractAddress, address, decimals, balance } } = this.props
+    const { data: { currency, contractAddress, address, decimals, balance, token } } = this.props
 
     if (!to || !amount || amount < 0.01 || amount > balance) {
       this.setState({
@@ -38,17 +38,31 @@ export default class WithdrawModal extends React.Component {
       return
     }
 
-    actions[currency.toLowerCase()].send(contractAddress || address, to, Number(amount), decimals)
-      .then(() => {
-        actions.loader.hide()
-        actions[currency.toLowerCase()].getBalance(currency)
+    if (token) {
+      actions.token.send(contractAddress || address, to, Number(amount), decimals)
+        .then(() => {
+          actions.loader.hide()
+          actions.token.getBalance(currency)
 
-        actions.notifications.show(constants.notifications.SuccessWithdraw, {
-          amount,
-          currency,
-          address: to,
+          actions.notifications.show(constants.notifications.SuccessWithdraw, {
+            amount,
+            currency,
+            address: to,
+          })
         })
-      })
+    } else {
+      actions[currency.toLowerCase()].send(contractAddress || address, to, Number(amount), decimals)
+        .then(() => {
+          actions.loader.hide()
+          actions[currency.toLowerCase()].getBalance(currency)
+
+          actions.notifications.show(constants.notifications.SuccessWithdraw, {
+            amount,
+            currency,
+            address: to,
+          })
+        })
+    }
   }
 
   render() {

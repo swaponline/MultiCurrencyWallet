@@ -43,8 +43,7 @@ class Info extends React.Component {
           {isOnline ? 'Connected ' : 'Loading or not available '}
         </span>
         to IPFS signal {serverAddress} / peers online: {onlineUsers}
-
-        <Line strokeColor="#2181F7" percent={progressValue} strokeWidth="2" />
+        <Line strokeColor="#2181F7" percent={progressValue} strokeWidth="1" />
       </div>
     )
   }
