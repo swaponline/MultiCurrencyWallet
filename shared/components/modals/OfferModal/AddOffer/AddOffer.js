@@ -152,8 +152,15 @@ export default class AddOffer extends Component {
     })
   }
 
-  handleBuyAmountChange = (value) => {
+  handleBuyAmountChange = (value, prev) => {
     const { exchangeRate } = this.state
+
+    const firstDot = value.indexOf('.')
+    const secondDot = value.lastIndexOf('.')
+
+    if (firstDot !== secondDot) {
+      return undefined
+    }
 
     if (!this.isSending) {
       actions.analytics.dataEvent('orderbook-addoffer-enter-ordervalue')
@@ -164,10 +171,19 @@ export default class AddOffer extends Component {
       sellAmount: new BigNumber(String(value) || 0).dividedBy(exchangeRate || 0),
       buyAmount: new BigNumber(String(value)),
     })
+
+    return value
   }
 
   handleSellAmountChange = (value) => {
     const { exchangeRate } = this.state
+
+    const firstDot = value.indexOf('.')
+    const secondDot = value.lastIndexOf('.')
+
+    if (firstDot !== secondDot) {
+      return undefined
+    }
 
     if (!this.isSending) {
       actions.analytics.dataEvent('orderbook-addoffer-enter-ordervalue')
@@ -178,6 +194,8 @@ export default class AddOffer extends Component {
       buyAmount: new BigNumber(String(value) || 0).multipliedBy(exchangeRate || 0),
       sellAmount: new BigNumber(String(value)),
     })
+
+    return value
   }
 
   handleNext = () => {
@@ -231,7 +249,7 @@ export default class AddOffer extends Component {
         <SelectGroup
           styleName="sellGroup"
           label="Sell"
-          inputValueLink={linked.sellAmount.onChange(this.handleSellAmountChange)}
+          inputValueLink={linked.sellAmount.pipe(this.handleSellAmountChange)}
           selectedCurrencyValue={sellCurrency}
           onCurrencySelect={this.handleSellCurrencySelect}
           id="sellAmount"
@@ -240,7 +258,7 @@ export default class AddOffer extends Component {
         />
         <SelectGroup
           label="Buy"
-          inputValueLink={linked.buyAmount.onChange(this.handleBuyAmountChange)}
+          inputValueLink={linked.buyAmount.pipe(this.handleBuyAmountChange)}
           selectedCurrencyValue={buyCurrency}
           onCurrencySelect={this.handleBuyCurrencySelect}
           id="buyAmount"
