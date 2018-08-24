@@ -9,6 +9,7 @@ import icx from './images/icx.svg'
 import waves from './images/waves.svg'
 import xrp from './images/xrp.svg'
 import nim from './images/nim.svg'
+import usdt from './images/usdt.svg'
 
 
 const icons = {
@@ -17,6 +18,7 @@ const icons = {
   icx,
   waves,
   xrp,
+  usdt,
   nim,
 }
 

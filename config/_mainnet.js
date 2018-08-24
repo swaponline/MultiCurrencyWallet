@@ -43,6 +43,10 @@ export default {
       address: '0xae72146eb535607Ee79f5D8834303ea18751845f',
       decimals: 18,
     },
+    omgtoken: {
+      address: '0xd26114cd6EE289AccF82350c8d8487fedB8A0C07',
+      decimals: 18,
+    },
   },
 
   link: {
