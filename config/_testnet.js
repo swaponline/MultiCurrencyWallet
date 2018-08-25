@@ -26,6 +26,10 @@ export default {
     contract : '0x4356152f044e3a1ce1a57566b2e0bee57949c1b2', // 0x830aef165b900fa7dc6b219f062c5784f6436d67
   },
 
+  eos: {
+    contract: 'swaponline42'
+  },
+
   tokens: {
     swap: {
       address: '0xbaa3fa2ed111f3e8488c21861ea7b7dbb5a7b121',
@@ -50,7 +54,7 @@ export default {
   link: {
     bitpay: 'https://test-insight.swap.online/insight',  // https://test-insight.bitpay.com
     etherscan: 'https://rinkeby.etherscan.io',
-    eos: 'http://jungle.cryptolions.io/#accountInfo',
+    eos: 'http://jungle.cryptolions.io',
     omniexplorer: '',
   },
 
