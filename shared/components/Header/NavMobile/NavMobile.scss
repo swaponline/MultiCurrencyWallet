@@ -1,145 +1,40 @@
-.navMobile {
-  height: 100%;
-  min-width: 0;
-  flex: auto 1 1;
+.navbar {
+  background-color: #333;
+  overflow: hidden;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 1001;
   display: flex;
-  align-items: center;
-}
+  flex-direction: row;
 
-@media screen and (min-width: 860px){
-  .navMobile {
-    padding: 0;
-    display: none;
-  }
-}
-
-.hamburger {
-  padding: 15px 15px;
-  display: inline-block;
-  cursor: pointer;
-  transition-property: opacity, filter;
-  transition-duration: 0.15s;
-  transition-timing-function: linear;
-  font: inherit;
-  color: inherit;
-  text-transform: none;
-  background-color: transparent;
-  border: 0;
-  margin: 0;
-  overflow: visible;
-}
-
-.hamburgerBox {
-  width: 40px;
-  height: 24px;
-  display: inline-block;
-  position: relative;
-}
-
-.hamburgerInner {
-  display: block;
-  top: 50%;
-  margin-top: -2px;
-
-  &, &::before, &::after {
-    width: 40px;
-    height: 4px;
-    background-color: #fff;
-    border-radius: 4px;
-    position: absolute;
-    transition-property: transform;
-    transition-duration: 0.15s;
-    transition-timing-function: ease;
-  }
-
-  &::before, &::after {
-    content: "";
-    display: block;
-  }
-
-  &::before {
-    top: -10px;
-  }
-
-  &::after {
-    bottom: -10px;
-  }
-
-  top: 5px;
-  transition-duration: 0.275s;
-  transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-
-  &::before {
-    top: 12px;
-    transition: opacity 0.125s 0.275s ease;
-  }
-
-  &::after {
-    top: 24px;
-    transition: transform 0.275s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  }
-}
-
-.hamburgerInnerActive {
-  transform: translate3d(0, 10px, 0) rotate(135deg);
-  transition-delay: 0.075s;
-
-  &::before {
-    transition-delay: 0s;
-    opacity: 0;
-  }
-
-  &::after {
-    top: 20px;
-    transform: translate3d(0, -20px, 0) rotate(-270deg);
-    transition-delay: 0.075s;
-  }
-}
-
-.navMenuContent {
-  background: #510ed8; /* Old browsers */
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#510ed8+0,510ed8+70,8821ee+100 */
+	background: #510ed8; /* Old browsers */
 	background: -moz-linear-gradient(left, #510ed8 0%, #510ed8 70%, #8821ee 100%); /* FF3.6-15 */
 	background: -webkit-linear-gradient(left, #510ed8 0%,#510ed8 70%,#8821ee 100%); /* Chrome10-25,Safari5.1-6 */
 	background: linear-gradient(to right, #510ed8 0%,#510ed8 70%,#8821ee 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#510ed8', endColorstr='#8821ee',GradientType=1 ); /* IE6-9 */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#510ed8', endColorstr='#8821ee',GradientType=1 ); /* IE6-9 */
 
-  position: fixed;
-  top: 85px;
-  left: 0;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-}
-
-.linkMobile {
-  cursor: pointer;
-  font-weight: 500;
-  font-size: 18px;
-  text-decoration: none;
-  color: #dccef7;
-  padding: 15px 0;
-
-  &:hover {
-    text-decoration: none;
+  a {
+    display: block;
     color: #dccef7;
-  }
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    flex: 1;
 
-  &.active {
-    font-weight: 700;
-    color: #fff;
-  }
-}
+    &.active {
+      border-bottom: 2px solid #fff;
+      font-weight: 700;
+      color: #fff;
+    }
 
-
-@include media-mobile {
-  .navMobile {
-  	padding-left: 0;
   }
 }
 
 .active {
+  border-bottom: 2px solid #fff;
   font-weight: 700;
   color: #fff;
 }
-

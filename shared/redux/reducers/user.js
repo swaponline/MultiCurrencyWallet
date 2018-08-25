@@ -5,6 +5,7 @@ export const initialState = {
     balance: 0,
     isBalanceFetched: false,
     currency: 'ETH',
+    fullName: 'Ethereum',
   },
   btcData: {
     address: '0x0',
@@ -12,6 +13,7 @@ export const initialState = {
     balance: 0,
     isBalanceFetched: false,
     currency: 'BTC',
+    fullName: 'Bitcoin',
   },
   usdtData: {
     address: '0x0',
@@ -25,12 +27,14 @@ export const initialState = {
     balance: 0,
     isBalanceFetched: false,
     currency: 'NIM',
+    fullName: 'Nimiq',
   },
   eosData: {
     address: '',
     balance: 0,
     isBalanceFetched: true,
     currency: 'EOS',
+    fullName: 'Eos',
   },
   tokensData: {},
 }
