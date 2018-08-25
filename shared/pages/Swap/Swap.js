@@ -16,7 +16,8 @@ import EthTokenToBtc from './EthTokenToBtc'
 import BtcToEthToken from './BtcToEthToken'
 import UsdtToEthToken from './UsdtToEthToken'
 import EthTokenToUsdt from './EthTokenToUsdt'
-
+import BtcToEos from './BtcToEos'
+import EosToBtc from './EosToBtc'
 
 const swapComponents = {
   'BTC2ETH': BtcToEth,
@@ -29,6 +30,8 @@ const swapComponents = {
   'BTC2JOT': BtcToEthToken,
   'SWAP2USDT': EthTokenToUsdt,
   'USDT2SWAP': UsdtToEthToken,
+  'BTC2EOS': BtcToEos,
+  'EOS2BTC': EosToBtc
 }
 
 
