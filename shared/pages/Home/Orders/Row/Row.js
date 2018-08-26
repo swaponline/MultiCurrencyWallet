@@ -5,7 +5,7 @@ import { connect } from 'redaction'
 import actions from 'redux/actions'
 
 import { links } from 'helpers'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 
 import Coins from 'components/Coins/Coins'
 import RequestButton from '../RequestButton/RequestButton'
@@ -48,7 +48,13 @@ export default class Row extends Component {
   }
 
   sendRequest = (orderId) => {
-    actions.core.sendRequest(orderId)
+    actions.core.sendRequest(orderId, (isAccepted) => {
+      console.log(`user has ${isAccepted ? 'accepted' : 'declined'} your request`)
+
+      if (isAccepted === true) {
+        this.setState({ redirect: true })
+      }
+    })
     actions.core.updateCore()
   }
 
@@ -58,6 +64,10 @@ export default class Row extends Component {
       sellAmount, isRequested, isProcessing,
       owner :{  peer: ownerPeer } }, peer } = this.props
     const amount = isMy ? sellAmount : buyAmount
+
+    if (this.state.redirect) {
+      return <Redirect push to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`} />;
+    }
 
     return (
       <tr style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}>
@@ -109,9 +119,7 @@ export default class Row extends Component {
                       <span>This order is in execution</span>
                     ) : (
                       balance > Number(amount) ? (
-                        <Link to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`} >
-                          <RequestButton onClick={() => this.sendRequest(id)} />
-                        </Link>
+                        <RequestButton onClick={() => this.sendRequest(id)} />
                       ) : (
                         <span>Insufficient funds</span>
                       )
