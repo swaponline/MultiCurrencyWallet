@@ -13,7 +13,7 @@ import { Button } from 'components/controls'
 
 
 @cssModules(styles)
-export default class Offer extends React.Component {
+export default class EthChecker extends React.Component {
   render() {
     const { name } = this.props
 

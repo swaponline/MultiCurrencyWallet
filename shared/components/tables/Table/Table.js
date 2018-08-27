@@ -7,7 +7,7 @@ import styles from './Table.scss'
 export default class Table extends React.Component {
 
   shouldComponentUpdate(nextProps) {
-    const { rows, isLoading, classTitle } = this.props
+    const { rows, isLoading } = this.props
     return (
       isLoading !== nextProps.isLoading || rows !== nextProps.rows
     )

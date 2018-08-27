@@ -34,14 +34,6 @@ export default class Row extends Component {
     })
   }
 
-  // componentDidMount() {
-  //   const { contractAddress, name } = this.props
-  //
-  //   if (name !== undefined) {
-  //     actions.token.allowance(contractAddress, name)
-  //   }
-  // }
-
   handleReloadBalance = () => {
     const { isBalanceFetching } = this.state
 
@@ -84,14 +76,6 @@ export default class Row extends Component {
   handleEosLogin = () => {
     actions.modals.open(constants.modals.Eos, {})
   }
-
-  // handleApproveToken = (decimals, contractAddress, name) => {
-  //   actions.modals.open(constants.modals.Approve, {
-  //     contractAddress,
-  //     decimals,
-  //     name,
-  //   })
-  // }
 
   handleWithdraw = () => {
     const { currency, address, contractAddress, decimals, balance } = this.props
@@ -152,12 +136,12 @@ export default class Row extends Component {
             {
               !contractAddress ? (
                 <Fragment>
-                  { currency !== 'EOS' && <i className="far fa-copy" styleName="icon" onClick={this.handleCopiedAddress} /> }
+                  { currency !== 'EOS' && <i className="far fa-copy" styleName="icon" /> }
                   <LinkAccount type={currency} address={address} >{address}</LinkAccount>
                 </Fragment>
               ) : (
                 <Fragment>
-                  <i className="far fa-copy" styleName="icon" onClick={this.handleCopiedAddress} />
+                  <i className="far fa-copy" styleName="icon" />
                   <LinkAccount type={currency} contractAddress={contractAddress} address={address} >{address}</LinkAccount>
                 </Fragment>
               )
@@ -175,10 +159,7 @@ export default class Row extends Component {
             </WithdrawButton>
             {
               tradeAllowed && (
-                <Fragment>
-                  <div styleName="button" onClick={() => this.handleGoTrade(`/sell-${currency.toLowerCase()}`)}>Sell</div>
-                  <div styleName="button" onClick={() => this.handleGoTrade(`/buy-${currency.toLowerCase()}`)}>Buy</div>
-                </Fragment>
+                <div styleName="button" onClick={() => this.handleGoTrade(`/${currency.toLowerCase()}`)}>Swap</div>
               )
             }
           </div>

@@ -8,12 +8,6 @@ import config from 'app-config'
 
 export default class Core extends Component {
 
-  componentWillReceiveProps(nextState) {
-    if (nextState !== this.state) {
-      this.setState()
-    }
-  }
-
   componentWillMount() {
     actions.core.getSwapHistory()
     SwapApp.services.orders
