@@ -63,7 +63,7 @@ export default class History extends Component {
     return (
       <section>
         <PageHeadline subTitle="History" />
-        <SwapsHistory orders={Object.values(swapHistory).filter(item => item.step >= 4)} />
+        <SwapsHistory orders={swapHistory.filter(item => item.step >= 4)} />
         <h3>All transactions</h3>
         <Filter />
         <InfiniteScrollTable

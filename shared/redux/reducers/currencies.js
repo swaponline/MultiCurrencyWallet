@@ -19,16 +19,22 @@ export const initialState = {
       value: 'usdt',
     },
     {
-      name: 'NOXON',
-      title: 'NOXON',
-      icon: 'noxon',
-      value: 'noxon',
-    },
-    {
       name: 'SWAP',
       title: 'SWAP',
       icon: 'swap',
       value: 'swap',
+    },
+    {
+      name: 'DRT',
+      title: 'DRT',
+      icon: 'drt',
+      value: 'drt',
+    },
+    {
+      name: 'NOXON',
+      title: 'NOXON',
+      icon: 'noxon',
+      value: 'noxon',
     },
     {
       name: 'JOT',

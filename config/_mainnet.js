@@ -35,6 +35,10 @@ export default {
       address: '0x4d8fc1453a0f359e99c9675954e656d80d996fbf',
       decimals: 18,
     },
+    DRT: {
+      address: '0x9af4f26941677c706cfecf6d3379ff01bb85d5ab',
+      decimals: 8,
+    },
     noxon: {
       address: '0x9E4AD79049282F942c1b4c9b418F0357A0637017',
       decimals: 0,
@@ -47,15 +51,10 @@ export default {
       address: '0xae72146eb535607Ee79f5D8834303ea18751845f',
       decimals: 18,
     },
-    omgtoken: {
+    omg: {
       address: '0xd26114cd6EE289AccF82350c8d8487fedB8A0C07',
       decimals: 18,
     },
-    DRT: {
-      address: '0x9af4f26941677c706cfecf6d3379ff01bb85d5ab',
-      decimals: 8,
-    },
-
     SENC: {
       address: '0xa13f0743951b4f6e3e3aa039f682e17279f52bc3',
       decimals: 18,

@@ -22,6 +22,8 @@ const RowHistory = ({ row }) => {
   buyAmount   = Number(buyAmount)
   sellAmount  = Number(sellAmount)
 
+  console.log('row', row)
+
   return (
     <tr>
       <td>

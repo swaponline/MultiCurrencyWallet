@@ -1,7 +1,7 @@
 export const initialState = {
   transactions: [],
   filter: 'all',
-  swapHistory: {},
+  swapHistory: [],
 }
 
 export const setFilter = (state, payload) => ({
@@ -18,7 +18,5 @@ export const setTransactions = (state, payload) => ({
 
 export const setSwapHistory = (state, payload) => ({
   ...state,
-  swapHistory: {
-    payload,
-  },
+  swapHistory: payload,
 })

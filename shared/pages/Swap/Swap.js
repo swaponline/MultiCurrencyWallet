@@ -27,6 +27,8 @@ const swapComponents = {
   'BTC2SWAP': BtcToEthToken,
   'JOT2BTC': EthTokenToBtc,
   'BTC2JOT': BtcToEthToken,
+  'DRT2BTC': EthTokenToBtc,
+  'BTC2DRT': BtcToEthToken,
   'SWAP2USDT': EthTokenToUsdt,
   'USDT2SWAP': UsdtToEthToken,
 }
@@ -81,7 +83,7 @@ export default class SwapComponent extends PureComponent {
 
     const boolean = swapsId.map(item => item === orderId)
 
-    if (!Boolean(...boolean)) {
+    if (Boolean(...boolean)) {
       swapsId.push(orderId)
     }
 
