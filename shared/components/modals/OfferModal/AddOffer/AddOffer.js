@@ -45,48 +45,35 @@ export default class AddOffer extends Component {
       sellCurrency: sellCurrency || 'eth',
       ethBalance: null,
       isSending: false,
+      balance: null,
       isSellFieldInteger: false,
       isBuyFieldInteger: false,
     }
   }
 
-  componentWillMount() {
-    const { sellCurrency } = this.state
-    this.checkBalance(sellCurrency)
-    this.handleCheckEthBalance()
-  }
-
   componentDidMount() {
     const { sellCurrency, buyCurrency } = this.state
-    this.getExchangeRate(sellCurrency, buyCurrency)
-  }
-
-  changeExchangeRate = (value) => {
-    this.setState({
-      exchangeRate: value,
-    })
-  }
-
-  handleCheckEthBalance = async () => {
-    const ethBalance = await actions.eth.getBalance()
-
-    this.setState({
-      ethBalance,
-    })
+    this.checkBalance(sellCurrency)
+    this.updateExchangeRate(sellCurrency, buyCurrency)
   }
 
   checkBalance = async (sellCurrency) => {
     const balance = await actions[sellCurrency].getBalance(sellCurrency)
-    this.handleCheckEthBalance()
+    const ethBalance = await actions.eth.getBalance()
 
     this.setState({
       balance,
+      ethBalance
     })
   }
 
-  getExchangeRate = (sellCurrency, buyCurrency) =>
-    actions.user.setExchangeRate(sellCurrency, buyCurrency, this.changeExchangeRate)
-
+  async updateExchangeRate(sellCurrency, buyCurrency) {
+    const exchangeRate = await actions.user.getExchangeRate(sellCurrency, buyCurrency)
+    return new Promise((resolve, reject) => {
+      this.setState({exchangeRate}, () => resolve())
+    })
+  }
+  
   handleExchangeRateChange = (value) => {
     let { buyAmount, sellAmount } = this.state
 
@@ -104,7 +91,7 @@ export default class AddOffer extends Component {
     })
   }
 
-  handleBuyCurrencySelect = ({ value }) => {
+  handleBuyCurrencySelect = async ({ value }) => {
     let { buyCurrency, sellCurrency, buyAmount, sellAmount } = this.state
 
     if (value === sellCurrency) {
@@ -114,8 +101,8 @@ export default class AddOffer extends Component {
     buyCurrency = value
 
     this.checkBalance(sellCurrency)
-    this.getExchangeRate(sellCurrency, buyCurrency)
 
+    await this.updateExchangeRate(sellCurrency, buyCurrency)
     const { exchangeRate } = this.state
     sellAmount = new BigNumber(String(buyAmount) || 0).multipliedBy(exchangeRate)
 
@@ -124,7 +111,6 @@ export default class AddOffer extends Component {
     if (isBuyFieldInteger) {
       buyAmount = new BigNumber(String(buyAmount) || 0).dp(0, BigNumber.ROUND_HALF_EVEN)
     }
-
     this.setState({
       buyCurrency,
       sellCurrency,
@@ -135,7 +121,7 @@ export default class AddOffer extends Component {
     })
   }
 
-  handleSellCurrencySelect = ({ value }) => {
+  handleSellCurrencySelect = async ({ value }) => {
     let { buyCurrency, sellCurrency, sellAmount, buyAmount } = this.state
 
     if (value === buyCurrency) {
@@ -145,8 +131,7 @@ export default class AddOffer extends Component {
     sellCurrency = value
 
     this.checkBalance(sellCurrency)
-    this.getExchangeRate(sellCurrency, buyCurrency)
-
+    await this.updateExchangeRate(sellCurrency, buyCurrency)
     const { exchangeRate } = this.state
     buyAmount = new BigNumber(String(sellAmount) || 0).dividedBy(exchangeRate)
 
@@ -206,8 +191,8 @@ export default class AddOffer extends Component {
     }
 
     this.setState({
-      buyAmount: new BigNumber(String(value) || 0).multipliedBy(exchangeRate || 0),
       sellAmount: new BigNumber(String(value)),
+      buyAmount: new BigNumber(String(value) || 0).multipliedBy(exchangeRate || 0),
     })
 
     return value

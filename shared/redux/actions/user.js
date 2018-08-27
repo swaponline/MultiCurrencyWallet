@@ -53,16 +53,16 @@ const getDemoMoney = process.env.MAINNET ? () => {} : () => {
     })
 }
 
-const setExchangeRate = (sellCurrency, buyCurrency, setState) => {
-  const url = `https://api.cryptonator.com/api/full/${sellCurrency}-${buyCurrency}`
-
-  return request.get(url)
-    .then(({ ticker: { price: exchangeRate } })  => {
-      setState(exchangeRate)
+const getExchangeRate = (sellCurrency, buyCurrency) => {
+  return new Promise((resolve, reject) => {
+    const url = `https://api.cryptonator.com/api/full/${sellCurrency}-${buyCurrency}`
+    request.get(url).then(({ ticker: { price: exchangeRate } })  => {
+      resolve(exchangeRate)
     })
-    .catch(() =>
-      setState(config.exchangeRates[`${sellCurrency.toLowerCase()}${buyCurrency.toLowerCase()}`])
-    )
+    .catch(() => {
+      resolve(config.exchangeRates[`${sellCurrency.toLowerCase()}${buyCurrency.toLowerCase()}`])
+    })
+  })
 }
 
 const setTransactions = () =>
@@ -148,7 +148,7 @@ export default {
   sign,
   getBalances,
   getDemoMoney,
-  setExchangeRate,
+  getExchangeRate,
   setTransactions,
   downloadPrivateKeys,
 }
