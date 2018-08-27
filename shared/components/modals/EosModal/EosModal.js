@@ -14,6 +14,7 @@ import styles from './EosModal.scss'
 
 @cssModules(styles)
 export default class EosModal extends React.Component {
+
   state = {
     accountName: '',
     privateKey: '',

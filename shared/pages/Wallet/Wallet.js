@@ -87,7 +87,7 @@ export default class Wallet extends Component {
         <Table
           classTitle={styles.wallet}
           titles={titles}
-          rows={[].concat(items, tokens)}
+          rows={[...items, ...tokens]}
           rowRender={(row, index) => (
             <Row key={index} {...row} currencies={currencies} />
           )}

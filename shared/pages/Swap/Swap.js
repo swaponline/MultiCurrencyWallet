@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react'
 
 import Swap from 'swap.swap'
-import SwapApp from 'swap.app'
 
 import { connect } from 'redaction'
 import actions from 'redux/actions'
@@ -44,6 +43,7 @@ export default class SwapComponent extends PureComponent {
 
     if (!orderId) {
       history.push(links.exchange)
+      return
     }
 
     const swap = new Swap(orderId)

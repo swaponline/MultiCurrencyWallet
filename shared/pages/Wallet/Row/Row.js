@@ -136,12 +136,12 @@ export default class Row extends Component {
             {
               !contractAddress ? (
                 <Fragment>
-                  { currency !== 'EOS' && <i className="far fa-copy" styleName="icon" onClick={this.handleCopiedAddress} /> }
+                  { currency !== 'EOS' && <i className="far fa-copy" styleName="icon" /> }
                   <LinkAccount type={currency} address={address} >{address}</LinkAccount>
                 </Fragment>
               ) : (
                 <Fragment>
-                  <i className="far fa-copy" styleName="icon" onClick={this.handleCopiedAddress} />
+                  <i className="far fa-copy" styleName="icon" />
                   <LinkAccount type={currency} contractAddress={contractAddress} address={address} >{address}</LinkAccount>
                 </Fragment>
               )

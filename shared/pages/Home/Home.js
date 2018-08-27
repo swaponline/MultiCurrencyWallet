@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 
 import actions from 'redux/actions'
-import { localStorage, constants, links } from 'helpers'
+import { links } from 'helpers'
 
 import Title from 'components/PageHeadline/Title/Title'
 import PageHeadline from 'components/PageHeadline/PageHeadline'

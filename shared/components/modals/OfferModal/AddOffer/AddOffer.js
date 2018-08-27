@@ -5,7 +5,6 @@ import actions from 'redux/actions'
 
 import Link from 'sw-valuelink'
 import config from 'app-config'
-import { constants } from 'helpers'
 
 import { BigNumber } from 'bignumber.js'
 
@@ -85,9 +84,8 @@ export default class AddOffer extends Component {
     })
   }
 
-  getExchangeRate = (sellCurrency, buyCurrency) => {
+  getExchangeRate = (sellCurrency, buyCurrency) =>
     actions.user.setExchangeRate(sellCurrency, buyCurrency, this.changeExchangeRate)
-  }
 
   handleExchangeRateChange = (value) => {
     let { buyAmount, sellAmount } = this.state

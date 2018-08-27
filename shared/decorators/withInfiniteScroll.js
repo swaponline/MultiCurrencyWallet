@@ -20,7 +20,7 @@ export const withInfiniteScroll = () => Component => {
       if (bottomSidePositionOnPage >= document.body.offsetHeight - bottomOffset && items.length !== itemsCount && items.length) {
         this.props.getMore()
       }
-    };
+    }
 
     render() {
       const { getMore, bottomOffset, itemsCount, ...rest } = this.props

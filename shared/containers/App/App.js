@@ -53,12 +53,9 @@ export default class App extends React.Component {
       error: '',
       fallbackUiError: '',
     }
-
-    this.hideErrorNotification = this.hideErrorNotification.bind(this)
   }
 
   componentWillMount() {
-
     localStorage.setItem(constants.localStorage.activeTabId, Date.now())
 
     if (localStorage.getItem(constants.localStorage.activeTabId)) {
@@ -92,7 +89,7 @@ export default class App extends React.Component {
     }, 1000)
   }
 
-  hideErrorNotification() {
+  hideErrorNotification = () => {
     this.setState({ error: '', fallbackUiError: '' })
   }
 

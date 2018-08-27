@@ -4,8 +4,6 @@ import PropTypes from 'prop-types'
 import CSSModules from 'react-css-modules'
 import styles from './EmergencySave.scss'
 
-import Button from 'components/controls/Button/Button'
-
 
 @CSSModules(styles)
 export default class EmergencySave extends Component {

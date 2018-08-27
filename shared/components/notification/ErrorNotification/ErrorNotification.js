@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import cssModules from 'react-css-modules'
 
 import styles from './ErrorNotification.scss'
