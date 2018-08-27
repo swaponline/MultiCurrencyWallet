@@ -100,9 +100,16 @@ export default class Row extends Component {
     }
   }
 
+  getCurrencyFullTitle = (currencyTitle, currencies) => {
+    const match = currencies.find((el) => el.title === currencyTitle)
+    return match ? match.fullTitle : currencyTitle
+  }
+
   render() {
     const { isBalanceFetching, tradeAllowed, isAddressCopied } = this.state
-    const { currency, balance, isBalanceFetched, address, contractAddress, unconfirmedBalance } = this.props
+    const { currency, balance, isBalanceFetched, address, contractAddress, unconfirmedBalance, currencies } = this.props
+
+    const currencyFullTitle = this.getCurrencyFullTitle(currency, currencies)
 
     return (
       <tr>
@@ -159,7 +166,7 @@ export default class Row extends Component {
             </WithdrawButton>
             {
               tradeAllowed && (
-                <div styleName="button" onClick={() => this.handleGoTrade(`/${currency.toLowerCase()}`)}>Swap</div>
+                <div styleName="button" onClick={() => this.handleGoTrade(`/${currencyFullTitle.toLowerCase()}`)}>Swap</div>
               )
             }
           </div>
