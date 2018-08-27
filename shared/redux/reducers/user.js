@@ -11,6 +11,13 @@ export const initialState = {
     currency: 'BTC',
     fullName: 'Bitcoin',
   },
+  usdtData: {
+    address: '0x0',
+    publicKey: '0x0',
+    balance: 0,
+    isBalanceFetched: false,
+    currency: 'USDT',
+  },
   nimData: {
     balance: 0,
     isBalanceFetched: false,

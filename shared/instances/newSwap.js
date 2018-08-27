@@ -1,4 +1,5 @@
 /* eslint-disable import/no-mutable-exports,max-len */
+import { eos } from 'helpers/eos'
 import web3 from 'helpers/web3'
 import bitcoin from 'bitcoinjs-lib'
 
@@ -12,8 +13,13 @@ import swapApp, { constants } from 'swap.app'
 import SwapAuth from 'swap.auth'
 import SwapRoom from 'swap.room'
 import SwapOrders from 'swap.orders'
-import { EthSwap, EthTokenSwap, BtcSwap } from 'swap.swaps'
-import { ETH2BTC, BTC2ETH, ETHTOKEN2BTC, BTC2ETHTOKEN } from 'swap.flows'
+import { EthSwap, EthTokenSwap, BtcSwap, UsdtSwap, EosSwap } from 'swap.swaps'
+import {
+  ETH2BTC, BTC2ETH,
+  ETHTOKEN2BTC, BTC2ETHTOKEN,
+  USDT2ETHTOKEN, ETHTOKEN2USDT,
+  BTC2EOS, EOS2BTC
+} from 'swap.flows'
 
 
 const createSwapApp = () => {
@@ -21,6 +27,7 @@ const createSwapApp = () => {
     network: process.env.MAINNET ? 'mainnet' : 'testnet',
 
     env: {
+      eos,
       web3,
       bitcoin,
       Ipfs: window.Ipfs,
@@ -33,6 +40,7 @@ const createSwapApp = () => {
         // TODO need init swapApp only after private keys created!!!!!!!!!!!!!!!!!!!
         eth: localStorage.getItem(privateKeys.privateKeyNames.eth),
         btc: localStorage.getItem(privateKeys.privateKeyNames.btc),
+        eos: privateKeys.privateKeyNames.eosAccount
       }),
       new SwapRoom({
         repo: 'client/ipfs/data',
@@ -61,6 +69,9 @@ const createSwapApp = () => {
         fetchBalance: (address) => actions.btc.fetchBalance(address),
         fetchUnspents: (scriptAddress) => actions.btc.fetchUnspents(scriptAddress),
         broadcastTx: (txRaw) => actions.btc.broadcastTx(txRaw),
+      }),
+      new EosSwap({
+        swapAccount: config.eos.contract
       }),
       new EthTokenSwap({
         name: constants.COINS.noxon,
@@ -97,9 +108,15 @@ const createSwapApp = () => {
       ETHTOKEN2BTC(constants.COINS.noxon),
       BTC2ETHTOKEN(constants.COINS.noxon),
       ETHTOKEN2BTC(constants.COINS.swap),
-      BTC2ETHTOKEN(constants.COINS.swap),
+      ETHTOKEN2BTC(constants.COINS.swap),
       ETHTOKEN2BTC(constants.COINS.jot),
       BTC2ETHTOKEN(constants.COINS.jot),
+
+      ETHTOKEN2USDT(constants.COINS.swap),
+      USDT2ETHTOKEN(constants.COINS.swap),
+
+      BTC2EOS,
+      EOS2BTC
     ],
   })
 }

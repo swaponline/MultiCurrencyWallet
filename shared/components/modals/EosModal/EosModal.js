@@ -27,7 +27,6 @@ export default class EosModal extends React.Component {
     actions.loader.show(true)
 
     try {
-      await actions.eos.init()
       await actions.eos.register(accountName, privateKey)
       await actions.eos.getBalance()
 
