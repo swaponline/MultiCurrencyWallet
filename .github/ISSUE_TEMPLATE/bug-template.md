@@ -1,6 +1,7 @@
 ---
 name: Bug Template
 about: Bug Template. Every correct-formed issue gets +1 token bonus.
+
 ---
 
 ## What is working wrong?
@@ -40,4 +41,3 @@ about: Bug Template. Every correct-formed issue gets +1 token bonus.
 
 
 ## Additional info
-
