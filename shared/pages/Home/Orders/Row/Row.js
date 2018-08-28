@@ -46,7 +46,7 @@ export default class Row extends Component {
   handleGoTrade = async () => {
     const balance = await actions.eth.getBalance()
 
-    if (balance - 0.02 > 0) {
+    if ((balance - 0.02) < 0) {
       actions.modals.open(constants.modals.EthChecker, {})
     }
   }
