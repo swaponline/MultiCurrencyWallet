@@ -80,12 +80,8 @@ export default class Home extends Component {
   }
 
   render() {
-    const { match: { params: { orderId, buy, sell } } } = this.props
+    const { match: { params: { orderId } } } = this.props
     const { buyCurrency, sellCurrency } = this.state
-
-    console.log('buy', buyCurrency, buy)
-    console.log('sell', sellCurrency, sell)
-    console.log('props', this.props)
 
     return (
       <section style={{ position: 'relative', width: '100%' }}>
