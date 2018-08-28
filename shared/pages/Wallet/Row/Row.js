@@ -166,7 +166,7 @@ export default class Row extends Component {
             </WithdrawButton>
             {
               tradeAllowed && (
-                <div styleName="button" onClick={() => this.handleGoTrade(`/${currencyFullTitle.toLowerCase()}`)}>Swap</div>
+                <div styleName="button" onClick={() => this.handleGoTrade(`/${currency.toLowerCase()}`)}>Swap</div>
               )
             }
           </div>

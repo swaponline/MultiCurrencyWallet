@@ -17,7 +17,7 @@ import { EthSwap, EthTokenSwap, BtcSwap, UsdtSwap, EosSwap } from 'swap.swaps'
 import {
   ETH2BTC, BTC2ETH,
   ETHTOKEN2BTC, BTC2ETHTOKEN,
-  USDT2ETHTOKEN, ETHTOKEN2USDT,
+  // USDT2ETHTOKEN, ETHTOKEN2USDT,
   // BTC2EOS, EOS2BTC,
 } from 'swap.flows'
 
@@ -111,9 +111,9 @@ const createSwapApp = () => {
       ETHTOKEN2BTC(constants.COINS.swap),
       ETHTOKEN2BTC(constants.COINS.jot),
       BTC2ETHTOKEN(constants.COINS.jot),
-
-      ETHTOKEN2USDT(constants.COINS.swap),
-      USDT2ETHTOKEN(constants.COINS.swap),
+      //
+      // ETHTOKEN2USDT(constants.COINS.swap),
+      // USDT2ETHTOKEN(constants.COINS.swap),
 
       // BTC2EOS,
       // EOS2BTC

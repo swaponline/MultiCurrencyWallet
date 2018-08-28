@@ -15,10 +15,10 @@ import Currency         from 'pages/Currency/Currency'
 
 const routes = (
   <Switch>
-    <Route path={`${links.exchange}/:buy-:sell/:orderId`} component={Home} />
     <Route path={`${links.exchange}/:buy-:sell`} component={Home} />
-    <Route path={`${links.home}:currency`} component={Currency} />
     <Route path={links.exchange} component={Home} />
+    <Route path={`${links.home}:currency`} component={Currency} />
+    <Route path={`${links.exchange}/:buy-:sell/:orderId`} component={Home} />
     <Route path={links.affiliate} component={Affiliate} />
     <Route path={links.listing} component={Listing} />
     <Route exact path={links.home} component={Wallet} />
