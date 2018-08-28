@@ -120,6 +120,9 @@ const createSwapApp = () => {
 
       ETHTOKEN2USDT(constants.COINS.swap),
       USDT2ETHTOKEN(constants.COINS.swap),
+
+      ETHTOKEN2USDT(constants.COINS.drt),
+      USDT2ETHTOKEN(constants.COINS.drt),
     ],
   })
 }

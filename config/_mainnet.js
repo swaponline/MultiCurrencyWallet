@@ -39,6 +39,10 @@ export default {
       address: '0x9af4f26941677c706cfecf6d3379ff01bb85d5ab',
       decimals: 8,
     },
+    DAO: {
+      address: '0x8aA33A7899FCC8eA5fBe6A608A109c3893A1B8b2',
+      decimals: 18,
+    },
     noxon: {
       address: '0x9E4AD79049282F942c1b4c9b418F0357A0637017',
       decimals: 0,

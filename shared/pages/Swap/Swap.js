@@ -21,6 +21,7 @@ import EthTokenToUsdt from './EthTokenToUsdt'
 const swapComponents = {
   'BTC2ETH': BtcToEth,
   'ETH2BTC': EthToBtc,
+  // ERC 20 - BTC
   'NOXON2BTC': EthTokenToBtc,
   'BTC2NOXON': BtcToEthToken,
   'SWAP2BTC': EthTokenToBtc,
@@ -29,8 +30,11 @@ const swapComponents = {
   'BTC2JOT': BtcToEthToken,
   'DRT2BTC': EthTokenToBtc,
   'BTC2DRT': BtcToEthToken,
+  // USDT - ERC20
   'SWAP2USDT': EthTokenToUsdt,
   'USDT2SWAP': UsdtToEthToken,
+  'DRT2USDT': EthTokenToUsdt,
+  'USDT2DRT': UsdtToEthToken,
 }
 
 
