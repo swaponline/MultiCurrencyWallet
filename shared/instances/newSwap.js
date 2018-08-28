@@ -18,7 +18,7 @@ import {
   ETH2BTC, BTC2ETH,
   ETHTOKEN2BTC, BTC2ETHTOKEN,
   USDT2ETHTOKEN, ETHTOKEN2USDT,
-  BTC2EOS, EOS2BTC
+  // BTC2EOS, EOS2BTC,
 } from 'swap.flows'
 
 
@@ -27,7 +27,7 @@ const createSwapApp = () => {
     network: process.env.MAINNET ? 'mainnet' : 'testnet',
 
     env: {
-      eos,
+      // eos,
       web3,
       bitcoin,
       Ipfs: window.Ipfs,
@@ -40,7 +40,7 @@ const createSwapApp = () => {
         // TODO need init swapApp only after private keys created!!!!!!!!!!!!!!!!!!!
         eth: localStorage.getItem(privateKeys.privateKeyNames.eth),
         btc: localStorage.getItem(privateKeys.privateKeyNames.btc),
-        eos: privateKeys.privateKeyNames.eosAccount
+        // eos: privateKeys.privateKeyNames.eosAccount
       }),
       new SwapRoom({
         repo: 'client/ipfs/data',
@@ -70,9 +70,9 @@ const createSwapApp = () => {
         fetchUnspents: (scriptAddress) => actions.btc.fetchUnspents(scriptAddress),
         broadcastTx: (txRaw) => actions.btc.broadcastTx(txRaw),
       }),
-      new EosSwap({
-        swapAccount: config.eos.contract
-      }),
+      // new EosSwap({
+      //   swapAccount: config.eos.contract
+      // }),
       new EthTokenSwap({
         name: constants.COINS.noxon,
         address: config.token.contract,
@@ -115,8 +115,8 @@ const createSwapApp = () => {
       ETHTOKEN2USDT(constants.COINS.swap),
       USDT2ETHTOKEN(constants.COINS.swap),
 
-      BTC2EOS,
-      EOS2BTC
+      // BTC2EOS,
+      // EOS2BTC
     ],
   })
 }
