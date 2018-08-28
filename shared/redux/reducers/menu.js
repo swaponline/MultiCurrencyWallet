@@ -7,14 +7,17 @@ export const initialState = {
       title: 'Wallet',
       link: links.home,
       exact: true,
+      icon: 'wallet',
     },
     {
       title: 'Exchange',
       link: links.exchange,
+      icon: 'exchange-alt',
     },
     {
       title: 'History',
       link: links.history,
+      icon: 'history',
     },
     {
       title: 'Affiliate',

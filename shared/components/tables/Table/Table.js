@@ -21,7 +21,7 @@ export default class Table extends React.Component {
         <thead>
           <tr>
             {
-              titles.map((title, index) => (
+              titles.filter(title => !!title).map((title, index) => (
                 <th key={index}>{title}</th>
               ))
             }

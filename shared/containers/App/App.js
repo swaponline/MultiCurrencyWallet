@@ -5,6 +5,7 @@ import actions from 'redux/actions'
 import { connect } from 'redaction'
 import moment from 'moment-with-locales-es6'
 import { constants, localStorage } from 'helpers'
+import { isMobile } from 'react-device-detect'
 
 import CSSModules from 'react-css-modules'
 import styles from './App.scss'
@@ -120,12 +121,12 @@ export default class App extends React.Component {
         <Seo location={history.location} />
         <Header />
         <WidthContainer styleName="main">
-          <main style={{ marginTop: '88px' }}>
+          <main>
             {children}
           </main>
         </WidthContainer>
         <Core />
-        <Footer />
+        { !isMobile && <Footer /> }
         <RequestLoader />
         <ModalConductor />
         <NotificationConductor />
