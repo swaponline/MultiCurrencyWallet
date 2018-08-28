@@ -56,6 +56,10 @@ const webpackConfig = {
   //   plugins: [],
   // },
 
+  node: {
+    fs: 'empty',
+  },
+
   resolve: {
     alias: {
       shared: config.paths.base('shared'),

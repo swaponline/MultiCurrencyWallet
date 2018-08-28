@@ -20,10 +20,10 @@ const routes = (
     <Route path={links.listing} component={Listing} />
     <Route exact path={links.home} component={Wallet} />
     <Route path={links.history} component={History} />
+    <Route path={`${links.swap}/:buy-:sell/:orderId`} component={SwapComponent} />
+    <Route path={`${links.exchange}/:buy-:sell/:orderId`} component={Home} />
     <Route path={`${links.exchange}/:buy-:sell`} component={Home} />
     <Route path={`${links.home}:currency`} component={Currency} />
-    <Route path={`${links.exchange}/:buy-:sell/:orderId`} component={Home} />
-    <Route path={`${links.swap}/:buy-:sell/:orderId`} component={SwapComponent} />
     <Route component={NotFound} />
   </Switch>
 )
