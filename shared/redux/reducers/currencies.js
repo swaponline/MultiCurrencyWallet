@@ -11,12 +11,14 @@ export const initialState = {
       title: 'ETH',
       icon: 'eth',
       value: 'eth',
+      fullTitle: 'ethereum',
     },
     {
       name: 'BTC',
       title: 'BTC',
       icon: 'btc',
       value: 'btc',
+      fullTitle: 'bitcoin',
     },
     {
       name: 'USDT',
@@ -29,18 +31,21 @@ export const initialState = {
       title: 'NOXON',
       icon: 'noxon',
       value: 'noxon',
+      fullTitle: 'noxon',
     },
     {
       name: 'SWAP',
       title: 'SWAP',
       icon: 'swap',
       value: 'swap',
+      fullTitle: 'swap',
     },
     {
       name: 'JOT',
       title: 'JOT',
       icon: 'jot',
       value: 'jot',
+      fullTitle: 'jot',
     },
   ],
 }
