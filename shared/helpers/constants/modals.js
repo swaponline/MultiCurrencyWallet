@@ -6,4 +6,5 @@ export default {
   Approve: 'Approve',
   ImportKeys: 'ImportKeys',
   EthChecker: 'EthChecker',
+  ReceiveModal: 'ReceiveModal',
 }

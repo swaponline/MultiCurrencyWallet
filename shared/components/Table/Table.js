@@ -9,7 +9,7 @@ const Table = ({ titles, rows, rowRender, classTitle, textIfEmpty, isLoading, lo
     <thead>
       <tr>
         {
-          titles.map((title, index) => (
+          titles.filter(title => !!title).map((title, index) => (
             <th key={index}>{title}</th>
           ))
         }

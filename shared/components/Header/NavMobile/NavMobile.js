@@ -14,36 +14,23 @@ export default class NavMobile extends Component {
     menu: PropTypes.array.isRequired,
   }
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      isOpened: false,
-    }
-  }
-
-  handleToggle = () => {
-    this.setState({
-      isOpened: !this.state.isOpened,
-    })
-  }
-
   render() {
-    const { props: { menu }, state: { isOpened } } = this
+    const { props: { menu } } = this
 
     return (
       <div styleName="navbar">
         {
           menu
             .filter(i => i.isMobile !== false)
-            .map(({ title, link, exact }) => (
+            .map(({ title, link, exact, icon }) => (
               <NavLink
-                exact={exact}
                 key={title}
+                exact={exact}
                 to={link}
                 activeClassName={styles.active}
-                onClick={this.handleToggle}
               >
-                {title}
+                <i className={`fas fa-${icon}`} aria-hidden="true" />
+                <span>{title}</span>
               </NavLink>
             ))
         }

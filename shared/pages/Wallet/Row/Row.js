@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import actions from 'redux/actions'
 import { constants } from 'helpers'
+import { isMobile } from 'react-device-detect'
 
 import cssModules from 'react-css-modules'
 import styles from './Row.scss'
@@ -90,6 +91,15 @@ export default class Row extends Component {
     })
   }
 
+  handleReceive = () => {
+    const { currency, address } = this.props
+
+    actions.modals.open(constants.modals.ReceiveModal, {
+      currency,
+      address,
+    })
+  }
+
   handleGoTrade = async (link) => {
     const balance = await actions.eth.getBalance()
 
@@ -116,8 +126,8 @@ export default class Row extends Component {
         <td>
           <Coin name={currency} size={40} />
         </td>
-        <td>{currency}</td>
-        <td style={{ minWidth: '120px' }}>
+        { !isMobile && <td>{currency}</td> }
+        <td>
           {
             !isBalanceFetched || isBalanceFetching ? (
               <InlineLoader />
@@ -135,38 +145,56 @@ export default class Row extends Component {
             )
           }
         </td>
-        <CopyToClipboard
-          text={address}
-          onCopy={this.handleCopyAddress}
-        >
-          <td style={{ position: 'relative' }}>
-            {
-              !contractAddress ? (
-                <Fragment>
-                  { currency !== 'EOS' && <i className="far fa-copy" styleName="icon" /> }
-                  <LinkAccount type={currency} address={address} >{address}</LinkAccount>
-                </Fragment>
-              ) : (
-                <Fragment>
-                  <i className="far fa-copy" styleName="icon" />
-                  <LinkAccount type={currency} contractAddress={contractAddress} address={address} >{address}</LinkAccount>
-                </Fragment>
-              )
-            }
-            {
-              currency === 'EOS' && address === '' && <button styleName="button" onClick={this.handleEosLogin}>Login</button>
-            }
-            { isAddressCopied && <p styleName="copied" >Address copied to clipboard</p> }
-          </td>
-        </CopyToClipboard>
-        <td >
+        { !isMobile && (
+          <CopyToClipboard
+            text={address}
+            onCopy={this.handleCopyAddress}
+          >
+            <td style={{ position: 'relative' }}>
+              {
+                !contractAddress ? (
+                  <Fragment>
+                    { currency !== 'EOS' && <i className="far fa-copy" styleName="icon" /> }
+                    <LinkAccount type={currency} address={address} >{address}</LinkAccount>
+                  </Fragment>
+                ) : (
+                  <Fragment>
+                    <i className="far fa-copy" styleName="icon" />
+                    <LinkAccount type={currency} contractAddress={contractAddress} address={address} >{address}</LinkAccount>
+                  </Fragment>
+                )
+              }
+              {
+                currency === 'EOS' && address === '' && <button styleName="button" onClick={this.handleEosLogin}>Login</button>
+              }
+              { isAddressCopied && <p styleName="copied" >Address copied to clipboard</p> }
+            </td>
+          </CopyToClipboard>
+        ) }
+        <td>
           <div>
-            <WithdrawButton onClick={this.handleWithdraw} styleName="marginRight" >
-              Send
+            { isMobile && (
+              <WithdrawButton onClick={this.handleReloadBalance} styleName="marginRight">
+                <i className="fas fa-sync-alt" />
+                <span>Refresh</span>
+              </WithdrawButton>
+            ) }
+            <WithdrawButton onClick={this.handleWithdraw} styleName="marginRight">
+              <i className="fas fa-arrow-alt-circle-down" />
+              <span>Send</span>
             </WithdrawButton>
+            { isMobile && (
+              <WithdrawButton onClick={this.handleReceive} styleName="marginRight">
+                <i className="fas fa-arrow-alt-circle-up" />
+                <span>Receive</span>
+              </WithdrawButton>
+            )}
             {
               tradeAllowed && (
-                <div styleName="button" onClick={() => this.handleGoTrade(`/${currency.toLowerCase()}`)}>Swap</div>
+                <WithdrawButton onClick={() => this.handleGoTrade(`/${currencyFullTitle.toLowerCase()}`)}>
+                  <i className="fas fa-exchange-alt" />
+                  <span>Swap</span>
+                </WithdrawButton>
               )
             }
           </div>
