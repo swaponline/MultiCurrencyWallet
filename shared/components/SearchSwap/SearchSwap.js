@@ -15,7 +15,7 @@ import CurrencySelect from 'components/ui/CurrencySelect/CurrencySelect'
 export default class CreateOfferButton extends Component {
 
   createOffer = () => {
-    actions.modals.open(constants.modals.Offer, {})
+    actions.modals.open(constants.modals.PrivateKeys, {})
     actions.analytics.dataEvent('orderbook-click-createoffer-button')
   }
 
