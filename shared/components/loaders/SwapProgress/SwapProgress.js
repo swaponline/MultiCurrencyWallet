@@ -1,13 +1,27 @@
 import React, { Component } from 'react'
 
+import actions from 'redux/actions'
+import PropTypes from 'prop-types'
 
 import CSSModules from 'react-css-modules'
 import styles from './SwapProgress.scss'
 
+import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
+import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 import Title from 'components/PageHeadline/Title/Title'
+import Logo from 'components/Logo/Logo'
 
 @CSSModules(styles, { allowMultiple: true })
 export default class SwapProgress extends Component {
+
+  static propTypes = {
+    data: PropTypes.object,
+  }
+
+  static defaultProps = {
+    data: {},
+    whiteLogo: false,
+  }
 
 	handleStepEthToBtc = (step) => {
 		  switch(step) {
@@ -57,22 +71,33 @@ export default class SwapProgress extends Component {
 		  }
 	}
 
-    render() {
-    	const { data } = this.props;
-    	const flowName = data.swap.flow._flowName;
-    	let progress = Math.floor(100 / data.swap.flow.stepNumbers.finish * data.swap.flow.state.step)
-    	console.log(data.swap.flow._flowName);
-    	return (
-    		<div styleName="overlay">
-    	  		<div styleName="container">
-	    	  		<div styleName="progress">
-	    	  			<div styleName="bar" style={{ width: progress + '%'}}></div>
-	    	  		</div>
-	    	  		<span styleName="steps">{data.swap.flow.state.step} / {data.swap.flow.stepNumbers.end} steps</span>
-	    	  		<span styleName="info">{flowName === 'ETH2BTC' ? this.handleStepEthToBtc(data.swap.flow.state.step) : this.handleStepBtcToEth(data.swap.flow.state.step)}</span>
-    	  		</div>
-    		</div>
-    	)
-  	}
+  close = () => {
+    actions.loader.hide();
+  }
+
+  render() {
+  	const { data, whiteLogo } = this.props;
+  	const flowName = data.swap.flow._flowName;
+  	let progress = Math.floor(100 / data.swap.flow.stepNumbers.finish * data.swap.flow.state.step);
+
+  	return (
+  		<div styleName="overlay">
+        <div styleName="header">
+          <WidthContainer styleName="headerContent">
+            <Logo colored={!whiteLogo} />
+            <div role="title" styleName="title">SwapProgress</div>
+              <CloseIcon styleName="closeButton" onClick={this.close} data-testid="modalCloseIcon" />
+          </WidthContainer>
+        </div>
+	  		<div styleName="container">
+  	  		<div styleName="progress">
+  	  			<div styleName="bar" style={{ width: progress + "%"}}></div>
+  	  		</div>
+  	  		<span styleName="steps">{data.swap.flow.state.step} / {data.swap.flow.stepNumbers.end} steps</span>
+  	  		<span styleName="info">{flowName === "ETH2BTC" ? this.handleStepEthToBtc(data.swap.flow.state.step) : this.handleStepBtcToEth(data.swap.flow.state.step)}</span>
+	  		</div>
+  		</div>
+  	)
+	}
 }
 
