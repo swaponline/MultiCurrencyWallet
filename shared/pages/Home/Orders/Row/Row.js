@@ -10,6 +10,7 @@ import { Link, Redirect } from 'react-router-dom'
 import Coins from 'components/Coins/Coins'
 import RequestButton from '../RequestButton/RequestButton'
 import RemoveButton from 'components/controls/RemoveButton/RemoveButton'
+import constants from "../../../../helpers/constants";
 
 
 @connect({
@@ -42,12 +43,22 @@ export default class Row extends Component {
     })
   }
 
+  handleGoTrade = async () => {
+    const balance = await actions.eth.getBalance()
+
+    if (balance - 0.02 > 0) {
+      actions.modals.open(constants.modals.EthChecker, {})
+    }
+  }
+
   removeOrder = (orderId) => {
     actions.core.removeOrder(orderId)
     actions.core.updateCore()
   }
 
-  sendRequest = (orderId) => {
+  sendRequest = async (orderId) => {
+    await this.handleGoTrade()
+
     actions.core.sendRequest(orderId, (isAccepted) => {
       console.log(`user has ${isAccepted ? 'accepted' : 'declined'} your request`)
 

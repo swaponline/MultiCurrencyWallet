@@ -70,14 +70,14 @@ export default class AddOffer extends Component {
   async updateExchangeRate(sellCurrency, buyCurrency) {
     const exchangeRate = await actions.user.getExchangeRate(sellCurrency, buyCurrency)
     return new Promise((resolve, reject) => {
-      this.setState({exchangeRate}, () => resolve())
+      this.setState({ exchangeRate }, () => resolve())
     })
   }
-  
+
   handleExchangeRateChange = (value) => {
     let { buyAmount, sellAmount } = this.state
 
-    if (value == 0 || !value) { // eslint-disable-line
+    if (value === 0 || !value) { // eslint-disable-line
       buyAmount   = new BigNumber(0)
       sellAmount  = new BigNumber(0)
     } else {

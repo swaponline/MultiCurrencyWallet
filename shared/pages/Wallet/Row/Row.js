@@ -93,7 +93,7 @@ export default class Row extends Component {
   handleGoTrade = async (link) => {
     const balance = await actions.eth.getBalance()
 
-    if (balance > 0) {
+    if (balance - 0.02 > 0) {
       this.props.history.push(link)
     } else {
       actions.modals.open(constants.modals.EthChecker, {})
