@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import ClickOutside from 'react-click-outside'
 
 import actions from 'redux/actions'
 import PropTypes from 'prop-types'
@@ -59,39 +60,43 @@ export default class Modal extends Component {
   }
 
   render() {
-    const { className, whiteLogo, title, showCloseButton, disableClose, children, titleUppercase } = this.props
+    const { className, whiteLogo, title, showCloseButton, disableClose, children, titleUppercase, name } = this.props
 
     const titleStyleName = cx('title', {
       'uppercase': titleUppercase,
     })
 
     return (
-      <Overlay>
-        <div styleName="modal" className={className}>
-          {
-            Boolean(title || showCloseButton) && (
-              <div styleName="header">
-                <WidthContainer styleName="headerContent">
-                  <Logo colored={!whiteLogo} />
-                  <div styleName={titleStyleName} role="title">{title}</div>
-                  {
-                    showCloseButton && !disableClose && (
-                      <CloseIcon styleName="closeButton" onClick={this.close} data-testid="modalCloseIcon" />
-                    )
-                  }
-                </WidthContainer>
-              </div>
-            )
-          }
-          <div styleName="contentContainer">
-            <Center scrollable>
-              <div styleName="content">
-                {children}
-              </div>
-            </Center>
+      <ClickOutside onClickOutside={() => {
+        actions.modals.close(name)
+      }}>
+        <Overlay>
+          <div styleName="modal" className={className}>
+            {
+              Boolean(title || showCloseButton) && (
+                <div styleName="header">
+                  <WidthContainer styleName="headerContent">
+                    <Logo colored={!whiteLogo} />
+                    <div styleName={titleStyleName} role="title">{title}</div>
+                    {
+                      showCloseButton && !disableClose && (
+                        <CloseIcon styleName="closeButton" onClick={this.close} data-testid="modalCloseIcon" />
+                      )
+                    }
+                  </WidthContainer>
+                </div>
+              )
+            }
+            <div styleName="contentContainer">
+              <Center scrollable>
+                <div styleName="content">
+                  {children}
+                </div>
+              </Center>
+            </div>
           </div>
-        </div>
-      </Overlay>
+        </Overlay>
+      </ClickOutside>
     )
   }
 }

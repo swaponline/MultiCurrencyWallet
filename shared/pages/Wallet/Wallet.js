@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { isMobile } from 'react-device-detect'
 
 import { connect } from 'redaction'
 import { constants } from 'helpers'
@@ -11,6 +12,7 @@ import SaveKeys from 'components/SaveKeys/SaveKeys'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import { WithdrawButton } from 'components/controls'
+import stylesWallet from './Wallet.scss'
 
 import Row from './Row/Row'
 
@@ -70,7 +72,7 @@ export default class Wallet extends Component {
   render() {
     const { view } = this.state
     const { items, tokens, currencies } = this.props
-    const titles = [ 'Coin', 'Name', 'Balance', 'Address', 'Actions' ]
+    const titles = [ 'Coin', !isMobile && 'Name', 'Balance', !isMobile && 'Address', isMobile ? 'Receive, send, swap' :  'Actions' ]
 
     return (
       <section>

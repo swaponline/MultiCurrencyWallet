@@ -13,28 +13,31 @@
 	background: -moz-linear-gradient(left, #510ed8 0%, #510ed8 70%, #8821ee 100%); /* FF3.6-15 */
 	background: -webkit-linear-gradient(left, #510ed8 0%,#510ed8 70%,#8821ee 100%); /* Chrome10-25,Safari5.1-6 */
 	background: linear-gradient(to right, #510ed8 0%,#510ed8 70%,#8821ee 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#510ed8', endColorstr='#8821ee',GradientType=1 ); /* IE6-9 */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#510ed8', endColorstr='#8821ee',GradientType=1 ); /* IE6-9 */
 
   a {
     display: block;
-    color: #dccef7;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
     font-size: 17px;
     flex: 1;
+    padding: 14px 16px;
+    text-align: center;
+    color: #dccef7;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
 
     &.active {
-      border-bottom: 2px solid #fff;
       font-weight: 700;
       color: #fff;
     }
 
+    i {
+      padding: 5px 0;
+    }
   }
 }
 
 .active {
-  border-bottom: 2px solid #fff;
   font-weight: 700;
   color: #fff;
 }

@@ -5,6 +5,7 @@ import EosModal from './EosModal/EosModal'
 import Approve from './Approve/Approve'
 import ImportKeys from './ImportKeys/ImportKeys'
 import EthChecker from './EthChecker/EthChecker'
+import ReceiveModal from './ReceiveModal/ReceiveModal'
 
 
 export default {
@@ -15,4 +16,5 @@ export default {
   EosModal,
   Approve,
   EthChecker,
+  ReceiveModal,
 }
