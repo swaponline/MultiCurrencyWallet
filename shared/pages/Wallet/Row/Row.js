@@ -173,12 +173,6 @@ export default class Row extends Component {
         ) }
         <td>
           <div>
-            { isMobile && (
-              <WithdrawButton onClick={this.handleReloadBalance} styleName="marginRight">
-                <i className="fas fa-sync-alt" />
-                <span>Refresh</span>
-              </WithdrawButton>
-            ) }
             <WithdrawButton onClick={this.handleWithdraw} styleName="marginRight">
               <i className="fas fa-arrow-alt-circle-down" />
               <span>Send</span>

@@ -72,7 +72,7 @@ export default class Wallet extends Component {
   render() {
     const { view } = this.state
     const { items, tokens, currencies } = this.props
-    const titles = [ 'Coin', !isMobile && 'Name', 'Balance', !isMobile && 'Address', 'Actions' ]
+    const titles = [ 'Coin', !isMobile && 'Name', 'Balance', !isMobile && 'Address', isMobile ? 'Receive, send, swap' :  'Actions' ]
 
     return (
       <section>

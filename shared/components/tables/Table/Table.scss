@@ -233,11 +233,6 @@
   table.wallet {
 
     td {
-
-      &>i {
-        display: none;
-      }
-
       div {
 
         button {
@@ -258,6 +253,10 @@
 
       }
 
+    }
+
+    td:nth-child(2) {
+      width: 100%;
     }
   }
 }
