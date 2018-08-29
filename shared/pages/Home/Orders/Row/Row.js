@@ -77,8 +77,10 @@ export default class Row extends Component {
     const amount = isMy ? sellAmount : buyAmount
 
     if (this.state.redirect) {
-      return <Redirect push to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`} />;
+      return <Redirect push to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`} />
     }
+
+    console.log('order', orderId)
 
     return (
       <tr style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}>
