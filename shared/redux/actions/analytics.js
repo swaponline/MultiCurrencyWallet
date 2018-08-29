@@ -1,11 +1,20 @@
-import reducers from 'redux/core/reducers'
 import TagManager from 'react-gtm-module'
 
 
-const addEvent = (name) => reducers.addEvent(name)
 const dataEvent = (eventName) => {
   window.dataLayer = window.dataLayer ? window.dataLayer : []
   window.dataLayer.push({ 'event' : eventName })
+}
+
+const swapEvent = (eventAction, eventLabel) => {
+  if (window.ga) {
+    const tracker = window.ga.getAll()[0]
+    tracker.send({ hitType: 'event', eventCategory: 'Swap', eventAction, eventLabel })
+  }
+
+  if (window.yaCounter48876458) {
+    window.yaCounter48876458.reachGoal(`${eventAction}`, { currency: eventLabel })
+  }
 }
 
 const tagManagerArgs = {
@@ -16,6 +25,6 @@ const tagManagerArgs = {
 TagManager.initialize(tagManagerArgs)
 
 export default {
-  addEvent,
   dataEvent,
+  swapEvent,
 }

@@ -4,6 +4,8 @@ import crypto from 'crypto'
 import config from 'app-config'
 import { BigNumber } from 'bignumber.js'
 
+import actions from 'redux/actions'
+
 import Timer from './Timer/Timer'
 import Button from 'components/controls/Button/Button'
 import OverProgress from 'components/loaders/OverProgress/OverProgress'
@@ -34,6 +36,19 @@ export default class BtcToEth extends Component {
   }
 
   handleFlowStateUpdate = (values) => {
+    const stepNumbers = {
+      1: 'sign',
+      2: 'submit-secret',
+      3: 'sync-balance',
+      4: 'lock-btc',
+      5: 'wait-lock-eth',
+      6: 'withdraw-eth',
+      7: 'finish',
+      8: 'end',
+    }
+
+    actions.analytics.swapEvent(stepNumbers[values.step], 'BTC-ETH')
+
     this.setState({
       flow: values,
     })

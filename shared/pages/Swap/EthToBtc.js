@@ -3,6 +3,8 @@ import React, { Component, Fragment } from 'react'
 import config from 'app-config'
 import { BigNumber } from 'bignumber.js'
 
+import actions from 'redux/actions'
+
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import OverProgress from 'components/loaders/OverProgress/OverProgress'
 import TimerButton from 'components/controls/TimerButton/TimerButton'
@@ -33,6 +35,20 @@ export default class EthToBtc extends Component {
   }
 
   handleFlowStateUpdate = (values) => {
+    const stepNumbers = {
+      1: 'sign',
+      2: 'wait-lock-btc',
+      3: 'verify-script',
+      4: 'sync-balance',
+      5: 'lock-eth',
+      6: 'wait-withdraw-eth',
+      7: 'withdraw-btc',
+      8: 'finish',
+      9: 'end',
+    }
+
+    actions.analytics.swapEvent(stepNumbers[values.step], 'ETH-BTC')
+
     this.setState({
       flow: values,
     })
