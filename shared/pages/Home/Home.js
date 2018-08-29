@@ -83,9 +83,6 @@ export default class Home extends Component {
     const { match: { params: { orderId } } } = this.props
     const { buyCurrency, sellCurrency } = this.state
 
-    console.log('home order', orderId)
-    console.log('asd', this.props)
-
     return (
       <section style={{ position: 'relative', width: '100%' }}>
         <PageHeadline >
