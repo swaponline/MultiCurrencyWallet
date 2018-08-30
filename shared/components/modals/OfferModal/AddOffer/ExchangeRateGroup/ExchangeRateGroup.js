@@ -13,7 +13,7 @@ const ExchangeRateGroup = ({ className, label, id, inputValueLink, placeholder, 
     id={id}
     inputValueLink={inputValueLink}
     placeholder={placeholder}>
-    <span styleName="currencyRatio">{buyCurrency} / {sellCurrency}</span>
+    <span styleName="currencyRatio">{sellCurrency} / {buyCurrency}</span>
   </Group>
 )
 
