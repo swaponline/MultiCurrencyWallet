@@ -1,5 +1,6 @@
 /* eslint-disable import/no-mutable-exports,max-len */
 import { eos } from 'helpers/eos'
+import 'abortcontroller-polyfill/dist/abortcontroller-polyfill-only'
 import web3 from 'helpers/web3'
 import bitcoin from 'bitcoinjs-lib'
 

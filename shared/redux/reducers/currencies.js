@@ -1,11 +1,11 @@
 export const initialState = {
   items: [
-    {
-      name: 'EOS',
-      title: 'EOS',
-      icon: 'eos',
-      value: 'eos'
-    },
+    // {
+    //   name: 'EOS',
+    //   title: 'EOS',
+    //   icon: 'eos',
+    //   value: 'eos'
+    // },
     {
       name: 'ETH',
       title: 'ETH',
@@ -20,12 +20,12 @@ export const initialState = {
       value: 'btc',
       fullTitle: 'bitcoin',
     },
-    {
-      name: 'USDT',
-      title: 'USDT',
-      icon: 'usdt',
-      value: 'usdt',
-    },
+    // {
+    //   name: 'USDT',
+    //   title: 'USDT',
+    //   icon: 'usdt',
+    //   value: 'usdt',
+    // },
     {
       name: 'NOXON',
       title: 'NOXON',

@@ -13,7 +13,7 @@ const swapEvent = (eventAction, eventLabel) => {
   }
 
   if (window.yaCounter48876458) {
-    window.yaCounter48876458.reachGoal(`${eventAction}`, { currency: eventLabel })
+    window.yaCounter48876458.reachGoal(eventAction, { currency: eventLabel })
   }
 }
 

@@ -63,7 +63,7 @@ export default class AddOffer extends Component {
 
     this.setState({
       balance,
-      ethBalance
+      ethBalance,
     })
   }
 
@@ -220,11 +220,12 @@ export default class AddOffer extends Component {
 
   render() {
     const { currencies } = this.props
-    const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency, balance, isBuyFieldInteger, isSellFieldInteger, ethBalance } = this.state
+    const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency,
+      balance, isBuyFieldInteger, isSellFieldInteger, ethBalance } = this.state
     const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
     const isDisabled = !exchangeRate || !buyAmount && !sellAmount
       || sellAmount > balance || sellAmount < minAmount[sellCurrency]
-      || ethBalance < 0.02
+      || ethBalance > 0.02
 
     linked.sellAmount.check((value) => value > minAmount[sellCurrency], `Amount must be greater than ${minAmount[sellCurrency]} `)
     linked.sellAmount.check((value) => value <= balance, `Amount must be bigger your balance`)
