@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import actions from 'redux/actions'
 
 import Link from 'sw-valuelink'
-import { constants } from 'helpers'
 
 import cssModules from 'react-css-modules'
 import styles from './ImportKeys.scss'
@@ -36,9 +35,9 @@ export default class ImportKeys extends Component {
     if (!ethKey || ethKey.length < 40) {
       this.setState({ isSubmittedEth: true })
       return
-    } else {
-      this.setState({ isDisabled: false })
     }
+    this.setState({ isDisabled: false })
+
 
     try {
       actions.eth.login(ethKey)
@@ -57,9 +56,9 @@ export default class ImportKeys extends Component {
     if (!btcKey || btcKey.length < 27) {
       this.setState({ isSubmittedBtc: true })
       return
-    } else {
-      this.setState({ isDisabled: false })
     }
+    this.setState({ isDisabled: false })
+
 
     try {
       actions.btc.login(btcKey)

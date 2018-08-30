@@ -105,7 +105,7 @@ export default class BtcToEthToken extends Component {
                   <Fragment>
                     <input type="text" placeholder="Secret Key" defaultValue={secret} />
                     <br />
-                    <TimerButton brand onClick={this.submitSecret}>Confirm</TimerButton>
+                    <TimerButton timeLeft={5} brand onClick={this.submitSecret}>Confirm</TimerButton>
                   </Fragment>
                 ) : (
                   <Fragment>
@@ -289,7 +289,7 @@ export default class BtcToEthToken extends Component {
           )
         }
         <br />
-        {/*{ !flow.isFinished && <Button green onClick={this.addGasPrice}>Add gas price</Button> }*/}
+        {/* { !flow.isFinished && <Button green onClick={this.addGasPrice}>Add gas price</Button> } */}
         { children }
       </div>
     )

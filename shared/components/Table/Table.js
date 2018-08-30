@@ -4,12 +4,12 @@ import cssModules from 'react-css-modules'
 import styles from './Table.scss'
 
 
-const Table = ({ titles, rows, rowRender, textIfEmpty, isLoading, loadingText }) => (
-  <table styleName="table">
+const Table = ({ titles, rows, rowRender, classTitle, textIfEmpty, isLoading, loadingText }) => (
+  <table styleName="table" className={classTitle}>
     <thead>
       <tr>
         {
-          titles.map((title, index) => (
+          titles.filter(title => !!title).map((title, index) => (
             <th key={index}>{title}</th>
           ))
         }

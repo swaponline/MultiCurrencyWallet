@@ -140,7 +140,7 @@ Private key: ${btcData.privateKey}\r\n
                 </div>
                 <div styleName="subTitle">We don`t store your private keys and will not be able to restore them!</div>
                 <Button brand styleName="button" onClick={this.handleDownload}>Download instruction</Button>
-                {/*<Button brand styleName="button" onClick={this.handleSendByEmail}>Send by email</Button>*/}
+                {/* <Button brand styleName="button" onClick={this.handleSendByEmail}>Send by email</Button> */}
               </Fragment>
             ) : (
               <Fragment>

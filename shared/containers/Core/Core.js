@@ -8,13 +8,8 @@ import config from 'app-config'
 
 export default class Core extends Component {
 
-  componentWillReceiveProps(nextState) {
-    if (nextState !== this.state) {
-      this.setState()
-    }
-  }
-
   componentWillMount() {
+    actions.core.getSwapHistory()
     SwapApp.services.orders
       .on('new orders', this.updateOrders)
       .on('new order', this.updateOrders)
@@ -31,15 +26,30 @@ export default class Core extends Component {
       .off('order update', this.updateOrders)
       .off('remove order', this.updateOrders)
       .off('new order request', this.updateOrders)
+    SwapApp.services.room.connection
+      .off('peer joined', actions.ipfs.userJoined)
+      .off('peer left', actions.ipfs.userLeft)
+      .off('accept swap request', this.updateOrders)
+      .off('decline swap request', this.updateOrders)
+  }
+
+  componentDidMount() {
+    this.updateOrders()
   }
 
   setIpfs = () => {
     setTimeout(() => {
       const isOnline = SwapApp.services.room.connection._ipfs.isOnline()
-      const peer = SwapApp.services.room.peer
+      const { peer } = SwapApp.services.room
 
-      SwapApp.services.room.connection.on('peer joined', actions.ipfs.userJoined)
-      SwapApp.services.room.connection.on('peer left', actions.ipfs.userLeft)
+      this.updateOrders()
+
+      SwapApp.services.room.connection
+        .on('peer joined', actions.ipfs.userJoined)
+        .on('peer left', actions.ipfs.userLeft)
+        .on('accept swap request', this.updateOrders)
+        .on('decline swap request', this.updateOrders)
+
       setTimeout(() => {
         actions.ipfs.set({
           isOnline,
@@ -52,12 +62,7 @@ export default class Core extends Component {
 
   updateOrders = () => {
     const orders = SwapApp.services.orders.items
-
-    this.setState({})
-
-    if (orders.length > 0) {
-      actions.core.updateCore(orders)
-    }
+    actions.core.updateCore(orders)
   }
 
   render() {

@@ -26,10 +26,15 @@ export default {
     contract : '0x843FcaAeb0Cce5FFaf272F5F2ddFFf3603F9c2A0',
   },
 
+  eos: {
+    contract: 'swaponline42',
+  },
+
   tokens: {
     swap: {
       address: '0x14a52cf6B4F68431bd5D9524E4fcD6F41ce4ADe9',
       decimals: 18,
+      description: 'description',
     },
     noxon: {
       address: '0x9E4AD79049282F942c1b4c9b418F0357A0637017',
@@ -49,6 +54,7 @@ export default {
     bitpay: 'https://insight.bitpay.com',
     etherscan: 'https://etherscan.io',
     eos: '',
+    omniexplorer: 'https://www.omniexplorer.info',
   },
 
   api: {

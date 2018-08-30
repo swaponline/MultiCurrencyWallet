@@ -100,7 +100,7 @@ export default class EthTokenToBtc extends Component {
                 !flow.isSignFetching && !flow.isMeSigned && (
                   <Fragment>
                     <br />
-                    <TimerButton brand onClick={this.signSwap}>Confirm</TimerButton>
+                    <TimerButton timeLeft={5} brand onClick={this.signSwap}>Confirm</TimerButton>
                   </Fragment>
                 )
               }
@@ -213,7 +213,7 @@ export default class EthTokenToBtc extends Component {
                       flow.step === 3 && (
                         <Fragment>
                           <br />
-                          <TimerButton brand onClick={this.confirmBTCScriptChecked}>Everything is OK. Continue</TimerButton>
+                          <TimerButton timeLeft={5} brand onClick={this.confirmBTCScriptChecked}>Everything is OK. Continue</TimerButton>
                         </Fragment>
                       )
                     }
@@ -351,7 +351,7 @@ export default class EthTokenToBtc extends Component {
           )
         }
         <br />
-        {/*{ !flow.isFinished && <Button white onClick={this.addGasPrice}>Add gas price</Button> }*/}
+        {/* { !flow.isFinished && <Button white onClick={this.addGasPrice}>Add gas price</Button> } */}
         { children }
       </div>
     )

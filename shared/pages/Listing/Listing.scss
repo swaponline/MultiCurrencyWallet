@@ -11,6 +11,12 @@
   margin-top: 50px;
 }
 
+.container {
+  & p {
+    text-align: justify;
+  }
+}
+
 @include media-mobile {
   .listingForm {
     width: 100%;

@@ -5,6 +5,8 @@ import actions from 'redux/actions'
 import config from 'app-config'
 import { BigNumber } from 'bignumber.js'
 
+import actions from 'redux/actions'
+
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import RequestLoader from 'components/loaders/RequestLoader/RequestLoader'
 import Loader from 'components/loaders/Loader/Loader'
@@ -38,6 +40,20 @@ export default class EthToBtc extends Component {
 
 
   handleFlowStateUpdate = (values) => {
+    const stepNumbers = {
+      1: 'sign',
+      2: 'wait-lock-btc',
+      3: 'verify-script',
+      4: 'sync-balance',
+      5: 'lock-eth',
+      6: 'wait-withdraw-eth',
+      7: 'withdraw-btc',
+      8: 'finish',
+      9: 'end',
+    }
+
+    actions.analytics.swapEvent(stepNumbers[values.step], 'ETH-BTC')
+
     this.setState({
       flow: values,
     })
@@ -91,7 +107,7 @@ export default class EthToBtc extends Component {
         {
           !this.swap.id && (
             this.swap.isMy ? (
-              <h3>This order doesn't have a buyer</h3>
+              <h3>This order doesn&apos;t have a buyer</h3>
             ) : (
               <Fragment>
                 <h3>The order creator is offline. Waiting for him..</h3>
@@ -112,7 +128,7 @@ export default class EthToBtc extends Component {
           flow.step === 1 && (
             <Fragment>
               <div>Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation.</div>
-              <TimerButton brand onClick={this.signSwap}>Sign</TimerButton>
+              <TimerButton timeLeft={5} brand onClick={this.signSwap}>Sign</TimerButton>
               {
                 (flow.isSignFetching || flow.signTransactionHash) && (
                   <Fragment>
@@ -217,7 +233,7 @@ export default class EthToBtc extends Component {
                       flow.step === 3 && (
                         <Fragment>
                           <br />
-                          <TimerButton brand onClick={this.confirmBTCScriptChecked}>Everything is OK. Continue</TimerButton>
+                          <TimerButton timeLeft={5} brand onClick={this.confirmBTCScriptChecked}>Everything is OK. Continue</TimerButton>
                         </Fragment>
                       )
                     }

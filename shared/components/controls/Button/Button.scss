@@ -62,3 +62,10 @@
   cursor: default !important;
   color: #626262 !important;
 }
+
+@include media-mobile {
+  .button {
+    height: 46px;
+    line-height: 46px;
+  }
+} 

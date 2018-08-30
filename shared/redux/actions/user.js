@@ -14,6 +14,7 @@ const sign = async () => {
   const _ethPrivateKey = actions.eth.login(ethPrivateKey)
 
   actions.btc.login(btcPrivateKey)
+  actions.usdt.login(btcPrivateKey)
 
   Object.keys(config.tokens)
     .forEach(name => {
@@ -24,7 +25,6 @@ const sign = async () => {
   const eosMasterPrivateKey = localStorage.getItem(constants.privateKeyNames.eos)
   const eosAccount = localStorage.getItem(constants.privateKeyNames.eosAccount)
   if (eosMasterPrivateKey && eosAccount) {
-    await actions.eos.init()
     await actions.eos.login(eosAccount, eosMasterPrivateKey)
     await actions.eos.getBalance()
   }
@@ -33,6 +33,7 @@ const sign = async () => {
 const getBalances = () => {
   actions.eth.getBalance()
   actions.btc.getBalance()
+  actions.usdt.getBalance()
   actions.eos.getBalance()
 
   Object.keys(config.tokens)
@@ -52,16 +53,16 @@ const getDemoMoney = process.env.MAINNET ? () => {} : () => {
     })
 }
 
-const setExchangeRate = (sellCurrency, buyCurrency, setState) => {
-  const url = `https://api.cryptonator.com/api/full/${sellCurrency}-${buyCurrency}`
-
-  return request.get(url)
-    .then(({ ticker: { price: exchangeRate } })  => {
-      setState(exchangeRate)
+const getExchangeRate = (sellCurrency, buyCurrency) => {
+  return new Promise((resolve, reject) => {
+    const url = `https://api.cryptonator.com/api/full/${sellCurrency}-${buyCurrency}`
+    request.get(url).then(({ ticker: { price: exchangeRate } })  => {
+      resolve(exchangeRate)
     })
-    .catch(() =>
-      setState(config.exchangeRates[`${sellCurrency.toLowerCase()}${buyCurrency.toLowerCase()}`])
-    )
+    .catch(() => {
+      resolve(config.exchangeRates[`${sellCurrency.toLowerCase()}${buyCurrency.toLowerCase()}`])
+    })
+  })
 }
 
 const setTransactions = () =>
@@ -111,7 +112,7 @@ Private key: ${btcData.privateKey}\r\n
 4. paste private key and click "Ok"\r\n
 \r\n
 \r\n
-* We don\`t store your private keys and will not be able to restore them!  
+* We don\`t store your private keys and will not be able to restore them!
 \r\n
 \r\n
 \r\n
@@ -147,7 +148,7 @@ export default {
   sign,
   getBalances,
   getDemoMoney,
-  setExchangeRate,
+  getExchangeRate,
   setTransactions,
   downloadPrivateKeys,
 }

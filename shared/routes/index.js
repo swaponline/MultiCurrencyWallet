@@ -10,18 +10,25 @@ import Listing          from 'pages/Listing/Listing'
 import History          from 'pages/History/History'
 import NotFound         from 'pages/NotFound/NotFound'
 import Affiliate        from 'pages/Affiliate/Affiliate'
+import Currency         from 'pages/Currency/Currency'
 
 
 const routes = (
   <Switch>
+    <Route path={`${links.swap}/:buy-:sell/:orderId`} component={SwapComponent} />
+
     <Route path={`${links.exchange}/:buy-:sell/:orderId`} component={Home} />
     <Route path={`${links.exchange}/:buy-:sell`} component={Home} />
     <Route path={links.exchange} component={Home} />
+
     <Route path={links.affiliate} component={Affiliate} />
     <Route path={links.listing} component={Listing} />
-    <Route exact path={links.home} component={Wallet} />
     <Route path={links.history} component={History} />
-    <Route path={`${links.swap}/:buy-:sell/:orderId`} component={SwapComponent} />
+
+    <Route path={`${links.home}:currency`} component={Currency} />
+    <Route exact path={links.home} component={Wallet} />
+
+
     <Route component={NotFound} />
   </Switch>
 )

@@ -13,13 +13,6 @@ export default (webpackConfig) => {
     publicPath: config.publicPath,
   }
 
-  // webpackConfig.plugins.push(
-  //   // new webpack.SourceMapDevToolPlugin({
-  //   //   filename: '[file].[hash:6].map',
-  //   //   append: `\n//# sourceMappingURL=[url]`,
-  //   // }),
-  // )
-
   webpackConfig.module.rules = webpackConfig.module.rules.map((loader) => {
     if (loader.test.test('*.css') || loader.test.test('*.scss')) {
       loader.use = ExtractTextPlugin.extract({

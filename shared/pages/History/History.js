@@ -6,9 +6,11 @@ import actions from 'redux/actions'
 import Row from './Row/Row'
 import SwapsHistory from './SwapsHistory/SwapsHistory'
 
-import Table from 'components/Table/Table'
+
+import styles from 'components/tables/Table/Table.scss'
 import Filter from 'components/Filter/Filter'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
+import InfiniteScrollTable from 'components/tables/InfiniteScrollTable/InfiniteScrollTable'
 
 
 const filterHistory = (items, filter) => {
@@ -28,28 +30,50 @@ const filterHistory = (items, filter) => {
   swapHistory,
 }))
 export default class History extends Component {
+  state = {
+    renderedItems: 10,
+  }
 
   componentDidMount() {
     actions.analytics.dataEvent('open-page-history')
     actions.user.setTransactions()
   }
 
+  loadMore = () => {
+    const { items } = this.props
+    const { renderedItems } = this.state
+
+    if (renderedItems < items.length) {
+      this.setState(state => ({
+        renderedItems: state.renderedItems + Math.min(10, items.length - state.renderedItems),
+      }))
+    }
+  }
+
+  rowRender = (row) => (
+    <Row key={row.hash} {...row} />
+  )
+
   render() {
     const { items, swapHistory } = this.props
     const titles = [ 'Coin', 'Status', 'Statement', 'Amount' ]
+
+    console.log('swapHistory', swapHistory)
 
     return (
       <section>
         <PageHeadline subTitle="History" />
         <SwapsHistory orders={Object.values(swapHistory).filter(item => item.step >= 4)} />
-        <h3 >All transactions</h3>
+        <h3>All transactions</h3>
         <Filter />
-        <Table
+        <InfiniteScrollTable
+          classTitle={styles.history}
           titles={titles}
-          rows={items}
-          rowRender={(row, index) => (
-            <Row key={index} {...row} />
-          )}
+          bottomOffset={400}
+          getMore={this.loadMore}
+          itemsCount={items.length}
+          items={items.slice(0, this.state.renderedItems)}
+          rowRender={this.rowRender}
         />
       </section>
     )

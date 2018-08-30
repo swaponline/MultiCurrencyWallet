@@ -2,7 +2,8 @@ import React, { PureComponent, Fragment } from 'react'
 
 import actions from 'redux/actions'
 
-import Table from 'components/Table/Table'
+import Table from 'components/tables/Table/Table'
+import styles from 'components/tables/Table/Table.scss'
 import RowFeeds from './RowFeeds/RowFeeds'
 
 
@@ -39,6 +40,7 @@ export default class MyOrders extends PureComponent {
       <Fragment>
         <h3 style={{ marginTop: '50px' }} >Your orders</h3>
         <Table
+          classTitle={styles.exchange}
           titles={titles}
           rows={myOrders}
           rowRender={(row, index) => (

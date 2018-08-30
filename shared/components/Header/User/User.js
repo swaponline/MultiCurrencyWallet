@@ -1,8 +1,8 @@
 import React from 'react'
 
+import { withRouter } from 'react-router'
 import actions from 'redux/actions'
 import { connect } from 'redaction'
-import { constants } from 'helpers'
 
 import styles from './User.scss'
 import CSSModules from 'react-css-modules'
@@ -13,6 +13,7 @@ import UserTooltip from './UserTooltip/UserTooltip'
 import AddOfferButton from './AddOfferButton/AddOfferButton'
 
 
+@withRouter
 @connect({
   feeds: 'feeds.items',
   peer: 'ipfs.peer',
@@ -47,9 +48,7 @@ export default class User extends React.Component {
 
   autoAcceptRequest = (orderId, participantPeer, link) => {
     this.acceptRequest(orderId, participantPeer)
-    setTimeout(() => {
-      this.props.history.push(link)
-    }, 1000)
+    this.props.history.push(link)
   }
 
   soundClick = () => {
@@ -69,7 +68,6 @@ export default class User extends React.Component {
         <UserAvatar
           isToggle={this.handleToggleTooltip}
           feeds={feeds}
-          mePeer={peer}
           soundClick={this.soundClick}
           changeView={this.handleChangeView}
         />

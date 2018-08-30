@@ -7,3 +7,16 @@
 .button {
   margin-top: 50px;
 }
+
+.error {
+  margin-top: 8px;
+  font-size: 14px;
+  color: $color-f-error;
+
+  [role = "errorLink"] {
+    display: inline !important;
+    color: inherit !important;
+    vertical-align: inherit !important;
+    text-decoration: underline !important;
+  }
+}

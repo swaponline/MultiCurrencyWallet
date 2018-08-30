@@ -57,6 +57,7 @@ const getBalance = async (currency) => {
   const ERC20 = new web3.eth.Contract(abi, contractAddress)
 
   const result = await ERC20.methods.balanceOf(address).call()
+  console.log('result get balance', result)
   let amount = new BigNumber(String(result)).dividedBy(new BigNumber(String(10)).pow(decimals)).toNumber()
 
   reducers.user.setTokenBalance({ name, amount })
@@ -148,6 +149,10 @@ const approve = (name, amount) => {
         gas: `${config.services.web3.gas}`,
         gasPrice: `${config.services.web3.gasPrice}`,
       })
+        .on('transactionHash', (hash) => {
+          const txId = `${config.link.etherscan}/tx/${hash}`
+          actions.loader.show(true, true, txId)
+        })
         .on('error', err => {
           reject(err)
         })

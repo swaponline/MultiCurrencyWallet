@@ -5,11 +5,12 @@ import { connect } from 'redaction'
 import actions from 'redux/actions'
 
 import { links } from 'helpers'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 
 import Coins from 'components/Coins/Coins'
 import RequestButton from '../RequestButton/RequestButton'
 import RemoveButton from 'components/controls/RemoveButton/RemoveButton'
+import constants from "../../../../helpers/constants";
 
 
 @connect({
@@ -27,15 +28,27 @@ export default class Row extends Component {
 
   componentWillMount() {
     const { row: {  sellCurrency, isMy, buyCurrency } } = this.props
-    isMy ? this.checkBalance(sellCurrency) : this.checkBalance(buyCurrency)
+    if (isMy) {
+      this.checkBalance(sellCurrency)
+    } else {
+      this.checkBalance(buyCurrency)
+    }
   }
 
-  checkBalance = async (sellCurrency) => {
-    const balance = await actions[sellCurrency.toLowerCase()].getBalance()
+  checkBalance = async (currency) => {
+    const balance = await actions[currency.toLowerCase()].getBalance(currency)
 
     this.setState({
       balance,
     })
+  }
+
+  handleGoTrade = async () => {
+    const balance = await actions.eth.getBalance()
+
+    if ((balance - 0.02) < 0) {
+      actions.modals.open(constants.modals.EthChecker, {})
+    }
   }
 
   removeOrder = (orderId) => {
@@ -43,17 +56,29 @@ export default class Row extends Component {
     actions.core.updateCore()
   }
 
-  sendRequest = (orderId) => {
-    actions.core.sendRequest(orderId)
+  sendRequest = async (orderId) => {
+    await this.handleGoTrade()
+
+    actions.core.sendRequest(orderId, (isAccepted) => {
+      console.log(`user has ${isAccepted ? 'accepted' : 'declined'} your request`)
+
+      if (isAccepted === true) {
+        this.setState({ redirect: true })
+      }
+    })
     actions.core.updateCore()
   }
 
   render() {
     const { balance } = this.state
     const { orderId, row: { id, buyCurrency, sellCurrency, isMy, buyAmount,
-      sellAmount, isRequested,
+      sellAmount, isRequested, isProcessing,
       owner :{  peer: ownerPeer } }, peer } = this.props
     const amount = isMy ? sellAmount : buyAmount
+
+    if (this.state.redirect) {
+      return <Redirect push to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`} />
+    }
 
     return (
       <tr style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}>
@@ -101,12 +126,14 @@ export default class Row extends Component {
                       <Link to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`}> Go to the swap</Link>
                     </Fragment>
                   ) : (
-                    balance > amount.toNumber() ? (
-                      <Link to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`} >
-                        <RequestButton onClick={() => this.sendRequest(id)} />
-                      </Link>
+                    isProcessing ? (
+                      <span>This order is in execution</span>
                     ) : (
-                      <span>Insufficient funds</span>
+                      balance > Number(amount) ? (
+                        <RequestButton onClick={() => this.sendRequest(id)} />
+                      ) : (
+                        <span>Insufficient funds</span>
+                      )
                     )
                   )
                 }

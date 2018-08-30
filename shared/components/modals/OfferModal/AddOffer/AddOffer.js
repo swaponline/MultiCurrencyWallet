@@ -1,5 +1,6 @@
 import React, { Fragment, Component } from 'react'
 
+import { connect } from 'redaction'
 import actions from 'redux/actions'
 
 import Link from 'sw-valuelink'
@@ -17,9 +18,20 @@ import SelectGroup from './SelectGroup/SelectGroup'
 import Button from 'components/controls/Button/Button'
 
 
+const minAmount = {
+  eth: 0.05,
+  btc: 0.004,
+  noxon: 1,
+  swap: 1,
+  jot: 1,
+}
+
+
+@connect(({ currencies }) => ({
+  currencies: currencies.items,
+}))
 @cssModules(styles, { allowMultiple: true })
 export default class AddOffer extends Component {
-
   constructor({ initialData }) {
     super()
 
@@ -31,44 +43,41 @@ export default class AddOffer extends Component {
       sellAmount: sellAmount || '',
       buyCurrency: buyCurrency || 'btc',
       sellCurrency: sellCurrency || 'eth',
+      ethBalance: null,
       isSending: false,
-      min: 0.05,
+      balance: null,
+      isSellFieldInteger: false,
+      isBuyFieldInteger: false,
     }
-  }
-
-  componentWillMount() {
-    const { sellCurrency } = this.state
-    this.checkBalance(sellCurrency)
   }
 
   componentDidMount() {
     const { sellCurrency, buyCurrency } = this.state
-    this.getExchangeRate(sellCurrency, buyCurrency)
-  }
-
-  changeExchangeRate = (value) => {
-    this.setState({
-      exchangeRate: value,
-    })
+    this.checkBalance(sellCurrency)
+    this.updateExchangeRate(sellCurrency, buyCurrency)
   }
 
   checkBalance = async (sellCurrency) => {
     const balance = await actions[sellCurrency].getBalance(sellCurrency)
+    const ethBalance = await actions.eth.getBalance()
 
     this.setState({
       balance,
+      ethBalance,
     })
   }
 
-  getExchangeRate = (sellCurrency, buyCurrency) => {
-    actions.user.setExchangeRate(sellCurrency, buyCurrency, this.changeExchangeRate)
+  async updateExchangeRate(sellCurrency, buyCurrency) {
+    const exchangeRate = await actions.user.getExchangeRate(sellCurrency, buyCurrency)
+    return new Promise((resolve, reject) => {
+      this.setState({ exchangeRate }, () => resolve())
+    })
   }
-
 
   handleExchangeRateChange = (value) => {
     let { buyAmount, sellAmount } = this.state
 
-    if (value == 0 || !value) { // eslint-disable-line
+    if (value === 0 || !value) { // eslint-disable-line
       buyAmount   = new BigNumber(0)
       sellAmount  = new BigNumber(0)
     } else {
@@ -82,7 +91,7 @@ export default class AddOffer extends Component {
     })
   }
 
-  handleBuyCurrencySelect = ({ value }) => {
+  handleBuyCurrencySelect = async ({ value }) => {
     let { buyCurrency, sellCurrency, buyAmount, sellAmount } = this.state
 
     if (value === sellCurrency) {
@@ -92,20 +101,27 @@ export default class AddOffer extends Component {
     buyCurrency = value
 
     this.checkBalance(sellCurrency)
-    this.getExchangeRate(sellCurrency, buyCurrency)
 
+    await this.updateExchangeRate(sellCurrency, buyCurrency)
     const { exchangeRate } = this.state
     sellAmount = new BigNumber(String(buyAmount) || 0).multipliedBy(exchangeRate)
 
+    const isBuyFieldInteger = config.tokens[buyCurrency] && config.tokens[buyCurrency].decimals === 0
 
+    if (isBuyFieldInteger) {
+      buyAmount = new BigNumber(String(buyAmount) || 0).dp(0, BigNumber.ROUND_HALF_EVEN)
+    }
     this.setState({
       buyCurrency,
       sellCurrency,
       sellAmount,
+      buyAmount,
+      isSellFieldInteger: config.tokens[sellCurrency] && config.tokens[sellCurrency].decimals === 0,
+      isBuyFieldInteger,
     })
   }
 
-  handleSellCurrencySelect = ({ value }) => {
+  handleSellCurrencySelect = async ({ value }) => {
     let { buyCurrency, sellCurrency, sellAmount, buyAmount } = this.state
 
     if (value === buyCurrency) {
@@ -115,21 +131,36 @@ export default class AddOffer extends Component {
     sellCurrency = value
 
     this.checkBalance(sellCurrency)
-    this.getExchangeRate(sellCurrency, buyCurrency)
-
+    await this.updateExchangeRate(sellCurrency, buyCurrency)
     const { exchangeRate } = this.state
     buyAmount = new BigNumber(String(sellAmount) || 0).dividedBy(exchangeRate)
+
+    const isSellFieldInteger = config.tokens[sellCurrency] && config.tokens[sellCurrency].decimals === 0
+
+    if (isSellFieldInteger) {
+      sellAmount = new BigNumber(String(sellAmount) || 0).dp(0, BigNumber.ROUND_HALF_EVEN)
+    }
 
 
     this.setState({
       buyCurrency,
       sellCurrency,
       buyAmount,
+      sellAmount,
+      isSellFieldInteger,
+      isBuyFieldInteger: config.tokens[buyCurrency] && config.tokens[buyCurrency].decimals === 0,
     })
   }
 
-  handleBuyAmountChange = (value) => {
+  handleBuyAmountChange = (value, prev) => {
     const { exchangeRate } = this.state
+
+    const firstDot = value.indexOf('.')
+    const secondDot = value.lastIndexOf('.')
+
+    if (firstDot !== secondDot) {
+      return undefined
+    }
 
     if (!this.isSending) {
       actions.analytics.dataEvent('orderbook-addoffer-enter-ordervalue')
@@ -140,10 +171,19 @@ export default class AddOffer extends Component {
       sellAmount: new BigNumber(String(value) || 0).dividedBy(exchangeRate || 0),
       buyAmount: new BigNumber(String(value)),
     })
+
+    return value
   }
 
   handleSellAmountChange = (value) => {
     const { exchangeRate } = this.state
+
+    const firstDot = value.indexOf('.')
+    const secondDot = value.lastIndexOf('.')
+
+    if (firstDot !== secondDot) {
+      return undefined
+    }
 
     if (!this.isSending) {
       actions.analytics.dataEvent('orderbook-addoffer-enter-ordervalue')
@@ -151,16 +191,19 @@ export default class AddOffer extends Component {
     }
 
     this.setState({
-      buyAmount: new BigNumber(String(value) || 0).multipliedBy(exchangeRate || 0),
       sellAmount: new BigNumber(String(value)),
+      buyAmount: new BigNumber(String(value) || 0).multipliedBy(exchangeRate || 0),
     })
+
+    return value
   }
 
   handleNext = () => {
-    const { exchangeRate, buyAmount, sellAmount, balance, min } = this.state
+    const { exchangeRate, buyAmount, sellAmount, balance, sellCurrency, ethBalance } = this.state
     const { onNext } = this.props
 
-    const isDisabled = !exchangeRate || !buyAmount || !sellAmount || sellAmount > balance || sellAmount < min
+    const isDisabled = !exchangeRate || !buyAmount || !sellAmount || sellAmount > balance || sellAmount < minAmount[sellCurrency]
+      || ethBalance < 0.02
 
     if (!isDisabled) {
       actions.analytics.dataEvent('orderbook-addoffer-click-next-button')
@@ -176,18 +219,16 @@ export default class AddOffer extends Component {
   }
 
   render() {
-    const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency, balance, min } = this.state
+    const { currencies } = this.props
+    const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency,
+      balance, isBuyFieldInteger, isSellFieldInteger, ethBalance } = this.state
     const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
-    const isDisabled = !exchangeRate || !buyAmount && !sellAmount || sellAmount > balance || sellAmount < min
+    const isDisabled = !exchangeRate || !buyAmount && !sellAmount
+      || sellAmount > balance || sellAmount < minAmount[sellCurrency]
+      || ethBalance > 0.02
 
-    if (sellCurrency === 'btc') {
-      linked.sellAmount.check((value) => value > 0.004, `Amount must be greater than 0.004 `)
-    } else {
-      linked.sellAmount.check((value) => value > min, `Amount must be greater than ${min} `)
-    }
-
-    linked.sellAmount.check((value) => value < balance, `Amount must be bigger your balance`)
-
+    linked.sellAmount.check((value) => value > minAmount[sellCurrency], `Amount must be greater than ${minAmount[sellCurrency]} `)
+    linked.sellAmount.check((value) => value <= balance, `Amount must be bigger your balance`)
 
     return (
       <Fragment>
@@ -205,21 +246,26 @@ export default class AddOffer extends Component {
           balance={balance}
           currency={sellCurrency}
         />
+        { ethBalance <= 0.02 && <span styleName="error">For a swap, you need 0.02 ETH on your balance</span> }
         <SelectGroup
           styleName="sellGroup"
           label="Sell"
-          inputValueLink={linked.sellAmount.onChange(this.handleSellAmountChange)}
+          inputValueLink={linked.sellAmount.pipe(this.handleSellAmountChange)}
           selectedCurrencyValue={sellCurrency}
           onCurrencySelect={this.handleSellCurrencySelect}
           id="sellAmount"
+          currencies={currencies}
+          isInteger={isSellFieldInteger}
           placeholder="Enter sell amount"
         />
         <SelectGroup
           label="Buy"
-          inputValueLink={linked.buyAmount.onChange(this.handleBuyAmountChange)}
+          inputValueLink={linked.buyAmount.pipe(this.handleBuyAmountChange)}
           selectedCurrencyValue={buyCurrency}
           onCurrencySelect={this.handleBuyCurrencySelect}
           id="buyAmount"
+          currencies={currencies}
+          isInteger={isBuyFieldInteger}
           placeholder="Enter buy amount"
         />
         <Button

@@ -5,6 +5,10 @@
   & span {
     font-weight: bold;
   }
+
+  & svg {
+    display: block;
+  }
 }
 
 .connect {
@@ -13,4 +17,10 @@
 
 .disconnect {
   color: #e32950;
+}
+
+@include media-tablet {
+  .title {
+    font-size: 16px;
+  }
 }

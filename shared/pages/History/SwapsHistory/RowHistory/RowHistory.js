@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
+import moment from 'moment/moment'
+import Identicon from 'identicon.js'
 
 import { links } from 'helpers'
 import { Link } from 'react-router-dom'
@@ -17,10 +19,26 @@ const RowHistory = ({ row }) => {
     return null
   }
 
-  const { buyAmount, buyCurrency, sellAmount, btcScriptValues, isRefunded, isMy, sellCurrency, isFinished,  id } = row
+  let { buyAmount, buyCurrency, sellAmount, btcScriptValues, isRefunded, isMy, sellCurrency, isFinished, id, btcScriptValues:{ lockTime } } = row
+
+  const lockDateAndTime = moment.unix(lockTime).format('HH:mm:ss DD/MM/YYYY')
+  const identiconOptions = {
+    background: [255, 255, 255, 255],
+    size: 40,
+    format: 'svg',
+  }
+
+  const identiconData = new Identicon(id, identiconOptions).toString()
+  const identiconDatasrc = `data:image/svg+xml;base64,${identiconData}`
+
+  buyAmount   = Number(buyAmount)
+  sellAmount  = Number(sellAmount)
 
   return (
     <tr>
+      <td>
+        <img alt="" src={identiconDatasrc} />
+      </td>
       <td>
         <Coins names={[buyCurrency, sellCurrency]}  />
       </td>
@@ -59,6 +77,9 @@ const RowHistory = ({ row }) => {
       </td>
       <td>
         { isFinished ? 'Finished' : 'Uncompleted' }
+      </td>
+      <td>
+        { lockDateAndTime.split(' ').map((item, key) => <Fragment key={key}>{item}<br /></Fragment>) }
       </td>
       <td>
         {

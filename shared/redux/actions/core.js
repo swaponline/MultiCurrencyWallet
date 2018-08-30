@@ -27,12 +27,10 @@ const removeOrder = (orderId) => {
   actions.feed.deleteItemToFeed(orderId)
 }
 
-const sendRequest = (orderId) => {
+const sendRequest = (orderId, callback) => {
   const order = SwapApp.services.orders.getByKey(orderId)
 
-  order.sendRequest((isAccepted) => {
-    console.log(`user ${order.owner.peer} ${isAccepted ? 'accepted' : 'declined'} your request`)
-  })
+  order.sendRequest(callback)
 }
 
 const createOrder = (data) => {
@@ -42,11 +40,9 @@ const createOrder = (data) => {
 const updateCore = () => {
   const orders = SwapApp.services.orders.items
 
-  if (orders !== undefined && orders.length > 0) {
-    getOrders(orders)
-    getSwapHistory()
-    actions.feed.getFeedDataFromOrder(orders)
-  }
+  getOrders(orders)
+  getSwapHistory()
+  actions.feed.getFeedDataFromOrder(orders)
 }
 
 const getSwapHistory = () => {

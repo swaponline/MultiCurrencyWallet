@@ -11,3 +11,9 @@
     opacity: 0;
     visibility: hidden;
 }
+
+@include media-mobile {
+    .user-cont {
+        display: none;
+    }
+} 

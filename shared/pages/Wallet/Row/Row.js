@@ -1,32 +1,38 @@
 import React, { Component, Fragment } from 'react'
 import actions from 'redux/actions'
-import { constants, web3 } from 'helpers'
+import { constants } from 'helpers'
+import { isMobile } from 'react-device-detect'
 
 import cssModules from 'react-css-modules'
 import styles from './Row.scss'
 
+import CopyToClipboard from 'react-copy-to-clipboard'
+
 import Coin from 'components/Coin/Coin'
-import WithdrawButton from 'components/controls/WithdrawButton/WithdrawButton'
-import ReloadButton from 'components/controls/ReloadButton/ReloadButton'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
+import WithdrawButton from 'components/controls/WithdrawButton/WithdrawButton'
 
 import LinkAccount from '../LinkAccount/LinkAcount'
+import { withRouter } from 'react-router'
 
 
+@withRouter
 @cssModules(styles)
 export default class Row extends Component {
 
   state = {
     isBalanceFetching: false,
     viewText: false,
+    tradeAllowed: false,
+    isAddressCopied: false,
   }
 
-  componentDidMount() {
-    const { contractAddress, name, balance } = this.props
+  componentWillMount() {
+    const { currency, currencies } = this.props
 
-    if (name !== undefined) {
-      actions.token.allowance(contractAddress, name)
-    }
+    this.setState({
+      tradeAllowed: !!currencies.find(c => c.value === currency.toLowerCase()),
+    })
   }
 
   handleReloadBalance = () => {
@@ -56,31 +62,20 @@ export default class Row extends Component {
       })
   }
 
-  handleCopiedAddress = () => {
-    this.setState({ viewText: true })
-    const el = document.createElement('textarea')
-    el.value = this.textAddress.innerText
-    el.style.position = 'absolute'
-    el.style.left = '-9999px'
-    document.body.appendChild(el)
-    el.select()
-    document.execCommand('copy')
-    document.body.removeChild(el)
-    setTimeout(() => {
-      this.setState({ viewText: false })
-    }, 800)
+  handleCopyAddress = () => {
+    this.setState({
+      isAddressCopied: true,
+    }, () => {
+      setTimeout(() => {
+        this.setState({
+          isAddressCopied: false,
+        })
+      }, 500)
+    })
   }
 
   handleEosLogin = () => {
     actions.modals.open(constants.modals.Eos, {})
-  }
-
-  handleApproveToken = (decimals, contractAddress, name) => {
-    actions.modals.open(constants.modals.Approve, {
-      contractAddress,
-      decimals,
-      name,
-    })
   }
 
   handleWithdraw = () => {
@@ -96,52 +91,106 @@ export default class Row extends Component {
     })
   }
 
+  handleReceive = () => {
+    const { currency, address } = this.props
+
+    actions.modals.open(constants.modals.ReceiveModal, {
+      currency,
+      address,
+    })
+  }
+
+  handleGoTrade = async (link) => {
+    const balance = await actions.eth.getBalance()
+
+    if (balance - 0.02 > 0) {
+      this.props.history.push(link)
+    } else {
+      actions.modals.open(constants.modals.EthChecker, {})
+    }
+  }
+
+  getCurrencyFullTitle = (currencyTitle, currencies) => {
+    const match = currencies.find((el) => el.title === currencyTitle)
+    return match ? match.fullTitle : currencyTitle
+  }
+
   render() {
-    const { isBalanceFetching, viewText } = this.state
-    const { currency, name, balance, isBalanceFetched, address, contractAddress, decimals, approve, unconfirmedBalance } = this.props
+    const { isBalanceFetching, tradeAllowed, isAddressCopied } = this.state
+    const { currency, balance, isBalanceFetched, address, contractAddress, unconfirmedBalance, currencies } = this.props
+
+    const currencyFullTitle = this.getCurrencyFullTitle(currency, currencies)
 
     return (
       <tr>
         <td>
           <Coin name={currency} size={40} />
         </td>
-        <td>{currency}</td>
-        <td style={{ minWidth: '80px' }}>
+        { !isMobile && <td>{currency}</td> }
+        <td>
           {
             !isBalanceFetched || isBalanceFetching ? (
               <InlineLoader />
             ) : (
               <Fragment>
-                <span>{String(balance).length > 5 ? balance.toFixed(5) : balance}</span> <br />
-                { currency === 'BTC' && unconfirmedBalance !== 0 && <span style={{ fontSize: '12px', color: '#c9c9c9' }}>Unconfirmed {unconfirmedBalance}</span> }
+                <i className="fas fa-sync-alt" styleName="icon" onClick={this.handleReloadBalance} />
+                <span>{String(balance).length > 5 ? balance.toFixed(5) : balance}</span>
+                { currency === 'BTC' || currency === 'USDT' && unconfirmedBalance !== 0 && (
+                  <Fragment>
+                    <br />
+                    <span style={{ fontSize: '12px', color: '#c9c9c9' }}>Unconfirmed {unconfirmedBalance}</span>
+                  </Fragment>
+                ) }
               </Fragment>
             )
           }
         </td>
-        <td ref={td => this.textAddress = td}>
-          {
-            !contractAddress ? (
-              <LinkAccount type={currency} address={address} >{address}</LinkAccount>
-            ) : (
-              !approve ? (
-                <button styleName="button" onClick={() => this.handleApproveToken(decimals, contractAddress, name)}>Approve</button>
-              ) : (
-                <LinkAccount type={currency} contractAddress={contractAddress} address={address} >{address}</LinkAccount>
-              )
-            )
-          }
-          {
-            currency === 'EOS' && address === '' && <button styleName="button" onClick={this.handleEosLogin}>Login</button>
-          }
-        </td>
-        <td style={{ position: 'relative' }} >
+        { !isMobile && (
+          <CopyToClipboard
+            text={address}
+            onCopy={this.handleCopyAddress}
+          >
+            <td style={{ position: 'relative' }}>
+              {
+                !contractAddress ? (
+                  <Fragment>
+                    { currency !== 'EOS' && <i className="far fa-copy" styleName="icon" /> }
+                    <LinkAccount type={currency} address={address} >{address}</LinkAccount>
+                  </Fragment>
+                ) : (
+                  <Fragment>
+                    <i className="far fa-copy" styleName="icon" />
+                    <LinkAccount type={currency} contractAddress={contractAddress} address={address} >{address}</LinkAccount>
+                  </Fragment>
+                )
+              }
+              {
+                currency === 'EOS' && address === '' && <button styleName="button" onClick={this.handleEosLogin}>Login</button>
+              }
+              { isAddressCopied && <p styleName="copied" >Address copied to clipboard</p> }
+            </td>
+          </CopyToClipboard>
+        ) }
+        <td>
           <div>
-            <button styleName="button" onClick={this.handleCopiedAddress}>Copy</button>
-            <ReloadButton styleName="reloadButton" onClick={this.handleReloadBalance} />
-            <WithdrawButton onClick={this.handleWithdraw} >
-              Withdraw
+            <WithdrawButton onClick={this.handleWithdraw} styleName="marginRight">
+              <i className="fas fa-arrow-alt-circle-down" />
+              <span>Send</span>
             </WithdrawButton>
-            { viewText && <p styleName="copied" >Address copied to clipboard</p> }
+            { isMobile && (
+              <WithdrawButton onClick={this.handleReceive} styleName="marginRight">
+                <i className="fas fa-arrow-alt-circle-up" />
+                <span>Receive</span>
+              </WithdrawButton>
+            )}
+            {
+              tradeAllowed && (
+                <WithdrawButton onClick={() => this.handleGoTrade(`/${currencyFullTitle.toLowerCase()}`)}>
+                  <i className="fas fa-exchange-alt" />
+                  <span>Swap</span>
+                </WithdrawButton>
+              )
+            }
           </div>
         </td>
       </tr>

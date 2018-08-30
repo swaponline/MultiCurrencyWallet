@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from 'react'
-import { constants } from 'helpers'
+
+import { Link } from 'react-router-dom'
+import { constants, links } from 'helpers'
 
 import CSSModules from 'react-css-modules'
 import styles from './AddOfferButton.scss'
@@ -11,15 +13,28 @@ export default class AddOfferButton extends Component {
   render() {
     return (
       <Fragment>
-        <div
-          styleName="button"
-          onClick={() => pinkClick()}
-        >
-          Sign up
-        </div>
+        {
+          process.env.TESTNET ? (
+            <a
+              href={links.main}
+              target="_blank"
+              rel="noreferrer noopener"
+              styleName="button"
+            >
+              Mainnet
+            </a>
+          ) : (
+            <div
+              styleName="button"
+              onClick={() => pinkClick()} /* eslint-disable-line */
+            >
+              Subscribe
+            </div>
+          )
+        }
         <div
           styleName="buttonMobile"
-          onClick={() => pinkClick()}
+          onClick={() => pinkClick()} /* eslint-disable-line */
         />
       </Fragment>
     )

@@ -50,7 +50,6 @@ export default class ModalContainer extends Component {
           <div
             styleName={modalContainerStyleName}
             ref={this.handleMount}
-            onClick={(event) => event.stopPropagation()}
           >
             {children}
           </div>

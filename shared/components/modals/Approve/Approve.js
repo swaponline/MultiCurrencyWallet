@@ -30,6 +30,7 @@ export default class Offer extends React.Component {
     const { amount } = this.state
     const { data: { contractAddress, name } } = this.props
     const message = `Your approve ${amount} tokens on contract address ${contractAddress}`
+    const error = `Please again later`
 
     if (amount <= 0 || !amount) {
       this.setState({
@@ -38,12 +39,15 @@ export default class Offer extends React.Component {
       return
     }
 
-    actions.loader.show(true, true)
-
     actions.token.approve(name, amount)
       .then(() => {
         actions.loader.hide()
         actions.notifications.show(constants.notifications.Message, { message })
+        actions.modals.close(constants.modals.Approve)
+      })
+      .catch(() => {
+        actions.loader.hide()
+        actions.notifications.show(constants.notifications.Message, { error })
         actions.modals.close(constants.modals.Approve)
       })
   }
