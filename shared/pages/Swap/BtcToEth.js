@@ -29,6 +29,7 @@ export default class BtcToEth extends Component {
 
   componentWillMount() {
     this.swap.on('state update', this.handleFlowStateUpdate)
+    this.overProgress();
   }
 
   componentWillUnmount() {
@@ -43,7 +44,7 @@ export default class BtcToEth extends Component {
 
   overProgress = () => {
     const swap = this.swap;
-    actions.loader.show(false, '', '', true, {swap});
+    actions.loader.show(true, '', '', true, {swap});
   }
   
   submitSecret = () => {
@@ -84,7 +85,7 @@ export default class BtcToEth extends Component {
 
     return (
       <div>
-        {this.overProgress()}
+
         {
           this.swap.id && (
             <strong>{this.swap.sellAmount.toNumber()} {this.swap.sellCurrency} &#10230; {this.swap.buyAmount.toNumber()} {this.swap.buyCurrency}</strong>

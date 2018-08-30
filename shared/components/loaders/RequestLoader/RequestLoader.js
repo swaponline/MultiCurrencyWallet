@@ -6,8 +6,11 @@ import SwapProgress from 'components/loaders/SwapProgress/SwapProgress'
 
 
 const RequestLoader = ({ isVisible, text, txId, swap, data}) => {
+	if (!isVisible) {
+    return null
+  }
   return (
-   swap ? <SwapProgress data={data} /> : <Loader text={text} txId={txId} /> && isVisible
+   swap ? <SwapProgress data={data} /> : <Loader text={text} txId={txId} /> 
   ) 
 }
 
