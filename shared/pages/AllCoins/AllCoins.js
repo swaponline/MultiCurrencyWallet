@@ -12,7 +12,7 @@ import SaveKeys from 'components/SaveKeys/SaveKeys'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import { WithdrawButton } from 'components/controls'
-import stylesWallet from './Wallet.scss'
+import stylesAllCoins from './AllCoins.scss'
 
 import Row from './Row/Row'
 import CSSModules from 'react-css-modules'
@@ -26,7 +26,7 @@ import { withRouter } from 'react-router'
   currencies,
   hiddenCoinsList
 }))
-@CSSModules(stylesWallet, { allowMultiple: true })
+@CSSModules(stylesAllCoins, { allowMultiple: true })
 export default class Wallet extends Component {
 
   state = {
@@ -53,67 +53,41 @@ export default class Wallet extends Component {
     window.location.reload()
   }
 
-  handleShowMore = () => {
-    this.props.history.push('/coins')
-  }
-
-  handleDownload = () => {
-    actions.user.downloadPrivateKeys()
-    this.changeView('checkKeys')
-  }
-
-  handleConfirm = () => {
-    this.changeView('checkKeys')
-    localStorage.setItem(constants.localStorage.privateKeysSaved, true)
-  }
-
-  handleImportKeys = () => {
-    actions.modals.open(constants.modals.ImportKeys, {})
-  }
-
-  changeView = (view) => {
-    this.setState({
-      view,
-    })
-  }
-
   render() {
     const { view } = this.state
     const { items, tokens, currencies, hiddenCoinsList } = this.props
-    const titles = [ 'Coin', !isMobile && 'Name', 'Balance', !isMobile && 'Address', isMobile ? 'Receive, send, swap' :  'Actions' ]
+    const titles = [ 'Coin','Name', 'Actions' ]
 
     return (
       <section>
-        <PageHeadline>
-          <SubTitle>
-            Swap.Online - Cryptocurrency Wallet with Atomic Swap Exchange
-          </SubTitle>
-        </PageHeadline>
-        <Confirm
-          title="Are you sure ?"
-          isConfirm={() => this.handleConfirm()}
-          isReject={() => this.changeView('off')}
-          animation={view === 'on'}
-        />
+
+        <SubTitle>
+          Coins in Wallet
+        </SubTitle>
+
         <Table
           classTitle={styles.wallet}
           titles={titles}
           rows={[...items, ...tokens].filter(coin=>!hiddenCoinsList.includes(coin.currency))}
           rowRender={(row, index) => (
-            <Row key={index} {...row} currencies={currencies} />
+            <Row key={index} {...row} isHidden={false} currencies={currencies} />
           )}
         />
-        <div styleName="coinsActionsBlock">
         {
-            hiddenCoinsList.length !== 0 && <WithdrawButton onClick={this.handleShowMore}>Show more coins ({hiddenCoinsList.length})</WithdrawButton>
+        hiddenCoinsList.length !== 0 && <div>
+                <SubTitle>
+                  Other coins
+                </SubTitle>
+                <Table
+                  classTitle={styles.wallet}
+                  titles={titles}
+                  rows={[...items, ...tokens].filter(coin=>hiddenCoinsList.includes(coin.currency))}
+                  rowRender={(row, index) => (
+                    <Row key={index} {...row} isHidden={true} currencies={currencies} />
+                  )}
+                />
+              </div>
         }
-        </div>
-        <div>
-          { view === 'off' && <SaveKeys isDownload={this.handleDownload} isChange={() => this.changeView('on')} /> }
-          { process.env.TESTNET && <WithdrawButton onClick={this.handleClear} >Exit</WithdrawButton> }
-          <WithdrawButton onClick={this.handleDownload}>Download keys</WithdrawButton>
-          <WithdrawButton onClick={this.handleImportKeys}>Import keys</WithdrawButton>
-        </div>
       </section>
     )
   }
