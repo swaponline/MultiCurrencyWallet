@@ -225,7 +225,7 @@ export default class AddOffer extends Component {
     const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
     const isDisabled = !exchangeRate || !buyAmount && !sellAmount
       || sellAmount > balance || sellAmount < minAmount[sellCurrency]
-      || ethBalance > 0.02
+      || ethBalance < 0.02
 
     linked.sellAmount.check((value) => value > minAmount[sellCurrency], `Amount must be greater than ${minAmount[sellCurrency]} `)
     linked.sellAmount.check((value) => value <= balance, `Amount must be bigger your balance`)
@@ -246,7 +246,7 @@ export default class AddOffer extends Component {
           balance={balance}
           currency={sellCurrency}
         />
-        { ethBalance <= 0.02 && <span styleName="error">For a swap, you need 0.02 ETH on your balance</span> }
+        { ethBalance < 0.02 && <span styleName="error">For a swap, you need 0.02 ETH on your balance</span> }
         <SelectGroup
           styleName="sellGroup"
           label="Sell"

@@ -5,8 +5,6 @@ import actions from 'redux/actions'
 import config from 'app-config'
 import { BigNumber } from 'bignumber.js'
 
-import actions from 'redux/actions'
-
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import RequestLoader from 'components/loaders/RequestLoader/RequestLoader'
 import Loader from 'components/loaders/Loader/Loader'

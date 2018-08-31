@@ -29,7 +29,7 @@ export default class Row extends Component {
           <span>{from.toUpperCase()}-{to.toUpperCase()}</span>
         </td>
         <td>
-          <Link styleName="button" to={`${links.exchange}/${from}-${to}`}>Trade</Link>
+          <Link styleName="button" to={`${links.home}${from.toLowerCase()}-for-${to.toLowerCase()}`}>Trade</Link>
         </td>
       </tr>
     )

@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 
 import actions from 'redux/actions'
+import { connect } from 'redaction'
 import { links } from 'helpers'
 
 import Title from 'components/PageHeadline/Title/Title'
@@ -10,6 +11,9 @@ import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import Orders from './Orders/Orders'
 
 
+@connect(({ currencies: { items: currencies } }) => ({
+  currencies,
+}))
 export default class Home extends Component {
 
   constructor({ initialData, match: { params: { buy, sell } } }) {
@@ -21,6 +25,23 @@ export default class Home extends Component {
       buyCurrency: buy || buyCurrency || 'eth',
       sellCurrency: sell || sellCurrency || 'btc',
     }
+  }
+
+  componentWillMount() {
+    const { match:{ params:{ buy, sell } } } = this.props
+    this.handleChangeName(buy, sell)
+  }
+
+  handleChangeName = (buy, sell) => {
+    const { currencies } = this.props
+
+    const buyCurrency = currencies.find((el) => el.fullTitle === buy)
+    const sellCurrency = currencies.find((el) => el.fullTitle === sell)
+
+    this.setState({
+      buyCurrency: buyCurrency.icon,
+      sellCurrency: sellCurrency.icon,
+    })
   }
 
   handleBuyCurrencySelect = ({ value }) => {
@@ -54,10 +75,14 @@ export default class Home extends Component {
   }
 
   handelReplaceHistory = (sellCurrency, buyCurrency) => {
-    const { history } = this.props
+    const { history, currencies } = this.props
 
     this.setFilter(`${buyCurrency}${sellCurrency}`)
-    history.replace((`${links.exchange}/${buyCurrency}-${sellCurrency}`))
+
+    const buy = currencies.find((el) => el.value === buyCurrency)
+    const sell = currencies.find((el) => el.value === sellCurrency)
+
+    history.replace((`${links.home}${buy.fullTitle}-for-${sell.fullTitle}`))
   }
 
   flipCurrency = () => {

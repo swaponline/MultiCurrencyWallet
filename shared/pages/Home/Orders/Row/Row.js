@@ -4,13 +4,12 @@ import PropTypes from 'prop-types'
 import { connect } from 'redaction'
 import actions from 'redux/actions'
 
-import { links } from 'helpers'
+import { links, constants } from 'helpers'
 import { Link, Redirect } from 'react-router-dom'
 
 import Coins from 'components/Coins/Coins'
 import RequestButton from '../RequestButton/RequestButton'
 import RemoveButton from 'components/controls/RemoveButton/RemoveButton'
-import constants from "../../../../helpers/constants";
 
 
 @connect({
@@ -79,6 +78,8 @@ export default class Row extends Component {
     if (this.state.redirect) {
       return <Redirect push to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`} />
     }
+
+    console.log(buyCurrency, sellCurrency)
 
     return (
       <tr style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}>

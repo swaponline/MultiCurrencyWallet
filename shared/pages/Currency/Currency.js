@@ -9,8 +9,6 @@ import Table from 'components/tables/Table/Table'
 
 import Row from './Row/Row'
 
-import { getSeoPage } from 'helpers/seo'
-
 
 @connect(({ currencies }) => ({
   currencies: currencies.items,
@@ -18,23 +16,17 @@ import { getSeoPage } from 'helpers/seo'
 export default class Currency extends Component {
 
   getRows = () => {
-    let { match:{ params: { currency, exchange } }, currencies } = this.props
+    let { match:{ params: { currency } }, currencies } = this.props
 
-    if (currency === 'btc') {
+    if (currency === 'bitcoin') {
       currencies = currencies.filter(c => c.value !== currency)
     } else {
       currencies = currencies.filter(c => c.value === 'btc')
     }
 
-    if (exchange === 'sell') {
-      currencies = currencies.reduce((previous, current) =>
-        previous.concat({ from: current.value, to: currency }),
-      [])
-    } else {
-      currencies = currencies.reduce((previous, current) =>
-        previous.concat({ from: currency, to: current.value }),
-      [])
-    }
+    currencies = currencies.reduce((previous, current) =>
+      previous.concat({ from: currency, to: current.fullTitle }, { from: current.fullTitle, to: currency }),
+    [])
 
     return currencies
   }
