@@ -29,7 +29,10 @@ export default class Home extends Component {
 
   componentWillMount() {
     const { match:{ params:{ buy, sell } } } = this.props
-    this.handleChangeName(buy, sell)
+
+    if (buy || sell) {
+      this.handleChangeName(buy, sell)
+    }
   }
 
   handleChangeName = (buy, sell) => {
@@ -82,7 +85,7 @@ export default class Home extends Component {
     const buy = currencies.find((el) => el.value === buyCurrency)
     const sell = currencies.find((el) => el.value === sellCurrency)
 
-    history.replace((`${links.home}${buy.fullTitle}-for-${sell.fullTitle}`))
+    history.replace((`${links.home}${buy.fullTitle}-to-${sell.fullTitle}`))
   }
 
   flipCurrency = () => {

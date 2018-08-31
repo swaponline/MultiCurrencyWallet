@@ -8,6 +8,7 @@ import { links, constants } from 'helpers'
 import { Link, Redirect } from 'react-router-dom'
 
 import Coins from 'components/Coins/Coins'
+import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import RequestButton from '../RequestButton/RequestButton'
 import RemoveButton from 'components/controls/RemoveButton/RemoveButton'
 
@@ -56,20 +57,24 @@ export default class Row extends Component {
   }
 
   sendRequest = async (orderId) => {
+    this.setState({ isFetching: true })
     await this.handleGoTrade()
 
     actions.core.sendRequest(orderId, (isAccepted) => {
       console.log(`user has ${isAccepted ? 'accepted' : 'declined'} your request`)
 
-      if (isAccepted === true) {
-        this.setState({ redirect: true })
+      if (isAccepted) {
+        this.setState({ redirect: true, isFetching: false })
+      } else {
+        this.setState({ isFetching: false })
       }
+
     })
     actions.core.updateCore()
   }
 
   render() {
-    const { balance } = this.state
+    const { balance, isFetching } = this.state
     const { orderId, row: { id, buyCurrency, sellCurrency, isMy, buyAmount,
       sellAmount, isRequested, isProcessing,
       owner :{  peer: ownerPeer } }, peer } = this.props
@@ -78,8 +83,6 @@ export default class Row extends Component {
     if (this.state.redirect) {
       return <Redirect push to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`} />
     }
-
-    console.log(buyCurrency, sellCurrency)
 
     return (
       <tr style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}>
@@ -131,7 +134,16 @@ export default class Row extends Component {
                       <span>This order is in execution</span>
                     ) : (
                       balance > Number(amount) ? (
-                        <RequestButton onClick={() => this.sendRequest(id)} />
+                        isFetching ? (
+                          <Fragment>
+                            <InlineLoader />
+                            <br />
+                            <span>Please wait while we confirm your request</span>
+                          </Fragment>
+
+                        ) : (
+                          <RequestButton onClick={() => this.sendRequest(id)} />
+                        )
                       ) : (
                         <span>Insufficient funds</span>
                       )

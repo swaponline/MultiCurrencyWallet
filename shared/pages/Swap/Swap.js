@@ -13,10 +13,10 @@ import BtcToEth from './BtcToEth'
 import EthToBtc from './EthToBtc'
 import EthTokenToBtc from './EthTokenToBtc'
 import BtcToEthToken from './BtcToEthToken'
-import UsdtToEthToken from './UsdtToEthToken'
-import EthTokenToUsdt from './EthTokenToUsdt'
-// import BtcToEos from './BtcToEos'
-// import EosToBtc from './EosToBtc'
+// import UsdtToEthToken from './UsdtToEthToken'
+// import EthTokenToUsdt from './EthTokenToUsdt'
+import BtcToEos from './BtcToEos'
+import EosToBtc from './EosToBtc'
 
 
 const swapComponents = {
@@ -28,10 +28,10 @@ const swapComponents = {
   'BTC2SWAP': BtcToEthToken,
   'JOT2BTC': EthTokenToBtc,
   'BTC2JOT': BtcToEthToken,
-  'SWAP2USDT': EthTokenToUsdt,
-  'USDT2SWAP': UsdtToEthToken,
-  // 'BTC2EOS': BtcToEos,
-  // 'EOS2BTC': EosToBtc
+  // 'SWAP2USDT': EthTokenToUsdt,
+  // 'USDT2SWAP': UsdtToEthToken,
+  'BTC2EOS': BtcToEos,
+  'EOS2BTC': EosToBtc,
 }
 
 

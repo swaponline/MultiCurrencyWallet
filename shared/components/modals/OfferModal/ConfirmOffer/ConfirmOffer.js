@@ -15,8 +15,12 @@ import Coins from 'components/Coins/Coins'
 import Amounts from './Amounts/Amounts'
 import ExchangeRate from './ExchangeRate/ExchangeRate'
 import Fee from './Fee/Fee'
+import { connect } from 'redaction'
 
 
+@connect(({ currencies: { items: currencies } }) => ({
+  currencies,
+}))
 @cssModules(styles)
 export default class ConfirmOffer extends Component {
 
@@ -40,7 +44,10 @@ export default class ConfirmOffer extends Component {
   }
 
   render() {
-    const { offer: { buyAmount, sellAmount, buyCurrency, sellCurrency, exchangeRate }, onBack } = this.props
+    const { offer: { buyAmount, sellAmount, buyCurrency, sellCurrency, exchangeRate }, onBack, currencies } = this.props
+
+    const buy = currencies.find((el) => el.value === buyCurrency)
+    const sell = currencies.find((el) => el.value === sellCurrency)
 
     return (
       <Fragment>
@@ -50,7 +57,7 @@ export default class ConfirmOffer extends Component {
         <Fee amount={0.0001} currency={sellCurrency} />
         <ButtonsInRow styleName="buttonsInRow">
           <Button styleName="button" gray onClick={onBack}>Back</Button>
-          <Link styleName="link" to={`${links.exchange}/${buyCurrency.toLowerCase()}-${sellCurrency.toLowerCase()}`}>
+          <Link styleName="link" to={`${links.home}${buy.fullTitle}-to-${sell.fullTitle}`}>
             <Button styleName="button" id="confirm" brand onClick={this.handleConfirm} >Add</Button>
           </Link>
         </ButtonsInRow>

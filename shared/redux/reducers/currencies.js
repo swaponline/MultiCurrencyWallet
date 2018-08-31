@@ -1,11 +1,12 @@
 export const initialState = {
   items: [
-    // {
-    //   name: 'EOS',
-    //   title: 'EOS',
-    //   icon: 'eos',
-    //   value: 'eos'
-    // },
+    {
+      name: 'EOS',
+      title: 'EOS',
+      icon: 'eos',
+      value: 'eos',
+      fullTitle: 'EOS',
+    },
     {
       name: 'ETH',
       title: 'ETH',

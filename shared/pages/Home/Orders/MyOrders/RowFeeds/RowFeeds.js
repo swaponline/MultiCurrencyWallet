@@ -55,7 +55,7 @@ export default class RowFeeds extends Component {
         <td>{`${(exchangeRate || (buyAmount / sellAmount)).toFixed(5)} ${buyCurrency}/${sellCurrency}`}</td>
         <CopyToClipboard
           onCopy={this.handleCopyLink}
-          text={`${window.location}/${sellCurrency.toLowerCase()}-${buyCurrency.toLowerCase()}/${id}`}
+          text={`${window.location}/${id}`}
         >
           <td style={{ position: 'relative', cursor: 'pointer' }}>
             { isLinkCopied && <span style={{ fontSize: '12px', position: 'absolute', top: '8px', left: 'calc(20%)' }}> Copied <br /></span>  }

@@ -9,14 +9,20 @@ import icx from './images/icx.svg'
 import waves from './images/waves.svg'
 import xrp from './images/xrp.svg'
 import nim from './images/nim.svg'
+import eos from './images/eos.svg'
+import swap from './images/swap.svg'
+import usdt from './images/usdt.svg'
 
 
 const icons = {
   btc,
   eth,
   icx,
+  usdt,
+  swap,
   waves,
   xrp,
+  eos,
   nim,
 }
 
