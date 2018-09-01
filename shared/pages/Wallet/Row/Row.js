@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import actions from 'redux/actions'
 import { constants } from 'helpers'
+import config from 'app-config'
 import { isMobile } from 'react-device-detect'
 
 import cssModules from 'react-css-modules'
@@ -35,8 +36,19 @@ export default class Row extends Component {
     })
   }
 
+  componentDidMount() {
+    const { hiddenCoinsList } = this.props
+
+    Object.keys(config.tokens)
+      .forEach(name => {
+        if (hiddenCoinsList.includes(name)) {
+          actions.core.markCoinAsHidden(name.toUpperCase())
+        }
+      })
+  }
+
   handleReloadBalance = () => {
-    const { isBalanceFetching } = this.state
+    const { isBalanceFetching, token } = this.state
 
     if (isBalanceFetching) {
       return null
@@ -50,16 +62,29 @@ export default class Row extends Component {
 
     currency = currency.toLowerCase()
 
-    actions[currency].getBalance(currency)
-      .then(() => {
-        this.setState({
-          isBalanceFetching: false,
+    if (token) {
+      actions.token.getBalance(currency)
+        .then(() => {
+          this.setState({
+            isBalanceFetching: false,
+          })
+        }, () => {
+          this.setState({
+            isBalanceFetching: false,
+          })
         })
-      }, () => {
-        this.setState({
-          isBalanceFetching: false,
+    } else {
+      actions[currency].getBalance(currency)
+        .then(() => {
+          this.setState({
+            isBalanceFetching: false,
+          })
+        }, () => {
+          this.setState({
+            isBalanceFetching: false,
+          })
         })
-      })
+    }
   }
 
   handleCopyAddress = () => {
@@ -79,7 +104,7 @@ export default class Row extends Component {
   }
 
   handleWithdraw = () => {
-    const { currency, address, contractAddress, decimals, balance } = this.props
+    const { currency, address, contractAddress, decimals, balance, token } = this.props
 
     actions.analytics.dataEvent(`balances-withdraw-${currency.toLowerCase()}`)
     actions.modals.open(constants.modals.Withdraw, {
@@ -87,6 +112,7 @@ export default class Row extends Component {
       address,
       contractAddress,
       decimals,
+      token,
       balance,
     })
   }
@@ -111,7 +137,7 @@ export default class Row extends Component {
   }
 
   handleMarkCoinAsHidden = (coin) => {
-    actions.core.markCoinAsHidden(coin);
+    actions.core.markCoinAsHidden(coin)
   }
 
   getCurrencyFullTitle = (currencyTitle, currencies) => {

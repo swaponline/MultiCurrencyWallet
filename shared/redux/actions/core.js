@@ -63,13 +63,14 @@ const getSwapHistory = () => {
 
 const markCoinAsHidden = (coin) => {
   let list = getState().core.hiddenCoinsList || []
-  if(!list.includes(coin)) {
-    reducers.core.markCoinAsHidden(coin);
+  if (!list.includes(coin)) {
+    reducers.core.markCoinAsHidden(coin)
     localStorage.setItem(constants.localStorage.hiddenCoinsList, JSON.stringify(getState().core.hiddenCoinsList))
   }
 }
+
 const markCoinAsVisible = (coin) => {
-  reducers.core.markCoinAsVisible(coin);
+  reducers.core.markCoinAsVisible(coin)
   localStorage.setItem(constants.localStorage.hiddenCoinsList, JSON.stringify(getState().core.hiddenCoinsList))
 }
 
@@ -84,5 +85,5 @@ export default {
   declineRequest,
   removeOrder,
   markCoinAsHidden,
-  markCoinAsVisible
+  markCoinAsVisible,
 }
