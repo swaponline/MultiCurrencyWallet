@@ -8,6 +8,7 @@ export default {
   listing: '/listing',
   test: 'https://testnet.swap.online',
   main: 'https://swap.online/',
+  coins: '/coins',
 
   // social networks
   medium: 'https://medium.com/swaponline',

@@ -8,7 +8,7 @@ import styles from './Row.scss'
 
 import CopyToClipboard from 'react-copy-to-clipboard'
 
-import Coin from 'components/Coin/Coin'
+import CoinInteractive from 'components/CoinInteractive/CoinInteractive'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import WithdrawButton from 'components/controls/WithdrawButton/WithdrawButton'
 
@@ -110,6 +110,10 @@ export default class Row extends Component {
     }
   }
 
+  handleMarkCoinAsHidden = (coin) => {
+    actions.core.markCoinAsHidden(coin);
+  }
+
   getCurrencyFullTitle = (currencyTitle, currencies) => {
     const match = currencies.find((el) => el.title === currencyTitle)
     return match ? match.fullTitle : currencyTitle
@@ -125,7 +129,7 @@ export default class Row extends Component {
     return (
       <tr>
         <td>
-          <Coin name={currency} size={40} />
+          <CoinInteractive onHide={this.handleMarkCoinAsHidden} name={currency} size={40} />
         </td>
         { !isMobile && <td>{currency}</td> }
         <td>
