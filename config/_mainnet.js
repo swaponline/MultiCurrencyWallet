@@ -39,13 +39,13 @@ export default {
       address: '0x9af4f26941677c706cfecf6d3379ff01bb85d5ab',
       decimals: 8,
     },
+    SMT: {
+      address: '0x21f15966e07a10554c364b988e91dab01d32794a',
+      decimals: 18,
+    },
     DAO: {
       address: '0x8aA33A7899FCC8eA5fBe6A608A109c3893A1B8b2',
       decimals: 18,
-    },
-    noxon: {
-      address: '0x9E4AD79049282F942c1b4c9b418F0357A0637017',
-      decimals: 0,
     },
     jot: {
       address: '0xdb455c71c1bc2de4e80ca451184041ef32054001',
@@ -62,6 +62,10 @@ export default {
     SENC: {
       address: '0xa13f0743951b4f6e3e3aa039f682e17279f52bc3',
       decimals: 18,
+    },
+    noxon: {
+      address: '0x9E4AD79049282F942c1b4c9b418F0357A0637017',
+      decimals: 0,
     },
 
     INSTAR: {
@@ -337,15 +341,6 @@ export default {
       address: '0xb98d4c97425d9908e66e53a6fdf673acca0be986',
       decimals: 18,
     },
-
-
-    SMT: {
-      address: '0x55f93985431fc9304077687a35a1ba103dc1e081',
-      decimals: 18,
-    },
-
-
-
     CHX: {
       address: '0x1460a58096d80a50a2F1f956DDA497611Fa4f165',
       decimals: 18,
