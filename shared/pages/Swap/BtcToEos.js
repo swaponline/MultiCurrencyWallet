@@ -1,9 +1,11 @@
 import crypto from 'crypto'
-import bitcoin from "bitcoinjs-lib"
+import bitcoin from 'bitcoinjs-lib'
 import React, { Component, Fragment } from 'react'
 
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import TransactionLink from 'components/Href/TransactionLink'
+import { Button } from 'components/controls'
+
 
 export default class BtcToEos extends Component {
   constructor({ swap }) {
@@ -12,7 +14,8 @@ export default class BtcToEos extends Component {
     this.swap = swap
 
     this.state = {
-      flow: this.swap.flow.state
+      flow: this.swap.flow.state,
+      isSubmitted: false,
     }
   }
 
@@ -26,7 +29,7 @@ export default class BtcToEos extends Component {
 
   handleFlowStateUpdate = (values) => {
     this.setState({
-      flow: values
+      flow: values,
     })
   }
 
@@ -34,28 +37,29 @@ export default class BtcToEos extends Component {
     const fromHexString = hexString =>
       new Uint8Array(hexString.match(/.{1,2}/g).map(byte => parseInt(byte, 16)))
 
-    const hash = (secret) => {
-      return bitcoin.crypto.sha256(fromHexString(secret))
-    }
+    const hash = (secret) => bitcoin.crypto.sha256(fromHexString(secret))
 
     const secret = crypto.randomBytes(32).toString('hex')
     const secretHash = hash(secret).toString('hex')
 
     this.swap.events.dispatch('submit secret', { secret, secretHash })
+
+    this.setState({
+      isSubmitted: true,
+    })
   }
 
   render() {
     const { children } = this.props
-    const { secret, flow } = this.state
-
-    if (flow.step === 1) {
-      this.submitSecret()
-    }
+    const { flow, isSubmitted } = this.state
 
     return (
       <div>
         <Fragment>
           <h3>1. Generate secret key</h3>
+          {
+            !isSubmitted && <Button brand onClick={this.submitSecret}>Send secret</Button>
+          }
           {
             flow.secret && flow.secretHash &&
             <Fragment>

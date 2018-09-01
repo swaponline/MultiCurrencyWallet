@@ -15,14 +15,18 @@ import { WithdrawButton } from 'components/controls'
 import stylesWallet from './Wallet.scss'
 
 import Row from './Row/Row'
+import CSSModules from 'react-css-modules'
+import { withRouter } from 'react-router'
 
 
-
-@connect(({ user: { ethData, btcData, tokensData, eosData, nimData, usdtData }, currencies: { items: currencies } }) => ({
+@withRouter
+@connect(({ core: { hiddenCoinsList }, user: { ethData, btcData, tokensData, eosData, nimData, usdtData }, currencies: { items: currencies } }) => ({
   tokens: Object.keys(tokensData).map(k => (tokensData[k])),
   items: [ ethData, btcData, eosData, usdtData /* eosData  nimData */ ],
   currencies,
+  hiddenCoinsList,
 }))
+@CSSModules(stylesWallet, { allowMultiple: true })
 export default class Wallet extends Component {
 
   state = {
@@ -49,6 +53,10 @@ export default class Wallet extends Component {
     window.location.reload()
   }
 
+  handleShowMore = () => {
+    this.props.history.push('/coins')
+  }
+
   handleDownload = () => {
     actions.user.downloadPrivateKeys()
     this.changeView('checkKeys')
@@ -71,7 +79,7 @@ export default class Wallet extends Component {
 
   render() {
     const { view } = this.state
-    const { items, tokens, currencies } = this.props
+    const { items, tokens, currencies, hiddenCoinsList } = this.props
     const titles = [ 'Coin', !isMobile && 'Name', 'Balance', !isMobile && 'Address', isMobile ? 'Receive, send, swap' :  'Actions' ]
 
     return (
@@ -90,7 +98,7 @@ export default class Wallet extends Component {
         <Table
           classTitle={styles.wallet}
           titles={titles}
-          rows={[...items, ...tokens]}
+          rows={[...items, ...tokens].filter(coin => !hiddenCoinsList.includes(coin.currency))}
           rowRender={(row, index) => (
             <Row key={index} {...row} currencies={currencies} />
           )}
@@ -100,6 +108,12 @@ export default class Wallet extends Component {
           { process.env.TESTNET && <WithdrawButton onClick={this.handleClear} >Exit</WithdrawButton> }
           <WithdrawButton onClick={this.handleDownload}>Download keys</WithdrawButton>
           <WithdrawButton onClick={this.handleImportKeys}>Import keys</WithdrawButton>
+          {
+            hiddenCoinsList.length !== 0 &&
+            <WithdrawButton onClick={this.handleShowMore}>
+              Show more coins ({hiddenCoinsList.length})
+            </WithdrawButton>
+          }
         </div>
       </section>
     )
