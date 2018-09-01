@@ -20,11 +20,11 @@ import { withRouter } from 'react-router'
 
 
 @withRouter
-@connect(({ core: { hiddenCoinsList }, user: { ethData, btcData, tokensData, eosData, nimData, usdtData } , currencies: { items: currencies }}) => ({
+@connect(({ core: { hiddenCoinsList }, user: { ethData, btcData, tokensData, eosData, nimData, usdtData }, currencies: { items: currencies } }) => ({
   tokens: Object.keys(tokensData).map(k => (tokensData[k])),
   items: [ ethData, btcData, eosData, usdtData /* eosData  nimData */ ],
   currencies,
-  hiddenCoinsList
+  hiddenCoinsList,
 }))
 @CSSModules(stylesWallet, { allowMultiple: true })
 export default class Wallet extends Component {
@@ -98,21 +98,22 @@ export default class Wallet extends Component {
         <Table
           classTitle={styles.wallet}
           titles={titles}
-          rows={[...items, ...tokens].filter(coin=>!hiddenCoinsList.includes(coin.currency))}
+          rows={[...items, ...tokens].filter(coin => !hiddenCoinsList.includes(coin.currency))}
           rowRender={(row, index) => (
             <Row key={index} {...row} currencies={currencies} />
           )}
         />
-        <div styleName="coinsActionsBlock">
-        {
-            hiddenCoinsList.length !== 0 && <WithdrawButton onClick={this.handleShowMore}>Show more coins ({hiddenCoinsList.length})</WithdrawButton>
-        }
-        </div>
         <div>
           { view === 'off' && <SaveKeys isDownload={this.handleDownload} isChange={() => this.changeView('on')} /> }
           { process.env.TESTNET && <WithdrawButton onClick={this.handleClear} >Exit</WithdrawButton> }
           <WithdrawButton onClick={this.handleDownload}>Download keys</WithdrawButton>
           <WithdrawButton onClick={this.handleImportKeys}>Import keys</WithdrawButton>
+          {
+            hiddenCoinsList.length !== 0 &&
+            <WithdrawButton onClick={this.handleShowMore}>
+              Show more coins ({hiddenCoinsList.length})
+            </WithdrawButton>
+          }
         </div>
       </section>
     )
