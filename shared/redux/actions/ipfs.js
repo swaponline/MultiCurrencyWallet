@@ -13,8 +13,13 @@ const userLeft = () => {
   reducers.ipfs.userLeft()
 }
 
+const hideIPFSWidget = () => {
+  reducers.ipfs.hideIPFSWidget()
+}
+
 export default {
   set,
   userJoined,
   userLeft,
+  hideIPFSWidget,
 }

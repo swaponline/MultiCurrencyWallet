@@ -1,12 +1,18 @@
 import React from 'react'
 import { Line } from 'rc-progress'
+import PropTypes from 'prop-types'
 
 import cssModules from 'react-css-modules'
 import styles from './Info.scss'
 
 
 class Info extends React.Component {
-
+  static propTypes = {
+    hideWidget: PropTypes.func,
+  }
+  static defaultProps = {
+    hideWidget: () => {},
+  }
   constructor() {
     super()
     this.state = { progressValue: 0 }
@@ -27,6 +33,7 @@ class Info extends React.Component {
 
       if (progressValue >= maxValue) {
         clearInterval(interval)
+        this.props.hideWidget()
       }
       else {
         this.setState({ progressValue: progressValue + progressUnit })
