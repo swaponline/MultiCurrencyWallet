@@ -97,8 +97,7 @@ const webpackConfig = {
     new webpack.NoEmitOnErrorsPlugin(),
     new ProgressBarPlugin({ clear: false }),
     new WebappWebpackPlugin({
-      logo: config.paths.client('favicon.png'),
-      prefix: `${config.publicPath}assets/`,
+      logo: 'favicon.png',
     }),
     new HtmlWebpackPlugin({
       title: 'Swap.Online - Cryptocurrency Wallet with Atomic Swap Exchange',
@@ -116,7 +115,7 @@ const webpackConfig = {
       'empty-module',
       false,
       /js$/
-    )
+    ),
   ],
 }
 
