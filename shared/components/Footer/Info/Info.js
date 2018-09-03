@@ -6,16 +6,20 @@ import styles from './Info.scss'
 
 
 class Info extends React.Component {
-
   constructor() {
     super()
-    this.state = { progressValue: 0 }
+    this.state = {
+      progressValue: 0,
+      isVisibleProgressBar: true,
+    }
   }
 
   componentDidMount() {
     this.launchProgressBar()
   }
-
+  hideProgressBar() {
+    this.setState({ isVisibleProgressBar: false })
+  }
   launchProgressBar() {
     const maxValue = 100
     const timeToReachMaxValue = 60000
@@ -27,6 +31,7 @@ class Info extends React.Component {
 
       if (progressValue >= maxValue) {
         clearInterval(interval)
+        this.hideProgressBar()
       }
       else {
         this.setState({ progressValue: progressValue + progressUnit })
@@ -36,7 +41,7 @@ class Info extends React.Component {
 
   render() {
     const { isOnline, serverAddress, onlineUsers } = this.props
-    const { progressValue } = this.state
+    const { progressValue, isVisibleProgressBar } = this.state
 
     return (
       <div styleName="title">
@@ -45,7 +50,7 @@ class Info extends React.Component {
         </span>
         to IPFS signal {serverAddress} / peers online: {onlineUsers}
 
-        <Line strokeColor="#2181F7" percent={progressValue} strokeWidth="1" />
+        { isVisibleProgressBar && <Line strokeColor="#2181F7" percent={progressValue} strokeWidth="1" /> }
       </div>
     )
   }
