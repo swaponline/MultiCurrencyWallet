@@ -3,7 +3,6 @@ export const initialState = {
   onlineUsers: 0,
   server: null,
   peer: '',
-  isVisibleIPFSWidget: true,
 }
 
 export const set = (state, payload) => ({
@@ -25,12 +24,4 @@ export const userJoined = state => ({
 export const userLeft = state => ({
   ...state,
   onlineUsers: state.onlineUsers - 1,
-})
-
-/**
- * Событие "Скрыть виджет IPFS".
- */
-export const hideIPFSWidget = state => ({
-  ...state,
-  isVisibleIPFSWidget: false,
 })

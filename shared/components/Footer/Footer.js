@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 
 import { connect } from 'redaction'
 import { withRouter } from 'react-router-dom'
-import actions from 'redux/actions'
 
 import styles from './Footer.scss'
 import logo from './images/logo.svg'
@@ -16,32 +14,21 @@ import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 
 
 @withRouter
-@connect(({ ipfs: { server, isOnline, onlineUsers, isVisibleIPFSWidget } }) => ({
+@connect(({ ipfs: { server, isOnline, onlineUsers } }) => ({
   server,
   isOnline,
   onlineUsers,
-  isVisibleIPFSWidget,
 }))
 @CSSModules(styles, { allowMultiple: true })
 export default class Footer extends Component {
-  static propTypes = {
-    isVisibleIPFSWidget: PropTypes.bool,
-  }
   render() {
-    const { onlineUsers, isOnline, server, isVisibleIPFSWidget } = this.props
+    const { onlineUsers, isOnline, server } = this.props
 
     return (
       <div styleName="footer">
         <div styleName="information-footer">
           <WidthContainer styleName="container">
-            { isVisibleIPFSWidget && (
-              <Info
-                serverAddress={server}
-                onlineUsers={onlineUsers}
-                isOnline={isOnline}
-                hideWidget={actions.ipfs.hideIPFSWidget}
-              />
-            ) }
+            <Info serverAddress={server} onlineUsers={onlineUsers} isOnline={isOnline} />
           </WidthContainer>
         </div>
         <div styleName="default-footer">
