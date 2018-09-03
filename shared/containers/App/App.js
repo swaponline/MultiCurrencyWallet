@@ -24,6 +24,7 @@ import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import NotificationConductor from 'components/notification/NotificationConductor/NotificationConductor'
 import Seo from 'components/Seo/Seo'
 import ErrorNotification from 'components/notification/ErrorNotification/ErrorNotification'
+import UserTooltip from 'components/Header/User/UserTooltip/UserTooltip'
 
 
 const userLanguage = (navigator.userLanguage || navigator.language || 'en-gb').split('-')[0]
@@ -119,6 +120,7 @@ export default class App extends React.Component {
       <Fragment>
         {error && <ErrorNotification hideErrorNotification={this.hideErrorNotification} error={error} />}
         <Seo location={history.location} />
+        { isMobile && <UserTooltip /> }
         <Header />
         <WidthContainer styleName="main">
           <main>
