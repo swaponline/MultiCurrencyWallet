@@ -11,8 +11,7 @@ import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import Orders from './Orders/Orders'
 
 
-@connect(({ currencies: { items: currencies },  core: { filter } }) => ({
-  currencies,
+@connect(({ core: { filter } }) => ({
   filter,
 }))
 export default class Home extends Component {
@@ -29,28 +28,12 @@ export default class Home extends Component {
   }
 
   componentWillMount() {
-    let { match:{ params:{ buy, sell } }, filter } = this.props
+    let { filter } = this.props
 
     if (filter && filter.length > 0) {
       filter = filter.split('-')
       this.handelReplaceHistory(filter[0], filter[1])
     }
-
-    if (buy || sell) {
-      this.handleChangeName(buy, sell)
-    }
-  }
-
-  handleChangeName = (buy, sell) => {
-    const { currencies } = this.props
-
-    const buyCurrency = currencies.find((el) => el.fullTitle === buy)
-    const sellCurrency = currencies.find((el) => el.fullTitle === sell)
-
-    this.setState({
-      buyCurrency: buyCurrency.icon,
-      sellCurrency: sellCurrency.icon,
-    })
   }
 
   handleBuyCurrencySelect = ({ value }) => {
@@ -84,14 +67,11 @@ export default class Home extends Component {
   }
 
   handelReplaceHistory = (sellCurrency, buyCurrency) => {
-    const { history, currencies } = this.props
+    const { history } = this.props
 
     this.setFilter(`${buyCurrency}-${sellCurrency}`)
 
-    const buy = currencies.find((el) => el.value === buyCurrency)
-    const sell = currencies.find((el) => el.value === sellCurrency)
-
-    history.replace((`${links.home}${buy.fullTitle}-to-${sell.fullTitle}`))
+    history.replace((`${links.home}${buyCurrency}-to-${sellCurrency}`))
   }
 
   flipCurrency = () => {

@@ -142,16 +142,10 @@ export default class Row extends Component {
     actions.core.markCoinAsHidden(coin)
   }
 
-  getCurrencyFullTitle = (currencyTitle, currencies) => {
-    const match = currencies.find((el) => el.title === currencyTitle)
-    return match ? match.fullTitle : currencyTitle
-  }
-
   render() {
     const { isBalanceFetching, tradeAllowed, isAddressCopied } = this.state
-    const { currency, balance, isBalanceFetched, address, contractAddress, unconfirmedBalance, currencies } = this.props
+    const { currency, balance, isBalanceFetched, address, contractAddress, unconfirmedBalance } = this.props
 
-    const currencyFullTitle = this.getCurrencyFullTitle(currency, currencies)
 
 
     return (
@@ -218,7 +212,7 @@ export default class Row extends Component {
             )}
             {
               tradeAllowed && (
-                <WithdrawButton onClick={() => this.handleGoTrade(`/${currencyFullTitle.toLowerCase()}`)}>
+                <WithdrawButton onClick={() => this.handleGoTrade(`/${currency.toLowerCase()}`)}>
                   <i className="fas fa-exchange-alt" />
                   <span>Swap</span>
                 </WithdrawButton>

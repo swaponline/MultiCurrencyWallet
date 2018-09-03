@@ -100,7 +100,7 @@ export default class Wallet extends Component {
           titles={titles}
           rows={[...items, ...tokens].filter(coin => !hiddenCoinsList.includes(coin.currency))}
           rowRender={(row, index) => (
-            <Row key={index} {...row} currencies={currencies} hiddenCoinsList={hiddenCoinsList}/>
+            <Row key={index} {...row} currencies={currencies} hiddenCoinsList={hiddenCoinsList} />
           )}
         />
         <div>

@@ -25,7 +25,7 @@ export default class Currency extends Component {
     }
 
     currencies = currencies.reduce((previous, current) =>
-      previous.concat({ from: currency, to: current.fullTitle }, { from: current.fullTitle, to: currency }),
+      previous.concat({ from: currency, to: current.value }, { from: current.value, to: currency }),
     [])
 
     return currencies
