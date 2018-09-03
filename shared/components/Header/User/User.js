@@ -1,7 +1,4 @@
 import React from 'react'
-
-import { withRouter } from 'react-router'
-import actions from 'redux/actions'
 import { connect } from 'redaction'
 
 import styles from './User.scss'
@@ -13,7 +10,6 @@ import UserTooltip from './UserTooltip/UserTooltip'
 import AddOfferButton from './AddOfferButton/AddOfferButton'
 
 
-@withRouter
 @connect({
   feeds: 'feeds.items',
   peer: 'ipfs.peer',
@@ -35,32 +31,15 @@ export default class User extends React.Component {
     })
   }
 
-  declineRequest = (orderId, participantPeer) => {
-    actions.core.declineRequest(orderId, participantPeer)
-    actions.core.updateCore()
-  }
-
-  acceptRequest = (orderId, participantPeer) => {
-    actions.core.acceptRequest(orderId, participantPeer)
-    actions.core.updateCore()
-    this.handleToggleTooltip()
-  }
-
-  autoAcceptRequest = (orderId, participantPeer, link) => {
-    this.acceptRequest(orderId, participantPeer)
-    this.props.history.push(link)
-  }
-
   soundClick = () => {
     let audio = new Audio()
     audio.src = Sound
     audio.autoplay = true
   }
 
-
   render() {
     const { view } = this.state
-    const { feeds, peer } = this.props
+    const { feeds } = this.props
 
     return (
       <div styleName="user-cont">
@@ -73,12 +52,7 @@ export default class User extends React.Component {
         />
         {
           view && <UserTooltip
-            view={view}
-            feeds={feeds}
-            mePeer={peer}
-            autoAcceptRequest={this.autoAcceptRequest}
-            acceptRequest={this.acceptRequest}
-            declineRequest={this.declineRequest}
+            toggle={this.handleToggleTooltip}
           />
         }
       </div>
