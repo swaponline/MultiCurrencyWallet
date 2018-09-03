@@ -15,7 +15,9 @@ import CurrencySelect from 'components/ui/CurrencySelect/CurrencySelect'
 export default class CreateOfferButton extends Component {
 
   createOffer = () => {
-    actions.modals.open(constants.modals.Offer, {})
+    const { buyCurrency, sellCurrency } = this.props
+
+    actions.modals.open(constants.modals.Offer, { buyCurrency, sellCurrency })
     actions.analytics.dataEvent('orderbook-click-createoffer-button')
   }
 
@@ -25,21 +27,21 @@ export default class CreateOfferButton extends Component {
     return (
       <div styleName="choice">
         <div styleName="row">
-          <p styleName="text">You want to buy</p>
+          <p styleName="text">You have</p>
           <CurrencySelect
             styleName="currencySelect"
-            selectedValue={buyCurrency}
-            onSelect={handleBuyCurrencySelect}
+            selectedValue={sellCurrency}
+            onSelect={handleSellCurrencySelect}
             currencies={currencies}
           />
         </div>
         <Flip onClick={flipCurrency} />
         <div styleName="row">
-          <p styleName="text">You want to sell</p>
+          <p styleName="text">You get</p>
           <CurrencySelect
             styleName="currencySelect"
-            selectedValue={sellCurrency}
-            onSelect={handleSellCurrencySelect}
+            selectedValue={buyCurrency}
+            onSelect={handleBuyCurrencySelect}
             currencies={currencies}
           />
         </div>

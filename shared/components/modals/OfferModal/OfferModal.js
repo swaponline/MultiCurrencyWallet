@@ -24,8 +24,15 @@ export default class Offer extends React.Component {
     offer: {},
   }
 
-  componentWillUnmount() {
-    window.scrollTo({ top: 0 })
+  componentWillMount() {
+    const { data: { buyCurrency, sellCurrency } } = this.props
+
+    this.setState({
+      offer: {
+        buyCurrency,
+        sellCurrency,
+      },
+    })
   }
 
   handleMoveToConfirmation = (offer) => {

@@ -140,7 +140,7 @@ export default class EthToBtc extends Component {
         {
           flow.isMeSigned && (
             <Fragment>
-              <h3>2. Waiting BTC Owner creates Secret Key, creates BTC Script and charges it</h3>
+              <h3>1. Waiting BTC Owner creates Secret Key, creates BTC Script and charges it</h3>
               {
                 flow.step === 2 && (
                   <InlineLoader />
@@ -150,7 +150,7 @@ export default class EthToBtc extends Component {
               {
                 flow.secretHash && flow.btcScriptValues && (
                   <Fragment>
-                    <h3>3. Bitcoin Script created and charged. Please check the information below</h3>
+                    <h3>2. Bitcoin Script created and charged. Please check the information below</h3>
                     <div>Secret Hash: <strong>{flow.secretHash}</strong></div>
                     <div>
                         Script address:
@@ -246,7 +246,7 @@ export default class EthToBtc extends Component {
               {
                 (flow.step >= 5 || flow.isEthContractFunded) && (
                   <Fragment>
-                    <h3>4. Creating Ethereum Contract. Please wait, it will take a while</h3>
+                    <h3>3. Creating Ethereum Contract. Please wait, it will take a while</h3>
                   </Fragment>
                 )
               }
@@ -290,7 +290,7 @@ export default class EthToBtc extends Component {
               {
                 (flow.step === 6 || flow.isEthWithdrawn) && (
                   <Fragment>
-                    <h3>5. Waiting BTC Owner adds Secret Key to ETH Contact</h3>
+                    <h3>4. Waiting BTC Owner adds Secret Key to ETH Contact</h3>
                     {
                       !flow.isEthWithdrawn && (
                         <InlineLoader />
@@ -302,7 +302,7 @@ export default class EthToBtc extends Component {
 
               {
                 (flow.step === 7 || flow.isBtcWithdrawn) && (
-                  <h3>6. BTC Owner successfully took money from ETH Contract and left Secret Key. Requesting withdrawal from BTC Script. Please wait</h3>
+                  <h3>5. BTC Owner successfully took money from ETH Contract and left Secret Key. Requesting withdrawal from BTC Script. Please wait</h3>
                 )
               }
               {
@@ -330,7 +330,7 @@ export default class EthToBtc extends Component {
               {
                 flow.isBtcWithdrawn && (
                   <Fragment>
-                    <h3>7. Money was transferred to your wallet. Check the balance.</h3>
+                    <h3>6. Money was transferred to your wallet. Check the balance.</h3>
                     <h2>Thank you for using Swap.Online!</h2>
                   </Fragment>
                 )

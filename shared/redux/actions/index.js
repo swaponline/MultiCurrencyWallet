@@ -25,12 +25,14 @@ import noxon from './noxon'
 import jot from './jot'
 
 import usdt from './usdt'
+import omgtoken from './omgtoken'
 
 
 export default {
   btrm,
   swap,
   noxon,
+  omgtoken,
   jot,
   filter,
   modals,

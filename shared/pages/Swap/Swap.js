@@ -21,14 +21,20 @@ import EthTokenToUsdt from './EthTokenToUsdt'
 const swapComponents = {
   'BTC2ETH': BtcToEth,
   'ETH2BTC': EthToBtc,
+  // ERC 20 - BTC
   'NOXON2BTC': EthTokenToBtc,
   'BTC2NOXON': BtcToEthToken,
   'SWAP2BTC': EthTokenToBtc,
   'BTC2SWAP': BtcToEthToken,
   'JOT2BTC': EthTokenToBtc,
   'BTC2JOT': BtcToEthToken,
+  'DRT2BTC': EthTokenToBtc,
+  'BTC2DRT': BtcToEthToken,
+  // USDT - ERC20
   'SWAP2USDT': EthTokenToUsdt,
   'USDT2SWAP': UsdtToEthToken,
+  'DRT2USDT': EthTokenToUsdt,
+  'USDT2DRT': UsdtToEthToken,
 }
 
 
@@ -81,7 +87,7 @@ export default class SwapComponent extends PureComponent {
 
     const boolean = swapsId.map(item => item === orderId)
 
-    if (!Boolean(...boolean)) {
+    if (Boolean(...boolean)) {
       swapsId.push(orderId)
     }
 

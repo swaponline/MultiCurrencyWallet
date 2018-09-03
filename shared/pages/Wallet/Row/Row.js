@@ -43,7 +43,7 @@ export default class Row extends Component {
   // }
 
   handleReloadBalance = () => {
-    const { isBalanceFetching } = this.state
+    const { isBalanceFetching, token } = this.state
 
     if (isBalanceFetching) {
       return null
@@ -57,16 +57,33 @@ export default class Row extends Component {
 
     currency = currency.toLowerCase()
 
-    actions[currency].getBalance(currency)
-      .then(() => {
-        this.setState({
-          isBalanceFetching: false,
+    console.log('token', token)
+
+    if (token) {
+      actions.token.getBalance(currency)
+        .then(() => {
+          this.setState({
+            isBalanceFetching: false,
+          })
+        }, () => {
+          this.setState({
+            isBalanceFetching: false,
+          })
         })
-      }, () => {
-        this.setState({
-          isBalanceFetching: false,
+    } else {
+      actions[currency].getBalance(currency)
+        .then(() => {
+          this.setState({
+            isBalanceFetching: false,
+          })
+        }, () => {
+          this.setState({
+            isBalanceFetching: false,
+          })
         })
-      })
+    }
+
+
   }
 
   handleCopyAddress = () => {
@@ -94,7 +111,7 @@ export default class Row extends Component {
   // }
 
   handleWithdraw = () => {
-    const { currency, address, contractAddress, decimals, balance } = this.props
+    const { currency, address, contractAddress, decimals, balance, token } = this.props
 
     actions.analytics.dataEvent(`balances-withdraw-${currency.toLowerCase()}`)
     actions.modals.open(constants.modals.Withdraw, {
@@ -102,6 +119,7 @@ export default class Row extends Component {
       address,
       contractAddress,
       decimals,
+      token,
       balance,
     })
   }
@@ -134,7 +152,7 @@ export default class Row extends Component {
               <Fragment>
                 <i className="fas fa-sync-alt" styleName="icon" onClick={this.handleReloadBalance} />
                 <span>{String(balance).length > 5 ? balance.toFixed(5) : balance}</span>
-                { currency === 'BTC' || currency === 'USDT' && unconfirmedBalance !== 0 && (
+                { currency === 'BTC' && currency === 'USDT' && unconfirmedBalance !== 0 && (
                   <Fragment>
                     <br />
                     <span style={{ fontSize: '12px', color: '#c9c9c9' }}>Unconfirmed {unconfirmedBalance}</span>
