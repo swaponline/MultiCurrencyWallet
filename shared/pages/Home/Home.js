@@ -11,8 +11,9 @@ import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import Orders from './Orders/Orders'
 
 
-@connect(({ currencies: { items: currencies } }) => ({
+@connect(({ currencies: { items: currencies },  core: { filter } }) => ({
   currencies,
+  filter,
 }))
 export default class Home extends Component {
 
@@ -28,7 +29,12 @@ export default class Home extends Component {
   }
 
   componentWillMount() {
-    const { match:{ params:{ buy, sell } } } = this.props
+    let { match:{ params:{ buy, sell } }, filter } = this.props
+
+    if (filter && filter.length > 0) {
+      filter = filter.split('-')
+      this.handelReplaceHistory(filter[0], filter[1])
+    }
 
     if (buy || sell) {
       this.handleChangeName(buy, sell)
@@ -80,7 +86,7 @@ export default class Home extends Component {
   handelReplaceHistory = (sellCurrency, buyCurrency) => {
     const { history, currencies } = this.props
 
-    this.setFilter(`${buyCurrency}${sellCurrency}`)
+    this.setFilter(`${buyCurrency}-${sellCurrency}`)
 
     const buy = currencies.find((el) => el.value === buyCurrency)
     const sell = currencies.find((el) => el.value === sellCurrency)

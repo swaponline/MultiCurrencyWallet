@@ -12,9 +12,9 @@ const filterMyOrders = (orders, peer) => orders.filter(order => order.owner.peer
 
 const filterOrders = (orders, filter) => orders
   .filter(order => order.isMy ? (
-    `${order.buyCurrency.toLowerCase()}${order.sellCurrency.toLowerCase()}` === filter
+    `${order.buyCurrency.toLowerCase()}-${order.sellCurrency.toLowerCase()}` === filter
   ) : (
-    `${order.sellCurrency.toLowerCase()}${order.buyCurrency.toLowerCase()}` === filter
+    `${order.sellCurrency.toLowerCase()}-${order.buyCurrency.toLowerCase()}` === filter
   ))
   .sort((a, b) => Number(b.buyAmount.dividedBy(b.sellAmount)) - Number(a.buyAmount.dividedBy(a.sellAmount)))
 
