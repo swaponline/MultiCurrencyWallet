@@ -48,6 +48,18 @@ const config = {
     'btcnoxon': 0.07,
     'noxonbtc': 0.07,
   },
+
+  currency: {
+    eos: {
+      description: 'EOS is domestic blockchain and basic cryptocurrency for the EOS.IO decentralised operating system, ' +
+        'which serves as a hosting for dApps. This service covers the RAM trading, data storage and exchange ' +
+        'options. EOS.IO is developed by the former leaders of SteemIt and BitShares and has a great scalability' +
+        ' and commercial implementation prospects. EOS is well-known due to the largest ICO ever ' +
+        '(349 days, $4B raised). Traditionally, EOS is purchased via centralized exchanges or EOS-only wallets.\n' +
+        'Here you can exchange EOS for BTC, ETH, ERC-20 tokens with zero fee in decentralized and prompt manner. \n',
+      title: 'Ethereum Operating System',
+    },
+  },
 }
 
 

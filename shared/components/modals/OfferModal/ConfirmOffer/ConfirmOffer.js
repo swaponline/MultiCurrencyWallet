@@ -46,9 +46,6 @@ export default class ConfirmOffer extends Component {
   render() {
     const { offer: { buyAmount, sellAmount, buyCurrency, sellCurrency, exchangeRate }, onBack, currencies } = this.props
 
-    const buy = currencies.find((el) => el.value === buyCurrency)
-    const sell = currencies.find((el) => el.value === sellCurrency)
-
     return (
       <Fragment>
         <Coins styleName="coins" names={[ buyCurrency, sellCurrency ]} size={100} />
@@ -57,7 +54,7 @@ export default class ConfirmOffer extends Component {
         <Fee amount={0.0001} currency={sellCurrency} />
         <ButtonsInRow styleName="buttonsInRow">
           <Button styleName="button" gray onClick={onBack}>Back</Button>
-          <Link styleName="link" to={`${links.home}${buy.fullTitle}-to-${sell.fullTitle}`}>
+          <Link styleName="link" to={`${links.home}${buyCurrency}-${sellCurrency}`}>
             <Button styleName="button" id="confirm" brand onClick={this.handleConfirm} >Add</Button>
           </Link>
         </ButtonsInRow>

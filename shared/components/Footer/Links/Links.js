@@ -39,6 +39,13 @@ const Links = () => (
       </span>
       <a href={links.medium} target="_blank" rel="noopener noreferrer">Medium</a>
     </div>
+    <div styleName="column">
+      <h4>Legal</h4>
+      <a href={links.privacyPolicy} target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+      <a href={links.privacyPolicyDoc} target="_blank" rel="noopener noreferrer">Privacy Policy Doc</a>
+      <a href={links.terms} target="_blank" rel="noopener noreferrer">Terms</a>
+      <a href={links.legalOpinion} target="_blank" rel="noopener noreferrer">Legal opinion</a>
+    </div>
   </div>
 )
 

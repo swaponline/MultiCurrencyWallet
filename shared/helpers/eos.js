@@ -1,6 +1,7 @@
 import { getState } from 'redux/core'
 import config from 'app-config'
 
+
 let eosInstance = null
 let eccInstance = null
 let semaphore = false
@@ -23,7 +24,7 @@ const setupEOS = async () => {
   const { chainId, httpEndpoint } = config.services.eos
 
   eosInstance = EOS({
-    chainId, httpEndpoint, keyProvider
+    chainId, httpEndpoint, keyProvider,
   })
 
   eccInstance = EOS.modules.ecc
@@ -43,7 +44,7 @@ const eos = {
     console.log('eos instance', eosInstance)
 
     return eosInstance
-  }
+  },
 }
 
 const ecc = {
@@ -56,9 +57,9 @@ const ecc = {
     }
 
     return eccInstance
-  }
+  },
 }
 
 export {
-  eos, ecc
+  eos, ecc,
 }

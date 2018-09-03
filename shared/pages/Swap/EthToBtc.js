@@ -6,8 +6,6 @@ import config from 'app-config'
 import { BigNumber } from 'bignumber.js'
 
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
-import RequestLoader from 'components/loaders/RequestLoader/RequestLoader'
-import Loader from 'components/loaders/Loader/Loader'
 import TimerButton from 'components/controls/TimerButton/TimerButton'
 import Button from 'components/controls/Button/Button'
 import Timer from './Timer/Timer'
@@ -28,6 +26,7 @@ export default class EthToBtc extends Component {
   }
 
   componentWillMount() {
+    this.overProgress()
     this.swap.on('state update', this.handleFlowStateUpdate)
   }
 

@@ -8,7 +8,6 @@ import actions from 'redux/actions'
 
 import Timer from './Timer/Timer'
 import Button from 'components/controls/Button/Button'
-import SwapProgress from 'components/loaders/SwapProgress/SwapProgress'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import TimerButton from 'components/controls/TimerButton/TimerButton'
 
@@ -28,6 +27,7 @@ export default class BtcToEth extends Component {
   }
 
   componentWillMount() {
+    this.overProgress()
     this.swap.on('state update', this.handleFlowStateUpdate)
   }
 
@@ -55,7 +55,7 @@ export default class BtcToEth extends Component {
   }
 
   overProgress = () => {
-    const { swap } = swap
+    const { swap } = this
     actions.loader.show(true, '', '', true, { swap })
   }
 

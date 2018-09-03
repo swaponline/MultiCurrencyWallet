@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 
 import { connect } from 'redaction'
+import config from 'app-config'
 
 import Title from 'components/PageHeadline/Title/Title'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
@@ -18,7 +19,7 @@ export default class Currency extends Component {
   getRows = () => {
     let { match:{ params: { currency } }, currencies } = this.props
 
-    if (currency === 'bitcoin') {
+    if (currency === 'btc') {
       currencies = currencies.filter(c => c.value !== currency)
     } else {
       currencies = currencies.filter(c => c.value === 'btc')
@@ -38,8 +39,9 @@ export default class Currency extends Component {
       <section>
         <PageHeadline>
           <Fragment>
-            <Title>{currency}</Title>
+            <Title>{config.currency[currency.toLowerCase()].title}</Title>
             <SubTitle>{currency.toUpperCase()} Trade</SubTitle>
+            <p>{config.currency[currency.toLowerCase()].description}</p>
           </Fragment>
         </PageHeadline>
         <Table

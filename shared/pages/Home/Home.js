@@ -22,17 +22,22 @@ export default class Home extends Component {
     const { buyCurrency, sellCurrency } = initialData || {}
 
     this.state = {
-      buyCurrency: buy || buyCurrency || 'eth',
-      sellCurrency: sell || sellCurrency || 'btc',
+      buyCurrency: buy || buyCurrency,
+      sellCurrency: sell || sellCurrency,
     }
   }
 
   componentWillMount() {
-    let { filter } = this.props
+    let { filter, match: { params: { buy, sell } } } = this.props
 
-    if (filter && filter.length > 0) {
+    if (!buy && !sell) {
       filter = filter.split('-')
-      this.handelReplaceHistory(filter[0], filter[1])
+      this.handelReplaceHistory(filter[1], filter[0])
+
+      this.setState(() => ({
+        buyCurrency: filter[0],
+        sellCurrency: filter[1],
+      }))
     }
   }
 
@@ -67,11 +72,10 @@ export default class Home extends Component {
   }
 
   handelReplaceHistory = (sellCurrency, buyCurrency) => {
-    const { history } = this.props
+    let { history } = this.props
 
     this.setFilter(`${buyCurrency}-${sellCurrency}`)
-
-    history.replace((`${links.home}${buyCurrency}-to-${sellCurrency}`))
+    history.replace((`${links.home}${buyCurrency}-${sellCurrency}`))
   }
 
   flipCurrency = () => {
@@ -94,7 +98,7 @@ export default class Home extends Component {
   }
 
   render() {
-    const { match: { params: { orderId } } } = this.props
+    const { match: { params: { orderId } }, filter } = this.props
     const { buyCurrency, sellCurrency } = this.state
 
     return (

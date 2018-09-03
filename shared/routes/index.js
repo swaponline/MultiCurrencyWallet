@@ -17,8 +17,8 @@ const routes = (
   <Switch>
     <Route path={`${links.swap}/:buy-:sell/:orderId`} component={SwapComponent} />
 
-    <Route path={`${links.home}:buy-to-:sell/:orderId`} component={Home} />
-    <Route path={`${links.home}:buy-to-:sell`} component={Home} />
+    <Route path={`${links.home}:buy-:sell/:orderId`} component={Home} />
+    <Route path={`${links.home}:buy-:sell`} component={Home} />
     <Route path={links.exchange} component={Home} />
 
     <Route path={links.affiliate} component={Affiliate} />

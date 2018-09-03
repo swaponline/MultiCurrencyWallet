@@ -1,6 +1,6 @@
 export const initialState = {
   orders: [],
-  filter: '',
+  filter: 'eth-btc',
   hiddenCoinsList: JSON.parse(localStorage.getItem('hiddenCoinsList')) || [],
 }
 

@@ -98,6 +98,7 @@ const webpackConfig = {
     new ProgressBarPlugin({ clear: false }),
     new WebappWebpackPlugin({
       logo: 'favicon.png',
+      path: '',
     }),
     new HtmlWebpackPlugin({
       title: 'Swap.Online - Cryptocurrency Wallet with Atomic Swap Exchange',

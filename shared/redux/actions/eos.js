@@ -1,16 +1,17 @@
 import { getState } from 'redux/core'
-import config from 'app-config'
 import reducers from 'redux/core/reducers'
 import constants from 'helpers/constants'
 
 import { eos, ecc } from 'helpers/eos'
 import { Keygen } from 'eosjs-keygen'
 
+
 const register = async (accountName, privateKey) => {
   const keys = await Keygen.generateMasterKeys(privateKey)
 
-  if (keys.masterPrivateKey !== privateKey)
+  if (keys.masterPrivateKey !== privateKey) {
     throw new Error('Invalid private key')
+  }
 
   const eosInstance = await eos.getInstance()
   const eccInstance = await ecc.getInstance()

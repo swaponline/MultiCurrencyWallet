@@ -42,8 +42,6 @@ export default class Row extends Component {
     Object.keys(config.tokens)
       .forEach(name => {
         if (!hiddenCoinsList.includes(name.toUpperCase())) {
-          actions.core.markCoinAsHidden(name.toUpperCase())
-        } else {
           actions.core.markCoinAsVisible(name.toUpperCase())
         }
       })
