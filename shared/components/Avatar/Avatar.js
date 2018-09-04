@@ -6,22 +6,25 @@ import styles from './Avatar.scss'
 
 
 const Avatar = ({ value, className, background, margin, size, format }) => {
-  const data = new Identicon(value, {
+
+  const options = {
     background,
     margin,
     size,
     format,
-  }).toString()
+  }
+
+  const data = new Identicon(value, options).toString()
 
   return (
-    <img className={className} alt={value} src={`data:image/svg+xml;base64,${data}`} />
+    <img className={className} styleName="avatar" alt={value} src={`data:image/svg+xml;base64,${data}`} />
   )
 }
 
 Avatar.defaultProps = {
   background: [255, 255, 255, 255],
   margin: 0,
-  size: 40,
+  size: 35,
   format: 'svg',
 }
 

@@ -47,7 +47,7 @@ export default class Row extends Component {
       })
   }
 
-  handleReloadBalance = () => {
+  handleReloadBalance = async () => {
     const { isBalanceFetching, token } = this.state
 
     if (isBalanceFetching) {
@@ -57,34 +57,22 @@ export default class Row extends Component {
     this.setState({
       isBalanceFetching: true,
     })
-
+    let action
     let { currency } = this.props
 
     currency = currency.toLowerCase()
 
     if (token) {
-      actions.token.getBalance(currency)
-        .then(() => {
-          this.setState({
-            isBalanceFetching: false,
-          })
-        }, () => {
-          this.setState({
-            isBalanceFetching: false,
-          })
-        })
+      action = actions.token.getBalance(currency)
     } else {
-      actions[currency].getBalance(currency)
-        .then(() => {
-          this.setState({
-            isBalanceFetching: false,
-          })
-        }, () => {
-          this.setState({
-            isBalanceFetching: false,
-          })
-        })
+      action = actions[currency].getBalance()
     }
+
+    await action
+
+    this.setState(() => ({
+      isBalanceFetching: false,
+    }))
   }
 
   handleCopyAddress = () => {
@@ -143,8 +131,6 @@ export default class Row extends Component {
   render() {
     const { isBalanceFetching, tradeAllowed, isAddressCopied } = this.state
     const { currency, balance, isBalanceFetched, address, contractAddress, unconfirmedBalance } = this.props
-
-
 
     return (
       <tr>

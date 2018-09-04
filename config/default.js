@@ -59,6 +59,26 @@ const config = {
         'Here you can exchange EOS for BTC, ETH, ERC-20 tokens with zero fee in decentralized and prompt manner. \n',
       title: 'Ethereum Operating System',
     },
+    jot: {
+      description: '',
+      title: 'ERC 20 token',
+    },
+    noxon: {
+      description: '',
+      title: 'ERC 20 token',
+    },
+    swap: {
+      description: '',
+      title: 'ERC 20 token',
+    },
+    btc: {
+      description: '',
+      title: 'Bitcoin',
+    },
+    eth: {
+      description: '',
+      title: 'Ethereum',
+    },
   },
 }
 

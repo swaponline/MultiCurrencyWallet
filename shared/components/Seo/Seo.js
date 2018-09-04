@@ -22,6 +22,10 @@ export default class Seo extends Component {
     }
   }
 
+  shouldComponentUpdate(nextProps) {
+    return this.props.location.pathname !== nextProps.location.pathname
+  }
+
   render() {
     if (!this.seoPage) {
       return null

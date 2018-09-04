@@ -26,7 +26,6 @@ export default class EthToBtc extends Component {
   }
 
   componentWillMount() {
-    this.overProgress()
     this.swap.on('state update', this.handleFlowStateUpdate)
   }
 
