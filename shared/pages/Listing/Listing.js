@@ -15,8 +15,14 @@ import PageHeadline from 'components/PageHeadline/PageHeadline'
 const Listing = () => (
   <div styleName="container">
     <PageHeadline>
-      <SubTitle>Listing</SubTitle>
+      <SubTitle>How to list your asset on swap.online?</SubTitle>
     </PageHeadline>
+    <p>
+  1. We can list your token on swap.online and it is absolutely free for now.  <br>
+  2. To list your tokens, please send us the link to your peoject, erc20 address, icon, name and ticker (short name) to team@swap.online <br>
+  3. We as well will announce listing of your tokens on our social media, mutial PR will benefit both sides. <br>
+    </p>
+  
     <p>Crypto Pink Sheets: ALL Coins Welcome To SWAP.Online!</p>
     <p>OTC-approach-crypto market to be opened in Aug, 2018.</p>
     <p>
