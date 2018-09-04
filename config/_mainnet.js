@@ -43,6 +43,10 @@ export default {
       address: '0x9af4f26941677c706cfecf6d3379ff01bb85d5ab',
       decimals: 8,
     },
+    syc: {
+      address: '0x49feeF410293261c04F1d14600Ba427F8eED8723',
+      decimals: 2,
+    },
     SMT: {
       address: '0x21f15966e07a10554c364b988e91dab01d32794a',
       decimals: 18,

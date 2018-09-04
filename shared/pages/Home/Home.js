@@ -105,7 +105,7 @@ export default class Home extends Component {
       <section style={{ position: 'relative', width: '100%' }}>
         <PageHeadline >
           <Fragment>
-            <Title>{buyCurrency} → {sellCurrency} no limit exchange with 0 fee</Title>
+            <Title>{buyCurrency} &#8594; {sellCurrency} no limit exchange with 0 fee</Title>
             <SubTitle>Choose the direction of exchange</SubTitle>
           </Fragment>
           <Orders
