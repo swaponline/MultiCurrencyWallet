@@ -12,8 +12,12 @@
     visibility: hidden;
 }
 
+.avatar {
+    margin-left: 10px;
+}
+
 @include media-mobile {
     .user-cont {
         display: none;
     }
-} 
+}

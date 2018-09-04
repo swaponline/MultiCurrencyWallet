@@ -11,6 +11,7 @@ import styles from './RowHistory.scss'
 
 import Coins from 'components/Coins/Coins'
 import Timer from 'pages/Swap/Timer/Timer'
+import Avatar from 'components/Avatar/Avatar'
 
 
 const RowHistory = ({ row }) => {
@@ -22,14 +23,6 @@ const RowHistory = ({ row }) => {
   let { buyAmount, buyCurrency, sellAmount, btcScriptValues, isRefunded, isMy, sellCurrency, isFinished, id, btcScriptValues:{ lockTime } } = row
 
   const lockDateAndTime = moment.unix(lockTime).format('HH:mm:ss DD/MM/YYYY')
-  const identiconOptions = {
-    background: [255, 255, 255, 255],
-    size: 40,
-    format: 'svg',
-  }
-
-  const identiconData = new Identicon(id, identiconOptions).toString()
-  const identiconDatasrc = `data:image/svg+xml;base64,${identiconData}`
 
   buyAmount   = Number(buyAmount)
   sellAmount  = Number(sellAmount)
@@ -37,7 +30,9 @@ const RowHistory = ({ row }) => {
   return (
     <tr>
       <td>
-        <img alt="" src={identiconDatasrc} />
+        <Avatar
+          value={id}
+        />
       </td>
       <td>
         <Coins names={[buyCurrency, sellCurrency]}  />
