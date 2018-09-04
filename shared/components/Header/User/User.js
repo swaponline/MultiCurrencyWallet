@@ -50,7 +50,6 @@ export default class User extends React.Component {
           feeds={feeds}
           soundClick={this.soundClick}
           changeView={this.handleChangeView}
-          peer={peer}
         />
         {
           view && <UserTooltip
