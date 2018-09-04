@@ -35,6 +35,13 @@ export const initialState = {
       fullTitle: 'noxon',
     },
     {
+      name: 'DRT',
+      title: 'DRT',
+      icon: 'drt',
+      value: 'drt',
+      fullTitle: 'drt',
+    },
+    {
       name: 'SYC',
       title: 'SYC',
       icon: 'syc',

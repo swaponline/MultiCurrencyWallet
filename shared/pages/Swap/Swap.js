@@ -30,6 +30,8 @@ const swapComponents = {
   'BTC2JOT': BtcToEthToken,
   'SYC2BTC': EthTokenToBtc,
   'BTC2SYC': BtcToEthToken,
+  'DRT2BTC': EthTokenToBtc,
+  'BTC2DRT': BtcToEthToken,
   // 'SWAP2USDT': EthTokenToUsdt,
   // 'USDT2SWAP': UsdtToEthToken,
   'BTC2EOS': BtcToEos,

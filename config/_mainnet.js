@@ -39,7 +39,7 @@ export default {
       address: '0x4d8fc1453a0f359e99c9675954e656d80d996fbf',
       decimals: 18,
     },
-    DRT: {
+    drt: {
       address: '0x9af4f26941677c706cfecf6d3379ff01bb85d5ab',
       decimals: 8,
     },

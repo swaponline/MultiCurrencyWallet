@@ -8,6 +8,10 @@ import config from 'app-config'
 
 export default class Core extends Component {
 
+  state = {
+    orders: [],
+  }
+
   componentWillMount() {
     actions.core.getSwapHistory()
     SwapApp.services.orders
@@ -32,6 +36,23 @@ export default class Core extends Component {
       .off('accept swap request', this.updateOrders)
       .off('decline swap request', this.updateOrders)
   }
+
+  componentWillReceiveProps(nextState) {
+    const { orders } = this.state
+
+    if (orders && orders.length > 0) {
+      if (orders.length !== nextState.orders.length) {
+        this.updateOrders()
+      }
+    }
+  }
+
+  shouldComponentUpdate(nextState) {
+    const { orders } = this.state
+
+    return orders && orders.length > 0 ? this.state.orders.length !== nextState.orders.length : false
+  }
+
 
   setIpfs = () => {
     setTimeout(() => {
@@ -58,6 +79,9 @@ export default class Core extends Component {
 
   updateOrders = () => {
     const orders = SwapApp.services.orders.items
+    this.setState(() => ({
+      orders,
+    }))
     actions.core.updateCore(orders)
   }
 

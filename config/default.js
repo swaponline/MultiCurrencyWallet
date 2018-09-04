@@ -83,6 +83,10 @@ const config = {
       description: '',
       title: 'ERC 20 token',
     },
+    drt: {
+      description: '',
+      title: 'ERC 20 token',
+    },
   },
 }
 

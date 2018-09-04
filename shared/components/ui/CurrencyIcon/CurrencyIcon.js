@@ -13,10 +13,16 @@ import eos from './images/eos.svg'
 import swap from './images/swap.svg'
 import usdt from './images/usdt.svg'
 import syc from './images/syc.svg'
+import bee from './images/bee.svg'
+import drt from './images/drt.svg'
+import omg from './images/omg.svg'
 
 
 const icons = {
   btc,
+  bee,
+  drt,
+  omg,
   eth,
   syc,
   icx,

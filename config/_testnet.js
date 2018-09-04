@@ -27,17 +27,13 @@ export default {
   },
 
   eos: {
-    contract: 'swaponline42'
+    contract: 'swaponline42',
   },
 
   tokens: {
     swap: {
       address: '0xbaa3fa2ed111f3e8488c21861ea7b7dbb5a7b121',
       decimals: 18,
-    },
-    syc: {
-      address: '0xb722f391bc3211331b00e827e1236bd2e8a668c1',
-      decimals: 2,
     },
     noxon: {
       address: '0x60c205722c6c797c725a996cf9cca11291f90749',
