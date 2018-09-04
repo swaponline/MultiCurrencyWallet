@@ -5,9 +5,7 @@ import CSSModules from 'react-css-modules'
 import ListingImg from './images/listing-screen.png'
 
 import Href from 'components/Href/Href'
-import { Button } from 'components/controls'
 import FeedBack from 'components/FeedBack/FeedBack'
-import { FieldLabel, Input } from 'components/forms'
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 
@@ -18,11 +16,10 @@ const Listing = () => (
       <SubTitle>How to list your asset on swap.online?</SubTitle>
     </PageHeadline>
     <p>
-  1. We can list your token on swap.online and it is absolutely free for now.  <br>
-  2. To list your tokens, please send us the link to your peoject, erc20 address, icon, name and ticker (short name) to team@swap.online <br>
-  3. We as well will announce listing of your tokens on our social media, mutial PR will benefit both sides. <br>
+      1. We can list your token on swap.online and it is absolutely free for now.  <br />
+      2. To list your tokens, please send us the link to your peoject, erc20 address, icon, name and ticker (short name) to team@swap.online <br />
+      3. We as well will announce listing of your tokens on our social media, mutial PR will benefit both sides. <br />
     </p>
-  
     <p>Crypto Pink Sheets: ALL Coins Welcome To SWAP.Online!</p>
     <p>OTC-approach-crypto market to be opened in Aug, 2018.</p>
     <p>

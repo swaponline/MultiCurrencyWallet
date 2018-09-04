@@ -79,6 +79,10 @@ const config = {
       description: '',
       title: 'Ethereum',
     },
+    syc: {
+      description: '',
+      title: 'ERC 20 token',
+    },
   },
 }
 
