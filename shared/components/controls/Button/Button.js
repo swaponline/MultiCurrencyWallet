@@ -23,16 +23,15 @@ const Button = (props) => {
   })
 
   return (
-    <div
+    <button
       styleName={styleName}
       className={className}
-      role="button"
       onClick={onClick}
       id={id}
       disabled={disabled}
     >
       {children}
-    </div>
+    </button>
   )
 }
 
