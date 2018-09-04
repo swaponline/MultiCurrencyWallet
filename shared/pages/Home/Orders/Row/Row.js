@@ -11,6 +11,7 @@ import Coins from 'components/Coins/Coins'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import RequestButton from '../RequestButton/RequestButton'
 import RemoveButton from 'components/controls/RemoveButton/RemoveButton'
+import Avatar from 'components/Avatar/Avatar'
 
 
 @connect({
@@ -77,7 +78,7 @@ export default class Row extends Component {
     const { balance, isFetching } = this.state
     const { orderId, row: { id, buyCurrency, sellCurrency, isMy, buyAmount,
       sellAmount, isRequested, isProcessing,
-      owner :{  peer: ownerPeer } }, peer } = this.props
+      owner: {  peer: ownerPeer } }, peer } = this.props
     const amount = isMy ? sellAmount : buyAmount
 
     if (this.state.redirect) {
@@ -86,6 +87,12 @@ export default class Row extends Component {
 
     return (
       <tr style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}>
+        <td>
+          <Avatar
+            value={ownerPeer}
+            size={45}
+          />
+        </td>
         <td>
           <Coins names={[buyCurrency, sellCurrency]}  />
         </td>

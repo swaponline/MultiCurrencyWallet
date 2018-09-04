@@ -8,6 +8,7 @@ import Sound from 'helpers/Sound/Sound.mp4'
 import UserAvatar from './UserAvatar/UserAvatar'
 import UserTooltip from './UserTooltip/UserTooltip'
 import AddOfferButton from './AddOfferButton/AddOfferButton'
+import Avatar from 'components/Avatar/Avatar'
 
 
 @connect({
@@ -39,7 +40,7 @@ export default class User extends React.Component {
 
   render() {
     const { view } = this.state
-    const { feeds } = this.props
+    const { feeds, peer } = this.props
 
     return (
       <div styleName="user-cont">
@@ -49,12 +50,21 @@ export default class User extends React.Component {
           feeds={feeds}
           soundClick={this.soundClick}
           changeView={this.handleChangeView}
+          peer={peer}
         />
         {
           view && <UserTooltip
             toggle={this.handleToggleTooltip}
           />
         }
+        {!!peer && (
+          <Avatar
+            className={styles.avatar}
+            value={peer}
+            background={[81, 14, 216, 255]}
+            size={40}
+          />
+        )}
       </div>
     )
   }
