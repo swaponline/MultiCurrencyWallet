@@ -33,10 +33,6 @@ export default class Core extends Component {
       .off('decline swap request', this.updateOrders)
   }
 
-  componentDidMount() {
-    this.updateOrders()
-  }
-
   setIpfs = () => {
     setTimeout(() => {
       const isOnline = SwapApp.services.room.connection._ipfs.isOnline()
