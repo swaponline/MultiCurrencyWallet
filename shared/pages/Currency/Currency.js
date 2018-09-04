@@ -13,7 +13,9 @@ import Row from './Row/Row'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import actions from 'redux/actions'
 
+import { withRouter } from 'react-router'
 
+@withRouter
 @connect(({ core: { hiddenCoinsList }, user: { ethData, btcData, tokensData, eosData, nimData, usdtData }, currencies: { items: currencies } }) => ({
   tokens: Object.keys(tokensData).map(k => (tokensData[k])),
   items: [ ethData, btcData, eosData, usdtData /* eosData  nimData */ ],
@@ -44,11 +46,16 @@ export default class Currency extends Component {
   }
 
   getCurrencyName = () => this.props.match.params.currency.toLowerCase();
-  getCoin = () => this.props.items.find(coin=>coin.fullName.toLowerCase() === this.getCurrencyName());
+  getCoin = () => {
+    return [...this.props.items, ...this.props.tokens].find(coin=>(coin.fullName || coin.currency).toLowerCase() === this.getCurrencyName());
+  }
 
   handleReloadBalance = () => {
     const { isBalanceFetching } = this.state
-    const currency = this.getCoin().currency.toLowerCase()
+    const coin = this.getCoin()
+    const currency = coin.currency.toLowerCase()
+    const token = !!coin.token
+    const action = token ? 'token' : currency
 
     if (isBalanceFetching) {
       return null
@@ -58,16 +65,11 @@ export default class Currency extends Component {
       isBalanceFetching: true,
     })
 
-    actions[currency].getBalance(currency)
-      .then(() => {
-        this.setState({
-          isBalanceFetching: false,
-        })
-      }, () => {
-        this.setState({
-          isBalanceFetching: false,
-        })
-      })
+    actions[action]
+      .getBalance(currency)
+      .finally(()=> this.setState({
+        isBalanceFetching: false,
+      }))
   }
 
   isInWallet = () => !this.props.hiddenCoinsList.includes(this.getCoin().currency)
@@ -76,6 +78,10 @@ export default class Currency extends Component {
     actions.core.markCoinAsHidden(this.getCoin().currency);
 
   componentWillMount = () => {
+    if(!this.getCoin()) {
+      this.props.history.push('/')
+      return false
+    }
     this.rows = this.getRows()
     this.handleReloadBalance()
   }
@@ -84,6 +90,7 @@ export default class Currency extends Component {
     const { match: { params: { currency } } } = this.props
     const { isBalanceFetching } = this.state
     const coin = this.getCoin()
+    if(!coin) return false
     return (
       <section>
         <PageHeadline>
