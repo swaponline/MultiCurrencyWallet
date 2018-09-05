@@ -8,7 +8,7 @@ import Loader from 'components/loaders/Loader/Loader'
 
 
 ReactDOM.render(
-  <Loader />,
+  <Loader showTips />,
   document.getElementById('root')
 )
 

@@ -109,7 +109,7 @@ export default class App extends React.Component {
     }
 
     if (isFetching) {
-      return <Loader />
+      return <Loader showTips />
     }
 
     if (fallbackUiError) {
