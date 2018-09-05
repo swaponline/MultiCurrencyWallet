@@ -47,6 +47,8 @@ const config = {
     'noxoneth': 1,
     'btcnoxon': 0.07,
     'noxonbtc': 0.07,
+    'sycbtc': 0.001,
+    'btcsyc': 1000,
   },
 
   currency: {
@@ -84,6 +86,10 @@ const config = {
       title: 'ERC 20 token',
     },
     drt: {
+      description: '',
+      title: 'ERC 20 token',
+    },
+    yup: {
       description: '',
       title: 'ERC 20 token',
     },

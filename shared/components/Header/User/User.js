@@ -7,6 +7,7 @@ import Sound from 'helpers/Sound/Sound.mp4'
 
 import UserAvatar from './UserAvatar/UserAvatar'
 import UserTooltip from './UserTooltip/UserTooltip'
+import Question from './Question/Question'
 import AddOfferButton from './AddOfferButton/AddOfferButton'
 import Avatar from 'components/Avatar/Avatar'
 
@@ -45,6 +46,7 @@ export default class User extends React.Component {
     return (
       <div styleName="user-cont">
         <AddOfferButton />
+        <Question />
         <UserAvatar
           isToggle={this.handleToggleTooltip}
           feeds={feeds}

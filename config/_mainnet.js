@@ -47,6 +47,10 @@ export default {
       address: '0x49feeF410293261c04F1d14600Ba427F8eED8723',
       decimals: 2,
     },
+    YUP: {
+      address: '0xD9A12Cde03a86E800496469858De8581D3A5353d',
+      decimals: 18,
+    },
     SMT: {
       address: '0x21f15966e07a10554c364b988e91dab01d32794a',
       decimals: 18,
