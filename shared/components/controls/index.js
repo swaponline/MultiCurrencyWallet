@@ -5,7 +5,7 @@ import ReloadButton from './ReloadButton/ReloadButton'
 import RemoveButton from './RemoveButton/RemoveButton'
 import TimerButton from './TimerButton/TimerButton'
 import WithdrawButton from './WithdrawButton/WithdrawButton'
-
+import Toggle from './Toggle/Toggle'
 
 export {
   Button,
@@ -15,4 +15,5 @@ export {
   RemoveButton,
   TimerButton,
   WithdrawButton,
+  Toggle
 }

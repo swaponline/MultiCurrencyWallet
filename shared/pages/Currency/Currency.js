@@ -7,16 +7,29 @@ import Title from 'components/PageHeadline/Title/Title'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import Table from 'components/tables/Table/Table'
+import Toggle from 'components/controls/Toggle/Toggle'
 
 import Row from './Row/Row'
+import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
+import actions from 'redux/actions'
 
+import { withRouter } from 'react-router'
 
-@connect(({ currencies }) => ({
-  currencies: currencies.items,
+@withRouter
+@connect(({ core: { hiddenCoinsList }, user: { ethData, btcData, tokensData, eosData, nimData, usdtData }, currencies: { items: currencies } }) => ({
+  tokens: Object.keys(tokensData).map(k => (tokensData[k])),
+  items: [ ethData, btcData, eosData, usdtData /* eosData  nimData */ ],
+  currencies,
+  hiddenCoinsList
 }))
 export default class Currency extends Component {
 
+  state = {
+    isBalanceFetching: false
+  }
+
   getRows = () => {
+
     let { match:{ params: { currency } }, currencies } = this.props
 
     if (currency === 'btc') {
@@ -32,21 +45,77 @@ export default class Currency extends Component {
     return currencies
   }
 
-  render() {
-    const { match:{ params: { currency } } } = this.props
+  getCurrencyName = () => this.props.match.params.currency.toLowerCase();
+  getCoin = () => {
+    return [...this.props.items, ...this.props.tokens].find(coin=>(coin.fullName || coin.currency).toLowerCase() === this.getCurrencyName());
+  }
 
+  handleReloadBalance = () => {
+    const { isBalanceFetching } = this.state
+    const coin = this.getCoin()
+    const currency = coin.currency.toLowerCase()
+    const token = !!coin.token
+    const action = token ? 'token' : currency
+
+    if (isBalanceFetching) {
+      return null
+    }
+
+    this.setState({
+      isBalanceFetching: true,
+    })
+
+    actions[action]
+      .getBalance(currency)
+      .finally(()=> this.setState({
+        isBalanceFetching: false,
+      }))
+  }
+
+  isInWallet = () => !this.props.hiddenCoinsList.includes(this.getCoin().currency)
+
+  handleInWalletChange = (val) => val ? actions.core.markCoinAsVisible(this.getCoin().currency) :
+    actions.core.markCoinAsHidden(this.getCoin().currency);
+
+  componentWillMount = () => {
+    if(!this.getCoin()) {
+      this.props.history.push('/')
+      return false
+    }
+    this.rows = this.getRows()
+    this.handleReloadBalance()
+  }
+
+  render() {
+    const { match: { params: { currency } } } = this.props
+    const { isBalanceFetching } = this.state
+    const coin = this.getCoin()
+    if(!coin) return false
     return (
       <section>
         <PageHeadline>
           <Fragment>
-            <Title>{config.currency[currency.toLowerCase()].title}</Title>
+            <Title>{config.currency[currency.toLowerCase()] ? config.currency[currency.toLowerCase()].title : this.getCurrencyName()}</Title>
             <SubTitle>{currency.toUpperCase()} Trade</SubTitle>
-            <p>{config.currency[currency.toLowerCase()].description}</p>
+            <p>{config.currency[currency.toLowerCase()] ? config.currency[currency.toLowerCase()].description : ''}</p>
           </Fragment>
+            <div> Balance: {
+              !coin.isBalanceFetched || isBalanceFetching ? (
+                <InlineLoader />
+              ) : (
+                <Fragment>
+                  <span>{String(coin.balance).length > 5 ? coin.balance.toFixed(5) : coin.balance} {coin.currency}</span>
+                </Fragment>
+              )
+            } </div>
+           <div>
+            <Toggle onChange={this.handleInWalletChange} checked={this.isInWallet()}></Toggle>Added to Wallet {this.isInWallet()}
+
+           </div>
         </PageHeadline>
         <Table
           titles={['Coin', 'Exchange', '']}
-          rows={this.getRows()}
+          rows={this.rows}
           rowRender={(row, index) => (
             <Row key={index} {...row} />
           )}
