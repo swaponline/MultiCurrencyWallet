@@ -138,7 +138,7 @@ export default class Row extends Component {
         <td>
           <CoinInteractive onHide={this.handleMarkCoinAsHidden} name={currency} size={40} />
         </td>
-        { !isMobile && <td>{currency}</td> }
+        <td>{currency}</td>
         <td>
           {
             !isBalanceFetched || isBalanceFetching ? (
@@ -146,7 +146,7 @@ export default class Row extends Component {
             ) : (
               <Fragment>
                 <i className="fas fa-sync-alt" styleName="icon" onClick={this.handleReloadBalance} />
-                <span>{String(balance).length > 5 ? balance.toFixed(5) : balance}</span>
+                <span>{String(balance).length > 4 ? balance.toFixed(4) : balance}</span>
                 { currency === 'BTC' && currency === 'USDT' && unconfirmedBalance !== 0 && (
                   <Fragment>
                     <br />
