@@ -37,23 +37,6 @@ export default class Core extends Component {
       .off('decline swap request', this.updateOrders)
   }
 
-  componentWillReceiveProps(nextState) {
-    const { orders } = this.state
-
-    if (orders && orders.length > 0) {
-      if (orders.length !== nextState.orders.length) {
-        this.updateOrders()
-      }
-    }
-  }
-
-  shouldComponentUpdate(nextState) {
-    const { orders } = this.state
-
-    return orders && orders.length > 0 ? this.state.orders.length !== nextState.orders.length : false
-  }
-
-
   setIpfs = () => {
     setTimeout(() => {
       const isOnline = SwapApp.services.room.connection._ipfs.isOnline()

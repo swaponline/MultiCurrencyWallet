@@ -22,6 +22,7 @@ import ipfs from './ipfs'
 import btrm from './btrm'
 import swap from './swap'
 import noxon from './noxon'
+import syc from './syc'
 import jot from './jot'
 
 import usdt from './usdt'
@@ -29,6 +30,7 @@ import usdt from './usdt'
 
 export default {
   btrm,
+  syc,
   swap,
   noxon,
   jot,

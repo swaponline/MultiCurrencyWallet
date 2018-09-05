@@ -31,6 +31,8 @@ export default class Seo extends Component {
       return null
     }
     const { uri, title, description } = this.seoPage
+
+    console.log('seo', this.seoPage)
     const url = getUrl(uri)
     return (
       <DocumentMeta
