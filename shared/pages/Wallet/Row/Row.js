@@ -48,7 +48,8 @@ export default class Row extends Component {
   }
 
   handleReloadBalance = async () => {
-    const { isBalanceFetching, token } = this.state
+    const { isBalanceFetching } = this.state
+    const { token } = this.props
 
     if (isBalanceFetching) {
       return null

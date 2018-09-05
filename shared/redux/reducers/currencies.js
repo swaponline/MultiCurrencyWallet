@@ -49,6 +49,13 @@ export const initialState = {
       fullTitle: 'Synexcoin',
     },
     {
+      name: 'YUP',
+      title: 'YUP',
+      icon: 'yup',
+      value: 'yup',
+      fullTitle: 'yup',
+    },
+    {
       name: 'SWAP',
       title: 'SWAP',
       icon: 'swap',

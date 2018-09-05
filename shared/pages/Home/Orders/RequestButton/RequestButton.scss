@@ -3,7 +3,6 @@
   height: 40px;
   background-color: #e91db4;
   position: relative;
-  cursor: pointer;
   opacity: 0.5;
   border-radius: 50%;
 
@@ -17,5 +16,13 @@
 
   &:hover {
     opacity: 1;
+  }
+}
+
+.disabled {
+  background-color: #828795;
+
+  &:hover {
+    opacity: 0.5;
   }
 }

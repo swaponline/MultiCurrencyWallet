@@ -140,19 +140,14 @@ export default class Row extends Component {
                     isProcessing ? (
                       <span>This order is in execution</span>
                     ) : (
-                      balance > Number(amount) ? (
-                        isFetching ? (
-                          <Fragment>
-                            <InlineLoader />
-                            <br />
-                            <span>Please wait while we confirm your request</span>
-                          </Fragment>
-
-                        ) : (
-                          <RequestButton onClick={() => this.sendRequest(id)} />
-                        )
+                      isFetching ? (
+                        <Fragment>
+                          <InlineLoader />
+                          <br />
+                          <span>Please wait while we confirm your request</span>
+                        </Fragment>
                       ) : (
-                        <span>Insufficient funds</span>
+                        <RequestButton disabled={balance > Number(amount)} onClick={() => this.sendRequest(id)} />
                       )
                     )
                   )

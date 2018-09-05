@@ -16,6 +16,7 @@ import syc from './images/syc.svg'
 import bee from './images/bee.svg'
 import drt from './images/drt.svg'
 import omg from './images/omg.svg'
+import yup from './images/yup.svg'
 
 
 const icons = {
@@ -31,6 +32,7 @@ const icons = {
   waves,
   xrp,
   eos,
+  yup,
   nim,
 }
 

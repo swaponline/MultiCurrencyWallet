@@ -30,6 +30,7 @@
   margin-top: -6px;
   position: absolute;
   top: 50%;
+  z-index: 9999;
   right: 20px;
 }
 
@@ -43,6 +44,7 @@
   top: 100%;
   overflow-x: hidden;
   overflow-y: auto;
+  z-index: 9999;
   border-radius: 6px;
   box-shadow: rgba(#000, 0.08) 0 3px 9px 0;
 }
@@ -68,4 +70,4 @@
   .dropDown.active {
     z-index: 1;
   }
-} 
+}
