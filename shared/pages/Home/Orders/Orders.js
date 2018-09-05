@@ -26,13 +26,6 @@ const filterOrders = (orders, filter) => orders
 }))
 export default class Orders extends Component {
 
-  shouldComponentUpdate(nextProps) {
-    const { orders, myOrders } = this.props
-    return (
-      orders !== nextProps.orders || myOrders !== nextProps.myOrders
-    )
-  }
-
   render() {
     const { sellCurrency, buyCurrency, handleSellCurrencySelect, handleBuyCurrencySelect, flipCurrency, currencies } = this.props
     const titles = [ 'OWNER', 'EXCHANGE', 'YOU BUY', 'YOU SELL', 'EXCHANGE RATE', 'ACTIONS' ]
