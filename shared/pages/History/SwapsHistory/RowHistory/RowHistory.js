@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment/moment'
-import Identicon from 'identicon.js'
 
 import { links } from 'helpers'
 import { Link } from 'react-router-dom'
