@@ -62,7 +62,6 @@ export default class User extends React.Component {
           <Avatar
             className={styles.avatar}
             value={peer}
-            background={[81, 14, 216, 255]}
             size={40}
           />
         )}
