@@ -49,7 +49,7 @@ export default class AddOffer extends Component {
       balance: null,
       isSellFieldInteger: false,
       isBuyFieldInteger: false,
-      manualRate: false
+      manualRate: false,
     }
   }
 
@@ -79,13 +79,12 @@ export default class AddOffer extends Component {
   handleExchangeRateChange = (value) => {
     let { buyAmount, sellAmount } = this.state
 
-    if (value === 0 || !value) { // eslint-disable-line
-      buyAmount   = new BigNumber(0)
-      sellAmount  = new BigNumber(0)
-    } else {
-      buyAmount  = new BigNumber(String(sellAmount) || 0).multipliedBy(value)
-      sellAmount = new BigNumber(String(buyAmount) || 0).dividedBy(value)
+    if (value === 0 || value.lastIndexOf(0, '.') || !value) {
+      return
     }
+
+    buyAmount  = new BigNumber(String(sellAmount)).multipliedBy(value)
+    sellAmount = new BigNumber(String(buyAmount)).dividedBy(value)
 
     this.setState({
       buyAmount,
@@ -168,7 +167,7 @@ export default class AddOffer extends Component {
       this.setState({ isSending: true })
     }
 
-    if(manualRate) {
+    if (manualRate) {
       let newRate = new BigNumber(String(value)).dividedBy(new BigNumber(String(sellAmount)))
       this.setState({
         exchangeRate: isNaN(newRate) ? '' : newRate,
@@ -198,11 +197,11 @@ export default class AddOffer extends Component {
       actions.analytics.dataEvent('orderbook-addoffer-enter-ordervalue')
       this.setState({ isSending: true })
     }
-    if(manualRate) {
+    if (manualRate) {
       let newRate = new BigNumber(String(buyAmount)).dividedBy(new BigNumber(String(value)))
       this.setState({
         sellAmount: new BigNumber(String(value)),
-        exchangeRate: isNaN(newRate) ? '' : newRate
+        exchangeRate: isNaN(newRate) ? '' : newRate,
       })
     } else {
       this.setState({
@@ -236,10 +235,10 @@ export default class AddOffer extends Component {
   }
 
   handleManualRate = (value) => {
-    if(!value) {
-      this.handleSellCurrencySelect({value:this.state.sellCurrency})
+    if (!value) {
+      this.handleSellCurrencySelect({ value:this.state.sellCurrency })
     }
-    this.setState({manualRate: value});
+    this.setState({ manualRate: value })
   }
 
   render() {
@@ -267,7 +266,7 @@ export default class AddOffer extends Component {
           sellCurrency={sellCurrency}
         />
         <div>
-          <Toggle checked={manualRate} onChange={this.handleManualRate}></Toggle> Custom exchange rate
+          <Toggle checked={manualRate} onChange={this.handleManualRate} /> Custom exchange rate
         </div>
         <Select
           changeBalance={this.changeBalance}
