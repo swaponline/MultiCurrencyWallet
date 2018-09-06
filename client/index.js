@@ -14,7 +14,7 @@ ReactDOM.render(
 
 const ipfsRoom = window.document.getElementById('ipfsRoom')
 
-migrate().then(()=> setInterval(ipfsRoom.onload = () => {
+migrate().finally(()=> setInterval(ipfsRoom.onload = () => {
   ReactDOM.render(
     <Root history={history} store={store} routes={routes} />,
     document.getElementById('root')
