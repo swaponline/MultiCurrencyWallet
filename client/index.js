@@ -5,7 +5,7 @@ import store, { history } from 'redux/store'
 
 import Root from 'containers/Root/Root'
 import Loader from 'components/loaders/Loader/Loader'
-
+import { migrate } from 'helpers'
 
 ReactDOM.render(
   <Loader showTips />,
@@ -14,9 +14,9 @@ ReactDOM.render(
 
 const ipfsRoom = window.document.getElementById('ipfsRoom')
 
-setInterval(ipfsRoom.onload = () => {
+migrate().then(()=> setInterval(ipfsRoom.onload = () => {
   ReactDOM.render(
     <Root history={history} store={store} routes={routes} />,
     document.getElementById('root')
   )
-}, 500)
+}, 500))
