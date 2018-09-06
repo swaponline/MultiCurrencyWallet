@@ -1,6 +1,6 @@
 const tips = {
   loader: [
-    'Do not forget save your private keys!'
+    'Do not forget to save your private keys!'
   ]
 }
 

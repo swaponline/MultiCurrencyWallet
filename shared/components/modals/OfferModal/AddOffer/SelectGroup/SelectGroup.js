@@ -7,11 +7,12 @@ import Group from '../Group/Group'
 import CurrencySelect from 'components/ui/CurrencySelect/CurrencySelect'
 
 
-const SelectGroup = ({ className, label, id, inputValueLink, placeholder, isInteger, selectedCurrencyValue, onCurrencySelect, currencies }) => (
+const SelectGroup = ({ className, disabled, label, id, inputValueLink, placeholder, isInteger, selectedCurrencyValue, onCurrencySelect, currencies }) => (
   <Group
     className={className}
     label={label}
     id={id}
+    disabled={disabled}
     isInteger={isInteger}
     inputValueLink={inputValueLink}
     placeholder={placeholder}>
