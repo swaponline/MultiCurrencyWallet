@@ -146,7 +146,7 @@ export default class Row extends Component {
             ) : (
               <Fragment>
                 <i className="fas fa-sync-alt" styleName="icon" onClick={this.handleReloadBalance} />
-                <span>{String(balance).length > 4 ? balance.toFixed(4) : balance}</span>
+                <span onClick={this.handleReloadBalance}>{String(balance).length > 4 ? balance.toFixed(4) : balance}</span>
                 { currency === 'BTC' && currency === 'USDT' && unconfirmedBalance !== 0 && (
                   <Fragment>
                     <br />
