@@ -8,6 +8,7 @@ import core from './core'
 import filter from './filter'
 
 import btc from './btc'
+import bch from './bch'
 import eth from './eth'
 import eos from './eos'
 import token from './token'
@@ -40,6 +41,7 @@ export default {
   notifications,
   user,
   core,
+  bch,
   btc,
   usdt,
   eth,

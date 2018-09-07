@@ -8,6 +8,7 @@ import eth from './images/eth.svg'
 import icx from './images/icx.svg'
 import waves from './images/waves.svg'
 import xrp from './images/xrp.svg'
+import bch from './images/bch.svg'
 import nim from './images/nim.svg'
 import eos from './images/eos.svg'
 import swap from './images/swap.svg'
@@ -22,6 +23,7 @@ import yup from './images/yup.svg'
 const icons = {
   btc,
   bee,
+  bch,
   drt,
   omg,
   eth,

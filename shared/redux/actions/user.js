@@ -10,11 +10,13 @@ import reducers from 'redux/core/reducers'
 
 const sign = async () => {
   const btcPrivateKey = localStorage.getItem(constants.privateKeyNames.btc)
+  const bchPrivateKey = localStorage.getItem(constants.privateKeyNames.bch)
   const ethPrivateKey = localStorage.getItem(constants.privateKeyNames.eth)
   const _ethPrivateKey = actions.eth.login(ethPrivateKey)
 
   actions.btc.login(btcPrivateKey)
-  actions.usdt.login(btcPrivateKey)
+  actions.bch.login(bchPrivateKey)
+  // actions.usdt.login(btcPrivateKey)
 
   Object.keys(config.tokens)
     .forEach(name => {
@@ -33,6 +35,7 @@ const sign = async () => {
 const getBalances = () => {
   actions.eth.getBalance()
   actions.btc.getBalance()
+  actions.bch.getBalance()
   actions.usdt.getBalance()
   actions.eos.getBalance()
 
@@ -76,7 +79,7 @@ const setTransactions = () =>
     })
 
 const getText = () => {
-  const { user : { ethData, btcData, eosData } } = getState()
+  const { user : { ethData, btcData, eosData, bchData } } = getState()
 
 
   const text = `
@@ -118,6 +121,22 @@ Private key: ${btcData.privateKey}\r\n
 \r\n
 EOS Master Private Key: ${eosData.masterPrivateKey}\r\n
 Account name: ${eosData.address}\r\n
+
+#BITCOIN CASH
+\r\n
+\r\n
+BitcoinCash address: ${bchData.address}  \r\n
+Private key: ${bchData.privateKey}\r\n
+\r\n
+\r\n
+1. Go to blockchain.info
+2. login
+3. Go to settings > addresses > import
+4. paste private key and click "Ok"
+
+\r\n
+\r\n
+\r\n
 `
 
   return text

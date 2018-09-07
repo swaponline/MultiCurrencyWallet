@@ -30,14 +30,13 @@ export default class Home extends Component {
   componentWillMount() {
     let { filter, match: { params: { buy, sell } } } = this.props
 
-    if (!buy && !sell) {
+    if (typeof buy !== 'string' || typeof sell !== 'string') {
       filter = filter.split('-')
-      this.handelReplaceHistory(filter[1], filter[0])
+      this.handelReplaceHistory(filter[0], filter[1])
+    }
 
-      this.setState(() => ({
-        buyCurrency: filter[0],
-        sellCurrency: filter[1],
-      }))
+    if (buy !== this.state.sellCurrency || sell !== this.state.sellCurrency) {
+      actions.core.setFilter(`${sell}-${buy}`)
     }
   }
 

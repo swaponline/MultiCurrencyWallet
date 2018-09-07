@@ -2,7 +2,6 @@ $information-footer-height: 44px;
 
 .footer {
   width: 100%;
-  background: #ffffff;
   margin-top: 44px;
 }
 
@@ -18,40 +17,18 @@ $information-footer-height: 44px;
 
 .container {
   display: flex;
+  flex-direction: column;
   height: 100%;
   align-items: center;
-
-  &--copyright {
-    display: flex;
-    margin-top: 16px;
-    flex-wrap: wrap;
-  }
-
-  &--social {
-    display: flex;
-    justify-content: center;
-    margin-top: 32px;
-  }
-}
-
-
-.default-footer {
-  padding-bottom: 8px;
+  margin-top: 16px;
+  flex-wrap: wrap;
 }
 
 .copyright {
-  margin-top: 16px;
-  display: flex;
-  align-items: center;
-
-  &-logo {
-    width: 80px;
-    height: 50px;
-  }
+  border-top: 1px solid rgba(255,255,255, 0);
 
   &-text {
-    font-size: 16px;
-    margin-top: 8px;
+    font-size: 14px;
     color: rgba(51, 51, 51, 0.6);
   }
 }
@@ -61,10 +38,6 @@ $information-footer-height: 44px;
     display: flex;
     justify-content: center;
     text-align: center;
-  }
-
-  .default-footer {
-    margin-top: 30px;
   }
 
   .copyright {

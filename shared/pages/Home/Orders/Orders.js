@@ -16,7 +16,7 @@ const filterOrders = (orders, filter) => orders
   ) : (
     `${order.sellCurrency.toLowerCase()}-${order.buyCurrency.toLowerCase()}` === filter
   ))
-  .sort((a, b) => Number(b.buyAmount.dividedBy(b.sellAmount)) - Number(a.buyAmount.dividedBy(a.sellAmount)))
+  .sort((a, b) => b.exchangeRate - a.exchangeRate)
 
 @connect(({  core: { orders, filter }, ipfs: { isOnline, peer }, currencies: { items: currencies } }) => ({
   orders: filterOrders(orders, filter),
