@@ -56,7 +56,7 @@ export default {
     etherscan: 'https://rinkeby.etherscan.io',
     eos: 'http://jungle.cryptolions.io',
     omniexplorer: '',
-    bch: 'https://bch.btc.com',
+    bch: 'https://bch-insight.bitpay.com/#',
   },
 
   api: {

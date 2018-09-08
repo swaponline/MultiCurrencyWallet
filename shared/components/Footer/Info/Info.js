@@ -45,12 +45,14 @@ class Info extends React.Component {
 
     return (
       <div styleName="title">
-        <span styleName={isOnline ? 'connect' : 'disconnect'}>
-          {isOnline ? 'Connected ' : 'Loading or not available '}
+        <span>
+          <span styleName={isOnline ? 'connect' : 'disconnect'}>
+            {isOnline ? 'Connected ' : 'Loading or not available '}
+          </span>
+          to IPFS signal {serverAddress} / peers online: {onlineUsers}
         </span>
-        to IPFS signal {serverAddress} / peers online: {onlineUsers}
-
         { isVisibleProgressBar && <Line strokeColor="#2181F7" percent={progressValue} strokeWidth="1" /> }
+        <span styleName="copyright-text">© 2018 Swap Online Harju maakond, Tallinn, Kesklinna linnaosa</span>
       </div>
     )
   }

@@ -1,6 +1,6 @@
 export default {
   home: '/',
-  exchange: '/swap-btc',
+  exchange: '/exchange',
   history: '/history',
   swap: '/swap',
   feed: '/feed',

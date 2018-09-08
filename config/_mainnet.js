@@ -66,7 +66,7 @@ export default {
     etherscan: 'https://etherscan.io',
     eos: '',
     omniexplorer: 'https://www.omniexplorer.info',
-    bch: 'https://bch.btc.com',
+    bch: 'https://bch-insight.bitpay.com/#/',
   },
 
   api: {

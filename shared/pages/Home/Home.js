@@ -22,8 +22,8 @@ export default class Home extends Component {
     const { buyCurrency, sellCurrency } = initialData || {}
 
     this.state = {
-      buyCurrency: buy || buyCurrency,
-      sellCurrency: sell || sellCurrency,
+      buyCurrency: buy || buyCurrency || 'swap',
+      sellCurrency: sell || sellCurrency || 'btc',
     }
   }
 

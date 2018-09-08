@@ -15,10 +15,7 @@ const Footer = (props) => (
     <WidthContainer styleName="container">
       <Links />
       <SocialMenu />
-      <div style={{  }} >
-        <Info {...props} />
-        <span styleName="copyright-text">© 2018 Swap Online Harju maakond, Tallinn, Kesklinna linnaosa</span>
-      </div>
+      <Info {...props} />
     </WidthContainer>
   </div>
 )
