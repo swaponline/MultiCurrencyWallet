@@ -12,13 +12,15 @@ const login = (privateKey) => {
   } else {
     privateKey  = new bch.PrivateKey(bcash.network)
     address = privateKey.toAddress(bcash.network)
+
+    localStorage.setItem(constants.privateKeyNames.bch, privateKey.toWIF())
   }
 
-  localStorage.setItem(constants.privateKeyNames.bch, privateKey)
+  const { BitpayFormat } = bch.Address
 
   const data = {
-    address: address.toString(),
-    privateKey,
+    address: address.toString(BitpayFormat),
+    privateKey: privateKey.toWIF(),
   }
 
   reducers.user.setAuthData({ name: 'bchData', data })
