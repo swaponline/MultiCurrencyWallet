@@ -186,12 +186,12 @@ export default class Row extends Component {
         <td>
           <div>
             <WithdrawButton onClick={this.handleWithdraw} styleName="marginRight">
-              <i className="fas fa-arrow-alt-circle-down" />
+              <i className="fas fa-arrow-alt-circle-up" />
               <span>Send</span>
             </WithdrawButton>
             { isMobile && (
               <WithdrawButton onClick={this.handleReceive} styleName="marginRight">
-                <i className="fas fa-arrow-alt-circle-up" />
+                <i className="fas fa-arrow-alt-circle-down" />
                 <span>Receive</span>
               </WithdrawButton>
             )}
