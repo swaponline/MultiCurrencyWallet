@@ -93,6 +93,14 @@ const config = {
       description: '',
       title: 'ERC 20 token',
     },
+    kn: {
+      description: '',
+      title: 'ERC 20 token',
+    },
+    bch: {
+      description: '',
+      title: 'Bitcoin Cash',
+    },
   },
 }
 

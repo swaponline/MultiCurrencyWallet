@@ -47,6 +47,10 @@ export default {
       address: '0x49feeF410293261c04F1d14600Ba427F8eED8723',
       decimals: 2,
     },
+    kn: {
+      address: '0xbfd18F20423694a69e35d65cB9c9D74396CC2c2d',
+      decimals: 18,
+    },
     yup: {
       address: '0xD9A12Cde03a86E800496469858De8581D3A5353d',
       decimals: 18,

@@ -18,10 +18,12 @@ import bee from './images/bee.svg'
 import drt from './images/drt.svg'
 import omg from './images/omg.svg'
 import yup from './images/yup.svg'
+import kn from './images/kn.svg'
 
 
 const icons = {
   btc,
+  kn,
   bee,
   bch,
   drt,

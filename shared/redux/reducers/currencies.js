@@ -15,6 +15,20 @@ export const initialState = {
       fullTitle: 'ethereum',
     },
     {
+      name: 'KN',
+      title: 'KN',
+      icon: 'kn',
+      value: 'kn',
+      fullTitle: 'Know Token',
+    },
+    {
+      name: ' BCH',
+      title: 'BCH',
+      icon: 'bch',
+      value: 'bch',
+      fullTitle: 'Bitcoin Cash',
+    },
+    {
       name: 'BTC',
       title: 'BTC',
       icon: 'btc',

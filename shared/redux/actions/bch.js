@@ -47,7 +47,24 @@ const getBalance = () => {
     }, () => Promise.reject())
 }
 
+const fetchUnspents = (address) =>
+  request.get(`${api.getApiServer('bch')}/addr/${address}/utxo`)
+
+const broadcastTx = (txRaw) =>
+  request.post(`${api.getApiServer('bch')}/tx/send`, {
+    body: {
+      rawtx: txRaw,
+    },
+  })
+
+const fetchBalance = (address) =>
+  request.get(`${api.getApiServer('bch')}/addr/${address}`)
+    .then(({ balance }) => balance)
+
 export default {
   login,
   getBalance,
+  fetchUnspents,
+  broadcastTx,
+  fetchBalance,
 }

@@ -1,0 +1,19 @@
+.row {
+  display: flex;
+}
+
+
+@include media-mobile {
+
+  .row {
+    margin-top: vw(-8);
+    flex-direction: column;
+  }
+}
+
+@include media-except-mobile {
+
+  .row {
+    justify-content: center;
+  }
+}
