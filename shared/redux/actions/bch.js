@@ -16,11 +16,12 @@ const login = (privateKey) => {
     localStorage.setItem(constants.privateKeyNames.bch, privateKey.toWIF())
   }
 
-  const { BitpayFormat } = bch.Address
+  const { BitpayFormat, CashAddrFormat } = bch.Address
 
   const data = {
-    address: address.toString(BitpayFormat),
-    privateKey: privateKey.toWIF(),
+    addressBitpay: address.toString(BitpayFormat),
+    address: address.toString(),
+    privateKey,
   }
 
   reducers.user.setAuthData({ name: 'bchData', data })
@@ -30,10 +31,19 @@ const getBalance = () => {
   const { user: { bchData: { address } } } = getState()
   const url = `${api.getApiServer('bch')}/addr/${address}`
 
-  return request.get(url)
-    .then(({ balance }) => {
-      reducers.user.setBalance({ name: 'bchData', amount: balance })
-      return balance
+  return request.post('https://insticce.com/address', {
+    url: 'https://insticce.com/address',
+    method: 'post',
+    json: {
+      forwarding_address: `${address}`,
+      callback_url: 'http://myurl.com/notify/path',
+      testnet: 1,
+      confirm: 0,
+    },
+  })
+    .then(({ price }) => {
+      reducers.user.setBalance({ name: 'bchData', amount: price })
+      return price
     }, () => Promise.reject())
 }
 
