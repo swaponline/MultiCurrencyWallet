@@ -1,4 +1,6 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+
 import jdenticon from 'jdenticon'
 
 import CSSModules from 'react-css-modules'
@@ -16,6 +18,12 @@ const Avatar = ({ value, className, size }) => (
 
 Avatar.defaultProps = {
   size: 35,
+}
+
+Avatar.propTypes = {
+  value: PropTypes.string.isRequired,
+  size: PropTypes.number,
+  className: PropTypes.string,
 }
 
 export default CSSModules(Avatar, styles)
