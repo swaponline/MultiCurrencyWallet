@@ -104,8 +104,6 @@ export default class App extends React.Component {
     const { children, ethAddress, btcAddress, tokenAddress, history /* eosAddress */ } = this.props
     const isFetching = !ethAddress || !btcAddress || !tokenAddress || !fetching
 
-    console.log('isFetching', isFetching)
-
     if (multiTabs) {
       return <PreventMultiTabs />
     }

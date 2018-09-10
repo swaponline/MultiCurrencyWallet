@@ -24,6 +24,7 @@ const Filter = ({ filter }) => {
       {
         filters.map(item => (
           <FilterLink
+            key={item}
             name={item}
             onClick={() => handleChangeFilter(item.toLowerCase())}
             filter={filter}

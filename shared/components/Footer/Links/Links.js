@@ -33,8 +33,8 @@ const link = [
   ],
 ]
 
-const Rows = items => items.map(item => (
-  <Fragment>
+const Rows = items => items.map((item, index) => (
+  <Fragment key={index}>
     { item.header && <h4>{item.header}</h4> }
     <a href={item.link} target="_blank" rel="noopener noreferrer">{item.title}</a>
   </Fragment>
@@ -44,8 +44,8 @@ const Rows = items => items.map(item => (
 const Links = () => (
   <div styleName="links">
     {
-      link.map(items => (
-        <div styleName="column">
+      link.map((items, index) => (
+        <div styleName="column" key={index}>
           {
             Rows(items)
           }
