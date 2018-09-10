@@ -8,7 +8,7 @@ import SwapsHistory from './SwapsHistory/SwapsHistory'
 
 
 import styles from 'components/tables/Table/Table.scss'
-import Filter from 'components/Filter/Filter'
+import Filter from './Filter/Filter'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import InfiniteScrollTable from 'components/tables/InfiniteScrollTable/InfiniteScrollTable'
 
