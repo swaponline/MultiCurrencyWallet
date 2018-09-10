@@ -28,7 +28,7 @@ export default class Wallet extends Component {
     const titles = [ 'Coin', 'Name', 'Actions' ]
 
     return (
-      <section style={{ display: 'flex', justifyContent: 'flex-start' }}>
+      <section style={{ display: 'flex', justifyContent: 'space-around' }}>
         <div style={{ width: '500px' }}>
           <SubTitle style={{ marginTop: '80px' }}>
             Coins in Wallet

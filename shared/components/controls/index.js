@@ -1,18 +1,20 @@
-import Button from './Button/Button'
+import Toggle from './Toggle/Toggle' // input type checkbox
+import TimerButton from './TimerButton/TimerButton' // HOC by timer
+import Button from './Button/Button' // constructor buttons
+
+/* Just button */
+
 import Flip from './Flip/Flip'
-import ReloadButton from './ReloadButton/ReloadButton'
 import RemoveButton from './RemoveButton/RemoveButton'
-import TimerButton from './TimerButton/TimerButton'
 import WithdrawButton from './WithdrawButton/WithdrawButton'
-import Toggle from './Toggle/Toggle'
 
 
 export {
-  Button,
-  Flip,
-  ReloadButton,
-  RemoveButton,
+  Toggle,
   TimerButton,
+  Button,
+
+  Flip,
+  RemoveButton,
   WithdrawButton,
-  Toggle
 }

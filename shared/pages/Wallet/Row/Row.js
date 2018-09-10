@@ -136,7 +136,7 @@ export default class Row extends Component {
     return (
       <tr>
         <td>
-          <CoinInteractive onHide={this.handleMarkCoinAsHidden} name={currency} size={40} />
+          <CoinInteractive name={currency} size={40} />
         </td>
         <td>{currency}</td>
         <td>

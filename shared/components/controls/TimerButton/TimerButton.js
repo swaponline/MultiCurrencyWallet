@@ -2,51 +2,15 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import Button from 'components/controls/Button/Button'
+import Timer from 'components/Timer/Timer'
 
 
 export default class TimerButton extends Component {
 
   static propTypes = {
-    timeLeft: PropTypes.number, // seconds
     onClick: PropTypes.func.isRequired,
-  }
-
-  static defaultProps = {
-    timeLeft: 10,
-    isButton: true,
-  }
-
-  timer = null
-
-  constructor({ timeLeft }) {
-    super()
-
-    this.state = {
-      timeLeft,
-    }
-  }
-
-  componentDidMount() {
-    this.tick()
-  }
-
-  componentWillUnmount() {
-    clearTimeout(this.timer)
-  }
-
-  tick = () => {
-    const { timeLeft } = this.state
-    const newTimeLeft = timeLeft - 1
-
-    if (newTimeLeft <= 0) {
-      this.handleClick()
-    }
-    else {
-      this.timer = setTimeout(this.tick, 1000)
-      this.setState({
-        timeLeft: newTimeLeft,
-      })
-    }
+    timeLeft: PropTypes.number.isRequired,
+    className: PropTypes.string,
   }
 
   handleClick = () => {
@@ -57,15 +21,14 @@ export default class TimerButton extends Component {
   }
 
   render() {
-    const { timeLeft } = this.state
-    const { children, isButton } = this.props
+    const { children, timeLeft, className, ...rest } = this.props
 
     return (
-      isButton ? (
-        <Button brand onClick={this.handleClick}>{children} {timeLeft}s</Button>
-      ) : (
-        `${timeLeft}`
-      )
+      <Button onClick={this.handleClick} className={className} {...rest} >
+        {children}
+        <Timer timeLeft={timeLeft} />
+      </Button>
     )
+
   }
 }

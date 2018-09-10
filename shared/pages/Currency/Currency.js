@@ -20,12 +20,12 @@ import { withRouter } from 'react-router'
   tokens: Object.keys(tokensData).map(k => (tokensData[k])),
   items: [ ethData, btcData, eosData, usdtData /* eosData  nimData */ ],
   currencies,
-  hiddenCoinsList
+  hiddenCoinsList,
 }))
 export default class Currency extends Component {
 
   state = {
-    isBalanceFetching: false
+    isBalanceFetching: false,
   }
 
   getRows = () => {
@@ -46,9 +46,7 @@ export default class Currency extends Component {
   }
 
   getCurrencyName = () => this.props.match.params.currency.toLowerCase();
-  getCoin = () => {
-    return [...this.props.items, ...this.props.tokens].find(coin=>(coin.fullName || coin.currency).toLowerCase() === this.getCurrencyName());
-  }
+  getCoin = () => [...this.props.items, ...this.props.tokens].find(coin => (coin.fullName || coin.currency).toLowerCase() === this.getCurrencyName())
 
   handleReloadBalance = () => {
     const { isBalanceFetching } = this.state
@@ -67,7 +65,7 @@ export default class Currency extends Component {
 
     actions[action]
       .getBalance(currency)
-      .finally(()=> this.setState({
+      .finally(() => this.setState({
         isBalanceFetching: false,
       }))
   }
@@ -78,7 +76,7 @@ export default class Currency extends Component {
     actions.core.markCoinAsHidden(this.getCoin().currency);
 
   componentWillMount = () => {
-    if(!this.getCoin()) {
+    if (!this.getCoin()) {
       this.props.history.push('/')
       return false
     }
@@ -90,7 +88,7 @@ export default class Currency extends Component {
     const { match: { params: { currency } } } = this.props
     const { isBalanceFetching } = this.state
     const coin = this.getCoin()
-    if(!coin) return false
+    if (!coin) return false
     return (
       <section>
         <PageHeadline>
@@ -99,19 +97,19 @@ export default class Currency extends Component {
             <SubTitle>{currency.toUpperCase()} Trade</SubTitle>
             <p>{config.currency[currency.toLowerCase()] ? config.currency[currency.toLowerCase()].description : ''}</p>
           </Fragment>
-            <div> Balance: {
-              !coin.isBalanceFetched || isBalanceFetching ? (
-                <InlineLoader />
-              ) : (
-                <Fragment>
-                  <span>{String(coin.balance).length > 5 ? coin.balance.toFixed(5) : coin.balance} {coin.currency}</span>
-                </Fragment>
-              )
-            } </div>
-           <div>
-            <Toggle onChange={this.handleInWalletChange} checked={this.isInWallet()}></Toggle>Added to Wallet {this.isInWallet()}
-
-           </div>
+          <div> Balance: {
+            !coin.isBalanceFetched || isBalanceFetching ? (
+              <InlineLoader />
+            ) : (
+              <Fragment>
+                <span>{String(coin.balance).length > 5 ? coin.balance.toFixed(5) : coin.balance} {coin.currency}</span>
+              </Fragment>
+            )
+          }
+          </div>
+          <div>
+            <Toggle onChange={this.handleInWalletChange} checked={this.isInWallet()} />Added to Wallet
+          </div>
         </PageHeadline>
         <Table
           titles={['Coin', 'Exchange', '']}
