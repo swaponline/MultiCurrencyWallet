@@ -1,10 +1,9 @@
 import baseConfig from './default'
-import config from './_mainnet'
+import config from './_config'
 
 
 export default {
   env: 'production',
-  entry: 'mainnet',
 
   base: 'https://swap.online/',
   publicPath: `https://swap.online${baseConfig.publicPath}`,

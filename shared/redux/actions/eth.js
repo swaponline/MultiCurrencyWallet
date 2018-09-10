@@ -57,7 +57,7 @@ const getTransaction = () =>
   new Promise((resolve) => {
     const { user: { ethData: { address } } } = getState()
 
-    const url = `${api.getApiServer('etherscan')}?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=${config.apiKeys.etherscan}`
+    const url = `${api.getApiServer('etherscan')}?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=RHHFPNMAZMD6I4ZWBZBF6FA11CMW9AXZNM`
 
     return request.get(url)
       .then((res) => {

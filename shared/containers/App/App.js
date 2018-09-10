@@ -35,7 +35,7 @@ moment.locale(userLanguage)
   isVisible: 'loader.isVisible',
   ethAddress: 'user.ethData.address',
   btcAddress: 'user.btcData.address',
-  tokenAddress: 'user.tokensData.noxon.address',
+  tokenAddress: 'user.tokensData.swap.address',
 })
 @CSSModules(styles)
 export default class App extends React.Component {
@@ -103,6 +103,8 @@ export default class App extends React.Component {
     const { fetching, multiTabs, error, fallbackUiError } = this.state
     const { children, ethAddress, btcAddress, tokenAddress, history /* eosAddress */ } = this.props
     const isFetching = !ethAddress || !btcAddress || !tokenAddress || !fetching
+
+    console.log('isFetching', isFetching)
 
     if (multiTabs) {
       return <PreventMultiTabs />

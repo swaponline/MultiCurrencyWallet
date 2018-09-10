@@ -39,7 +39,7 @@ export default class Row extends Component {
   componentDidMount() {
     const { hiddenCoinsList } = this.props
 
-    Object.keys(config.tokens)
+    Object.keys(config.erc20)
       .forEach(name => {
         if (!hiddenCoinsList.includes(name.toUpperCase())) {
           actions.core.markCoinAsVisible(name.toUpperCase())
@@ -166,7 +166,7 @@ export default class Row extends Component {
               {
                 !contractAddress ? (
                   <Fragment>
-                    { currency !== 'EOS' && <i className="far fa-copy" styleName="icon" /> }
+                    <i className="far fa-copy" styleName="icon" />
                     <LinkAccount type={currency} address={address} >{address}</LinkAccount>
                   </Fragment>
                 ) : (

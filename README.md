@@ -46,4 +46,4 @@ Alice wants to sell BTC and buy ETH, Bob instead wants to sell ETH and buy BTC.
  12. Alice signs a call to the ETH Swap contract to withdraw ETH.
  13. Bob is notified that Alice did withdraw. Bob signs a call to the ETH Swap contract to receive the secret.
  14. Bob signs the BTC script method to withdraw 1 BTC.
- 
+

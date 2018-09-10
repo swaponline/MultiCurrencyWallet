@@ -21,10 +21,12 @@ const setupEOS = async () => {
   const EOS = await import('eosjs')
   console.log('eos finish import')
 
-  const { chainId, httpEndpoint } = config.services.eos
+  const { httpEndpoint, chainId } = config.api.eos
 
   eosInstance = EOS({
-    chainId, httpEndpoint, keyProvider,
+    chainId,
+    httpEndpoint,
+    keyProvider,
   })
 
   eccInstance = EOS.modules.ecc

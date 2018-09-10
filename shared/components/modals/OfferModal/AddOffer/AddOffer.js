@@ -39,7 +39,7 @@ export default class AddOffer extends Component {
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency } = initialData || {}
 
     this.state = {
-      exchangeRate: exchangeRate || config.exchangeRates.ethbtc,
+      exchangeRate: exchangeRate || 1,
       buyAmount: buyAmount || '',
       sellAmount: sellAmount || '',
       buyCurrency: buyCurrency || 'btc',
@@ -107,7 +107,7 @@ export default class AddOffer extends Component {
     const { exchangeRate } = this.state
     sellAmount = new BigNumber(String(buyAmount) || 0).multipliedBy(exchangeRate)
 
-    const isBuyFieldInteger = config.tokens[buyCurrency] && config.tokens[buyCurrency].decimals === 0
+    const isBuyFieldInteger = config.erc20[buyCurrency] && config.erc20[buyCurrency].decimals === 0
 
     if (isBuyFieldInteger) {
       buyAmount = new BigNumber(String(buyAmount) || 0).dp(0, BigNumber.ROUND_HALF_EVEN)
@@ -117,7 +117,7 @@ export default class AddOffer extends Component {
       sellCurrency,
       sellAmount: isNaN(sellAmount) ? '' : sellAmount,
       buyAmount: isNaN(buyAmount) ? '' : buyAmount,
-      isSellFieldInteger: config.tokens[sellCurrency] && config.tokens[sellCurrency].decimals === 0,
+      isSellFieldInteger: config.erc20[sellCurrency] && config.erc20[sellCurrency].decimals === 0,
       isBuyFieldInteger,
     })
   }
@@ -136,7 +136,7 @@ export default class AddOffer extends Component {
     const { exchangeRate } = this.state
     buyAmount = new BigNumber(String(sellAmount) || 0).multipliedBy(exchangeRate)
 
-    const isSellFieldInteger = config.tokens[sellCurrency] && config.tokens[sellCurrency].decimals === 0
+    const isSellFieldInteger = config.erc20[sellCurrency] && config.erc20[sellCurrency].decimals === 0
 
     if (isSellFieldInteger) {
       sellAmount = new BigNumber(String(sellAmount) || 0).dp(0, BigNumber.ROUND_HALF_EVEN)
@@ -148,7 +148,7 @@ export default class AddOffer extends Component {
       buyAmount: isNaN(buyAmount) ? '' : buyAmount,
       sellAmount: isNaN(sellAmount) ? '' : sellAmount,
       isSellFieldInteger,
-      isBuyFieldInteger: config.tokens[buyCurrency] && config.tokens[buyCurrency].decimals === 0,
+      isBuyFieldInteger: config.erc20[buyCurrency] && config.erc20[buyCurrency].decimals === 0,
     })
   }
 

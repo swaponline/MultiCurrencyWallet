@@ -58,8 +58,6 @@ export default class History extends Component {
     const { items, swapHistory } = this.props
     const titles = [ 'Coin', 'Status', 'Statement', 'Amount' ]
 
-    console.log('swapHistory', swapHistory)
-
     return (
       <section>
         <PageHeadline subTitle="History" />

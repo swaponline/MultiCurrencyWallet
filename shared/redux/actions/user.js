@@ -18,9 +18,9 @@ const sign = async () => {
   actions.bch.login(bchPrivateKey)
   // actions.usdt.login(btcPrivateKey)
 
-  Object.keys(config.tokens)
+  Object.keys(config.erc20)
     .forEach(name => {
-      actions.token.login(_ethPrivateKey, config.tokens[name].address, name, config.tokens[name].decimals)
+      actions.token.login(_ethPrivateKey, config.erc20[name].address, name, config.erc20[name].decimals)
     })
   // await actions.nimiq.login(_ethPrivateKey)
 
@@ -39,7 +39,7 @@ const getBalances = () => {
   actions.usdt.getBalance()
   actions.eos.getBalance()
 
-  Object.keys(config.tokens)
+  Object.keys(config.erc20)
     .forEach(name => {
       actions.token.getBalance(name)
     })
@@ -62,7 +62,7 @@ const getExchangeRate = (sellCurrency, buyCurrency) => new Promise((resolve, rej
     resolve(exchangeRate)
   })
     .catch(() => {
-      resolve(config.exchangeRates[`${sellCurrency.toLowerCase()}${buyCurrency.toLowerCase()}`])
+      resolve(1)
     })
 })
 
@@ -70,8 +70,7 @@ const setTransactions = () =>
   Promise.all([
     actions.btc.getTransaction(),
     actions.eth.getTransaction(),
-    actions.token.getTransaction(config.tokens.swap.address),
-    actions.token.getTransaction(config.tokens.noxon.address),
+    actions.token.getTransaction('swap'),
   ])
     .then(transactions => {
       let data = [].concat([], ...transactions).sort((a, b) => b.date - a.date)
