@@ -3,16 +3,17 @@ import React from 'react'
 import Href from 'components/Href/Href'
 import config from 'app-config'
 
+
 export default ({ type, id, link = '#' }) => {
   switch (type) {
     case 'BTC':
-      link = `${config.api.blocktrail}/tx/${id}`
+      return link = `${config.api.blocktrail}/tx/${id}`
 
     case 'ETH':
-      link = `${config.link.etherscan}/tx/${id}`
+      return link = `${config.link.etherscan}/tx/${id}`
 
     case 'EOS':
-      link = `${config.link.eos}/#tx/${id}`
+      return link = `${config.link.eos}/#tx/${id}`
   }
 
   return (

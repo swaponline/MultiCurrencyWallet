@@ -20,7 +20,7 @@ const login = (privateKey) => {
 
   const data = {
     addressBitpay: address.toString(BitpayFormat),
-    address: address.toString(),
+    address: address.toString(CashAddrFormat),
     privateKey,
   }
 
@@ -31,19 +31,10 @@ const getBalance = () => {
   const { user: { bchData: { address } } } = getState()
   const url = `${api.getApiServer('bch')}/addr/${address}`
 
-  return request.post('https://insticce.com/address', {
-    url: 'https://insticce.com/address',
-    method: 'post',
-    json: {
-      forwarding_address: `${address}`,
-      callback_url: 'http://myurl.com/notify/path',
-      testnet: 1,
-      confirm: 0,
-    },
-  })
-    .then(({ price }) => {
-      reducers.user.setBalance({ name: 'bchData', amount: price })
-      return price
+  return request.get(url)
+    .then(({ balance }) => {
+      reducers.user.setBalance({ name: 'bchData', amount: balance })
+      return balance
     }, () => Promise.reject())
 }
 

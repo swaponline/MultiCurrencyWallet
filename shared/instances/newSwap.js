@@ -82,6 +82,9 @@ const createSwapApp = () => {
     flows: [
       ETH2BTC,
       BTC2ETH,
+
+      EOS2BTC,
+      BTC2EOS,
     ],
   })
 }
