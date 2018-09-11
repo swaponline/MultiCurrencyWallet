@@ -7,6 +7,7 @@
   text-transform: uppercase;
   text-align: center;
   font-size: 18px;
+  border: none;
   border-radius: 6px;
   @include no-user-select;
   transition:
@@ -68,4 +69,4 @@
     height: 46px;
     line-height: 46px;
   }
-} 
+}
