@@ -5,6 +5,7 @@ import web3 from 'helpers/web3'
 import bitcoin from 'bitcoinjs-lib'
 
 import Channel from 'ipfs-pubsub-room'
+import IPFS from 'ipfs'
 
 import config from 'app-config'
 import { constants as privateKeys } from 'helpers'
@@ -26,7 +27,7 @@ const createSwapApp = () => {
       eos,
       web3,
       bitcoin,
-      Ipfs: window.Ipfs,
+      Ipfs: IPFS,
       IpfsRoom: Channel,
       storage: window.localStorage,
     },

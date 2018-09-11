@@ -12,11 +12,10 @@ ReactDOM.render(
   document.getElementById('root')
 )
 
-const ipfsRoom = window.document.getElementById('ipfsRoom')
 
-setInterval(ipfsRoom.onload = () => {
+setTimeout(() => {
   ReactDOM.render(
     <Root history={history} store={store} routes={routes} />,
     document.getElementById('root')
   )
-}, 500)
+}, 3000)
