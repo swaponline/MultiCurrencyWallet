@@ -82,9 +82,9 @@ export default class WithdrawModal extends React.Component {
       <Modal name={name} title={`Withdraw ${data.currency.toUpperCase()}`}>
         <p style={{ fontSize: '16px' }}>Please notice, that you need to have minimum 0.01 amount <br /> of the ETH on your wallet, to use it for Ethereum miners fee</p>
         <FieldLabel inRow>Address</FieldLabel>
-        <Input valueLink={linked.address} pattern="0-9a-zA-Z" />
+        <Input valueLink={linked.address} focusOnInit pattern="0-9a-zA-Z" placeholder="Enter address" />
         <FieldLabel inRow>Amount</FieldLabel>
-        <Input valueLink={linked.amount} pattern="0-9\." />
+        <Input valueLink={linked.amount} pattern="0-9\." placeholder={`Enter amount, you have ${balance}`} />
         {
           !linked.amount.error && (
             <div styleName="note">No less than 0.01</div>
