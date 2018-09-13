@@ -92,6 +92,10 @@ export default class Row extends Component {
     actions.modals.open(constants.modals.Eos, {})
   }
 
+  handleEosCreateAccount = () => {
+    actions.eos.createAccount()
+  }
+
   handleWithdraw = () => {
     const { currency, address, contractAddress, decimals, balance, token } = this.props
 
@@ -178,6 +182,9 @@ export default class Row extends Component {
               }
               {
                 currency === 'EOS' && address === '' && <button styleName="button" onClick={this.handleEosLogin}>Login</button>
+              }
+              {
+                currency === 'EOS' && address === '' && <button styleName="button" onClick={this.handleEosCreateAccount}>Register</button>
               }
               { isAddressCopied && <p styleName="copied" >Address copied to clipboard</p> }
             </td>
