@@ -1,3 +1,4 @@
+import config from 'app-config'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
 import constants from 'helpers/constants'
@@ -36,6 +37,30 @@ const register = async (accountName, privateKey) => {
 const login = async (accountName, masterPrivateKey) => {
   const keys = await Keygen.generateMasterKeys(masterPrivateKey)
   reducers.user.setAuthData({ name: 'eosData', data: { ...keys, address: accountName } })
+}
+
+const createAccount = async () => {
+  const keys = await Keygen.generateMasterKeys()
+  const { masterPrivateKey, publicKeys: { owner } } = keys
+
+  localStorage.setItem(constants.privateKeyNames.eos, masterPrivateKey)
+  reducers.user.setAuthData({ name: 'eosData', data: { ...keys }})
+
+  console.log(`request to create account for ${owner}`)
+  const { registerEndpoint } = config.api.eos
+  const response = await fetch(registerEndpoint, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ publicKey: owner }),
+  })
+  const { accountName, transaction_id } = await response.json()
+  console.log(`${accountName} was created at ${transaction_id}`)
+
+  localStorage.setItem(constants.privateKeyNames.eosAccount, accountName)
+  reducers.user.setAuthData({ name: 'eosData', data: { address: accountName } })
 }
 
 const getBalance = async () => {
@@ -86,4 +111,5 @@ export default {
   register,
   getBalance,
   send,
+  createAccount,
 }
