@@ -42,7 +42,7 @@ export default class ReceiveModal extends React.Component {
             text={address}
             onCopy={this.handleCopyAddress}
           >
-            <p>
+            <p className={styles.qr}>
               <QR
                 network={currency}
                 address={address}
