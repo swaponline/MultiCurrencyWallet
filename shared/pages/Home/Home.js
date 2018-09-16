@@ -70,11 +70,11 @@ export default class Home extends Component {
     })
   }
 
-  handelReplaceHistory = (sellCurrency, buyCurrency) => {
+  handelReplaceHistory = (buyCurrency, sellCurrency) => {
     let { history } = this.props
 
-    this.setFilter(`${buyCurrency}-${sellCurrency}`)
-    history.replace((`${links.home}${buyCurrency}-${sellCurrency}`))
+    this.setFilter(`${sellCurrency}-${buyCurrency}`)
+    history.replace((`${links.home}${sellCurrency}-${buyCurrency}`))
   }
 
   flipCurrency = () => {
