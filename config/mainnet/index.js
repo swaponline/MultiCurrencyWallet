@@ -7,12 +7,10 @@ import swapContract from './swapContract'
 
 
 export default {
-  entry: process.env.MAINNET ? 'mainnet' : 'testnet',
-
-  ...web3,
-  ...link,
-  ...api,
-  ...ipfs,
-  ...erc20,
-  ...swapContract,
+  web3,
+  link,
+  api,
+  ipfs,
+  erc20,
+  swapContract,
 }

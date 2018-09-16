@@ -18,4 +18,4 @@ setTimeout(() => {
     <Root history={history} store={store} routes={routes} />,
     document.getElementById('root')
   )
-}, 3000)
+}, 1000)

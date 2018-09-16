@@ -1,28 +1,14 @@
 import React, { PureComponent } from 'react'
 
 import Swap from 'swap.swap'
+import swapApp from 'swap.app'
+import * as flows from 'swap.flows'
 
 import { connect } from 'redaction'
 import { links } from 'helpers'
 
+import { swapComponents } from './swaps'
 import EmergencySave from './EmergencySave/EmergencySave'
-
-import BtcToEth from './BtcToEth'
-import EthToBtc from './EthToBtc'
-import EthTokenToBtc from './EthTokenToBtc'
-import BtcToEthToken from './BtcToEthToken'
-import BtcToEos from './BtcToEos'
-import EosToBtc from './EosToBtc'
-
-
-const swapComponents = {
-  'BTC2ETH': BtcToEth,
-  'ETH2BTC': EthToBtc,
-  'SWAP2BTC': EthTokenToBtc,
-  'BTC2SWAP': BtcToEthToken,
-  'BTC2EOS': BtcToEos,
-  'EOS2BTC': EosToBtc,
-}
 
 
 @connect({
@@ -37,15 +23,23 @@ export default class SwapComponent extends PureComponent {
   }
 
   componentWillMount() {
-    const { match : { params : { orderId } }, history } = this.props
+    const { match : { params : { orderId, buy, sell } }, history } = this.props
 
     if (!orderId) {
       history.push(links.exchange)
       return
     }
 
+    try {
+      const flow = flows[`${buy.toUpperCase()}2${sell.toUpperCase()}`]
+      swapApp._addFlow(flow)
+    }
+    catch (e) {
+      throw new Error(`Swaps._addFlow(): ${e}`)
+    }
+
     const swap = new Swap(orderId)
-    const SwapComponent = swapComponents[swap.flow._flowName.toUpperCase()]
+    const SwapComponent = swapComponents[swap.flow._flowName]
 
     this.setState({
       SwapComponent,
