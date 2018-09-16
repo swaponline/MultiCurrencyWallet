@@ -7,6 +7,7 @@ export default class TimerButton extends Component {
 
   static propTypes = {
     timeLeft: PropTypes.number, // seconds
+    handleClick: PropTypes.func,
   }
 
   static defaultProps = {
@@ -36,7 +37,7 @@ export default class TimerButton extends Component {
     const newTimeLeft = timeLeft - 1
 
     if (newTimeLeft <= 0) {
-      this.handleClick()
+      this.props.handleClick()
     }
     else {
       this.timer = setTimeout(this.tick, 1000)

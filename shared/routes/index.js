@@ -13,6 +13,7 @@ import Affiliate        from 'pages/Affiliate/Affiliate'
 import Currency         from 'pages/Currency/Currency'
 import AllCoins         from 'pages/AllCoins/AllCoins'
 
+
 const routes = (
   <Switch>
     <Route path={`${links.swap}/:buy-:sell/:orderId`} component={SwapComponent} />

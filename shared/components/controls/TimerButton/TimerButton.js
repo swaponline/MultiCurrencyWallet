@@ -26,7 +26,7 @@ export default class TimerButton extends Component {
     return (
       <Button onClick={this.handleClick} className={className} {...rest} >
         {children}
-        <Timer timeLeft={timeLeft} />
+        <Timer timeLeft={timeLeft} handleClick={this.handleClick} />
       </Button>
     )
 
