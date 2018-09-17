@@ -1,7 +1,11 @@
+.container {
+  display: flex;
+  align-items: center;
+}
+
 .header {
 	height: 88px;
 	width: 100%;
-
 	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#510ed8+0,510ed8+70,8821ee+100 */
 	background: #510ed8; /* Old browsers */
 	background: -moz-linear-gradient(left, #510ed8 0%, #510ed8 70%, #8821ee 100%); /* FF3.6-15 */
@@ -13,11 +17,6 @@
 	right: 0;
   z-index: 2;
   transition: position 0.3s ease;
-}
-
-.container {
-  display: flex;
-  align-items: center;
 }
 
 @include media-mobile {

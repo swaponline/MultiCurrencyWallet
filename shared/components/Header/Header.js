@@ -23,28 +23,33 @@ let lastScrollTop = 0;
 
 export default class Header extends Component {
 
-  constructor({ timeLeft }) {
+  constructor() {
     super()
 
     this.state = {
       sticky: false
     }
+    this.handleScroll = this.handleScroll.bind(this);
   }
 
   componentDidMount() {
-    window.onscroll = () => this._handleScroll()
-  }
+    window.addEventListener('scroll', this.handleScroll);
+  };
 
-  _handleScroll() {
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
+  };
+
+  handleScroll() {
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        if ( scrollTop > lastScrollTop ) {
-          this.setState({sticky: false})
-        }
-        else {
-          this.setState({sticky: true})
-        }
-        lastScrollTop = scrollTop;
-    }
+      if ( scrollTop > lastScrollTop ) {
+        this.setState({sticky: false})
+      }
+      else {
+        this.setState({sticky: true})
+      }
+      lastScrollTop = scrollTop;
+  }
 
   render() {
     const { menu } = this.props
