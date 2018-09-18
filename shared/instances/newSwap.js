@@ -16,6 +16,7 @@ import swapApp, { constants } from 'swap.app'
 import SwapAuth from 'swap.auth'
 import SwapRoom from 'swap.room'
 import SwapOrders from 'swap.orders'
+import { ETH2BTC, BTC2ETH, ETHTOKEN2BTC, BTC2ETHTOKEN, EOS2BTC, BTC2EOS } from 'swap.flows'
 import { EthSwap, EthTokenSwap, BtcSwap, EosSwap } from 'swap.swaps'
 
 
@@ -82,8 +83,22 @@ const createSwapApp = () => {
           })
         )),
     ],
-    flows: [],
+    flows: [
+      ETH2BTC,
+      BTC2ETH,
+
+      EOS2BTC,
+      BTC2EOS,
+
+      ...(Object.keys(config.erc20))
+        .map(key => ETHTOKEN2BTC(key)),
+
+      ...(Object.keys(config.erc20))
+        .map(key => BTC2ETHTOKEN(key)),
+    ],
   })
+
+  console.log('swap', swapApp)
 }
 
 export {

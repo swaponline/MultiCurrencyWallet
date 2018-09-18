@@ -1,8 +1,6 @@
 import React, { PureComponent } from 'react'
 
 import Swap from 'swap.swap'
-import SwapApp from 'swap.app'
-import * as flows from 'swap.flows'
 
 import { connect } from 'redaction'
 import { links } from 'helpers'
@@ -23,38 +21,11 @@ export default class SwapComponent extends PureComponent {
   }
 
   componentWillMount() {
-    let { match : { params : { orderId, buy, sell } }, history } = this.props
+    let { match : { params : { orderId } }, history } = this.props
 
     if (!orderId) {
       history.push(links.exchange)
       return
-    }
-
-    try {
-      let flow = flows[`${buy.toUpperCase()}2${sell.toUpperCase()}`]
-
-      if (flow === undefined) {
-        if (buy === 'BTC') {
-          flow = [
-            flows.ETHTOKEN2BTC(sell),
-            flows.BTC2ETHTOKEN(sell),
-          ]
-        } else {
-          flow = [
-            flows.ETHTOKEN2BTC(buy),
-            flows.BTC2ETHTOKEN(buy),
-          ]
-        }
-
-        SwapApp._addFlows(flow)
-      } else {
-        SwapApp._addFlow(flow)
-      }
-
-
-    }
-    catch (e) {
-      throw new Error(`Swaps._addFlow(): ${e}`)
     }
 
     const swap = new Swap(orderId)
