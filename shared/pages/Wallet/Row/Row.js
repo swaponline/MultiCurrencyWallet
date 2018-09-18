@@ -161,12 +161,13 @@ export default class Row extends Component {
             )
           }
         </td>
+
         { !isMobile && (
-          <td style={{ position: 'relative' }}>
-            <CopyToClipboard
-              text={address}
-              onCopy={this.handleCopyAddress}
-            >
+          <CopyToClipboard
+            text={address}
+            onCopy={this.handleCopyAddress}
+          >
+            <td style={{ position: 'relative' }}>
               {
                 !contractAddress ? (
                   <Fragment>
@@ -182,15 +183,15 @@ export default class Row extends Component {
                   </Fragment>
                 )
               }
-            </CopyToClipboard>
-            {
-              currency === 'EOS' && address === '' && <button styleName="button" onClick={this.handleEosLogin}>Login</button>
-            }
-            {
-              currency === 'EOS' && address === '' && <button styleName="button" onClick={this.handleEosCreateAccount}>Register</button>
-            }
-            { isAddressCopied && <p styleName="copied" >Address copied to clipboard</p> }
-          </td>
+              {
+                currency === 'EOS' && address === '' && <button styleName="button" onClick={this.handleEosLogin}>Login</button>
+              }
+              {
+                currency === 'EOS' && address === '' && <button styleName="button" onClick={this.handleEosCreateAccount}>Register</button>
+              }
+              { isAddressCopied && <p styleName="copied" >Address copied to clipboard</p> }
+            </td>
+          </CopyToClipboard>
         ) }
         <td>
           <div>
