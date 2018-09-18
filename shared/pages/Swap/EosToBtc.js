@@ -1,8 +1,10 @@
 import React, { Component, Fragment } from 'react'
+
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import TransactionLink from 'components/Href/TransactionLink'
-import Button from 'components/controls/Button/Button'
 
+import { Button } from 'components/controls'
+import Timer from './Timer/Timer'
 
 
 export default class EosToBtc extends Component {
@@ -13,6 +15,7 @@ export default class EosToBtc extends Component {
 
     this.state = {
       flow: this.swap.flow.state,
+      enabledButton: false,
     }
   }
 
@@ -44,7 +47,7 @@ export default class EosToBtc extends Component {
 
   render() {
     const { children } = this.props
-    const { flow } = this.state
+    const { flow, enabledButton } = this.state
 
     if (flow.step === 2) {
       setTimeout(this.verifyScript, 2000)
@@ -87,9 +90,16 @@ export default class EosToBtc extends Component {
           <Fragment>
             <h3>4. Request to withdraw EOS from contract</h3>
             {
-              flow.eosWithdrawTx === null && <InlineLoader /> && (
-                <div>
-                  <Button onClick={this.tryRefund}>Refund</Button>
+              flow.eosWithdrawTx === null && <InlineLoader />
+            }
+            {
+              !flow.btcWithdrawTx && (
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  { enabledButton && !flow.eosWithdrawTx && <Button brand onClick={this.tryRefund}>TRY REFUND</Button> }
+                  <Timer
+                    lockTime={flow.scriptValues.lockTime * 1000}
+                    enabledButton={() => this.setState({ enabledButton: true })}
+                  />
                 </div>
               )
             }

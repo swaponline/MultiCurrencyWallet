@@ -7,9 +7,8 @@ import { BigNumber } from 'bignumber.js'
 import actions from 'redux/actions'
 
 import Timer from './Timer/Timer'
-import Button from 'components/controls/Button/Button'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
-import TimerButton from 'components/controls/TimerButton/TimerButton'
+import { TimerButton, Button } from 'components/controls'
 
 
 export default class BtcToEth extends Component {
