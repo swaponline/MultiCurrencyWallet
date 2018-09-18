@@ -41,12 +41,12 @@ const login = async (accountName, masterPrivateKey) => {
 
 const createAccount = async () => {
   const keys = await Keygen.generateMasterKeys()
-  const { masterPrivateKey, publicKeys: { owner } } = keys
+  const { masterPrivateKey, publicKeys: { active } } = keys
 
   localStorage.setItem(constants.privateKeyNames.eos, masterPrivateKey)
   reducers.user.setAuthData({ name: 'eosData', data: { ...keys } })
 
-  console.log(`request to create account for ${owner}`)
+  console.log(`request to create account for ${active}`)
   const { registerEndpoint } = config.api.eos
   const response = await fetch(registerEndpoint, {
     method: 'POST',
@@ -54,10 +54,10 @@ const createAccount = async () => {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ publicKey: owner }),
+    body: JSON.stringify({ publicKey: active }),
   })
-  const { accountName, transaction_id } = await response.json()
-  console.log(`${accountName} was created at ${transaction_id}`)
+  const { accountName, transaction_id: txid } = await response.json()
+  console.log(`${accountName} was created at ${txid}`)
 
   localStorage.setItem(constants.privateKeyNames.eosAccount, accountName)
   reducers.user.setAuthData({ name: 'eosData', data: { address: accountName } })

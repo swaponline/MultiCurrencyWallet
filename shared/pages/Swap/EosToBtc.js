@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from 'react'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import TransactionLink from 'components/Href/TransactionLink'
+import Button from 'components/controls/Button/Button'
+
 
 
 export default class EosToBtc extends Component {
@@ -29,7 +31,15 @@ export default class EosToBtc extends Component {
   }
 
   verifyScript = () => {
-    this.swap.events.dispatch('verify script')
+    const { flow: { scriptValues: { secretHash, recipientPublicKey, ownerPublicKey, lockTime } } } = this.state
+
+    if (secretHash && recipientPublicKey && ownerPublicKey && lockTime) {
+      this.swap.events.dispatch('verify script')
+    }
+  }
+
+  tryRefund = () => {
+    this.swap.flow.tryRefund()
   }
 
   render() {
@@ -37,7 +47,7 @@ export default class EosToBtc extends Component {
     const { flow } = this.state
 
     if (flow.step === 2) {
-      this.verifyScript()
+      setTimeout(this.verifyScript, 2000)
     }
 
     return (
@@ -77,7 +87,11 @@ export default class EosToBtc extends Component {
           <Fragment>
             <h3>4. Request to withdraw EOS from contract</h3>
             {
-              flow.eosWithdrawTx === null && <InlineLoader />
+              flow.eosWithdrawTx === null && <InlineLoader /> && (
+                <div>
+                  <Button onClick={this.tryRefund}>Refund</Button>
+                </div>
+              )
             }
             {
               flow.eosWithdrawTx !== null && <TransactionLink type="EOS" id={flow.eosWithdrawTx} />

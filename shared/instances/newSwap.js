@@ -69,6 +69,7 @@ const createSwapApp = () => {
       }),
       new EosSwap({
         swapAccount: config.swapContract.eos,
+        swapLockPeriod: 300, // safe time in seconds
       }),
       ...(Object.keys(config.erc20)
         .map(key =>
