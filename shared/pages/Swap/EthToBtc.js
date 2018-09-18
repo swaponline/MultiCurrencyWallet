@@ -51,11 +51,6 @@ export default class EthToBtc extends Component {
 
     this.setState({
       flow: values,
-    }, () => {
-      this.overProgress({
-        flow: this.state.flow,
-        length: 9,
-      })
     })
   }
 
