@@ -97,8 +97,6 @@ const createSwapApp = () => {
         .map(key => BTC2ETHTOKEN(key)),
     ],
   })
-
-  console.log('swap', swapApp)
 }
 
 export {
