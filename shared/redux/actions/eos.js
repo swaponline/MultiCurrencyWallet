@@ -44,7 +44,7 @@ const createAccount = async () => {
   const { masterPrivateKey, publicKeys: { owner } } = keys
 
   localStorage.setItem(constants.privateKeyNames.eos, masterPrivateKey)
-  reducers.user.setAuthData({ name: 'eosData', data: { ...keys }})
+  reducers.user.setAuthData({ name: 'eosData', data: { ...keys } })
 
   console.log(`request to create account for ${owner}`)
   const { registerEndpoint } = config.api.eos

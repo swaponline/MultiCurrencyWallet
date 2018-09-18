@@ -17,7 +17,7 @@ export default class CreateOfferButton extends Component {
   createOffer = () => {
     actions.modals.open(constants.modals.Offer, {
       buyCurrency: this.props.buyCurrency,
-      sellCurrency: this.props.sellCurrency
+      sellCurrency: this.props.sellCurrency,
     })
     actions.analytics.dataEvent('orderbook-click-createoffer-button')
   }

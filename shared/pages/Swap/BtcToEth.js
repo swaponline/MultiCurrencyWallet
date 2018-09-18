@@ -46,16 +46,20 @@ export default class BtcToEth extends Component {
       8: 'end',
     }
 
-    actions.analytics.swapEvent(stepNumbers[values.step], 'BTC-ETH')
+    actions.analytics.swapEvent(stepNumbers[values.step], 'BTC2ETH')
 
     this.setState({
       flow: values,
+    }, () => {
+      this.overProgress({
+        flow: this.state.flow,
+        length: 8,
+      })
     })
   }
 
-  overProgress = () => {
-    const { swap } = this
-    actions.loader.show(true, '', '', true, { swap })
+  overProgress = ({ flow, length }) => {
+    actions.loader.show(true, '', '', true, { flow, length, name: 'BTC2ETH' })
   }
 
   submitSecret = () => {

@@ -25,7 +25,7 @@ import ArrowRightSvg from './images/arrow-right.svg'
 export default class UserTooltip extends Component {
 
   static propTypes = {
-    toggle: PropTypes.func
+    toggle: PropTypes.func,
   }
 
   declineRequest = (orderId, participantPeer) => {

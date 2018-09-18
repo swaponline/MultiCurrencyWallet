@@ -3,7 +3,7 @@ export const initialState = {
   text: false,
   txId: null,
   swap: false,
-  data: null
+  data: null,
 }
 
 export const setVisibility = (state, payload) => ({

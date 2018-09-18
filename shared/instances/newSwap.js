@@ -19,8 +19,6 @@ import SwapOrders from 'swap.orders'
 import { EthSwap, EthTokenSwap, BtcSwap, EosSwap } from 'swap.swaps'
 
 
-console.log('config', config)
-
 const createSwapApp = () => {
   swapApp.setup({
     network: process.env.MAINNET ? 'mainnet' : 'testnet',

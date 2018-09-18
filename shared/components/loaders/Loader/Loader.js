@@ -27,7 +27,8 @@ const Loader = ({ overlayClassName, className, text = false, txId, showTips = fa
         left: '50%',
         transform: 'translate(-50%, -50%)',
         textAlign: 'center',
-      }}>{getRandomTip('loader')}</div>
+      }}>{getRandomTip('loader')}
+      </div>
     }
   </div>
 )

@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import TransactionLink from 'components/Href/TransactionLink'
 
+
 export default class EosToBtc extends Component {
   constructor({ swap }) {
     super()
@@ -9,7 +10,7 @@ export default class EosToBtc extends Component {
     this.swap = swap
 
     this.state = {
-      flow: this.swap.flow.state
+      flow: this.swap.flow.state,
     }
   }
 
@@ -23,7 +24,7 @@ export default class EosToBtc extends Component {
 
   handleFlowStateUpdate = (values) => {
     this.setState({
-      flow: values
+      flow: values,
     })
   }
 

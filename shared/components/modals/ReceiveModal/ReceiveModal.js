@@ -15,7 +15,7 @@ export default class ReceiveModal extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      isAddressCopied: false
+      isAddressCopied: false,
     }
   }
 
