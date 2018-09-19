@@ -19,6 +19,8 @@ before_script:
 #- yarn add jest --save-dev
 #- yarn add react-test-renderer --save-dev
 #- yarn add ignore-styles --save-dev
+- echo "_________YARN add plugins for swap.core_______"
+- yarn add add-module-exports --save-dev
 - echo "_________YARN install___________"
 - yarn install
 - echo "__________YARN start____________"
