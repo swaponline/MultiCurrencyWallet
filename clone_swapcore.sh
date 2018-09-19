@@ -3,5 +3,5 @@ cd ..
 ls
 git clone https://github.com/swaponline/swap.core.git
 cd swap.core
-yarn install
+npm i
 cd ../swap.react
