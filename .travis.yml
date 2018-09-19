@@ -3,13 +3,14 @@
 #  - node_modules
 #  - "~/.cache"
 #  - "~/.npm"
-#  yarn:        true
+#  yarn:       true
 language:      node_js
 node_js:
 - '8'
-before_script:
+before_install:
 - echo "Clone swap.core source"
 - ./clone_swapcore.sh
+before_script:
 #Uncomment this when enable covaralls
 #- yarn add coveralls --save-dev
 #- yarn add mocha --save-dev
@@ -47,4 +48,4 @@ deploy:
   - build-mainnet.tgz
   - build-testnet.tgz
   on:
-    tags: true
+    tags:      true
