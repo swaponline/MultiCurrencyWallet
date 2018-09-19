@@ -19,7 +19,7 @@ Coins.defaultProps = {
 }
 
 Coins.propTypes = {
-  names: PropTypes.string.isRequired,
+  names: PropTypes.array.isRequired,
   size: PropTypes.number,
   className: PropTypes.string,
 }
