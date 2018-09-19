@@ -6,11 +6,13 @@
 #  yarn:       true
 language:      node_js
 node_js:
-- '8'
+- 'lts/*'
 before_install:
 - echo "Clone swap.core source"
 - ./clone_swapcore.sh
 before_script:
+- curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version version-number
+- export PATH="$HOME/.yarn/bin:$PATH"
 #Uncomment this when enable covaralls
 #- yarn add coveralls --save-dev
 #- yarn add mocha --save-dev
@@ -19,6 +21,7 @@ before_script:
 #- yarn add jest --save-dev
 #- yarn add react-test-renderer --save-dev
 #- yarn add ignore-styles --save-dev
+-
 - echo "_________YARN install___________"
 - yarn install
 - echo "__________YARN start____________"
