@@ -3,8 +3,10 @@ import React from 'react'
 import CSSModules from 'react-css-modules'
 import styles from './Loader.scss'
 
+import { getRandomTip } from '../../../../config/tips'
 
-const Loader = ({ overlayClassName, className, text = false, txId }) => (
+
+const Loader = ({ overlayClassName, className, text = false, txId, showTips = false }) => (
   <div styleName="overlay" className={overlayClassName}>
     <div styleName="loader center" className={className}>
       <div styleName="loader1" />
@@ -16,6 +18,17 @@ const Loader = ({ overlayClassName, className, text = false, txId }) => (
     }
     {
       txId && <a href={txId} styleName="link" target="_blank" rel="noopener noreferrer" >{txId}</a>
+    }
+    {
+      !!showTips && <div style={{
+        fontSize: '16px',
+        position: 'absolute',
+        top: '60%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        textAlign: 'center',
+      }}>{getRandomTip('loader')}
+      </div>
     }
   </div>
 )

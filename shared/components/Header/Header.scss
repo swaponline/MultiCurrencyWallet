@@ -13,10 +13,16 @@
 	top: 0;
 	left: 0;
 	right: 0;
-  z-index: 4;
+  	z-index: 2;
 }
 
 .container {
   display: flex;
   align-items: center;
+}
+
+@include media-mobile {
+  .header {
+	display: flex;
+  }
 }

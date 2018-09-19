@@ -5,30 +5,22 @@ import cssModules from 'react-css-modules'
 
 import Input from 'components/forms/Input/Input'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
-import CurrencySelect from 'components/ui/CurrencySelect/CurrencySelect'
 
 
-const Group = ({ className, label, id, inputValueLink, selectedCurrencyValue, onCurrencySelect, placeholder, currency = true }) => (
+const Group = ({ className, disabled, label, id, inputValueLink, isInteger = false, placeholder, children }) => (
   <Fragment>
     <FieldLabel inRow>{label}</FieldLabel>
     <div styleName="groupField" className={className}>
       <Input
         styleName="inputRoot"
-        inputContainerClassName={styles.inputContainer}
+        inputContainerClassName="inputContainer"
         valueLink={inputValueLink}
-        pattern="0-9\."
+        pattern={isInteger ? '0-9' : '0-9.'}
         id={id}
         placeholder={placeholder}
+        disabled={disabled}
       />
-      {
-        currency && (
-          <CurrencySelect
-            styleName="currencySelect"
-            selectedValue={selectedCurrencyValue}
-            onSelect={onCurrencySelect}
-          />
-        )
-      }
+      {children}
     </div>
   </Fragment>
 )

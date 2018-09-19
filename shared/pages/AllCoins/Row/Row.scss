@@ -1,0 +1,15 @@
+.button {
+  @include inline-block;
+  height: 40px;
+  width: 40px;
+  background: #f8f3fe;
+  cursor: pointer;
+  font-size: 14px;
+  color: #7c1de9;
+  border-radius: 50%;
+
+  &:hover {
+    color: #7c1de9;
+    background: #dfc5ff;
+  }
+}

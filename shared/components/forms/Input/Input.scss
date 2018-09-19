@@ -30,18 +30,19 @@ input, textarea {
 
 .input {
   width: 100%;
-  height: 56px;
+  height: 60px;
   padding: 0 16px;
   // TODO placeholder doesn't change. Check on Messages page in New Message textarea
   //+input-placeholder()
   vertical-align: top;
   line-height: 16px;
+  border-radius: 6px;
   font-size: 16px;
   @include ff;
   color: $color-f-main;
 
   &:focus {
-    border-color: #6F8BC2;
+    border: 1px solid #3b95ff;
   }
 }
 
@@ -57,7 +58,7 @@ textarea.input {
 }
 
 .error {
-  margin-top: 6px;
+  margin-top: 8px;
   font-size: 14px;
   color: $color-f-error;
 

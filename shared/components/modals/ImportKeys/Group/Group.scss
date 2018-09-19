@@ -1,0 +1,21 @@
+.group {
+  width: 100%;
+  display: inline-flex;
+  height: 60px;
+  margin-bottom: 40px;
+  box-shadow: rgba(#000, 0.08) 0 3px 9px 0;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.input {
+  width: 70%;
+  text-align: left;
+}
+
+.button {
+  height: 100%;
+  width: 120px;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}

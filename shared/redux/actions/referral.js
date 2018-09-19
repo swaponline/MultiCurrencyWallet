@@ -1,15 +1,15 @@
-let URL = require('url-parse');
 import { request } from 'helpers'
-import config from 'app-config'
+import URL from 'url-parse'
 
-const newReferral = (eth_address) => {
 
-  let {query} = new URL(window.location.href, 1);
-  if(query.ref) {
-    request.get(`${config.referral.url}?referral=${query.ref}&action=add_referrer&address=${eth_address}`)
+const newReferral = (ethAddress) => {
+
+  const { query } = new URL(window.location.href, 1, true)
+  if (query.ref) {
+    request.get(`https://wiki.swap.online/affiliate.php?referral=${query.ref}&action=add_referrer&address=${ethAddress}`)
   }
 }
 
 export default {
-  newReferral
+  newReferral,
 }

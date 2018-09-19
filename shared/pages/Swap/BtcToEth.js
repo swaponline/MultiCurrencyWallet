@@ -4,10 +4,11 @@ import crypto from 'crypto'
 import config from 'app-config'
 import { BigNumber } from 'bignumber.js'
 
+import actions from 'redux/actions'
+
 import Timer from './Timer/Timer'
-import Button from 'components/controls/Button/Button'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
-import TimerButton from 'components/controls/TimerButton/TimerButton'
+import { TimerButton, Button } from 'components/controls'
 
 
 export default class BtcToEth extends Component {
@@ -33,9 +34,26 @@ export default class BtcToEth extends Component {
   }
 
   handleFlowStateUpdate = (values) => {
+    const stepNumbers = {
+      1: 'sign',
+      2: 'submit-secret',
+      3: 'sync-balance',
+      4: 'lock-btc',
+      5: 'wait-lock-eth',
+      6: 'withdraw-eth',
+      7: 'finish',
+      8: 'end',
+    }
+
+    actions.analytics.swapEvent(stepNumbers[values.step], 'BTC2ETH')
+
     this.setState({
       flow: values,
     })
+  }
+
+  overProgress = ({ flow, length }) => {
+    actions.loader.show(true, '', '', true, { flow, length, name: 'BTC2ETH' })
   }
 
   submitSecret = () => {
@@ -46,12 +64,6 @@ export default class BtcToEth extends Component {
 
   updateBalance = () => {
     this.swap.flow.syncBalance()
-  }
-
-  addGasPrice = () => {
-    const gwei =  new BigNumber(String(this.swap.flow.ethSwap.gasPrice)).plus(new BigNumber(1e9))
-    this.swap.flow.ethSwap.addGasPrice(gwei)
-    this.swap.flow.restartStep()
   }
 
   tryRefund = () => {
@@ -84,7 +96,7 @@ export default class BtcToEth extends Component {
         {
           !this.swap.id && (
             this.swap.isMy ? (
-              <h3>This order doesn't have a buyer</h3>
+              <h3>This order doesn&apos;t have a buyer</h3>
             ) : (
               <Fragment>
                 <h3>The order creator is offline. Waiting for him..</h3>
@@ -111,7 +123,7 @@ export default class BtcToEth extends Component {
                   <Fragment>
                     <input type="text" placeholder="Secret Key" defaultValue={secret} />
                     <br />
-                    <TimerButton brand onClick={this.submitSecret}>Confirm</TimerButton>
+                    <TimerButton timeLeft={5} brand onClick={this.submitSecret}>Confirm</TimerButton>
                   </Fragment>
                 ) : (
                   <Fragment>
@@ -176,13 +188,20 @@ export default class BtcToEth extends Component {
                 )
               }
               {
-                flow.btcScriptValues && (
+                flow.btcScriptValues && !flow.isFinished && !flow.isEthWithdrawn && (
                   <Fragment>
                     <br />
                     { !flow.refundTxHex && <Button brand onClick={this.getRefundTxHex}> Create refund hex</Button> }
                     {
                       flow.refundTxHex && (
                         <div>
+                          <a
+                            href="https://wiki.swap.online/faq/my-swap-got-stuck-and-my-bitcoin-has-been-withdrawn-what-to-do/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            How refund your money ?
+                          </a>
                           Refund hex transaction:
                           <code>
                             {flow.refundTxHex}
@@ -259,7 +278,7 @@ export default class BtcToEth extends Component {
               {
                 flow.step >= 5 && !flow.isFinished && (
                   <div style={{ display: 'flex', alignItems: 'center' }}>
-                    { enabledButton &&  <Button brand onClick={this.tryRefund}>TRY REFUND</Button> }
+                    { enabledButton && !flow.isEthWithdrawn && <Button brand onClick={this.tryRefund}>TRY REFUND</Button> }
                     <Timer
                       lockTime={flow.btcScriptValues.lockTime * 1000}
                       enabledButton={() => this.setState({ enabledButton: true })}
@@ -267,11 +286,27 @@ export default class BtcToEth extends Component {
                   </div>
                 )
               }
+              {
+                flow.refundTransactionHash && (
+                  <div>
+                    Transaction:
+                    <strong>
+                      <a
+                        href={`${config.link.bitpay}/tx/${flow.refundTransactionHash}`}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                      >
+                        {flow.refundTransactionHash}
+                      </a>
+                    </strong>
+                  </div>
+                )
+              }
             </Fragment>
           )
         }
         <br />
-        { !flow.isFinished && <Button green onClick={this.addGasPrice}>Add gas price</Button> }
+        {/* { !flow.isFinished && <Button green onClick={this.addGasPrice}>Add gas price</Button> } */}
         { children }
       </div>
     )

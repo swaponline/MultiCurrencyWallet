@@ -1,0 +1,18 @@
+.question {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  margin-right: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.question:hover{
+  color: #fff;
+}

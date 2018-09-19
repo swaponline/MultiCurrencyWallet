@@ -1,69 +1,43 @@
-.navMobile {
-  height: 100%;
-  min-width: 0;
-  flex: auto 1 1;
-  display: flex;
-  align-items: center;
-  padding-left: 50px;
-}
-
-.linkMobile {
-  margin-left: 25px;
-  cursor: pointer;
-  font-weight: 500;
-  font-size: 18px;
-  text-decoration: none;
-  color: #dccef7;
-
-  &:first-child {
-    margin-left: 0;
-  }
-
-  &:hover {
-    color: #fff;
-  }
-
-  &.active {
-    border-bottom: 2px solid #fff;
-    font-weight: 700;
-    color: #fff;
-  }
-}
-
-
-.hide {
-  display: none;
+.navbar {
+  background-color: #333;
   overflow: hidden;
-  margin: 0;
-  padding: 0;
-  opacity: 0;
-  height: 0;
-  width: 0;
-  position: absolute;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 1001;
+  display: flex;
+  flex-direction: row;
+
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#510ed8+0,510ed8+70,8821ee+100 */
+	background: #510ed8; /* Old browsers */
+	background: -moz-linear-gradient(left, #510ed8 0%, #510ed8 70%, #8821ee 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(left, #510ed8 0%,#510ed8 70%,#8821ee 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to right, #510ed8 0%,#510ed8 70%,#8821ee 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#510ed8', endColorstr='#8821ee',GradientType=1 ); /* IE6-9 */
+
+  a {
+    display: block;
+    font-size: 17px;
+    flex: 1;
+    padding: 14px 16px;
+    text-align: center;
+    color: #dccef7;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+
+    &.active {
+      font-weight: 700;
+      color: #fff;
+    }
+
+    i {
+      padding: 5px 0;
+    }
+  }
 }
 
-
-.button {
-  padding: 0 16px;
-  height: 56px;
-  cursor: pointer;
-  margin-top: 10px;
-  line-height: 56px;
-  text-transform: uppercase;
-  text-align: center;
-  font-size: 16px;
-  border-radius: 10px;
-  display: inline-block;
-  background-color: #E72BB3;
-  color: #ffffff;
-}
-
-@media screen and (min-width: 860px){
-  .linkMobile {
-    display: none;
-  }
-  .navMobile {
-    padding: 0;
-    display: none;
-  }
+.active {
+  font-weight: 700;
+  color: #fff;
 }

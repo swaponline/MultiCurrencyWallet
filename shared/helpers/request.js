@@ -6,7 +6,7 @@ const createResponseHandler = (req, opts) => {
 
   return new Promise((fulfill, reject) => req.end((err, res) => {
     let serverError
-    let body = res.body
+    let { body } = res
 
     // Errors
 

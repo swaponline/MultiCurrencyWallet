@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'redaction'
-import moment from 'moment'
+import moment from 'moment-with-locales-es6'
 import actions from 'redux/actions'
 import Link from 'sw-valuelink'
 import { localStorage, constants } from 'helpers'
@@ -81,7 +81,7 @@ Private key: ${btcData.privateKey}\r\n
 4. paste private key and click "Ok"\r\n
 \r\n
 \r\n
-* We don\`t store your private keys and will not be able to restore them!  
+* We don\`t store your private keys and will not be able to restore them!
     `
 
     return text
@@ -140,7 +140,7 @@ Private key: ${btcData.privateKey}\r\n
                 </div>
                 <div styleName="subTitle">We don`t store your private keys and will not be able to restore them!</div>
                 <Button brand styleName="button" onClick={this.handleDownload}>Download instruction</Button>
-                {/*<Button brand styleName="button" onClick={this.handleSendByEmail}>Send by email</Button>*/}
+                {/* <Button brand styleName="button" onClick={this.handleSendByEmail}>Send by email</Button> */}
               </Fragment>
             ) : (
               <Fragment>

@@ -1,90 +1,60 @@
 import React, { Component, Fragment } from 'react'
-import SwapApp from 'swap.app'
-import actions from 'redux/actions'
+import { connect } from 'redaction'
 
 import Row from './Row/Row'
-import Table from 'components/Table/Table'
+import Table from 'components/tables/Table/Table'
+import styles from 'components/tables/Table/Table.scss'
 import MyOrders from './MyOrders/MyOrders'
 import SearchSwap from 'components/SearchSwap/SearchSwap'
 
 
+const filterMyOrders = (orders, peer) => orders.filter(order => order.owner.peer === peer)
+
+const filterOrders = (orders, filter) => orders
+  .filter(order => order.isMy ? (
+    `${order.buyCurrency.toLowerCase()}-${order.sellCurrency.toLowerCase()}` === filter
+  ) : (
+    `${order.sellCurrency.toLowerCase()}-${order.buyCurrency.toLowerCase()}` === filter
+  ))
+  .sort((a, b) => b.exchangeRate - a.exchangeRate)
+
+@connect(({  core: { orders, filter }, ipfs: { isOnline, peer }, currencies: { items: currencies } }) => ({
+  orders: filterOrders(orders, filter),
+  myOrders: filterMyOrders(orders, peer),
+  isOnline,
+  currencies,
+}))
 export default class Orders extends Component {
 
-  state = {
-    orders: SwapApp.services.orders.items,
-  }
-
-  componentWillMount() {
-    actions.analytics.dataEvent('open-page-orders')
-    SwapApp.services.orders
-      .on('new orders', this.updateOrders)
-      .on('new order', this.updateOrders)
-      .on('order update', this.updateOrders)
-      .on('remove order', this.updateOrders)
-  }
-
-  componentWillUnmount() {
-    SwapApp.services.orders
-      .off('new orders', this.updateOrders)
-      .off('new order', this.updateOrders)
-      .off('order update', this.updateOrders)
-      .off('remove order', this.updateOrders)
-  }
-
-  updateOrders = () => {
-    this.setState({
-      orders: SwapApp.services.orders.items,
-    })
-
-    const { orders } = this.state
-
-    if (orders.length !== 0) {
-      actions.feed.getFeedDataFromOrder(orders)
-    }
-  }
-
-  filterOrders = (orders, filter) => orders
-    .filter(order => order.isProcessing === false)
-    .filter(order => order.isMy ? (
-      `${order.buyCurrency.toLowerCase()}${order.sellCurrency.toLowerCase()}` === filter
-    ) : (
-      `${order.sellCurrency.toLowerCase()}${order.buyCurrency.toLowerCase()}` === filter
-    ))
-    .sort((a, b) => b.exchangeRate - a.exchangeRate)
-
   render() {
-    const { filter, sellCurrency, buyCurrency, handleSellCurrencySelect, handleBuyCurrencySelect, flipCurrency } = this.props
-    const titles = [ 'EXCHANGE', 'YOU BUY', 'YOU SELL', 'EXCHANGE RATE', 'ACTIONS' ]
-    const { orders } = this.state
-
-    const mePeer = SwapApp.services.room.peer
-    const filteredOrders = this.filterOrders(orders, filter)
-    const myOrders = orders.filter(order => order.owner.peer === mePeer).sort((a, b) => b.exchangeRate - a.exchangeRate)
+    const { sellCurrency, buyCurrency, handleSellCurrencySelect, handleBuyCurrencySelect, flipCurrency, currencies } = this.props
+    const titles = [ 'OWNER', 'EXCHANGE', 'YOU GET', 'YOU HAVE', 'EXCHANGE RATE', 'ACTIONS' ]
+    const { isOnline, orders, myOrders, orderId } = this.props
 
     return (
       <Fragment>
-        <MyOrders
-          orders={myOrders}
-          updateOrders={this.updateOrders}
-        />
+        <MyOrders myOrders={myOrders} />
         <SearchSwap
           handleSellCurrencySelect={handleSellCurrencySelect}
           handleBuyCurrencySelect={handleBuyCurrencySelect}
           buyCurrency={buyCurrency}
           sellCurrency={sellCurrency}
           flipCurrency={flipCurrency}
+          currencies={currencies}
         />
         <h3>All orders</h3>
         <Table
+          classTitle={styles.exchange}
           titles={titles}
-          rows={filteredOrders}
+          rows={orders}
           rowRender={(row, index) => (
             <Row
               key={index}
+              orderId={orderId}
               row={row}
-              update={this.updateOrders}
             />
           )}
+          isLoading={!isOnline}
         />
       </Fragment>
     )

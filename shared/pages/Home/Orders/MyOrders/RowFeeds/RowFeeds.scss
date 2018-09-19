@@ -53,5 +53,18 @@ td {
   height: auto;
 }
 
+.img {
+  width: 18px;
+  margin-top: -2px;
+  margin-right: 12px;
+}
+
+.share {
+  color: #212529;
+  &:hover {
+    color: #212529;
+  }
+}
+
 
 

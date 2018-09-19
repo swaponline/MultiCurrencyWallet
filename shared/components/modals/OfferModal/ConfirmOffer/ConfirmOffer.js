@@ -1,61 +1,28 @@
 import React, { Component, Fragment } from 'react'
 
 import actions from 'redux/actions'
-import SwapApp from 'swap.app'
 
 import { links } from 'helpers'
-import { BigNumber } from 'bignumber.js'
 import { Link } from 'react-router-dom'
 
 import cssModules from 'react-css-modules'
 import styles from './ConfirmOffer.scss'
 
-import ButtonsInRow from 'components/controls/ButtonsInRow/ButtonsInRow'
+import Row from 'components/Row/Row'
 import Button from 'components/controls/Button/Button'
 import Coins from 'components/Coins/Coins'
 
 import Amounts from './Amounts/Amounts'
 import ExchangeRate from './ExchangeRate/ExchangeRate'
 import Fee from './Fee/Fee'
+import { connect } from 'redaction'
 
 
+@connect(({ currencies: { items: currencies } }) => ({
+  currencies,
+}))
 @cssModules(styles)
 export default class ConfirmOffer extends Component {
-
-  state = {
-    buyAmount: null,
-    sellAmount: null,
-    sellCurrency: null,
-    buyCurrency: null,
-    exchangeRate: null,
-  }
-
-  componentWillMount() {
-    let { offer: { sellAmount, buyAmount, sellCurrency, buyCurrency, exchangeRate } } = this.props
-    sellAmount = new BigNumber(String(sellAmount))
-    buyAmount = new BigNumber(String(buyAmount))
-    this.setState({
-      sellAmount,
-      buyAmount,
-      buyCurrency,
-      sellCurrency,
-      exchangeRate,
-    })
-
-    if (process.env.MAINNET) {
-      if (sellCurrency === 'eth' && sellAmount > 0.1) {
-        this.setState({
-          sellAmount: 0.1,
-          buyAmount: 0.007,
-        })
-      } else if (sellCurrency === 'btc' && sellAmount > 0.007) {
-        this.setState({
-          sellAmount: 0.007,
-          buyAmount: 0.1,
-        })
-      }
-    }
-  }
 
   handleConfirm = () => {
     this.createOrder()
@@ -63,7 +30,7 @@ export default class ConfirmOffer extends Component {
   }
 
   createOrder = () => {
-    const {  buyAmount, sellAmount, buyCurrency, sellCurrency, exchangeRate } = this.state
+    const { offer: { buyAmount, sellAmount, buyCurrency, sellCurrency, exchangeRate } } = this.props
 
     const data = {
       buyCurrency: `${buyCurrency}`,
@@ -73,14 +40,12 @@ export default class ConfirmOffer extends Component {
       exchangeRate: Number(exchangeRate),
     }
     actions.analytics.dataEvent('orderbook-addoffer-click-confirm-button')
-    SwapApp.services.orders.create(data)
+    actions.core.createOrder(data)
+    actions.core.updateCore()
   }
 
   render() {
-    const { onBack } = this.props
-    let {  buyAmount, sellAmount, buyCurrency, sellCurrency, exchangeRate } = this.state
-    buyAmount   = buyAmount.toNumber().toFixed(5)
-    sellAmount  = sellAmount.toNumber().toFixed(5)
+    const { offer: { buyAmount, sellAmount, buyCurrency, sellCurrency, exchangeRate }, onBack, currencies } = this.props
 
     return (
       <Fragment>
@@ -88,12 +53,12 @@ export default class ConfirmOffer extends Component {
         <Amounts {...{ buyAmount, sellAmount, buyCurrency, sellCurrency }} />
         <ExchangeRate {...{ value: exchangeRate, buyCurrency, sellCurrency }} />
         <Fee amount={0.0001} currency={sellCurrency} />
-        <ButtonsInRow styleName="buttonsInRow">
+        <Row styleName="buttonsInRow">
           <Button styleName="button" gray onClick={onBack}>Back</Button>
-          <Link styleName="link" to={`${links.home}orders/${buyCurrency.toLowerCase()}-${sellCurrency.toLowerCase()}`}>
+          <Link styleName="link" to={`${links.home}${buyCurrency}-${sellCurrency}`}>
             <Button styleName="button" id="confirm" brand onClick={this.handleConfirm} >Add</Button>
           </Link>
-        </ButtonsInRow>
+        </Row>
       </Fragment>
     )
   }

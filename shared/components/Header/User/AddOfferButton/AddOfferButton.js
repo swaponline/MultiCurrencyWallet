@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
-import actions from 'redux/actions'
-import { constants } from 'helpers'
+
+import { Link } from 'react-router-dom'
+import { constants, links } from 'helpers'
 
 import CSSModules from 'react-css-modules'
 import styles from './AddOfferButton.scss'
@@ -9,23 +10,31 @@ import styles from './AddOfferButton.scss'
 @CSSModules(styles)
 export default class AddOfferButton extends Component {
 
-  handleClick = () => {
-    actions.modals.open(constants.modals.Offer, {})
-    actions.analytics.dataEvent('orderbook-click-addoffer-button')
-  }
-
   render() {
     return (
       <Fragment>
-        <div
-          styleName="button"
-          onClick={this.handleClick}
-        >
-          Add offer
-        </div>
-        <div
+        {
+          process.env.TESTNET ? (
+            <a
+              href={links.main}
+              target="_blank"
+              rel="noreferrer noopener"
+              styleName="button"
+            >
+              Mainnet
+            </a>
+          ) : (
+            <button
+              styleName="button"
+              onClick={() => pinkClick()} /* eslint-disable-line */
+            >
+              Subscribe
+            </button>
+          )
+        }
+        <button
           styleName="buttonMobile"
-          onClick={this.handleClick}
+          onClick={() => pinkClick()} /* eslint-disable-line */
         />
       </Fragment>
     )

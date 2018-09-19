@@ -23,7 +23,6 @@ const login = (privateKey, contractAddress, nameContract, decimals) => {
   web3.eth.accounts.wallet.add(data.privateKey)
   console.info('Logged in with ETH Token', data)
 
-
   setupContract(data.address, contractAddress, nameContract, decimals)
 }
 
@@ -36,90 +35,98 @@ const setupContract = (ethAddress, contractAddress, nameContract, decimals) => {
   const data = {
     address: ethAddress,
     balance: 0,
-    name: nameContract,
+    name: nameContract.toLowerCase(),
     currency: nameContract.toUpperCase(),
     contractAddress,
     decimals,
+    token: true,
   }
 
   reducers.user.setTokenAuthData({ name: data.name, data })
 }
 
 
-const getBalance = (contractAddress, name, decimals) => {
-  const { user: { ethData: { address } } } = getState()
-  const url = `${config.api.etherscan}?module=account&action=tokenbalance&contractaddress=${contractAddress}&address=${address}`
+const getBalance = async (currency) => {
+  const { user: { tokensData } } = getState()
 
-  if (name === undefined) {
-    return null
+  if (currency === undefined) {
+    return
   }
 
-  return request.get(url)
-    .then(({ result }) => {
-      const amount = new BigNumber(String(result)).dividedBy(new BigNumber(String(10)).pow(decimals)).toNumber()
+  const { address, contractAddress, decimals, name  } = tokensData[currency.toLowerCase()]
 
-      reducers.user.setTokenBalance({ name, amount })
-      return result
-    }).catch(r => console.error('Token service isn\'t available, try later'))
+  const ERC20 = new web3.eth.Contract(abi, contractAddress)
+
+  const result = await ERC20.methods.balanceOf(address).call()
+  console.log('result get balance', result)
+  let amount = new BigNumber(String(result)).dividedBy(new BigNumber(String(10)).pow(decimals)).toNumber()
+
+  reducers.user.setTokenBalance({ name, amount })
+  return amount
 }
 
-const fetchBalance = (address, tokenAddress, decimals) =>
-  request.get(`https://rinkeby.etherscan.io/api?module=account&action=tokenbalance&contractaddress=${tokenAddress}&address=${address}`)
-    .then(({ result }) => {
-      const amount = new BigNumber(String(result)).dividedBy(new BigNumber(String(10)).pow(decimals)).toNumber()
 
-      return amount
-    })
+const fetchBalance = async (address, contractAddress, decimals) => {
 
+  const ERC20 = new web3.eth.Contract(abi, contractAddress)
+  const result = await ERC20.methods.balanceOf(address).call()
 
-const getTransaction = (contractAddress) =>
+  const amount = new BigNumber(String(result)).dividedBy(new BigNumber(String(10)).pow(decimals)).toNumber()
+  return amount
+}
+
+const getTransaction = (currency) =>
   new Promise((resolve) => {
-    const { user: { ethData: { address } } } = getState()
+    const { user: { tokensData } } = getState()
+
+    if (currency === undefined) {
+      return
+    }
+
+    const { address, contractAddress } = tokensData[currency.toLowerCase()]
+
+    console.log('swap', address, contractAddress)
 
     const url = [
       `https://api-rinkeby.etherscan.io/api?module=account&action=tokentx`,
       `&contractaddress=${contractAddress}`,
       `&address=${address}`,
       `&startblock=0&endblock=99999999`,
-      `&sort=asc&apikey=${config.apiKeys.blocktrail}`,
+      `&sort=asc&apikey=RHHFPNMAZMD6I4ZWBZBF6FA11CMW9AXZNM`,
     ].join('')
 
-    let transactions
-
-    request.get(url)
+    return request.get(url)
       .then((res) => {
-        if (res.status) {
-          transactions = res.result
-            .filter((item) => item.value > 0).map((item) => ({
-              confirmations: item.confirmations,
-              type: item.tokenSymbol,
-              hash: item.hash,
-              contractAddress: item.contractAddress,
-              status: item.blockHash != null ? 1 : 0,
-              value: new BigNumber(String(item.value)).dividedBy(new BigNumber(10).pow(Number(item.tokenDecimal))).toNumber(),
-              address: item.to,
-              date: item.timeStamp * 1000,
-              direction: address.toLowerCase() === item.to.toLowerCase() ? 'in' : 'out',
-            }))
-          resolve(transactions)
-          console.log('TOKEN', transactions)
-        } else { console.error('res:status ETH false', res) }
+        const transactions = res.result
+          .filter((item) => item.value > 0).map((item) => ({
+            confirmations: item.confirmations,
+            type: item.tokenSymbol,
+            hash: item.hash,
+            contractAddress: item.contractAddress,
+            status: item.blockHash != null ? 1 : 0,
+            value: new BigNumber(String(item.value)).dividedBy(new BigNumber(10).pow(Number(item.tokenDecimal))).toNumber(),
+            address: item.to,
+            date: item.timeStamp * 1000,
+            direction: address.toLowerCase() === item.to.toLowerCase() ? 'in' : 'out',
+          }))
+        resolve(transactions)
+      })
+      .catch(() => {
+        resolve([])
       })
   })
 
 
 const send = (contractAddress, to, amount, decimals) => {
   const { user: { ethData: { address } } } = getState()
-  let tokenContract
 
   const options = {
     from: address,
-    gas: `${config.services.web3.gas}`,
-    gasPrice: `${config.services.web3.gasPrice}`,
+    gas: 1e5,
+    gasPrice: 21e9,
   }
 
-  tokenContract = new web3.eth.Contract(abi, contractAddress, options)
-
+  const tokenContract = new web3.eth.Contract(abi, contractAddress, options)
   const newAmount = new BigNumber(String(amount)).times(new BigNumber(10).pow(decimals)).integerValue()
 
   return new Promise(async (resolve, reject) => {
@@ -136,8 +143,9 @@ const send = (contractAddress, to, amount, decimals) => {
   })
 }
 
-const approve = (contractAddress, amount, decimals, name) => {
-  const { user: { ethData: { address } } } = getState()
+const approve = (name, amount) => {
+  const { user: { tokensData } } = getState()
+  const { address, contractAddress, decimals } = tokensData[name.toLowerCase()]
 
 
   const newAmount = new BigNumber(String(amount)).times(new BigNumber(10).pow(decimals)).integerValue()
@@ -147,9 +155,13 @@ const approve = (contractAddress, amount, decimals, name) => {
     try {
       const result = await ERC20.methods.approve(config.token.contract, newAmount).send({
         from: address,
-        gas: `${config.services.web3.gas}`,
-        gasPrice: `${config.services.web3.gasPrice}`,
+        gas: 1e5,
+        gasPrice: 21e9,
       })
+        .on('transactionHash', (hash) => {
+          const txId = `${config.link.etherscan}/tx/${hash}`
+          actions.loader.show(true, true, txId)
+        })
         .on('error', err => {
           reject(err)
         })
@@ -161,7 +173,7 @@ const approve = (contractAddress, amount, decimals, name) => {
     }
   })
     .then(() => {
-      reducers.user.setTokenApprove({ name, approve: true  })
+      reducers.user.setTokenApprove({ name: name.toLowerCase(), approve: true  })
     })
 }
 
@@ -170,7 +182,7 @@ const allowance = (contractAddress, name) => {
   const ERC20     = new web3.eth.Contract(abi, contractAddress)
 
   return new Promise(async (resolve, reject) => {
-    let allowance = await ERC20.methods.allowance(address, config.token.contract).call()
+    let allowance = await ERC20.methods.allowance(address, config.swapContract.erc20).call()
 
     console.log('💸 allowance:', allowance)
 

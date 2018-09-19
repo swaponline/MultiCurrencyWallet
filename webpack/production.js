@@ -1,6 +1,6 @@
 import webpack from 'webpack'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
-import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
+// import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
 import config from 'app-config'
 
 
@@ -13,13 +13,6 @@ export default (webpackConfig) => {
     publicPath: config.publicPath,
   }
 
-  // webpackConfig.plugins.push(
-  //   // new webpack.SourceMapDevToolPlugin({
-  //   //   filename: '[file].[hash:6].map',
-  //   //   append: `\n//# sourceMappingURL=[url]`,
-  //   // }),
-  // )
-
   webpackConfig.module.rules = webpackConfig.module.rules.map((loader) => {
     if (loader.test.test('*.css') || loader.test.test('*.scss')) {
       loader.use = ExtractTextPlugin.extract({
@@ -31,11 +24,9 @@ export default (webpackConfig) => {
   })
 
   webpackConfig.plugins.push(
+    //  Perhaps it's the cause of errors during the swap process,
+    //  so temporary commented.
     // new UglifyJsPlugin({
-    //   uglifyOptions: {
-    //     ecma: 6,
-    //     warnings: true,
-    //   },
     // }),
     new ExtractTextPlugin({
       filename: '[name].[hash:6].css',

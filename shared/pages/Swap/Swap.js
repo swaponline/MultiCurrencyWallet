@@ -1,23 +1,18 @@
 import React, { PureComponent } from 'react'
+
 import Swap from 'swap.swap'
 
+import { connect } from 'redaction'
+import { links } from 'helpers'
+
+import { swapComponents } from './swaps'
 import EmergencySave from './EmergencySave/EmergencySave'
 
-import BtcToEth from './BtcToEth'
-import EthToBtc from './EthToBtc'
-import EthTokenToBtc from './EthTokenToBtc'
-import BtcToEthToken from './BtcToEthToken'
 
-
-const swapComponents = {
-  'BTC2ETH': BtcToEth,
-  'ETH2BTC': EthToBtc,
-  'NOXON2BTC': EthTokenToBtc,
-  'BTC2NOXON': BtcToEthToken,
-  'SWAP2BTC': EthTokenToBtc,
-  'BTC2SWAP': BtcToEthToken,
-}
-
+@connect({
+  errors: 'api.errors',
+  checked: 'api.checked',
+})
 export default class SwapComponent extends PureComponent {
 
   state = {
@@ -26,10 +21,15 @@ export default class SwapComponent extends PureComponent {
   }
 
   componentWillMount() {
-    const { match : { params : { orderId } } } = this.props
+    let { match : { params : { orderId } }, history } = this.props
+
+    if (!orderId) {
+      history.push(links.exchange)
+      return
+    }
 
     const swap = new Swap(orderId)
-    const SwapComponent = swapComponents[swap.flow._flowName.toUpperCase()]
+    const SwapComponent = swapComponents[swap.flow._flowName]
 
     this.setState({
       SwapComponent,
@@ -40,8 +40,14 @@ export default class SwapComponent extends PureComponent {
 
     // for debug and emergency save
     window.swap = swap
-
   }
+
+  // componentWillMount() {
+  //   actions.api.checkServers()
+  //     .then(() => {
+  //
+  //     })
+  // }
 
   setSaveSwapId = (orderId) => {
     let swapsId = JSON.parse(localStorage.getItem('swapId'))
@@ -51,9 +57,9 @@ export default class SwapComponent extends PureComponent {
       swapsId.push(orderId)
     }
 
-    const boolean = swapsId.map(item => item !== orderId)
+    const boolean = swapsId.map(item => item === orderId)
 
-    if (Boolean(...boolean)) {
+    if (!Boolean(...boolean)) {
       swapsId.push(orderId)
     }
 

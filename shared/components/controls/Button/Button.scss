@@ -7,6 +7,7 @@
   text-transform: uppercase;
   text-align: center;
   font-size: 18px;
+  border: none;
   border-radius: 6px;
   @include no-user-select;
   transition:
@@ -44,7 +45,7 @@
   border: 2px solid #e24d4d;
 
   &:hover {
-    background-color: darken(#fafafa, 10%);
+    background-color: darken(#e24d4d, 10%);
   }
 }
 
@@ -61,4 +62,11 @@
   background-color: #dbdbdb !important;
   cursor: default !important;
   color: #626262 !important;
+}
+
+@include media-mobile {
+  .button {
+    height: 46px;
+    line-height: 46px;
+  }
 }

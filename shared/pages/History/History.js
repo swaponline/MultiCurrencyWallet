@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
+
 import { connect } from 'redaction'
 import actions from 'redux/actions'
 
-import SwapApp from 'swap.app'
-
 import Row from './Row/Row'
-import Table from 'components/Table/Table'
-import Filter from 'components/Filter/Filter'
 import SwapsHistory from './SwapsHistory/SwapsHistory'
+
+
+import styles from 'components/tables/Table/Table.scss'
+import Filter from './Filter/Filter'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
+import InfiniteScrollTable from 'components/tables/InfiniteScrollTable/InfiniteScrollTable'
 
 
 const filterHistory = (items, filter) => {
@@ -28,46 +30,29 @@ const filterHistory = (items, filter) => {
   swapHistory,
 }))
 export default class History extends Component {
-
   state = {
-    orders: SwapApp.services.orders.items,
-  };
+    renderedItems: 10,
+  }
 
   componentDidMount() {
     actions.analytics.dataEvent('open-page-history')
     actions.user.setTransactions()
   }
 
-  componentWillMount() {
-    actions.user.getSwapHistory()
-    SwapApp.services.orders
-      .on('new orders', this.updateOrders)
-      .on('new order', this.updateOrders)
-      .on('order update', this.updateOrders)
-      .on('remove order', this.updateOrders)
-      .on('new order request', this.updateOrders)
-  }
+  loadMore = () => {
+    const { items } = this.props
+    const { renderedItems } = this.state
 
-  componentWillUnmount() {
-    SwapApp.services.orders
-      .off('new orders', this.updateOrders)
-      .off('new order', this.updateOrders)
-      .off('order update', this.updateOrders)
-      .off('remove order', this.updateOrders)
-      .off('new order request', this.updateOrders)
-  }
-
-  updateOrders = () => {
-    this.setState({
-      orders: SwapApp.services.orders.items,
-    })
-
-    const { orders } = this.state
-
-    if (orders.length !== 0) {
-      actions.feed.getFeedDataFromOrder(orders)
+    if (renderedItems < items.length) {
+      this.setState(state => ({
+        renderedItems: state.renderedItems + Math.min(10, items.length - state.renderedItems),
+      }))
     }
   }
+
+  rowRender = (row) => (
+    <Row key={row.hash} {...row} />
+  )
 
   render() {
     const { items, swapHistory } = this.props
@@ -76,15 +61,17 @@ export default class History extends Component {
     return (
       <section>
         <PageHeadline subTitle="History" />
-        <SwapsHistory orders={swapHistory} />
-        <h3 >All transactions</h3>
+        <SwapsHistory orders={Object.values(swapHistory).filter(item => item.step >= 4)} />
+        <h3>All transactions</h3>
         <Filter />
-        <Table
+        <InfiniteScrollTable
+          classTitle={styles.history}
           titles={titles}
-          rows={items}
-          rowRender={(row, index) => (
-            <Row key={index} {...row} />
-          )}
+          bottomOffset={400}
+          getMore={this.loadMore}
+          itemsCount={items.length}
+          items={items.slice(0, this.state.renderedItems)}
+          rowRender={this.rowRender}
         />
       </section>
     )

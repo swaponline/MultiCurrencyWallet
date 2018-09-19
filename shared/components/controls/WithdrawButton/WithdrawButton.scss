@@ -6,6 +6,7 @@
   cursor: pointer;
   line-height: 40px;
   font-size: 16px;
+  border: none;
   font-weight: 500;
   color: #7c1de9;
   border-radius: 20px;
@@ -13,5 +14,12 @@
   &:hover {
     color: #7c1de9;
     background: #dfc5ff;
+  }
+}
+
+@include media-mobile {
+  .withdrawButton {
+    margin-right: 10px;
+    margin-bottom: 10px;
   }
 }

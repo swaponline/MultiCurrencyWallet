@@ -10,6 +10,16 @@
   align-items: center;
 }
 
+.cell {
+  margin-left: 15px;
+  margin-top: 10px;
+}
+
+.linked {
+  color: #2181F7 !important;
+  cursor: pointer;
+}
+
 @media screen and (max-width: 860px) {
   .row {
     flex-direction: column;
@@ -21,14 +31,19 @@
   .title {
     font-size: 22px;
   }
+
+  .cell {
+    min-width: 280px;
+    width: 100%;
+    max-width: 700px;
+    box-sizing: border-box;
+    overflow-x: scroll;
+    margin-left: 0;
+  }
 }
 
-.cell {
-  margin-left: 15px;
-  margin-top: 10px;
-}
-
-.linked {
-  color: #2181F7 !important;
-  cursor: pointer;
-}
+@include media-mobile {
+  .title {
+    font-size: 18px;
+  }
+} 

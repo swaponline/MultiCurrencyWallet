@@ -1,11 +1,14 @@
 .removeButton {
   width: 40px;
   height: 40px;
-  background-color: #e91db4;
+  background: #e91db4 url('./images/delete.svg') 50% 50% no-repeat;
+  background-size: 16px;
   cursor: pointer;
   @include inline-block;
   opacity: 0.5;
   border-radius: 50%;
+  line-height: 36px;
+  border: none;
   text-align: center;
 
   &:hover {

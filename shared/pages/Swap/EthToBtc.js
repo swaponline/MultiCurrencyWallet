@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from 'react'
 
+import actions from 'redux/actions'
+
 import config from 'app-config'
 import { BigNumber } from 'bignumber.js'
 
@@ -19,6 +21,7 @@ export default class EthToBtc extends Component {
     this.state = {
       flow: this.swap.flow.state,
       enabledButton: false,
+      isShowingBitcoinScript: false,
     }
   }
 
@@ -30,10 +33,29 @@ export default class EthToBtc extends Component {
     this.swap.off('state update', this.handleFlowStateUpdate)
   }
 
+
   handleFlowStateUpdate = (values) => {
+    const stepNumbers = {
+      1: 'sign',
+      2: 'wait-lock-btc',
+      3: 'verify-script',
+      4: 'sync-balance',
+      5: 'lock-eth',
+      6: 'wait-withdraw-eth',
+      7: 'withdraw-btc',
+      8: 'finish',
+      9: 'end',
+    }
+
+    actions.analytics.swapEvent(stepNumbers[values.step], 'ETH-BTC')
+
     this.setState({
       flow: values,
     })
+  }
+
+  overProgress = ({ flow, length }) => {
+    actions.loader.show(true, '', '', true, { flow, length, name: 'ETH2BTC' })
   }
 
   signSwap = () => {
@@ -52,19 +74,18 @@ export default class EthToBtc extends Component {
     this.swap.flow.tryRefund()
   }
 
-  addGasPrice = () => {
-    const gwei =  new BigNumber(String(this.swap.flow.ethSwap.gasPrice)).plus(new BigNumber(1e9))
-    this.swap.flow.ethSwap.addGasPrice(gwei)
-    this.swap.flow.restartStep()
+  toggleBitcoinScript = () => {
+    this.setState({
+      isShowingBitcoinScript: !this.state.isShowingBitcoinScript,
+    })
   }
 
   render() {
     const { children } = this.props
-    const { flow, enabledButton } = this.state
+    const { flow, enabledButton, isShowingBitcoinScript } = this.state
 
     return (
       <div>
-
         {
           this.swap.id && (
             <strong>{this.swap.sellAmount.toNumber()} {this.swap.sellCurrency} &#10230; {this.swap.buyAmount.toNumber()} {this.swap.buyCurrency}</strong>
@@ -74,7 +95,7 @@ export default class EthToBtc extends Component {
         {
           !this.swap.id && (
             this.swap.isMy ? (
-              <h3>This order doesn't have a buyer</h3>
+              <h3>This order doesn&apos;t have a buyer</h3>
             ) : (
               <Fragment>
                 <h3>The order creator is offline. Waiting for him..</h3>
@@ -95,7 +116,7 @@ export default class EthToBtc extends Component {
           flow.step === 1 && (
             <Fragment>
               <div>Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation.</div>
-              <TimerButton brand onClick={this.signSwap}>Sign</TimerButton>
+              <TimerButton timeLeft={5} brand onClick={this.signSwap}>Sign</TimerButton>
               {
                 (flow.isSignFetching || flow.signTransactionHash) && (
                   <Fragment>
@@ -159,8 +180,11 @@ export default class EthToBtc extends Component {
                       </strong>
                     </div>
                     <br />
-                    <pre>
-                      <code>{`
+                    <Fragment>
+                      { flow.btcScriptValues && <span onClick={this.toggleBitcoinScript}>Show bitcoin script</span> }
+                      { isShowingBitcoinScript && (
+                        <pre>
+                          <code>{`
   bitcoinjs.script.compile([
     bitcoin.core.opcodes.OP_RIPEMD160,
     Buffer.from('${flow.btcScriptValues.secretHash}', 'hex'),
@@ -184,13 +208,20 @@ export default class EthToBtc extends Component {
     bitcoin.core.opcodes.OP_ENDIF,
   ])
                       `}
-                      </code>
-                    </pre>
+                          </code>
+                        </pre>
+                      )
+                      }
+                    </Fragment>
+
+                    <br />
+                    <br />
+
                     {
                       flow.step === 3 && (
                         <Fragment>
                           <br />
-                          <TimerButton brand onClick={this.confirmBTCScriptChecked}>Everything is OK. Continue</TimerButton>
+                          <TimerButton timeLeft={5} brand onClick={this.confirmBTCScriptChecked}>Everything is OK. Continue</TimerButton>
                         </Fragment>
                       )
                     }
@@ -236,7 +267,7 @@ export default class EthToBtc extends Component {
                     Transaction:
                     <strong>
                       <a
-                        href={`https://rinkeby.etherscan.io/tx/${flow.ethSwapCreationTransactionHash}`}
+                        href={`${config.link.etherscan}/tx/${flow.ethSwapCreationTransactionHash}`}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
@@ -257,7 +288,7 @@ export default class EthToBtc extends Component {
                     Transaction:
                     <strong>
                       <a
-                        href={`https://rinkeby.etherscan.io/tx/${flow.refundTransactionHash}`}
+                        href={`${config.link.etherscan}/tx/${flow.refundTransactionHash}`}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
@@ -318,11 +349,27 @@ export default class EthToBtc extends Component {
               {
                 flow.step >= 6 && !flow.isFinished && (
                   <div style={{ display: 'flex', alignItems: 'center' }}>
-                    { enabledButton &&  <Button brand onClick={this.tryRefund}>TRY REFUND</Button> }
+                    { enabledButton && !flow.isBtcWithdrawn && <Button brand onClick={this.tryRefund}>TRY REFUND</Button> }
                     <Timer
-                      lockTime={flow.btcScriptValues.lockTime * 1000}
+                      lockTime={(flow.btcScriptValues.lockTime - 5400) * 1000}
                       enabledButton={() => this.setState({ enabledButton: true })}
                     />
+                  </div>
+                )
+              }
+              {
+                flow.refundTransactionHash && (
+                  <div>
+                    Transaction:
+                    <strong>
+                      <a
+                        href={`${config.link.bitpay}/tx/${flow.refundTransactionHash}`}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                      >
+                        {flow.refundTransactionHash}
+                      </a>
+                    </strong>
                   </div>
                 )
               }
@@ -330,7 +377,7 @@ export default class EthToBtc extends Component {
           )
         }
         <br />
-        { !flow.isFinished && <Button white onClick={this.addGasPrice}>Add gas price</Button> }
+        {/* { !flow.isFinished && <Button white onClick={this.addGasPrice}>Add gas price</Button> } */}
         { children }
       </div>
     )

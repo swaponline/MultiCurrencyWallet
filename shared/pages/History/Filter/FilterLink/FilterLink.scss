@@ -1,0 +1,18 @@
+.item {
+  font-size: 18px;
+  opacity: 0.6;
+  color: #000;
+  margin-right: 45px;
+  font-weight: bold;
+  text-decoration: none;
+
+  &:hover {
+    color: #000;
+    opacity: 1;
+  }
+}
+
+.active {
+  opacity: 1;
+  border-bottom: 2px solid #500ed8;
+}

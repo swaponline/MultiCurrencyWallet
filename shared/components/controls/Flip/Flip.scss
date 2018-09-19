@@ -1,8 +1,16 @@
 .trade-panel__change {
-    display: flex;
-    align-items: center;
-    height: 58px;
-    width: 32px;
-    cursor: pointer;
-    margin: 0px 25px;
+  display: flex;
+  align-items: center;
+  background: url('./images/flip.svg') 50% 50% no-repeat;
+  height: 58px;
+  width: 32px;
+  cursor: pointer;
+  margin: 0px 25px;
+  border: none;
+}
+
+@media screen and (max-width: 690px) {
+  .trade-panel__change {
+    display: none;
+  }
 }

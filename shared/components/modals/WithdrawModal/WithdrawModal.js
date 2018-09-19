@@ -29,7 +29,7 @@ export default class WithdrawModal extends React.Component {
 
   handleSubmit = () => {
     const { address: to, amount } = this.state
-    const { data: { currency, contractAddress, address, decimals, balance } } = this.props
+    const { data: { currency, contractAddress, address, decimals, balance, token } } = this.props
 
     if (!to || !amount || amount < 0.01 || amount > balance) {
       this.setState({
@@ -38,40 +38,31 @@ export default class WithdrawModal extends React.Component {
       return
     }
 
-    let action
+    if (token) {
+      actions.token.send(contractAddress || address, to, Number(amount), decimals)
+        .then(() => {
+          actions.loader.hide()
+          actions.token.getBalance(currency)
 
-    switch (currency) {
-      case 'ETH':
-        action = actions.ethereum
-        break
-
-      case 'BTC':
-        action = actions.bitcoin
-        break
-
-      case 'NIM':
-        action = actions.nimiq
-        break
-
-      case 'EOS':
-        action = actions.eos
-        break
-
-      default:
-        action = actions.token
-    }
-
-    action.send(contractAddress || address, to, Number(amount), decimals)
-      .then(() => {
-        actions.loader.hide()
-        action.getBalance()
-
-        actions.notifications.show(constants.notifications.SuccessWithdraw, {
-          amount,
-          currency,
-          address: to,
+          actions.notifications.show(constants.notifications.SuccessWithdraw, {
+            amount,
+            currency,
+            address: to,
+          })
         })
-      })
+    } else {
+      actions[currency.toLowerCase()].send(address, to, Number(amount))
+        .then(() => {
+          actions.loader.hide()
+          actions[currency.toLowerCase()].getBalance(currency)
+
+          actions.notifications.show(constants.notifications.SuccessWithdraw, {
+            amount,
+            currency,
+            address: to,
+          })
+        })
+    }
   }
 
   render() {
@@ -83,7 +74,7 @@ export default class WithdrawModal extends React.Component {
     const isDisabled = !address || !amount
 
     if (isSubmitted) {
-      linked.amount.check((value) => value > 0.01, `Amount must be greater than 0.01 `)
+      linked.amount.check((value) => value > 0.01, `Amount must be greater than 0.05 `)
       linked.amount.check((value) => value < balance, `Amount must be bigger your balance`)
     }
 
@@ -91,9 +82,9 @@ export default class WithdrawModal extends React.Component {
       <Modal name={name} title={`Withdraw ${data.currency.toUpperCase()}`}>
         <p style={{ fontSize: '16px' }}>Please notice, that you need to have minimum 0.01 amount <br /> of the ETH on your wallet, to use it for Ethereum miners fee</p>
         <FieldLabel inRow>Address</FieldLabel>
-        <Input valueLink={linked.address} pattern="0-9a-zA-Z" />
+        <Input valueLink={linked.address} focusOnInit pattern="0-9a-zA-Z" placeholder="Enter address" />
         <FieldLabel inRow>Amount</FieldLabel>
-        <Input valueLink={linked.amount} pettern="0-9\." />
+        <Input valueLink={linked.amount} pattern="0-9\." placeholder={`Enter amount, you have ${balance}`} />
         {
           !linked.amount.error && (
             <div styleName="note">No less than 0.01</div>

@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react'
 
 import actions from 'redux/actions'
-import { localStorage, constants, links } from 'helpers'
+import { connect } from 'redaction'
+import { links } from 'helpers'
 
 import Title from 'components/PageHeadline/Title/Title'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
@@ -10,6 +11,9 @@ import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import Orders from './Orders/Orders'
 
 
+@connect(({ core: { filter } }) => ({
+  filter,
+}))
 export default class Home extends Component {
 
   constructor({ initialData, match: { params: { buy, sell } } }) {
@@ -18,64 +22,98 @@ export default class Home extends Component {
     const { buyCurrency, sellCurrency } = initialData || {}
 
     this.state = {
-      buyCurrency: buy || buyCurrency || 'eth',
+      buyCurrency: buy || buyCurrency || 'swap',
       sellCurrency: sell || sellCurrency || 'btc',
-      view: 'saveKeys',
+    }
+  }
+
+  componentWillMount() {
+    let { filter, match: { params: { buy, sell } } } = this.props
+
+    if (typeof buy !== 'string' || typeof sell !== 'string') {
+      filter = filter.split('-')
+      this.handelReplaceHistory(filter[0], filter[1])
+    }
+
+    if (buy !== this.state.sellCurrency || sell !== this.state.sellCurrency) {
+      actions.core.setFilter(`${sell}-${buy}`)
     }
   }
 
   handleBuyCurrencySelect = ({ value }) => {
+    let { sellCurrency, buyCurrency } = this.state
+
+    if (value === sellCurrency) {
+      sellCurrency = buyCurrency
+    }
+
+    this.handelReplaceHistory(sellCurrency, value)
+
     this.setState({
       buyCurrency: value,
+      sellCurrency,
     })
   }
 
   handleSellCurrencySelect = ({ value }) => {
+    let { sellCurrency, buyCurrency } = this.state
+
+    if (value === buyCurrency) {
+      buyCurrency = sellCurrency
+    }
+
+    this.handelReplaceHistory(value, buyCurrency)
+
     this.setState({
+      buyCurrency,
       sellCurrency: value,
     })
   }
 
+  handelReplaceHistory = (sellCurrency, buyCurrency) => {
+    let { history } = this.props
+
+    this.setFilter(`${buyCurrency}-${sellCurrency}`)
+    history.replace((`${links.home}${buyCurrency}-${sellCurrency}`))
+  }
+
   flipCurrency = () => {
     let { buyCurrency, sellCurrency } = this.state
+    const value = sellCurrency
+
+    sellCurrency = buyCurrency
+    buyCurrency = value
+
+    this.handelReplaceHistory(sellCurrency, buyCurrency)
 
     this.setState({
-      buyCurrency: sellCurrency,
-      sellCurrency: buyCurrency,
+      buyCurrency,
+      sellCurrency,
     })
   }
 
-  handleClickTelegram = () => {
-    actions.analytics.dataEvent('orders-click-telegram-group')
-    actions.analytics.dataEvent('orders-click-start-swap')
-  }
-
-  handleClickMailing = () => {
-    actions.analytics.dataEvent('orders-click-start-swap')
-    actions.analytics.dataEvent('orders-click-start-swap')
+  setFilter = (filter) => {
+    actions.core.setFilter(filter)
   }
 
   render() {
+    const { match: { params: { orderId } } } = this.props
     const { buyCurrency, sellCurrency } = this.state
-    const filterOrders = `${buyCurrency}${sellCurrency}`
 
     return (
-      <section style={{ position: 'relative' }}>
+      <section style={{ position: 'relative', width: '100%' }}>
         <PageHeadline >
           <Fragment>
-            <Title>Swap.Online - CRYPTO-CURRENCY <abbr title="Over-The-Counter Market">OTC MARKET</abbr></Title>
-            <SubTitle>
-              Check out our <a href="https://wiki.swap.online/en.pdf" target="_balnk" rel="noreferrer noopener">project brief</a> and participate in <a href="http://swap.wpmix.net/#airdrop" traget="landframe">smart airdrop.</a>
-              {/* Subscribe to <a href="https://t.me/swaponlineint" onClick={this.handleClickTelegram} target="_blank">telegram</a> and <a href="/" target="_blank"  onClick={this.handleClickMailing}>mailing list</a> */}
-            </SubTitle>
+            <Title>{buyCurrency} &#8594; {sellCurrency} no limit exchange with 0 fee</Title>
+            <SubTitle>Choose the direction of exchange</SubTitle>
           </Fragment>
           <Orders
-            filter={filterOrders}
             handleSellCurrencySelect={this.handleSellCurrencySelect}
             handleBuyCurrencySelect={this.handleBuyCurrencySelect}
             buyCurrency={buyCurrency}
             sellCurrency={sellCurrency}
             flipCurrency={this.flipCurrency}
+            orderId={orderId}
           />
         </PageHeadline>
       </section>

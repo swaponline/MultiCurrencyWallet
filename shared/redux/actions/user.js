@@ -5,40 +5,43 @@ import { request, constants } from 'helpers'
 import actions from 'redux/actions'
 import { getState } from 'redux/core'
 
-import SwapApp from 'swap.app'
 import reducers from 'redux/core/reducers'
 
 
 const sign = async () => {
   const btcPrivateKey = localStorage.getItem(constants.privateKeyNames.btc)
+  const bchPrivateKey = localStorage.getItem(constants.privateKeyNames.bch)
   const ethPrivateKey = localStorage.getItem(constants.privateKeyNames.eth)
-  const _ethPrivateKey = actions.ethereum.login(ethPrivateKey)
+  const _ethPrivateKey = actions.eth.login(ethPrivateKey)
 
-  actions.bitcoin.login(btcPrivateKey)
+  actions.btc.login(btcPrivateKey)
+  actions.bch.login(bchPrivateKey)
+  // actions.usdt.login(btcPrivateKey)
 
-  Object.keys(config.tokens)
+  Object.keys(config.erc20)
     .forEach(name => {
-      actions.token.login(_ethPrivateKey, config.tokens[name].address, name, config.tokens[name].decimals)
+      actions.token.login(_ethPrivateKey, config.erc20[name].address, name, config.erc20[name].decimals)
     })
   // await actions.nimiq.login(_ethPrivateKey)
 
   const eosMasterPrivateKey = localStorage.getItem(constants.privateKeyNames.eos)
   const eosAccount = localStorage.getItem(constants.privateKeyNames.eosAccount)
   if (eosMasterPrivateKey && eosAccount) {
-    await actions.eos.init()
     await actions.eos.login(eosAccount, eosMasterPrivateKey)
     await actions.eos.getBalance()
   }
 }
 
 const getBalances = () => {
-  actions.ethereum.getBalance()
-  actions.bitcoin.getBalance()
+  actions.eth.getBalance()
+  actions.btc.getBalance()
+  actions.bch.getBalance()
+  actions.usdt.getBalance()
   actions.eos.getBalance()
 
-  Object.keys(config.tokens)
+  Object.keys(config.erc20)
     .forEach(name => {
-      actions.token.getBalance(config.tokens[name].address, name, config.tokens[name].decimals)
+      actions.token.getBalance(name)
     })
   // actions.nimiq.getBalance()
 }
@@ -53,32 +56,21 @@ const getDemoMoney = process.env.MAINNET ? () => {} : () => {
     })
 }
 
-const setExchangeRate = (sellCurrency, buyCurrency, setState) => {
-  let url
-
-  if (sellCurrency === 'btc') {
-    url = `https://api.cryptonator.com/api/full/${buyCurrency}-btc`
-  } else {
-    url = `https://api.cryptonator.com/api/full/${sellCurrency}-btc`
-  }
-
-  console.log('rate', url)
-  return request.get(url)
-    .then(({ ticker: { price: exchangeRate } })  => {
-      console.log('rate', exchangeRate)
-      setState(exchangeRate)
+const getExchangeRate = (sellCurrency, buyCurrency) => new Promise((resolve, reject) => {
+  const url = `https://api.cryptonator.com/api/full/${sellCurrency}-${buyCurrency}`
+  request.get(url).then(({ ticker: { price: exchangeRate } })  => {
+    resolve(exchangeRate)
+  })
+    .catch(() => {
+      resolve(1)
     })
-    .catch(() =>
-      setState(config.exchangeRates[`${sellCurrency.toLowerCase()}btc`])
-    )
-}
+})
 
 const setTransactions = () =>
   Promise.all([
-    actions.bitcoin.getTransaction(),
-    actions.ethereum.getTransaction(),
-    actions.token.getTransaction(config.tokens.swap.address),
-    actions.token.getTransaction(config.tokens.noxon.address),
+    actions.btc.getTransaction(),
+    actions.eth.getTransaction(),
+    actions.token.getTransaction('swap'),
   ])
     .then(transactions => {
       let data = [].concat([], ...transactions).sort((a, b) => b.date - a.date)
@@ -86,7 +78,7 @@ const setTransactions = () =>
     })
 
 const getText = () => {
-  const { user : { ethData, btcData, eosData } } = getState()
+  const { user : { ethData, btcData, eosData, bchData } } = getState()
 
 
   const text = `
@@ -120,7 +112,7 @@ Private key: ${btcData.privateKey}\r\n
 4. paste private key and click "Ok"\r\n
 \r\n
 \r\n
-* We don\`t store your private keys and will not be able to restore them!  
+* We don\`t store your private keys and will not be able to restore them!
 \r\n
 \r\n
 \r\n
@@ -128,6 +120,22 @@ Private key: ${btcData.privateKey}\r\n
 \r\n
 EOS Master Private Key: ${eosData.masterPrivateKey}\r\n
 Account name: ${eosData.address}\r\n
+
+#BITCOIN CASH
+\r\n
+\r\n
+BitcoinCash address: ${bchData.address}  \r\n
+Private key: ${bchData.privateKey}\r\n
+\r\n
+\r\n
+1. Go to blockchain.info
+2. login
+3. Go to settings > addresses > import
+4. paste private key and click "Ok"
+
+\r\n
+\r\n
+\r\n
 `
 
   return text
@@ -151,27 +159,12 @@ const downloadPrivateKeys = () => {
   })
 }
 
-const getSwapHistory = () => {
-  const swapId = JSON.parse(localStorage.getItem('swapId'))
-
-  if (swapId === null || swapId.length === 0) {
-    return
-  }
-
-  const historySwap = swapId.map(item => ({
-    ...SwapApp.env.storage.getItem(`swap.${item}`),
-    ...SwapApp.env.storage.getItem(`flow.${item}`),
-  }))
-  reducers.history.setSwapHistory(historySwap)
-}
-
 
 export default {
   sign,
   getBalances,
   getDemoMoney,
-  getSwapHistory,
-  setExchangeRate,
+  getExchangeRate,
   setTransactions,
   downloadPrivateKeys,
 }

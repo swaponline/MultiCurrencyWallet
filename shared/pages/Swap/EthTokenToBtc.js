@@ -52,15 +52,15 @@ export default class EthTokenToBtc extends Component {
     this.swap.flow.tryRefund()
   }
 
-  addGasPrice = () => {
-    const gwei =  new BigNumber(String(this.swap.flow.ethSwap.gasPrice)).plus(new BigNumber(1e10))
-    this.swap.flow.ethSwap.addGasPrice(gwei)
-    this.swap.flow.restartStep()
+  toggleBitcoinScript = () => {
+    this.setState({
+      isShowingBitcoinScript: !this.state.isShowingBitcoinScript,
+    })
   }
 
   render() {
     const { children } = this.props
-    const { flow, enabledButton } = this.state
+    const { flow, enabledButton, isShowingBitcoinScript } = this.state
 
     return (
       <div>
@@ -94,7 +94,7 @@ export default class EthTokenToBtc extends Component {
                 !flow.isSignFetching && !flow.isMeSigned && (
                   <Fragment>
                     <br />
-                    <TimerButton brand onClick={this.signSwap}>Confirm</TimerButton>
+                    <TimerButton timeLeft={5} brand onClick={this.signSwap}>Confirm</TimerButton>
                   </Fragment>
                 )
               }
@@ -163,9 +163,13 @@ export default class EthTokenToBtc extends Component {
                         }
                       </strong>
                     </div>
+
                     <br />
-                    <pre>
-                      <code>{`
+                    <Fragment>
+                      { flow.btcScriptValues &&   <span onClick={this.toggleBitcoinScript}>Show bitcoin script</span> }
+                      { isShowingBitcoinScript && (
+                        <pre>
+                          <code>{`
   bitcoinjs.script.compile([
     bitcoin.core.opcodes.OP_RIPEMD160,
     Buffer.from('${flow.btcScriptValues.secretHash}', 'hex'),
@@ -188,13 +192,22 @@ export default class EthTokenToBtc extends Component {
 
     bitcoin.core.opcodes.OP_ENDIF,
   ])
-                      `}</code>
-                    </pre>
+                      `}
+                          </code>
+                        </pre>
+                      )
+                      }
+                    </Fragment>
+
+                    <br />
+                    <br />
+
+
                     {
                       flow.step === 3 && (
                         <Fragment>
                           <br />
-                          <TimerButton brand onClick={this.confirmBTCScriptChecked}>Everything is OK. Continue</TimerButton>
+                          <TimerButton timeLeft={5} brand onClick={this.confirmBTCScriptChecked}>Everything is OK. Continue</TimerButton>
                         </Fragment>
                       )
                     }
@@ -258,7 +271,7 @@ export default class EthTokenToBtc extends Component {
                     Transaction:
                     <strong>
                       <a
-                        href={`https://rinkeby.etherscan.io/tx/${flow.refundTransactionHash}`}
+                        href={`${config.link.etherscan}/tx/${flow.refundTransactionHash}`}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
@@ -320,9 +333,9 @@ export default class EthTokenToBtc extends Component {
               {
                 flow.step >= 6 && !flow.isFinished && (
                   <div style={{ display: 'flex', alignItems: 'center' }}>
-                    { enabledButton &&  <Button brand onClick={this.tryRefund}>TRY REFUND</Button> }
+                    { enabledButton && !flow.isBtcWithdrawn && <Button brand onClick={this.tryRefund}>TRY REFUND</Button> }
                     <Timer
-                      lockTime={flow.btcScriptValues.lockTime * 1000}
+                      lockTime={(flow.btcScriptValues.lockTime - 5400) * 1000}
                       enabledButton={() => this.setState({ enabledButton: true })}
                     />
                   </div>
@@ -332,7 +345,7 @@ export default class EthTokenToBtc extends Component {
           )
         }
         <br />
-        { !flow.isFinished && <Button white onClick={this.addGasPrice}>Add gas price</Button> }
+        {/* { !flow.isFinished && <Button white onClick={this.addGasPrice}>Add gas price</Button> } */}
         { children }
       </div>
     )
