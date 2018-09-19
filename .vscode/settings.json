@@ -1,0 +1,8 @@
+{
+  "path-intellisense.mappings": {
+    "/": "${workspaceRoot}/shared/",
+  },
+  "path-intellisense.absolutePathToWorkspace": false,
+  "prettier.eslintIntegration": true,
+  "javascript.validate.enable": false
+}
