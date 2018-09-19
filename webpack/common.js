@@ -54,7 +54,7 @@ const webpackConfig = {
       config.paths.base('shared'),
       config.paths.base('local_modules'),
       'node_modules',
-      config.paths.swapCore('../swap.core/src'),
+      config.paths.swapCore('swap.core/src'),
     ],
     extensions: [ '.js', '.jsx', '.scss' ],
     plugins: [],

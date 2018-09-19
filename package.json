@@ -115,7 +115,7 @@
     "react-css-modules": "^4.7.3",
     "react-device-detect": "^1.5.9",
     "react-document-meta": "^3.0.0-beta.2",
-    "react-dom": "^16.3.2",
+    "react-dom": "^16.4.2",
     "react-gtm-module": "^2.0.2",
     "react-input-mask": "^2.0.1",
     "react-paginate": "^5.2.3",
