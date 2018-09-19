@@ -92,8 +92,13 @@ export default class Row extends Component {
     actions.modals.open(constants.modals.Eos, {})
   }
 
-  handleEosCreateAccount = () => {
-    actions.eos.createAccount()
+  handleEosCreateAccount = async () => {
+    try {
+      await actions.eos.createAccount()
+    } catch (error) {
+      console.log(error.toString())
+      actions.notifications.show(constants.notifications.Message, { message: error.toString() })
+    }
   }
 
   handleWithdraw = () => {

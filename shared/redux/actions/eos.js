@@ -57,6 +57,11 @@ const createAccount = async () => {
     body: JSON.stringify({ publicKey: active }),
   })
   const { accountName, transaction_id: txid } = await response.json()
+
+  if (!accountName) {
+    throw new Error('Unable to register EOS address. Please contact team@swap.online for fix this issue')
+  }
+
   console.log(`${accountName} was created at ${txid}`)
 
   localStorage.setItem(constants.privateKeyNames.eosAccount, accountName)
