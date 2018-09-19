@@ -8,6 +8,7 @@ language:      node_js
 node_js:
 - '8'
 before_script:
+- echo "Clone swap.core source"
 - ./clone_swapcore.sh
 #Uncomment this when enable covaralls
 #- yarn add coveralls --save-dev
