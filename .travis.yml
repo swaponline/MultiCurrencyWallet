@@ -8,7 +8,7 @@ language:      node_js
 node_js:
 - '8'
 before_script:
-- git submodule update --init --recursive
+- git clone https://github.com/swaponline/swap.core.git
 #Uncomment this when enable covaralls
 #- yarn add coveralls --save-dev
 #- yarn add mocha --save-dev
