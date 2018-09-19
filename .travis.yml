@@ -11,7 +11,7 @@ before_install:
 - echo "Clone swap.core source"
 - ./clone_swapcore.sh
 before_script:
-- curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version version-number
+- curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.9.4
 - export PATH="$HOME/.yarn/bin:$PATH"
 #Uncomment this when enable covaralls
 #- yarn add coveralls --save-dev

@@ -41,6 +41,7 @@
   },
   "plugins": [
     [ "transform-object-rest-spread", { "useBuiltIns": true } ],
+    "add-module-exports",
     "transform-es2015-destructuring",
     "transform-object-rest-spread",
     "transform-runtime",
