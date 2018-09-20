@@ -1,4 +1,3 @@
-// import BundleAnalyzer from 'webpack-bundle-analyzer'
 import config from 'app-config'
 
 

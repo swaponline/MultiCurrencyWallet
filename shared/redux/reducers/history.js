@@ -18,7 +18,5 @@ export const setTransactions = (state, payload) => ({
 
 export const setSwapHistory = (state, payload) => ({
   ...state,
-  swapHistory: {
-    payload,
-  },
+  swapHistory: payload,
 })

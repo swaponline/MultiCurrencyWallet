@@ -41,7 +41,6 @@ const createSwapApp = () => {
         eos: privateKeys.privateKeyNames.eosAccount,
       }),
       new SwapRoom({
-        repo: 'client/ipfs/data',
         EXPERIMENTAL: {
           pubsub: true,
         },

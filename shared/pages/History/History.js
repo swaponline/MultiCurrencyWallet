@@ -58,10 +58,12 @@ export default class History extends Component {
     const { items, swapHistory } = this.props
     const titles = [ 'Coin', 'Status', 'Statement', 'Amount' ]
 
+    console.log('swapHistory', swapHistory)
+
     return (
       <section>
         <PageHeadline subTitle="History" />
-        <SwapsHistory orders={Object.values(swapHistory).filter(item => item.step >= 4)} />
+        { swapHistory.length > 0 && <SwapsHistory orders={swapHistory.filter(item => item.step >= 4)} /> }
         <h3>All transactions</h3>
         <Filter />
         <InfiniteScrollTable

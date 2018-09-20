@@ -85,10 +85,6 @@ const webpackConfig = {
       filename: 'index.html',
       inject: 'body',
     }),
-    // new webpack.ContextReplacementPlugin(
-    //   /moment[\/\\]locale$/,
-    //   /en-gb|es/
-    // ),
     new webpack.ContextReplacementPlugin(
       /\.\/locale$/,
       'empty-module',
