@@ -4,7 +4,7 @@ cache:
   directories:
   - "$HOME/.npm"
 node_js:
-- '8'
+- 'lts/*'
 before_install:
 - echo "Clone swap.core source"
 - ./clone_swapcore.sh
@@ -12,15 +12,14 @@ before_script:
 - echo "_________NPM install swap.react___________"
 - npm install
 - echo "__________NPM start swap.react____________"
-- npm start &
+- npm run dev &
 script:
-- echo "____________TEST________________"
 - echo "____________LINT________________"
-- npm eslint
+- npm run eslint
 - echo "________Build mainnet___________"
-- npm build:mainnet
+- npm run clean:mainnet && cross-env DEBUG=app:* CONFIG=mainnet.prod node ./bin/compile
 - echo "________Build testnet___________"
-- npm build:testnet
+- npm run clean:testnet && cross-env DEBUG=app:* CONFIG=testnet.prod node ./bin/compile
 after_script:
 - tar -cvzf build-mainnet.tgz build-mainnet/
 - tar -cvzf build-testnet.tgz build-testnet/
