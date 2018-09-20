@@ -85,8 +85,9 @@ export default class AddOffer extends Component {
       return
     }
 
-    buyAmount  = new BigNumber(String(sellAmount)).multipliedBy(value)
-    sellAmount = new BigNumber(String(buyAmount)).dividedBy(value)
+
+    buyAmount  = new BigNumber(Number(sellAmount)).multipliedBy(value)
+    sellAmount = new BigNumber(Number(buyAmount)).dividedBy(value)
 
     this.setState({
       buyAmount,
