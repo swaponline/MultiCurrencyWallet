@@ -4,7 +4,7 @@ cache:
   directories:
   - "$HOME/.npm"
 node_js:
-- 'lts/*'
+- '8'
 before_install:
 - echo "Clone swap.core source"
 - ./clone_swapcore.sh
