@@ -49,7 +49,6 @@ export default class Row extends Component {
 
   handleReloadBalance = async () => {
     const { isBalanceFetching } = this.state
-    const { token } = this.props
 
     if (isBalanceFetching) {
       return null
@@ -58,18 +57,10 @@ export default class Row extends Component {
     this.setState({
       isBalanceFetching: true,
     })
-    let action
-    let { currency } = this.props
 
-    currency = currency.toLowerCase()
+    const { currency } = this.props
 
-    if (token) {
-      action = actions.token.getBalance(currency)
-    } else {
-      action = actions[currency].getBalance()
-    }
-
-    await action
+    await actions[currency.toLowerCase()].getBalance()
 
     this.setState(() => ({
       isBalanceFetching: false,
