@@ -3,7 +3,6 @@ cache:
   - node_modules
   - "~/.cache"
   - "~/.npm"
-  yarn:       true
 language:      node_js
 node_js:
 - 'lts/*'
@@ -20,9 +19,9 @@ before_script:
 #- yarn add react-test-renderer --save-dev
 #- yarn add ignore-styles --save-dev
 -
-- echo "_________YARN install___________"
+- echo "_________NPM install swap.react___________"
 - npm i
-- echo "__________YARN start____________"
+- echo "__________NPM start swap.react____________"
 - npm start &
 script:
 - echo "____________TEST________________"
