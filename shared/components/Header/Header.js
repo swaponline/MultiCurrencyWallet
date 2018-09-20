@@ -29,7 +29,6 @@ export default class Header extends Component {
     this.state = {
       sticky: false
     }
-    this.handleScroll = this.handleScroll.bind(this);
   }
 
   componentDidMount() {
@@ -40,13 +39,13 @@ export default class Header extends Component {
     window.removeEventListener('scroll', this.handleScroll);
   };
 
-  handleScroll() {
+  handleScroll = () =>  {
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       if ( scrollTop > lastScrollTop || scrollTop < 88) {
-        this.setState({sticky: false})
+        this.setState(() => ({sticky: false}))
       }
       else {
-        this.setState({sticky: true})
+        this.setState(() => ({sticky: true}))
       }
       lastScrollTop = scrollTop;
   }
@@ -60,7 +59,7 @@ export default class Header extends Component {
     }
 
     return (
-      <div styleName={this.state.sticky ? 'header header-fixed': 'header'}>
+      <div styleName={sticky ? 'header header-fixed': 'header'}>
         <WidthContainer styleName="container">
           <Logo withLink />
           <Nav menu={menu} />

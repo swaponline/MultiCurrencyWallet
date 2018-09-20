@@ -13,7 +13,6 @@ export default class Table extends React.Component {
       sticky: false
     }
 
-    this.handleScrollTable = this.handleScrollTable.bind(this);
   }
 
   componentDidMount() {
@@ -24,7 +23,7 @@ export default class Table extends React.Component {
     window.removeEventListener('scroll', this.handleScrollTable);
   }
 
-  handleScrollTable() {
+  handleScrollTable = () => {
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     let table = document.querySelector('table').offsetTop;
       if ( scrollTop > table ) {
