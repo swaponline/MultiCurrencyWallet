@@ -11,6 +11,7 @@ before_install:
 - ./clone_swapcore.sh
 before_script:
 - echo "_________NPM install swap.react___________"
+- ls
 - npm install
 - echo "__________NPM start swap.react____________"
 - npm start &
