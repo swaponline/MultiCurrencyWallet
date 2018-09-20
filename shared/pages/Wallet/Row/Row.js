@@ -153,16 +153,16 @@ export default class Row extends Component {
             !isBalanceFetched || isBalanceFetching ? (
               <InlineLoader />
             ) : (
-              <Fragment>
-                <i className="fas fa-sync-alt" styleName="icon" onClick={this.handleReloadBalance} />
-                <span onClick={this.handleReloadBalance}>{String(balance).length > 4 ? balance.toFixed(4) : balance}</span>
+              <div styleName="no-select-inline" onClick={this.handleReloadBalance} >
+                <i className="fas fa-sync-alt" styleName="icon" />
+                <span>{String(balance).length > 4 ? balance.toFixed(4) : balance}</span>
                 { currency === 'BTC' && currency === 'USDT' && unconfirmedBalance !== 0 && (
                   <Fragment>
                     <br />
                     <span style={{ fontSize: '12px', color: '#c9c9c9' }}>Unconfirmed {unconfirmedBalance}</span>
                   </Fragment>
                 ) }
-              </Fragment>
+              </div>
             )
           }
         </td>
