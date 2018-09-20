@@ -11,7 +11,6 @@ before_install:
 - ./clone_swapcore.sh
 before_script:
 - echo "_________NPM install swap.react___________"
-- ls
 - npm install
 - echo "__________NPM start swap.react____________"
 - npm start &
@@ -23,7 +22,6 @@ script:
 - npm build:mainnet
 - echo "________Build testnet___________"
 - npm build:testnet
-- ls
 after_script:
 - tar -cvzf build-mainnet.tgz build-mainnet/
 - tar -cvzf build-testnet.tgz build-testnet/
