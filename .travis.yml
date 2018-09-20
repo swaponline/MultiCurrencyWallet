@@ -15,7 +15,7 @@ before_script:
 - npm run dev &
 script:
 - echo "____________LINT________________"
-- npm run eslint
+- eslint
 - echo "________Build mainnet___________"
 - npm run clean:mainnet && cross-env DEBUG=app:* CONFIG=mainnet.prod node ./bin/compile
 - echo "________Build testnet___________"
