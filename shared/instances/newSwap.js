@@ -71,6 +71,7 @@ const createSwapApp = () => {
         fetchBalance: (address) => actions.usdt.fetchBalance(address, 31),
         fetchUnspents: (scriptAddress) => actions.btc.fetchUnspents(scriptAddress),
         broadcastTx: (txRaw) => actions.btc.broadcastTx(txRaw),
+        fetchTx: (hash) => actions.btc.fetchTx(hash),
       }),
       new EosSwap({
         swapAccount: config.swapContract.eos,
