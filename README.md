@@ -5,7 +5,7 @@ Atomic swap cryptocurrency protocol. Live version here: https://swap.online. Ato
 ## Swap  React
 
 ### Install
-
+a
 [link on install](https://youtu.be/EX2TomioHiU)
 
 1) Clone [swap.core](https://github.com/swaponline/swap.core) to same directory where `swap.react` is <br />
@@ -26,24 +26,55 @@ npm i
 npm run start
 ```
 
-## how it works?
+ # Структура папок и файлов
+#### github
+    Шаблоны для issue, PR, и т.п.
+#### bin
+    Express сервер для сборки webpack
+#### client
+    Html, scss, шрифты приложения
+#### config
+    app-config для тестнета и мейннета
+#### cypress
+    e2e тесты
+#### local_modules
+    локальные зависимости которых нет в npm <br />
 
-BTC -> ETH
+### shared
+- сам проект
+   - components (компоненты)
+   - containers (контейнеры)
+   - decorators (JS декораторы)
+   - helpers (вспомогательные средства для работы)
+  #### instances
+   - установка swap.core
+  #### pages
+  - страницы в приложении
+  #### redux
+ - вся логика redux
+   - actions
+   - core
+   - redusers
+   - store
+  #### routes
+   - маршруты для переходов по страницам
+   #### webpack
+   - настройки для сборки webpack
+   ##### rules
+     правила сборки для webpack
+   ##### utils
+     различные дополнительные констаты для сборки
 
-Alice wants to sell BTC and buy ETH, Bob instead wants to sell ETH and buy BTC.
-
- 1. Alice creates order for 1 BTC -> 10 ETH
- 2. Bob pushes a 'Buy' button in the orders list and is redirected to /swaps/eth-btc/:id page.
- 3. Alice is notified about Bob and is redirected to /swaps/btc-eth/:id page.
- 4. Alice is asked to create a 'Secret Key'.
- 5. The system automatically generates the 'Secret Hash', shows it to Alice and sends to Bob.
- 6. The system automatically calls the ETH Swap contract method to create a swap.
- 7. The system asks Bob to sign the transaction (Bob fund the ETH Swap contract here).
- 8. The system automatically creates a BTC Swap script.
- 9. Alice is notified that Bob fund the ETH Swap contract. The system asks Alice to fund the script (Alice fund the script here).
- 10. Bob is notified that Alice fund the script.
- 11. The system automatically sends the ETH Swap contract address to Alice and the script to Bob.
- 12. Alice signs a call to the ETH Swap contract to withdraw ETH.
- 13. Bob is notified that Alice did withdraw. Bob signs a call to the ETH Swap contract to receive the secret.
- 14. Bob signs the BTC script method to withdraw 1 BTC.
+#### babelrc
+    настройки для babel
+#### eslintignore
+    файлы которые не проверяет eslint
+#### eslintrc.yml
+    настройки eslint для travis
+#### gitignore
+    файлы которые не пушиться в git
+#### stylelintrc
+    настройки для styleLint
+#### travis.yml
+    конфиг для travis
 
