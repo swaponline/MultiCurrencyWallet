@@ -18,6 +18,8 @@ import SelectGroup from './SelectGroup/SelectGroup'
 import Button from 'components/controls/Button/Button'
 import Toggle from 'components/controls/Toggle/Toggle'
 
+import { areFloatsEqual, isNumberValid, isNumberStringFormatCorrect } from 'helpers/math.js'
+
 
 const minAmount = {
   eth: 0.05,
@@ -80,17 +82,32 @@ export default class AddOffer extends Component {
   handleExchangeRateChange = (value) => {
     let { buyAmount, sellAmount } = this.state
 
-    if (value === 0 || value.lastIndexOf(0, '.') || !value) {
-      return
+    if (!isNumberStringFormatCorrect(value)) {
+      return undefined
     }
+
+    if (areFloatsEqual(value, 0) || !value) {
+      return undefined
+    }
+
 
     buyAmount  = new BigNumber(String(sellAmount)).multipliedBy(value)
     sellAmount = new BigNumber(String(buyAmount)).dividedBy(value)
+
+    if (!isNumberValid(buyAmount)) {
+      buyAmount = new BigNumber('0')
+    }
+
+    if (!isNumberValid(sellAmount)) {
+      sellAmount = new BigNumber('0')
+    }
 
     this.setState({
       buyAmount,
       sellAmount,
     })
+
+    return value
   }
 
   handleBuyCurrencySelect = async ({ value }) => {
@@ -116,8 +133,8 @@ export default class AddOffer extends Component {
     this.setState({
       buyCurrency,
       sellCurrency,
-      sellAmount: isNaN(sellAmount) ? '' : sellAmount,
-      buyAmount: isNaN(buyAmount) ? '' : buyAmount,
+      sellAmount: Number.isNaN(sellAmount) ? '' : sellAmount,
+      buyAmount: Number.isNaN(buyAmount) ? '' : buyAmount,
       isSellFieldInteger: config.erc20[sellCurrency] && config.erc20[sellCurrency].decimals === 0,
       isBuyFieldInteger,
     })
@@ -146,8 +163,8 @@ export default class AddOffer extends Component {
     this.setState({
       buyCurrency,
       sellCurrency,
-      buyAmount: isNaN(buyAmount) ? '' : buyAmount,
-      sellAmount: isNaN(sellAmount) ? '' : sellAmount,
+      buyAmount: Number.isNaN(buyAmount) ? '' : buyAmount,
+      sellAmount: Number.isNaN(sellAmount) ? '' : sellAmount,
       isSellFieldInteger,
       isBuyFieldInteger: config.erc20[buyCurrency] && config.erc20[buyCurrency].decimals === 0,
     })
@@ -156,10 +173,7 @@ export default class AddOffer extends Component {
   handleBuyAmountChange = (value, prev) => {
     const { exchangeRate, sellAmount, manualRate } = this.state
 
-    const firstDot = value.indexOf('.')
-    const secondDot = value.lastIndexOf('.')
-
-    if (firstDot !== secondDot) {
+    if (!isNumberStringFormatCorrect(value)) {
       return undefined
     }
 
@@ -171,7 +185,7 @@ export default class AddOffer extends Component {
     if (manualRate) {
       let newRate = new BigNumber(String(value)).dividedBy(new BigNumber(String(sellAmount)))
       this.setState({
-        exchangeRate: isNaN(newRate) ? '' : newRate,
+        exchangeRate: isNumberValid(newRate) ? newRate : '',
         buyAmount: new BigNumber(String(value)),
       })
     } else {
@@ -187,10 +201,8 @@ export default class AddOffer extends Component {
 
   handleSellAmountChange = (value) => {
     const { exchangeRate, manualRate, buyAmount } = this.state
-    const firstDot = value.toString().indexOf('.')
-    const secondDot = value.toString().lastIndexOf('.')
 
-    if (firstDot !== secondDot) {
+    if (!isNumberStringFormatCorrect(value)) {
       return undefined
     }
 
@@ -201,8 +213,8 @@ export default class AddOffer extends Component {
     if (manualRate) {
       let newRate = new BigNumber(String(buyAmount)).dividedBy(new BigNumber(String(value)))
       this.setState({
+        exchangeRate: isNumberValid(newRate) ? newRate : '',
         sellAmount: new BigNumber(String(value)),
-        exchangeRate: isNaN(newRate) ? '' : newRate,
       })
     } else {
       this.setState({
@@ -258,7 +270,7 @@ export default class AddOffer extends Component {
       <Fragment>
         <ExchangeRateGroup
           label="Exchange rate"
-          inputValueLink={linked.exchangeRate.onChange(this.handleExchangeRateChange)}
+          inputValueLink={linked.exchangeRate.pipe(this.handleExchangeRateChange)}
           currency={false}
           disabled={!manualRate}
           id="exchangeRate"
