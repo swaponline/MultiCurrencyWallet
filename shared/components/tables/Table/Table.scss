@@ -262,3 +262,13 @@
     }
   }
 }
+
+.table-fixed {
+  thead {
+    position: fixed;
+    top: 0;
+    background: #fff;
+    z-index: 1111;
+    width: 100%;
+  }
+}
