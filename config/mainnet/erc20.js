@@ -15,6 +15,14 @@ export default {
     address: '0x49feeF410293261c04F1d14600Ba427F8eED8723',
     decimals: 2,
   },
+  arn: {
+    address: '0xBA5F11b16B155792Cf3B2E6880E8706859A8AEB6',
+    decimals: 8,
+  },
+  gusd: {
+    address: '0x056fd409e1d7a124bd7017459dfea2f387b6d5cd',
+    decimals: 2,
+  },
   yup: {
     address: '0xD9A12Cde03a86E800496469858De8581D3A5353d',
     decimals: 18,

@@ -15,8 +15,6 @@ export default class SwapsHistory extends PureComponent {
       return null
     }
 
-    console.log('history', orders)
-
     return (
       <div style={{ marginBottom: '50px' }}>
         <h3>Swaps history</h3>
