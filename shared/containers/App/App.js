@@ -5,6 +5,7 @@ import actions from 'redux/actions'
 import { connect } from 'redaction'
 import moment from 'moment-with-locales-es6'
 import { constants, localStorage } from 'helpers'
+import { isMobile } from 'react-device-detect'
 
 import CSSModules from 'react-css-modules'
 import styles from './App.scss'
@@ -23,6 +24,7 @@ import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import NotificationConductor from 'components/notification/NotificationConductor/NotificationConductor'
 import Seo from 'components/Seo/Seo'
 import ErrorNotification from 'components/notification/ErrorNotification/ErrorNotification'
+import UserTooltip from 'components/Header/User/UserTooltip/UserTooltip'
 
 
 const userLanguage = (navigator.userLanguage || navigator.language || 'en-gb').split('-')[0]
@@ -33,7 +35,7 @@ moment.locale(userLanguage)
   isVisible: 'loader.isVisible',
   ethAddress: 'user.ethData.address',
   btcAddress: 'user.btcData.address',
-  tokenAddress: 'user.tokensData.noxon.address',
+  tokenAddress: 'user.tokensData.swap.address',
 })
 @CSSModules(styles)
 export default class App extends React.Component {
@@ -53,12 +55,9 @@ export default class App extends React.Component {
       error: '',
       fallbackUiError: '',
     }
-
-    this.hideErrorNotification = this.hideErrorNotification.bind(this)
   }
 
   componentWillMount() {
-
     localStorage.setItem(constants.localStorage.activeTabId, Date.now())
 
     if (localStorage.getItem(constants.localStorage.activeTabId)) {
@@ -92,7 +91,7 @@ export default class App extends React.Component {
     }, 1000)
   }
 
-  hideErrorNotification() {
+  hideErrorNotification = () => {
     this.setState({ error: '', fallbackUiError: '' })
   }
 
@@ -110,7 +109,7 @@ export default class App extends React.Component {
     }
 
     if (isFetching) {
-      return <Loader />
+      return <Loader showTips />
     }
 
     if (fallbackUiError) {
@@ -121,12 +120,15 @@ export default class App extends React.Component {
       <Fragment>
         {error && <ErrorNotification hideErrorNotification={this.hideErrorNotification} error={error} />}
         <Seo location={history.location} />
+        { isMobile && <UserTooltip /> }
         <Header />
         <WidthContainer styleName="main">
-          {children}
+          <main>
+            {children}
+          </main>
         </WidthContainer>
         <Core />
-        <Footer />
+        { !isMobile && <Footer /> }
         <RequestLoader />
         <ModalConductor />
         <NotificationConductor />

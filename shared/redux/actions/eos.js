@@ -1,43 +1,11 @@
-import { getState } from 'redux/core'
 import config from 'app-config'
+import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
 import constants from 'helpers/constants'
 
+import { eos, ecc } from 'helpers/eos'
 import { Keygen } from 'eosjs-keygen'
 
-
-let eos = null
-let ecc = null
-
-const keyProvider = ({ transaction, pubkeys }) => {
-  const { user: { eosData: { privateKeys, publicKeys } } } = getState()
-
-  if (!pubkeys) {
-    return [publicKeys.active]
-  }
-
-  return [privateKeys.active]
-}
-
-const init = async () => {
-  if (eos === null) {
-    const EOSLibrary = await import('eosjs')
-
-    const { chainId, httpEndpoint } = config.services.eos
-
-    if (!chainId || !httpEndpoint) {
-      throw new Error('Invalid config')
-    }
-
-    eos = EOSLibrary({
-      chainId,
-      httpEndpoint,
-      keyProvider,
-    })
-
-    ecc = EOSLibrary.modules.ecc /* eslint-disable-line */
-  }
-}
 
 const register = async (accountName, privateKey) => {
   const keys = await Keygen.generateMasterKeys(privateKey)
@@ -46,9 +14,11 @@ const register = async (accountName, privateKey) => {
     throw new Error('Invalid private key')
   }
 
-  const { permissions } = await eos.getAccount(accountName)
+  const eosInstance = await eos.getInstance()
+  const eccInstance = await ecc.getInstance()
+  const { permissions } = await eosInstance.getAccount(accountName)
 
-  const providedKey = ecc.privateToPublic(keys.privateKeys.active)
+  const providedKey = eccInstance.privateToPublic(keys.privateKeys.active)
 
   const requiredKey =
     permissions.find(item => item.perm_name === 'active')
@@ -69,14 +39,42 @@ const login = async (accountName, masterPrivateKey) => {
   reducers.user.setAuthData({ name: 'eosData', data: { ...keys, address: accountName } })
 }
 
+const createAccount = async () => {
+  const keys = await Keygen.generateMasterKeys()
+  const { masterPrivateKey, publicKeys: { active } } = keys
+
+  localStorage.setItem(constants.privateKeyNames.eos, masterPrivateKey)
+  reducers.user.setAuthData({ name: 'eosData', data: { ...keys } })
+
+  console.log(`request to create account for ${active}`)
+  const { registerEndpoint } = config.api.eos
+  const response = await fetch(registerEndpoint, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ publicKey: active }),
+  })
+  const { accountName, transaction_id: txid } = await response.json()
+
+  if (!accountName) {
+    throw new Error('Unable to register EOS address. Please contact team@swap.online for fix this issue')
+  }
+
+  console.log(`${accountName} was created at ${txid}`)
+
+  localStorage.setItem(constants.privateKeyNames.eosAccount, accountName)
+  reducers.user.setAuthData({ name: 'eosData', data: { address: accountName } })
+}
+
 const getBalance = async () => {
   const { user: { eosData: { address } } } = getState()
 
-  if (eos === null || typeof address === 'string') {
-    return
-  }
+  if (typeof address !== 'string') return
 
-  const balance = await eos.getCurrencyBalance({
+  const eosInstance = await eos.getInstance()
+  const balance = await eosInstance.getCurrencyBalance({
     code: 'eosio.token',
     symbol: 'EOS',
     account: address,
@@ -90,11 +88,10 @@ const getBalance = async () => {
 const send = async (from, to, amount) => {
   const { user: { eosData: { address } } } = getState()
 
-  if (eos === null || typeof address === 'string') {
-    return
-  }
+  if (typeof address !== 'string') return
 
-  const transfer = await eos.transaction(
+  const eosInstance = await eos.getInstance()
+  const transfer = await eosInstance.transaction(
     {
       actions: [{
         account: 'eosio.token',
@@ -115,9 +112,9 @@ const send = async (from, to, amount) => {
 }
 
 export default {
-  init,
   login,
   register,
   getBalance,
   send,
+  createAccount,
 }

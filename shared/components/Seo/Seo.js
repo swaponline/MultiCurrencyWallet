@@ -22,11 +22,17 @@ export default class Seo extends Component {
     }
   }
 
+  shouldComponentUpdate(nextProps) {
+    return this.props.location.pathname !== nextProps.location.pathname
+  }
+
   render() {
     if (!this.seoPage) {
       return null
     }
     const { uri, title, description } = this.seoPage
+
+    console.log('seo', this.seoPage)
     const url = getUrl(uri)
     return (
       <DocumentMeta

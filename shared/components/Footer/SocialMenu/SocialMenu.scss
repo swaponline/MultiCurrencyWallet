@@ -1,11 +1,13 @@
 .social-menu {
   display: flex;
   list-style: none;
-  margin: 0;
+  justify-content: center;
+  margin-top: 40px;
+  margin-bottom: 0;
   padding: 0;
 
   & li {
-    margin-right: 32px;
+    margin-right: 18px;
 
     &:last-child {
       margin-right: 0;
@@ -15,7 +17,7 @@
 
 .icon {
   color: #7371ff;
-  font-size: 32px;
+  font-size: 24px;
   text-align: center;
   transition: color 300ms ease;
   cursor: pointer;

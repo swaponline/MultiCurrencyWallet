@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+import { links }    from 'helpers'
 
 import cssModules from 'react-css-modules'
 import styles from './Row.scss'
@@ -28,7 +29,7 @@ export default class Row extends Component {
           <span>{from.toUpperCase()}-{to.toUpperCase()}</span>
         </td>
         <td>
-          <Link styleName="button" to={`/exchange/${from}-${to}`}>Trade</Link>
+          <Link styleName="button" to={`${links.home}${from.toLowerCase()}-${to.toLowerCase()}`}>Trade</Link>
         </td>
       </tr>
     )

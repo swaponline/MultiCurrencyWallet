@@ -34,27 +34,9 @@ const webpackConfig = {
     rules,
   },
 
-  // resolve: {
-  //   alias: {
-  //     shared: config.paths.base('shared'),
-  //     'swap.auth': config.paths.swapCore('swap.core/lib/swap.auth'),
-  //     'swap.orders': config.paths.swapCore('swap.core/lib/swap.orders'),
-  //     'swap.room': config.paths.swapCore('swap.core/lib/swap.room'),
-  //     'swap.app': config.paths.swapCore('swap.core/lib/swap.app'),
-  //     'swap.flows': config.paths.swapCore('swap.core/lib/swap.flows'),
-  //     'swap.swap': config.paths.swapCore('swap.core/lib/swap.swap'),
-  //     'swap.swaps': config.paths.swapCore('swap.core/lib/swap.swaps'),
-  //   },
-  //   modules: [
-  //     config.paths.base('client'),
-  //     config.paths.base('shared'),
-  //     config.paths.base('local_modules'),
-  //     'node_modules',
-  //     config.paths.swapCore('../node_modules'),
-  //   ],
-  //   extensions: [ '.js', '.jsx', '.scss' ],
-  //   plugins: [],
-  // },
+  node: {
+    fs: 'empty',
+  },
 
   resolve: {
     alias: {
@@ -93,8 +75,8 @@ const webpackConfig = {
     new webpack.NoEmitOnErrorsPlugin(),
     new ProgressBarPlugin({ clear: false }),
     new WebappWebpackPlugin({
-      logo: config.paths.client('favicon.png'),
-      prefix: `${config.publicPath}assets/`,
+      logo: 'favicon.png',
+      path: '',
     }),
     new HtmlWebpackPlugin({
       title: 'Swap.Online - Cryptocurrency Wallet with Atomic Swap Exchange',
@@ -103,16 +85,12 @@ const webpackConfig = {
       filename: 'index.html',
       inject: 'body',
     }),
-    // new webpack.ContextReplacementPlugin(
-    //   /moment[\/\\]locale$/,
-    //   /en-gb|es/
-    // ),
     new webpack.ContextReplacementPlugin(
       /\.\/locale$/,
       'empty-module',
       false,
       /js$/
-    )
+    ),
   ],
 }
 

@@ -1,5 +1,5 @@
 import baseConfig from './default'
-import config from './_testnet'
+import config from './testnet'
 
 
 export default {

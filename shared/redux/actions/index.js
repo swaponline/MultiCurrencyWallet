@@ -8,6 +8,7 @@ import core from './core'
 import filter from './filter'
 
 import btc from './btc'
+import bch from './bch'
 import eth from './eth'
 import eos from './eos'
 import token from './token'
@@ -22,17 +23,17 @@ import ipfs from './ipfs'
 import btrm from './btrm'
 import swap from './swap'
 import noxon from './noxon'
+import syc from './syc'
 import jot from './jot'
 
 import usdt from './usdt'
-import omgtoken from './omgtoken'
 
 
 export default {
   btrm,
+  syc,
   swap,
   noxon,
-  omgtoken,
   jot,
   filter,
   modals,
@@ -40,6 +41,7 @@ export default {
   notifications,
   user,
   core,
+  bch,
   btc,
   usdt,
   eth,

@@ -1,17 +1,28 @@
 export const initialState = {
   ethData: {
-    address: '0x0',
-    publicKey: '0x0',
     balance: 0,
     isBalanceFetched: false,
     currency: 'ETH',
+    fullName: 'Ethereum',
   },
   btcData: {
+    balance: 0,
+    isBalanceFetched: false,
+    currency: 'BTC',
+    fullName: 'Bitcoin',
+  },
+  bchData: {
+    balance: 0,
+    isBalanceFetched: false,
+    currency: 'BCH',
+    fullName: 'BitcoinCash',
+  },
+  usdtData: {
     address: '0x0',
     publicKey: '0x0',
     balance: 0,
     isBalanceFetched: false,
-    currency: 'BTC',
+    currency: 'USDT',
   },
   usdtData: {
     address: '0x0',
@@ -21,16 +32,17 @@ export const initialState = {
     currency: 'USDT',
   },
   nimData: {
-    address: '',
     balance: 0,
     isBalanceFetched: false,
     currency: 'NIM',
+    fullName: 'Nimiq',
   },
   eosData: {
-    address: '',
     balance: 0,
+    address: '',
     isBalanceFetched: true,
     currency: 'EOS',
+    fullName: 'Eos',
   },
   tokensData: {},
 }

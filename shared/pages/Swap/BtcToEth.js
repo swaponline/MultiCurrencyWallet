@@ -4,11 +4,11 @@ import crypto from 'crypto'
 import config from 'app-config'
 import { BigNumber } from 'bignumber.js'
 
+import actions from 'redux/actions'
+
 import Timer from './Timer/Timer'
-import Button from 'components/controls/Button/Button'
-import OverProgress from 'components/loaders/OverProgress/OverProgress'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
-import TimerButton from 'components/controls/TimerButton/TimerButton'
+import { TimerButton, Button } from 'components/controls'
 
 
 export default class BtcToEth extends Component {
@@ -34,9 +34,26 @@ export default class BtcToEth extends Component {
   }
 
   handleFlowStateUpdate = (values) => {
+    const stepNumbers = {
+      1: 'sign',
+      2: 'submit-secret',
+      3: 'sync-balance',
+      4: 'lock-btc',
+      5: 'wait-lock-eth',
+      6: 'withdraw-eth',
+      7: 'finish',
+      8: 'end',
+    }
+
+    actions.analytics.swapEvent(stepNumbers[values.step], 'BTC2ETH')
+
     this.setState({
       flow: values,
     })
+  }
+
+  overProgress = ({ flow, length }) => {
+    actions.loader.show(true, '', '', true, { flow, length, name: 'BTC2ETH' })
   }
 
   submitSecret = () => {
@@ -47,12 +64,6 @@ export default class BtcToEth extends Component {
 
   updateBalance = () => {
     this.swap.flow.syncBalance()
-  }
-
-  addGasPrice = () => {
-    const gwei =  new BigNumber(String(this.swap.flow.ethSwap.gasPrice)).plus(new BigNumber(1e9))
-    this.swap.flow.ethSwap.addGasPrice(gwei)
-    this.swap.flow.restartStep()
   }
 
   tryRefund = () => {
@@ -74,11 +85,9 @@ export default class BtcToEth extends Component {
   render() {
     const { children } = this.props
     const { secret, flow, enabledButton } = this.state
-    // let progress = Math.floor(100 / 7 * flow.step)
 
     return (
       <div>
-        {/* <OverProgress text={flow.step} progress={progress} /> */}
         {
           this.swap.id && (
             <strong>{this.swap.sellAmount.toNumber()} {this.swap.sellCurrency} &#10230; {this.swap.buyAmount.toNumber()} {this.swap.buyCurrency}</strong>

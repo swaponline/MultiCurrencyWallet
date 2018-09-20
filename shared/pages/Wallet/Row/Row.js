@@ -1,13 +1,15 @@
 import React, { Component, Fragment } from 'react'
 import actions from 'redux/actions'
 import { constants } from 'helpers'
+import config from 'app-config'
+import { isMobile } from 'react-device-detect'
 
 import cssModules from 'react-css-modules'
 import styles from './Row.scss'
 
 import CopyToClipboard from 'react-copy-to-clipboard'
 
-import Coin from 'components/Coin/Coin'
+import CoinInteractive from 'components/CoinInteractive/CoinInteractive'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import WithdrawButton from 'components/controls/WithdrawButton/WithdrawButton'
 
@@ -34,16 +36,20 @@ export default class Row extends Component {
     })
   }
 
-  // componentDidMount() {
-  //   const { contractAddress, name } = this.props
-  //
-  //   if (name !== undefined) {
-  //     actions.token.allowance(contractAddress, name)
-  //   }
-  // }
+  componentDidMount() {
+    const { hiddenCoinsList } = this.props
 
-  handleReloadBalance = () => {
-    const { isBalanceFetching, token } = this.state
+    Object.keys(config.erc20)
+      .forEach(name => {
+        if (!hiddenCoinsList.includes(name.toUpperCase())) {
+          actions.core.markCoinAsVisible(name.toUpperCase())
+        }
+      })
+  }
+
+  handleReloadBalance = async () => {
+    const { isBalanceFetching } = this.state
+    const { token } = this.props
 
     if (isBalanceFetching) {
       return null
@@ -52,38 +58,22 @@ export default class Row extends Component {
     this.setState({
       isBalanceFetching: true,
     })
-
+    let action
     let { currency } = this.props
 
     currency = currency.toLowerCase()
 
-    console.log('token', token)
-
     if (token) {
-      actions.token.getBalance(currency)
-        .then(() => {
-          this.setState({
-            isBalanceFetching: false,
-          })
-        }, () => {
-          this.setState({
-            isBalanceFetching: false,
-          })
-        })
+      action = actions.token.getBalance(currency)
     } else {
-      actions[currency].getBalance(currency)
-        .then(() => {
-          this.setState({
-            isBalanceFetching: false,
-          })
-        }, () => {
-          this.setState({
-            isBalanceFetching: false,
-          })
-        })
+      action = actions[currency].getBalance()
     }
 
+    await action
 
+    this.setState(() => ({
+      isBalanceFetching: false,
+    }))
   }
 
   handleCopyAddress = () => {
@@ -102,13 +92,14 @@ export default class Row extends Component {
     actions.modals.open(constants.modals.Eos, {})
   }
 
-  // handleApproveToken = (decimals, contractAddress, name) => {
-  //   actions.modals.open(constants.modals.Approve, {
-  //     contractAddress,
-  //     decimals,
-  //     name,
-  //   })
-  // }
+  handleEosCreateAccount = async () => {
+    try {
+      await actions.eos.createAccount()
+    } catch (error) {
+      console.log(error.toString())
+      actions.notifications.show(constants.notifications.Message, { message: error.toString() })
+    }
+  }
 
   handleWithdraw = () => {
     const { currency, address, contractAddress, decimals, balance, token } = this.props
@@ -124,14 +115,27 @@ export default class Row extends Component {
     })
   }
 
+  handleReceive = () => {
+    const { currency, address } = this.props
+
+    actions.modals.open(constants.modals.ReceiveModal, {
+      currency,
+      address,
+    })
+  }
+
   handleGoTrade = async (link) => {
     const balance = await actions.eth.getBalance()
 
-    if (balance > 0) {
+    if (balance - 0.02 > 0) {
       this.props.history.push(link)
     } else {
       actions.modals.open(constants.modals.EthChecker, {})
     }
+  }
+
+  handleMarkCoinAsHidden = (coin) => {
+    actions.core.markCoinAsHidden(coin)
   }
 
   render() {
@@ -141,62 +145,77 @@ export default class Row extends Component {
     return (
       <tr>
         <td>
-          <Coin name={currency} size={40} />
+          <CoinInteractive name={currency} />
         </td>
         <td>{currency}</td>
-        <td style={{ minWidth: '120px' }}>
+        <td>
           {
             !isBalanceFetched || isBalanceFetching ? (
               <InlineLoader />
             ) : (
-              <Fragment>
-                <i className="fas fa-sync-alt" styleName="icon" onClick={this.handleReloadBalance} />
-                <span>{String(balance).length > 5 ? balance.toFixed(5) : balance}</span>
+              <div styleName="no-select-inline" onClick={this.handleReloadBalance} >
+                <i className="fas fa-sync-alt" styleName="icon" />
+                <span>{String(balance).length > 4 ? balance.toFixed(4) : balance}</span>
                 { currency === 'BTC' && currency === 'USDT' && unconfirmedBalance !== 0 && (
                   <Fragment>
                     <br />
                     <span style={{ fontSize: '12px', color: '#c9c9c9' }}>Unconfirmed {unconfirmedBalance}</span>
                   </Fragment>
                 ) }
-              </Fragment>
+              </div>
             )
           }
         </td>
-        <CopyToClipboard
-          text={address}
-          onCopy={this.handleCopyAddress}
-        >
-          <td style={{ position: 'relative' }}>
-            {
-              !contractAddress ? (
-                <Fragment>
-                  { currency !== 'EOS' && <i className="far fa-copy" styleName="icon" onClick={this.handleCopiedAddress} /> }
-                  <LinkAccount type={currency} address={address} >{address}</LinkAccount>
-                </Fragment>
-              ) : (
-                <Fragment>
-                  <i className="far fa-copy" styleName="icon" onClick={this.handleCopiedAddress} />
-                  <LinkAccount type={currency} contractAddress={contractAddress} address={address} >{address}</LinkAccount>
-                </Fragment>
-              )
-            }
-            {
-              currency === 'EOS' && address === '' && <button styleName="button" onClick={this.handleEosLogin}>Login</button>
-            }
-            { isAddressCopied && <p styleName="copied" >Address copied to clipboard</p> }
-          </td>
-        </CopyToClipboard>
-        <td >
+
+        { !isMobile && (
+          <CopyToClipboard
+            text={address}
+            onCopy={this.handleCopyAddress}
+          >
+            <td style={{ position: 'relative' }}>
+              {
+                !contractAddress ? (
+                  <Fragment>
+                    {
+                      address !== '' && <i className="far fa-copy" styleName="icon" />
+                    }
+                    <LinkAccount type={currency} address={address} >{address}</LinkAccount>
+                  </Fragment>
+                ) : (
+                  <Fragment>
+                    <i className="far fa-copy" styleName="icon" />
+                    <LinkAccount type={currency} contractAddress={contractAddress} address={address} >{address}</LinkAccount>
+                  </Fragment>
+                )
+              }
+              {
+                currency === 'EOS' && address === '' && <button styleName="button" onClick={this.handleEosLogin}>Login</button>
+              }
+              {
+                currency === 'EOS' && address === '' && <button styleName="button" onClick={this.handleEosCreateAccount}>Register</button>
+              }
+              { isAddressCopied && <p styleName="copied" >Address copied to clipboard</p> }
+            </td>
+          </CopyToClipboard>
+        ) }
+        <td>
           <div>
-            <WithdrawButton onClick={this.handleWithdraw} styleName="marginRight" >
-              Send
+            <WithdrawButton onClick={this.handleWithdraw} styleName="marginRight">
+              <i className="fas fa-arrow-alt-circle-up" />
+              <span>Send</span>
             </WithdrawButton>
+            { isMobile && (
+              <WithdrawButton onClick={this.handleReceive} styleName="marginRight">
+                <i className="fas fa-arrow-alt-circle-down" />
+                <span>Receive</span>
+              </WithdrawButton>
+            )}
             {
               tradeAllowed && (
-                <Fragment>
-                  <div styleName="button" onClick={() => this.handleGoTrade(`/sell-${currency.toLowerCase()}`)}>Sell</div>
-                  <div styleName="button" onClick={() => this.handleGoTrade(`/buy-${currency.toLowerCase()}`)}>Buy</div>
-                </Fragment>
+                <WithdrawButton onClick={() => this.handleGoTrade(`/${currency.toLowerCase()}`)}>
+                  <i className="fas fa-exchange-alt" />
+                  <span>Swap</span>
+                </WithdrawButton>
               )
             }
           </div>

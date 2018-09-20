@@ -12,11 +12,11 @@ const filterMyOrders = (orders, peer) => orders.filter(order => order.owner.peer
 
 const filterOrders = (orders, filter) => orders
   .filter(order => order.isMy ? (
-    `${order.buyCurrency.toLowerCase()}${order.sellCurrency.toLowerCase()}` === filter
+    `${order.buyCurrency.toLowerCase()}-${order.sellCurrency.toLowerCase()}` === filter
   ) : (
-    `${order.sellCurrency.toLowerCase()}${order.buyCurrency.toLowerCase()}` === filter
+    `${order.sellCurrency.toLowerCase()}-${order.buyCurrency.toLowerCase()}` === filter
   ))
-  .sort((a, b) => Number(b.buyAmount.dividedBy(b.sellAmount)) - Number(a.buyAmount.dividedBy(a.sellAmount)))
+  .sort((a, b) => b.exchangeRate - a.exchangeRate)
 
 @connect(({  core: { orders, filter }, ipfs: { isOnline, peer }, currencies: { items: currencies } }) => ({
   orders: filterOrders(orders, filter),
@@ -26,16 +26,9 @@ const filterOrders = (orders, filter) => orders
 }))
 export default class Orders extends Component {
 
-  shouldComponentUpdate(nextProps) {
-    const { orders, myOrders } = this.props
-    return (
-      orders !== nextProps.orders || myOrders !== nextProps.myOrders
-    )
-  }
-
   render() {
     const { sellCurrency, buyCurrency, handleSellCurrencySelect, handleBuyCurrencySelect, flipCurrency, currencies } = this.props
-    const titles = [ 'EXCHANGE', 'YOU BUY', 'YOU SELL', 'EXCHANGE RATE', 'ACTIONS' ]
+    const titles = [ 'OWNER', 'EXCHANGE', 'YOU GET', 'YOU HAVE', 'EXCHANGE RATE', 'ACTIONS' ]
     const { isOnline, orders, myOrders, orderId } = this.props
 
     return (

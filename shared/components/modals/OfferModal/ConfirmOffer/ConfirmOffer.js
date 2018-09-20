@@ -8,15 +8,19 @@ import { Link } from 'react-router-dom'
 import cssModules from 'react-css-modules'
 import styles from './ConfirmOffer.scss'
 
-import ButtonsInRow from 'components/controls/ButtonsInRow/ButtonsInRow'
+import Row from 'components/Row/Row'
 import Button from 'components/controls/Button/Button'
 import Coins from 'components/Coins/Coins'
 
 import Amounts from './Amounts/Amounts'
 import ExchangeRate from './ExchangeRate/ExchangeRate'
 import Fee from './Fee/Fee'
+import { connect } from 'redaction'
 
 
+@connect(({ currencies: { items: currencies } }) => ({
+  currencies,
+}))
 @cssModules(styles)
 export default class ConfirmOffer extends Component {
 
@@ -37,10 +41,11 @@ export default class ConfirmOffer extends Component {
     }
     actions.analytics.dataEvent('orderbook-addoffer-click-confirm-button')
     actions.core.createOrder(data)
+    actions.core.updateCore()
   }
 
   render() {
-    const { offer: { buyAmount, sellAmount, buyCurrency, sellCurrency, exchangeRate }, onBack } = this.props
+    const { offer: { buyAmount, sellAmount, buyCurrency, sellCurrency, exchangeRate }, onBack, currencies } = this.props
 
     return (
       <Fragment>
@@ -48,12 +53,12 @@ export default class ConfirmOffer extends Component {
         <Amounts {...{ buyAmount, sellAmount, buyCurrency, sellCurrency }} />
         <ExchangeRate {...{ value: exchangeRate, buyCurrency, sellCurrency }} />
         <Fee amount={0.0001} currency={sellCurrency} />
-        <ButtonsInRow styleName="buttonsInRow">
+        <Row styleName="buttonsInRow">
           <Button styleName="button" gray onClick={onBack}>Back</Button>
-          <Link styleName="link" to={`${links.exchange}/${buyCurrency.toLowerCase()}-${sellCurrency.toLowerCase()}`}>
+          <Link styleName="link" to={`${links.home}${buyCurrency}-${sellCurrency}`}>
             <Button styleName="button" id="confirm" brand onClick={this.handleConfirm} >Add</Button>
           </Link>
-        </ButtonsInRow>
+        </Row>
       </Fragment>
     )
   }

@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
+import moment from 'moment/moment'
 
 import { links } from 'helpers'
 import { Link } from 'react-router-dom'
@@ -9,6 +10,7 @@ import styles from './RowHistory.scss'
 
 import Coins from 'components/Coins/Coins'
 import Timer from 'pages/Swap/Timer/Timer'
+import Avatar from 'components/Avatar/Avatar'
 
 
 const RowHistory = ({ row }) => {
@@ -17,7 +19,11 @@ const RowHistory = ({ row }) => {
     return null
   }
 
-  let { buyAmount, buyCurrency, sellAmount, btcScriptValues, isRefunded, isMy, sellCurrency, isFinished,  id } = row
+  let { buyAmount, buyCurrency, sellAmount, btcScriptValues, isRefunded, isMy, sellCurrency, isFinished, id, scriptValues } = row
+
+  const values = btcScriptValues || scriptValues
+
+  const lockDateAndTime = moment.unix(values.lockTime).format('HH:mm:ss DD/MM/YYYY')
 
   buyAmount   = Number(buyAmount)
   sellAmount  = Number(sellAmount)
@@ -26,6 +32,11 @@ const RowHistory = ({ row }) => {
 
   return (
     <tr>
+      <td>
+        <Avatar
+          value={id}
+        />
+      </td>
       <td>
         <Coins names={[buyCurrency, sellCurrency]}  />
       </td>
@@ -64,6 +75,9 @@ const RowHistory = ({ row }) => {
       </td>
       <td>
         { isFinished ? 'Finished' : 'Uncompleted' }
+      </td>
+      <td>
+        { lockDateAndTime.split(' ').map((item, key) => <Fragment key={key}>{item}<br /></Fragment>) }
       </td>
       <td>
         {

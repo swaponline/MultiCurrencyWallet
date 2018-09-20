@@ -8,7 +8,7 @@ import SwapsHistory from './SwapsHistory/SwapsHistory'
 
 
 import styles from 'components/tables/Table/Table.scss'
-import Filter from 'components/Filter/Filter'
+import Filter from './Filter/Filter'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import InfiniteScrollTable from 'components/tables/InfiniteScrollTable/InfiniteScrollTable'
 
@@ -63,7 +63,7 @@ export default class History extends Component {
     return (
       <section>
         <PageHeadline subTitle="History" />
-        <SwapsHistory orders={swapHistory.filter(item => item.step >= 4)} />
+        { swapHistory.length > 0 && <SwapsHistory orders={swapHistory.filter(item => item.step >= 4)} /> }
         <h3>All transactions</h3>
         <Filter />
         <InfiniteScrollTable

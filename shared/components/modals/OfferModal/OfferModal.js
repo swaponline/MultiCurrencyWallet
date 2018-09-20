@@ -21,7 +21,10 @@ export default class Offer extends React.Component {
 
   state = {
     view: 'editOffer', // editOffer / confirmOffer
-    offer: {},
+    offer: {
+      buyCurrency: this.props.data.buyCurrency,
+      sellCurrency: this.props.data.sellCurrency,
+    },
   }
 
   componentWillMount() {

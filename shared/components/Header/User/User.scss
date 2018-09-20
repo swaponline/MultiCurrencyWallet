@@ -12,8 +12,16 @@
     visibility: hidden;
 }
 
+.avatar {
+    margin-left: 10px;
+    background: #ffffff;
+    padding: 5px;
+    border-radius: 50%;
+    box-sizing: content-box;
+}
+
 @include media-mobile {
     .user-cont {
         display: none;
     }
-} 
+}

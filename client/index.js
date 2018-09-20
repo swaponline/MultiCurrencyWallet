@@ -1,4 +1,3 @@
-import 'abortcontroller-polyfill/dist/abortcontroller-polyfill-only'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import routes from 'routes'
@@ -9,15 +8,14 @@ import Loader from 'components/loaders/Loader/Loader'
 
 
 ReactDOM.render(
-  <Loader />,
+  <Loader showTips />,
   document.getElementById('root')
 )
 
-const ipfsRoom = window.document.getElementById('ipfsRoom')
 
-setInterval(ipfsRoom.onload = () => {
+setTimeout(() => {
   ReactDOM.render(
     <Root history={history} store={store} routes={routes} />,
     document.getElementById('root')
   )
-}, 500)
+}, 1000)

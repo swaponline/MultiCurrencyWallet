@@ -1,41 +1,12 @@
 import React, { PureComponent } from 'react'
 
 import Swap from 'swap.swap'
-import SwapApp from 'swap.app'
 
 import { connect } from 'redaction'
-import actions from 'redux/actions'
 import { links } from 'helpers'
 
+import { swapComponents } from './swaps'
 import EmergencySave from './EmergencySave/EmergencySave'
-import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
-
-import BtcToEth from './BtcToEth'
-import EthToBtc from './EthToBtc'
-import EthTokenToBtc from './EthTokenToBtc'
-import BtcToEthToken from './BtcToEthToken'
-import UsdtToEthToken from './UsdtToEthToken'
-import EthTokenToUsdt from './EthTokenToUsdt'
-
-
-const swapComponents = {
-  'BTC2ETH': BtcToEth,
-  'ETH2BTC': EthToBtc,
-  // ERC 20 - BTC
-  'NOXON2BTC': EthTokenToBtc,
-  'BTC2NOXON': BtcToEthToken,
-  'SWAP2BTC': EthTokenToBtc,
-  'BTC2SWAP': BtcToEthToken,
-  'JOT2BTC': EthTokenToBtc,
-  'BTC2JOT': BtcToEthToken,
-  'DRT2BTC': EthTokenToBtc,
-  'BTC2DRT': BtcToEthToken,
-  // USDT - ERC20
-  'SWAP2USDT': EthTokenToUsdt,
-  'USDT2SWAP': UsdtToEthToken,
-  'DRT2USDT': EthTokenToUsdt,
-  'USDT2DRT': UsdtToEthToken,
-}
 
 
 @connect({
@@ -50,14 +21,15 @@ export default class SwapComponent extends PureComponent {
   }
 
   componentWillMount() {
-    const { match : { params : { orderId } }, history } = this.props
+    let { match : { params : { orderId } }, history } = this.props
 
     if (!orderId) {
       history.push(links.exchange)
+      return
     }
 
     const swap = new Swap(orderId)
-    const SwapComponent = swapComponents[swap.flow._flowName.toUpperCase()]
+    const SwapComponent = swapComponents[swap.flow._flowName]
 
     this.setState({
       SwapComponent,

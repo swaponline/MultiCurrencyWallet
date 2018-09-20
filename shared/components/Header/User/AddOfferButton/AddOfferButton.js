@@ -24,15 +24,15 @@ export default class AddOfferButton extends Component {
               Mainnet
             </a>
           ) : (
-            <div
+            <button
               styleName="button"
               onClick={() => pinkClick()} /* eslint-disable-line */
             >
               Subscribe
-            </div>
+            </button>
           )
         }
-        <div
+        <button
           styleName="buttonMobile"
           onClick={() => pinkClick()} /* eslint-disable-line */
         />

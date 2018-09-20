@@ -2,6 +2,7 @@ import reducers from 'redux/core/reducers'
 import actions from 'redux/actions'
 import { getState } from 'redux/core'
 import SwapApp from 'swap.app'
+import { constants } from 'helpers'
 
 
 const getOrders = (orders) => {
@@ -27,12 +28,10 @@ const removeOrder = (orderId) => {
   actions.feed.deleteItemToFeed(orderId)
 }
 
-const sendRequest = (orderId) => {
+const sendRequest = (orderId, callback) => {
   const order = SwapApp.services.orders.getByKey(orderId)
 
-  order.sendRequest((isAccepted) => {
-    console.log(`user ${order.owner.peer} ${isAccepted ? 'accepted' : 'declined'} your request`)
-  })
+  order.sendRequest(callback)
 }
 
 const createOrder = (data) => {
@@ -62,6 +61,19 @@ const getSwapHistory = () => {
   reducers.history.setSwapHistory(historySwap)
 }
 
+const markCoinAsHidden = (coin) => {
+  let list = getState().core.hiddenCoinsList || []
+  if (!list.includes(coin)) {
+    reducers.core.markCoinAsHidden(coin)
+    localStorage.setItem(constants.localStorage.hiddenCoinsList, JSON.stringify(getState().core.hiddenCoinsList))
+  }
+}
+
+const markCoinAsVisible = (coin) => {
+  reducers.core.markCoinAsVisible(coin)
+  localStorage.setItem(constants.localStorage.hiddenCoinsList, JSON.stringify(getState().core.hiddenCoinsList))
+}
+
 export default {
   getOrders,
   setFilter,
@@ -72,4 +84,6 @@ export default {
   acceptRequest,
   declineRequest,
   removeOrder,
+  markCoinAsHidden,
+  markCoinAsVisible,
 }

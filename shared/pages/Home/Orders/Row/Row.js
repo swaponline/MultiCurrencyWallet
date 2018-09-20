@@ -4,12 +4,14 @@ import PropTypes from 'prop-types'
 import { connect } from 'redaction'
 import actions from 'redux/actions'
 
-import { links } from 'helpers'
-import { Link } from 'react-router-dom'
+import { links, constants } from 'helpers'
+import { Link, Redirect } from 'react-router-dom'
 
 import Coins from 'components/Coins/Coins'
+import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import RequestButton from '../RequestButton/RequestButton'
 import RemoveButton from 'components/controls/RemoveButton/RemoveButton'
+import Avatar from 'components/Avatar/Avatar'
 
 
 @connect({
@@ -42,25 +44,55 @@ export default class Row extends Component {
     })
   }
 
+  handleGoTrade = async () => {
+    const balance = await actions.eth.getBalance()
+
+    if ((balance - 0.02) < 0) {
+      actions.modals.open(constants.modals.EthChecker, {})
+    }
+  }
+
   removeOrder = (orderId) => {
     actions.core.removeOrder(orderId)
     actions.core.updateCore()
   }
 
-  sendRequest = (orderId) => {
-    actions.core.sendRequest(orderId)
+  sendRequest = async (orderId) => {
+    this.setState({ isFetching: true })
+    await this.handleGoTrade()
+
+    actions.core.sendRequest(orderId, (isAccepted) => {
+      console.log(`user has ${isAccepted ? 'accepted' : 'declined'} your request`)
+
+      if (isAccepted) {
+        this.setState({ redirect: true, isFetching: false })
+      } else {
+        this.setState({ isFetching: false })
+      }
+
+    })
     actions.core.updateCore()
   }
 
   render() {
-    const { balance } = this.state
+    const { balance, isFetching } = this.state
     const { orderId, row: { id, buyCurrency, sellCurrency, isMy, buyAmount,
       sellAmount, isRequested, isProcessing,
-      owner :{  peer: ownerPeer } }, peer } = this.props
+      owner: {  peer: ownerPeer } }, peer } = this.props
     const amount = isMy ? sellAmount : buyAmount
+
+    if (this.state.redirect) {
+      return <Redirect push to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`} />
+    }
 
     return (
       <tr style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}>
+        <td>
+          <Avatar
+            value={ownerPeer}
+            size={45}
+          />
+        </td>
         <td>
           <Coins names={[buyCurrency, sellCurrency]}  />
         </td>
@@ -108,12 +140,14 @@ export default class Row extends Component {
                     isProcessing ? (
                       <span>This order is in execution</span>
                     ) : (
-                      balance > Number(amount) ? (
-                        <Link to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`} >
-                          <RequestButton onClick={() => this.sendRequest(id)} />
-                        </Link>
+                      isFetching ? (
+                        <Fragment>
+                          <InlineLoader />
+                          <br />
+                          <span>Please wait while we confirm your request</span>
+                        </Fragment>
                       ) : (
-                        <span>Insufficient funds</span>
+                        <RequestButton disabled={balance > Number(amount)} onClick={() => this.sendRequest(id)} />
                       )
                     )
                   )

@@ -1,4 +1,6 @@
+import eos from './eos'
 import btc from './btc'
+import bcash from './bcash'
 import web3 from './web3'
 import links from './links'
 import request from './request'
@@ -15,6 +17,8 @@ import getScrollBarWidth from './getScrollBarWidth'
 
 
 export {
+  eos,
+  bcash,
   btc,
   web3,
   links,

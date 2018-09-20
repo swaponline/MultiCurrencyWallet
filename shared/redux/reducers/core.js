@@ -1,6 +1,7 @@
 export const initialState = {
   orders: [],
-  filter: 'ethbtc',
+  filter: 'btc-swap',
+  hiddenCoinsList: JSON.parse(localStorage.getItem('hiddenCoinsList')) || [],
 }
 
 
@@ -15,4 +16,16 @@ export const setFilter = (state, { filter }) => ({
     ...state.orders,
   ],
   filter,
+})
+
+export const markCoinAsHidden = (state, coin) => ({
+  ...state,
+  hiddenCoinsList: [
+    ...state.hiddenCoinsList,
+    coin,
+  ],
+})
+export const markCoinAsVisible = (state, coin) => ({
+  ...state,
+  hiddenCoinsList: state.hiddenCoinsList.filter(c => c !== coin),
 })

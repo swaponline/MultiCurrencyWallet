@@ -1,13 +1,22 @@
 .title {
   font-size: 14px;
   color: #b2b2b2;
+  background: #ffffff;
+  width: 100%;
+  height: 20px;
+  position: fixed;
+  bottom: 10px;
+  padding-bottom: 20px;
+  left: 15%;
 
   & span {
     font-weight: bold;
+
   }
 
   & svg {
     display: block;
+    height: 3px;
   }
 }
 
@@ -17,6 +26,15 @@
 
 .disconnect {
   color: #e32950;
+}
+
+.copyright {
+  border-top: 1px solid rgba(255,255,255, 0);
+
+  &-text {
+    font-size: 14px;
+    color: rgba(51, 51, 51, 0.6);
+  }
 }
 
 @include media-tablet {
