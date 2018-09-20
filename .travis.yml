@@ -12,10 +12,12 @@ before_script:
 - echo "_________NPM install swap.react___________"
 - npm install
 - echo "__________NPM start swap.react____________"
-- npm run dev &
+- yarn start &
 script:
 - echo "____________LINT________________"
 - npm run eslint
+- echo "____________LINT________________"
+- yarn test
 - echo "________Build mainnet___________"
 - npm run clean:mainnet && cross-env DEBUG=app:* CONFIG=mainnet.prod node ./bin/compile
 - echo "________Build testnet___________"
