@@ -6,7 +6,7 @@ import { links } from 'helpers'
 
 import Title from 'components/PageHeadline/Title/Title'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
-import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
+// import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 
 import Orders from './Orders/Orders'
 
@@ -99,13 +99,12 @@ export default class Home extends Component {
   render() {
     const { match: { params: { orderId } } } = this.props
     const { buyCurrency, sellCurrency } = this.state
-
+    
     return (
       <section style={{ position: 'relative', width: '100%' }}>
         <PageHeadline >
           <Fragment>
             <Title>{buyCurrency} &#8594; {sellCurrency} no limit exchange with 0 fee</Title>
-            <SubTitle>Choose the direction of exchange</SubTitle>
           </Fragment>
           <Orders
             handleSellCurrencySelect={this.handleSellCurrencySelect}
