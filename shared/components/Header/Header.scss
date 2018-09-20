@@ -1,28 +1,30 @@
+.container {
+  display: flex;
+  align-items: center;
+}
+
 .header {
 	height: 88px;
 	width: 100%;
-
 	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#510ed8+0,510ed8+70,8821ee+100 */
 	background: #510ed8; /* Old browsers */
 	background: -moz-linear-gradient(left, #510ed8 0%, #510ed8 70%, #8821ee 100%); /* FF3.6-15 */
 	background: -webkit-linear-gradient(left, #510ed8 0%,#510ed8 70%,#8821ee 100%); /* Chrome10-25,Safari5.1-6 */
 	background: linear-gradient(to right, #510ed8 0%,#510ed8 70%,#8821ee 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#510ed8', endColorstr='#8821ee',GradientType=1 ); /* IE6-9 */
-
-	position: fixed;
 	top: 0;
 	left: 0;
 	right: 0;
-  	z-index: 2;
-}
-
-.container {
-  display: flex;
-  align-items: center;
+  z-index: 2;
+  transition: position 0.3s ease;
 }
 
 @include media-mobile {
   .header {
 	display: flex;
   }
+}
+
+.header-fixed {
+	position: fixed;
 }

@@ -3,21 +3,51 @@ import React from 'react'
 import CSSModules from 'react-css-modules'
 import styles from './Table.scss'
 
-@CSSModules(styles)
+@CSSModules(styles, { allowMultiple: true })
 export default class Table extends React.Component {
 
-  shouldComponentUpdate(nextProps) {
+  constructor() {
+    super()
+
+    this.state = {
+      sticky: false
+    }
+
+  }
+
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScrollTable);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScrollTable);
+  }
+
+  handleScrollTable = () => {
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    let table = document.querySelector('table').offsetTop;
+      if ( scrollTop > table ) {
+        this.setState(() => ({sticky: true}))
+      }
+      else {
+        this.setState(() => ({sticky: false}))
+      }
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
     const { rows, isLoading } = this.props
     return (
-      isLoading !== nextProps.isLoading || rows !== nextProps.rows
+      isLoading !== nextProps.isLoading || rows !== nextProps.rows || this.state.sticky !== nextState.sticky
     )
   }
 
+
   render() {
     const { titles, rows, rowRender, textIfEmpty, isLoading, loadingText, classTitle } = this.props
+    const { sticky } = this.state
 
     return (
-      <table styleName="table" className={classTitle}>
+      <table styleName={sticky ? 'table table-fixed' : 'table'} className={classTitle}>
         <thead>
           <tr>
             {
