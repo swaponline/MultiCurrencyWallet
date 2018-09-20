@@ -18,6 +18,8 @@ import SelectGroup from './SelectGroup/SelectGroup'
 import Button from 'components/controls/Button/Button'
 import Toggle from 'components/controls/Toggle/Toggle'
 
+import { areFloatsEqual } from 'helpers/math.js'
+
 
 const minAmount = {
   eth: 0.05,
@@ -80,12 +82,13 @@ export default class AddOffer extends Component {
   handleExchangeRateChange = (value) => {
     let { buyAmount, sellAmount } = this.state
 
-    if (value === 0 || value.lastIndexOf(0, '.') || !value) {
+    if (areFloatsEqual(value, 0) || value.lastIndexOf(0, '.') || !value) {
       return
     }
 
-    buyAmount  = new BigNumber(String(sellAmount)).multipliedBy(value)
-    sellAmount = new BigNumber(String(buyAmount)).dividedBy(value)
+
+    buyAmount  = new BigNumber(Number(sellAmount)).multipliedBy(value)
+    sellAmount = new BigNumber(Number(buyAmount)).dividedBy(value)
 
     this.setState({
       buyAmount,
@@ -116,8 +119,8 @@ export default class AddOffer extends Component {
     this.setState({
       buyCurrency,
       sellCurrency,
-      sellAmount: isNaN(sellAmount) ? '' : sellAmount,
-      buyAmount: isNaN(buyAmount) ? '' : buyAmount,
+      sellAmount: Number.isNaN(sellAmount) ? '' : sellAmount,
+      buyAmount: Number.isNaN(buyAmount) ? '' : buyAmount,
       isSellFieldInteger: config.erc20[sellCurrency] && config.erc20[sellCurrency].decimals === 0,
       isBuyFieldInteger,
     })
@@ -146,8 +149,8 @@ export default class AddOffer extends Component {
     this.setState({
       buyCurrency,
       sellCurrency,
-      buyAmount: isNaN(buyAmount) ? '' : buyAmount,
-      sellAmount: isNaN(sellAmount) ? '' : sellAmount,
+      buyAmount: Number.isNaN(buyAmount) ? '' : buyAmount,
+      sellAmount: Number.isNaN(sellAmount) ? '' : sellAmount,
       isSellFieldInteger,
       isBuyFieldInteger: config.erc20[buyCurrency] && config.erc20[buyCurrency].decimals === 0,
     })
@@ -171,7 +174,7 @@ export default class AddOffer extends Component {
     if (manualRate) {
       let newRate = new BigNumber(String(value)).dividedBy(new BigNumber(String(sellAmount)))
       this.setState({
-        exchangeRate: isNaN(newRate) ? '' : newRate,
+        exchangeRate: Number.isNaN(newRate) ? '' : newRate,
         buyAmount: new BigNumber(String(value)),
       })
     } else {
@@ -202,7 +205,7 @@ export default class AddOffer extends Component {
       let newRate = new BigNumber(String(buyAmount)).dividedBy(new BigNumber(String(value)))
       this.setState({
         sellAmount: new BigNumber(String(value)),
-        exchangeRate: isNaN(newRate) ? '' : newRate,
+        exchangeRate: Number.isNaN(newRate) ? '' : newRate,
       })
     } else {
       this.setState({
