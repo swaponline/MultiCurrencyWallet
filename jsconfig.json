@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "checkJs": true,
+    "experimentalDecorators": true,
+    "jsx": "react",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "paths": {
+      "*": ["*", "shared/*", "local_modules/*"]
+    },
+    "target": "ES6",
+    "resolveJsonModule": true
+  },
+  "exclude": ["node_modules", "**/node_modules/*"]
+}
