@@ -10,24 +10,12 @@ before_install:
 - echo "Clone swap.core source"
 - ./clone_swapcore.sh
 before_script:
-#Uncomment this when enable covaralls
-#- yarn add coveralls --save-dev
-#- yarn add mocha --save-dev
-#- yarn add chai --save-dev
-#- yarn add jsdom --save-dev
-#- yarn add jest --save-dev
-#- yarn add react-test-renderer --save-dev
-#- yarn add ignore-styles --save-dev
--
 - echo "_________NPM install swap.react___________"
-- npm i
+- npm install
 - echo "__________NPM start swap.react____________"
 - npm start &
 script:
 - echo "____________TEST________________"
-#Uncomment this when enable covaralls
-#- yarn test:unit -- --coverage
-#- yarn test:snapshot -- --coverage
 - echo "____________LINT________________"
 - npm eslint
 - echo "________Build mainnet___________"
@@ -36,8 +24,6 @@ script:
 - npm build:testnet
 - ls
 after_script:
-#Uncomment this when enable covaralls
-#- COVERALLS_REPO_TOKEN=$coveralls_repo_token yarn coveralls
 - tar -cvzf build-mainnet.tgz build-mainnet/
 - tar -cvzf build-testnet.tgz build-testnet/
 deploy:
