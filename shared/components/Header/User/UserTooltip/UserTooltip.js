@@ -4,6 +4,7 @@ import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 
 import { TimerButton } from 'components/controls'
+import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 
 import actions from 'redux/actions'
 
@@ -67,7 +68,7 @@ export default class UserTooltip extends Component {
                       <span>{sellAmount.toFixed(5)} <span styleName="coin">{sellCurrency}</span></span>
                     </div>
                   </div>
-                  <span styleName="decline" onClick={() => this.declineRequest(id, peer)} />
+                  <CloseIcon styleName="decline" whiteColor onClick={() => this.declineRequest(id, peer)} />
                   <Link to={`${links.swap}/${sellCurrency}-${buyCurrency}/${id}`}>
                     <div styleName="checked" onClick={() => this.acceptRequest(id, peer)} />
                   </Link>

@@ -67,7 +67,6 @@ export const exitListener = () => {
     })
 }
 
-export const createRepo = (dirpath = './') => {
-  dirpath += Math.ceil(Math.random() * 10000)
-  return path.resolve(dirpath)
-}
+// dirpath += Math.ceil(Math.random() * 10000)
+export const createRepo = (dirpath = './data/') => path.resolve(dirpath)
+

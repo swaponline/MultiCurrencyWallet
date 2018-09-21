@@ -6,14 +6,14 @@ import cssModules from 'react-css-modules'
 import styles from './CloseIcon.scss'
 
 
-const CloseIcon = ({ whiteColor, brandColor, ...rest }) => {
+const CloseIcon = ({ whiteColor, brandColor, onClick, ...rest }) => {
   const styleName = cx('button', {
     'whiteColor': whiteColor,
     'brandColor': brandColor,
   })
 
   return (
-    <div styleName={styleName} {...rest} role="closeButton">
+    <div styleName={styleName} {...rest} role="closeButton" onClick={onClick}>
       <div styleName="icon" role="closeIcon" />
     </div>
   )
