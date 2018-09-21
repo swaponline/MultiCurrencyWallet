@@ -38,10 +38,10 @@ export default class WithdrawModal extends React.Component {
       return
     }
 
-    actions.send(contractAddress || address, to, Number(amount), decimals)
+    actions[currency.toLowerCase()].send(contractAddress || address, to, Number(amount), decimals)
       .then(() => {
         actions.loader.hide()
-        actions.token.getBalance(currency)
+        actions[currency.toLowerCase()].getBalance(currency)
 
         actions.notifications.show(constants.notifications.SuccessWithdraw, {
           amount,
