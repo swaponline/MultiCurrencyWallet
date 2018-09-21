@@ -7,6 +7,7 @@ import request from './request'
 import constants from './constants'
 import localStorage from './localStorage'
 import api from './api'
+import * as utils from './utils'
 
 // Methods
 import ignoreProps from './ignoreProps'
@@ -21,6 +22,7 @@ export {
   bcash,
   btc,
   web3,
+  utils,
   links,
   request,
   constants,
