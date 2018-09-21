@@ -56,7 +56,12 @@ export default class Orders extends Component {
         /> */}
         <div className="d-flex justify-content-between mt-4">
           <h3>All orders</h3>
-          <Button brand onClick={this.createOffer}>Create offer</Button>
+          <Button
+          onClick={this.createOffer} 
+          className="btn btn-light"
+          >
+          Create offer
+          </Button>
         </div>
         <Table
           classTitle={styles.exchange}
