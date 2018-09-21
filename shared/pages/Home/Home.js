@@ -40,36 +40,51 @@ export default class Home extends Component {
     }
   }
 
-  handleBuyCurrencySelect = ({ value }) => {
-    let { sellCurrency, buyCurrency } = this.state
+  // handleBuyCurrencySelect = ({ value }) => {
+  //   let { sellCurrency, buyCurrency } = this.state
 
-    if (value === sellCurrency) {
-      sellCurrency = buyCurrency
-    }
+  //   if (value === sellCurrency) {
+  //     sellCurrency = buyCurrency
+  //   }
 
-    this.handelReplaceHistory(sellCurrency, value)
+  //   this.handelReplaceHistory(sellCurrency, value)
 
-    this.setState({
-      buyCurrency: value,
-      sellCurrency,
-    })
-  }
+  //   this.setState({
+  //     buyCurrency: value,
+  //     sellCurrency,
+  //   })
+  // }
 
-  handleSellCurrencySelect = ({ value }) => {
-    let { sellCurrency, buyCurrency } = this.state
+  // handleSellCurrencySelect = ({ value }) => {
+  //   let { sellCurrency, buyCurrency } = this.state
 
-    if (value === buyCurrency) {
-      buyCurrency = sellCurrency
-    }
+  //   if (value === buyCurrency) {
+  //     buyCurrency = sellCurrency
+  //   }
 
-    this.handelReplaceHistory(value, buyCurrency)
+  //   this.handelReplaceHistory(value, buyCurrency)
 
-    this.setState({
-      buyCurrency,
-      sellCurrency: value,
-    })
-  }
+  //   this.setState({
+  //     buyCurrency,
+  //     sellCurrency: value,
+  //   })
+  // }
+  
+  // flipCurrency = () => {
+  //   let { buyCurrency, sellCurrency } = this.state
+  //   const value = sellCurrency
 
+  //   sellCurrency = buyCurrency
+  //   buyCurrency = value
+
+  //   this.handelReplaceHistory(sellCurrency, buyCurrency)
+
+  //   this.setState({
+  //     buyCurrency,
+  //     sellCurrency,
+  //   })
+  // }
+  
   handelReplaceHistory = (sellCurrency, buyCurrency) => {
     let { history } = this.props
 
@@ -77,20 +92,6 @@ export default class Home extends Component {
     history.replace((`${links.home}${buyCurrency}-${sellCurrency}`))
   }
 
-  flipCurrency = () => {
-    let { buyCurrency, sellCurrency } = this.state
-    const value = sellCurrency
-
-    sellCurrency = buyCurrency
-    buyCurrency = value
-
-    this.handelReplaceHistory(sellCurrency, buyCurrency)
-
-    this.setState({
-      buyCurrency,
-      sellCurrency,
-    })
-  }
 
   setFilter = (filter) => {
     actions.core.setFilter(filter)
@@ -107,11 +108,11 @@ export default class Home extends Component {
             <Title>{buyCurrency} &#8594; {sellCurrency} no limit exchange with 0 fee</Title>
           </Fragment>
           <Orders
-            handleSellCurrencySelect={this.handleSellCurrencySelect}
-            handleBuyCurrencySelect={this.handleBuyCurrencySelect}
-            buyCurrency={buyCurrency}
-            sellCurrency={sellCurrency}
-            flipCurrency={this.flipCurrency}
+            // handleSellCurrencySelect={this.handleSellCurrencySelect}
+            // handleBuyCurrencySelect={this.handleBuyCurrencySelect}
+            // buyCurrency={buyCurrency}
+            // sellCurrency={sellCurrency}
+            // flipCurrency={this.flipCurrency}
             orderId={orderId}
           />
         </PageHeadline>
