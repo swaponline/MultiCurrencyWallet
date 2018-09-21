@@ -12,6 +12,13 @@
   border-radius: 20px;
 }
 
+.no-select-inline {
+  cursor: pointer;
+  display: inline;
+  user-select: none;
+  white-space: nowrap;
+}
+
 .icon {
   margin-right: 5px;
 }

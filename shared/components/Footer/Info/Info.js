@@ -52,7 +52,7 @@ class Info extends React.Component {
           to IPFS signal {serverAddress} / peers online: {onlineUsers}
         </span>
         { isVisibleProgressBar && <Line strokeColor="#2181F7" percent={progressValue} strokeWidth="1" /> }
-        <span styleName="copyright-text">© 2018 Swap Online Harju maakond, Tallinn, Kesklinna linnaosa</span>
+        {/* <span styleName="copyright-text">© 2018 Swap Online, Crypto-Fiat License: FVR000275. <a href="mailto:team@swap.online">team@swap.online</a></span> */}
       </div>
     )
   }

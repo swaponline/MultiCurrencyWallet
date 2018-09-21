@@ -86,7 +86,7 @@ export default class EosToBtc extends Component {
         }
 
         {
-          flow.step >= 4 &&
+          flow.step == 4 &&
           <Fragment>
             <h3>4. Request to withdraw EOS from contract</h3>
             {

@@ -49,7 +49,6 @@ export default class Row extends Component {
 
   handleReloadBalance = async () => {
     const { isBalanceFetching } = this.state
-    const { token } = this.props
 
     if (isBalanceFetching) {
       return null
@@ -58,18 +57,10 @@ export default class Row extends Component {
     this.setState({
       isBalanceFetching: true,
     })
-    let action
-    let { currency } = this.props
 
-    currency = currency.toLowerCase()
+    const { currency } = this.props
 
-    if (token) {
-      action = actions.token.getBalance(currency)
-    } else {
-      action = actions[currency].getBalance()
-    }
-
-    await action
+    await actions[currency.toLowerCase()].getBalance()
 
     this.setState(() => ({
       isBalanceFetching: false,
@@ -92,8 +83,13 @@ export default class Row extends Component {
     actions.modals.open(constants.modals.Eos, {})
   }
 
-  handleEosCreateAccount = () => {
-    actions.eos.createAccount()
+  handleEosCreateAccount = async () => {
+    try {
+      await actions.eos.createAccount()
+    } catch (error) {
+      console.log(error.toString())
+      actions.notifications.show(constants.notifications.Message, { message: error.toString() })
+    }
   }
 
   handleWithdraw = () => {
@@ -148,16 +144,16 @@ export default class Row extends Component {
             !isBalanceFetched || isBalanceFetching ? (
               <InlineLoader />
             ) : (
-              <Fragment>
-                <i className="fas fa-sync-alt" styleName="icon" onClick={this.handleReloadBalance} />
-                <span onClick={this.handleReloadBalance}>{String(balance).length > 4 ? balance.toFixed(4) : balance}</span>
+              <div styleName="no-select-inline" onClick={this.handleReloadBalance} >
+                <i className="fas fa-sync-alt" styleName="icon" />
+                <span>{String(balance).length > 4 ? balance.toFixed(4) : balance}</span>
                 { currency === 'BTC' && currency === 'USDT' && unconfirmedBalance !== 0 && (
                   <Fragment>
                     <br />
                     <span style={{ fontSize: '12px', color: '#c9c9c9' }}>Unconfirmed {unconfirmedBalance}</span>
                   </Fragment>
                 ) }
-              </Fragment>
+              </div>
             )
           }
         </td>

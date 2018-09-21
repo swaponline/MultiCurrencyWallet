@@ -13,7 +13,7 @@ const setApi = (type, link, id) => {
       return `${config.link.etherscan}/tx/${id}`
 
     case 'EOS':
-      return `${config.link.eos}/#tx/${id}`
+      return `${config.link.eos}/tx/${id}`
   }
 }
 

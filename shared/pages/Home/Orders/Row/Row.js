@@ -24,7 +24,9 @@ export default class Row extends Component {
   }
 
   state = {
+    isFetching: false,
     balance: 0,
+
   }
 
   componentWillMount() {
