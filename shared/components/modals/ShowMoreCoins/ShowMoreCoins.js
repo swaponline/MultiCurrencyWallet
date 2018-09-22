@@ -24,11 +24,11 @@ import Row from './Row/Row'
 @cssModules(styles, { allowMultiple: true })
 export default class ShowMoreCoins extends Component {
   render() {
-    let { items, tokens, currencies, hiddenCoinsList } = this.props
+    const { name, items, tokens, currencies, hiddenCoinsList } = this.props
     const titles = ['Coin', 'Name', 'Actions']
 
     return (
-      <Modal name={this.props.name} title="Show More Coins" shouldCenterVertically={false}>
+      <Modal name={name} title="Show More Coins" shouldCenterVertically={false}>
         <div styleName="modal">
           <div styleName="modal_column">
             <SubTitle styleName="modal_column-title">Coins in Wallet</SubTitle>
