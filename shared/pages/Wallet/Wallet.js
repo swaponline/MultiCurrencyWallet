@@ -16,6 +16,7 @@ import { WithdrawButton } from 'components/controls'
 import stylesWallet from './Wallet.scss'
 import Row from './Row/Row'
 import Overlay from 'components/layout/Overlay/Overlay'
+import Center from 'components/layout/Center/Center'
 
 import CSSModules from 'react-css-modules'
 import cx from 'classnames'
@@ -23,16 +24,24 @@ import { withRouter } from 'react-router'
 
 
 @withRouter
-@connect(({ core: { hiddenCoinsList }, user: { ethData, btcData, bchData, tokensData, eosData, nimData, usdtData }, currencies: { items: currencies } }) => ({
-  tokens: Object.keys(tokensData).map(k => (tokensData[k])),
-  items: [ ethData, btcData, eosData, bchData /* usdtData eosData  nimData */ ],
-  currencies,
-  hiddenCoinsList,
-}))
+@connect(
+  ({
+    core: { hiddenCoinsList },
+    user: { ethData, btcData, bchData, tokensData, eosData, nimData, usdtData },
+    currencies: { items: currencies },
+  }) => ({
+    tokens: Object.keys(tokensData).map(k => (tokensData[k])),
+    items: [ ethData, btcData, eosData, bchData /* usdtData eosData  nimData */ ],
+    currencies,
+    hiddenCoinsList,
+  })
+)
 @CSSModules(stylesWallet, { allowMultiple: true })
 export default class Wallet extends Component {
 
   static propTypes = {
+    core: propTypes.object,
+    user: propTypes.object,
     currencies: propTypes.arrayOf(propTypes.object),
     hiddenCoinsList: propTypes.array,
     history: propTypes.object,
@@ -55,9 +64,6 @@ export default class Wallet extends Component {
   componentDidMount() {
     actions.user.getBalances()
     actions.analytics.dataEvent('open-page-balances')
-    // if (!localStorage.getItem(constants.localStorage.privateKeysSaved)) {
-    //   actions.modals.open(constants.modals.PrivateKeys, {})
-    // }
   }
 
   componentWillReceiveProps(props) {
@@ -82,16 +88,19 @@ export default class Wallet extends Component {
 
   handleDownload = () => {
     actions.user.downloadPrivateKeys()
-    this.changeView('checkKeys')
+    // this.changeView('checkKeys')
   }
 
   handleConfirm = () => {
-    this.changeView('checkKeys')
-    localStorage.setItem(constants.localStorage.privateKeysSaved, true)
+    this.askPrivateKeysApproval()
+    // this.changeView('checkKeys')
+    // localStorage.setItem(constants.localStorage.privateKeysSaved, true)
   }
 
-  handleImportKeys = () => {
-    actions.modals.open(constants.modals.ImportKeys, {})
+  askPrivateKeysApproval() {
+    if (!localStorage.getItem(constants.localStorage.privateKeysSaved)) {
+      actions.modals.open(constants.modals.PrivateKeys, {})
+    }
   }
 
   changeView = (view) => {
@@ -105,19 +114,53 @@ export default class Wallet extends Component {
     const { items, tokens, currencies, hiddenCoinsList } = this.props
     const titles = [ 'Coin', 'Name', 'Balance', !isMobile && 'Address', isMobile ? 'Send, receive, swap' :  'Actions' ]
 
+    const keysSaved = localStorage.getItem(constants.localStorage.privateKeysSaved)
+    const testNetSkip = localStorage.getItem(constants.localStorage.testnetSkipPKCheck)
+
+    const showOverlay = !zeroBalance && !keysSaved && !testNetSkip // non-zero balance and no keys saved
+
     return (
       <section>
+        {
+          showOverlay &&
+          <Overlay>
+            <Center keepFontSize>
+              { process.env.TESTNET && (
+                <a
+                  href="#"
+                  onClick={() => {
+                    localStorage.setItem(constants.localStorage.testnetSkipPKCheck, true)
+                    this.forceUpdate()
+                  }}>
+                  Testnet: Don't ask again
+                </a>
+              )}
+              {
+
+                view === 'off' &&
+                <SaveKeys
+                  isDownload={this.handleDownload}
+                  isChange={() => this.changeView('on')}
+                />
+              }
+              {
+                view === 'on' &&
+                <Confirm
+                  rootClassName={stylesWallet.areYouSure}
+                  title="Are you sure ?"
+                  isConfirm={() => this.handleConfirm()}
+                  isReject={() => this.changeView('off')}
+                  animation={view === 'on'}
+                />
+              }
+            </Center>
+          </Overlay>
+        }
         <PageHeadline>
           <SubTitle>
             Swap.Online - Cryptocurrency Wallet with Atomic Swap Exchange
           </SubTitle>
         </PageHeadline>
-        <Confirm
-          title="Are you sure ?"
-          isConfirm={() => this.handleConfirm()}
-          isReject={() => this.changeView('off')}
-          animation={view === 'on'}
-        />
         <Table
           classTitle={styles.wallet}
           titles={titles}
@@ -126,13 +169,10 @@ export default class Wallet extends Component {
             <Row key={index} {...row} currencies={currencies} hiddenCoinsList={hiddenCoinsList} />
           )}
         />
-        {
-          !zeroBalance && view === 'off' &&
-          <Overlay />
-        }
         <div>
+          {/* TODO: Useless condition below? */}
           {
-            view === 'off' &&
+            view === 'off' && !showOverlay &&
             <SaveKeys
               className={cx('', { [stylesWallet.saveKeysShow] : !zeroBalance && view === 'off' })}
               isDownload={this.handleDownload}

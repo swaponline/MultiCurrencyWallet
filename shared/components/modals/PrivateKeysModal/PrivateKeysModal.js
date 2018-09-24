@@ -104,6 +104,11 @@ Private key: ${btcData.privateKey}\r\n
     window.open(`mailto:?subject=Your_Subject&body=${text}`)
   }
 
+  handleKeysSubmit = () => {
+    localStorage.setItem(constants.localStorage.privateKeysSaved, true)
+    window.location.reload()
+  }
+
   render() {
     const { view } = this.state
     const { name, ethData, btcData } = this.props
@@ -159,7 +164,7 @@ Private key: ${btcData.privateKey}\r\n
                 />
                 {
                   isValidated && (
-                    <Button white styleName="button" onClick={this.close}>GO TO THE SITE!</Button>
+                    <Button white styleName="button" onClick={this.handleKeysSubmit}>GO TO THE SITE!</Button>
                   )
                 }
               </Fragment>
