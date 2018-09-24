@@ -15,13 +15,19 @@ import InfiniteScrollTable from 'components/tables/InfiniteScrollTable/InfiniteS
 
 const filterHistory = (items, filter) => {
   if (filter === 'sent') {
+
     return items.filter(({ direction }) => direction === 'out')
   }
-
+  
   if (filter === 'received') {
+
     return items.filter(({ direction }) => direction === 'in')
   }
 
+  if(window.location.search) {
+    const SwapFilter = window.location.search.split("=")[1];
+    return items.filter(({type}) => type.toLowerCase() === SwapFilter.toLowerCase())
+  }
   return items
 }
 
@@ -57,8 +63,6 @@ export default class History extends Component {
   render() {
     const { items, swapHistory } = this.props
     const titles = [ 'Coin', 'Status', 'Statement', 'Amount' ]
-
-    console.log('swapHistory', swapHistory)
 
     return (
       <section>

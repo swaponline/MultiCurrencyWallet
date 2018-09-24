@@ -3,6 +3,7 @@ import actions from 'redux/actions'
 import { constants } from 'helpers'
 import config from 'app-config'
 import { isMobile } from 'react-device-detect'
+import { NavLink } from 'react-router-dom'
 
 import cssModules from 'react-css-modules'
 import styles from './Row.scss'
@@ -13,7 +14,6 @@ import CoinInteractive from 'components/CoinInteractive/CoinInteractive'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import WithdrawButton from 'components/controls/WithdrawButton/WithdrawButton'
 
-import LinkAccount from '../LinkAccount/LinkAcount'
 import { withRouter } from 'react-router'
 
 
@@ -139,7 +139,7 @@ export default class Row extends Component {
           <CoinInteractive name={currency} />
         </td>
         <td>{currency}</td>
-        <td styleName="table_balance-cell">
+        <td>
           {
             !isBalanceFetched || isBalanceFetching ? (
               <InlineLoader />
@@ -170,12 +170,20 @@ export default class Row extends Component {
                     {
                       address !== '' && <i className="far fa-copy" styleName="icon" />
                     }
-                    <LinkAccount type={currency} address={address} >{address}</LinkAccount>
+                    <NavLink
+                    to={`/history?filter=${currency}`}
+                    >
+                      {address}
+                    </NavLink>
                   </Fragment>
                 ) : (
                   <Fragment>
-                    <i className="far fa-copy" styleName="icon" />
-                    <LinkAccount type={currency} contractAddress={contractAddress} address={address} >{address}</LinkAccount>
+                    <i className="far fa-copy" styleName="icon" /> {/* <LinkAccount type={currency} contractAddress={contractAddress} address={address} >{address}</LinkAccount> */}
+                    <NavLink
+                    to={`/history?filter=${currency}`}
+                    >
+                      {address}
+                    </NavLink>
                   </Fragment>
                 )
               }
