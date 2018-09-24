@@ -132,7 +132,7 @@ export default class Wallet extends Component {
                     localStorage.setItem(constants.localStorage.testnetSkipPKCheck, true)
                     this.forceUpdate()
                   }}>
-                  Testnet: Don't ask again
+                  Testnet: Don`t ask again
                 </a>
               )}
               {
