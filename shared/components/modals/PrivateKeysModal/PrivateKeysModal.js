@@ -88,17 +88,8 @@ Private key: ${btcData.privateKey}\r\n
   }
 
   handleDownload = () => {
-    const element = document.createElement('a')
-    const text = this.getText()
+    this.downloadInstructionsAnchor.click()
     const message = 'Check your browser downloads'
-
-    element.setAttribute('href', `data:text/plaincharset=utf-8,${encodeURIComponent(text)}`)
-    element.setAttribute('download', `${window.location.hostname}_keys_${moment().format('DD.MM.YYYY')}.txt`)
-
-    element.style.display = 'none'
-    document.body.appendChild(element)
-    element.click()
-    document.body.removeChild(element)
 
     this.changeView('checkKeys')
 
@@ -129,6 +120,14 @@ Private key: ${btcData.privateKey}\r\n
         whiteLogo
         title="CAUTION!"
       >
+        <a
+          href={`data:text/plaincharset=utf-8,${encodeURIComponent(this.getText())}`}
+          download={`${window.location.hostname}_keys_${moment().format('DD.MM.YYYY')}.txt`}
+          ref={ref => { this.downloadInstructionsAnchor = ref }}
+          style={{ display: 'none' }}
+        >
+          Download Instructions
+        </a>
         <div styleName="content">
           {
             view === 'saveKeys' ? (
