@@ -44,23 +44,29 @@ export default class Table extends React.Component {
       <table styleName={sticky ? 'table table-fixed' : 'table'} className={classTitle}>
         <thead>
           <tr>
-            {titles.filter(title => !!title).map((title, index) => (
-              <th key={index}>{title}</th>
-            ))}
+            {
+              titles.filter(title => !!title).map((title, index) => (
+                <th key={index}>{title}</th>
+              ))
+            }
           </tr>
         </thead>
         <tbody>
-          {isLoading && (
-            <tr>
-              <td styleName="color">{loadingText}</td>
-            </tr>
-          )}
-          {!isLoading &&
-            !rows.length && (
-            <tr>
-              <td styleName="color">{textIfEmpty}</td>
-            </tr>
-          )}
+          {
+            isLoading && (
+              <tr>
+                <td styleName="color">{loadingText}</td>
+              </tr>
+            )
+          }
+          {
+            !isLoading &&
+              !rows.length && (
+              <tr>
+                <td styleName="color">{textIfEmpty}</td>
+              </tr>
+            )
+          }
           {!isLoading && !!rows.length && rows.map((row, rowIndex) => typeof rowRender === 'function' && rowRender(row, rowIndex))}
         </tbody>
       </table>
