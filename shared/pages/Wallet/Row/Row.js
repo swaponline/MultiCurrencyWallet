@@ -139,7 +139,7 @@ export default class Row extends Component {
           <CoinInteractive name={currency} />
         </td>
         <td>{currency}</td>
-        <td>
+        <td styleName="table_balance-cell">
           {
             !isBalanceFetched || isBalanceFetching ? (
               <InlineLoader />
