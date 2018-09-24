@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import propTypes from 'prop-types'
 import { isMobile } from 'react-device-detect'
 
 import { connect } from 'redaction'
@@ -13,9 +14,11 @@ import PageHeadline from 'components/PageHeadline/PageHeadline'
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import { WithdrawButton } from 'components/controls'
 import stylesWallet from './Wallet.scss'
-
 import Row from './Row/Row'
+import Overlay from 'components/layout/Overlay/Overlay'
+
 import CSSModules from 'react-css-modules'
+import cx from 'classnames'
 import { withRouter } from 'react-router'
 
 
@@ -29,8 +32,18 @@ import { withRouter } from 'react-router'
 @CSSModules(stylesWallet, { allowMultiple: true })
 export default class Wallet extends Component {
 
+  static propTypes = {
+    currencies: propTypes.arrayOf(propTypes.object),
+    hiddenCoinsList: propTypes.array,
+    history: propTypes.object,
+    items: propTypes.arrayOf(propTypes.object),
+    location: propTypes.object,
+    match: propTypes.object,
+  }
+
   state = {
     view: 'off',
+    zeroBalance: true,
   }
 
   componentWillMount() {
@@ -45,6 +58,16 @@ export default class Wallet extends Component {
     // if (!localStorage.getItem(constants.localStorage.privateKeysSaved)) {
     //   actions.modals.open(constants.modals.PrivateKeys, {})
     // }
+  }
+
+  componentWillReceiveProps(props) {
+    if (!this.state.zeroBalance) {
+      return
+    }
+
+    if (props.items.some(o => o.balance > 0)) { // if at least one balance is greater than 0
+      this.setState({ zeroBalance: false })
+    }
   }
 
   handleClear = process.env.MAINNET ? () => {} : (event) => {
@@ -78,7 +101,7 @@ export default class Wallet extends Component {
   }
 
   render() {
-    const { view } = this.state
+    const { view, zeroBalance } = this.state
     const { items, tokens, currencies, hiddenCoinsList } = this.props
     const titles = [ 'Coin', 'Name', 'Balance', !isMobile && 'Address', isMobile ? 'Send, receive, swap' :  'Actions' ]
 
@@ -103,8 +126,19 @@ export default class Wallet extends Component {
             <Row key={index} {...row} currencies={currencies} hiddenCoinsList={hiddenCoinsList} />
           )}
         />
+        {
+          !zeroBalance && view === 'off' &&
+          <Overlay />
+        }
         <div>
-          { view === 'off' && <SaveKeys isDownload={this.handleDownload} isChange={() => this.changeView('on')} /> }
+          {
+            view === 'off' &&
+            <SaveKeys
+              className={cx('', { [stylesWallet.saveKeysShow] : !zeroBalance && view === 'off' })}
+              isDownload={this.handleDownload}
+              isChange={() => this.changeView('on')}
+            />
+          }
           { process.env.TESTNET && <WithdrawButton onClick={this.handleClear} >Exit</WithdrawButton> }
           <WithdrawButton onClick={this.handleDownload}>Download keys</WithdrawButton>
           <WithdrawButton onClick={this.handleImportKeys}>Import keys</WithdrawButton>
