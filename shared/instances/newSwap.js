@@ -45,14 +45,9 @@ const createSwapApp = () => {
       }),
       new SwapRoom({
         repo,
-        EXPERIMENTAL: {
-          pubsub: true,
-        },
         config: {
           Addresses: {
-            Swarm: [
-              config.ipfs.swarm,
-            ],
+            Swarm: config.ipfs.swarm,
           },
         },
       }),
