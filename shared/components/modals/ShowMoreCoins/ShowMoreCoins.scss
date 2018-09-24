@@ -1,0 +1,27 @@
+.modal {
+  // width: 400px;
+  display: flex;
+  flex-direction: row;
+
+  &_column {
+    width: 500px;
+
+    &-title {
+      margin-top: 80px;
+    }
+  }
+
+  @include media-tablet-portrait-and-lower {
+    flex-direction: column;
+
+    width: 100%;
+
+    &_column {
+      width: 100%;
+    }
+  }
+}
+
+.button {
+  margin-top: 20px;
+}
