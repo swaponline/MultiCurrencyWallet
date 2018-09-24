@@ -6,10 +6,11 @@ import cssModules from 'react-css-modules'
 import styles from './Center.scss'
 
 
-const Center = ({ children, scrollable, ...rest }) => {
+const Center = ({ children, scrollable, keepFontSize, ...rest }) => {
   // TODO move overflow to Modal and any other cases where it belongs
   const styleName = cx('centringContainer', {
     'scrollable': scrollable,
+    'keepFontSize': keepFontSize,
   })
 
   return (
@@ -24,10 +25,12 @@ const Center = ({ children, scrollable, ...rest }) => {
 Center.propTypes = {
   children: PropTypes.node,
   scrollable: PropTypes.bool,
+  keepFontSize: PropTypes.bool,
 }
 
 Center.defaultProps = {
   scrollable: false,
+  keepFontSize: false,
 }
 
 

@@ -6,7 +6,7 @@
   left: 0;
   white-space: nowrap;
   text-align: center;
-  font-size: 0;
+  // font-size: 0; // FIXME: why?
 
   &::before {
     content: '';
@@ -17,6 +17,10 @@
 
   &.scrollable {
     overflow: auto;
+  }
+
+  &:not(.keepFontSize) {
+    font-size: 0;
   }
 }
 
