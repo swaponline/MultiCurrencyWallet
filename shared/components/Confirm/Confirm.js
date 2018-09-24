@@ -7,8 +7,8 @@ import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import Button from 'components/controls/Button/Button'
 
 
-const Confirm = ({ isConfirm, isReject, title, animation }) => (
-  <div styleName={animation ? 'confirm animation' : 'confirm'} >
+const Confirm = ({ rootClassName, isConfirm, isReject, title, animation }) => (
+  <div styleName={animation ? 'confirm animation' : 'confirm'} className={rootClassName}>
     <SubTitle>
       {title}
     </SubTitle>
