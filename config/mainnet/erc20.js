@@ -23,6 +23,10 @@ export default {
     address: '0x056fd409e1d7a124bd7017459dfea2f387b6d5cd',
     decimals: 2,
   },
+  knc: {
+    address: '0xbfd18f20423694a69e35d65cb9c9d74396cc2c2d',
+    decimals: 18,
+  },
   yup: {
     address: '0xD9A12Cde03a86E800496469858De8581D3A5353d',
     decimals: 18,

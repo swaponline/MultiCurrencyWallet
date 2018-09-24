@@ -54,7 +54,8 @@ export default class Wallet extends Component {
   }
 
   handleShowMore = () => {
-    this.props.history.push('/coins')
+    actions.modals.open(constants.modals.ShowMoreCoins, {})
+    // this.props.history.push('/coins')
   }
 
   handleDownload = () => {

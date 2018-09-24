@@ -9,7 +9,7 @@ import Channel from 'ipfs-pubsub-room'
 import IPFS from 'ipfs'
 
 import config from 'app-config'
-import { constants as privateKeys } from 'helpers'
+import { constants as privateKeys, utils } from 'helpers'
 import actions from 'redux/actions'
 
 import swapApp, { constants } from 'swap.app'
@@ -19,6 +19,9 @@ import SwapOrders from 'swap.orders'
 import { ETH2BTC, BTC2ETH, ETHTOKEN2BTC, BTC2ETHTOKEN, EOS2BTC, BTC2EOS } from 'swap.flows'
 import { EthSwap, EthTokenSwap, BtcSwap, EosSwap } from 'swap.swaps'
 
+
+const repo = utils.createRepo()
+utils.exitListener()
 
 const createSwapApp = () => {
   swapApp.setup({
@@ -41,6 +44,7 @@ const createSwapApp = () => {
         eos: privateKeys.privateKeyNames.eosAccount,
       }),
       new SwapRoom({
+        repo,
         EXPERIMENTAL: {
           pubsub: true,
         },
