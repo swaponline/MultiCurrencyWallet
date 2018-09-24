@@ -5,14 +5,12 @@ import styles from './Table.scss'
 
 @CSSModules(styles, { allowMultiple: true })
 export default class Table extends React.Component {
-
   constructor() {
     super()
 
     this.state = {
       sticky: false,
     }
-
   }
 
   componentDidMount() {
@@ -28,19 +26,15 @@ export default class Table extends React.Component {
     let table = document.querySelector('table').offsetTop
     if (scrollTop > table) {
       this.setState(() => ({ sticky: true }))
-    }
-    else {
+    } else {
       this.setState(() => ({ sticky: false }))
     }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
     const { rows, isLoading } = this.props
-    return (
-      isLoading !== nextProps.isLoading || rows !== nextProps.rows || this.state.sticky !== nextState.sticky
-    )
+    return isLoading !== nextProps.isLoading || rows !== nextProps.rows || this.state.sticky !== nextState.sticky
   }
-
 
   render() {
     const { titles, rows, rowRender, textIfEmpty, isLoading, loadingText, classTitle } = this.props
@@ -82,7 +76,6 @@ export default class Table extends React.Component {
     )
   }
 }
-
 
 Table.defaultProps = {
   textIfEmpty: 'The table is empty',
