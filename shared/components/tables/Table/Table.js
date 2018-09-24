@@ -10,28 +10,28 @@ export default class Table extends React.Component {
     super()
 
     this.state = {
-      sticky: false
+      sticky: false,
     }
 
   }
 
   componentDidMount() {
-    window.addEventListener('scroll', this.handleScrollTable);
+    window.addEventListener('scroll', this.handleScrollTable)
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScrollTable);
+    window.removeEventListener('scroll', this.handleScrollTable)
   }
 
   handleScrollTable = () => {
-    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    let table = document.querySelector('table').offsetTop;
-      if ( scrollTop > table ) {
-        this.setState(() => ({sticky: true}))
-      }
-      else {
-        this.setState(() => ({sticky: false}))
-      }
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop
+    let table = document.querySelector('table').offsetTop
+    if (scrollTop > table) {
+      this.setState(() => ({ sticky: true }))
+    }
+    else {
+      this.setState(() => ({ sticky: false }))
+    }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
