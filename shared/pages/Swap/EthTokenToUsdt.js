@@ -9,7 +9,7 @@ import Button from 'components/controls/Button/Button'
 import Timer from './Timer/Timer'
 
 
-export default class EthTokenToBtc extends Component {
+export default class EthTokenToUsdt extends Component {
 
   constructor({ swap }) {
     super()
