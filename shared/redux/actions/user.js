@@ -16,7 +16,7 @@ const sign = async () => {
 
   actions.btc.login(btcPrivateKey)
   actions.bch.login(bchPrivateKey)
-  // actions.usdt.login(btcPrivateKey)
+  actions.usdt.login(btcPrivateKey)
 
   Object.keys(config.erc20)
     .forEach(name => {
