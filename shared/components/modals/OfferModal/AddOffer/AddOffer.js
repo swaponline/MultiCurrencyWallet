@@ -281,11 +281,6 @@ export default class AddOffer extends Component {
         <div>
           <Toggle checked={manualRate} onChange={this.handleManualRate} /> Custom exchange rate
         </div>
-        <Select
-          changeBalance={this.changeBalance}
-          balance={balance}
-          currency={sellCurrency}
-        />
         { ethBalance < 0.02 && <span styleName="error">For a swap, you need 0.02 ETH on your balance</span> }
         <SelectGroup
           styleName="sellGroup"
@@ -297,6 +292,11 @@ export default class AddOffer extends Component {
           currencies={currencies}
           isInteger={isSellFieldInteger}
           placeholder="Enter sell amount"
+        />
+        <Select
+          changeBalance={this.changeBalance}
+          balance={balance}
+          currency={sellCurrency}
         />
         <SelectGroup
           label="Buy"
