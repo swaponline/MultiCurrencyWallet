@@ -1,8 +1,8 @@
-import bitcoin from 'bitcoinjs-lib'
+import coininfo from 'coininfo'
 
 
-const network = process.env.MAINNET ? bitcoin.networks.bitcoin : bitcoin.networks.testnet
-
+const networkCoininfo = process.env.MAINNET ? coininfo.litecoin.main : coininfo.litecoin.test
+const network = networkCoininfo.toBitcoinJS()
 
 export default {
   network,
