@@ -18,6 +18,13 @@ export const initialState = {
       fullTitle: 'ethereum',
     },
     {
+      name: 'LTC',
+      title: 'LTC',
+      icon: 'ltc',
+      value: 'ltc',
+      fullTitle: 'litecoin',
+    },
+    {
       name: ' BCH',
       title: 'BCH',
       icon: 'bch',
