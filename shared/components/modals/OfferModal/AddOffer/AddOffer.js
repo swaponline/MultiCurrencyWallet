@@ -18,7 +18,7 @@ import SelectGroup from './SelectGroup/SelectGroup'
 import Button from 'components/controls/Button/Button'
 import Toggle from 'components/controls/Toggle/Toggle'
 
-import { areFloatsEqual, isNumberValid, isNumberStringFormatCorrect } from 'helpers/math.js'
+import { areFloatsEqual, isNumberValid, isNumberStringFormatCorrect, mathConstants } from 'helpers/math.js'
 
 
 const minAmount = {
@@ -148,9 +148,9 @@ export default class AddOffer extends Component {
       return undefined
     }
 
-    if (areFloatsEqual(value, 0) || !value) {
-      return undefined
-    }
+    // if (areFloatsEqual(value, 0) || !value) {
+    //   return undefined
+    // }
 
     this.handleAnyChange({
       type: 'rate',
@@ -251,25 +251,37 @@ export default class AddOffer extends Component {
       }
 
       case 'rate': {
-        /*
-          XR++ -> S -> B--
-        */
+        if (sellAmount > mathConstants.high_precision) {
+          // If user has set sell value change buy value
+          /*
+            XR++ -> S -> B--
+          */
 
-        let newBuyAmount  = new BigNumber(String(sellAmount)).dividedBy(value)
-        // let newSellAmount = new BigNumber(String(value)).multipliedBy(buyAmount)
+          let newBuyAmount  = new BigNumber(String(sellAmount)).dividedBy(value)
 
-        if (!isNumberValid(newBuyAmount)) {
-          newBuyAmount = new BigNumber('0')
+          if (!isNumberValid(newBuyAmount)) {
+            newBuyAmount = new BigNumber('0')
+          }
+
+          this.setState({
+            buyAmount: newBuyAmount,
+          })
+        } else {
+          // Otherwise change sell value if buy value is not null
+          /*
+            XR++ -> S++ -> B
+          */
+
+          let newSellAmount = new BigNumber(String(value)).multipliedBy(buyAmount)
+
+          if (!isNumberValid(newSellAmount)) {
+            newSellAmount = new BigNumber('0')
+          }
+
+          this.setState({
+            sellAmount: newSellAmount,
+          })
         }
-
-        // if (!isNumberValid(newSellAmount)) {
-        //   newSellAmount = new BigNumber('0')
-        // }
-
-        this.setState({
-          buyAmount: newBuyAmount,
-          // sellAmount: newSellAmount,
-        })
 
         break
       }

@@ -1,4 +1,4 @@
-export const constants = {
+export const mathConstants = {
   high_precision: 10e-8,
   low_precision: 10e-5,
 }
@@ -15,7 +15,7 @@ export const areFloatsEqual = (float1, float2) => {
     return parsed1 === parsed2
   }
 
-  return Math.abs(parsed1 - parsed2) <= constants.high_precision
+  return Math.abs(parsed1 - parsed2) <= mathConstants.high_precision
 }
 
 // TODO: Give it better name
