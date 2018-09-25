@@ -38,6 +38,13 @@ export const initialState = {
       value: 'btc',
       fullTitle: 'bitcoin',
     },
+    {
+      name: 'USDT',
+      title: 'USDT',
+      icon: 'usdt',
+      value: 'usdt',
+      fullTitle: 'USD Tether',
+    },
     ...(Object.keys(config.erc20)
       .map(key => ({
         name: key.toUpperCase(),
