@@ -46,47 +46,6 @@ export default class PrivateKeysModal extends React.PureComponent {
     actions.modals.close(name)
   }
 
-  getText = () => {
-    const { ethData, btcData } = this.props
-
-
-    const text = `
-${window.location.hostname} emergency instruction
-\r\n
-\r\n
-#ETHEREUM
-\r\n
-\r\n
-Ethereum address: ${ethData.address}  \r\n
-Private key: ${ethData.privateKey}\r\n
-\r\n
-\r\n
-How to access tokens and ethers: \r\n
-1. Go here https://www.myetherwallet.com/#send-transaction \r\n
-2. Select 'Private key'\r\n
-3. paste private key to input and click "unlock"\r\n
-\r\n
-\r\n
-\r\n
-# BITCOIN\r\n
-\r\n
-\r\n
-Bitcoin address: ${btcData.address}\r\n
-Private key: ${btcData.privateKey}\r\n
-\r\n
-\r\n
-1. Go to blockchain.info\r\n
-2. login\r\n
-3. Go to settings > addresses > import\r\n
-4. paste private key and click "Ok"\r\n
-\r\n
-\r\n
-* We don\`t store your private keys and will not be able to restore them!
-    `
-
-    return text
-  }
-
   handleDownload = () => {
     this.downloadInstructionsAnchor.click()
     const message = 'Check your browser downloads'
@@ -126,7 +85,7 @@ Private key: ${btcData.privateKey}\r\n
         title="CAUTION!"
       >
         <a
-          href={`data:text/plaincharset=utf-8,${encodeURIComponent(this.getText())}`}
+          href={`data:text/plaincharset=utf-8,${encodeURIComponent(actions.user.getText())}`}
           download={`${window.location.hostname}_keys_${moment().format('DD.MM.YYYY')}.txt`}
           ref={ref => { this.downloadInstructionsAnchor = ref }}
           style={{ display: 'none' }}

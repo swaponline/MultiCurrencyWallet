@@ -166,5 +166,6 @@ export default {
   getDemoMoney,
   getExchangeRate,
   setTransactions,
+  getText,
   downloadPrivateKeys,
 }
