@@ -12,6 +12,7 @@ const LinkAccount = ({ type, children, address, contractAddress }) => (
     { contractAddress !== undefined && <Href tab={`${config.link.etherscan}/token/${contractAddress}?a=${address}`} >{children}</Href> }
     { type.toLowerCase() === 'eos' && <Href tab={`${config.link.eos}/account/${address}`} >{children}</Href> }
     { type.toLowerCase() === 'bch' && <Href tab={`${config.link.bch}/address/${address}`} >{children}</Href> }
+    { type.toLowerCase() === 'ltc' && <Href tab={`${config.link.ltc}/address/${address}`} >{children}</Href> }
   </Fragment>
 )
 
