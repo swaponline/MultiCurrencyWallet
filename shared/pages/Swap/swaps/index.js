@@ -32,6 +32,9 @@ Object.keys(config.erc20)
   .forEach(key => {
     swapComponents[`${key.toUpperCase()}2BTC`] = EthTokenToBtc
     swapComponents[`BTC2${key.toUpperCase()}`] = BtcToEthToken
+
+    swapComponents[`${key.toUpperCase()}2USDT`] = EthTokenToUsdt
+    swapComponents[`USDT2${key.toUpperCase()}`] = UsdtToEthToken
   })
 
 export {
