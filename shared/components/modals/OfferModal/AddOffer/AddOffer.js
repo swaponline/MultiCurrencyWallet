@@ -18,7 +18,7 @@ import SelectGroup from './SelectGroup/SelectGroup'
 import Button from 'components/controls/Button/Button'
 import Toggle from 'components/controls/Toggle/Toggle'
 
-import { areFloatsEqual, isNumberValid, isNumberStringFormatCorrect } from 'helpers/math.js'
+import { areFloatsEqual, isNumberValid, isNumberStringFormatCorrect, mathConstants } from 'helpers/math.js'
 
 
 const minAmount = {
@@ -73,41 +73,12 @@ export default class AddOffer extends Component {
   }
 
   async updateExchangeRate(sellCurrency, buyCurrency) {
-    const exchangeRate = await actions.user.getExchangeRate(sellCurrency, buyCurrency)
+    const exchangeRate = 1 / await actions.user.getExchangeRate(sellCurrency, buyCurrency)
+
+
     return new Promise((resolve, reject) => {
       this.setState({ exchangeRate }, () => resolve())
     })
-  }
-
-  handleExchangeRateChange = (value) => {
-    let { buyAmount, sellAmount } = this.state
-
-    if (!isNumberStringFormatCorrect(value)) {
-      return undefined
-    }
-
-    if (areFloatsEqual(value, 0) || !value) {
-      return undefined
-    }
-
-
-    buyAmount  = new BigNumber(String(sellAmount)).multipliedBy(value)
-    sellAmount = new BigNumber(String(buyAmount)).dividedBy(value)
-
-    if (!isNumberValid(buyAmount)) {
-      buyAmount = new BigNumber('0')
-    }
-
-    if (!isNumberValid(sellAmount)) {
-      sellAmount = new BigNumber('0')
-    }
-
-    this.setState({
-      buyAmount,
-      sellAmount,
-    })
-
-    return value
   }
 
   handleBuyCurrencySelect = async ({ value }) => {
@@ -170,6 +141,25 @@ export default class AddOffer extends Component {
     })
   }
 
+  handleExchangeRateChange = (value) => {
+    let { buyAmount, sellAmount } = this.state
+
+    if (!isNumberStringFormatCorrect(value)) {
+      return undefined
+    }
+
+    // if (areFloatsEqual(value, 0) || !value) {
+    //   return undefined
+    // }
+
+    this.handleAnyChange({
+      type: 'rate',
+      value,
+    })
+
+    return value
+  }
+
   handleBuyAmountChange = (value, prev) => {
     const { exchangeRate, sellAmount, manualRate } = this.state
 
@@ -177,54 +167,128 @@ export default class AddOffer extends Component {
       return undefined
     }
 
-    if (!this.isSending) {
-      actions.analytics.dataEvent('orderbook-addoffer-enter-ordervalue')
-      this.setState({ isSending: true })
-    }
-
-    if (manualRate) {
-      let newRate = new BigNumber(String(value)).dividedBy(new BigNumber(String(sellAmount)))
-      this.setState({
-        exchangeRate: isNumberValid(newRate) ? newRate : '',
-        buyAmount: new BigNumber(String(value)),
-      })
-    } else {
-      this.setState({
-        sellAmount: new BigNumber(String(value) || 0).dividedBy(exchangeRate || 0),
-        buyAmount: new BigNumber(String(value)),
-      })
-    }
-
+    this.handleAnyChange({
+      type: 'buy',
+      value,
+    })
 
     return value
   }
 
   handleSellAmountChange = (value) => {
-    const { exchangeRate, manualRate, buyAmount } = this.state
+    const { exchangeRate, buyAmount } = this.state
 
     if (!isNumberStringFormatCorrect(value)) {
       return undefined
     }
 
-    if (!this.isSending) {
-      actions.analytics.dataEvent('orderbook-addoffer-enter-ordervalue')
-      this.setState({ isSending: true })
-    }
-    if (manualRate) {
-      let newRate = new BigNumber(String(buyAmount)).dividedBy(new BigNumber(String(value)))
-      this.setState({
-        exchangeRate: isNumberValid(newRate) ? newRate : '',
-        sellAmount: new BigNumber(String(value)),
-      })
-    } else {
-      this.setState({
-        sellAmount: new BigNumber(String(value)),
-        buyAmount: new BigNumber(String(value) || 0).multipliedBy(exchangeRate || 0),
-      })
-    }
-
+    this.handleAnyChange({
+      type: 'sell',
+      value,
+    })
 
     return value
+  }
+
+  handleAnyChange = ({ type, value }) => {
+    const { manualRate, exchangeRate, buyAmount, sellAmount } = this.state
+
+    if (type === 'sell' || type === 'buy') {
+      if (!this.isSending) {
+        actions.analytics.dataEvent('orderbook-addoffer-enter-ordervalue')
+        this.setState({ isSending: true })
+      }
+    }
+
+    /*
+        XR = S / B
+        B = S / XR
+        S = XR * B
+    */
+
+    switch (type) {
+      case 'sell':  {
+        /*
+          S++ -> XR++ -> B (Manual Rate)
+          S++ -> XR -> B++ (Auto Rate)
+        */
+
+        if (manualRate) {
+          let newExchangeRate = new BigNumber(String(value)).dividedBy(new BigNumber(String(buyAmount)))
+          this.setState({
+            exchangeRate: isNumberValid(newExchangeRate) ? newExchangeRate : '',
+            sellAmount: new BigNumber(String(value)),
+          })
+        } else {
+          this.setState({
+            sellAmount: new BigNumber(String(value)),
+            buyAmount: new BigNumber(String(value) || 0).multipliedBy(exchangeRate || 0),
+          })
+        }
+        break
+      }
+
+      case 'buy':  {
+        /*
+          B++ -> XR-- -> S (Manual Rate)
+          B++ -> XR -> S++ (Auto Rate)
+        */
+
+        if (manualRate) {
+          let newExchangeRate = new BigNumber(String(sellAmount)).dividedBy(new BigNumber(String(value)))
+          this.setState({
+            exchangeRate: isNumberValid(newExchangeRate) ? newExchangeRate : '',
+            buyAmount: new BigNumber(String(value)),
+          })
+        } else {
+          this.setState({
+            sellAmount: new BigNumber(String(value) || 0).multipliedBy(exchangeRate || 0),
+            buyAmount: new BigNumber(String(value)),
+          })
+        }
+
+        break
+      }
+
+      case 'rate': {
+        if (sellAmount > mathConstants.high_precision) {
+          // If user has set sell value change buy value
+          /*
+            XR++ -> S -> B--
+          */
+
+          let newBuyAmount  = new BigNumber(String(sellAmount)).dividedBy(value)
+
+          if (!isNumberValid(newBuyAmount)) {
+            newBuyAmount = new BigNumber('0')
+          }
+
+          this.setState({
+            buyAmount: newBuyAmount,
+          })
+        } else {
+          // Otherwise change sell value if buy value is not null
+          /*
+            XR++ -> S++ -> B
+          */
+
+          let newSellAmount = new BigNumber(String(value)).multipliedBy(buyAmount)
+
+          if (!isNumberValid(newSellAmount)) {
+            newSellAmount = new BigNumber('0')
+          }
+
+          this.setState({
+            sellAmount: newSellAmount,
+          })
+        }
+
+        break
+      }
+      default:
+        console.error('Unknown type')
+        break
+    }
   }
 
   handleNext = () => {
