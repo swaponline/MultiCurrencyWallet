@@ -75,7 +75,7 @@ export default class Field2 extends React.Component {
           error && (
             <React.Fragment>
               <i className="fas fa-times" styleName="errorIcon" />
-              <div styleName="error">You should pass correct value! Reload page and enter key again</div>
+              <div styleName="error">INVALID PRIVATE KEY! You should pass correct value! Reload page and enter key again</div>
             </React.Fragment>
           )
         }
