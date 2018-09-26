@@ -1,3 +1,5 @@
+$errorColor: #e24d4d;
+
 .container {
   margin-top: 10px;
 
@@ -7,7 +9,7 @@
 }
 
 .section {
-  background-color: #e24d4d;
+  background-color: $errorColor;
   display: flex;
   align-items: center;
   padding: 6px;
@@ -23,6 +25,10 @@
 .input {
   min-width: 0;
   flex: auto 1 1;
+
+  input {
+    transition: background 0.4s ease;
+  }
 }
 
 .button {
@@ -33,5 +39,17 @@
 .error {
   margin-top: 10px;
   font-size: 18px;
+  display: inline-block;
+  margin-left: 10px;
   @include ff-bold;
+}
+
+.errorInput input {
+  background-color: #ff9e9e !important;
+}
+
+.errorIcon {
+  color: $errorColor;
+  font-size: 28px;
+  vertical-align: middle;
 }
