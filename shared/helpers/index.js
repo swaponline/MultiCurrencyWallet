@@ -17,6 +17,7 @@ import ignoreProps from './ignoreProps'
 import getPageOffset from './getPageOffset'
 import getScrollBarWidth from './getScrollBarWidth'
 
+import { migrate } from './migrations/'
 
 export {
   eos,
@@ -30,7 +31,7 @@ export {
   constants,
   localStorage,
   api,
-
+  migrate,
   // Methods
   ignoreProps,
 

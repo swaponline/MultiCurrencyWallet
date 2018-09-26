@@ -8,14 +8,14 @@
 }
 
 .content {
-  max-width: 700px;
+  max-width: 800px;
   margin: 0 auto;
   text-align: center;
 }
 
 .title {
   margin-bottom: 30px;
-  color: #ff354b;
+  color: #000;
   font-size: 24px;
 }
 
@@ -26,6 +26,13 @@
   color: #000;
 }
 
-.button {
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-top: 40px;
+}
+
+.button {
+  margin-bottom: 20px;
 }
