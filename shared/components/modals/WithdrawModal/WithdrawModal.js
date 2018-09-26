@@ -13,6 +13,16 @@ import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
 
 
+const minAmount = {
+  eth: 0.05,
+  btc: 0.004,
+  eos: 1,
+  noxon: 1,
+  swap: 1,
+  jot: 1,
+}
+
+
 @cssModules(styles)
 export default class WithdrawModal extends React.Component {
 
@@ -60,7 +70,7 @@ export default class WithdrawModal extends React.Component {
     const isDisabled = !address || !amount
 
     if (isSubmitted) {
-      linked.amount.check((value) => value > 0.01, `Amount must be greater than 0.05 `)
+      linked.amount.check((value) => value > minAmount[data.currency], `Amount must be greater than ${minAmount[data.currency]} `)
       linked.amount.check((value) => value < balance, `Amount must be bigger your balance`)
     }
 

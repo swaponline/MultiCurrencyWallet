@@ -16,8 +16,8 @@ import swapApp, { constants } from 'swap.app'
 import SwapAuth from 'swap.auth'
 import SwapRoom from 'swap.room'
 import SwapOrders from 'swap.orders'
-import { ETH2BTC, BTC2ETH, ETHTOKEN2BTC, BTC2ETHTOKEN, EOS2BTC, BTC2EOS } from 'swap.flows'
-import { EthSwap, EthTokenSwap, BtcSwap, EosSwap } from 'swap.swaps'
+import { ETH2BTC, BTC2ETH, ETHTOKEN2BTC, BTC2ETHTOKEN, EOS2BTC, BTC2EOS, USDT2ETHTOKEN, ETHTOKEN2USDT } from 'swap.flows'
+import { EthSwap, EthTokenSwap, BtcSwap, EosSwap, UsdtSwap } from 'swap.swaps'
 
 
 const repo = utils.createRepo()
@@ -45,14 +45,9 @@ const createSwapApp = () => {
       }),
       new SwapRoom({
         repo,
-        EXPERIMENTAL: {
-          pubsub: true,
-        },
         config: {
           Addresses: {
-            Swarm: [
-              config.ipfs.swarm,
-            ],
+            Swarm: config.ipfs.swarm,
           },
         },
       }),
@@ -69,6 +64,13 @@ const createSwapApp = () => {
         fetchBalance: (address) => actions.btc.fetchBalance(address),
         fetchUnspents: (scriptAddress) => actions.btc.fetchUnspents(scriptAddress),
         broadcastTx: (txRaw) => actions.btc.broadcastTx(txRaw),
+      }),
+      new UsdtSwap({
+        assetId: 31, // USDT
+        fetchBalance: (address) => actions.usdt.fetchBalance(address, 31),
+        fetchUnspents: (scriptAddress) => actions.btc.fetchUnspents(scriptAddress),
+        broadcastTx: (txRaw) => actions.btc.broadcastTx(txRaw),
+        fetchTx: (hash) => actions.btc.fetchTx(hash),
       }),
       new EosSwap({
         swapAccount: config.swapContract.eos,
@@ -99,6 +101,12 @@ const createSwapApp = () => {
 
       ...(Object.keys(config.erc20))
         .map(key => BTC2ETHTOKEN(key)),
+
+      ...(Object.keys(config.erc20))
+        .map(key => ETHTOKEN2USDT(key)),
+
+      ...(Object.keys(config.erc20))
+        .map(key => USDT2ETHTOKEN(key)),
     ],
   })
 }

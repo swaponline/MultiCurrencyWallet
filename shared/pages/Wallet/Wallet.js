@@ -29,7 +29,7 @@ import { withRouter } from 'react-router'
     currencies: { items: currencies },
   }) => ({
     tokens: Object.keys(tokensData).map(k => (tokensData[k])),
-    items: [ ethData, btcData, eosData, bchData /* usdtData eosData  nimData */ ],
+    items: [ ethData, btcData, eosData, bchData, ltcData, usdtData /* nimData */ ],
     currencies,
     hiddenCoinsList,
   })

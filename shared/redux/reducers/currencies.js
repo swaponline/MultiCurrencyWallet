@@ -18,6 +18,13 @@ export const initialState = {
       fullTitle: 'ethereum',
     },
     {
+      name: 'LTC',
+      title: 'LTC',
+      icon: 'ltc',
+      value: 'ltc',
+      fullTitle: 'litecoin',
+    },
+    {
       name: ' BCH',
       title: 'BCH',
       icon: 'bch',
@@ -30,6 +37,13 @@ export const initialState = {
       icon: 'btc',
       value: 'btc',
       fullTitle: 'bitcoin',
+    },
+    {
+      name: 'USDT',
+      title: 'USDT',
+      icon: 'usdt',
+      value: 'usdt',
+      fullTitle: 'USD Tether',
     },
     ...(Object.keys(config.erc20)
       .map(key => ({
