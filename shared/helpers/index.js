@@ -1,6 +1,7 @@
 import eos from './eos'
 import btc from './btc'
 import bcash from './bcash'
+import ltc from './ltc'
 import web3 from './web3'
 import links from './links'
 import request from './request'
@@ -21,6 +22,7 @@ export {
   eos,
   bcash,
   btc,
+  ltc,
   web3,
   utils,
   links,
