@@ -115,11 +115,11 @@ export default class Row extends Component {
     })
   }
 
-  handleGoTrade = async (link) => {
+  handleGoTrade = async (currency) => {
     const balance = await actions.eth.getBalance()
 
-    if (balance - 0.02 > 0) {
-      this.props.history.push(link)
+    if (balance - 0.02 > 0 || currency.toLowerCase() === 'eos') {
+      this.props.history.push(`/${currency.toLowerCase()}`)
     } else {
       actions.modals.open(constants.modals.EthChecker, {})
     }
@@ -203,7 +203,7 @@ export default class Row extends Component {
             )}
             {
               tradeAllowed && (
-                <WithdrawButton onClick={() => this.handleGoTrade(`/${currency.toLowerCase()}`)}>
+                <WithdrawButton onClick={() => this.handleGoTrade(currency)}>
                   <i className="fas fa-exchange-alt" />
                   <span>Swap</span>
                 </WithdrawButton>

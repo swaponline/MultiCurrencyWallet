@@ -48,10 +48,7 @@ export default class Row extends Component {
 
   handleGoTrade = async () => {
     const balance = await actions.eth.getBalance()
-
-    if ((balance - 0.02) < 0) {
-      actions.modals.open(constants.modals.EthChecker, {})
-    }
+    return !((balance - 0.02) < 0)
   }
 
   removeOrder = (orderId) => {
@@ -61,18 +58,23 @@ export default class Row extends Component {
 
   sendRequest = async (orderId) => {
     this.setState({ isFetching: true })
-    await this.handleGoTrade()
+    const check = await this.handleGoTrade()
 
-    actions.core.sendRequest(orderId, (isAccepted) => {
-      console.log(`user has ${isAccepted ? 'accepted' : 'declined'} your request`)
+    if (check) {
+      actions.core.sendRequest(orderId, (isAccepted) => {
+        console.log(`user has ${isAccepted ? 'accepted' : 'declined'} your request`)
 
-      if (isAccepted) {
-        this.setState({ redirect: true, isFetching: false })
-      } else {
-        this.setState({ isFetching: false })
-      }
+        if (isAccepted) {
+          this.setState({ redirect: true, isFetching: false })
+        } else {
+          this.setState({ isFetching: false })
+        }
 
-    })
+      })
+    } else {
+      actions.modals.open(constants.modals.EthChecker, {})
+    }
+
     actions.core.updateCore()
   }
 
