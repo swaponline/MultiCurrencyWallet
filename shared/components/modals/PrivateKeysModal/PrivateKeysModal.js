@@ -51,16 +51,16 @@ export default class PrivateKeysModal extends React.PureComponent {
     actions.modals.close(name)
   }
 
-  handleProceed = () => {
-    this.changeView(views.checkKeys)
-  }
-
   handleDownload = () => {
     actions.user.downloadPrivateKeys()
     actions.notifications.show(constants.notifications.Message, {
       message: 'Check your browser downloads',
     })
 
+    // this.changeView(views.checkKeys)
+  }
+
+  handleNext = () => {
     this.changeView(views.checkKeys)
   }
 
@@ -102,8 +102,14 @@ export default class PrivateKeysModal extends React.PureComponent {
                 </div>
                 <div styleName="subTitle">We don`t store your private keys and will not be able to restore them!</div>
                 <div styleName="buttonContainer">
-                  <Button brand styleName="button" onClick={this.handleDownload}>1. DOWNLOAD KEYS & INSTRUCTION</Button>
-                  <Button brand styleName="button" onClick={this.handleProceed}>2. NEXT STEP</Button>
+                  <div styleName="buttonSubContainer">
+                    <span styleName="text">Click here</span>
+                    <Button brand styleName="button" onClick={this.handleDownload}>1. DOWNLOAD KEYS & INSTRUCTION</Button>
+                  </div>
+                  <div styleName="buttonSubContainer">
+                    <span styleName="text">Then click here</span>
+                    <Button brand styleName="button" onClick={this.handleNext}>2. NEXT STEP</Button>
+                  </div>
                 </div>
                 {/* <Button brand styleName="button" onClick={this.handleSendByEmail}>Send by email</Button> */}
               </Fragment>
