@@ -58,7 +58,7 @@ export default class Wallet extends Component {
     if (localStorage.getItem(constants.localStorage.privateKeysSaved)) {
       this.changeView('checkKeys')
     } else {
-      actions.modals.open(constants.modals.PrivateKeys, {})
+      // actions.modals.open(constants.modals.PrivateKeys, {})
     }
   }
 

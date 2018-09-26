@@ -57,12 +57,11 @@ export default class Row extends Component {
   }
 
   sendRequest = async (orderId, currency) => {
-    this.setState({ isFetching: true })
     const check = await this.handleGoTrade(currency)
 
-    console.log('check', check)
-
     if (check) {
+      this.setState({ isFetching: true })
+
       actions.core.sendRequest(orderId, (isAccepted) => {
         console.log(`user has ${isAccepted ? 'accepted' : 'declined'} your request`)
 
