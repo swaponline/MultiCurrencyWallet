@@ -44,6 +44,7 @@ export default class Wallet extends Component {
     hiddenCoinsList: propTypes.array,
     history: propTypes.object,
     items: propTypes.arrayOf(propTypes.object),
+    tokens: propTypes.arrayOf(propTypes.object),
     location: propTypes.object,
     match: propTypes.object,
   }
@@ -69,7 +70,7 @@ export default class Wallet extends Component {
       return
     }
 
-    if (props.items.some(o => o.balance > 0)) { // if at least one balance is greater than 0
+    if (props.items.some(o => o.balance > 0) || props.tokens.some(t => t.balance > 0)) { // if at least one balance is greater than 0
       this.setState({ zeroBalance: false })
     }
   }
