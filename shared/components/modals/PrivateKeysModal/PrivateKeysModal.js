@@ -14,6 +14,11 @@ import Modal from 'components/modal/Modal/Modal'
 import Button from 'components/controls/Button/Button'
 
 
+const views = {
+  saveKeys: 'saveKeys',
+  checkKeys: 'checkKeys',
+}
+
 @connect({
   ethData: 'user.ethData',
   btcData: 'user.btcData',
@@ -28,7 +33,7 @@ export default class PrivateKeysModal extends React.PureComponent {
   }
 
   state = {
-    view: 'saveKeys', // saveKeys, checkKeys
+    view: views.saveKeys,
     ethValidated: false,
     btcValidated: false,
   }
@@ -46,71 +51,28 @@ export default class PrivateKeysModal extends React.PureComponent {
     actions.modals.close(name)
   }
 
-  getText = () => {
-    const { ethData, btcData } = this.props
-
-
-    const text = `
-${window.location.hostname} emergency instruction
-\r\n
-\r\n
-#ETHEREUM
-\r\n
-\r\n
-Ethereum address: ${ethData.address}  \r\n
-Private key: ${ethData.privateKey}\r\n
-\r\n
-\r\n
-How to access tokens and ethers: \r\n
-1. Go here https://www.myetherwallet.com/#send-transaction \r\n
-2. Select 'Private key'\r\n
-3. paste private key to input and click "unlock"\r\n
-\r\n
-\r\n
-\r\n
-# BITCOIN\r\n
-\r\n
-\r\n
-Bitcoin address: ${btcData.address}\r\n
-Private key: ${btcData.privateKey}\r\n
-\r\n
-\r\n
-1. Go to blockchain.info\r\n
-2. login\r\n
-3. Go to settings > addresses > import\r\n
-4. paste private key and click "Ok"\r\n
-\r\n
-\r\n
-* We don\`t store your private keys and will not be able to restore them!
-    `
-
-    return text
+  handleProceed = () => {
+    this.changeView(views.checkKeys)
   }
 
   handleDownload = () => {
-    const element = document.createElement('a')
-    const text = this.getText()
-    const message = 'Check your browser downloads'
-
-    element.setAttribute('href', `data:text/plaincharset=utf-8,${encodeURIComponent(text)}`)
-    element.setAttribute('download', `${window.location.hostname}_keys_${moment().format('DD.MM.YYYY')}.txt`)
-
-    element.style.display = 'none'
-    document.body.appendChild(element)
-    element.click()
-    document.body.removeChild(element)
-
-    this.changeView('checkKeys')
-
+    actions.user.downloadPrivateKeys()
     actions.notifications.show(constants.notifications.Message, {
-      message,
+      message: 'Check your browser downloads',
     })
+
+    this.changeView(views.checkKeys)
   }
 
   handleSendByEmail = () => {
     const text = this.getText()
 
     window.open(`mailto:?subject=Your_Subject&body=${text}`)
+  }
+
+  handleKeysSubmit = () => {
+    localStorage.setItem(constants.localStorage.privateKeysSaved, true)
+    window.location.reload()
   }
 
   render() {
@@ -126,12 +88,12 @@ Private key: ${btcData.privateKey}\r\n
         styleName="modal"
         name={name}
         showCloseButton={false}
-        whiteLogo
+        showLogo={false}
         title="CAUTION!"
       >
         <div styleName="content">
           {
-            view === 'saveKeys' ? (
+            view === views.saveKeys ? (
               <Fragment>
                 <div styleName="title">
                   Before you continue be sure to save your private keys!<br />
@@ -139,7 +101,10 @@ Private key: ${btcData.privateKey}\r\n
                   there is a big chance you`ll loose your money.
                 </div>
                 <div styleName="subTitle">We don`t store your private keys and will not be able to restore them!</div>
-                <Button brand styleName="button" onClick={this.handleDownload}>Download instruction</Button>
+                <div styleName="buttonContainer">
+                  <Button brand styleName="button" onClick={this.handleDownload}>Download instruction</Button>
+                  <Button brand styleName="button" onClick={this.handleProceed}>Proceed without downloading</Button>
+                </div>
                 {/* <Button brand styleName="button" onClick={this.handleSendByEmail}>Send by email</Button> */}
               </Fragment>
             ) : (
@@ -160,7 +125,7 @@ Private key: ${btcData.privateKey}\r\n
                 />
                 {
                   isValidated && (
-                    <Button white styleName="button" onClick={this.close}>GO TO THE SITE!</Button>
+                    <Button white styleName="button" onClick={this.handleKeysSubmit}>GO TO THE SITE!</Button>
                   )
                 }
               </Fragment>
