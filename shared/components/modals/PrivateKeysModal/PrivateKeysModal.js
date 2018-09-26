@@ -81,7 +81,7 @@ export default class PrivateKeysModal extends React.PureComponent {
         styleName="modal"
         name={name}
         showCloseButton={false}
-        whiteLogo
+        showLogo={false}
         title="CAUTION!"
       >
         <a
