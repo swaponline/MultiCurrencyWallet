@@ -91,14 +91,6 @@ export default class PrivateKeysModal extends React.PureComponent {
         showLogo={false}
         title="CAUTION!"
       >
-        <a
-          href={`data:text/plaincharset=utf-8,${encodeURIComponent(actions.user.getText())}`}
-          download={`${window.location.hostname}_keys_${moment().format('DD.MM.YYYY')}.txt`}
-          ref={ref => { this.downloadInstructionsAnchor = ref }}
-          style={{ display: 'none' }}
-        >
-          Download Instructions
-        </a>
         <div styleName="content">
           {
             view === views.saveKeys ? (
