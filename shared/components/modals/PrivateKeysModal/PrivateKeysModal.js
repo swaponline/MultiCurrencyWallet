@@ -102,8 +102,8 @@ export default class PrivateKeysModal extends React.PureComponent {
                 </div>
                 <div styleName="subTitle">We don`t store your private keys and will not be able to restore them!</div>
                 <div styleName="buttonContainer">
-                  <Button brand styleName="button" onClick={this.handleDownload}>Download instruction</Button>
-                  <Button brand styleName="button" onClick={this.handleProceed}>Proceed without downloading</Button>
+                  <Button brand styleName="button" onClick={this.handleDownload}>1. DOWNLOAD KEYS & INSTRUCTION</Button>
+                  <Button brand styleName="button" onClick={this.handleProceed}>2. NEXT STEP</Button>
                 </div>
                 {/* <Button brand styleName="button" onClick={this.handleSendByEmail}>Send by email</Button> */}
               </Fragment>
