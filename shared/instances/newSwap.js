@@ -47,7 +47,9 @@ const createSwapApp = () => {
         repo,
         config: {
           Addresses: {
-            Swarm: config.ipfs.swarm,
+            Swarm: [
+              config.ipfs.swarm,
+            ],
           },
         },
       }),
@@ -64,13 +66,6 @@ const createSwapApp = () => {
         fetchBalance: (address) => actions.btc.fetchBalance(address),
         fetchUnspents: (scriptAddress) => actions.btc.fetchUnspents(scriptAddress),
         broadcastTx: (txRaw) => actions.btc.broadcastTx(txRaw),
-      }),
-      new UsdtSwap({
-        assetId: 31, // USDT
-        fetchBalance: (address) => actions.usdt.fetchBalance(address, 31),
-        fetchUnspents: (scriptAddress) => actions.btc.fetchUnspents(scriptAddress),
-        broadcastTx: (txRaw) => actions.btc.broadcastTx(txRaw),
-        fetchTx: (hash) => actions.btc.fetchTx(hash),
       }),
       new EosSwap({
         swapAccount: config.swapContract.eos,
@@ -109,6 +104,16 @@ const createSwapApp = () => {
         .map(key => USDT2ETHTOKEN(key)),
     ],
   })
+
+  process.env.MAINNET ? swapApp._addSwap(
+    new UsdtSwap({
+      assetId: 31, // USDT
+      fetchBalance: (address) => actions.usdt.fetchBalance(address, 31),
+      fetchUnspents: (scriptAddress) => actions.btc.fetchUnspents(scriptAddress),
+      broadcastTx: (txRaw) => actions.btc.broadcastTx(txRaw),
+      fetchTx: (hash) => actions.btc.fetchTx(hash),
+    }),
+  ) : null
 }
 
 export {

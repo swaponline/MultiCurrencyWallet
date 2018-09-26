@@ -38,7 +38,7 @@ export const initialState = {
       value: 'btc',
       fullTitle: 'bitcoin',
     },
-    {
+    process.env.MAINNET && {
       name: 'USDT',
       title: 'USDT',
       icon: 'usdt',

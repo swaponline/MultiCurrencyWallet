@@ -12,7 +12,8 @@ import NavMobile from './NavMobile/NavMobile'
 import Logo from 'components/Logo/Logo'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 
-let lastScrollTop = 0;
+
+let lastScrollTop = 0
 
 @withRouter
 @connect(({ menu: { items: menu } }) => ({
@@ -27,27 +28,27 @@ export default class Header extends Component {
     super()
 
     this.state = {
-      sticky: false
+      sticky: false,
     }
   }
 
   componentDidMount() {
-    window.addEventListener('scroll', this.handleScroll);
-  };
+    window.addEventListener('scroll', this.handleScroll)
+  }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll);
-  };
+    window.removeEventListener('scroll', this.handleScroll)
+  }
 
   handleScroll = () =>  {
-    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      if ( scrollTop > lastScrollTop || scrollTop < 88) {
-        this.setState(() => ({sticky: false}))
-      }
-      else {
-        this.setState(() => ({sticky: true}))
-      }
-      lastScrollTop = scrollTop;
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop
+    if (scrollTop > lastScrollTop || scrollTop < 88) {
+      this.setState(() => ({ sticky: false }))
+    }
+    else {
+      this.setState(() => ({ sticky: true }))
+    }
+    lastScrollTop = scrollTop
   }
 
   render() {
@@ -59,7 +60,7 @@ export default class Header extends Component {
     }
 
     return (
-      <div styleName={sticky ? 'header header-fixed': 'header'}>
+      <div styleName={sticky ? 'header header-fixed' : 'header'}>
         <WidthContainer styleName="container">
           <Logo withLink />
           <Nav menu={menu} />

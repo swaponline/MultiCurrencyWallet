@@ -4,4 +4,5 @@ export default {
   activeTabId: 'activeTabId',
   hiddenCoinsList: 'hiddenCoinsList',
   testnetSkipPKCheck: 'testnetSkipPKCheck',
+  storageRevision: '_revision'
 }
