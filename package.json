@@ -111,6 +111,7 @@
     "superagent": "^3.8.3"
   },
   "dependencies": {
+    "coininfo": "^4.3.0",
     "node-gyp": "^3.7.0",
     "react": "^16.3.2",
     "react-click-outside": "github:tj/react-click-outside",

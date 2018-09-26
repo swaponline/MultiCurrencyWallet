@@ -47,7 +47,9 @@ const createSwapApp = () => {
         repo,
         config: {
           Addresses: {
-            Swarm: config.ipfs.swarm,
+            Swarm: [
+              config.ipfs.swarm,
+            ],
           },
         },
       }),
