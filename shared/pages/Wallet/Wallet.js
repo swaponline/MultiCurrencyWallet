@@ -40,7 +40,7 @@ export default class Wallet extends Component {
   static propTypes = {
     core: propTypes.object,
     user: propTypes.object,
-    currencies: propTypes.arrayOf(propTypes.object),
+    currencies: propTypes.array,
     hiddenCoinsList: propTypes.array,
     history: propTypes.object,
     items: propTypes.arrayOf(propTypes.object),
@@ -75,7 +75,7 @@ export default class Wallet extends Component {
     }
   }
 
-  handleClear = process.env.MAINNET ? () => {} : (event) => {
+  handleClear = (event) => {
     event.preventDefault()
     window.localStorage.clear()
     window.location.reload()
@@ -92,15 +92,13 @@ export default class Wallet extends Component {
   }
 
   handleConfirm = () => {
-    this.askPrivateKeysApproval()
-    // this.changeView('checkKeys')
-    // localStorage.setItem(constants.localStorage.privateKeysSaved, true)
-  }
-
-  askPrivateKeysApproval() {
     if (!localStorage.getItem(constants.localStorage.privateKeysSaved)) {
       actions.modals.open(constants.modals.PrivateKeys, {})
     }
+  }
+
+  handleImportKeys = () => {
+    actions.modals.open(constants.modals.ImportKeys, {})
   }
 
   changeView = (view) => {
