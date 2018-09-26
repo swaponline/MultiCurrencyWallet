@@ -46,9 +46,9 @@ export default class Row extends Component {
     })
   }
 
-  handleGoTrade = async () => {
+  handleGoTrade = async (currency) => {
     const balance = await actions.eth.getBalance()
-    return !((balance - 0.02) < 0)
+    return !((balance - 0.02) < 0 || currency.toLowerCase() !== 'eos')
   }
 
   removeOrder = (orderId) => {
@@ -56,9 +56,11 @@ export default class Row extends Component {
     actions.core.updateCore()
   }
 
-  sendRequest = async (orderId) => {
+  sendRequest = async (orderId, currency) => {
     this.setState({ isFetching: true })
-    const check = await this.handleGoTrade()
+    const check = await this.handleGoTrade(currency)
+
+    console.log('check', check)
 
     if (check) {
       actions.core.sendRequest(orderId, (isAccepted) => {
@@ -151,7 +153,7 @@ export default class Row extends Component {
                           <span>Please wait while we confirm your request</span>
                         </Fragment>
                       ) : (
-                        <RequestButton disabled={balance > Number(amount)} onClick={() => this.sendRequest(id)} />
+                        <RequestButton disabled={balance > Number(amount)} onClick={() => this.sendRequest(id, isMy ? sellCurrency : buyCurrency)} />
                       )
                     )
                   )

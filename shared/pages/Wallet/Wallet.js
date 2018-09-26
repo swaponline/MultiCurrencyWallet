@@ -25,7 +25,7 @@ import { withRouter } from 'react-router'
 @connect(
   ({
     core: { hiddenCoinsList },
-    user: { ethData, btcData, bchData, tokensData, eosData, nimData, usdtData },
+    user: { ethData, btcData, bchData, tokensData, eosData, nimData, usdtData, ltcData},
     currencies: { items: currencies },
   }) => ({
     tokens: Object.keys(tokensData).map(k => (tokensData[k])),
