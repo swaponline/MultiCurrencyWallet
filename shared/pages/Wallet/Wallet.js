@@ -57,6 +57,8 @@ export default class Wallet extends Component {
   componentWillMount() {
     if (localStorage.getItem(constants.localStorage.privateKeysSaved)) {
       this.changeView('checkKeys')
+    } else {
+      actions.modals.open(constants.modals.PrivateKeys, {})
     }
   }
 
@@ -89,12 +91,6 @@ export default class Wallet extends Component {
   handleDownload = () => {
     actions.user.downloadPrivateKeys()
     // this.changeView('checkKeys')
-  }
-
-  handleConfirm = () => {
-    if (!localStorage.getItem(constants.localStorage.privateKeysSaved)) {
-      actions.modals.open(constants.modals.PrivateKeys, {})
-    }
   }
 
   handleImportKeys = () => {
