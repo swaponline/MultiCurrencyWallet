@@ -3,4 +3,5 @@ export default {
   demoMoneyReceived: 'demoMoneyReceived',
   activeTabId: 'activeTabId',
   hiddenCoinsList: 'hiddenCoinsList',
+  storageRevision: '_revision'
 }
