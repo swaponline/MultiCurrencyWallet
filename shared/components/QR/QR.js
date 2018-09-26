@@ -8,7 +8,7 @@ export default class QR extends Component {
   static propTypes = {
     network: PropTypes.string.isRequired,
     address: PropTypes.string.isRequired,
-    size: PropTypes.number
+    size: PropTypes.number,
   }
 
   render() {

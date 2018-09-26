@@ -12,6 +12,13 @@
   border-radius: 20px;
 }
 
+.no-select-inline {
+  cursor: pointer;
+  display: inline;
+  user-select: none;
+  white-space: nowrap;
+}
+
 .icon {
   margin-right: 5px;
 }
@@ -33,4 +40,8 @@
     color: #7c1de9;
     background: #dfc5ff;
   }
+}
+
+.table_balance-cell {
+  min-width: 100px;
 }

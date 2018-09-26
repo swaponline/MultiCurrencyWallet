@@ -5,15 +5,14 @@ import Loader from 'components/loaders/Loader/Loader'
 import SwapProgress from 'components/loaders/SwapProgress/SwapProgress'
 
 
-const RequestLoader = ({ isVisible, text, txId, swap, data}) => {
-	if (!isVisible) {
+const RequestLoader = ({ isVisible, text, txId, swap, data }) => {
+  if (!isVisible) {
     return null
   }
   return (
-   swap ? <SwapProgress data={data} /> : <Loader text={text} txId={txId} /> 
-  ) 
+    swap ? <SwapProgress data={data} /> : <Loader text={text} txId={txId} />
+  )
 }
-
 
 
 export default connect({

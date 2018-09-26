@@ -13,7 +13,7 @@ const Href = ({ children, to, redirect, tab, rel }) => {
   }
 
   return (
-    <a styleName="link" href={redirect || tab} target={tab ? '_blank' : null} rel={rel ? rel : null}>
+    <a styleName="link" href={redirect || tab} target={tab ? '_blank' : null} rel={rel || null}>
       {children}
     </a>
   )

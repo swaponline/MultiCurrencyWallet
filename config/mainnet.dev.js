@@ -1,5 +1,5 @@
 import baseConfig from './default'
-import config from './_mainnet'
+import config from './mainnet'
 
 
 export default {

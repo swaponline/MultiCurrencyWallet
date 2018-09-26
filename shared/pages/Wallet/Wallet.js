@@ -20,9 +20,9 @@ import { withRouter } from 'react-router'
 
 
 @withRouter
-@connect(({ core: { hiddenCoinsList }, user: { ethData, btcData, tokensData, eosData, nimData, usdtData }, currencies: { items: currencies } }) => ({
+@connect(({ core: { hiddenCoinsList }, user: { ethData, btcData, bchData, ltcData, tokensData, eosData, nimData, usdtData }, currencies: { items: currencies } }) => ({
   tokens: Object.keys(tokensData).map(k => (tokensData[k])),
-  items: [ ethData, btcData, eosData, usdtData /* eosData  nimData */ ],
+  items: [ ethData, btcData, eosData, bchData, ltcData, usdtData /* nimData */ ],
   currencies,
   hiddenCoinsList,
 }))
@@ -54,7 +54,8 @@ export default class Wallet extends Component {
   }
 
   handleShowMore = () => {
-    this.props.history.push('/coins')
+    actions.modals.open(constants.modals.ShowMoreCoins, {})
+    // this.props.history.push('/coins')
   }
 
   handleDownload = () => {
@@ -80,7 +81,7 @@ export default class Wallet extends Component {
   render() {
     const { view } = this.state
     const { items, tokens, currencies, hiddenCoinsList } = this.props
-    const titles = [ 'Coin', 'Name', 'Balance', !isMobile && 'Address', isMobile ? 'Receive, send, swap' :  'Actions' ]
+    const titles = [ 'Coin', 'Name', 'Balance', !isMobile && 'Address', isMobile ? 'Send, receive, swap' :  'Actions' ]
 
     return (
       <section>

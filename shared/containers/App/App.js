@@ -35,7 +35,7 @@ moment.locale(userLanguage)
   isVisible: 'loader.isVisible',
   ethAddress: 'user.ethData.address',
   btcAddress: 'user.btcData.address',
-  tokenAddress: 'user.tokensData.noxon.address',
+  tokenAddress: 'user.tokensData.swap.address',
 })
 @CSSModules(styles)
 export default class App extends React.Component {

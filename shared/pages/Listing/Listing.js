@@ -5,7 +5,6 @@ import CSSModules from 'react-css-modules'
 import ListingImg from './images/listing-screen.png'
 
 import Href from 'components/Href/Href'
-import FeedBack from 'components/FeedBack/FeedBack'
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 
@@ -86,7 +85,6 @@ const Listing = () => (
       <strong>Grow with us.</strong> <br />
       <strong>Earn with us.</strong> <br />
     </p>
-    <FeedBack link="https://t.me/sashanoxon" />
   </div>
 )
 

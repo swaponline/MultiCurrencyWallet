@@ -1,6 +1,11 @@
 import React, { Component, Fragment } from 'react'
+
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import TransactionLink from 'components/Href/TransactionLink'
+
+import { Button } from 'components/controls'
+import Timer from './Timer/Timer'
+
 
 export default class EosToBtc extends Component {
   constructor({ swap }) {
@@ -9,7 +14,8 @@ export default class EosToBtc extends Component {
     this.swap = swap
 
     this.state = {
-      flow: this.swap.flow.state
+      flow: this.swap.flow.state,
+      enabledButton: false,
     }
   }
 
@@ -23,20 +29,28 @@ export default class EosToBtc extends Component {
 
   handleFlowStateUpdate = (values) => {
     this.setState({
-      flow: values
+      flow: values,
     })
   }
 
   verifyScript = () => {
-    this.swap.events.dispatch('verify script')
+    const { flow: { scriptValues: { secretHash, recipientPublicKey, ownerPublicKey, lockTime } } } = this.state
+
+    if (secretHash && recipientPublicKey && ownerPublicKey && lockTime) {
+      this.swap.events.dispatch('verify script')
+    }
+  }
+
+  tryRefund = () => {
+    this.swap.flow.tryRefund()
   }
 
   render() {
     const { children } = this.props
-    const { flow } = this.state
+    const { flow, enabledButton } = this.state
 
     if (flow.step === 2) {
-      this.verifyScript()
+      setTimeout(this.verifyScript, 2000)
     }
 
     return (
@@ -72,11 +86,22 @@ export default class EosToBtc extends Component {
         }
 
         {
-          flow.step >= 4 &&
+          flow.step == 4 &&
           <Fragment>
             <h3>4. Request to withdraw EOS from contract</h3>
             {
               flow.eosWithdrawTx === null && <InlineLoader />
+            }
+            {
+              !flow.btcWithdrawTx && (
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  { enabledButton && !flow.eosWithdrawTx && <Button brand onClick={this.tryRefund}>TRY REFUND</Button> }
+                  <Timer
+                    lockTime={flow.scriptValues.lockTime * 1000}
+                    enabledButton={() => this.setState({ enabledButton: true })}
+                  />
+                </div>
+              )
             }
             {
               flow.eosWithdrawTx !== null && <TransactionLink type="EOS" id={flow.eosWithdrawTx} />

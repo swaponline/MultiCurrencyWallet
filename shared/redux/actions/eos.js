@@ -1,3 +1,4 @@
+import config from 'app-config'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
 import constants from 'helpers/constants'
@@ -38,6 +39,35 @@ const login = async (accountName, masterPrivateKey) => {
   reducers.user.setAuthData({ name: 'eosData', data: { ...keys, address: accountName } })
 }
 
+const createAccount = async () => {
+  const keys = await Keygen.generateMasterKeys()
+  const { masterPrivateKey, publicKeys: { active } } = keys
+
+  localStorage.setItem(constants.privateKeyNames.eos, masterPrivateKey)
+  reducers.user.setAuthData({ name: 'eosData', data: { ...keys } })
+
+  console.log(`request to create account for ${active}`)
+  const { registerEndpoint } = config.api.eos
+  const response = await fetch(registerEndpoint, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ publicKey: active }),
+  })
+  const { accountName, transaction_id: txid } = await response.json()
+
+  if (!accountName) {
+    throw new Error('Unable to register EOS address. Please contact team@swap.online for fix this issue')
+  }
+
+  console.log(`${accountName} was created at ${txid}`)
+
+  localStorage.setItem(constants.privateKeyNames.eosAccount, accountName)
+  reducers.user.setAuthData({ name: 'eosData', data: { address: accountName } })
+}
+
 const getBalance = async () => {
   const { user: { eosData: { address } } } = getState()
 
@@ -53,6 +83,8 @@ const getBalance = async () => {
   const amount = Number.parseFloat(balance[0]) || 0
 
   reducers.user.setBalance({ name: 'eosData', amount })
+
+  return amount
 }
 
 const send = async (from, to, amount) => {
@@ -86,4 +118,5 @@ export default {
   register,
   getBalance,
   send,
+  createAccount,
 }

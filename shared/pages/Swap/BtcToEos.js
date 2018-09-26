@@ -4,7 +4,9 @@ import React, { Component, Fragment } from 'react'
 
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import TransactionLink from 'components/Href/TransactionLink'
-import { Button } from 'components/controls'
+import { TimerButton, Button } from 'components/controls'
+
+import Timer from './Timer/Timer'
 
 
 export default class BtcToEos extends Component {
@@ -16,6 +18,7 @@ export default class BtcToEos extends Component {
     this.state = {
       flow: this.swap.flow.state,
       isSubmitted: false,
+      enabledButton: false,
     }
   }
 
@@ -51,14 +54,14 @@ export default class BtcToEos extends Component {
 
   render() {
     const { children } = this.props
-    const { flow, isSubmitted } = this.state
+    const { flow, isSubmitted, enabledButton } = this.state
 
     return (
       <div>
         <Fragment>
           <h3>1. Generate secret key</h3>
           {
-            !isSubmitted && <Button brand onClick={this.submitSecret}>Send secret</Button>
+            !isSubmitted && <TimerButton brand onClick={this.submitSecret}>Send secret</TimerButton>
           }
           {
             flow.secret && flow.secretHash &&
@@ -81,7 +84,6 @@ export default class BtcToEos extends Component {
             }
           </Fragment>
         }
-
         {
           flow.step >= 3 &&
           <Fragment>
@@ -94,7 +96,6 @@ export default class BtcToEos extends Component {
             }
           </Fragment>
         }
-
         {
           flow.step >= 4 &&
           <Fragment>
@@ -105,6 +106,13 @@ export default class BtcToEos extends Component {
             {
               flow.eosWithdrawTx !== null && <TransactionLink type="EOS" id={flow.eosWithdrawTx} />
             }
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              { enabledButton && !flow.btcWithdrawTx && <Button brand onClick={this.tryRefund}>TRY REFUND</Button> }
+              <Timer
+                lockTime={flow.scriptValues.lockTime * 1000}
+                enabledButton={() => this.setState({ enabledButton: true })}
+              />
+            </div>
           </Fragment>
         }
 

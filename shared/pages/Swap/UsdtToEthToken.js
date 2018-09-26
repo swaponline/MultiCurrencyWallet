@@ -10,7 +10,7 @@ import Button from 'components/controls/Button/Button'
 import Timer from './Timer/Timer'
 
 
-export default class BtcToEthToken extends Component {
+export default class UsdtToEthToken extends Component {
 
   constructor({ swap }) {
     super()
@@ -289,7 +289,7 @@ export default class BtcToEthToken extends Component {
           )
         }
         <br />
-        {/*{ !flow.isFinished && <Button green onClick={this.addGasPrice}>Add gas price</Button> }*/}
+        {/* { !flow.isFinished && <Button green onClick={this.addGasPrice}>Add gas price</Button> } */}
         { children }
       </div>
     )

@@ -39,7 +39,6 @@ const setupContract = (ethAddress, contractAddress, nameContract, decimals) => {
     currency: nameContract.toUpperCase(),
     contractAddress,
     decimals,
-    token: true,
   }
 
   reducers.user.setTokenAuthData({ name: data.name, data })
@@ -75,16 +74,24 @@ const fetchBalance = async (address, contractAddress, decimals) => {
   return amount
 }
 
-const getTransaction = (contractAddress) =>
+const getTransaction = (currency) =>
   new Promise((resolve) => {
-    const { user: { ethData: { address } } } = getState()
+    const { user: { tokensData } } = getState()
+
+    if (currency === undefined) {
+      return
+    }
+
+    const { address, contractAddress } = tokensData[currency.toLowerCase()]
+
+    console.log('swap', address, contractAddress)
 
     const url = [
       `https://api-rinkeby.etherscan.io/api?module=account&action=tokentx`,
       `&contractaddress=${contractAddress}`,
       `&address=${address}`,
       `&startblock=0&endblock=99999999`,
-      `&sort=asc&apikey=${config.apiKeys.blocktrail}`,
+      `&sort=asc&apikey=RHHFPNMAZMD6I4ZWBZBF6FA11CMW9AXZNM`,
     ].join('')
 
     return request.get(url)
@@ -114,8 +121,8 @@ const send = (contractAddress, to, amount, decimals) => {
 
   const options = {
     from: address,
-    gas: `${config.services.web3.gas}`,
-    gasPrice: `${config.services.web3.gasPrice}`,
+    gas: 1e5,
+    gasPrice: 21e9,
   }
 
   const tokenContract = new web3.eth.Contract(abi, contractAddress, options)
@@ -147,8 +154,8 @@ const approve = (name, amount) => {
     try {
       const result = await ERC20.methods.approve(config.token.contract, newAmount).send({
         from: address,
-        gas: `${config.services.web3.gas}`,
-        gasPrice: `${config.services.web3.gasPrice}`,
+        gas: 1e5,
+        gasPrice: 21e9,
       })
         .on('transactionHash', (hash) => {
           const txId = `${config.link.etherscan}/tx/${hash}`
@@ -174,7 +181,7 @@ const allowance = (contractAddress, name) => {
   const ERC20     = new web3.eth.Contract(abi, contractAddress)
 
   return new Promise(async (resolve, reject) => {
-    let allowance = await ERC20.methods.allowance(address, config.token.contract).call()
+    let allowance = await ERC20.methods.allowance(address, config.swapContract.erc20).call()
 
     console.log('💸 allowance:', allowance)
 

@@ -1,3 +1,6 @@
+import config from 'app-config'
+
+
 export const initialState = {
   items: [
     {
@@ -15,59 +18,40 @@ export const initialState = {
       fullTitle: 'ethereum',
     },
     {
+      name: 'LTC',
+      title: 'LTC',
+      icon: 'ltc',
+      value: 'ltc',
+      fullTitle: 'litecoin',
+    },
+    {
+      name: ' BCH',
+      title: 'BCH',
+      icon: 'bch',
+      value: 'bch',
+      fullTitle: 'Bitcoin Cash',
+    },
+    {
       name: 'BTC',
       title: 'BTC',
       icon: 'btc',
       value: 'btc',
       fullTitle: 'bitcoin',
     },
-    // {
-    //   name: 'USDT',
-    //   title: 'USDT',
-    //   icon: 'usdt',
-    //   value: 'usdt',
-    // },
-    {
-      name: 'NOXON',
-      title: 'NOXON',
-      icon: 'noxon',
-      value: 'noxon',
-      fullTitle: 'noxon',
+    process.env.MAINNET && {
+      name: 'USDT',
+      title: 'USDT',
+      icon: 'usdt',
+      value: 'usdt',
+      fullTitle: 'USD Tether',
     },
-    {
-      name: 'DRT',
-      title: 'DRT',
-      icon: 'drt',
-      value: 'drt',
-      fullTitle: 'drt',
-    },
-    {
-      name: 'SYC',
-      title: 'SYC',
-      icon: 'syc',
-      value: 'syc',
-      fullTitle: 'Synexcoin',
-    },
-    {
-      name: 'YUP',
-      title: 'YUP',
-      icon: 'yup',
-      value: 'yup',
-      fullTitle: 'yup',
-    },
-    {
-      name: 'SWAP',
-      title: 'SWAP',
-      icon: 'swap',
-      value: 'swap',
-      fullTitle: 'swap',
-    },
-    {
-      name: 'JOT',
-      title: 'JOT',
-      icon: 'jot',
-      value: 'jot',
-      fullTitle: 'jot',
-    },
+    ...(Object.keys(config.erc20)
+      .map(key => ({
+        name: key.toUpperCase(),
+        title: key.toUpperCase(),
+        icon: key,
+        value: key,
+        fullTitle: key,
+      }))),
   ],
 }

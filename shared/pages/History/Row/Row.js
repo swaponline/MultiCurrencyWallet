@@ -29,7 +29,9 @@ class Row extends React.PureComponent {
           <LinkTransaction type={type} styleName="address" hash={hash} >{hash}</LinkTransaction>
         </td>
         <td>
-          <div styleName={confirmations > 0 ? 'confirm cell' : 'unconfirmed cell'}>{confirmations > 0 ? `Confirm ${confirmations}` : 'Unconfirmed' }</div>
+          <div styleName={confirmations > 0 ? 'confirm cell' : 'unconfirmed cell'}>
+            {confirmations > 0 ? confirmations > 6 ? 'Confirm' : `Confirm ${confirmations}` : 'Unconfirmed' }
+          </div>
         </td>
         <td>
           <div styleName="amount">{value} {type.toUpperCase()}</div>

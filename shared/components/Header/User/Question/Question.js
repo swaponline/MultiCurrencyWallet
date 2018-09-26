@@ -5,7 +5,7 @@ import styles from './Question.scss'
 
 
 const Question = () => (
-  <span styleName="question" onClick={() => { window.openSwapHelp() }}>?</span>
+  <a href="https://wiki.swap.online/faq" target="_blank" rel="noreferrer noopener" styleName="question">?</a>
 )
 
 export default CSSModules(Question, styles)

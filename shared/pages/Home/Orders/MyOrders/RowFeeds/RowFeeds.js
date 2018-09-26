@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import config from 'app-config'
 import { links } from 'helpers'
 import { Link } from 'react-router-dom'
 import CopyToClipboard from 'react-copy-to-clipboard'
@@ -55,7 +56,7 @@ export default class RowFeeds extends Component {
         <td>{`${(exchangeRate || (buyAmount / sellAmount)).toFixed(5)} ${buyCurrency}/${sellCurrency}`}</td>
         <CopyToClipboard
           onCopy={this.handleCopyLink}
-          text={`${window.location}/${id}`}
+          text={`${config.base}${buyCurrency.toLowerCase()}-${sellCurrency.toLowerCase()}/${id}`}
         >
           <td style={{ position: 'relative', cursor: 'pointer' }}>
             { isLinkCopied && <span style={{ fontSize: '12px', position: 'absolute', top: '8px', left: 'calc(20%)' }}> Copied <br /></span>  }
@@ -67,7 +68,7 @@ export default class RowFeeds extends Component {
             Boolean(requests && requests.length) ? (
               <div styleName="buttons">
                 <div styleName="delete" onClick={() => declineRequest(id, requests[0].peer)} >Decline</div>
-                <Link to={`${links.swap}/${sellCurrency}-${buyCurrency}/${id}`}>
+                <Link to={`${links.swap}/${sellCurrency.toLowerCase()}-${buyCurrency.toLowerCase()}/${id}`}>
                   <div styleName="accept" onClick={() => acceptRequest(id, requests[0].peer)} >Accept</div>
                 </Link>
               </div>

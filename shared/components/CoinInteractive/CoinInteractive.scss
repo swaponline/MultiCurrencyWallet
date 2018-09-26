@@ -1,6 +1,7 @@
 .coinHover {
   position: relative;
   cursor: pointer;
+
   .coinHide {
     display: none;
     background: #f8f3fe;
@@ -14,10 +15,12 @@
     border-radius: 50%;
     padding:20%;
   }
+
   &:hover {
     .coinHide {
       display: block;
     }
+
     display: block;
   }
 }

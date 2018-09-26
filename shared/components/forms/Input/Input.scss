@@ -36,12 +36,13 @@ input, textarea {
   //+input-placeholder()
   vertical-align: top;
   line-height: 16px;
+  border-radius: 6px;
   font-size: 16px;
   @include ff;
   color: $color-f-main;
 
   &:focus {
-    border-color: #6F8BC2;
+    border: 1px solid #3b95ff;
   }
 }
 

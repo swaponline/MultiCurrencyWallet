@@ -54,9 +54,8 @@ export default class EthToBtc extends Component {
     })
   }
 
-  overProgress = () => {
-    const { swap } = this
-    actions.loader.show(true, '', '', true, { swap })
+  overProgress = ({ flow, length }) => {
+    actions.loader.show(true, '', '', true, { flow, length, name: 'ETH2BTC' })
   }
 
   signSwap = () => {

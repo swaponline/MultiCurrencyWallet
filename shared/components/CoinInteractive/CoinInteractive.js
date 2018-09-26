@@ -1,18 +1,34 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+
+import actions from 'redux/actions'
 
 import CSSModules from 'react-css-modules'
 import styles from './CoinInteractive.scss'
-
-import Coin from 'components/Coin/Coin'
 import hideIcon from './images/hide.svg'
 
-const CoinInteractive = ({ className, name, size = 40, onHide }) => (
-  <div styleName="coinHover" className={className} onClick={()=>onHide(name)}>
-    <Coin name={name} size={size} />
-    <div styleName="coinHide">
-      <img src={hideIcon}></img>
+import Coin from 'components/Coin/Coin'
+
+
+const CoinInteractive = ({ className, name }) => {
+
+  const handleHideCoin = (nameCoin) => {
+    actions.core.markCoinAsHidden(nameCoin)
+  }
+
+  return (
+    <div styleName="coinHover" className={className} onClick={() => handleHideCoin(name)}>
+      <Coin name={name} />
+      <div styleName="coinHide">
+        <img src={hideIcon} alt={`${name} coin`} />
+      </div>
     </div>
-  </div>
-)
+  )
+}
+
+CoinInteractive.propTypes = {
+  className: PropTypes.string,
+  name: PropTypes.string.isRequired,
+}
 
 export default CSSModules(CoinInteractive, styles)

@@ -5,6 +5,7 @@ export default {
   Eos: 'EosModal',
   Approve: 'Approve',
   ImportKeys: 'ImportKeys',
+  ShowMoreCoins: 'ShowMoreCoins',
   EthChecker: 'EthChecker',
   ReceiveModal: 'ReceiveModal',
 }

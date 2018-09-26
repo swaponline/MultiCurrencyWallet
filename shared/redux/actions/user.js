@@ -10,15 +10,19 @@ import reducers from 'redux/core/reducers'
 
 const sign = async () => {
   const btcPrivateKey = localStorage.getItem(constants.privateKeyNames.btc)
+  const bchPrivateKey = localStorage.getItem(constants.privateKeyNames.bch)
+  const ltcPrivateKey = localStorage.getItem(constants.privateKeyNames.ltc)
   const ethPrivateKey = localStorage.getItem(constants.privateKeyNames.eth)
   const _ethPrivateKey = actions.eth.login(ethPrivateKey)
 
   actions.btc.login(btcPrivateKey)
+  actions.bch.login(bchPrivateKey)
   actions.usdt.login(btcPrivateKey)
+  actions.ltc.login(ltcPrivateKey)
 
-  Object.keys(config.tokens)
+  Object.keys(config.erc20)
     .forEach(name => {
-      actions.token.login(_ethPrivateKey, config.tokens[name].address, name, config.tokens[name].decimals)
+      actions.token.login(_ethPrivateKey, config.erc20[name].address, name, config.erc20[name].decimals)
     })
   // await actions.nimiq.login(_ethPrivateKey)
 
@@ -33,10 +37,12 @@ const sign = async () => {
 const getBalances = () => {
   actions.eth.getBalance()
   actions.btc.getBalance()
+  actions.bch.getBalance()
+  actions.ltc.getBalance()
   actions.usdt.getBalance()
   actions.eos.getBalance()
 
-  Object.keys(config.tokens)
+  Object.keys(config.erc20)
     .forEach(name => {
       actions.token.getBalance(name)
     })
@@ -59,7 +65,7 @@ const getExchangeRate = (sellCurrency, buyCurrency) => new Promise((resolve, rej
     resolve(exchangeRate)
   })
     .catch(() => {
-      resolve(config.exchangeRates[`${sellCurrency.toLowerCase()}${buyCurrency.toLowerCase()}`])
+      resolve(1)
     })
 })
 
@@ -67,8 +73,8 @@ const setTransactions = () =>
   Promise.all([
     actions.btc.getTransaction(),
     actions.eth.getTransaction(),
-    actions.token.getTransaction(config.tokens.swap.address),
-    actions.token.getTransaction(config.tokens.noxon.address),
+    actions.ltc.getTransaction(),
+    actions.token.getTransaction('swap'),
   ])
     .then(transactions => {
       let data = [].concat([], ...transactions).sort((a, b) => b.date - a.date)
@@ -76,7 +82,7 @@ const setTransactions = () =>
     })
 
 const getText = () => {
-  const { user : { ethData, btcData, eosData } } = getState()
+  const { user : { ethData, btcData, eosData, bchData, ltcData } } = getState()
 
 
   const text = `
@@ -118,6 +124,38 @@ Private key: ${btcData.privateKey}\r\n
 \r\n
 EOS Master Private Key: ${eosData.masterPrivateKey}\r\n
 Account name: ${eosData.address}\r\n
+
+#BITCOIN CASH
+\r\n
+\r\n
+BitcoinCash address: ${bchData.address}  \r\n
+Private key: ${bchData.privateKey}\r\n
+\r\n
+\r\n
+1. Go to blockchain.info
+2. login
+3. Go to settings > addresses > import
+4. paste private key and click "Ok"
+
+\r\n
+\r\n
+\r\n
+
+#LITECOIN
+\r\n
+\r\n
+Litecoin address: ${ltcData.address}  \r\n
+Private key: ${ltcData.privateKey}\r\n
+\r\n
+\r\n
+1. Go to blockchain.info
+2. login
+3. Go to settings > addresses > import
+4. paste private key and click "Ok"
+
+\r\n
+\r\n
+\r\n
 `
 
   return text

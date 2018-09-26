@@ -13,21 +13,54 @@ import Logo from 'components/Logo/Logo'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 
 
+let lastScrollTop = 0
+
 @withRouter
 @connect(({ menu: { items: menu } }) => ({
   menu,
 }))
-@CSSModules(styles)
+@CSSModules(styles, { allowMultiple: true })
+
+
 export default class Header extends Component {
+
+  constructor() {
+    super()
+
+    this.state = {
+      sticky: false,
+    }
+  }
+
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll)
+  }
+
+  handleScroll = () =>  {
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop
+    if (scrollTop > lastScrollTop || scrollTop < 88) {
+      this.setState(() => ({ sticky: false }))
+    }
+    else {
+      this.setState(() => ({ sticky: true }))
+    }
+    lastScrollTop = scrollTop
+  }
+
   render() {
     const { menu } = this.props
+    const { sticky } = this.state
 
     if (isMobile) {
       return <NavMobile menu={menu} />
     }
 
     return (
-      <div styleName="header">
+      <div styleName={sticky ? 'header header-fixed' : 'header'}>
         <WidthContainer styleName="container">
           <Logo withLink />
           <Nav menu={menu} />

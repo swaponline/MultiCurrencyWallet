@@ -23,7 +23,7 @@ export default class Offer extends React.Component {
     view: 'editOffer', // editOffer / confirmOffer
     offer: {
       buyCurrency: this.props.data.buyCurrency,
-      sellCurrency: this.props.data.sellCurrency
+      sellCurrency: this.props.data.sellCurrency,
     },
   }
 
