@@ -14,6 +14,11 @@ import Modal from 'components/modal/Modal/Modal'
 import Button from 'components/controls/Button/Button'
 
 
+const views = {
+  saveKeys: 'saveKeys',
+  checkKeys: 'checkKeys',
+}
+
 @connect({
   ethData: 'user.ethData',
   btcData: 'user.btcData',
@@ -28,7 +33,7 @@ export default class PrivateKeysModal extends React.PureComponent {
   }
 
   state = {
-    view: 'saveKeys', // saveKeys, checkKeys
+    view: views.saveKeys,
     ethValidated: false,
     btcValidated: false,
   }
@@ -46,15 +51,17 @@ export default class PrivateKeysModal extends React.PureComponent {
     actions.modals.close(name)
   }
 
+  handleProceed = () => {
+    this.changeView(views.checkKeys)
+  }
+
   handleDownload = () => {
-    this.downloadInstructionsAnchor.click()
-    const message = 'Check your browser downloads'
-
-    this.changeView('checkKeys')
-
+    actions.user.downloadPrivateKeys()
     actions.notifications.show(constants.notifications.Message, {
-      message,
+      message: 'Check your browser downloads',
     })
+
+    this.changeView(views.checkKeys)
   }
 
   handleSendByEmail = () => {
@@ -94,7 +101,7 @@ export default class PrivateKeysModal extends React.PureComponent {
         </a>
         <div styleName="content">
           {
-            view === 'saveKeys' ? (
+            view === views.saveKeys ? (
               <Fragment>
                 <div styleName="title">
                   Before you continue be sure to save your private keys!<br />
@@ -102,7 +109,10 @@ export default class PrivateKeysModal extends React.PureComponent {
                   there is a big chance you`ll loose your money.
                 </div>
                 <div styleName="subTitle">We don`t store your private keys and will not be able to restore them!</div>
-                <Button brand styleName="button" onClick={this.handleDownload}>Download instruction</Button>
+                <div styleName="buttonContainer">
+                  <Button brand styleName="button" onClick={this.handleDownload}>Download instruction</Button>
+                  <Button brand styleName="button" onClick={this.handleProceed}>Proceed without downloading</Button>
+                </div>
                 {/* <Button brand styleName="button" onClick={this.handleSendByEmail}>Send by email</Button> */}
               </Fragment>
             ) : (

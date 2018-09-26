@@ -8,15 +8,13 @@ import actions from 'redux/actions'
 
 import Table from 'components/tables/Table/Table'
 import styles from 'components/tables/Table/Table.scss'
-import Confirm from 'components/Confirm/Confirm'
-import SaveKeys from 'components/SaveKeys/SaveKeys'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import { WithdrawButton } from 'components/controls'
 import stylesWallet from './Wallet.scss'
 import Row from './Row/Row'
-import Overlay from 'components/layout/Overlay/Overlay'
-import Center from 'components/layout/Center/Center'
+import SaveKeysModal from 'components/modals/SaveKeysModal/SaveKeysModal'
+
 
 import CSSModules from 'react-css-modules'
 import cx from 'classnames'
@@ -118,45 +116,11 @@ export default class Wallet extends Component {
     const keysSaved = localStorage.getItem(constants.localStorage.privateKeysSaved)
     const testNetSkip = localStorage.getItem(constants.localStorage.testnetSkipPKCheck)
 
-    const showOverlay = !zeroBalance && !keysSaved && !testNetSkip // non-zero balance and no keys saved
+    const showSaveKeysModal = !zeroBalance && !keysSaved && !testNetSkip // non-zero balance and no keys saved
 
     return (
       <section>
-        {
-          showOverlay &&
-          <Overlay>
-            <Center keepFontSize>
-              { process.env.TESTNET && (
-                <a
-                  href="#"
-                  onClick={() => {
-                    localStorage.setItem(constants.localStorage.testnetSkipPKCheck, true)
-                    this.forceUpdate()
-                  }}>
-                  Testnet: Don`t ask again
-                </a>
-              )}
-              {
-
-                view === 'off' &&
-                <SaveKeys
-                  isDownload={this.handleDownload}
-                  isChange={() => this.changeView('on')}
-                />
-              }
-              {
-                view === 'on' &&
-                <Confirm
-                  rootClassName={stylesWallet.areYouSure}
-                  title="Are you sure ?"
-                  isConfirm={() => this.handleConfirm()}
-                  isReject={() => this.changeView('off')}
-                  animation={view === 'on'}
-                />
-              }
-            </Center>
-          </Overlay>
-        }
+        { showSaveKeysModal && <SaveKeysModal /> }
         <PageHeadline>
           <SubTitle>
             Swap.Online - Cryptocurrency Wallet with Atomic Swap Exchange
@@ -171,15 +135,6 @@ export default class Wallet extends Component {
           )}
         />
         <div>
-          {/* TODO: Useless condition below? */}
-          {
-            view === 'off' && !showOverlay &&
-            <SaveKeys
-              className={cx('', { [stylesWallet.saveKeysShow] : !zeroBalance && view === 'off' })}
-              isDownload={this.handleDownload}
-              isChange={() => this.changeView('on')}
-            />
-          }
           { process.env.TESTNET && <WithdrawButton onClick={this.handleClear} >Exit</WithdrawButton> }
           <WithdrawButton onClick={this.handleDownload}>Download keys</WithdrawButton>
           <WithdrawButton onClick={this.handleImportKeys}>Import keys</WithdrawButton>

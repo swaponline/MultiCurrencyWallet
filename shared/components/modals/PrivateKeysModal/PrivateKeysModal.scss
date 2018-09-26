@@ -26,6 +26,13 @@
   color: #000;
 }
 
-.button {
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-top: 40px;
+}
+
+.button {
+  margin-bottom: 20px;
 }
