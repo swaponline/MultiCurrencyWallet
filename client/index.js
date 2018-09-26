@@ -7,15 +7,16 @@ import Root from 'containers/Root/Root'
 import Loader from 'components/loaders/Loader/Loader'
 import { migrate } from 'helpers'
 
+
 ReactDOM.render(
   <Loader showTips />,
   document.getElementById('root')
 )
 
 
-migrate().finally(()=> setTimeout(() => {
+migrate().finally(() => setTimeout(() => {
   ReactDOM.render(
     <Root history={history} store={store} routes={routes} />,
     document.getElementById('root')
   )
-}, 1000)
+}, 1000))
