@@ -26,11 +26,22 @@
   color: #000;
 }
 
+.text {
+  color: #000;
+  font-size: 21px;
+}
+
 .buttonContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 40px;
+}
+
+.buttonSubContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .button {
