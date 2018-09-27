@@ -1,4 +1,6 @@
 import React, { Component, Fragment } from 'react'
+import { withRouter } from 'react-router'
+
 import PropTypes from 'prop-types'
 import cx from 'classnames'
 
@@ -8,7 +10,7 @@ import { links } from 'helpers'
 import CSSModules from 'react-css-modules'
 import styles from './Nav.scss'
 
-
+@withRouter
 @CSSModules(styles, { allowMultiple: true })
 export default class Nav extends Component {
 
@@ -20,18 +22,29 @@ export default class Nav extends Component {
     activeRoute: '/',
   }
 
-  componentDidMount = () => {
-    const path = window.location.pathname
-    const menu = document.querySelector('#navmenu')
-    const el = menu.querySelector(`a[href="${path}"]`)
+  handleRouteChange = (props) => {
+    const activeRoute = props.location.pathname
 
-    // TODO: Replace this hack approach
+    const pathExist = this.props.menu
+      .some(m => m.link === activeRoute)
 
-    if (el) {
-      el.click()
+    if (pathExist) {
+      this.setState({ activeRoute })
     } else {
-      menu.querySelector('a[href="/exchange"]').click()
+      this.setState({ activeRoute: '/exchange' })
     }
+  }
+
+  componentDidMount = () => {
+    this.handleRouteChange(this.props)
+  }
+
+  componentWillReceiveProps = (nextProps) => {
+    if (nextProps.location.pathname === this.state.activeRoute) {
+      return
+    }
+
+    this.handleRouteChange(nextProps)
   }
 
   handleClick = (link) => {
@@ -52,7 +65,7 @@ export default class Nav extends Component {
     const { activeRoute } = this.state
 
     return (
-      <div id="navmenu" styleName="nav">
+      <div styleName="nav">
         <Fragment>
           {
             menu
