@@ -25,13 +25,6 @@ const initialState = {
       fullTitle: 'litecoin',
     },
     {
-      name: ' BCH',
-      title: 'BCH',
-      icon: 'bch',
-      value: 'bch',
-      fullTitle: 'Bitcoin Cash',
-    },
-    {
       name: 'BTC',
       title: 'BTC',
       icon: 'btc',
