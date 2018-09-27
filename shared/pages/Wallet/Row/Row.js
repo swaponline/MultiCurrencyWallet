@@ -118,7 +118,7 @@ export default class Row extends Component {
   handleGoTrade = async (currency) => {
     const balance = await actions.eth.getBalance()
 
-    if (balance - 0.02 > 0 || currency.toLowerCase() === 'eos') {
+    if (balance >= 0.005 || currency.toLowerCase() === 'eos') {
       this.props.history.push(`/${currency.toLowerCase()}`)
     } else {
       actions.modals.open(constants.modals.EthChecker, {})
