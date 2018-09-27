@@ -147,7 +147,13 @@ export default class Row extends Component {
               <div styleName="no-select-inline" onClick={this.handleReloadBalance} >
                 <i className="fas fa-sync-alt" styleName="icon" />
                 <span>{String(balance).length > 4 ? balance.toFixed(4) : balance}</span>
-                { currency === 'BTC' && currency === 'USDT' && unconfirmedBalance !== 0 && (
+                { currency === 'BTC' && unconfirmedBalance !== 0 && (
+                  <Fragment>
+                    <br />
+                    <span style={{ fontSize: '12px', color: '#c9c9c9' }}>Unconfirmed {unconfirmedBalance}</span>
+                  </Fragment>
+                ) }
+                { currency === 'USDT' && unconfirmedBalance !== 0 && (
                   <Fragment>
                     <br />
                     <span style={{ fontSize: '12px', color: '#c9c9c9' }}>Unconfirmed {unconfirmedBalance}</span>

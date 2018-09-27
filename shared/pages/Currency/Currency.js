@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react'
 
 import { connect } from 'redaction'
-import config from 'app-config'
 
 import Title from 'components/PageHeadline/Title/Title'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
@@ -10,15 +9,14 @@ import Table from 'components/tables/Table/Table'
 import Toggle from 'components/controls/Toggle/Toggle'
 
 import Row from './Row/Row'
-import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import actions from 'redux/actions'
 
 import { withRouter } from 'react-router'
 
 @withRouter
-@connect(({ core: { hiddenCoinsList }, user: { ethData, btcData, tokensData, eosData, nimData, usdtData }, currencies: { items: currencies } }) => ({
+@connect(({ core: { hiddenCoinsList }, user: { ethData, btcData, ltcData, tokensData, eosData, nimData, usdtData }, currencies: { items: currencies } }) => ({
   tokens: Object.keys(tokensData).map(k => (tokensData[k])),
-  items: [ ethData, btcData, eosData, usdtData /* eosData  nimData */ ],
+  items: [ ethData, btcData, eosData, usdtData, ltcData /* eosData  nimData */ ],
   currencies,
   hiddenCoinsList,
 }))
