@@ -41,18 +41,25 @@
   margin-left: 80px;
 }
 
+.videoContainer {
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  padding: 40px 0 0 0;
+}
+
 @media screen and (max-width: 690px) {
   .choice {
     flex-wrap: wrap;
     margin-top: 20px;
   }
-   .row {
+  .row {
     width: 100%;
     justify-content: center;
     margin-bottom: 15px;
-     &:last-child {
+    &:last-child {
       justify-content: center;
       margin-left: 0;
     }
   }
-} 
+}
