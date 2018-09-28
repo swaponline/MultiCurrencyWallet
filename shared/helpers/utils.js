@@ -67,6 +67,26 @@ export const exitListener = () => {
     })
 }
 
+export const capitalize = s => s.charAt(0).toUpperCase() + s.substr(1)
+
+export const mapFullCurrencyNameToAbbreviation = (fullCurrencyName) => {
+  const mappings = {
+    'bitcoin': 'btc',
+    'ethereum': 'eth',
+    'bitcoincash': 'bch',
+    'eos': 'eos',
+    'tetherusdt': 'usdt',
+    'litecoin': 'ltc',
+    'nimiq': 'nim',
+  }
+
+  if (!mappings[fullCurrencyName]) {
+    throw new Error('Invalid crypto name')
+  }
+
+  return mappings[fullCurrencyName]
+}
+
 // dirpath += Math.ceil(Math.random() * 10000)
 export const createRepo = (dirpath = './data/') => path.resolve(dirpath)
 
