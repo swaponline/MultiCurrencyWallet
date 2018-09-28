@@ -50,7 +50,10 @@ export default class Orders extends Component {
       <Fragment>
         <MyOrders myOrders={myOrders} />
         <div styleName="allOrders">
-          <h3>All orders</h3>
+          <div styleName="titleButtonRow">
+            <h3>All orders</h3>
+            <Button brand onClick={this.createOffer}>CREATE OFFER</Button>
+          </div>
           <Table
             classTitle={tableStyles.exchange}
             titles={titles}
