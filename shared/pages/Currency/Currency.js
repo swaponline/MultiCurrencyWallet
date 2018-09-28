@@ -28,19 +28,37 @@ export default class Currency extends Component {
 
   getRows = () => {
 
+    const existsSwaps = [
+      'ETH2BTC',
+      'BTC2ETH',
+
+      'ETH2LTC',
+      'LTC2ETH',
+
+      'ETHTOKEN2BTC',
+      'BTC2ETHTOKEN',
+
+      'EOS2BTC',
+      'BTC2EOS',
+
+      'USDT2ETHTOKEN',
+      'ETHTOKEN2USDT',
+    ]
+
     let { match:{ params: { currency } }, currencies } = this.props
 
-    console.log('currency', currency)
-
-    if (currency === 'btc') {
-      currencies = currencies.filter(c => c.value !== currency)
-    } else {
-      currencies = currencies.filter(c => c.value === 'btc')
-    }
+    currencies = currencies.filter(c => c.name.toLowerCase() !== currency)
 
     currencies = currencies.reduce((previous, current) =>
-      previous.concat({ from: currency, to: current.value }, { from: current.value, to: currency }),
-    [])
+      {
+        if (existsSwaps.indexOf(current.name + '2' + currency.toUpperCase()) != -1) {
+          previous.push({ from: current.value, to: currency })
+        }
+        if (existsSwaps.indexOf(currency.toUpperCase() + '2' + current.name) != -1) {
+          previous.push({ from: currency, to: current.value })
+        }
+        return previous
+      }, [])
 
     return currencies
   }
