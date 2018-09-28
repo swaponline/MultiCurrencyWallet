@@ -4,24 +4,37 @@
 
 .choice {
   margin-bottom: 20px;
-  margin-top: 50px;
+  // margin-top: 50px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  flex-direction: column;
 }
 
 .row {
   display: flex;
   align-items: center;
 
-  &:last-child {
-    margin-left: 40px;
-    justify-content: flex-end;
-  }
+  // &:last-child {
+  //   margin-left: 40px;
+  //   justify-content: flex-end;
+  // }
+}
+
+.title {
+  margin-bottom: 35px;
 }
 
 .text {
   margin-bottom: 0px;
   margin-right: 25px;
+}
+
+.spacedRow {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 @media screen and (max-width: 690px) {

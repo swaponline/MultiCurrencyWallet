@@ -25,7 +25,7 @@ export const initialState = {
       fullTitle: 'litecoin',
     },
     {
-      name: ' BCH',
+      name: 'BCH',
       title: 'BCH',
       icon: 'bch',
       value: 'bch',
