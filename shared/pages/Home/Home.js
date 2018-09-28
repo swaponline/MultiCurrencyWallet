@@ -5,7 +5,6 @@ import { connect } from 'redaction'
 import { links } from 'helpers'
 
 import SwapCurrencyChooser from 'components/SwapCurrencyChooser/SwapCurrencyChooser'
-import Title from 'components/PageHeadline/Title/Title'
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 
@@ -99,7 +98,6 @@ export default class Home extends Component {
     return (
       <section style={{ position: 'relative', width: '100%' }}>
         <PageHeadline>
-          <Title>{buyCurrency} &#8594; {sellCurrency} no limit exchange with 0 fee</Title>
           {
             pathname === links.exchange &&
               <SwapCurrencyChooser

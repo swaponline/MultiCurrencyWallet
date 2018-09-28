@@ -6,6 +6,7 @@ import constants from 'helpers/constants'
 
 import Row from './Row/Row'
 import Table from 'components/tables/Table/Table'
+import Title from 'components/PageHeadline/Title/Title'
 import tableStyles from 'components/tables/Table/Table.scss'
 import MyOrders from './MyOrders/MyOrders'
 import SwapCurrencyChooser from 'components/SwapCurrencyChooser/SwapCurrencyChooser'
@@ -48,6 +49,7 @@ export default class Orders extends Component {
 
     return (
       <Fragment>
+        <Title>{buyCurrency} &#8594; {sellCurrency} no limit exchange with 0 fee</Title>
         <MyOrders myOrders={myOrders} />
         <div styleName="allOrders">
           <div styleName="titleButtonRow">
