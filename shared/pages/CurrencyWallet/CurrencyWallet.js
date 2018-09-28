@@ -27,10 +27,10 @@ export default class CurrencyWallet extends Component {
     const { balance } = this.props.user[`${currencyAbbreviation}Data`]
 
     return (
-      <div>
+      <div className="root">
         <PageHeadline subTitle={`Your Online ${capitalize(currencyWalletName)} Wallet`} />
         <div styleName="info-panel">
-          <h3 styleName="info">Your address: {`${walletAddress}`}</h3>
+          <h3 styleName="info">Your address: <span>{`${walletAddress}`}</span></h3>
           <h3 styleName="info">Your balance: {`${balance}`}</h3>
         </div>
         <div styleName="actions">

@@ -1,16 +1,32 @@
+.root {
+  position: static;
+  width: 100%;
+}
+
 .heading {
   display: flex;
   justify-content: center;
 }
 
 .info-panel {
-  margin-bottom: 1rem;
+  margin-bottom: .9rem;
+  overflow-x: scroll;
 }
 
 .info {
   display: flex;
   justify-content: center;
 }
+
+.info span {
+  font-size: 1rem;
+}
+
+@include media-tablet-landscape-and-lower {
+  .info {
+    display: block;
+  }
+} 
 
 .actions {
   display: flex;
