@@ -58,6 +58,8 @@ const fetchBalance = (address) =>
   request.get(`${api.getApiServer('bitpay')}/addr/${address}`)
     .then(({ balance }) => balance)
 
+const fetchTx = (hash) =>
+  request.get(`${api.getApiServer('bitpay')}/tx/${hash}`)
 
 const getTransaction = () =>
   new Promise((resolve) => {
@@ -163,5 +165,6 @@ export default {
   fetchUnspents,
   createScript,
   broadcastTx,
+  fetchTx,
   fetchBalance,
 }

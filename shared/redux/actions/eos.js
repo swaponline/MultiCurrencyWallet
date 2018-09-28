@@ -83,6 +83,8 @@ const getBalance = async () => {
   const amount = Number.parseFloat(balance[0]) || 0
 
   reducers.user.setBalance({ name: 'eosData', amount })
+
+  return amount
 }
 
 const send = async (from, to, amount) => {

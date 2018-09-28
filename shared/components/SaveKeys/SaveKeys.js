@@ -14,10 +14,10 @@ import Button from 'components/controls/Button/Button'
 @CSSModules(styles)
 export default class SaveKeys extends Component {
   render() {
-    const { ethData, btcData, eosData, isChange, isDownload } = this.props
+    const { ethData, btcData, eosData, isChange, isDownload, ...otherProps } = this.props
 
     return (
-      <Fragment>
+      <div {...otherProps}>
         <div styleName="title" >
           These are your private keys. Download the keys by  clicking on <br />
           the button or take a screenshot of this page, then confirm it and click here. <br />
@@ -42,7 +42,7 @@ export default class SaveKeys extends Component {
             }
           </div>
         </div>
-      </Fragment>
+      </div>
     )
   }
 }

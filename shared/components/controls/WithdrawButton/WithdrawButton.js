@@ -13,7 +13,7 @@ const WithdrawButton = ({ onClick, children, className }) => (
 
 WithdrawButton.propTypes = {
   onClick: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   className: PropTypes.string,
 }
 
