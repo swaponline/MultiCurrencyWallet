@@ -73,7 +73,7 @@ export default class AddOffer extends Component {
   }
 
   async updateExchangeRate(sellCurrency, buyCurrency) {
-    const exchangeRate = 1 / await actions.user.getExchangeRate(sellCurrency, buyCurrency)
+    const exchangeRate = await actions.user.getExchangeRate(sellCurrency, buyCurrency)
 
 
     return new Promise((resolve, reject) => {
