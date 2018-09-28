@@ -46,12 +46,9 @@ export default class Row extends Component {
     })
   }
 
-  handleGoTrade = async () => {
+  handleGoTrade = async (currency) => {
     const balance = await actions.eth.getBalance()
-
-    if ((balance - 0.02) < 0) {
-      actions.modals.open(constants.modals.EthChecker, {})
-    }
+    return (balance >= 0.005 || currency.toLowerCase() !== 'eos')
   }
 
   removeOrder = (orderId) => {
@@ -59,20 +56,26 @@ export default class Row extends Component {
     actions.core.updateCore()
   }
 
-  sendRequest = async (orderId) => {
-    this.setState({ isFetching: true })
-    await this.handleGoTrade()
+  sendRequest = async (orderId, currency) => {
+    const check = await this.handleGoTrade(currency)
 
-    actions.core.sendRequest(orderId, (isAccepted) => {
-      console.log(`user has ${isAccepted ? 'accepted' : 'declined'} your request`)
+    if (check) {
+      this.setState({ isFetching: true })
 
-      if (isAccepted) {
-        this.setState({ redirect: true, isFetching: false })
-      } else {
-        this.setState({ isFetching: false })
-      }
+      actions.core.sendRequest(orderId, (isAccepted) => {
+        console.log(`user has ${isAccepted ? 'accepted' : 'declined'} your request`)
 
-    })
+        if (isAccepted) {
+          this.setState({ redirect: true, isFetching: false })
+        } else {
+          this.setState({ isFetching: false })
+        }
+
+      })
+    } else {
+      actions.modals.open(constants.modals.EthChecker, {})
+    }
+
     actions.core.updateCore()
   }
 
@@ -149,7 +152,7 @@ export default class Row extends Component {
                           <span>Please wait while we confirm your request</span>
                         </Fragment>
                       ) : (
-                        <RequestButton disabled={balance > Number(amount)} onClick={() => this.sendRequest(id)} />
+                        <RequestButton disabled={balance >= Number(amount)} onClick={() => this.sendRequest(id, isMy ? sellCurrency : buyCurrency)} />
                       )
                     )
                   )

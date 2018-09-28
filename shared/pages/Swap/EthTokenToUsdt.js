@@ -9,7 +9,7 @@ import Button from 'components/controls/Button/Button'
 import Timer from './Timer/Timer'
 
 
-export default class EthTokenToBtc extends Component {
+export default class EthTokenToUsdt extends Component {
 
   constructor({ swap }) {
     super()
@@ -141,7 +141,7 @@ export default class EthTokenToBtc extends Component {
         {
           flow.isMeSigned && (
             <Fragment>
-              <h3>2. Waiting BTC Owner creates Secret Key, creates BTC Script and charges it</h3>
+              <h3>2. Waiting USDT Owner creates Secret Key, creates BTC Omni Script and charges it</h3>
               {
                 flow.step === 2 && (
                   <InlineLoader />
@@ -151,7 +151,7 @@ export default class EthTokenToBtc extends Component {
               {
                 flow.secretHash && flow.usdtScriptValues && (
                   <Fragment>
-                    <h3>3. Bitcoin Script created and charged. Please check the information below</h3>
+                    <h3>3. Bitcoin Omni Script created and charged. Please check the information below</h3>
                     <div>Secret Hash: <strong>{flow.secretHash}</strong></div>
                     <div>
                       Script address:
@@ -303,13 +303,13 @@ export default class EthTokenToBtc extends Component {
 
               {
                 (flow.step === 7 || flow.isBtcWithdrawn) && (
-                  <h3>6. BTC Owner successfully took money from ETH Contract and left Secret Key. Requesting withdrawal from BTC Script. Please wait</h3>
+                  <h3>6. USDT Owner successfully took money from ETH Contract and left Secret Key. Requesting withdrawal from BTC Script. Please wait</h3>
                 )
               }
               {
                 flow.usdtSwapWithdrawTransactionHash && (
                   <div>
-                    Transaction:
+                    USDT withdrawal transaction:
                     <strong>
                       <a
                         href={`${config.link.bitpay}/tx/${flow.usdtSwapWithdrawTransactionHash}`}
@@ -319,6 +319,8 @@ export default class EthTokenToBtc extends Component {
                         {flow.usdtSwapWithdrawTransactionHash}
                       </a>
                     </strong>
+                    Please note that USDT withdrawal may take a while to mine and to propagate the network.
+                    Due to Omni Protocol properties, the transaction may show up at the OmniExplorer in up to 20 minutes.
                   </div>
                 )
               }

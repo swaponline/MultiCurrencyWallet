@@ -1,5 +1,8 @@
 import React, { Component, Fragment } from 'react'
+import { withRouter } from 'react-router'
+
 import PropTypes from 'prop-types'
+import cx from 'classnames'
 
 import { NavLink } from 'react-router-dom'
 import { links } from 'helpers'
@@ -7,15 +10,46 @@ import { links } from 'helpers'
 import CSSModules from 'react-css-modules'
 import styles from './Nav.scss'
 
-
-@CSSModules(styles)
+@withRouter
+@CSSModules(styles, { allowMultiple: true })
 export default class Nav extends Component {
 
   static propTypes = {
     menu: PropTypes.array.isRequired,
   }
 
-  handleClick = () => {
+  state = {
+    activeRoute: '/',
+  }
+
+  handleRouteChange = (props) => {
+    const activeRoute = props.location.pathname
+
+    const pathExist = this.props.menu
+      .some(m => m.link === activeRoute)
+
+    if (pathExist) {
+      this.setState({ activeRoute })
+    } else {
+      this.setState({ activeRoute: '/exchange' })
+    }
+  }
+
+  componentDidMount = () => {
+    this.handleRouteChange(this.props)
+  }
+
+  componentWillReceiveProps = (nextProps) => {
+    if (nextProps.location.pathname === this.state.activeRoute) {
+      return
+    }
+
+    this.handleRouteChange(nextProps)
+  }
+
+  handleClick = (link) => {
+    this.setState({ activeRoute: link })
+
     const scrollStep = -window.scrollY / (500 / 15)
     const scrollInterval = setInterval(() => {
       if (window.scrollY !== 0) {
@@ -28,6 +62,7 @@ export default class Nav extends Component {
 
   render() {
     const { menu } = this.props
+    const { activeRoute } = this.state
 
     return (
       <div styleName="nav">
@@ -37,12 +72,12 @@ export default class Nav extends Component {
               .filter(i => i.isDesktop !== false)
               .map(({ title, link, exact }) => (
                 <NavLink
-                  onClick={this.handleClick}
+                  onClick={() => this.handleClick(link)}
                   key={title}
                   exact={exact}
-                  styleName="link"
+                  styleName={cx('link', { 'active': activeRoute === link })}
                   to={link}
-                  activeClassName={styles.active}
+                  // activeClassName={styles.active}
                 >
                   {title}
                 </NavLink>

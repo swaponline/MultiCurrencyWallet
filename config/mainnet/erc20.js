@@ -23,8 +23,8 @@ export default {
     address: '0x056fd409e1d7a124bd7017459dfea2f387b6d5cd',
     decimals: 2,
   },
-  knc: {
-    address: '0xbfd18f20423694a69e35d65cb9c9d74396cc2c2d',
+  kn: {
+    address: '0xbfd18F20423694a69e35d65cB9c9D74396CC2c2d',
     decimals: 18,
   },
   yup: {

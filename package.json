@@ -5,7 +5,7 @@
   "private": true,
   "main": "./bin/server",
   "scripts": {
-    "test": "cypress run --record",
+    "test": "cypress open",
     "eslint": "eslint  --fix --cache ./shared --ext js",
     "start": "npm run dev",
     "dev": "npm run dev:testnet",
