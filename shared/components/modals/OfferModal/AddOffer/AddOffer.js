@@ -242,7 +242,7 @@ export default class AddOffer extends Component {
           })
         } else {
           this.setState({
-            sellAmount: new BigNumber(String(value) || 0).multipliedBy(exchangeRate || 0),
+            sellAmount: new BigNumber(String(value) || 0).dividedBy(exchangeRate || 0),
             buyAmount: new BigNumber(String(value)),
           })
         }
