@@ -61,7 +61,7 @@ export default class SwapCurrencyChooser extends Component {
               />
             </div>
           </div>
-          <Button brand onClick={handleSubmit}>SEARCH</Button>
+          <Button styleName="button" brand onClick={handleSubmit}>SHOW ORDERS</Button>
         </div>
       </div>
     )
