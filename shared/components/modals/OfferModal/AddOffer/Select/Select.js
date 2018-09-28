@@ -8,7 +8,7 @@ const Select = ({ balance, currency, changeBalance }) => (
   <Fragment>
     <FieldLabel inRow>Available amount for sell</FieldLabel>
     <div styleName="groupField">
-      <p>{currency.toUpperCase()} { balance ? balance.toFixed(3) : 0.00 }</p>
+      <p>{currency.toUpperCase()} { (!!balance && balance instanceof Number) ? balance.toFixed(3) : 0.00 }</p>
       <div styleName="cell" onClick={() => changeBalance(balance / 10)}>Sell 1/10</div>
       <div styleName="cell" onClick={() => changeBalance(balance / 4)}>1/4</div>
       <div styleName="cell" onClick={() => changeBalance(balance / 2)}>1/2</div>
