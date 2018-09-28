@@ -5,9 +5,10 @@ import CSSModules from 'react-css-modules'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import Button from 'components/controls/Button/Button'
 import { WithdrawButton } from 'components/controls'
+import KeyActionsPanel from 'components/KeyActionsPanel/KeyActionsPanel'
 import History from 'pages/History/History'
-import styles from './CurrencyWallet.scss'
 import { mapFullCurrencyNameToAbbreviation, capitalize } from 'helpers/utils'
+import styles from './CurrencyWallet.scss'
 
 
 const mapStateToProps = ({ core, user }) => ({
@@ -37,17 +38,7 @@ export default class CurrencyWallet extends Component {
           <Button gray>Exchange</Button>
         </div>
         <History />
-        <div>
-          { process.env.TESTNET && <WithdrawButton onClick={this.handleClear} >Exit</WithdrawButton> }
-          <WithdrawButton onClick={this.handleDownload}>Download keys</WithdrawButton>
-          <WithdrawButton onClick={this.handleImportKeys}>Import keys</WithdrawButton>
-          {
-            hiddenCoinsList.length !== 0 &&
-            <WithdrawButton onClick={this.handleShowMore}>
-              Show more coins ({hiddenCoinsList.length})
-            </WithdrawButton>
-          }
-        </div>
+        <KeyActionsPanel />
       </div>
     )
   }

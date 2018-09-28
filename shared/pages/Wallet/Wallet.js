@@ -11,6 +11,7 @@ import styles from 'components/tables/Table/Table.scss'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import { WithdrawButton } from 'components/controls'
+import KeyActionsPanel from 'components/KeyActionsPanel/KeyActionsPanel'
 import stylesWallet from './Wallet.scss'
 import Row from './Row/Row'
 import SaveKeysModal from 'components/modals/SaveKeysModal/SaveKeysModal'
@@ -25,7 +26,7 @@ import { withRouter } from 'react-router'
 @connect(
   ({
     core: { hiddenCoinsList },
-    user: { ethData, btcData, bchData, tokensData, eosData, nimData, usdtData, ltcData},
+    user: { ethData, btcData, bchData, tokensData, eosData, nimData, usdtData, ltcData },
     currencies: { items: currencies },
   }) => ({
     tokens: Object.keys(tokensData).map(k => (tokensData[k])),
@@ -83,20 +84,6 @@ export default class Wallet extends Component {
     window.location.reload()
   }
 
-  handleShowMore = () => {
-    actions.modals.open(constants.modals.ShowMoreCoins, {})
-    // this.props.history.push('/coins')
-  }
-
-  handleDownload = () => {
-    actions.user.downloadPrivateKeys()
-    // this.changeView('checkKeys')
-  }
-
-  handleImportKeys = () => {
-    actions.modals.open(constants.modals.ImportKeys, {})
-  }
-
   changeView = (view) => {
     this.setState({
       view,
@@ -129,17 +116,7 @@ export default class Wallet extends Component {
             <Row key={index} {...row} currencies={currencies} hiddenCoinsList={hiddenCoinsList} />
           )}
         />
-        <div>
-          { process.env.TESTNET && <WithdrawButton onClick={this.handleClear} >Exit</WithdrawButton> }
-          <WithdrawButton onClick={this.handleDownload}>Download keys</WithdrawButton>
-          <WithdrawButton onClick={this.handleImportKeys}>Import keys</WithdrawButton>
-          {
-            hiddenCoinsList.length !== 0 &&
-            <WithdrawButton onClick={this.handleShowMore}>
-              Show more coins ({hiddenCoinsList.length})
-            </WithdrawButton>
-          }
-        </div>
+        <KeyActionsPanel />
       </section>
     )
   }
