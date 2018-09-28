@@ -4,7 +4,7 @@ import actions from 'redux/actions'
 import { constants } from 'helpers'
 
 import CSSModules from 'react-css-modules'
-import styles from './SearchSwap.scss'
+import styles from './SwapCurrencyChooser.scss'
 
 import Flip from 'components/controls/Flip/Flip'
 import Button from 'components/controls/Button/Button'
@@ -12,7 +12,7 @@ import CurrencySelect from 'components/ui/CurrencySelect/CurrencySelect'
 
 
 @CSSModules(styles)
-export default class CreateOfferButton extends Component {
+export default class SwapCurrencyChooser extends Component {
 
   createOffer = () => {
     actions.modals.open(constants.modals.Offer, {
