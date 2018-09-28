@@ -48,7 +48,7 @@ export default class Row extends Component {
 
   handleGoTrade = async (currency) => {
     const balance = await actions.eth.getBalance()
-    return !((balance - 0.02) < 0 || currency.toLowerCase() !== 'eos')
+    return (balance >= 0.005 || currency.toLowerCase() !== 'eos')
   }
 
   removeOrder = (orderId) => {
@@ -152,7 +152,7 @@ export default class Row extends Component {
                           <span>Please wait while we confirm your request</span>
                         </Fragment>
                       ) : (
-                        <RequestButton disabled={balance > Number(amount)} onClick={() => this.sendRequest(id, isMy ? sellCurrency : buyCurrency)} />
+                        <RequestButton disabled={balance >= Number(amount)} onClick={() => this.sendRequest(id, isMy ? sellCurrency : buyCurrency)} />
                       )
                     )
                   )

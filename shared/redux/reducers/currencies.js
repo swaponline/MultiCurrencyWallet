@@ -1,7 +1,7 @@
 import config from 'app-config'
 
 
-export const initialState = {
+const initialState = {
   items: [
     {
       name: 'EOS',
@@ -25,25 +25,11 @@ export const initialState = {
       fullTitle: 'litecoin',
     },
     {
-      name: 'BCH',
-      title: 'BCH',
-      icon: 'bch',
-      value: 'bch',
-      fullTitle: 'Bitcoin Cash',
-    },
-    {
       name: 'BTC',
       title: 'BTC',
       icon: 'btc',
       value: 'btc',
       fullTitle: 'bitcoin',
-    },
-    process.env.MAINNET && {
-      name: 'USDT',
-      title: 'USDT',
-      icon: 'usdt',
-      value: 'usdt',
-      fullTitle: 'USD Tether',
     },
     ...(Object.keys(config.erc20)
       .map(key => ({
@@ -54,4 +40,17 @@ export const initialState = {
         fullTitle: key,
       }))),
   ],
+}
+
+process.env.MAINNET && initialState.items.unshift({
+  name: 'USDT',
+  title: 'USDT',
+  icon: 'usdt',
+  value: 'usdt',
+  fullTitle: 'USD Tether',
+})
+
+
+export {
+  initialState,
 }
