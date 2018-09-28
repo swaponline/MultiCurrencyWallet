@@ -4,7 +4,7 @@ import actions from 'redux/actions'
 import { constants } from 'helpers'
 
 import CSSModules from 'react-css-modules'
-import styles from './SwapCurrencyChooser.scss'
+import styles from './CurrencyDirectionChooser.scss'
 
 import Flip from 'components/controls/Flip/Flip'
 import Button from 'components/controls/Button/Button'
@@ -13,7 +13,7 @@ import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 
 
 @CSSModules(styles, { allowMultiple: true })
-export default class SwapCurrencyChooser extends Component {
+export default class CurrencyDirectionChooser extends Component {
 
   createOffer = () => {
     actions.modals.open(constants.modals.Offer, {
@@ -39,7 +39,7 @@ export default class SwapCurrencyChooser extends Component {
         <div styleName="row title">
           <SubTitle>Choose the direction of exchange</SubTitle>
         </div>
-        <div styleName="row spacedRow">
+        <div styleName="row formRow">
           <div styleName="row">
             <div styleName="row">
               <p styleName="text">You have </p>

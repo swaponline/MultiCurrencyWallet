@@ -9,7 +9,7 @@ import Table from 'components/tables/Table/Table'
 import Title from 'components/PageHeadline/Title/Title'
 import tableStyles from 'components/tables/Table/Table.scss'
 import MyOrders from './MyOrders/MyOrders'
-import SwapCurrencyChooser from 'components/SwapCurrencyChooser/SwapCurrencyChooser'
+import CurrencyDirectionChooser from 'components/CurrencyDirectionChooser/CurrencyDirectionChooser'
 import Button from 'components/controls/Button/Button'
 
 import styles from './Orders.scss'

@@ -4,7 +4,7 @@ import actions from 'redux/actions'
 import { connect } from 'redaction'
 import { links } from 'helpers'
 
-import SwapCurrencyChooser from 'components/SwapCurrencyChooser/SwapCurrencyChooser'
+import CurrencyDirectionChooser from 'components/CurrencyDirectionChooser/CurrencyDirectionChooser'
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 
@@ -100,7 +100,7 @@ export default class Home extends Component {
         <PageHeadline>
           {
             pathname === links.exchange &&
-              <SwapCurrencyChooser
+              <CurrencyDirectionChooser
                 handleSellCurrencySelect={this.handleSellCurrencySelect}
                 handleBuyCurrencySelect={this.handleBuyCurrencySelect}
                 handleSubmit={this.handleNext}

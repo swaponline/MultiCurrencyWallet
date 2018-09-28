@@ -29,12 +29,16 @@
   margin-right: 25px;
 }
 
-.spacedRow {
+.formRow {
   width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
+}
+
+.button {
+  margin-left: 80px;
 }
 
 @media screen and (max-width: 690px) {
