@@ -1,36 +1,64 @@
 import React, { Component } from 'react'
 import { connect } from 'redaction'
 import { withRouter } from 'react-router-dom'
-import CSSModules from 'react-css-modules'
+
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import Button from 'components/controls/Button/Button'
 import { WithdrawButton } from 'components/controls'
 import KeyActionsPanel from 'components/KeyActionsPanel/KeyActionsPanel'
 import History from 'pages/History/History'
-import { mapFullCurrencyNameToAbbreviation, capitalize } from 'helpers/utils'
+
+import { capitalize } from 'helpers/utils'
+
+import CSSModules from 'react-css-modules'
 import styles from './CurrencyWallet.scss'
 
 
-const mapStateToProps = ({ core, user }) => ({
+@connect(({ core, user }) => ({
   user,
   hiddenCoinsList: core.hiddenCoinsList,
-})
-@connect(mapStateToProps)
+}))
 @withRouter
 @CSSModules(styles)
 export default class CurrencyWallet extends Component {
-  render() {
-    const { user, hiddenCoinsList } = this.props
-    const { currencyWallet: currencyWalletName } = this.props.match.params
-    const currencyAbbreviation = mapFullCurrencyNameToAbbreviation(currencyWalletName)
-    const walletAddress = this.props.user[`${currencyAbbreviation}Data`].address
-    const { balance } = this.props.user[`${currencyAbbreviation}Data`]
+  constructor(props) {
+    super(props)
+    this.state = {
+      user: null,
+      hiddenCoinsList: null,
+      currencyWalletName: null,
+      walletAddress: null,
+      balance: null,
+    }
+  }
 
+  static getDerivedStateFromProps(nextProps) {
+    const { user, hiddenCoinsList } = nextProps
+    let { currencyWallet: currencyWalletName } = nextProps.match.params
+    currencyWalletName = currencyWalletName.toLowerCase()
+    const currencyData = Object.values(user)
+      .filter(v => v.fullName && v.fullName.toLowerCase() === currencyWalletName)[0]
+    const walletAddress = currencyData.address
+    const { balance } = currencyData
+
+    return {
+      user,
+      hiddenCoinsList,
+      currencyWalletName,
+      walletAddress,
+      balance,
+    }
+  }
+
+  render() {
+    const { user, hiddenCoinsList, currencyWalletName, walletAddress, balance } = this.state
     return (
       <div className="root">
         <PageHeadline subTitle={`Your Online ${capitalize(currencyWalletName)} Wallet`} />
         <div styleName="info-panel">
-          <h3 styleName="info">Your address: <span>{`${walletAddress}`}</span></h3>
+          <h3 styleName="info">
+            Your address: <span>{`${walletAddress}`}</span>
+          </h3>
           <h3 styleName="info">Your balance: {`${balance}`}</h3>
         </div>
         <div styleName="actions">

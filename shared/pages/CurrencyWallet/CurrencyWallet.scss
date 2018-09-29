@@ -18,13 +18,13 @@
   justify-content: center;
 }
 
-.info span {
-  font-size: 1rem;
-}
-
 @include media-tablet-landscape-and-lower {
   .info {
     display: block;
+  }
+
+  .info span {
+    font-size: 1rem;
   }
 } 
 
