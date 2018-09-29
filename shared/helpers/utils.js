@@ -67,6 +67,8 @@ export const exitListener = () => {
     })
 }
 
+export const capitalize = s => s.charAt(0).toUpperCase() + s.substr(1)
+
 // dirpath += Math.ceil(Math.random() * 10000)
 export const createRepo = (dirpath = './data/') => path.resolve(dirpath)
 
