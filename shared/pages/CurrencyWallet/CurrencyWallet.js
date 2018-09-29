@@ -37,6 +37,7 @@ export default class CurrencyWallet extends Component {
     let { currencyWallet: currencyWalletName } = nextProps.match.params
     currencyWalletName = currencyWalletName.toLowerCase()
     const currencyData = Object.values(user)
+      .concat(Object.values(user.tokensData))
       .filter(v => v.fullName && v.fullName.toLowerCase() === currencyWalletName)[0]
     const walletAddress = currencyData.address
     const { balance } = currencyData
@@ -57,9 +58,9 @@ export default class CurrencyWallet extends Component {
         <PageHeadline subTitle={`Your Online ${capitalize(currencyWalletName)} Wallet`} />
         <div styleName="info-panel">
           <h3 styleName="info">
-            Your address: <span>{`${walletAddress}`}</span>
+            Your address: <span>{walletAddress}</span>
           </h3>
-          <h3 styleName="info">Your balance: {`${balance}`}</h3>
+          <h3 styleName="info">Your balance: {balance}</h3>
         </div>
         <div styleName="actions">
           <Button brand>Send</Button>
