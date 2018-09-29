@@ -26,7 +26,6 @@ export default class Table extends React.Component {
   }
 
   handleScrollTable = () => {
-    console.log('table props', this.props)
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop
     let table = document.querySelector('table').offsetTop
     if (scrollTop > table) {
