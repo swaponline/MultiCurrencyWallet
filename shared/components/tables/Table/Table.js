@@ -1,7 +1,11 @@
 import React from 'react'
 
+import { connect } from 'redaction'
+
 import CSSModules from 'react-css-modules'
 import styles from './Table.scss'
+
+import reducers from 'redux/core/reducers'
 
 @CSSModules(styles, { allowMultiple: true })
 export default class Table extends React.Component {
@@ -25,9 +29,11 @@ export default class Table extends React.Component {
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop
     let table = document.querySelector('table').offsetTop
     if (scrollTop > table) {
+      reducers.menu.setIsDisplayingTable(true)
       this.setState(() => ({ sticky: true }))
     } else {
       this.setState(() => ({ sticky: false }))
+      reducers.menu.setIsDisplayingTable(false)
     }
   }
 
@@ -81,3 +87,7 @@ Table.defaultProps = {
   textIfEmpty: 'The table is empty',
   loadingText: 'Loading...',
 }
+
+// export default connect(() => {}, (dispatch) => ({
+//   setIsDisplayingTable: payload => dispatch(setIsDisplayingTable(payload)),
+// }))
