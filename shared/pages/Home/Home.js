@@ -1,11 +1,10 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 
 import actions from 'redux/actions'
 import { connect } from 'redaction'
 import { links } from 'helpers'
 
 import CurrencyDirectionChooser from 'components/CurrencyDirectionChooser/CurrencyDirectionChooser'
-import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 
 import Orders from './Orders/Orders'
@@ -29,11 +28,7 @@ export default class Home extends Component {
   }
 
   componentWillMount() {
-    let { filter, match: { params: { buy, sell } } } = this.props
-
-    if (typeof buy !== 'string' || typeof sell !== 'string') {
-      filter = filter.split('-')
-    }
+    const { match: { params: { buy, sell } } } = this.props
 
     if (buy !== this.state.sellCurrency || sell !== this.state.sellCurrency) {
       actions.core.setFilter(`${sell}-${buy}`)
@@ -41,41 +36,29 @@ export default class Home extends Component {
   }
 
   handleBuyCurrencySelect = ({ value }) => {
-    let { sellCurrency, buyCurrency } = this.state
-
-    if (value === sellCurrency) {
-      sellCurrency = buyCurrency
-    }
+    const { sellCurrency, buyCurrency } = this.state
 
     this.setState({
       buyCurrency: value,
-      sellCurrency,
+      sellCurrency: value === buyCurrency ? buyCurrency : sellCurrency,
     })
   }
 
   handleSellCurrencySelect = ({ value }) => {
-    let { sellCurrency, buyCurrency } = this.state
-
-    if (value === buyCurrency) {
-      buyCurrency = sellCurrency
-    }
+    const { sellCurrency, buyCurrency } = this.state
 
     this.setState({
-      buyCurrency,
+      buyCurrency: value === buyCurrency ? sellCurrency : buyCurrency,
       sellCurrency: value,
     })
   }
 
   flipCurrency = () => {
-    let { buyCurrency, sellCurrency } = this.state
-    const value = sellCurrency
-
-    sellCurrency = buyCurrency
-    buyCurrency = value
+    const { buyCurrency, sellCurrency } = this.state
 
     this.setState({
-      buyCurrency,
-      sellCurrency,
+      buyCurrency: sellCurrency,
+      sellCurrency: buyCurrency,
     })
   }
 
