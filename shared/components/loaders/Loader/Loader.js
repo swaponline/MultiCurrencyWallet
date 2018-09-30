@@ -13,25 +13,27 @@ const Loader = ({ overlayClassName, className, text = false, txId, showTips = fa
       <div styleName="loader2" />
       <div styleName="loader3" />
     </div>
-    {
-      text && <p styleName="text">Please wait, it takes from 3 to 5 minutes to complete the transaction.</p>
-    }
-    {
-      txId && <a href={txId} styleName="link" target="_blank" rel="noopener noreferrer" >{txId}</a>
-    }
-    {
-      !!showTips && <div style={{
-        fontSize: '16px',
-        position: 'absolute',
-        top: '60%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        textAlign: 'center',
-      }}>{getRandomTip('loader')}
+    {text && <p styleName="text">Please wait, it takes from 3 to 5 minutes to complete the transaction.</p>}
+    {txId && (
+      <a href={txId} styleName="link" target="_blank" rel="noopener noreferrer">
+        {txId}
+      </a>
+    )}
+    {!!showTips && (
+      <div
+        style={{
+          fontSize: '16px',
+          position: 'absolute',
+          top: '60%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          textAlign: 'center',
+        }}
+      >
+        {getRandomTip('loader')}
       </div>
-    }
+    )}
   </div>
 )
-
 
 export default CSSModules(Loader, styles, { allowMultiple: true })

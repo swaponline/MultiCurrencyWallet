@@ -84,6 +84,7 @@ rules:
   no-use-before-define: 0
   no-template-curly-in-string: 0
   no-unused-vars: 0
+  no-unused-expressions: 0
 
   func-names: 0
   padded-blocks: 0
@@ -111,6 +112,7 @@ rules:
   react/no-array-index-key: 0
   react/no-danger: 0
   react/no-unused-state: 0
+  react/prefer-stateless-function: 0
 
   import/extensions: 0
   import/no-unresolved: 0

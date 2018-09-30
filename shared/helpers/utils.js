@@ -21,6 +21,7 @@ export const removeRepo = (pathToRepo) => {
      * check files in directory
      * and call functions for each of them
      */
+    // eslint-disable-next-line no-restricted-syntax
     for (let file of fs.readdirSync(pathToRepo)) {
       /**
        * Create path to file inner directory
@@ -32,6 +33,7 @@ export const removeRepo = (pathToRepo) => {
        * then missing this path
        */
       if (!fs.existsSync(curPath)) {
+        // eslint-disable-next-line no-continue
         continue
       }
 
