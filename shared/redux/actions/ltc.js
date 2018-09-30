@@ -6,6 +6,7 @@ import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
 import { ltc, request, constants, api } from 'helpers'
 
+
 const network = process.env.MAINNET ? 'LTC' : 'LTCTEST'
 
 const login = (privateKey) => {
@@ -47,9 +48,8 @@ const getBalance = () => {
 
   return request.get(url)
     .then(({ data }) => {
-      let balance = data.balance
-      reducers.user.setBalance({ name: 'ltcData', amount: balance })
-      return balance
+      reducers.user.setBalance({ name: 'ltcData', amount: data.balance })
+      return data.balance
     }, () => Promise.reject())
 }
 
@@ -65,9 +65,9 @@ const getTransaction = () =>
           type: 'ltc',
           hash: item.txid,
           confirmations: item.confirmations,
-          value: item.outgoing != undefined ? item.outgoing.outputs[0].value : item.incoming.value,
+          value: typeof item.outgoing !== 'undefined' ? item.outgoing.outputs[0].value : item.incoming.value,
           date: item.time * 1000,
-          direction: item.outgoing != undefined ? 'out' : 'in',
+          direction: typeof item.outgoing !== 'undefined' ? 'out' : 'in',
         }))
         resolve(transactions)
       })
@@ -86,10 +86,10 @@ const send = async (from, to, amount) => {
 
   const fundValue     = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
   const feeValue      = 100000
-  const totalUnspent  = unspents.reduce((summ, { value }) => summ + (parseInt(value) * 100000000), 0)
+  const totalUnspent  = unspents.reduce((summ, { value }) => summ + (parseInt(value, 10) * 100000000), 0)
   const skipValue     = totalUnspent - feeValue - fundValue
 
-  unspents.forEach(({ txid, output_no }) => tx.addInput(txid, output_no, 0xfffffffe))
+  unspents.forEach(({ txid, output_no: output }) => tx.addInput(txid, output, 0xfffffffe))
   tx.addOutput(to, fundValue)
   tx.addOutput(from, skipValue)
 
