@@ -82,7 +82,7 @@ export default class Home extends Component {
       <section style={{ position: 'relative', width: '100%' }}>
         <PageHeadline>
           {
-            pathname === links.exchange &&
+            pathname === links.exchange ?
               <CurrencyDirectionChooser
                 handleSellCurrencySelect={this.handleSellCurrencySelect}
                 handleBuyCurrencySelect={this.handleBuyCurrencySelect}
@@ -92,9 +92,7 @@ export default class Home extends Component {
                 flipCurrency={this.flipCurrency}
                 currencies={currencies}
               />
-          }
-          {
-            pathname !== links.exchange &&
+              :
               <Orders
                 handleSellCurrencySelect={this.handleSellCurrencySelect}
                 handleBuyCurrencySelect={this.handleBuyCurrencySelect}
