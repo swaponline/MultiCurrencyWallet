@@ -6,6 +6,7 @@ import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
 import { ltc, request, constants, api } from 'helpers'
 
+
 const network = process.env.MAINNET ? 'LTC' : 'LTCTEST'
 
 const login = (privateKey) => {
