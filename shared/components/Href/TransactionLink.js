@@ -5,6 +5,7 @@ import config from 'app-config'
 
 
 const setApi = (type, link, id) => {
+  // eslint-disable-next-line default-case
   switch (type) {
     case 'BTC':
       return `${config.link.bitpay}/tx/${id}`
@@ -17,10 +18,14 @@ const setApi = (type, link, id) => {
   }
 }
 
-
 const TransactionLink = ({ type, id, link = '#' }) => (
   <div>
-    Transaction: <strong><Href tab={setApi(type, link, id)} rel="noopener noreferrer">{id}</Href></strong>
+    Transaction:{' '}
+    <strong>
+      <Href tab={setApi(type, link, id)} rel="noopener noreferrer">
+        {id}
+      </Href>
+    </strong>
   </div>
 )
 
