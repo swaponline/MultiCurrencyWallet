@@ -60,7 +60,7 @@ export default class Row extends Component {
 
     const { currency } = this.props
 
-    await actions[currency.toLowerCase()].getBalance()
+    await actions[currency.toLowerCase()].getBalance(currency.toLowerCase())
 
     this.setState(() => ({
       isBalanceFetching: false,

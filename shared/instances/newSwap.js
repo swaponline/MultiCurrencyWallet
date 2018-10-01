@@ -105,10 +105,11 @@ const createSwapApp = () => {
     ],
   })
 
+  // eslint-disable-next-line
   process.env.MAINNET ? swapApp._addSwap(
     new UsdtSwap({
       assetId: 31, // USDT
-      fetchBalance: (address) => actions.usdt.fetchBalance(address, 31),
+      fetchBalance: (address) => actions.usdt.fetchBalance(address, 31).then(res => res.balance),
       fetchUnspents: (scriptAddress) => actions.btc.fetchUnspents(scriptAddress),
       broadcastTx: (txRaw) => actions.btc.broadcastTx(txRaw),
       fetchTx: (hash) => actions.btc.fetchTx(hash),
