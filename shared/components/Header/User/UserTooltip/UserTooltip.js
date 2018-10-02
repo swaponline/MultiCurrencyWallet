@@ -38,7 +38,11 @@ export default class UserTooltip extends Component {
 
     actions.core.acceptRequest(orderId, participantPeer)
     actions.core.updateCore()
-    !!toggle && toggle()
+
+    if (typeof toggle === 'function') {
+      toggle()
+    }
+
   }
 
   autoAcceptRequest = (orderId, participantPeer, link) => {

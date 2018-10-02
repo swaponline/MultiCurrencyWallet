@@ -105,6 +105,7 @@ const createSwapApp = () => {
     ],
   })
 
+  // eslint-disable-next-line
   process.env.MAINNET ? swapApp._addSwap(
     new UsdtSwap({
       assetId: 31, // USDT

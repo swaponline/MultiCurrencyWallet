@@ -109,7 +109,7 @@ export default class UsdtToEthToken extends Component {
                   </Fragment>
                 ) : (
                   <Fragment>
-                    <div>Save the secret key! Otherwise there will be a chance that you'll lose your money!</div>
+                    <div>Save the secret key! Otherwise there will be a chance that you&apos;ll lose your money!</div>
                     <div>Secret Key: <strong>{flow.secret}</strong></div>
                     <div>Secret Hash: <strong>{flow.secretHash}</strong></div>
                   </Fragment>

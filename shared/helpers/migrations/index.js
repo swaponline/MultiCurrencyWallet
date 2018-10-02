@@ -8,8 +8,8 @@ const migrations = [
 ]
 
 export const migrate = () => {
-  let revision = parseInt(localStorage.getItem(constants.localStorage.storageRevision)) || 0
-  if (migrations.length == revision) {
+  let revision = parseInt(localStorage.getItem(constants.localStorage.storageRevision), 10) || 0
+  if (migrations.length === revision) {
     console.log('Your storage is up-to-date')
     return Promise.resolve()
   }

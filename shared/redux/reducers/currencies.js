@@ -42,6 +42,7 @@ const initialState = {
   ],
 }
 
+// eslint-disable-next-line
 process.env.MAINNET && initialState.items.unshift({
   name: 'USDT',
   title: 'USDT',
