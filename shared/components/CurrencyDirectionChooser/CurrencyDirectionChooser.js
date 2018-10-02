@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 import actions from 'redux/actions'
 import { constants } from 'helpers'
@@ -14,6 +15,16 @@ import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 
 @CSSModules(styles, { allowMultiple: true })
 export default class CurrencyDirectionChooser extends Component {
+
+  static propTypes = {
+    flipCurrency: PropTypes.func,
+    currencies: PropTypes.any,
+    handleSellCurrencySelect: PropTypes.func,
+    handleBuyCurrencySelect: PropTypes.func,
+    handleSubmit: PropTypes.func,
+    buyCurrency: PropTypes.string.isRequired,
+    sellCurrency: PropTypes.string.isRequired,
+  }
 
   createOffer = () => {
     actions.modals.open(constants.modals.Offer, {
