@@ -3,6 +3,9 @@ import config from 'app-config'
 import BtcToEth from '../BtcToEth'
 import EthToBtc from '../EthToBtc'
 
+import LtcToEth from '../LtcToEth'
+import EthToLtc from '../EthToLtc'
+
 import BtcToEos from '../BtcToEos'
 import EosToBtc from '../EosToBtc'
 
@@ -16,6 +19,9 @@ import UsdtToEthToken from '../UsdtToEthToken'
 const swapComponents = {
   'BTC2ETH': BtcToEth,
   'ETH2BTC': EthToBtc,
+
+  'LTC2ETH': LtcToEth,
+  'ETH2LTC': EthToLtc,
 
   'BTC2EOS': BtcToEos,
   'EOS2BTC': EosToBtc,
