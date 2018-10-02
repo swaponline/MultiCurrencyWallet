@@ -79,17 +79,12 @@ export default class Row extends Component {
     })
   }
 
-  handleEosLogin = () => {
-    actions.modals.open(constants.modals.Eos, {})
+  handleEosRegister = () => {
+    actions.modals.open(constants.modals.EosRegister, {})
   }
 
-  handleEosCreateAccount = async () => {
-    try {
-      await actions.eos.createAccount()
-    } catch (error) {
-      console.log(error.toString())
-      actions.notifications.show(constants.notifications.Message, { message: error.toString() })
-    }
+  handleEosBuyAccount = async () => {
+    actions.modals.open(constants.modals.EosBuyAccount)
   }
 
   handleWithdraw = () => {
@@ -180,10 +175,10 @@ export default class Row extends Component {
                 )
               }
               {
-                currency === 'EOS' && address === '' && <button styleName="button" onClick={this.handleEosLogin}>Login</button>
+                currency === 'EOS' && address === '' && <button styleName="button" onClick={this.handleEosRegister}>Login</button>
               }
               {
-                currency === 'EOS' && address === '' && <button styleName="button" onClick={this.handleEosCreateAccount}>Register</button>
+                currency === 'EOS' && address === '' && <button styleName="button" onClick={this.handleEosBuyAccount}>Buy account</button>
               }
               { isAddressCopied && <p styleName="copied" >Address copied to clipboard</p> }
             </td>

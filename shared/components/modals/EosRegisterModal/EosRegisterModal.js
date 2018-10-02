@@ -10,10 +10,10 @@ import actions from 'redux/actions'
 import { constants } from 'helpers'
 
 import cssModules from 'react-css-modules'
-import styles from './EosModal.scss'
+import styles from './EosRegisterModal.scss'
 
 @cssModules(styles)
-export default class EosModal extends React.Component {
+export default class EosRegisterModal extends React.Component {
 
   state = {
     accountName: '',
@@ -30,7 +30,7 @@ export default class EosModal extends React.Component {
       await actions.eos.register(accountName, privateKey)
       await actions.eos.getBalance()
 
-      actions.modals.close(constants.modals.Eos)
+      actions.modals.close(constants.modals.EosRegister)
     } catch (e) {
       console.error(e)
       this.setState({ error: e.toString() })

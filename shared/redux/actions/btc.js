@@ -2,10 +2,10 @@ import BigInteger from 'bigi'
 
 import { BigNumber } from 'bignumber.js'
 import bitcoin from 'bitcoinjs-lib'
+import bitcoinMessage from 'bitcoinjs-message'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
 import { btc, request, constants, api } from 'helpers'
-
 
 const login = (privateKey) => {
   let keyPair
@@ -141,6 +141,8 @@ const send = async (from, to, amount) => {
   const txRaw = tx.buildIncomplete()
 
   broadcastTx(txRaw.toHex())
+
+  return txRaw
 }
 
 
@@ -154,6 +156,14 @@ const broadcastTx = (txRaw) =>
     },
   })
 
+const signMessage = (message, encodedPrivateKey) => {
+  const keyPair = bitcoin.ECPair.fromWIF(encodedPrivateKey, [bitcoin.networks.bitcoin, bitcoin.networks.testnet])
+  const privateKey = keyPair.d.toBuffer(32)
+
+  const signature = bitcoinMessage.sign(message, privateKey, keyPair.compressed)
+
+  return signature.toString('base64')
+}
 
 export default {
   login,
@@ -164,4 +174,5 @@ export default {
   createScript,
   broadcastTx,
   fetchBalance,
+  signMessage
 }

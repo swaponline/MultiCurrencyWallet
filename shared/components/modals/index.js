@@ -1,7 +1,8 @@
 import OfferModal from './OfferModal/OfferModal'
 import WithdrawModal from './WithdrawModal/WithdrawModal'
 import PrivateKeysModal from './PrivateKeysModal/PrivateKeysModal'
-import EosModal from './EosModal/EosModal'
+import EosRegisterModal from './EosRegisterModal/EosRegisterModal'
+import EosBuyAccountModal from './EosBuyAccountModal/EosBuyAccountModal'
 import Approve from './Approve/Approve'
 import ImportKeys from './ImportKeys/ImportKeys'
 import ShowMoreCoins from './ShowMoreCoins/ShowMoreCoins'
@@ -15,7 +16,8 @@ export default {
   PrivateKeysModal,
   ImportKeys,
   ShowMoreCoins,
-  EosModal,
+  EosBuyAccountModal,
+  EosRegisterModal,
   Approve,
   EthChecker,
   ReceiveModal,
