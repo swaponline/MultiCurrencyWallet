@@ -49,5 +49,6 @@ aliases = ["/version/1/4/ru"]
 
 ## Подписались:
 
-- @caffeinum (Алексей Быхун)
+- @caffeinum   (Алексей Быхун)
+- @nikdementev (Никита Дементьев)
 
