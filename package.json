@@ -5,7 +5,7 @@
   "private": true,
   "main": "./bin/server",
   "scripts": {
-    "test": "cypress run --record",
+    "test": "cypress open",
     "eslint": "eslint  --fix --cache ./shared --ext js",
     "start": "npm run dev",
     "dev": "npm run dev:testnet",
@@ -112,6 +112,7 @@
   },
   "dependencies": {
     "bitcoinjs-message": "^2.0.0",
+    "coininfo": "git+https://github.com/cryptocoinjs/coininfo.git",
     "node-gyp": "^3.7.0",
     "react": "^16.3.2",
     "react-click-outside": "github:tj/react-click-outside",

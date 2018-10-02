@@ -11,6 +11,7 @@ import filter from './filter'
 
 import btc from './btc'
 import bch from './bch'
+import ltc from './ltc'
 import eth from './eth'
 import eos from './eos'
 import token from './token'
@@ -41,6 +42,7 @@ export default {
   notifications,
   user,
   core,
+  ltc,
   bch,
   btc,
   usdt,

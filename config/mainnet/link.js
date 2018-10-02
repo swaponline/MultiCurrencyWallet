@@ -4,4 +4,5 @@ export default {
   eos: 'https://eospark.com/MainNet',
   omniexplorer: 'https://www.omniexplorer.info',
   bch: 'https://bch-insight.bitpay.com/#',
+  ltc: 'https://chain.so/ltc',
 }

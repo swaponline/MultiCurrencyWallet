@@ -20,15 +20,17 @@ const Loader = ({ overlayClassName, className, text = false, txId, showTips = fa
       txId && <a href={txId} styleName="link" target="_blank" rel="noopener noreferrer" >{txId}</a>
     }
     {
-      !!showTips && <div style={{
-        fontSize: '16px',
-        position: 'absolute',
-        top: '60%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        textAlign: 'center',
-      }}>{getRandomTip('loader')}
-      </div>
+      !!showTips && (
+        <div style={{
+          fontSize: '16px',
+          position: 'absolute',
+          top: '60%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          textAlign: 'center',
+        }}>{getRandomTip('loader')}
+        </div>
+      )
     }
   </div>
 )
