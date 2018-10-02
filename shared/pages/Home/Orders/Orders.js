@@ -1,11 +1,18 @@
 import React, { Component, Fragment } from 'react'
+import cssModules from 'react-css-modules'
 import { connect } from 'redaction'
+import actions from 'redux/actions'
+import constants from 'helpers/constants'
 
 import Row from './Row/Row'
 import Table from 'components/tables/Table/Table'
-import styles from 'components/tables/Table/Table.scss'
+import Title from 'components/PageHeadline/Title/Title'
+import tableStyles from 'components/tables/Table/Table.scss'
 import MyOrders from './MyOrders/MyOrders'
-import SearchSwap from 'components/SearchSwap/SearchSwap'
+import CurrencyDirectionChooser from 'components/CurrencyDirectionChooser/CurrencyDirectionChooser'
+import Button from 'components/controls/Button/Button'
+
+import styles from './Orders.scss'
 
 
 const filterMyOrders = (orders, peer) => orders.filter(order => order.owner.peer === peer)
@@ -24,7 +31,16 @@ const filterOrders = (orders, filter) => orders
   isOnline,
   currencies,
 }))
+@cssModules(styles)
 export default class Orders extends Component {
+
+  createOffer = () => {
+    actions.modals.open(constants.modals.Offer, {
+      buyCurrency: this.props.buyCurrency,
+      sellCurrency: this.props.sellCurrency,
+    })
+    actions.analytics.dataEvent('orderbook-click-createoffer-button')
+  }
 
   render() {
     const { sellCurrency, buyCurrency, handleSellCurrencySelect, handleBuyCurrencySelect, flipCurrency, currencies } = this.props
@@ -33,29 +49,27 @@ export default class Orders extends Component {
 
     return (
       <Fragment>
+        <Title>{buyCurrency} &#8594; {sellCurrency} no limit exchange with 0 fee</Title>
         <MyOrders myOrders={myOrders} />
-        <SearchSwap
-          handleSellCurrencySelect={handleSellCurrencySelect}
-          handleBuyCurrencySelect={handleBuyCurrencySelect}
-          buyCurrency={buyCurrency}
-          sellCurrency={sellCurrency}
-          flipCurrency={flipCurrency}
-          currencies={currencies}
-        />
-        <h3>All orders</h3>
-        <Table
-          classTitle={styles.exchange}
-          titles={titles}
-          rows={orders}
-          rowRender={(row, index) => (
-            <Row
-              key={index}
-              orderId={orderId}
-              row={row}
-            />
-          )}
-          isLoading={!isOnline}
-        />
+        <div styleName="allOrders">
+          <div styleName="titleButtonRow">
+            <h3>All orders</h3>
+            <Button brand onClick={this.createOffer}>CREATE OFFER</Button>
+          </div>
+          <Table
+            classTitle={tableStyles.exchange}
+            titles={titles}
+            rows={orders}
+            rowRender={(row, index) => (
+              <Row
+                key={index}
+                orderId={orderId}
+                row={row}
+              />
+            )}
+            isLoading={!isOnline}
+          />
+        </div>
       </Fragment>
     )
   }
