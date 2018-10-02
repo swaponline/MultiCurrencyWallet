@@ -69,9 +69,11 @@ const getTransaction = () =>
           type: 'ltc',
           hash: item.txid,
           confirmations: item.confirmations,
-          value: item.vout.filter(item => item.scriptPubKey.addresses[0] === address)[0].value,
+          value: item.vin.filter(item => item.addr === address).length > 0
+                  ? item.vout.filter((item, index) => item.scriptPubKey.addresses[0] !== address)[0].value
+                  : item.vout.filter((item, index) => item.scriptPubKey.addresses[0] === address)[0].value,
           date: item.time * 1000,
-          direction: address === item.vout[0].scriptPubKey.addresses[0] ? 'in' : 'out',
+          direction: item.vin.filter(item => item.addr === address).length > 0  ? 'out' : 'in',
         }))
         resolve(transactions)
       })
