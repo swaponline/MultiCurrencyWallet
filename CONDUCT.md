@@ -51,4 +51,5 @@ aliases = ["/version/1/4/ru"]
 
 - @caffeinum   (Алексей Быхун)
 - @nikdementev (Никита Дементьев)
+- @noxonsu (Алексанлдр Ноксон)
 
