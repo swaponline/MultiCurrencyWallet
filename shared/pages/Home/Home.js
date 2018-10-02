@@ -16,48 +16,19 @@ import Center from '../../components/layout/Center/Center'
 import { FaqExpandableItem } from '../../components/FaqExpandableItem/FaqExpandableItem'
 
 
-@connect(({ core: { filter }, currencies: { items: currencies } }) => ({
+@connect(({ core: { filter }, currencies: { items: currencies }, info: { faqList } }) => ({
   filter,
   currencies,
+  faqList,
 }))
 @cssModules(styles)
 export default class Home extends Component {
 
   static propTypes = {
-    faqListItems: PropTypes.arrayOf(PropTypes.shape({
+    faqList: PropTypes.arrayOf(PropTypes.shape({
       title: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,
     })),
-  }
-
-  static defaultProps = {
-    faqListItems: [
-      {
-        title: 'test',
-        description: 'test descr',
-      },
-      {
-        title: 'test',
-        description: 'test descr',
-      },
-      {
-        title: 'test',
-        description: 'test descr',
-      },
-      {
-        title: 'test',
-        description: 'test descr',
-      },
-      {
-        title: 'test',
-        description: 'test descr',
-      }, {
-        title: 'test',
-        description: 'test descr',
-      },
-
-
-    ],
   }
 
   constructor({ initialData, match: { params: { buy, sell } } }) {
@@ -69,6 +40,10 @@ export default class Home extends Component {
       buyCurrency: buy || buyCurrency || 'swap',
       sellCurrency: sell || sellCurrency || 'btc',
     }
+  }
+
+  componentDidMount() {
+    actions.info.getFaq()
   }
 
   componentWillMount() {
@@ -131,7 +106,7 @@ export default class Home extends Component {
         },
       },
       currencies,
-      faqListItems,
+      faqList,
     } = this.props
 
     const { buyCurrency, sellCurrency } = this.state
@@ -169,7 +144,8 @@ export default class Home extends Component {
 
                     <div styleName="faqContainer">
                       {
-                        faqListItems.map((question, idx) => <FaqExpandableItem key={idx} {...question} />)
+                        Boolean(faqList && faqList.length) &&
+                        faqList.map((question, idx) => <FaqExpandableItem key={idx} {...question} />)
                       }
                     </div>
                   </div>

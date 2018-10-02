@@ -5,12 +5,13 @@ import cx from 'classnames'
 
 import styles from './FaqExpandableItem.scss'
 
+
 @cssModules(styles, { allowMultiple: true })
 export class FaqExpandableItem extends React.Component {
 
   static propTypes = {
-    title: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
+    question: PropTypes.string.isRequired,
+    answer: PropTypes.string.isRequired,
   }
 
   state = {
@@ -22,7 +23,7 @@ export class FaqExpandableItem extends React.Component {
   }
 
   render() {
-    const { description, title } = this.props
+    const { answer, question } = this.props
     const { expanded } = this.state
 
     const styleName = cx('container', {
@@ -32,11 +33,11 @@ export class FaqExpandableItem extends React.Component {
     return (
       <div styleName={styleName}>
         <div styleName="header" onClick={this.toggle}>
-          {title}
+          <div dangerouslySetInnerHTML={{ __html: question }} />
           <span className={`fas fa-${expanded ? 'minus' : 'plus'}`} styleName="icon" />
         </div>
         {
-          expanded && <div styleName="description">{description}</div>
+          expanded && <div styleName="description" dangerouslySetInnerHTML={{ __html: answer }} />
         }
       </div>
     )
