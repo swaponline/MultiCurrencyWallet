@@ -43,6 +43,7 @@ export default class CurrencyDirectionChooser extends Component {
       handleSellCurrencySelect,
       handleSubmit,
       currencies,
+      faqList,
     } = this.props
 
     return (
@@ -73,19 +74,6 @@ export default class CurrencyDirectionChooser extends Component {
             </div>
           </div>
           <Button styleName="button" brand onClick={handleSubmit}>SHOW ORDERS</Button>
-        </div>
-        <div styleName="videoContainer row">
-          <SubTitle>What is atomic swap?</SubTitle>
-
-          <iframe
-            title="What is atomic swap?"
-            width="700"
-            height="480"
-            src="https://www.youtube.com/embed/Jhrb7xOT_7s"
-            frameBorder="0"
-            allow="autoplay; encrypted-media"
-            allowFullScreen
-          />
         </div>
       </div>
     )
