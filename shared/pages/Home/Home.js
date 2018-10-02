@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import cssModules from 'react-css-modules'
+import cx from 'classnames'
 
 import actions from 'redux/actions'
 import { connect } from 'redaction'
@@ -13,15 +14,23 @@ import Orders from './Orders/Orders'
 import SubTitle from '../../components/PageHeadline/SubTitle/SubTitle'
 import styles from './Home.scss'
 import Center from '../../components/layout/Center/Center'
+import InlineLoader from '../../components/loaders/InlineLoader/InlineLoader'
 import { FaqExpandableItem } from '../../components/FaqExpandableItem/FaqExpandableItem'
 
 
-@connect(({ core: { filter }, currencies: { items: currencies }, info: { faqList } }) => ({
-  filter,
-  currencies,
-  faqList,
-}))
-@cssModules(styles)
+@connect(
+  ({
+    core: { filter },
+    currencies: { items: currencies },
+    info: { faq: { items, fetching: faqFetching } },
+  }) => ({
+    filter,
+    currencies,
+    faqList: items,
+    faqFetching,
+  })
+)
+@cssModules(styles, { allowMultiple: true })
 export default class Home extends Component {
 
   static propTypes = {
@@ -29,6 +38,7 @@ export default class Home extends Component {
       title: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,
     })),
+    faqFetching: PropTypes.bool,
   }
 
   constructor({ initialData, match: { params: { buy, sell } } }) {
@@ -43,7 +53,8 @@ export default class Home extends Component {
   }
 
   componentDidMount() {
-    actions.info.getFaq()
+    // noinspection JSIgnoredPromiseFromCall
+    actions.info.fetchFaq()
   }
 
   componentWillMount() {
@@ -107,6 +118,7 @@ export default class Home extends Component {
       },
       currencies,
       faqList,
+      faqFetching,
     } = this.props
 
     const { buyCurrency, sellCurrency } = this.state
@@ -142,10 +154,27 @@ export default class Home extends Component {
                       allowFullScreen
                     />
 
-                    <div styleName="faqContainer">
+                    <div
+                      styleName={
+                        cx('faqContainer', {
+                          'noItems': !faqFetching && faqList.length === 0,
+                          'loading': faqFetching,
+                        })
+                      }
+                    >
                       {
-                        Boolean(faqList && faqList.length) &&
-                        faqList.map((question, idx) => <FaqExpandableItem key={idx} {...question} />)
+                        faqFetching ?
+                          (
+                            <React.Fragment>
+                              {'Loading FAQ'}
+                              <InlineLoader />
+                            </React.Fragment>
+                          )
+                          :
+                          faqList.length === 0 ?
+                            'No items here yet'
+                            :
+                            faqList.map((question, idx) => <FaqExpandableItem key={idx} {...question} />)
                       }
                     </div>
                   </div>

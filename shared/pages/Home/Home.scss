@@ -28,4 +28,10 @@
   &>div:not(:last-child) {
     margin-bottom: 20px;
   }
+
+  &.loading, &.noItems  {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }

@@ -1,8 +1,11 @@
 export const initialState = {
-  faqList: [],
+  faq: {
+    items: [],
+    fetching: false,
+  },
 }
 
-export const setFaq = (state, { faqList }) => ({
+export const setFaq = (state, { faq }) => ({
   ...state,
-  faqList,
+  faq,
 })
