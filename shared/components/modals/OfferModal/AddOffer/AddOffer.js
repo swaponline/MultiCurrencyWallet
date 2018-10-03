@@ -214,7 +214,7 @@ export default class AddOffer extends Component {
         */
 
         if (manualRate) {
-          let newExchangeRate = new BigNumber(String(value)).dividedBy(new BigNumber(String(buyAmount)))
+          let newExchangeRate = new BigNumber(String(buyAmount)).dividedBy(new BigNumber(String(value)))
           this.setState({
             exchangeRate: isNumberValid(newExchangeRate) ? newExchangeRate : '',
             sellAmount: new BigNumber(String(value)),
@@ -235,7 +235,7 @@ export default class AddOffer extends Component {
         */
 
         if (manualRate) {
-          let newExchangeRate = new BigNumber(String(sellAmount)).dividedBy(new BigNumber(String(value)))
+          let newExchangeRate = new BigNumber(String(value)).dividedBy(new BigNumber(String(sellAmount)))
           this.setState({
             exchangeRate: isNumberValid(newExchangeRate) ? newExchangeRate : '',
             buyAmount: new BigNumber(String(value)),
@@ -257,8 +257,7 @@ export default class AddOffer extends Component {
             XR++ -> S -> B--
           */
 
-          let newBuyAmount  = new BigNumber(String(sellAmount)).dividedBy(value)
-
+          let newBuyAmount  = new BigNumber(String(sellAmount)).multipliedBy(value)
           if (!isNumberValid(newBuyAmount)) {
             newBuyAmount = new BigNumber('0')
           }
