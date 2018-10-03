@@ -21,8 +21,12 @@ const RowHistory = ({ row }) => {
 
   let { buyAmount, buyCurrency, sellAmount, btcScriptValues, ltcScriptValues, usdtScriptValues, isRefunded, isMy, sellCurrency, isFinished, id, scriptValues } = row
 
-  const values = btcScriptValues || ltcScriptValues || usdtScriptValues || scriptValues
+  const values  = btcScriptValues || ltcScriptValues || usdtScriptValues || scriptValues
   const data = Date.now() / 1000
+
+  if (!values) {
+    return
+  }
 
   const lockDateAndTime = moment.unix(values.lockTime || data).format('HH:mm:ss DD/MM/YYYY')
 
