@@ -55,3 +55,4 @@ aliases = ["/version/1/4/ru"]
 - @7flash       (Игорь Берленко)
 - @sdwas        (ED)
 - @noxonsu (Алексанлдр Ноксон)
+- @nthgness (Алексей Залунин)
