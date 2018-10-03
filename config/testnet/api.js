@@ -3,10 +3,12 @@ export default {
   bitpay: 'https://test-insight.swap.online/insight-api',
   etherscan: 'https://rinkeby.etherscan.io/api',
   bch: 'https://bch-insight.bitpay.com/api',
-  ltc: 'https://chain.so/api/v2',
+  ltc: 'https://testnet.litecore.io/api',
   eos: {
     chainId: '038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca',
     httpEndpoint: 'https://jungle.eosio.cr',
-    registerEndpoint: 'https://seven.swap.online/newaccount',
+    registerEndpoint: 'https://seven.swap.online/eos-testnet/buyaccount',
+    buyAccountPriceInBTC: 0.01,
+    buyAccountPaymentRecipient: 'mpAaNgjBUU7edRZ1ruoYeuBaXvkWFXDmpY'
   },
 }

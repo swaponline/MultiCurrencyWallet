@@ -3,6 +3,7 @@ import { eos } from 'helpers/eos'
 import 'abortcontroller-polyfill/dist/abortcontroller-polyfill-only'
 import web3 from 'helpers/web3'
 import bitcoin from 'bitcoinjs-lib'
+import coininfo from 'coininfo'
 import abi from 'human-standard-token-abi'
 
 import Channel from 'ipfs-pubsub-room'
@@ -16,8 +17,8 @@ import swapApp, { constants } from 'swap.app'
 import SwapAuth from 'swap.auth'
 import SwapRoom from 'swap.room'
 import SwapOrders from 'swap.orders'
-import { ETH2BTC, BTC2ETH, ETHTOKEN2BTC, BTC2ETHTOKEN, EOS2BTC, BTC2EOS, USDT2ETHTOKEN, ETHTOKEN2USDT } from 'swap.flows'
-import { EthSwap, EthTokenSwap, BtcSwap, EosSwap, UsdtSwap } from 'swap.swaps'
+import { ETH2BTC, BTC2ETH, ETH2LTC, LTC2ETH, ETHTOKEN2BTC, BTC2ETHTOKEN, EOS2BTC, BTC2EOS, USDT2ETHTOKEN, ETHTOKEN2USDT } from 'swap.flows'
+import { EthSwap, EthTokenSwap, BtcSwap, LtcSwap, EosSwap, UsdtSwap } from 'swap.swaps'
 
 
 const repo = utils.createRepo()
@@ -31,6 +32,7 @@ const createSwapApp = () => {
       eos,
       web3,
       bitcoin,
+      coininfo,
       Ipfs: IPFS,
       IpfsRoom: Channel,
       storage: window.localStorage,
@@ -41,6 +43,7 @@ const createSwapApp = () => {
         // TODO need init swapApp only after private keys created!!!!!!!!!!!!!!!!!!!
         eth: localStorage.getItem(privateKeys.privateKeyNames.eth),
         btc: localStorage.getItem(privateKeys.privateKeyNames.btc),
+        ltc: localStorage.getItem(privateKeys.privateKeyNames.ltc),
         eos: privateKeys.privateKeyNames.eosAccount,
       }),
       new SwapRoom({
@@ -67,6 +70,11 @@ const createSwapApp = () => {
         fetchUnspents: (scriptAddress) => actions.btc.fetchUnspents(scriptAddress),
         broadcastTx: (txRaw) => actions.btc.broadcastTx(txRaw),
       }),
+      new LtcSwap({
+        fetchBalance: (address) => actions.ltc.fetchBalance(address),
+        fetchUnspents: (scriptAddress) => actions.ltc.fetchUnspents(scriptAddress),
+        broadcastTx: (txRaw) => actions.ltc.broadcastTx(txRaw),
+      }),
       new EosSwap({
         swapAccount: config.swapContract.eos,
         swapLockPeriod: 300, // safe time in seconds
@@ -87,6 +95,9 @@ const createSwapApp = () => {
     flows: [
       ETH2BTC,
       BTC2ETH,
+
+      ETH2LTC,
+      LTC2ETH,
 
       EOS2BTC,
       BTC2EOS,

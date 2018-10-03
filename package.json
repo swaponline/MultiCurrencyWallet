@@ -111,6 +111,7 @@
     "superagent": "^3.8.3"
   },
   "dependencies": {
+    "bitcoinjs-message": "^2.0.0",
     "coininfo": "git+https://github.com/cryptocoinjs/coininfo.git",
     "node-gyp": "^3.7.0",
     "react": "^16.3.2",

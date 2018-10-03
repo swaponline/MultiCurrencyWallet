@@ -6,9 +6,6 @@ import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
 import { ltc, request, constants, api } from 'helpers'
 
-
-const network = process.env.MAINNET ? 'LTC' : 'LTCTEST'
-
 const login = (privateKey) => {
   let keyPair
 
@@ -38,36 +35,45 @@ const login = (privateKey) => {
     publicKey,
   }
 
+  window.getLtcAddress = () => data.address
+
   console.info('Logged in with Litecoin', data)
   reducers.user.setAuthData({ name: 'ltcData', data })
 }
 
 const getBalance = () => {
   const { user: { ltcData: { address } } } = getState()
-  const url = `${api.getApiServer('ltc')}/address/${network}/${address}`
 
-  return request.get(url)
-    .then(({ data }) => {
-      reducers.user.setBalance({ name: 'ltcData', amount: data.balance })
-      return data.balance
+  return request.get(`${api.getApiServer('ltc')}/addr/${address}`)
+    .then(({ balance, unconfirmedBalance }) => {
+      console.log('LTC Balance:', balance)
+      console.log('LTC unconfirmedBalance Balance:', unconfirmedBalance)
+      reducers.user.setBalance({ name: 'ltcData', amount: balance, unconfirmedBalance })
+      return balance
     }, () => Promise.reject())
 }
+
+const fetchBalance = (address) =>
+  request.get(`${api.getApiServer('ltc')}/addr/${address}`)
+    .then(({ balance }) => balance)
 
 const getTransaction = () =>
   new Promise((resolve) => {
     const { user: { ltcData: { address } } } = getState()
 
-    const url = `${api.getApiServer('ltc')}/address/${network}/${address}`
+    const url = `${api.getApiServer('ltc')}/txs/?address=${address}`
 
     return request.get(url)
       .then((res) => {
-        const transactions = res.data.txs.map((item) => ({
+        const transactions = res.txs.map((item) => ({
           type: 'ltc',
           hash: item.txid,
           confirmations: item.confirmations,
-          value: typeof item.outgoing !== 'undefined' ? item.outgoing.outputs[0].value : item.incoming.value,
+          value: item.vin.filter(item => item.addr === address).length > 0
+                  ? item.vout.filter((item, index) => item.scriptPubKey.addresses[0] !== address)[0].value
+                  : item.vout.filter((item, index) => item.scriptPubKey.addresses[0] === address)[0].value,
           date: item.time * 1000,
-          direction: typeof item.outgoing !== 'undefined' ? 'out' : 'in',
+          direction: item.vin.filter(item => item.addr === address).length > 0  ? 'out' : 'in',
         }))
         resolve(transactions)
       })
@@ -81,15 +87,14 @@ const send = async (from, to, amount) => {
   const keyPair = bitcoin.ECPair.fromWIF(privateKey, ltc.network)
 
   const tx            = new bitcoin.TransactionBuilder(ltc.network)
-  const unspentsData  = await fetchUnspents(from)
-  const unspents      = unspentsData.data.txs
-
+  const unspents      = await fetchUnspents(from)
+  console.log(unspents)
   const fundValue     = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
   const feeValue      = 100000
-  const totalUnspent  = unspents.reduce((summ, { value }) => summ + (parseInt(value, 10) * 100000000), 0)
+  const totalUnspent  = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
   const skipValue     = totalUnspent - feeValue - fundValue
 
-  unspents.forEach(({ txid, output_no: output }) => tx.addInput(txid, output, 0xfffffffe))
+  unspents.forEach(({ txid, vout }) => tx.addInput(txid, vout, 0xfffffffe))
   tx.addOutput(to, fundValue)
   tx.addOutput(from, skipValue)
 
@@ -103,20 +108,22 @@ const send = async (from, to, amount) => {
 }
 
 const fetchUnspents = (address) =>
-  request.get(`${api.getApiServer('ltc')}/get_tx_unspent/${network}/${address}`)
+  request.get(`${api.getApiServer('ltc')}/addr/${address}/utxo`)
 
-const broadcastTx = (txHex) =>
-  request.post(`${api.getApiServer('ltc')}/send_tx/${network}`, {
+const broadcastTx = (txRaw) =>
+  request.post(`${api.getApiServer('ltc')}/tx/send`, {
     body: {
-      tx_hex: txHex,
+      rawtx: txRaw,
     },
   })
+
 
 export default {
   login,
   getBalance,
-  send,
   getTransaction,
-  broadcastTx,
+  send,
   fetchUnspents,
+  broadcastTx,
+  fetchBalance,
 }
