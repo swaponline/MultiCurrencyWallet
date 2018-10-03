@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4239880e-19e3-4a11-acd6-78e004879c3c" name="Default" comment="closes #511">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/components/tables/Table/Table.scss" beforeDir="false" afterPath="$PROJECT_DIR$/shared/components/tables/Table/Table.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webpack/production.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack/production.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -48,7 +50,7 @@
           <entry key="eslintignore" value="1" />
           <entry key="gitmodules" value="5" />
           <entry key="html" value="312" />
-          <entry key="js" value="54769" />
+          <entry key="js" value="54784" />
           <entry key="json" value="82" />
           <entry key="md" value="4" />
           <entry key="scss" value="2415" />
@@ -61,7 +63,7 @@
           <entry key="CSS" value="11" />
           <entry key="HTML" value="94" />
           <entry key="JSON" value="105" />
-          <entry key="JavaScript" value="54597" />
+          <entry key="JavaScript" value="54612" />
           <entry key="Markdown" value="4" />
           <entry key="PLAIN_TEXT" value="4166" />
           <entry key="SCSS" value="2415" />
@@ -76,16 +78,16 @@
           <entry key="babelrc" value="2" />
           <entry key="css" value="7" />
           <entry key="eslintignore" value="4" />
-          <entry key="gitignore" value="5" />
+          <entry key="gitignore" value="6" />
           <entry key="gitmodules" value="3" />
           <entry key="html" value="49" />
           <entry key="ini" value="1" />
           <entry key="jpg" value="3" />
-          <entry key="js" value="2331" />
-          <entry key="json" value="44" />
+          <entry key="js" value="2333" />
+          <entry key="json" value="45" />
           <entry key="md" value="4" />
           <entry key="png" value="2" />
-          <entry key="scss" value="213" />
+          <entry key="scss" value="214" />
           <entry key="stylelintrc" value="1" />
           <entry key="svg" value="36" />
           <entry key="txt" value="1" />
@@ -97,11 +99,11 @@
           <entry key="CSS" value="7" />
           <entry key="HTML" value="47" />
           <entry key="Image" value="5" />
-          <entry key="JSON" value="47" />
-          <entry key="JavaScript" value="2306" />
+          <entry key="JSON" value="48" />
+          <entry key="JavaScript" value="2308" />
           <entry key="Markdown" value="3" />
-          <entry key="PLAIN_TEXT" value="44" />
-          <entry key="SCSS" value="213" />
+          <entry key="PLAIN_TEXT" value="45" />
+          <entry key="SCSS" value="214" />
           <entry key="SVG" value="36" />
           <entry key="Svelte" value="1" />
           <entry key="YAML" value="13" />
@@ -112,20 +114,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/package.json">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/shared/components/tables/Table/Table.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="624">
-              <caret line="137" column="35" selection-start-line="137" selection-start-column="35" selection-end-line="137" selection-end-column="35" />
+            <state relative-caret-position="607">
+              <caret line="49" column="44" selection-start-line="49" selection-start-column="44" selection-end-line="49" selection-end-column="44" />
+              <folding>
+                <element signature="e#0#25#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.travis.yml">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/shared/components/tables/Table/Table.scss">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1054">
-              <caret line="34" column="4" selection-start-line="34" selection-start-column="4" selection-end-line="34" selection-end-column="4" />
+            <state relative-caret-position="593">
+              <caret line="271" column="21" selection-start-line="271" selection-start-column="21" selection-end-line="271" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -194,8 +199,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/shared/components/Header/User/UserTooltip/UserTooltip.scss" />
-        <option value="$PROJECT_DIR$/shared/components/tables/Table/Table.js" />
         <option value="$PROJECT_DIR$/config/mainnet/erc20.js" />
         <option value="$PROJECT_DIR$/shared/redux/actions/eos.js" />
         <option value="$PROJECT_DIR$/shared/components/modals/WithdrawModal/WithdrawModal.js" />
@@ -245,6 +248,8 @@
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/.travis.yml" />
         <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/webpack/production.js" />
+        <option value="$PROJECT_DIR$/shared/components/tables/Table/Table.scss" />
       </list>
     </option>
   </component>
@@ -269,6 +274,7 @@
   </component>
   <component name="NodeModulesDirectoryManager">
     <handled-path value="$PROJECT_DIR$/node_modules" />
+    <handled-path value="$PROJECT_DIR$/swap.core/node_modules" />
   </component>
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths>
@@ -346,6 +352,32 @@
               <item name="swap.react" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
             </path>
+            <path>
+              <item name="swap.react" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="shared" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="swap.react" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="shared" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="components" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="swap.react" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="shared" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="components" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="tables" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="swap.react" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="shared" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="components" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="tables" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="Table" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -369,19 +401,19 @@
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Language Defaults" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/config/mainnet" />
-      <recent name="$PROJECT_DIR$/config/testnet" />
-      <recent name="$PROJECT_DIR$/config" />
-      <recent name="$PROJECT_DIR$/shared/pages/History" />
-      <recent name="$PROJECT_DIR$/shared/components/Filter/FilterLink" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/config/mainnet" />
       <recent name="$PROJECT_DIR$/config/testnet" />
       <recent name="$PROJECT_DIR$/config/swap" />
       <recent name="$PROJECT_DIR$/config/api" />
       <recent name="$PROJECT_DIR$/config/coin" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/config/mainnet" />
+      <recent name="$PROJECT_DIR$/config/testnet" />
+      <recent name="$PROJECT_DIR$/config" />
+      <recent name="$PROJECT_DIR$/shared/pages/History" />
+      <recent name="$PROJECT_DIR$/shared/components/Filter/FilterLink" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -461,7 +493,7 @@
       <workItem from="1538150310466" duration="1265000" />
       <workItem from="1538160377111" duration="790000" />
       <workItem from="1538222807313" duration="178000" />
-      <workItem from="1538322808507" duration="11916000" />
+      <workItem from="1538322808507" duration="13012000" />
     </task>
     <task id="LOCAL-00072" summary="issue #322">
       <created>1534846278204</created>
@@ -810,7 +842,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="772147000" />
+    <option name="totallyTimeSpent" value="773243000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -838,7 +870,7 @@
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49909583" weight="0.32977587" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.50391805" side_tool="true" weight="0.45891142" />
-      <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49608198" weight="0.35218784" />
+      <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49608198" weight="0.29882604" />
       <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.4996986" weight="0.32870865" />
       <window_info anchor="bottom" id="Messages" order="11" weight="0.32977587" />
       <window_info anchor="bottom" id="Inspection Results" order="12" weight="0.32977587" />
@@ -930,26 +962,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="closes #511" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/shared/components/Header/User/UserTooltip/UserTooltip.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="43" column="5" lean-forward="true" selection-start-line="43" selection-start-column="5" selection-end-line="43" selection-end-column="5" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shared/components/Href/TransactionLink.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="131">
-          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/shared/components/loaders/Loader/Loader.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="128">
@@ -1130,13 +1142,6 @@
           <folding>
             <element signature="e#0#40#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shared/components/tables/Table/Table.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="59" selection-start-line="59" selection-end-line="59" selection-end-column="41" />
         </state>
       </provider>
     </entry>
@@ -1328,13 +1333,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="372">
-          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.travis.yml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1054">
@@ -1342,10 +1340,44 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="372">
+          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="624">
-          <caret line="137" column="35" selection-start-line="137" selection-start-column="35" selection-end-line="137" selection-end-column="35" />
+        <state relative-caret-position="-648">
+          <caret line="105" column="26" selection-start-line="105" selection-start-column="26" selection-end-line="105" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webpack/production.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1115">
+          <caret line="36" column="3" lean-forward="true" selection-start-line="36" selection-start-column="3" selection-end-line="36" selection-end-column="3" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shared/components/tables/Table/Table.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="607">
+          <caret line="49" column="44" selection-start-line="49" selection-start-column="44" selection-end-line="49" selection-end-column="44" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shared/components/tables/Table/Table.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="593">
+          <caret line="271" column="21" selection-start-line="271" selection-start-column="21" selection-end-line="271" selection-end-column="21" />
         </state>
       </provider>
     </entry>
