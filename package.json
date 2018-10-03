@@ -113,6 +113,7 @@
   "dependencies": {
     "bitcoinjs-message": "^2.0.0",
     "coininfo": "git+https://github.com/cryptocoinjs/coininfo.git",
+    "ethereum-input-data-decoder": "0.0.12",
     "node-gyp": "^3.7.0",
     "react": "^16.3.2",
     "react-click-outside": "github:tj/react-click-outside",
@@ -134,6 +135,6 @@
     "redux": "^4.0.0",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
-    "swap.core": "file:./swap.core"
+    "swap.core": "file:../swap.core"
   }
 }
