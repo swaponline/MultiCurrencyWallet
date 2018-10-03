@@ -51,25 +51,29 @@ export default class Orders extends Component {
       <Fragment>
         <Title>{buyCurrency} &#8594; {sellCurrency} no limit exchange with 0 fee</Title>
         <MyOrders myOrders={myOrders} />
-        <div styleName="allOrders">
-          <div styleName="titleButtonRow">
-            <h3>All orders</h3>
-            <Button brand onClick={this.createOffer}>CREATE OFFER</Button>
-          </div>
-          <Table
-            classTitle={tableStyles.exchange}
-            titles={titles}
-            rows={orders}
-            rowRender={(row, index) => (
-              <Row
-                key={index}
-                orderId={orderId}
-                row={row}
-              />
-            )}
-            isLoading={!isOnline}
-          />
-        </div>
+        <SearchSwap
+          handleSellCurrencySelect={handleSellCurrencySelect}
+          handleBuyCurrencySelect={handleBuyCurrencySelect}
+          buyCurrency={buyCurrency}
+          sellCurrency={sellCurrency}
+          flipCurrency={flipCurrency}
+          currencies={currencies}
+        />
+        <h3>All orders</h3>
+        <Table
+          id="table_exchange"
+          classTitle={styles.exchange}
+          titles={titles}
+          rows={orders}
+          rowRender={(row, index) => (
+            <Row
+              key={index}
+              orderId={orderId}
+              row={row}
+            />
+          )}
+          isLoading={!isOnline}
+        />
       </Fragment>
     )
   }

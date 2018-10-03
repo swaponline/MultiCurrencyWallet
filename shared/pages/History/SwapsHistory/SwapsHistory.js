@@ -19,6 +19,7 @@ export default class SwapsHistory extends PureComponent {
       <div style={{ marginBottom: '50px' }}>
         <h3>Swaps history</h3>
         <Table
+          id="table-history"
           classTitle={styles.historySwap}
           titles={titles}
           rows={orders}

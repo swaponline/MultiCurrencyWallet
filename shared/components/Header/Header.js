@@ -34,7 +34,9 @@ export default class Header extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener('scroll', this.handleScroll)
+    if(window.innerHeight < 450 || document.body.clientHeight > 1500) {
+      window.addEventListener('scroll', this.handleScroll)
+    }
   }
 
   componentWillUnmount() {

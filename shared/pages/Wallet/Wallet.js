@@ -109,6 +109,7 @@ export default class Wallet extends Component {
           </SubTitle>
         </PageHeadline>
         <Table
+          id="table-wallet"
           classTitle={styles.wallet}
           titles={titles}
           rows={[...items, ...tokens].filter(coin => !hiddenCoinsList.includes(coin.currency))}
