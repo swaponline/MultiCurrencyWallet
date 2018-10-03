@@ -36,6 +36,7 @@ const setupContract = (ethAddress, contractAddress, nameContract, decimals) => {
     address: ethAddress,
     balance: 0,
     name: nameContract.toLowerCase(),
+    fullName: nameContract.toLowerCase(),
     currency: nameContract.toUpperCase(),
     contractAddress,
     decimals,

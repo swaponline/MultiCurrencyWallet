@@ -2,10 +2,36 @@ import config from 'app-config'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
 import constants from 'helpers/constants'
+import actions from 'redux/actions'
 
 import { eos, ecc } from 'helpers/eos'
 import { Keygen } from 'eosjs-keygen'
 
+const generateAccountName = (publicKey) => {
+  const account = Array.prototype.map.call(
+    publicKey.substr(0, 12).toLowerCase(),
+    (char) => (Number.isNaN(Number.parseInt(char, 10)) || char < 5) ? char : char - 4
+  ).join('')
+
+  return account
+}
+
+const prepareAccount = async () => {
+  const keys = await Keygen.generateMasterKeys()
+
+  const { masterPrivateKey, publicKeys: { active } } = keys
+
+  const accountName = generateAccountName(active)
+
+  const { buyAccountPriceInBTC } = config.api.eos
+
+  return {
+    masterPrivateKey: masterPrivateKey,
+    publicKey: active,
+    accountName: accountName,
+    price: buyAccountPriceInBTC
+  }
+}
 
 const register = async (accountName, privateKey) => {
   const keys = await Keygen.generateMasterKeys(privateKey)
@@ -39,33 +65,61 @@ const login = async (accountName, masterPrivateKey) => {
   reducers.user.setAuthData({ name: 'eosData', data: { ...keys, address: accountName } })
 }
 
-const createAccount = async () => {
-  const keys = await Keygen.generateMasterKeys()
-  const { masterPrivateKey, publicKeys: { active } } = keys
-
-  localStorage.setItem(constants.privateKeyNames.eos, masterPrivateKey)
-  reducers.user.setAuthData({ name: 'eosData', data: { ...keys } })
-
-  console.log(`request to create account for ${active}`)
+const requestToCreateAccount = async ({ publicKey, accountName, address, signature, txid }) => {
   const { registerEndpoint } = config.api.eos
+
   const response = await fetch(registerEndpoint, {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ publicKey: active }),
+    body: JSON.stringify({ publicKey, accountName, address, signature, txid }),
   })
-  const { accountName, transaction_id: txid } = await response.json()
 
-  if (!accountName) {
-    throw new Error('Unable to register EOS address. Please contact team@swap.online for fix this issue')
+  const { transaction_id } = await response.json()
+
+  return transaction_id
+}
+
+const payForAccountCreation = async (senderAddress) => {
+  const { buyAccountPriceInBTC, buyAccountPaymentRecipient } = config.api.eos
+
+  const txid = await actions.btc.send(senderAddress, buyAccountPaymentRecipient, buyAccountPriceInBTC)
+
+  return txid
+}
+
+const buyAccount = async (masterPrivateKey, paymentTxId) => {
+  const keys = await Keygen.generateMasterKeys(masterPrivateKey)
+  const {publicKeys: {active: eosPublicKey}, privateKeys: {active: eosPrivateKey}} = keys
+  const accountName = generateAccountName(eosPublicKey)
+
+  const {user: {btcData: {address: btcAddress, privateKey: btcPrivateKey}}} = getState()
+
+  localStorage.setItem(constants.privateKeyNames.eos, eosPrivateKey)
+  localStorage.setItem(constants.privateKeyNames.eosAccount, accountName)
+  reducers.user.setAuthData({name: 'eosData', data: {...keys, address: accountName}})
+
+  if (!paymentTxId) {
+    const paymentTx = await payForAccountCreation(btcAddress)
+    paymentTxId = paymentTx.getId()
   }
 
-  console.log(`${accountName} was created at ${txid}`)
+  const message = `${accountName}:${eosPublicKey}`
+  const signature = await actions.btc.signMessage(message, btcPrivateKey)
 
-  localStorage.setItem(constants.privateKeyNames.eosAccount, accountName)
-  reducers.user.setAuthData({ name: 'eosData', data: { address: accountName } })
+  const creationTxId = await requestToCreateAccount({
+    accountName: accountName,
+    publicKey: eosPublicKey,
+    address: btcAddress,
+    signature: signature,
+    txid: paymentTxId
+  })
+
+  console.log(`${accountName} created at ${creationTxId}`)
+
+  return { paymentTxId, creationTxId }
 }
 
 const getBalance = async () => {
@@ -118,5 +172,6 @@ export default {
   register,
   getBalance,
   send,
-  createAccount,
+  buyAccount,
+  prepareAccount
 }

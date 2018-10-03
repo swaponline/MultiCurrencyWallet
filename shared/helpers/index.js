@@ -19,6 +19,7 @@ import getScrollBarWidth from './getScrollBarWidth'
 
 import { migrate } from './migrations/'
 
+
 export {
   eos,
   bcash,

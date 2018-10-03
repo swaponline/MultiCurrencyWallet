@@ -6,7 +6,7 @@ import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 
 const Select = ({ balance, currency, changeBalance }) => (
   <Fragment>
-    <FieldLabel inRow>Available amount for sell</FieldLabel>
+    <FieldLabel inRow >Available amount for sell</FieldLabel>
     <div styleName="groupField">
       <p>{currency.toUpperCase()} { balance ? parseFloat(balance).toFixed(3) : 0.00 }</p>
       <div styleName="cell" onClick={() => changeBalance(balance / 10)}>Sell 1/10</div>

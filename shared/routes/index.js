@@ -11,11 +11,15 @@ import History          from 'pages/History/History'
 import NotFound         from 'pages/NotFound/NotFound'
 import Affiliate        from 'pages/Affiliate/Affiliate'
 import Currency         from 'pages/Currency/Currency'
+import CurrencyWallet   from 'pages/CurrencyWallet/CurrencyWallet'
 
 
 const routes = (
   <Switch>
+
     <Route path={`${links.swap}/:buy-:sell/:orderId`} component={SwapComponent} />
+
+    <Route path={`${links.currencyWallet}-:fullName`} component={CurrencyWallet} />
 
     <Route path={`${links.home}:buy-:sell/:orderId`} component={Home} />
     <Route path={`${links.home}:buy-:sell`} component={Home} />

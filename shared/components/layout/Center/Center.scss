@@ -21,6 +21,10 @@
   &:not(.keepFontSize) {
     font-size: 0;
   }
+
+  &.relative {
+    position: relative;
+  }
 }
 
 .centerHorizontally {
