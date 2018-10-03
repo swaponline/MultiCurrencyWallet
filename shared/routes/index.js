@@ -19,6 +19,8 @@ const routes = (
 
     <Route path={`${links.swap}/:buy-:sell/:orderId`} component={SwapComponent} />
 
+    <Route path={`${links.currencyWallet}-:fullName`} component={CurrencyWallet} />
+
     <Route path={`${links.home}:buy-:sell/:orderId`} component={Home} />
     <Route path={`${links.home}:buy-:sell`} component={Home} />
     <Route path={links.exchange} component={Home} />
@@ -26,8 +28,6 @@ const routes = (
     <Route path={links.affiliate} component={Affiliate} />
     <Route path={links.listing} component={Listing} />
     <Route path={links.history} component={History} />
-
-    <Route path={`${links.home}wallets/:currencyWallet`} component={CurrencyWallet} />
 
     <Route path={`${links.home}:currency`} component={Currency} />
     <Route exact path={links.home} component={Wallet} />
