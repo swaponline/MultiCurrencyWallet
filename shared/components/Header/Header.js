@@ -16,8 +16,9 @@ import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 let lastScrollTop = 0
 
 @withRouter
-@connect(({ menu: { items: menu } }) => ({
-  menu,
+@connect(({ menu: { items: menuItems, isDisplayingTable } }) => ({
+  menuItems,
+  isDisplayingTable,
 }))
 @CSSModules(styles, { allowMultiple: true })
 
@@ -52,18 +53,18 @@ export default class Header extends Component {
   }
 
   render() {
-    const { menu } = this.props
+    const { menuItems, isDisplayingTable } = this.props
     const { sticky } = this.state
 
     if (isMobile) {
-      return <NavMobile menu={menu} />
+      return <NavMobile menu={menuItems} />
     }
 
     return (
-      <div styleName={sticky ? 'header header-fixed' : 'header'}>
+      <div styleName={sticky && !isDisplayingTable ? 'header header-fixed' : 'header'}>
         <WidthContainer styleName="container">
           <Logo withLink />
-          <Nav menu={menu} />
+          <Nav menu={menuItems} />
           <Logo withLink mobile />
           <User />
         </WidthContainer>

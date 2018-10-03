@@ -1,0 +1,38 @@
+.root {
+  position: static;
+  width: 100%;
+}
+
+.heading {
+  display: flex;
+  justify-content: center;
+}
+
+.info-panel {
+  margin-bottom: .9rem;
+  overflow-x: scroll;
+}
+
+.info {
+  display: flex;
+  justify-content: center;
+}
+
+@include media-tablet-landscape-and-lower {
+  .info {
+    display: block;
+  }
+
+  .info span {
+    font-size: 1rem;
+  }
+} 
+
+.actions {
+  display: flex;
+  justify-content: center;
+}
+
+.actions button:not(:last-child) {
+  margin-right: .5rem;
+}

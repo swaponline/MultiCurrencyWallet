@@ -1,20 +1,45 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import cssModules from 'react-css-modules'
+import cx from 'classnames'
 
 import actions from 'redux/actions'
 import { connect } from 'redaction'
 import { links } from 'helpers'
 
-import Title from 'components/PageHeadline/Title/Title'
+import CurrencyDirectionChooser from 'components/CurrencyDirectionChooser/CurrencyDirectionChooser'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
-import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 
 import Orders from './Orders/Orders'
+import SubTitle from '../../components/PageHeadline/SubTitle/SubTitle'
+import styles from './Home.scss'
+import Center from '../../components/layout/Center/Center'
+import InlineLoader from '../../components/loaders/InlineLoader/InlineLoader'
+import { FaqExpandableItem } from '../../components/FaqExpandableItem/FaqExpandableItem'
 
 
-@connect(({ core: { filter } }) => ({
-  filter,
-}))
+@connect(
+  ({
+    core: { filter },
+    currencies: { items: currencies },
+    info: { faq: { items, fetching: faqFetching } },
+  }) => ({
+    filter,
+    currencies,
+    faqList: items,
+    faqFetching,
+  })
+)
+@cssModules(styles, { allowMultiple: true })
 export default class Home extends Component {
+
+  static propTypes = {
+    faqList: PropTypes.arrayOf(PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      description: PropTypes.string.isRequired,
+    })),
+    faqFetching: PropTypes.bool,
+  }
 
   constructor({ initialData, match: { params: { buy, sell } } }) {
     super()
@@ -27,13 +52,13 @@ export default class Home extends Component {
     }
   }
 
-  componentWillMount() {
-    let { filter, match: { params: { buy, sell } } } = this.props
+  componentDidMount() {
+    // noinspection JSIgnoredPromiseFromCall
+    actions.info.fetchFaq()
+  }
 
-    if (typeof buy !== 'string' || typeof sell !== 'string') {
-      filter = filter.split('-')
-      this.handelReplaceHistory(filter[0], filter[1])
-    }
+  componentWillMount() {
+    const { match: { params: { buy, sell } } } = this.props
 
     if (buy !== this.state.sellCurrency || sell !== this.state.sellCurrency) {
       actions.core.setFilter(`${sell}-${buy}`)
@@ -41,54 +66,29 @@ export default class Home extends Component {
   }
 
   handleBuyCurrencySelect = ({ value }) => {
-    let { sellCurrency, buyCurrency } = this.state
-
-    if (value === sellCurrency) {
-      sellCurrency = buyCurrency
-    }
-
-    this.handelReplaceHistory(sellCurrency, value)
+    const { sellCurrency, buyCurrency } = this.state
 
     this.setState({
       buyCurrency: value,
-      sellCurrency,
+      sellCurrency: value === buyCurrency ? buyCurrency : sellCurrency,
     })
   }
 
   handleSellCurrencySelect = ({ value }) => {
-    let { sellCurrency, buyCurrency } = this.state
-
-    if (value === buyCurrency) {
-      buyCurrency = sellCurrency
-    }
-
-    this.handelReplaceHistory(value, buyCurrency)
+    const { sellCurrency, buyCurrency } = this.state
 
     this.setState({
-      buyCurrency,
+      buyCurrency: value === buyCurrency ? sellCurrency : buyCurrency,
       sellCurrency: value,
     })
   }
 
-  handelReplaceHistory = (sellCurrency, buyCurrency) => {
-    let { history } = this.props
-
-    this.setFilter(`${buyCurrency}-${sellCurrency}`)
-    history.replace((`${links.home}${buyCurrency}-${sellCurrency}`))
-  }
-
   flipCurrency = () => {
-    let { buyCurrency, sellCurrency } = this.state
-    const value = sellCurrency
-
-    sellCurrency = buyCurrency
-    buyCurrency = value
-
-    this.handelReplaceHistory(sellCurrency, buyCurrency)
+    const { buyCurrency, sellCurrency } = this.state
 
     this.setState({
-      buyCurrency,
-      sellCurrency,
+      buyCurrency: sellCurrency,
+      sellCurrency: buyCurrency,
     })
   }
 
@@ -96,25 +96,100 @@ export default class Home extends Component {
     actions.core.setFilter(filter)
   }
 
+  handleNext = () => {
+    const { history } = this.props
+    const { buyCurrency, sellCurrency } = this.state
+
+    this.setFilter(`${buyCurrency}-${sellCurrency}`)
+    history.replace((`${links.home}${buyCurrency}-${sellCurrency}`))
+  }
+
   render() {
-    const { match: { params: { orderId } } } = this.props
+    const {
+      match: {
+        params: {
+          orderId,
+        },
+      },
+      history: {
+        location: {
+          pathname,
+        },
+      },
+      currencies,
+      faqList,
+      faqFetching,
+    } = this.props
+
     const { buyCurrency, sellCurrency } = this.state
 
     return (
       <section style={{ position: 'relative', width: '100%' }}>
-        <PageHeadline >
-          <Fragment>
-            <Title>{buyCurrency} &#8594; {sellCurrency} no limit exchange with 0 fee</Title>
-            <SubTitle>Choose the direction of exchange</SubTitle>
-          </Fragment>
-          <Orders
-            handleSellCurrencySelect={this.handleSellCurrencySelect}
-            handleBuyCurrencySelect={this.handleBuyCurrencySelect}
-            buyCurrency={buyCurrency}
-            sellCurrency={sellCurrency}
-            flipCurrency={this.flipCurrency}
-            orderId={orderId}
-          />
+        <PageHeadline>
+          {
+            pathname === links.exchange ?
+              <React.Fragment>
+                <CurrencyDirectionChooser
+                  handleSellCurrencySelect={this.handleSellCurrencySelect}
+                  handleBuyCurrencySelect={this.handleBuyCurrencySelect}
+                  handleSubmit={this.handleNext}
+                  buyCurrency={buyCurrency}
+                  sellCurrency={sellCurrency}
+                  flipCurrency={this.flipCurrency}
+                  currencies={currencies}
+                />
+                <div styleName="videoContainer">
+                  <Center relative centerVertically={false}>
+                    <SubTitle>What is atomic swap?</SubTitle>
+                  </Center>
+
+                  <div styleName="videoFaqContainer">
+                    <iframe
+                      title="What is atomic swap?"
+                      width="700"
+                      height="480"
+                      src="https://www.youtube.com/embed/Jhrb7xOT_7s"
+                      frameBorder="0"
+                      allow="autoplay; encrypted-media"
+                      allowFullScreen
+                    />
+
+                    <div
+                      styleName={
+                        cx('faqContainer', {
+                          'noItems': !faqFetching && faqList.length === 0,
+                          'loading': faqFetching,
+                        })
+                      }
+                    >
+                      {
+                        faqFetching ?
+                          (
+                            <React.Fragment>
+                              {'Loading FAQ'}
+                              <InlineLoader />
+                            </React.Fragment>
+                          )
+                          :
+                          faqList.length === 0 ?
+                            'No items here yet'
+                            :
+                            faqList.map((question, idx) => <FaqExpandableItem key={idx} {...question} />)
+                      }
+                    </div>
+                  </div>
+                </div>
+              </React.Fragment>
+              :
+              <Orders
+                handleSellCurrencySelect={this.handleSellCurrencySelect}
+                handleBuyCurrencySelect={this.handleBuyCurrencySelect}
+                buyCurrency={buyCurrency}
+                sellCurrency={sellCurrency}
+                flipCurrency={this.flipCurrency}
+                orderId={orderId}
+              />
+          }
         </PageHeadline>
       </section>
     )

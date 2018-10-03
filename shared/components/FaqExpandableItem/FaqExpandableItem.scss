@@ -1,0 +1,43 @@
+.container {
+  display: flex;
+  width: 100%;
+  flex: 1;
+
+  flex-direction: column;
+  box-shadow: 1px 1px 3px 0;
+
+  &.active {
+
+    .header {
+      background-color: #7371ff;
+      color: #fff !important;
+    }
+
+    .description {
+      background: #fafafa;
+    }
+
+  }
+}
+
+.icon {
+  position: absolute;
+  right: 10px;
+  top: 13px;
+}
+
+.header {
+  position: relative;
+  cursor: pointer;
+  min-height: 40px;
+  user-select: none;
+
+  color: #474748 !important;
+  background: rgb(250, 250, 250);
+
+  padding: 10px 30px 10px 10px;
+}
+
+.description {
+  padding: 10px;
+}
