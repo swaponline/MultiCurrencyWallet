@@ -1,3 +1,0 @@
-<component name="DependencyValidationManager">
-  <scope name="ProjectFiles" pattern="file[swap.react]:shared//*.js" />
-</component>

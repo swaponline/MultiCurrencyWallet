@@ -1,6 +1,0 @@
-<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Swap" type="JavascriptDebugType" factoryName="JavaScript Debug" uri="http://localhost:9001" useFirstLineBreakpoints="true">
-    <mapping url="http://webpack:///./shared" local-file="$PROJECT_DIR$/shared" />
-    <method v="2" />
-  </configuration>
-</component>
