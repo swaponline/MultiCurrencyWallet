@@ -44,6 +44,7 @@ export default class Orders extends Component {
         />
         <h3>All orders</h3>
         <Table
+          id="table_exchange"
           classTitle={styles.exchange}
           titles={titles}
           rows={orders}
