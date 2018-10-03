@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react'
+import React, { Component } from 'react'
 
 import { connect } from 'redaction'
 import actions from 'redux/actions'
@@ -18,7 +18,7 @@ import SelectGroup from './SelectGroup/SelectGroup'
 import Button from 'components/controls/Button/Button'
 import Toggle from 'components/controls/Toggle/Toggle'
 
-import { areFloatsEqual, isNumberValid, isNumberStringFormatCorrect, mathConstants } from 'helpers/math.js'
+import { isNumberValid, isNumberStringFormatCorrect, mathConstants } from 'helpers/math.js'
 
 
 const minAmount = {
@@ -331,7 +331,7 @@ export default class AddOffer extends Component {
     linked.sellAmount.check((value) => value <= balance, `Amount must be bigger your balance`)
 
     return (
-      <Fragment>
+      <div styleName="wrapper">
         <ExchangeRateGroup
           label="Exchange rate"
           inputValueLink={linked.exchangeRate.pipe(this.handleExchangeRateChange)}
@@ -381,7 +381,7 @@ export default class AddOffer extends Component {
         >
           Next
         </Button>
-      </Fragment>
+      </div>
     )
   }
 }

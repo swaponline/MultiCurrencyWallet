@@ -6,7 +6,7 @@ import styles from './FieldLabel.scss'
 
 
 const FieldLabel = ({ children, inRow }) => (
-  <div styleName={cx('label', { 'inRow': inRow })}>{children}</div>
+  <div styleName={cx('label', { 'inRow': inRow })} >{children}</div>
 )
 
 export default cssModules(FieldLabel, styles, { allowMultiple: true })

@@ -9,3 +9,13 @@
     margin-top: 0;
   }
 }
+
+@include media-tablet-landscape-and-lower  {
+  .inRow {
+    margin-top: 30px;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+}

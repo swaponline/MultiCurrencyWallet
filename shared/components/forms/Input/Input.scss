@@ -46,6 +46,12 @@ input, textarea {
   }
 }
 
+@include media-tablet-landscape-and-lower {
+  .input {
+    width: 200px;
+  }
+}
+
 textarea.input {
   line-height: 18px;
   padding: 11px 12px;
