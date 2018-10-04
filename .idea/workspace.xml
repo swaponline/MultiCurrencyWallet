@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4239880e-19e3-4a11-acd6-78e004879c3c" name="Default" comment="closes #511">
-      <change beforePath="$PROJECT_DIR$/config/mainnet/erc20.js" beforeDir="false" afterPath="$PROJECT_DIR$/config/mainnet/erc20.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared/components/modals/OfferModal/ConfirmOffer/ConfirmOffer.js" beforeDir="false" afterPath="$PROJECT_DIR$/shared/components/modals/OfferModal/ConfirmOffer/ConfirmOffer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared/components/ui/CurrencyIcon/images/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/shared/components/ui/CurrencyIcon/images/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared/containers/Core/Core.js" beforeDir="false" afterPath="$PROJECT_DIR$/shared/containers/Core/Core.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/helpers/utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/shared/helpers/utils.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/swap.core" beforeDir="false" afterPath="$PROJECT_DIR$/swap.core" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/swap.core/src/swap.app/constants/COINS.js" beforeDir="false" afterPath="$PROJECT_DIR$/swap.core/src/swap.app/constants/COINS.js" afterDir="false" />
     </list>
@@ -53,7 +50,7 @@
           <entry key="gitignore" value="8" />
           <entry key="gitmodules" value="5" />
           <entry key="html" value="312" />
-          <entry key="js" value="55120" />
+          <entry key="js" value="55133" />
           <entry key="json" value="82" />
           <entry key="md" value="4" />
           <entry key="scss" value="2415" />
@@ -66,7 +63,7 @@
           <entry key="CSS" value="11" />
           <entry key="HTML" value="94" />
           <entry key="JSON" value="105" />
-          <entry key="JavaScript" value="54948" />
+          <entry key="JavaScript" value="54961" />
           <entry key="Markdown" value="4" />
           <entry key="PLAIN_TEXT" value="4174" />
           <entry key="SCSS" value="2415" />
@@ -86,7 +83,7 @@
           <entry key="html" value="50" />
           <entry key="ini" value="1" />
           <entry key="jpg" value="3" />
-          <entry key="js" value="2357" />
+          <entry key="js" value="2359" />
           <entry key="json" value="46" />
           <entry key="md" value="5" />
           <entry key="png" value="2" />
@@ -103,7 +100,7 @@
           <entry key="HTML" value="47" />
           <entry key="Image" value="5" />
           <entry key="JSON" value="49" />
-          <entry key="JavaScript" value="2332" />
+          <entry key="JavaScript" value="2334" />
           <entry key="Markdown" value="4" />
           <entry key="PLAIN_TEXT" value="46" />
           <entry key="SCSS" value="214" />
@@ -118,44 +115,26 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/shared/components/modals/OfferModal/ConfirmOffer/ConfirmOffer.js">
+        <entry file="file://$PROJECT_DIR$/shared/instances/newSwap.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="433">
-              <caret line="43" column="27" selection-start-line="43" selection-start-column="27" selection-end-line="43" selection-end-column="27" />
+            <state relative-caret-position="400">
+              <caret line="23" column="31" lean-forward="true" selection-start-line="23" selection-start-column="31" selection-end-line="23" selection-end-column="31" />
               <folding>
-                <element signature="e#0#50#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config/mainnet/erc20.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="775">
-              <caret line="45" selection-start-line="45" selection-end-line="45" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/shared/components/ui/CurrencyIcon/CurrencyIcon.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-172">
-              <folding>
-                <element signature="e#0#25#0" expanded="true" />
+                <element signature="n#!!doc" expanded="true" />
+                <element signature="e#55#88#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/shared/components/ui/CurrencyIcon/images/index.js">
+        <entry file="file://$PROJECT_DIR$/shared/helpers/utils.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="580">
-              <caret line="23" column="9" lean-forward="true" selection-start-line="23" selection-start-column="9" selection-end-line="23" selection-end-column="9" />
+            <state relative-caret-position="593">
+              <caret line="72" lean-forward="true" selection-start-line="72" selection-end-line="72" />
               <folding>
-                <element signature="e#0#27#0" expanded="true" />
+                <element signature="n#!!doc" expanded="true" />
+                <element signature="e#21#45#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -239,7 +218,6 @@
         <option value="$PROJECT_DIR$/shared/components/loaders/Loader/Loader.js" />
         <option value="$PROJECT_DIR$/shared/components/QR/QR.js" />
         <option value="$PROJECT_DIR$/shared/helpers/seo.js" />
-        <option value="$PROJECT_DIR$/shared/helpers/utils.js" />
         <option value="$PROJECT_DIR$/shared/pages/Swap/EosToBtc.js" />
         <option value="$PROJECT_DIR$/shared/pages/Swap/UsdtToEthToken.js" />
         <option value="$PROJECT_DIR$/shared/redux/reducers/currencies.js" />
@@ -276,6 +254,7 @@
         <option value="$PROJECT_DIR$/shared/components/modals/OfferModal/ConfirmOffer/ConfirmOffer.js" />
         <option value="$PROJECT_DIR$/config/mainnet/erc20.js" />
         <option value="$PROJECT_DIR$/shared/components/ui/CurrencyIcon/images/index.js" />
+        <option value="$PROJECT_DIR$/shared/helpers/utils.js" />
       </list>
     </option>
   </component>
@@ -387,31 +366,7 @@
               <item name="swap.react" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
               <item name="shared" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="components" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="swap.react" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="shared" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="components" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="ui" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="swap.react" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="shared" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="components" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="ui" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="CurrencyIcon" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-            </path>
-            <path>
-              <item name="swap.react" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
-              <item name="shared" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="components" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="ui" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="CurrencyIcon" type="9f88c78c:ScopeViewTreeModel$FileNode" />
-              <item name="images" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="helpers" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
           </expand>
           <select />
@@ -877,7 +832,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="777004000" />
+    <option name="totallyTimeSpent" value="777187000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -997,23 +952,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="closes #511" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/shared/redux/actions/user.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1804">
-          <caret line="138" column="4" selection-start-line="138" selection-start-column="4" selection-end-line="138" selection-end-column="4" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shared/components/forms/FieldLabel/FieldLabel.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="434">
-          <caret line="14" column="17" selection-start-line="14" selection-start-column="17" selection-end-line="14" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/shared/components/forms/FieldLabel/FieldLabel.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="248">
@@ -1383,15 +1321,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shared/components/ui/CurrencyIcon/CurrencyIcon.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-172">
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/mainnet/erc20.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="775">
@@ -1401,10 +1330,41 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/shared/components/ui/CurrencyIcon/images/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="580">
+        <state relative-caret-position="98">
           <caret line="23" column="9" lean-forward="true" selection-start-line="23" selection-start-column="9" selection-end-line="23" selection-end-column="9" />
           <folding>
             <element signature="e#0#27#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shared/components/ui/CurrencyIcon/CurrencyIcon.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-172">
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shared/instances/newSwap.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="23" column="31" lean-forward="true" selection-start-line="23" selection-start-column="31" selection-end-line="23" selection-end-column="31" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#55#88#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shared/helpers/utils.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="593">
+          <caret line="72" lean-forward="true" selection-start-line="72" selection-end-line="72" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#21#45#0" expanded="true" />
           </folding>
         </state>
       </provider>
