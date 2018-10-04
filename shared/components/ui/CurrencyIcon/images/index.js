@@ -16,10 +16,12 @@ import kn from './kn.svg'
 import arn from './arn.svg'
 import lev from './lev.svg'
 import ltc from './ltc.svg'
+// import bxb from './bxb.svg'
 
 
 export default {
   btc,
+  // bxb,
   kn,
   ltc,
   bch,

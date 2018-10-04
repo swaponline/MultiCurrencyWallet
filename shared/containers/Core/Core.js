@@ -43,6 +43,7 @@ export default class Core extends Component {
       const { peer } = SwapApp.services.room
 
       this.updateOrders()
+      console.log('swap app', SwapApp)
 
       SwapApp.services.room.connection
         .on('peer joined', actions.ipfs.userJoined)
