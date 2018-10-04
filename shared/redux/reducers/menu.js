@@ -30,4 +30,10 @@ export const initialState = {
       isMobile: false,
     },
   ],
+  isDisplayingTable: false,
 }
+
+export const setIsDisplayingTable = (state, payload) => ({
+  ...state,
+  isDisplayingTable: payload,
+})

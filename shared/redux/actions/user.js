@@ -90,73 +90,52 @@ const getText = () => {
   const text = `
 ${window.location.hostname} emergency instruction
 \r\n
-\r\n
 #ETHEREUM
-\r\n
 \r\n
 Ethereum address: ${ethData.address}  \r\n
 Private key: ${ethData.privateKey}\r\n
-\r\n
 \r\n
 How to access tokens and ethers: \r\n
 1. Go here https://www.myetherwallet.com/#send-transaction \r\n
 2. Select 'Private key'\r\n
 3. paste private key to input and click "unlock"\r\n
 \r\n
-\r\n
-\r\n
 # BITCOIN\r\n
-\r\n
 \r\n
 Bitcoin address: ${btcData.address}\r\n
 Private key: ${btcData.privateKey}\r\n
-\r\n
 \r\n
 1. Go to blockchain.info\r\n
 2. login\r\n
 3. Go to settings > addresses > import\r\n
 4. paste private key and click "Ok"\r\n
 \r\n
-\r\n
 * We don\`t store your private keys and will not be able to restore them!
-\r\n
-\r\n
 \r\n
 # EOS\r\n
 \r\n
 EOS Master Private Key: ${eosData.masterPrivateKey}\r\n
 Account name: ${eosData.address}\r\n
 
-#BITCOIN CASH
-\r\n
+#BITCOIN CASH\r\n
 \r\n
 BitcoinCash address: ${bchData.address}  \r\n
 Private key: ${bchData.privateKey}\r\n
 \r\n
-\r\n
 1. Go to blockchain.info
 2. login
 3. Go to settings > addresses > import
 4. paste private key and click "Ok"
-
 \r\n
-\r\n
-\r\n
-
 #LITECOIN
-\r\n
 \r\n
 Litecoin address: ${ltcData.address}  \r\n
 Private key: ${ltcData.privateKey}\r\n
 \r\n
-\r\n
 1. Go to blockchain.info
 2. login
 3. Go to settings > addresses > import
 4. paste private key and click "Ok"
-
-\r\n
-\r\n
 \r\n
 `
 
