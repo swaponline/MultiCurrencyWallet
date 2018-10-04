@@ -34,9 +34,7 @@ export default class Header extends Component {
   }
 
   componentDidMount() {
-    if(window.innerHeight < 450 || document.body.clientHeight > 1500) {
-      window.addEventListener('scroll', this.handleScroll)
-    }
+    window.addEventListener('scroll', this.handleScroll)
   }
 
   componentWillUnmount() {
@@ -45,7 +43,7 @@ export default class Header extends Component {
 
   handleScroll = () =>  {
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop
-    if (scrollTop > lastScrollTop || scrollTop < 88) {
+    if (scrollTop > lastScrollTop || scrollTop < 200) {
       this.setState(() => ({ sticky: false }))
     }
     else {
