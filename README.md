@@ -1,4 +1,5 @@
-## swap.online
+## swap.online 
+[![Build Status](https://travis-ci.org/swaponline/swap.react.svg?branch=master)](https://travis-ci.org/swaponline/swap.react)
 
 Atomic swap cryptocurrency protocol. Live version here: https://swap.online. Atomic swap library at http://github.com/swaponline/swap.core.
 
@@ -27,6 +28,7 @@ npm run start
 ```
 
  # Структура папок и файлов
+```
 #### github
     Шаблоны для issue, PR, и т.п.
 #### bin
@@ -78,3 +80,4 @@ npm run start
 #### travis.yml
     конфиг для travis
 
+```
