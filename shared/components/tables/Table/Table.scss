@@ -265,12 +265,11 @@
 
 .table-fixed{
   thead {
-    th {
-      position: sticky;
-      top: 0;
-      background: #fff;
-      z-index: 10000;
-    }
+    position: fixed;
+    top: 0;
+    background: #fff;
+    z-index: 10000;
+    width: 100%;
   }
 }
 
