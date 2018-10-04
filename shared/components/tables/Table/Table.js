@@ -19,7 +19,7 @@ export default class Table extends React.Component {
 
   componentDidMount() {
     const { id } = this.props
-    if (id && (window.innerHeight < 900 || document.body.clientHeight > 1200)) { 
+    if (id) { 
       window.addEventListener('scroll', this.handleScrollTable)
     }
   }
@@ -34,7 +34,7 @@ export default class Table extends React.Component {
     let tableOffset = document.getElementById(id).offsetTop
     let tableHeight = document.getElementById(id).clientHeight
     if (scrollTop > tableOffset && scrollTop < tableOffset + tableHeight) {
-      reducers.menu.setIsDisplayingTable(true)
+     reducers.menu.setIsDisplayingTable(true)
       this.setState(() => ({ sticky: true }))
     } else {
       this.setState(() => ({ sticky: false }))
