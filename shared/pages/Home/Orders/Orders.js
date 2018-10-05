@@ -9,7 +9,7 @@ import Table from 'components/tables/Table/Table'
 import Title from 'components/PageHeadline/Title/Title'
 import tableStyles from 'components/tables/Table/Table.scss'
 import MyOrders from './MyOrders/MyOrders'
-
+import SearchSwap from 'components/SearchSwap/SearchSwap'
 import styles from './Orders.scss'
 
 
@@ -41,7 +41,7 @@ export default class Orders extends Component {
   }
 
   render() {
-    const { sellCurrency, buyCurrency } = this.props
+    const { sellCurrency, buyCurrency, handleSellCurrencySelect, handleBuyCurrencySelect, flipCurrency, currencies } = this.props
     const titles = [ 'OWNER', 'EXCHANGE', 'YOU GET', 'YOU HAVE', 'EXCHANGE RATE', 'ACTIONS' ]
     const { isOnline, orders, myOrders, orderId } = this.props
 
@@ -49,6 +49,14 @@ export default class Orders extends Component {
       <Fragment>
         <Title>{buyCurrency} &#8594; {sellCurrency} no limit exchange with 0 fee</Title>
         <MyOrders myOrders={myOrders} />
+        <SearchSwap
+          handleSellCurrencySelect={handleSellCurrencySelect}
+          handleBuyCurrencySelect={handleBuyCurrencySelect}
+          buyCurrency={buyCurrency}
+          sellCurrency={sellCurrency}
+          flipCurrency={flipCurrency}
+          currencies={currencies}
+        />
         <h3>All orders</h3>
         <Table
           id="table_exchange"
