@@ -35,8 +35,7 @@ export default class Home extends Component {
 
   static propTypes = {
     faqList: PropTypes.arrayOf(PropTypes.shape({
-      title: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
+      question: PropTypes.string.isRequired,
     })),
     faqFetching: PropTypes.bool,
   }
