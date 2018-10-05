@@ -25,6 +25,7 @@ import { EthSwap, EthTokenSwap, BtcSwap, LtcSwap, EosSwap, UsdtSwap } from 'swap
 
 const repo = utils.createRepo()
 utils.exitListener()
+utils.removeRepo(path('/data/'))
 
 const createSwapApp = () => {
 

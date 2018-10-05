@@ -2,8 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4239880e-19e3-4a11-acd6-78e004879c3c" name="Default" comment="closes #511">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/helpers/utils.js" beforeDir="false" afterPath="$PROJECT_DIR$/shared/helpers/utils.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/instances/newSwap.js" beforeDir="false" afterPath="$PROJECT_DIR$/shared/instances/newSwap.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/pages/Home/Orders/Orders.js" beforeDir="false" afterPath="$PROJECT_DIR$/shared/pages/Home/Orders/Orders.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared/pages/Home/Orders/Orders.scss" beforeDir="false" afterPath="$PROJECT_DIR$/shared/pages/Home/Orders/Orders.scss" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/swap.core" beforeDir="false" afterPath="$PROJECT_DIR$/swap.core" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/swap.core/src/swap.app/constants/COINS.js" beforeDir="false" afterPath="$PROJECT_DIR$/swap.core/src/swap.app/constants/COINS.js" afterDir="false" />
     </list>
@@ -51,10 +55,10 @@
           <entry key="gitignore" value="17" />
           <entry key="gitmodules" value="5" />
           <entry key="html" value="312" />
-          <entry key="js" value="55558" />
+          <entry key="js" value="55702" />
           <entry key="json" value="82" />
           <entry key="md" value="4" />
-          <entry key="scss" value="2415" />
+          <entry key="scss" value="2429" />
           <entry key="svg" value="473" />
           <entry key="txt" value="3769" />
         </counts>
@@ -64,10 +68,10 @@
           <entry key="CSS" value="11" />
           <entry key="HTML" value="94" />
           <entry key="JSON" value="105" />
-          <entry key="JavaScript" value="55386" />
+          <entry key="JavaScript" value="55530" />
           <entry key="Markdown" value="4" />
           <entry key="PLAIN_TEXT" value="4183" />
-          <entry key="SCSS" value="2415" />
+          <entry key="SCSS" value="2429" />
           <entry key="SVG" value="473" />
         </counts>
       </usages-collector>
@@ -84,11 +88,11 @@
           <entry key="html" value="50" />
           <entry key="ini" value="1" />
           <entry key="jpg" value="3" />
-          <entry key="js" value="2373" />
+          <entry key="js" value="2375" />
           <entry key="json" value="46" />
           <entry key="md" value="5" />
           <entry key="png" value="2" />
-          <entry key="scss" value="214" />
+          <entry key="scss" value="215" />
           <entry key="stylelintrc" value="1" />
           <entry key="svg" value="37" />
           <entry key="txt" value="1" />
@@ -101,10 +105,10 @@
           <entry key="HTML" value="47" />
           <entry key="Image" value="5" />
           <entry key="JSON" value="49" />
-          <entry key="JavaScript" value="2348" />
+          <entry key="JavaScript" value="2350" />
           <entry key="Markdown" value="4" />
           <entry key="PLAIN_TEXT" value="49" />
-          <entry key="SCSS" value="214" />
+          <entry key="SCSS" value="215" />
           <entry key="SVG" value="37" />
           <entry key="Svelte" value="2" />
           <entry key="YAML" value="13" />
@@ -115,11 +119,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/shared/instances/newSwap.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="337">
-              <caret line="26" column="20" selection-start-line="26" selection-start-column="20" selection-end-line="26" selection-end-column="20" />
+            <state relative-caret-position="344">
+              <caret line="27" column="29" selection-start-line="27" selection-start-column="29" selection-end-line="27" selection-end-column="29" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <element signature="e#55#88#0" expanded="true" />
@@ -131,8 +135,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/shared/helpers/utils.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="531">
-              <caret line="22" column="39" selection-start-line="22" selection-start-column="39" selection-end-line="22" selection-end-column="39" />
+            <state relative-caret-position="31">
+              <caret line="1" selection-start-line="1" selection-end-line="1" selection-end-column="23" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <element signature="e#21#44#0" expanded="true" />
@@ -142,19 +146,34 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config/mainnet/erc20.js">
+        <entry file="file://$PROJECT_DIR$/shared/pages/Home/Home.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="447">
-              <caret line="49" selection-start-line="49" selection-end-line="49" />
+            <state relative-caret-position="-757">
+              <caret line="144" lean-forward="true" selection-start-line="144" selection-end-line="144" />
+              <folding>
+                <element signature="e#0#40#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/shared/pages/Home/Orders/Orders.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="496">
-              <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+            <state relative-caret-position="617">
+              <caret line="53" column="39" selection-start-line="53" selection-start-column="33" selection-end-line="53" selection-end-column="39" />
+              <folding>
+                <element signature="e#0#50#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/shared/pages/Home/Orders/Orders.scss">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="62">
+              <caret line="2" column="1" lean-forward="true" selection-start-line="2" selection-start-column="1" selection-end-line="2" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -223,7 +242,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/shared/components/controls/WithdrawButton/WithdrawButton.js" />
         <option value="$PROJECT_DIR$/shared/components/ui/CurrencyIcon/images/arn.svg" />
         <option value="$PROJECT_DIR$/shared/components/ui/CurrencyIcon/images/lev.svg" />
         <option value="$PROJECT_DIR$/shared/pages/Wallet/Wallet.js" />
@@ -262,18 +280,19 @@
         <option value="$PROJECT_DIR$/shared/components/tables/Table/Table.scss" />
         <option value="$PROJECT_DIR$/shared/components/modals/OfferModal/AddOffer/Group/Group.js" />
         <option value="$PROJECT_DIR$/shared/pages/History/SwapsHistory/RowHistory/RowHistory.js" />
-        <option value="$PROJECT_DIR$/shared/pages/Home/Orders/Orders.js" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/shared/containers/Core/Core.js" />
         <option value="$PROJECT_DIR$/shared/components/modals/OfferModal/ConfirmOffer/ConfirmOffer.js" />
-        <option value="$PROJECT_DIR$/shared/instances/newSwap.js" />
-        <option value="$PROJECT_DIR$/shared/helpers/utils.js" />
         <option value="$PROJECT_DIR$/config/mainnet/erc20.js" />
         <option value="$PROJECT_DIR$/shared/components/ui/CurrencyIcon/images/index.js" />
         <option value="$PROJECT_DIR$/shared/components/ui/CurrencyIcon/images/bxb.svg" />
         <option value="$PROJECT_DIR$/config/default.js" />
         <option value="$PROJECT_DIR$/swap.core/src/swap.app/constants/COINS.js" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/shared/pages/Home/Orders/Orders.js" />
+        <option value="$PROJECT_DIR$/shared/pages/Home/Orders/Orders.scss" />
+        <option value="$PROJECT_DIR$/shared/helpers/utils.js" />
+        <option value="$PROJECT_DIR$/shared/instances/newSwap.js" />
       </list>
     </option>
   </component>
@@ -380,6 +399,32 @@
               <item name="swap.react" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
               <item name=".idea" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="swap.react" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="shared" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="swap.react" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="shared" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="pages" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="swap.react" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="shared" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="pages" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="Home" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="swap.react" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="shared" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="pages" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="Home" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="Orders" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
           </expand>
           <select />
@@ -845,7 +890,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="783635000" />
+    <option name="totallyTimeSpent" value="784227000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -860,7 +905,7 @@
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4994664" visible="true" weight="0.17420132" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4994664" visible="true" weight="0.17420132" />
       <window_info id="Structure" order="1" sideWeight="0.50053364" side_tool="true" weight="0.17420132" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -873,7 +918,7 @@
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49909583" weight="0.32977587" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.50391805" side_tool="true" weight="0.45891142" />
-      <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49608198" visible="true" weight="0.18890075" />
+      <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.49608198" weight="0.3895411" />
       <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.4996986" weight="0.32870865" />
       <window_info anchor="bottom" id="Messages" order="11" weight="0.32977587" />
       <window_info anchor="bottom" id="Inspection Results" order="12" weight="0.32977587" />
@@ -965,13 +1010,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="closes #511" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/shared/components/modals/OfferModal/AddOffer/SelectGroup/SelectGroup.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="62">
-          <caret line="2" column="1" selection-start-line="2" selection-start-column="1" selection-end-line="2" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/mainnet/swapContract.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="62">
@@ -1130,16 +1168,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shared/pages/Home/Home.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="671">
-          <caret line="145" column="12" selection-start-line="145" selection-start-column="12" selection-end-line="145" selection-end-column="12" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/shared/pages/Swap/LtcToEth.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="281">
@@ -1163,16 +1191,6 @@
           <second_editor>
             <markdownNavigatorState />
           </second_editor>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shared/pages/Home/Orders/Orders.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1600">
-          <caret line="52" column="14" selection-start-line="52" selection-start-column="14" selection-end-line="52" selection-end-column="14" />
-          <folding>
-            <element signature="e#0#50#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1300,34 +1318,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/shared/instances/newSwap.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="337">
-          <caret line="26" column="20" selection-start-line="26" selection-start-column="20" selection-end-line="26" selection-end-column="20" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#55#88#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/testnet.dev.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="248">
           <caret line="8" column="6" selection-start-line="8" selection-start-column="2" selection-end-line="8" selection-end-column="6" />
           <folding>
             <element signature="e#0#34#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/shared/helpers/utils.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="531">
-          <caret line="22" column="39" selection-start-line="22" selection-start-column="39" selection-end-line="22" selection-end-column="39" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#21#44#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1359,6 +1355,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="496">
+          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/config/mainnet/erc20.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="447">
@@ -1366,10 +1369,52 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
+    <entry file="file://$PROJECT_DIR$/shared/pages/Home/Home.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="496">
-          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+        <state relative-caret-position="-757">
+          <caret line="144" lean-forward="true" selection-start-line="144" selection-end-line="144" />
+          <folding>
+            <element signature="e#0#40#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shared/pages/Home/Orders/Orders.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="617">
+          <caret line="53" column="39" selection-start-line="53" selection-start-column="33" selection-end-line="53" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#50#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shared/pages/Home/Orders/Orders.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="62">
+          <caret line="2" column="1" lean-forward="true" selection-start-line="2" selection-start-column="1" selection-end-line="2" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shared/helpers/utils.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="31">
+          <caret line="1" selection-start-line="1" selection-end-line="1" selection-end-column="23" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#21#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/shared/instances/newSwap.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="344">
+          <caret line="27" column="29" selection-start-line="27" selection-start-column="29" selection-end-line="27" selection-end-column="29" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#55#88#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

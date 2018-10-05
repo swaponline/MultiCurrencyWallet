@@ -9,6 +9,7 @@ import Table from 'components/tables/Table/Table'
 import Title from 'components/PageHeadline/Title/Title'
 import tableStyles from 'components/tables/Table/Table.scss'
 import MyOrders from './MyOrders/MyOrders'
+import { Button } from 'components/controls'
 
 import styles from './Orders.scss'
 
@@ -50,6 +51,7 @@ export default class Orders extends Component {
         <Title>{buyCurrency} &#8594; {sellCurrency} no limit exchange with 0 fee</Title>
         <MyOrders myOrders={myOrders} />
         <h3>All orders</h3>
+        <Button brand styleName="button" onClick={this.createOffer}>Create offer</Button>
         <Table
           id="table_exchange"
           classTitle={tableStyles.exchange}
