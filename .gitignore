@@ -11,6 +11,4 @@ build-*
 app.*.css
 app.*.js
 
-.idea/**/workspace.xml
-.idea/**/tasks.xml
-.idea/**/vcs.xml
+.idea/**/**
