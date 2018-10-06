@@ -54,7 +54,7 @@ const webpackConfig = {
       config.paths.base('shared'),
       config.paths.base('local_modules'),
       'node_modules',
-      config.paths.swapCore('swap.core/src'),
+      config.paths.swapCore(''),
     ],
     extensions: [ '.js', '.jsx', '.scss' ],
     plugins: [],
@@ -76,7 +76,7 @@ const webpackConfig = {
     new ProgressBarPlugin({ clear: false }),
     new WebappWebpackPlugin({
       logo: 'favicon.png',
-      path: '',
+      path: config.base,
     }),
     new HtmlWebpackPlugin({
       title: 'Swap.Online - Cryptocurrency Wallet with Atomic Swap Exchange',
@@ -85,10 +85,6 @@ const webpackConfig = {
       filename: 'index.html',
       inject: 'body',
     }),
-    // new webpack.ContextReplacementPlugin(
-    //   /moment[\/\\]locale$/,
-    //   /en-gb|es/
-    // ),
     new webpack.ContextReplacementPlugin(
       /\.\/locale$/,
       'empty-module',

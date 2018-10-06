@@ -2,9 +2,11 @@ export default {
   Withdraw: 'WithdrawModal',
   Offer: 'OfferModal',
   PrivateKeys: 'PrivateKeysModal',
-  Eos: 'EosModal',
+  EosRegister: 'EosRegisterModal',
+  EosBuyAccount: 'EosBuyAccountModal',
   Approve: 'Approve',
   ImportKeys: 'ImportKeys',
+  ShowMoreCoins: 'ShowMoreCoins',
   EthChecker: 'EthChecker',
   ReceiveModal: 'ReceiveModal',
 }

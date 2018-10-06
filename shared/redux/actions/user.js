@@ -11,12 +11,14 @@ import reducers from 'redux/core/reducers'
 const sign = async () => {
   const btcPrivateKey = localStorage.getItem(constants.privateKeyNames.btc)
   const bchPrivateKey = localStorage.getItem(constants.privateKeyNames.bch)
+  const ltcPrivateKey = localStorage.getItem(constants.privateKeyNames.ltc)
   const ethPrivateKey = localStorage.getItem(constants.privateKeyNames.eth)
   const _ethPrivateKey = actions.eth.login(ethPrivateKey)
 
   actions.btc.login(btcPrivateKey)
   actions.bch.login(bchPrivateKey)
-  // actions.usdt.login(btcPrivateKey)
+  actions.usdt.login(btcPrivateKey)
+  actions.ltc.login(ltcPrivateKey)
 
   Object.keys(config.erc20)
     .forEach(name => {
@@ -36,6 +38,7 @@ const getBalances = () => {
   actions.eth.getBalance()
   actions.btc.getBalance()
   actions.bch.getBalance()
+  actions.ltc.getBalance()
   actions.usdt.getBalance()
   actions.eos.getBalance()
 
@@ -56,20 +59,23 @@ const getDemoMoney = process.env.MAINNET ? () => {} : () => {
     })
 }
 
-const getExchangeRate = (sellCurrency, buyCurrency) => new Promise((resolve, reject) => {
-  const url = `https://api.cryptonator.com/api/full/${sellCurrency}-${buyCurrency}`
-  request.get(url).then(({ ticker: { price: exchangeRate } })  => {
-    resolve(exchangeRate)
-  })
-    .catch(() => {
-      resolve(1)
+const getExchangeRate = (sellCurrency, buyCurrency) =>
+  new Promise((resolve, reject) => {
+    const url = `https://api.cryptonator.com/api/full/${sellCurrency}-${buyCurrency}`
+
+    request.get(url).then(({ ticker: { price: exchangeRate } })  => {
+      resolve(exchangeRate)
     })
-})
+      .catch(() => {
+        resolve(1)
+      })
+  })
 
 const setTransactions = () =>
   Promise.all([
     actions.btc.getTransaction(),
     actions.eth.getTransaction(),
+    actions.ltc.getTransaction(),
     actions.token.getTransaction('swap'),
   ])
     .then(transactions => {
@@ -78,63 +84,58 @@ const setTransactions = () =>
     })
 
 const getText = () => {
-  const { user : { ethData, btcData, eosData, bchData } } = getState()
+  const { user : { ethData, btcData, eosData, bchData, ltcData } } = getState()
 
 
   const text = `
 ${window.location.hostname} emergency instruction
 \r\n
-\r\n
 #ETHEREUM
-\r\n
 \r\n
 Ethereum address: ${ethData.address}  \r\n
 Private key: ${ethData.privateKey}\r\n
-\r\n
 \r\n
 How to access tokens and ethers: \r\n
 1. Go here https://www.myetherwallet.com/#send-transaction \r\n
 2. Select 'Private key'\r\n
 3. paste private key to input and click "unlock"\r\n
 \r\n
-\r\n
-\r\n
 # BITCOIN\r\n
-\r\n
 \r\n
 Bitcoin address: ${btcData.address}\r\n
 Private key: ${btcData.privateKey}\r\n
-\r\n
 \r\n
 1. Go to blockchain.info\r\n
 2. login\r\n
 3. Go to settings > addresses > import\r\n
 4. paste private key and click "Ok"\r\n
 \r\n
-\r\n
 * We don\`t store your private keys and will not be able to restore them!
-\r\n
-\r\n
 \r\n
 # EOS\r\n
 \r\n
 EOS Master Private Key: ${eosData.masterPrivateKey}\r\n
 Account name: ${eosData.address}\r\n
 
-#BITCOIN CASH
-\r\n
+#BITCOIN CASH\r\n
 \r\n
 BitcoinCash address: ${bchData.address}  \r\n
 Private key: ${bchData.privateKey}\r\n
-\r\n
 \r\n
 1. Go to blockchain.info
 2. login
 3. Go to settings > addresses > import
 4. paste private key and click "Ok"
-
 \r\n
+#LITECOIN
 \r\n
+Litecoin address: ${ltcData.address}  \r\n
+Private key: ${ltcData.privateKey}\r\n
+\r\n
+1. Go to blockchain.info
+2. login
+3. Go to settings > addresses > import
+4. paste private key and click "Ok"
 \r\n
 `
 

@@ -1,7 +1,6 @@
 lib
 
 .DS_Store
-.idea
 .eslintcache
 
 *-lock.*
@@ -11,3 +10,5 @@ build-*
 
 app.*.css
 app.*.js
+
+.idea

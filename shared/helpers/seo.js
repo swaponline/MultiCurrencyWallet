@@ -12,7 +12,8 @@ const seo = {
     {
       uri: '/',
       title: 'Swap.Online - Cryptocurrency Wallet with Atomic Swap Exchange',
-      description: 'Atomic swap algorithms will help you to exchange cryptocurrencies instantly in a more secure way exluding third-parties. Decentralized exchange.',
+      description: 'Our wallet with Atomic swap algorithms will help you store and exchange' +
+        'cryptocurrencies instantly and more secure without third-parties. Decentralized exchange.',
     },
     {
       uri: '/exchange',

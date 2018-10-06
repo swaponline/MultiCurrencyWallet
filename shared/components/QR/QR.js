@@ -1,18 +1,23 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 
 /**
  * @todo Amount support?
  */
-export default class QR extends Component {
+export default class QR extends PureComponent {
+
   static propTypes = {
     network: PropTypes.string.isRequired,
     address: PropTypes.string.isRequired,
     size: PropTypes.number,
   }
 
+  static defaultProps = {
+    size: 250,
+  }
+
   render() {
-    const { network, address, size = 250 } = this.props
+    const { network, address, size } = this.props
 
     return (
       <img

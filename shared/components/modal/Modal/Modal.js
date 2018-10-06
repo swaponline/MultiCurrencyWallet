@@ -27,16 +27,23 @@ export default class Modal extends Component {
     disableClose: PropTypes.bool,
     titleUppercase: PropTypes.bool,
     onClose: PropTypes.func,
+    shouldCenterVertically: PropTypes.bool,
+    shouldCenterHorizontally: PropTypes.bool,
+    whiteLogo: PropTypes.bool,
+    showLogo: PropTypes.bool,
   }
 
   static defaultProps = {
     data: {},
     whiteLogo: false,
+    showLogo: true,
     showCloseButton: true,
     fullWidth: false,
     disableClose: false,
     disableCloseOverlay: false,
     uppercase: false,
+    shouldCenterVertically: true,
+    shouldCenterHorizontally: true,
   }
 
   close = () => {
@@ -60,7 +67,19 @@ export default class Modal extends Component {
   }
 
   render() {
-    const { className, whiteLogo, title, showCloseButton, disableClose, children, titleUppercase, name } = this.props
+    const {
+      className,
+      whiteLogo,
+      showLogo,
+      title,
+      showCloseButton,
+      disableClose,
+      children,
+      titleUppercase,
+      name,
+      shouldCenterHorizontally,
+      shouldCenterVertically,
+    } = this.props
 
     const titleStyleName = cx('title', {
       'uppercase': titleUppercase,
@@ -76,7 +95,10 @@ export default class Modal extends Component {
               Boolean(title || showCloseButton) && (
                 <div styleName="header">
                   <WidthContainer styleName="headerContent">
-                    <Logo colored={!whiteLogo} />
+                    {
+                      showLogo &&
+                      <Logo colored={!whiteLogo} />
+                    }
                     <div styleName={titleStyleName} role="title">{title}</div>
                     {
                       showCloseButton && !disableClose && (
@@ -88,7 +110,7 @@ export default class Modal extends Component {
               )
             }
             <div styleName="contentContainer">
-              <Center scrollable>
+              <Center scrollable centerHorizontally={shouldCenterHorizontally} centerVertically={shouldCenterVertically}>
                 <div styleName="content">
                   {children}
                 </div>

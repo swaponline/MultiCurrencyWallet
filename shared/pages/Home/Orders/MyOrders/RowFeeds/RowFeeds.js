@@ -46,8 +46,6 @@ export default class RowFeeds extends Component {
     const { isLinkCopied } = this.state
     const { row: { requests, buyAmount, buyCurrency, sellAmount, sellCurrency, exchangeRate, id }, declineRequest, acceptRequest, removeOrder } = this.props
 
-    console.log('this.props', this.props)
-
     return (
       <tr>
         <td>

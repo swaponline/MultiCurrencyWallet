@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Link from 'sw-valuelink'
+import cx from 'classnames'
 
 import CSSModules from 'react-css-modules'
 import styles from './Field2.scss'
@@ -9,7 +10,7 @@ import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
 
 
-@CSSModules(styles)
+@CSSModules(styles, { allowMultiple: true })
 export default class Field2 extends React.Component {
 
   static propTypes = {
@@ -56,9 +57,10 @@ export default class Field2 extends React.Component {
         <div styleName="section">
           <div styleName="label">{label.toUpperCase()}</div>
           <Input
-            styleName="input"
+            styleName={cx('input', { 'errorInput': error })}
             placeholder="Write private key here..."
             valueLink={linkedValue}
+            disabled={error}
           />
           <Button
             styleName="button"
@@ -71,9 +73,10 @@ export default class Field2 extends React.Component {
         </div>
         {
           error && (
-            <div styleName="error">You should pass correct value!
-              Reload page and enter key again
-            </div>
+            <React.Fragment>
+              <i className="fas fa-times" styleName="errorIcon" />
+              <div styleName="error">INVALID PRIVATE KEY! You should pass correct value! Reload page and enter key again</div>
+            </React.Fragment>
           )
         }
       </div>

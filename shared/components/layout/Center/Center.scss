@@ -5,18 +5,36 @@
   top: 0;
   left: 0;
   white-space: nowrap;
-  text-align: center;
-  font-size: 0;
+  // font-size: 0; // FIXME: why?
 
   &::before {
-    content: '';
+    content: "";
     height: 100%;
     display: inline-block;
-    vertical-align: middle;
+    vertical-align: top;
   }
 
   &.scrollable {
     overflow: auto;
+  }
+
+  &:not(.keepFontSize) {
+    font-size: 0;
+  }
+
+  &.relative {
+    position: relative;
+  }
+}
+
+.centerHorizontally {
+  text-align: center;
+}
+
+.centerVertically {
+  .centringContent,
+  &::before {
+    vertical-align: middle;
   }
 }
 
@@ -26,4 +44,3 @@
   vertical-align: middle;
   text-align: left;
 }
-

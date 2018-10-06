@@ -18,8 +18,9 @@ import Fee from './Fee/Fee'
 import { connect } from 'redaction'
 
 
-@connect(({ currencies: { items: currencies } }) => ({
+@connect(({ currencies: { items: currencies }, user: { ethData: { address } } }) => ({
   currencies,
+  address,
 }))
 @cssModules(styles)
 export default class ConfirmOffer extends Component {
@@ -29,8 +30,17 @@ export default class ConfirmOffer extends Component {
     actions.modals.close('OfferModal')
   }
 
+  getUniqId = () => {
+    const { address } = this.props
+    let id = Date.now()
+
+    return `${address}-${++id}`
+  }
+
   createOrder = () => {
     const { offer: { buyAmount, sellAmount, buyCurrency, sellCurrency, exchangeRate } } = this.props
+
+    console.log('order id', this.getUniqId())
 
     const data = {
       buyCurrency: `${buyCurrency}`,
@@ -39,6 +49,7 @@ export default class ConfirmOffer extends Component {
       sellAmount: Number(sellAmount),
       exchangeRate: Number(exchangeRate),
     }
+
     actions.analytics.dataEvent('orderbook-addoffer-click-confirm-button')
     actions.core.createOrder(data)
     actions.core.updateCore()

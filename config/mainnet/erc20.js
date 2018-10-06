@@ -15,6 +15,18 @@ export default {
     address: '0x49feeF410293261c04F1d14600Ba427F8eED8723',
     decimals: 2,
   },
+  arn: {
+    address: '0xBA5F11b16B155792Cf3B2E6880E8706859A8AEB6',
+    decimals: 8,
+  },
+  gusd: {
+    address: '0x056fd409e1d7a124bd7017459dfea2f387b6d5cd',
+    decimals: 2,
+  },
+  kn: {
+    address: '0xbfd18F20423694a69e35d65cB9c9D74396CC2c2d',
+    decimals: 18,
+  },
   yup: {
     address: '0xD9A12Cde03a86E800496469858De8581D3A5353d',
     decimals: 18,
@@ -27,4 +39,13 @@ export default {
     address: '0x9E4AD79049282F942c1b4c9b418F0357A0637017',
     decimals: 0,
   },
+  bxb: {
+    address: '0x60cbB964Db3f60D14f0d00B5109BccFB01981Aca',
+    decimals: 18,
+  },
+  dcn: {
+    address: '0x08d32b0da63e2C3bcF8019c9c5d849d7a9d791e6',
+    decimals: 0,
+  },
+
 }

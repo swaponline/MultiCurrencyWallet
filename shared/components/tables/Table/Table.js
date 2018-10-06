@@ -3,21 +3,54 @@ import React from 'react'
 import CSSModules from 'react-css-modules'
 import styles from './Table.scss'
 
-@CSSModules(styles)
-export default class Table extends React.Component {
 
-  shouldComponentUpdate(nextProps) {
+@CSSModules(styles, { allowMultiple: true })
+export default class Table extends React.Component {
+  constructor() {
+    super()
+
+    this.state = {
+      sticky: false,
+    }
+  }
+
+  componentDidMount() {
+    if (this.props.id) {
+      window.addEventListener('scroll', this.handleScrollTable)
+    }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScrollTable)
+  }
+
+  handleScrollTable = () => {
+    const { id } = this.props
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop
+
+    let tableOffset = document.getElementById(id).offsetTop
+    let tableHeight = document.getElementById(id).clientHeight
+
+    if (scrollTop > tableOffset && scrollTop < tableOffset + tableHeight) {
+      this.setState(() => ({ sticky: true }))
+    } else {
+      this.setState(() => ({ sticky: false }))
+    }
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
     const { rows, isLoading } = this.props
-    return (
-      isLoading !== nextProps.isLoading || rows !== nextProps.rows
-    )
+    return isLoading !== nextProps.isLoading
+      || rows !== nextProps.rows
+      || this.state.sticky !== nextState.sticky
   }
 
   render() {
-    const { titles, rows, rowRender, textIfEmpty, isLoading, loadingText, classTitle } = this.props
+    const { titles, rows, rowRender, textIfEmpty, isLoading, loadingText, classTitle, id } = this.props
+    const { sticky } = this.state
 
     return (
-      <table styleName="table" className={classTitle}>
+      <table styleName={sticky ? 'table table-fixed' : 'table'} className={classTitle} id={id}>
         <thead>
           <tr>
             {
@@ -53,8 +86,11 @@ export default class Table extends React.Component {
   }
 }
 
-
 Table.defaultProps = {
   textIfEmpty: 'The table is empty',
   loadingText: 'Loading...',
 }
+
+// export default connect(() => {}, (dispatch) => ({
+//   setIsDisplayingTable: payload => dispatch(setIsDisplayingTable(payload)),
+// }))

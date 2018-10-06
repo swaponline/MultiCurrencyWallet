@@ -10,7 +10,7 @@ import Button from 'components/controls/Button/Button'
 import Timer from './Timer/Timer'
 
 
-export default class BtcToEthToken extends Component {
+export default class UsdtToEthToken extends Component {
 
   constructor({ swap }) {
     super()
@@ -109,7 +109,7 @@ export default class BtcToEthToken extends Component {
                   </Fragment>
                 ) : (
                   <Fragment>
-                    <div>Save the secret key! Otherwise there will be a chance you loose your money!</div>
+                    <div>Save the secret key! Otherwise there will be a chance that you&apos;ll lose your money!</div>
                     <div>Secret Key: <strong>{flow.secret}</strong></div>
                     <div>Secret Hash: <strong>{flow.secretHash}</strong></div>
                   </Fragment>
@@ -135,7 +135,7 @@ export default class BtcToEthToken extends Component {
               {
                 flow.step === 3 && flow.isBalanceFetching && (
                   <Fragment>
-                    <div>Checking balance..</div>
+                    <div>Checking balance...</div>
                     <InlineLoader />
                   </Fragment>
                 )
@@ -144,7 +144,7 @@ export default class BtcToEthToken extends Component {
               {
                 (flow.step === 4 || flow.usdtScriptValues) && (
                   <Fragment>
-                    <h3>3. Creating Bitcoin Script. Please wait, it will take a while</h3>
+                    <h3>3. Creating Bitcoin Omni Script. Please wait, it will take a while</h3>
                     {
                       flow.usdtFundingTransactionHash && (
                         <div>
@@ -182,7 +182,7 @@ export default class BtcToEthToken extends Component {
                             target="_blank"
                             rel="noopener noreferrer"
                           >
-                            How refund your money ?
+                            How to refund your money?
                           </a>
                           Refund hex transaction:
                           <code>
@@ -197,7 +197,7 @@ export default class BtcToEthToken extends Component {
               {
                 (flow.step === 5 || flow.isEthContractFunded) && (
                   <Fragment>
-                    <h3>4. ETH Owner received Bitcoin Script and Secret Hash. Waiting when he creates ETH Contract</h3>
+                    <h3>4. ETH Owner received Bitcoin Omni Script and Secret Hash. Waiting until he creates ETH Contract</h3>
                     {
                       !flow.isEthContractFunded && (
                         <InlineLoader />
@@ -225,7 +225,7 @@ export default class BtcToEthToken extends Component {
 
               {
                 (flow.step === 6 || flow.isEthWithdrawn) && (
-                  <h3>5. ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait</h3>
+                  <h3>5. ETH Contract is created and charged. Requesting withdrawal from ETH Contract. Please wait</h3>
                 )
               }
               {

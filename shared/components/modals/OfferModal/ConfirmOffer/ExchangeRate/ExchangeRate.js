@@ -11,9 +11,8 @@ const ExchangeRate = ({ value, buyCurrency, sellCurrency }) => (
   <Row title="Exchange rate">
     <Value value={1} currency={buyCurrency} />
     <div styleName="equal">=</div>
-    <Value value={Number(value)} currency={sellCurrency} />
+    <Value value={1 / Number(value)} currency={sellCurrency} />
   </Row>
 )
 
 export default CSSModules(ExchangeRate, styles)
-

@@ -49,7 +49,6 @@ export default class Row extends Component {
 
   handleReloadBalance = async () => {
     const { isBalanceFetching } = this.state
-    const { token } = this.props
 
     if (isBalanceFetching) {
       return null
@@ -58,18 +57,10 @@ export default class Row extends Component {
     this.setState({
       isBalanceFetching: true,
     })
-    let action
-    let { currency } = this.props
 
-    currency = currency.toLowerCase()
+    const { currency } = this.props
 
-    if (token) {
-      action = actions.token.getBalance(currency)
-    } else {
-      action = actions[currency].getBalance()
-    }
-
-    await action
+    await actions[currency.toLowerCase()].getBalance(currency.toLowerCase())
 
     this.setState(() => ({
       isBalanceFetching: false,
@@ -88,12 +79,12 @@ export default class Row extends Component {
     })
   }
 
-  handleEosLogin = () => {
-    actions.modals.open(constants.modals.Eos, {})
+  handleEosRegister = () => {
+    actions.modals.open(constants.modals.EosRegister, {})
   }
 
-  handleEosCreateAccount = () => {
-    actions.eos.createAccount()
+  handleEosBuyAccount = async () => {
+    actions.modals.open(constants.modals.EosBuyAccount)
   }
 
   handleWithdraw = () => {
@@ -119,14 +110,8 @@ export default class Row extends Component {
     })
   }
 
-  handleGoTrade = async (link) => {
-    const balance = await actions.eth.getBalance()
-
-    if (balance - 0.02 > 0) {
-      this.props.history.push(link)
-    } else {
-      actions.modals.open(constants.modals.EthChecker, {})
-    }
+  handleGoTrade = (currency) => {
+    this.props.history.push(`/${currency.toLowerCase()}`)
   }
 
   handleMarkCoinAsHidden = (coin) => {
@@ -143,21 +128,27 @@ export default class Row extends Component {
           <CoinInteractive name={currency} />
         </td>
         <td>{currency}</td>
-        <td>
+        <td styleName="table_balance-cell">
           {
             !isBalanceFetched || isBalanceFetching ? (
               <InlineLoader />
             ) : (
-              <Fragment>
-                <i className="fas fa-sync-alt" styleName="icon" onClick={this.handleReloadBalance} />
-                <span onClick={this.handleReloadBalance}>{String(balance).length > 4 ? balance.toFixed(4) : balance}</span>
-                { currency === 'BTC' && currency === 'USDT' && unconfirmedBalance !== 0 && (
+              <div styleName="no-select-inline" onClick={this.handleReloadBalance} >
+                <i className="fas fa-sync-alt" styleName="icon" />
+                <span>{String(balance).length > 4 ? balance.toFixed(4) : balance}</span>
+                { currency === 'BTC' && unconfirmedBalance !== 0 && (
                   <Fragment>
                     <br />
                     <span style={{ fontSize: '12px', color: '#c9c9c9' }}>Unconfirmed {unconfirmedBalance}</span>
                   </Fragment>
                 ) }
-              </Fragment>
+                { currency === 'USDT' && unconfirmedBalance !== 0 && (
+                  <Fragment>
+                    <br />
+                    <span style={{ fontSize: '12px', color: '#c9c9c9' }}>Unconfirmed {unconfirmedBalance}</span>
+                  </Fragment>
+                ) }
+              </div>
             )
           }
         </td>
@@ -184,10 +175,10 @@ export default class Row extends Component {
                 )
               }
               {
-                currency === 'EOS' && address === '' && <button styleName="button" onClick={this.handleEosLogin}>Login</button>
+                currency === 'EOS' && address === '' && <button styleName="button" onClick={this.handleEosRegister}>Login</button>
               }
               {
-                currency === 'EOS' && address === '' && <button styleName="button" onClick={this.handleEosCreateAccount}>Register</button>
+                currency === 'EOS' && address === '' && <button styleName="button" onClick={this.handleEosBuyAccount}>Buy account</button>
               }
               { isAddressCopied && <p styleName="copied" >Address copied to clipboard</p> }
             </td>
@@ -207,9 +198,9 @@ export default class Row extends Component {
             )}
             {
               tradeAllowed && (
-                <WithdrawButton onClick={() => this.handleGoTrade(`/${currency.toLowerCase()}`)}>
+                <WithdrawButton onClick={() => this.handleGoTrade(currency)}>
                   <i className="fas fa-exchange-alt" />
-                  <span>Swap</span>
+                  <span>Exchange</span>
                 </WithdrawButton>
               )
             }

@@ -41,9 +41,11 @@ const login = (privateKey) => {
 const getBalance = async () => {
   const { user: { usdtData: { address } } } = getState()
 
-  const balance = await fetchBalance(address)
+  const result = await fetchBalance(address)
+  console.log('result', result)
+  const { balance, unconfirmed } = result
 
-  reducers.user.setBalance({ name: 'usdtData', amount: balance })
+  reducers.user.setBalance({ name: 'usdtData', amount: balance, unconfirmedBalance: unconfirmed || 0 })
   return balance
 }
 
@@ -52,6 +54,7 @@ const fetchBalance = (address, assetId = 31) =>
     body: `addr=${address}`,
   })
     .then(response => {
+      console.log('responce', response)
       const { error, balance } = response
 
       if (error) throw new Error(`Omni Balance: ${error} at ${address}`)
@@ -60,7 +63,9 @@ const fetchBalance = (address, assetId = 31) =>
         .filter(asset => parseInt(asset.id) === assetId || asset.id === assetId)
 
       if (!findById.length) {
-        return 0
+        return {
+          balance: 0,
+        }
       }
 
       console.log('Omni Balance:', findById[0].value)
@@ -68,11 +73,17 @@ const fetchBalance = (address, assetId = 31) =>
       console.log('Omni Balance pending:', findById[0].pendingneg)
 
       const usdsatoshis = BigNumber(findById[0].value)
+      const usdtUnconfirmed = BigNumber(findById[0].pendingneg)
 
       if (usdsatoshis) {
-        return usdsatoshis.dividedBy(1e8).toNumber()
+        return {
+          unconfirmed: usdtUnconfirmed.dividedBy(1e8).toNumber(),
+          balance: usdsatoshis.dividedBy(1e8).toNumber(),
+        }
       }
-      return 0
+      return {
+        balance: 0,
+      }
 
     })
     .catch(error => console.error(error))
