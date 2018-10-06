@@ -12,7 +12,7 @@ import PageHeadline from 'components/PageHeadline/PageHeadline'
 const Listing = () => (
   <div styleName="container">
     <PageHeadline>
-      <SubTitle>How to list your asset on swap.online?</SubTitle>
+      <SubTitle>How to list your asset on swap.online? WELCOME AL! FIRST USDT DEX!</SubTitle>
     </PageHeadline>
     <p>
       1. We can list your token on swap.online and it is absolutely free for now.  <br />
