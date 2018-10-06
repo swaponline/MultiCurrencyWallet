@@ -76,7 +76,7 @@ export default class Orders extends Component {
         {
           sellOrders.length > 0 && (
             <Fragment>
-              <h3>Exchange {sellCurrency.toUpperCase()} to {buyCurrency.toUpperCase()} (click any pink button)</h3>
+              <h3>Ask</h3>
               <Table
                 id="table_exchange"
                 classTitle={tableStyles.exchange}
@@ -97,7 +97,7 @@ export default class Orders extends Component {
         {
           buyOrders.length > 0 && (
             <Fragment>
-              <h3>Buy orders</h3>
+              <h3>Bid</h3>
               <Table
                 id="table_exchange"
                 classTitle={tableStyles.exchange}
