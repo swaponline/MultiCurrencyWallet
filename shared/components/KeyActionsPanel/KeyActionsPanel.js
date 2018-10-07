@@ -18,6 +18,10 @@ export default class KeyActionsPanel extends Component {
     actions.modals.open(constants.modals.ImportKeys, {})
   }
 
+  handleClear = () => {
+    actions.user.getDemoMoney()
+  }
+
   render() {
     const { hiddenCoinsList } = this.props
 
