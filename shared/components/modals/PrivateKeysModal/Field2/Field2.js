@@ -33,15 +33,10 @@ export default class Field2 extends React.Component {
       return
     }
 
-    //if (this.setState({ //вот прям совсем не уверен
-    //   error: true
-    // })){
-    //   return this.setState({error: false})
-    // }
-
     if (value !== privateKey) {
       this.setState({
         error: true,
+        value: ''
       })
     }
     else {
@@ -59,28 +54,31 @@ export default class Field2 extends React.Component {
     const linkedValue = Link.state(this, 'value')
 
     return (
-      <div styleName="container">
-        <div styleName="section">
-          <div styleName="label">{label.toUpperCase()}</div>
+      <div styleName = "container">
+        <div styleName = "section">
+          <div styleName = "label">{label.toUpperCase()}</div>
           <Input
             styleName={cx('input', { 'errorInput': error })}
             placeholder="Write private key here..."
-            valueLink={linkedValue}
+            valueLink = {linkedValue}
+
           />
           <Button
             styleName="button"
-            white={!success}
-            green={success}
-            onClick={this.handleCheck}
+            white = {!success}
+            green = {success}
+            onClick = {this.handleCheck}
           >
             {success ? 'OK' : 'Check'}
           </Button>
+
+
         </div>
         {
           error && (
             <React.Fragment>
               <i className="fas fa-times" styleName="errorIcon" />
-              <div styleName="error">INVALID PRIVATE KEY! You should pass correct value! Try again! </div>
+              <div styleName="error" >INVALID PRIVATE KEY! You should pass correct value! Try again! </div>
             </React.Fragment>
           )
         }
