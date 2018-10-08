@@ -364,15 +364,11 @@
   }
 }
 
-
-@include media-mobile {
-
-}
-
 @include media-tablet {
   .table.wallet {
     min-width: 1000px;
   }
+
   .table-fixed.wallet {
     thead {
       tr {
@@ -413,6 +409,7 @@
       }
     }
   }
+
   .table-fixed.historySwap {
     thead {
       min-width: 1024px;

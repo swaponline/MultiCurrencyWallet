@@ -16,9 +16,8 @@ import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 let lastScrollTop = 0
 
 @withRouter
-@connect(({ menu: { items: menuItems, isDisplayingTable } }) => ({
+@connect(({ menu: { items: menuItems } }) => ({
   menuItems,
-  isDisplayingTable,
 }))
 @CSSModules(styles, { allowMultiple: true })
 
@@ -43,7 +42,8 @@ export default class Header extends Component {
 
   handleScroll = () =>  {
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop
-    if (scrollTop > lastScrollTop || scrollTop < 200) {
+
+    if (scrollTop >= lastScrollTop || scrollTop <= 88) {
       this.setState(() => ({ sticky: false }))
     }
     else {
@@ -53,7 +53,7 @@ export default class Header extends Component {
   }
 
   render() {
-    const { menuItems, isDisplayingTable } = this.props
+    const { menuItems } = this.props
     const { sticky } = this.state
 
     if (isMobile) {
@@ -61,7 +61,7 @@ export default class Header extends Component {
     }
 
     return (
-      <div styleName={sticky && !isDisplayingTable ? 'header header-fixed' : 'header'}>
+      <div styleName={sticky ? 'header header-fixed' : 'header'}>
         <WidthContainer styleName="container">
           <Logo withLink />
           <Nav menu={menuItems} />
