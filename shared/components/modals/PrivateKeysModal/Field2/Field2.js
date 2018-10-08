@@ -54,20 +54,20 @@ export default class Field2 extends React.Component {
     const linkedValue = Link.state(this, 'value')
 
     return (
-      <div styleName = "container">
-        <div styleName = "section">
-          <div styleName = "label">{label.toUpperCase()}</div>
+      <div styleName="container">
+        <div styleName="section">
+          <div styleName="label">{label.toUpperCase()}</div>
           <Input
             styleName={cx('input', { 'errorInput': error })}
             placeholder="Write private key here..."
-            valueLink = {linkedValue}
+            valueLink={linkedValue}
 
           />
           <Button
             styleName="button"
-            white = {!success}
-            green = {success}
-            onClick = {this.handleCheck}
+            white={!success}
+            green={success}
+            onClick={this.handleCheck}
           >
             {success ? 'OK' : 'Check'}
           </Button>
