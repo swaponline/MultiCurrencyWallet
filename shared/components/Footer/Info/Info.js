@@ -15,6 +15,12 @@ class Info extends React.Component {
     onlineUsers: PropTypes.number,
   }
 
+  static defaultProps = {
+    serverAddress: 'array.io',
+    isOnline: false,
+    onlineUsers: 1,
+  }
+
   constructor() {
     super()
 
