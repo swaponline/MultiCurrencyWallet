@@ -1,33 +1,30 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+
 import cssModules from 'react-css-modules'
-import cx from 'classnames'
+import styles from './Home.scss'
+
+import { links } from 'helpers'
 
 import actions from 'redux/actions'
 import { connect } from 'redaction'
-import { links } from 'helpers'
 
-import CurrencyDirectionChooser from 'components/CurrencyDirectionChooser/CurrencyDirectionChooser'
+import Center from 'components/layout/Center/Center'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
+import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
+import FaqExpandableItem from 'components/FaqExpandableItem/FaqExpandableItem'
+import CurrencyDirectionChooser from 'components/CurrencyDirectionChooser/CurrencyDirectionChooser'
 
 import Orders from './Orders/Orders'
-import SubTitle from '../../components/PageHeadline/SubTitle/SubTitle'
-import styles from './Home.scss'
-import Center from '../../components/layout/Center/Center'
-import InlineLoader from '../../components/loaders/InlineLoader/InlineLoader'
-import { FaqExpandableItem } from '../../components/FaqExpandableItem/FaqExpandableItem'
 
 
 @connect(
   ({
     core: { filter },
     currencies: { items: currencies },
-    info: { faq: { items, fetching: faqFetching } },
   }) => ({
     filter,
     currencies,
-    faqList: items,
-    faqFetching,
   })
 )
 @cssModules(styles, { allowMultiple: true })
@@ -50,11 +47,6 @@ export default class Home extends Component {
       buyCurrency: buy || buyCurrency || 'swap',
       sellCurrency: sell || sellCurrency || 'btc',
     }
-  }
-
-  componentDidMount() {
-    // noinspection JSIgnoredPromiseFromCall
-    actions.info.fetchFaq()
   }
 
   componentWillMount() {
@@ -105,22 +97,7 @@ export default class Home extends Component {
   }
 
   render() {
-    const {
-      match: {
-        params: {
-          orderId,
-        },
-      },
-      history: {
-        location: {
-          pathname,
-        },
-      },
-      currencies,
-      faqList,
-      faqFetching,
-    } = this.props
-
+    const { match: { params: { orderId } }, history: { location: { pathname } }, currencies } = this.props
     const { buyCurrency, sellCurrency } = this.state
 
     return (
@@ -153,28 +130,11 @@ export default class Home extends Component {
                       allow="autoplay; encrypted-media"
                       allowFullScreen
                     />
-
-                    <div
-                      styleName={
-                        cx('faqContainer', {
-                          'noItems': !faqFetching && faqList.length === 0,
-                          'loading': faqFetching,
-                        })
-                      }
-                    >
+                    <div styleName="faqContainer" >
                       {
-                        faqFetching ?
-                          (
-                            <React.Fragment>
-                              {'Loading FAQ'}
-                              <InlineLoader />
-                            </React.Fragment>
-                          )
-                          :
-                          faqList.length === 0 ?
-                            'No items here yet'
-                            :
-                            faqList.map((question, idx) => <FaqExpandableItem key={idx} {...question} />)
+                        links.faq.map((question, idx) =>
+                          <FaqExpandableItem key={idx} {...question} />
+                        )
                       }
                     </div>
                   </div>

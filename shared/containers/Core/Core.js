@@ -3,8 +3,6 @@ import React, { Component } from 'react'
 import SwapApp from 'swap.app'
 import actions from 'redux/actions'
 
-import config from 'app-config'
-
 
 export default class Core extends Component {
 
@@ -43,6 +41,7 @@ export default class Core extends Component {
       const { peer } = SwapApp.services.room
 
       this.updateOrders()
+      console.log('swap app', SwapApp)
 
       SwapApp.services.room.connection
         .on('peer joined', actions.ipfs.userJoined)
@@ -54,7 +53,6 @@ export default class Core extends Component {
         actions.ipfs.set({
           isOnline,
           peer,
-          server: config.ipfs.server,
         })
       }, 1000)
     }, 8000)

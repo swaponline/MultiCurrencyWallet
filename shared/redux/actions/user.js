@@ -56,6 +56,7 @@ const getDemoMoney = process.env.MAINNET ? () => {} : () => {
       localStorage.setItem(constants.privateKeyNames.btc, r[0])
       localStorage.setItem(constants.privateKeyNames.eth, r[1])
       localStorage.setItem(constants.localStorage.demoMoneyReceived, true)
+      window.location.reload()
     })
 }
 

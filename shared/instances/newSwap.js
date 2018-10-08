@@ -3,7 +3,8 @@ import { eos } from 'helpers/eos'
 import 'abortcontroller-polyfill/dist/abortcontroller-polyfill-only'
 import web3 from 'helpers/web3'
 import bitcoin from 'bitcoinjs-lib'
-import coininfo from 'coininfo'
+
+
 import abi from 'human-standard-token-abi'
 
 import Channel from 'ipfs-pubsub-room'
@@ -25,6 +26,7 @@ const repo = utils.createRepo()
 utils.exitListener()
 
 const createSwapApp = () => {
+
   swapApp.setup({
     network: process.env.MAINNET ? 'mainnet' : 'testnet',
 

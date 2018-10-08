@@ -19,7 +19,7 @@ export default class Table extends React.Component {
 
   componentDidMount() {
     const { id } = this.props
-    if (id) { 
+    if (id) {
       window.addEventListener('scroll', this.handleScrollTable)
     }
   }
@@ -27,7 +27,7 @@ export default class Table extends React.Component {
   componentWillUnmount() {
     window.removeEventListener('scroll', this.handleScrollTable)
   }
- 
+
   handleScrollTable = () => {
     const { id } = this.props
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop

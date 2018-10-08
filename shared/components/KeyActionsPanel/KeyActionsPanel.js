@@ -6,6 +6,7 @@ import { WithdrawButton } from 'components/controls'
 
 @connect(({ core: { hiddenCoinsList } }) => ({ hiddenCoinsList }))
 export default class KeyActionsPanel extends Component {
+
   handleShowMore = () => {
     actions.modals.open(constants.modals.ShowMoreCoins, {})
   }
@@ -16,6 +17,10 @@ export default class KeyActionsPanel extends Component {
 
   handleImportKeys = () => {
     actions.modals.open(constants.modals.ImportKeys, {})
+  }
+
+  handleClear = () => {
+    actions.user.getDemoMoney()
   }
 
   render() {

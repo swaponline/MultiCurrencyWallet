@@ -5,7 +5,7 @@ import cssModules from 'react-css-modules'
 import styles from './Href.scss'
 
 
-const Href = ({ children, to, redirect, tab, rel }) => {
+const Href = ({ children, to, redirect, tab, rel, className }) => {
   if (to) {
     return (
       <NavLink styleName="link">{children}</NavLink>
@@ -13,7 +13,7 @@ const Href = ({ children, to, redirect, tab, rel }) => {
   }
 
   return (
-    <a styleName="link" href={redirect || tab} target={tab ? '_blank' : null} rel={rel || null}>
+    <a styleName="link" className={className} href={redirect || tab} target={tab ? '_blank' : null} rel={rel || null}>
       {children}
     </a>
   )

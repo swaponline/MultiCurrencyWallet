@@ -10,3 +10,5 @@ build-*
 
 app.*.css
 app.*.js
+
+.idea
