@@ -18,8 +18,7 @@ export default class Table extends React.Component {
   }
 
   componentDidMount() {
-    const { id } = this.props
-    if (id) {
+    if (this.props.id) {
       window.addEventListener('scroll', this.handleScrollTable)
     }
   }
