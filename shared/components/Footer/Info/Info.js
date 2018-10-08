@@ -23,7 +23,7 @@ class Info extends React.Component {
     }
   }
 
-  hideProgressBar() {
+  hideProgressBar = () => {
     this.setState(() => ({ isVisibleProgressBar: false }))
   }
 
