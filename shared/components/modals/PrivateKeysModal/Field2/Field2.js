@@ -27,9 +27,9 @@ export default class Field2 extends React.Component {
 
   handleCheck = () => {
     const { value, error, success } = this.state
-    const { getDefault, valueLink, privateKey } = this.props
+    const { valueLink, privateKey } = this.props
 
-    if ( success) {
+    if (success) {
       return
     }
 
@@ -38,13 +38,13 @@ export default class Field2 extends React.Component {
         value: '',
         error: true,
         success: false,
-        })
-      }
+          })
+        }
     else {
       valueLink.set(true)
       this.setState({
         success: true,
-        error:false,
+        error: false,
       })
     }
   }
@@ -52,7 +52,6 @@ export default class Field2 extends React.Component {
   render() {
     const { error, success } = this.state
     const { label } = this.props
-
     const linkedValue = Link.state(this, 'value')
 
     return (
@@ -63,8 +62,8 @@ export default class Field2 extends React.Component {
             styleName={cx('input', { 'errorInput': error })}
             placeholder="Write private key here..."
             valueLink={linkedValue}
-
           />
+
           <Button
             styleName="button"
             white={!success}
@@ -73,11 +72,10 @@ export default class Field2 extends React.Component {
           >
             {success ? 'OK' : 'Check'}
           </Button>
-
-
         </div>
+        
         {
-        error &&(
+        error && (
             <React.Fragment>
               <i className="fas fa-times" styleName="errorIcon" />
               <div styleName="error" >INVALID PRIVATE KEY! You should pass correct value! Try again! </div>
