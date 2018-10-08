@@ -28,12 +28,11 @@ export default class Table extends React.Component {
   }
 
   handleScrollTable = () => {
-    const { id } = this.props
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop
-    let tableOffset = document.getElementById(id).offsetTop
-    let tableHeight = document.getElementById(id).clientHeight
+    let tableOffset = document.getElementById(this.props.id).offsetTop
+    let tableHeight = document.getElementById(this.props.id).clientHeight
     if (scrollTop > tableOffset && scrollTop < tableOffset + tableHeight && tableHeight > 400) {
-     reducers.menu.setIsDisplayingTable(true)
+      reducers.menu.setIsDisplayingTable(true)
       this.setState(() => ({ sticky: true }))
     } else {
       this.setState(() => ({ sticky: false }))
