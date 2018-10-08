@@ -1,8 +1,11 @@
 import React from 'react'
 
+import { connect } from 'redaction'
+
 import CSSModules from 'react-css-modules'
 import styles from './Table.scss'
 
+import reducers from 'redux/core/reducers'
 
 @CSSModules(styles, { allowMultiple: true })
 export default class Table extends React.Component {
@@ -27,7 +30,6 @@ export default class Table extends React.Component {
   handleScrollTable = () => {
     const { id } = this.props
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop
-
     let tableOffset = document.getElementById(id).offsetTop
     let tableHeight = document.getElementById(id).clientHeight
     if (scrollTop > tableOffset && scrollTop < tableOffset + tableHeight && tableHeight > 400) {
@@ -41,9 +43,7 @@ export default class Table extends React.Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     const { rows, isLoading } = this.props
-    return isLoading !== nextProps.isLoading
-      || rows !== nextProps.rows
-      || this.state.sticky !== nextState.sticky
+    return isLoading !== nextProps.isLoading || rows !== nextProps.rows || this.state.sticky !== nextState.sticky
   }
 
   render() {
