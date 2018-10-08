@@ -13,7 +13,6 @@ const FaqExpandableItem = ({ link, question }) => (
       tab={link}
       styleName="header"
       rel="noreferrer noopener"
-      onClick={this.goToLink}
     >
       {question}
     </Href>
