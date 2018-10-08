@@ -1,47 +1,35 @@
 import React from 'react'
-import { Line } from 'rc-progress'
+import PropTypes from 'prop-types'
 
 import cssModules from 'react-css-modules'
 import styles from './Info.scss'
 
+import ProgressBar from '../ProgressBar/ProgressBar'
+
 
 class Info extends React.Component {
+
+  static propTypes = {
+    serverAddress: PropTypes.string.isRequired,
+    isOnline: PropTypes.bool.isRequired,
+    onlineUsers: PropTypes.number,
+  }
+
   constructor() {
     super()
+
     this.state = {
-      progressValue: 0,
       isVisibleProgressBar: true,
     }
   }
 
-  componentDidMount() {
-    this.launchProgressBar()
-  }
   hideProgressBar() {
-    this.setState({ isVisibleProgressBar: false })
-  }
-  launchProgressBar() {
-    const maxValue = 100
-    const timeToReachMaxValue = 60000
-    const howOftenToProgres = 1000
-    const progressUnit = maxValue / (timeToReachMaxValue / howOftenToProgres)
-
-    const interval = setInterval(() => {
-      const { progressValue } = this.state
-
-      if (progressValue >= maxValue) {
-        clearInterval(interval)
-        this.hideProgressBar()
-      }
-      else {
-        this.setState({ progressValue: progressValue + progressUnit })
-      }
-    }, howOftenToProgres)
+    this.setState(() => ({ isVisibleProgressBar: false }))
   }
 
   render() {
     const { isOnline, serverAddress, onlineUsers } = this.props
-    const { progressValue, isVisibleProgressBar } = this.state
+    const { isVisibleProgressBar } = this.state
 
     return (
       <div styleName="title">
@@ -51,8 +39,7 @@ class Info extends React.Component {
           </span>
           to IPFS signal {serverAddress} / peers online: {onlineUsers}
         </span>
-        { isVisibleProgressBar && <Line strokeColor="#2181F7" percent={progressValue} strokeWidth="1" /> }
-        {/* <span styleName="copyright-text">© 2018 Swap Online, Crypto-Fiat License: FVR000275. <a href="mailto:team@swap.online">team@swap.online</a></span> */}
+        { isVisibleProgressBar && <ProgressBar handleClick={this.hideProgressBar} /> }
       </div>
     )
   }
