@@ -36,6 +36,7 @@ export default class Field2 extends React.Component {
     if (value !== privateKey) {
       this.setState({
         error: true,
+        value: ''
       })
     }
     else {
@@ -60,7 +61,7 @@ export default class Field2 extends React.Component {
             styleName={cx('input', { 'errorInput': error })}
             placeholder="Write private key here..."
             valueLink={linkedValue}
-            disabled={error}
+
           />
           <Button
             styleName="button"
@@ -70,12 +71,14 @@ export default class Field2 extends React.Component {
           >
             {success ? 'OK' : 'Check'}
           </Button>
+
+
         </div>
         {
           error && (
             <React.Fragment>
               <i className="fas fa-times" styleName="errorIcon" />
-              <div styleName="error">INVALID PRIVATE KEY! You should pass correct value! Reload page and enter key again</div>
+              <div styleName="error" >INVALID PRIVATE KEY! You should pass correct value! Try again! </div>
             </React.Fragment>
           )
         }
