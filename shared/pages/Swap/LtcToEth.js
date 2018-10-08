@@ -162,7 +162,7 @@ export default class LtcToEth extends Component {
               {
                 (flow.step === 4 || flow.ltcScriptValues) && (
                   <Fragment>
-                    <h3>3. Creating Bitcoin Script. Please wait, it will take a while</h3>
+                    <h3>3. Creating Litecoin Script. Please wait, it will take a while</h3>
                     {
                       flow.ltcScriptCreatingTransactionHash && (
                         <div>
@@ -215,7 +215,7 @@ export default class LtcToEth extends Component {
               {
                 (flow.step === 5 || flow.isEthContractFunded) && (
                   <Fragment>
-                    <h3>4. ETH Owner received Bitcoin Script and Secret Hash. Waiting when he creates ETH Contract</h3>
+                    <h3>4. ETH Owner received Litecoin Script and Secret Hash. Waiting when he creates ETH Contract</h3>
                     {
                       !flow.isEthContractFunded && (
                         <InlineLoader />

@@ -21,7 +21,7 @@ export default class EthToLtc extends Component {
     this.state = {
       flow: this.swap.flow.state,
       enabledButton: false,
-      isShowingBitcoinScript: false,
+      isShowingLitecoinScript: false,
     }
   }
 
@@ -74,15 +74,15 @@ export default class EthToLtc extends Component {
     this.swap.flow.tryRefund()
   }
 
-  toggleBitcoinScript = () => {
+  toggleLitecoinScript = () => {
     this.setState({
-      isShowingBitcoinScript: !this.state.isShowingBitcoinScript,
+      isShowingLitecoinScript: !this.state.isShowingLitecoinScript,
     })
   }
 
   render() {
     const { children } = this.props
-    const { flow, enabledButton, isShowingBitcoinScript } = this.state
+    const { flow, enabledButton, isShowingLitecoinScript } = this.state
 
     return (
       <div>
@@ -161,7 +161,7 @@ export default class EthToLtc extends Component {
               {
                 flow.secretHash && flow.ltcScriptValues && (
                   <Fragment>
-                    <h3>3. Bitcoin Script created and charged. Please check the information below</h3>
+                    <h3>3. Litecoin Script created and charged. Please check the information below</h3>
                     <div>Secret Hash: <strong>{flow.secretHash}</strong></div>
                     <div>
                         Script address:
@@ -181,8 +181,8 @@ export default class EthToLtc extends Component {
                     </div>
                     <br />
                     <Fragment>
-                      { flow.ltcScriptValues && <span onClick={this.toggleBitcoinScript}>Show litecoin script</span> }
-                      { isShowingBitcoinScript && (
+                      { flow.ltcScriptValues && <span onClick={this.toggleLitecoinScript}>Show litecoin script</span> }
+                      { isShowingLitecoinScript && (
                         <pre>
                           <code>{`
   bitcoinjs.script.compile([

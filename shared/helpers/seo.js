@@ -27,6 +27,12 @@ const seo = {
       h1: 'Bitcoin Trade',
     },
     {
+      uri: '/exchange/ltc',
+      title: 'Litecoin',
+      description: 'Litecoin',
+      h1: 'Litecoin Trade',
+    },
+    {
       uri: '/exchange/eth',
       title: 'Ethereum',
       description: 'Ethereum',
@@ -86,6 +92,18 @@ const seo = {
       title: 'Atomic Swap Bitcoin (BTC) to Ethereum (ETH) Cross-Chain Exchange',
       desctption: 'Looking for best exchange rate to buy Ethereum (ETH) with Bitcoin (BTC)? Place your order on Swap.online to get the best rate.',
       h1: 'Atomic Swap Bitcoin (BTC) to Ethereum (ETH) - Decentralized Exchange',
+    },
+    {
+      uri: '/eth-ltc',
+      title: 'Atomic Swap Ethereum (ETH) to Litecoin (LTC) Decentralized Exchange',
+      desctption: 'Best exchange rate for Ethereum (ETH) to Litecoin (LTC) atomic swap. Decentralized exchange of digital currencies with online wallet.',
+      h1: 'Atomic Swap Ethereum (ETH) to Litecoin (LTC) - Instant Exchange',
+    },
+    {
+      uri: '/ltc-eth',
+      title: 'Atomic Swap Litecoin (LTC) to Ethereum (ETH) Cross-Chain Exchange',
+      desctption: 'Looking for best exchange rate to buy Ethereum (ETH) with Litecoin (LTC)? Place your order on Swap.online to get the best rate.',
+      h1: 'Atomic Swap Litecoin (LTC) to Ethereum (ETH) - Decentralized Exchange',
     },
     {
       uri: '/eos-btc',
