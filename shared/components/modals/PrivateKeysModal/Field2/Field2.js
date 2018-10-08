@@ -27,22 +27,24 @@ export default class Field2 extends React.Component {
 
   handleCheck = () => {
     const { value, error, success } = this.state
-    const { valueLink, privateKey } = this.props
+    const { getDefault, valueLink, privateKey } = this.props
 
-    if (error || success) {
+    if ( success) {
       return
     }
 
     if (value !== privateKey) {
       this.setState({
+        value: '',
         error: true,
-        value: ''
-      })
-    }
+        success: false,
+        })
+      }
     else {
       valueLink.set(true)
       this.setState({
         success: true,
+        error:false,
       })
     }
   }
@@ -75,7 +77,7 @@ export default class Field2 extends React.Component {
 
         </div>
         {
-          error && (
+        error &&(
             <React.Fragment>
               <i className="fas fa-times" styleName="errorIcon" />
               <div styleName="error" >INVALID PRIVATE KEY! You should pass correct value! Try again! </div>
