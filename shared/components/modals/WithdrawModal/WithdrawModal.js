@@ -41,7 +41,7 @@ export default class WithdrawModal extends React.Component {
     const { address: to, amount } = this.state
     const { data: { currency, contractAddress, address, decimals, balance } } = this.props
 
-    if (!to || !amount || amount < 0.01 || amount > balance) {
+    if (!to || !amount || amount < minAmount[currency.toLowerCase()] || amount > balance) {
       this.setState({
         isSubmitted: true,
       })

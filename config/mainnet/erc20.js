@@ -43,5 +43,9 @@ export default {
     address: '0x60cbB964Db3f60D14f0d00B5109BccFB01981Aca',
     decimals: 18,
   },
+  dcn: {
+    address: '0x08d32b0da63e2C3bcF8019c9c5d849d7a9d791e6',
+    decimals: 0,
+  },
 
 }

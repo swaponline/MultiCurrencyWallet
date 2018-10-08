@@ -34,14 +34,15 @@ export default class ConfirmOffer extends Component {
     const { address } = this.props
     let id = Date.now()
 
-    return () => `${address}-${++id}`
+    return `${address}-${++id}`
   }
 
   createOrder = () => {
     const { offer: { buyAmount, sellAmount, buyCurrency, sellCurrency, exchangeRate } } = this.props
 
+    console.log('order id', this.getUniqId())
+
     const data = {
-      id: this.getUniqId(),
       buyCurrency: `${buyCurrency}`,
       sellCurrency: `${sellCurrency}`,
       buyAmount: Number(buyAmount),
