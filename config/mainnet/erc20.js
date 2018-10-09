@@ -47,5 +47,24 @@ export default {
     address: '0x08d32b0da63e2C3bcF8019c9c5d849d7a9d791e6',
     decimals: 0,
   },
-
+  mbrs: {
+    address: '0x386467F1f3ddbE832448650418311a479EECFC57',
+    decimals: 0,
+  },
+  sct: {
+    address: '0x63b992e6246d88f07fc35a056d2c365e6d441a3d',
+    decimals: 18,
+  },
+  shl: {
+    address: '0xb62132e35a6c13ee1ee0f84dc5d40bad8d815206',
+    decimals: 18,
+  },
+  btrm: {
+    address: '0xae72146eb535607ee79f5d8834303ea18751845f',
+    decimals: 18,
+  },
+  bnty: {
+    address: '0xd2d6158683aee4cc838067727209a0aaf4359de3',
+    decimals: 18,
+  },
 }
