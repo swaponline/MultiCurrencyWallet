@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 
 import { connect } from 'redaction'
 
@@ -18,7 +19,7 @@ export default class Table extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.id) {
+    if (this.props.id == 'table-wallet' || this.props.id == 'table-history') {
       window.addEventListener('scroll', this.handleScrollTable)
     }
   }
@@ -29,8 +30,8 @@ export default class Table extends React.Component {
 
   handleScrollTable = () => {
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop
-    let tableOffset = document.getElementById(this.props.id).offsetTop
-    let tableHeight = document.getElementById(this.props.id).clientHeight
+    let tableOffset = ReactDOM.findDOMNode(this.table).offsetTop
+    let tableHeight = ReactDOM.findDOMNode(this.table).clientHeight
     if (scrollTop > tableOffset && scrollTop < tableOffset + tableHeight && tableHeight > 400) {
 
       reducers.menu.setIsDisplayingTable(true)
@@ -55,7 +56,7 @@ export default class Table extends React.Component {
     const { sticky } = this.state
 
     return (
-      <table styleName={sticky ? 'table table-fixed' : 'table'} className={classTitle} id={id}>
+      <table styleName={sticky ? 'table table-fixed' : 'table'} className={classTitle} ref={(node) => {this.table = node}}>
         <thead>
           <tr>
             {
