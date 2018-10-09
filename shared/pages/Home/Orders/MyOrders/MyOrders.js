@@ -9,28 +9,9 @@ import RowFeeds from './RowFeeds/RowFeeds'
 
 export default class MyOrders extends PureComponent {
 
-  componentWillReceiveProps() {
-    this.setState()
-  }
-
-  removeOrder = (orderId) => {
-    actions.core.removeOrder(orderId)
-    actions.core.updateCore()
-  }
-
-  acceptRequest = (orderId, peer) => {
-    actions.core.acceptRequest(orderId, peer)
-    actions.core.updateCore()
-  }
-
-  declineRequest = (orderId, peer) => {
-    actions.core.declineRequest(orderId, peer)
-    actions.core.updateCore()
-  }
-
   render() {
     const titles = [ 'EXCHANGE', 'YOU GET', 'YOU HAVE', 'EXCHANGE RATE', 'SHARE', 'ACTIONS' ]
-    const { myOrders } = this.props
+    const { myOrders, declineRequest, acceptRequest, removeOrder } = this.props
 
     if (myOrders.length === undefined || myOrders.length <= 0) {
       return null
@@ -47,9 +28,9 @@ export default class MyOrders extends PureComponent {
             <RowFeeds
               key={index}
               row={row}
-              declineRequest={this.declineRequest}
-              acceptRequest={this.acceptRequest}
-              removeOrder={this.removeOrder}
+              declineRequest={declineRequest}
+              acceptRequest={acceptRequest}
+              removeOrder={removeOrder}
             />
           )}
         />
