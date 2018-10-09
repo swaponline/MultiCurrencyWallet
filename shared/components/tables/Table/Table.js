@@ -19,7 +19,8 @@ export default class Table extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.id == 'table-wallet' || this.props.id == 'table-history') {
+    //добавил условие для планшета и десктопа, пока не сделал адаптивные таблицы
+    if ( (this.props.id == 'table-wallet' || this.props.id == 'table-history') && window.innerWidth > 950)  {
       window.addEventListener('scroll', this.handleScrollTable)
     }
   }
@@ -30,8 +31,8 @@ export default class Table extends React.Component {
 
   handleScrollTable = () => {
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop
-    let tableOffset = ReactDOM.findDOMNode(this.table).offsetTop
-    let tableHeight = ReactDOM.findDOMNode(this.table).clientHeight
+    let tableOffset = this.linkOnTable.offsetTop
+    let tableHeight = this.linkOnTable.clientHeight
     if (scrollTop > tableOffset && scrollTop < tableOffset + tableHeight && tableHeight > 400) {
 
       reducers.menu.setIsDisplayingTable(true)
@@ -56,7 +57,7 @@ export default class Table extends React.Component {
     const { sticky } = this.state
 
     return (
-      <table styleName={sticky ? 'table table-fixed' : 'table'} className={classTitle} ref={(node) => {this.table = node}}>
+      <table styleName={sticky ? 'table table-fixed' : 'table'} className={classTitle} ref={(table) => this.linkOnTable = table}>
         <thead>
           <tr>
             {
