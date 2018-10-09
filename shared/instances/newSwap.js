@@ -128,6 +128,8 @@ const createSwapApp = () => {
       fetchTx: (hash) => actions.btc.fetchTx(hash),
     }),
   ) : null
+
+  window.swapApp = swapApp
 }
 
 export {
