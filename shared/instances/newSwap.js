@@ -34,7 +34,7 @@ const createSwapApp = () => {
       eos,
       web3,
       bitcoin,
-      // coininfo,
+      coininfo,
       Ipfs: IPFS,
       IpfsRoom: Channel,
       storage: window.localStorage,
@@ -45,7 +45,7 @@ const createSwapApp = () => {
         // TODO need init swapApp only after private keys created!!!!!!!!!!!!!!!!!!!
         eth: localStorage.getItem(privateKeys.privateKeyNames.eth),
         btc: localStorage.getItem(privateKeys.privateKeyNames.btc),
-        // ltc: localStorage.getItem(privateKeys.privateKeyNames.ltc),
+        ltc: localStorage.getItem(privateKeys.privateKeyNames.ltc),
         eos: privateKeys.privateKeyNames.eosAccount,
       }),
       new SwapRoom({
@@ -72,11 +72,11 @@ const createSwapApp = () => {
         fetchUnspents: (scriptAddress) => actions.btc.fetchUnspents(scriptAddress),
         broadcastTx: (txRaw) => actions.btc.broadcastTx(txRaw),
       }),
-      // new LtcSwap({
-      //   fetchBalance: (address) => actions.ltc.fetchBalance(address),
-      //   fetchUnspents: (scriptAddress) => actions.ltc.fetchUnspents(scriptAddress),
-      //   broadcastTx: (txRaw) => actions.ltc.broadcastTx(txRaw),
-      // }),
+      new LtcSwap({
+        fetchBalance: (address) => actions.ltc.fetchBalance(address),
+        fetchUnspents: (scriptAddress) => actions.ltc.fetchUnspents(scriptAddress),
+        broadcastTx: (txRaw) => actions.ltc.broadcastTx(txRaw),
+      }),
       new EosSwap({
         swapAccount: config.swapContract.eos,
         swapLockPeriod: 300, // safe time in seconds
@@ -98,8 +98,8 @@ const createSwapApp = () => {
       ETH2BTC,
       BTC2ETH,
 
-      // ETH2LTC,
-      // LTC2ETH,
+      ETH2LTC,
+      LTC2ETH,
 
       EOS2BTC,
       BTC2EOS,
