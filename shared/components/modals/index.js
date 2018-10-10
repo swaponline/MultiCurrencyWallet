@@ -3,12 +3,12 @@ import WithdrawModal from './WithdrawModal/WithdrawModal'
 import PrivateKeysModal from './PrivateKeysModal/PrivateKeysModal'
 import EosRegisterModal from './EosRegisterModal/EosRegisterModal'
 import EosBuyAccountModal from './EosBuyAccountModal/EosBuyAccountModal'
+import TelosRegisterModal from './TelosRegisterModal/TelosRegisterModal'
 import Approve from './Approve/Approve'
 import ImportKeys from './ImportKeys/ImportKeys'
 import ShowMoreCoins from './ShowMoreCoins/ShowMoreCoins'
 import EthChecker from './EthChecker/EthChecker'
 import ReceiveModal from './ReceiveModal/ReceiveModal'
-
 
 export default {
   OfferModal,
@@ -18,6 +18,7 @@ export default {
   ShowMoreCoins,
   EosBuyAccountModal,
   EosRegisterModal,
+  TelosRegisterModal,
   Approve,
   EthChecker,
   ReceiveModal,
