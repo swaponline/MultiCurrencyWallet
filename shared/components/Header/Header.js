@@ -4,6 +4,9 @@ import PropTypes from 'prop-types'
 import { connect } from 'redaction'
 import { withRouter } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
+import links from 'helpers/links'
+import { defineMessages, injectIntl } from 'react-intl'
+
 
 import CSSModules from 'react-css-modules'
 import styles from './Header.scss'
@@ -16,9 +19,40 @@ import Logo from 'components/Logo/Logo'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 
 
+let lastScrollTop = 0
+
+const messages = defineMessages({
+  wallet: {
+    id: 'menu.wallet',
+    description: 'Menu item "Wallet"',
+    defaultMessage: 'Wallet',
+  },
+  exchange: {
+    id: 'menu.exchange',
+    description: 'Menu item "Exchange"',
+    defaultMessage: 'Exchange',
+  },
+  history: {
+    id: 'menu.history',
+    description: 'Menu item "History"',
+    defaultMessage: 'History',
+  },
+  affiliate: {
+    id: 'menu.affiliate',
+    description: 'Menu item "Affiliate"',
+    defaultMessage: 'Affiliate',
+  },
+  listing: {
+    id: 'menu.listing',
+    description: 'Menu item "Listing"',
+    defaultMessage: 'Listing',
+  },
+})
+
+
+@injectIntl
 @withRouter
-@connect(({ menu: { items: menuItems, isDisplayingTable } }) => ({
-  menuItems,
+@connect(({ menu: { isDisplayingTable } }) => ({
   isDisplayingTable,
 }))
 @CSSModules(styles, { allowMultiple: true })
@@ -35,11 +69,39 @@ export default class Header extends Component {
     isDisplayingTable: false,
   }
 
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
 
     this.state = {
       sticky: false,
+      menuItems: [
+        {
+          title: props.intl.formatMessage(messages.wallet),
+          link: links.home,
+          exact: true,
+          icon: 'wallet',
+        },
+        {
+          title: props.intl.formatMessage(messages.exchange),
+          link: links.exchange,
+          icon: 'exchange-alt',
+        },
+        {
+          title: props.intl.formatMessage(messages.history),
+          link: links.history,
+          icon: 'history',
+        },
+        {
+          title: props.intl.formatMessage(messages.affiliate),
+          link: links.affiliate,
+          isMobile: false,
+        },
+        {
+          title: props.intl.formatMessage(messages.listing),
+          link: links.listing,
+          isMobile: false,
+        },
+      ],
     }
 
     this.lastScrollTop = 0
@@ -65,8 +127,8 @@ export default class Header extends Component {
   }
 
   render() {
-    const { menuItems, isDisplayingTable } = this.props
-    const { sticky } = this.state
+    const { isDisplayingTable } = this.props
+    const { sticky, menuItems } = this.state
 
     if (isMobile) {
       return <NavMobile menu={menuItems} />

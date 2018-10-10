@@ -3,7 +3,9 @@ import PropTypes from 'prop-types'
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'react-router-redux'
 
+
 import App from 'containers/App/App'
+import IntlProviderContainer from 'containers/IntlProviderContainer'
 
 
 export default class Root extends React.PureComponent {
@@ -19,9 +21,11 @@ export default class Root extends React.PureComponent {
     return (
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          <App>
-            {routes}
-          </App>
+          <IntlProviderContainer>
+            <App>
+              {routes}
+            </App>
+          </IntlProviderContainer>
         </ConnectedRouter>
       </Provider>
     )

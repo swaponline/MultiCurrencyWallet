@@ -1,0 +1,44 @@
+[
+  {
+    "id": "menu.affiliate",
+    "message": "Филиал",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
+    "id": "menu.exchange",
+    "message": "Обмен",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
+    "id": "menu.history",
+    "message": "История",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
+    "id": "menu.listing",
+    "message": "Листинг",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
+    "id": "menu.wallet",
+    "message": "Кошелек",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
+    "id": "LtcToEth.orderCreatorIsOffline",
+    "message": "Автор ушел",
+    "files": [
+      "shared/pages/Swap/LtcToEth.js"
+    ]
+  }
+]

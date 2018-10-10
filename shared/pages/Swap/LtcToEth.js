@@ -9,6 +9,7 @@ import actions from 'redux/actions'
 import Timer from './Timer/Timer'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { TimerButton, Button } from 'components/controls'
+import { FormattedMessage } from 'react-intl'
 
 
 export default class LtcToEth extends Component {
@@ -99,7 +100,9 @@ export default class LtcToEth extends Component {
               <h3>This order doesn&apos;t have a buyer</h3>
             ) : (
               <Fragment>
-                <h3>The order creator is offline. Waiting for him..</h3>
+                <FormattedMessage id="LtcToEth.orderCreatorIsOffline" defaultMessage="The order creator is offline. Waiting for him..">
+                  {message => <h3>{message}</h3>}
+                </FormattedMessage>
                 <InlineLoader />
               </Fragment>
             )

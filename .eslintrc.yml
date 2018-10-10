@@ -12,6 +12,7 @@ plugins:
   - react
   - import
   - babel
+  - reactintl
 
 env:
   browser: true
@@ -126,3 +127,6 @@ rules:
   jsx-a11y/label-has-for: 0
   jsx-a11y/anchor-is-valid: 0
   jsx-a11y/interactive-supports-focus: 0
+
+  reactintl/default-message: 2
+  reactintl/contains-hardcoded-copy: 2
