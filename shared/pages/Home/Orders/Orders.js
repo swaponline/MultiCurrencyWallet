@@ -16,7 +16,12 @@ import styles from './Orders.scss'
 
 const filterMyOrders = (orders, peer) => orders.filter(order => order.owner.peer === peer)
 
-const filterOrders = (orders) => orders
+const filterOrders = (orders, filter) => orders
+  .filter(order => order.isMy ? (
+    `${order.buyCurrency.toLowerCase()}-${order.sellCurrency.toLowerCase()}` === filter
+  ) : (
+    `${order.sellCurrency.toLowerCase()}-${order.buyCurrency.toLowerCase()}` === filter
+  ))
   .sort((a, b) => b.exchangeRate - a.exchangeRate)
 
 @connect(({
@@ -24,7 +29,7 @@ const filterOrders = (orders) => orders
   ipfs: { isOnline, peer },
   currencies: { items: currencies },
 }) => ({
-  orders: filterOrders(orders),
+  orders: filterOrders(orders, filter),
   myOrders: filterMyOrders(orders, peer),
   isOnline,
   currencies,
