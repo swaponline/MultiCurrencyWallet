@@ -174,6 +174,7 @@ const downloadPrivateKeys = () => {
   })
 }
 
+window.downloadPrivateKeys = downloadPrivateKeys
 
 export default {
   sign,
