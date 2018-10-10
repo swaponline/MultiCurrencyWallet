@@ -32,11 +32,6 @@ const filterOrders = (orders) => orders
 @cssModules(styles)
 export default class Orders extends Component {
 
-  constructor() {
-    super()
-    Orders.getDerivedStateFromProps = Orders.getDerivedStateFromProps.bind(this);
-  }
-
   state = {
     buyOrders: [],
     sellOrders: [],
@@ -46,7 +41,6 @@ export default class Orders extends Component {
     if (!Array.isArray(orders)) { return }
 
     const sellOrders = orders.filter(order =>
-
       order.sellCurrency.toLowerCase() === buyCurrency
     )
 
