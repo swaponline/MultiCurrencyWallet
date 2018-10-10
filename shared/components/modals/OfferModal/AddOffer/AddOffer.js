@@ -328,7 +328,7 @@ export default class AddOffer extends Component {
       || ethBalance < 0.02
 
     linked.sellAmount.check((value) => value > minAmount[sellCurrency], `Amount must be greater than ${minAmount[sellCurrency]} `)
-    linked.sellAmount.check((value) => value <= balance, `Amount must be bigger your balance`)
+    linked.sellAmount.check((value) => value <= balance, `Amount must be less than your balance`)
 
     return (
       <div styleName="wrapper">
