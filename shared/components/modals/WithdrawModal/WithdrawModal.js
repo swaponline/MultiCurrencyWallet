@@ -37,9 +37,20 @@ export default class WithdrawModal extends React.Component {
     amount: '',
   }
 
+  componentWillMount() {
+    this.setBalanceOnState(this.props.data.currency)
+  }
+
+  setBalanceOnState = async (currency) => {
+    const balance = await actions[currency.toLowerCase()].getBalance(currency.toLowerCase())
+    this.setState (() => ({ balance }))
+  }
+
   handleSubmit = () => {
     const { address: to, amount } = this.state
-    const { data: { currency, contractAddress, address, decimals, balance } } = this.props
+    const { data: { currency, contractAddress, address, balance, decimals} } = this.props
+
+    this.setBalanceOnState(currency)
 
     if (!to || !amount || amount < 0.01 || amount > balance) {
       this.setState({
@@ -51,7 +62,7 @@ export default class WithdrawModal extends React.Component {
     actions[currency.toLowerCase()].send(contractAddress || address, to, Number(amount), decimals)
       .then(() => {
         actions.loader.hide()
-        actions[currency.toLowerCase()].getBalance(currency)
+        this.setBalanceOnState(currency)
 
         actions.notifications.show(constants.notifications.SuccessWithdraw, {
           amount,
@@ -62,9 +73,8 @@ export default class WithdrawModal extends React.Component {
   }
 
   render() {
-    const { isSubmitted, address, amount } = this.state
+    const { isSubmitted, address, amount, balance } = this.state
     const { name, data } = this.props
-    const { balance } = data
 
     const linked = Link.all(this, 'address', 'amount')
     const isDisabled = !address || !amount
