@@ -26,6 +26,7 @@ export default class Row extends Component {
     viewText: false,
     tradeAllowed: false,
     isAddressCopied: false,
+    showMobileButtons: false
   }
 
   componentWillMount() {
@@ -77,6 +78,12 @@ export default class Row extends Component {
         })
       }, 500)
     })
+  }
+
+  handleShowButtons = () => {
+    this.setState(() => ({
+      showMobileButtons: !this.state.showMobileButtons
+    }))    
   }
 
   handleEosRegister = () => {
@@ -191,8 +198,11 @@ export default class Row extends Component {
             </td>
           </CopyToClipboard>
         ) }
-        <td>
-          <div>
+        <td styleName="tdButtons">
+          <div styleName={this.state.showMobileButtons ? 'showButtons' : ''}>
+            <button styleName="toggleWithdraw" onClick={this.handleShowButtons}>
+              <i class="fas fa-ellipsis-v"></i>
+            </button>
             <WithdrawButton onClick={this.handleWithdraw} styleName="marginRight">
               <i className="fas fa-arrow-alt-circle-up" />
               <span>Send</span>

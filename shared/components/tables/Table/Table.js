@@ -19,8 +19,7 @@ export default class Table extends React.Component {
   }
 
   componentDidMount() {
-    //добавил условие для планшета и десктопа, пока не сделал адаптивные таблицы
-    if ( (this.props.id == 'table-wallet' || this.props.id == 'table-history') && window.innerWidth > 950)  {
+    if (this.props.id == 'table-wallet' || this.props.id == 'table-history')  {
       window.addEventListener('scroll', this.handleScrollTable)
     }
   }
