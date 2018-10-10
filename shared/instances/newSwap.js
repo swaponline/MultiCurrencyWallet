@@ -3,7 +3,7 @@ import { eos } from 'helpers/eos'
 import 'abortcontroller-polyfill/dist/abortcontroller-polyfill-only'
 import web3 from 'helpers/web3'
 import bitcoin from 'bitcoinjs-lib'
-
+import coininfo from 'coininfo'
 
 import abi from 'human-standard-token-abi'
 
