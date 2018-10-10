@@ -1,14 +1,14 @@
 import React, { Component, Fragment } from 'react'
-import { withRouter } from 'react-router'
-
 import PropTypes from 'prop-types'
-import cx from 'classnames'
 
-import { NavLink } from 'react-router-dom'
 import { links } from 'helpers'
+import { withRouter } from 'react-router'
+import { NavLink } from 'react-router-dom'
 
-import CSSModules from 'react-css-modules'
+import cx from 'classnames'
 import styles from './Nav.scss'
+import CSSModules from 'react-css-modules'
+
 
 @withRouter
 @CSSModules(styles, { allowMultiple: true })

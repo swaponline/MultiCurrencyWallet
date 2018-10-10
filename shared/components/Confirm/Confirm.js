@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import cssModules from 'react-css-modules'
 import styles from './Confirm.scss'
@@ -21,5 +22,13 @@ const Confirm = ({ rootClassName, isConfirm, isReject, title, animation }) => (
     </div>
   </Center>
 )
+
+Confirm.propTypes = {
+  rootClassName: PropTypes.string,
+  isConfirm: PropTypes.func.isRequired,
+  isReject: PropTypes.func.isRequired,
+  title: PropTypes.string.isRequired,
+  animation: PropTypes.bool,
+}
 
 export default cssModules(Confirm, styles, { allowMultiple: true })

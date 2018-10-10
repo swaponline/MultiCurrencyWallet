@@ -24,7 +24,7 @@ const filterOrders = (orders) => orders
   ipfs: { isOnline, peer },
   currencies: { items: currencies },
 }) => ({
-  orders: filterOrders(orders, filter),
+  orders: filterOrders(orders),
   myOrders: filterMyOrders(orders, peer),
   isOnline,
   currencies,
@@ -42,15 +42,16 @@ export default class Orders extends Component {
     sellOrders: [],
   }
 
-  static getDerivedStateFromProps({ orders }) {
+  static getDerivedStateFromProps({ orders, sellCurrency, buyCurrency }) {
     if (!Array.isArray(orders)) { return }
 
     const sellOrders = orders.filter(order =>
-      order.sellCurrency.toLowerCase() === this.props.sellCurrency
+
+      order.sellCurrency.toLowerCase() === buyCurrency
     )
 
     const buyOrders = orders.filter(order =>
-      order.buyCurrency.toLowerCase() === this.props.sellCurrency
+      order.buyCurrency.toLowerCase() === sellCurrency
     )
 
     return {
@@ -67,6 +68,21 @@ export default class Orders extends Component {
     actions.analytics.dataEvent('orderbook-click-createoffer-button')
   }
 
+  removeOrder = (orderId) => {
+    actions.core.removeOrder(orderId)
+    actions.core.updateCore()
+  }
+
+  acceptRequest = (orderId, peer) => {
+    actions.core.acceptRequest(orderId, peer)
+    actions.core.updateCore()
+  }
+
+  declineRequest = (orderId, peer) => {
+    actions.core.declineRequest(orderId, peer)
+    actions.core.updateCore()
+  }
+
   render() {
     const { sellOrders, buyOrders } = this.state
     const { sellCurrency, buyCurrency } = this.props
@@ -76,7 +92,12 @@ export default class Orders extends Component {
     return (
       <Fragment>
         <Title>{buyCurrency} &#8594; {sellCurrency} no limit exchange with 0 fee</Title>
-        <MyOrders myOrders={myOrders} />
+        <MyOrders
+          myOrders={myOrders}
+          declineRequest={this.declineRequest}
+          removeOrder={this.removeOrder}
+          acceptRequest={this.acceptRequest}
+        />
         <Button gray styleName="button" onClick={this.createOffer}>Create offer</Button>
         {
           sellOrders.length > 0 && (

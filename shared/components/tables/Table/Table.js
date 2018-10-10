@@ -1,8 +1,12 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
+
+import { connect } from 'redaction'
 
 import CSSModules from 'react-css-modules'
 import styles from './Table.scss'
 
+import reducers from 'redux/core/reducers'
 
 @CSSModules(styles, { allowMultiple: true })
 export default class Table extends React.Component {
@@ -15,7 +19,8 @@ export default class Table extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.id) {
+    //добавил условие для планшета и десктопа, пока не сделал адаптивные таблицы
+    if ( (this.props.id == 'table-wallet' || this.props.id == 'table-history') && window.innerWidth > 950)  {
       window.addEventListener('scroll', this.handleScrollTable)
     }
   }
@@ -25,24 +30,26 @@ export default class Table extends React.Component {
   }
 
   handleScrollTable = () => {
-    const { id } = this.props
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop
+    let tableOffset = this.linkOnTable.offsetTop
+    let tableHeight = this.linkOnTable.clientHeight
+    if (scrollTop > tableOffset && scrollTop < tableOffset + tableHeight && tableHeight > 400) {
 
-    let tableOffset = document.getElementById(id).offsetTop
-    let tableHeight = document.getElementById(id).clientHeight
+      reducers.menu.setIsDisplayingTable(true)
 
-    if (scrollTop > tableOffset && scrollTop < tableOffset + tableHeight) {
       this.setState(() => ({ sticky: true }))
+
     } else {
+
       this.setState(() => ({ sticky: false }))
+      
+      reducers.menu.setIsDisplayingTable(false)
     }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
     const { rows, isLoading } = this.props
-    return isLoading !== nextProps.isLoading
-      || rows !== nextProps.rows
-      || this.state.sticky !== nextState.sticky
+    return isLoading !== nextProps.isLoading || rows !== nextProps.rows || this.state.sticky !== nextState.sticky
   }
 
   render() {
@@ -50,7 +57,7 @@ export default class Table extends React.Component {
     const { sticky } = this.state
 
     return (
-      <table styleName={sticky ? 'table table-fixed' : 'table'} className={classTitle} id={id}>
+      <table styleName={sticky ? 'table table-fixed' : 'table'} className={classTitle} ref={(table) => this.linkOnTable = table}>
         <thead>
           <tr>
             {

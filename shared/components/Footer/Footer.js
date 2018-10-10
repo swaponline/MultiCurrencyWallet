@@ -1,4 +1,6 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+
 import { connect } from 'redaction'
 
 import styles from './Footer.scss'
@@ -20,8 +22,16 @@ const Footer = (props) => (
   </div>
 )
 
+Footer.propTypes = {
+  props: PropTypes.shape({
+    serverAddress: PropTypes.string.isRequired,
+    isOnline: PropTypes.bool.isRequired,
+    onlineUsers: PropTypes.number,
+  }),
+}
+
 export default connect({
-  'server': 'ipfs.server',
+  'serverAddress': 'ipfs.server',
   'isOnline': 'ipfs.isOnline',
   'onlineUsers': 'ipfs.onlineUsers',
 })(CSSModules(Footer, styles, { allowMultiple: true }))

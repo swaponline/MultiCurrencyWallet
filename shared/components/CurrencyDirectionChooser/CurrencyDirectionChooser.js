@@ -27,24 +27,25 @@ export default class CurrencyDirectionChooser extends Component {
   }
 
   createOffer = () => {
+    const { buyCurrency, sellCurrency } = this.props
+
+    // return if value equal undefined or null
+    if (!sellCurrency || !buyCurrency) {
+      return
+    }
+
     actions.modals.open(constants.modals.Offer, {
-      buyCurrency: this.props.buyCurrency,
-      sellCurrency: this.props.sellCurrency,
+      buyCurrency,
+      sellCurrency,
     })
+
     actions.analytics.dataEvent('orderbook-click-createoffer-button')
   }
 
   render() {
-    const {
-      buyCurrency,
-      sellCurrency,
-      flipCurrency,
-      handleBuyCurrencySelect,
-      handleSellCurrencySelect,
-      handleSubmit,
-      currencies,
-      faqList,
-    } = this.props
+    const { buyCurrency, sellCurrency,
+      flipCurrency, handleBuyCurrencySelect, handleSellCurrencySelect, handleSubmit,
+      currencies } = this.props
 
     return (
       <div styleName="choice">

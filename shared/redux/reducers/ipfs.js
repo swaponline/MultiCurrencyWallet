@@ -1,7 +1,10 @@
+import config from 'app-config'
+
+
 export const initialState = {
   isOnline: false,
   onlineUsers: 0,
-  server: null,
+  serverAddress: config.ipfs.server,
   peer: '',
 }
 

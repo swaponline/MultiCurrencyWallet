@@ -3,9 +3,8 @@ import { eos } from 'helpers/eos'
 import 'abortcontroller-polyfill/dist/abortcontroller-polyfill-only'
 import web3 from 'helpers/web3'
 import bitcoin from 'bitcoinjs-lib'
-import coininfo from 'coininfo'
 
-import path from 'path'
+
 import abi from 'human-standard-token-abi'
 
 import Channel from 'ipfs-pubsub-room'
@@ -129,6 +128,8 @@ const createSwapApp = () => {
       fetchTx: (hash) => actions.btc.fetchTx(hash),
     }),
   ) : null
+
+  window.swapApp = swapApp
 }
 
 export {

@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'redaction'
-import moment from 'moment-with-locales-es6'
+
 import actions from 'redux/actions'
 import Link from 'sw-valuelink'
 import { localStorage, constants } from 'helpers'
