@@ -72,7 +72,7 @@ export default class WithdrawModal extends React.Component {
 
     if (isSubmitted) {
       linked.amount.check((value) => value > minAmount[data.currency], `Amount must be greater than ${minAmount[data.currency]} `)
-      linked.amount.check((value) => value < balance, `Amount must be bigger your balance`)
+      linked.amount.check((value) => value < balance, `Amount must be less than your balance`)
     }
 
     return (
