@@ -104,8 +104,9 @@ export default class ImportKeys extends Component {
       <Modal name={this.props.name} title="Import keys">
         <div styleName="modal">
           <p>This procedure will rewrite your private key. If you are not sure about it, we recommend to press cancel</p>
+          <p>You can import both your keys at once, or one by one.</p>
 
-          <FieldLabel>Please enter eth private key</FieldLabel>
+          <FieldLabel>Enter ETH private key</FieldLabel>
           <Group
             inputLink={linked.ethKey}
             placeholder="Key"
@@ -113,7 +114,7 @@ export default class ImportKeys extends Component {
             onClick={this.handleEthImportKey}
           />
 
-          <FieldLabel>Please enter btc private key in WIF format</FieldLabel>
+          <FieldLabel>Enter BTC private key in WIF format</FieldLabel>
           <Group
             inputLink={linked.btcKey}
             placeholder="Key in WIF format"
