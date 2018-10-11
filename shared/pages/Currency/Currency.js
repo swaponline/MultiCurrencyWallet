@@ -39,7 +39,7 @@ export default class Currency extends Component {
     }
 
     currencies = currencies.reduce((previous, current) =>
-      previous.concat({ from: currency, to: current.value }, { from: current.value, to: currency }),
+      previous.concat({ from: current.value, to: currency }),
     [])
 
     return currencies
@@ -99,9 +99,7 @@ export default class Currency extends Component {
           </Fragment>
           <div> Balance: <span>{String(coin.balance).length > 5 ? coin.balance.toFixed(5) : coin.balance} {coin.currency}</span>
           </div>
-          <div>
-            <Toggle onChange={this.handleInWalletChange} checked={this.isInWallet()} />Added to Wallet
-          </div>
+          <Toggle onChange={this.handleInWalletChange} checked={this.isInWallet()} />Added to Wallet
         </PageHeadline>
         <Table
           titles={['Coin', 'Exchange', '']}
