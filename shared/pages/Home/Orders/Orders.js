@@ -19,8 +19,8 @@ import styles from './Orders.scss'
 const filterMyOrders = (orders, peer) => orders
   .filter(order => order.owner.peer === peer)
 
-const filterOrders = (orders, filterTicker) => orders
-  .filter(order => Pair.check(order, filterTicker))
+const filterOrders = (orders, filter) => orders
+  .filter(order => Pair.check(order, filter))
   .sort((a, b) => Pair.compareOrders(b, a))
 
 @connect(({
@@ -85,6 +85,8 @@ export default class Orders extends Component {
     const titles = [ 'OWNER', 'EXCHANGE', 'AMOUNT', 'PRICE', 'TOTAL', 'START EXCHANGE' ]
     const { isOnline, myOrders, orderId } = this.props
 
+    console.log('this state', this.state)
+
     return (
       <Fragment>
         <Title>{buyCurrency} &#8594; {sellCurrency} no limit exchange with 0 fee</Title>
@@ -95,48 +97,38 @@ export default class Orders extends Component {
           acceptRequest={this.acceptRequest}
         />
         <Button gray styleName="button" onClick={this.createOffer}>Create offer</Button>
-        {
-          sellOrders.length > 0 && (
-            <Fragment>
-              <h3>ASK</h3>
-              <Table
-                id="table_exchange"
-                classTitle={tableStyles.exchange}
-                titles={titles}
-                rows={sellOrders}
-                rowRender={(row, index) => (
-                  <Row
-                    key={index}
-                    orderId={orderId}
-                    row={row}
-                  />
-                )}
-                isLoading={!isOnline}
-              />
-            </Fragment>
-          )
-        }
-        {
-          buyOrders.length > 0 && (
-            <Fragment>
-              <h3>BID</h3>
-              <Table
-                id="table_exchange"
-                classTitle={tableStyles.exchange}
-                titles={titles}
-                rows={buyOrders}
-                rowRender={(row, index) => (
-                  <Row
-                    key={index}
-                    orderId={orderId}
-                    row={row}
-                  />
-                )}
-                isLoading={!isOnline}
-              />
-            </Fragment>
-          )
-        }
+
+        <h3>ASK</h3>
+        <Table
+          id="table_exchange"
+          classTitle={tableStyles.exchange}
+          titles={titles}
+          rows={sellOrders}
+          rowRender={(row, index) => (
+            <Row
+              key={index}
+              orderId={orderId}
+              row={row}
+            />
+          )}
+          isLoading={!isOnline}
+        />
+
+        <h3>BID</h3>
+        <Table
+          id="table_exchange"
+          classTitle={tableStyles.exchange}
+          titles={titles}
+          rows={buyOrders}
+          rowRender={(row, index) => (
+            <Row
+              key={index}
+              orderId={orderId}
+              row={row}
+            />
+          )}
+          isLoading={!isOnline}
+        />
       </Fragment>
     )
   }

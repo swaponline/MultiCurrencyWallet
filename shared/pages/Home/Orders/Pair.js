@@ -18,33 +18,56 @@ const filteredDecimals = ({ amount, currency }) =>
   BigNumber(amount).decimalPlaces(TOKEN_DECIMALS[currency] || 0).toString()
 
 export const parseTicker = (order) => {
-
-  if (order.length === 0 || !Array.isArray(order)) {
-    return []
-  }
-
   const { buyCurrency: buy, sellCurrency: sell } = order
 
   const BS = `${buy}-${sell}`.toUpperCase() // buys ETH, sells BTC, BID
   const SB = `${sell}-${buy}`.toUpperCase() // sells ETH = ASK
 
-  if (TRADE_TICKERS.includes(BS)) return { ticker: BS, type: PAIR_BID }
-  if (TRADE_TICKERS.includes(SB)) return { ticker: SB, type: PAIR_ASK }
+  if (TRADE_TICKERS.includes(BS)) {
+    console.log('bs')
+    return {
+      ticker: BS,
+      type: PAIR_BID,
+    }
+  }
+
+  if (TRADE_TICKERS.includes(SB)) {
+    console.log('sb')
+    return {
+      ticker: SB,
+      type: PAIR_ASK,
+    }
+  }
 
   console.error(new Error(`ParseTickerError: No such tickers: ${BS},${SB}`))
   return { ticker: 'none', type: PAIR_BID }
 }
 
 export const parsePair = (str) => {
-  if (!str) throw new Error(`Empty string: ${str}`)
-  if (typeof str !== 'string') throw new Error(`ParseTickerError: Not a string: ${str}`)
+
+  if (!str) {
+    throw new Error(`Empty string: ${str}`)
+  }
+
+  if (typeof str !== 'string') {
+    throw new Error(`ParseTickerError: Not a string: ${str}`)
+  }
 
   const tokens = str.split('-')
-  if (!tokens.length === 2) throw new Error(`ParseTickerError: Wrong tokens: ${str}`)
 
-  if (TRADE_TICKERS.includes(str)) { str = str } else { str = tokens.reverse().join('-') }
+  if (!tokens.length === 2) {
+    throw new Error(`ParseTickerError: Wrong tokens: ${str}`)
+  }
 
-  if (!TRADE_TICKERS.includes(str)) throw new Error(`ParseTickerError: Ticker not found: ${str}`)
+  if (TRADE_TICKERS.includes(str)) {
+    str = str
+  } else {
+    str = tokens.reverse().join('-')
+  }
+
+  if (!TRADE_TICKERS.includes(str)) {
+    throw new Error(`ParseTickerError: Ticker not found: ${str}`)
+  }
 
   const MAIN = tokens[0].toUpperCase()
   const BASE = tokens[1].toUpperCase()
@@ -120,14 +143,16 @@ export default class Pair {
   }
 
   static fromOrder(order) {
-    const { buyCurrency: buy, sellCurrency: sell, buyAmount, sellAmount } = order
-
+    const { buyCurrency, sellCurrency, buyAmount, sellAmount } = order
     const { ticker, type } = parseTicker(order)
 
-    if (ticker === 'none') return {}
+    if (ticker === 'none') {
+      return
+    }
+
     // ASK means sellCurrency is ETH, then sell is main
-    const main_amount = BigNumber(type == PAIR_ASK ? sellAmount : buyAmount)
-    const base_amount = BigNumber(type == PAIR_ASK ? buyAmount : sellAmount)
+    const main_amount = BigNumber(type === PAIR_ASK ? sellAmount : buyAmount)
+    const base_amount = BigNumber(type === PAIR_ASK ? buyAmount : sellAmount)
 
     return new Pair({
       ticker,
