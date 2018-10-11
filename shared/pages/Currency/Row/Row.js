@@ -26,7 +26,7 @@ export default class Row extends Component {
           <Coins styleName="coins" names={[ from, to ]} size={40} />
         </td>
         <td>
-          <span>Exchange {from.toUpperCase()} to {to.toUpperCase()}</span>
+          <span>Exchange {from.toUpperCase()}/{to.toUpperCase()}</span>
         </td>
         <td>
           <Link styleName="button" to={`${links.home}${from.toLowerCase()}-${to.toLowerCase()}`}>Exchange</Link>

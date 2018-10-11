@@ -4,6 +4,10 @@ import TOKEN_DECIMALS from 'helpers/constants/TOKEN_DECIMALS'
 import TRADE_TICKERS from 'helpers/constants/TRADE_TICKERS'
 import PAIR_TYPES from 'helpers/constants/PAIR_TYPES'
 
+
+console.log('TOKEN_DECIMALS', TOKEN_DECIMALS)
+console.log('TRADE_TICKERS', TRADE_TICKERS)
+
 const PAIR_BID = PAIR_TYPES.BID
 const PAIR_ASK = PAIR_TYPES.ASK
 
@@ -14,6 +18,11 @@ const filteredDecimals = ({ amount, currency }) =>
   BigNumber(amount).decimalPlaces(TOKEN_DECIMALS[currency] || 0).toString()
 
 export const parseTicker = (order) => {
+
+  if (order.length === 0 || !Array.isArray(order)) {
+    return []
+  }
+
   const { buyCurrency: buy, sellCurrency: sell } = order
 
   const BS = `${buy}-${sell}`.toUpperCase() // buys ETH, sells BTC, BID
@@ -22,7 +31,7 @@ export const parseTicker = (order) => {
   if (TRADE_TICKERS.includes(BS)) return { ticker: BS, type: PAIR_BID }
   if (TRADE_TICKERS.includes(SB)) return { ticker: SB, type: PAIR_ASK }
 
-  console.error( new Error(`ParseTickerError: No such tickers: ${BS},${SB}`) )
+  console.error(new Error(`ParseTickerError: No such tickers: ${BS},${SB}`))
   return { ticker: 'none', type: PAIR_BID }
 }
 
@@ -31,7 +40,7 @@ export const parsePair = (str) => {
   if (typeof str !== 'string') throw new Error(`ParseTickerError: Not a string: ${str}`)
 
   const tokens = str.split('-')
-  if (!tokens.length == 2) throw new Error(`ParseTickerError: Wrong tokens: ${str}`)
+  if (!tokens.length === 2) throw new Error(`ParseTickerError: Wrong tokens: ${str}`)
 
   if (TRADE_TICKERS.includes(str)) { str = str } else { str = tokens.reverse().join('-') }
 
@@ -47,7 +56,7 @@ export const parsePair = (str) => {
 }
 
 export default class Pair {
-  constructor ({ price, amount, ticker, type }) {
+  constructor({ price, amount, ticker, type }) {
     this.price = BigNumber(price)
     this.amount = BigNumber(amount)
 
@@ -86,7 +95,7 @@ export default class Pair {
   * sellAmount: 10 ETH = 10 ETH = amount
   *
   */
-  toOrder () {
+  toOrder() {
     const { ticker, type, price, amount } = this
 
     console.log(`create order ${this}`)
@@ -110,7 +119,7 @@ export default class Pair {
     }
   }
 
-  static fromOrder (order) {
+  static fromOrder(order) {
     const { buyCurrency: buy, sellCurrency: sell, buyAmount, sellAmount } = order
 
     const { ticker, type } = parseTicker(order)

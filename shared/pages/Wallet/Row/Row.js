@@ -7,6 +7,7 @@ import { isMobile } from 'react-device-detect'
 import cssModules from 'react-css-modules'
 import styles from './Row.scss'
 
+import { Link } from 'react-router-dom'
 import CopyToClipboard from 'react-copy-to-clipboard'
 
 import CoinInteractive from 'components/CoinInteractive/CoinInteractive'
@@ -26,7 +27,7 @@ export default class Row extends Component {
     viewText: false,
     tradeAllowed: false,
     isAddressCopied: false,
-    showMobileButtons: false
+    showMobileButtons: false,
   }
 
   componentWillMount() {
@@ -83,7 +84,7 @@ export default class Row extends Component {
   handleShowButtons = () => {
     this.setState(() => ({
       showMobileButtons: !this.state.showMobileButtons
-    }))    
+    }))
   }
 
   handleEosRegister = () => {
@@ -131,14 +132,18 @@ export default class Row extends Component {
 
   render() {
     const { isBalanceFetching, tradeAllowed, isAddressCopied } = this.state
-    const { currency, balance, isBalanceFetched, address, contractAddress, unconfirmedBalance } = this.props
+    const { currency, balance, isBalanceFetched, address, contractAddress, fullName, unconfirmedBalance } = this.props
 
     return (
       <tr>
         <td>
           <CoinInteractive name={currency} />
         </td>
-        <td>{currency}</td>
+        <td>
+          <Link to={`/${fullName}-wallet`} title={`Online ${fullName} wallet`}>
+            {fullName}
+          </Link>
+        </td>
         <td styleName="table_balance-cell">
           {
             !isBalanceFetched || isBalanceFetching ? (
@@ -146,7 +151,7 @@ export default class Row extends Component {
             ) : (
               <div styleName="no-select-inline" onClick={this.handleReloadBalance} >
                 <i className="fas fa-sync-alt" styleName="icon" />
-                <span>{String(balance).length > 4 ? balance.toFixed(4) : balance}</span>
+                <span>{String(balance).length > 4 ? balance.toFixed(4) : balance}{' '}{currency}</span>
                 { currency === 'BTC' && unconfirmedBalance !== 0 && (
                   <Fragment>
                     <br />
@@ -201,7 +206,7 @@ export default class Row extends Component {
         <td styleName="tdButtons">
           <div styleName={this.state.showMobileButtons ? 'showButtons' : ''}>
             <button styleName="toggleWithdraw" onClick={this.handleShowButtons}>
-              <i class="fas fa-ellipsis-v"></i>
+              <i className="fas fa-ellipsis-v"></i>
             </button>
             <WithdrawButton onClick={this.handleWithdraw} styleName="marginRight">
               <i className="fas fa-arrow-alt-circle-up" />

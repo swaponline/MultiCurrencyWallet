@@ -48,6 +48,7 @@ export default class CurrencyWallet extends Component {
       address,
       contractAddress,
       decimals,
+      fullName,
       balance,
     }
   }
@@ -67,20 +68,20 @@ export default class CurrencyWallet extends Component {
 
 
   render() {
-    const { name, address, balance } = this.state
+    const { fullName, address, balance, currency } = this.state
 
     return (
       <div className="root">
-        <PageHeadline subTitle={`Your Online ${name} Wallet`} />
+        <PageHeadline subTitle={`Your Online ${fullName} Wallet`} />
         <div styleName="info-panel">
-          <h3 styleName="info">
+          <h3 >
             Your address: <span>{address}</span>
           </h3>
-          <h3 styleName="info">Your balance: {balance}</h3>
+          <h3 >Your {fullName} balance: {balance}{' '}{currency.toUpperCase()}</h3>
         </div>
-        <div styleName="actions">
+        <div>
           <Button brand onClick={this.handleWithdraw} >Send</Button>
-          <Link to={`${links.home}${name}`} >
+          <Link to={`${links.home}${currency.toLowerCase()}`} >
             <Button gray>Exchange</Button>
           </Link>
         </div>

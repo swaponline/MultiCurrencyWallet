@@ -11,7 +11,6 @@ import tableStyles from 'components/tables/Table/Table.scss'
 import MyOrders from './MyOrders/MyOrders'
 import { Button } from 'components/controls'
 
-import PAIR_TYPES from 'helpers/constants/PAIR_TYPES'
 import Pair, { parseTicker } from './Pair'
 
 import styles from './Orders.scss'
@@ -42,7 +41,7 @@ export default class Orders extends Component {
     sellOrders: [],
   }
 
-  static getDerivedStateFromProps({ orders, sellCurrency, buyCurrency }) {
+  static getDerivedStateFromProps({ orders }) {
     if (!Array.isArray(orders)) { return }
 
     const sellOrders = orders
@@ -50,9 +49,6 @@ export default class Orders extends Component {
 
     const buyOrders = orders
       .filter(order => Pair.fromOrder(order).isBid())
-
-    console.log('orders', orders.map(Pair.fromOrder))
-    console.log(buyOrders, sellOrders)
 
     return {
       buyOrders,

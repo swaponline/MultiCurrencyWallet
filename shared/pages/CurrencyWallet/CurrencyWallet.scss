@@ -13,11 +13,6 @@
   overflow-x: scroll;
 }
 
-.info {
-  display: flex;
-  justify-content: center;
-}
-
 @include media-tablet-landscape-and-lower {
   .info {
     display: block;
@@ -26,11 +21,10 @@
   .info span {
     font-size: 1rem;
   }
-} 
+}
 
 .actions {
   display: flex;
-  justify-content: center;
 }
 
 .actions button:not(:last-child) {

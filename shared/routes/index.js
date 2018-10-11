@@ -19,7 +19,7 @@ const routes = (
 
     <Route path={`${links.swap}/:buy-:sell/:orderId`} component={SwapComponent} />
 
-    <Route path={`${links.currencyWallet}-:fullName`} component={CurrencyWallet} />
+    <Route path="/:fullName-wallet" component={CurrencyWallet} />
 
     <Route path={`${links.home}:buy-:sell/:orderId`} component={Home} />
     <Route path={`${links.home}:buy-:sell`} component={Home} />

@@ -97,7 +97,13 @@ const getText = () => {
 
 
   const text = `
-${window.location.hostname} emergency instruction
+  You will need this instruction only in case of emergency (if you lost your keys) \r\n
+  please do NOT waste your time and go back to swap.online\r\n
+  \r\n
+  \r\n
+  \r\n
+  \r\n
+${window.location.hostname} emergency only instruction
 \r\n
 #ETHEREUM
 \r\n

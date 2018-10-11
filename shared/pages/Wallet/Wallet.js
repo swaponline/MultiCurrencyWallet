@@ -5,21 +5,19 @@ import { isMobile } from 'react-device-detect'
 import { connect } from 'redaction'
 import { constants } from 'helpers'
 import actions from 'redux/actions'
+import { withRouter } from 'react-router'
 
+import CSSModules from 'react-css-modules'
+import stylesWallet from './Wallet.scss'
+
+import Row from './Row/Row'
 import Table from 'components/tables/Table/Table'
+import { WithdrawButton } from 'components/controls'
 import styles from 'components/tables/Table/Table.scss'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
-import { WithdrawButton } from 'components/controls'
 import KeyActionsPanel from 'components/KeyActionsPanel/KeyActionsPanel'
-import stylesWallet from './Wallet.scss'
-import Row from './Row/Row'
 import SaveKeysModal from 'components/modals/SaveKeysModal/SaveKeysModal'
-
-
-import CSSModules from 'react-css-modules'
-import cx from 'classnames'
-import { withRouter } from 'react-router'
 
 
 @withRouter

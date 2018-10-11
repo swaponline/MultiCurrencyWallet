@@ -14,6 +14,6 @@ Object.keys(config.erc20)
   })
 
 export default {
-  decimals,
+  ...decimals,
 }
 
