@@ -46,11 +46,11 @@ export default class Orders extends Component {
     if (!Array.isArray(orders)) { return }
 
     const sellOrders = orders.filter(order =>
-      order.sellCurrency.toLowerCase() === buyCurrency
+      order.sellCurrency.toLowerCase() === sellCurrency
     )
 
     const buyOrders = orders.filter(order =>
-      order.buyCurrency.toLowerCase() === sellCurrency
+      order.buyCurrency.toLowerCase() === buyCurrency
     )
 
     return {
