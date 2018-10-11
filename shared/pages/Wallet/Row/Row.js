@@ -7,10 +7,9 @@ import { isMobile } from 'react-device-detect'
 import cssModules from 'react-css-modules'
 import styles from './Row.scss'
 
-import { Link } from 'react-router-dom'
 import CopyToClipboard from 'react-copy-to-clipboard'
 
-import Coin from 'components/Coin/Coin'
+import CoinInteractive from 'components/CoinInteractive/CoinInteractive'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import WithdrawButton from 'components/controls/WithdrawButton/WithdrawButton'
 
@@ -28,6 +27,7 @@ export default class Row extends Component {
     tradeAllowed: false,
     isAddressCopied: false,
     showMobileButtons: false,
+    countButtons: 0
   }
 
   componentWillMount() {
@@ -81,10 +81,28 @@ export default class Row extends Component {
     })
   }
 
-  handleShowButtons = () => {
+  handleCountButtons = () => {
     this.setState(() => ({
-      showMobileButtons: !this.state.showMobileButtons
+      countButtons: this.state.countButtons + 1
     }))
+    if (this.state.countButtons == 2) {
+      this.setState(() => ({
+        countButtons: 0
+      }))
+    }
+  }
+
+  getCurrentButton = () => {
+    switch (this.state.countButtons) {
+      case 0:
+        return 'sendButton'
+      case 1:
+        return 'receiveButton' 
+      case 2:
+        return 'swapButton'
+      default:
+        return null
+    }
   }
 
   handleEosRegister = () => {
@@ -132,20 +150,14 @@ export default class Row extends Component {
 
   render() {
     const { isBalanceFetching, tradeAllowed, isAddressCopied } = this.state
-    const { currency, balance, isBalanceFetched, address, contractAddress, fullName, unconfirmedBalance } = this.props
+    const { currency, balance, isBalanceFetched, address, contractAddress, unconfirmedBalance } = this.props
 
     return (
       <tr>
         <td>
-          <Link to={`/${fullName}-wallet`} title={`Online ${fullName} wallet`}>
-            <Coin name={currency} />
-          </Link>
+          <CoinInteractive name={currency} />
         </td>
-        <td>
-          <Link to={`/${fullName}-wallet`} title={`Online ${fullName} wallet`}>
-            {fullName}
-          </Link>
-        </td>
+        <td>{currency}</td>
         <td styleName="table_balance-cell">
           {
             !isBalanceFetched || isBalanceFetching ? (
@@ -153,7 +165,7 @@ export default class Row extends Component {
             ) : (
               <div styleName="no-select-inline" onClick={this.handleReloadBalance} >
                 <i className="fas fa-sync-alt" styleName="icon" />
-                <span>{String(balance).length > 4 ? balance.toFixed(4) : balance}{' '}{currency}</span>
+                <span>{String(balance).length > 4 ? balance.toFixed(4) : balance}</span>
                 { currency === 'BTC' && unconfirmedBalance !== 0 && (
                   <Fragment>
                     <br />
@@ -206,9 +218,9 @@ export default class Row extends Component {
           </CopyToClipboard>
         ) }
         <td styleName="tdButtons">
-          <div styleName={this.state.showMobileButtons ? 'showButtons' : ''}>
-            <button styleName="toggleWithdraw" onClick={this.handleShowButtons}>
-              <i className="fas fa-ellipsis-v" />
+          <div styleName={this.getCurrentButton()}>
+            <button styleName="toggleWithdraw" onClick={this.handleCountButtons}>
+              <i class="fas fa-ellipsis-v"></i>
             </button>
             <WithdrawButton onClick={this.handleWithdraw} styleName="marginRight">
               <i className="fas fa-arrow-alt-circle-up" />

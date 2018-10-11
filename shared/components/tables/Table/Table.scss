@@ -457,10 +457,10 @@
     }
   }
   .wallet {
-    min-width: 275px;
-    max-width: 262px;
+    min-width: 280px;
     margin-bottom: 15px;
     font-size: 14px;
+    overflow: hidden;
     th {
       font-size: 13px;
     }

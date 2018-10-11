@@ -46,6 +46,54 @@
   min-width: 100px;
 }
 
+.marginRight {
+  margin-right: 10px;
+}
+
+.copied {
+  font-size: 14px;
+  position: absolute;
+  padding: 5px 15px;
+  background: #f8f3fe;
+  top: -16px;
+  left: calc(25%);
+  border-radius: 20px;
+}
+
+.no-select-inline {
+  cursor: pointer;
+  display: inline;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.icon {
+  margin-right: 5px;
+}
+
+.button {
+  @include inline-block;
+  height: 40px;
+  background: #f8f3fe;
+  padding: 0 25px;
+  cursor: pointer;
+  line-height: 40px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #7c1de9;
+  border-radius: 20px;
+  margin-right: 10px;
+
+  &:hover {
+    color: #7c1de9;
+    background: #dfc5ff;
+  }
+}
+
+.table_balance-cell {
+  min-width: 100px;
+}
+
 @include media-mobile { 
   .table_balance-cell {
     min-width: 75px;
@@ -57,18 +105,47 @@
     cursor: pointer;
   }
   td.tdButtons {
-    .showButtons {
-      display: flex;
+    .sendButton {
+      button:nth-child(2) {
+        display: block;
+        padding: 0;
+        width: 87px;
+      }
+    }
+    .receiveButton {
       button:nth-child(2) {
         display: none;
       }
       button:nth-child(3) {
         display: block;
-        margin-right: 5px;
+        width: 87px;
+        padding: 0;
+        i {
+          display: none;
+        }
+        span {
+          display: block;
+        }
+      }
+    }
+    .swapButton {
+      height: 40px;
+      button:nth-child(2) {
+        display: none;
       }
       button:nth-child(4) {
         display: block;
+        width: 87px;
+        padding: 0;
+        font-size: 14px;
+        i {
+          display: none;
+        }
+        span {
+          display: block;
+        }
       }
     }
   }
 }
+
