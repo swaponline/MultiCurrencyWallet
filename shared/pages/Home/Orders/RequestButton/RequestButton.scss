@@ -1,18 +1,11 @@
 .button {
-  width: 40px;
-  height: 40px;
+  padding: 15px 20px;
   background-color: #e91db4;
   position: relative;
-  opacity: 0.5;
-  border-radius: 50%;
-
-  &::after {
-    @include arrow('right', 10px, 3px, #fff);
-    margin: -5px 0 0 -7px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-  }
+  opacity: 0.8;
+  border-radius: 5px;
+  color: #ffffff;
+  cursor: pointer;
 
   &:hover {
     opacity: 1;
@@ -21,6 +14,7 @@
 
 .disabled {
   background-color: #828795;
+  color: #000000;
 
   &:hover {
     opacity: 0.5;

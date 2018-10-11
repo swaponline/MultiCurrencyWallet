@@ -3,6 +3,6 @@ export default {
   demoMoneyReceived: 'demoMoneyReceived',
   activeTabId: 'activeTabId',
   hiddenCoinsList: 'hiddenCoinsList',
-  testnetSkipPKCheck: 'testnetSkipPKCheck',
+  testnetSkip: 'testnetSkip',
   storageRevision: '_revision',
 }

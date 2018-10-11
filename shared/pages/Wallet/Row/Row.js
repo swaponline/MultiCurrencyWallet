@@ -10,7 +10,7 @@ import styles from './Row.scss'
 import { Link } from 'react-router-dom'
 import CopyToClipboard from 'react-copy-to-clipboard'
 
-import CoinInteractive from 'components/CoinInteractive/CoinInteractive'
+import Coin from 'components/Coin/Coin'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import WithdrawButton from 'components/controls/WithdrawButton/WithdrawButton'
 
@@ -137,7 +137,9 @@ export default class Row extends Component {
     return (
       <tr>
         <td>
-          <CoinInteractive name={currency} />
+          <Link to={`/${fullName}-wallet`} title={`Online ${fullName} wallet`}>
+            <Coin name={currency} />
+          </Link>
         </td>
         <td>
           <Link to={`/${fullName}-wallet`} title={`Online ${fullName} wallet`}>
@@ -206,7 +208,7 @@ export default class Row extends Component {
         <td styleName="tdButtons">
           <div styleName={this.state.showMobileButtons ? 'showButtons' : ''}>
             <button styleName="toggleWithdraw" onClick={this.handleShowButtons}>
-              <i className="fas fa-ellipsis-v"></i>
+              <i className="fas fa-ellipsis-v" />
             </button>
             <WithdrawButton onClick={this.handleWithdraw} styleName="marginRight">
               <i className="fas fa-arrow-alt-circle-up" />

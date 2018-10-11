@@ -142,7 +142,12 @@ export default class Row extends Component {
                           <span>Please wait while we confirm your request</span>
                         </Fragment>
                       ) : (
-                        <RequestButton disabled={balance >= Number(amount)} onClick={() => this.sendRequest(id, isMy ? sellCurrency : buyCurrency)} />
+                        <RequestButton
+                          disabled={balance >= Number(amount)}
+                          onClick={() => this.sendRequest(id, isMy ? sellCurrency : buyCurrency)}
+                        >
+                          start exchange
+                        </RequestButton>
                       )
                     )
                   )

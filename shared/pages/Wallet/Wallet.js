@@ -54,6 +54,7 @@ export default class Wallet extends Component {
   }
 
   componentWillMount() {
+    process.env && localStorage.setItem(constants.localStorage.testnetSkip, true)
     if (localStorage.getItem(constants.localStorage.privateKeysSaved)) {
       this.changeView('checkKeys')
     } else {
@@ -94,7 +95,7 @@ export default class Wallet extends Component {
     const titles = [ 'Coin', 'Name', 'Balance', !isMobile && 'Address', isMobile ? 'Send, receive, swap' :  'Actions' ]
 
     const keysSaved = localStorage.getItem(constants.localStorage.privateKeysSaved)
-    const testNetSkip = localStorage.getItem(constants.localStorage.testnetSkipPKCheck)
+    const testNetSkip = localStorage.getItem(constants.localStorage.testnetSkip)
 
     const showSaveKeysModal = !zeroBalance && !keysSaved && !testNetSkip // non-zero balance and no keys saved
 

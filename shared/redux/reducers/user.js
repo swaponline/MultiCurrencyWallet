@@ -29,6 +29,7 @@ export const initialState = {
     balance: 0,
     isBalanceFetched: false,
     currency: 'USDT',
+    fullName: 'USDT',
   },
   nimData: {
     balance: 0,

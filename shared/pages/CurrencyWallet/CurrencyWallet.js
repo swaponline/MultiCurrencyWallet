@@ -80,7 +80,7 @@ export default class CurrencyWallet extends Component {
           <h3 >Your {fullName} balance: {balance}{' '}{currency.toUpperCase()}</h3>
         </div>
         <div>
-          <Button brand onClick={this.handleWithdraw} >Send</Button>
+          <Button brand style={{ marginRight: '15px' }} onClick={this.handleWithdraw} >Send</Button>
           <Link to={`${links.home}${currency.toLowerCase()}`} >
             <Button gray>Exchange</Button>
           </Link>
