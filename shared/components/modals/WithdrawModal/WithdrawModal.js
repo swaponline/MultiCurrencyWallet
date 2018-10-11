@@ -31,6 +31,7 @@ export default class WithdrawModal extends React.Component {
     data: PropTypes.object,
   }
 
+
   state = {
     isSubmitted: false,
     address: '',
