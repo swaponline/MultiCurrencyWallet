@@ -12,7 +12,7 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import RequestButton from '../RequestButton/RequestButton'
 import RemoveButton from 'components/controls/RemoveButton/RemoveButton'
 import Avatar from 'components/Avatar/Avatar'
-
+import Pair from '../Pair'
 
 @connect({
   peer: 'ipfs.peer',
@@ -84,7 +84,10 @@ export default class Row extends Component {
     const { orderId, row: { id, buyCurrency, sellCurrency, isMy, buyAmount,
       sellAmount, isRequested, isProcessing,
       owner: {  peer: ownerPeer } }, peer } = this.props
-    const amount = isMy ? sellAmount : buyAmount
+
+    const pair = Pair.fromOrder(this.props.row)
+
+    const { price, amount, total, main, base } = pair
 
     if (this.state.redirect) {
       return <Redirect push to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`} />
@@ -103,30 +106,17 @@ export default class Row extends Component {
         </td>
         <td>
           {
-            isMy ? (
-              `${buyAmount.toFixed(5)} ${buyCurrency} `
-            ) : (
-              `${sellAmount.toFixed(5)} ${sellCurrency} `
-            )
+            `${amount.toFixed(5)} ${main}`
           }
         </td>
         <td>
           {
-            isMy ? (
-              `${sellAmount.toFixed(5)} ${sellCurrency} `
-            ) : (
-              `${buyAmount.toFixed(5)} ${buyCurrency} `
-            )
+            `${price.toFixed(5)} ${base}`
           }
         </td>
         <td>
-          { buyAmount.dividedBy(sellAmount).toFixed(5) }
           {
-            isMy ? (
-              `${sellCurrency}/${buyCurrency}`
-            ) : (
-              `${buyCurrency}/${sellCurrency}`
-            )
+            `${total.toFixed(5)} ${base}`
           }
         </td>
         <td>
