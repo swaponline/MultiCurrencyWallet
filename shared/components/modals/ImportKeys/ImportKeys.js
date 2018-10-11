@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import actions from 'redux/actions'
 
 import Link from 'sw-valuelink'
+import { constants } from 'helpers'
 
 import cssModules from 'react-css-modules'
 import styles from './ImportKeys.scss'
@@ -77,6 +78,7 @@ export default class ImportKeys extends Component {
 
     if (!isDisabled) {
       window.location.reload()
+      localStorage.setItem(constants.localStorage.testnetSkipPKCheck, 'true')
     }
   }
 

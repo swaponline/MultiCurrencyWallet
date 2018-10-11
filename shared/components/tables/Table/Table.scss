@@ -225,44 +225,6 @@
   }
 }
 
-
-
-@include media-mobile {
-  table {
-    overflow-x: auto;
-  }
-
-  table.wallet {
-
-    td {
-      div {
-
-        button {
-
-          width: 40px;
-          padding: 1px 7px 2px 7px;
-          margin: 0 1px;
-
-          i {
-            display: block;
-          }
-
-          span {
-            display: none;
-          }
-
-        }
-
-      }
-
-    }
-
-    td:nth-child(2) {
-      width: 100%;
-    }
-  }
-}
-
 .table-fixed{
   thead {
     position: fixed;
@@ -455,6 +417,97 @@
     tbody {
       td:nth-child(2) {
         margin-left: 45px;
+      }
+    }
+  }
+}
+
+@include media-mobile {
+  table {
+    overflow-x: auto;
+  }
+
+  table.wallet {
+
+    td {
+      div {
+
+        button {
+
+          width: 40px;
+          padding: 1px 7px 2px 7px;
+          margin: 0 1px;
+
+          i {
+            display: block;
+          }
+
+          span {
+            display: none;
+          }
+
+        }
+
+      }
+
+    }
+
+    td:nth-child(2) {
+      width: 100%;
+    }
+  }
+  .wallet {
+    min-width: 275px;
+    max-width: 262px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    th {
+      font-size: 13px;
+    }
+    td:nth-child(1),
+    th:nth-child(1) {
+      display: none;
+    }
+    th:nth-child(2) {
+      padding-left: 10px;
+    }
+    td:nth-child(2) {
+      width: auto;
+    }
+    td:nth-child(4) {
+      margin-left: -10px;
+      position: relative;
+        button:nth-child(2) {
+          width: auto;
+          padding: 0 25px;
+          i {
+            display: none;
+          }
+          span {
+            display: block;
+          }
+        }
+        button:nth-child(3),
+        button:nth-child(4) {
+          display: none;
+      }
+    }
+  }
+  .table-fixed.wallet {
+    thead {
+      min-width: 365px;
+      max-width: 370px;
+      tr {
+        th:nth-child(1) {
+          width: 143px;
+          margin-left: 3px;
+        }
+        th:nth-child(2) {
+          width: 177px;
+        }
+        th:nth-child(3) {
+          width: 321px;
+        }
       }
     }
   }
