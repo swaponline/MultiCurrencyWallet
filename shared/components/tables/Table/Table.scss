@@ -1,7 +1,6 @@
 .table {
   border-collapse: collapse;
   border: 0;
-  min-width: 1040px;
   width: auto;
   thead {
     box-shadow: rgba(#000 ,0.03) 0 3px 3px 0;
@@ -65,6 +64,11 @@
 
   // Wallet
   .wallet {
+
+    th:last-child {
+      padding-left: 30px;
+    }
+
     & td {
       // &:first-child {
       //   position: absolute;
@@ -236,26 +240,6 @@
   }
 }
 
-.table-fixed.wallet {
-  thead {
-    tr {
-      display: flex;
-      th:nth-child(1) {
-        width: 63px;
-      }
-      th:nth-child(2) {
-        width: 83px;
-      }
-      th:nth-child(3) {
-        width: 130px;
-      }
-      th:nth-child(4) {
-        width: 515px;
-      }
-    }
-  }
-}
-
 .table-fixed.exchange {
   thead {
     tr {
@@ -329,25 +313,6 @@
 @include media-tablet {
   .table.wallet {
     min-width: 1000px;
-  }
-
-  .table-fixed.wallet {
-    thead {
-      tr {
-        th:nth-child(1) {
-          width: 50px;
-        }
-        th:nth-child(2) {
-          width: 66px;
-        }
-        th:nth-child(3) {
-          width: 100px;
-        }
-        th:nth-child(4) {
-          width: 451px;
-        }
-      }
-    }
   }
   .table-fixed.exchange {
     thead {
@@ -453,7 +418,14 @@
     }
 
     td:nth-child(2) {
-      width: 100%;
+      width: 15%;
+      max-width: 60px;
+    }
+    td:nth-child(3) {
+      width: 54%;
+    }
+    td:nth-child(4) {
+      width: 26%;
     }
   }
   .wallet {
@@ -463,6 +435,9 @@
     overflow: hidden;
     th {
       font-size: 13px;
+    }
+    th:last-child {
+      padding-left: 15px;
     }
     td:nth-child(1),
     th:nth-child(1) {
@@ -495,12 +470,11 @@
   }
   .table-fixed.wallet {
     thead {
-      min-width: 365px;
-      max-width: 370px;
       tr {
         th:nth-child(1) {
           width: 143px;
           margin-left: 3px;
+          display: none;
         }
         th:nth-child(2) {
           width: 177px;
@@ -512,5 +486,6 @@
     }
   }
 }
+
 
 
