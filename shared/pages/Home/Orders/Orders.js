@@ -89,7 +89,7 @@ export default class Orders extends Component {
 
     return (
       <Fragment>
-        <Title>{buyCurrency} &#8594; {sellCurrency} no limit exchange with 0 fee</Title>
+        <Title>{buyCurrency}/{sellCurrency} no limit exchange with 0 fee</Title>
         <MyOrders
           myOrders={myOrders}
           declineRequest={this.declineRequest}
