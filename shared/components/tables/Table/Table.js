@@ -19,11 +19,11 @@ export default class Table extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.id == 'table-wallet' || this.props.id == 'table-history')  {
+    if (this.props.id == 'table-wallet')  {
       window.addEventListener('scroll', this.handleScrollTable)
       window.addEventListener('resize', this.responsiveTable)
-    }
-    this.responsiveTable();
+      this.responsiveTable();
+    } 
   }
 
   componentWillUnmount() {

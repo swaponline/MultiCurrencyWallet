@@ -56,6 +56,13 @@
   color: #626262;
 }
 
+.wallet {
+
+  th:last-child {
+    padding-left: 30px;
+  }
+}
+
 @include media-tablet-landscape-and-lower {
   table {
     display: block;
