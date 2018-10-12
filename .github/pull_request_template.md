@@ -1,6 +1,6 @@
 # Template PR swap.react
 
-If the build is not going, the PR do not even look
+`Build not working ? PR closed : Merge`
 
 * Code matches style guide 😏
   - [ ] [js](https://github.com/airbnb/javascript#ecmascript-6-es-2015-styles)
@@ -13,6 +13,5 @@ If the build is not going, the PR do not even look
 * Git 😈
   - [ ] `git pull --rebase origin master` [help](https://git-scm.com/book/en/v2/Git-Branching-Rebasing)
 
-For the correct PR bonus tokens ✨ <br>
+For the correct PR bonus tokens ✨
 💔Thank you!
-
