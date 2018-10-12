@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import config from 'app-config'
 import { connect } from 'redaction'
 
 import styles from './Footer.scss'
@@ -18,6 +19,7 @@ const Footer = (props) => (
       <Links />
       <SocialMenu />
       <Info {...props} />
+      <span style={{ color: '#ffffff', fontSize: '12px' }}>{config.time}</span>
     </WidthContainer>
   </div>
 )
