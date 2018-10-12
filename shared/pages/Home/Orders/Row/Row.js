@@ -143,7 +143,7 @@ export default class Row extends Component {
                         </Fragment>
                       ) : (
                         <RequestButton
-                          disabled={balance >= Number(amount)}
+                          disabled={balance >= Number(buyAmount)}
                           onClick={() => this.sendRequest(id, isMy ? sellCurrency : buyCurrency)}
                         >
                           start exchange
