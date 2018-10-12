@@ -6,6 +6,7 @@ import { connect } from 'redaction'
 import { links } from 'helpers'
 
 import { swapComponents } from './swaps'
+import Share from './Share/Share'
 import EmergencySave from './EmergencySave/EmergencySave'
 
 
@@ -76,6 +77,7 @@ export default class SwapComponent extends PureComponent {
     return (
       <div style={{ paddingLeft: '30px', paddingTop: '30px' }}>
         <SwapComponent swap={swap} >
+          <Share flow={swap.flow} />
           <EmergencySave flow={swap.flow} />
         </SwapComponent>
       </div>

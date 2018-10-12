@@ -1,0 +1,19 @@
+import React from 'react'
+
+import CSSModules from 'react-css-modules'
+import styles from './Share.scss'
+
+import { Button } from 'components/controls'
+import Href from 'components/Href/Href'
+
+
+const Share = ({ flow }) => (
+  flow.step >= 5 && (
+    <Href tab="https://twitter.com/intent/tweet?url=https://swap.online/&text=I%20just%20make%20swap%20on%20&hashtags=AtomicSwap,DEX,Bitcoin,SWAP&via=SwapOnlineTeam">
+      <Button brand>Share Twitter</Button>
+    </Href>
+  )
+)
+
+export default CSSModules(Share, styles)
+

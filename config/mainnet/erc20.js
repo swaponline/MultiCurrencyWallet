@@ -55,7 +55,7 @@ export default {
     address: '0x63b992e6246d88f07fc35a056d2c365e6d441a3d',
     decimals: 18,
   },
-  shl: {
+  nexo: {
     address: '0xb62132e35a6c13ee1ee0f84dc5d40bad8d815206',
     decimals: 18,
   },
@@ -65,6 +65,14 @@ export default {
   },
   bnty: {
     address: '0xd2d6158683aee4cc838067727209a0aaf4359de3',
+    decimals: 18,
+  },
+  pbl: {
+    address: '0x55648de19836338549130b1af587f16bea46f66b',
+    decimals: 18,
+  },
+  senc: {
+    address: '0xa13f0743951b4f6e3e3aa039f682e17279f52bc3',
     decimals: 18,
   },
 }
