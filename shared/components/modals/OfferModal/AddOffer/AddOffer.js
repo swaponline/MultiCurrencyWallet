@@ -325,26 +325,13 @@ export default class AddOffer extends Component {
     const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
     const isDisabled = !exchangeRate || !buyAmount && !sellAmount
       || sellAmount > balance || sellAmount < minAmount[sellCurrency]
-      || ethBalance < 0.02
+      || ethBalance < 0.01
 
     linked.sellAmount.check((value) => value > minAmount[sellCurrency], `Amount must be greater than ${minAmount[sellCurrency]} `)
     linked.sellAmount.check((value) => value <= balance, `Amount must be bigger than on your balance`)
 
     return (
       <div styleName="wrapper">
-        <ExchangeRateGroup
-          label="Exchange rate"
-          inputValueLink={linked.exchangeRate.pipe(this.handleExchangeRateChange)}
-          currency={false}
-          disabled={!manualRate}
-          id="exchangeRate"
-          placeholder="Enter exchange rate amount"
-          buyCurrency={buyCurrency}
-          sellCurrency={sellCurrency}
-        />
-        <div>
-          <Toggle checked={manualRate} onChange={this.handleManualRate} /> Custom exchange rate
-        </div>
         { ethBalance < 0.02 && <span styleName="error">For a swap, you need 0.02 ETH on your balance</span> }
         <SelectGroup
           styleName="sellGroup"
@@ -372,6 +359,19 @@ export default class AddOffer extends Component {
           isInteger={isBuyFieldInteger}
           placeholder="Enter buy amount"
         />
+        <ExchangeRateGroup
+          label="Exchange rate"
+          inputValueLink={linked.exchangeRate.pipe(this.handleExchangeRateChange)}
+          currency={false}
+          disabled={!manualRate}
+          id="exchangeRate"
+          placeholder="Enter exchange rate amount"
+          buyCurrency={buyCurrency}
+          sellCurrency={sellCurrency}
+        />
+        <div>
+          <Toggle checked={manualRate} onChange={this.handleManualRate} /> Custom exchange rate
+        </div>
         <Button
           styleName="button"
           fullWidth
