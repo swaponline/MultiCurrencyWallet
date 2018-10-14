@@ -114,8 +114,8 @@ export default class Home extends Component {
     } else {
       this.setFilter('swap-btc')
       this.setState(() => ({
-        sellCurrency: 'swap',
-        buyCurrency: 'btc',
+        sellCurrency: 'btc',
+        buyCurrency: 'swap',
         invalidPair: true,
       }))
     }
