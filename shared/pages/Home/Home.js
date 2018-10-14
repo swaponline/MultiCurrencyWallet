@@ -18,15 +18,13 @@ import CurrencyDirectionChooser from 'components/CurrencyDirectionChooser/Curren
 import Orders from './Orders/Orders'
 
 
-@connect(
-  ({
-    core: { filter },
-    currencies: { items: currencies },
-  }) => ({
-    filter,
-    currencies,
-  })
-)
+@connect(({
+  core: { filter },
+  currencies: { items: currencies },
+}) => ({
+  filter,
+  currencies,
+}))
 @cssModules(styles, { allowMultiple: true })
 export default class Home extends Component {
 

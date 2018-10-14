@@ -1,19 +1,21 @@
 import React, { Component, Fragment } from 'react'
-import cssModules from 'react-css-modules'
+
 import { connect } from 'redaction'
 import actions from 'redux/actions'
+
 import constants from 'helpers/constants'
 
-import Row from './Row/Row'
+import cssModules from 'react-css-modules'
+import styles from './Orders.scss'
+
+import { Button } from 'components/controls'
 import Table from 'components/tables/Table/Table'
 import Title from 'components/PageHeadline/Title/Title'
 import tableStyles from 'components/tables/Table/Table.scss'
+
+import Pair from './Pair'
+import Row from './Row/Row'
 import MyOrders from './MyOrders/MyOrders'
-import { Button } from 'components/controls'
-
-import Pair, { parseTicker } from './Pair'
-
-import styles from './Orders.scss'
 
 
 const filterMyOrders = (orders, peer) => orders
