@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import cssModules from 'react-css-modules'
 import styles from './Home.scss'
 
-import { links } from 'helpers'
+import { links, constants } from 'helpers'
 
 import actions from 'redux/actions'
 import { connect } from 'redaction'
@@ -50,8 +50,10 @@ export default class Home extends Component {
   componentWillMount() {
     const { match: { params: { buy, sell } } } = this.props
 
-    if (buy !== this.state.sellCurrency || sell !== this.state.sellCurrency) {
-      actions.core.setFilter(`${sell}-${buy}`)
+    if (constants.tradeTicker.includes(`${sell.toUpperCase()}-${buy.toUpperCase()}`)) {
+      this.setFilter(`${sell}-${buy}`)
+    } else {
+      this.setFilter(`${buy}-${sell}`)
     }
   }
 
@@ -84,14 +86,13 @@ export default class Home extends Component {
 
   setFilter = (filter) => {
     actions.core.setFilter(filter)
+    this.props.history.replace(filter)
   }
 
   handleNext = () => {
-    const { history } = this.props
     const { buyCurrency, sellCurrency } = this.state
 
     this.setFilter(`${buyCurrency}-${sellCurrency}`)
-    history.replace((`${links.home}${buyCurrency}-${sellCurrency}`))
   }
 
   render() {

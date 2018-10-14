@@ -87,8 +87,6 @@ export default class Orders extends Component {
     const titles = [ 'OWNER', 'EXCHANGE', 'AMOUNT', 'PRICE', 'TOTAL', 'START EXCHANGE' ]
     const { isOnline, myOrders, orderId } = this.props
 
-    console.log('this state', this.state)
-
     return (
       <Fragment>
         <Title>{buyCurrency}/{sellCurrency} no limit exchange with 0 fee</Title>
