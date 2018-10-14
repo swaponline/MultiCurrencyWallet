@@ -81,12 +81,6 @@ export default class Row extends Component {
     })
   }
 
-  handleShowButtons = () => {
-    this.setState(() => ({
-      showMobileButtons: !this.state.showMobileButtons
-    }))
-  }
-
   handleEosRegister = () => {
     actions.modals.open(constants.modals.EosRegister, {})
   }
@@ -205,18 +199,15 @@ export default class Row extends Component {
             </td>
           </CopyToClipboard>
         ) }
-        <td styleName="tdButtons">
-          <div styleName={this.state.showMobileButtons ? 'showButtons' : ''}>
-            <button styleName="toggleWithdraw" onClick={this.handleShowButtons}>
-              <i className="fas fa-ellipsis-v" />
-            </button>
+        <td>
+          <div>
             <WithdrawButton onClick={this.handleWithdraw} styleName="marginRight">
-              <i className="fas fa-arrow-alt-circle-up" />
+              <i className="fas fa-arrow-alt-circle-right" />
               <span>Send</span>
             </WithdrawButton>
             { isMobile && (
               <WithdrawButton onClick={this.handleReceive} styleName="marginRight">
-                <i className="fas fa-arrow-alt-circle-down" />
+                <i className="fas fa-arrow-alt-circle-left" />
                 <span>Receive</span>
               </WithdrawButton>
             )}

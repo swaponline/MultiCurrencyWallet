@@ -19,13 +19,16 @@ export default class Table extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.id == 'table-wallet' || this.props.id == 'table-history')  {
+    if (this.props.id == 'table-wallet')  {
       window.addEventListener('scroll', this.handleScrollTable)
-    }
+      window.addEventListener('resize', this.handleResponsiveTable)
+      this.handleResponsiveTable();
+    } 
   }
 
   componentWillUnmount() {
     window.removeEventListener('scroll', this.handleScrollTable)
+    window.removeEventListener('resize', this.handleResponsiveTable)
   }
 
   handleScrollTable = () => {
@@ -46,10 +49,23 @@ export default class Table extends React.Component {
     }
   }
 
+  handleResponsiveTable = () => {
+    let table = this.linkOnTable;
+    let thead = this.linkOnTableHead;
+    let tbody = this.linkOnTableBody;
+    let th = thead.children[0].cells;
+    let td = tbody.children[0].cells;
+
+    for(let i = 0; i < th.length; i++) {
+      th[i].style.width = td[i].offsetWidth + 'px';
+    }
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
     const { rows, isLoading } = this.props
     return isLoading !== nextProps.isLoading || rows !== nextProps.rows || this.state.sticky !== nextState.sticky
   }
+
 
   render() {
     const { titles, rows, rowRender, textIfEmpty, isLoading, loadingText, classTitle, id } = this.props
@@ -57,7 +73,7 @@ export default class Table extends React.Component {
 
     return (
       <table styleName={sticky ? 'table table-fixed' : 'table'} className={classTitle} ref={(table) => this.linkOnTable = table}>
-        <thead>
+        <thead ref={(thead) => this.linkOnTableHead = thead}>
           <tr>
             {
               titles.filter(title => !!title).map((title, index) => (
@@ -66,7 +82,7 @@ export default class Table extends React.Component {
             }
           </tr>
         </thead>
-        <tbody>
+        <tbody ref={(tbody) => this.linkOnTableBody = tbody}>
           {
             isLoading && (
               <tr>

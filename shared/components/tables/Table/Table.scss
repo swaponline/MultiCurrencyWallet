@@ -1,7 +1,6 @@
 .table {
   border-collapse: collapse;
   border: 0;
-  min-width: 1040px;
   width: auto;
   thead {
     box-shadow: rgba(#000 ,0.03) 0 3px 3px 0;
@@ -57,6 +56,13 @@
   color: #626262;
 }
 
+.wallet {
+
+  th:last-child {
+    padding-left: 30px;
+  }
+}
+
 @include media-tablet-landscape-and-lower {
   table {
     display: block;
@@ -65,6 +71,11 @@
 
   // Wallet
   .wallet {
+
+    th:last-child {
+      padding-left: 30px;
+    }
+
     & td {
       // &:first-child {
       //   position: absolute;
@@ -236,26 +247,6 @@
   }
 }
 
-.table-fixed.wallet {
-  thead {
-    tr {
-      display: flex;
-      th:nth-child(1) {
-        width: 63px;
-      }
-      th:nth-child(2) {
-        width: 83px;
-      }
-      th:nth-child(3) {
-        width: 130px;
-      }
-      th:nth-child(4) {
-        width: 515px;
-      }
-    }
-  }
-}
-
 .table-fixed.exchange {
   thead {
     tr {
@@ -329,25 +320,6 @@
 @include media-tablet {
   .table.wallet {
     min-width: 1000px;
-  }
-
-  .table-fixed.wallet {
-    thead {
-      tr {
-        th:nth-child(1) {
-          width: 50px;
-        }
-        th:nth-child(2) {
-          width: 66px;
-        }
-        th:nth-child(3) {
-          width: 100px;
-        }
-        th:nth-child(4) {
-          width: 451px;
-        }
-      }
-    }
   }
   .table-fixed.exchange {
     thead {
@@ -453,16 +425,27 @@
     }
 
     td:nth-child(2) {
-      width: 100%;
+      width: 15%;
+      max-width: 60px;
+    }
+    td:nth-child(3) {
+      width: 54%;
+      max-width: 80px;
+    }
+    td:nth-child(4) {
+      width: 26%;
     }
   }
   .wallet {
-    min-width: 275px;
-    max-width: 262px;
+    min-width: 280px;
     margin-bottom: 15px;
     font-size: 14px;
+    overflow: hidden;
     th {
       font-size: 13px;
+    }
+    th:last-child {
+      padding-left: 15px;
     }
     td:nth-child(1),
     th:nth-child(1) {
@@ -474,33 +457,14 @@
     td:nth-child(2) {
       width: auto;
     }
-    td:nth-child(4) {
-      margin-left: -10px;
-      position: relative;
-        button:nth-child(2) {
-          width: auto;
-          padding: 0 25px;
-          i {
-            display: none;
-          }
-          span {
-            display: block;
-          }
-        }
-        button:nth-child(3),
-        button:nth-child(4) {
-          display: none;
-      }
-    }
   }
   .table-fixed.wallet {
     thead {
-      min-width: 365px;
-      max-width: 370px;
       tr {
         th:nth-child(1) {
           width: 143px;
           margin-left: 3px;
+          display: none;
         }
         th:nth-child(2) {
           width: 177px;
@@ -512,5 +476,6 @@
     }
   }
 }
+
 
 
