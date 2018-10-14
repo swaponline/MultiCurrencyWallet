@@ -1,15 +1,14 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-
-import { connect } from 'redaction'
 
 import CSSModules from 'react-css-modules'
 import styles from './Table.scss'
 
 import reducers from 'redux/core/reducers'
 
+
 @CSSModules(styles, { allowMultiple: true })
 export default class Table extends React.Component {
+
   constructor() {
     super()
 
@@ -19,11 +18,11 @@ export default class Table extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.id == 'table-wallet')  {
+    if (this.props.id === 'table-wallet')  {
       window.addEventListener('scroll', this.handleScrollTable)
       window.addEventListener('resize', this.handleResponsiveTable)
-      this.handleResponsiveTable();
-    } 
+      this.handleResponsiveTable()
+    }
   }
 
   componentWillUnmount() {
@@ -44,20 +43,19 @@ export default class Table extends React.Component {
     } else {
 
       this.setState(() => ({ sticky: false }))
-      
+
       reducers.menu.setIsDisplayingTable(false)
     }
   }
 
   handleResponsiveTable = () => {
-    let table = this.linkOnTable;
-    let thead = this.linkOnTableHead;
-    let tbody = this.linkOnTableBody;
-    let th = thead.children[0].cells;
-    let td = tbody.children[0].cells;
+    const { linkOnTableBody: tdLink, linkOnTableHead: thLink  } = this
 
-    for(let i = 0; i < th.length; i++) {
-      th[i].style.width = td[i].offsetWidth + 'px';
+    let th = thLink.children[0].cells
+    let td = tdLink.children[0].cells
+
+    for (let i = 0; i < th.length; i++) {
+      th[i].style.width = `${td[i].offsetWidth} px`
     }
   }
 
@@ -68,7 +66,7 @@ export default class Table extends React.Component {
 
 
   render() {
-    const { titles, rows, rowRender, textIfEmpty, isLoading, loadingText, classTitle, id } = this.props
+    const { titles, rows, rowRender, textIfEmpty, isLoading, loadingText, classTitle } = this.props
     const { sticky } = this.state
 
     return (
