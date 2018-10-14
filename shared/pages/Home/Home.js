@@ -129,7 +129,7 @@ export default class Home extends Component {
   }
 
   render() {
-    const { match: { params: { orderId } }, history: { location: { pathname } }, currencies } = this.props
+    const { match: { params: { orderId } }, history: { location: { pathname } }, currencies, history, filter } = this.props
     const { buyCurrency, sellCurrency, invalidPair } = this.state
 
     return (
@@ -180,6 +180,8 @@ export default class Home extends Component {
                 sellCurrency={sellCurrency}
                 flipCurrency={this.flipCurrency}
                 orderId={orderId}
+                history={history}
+                filter={filter}
                 invalidPair={invalidPair}
               />
             )
