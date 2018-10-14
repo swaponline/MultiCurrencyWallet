@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Link } from 'react-router-dom'
 import { links } from 'helpers'
 
@@ -7,7 +7,7 @@ import styles from './Logo.scss'
 
 import logoImage from './images/logo.svg'
 import coloredLogoImage from './images/logo-colored.svg'
-
+import ReactTooltip from 'react-tooltip'
 
 const Logo = ({ colored, withLink, mobile }) => {
   const imgNode = React.createElement('img', {
@@ -18,9 +18,14 @@ const Logo = ({ colored, withLink, mobile }) => {
 
   if (withLink) {
     return (
-      <Link styleName={mobile ? 'mobile' : 'logo'} to={links.home}>
-        {imgNode}
-      </Link>
+      <Fragment>
+        <Link styleName={mobile ? 'mobile' : 'logo'} data-tip data-for="logo" to={links.home}>
+          {imgNode}
+          <ReactTooltip id="logo" type="light" effect="solid">
+            <span>Go Home</span>
+          </ReactTooltip>
+        </Link>
+      </Fragment>
     )
   }
 

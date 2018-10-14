@@ -17,6 +17,7 @@ import SelectGroup from './SelectGroup/SelectGroup'
 
 import Button from 'components/controls/Button/Button'
 import Toggle from 'components/controls/Toggle/Toggle'
+import Tooltip from 'components/ui/Tooltip/Tooltip'
 
 import { isNumberValid, isNumberStringFormatCorrect, mathConstants } from 'helpers/math.js'
 
@@ -359,6 +360,7 @@ export default class AddOffer extends Component {
           isInteger={isBuyFieldInteger}
           placeholder="Enter buy amount"
         />
+        <div>
         <ExchangeRateGroup
           label="Exchange rate"
           inputValueLink={linked.exchangeRate.pipe(this.handleExchangeRateChange)}
@@ -369,8 +371,10 @@ export default class AddOffer extends Component {
           buyCurrency={buyCurrency}
           sellCurrency={sellCurrency}
         />
+        </div>
         <div>
           <Toggle checked={manualRate} onChange={this.handleManualRate} /> Custom exchange rate
+          <Tooltip text="To change the exchange rate"/>
         </div>
         <Button
           styleName="button"

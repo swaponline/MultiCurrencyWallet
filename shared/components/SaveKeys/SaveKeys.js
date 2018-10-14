@@ -6,6 +6,7 @@ import styles from './SaveKeys.scss'
 
 import Field from './Field/Field'
 import Button from 'components/controls/Button/Button'
+import ReactTooltip from 'react-tooltip'
 
 
 @connect(({ user: { ethData, btcData, eosData, telosData } }) => ({
@@ -24,7 +25,10 @@ export default class SaveKeys extends Component {
           <span styleName="linked" onClick={isChange}>I saved the keys in a safe place</span>
         </div>
         <div styleName="row" >
-          <Button brand onClick={isDownload}>Download</Button>
+          <Button brand onClick={isDownload} data-tip data-for="dK">Download</Button>
+            <ReactTooltip id="dK" type="light" effect="solid">
+              <span>Download text document with keys and accounts</span>
+            </ReactTooltip>
           <div styleName="cell" >
             <Field
               label={ethData.currency}
