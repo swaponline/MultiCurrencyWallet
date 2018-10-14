@@ -85,11 +85,12 @@ export default class Orders extends Component {
     const { sellOrders, buyOrders } = this.state
     const { sellCurrency, buyCurrency } = this.props
     const titles = [ 'OWNER', 'EXCHANGE', 'AMOUNT', 'PRICE', 'TOTAL', 'START EXCHANGE' ]
-    const { isOnline, myOrders, orderId } = this.props
+    const { isOnline, myOrders, orderId, invalidPair } = this.props
 
     return (
       <Fragment>
         <Title>{buyCurrency}/{sellCurrency} no limit exchange with 0 fee</Title>
+        { invalidPair && <p> No such ticker. Redirecting to SWAP-BTC exchange... </p> }
         <MyOrders
           myOrders={myOrders}
           declineRequest={this.declineRequest}

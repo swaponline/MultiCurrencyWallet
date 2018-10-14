@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 
 import cssModules from 'react-css-modules'
@@ -44,39 +44,54 @@ export default class Home extends Component {
     this.state = {
       buyCurrency: buy || buyCurrency || 'swap',
       sellCurrency: sell || sellCurrency || 'btc',
+      invalidPair: false,
     }
   }
 
   componentWillMount() {
     const { match: { params: { buy, sell } } } = this.props
 
-    if (constants.tradeTicker.includes(`${sell.toUpperCase()}-${buy.toUpperCase()}`)) {
-      this.setFilter(`${sell}-${buy}`)
-    } else {
-      this.setFilter(`${buy}-${sell}`)
+    if (!sell || !buy) {
+      return
     }
+
+    this.checkPair(sell, buy)
   }
 
   handleBuyCurrencySelect = ({ value }) => {
-    const { sellCurrency, buyCurrency } = this.state
+    let { sellCurrency, buyCurrency } = this.state
+
+    if (sellCurrency === value) {
+      sellCurrency = buyCurrency
+    }
+
+    this.checkPair(sellCurrency, value)
 
     this.setState({
       buyCurrency: value,
-      sellCurrency: value === buyCurrency ? buyCurrency : sellCurrency,
+      sellCurrency,
     })
   }
 
   handleSellCurrencySelect = ({ value }) => {
-    const { sellCurrency, buyCurrency } = this.state
+    let { sellCurrency, buyCurrency } = this.state
+
+    if (buyCurrency === value) {
+      buyCurrency = sellCurrency
+    }
+
+    this.checkPair(value, buyCurrency)
 
     this.setState({
-      buyCurrency: value === buyCurrency ? sellCurrency : buyCurrency,
+      buyCurrency,
       sellCurrency: value,
     })
   }
 
   flipCurrency = () => {
     const { buyCurrency, sellCurrency } = this.state
+
+    this.checkPair(buyCurrency, sellCurrency)
 
     this.setState({
       buyCurrency: sellCurrency,
@@ -86,29 +101,47 @@ export default class Home extends Component {
 
   setFilter = (filter) => {
     actions.core.setFilter(filter)
-    this.props.history.replace(filter)
   }
 
-  handleNext = () => {
-    const { buyCurrency, sellCurrency } = this.state
+  checkPair = (sell, buy) => {
+    sell  = sell.toUpperCase()
+    buy   = buy.toUpperCase()
 
-    this.setFilter(`${buyCurrency}-${sellCurrency}`)
+    if (constants.tradeTicker.includes(`${sell}-${buy}`)) {
+      this.setFilter(`${sell}-${buy}`)
+    } else if (constants.tradeTicker.includes(`${buy}-${sell}`)) {
+      this.setFilter(`${buy}-${sell}`)
+    } else {
+      this.setFilter('swap-btc')
+      this.setState(() => ({
+        sellCurrency: 'swap',
+        buyCurrency: 'btc',
+        invalidPair: true,
+      }))
+    }
+  }
+
+  handleShowOrders = () => {
+    const { history, filter } = this.props
+
+    this.setState(() => ({ isVisible: false }))
+    history.replace(filter)
   }
 
   render() {
     const { match: { params: { orderId } }, history: { location: { pathname } }, currencies } = this.props
-    const { buyCurrency, sellCurrency } = this.state
+    const { buyCurrency, sellCurrency, invalidPair } = this.state
 
     return (
       <section style={{ position: 'relative', width: '100%' }}>
         <PageHeadline>
           {
-            pathname === links.exchange ?
-              <React.Fragment>
+            pathname === links.exchange ? (
+              <Fragment>
                 <CurrencyDirectionChooser
                   handleSellCurrencySelect={this.handleSellCurrencySelect}
                   handleBuyCurrencySelect={this.handleBuyCurrencySelect}
-                  handleSubmit={this.handleNext}
+                  handleSubmit={this.handleShowOrders}
                   buyCurrency={buyCurrency}
                   sellCurrency={sellCurrency}
                   flipCurrency={this.flipCurrency}
@@ -138,8 +171,8 @@ export default class Home extends Component {
                     </div>
                   </div>
                 </div>
-              </React.Fragment>
-              :
+              </Fragment>
+            ) : (
               <Orders
                 handleSellCurrencySelect={this.handleSellCurrencySelect}
                 handleBuyCurrencySelect={this.handleBuyCurrencySelect}
@@ -147,7 +180,9 @@ export default class Home extends Component {
                 sellCurrency={sellCurrency}
                 flipCurrency={this.flipCurrency}
                 orderId={orderId}
+                invalidPair={invalidPair}
               />
+            )
           }
         </PageHeadline>
       </section>
