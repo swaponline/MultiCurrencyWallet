@@ -11,6 +11,7 @@ import Flip from 'components/controls/Flip/Flip'
 import Button from 'components/controls/Button/Button'
 import CurrencySelect from 'components/ui/CurrencySelect/CurrencySelect'
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
+import Tooltip from 'components/ui/Tooltip/Tooltip'
 
 
 @CSSModules(styles, { allowMultiple: true })
