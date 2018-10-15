@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 
 import { connect } from 'redaction'
+import { constants } from 'helpers'
 
 import Title from 'components/PageHeadline/Title/Title'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
@@ -14,10 +15,9 @@ import actions from 'redux/actions'
 import { withRouter } from 'react-router'
 
 @withRouter
-@connect(({ core: { hiddenCoinsList }, user: { ethData, btcData, ltcData, tokensData, eosData, nimData, usdtData }, currencies: { items: currencies } }) => ({
+@connect(({ core: { hiddenCoinsList }, user: { ethData, btcData, ltcData, tokensData, eosData, nimData, usdtData } }) => ({
   tokens: Object.keys(tokensData).map(k => (tokensData[k])),
   items: [ ethData, btcData, eosData, usdtData, ltcData /* eosData  nimData */ ],
-  currencies,
   hiddenCoinsList,
 }))
 export default class Currency extends Component {
@@ -27,22 +27,22 @@ export default class Currency extends Component {
   }
 
   getRows = () => {
+    const { match:{ params: { currency } } } = this.props
 
-    let { match:{ params: { currency } }, currencies } = this.props
+    const filterPair = constants.tradeTicker
+      .filter(ticker => {
+        ticker = ticker.split('-')
+        return ticker[0].toLowerCase() === currency || ticker[1].toLowerCase() === currency
+      })
+      .map(pair => {
+        pair = pair.split('-')
+        return {
+          from: pair[0],
+          to: pair[1],
+        }
+      })
 
-    console.log('currency', currency)
-
-    if (currency === 'btc') {
-      currencies = currencies.filter(c => c.value !== currency)
-    } else {
-      currencies = currencies.filter(c => c.value === 'btc')
-    }
-
-    currencies = currencies.reduce((previous, current) =>
-      previous.concat({ from: current.value, to: currency }),
-    [])
-
-    return currencies
+    return filterPair
   }
 
   getCurrencyName = () => this.props.match.params.currency.toLowerCase()
@@ -73,7 +73,7 @@ export default class Currency extends Component {
   isInWallet = () => !this.props.hiddenCoinsList.includes(this.getCoin().currency)
 
   handleInWalletChange = (val) => val ? actions.core.markCoinAsVisible(this.getCoin().currency) :
-    actions.core.markCoinAsHidden(this.getCoin().currency);
+    actions.core.markCoinAsHidden(this.getCoin().currency)
 
   componentWillMount = () => {
     if (!this.getCoin()) {
@@ -86,9 +86,8 @@ export default class Currency extends Component {
 
   render() {
     const { match: { params: { currency } } } = this.props
-    const { isBalanceFetching } = this.state
-    const coin = this.getCoin()
-    if (!coin) return false
+    const { balance } = this.getCoin()
+    if (!balance) return false
 
     return (
       <section>
@@ -97,7 +96,7 @@ export default class Currency extends Component {
             <Title>{currency}</Title>
             <SubTitle>{currency.toUpperCase()} Trade</SubTitle>
           </Fragment>
-          <div> Balance: <span>{String(coin.balance).length > 5 ? coin.balance.toFixed(5) : coin.balance} {coin.currency}</span>
+          <div> Balance: <span>{String(balance).length > 5 ? balance.toFixed(5) : balance} {currency}</span>
           </div>
           <Toggle onChange={this.handleInWalletChange} checked={this.isInWallet()} />Added to Wallet
         </PageHeadline>
