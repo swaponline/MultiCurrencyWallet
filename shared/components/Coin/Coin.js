@@ -53,4 +53,3 @@ Coin.propTypes = {
 }
 
 export default CSSModules(Coin, styles)
-

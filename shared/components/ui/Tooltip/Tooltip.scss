@@ -1,0 +1,13 @@
+.tooltip {
+  display: inline-block;
+  width: 1.2em;
+  height: 1.2em;
+  text-align: center;
+  line-height: 1.2em;
+  // font-size: 15px;
+  border-radius: 50%;
+  border: 0,5px;
+  border-color: lightgrey;
+  vertical-align: middle;
+  background: rgba(128,128,128,0.2);
+}

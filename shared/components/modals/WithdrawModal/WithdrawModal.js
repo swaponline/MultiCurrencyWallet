@@ -11,6 +11,7 @@ import Modal from 'components/modal/Modal/Modal'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
+import Tooltip from 'components/ui/Tooltip/Tooltip'
 
 
 const minAmount = {
@@ -78,7 +79,7 @@ export default class WithdrawModal extends React.Component {
     return (
       <Modal name={name} title={`Withdraw ${data.currency.toUpperCase()}`}>
         <p style={{ fontSize: '16px' }}>Please notice, that you need to have minimum 0.01 amount <br /> of the ETH on your wallet, to use it for Ethereum miners fee</p>
-        <FieldLabel inRow>Address</FieldLabel>
+        <FieldLabel inRow>Address <Tooltip text="addressee address" /></FieldLabel>
         <Input valueLink={linked.address} focusOnInit pattern="0-9a-zA-Z" placeholder="Enter address" />
         <FieldLabel inRow>Amount</FieldLabel>
         <Input valueLink={linked.amount} pattern="0-9\." placeholder={`Enter amount, you have ${balance}`} />

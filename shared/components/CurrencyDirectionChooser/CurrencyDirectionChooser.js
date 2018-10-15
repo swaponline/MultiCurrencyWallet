@@ -74,7 +74,7 @@ export default class CurrencyDirectionChooser extends Component {
               />
             </div>
           </div>
-          <Button styleName="button" brand onClick={handleSubmit}>SHOW ORDERS</Button>
+          <Button styleName="button" brand onClick={handleSubmit}>SHOW ORDERS <Tooltip text="Offer list" /></Button>
         </div>
       </div>
     )

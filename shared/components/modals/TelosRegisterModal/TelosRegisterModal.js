@@ -11,6 +11,8 @@ import { constants } from 'helpers'
 
 import cssModules from 'react-css-modules'
 import styles from './TelosRegisterModal.scss'
+import Tooltip from 'components/ui/Tooltip/Tooltip'
+
 
 @cssModules(styles)
 export default class TelosRegisterModal extends React.Component {
@@ -49,9 +51,9 @@ export default class TelosRegisterModal extends React.Component {
 
     return (
       <Modal name={name} title="TELOS Login">
-        <FieldLabel inRow>Account name</FieldLabel>
+        <FieldLabel inRow>Account name <Tooltip text="Enter TELOS account name"/></FieldLabel>
         <Input valueLink={linked.accountName} />
-        <FieldLabel inRow>Private key</FieldLabel>
+        <FieldLabel inRow>Private key <Tooltip text="Enter your TELOS secret key"/></FieldLabel>
         <Input valueLink={linked.privateKey} />
         { error && (
           <div styleName="error">Sorry, error occured during activation</div>

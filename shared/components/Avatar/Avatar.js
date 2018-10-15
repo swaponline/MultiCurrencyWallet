@@ -1,19 +1,26 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 
 import jdenticon from 'jdenticon'
 
 import CSSModules from 'react-css-modules'
 import styles from './Avatar.scss'
+import ReactTooltip from 'react-tooltip'
 
 
 const Avatar = ({ value, className, size }) => (
-  <img
-    className={className}
-    styleName="avatar"
-    alt={value}
-    src={`data:image/svg+xml,${encodeURIComponent(jdenticon.toSvg(value, size))}`}
-  />
+  <Fragment>
+    <img
+      className={className}
+      styleName="avatar"
+      alt={value}
+      src={`data:image/svg+xml,${encodeURIComponent(jdenticon.toSvg(value, size))}`}
+      data-tip data-for="a"
+    />
+        <ReactTooltip id="a" type="light" effect="solid" >
+          <span>This is your automatically created gravatar. Its unique for every profile</span>
+        </ReactTooltip>
+    </Fragment>
 )
 
 Avatar.defaultProps = {

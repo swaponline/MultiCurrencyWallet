@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 
 import { Modal } from 'components/modal'
 import { Button } from 'components/controls'
@@ -12,6 +12,8 @@ import { getState } from 'redux/core'
 
 import cssModules from 'react-css-modules'
 import styles from './EosBuyAccountModal.scss'
+import Tooltip from 'components/ui/Tooltip/Tooltip'
+
 
 @cssModules(styles)
 export default class EosBuyAccountModal extends React.Component {
@@ -57,27 +59,37 @@ export default class EosBuyAccountModal extends React.Component {
     const linked = Link.all(this, 'accountName', 'publicKey', 'price', 'masterPrivateKey')
 
     return (
-      <Modal name={name} title="EOS Register">
-        <FieldLabel inRow>Account name</FieldLabel>
-        <Input readOnly={true} valueLink={linked.accountName} />
-        <FieldLabel inRow>Master private key</FieldLabel>
-        <Input readOnly={true} valueLink={linked.masterPrivateKey} />
-        <FieldLabel inRow>Active public key</FieldLabel>
-        <Input readOnly={true} valueLink={linked.publicKey} />
-        <FieldLabel inRow>Price (BTC)</FieldLabel>
-        <Input readOnly={true} valueLink={linked.price} />
-        { error && (
-          <div styleName="error">Sorry, error occured during activation</div>
-        )}
-        <Button
-          styleName="button"
-          brand
-          fullWidth
-          onClick={this.handleSubmit}
-        >
-          Create account
-        </Button>
-      </Modal>
+      <Fragment>
+        <Modal name={name} title="EOS Register">
+          <div>
+            <FieldLabel inRow>Account name <Tooltip text="Your EOS Account name, please save it in a safe place" /></FieldLabel>
+            <Input readOnly={true} valueLink={linked.accountName} />
+          </div>
+          <div>
+            <FieldLabel inRow>Master private key <Tooltip text="Your EOS secret key, please save it in a safe place"/></FieldLabel>
+            <Input readOnly={true} valueLink={linked.masterPrivateKey} />
+          </div>
+          <div>
+            <FieldLabel inRow>Active public key <Tooltip text="Your EOS public key, please save it in a safe place"/></FieldLabel>
+            <Input readOnly={true} valueLink={linked.publicKey} />
+          </div>
+          <div>
+            <FieldLabel inRow>Price (BTC) <Tooltip text="Account creation fee "/></FieldLabel>
+            <Input readOnly={true} valueLink={linked.price} />
+          </div>
+          { error && (
+            <div styleName="error">Sorry, error occured during activation</div>
+          )}
+          <Button
+            styleName="button"
+            brand
+            fullWidth
+            onClick={this.handleSubmit}
+          >
+            Create account
+          </Button>
+        </Modal>
+      </Fragment>
     )
   }
 }

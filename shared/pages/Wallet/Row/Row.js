@@ -16,7 +16,7 @@ import WithdrawButton from 'components/controls/WithdrawButton/WithdrawButton'
 
 import LinkAccount from '../LinkAccount/LinkAcount'
 import { withRouter } from 'react-router'
-
+import ReactTooltip from 'react-tooltip'
 
 @withRouter
 @cssModules(styles)
@@ -166,44 +166,70 @@ export default class Row extends Component {
         </td>
 
         { !isMobile && (
-          <CopyToClipboard
-            text={address}
-            onCopy={this.handleCopyAddress}
-          >
-            <td style={{ position: 'relative' }}>
-              {
-                !contractAddress ? (
-                  <Fragment>
-                    {
-                      address !== '' && <i className="far fa-copy" styleName="icon" />
-                    }
-                    <LinkAccount type={currency} address={address} >{address}</LinkAccount>
-                  </Fragment>
+          <Fragment>
+            <CopyToClipboard
+              text={address}
+              onCopy={this.handleCopyAddress}
+            >
+              <td style={{ position: 'relative' }}>
+                {
+                  !contractAddress ? (
+                    <Fragment>
+
+                      {
+                        address !== '' && <i className="far fa-copy" styleName="icon" data-tip data-for="cp"
+                        style={{ width: '10px' }}/>
+                      }
+                      <LinkAccount type={currency} address={address} >{address}</LinkAccount>
+                      <ReactTooltip id="cp" type="light" effect="solid">
+                        <span>Copy</span>
+                      </ReactTooltip>
+                      </Fragment>
+
                 ) : (
                   <Fragment>
-                    <i className="far fa-copy" styleName="icon" />
-                    <LinkAccount type={currency} contractAddress={contractAddress} address={address} >{address}</LinkAccount>
-                  </Fragment>
-                )
-              }
-              {
-                currency === 'EOS' && address === '' && <button styleName="button" onClick={this.handleEosRegister}>Login</button>
-              }
-              {
-                currency === 'EOS' && address === '' && <button styleName="button" onClick={this.handleEosBuyAccount}>Buy account</button>
-              }
-              {
-                currency === 'TLOS' && address === '' && <button styleName="button" onClick={this.handleTelosRegister}>Login</button>
-              }
-              { isAddressCopied && <p styleName="copied" >Address copied to clipboard</p> }
-            </td>
-          </CopyToClipboard>
+                      <i className="far fa-copy" styleName="icon" />
+                      <LinkAccount type={currency} contractAddress={contractAddress} address={address} >{address}</LinkAccount>
+                      </Fragment>
+                    )
+                }
+
+
+                <div>
+                {
+                  currency === 'EOS' && address === '' && <button styleName="button" onClick={this.handleEosRegister} data-tip data-for="lE">Login</button>
+                }
+                  <ReactTooltip id="lE" type="light" effect="solid">
+                    <span>login if you have EOS account yet</span>
+                  </ReactTooltip>
+                {
+                  currency === 'EOS' && address === '' && <button styleName="button" onClick={this.handleEosBuyAccount} data-tip data-for="bE">Buy account</button>
+                }
+                <ReactTooltip id="bE" type="light" effect="solid">
+                  <span>Buy EOS account if you have not it</span>
+                </ReactTooltip>
+                </div>
+                <div>
+                {
+                  currency === 'TLOS' && address === '' && <button styleName="button" onClick={this.handleTelosRegister} data-tip data-for="lT">Login</button>
+                }
+                  <ReactTooltip id="lT" type="light" effect="solid">
+                    <span>login if you have TLOS account yet</span>
+                  </ReactTooltip>
+                </div>
+                { isAddressCopied && <p styleName="copied" >Address copied to clipboard</p> }
+              </td>
+            </CopyToClipboard>
+          </Fragment>
         ) }
         <td>
           <div>
             <WithdrawButton onClick={this.handleWithdraw} styleName="marginRight">
               <i className="fas fa-arrow-alt-circle-right" />
-              <span>Send</span>
+              <span data-tip data-for="sd">Send</span>
+                <ReactTooltip id="sd" type="light" effect="solid">
+                  <span>Send your currency</span>
+                </ReactTooltip>
             </WithdrawButton>
             { isMobile && (
               <WithdrawButton onClick={this.handleReceive} styleName="marginRight">
@@ -215,7 +241,10 @@ export default class Row extends Component {
               tradeAllowed && (
                 <WithdrawButton onClick={() => this.handleGoTrade(currency)}>
                   <i className="fas fa-exchange-alt" />
-                  <span>Exchange</span>
+                  <span data-tip data-for="sw">Exchange</span>
+                    <ReactTooltip id="sw" type="light" effect="solid">
+                      <span>Swap your currency or create order to swap</span>
+                    </ReactTooltip>
                 </WithdrawButton>
               )
             }
