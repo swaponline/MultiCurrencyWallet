@@ -29,10 +29,12 @@ export default class Currency extends Component {
   getRows = () => {
     const { match:{ params: { currency } } } = this.props
 
-    const filterPair = constants.tradeTicker
+    return constants.tradeTicker
       .filter(ticker => {
         ticker = ticker.split('-')
-        return ticker[0].toLowerCase() === currency || ticker[1].toLowerCase() === currency
+        return currency === 'btc'
+          ? ticker[1].toLowerCase() === currency
+          : ticker[0].toLowerCase() === currency
       })
       .map(pair => {
         pair = pair.split('-')
@@ -41,8 +43,6 @@ export default class Currency extends Component {
           to: pair[1],
         }
       })
-
-    return filterPair
   }
 
   getCurrencyName = () => this.props.match.params.currency.toLowerCase()
@@ -80,7 +80,7 @@ export default class Currency extends Component {
       this.props.history.push('/')
       return false
     }
-    this.rows = this.getRows()
+
     this.handleReloadBalance()
   }
 
@@ -102,7 +102,7 @@ export default class Currency extends Component {
         </PageHeadline>
         <Table
           titles={['Coin', 'Exchange', '']}
-          rows={this.rows}
+          rows={this.getRows()}
           rowRender={(row, index) => (
             <Row key={index} {...row} />
           )}
