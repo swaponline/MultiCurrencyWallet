@@ -298,7 +298,7 @@ export default class AddOffer extends Component {
     const { onNext } = this.props
 
     const isDisabled = !exchangeRate || !buyAmount || !sellAmount || sellAmount > balance || sellAmount < minAmount[sellCurrency]
-      || ethBalance < 0.02
+      || sellCurrency === 'eth' ? ethBalance < minAmount.eth : false
 
     if (!isDisabled) {
       actions.analytics.dataEvent('orderbook-addoffer-click-next-button')
@@ -327,14 +327,14 @@ export default class AddOffer extends Component {
     const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
     const isDisabled = !exchangeRate || !buyAmount && !sellAmount
       || sellAmount > balance || sellAmount < minAmount[sellCurrency]
-      || ethBalance < 0.01
+      || sellCurrency === 'eth' ? ethBalance < minAmount.eth : false
 
     linked.sellAmount.check((value) => value > minAmount[sellCurrency], `Amount must be greater than ${minAmount[sellCurrency]} `)
     linked.sellAmount.check((value) => value <= balance, `Amount must be bigger than on your balance`)
 
     return (
       <div styleName="wrapper">
-        { ethBalance < 0.02 && <span styleName="error">For a swap, you need 0.02 ETH on your balance</span> }
+        { sellCurrency === 'eth' && ethBalance < minAmount.eth && <span styleName="error">For a swap, you need {minAmount.eth} ETH on your balance</span> }
         <SelectGroup
           styleName="sellGroup"
           label="Sell"
