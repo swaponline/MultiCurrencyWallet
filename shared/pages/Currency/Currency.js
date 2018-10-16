@@ -17,7 +17,7 @@ import { withRouter } from 'react-router'
 @withRouter
 @connect(({ core: { hiddenCoinsList }, user: { ethData, btcData, ltcData, tokensData, eosData, nimData, usdtData } }) => ({
   tokens: Object.keys(tokensData).map(k => (tokensData[k])),
-  items: [ ethData, btcData, eosData, usdtData, ltcData /* eosData  nimData */ ],
+  items: [ ethData, btcData, eosData, usdtData, ltcData /* nimData */ ],
   hiddenCoinsList,
 }))
 export default class Currency extends Component {
@@ -27,12 +27,13 @@ export default class Currency extends Component {
   }
 
   getRows = () => {
-    const { match:{ params: { currency } } } = this.props
+    let { match:{ params: { currency } } } = this.props
+    currency = currency.toLowerCase()
 
     return constants.tradeTicker
       .filter(ticker => {
         ticker = ticker.split('-')
-        return currency === 'btc'
+        return currency === 'btc' || currency === 'ltc' || currency === 'usdt'
           ? ticker[1].toLowerCase() === currency
           : ticker[0].toLowerCase() === currency
       })
@@ -87,7 +88,6 @@ export default class Currency extends Component {
   render() {
     const { match: { params: { currency } } } = this.props
     const { balance } = this.getCoin()
-    if (!balance) return false
 
     return (
       <section>
@@ -96,7 +96,7 @@ export default class Currency extends Component {
             <Title>{currency}</Title>
             <SubTitle>{currency.toUpperCase()} Trade</SubTitle>
           </Fragment>
-          <div> Balance: <span>{String(balance).length > 5 ? balance.toFixed(5) : balance} {currency}</span>
+          <div> Balance: <span>{(String(balance).length > 5 ? balance.toFixed(5) : balance) || 0} {currency}</span>
           </div>
           <Toggle onChange={this.handleInWalletChange} checked={this.isInWallet()} />Added to Wallet
         </PageHeadline>
