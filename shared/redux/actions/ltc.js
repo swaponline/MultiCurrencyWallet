@@ -58,6 +58,9 @@ const fetchBalance = (address) =>
   request.get(`${api.getApiServer('ltc')}/addr/${address}`)
     .then(({ balance }) => balance)
 
+const getInfoTx = (transactionHash) =>
+  request.get(`${api.getApiServer('ltc')}/tx/${transactionHash}`)
+
 const getTransaction = () =>
   new Promise((resolve) => {
     const { user: { ltcData: { address } } } = getState()
@@ -122,6 +125,7 @@ const broadcastTx = (txRaw) =>
 export default {
   login,
   getBalance,
+  getInfoTx,
   getTransaction,
   send,
   fetchUnspents,

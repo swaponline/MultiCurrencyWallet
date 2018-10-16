@@ -25,6 +25,7 @@ import { isNumberValid, isNumberStringFormatCorrect, mathConstants } from 'helpe
 const minAmount = {
   eth: 0.05,
   btc: 0.004,
+  ltc: 0.1,
   eos: 1,
   noxon: 1,
   swap: 1,

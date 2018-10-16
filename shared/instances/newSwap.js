@@ -18,7 +18,7 @@ import swapApp, { constants } from 'swap.app'
 import SwapAuth from 'swap.auth'
 import SwapRoom from 'swap.room'
 import SwapOrders from 'swap.orders'
-import { ETH2BTC, BTC2ETH, ETH2LTC, LTC2ETH, ETHTOKEN2BTC, BTC2ETHTOKEN, EOS2BTC, BTC2EOS, USDT2ETHTOKEN, ETHTOKEN2USDT } from 'swap.flows'
+import { ETH2BTC, BTC2ETH, LTC2BTC, BTC2LTC, ETH2LTC, LTC2ETH, ETHTOKEN2BTC, BTC2ETHTOKEN, EOS2BTC, BTC2EOS, USDT2ETHTOKEN, ETHTOKEN2USDT } from 'swap.flows'
 import { EthSwap, EthTokenSwap, BtcSwap, LtcSwap, EosSwap, UsdtSwap } from 'swap.swaps'
 
 
@@ -76,6 +76,7 @@ const createSwapApp = () => {
         fetchBalance: (address) => actions.ltc.fetchBalance(address),
         fetchUnspents: (scriptAddress) => actions.ltc.fetchUnspents(scriptAddress),
         broadcastTx: (txRaw) => actions.ltc.broadcastTx(txRaw),
+        getInfoTx: (transactionHash) => actions.ltc.getInfoTx(transactionHash),
       }),
       new EosSwap({
         swapAccount: config.swapContract.eos,
@@ -100,6 +101,9 @@ const createSwapApp = () => {
 
       ETH2LTC,
       LTC2ETH,
+
+      LTC2BTC,
+      BTC2LTC,
 
       EOS2BTC,
       BTC2EOS,
