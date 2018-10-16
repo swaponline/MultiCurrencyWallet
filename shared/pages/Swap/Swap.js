@@ -38,9 +38,6 @@ export default class SwapComponent extends PureComponent {
     })
 
     this.setSaveSwapId(orderId)
-
-    // for debug and emergency save
-    window.swap = swap
   }
 
   // componentWillMount() {
