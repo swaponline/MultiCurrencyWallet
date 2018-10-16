@@ -147,7 +147,7 @@ export default class Row extends Component {
             ) : (
               <div styleName="no-select-inline" onClick={this.handleReloadBalance} >
                 <i className="fas fa-sync-alt" styleName="icon" />
-                <span>{String(balance).length > 4 ? balance.toFixed(4) : balance}{' '}{currency}</span>
+                <span>{String(balance).length > 4 ? balance.toFixed(4) : balance}{' '}</span>
                 { currency === 'BTC' && unconfirmedBalance !== 0 && (
                   <Fragment>
                     <br />
@@ -160,6 +160,7 @@ export default class Row extends Component {
                     <span style={{ fontSize: '12px', color: '#c9c9c9' }}>Unconfirmed {unconfirmedBalance}</span>
                   </Fragment>
                 ) }
+                {isMobile && <span styleName="mobileName">{fullName}</span>}
               </div>
             )
           }
@@ -237,7 +238,7 @@ export default class Row extends Component {
             </WithdrawButton>
             { isMobile && (
               <WithdrawButton onClick={this.handleReceive} styleName="marginRight">
-                <i className="fas fa-arrow-alt-circle-left" />
+                <i class="fas fa-qrcode"></i>
                 <span>Receive</span>
               </WithdrawButton>
             )}
