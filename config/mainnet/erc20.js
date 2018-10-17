@@ -75,4 +75,8 @@ export default {
     address: '0xa13f0743951b4f6e3e3aa039f682e17279f52bc3',
     decimals: 18,
   },
+  mth: {
+    address: '0xaf4dce16da2877f8c9e00544c93b62ac40631f16',
+    decimals: 5,
+  },
 }
