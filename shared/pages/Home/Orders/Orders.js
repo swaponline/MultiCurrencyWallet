@@ -83,8 +83,11 @@ export default class Orders extends Component {
 
   render() {
     const { sellOrders, buyOrders } = this.state
-    const { sellCurrency, buyCurrency } = this.props
-    const titles = [ 'OWNER', 'EXCHANGE', 'AMOUNT', 'PRICE', 'TOTAL', 'START EXCHANGE' ]
+    let { sellCurrency, buyCurrency } = this.props
+    buyCurrency = buyCurrency.toUpperCase()
+    sellCurrency = sellCurrency.toUpperCase()
+
+    const titles = [ 'OWNER', `${buyCurrency}`, `? ${sellCurrency} = 1 ${buyCurrency}`, `${sellCurrency}`, 'START EXCHANGE' ]
     const { isOnline, myOrders, orderId, invalidPair } = this.props
 
     return (
@@ -99,7 +102,7 @@ export default class Orders extends Component {
         />
         <Button gray styleName="button" onClick={this.createOffer}>Create offer</Button>
 
-        <h3>ASK</h3>
+        <h3>Buy {buyCurrency} for {sellCurrency}</h3>
         <Table
           id="table_exchange"
           classTitle={tableStyles.exchange}
@@ -115,7 +118,7 @@ export default class Orders extends Component {
           isLoading={!isOnline}
         />
 
-        <h3>BID</h3>
+        <h3>Sell {sellCurrency} for {buyCurrency}</h3>
         <Table
           id="table_exchange"
           classTitle={tableStyles.exchange}

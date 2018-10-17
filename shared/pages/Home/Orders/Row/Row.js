@@ -7,12 +7,13 @@ import actions from 'redux/actions'
 import { links, constants } from 'helpers'
 import { Link, Redirect } from 'react-router-dom'
 
-import Coins from 'components/Coins/Coins'
-import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
-import RequestButton from '../RequestButton/RequestButton'
-import RemoveButton from 'components/controls/RemoveButton/RemoveButton'
 import Avatar from 'components/Avatar/Avatar'
+import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
+import RemoveButton from 'components/controls/RemoveButton/RemoveButton'
+
 import Pair from '../Pair'
+import RequestButton from '../RequestButton/RequestButton'
+
 
 @connect({
   peer: 'ipfs.peer',
@@ -104,9 +105,6 @@ export default class Row extends Component {
             value={ownerPeer}
             size={45}
           />
-        </td>
-        <td>
-          <Coins names={[buyCurrency, sellCurrency]}  />
         </td>
         <td>
           {
