@@ -22,6 +22,7 @@ const filterMyOrders = (orders, peer) => orders
   .filter(order => order.owner.peer === peer)
 
 const filterOrders = (orders, filter) => orders
+  .filter(order => order.isProcessing !== true)
   .filter(order => Pair.check(order, filter))
   .sort((a, b) => Pair.compareOrders(b, a))
 
@@ -101,8 +102,8 @@ export default class Orders extends Component {
           acceptRequest={this.acceptRequest}
         />
         <Button gray styleName="button" onClick={this.createOffer}>Create offer</Button>
-
-        <h3>Buy {buyCurrency} for {sellCurrency}</h3>
+        <h3>Ask for sell</h3>
+        <p>In this table the orders are placed by those who want to upsell ETH</p>
         <Table
           id="table_exchange"
           classTitle={tableStyles.exchange}
@@ -117,8 +118,8 @@ export default class Orders extends Component {
           )}
           isLoading={!isOnline}
         />
-
-        <h3>Sell {sellCurrency} for {buyCurrency}</h3>
+        <h3>Bid for buy</h3>
+        <p>In this table placed the orders of those  who are ready to buy your ETH for BTC</p>
         <Table
           id="table_exchange"
           classTitle={tableStyles.exchange}

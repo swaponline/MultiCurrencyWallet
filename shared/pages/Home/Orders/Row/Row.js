@@ -26,8 +26,8 @@ export default class Row extends Component {
 
   state = {
     isFetching: false,
+    enterButton: false,
     balance: 0,
-
   }
 
   componentWillMount() {
@@ -92,7 +92,7 @@ export default class Row extends Component {
 
     const pair = Pair.fromOrder(this.props.row)
 
-    const { price, amount, total, main, base } = pair
+    const { price, amount, total, main, base, type } = pair
 
     if (this.state.redirect) {
       return <Redirect push to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`} />
@@ -147,8 +147,19 @@ export default class Row extends Component {
                         <RequestButton
                           disabled={balance >= Number(buyAmount)}
                           onClick={() => this.sendRequest(id, isMy ? sellCurrency : buyCurrency)}
+                          data={{ amount, main, total, base }}
+                          onMouseEnter={() => this.setState(() => ({ enterButton: true }))}
+                          onMouseLeave={() => this.setState(() => ({ enterButton: false }))}
+                          move={this.state.enterButton}
                         >
-                          start exchange
+                          Start exchange <br />
+                          {
+                            type.toLowerCase() === 'bid' ? (
+                              <span>{main} to {base}</span>
+                            ) : (
+                              <span>{main} to {base}</span>
+                            )
+                          }
                         </RequestButton>
                       )
                     )

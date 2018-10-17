@@ -1,11 +1,14 @@
 .button {
-  padding: 15px 20px;
+  padding: 5px 10px;
+  height: 60px;
+  width: 180px;
   background-color: #e91db4;
   position: relative;
   opacity: 0.8;
   border-radius: 5px;
   color: #ffffff;
   cursor: pointer;
+  box-shadow: 1px 1px 6px #929292;
 
   &:hover {
     opacity: 1;
