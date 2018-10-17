@@ -125,7 +125,7 @@ export default class Home extends Component {
     const { history, filter } = this.props
 
     this.setState(() => ({ isVisible: false }))
-    history.replace(filter)
+    history.replace(filter.toLowerCase())
   }
 
   render() {
