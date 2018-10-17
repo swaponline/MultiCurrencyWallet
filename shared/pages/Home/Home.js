@@ -180,8 +180,6 @@ export default class Home extends Component {
                 sellCurrency={sellCurrency}
                 flipCurrency={this.flipCurrency}
                 orderId={orderId}
-                history={history}
-                filter={filter}
                 invalidPair={invalidPair}
               />
             )

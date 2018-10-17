@@ -43,10 +43,7 @@ export default class Orders extends Component {
     sellOrders: [],
   }
 
-  static getDerivedStateFromProps({ orders, filter, history }) {
-
-    history.replace(filter)
-
+  static getDerivedStateFromProps({ orders }) {
     if (!Array.isArray(orders)) { return }
 
     const sellOrders = orders
