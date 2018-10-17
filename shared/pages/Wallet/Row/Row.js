@@ -27,7 +27,7 @@ export default class Row extends Component {
     viewText: false,
     tradeAllowed: false,
     isAddressCopied: false,
-    showMobileButtons: false,
+    showMobileButtons: false
   }
 
   componentWillMount() {
@@ -116,6 +116,12 @@ export default class Row extends Component {
     })
   }
 
+  handleShowOptions = () => {
+    this.setState({
+      showMobileButtons: true
+    })
+  }
+
   handleGoTrade = (currency) => {
     this.props.history.push(`/${currency.toLowerCase()}`)
   }
@@ -129,7 +135,7 @@ export default class Row extends Component {
     const { currency, balance, isBalanceFetched, address, contractAddress, fullName, unconfirmedBalance } = this.props
 
     return (
-      <tr>
+      <tr onClick={this.handleShowOptions} styleName={this.state.showMobileButtons ? 'showButtons' : ''}>
         <td>
           <Link to={`/${fullName}-wallet`} title={`Online ${fullName} wallet`}>
             <Coin name={currency} />
@@ -147,7 +153,7 @@ export default class Row extends Component {
             ) : (
               <div styleName="no-select-inline" onClick={this.handleReloadBalance} >
                 <i className="fas fa-sync-alt" styleName="icon" />
-                <span>{String(balance).length > 4 ? balance.toFixed(4) : balance}{' '}</span>
+                <span>{String(balance).length > 4 ? balance.toFixed(4) : balance}{' '}{currency}</span>
                 { currency === 'BTC' && unconfirmedBalance !== 0 && (
                   <Fragment>
                     <br />
@@ -160,10 +166,10 @@ export default class Row extends Component {
                     <span style={{ fontSize: '12px', color: '#c9c9c9' }}>Unconfirmed {unconfirmedBalance}</span>
                   </Fragment>
                 ) }
-                {isMobile && <span styleName="mobileName">{fullName}</span>}
               </div>
             )
           }
+          {isMobile && <span styleName="mobileName">{fullName}</span>}
         </td>
 
         { !isMobile && (

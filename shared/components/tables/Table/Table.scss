@@ -57,16 +57,16 @@
 }
 
 .wallet {
-  padding-top: 45px;
+  padding-top: 41px;
   position: relative;
-
+  display: inline-block;
   th:last-child {
     padding-left: 30px;
   }
   thead {
     position: absolute;
     width: 100%;
-    height: 45px;
+    height: 41px;
     top: 0;
   }
 }
@@ -418,13 +418,13 @@
           padding: 1px 7px 2px 7px;
           margin: 0 1px;
 
-          i {
-            display: block;
-          }
+          // i {
+          //   display: block;
+          // }
 
-          span {
-            display: none;
-          }
+          // span {
+          //   display: none;
+          // }
 
         }
 
@@ -442,6 +442,27 @@
     }
     td:nth-child(4) {
       width: 26%;
+      div {
+        position: absolute;
+        left: 0;
+        top: 65px;
+        width: 100%;
+        justify-content: space-evenly;
+        display: flex;
+        padding: 0 7px;
+        button {
+          width: auto;
+          padding: 0 15px;
+          margin-right: 5px;
+          font-size: 13px;
+        }
+        button:nth-child(1) {
+          width: 30%;
+        }
+        button:last-child {
+          margin-right: 0;
+        }
+      }
     }
   }
   .wallet {
@@ -467,6 +488,28 @@
     }
     td:nth-child(2) {
       width: auto;
+    }
+    tr {
+      display: flex;
+      flex-wrap: wrap;
+      position: relative;
+      width: 264px;
+      height: 60px;
+      box-shadow: 1px 1px 16px rgba(0, 0, 0, 0.10);
+      border-radius: 20px;
+      padding: 0 10px;
+      margin-left: 8px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    td:nth-child(1) {
+      a {
+        position: absolute;
+        top: 10px;
+      }
+    }
+    thead {
+      display: none;
     }
   }
 }

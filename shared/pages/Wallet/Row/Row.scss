@@ -98,9 +98,27 @@
   .table_balance-cell {
     min-width: 75px;
   }
+  .no-select-inline {
+    font-size: 15px;
+    position: absolute;
+    right: 15px;
+    top: 20px;
+  }
+  .mobileName {
+    color: #000;
+    display: block;
+    position: absolute;
+    left: 60px;
+    top: 19px;
+  }
+  tr.showButtons {
+    color: #000;
+    height: 115px;
+  }
 }
 .mobileName {
   color: #000;
   display: block;
 }
+
 
