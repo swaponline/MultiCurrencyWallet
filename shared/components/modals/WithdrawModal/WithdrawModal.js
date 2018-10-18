@@ -13,7 +13,6 @@ import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 
-
 const minAmount = {
   eth: 0.05,
   btc: 0.004,
