@@ -90,7 +90,7 @@ export default class App extends React.Component {
   }
 
   componentDidCatch(error) {
-    this.setState({ error });
+    this.setState({ error.message });
   }
 
   render() {
