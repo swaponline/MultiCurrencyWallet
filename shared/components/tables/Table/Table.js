@@ -55,7 +55,7 @@ export default class Table extends React.Component {
     let td = tdLink.children[0].cells
 
     for (let i = 0; i < th.length; i++) {
-      th[i].style.width = `${td[i].offsetWidth} px`
+      th[i].style.width = `${td[i].offsetWidth}px`
     }
   }
 

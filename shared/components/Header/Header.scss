@@ -17,11 +17,12 @@
 	right: 0;
   z-index: 2;
   transition: position 0.3s ease;
+  position: absolute;
 }
 
 @include media-mobile {
   .header {
-	display: flex;
+	  display: flex;
   }
 }
 

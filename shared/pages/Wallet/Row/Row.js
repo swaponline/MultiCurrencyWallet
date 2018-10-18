@@ -27,7 +27,7 @@ export default class Row extends Component {
     viewText: false,
     tradeAllowed: false,
     isAddressCopied: false,
-    showMobileButtons: false,
+    showMobileButtons: false
   }
 
   componentWillMount() {
@@ -116,6 +116,12 @@ export default class Row extends Component {
     })
   }
 
+  handleShowOptions = () => {
+    this.setState({
+      showMobileButtons: true
+    })
+  }
+
   handleGoTrade = (currency) => {
     this.props.history.push(`/${currency.toLowerCase()}`)
   }
@@ -129,7 +135,7 @@ export default class Row extends Component {
     const { currency, balance, isBalanceFetched, address, contractAddress, fullName, unconfirmedBalance } = this.props
 
     return (
-      <tr>
+      <tr onClick={this.handleShowOptions} styleName={this.state.showMobileButtons ? 'showButtons' : ''}>
         <td>
           <Link to={`/${fullName}-wallet`} title={`Online ${fullName} wallet`}>
             <Coin name={currency} />
@@ -163,6 +169,7 @@ export default class Row extends Component {
               </div>
             )
           }
+          {isMobile && <span styleName="mobileName">{fullName}</span>}
         </td>
 
         { !isMobile && (
@@ -237,7 +244,7 @@ export default class Row extends Component {
             </WithdrawButton>
             { isMobile && (
               <WithdrawButton onClick={this.handleReceive} styleName="marginRight">
-                <i className="fas fa-arrow-alt-circle-left" />
+                <i class="fas fa-qrcode"></i>
                 <span>Receive</span>
               </WithdrawButton>
             )}

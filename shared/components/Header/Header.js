@@ -43,7 +43,7 @@ export default class Header extends Component {
 
   handleScroll = () =>  {
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop
-    if (scrollTop > lastScrollTop || scrollTop < 200) {
+    if (scrollTop > lastScrollTop) {
       this.setState(() => ({ sticky: false }))
     }
     else {
