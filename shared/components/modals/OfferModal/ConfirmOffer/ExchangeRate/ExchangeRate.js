@@ -9,9 +9,9 @@ import Value from '../Value/Value'
 
 const ExchangeRate = ({ value, buyCurrency, sellCurrency }) => (
   <Row title="Exchange rate">
-    <Value value={1} currency={buyCurrency} />
-    <div styleName="equal">=</div>
     <Value value={1 / Number(value)} currency={sellCurrency} />
+    <div styleName="equal">=</div>
+    <Value value={1} currency={buyCurrency} />
   </Row>
 )
 
