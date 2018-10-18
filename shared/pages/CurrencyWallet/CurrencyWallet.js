@@ -41,7 +41,7 @@ export default class CurrencyWallet extends Component {
       .concat(Object.values(user.tokensData))
       .filter(v => v.fullName && v.fullName.toLowerCase() === fullName.toLowerCase())[0]
 
-    const { currency, address, contractAddress, decimals, balance   } = currencyData
+    const { currency, address, contractAddress, decimals, balance } = currencyData
 
     return {
       currency,
