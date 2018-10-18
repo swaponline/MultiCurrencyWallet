@@ -42,6 +42,7 @@ export default class Orders extends Component {
   state = {
     buyOrders: [],
     sellOrders: [],
+    isVisible: false,
   }
 
   static getDerivedStateFromProps({ orders }) {
@@ -83,7 +84,7 @@ export default class Orders extends Component {
   }
 
   render() {
-    const { sellOrders, buyOrders } = this.state
+    const { sellOrders, buyOrders, isVisible } = this.state
     let { sellCurrency, buyCurrency } = this.props
     buyCurrency = buyCurrency.toUpperCase()
     sellCurrency = sellCurrency.toUpperCase()
@@ -95,13 +96,20 @@ export default class Orders extends Component {
       <Fragment>
         <Title>{buyCurrency}/{sellCurrency} no limit exchange with 0 fee</Title>
         { invalidPair && <p> No such ticker. Redirecting to SWAP-BTC exchange... </p> }
-        <MyOrders
-          myOrders={myOrders}
-          declineRequest={this.declineRequest}
-          removeOrder={this.removeOrder}
-          acceptRequest={this.acceptRequest}
-        />
-        <Button gray styleName="button" onClick={this.createOffer}>Create offer</Button>
+        <div styleName="buttonRow">
+          <Button green styleName="button" disabled={myOrders.length === 0} onClick={() => this.setState(state => ({ isVisible: !state.isVisible }))}>
+            {isVisible ? 'Hide' : 'Show'} my Orders
+          </Button>
+          <Button gray styleName="button" onClick={this.createOffer}>Create offer</Button>
+        </div>
+        {
+          isVisible && <MyOrders
+            myOrders={myOrders}
+            declineRequest={this.declineRequest}
+            removeOrder={this.removeOrder}
+            acceptRequest={this.acceptRequest}
+          />
+        }
         <h3>Ask for sell</h3>
         <p>In this table the orders are placed by those who want to upsell ETH</p>
         <Table

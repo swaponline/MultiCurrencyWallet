@@ -9,9 +9,16 @@
   margin-bottom: 20px;
 }
 
+.buttonRow {
+  display: flex;
+  width: 300px;
+  margin-left: 65%;
+  justify-content: space-around;
+}
+
 .button {
-  margin-left: 80%;
   font-size: 14px;
+  width: 140px;
   line-height: 28px;
   height: 100%;
   padding: 5px 5px;
