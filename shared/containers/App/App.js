@@ -89,12 +89,6 @@ export default class App extends React.Component {
     }, 1000)
   }
 
-
-
-  hideErrorNotification = () => {
-    this.setState({ error: ''})
-  }
-
   componentDidCatch(error) {
     this.setState({ error });
   }
@@ -110,10 +104,6 @@ export default class App extends React.Component {
 
     if (isFetching) {
       return <Loader showTips />
-    }
-
-    if (this.state.error) {
-
     }
 
     return (
