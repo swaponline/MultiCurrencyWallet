@@ -15,9 +15,9 @@ import Table from 'components/tables/Table/Table'
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import Row from './Row/Row'
 
-@connect(({ core: { hiddenCoinsList }, user: { ethData, btcData, bchData, tokensData, eosData, nimData, usdtData }, currencies: { items: currencies } }) => ({
+@connect(({ core: { hiddenCoinsList }, user: { ethData, btcData, ltcData, bchData, tokensData, eosData, nimData, usdtData }, currencies: { items: currencies } }) => ({
   tokens: Object.keys(tokensData).map(k => tokensData[k]),
-  items: [ethData, btcData, eosData, usdtData, bchData /* eosData  nimData */],
+  items: [ethData, btcData, eosData, usdtData, bchData, ltcData /* eosData  nimData */],
   currencies,
   hiddenCoinsList,
 }))
