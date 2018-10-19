@@ -53,8 +53,10 @@ export default class Row extends Component {
   }
 
   removeOrder = (orderId) => {
-    actions.core.removeOrder(orderId)
-    actions.core.updateCore()
+    if (confirm('Are your sure ?')) {
+      actions.core.removeOrder(orderId)
+      actions.core.updateCore()
+    }
   }
 
   sendRequest = async (orderId, currency) => {

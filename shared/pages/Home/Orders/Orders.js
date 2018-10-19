@@ -69,8 +69,10 @@ export default class Orders extends Component {
   }
 
   removeOrder = (orderId) => {
-    actions.core.removeOrder(orderId)
-    actions.core.updateCore()
+    if (confirm('Are your sure ?')) {
+      actions.core.removeOrder(orderId)
+      actions.core.updateCore()
+    }
   }
 
   acceptRequest = (orderId, peer) => {
