@@ -14,6 +14,7 @@ export default class Table extends React.Component {
 
     this.state = {
       sticky: false,
+      selectId: 0
     }
   }
 
@@ -48,6 +49,10 @@ export default class Table extends React.Component {
     }
   }
 
+  handleSelectId = (id) => {
+    this.setState(() => ({ selectId: id }))
+  }
+
   handleResponsiveTable = () => {
     const { linkOnTableBody: tdLink, linkOnTableHead: thLink  } = this
 
@@ -61,14 +66,13 @@ export default class Table extends React.Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     const { rows, isLoading } = this.props
-    return isLoading !== nextProps.isLoading || rows !== nextProps.rows || this.state.sticky !== nextState.sticky
+    return isLoading !== nextProps.isLoading || rows !== nextProps.rows || this.state.sticky !== nextState.sticky || this.state.selectId !== nextState.selectId
   }
 
 
   render() {
     const { titles, rows, rowRender, textIfEmpty, isLoading, loadingText, classTitle } = this.props
     const { sticky } = this.state
-
     return (
       <table styleName={sticky ? 'table table-fixed' : 'table'} className={classTitle} ref={(table) => this.linkOnTable = table}>
         <thead ref={(thead) => this.linkOnTableHead = thead}>
@@ -97,7 +101,7 @@ export default class Table extends React.Component {
           }
           {
             !isLoading && !!rows.length && rows.map((row, rowIndex) => (
-              typeof rowRender === 'function' && rowRender(row, rowIndex)
+              typeof rowRender === 'function' && rowRender(row, rowIndex, this.state.selectId, this.handleSelectId)
             ))
           }
         </tbody>

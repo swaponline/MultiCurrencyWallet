@@ -50,7 +50,7 @@ export default class Wallet extends Component {
 
   state = {
     view: 'off',
-    zeroBalance: true,
+    zeroBalance: true
   }
 
   componentWillMount() {
@@ -89,6 +89,8 @@ export default class Wallet extends Component {
     })
   }
 
+
+
   render() {
     const { view, zeroBalance } = this.state
     const { items, tokens, currencies, hiddenCoinsList } = this.props
@@ -99,6 +101,7 @@ export default class Wallet extends Component {
 
     const showSaveKeysModal = !zeroBalance && !keysSaved && !testNetSkip // non-zero balance and no keys saved
 
+    console.log(this);
     return (
       <section>
         { showSaveKeysModal && <SaveKeysModal /> }
@@ -112,8 +115,8 @@ export default class Wallet extends Component {
           classTitle={styles.wallet}
           titles={titles}
           rows={[...items, ...tokens].filter(coin => !hiddenCoinsList.includes(coin.currency))}
-          rowRender={(row, index) => (
-            <Row key={index} {...row} currencies={currencies} hiddenCoinsList={hiddenCoinsList} />
+          rowRender={(row, index, selectId, handleSelectId) => (
+            <Row key={index} {...row} currencies={currencies} hiddenCoinsList={hiddenCoinsList} selectId={selectId} index={index} handleSelectId={handleSelectId}/>
           )}
         />
         <KeyActionsPanel />

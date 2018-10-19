@@ -61,3 +61,11 @@
     transform: translate(19px, 0);
   }
 }
+
+@include media-mobile { 
+  .ellipsis {
+    position: absolute;
+    right: 15px;
+    top: 25px;
+  }
+}

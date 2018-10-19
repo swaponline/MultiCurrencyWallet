@@ -26,8 +26,7 @@ export default class Row extends Component {
     isBalanceFetching: false,
     viewText: false,
     tradeAllowed: false,
-    isAddressCopied: false,
-    showMobileButtons: false
+    isAddressCopied: false
   }
 
   componentWillMount() {
@@ -36,6 +35,7 @@ export default class Row extends Component {
     this.setState({
       tradeAllowed: !!currencies.find(c => c.value === currency.toLowerCase()),
     })
+
   }
 
   componentDidMount() {
@@ -136,7 +136,7 @@ export default class Row extends Component {
     const eosActivationAvailable = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true" ? false : true
 
     return (
-      <tr onClick={this.handleShowOptions} styleName={this.state.showMobileButtons ? 'showButtons' : ''}>
+      <tr styleName={this.props.index == this.props.selectId ? 'showButtons' : 'hidden'} onClick={() => { this.props.handleSelectId(this.props.index)}}>
         <td>
           <Link to={`/${fullName}-wallet`} title={`Online ${fullName} wallet`}>
             <Coin name={currency} />
