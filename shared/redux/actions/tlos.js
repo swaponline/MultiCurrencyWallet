@@ -30,12 +30,7 @@ const register = async (accountName, activePrivateKey) => {
 
   const keys = {
     activePrivateKey: activePrivateKey,
-    privateKeys: {
-      active: activePrivateKey
-    },
-    publicKeys: {
-      active: givenPublicKey
-    }
+    activePublicKey: givenPublicKey,
   }
 
   reducers.user.setAuthData({ name: 'telosData', data: { ...keys, address: accountName } })
@@ -46,16 +41,9 @@ const login = async (accountName, activePrivateKey) => {
 
   const keys = {
     activePrivateKey,
-    privateKeys: {
-      active: activePrivateKey
-    },
-    publicKeys: {
-      active: activePublicKey
-    }
+    activePublicKey
   }
 
-  console.log('keys', keys)
-  console.log('accountName', accountName)
   reducers.user.setAuthData({ name: 'telosData', data: { ...keys, address: accountName } })
 }
 

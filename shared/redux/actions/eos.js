@@ -16,56 +16,87 @@ const generateAccountName = (publicKey) => {
   return account
 }
 
-const prepareAccount = async () => {
-  const keys = await Keygen.generateMasterKeys()
-
-  const { masterPrivateKey, publicKeys: { active } } = keys
-
-  const accountName = generateAccountName(active)
-
-  const { buyAccountPriceInBTC } = config.api.eos
-
-  return {
-    masterPrivateKey: masterPrivateKey,
-    publicKey: active,
-    accountName: accountName,
-    price: buyAccountPriceInBTC
-  }
-}
-
-const register = async (accountName, privateKey) => {
-  const keys = await Keygen.generateMasterKeys(privateKey)
-
-  if (keys.masterPrivateKey !== privateKey) {
-    throw new Error('Invalid private key')
-  }
-
+const register = async (accountName, activePrivateKey) => {
   const eosInstance = await eos.getInstance()
   const eccInstance = await ecc.getInstance()
   const { permissions } = await eosInstance.getAccount(accountName)
 
-  const providedKey = eccInstance.privateToPublic(keys.privateKeys.active)
+  const activePublicKey = eccInstance.privateToPublic(activePrivateKey)
 
-  const requiredKey =
+  const requiredPublicKey =
     permissions.find(item => item.perm_name === 'active')
       .required_auth.keys[0].key
 
-  if (providedKey !== requiredKey) {
-    throw new Error('Invalid accounts permissions')
+  if (activePublicKey != requiredPublicKey)
+    throw new Error(`${activePublicKey} is not equal to ${requiredPublicKey}`)
+
+  localStorage.setItem(constants.privateKeyNames.eos, activePrivateKey)
+  localStorage.setItem(constants.privateKeyNames.eosAccount, accountName)
+  localStorage.setItem(constants.localStorage.eosAccountActivated, true)
+
+  await login(accountName, activePrivateKey)
+}
+
+const loginWithNewAccount = async () => {
+  const eccInstance = await ecc.getInstance()
+
+  const keys = await Keygen.generateMasterKeys()
+
+  const { privateKeys: { active: activePrivateKey }, publicKeys: { active: activePublicKey }} = keys
+
+  const accountName = generateAccountName(activePublicKey)
+
+  localStorage.setItem(constants.privateKeyNames.eos, activePrivateKey)
+  localStorage.setItem(constants.privateKeyNames.eosAccount, accountName)
+  localStorage.setItem(constants.localStorage.eosAccountActivated, false)
+
+  await login(accountName, activePrivateKey)
+}
+
+const login = async (accountName, activePrivateKey) => {
+  const eccInstance = await ecc.getInstance()
+
+  const activePublicKey = eccInstance.privateToPublic(activePrivateKey)
+
+  reducers.user.setAuthData({ name: 'eosData', data: { activePrivateKey, activePublicKey, address: accountName } })
+}
+
+const buyAccount = async () => {
+  const eosPrivateKey = localStorage.getItem(constants.privateKeyNames.eos)
+  const accountName = localStorage.getItem(constants.privateKeyNames.eosAccount)
+  let paymentTx = localStorage.getItem(constants.localStorage.eosActivationPayment)
+
+  const eccInstance = await ecc.getInstance()
+  const eosPublicKey = eccInstance.privateToPublic(eosPrivateKey)
+
+  const { user: { btcData }} = getState()
+  const btcAddress = btcData.address
+  const btcPrivateKey = btcData.privateKey
+
+  if (!paymentTx) {
+    paymentTx = await sendActivationPayment({ from: btcAddress })
+    localStorage.setItem(constants.localStorage.eosActivationPayment, paymentTx)
   }
 
-  localStorage.setItem(constants.privateKeyNames.eos, privateKey)
-  localStorage.setItem(constants.privateKeyNames.eosAccount, accountName)
+  const message = `${accountName}:${eosPublicKey}`
+  const signature = await actions.btc.signMessage(message, btcPrivateKey)
 
-  reducers.user.setAuthData({ name: 'eosData', data: { ...keys, address: accountName } })
+  await activateAccount({
+    accountName, eosPublicKey, btcAddress, signature, paymentTx
+  })
+
+  localStorage.setItem(constants.localStorage.eosAccountActivated, true)
 }
 
-const login = async (accountName, masterPrivateKey) => {
-  const keys = await Keygen.generateMasterKeys(masterPrivateKey)
-  reducers.user.setAuthData({ name: 'eosData', data: { ...keys, address: accountName } })
+const sendActivationPayment = async ({ from }) => {
+  const { buyAccountPriceInBTC, buyAccountPaymentRecipient } = config.api.eos
+
+  const txid = await actions.btc.send(from, buyAccountPaymentRecipient, buyAccountPriceInBTC)
+
+  return txid.getId()
 }
 
-const requestToCreateAccount = async ({ publicKey, accountName, address, signature, txid }) => {
+const activateAccount = async ({ accountName, eosPublicKey, btcAddress, signature, paymentTx }) => {
   const { registerEndpoint } = config.api.eos
 
   const response = await fetch(registerEndpoint, {
@@ -74,52 +105,18 @@ const requestToCreateAccount = async ({ publicKey, accountName, address, signatu
       'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ publicKey, accountName, address, signature, txid }),
+    body: JSON.stringify({
+      publicKey: eosPublicKey,
+      accountName: accountName,
+      address: btcAddress,
+      signature: signature,
+      txid: paymentTx
+    }),
   })
 
   const { transaction_id } = await response.json()
 
   return transaction_id
-}
-
-const payForAccountCreation = async (senderAddress) => {
-  const { buyAccountPriceInBTC, buyAccountPaymentRecipient } = config.api.eos
-
-  const txid = await actions.btc.send(senderAddress, buyAccountPaymentRecipient, buyAccountPriceInBTC)
-
-  return txid
-}
-
-const buyAccount = async (masterPrivateKey, paymentTxId) => {
-  const keys = await Keygen.generateMasterKeys(masterPrivateKey)
-  const {publicKeys: {active: eosPublicKey}, privateKeys: {active: eosPrivateKey}} = keys
-  const accountName = generateAccountName(eosPublicKey)
-
-  const {user: {btcData: {address: btcAddress, privateKey: btcPrivateKey}}} = getState()
-
-  localStorage.setItem(constants.privateKeyNames.eos, eosPrivateKey)
-  localStorage.setItem(constants.privateKeyNames.eosAccount, accountName)
-  reducers.user.setAuthData({name: 'eosData', data: {...keys, address: accountName}})
-
-  if (!paymentTxId) {
-    const paymentTx = await payForAccountCreation(btcAddress)
-    paymentTxId = paymentTx.getId()
-  }
-
-  const message = `${accountName}:${eosPublicKey}`
-  const signature = await actions.btc.signMessage(message, btcPrivateKey)
-
-  const creationTxId = await requestToCreateAccount({
-    accountName: accountName,
-    publicKey: eosPublicKey,
-    address: btcAddress,
-    signature: signature,
-    txid: paymentTxId
-  })
-
-  console.log(`${accountName} created at ${creationTxId}`)
-
-  return { paymentTxId, creationTxId }
 }
 
 const getBalance = async () => {
@@ -169,9 +166,9 @@ const send = async (from, to, amount) => {
 
 export default {
   login,
+  loginWithNewAccount,
   register,
   getBalance,
   send,
-  buyAccount,
-  prepareAccount
+  buyAccount
 }

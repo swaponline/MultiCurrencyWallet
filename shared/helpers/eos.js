@@ -11,12 +11,12 @@ const keyProvider = (telos = false) => {
 
   return ({ transaction, pubkeys }) => {
     const { user } = getState()
-    const { privateKeys, publicKeys } = user[userDataKey]
+    const { activePrivateKey, activePublicKey } = user[userDataKey]
 
     if (pubkeys || telos) {
-      return [privateKeys.active]
+      return [activePrivateKey]
     } else {
-      return [publicKeys.active]
+      return [activePublicKey]
     }
   }
 }

@@ -133,6 +133,7 @@ export default class Row extends Component {
   render() {
     const { isBalanceFetching, tradeAllowed, isAddressCopied } = this.state
     const { currency, balance, isBalanceFetched, address, contractAddress, fullName, unconfirmedBalance } = this.props
+    const eosActivationAvailable = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true" ? false : true
 
     return (
       <tr onClick={this.handleShowOptions} styleName={this.state.showMobileButtons ? 'showButtons' : ''}>
@@ -205,29 +206,24 @@ export default class Row extends Component {
                   )
                 }
 
-
-                <div>
-                  {
-                    currency === 'EOS' && address === '' && <button styleName="button" onClick={this.handleEosRegister} data-tip data-for="lE">Login</button>
-                  }
-                  <ReactTooltip id="lE" type="light" effect="solid">
-                    <span>login if you have EOS account yet</span>
-                  </ReactTooltip>
-                  {
-                    currency === 'EOS' && address === '' && <button styleName="button" onClick={this.handleEosBuyAccount} data-tip data-for="bE">Buy account</button>
-                  }
-                  <ReactTooltip id="bE" type="light" effect="solid">
-                    <span>Buy EOS account if you have not it</span>
-                  </ReactTooltip>
-                </div>
-                <div>
-                  {
-                    currency === 'TLOS' && address === '' && <button styleName="button" onClick={this.handleTelosRegister} data-tip data-for="lT">Login</button>
-                  }
-                  <ReactTooltip id="lT" type="light" effect="solid">
-                    <span>login if you have TLOS account yet</span>
-                  </ReactTooltip>
-                </div>
+                {
+                  currency === 'EOS' && eosActivationAvailable && <button styleName="button" onClick={this.handleEosBuyAccount} data-tip data-for="bE">Activate</button>
+                }
+                <ReactTooltip id="bE" type="light" effect="solid">
+                  <span>Buy this account</span>
+                </ReactTooltip>
+                {
+                  currency === 'EOS' && <button styleName="button" onClick={this.handleEosRegister} data-tip data-for="lE">Use another</button>
+                }
+                <ReactTooltip id="lE" type="light" effect="solid">
+                  <span>Login with your existing eos account</span>
+                </ReactTooltip>
+                {
+                  currency === 'TLOS' && address === '' && <button styleName="button" onClick={this.handleTelosRegister} data-tip data-for="lT">Login</button>
+                }
+                <ReactTooltip id="lT" type="light" effect="solid">
+                  <span>login if you have TLOS account yet</span>
+                </ReactTooltip>
                 { isAddressCopied && <p styleName="copied" >Address copied to clipboard</p> }
               </td>
             </CopyToClipboard>

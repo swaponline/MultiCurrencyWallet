@@ -11,7 +11,7 @@ import { constants } from 'helpers'
 
 import cssModules from 'react-css-modules'
 import styles from './EosRegisterModal.scss'
-import Tooltip from 'components/ui/Tooltip/Tooltip' 
+import Tooltip from 'components/ui/Tooltip/Tooltip'
 
 
 @cssModules(styles)
@@ -52,7 +52,7 @@ export default class EosRegisterModal extends React.Component {
       <Modal name={name} title="EOS Login">
         <FieldLabel inRow>Account name <Tooltip text="Enter your EOS account name "/></FieldLabel>
         <Input valueLink={linked.accountName} />
-        <FieldLabel inRow>Private key <Tooltip text="Enter your EOS secret key"/></FieldLabel>
+        <FieldLabel inRow>Active private key<Tooltip text="Enter private key for active permission"/></FieldLabel>
         <Input valueLink={linked.privateKey} />
         { error && (
           <div styleName="error">Sorry, error occured during activation</div>
