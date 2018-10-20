@@ -6,6 +6,7 @@ import { FieldLabel, Input } from 'components/forms'
 
 import Link from 'sw-valuelink'
 
+import config from 'app-config'
 import actions from 'redux/actions'
 import { constants, eos } from 'helpers'
 import { getState } from 'redux/core'
@@ -19,62 +20,67 @@ import Tooltip from 'components/ui/Tooltip/Tooltip'
 export default class EosBuyAccountModal extends React.Component {
 
   state = {
-    masterPrivateKey: '',
+    activePrivateKey: '',
+    activePublicKey: '',
     accountName: '',
-    publicKey: '',
     price: '',
-    error: '',
-    transactionId: ''
+    error: ''
   }
 
   async componentDidMount() {
-    const { masterPrivateKey, publicKey, accountName, price } = await actions.eos.prepareAccount()
+    const {
+      user: {
+        eosData: {
+          activePrivateKey,
+          activePublicKey,
+          address: accountName
+        }
+      }
+    } = getState()
 
-    this.setState({ masterPrivateKey, accountName, publicKey, price })
+    const { buyAccountPriceInBTC: price } = config.api.eos
+
+    this.setState({ activePrivateKey, activePublicKey, accountName, price })
   }
 
   handleSubmit = async () => {
-    const { masterPrivateKey, accountName, transactionId } = this.state
-
     actions.loader.show(true)
 
     try {
-      const { paymentTxId } = await actions.eos.buyAccount(masterPrivateKey, transactionId)
-      this.setState({ transactionId: paymentTxId })
+      await actions.eos.buyAccount()
 
-      await actions.eos.getBalance()
       actions.modals.close(constants.modals.EosBuyAccount)
     } catch (e) {
       console.error(e)
-      this.setState({error: e.toString()})
-    } finally {
-      actions.loader.hide()
+      this.setState({ error: e.toString() })
     }
+
+    actions.loader.hide()
   }
 
   render() {
-    const { error, masterPrivateKey, accountName, publicKey, price } = this.state
+    const { error, activePrivateKey, activePublicKey, accountName, price } = this.state
     const { name } = this.props
 
-    const linked = Link.all(this, 'accountName', 'publicKey', 'price', 'masterPrivateKey')
+    const linked = Link.all(this, 'accountName', 'activePrivateKey', 'activePublicKey', 'price')
 
     return (
       <Fragment>
         <Modal name={name} title="EOS Register">
           <div>
-            <FieldLabel inRow>Account name <Tooltip text="Your EOS Account name, please save it in a safe place" /></FieldLabel>
+            <FieldLabel inRow>Account name<Tooltip text="This account will be registered in EOS blockchain" /></FieldLabel>
             <Input readOnly={true} valueLink={linked.accountName} />
           </div>
           <div>
-            <FieldLabel inRow>Master private key <Tooltip text="Your EOS secret key, please save it in a safe place"/></FieldLabel>
-            <Input readOnly={true} valueLink={linked.masterPrivateKey} />
+            <FieldLabel inRow>Private key<Tooltip text="Private key for active and owner permissions"/></FieldLabel>
+            <Input readOnly={true} valueLink={linked.activePrivateKey} />
           </div>
           <div>
-            <FieldLabel inRow>Active public key <Tooltip text="Your EOS public key, please save it in a safe place"/></FieldLabel>
-            <Input readOnly={true} valueLink={linked.publicKey} />
+            <FieldLabel inRow>Public key<Tooltip text="Public key associated with account"/></FieldLabel>
+            <Input readOnly={true} valueLink={linked.activePublicKey} />
           </div>
           <div>
-            <FieldLabel inRow>Price (BTC) <Tooltip text="Account creation fee "/></FieldLabel>
+            <FieldLabel inRow>Price (BTC)<Tooltip text="This amount will be withdrawn from your BTC wallet"/></FieldLabel>
             <Input readOnly={true} valueLink={linked.price} />
           </div>
           { error && (
