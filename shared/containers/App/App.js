@@ -79,7 +79,7 @@ export default class App extends React.Component {
 
   componentDidMount() {
     window.onerror = (error) => {
-      this.setState({ error })
+      actions.notifications.show(constants.notifications.ErrorNotification, {error})
     }
 
     setTimeout(() => {
@@ -108,8 +108,6 @@ export default class App extends React.Component {
 
     return (
       <Fragment>
-        { actions.notifications.show(constants.notifications.ErrorNotification, {error})
-      }
         <Seo location={history.location} />
         { isMobile && <UserTooltip /> }
         <Header />
