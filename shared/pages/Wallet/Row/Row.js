@@ -26,7 +26,8 @@ export default class Row extends Component {
     isBalanceFetching: false,
     viewText: false,
     tradeAllowed: false,
-    isAddressCopied: false
+    isAddressCopied: false,
+    isTouch: false
   }
 
   componentWillMount() {
@@ -67,6 +68,18 @@ export default class Row extends Component {
     this.setState(() => ({
       isBalanceFetching: false,
     }))
+  }
+
+  handleTouch = (e) => {
+    this.setState({
+      isTouch: true,
+    }, () => {
+      setTimeout(() => {
+        this.setState({
+          isTouch: false,
+        })
+      }, 500)
+    })
   }
 
   handleCopyAddress = () => {
@@ -131,12 +144,12 @@ export default class Row extends Component {
   }
 
   render() {
-    const { isBalanceFetching, tradeAllowed, isAddressCopied } = this.state
+    const { isBalanceFetching, tradeAllowed, isAddressCopied, isTouch } = this.state
     const { currency, balance, isBalanceFetched, address, contractAddress, fullName, unconfirmedBalance } = this.props
     const eosActivationAvailable = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true" ? false : true
 
     return (
-      <tr styleName={this.props.index == this.props.selectId ? 'showButtons' : 'hidden'} onClick={() => { this.props.handleSelectId(this.props.index)}}>
+      <tr styleName={this.props.index == this.props.selectId || !isMobile ? 'showButtons' : 'hidden'} onClick={() => { this.props.handleSelectId(this.props.index)}} onTouchMove={this.handleTouch} style= { isTouch && this.props.index != this.props.selectId ?  { background: '#f5f5f5' } : { background: '#fff' } }>
         <td>
           <Link to={`/${fullName}-wallet`} title={`Online ${fullName} wallet`}>
             <Coin name={currency} />

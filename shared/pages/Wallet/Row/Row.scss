@@ -101,15 +101,17 @@
   .no-select-inline {
     font-size: 15px;
     position: absolute;
-    right: 15px;
+    right: 20px;
+    background: transparent!important;
     top: 20px;
   }
   .mobileName {
     color: #000;
     display: block;
     position: absolute;
-    left: 60px;
-    top: 19px;
+    left: 70px;
+    top: 18px;
+    font-size: 16px;
   }
   tr.showButtons {
     color: #000;
@@ -128,6 +130,7 @@
 .visible {
   display: none;
 }
+
 
 
 
