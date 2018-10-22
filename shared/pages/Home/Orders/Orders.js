@@ -113,7 +113,7 @@ export default class Orders extends Component {
           />
         }
         <h3>Ask for sell</h3>
-        <p>In this table the orders are placed by those who want to upsell ETH</p>
+        <p>In this table the orders are placed by those who want to sell {buyCurrency}</p>
         <Table
           id="table_exchange"
           classTitle={tableStyles.exchange}
@@ -129,7 +129,7 @@ export default class Orders extends Component {
           isLoading={!isOnline}
         />
         <h3>Bid for buy</h3>
-        <p>In this table placed the orders of those  who are ready to buy your ETH for BTC</p>
+        <p>In this table placed the orders of those  who are ready to buy your {buyCurrency} for {sellCurrency}</p>
         <Table
           id="table_exchange"
           classTitle={tableStyles.exchange}
