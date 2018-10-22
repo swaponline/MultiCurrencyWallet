@@ -218,12 +218,6 @@ export default class Row extends Component {
                 <ReactTooltip id="lE" type="light" effect="solid">
                   <span>Login with your existing eos account</span>
                 </ReactTooltip>
-                {
-                  currency === 'TLOS' && address === '' && <button styleName="button" onClick={this.handleTelosRegister} data-tip data-for="lT">Login</button>
-                }
-                <ReactTooltip id="lT" type="light" effect="solid">
-                  <span>login if you have TLOS account yet</span>
-                </ReactTooltip>
                 { isAddressCopied && <p styleName="copied" >Address copied to clipboard</p> }
               </td>
             </CopyToClipboard>

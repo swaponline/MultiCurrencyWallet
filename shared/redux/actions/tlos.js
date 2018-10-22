@@ -7,6 +7,15 @@ import actions from 'redux/actions'
 import { telos, ecc } from 'helpers/eos'
 import { Keygen } from 'eosjs-keygen'
 
+const generateAccountName = (publicKey) => {
+  const account = Array.prototype.map.call(
+    publicKey.substr(0, 12).toLowerCase(),
+    (char) => (Number.isNaN(Number.parseInt(char, 10)) || char < 5) ? char : char - 4
+  ).join('')
+
+  return account
+}
+
 const privateToPublic = async (privateKey) => {
   const eccInstance = await ecc.getInstance()
   return eccInstance.privateToPublic(privateKey).replace('EOS', 'TLOS')
@@ -92,6 +101,48 @@ const send = async (from, to, amount) => {
   )
 }
 
+const loginWithNewAccount = async () => {
+  const eccInstance = await ecc.getInstance()
+
+  const keys = await Keygen.generateMasterKeys()
+
+  const { privateKeys: { active: activePrivateKey }} = keys
+
+  const activePublicKey = await privateToPublic(activePrivateKey)
+
+  const accountName = generateAccountName(activePublicKey)
+
+  localStorage.setItem(constants.privateKeyNames.telos, activePrivateKey)
+  localStorage.setItem(constants.privateKeyNames.telosAccount, accountName)
+  localStorage.setItem(constants.localStorage.telosAccountActivated, false)
+
+  await login(accountName, activePrivateKey)
+  await activateAccount(accountName, activePrivateKey)
+}
+
+const activateAccount = async(accountName, activePrivateKey) => {
+  const activePublicKey = await privateToPublic(activePrivateKey)
+
+  const { registerEndpoint } = config.api.eos
+
+  try {
+    const response = await fetch(registerEndpoint, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        publicKey: activePublicKey,
+        accountName: accountName
+      })
+    })
+    localStorage.setItem(constants.localStorage.telosAccountActivated, true)
+  } catch(e) {
+    console.error('Cannot activate telos account', e)
+  }
+}
+
 module.exports = {
-  register, login, getBalance, send
+  register, login, getBalance, send, loginWithNewAccount, activateAccount
 }
