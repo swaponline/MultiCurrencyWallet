@@ -74,6 +74,17 @@ export default class LtcToBtc extends Component {
     this.swap.flow.tryRefund()
   }
 
+  getRefundTxHex = () => {
+    const { flow } = this.state
+    console.log('kiik')
+    if (flow.refundTxHex) {
+      return flow.refundTxHex
+    }
+    else if (flow.btcScriptValues) {
+      this.swap.flow.getRefundTxHex()
+    }
+  }
+
   toggleBitcoinScript = () => {
     this.setState({
       isShowingBitcoinScript: !this.state.isShowingBitcoinScript,

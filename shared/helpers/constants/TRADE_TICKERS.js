@@ -4,7 +4,7 @@ import config from 'app-config'
 const swap = [
   'ETH-BTC',
   'ETH-LTC',
-  'BTC-LTC',
+  'LTC-BTC',
   'EOS-BTC',
 ]
 

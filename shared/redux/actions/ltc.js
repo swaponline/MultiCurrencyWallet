@@ -58,8 +58,8 @@ const fetchBalance = (address) =>
   request.get(`${api.getApiServer('ltc')}/addr/${address}`)
     .then(({ balance }) => balance)
 
-const getInfoTx = (transactionHash) =>
-  request.get(`${api.getApiServer('ltc')}/tx/${transactionHash}`)
+const fetchTx = (hash) =>
+  request.get(`${api.getApiServer('ltc')}/tx/${hash}`)
 
 const getTransaction = () =>
   new Promise((resolve) => {
@@ -92,7 +92,7 @@ const send = async (from, to, amount) => {
 
   const tx            = new bitcoin.TransactionBuilder(ltc.network)
   const unspents      = await fetchUnspents(from)
-  console.log(unspents)
+
   const fundValue     = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
   const feeValue      = 100000
   const totalUnspent  = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
@@ -125,7 +125,7 @@ const broadcastTx = (txRaw) =>
 export default {
   login,
   getBalance,
-  getInfoTx,
+  fetchTx,
   getTransaction,
   send,
   fetchUnspents,

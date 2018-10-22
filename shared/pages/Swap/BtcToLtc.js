@@ -22,6 +22,7 @@ export default class BtcToLtc extends Component {
       flow: this.swap.flow.state,
       secret: crypto.randomBytes(32).toString('hex'),
       enabledButton: false,
+      isShowingBitcoinScript: false,
     }
   }
 
@@ -81,10 +82,15 @@ export default class BtcToLtc extends Component {
     }
   }
 
+  toggleLitecoinScript = () => {
+    this.setState({
+      isShowingLitecoinScript: !this.state.isShowingLitecoinScript,
+    })
+  }
 
   render() {
     const { children } = this.props
-    const { secret, flow, enabledButton } = this.state
+    const { secret, flow, enabledButton, isShowingLitecoinScript } = this.state
 
     return (
       <div>
@@ -225,24 +231,65 @@ export default class BtcToLtc extends Component {
                 )
               }
               {
-                flow.ltcSwapCreationTransactionHash && (
-                  <div>
-                    Transaction:
-                    <strong>
-                      <a
-                        href={`${config.link.ltc}/tx/${flow.ltcSwapCreationTransactionHash}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {flow.ltcSwapCreationTransactionHash}
-                      </a>
-                    </strong>
-                  </div>
-                )
-              }
-              {
                 (flow.step === 6 || flow.isLtcWithdrawn) && (
-                  <h3>5. LTC Script created and charged. Requesting withdrawal from LTC Script. Please wait</h3>
+                  <Fragment>
+                    <h3>5. Litecoin Script created and charged. Please check the information below</h3>
+                    <div>Secret Hash: <strong>{flow.secretHash}</strong></div>
+                    <div>
+                        Script address:
+                      <strong>
+                        {
+                          flow.ltcSwapCreationTransactionHash && (
+                            <a
+                              href={`${config.link.ltc}/tx/${flow.ltcSwapCreationTransactionHash}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              {flow.ltcSwapCreationTransactionHash}
+                            </a>
+                          )
+                        }
+                      </strong>
+                    </div>
+                    <br />
+                    <Fragment>
+                      { flow.ltcScriptValues && <span onClick={this.toggleLitecoinScript}>Show litecoin script</span> }
+                      { isShowingLitecoinScript && (
+                        <pre>
+                          <code>{`
+  bitcoinjs.script.compile([
+    bitcoin.core.opcodes.OP_RIPEMD160,
+    Buffer.from('${flow.ltcScriptValues.secretHash}', 'hex'),
+    bitcoin.core.opcodes.OP_EQUALVERIFY,
+
+    Buffer.from('${flow.ltcScriptValues.recipientPublicKey}', 'hex'),
+    bitcoin.core.opcodes.OP_EQUAL,
+    bitcoin.core.opcodes.OP_IF,
+
+    Buffer.from('${flow.ltcScriptValues.recipientPublicKey}', 'hex'),
+    bitcoin.core.opcodes.OP_CHECKSIG,
+
+    bitcoin.core.opcodes.OP_ELSE,
+
+    bitcoin.core.script.number.encode(${flow.ltcScriptValues.lockTime}),
+    bitcoin.core.opcodes.OP_CHECKLOCKTIMEVERIFY,
+    bitcoin.core.opcodes.OP_DROP,
+    Buffer.from('${flow.ltcScriptValues.ownerPublicKey}', 'hex'),
+    bitcoin.core.opcodes.OP_CHECKSIG,
+
+    bitcoin.core.opcodes.OP_ENDIF,
+  ])
+                      `}
+                          </code>
+                        </pre>
+                      )
+                      }
+                    </Fragment>
+
+                    <br />
+                    <br />
+
+                  </Fragment>
                 )
               }
               {
