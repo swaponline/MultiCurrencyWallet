@@ -95,7 +95,7 @@ export default class CurrencyWallet extends Component {
           </Link>
         </div>
         { swapHistory.length > 0 && <SwapsHistory orders={swapHistory} /> }
-        <h2>History your transactions</h2>
+        <h2 style={{ marginTop: '20px' }} >History your transactions</h2>
         {
           txHistory && (
             <Table
