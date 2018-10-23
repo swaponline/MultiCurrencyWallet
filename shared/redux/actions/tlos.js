@@ -123,7 +123,7 @@ const loginWithNewAccount = async () => {
 const activateAccount = async(accountName, activePrivateKey) => {
   const activePublicKey = await privateToPublic(activePrivateKey)
 
-  const { registerEndpoint } = config.api.eos
+  const { registerEndpoint } = config.api.telos
 
   try {
     const response = await fetch(registerEndpoint, {
