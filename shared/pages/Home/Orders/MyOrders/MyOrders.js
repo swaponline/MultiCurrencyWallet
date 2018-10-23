@@ -21,7 +21,7 @@ export default class MyOrders extends PureComponent {
       <Fragment>
         <h3 style={{ marginTop: '50px' }} >Your orders</h3>
         <Table
-          classTitle={styles.exchange}
+          className={styles.exchange}
           titles={titles}
           rows={myOrders}
           rowRender={(row, index) => (

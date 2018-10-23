@@ -116,7 +116,7 @@ export default class Orders extends Component {
         <p>In this table the orders are placed by those who want to upsell ETH</p>
         <Table
           id="table_exchange"
-          classTitle={tableStyles.exchange}
+          className={tableStyles.exchange}
           titles={titles}
           rows={sellOrders}
           rowRender={(row, index) => (
@@ -132,7 +132,7 @@ export default class Orders extends Component {
         <p>In this table placed the orders of those  who are ready to buy your ETH for BTC</p>
         <Table
           id="table_exchange"
-          classTitle={tableStyles.exchange}
+          className={tableStyles.exchange}
           titles={titles}
           rows={buyOrders}
           rowRender={(row, index) => (

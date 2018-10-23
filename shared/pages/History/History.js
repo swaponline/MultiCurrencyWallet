@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 
 import { connect } from 'redaction'
 import actions from 'redux/actions'
@@ -59,19 +59,17 @@ export default class History extends Component {
     const { items, swapHistory } = this.props
     const titles = [ 'Coin', 'Status', 'Statement', 'Amount' ]
 
-    console.log('swapHistory', swapHistory)
-
     return (
       <section>
         <PageHeadline subTitle="History" />
         { swapHistory.length > 0 && <SwapsHistory orders={swapHistory.filter(item => item.step >= 4)} /> }
-        <h3 data-tip data-for="tr" style={{width:'200px'}}>All transactions</h3>
+        <h3 data-tip data-for="tr" style={{ width:'200px' }}>All transactions</h3>
         <ReactTooltip id="tr" type="light" effect="solid">
           <span>All transactions sent and received</span>
         </ReactTooltip>
         <Filter />
         <InfiniteScrollTable
-          classTitle={styles.history}
+          className={styles.history}
           titles={titles}
           bottomOffset={400}
           getMore={this.loadMore}

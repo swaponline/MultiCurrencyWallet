@@ -20,7 +20,7 @@ export default class SwapsHistory extends PureComponent {
         <h3>Swaps history</h3>
         <Table
           id="table-history"
-          classTitle={styles.historySwap}
+          className={styles.historySwap}
           titles={titles}
           rows={orders}
           rowRender={(row, index) => (
