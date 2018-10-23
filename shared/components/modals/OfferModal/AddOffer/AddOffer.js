@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 
 import { connect } from 'redaction'
 import actions from 'redux/actions'
-import reducers from 'redux/core/reducers'
 
 import Link from 'sw-valuelink'
 import config from 'app-config'
