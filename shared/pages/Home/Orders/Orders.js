@@ -60,10 +60,14 @@ export default class Orders extends Component {
     }
   }
 
-  createOffer = () => {
+  createOffer = async () => {
+    const { buyCurrency, sellCurrency } = this.props
+
+    await actions[sellCurrency].getBalance(sellCurrency)
+
     actions.modals.open(constants.modals.Offer, {
-      buyCurrency: this.props.buyCurrency,
-      sellCurrency: this.props.sellCurrency,
+      buyCurrency,
+      sellCurrency,
     })
     actions.analytics.dataEvent('orderbook-click-createoffer-button')
   }
