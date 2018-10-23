@@ -4,5 +4,5 @@ export default {
   eos: 'https://eospark.com/Jungle',
   tlos: 'http://testnet.telosfoundation.io',
   bch: 'https://www.blocktrail.com/tBCC',
-  ltc: 'https://testnet.litecore.io',
+  ltc: 'https://ltctest.coinapp.io',
 }

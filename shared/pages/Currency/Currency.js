@@ -33,9 +33,9 @@ export default class Currency extends Component {
     return constants.tradeTicker
       .filter(ticker => {
         ticker = ticker.split('-')
-        return currency === 'btc' || currency === 'ltc' || currency === 'usdt'
-          ? ticker[1].toLowerCase() === currency
-          : ticker[0].toLowerCase() === currency
+        return currency === ticker[0].toLowerCase()
+          ? ticker[0].toLowerCase() === currency
+          : ticker[1].toLowerCase() === currency
       })
       .map(pair => {
         pair = pair.split('-')
