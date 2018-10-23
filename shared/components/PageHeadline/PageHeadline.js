@@ -8,8 +8,8 @@ import Title from './Title/Title'
 import SubTitle from './SubTitle/SubTitle'
 
 
-const PageHeadline = ({ children, title, subTitle }) => (
-  <div styleName="headline">
+const PageHeadline = ({ children, title, subTitle, ...rest }) => (
+  <div styleName="headline" {...rest} >
     {
       children || (
         <Fragment>
