@@ -95,7 +95,7 @@ export default class Orders extends Component {
     buyCurrency = buyCurrency.toUpperCase()
     sellCurrency = sellCurrency.toUpperCase()
 
-    const titles = [ 'OWNER', `${buyCurrency}`, `? ${sellCurrency} = 1 ${buyCurrency}`, `${sellCurrency}`, 'START EXCHANGE' ]
+    const titles = [ 'OWNER', `${sellCurrency}`, `? ${sellCurrency} = 1 ${buyCurrency}`, `${buyCurrency}`, 'START EXCHANGE' ]
     const { isOnline, myOrders, orderId, invalidPair } = this.props
 
     return (
