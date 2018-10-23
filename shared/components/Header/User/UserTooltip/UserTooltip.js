@@ -1,19 +1,18 @@
 import React, { Component } from 'react'
-import { connect } from 'redaction'
-import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 
-import { TimerButton } from 'components/controls'
-
+import { connect } from 'redaction'
 import actions from 'redux/actions'
 
 import { links } from 'helpers'
 import { Link } from 'react-router-dom'
+import { withRouter } from 'react-router'
 
-import CSSModules from 'react-css-modules'
 import styles from './UserTooltip.scss'
-
+import CSSModules from 'react-css-modules'
 import ArrowRightSvg from './images/arrow-right.svg'
+
+import { TimerButton } from 'components/controls'
 
 
 @withRouter
@@ -25,7 +24,9 @@ import ArrowRightSvg from './images/arrow-right.svg'
 export default class UserTooltip extends Component {
 
   static propTypes = {
-    toggle: PropTypes.func,
+    toggle: PropTypes.func.isRequired,
+    feeds: PropTypes.array.isRequired,
+    peer: PropTypes.string.isRequired,
   }
 
   declineRequest = (orderId, participantPeer) => {

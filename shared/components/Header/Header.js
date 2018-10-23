@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+
 import { connect } from 'redaction'
 import { withRouter } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
@@ -9,11 +11,10 @@ import styles from './Header.scss'
 import Nav from './Nav/Nav'
 import User from './User/User'
 import NavMobile from './NavMobile/NavMobile'
+
 import Logo from 'components/Logo/Logo'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 
-
-let lastScrollTop = 0
 
 @withRouter
 @connect(({ menu: { items: menuItems, isDisplayingTable } }) => ({
@@ -25,12 +26,23 @@ let lastScrollTop = 0
 
 export default class Header extends Component {
 
+  static propTypes = {
+    menuItems: PropTypes.array.isRequired,
+    isDisplayingTable: PropTypes.bool.isRequired,
+  }
+
+  static defaulProps = {
+    isDisplayingTable: false,
+  }
+
   constructor() {
     super()
 
     this.state = {
       sticky: false,
     }
+
+    this.lastScrollTop = 0
   }
 
   componentDidMount() {
@@ -43,13 +55,13 @@ export default class Header extends Component {
 
   handleScroll = () =>  {
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop
-    if (scrollTop > lastScrollTop) {
+    if (scrollTop > this.lastScrollTop) {
       this.setState(() => ({ sticky: false }))
     }
     else {
       this.setState(() => ({ sticky: true }))
     }
-    lastScrollTop = scrollTop
+    this.lastScrollTop = scrollTop
   }
 
   render() {

@@ -1,12 +1,23 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
-import styles from './UserAvatar.scss'
 import bell from './images/avatar.svg'
+import styles from './UserAvatar.scss'
 import CSSModules from 'react-css-modules'
 
 
 @CSSModules(styles, { allowMultiple: true })
 export default class UserAvatar extends Component {
+
+  static propTypes = {
+    feeds: PropTypes.array.isRequired,
+    soundClick: PropTypes.func.isRequired,
+    changeView: PropTypes.func.isRequired,
+  }
+
+  static defaultProps = {
+    feeds: [],
+  }
 
   state = {
     feeds: null,
