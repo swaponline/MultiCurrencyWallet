@@ -66,11 +66,11 @@ export default class Table extends React.Component {
 
 
   render() {
-    const { titles, rows, rowRender, textIfEmpty, isLoading, loadingText, classTitle } = this.props
+    const { titles, rows, rowRender, textIfEmpty, isLoading, loadingText, className } = this.props
     const { sticky } = this.state
 
     return (
-      <table styleName={sticky ? 'table table-fixed' : 'table'} className={classTitle} ref={(table) => this.linkOnTable = table}>
+      <table styleName={sticky ? 'table table-fixed' : 'table'} className={className} ref={(table) => this.linkOnTable = table}>
         <thead ref={(thead) => this.linkOnTableHead = thead}>
           <tr>
             {

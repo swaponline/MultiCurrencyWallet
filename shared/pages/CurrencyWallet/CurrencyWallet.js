@@ -1,24 +1,27 @@
 import React, { Component } from 'react'
 
 import { connect } from 'redaction'
-import { capitalize } from 'helpers/utils'
+import actions from 'redux/actions'
 import { Link, withRouter } from 'react-router-dom'
+
+import { utils, links, constants } from 'helpers'
 
 import CSSModules from 'react-css-modules'
 import styles from './CurrencyWallet.scss'
 
-import History from 'pages/History/History'
-import Button from 'components/controls/Button/Button'
+import Row from 'pages/History/Row/Row'
+import SwapsHistory from 'pages/History/SwapsHistory/SwapsHistory'
+
+import Table from 'components/tables/Table/Table'
+import { Button } from 'components/controls'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
-import KeyActionsPanel from 'components/KeyActionsPanel/KeyActionsPanel'
-import links from '../../helpers/links'
-import actions from '../../redux/actions'
-import constants from '../../helpers/constants'
 
 
-@connect(({ core, user }) => ({
+@connect(({ core, user,  history: { transactions, swapHistory } }) => ({
   user,
   hiddenCoinsList: core.hiddenCoinsList,
+  txHistory: transactions,
+  swapHistory,
 }))
 @withRouter
 @CSSModules(styles)
@@ -68,25 +71,43 @@ export default class CurrencyWallet extends Component {
 
 
   render() {
+    let { swapHistory, txHistory } = this.props
     const { fullName, address, balance, currency } = this.state
+
+    txHistory = txHistory
+      .filter(tx => tx.type === currency.toLowerCase())
+
+    swapHistory = Object.keys(swapHistory)
+      .map(key => swapHistory[key])
+      .filter(swap => swap.sellCurrency === currency || swap.buyCurrency === currency)
 
     return (
       <div className="root">
-        <PageHeadline subTitle={`Your Online ${fullName} Wallet`} />
-        <div styleName="info-panel">
-          <h3 >
-            Your address: <span>{address}</span>
-          </h3>
-          <h3 >Your {fullName} balance: {balance}{' '}{currency.toUpperCase()}</h3>
-        </div>
-        <div>
+        <PageHeadline subTitle={`Your Online ${fullName} Wallet`}  styleName="title" />
+        <h3 styleName="subtitle">
+          Your address: <span>{address}</span> <br />
+          Your {fullName} balance: {balance}{' '}{currency.toUpperCase()}
+        </h3>
+        <div styleName="inRow">
           <Button brand style={{ marginRight: '15px' }} onClick={this.handleWithdraw} >Send</Button>
           <Link to={`${links.home}${currency.toLowerCase()}`} >
             <Button gray>Exchange</Button>
           </Link>
         </div>
-        <History />
-        <KeyActionsPanel />
+        { swapHistory.length > 0 && <SwapsHistory orders={swapHistory} /> }
+        <h2>History your transactions</h2>
+        {
+          txHistory && (
+            <Table
+              titles={[ 'Coin', 'Status', 'Statement', 'Amount' ]}
+              rows={txHistory}
+              styleName="table"
+              rowRender={(row) => (
+                <Row key={row.hash} {...row} />
+              )}
+            />
+          )
+        }
       </div>
     )
   }

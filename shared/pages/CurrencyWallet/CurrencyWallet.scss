@@ -3,13 +3,28 @@
   width: 100%;
 }
 
+.title {
+  padding: 1px 0 1px;
+}
+
 .heading {
   display: flex;
   justify-content: center;
 }
 
-.info-panel {
-  margin-bottom: .9rem;
+.subtitle {
+  margin: 0;
+}
+
+.table {
+  width: 100%;
+}
+
+.inRow {
+  margin-top: 20px;
+  display: flex;
+  width: 220px;
+  justify-content: space-between;
 }
 
 @include media-tablet-landscape-and-lower {
