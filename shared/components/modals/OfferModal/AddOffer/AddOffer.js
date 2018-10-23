@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 
 import { connect } from 'redaction'
 import actions from 'redux/actions'
+import reducers from 'redux/core/reducers'
 
 import Link from 'sw-valuelink'
 import config from 'app-config'
@@ -32,9 +33,15 @@ const minAmount = {
 }
 
 
-@connect(({ currencies }) => ({
-  currencies: currencies.items,
-}))
+@connect(
+  ({
+    currencies,
+    user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, usdtData, ltcData },
+  }) => ({
+    currencies: currencies.items,
+    items: [ ethData, btcData, eosData, telosData, bchData, ltcData, usdtData /* nimData */ ],
+  })
+)
 @cssModules(styles, { allowMultiple: true })
 export default class AddOffer extends Component {
   constructor({ initialData }) {
@@ -63,12 +70,32 @@ export default class AddOffer extends Component {
     this.updateExchangeRate(sellCurrency, buyCurrency)
   }
 
+  checkUnconfirmedBalance = async (sellCurrency) => {
+    const { items } = this.props
+
+    return new Promise((resolve, reject) => {
+
+      setTimeout(() => {
+        const unconfirmedBalance = items
+          .filter(item => item.currency === sellCurrency.toUpperCase())[0]
+          .unconfirmedBalance;
+        resolve(unconfirmedBalance)
+      }, 100)
+    })
+  }
+
   checkBalance = async (sellCurrency) => {
+    const { items } = this.props
+
     const balance = await actions[sellCurrency].getBalance(sellCurrency)
+    const unconfirmedBalance = await this.checkUnconfirmedBalance(sellCurrency)
+    const finalBalance = unconfirmedBalance !== undefined && unconfirmedBalance < 0
+                         ? Number(balance) + Number(unconfirmedBalance)
+                         : balance
     const ethBalance = await actions.eth.getBalance()
 
     this.setState({
-      balance,
+      finalBalance,
       ethBalance,
     })
   }
