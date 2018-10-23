@@ -54,8 +54,6 @@ export default class Notification extends Component {
     const { mounted, removed } = this.state
     const { children, type, className } = this.props
 
-    console.log('this.props', this.props)
-
     const containerStyleName = cx('container', {
       'mounted': mounted,
       'removed': removed,
@@ -69,7 +67,6 @@ export default class Notification extends Component {
       'warning': type === 'warning',
       'error': type === 'error',
     })
-
 
     return (
       <div styleName={containerStyleName}>

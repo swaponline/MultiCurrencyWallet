@@ -26,15 +26,17 @@
   background-color:var(--light);
   color: var(--danger);
   position: fixed;
-  bottom: 0;
-  right: 0;
+  top: 50%;
+  left: 50%;
+  margin-top: -100px; /* Negative half of height. */
+  margin-left: -250px;
   padding: 20px 15px 10px 15px;
   z-index: 5;
   border-radius: 4px;
 
 
   & .error-notification-heading {
-    font-size: 26px;
+    font-size: 30px;
   }
 
   & .error-notification-text {
