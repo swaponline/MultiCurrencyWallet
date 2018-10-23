@@ -128,7 +128,7 @@ const send = async (from, to, amount) => {
   const unspents      = await fetchUnspents(from)
 
   const fundValue     = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
-  const feeValue      = 15000
+  const feeValue      = 5000
   const totalUnspent  = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
   const skipValue     = totalUnspent - feeValue - fundValue
 
