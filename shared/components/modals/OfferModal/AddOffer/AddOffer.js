@@ -38,7 +38,7 @@ const minAmount = {
     user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, usdtData, ltcData },
   }) => ({
     currencies: currencies.items,
-    items: [ ethData, btcData, eosData, telosData, bchData, ltcData, usdtData /* nimData */ ],
+    items: [ ethData, btcData, eosData, telosData, bchData, ltcData, usdtData, ...Object.keys(tokensData).map(k => (tokensData[k])) /* nimData */ ],
   })
 )
 @cssModules(styles, { allowMultiple: true })
@@ -75,15 +75,14 @@ export default class AddOffer extends Component {
     const currency = items
       .filter(item => item.currency === sellCurrency.toUpperCase())[0]
 
-    const balance = currency.balance
-    const unconfirmedBalance = currency.unconfirmedBalance;
+    const { balance, unconfirmedBalance } = currency
     const finalBalance = unconfirmedBalance !== undefined && unconfirmedBalance < 0
-                         ? Number(balance) + Number(unconfirmedBalance)
-                         : balance
+      ? Number(balance) + Number(unconfirmedBalance)
+      : balance
     const ethBalance = await actions.eth.getBalance()
 
     this.setState({
-      finalBalance,
+      balance: finalBalance,
       ethBalance,
     })
   }
@@ -376,20 +375,20 @@ export default class AddOffer extends Component {
           placeholder="Enter buy amount"
         />
         <div>
-        <ExchangeRateGroup
-          label="Exchange rate"
-          inputValueLink={linked.exchangeRate.pipe(this.handleExchangeRateChange)}
-          currency={false}
-          disabled={!manualRate}
-          id="exchangeRate"
-          placeholder="Enter exchange rate amount"
-          buyCurrency={buyCurrency}
-          sellCurrency={sellCurrency}
-        />
+          <ExchangeRateGroup
+            label="Exchange rate"
+            inputValueLink={linked.exchangeRate.pipe(this.handleExchangeRateChange)}
+            currency={false}
+            disabled={!manualRate}
+            id="exchangeRate"
+            placeholder="Enter exchange rate amount"
+            buyCurrency={buyCurrency}
+            sellCurrency={sellCurrency}
+          />
         </div>
         <div>
           <Toggle checked={manualRate} onChange={this.handleManualRate} /> Custom exchange rate
-          <Tooltip text="To change the exchange rate"/>
+          <Tooltip text="To change the exchange rate" />
         </div>
         <Button
           styleName="button"
