@@ -22,7 +22,7 @@ export default class SwapsHistory extends PureComponent {
           id="table-history"
           className={styles.historySwap}
           titles={titles}
-          rows={orders}
+          rows={orders.reverse()}
           rowRender={(row, index) => (
             <RowHistory
               key={index}
