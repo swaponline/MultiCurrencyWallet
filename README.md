@@ -21,9 +21,7 @@ cd swap.react
 npm i
 ```
 
-3) Do `git submodule update` in swap.react directory
-
-4) For dev mode `npm run start`, for prod `npm run build`
+3) For dev mode `npm run start`, for prod `npm run build`
 
 ```
 npm run start
