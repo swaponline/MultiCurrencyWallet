@@ -32,9 +32,15 @@ const minAmount = {
 }
 
 
-@connect(({ currencies }) => ({
-  currencies: currencies.items,
-}))
+@connect(
+  ({
+    currencies,
+    user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, usdtData, ltcData },
+  }) => ({
+    currencies: currencies.items,
+    items: [ ethData, btcData, eosData, telosData, bchData, ltcData, usdtData /* nimData */ ],
+  })
+)
 @cssModules(styles, { allowMultiple: true })
 export default class AddOffer extends Component {
   constructor({ initialData }) {
@@ -64,11 +70,20 @@ export default class AddOffer extends Component {
   }
 
   checkBalance = async (sellCurrency) => {
-    const balance = await actions[sellCurrency].getBalance(sellCurrency)
+    const { items } = this.props
+
+    const currency = items
+      .filter(item => item.currency === sellCurrency.toUpperCase())[0]
+
+    const balance = currency.balance
+    const unconfirmedBalance = currency.unconfirmedBalance;
+    const finalBalance = unconfirmedBalance !== undefined && unconfirmedBalance < 0
+                         ? Number(balance) + Number(unconfirmedBalance)
+                         : balance
     const ethBalance = await actions.eth.getBalance()
 
     this.setState({
-      balance,
+      finalBalance,
       ethBalance,
     })
   }
