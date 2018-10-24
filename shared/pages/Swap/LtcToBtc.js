@@ -76,11 +76,11 @@ export default class LtcToBtc extends Component {
 
   getRefundTxHex = () => {
     const { flow } = this.state
-    console.log('kiik')
+
     if (flow.refundTxHex) {
       return flow.refundTxHex
     }
-    else if (flow.btcScriptValues) {
+    else if (flow.ltcScriptValues) {
       this.swap.flow.getRefundTxHex()
     }
   }
