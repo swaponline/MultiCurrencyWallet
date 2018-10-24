@@ -22,7 +22,9 @@ export default class Notification extends Component {
   }
 
   componentDidMount() {
+  if (this.props.name !== "ErrorNotification"){
     this.soundClick()
+  }
     setTimeout(() => {
       this.setState({
         mounted: true,
@@ -48,11 +50,12 @@ export default class Notification extends Component {
     let audio = new Audio()
     audio.src = Sound
     audio.autoplay = true
+
   }
 
   render() {
     const { mounted, removed } = this.state
-    const { children, type } = this.props
+    const { children, type, className } = this.props
 
     const containerStyleName = cx('container', {
       'mounted': mounted,
@@ -71,7 +74,7 @@ export default class Notification extends Component {
     return (
       <div styleName={containerStyleName}>
         <div styleName={notificationStyleName} onClick={this.close}>
-          <div styleName="content">
+          <div styleName="content" className={className}>
             {children}
           </div>
         </div>

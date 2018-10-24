@@ -34,6 +34,13 @@
     transition: all 0.4s linear;
   }
 
+  &.warning {
+    height: 10em;
+    display: flex;
+    align-items: center;
+    justify-content: center
+  }
+
   &.removed {
     margin-top: -100% !important;
     opacity: 0.5 !important;
