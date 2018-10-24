@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
+
 import { connect } from 'redaction'
 import actions from 'redux/actions'
+
 import { constants } from 'helpers'
 import { WithdrawButton } from 'components/controls'
+
 
 @connect(({ core: { hiddenCoinsList } }) => ({ hiddenCoinsList }))
 export default class KeyActionsPanel extends Component {
@@ -32,10 +35,11 @@ export default class KeyActionsPanel extends Component {
         <WithdrawButton onClick={this.handleDownload}>Download keys</WithdrawButton>
         <WithdrawButton onClick={this.handleImportKeys}>Import keys</WithdrawButton>
         {
-          hiddenCoinsList.length !== 0 &&
-          <WithdrawButton onClick={this.handleShowMore}>
-            Show more coins ({hiddenCoinsList.length})
-          </WithdrawButton>
+          hiddenCoinsList.length !== 0 && (
+            <WithdrawButton onClick={this.handleShowMore}>
+              Show more coins ({hiddenCoinsList.length})
+            </WithdrawButton>
+          )
         }
       </div>
     )

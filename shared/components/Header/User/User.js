@@ -1,14 +1,17 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+
 import { connect } from 'redaction'
 
 import styles from './User.scss'
 import CSSModules from 'react-css-modules'
 import Sound from 'helpers/Sound/Sound.mp4'
 
+import Question from './Question/Question'
 import UserAvatar from './UserAvatar/UserAvatar'
 import UserTooltip from './UserTooltip/UserTooltip'
-import Question from './Question/Question'
 import AddOfferButton from './AddOfferButton/AddOfferButton'
+
 import Avatar from 'components/Avatar/Avatar'
 
 
@@ -18,6 +21,16 @@ import Avatar from 'components/Avatar/Avatar'
 })
 @CSSModules(styles)
 export default class User extends React.Component {
+
+  static propTypes = {
+    feeds: PropTypes.array.isRequired,
+    peer: PropTypes.string.isRequired,
+  }
+
+  static defaultProps = {
+    peer: null,
+    feeds: [],
+  }
 
   state = {
     view: true,

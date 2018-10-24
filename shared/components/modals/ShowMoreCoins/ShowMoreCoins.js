@@ -33,7 +33,7 @@ export default class ShowMoreCoins extends Component {
           <div styleName="modal_column">
             <SubTitle styleName="modal_column-title">Coins in Wallet</SubTitle>
             <Table
-              classTitle={styles.wallet}
+              className={styles.wallet}
               titles={titles}
               rows={[...items, ...tokens].filter(coin => !hiddenCoinsList.includes(coin.currency))}
               rowRender={(row, index) => <Row key={index} {...row} isHidden={false} currencies={currencies} />}
@@ -43,7 +43,7 @@ export default class ShowMoreCoins extends Component {
             <div styleName="modal_column">
               <SubTitle styleName="modal_column-title">Other coins</SubTitle>
               <Table
-                classTitle={styles.wallet}
+                className={styles.wallet}
                 titles={titles}
                 rows={[...items, ...tokens].filter(coin => hiddenCoinsList.includes(coin.currency))}
                 rowRender={(row, index) => <Row key={index} {...row} isHidden currencies={currencies} />}

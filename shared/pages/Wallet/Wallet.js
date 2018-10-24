@@ -109,7 +109,7 @@ export default class Wallet extends Component {
         </PageHeadline>
         <Table
           id="table-wallet"
-          classTitle={styles.wallet}
+          className={styles.wallet}
           titles={titles}
           rows={[...items, ...tokens].filter(coin => !hiddenCoinsList.includes(coin.currency))}
           rowRender={(row, index) => (
