@@ -12,6 +12,7 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import RemoveButton from 'components/controls/RemoveButton/RemoveButton'
 
 import Pair from '../Pair'
+import PAIR_TYPES from 'helpers/constants/PAIR_TYPES'
 import RequestButton from '../RequestButton/RequestButton'
 
 
@@ -109,16 +110,24 @@ export default class Row extends Component {
           />
         </td>
         <td>
+          <span style={{ color: 'gray' }}>
+            {type === PAIR_TYPES.BID ? 'buys' : 'sells'}
+          </span>
+          {' '}
           {
             `${amount.toFixed(5)} ${main}`
           }
         </td>
         <td>
+          <span style={{ color: 'gray' }}>at price</span>
+          {' '}
           {
             `${price.toFixed(5)} ${base}`
           }
         </td>
         <td>
+          <span style={{ color: 'gray' }}>for</span>
+          {' '}
           {
             `${total.toFixed(5)} ${base}`
           }
@@ -149,19 +158,18 @@ export default class Row extends Component {
                         <RequestButton
                           disabled={balance >= Number(buyAmount)}
                           onClick={() => this.sendRequest(id, isMy ? sellCurrency : buyCurrency)}
-                          data={{ amount, main, total, base }}
+                          data={{ type, amount, main, total, base }}
                           onMouseEnter={() => this.setState(() => ({ enterButton: true }))}
                           onMouseLeave={() => this.setState(() => ({ enterButton: false }))}
                           move={this.state.enterButton}
                         >
-                          Start exchange <br />
-                          {
-                            type.toLowerCase() === 'bid' ? (
-                              <span>{main} to {base}</span>
-                            ) : (
-                              <span>{main} to {base}</span>
-                            )
-                          }
+                          {type === PAIR_TYPES.BID ? 'SELL' : 'BUY'}
+                          {' '}
+                          {amount.toFixed(4)}{' '}{main}
+                          <br />
+                          FOR
+                          {' '}
+                          {total.toFixed(4)}{' '}{base}
                         </RequestButton>
                       )
                     )
