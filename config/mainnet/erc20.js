@@ -79,4 +79,16 @@ export default {
     address: '0xaf4dce16da2877f8c9e00544c93b62ac40631f16',
     decimals: 5,
   },
+  star: {
+    address: '0xf70a642bd387f94380ffb90451c2c81d4eb82cbc',
+    decimals: 18,
+  },
+  xyo: {
+    address: '0x55296f69f40ea6d20e478533c15a6b08b654e758',
+    decimals: 18,
+  },
+  xnk: {
+    address: '0xbc86727e770de68b1060c91f6bb6945c73e10388',
+    decimals: 18,
+  },
 }
