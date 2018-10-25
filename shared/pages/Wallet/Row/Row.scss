@@ -103,24 +103,34 @@
     position: absolute;
     right: 20px;
     background: transparent!important;
-    top: 20px;
+    top: 23px;
   }
   .mobileName {
     color: #000;
     display: block;
-    position: absolute;
-    left: 70px;
-    top: 18px;
     font-size: 16px;
   }
   tr.showButtons {
     color: #000;
-    height: 115px;
+    height: 120px;
+    td:nth-child(1) {
+      a {
+        top: 14px;
+        position: absolute;
+      }
+    }
+    .mobileName {
+      position: absolute;
+      left: 70px;
+      top: 23px;
+      margin: 0;
+    }
   }
 }
 .mobileName {
   color: #000;
   display: block;
+  margin-left: -10px;
 }
 
 .hidden {

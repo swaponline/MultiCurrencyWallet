@@ -28,7 +28,7 @@ import SaveKeysModal from 'components/modals/SaveKeysModal/SaveKeysModal'
     currencies: { items: currencies },
   }) => ({
     tokens: Object.keys(tokensData).map(k => (tokensData[k])),
-    items: [ ethData, btcData, eosData, telosData, bchData, ltcData, usdtData /* nimData */ ],
+    items: [btcData, ethData, eosData, telosData, bchData, ltcData, usdtData /* nimData */ ],
     currencies,
     hiddenCoinsList,
   })
@@ -101,7 +101,6 @@ export default class Wallet extends Component {
 
     const showSaveKeysModal = !zeroBalance && !keysSaved && !testNetSkip // non-zero balance and no keys saved
 
-    console.log(this);
     return (
       <section>
         { showSaveKeysModal && <SaveKeysModal /> }
