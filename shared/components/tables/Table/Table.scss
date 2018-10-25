@@ -445,7 +445,7 @@
       div {
         position: absolute;
         left: 0;
-        top: 65px;
+        top: 70px;
         width: 100%;
         justify-content: space-between;
         display: flex;
@@ -460,6 +460,7 @@
         button:nth-child(2),
         button:nth-child(3) {
           width: 33.3%;
+          flex-basis: 50%;
         }
         button:last-child {
           margin-right: 0;
@@ -503,19 +504,20 @@
       display: -ms-flexbox;
       position: relative;
       width: 100%;
-      height: 60px;
+      height: 65px;
       border-radius: 0px;
       padding: 0;
       margin-bottom: 0;
       overflow: hidden;
       box-shadow: none;
       padding: 0 10px;
+      align-items: center;
     }
     td:nth-child(1) {
-      a {
-        position: absolute;
-        top: 10px;
-      }
+      // a {
+      //   position: absolute;
+      //   top: 10px;
+      // }
     }
     tbody {
       width: 100%;
