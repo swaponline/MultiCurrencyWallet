@@ -72,13 +72,13 @@ export default class Row extends Component {
 
   handleTouch = (e) => {
     this.setState({
-      isTouch: true,
-    }, () => {
-      setTimeout(() => {
-        this.setState({
-          isTouch: false,
-        })
-      }, 500)
+      isTouch: true
+    })
+  }
+
+  handleTouchClear = (e) => {
+      this.setState({
+        isTouch: false
     })
   }
 
@@ -149,7 +149,7 @@ export default class Row extends Component {
     const eosActivationAvailable = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true" ? false : true
 
     return (
-      <tr styleName={this.props.index == this.props.selectId || !isMobile ? 'showButtons' : 'hidden'} onClick={() => { this.props.handleSelectId(this.props.index)}} onTouchMove={this.handleTouch} style= { isTouch && this.props.index != this.props.selectId ?  { background: '#f5f5f5' } : { background: '#fff' } }>
+      <tr styleName={this.props.index == this.props.selectId || !isMobile ? 'showButtons' : 'hidden'} onClick={() => { this.props.handleSelectId(this.props.index)}} onTouchEnd={this.handleTouchClear} onTouchMove={this.handleTouch} style= { isTouch && this.props.index != this.props.selectId ?  { background: '#f5f5f5' } : { background: '#fff' } }>
         <td>
           <Link to={`/${fullName}-wallet`} title={`Online ${fullName} wallet`}>
             <Coin name={currency} />
