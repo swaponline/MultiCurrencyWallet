@@ -95,7 +95,7 @@ export default class Orders extends Component {
     buyCurrency = buyCurrency.toUpperCase()
     sellCurrency = sellCurrency.toUpperCase()
 
-    const titles = [ 'OWNER', `${sellCurrency}`, `? ${sellCurrency} = 1 ${buyCurrency}`, `${buyCurrency}`, 'START EXCHANGE' ]
+    const titles = [ 'OWNER', `AMOUNT`, `PRICE FOR 1 ${buyCurrency}`, `TOTAL`, 'START EXCHANGE' ]
     const { isOnline, myOrders, orderId, invalidPair } = this.props
 
     return (
@@ -116,8 +116,8 @@ export default class Orders extends Component {
             acceptRequest={this.acceptRequest}
           />
         }
-        <h3>Ask for sell</h3>
-        <p>In this table the orders are placed by those who want to upsell ETH</p>
+        <h3>BUY {buyCurrency} HERE</h3>
+        <p>orders of those who <i>sell</i> {buyCurrency} to you</p>
         <Table
           id="table_exchange"
           className={tableStyles.exchange}
@@ -132,8 +132,8 @@ export default class Orders extends Component {
           )}
           isLoading={!isOnline}
         />
-        <h3>Bid for buy</h3>
-        <p>In this table placed the orders of those  who are ready to buy your ETH for BTC</p>
+        <h3>SELL {buyCurrency} HERE</h3>
+        <p>orders that <i>buy</i> {buyCurrency} from you</p>
         <Table
           id="table_exchange"
           className={tableStyles.exchange}
