@@ -18,7 +18,7 @@ const Avatar = ({ value, className, size }) => (
       data-tip data-for="a"
     />
         <ReactTooltip id="a" type="light" effect="solid" >
-          <span>TAutomatically created gravatar. its unique for every profile. You can see your in the upper right corner</span>
+          <span>Automatically created gravatar. its unique for every profile. You can see your in the upper right corner</span>
         </ReactTooltip>
     </Fragment>
 )
