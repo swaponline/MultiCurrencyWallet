@@ -8,6 +8,7 @@ import request from './request'
 import constants from './constants'
 import localStorage from './localStorage'
 import api from './api'
+import tips from './tips'
 import * as utils from './utils'
 
 // Methods
@@ -23,6 +24,7 @@ import { migrate } from './migrations/'
 export {
   eos,
   bcash,
+  tips,
   btc,
   ltc,
   web3,
