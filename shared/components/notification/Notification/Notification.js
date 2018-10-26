@@ -25,9 +25,7 @@ export default class Notification extends Component {
     removed: false,
   }
   componentDidMount() {
-    // if (this.props.name !== "ErrorNotification"){
-   	  this.soundClick()
-    // }
+    this.soundClick()
     setTimeout(() => {
       this.setState({
         mounted: true,
