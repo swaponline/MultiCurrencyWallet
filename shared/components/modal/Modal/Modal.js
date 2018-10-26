@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import ClickOutside from 'react-click-outside'
 
 import actions from 'redux/actions'
 import PropTypes from 'prop-types'
@@ -67,58 +66,42 @@ export default class Modal extends Component {
   }
 
   render() {
-    const {
-      className,
-      whiteLogo,
-      showLogo,
-      title,
-      showCloseButton,
-      disableClose,
-      children,
-      titleUppercase,
-      name,
-      shouldCenterHorizontally,
-      shouldCenterVertically,
-    } = this.props
+    const { className, whiteLogo, showLogo, title, showCloseButton, disableClose, children,
+      titleUppercase, name, shouldCenterHorizontally, shouldCenterVertically } = this.props
 
     const titleStyleName = cx('title', {
       'uppercase': titleUppercase,
     })
 
     return (
-      <ClickOutside onClickOutside={() => {
-        actions.modals.close(name)
-      }}>
-        <Overlay>
-          <div styleName="modal" className={className}>
-            {
-              Boolean(title || showCloseButton) && (
-                <div styleName="header">
-                  <WidthContainer styleName="headerContent">
-                    {
-                      showLogo &&
-                      <Logo colored={!whiteLogo} />
-                    }
-                    <div styleName={titleStyleName} role="title">{title}</div>
-                    {
-                      showCloseButton && !disableClose && (
-                        <CloseIcon styleName="closeButton" onClick={this.close} data-testid="modalCloseIcon" />
-                      )
-                    }
-                  </WidthContainer>
-                </div>
-              )
-            }
-            <div styleName="contentContainer">
-              <Center scrollable centerHorizontally={shouldCenterHorizontally} centerVertically={shouldCenterVertically}>
-                <div styleName="content">
-                  {children}
-                </div>
-              </Center>
-            </div>
+      <Overlay>
+        <div styleName="modal" className={className}>
+          {
+            Boolean(title || showCloseButton) && (
+              <div styleName="header">
+                <WidthContainer styleName="headerContent">
+                  {
+                    showLogo && <Logo colored={!whiteLogo} />
+                  }
+                  <div styleName={titleStyleName} role="title">{title}</div>
+                  {
+                    showCloseButton && !disableClose && (
+                      <CloseIcon styleName="closeButton" onClick={this.close} data-testid="modalCloseIcon" />
+                    )
+                  }
+                </WidthContainer>
+              </div>
+            )
+          }
+          <div styleName="contentContainer">
+            <Center scrollable centerHorizontally={shouldCenterHorizontally} centerVertically={shouldCenterVertically}>
+              <div styleName="content">
+                {children}
+              </div>
+            </Center>
           </div>
-        </Overlay>
-      </ClickOutside>
+        </div>
+      </Overlay>
     )
   }
 }

@@ -1,24 +1,30 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+
 import { connect } from 'redaction'
 
-import Loader from 'components/loaders/Loader/Loader'
-import SwapProgress from 'components/loaders/SwapProgress/SwapProgress'
+import SwapProgress from 'components/SwapProgress/SwapProgress'
 
 
-const RequestLoader = ({ isVisible, text, txId, swap, data }) => {
+const RequestLoader = ({ isVisible, data }) => {
   if (!isVisible) {
     return null
   }
-  return (
-    swap ? <SwapProgress data={data} /> : <Loader text={text} txId={txId} />
-  )
+
+  return <SwapProgress data={data} />
+}
+
+RequestLoader.propTypes = {
+  isVisible: PropTypes.bool.isRequired,
+  data: PropTypes.object.isRequired,
+}
+
+RequestLoader.deafultProps = {
+  isVisible: false,
 }
 
 
 export default connect({
   isVisible: 'loader.isVisible',
-  text: 'loader.text',
-  txId: 'loader.txId',
-  swap: 'loader.swap',
   data: 'loader.data',
 })(RequestLoader)

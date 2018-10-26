@@ -28,7 +28,7 @@ import SaveKeysModal from 'components/modals/SaveKeysModal/SaveKeysModal'
     currencies: { items: currencies },
   }) => ({
     tokens: Object.keys(tokensData).map(k => (tokensData[k])),
-    items: [ ethData, btcData, eosData, telosData, bchData, ltcData, usdtData /* nimData */ ],
+    items: [btcData, ethData, eosData, telosData, bchData, ltcData, usdtData /* nimData */ ],
     currencies,
     hiddenCoinsList,
   })
@@ -50,7 +50,7 @@ export default class Wallet extends Component {
 
   state = {
     view: 'off',
-    zeroBalance: true,
+    zeroBalance: true
   }
 
   componentWillMount() {
@@ -89,6 +89,8 @@ export default class Wallet extends Component {
     })
   }
 
+
+
   render() {
     const { view, zeroBalance } = this.state
     const { items, tokens, currencies, hiddenCoinsList } = this.props
@@ -112,8 +114,8 @@ export default class Wallet extends Component {
           className={styles.wallet}
           titles={titles}
           rows={[...items, ...tokens].filter(coin => !hiddenCoinsList.includes(coin.currency))}
-          rowRender={(row, index) => (
-            <Row key={index} {...row} currencies={currencies} hiddenCoinsList={hiddenCoinsList} />
+          rowRender={(row, index, selectId, handleSelectId) => (
+            <Row key={index} {...row} currencies={currencies} hiddenCoinsList={hiddenCoinsList} selectId={selectId} index={index} handleSelectId={handleSelectId}/>
           )}
         />
         <KeyActionsPanel />

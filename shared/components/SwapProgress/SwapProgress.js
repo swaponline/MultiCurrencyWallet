@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 import actions from 'redux/actions'
-import PropTypes from 'prop-types'
 
 import CSSModules from 'react-css-modules'
 import styles from './SwapProgress.scss'
@@ -10,6 +10,7 @@ import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 import Title from 'components/PageHeadline/Title/Title'
 import Logo from 'components/Logo/Logo'
+
 
 @CSSModules(styles, { allowMultiple: true })
 export default class SwapProgress extends Component {

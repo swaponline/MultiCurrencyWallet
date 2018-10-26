@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react'
 
 import { connect } from 'redaction'
 import actions from 'redux/actions'
+import { withRouter } from 'react-router-dom'
 
 import constants from 'helpers/constants'
 
@@ -12,6 +13,7 @@ import { Button } from 'components/controls'
 import Table from 'components/tables/Table/Table'
 import Title from 'components/PageHeadline/Title/Title'
 import tableStyles from 'components/tables/Table/Table.scss'
+import PageSeo from 'components/Seo/PageSeo'
 
 import Pair from './Pair'
 import Row from './Row/Row'
@@ -36,6 +38,7 @@ const filterOrders = (orders, filter) => orders
   isOnline,
   currencies,
 }))
+@withRouter
 @cssModules(styles)
 export default class Orders extends Component {
 
@@ -95,11 +98,15 @@ export default class Orders extends Component {
     buyCurrency = buyCurrency.toUpperCase()
     sellCurrency = sellCurrency.toUpperCase()
 
-    const titles = [ 'OWNER', `${buyCurrency}`, `? ${sellCurrency} = 1 ${buyCurrency}`, `${sellCurrency}`, 'START EXCHANGE' ]
-    const { isOnline, myOrders, orderId, invalidPair } = this.props
+    const titles = [ 'OWNER', `AMOUNT`, `PRICE FOR 1 ${buyCurrency}`, `TOTAL`, 'START EXCHANGE' ]
+    const { isOnline, myOrders, orderId, invalidPair, location, currencies } = this.props
+
+    const buyCurrencyFullName = (currencies.find(c => c.name === buyCurrency) || {}).fullTitle
+    const sellCurrencyFullName = (currencies.find(c => c.name === sellCurrency) || {}).fullTitle
 
     return (
       <Fragment>
+        <PageSeo location={location} defaultTitle={`Atomic Swap ${buyCurrencyFullName} (${buyCurrency}) to ${sellCurrencyFullName} (${sellCurrency}) Instant Exchange`} defaultDescription={`Best exchange rate for ${buyCurrencyFullName} (${buyCurrency}) to ${sellCurrencyFullName} (${sellCurrency}). Swap.Online wallet provides instant exchange using Atomic Swap Protocol.`} />
         <Title>{buyCurrency}/{sellCurrency} no limit exchange with 0 fee</Title>
         { invalidPair && <p> No such ticker. Redirecting to SWAP-BTC exchange... </p> }
         <div styleName="buttonRow">
@@ -116,8 +123,8 @@ export default class Orders extends Component {
             acceptRequest={this.acceptRequest}
           />
         }
-        <h3>Ask for sell</h3>
-        <p>In this table the orders are placed by those who want to upsell ETH</p>
+        <h3>BUY {buyCurrency} HERE</h3>
+        <p>orders of those who <i>sell</i> {buyCurrency} to you</p>
         <Table
           id="table_exchange"
           className={tableStyles.exchange}
@@ -132,8 +139,8 @@ export default class Orders extends Component {
           )}
           isLoading={!isOnline}
         />
-        <h3>Bid for buy</h3>
-        <p>In this table placed the orders of those  who are ready to buy your ETH for BTC</p>
+        <h3>SELL {buyCurrency} HERE</h3>
+        <p>orders that <i>buy</i> {buyCurrency} from you</p>
         <Table
           id="table_exchange"
           className={tableStyles.exchange}

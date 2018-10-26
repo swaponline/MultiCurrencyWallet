@@ -1,4 +1,6 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+
 import { NavLink } from 'react-router-dom'
 
 import cssModules from 'react-css-modules'
@@ -23,6 +25,15 @@ const Href = ({ children, to, redirect, tab, rel, className }) => {
       {children}
     </a>
   )
+}
+
+Href.propTypes = {
+  children: PropTypes.node.isRequired,
+  to: PropTypes.string,
+  redirect: PropTypes.string,
+  tab: PropTypes.string,
+  rel: PropTypes.string,
+  className: PropTypes.string,
 }
 
 export default cssModules(Href, styles)

@@ -1,4 +1,6 @@
 import React, { Fragment } from 'react'
+import PropTypes from 'prop-types'
+
 import { Link } from 'react-router-dom'
 import { links } from 'helpers'
 
@@ -9,7 +11,9 @@ import logoImage from './images/logo.svg'
 import coloredLogoImage from './images/logo-colored.svg'
 import ReactTooltip from 'react-tooltip'
 
+
 const Logo = ({ colored, withLink, mobile }) => {
+
   const imgNode = React.createElement('img', {
     styleName: !withLink && 'logo',
     src: colored ? coloredLogoImage : logoImage,
@@ -30,6 +34,12 @@ const Logo = ({ colored, withLink, mobile }) => {
   }
 
   return imgNode
+}
+
+Logo.propTypes = {
+  colored: PropTypes.string,
+  withLink: PropTypes.bool,
+  mobile: PropTypes.bool,
 }
 
 export default cssModules(Logo, styles)

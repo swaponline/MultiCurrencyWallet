@@ -22,8 +22,7 @@ const AddOfferButton  = () => (
         </Fragment>
       ) : (
         <Fragment>
-          /* eslint-disable-next-line */
-          <button styleName="button" onClick={() => pinkClick()} data-tip data-for="Subscribe" >
+          <button styleName="button" onClick={() => pinkClick()} /* eslint-disable-line */ data-tip data-for="Subscribe" >
           Subscribe
           </button>
           <ReactTooltip id="Subscribe" type="light" effect="solid">

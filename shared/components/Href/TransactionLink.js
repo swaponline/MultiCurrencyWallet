@@ -1,10 +1,11 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 import Href from './Href'
 import config from 'app-config'
 
 
-const setApi = (type, link, id) => {
+const setApi = (type, id) => {
   switch (type) {
     case 'BTC':
       return `${config.link.bitpay}/tx/${id}`
@@ -21,10 +22,15 @@ const setApi = (type, link, id) => {
 }
 
 
-const TransactionLink = ({ type, id, link = '#' }) => (
+const TransactionLink = ({ type, id }) => (
   <div>
-    Transaction: <strong><Href tab={setApi(type, link, id)} rel="noopener noreferrer">{id}</Href></strong>
+    Transaction: <strong><Href tab={setApi(type, id)} rel="noopener noreferrer">{id}</Href></strong>
   </div>
 )
+
+TransactionLink.propTypes = {
+  type: PropTypes.string.isRequired, // BTC, ETH ...
+  id: PropTypes.string.isRequired, // transaction id
+}
 
 export default TransactionLink

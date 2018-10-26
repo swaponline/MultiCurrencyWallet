@@ -128,13 +128,16 @@ const send = async (from, to, amount) => {
   const unspents      = await fetchUnspents(from)
 
   const fundValue     = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
-  const feeValue      = 15000
+  const feeValue      = 5000
   const totalUnspent  = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-  const skipValue     = totalUnspent - feeValue - fundValue
+  const skipValue     = totalUnspent - (fundValue - feeValue)
 
   unspents.forEach(({ txid, vout }) => tx.addInput(txid, vout, 0xfffffffe))
-  tx.addOutput(to, fundValue)
-  tx.addOutput(from, skipValue)
+  tx.addOutput(to, fundValue - feeValue)
+
+  if (skipValue > feeValue) {
+    tx.addOutput(from, skipValue)
+  }
 
   tx.inputs.forEach((input, index) => {
     tx.sign(index, keyPair)

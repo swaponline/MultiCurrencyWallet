@@ -30,7 +30,7 @@ class Row extends React.PureComponent {
         </td>
         <td>
           <div styleName={confirmations > 0 ? 'confirm cell' : 'unconfirmed cell'}>
-            {confirmations > 0 ? confirmations > 6 ? 'Confirm' : `Confirm ${confirmations}` : 'Unconfirmed' }
+            {confirmations > 0 ? confirmations > 6 ? 'Confirmed' : `Confirm ${confirmations}` : 'Unconfirmed' }
           </div>
         </td>
         <td>
