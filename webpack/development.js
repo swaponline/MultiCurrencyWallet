@@ -1,5 +1,7 @@
 import config from 'app-config'
 
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+
 
 export default (webpackConfig) => {
 
@@ -25,7 +27,9 @@ export default (webpackConfig) => {
     lazy: false,
   }
 
-  webpackConfig.plugins.push()
+  webpackConfig.plugins.push(
+    // new BundleAnalyzerPlugin()
+  )
 
   return webpackConfig
 }
