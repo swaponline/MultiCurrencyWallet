@@ -88,8 +88,9 @@ const setTransactions = () =>
   Promise.all([
     actions.btc.getTransaction(),
     actions.eth.getTransaction(),
-    actions.ltc.getTransaction(),
-    actions.token.getTransaction('swap'),
+    // actions.ltc.getTransaction(),
+    ...Object.keys(config.erc20)
+      .map(name => actions[name].getTransaction(name)),
   ])
     .then(transactions => {
       let data = [].concat([], ...transactions).sort((a, b) => b.date - a.date)
