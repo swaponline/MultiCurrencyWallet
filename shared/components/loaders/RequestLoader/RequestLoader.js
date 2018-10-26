@@ -19,7 +19,7 @@ RequestLoader.propTypes = {
   data: PropTypes.object.isRequired,
 }
 
-RequestLoader.deafultProps = {
+RequestLoader.defaultProps = {
   isVisible: false,
 }
 
