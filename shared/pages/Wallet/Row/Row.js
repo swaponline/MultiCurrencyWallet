@@ -244,12 +244,10 @@ export default class Row extends Component {
         ) }
         <td>
           <div>
-            <WithdrawButton onClick={this.handleWithdraw} styleName="marginRight">
+            <WithdrawButton onClick={this.handleWithdraw} datatip="Send your currency" styleName="marginRight">
               <i className="fas fa-arrow-alt-circle-right" />
-              <span data-tip data-for="sd">Send</span>
-              <ReactTooltip id="sd" type="light" effect="solid">
-                <span>Send your currency</span>
-              </ReactTooltip>
+              <span>Send</span>
+              <ReactTooltip type="light" effect="solid" />
             </WithdrawButton>
             { isMobile && (
               <WithdrawButton onClick={this.handleReceive} styleName="marginRight">
@@ -259,12 +257,10 @@ export default class Row extends Component {
             )}
             {
               tradeAllowed && (
-                <WithdrawButton onClick={() => this.handleGoTrade(currency)}>
+                <WithdrawButton datatip="Swap your currency or create order to swap" onClick={() => this.handleGoTrade(currency)}>
                   <i className="fas fa-exchange-alt" />
-                  <span data-tip data-for="sw">Exchange</span>
-                  <ReactTooltip id="sw" type="light" effect="solid">
-                    <span>Swap your currency or create order to swap</span>
-                  </ReactTooltip>
+                  <span>Exchange</span>
+                  <ReactTooltip type="light" effect="solid" />
                 </WithdrawButton>
               )
             }
