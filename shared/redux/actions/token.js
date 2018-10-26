@@ -10,7 +10,7 @@ import { BigNumber } from 'bignumber.js'
 
 BigNumber.config({ RANGE: [-1e+9, 1e+9], POW_PRECISION: 0  })
 
-const login = (privateKey, contractAddress, nameContract, decimals) => {
+const login = (privateKey, contractAddress, nameContract, decimals, fullName) => {
   let data
   if (privateKey) {
     data = web3.eth.accounts.privateKeyToAccount(privateKey)
@@ -23,11 +23,11 @@ const login = (privateKey, contractAddress, nameContract, decimals) => {
   web3.eth.accounts.wallet.add(data.privateKey)
   console.info('Logged in with ETH Token', data)
 
-  setupContract(data.address, contractAddress, nameContract, decimals)
+  setupContract(data.address, contractAddress, nameContract, decimals, fullName)
 }
 
 
-const setupContract = (ethAddress, contractAddress, nameContract, decimals) => {
+const setupContract = (ethAddress, contractAddress, nameContract, decimals, fullName) => {
   if (!web3.eth.accounts.wallet[ethAddress]) {
     throw new Error('web3 does not have given address')
   }
@@ -36,7 +36,7 @@ const setupContract = (ethAddress, contractAddress, nameContract, decimals) => {
     address: ethAddress,
     balance: 0,
     name: nameContract.toLowerCase(),
-    fullName: nameContract.toLowerCase(),
+    fullName,
     currency: nameContract.toUpperCase(),
     contractAddress,
     decimals,

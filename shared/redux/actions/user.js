@@ -22,7 +22,7 @@ const sign = async () => {
 
   Object.keys(config.erc20)
     .forEach(name => {
-      actions.token.login(_ethPrivateKey, config.erc20[name].address, name, config.erc20[name].decimals)
+      actions.token.login(_ethPrivateKey, config.erc20[name].address, name, config.erc20[name].decimals, config.erc20[name].fullName)
     })
   // await actions.nimiq.login(_ethPrivateKey)
 
