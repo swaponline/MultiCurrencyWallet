@@ -13,20 +13,20 @@ const AddOfferButton  = () => (
     {
       process.env.TESTNET ? (
         <Fragment>
-          <a href={links.main} target="_blank" rel="noreferrer noopener" styleName="button" data-tip data-for="m">
+          <a href={links.main} target="_blank" rel="noreferrer noopener" styleName="button" data-tip data-for="main">
           Mainnet
           </a>
-          <ReactTooltip id="m" type="light" effect="solid">
+          <ReactTooltip id="main" type="light" effect="solid">
             <span>Start to real Swap</span>
           </ReactTooltip>
         </Fragment>
       ) : (
         <Fragment>
           /* eslint-disable-next-line */
-          <button styleName="button" onClick={() => pinkClick()} data-tip data-for="a" >
+          <button styleName="button" onClick={() => pinkClick()} data-tip data-for="Subscribe" >
           Subscribe
           </button>
-          <ReactTooltip id="a" type="light" effect="solid">
+          <ReactTooltip id="Subscribe" type="light" effect="solid">
             <span>Get subscribed for the Swap.Online news</span>
           </ReactTooltip>
         </Fragment>

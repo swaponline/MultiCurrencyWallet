@@ -15,9 +15,9 @@ const Avatar = ({ value, className, size }) => (
       styleName="avatar"
       alt={value}
       src={`data:image/svg+xml,${encodeURIComponent(jdenticon.toSvg(value, size))}`}
-      data-tip data-for="a"
+      data-tip data-for="gravatar"
     />
-        <ReactTooltip id="a" type="light" effect="solid" >
+        <ReactTooltip id="gravatar" type="light" effect="solid" >
           <span>This is your automatically created gravatar. Its unique for every profile</span>
         </ReactTooltip>
     </Fragment>
