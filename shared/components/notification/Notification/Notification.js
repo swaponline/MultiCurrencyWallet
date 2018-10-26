@@ -25,7 +25,7 @@ export default class Notification extends Component {
     removed: false,
   }
   componentDidMount() {
-    this.soundClick()
+    this.soundClick(this.props.soundPlay)
     setTimeout(() => {
       this.setState({
         mounted: true,
@@ -50,8 +50,8 @@ export default class Notification extends Component {
   soundClick() {
       let audio = new Audio()
       audio.src = Sound
-      audio.autoplay = this.props.soundPlay
-    }
+      audio.autoplay = true
+  }
 
   render() {
     const { mounted, removed } = this.state
