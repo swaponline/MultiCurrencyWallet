@@ -111,4 +111,8 @@ export default {
     address: '0xbc86727e770de68b1060c91f6bb6945c73e10388',
     decimals: 18,
   },
+  loc: {
+    address: '0x5e3346444010135322268a4630d2ed5f8d09446c',
+    decimals: 18,
+  },
 }
