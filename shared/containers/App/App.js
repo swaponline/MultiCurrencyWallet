@@ -23,7 +23,6 @@ import ModalConductor from 'components/modal/ModalConductor/ModalConductor'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import NotificationConductor from 'components/notification/NotificationConductor/NotificationConductor'
 import Seo from 'components/Seo/Seo'
-import ErrorNotification from 'components/notification/ErrorNotification/ErrorNotification'
 import UserTooltip from 'components/Header/User/UserTooltip/UserTooltip'
 
 
@@ -53,7 +52,6 @@ export default class App extends React.Component {
       fetching: false,
       multiTabs: false,
       error: '',
-      fallbackUiError: '',
     }
   }
 
@@ -81,9 +79,8 @@ export default class App extends React.Component {
 
   componentDidMount() {
     window.onerror = (error) => {
-      this.setState({ error })
-    }
-
+      actions.notifications.show(constants.notifications.ErrorNotification, {error})
+  }
     setTimeout(() => {
       actions.user.sign()
       createSwapApp()
@@ -91,16 +88,8 @@ export default class App extends React.Component {
     }, 1000)
   }
 
-  hideErrorNotification = () => {
-    this.setState({ error: '', fallbackUiError: '' })
-  }
-
-  componentDidCatch(error) {
-    this.setState({ fallbackUiError: error.message })
-  }
-
   render() {
-    const { fetching, multiTabs, error, fallbackUiError } = this.state
+    const { fetching, multiTabs, error } = this.state
     const { children, ethAddress, btcAddress, tokenAddress, history /* eosAddress */ } = this.props
     const isFetching = !ethAddress || !btcAddress || !tokenAddress || !fetching
 
@@ -112,13 +101,8 @@ export default class App extends React.Component {
       return <Loader showTips />
     }
 
-    if (fallbackUiError) {
-      return <ErrorNotification hideErrorNotification={this.hideErrorNotification} error={error} />
-    }
-
     return (
       <Fragment>
-        {error && <ErrorNotification hideErrorNotification={this.hideErrorNotification} error={error} />}
         <Seo location={history.location} />
         { isMobile && <UserTooltip /> }
         <Header />
