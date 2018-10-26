@@ -12,6 +12,10 @@ import Sound from 'helpers/Sound/Sound.mp4'
 @cssModules(styles, { allowMultiple: true })
 export default class Notification extends Component {
 
+  static defaultProps = {
+    soundPlay: true,
+  }
+
   static childContextTypes = {
     close: PropTypes.func,
   }
@@ -19,7 +23,6 @@ export default class Notification extends Component {
   state = {
     mounted: false,
     removed: false,
-    autoplay: true,
   }
   componentDidMount() {
     // if (this.props.name !== "ErrorNotification"){
@@ -47,13 +50,10 @@ export default class Notification extends Component {
   }
 
   soundClick() {
-    if (this.props.soundPlay){
       let audio = new Audio()
       audio.src = Sound
-      audio.autoplay = true
-      console.log('PROPS', this.props, 'STATE', this.state)
+      audio.autoplay = this.props.soundPlay
     }
-  }
 
   render() {
     const { mounted, removed } = this.state
