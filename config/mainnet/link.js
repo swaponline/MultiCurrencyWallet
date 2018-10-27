@@ -5,5 +5,5 @@ export default {
   tlos: 'http://testnet.telosfoundation.io',
   omniexplorer: 'https://www.omniexplorer.info',
   bch: 'https://bch-insight.bitpay.com/#',
-  ltc: 'https://ltc.coin.space',
+  ltc: 'https://ltc.coinapp.io/',
 }
