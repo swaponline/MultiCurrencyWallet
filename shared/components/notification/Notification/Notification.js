@@ -25,7 +25,8 @@ export default class Notification extends Component {
     removed: false,
   }
   componentDidMount() {
-    this.soundClick(this.props.soundPlay)
+    if (this.props.soundPlay)
+     {this.soundClick()}
     setTimeout(() => {
       this.setState({
         mounted: true,
