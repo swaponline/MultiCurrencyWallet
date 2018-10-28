@@ -31,7 +31,7 @@ export default class Nav extends Component {
     if (pathExist) {
       this.setState({ activeRoute })
     } else {
-      this.setState({ activeRoute: '/exchange' })
+      this.setState({ activeRoute: '/' })
     }
   }
 
