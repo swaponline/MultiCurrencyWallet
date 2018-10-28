@@ -54,7 +54,7 @@ export default class WithdrawModal extends React.Component {
 
     this.setBalanceOnState(currency)
 
-    if (!to || !amount || amount < 1 || amount > balance) {
+    if (!to || !amount || amount < minAmount[currency.toLowerCase()] || amount > balance) {
       this.setState({
         isSubmitted: true,
       })
@@ -64,6 +64,7 @@ export default class WithdrawModal extends React.Component {
     actions[currency.toLowerCase()].send(contractAddress || address, to, Number(amount), decimals)
       .then(() => {
         actions.loader.hide()
+        actions[currency.toLowerCase()].getBalance(currency)
         this.setBalanceOnState(currency)
 
         actions.notifications.show(constants.notifications.SuccessWithdraw, {
@@ -75,9 +76,8 @@ export default class WithdrawModal extends React.Component {
   }
 
   render() {
-    const { isSubmitted, address, amount } = this.state
+    const { isSubmitted, address, amount, balance } = this.state
     const { name, data } = this.props
-    const { balance } = data
 
     const linked = Link.all(this, 'address', 'amount')
     const isDisabled = !address || !amount
