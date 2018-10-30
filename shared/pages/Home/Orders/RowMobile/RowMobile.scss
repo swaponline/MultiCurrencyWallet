@@ -1,0 +1,34 @@
+.firstType,
+.secondType {
+  color: gray;
+  display: block;
+}
+.icon {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  left: 90px;
+}
+.tdContainer-1 {
+  width: 90px;
+  font-size: 14px;
+}
+.tdContainer-2 {
+  position: absolute;
+  left: 120px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  font-size: 14px;
+}
+.startButton {
+  position: absolute;
+  top: 50%;
+  left: 210px;
+  width: 67px;
+  height: 40px;
+  transform: translateY(-50%);
+  text-transform: uppercase;
+  font-size: 12px;
+}

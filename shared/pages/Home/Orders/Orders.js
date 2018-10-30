@@ -4,6 +4,8 @@ import { connect } from 'redaction'
 import actions from 'redux/actions'
 import { withRouter } from 'react-router-dom'
 
+import { isMobile } from 'react-device-detect'
+
 import constants from 'helpers/constants'
 
 import cssModules from 'react-css-modules'
@@ -17,6 +19,7 @@ import PageSeo from 'components/Seo/PageSeo'
 
 import Pair from './Pair'
 import Row from './Row/Row'
+import RowMobile from './RowMobile/RowMobile'
 import MyOrders from './MyOrders/MyOrders'
 
 
@@ -95,6 +98,7 @@ export default class Orders extends Component {
   render() {
     const { sellOrders, buyOrders, isVisible } = this.state
     let { sellCurrency, buyCurrency } = this.props
+    console.log('gdfgdggfdgdgdgdffgd' + buyOrders);
     buyCurrency = buyCurrency.toUpperCase()
     sellCurrency = sellCurrency.toUpperCase()
 
@@ -123,7 +127,7 @@ export default class Orders extends Component {
             acceptRequest={this.acceptRequest}
           />
         }
-        <h3>BUY {buyCurrency} HERE</h3>
+        <h3 styleName="ordersHeading">BUY {buyCurrency} HERE</h3>
         <p>orders of those who <i>sell</i> {buyCurrency} to you</p>
         <Table
           id="table_exchange"
@@ -134,12 +138,12 @@ export default class Orders extends Component {
             <Row
               key={index}
               orderId={orderId}
-              row={row}
+              row={row} 
             />
           )}
           isLoading={!isOnline}
         />
-        <h3>SELL {buyCurrency} HERE</h3>
+        <h3 styleName="ordersHeading">SELL {buyCurrency} HERE</h3>
         <p>orders that <i>buy</i> {buyCurrency} from you</p>
         <Table
           id="table_exchange"
@@ -147,10 +151,14 @@ export default class Orders extends Component {
           titles={titles}
           rows={buyOrders}
           rowRender={(row, index) => (
-            <Row
+           isMobile &&  <RowMobile
               key={index}
               orderId={orderId}
-              row={row}
+              row={row} 
+            /> || <Row
+              key={index}
+              orderId={orderId}
+              row={row} 
             />
           )}
           isLoading={!isOnline}
