@@ -44,6 +44,7 @@ export default class Currency extends Component {
           to: pair[1],
         }
       })
+      .reduce((array, item) => array.push({from: item.to, to: item.from}, item) && array, [])
   }
 
   getCurrencyName = () => this.props.match.params.currency.toLowerCase()
