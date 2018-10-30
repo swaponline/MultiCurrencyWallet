@@ -5,11 +5,11 @@ import moment from 'moment-with-locales-es6'
 
 export default {
   env: 'production',
-  entry: 'testnet',
-  local: 'online',
+  entry: 'testnet-local',
+  local: 'local',
 
-  base: 'https://testnet.swap.online/',
-  publicPath: `https://testnet.swap.online${baseConfig.publicPath}`,
+  base: './',
+  publicPath: `.${baseConfig.publicPath}`,
 
   time: moment(Date.now()).format('LLLL'),
 
