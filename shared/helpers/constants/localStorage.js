@@ -6,5 +6,6 @@ export default {
   testnetSkip: 'testnetSkip',
   storageRevision: '_revision',
   eosActivationPayment: `${process.env.ENTRY}:eos:activationPayment`,
-  eosAccountActivated: `${process.env.ENTRY}:eos:activationFlag`
+  eosAccountActivated: `${process.env.ENTRY}:eos:activationFlag`,
+  telosAccountActivated: `${process.env.ENTRY}:telos:activationFlag`
 }

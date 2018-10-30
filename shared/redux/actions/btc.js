@@ -120,7 +120,7 @@ const createScript = (data) => {
 }
 
 
-const send = async (from, to, amount) => {
+const send = async (from, to, amount, feeValue = 15000) => {
   const { user: { btcData: { privateKey } } } = getState()
   const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
 
@@ -128,7 +128,6 @@ const send = async (from, to, amount) => {
   const unspents      = await fetchUnspents(from)
 
   const fundValue     = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
-  const feeValue      = 5000
   const totalUnspent  = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
   const skipValue     = totalUnspent - (fundValue - feeValue)
 
