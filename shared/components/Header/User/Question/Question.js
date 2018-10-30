@@ -8,8 +8,8 @@ import ReactTooltip from 'react-tooltip'
 
 const Question = () => (
   <Fragment>
-    <a href="https://wiki.swap.online/faq" target="_blank" rel="noreferrer noopener" styleName="question" data-tip data-for="q">?</a>
-    <ReactTooltip id="q" type="light" effect="solid">
+    <a href="https://wiki.swap.online/faq" target="_blank" rel="noreferrer noopener" styleName="question" data-tip data-for="Knowmore">?</a>
+    <ReactTooltip id="Knowmore" type="light" effect="solid">
       <span>Know more about us</span>
     </ReactTooltip>
   </Fragment>
