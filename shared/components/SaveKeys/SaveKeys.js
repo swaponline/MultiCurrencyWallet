@@ -25,8 +25,8 @@ export default class SaveKeys extends Component {
           <span styleName="linked" onClick={isChange}>I saved the keys in a safe place</span>
         </div>
         <div styleName="row" >
-          <Button brand onClick={isDownload} data-tip data-for="dK">Download</Button>
-            <ReactTooltip id="dK" type="light" effect="solid">
+          <Button brand onClick={isDownload} data-tip data-for="Download">Download</Button>
+            <ReactTooltip id="Download" type="light" effect="solid">
               <span>Download text document with keys and accounts</span>
             </ReactTooltip>
           <div styleName="cell" >
