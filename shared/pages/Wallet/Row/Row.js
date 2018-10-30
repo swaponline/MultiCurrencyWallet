@@ -147,6 +147,7 @@ export default class Row extends Component {
     const { isBalanceFetching, tradeAllowed, isAddressCopied, isTouch } = this.state
     const { currency, balance, isBalanceFetched, address, contractAddress, fullName, unconfirmedBalance } = this.props
     const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true"
+    const telosAccountActivated = localStorage.getItem(constants.localStorage.telosAccountActivated) === "true"
 
     return (
       <tr styleName={this.props.index == this.props.selectId || !isMobile ? 'showButtons' : 'hidden'} onClick={() => { this.props.handleSelectId(this.props.index)}} onTouchEnd={this.handleTouchClear} onTouchMove={this.handleTouch} style= { isTouch && this.props.index != this.props.selectId ?  { background: '#f5f5f5' } : { background: '#fff' } }>
@@ -231,6 +232,7 @@ export default class Row extends Component {
                 <ReactTooltip id="bE" type="light" effect="solid">
                   <span>Buy this account</span>
                 </ReactTooltip>
+
                 {
                   currency === 'EOS' && <button styleName="button" onClick={this.handleEosRegister} data-tip data-for="lE">Use another</button>
                 }
@@ -246,10 +248,14 @@ export default class Row extends Component {
                 )
                 }
 
+                { currency === 'TLOS' && !telosAccountActivated && (
+                  <Fragment>
+                    <br />
+                    <span style={{ fontSize: '12px', color: '#c9c9c9' }}>not activated</span>
+                  </Fragment>
+                )
                 }
-                <ReactTooltip id="lT" type="light" effect="solid">
-                  <span>login if you have TLOS account yet</span>
-                </ReactTooltip>
+
                 { isAddressCopied && <p styleName="copied" >Address copied to clipboard</p> }
               </td>
             </CopyToClipboard>

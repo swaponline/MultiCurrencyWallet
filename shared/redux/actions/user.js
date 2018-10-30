@@ -45,13 +45,28 @@ const sign = async () => {
     await actions.eos.getBalance()
   }
 
-  const telosActivePrivateKey = localStorage.getItem(constants.privateKeyNames.telos)
-  const telosAccount = localStorage.getItem(constants.privateKeyNames.telosAccount)
-  if (telosActivePrivateKey && telosAccount) {
-    await actions.tlos.login(telosAccount, telosActivePrivateKey)
+  const telosSign = async () => {
+    const telosActivePrivateKey = localStorage.getItem(constants.privateKeyNames.telosPrivateKey)
+    const telosActivePublicKey = localStorage.getItem(constants.privateKeyNames.telosPublicKey)
+    const telosAccount = localStorage.getItem(constants.privateKeyNames.telosAccount)
+    const telosAccountActivated = localStorage.getItem(constants.localStorage.telosAccountActivated) === "true"
+
+    if (telosActivePrivateKey && telosActivePublicKey && telosAccount) {
+      actions.tlos.login(telosAccount, telosActivePrivateKey, telosActivePublicKey)
+
+      if (!telosAccountActivated) {
+        await actions.tlos.activateAccount(telosAccount, telosActivePrivateKey, telosActivePublicKey)
+      }
+    } else {
+      const { accountName, activePrivateKey, activePublicKey } = await actions.tlos.loginWithNewAccount()
+      await actions.tlos.activateAccount(accountName, activePrivateKey, activePublicKey)
+    }
+
     await actions.tlos.getBalance()
   }
+
   eosSign()
+  telosSign()
 }
 
 const getBalances = () => {

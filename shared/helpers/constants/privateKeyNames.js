@@ -6,6 +6,7 @@ export default {
   eosPrivateKey: `${process.env.ENTRY}:eos:privateKey`,
   eosPublicKey: `${process.env.ENTRY}:eos:publicKey`,
   eosAccount: `${process.env.ENTRY}:eos:account`,
-  telos: `${process.env.ENTRY}:telos:privateKey`,
+  telosPrivateKey: `${process.env.ENTRY}:telos:privateKey`,
+  telosPublicKey: `${process.env.ENTRY}:telos:publicKey`,
   telosAccount: `${process.env.ENTRY}:telos:account`,
 }

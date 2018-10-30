@@ -120,7 +120,7 @@ const createScript = (data) => {
 }
 
 
-const send = async (from, to, amount, feeValue = 5000) => {
+const send = async (from, to, amount, feeValue = 15000) => {
   const { user: { btcData: { privateKey } } } = getState()
   const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
 

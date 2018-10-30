@@ -92,7 +92,7 @@ const buyAccount = async () => {
 const sendActivationPayment = async ({ from }) => {
   const { buyAccountPriceInBTC, buyAccountPaymentRecipient } = config.api.eos
 
-  const feeValue = 100000
+  const feeValue = 15000
   const txid = await actions.btc.send(from, buyAccountPaymentRecipient, buyAccountPriceInBTC, feeValue)
 
   return txid.getId()
