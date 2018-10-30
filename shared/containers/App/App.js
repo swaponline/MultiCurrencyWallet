@@ -6,6 +6,7 @@ import { connect } from 'redaction'
 import moment from 'moment-with-locales-es6'
 import { constants, localStorage } from 'helpers'
 import { isMobile } from 'react-device-detect'
+import { HashRouter } from 'react-router-dom'
 
 import CSSModules from 'react-css-modules'
 import styles from './App.scss'
@@ -23,7 +24,6 @@ import ModalConductor from 'components/modal/ModalConductor/ModalConductor'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import NotificationConductor from 'components/notification/NotificationConductor/NotificationConductor'
 import Seo from 'components/Seo/Seo'
-import ErrorNotification from 'components/notification/ErrorNotification/ErrorNotification'
 import UserTooltip from 'components/Header/User/UserTooltip/UserTooltip'
 
 
@@ -53,7 +53,6 @@ export default class App extends React.Component {
       fetching: false,
       multiTabs: false,
       error: '',
-      fallbackUiError: '',
     }
   }
 
@@ -81,7 +80,7 @@ export default class App extends React.Component {
 
   componentDidMount() {
     window.onerror = (error) => {
-      this.setState({ error })
+    actions.notifications.show(constants.notifications.ErrorNotification, {error})
     }
 
     setTimeout(() => {
@@ -91,16 +90,8 @@ export default class App extends React.Component {
     }, 1000)
   }
 
-  hideErrorNotification = () => {
-    this.setState({ error: '', fallbackUiError: '' })
-  }
-
-  componentDidCatch(error) {
-    this.setState({ fallbackUiError: error.message })
-  }
-
   render() {
-    const { fetching, multiTabs, error, fallbackUiError } = this.state
+    const { fetching, multiTabs, error, } = this.state
     const { children, ethAddress, btcAddress, tokenAddress, history /* eosAddress */ } = this.props
     const isFetching = !ethAddress || !btcAddress || !tokenAddress || !fetching
 
@@ -112,13 +103,8 @@ export default class App extends React.Component {
       return <Loader showTips />
     }
 
-    if (fallbackUiError) {
-      return <ErrorNotification hideErrorNotification={this.hideErrorNotification} error={error} />
-    }
-
-    return (
+    const mainContent = (
       <Fragment>
-        {error && <ErrorNotification hideErrorNotification={this.hideErrorNotification} error={error} />}
         <Seo location={history.location} />
         { isMobile && <UserTooltip /> }
         <Header />
@@ -133,6 +119,16 @@ export default class App extends React.Component {
         <ModalConductor />
         <NotificationConductor />
       </Fragment>
+    )
+
+    return (
+      process.env.LOCAL === 'local' ? (
+        <HashRouter>
+          {mainContent}
+        </HashRouter>
+      ) : (
+        mainContent
+      )
     )
   }
 }

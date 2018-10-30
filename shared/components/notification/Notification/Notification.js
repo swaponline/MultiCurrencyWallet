@@ -12,6 +12,10 @@ import Sound from 'helpers/Sound/Sound.mp4'
 @cssModules(styles, { allowMultiple: true })
 export default class Notification extends Component {
 
+  static defaultProps = {
+    soundPlay: true,
+  }
+
   static childContextTypes = {
     close: PropTypes.func,
   }
@@ -22,7 +26,9 @@ export default class Notification extends Component {
   }
 
   componentDidMount() {
-    this.soundClick()
+    if (this.props.soundPlay) {
+        this.soundClick()
+    }
     setTimeout(() => {
       this.setState({
         mounted: true,
@@ -52,7 +58,7 @@ export default class Notification extends Component {
 
   render() {
     const { mounted, removed } = this.state
-    const { children, type } = this.props
+    const { children, type, className} = this.props
 
     const containerStyleName = cx('container', {
       'mounted': mounted,
@@ -71,7 +77,7 @@ export default class Notification extends Component {
     return (
       <div styleName={containerStyleName}>
         <div styleName={notificationStyleName} onClick={this.close}>
-          <div styleName="content">
+          <div styleName="content" className={className}>
             {children}
           </div>
         </div>
