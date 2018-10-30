@@ -9,7 +9,7 @@ export default {
     httpEndpoint: 'https://api.eosnewyork.io',
     registerEndpoint: 'https://seven.swap.online/eos-mainnet/buyaccount',
     buyAccountPriceInBTC: 0.01,
-    buyAccountPaymentRecipient: '1MTR2nZZekN7cmzy2Pv4iyGpbUU6uDyagd'
+    buyAccountPaymentRecipient: '14xdPidvcTWhNEF4uNpYtdQFALALNdDVWD'
   },
   telos: {
     chainId: '6c8aacc339bf1567743eb9c8ab4d933173aa6dca4ae6b6180a849c422f5bb207',

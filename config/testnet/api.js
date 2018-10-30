@@ -9,7 +9,7 @@ export default {
     httpEndpoint: 'https://jungle.eosio.cr',
     registerEndpoint: 'https://seven.swap.online/eos-testnet/buyaccount',
     buyAccountPriceInBTC: 0.01,
-    buyAccountPaymentRecipient: 'mpAaNgjBUU7edRZ1ruoYeuBaXvkWFXDmpY'
+    buyAccountPaymentRecipient: 'mnCLLbtNuXfmHHbDunyjqj61o63XjxNCpG'
   },
   telos: {
     chainId: '6c8aacc339bf1567743eb9c8ab4d933173aa6dca4ae6b6180a849c422f5bb207',

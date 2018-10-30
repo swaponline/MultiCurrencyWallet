@@ -26,16 +26,24 @@ const sign = async () => {
     })
   // await actions.nimiq.login(_ethPrivateKey)
 
-  const eosActivePrivateKey = localStorage.getItem(constants.privateKeyNames.eos)
-  const eosAccount = localStorage.getItem(constants.privateKeyNames.eosAccount)
+  const eosSign = async () => {
+    const eosActivePrivateKey = localStorage.getItem(constants.privateKeyNames.eosPrivateKey)
+    const eosActivePublicKey = localStorage.getItem(constants.privateKeyNames.eosPublicKey)
+    const eosAccount = localStorage.getItem(constants.privateKeyNames.eosAccount)
+    const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true"
 
-  if (eosActivePrivateKey && eosAccount) {
-    await actions.eos.login(eosAccount, eosActivePrivateKey)
-  } else {
-    await actions.eos.loginWithNewAccount()
+    if (eosActivePrivateKey && eosActivePublicKey && eosAccount) {
+      await actions.eos.login(eosAccount, eosActivePrivateKey, eosActivePublicKey)
+
+      if (!eosAccountActivated) {
+        console.log(`"${eosAccount}" is not activated yet`)
+      }
+    } else {
+      await actions.eos.loginWithNewAccount()
+    }
+
+    await actions.eos.getBalance()
   }
-
-  await actions.eos.getBalance()
 
   const telosActivePrivateKey = localStorage.getItem(constants.privateKeyNames.telos)
   const telosAccount = localStorage.getItem(constants.privateKeyNames.telosAccount)
@@ -43,6 +51,7 @@ const sign = async () => {
     await actions.tlos.login(telosAccount, telosActivePrivateKey)
     await actions.tlos.getBalance()
   }
+  eosSign()
 }
 
 const getBalances = () => {

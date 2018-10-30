@@ -64,6 +64,8 @@ export default class EosBuyAccountModal extends React.Component {
 
     const linked = Link.all(this, 'accountName', 'activePrivateKey', 'activePublicKey', 'price')
 
+    const activationPayment = localStorage.getItem(constants.localStorage.eosActivationPayment)
+
     return (
       <Fragment>
         <Modal name={name} title="EOS Register">
@@ -85,6 +87,20 @@ export default class EosBuyAccountModal extends React.Component {
           </div>
           { error && (
             <div styleName="error">Sorry, error occured during activation</div>
+          )}
+          { activationPayment && (
+            <div>
+            <strong>
+              Payment transaction:
+              <a
+                href={`${config.link.bitpay}/tx/${activationPayment}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {activationPayment}
+              </a>
+            </strong>
+            </div>
           )}
           <Button
             styleName="button"
