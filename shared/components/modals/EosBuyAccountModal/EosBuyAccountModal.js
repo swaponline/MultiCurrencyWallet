@@ -86,7 +86,7 @@ export default class EosBuyAccountModal extends React.Component {
             <Input readOnly={true} valueLink={linked.price} />
           </div>
           { error && (
-            <div styleName="error">Sorry, error occured during activation</div>
+            <div styleName="error">Sorry, error occured during activation, try again</div>
           )}
           { activationPayment && (
             <div>
