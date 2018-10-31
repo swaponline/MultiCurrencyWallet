@@ -129,12 +129,12 @@ const send = async (from, to, amount, feeValue = 15000) => {
 
   const fundValue     = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
   const totalUnspent  = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-  const skipValue     = totalUnspent - (fundValue - feeValue)
+  const skipValue     = totalUnspent - fundValue - feeValue
 
   unspents.forEach(({ txid, vout }) => tx.addInput(txid, vout, 0xfffffffe))
-  tx.addOutput(to, fundValue - feeValue)
+  tx.addOutput(to, fundValue)
 
-  if (skipValue > feeValue) {
+  if (skipValue > 546) {
     tx.addOutput(from, skipValue)
   }
 
