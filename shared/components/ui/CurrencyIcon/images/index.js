@@ -8,7 +8,7 @@ import nim from './nim.svg'
 import eos from './eos.svg'
 import swap from './swap.svg'
 import usdt from './usdt.svg'
-import syc from './syc.svg'
+import syc2 from './syc2.svg'
 import drt from './drt.svg'
 import omg from './omg.svg'
 import yup from './yup.svg'
@@ -32,7 +32,7 @@ export default {
   arn,
   omg,
   eth,
-  syc,
+  syc2,
   icx,
   usdt,
   swap,
