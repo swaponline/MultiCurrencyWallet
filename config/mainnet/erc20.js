@@ -107,7 +107,7 @@ export default {
   xyo: {
     address: '0x55296f69f40ea6d20e478533c15a6b08b654e758',
     decimals: 18,
-    fullName: 'Oracle',
+    fullName: 'XY Oracle',
   },
   xnk: {
     address: '0xbc86727e770de68b1060c91f6bb6945c73e10388',
