@@ -135,7 +135,7 @@ const send = async (from, to, amount) => {
   unspents.forEach(({ txid, vout }) => tx.addInput(txid, vout, 0xfffffffe))
   tx.addOutput(to, fundValue)
 
-  if (skipValue > feeValue) {
+  if (skipValue > 546) {
     tx.addOutput(from, skipValue)
   }
 
