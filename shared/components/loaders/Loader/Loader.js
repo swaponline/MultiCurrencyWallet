@@ -7,7 +7,7 @@ import styles from './Loader.scss'
 import { tips } from 'helpers'
 
 
-const Loader = ({ overlayClassName, className, text, txId, showTips }) => (
+const Loader = ({ overlayClassName, className, data, showTips }) => (
   <div styleName="overlay" className={overlayClassName}>
     <div styleName="loader center" className={className}>
       <div styleName="loader1" />
@@ -15,21 +15,21 @@ const Loader = ({ overlayClassName, className, text, txId, showTips }) => (
       <div styleName="loader3" />
     </div>
     {
-      text && (
+      data && data.text && (
         <p styleName="text">
           Please wait, it takes from 3 to 5 minutes to complete the transaction.
         </p>
       )
     }
     {
-      txId && (
+      data && data.txId && (
         <a
-          href={txId}
+          href={data.txId}
           styleName="link"
           target="_blank"
           rel="noopener noreferrer"
         >
-          {txId}
+          {data.txId}
         </a>
       )
     }
@@ -46,14 +46,15 @@ const Loader = ({ overlayClassName, className, text, txId, showTips }) => (
 Loader.propTypes = {
   overlayClassName: PropTypes.string,
   className: PropTypes.string,
-  text: PropTypes.bool,
-  txId: PropTypes.bool,
+  data: PropTypes.shape({
+    text: PropTypes.bool,
+    txId: PropTypes.string,
+  }),
   showTips: PropTypes.bool,
 }
 
 Loader.deafultProps = {
-  text: false,
-  txId: false,
+  data: null,
   showTips: false,
 }
 
