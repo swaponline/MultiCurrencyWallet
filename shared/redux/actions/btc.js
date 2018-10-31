@@ -134,7 +134,10 @@ const send = async (from, to, amount) => {
 
   unspents.forEach(({ txid, vout }) => tx.addInput(txid, vout, 0xfffffffe))
   tx.addOutput(to, fundValue)
-  tx.addOutput(from, skipValue)
+
+  if (skipValue > feeValue) {
+    tx.addOutput(from, skipValue)
+  }
 
   tx.inputs.forEach((input, index) => {
     tx.sign(index, keyPair)
