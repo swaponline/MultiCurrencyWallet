@@ -106,6 +106,18 @@ const seo = {
       h1: 'Atomic Swap Litecoin (LTC) to Ethereum (ETH) - Decentralized Exchange',
     },
     {
+      uri: '/ltc-btc',
+      title: 'Atomic Swap Litecoin (LTC) to Bitcoin (BTC) Decentralized Exchange',
+      desctption: 'Best exchange rate for Litecoin (LTC) to Bitcoin (BTC) atomic swap. Decentralized exchange of digital currencies with online wallet.',
+      h1: 'Atomic Swap Litecoin (LTC) to Bitcoin (BTC) - Instant Exchange',
+    },
+    {
+      uri: '/btc-ltc',
+      title: 'Atomic Swap Bitcoin (BTC) to Litecoin (LTC) Cross-Chain Exchange',
+      desctption: 'Looking for best exchange rate to buy Litecoin (LTC) with Bitcoin (BTC)? Place your order on Swap.online to get the best rate.',
+      h1: 'Atomic Swap Bitcoin (BTC) to Litecoin (LTC) - Decentralized Exchange',
+    },
+    {
       uri: '/eos-btc',
       title: 'Atomic Swap EOS to Bitcoin (BTC) Instant Exchange',
       description: 'How to exchange EOS to BTC instantly and safely? Use Swap.Online service to exchange coins with atomic swap algorithm. ',
