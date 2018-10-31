@@ -115,11 +115,18 @@ export default class RowMobile extends Component {
           />
         </td>*/}
         <td>
-          <div styleName="tdContainer-1">
-            <span styleName="firstType">
-              {type === PAIR_TYPES.BID ? 'You have' : 'You get'}
-            </span>
-            <span>{`${amount.toFixed(5)} ${main}`}</span>
+          <div styleName="bigContainer">
+            <div styleName="tdContainer-1">
+              <span styleName="firstType">
+                {type === PAIR_TYPES.BID ? 'You have' : 'You get'}
+              </span>
+              <span>{`${amount.toFixed(5)} ${main}`}</span>
+            </div>
+            <div><i class="fas fa-exchange-alt"></i></div>
+            <div styleName="tdContainer-2">
+              <span styleName="secondType">You get</span>
+              <span>{`${total.toFixed(5)} ${base}`}</span>
+            </div>
           </div>
         </td>
         {/*<td>
@@ -129,13 +136,6 @@ export default class RowMobile extends Component {
             `${price.toFixed(5)} ${base}`
           }
         </td>*/}
-        <td><div styleName="icon"><i class="fas fa-exchange-alt"></i></div></td>
-        <td>
-          <div styleName="tdContainer-2">
-            <span styleName="secondType">You get</span>
-            <span>{`${total.toFixed(5)} ${base}`}</span>
-          </div>
-        </td>
         <td>
           {
             peer === ownerPeer ? (

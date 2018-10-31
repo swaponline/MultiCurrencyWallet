@@ -135,7 +135,11 @@ export default class Orders extends Component {
           titles={titles}
           rows={sellOrders}
           rowRender={(row, index) => (
-            <Row
+            isMobile &&  <RowMobile
+              key={index}
+              orderId={orderId}
+              row={row} 
+            /> || <Row
               key={index}
               orderId={orderId}
               row={row} 
@@ -151,7 +155,7 @@ export default class Orders extends Component {
           titles={titles}
           rows={buyOrders}
           rowRender={(row, index) => (
-           isMobile &&  <RowMobile
+            isMobile &&  <RowMobile
               key={index}
               orderId={orderId}
               row={row} 
