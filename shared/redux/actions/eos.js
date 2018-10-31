@@ -16,6 +16,23 @@ const generateAccountName = (publicKey) => {
   return account
 }
 
+const updateActivationStatus = async () => {
+  const { user: { eosData: { address, activePublicKey } } } = getState()
+
+  const eosInstance = await eos.getInstance()
+  const { permissions } = await eosInstance.getAccount(address)
+
+  const accountActivePublicKey =
+    permissions.find(item => item.perm_name === 'active')
+      .required_auth.keys[0].key
+
+  if (accountActivePublicKey === activePublicKey) {
+    localStorage.setItem(constants.localStorage.eosAccountActivated, true)
+  } else {
+    localStorage.setItem(constants.localStorage.eosAccountActivated, false)
+  }
+}
+
 const register = async (accountName, activePrivateKey) => {
   const eosInstance = await eos.getInstance()
   const eccInstance = await ecc.getInstance()
@@ -85,11 +102,10 @@ const buyAccount = async () => {
 
   if (activationTx) {
     console.log('eos account activated', activationTx)
+    localStorage.setItem(constants.localStorage.eosAccountActivated, true)
   } else {
     console.log('eos account already activated')
   }
-
-  localStorage.setItem(constants.localStorage.eosAccountActivated, true)
 }
 
 const sendActivationPayment = async ({ from }) => {
@@ -104,23 +120,23 @@ const sendActivationPayment = async ({ from }) => {
 const activateAccount = async ({ accountName, eosPublicKey, btcAddress, signature, paymentTx }) => {
   const { registerEndpoint } = config.api.eos
 
-  const response = await fetch(registerEndpoint, {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      publicKey: eosPublicKey,
-      accountName: accountName,
-      address: btcAddress,
-      signature: signature,
-      txid: paymentTx
-    }),
-  })
-
   let transaction_id = -1
   try {
+    const response = await fetch(registerEndpoint, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        publicKey: eosPublicKey,
+        accountName: accountName,
+        address: btcAddress,
+        signature: signature,
+        txid: paymentTx
+      }),
+    })
+
     transaction_id = response.json().transaction_id
   } catch (e) {
     console.error(e)
@@ -177,6 +193,7 @@ const send = async (from, to, amount) => {
 export default {
   login,
   loginWithNewAccount,
+  updateActivationStatus,
   register,
   getBalance,
   send,
