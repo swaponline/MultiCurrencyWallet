@@ -45,12 +45,12 @@ export default class WithdrawModal extends React.Component {
 
   setBalanceOnState = async (currency) => {
     const balance = await actions[currency.toLowerCase()].getBalance(currency.toLowerCase())
-    this.setState (() => ({ balance }))
+    this.setState(() => ({ balance }))
   }
 
   handleSubmit = () => {
     const { address: to, amount } = this.state
-    const { data: { currency, contractAddress, address, balance, decimals} } = this.props
+    const { data: { currency, contractAddress, address, balance, decimals }, name } = this.props
 
     this.setBalanceOnState(currency)
 
@@ -72,6 +72,8 @@ export default class WithdrawModal extends React.Component {
           currency,
           address: to,
         })
+
+        actions.modals.close(name)
       })
   }
 
@@ -92,6 +94,7 @@ export default class WithdrawModal extends React.Component {
         <p style={{ fontSize: '16px' }}>{`Please notice, that you need to have minimum ${minAmount[data.currency.toLowerCase()]} amount `}<br /> of the {data.currency} on your wallet, to use it for miners fee</p>
         <FieldLabel inRow>Address <Tooltip text="destination address" /></FieldLabel>
         <Input valueLink={linked.address} focusOnInit pattern="0-9a-zA-Z" placeholder="Enter address" />
+        <p style={{ marginTop: '20px' }}>Your balance: {balance} {data.currency.toUpperCase()}</p>
         <FieldLabel inRow>Amount</FieldLabel>
         <Input valueLink={linked.amount} pattern="0-9\." placeholder={`Enter amount, you have ${balance}`} />
         {
