@@ -85,8 +85,11 @@ const buyAccount = async () => {
 
   if (activationTx) {
     console.log('eos account activated', activationTx)
-    localStorage.setItem(constants.localStorage.eosAccountActivated, true)
+  } else {
+    console.log('eos account already activated')
   }
+
+  localStorage.setItem(constants.localStorage.eosAccountActivated, true)
 }
 
 const sendActivationPayment = async ({ from }) => {
@@ -116,10 +119,13 @@ const activateAccount = async ({ accountName, eosPublicKey, btcAddress, signatur
     }),
   })
 
-  if (!response.ok)
-    throw new Error('Cannot activate eos account')
+  let transaction_id = -1
+  try {
+    transaction_id = response.json().transaction_id
+  } catch (e) {
+    console.error(e)
+  }
 
-  const { transaction_id } = response.json()
   return transaction_id
 }
 
