@@ -117,7 +117,7 @@ export default {
   loc: {
     address: '0x5e3346444010135322268a4630d2ed5f8d09446c',
     decimals: 18,
-    fullName: 'FullName',
+    fullName: 'LockTrip',
   },
   key: {
     address: '0x4cc19356f2d37338b9802aa8e8fc58b0373296e7',
