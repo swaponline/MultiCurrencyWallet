@@ -30,39 +30,37 @@ const register = async (accountName, activePrivateKey) => {
   if (activePublicKey != requiredPublicKey)
     throw new Error(`${activePublicKey} is not equal to ${requiredPublicKey}`)
 
-  localStorage.setItem(constants.privateKeyNames.eos, activePrivateKey)
+  localStorage.setItem(constants.privateKeyNames.eosPrivateKey, activePrivateKey)
+  localStorage.setItem(constants.privateKeyNames.eosPublicKey, activePublicKey)
   localStorage.setItem(constants.privateKeyNames.eosAccount, accountName)
   localStorage.setItem(constants.localStorage.eosAccountActivated, true)
 
-  await login(accountName, activePrivateKey)
+  await login(accountName, activePrivateKey, activePublicKey)
 }
 
 const loginWithNewAccount = async () => {
-  const eccInstance = await ecc.getInstance()
-
   const keys = await Keygen.generateMasterKeys()
 
   const { privateKeys: { active: activePrivateKey }, publicKeys: { active: activePublicKey }} = keys
 
   const accountName = generateAccountName(activePublicKey)
 
-  localStorage.setItem(constants.privateKeyNames.eos, activePrivateKey)
+  localStorage.setItem(constants.privateKeyNames.eosPrivateKey, activePrivateKey)
+  localStorage.setItem(constants.privateKeyNames.eosPublicKey, activePublicKey)
   localStorage.setItem(constants.privateKeyNames.eosAccount, accountName)
   localStorage.setItem(constants.localStorage.eosAccountActivated, false)
 
-  await login(accountName, activePrivateKey)
+  await login(accountName, activePrivateKey, activePublicKey)
+
+  return { accountName, activePrivateKey, activePublicKey }
 }
 
-const login = async (accountName, activePrivateKey) => {
-  const eccInstance = await ecc.getInstance()
-
-  const activePublicKey = eccInstance.privateToPublic(activePrivateKey)
-
+const login = async (accountName, activePrivateKey, activePublicKey) => {
   reducers.user.setAuthData({ name: 'eosData', data: { activePrivateKey, activePublicKey, address: accountName } })
 }
 
 const buyAccount = async () => {
-  const eosPrivateKey = localStorage.getItem(constants.privateKeyNames.eos)
+  const eosPrivateKey = localStorage.getItem(constants.privateKeyNames.eosPrivateKey)
   const accountName = localStorage.getItem(constants.privateKeyNames.eosAccount)
   let paymentTx = localStorage.getItem(constants.localStorage.eosActivationPayment)
 
@@ -81,17 +79,21 @@ const buyAccount = async () => {
   const message = `${accountName}:${eosPublicKey}`
   const signature = await actions.btc.signMessage(message, btcPrivateKey)
 
-  await activateAccount({
+  const activationTx = await activateAccount({
     accountName, eosPublicKey, btcAddress, signature, paymentTx
   })
 
-  localStorage.setItem(constants.localStorage.eosAccountActivated, true)
+  if (activationTx) {
+    console.log('eos account activated', activationTx)
+    localStorage.setItem(constants.localStorage.eosAccountActivated, true)
+  }
 }
 
 const sendActivationPayment = async ({ from }) => {
   const { buyAccountPriceInBTC, buyAccountPaymentRecipient } = config.api.eos
 
-  const txid = await actions.btc.send(from, buyAccountPaymentRecipient, buyAccountPriceInBTC)
+  const feeValue = 15000
+  const txid = await actions.btc.send(from, buyAccountPaymentRecipient, buyAccountPriceInBTC, feeValue)
 
   return txid.getId()
 }
@@ -114,8 +116,10 @@ const activateAccount = async ({ accountName, eosPublicKey, btcAddress, signatur
     }),
   })
 
-  const { transaction_id } = await response.json()
+  if (!response.ok)
+    throw new Error('Cannot activate eos account')
 
+  const { transaction_id } = response.json()
   return transaction_id
 }
 
