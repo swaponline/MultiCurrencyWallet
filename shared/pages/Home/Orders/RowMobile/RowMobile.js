@@ -108,12 +108,6 @@ export default class RowMobile extends Component {
 
     return (
       <tr style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}>
-        {/*<td>
-          <Avatar
-            value={ownerPeer}
-            size={45}
-          />
-        </td>*/}
         <td>
           <div styleName="bigContainer">
             <div styleName="tdContainer-1">
@@ -129,13 +123,6 @@ export default class RowMobile extends Component {
             </div>
           </div>
         </td>
-        {/*<td>
-          <span style={{ color: 'gray' }}>at price</span>
-          {' '}
-          {
-            `${price.toFixed(5)} ${base}`
-          }
-        </td>*/}
         <td>
           {
             peer === ownerPeer ? (

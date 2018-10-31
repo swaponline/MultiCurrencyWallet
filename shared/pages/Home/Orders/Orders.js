@@ -98,7 +98,6 @@ export default class Orders extends Component {
   render() {
     const { sellOrders, buyOrders, isVisible } = this.state
     let { sellCurrency, buyCurrency } = this.props
-    console.log('gdfgdggfdgdgdgdffgd' + buyOrders);
     buyCurrency = buyCurrency.toUpperCase()
     sellCurrency = sellCurrency.toUpperCase()
 
