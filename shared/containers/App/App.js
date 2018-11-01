@@ -79,7 +79,7 @@ export default class App extends React.Component {
 
   componentDidMount() {
     window.onerror = (error) => {
-    actions.notifications.show(constants.notifications.ErrorNotification, {error})
+      actions.notifications.show(constants.notifications.ErrorNotification, { error })
     }
 
     setTimeout(() => {
@@ -90,7 +90,7 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { fetching, multiTabs, error, } = this.state
+    const { fetching, multiTabs, error } = this.state
     const { children, ethAddress, btcAddress, tokenAddress, history /* eosAddress */ } = this.props
     const isFetching = !ethAddress || !btcAddress || !tokenAddress || !fetching
 

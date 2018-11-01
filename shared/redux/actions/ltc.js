@@ -71,8 +71,8 @@ const getTransaction = () =>
           hash: item.txid,
           confirmations: item.confirmations,
           value: item.vin.filter(item => item.addr === address).length > 0
-                  ? item.vout.filter((item, index) => item.scriptPubKey.addresses[0] !== address)[0].value
-                  : item.vout.filter((item, index) => item.scriptPubKey.addresses[0] === address)[0].value,
+            ? item.vout.filter((item, index) => item.scriptPubKey.addresses[0] !== address)[0].value
+            : item.vout.filter((item, index) => item.scriptPubKey.addresses[0] === address)[0].value,
           date: item.time * 1000,
           direction: item.vin.filter(item => item.addr === address).length > 0  ? 'out' : 'in',
         }))

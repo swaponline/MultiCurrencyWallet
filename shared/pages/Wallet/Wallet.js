@@ -18,6 +18,7 @@ import PageHeadline from 'components/PageHeadline/PageHeadline'
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import KeyActionsPanel from 'components/KeyActionsPanel/KeyActionsPanel'
 import SaveKeysModal from 'components/modals/SaveKeysModal/SaveKeysModal'
+import { FormattedMessage } from 'react-intl'
 
 
 @withRouter
@@ -50,7 +51,7 @@ export default class Wallet extends Component {
 
   state = {
     view: 'off',
-    zeroBalance: true
+    zeroBalance: true,
   }
 
   componentWillMount() {
@@ -89,8 +90,6 @@ export default class Wallet extends Component {
     })
   }
 
-
-
   render() {
     const { view, zeroBalance } = this.state
     const { items, tokens, currencies, hiddenCoinsList } = this.props
@@ -105,9 +104,9 @@ export default class Wallet extends Component {
       <section>
         { showSaveKeysModal && <SaveKeysModal /> }
         <PageHeadline>
-          <SubTitle>
-            Swap.Online - Cryptocurrency Wallet with Atomic Swap Exchange
-          </SubTitle>
+          <FormattedMessage id="Wallet107" defaultMessage="Swap.Online - Cryptocurrency Wallet with Atomic Swap Exchange">
+            {message => <SubTitle>{message}  </SubTitle>}
+          </FormattedMessage>
         </PageHeadline>
         <Table
           id="table-wallet"
@@ -115,7 +114,7 @@ export default class Wallet extends Component {
           titles={titles}
           rows={[...items, ...tokens].filter(coin => !hiddenCoinsList.includes(coin.currency))}
           rowRender={(row, index, selectId, handleSelectId) => (
-            <Row key={index} {...row} currencies={currencies} hiddenCoinsList={hiddenCoinsList} selectId={selectId} index={index} handleSelectId={handleSelectId}/>
+            <Row key={index} {...row} currencies={currencies} hiddenCoinsList={hiddenCoinsList} selectId={selectId} index={index} handleSelectId={handleSelectId} />
           )}
         />
         <KeyActionsPanel />

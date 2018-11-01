@@ -12,6 +12,7 @@ import styles from './Approve.scss'
 import { Modal } from 'components/modal'
 import { Button } from 'components/controls'
 import { FieldLabel, Input } from 'components/forms'
+import { FormattedMessage } from 'react-intl'
 
 
 @cssModules(styles)
@@ -66,17 +67,17 @@ export default class Offer extends React.Component {
     return (
       <Modal name={name} title="Approve token">
         <div styleName="content">
-          <p>Please set the amount limit that the swap smart contract can deduct from your account. We do not recommend setting any limits.</p>
-          <FieldLabel inRow>Amount</FieldLabel>
+          <FormattedMessage
+            id="Approve70"
+            defaultMessage="Please set the amount limit that the swap smart contract can deduct from your account. We do not recommend setting any limits.">
+            {message => <p>{message}</p>}
+          </FormattedMessage>
+          <FieldLabel inRow>
+            <FormattedMessage id="Approve73" defaultMessage="Amount" />
+          </FieldLabel>
           <Input valueLink={linked.amount} type="number" />
-          <Button
-            styleName="button"
-            brand
-            fullWidth
-            disabled={isDisabled}
-            onClick={this.handleApprove}
-          >
-            Approve
+          <Button styleName="button" brand fullWidth disabled={isDisabled} onClick={this.handleApprove}>
+            <FormattedMessage id="Approve73" defaultMessage="Approve" />
           </Button>
         </div>
       </Modal>

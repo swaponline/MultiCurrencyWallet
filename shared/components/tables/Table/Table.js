@@ -14,7 +14,7 @@ export default class Table extends React.Component {
 
     this.state = {
       sticky: false,
-      selectId: 0
+      selectId: 0,
     }
   }
 

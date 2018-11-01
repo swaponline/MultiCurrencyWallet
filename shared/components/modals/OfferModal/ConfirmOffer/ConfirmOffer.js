@@ -16,6 +16,7 @@ import Amounts from './Amounts/Amounts'
 import ExchangeRate from './ExchangeRate/ExchangeRate'
 import Fee from './Fee/Fee'
 import { connect } from 'redaction'
+import { FormattedMessage } from 'react-intl'
 
 
 @connect(({ currencies: { items: currencies }, user: { ethData: { address } } }) => ({
@@ -65,9 +66,13 @@ export default class ConfirmOffer extends Component {
         <ExchangeRate {...{ value: exchangeRate, buyCurrency, sellCurrency }} />
         <Fee amount={0.0001} currency={sellCurrency} />
         <Row styleName="buttonsInRow">
-          <Button styleName="button" gray onClick={onBack}>Back</Button>
+          <Button styleName="button" gray onClick={onBack}>
+            <FormattedMessage id="ConfirmOffer69" defaultMessage="Back" />
+          </Button>
           <Link styleName="link" to={`${links.home}${buyCurrency}-${sellCurrency}`}>
-            <Button styleName="button" id="confirm" brand onClick={this.handleConfirm} >Add</Button>
+          <Button styleName="button" id="confirm" brand onClick={this.handleConfirm}>
+            <FormattedMessage id="ConfirmOffer73" defaultMessage="Add" />
+          </Button>
           </Link>
         </Row>
       </Fragment>

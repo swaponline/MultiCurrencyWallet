@@ -7,6 +7,7 @@ import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
 import { btc, request, constants, api } from 'helpers'
 
+
 const login = (privateKey) => {
   let keyPair
 
@@ -180,5 +181,5 @@ export default {
   broadcastTx,
   fetchTx,
   fetchBalance,
-  signMessage
+  signMessage,
 }

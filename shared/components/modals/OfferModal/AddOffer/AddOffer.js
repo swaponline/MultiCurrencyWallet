@@ -18,6 +18,7 @@ import SelectGroup from './SelectGroup/SelectGroup'
 import Button from 'components/controls/Button/Button'
 import Toggle from 'components/controls/Toggle/Toggle'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
+import { FormattedMessage } from 'react-intl'
 
 import { isNumberValid, isNumberStringFormatCorrect, mathConstants } from 'helpers/math.js'
 
@@ -347,7 +348,11 @@ export default class AddOffer extends Component {
 
     return (
       <div styleName="wrapper">
-        { ethBalance < 0.02 && <span styleName="error">For a swap, you need 0.02 ETH on your balance</span> }
+        { ethBalance < 0.02 &&
+        <span styleName="error">
+          <FormattedMessage id="AddOffer351" defaultMessage="For a swap, you need 0.02 ETH on your balance"/>
+        </span>
+        }
         <SelectGroup
           styleName="sellGroup"
           label="Sell"
@@ -390,14 +395,8 @@ export default class AddOffer extends Component {
           <Toggle checked={manualRate} onChange={this.handleManualRate} /> Custom exchange rate
           <Tooltip text="To change the exchange rate" />
         </div>
-        <Button
-          styleName="button"
-          fullWidth
-          brand
-          disabled={isDisabled}
-          onClick={this.handleNext}
-        >
-          Next
+        <Button styleName="button" fullWidth brand disabled={isDisabled} onClick={this.handleNext}>
+          <FormattedMessage id="AddOffer396" defaultMessage="Next"/>  
         </Button>
       </div>
     )

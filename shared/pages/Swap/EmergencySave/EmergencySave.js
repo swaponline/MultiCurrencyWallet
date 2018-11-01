@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import CSSModules from 'react-css-modules'
 import styles from './EmergencySave.scss'
+import { FormattedMessage } from 'react-intl'
 
 
 @CSSModules(styles)
@@ -29,7 +30,7 @@ export default class EmergencySave extends Component {
     return (
       <div styleName="block">
         <span styleName="button"  onClick={this.showEmergency}>
-          Information about swap
+          <FormattedMessage id="EmergencySave" defaultMessage="Information about swap" />
         </span>
         {
           isShowEmergency && (

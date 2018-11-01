@@ -12,6 +12,7 @@ import { constants } from 'helpers'
 import cssModules from 'react-css-modules'
 import styles from './EosRegisterModal.scss'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
+import { FormattedMessage } from 'react-intl'
 
 
 @cssModules(styles)
@@ -50,22 +51,21 @@ export default class EosRegisterModal extends React.Component {
 
     return (
       <Modal name={name} title="EOS Login">
-        <FieldLabel inRow>Account name <Tooltip text="Enter your EOS account name "/></FieldLabel>
+        <FieldLabel inRow>
+          <FormattedMessage id="EosRegAccountModal54" defaultMessage="Account name" />
+        <Tooltip text="Enter your EOS account name" /></FieldLabel>
         <Input valueLink={linked.accountName} />
-        <FieldLabel inRow>Active private key<Tooltip text="Enter private key for active permission"/></FieldLabel>
+        <FieldLabel inRow>
+          <FormattedMessage id="EosRegAccountModal58" defaultMessage="Active private key" />
+        <Tooltip text="Enter private key for active permission" /></FieldLabel>
         <Input valueLink={linked.privateKey} />
-        { error && (
-          <div styleName="error">Sorry, error occured during activation</div>
+        { error && (<div styleName="error">
+          <FormattedMessage id="EosRegAccountModal63" defaultMessage="Sorry, error occured during activation" />
+        </div>
         )
         }
-        <Button
-          styleName="button"
-          brand
-          fullWidth
-          disabled={isDisabled}
-          onClick={this.handleSubmit}
-        >
-          Login
+        <Button styleName="button" brand fullWidth disabled={isDisabled} onClick={this.handleSubmit}>
+          <FormattedMessage id="EosRegAccountModal63" defaultMessage="Login" />
         </Button>
       </Modal>
     )

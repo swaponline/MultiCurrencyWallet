@@ -7,6 +7,7 @@ import actions from 'redux/actions'
 import { eos, ecc } from 'helpers/eos'
 import { Keygen } from 'eosjs-keygen'
 
+
 const generateAccountName = (publicKey) => {
   const account = Array.prototype.map.call(
     publicKey.substr(0, 12).toLowerCase(),
@@ -27,8 +28,9 @@ const register = async (accountName, activePrivateKey) => {
     permissions.find(item => item.perm_name === 'active')
       .required_auth.keys[0].key
 
-  if (activePublicKey != requiredPublicKey)
+  if (activePublicKey !== requiredPublicKey) {
     throw new Error(`${activePublicKey} is not equal to ${requiredPublicKey}`)
+  }
 
   localStorage.setItem(constants.privateKeyNames.eos, activePrivateKey)
   localStorage.setItem(constants.privateKeyNames.eosAccount, accountName)
@@ -42,7 +44,7 @@ const loginWithNewAccount = async () => {
 
   const keys = await Keygen.generateMasterKeys()
 
-  const { privateKeys: { active: activePrivateKey }, publicKeys: { active: activePublicKey }} = keys
+  const { privateKeys: { active: activePrivateKey }, publicKeys: { active: activePublicKey } } = keys
 
   const accountName = generateAccountName(activePublicKey)
 
@@ -69,7 +71,7 @@ const buyAccount = async () => {
   const eccInstance = await ecc.getInstance()
   const eosPublicKey = eccInstance.privateToPublic(eosPrivateKey)
 
-  const { user: { btcData }} = getState()
+  const { user: { btcData } } = getState()
   const btcAddress = btcData.address
   const btcPrivateKey = btcData.privateKey
 
@@ -82,7 +84,7 @@ const buyAccount = async () => {
   const signature = await actions.btc.signMessage(message, btcPrivateKey)
 
   await activateAccount({
-    accountName, eosPublicKey, btcAddress, signature, paymentTx
+    accountName, eosPublicKey, btcAddress, signature, paymentTx,
   })
 
   localStorage.setItem(constants.localStorage.eosAccountActivated, true)
@@ -107,16 +109,16 @@ const activateAccount = async ({ accountName, eosPublicKey, btcAddress, signatur
     },
     body: JSON.stringify({
       publicKey: eosPublicKey,
-      accountName: accountName,
+      accountName,
       address: btcAddress,
-      signature: signature,
-      txid: paymentTx
+      signature,
+      txid: paymentTx,
     }),
   })
 
-  const { transaction_id } = await response.json()
+  const { transactionId } = await response.json()
 
-  return transaction_id
+  return transactionId
 }
 
 const getBalance = async () => {
@@ -170,5 +172,5 @@ export default {
   register,
   getBalance,
   send,
-  buyAccount
+  buyAccount,
 }

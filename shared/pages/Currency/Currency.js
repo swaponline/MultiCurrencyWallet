@@ -13,6 +13,8 @@ import Row from './Row/Row'
 import actions from 'redux/actions'
 
 import { withRouter } from 'react-router'
+import { FormattedMessage } from 'react-intl'
+
 
 @withRouter
 @connect(({ core: { hiddenCoinsList }, user: { ethData, btcData, ltcData, tokensData, eosData, nimData, usdtData } }) => ({
@@ -96,8 +98,9 @@ export default class Currency extends Component {
             <Title>{currency}</Title>
             <SubTitle>{currency.toUpperCase()} Trade</SubTitle>
           </Fragment>
-          <div> Balance: <span>{(String(balance).length > 5 ? balance.toFixed(5) : balance) || 0} {currency}</span>
-          </div>
+          <div>
+            <FormattedMessage id="Currency101" defaultMessage="Balance:" />
+          <span>{(String(balance).length > 5 ? balance.toFixed(5) : balance) || 0} {currency}</span></div>
           <Toggle onChange={this.handleInWalletChange} checked={this.isInWallet()} />Added to Wallet
         </PageHeadline>
         <Table

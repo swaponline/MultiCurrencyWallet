@@ -8,6 +8,7 @@ import { NavLink } from 'react-router-dom'
 import cx from 'classnames'
 import styles from './Nav.scss'
 import CSSModules from 'react-css-modules'
+import { FormattedMessage } from 'react-intl'
 
 
 @withRouter
@@ -85,7 +86,9 @@ export default class Nav extends Component {
           }
           {
             process.env.MAINNET && (
-              <a href={links.test} styleName="link" target="_blank" rel="noreferrer noopener">Testnet</a>
+              <a href={links.test} styleName="link" target="_blank" rel="noreferrer noopener">
+                <FormattedMessage id="Nav88" defaultMessage="Testnet" />
+              </a>
             )
           }
         </Fragment>

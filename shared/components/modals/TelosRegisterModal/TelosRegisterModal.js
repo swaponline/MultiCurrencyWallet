@@ -12,6 +12,7 @@ import { constants } from 'helpers'
 import cssModules from 'react-css-modules'
 import styles from './TelosRegisterModal.scss'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
+import { FormattedMessage } from 'react-intl'
 
 
 @cssModules(styles)
@@ -51,22 +52,22 @@ export default class TelosRegisterModal extends React.Component {
 
     return (
       <Modal name={name} title="TELOS Login">
-        <FieldLabel inRow>Account name <Tooltip text="Enter TELOS account name"/></FieldLabel>
+        <FieldLabel inRow>
+          <FormattedMessage id="TelosRegister55" defaultMessage="Account name" />
+        <Tooltip text="Enter TELOS account name" /></FieldLabel>
         <Input valueLink={linked.accountName} />
-        <FieldLabel inRow>Private key <Tooltip text="Enter your TELOS secret key"/></FieldLabel>
+        <FieldLabel inRow>
+          <FormattedMessage id="TelosRegister59" defaultMessage="Private key" />
+        <Tooltip text="Enter your TELOS secret key" /></FieldLabel>
         <Input valueLink={linked.privateKey} />
         { error && (
-          <div styleName="error">Sorry, error occured during activation</div>
+          <FormattedMessage id="TelosRegister64" defaultMessage="Sorry, error occured during activation">
+            {message => <div styleName="error">{message}</div>}
+          </FormattedMessage>
         )
         }
-        <Button
-          styleName="button"
-          brand
-          fullWidth
-          disabled={isDisabled}
-          onClick={this.handleSubmit}
-        >
-          Login
+        <Button styleName="button" brand fullWidth disabled={isDisabled} onClick={this.handleSubmit}>
+          <FormattedMessage id="TelosRegister69" defaultMessage="Login" />
         </Button>
       </Modal>
     )

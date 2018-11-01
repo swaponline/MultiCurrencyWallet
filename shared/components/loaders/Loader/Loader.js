@@ -5,6 +5,7 @@ import CSSModules from 'react-css-modules'
 import styles from './Loader.scss'
 
 import { tips } from 'helpers'
+import { FormattedMessage } from 'react-intl'
 
 
 const Loader = ({ overlayClassName, className, text, txId, showTips }) => (
@@ -15,10 +16,9 @@ const Loader = ({ overlayClassName, className, text, txId, showTips }) => (
       <div styleName="loader3" />
     </div>
     {
-      text && (
-        <p styleName="text">
-          Please wait, it takes from 3 to 5 minutes to complete the transaction.
-        </p>
+      text && (<p styleName="text">
+        <FormattedMessage id="loader19" defaultMessage="Please wait, it takes from 3 to 5 minutes to complete the transaction." />
+      </p>
       )
     }
     {

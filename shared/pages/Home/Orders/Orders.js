@@ -18,6 +18,7 @@ import PageSeo from 'components/Seo/PageSeo'
 import Pair from './Pair'
 import Row from './Row/Row'
 import MyOrders from './MyOrders/MyOrders'
+import { FormattedMessage } from 'react-intl'
 
 
 const filterMyOrders = (orders, peer) => orders
@@ -106,14 +107,26 @@ export default class Orders extends Component {
 
     return (
       <Fragment>
-        <PageSeo location={location} defaultTitle={`Atomic Swap ${buyCurrencyFullName} (${buyCurrency}) to ${sellCurrencyFullName} (${sellCurrency}) Instant Exchange`} defaultDescription={`Best exchange rate for ${buyCurrencyFullName} (${buyCurrency}) to ${sellCurrencyFullName} (${sellCurrency}). Swap.Online wallet provides instant exchange using Atomic Swap Protocol.`} />
+        <PageSeo
+            location={location}
+            defaultTitle={
+              `Atomic Swap ${buyCurrencyFullName} (${buyCurrency}) to ${sellCurrencyFullName} (${sellCurrency}) Instant Exchange`}
+               defaultDescription={`Best exchange rate for ${buyCurrencyFullName} (${buyCurrency}) to ${sellCurrencyFullName} (${sellCurrency}).
+               Swap.Online wallet provides instant exchange using Atomic Swap Protocol.`
+              } />
         <Title>{buyCurrency}/{sellCurrency} no limit exchange with 0 fee</Title>
-        { invalidPair && <p> No such ticker. Redirecting to SWAP-BTC exchange... </p> }
+        { invalidPair &&
+          <FormattedMessage id="Orders117" defaultMessage="No such ticker. Redirecting to SWAP-BTC exchange...">
+            {message => <p>{message}</p>}
+          </FormattedMessage>
+        }
         <div styleName="buttonRow">
           <Button green styleName="button" disabled={myOrders.length === 0} onClick={() => this.setState(state => ({ isVisible: !state.isVisible }))}>
             {isVisible ? 'Hide' : 'Show'} my Orders
           </Button>
-          <Button gray styleName="button" onClick={this.createOffer}>Create offer</Button>
+        <Button gray styleName="button" onClick={this.createOffer}>
+          <FormattedMessage id="Orders117" defaultMessage="Create offer" />
+        </Button>
         </div>
         {
           isVisible && <MyOrders
@@ -123,8 +136,17 @@ export default class Orders extends Component {
             acceptRequest={this.acceptRequest}
           />
         }
-        <h3>BUY {buyCurrency} HERE</h3>
-        <p>orders of those who <i>sell</i> {buyCurrency} to you</p>
+        <h3>
+          <FormattedMessage id="Orders117" defaultMessage="BUY " />
+          {buyCurrency}
+            <FormattedMessage id="Orders118" defaultMessage=" HERE" />
+        </h3>
+        <p>
+          <FormattedMessage id="Orders162" defaultMessage="orders of those who " />
+            <a> sell </a>
+            {buyCurrency}
+          <FormattedMessage id="Orders162" defaultMessage=" to you" />
+        </p>
         <Table
           id="table_exchange"
           className={tableStyles.exchange}
@@ -139,8 +161,17 @@ export default class Orders extends Component {
           )}
           isLoading={!isOnline}
         />
-        <h3>SELL {buyCurrency} HERE</h3>
-        <p>orders that <i>buy</i> {buyCurrency} from you</p>
+        <h3>
+          <FormattedMessage id="Orders117" defaultMessage="SELL " />
+          {buyCurrency}
+            <FormattedMessage id="Orders118" defaultMessage=" HERE" />
+        </h3>
+        <p>
+          <FormattedMessage id="Orders162" defaultMessage="orders that " />
+            <a> buy </a>
+            {buyCurrency}
+          <FormattedMessage id="Orders162" defaultMessage=" from you" />
+        </p>
         <Table
           id="table_exchange"
           className={tableStyles.exchange}

@@ -14,6 +14,7 @@ import RemoveButton from 'components/controls/RemoveButton/RemoveButton'
 import Pair from '../Pair'
 import PAIR_TYPES from 'helpers/constants/PAIR_TYPES'
 import RequestButton from '../RequestButton/RequestButton'
+import { FormattedMessage } from 'react-intl'
 
 
 @connect({
@@ -119,14 +120,18 @@ export default class Row extends Component {
           }
         </td>
         <td>
-          <span style={{ color: 'gray' }}>at price</span>
+          <span style={{ color: 'gray' }}>
+            <FormattedMessage id="Row122" defaultMessage="at price" />
+          </span>
           {' '}
           {
             `${price.toFixed(5)} ${base}`
           }
         </td>
         <td>
-          <span style={{ color: 'gray' }}>for</span>
+          <span style={{ color: 'gray' }}>
+            <FormattedMessage id="Row131" defaultMessage="for" />
+          </span>
           {' '}
           {
             `${total.toFixed(5)} ${base}`
@@ -141,18 +146,26 @@ export default class Row extends Component {
                 {
                   isRequested ? (
                     <Fragment>
-                      <div style={{ color: 'red' }}>REQUESTING</div>
-                      <Link to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`}> Go to the swap</Link>
+                      <div style={{ color: 'red' }}>
+                        <FormattedMessage id="Row148" defaultMessage="REQUESTING" />
+                      </div>
+                      <Link to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`}>
+                        <FormattedMessage id="Row151" defaultMessage="Go to the swap" />
+                      </Link>
                     </Fragment>
                   ) : (
                     isProcessing ? (
-                      <span>This order is in execution</span>
+                      <FormattedMessage id="Row157" defaultMessage="This order is in execution">
+                        {message => <span>{message}</span>}
+                      </FormattedMessage>
                     ) : (
                       isFetching ? (
                         <Fragment>
                           <InlineLoader />
                           <br />
-                          <span>Please wait while we confirm your request</span>
+                          <FormattedMessage id="Row165" defaultMessage="Please wait while we confirm your request">
+                            {message => <span>{message}</span>}
+                          </FormattedMessage>
                         </Fragment>
                       ) : (
                         <RequestButton

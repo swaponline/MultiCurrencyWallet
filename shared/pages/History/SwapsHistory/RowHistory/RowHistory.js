@@ -11,6 +11,7 @@ import styles from './RowHistory.scss'
 import Coins from 'components/Coins/Coins'
 import Timer from 'pages/Swap/Timer/Timer'
 import Avatar from 'components/Avatar/Avatar'
+import { FormattedMessage } from 'react-intl'
 
 
 const RowHistory = ({ row }) => {
@@ -72,7 +73,9 @@ const RowHistory = ({ row }) => {
               enabledButton={() => {}}
             />
           ) : (
-            <span>Refund not available</span>
+            <FormattedMessage id="RowHistory76" defaultMessage="Refund not available">
+              {message => <span>{message}</span>}
+            </FormattedMessage>
           )
         }
       </td>
@@ -85,9 +88,13 @@ const RowHistory = ({ row }) => {
       <td>
         {
           isMy ? (
-            <Link to={`${links.swap}/${sellCurrency}-${buyCurrency}/${id}`}>Link to the swap</Link>
+            <Link to={`${links.swap}/${sellCurrency}-${buyCurrency}/${id}`}>
+              <FormattedMessage id="RowHistory91" defaultMessage="Link to the swap" />
+            </Link>
           ) : (
-            <Link to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`}>Link to the swap</Link>
+            <Link to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`}>
+              <FormattedMessage id="RowHistory95" defaultMessage="Link to the swap" />
+            </Link>
           )
         }
       </td>

@@ -13,6 +13,7 @@ import CSSModules from 'react-css-modules'
 import ArrowRightSvg from './images/arrow-right.svg'
 
 import { TimerButton } from 'components/controls'
+import { FormattedMessage } from 'react-intl'
 
 
 @withRouter
@@ -65,7 +66,11 @@ export default class UserTooltip extends Component {
               request.map(({ peer, reputation }) => (
                 <div styleName="userTooltip" >
                   <div key={peer}>
-                    <div styleName="title">User with <b>{reputation}</b> reputation wants to swap</div>
+                    <div styleName="title">
+                      <FormattedMessage id="userTooltip68" defaultMessage= "User with" />
+                      <b>{reputation}</b>
+                      <FormattedMessage id="userTooltip68" defaultMessage= "reputation wants to swap" />
+                    </div>
                     <div styleName="currency">
                       <span>{buyAmount.toFixed(5)} <span styleName="coin">{buyCurrency}</span></span>
                       <span styleName="arrow"><img src={ArrowRightSvg} alt="" /></span>
@@ -83,10 +88,13 @@ export default class UserTooltip extends Component {
           })
         ) : (
           <div styleName="feed" >
-            <Link to={links.feed} > Go to the feed page</Link>
+            <Link to={links.feed} >
+              <FormattedMessage id="QUESTION15" defaultMessage="Go to the feed page" />
+            </Link>
           </div>
-        )}
-      </div>
+        )
+      }
+    </div>
     )
   }
 }

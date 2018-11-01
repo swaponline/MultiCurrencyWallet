@@ -7,6 +7,7 @@ import actions from 'redux/actions'
 import { telos, ecc } from 'helpers/eos'
 import { Keygen } from 'eosjs-keygen'
 
+
 const privateToPublic = async (privateKey) => {
   const eccInstance = await ecc.getInstance()
   return eccInstance.privateToPublic(privateKey).replace('EOS', 'TLOS')
@@ -22,14 +23,14 @@ const register = async (accountName, activePrivateKey) => {
     permissions.find(item => item.perm_name === 'active')
       .required_auth.keys[0].key
 
-  if (givenPublicKey !== requiredPublicKey)
+  if (givenPublicKey !== requiredPublicKey) {
     throw new Error(`${givenPublicKey} is not equal to ${requiredPublicKey}`)
-
+  }
   localStorage.setItem(constants.privateKeyNames.telos, activePrivateKey)
   localStorage.setItem(constants.privateKeyNames.telosAccount, accountName)
 
   const keys = {
-    activePrivateKey: activePrivateKey,
+    activePrivateKey,
     activePublicKey: givenPublicKey,
   }
 
@@ -41,7 +42,7 @@ const login = async (accountName, activePrivateKey) => {
 
   const keys = {
     activePrivateKey,
-    activePublicKey
+    activePublicKey,
   }
 
   reducers.user.setAuthData({ name: 'telosData', data: { ...keys, address: accountName } })
@@ -93,5 +94,5 @@ const send = async (from, to, amount) => {
 }
 
 module.exports = {
-  register, login, getBalance, send
+  register, login, getBalance, send,
 }

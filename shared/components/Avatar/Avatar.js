@@ -6,6 +6,7 @@ import jdenticon from 'jdenticon'
 import CSSModules from 'react-css-modules'
 import styles from './Avatar.scss'
 import ReactTooltip from 'react-tooltip'
+import { FormattedMessage } from 'react-intl'
 
 
 const Avatar = ({ value, className, size }) => (
@@ -15,12 +16,15 @@ const Avatar = ({ value, className, size }) => (
       styleName="avatar"
       alt={value}
       src={`data:image/svg+xml,${encodeURIComponent(jdenticon.toSvg(value, size))}`}
-      data-tip data-for="a"
+      data-tip
+      data-for="a"
     />
-        <ReactTooltip id="a" type="light" effect="solid" >
-          <span>Automatically created gravatar. its unique for every profile. You can see your in the upper right corner</span>
-        </ReactTooltip>
-    </Fragment>
+    <ReactTooltip id="a" type="light" effect="solid" >
+      <FormattedMessage id="transaction27" defaultMessage="Automatically created gravatar. its unique for every profile. You can see your in the upper right corner">
+        {message => <span>{message}</span>}
+      </FormattedMessage>
+    </ReactTooltip>
+  </Fragment>
 )
 
 Avatar.defaultProps = {

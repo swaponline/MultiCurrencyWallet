@@ -7,6 +7,7 @@ import styles from './Confirm.scss'
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import Button from 'components/controls/Button/Button'
 import Center from 'components/layout/Center/Center'
+import { FormattedMessage } from 'react-intl'
 
 
 const Confirm = ({ rootClassName, isConfirm, isReject, title, animation }) => (
@@ -16,8 +17,16 @@ const Confirm = ({ rootClassName, isConfirm, isReject, title, animation }) => (
         {title}
       </SubTitle>
       <div styleName="row" >
-        <Button brand onClick={isConfirm}>Yes</Button>
-        <Button brand onClick={isReject}>No</Button>
+        <Button brand onClick={isConfirm}>
+          <FormattedMessage id="Confirm20" defaultMessage="Yes">
+            {message => <h3>{message}</h3>}
+          </FormattedMessage>
+        </Button>
+        <Button brand onClick={isReject}>
+          <FormattedMessage id="Confirm25" defaultMessage="No">
+            {message => <h3>{message}</h3>}
+          </FormattedMessage>
+        </Button>
       </div>
     </div>
   </Center>

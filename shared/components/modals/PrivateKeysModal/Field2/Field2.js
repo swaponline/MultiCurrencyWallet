@@ -8,6 +8,7 @@ import styles from './Field2.scss'
 
 import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
+import { FormattedMessage } from 'react-intl'
 
 
 @CSSModules(styles, { allowMultiple: true })
@@ -38,8 +39,8 @@ export default class Field2 extends React.Component {
         value: '',
         error: true,
         success: false,
-          })
-        }
+      })
+    }
     else {
       valueLink.set(true)
       this.setState({
@@ -73,12 +74,13 @@ export default class Field2 extends React.Component {
             {success ? 'OK' : 'Check'}
           </Button>
         </div>
-        
         {
-        error && (
+          error && (
             <React.Fragment>
               <i className="fas fa-times" styleName="errorIcon" />
-              <div styleName="error" >INVALID PRIVATE KEY! You should pass correct value! Try again! </div>
+              <div styleName="error">
+                <FormattedMessage id="ConfirmOffer69" defaultMessage="INVALID PRIVATE KEY! You should pass correct value! Try again!" />
+              </div>
             </React.Fragment>
           )
         }

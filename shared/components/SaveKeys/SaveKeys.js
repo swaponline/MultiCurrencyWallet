@@ -7,10 +7,11 @@ import styles from './SaveKeys.scss'
 import Field from './Field/Field'
 import Button from 'components/controls/Button/Button'
 import ReactTooltip from 'react-tooltip'
+import { FormattedMessage } from 'react-intl'
 
 
 @connect(({ user: { ethData, btcData, eosData, telosData } }) => ({
-  btcData, ethData, eosData, telosData
+  btcData, ethData, eosData, telosData,
 }))
 @CSSModules(styles)
 export default class SaveKeys extends Component {
@@ -20,39 +21,49 @@ export default class SaveKeys extends Component {
     return (
       <div {...otherProps}>
         <div styleName="title" >
-          These are your private keys. Download the keys by  clicking on <br />
-          the button or take a screenshot of this page, then confirm it and click here. <br />
-          <span styleName="linked" onClick={isChange}>I saved the keys in a safe place</span>
-        </div>
-        <div styleName="row" >
-          <Button brand onClick={isDownload} data-tip data-for="dK">Download</Button>
-            <ReactTooltip id="dK" type="light" effect="solid">
-              <span>Download text document with keys and accounts</span>
-            </ReactTooltip>
-          <div styleName="cell" >
-            <Field
-              label={ethData.currency}
-              privateKey={ethData.privateKey.toString()}
-            />
-            <Field
-              label={btcData.currency}
-              privateKey={btcData.privateKey.toString()}
-            />
-            { typeof eosData.masterPrivateKey === 'string' &&
-              <Field
-                label={eosData.currency}
-                privateKey={eosData.masterPrivateKey.toString()}
-              />
-            }
-            { typeof telosData.activePrivateKey === 'string' &&
-              <Field
-                label={telosData.currency}
-                privateKey={telosData.activePrivateKey.toString()}
-              />
-            }
-          </div>
-        </div>
+          <FormattedMessage id="SaveKeys23" value={{br:<br />}}
+            defaultMessage="These are your private keys. Download the keys by  clicking on {br} the button or take a screenshot of this page, then confirm it and click here.">
+            {message => {message}}
+          </FormattedMessage>
+          <span styleName="linked" onClick={isChange}>
+            <FormattedMessage id="SaveKeys26" defaultMessage="I saved the keys in a safe place">
+              {message => {message}}
+            </FormattedMessage>
+          <br /></span>
       </div>
+      <div styleName="row">
+      <Button brand onClick={isDownload} data-tip data-for="dK">
+        <FormattedMessage id="SaveKeys31" defaultMessage="Download" />
+      </Button>
+      </div>
+        <ReactTooltip id="dK" type="light" effect="solid">
+        <FormattedMessage id="SaveKeys35" defaultMessage="Download text document with keys and accounts">
+          {message => <span>{message}</span>}
+        </FormattedMessage>
+        </ReactTooltip>
+      <div styleName="cell" >
+        <Field
+          label={ethData.currency}
+          privateKey={ethData.privateKey.toString()}
+        />
+        <Field
+          label={btcData.currency}
+          privateKey={btcData.privateKey.toString()}
+        />
+        { typeof eosData.masterPrivateKey === 'string' &&
+        <Field
+          label={eosData.currency}
+          privateKey={eosData.masterPrivateKey.toString()}
+        />
+        }
+        { typeof telosData.activePrivateKey === 'string' &&
+          <Field
+          label={telosData.currency}
+          privateKey={telosData.activePrivateKey.toString()}
+          />
+        }
+      </div>
+    </div>
     )
   }
 }

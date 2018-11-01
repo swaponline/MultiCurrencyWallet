@@ -17,6 +17,7 @@ import { Button } from 'components/controls'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import PageSeo from 'components/Seo/PageSeo'
 import { getSeoPage } from 'helpers/seo'
+import { FormattedMessage } from 'react-intl'
 
 
 @connect(({ core, user,  history: { transactions, swapHistory } }) => ({
@@ -87,32 +88,29 @@ export default class CurrencyWallet extends Component {
 
     return (
       <div className="root">
-        <PageSeo location={location} defaultTitle={`Swap.Online - ${fullName} (${currency}) Web Wallet with Atomic Swap.`} defaultDescription={`Atomic Swap Wallet allows you to manage and securely exchange ${fullName} (${currency}) with 0% fees. Based on Multi-Sig and Atomic Swap technologies.`} />
+        <PageSeo location={location} defaultTitle={
+          `Swap.Online - ${fullName} (${currency}) Web Wallet with Atomic Swap.`} defaultDescription={`Atomic Swap Wallet allows you to manage and securely exchange ${fullName} (${currency}) with 0% fees. Based on Multi-Sig and Atomic Swap technologies.`
+        } />
         <PageHeadline styleName="title" subTitle={!!seoPage ? seoPage.h1 : `Your online ${fullName} (${currency}) web wallet with Atomic Swap.`} />
-        <h3 styleName="subtitle">
-          Your address: <span>{address}</span> <br />
-          Your {fullName} balance: {balance}{' '}{currency.toUpperCase()}
-        </h3>
+          <h3 styleName="subtitle">
+              <FormattedMessage id="CurrencyWallet95" defaultMessage="Your address:" />
+            <span>{address}</span> <br /> Your {fullName} balance: {balance}{' '}{currency.toUpperCase()}
+          </h3>
         <div styleName="inRow">
-          <Button brand style={{ marginRight: '15px' }} onClick={this.handleWithdraw} >Send</Button>
+          <Button brand style={{ marginRight: '15px' }} onClick={this.handleWithdraw}>
+            <FormattedMessage id="CurrencyWallet100" defaultMessage="Send" />
+          </Button>
           <Link to={`${links.home}${currency.toLowerCase()}`} >
-            <Button gray>Exchange</Button>
+          <Button gray>
+            <FormattedMessage id="CurrencyWallet104" defaultMessage="Exchange" />
+          </Button>
           </Link>
         </div>
         { swapHistory.length > 0 && <SwapsHistory orders={swapHistory} /> }
-        <h2 style={{ marginTop: '20px' }} >History your transactions</h2>
-        {
-          txHistory && (
-            <Table
-              titles={[ 'Coin', 'Status', 'Statement', 'Amount' ]}
-              rows={txHistory}
-              styleName="table"
-              rowRender={(row) => (
-                <Row key={row.hash} {...row} />
-              )}
-            />
-          )
-        }
+        <h2 style={{ marginTop: '20px' }} >
+          <FormattedMessage id="CurrencyWallet110" defaultMessage="History your transactions" />
+        </h2>
+        {txHistory && (<Table titles={[ 'Coin', 'Status', 'Statement', 'Amount' ]} rows={txHistory}styleName="table" rowRender={(row) => (<Row key={row.hash} {...row} />)}/>)}
       </div>
     )
   }
