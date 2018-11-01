@@ -36,7 +36,7 @@ const sign = async () => {
       await actions.eos.login(eosAccount, eosActivePrivateKey, eosActivePublicKey)
 
       if (!eosAccountActivated) {
-        console.log(`"${eosAccount}" is not activated yet`)
+        await actions.eos.updateActivationStatus()
       }
     } else {
       await actions.eos.loginWithNewAccount()
