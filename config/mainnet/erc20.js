@@ -24,6 +24,11 @@ export default {
     decimals: 8,
     fullName: 'Aeron',
   },
+  deb: {
+    address: '0x151202c9c18e495656f372281f493eb7698961d5',
+    decimals: 18,
+    fullName: 'Debitum',
+  },
   gusd: {
     address: '0x056fd409e1d7a124bd7017459dfea2f387b6d5cd',
     decimals: 2,
@@ -52,7 +57,7 @@ export default {
   bxb: {
     address: '0x60cbB964Db3f60D14f0d00B5109BccFB01981Aca',
     decimals: 18,
-    fullName: 'bitXbit',
+    fullName: 'Bobcoin',
   },
   dcn: {
     address: '0x08d32b0da63e2C3bcF8019c9c5d849d7a9d791e6',
