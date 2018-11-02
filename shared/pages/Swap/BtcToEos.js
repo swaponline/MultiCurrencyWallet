@@ -126,9 +126,9 @@ export default class BtcToEos extends Component {
             }
             <div style={{ display: 'flex', alignItems: 'center' }}>
               { enabledButton && !flow.btcWithdrawTx &&
-            <Button brand onClick={this.tryRefund}>
-              <FormattedMessage id="BtcToEos126" defaultMessage="TRY REFUND" />
-            </Button>
+                <Button brand onClick={this.tryRefund}>
+                  <FormattedMessage id="BtcToEos126" defaultMessage="TRY REFUND" />
+                </Button>
               }
               <div>
                 <Timer lockTime={flow.scriptValues.lockTime * 1000} enabledButton={() => this.setState({ enabledButton: true })} />

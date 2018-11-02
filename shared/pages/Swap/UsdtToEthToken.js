@@ -80,9 +80,10 @@ export default class UsdtToEthToken extends Component {
         {
           flow.isWaitingForOwner && (
             <Fragment>
-              <FormattedMessage id="UsdrToEthToken83"
+              <FormattedMessage
+                id="UsdrToEthToken83"
                 defaultMessage="We are waiting for a market maker. If it does not appear within 5 minutes, the swap will be canceled automatically.">
-                  {message => <h3>{message}</h3>}
+                {message => <h3>{message}</h3>}
               </FormattedMessage>
               <InlineLoader />
             </Fragment>
@@ -265,10 +266,10 @@ export default class UsdtToEthToken extends Component {
                 flow.ethSwapWithdrawTransactionHash && (
                   <div>
                     <FormattedMessage id="UsdrToEthToken271" defaultMessage="Transaction:" />
-                      <strong>
-                        <a href={`${config.link.etherscan}/tx/${flow.ethSwapWithdrawTransactionHash}`} target="_blank" rel="noreferrer noopener">
-                          {flow.ethSwapWithdrawTransactionHash}
-                        </a>
+                    <strong>
+                      <a href={`${config.link.etherscan}/tx/${flow.ethSwapWithdrawTransactionHash}`} target="_blank" rel="noreferrer noopener">
+                        {flow.ethSwapWithdrawTransactionHash}
+                      </a>
                     </strong>
                   </div>
                 )

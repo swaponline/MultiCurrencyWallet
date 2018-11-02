@@ -125,7 +125,7 @@ export default class Orders extends Component {
             {isVisible ? 'Hide' : 'Show'} my Orders
           </Button>
           <Button gray styleName="button" onClick={this.createOffer}>
-            <FormattedMessage id="Orders117" defaultMessage="Create offer" />
+            <FormattedMessage id="Orders128" defaultMessage="Create offer" />
           </Button>
         </div>
         {
@@ -164,12 +164,12 @@ export default class Orders extends Component {
           isLoading={!isOnline}
         />
         <h3 styleName="ordersHeading">
-          <FormattedMessage id="Orders117" defaultMessage="SELL " />
+          <FormattedMessage id="Orders167" defaultMessage="SELL " />
           {buyCurrency}
-          <FormattedMessage id="Orders118" defaultMessage=" HERE" />
+          <FormattedMessage id="Orders169" defaultMessage=" HERE" />
         </h3>
         <p>
-          <FormattedMessage id="Orders162" defaultMessage="orders that " />
+          <FormattedMessage id="Orders172" defaultMessage="orders that " />
           <a>
             <FormattedMessage id="Orders176" defaultMessage="buy" />
           </a>

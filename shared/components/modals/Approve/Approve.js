@@ -77,7 +77,7 @@ export default class Offer extends React.Component {
           </FieldLabel>
           <Input valueLink={linked.amount} type="number" />
           <Button styleName="button" brand fullWidth disabled={isDisabled} onClick={this.handleApprove}>
-            <FormattedMessage id="Approve73" defaultMessage="Approve" />
+            <FormattedMessage id="Approve80" defaultMessage="Approve" />
           </Button>
         </div>
       </Modal>

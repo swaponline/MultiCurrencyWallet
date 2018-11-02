@@ -53,19 +53,22 @@ export default class EosRegisterModal extends React.Component {
       <Modal name={name} title="EOS Login">
         <FieldLabel inRow>
           <FormattedMessage id="EosRegAccountModal54" defaultMessage="Account name" />
-          <Tooltip text="Enter your EOS account name" /></FieldLabel>
+          <Tooltip text="Enter your EOS account name" />
+        </FieldLabel>
         <Input valueLink={linked.accountName} />
         <FieldLabel inRow>
           <FormattedMessage id="EosRegAccountModal58" defaultMessage="Active private key" />
-          <Tooltip text="Enter private key for active permission" /></FieldLabel>
+          <Tooltip text="Enter private key for active permission" />
+        </FieldLabel>
         <Input valueLink={linked.privateKey} />
-        { error && (<div styleName="error">
-          <FormattedMessage id="EosRegAccountModal63" defaultMessage="Sorry, error occured during activation" />
-        </div>
+        { error && (
+          <div styleName="error">
+            <FormattedMessage id="EosRegAccountModal63" defaultMessage="Sorry, error occured during activation" />
+          </div>
         )
         }
         <Button styleName="button" brand fullWidth disabled={isDisabled} onClick={this.handleSubmit}>
-          <FormattedMessage id="EosRegAccountModal63" defaultMessage="Login" />
+          <FormattedMessage id="EosRegAccountModal70" defaultMessage="Login" />
         </Button>
       </Modal>
     )

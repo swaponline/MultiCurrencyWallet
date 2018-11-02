@@ -123,8 +123,9 @@ export default class EthToBtc extends Component {
           flow.step === 1 && (
             <Fragment>
               <FormattedMessage
-              id="EthToBtc125"
-              defaultMessage="Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation.">
+                id="EthToBtc125"
+                defaultMessage=
+                  "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation.">
                 {message => <div>{message}</div>}
               </FormattedMessage>
               <TimerButton timeLeft={5} brand onClick={this.signSwap}>
@@ -201,7 +202,8 @@ export default class EthToBtc extends Component {
                           )
                         }
                       </strong>
-                    </div>}
+                    </div>
+                }
                     <br />
                     <Fragment>
                       { flow.btcScriptValues &&
@@ -362,9 +364,10 @@ export default class EthToBtc extends Component {
               {
                 (flow.step === 7 || flow.isBtcWithdrawn) && (
                   <FormattedMessage
-                  id="EthToBtc357"
-                  defaultMessage=
-                    "6. BTC Owner successfully took money from ETH Contract and left Secret Key. Requesting withdrawal from BTC Script. Please wait">
+                    id="EthToBtc357"
+                    defaultMessage=
+                      "6. BTC Owner successfully took money from ETH Contract and left Secret Key. Requesting withdrawal from BTC Script. Please wait"
+                  >
                     {message => <h3>{message}</h3>}
                   </FormattedMessage>
                 )

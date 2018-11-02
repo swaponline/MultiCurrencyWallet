@@ -122,8 +122,11 @@ export default class EthToLtc extends Component {
         {
           flow.step === 1 && (
             <Fragment>
-              <FormattedMessage id="EthToLtc125"
-                defaultMessage="Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation.">
+              <FormattedMessage
+                id="EthToLtc125"
+                defaultMessage=
+                  "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation."
+              >
                 {message => <div>{message}</div>}
               </FormattedMessage>
               <TimerButton timeLeft={5} brand onClick={this.signSwap}>
@@ -360,7 +363,9 @@ export default class EthToLtc extends Component {
 
               {
                 (flow.step === 7 || flow.isLtcWithdrawn) && (
-                  <FormattedMessage id="EthToLtc357" defaultMessage="6. LTC Owner successfully took money from ETH Contract and left Secret Key. Requesting withdrawal from LTC Script. Please wait">
+                  <FormattedMessage
+                    id="EthToLtc357"
+                    defaultMessage="6. LTC Owner successfully took money from ETH Contract and left Secret Key. Requesting withdrawal from LTC Script. Please wait">
                     {message => <h3>{message}</h3>}
                   </FormattedMessage>
                 )
@@ -374,7 +379,7 @@ export default class EthToLtc extends Component {
                         {flow.ltcSwapWithdrawTransactionHash}
                       </a>
                     </strong>
-                </div>
+                  </div>
                 )
               }
               {

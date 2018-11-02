@@ -157,9 +157,9 @@ export default class BtcToEth extends Component {
               {
                 flow.step === 3 && !flow.isBalanceEnough && !flow.isBalanceFetching && (
                   <Fragment>
-                    <FormattedMessage id="BtcToEth156" defaultMessage="Not enough money for this swap. Please charge the balance">
-                      {message => <h3>{message}></h3>}
-                    </FormattedMessage>
+                    <h3>
+                      <FormattedMessage id="BtcToEth156" defaultMessage="Not enough money for this swap. Please charge the balance" />
+                    </h3>
                     <div>
                       <div>
                         <FormattedMessage id="BtcToEth160" defaultMessage="Your balance:" />
@@ -207,13 +207,13 @@ export default class BtcToEth extends Component {
                       flow.btcScriptCreatingTransactionHash && (
                         <div>
                           <FormattedMessage id="BtcToEth199" defaultMessage="Transaction:" />
-                            <strong>
+                          <strong>
                             <a href={`${config.link.bitpay}/tx/${flow.btcScriptCreatingTransactionHash}`} target="_blank" el="noopener noreferrer">
                               {flow.btcScriptCreatingTransactionHash}
                             </a>
                           </strong>
                         )
-                          </div>
+                        </div>
                       )
                     }
                     {
@@ -268,15 +268,15 @@ export default class BtcToEth extends Component {
                 flow.ethSwapCreationTransactionHash && (
                   <div>
                     <FormattedMessage id="BtcToEth266" defaultMessage="Transaction:" />
-                      <strong>
-                        <a
-                          href={`${config.link.etherscan}/tx/${flow.ethSwapCreationTransactionHash}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          {flow.ethSwapCreationTransactionHash}
-                        </a>
-                      </strong>
+                    <strong>
+                      <a
+                        href={`${config.link.etherscan}/tx/${flow.ethSwapCreationTransactionHash}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {flow.ethSwapCreationTransactionHash}
+                      </a>
+                    </strong>
                   </div>
                 )
               }
@@ -340,14 +340,14 @@ export default class BtcToEth extends Component {
                 flow.refundTransactionHash && (
                   <div>
                     <FormattedMessage id="BtcToEth338" defaultMessage="Transaction:" />
-                      <strong>
-                        <a
-                          href={`${config.link.bitpay}/tx/${flow.refundTransactionHash}`}
-                          target="_blank"
-                          rel="noreferrer noopener"
-                        >
-                          {flow.refundTransactionHash}
-                        </a>
+                    <strong>
+                      <a
+                        href={`${config.link.bitpay}/tx/${flow.refundTransactionHash}`}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                      >
+                        {flow.refundTransactionHash}
+                      </a>
                     </strong>
                   </div>
                 )

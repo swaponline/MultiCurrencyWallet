@@ -26,7 +26,9 @@ const setApi = (type, id) => {
 const TransactionLink = ({ type, id }) => (
   <div>
     <FormattedMessage id="transaction27" defaultMessage="Transaction:" />
-    <strong><Href tab={setApi(type, id)} rel="noopener noreferrer">{id}</Href></strong>>
+    <strong>
+      <Href tab={setApi(type, id)} rel="noopener noreferrer">{id}</Href>
+    </strong>>
   </div>
 )
 

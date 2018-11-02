@@ -61,10 +61,10 @@ export default class SaveKeysModal extends React.Component {
             <React.Fragment>
               { process.env.TESTNET && (
                 <a
-                href="#"
+                  href="#"
                   onClick={() => { localStorage.setItem(constants.localStorage.testnetSkipPKCheck, true)
                     this.forceUpdate()
-                }}>
+                  }}>
                   <FormattedMessage id="SaveKeysModal" defaultMessage="Testnet: Don`t ask again" />
                 </a>
               )}

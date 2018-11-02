@@ -25,7 +25,8 @@ export default class SaveKeys extends Component {
           <FormattedMessage id="SaveKeys24" defaultMessage="the button or take a screenshot of this page, then confirm it and click here." />
           <span styleName="linked" onClick={isChange}>
             <FormattedMessage id="SaveKeys26" defaultMessage="I saved the keys in a safe place" />
-            <br /></span>
+            <br />
+          </span>
         </div>
         <div styleName="row">
           <Button brand onClick={isDownload} data-tip data-for="Download">
@@ -56,7 +57,7 @@ export default class SaveKeys extends Component {
             <Field
               label={telosData.currency}
               privateKey={telosData.activePrivateKey.toString()}
-              />
+            />
           }
         </div>
       </div>

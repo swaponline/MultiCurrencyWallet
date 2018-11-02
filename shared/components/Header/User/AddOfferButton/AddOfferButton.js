@@ -29,7 +29,7 @@ const AddOfferButton  = () => (
           Subscribe
           </button>
           <ReactTooltip id="subscribe" type="light" effect="solid">
-            <FormattedMessage id="AddOffer22" defaultMessage="Get subscribed for the Swap.Online news">
+            <FormattedMessage id="AddOffer32" defaultMessage="Get subscribed for the Swap.Online news">
               {message => <span>{message}</span>}
             </FormattedMessage>
           </ReactTooltip>

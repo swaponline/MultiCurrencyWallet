@@ -101,7 +101,7 @@ export default class EthTokenToUsdt extends Component {
                 id="EthTokenToUsdt101"
                 defaultMessage=
                   "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation."
-                >
+              >
                 {message => <div>{message}</div>}
               </FormattedMessage>
               {
@@ -122,8 +122,9 @@ export default class EthTokenToUsdt extends Component {
                     </FormattedMessage>
                     {
                       flow.signTransactionHash && (
-                        <FormattedMessage id="EthTokenToUsdt123" defaultMessage="Transaction:">
-                          {message => <div>{message}<strong>
+                        <div>
+                          <FormattedMessage id="EthTokenToUsdt123" defaultMessage="Transaction:" />
+                          <strong>
                             <a
                               href={`${config.link.etherscan}/tx/${flow.signTransactionHash}`}
                               target="_blank"
@@ -132,8 +133,7 @@ export default class EthTokenToUsdt extends Component {
                               {flow.signTransactionHash}
                             </a>
                           </strong>
-                          </div>}
-                        </FormattedMessage>
+                        </div>
                       )
                     }
                     {
@@ -171,8 +171,9 @@ export default class EthTokenToUsdt extends Component {
                     <FormattedMessage id="EthTokenToUsdt169" defaultMessage="Secret Hash:">
                       {message => <div>{message}<strong>{flow.secretHash}</strong></div>}
                     </FormattedMessage>
-                    <FormattedMessage id="EthTokenToUsdt172" defaultMessage="Script address:">
-                      {message => <div>{message}<strong>
+                    <div>
+                      <FormattedMessage id="EthTokenToUsdt172" defaultMessage="Script address:" />
+                      <strong>
                         {
                           flow.usdtFundingTransactionHash && (
                             <a
@@ -185,9 +186,7 @@ export default class EthTokenToUsdt extends Component {
                           )
                         }
                       </strong>
-                      </div>
-                      }
-                    </FormattedMessage>
+                    </div>
                     <br />
                     <Fragment>
                       { flow.usdtScriptValues &&
@@ -348,7 +347,10 @@ export default class EthTokenToUsdt extends Component {
 
               {
                 (flow.step === 7 || flow.isBtcWithdrawn) && (
-                  <FormattedMessage id="EthTokenToUsdt345" defaultMessage="6. USDT Owner successfully took money from ETH Contract and left Secret Key. Requesting withdrawal from BTC Script. Please wait">
+                  <FormattedMessage
+                    id="EthTokenToUsdt345"
+                    defaultMessage="6. USDT Owner successfully took money from ETH Contract and left Secret Key. Requesting withdrawal from BTC Script. Please wait"
+                  >
                     {message => <h3>{message}</h3>}
                   </FormattedMessage>
                 )
@@ -368,7 +370,7 @@ export default class EthTokenToUsdt extends Component {
                     </strong>
                     Please note that USDT withdrawal may take a while to mine and to propagate the network.
                     Due to Omni Protocol properties, the transaction may show up at the OmniExplorer in up to 20 minutes.
-                    </div>
+                  </div>
                 )
               }
               {

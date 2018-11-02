@@ -29,25 +29,25 @@ export default class SwapProgress extends Component {
     switch (step) {
       case 1:
         return (
-          <FormattedMessage id="ConfirmOffer69" defaultMessage="1. Please wait. Confirmation processing">
+          <FormattedMessage id="SwapProgress32" defaultMessage="1. Please wait. Confirmation processing">
             {message => <Title>{message}</Title>}
           </FormattedMessage>
         )
       case 2:
         return (
-          <FormattedMessage id="ConfirmOffer69" defaultMessage="2. Waiting BTC Owner creates Secret Key, creates BTC Script and charges it">
+          <FormattedMessage id="SwapProgress38" defaultMessage="2. Waiting BTC Owner creates Secret Key, creates BTC Script and charges it">
             {message => <Title>{message}</Title>}
           </FormattedMessage>
         )
       case 3:
         return (
-          <FormattedMessage id="ConfirmOffer69" defaultMessage="3. Bitcoin Script created and charged. Please check the information below">
+          <FormattedMessage id="SwapProgress44" defaultMessage="3. Bitcoin Script created and charged. Please check the information below">
             {message => <Title>{message}</Title>}
           </FormattedMessage>
         )
       case 4:
         return (
-          <FormattedMessage id="ConfirmOffer69" defaultMessage="4. Checking balance..">
+          <FormattedMessage id="SwapProgress50" defaultMessage="4. Checking balance..">
             {message => <Title>{message}</Title>}
           </FormattedMessage>
         )
@@ -120,7 +120,7 @@ export default class SwapProgress extends Component {
         )
       case 6:
         return (
-          <FormattedMessage id="SwapProgress129" defaultMessage="6. ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait">
+          <FormattedMessage id="SwapProgress123" defaultMessage="6. ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait">
             {message => <Title>{message}</Title>}
           </FormattedMessage>
         )

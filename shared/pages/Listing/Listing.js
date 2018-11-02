@@ -108,11 +108,11 @@ const Listing = () => (
         <FormattedMessage id="Listing5712" defaultMessage="safe, rapid and decentralized " />
       </Href>
       <FormattedMessage
-      id="Listing571"
+        id="Listing571"
         defaultMessage={defaultMessageLint31} />
     </p>
     <FormattedMessage id="Listing64" defaultMessage="SWAP.Online will be cryptocurrency Pink Sheets market.">
-       {message => <p>{message}</p>}
+      {message => <p>{message}</p>}
     </FormattedMessage>
     <img src={ListingImg} styleName="listingImg" alt="Orders book on swap.online" />
     <p>
@@ -133,7 +133,7 @@ const Listing = () => (
     </FormattedMessage>
     <FormattedMessage
       id="Listing89"
-      defaultMessage= {defaultMessageLint6}>
+      defaultMessage={defaultMessageLint6}>
       {message => <p>{message}</p>}
     </FormattedMessage>
     <FormattedMessage
@@ -152,13 +152,14 @@ const Listing = () => (
       {message => <p>{message}</p>}
     </FormattedMessage>
     <FormattedMessage
-      d="Listing110"
+      id="Listing110"
       defaultMessage="Thus, you token can start to be quoted in free and decentralized manner as quickly as possible for your unlimited profit.">
       {message => <p>{message}</p>}
     </FormattedMessage>
     <p>
       <FormattedMessage
-        id="Listing114" defaultMessage="Stay with us.">
+        id="Listing114"
+        defaultMessage="Stay with us.">
         {message => <strong>{message}</strong>}
       </FormattedMessage>
       <br />

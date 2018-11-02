@@ -79,7 +79,7 @@ export default class Field2 extends React.Component {
             <React.Fragment>
               <i className="fas fa-times" styleName="errorIcon" />
               <div styleName="error">
-                <FormattedMessage id="ConfirmOffer69" defaultMessage="INVALID PRIVATE KEY! You should pass correct value! Try again!" />
+                <FormattedMessage id="Feld82" defaultMessage="INVALID PRIVATE KEY! You should pass correct value! Try again!" />
               </div>
             </React.Fragment>
           )

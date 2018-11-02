@@ -70,19 +70,22 @@ export default class EosBuyAccountModal extends React.Component {
           <div>
             <FieldLabel inRow>
               <FormattedMessage id="EosBuyAccountModal72" defaultMessage="Account name" />
-              <Tooltip text="This account will be registered in EOS blockchain" /></FieldLabel>
+              <Tooltip text="This account will be registered in EOS blockchain" />
+            </FieldLabel>
             <Input readOnly="true" valueLink={linked.accountName} />
           </div>
           <div>
             <FieldLabel inRow>
               <FormattedMessage id="EosBuyAccountModal78" defaultMessage="APrivate key" />
-              <Tooltip text="Private key for active and owner permissions" /></FieldLabel>
+              <Tooltip text="Private key for active and owner permissions" />
+            </FieldLabel>
             <Input readOnly="true" valueLink={linked.activePrivateKey} />
           </div>
           <div>
             <FieldLabel inRow>
               <FormattedMessage id="EosBuyAccountModal84" defaultMessage="Public key" />
-              <Tooltip text="Public key associated with account" /></FieldLabel>
+              <Tooltip text="Public key associated with account" />
+            </FieldLabel>
             <Input readOnly="true" valueLink={linked.activePublicKey} />
           </div>
           <div>
@@ -92,14 +95,15 @@ export default class EosBuyAccountModal extends React.Component {
             </FieldLabel>
             <Input readOnly="true" valueLink={linked.price} />
           </div>
-          { error && (<div styleName="error">
-            <FormattedMessage id="EosBuyAccountModal90" defaultMessage="Sorry, error occured during activation, try again" />
-          </div>
-        )}
+          { error && (
+            <div styleName="error">
+              <FormattedMessage id="EosBuyAccountModal99" defaultMessage="Sorry, error occured during activation, try again" />
+            </div>
+          )}
           { activationPayment && (
             <div>
               <strong>
-                Payment transaction:
+                <FormattedMessage id="EosBuyAccountModal105" defaultMessage="Payment transaction:" />
                 <a
                   href={`${config.link.bitpay}/tx/${activationPayment}`}
                   target="_blank"

@@ -18,14 +18,14 @@ const Confirm = ({ rootClassName, isConfirm, isReject, title, animation }) => (
       </SubTitle>
       <div styleName="row" >
         <Button brand onClick={isConfirm}>
-          <FormattedMessage id="Confirm20" defaultMessage="Yes">
-            {message => <h3>{message}</h3>}
-          </FormattedMessage>
+          <h3>
+            <FormattedMessage id="Confirm20" defaultMessage="Yes" />
+          </h3>
         </Button>
         <Button brand onClick={isReject}>
-          <FormattedMessage id="Confirm25" defaultMessage="No">
-            {message => <h3>{message}</h3>}
-          </FormattedMessage>
+          <h3>
+            <FormattedMessage id="ConConfirm25firm20" defaultMessage="No" />
+          </h3>
         </Button>
       </div>
     </div>

@@ -97,9 +97,12 @@ export default class PrivateKeysModal extends React.PureComponent {
             view === views.saveKeys ? (
               <Fragment>
                 <div styleName="title">
-                  <FormattedMessage id="PrivateKeysModal991" defaultMessage="Before you continue be sure to save your private keys! {br} {br} there is a big chance you will loose your money. " />
+                  <FormattedMessage
+                    id="PrivateKeysModal991"
+                    defaultMessage="Before you continue be sure to save your private keys! {br} {br} there is a big chance you will loose your money. "
+                  />
                   <FormattedMessage id="PrivateKeysModal99" defaultMessage="It`s very important because If you don`t " />
-                  <FormattedMessage id="PrivateKeysModal99" defaultMessage="there is a big chance you will loose your money. " />
+                  <FormattedMessage id="PrivateKeysModal105" defaultMessage="there is a big chance you will loose your money. " />
                 </div>
                 <FormattedMessage id="PrivateKeysModal105" defaultMessage="We do not store your private keys and will not be able to restore them!">
                   {message => <div styleName="subTitle">{message}</div>}
@@ -126,8 +129,10 @@ export default class PrivateKeysModal extends React.PureComponent {
               </Fragment>
             ) : (
               <Fragment>
-                <FormattedMessage id="PrivateKeysModal130"
-                defaultMessage="Please fill information below from instruction.txt file. We`d like to be sure that you saved the private keys before you can continue to the site."
+                <FormattedMessage
+                  id="PrivateKeysModal130"
+                  defaultMessage=
+                    "Please fill information below from instruction.txt file. We`d like to be sure that you saved the private keys before you can continue to the site."
                 >
                   {message => <div styleName="title">{message}</div>}
                 </FormattedMessage>

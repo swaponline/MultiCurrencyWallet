@@ -96,7 +96,7 @@ export default class WithdrawModal extends React.Component {
             defaultMessage="Please notice, that you need to have minimum 0.01 amount "
           />
           <FormattedMessage
-            id="WithdrawModal93"
+            id="WithdrawModal99"
             defaultMessage="of the ETH on your wallet, to use it for Ethereum miners fee"
           />
         </p>
@@ -112,7 +112,8 @@ export default class WithdrawModal extends React.Component {
           !linked.amount.error && (
             <div styleName="note">
               <FormattedMessage id="WithdrawModal106" defaultMessage="No less than" />
-            {minAmount[data.currency.toLowerCase()]}</div>
+              {minAmount[data.currency.toLowerCase()]}
+            </div>
           )
         }
         <Button styleName="button" brand fullWidth disabled={isDisabled} onClick={this.handleSubmit}>

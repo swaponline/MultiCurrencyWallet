@@ -69,7 +69,7 @@ export default class UserTooltip extends Component {
                     <div styleName="title">
                       <FormattedMessage id="userTooltip68" defaultMessage="User with" />
                       <b>{reputation}</b>
-                      <FormattedMessage id="userTooltip68" defaultMessage="reputation wants to swap" />
+                      <FormattedMessage id="userTooltip72" defaultMessage="reputation wants to swap" />
                     </div>
                     <div styleName="currency">
                       <span>{buyAmount.toFixed(5)} <span styleName="coin">{buyCurrency}</span></span>

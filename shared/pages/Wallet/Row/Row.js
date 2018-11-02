@@ -155,9 +155,9 @@ export default class Row extends Component {
       <tr
         styleName={this.props.index === this.props.selectId || !isMobile ? 'showButtons' : 'hidden'}
         onClick={() => { this.props.handleSelectId(this.props.index) }}
-        onTouchEnd={this.handleTouchClear}
-        onTouchMove={this.handleTouch}
-        style={isTouch && this.props.index !== this.props.selectId ? { background: '#f5f5f5' } : { background: '#fff' }}>
+        onTouchEnd={this.handleTouchClear} onTouchMove={this.handleTouch}
+        style={ isTouch && this.props.index !== this.props.selectId ?  { background: '#f5f5f5' } : { background: '#fff' }}
+      >
         <td>
           <Link to={`/${fullName}-wallet`} title={`Online ${fullName} wallet`}>
             <Coin name={currency} />
@@ -225,11 +225,11 @@ export default class Row extends Component {
                           className="far fa-copy"
                           styleName="icon"
                           data-tip
-                          data-for="cp"
+                          data-for="Copy"
                           style={{ width: '10px' }} />
                       }
                       <LinkAccount type={currency} address={address} >{address}</LinkAccount>
-                      <ReactTooltip id="cp" type="light" effect="solid">
+                      <ReactTooltip id="Copy" type="light" effect="solid">
                         <FormattedMessage id="RowWallet229" defaultMessage="Copy">
                           {message => <span>{message}</span>}
                         </FormattedMessage>
@@ -245,41 +245,48 @@ export default class Row extends Component {
                 }
 
                 {
-                  currency === 'EOS' && eosActivationAvailable &&
-                  <button styleName="button" onClick={this.handleEosBuyAccount} data-tip data-for="bE">
+                  currency === 'EOS' && !eosAccountActivated &&
+                  <button styleName="button" onClick={this.handleEosBuyAccount} data-tip data-for="Activate">
                     <FormattedMessage id="RowWallet1245" defaultMessage="Activate" />
-                  </button>
-                }
-                <ReactTooltip id="bE" type="light" effect="solid">
+                  </button>                }
+                <ReactTooltip id="Activate" type="light" effect="solid">
                   <FormattedMessage id="RowWallet250" defaultMessage="Buy this account">
                     {message => <span>{message}</span>}
                   </FormattedMessage>
                 </ReactTooltip>
+
                 {
-                  currency === 'EOS' &&
-                  <button styleName="button" onClick={this.handleEosRegister} data-tip data-for="lE">
+                  <button styleName="button" onClick={this.handleEosRegister} data-tip data-for="Use">
                     <FormattedMessage id="RowWallet256" defaultMessage="Use another" />
                   </button>
                 }
-                <ReactTooltip id="lE" type="light" effect="Login with your existing eos account">
-                  <FormattedMessage id="RowWallet261" defaultMessage="Buy this account">
+                <ReactTooltip id="Use" type="light" effect="solid">
+                  <FormattedMessage id="RowWallet261" defaultMessage="Login with your existing eos account">
                     {message => <span>{message}</span>}
                   </FormattedMessage>
                 </ReactTooltip>
-                {
-                  currency === 'TLOS' && address === '' &&
-                  <button styleName="button" onClick={this.handleTelosRegister} data-tip data-for="lT">
-                    <FormattedMessage id="RowWallet267" defaultMessage="Login" />
-                  </button>
+                { currency === 'EOS' && !eosAccountActivated && (
+                  <Fragment>
+                    <br />
+                    <span style={{ fontSize: '12px', color: '#c9c9c9' }}>
+                      <FormattedMessage id="RowWallet267" defaultMessage="not activated" />
+                    </span>
+                  </Fragment>
+                )
                 }
-                <ReactTooltip id="lT" type="light" effect="solid">
-                  <FormattedMessage id="RowWallet272" defaultMessage="login if you have TLOS account yet">
-                    {message => <span>{message}</span>}
-                  </FormattedMessage>
-                </ReactTooltip>
+
+                { currency === 'TLOS' && !telosAccountActivated && (
+                  <Fragment>
+                    <br />
+                    <span style={{ fontSize: '12px', color: '#c9c9c9' }}>
+                      <FormattedMessage id="RowWallet274" defaultMessage="not activated" />
+                    </span>
+                  </Fragment>
+                )
+                }
                 { isAddressCopied &&
                   <p styleName="copied" >
-                    <FormattedMessage id="RowWallet277" defaultMessage="Address copied to clipboard" />
+                    <FormattedMessage id="RowWallet284" defaultMessage="Address copied to clipboard" />
                   </p>
                 }
               </td>
@@ -290,26 +297,26 @@ export default class Row extends Component {
           <div>
             <WithdrawButton onClick={this.handleWithdraw} datatip="Send your currency" styleName="marginRight">
               <i className="fas fa-arrow-alt-circle-right" />
-              <FormattedMessage id="RowWallet289" defaultMessage="Send">
-                {message => <span>{message}</span>}
-              </FormattedMessage>
+              <span>
+                <FormattedMessage id="RowWallet296" defaultMessage="Send" />
+              </span>
               <ReactTooltip type="light" effect="solid" />
             </WithdrawButton>
             { isMobile && (
               <WithdrawButton onClick={this.handleReceive} styleName="marginRight">
                 <i className="fas fa-qrcode" />
-                <FormattedMessage id="RowWallet289" defaultMessage="Receive">
-                  {message => <span>{message}</span>}
-                </FormattedMessage>
+                <span>
+                  <FormattedMessage id="RowWallet304" defaultMessage="Receive" />
+                </span>
               </WithdrawButton>
             )}
             {
               tradeAllowed && (
                 <WithdrawButton datatip="Swap your currency or create order to swap" onClick={() => this.handleGoTrade(currency)}>
                   <i className="fas fa-exchange-alt" />
-                  <FormattedMessage id="RowWallet306" defaultMessage="Exchange">
-                    {message => <span>{message}</span>}
-                  </FormattedMessage>
+                  <span>
+                    <FormattedMessage id="RowWallet313" defaultMessage="Exchange" />
+                  </span>
                   <ReactTooltip type="light" effect="solid" />
                 </WithdrawButton>
               )

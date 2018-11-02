@@ -165,9 +165,9 @@ export default class EthTokenToBtc extends Component {
                       <strong>
                         {flow.btcScriptCreatingTransactionHash && (
                           <a
-                          href={`${config.link.bitpay}/tx/${flow.btcScriptCreatingTransactionHash}`}
-                          target="_blank"
-                          rel="noopener noreferrer" >
+                            href={`${config.link.bitpay}/tx/${flow.btcScriptCreatingTransactionHash}`}
+                            target="_blank"
+                            rel="noopener noreferrer" >
                             {flow.btcScriptCreatingTransactionHash}
                           </a>
                         )
@@ -179,7 +179,8 @@ export default class EthTokenToBtc extends Component {
                       { flow.btcScriptValues &&
                         <span onClick={this.toggleBitcoinScript}>
                           <FormattedMessage id="EthTokenBtc184" defaultMessage="Show bitcoin script" />
-                          <strong>{flow.secretHash}</strong></span>
+                          <strong>{flow.secretHash}</strong>
+                        </span>
                       }
                       { isShowingBitcoinScript && (
                         <pre>
@@ -323,7 +324,8 @@ export default class EthTokenToBtc extends Component {
 
               {
                 (flow.step === 7 || flow.isBtcWithdrawn) && (
-                  <FormattedMessage id="EthTokenBtc335"
+                  <FormattedMessage
+                    id="EthTokenBtc335"
                     defaultMessage="6. BTC Owner successfully took money from ETH Contract and left Secret Key. Requesting withdrawal from BTC Script. Please wait">
                     {message => <h3>{message}</h3>}
                   </FormattedMessage>
@@ -365,7 +367,7 @@ export default class EthTokenToBtc extends Component {
                       </Button>
                     }
                     <div>
-                      <Timer lockTime={(flow.btcScriptValues.lockTime - 5400) * 1000} enabledButton={() => this.setState({ enabledButton: true })}/>
+                      <Timer lockTime={(flow.btcScriptValues.lockTime - 5400) * 1000} enabledButton={() => this.setState({ enabledButton: true })} />
                     </div>
                   </div>
                 )
