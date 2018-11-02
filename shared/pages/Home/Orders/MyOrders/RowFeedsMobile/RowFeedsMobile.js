@@ -24,12 +24,6 @@ export default class RowFeedsMoble extends Component {
     isLinkCopied: false,
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps !== this.props) {
-      this.setState()
-    }
-  }
-
   handleCopyLink = () => {
     this.setState({
       isLinkCopied: true,
