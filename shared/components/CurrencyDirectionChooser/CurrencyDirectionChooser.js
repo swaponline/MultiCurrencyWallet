@@ -55,20 +55,20 @@ export default class CurrencyDirectionChooser extends Component {
         </div>
         <div styleName="row formRow">
           <div styleName="row">
-            <div styleName="row">
+            <div styleName="row rowLeft">
               <p styleName="text">You have </p>
               <CurrencySelect
-                styleName="currencySelect"
+                styleName="currencySelect currencySelectLeft"
                 selectedValue={sellCurrency}
                 onSelect={handleSellCurrencySelect}
                 currencies={currencies}
               />
             </div>
             <Flip onClick={flipCurrency} />
-            <div styleName="row">
+            <div styleName="row rowRight">
               <p styleName="text">You get</p>
               <CurrencySelect
-                styleName="currencySelect"
+                styleName="currencySelect currencySelectRight"
                 selectedValue={buyCurrency}
                 onSelect={handleBuyCurrencySelect}
                 currencies={currencies}
