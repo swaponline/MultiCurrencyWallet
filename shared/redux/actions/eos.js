@@ -83,7 +83,7 @@ const buyAccount = async () => {
   const message = `${accountName}:${eosPublicKey}`
   const signature = await actions.btc.signMessage(message, btcPrivateKey)
 
-  await activateAccount({
+  const activationTx = await activateAccount({
     accountName, eosPublicKey, btcAddress, signature, paymentTx,
   })
 

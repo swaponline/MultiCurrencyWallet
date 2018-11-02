@@ -41,8 +41,9 @@ export default class KeyActionsPanel extends Component {
 
     return (
       <div>
-        { process.env.TESTNET && <WithdrawButton onClick={this.handleClear} >
-          <FormattedMessage id="KeyActionsPanel43" defaultMessage="Exit"/>
+        { process.env.TESTNET &&
+        <WithdrawButton onClick={this.handleClear} >
+          <FormattedMessage id="KeyActionsPanel43" defaultMessage="Exit" />
         </WithdrawButton>
         }
         <WithdrawButton onClick={this.handleDownload}>
@@ -54,7 +55,7 @@ export default class KeyActionsPanel extends Component {
         {
           hiddenCoinsList.length !== 0 && (
             <WithdrawButton onClick={this.handleShowMore}>
-              <FormattedMessage id="KeyActionsPanel53" defaultMessage="Show more coins"/>
+              <FormattedMessage id="KeyActionsPanel53" defaultMessage="Show more coins" />
               ({hiddenCoinsList.length})
             </WithdrawButton>
           )

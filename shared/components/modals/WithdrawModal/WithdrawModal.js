@@ -51,7 +51,7 @@ export default class WithdrawModal extends React.Component {
 
   handleSubmit = () => {
     const { address: to, amount } = this.state
-    const { data: { currency, contractAddress, address, balance, decimals } } = this.props
+    const { data: { currency, contractAddress, address, balance, decimals }, name }  = this.props
 
     this.setBalanceOnState(currency)
 
@@ -90,12 +90,16 @@ export default class WithdrawModal extends React.Component {
 
     return (
       <Modal name={name} title={`Withdraw ${data.currency.toUpperCase()}`}>
-        <FormattedMessage
-          id="WithdrawModal93"
-           value={{br:<br />}}
-          defaultMessage="Please notice, that you need to have minimum 0.01 amount {br} of the ETH on your wallet, to use it for Ethereum miners fee">
-          {message => <p style={{ fontSize: '16px' }}>{message}</p>}
-        </FormattedMessage>
+        <p style={{ fontSize: '16px' }}>
+          <FormattedMessage
+            id="WithdrawModal93"
+            defaultMessage="Please notice, that you need to have minimum 0.01 amount "
+          />
+          <FormattedMessage
+            id="WithdrawModal93"
+            defaultMessage="of the ETH on your wallet, to use it for Ethereum miners fee"
+          />
+        </p>
         <FormattedMessage id="WithdrawModal96" defaultMessage="Address">
           {message => <FieldLabel inRow>{message}<Tooltip text="destination address" /></FieldLabel>}
         </FormattedMessage>

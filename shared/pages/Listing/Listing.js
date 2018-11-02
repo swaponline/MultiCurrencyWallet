@@ -64,84 +64,101 @@ const Listing = () => (
     </PageHeadline>
     <p>
       <SubTitle>
-        <FormattedMessage id="Listing21"
-        defaultMessage= "1. We can list your token on swap.online and it is absolutely free for now;" />
+        <FormattedMessage
+          id="Listing21"
+          defaultMessage="1. We can list your token on swap.online and it is absolutely free for now;" />
       </SubTitle>
       <SubTitle>
-        <FormattedMessage id="Listing22"
-        defaultMessage= "2. To list your tokens, please send us the link to your peoject, erc20 address, icon, name and ticker (short name) to team@swap.online" />
+        <FormattedMessage
+          id="Listing22"
+          defaultMessage="2. To list your tokens, please send us the link to your peoject, erc20 address, icon, name and ticker (short name) to team@swap.online" />
       </SubTitle>
       <SubTitle>
-        <FormattedMessage id="Listing23"
-        defaultMessage= "3. We as well will announce listing of your tokens on our social media, mutial PR will benefit both sides." />
+        <FormattedMessage
+          id="Listing23"
+          defaultMessage="3. We as well will announce listing of your tokens on our social media, mutial PR will benefit both sides." />
       </SubTitle>
     </p>
-      <FormattedMessage id="Listing28" defaultMessage="Crypto Pink Sheets: ALL Coins Welcome To SWAP.Online!">
-        {message => <p>{message}</p>}
-      </FormattedMessage>
-      <FormattedMessage id="Listing31" defaultMessage="OTC-approach-crypto market to be opened in Aug, 2018.">
-        {message => <p>{message}</p>}
-      </FormattedMessage>
-      <FormattedMessage id="Listing34"
-        defaultMessage={defaultMessageLint}>
-        {message => <p>{message}</p>}
-      </FormattedMessage>
-      <FormattedMessage id="Listing48"
-        defaultMessage="Wal-Mart was the Pink Sheet company in 1972 and earned there USD 1B.">
-        {message => <p>{message}</p>}
-      </FormattedMessage>
-      <FormattedMessage id="Listing52"
-        defaultMessage={defaultMessageLint1}>
-        {message => <p>{message}</p>}
-      </FormattedMessage>
-      <p>
-        <FormattedMessage id="Listing57"
-          defaultMessage={defaultMessageLint3} />
-        <Href tab="https://wiki.swap.online/decentralised_exchanges_2018trends_eng/" >safe, rapid and decentralized </Href>
-        <FormattedMessage id="Listing571"
-          defaultMessage={defaultMessageLint31} />
-
-      </p>
-      <FormattedMessage id="Listing64" defaultMessage="SWAP.Online will be cryptocurrency Pink Sheets market.">
-        {message => <p>{message}</p>}
-      </FormattedMessage>
+    <FormattedMessage id="Listing28" defaultMessage="Crypto Pink Sheets: ALL Coins Welcome To SWAP.Online!">
+      {message => <p>{message}</p>}
+    </FormattedMessage>
+    <FormattedMessage id="Listing31" defaultMessage="OTC-approach-crypto market to be opened in Aug, 2018.">
+      {message => <p>{message}</p>}
+    </FormattedMessage>
+    <FormattedMessage
+      id="Listing34"
+      defaultMessage={defaultMessageLint}>
+      {message => <p>{message}</p>}
+    </FormattedMessage>
+    <FormattedMessage
+      id="Listing48"
+      defaultMessage="Wal-Mart was the Pink Sheet company in 1972 and earned there USD 1B.">
+      {message => <p>{message}</p>}
+    </FormattedMessage>
+    <FormattedMessage
+      id="Listing52"
+      defaultMessage={defaultMessageLint1}>
+      {message => <p>{message}</p>}
+    </FormattedMessage>
+    <p>
+      <FormattedMessage
+        id="Listing57"
+        defaultMessage={defaultMessageLint3} />
+      <Href tab="https://wiki.swap.online/decentralised_exchanges_2018trends_eng/" >
+        <FormattedMessage id="Listing5712" defaultMessage="safe, rapid and decentralized " />
+      </Href>
+      <FormattedMessage
+      id="Listing571"
+        defaultMessage={defaultMessageLint31} />
+    </p>
+    <FormattedMessage id="Listing64" defaultMessage="SWAP.Online will be cryptocurrency Pink Sheets market.">
+       {message => <p>{message}</p>}
+    </FormattedMessage>
     <img src={ListingImg} styleName="listingImg" alt="Orders book on swap.online" />
-      <p>
-        <FormattedMessage id="Listing68"
-          defaultMessage={defaultMessageLint2} />
-      </p>
-      <FormattedMessage id="Listing75"
-        defaultMessage={defaultMessageLint4} >
-        {message => <p>{message}</p>}
-      </FormattedMessage>
-      <FormattedMessage id="Listing81" defaultMessage="That is not about us.">
-        {message => <p>{message}</p>}
-      </FormattedMessage>
-      <FormattedMessage id="Listing84" defaultMessage={defaultMessageLint5}>
-        {message => <p>{message}</p>}
-      </FormattedMessage>
-      <FormattedMessage id="Listing89"
+    <p>
+      <FormattedMessage
+        id="Listing68"
+        defaultMessage={defaultMessageLint2} />
+    </p>
+    <FormattedMessage
+      id="Listing75"
+      defaultMessage={defaultMessageLint4} >
+      {message => <p>{message}</p>}
+    </FormattedMessage>
+    <FormattedMessage id="Listing81" defaultMessage="That is not about us.">
+      {message => <p>{message}</p>}
+    </FormattedMessage>
+    <FormattedMessage id="Listing84" defaultMessage={defaultMessageLint5}>
+      {message => <p>{message}</p>}
+    </FormattedMessage>
+    <FormattedMessage
+      id="Listing89"
       defaultMessage= {defaultMessageLint6}>
-        {message => <p>{message}</p>}
-      </FormattedMessage>
-      <FormattedMessage id="Listing95"
+      {message => <p>{message}</p>}
+    </FormattedMessage>
+    <FormattedMessage
+      id="Listing95"
       defaultMessage={defaultMessageLint7}>
-        {message => <p>{message}</p>}
-      </FormattedMessage>
-      <FormattedMessage id="Listing100"
-       defaultMessage={defaultMessageLint8}>
-        {message => <p>{message}</p>}
-      </FormattedMessage>
-      <FormattedMessage id="Listing106"
+      {message => <p>{message}</p>}
+    </FormattedMessage>
+    <FormattedMessage
+      id="Listing100"
+      defaultMessage={defaultMessageLint8}>
+      {message => <p>{message}</p>}
+    </FormattedMessage>
+    <FormattedMessage
+      id="Listing106"
       defaultMessage="The conditions of delisting are discussed, but at the moment, we plan to expel twenty per cent worst tokens every month.">
-        {message => <p>{message}</p>}
-      </FormattedMessage>
-      <FormattedMessage id="Listing110"
+      {message => <p>{message}</p>}
+    </FormattedMessage>
+    <FormattedMessage
+      d="Listing110"
       defaultMessage="Thus, you token can start to be quoted in free and decentralized manner as quickly as possible for your unlimited profit.">
       {message => <p>{message}</p>}
-      </FormattedMessage>
+    </FormattedMessage>
     <p>
-      <FormattedMessage id="Listing114" defaultMessage="Stay with us.">
+      <FormattedMessage
+        id="Listing114" defaultMessage="Stay with us.">
         {message => <strong>{message}</strong>}
       </FormattedMessage>
       <br />

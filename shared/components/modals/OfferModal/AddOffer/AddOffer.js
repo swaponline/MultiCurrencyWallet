@@ -348,9 +348,11 @@ export default class AddOffer extends Component {
 
     return (
       <div styleName="wrapper">
-        { ethBalance < 0.02 &&
+        { this.isEthOrERC20() &&
         <span styleName="error">
-          <FormattedMessage id="AddOffer351" defaultMessage="For a swap, you need 0.02 ETH on your balance"/>
+          <FormattedMessage id="AddOffer351" defaultMessage="For a swap, you need " />
+          {minAmount.eth}
+          <FormattedMessage id="AddOffer355" defaultMessage="ETH on your balance" />
         </span>
         }
         <SelectGroup
@@ -396,7 +398,7 @@ export default class AddOffer extends Component {
           <Tooltip text="To change the exchange rate" />
         </div>
         <Button styleName="button" fullWidth brand disabled={isDisabled} onClick={this.handleNext}>
-          <FormattedMessage id="AddOffer396" defaultMessage="Next"/>  
+          <FormattedMessage id="AddOffer396" defaultMessage="Next" />
         </Button>
       </div>
     )

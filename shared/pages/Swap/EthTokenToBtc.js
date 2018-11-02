@@ -93,7 +93,8 @@ export default class EthTokenToBtc extends Component {
             <Fragment>
               <FormattedMessage
                 id="EthTokenBtc94"
-                defaultMessage="Confirmation of the transaction is necessary for crediting the reputation.If a user does not bring the deal to the end he gets a negative reputation."
+                defaultMessage=
+                  "Confirmation of the transaction is necessary for crediting the reputation.If a user does not bring the deal to the end he gets a negative reputation."
               >
                 {message => <div>{message}</div>}
               </FormattedMessage>
@@ -118,7 +119,7 @@ export default class EthTokenToBtc extends Component {
                         <div>
                           <FormattedMessage id="EthTokenBtc116" defaultMessage="Transaction" />
                           <strong>
-                          <a href={`${config.link.etherscan}/tx/${flow.signTransactionHash}`} target="_blank" rel="noopener noreferrer" >{flow.signTransactionHash}</a>
+                            <a href={`${config.link.etherscan}/tx/${flow.signTransactionHash}`} target="_blank" rel="noopener noreferrer" >{flow.signTransactionHash}</a>
                           </strong>
                         </div>
                       )
@@ -162,9 +163,14 @@ export default class EthTokenToBtc extends Component {
                     <div>
                       <FormattedMessage id="EthTokenBtc165" defaultMessage="Script address:" />
                       <strong>
-                        {flow.btcScriptCreatingTransactionHash && (<a href={`${config.link.bitpay}/tx/${flow.btcScriptCreatingTransactionHash}`}
-                          target="_blank"rel="noopener noreferrer" >
-                          {flow.btcScriptCreatingTransactionHash}</a>)
+                        {flow.btcScriptCreatingTransactionHash && (
+                          <a
+                          href={`${config.link.bitpay}/tx/${flow.btcScriptCreatingTransactionHash}`}
+                          target="_blank"
+                          rel="noopener noreferrer" >
+                            {flow.btcScriptCreatingTransactionHash}
+                          </a>
+                        )
                         }
                       </strong>
                     </div>
@@ -173,7 +179,7 @@ export default class EthTokenToBtc extends Component {
                       { flow.btcScriptValues &&
                         <span onClick={this.toggleBitcoinScript}>
                           <FormattedMessage id="EthTokenBtc184" defaultMessage="Show bitcoin script" />
-                        <strong>{flow.secretHash}</strong></span>
+                          <strong>{flow.secretHash}</strong></span>
                       }
                       { isShowingBitcoinScript && (
                         <pre>
@@ -215,9 +221,9 @@ export default class EthTokenToBtc extends Component {
                       flow.step === 3 && (
                         <Fragment>
                           <br />
-                            <TimerButton timeLeft={5} brand onClick={this.confirmBTCScriptChecked}>
-                              <FormattedMessage id="EthTokenBtc228" defaultMessage="Everything is OK. Continue" />
-                            </TimerButton>
+                          <TimerButton timeLeft={5} brand onClick={this.confirmBTCScriptChecked}>
+                            <FormattedMessage id="EthTokenBtc228" defaultMessage="Everything is OK. Continue" />
+                          </TimerButton>
                         </Fragment>
                       )
                     }
@@ -245,9 +251,9 @@ export default class EthTokenToBtc extends Component {
                       <span>{flow.address}</span>
                     </div>
                     <br />
-                      <FormattedMessage id="EthTokenBtc258" defaultMessage="Continue" >
-                        {message => <TimerButton brand onClick={this.updateBalance}>{message}</TimerButton>}
-                      </FormattedMessage>
+                    <FormattedMessage id="EthTokenBtc258" defaultMessage="Continue" >
+                      {message => <TimerButton brand onClick={this.updateBalance}>{message}</TimerButton>}
+                    </FormattedMessage>
                   </Fragment>
                 )
               }
@@ -273,7 +279,11 @@ export default class EthTokenToBtc extends Component {
                   <div>
                     <FormattedMessage id="EthTokenBtc283" defaultMessage="Transaction:" />
                     <strong>
-                    <a href={`${config.link.etherscan}/tx/${flow.ethSwapCreationTransactionHash}`} target="_blank" rel="noopener noreferrer">{flow.ethSwapCreationTransactionHash}</a>
+                      <a
+                        href={`${config.link.etherscan}/tx/${flow.ethSwapCreationTransactionHash}`}
+                        target="_blank"
+                        rel="noopener noreferrer">{flow.ethSwapCreationTransactionHash}
+                      </a>
                     </strong>
                   </div>
                 )
@@ -313,7 +323,8 @@ export default class EthTokenToBtc extends Component {
 
               {
                 (flow.step === 7 || flow.isBtcWithdrawn) && (
-                  <FormattedMessage id="EthTokenBtc335" defaultMessage="6. BTC Owner successfully took money from ETH Contract and left Secret Key. Requesting withdrawal from BTC Script. Please wait">
+                  <FormattedMessage id="EthTokenBtc335"
+                    defaultMessage="6. BTC Owner successfully took money from ETH Contract and left Secret Key. Requesting withdrawal from BTC Script. Please wait">
                     {message => <h3>{message}</h3>}
                   </FormattedMessage>
                 )
@@ -351,11 +362,11 @@ export default class EthTokenToBtc extends Component {
                     { enabledButton && !flow.isBtcWithdrawn &&
                       <Button brand onClick={this.tryRefund}>
                         <FormattedMessage id="EthTokenBtc375" defaultMessage="TRY REFUND" />
-                        </Button>
+                      </Button>
                     }
-                      <div>
-                        <Timer lockTime={(flow.btcScriptValues.lockTime - 5400) * 1000} enabledButton={() => this.setState({ enabledButton: true })}/>
-                      </div>
+                    <div>
+                      <Timer lockTime={(flow.btcScriptValues.lockTime - 5400) * 1000} enabledButton={() => this.setState({ enabledButton: true })}/>
+                    </div>
                   </div>
                 )
               }

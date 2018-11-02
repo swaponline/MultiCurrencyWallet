@@ -21,49 +21,45 @@ export default class SaveKeys extends Component {
     return (
       <div {...otherProps}>
         <div styleName="title" >
-          <FormattedMessage id="SaveKeys23" value={{br:<br />}}
-            defaultMessage="These are your private keys. Download the keys by  clicking on {br} the button or take a screenshot of this page, then confirm it and click here.">
-            {message => {message}}
-          </FormattedMessage>
+          <FormattedMessage id="SaveKeys23" defaultMessage="These are your private keys. Download the keys by  clicking on " />
+          <FormattedMessage id="SaveKeys24" defaultMessage="the button or take a screenshot of this page, then confirm it and click here." />
           <span styleName="linked" onClick={isChange}>
-            <FormattedMessage id="SaveKeys26" defaultMessage="I saved the keys in a safe place">
-              {message => {message}}
-            </FormattedMessage>
-          <br /></span>
-      </div>
-      <div styleName="row">
-      <Button brand onClick={isDownload} data-tip data-for="dK">
-        <FormattedMessage id="SaveKeys31" defaultMessage="Download" />
-      </Button>
-      </div>
-        <ReactTooltip id="dK" type="light" effect="solid">
-        <FormattedMessage id="SaveKeys35" defaultMessage="Download text document with keys and accounts">
-          {message => <span>{message}</span>}
-        </FormattedMessage>
+            <FormattedMessage id="SaveKeys26" defaultMessage="I saved the keys in a safe place" />
+            <br /></span>
+        </div>
+        <div styleName="row">
+          <Button brand onClick={isDownload} data-tip data-for="Download">
+            <FormattedMessage id="SaveKeys31" defaultMessage="Download" />
+          </Button>
+        </div>
+        <ReactTooltip id="Download" type="light" effect="solid">
+          <FormattedMessage id="SaveKeys35" defaultMessage="Download text document with keys and accounts">
+            {message => <span>{message}</span>}
+          </FormattedMessage>
         </ReactTooltip>
-      <div styleName="cell" >
-        <Field
-          label={ethData.currency}
-          privateKey={ethData.privateKey.toString()}
-        />
-        <Field
-          label={btcData.currency}
-          privateKey={btcData.privateKey.toString()}
-        />
-        { typeof eosData.masterPrivateKey === 'string' &&
-        <Field
-          label={eosData.currency}
-          privateKey={eosData.masterPrivateKey.toString()}
-        />
-        }
-        { typeof telosData.activePrivateKey === 'string' &&
+        <div styleName="cell" >
           <Field
-          label={telosData.currency}
-          privateKey={telosData.activePrivateKey.toString()}
+            label={ethData.currency}
+            privateKey={ethData.privateKey.toString()}
           />
-        }
+          <Field
+            label={btcData.currency}
+            privateKey={btcData.privateKey.toString()}
+          />
+          { typeof eosData.masterPrivateKey === 'string' &&
+            <Field
+              label={eosData.currency}
+              privateKey={eosData.masterPrivateKey.toString()}
+            />
+          }
+          { typeof telosData.activePrivateKey === 'string' &&
+            <Field
+              label={telosData.currency}
+              privateKey={telosData.activePrivateKey.toString()}
+              />
+          }
+        </div>
       </div>
-    </div>
     )
   }
 }

@@ -108,12 +108,12 @@ export default class Orders extends Component {
     return (
       <Fragment>
         <PageSeo
-            location={location}
-            defaultTitle={
-              `Atomic Swap ${buyCurrencyFullName} (${buyCurrency}) to ${sellCurrencyFullName} (${sellCurrency}) Instant Exchange`}
-               defaultDescription={`Best exchange rate for ${buyCurrencyFullName} (${buyCurrency}) to ${sellCurrencyFullName} (${sellCurrency}).
+          location={location}
+          defaultTitle={
+            `Atomic Swap ${buyCurrencyFullName} (${buyCurrency}) to ${sellCurrencyFullName} (${sellCurrency}) Instant Exchange`}
+          defaultDescription={`Best exchange rate for ${buyCurrencyFullName} (${buyCurrency}) to ${sellCurrencyFullName} (${sellCurrency}).
                Swap.Online wallet provides instant exchange using Atomic Swap Protocol.`
-              } />
+          } />
         <Title>{buyCurrency}/{sellCurrency} no limit exchange with 0 fee</Title>
         { invalidPair &&
           <FormattedMessage id="Orders117" defaultMessage="No such ticker. Redirecting to SWAP-BTC exchange...">
@@ -124,9 +124,9 @@ export default class Orders extends Component {
           <Button green styleName="button" disabled={myOrders.length === 0} onClick={() => this.setState(state => ({ isVisible: !state.isVisible }))}>
             {isVisible ? 'Hide' : 'Show'} my Orders
           </Button>
-        <Button gray styleName="button" onClick={this.createOffer}>
-          <FormattedMessage id="Orders117" defaultMessage="Create offer" />
-        </Button>
+          <Button gray styleName="button" onClick={this.createOffer}>
+            <FormattedMessage id="Orders117" defaultMessage="Create offer" />
+          </Button>
         </div>
         {
           isVisible && <MyOrders
@@ -139,13 +139,15 @@ export default class Orders extends Component {
         <h3>
           <FormattedMessage id="Orders117" defaultMessage="BUY " />
           {buyCurrency}
-            <FormattedMessage id="Orders118" defaultMessage=" HERE" />
+          <FormattedMessage id="Orders118" defaultMessage=" HERE" />
         </h3>
         <p>
           <FormattedMessage id="Orders162" defaultMessage="orders of those who " />
-            <a> sell </a>
-            {buyCurrency}
-          <FormattedMessage id="Orders162" defaultMessage=" to you" />
+          <a>
+            <FormattedMessage id="Orders163" defaultMessage="sell" />
+          </a>
+          {buyCurrency}
+          <FormattedMessage id="Orders164" defaultMessage=" to you" />
         </p>
         <Table
           id="table_exchange"
@@ -161,16 +163,18 @@ export default class Orders extends Component {
           )}
           isLoading={!isOnline}
         />
-        <h3>
+        <h3 styleName="ordersHeading">
           <FormattedMessage id="Orders117" defaultMessage="SELL " />
           {buyCurrency}
-            <FormattedMessage id="Orders118" defaultMessage=" HERE" />
+          <FormattedMessage id="Orders118" defaultMessage=" HERE" />
         </h3>
         <p>
           <FormattedMessage id="Orders162" defaultMessage="orders that " />
-            <a> buy </a>
-            {buyCurrency}
-          <FormattedMessage id="Orders162" defaultMessage=" from you" />
+          <a>
+            <FormattedMessage id="Orders176" defaultMessage="buy" />
+          </a>
+          {buyCurrency}
+          <FormattedMessage id="Orders177" defaultMessage=" from you" />
         </p>
         <Table
           id="table_exchange"

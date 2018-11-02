@@ -54,11 +54,11 @@ export default class TelosRegisterModal extends React.Component {
       <Modal name={name} title="TELOS Login">
         <FieldLabel inRow>
           <FormattedMessage id="TelosRegister55" defaultMessage="Account name" />
-        <Tooltip text="Enter TELOS account name" /></FieldLabel>
+          <Tooltip text="Enter TELOS account name" /></FieldLabel>
         <Input valueLink={linked.accountName} />
         <FieldLabel inRow>
           <FormattedMessage id="TelosRegister59" defaultMessage="Private key" />
-        <Tooltip text="Enter your TELOS secret key" /></FieldLabel>
+          <Tooltip text="Enter your TELOS secret key" /></FieldLabel>
         <Input valueLink={linked.privateKey} />
         { error && (
           <FormattedMessage id="TelosRegister64" defaultMessage="Sorry, error occured during activation">

@@ -12,7 +12,7 @@ const Group = ({ inputLink, placeholder, onClick, disabled }) => (
   <div styleName="group">
     <Input valueLink={inputLink} readOnly={disabled} placeholder={placeholder} styleName="input" pattern="0-9a-zA-Z" />
     <Button brand onClick={onClick} disabled={disabled} styleName="button" >
-      <FormattedMessage id="Group14" defaultMessage="Import"/>
+      <FormattedMessage id="Group14" defaultMessage="Import" />
     </Button>
   </div>
 )

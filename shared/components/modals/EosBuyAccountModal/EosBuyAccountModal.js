@@ -41,8 +41,7 @@ export default class EosBuyAccountModal extends React.Component {
 
     const { buyAccountPriceInBTC: price } = config.api.eos
 
-  //   this.setState({ activePrivateKey, activePublicKey, accountName, price })
-}     //Do not use setState in componentDidMount
+  }
 
   handleSubmit = async () => {
     actions.loader.show(true)
@@ -71,47 +70,52 @@ export default class EosBuyAccountModal extends React.Component {
           <div>
             <FieldLabel inRow>
               <FormattedMessage id="EosBuyAccountModal72" defaultMessage="Account name" />
-            <Tooltip text="This account will be registered in EOS blockchain" /></FieldLabel>
+              <Tooltip text="This account will be registered in EOS blockchain" /></FieldLabel>
             <Input readOnly="true" valueLink={linked.accountName} />
           </div>
           <div>
             <FieldLabel inRow>
               <FormattedMessage id="EosBuyAccountModal78" defaultMessage="APrivate key" />
-            <Tooltip text="Private key for active and owner permissions" /></FieldLabel>
+              <Tooltip text="Private key for active and owner permissions" /></FieldLabel>
             <Input readOnly="true" valueLink={linked.activePrivateKey} />
           </div>
           <div>
             <FieldLabel inRow>
               <FormattedMessage id="EosBuyAccountModal84" defaultMessage="Public key" />
-            <Tooltip text="Public key associated with account" /></FieldLabel>
+              <Tooltip text="Public key associated with account" /></FieldLabel>
             <Input readOnly="true" valueLink={linked.activePublicKey} />
           </div>
           <div>
             <FieldLabel inRow>
               <FormattedMessage id="EosBuyAccountModal90" defaultMessage="Price (BTC)" />
-            <Tooltip text="This amount will be withdrawn from your BTC wallet" /></FieldLabel>
+              <Tooltip text="This amount will be withdrawn from your BTC wallet" />
+            </FieldLabel>
             <Input readOnly="true" valueLink={linked.price} />
           </div>
-          { error && (
-            <FormattedMessage id="EosBuyAccountModal96" defaultMessage="Sorry, error occured during activation">
-              {message =>  <div styleName="error">{message} </div>}
-            </FormattedMessage>
-          )}
-          <FormattedMessage id="EosBuyAccountModal96" defaultMessage="Create account">
-            {message =>
-              {
-                <Button
-                  styleName="button"
-                  brand
-                  fullWidth
-                  onClick={this.handleSubmit}
+          { error && (<div styleName="error">
+            <FormattedMessage id="EosBuyAccountModal90" defaultMessage="Sorry, error occured during activation, try again" />
+          </div>
+        )}
+          { activationPayment && (
+            <div>
+              <strong>
+                Payment transaction:
+                <a
+                  href={`${config.link.bitpay}/tx/${activationPayment}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  {message}
-                </Button>}
-              }
-            </FormattedMessage>
-          </Modal>
-        </Fragment>
+                  {activationPayment}
+                </a>
+              </strong>
+            </div>
+          )}
+
+          <Button styleName="button" brand fullWidth onClick={this.handleSubmit}>
+            <FormattedMessage id="EosBuyAccountModal114" defaultMessage="Create account" />
+          </Button>
+        </Modal>
+      </Fragment>
     )
   }
 }

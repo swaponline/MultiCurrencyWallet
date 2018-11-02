@@ -113,8 +113,9 @@ export default class BtcToEth extends Component {
         {
           !flow.isParticipantSigned && (
             <Fragment>
-              <FormattedMessage id="BtcToEth116"
-              defaultMessage="We are waiting for a market maker. If it does not appear within 5 minutes, the swap will be canceled automatically.">
+              <FormattedMessage
+                id="BtcToEth116"
+                defaultMessage="We are waiting for a market maker. If it does not appear within 5 minutes, the swap will be canceled automatically.">
                 {message => <h3>{message}</h3>}
               </FormattedMessage>
               <InlineLoader />
@@ -147,7 +148,7 @@ export default class BtcToEth extends Component {
                     </div>
                     <div>
                       <FormattedMessage id="BtcToEth146" defaultMessage="Secret Hash:" />
-                      {message}<strong>{flow.secretHash}</strong>
+                      <strong>{flow.secretHash}</strong>
                     </div>
                   </Fragment>
                 )
@@ -160,23 +161,23 @@ export default class BtcToEth extends Component {
                       {message => <h3>{message}></h3>}
                     </FormattedMessage>
                     <div>
-                    <div>
-                      <FormattedMessage id="BtcToEth160" defaultMessage="Your balance:" />
-                      <strong>{flow.balance}</strong> {this.swap.sellCurrency}
-                    </div>
-                    <div>
-                      <FormattedMessage id="BtcToEth163" defaultMessage="Required balance:" />
-                      <strong>{this.swap.sellAmount.toNumber()}</strong> {this.swap.sellCurrency}
-                    </div>
-                    <div>
                       <div>
-                        <FormattedMessage id="BtcToEth167" defaultMessage="Your address:" />
-                        {this.swap.flow.myBtcAddress}
+                        <FormattedMessage id="BtcToEth160" defaultMessage="Your balance:" />
+                        <strong>{flow.balance}</strong> {this.swap.sellCurrency}
                       </div>
+                      <div>
+                        <FormattedMessage id="BtcToEth163" defaultMessage="Required balance:" />
+                        <strong>{this.swap.sellAmount.toNumber()}</strong> {this.swap.sellCurrency}
+                      </div>
+                      <div>
+                        <div>
+                          <FormattedMessage id="BtcToEth167" defaultMessage="Your address:" />
+                          {this.swap.flow.myBtcAddress}
+                        </div>
                         <hr />
                         <span>{flow.address}</span>
                       </div>
-                     <br />
+                      <br />
                       <Button brand onClick={this.updateBalance}>
                         <FormattedMessage id="174" defaultMessage="Continue" />
                         {this.swap.flow.myBtcAddress}
@@ -204,16 +205,15 @@ export default class BtcToEth extends Component {
                     </FormattedMessage>
                     {
                       flow.btcScriptCreatingTransactionHash && (
-                        <FormattedMessage id="BtcToEth199" defaultMessage="Transaction:">
-                          {message => <div>{message}(<strong>
+                        <div>
+                          <FormattedMessage id="BtcToEth199" defaultMessage="Transaction:" />
+                            <strong>
                             <a href={`${config.link.bitpay}/tx/${flow.btcScriptCreatingTransactionHash}`} target="_blank" el="noopener noreferrer">
                               {flow.btcScriptCreatingTransactionHash}
                             </a>
                           </strong>
                         )
-                        </div>
-                      }
-                        </FormattedMessage>
+                          </div>
                       )
                     }
                     {
@@ -240,12 +240,10 @@ export default class BtcToEth extends Component {
                             href="https://wiki.swap.online/faq/my-swap-got-stuck-and-my-bitcoin-has-been-withdrawn-what-to-do/"
                             target="_blank"
                             rel="noopener noreferrer"
-                            >
-                            <FormattedMessage id="BtcToEth233" defaultMessage="How refund your money ?">
-                            {message => {message}}
-                            </FormattedMessage>
+                          >
+                            <FormattedMessage id="BtcToEth233" defaultMessage="How refund your money ?" />
                           </a>
-                        Refund hex transaction: <code> {flow.refundTxHex}</code>
+                          Refund hex transaction: <code> {flow.refundTxHex}</code>
                         </div>
                       )
                     }
@@ -268,18 +266,18 @@ export default class BtcToEth extends Component {
               }
               {
                 flow.ethSwapCreationTransactionHash && (
-                  <FormattedMessage id="BtcToEth266" defaultMessage="Transaction:">
-                    {message => <div>{message}<strong>
-                      <a
-                        href={`${config.link.etherscan}/tx/${flow.ethSwapCreationTransactionHash}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {flow.ethSwapCreationTransactionHash}
-                      </a>
-                    </strong>
-                  </div>}
-                  </FormattedMessage>
+                  <div>
+                    <FormattedMessage id="BtcToEth266" defaultMessage="Transaction:" />
+                      <strong>
+                        <a
+                          href={`${config.link.etherscan}/tx/${flow.ethSwapCreationTransactionHash}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {flow.ethSwapCreationTransactionHash}
+                        </a>
+                      </strong>
+                  </div>
                 )
               }
               {
@@ -291,18 +289,18 @@ export default class BtcToEth extends Component {
               }
               {
                 flow.ethSwapWithdrawTransactionHash && (
-                  <FormattedMessage id="BtcToEth289" defaultMessage="Transaction:" >
-                    {message => <div>{message}<strong>
-                        <a
-                          href={`${config.link.etherscan}/tx/${flow.ethSwapWithdrawTransactionHash}`}
-                          target="_blank"
-                          rel="noreferrer noopener"
-                        >
-                          {flow.ethSwapWithdrawTransactionHash}
-                        </a>
-                      </strong>
-                    </div>}
-                  </FormattedMessage>
+                  <div>
+                    <FormattedMessage id="BtcToEth289" defaultMessage="Transaction:" />
+                    <strong>
+                      <a
+                        href={`${config.link.etherscan}/tx/${flow.ethSwapWithdrawTransactionHash}`}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                      >
+                        {flow.ethSwapWithdrawTransactionHash}
+                      </a>
+                    </strong>
+                  </div>
                 )
               }
               {
@@ -327,9 +325,9 @@ export default class BtcToEth extends Component {
                 flow.step >= 5 && !flow.isFinished && (
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     { enabledButton && !flow.isEthWithdrawn &&
-                      <FormattedMessage id="BtcToEth325" defaultMessage="TRY REFUND">
-                        {message => <Button brand onClick={this.tryRefund}>{message}</Button>}
-                      </FormattedMessage>
+                      <Button brand onClick={this.tryRefund}>
+                        <FormattedMessage id="BtcToEth325" defaultMessage="TRY REFUND" />
+                      </Button>
                     }
                     <Timer
                       lockTime={flow.btcScriptValues.lockTime * 1000}
@@ -340,18 +338,18 @@ export default class BtcToEth extends Component {
               }
               {
                 flow.refundTransactionHash && (
-                  <FormattedMessage id="BtcToEth338" defaultMessage="Transaction:">
-                    {message => <div>{message}<strong>
-                      <a
-                        href={`${config.link.bitpay}/tx/${flow.refundTransactionHash}`}
-                        target="_blank"
-                        rel="noreferrer noopener"
-                      >
-                        {flow.refundTransactionHash}
-                      </a>
+                  <div>
+                    <FormattedMessage id="BtcToEth338" defaultMessage="Transaction:" />
+                      <strong>
+                        <a
+                          href={`${config.link.bitpay}/tx/${flow.refundTransactionHash}`}
+                          target="_blank"
+                          rel="noreferrer noopener"
+                        >
+                          {flow.refundTransactionHash}
+                        </a>
                     </strong>
-                  </div>}
-                  </FormattedMessage>
+                  </div>
                 )
               }
             </Fragment>

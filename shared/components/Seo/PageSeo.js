@@ -20,16 +20,17 @@ export default class PageSeo extends Seo {
         ...this.seoPage,
         url: getUrl(this.seoPage.uri),
       }
-    } else {
-        const  { defaultTitle, defaultDescription } = this.props
-        return {
-          title: defaultTitle,
-          description: defaultDescription,
-          uri: null,
-          url: null,
-        }
-        }
     }
+    else {
+      const  { defaultTitle, defaultDescription } = this.props
+      return {
+        title: defaultTitle,
+        description: defaultDescription,
+        uri: null,
+        url: null,
+      }
+    }
+  }
 
   render() {
     const { title, description, uri, url } = this.getValues()

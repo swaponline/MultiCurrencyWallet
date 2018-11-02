@@ -60,10 +60,12 @@ export default class SaveKeysModal extends React.Component {
           <Center keepFontSize>
             <React.Fragment>
               { process.env.TESTNET && (
-                <a href="#" onClick={() => { localStorage.setItem(constants.localStorage.testnetSkipPKCheck, true)
-                  this.forceUpdate()
+                <a
+                href="#"
+                  onClick={() => { localStorage.setItem(constants.localStorage.testnetSkipPKCheck, true)
+                    this.forceUpdate()
                 }}>
-                  <FormattedMessage id="SaveKeysModal" defaultMessage="Testnet: Don`t ask again"/>
+                  <FormattedMessage id="SaveKeysModal" defaultMessage="Testnet: Don`t ask again" />
                 </a>
               )}
               {

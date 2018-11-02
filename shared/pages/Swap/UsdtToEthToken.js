@@ -81,8 +81,8 @@ export default class UsdtToEthToken extends Component {
           flow.isWaitingForOwner && (
             <Fragment>
               <FormattedMessage id="UsdrToEthToken83"
-              defaultMessage="We are waiting for a market maker. If it does not appear within 5 minutes, the swap will be canceled automatically.">
-                {message => <h3>{message}</h3>}
+                defaultMessage="We are waiting for a market maker. If it does not appear within 5 minutes, the swap will be canceled automatically.">
+                  {message => <h3>{message}</h3>}
               </FormattedMessage>
               <InlineLoader />
             </Fragment>
@@ -187,13 +187,13 @@ export default class UsdtToEthToken extends Component {
                     {
                       flow.usdtFundingTransactionHash && (
                         <div>
-                        <FormattedMessage id="UsdrToEthToken179" defaultMessage="Transaction:" />
+                          <FormattedMessage id="UsdrToEthToken179" defaultMessage="Transaction:" />
                           <strong>
                             <a href={`${config.link.bitpay}/tx/${flow.usdtFundingTransactionHash}`} target="_blank" rel="noopener noreferrer">
                               {flow.usdtFundingTransactionHash}
                             </a>
                           </strong>
-                          </div>
+                        </div>
                       )
                     }
                     {
@@ -246,8 +246,8 @@ export default class UsdtToEthToken extends Component {
                   <div>
                     <FormattedMessage id="UsdrToEthToken246" defaultMessage="Transaction:" />
                     <strong>
-                    <a href={`${config.link.etherscan}/tx/${flow.ethSwapCreationTransactionHash}`} target="_blank" rel="noopener noreferrer">
-                      {flow.ethSwapCreationTransactionHash}
+                      <a href={`${config.link.etherscan}/tx/${flow.ethSwapCreationTransactionHash}`} target="_blank" rel="noopener noreferrer">
+                        {flow.ethSwapCreationTransactionHash}
                       </a>
                     </strong>
                   </div>
@@ -266,9 +266,9 @@ export default class UsdtToEthToken extends Component {
                   <div>
                     <FormattedMessage id="UsdrToEthToken271" defaultMessage="Transaction:" />
                       <strong>
-                      <a href={`${config.link.etherscan}/tx/${flow.ethSwapWithdrawTransactionHash}`} target="_blank" rel="noreferrer noopener">
-                        {flow.ethSwapWithdrawTransactionHash}
-                      </a>
+                        <a href={`${config.link.etherscan}/tx/${flow.ethSwapWithdrawTransactionHash}`} target="_blank" rel="noreferrer noopener">
+                          {flow.ethSwapWithdrawTransactionHash}
+                        </a>
                     </strong>
                   </div>
                 )
@@ -318,7 +318,7 @@ export default class UsdtToEthToken extends Component {
                         {flow.refundTransactionHash}
                       </a>
                     </strong>
-                    </div>
+                  </div>
                 )
               }
             </Fragment>

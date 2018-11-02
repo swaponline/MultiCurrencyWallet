@@ -127,10 +127,10 @@ export default class ImportKeys extends Component {
             onClick={this.handleBtcImportKey}
           />
           <Button brand disabled={isDisabled} styleName="button" onClick={this.handleImportKeys}>
-            <FormattedMessage id="ImportKeys110" defaultMessage="Confirm"/>
+            <FormattedMessage id="ImportKeys110" defaultMessage="Confirm" />
           </Button>
           <Button gray styleName="button" onClick={this.handleCloseModal}>
-            <FormattedMessage id="ImportKeys110" defaultMessage="Cancel"/>
+            <FormattedMessage id="ImportKeys110" defaultMessage="Cancel" />
           </Button>
         </div>
       </Modal>

@@ -113,7 +113,9 @@ export default class LtcToEth extends Component {
         {
           !flow.isParticipantSigned && (
             <Fragment>
-              <FormattedMessage id="LtcTOeth117" defaultMessage="We are waiting for a market maker. If it does not appear within 5 minutes, the swap will be canceled automatically.">
+              <FormattedMessage
+                id="LtcTOeth117"
+                defaultMessage="We are waiting for a market maker. If it does not appear within 5 minutes, the swap will be canceled automatically.">
                 {message => <h3>{message}</h3>}
               </FormattedMessage>
               <InlineLoader />
@@ -134,7 +136,7 @@ export default class LtcToEth extends Component {
                     <br />
                     <TimerButton timeLeft={5} brand onClick={this.submitSecret}>
                       <FormattedMessage id="LtcTOeth136" defaultMessage="Confirm" />
-                      </TimerButton>
+                    </TimerButton>
                   </Fragment>
                 ) : (
                   <Fragment>
@@ -156,10 +158,10 @@ export default class LtcToEth extends Component {
               {
                 flow.step === 3 && !flow.isBalanceEnough && !flow.isBalanceFetching && (
                   <Fragment>
-                  <h3>
-                    <FormattedMessage id="LtcTOeth158" defaultMessage="Not enough money for this swap. Please charge the balance" />
+                    <h3>
+                      <FormattedMessage id="LtcTOeth158" defaultMessage="Not enough money for this swap. Please charge the balance" />
                       <strong>{flow.secretHash}</strong>
-                  </h3>
+                    </h3>
                     <div>
                       <div>
                         <FormattedMessage id="LtcTOeth162" defaultMessage="Your balance:" />
@@ -180,7 +182,7 @@ export default class LtcToEth extends Component {
                     <br />
                     <Button brand onClick={this.updateBalance}>
                       <FormattedMessage id="LtcTOeth175" defaultMessage="Continue" />
-                        {this.swap.flow.myLtcAddress}
+                      {this.swap.flow.myLtcAddress}
                     </Button>
                   </Fragment>
                 )
@@ -276,11 +278,11 @@ export default class LtcToEth extends Component {
                   <div>
                     <FormattedMessage id="LtcTOeth267" defaultMessage="Transaction:" />
                     <strong>
-                    <a
-                      href={`${config.link.etherscan}/tx/${flow.ethSwapCreationTransactionHash}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
+                      <a
+                        href={`${config.link.etherscan}/tx/${flow.ethSwapCreationTransactionHash}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         {flow.ethSwapCreationTransactionHash}
                       </a>
                     </strong>
@@ -299,12 +301,12 @@ export default class LtcToEth extends Component {
                   <div>
                     <FormattedMessage id="LtcTOeth290" defaultMessage="Transaction:" />
                     <strong>
-                    <a
-                      href={`${config.link.etherscan}/tx/${flow.ethSwapWithdrawTransactionHash}`}
-                      target="_blank"
-                      rel="noreferrer noopener"
-                    >
-                      {flow.ethSwapWithdrawTransactionHash}
+                      <a
+                        href={`${config.link.etherscan}/tx/${flow.ethSwapWithdrawTransactionHash}`}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                      >
+                        {flow.ethSwapWithdrawTransactionHash}
                       </a>
                     </strong>
                   </div>
@@ -336,9 +338,9 @@ export default class LtcToEth extends Component {
                         <FormattedMessage id="LtcTOeth326" defaultMessage="TRY REFUND" />
                       </Button>
                     }
-                      <div>
-                        <Timer lockTime={flow.ltcScriptValues.lockTime * 1000} enabledButton={() => this.setState({ enabledButton: true })} />
-                      </div>
+                    <div>
+                      <Timer lockTime={flow.ltcScriptValues.lockTime * 1000} enabledButton={() => this.setState({ enabledButton: true })} />
+                    </div>
                   </div>
                 )
               }
@@ -347,15 +349,15 @@ export default class LtcToEth extends Component {
                   <div>
                     <FormattedMessage id="LtcTOeth338" defaultMessage="Transaction:" />
                     <strong>
-                        <a
-                          href={`${config.link.ltc}/tx/${flow.refundTransactionHash}`}
-                          target="_blank"
-                          rel="noreferrer noopener"
-                        >
-                          {flow.refundTransactionHash}
-                        </a>
-                      </strong>
-                    </div>
+                      <a
+                        href={`${config.link.ltc}/tx/${flow.refundTransactionHash}`}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                      >
+                        {flow.refundTransactionHash}
+                      </a>
+                    </strong>
+                  </div>
                 )
               }
             </Fragment>

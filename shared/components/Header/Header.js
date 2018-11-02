@@ -102,7 +102,6 @@ export default class Header extends Component {
         },
       ],
     }
-console.log(this.props)
     this.lastScrollTop = 0
   }
 

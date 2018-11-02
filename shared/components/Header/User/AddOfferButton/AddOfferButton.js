@@ -14,10 +14,10 @@ const AddOfferButton  = () => (
     {
       process.env.TESTNET ? (
         <Fragment>
-          <a href={links.main} target="_blank" rel="noreferrer noopener" styleName="button" data-tip data-for="m">
-            <FormattedMessage id="AddOffer16" defaultMessage="Mainnet"/>
+          <a href={links.main} target="_blank" rel="noreferrer noopener" styleName="button" data-tip data-for="main">
+            <FormattedMessage id="AddOffer16" defaultMessage="Mainnet" />
           </a>
-          <ReactTooltip id="m" type="light" effect="solid">
+          <ReactTooltip id="main" type="light" effect="solid">
             <FormattedMessage id="AddOffer22" defaultMessage="Start to real Swap">
               {message => <span>{message}</span>}
             </FormattedMessage>
@@ -25,10 +25,10 @@ const AddOfferButton  = () => (
         </Fragment>
       ) : (
         <Fragment>
-          <button styleName="button" onClick={() => pinkClick()} /* eslint-disable-line */ data-tip data-for="a" >
+          <button styleName="button" onClick={() => pinkClick()} /* eslint-disable-line */ data-tip data-for="subscribe" >
           Subscribe
           </button>
-          <ReactTooltip id="a" type="light" effect="solid">
+          <ReactTooltip id="subscribe" type="light" effect="solid">
             <FormattedMessage id="AddOffer22" defaultMessage="Get subscribed for the Swap.Online news">
               {message => <span>{message}</span>}
             </FormattedMessage>

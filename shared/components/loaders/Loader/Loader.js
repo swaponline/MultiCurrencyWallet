@@ -16,7 +16,7 @@ const Loader = ({ overlayClassName, className, text, txId, showTips }) => (
       <div styleName="loader3" />
     </div>
     {
-      text && (<p styleName="text">
+      data && data.text && (<p styleName="text">
         <FormattedMessage id="loader19" defaultMessage="Please wait, it takes from 3 to 5 minutes to complete the transaction." />
       </p>
       )

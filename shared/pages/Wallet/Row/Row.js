@@ -148,7 +148,8 @@ export default class Row extends Component {
   render() {
     const { isBalanceFetching, tradeAllowed, isAddressCopied, isTouch } = this.state
     const { currency, balance, isBalanceFetched, address, contractAddress, fullName, unconfirmedBalance } = this.props
-    const eosActivationAvailable = localStorage.getItem(constants.localStorage.eosAccountActivated) === 'true' ? 'false' : 'true'
+    const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true"
+    const telosAccountActivated = localStorage.getItem(constants.localStorage.telosAccountActivated) === "true"
 
     return (
       <tr

@@ -63,7 +63,8 @@ export default class RowFeeds extends Component {
             { isLinkCopied &&
             <span style={{ fontSize: '12px', position: 'absolute', top: '8px', left: 'calc(20%)' }}>
               <FormattedMessage id="RowFeeds64" defaultMessage="Copied" />
-            <br /></span>
+              <br />
+            </span>
             }
             <img src={ShareImg} styleName="img" alt="share" />
             <FormattedMessage id="RowFeeds68" defaultMessage="Share">

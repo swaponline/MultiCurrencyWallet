@@ -100,7 +100,7 @@ export default class EthTokenToUsdt extends Component {
               <FormattedMessage
                 id="EthTokenToUsdt101"
                 defaultMessage=
-                "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation."
+                  "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation."
                 >
                 {message => <div>{message}</div>}
               </FormattedMessage>
@@ -262,7 +262,7 @@ export default class EthTokenToUsdt extends Component {
                       </div>
                       <div>
                         <FormattedMessage id="EthTokenToUsdt260" defaultMessage="Your address:" />
-                          {this.swap.flow.myEthAddress}
+                        {this.swap.flow.myEthAddress}
                       </div>
                       <div>
                         <hr />
@@ -327,7 +327,7 @@ export default class EthTokenToUsdt extends Component {
                         {flow.refundTransactionHash}
                       </a>
                     </strong>
-                    </div>
+                  </div>
                 )
               }
 
