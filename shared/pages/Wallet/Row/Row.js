@@ -146,7 +146,8 @@ export default class Row extends Component {
   render() {
     const { isBalanceFetching, tradeAllowed, isAddressCopied, isTouch } = this.state
     const { currency, balance, isBalanceFetched, address, contractAddress, fullName, unconfirmedBalance } = this.props
-    const eosActivationAvailable = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true" ? false : true
+    const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true"
+    const telosAccountActivated = localStorage.getItem(constants.localStorage.telosAccountActivated) === "true"
 
     return (
       <tr styleName={this.props.index == this.props.selectId || !isMobile ? 'showButtons' : 'hidden'} onClick={() => { this.props.handleSelectId(this.props.index)}} onTouchEnd={this.handleTouchClear} onTouchMove={this.handleTouch} style= { isTouch && this.props.index != this.props.selectId ?  { background: '#f5f5f5' } : { background: '#fff' } }>
@@ -208,11 +209,11 @@ export default class Row extends Component {
                           className="far fa-copy"
                           styleName="icon"
                           data-tip
-                          data-for="cp"
+                          data-for="Copy"
                           style={{ width: '10px' }} />
                       }
                       <LinkAccount type={currency} address={address} >{address}</LinkAccount>
-                      <ReactTooltip id="cp" type="light" effect="solid">
+                      <ReactTooltip id="Copy" type="light" effect="solid">
                         <span>Copy</span>
                       </ReactTooltip>
                     </Fragment>
@@ -226,23 +227,34 @@ export default class Row extends Component {
                 }
 
                 {
-                  currency === 'EOS' && eosActivationAvailable && <button styleName="button" onClick={this.handleEosBuyAccount} data-tip data-for="bE">Activate</button>
+                  currency === 'EOS' && !eosAccountActivated && <button styleName="button" onClick={this.handleEosBuyAccount} data-tip data-for="bE">Activate</button>
                 }
-                <ReactTooltip id="bE" type="light" effect="solid">
+                <ReactTooltip id="Activate" type="light" effect="solid">
                   <span>Buy this account</span>
                 </ReactTooltip>
+
                 {
-                  currency === 'EOS' && <button styleName="button" onClick={this.handleEosRegister} data-tip data-for="lE">Use another</button>
+                  currency === 'EOS' && <button styleName="button" onClick={this.handleEosRegister} data-tip data-for="Use">Use another</button>
                 }
-                <ReactTooltip id="lE" type="light" effect="solid">
+                <ReactTooltip id="Use" type="light" effect="solid">
                   <span>Login with your existing eos account</span>
                 </ReactTooltip>
-                {
-                  currency === 'TLOS' && address === '' && <button styleName="button" onClick={this.handleTelosRegister} data-tip data-for="lT">Login</button>
+
+                { currency === 'EOS' && !eosAccountActivated && (
+                  <Fragment>
+                    <br />
+                    <span style={{ fontSize: '12px', color: '#c9c9c9' }}>not activated</span>
+                  </Fragment>
+                )
                 }
-                <ReactTooltip id="lT" type="light" effect="solid">
-                  <span>login if you have TLOS account yet</span>
-                </ReactTooltip>
+
+                { currency === 'TLOS' && !telosAccountActivated && (
+                  <Fragment>
+                    <br />
+                    <span style={{ fontSize: '12px', color: '#c9c9c9' }}>not activated</span>
+                  </Fragment>
+                )
+                }
                 { isAddressCopied && <p styleName="copied" >Address copied to clipboard</p> }
               </td>
             </CopyToClipboard>

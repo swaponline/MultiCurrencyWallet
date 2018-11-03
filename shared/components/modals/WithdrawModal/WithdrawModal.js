@@ -39,9 +39,20 @@ export default class WithdrawModal extends React.Component {
     amount: '',
   }
 
+  componentWillMount() {
+    this.setBalanceOnState(this.props.data.currency)
+  }
+
+  setBalanceOnState = async (currency) => {
+    const balance = await actions[currency.toLowerCase()].getBalance(currency.toLowerCase())
+    this.setState(() => ({ balance }))
+  }
+
   handleSubmit = () => {
     const { address: to, amount } = this.state
-    const { data: { currency, contractAddress, address, decimals, balance } } = this.props
+    const { data: { currency, contractAddress, address, balance, decimals }, name } = this.props
+
+    this.setBalanceOnState(currency)
 
     if (!to || !amount || amount < minAmount[currency.toLowerCase()] || amount > balance) {
       this.setState({
@@ -54,38 +65,41 @@ export default class WithdrawModal extends React.Component {
       .then(() => {
         actions.loader.hide()
         actions[currency.toLowerCase()].getBalance(currency)
+        this.setBalanceOnState(currency)
 
         actions.notifications.show(constants.notifications.SuccessWithdraw, {
           amount,
           currency,
           address: to,
         })
+
+        actions.modals.close(name)
       })
   }
 
   render() {
-    const { isSubmitted, address, amount } = this.state
+    const { isSubmitted, address, amount, balance } = this.state
     const { name, data } = this.props
-    const { balance } = data
 
     const linked = Link.all(this, 'address', 'amount')
     const isDisabled = !address || !amount
 
     if (isSubmitted) {
+      linked.amount.check((value) => value < balance, `You don't have enough balance`)
       linked.amount.check((value) => value > minAmount[data.currency], `Amount must be greater than ${minAmount[data.currency.toLowerCase()]} `)
-      linked.amount.check((value) => value < balance, `Amount must be bigger your balance`)
     }
 
     return (
       <Modal name={name} title={`Withdraw ${data.currency.toUpperCase()}`}>
-        <p style={{ fontSize: '16px' }}>Please notice, that you need to have minimum 0.01 amount <br /> of the ETH on your wallet, to use it for Ethereum miners fee</p>
-        <FieldLabel inRow>Address <Tooltip text="addressee address" /></FieldLabel>
+        <p style={{ fontSize: '16px' }}>{`Please notice, that you need to have minimum ${minAmount[data.currency.toLowerCase()]} amount `}<br /> of the {data.currency} on your wallet, to use it for miners fee</p>
+        <FieldLabel inRow>Address <Tooltip text="destination address" /></FieldLabel>
         <Input valueLink={linked.address} focusOnInit pattern="0-9a-zA-Z" placeholder="Enter address" />
+        <p style={{ marginTop: '20px' }}>Your balance: {balance} {data.currency.toUpperCase()}</p>
         <FieldLabel inRow>Amount</FieldLabel>
         <Input valueLink={linked.amount} pattern="0-9\." placeholder={`Enter amount, you have ${balance}`} />
         {
           !linked.amount.error && (
-            <div styleName="note">No less than 0.01</div>
+            <div styleName="note">No less than {minAmount[data.currency.toLowerCase()]}</div>
           )
         }
         <Button

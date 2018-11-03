@@ -26,23 +26,47 @@ const sign = async () => {
     })
   // await actions.nimiq.login(_ethPrivateKey)
 
-  const eosActivePrivateKey = localStorage.getItem(constants.privateKeyNames.eos)
-  const eosAccount = localStorage.getItem(constants.privateKeyNames.eosAccount)
+  const eosSign = async () => {
+    const eosActivePrivateKey = localStorage.getItem(constants.privateKeyNames.eosPrivateKey)
+    const eosActivePublicKey = localStorage.getItem(constants.privateKeyNames.eosPublicKey)
+    const eosAccount = localStorage.getItem(constants.privateKeyNames.eosAccount)
+    const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true"
 
-  if (eosActivePrivateKey && eosAccount) {
-    await actions.eos.login(eosAccount, eosActivePrivateKey)
-  } else {
-    await actions.eos.loginWithNewAccount()
+    if (eosActivePrivateKey && eosActivePublicKey && eosAccount) {
+      await actions.eos.login(eosAccount, eosActivePrivateKey, eosActivePublicKey)
+
+      if (!eosAccountActivated) {
+        await actions.eos.updateActivationStatus()
+      }
+    } else {
+      await actions.eos.loginWithNewAccount()
+    }
+
+    await actions.eos.getBalance()
   }
 
-  await actions.eos.getBalance()
+  const telosSign = async () => {
+    const telosActivePrivateKey = localStorage.getItem(constants.privateKeyNames.telosPrivateKey)
+    const telosActivePublicKey = localStorage.getItem(constants.privateKeyNames.telosPublicKey)
+    const telosAccount = localStorage.getItem(constants.privateKeyNames.telosAccount)
+    const telosAccountActivated = localStorage.getItem(constants.localStorage.telosAccountActivated) === "true"
 
-  const telosActivePrivateKey = localStorage.getItem(constants.privateKeyNames.telos)
-  const telosAccount = localStorage.getItem(constants.privateKeyNames.telosAccount)
-  if (telosActivePrivateKey && telosAccount) {
-    await actions.tlos.login(telosAccount, telosActivePrivateKey)
+    if (telosActivePrivateKey && telosActivePublicKey && telosAccount) {
+      actions.tlos.login(telosAccount, telosActivePrivateKey, telosActivePublicKey)
+
+      if (!telosAccountActivated) {
+        await actions.tlos.activateAccount(telosAccount, telosActivePrivateKey, telosActivePublicKey)
+      }
+    } else {
+      const { accountName, activePrivateKey, activePublicKey } = await actions.tlos.loginWithNewAccount()
+      await actions.tlos.activateAccount(accountName, activePrivateKey, activePublicKey)
+    }
+
     await actions.tlos.getBalance()
   }
+
+  eosSign()
+  telosSign()
 }
 
 const getBalances = () => {
@@ -88,7 +112,7 @@ const setTransactions = () =>
   Promise.all([
     actions.btc.getTransaction(),
     actions.eth.getTransaction(),
-    // actions.ltc.getTransaction(),
+    actions.ltc.getTransaction(),
     ...Object.keys(config.erc20)
       .map(name => actions[name].getTransaction(name)),
   ])

@@ -54,7 +54,7 @@ export default class Wallet extends Component {
   }
 
   componentWillMount() {
-    process.env && localStorage.setItem(constants.localStorage.testnetSkip, true)
+    process.env.MAINNET && localStorage.setItem(constants.localStorage.testnetSkip, true)
     if (localStorage.getItem(constants.localStorage.privateKeysSaved)) {
       this.changeView('checkKeys')
     } else {
@@ -67,20 +67,14 @@ export default class Wallet extends Component {
     actions.analytics.dataEvent('open-page-balances')
   }
 
-  componentWillReceiveProps(props) {
-    if (!this.state.zeroBalance) {
-      return
-    }
+  componentWillReceiveProps({ items, tokens }) {
+    const data = [].concat(items, tokens)
 
-    if (props.items.some(o => o.balance > 0) || props.tokens.some(t => t.balance > 0)) { // if at least one balance is greater than 0
-      this.setState({ zeroBalance: false })
-    }
-  }
-
-  handleClear = (event) => {
-    event.preventDefault()
-    window.localStorage.clear()
-    window.location.reload()
+    data.forEach(item => {
+      if (item.balance > 0) {
+        actions.analytics.balanceEvent(item.currency, item.balance)
+      }
+    })
   }
 
   changeView = (view) => {
@@ -88,7 +82,6 @@ export default class Wallet extends Component {
       view,
     })
   }
-
 
 
   render() {

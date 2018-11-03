@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { connect } from 'redaction'
 
-import SwapProgress from 'components/SwapProgress/SwapProgress'
+import Loader from '../Loader/Loader'
 
 
 const RequestLoader = ({ isVisible, data }) => {
@@ -11,12 +11,13 @@ const RequestLoader = ({ isVisible, data }) => {
     return null
   }
 
-  return <SwapProgress data={data} />
+  console.log('data', data)
+
+  return <Loader data={data} />
 }
 
 RequestLoader.propTypes = {
   isVisible: PropTypes.bool.isRequired,
-  data: PropTypes.object.isRequired,
 }
 
 RequestLoader.defaultProps = {

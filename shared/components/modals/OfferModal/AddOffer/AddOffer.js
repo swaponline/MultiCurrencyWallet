@@ -25,6 +25,7 @@ import { isNumberValid, isNumberStringFormatCorrect, mathConstants } from 'helpe
 const minAmount = {
   eth: 0.05,
   btc: 0.004,
+  ltc: 0.1,
   eos: 1,
   noxon: 1,
   swap: 1,
@@ -38,7 +39,8 @@ const minAmount = {
     user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, usdtData, ltcData },
   }) => ({
     currencies: currencies.items,
-    items: [ ethData, btcData, eosData, telosData, bchData, ltcData, usdtData, ...Object.keys(tokensData).map(k => (tokensData[k])) /* nimData */ ],
+    items: [ ethData, btcData, eosData, telosData, bchData, ltcData, usdtData /* nimData */ ],
+    tokenItems: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
   })
 )
 @cssModules(styles, { allowMultiple: true })
@@ -70,9 +72,9 @@ export default class AddOffer extends Component {
   }
 
   checkBalance = async (sellCurrency) => {
-    const { items } = this.props
+    const { items, tokenItems } = this.props
 
-    const currency = items
+    const currency = items.concat(tokenItems)
       .filter(item => item.currency === sellCurrency.toUpperCase())[0]
 
     const { balance, unconfirmedBalance } = currency
@@ -306,12 +308,23 @@ export default class AddOffer extends Component {
     }
   }
 
+  isEthOrERC20() {
+    const { tokenItems } = this.props
+    const { buyCurrency, sellCurrency, ethBalance } = this.state
+
+    return (
+      sellCurrency === 'eth' || buyCurrency === 'eth' || tokenItems.find(
+        (item) => item.name === sellCurrency || item.name === buyCurrency
+      ) !== undefined
+    ) ? ethBalance < minAmount.eth : false
+  }
+
   handleNext = () => {
     const { exchangeRate, buyAmount, sellAmount, balance, sellCurrency, ethBalance } = this.state
-    const { onNext } = this.props
+    const { onNext, tokenItems } = this.props
 
     const isDisabled = !exchangeRate || !buyAmount || !sellAmount || sellAmount > balance || sellAmount < minAmount[sellCurrency]
-      || ethBalance < 0.02
+      || this.isEthOrERC20()
 
     if (!isDisabled) {
       actions.analytics.dataEvent('orderbook-addoffer-click-next-button')
@@ -334,20 +347,20 @@ export default class AddOffer extends Component {
   }
 
   render() {
-    const { currencies } = this.props
+    const { currencies, tokenItems } = this.props
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency,
       balance, isBuyFieldInteger, isSellFieldInteger, ethBalance, manualRate } = this.state
     const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
     const isDisabled = !exchangeRate || !buyAmount && !sellAmount
       || sellAmount > balance || sellAmount < minAmount[sellCurrency]
-      || ethBalance < 0.01
+      || this.isEthOrERC20()
 
     linked.sellAmount.check((value) => value > minAmount[sellCurrency], `Amount must be greater than ${minAmount[sellCurrency]} `)
     linked.sellAmount.check((value) => value <= balance, `Amount must be bigger than on your balance`)
 
     return (
       <div styleName="wrapper">
-        { ethBalance < 0.02 && <span styleName="error">For a swap, you need 0.02 ETH on your balance</span> }
+        { this.isEthOrERC20() && <span styleName="error">For a swap, you need {minAmount.eth} ETH on your balance</span> }
         <SelectGroup
           styleName="sellGroup"
           label="Sell"

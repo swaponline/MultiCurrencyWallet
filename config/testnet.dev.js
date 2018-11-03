@@ -6,6 +6,7 @@ import moment from 'moment-with-locales-es6'
 export default {
   env: 'development',
   entry: 'testnet',
+  local: 'online',
 
   base: `http://localhost:${baseConfig.http.port}/`,
   publicPath: `http://localhost:${baseConfig.http.port}${baseConfig.publicPath}`,
