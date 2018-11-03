@@ -25,7 +25,7 @@ export default class EosBuyAccountModal extends React.Component {
     activePublicKey: '',
     accountName: '',
     price: '',
-    error: '',
+    error: ''
   }
 
   async componentDidMount() {
@@ -34,13 +34,14 @@ export default class EosBuyAccountModal extends React.Component {
         eosData: {
           activePrivateKey,
           activePublicKey,
-          address: accountName,
-        },
-      },
+          address: accountName
+        }
+      }
     } = getState()
 
     const { buyAccountPriceInBTC: price } = config.api.eos
 
+    this.setState({ activePrivateKey, activePublicKey, accountName, price })
   }
 
   handleSubmit = async () => {
@@ -63,6 +64,8 @@ export default class EosBuyAccountModal extends React.Component {
     const { name } = this.props
 
     const linked = Link.all(this, 'accountName', 'activePrivateKey', 'activePublicKey', 'price')
+
+    const activationPayment = localStorage.getItem(constants.localStorage.eosActivationPayment)
 
     return (
       <Fragment>

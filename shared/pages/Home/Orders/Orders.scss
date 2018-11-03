@@ -23,3 +23,81 @@
   height: 100%;
   padding: 5px 5px;
 }
+
+.ordersHeading {
+  margin-top: 20px;
+}
+
+.tableBox {
+  box-shadow: 0 3px 9px 0 rgba(0,0,0,.08);
+  padding: 10px;
+  height: 120px;
+  position: relative;
+}
+// .for {
+//   position: absolute;
+//   text-transform: uppercase;
+//   left: 15px;
+//   bottom: 21px;
+//   text-transform: uppercase;
+//   font-weight: bold;
+//   font-size: 13px;
+// }
+.price {
+  position: absolute;
+  right: 10px;
+  color: #bbb;
+  text-transform: uppercase;
+  font-size: 13px;
+}
+// .sell {
+//   position: absolute;
+//   bottom: 33px;
+//   left: 15px;
+//   text-transform: uppercase;
+//   font-weight: bold;
+//   font-size: 13px;
+// }
+.have, .haveValue, .get, .getValue {
+  color: #000;
+}
+.btn {
+  position: absolute;
+  background: #8400f0;
+  color: #fff;
+  text-transform: uppercase;
+  border-radius: 5px;
+  padding: 5px 26px;
+  font-size: 12px;
+  right: 10px;
+  bottom: 15px;
+}
+.img {
+  position: absolute;
+  top: 15px;
+  img {
+    width: 35px;
+  }
+}
+.icon {
+  color: #000;
+}
+
+@include media-mobile {
+  .buttonRow {
+    margin: 0;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    width: auto;
+    justify-content: end;
+    position: absolute;
+    bottom: -100px;
+    .button:first-child {
+      margin-right: 10px;
+      color: #fff;
+    }
+  }
+  table thead {
+    display: none;
+  }
+}

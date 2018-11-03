@@ -43,6 +43,7 @@ const setupEOS = async () => {
     chainId: telosChainId,
     httpEndpoint: telosHttpEndpoint,
     keyProvider: telosKeyProvider,
+    keyPrefix: 'TLOS',
   })
 
   eccInstance = EOS.modules.ecc

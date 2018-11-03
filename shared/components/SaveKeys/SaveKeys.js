@@ -32,12 +32,12 @@ export default class SaveKeys extends Component {
           <Button brand onClick={isDownload} data-tip data-for="Download">
             <FormattedMessage id="SaveKeys31" defaultMessage="Download" />
           </Button>
+          <ReactTooltip id="Download" type="light" effect="solid">
+            <FormattedMessage id="SaveKeys35" defaultMessage="Download text document with keys and accounts">
+              {message => <span>{message}</span>}
+            </FormattedMessage>
+          </ReactTooltip>
         </div>
-        <ReactTooltip id="Download" type="light" effect="solid">
-          <FormattedMessage id="SaveKeys35" defaultMessage="Download text document with keys and accounts">
-            {message => <span>{message}</span>}
-          </FormattedMessage>
-        </ReactTooltip>
         <div styleName="cell" >
           <Field
             label={ethData.currency}

@@ -20,13 +20,13 @@ export default class Root extends React.PureComponent {
     const { history, store, routes } = this.props
     return (
       <Provider store={store}>
-        <ConnectedRouter history={history}>
           <IntlProviderContainer>
-            <App>
-              {routes}
-            </App>
+            <ConnectedRouter history={history}>
+              <App>
+                {routes}
+              </App>
+            </ConnectedRouter>
           </IntlProviderContainer>
-        </ConnectedRouter>
       </Provider>
     )
   }

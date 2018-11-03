@@ -58,7 +58,7 @@ export default class CurrencyDirectionChooser extends Component {
         </div>
         <div styleName="row formRow">
           <div styleName="row">
-            <div styleName="row">
+            <div styleName="row formRow">
               <FormattedMessage id="CurrencyDirectionChooser61" defaultMessage="You have">
                 {message =>   <p styleName="text">{message}</p>}
               </FormattedMessage>
@@ -70,7 +70,7 @@ export default class CurrencyDirectionChooser extends Component {
               />
             </div>
             <Flip onClick={flipCurrency} />
-            <div styleName="row">
+            <div styleName="row formRow">
               <FormattedMessage id="CurrencyDirectionChooser74" defaultMessage="You geе">
                 {message =>   <p styleName="text">{message}</p>}
               </FormattedMessage>

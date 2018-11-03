@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { withRouter } from 'react-router'
+import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import actions from 'redux/actions'
 import { connect } from 'redaction'
@@ -93,7 +93,7 @@ export default class App extends React.Component {
     const { fetching, multiTabs, error } = this.state
     const { children, ethAddress, btcAddress, tokenAddress, history /* eosAddress */ } = this.props
     const isFetching = !ethAddress || !btcAddress || !tokenAddress || !fetching
-
+console.log('NBFJHBSKHBAK', this.props)
     if (multiTabs) {
       return <PreventMultiTabs />
     }
@@ -104,7 +104,7 @@ export default class App extends React.Component {
 
     return (
       <Fragment>
-        <Seo location={history.location} />
+        // <Seo location={history.location} />
         { isMobile && <UserTooltip /> }
         <Header />
         <WidthContainer styleName="main">

@@ -20,7 +20,7 @@ requirements of NYSE and NASDAQ and growing demands of the SEC to the informatio
 applying the market, the interest to the Pink Sheets arose very fast. In September, 1990, the NQB introduced
 the real-time Electronic Quotation Service, so the over-the-counter trading entered the Internet. By the year
 2010 the operators of the Pink Sheets trading were acquisited by the OTC Market Group, Inc. In 2014, two of five
-U.S. stock trades were over-the-counter`
+U.S. stock trades were over-the-counter.`
 
 const defaultMessageLint1 = `Navistar International, the 12-billion-dollar-corporation, came to the
 Pink Sheets Market in 2006 leaving the NYSE due to some issues with the auditor board..`
@@ -105,7 +105,9 @@ const Listing = () => (
         id="Listing57"
         defaultMessage={defaultMessageLint3} />
       <Href tab="https://wiki.swap.online/decentralised_exchanges_2018trends_eng/" >
-        <FormattedMessage id="Listing5712" defaultMessage="safe, rapid and decentralized " />
+        <FormattedMessage id="Listing5712" defaultMessage=" safe, rapid and decentralized">
+          {message => <a style={{fontSize: 16, fontWeight: 'bold'}}>{message} </a>}
+        </FormattedMessage>
       </Href>
       <FormattedMessage
         id="Listing571"
@@ -160,15 +162,15 @@ const Listing = () => (
       <FormattedMessage
         id="Listing114"
         defaultMessage="Stay with us.">
-        {message => <strong>{message}</strong>}
+        {message => <strong style={{fontSize:22}}>{message}</strong>}
       </FormattedMessage>
       <br />
       <FormattedMessage id="Listing117" defaultMessage="Grow with us.">
-        {message => <strong>{message}</strong>}
+        {message => <strong style={{fontSize:22}}>{message}</strong>}
       </FormattedMessage>
       <br />
       <FormattedMessage id="Listing120" defaultMessage="Earn with us.">
-        {message => <strong>{message}</strong>}
+        {message => <strong style={{fontSize:22}}>{message}</strong>}
       </FormattedMessage>
       <br />
     </p>
