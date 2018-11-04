@@ -170,8 +170,13 @@ export default class Orders extends Component {
         </h3>
         <p>
           <FormattedMessage id="Orders172" defaultMessage="orders that " />
+<<<<<<< HEAD
           <a style={ {fontSize: 16, fontWeight: 'bold'} }>
             <FormattedMessage id="Orders176" defaultMessage="buy " />
+=======
+          <a>
+            <FormattedMessage id="Orders176" defaultMessage="buy" />
+>>>>>>> 649bb2b... fix lint, fix errors
           </a>
           {buyCurrency}
           <FormattedMessage id="Orders177" defaultMessage=" from you" />

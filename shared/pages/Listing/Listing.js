@@ -162,7 +162,11 @@ const Listing = () => (
       <FormattedMessage
         id="Listing114"
         defaultMessage="Stay with us.">
+<<<<<<< HEAD
         {message => <strong style={ {fontSize:22} }>{message}</strong>}
+=======
+        {message => <strong>{message}</strong>}
+>>>>>>> 649bb2b... fix lint, fix errors
       </FormattedMessage>
       <br />
       <FormattedMessage id="Listing117" defaultMessage="Grow with us.">
