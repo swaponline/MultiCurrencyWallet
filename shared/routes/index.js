@@ -16,7 +16,6 @@ import CurrencyWallet   from 'pages/CurrencyWallet/CurrencyWallet'
 
 const routes = (
   <Switch>
-console.log('fdslmfksd')
     <Route path={`${links.swap}/:buy-:sell/:orderId`} component={SwapComponent} />
 
     <Route path="/:fullName-wallet" component={CurrencyWallet} />

@@ -106,7 +106,7 @@ const Listing = () => (
         defaultMessage={defaultMessageLint3} />
       <Href tab="https://wiki.swap.online/decentralised_exchanges_2018trends_eng/" >
         <FormattedMessage id="Listing5712" defaultMessage=" safe, rapid and decentralized">
-          {message => <a style={{fontSize: 16, fontWeight: 'bold'}}>{message} </a>}
+          {message => <a style={ {fontSize: 16, fontWeight: 'bold'} }>{message} </a>}
         </FormattedMessage>
       </Href>
       <FormattedMessage
@@ -162,15 +162,15 @@ const Listing = () => (
       <FormattedMessage
         id="Listing114"
         defaultMessage="Stay with us.">
-        {message => <strong style={{fontSize:22}}>{message}</strong>}
+        {message => <strong style={ {fontSize:22} }>{message}</strong>}
       </FormattedMessage>
       <br />
       <FormattedMessage id="Listing117" defaultMessage="Grow with us.">
-        {message => <strong style={{fontSize:22}}>{message}</strong>}
+        {message => <strong style={ {fontSize:22} }>{message}</strong>}
       </FormattedMessage>
       <br />
       <FormattedMessage id="Listing120" defaultMessage="Earn with us.">
-        {message => <strong style={{fontSize:22}}>{message}</strong>}
+        {message => <strong style={ {fontSize:22} }>{message}</strong>}
       </FormattedMessage>
       <br />
     </p>

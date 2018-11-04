@@ -33,8 +33,8 @@ const register = async (accountName, activePrivateKey) => {
     permissions.find(item => item.perm_name === 'active')
       .required_auth.keys[0].key
 
-  if (activePublicKey !== requiredPublicKey){
-      throw new Error(`${activePublicKey} is not equal to ${requiredPublicKey}`)
+  if (activePublicKey !== requiredPublicKey) {
+    throw new Error(`${activePublicKey} is not equal to ${requiredPublicKey}`)
   }
 
   localStorage.setItem(constants.privateKeyNames.telosPrivateKey, activePrivateKey)
@@ -126,7 +126,7 @@ const activateAccount = async (accountName, activePrivateKey, activePublicKey) =
       body: JSON.stringify({
         publicKey: activePublicKey,
         accountName,
-      })
+      }),
     })
 
     if (response.ok) {
