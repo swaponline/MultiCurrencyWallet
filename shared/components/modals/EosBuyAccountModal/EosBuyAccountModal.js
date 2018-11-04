@@ -25,7 +25,7 @@ export default class EosBuyAccountModal extends React.Component {
     activePublicKey: '',
     accountName: '',
     price: '',
-    error: ''
+    error: '',
   }
 
   async componentDidMount() {
@@ -34,9 +34,9 @@ export default class EosBuyAccountModal extends React.Component {
         eosData: {
           activePrivateKey,
           activePublicKey,
-          address: accountName
-        }
-      }
+          address: accountName,
+        },
+      },
     } = getState()
 
     const { buyAccountPriceInBTC: price } = config.api.eos

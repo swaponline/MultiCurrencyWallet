@@ -70,7 +70,6 @@ export default class Header extends Component {
 
   constructor(props) {
     super(props)
-console.log(props)
     this.state = {
       sticky: false,
       menuItems: [

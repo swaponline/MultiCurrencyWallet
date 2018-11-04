@@ -18,35 +18,6 @@ export default class Nav extends Component {
     menu: PropTypes.array.isRequired,
   }
 
-  // state = {
-  //   activeRoute: '/',
-  // }
-
-  // handleRouteChange = (props) => {
-  //   const activeRoute = props.location.pathname
-  //
-  //   const pathExist = this.props.menu
-  //     .some(m => m.link === activeRoute)
-  //
-  //   if (pathExist) {
-  //     this.setState({ activeRoute })
-  //   } else {
-  //     this.setState({ activeRoute: '/exchange' })
-  //   }
-  // }
-  //
-  // componentDidMount = () => {
-  //   this.handleRouteChange(this.props)
-  // }
-  //
-  // componentWillReceiveProps = (nextProps) => {
-  //   if (nextProps.location.pathname === this.state.activeRoute) {
-  //     return
-  //   }
-  //
-  //   this.handleRouteChange(nextProps)
-  // }
-
   handleScrollToTopClick = (link) => {
     this.setState({ activeRoute: link })
 
@@ -62,9 +33,6 @@ export default class Nav extends Component {
 
   render() {
     const { menu } = this.props
-
-
-    console.log('menu', menu)
 
     return (
       <div styleName="nav">
