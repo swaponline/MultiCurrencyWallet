@@ -93,6 +93,7 @@ export default class App extends React.Component {
     const { fetching, multiTabs, error } = this.state
     const { children, ethAddress, btcAddress, tokenAddress, history /* eosAddress */ } = this.props
     const isFetching = !ethAddress || !btcAddress || !tokenAddress || !fetching
+console.log('NBFJHBSKHBAK', this.props)
     if (multiTabs) {
       return <PreventMultiTabs />
     }
@@ -102,7 +103,8 @@ export default class App extends React.Component {
     }
 
     return (
-      <Fragment>  // <Seo location={history.location} />
+      <Fragment>
+        // <Seo location={history.location} />
         { isMobile && <UserTooltip /> }
         <Header />
         <WidthContainer styleName="main">

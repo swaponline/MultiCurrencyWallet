@@ -54,8 +54,8 @@ export default class WithdrawModal extends React.Component {
     const { data: { currency, contractAddress, address, balance, decimals }, name }  = this.props
 
     this.setBalanceOnState(currency)
-    this.setState(() => ({ isShipped: true }))
-    
+      this.setState(() => ({ isShipped: true }))
+
     if (!to || !amount || amount < minAmount[currency.toLowerCase()] || amount > balance) {
       this.setState({
         isSubmitted: true,

@@ -126,11 +126,8 @@ const activateAccount = async (accountName, activePrivateKey, activePublicKey) =
       body: JSON.stringify({
         publicKey: activePublicKey,
         accountName,
-<<<<<<< HEAD
-      }),
-=======
       })
->>>>>>> 649bb2b... fix lint, fix errors
+
     })
 
     if (response.ok) {
