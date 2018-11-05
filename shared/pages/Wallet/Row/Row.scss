@@ -41,9 +41,8 @@
     background: #dfc5ff;
   }
 }
-
-.table_balance-cell {
-  min-width: 100px;
+.buttonActivate {
+  margin-left: 15px;
 }
 
 .marginRight {
@@ -91,7 +90,7 @@
 }
 
 .table_balance-cell {
-  min-width: 100px;
+  min-width: 124px;
 }
 
 @include media-mobile { 

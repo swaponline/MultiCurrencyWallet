@@ -19,7 +19,7 @@ import { withRouter } from 'react-router'
 import ReactTooltip from 'react-tooltip'
 
 @withRouter
-@cssModules(styles)
+@cssModules(styles, { allowMultiple: true })
 export default class Row extends Component {
 
   state = {
@@ -210,7 +210,7 @@ export default class Row extends Component {
                           styleName="icon"
                           data-tip
                           data-for="Copy"
-                          style={{ width: '10px' }} />
+                          style={{ width: '14px' }} />
                       }
                       <LinkAccount type={currency} address={address} >{address}</LinkAccount>
                       <ReactTooltip id="Copy" type="light" effect="solid">
@@ -227,7 +227,7 @@ export default class Row extends Component {
                 }
 
                 {
-                  currency === 'EOS' && !eosAccountActivated && <button styleName="button" onClick={this.handleEosBuyAccount} data-tip data-for="bE">Activate</button>
+                  currency === 'EOS' && !eosAccountActivated && <button styleName="button buttonActivate" onClick={this.handleEosBuyAccount} data-tip data-for="bE">Activate</button>
                 }
                 <ReactTooltip id="Activate" type="light" effect="solid">
                   <span>Buy this account</span>
@@ -243,7 +243,7 @@ export default class Row extends Component {
                 { currency === 'EOS' && !eosAccountActivated && (
                   <Fragment>
                     <br />
-                    <span style={{ fontSize: '12px', color: '#c9c9c9' }}>not activated</span>
+                    <span style={{ fontSize: '12px', color: '#c9c9c9', position: 'absolute', bottom: '10px' }}>not activated</span>
                   </Fragment>
                 )
                 }
@@ -251,7 +251,7 @@ export default class Row extends Component {
                 { currency === 'TLOS' && !telosAccountActivated && (
                   <Fragment>
                     <br />
-                    <span style={{ fontSize: '12px', color: '#c9c9c9' }}>not activated</span>
+                    <span style={{ fontSize: '12px', color: '#c9c9c9', position: 'absolute', bottom: '10px' }}>not activated</span>
                   </Fragment>
                 )
                 }
