@@ -64,6 +64,10 @@
   th:last-child {
     padding-left: 30px;
   }
+  td:first-child {
+    display: table-cell;
+    padding-left: 0px;
+  }
   thead {
     position: absolute;
     width: 100%;
