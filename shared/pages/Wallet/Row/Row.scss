@@ -23,6 +23,13 @@
   margin-right: 5px;
 }
 
+.notActiveLink {
+  font-size: 12px;
+  color: #c9c9c9; 
+  position: absolute;
+  bottom: 14px;
+}
+
 .button {
   @include inline-block;
   height: 40px;

@@ -243,7 +243,7 @@ export default class Row extends Component {
                 { currency === 'EOS' && !eosAccountActivated && (
                   <Fragment>
                     <br />
-                    <span style={{ fontSize: '12px', color: '#c9c9c9', position: 'absolute', bottom: '10px' }}>not activated</span>
+                    <span styleName="notActiveLink">not activated</span>
                   </Fragment>
                 )
                 }
@@ -251,7 +251,7 @@ export default class Row extends Component {
                 { currency === 'TLOS' && !telosAccountActivated && (
                   <Fragment>
                     <br />
-                    <span style={{ fontSize: '12px', color: '#c9c9c9', position: 'absolute', bottom: '10px' }}>not activated</span>
+                    <span styleName="notActiveLink">not activated</span>
                   </Fragment>
                 )
                 }
