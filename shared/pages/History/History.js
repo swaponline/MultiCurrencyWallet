@@ -12,6 +12,7 @@ import styles from 'components/tables/Table/Table.scss'
 import Filter from './Filter/Filter'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import InfiniteScrollTable from 'components/tables/InfiniteScrollTable/InfiniteScrollTable'
+import { FormattedMessage } from 'react-intl'
 
 
 const filterHistory = (items, filter) => {

@@ -17,6 +17,8 @@ import WithdrawButton from 'components/controls/WithdrawButton/WithdrawButton'
 import LinkAccount from '../LinkAccount/LinkAcount'
 import { withRouter } from 'react-router'
 import ReactTooltip from 'react-tooltip'
+import { FormattedMessage } from 'react-intl'
+
 
 @withRouter
 @cssModules(styles, { allowMultiple: true })
@@ -27,7 +29,7 @@ export default class Row extends Component {
     viewText: false,
     tradeAllowed: false,
     isAddressCopied: false,
-    isTouch: false
+    isTouch: false,
   }
 
   componentWillMount() {
@@ -72,13 +74,13 @@ export default class Row extends Component {
 
   handleTouch = (e) => {
     this.setState({
-      isTouch: true
+      isTouch: true,
     })
   }
 
   handleTouchClear = (e) => {
-      this.setState({
-        isTouch: false
+    this.setState({
+      isTouch: false,
     })
   }
 
@@ -131,7 +133,7 @@ export default class Row extends Component {
 
   handleShowOptions = () => {
     this.setState({
-      showMobileButtons: true
+      showMobileButtons: true,
     })
   }
 
@@ -150,7 +152,12 @@ export default class Row extends Component {
     const telosAccountActivated = localStorage.getItem(constants.localStorage.telosAccountActivated) === "true"
 
     return (
-      <tr styleName={this.props.index == this.props.selectId || !isMobile ? 'showButtons' : 'hidden'} onClick={() => { this.props.handleSelectId(this.props.index)}} onTouchEnd={this.handleTouchClear} onTouchMove={this.handleTouch} style= { isTouch && this.props.index != this.props.selectId ?  { background: '#f5f5f5' } : { background: '#fff' } }>
+      <tr
+        styleName={this.props.index === this.props.selectId || !isMobile ? 'showButtons' : 'hidden'}
+        onClick={() => { this.props.handleSelectId(this.props.index) }}
+        onTouchEnd={this.handleTouchClear} onTouchMove={this.handleTouch}
+        style={ isTouch && this.props.index !== this.props.selectId ?  { background: '#f5f5f5' } : { background: '#fff' }}
+      >
         <td>
           <Link to={`/${fullName}-wallet`} title={`Online ${fullName} wallet`}>
             <Coin name={currency} />
@@ -172,19 +179,28 @@ export default class Row extends Component {
                 { currency === 'BTC' && unconfirmedBalance !== 0 && (
                   <Fragment>
                     <br />
-                    <span style={{ fontSize: '12px', color: '#c9c9c9' }}>Unconfirmed {unconfirmedBalance}</span>
+                    <span style={{ fontSize: '12px', color: '#c9c9c9' }}>
+                      <FormattedMessage id="RowWallet181" defaultMessage="Unconfirmed" />
+                      {unconfirmedBalance}
+                    </span>
                   </Fragment>
                 ) }
                 { currency === 'LTC' && unconfirmedBalance !== 0 && (
                   <Fragment>
                     <br />
-                    <span style={{ fontSize: '12px', color: '#c9c9c9' }}>Unconfirmed {unconfirmedBalance}</span>
+                    <span style={{ fontSize: '12px', color: '#c9c9c9' }}>
+                      <FormattedMessage id="RowWallet189" defaultMessage="Unconfirmed" />
+                      {unconfirmedBalance}
+                    </span>
                   </Fragment>
                 ) }
                 { currency === 'USDT' && unconfirmedBalance !== 0 && (
                   <Fragment>
                     <br />
-                    <span style={{ fontSize: '12px', color: '#c9c9c9' }}>Unconfirmed {unconfirmedBalance}</span>
+                    <span style={{ fontSize: '12px', color: '#c9c9c9' }}>
+                      <FormattedMessage id="RowWallet197" defaultMessage="Unconfirmed" />
+                      {unconfirmedBalance}
+                    </span>
                   </Fragment>
                 ) }
               </div>
@@ -264,20 +280,26 @@ export default class Row extends Component {
           <div>
             <WithdrawButton onClick={this.handleWithdraw} datatip="Send your currency" styleName="marginRight">
               <i className="fas fa-arrow-alt-circle-right" />
-              <span>Send</span>
+              <span>
+                <FormattedMessage id="RowWallet296" defaultMessage="Send" />
+              </span>
               <ReactTooltip type="light" effect="solid" />
             </WithdrawButton>
             { isMobile && (
               <WithdrawButton onClick={this.handleReceive} styleName="marginRight">
-                <i class="fas fa-qrcode"></i>
-                <span>Receive</span>
+                <i className="fas fa-qrcode" />
+                <span>
+                  <FormattedMessage id="RowWallet304" defaultMessage="Receive" />
+                </span>
               </WithdrawButton>
             )}
             {
               tradeAllowed && (
                 <WithdrawButton datatip="Swap your currency or create order to swap" onClick={() => this.handleGoTrade(currency)}>
                   <i className="fas fa-exchange-alt" />
-                  <span>Exchange</span>
+                  <span>
+                    <FormattedMessage id="RowWallet313" defaultMessage="Exchange" />
+                  </span>
                   <ReactTooltip type="light" effect="solid" />
                 </WithdrawButton>
               )

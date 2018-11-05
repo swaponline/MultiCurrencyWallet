@@ -1,0 +1,44 @@
+[
+  {
+    "id": "menu.affiliate",
+    "message": "Affiliate",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
+    "id": "menu.exchange",
+    "message": "Exchange",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
+    "id": "menu.history",
+    "message": "History",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
+    "id": "menu.listing",
+    "message": "Listing",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
+    "id": "menu.wallet",
+    "message": "Wallet",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
+    "id": "LtcToEth.orderCreatorIsOffline",
+    "message": "The order creator is offline. Waiting for him..",
+    "files": [
+      "shared/pages/Swap/LtcToEth.js"
+    ]
+  }
+]

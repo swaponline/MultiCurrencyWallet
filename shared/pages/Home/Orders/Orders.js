@@ -21,6 +21,7 @@ import Pair from './Pair'
 import Row from './Row/Row'
 import RowMobile from './RowMobile/RowMobile'
 import MyOrders from './MyOrders/MyOrders'
+import { FormattedMessage } from 'react-intl'
 
 
 const filterMyOrders = (orders, peer) => orders
@@ -109,14 +110,26 @@ export default class Orders extends Component {
 
     return (
       <Fragment>
-        <PageSeo location={location} defaultTitle={`Atomic Swap ${buyCurrencyFullName} (${buyCurrency}) to ${sellCurrencyFullName} (${sellCurrency}) Instant Exchange`} defaultDescription={`Best exchange rate for ${buyCurrencyFullName} (${buyCurrency}) to ${sellCurrencyFullName} (${sellCurrency}). Swap.Online wallet provides instant exchange using Atomic Swap Protocol.`} />
+        <PageSeo
+          location={location}
+          defaultTitle={
+            `Atomic Swap ${buyCurrencyFullName} (${buyCurrency}) to ${sellCurrencyFullName} (${sellCurrency}) Instant Exchange`}
+          defaultDescription={`Best exchange rate for ${buyCurrencyFullName} (${buyCurrency}) to ${sellCurrencyFullName} (${sellCurrency}).
+               Swap.Online wallet provides instant exchange using Atomic Swap Protocol.`
+          } />
         <Title>{buyCurrency}/{sellCurrency} no limit exchange with 0 fee</Title>
-        { invalidPair && <p> No such ticker. Redirecting to SWAP-BTC exchange... </p> }
+        { invalidPair &&
+          <FormattedMessage id="Orders117" defaultMessage="No such ticker. Redirecting to SWAP-BTC exchange...">
+            {message => <p>{message}</p>}
+          </FormattedMessage>
+        }
         <div styleName="buttonRow">
           <Button green styleName="button" disabled={myOrders.length === 0} onClick={() => this.setState(state => ({ isVisible: !state.isVisible }))}>
             {isVisible ? 'Hide' : 'Show'} my Orders
           </Button>
-          <Button gray styleName="button" onClick={this.createOffer}>Create offer</Button>
+          <Button gray styleName="button" onClick={this.createOffer}>
+            <FormattedMessage id="Orders128" defaultMessage="Create offer" />
+          </Button>
         </div>
         {
           isVisible && <MyOrders

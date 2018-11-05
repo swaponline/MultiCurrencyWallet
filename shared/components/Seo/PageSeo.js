@@ -20,8 +20,9 @@ export default class PageSeo extends Seo {
         ...this.seoPage,
         url: getUrl(this.seoPage.uri),
       }
-    } else {
-      const { defaultTitle, defaultDescription } = this.props
+    }
+    else {
+      const  { defaultTitle, defaultDescription } = this.props
       return {
         title: defaultTitle,
         description: defaultDescription,

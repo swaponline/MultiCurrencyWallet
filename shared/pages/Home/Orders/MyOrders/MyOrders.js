@@ -7,6 +7,7 @@ import { isMobile } from 'react-device-detect'
 import Table from 'components/tables/Table/Table'
 import styles from 'components/tables/Table/Table.scss'
 import RowFeeds from './RowFeeds/RowFeeds'
+
 import RowFeedsMobile from './RowFeedsMobile/RowFeedsMobile'
 
 
@@ -22,7 +23,9 @@ export default class MyOrders extends PureComponent {
 
     return (
       <Fragment>
-        <h3 style={{ marginTop: '50px' }} >Your orders</h3>
+        <FormattedMessage id="MyOrders23" defaultMessage="Your orders">
+          {message => <h3 style={{ marginTop: '50px' }} >{message}</h3>}
+        </FormattedMessage>
         <Table
           className={styles.exchange}
           titles={titles}

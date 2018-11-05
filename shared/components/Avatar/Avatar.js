@@ -6,6 +6,7 @@ import jdenticon from 'jdenticon'
 import CSSModules from 'react-css-modules'
 import styles from './Avatar.scss'
 import ReactTooltip from 'react-tooltip'
+import { FormattedMessage } from 'react-intl'
 
 
 const Avatar = ({ value, className, size }) => (

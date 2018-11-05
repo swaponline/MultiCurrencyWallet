@@ -12,6 +12,7 @@ import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
+import { FormattedMessage } from 'react-intl'
 
 
 const minAmount = {
@@ -56,7 +57,8 @@ export default class WithdrawModal extends React.Component {
     this.setState(() => ({ isShipped: true }))
 
     this.setBalanceOnState(currency)
-
+    this.setState(() => ({ isShipped: true }))
+    
     if (!to || !amount || amount < minAmount[currency.toLowerCase()] || amount > balance) {
       this.setState({
         isSubmitted: true,
@@ -103,17 +105,15 @@ export default class WithdrawModal extends React.Component {
         <Input valueLink={linked.amount} pattern="0-9\." placeholder={`Enter amount, you have ${balance}`} />
         {
           !linked.amount.error && (
-            <div styleName="note">No less than {minAmount[data.currency.toLowerCase()]}</div>
+            <div styleName="note">
+              <FormattedMessage id="WithdrawModal106" defaultMessage="No less than" />
+              {minAmount[data.currency.toLowerCase()]}
+            </div>
           )
         }
-        <Button
-          styleName="button"
-          brand
-          fullWidth
-          disabled={isDisabled}
-          onClick={this.handleSubmit}
-        >
-          Transfer
+        <Button styleName="button" brand fullWidth disabled={isDisabled} onClick={this.handleSubmit}>
+          <FormattedMessage id="WithdrawModal111" defaultMessage="Transfer" />
+          {minAmount[data.currency.toLowerCase()]}
         </Button>
       </Modal>
     )

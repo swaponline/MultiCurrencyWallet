@@ -1,3 +1,4 @@
+
 import config from 'app-config'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
@@ -6,6 +7,7 @@ import actions from 'redux/actions'
 
 import { telos, ecc } from 'helpers/eos'
 import { Keygen } from 'eosjs-keygen'
+
 
 const generateAccountName = (publicKey) => {
   const account = Array.prototype.map.call(
@@ -110,6 +112,7 @@ const loginWithNewAccount = async () => {
   return { accountName, activePrivateKey, activePublicKey }
 }
 
+
 const activateAccount = async(accountName, activePrivateKey, activePublicKey) => {
   const { registerEndpoint } = config.api.telos
 
@@ -118,6 +121,7 @@ const activateAccount = async(accountName, activePrivateKey, activePublicKey) =>
       method: 'POST',
       headers: {
         'Accept': 'application/json',
+
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({

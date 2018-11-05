@@ -1,6 +1,7 @@
 import { getState } from 'redux/core'
 import config from 'app-config'
 
+
 let eosInstance = null
 let telosInstance = null
 let eccInstance = null
@@ -15,7 +16,8 @@ const keyProvider = (telos = false) => {
 
     if (pubkeys || telos) {
       return [activePrivateKey]
-    } else {
+    }
+    else {
       return [activePublicKey]
     }
   }
@@ -79,5 +81,5 @@ const telos = {
 }
 
 export {
-  eos, telos, ecc
+  eos, telos, ecc,
 }

@@ -4,6 +4,7 @@ import CSSModules from 'react-css-modules'
 import styles from './Question.scss'
 
 import ReactTooltip from 'react-tooltip'
+import { FormattedMessage } from 'react-intl'
 
 
 const Question = () => (

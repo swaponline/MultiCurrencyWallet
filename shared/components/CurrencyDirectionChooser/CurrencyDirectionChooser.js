@@ -12,6 +12,7 @@ import Button from 'components/controls/Button/Button'
 import CurrencySelect from 'components/ui/CurrencySelect/CurrencySelect'
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
+import { FormattedMessage } from 'react-intl'
 
 
 @CSSModules(styles, { allowMultiple: true })
@@ -51,7 +52,9 @@ export default class CurrencyDirectionChooser extends Component {
     return (
       <div styleName="choice">
         <div styleName="row title">
-          <SubTitle>Choose the direction of exchange</SubTitle>
+          <FormattedMessage id="CurrencyDirectionChooser54" defaultMessage=" Choose the direction of exchange">
+            {message => <SubTitle>{message}</SubTitle>}
+          </FormattedMessage>
         </div>
         <div styleName="row formRow">
           <div styleName="row">
@@ -75,7 +78,10 @@ export default class CurrencyDirectionChooser extends Component {
               />
             </div>
           </div>
-          <Button styleName="button" brand onClick={handleSubmit}>SHOW ORDERS <Tooltip text="Offer list" /></Button>
+
+          <FormattedMessage id="CurrencyDirectionChooser86" defaultMessage="SHOW ORDERS ">
+            {message =>   <Button styleName="button" brand onClick={handleSubmit}>{message}<Tooltip text="Offer list" /></Button>}
+          </FormattedMessage>
         </div>
       </div>
     )
