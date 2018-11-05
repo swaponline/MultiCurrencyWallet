@@ -58,26 +58,27 @@ version of the exchange to client’s token. This option is available for the fi
 const Listing = () => (
   <div styleName="container">
     <PageHeadline>
-      <FormattedMessage id="Listing16" defaultMessage="How to list your asset on swap.online ? bid/ask">
-        {message => <SubTitle>{message}</SubTitle>}
-      </FormattedMessage>
+      <SubTitle>How to list your asset on swap.online </SubTitle>
     </PageHeadline>
     <p>
-      <SubTitle>
-        <FormattedMessage
-          id="Listing21"
-          defaultMessage="1. We can list your token on swap.online and it is absolutely free for now;" />
-      </SubTitle>
-      <SubTitle>
-        <FormattedMessage
-          id="Listing22"
-          defaultMessage="2. To list your tokens, please send us the link to your peoject, erc20 address, icon, name and ticker (short name) to team@swap.online" />
-      </SubTitle>
-      <SubTitle>
-        <FormattedMessage
-          id="Listing23"
-          defaultMessage="3. We as well will announce listing of your tokens on our social media, mutial PR will benefit both sides." />
-      </SubTitle>
+      1. We can list your token on swap.online ; <br />
+      2. To list your tokens, please send us the link to your peoject, erc20 address, icon, name and ticker (short name) to team@swap.online <br />
+      3. We as well will announce listing of your tokens on our social media, mutial PR will benefit both sides. <br />
+    </p>
+    <p>Crypto Pink Sheets: ALL Coins Welcome To SWAP.Online!</p>
+    <p>OTC-approach-crypto market to be opened in Aug, 2018.</p>
+    <p>
+      There was one company in the U.S. in the year of 1913, the National Quotation Bureau.
+      They brought to life very simple idea - to provide every entity with the ability to be quoted freely, without
+      complicated safety and control proceedings. The list of the bond orders was primarily published on the yellow
+      paper and the stock orders were published on the pink paper. The Pink Sheets, as the lists were immediately
+      called by the traders. rapidly became very popular among the market players. Every firm opened in the U.S.
+      or abroad was able to publish its securities quotations in the list of Pink Sheets. With the increasing
+      requirements of NYSE and NASDAQ and growing demands of the SEC to the information regarding the company
+      applying the market, the interest to the Pink Sheets arose very fast. In September, 1990, the NQB introduced
+      the real-time Electronic Quotation Service, so the over-the-counter trading entered the Internet. By the year
+      2010 the operators of the Pink Sheets trading were acquisited by the OTC Market Group, Inc. In 2014, two of five
+      U.S. stock trades were over-the-counter.
     </p>
     <FormattedMessage id="Listing28" defaultMessage="Crypto Pink Sheets: ALL Coins Welcome To SWAP.Online!">
       {message => <p>{message}</p>}

@@ -107,7 +107,7 @@ export default class DropDown extends Component {
     return (
       <ClickOutside onClickOutside={isToggleActive ? () => this.toggle() : () => {}}>
         <div styleName={dropDownStyleName} className={className}>
-          <div styleName="selectedItem" onClick={this.toggle}>
+          <div styleName={this.renderSelectedItem().props.title == 'SWAP' ? 'swapStyle selectedItem' : 'selectedItem'} onClick={this.toggle}>
             <div styleName="arrow" />
             {this.renderSelectedItem()}
           </div>
@@ -121,7 +121,9 @@ export default class DropDown extends Component {
                       styleName="option"
                       onClick={() => this.handleOptionClick(item)}
                     >
+
                       {this.renderItem(item)}
+                  
                     </div>
                   ))
                 }

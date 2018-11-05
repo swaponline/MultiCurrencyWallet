@@ -89,7 +89,7 @@ export default class Wallet extends Component {
   render() {
     const { view, zeroBalance } = this.state
     const { items, tokens, currencies, hiddenCoinsList } = this.props
-    const titles = [ 'Coin', 'Name', 'Balance', !isMobile && 'Address', isMobile ? 'Send, receive, swap' :  'Actions' ]
+    const titles = [ 'Coin', 'Name', 'Balance', !isMobile && 'Your Address', isMobile ? 'Send, receive, swap' :  'Actions' ]
 
     const keysSaved = localStorage.getItem(constants.localStorage.privateKeysSaved)
     const testNetSkip = localStorage.getItem(constants.localStorage.testnetSkip)
@@ -100,9 +100,10 @@ export default class Wallet extends Component {
       <section>
         { showSaveKeysModal && <SaveKeysModal /> }
         <PageHeadline>
-          <FormattedMessage id="Wallet107" defaultMessage="Swap.Online - Cryptocurrency Wallet with Atomic Swap Exchange">
-            {message => <SubTitle>{message}  </SubTitle>}
-          </FormattedMessage>
+          <SubTitle>
+            Your online cryptocurrency wallet
+          </SubTitle>
+          Deposit funds to addresses below
         </PageHeadline>
         <Table
           id="table-wallet"

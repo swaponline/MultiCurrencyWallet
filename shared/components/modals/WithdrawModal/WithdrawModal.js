@@ -36,6 +36,7 @@ export default class WithdrawModal extends React.Component {
 
   state = {
     isSubmitted: false,
+    isShipped: false,
     address: '',
     amount: '',
   }
@@ -52,6 +53,8 @@ export default class WithdrawModal extends React.Component {
   handleSubmit = () => {
     const { address: to, amount } = this.state
     const { data: { currency, contractAddress, address, balance, decimals }, name } = this.props
+
+    this.setState(() => ({ isShipped: true }))
 
     this.setBalanceOnState(currency)
     this.setState(() => ({ isShipped: true }))
@@ -75,16 +78,17 @@ export default class WithdrawModal extends React.Component {
           address: to,
         })
 
+        this.setState(() => ({ isShipped: false }))
         actions.modals.close(name)
       })
   }
 
   render() {
-    const { isSubmitted, address, amount, balance } = this.state
+    const { isSubmitted, address, amount, balance, isShipped } = this.state
     const { name, data } = this.props
 
     const linked = Link.all(this, 'address', 'amount')
-    const isDisabled = !address || !amount
+    const isDisabled = !address || !amount || isShipped
 
     if (isSubmitted) {
       linked.amount.check((value) => value < balance, `You don't have enough balance`)
