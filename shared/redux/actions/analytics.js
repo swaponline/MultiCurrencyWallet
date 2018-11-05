@@ -33,7 +33,9 @@ const tagManagerArgs = {
   dataLayerName: 'dataLayer',
 }
 
-TagManager.initialize(tagManagerArgs)
+if (!process.env.EXTENSION) {
+  TagManager.initialize(tagManagerArgs)
+}
 
 export default {
   dataEvent,
