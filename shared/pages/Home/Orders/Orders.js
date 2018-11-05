@@ -143,7 +143,7 @@ export default class Orders extends Component {
         </h3>
         <p>
           <FormattedMessage id="Orders162" defaultMessage="orders of those who " />
-          <a style={ {fontSize: 16, fontWeight: 'bold'} }>
+          <a style={{ fontSize: 16, fontWeight: 'bold' }}>
             <FormattedMessage id="Orders163" defaultMessage="sell " />
           </a>
           {buyCurrency}
@@ -170,7 +170,7 @@ export default class Orders extends Component {
         </h3>
         <p>
           <FormattedMessage id="Orders172" defaultMessage="orders that " />
-          <a style={ {fontSize: 16, fontWeight: 'bold'} }>
+          <a style={{ fontSize: 16, fontWeight: 'bold' }}>
             <FormattedMessage id="Orders176" defaultMessage="buy " />
           </a>
           {buyCurrency}
