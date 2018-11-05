@@ -16,10 +16,16 @@
     "clean:mainnet-local": "rimraf ./build-mainnet-local",
     "clean:testnet": "rimraf ./build-testnet",
     "clean:mainnet": "rimraf ./build-mainnet",
+    "clean:chrome-extension": "rimraf ./build-chrome-extension",
+    "copy:chrome-extension": "copy ./chrome-extension ./build-chrome-extension",
+    "zip:chrome-extension-testnet": "bestzip ./build-chrome-extension/chrome-extension-testnet.zip ./build-chrome-extension/*",
+    "zip:chrome-extension-mainnet": "bestzip ./build-chrome-extension/chrome-extension-mainnet.zip ./build-chrome-extension/*",
     "build:testnet": "npm run clean:testnet && cross-env DEBUG=app:* CONFIG=testnet.prod node ./bin/compile",
     "build:mainnet": "npm run clean:mainnet && cross-env DEBUG=app:* CONFIG=mainnet.prod node ./bin/compile",
     "build:testnet-local": "npm run clean:testnet-local && cross-env DEBUG=app:* CONFIG=testnet-local.prod node ./bin/compile",
     "build:mainnet-local": "npm run clean:mainnet-local && cross-env DEBUG=app:* CONFIG=mainnet-local.prod node ./bin/compile",
+    "build:chrome-extension-testnet": "npm run clean:chrome-extension && cross-env DEBUG=app:* CONFIG=chrome-extension-testnet.prod node ./bin/compile && npm run copy:chrome-extension && npm run zip:chrome-extension-testnet",
+    "build:chrome-extension-mainnet": "npm run clean:chrome-extension && cross-env DEBUG=app:* CONFIG=chrome-extension-mainnet.prod node ./bin/compile && npm run copy:chrome-extension && npm run zip:chrome-extension-mainnet",
     "test:unit": "mocha --require babel-core/register --require ./test/helpers.js --require ./test/dom.js --require ignore-styles 'src/**/*.spec.js'",
     "test:snapshot": "jest --config ./test/jest.config.json",
     "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls"
@@ -115,8 +121,10 @@
     "webpack-dev-middleware": "^2.0.6"
   },
   "dependencies": {
+    "bestzip": "^2.1.2",
     "bitcoinjs-message": "^2.0.0",
     "coininfo": "git+https://github.com/cryptocoinjs/coininfo.git",
+    "copy-dir-cli": "0.0.3",
     "ethereum-input-data-decoder": "0.0.12",
     "ipfs": "^0.32.3",
     "ipfs-pubsub-room": "^1.4.0",

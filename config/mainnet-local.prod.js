@@ -4,8 +4,9 @@ import config from './mainnet'
 
 export default {
   env: 'production',
-  entry: 'mainnet-local',
+  entry: 'mainnet',
   local: 'local',
+  dir: 'mainnet-local',
 
   base: './',
   publicPath: `.${baseConfig.publicPath}`,
