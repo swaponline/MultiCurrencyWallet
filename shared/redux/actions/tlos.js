@@ -1,3 +1,4 @@
+
 import config from 'app-config'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
@@ -6,6 +7,7 @@ import actions from 'redux/actions'
 
 import { telos, ecc } from 'helpers/eos'
 import { Keygen } from 'eosjs-keygen'
+
 
 const generateAccountName = (publicKey) => {
   const account = Array.prototype.map.call(
@@ -31,8 +33,9 @@ const register = async (accountName, activePrivateKey) => {
     permissions.find(item => item.perm_name === 'active')
       .required_auth.keys[0].key
 
-  if (activePublicKey !== requiredPublicKey)
+  if (activePublicKey !== requiredPublicKey) {
     throw new Error(`${activePublicKey} is not equal to ${requiredPublicKey}`)
+  }
 
   localStorage.setItem(constants.privateKeyNames.telosPrivateKey, activePrivateKey)
   localStorage.setItem(constants.privateKeyNames.telosPublicKey, activePublicKey)
@@ -110,7 +113,11 @@ const loginWithNewAccount = async () => {
   return { accountName, activePrivateKey, activePublicKey }
 }
 
+<<<<<<< HEAD
 const activateAccount = async(accountName, activePrivateKey, activePublicKey) => {
+=======
+const activateAccount = async (accountName, activePrivateKey, activePublicKey) => {
+>>>>>>> localisation
   const { registerEndpoint } = config.api.telos
 
   try {
@@ -118,12 +125,21 @@ const activateAccount = async(accountName, activePrivateKey, activePublicKey) =>
       method: 'POST',
       headers: {
         'Accept': 'application/json',
+<<<<<<< HEAD
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         publicKey: activePublicKey,
         accountName: accountName
       })
+=======
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        publicKey: activePublicKey,
+        accountName,
+      }),
+>>>>>>> localisation
     })
 
     if (response.ok) {
@@ -137,5 +153,9 @@ const activateAccount = async(accountName, activePrivateKey, activePublicKey) =>
 }
 
 module.exports = {
+<<<<<<< HEAD
   register, login, getBalance, send, loginWithNewAccount, activateAccount
+=======
+  register, login, getBalance, send, loginWithNewAccount, activateAccount,
+>>>>>>> localisation
 }

@@ -12,6 +12,7 @@ import Group from './Group/Group'
 import { Modal } from 'components/modal'
 import { FieldLabel } from 'components/forms'
 import { Button } from 'components/controls'
+import { FormattedMessage } from 'react-intl'
 
 
 @cssModules(styles)
@@ -103,9 +104,12 @@ export default class ImportKeys extends Component {
     return (
       <Modal name={this.props.name} title="Import keys">
         <div styleName="modal">
-          <p>This procedure will rewrite your private key. If you are not sure about it, we recommend to press cancel</p>
-
-          <FieldLabel>Please enter eth private key</FieldLabel>
+          <FormattedMessage id="ImportKeys107" defaultMessage="This procedure will rewrite your private key. If you are not sure about it, we recommend to press cancel">
+            {message => <p>{message}</p>}
+          </FormattedMessage>
+          <FormattedMessage id="ImportKeys110" defaultMessage="Please enter eth private key">
+            {message => <FieldLabel>{message}</FieldLabel>}
+          </FormattedMessage>
           <Group
             inputLink={linked.ethKey}
             placeholder="Key"
@@ -113,16 +117,21 @@ export default class ImportKeys extends Component {
             onClick={this.handleEthImportKey}
           />
 
-          <FieldLabel>Please enter btc private key in WIF format</FieldLabel>
+          <FormattedMessage id="ImportKeys120" defaultMessage="Please enter btc private key in WIF format">
+            {message => <FieldLabel>{message}</FieldLabel>}
+          </FormattedMessage>
           <Group
             inputLink={linked.btcKey}
             placeholder="Key in WIF format"
             disabled={isImportedBtc}
             onClick={this.handleBtcImportKey}
           />
-
-          <Button brand disabled={isDisabled} styleName="button" onClick={this.handleImportKeys}> Confirm</Button>
-          <Button gray styleName="button" onClick={this.handleCloseModal}> Cancel</Button>
+          <Button brand disabled={isDisabled} styleName="button" onClick={this.handleImportKeys}>
+            <FormattedMessage id="ImportKeys130" defaultMessage="Confirm" />
+          </Button>
+          <Button gray styleName="button" onClick={this.handleCloseModal}>
+            <FormattedMessage id="ImportKeys133" defaultMessage="Cancel" />
+          </Button>
         </div>
       </Modal>
     )

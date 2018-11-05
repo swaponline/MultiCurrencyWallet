@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import Href from './Href'
 import config from 'app-config'
+import { FormattedMessage } from 'react-intl'
 
 
 const setApi = (type, id) => {
@@ -24,7 +25,10 @@ const setApi = (type, id) => {
 
 const TransactionLink = ({ type, id }) => (
   <div>
-    Transaction: <strong><Href tab={setApi(type, id)} rel="noopener noreferrer">{id}</Href></strong>
+    <FormattedMessage id="transaction27" defaultMessage="Transaction:" />
+    <strong>
+      <Href tab={setApi(type, id)} rel="noopener noreferrer">{id}</Href>
+    </strong>>
   </div>
 )
 

@@ -10,6 +10,7 @@ import styles from './Logo.scss'
 import logoImage from './images/logo.svg'
 import coloredLogoImage from './images/logo-colored.svg'
 import ReactTooltip from 'react-tooltip'
+import { FormattedMessage } from 'react-intl'
 
 
 const Logo = ({ colored, withLink, mobile }) => {
@@ -26,7 +27,9 @@ const Logo = ({ colored, withLink, mobile }) => {
         <Link styleName={mobile ? 'mobile' : 'logo'} data-tip data-for="logo" to={links.home}>
           {imgNode}
           <ReactTooltip id="logo" type="light" effect="solid">
-            <span>Go Home</span>
+            <FormattedMessage id="logo29" defaultMessage="Go Home">
+              {message => <span>{message}</span>}
+            </FormattedMessage>
           </ReactTooltip>
         </Link>
       </Fragment>

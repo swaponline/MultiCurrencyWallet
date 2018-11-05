@@ -12,6 +12,7 @@ import styles from './PrivateKeysModal.scss'
 import Field2 from './Field2/Field2'
 import Modal from 'components/modal/Modal/Modal'
 import Button from 'components/controls/Button/Button'
+import { FormattedMessage } from 'react-intl'
 
 
 const views = {
@@ -96,29 +97,45 @@ export default class PrivateKeysModal extends React.PureComponent {
             view === views.saveKeys ? (
               <Fragment>
                 <div styleName="title">
-                  Before you continue be sure to save your private keys!<br />
-                  It`s very important because If you don`t<br />
-                  there is a big chance you`ll loose your money.
+                  <FormattedMessage
+                    id="PrivateKeysModal991"
+                    defaultMessage="Before you continue be sure to save your private keys! {br} {br} there is a big chance you will loose your money. "
+                  />
+                  <FormattedMessage id="PrivateKeysModal99" defaultMessage="It`s very important because If you don`t " />
+                  <FormattedMessage id="PrivateKeysModal105" defaultMessage="there is a big chance you will loose your money. " />
                 </div>
-                <div styleName="subTitle">We don`t store your private keys and will not be able to restore them!</div>
+                <FormattedMessage id="PrivateKeysModal105" defaultMessage="We do not store your private keys and will not be able to restore them!">
+                  {message => <div styleName="subTitle">{message}</div>}
+                </FormattedMessage>
                 <div styleName="buttonContainer">
                   <div styleName="buttonSubContainer">
-                    <span styleName="text">Click here</span>
-                    <Button brand styleName="button" onClick={this.handleDownload}>1. DOWNLOAD KEYS & INSTRUCTION</Button>
+                    <FormattedMessage id="PrivateKeysModal110" defaultMessage="Click here">
+                      {message => <span styleName="text">{message}</span>}
+                    </FormattedMessage>
+                    <span styleName="button" onClick={this.handleDownload}>
+                      <FormattedMessage id="PrivateKeysModal113" defaultMessage="1. DOWNLOAD KEYS & INSTRUCTION" />
+                    </span>
                   </div>
                   <div styleName="buttonSubContainer">
-                    <span styleName="text">Then click here</span>
-                    <Button brand styleName="button" onClick={this.handleNext}>2. NEXT STEP</Button>
+                    <FormattedMessage id="PrivateKeysModal118" defaultMessage="Then click here">
+                      {message => <span styleName="text">{message}</span>}
+                    </FormattedMessage>
+                    <Button brand styleName="button"onClick={this.handleNext}>
+                      <FormattedMessage id="PrivateKeysModal121" defaultMessage="2. NEXT STEP" />
+                    </Button>
                   </div>
                 </div>
                 {/* <Button brand styleName="button" onClick={this.handleSendByEmail}>Send by email</Button> */}
               </Fragment>
             ) : (
               <Fragment>
-                <div styleName="title">
-                  Please fill information below from instruction.txt file. We`d like to be sure that you saved the private keys
-                  before you can continue to the site.
-                </div>
+                <FormattedMessage
+                  id="PrivateKeysModal130"
+                  defaultMessage=
+                    "Please fill information below from instruction.txt file. We`d like to be sure that you saved the private keys before you can continue to the site."
+                >
+                  {message => <div styleName="title">{message}</div>}
+                </FormattedMessage>
                 <Field2
                   label={ethData.currency}
                   privateKey={ethData.privateKey}
@@ -131,7 +148,9 @@ export default class PrivateKeysModal extends React.PureComponent {
                 />
                 {
                   isValidated && (
-                    <Button white styleName="button" onClick={this.handleKeysSubmit}>GO TO THE SITE!</Button>
+                    <Button white styleName="button" onClick={this.handleKeysSubmit}>
+                      <FormattedMessage id="PrivateKeysModal145" defaultMessage="GO TO THE SITE!" />
+                    </Button>
                   )
                 }
               </Fragment>

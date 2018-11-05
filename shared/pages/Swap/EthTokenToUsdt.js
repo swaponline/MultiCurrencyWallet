@@ -7,6 +7,7 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import TimerButton from 'components/controls/TimerButton/TimerButton'
 import Button from 'components/controls/Button/Button'
 import Timer from './Timer/Timer'
+import { FormattedMessage } from 'react-intl'
 
 
 export default class EthTokenToUsdt extends Component {
@@ -79,39 +80,50 @@ export default class EthTokenToUsdt extends Component {
         {
           flow.isWaitingForOwner && (
             <Fragment>
-              <h3>Waiting for other user when he connect to the order</h3>
+              <FormattedMessage id="EthTokenToUsdt84" defaultMessage="Waiting for other user when he connect to the order">
+                {message => <h3>{message}</h3>}
+              </FormattedMessage>
               <InlineLoader />
             </Fragment>
           )
         }
         {
           (flow.step === 1 || flow.isMeSigned) && (
-            <h3>1. Please confirm your participation to begin the deal</h3>
+            <FormattedMessage id="EthTokenToUsdt93" defaultMessage="1. Please confirm your participation to begin the deal">
+              {message => <h3>{message}</h3>}
+            </FormattedMessage>
           )
         }
         {
           flow.step === 1 && (
             <Fragment>
-              <div>
-                Confirmation of the transaction is necessary for crediting the reputation.
-                If a user does not bring the deal to the end he gets a negative reputation.
-              </div>
+              <FormattedMessage
+                id="EthTokenToUsdt101"
+                defaultMessage=
+                  "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation."
+              >
+                {message => <div>{message}</div>}
+              </FormattedMessage>
               {
                 !flow.isSignFetching && !flow.isMeSigned && (
                   <Fragment>
                     <br />
-                    <TimerButton brand onClick={this.signSwap}>Confirm</TimerButton>
+                    <TimerButton brand onClick={this.signSwap}>
+                      <FormattedMessage id="EthTokenToUsdt109" defaultMessage="Confirm" />
+                    </TimerButton>
                   </Fragment>
                 )
               }
               {
                 (flow.isSignFetching || flow.signTransactionHash) && (
                   <Fragment>
-                    <h4>Please wait. Confirmation processing</h4>
+                    <FormattedMessage id="EthTokenToUsdt118" defaultMessage="Please wait. Confirmation processing">
+                      {message => <h4>{message}</h4>}
+                    </FormattedMessage>
                     {
                       flow.signTransactionHash && (
                         <div>
-                          Transaction:
+                          <FormattedMessage id="EthTokenToUsdt123" defaultMessage="Transaction:" />
                           <strong>
                             <a
                               href={`${config.link.etherscan}/tx/${flow.signTransactionHash}`}
@@ -141,7 +153,9 @@ export default class EthTokenToUsdt extends Component {
         {
           flow.isMeSigned && (
             <Fragment>
-              <h3>2. Waiting USDT Owner creates Secret Key, creates BTC Omni Script and charges it</h3>
+              <FormattedMessage id="EthTokenToUsdt154" defaultMessage="2. Waiting USDT Owner creates Secret Key, creates BTC Omni Script and charges it">
+                {message => <h3>{message}</h3>}
+              </FormattedMessage>
               {
                 flow.step === 2 && (
                   <InlineLoader />
@@ -151,10 +165,14 @@ export default class EthTokenToUsdt extends Component {
               {
                 flow.secretHash && flow.usdtScriptValues && (
                   <Fragment>
-                    <h3>3. Bitcoin Omni Script created and charged. Please check the information below</h3>
-                    <div>Secret Hash: <strong>{flow.secretHash}</strong></div>
+                    <FormattedMessage id="EthTokenToUsdt166" defaultMessage="3. Bitcoin Omni Script created and charged. Please check the information below">
+                      {message => <h3>{message}</h3>}
+                    </FormattedMessage>
+                    <FormattedMessage id="EthTokenToUsdt169" defaultMessage="Secret Hash:">
+                      {message => <div>{message}<strong>{flow.secretHash}</strong></div>}
+                    </FormattedMessage>
                     <div>
-                      Script address:
+                      <FormattedMessage id="EthTokenToUsdt172" defaultMessage="Script address:" />
                       <strong>
                         {
                           flow.usdtFundingTransactionHash && (
@@ -169,10 +187,13 @@ export default class EthTokenToUsdt extends Component {
                         }
                       </strong>
                     </div>
-
                     <br />
                     <Fragment>
-                      { flow.usdtScriptValues &&   <span onClick={this.toggleBitcoinScript}>Show bitcoin script</span> }
+                      { flow.usdtScriptValues &&
+                        <span onClick={this.toggleBitcoinScript}>
+                          <FormattedMessage id="EthTokenToUsdt192" defaultMessage="Show bitcoin script" />
+                        </span>
+                      }
                       { isShowingBitcoinScript && (
                         <pre>
                           <code>{`
@@ -213,7 +234,9 @@ export default class EthTokenToUsdt extends Component {
                       flow.step === 3 && (
                         <Fragment>
                           <br />
-                          <TimerButton brand onClick={this.confirmBTCScriptChecked}>Everything is OK. Continue</TimerButton>
+                          <TimerButton brand onClick={this.confirmBTCScriptChecked}>
+                            <FormattedMessage id="EthTokenToUsdt236" defaultMessage="Everything is OK. Continue" />
+                          </TimerButton>
                         </Fragment>
                       )
                     }
@@ -224,36 +247,55 @@ export default class EthTokenToUsdt extends Component {
               {
                 flow.step === 4 && !flow.isBalanceEnough && !flow.isBalanceFetching && (
                   <Fragment>
-                    <h3>Not enough money for this swap. Please fund the balance</h3>
+                    <FormattedMessage id="EthTokenToUsdt249" defaultMessage="Not enough money for this swap. Please fund the balance">
+                      {message => <h3>{message}</h3> }
+                    </FormattedMessage>
                     <div>
-                      <div>Your balance: <strong>{flow.balance}</strong> {this.swap.sellCurrency}</div>
-                      <div>Required balance: <strong>{this.swap.sellAmount.toNumber()}</strong> {this.swap.sellCurrency}</div>
-                      <div>Your address: {this.swap.flow.myEthAddress}</div>
-                      <hr />
-                      <span>{flow.address}</span>
+                      <div>
+                        <FormattedMessage id="EthTokenToUsdt253" defaultMessage="Your balance:" />
+                        <strong>{flow.balance}</strong> {this.swap.sellCurrency}
+                      </div>
+                      <div>
+                        <FormattedMessage id="EthTokenToUsdt257" defaultMessage="Required balance:" />
+                        <strong>{this.swap.sellAmount.toNumber()}</strong> {this.swap.sellCurrency}
+                      </div>
+                      <div>
+                        <FormattedMessage id="EthTokenToUsdt260" defaultMessage="Your address:" />
+                        {this.swap.flow.myEthAddress}
+                      </div>
+                      <div>
+                        <hr />
+                        <span>{flow.address}</span>
+                      </div>
+                      <br />
+                      <TimerButton brand onClick={this.updateBalance}>
+                        <FormattedMessage id="EthTokenToUsdt267" defaultMessage="Continue" />
+                      </TimerButton>
                     </div>
-                    <br />
-                    <TimerButton brand onClick={this.updateBalance}>Continue</TimerButton>
                   </Fragment>
                 )
               }
               {
                 flow.step === 4 && flow.isBalanceFetching && (
                   <Fragment>
-                    <div>Checking balance..</div>
+                    <FormattedMessage id="EthTokenToUsdt276" defaultMessage="hecking balance..">
+                      {message => <div>{message}</div>}
+                    </FormattedMessage>
                     <InlineLoader />
                   </Fragment>
                 )
               }
               {
                 (flow.step >= 5 || flow.isEthContractFunded) && (
-                  <h3>4. Creating Ethereum Contract. Please wait, it will take a while</h3>
+                  <FormattedMessage id="EthTokenToUsdt285" defaultMessage="4. Creating Ethereum Contract. Please wait, it will take a while">
+                    {message => <h3>{message}</h3>}
+                  </FormattedMessage>
                 )
               }
               {
                 flow.ethSwapCreationTransactionHash && (
                   <div>
-                    Transaction:
+                    <FormattedMessage id="EthTokenToUsdt292" defaultMessage="Transaction:" />
                     <strong>
                       <a
                         href={`${config.link.etherscan}/tx/${flow.ethSwapCreationTransactionHash}`}
@@ -274,7 +316,7 @@ export default class EthTokenToUsdt extends Component {
               {
                 flow.refundTransactionHash && (
                   <div>
-                    Transaction:
+                    <FormattedMessage id="EthTokenToUsdt313" defaultMessage="Transaction:" />
                     <strong>
                       <a
                         href={`${config.link.etherscan}/tx/${flow.refundTransactionHash}`}
@@ -291,7 +333,9 @@ export default class EthTokenToUsdt extends Component {
               {
                 (flow.step === 6 || flow.isEthWithdrawn) && (
                   <Fragment>
-                    <h3>5. Waiting BTC Owner adds Secret Key to ETH Contact</h3>
+                    <FormattedMessage id="EthTokenToUsdt331" defaultMessage="5. Waiting BTC Owner adds Secret Key to ETH Contact">
+                      {message => <h3>{message}</h3>}
+                    </FormattedMessage>
                     {
                       !flow.isEthWithdrawn && (
                         <InlineLoader />
@@ -303,13 +347,18 @@ export default class EthTokenToUsdt extends Component {
 
               {
                 (flow.step === 7 || flow.isBtcWithdrawn) && (
-                  <h3>6. USDT Owner successfully took money from ETH Contract and left Secret Key. Requesting withdrawal from BTC Script. Please wait</h3>
+                  <FormattedMessage
+                    id="EthTokenToUsdt345"
+                    defaultMessage="6. USDT Owner successfully took money from ETH Contract and left Secret Key. Requesting withdrawal from BTC Script. Please wait"
+                  >
+                    {message => <h3>{message}</h3>}
+                  </FormattedMessage>
                 )
               }
               {
                 flow.usdtSwapWithdrawTransactionHash && (
                   <div>
-                    USDT withdrawal transaction:
+                    <FormattedMessage id="EthTokenToUsdt352" defaultMessage="USDT withdrawal transaction:" />
                     <strong>
                       <a
                         href={`${config.link.bitpay}/tx/${flow.usdtSwapWithdrawTransactionHash}`}
@@ -333,15 +382,23 @@ export default class EthTokenToUsdt extends Component {
               {
                 flow.isBtcWithdrawn && (
                   <Fragment>
-                    <h3>7. Money was transferred to your wallet. Check the balance.</h3>
-                    <h2>Thank you for using Swap.Online!</h2>
+                    <FormattedMessage id="EthTokenToUsdt377" defaultMessage="7. Money was transferred to your wallet. Check the balance.">
+                      {message => <h3>{message}</h3>}
+                    </FormattedMessage>
+                    <FormattedMessage id="EthTokenToUsdt380" defaultMessage="Thank you for using Swap.Online!">
+                      {message => <h2>{message}</h2>}
+                    </FormattedMessage>
                   </Fragment>
                 )
               }
               {
                 flow.step >= 6 && !flow.isFinished && (
                   <div style={{ display: 'flex', alignItems: 'center' }}>
-                    { enabledButton && !flow.isBtcWithdrawn && <Button brand onClick={this.tryRefund}>TRY REFUND</Button> }
+                    { enabledButton && !flow.isBtcWithdrawn &&
+                    <Button brand onClick={this.tryRefund}>
+                      <FormattedMessage id="EthTokenToUsdt390" defaultMessage="TRY REFUND" />
+                    </Button>
+                    }
                     <Timer
                       lockTime={(flow.usdtScriptValues.lockTime - 5400) * 1000}
                       enabledButton={() => this.setState({ enabledButton: true })}

@@ -14,6 +14,7 @@ import PageHeadline from 'components/PageHeadline/PageHeadline'
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import FaqExpandableItem from 'components/FaqExpandableItem/FaqExpandableItem'
 import CurrencyDirectionChooser from 'components/CurrencyDirectionChooser/CurrencyDirectionChooser'
+import { FormattedMessage } from 'react-intl'
 
 import Orders from './Orders/Orders'
 
@@ -149,7 +150,9 @@ export default class Home extends Component {
                 />
                 <div styleName="videoContainer">
                   <Center relative centerVertically={false}>
-                    <SubTitle>What is atomic swap?</SubTitle>
+                    <FormattedMessage id="Home153" defaultMessage="What is atomic swap?">
+                      {message => <SubTitle>{message}</SubTitle>}
+                    </FormattedMessage>
                   </Center>
 
                   <div styleName="videoFaqContainer">

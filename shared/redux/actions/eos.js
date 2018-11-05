@@ -7,6 +7,7 @@ import actions from 'redux/actions'
 import { eos, ecc } from 'helpers/eos'
 import { Keygen } from 'eosjs-keygen'
 
+
 const generateAccountName = (publicKey) => {
   const account = Array.prototype.map.call(
     publicKey.substr(0, 12).toLowerCase(),
@@ -44,8 +45,9 @@ const register = async (accountName, activePrivateKey) => {
     permissions.find(item => item.perm_name === 'active')
       .required_auth.keys[0].key
 
-  if (activePublicKey != requiredPublicKey)
+  if (activePublicKey !== requiredPublicKey) {
     throw new Error(`${activePublicKey} is not equal to ${requiredPublicKey}`)
+  }
 
   localStorage.setItem(constants.privateKeyNames.eosPrivateKey, activePrivateKey)
   localStorage.setItem(constants.privateKeyNames.eosPublicKey, activePublicKey)
@@ -58,7 +60,7 @@ const register = async (accountName, activePrivateKey) => {
 const loginWithNewAccount = async () => {
   const keys = await Keygen.generateMasterKeys()
 
-  const { privateKeys: { active: activePrivateKey }, publicKeys: { active: activePublicKey }} = keys
+  const { privateKeys: { active: activePrivateKey }, publicKeys: { active: activePublicKey } } = keys
 
   const accountName = generateAccountName(activePublicKey)
 
@@ -84,7 +86,7 @@ const buyAccount = async () => {
   const eccInstance = await ecc.getInstance()
   const eosPublicKey = eccInstance.privateToPublic(eosPrivateKey)
 
-  const { user: { btcData }} = getState()
+  const { user: { btcData } } = getState()
   const btcAddress = btcData.address
   const btcPrivateKey = btcData.privateKey
 
@@ -97,7 +99,7 @@ const buyAccount = async () => {
   const signature = await actions.btc.signMessage(message, btcPrivateKey)
 
   const activationTx = await activateAccount({
-    accountName, eosPublicKey, btcAddress, signature, paymentTx
+    accountName, eosPublicKey, btcAddress, signature, paymentTx,
   })
 
   if (activationTx) {
@@ -120,29 +122,24 @@ const sendActivationPayment = async ({ from }) => {
 const activateAccount = async ({ accountName, eosPublicKey, btcAddress, signature, paymentTx }) => {
   const { registerEndpoint } = config.api.eos
 
-  let transaction_id = -1
-  try {
-    const response = await fetch(registerEndpoint, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        publicKey: eosPublicKey,
-        accountName: accountName,
-        address: btcAddress,
-        signature: signature,
-        txid: paymentTx
-      }),
-    })
+  const response = await fetch(registerEndpoint, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      publicKey: eosPublicKey,
+      accountName,
+      address: btcAddress,
+      signature,
+      txid: paymentTx,
+    }),
+  })
 
-    transaction_id = response.json().transaction_id
-  } catch (e) {
-    console.error(e)
-  }
+  const { transactionId } = await response.json()
 
-  return transaction_id
+  return transactionId
 }
 
 const getBalance = async () => {
@@ -197,5 +194,5 @@ export default {
   register,
   getBalance,
   send,
-  buyAccount
+  buyAccount,
 }

@@ -9,6 +9,7 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import TimerButton from 'components/controls/TimerButton/TimerButton'
 import Button from 'components/controls/Button/Button'
 import Timer from './Timer/Timer'
+import { FormattedMessage } from 'react-intl'
 
 
 export default class EthToLtc extends Component {
@@ -95,10 +96,14 @@ export default class EthToLtc extends Component {
         {
           !this.swap.id && (
             this.swap.isMy ? (
-              <h3>This order doesn&apos;t have a buyer</h3>
+              <FormattedMessage id="EthToLtc99" defaultMessage="This order doesn&apos;t have a buyer">
+                {message => <h3>{message}</h3>}
+              </FormattedMessage>
             ) : (
               <Fragment>
-                <h3>The order creator is offline. Waiting for him..</h3>
+                <FormattedMessage id="EthToLtc104" defaultMessage="The order creator is offline. Waiting for him..">
+                  {message => <h3>{message}</h3>}
+                </FormattedMessage>
                 <InlineLoader />
               </Fragment>
             )
@@ -107,7 +112,9 @@ export default class EthToLtc extends Component {
         {
           flow.isWaitingForOwner && (
             <Fragment>
-              <h3>Waiting for other user when he connect to the order</h3>
+              <FormattedMessage id="EthToLtc115" defaultMessage="Waiting for other user when he connect to the order">
+                {message => <h3>{message}</h3>}
+              </FormattedMessage>
               <InlineLoader />
             </Fragment>
           )
@@ -115,16 +122,26 @@ export default class EthToLtc extends Component {
         {
           flow.step === 1 && (
             <Fragment>
-              <div>Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation.</div>
-              <TimerButton timeLeft={5} brand onClick={this.signSwap}>Sign</TimerButton>
+              <FormattedMessage
+                id="EthToLtc125"
+                defaultMessage=
+                  "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation."
+              >
+                {message => <div>{message}</div>}
+              </FormattedMessage>
+              <TimerButton timeLeft={5} brand onClick={this.signSwap}>
+                <FormattedMessage id="EthToLtc128" defaultMessage="Sign" />
+              </TimerButton>
               {
                 (flow.isSignFetching || flow.signTransactionHash) && (
                   <Fragment>
-                    <h4>Please wait. Confirmation processing</h4>
+                    <FormattedMessage id="EthToLtc134" defaultMessage="Please wait. Confirmation processing">
+                      {message => <h4>{message}</h4>}
+                    </FormattedMessage>
                     {
                       flow.signTransactionHash && (
                         <div>
-                        Transaction:
+                          <FormattedMessage id="EthToLtc139" defaultMessage="Transaction:" />
                           <strong>
                             <a
                               href={`${config.link.etherscan}/tx/${flow.signTransactionHash}`}
@@ -151,7 +168,9 @@ export default class EthToLtc extends Component {
         {
           flow.isMeSigned && (
             <Fragment>
-              <h3>2. Waiting LTC Owner creates Secret Key, creates LTC Script and charges it</h3>
+              <FormattedMessage id="EthToLtc167" defaultMessage="2. Waiting LTC Owner creates Secret Key, creates LTC Script and charges it">
+                {message => <h3>{message}</h3>}
+              </FormattedMessage>
               {
                 flow.step === 2 && (
                   <InlineLoader />
@@ -161,10 +180,15 @@ export default class EthToLtc extends Component {
               {
                 flow.secretHash && flow.ltcScriptValues && (
                   <Fragment>
-                    <h3>3. Litecoin Script created and charged. Please check the information below</h3>
-                    <div>Secret Hash: <strong>{flow.secretHash}</strong></div>
+                    <FormattedMessage id="EthToLtc179" defaultMessage="3. Litecoin Script created and charged. Please check the information below">
+                      {message => <h3>{message}</h3>}
+                    </FormattedMessage>
                     <div>
-                        Script address:
+                      <FormattedMessage id="EthToLtc182" defaultMessage="Secret Hash:" />
+                      <strong>{flow.secretHash}</strong>
+                    </div>
+                    <div>
+                      <FormattedMessage id="EthToLtc185" defaultMessage="Script address:" />
                       <strong>
                         {
                           flow.ltcScriptCreatingTransactionHash && (
@@ -181,7 +205,11 @@ export default class EthToLtc extends Component {
                     </div>
                     <br />
                     <Fragment>
-                      { flow.ltcScriptValues && <span onClick={this.toggleLitecoinScript}>Show litecoin script</span> }
+                      { flow.ltcScriptValues &&
+                      <span onClick={this.toggleLitecoinScript}>
+                        <FormattedMessage id="EthToLtc204" defaultMessage="Show litecoin script" />
+                      </span>
+                      }
                       { isShowingLitecoinScript && (
                         <pre>
                           <code>{`
@@ -221,7 +249,9 @@ export default class EthToLtc extends Component {
                       flow.step === 3 && (
                         <Fragment>
                           <br />
-                          <TimerButton timeLeft={5} brand onClick={this.confirmLTCScriptChecked}>Everything is OK. Continue</TimerButton>
+                          <TimerButton timeLeft={5} brand onClick={this.confirmLTCScriptChecked}>
+                            <FormattedMessage id="EthToLtc247" defaultMessage="Everything is OK. Continue" />
+                          </TimerButton>
                         </Fragment>
                       )
                     }
@@ -232,23 +262,39 @@ export default class EthToLtc extends Component {
               {
                 flow.step === 4 && !flow.isBalanceEnough && !flow.isBalanceFetching && (
                   <Fragment>
-                    <h3>Not enough money for this swap. Please fund the balance</h3>
+                    <FormattedMessage id="EthToLtc260" defaultMessage="Not enough money for this swap. Please fund the balance">
+                      {message => <h3>{message}</h3>}
+                    </FormattedMessage>
                     <div>
-                      <div>Your balance: <strong>{flow.balance}</strong> {this.swap.sellCurrency}</div>
-                      <div>Required balance: <strong>{this.swap.sellAmount.toNumber()}</strong> {this.swap.sellCurrency}</div>
-                      <div>Your address: {this.swap.flow.myEthAddress}</div>
+                      <div>
+                        <FormattedMessage id="EthToLtc264" defaultMessage="Your balance:" />
+                        <strong>{flow.balance}</strong> {this.swap.sellCurrency}
+                      </div>
+                      <div>
+                        <FormattedMessage id="EthToLtc267" defaultMessage="Required balance:" />
+                        <strong>{this.swap.sellAmount.toNumber()}</strong> {this.swap.sellCurrency}
+                      </div>
+                      <div>
+                        <FormattedMessage id="EthToLtc270" defaultMessage="Your address:" />
+                        {this.swap.flow.myEthAddress}
+                      </div>
                       <hr />
                       <span>{flow.address}</span>
                     </div>
                     <br />
-                    <Button brand onClick={this.updateBalance}>Continue</Button>
+                    <Button brand onClick={this.updateBalance}>
+                      <FormattedMessage id="EthToLtc277" defaultMessage="Continue" />
+                      {message}
+                    </Button>
                   </Fragment>
                 )
               }
               {
                 flow.step === 4 && flow.isBalanceFetching && (
                   <Fragment>
-                    <div>Checking balance..</div>
+                    <FormattedMessage id="EthToLtc286" defaultMessage="Checking balance..">
+                      {message => <div>{message}</div>}
+                    </FormattedMessage>
                     <InlineLoader />
                   </Fragment>
                 )
@@ -257,14 +303,16 @@ export default class EthToLtc extends Component {
               {
                 (flow.step >= 5 || flow.isEthContractFunded) && (
                   <Fragment>
-                    <h3>4. Creating Ethereum Contract. Please wait, it will take a while</h3>
+                    <FormattedMessage id="EthToLtc297" defaultMessage="4. Creating Ethereum Contract. Please wait, it will take a while">
+                      {message => <h3>{message}</h3>}
+                    </FormattedMessage>
                   </Fragment>
                 )
               }
               {
                 flow.ethSwapCreationTransactionHash && (
                   <div>
-                    Transaction:
+                    <FormattedMessage id="EthToLtc305" defaultMessage="Transaction:" />
                     <strong>
                       <a
                         href={`${config.link.etherscan}/tx/${flow.ethSwapCreationTransactionHash}`}
@@ -285,7 +333,7 @@ export default class EthToLtc extends Component {
               {
                 flow.refundTransactionHash && (
                   <div>
-                    Transaction:
+                    <FormattedMessage id="EthToLtc326" defaultMessage="Transaction:" />
                     <strong>
                       <a
                         href={`${config.link.etherscan}/tx/${flow.refundTransactionHash}`}
@@ -301,7 +349,9 @@ export default class EthToLtc extends Component {
               {
                 (flow.step === 6 || flow.isEthWithdrawn) && (
                   <Fragment>
-                    <h3>5. Waiting LTC Owner adds Secret Key to ETH Contact</h3>
+                    <FormattedMessage id="EthToLtc343" defaultMessage="5. Waiting LTC Owner adds Secret Key to ETH Contact">
+                      {message => <h3>{message}</h3>}
+                    </FormattedMessage>
                     {
                       !flow.isEthWithdrawn && (
                         <InlineLoader />
@@ -313,19 +363,19 @@ export default class EthToLtc extends Component {
 
               {
                 (flow.step === 7 || flow.isLtcWithdrawn) && (
-                  <h3>6. LTC Owner successfully took money from ETH Contract and left Secret Key. Requesting withdrawal from LTC Script. Please wait</h3>
+                  <FormattedMessage
+                    id="EthToLtc357"
+                    defaultMessage="6. LTC Owner successfully took money from ETH Contract and left Secret Key. Requesting withdrawal from LTC Script. Please wait">
+                    {message => <h3>{message}</h3>}
+                  </FormattedMessage>
                 )
               }
               {
                 flow.ltcSwapWithdrawTransactionHash && (
                   <div>
-                    Transaction:
+                    <FormattedMessage id="EthToLtc364" defaultMessage="Transaction:" />
                     <strong>
-                      <a
-                        href={`${config.link.ltc}/tx/${flow.ltcSwapWithdrawTransactionHash}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
+                      <a href={`${config.link.ltc}/tx/${flow.ltcSwapWithdrawTransactionHash}`} target="_blank" rel="noopener noreferrer" >
                         {flow.ltcSwapWithdrawTransactionHash}
                       </a>
                     </strong>
@@ -341,15 +391,23 @@ export default class EthToLtc extends Component {
               {
                 flow.isLtcWithdrawn && (
                   <Fragment>
-                    <h3>7. Money was transferred to your wallet. Check the balance.</h3>
-                    <h2>Thank you for using Swap.Online!</h2>
+                    <FormattedMessage id="EthToLtc386" defaultMessage="7. Money was transferred to your wallet. Check the balance.">
+                      {message => <h3>{message}</h3>}
+                    </FormattedMessage>
+                    <FormattedMessage id="EthToLtc389" defaultMessage="Thank you for using Swap.Online!">
+                      {message => <h2>{message}</h2>}
+                    </FormattedMessage>
                   </Fragment>
                 )
               }
               {
                 flow.step >= 6 && !flow.isFinished && (
                   <div style={{ display: 'flex', alignItems: 'center' }}>
-                    { enabledButton && !flow.isLtcWithdrawn && <Button brand onClick={this.tryRefund}>TRY REFUND</Button> }
+                    { enabledButton && !flow.isLtcWithdrawn &&
+                      <Button brand onClick={this.tryRefund}>
+                        <FormattedMessage id="EthToLtc399" defaultMessage="TRY REFUND" />
+                      </Button>
+                    }
                     <Timer
                       lockTime={(flow.ltcScriptValues.lockTime - 5400) * 1000}
                       enabledButton={() => this.setState({ enabledButton: true })}
@@ -360,7 +418,7 @@ export default class EthToLtc extends Component {
               {
                 flow.refundTransactionHash && (
                   <div>
-                    Transaction:
+                    <FormattedMessage id="EthToLtc412" defaultMessage="Transaction:" />
                     <strong>
                       <a
                         href={`${config.link.ltc}/tx/${flow.refundTransactionHash}`}

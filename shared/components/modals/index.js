@@ -10,6 +10,7 @@ import ShowMoreCoins from './ShowMoreCoins/ShowMoreCoins'
 import EthChecker from './EthChecker/EthChecker'
 import ReceiveModal from './ReceiveModal/ReceiveModal'
 
+
 export default {
   OfferModal,
   WithdrawModal,

@@ -12,6 +12,7 @@ import Button from 'components/controls/Button/Button'
 import CurrencySelect from 'components/ui/CurrencySelect/CurrencySelect'
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
+import { FormattedMessage } from 'react-intl'
 
 
 @CSSModules(styles, { allowMultiple: true })
@@ -51,12 +52,16 @@ export default class CurrencyDirectionChooser extends Component {
     return (
       <div styleName="choice">
         <div styleName="row title">
-          <SubTitle>Choose the direction of exchange</SubTitle>
+          <FormattedMessage id="CurrencyDirectionChooser54" defaultMessage=" Choose the direction of exchange">
+            {message => <SubTitle>{message}</SubTitle>}
+          </FormattedMessage>
         </div>
         <div styleName="row formRow">
           <div styleName="row">
-            <div styleName="row rowLeft">
-              <p styleName="text">You have </p>
+            <div styleName="row formRow">
+              <FormattedMessage id="CurrencyDirectionChooser61" defaultMessage="You have">
+                {message =>   <p styleName="text">{message}</p>}
+              </FormattedMessage>
               <CurrencySelect
                 styleName="currencySelect currencySelectLeft"
                 selectedValue={sellCurrency}
@@ -65,8 +70,10 @@ export default class CurrencyDirectionChooser extends Component {
               />
             </div>
             <Flip onClick={flipCurrency} />
-            <div styleName="row rowRight">
-              <p styleName="text">You get</p>
+            <div styleName="row formRow">
+              <FormattedMessage id="CurrencyDirectionChooser74" defaultMessage="You geе">
+                {message =>   <p styleName="text">{message}</p>}
+              </FormattedMessage>
               <CurrencySelect
                 styleName="currencySelect currencySelectRight"
                 selectedValue={buyCurrency}
@@ -75,7 +82,10 @@ export default class CurrencyDirectionChooser extends Component {
               />
             </div>
           </div>
-          <Button styleName="button" brand onClick={handleSubmit}>SHOW ORDERS <Tooltip text="Offer list" /></Button>
+
+          <FormattedMessage id="CurrencyDirectionChooser86" defaultMessage="SHOW ORDERS ">
+            {message =>   <Button styleName="button" brand onClick={handleSubmit}>{message}<Tooltip text="Offer list" /></Button>}
+          </FormattedMessage>
         </div>
       </div>
     )
