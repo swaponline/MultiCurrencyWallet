@@ -4,6 +4,8 @@ import { connect } from 'redaction'
 import actions from 'redux/actions'
 import { withRouter } from 'react-router-dom'
 
+import { isMobile } from 'react-device-detect'
+
 import constants from 'helpers/constants'
 
 import cssModules from 'react-css-modules'
@@ -17,6 +19,7 @@ import PageSeo from 'components/Seo/PageSeo'
 
 import Pair from './Pair'
 import Row from './Row/Row'
+import RowMobile from './RowMobile/RowMobile'
 import MyOrders from './MyOrders/MyOrders'
 import { FormattedMessage } from 'react-intl'
 
@@ -136,56 +139,44 @@ export default class Orders extends Component {
             acceptRequest={this.acceptRequest}
           />
         }
-        <h3>
-          <FormattedMessage id="Orders117" defaultMessage="BUY " />
-          {buyCurrency}
-          <FormattedMessage id="Orders118" defaultMessage=" HERE" />
-        </h3>
-        <p>
-          <FormattedMessage id="Orders162" defaultMessage="orders of those who " />
-          <a style={ {fontSize: 16, fontWeight: 'bold'} }>
-            <FormattedMessage id="Orders163" defaultMessage="sell " />
-          </a>
-          {buyCurrency}
-          <FormattedMessage id="Orders164" defaultMessage=" to you" />
-        </p>
+
+        <h3 styleName="ordersHeading">BUY {buyCurrency} HERE</h3>
+        <p>orders of those who <i>sell</i> {buyCurrency} to you</p>
         <Table
           id="table_exchange"
           className={tableStyles.exchange}
           titles={titles}
           rows={sellOrders}
           rowRender={(row, index) => (
-            <Row
+            isMobile &&  <RowMobile
               key={index}
               orderId={orderId}
-              row={row}
+              row={row} 
+            /> || <Row
+              key={index}
+              orderId={orderId}
+              row={row} 
             />
           )}
           isLoading={!isOnline}
         />
-        <h3 styleName="ordersHeading">
-          <FormattedMessage id="Orders167" defaultMessage="SELL " />
-          {buyCurrency}
-          <FormattedMessage id="Orders169" defaultMessage=" HERE" />
-        </h3>
-        <p>
-          <FormattedMessage id="Orders172" defaultMessage="orders that " />
-          <a style={ {fontSize: 16, fontWeight: 'bold'} }>
-            <FormattedMessage id="Orders176" defaultMessage="buy " />
-          </a>
-          {buyCurrency}
-          <FormattedMessage id="Orders177" defaultMessage=" from you" />
-        </p>
+
+        <h3 styleName="ordersHeading">SELL {buyCurrency} HERE</h3>
+        <p>orders that <i>buy</i> {buyCurrency} from you</p>
         <Table
           id="table_exchange"
           className={tableStyles.exchange}
           titles={titles}
           rows={buyOrders}
           rowRender={(row, index) => (
-            <Row
+            isMobile &&  <RowMobile
               key={index}
               orderId={orderId}
-              row={row}
+              row={row} 
+            /> || <Row
+              key={index}
+              orderId={orderId}
+              row={row} 
             />
           )}
           isLoading={!isOnline}

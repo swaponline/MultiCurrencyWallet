@@ -16,6 +16,7 @@ const globals = {
   'process.env': {
     'NODE_ENV': JSON.stringify(config.env),
     'ENTRY': JSON.stringify(config.entry),
+    'LOCAL': JSON.stringify(config.local),
     'TESTNET': config.entry === 'testnet',
     'MAINNET': config.entry === 'mainnet',
   },

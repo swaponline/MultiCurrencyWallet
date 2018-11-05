@@ -55,7 +55,7 @@ export default class Wallet extends Component {
   }
 
   componentWillMount() {
-    process.env && localStorage.setItem(constants.localStorage.testnetSkip, true)
+    process.env.MAINNET && localStorage.setItem(constants.localStorage.testnetSkip, true)
     if (localStorage.getItem(constants.localStorage.privateKeysSaved)) {
       this.changeView('checkKeys')
     } else {
@@ -68,20 +68,14 @@ export default class Wallet extends Component {
     actions.analytics.dataEvent('open-page-balances')
   }
 
-  componentWillReceiveProps(props) {
-    if (!this.state.zeroBalance) {
-      return
-    }
+  componentWillReceiveProps({ items, tokens }) {
+    const data = [].concat(items, tokens)
 
-    if (props.items.some(o => o.balance > 0) || props.tokens.some(t => t.balance > 0)) { // if at least one balance is greater than 0
-      this.setState({ zeroBalance: false })
-    }
-  }
-
-  handleClear = (event) => {
-    event.preventDefault()
-    window.localStorage.clear()
-    window.location.reload()
+    data.forEach(item => {
+      if (item.balance > 0) {
+        actions.analytics.balanceEvent(item.currency, item.balance)
+      }
+    })
   }
 
   changeView = (view) => {
@@ -93,7 +87,7 @@ export default class Wallet extends Component {
   render() {
     const { view, zeroBalance } = this.state
     const { items, tokens, currencies, hiddenCoinsList } = this.props
-    const titles = [ 'Coin', 'Name', 'Balance', !isMobile && 'Address', isMobile ? 'Send, receive, swap' :  'Actions' ]
+    const titles = [ 'Coin', 'Name', 'Balance', !isMobile && 'Your Address', isMobile ? 'Send, receive, swap' :  'Actions' ]
 
     const keysSaved = localStorage.getItem(constants.localStorage.privateKeysSaved)
     const testNetSkip = localStorage.getItem(constants.localStorage.testnetSkip)
@@ -104,9 +98,11 @@ export default class Wallet extends Component {
       <section>
         { showSaveKeysModal && <SaveKeysModal /> }
         <PageHeadline>
-          <FormattedMessage id="Wallet107" defaultMessage="Swap.Online - Cryptocurrency Wallet with Atomic Swap Exchange">
-            {message => <SubTitle>{message}  </SubTitle>}
-          </FormattedMessage>
+
+          <SubTitle>
+            Your online cryptocurrency wallet
+          </SubTitle>
+          Deposit funds to addresses below
         </PageHeadline>
         <Table
           id="table-wallet"

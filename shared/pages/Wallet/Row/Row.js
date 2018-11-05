@@ -231,9 +231,7 @@ export default class Row extends Component {
                       }
                       <LinkAccount type={currency} address={address} >{address}</LinkAccount>
                       <ReactTooltip id="Copy" type="light" effect="solid">
-                        <FormattedMessage id="RowWallet229" defaultMessage="Copy">
-                          {message => <span>{message}</span>}
-                        </FormattedMessage>
+
                       </ReactTooltip>
                     </Fragment>
 
@@ -246,32 +244,24 @@ export default class Row extends Component {
                 }
 
                 {
-                  currency === 'EOS' && !eosAccountActivated &&
-                  <button styleName="button" onClick={this.handleEosBuyAccount} data-tip data-for="Activate">
-                    <FormattedMessage id="RowWallet1245" defaultMessage="Activate" />
-                  </button>                }
+
+                  currency === 'EOS' && !eosAccountActivated && <button styleName="button" onClick={this.handleEosBuyAccount} data-tip data-for="bE">Activate</button>
+                }
                 <ReactTooltip id="Activate" type="light" effect="solid">
-                  <FormattedMessage id="RowWallet250" defaultMessage="Buy this account">
-                    {message => <span>{message}</span>}
-                  </FormattedMessage>
+                  <span>Buy this account</span>
                 </ReactTooltip>
 
                 {
-                  <button styleName="button" onClick={this.handleEosRegister} data-tip data-for="Use">
-                    <FormattedMessage id="RowWallet256" defaultMessage="Use another" />
-                  </button>
+                  currency === 'EOS' && <button styleName="button" onClick={this.handleEosRegister} data-tip data-for="Use">Use another</button>
                 }
                 <ReactTooltip id="Use" type="light" effect="solid">
-                  <FormattedMessage id="RowWallet261" defaultMessage="Login with your existing eos account">
-                    {message => <span>{message}</span>}
-                  </FormattedMessage>
+                  <span>Login with your existing eos account</span>
                 </ReactTooltip>
+
                 { currency === 'EOS' && !eosAccountActivated && (
                   <Fragment>
                     <br />
-                    <span style={{ fontSize: '12px', color: '#c9c9c9' }}>
-                      <FormattedMessage id="RowWallet267" defaultMessage="not activated" />
-                    </span>
+                    <span style={{ fontSize: '12px', color: '#c9c9c9' }}>not activated</span>
                   </Fragment>
                 )
                 }
@@ -279,17 +269,12 @@ export default class Row extends Component {
                 { currency === 'TLOS' && !telosAccountActivated && (
                   <Fragment>
                     <br />
-                    <span style={{ fontSize: '12px', color: '#c9c9c9' }}>
-                      <FormattedMessage id="RowWallet274" defaultMessage="not activated" />
-                    </span>
+
+                    <span style={{ fontSize: '12px', color: '#c9c9c9' }}>not activated</span>
                   </Fragment>
                 )
                 }
-                { isAddressCopied &&
-                  <p styleName="copied" >
-                    <FormattedMessage id="RowWallet284" defaultMessage="Address copied to clipboard" />
-                  </p>
-                }
+                { isAddressCopied && <p styleName="copied" >Address copied to clipboard</p> }
               </td>
             </CopyToClipboard>
           </Fragment>

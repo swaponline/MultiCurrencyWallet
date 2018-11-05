@@ -6,6 +6,7 @@ import { connect } from 'redaction'
 import moment from 'moment-with-locales-es6'
 import { constants, localStorage } from 'helpers'
 import { isMobile } from 'react-device-detect'
+import { HashRouter } from 'react-router-dom'
 
 import CSSModules from 'react-css-modules'
 import styles from './App.scss'
@@ -101,8 +102,9 @@ export default class App extends React.Component {
       return <Loader showTips />
     }
 
-    return (
-      <Fragment>  // <Seo location={history.location} />
+    const mainContent = (
+      <Fragment>
+        <Seo location={history.location} />
         { isMobile && <UserTooltip /> }
         <Header />
         <WidthContainer styleName="main">
@@ -116,6 +118,16 @@ export default class App extends React.Component {
         <ModalConductor />
         <NotificationConductor />
       </Fragment>
+    )
+
+    return (
+      process.env.LOCAL === 'local' ? (
+        <HashRouter>
+          {mainContent}
+        </HashRouter>
+      ) : (
+        mainContent
+      )
     )
   }
 }

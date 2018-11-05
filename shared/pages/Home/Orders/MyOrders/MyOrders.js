@@ -2,10 +2,13 @@ import React, { PureComponent, Fragment } from 'react'
 
 import actions from 'redux/actions'
 
+import { isMobile } from 'react-device-detect'
+
 import Table from 'components/tables/Table/Table'
 import styles from 'components/tables/Table/Table.scss'
 import RowFeeds from './RowFeeds/RowFeeds'
-import { FormattedMessage } from 'react-intl'
+
+import RowFeedsMobile from './RowFeedsMobile/RowFeedsMobile'
 
 
 export default class MyOrders extends PureComponent {
@@ -28,12 +31,18 @@ export default class MyOrders extends PureComponent {
           titles={titles}
           rows={myOrders}
           rowRender={(row, index) => (
-            <RowFeeds
+            isMobile && <RowFeedsMobile
               key={index}
               row={row}
               declineRequest={declineRequest}
               acceptRequest={acceptRequest}
-              removeOrder={removeOrder}
+              removeOrder={removeOrder} 
+            /> || <RowFeeds
+              key={index}
+              row={row}
+              declineRequest={declineRequest}
+              acceptRequest={acceptRequest}
+              removeOrder={removeOrder} 
             />
           )}
         />

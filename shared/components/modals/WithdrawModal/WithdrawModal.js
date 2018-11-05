@@ -36,6 +36,7 @@ export default class WithdrawModal extends React.Component {
 
   state = {
     isSubmitted: false,
+    isShipped: false,
     address: '',
     amount: '',
   }
@@ -51,7 +52,10 @@ export default class WithdrawModal extends React.Component {
 
   handleSubmit = () => {
     const { address: to, amount } = this.state
-    const { data: { currency, contractAddress, address, balance, decimals }, name }  = this.props
+
+    const { data: { currency, contractAddress, address, balance, decimals }, name } = this.props
+
+    this.setState(() => ({ isShipped: true }))
 
     this.setBalanceOnState(currency)
     this.setState(() => ({ isShipped: true }))
@@ -74,15 +78,18 @@ export default class WithdrawModal extends React.Component {
           currency,
           address: to,
         })
+
+        this.setState(() => ({ isShipped: false }))
+        actions.modals.close(name)
       })
   }
 
   render() {
-    const { isSubmitted, address, amount, balance } = this.state
+    const { isSubmitted, address, amount, balance, isShipped } = this.state
     const { name, data } = this.props
 
     const linked = Link.all(this, 'address', 'amount')
-    const isDisabled = !address || !amount
+    const isDisabled = !address || !amount || isShipped
 
     if (isSubmitted) {
       linked.amount.check((value) => value < balance, `You don't have enough balance`)
@@ -91,23 +98,12 @@ export default class WithdrawModal extends React.Component {
 
     return (
       <Modal name={name} title={`Withdraw ${data.currency.toUpperCase()}`}>
-        <p style={{ fontSize: '16px' }}>
-          <FormattedMessage
-            id="WithdrawModal93"
-            defaultMessage="Please notice, that you need to have minimum 0.01 amount "
-          />
-          <FormattedMessage
-            id="WithdrawModal99"
-            defaultMessage="of the ETH on your wallet, to use it for Ethereum miners fee"
-          />
-        </p>
-        <FormattedMessage id="WithdrawModal96" defaultMessage="Address">
-          {message => <FieldLabel inRow>{message}<Tooltip text="destination address" /></FieldLabel>}
-        </FormattedMessage>
+
+        <p style={{ fontSize: '16px' }}>{`Please notice, that you need to have minimum ${minAmount[data.currency.toLowerCase()]} amount `}<br /> of the {data.currency} on your wallet, to use it for miners fee</p>
+        <FieldLabel inRow>Address <Tooltip text="destination address" /></FieldLabel>
         <Input valueLink={linked.address} focusOnInit pattern="0-9a-zA-Z" placeholder="Enter address" />
-        <FormattedMessage id="WithdrawModal100" defaultMessage="Amount">
-          {message => <FieldLabel inRow>{message}</FieldLabel>}
-        </FormattedMessage>
+        <p style={{ marginTop: '20px' }}>Your balance: {balance} {data.currency.toUpperCase()}</p>
+        <FieldLabel inRow>Amount</FieldLabel>
         <Input valueLink={linked.amount} pattern="0-9\." placeholder={`Enter amount, you have ${balance}`} />
         {
           !linked.amount.error && (

@@ -33,9 +33,9 @@ const register = async (accountName, activePrivateKey) => {
     permissions.find(item => item.perm_name === 'active')
       .required_auth.keys[0].key
 
-  if (activePublicKey !== requiredPublicKey) {
+
+  if (activePublicKey !== requiredPublicKey)
     throw new Error(`${activePublicKey} is not equal to ${requiredPublicKey}`)
-  }
 
   localStorage.setItem(constants.privateKeyNames.telosPrivateKey, activePrivateKey)
   localStorage.setItem(constants.privateKeyNames.telosPublicKey, activePublicKey)
@@ -113,7 +113,8 @@ const loginWithNewAccount = async () => {
   return { accountName, activePrivateKey, activePublicKey }
 }
 
-const activateAccount = async (accountName, activePrivateKey, activePublicKey) => {
+
+const activateAccount = async(accountName, activePrivateKey, activePublicKey) => {
   const { registerEndpoint } = config.api.telos
 
   try {
@@ -121,12 +122,13 @@ const activateAccount = async (accountName, activePrivateKey, activePublicKey) =
       method: 'POST',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json',
+
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         publicKey: activePublicKey,
-        accountName,
-      }),
+        accountName: accountName
+      })
     })
 
     if (response.ok) {
@@ -140,5 +142,6 @@ const activateAccount = async (accountName, activePrivateKey, activePublicKey) =
 }
 
 module.exports = {
-  register, login, getBalance, send, loginWithNewAccount, activateAccount,
+
+  register, login, getBalance, send, loginWithNewAccount, activateAccount
 }

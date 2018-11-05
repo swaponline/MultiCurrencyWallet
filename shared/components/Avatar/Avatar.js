@@ -16,15 +16,13 @@ const Avatar = ({ value, className, size }) => (
       styleName="avatar"
       alt={value}
       src={`data:image/svg+xml,${encodeURIComponent(jdenticon.toSvg(value, size))}`}
-      data-tip
-      data-for="gravatar"
+
+      data-tip data-for="gravatar"
     />
-    <ReactTooltip id="gravatar" type="light" effect="solid" >
-      <span>
-        <FormattedMessage id="Avatar24" defaultMessage="Automatically created gravatar. its unique for every profile. You can see your in the upper right corner" />
-      </span>
-    </ReactTooltip>
-  </Fragment>
+        <ReactTooltip id="gravatar" type="light" effect="solid" >
+          <span>Automatically created gravatar. its unique for every profile. You can see your in the upper right corner</span>
+        </ReactTooltip>
+    </Fragment>
 )
 
 Avatar.defaultProps = {

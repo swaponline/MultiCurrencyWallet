@@ -6,7 +6,6 @@ const createResponseHandler = (req, opts) => {
 
   return new Promise((fulfill, reject) => req.end((err, res) => {
     let serverError
-    let { body } = res
 
     // Errors
 
@@ -18,14 +17,17 @@ const createResponseHandler = (req, opts) => {
     }
 
     if (serverError) {
-      throw new Error(serverError)
+      throw new Error(`Connection failed: ${debug}, server error:${serverError}`)
     }
 
     if (err) {
       // TODO write Error notifier
       opts.onComplete()
-      return reject({ resData: body, err, res })
+      return reject({ resData: err, res })
     }
+
+    let { body } = res
+
 
     if (!body) {
       try {
