@@ -155,14 +155,8 @@ export default class Row extends Component {
       <tr
         styleName={this.props.index === this.props.selectId || !isMobile ? 'showButtons' : 'hidden'}
         onClick={() => { this.props.handleSelectId(this.props.index) }}
-<<<<<<< HEAD
-        onTouchEnd={this.handleTouchClear}
-        onTouchMove={this.handleTouch}
-        style={ isTouch && this.props.index !== this.props.selectId ?  { background: '#f5f5f5' } : { background: '#fff' } }
-=======
         onTouchEnd={this.handleTouchClear} onTouchMove={this.handleTouch}
         style={ isTouch && this.props.index !== this.props.selectId ?  { background: '#f5f5f5' } : { background: '#fff' }}
->>>>>>> 649bb2b... fix lint, fix errors
       >
         <td>
           <Link to={`/${fullName}-wallet`} title={`Online ${fullName} wallet`}>
