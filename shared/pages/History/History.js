@@ -64,13 +64,9 @@ export default class History extends Component {
       <section>
         <PageHeadline subTitle="History" />
         { swapHistory.length > 0 && <SwapsHistory orders={swapHistory.filter(item => item.step >= 4)} /> }
-        <h3 data-tip data-for="transactions" style={{ width:'200px' }}>
-          <FormattedMessage id="History67" defaultMessage="All transactions" />
-        </h3>
+        <h3 data-tip data-for="transactions" style={{ width:'200px' }}>All transactions</h3>
         <ReactTooltip id="transactions" type="light" effect="solid">
-          <span>
-            <FormattedMessage id="History71" defaultMessage="All transactions sent and received" />
-          </span>
+          <span>All transactions sent and received</span>
         </ReactTooltip>
         <Filter />
         <InfiniteScrollTable

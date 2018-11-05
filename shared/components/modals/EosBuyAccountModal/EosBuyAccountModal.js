@@ -99,22 +99,20 @@ export default class EosBuyAccountModal extends React.Component {
             <Input readOnly="true" valueLink={linked.price} />
           </div>
           { error && (
-            <div styleName="error">
-              <FormattedMessage id="EosBuyAccountModal99" defaultMessage="Sorry, error occured during activation, try again" />
-            </div>
+            <div styleName="error">Sorry, error occured during activation, try again</div>
           )}
           { activationPayment && (
             <div>
-              <strong>
-                <FormattedMessage id="EosBuyAccountModal105" defaultMessage="Payment transaction:" />
-                <a
-                  href={`${config.link.bitpay}/tx/${activationPayment}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {activationPayment}
-                </a>
-              </strong>
+            <strong>
+              Payment transaction:
+              <a
+                href={`${config.link.bitpay}/tx/${activationPayment}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {activationPayment}
+              </a>
+            </strong>
             </div>
           )}
 

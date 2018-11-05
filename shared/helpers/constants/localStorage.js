@@ -7,5 +7,5 @@ export default {
   storageRevision: '_revision',
   eosActivationPayment: `${process.env.ENTRY}:eos:activationPayment`,
   eosAccountActivated: `${process.env.ENTRY}:eos:activationFlag`,
-  telosAccountActivated: `${process.env.ENTRY}:telos:activationFlag`,
+  telosAccountActivated: `${process.env.ENTRY}:telos:activationFlag`
 }

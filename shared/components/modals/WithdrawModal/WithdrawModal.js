@@ -51,7 +51,7 @@ export default class WithdrawModal extends React.Component {
 
   handleSubmit = () => {
     const { address: to, amount } = this.state
-    const { data: { currency, contractAddress, address, balance, decimals }, name }  = this.props
+    const { data: { currency, contractAddress, address, balance, decimals }, name } = this.props
 
     this.setBalanceOnState(currency)
     this.setState(() => ({ isShipped: true }))
@@ -74,6 +74,8 @@ export default class WithdrawModal extends React.Component {
           currency,
           address: to,
         })
+
+        actions.modals.close(name)
       })
   }
 
@@ -91,23 +93,11 @@ export default class WithdrawModal extends React.Component {
 
     return (
       <Modal name={name} title={`Withdraw ${data.currency.toUpperCase()}`}>
-        <p style={{ fontSize: '16px' }}>
-          <FormattedMessage
-            id="WithdrawModal93"
-            defaultMessage="Please notice, that you need to have minimum 0.01 amount "
-          />
-          <FormattedMessage
-            id="WithdrawModal99"
-            defaultMessage="of the ETH on your wallet, to use it for Ethereum miners fee"
-          />
-        </p>
-        <FormattedMessage id="WithdrawModal96" defaultMessage="Address">
-          {message => <FieldLabel inRow>{message}<Tooltip text="destination address" /></FieldLabel>}
-        </FormattedMessage>
+        <p style={{ fontSize: '16px' }}>{`Please notice, that you need to have minimum ${minAmount[data.currency.toLowerCase()]} amount `}<br /> of the {data.currency} on your wallet, to use it for miners fee</p>
+        <FieldLabel inRow>Address <Tooltip text="destination address" /></FieldLabel>
         <Input valueLink={linked.address} focusOnInit pattern="0-9a-zA-Z" placeholder="Enter address" />
-        <FormattedMessage id="WithdrawModal100" defaultMessage="Amount">
-          {message => <FieldLabel inRow>{message}</FieldLabel>}
-        </FormattedMessage>
+        <p style={{ marginTop: '20px' }}>Your balance: {balance} {data.currency.toUpperCase()}</p>
+        <FieldLabel inRow>Amount</FieldLabel>
         <Input valueLink={linked.amount} pattern="0-9\." placeholder={`Enter amount, you have ${balance}`} />
         {
           !linked.amount.error && (
