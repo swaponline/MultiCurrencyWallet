@@ -147,12 +147,6 @@
   }
 }
 
-.text {
-   position: absolute;
-   font-size: 16px;
-   left: calc(50% - 245.5px);
-   top: 65%;
- }
 
 .link {
   position: absolute;
@@ -172,4 +166,20 @@
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
+}
+
+@include media-mobile { 
+  .text {
+     position: absolute;
+     top: 65%;
+     transform: translateY(-50%);
+     padding: 0 35px;
+     text-align: center;
+   }
+   .loader {
+     transform: translateY(-50%);
+   }
+   .tips {
+     top: 64%;
+   }
 }
