@@ -43,7 +43,7 @@ const setupEOS = async () => {
     chainId: telosChainId,
     httpEndpoint: telosHttpEndpoint,
     keyProvider: telosKeyProvider,
-    keyPrefix: 'TLOS'
+    keyPrefix: 'TLOS',
   })
 
   eccInstance = EOS.modules.ecc
@@ -63,21 +63,21 @@ const eos = {
   async getInstance() {
     await init()
     return eosInstance
-  }
+  },
 }
 
 const ecc = {
   async getInstance() {
     await init()
     return eccInstance
-  }
+  },
 }
 
 const telos = {
   async getInstance() {
     await init()
     return telosInstance
-  }
+  },
 }
 
 export {

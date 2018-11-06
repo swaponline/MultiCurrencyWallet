@@ -13,14 +13,11 @@ const Select = ({ balance, currency, changeBalance }) => (
     <div styleName="groupField">
       <p>{currency.toUpperCase()} { balance ? parseFloat(balance).toFixed(3) : 0.00 }</p>
       <div styleName="cell" onClick={() => changeBalance(balance / 10)}>
-        <FormattedMessage id="Select15" defaultMessage="Sell 1/10" />
+        <FormattedMessage id="Select15" defaultMessage="Sell " />
+        1/10
       </div>
-      <div styleName="cell" onClick={() => changeBalance(balance / 4)}>
-        <FormattedMessage id="Select18" defaultMessage="1/4" />
-      </div>
-      <div styleName="cell" onClick={() => changeBalance(balance / 2)}>
-        <FormattedMessage id="Select21" defaultMessage="1/2" />
-      </div>
+      <div styleName="cell" onClick={() => changeBalance(balance / 4)}>1/4</div>
+      <div styleName="cell" onClick={() => changeBalance(balance / 2)}>1/2</div>
       <div styleName="cell" onClick={() => changeBalance(balance)}>
         <FormattedMessage id="Select24" defaultMessage="ALL" />
       </div>

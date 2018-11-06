@@ -29,25 +29,29 @@ export default class SaveKeys extends Component {
           </span>
         </div>
         <div styleName="row" >
-          <Button brand onClick={isDownload} data-tip data-for="Download">Download</Button>
-            <ReactTooltip id="Download" type="light" effect="solid">
-              <span>Download text document with keys and accounts</span>
-            </ReactTooltip>
+          <Button brand onClick={isDownload} data-tip data-for="Download">
+            <FormattedMessage id="SaveKe33" defaultMessage="Download" />
+          </Button>
+          <ReactTooltip id="Download" type="light" effect="solid">
+            <span>
+              <FormattedMessage id="SaveKe37" defaultMessage="Download text document with keys and accounts" />
+            </span>
+          </ReactTooltip>
           <div styleName="cell" >
             <Field
               label={eosData.currency}
               privateKey={eosData.masterPrivateKey.toString()}
             />
           }
-          { typeof telosData.activePrivateKey === 'string' &&
+            { typeof telosData.activePrivateKey === 'string' &&
             <Field
               label={telosData.currency}
               privateKey={telosData.activePrivateKey.toString()}
             />
-          }
+            }
+          </div>
         </div>
       </div>
-    </div>
     )
   }
 }

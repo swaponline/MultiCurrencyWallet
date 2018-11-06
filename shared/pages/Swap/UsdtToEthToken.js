@@ -116,7 +116,6 @@ export default class UsdtToEthToken extends Component {
                     <br />
                     <TimerButton brand onClick={this.submitSecret}>
                       <FormattedMessage id="UsdrToEthToken115" defaultMessage="Confirm" />
-                      {message}
                     </TimerButton>
                   </Fragment>
                 ) : (
@@ -295,9 +294,10 @@ export default class UsdtToEthToken extends Component {
               {
                 flow.step >= 5 && !flow.isFinished && (
                   <div style={{ display: 'flex', alignItems: 'center' }}>
-                    { enabledButton && !flow.isEthWithdrawn && <Button brand onClick={this.tryRefund}>
-                      <FormattedMessage id="UsdrToEthToken307" defaultMessage="TRY REFUND" />
-                    </Button>
+                    { enabledButton && !flow.isEthWithdrawn &&
+                      <Button brand onClick={this.tryRefund}>
+                        <FormattedMessage id="UsdrToEthToken307" defaultMessage="TRY REFUND" />
+                      </Button>
                     }
                     <Timer
                       lockTime={flow.usdtScriptValues.lockTime * 1000}

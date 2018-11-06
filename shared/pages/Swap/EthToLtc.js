@@ -284,7 +284,6 @@ export default class EthToLtc extends Component {
                     <br />
                     <Button brand onClick={this.updateBalance}>
                       <FormattedMessage id="EthToLtc277" defaultMessage="Continue" />
-                      {message}
                     </Button>
                   </Fragment>
                 )

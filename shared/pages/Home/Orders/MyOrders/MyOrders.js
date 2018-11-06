@@ -9,6 +9,7 @@ import styles from 'components/tables/Table/Table.scss'
 import RowFeeds from './RowFeeds/RowFeeds'
 
 import RowFeedsMobile from './RowFeedsMobile/RowFeedsMobile'
+import { FormattedMessage } from 'react-intl'
 
 
 export default class MyOrders extends PureComponent {
@@ -36,13 +37,13 @@ export default class MyOrders extends PureComponent {
               row={row}
               declineRequest={declineRequest}
               acceptRequest={acceptRequest}
-              removeOrder={removeOrder} 
+              removeOrder={removeOrder}
             /> || <RowFeeds
               key={index}
               row={row}
               declineRequest={declineRequest}
               acceptRequest={acceptRequest}
-              removeOrder={removeOrder} 
+              removeOrder={removeOrder}
             />
           )}
         />

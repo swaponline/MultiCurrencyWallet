@@ -119,7 +119,7 @@ export default class Orders extends Component {
           } />
         <Title>{buyCurrency}/{sellCurrency} no limit exchange with 0 fee</Title>
         { invalidPair &&
-          <FormattedMessage id="Orders117" defaultMessage="No such ticker. Redirecting to SWAP-BTC exchange...">
+          <FormattedMessage id="Orders117" defaultMessage="No such ticker. Redirecting to SWAP-BTC exchange..." >
             {message => <p>{message}</p>}
           </FormattedMessage>
         }
@@ -139,8 +139,19 @@ export default class Orders extends Component {
             acceptRequest={this.acceptRequest}
           />
         }
-        <h3 styleName="ordersHeading">BUY {buyCurrency} HERE</h3>
-        <p>orders of those who <i>sell</i> {buyCurrency} to you</p>
+        <h3 styleName="ordersHeading">
+          <FormattedMessage id="orders143" defaultMessage="BUY " />
+          {buyCurrency}
+          <FormattedMessage id="orders145" defaultMessage=" HERE" />
+        </h3>
+        <p>
+          <FormattedMessage id="orders148" defaultMessage=" orders of those who " />
+          <i>
+            <FormattedMessage id="orders150" defaultMessage=" sell " />
+          </i>
+          {buyCurrency}
+          <FormattedMessage id="orders153" defaultMessage=" to you " />
+        </p>
         <Table
           id="table_exchange"
           className={tableStyles.exchange}
@@ -150,17 +161,28 @@ export default class Orders extends Component {
             isMobile &&  <RowMobile
               key={index}
               orderId={orderId}
-              row={row} 
+              row={row}
             /> || <Row
               key={index}
               orderId={orderId}
-              row={row} 
+              row={row}
             />
           )}
           isLoading={!isOnline}
         />
-        <h3 styleName="ordersHeading">SELL {buyCurrency} HERE</h3>
-        <p>orders that <i>buy</i> {buyCurrency} from you</p>
+        <h3 styleName="ordersHeading">
+          <FormattedMessage id="orders174" defaultMessage="SELL " />
+          {buyCurrency}
+          <FormattedMessage id="orders176" defaultMessage=" HERE" />
+        </h3>
+        <p>
+          <FormattedMessage id="orders179" defaultMessage=" orders that " />
+          <i>
+            <FormattedMessage id="orders181" defaultMessage=" buy " />
+          </i>
+          {buyCurrency}
+          <FormattedMessage id="orders184" defaultMessage=" from you " />
+        </p>
         <Table
           id="table_exchange"
           className={tableStyles.exchange}
@@ -170,11 +192,11 @@ export default class Orders extends Component {
             isMobile &&  <RowMobile
               key={index}
               orderId={orderId}
-              row={row} 
+              row={row}
             /> || <Row
               key={index}
               orderId={orderId}
-              row={row} 
+              row={row}
             />
           )}
           isLoading={!isOnline}

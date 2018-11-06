@@ -99,7 +99,7 @@ const buyAccount = async () => {
   const signature = await actions.btc.signMessage(message, btcPrivateKey)
 
   const activationTx = await activateAccount({
-    accountName, eosPublicKey, btcAddress, signature, paymentTx
+    accountName, eosPublicKey, btcAddress, signature, paymentTx,
   })
 
   if (activationTx) {
@@ -122,7 +122,7 @@ const sendActivationPayment = async ({ from }) => {
 const activateAccount = async ({ accountName, eosPublicKey, btcAddress, signature, paymentTx }) => {
   const { registerEndpoint } = config.api.eos
 
-  let transaction_id = -1
+  let transactionId = -1
   try {
     const response = await fetch(registerEndpoint, {
       method: 'POST',
@@ -132,14 +132,14 @@ const activateAccount = async ({ accountName, eosPublicKey, btcAddress, signatur
       },
       body: JSON.stringify({
         publicKey: eosPublicKey,
-        accountName: accountName,
+        accountName,
         address: btcAddress,
-        signature: signature,
-        txid: paymentTx
+        signature,
+        txid: paymentTx,
       }),
     })
 
-    transaction_id = response.json().transaction_id
+    transactionId = response.json().transactionId
   } catch (e) {
     console.error(e)
   }
