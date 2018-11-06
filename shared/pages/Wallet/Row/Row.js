@@ -30,6 +30,7 @@ export default class Row extends Component {
     tradeAllowed: false,
     isAddressCopied: false,
     isTouch: false,
+    isBalanceEmpty: true
   }
 
   componentWillMount() {
@@ -39,6 +40,10 @@ export default class Row extends Component {
       tradeAllowed: !!currencies.find(c => c.value === currency.toLowerCase()),
     })
 
+  }
+
+  componentWillReceiveProps(newProps) {
+    this.handleCheckBalance()
   }
 
   componentDidMount() {
@@ -137,6 +142,15 @@ export default class Row extends Component {
     })
   }
 
+  handleCheckBalance = () => {
+    const { balance } = this.props;
+    if( balance > 0 ) {
+      this.setState({
+        isBalanceEmpty: false
+      })
+    }
+  }
+
   handleGoTrade = (currency) => {
     this.props.history.push(`/${currency.toLowerCase()}`)
   }
@@ -146,7 +160,7 @@ export default class Row extends Component {
   }
 
   render() {
-    const { isBalanceFetching, tradeAllowed, isAddressCopied, isTouch } = this.state
+    const { isBalanceFetching, tradeAllowed, isAddressCopied, isTouch, isBalanceEmpty } = this.state
     const { currency, balance, isBalanceFetched, address, contractAddress, fullName, unconfirmedBalance } = this.props
     const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true"
     const telosAccountActivated = localStorage.getItem(constants.localStorage.telosAccountActivated) === "true"
@@ -177,6 +191,7 @@ export default class Row extends Component {
               <div styleName="no-select-inline" onClick={this.handleReloadBalance} >
                 <i className="fas fa-sync-alt" styleName="icon" />
                 <span>{String(balance).length > 4 ? balance.toFixed(4) : balance}{' '}{currency}</span>
+
                 { currency === 'BTC' && unconfirmedBalance !== 0 && (
                   <Fragment>
                     <br />
@@ -216,10 +231,10 @@ export default class Row extends Component {
               text={address}
               onCopy={this.handleCopyAddress}
             >
-              <td style={{ position: 'relative' }}>
+              <td>
                 {
                   !contractAddress ? (
-                    <Fragment>
+                    <div styleName="notContractAddress">
 
                       {
                         address !== '' && <i
@@ -235,7 +250,14 @@ export default class Row extends Component {
                           <FormattedMessage id="Row235" defaultMessage="Copy" />
                         </span>
                       </ReactTooltip>
-                    </Fragment>
+                      { currency === 'EOS' && !eosAccountActivated && (
+                        <Fragment>
+                          <br />
+                          <span styleName="notActiveLink">not activated</span>
+                        </Fragment>
+                      )
+                      }
+                    </div>
 
                   ) : (
                     <Fragment>
@@ -267,13 +289,7 @@ export default class Row extends Component {
                   </span>
                 </ReactTooltip>
 
-                { currency === 'EOS' && !eosAccountActivated && (
-                  <Fragment>
-                    <br />
-                    <span styleName="notActiveLink">not activated</span>
-                  </Fragment>
-                )
-                }
+     
 
                 { currency === 'TLOS' && !telosAccountActivated && (
                   <Fragment>
@@ -293,7 +309,7 @@ export default class Row extends Component {
         ) }
         <td>
           <div>
-            <WithdrawButton onClick={this.handleWithdraw} datatip="Send your currency" styleName="marginRight">
+            <WithdrawButton onClick={this.handleWithdraw} datatip="Send your currency" styleName="marginRight" disabled={isBalanceEmpty}>
               <i className="fas fa-arrow-alt-circle-right" />
               <span>
                 <FormattedMessage id="Row305" defaultMessage="Send" />
@@ -306,11 +322,13 @@ export default class Row extends Component {
                 <span>
                   <FormattedMessage id="Row313" defaultMessage="Receive" />
                 </span>
+                <i class="fas fa-qrcode"></i>
+                <span>Deposit</span>
               </WithdrawButton>
             )}
             {
               tradeAllowed && (
-                <WithdrawButton datatip="Swap your currency or create order to swap" onClick={() => this.handleGoTrade(currency)}>
+                <WithdrawButton datatip="Swap your currency or create order to swap" onClick={() => this.handleGoTrade(currency)} disabled={isBalanceEmpty}>
                   <i className="fas fa-exchange-alt" />
                   <span>
                     <FormattedMessage id="RowWallet313" defaultMessage="Exchange" />
@@ -321,6 +339,7 @@ export default class Row extends Component {
             }
           </div>
         </td>
+      
       </tr>
     )
   }
