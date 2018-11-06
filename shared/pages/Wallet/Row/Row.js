@@ -317,10 +317,8 @@ export default class Row extends Component {
               <WithdrawButton onClick={this.handleReceive} styleName="marginRight">
                 <i className="fas fa-qrcode" />
                 <span>
-                  <FormattedMessage id="Row313" defaultMessage="Receive" />
+                  <FormattedMessage id="Row313" defaultMessage="Deposit" />
                 </span>
-                <i class="fas fa-qrcode"></i>
-                <span>Deposit</span>
               </WithdrawButton>
             )}
             {
