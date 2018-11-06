@@ -72,6 +72,9 @@ export default class CurrencyWallet extends Component {
     })
   }
 
+  handleEosBuyAccount = async () => {
+    actions.modals.open(constants.modals.EosBuyAccount)
+  }
 
   render() {
     let { swapHistory, txHistory, location } = this.props
@@ -85,6 +88,8 @@ export default class CurrencyWallet extends Component {
       .filter(swap => swap.sellCurrency === currency || swap.buyCurrency === currency)
 
     const seoPage = getSeoPage(location.pathname)
+
+    const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true"
 
     return (
       <div className="root">
@@ -100,6 +105,9 @@ export default class CurrencyWallet extends Component {
           <FormattedMessage id="CurrencyWallet95" defaultMessage="Your address:" />
           <span>{address}</span> <br /> Your {fullName} balance: {balance}{' '}{currency.toUpperCase()}
         </h3>
+        {!eosAccountActivated && (<Button onClick={this.handleEosBuyAccount} gray>
+          <FormattedMessage id="CurrencyWallet105" defaultMessage="Activate account" />
+        </Button>)}
         <div styleName="inRow">
           <Button brand style={{ marginRight: '15px' }} onClick={this.handleWithdraw}>
             <FormattedMessage id="CurrencyWallet100" defaultMessage="Send" />
