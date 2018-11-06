@@ -257,6 +257,13 @@ export default class Row extends Component {
                         </Fragment>
                       )
                       }
+                      { currency === 'TLOS' && !telosAccountActivated && (
+                        <Fragment>
+                          <br />
+                          <span styleName="notActiveLink">not activated</span>
+                        </Fragment>
+                      )
+                      }
                     </div>
 
                   ) : (
@@ -288,16 +295,6 @@ export default class Row extends Component {
                     <FormattedMessage id="Row268" defaultMessage="Login with your existing eos account" />
                   </span>
                 </ReactTooltip>
-
-     
-
-                { currency === 'TLOS' && !telosAccountActivated && (
-                  <Fragment>
-                    <br />
-                    <span styleName="notActiveLink">not activated</span>
-                  </Fragment>
-                )
-                }
                 { isAddressCopied &&
                   <p styleName="copied" >
                     <FormattedMessage id="Row293" defaultMessage="Address copied to clipboard" />
