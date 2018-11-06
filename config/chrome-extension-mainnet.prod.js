@@ -5,11 +5,11 @@ import config from './mainnet'
 export default {
   env: 'production',
   entry: 'mainnet',
-  local: 'online',
-  dir: 'mainnet',
+  local: 'local',
+  dir: 'chrome-extension/application',
 
-  base: 'https://swap.online/',
-  publicPath: `https://swap.online${baseConfig.publicPath}`,
+  base: './',
+  publicPath: `.${baseConfig.publicPath}`,
 
   ...config,
 }

@@ -33,7 +33,7 @@ export default class Notification extends Component {
       this.setState({
         mounted: true,
       }, () => {
-        setTimeout(this.close, 4000)
+        setTimeout(this.close, 8000)
       })
     }, 0)
   }

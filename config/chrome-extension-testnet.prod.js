@@ -7,7 +7,7 @@ export default {
   env: 'production',
   entry: 'testnet',
   local: 'local',
-  dir: 'testnet-local',
+  dir: 'chrome-extension/application',
 
   base: './',
   publicPath: `.${baseConfig.publicPath}`,

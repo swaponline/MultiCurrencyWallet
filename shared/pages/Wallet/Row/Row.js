@@ -21,7 +21,7 @@ import { FormattedMessage } from 'react-intl'
 
 
 @withRouter
-@cssModules(styles)
+@cssModules(styles, { allowMultiple: true })
 export default class Row extends Component {
 
   state = {
@@ -227,7 +227,7 @@ export default class Row extends Component {
                           styleName="icon"
                           data-tip
                           data-for="Copy"
-                          style={{ width: '10px' }} />
+                          style={{ width: '14px' }} />
                       }
                       <LinkAccount type={currency} address={address} >{address}</LinkAccount>
                       <ReactTooltip id="Copy" type="light" effect="solid">
@@ -246,10 +246,8 @@ export default class Row extends Component {
                 }
 
                 {
-                  currency === 'EOS' && !eosAccountActivated &&
-                  <button styleName="button" onClick={this.handleEosBuyAccount} data-tip data-for="bE">
-                    <FormattedMessage id="Row251" defaultMessage="Activate" />
-                  </button>
+
+                  currency === 'EOS' && !eosAccountActivated && <button styleName="button buttonActivate" onClick={this.handleEosBuyAccount} data-tip data-for="Activate">Activate</button>
                 }
                 <ReactTooltip id="Activate" type="light" effect="solid">
                   <span>
@@ -272,9 +270,7 @@ export default class Row extends Component {
                 { currency === 'EOS' && !eosAccountActivated && (
                   <Fragment>
                     <br />
-                    <span style={{ fontSize: '12px', color: '#c9c9c9' }}>
-                      <FormattedMessage id="Row276" defaultMessage="not activated" />
-                    </span>
+                    <span styleName="notActiveLink">not activated</span>
                   </Fragment>
                 )
                 }
@@ -282,9 +278,7 @@ export default class Row extends Component {
                 { currency === 'TLOS' && !telosAccountActivated && (
                   <Fragment>
                     <br />
-                    <span style={{ fontSize: '12px', color: '#c9c9c9' }}>
-                      <FormattedMessage id="Row286" defaultMessage="not activated" />
-                    </span>
+                    <span styleName="notActiveLink">not activated</span>
                   </Fragment>
                 )
                 }
