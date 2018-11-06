@@ -58,7 +58,7 @@ export default class WithdrawModal extends React.Component {
 
     this.setBalanceOnState(currency)
     this.setState(() => ({ isShipped: true }))
-    
+
     if (!to || !amount || amount < minAmount[currency.toLowerCase()] || amount > balance) {
       this.setState({
         isSubmitted: true,
@@ -97,11 +97,26 @@ export default class WithdrawModal extends React.Component {
 
     return (
       <Modal name={name} title={`Withdraw ${data.currency.toUpperCase()}`}>
-        <p style={{ fontSize: '16px' }}>{`Please notice, that you need to have minimum ${minAmount[data.currency.toLowerCase()]} amount `}<br /> of the {data.currency} on your wallet, to use it for miners fee</p>
-        <FieldLabel inRow>Address <Tooltip text="destination address" /></FieldLabel>
+        <p
+          style={{ fontSize: '16px' }}
+        >
+          {`Please notice, that you need to have minimum ${minAmount[data.currency.toLowerCase()]} amount `}
+          <br />
+          of the {data.currency} on your wallet, to use it for miners fee
+        </p>
+        <FieldLabel inRow>
+          <FormattedMessage id="Withdrow108" defaultMessage="Address" />
+          <Tooltip text="destination address" />
+        </FieldLabel>
         <Input valueLink={linked.address} focusOnInit pattern="0-9a-zA-Z" placeholder="Enter address" />
-        <p style={{ marginTop: '20px' }}>Your balance: {balance} {data.currency.toUpperCase()}</p>
-        <FieldLabel inRow>Amount</FieldLabel>
+        <p style={{ marginTop: '20px' }}>
+          <FormattedMessage id="Withdrow113" defaultMessage="Your balance:" />
+          {balance}
+          {data.currency.toUpperCase()}
+        </p>
+        <FieldLabel inRow>
+          <FormattedMessage id="Withdrow118" defaultMessage="Amount" />
+        </FieldLabel>
         <Input valueLink={linked.amount} pattern="0-9\." placeholder={`Enter amount, you have ${balance}`} />
         {
           !linked.amount.error && (

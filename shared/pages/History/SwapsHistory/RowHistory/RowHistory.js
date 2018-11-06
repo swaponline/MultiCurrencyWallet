@@ -85,7 +85,9 @@ const RowHistory = ({ row }) => {
               enabledButton={() => {}}
             />
           ) : (
-            <span>Refund not available</span>
+            <span>
+              <FormattedMessage id="RowMhistory49" defaultMessage="Refund not available" />
+            </span>
           )
         }
       </td>

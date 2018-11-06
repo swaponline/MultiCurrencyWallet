@@ -11,7 +11,9 @@ const Question = () => (
   <Fragment>
     <a href="https://wiki.swap.online/faq" target="_blank" rel="noreferrer noopener" styleName="question" data-tip data-for="Knowmore">?</a>
     <ReactTooltip id="Knowmore" type="light" effect="solid">
-      <span>Know more about us</span>
+      <span>
+        <FormattedMessage id="question15" defaultMessage="Know more about us" />
+      </span>
     </ReactTooltip>
   </Fragment>
 )

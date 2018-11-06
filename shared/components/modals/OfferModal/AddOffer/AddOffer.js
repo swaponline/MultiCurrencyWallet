@@ -361,7 +361,13 @@ export default class AddOffer extends Component {
 
     return (
       <div styleName="wrapper">
-        { this.isEthOrERC20() && <span styleName="error">For a swap, you need {minAmount.eth} ETH on your balance</span> }
+        { this.isEthOrERC20() &&
+          <span styleName="error">
+            <FormattedMessage id="transaction27" defaultMessage="For a swap, you need" />
+            {minAmount.eth}
+            <FormattedMessage id="transaction27" defaultMessage="ETH on your balance" />
+          </span>
+        }
         <SelectGroup
           styleName="sellGroup"
           label="Sell"

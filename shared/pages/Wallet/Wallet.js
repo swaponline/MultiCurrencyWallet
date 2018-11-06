@@ -84,8 +84,6 @@ export default class Wallet extends Component {
     })
   }
 
-
-
   render() {
     const { view, zeroBalance } = this.state
     const { items, tokens, currencies, hiddenCoinsList } = this.props
@@ -101,7 +99,7 @@ export default class Wallet extends Component {
         { showSaveKeysModal && <SaveKeysModal /> }
         <PageHeadline>
           <SubTitle>
-            Your online cryptocurrency wallet
+            <FormattedMessage id="Wallet104" defaultMessage="Your online cryptocurrency wallet" />
           </SubTitle>
           Deposit funds to addresses below
         </PageHeadline>

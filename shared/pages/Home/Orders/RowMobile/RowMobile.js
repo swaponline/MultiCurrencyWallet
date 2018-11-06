@@ -17,6 +17,7 @@ import RemoveButton from 'components/controls/RemoveButton/RemoveButton'
 import Pair from '../Pair'
 import PAIR_TYPES from 'helpers/constants/PAIR_TYPES'
 import RequestButton from '../RequestButton/RequestButton'
+import { FormattedMessage } from 'react-intl'
 
 
 @connect({
@@ -116,9 +117,11 @@ export default class RowMobile extends Component {
               </span>
               <span>{`${amount.toFixed(5)} ${main}`}</span>
             </div>
-            <div><i class="fas fa-exchange-alt"></i></div>
+            <div><i className="fas fa-exchange-alt" /></div>
             <div styleName="tdContainer-2">
-              <span styleName="secondType">You get</span>
+              <span styleName="secondType">
+                <FormattedMessage id="RowM122" defaultMessage="You get" />
+              </span>
               <span>{`${total.toFixed(5)} ${base}`}</span>
             </div>
           </div>
@@ -132,18 +135,26 @@ export default class RowMobile extends Component {
                 {
                   isRequested ? (
                     <Fragment>
-                      <div style={{ color: 'red' }}>REQUESTING</div>
-                      <Link to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`}> Go to the swap</Link>
+                      <div style={{ color: 'red' }}>
+                        <FormattedMessage id="RowM136" defaultMessage="REQUESTING" />
+                      </div>
+                      <Link to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`}>
+                        <FormattedMessage id="RowM139" defaultMessage="Go to the swap" />
+                      </Link>
                     </Fragment>
                   ) : (
                     isProcessing ? (
-                      <span>This order is in execution</span>
+                      <span>
+                        <FormattedMessage id="RowM145" defaultMessage="This order is in execution" />
+                      </span>
                     ) : (
                       isFetching ? (
                         <Fragment>
                           <InlineLoader />
                           <br />
-                          <span>Please wait while we confirm your request</span>
+                          <span>
+                            <FormattedMessage id="RowM153" defaultMessage="Please wait while we confirm your request" />
+                          </span>
                         </Fragment>
                       ) : (
                         <RequestButton
@@ -155,7 +166,7 @@ export default class RowMobile extends Component {
                           onMouseLeave={() => this.setState(() => ({ enterButton: false }))}
                           move={this.state.enterButton}
                         >
-                          Start
+                          <FormattedMessage id="RowM166" defaultMessage="Start" />
                         </RequestButton>
                       )
                     )
