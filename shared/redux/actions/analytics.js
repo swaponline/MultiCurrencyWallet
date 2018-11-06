@@ -17,6 +17,13 @@ const balanceEvent = (currency, balance) => {
   })
 }
 
+const errorEvent = (eventAction) => {
+  if (window.ga) {
+    const tracker = window.ga.getAll()[0]
+    tracker.send({ hitType: 'event', eventCategory: 'fatalError', eventAction })
+  }
+}
+
 const swapEvent = (eventAction, eventLabel) => {
   if (window.ga) {
     const tracker = window.ga.getAll()[0]
