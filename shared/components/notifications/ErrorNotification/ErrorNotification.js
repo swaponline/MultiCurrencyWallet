@@ -8,7 +8,7 @@ import { FormattedMessage } from 'react-intl'
 
 
 const ErrorNotification = ({ data, name }) => (
-  <Notification soundPlay={false} name={name} styleName={data.center ? 'middle' : 'righttop'}>
+  <Notification soundPlay={false} name={name} styleName={'righttop'}>
     <FormattedMessage id="ErrorNotification12" defaultMessage="Oops, looks like something went wrong!">
       {message => <h3 styleName="error-notification-heading ">{message}</h3>}
     </FormattedMessage>

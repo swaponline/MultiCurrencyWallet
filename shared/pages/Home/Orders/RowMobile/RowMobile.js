@@ -54,45 +54,6 @@ export default class RowMobile extends Component {
     })
   }
 
-  handleGoTrade = async (currency) => {
-    const balance = await actions.eth.getBalance()
-    return (balance >= 0.005 || currency.toLowerCase() !== 'eos')
-  }
-
-  removeOrder = (orderId) => {
-    if (confirm('Are your sure ?')) {
-      actions.core.removeOrder(orderId)
-      actions.core.updateCore()
-    }
-  }
-
-  sendRequest = async (orderId, currency) => {
-    const check = await this.handleGoTrade(currency)
-
-    if (check) {
-      this.setState({ isFetching: true })
-
-      setTimeout(() => {
-        this.setState(() => ({ isFetching: false }))
-      }, 15 * 1000)
-
-      actions.core.sendRequest(orderId, (isAccepted) => {
-        console.log(`user has ${isAccepted ? 'accepted' : 'declined'} your request`)
-
-        if (isAccepted) {
-          this.setState({ redirect: true, isFetching: false })
-        } else {
-          this.setState({ isFetching: false })
-        }
-
-      })
-    } else {
-      actions.modals.open(constants.modals.EthChecker, {})
-    }
-
-    actions.core.updateCore()
-  }
-
   render() {
     const { balance, isFetching } = this.state
     const { orderId, row: { id, buyCurrency, sellCurrency, isMy, buyAmount,

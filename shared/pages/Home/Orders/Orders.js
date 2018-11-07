@@ -96,6 +96,38 @@ export default class Orders extends Component {
     actions.core.updateCore()
   }
 
+  handleGoTrade = async (currency) => {
+    const balance = await actions.eth.getBalance()
+    return (balance >= 0.005 || currency.toLowerCase() !== 'eos')
+  }
+
+  sendRequest = async (orderId, currency) => {
+    const check = await this.handleGoTrade(currency)
+
+    if (check) {
+      this.setState({ isFetching: true })
+
+      setTimeout(() => {
+        this.setState(() => ({ isFetching: false }))
+      }, 15 * 1000)
+
+      actions.core.sendRequest(orderId, (isAccepted) => {
+        console.log(`user has ${isAccepted ? 'accepted' : 'declined'} your request`)
+
+        if (isAccepted) {
+          this.setState({ redirect: true, isFetching: false })
+        } else {
+          this.setState({ isFetching: false })
+        }
+
+      })
+    } else {
+      actions.modals.open(constants.modals.EthChecker, {})
+    }
+
+    actions.core.updateCore()
+  }
+
   render() {
     const { sellOrders, buyOrders, isVisible } = this.state
     let { sellCurrency, buyCurrency } = this.props
@@ -158,11 +190,9 @@ export default class Orders extends Component {
           titles={titles}
           rows={sellOrders}
           rowRender={(row, index) => (
-            isMobile &&  <RowMobile
-              key={index}
-              orderId={orderId}
-              row={row}
-            /> || <Row
+            <Row
+              sendRequest={this.sendRequest}
+              removeOrder={this.removeOrder}
               key={index}
               orderId={orderId}
               row={row}
@@ -189,11 +219,9 @@ export default class Orders extends Component {
           titles={titles}
           rows={buyOrders}
           rowRender={(row, index) => (
-            isMobile &&  <RowMobile
-              key={index}
-              orderId={orderId}
-              row={row}
-            /> || <Row
+            <Row
+              sendRequest={this.sendRequest}
+              removeOrder={this.removeOrder}
               key={index}
               orderId={orderId}
               row={row}

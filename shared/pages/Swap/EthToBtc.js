@@ -203,7 +203,6 @@ export default class EthToBtc extends Component {
                         }
                       </strong>
                     </div>
-                }
                     <br />
                     <Fragment>
                       { flow.btcScriptValues &&
