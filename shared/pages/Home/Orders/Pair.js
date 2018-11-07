@@ -156,7 +156,7 @@ export default class Pair {
       ticker,
       type,
       price: baseAmount.div(mainAmount),
-      amount: baseAmount,
+      amount: mainAmount,
     })
   }
 
