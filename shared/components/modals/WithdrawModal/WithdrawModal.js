@@ -97,9 +97,7 @@ export default class WithdrawModal extends React.Component {
 
     return (
       <Modal name={name} title={`Withdraw ${data.currency.toUpperCase()}`}>
-        <p
-          style={{ fontSize: '16px' }}
-        >
+        <p style={{ fontSize: '16px' }}>
           {`Please notice, that you need to have minimum ${minAmount[data.currency.toLowerCase()]} amount `}
           <br />
           of the {data.currency} on your wallet, to use it for miners fee
@@ -128,7 +126,6 @@ export default class WithdrawModal extends React.Component {
         }
         <Button styleName="button" brand fullWidth disabled={isDisabled} onClick={this.handleSubmit}>
           <FormattedMessage id="WithdrawModal111" defaultMessage="Transfer" />
-          {minAmount[data.currency.toLowerCase()]}
         </Button>
       </Modal>
     )

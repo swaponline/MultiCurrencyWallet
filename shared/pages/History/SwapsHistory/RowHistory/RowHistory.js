@@ -67,27 +67,15 @@ const RowHistory = ({ row }) => {
       </td>
       <td>
         {
-          btcScriptValues && !isRefunded && !isFinished ? (
+          values && !isRefunded && !isFinished ? (
             <Timer
-              lockTime={btcScriptValues.lockTime * 1000}
+              lockTime={values.lockTime * 1000}
               enabledButton={() => {}}
             />
           ) : (
             <FormattedMessage id="RowHistory76" defaultMessage="Refund not available">
               {message => <span>{message}</span>}
             </FormattedMessage>
-          )
-        },
-        {
-          ltcScriptValues && !isRefunded && !isFinished ? (
-            <Timer
-              lockTime={ltcScriptValues.lockTime * 1000}
-              enabledButton={() => {}}
-            />
-          ) : (
-            <span>
-              <FormattedMessage id="RowMhistory49" defaultMessage="Refund not available" />
-            </span>
           )
         }
       </td>

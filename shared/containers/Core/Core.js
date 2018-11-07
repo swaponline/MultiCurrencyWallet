@@ -43,10 +43,14 @@ export default class Core extends Component {
       this.updateOrders()
       console.log('swap app', SwapApp)
 
+      SwapApp.services.room
+        .on('request partial closure', this.createOrder)
+
       SwapApp.services.room.connection
         .on('peer joined', actions.ipfs.userJoined)
         .on('peer left', actions.ipfs.userLeft)
         .on('accept swap request', this.updateOrders)
+        .on('request partial closure', this.createOrder)
         .on('decline swap request', this.updateOrders)
 
       setTimeout(() => {
@@ -64,6 +68,13 @@ export default class Core extends Component {
       orders,
     }))
     actions.core.updateCore(orders)
+  }
+
+  createOrder = async ({ fromPeer, order, ...rest }) => {
+    console.log('rest', ...rest)
+    const creatingOrder = await actions.core.createOrder(order)
+
+    actions.core.requestToPeer('accept request', fromPeer, { orderId: creatingOrder.id })
   }
 
   render() {

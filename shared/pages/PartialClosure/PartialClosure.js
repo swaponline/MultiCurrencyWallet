@@ -1,0 +1,171 @@
+import React, { Component, Fragment } from 'react'
+
+import Link from 'sw-valuelink'
+import { links } from 'helpers'
+
+import { connect } from 'redaction'
+import actions from 'redux/actions'
+import { BigNumber } from 'bignumber.js'
+
+import SelectGroup from './SelectGroup/SelectGroup'
+import { Button } from 'components/controls'
+import { Redirect } from 'react-router-dom'
+
+
+const filterIsPartial = (orders) => orders
+  .filter(order => order.isPartialClosure)
+
+@connect(({ currencies, core: { orders } }) => ({
+  currencies: currencies.items,
+  orders: filterIsPartial(orders),
+}))
+export default class PartialClosure extends Component {
+
+  static defaultProps = {
+    orders: [],
+  }
+
+  constructor() {
+    super()
+
+    this.state = {
+      haveCurrency: 'btc',
+      getCurrency: 'eth',
+      haveAmount: '',
+      getAmount: '',
+      peer: '',
+      type: 'SELL',
+      filteredOrders: [],
+      isNonOffers: false,
+    }
+  }
+
+  static getDerivedStateFromProps({ orders }, { haveCurrency, type, filteredOrders }) {
+    if (!Array.isArray(orders)) { return }
+
+    switch (type) {
+      case 'SELL': {
+        filteredOrders = orders.filter(order => order.sellCurrency === haveCurrency.toUpperCase())
+        break
+      }
+
+      case 'BUY': {
+        filteredOrders = orders.filter(order => order.buyCurrency === haveCurrency.toUpperCase())
+        break
+      }
+
+      default: {
+        break
+      }
+    }
+
+    return {
+      filteredOrders,
+    }
+  }
+
+  sendRequest = () => {
+    const { getAmount, haveAmount, haveCurrency, getCurrency, peer, orderId } = this.state
+
+    console.log('getAmount', getAmount)
+    console.log('haveAmount', haveAmount)
+    console.log('peer', peer)
+    console.log('orderId', orderId)
+
+    if (!String(getAmount) || !peer || !orderId || !String(haveAmount)) {
+      return
+    }
+
+    const order = {
+      buyCurrency: getCurrency,
+      sellCurrency: haveCurrency,
+      sellAmount: haveAmount,
+      buyAmount: getAmount,
+    }
+
+    actions.core.requestToPeer('request partial closure', peer, { order, orderId }, (orderId) => {
+      console.log('orderId', orderId)
+
+      if (orderId) {
+        actions.core.sendRequest(orderId, (isAccept) => {
+          if (isAccept) {
+            this.setState(() => ({
+              redirect: true,
+              orderId,
+            }))
+          }
+        })
+      }
+    })
+  }
+
+  setAmount = (value) => {
+    this.setState(() => ({ haveAmount: new BigNumber(String(value)) }))
+
+    const { filteredOrders } = this.state
+
+    console.log('value', value)
+    console.log('filteredOrders', filteredOrders)
+
+    if (filteredOrders.length === 0) {
+      this.setState(() => ({ isNonOffers: true }))
+      return
+    }
+
+    const sortedOrder = filteredOrders.sort((a, b) => a.exchangeRate - b.exchangeRate)
+    const exRate = new BigNumber(String(sortedOrder[0].exchangeRate))
+
+    console.log('exRate', exRate)
+    console.log('sortedOrder', sortedOrder)
+
+    this.setState(() => ({
+      isNonOffers: false,
+      getAmount: exRate.multipliedBy(new BigNumber(String(value))),
+      peer: sortedOrder[0].owner.peer,
+      orderId: sortedOrder[0].id,
+    }))
+  }
+
+  render() {
+    const { currencies } = this.props
+    const { haveCurrency, getCurrency, isNonOffers, redirect, orderId } = this.state
+
+    const linked = Link.all(this, 'haveAmount', 'getAmount')
+
+    console.log('state', this.state)
+
+    if (redirect) {
+      return <Redirect push to={`${links.swap}/${getCurrency}-${haveCurrency}/${orderId}`} />
+    }
+
+    return (
+      <Fragment>
+        <h1>Partial Closure</h1>
+        <div style={{ width: '400px', margin: '0 auto' }}>
+          <SelectGroup
+            inputValueLink={linked.haveAmount.pipe(this.setAmount)}
+            selectedValue={haveCurrency}
+            onSelect={({ value }) => this.setState(() => ({ haveCurrency: value }))}
+            label="You have"
+            placeholder="Enter amount"
+            currencies={currencies}
+          />
+          <SelectGroup
+            inputValueLink={linked.getAmount}
+            selectedValue={getCurrency}
+            onSelect={({ value }) => this.setState(() => ({ getCurrency: value }))}
+            label="You get"
+            disabled
+            currencies={currencies}
+          />
+          {
+            isNonOffers && (<p style={{ color: 'red' }}>No offers </p>)
+          }
+          <Button brand fullWidth onClick={this.sendRequest} disabled={isNonOffers}>
+            Start
+          </Button>
+        </div>
+      </Fragment>
+    )
+  }
+}
