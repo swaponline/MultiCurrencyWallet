@@ -25,12 +25,14 @@
     "build:mainnet": "npm run clean:mainnet && cross-env DEBUG=app:* CONFIG=mainnet.prod node ./bin/compile",
     "build:testnet-local": "npm run clean:testnet-local && cross-env DEBUG=app:* CONFIG=testnet-local.prod node ./bin/compile",
     "build:mainnet-local": "npm run clean:mainnet-local && cross-env DEBUG=app:* CONFIG=mainnet-local.prod node ./bin/compile",
-    "build:chrome-extension-testnet": "npm run clean:chrome-extension && cross-env DEBUG=app:* CONFIG=chrome-extension-testnet.prod node ./bin/compile && npm run copy:chrome-extension && npm run zip:chrome-extension-testnet",
-    "build:chrome-extension-mainnet": "npm run clean:chrome-extension && cross-env DEBUG=app:* CONFIG=chrome-extension-mainnet.prod node ./bin/compile && npm run copy:chrome-extension && npm run zip:chrome-extension-mainnet",
+    "build:chrome-extension-testnet": "npm run clean:chrome-extension && cross-env DEBUG=app:* CONFIG=chrome-extension-testnet.prod node ./bin/compile && npm run copy:chrome-extension && npm run rename-assets-manifest-file && npm run rename-assets-manifest-link && npm run zip:chrome-extension-testnet",
+    "build:chrome-extension-mainnet": "npm run clean:chrome-extension && cross-env DEBUG=app:* CONFIG=chrome-extension-mainnet.prod node ./bin/compile && npm run copy:chrome-extension && npm run rename-assets-manifest-file && npm run rename-assets-manifest-link && npm run zip:chrome-extension-mainnet",
     "test:unit": "mocha --require babel-core/register --require ./test/helpers.js --require ./test/dom.js --require ignore-styles 'src/**/*.spec.js'",
     "test:snapshot": "jest --config ./test/jest.config.json",
     "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls",
-    "messages:extract": "babel-node tools/run messages"
+    "messages:extract": "babel-node tools/run messages",
+    "rename-assets-manifest-file": "rename-files ./build-chrome-extension/application/assets/ 'manifest.json' 'android-manifest.json'",
+    "rename-assets-manifest-link": "replace 'assets/manifest.json' 'assets/android-manifest.json' ./build-chrome-extension/application/index.html"
   },
   "keywords": [],
   "author": "@nikdementev",
@@ -153,6 +155,7 @@
     "rebuild": "^0.1.2",
     "redaction": "^4.2.1",
     "redux": "^4.0.0",
+    "replace": "^1.0.0",
     "reverse": "^4.0.0"
   }
 }
