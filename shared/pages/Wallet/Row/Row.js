@@ -222,7 +222,7 @@ export default class Row extends Component {
               </div>
             )
           }
-          {isMobile && <span styleName="mobileName">{fullName}</span>}
+          <span styleName="mobileName">{fullName}</span>
         </td>
 
         { !isMobile && (
@@ -231,7 +231,7 @@ export default class Row extends Component {
               text={address}
               onCopy={this.handleCopyAddress}
             >
-              <td>
+              <td styleName="yourAddress">
                 {
                   !contractAddress ? (
                     <div styleName="notContractAddress">

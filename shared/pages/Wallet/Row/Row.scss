@@ -116,7 +116,35 @@
   max-width: 124px;
 }
 
+.mobileName {
+  color: #000;
+  display: block;
+  margin-left: -10px;
+  display: none;
+}
+
+.hidden {
+  display: none;
+}
+
+.visible {
+  display: none;
+}
+
+
+@include media-tablet { 
+  .yourAddress {
+    display: none;
+  }
+}
+
 @include media-mobile { 
+  .mobileName {
+    display: block;
+  }
+  .yourAddress {
+    display: none;
+  }
   .table_balance-cell {
     min-width: 75px;
   }
@@ -182,19 +210,6 @@
   }
 }
 
-.mobileName {
-  color: #000;
-  display: block;
-  margin-left: -10px;
-}
-
-.hidden {
-  display: none;
-}
-
-.visible {
-  display: none;
-}
 
 
 

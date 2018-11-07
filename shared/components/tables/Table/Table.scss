@@ -261,9 +261,43 @@
 }
 
 
+table.wallet {
+  tr {
+    display: table-row;
+  }
+}
 
 @include media-tablet {
 
+  table {
+    overflow-x: auto;
+  }
+
+  table.wallet {
+    td:nth-child(1) {
+      width: 5%;
+    }
+    td:nth-child(2) {
+      width: 12%;
+    }
+    td:nth-child(3) {
+      width: 18%;
+    }
+    th:last-child {
+      padding-left: 15px;
+    }
+    tr {
+      display: table-row;
+    }
+  }
+  th:nth-child(4) {
+    display: none;
+  }
+  .mobileThead {
+    th:nth-child(4) {
+      display: block;
+    }
+  }
 }
 
 @include media-mobile {
@@ -290,13 +324,11 @@
   }
 
   table.wallet {
-    td {
+    td:nth-child(5) {
       div {
-        button {
-          width: 40px;
-          padding: 1px 7px 2px 7px;
-          margin: 0 1px;
-        }
+        position: absolute;
+        bottom: 0;
+        left: 20px;
       }
     }
 
@@ -334,6 +366,9 @@
           margin-right: 0;
         }
       }
+    }
+    tr {
+      display: block;
     }
   }
   .wallet {
@@ -380,12 +415,6 @@
       box-shadow: none;
       padding: 0 10px;
       align-items: center;
-    }
-    td:nth-child(1) {
-      // a {
-      //   position: absolute;
-      //   top: 10px;
-      // }
     }
     tbody {
       width: 100%;
