@@ -124,11 +124,11 @@ export default class UsdtToEthToken extends Component {
                       <FormattedMessage id="UsdrToEthToken121" defaultMessage="Save the secret key! Otherwise there will be a chance that you&apos;ll lose your money!" />
                     </div>
                     <div>
-                      <FormattedMessage id="UsdrToEthToken124" defaultMessage="Secret Key:" />
+                      <FormattedMessage id="UsdrToEthToken124" defaultMessage="Secret Key: " />
                       <strong>{flow.secret}</strong>
                     </div>
                     <div>
-                      <FormattedMessage id="UsdrToEthToken127" defaultMessage="Secret Hash:" />
+                      <FormattedMessage id="UsdrToEthToken127" defaultMessage="Secret Hash: " />
                       <strong>{flow.secretHash}</strong>
                     </div>
                   </Fragment>
@@ -143,17 +143,17 @@ export default class UsdtToEthToken extends Component {
                     </FormattedMessage>
                     <div>
                       <div>
-                        <FormattedMessage id="UsdrToEthToken141" defaultMessage="Your balance:" />
+                        <FormattedMessage id="UsdrToEthToken141" defaultMessage="Your balance: " />
                         <strong>{flow.balance}</strong>
                         {this.swap.sellCurrency}
                       </div>
                       <div>
-                        <FormattedMessage id="UsdrToEthToken144" defaultMessage="Required balance:" />
+                        <FormattedMessage id="UsdrToEthToken144" defaultMessage="Required balance: " />
                         <strong>{this.swap.sellAmount.toNumber()}</strong>
                         {this.swap.sellCurrency}
                       </div>
                       <div>
-                        <FormattedMessage id="UsdrToEthToken147" defaultMessage="Your address:" />
+                        <FormattedMessage id="UsdrToEthToken147" defaultMessage="Your address: " />
                         {this.swap.flow.myBtcAddress}
                       </div>
 
@@ -187,7 +187,7 @@ export default class UsdtToEthToken extends Component {
                     {
                       flow.usdtFundingTransactionHash && (
                         <div>
-                          <FormattedMessage id="UsdrToEthToken179" defaultMessage="Transaction:" />
+                          <FormattedMessage id="UsdrToEthToken179" defaultMessage="Transaction: " />
                           <strong>
                             <a href={`${config.link.bitpay}/tx/${flow.usdtFundingTransactionHash}`} target="_blank" rel="noopener noreferrer">
                               {flow.usdtFundingTransactionHash}
@@ -244,7 +244,7 @@ export default class UsdtToEthToken extends Component {
               {
                 flow.ethSwapCreationTransactionHash && (
                   <div>
-                    <FormattedMessage id="UsdrToEthToken246" defaultMessage="Transaction:" />
+                    <FormattedMessage id="UsdrToEthToken246" defaultMessage="Transaction: " />
                     <strong>
                       <a href={`${config.link.etherscan}/tx/${flow.ethSwapCreationTransactionHash}`} target="_blank" rel="noopener noreferrer">
                         {flow.ethSwapCreationTransactionHash}
@@ -264,7 +264,7 @@ export default class UsdtToEthToken extends Component {
               {
                 flow.ethSwapWithdrawTransactionHash && (
                   <div>
-                    <FormattedMessage id="UsdrToEthToken271" defaultMessage="Transaction:" />
+                    <FormattedMessage id="UsdrToEthToken271" defaultMessage="Transaction: " />
                     <strong>
                       <a href={`${config.link.etherscan}/tx/${flow.ethSwapWithdrawTransactionHash}`} target="_blank" rel="noreferrer noopener">
                         {flow.ethSwapWithdrawTransactionHash}
@@ -309,7 +309,7 @@ export default class UsdtToEthToken extends Component {
               {
                 flow.refundTransactionHash && (
                   <div>
-                    <FormattedMessage id="UsdrToEthToken320" defaultMessage="Transaction:" />
+                    <FormattedMessage id="UsdrToEthToken320" defaultMessage="Transaction: " />
                     <strong>
                       <a
                         href={`${config.link.bitpay}/tx/${flow.refundTransactionHash}`}

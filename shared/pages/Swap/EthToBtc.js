@@ -140,7 +140,7 @@ export default class EthToBtc extends Component {
                     {
                       flow.signTransactionHash && (
                         <div>
-                          <FormattedMessage id="EthToBtc139" defaultMessage="Transaction:" />
+                          <FormattedMessage id="EthToBtc139" defaultMessage="Transaction: " />
                           <strong>
                             <a
                               href={`${config.link.etherscan}/tx/${flow.signTransactionHash}`}
@@ -184,11 +184,11 @@ export default class EthToBtc extends Component {
                       {message => <h3>{message}</h3>}
                     </FormattedMessage>
                     <div>
-                      <FormattedMessage id="EthToBtc182" defaultMessage="Secret Hash:" />
+                      <FormattedMessage id="EthToBtc182" defaultMessage="Secret Hash: " />
                       <strong>{flow.secretHash}</strong>
                     </div>
                     <div>
-                      <FormattedMessage id="EthToBtc185" defaultMessage="Script address:" />
+                      <FormattedMessage id="EthToBtc185" defaultMessage="Script address: " />
                       <strong>
                         {
                           flow.btcScriptCreatingTransactionHash && (
@@ -203,7 +203,6 @@ export default class EthToBtc extends Component {
                         }
                       </strong>
                     </div>
-                }
                     <br />
                     <Fragment>
                       { flow.btcScriptValues &&
@@ -268,15 +267,15 @@ export default class EthToBtc extends Component {
                     </FormattedMessage>
                     <div>
                       <div>
-                        <FormattedMessage id="EthToBtc264" defaultMessage="Your balance:" />
+                        <FormattedMessage id="EthToBtc264" defaultMessage="Your balance: " />
                         <strong>{flow.balance}</strong> {this.swap.sellCurrency}
                       </div>
                       <div>
-                        <FormattedMessage id="EthToBtc267" defaultMessage="Required balance:" />
+                        <FormattedMessage id="EthToBtc267" defaultMessage="Required balance: " />
                         <strong>{this.swap.sellAmount.toNumber()}</strong> {this.swap.sellCurrency}
                       </div>
                       <div>
-                        <FormattedMessage id="EthToBtc270" defaultMessage="Your address:" />
+                        <FormattedMessage id="EthToBtc270" defaultMessage="Your address: " />
                         {this.swap.flow.myEthAddress}
                       </div>
                       <hr />
@@ -312,7 +311,7 @@ export default class EthToBtc extends Component {
               {
                 flow.ethSwapCreationTransactionHash && (
                   <div>
-                    <FormattedMessage id="EthToBtc305" defaultMessage="Transaction:" />
+                    <FormattedMessage id="EthToBtc305" defaultMessage="Transaction: " />
                     <strong>
                       <a
                         href={`${config.link.etherscan}/tx/${flow.ethSwapCreationTransactionHash}`}
@@ -333,7 +332,7 @@ export default class EthToBtc extends Component {
               {
                 flow.refundTransactionHash && (
                   <div>
-                    <FormattedMessage id="EthToBtc326" defaultMessage="Transaction:" />
+                    <FormattedMessage id="EthToBtc326" defaultMessage="Transaction: " />
                     <strong>
                       <a
                         href={`${config.link.etherscan}/tx/${flow.refundTransactionHash}`}
@@ -375,7 +374,7 @@ export default class EthToBtc extends Component {
               {
                 flow.btcSwapWithdrawTransactionHash && (
                   <div>
-                    <FormattedMessage id="EthToBtc364" defaultMessage="Transaction:" />
+                    <FormattedMessage id="EthToBtc364" defaultMessage="Transaction: " />
                     <strong>
                       <a
                         href={`${config.link.bitpay}/tx/${flow.btcSwapWithdrawTransactionHash}`}
@@ -421,7 +420,7 @@ export default class EthToBtc extends Component {
               {
                 flow.refundTransactionHash && (
                   <div>
-                    <FormattedMessage id="EthToBtc412" defaultMessage="Transaction:" />
+                    <FormattedMessage id="EthToBtc412" defaultMessage="Transaction: " />
                     <strong>
                       <a
                         href={`${config.link.bitpay}/tx/${flow.refundTransactionHash}`}

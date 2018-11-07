@@ -73,11 +73,11 @@ export default class BtcToEos extends Component {
             flow.secret && flow.secretHash &&
             <Fragment>
               <div>
-                <FormattedMessage id="BtcToEos74" defaultMessage="Secret:" />
+                <FormattedMessage id="BtcToEos74" defaultMessage="Secret: " />
                 <strong>{flow.secret.toString('hex')}</strong>
               </div>
               <div>
-                <FormattedMessage id="BtcToEos77" defaultMessage="Hash:" />
+                <FormattedMessage id="BtcToEos77" defaultMessage="Hash: " />
                 <strong>{flow.secretHash.toString('hex')}</strong>
               </div>
             </Fragment>

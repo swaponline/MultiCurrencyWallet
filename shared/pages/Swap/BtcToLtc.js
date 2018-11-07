@@ -148,11 +148,11 @@ export default class BtcToLtc extends Component {
                       <FormattedMessage id="LTCTOBTC147" defaultMessage="Save the secret key! Otherwise there will be a chance you loose your money!" />
                     </div>
                     <div>
-                      <FormattedMessage id="LTCTOBTC150" defaultMessage="Secret Key:" />
+                      <FormattedMessage id="LTCTOBTC150" defaultMessage="Secret Key: " />
                       <strong>{flow.secret}</strong>
                     </div>
                     <div>
-                      <FormattedMessage id="SecretHash" defaultMessage="Secret Hash:" />
+                      <FormattedMessage id="SecretHash" defaultMessage="Secret Hash: " />
                       <strong>{flow.secretHash}</strong>
                     </div>
                   </Fragment>
@@ -167,15 +167,15 @@ export default class BtcToLtc extends Component {
                     </h3>
                     <div>
                       <div>
-                        <FormattedMessage id="balance" defaultMessage="Your balance:" />
+                        <FormattedMessage id="balance" defaultMessage="Your balance: " />
                         <strong>{flow.balance}</strong> {this.swap.sellCurrency}
                       </div>
                       <div>
-                        <FormattedMessage id="Required" defaultMessage="Required balance:" />
+                        <FormattedMessage id="Required" defaultMessage="Required balance: " />
                         <strong>{this.swap.sellAmount.toNumber()}</strong> {this.swap.sellCurrency}
                       </div>
                       <div>
-                        <FormattedMessage id="address" defaultMessage="Your address:" />
+                        <FormattedMessage id="address" defaultMessage="Your address: " />
                         {this.swap.flow.myBtcAddress}
                       </div>
                       <hr />
@@ -208,7 +208,7 @@ export default class BtcToLtc extends Component {
                     {
                       flow.btcScriptCreatingTransactionHash && (
                         <div>
-                          <FormattedMessage id="Transaction" defaultMessage="Transacrion: " />
+                          <FormattedMessage id="Transaction" defaultMessage="Transaction: " />
                           <strong>
                             <a
                               href={`${config.link.bitpay}/tx/${flow.btcScriptCreatingTransactionHash}`}
@@ -283,7 +283,7 @@ export default class BtcToLtc extends Component {
                       <strong>{flow.secretHash}</strong>
                     </div>
                     <div>
-                      <FormattedMessage id="Scriptaddress:" defaultMessage="Script address:" />
+                      <FormattedMessage id="Scriptaddress:" defaultMessage="Script address: " />
                       <strong>
                         {
                           flow.ltcSwapCreationTransactionHash && (
@@ -341,7 +341,7 @@ export default class BtcToLtc extends Component {
               {
                 flow.ltcSwapWithdrawTransactionHash && (
                   <div>
-                    <FormattedMessage id="Transaction" defaultMessage="Transaction" />
+                    <FormattedMessage id="Transaction" defaultMessage="Transaction: " />
                     <strong>
                       <a
                         href={`${config.link.ltc}/tx/${flow.ltcSwapWithdrawTransactionHash}`}
@@ -390,7 +390,7 @@ export default class BtcToLtc extends Component {
               {
                 flow.refundTransactionHash && (
                   <div>
-                    <FormattedMessage id="Transaction" defaultMessage="Transaction" />
+                    <FormattedMessage id="Transaction" defaultMessage="Transaction: " />
                     <strong>
                       <a
                         href={`${config.link.bitpay}/tx/${flow.refundTransactionHash}`}

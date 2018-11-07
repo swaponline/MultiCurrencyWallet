@@ -141,7 +141,7 @@ export default class EthToLtc extends Component {
                     {
                       flow.signTransactionHash && (
                         <div>
-                          <FormattedMessage id="EthToLtc139" defaultMessage="Transaction:" />
+                          <FormattedMessage id="EthToLtc139" defaultMessage="Transaction: " />
                           <strong>
                             <a
                               href={`${config.link.etherscan}/tx/${flow.signTransactionHash}`}
@@ -184,11 +184,11 @@ export default class EthToLtc extends Component {
                       {message => <h3>{message}</h3>}
                     </FormattedMessage>
                     <div>
-                      <FormattedMessage id="EthToLtc182" defaultMessage="Secret Hash:" />
+                      <FormattedMessage id="EthToLtc182" defaultMessage="Secret Hash: " />
                       <strong>{flow.secretHash}</strong>
                     </div>
                     <div>
-                      <FormattedMessage id="EthToLtc185" defaultMessage="Script address:" />
+                      <FormattedMessage id="EthToLtc185" defaultMessage="Script address: " />
                       <strong>
                         {
                           flow.ltcScriptCreatingTransactionHash && (
@@ -267,15 +267,15 @@ export default class EthToLtc extends Component {
                     </FormattedMessage>
                     <div>
                       <div>
-                        <FormattedMessage id="EthToLtc264" defaultMessage="Your balance:" />
+                        <FormattedMessage id="EthToLtc264" defaultMessage="Your balance: " />
                         <strong>{flow.balance}</strong> {this.swap.sellCurrency}
                       </div>
                       <div>
-                        <FormattedMessage id="EthToLtc267" defaultMessage="Required balance:" />
+                        <FormattedMessage id="EthToLtc267" defaultMessage="Required balance: " />
                         <strong>{this.swap.sellAmount.toNumber()}</strong> {this.swap.sellCurrency}
                       </div>
                       <div>
-                        <FormattedMessage id="EthToLtc270" defaultMessage="Your address:" />
+                        <FormattedMessage id="EthToLtc270" defaultMessage="Your address: " />
                         {this.swap.flow.myEthAddress}
                       </div>
                       <hr />
@@ -311,7 +311,7 @@ export default class EthToLtc extends Component {
               {
                 flow.ethSwapCreationTransactionHash && (
                   <div>
-                    <FormattedMessage id="EthToLtc305" defaultMessage="Transaction:" />
+                    <FormattedMessage id="EthToLtc305" defaultMessage="Transaction: " />
                     <strong>
                       <a
                         href={`${config.link.etherscan}/tx/${flow.ethSwapCreationTransactionHash}`}
@@ -332,7 +332,7 @@ export default class EthToLtc extends Component {
               {
                 flow.refundTransactionHash && (
                   <div>
-                    <FormattedMessage id="EthToLtc326" defaultMessage="Transaction:" />
+                    <FormattedMessage id="EthToLtc326" defaultMessage="Transaction: " />
                     <strong>
                       <a
                         href={`${config.link.etherscan}/tx/${flow.refundTransactionHash}`}
@@ -372,7 +372,7 @@ export default class EthToLtc extends Component {
               {
                 flow.ltcSwapWithdrawTransactionHash && (
                   <div>
-                    <FormattedMessage id="EthToLtc364" defaultMessage="Transaction:" />
+                    <FormattedMessage id="EthToLtc364" defaultMessage="Transaction: " />
                     <strong>
                       <a href={`${config.link.ltc}/tx/${flow.ltcSwapWithdrawTransactionHash}`} target="_blank" rel="noopener noreferrer" >
                         {flow.ltcSwapWithdrawTransactionHash}
@@ -417,7 +417,7 @@ export default class EthToLtc extends Component {
               {
                 flow.refundTransactionHash && (
                   <div>
-                    <FormattedMessage id="EthToLtc412" defaultMessage="Transaction:" />
+                    <FormattedMessage id="EthToLtc412" defaultMessage="Transaction: " />
                     <strong>
                       <a
                         href={`${config.link.ltc}/tx/${flow.refundTransactionHash}`}

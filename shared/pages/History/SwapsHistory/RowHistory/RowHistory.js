@@ -77,7 +77,7 @@ const RowHistory = ({ row }) => {
               {message => <span>{message}</span>}
             </FormattedMessage>
           )
-        },
+        }
         {
           ltcScriptValues && !isRefunded && !isFinished ? (
             <Timer

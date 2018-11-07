@@ -117,11 +117,11 @@ export default class BtcToEthToken extends Component {
                       {message => <div>{message}</div>}
                     </FormattedMessage>
                     <div>
-                      <FormattedMessage id="BtcToEthToken117" defaultMessage="Secret Key:" />
+                      <FormattedMessage id="BtcToEthToken117" defaultMessage="Secret Key: " />
                       <strong>{flow.secret}</strong>
                     </div>
                     <div>
-                      <FormattedMessage id="BtcToEthToken120" defaultMessage="Secret Hash:" />
+                      <FormattedMessage id="BtcToEthToken120" defaultMessage="Secret Hash: " />
                       <strong>{flow.secretHash}</strong>
                     </div>
                   </Fragment>
@@ -135,13 +135,13 @@ export default class BtcToEthToken extends Component {
                       {message => <h3>{message}</h3>}
                     </FormattedMessage>
                     <div>
-                      <FormattedMessage id="BtcToEthToken134" defaultMessage="Your balance:">
+                      <FormattedMessage id="BtcToEthToken134" defaultMessage="Your balance: ">
                         {message => <div>{message}<strong>{flow.balance}</strong> {this.swap.sellCurrency}</div>}
                       </FormattedMessage>
                       <FormattedMessage id="BtcToEthToken137" defaultMessage="Required balance:">
                         {message => <div>{message}<strong>{this.swap.sellAmount.toNumber()}</strong> {this.swap.sellCurrency}</div>}
                       </FormattedMessage>
-                      <FormattedMessage id="BtcToEthToken140" defaultMessage="Your address:">
+                      <FormattedMessage id="BtcToEthToken140" defaultMessage="Your address: ">
                         {message => <div>{message}{this.swap.flow.myBtcAddress}</div>}
                       </FormattedMessage>
                       <hr />
@@ -174,8 +174,7 @@ export default class BtcToEthToken extends Component {
                     {
                       flow.btcScriptCreatingTransactionHash && (
                         <div>
-                          <FormattedMessage id="BtcToEthToken172" defaultMessage="Transaction" />
-                          Transaction:
+                          <FormattedMessage id="BtcToEthToken172" defaultMessage="Transaction: " />
                           <strong>
                             <a
                               href={`${config.link.bitpay}/tx/${flow.btcScriptCreatingTransactionHash}`}
@@ -235,7 +234,7 @@ export default class BtcToEthToken extends Component {
               {
                 flow.ethSwapCreationTransactionHash && (
                   <div>
-                    <FormattedMessage id="BtcToEthToken243" defaultMessage="Transaction:" />
+                    <FormattedMessage id="BtcToEthToken243" defaultMessage="Transaction: " />
                     <strong>
                       <a
                         href={`${config.link.etherscan}/tx/${flow.ethSwapCreationTransactionHash}`}
@@ -259,7 +258,7 @@ export default class BtcToEthToken extends Component {
               {
                 flow.ethSwapWithdrawTransactionHash && (
                   <div>
-                    <FormattedMessage id="BtcToEthToken267" defaultMessage="Transaction:" />
+                    <FormattedMessage id="BtcToEthToken267" defaultMessage="Transaction: " />
                     <strong>
                       <a
                         href={`${config.link.etherscan}/tx/${flow.ethSwapWithdrawTransactionHash}`}
@@ -308,7 +307,7 @@ export default class BtcToEthToken extends Component {
               {
                 flow.refundTransactionHash && (
                   <div>
-                    <FormattedMessage id="BtcToEthToken316" defaultMessage="Transaction:" />
+                    <FormattedMessage id="BtcToEthToken316" defaultMessage="Transaction: " />
                     <strong>
                       <a
                         href={`${config.link.bitpay}/tx/${flow.refundTransactionHash}`}

@@ -151,7 +151,7 @@ export default class LtcToBtc extends Component {
                     {
                       flow.signTransactionHash && (
                         <div>
-                          <FormattedMessage id="Transaction" defaultMessage="Transaction" />
+                          <FormattedMessage id="Transaction" defaultMessage="Transaction: " />
                           <strong>
                             <a
                               href={`${config.link.ltc}/tx/${flow.signTransactionHash}`}
@@ -194,11 +194,11 @@ export default class LtcToBtc extends Component {
                       <FormattedMessage id="LTCTOBTC191" defaultMessage="3. Bitcoin Script created and charged. Please check the information below" />
                     </h3>
                     <div>
-                      <FormattedMessage id="SecretHash" defaultMessage="Secret Hash:" />
+                      <FormattedMessage id="SecretHash" defaultMessage="Secret Hash: " />
                       <strong>{flow.secretHash}</strong>
                     </div>
                     <div>
-                      <FormattedMessage id="Scriptaddress" defaultMessage="Script address:" />
+                      <FormattedMessage id="Scriptaddress" defaultMessage="Script address: " />
                       <strong>
                         {
                           flow.btcScriptCreatingTransactionHash && (
@@ -272,15 +272,15 @@ export default class LtcToBtc extends Component {
                     </h3>
                     <div>
                       <div>
-                        <FormattedMessage id="balance" defaultMessage="Your balance:" />
+                        <FormattedMessage id="balance" defaultMessage="Your balance: " />
                         <strong>{flow.balance}</strong> {this.swap.sellCurrency}
                       </div>
                       <div>
-                        <FormattedMessage id="Required" defaultMessage="Required balance:" />
+                        <FormattedMessage id="Required" defaultMessage="Required balance: " />
                         <strong>{this.swap.sellAmount.toNumber()}</strong> {this.swap.sellCurrency}
                       </div>
                       <div>
-                        <FormattedMessage id="address" defaultMessage="Your address:" />
+                        <FormattedMessage id="address" defaultMessage="Your address: " />
                         {this.swap.flow.myLtcAddress}
                       </div>
                       <hr />
@@ -316,7 +316,7 @@ export default class LtcToBtc extends Component {
               {
                 flow.ltcSwapCreationTransactionHash && (
                   <div>
-                    <FormattedMessage id="Transaction" defaultMessage="Transaction" />
+                    <FormattedMessage id="Transaction" defaultMessage="Transaction: " />
                     <strong>
                       <a
                         href={`${config.link.ltc}/tx/${flow.ltcSwapCreationTransactionHash}`}
@@ -337,7 +337,7 @@ export default class LtcToBtc extends Component {
               {
                 flow.refundTransactionHash && (
                   <div>
-                    <FormattedMessage id="Transaction" defaultMessage="Transaction" />
+                    <FormattedMessage id="Transaction" defaultMessage="Transaction: " />
                     <strong>
                       <a
                         href={`${config.link.ltc}/tx/${flow.refundTransactionHash}`}
@@ -377,7 +377,7 @@ export default class LtcToBtc extends Component {
               {
                 flow.btcSwapWithdrawTransactionHash && (
                   <div>
-                    <FormattedMessage id="Transaction" defaultMessage="Transaction" />
+                    <FormattedMessage id="Transaction" defaultMessage="Transaction: " />
                     <strong>
                       <a
                         href={`${config.link.bitpay}/tx/${flow.btcSwapWithdrawTransactionHash}`}
@@ -426,7 +426,7 @@ export default class LtcToBtc extends Component {
               {
                 flow.refundTransactionHash && (
                   <div>
-                    <FormattedMessage id="Transaction" defaultMessage="Transaction:" />
+                    <FormattedMessage id="Transaction" defaultMessage="Transaction: " />
                     <strong>
                       <a
                         href={`${config.link.bitpay}/tx/${flow.refundTransactionHash}`}

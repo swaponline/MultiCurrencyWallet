@@ -28,7 +28,7 @@ export default class Row extends Component {
         </td>
         <td>
           <span>
-            <FormattedMessage id="Row30" defaultMessage="Exchange" />
+            <FormattedMessage id="Row30" defaultMessage="Exchange " />
             {from.toUpperCase()}/{to.toUpperCase()}
           </span>
         </td>
