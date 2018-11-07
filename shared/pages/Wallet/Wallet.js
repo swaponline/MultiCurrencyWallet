@@ -95,7 +95,7 @@ export default class Wallet extends Component {
     const showSaveKeysModal = !zeroBalance && !keysSaved && !testNetSkip // non-zero balance and no keys saved
 
     return (
-      <section>
+      <section styleName={isMobile ? 'sectionWalletMobile' : 'sectionWallet'}>
         { showSaveKeysModal && <SaveKeysModal /> }
         <PageHeadline>
           <SubTitle>
