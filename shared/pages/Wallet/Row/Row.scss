@@ -30,6 +30,15 @@
   bottom: -20px;
 }
 
+.unconfirmedBalance {
+  font-size: 12px;
+  color: #c9c9c9;
+  span {
+    margin-bottom: -5px;
+    display: block;
+  }
+}
+
 .notContractAddress {
   float: left;
   position: relative;
@@ -103,7 +112,8 @@
 }
 
 .table_balance-cell {
-  min-width: 124px;
+  min-width: 124px; 
+  max-width: 124px;
 }
 
 @include media-mobile { 
@@ -148,8 +158,30 @@
       margin: 0;
       color: #000;
     }
+    .buttonActivate {
+      top: -45px;
+    }
+  }
+  .unconfirmedBalance {
+    position: absolute;
+    right: 0;
+    top: 23px;
+    span {
+      display: inline-block;
+      margin-right: 5px;
+    }
+  }
+  .buttonActivate {
+    position: absolute;
+    right: 0;
+    height: 22px;
+    line-height: 0px;
+    font-size: 10px!important;
+    top: -47px;
+    left: 103px;
   }
 }
+
 .mobileName {
   color: #000;
   display: block;

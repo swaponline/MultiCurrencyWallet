@@ -195,16 +195,16 @@ export default class Row extends Component {
                 { currency === 'BTC' && unconfirmedBalance !== 0 && (
                   <Fragment>
                     <br />
-                    <span style={{ fontSize: '12px', color: '#c9c9c9' }}>
+                    <span styleName="unconfirmedBalance">
                       <FormattedMessage id="RowWallet181" defaultMessage="Unconfirmed" />
-                      {unconfirmedBalance}
+                      {unconfirmedBalance} {' '}
                     </span>
                   </Fragment>
                 ) }
                 { currency === 'LTC' && unconfirmedBalance !== 0 && (
                   <Fragment>
                     <br />
-                    <span style={{ fontSize: '12px', color: '#c9c9c9' }}>
+                    <span styleName="unconfirmedBalance">
                       <FormattedMessage id="RowWallet189" defaultMessage="Unconfirmed" />
                       {unconfirmedBalance}
                     </span>
@@ -213,9 +213,9 @@ export default class Row extends Component {
                 { currency === 'USDT' && unconfirmedBalance !== 0 && (
                   <Fragment>
                     <br />
-                    <span style={{ fontSize: '12px', color: '#c9c9c9' }}>
+                    <span styleName="unconfirmedBalance">
                       <FormattedMessage id="RowWallet197" defaultMessage="Unconfirmed" />
-                      {unconfirmedBalance}
+                      {unconfirmedBalance} 
                     </span>
                   </Fragment>
                 ) }
@@ -275,7 +275,6 @@ export default class Row extends Component {
                 }
 
                 {
-
                   currency === 'EOS' && !eosAccountActivated && <button styleName="button buttonActivate" onClick={this.handleEosBuyAccount} data-tip data-for="Activate">Activate</button>
                 }
                 <ReactTooltip id="Activate" type="light" effect="solid">
@@ -306,13 +305,6 @@ export default class Row extends Component {
         ) }
         <td>
           <div>
-            <WithdrawButton onClick={this.handleWithdraw} datatip="Send your currency" styleName="marginRight" disabled={isBalanceEmpty}>
-              <i className="fas fa-arrow-alt-circle-right" />
-              <span>
-                <FormattedMessage id="Row305" defaultMessage="Send" />
-              </span>
-              <ReactTooltip type="light" effect="solid" />
-            </WithdrawButton>
             { isMobile && (
               <WithdrawButton onClick={this.handleReceive} styleName="marginRight">
                 <i className="fas fa-qrcode" />
@@ -321,6 +313,13 @@ export default class Row extends Component {
                 </span>
               </WithdrawButton>
             )}
+            <WithdrawButton onClick={this.handleWithdraw} datatip="Send your currency" styleName="marginRight" disabled={isBalanceEmpty}>
+              <i className="fas fa-arrow-alt-circle-right" />
+              <span>
+                <FormattedMessage id="Row305" defaultMessage="Send" />
+              </span>
+              <ReactTooltip type="light" effect="solid" />
+            </WithdrawButton>
             {
               tradeAllowed && (
                 <WithdrawButton datatip="Swap your currency or create order to swap" onClick={() => this.handleGoTrade(currency)} disabled={isBalanceEmpty}>
@@ -332,7 +331,12 @@ export default class Row extends Component {
                 </WithdrawButton>
               )
             }
+            {
+              isMobile && (currency === 'EOS' && !eosAccountActivated && <button styleName="button buttonActivate" onClick={this.handleEosBuyAccount} data-tip data-for="Activate">Activate</button>)
+            }
           </div>
+
+   
         </td>
       
       </tr>
