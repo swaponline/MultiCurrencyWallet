@@ -28,13 +28,13 @@ export default class Row extends Component {
         </td>
         <td>
           <span>
-            <FormattedMessage id="Row30" defaultMessage="Exchange" />
+            <FormattedMessage id="Row30" defaultMessage="Exchange " />
             {from.toUpperCase()}/{to.toUpperCase()}
           </span>
         </td>
         <td>
           <Link styleName="button" to={`${links.home}${from.toLowerCase()}-${to.toLowerCase()}`}>
-            <FormattedMessage id="Row35" defaultMessage="Exchange" />
+            <FormattedMessage id="Row35" defaultMessage="Exchange " />
           </Link>
         </td>
       </tr>
