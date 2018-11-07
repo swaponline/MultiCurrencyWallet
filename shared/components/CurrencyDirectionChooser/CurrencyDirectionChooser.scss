@@ -37,7 +37,7 @@
   align-items: center;
 }
 
-.button {
+.formRow > button {
   margin-left: 80px;
 }
 
@@ -84,7 +84,7 @@
     left: auto;
     right: -15px;
   }
-  .button {
+  .formRow > button {
     position: absolute;
     bottom: -90px;
     width: 100%;
