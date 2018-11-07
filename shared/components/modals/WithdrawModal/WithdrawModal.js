@@ -119,7 +119,6 @@ export default class WithdrawModal extends React.Component {
         }
         <Button styleName="button" brand fullWidth disabled={isDisabled} onClick={this.handleSubmit}>
           <FormattedMessage id="WithdrawModal111" defaultMessage="Transfer" />
-          {minAmount[data.currency.toLowerCase()]}
         </Button>
       </Modal>
     )
