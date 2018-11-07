@@ -42,5 +42,20 @@
 
 .content {
   padding: 15px 25px;
-  font-size: 18px;
+  font-size: 20px;
+}
+
+.ErrorNotification {
+    background-color:var(--light);
+    color: var(--danger);
+    position: fixed;
+    bottom: 100;
+    right: 0;
+    padding: 20px 15px 10px 15px;
+    z-index: 5;
+    border-radius: 4px;
+
+     p {
+      margin-bottom: 20px;
+    }
 }
