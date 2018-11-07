@@ -41,22 +41,12 @@ export default class WithdrawModal extends React.Component {
     amount: '',
   }
 
-  componentWillMount() {
-    this.setBalanceOnState(this.props.data.currency)
-  }
-
-  setBalanceOnState = async (currency) => {
-    const balance = await actions[currency.toLowerCase()].getBalance(currency.toLowerCase())
-    this.setState(() => ({ balance }))
-  }
-
   handleSubmit = () => {
     const { address: to, amount } = this.state
     const { data: { currency, contractAddress, address, balance, decimals }, name } = this.props
 
     this.setState(() => ({ isShipped: true }))
 
-    this.setBalanceOnState(currency)
     this.setState(() => ({ isShipped: true }))
 
     if (!to || !amount || amount < minAmount[currency.toLowerCase()] || amount > balance) {
@@ -70,7 +60,6 @@ export default class WithdrawModal extends React.Component {
       .then(() => {
         actions.loader.hide()
         actions[currency.toLowerCase()].getBalance(currency)
-        this.setBalanceOnState(currency)
 
         actions.notifications.show(constants.notifications.SuccessWithdraw, {
           amount,
@@ -84,8 +73,10 @@ export default class WithdrawModal extends React.Component {
   }
 
   render() {
-    const { isSubmitted, address, amount, balance, isShipped } = this.state
+    const { isSubmitted, address, amount, isShipped } = this.state
     const { name, data } = this.props
+
+    const { balance } = data
 
     const linked = Link.all(this, 'address', 'amount')
     const isDisabled = !address || !amount || isShipped

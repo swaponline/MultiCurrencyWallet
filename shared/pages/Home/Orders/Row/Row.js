@@ -59,9 +59,6 @@ export default class Row extends Component {
 
     const { price, amount, total, main, base, type } = pair
 
-    console.log("PROPS", this.props)
-
-
     if (this.state.redirect) {
       return <Redirect push to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`} />
     }
