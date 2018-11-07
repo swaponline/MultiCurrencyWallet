@@ -34,6 +34,8 @@ export default class SwapComponent extends PureComponent {
       const swap = new Swap(orderId)
       const SwapComponent = swapComponents[swap.flow._flowName]
 
+      window.swap = swap
+
       this.setState({
         SwapComponent,
         swap,
