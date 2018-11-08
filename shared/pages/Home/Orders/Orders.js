@@ -190,7 +190,11 @@ export default class Orders extends Component {
           titles={titles}
           rows={sellOrders}
           rowRender={(row, index) => (
-            <Row
+            isMobile &&  <RowMobile
+            key={index}
+              orderId={orderId}
+              row={row}
+            /> || <Row
               sendRequest={this.sendRequest}
               removeOrder={this.removeOrder}
               key={index}
@@ -219,7 +223,11 @@ export default class Orders extends Component {
           titles={titles}
           rows={buyOrders}
           rowRender={(row, index) => (
-            <Row
+            isMobile &&  <RowMobile
+            key={index}
+              orderId={orderId}
+              row={row}
+            /> || <Row
               sendRequest={this.sendRequest}
               removeOrder={this.removeOrder}
               key={index}
