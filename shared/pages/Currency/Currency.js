@@ -99,7 +99,7 @@ export default class Currency extends Component {
             <SubTitle>{currency.toUpperCase()} Trade</SubTitle>
           </Fragment>
           <div>
-            <FormattedMessage id="Currency101" defaultMessage="Balance:" />
+            <FormattedMessage id="Currency101" defaultMessage="Balance: " />
             <span>{(String(balance).length > 5 ? balance.toFixed(5) : balance) || 0} {currency}</span>
           </div>
           <Toggle onChange={this.handleInWalletChange} checked={this.isInWallet()} />Added to Wallet

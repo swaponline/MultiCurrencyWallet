@@ -48,8 +48,8 @@ const getBalance = () => {
 
   return request.get(`${api.getApiServer('bitpay')}/addr/${address}`)
     .then(({ balance, unconfirmedBalance }) => {
-      console.log('BTC Balance:', balance)
-      console.log('BTC unconfirmedBalance Balance:', unconfirmedBalance)
+      console.log('BTC Balance: ', balance)
+      console.log('BTC unconfirmedBalance Balance: ', unconfirmedBalance)
       reducers.user.setBalance({ name: 'btcData', amount: balance, unconfirmedBalance })
       return balance
     }, () => Promise.reject())

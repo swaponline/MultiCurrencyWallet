@@ -138,7 +138,7 @@ export default class BtcToEthToken extends Component {
                       <FormattedMessage id="BtcToEthToken134" defaultMessage="Your balance: ">
                         {message => <div>{message}<strong>{flow.balance}</strong> {this.swap.sellCurrency}</div>}
                       </FormattedMessage>
-                      <FormattedMessage id="BtcToEthToken137" defaultMessage="Required balance:">
+                      <FormattedMessage id="BtcToEthToken137" defaultMessage="Required balance: ">
                         {message => <div>{message}<strong>{this.swap.sellAmount.toNumber()}</strong> {this.swap.sellCurrency}</div>}
                       </FormattedMessage>
                       <FormattedMessage id="BtcToEthToken140" defaultMessage="Your address: ">
@@ -218,7 +218,7 @@ export default class BtcToEthToken extends Component {
                       flow.refundTxHex && (
                         <div>
                           <a href="https://wiki.swap.online/faq/my-swap-got-stuck-and-my-bitcoin-has-been-withdrawn-what-to-do/" target="_blank" rel="noopener noreferrer">
-                            <FormattedMessage id="BtcToEthToken207" defaultMessage="How refund your money ?" />
+                            <FormattedMessage id="BtcToEthToken207" defaultMessage="How refund your money? " />
                           </a>
                           Refund hex transaction: <code> {flow.refundTxHex} </code>
                         </div>
