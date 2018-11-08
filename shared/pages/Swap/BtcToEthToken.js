@@ -172,6 +172,16 @@ export default class BtcToEthToken extends Component {
                       {message => <h3>{message}</h3>}
                     </FormattedMessage>
                     {
+                      flow.scriptAddress &&
+                      <a
+                        href={`${config.link.bitpay}/address/${flow.scriptAddress}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Top up BTC Script {flow.scriptAddress}
+                      </a>
+                    }
+                    {
                       flow.btcScriptCreatingTransactionHash && (
                         <div>
                           <FormattedMessage id="BtcToEthToken172" defaultMessage="Transaction: " />

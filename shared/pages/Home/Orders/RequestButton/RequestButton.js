@@ -6,7 +6,7 @@ import PAIR_TYPES from 'helpers/constants/PAIR_TYPES'
 
 
 const RequestButton = ({ disabled, children, data: { type, base, amount, total, main }, move, ...rest  }) =>  (
-  <button styleName={!disabled ? 'button disabled' : 'button'} disabled={!disabled} {...rest}>
+  <button styleName={!disabled ? 'button disabled' : 'button'} {...rest}>
     {
       move ? (
         <React.Fragment>
