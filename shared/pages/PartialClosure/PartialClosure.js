@@ -3,22 +3,27 @@ import React, { Component, Fragment } from 'react'
 import Link from 'sw-valuelink'
 import { links } from 'helpers'
 
+import CSSModules from 'react-css-modules'
+import styles from './PartialClosure.scss'
+
 import { connect } from 'redaction'
 import actions from 'redux/actions'
 import { BigNumber } from 'bignumber.js'
 
 import SelectGroup from './SelectGroup/SelectGroup'
-import { Button } from 'components/controls'
+import { Button, Toggle } from 'components/controls'
 import { Redirect } from 'react-router-dom'
 
 
 const filterIsPartial = (orders) => orders
   .filter(order => order.isPartialClosure)
 
+
 @connect(({ currencies, core: { orders } }) => ({
   currencies: currencies.items,
   orders: filterIsPartial(orders),
 }))
+@CSSModules(styles)
 export default class PartialClosure extends Component {
 
   static defaultProps = {
@@ -34,31 +39,17 @@ export default class PartialClosure extends Component {
       haveAmount: '',
       getAmount: '',
       peer: '',
-      type: 'SELL',
       filteredOrders: [],
       isNonOffers: false,
       isDeclinedOffer: false,
     }
   }
 
-  static getDerivedStateFromProps({ orders }, { haveCurrency, type, filteredOrders }) {
+  static getDerivedStateFromProps({ orders }, { haveCurrency }) {
     if (!Array.isArray(orders)) { return }
 
-    switch (type) {
-      case 'SELL': {
-        filteredOrders = orders.filter(order => order.sellCurrency === haveCurrency.toUpperCase())
-        break
-      }
-
-      case 'BUY': {
-        filteredOrders = orders.filter(order => order.buyCurrency === haveCurrency.toUpperCase())
-        break
-      }
-
-      default: {
-        break
-      }
-    }
+    const filteredOrders = orders.filter(order =>
+      order.sellCurrency === haveCurrency.toUpperCase())
 
     return {
       filteredOrders,
@@ -67,11 +58,6 @@ export default class PartialClosure extends Component {
 
   sendRequest = () => {
     const { getAmount, haveAmount, haveCurrency, getCurrency, peer, orderId } = this.state
-
-    console.log('getAmount', getAmount)
-    console.log('haveAmount', haveAmount)
-    console.log('peer', peer)
-    console.log('orderId', orderId)
 
     if (!String(getAmount) || !peer || !orderId || !String(haveAmount)) {
       return
@@ -132,7 +118,7 @@ export default class PartialClosure extends Component {
 
   render() {
     const { currencies } = this.props
-    const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isDeclinedOffer } = this.state
+    const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isDeclinedOffer, type } = this.state
 
     const linked = Link.all(this, 'haveAmount', 'getAmount')
 
@@ -166,7 +152,7 @@ export default class PartialClosure extends Component {
           {
             isNonOffers && (<p style={{ color: 'red' }}>No offers </p>)
           }
-          <Button brand fullWidth onClick={this.sendRequest} disabled={isNonOffers}>
+          <Button styleName="button" brand fullWidth onClick={this.sendRequest} disabled={isNonOffers}>
             Start
           </Button>
         </div>
