@@ -38,17 +38,26 @@ export default class SaveKeys extends Component {
             </span>
           </ReactTooltip>
           <div styleName="cell" >
+          <Field
+          label={ethData.currency}
+          privateKey={ethData.privateKey.toString()}
+          />
+          <Field
+            label={btcData.currency}
+            privateKey={btcData.privateKey.toString()}
+          />
+          { typeof eosData.masterPrivateKey === 'string' &&
             <Field
-              label={ethData.currency}
-              privateKey={ethData.masterPrivateKey.toString()}
+              label={eosData.currency}
+              privateKey={eosData.masterPrivateKey.toString()}
             />
           }
-            { typeof telosData.activePrivateKey === 'string' &&
-            <Field
-              label={btcData.currency}
-              privateKey={btcData.activePrivateKey.toString()}
+          { typeof telosData.activePrivateKey === 'string' &&
+          <Field
+            label={telosData.currency}
+            privateKey={telosData.activePrivateKey.toString()}
             />
-            }
+          }
           </div>
         </div>
       </div>
