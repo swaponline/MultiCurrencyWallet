@@ -149,34 +149,4 @@ export default {
     decimals: 15,
     fullName: 'Hubiits',
   },
-  trn: {
-    address: '0x08f5a9235b08173b7569f83645d2c7fb55e8ccd8',
-    decimals: 8,
-    fullName: 'Tierion',
-  },
-  view: {
-    address: '0xf03f8d65bafa598611c3495124093c56e8f638f0',
-    decimals: 18,
-    fullName: 'View',
-  },
-  cs: {
-    address: '0x46b9ad944d1059450da1163511069c718f699d31',
-    decimals: 18,
-    fullName: 'Credits',
-  },
-  pix: {
-    address: '0x8eFFd494eB698cc399AF6231fCcd39E08fd20B15',
-    decimals: 0,
-    fullName: 'PIX Token',
-  },
-  dax: {
-    address: '0x543ff227f64aa17ea132bf9886cab5db55dcaddf',
-    decimals: 18,
-    fullName: 'DAO Stack',
-  },
-  data: {
-    address: '0x0cf0ee63788a0849fe5297f3407f701e122cc023',
-    decimals: 18,
-    fullName: 'Streamr DATAcoin',
-  },
 }

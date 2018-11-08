@@ -5,6 +5,9 @@ import TRADE_TICKERS from 'helpers/constants/TRADE_TICKERS'
 import PAIR_TYPES from 'helpers/constants/PAIR_TYPES'
 
 
+console.log('TOKEN_DECIMALS', TOKEN_DECIMALS)
+console.log('TRADE_TICKERS', TRADE_TICKERS)
+
 const PAIR_BID = PAIR_TYPES.BID
 const PAIR_ASK = PAIR_TYPES.ASK
 

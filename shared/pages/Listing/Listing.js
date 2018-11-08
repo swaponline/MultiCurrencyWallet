@@ -11,10 +11,10 @@ import { FormattedMessage } from 'react-intl'
 
 
 const text = [
-  { id: 1, context: `1. We can list your token on swap.online ;` },
-  { id: 2, context: `2. To list your tokens, please send us the link to your peoject, erc20 address, icon, name and ticker (short name) to team@swap.online;` },
-  { id: 3, context: `3. We as well will announce listing of your tokens on our social media, mutial PR will benefit both sides.` },
-  { id: 4, context: `Crypto Pink Sheets: ALL Coins Welcome To SWAP.Online!` },
+  { id: 1, context: `1. We can list your token on swap.online ;`},
+  { id: 2, context: `2. To list your tokens, please send us the link to your peoject, erc20 address, icon, name and ticker (short name) to team@swap.online;`, },
+  { id: 3, context: `3. We as well will announce listing of your tokens on our social media, mutial PR will benefit both sides.`, },
+  { id: 4, context: `Crypto Pink Sheets: ALL Coins Welcome To SWAP.Online!`},
   { id: 5, context: `OTC-approach-crypto market to be opened in Aug, 2018.` },
   { id: 6, context:`There was one company in the U.S. in the year of 1913, the National Quotation Bureau.
     They brought to life very simple idea - to provide every entity with the ability to be quoted freely, without
@@ -34,23 +34,24 @@ const text = [
   <p>
     <FormattedMessage
       id="Listing6"
-      defaultMessage="In SWAP. Online we have noticed that Pink Sheets principles are very close to the initial meaning of cryptocurrencies. Both of them are based on the faith in transparency, decentralization, bilateral responsibility of buyer and seller. As we decided to make the exchange of crypto really " />
+      defaultMessage=
+        "In SWAP. Online we have noticed that Pink Sheets principles are very close to the initial meaning of cryptocurrencies. Both of them are based on the faith in transparency, decentralization, bilateral responsibility of buyer and seller. As we decided to make the exchange of crypto really " />
     <Href tab="https://wiki.swap.online/decentralised_exchanges_2018trends_eng/" >
       <a>
         <FormattedMessage id="Listing4" defaultMessage="safe, rapid and decentralized, we couldn’t go about this another way." />
       </a>
     </Href>
-  </p>,
-  },
+  </p>
+   },
   { id: 10, context:`SWAP.Online will be cryptocurrency Pink Sheets market.` },
-  { id: 11, context:   <img src={ListingImg} styleName="listingImg" alt="Orders book on swap.online" /> },
+  { id: 11, context:   <img src={ListingImg} styleName="listingImg" alt="Orders book on swap.online" />, id:11 },
   { id: 12, context: `It’s well known that even in traditional stock market, one willing to be quoted must meet the requirements of SEC,
     or as far as the OTC Market Group Inc. markets (OTCQX and OTCQB) are concerned, must show the big income and seek the
     support of the influential consulting agencies. Moreover, the information about the company audit must be provided annually
     to the SEC or SEC-approved regulators.` },
   { id: 13, context:`Some of the cryptocurrency ‘fat cats’ allow themselves to do the same. For example, Localbitcoins CEO said they would
     newer list a token of the project with less than USD1B capitalisation. Cryptobridge and some related centralized
-    exchanges ask for the USD 23 thousand (in BTS equivalent) for the token owner to be listed.` },
+    exchanges ask for the USD 23 thousand (in BTS equivalent) for the token owner to be listed.`, id: 13 },
   { id: 14, context: `That is not about us.` },
   { id: 15, context: `As our transactions is peer-to-peer, based on the Atomic Swaps technology, we can add to the balances every token corresponding
     some our criterias. Obviously, clearly fraudulent projects are to be rejected from the very beginning. But all other
