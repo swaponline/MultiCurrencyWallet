@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import SwapApp from 'swap.app'
 import actions from 'redux/actions'
-
+import { getState } from 'redux/core'
 
 export default class Core extends Component {
 
@@ -36,26 +36,36 @@ export default class Core extends Component {
   }
 
   setIpfs = () => {
-    setTimeout(() => {
-      const isOnline = SwapApp.services.room.connection._ipfs.isOnline()
-      const { peer } = SwapApp.services.room
+    const { ipfs } = getState()
 
-      this.updateOrders()
-      console.log('swap app', SwapApp)
+    const setupIPFS = () => {
+      try {
+        if (ipfs.isOnline) return
 
-      SwapApp.services.room.connection
-        .on('peer joined', actions.ipfs.userJoined)
-        .on('peer left', actions.ipfs.userLeft)
-        .on('accept swap request', this.updateOrders)
-        .on('decline swap request', this.updateOrders)
+        const isOnline = SwapApp.services.room.connection._ipfs.isOnline()
+        const { peer } = SwapApp.services.room
 
-      setTimeout(() => {
+        this.updateOrders()
+        console.log('swap app', SwapApp)
+
+        SwapApp.services.room.connection
+          .on('peer joined', actions.ipfs.userJoined)
+          .on('peer left', actions.ipfs.userLeft)
+  
+        clearInterval(ipfsLoadingInterval)
+
         actions.ipfs.set({
           isOnline,
           peer,
         })
-      }, 1000)
-    }, 8000)
+      } catch (err) {
+        console.error('IPFS setup error', err)
+      }
+    }
+
+    SwapApp.services.room.on('ready', setupIPFS)
+
+    const ipfsLoadingInterval = setInterval(setupIPFS, 5000)
   }
 
   updateOrders = () => {
