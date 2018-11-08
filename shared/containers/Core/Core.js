@@ -31,8 +31,6 @@ export default class Core extends Component {
     SwapApp.services.room.connection
       .off('peer joined', actions.ipfs.userJoined)
       .off('peer left', actions.ipfs.userLeft)
-      .off('accept swap request', this.updateOrders)
-      .off('decline swap request', this.updateOrders)
   }
 
   setIpfs = () => {
@@ -40,19 +38,24 @@ export default class Core extends Component {
 
     const setupIPFS = () => {
       try {
+        console.log('ipfs', ipfs)
         if (ipfs.isOnline) return
+
+        if (!SwapApp.services.room.connection) {
+          throw new Error(`SwapRoom not ready`)
+        }
 
         const isOnline = SwapApp.services.room.connection._ipfs.isOnline()
         const { peer } = SwapApp.services.room
 
         this.updateOrders()
-        console.log('swap app', SwapApp)
 
         SwapApp.services.room.connection
           .on('peer joined', actions.ipfs.userJoined)
           .on('peer left', actions.ipfs.userLeft)
-  
+
         clearInterval(ipfsLoadingInterval)
+        console.log('ipfs loaded')
 
         actions.ipfs.set({
           isOnline,
