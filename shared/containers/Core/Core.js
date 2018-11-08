@@ -34,10 +34,10 @@ export default class Core extends Component {
   }
 
   setIpfs = () => {
-    const { ipfs } = getState()
-
     const setupIPFS = () => {
       try {
+        const { ipfs } = getState()
+
         console.log('ipfs', ipfs)
         if (ipfs.isOnline) return
 
