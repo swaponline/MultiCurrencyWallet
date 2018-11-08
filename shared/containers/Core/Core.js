@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 
 import SwapApp from 'swap.app'
 import actions from 'redux/actions'
-import { getState } from 'redux/core'
+import { connect } from 'redaction'
 
+@connect(({ ipfs }) => ({ ipfs }))
 export default class Core extends Component {
 
   state = {
@@ -36,7 +37,7 @@ export default class Core extends Component {
   setIpfs = () => {
     const setupIPFS = () => {
       try {
-        const { ipfs } = getState()
+        const { ipfs } = this.props
 
         console.log('ipfs', ipfs)
         if (ipfs.isOnline) return
