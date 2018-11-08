@@ -143,11 +143,11 @@ export default class BtcToEth extends Component {
                       {message => <div>{message}</div>}
                     </FormattedMessage>
                     <div>
-                      <FormattedMessage id="BtcToEth143" defaultMessage="Secret Key:" />
+                      <FormattedMessage id="BtcToEth143" defaultMessage="Secret Key: " />
                       <strong>{flow.secret}</strong>
                     </div>
                     <div>
-                      <FormattedMessage id="BtcToEth146" defaultMessage="Secret Hash:" />
+                      <FormattedMessage id="BtcToEth146" defaultMessage="Secret Hash: " />
                       <strong>{flow.secretHash}</strong>
                     </div>
                   </Fragment>
@@ -162,16 +162,16 @@ export default class BtcToEth extends Component {
                     </h3>
                     <div>
                       <div>
-                        <FormattedMessage id="BtcToEth160" defaultMessage="Your balance:" />
+                        <FormattedMessage id="BtcToEth160" defaultMessage="Your balance: " />
                         <strong>{flow.balance}</strong> {this.swap.sellCurrency}
                       </div>
                       <div>
-                        <FormattedMessage id="BtcToEth163" defaultMessage="Required balance:" />
+                        <FormattedMessage id="BtcToEth163" defaultMessage="Required balance: " />
                         <strong>{this.swap.sellAmount.toNumber()}</strong> {this.swap.sellCurrency}
                       </div>
                       <div>
                         <div>
-                          <FormattedMessage id="BtcToEth167" defaultMessage="Your address:" />
+                          <FormattedMessage id="BtcToEth167" defaultMessage="Your address: " />
                           {this.swap.flow.myBtcAddress}
                         </div>
                         <hr />
@@ -206,7 +206,7 @@ export default class BtcToEth extends Component {
                     {
                       flow.btcScriptCreatingTransactionHash && (
                         <div>
-                          <FormattedMessage id="BtcToEth199" defaultMessage="Transaction:" />
+                          <FormattedMessage id="BtcToEth199" defaultMessage="Transaction: " />
                           <strong>
                             <a href={`${config.link.bitpay}/tx/${flow.btcScriptCreatingTransactionHash}`} target="_blank" el="noopener noreferrer">
                               {flow.btcScriptCreatingTransactionHash}
@@ -267,7 +267,7 @@ export default class BtcToEth extends Component {
               {
                 flow.ethSwapCreationTransactionHash && (
                   <div>
-                    <FormattedMessage id="BtcToEth266" defaultMessage="Transaction:" />
+                    <FormattedMessage id="BtcToEth266" defaultMessage="Transaction: " />
                     <strong>
                       <a
                         href={`${config.link.etherscan}/tx/${flow.ethSwapCreationTransactionHash}`}
@@ -290,7 +290,7 @@ export default class BtcToEth extends Component {
               {
                 flow.ethSwapWithdrawTransactionHash && (
                   <div>
-                    <FormattedMessage id="BtcToEth289" defaultMessage="Transaction:" />
+                    <FormattedMessage id="BtcToEth289" defaultMessage="Transaction: " />
                     <strong>
                       <a
                         href={`${config.link.etherscan}/tx/${flow.ethSwapWithdrawTransactionHash}`}
@@ -339,7 +339,7 @@ export default class BtcToEth extends Component {
               {
                 flow.refundTransactionHash && (
                   <div>
-                    <FormattedMessage id="BtcToEth338" defaultMessage="Transaction:" />
+                    <FormattedMessage id="BtcToEth338" defaultMessage="Transaction: " />
                     <strong>
                       <a
                         href={`${config.link.bitpay}/tx/${flow.refundTransactionHash}`}

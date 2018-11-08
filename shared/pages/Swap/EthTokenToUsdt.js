@@ -123,7 +123,7 @@ export default class EthTokenToUsdt extends Component {
                     {
                       flow.signTransactionHash && (
                         <div>
-                          <FormattedMessage id="EthTokenToUsdt123" defaultMessage="Transaction:" />
+                          <FormattedMessage id="EthTokenToUsdt123" defaultMessage="Transaction: " />
                           <strong>
                             <a
                               href={`${config.link.etherscan}/tx/${flow.signTransactionHash}`}
@@ -168,11 +168,11 @@ export default class EthTokenToUsdt extends Component {
                     <FormattedMessage id="EthTokenToUsdt166" defaultMessage="3. Bitcoin Omni Script created and charged. Please check the information below">
                       {message => <h3>{message}</h3>}
                     </FormattedMessage>
-                    <FormattedMessage id="EthTokenToUsdt169" defaultMessage="Secret Hash:">
+                    <FormattedMessage id="EthTokenToUsdt169" defaultMessage="Secret Hash: ">
                       {message => <div>{message}<strong>{flow.secretHash}</strong></div>}
                     </FormattedMessage>
                     <div>
-                      <FormattedMessage id="EthTokenToUsdt172" defaultMessage="Script address:" />
+                      <FormattedMessage id="EthTokenToUsdt172" defaultMessage="Script address: " />
                       <strong>
                         {
                           flow.usdtFundingTransactionHash && (
@@ -191,7 +191,7 @@ export default class EthTokenToUsdt extends Component {
                     <Fragment>
                       { flow.usdtScriptValues &&
                         <span onClick={this.toggleBitcoinScript}>
-                          <FormattedMessage id="EthTokenToUsdt192" defaultMessage="Show bitcoin script" />
+                          <FormattedMessage id="EthTokenToUsdt192" defaultMessage="Show bitcoin script " />
                         </span>
                       }
                       { isShowingBitcoinScript && (
@@ -252,15 +252,15 @@ export default class EthTokenToUsdt extends Component {
                     </FormattedMessage>
                     <div>
                       <div>
-                        <FormattedMessage id="EthTokenToUsdt253" defaultMessage="Your balance:" />
+                        <FormattedMessage id="EthTokenToUsdt253" defaultMessage="Your balance: " />
                         <strong>{flow.balance}</strong> {this.swap.sellCurrency}
                       </div>
                       <div>
-                        <FormattedMessage id="EthTokenToUsdt257" defaultMessage="Required balance:" />
+                        <FormattedMessage id="EthTokenToUsdt257" defaultMessage="Required balance: " />
                         <strong>{this.swap.sellAmount.toNumber()}</strong> {this.swap.sellCurrency}
                       </div>
                       <div>
-                        <FormattedMessage id="EthTokenToUsdt260" defaultMessage="Your address:" />
+                        <FormattedMessage id="EthTokenToUsdt260" defaultMessage="Your address: " />
                         {this.swap.flow.myEthAddress}
                       </div>
                       <div>
@@ -295,7 +295,7 @@ export default class EthTokenToUsdt extends Component {
               {
                 flow.ethSwapCreationTransactionHash && (
                   <div>
-                    <FormattedMessage id="EthTokenToUsdt292" defaultMessage="Transaction:" />
+                    <FormattedMessage id="EthTokenToUsdt292" defaultMessage="Transaction: " />
                     <strong>
                       <a
                         href={`${config.link.etherscan}/tx/${flow.ethSwapCreationTransactionHash}`}
@@ -316,7 +316,7 @@ export default class EthTokenToUsdt extends Component {
               {
                 flow.refundTransactionHash && (
                   <div>
-                    <FormattedMessage id="EthTokenToUsdt313" defaultMessage="Transaction:" />
+                    <FormattedMessage id="EthTokenToUsdt313" defaultMessage="Transaction: " />
                     <strong>
                       <a
                         href={`${config.link.etherscan}/tx/${flow.refundTransactionHash}`}
@@ -358,7 +358,7 @@ export default class EthTokenToUsdt extends Component {
               {
                 flow.usdtSwapWithdrawTransactionHash && (
                   <div>
-                    <FormattedMessage id="EthTokenToUsdt352" defaultMessage="USDT withdrawal transaction:" />
+                    <FormattedMessage id="EthTokenToUsdt352" defaultMessage="USDT withdrawal transaction: " />
                     <strong>
                       <a
                         href={`${config.link.bitpay}/tx/${flow.usdtSwapWithdrawTransactionHash}`}

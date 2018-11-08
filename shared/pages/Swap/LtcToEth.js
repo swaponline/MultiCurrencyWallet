@@ -144,11 +144,11 @@ export default class LtcToEth extends Component {
                       {message => <div>{message}</div>}
                     </FormattedMessage>
                     <div>
-                      <FormattedMessage id="LtcTOeth145" defaultMessage="Secret Key:" />
+                      <FormattedMessage id="LtcTOeth145" defaultMessage="Secret Key: " />
                       <strong>{flow.secret}</strong>
                     </div>
                     <div>
-                      <FormattedMessage id="LtcTOeth148" defaultMessage="Secret Hash:" />
+                      <FormattedMessage id="LtcTOeth148" defaultMessage="Secret Hash: " />
                       <strong>{flow.secretHash}</strong>
                     </div>
                   </Fragment>
@@ -164,16 +164,16 @@ export default class LtcToEth extends Component {
                     </h3>
                     <div>
                       <div>
-                        <FormattedMessage id="LtcTOeth162" defaultMessage="Your balance:" />
+                        <FormattedMessage id="LtcTOeth162" defaultMessage="Your balance: " />
                         <strong>{flow.balance}</strong> {this.swap.sellCurrency}
                       </div>
                       <div>
-                        <FormattedMessage id="LtcTOeth165" defaultMessage="Required balance:" />
+                        <FormattedMessage id="LtcTOeth165" defaultMessage="Required balance: " />
                         <strong>{this.swap.sellAmount.toNumber()}</strong>
                         {this.swap.sellCurrency}
                       </div>
                       <div>
-                        <FormattedMessage id="LtcTOeth168" defaultMessage="Your address:" />
+                        <FormattedMessage id="LtcTOeth168" defaultMessage="Your address: " />
                         {this.swap.flow.myLtcAddress}
                       </div>
                       <hr />
@@ -209,7 +209,7 @@ export default class LtcToEth extends Component {
                     {
                       flow.ltcScriptCreatingTransactionHash && (
                         <div>
-                          <FormattedMessage id="LtcTOeth200" defaultMessage="Transaction" />
+                          <FormattedMessage id="LtcTOeth200" defaultMessage="Transaction: " />
                           <strong>
                             <a
                               href={`${config.link.ltc}/tx/${flow.ltcScriptCreatingTransactionHash}`}
@@ -276,7 +276,7 @@ export default class LtcToEth extends Component {
               {
                 flow.ethSwapCreationTransactionHash && (
                   <div>
-                    <FormattedMessage id="LtcTOeth267" defaultMessage="Transaction:" />
+                    <FormattedMessage id="LtcTOeth267" defaultMessage="Transaction: " />
                     <strong>
                       <a
                         href={`${config.link.etherscan}/tx/${flow.ethSwapCreationTransactionHash}`}
@@ -299,7 +299,7 @@ export default class LtcToEth extends Component {
               {
                 flow.ethSwapWithdrawTransactionHash && (
                   <div>
-                    <FormattedMessage id="LtcTOeth290" defaultMessage="Transaction:" />
+                    <FormattedMessage id="LtcTOeth290" defaultMessage="Transaction: " />
                     <strong>
                       <a
                         href={`${config.link.etherscan}/tx/${flow.ethSwapWithdrawTransactionHash}`}
@@ -347,7 +347,7 @@ export default class LtcToEth extends Component {
               {
                 flow.refundTransactionHash && (
                   <div>
-                    <FormattedMessage id="LtcTOeth338" defaultMessage="Transaction:" />
+                    <FormattedMessage id="LtcTOeth338" defaultMessage="Transaction: " />
                     <strong>
                       <a
                         href={`${config.link.ltc}/tx/${flow.refundTransactionHash}`}
