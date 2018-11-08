@@ -82,12 +82,11 @@ const RowHistory = ({ row }) => {
           ltcScriptValues && !isRefunded && !isFinished ? (
             <Timer
               lockTime={ltcScriptValues.lockTime * 1000}
-              enabledButton={() => {
-              }}
+              enabledButton={() => {}}
             />
           ) : (
             <span>
-              <FormattedMessage id="RowMhistory49" defaultMessage="Refund not available"/>
+              <FormattedMessage id="RowMhistory49" defaultMessage="Refund not available" />
             </span>
           )
         }
