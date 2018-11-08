@@ -73,7 +73,7 @@ export default class Notification extends Component {
 
     return (
       <div styleName={containerStyleName}>
-        <div styleName={notificationStyleName} onClick={this.close} type={this.type}>
+        <div styleName={notificationStyleName} onClick={this.close}>
           <div styleName="content" >
             {children}
           </div>
