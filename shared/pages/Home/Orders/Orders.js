@@ -27,9 +27,6 @@ import { FormattedMessage } from 'react-intl'
 const filterMyOrders = (orders, peer) => orders
   .filter(order => order.owner.peer === peer)
 
-const filterIsPartial = (orders) => orders
-  .filter(order => order.isPartialClosure)
-
 const filterOrders = (orders, filter) => orders
   .filter(order => order.isProcessing !== true)
   .filter(order => Pair.check(order, filter))
@@ -42,7 +39,6 @@ const filterOrders = (orders, filter) => orders
 }) => ({
   orders: filterOrders(orders, filter),
   myOrders: filterMyOrders(orders, peer),
-  partialOrders: filterIsPartial(orders),
   isOnline,
   currencies,
 }))
@@ -64,9 +60,6 @@ export default class Orders extends Component {
 
     const buyOrders = orders
       .filter(order => Pair.fromOrder(order).isBid())
-
-    console.log('sellOrders', sellOrders)
-    console.log('buyOrders', buyOrders)
 
     return {
       buyOrders,
@@ -105,7 +98,7 @@ export default class Orders extends Component {
 
   render() {
     const { sellOrders, buyOrders, isVisible } = this.state
-    let { sellCurrency, buyCurrency, partialOrders } = this.props
+    let { sellCurrency, buyCurrency } = this.props
     buyCurrency = buyCurrency.toUpperCase()
     sellCurrency = sellCurrency.toUpperCase()
 
@@ -114,8 +107,6 @@ export default class Orders extends Component {
 
     const buyCurrencyFullName = (currencies.find(c => c.name === buyCurrency) || {}).fullTitle
     const sellCurrencyFullName = (currencies.find(c => c.name === sellCurrency) || {}).fullTitle
-
-    console.log('partialOrders', partialOrders)
 
     return (
       <Fragment>
@@ -148,20 +139,6 @@ export default class Orders extends Component {
             acceptRequest={this.acceptRequest}
           />
         }
-        <Table
-          id="table_exchange"
-          className={tableStyles.exchange}
-          titles={titles}
-          rows={partialOrders}
-          rowRender={(row, index) => (
-            <Row
-              key={index}
-              orderId={orderId}
-              row={row}
-            />
-          )}
-          isLoading={!isOnline}
-        />
         <h3 styleName="ordersHeading">
           <FormattedMessage id="orders143" defaultMessage="BUY " />
           {buyCurrency}
@@ -181,7 +158,11 @@ export default class Orders extends Component {
           titles={titles}
           rows={sellOrders}
           rowRender={(row, index) => (
-            <Row
+            isMobile &&  <RowMobile
+              key={index}
+              orderId={orderId}
+              row={row}
+            /> || <Row
               key={index}
               orderId={orderId}
               row={row}
@@ -208,11 +189,14 @@ export default class Orders extends Component {
           titles={titles}
           rows={buyOrders}
           rowRender={(row, index) => (
-            <Row
+            isMobile &&  <RowMobile
               key={index}
               orderId={orderId}
               row={row}
-              removeOrder={this.removeOrder}
+            /> || <Row
+              key={index}
+              orderId={orderId}
+              row={row}
             />
           )}
           isLoading={!isOnline}

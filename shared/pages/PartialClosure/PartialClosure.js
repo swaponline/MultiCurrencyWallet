@@ -37,6 +37,7 @@ export default class PartialClosure extends Component {
       type: 'SELL',
       filteredOrders: [],
       isNonOffers: false,
+      isDeclinedOffer: false,
     }
   }
 
@@ -85,7 +86,7 @@ export default class PartialClosure extends Component {
 
     actions.core.requestToPeer('request partial closure', peer, { order, orderId }, (orderId) => {
       console.log('orderId', orderId)
-
+      // TODO change callback on boolean type
       if (orderId) {
         actions.core.sendRequest(orderId, (isAccept) => {
           if (isAccept) {
@@ -95,6 +96,8 @@ export default class PartialClosure extends Component {
             }))
           }
         })
+      } else {
+        this.setState(() => ({ isDeclinedOffer: true, haveAmount: '' }))
       }
     })
   }
@@ -112,6 +115,7 @@ export default class PartialClosure extends Component {
       return
     }
 
+    // TODO add check orders and view
     const sortedOrder = filteredOrders.sort((a, b) => a.exchangeRate - b.exchangeRate)
     const exRate = new BigNumber(String(sortedOrder[0].exchangeRate))
 
@@ -128,11 +132,9 @@ export default class PartialClosure extends Component {
 
   render() {
     const { currencies } = this.props
-    const { haveCurrency, getCurrency, isNonOffers, redirect, orderId } = this.state
+    const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isDeclinedOffer } = this.state
 
     const linked = Link.all(this, 'haveAmount', 'getAmount')
-
-    console.log('state', this.state)
 
     if (redirect) {
       return <Redirect push to={`${links.swap}/${getCurrency}-${haveCurrency}/${orderId}`} />
@@ -158,6 +160,9 @@ export default class PartialClosure extends Component {
             disabled
             currencies={currencies}
           />
+          {
+            isDeclinedOffer && (<p>Offer is declined</p>)
+          }
           {
             isNonOffers && (<p style={{ color: 'red' }}>No offers </p>)
           }

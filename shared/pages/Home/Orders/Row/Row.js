@@ -98,19 +98,12 @@ export default class Row extends Component {
 
     const { price, amount, total, main, base, type } = pair
 
-    console.log('pair', pair)
-
     if (this.state.redirect) {
       return <Redirect push to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`} />
     }
 
     return (
       <tr style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}>
-        <td>
-          <Button onClick={() => actions.core.reCreationOrder(id)}>
-            Re-creation
-          </Button>
-        </td>
         <td>
           <Avatar
             value={ownerPeer}

@@ -47,11 +47,6 @@ const messages = defineMessages({
     description: 'Menu item "Listing"',
     defaultMessage: 'Listing',
   },
-  partial: {
-    id: 'menu.partial',
-    description: 'Partial',
-    defaultMessage: 'Partial',
-  },
 })
 
 
@@ -102,11 +97,6 @@ export default class Header extends Component {
         {
           title: props.intl.formatMessage(messages.listing),
           link: links.listing,
-          isMobile: false,
-        },
-        {
-          title: props.intl.formatMessage(messages.partial),
-          link: links.partial,
           isMobile: false,
         },
       ],

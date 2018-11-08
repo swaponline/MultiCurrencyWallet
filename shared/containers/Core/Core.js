@@ -72,9 +72,9 @@ export default class Core extends Component {
 
   createOrder = async ({ fromPeer, order, ...rest }) => {
     console.log('rest', ...rest)
-    const creatingOrder = await actions.core.createOrder(order)
-
-    actions.core.requestToPeer('accept request', fromPeer, { orderId: creatingOrder.id })
+    // TODO add check exchange rate and format order
+    const createdOrder = await actions.core.createOrder(order)
+    actions.core.requestToPeer('accept request', fromPeer, { orderId: createdOrder.id })
   }
 
   render() {
