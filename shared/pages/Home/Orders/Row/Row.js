@@ -9,7 +9,7 @@ import { Link, Redirect } from 'react-router-dom'
 
 import Avatar from 'components/Avatar/Avatar'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
-import RemoveButton from 'components/controls/RemoveButton/RemoveButton'
+import { Button, RemoveButton } from 'components/controls'
 
 import Pair from '../Pair'
 import PAIR_TYPES from 'helpers/constants/PAIR_TYPES'

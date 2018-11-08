@@ -10,6 +10,7 @@ export default {
   test: 'https://testnet.swap.online',
   main: 'https://swap.online/',
   coins: '/coins',
+  partial: '/partial',
 
   // social networks
   medium: 'https://medium.com/swaponline',
