@@ -45,11 +45,12 @@ export default class PartialClosure extends Component {
     }
   }
 
-  static getDerivedStateFromProps({ orders }, { haveCurrency }) {
+  static getDerivedStateFromProps({ orders }, { haveCurrency, getCurrency }) {
     if (!Array.isArray(orders)) { return }
 
-    const filteredOrders = orders.filter(order =>
-      order.sellCurrency === haveCurrency.toUpperCase())
+    const filteredOrders = orders.filter(order => !order.isMy
+      && order.sellCurrency === haveCurrency.toUpperCase()
+      && order.buyCurrency === getCurrency.toUpperCase())
 
     return {
       filteredOrders,
@@ -116,6 +117,32 @@ export default class PartialClosure extends Component {
     }))
   }
 
+  handleSetGetValue = ({ value }) => {
+    let { getCurrency, haveCurrency } = this.state
+
+    if (haveCurrency === value) {
+      haveCurrency = getCurrency
+    }
+
+    this.setState(() => ({
+      haveCurrency,
+      getCurrency: value,
+    }))
+  }
+
+  handleSetHaveValue = ({ value }) => {
+    let { getCurrency, haveCurrency } = this.state
+
+    if (getCurrency === value) {
+      getCurrency = haveCurrency
+    }
+
+    this.setState(() => ({
+      getCurrency,
+      haveCurrency: value,
+    }))
+  }
+
   render() {
     const { currencies } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isDeclinedOffer, type } = this.state
@@ -133,7 +160,7 @@ export default class PartialClosure extends Component {
           <SelectGroup
             inputValueLink={linked.haveAmount.pipe(this.setAmount)}
             selectedValue={haveCurrency}
-            onSelect={({ value }) => this.setState(() => ({ haveCurrency: value }))}
+            onSelect={this.handleSetHaveValue}
             label="You have"
             placeholder="Enter amount"
             currencies={currencies}
@@ -141,7 +168,7 @@ export default class PartialClosure extends Component {
           <SelectGroup
             inputValueLink={linked.getAmount}
             selectedValue={getCurrency}
-            onSelect={({ value }) => this.setState(() => ({ getCurrency: value }))}
+            onSelect={this.handleSetGetValue}
             label="You get"
             disabled
             currencies={currencies}
