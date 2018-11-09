@@ -6,6 +6,7 @@ import actions from 'redux/actions'
 
 import { constants } from 'helpers'
 import { WithdrawButton } from 'components/controls'
+import { FormattedMessage } from 'react-intl'
 
 
 @connect(({ core: { hiddenCoinsList } }) => ({ hiddenCoinsList }))
@@ -40,13 +41,22 @@ export default class KeyActionsPanel extends Component {
 
     return (
       <div>
-        {process.env.TESTNET && <WithdrawButton onClick={this.handleClear} >Exit</WithdrawButton> }
-        <WithdrawButton onClick={this.handleDownload}>Download keys</WithdrawButton>
-        <WithdrawButton onClick={this.handleImportKeys}>Import keys</WithdrawButton>
+        { process.env.TESTNET &&
+        <WithdrawButton onClick={this.handleClear} >
+          <FormattedMessage id="KeyActionsPanel43" defaultMessage="Exit" />
+        </WithdrawButton>
+        }
+        <WithdrawButton onClick={this.handleDownload}>
+          <FormattedMessage id="KeyActionsPanel46" defaultMessage="Download keys" />
+        </WithdrawButton>
+        <WithdrawButton onClick={this.handleImportKeys}>
+          <FormattedMessage id="KeyActionsPanel49" defaultMessage="Import keys" />
+        </WithdrawButton>
         {
           hiddenCoinsList.length !== 0 && (
             <WithdrawButton onClick={this.handleShowMore}>
-              Show more coins ({hiddenCoinsList.length})
+              <FormattedMessage id="KeyActionsPanel53" defaultMessage="Show more coins" />
+              ({hiddenCoinsList.length})
             </WithdrawButton>
           )
         }

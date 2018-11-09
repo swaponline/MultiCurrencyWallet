@@ -5,6 +5,7 @@ import CSSModules from 'react-css-modules'
 import styles from './Loader.scss'
 
 import { tips } from 'helpers'
+import { FormattedMessage } from 'react-intl'
 
 
 const Loader = ({ overlayClassName, className, data, showTips }) => (
@@ -14,32 +15,32 @@ const Loader = ({ overlayClassName, className, data, showTips }) => (
       <div styleName="loader2" />
       <div styleName="loader3" />
     </div>
-    {
-      data && data.text && (
-        <p styleName="text">
-          Please wait, it takes from 3 to 5 minutes to complete the transaction.
-        </p>
-      )
-    }
-    {
-      data && data.txId && (
-        <a
-          href={data.txId}
-          styleName="link"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {data.txId}
-        </a>
-      )
-    }
-    {
-      showTips && (
-        <div styleName="tips">
-          {tips('loader')}
-        </div>
-      )
-    }
+      {
+        data && data.text && (
+          <p styleName="text">
+            <FormattedMessage id="Loader21"  defaultMessage="Please wait, it takes from 3 to 5 minutes to complete the transaction." />
+          </p>
+        )
+      }
+      {
+        data && data.txId && (
+          <a
+            href={data.txId}
+            styleName="link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {data.txId}
+          </a>
+        )
+      }
+      {
+        showTips && (
+          <div styleName="tips">
+            {tips('loader')}
+          </div>
+        )
+      }
   </div>
 )
 

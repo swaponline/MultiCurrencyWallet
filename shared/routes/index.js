@@ -11,12 +11,12 @@ import History          from 'pages/History/History'
 import NotFound         from 'pages/NotFound/NotFound'
 import Affiliate        from 'pages/Affiliate/Affiliate'
 import Currency         from 'pages/Currency/Currency'
+import PartialClosure   from 'pages/PartialClosure/PartialClosure'
 import CurrencyWallet   from 'pages/CurrencyWallet/CurrencyWallet'
 
 
 const routes = (
   <Switch>
-
     <Route path={`${links.swap}/:buy-:sell/:orderId`} component={SwapComponent} />
 
     <Route path="/:fullName-wallet" component={CurrencyWallet} />
@@ -25,6 +25,7 @@ const routes = (
     <Route path={`${links.home}:buy-:sell`} component={Home} />
     <Route path={links.exchange} component={Home} />
 
+    <Route path={links.partial} component={PartialClosure} />
     <Route path={links.affiliate} component={Affiliate} />
     <Route path={links.listing} component={Listing} />
     <Route path={links.history} component={History} />

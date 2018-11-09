@@ -7,6 +7,7 @@ import styles from './ReceiveModal.scss'
 import QR from 'components/QR/QR'
 import { Modal } from 'components/modal'
 import { Button } from 'components/controls'
+import { FormattedMessage } from 'react-intl'
 
 
 @cssModules(styles)
@@ -37,7 +38,9 @@ export default class ReceiveModal extends React.Component {
     return (
       <Modal name={name} title="Receive">
         <div styleName="content">
-          <p>This is your address for receive {currency}</p>
+          <FormattedMessage id="ReceiveModal" defaultMessage="This is your address for receive {currency}">
+            {message => <p>{message}</p>}
+          </FormattedMessage>
           <CopyToClipboard
             text={address}
             onCopy={this.handleCopyAddress}

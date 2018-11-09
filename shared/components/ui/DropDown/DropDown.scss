@@ -66,8 +66,15 @@
   }
 }
 
+
 @media screen and (max-width: 690px) {
   .dropDown.active {
     z-index: 1;
+  }
+}
+
+@include media-mobile { 
+  .selectedItem {
+    width: 160px;
   }
 }

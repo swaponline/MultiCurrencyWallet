@@ -3,6 +3,7 @@ import React, { PureComponent } from 'react'
 import Table from 'components/tables/Table/Table'
 import styles from 'components/tables/Table/Table.scss'
 import RowHistory from './RowHistory/RowHistory'
+import { FormattedMessage } from 'react-intl'
 
 
 export default class SwapsHistory extends PureComponent {
@@ -17,7 +18,9 @@ export default class SwapsHistory extends PureComponent {
 
     return (
       <div style={{ marginBottom: '50px' }}>
-        <h3>Swaps history</h3>
+        <FormattedMessage id="SwapHisrory21" defaultMessage="Swaps history">
+          {message => <h3>{message}</h3>}
+        </FormattedMessage>
         <Table
           id="table-history"
           className={styles.historySwap}

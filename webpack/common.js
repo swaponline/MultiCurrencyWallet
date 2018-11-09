@@ -19,6 +19,7 @@ const globals = {
     'LOCAL': JSON.stringify(config.local),
     'TESTNET': config.entry === 'testnet',
     'MAINNET': config.entry === 'mainnet',
+    'EXTENSION': config.dir === 'chrome-extension/application',
   },
   // TODO fix __CONFIG__ - remove it and check app-config/webpack to resolve in /client.js
   __CONFIG__: JSON.stringify(config),

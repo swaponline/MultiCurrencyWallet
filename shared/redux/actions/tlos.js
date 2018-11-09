@@ -1,3 +1,4 @@
+
 import config from 'app-config'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
@@ -6,6 +7,7 @@ import actions from 'redux/actions'
 
 import { telos, ecc } from 'helpers/eos'
 import { Keygen } from 'eosjs-keygen'
+
 
 const generateAccountName = (publicKey) => {
   const account = Array.prototype.map.call(
@@ -31,8 +33,9 @@ const register = async (accountName, activePrivateKey) => {
     permissions.find(item => item.perm_name === 'active')
       .required_auth.keys[0].key
 
-  if (activePublicKey !== requiredPublicKey)
+  if (activePublicKey !== requiredPublicKey) {
     throw new Error(`${activePublicKey} is not equal to ${requiredPublicKey}`)
+  }
 
   localStorage.setItem(constants.privateKeyNames.telosPrivateKey, activePrivateKey)
   localStorage.setItem(constants.privateKeyNames.telosPublicKey, activePublicKey)
@@ -68,7 +71,7 @@ const getBalance = async () => {
 const send = async (from, to, amount) => {
   const { user: { telosData: { address } } } = getState()
 
-  if (typeof address !== 'string') return
+  if (typeof address !== 'string') { return }
 
   const telosInstance = await telos.getInstance()
   const transfer = await telosInstance.transaction(
@@ -110,7 +113,8 @@ const loginWithNewAccount = async () => {
   return { accountName, activePrivateKey, activePublicKey }
 }
 
-const activateAccount = async(accountName, activePrivateKey, activePublicKey) => {
+
+const activateAccount = async (accountName, activePrivateKey, activePublicKey) => {
   const { registerEndpoint } = config.api.telos
 
   try {
@@ -118,12 +122,13 @@ const activateAccount = async(accountName, activePrivateKey, activePublicKey) =>
       method: 'POST',
       headers: {
         'Accept': 'application/json',
-        'Content-Type': 'application/json'
+
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         publicKey: activePublicKey,
-        accountName: accountName
-      })
+        accountName,
+      }),
     })
 
     if (response.ok) {
@@ -131,11 +136,11 @@ const activateAccount = async(accountName, activePrivateKey, activePublicKey) =>
     } else {
       console.error('tlos activation error')
     }
-  } catch(e) {
+  } catch (e) {
     console.error('tlos network error', e)
   }
 }
 
 module.exports = {
-  register, login, getBalance, send, loginWithNewAccount, activateAccount
+  register, login, getBalance, send, loginWithNewAccount, activateAccount,
 }

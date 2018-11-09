@@ -6,6 +6,7 @@ import CSSModules from 'react-css-modules'
 import styles from './AddOfferButton.scss'
 
 import ReactTooltip from 'react-tooltip'
+import { FormattedMessage } from 'react-intl'
 
 
 const AddOfferButton  = () => (
@@ -14,19 +15,23 @@ const AddOfferButton  = () => (
       process.env.TESTNET ? (
         <Fragment>
           <a href={links.main} target="_blank" rel="noreferrer noopener" styleName="button" data-tip data-for="main">
-          Mainnet
+            <FormattedMessage id="ADDoffer2218" defaultMessage="Mainnet" />
           </a>
           <ReactTooltip id="main" type="light" effect="solid">
-            <span>Start to real Swap</span>
+            <span>
+              <FormattedMessage id="ADDoffer22" defaultMessage="Start to real Swap" />
+            </span>
           </ReactTooltip>
         </Fragment>
       ) : (
         <Fragment>
           <button styleName="button" onClick={() => pinkClick()} /* eslint-disable-line */ data-tip data-for="subscribe" >
-          Subscribe
+            <FormattedMessage id="ADDoffer29" defaultMessage="Subscribe" />
           </button>
           <ReactTooltip id="subscribe" type="light" effect="solid">
-            <span>Get subscribed for the Swap.Online news</span>
+            <span>
+              <FormattedMessage id="ADDoffer33" defaultMessage="Get subscribed for the Swap.Online news" />
+            </span>
           </ReactTooltip>
         </Fragment>
       )

@@ -6,7 +6,8 @@
   "main": "./bin/server",
   "scripts": {
     "test": "cypress open",
-    "eslint": "eslint  --fix --cache ./shared --ext js",
+    "eslint": "eslint --fix --cache ./shared --ext js",
+    "validate": "eslint --cache ./shared --ext js",
     "start": "npm run dev",
     "dev": "npm run dev:testnet",
     "prod": "npm run dev:mainnet",
@@ -16,13 +17,22 @@
     "clean:mainnet-local": "rimraf ./build-mainnet-local",
     "clean:testnet": "rimraf ./build-testnet",
     "clean:mainnet": "rimraf ./build-mainnet",
+    "clean:chrome-extension": "rimraf ./build-chrome-extension",
+    "copy:chrome-extension": "copy ./chrome-extension ./build-chrome-extension",
+    "zip:chrome-extension-testnet": "bestzip ./build-chrome-extension/chrome-extension-testnet.zip ./build-chrome-extension/*",
+    "zip:chrome-extension-mainnet": "bestzip ./build-chrome-extension/chrome-extension-mainnet.zip ./build-chrome-extension/*",
     "build:testnet": "npm run clean:testnet && cross-env DEBUG=app:* CONFIG=testnet.prod node ./bin/compile",
     "build:mainnet": "npm run clean:mainnet && cross-env DEBUG=app:* CONFIG=mainnet.prod node ./bin/compile",
     "build:testnet-local": "npm run clean:testnet-local && cross-env DEBUG=app:* CONFIG=testnet-local.prod node ./bin/compile",
     "build:mainnet-local": "npm run clean:mainnet-local && cross-env DEBUG=app:* CONFIG=mainnet-local.prod node ./bin/compile",
+    "build:chrome-extension-testnet": "npm run clean:chrome-extension && cross-env DEBUG=app:* CONFIG=chrome-extension-testnet.prod node ./bin/compile && npm run copy:chrome-extension && npm run rename-assets-manifest-file && npm run rename-assets-manifest-link && npm run zip:chrome-extension-testnet",
+    "build:chrome-extension-mainnet": "npm run clean:chrome-extension && cross-env DEBUG=app:* CONFIG=chrome-extension-mainnet.prod node ./bin/compile && npm run copy:chrome-extension && npm run rename-assets-manifest-file && npm run rename-assets-manifest-link && npm run zip:chrome-extension-mainnet",
     "test:unit": "mocha --require babel-core/register --require ./test/helpers.js --require ./test/dom.js --require ignore-styles 'src/**/*.spec.js'",
     "test:snapshot": "jest --config ./test/jest.config.json",
-    "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls"
+    "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls",
+    "messages:extract": "babel-node tools/run messages",
+    "rename-assets-manifest-file": "rename-files ./build-chrome-extension/application/assets/ 'manifest.json' 'android-manifest.json'",
+    "rename-assets-manifest-link": "replace 'assets/manifest.json' 'assets/android-manifest.json' ./build-chrome-extension/application/index.html"
   },
   "keywords": [],
   "author": "@nikdementev",
@@ -40,6 +50,7 @@
     "babel-loader": "^7.1.4",
     "babel-minify": "^0.4.3",
     "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-react-intl": "^2.4.0",
     "babel-plugin-transform-async-to-generator": "^6.24.1",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
@@ -75,6 +86,7 @@
     "eslint-plugin-import": "^2.12.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.8.2",
+    "eslint-plugin-reactintl": "^0.1.3",
     "exports-loader": "^0.7.0",
     "express": "^4.16.3",
     "extract-text-webpack-plugin": "^3.0.2",
@@ -115,8 +127,10 @@
     "webpack-dev-middleware": "^2.0.6"
   },
   "dependencies": {
+    "bestzip": "^2.1.2",
     "bitcoinjs-message": "^2.0.0",
     "coininfo": "git+https://github.com/cryptocoinjs/coininfo.git",
+    "copy-dir-cli": "0.0.3",
     "ethereum-input-data-decoder": "0.0.12",
     "ipfs": "^0.32.3",
     "ipfs-pubsub-room": "^1.4.0",
@@ -131,6 +145,7 @@
     "react-dom": "^16.3.2",
     "react-gtm-module": "^2.0.2",
     "react-input-mask": "^2.0.1",
+    "react-intl": "^2.7.1",
     "react-paginate": "^5.2.3",
     "react-redux": "^5.0.7",
     "react-router": "^4.2.0",
@@ -140,6 +155,7 @@
     "rebuild": "^0.1.2",
     "redaction": "^4.2.1",
     "redux": "^4.0.0",
+    "replace": "^1.0.0",
     "reverse": "^4.0.0"
   }
 }

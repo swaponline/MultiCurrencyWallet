@@ -11,6 +11,7 @@ import CSSModules from 'react-css-modules'
 import ShareImg from './images/share-alt-solid.svg'
 
 import Coins from 'components/Coins/Coins'
+import { FormattedMessage } from 'react-intl'
 
 
 @CSSModules(styles, { allowMultiple: true })
@@ -59,21 +60,35 @@ export default class RowFeeds extends Component {
           text={`${config.base}${buyCurrency.toLowerCase()}-${sellCurrency.toLowerCase()}/${id}`}
         >
           <td style={{ position: 'relative', cursor: 'pointer' }}>
-            { isLinkCopied && <span style={{ fontSize: '12px', position: 'absolute', top: '8px', left: 'calc(20%)' }}> Copied <br /></span>  }
-            <img src={ShareImg} styleName="img" alt="share" /><span>Share</span>
+            { isLinkCopied &&
+            <span style={{ fontSize: '12px', position: 'absolute', top: '8px', left: 'calc(20%)' }}>
+              <FormattedMessage id="RowFeeds64" defaultMessage="Copied" />
+              <br />
+            </span>
+            }
+            <img src={ShareImg} styleName="img" alt="share" />
+            <FormattedMessage id="RowFeeds68" defaultMessage="Share">
+              {message => <span>{message}</span>}
+            </FormattedMessage>
           </td>
         </CopyToClipboard>
         <td>
           {
             Boolean(requests && requests.length) ? (
               <div styleName="buttons">
-                <div styleName="delete" onClick={() => declineRequest(id, requests[0].peer)} >Decline</div>
+                <FormattedMessage id="RowFeeds77" defaultMessage="Decline">
+                  {message => <div styleName="delete" onClick={() => declineRequest(id, requests[0].peer)} >{message}</div>}
+                </FormattedMessage>
                 <Link to={`${links.swap}/${sellCurrency.toLowerCase()}-${buyCurrency.toLowerCase()}/${id}`}>
-                  <div styleName="accept" onClick={() => acceptRequest(id, requests[0].peer)} >Accept</div>
+                  <div styleName="accept" onClick={() => acceptRequest(id, requests[0].peer)} >
+                    <FormattedMessage id="RowFeeds81" defaultMessage="Accept" />
+                  </div>
                 </Link>
               </div>
             ) : (
-              <div styleName="delete" onClick={() => removeOrder(id)} > Delete order</div>
+              <div styleName="delete" onClick={() => removeOrder(id)} >
+                <FormattedMessage id="RowFeeds87" defaultMessage="Delete order" />
+              </div>
             )
           }
         </td>

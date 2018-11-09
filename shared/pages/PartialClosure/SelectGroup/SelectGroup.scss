@@ -1,0 +1,27 @@
+.groupField {
+  width: 100%;
+  display: inline-flex;
+  height: 60px;
+  margin-bottom: 10px;
+  box-shadow: rgba(#000, 0.08) 0 3px 9px 0;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.inputRoot {
+  min-width: 0;
+  flex: auto 1 1;
+}
+
+.inputContainer {
+  border-radius: 6px 0 0 6px !important;
+  box-shadow: none !important;
+}
+
+input:disabled {
+  background-color:#eee;
+}
+
+.currencySelect {
+  border-radius: 0 6px 6px 0 !important;
+}

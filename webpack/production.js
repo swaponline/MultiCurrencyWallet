@@ -6,7 +6,7 @@ import config from 'app-config'
 export default (webpackConfig) => {
 
   webpackConfig.output = {
-    path: config.paths.base(`build-${config.entry}`),
+    path: config.paths.base(`build-${config.dir}`),
     filename: '[name].[hash:6].js',
     chunkFilename: '[id].[hash:6].chunk.js',
     publicPath: config.publicPath,

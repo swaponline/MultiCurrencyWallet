@@ -14,6 +14,8 @@ import { Button } from 'components/controls'
 import Table from 'components/tables/Table/Table'
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import Row from './Row/Row'
+import { FormattedMessage } from 'react-intl'
+
 
 @connect(({ core: { hiddenCoinsList }, user: { ethData, btcData, ltcData, bchData, tokensData, eosData, nimData, usdtData }, currencies: { items: currencies } }) => ({
   tokens: Object.keys(tokensData).map(k => tokensData[k]),
@@ -31,7 +33,9 @@ export default class ShowMoreCoins extends Component {
       <Modal name={name} title="Show More Coins" shouldCenterVertically={false}>
         <div styleName="modal">
           <div styleName="modal_column">
-            <SubTitle styleName="modal_column-title">Coins in Wallet</SubTitle>
+            <SubTitle styleName="modal_column-title">
+              <FormattedMessage id="ShowMoreCoins36" defaultMessage="Coins in Wallet" />
+            </SubTitle>
             <Table
               className={styles.wallet}
               titles={titles}
@@ -41,7 +45,9 @@ export default class ShowMoreCoins extends Component {
           </div>
           {hiddenCoinsList.length !== 0 && (
             <div styleName="modal_column">
-              <SubTitle styleName="modal_column-title">Other coins</SubTitle>
+              <SubTitle styleName="modal_column-title">
+                <FormattedMessage id="ShowMoreCoins48" defaultMessage="Other coins" />
+              </SubTitle>
               <Table
                 className={styles.wallet}
                 titles={titles}

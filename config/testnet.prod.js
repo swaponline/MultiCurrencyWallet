@@ -7,6 +7,7 @@ export default {
   env: 'production',
   entry: 'testnet',
   local: 'online',
+  dir: 'testnet',
 
   base: 'https://testnet.swap.online/',
   publicPath: `https://testnet.swap.online${baseConfig.publicPath}`,

@@ -47,8 +47,8 @@ const getBalance = () => {
 
   return request.get(`${api.getApiServer('ltc')}/addr/${address}`)
     .then(({ balance, unconfirmedBalance }) => {
-      console.log('LTC Balance:', balance)
-      console.log('LTC unconfirmedBalance Balance:', unconfirmedBalance)
+      console.log('LTC Balance: ', balance)
+      console.log('LTC unconfirmedBalance Balance: ', unconfirmedBalance)
       reducers.user.setBalance({ name: 'ltcData', amount: balance, unconfirmedBalance })
       return balance
     }, () => Promise.reject())

@@ -11,7 +11,7 @@
   - [ ] brief description of the work
   - [ ] why you chose this solution
 * Git 😈
-  - [ ] `git pull --rebase origin master` [help](https://git-scm.com/book/en/v2/Git-Branching-Rebasing)
+  - [ ] `git pull --rebase origin develop` [help](https://git-scm.com/book/en/v2/Git-Branching-Rebasing)
 
 For the correct PR bonus tokens ✨
 💔Thank you!

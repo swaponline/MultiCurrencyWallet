@@ -18,6 +18,7 @@ import PageHeadline from 'components/PageHeadline/PageHeadline'
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import KeyActionsPanel from 'components/KeyActionsPanel/KeyActionsPanel'
 import SaveKeysModal from 'components/modals/SaveKeysModal/SaveKeysModal'
+import { FormattedMessage } from 'react-intl'
 
 
 @withRouter
@@ -50,7 +51,7 @@ export default class Wallet extends Component {
 
   state = {
     view: 'off',
-    zeroBalance: true
+    zeroBalance: true,
   }
 
   componentWillMount() {
@@ -83,11 +84,10 @@ export default class Wallet extends Component {
     })
   }
 
-
   render() {
     const { view, zeroBalance } = this.state
     const { items, tokens, currencies, hiddenCoinsList } = this.props
-    const titles = [ 'Coin', 'Name', 'Balance', !isMobile && 'Address', isMobile ? 'Send, receive, swap' :  'Actions' ]
+    const titles = [ 'Coin', 'Name', 'Balance', !isMobile && 'Your Address', isMobile ? 'Send, receive, swap' :  'Actions' ]
 
     const keysSaved = localStorage.getItem(constants.localStorage.privateKeysSaved)
     const testNetSkip = localStorage.getItem(constants.localStorage.testnetSkip)
@@ -95,12 +95,13 @@ export default class Wallet extends Component {
     const showSaveKeysModal = !zeroBalance && !keysSaved && !testNetSkip // non-zero balance and no keys saved
 
     return (
-      <section>
+      <section styleName={isMobile ? 'sectionWalletMobile' : 'sectionWallet'}>
         { showSaveKeysModal && <SaveKeysModal /> }
         <PageHeadline>
           <SubTitle>
-            Swap.Online - Cryptocurrency Wallet with Atomic Swap Exchange
+            <FormattedMessage id="Wallet104" defaultMessage="Your online cryptocurrency wallet" />
           </SubTitle>
+          Deposit funds to addresses below
         </PageHeadline>
         <Table
           id="table-wallet"
@@ -108,7 +109,7 @@ export default class Wallet extends Component {
           titles={titles}
           rows={[...items, ...tokens].filter(coin => !hiddenCoinsList.includes(coin.currency))}
           rowRender={(row, index, selectId, handleSelectId) => (
-            <Row key={index} {...row} currencies={currencies} hiddenCoinsList={hiddenCoinsList} selectId={selectId} index={index} handleSelectId={handleSelectId}/>
+            <Row key={index} {...row} currencies={currencies} hiddenCoinsList={hiddenCoinsList} selectId={selectId} index={index} handleSelectId={handleSelectId} />
           )}
         />
         <KeyActionsPanel />
