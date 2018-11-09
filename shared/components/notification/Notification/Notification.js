@@ -70,7 +70,6 @@ export default class Notification extends Component {
       'removed': removed,
       'ErrorNotification': type === 'ErrorNotification',
     })
-console.log("sdfdsf",this.props)
     return (
       <div styleName={containerStyleName}>
         <div styleName={notificationStyleName} onClick={this.close}>

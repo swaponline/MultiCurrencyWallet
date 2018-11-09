@@ -41,22 +41,12 @@ export default class WithdrawModal extends React.Component {
     amount: '',
   }
 
-  componentWillMount() {
-    this.setBalanceOnState(this.props.data.currency)
-  }
-
-  setBalanceOnState = async (currency) => {
-    const balance = await actions[currency.toLowerCase()].getBalance(currency.toLowerCase())
-    this.setState(() => ({ balance }))
-  }
-
   handleSubmit = () => {
     const { address: to, amount } = this.state
     const { data: { currency, contractAddress, address, balance, decimals }, name } = this.props
 
     this.setState(() => ({ isShipped: true }))
 
-    this.setBalanceOnState(currency)
     this.setState(() => ({ isShipped: true }))
 
     if (!to || !amount || amount < minAmount[currency.toLowerCase()] || amount > balance) {
@@ -70,7 +60,6 @@ export default class WithdrawModal extends React.Component {
       .then(() => {
         actions.loader.hide()
         actions[currency.toLowerCase()].getBalance(currency)
-        this.setBalanceOnState(currency)
 
         actions.notifications.show(constants.notifications.SuccessWithdraw, {
           amount,
@@ -84,14 +73,16 @@ export default class WithdrawModal extends React.Component {
   }
 
   render() {
-    const { isSubmitted, address, amount, balance, isShipped } = this.state
+    const { isSubmitted, address, amount, isShipped } = this.state
     const { name, data } = this.props
+
+    const { balance } = data
 
     const linked = Link.all(this, 'address', 'amount')
     const isDisabled = !address || !amount || isShipped
 
     if (isSubmitted) {
-      linked.amount.check((value) => value < balance, `You don't have enough balance `)
+      linked.amount.check((value) => value < balance, `You don't have enough balance`)
       linked.amount.check((value) => value > minAmount[data.currency], `Amount must be greater than ${minAmount[data.currency.toLowerCase()]} `)
     }
 
@@ -105,29 +96,29 @@ export default class WithdrawModal extends React.Component {
           of the {data.currency} on your wallet, to use it for miners fee
         </p>
         <FieldLabel inRow>
-          <FormattedMessage id="Withdrow108" defaultMessage="Address " />
-          <Tooltip text="destination address " />
+          <FormattedMessage id="Withdrow108" defaultMessage="Address" />
+          <Tooltip text="destination address" />
         </FieldLabel>
         <Input valueLink={linked.address} focusOnInit pattern="0-9a-zA-Z" placeholder="Enter address" />
         <p style={{ marginTop: '20px' }}>
-          <FormattedMessage id="Withdrow113" defaultMessage="Your balance: " />
+          <FormattedMessage id="Withdrow113" defaultMessage="Your balance:" />
           {balance}
           {data.currency.toUpperCase()}
         </p>
         <FieldLabel inRow>
-          <FormattedMessage id="Withdrow118" defaultMessage="Amount " />
+          <FormattedMessage id="Withdrow118" defaultMessage="Amount" />
         </FieldLabel>
         <Input valueLink={linked.amount} pattern="0-9\." placeholder={`Enter amount, you have ${balance}`} />
         {
           !linked.amount.error && (
             <div styleName="note">
-              <FormattedMessage id="WithdrawModal106" defaultMessage="No less than " />
+              <FormattedMessage id="WithdrawModal106" defaultMessage="No less than" />
               {minAmount[data.currency.toLowerCase()]}
             </div>
           )
         }
         <Button styleName="button" brand fullWidth disabled={isDisabled} onClick={this.handleSubmit}>
-          <FormattedMessage id="WithdrawModal111" defaultMessage="Transfer " />
+          <FormattedMessage id="WithdrawModal111" defaultMessage="Transfer" />
         </Button>
       </Modal>
     )
