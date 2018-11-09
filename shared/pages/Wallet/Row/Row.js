@@ -215,7 +215,7 @@ export default class Row extends Component {
                     <br />
                     <span styleName="unconfirmedBalance">
                       <FormattedMessage id="RowWallet197" defaultMessage="Unconfirmed" />
-                      {unconfirmedBalance} 
+                      {unconfirmedBalance}
                     </span>
                   </Fragment>
                 ) }
@@ -336,9 +336,9 @@ export default class Row extends Component {
             }
           </div>
 
-   
+
         </td>
-      
+
       </tr>
     )
   }
