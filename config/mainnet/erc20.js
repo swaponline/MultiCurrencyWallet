@@ -136,7 +136,7 @@ export default {
   },
   tnt: {
     address: '0x08f5a9235b08173b7569f83645d2c7fb55e8ccd8',
-    decimals: 18,
+    decimals: 8,
     fullName: 'Tierion Network',
   },
   avt: {
@@ -148,11 +148,6 @@ export default {
     address: '0xdd6c68bb32462e01705011a4e2ad1a60740f217f',
     decimals: 15,
     fullName: 'Hubiits',
-  },
-  trn: {
-    address: '0x08f5a9235b08173b7569f83645d2c7fb55e8ccd8',
-    decimals: 8,
-    fullName: 'Tierion',
   },
   view: {
     address: '0xf03f8d65bafa598611c3495124093c56e8f638f0',
