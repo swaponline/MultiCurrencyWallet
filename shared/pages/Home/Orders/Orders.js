@@ -70,8 +70,6 @@ export default class Orders extends Component {
   createOffer = async () => {
     const { buyCurrency, sellCurrency } = this.props
 
-    await actions[sellCurrency].getBalance(sellCurrency)
-
     actions.modals.open(constants.modals.Offer, {
       buyCurrency,
       sellCurrency,

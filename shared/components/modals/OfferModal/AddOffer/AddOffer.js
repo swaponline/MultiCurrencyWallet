@@ -74,10 +74,14 @@ export default class AddOffer extends Component {
   }
 
   checkBalance = async (sellCurrency) => {
+    await actions[sellCurrency].getBalance(sellCurrency)
+
     const { items, tokenItems } = this.props
 
     const currency = items.concat(tokenItems)
       .filter(item => item.currency === sellCurrency.toUpperCase())[0]
+
+    const sleep = time => new Promise(resolve => setTimeout(resolve, time))
 
     const { balance, unconfirmedBalance } = currency
     const finalBalance = unconfirmedBalance !== undefined && unconfirmedBalance < 0
@@ -109,7 +113,7 @@ export default class AddOffer extends Component {
 
     buyCurrency = value
 
-    this.checkBalance(sellCurrency)
+    await this.checkBalance(sellCurrency)
 
     await this.updateExchangeRate(sellCurrency, buyCurrency)
     const { exchangeRate } = this.state
@@ -139,7 +143,8 @@ export default class AddOffer extends Component {
 
     sellCurrency = value
 
-    this.checkBalance(sellCurrency)
+    await this.checkBalance(sellCurrency)
+    
     await this.updateExchangeRate(sellCurrency, buyCurrency)
     const { exchangeRate } = this.state
     buyAmount = new BigNumber(String(sellAmount) || 0).multipliedBy(exchangeRate)
