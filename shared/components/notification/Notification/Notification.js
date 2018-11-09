@@ -58,7 +58,7 @@ export default class Notification extends Component {
 
   render() {
     const { mounted, removed, error } = this.state
-    const { children, type, className } = this.props
+    const { children, type } = this.props
 
     const containerStyleName = cx('container', {
       'mounted': mounted,
@@ -70,7 +70,7 @@ export default class Notification extends Component {
       'removed': removed,
       'ErrorNotification': type === 'ErrorNotification',
     })
-
+console.log("sdfdsf",this.props)
     return (
       <div styleName={containerStyleName}>
         <div styleName={notificationStyleName} onClick={this.close}>
