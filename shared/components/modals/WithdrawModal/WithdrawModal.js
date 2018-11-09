@@ -82,7 +82,7 @@ export default class WithdrawModal extends React.Component {
     const isDisabled = !address || !amount || isShipped
 
     if (isSubmitted) {
-      linked.amount.check((value) => value < balance, `You don't have enough balance`)
+      linked.amount.check((value) => value < balance, `You don't have enough balance `)
       linked.amount.check((value) => value > minAmount[data.currency], `Amount must be greater than ${minAmount[data.currency.toLowerCase()]} `)
     }
 
@@ -96,23 +96,23 @@ export default class WithdrawModal extends React.Component {
           of the {data.currency} on your wallet, to use it for miners fee
         </p>
         <FieldLabel inRow>
-          <FormattedMessage id="Withdrow108" defaultMessage="Address" />
+          <FormattedMessage id="Withdrow108" defaultMessage="Address " />
           <Tooltip text="destination address" />
         </FieldLabel>
-        <Input valueLink={linked.address} focusOnInit pattern="0-9a-zA-Z" placeholder="Enter address" />
+        <Input valueLink={linked.address} focusOnInit pattern="0-9a-zA-Z" placeholder="Enter address " />
         <p style={{ marginTop: '20px' }}>
-          <FormattedMessage id="Withdrow113" defaultMessage="Your balance:" />
+          <FormattedMessage id="Withdrow113" defaultMessage="Your balance: " />
           {balance}
           {data.currency.toUpperCase()}
         </p>
         <FieldLabel inRow>
-          <FormattedMessage id="Withdrow118" defaultMessage="Amount" />
+          <FormattedMessage id="Withdrow118" defaultMessage="Amount " />
         </FieldLabel>
         <Input valueLink={linked.amount} pattern="0-9\." placeholder={`Enter amount, you have ${balance}`} />
         {
           !linked.amount.error && (
             <div styleName="note">
-              <FormattedMessage id="WithdrawModal106" defaultMessage="No less than" />
+              <FormattedMessage id="WithdrawModal106" defaultMessage="No less than " />
               {minAmount[data.currency.toLowerCase()]}
             </div>
           )
