@@ -44,14 +44,14 @@ const text = [
   </p>
    },
   { id: 10, context:`SWAP.Online will be cryptocurrency Pink Sheets market.` },
-  { id: 11, context:   <img src={ListingImg} styleName="listingImg" alt="Orders book on swap.online" />, id:11 },
+  { id: 11, context:   <img src={ListingImg} styleName="listingImg" alt="Orders book on swap.online" /> },
   { id: 12, context: `It’s well known that even in traditional stock market, one willing to be quoted must meet the requirements of SEC,
     or as far as the OTC Market Group Inc. markets (OTCQX and OTCQB) are concerned, must show the big income and seek the
     support of the influential consulting agencies. Moreover, the information about the company audit must be provided annually
     to the SEC or SEC-approved regulators.` },
   { id: 13, context:`Some of the cryptocurrency ‘fat cats’ allow themselves to do the same. For example, Localbitcoins CEO said they would
     newer list a token of the project with less than USD1B capitalisation. Cryptobridge and some related centralized
-    exchanges ask for the USD 23 thousand (in BTS equivalent) for the token owner to be listed.`, id: 13 },
+    exchanges ask for the USD 23 thousand (in BTS equivalent) for the token owner to be listed.` },
   { id: 14, context: `That is not about us.` },
   { id: 15, context: `As our transactions is peer-to-peer, based on the Atomic Swaps technology, we can add to the balances every token corresponding
     some our criterias. Obviously, clearly fraudulent projects are to be rejected from the very beginning. But all other
