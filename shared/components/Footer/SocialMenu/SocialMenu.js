@@ -10,7 +10,7 @@ const nav = [
   { links: links.facebook,    icon: 'fa-facebook'  },
   { links: links.telegram,    icon: 'fa-telegram-plane'  },
   { links: links.bitcointalk, icon: 'fa-btc' },
-  { links: links.discord,     icon: 'fab fa-discord'}
+  { links: links.discord,     icon: 'fab fa-discord'},
 ]
 
 const SocialMenu = () => (
