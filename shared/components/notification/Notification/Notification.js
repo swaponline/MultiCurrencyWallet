@@ -57,7 +57,7 @@ export default class Notification extends Component {
   }
 
   render() {
-    const { mounted, removed } = this.state
+    const { mounted, removed, error } = this.state
     const { children, type, className } = this.props
 
     const containerStyleName = cx('container', {
@@ -65,19 +65,16 @@ export default class Notification extends Component {
       'removed': removed,
     })
 
-    const notificationStyleName = cx('notification', {
+    const notificationStyleName = cx(type ? type : 'notification', {
       'mounted': mounted,
       'removed': removed,
-      'info': type === 'info',
-      'success': type === 'success',
-      'warning': type === 'warning',
-      'error': type === 'error',
+      'ErrorNotification': type === 'ErrorNotification',
     })
 
     return (
       <div styleName={containerStyleName}>
         <div styleName={notificationStyleName} onClick={this.close}>
-          <div styleName="content" className={className}>
+          <div styleName="content" >
             {children}
           </div>
         </div>

@@ -1,21 +1,20 @@
 import React from 'react'
 
 import cssModules from 'react-css-modules'
-import styles from './ErrorNotification.scss'
 
 import Notification from 'components/notification/Notification/Notification'
 import { FormattedMessage } from 'react-intl'
 
 
 const ErrorNotification = ({ data, name }) => (
-  <Notification soundPlay={false} name={name} styleName={data.center ? 'middle' : 'righttop'}>
+  <Notification soundPlay={false} name={name} type={name}>
     <FormattedMessage id="ErrorNotification12" defaultMessage="Oops, looks like something went wrong!">
-      {message => <h3 styleName="error-notification-heading ">{message}</h3>}
+      {message => <h3>{message}</h3>}
     </FormattedMessage>
     <FormattedMessage id="ErrorNotification15" defaultMessage="Error:">
-      {message => <p styleName="error-notification-text">{message}{data.error}</p>}
+      {message => <p>{message}{data.error}</p>}
     </FormattedMessage>
   </Notification>
 )
 
-export default cssModules(ErrorNotification, styles, { allowMultiple: true })
+export default cssModules(ErrorNotification, { allowMultiple: true })

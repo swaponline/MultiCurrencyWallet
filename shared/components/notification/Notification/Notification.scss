@@ -29,18 +29,31 @@
   box-shadow: rgba(#000, 0.4) 0 2px 10px;
 
   &.mounted {
-    margin-top: 0 !important;
-    opacity: 1 !important;
-    transition: all 0.4s linear;
-  }
-
-  &.removed {
-    margin-top: -100% !important;
-    opacity: 0.5 !important;
-  }
+  margin-top: 0 !important;
+  opacity: 1 !important;
+  transition: all 0.4s linear;
 }
 
+&.removed {
+  margin-top: -100% !important;
+  opacity: 0.5 !important;
+}
+}
 .content {
-  padding: 15px 25px;
-  font-size: 18px;
+padding: 15px 25px;
+font-size: 18px;
+font-size: 20px;
+}
+.ErrorNotification {
+ background-color:var(--light);
+ color: var(--danger);
+ position: fixed;
+ bottom: 100;
+ right: 0;
+ padding: 20px 15px 10px 15px;
+ z-index: 5;
+ border-radius: 4px;
+   p {
+   margin-bottom: 20px;
+ }
 }
