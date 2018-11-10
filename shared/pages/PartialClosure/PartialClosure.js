@@ -49,8 +49,8 @@ export default class PartialClosure extends Component {
     if (!Array.isArray(orders)) { return }
 
     const filteredOrders = orders.filter(order => !order.isMy
-      && order.sellCurrency === haveCurrency.toUpperCase()
-      && order.buyCurrency === getCurrency.toUpperCase())
+      && order.sellCurrency === getCurrency.toUpperCase()
+      && order.buyCurrency === haveCurrency.toUpperCase())
 
     return {
       filteredOrders,
@@ -65,8 +65,8 @@ export default class PartialClosure extends Component {
     }
 
     const order = {
-      buyCurrency: getCurrency,
-      sellCurrency: haveCurrency,
+      buyCurrency: haveCurrency,
+      sellCurrency: getCurrency,
       sellAmount: haveAmount,
       buyAmount: getAmount,
     }
