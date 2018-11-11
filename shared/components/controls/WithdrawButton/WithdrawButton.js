@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 
 import CSSModules from 'react-css-modules'
 import styles from './WithdrawButton.scss'
-import ReactTooltip from 'react-tooltip'
 
 
 const WithdrawButton = ({ onClick, children, className, datatip, disabled }) => (

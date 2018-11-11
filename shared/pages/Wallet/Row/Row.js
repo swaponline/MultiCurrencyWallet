@@ -265,7 +265,6 @@ export default class Row extends Component {
                       )
                       }
                     </div>
-
                   ) : (
                     <Fragment>
                       <i className="far fa-copy" styleName="icon" />
@@ -273,7 +272,6 @@ export default class Row extends Component {
                     </Fragment>
                   )
                 }
-
                 {
                   currency === 'EOS' && !eosAccountActivated && <button styleName="button buttonActivate" onClick={this.handleEosBuyAccount} data-tip data-for="Activate">Activate</button>
                 }
@@ -282,7 +280,6 @@ export default class Row extends Component {
                     <FormattedMessage id="Row256" defaultMessage="Buy this account" />
                   </span>
                 </ReactTooltip>
-
                 {
                   currency === 'EOS' &&
                   <button styleName="button" onClick={this.handleEosRegister} data-tip data-for="Use">
@@ -333,10 +330,7 @@ export default class Row extends Component {
               isMobile && (currency === 'EOS' && !eosAccountActivated && <button styleName="button buttonActivate" onClick={this.handleEosBuyAccount} data-tip data-for="Activate">Activate</button>)
             }
           </div>
-
-
         </td>
-
       </tr>
     )
   }
