@@ -224,7 +224,6 @@ export default class Row extends Component {
           }
           <span styleName="mobileName">{fullName}</span>
         </td>
-
         { !isMobile && (
           <Fragment>
             <CopyToClipboard
@@ -235,7 +234,6 @@ export default class Row extends Component {
                 {
                   !contractAddress ? (
                     <div styleName="notContractAddress">
-
                       {
                         address !== '' && <i
                           className="far fa-copy"

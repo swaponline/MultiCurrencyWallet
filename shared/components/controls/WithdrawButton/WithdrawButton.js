@@ -5,7 +5,7 @@ import CSSModules from 'react-css-modules'
 import styles from './WithdrawButton.scss'
 
 
-const WithdrawButton = ({ onClick, children, className, datatip, disabled }) => (
+const WithdrawButton = ({ onClick, children, className, disabled }) => (
   <button styleName="withdrawButton" className={className} onClick={onClick} disabled={disabled}>
     {children}
   </button>
