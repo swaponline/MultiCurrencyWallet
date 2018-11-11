@@ -112,7 +112,7 @@
 }
 
 .table_balance-cell {
-  min-width: 124px; 
+  min-width: 124px;
   max-width: 124px;
 }
 
@@ -132,13 +132,13 @@
 }
 
 
-@include media-tablet { 
+@include media-tablet {
   .yourAddress {
     display: none;
   }
 }
 
-@include media-mobile { 
+@include media-mobile {
   .mobileName {
     display: block;
   }
@@ -209,8 +209,3 @@
     left: 103px;
   }
 }
-
-
-
-
-
