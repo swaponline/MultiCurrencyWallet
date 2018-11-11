@@ -42,13 +42,13 @@ export default class WithdrawModal extends React.Component {
   }
 
   componentWillMount() {
-      this.setBalanceOnState(this.props.data.currency)
-    }
+    this.setBalanceOnState(this.props.data.currency)
+  }
 
-     setBalanceOnState = async (currency) => {
-       const balance = await actions[currency.toLowerCase()].getBalance(currency.toLowerCase())
-       this.setState(() => ({ balance }))
-    }
+  setBalanceOnState = async (currency) => {
+   const balance = await actions[currency.toLowerCase()].getBalance(currency.toLowerCase())
+   this.setState(() => ({ balance }))
+  }
 
   handleSubmit = () => {
     const { address: to, amount } = this.state
@@ -63,23 +63,23 @@ export default class WithdrawModal extends React.Component {
       this.setState({
         isSubmitted: true,
       })
-      return
-    }
+    return
+  }
 
-    actions[currency.toLowerCase()].send(contractAddress || address, to, Number(amount), decimals)
-      .then(() => {
-        actions.loader.hide()
-        actions[currency.toLowerCase()].getBalance(currency)
-        this.setBalanceOnState(currency)
+  actions[currency.toLowerCase()].send(contractAddress || address, to, Number(amount), decimals)
+    .then(() => {
+      actions.loader.hide()
+      actions[currency.toLowerCase()].getBalance(currency)
+      this.setBalanceOnState(currency)
 
-        actions.notifications.show(constants.notifications.SuccessWithdraw, {
-          amount,
-          currency,
-          address: to,
-        })
+      actions.notifications.show(constants.notifications.SuccessWithdraw, {
+        amount,
+        currency,
+        address: to,
+      })
 
-        this.setState(() => ({ isShipped: false }))
-        actions.modals.close(name)
+      this.setState(() => ({ isShipped: false }))
+      actions.modals.close(name)
       })
   }
 
@@ -97,9 +97,7 @@ export default class WithdrawModal extends React.Component {
 
     return (
       <Modal name={name} title={`Withdraw ${data.currency.toUpperCase()}`}>
-        <p
-          style={{ fontSize: '16px' }}
-        >
+        <p style={{ fontSize: '16px' }}>
           {`Please notice, that you need to have minimum ${minAmount[data.currency.toLowerCase()]} amount `}
           <br />
           of the {data.currency} on your wallet, to use it for miners fee

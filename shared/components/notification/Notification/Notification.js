@@ -65,7 +65,7 @@ export default class Notification extends Component {
       'removed': removed,
     })
 
-    const notificationStyleName = cx(type ? type : 'notification', {
+    const notificationStyleName = cx('notification', {
       'mounted': mounted,
       'removed': removed,
       'ErrorNotification': type === 'ErrorNotification',

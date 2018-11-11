@@ -283,7 +283,7 @@ export default class BtcToLtc extends Component {
                       <strong>{flow.secretHash}</strong>
                     </div>
                     <div>
-                      <FormattedMessage id="Scriptaddress:" defaultMessage="Script address: " />
+                      <FormattedMessage id="Scriptaddress" defaultMessage="Script address: " />
                       <strong>
                         {
                           flow.ltcSwapCreationTransactionHash && (

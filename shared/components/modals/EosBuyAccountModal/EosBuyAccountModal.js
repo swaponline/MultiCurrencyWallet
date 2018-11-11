@@ -106,7 +106,7 @@ export default class EosBuyAccountModal extends React.Component {
           { activationPayment && (
             <div>
               <strong>
-                <FormattedMessage id="EosBuyAccountModal109" defaultMessage="Payment transaction:" />
+                <FormattedMessage id="EosBuyAccountModal109" defaultMessage="Payment transaction: " />
                 <a
                   href={`${config.link.bitpay}/tx/${activationPayment}`}
                   target="_blank"
