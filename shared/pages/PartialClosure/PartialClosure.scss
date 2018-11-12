@@ -1,3 +1,13 @@
 .button {
   margin-top: 20px;
 }
+
+.section {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.block {
+  width: 400px;
+}

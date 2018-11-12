@@ -12,6 +12,7 @@ import { BigNumber } from 'bignumber.js'
 
 import SelectGroup from './SelectGroup/SelectGroup'
 import { Button, Toggle } from 'components/controls'
+import PageHeadline from 'components/PageHeadline/PageHeadline'
 import { Redirect } from 'react-router-dom'
 
 
@@ -155,33 +156,46 @@ export default class PartialClosure extends Component {
 
     return (
       <Fragment>
-        <h1>Partial Closure</h1>
-        <div style={{ width: '400px', margin: '0 auto' }}>
-          <SelectGroup
-            inputValueLink={linked.haveAmount.pipe(this.setAmount)}
-            selectedValue={haveCurrency}
-            onSelect={this.handleSetHaveValue}
-            label="You have"
-            placeholder="Enter amount"
-            currencies={currencies}
-          />
-          <SelectGroup
-            inputValueLink={linked.getAmount}
-            selectedValue={getCurrency}
-            onSelect={this.handleSetGetValue}
-            label="You get"
-            disabled
-            currencies={currencies}
-          />
-          {
-            isDeclinedOffer && (<p>Offer is declined</p>)
-          }
-          {
-            isNonOffers && (<p style={{ color: 'red' }}>No offers </p>)
-          }
-          <Button styleName="button" brand fullWidth onClick={this.sendRequest} disabled={isNonOffers}>
-            Start
-          </Button>
+        <PageHeadline subTitle="Partial closure offers" />
+        <div styleName="section">
+          <div styleName="block">
+            <iframe
+              title="swap online video"
+              width="560"
+              height="315"
+              src="https://www.youtube-nocookie.com/embed/Jhrb7xOT_7s?controls=0"
+              frameBorder="0"
+              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          </div>
+          <div styleName="block">
+            <SelectGroup
+              inputValueLink={linked.haveAmount.pipe(this.setAmount)}
+              selectedValue={haveCurrency}
+              onSelect={this.handleSetHaveValue}
+              label="You have"
+              placeholder="Enter amount"
+              currencies={currencies}
+            />
+            <SelectGroup
+              inputValueLink={linked.getAmount}
+              selectedValue={getCurrency}
+              onSelect={this.handleSetGetValue}
+              label="You get"
+              disabled
+              currencies={currencies}
+            />
+            {
+              isDeclinedOffer && (<p>Offer is declined</p>)
+            }
+            {
+              isNonOffers && (<p style={{ color: 'red' }}>No offers </p>)
+            }
+            <Button styleName="button" brand fullWidth onClick={this.sendRequest} disabled={isNonOffers}>
+              Start
+            </Button>
+          </div>
         </div>
       </Fragment>
     )
