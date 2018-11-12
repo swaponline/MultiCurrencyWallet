@@ -63,9 +63,10 @@ export default class SwapComponent extends PureComponent {
       swapsId = []
     }
 
-    const boolean = swapsId.map(item => item === orderId)
+    console.log('swapsId', swapsId)
+    console.log('array',  !swapsId.includes(orderId))
 
-    if (!Boolean(...boolean)) {
+    if (!swapsId.includes(orderId)) {
       swapsId.push(orderId)
     }
 
