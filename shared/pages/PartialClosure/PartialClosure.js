@@ -134,7 +134,8 @@ export default class PartialClosure extends Component {
       return
     }
 
-    const sortedOrder = filteredOrders.sort((a, b) => a.exchangeRate - b.exchangeRate)
+    const sortedOrder = filteredOrders
+      .sort((a, b) => Number(a.buyAmount.dividedBy(a.sellAmount)) - Number(b.buyAmount.dividedBy(b.sellAmount)))
     const exRate = sortedOrder[0].buyAmount.dividedBy(sortedOrder[0].sellAmount)
     const getAmount = new BigNumber(String(value)).dividedBy(exRate)
 
@@ -181,7 +182,7 @@ export default class PartialClosure extends Component {
   render() {
     const { currencies } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect,
-      orderId, isDeclinedOffer, isFetching } = this.state
+      orderId, isDeclinedOffer, isFetching, maxAmount } = this.state
 
     const linked = Link.all(this, 'haveAmount', 'getAmount')
 
@@ -213,6 +214,7 @@ export default class PartialClosure extends Component {
               placeholder="Enter amount"
               currencies={currencies}
             />
+            <p>Max amount for offer: {maxAmount}{' '}{getCurrency.toUpperCase()}</p>
             <SelectGroup
               inputValueLink={linked.getAmount}
               selectedValue={getCurrency}
