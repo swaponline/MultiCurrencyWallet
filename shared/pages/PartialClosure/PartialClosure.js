@@ -70,8 +70,8 @@ export default class PartialClosure extends Component {
     const order = {
       buyCurrency: haveCurrency,
       sellCurrency: getCurrency,
-      sellAmount: haveAmount,
-      buyAmount: getAmount,
+      sellAmount: getAmount,
+      buyAmount: haveAmount,
     }
 
     this.setState(() => ({ isFetching: true }))
