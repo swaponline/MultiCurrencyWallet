@@ -50,10 +50,11 @@ export default class PartialClosure extends Component {
     }
   }
 
-  static getDerivedStateFromProps({ orders }, { haveCurrency, getCurrency }) {
+  static getDerivedStateFromProps({ orders }, { haveCurrency, getCurrency, haveAmount }) {
     if (!Array.isArray(orders)) { return }
 
     const filteredOrders = orders.filter(order => !order.isMy
+      && order.buyAmount > haveAmount
       && order.sellCurrency === getCurrency.toUpperCase()
       && order.buyCurrency === haveCurrency.toUpperCase())
 
@@ -133,11 +134,10 @@ export default class PartialClosure extends Component {
       return
     }
 
-    const sortedOrder = filteredOrders.sort((a, b) => a.exchangeRate - b.exchangeRate)
-    const exRate = new BigNumber(String(sortedOrder[0].exchangeRate))
+    const sortedOrder = filteredOrders
+      .sort((a, b) => Number(a.buyAmount.dividedBy(a.sellAmount)) - Number(b.buyAmount.dividedBy(b.sellAmount)))
+    const exRate = sortedOrder[0].buyAmount.dividedBy(sortedOrder[0].sellAmount)
     const getAmount = new BigNumber(String(value)).dividedBy(exRate)
-
-    console.log('get Amount ', Number(getAmount), String(getAmount))
 
     const checkAmount = this.setAmountOnState(sortedOrder[0].sellAmount, getAmount)
 
@@ -182,7 +182,7 @@ export default class PartialClosure extends Component {
   render() {
     const { currencies } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect,
-      orderId, isDeclinedOffer, maxAmount, isDisabled, isFetching } = this.state
+      orderId, isDeclinedOffer, isFetching, maxAmount } = this.state
 
     const linked = Link.all(this, 'haveAmount', 'getAmount')
 
@@ -214,6 +214,7 @@ export default class PartialClosure extends Component {
               placeholder="Enter amount"
               currencies={currencies}
             />
+            <p>Max amount for offer: {maxAmount}{' '}{getCurrency.toUpperCase()}</p>
             <SelectGroup
               inputValueLink={linked.getAmount}
               selectedValue={getCurrency}
