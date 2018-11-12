@@ -63,9 +63,6 @@ export default class SwapComponent extends PureComponent {
       swapsId = []
     }
 
-    console.log('swapsId', swapsId)
-    console.log('array',  !swapsId.includes(orderId))
-
     if (!swapsId.includes(orderId)) {
       swapsId.push(orderId)
     }
