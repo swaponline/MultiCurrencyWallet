@@ -2,6 +2,7 @@
   margin-top: 20px;
 }
 
+
 .section {
   display: flex;
   justify-content: space-between;
@@ -10,4 +11,7 @@
 
 .block {
   width: 400px;
+
+.error {
+  color: red;
 }

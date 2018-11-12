@@ -9,11 +9,13 @@ import styles from './PartialClosure.scss'
 import { connect } from 'redaction'
 import actions from 'redux/actions'
 import { BigNumber } from 'bignumber.js'
+import { Redirect } from 'react-router-dom'
 
 import SelectGroup from './SelectGroup/SelectGroup'
 import { Button, Toggle } from 'components/controls'
+
 import PageHeadline from 'components/PageHeadline/PageHeadline'
-import { Redirect } from 'react-router-dom'
+import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 
 
 const filterIsPartial = (orders) => orders
@@ -39,9 +41,11 @@ export default class PartialClosure extends Component {
       getCurrency: 'eth',
       haveAmount: '',
       getAmount: '',
+      maxAmount: 0,
       peer: '',
       filteredOrders: [],
       isNonOffers: false,
+      isFetching: false,
       isDeclinedOffer: false,
     }
   }
@@ -68,9 +72,11 @@ export default class PartialClosure extends Component {
     const order = {
       buyCurrency: haveCurrency,
       sellCurrency: getCurrency,
-      sellAmount: haveAmount,
-      buyAmount: getAmount,
+      sellAmount: getAmount,
+      buyAmount: haveAmount,
     }
+
+    this.setState(() => ({ isFetching: true }))
 
     actions.core.requestToPeer('request partial closure', peer, { order, orderId }, (orderId) => {
       console.log('orderId', orderId)
@@ -80,14 +86,41 @@ export default class PartialClosure extends Component {
           if (isAccept) {
             this.setState(() => ({
               redirect: true,
+              isFetching: false,
               orderId,
             }))
+          } else {
+            this.setDeclinedOffer()
           }
         })
       } else {
-        this.setState(() => ({ isDeclinedOffer: true, haveAmount: '' }))
+        this.setDeclinedOffer()
       }
     })
+  }
+
+  setDeclinedOffer = () => {
+    this.setState(() => ({ haveAmount: '', isFetching: false, isDeclinedOffer: true }))
+
+    setTimeout(() => {
+      this.setState(() => ({
+        isDeclinedOffer: false,
+      }))
+    }, 5000)
+  }
+
+  setNoOfferState = () => {
+    this.setState(() => ({ isNonOffers: true }))
+  }
+
+  setAmountOnState = (maxAmount, getAmount) => {
+
+    this.setState(() => ({
+      maxAmount: String(maxAmount),
+      getAmount,
+    }))
+
+    return getAmount.isLessThan(maxAmount)
   }
 
   setAmount = (value) => {
@@ -95,27 +128,29 @@ export default class PartialClosure extends Component {
 
     const { filteredOrders } = this.state
 
-    console.log('value', value)
-    console.log('filteredOrders', filteredOrders)
-
     if (filteredOrders.length === 0) {
-      this.setState(() => ({ isNonOffers: true }))
+      this.setNoOfferState()
       return
     }
 
-    // TODO add check orders and view
     const sortedOrder = filteredOrders.sort((a, b) => a.exchangeRate - b.exchangeRate)
     const exRate = new BigNumber(String(sortedOrder[0].exchangeRate))
+    const getAmount = new BigNumber(String(value)).dividedBy(exRate)
 
-    console.log('exRate', exRate)
-    console.log('sortedOrder', sortedOrder)
+    console.log('get Amount ', Number(getAmount), String(getAmount))
+
+    const checkAmount = this.setAmountOnState(sortedOrder[0].sellAmount, getAmount)
+
+    if (!checkAmount) {
+      this.setNoOfferState()
+      return
+    }
 
     this.setState(() => ({
       isNonOffers: false,
-      getAmount: exRate.multipliedBy(new BigNumber(String(value))),
       peer: sortedOrder[0].owner.peer,
       orderId: sortedOrder[0].id,
-    }))
+    }), console.log(`this state ${this.state.getAmount} ${this.state.haveAmount}`))
   }
 
   handleSetGetValue = ({ value }) => {
@@ -128,7 +163,7 @@ export default class PartialClosure extends Component {
     this.setState(() => ({
       haveCurrency,
       getCurrency: value,
-    }))
+    }), this.setAmount(this.state.haveAmount))
   }
 
   handleSetHaveValue = ({ value }) => {
@@ -141,12 +176,13 @@ export default class PartialClosure extends Component {
     this.setState(() => ({
       getCurrency,
       haveCurrency: value,
-    }))
+    }), this.setAmount(this.state.haveAmount))
   }
 
   render() {
     const { currencies } = this.props
-    const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isDeclinedOffer, type } = this.state
+    const { haveCurrency, getCurrency, isNonOffers, redirect,
+      orderId, isDeclinedOffer, maxAmount, isDisabled, isFetching } = this.state
 
     const linked = Link.all(this, 'haveAmount', 'getAmount')
 
