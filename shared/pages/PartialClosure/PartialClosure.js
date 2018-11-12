@@ -88,16 +88,16 @@ export default class PartialClosure extends Component {
               orderId,
             }))
           } else {
-            this.setDeclineOffer()
+            this.setDeclinedOffer()
           }
         })
       } else {
-        this.setDeclineOffer()
+        this.setDeclinedOffer()
       }
     })
   }
 
-  setDeclineOffer = () => {
+  setDeclinedOffer = () => {
     this.setState(() => ({ haveAmount: '', isFetching: false, isDeclinedOffer: true }))
 
     setTimeout(() => {
@@ -111,7 +111,7 @@ export default class PartialClosure extends Component {
     this.setState(() => ({ isNonOffers: true }))
   }
 
-  setAmountOnSate = (maxAmount, getAmount) => {
+  setAmountOnState = (maxAmount, getAmount) => {
 
     this.setState(() => ({
       maxAmount: String(maxAmount),
@@ -137,7 +137,7 @@ export default class PartialClosure extends Component {
 
     console.log('get Amount ', Number(getAmount), String(getAmount))
 
-    const checkAmount = this.setAmountOnSate(sortedOrder[0].sellAmount, getAmount)
+    const checkAmount = this.setAmountOnState(sortedOrder[0].sellAmount, getAmount)
 
     if (!checkAmount) {
       this.setNoOfferState()
