@@ -313,21 +313,19 @@ export default class Row extends Component {
                 </span>
               </WithdrawButton>
             )}
-            <WithdrawButton onClick={this.handleWithdraw} datatip="Send your currency" styleName="marginRight" disabled={isBalanceEmpty}>
+            <WithdrawButton onClick={this.handleWithdraw} styleName="marginRight" disabled={isBalanceEmpty}>
               <i className="fas fa-arrow-alt-circle-right" />
               <span>
                 <FormattedMessage id="Row305" defaultMessage="Send" />
               </span>
-              <ReactTooltip type="light" effect="solid" />
             </WithdrawButton>
             {
               tradeAllowed && (
-                <WithdrawButton datatip="Swap your currency or create order to swap" onClick={() => this.handleGoTrade(currency)} disabled={isBalanceEmpty}>
+                <WithdrawButton onClick={() => this.handleGoTrade(currency)} disabled={isBalanceEmpty}>
                   <i className="fas fa-exchange-alt" />
                   <span>
                     <FormattedMessage id="RowWallet313" defaultMessage="Exchange" />
                   </span>
-                  <ReactTooltip type="light" effect="solid" />
                 </WithdrawButton>
               )
             }
