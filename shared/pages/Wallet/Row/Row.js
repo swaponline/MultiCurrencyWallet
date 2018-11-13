@@ -264,7 +264,7 @@ export default class Row extends Component {
                   ) : (
                     <Fragment>
                       <i className="far fa-copy" styleName="icon" data-tip data-for="Copy" style={{ width: '14px' }} />
-                      <LinkAccount type={currency} contractAddress={contractAddress} address={address} > {address}</LinkAccount>
+                      <LinkAccount type={currency} contractAddress={contractAddress} address={address} >{isMobile ? this.handleSliceAddress() : address}</LinkAccount>
                     </Fragment>
                   )
                 }
