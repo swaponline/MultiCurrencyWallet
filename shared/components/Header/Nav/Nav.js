@@ -2,12 +2,12 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 
 import { links } from 'helpers'
-import { withRouter } from 'react-router'
-import { NavLink } from 'react-router-dom'
+import { NavLink, withRouter } from 'react-router-dom'
 
 import cx from 'classnames'
 import styles from './Nav.scss'
 import CSSModules from 'react-css-modules'
+import { FormattedMessage } from 'react-intl'
 
 
 @withRouter
@@ -18,36 +18,7 @@ export default class Nav extends Component {
     menu: PropTypes.array.isRequired,
   }
 
-  state = {
-    activeRoute: '/',
-  }
-
-  handleRouteChange = (props) => {
-    const activeRoute = props.location.pathname
-
-    const pathExist = this.props.menu
-      .some(m => m.link === activeRoute)
-
-    if (pathExist) {
-      this.setState({ activeRoute })
-    } else {
-      this.setState({ activeRoute: '/exchange' })
-    }
-  }
-
-  componentDidMount = () => {
-    this.handleRouteChange(this.props)
-  }
-
-  componentWillReceiveProps = (nextProps) => {
-    if (nextProps.location.pathname === this.state.activeRoute) {
-      return
-    }
-
-    this.handleRouteChange(nextProps)
-  }
-
-  handleClick = (link) => {
+  handleScrollToTopClick = (link) => {
     this.setState({ activeRoute: link })
 
     const scrollStep = -window.scrollY / (500 / 15)
@@ -62,7 +33,6 @@ export default class Nav extends Component {
 
   render() {
     const { menu } = this.props
-    const { activeRoute } = this.state
 
     return (
       <div styleName="nav">
@@ -72,12 +42,12 @@ export default class Nav extends Component {
               .filter(i => i.isDesktop !== false)
               .map(({ title, link, exact }) => (
                 <NavLink
-                  onClick={() => this.handleClick(link)}
+                  onClick={this.handleScrollToTopClick}
                   key={title}
                   exact={exact}
-                  styleName={cx('link', { 'active': activeRoute === link })}
+                  styleName="link"
                   to={link}
-                  // activeClassName={styles.active}
+                  activeClassName={styles.active}
                 >
                   {title}
                 </NavLink>
@@ -85,7 +55,9 @@ export default class Nav extends Component {
           }
           {
             process.env.MAINNET && (
-              <a href={links.test} styleName="link" target="_blank" rel="noreferrer noopener">Testnet</a>
+              <a href={links.test} styleName="link" target="_blank" rel="noreferrer noopener">
+                <FormattedMessage id="Nav88" defaultMessage="Testnet" />
+              </a>
             )
           }
         </Fragment>

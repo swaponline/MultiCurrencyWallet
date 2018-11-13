@@ -37,7 +37,7 @@
   align-items: center;
 }
 
-.button {
+.formRow > button {
   margin-left: 80px;
 }
 
@@ -54,5 +54,49 @@
       justify-content: center;
       margin-left: 0;
     }
+  }
+}
+
+@include media-mobile {
+  .formRow {
+    position: relative;
+    margin-top: 60px;
+    margin-bottom: 85px;
+  }
+  .rowLeft {
+    position: absolute;
+    flex-direction: column;
+    align-items: normal;
+  }
+  .rowRight {
+    position: absolute;
+    flex-direction: column;
+    align-items: flex-end;
+    right: 0;
+    text-align: right;
+  }
+  .currencySelectLeft {
+    transform: scale(0.8);
+    left: -15px;
+  }
+  .currencySelectRight{
+    transform: scale(0.8);
+    left: auto;
+    right: -15px;
+  }
+  .formRow > button {
+    position: absolute;
+    bottom: -90px;
+    width: 100%;
+    left: 0;
+    margin: 0;
+    font-size: 15px;
+    span {
+      margin-left: 5px;
+      margin-top: -4px;
+    }
+  }
+  .text {
+    margin: 0;
   }
 }

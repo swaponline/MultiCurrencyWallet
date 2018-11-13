@@ -23,6 +23,28 @@
   margin-right: 5px;
 }
 
+.notActiveLink {
+  font-size: 12px;
+  color: #c9c9c9;
+  position: absolute;
+  bottom: -20px;
+}
+
+.unconfirmedBalance {
+  font-size: 12px;
+  color: #c9c9c9;
+  span {
+    margin-bottom: -5px;
+    display: block;
+  }
+}
+
+.notContractAddress {
+  float: left;
+  position: relative;
+  height: 100%;
+}
+
 .button {
   @include inline-block;
   height: 40px;
@@ -41,9 +63,8 @@
     background: #dfc5ff;
   }
 }
-
-.table_balance-cell {
-  min-width: 100px;
+.buttonActivate {
+  margin-left: 15px;
 }
 
 .marginRight {
@@ -91,10 +112,39 @@
 }
 
 .table_balance-cell {
-  min-width: 100px;
+  min-width: 124px; 
+  max-width: 124px;
+}
+
+.mobileName {
+  color: #000;
+  display: block;
+  margin-left: -10px;
+  display: none;
+}
+
+.hidden {
+  display: none;
+}
+
+.visible {
+  display: none;
+}
+
+
+@include media-tablet { 
+  .yourAddress {
+    display: none;
+  }
 }
 
 @include media-mobile { 
+  .mobileName {
+    display: block;
+  }
+  .yourAddress {
+    display: none;
+  }
   .table_balance-cell {
     min-width: 75px;
   }
@@ -113,33 +163,53 @@
   tr.showButtons {
     color: #000;
     height: 120px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 0px 20px 0;
+    margin-bottom: 10px;
+    margin-top: 10px;
     td:nth-child(1) {
       a {
         top: 14px;
         position: absolute;
       }
     }
+    button:disabled,
+    button[disabled]{
+      background-color: #dbdbdb;
+      cursor: default;
+      color: #626262;
+    }
     .mobileName {
       position: absolute;
       left: 70px;
       top: 23px;
       margin: 0;
+      color: #000;
+    }
+    .buttonActivate {
+      top: -45px;
     }
   }
-}
-.mobileName {
-  color: #000;
-  display: block;
-  margin-left: -10px;
+  .unconfirmedBalance {
+    position: absolute;
+    right: 0;
+    top: 23px;
+    span {
+      display: inline-block;
+      margin-right: 5px;
+    }
+  }
+  .buttonActivate {
+    position: absolute;
+    right: 0;
+    height: 22px;
+    line-height: 0px;
+    font-size: 10px!important;
+    top: -47px;
+    left: 103px;
+  }
 }
 
-.hidden {
-  display: none;
-}
-
-.visible {
-  display: none;
-}
 
 
 

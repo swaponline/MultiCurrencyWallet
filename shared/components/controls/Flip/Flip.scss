@@ -9,8 +9,13 @@
   border: none;
 }
 
-@media screen and (max-width: 690px) {
+@include media-mobile {
   .trade-panel__change {
-    display: none;
+    position: absolute;
+    -webkit-transform: scale(0.6);
+    transform: scale(0.6);
+    left: 50%;
+    margin-left: -17px;
+    margin-top: -29px;
   }
 }

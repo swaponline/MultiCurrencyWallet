@@ -1,0 +1,25 @@
+{
+  "name": "Swap.Online",
+  "version": "1.0.1",
+  "manifest_version": 2,
+  "description": "Swap.Online Chrome Extension",
+  "homepage_url": "https://swap.online/",
+  "icons": {
+    "16": "extension/images/icons/icon-16.png",
+    "32": "extension/images/icons/icon-32.png",
+    "192": "extension/images/icons/icon-196.png"
+  },
+  "options_page": "application/index.html",
+  "browser_action": {
+    "default_icon": "extension/images/icons/icon-32.png",
+    "default_title": "Swap.Online"
+  },
+  "permissions": [
+    "activeTab"
+  ],
+  "background": {
+    "scripts": ["./extension/js/background.js"],
+    "persistent": false
+  },
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}

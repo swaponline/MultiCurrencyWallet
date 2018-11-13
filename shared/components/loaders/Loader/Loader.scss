@@ -173,3 +173,19 @@
   transform: translate(-50%, -50%);
   text-align: center;
 }
+
+@include media-mobile { 
+  .text {
+     position: absolute;
+     top: 65%;
+     transform: translateY(-50%);
+     padding: 0 35px;
+     text-align: center;
+   }
+   .loader {
+     transform: translateY(-50%);
+   }
+   .tips {
+     top: 64%;
+   }
+}

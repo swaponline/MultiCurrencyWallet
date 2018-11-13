@@ -12,3 +12,5 @@ app.*.css
 app.*.js
 
 .idea
+
+mainnet.build/

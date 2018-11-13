@@ -35,7 +35,11 @@ const sendRequest = (orderId, callback) => {
 }
 
 const createOrder = (data) => {
-  SwapApp.services.orders.create(data)
+  return SwapApp.services.orders.create(data)
+}
+
+const requestToPeer = (event, peer, data, callback) => {
+  SwapApp.services.orders.requestToPeer(event, peer, data, callback)
 }
 
 const updateCore = () => {
@@ -86,4 +90,5 @@ export default {
   removeOrder,
   markCoinAsHidden,
   markCoinAsVisible,
+  requestToPeer,
 }

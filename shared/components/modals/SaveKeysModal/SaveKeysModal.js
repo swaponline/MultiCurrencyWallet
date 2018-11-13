@@ -11,6 +11,7 @@ import Center from 'components/layout/Center/Center'
 import Confirm from 'components/Confirm/Confirm'
 import { constants } from 'helpers'
 import styles from './SaveKeysModal.scss'
+import { FormattedMessage } from 'react-intl'
 
 
 const views = {
@@ -61,11 +62,10 @@ export default class SaveKeysModal extends React.Component {
               { process.env.TESTNET && (
                 <a
                   href="#"
-                  onClick={() => {
-                    localStorage.setItem(constants.localStorage.testnetSkipPKCheck, true)
+                  onClick={() => { localStorage.setItem(constants.localStorage.testnetSkipPKCheck, true)
                     this.forceUpdate()
                   }}>
-              Testnet: Don`t ask again
+                  <FormattedMessage id="SaveKeysModal" defaultMessage="Testnet: Don`t ask again" />
                 </a>
               )}
               {

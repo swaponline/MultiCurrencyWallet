@@ -27,13 +27,13 @@ export default class Notification extends Component {
 
   componentDidMount() {
     if (this.props.soundPlay) {
-        this.soundClick()
+      this.soundClick()
     }
     setTimeout(() => {
       this.setState({
         mounted: true,
       }, () => {
-        setTimeout(this.close, 4000)
+        setTimeout(this.close, 8000)
       })
     }, 0)
   }
@@ -58,7 +58,7 @@ export default class Notification extends Component {
 
   render() {
     const { mounted, removed } = this.state
-    const { children, type, className} = this.props
+    const { children, type, className } = this.props
 
     const containerStyleName = cx('container', {
       'mounted': mounted,

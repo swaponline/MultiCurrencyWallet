@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 
 import SwapApp from 'swap.app'
 import actions from 'redux/actions'
+import { connect } from 'redaction'
 
-
+@connect(({ ipfs }) => ({ ipfs }))
 export default class Core extends Component {
 
   state = {
@@ -31,31 +32,48 @@ export default class Core extends Component {
     SwapApp.services.room.connection
       .off('peer joined', actions.ipfs.userJoined)
       .off('peer left', actions.ipfs.userLeft)
-      .off('accept swap request', this.updateOrders)
-      .off('decline swap request', this.updateOrders)
   }
 
   setIpfs = () => {
-    setTimeout(() => {
-      const isOnline = SwapApp.services.room.connection._ipfs.isOnline()
-      const { peer } = SwapApp.services.room
+    const setupIPFS = () => {
+      try {
+        const { ipfs } = this.props
 
-      this.updateOrders()
-      console.log('swap app', SwapApp)
+        console.log('ipfs', ipfs)
+        if (ipfs.isOnline) return
 
-      SwapApp.services.room.connection
-        .on('peer joined', actions.ipfs.userJoined)
-        .on('peer left', actions.ipfs.userLeft)
-        .on('accept swap request', this.updateOrders)
-        .on('decline swap request', this.updateOrders)
+        if (!SwapApp.services.room.connection) {
+          throw new Error(`SwapRoom not ready`)
+        }
 
-      setTimeout(() => {
+        const isOnline = SwapApp.services.room.connection._ipfs.isOnline()
+        const { peer } = SwapApp.services.room
+
+        this.updateOrders()
+
+
+        SwapApp.services.room.connection
+          .on('peer joined', actions.ipfs.userJoined)
+          .on('peer left', actions.ipfs.userLeft)
+
+        clearInterval(ipfsLoadingInterval)
+        console.log('ipfs loaded')
+
+      SwapApp.services.room
+        .on('request partial closure', this.createOrder)
+
         actions.ipfs.set({
           isOnline,
           peer,
         })
-      }, 1000)
-    }, 8000)
+      } catch (err) {
+        console.error('IPFS setup error', err)
+      }
+    }
+
+    SwapApp.services.room.on('ready', setupIPFS)
+
+    const ipfsLoadingInterval = setInterval(setupIPFS, 5000)
   }
 
   updateOrders = () => {
@@ -64,6 +82,13 @@ export default class Core extends Component {
       orders,
     }))
     actions.core.updateCore(orders)
+  }
+
+  createOrder = async ({ fromPeer, order, ...rest }) => {
+    console.log('rest', ...rest)
+    // TODO add check exchange rate and format order
+    const createdOrder = await actions.core.createOrder(order)
+    actions.core.requestToPeer('accept request', fromPeer, { orderId: createdOrder.id })
   }
 
   render() {

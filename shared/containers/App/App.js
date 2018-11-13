@@ -1,12 +1,11 @@
 import React, { Fragment } from 'react'
-import { withRouter } from 'react-router'
+import { withRouter, HashRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import actions from 'redux/actions'
 import { connect } from 'redaction'
 import moment from 'moment-with-locales-es6'
 import { constants, localStorage } from 'helpers'
 import { isMobile } from 'react-device-detect'
-import { HashRouter } from 'react-router-dom'
 
 import CSSModules from 'react-css-modules'
 import styles from './App.scss'
@@ -80,7 +79,8 @@ export default class App extends React.Component {
 
   componentDidMount() {
     window.onerror = (error) => {
-    actions.notifications.show(constants.notifications.ErrorNotification, {error})
+      actions.notifications.show(constants.notifications.ErrorNotification, { error })
+      actions.analytics.errorEvent(error)
     }
 
     setTimeout(() => {
@@ -91,10 +91,9 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { fetching, multiTabs, error, } = this.state
+    const { fetching, multiTabs, error } = this.state
     const { children, ethAddress, btcAddress, tokenAddress, history /* eosAddress */ } = this.props
     const isFetching = !ethAddress || !btcAddress || !tokenAddress || !fetching
-
     if (multiTabs) {
       return <PreventMultiTabs />
     }

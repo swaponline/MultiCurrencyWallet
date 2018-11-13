@@ -18,6 +18,7 @@ import SelectGroup from './SelectGroup/SelectGroup'
 import Button from 'components/controls/Button/Button'
 import Toggle from 'components/controls/Toggle/Toggle'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
+import { FormattedMessage } from 'react-intl'
 
 import { isNumberValid, isNumberStringFormatCorrect, mathConstants } from 'helpers/math.js'
 
@@ -62,6 +63,7 @@ export default class AddOffer extends Component {
       isSellFieldInteger: false,
       isBuyFieldInteger: false,
       manualRate: false,
+      isPartialClosure: false,
     }
   }
 
@@ -72,10 +74,14 @@ export default class AddOffer extends Component {
   }
 
   checkBalance = async (sellCurrency) => {
+    await actions[sellCurrency].getBalance(sellCurrency)
+
     const { items, tokenItems } = this.props
 
     const currency = items.concat(tokenItems)
       .filter(item => item.currency === sellCurrency.toUpperCase())[0]
+
+    const sleep = time => new Promise(resolve => setTimeout(resolve, time))
 
     const { balance, unconfirmedBalance } = currency
     const finalBalance = unconfirmedBalance !== undefined && unconfirmedBalance < 0
@@ -107,7 +113,7 @@ export default class AddOffer extends Component {
 
     buyCurrency = value
 
-    this.checkBalance(sellCurrency)
+    await this.checkBalance(sellCurrency)
 
     await this.updateExchangeRate(sellCurrency, buyCurrency)
     const { exchangeRate } = this.state
@@ -137,7 +143,8 @@ export default class AddOffer extends Component {
 
     sellCurrency = value
 
-    this.checkBalance(sellCurrency)
+    await this.checkBalance(sellCurrency)
+    
     await this.updateExchangeRate(sellCurrency, buyCurrency)
     const { exchangeRate } = this.state
     buyAmount = new BigNumber(String(sellAmount) || 0).multipliedBy(exchangeRate)
@@ -349,7 +356,7 @@ export default class AddOffer extends Component {
   render() {
     const { currencies, tokenItems } = this.props
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency,
-      balance, isBuyFieldInteger, isSellFieldInteger, ethBalance, manualRate } = this.state
+      balance, isBuyFieldInteger, isSellFieldInteger, ethBalance, manualRate, isPartialClosure } = this.state
     const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
     const isDisabled = !exchangeRate || !buyAmount && !sellAmount
       || sellAmount > balance || sellAmount < minAmount[sellCurrency]
@@ -360,7 +367,13 @@ export default class AddOffer extends Component {
 
     return (
       <div styleName="wrapper">
-        { this.isEthOrERC20() && <span styleName="error">For a swap, you need {minAmount.eth} ETH on your balance</span> }
+        { this.isEthOrERC20() &&
+          <span styleName="error">
+            <FormattedMessage id="transaction27" defaultMessage="For a swap, you need" />
+            {minAmount.eth}
+            <FormattedMessage id="transaction27" defaultMessage="ETH on your balance" />
+          </span>
+        }
         <SelectGroup
           styleName="sellGroup"
           label="Sell"
@@ -403,14 +416,13 @@ export default class AddOffer extends Component {
           <Toggle checked={manualRate} onChange={this.handleManualRate} /> Custom exchange rate
           <Tooltip text="To change the exchange rate" />
         </div>
-        <Button
-          styleName="button"
-          fullWidth
-          brand
-          disabled={isDisabled}
-          onClick={this.handleNext}
-        >
-          Next
+        <div>
+          <Toggle checked={isPartialClosure} onChange={() => this.setState((state) => ({ isPartialClosure: !state.isPartialClosure }))} /> Enabled to partial closure
+          <Tooltip
+          text="Partial closure means that you will receive exchange requests <br/> or the amount less than the total amount you want sell. <br/> For example if you want to sell 1 BTC, <br/> other users can send you exchange requests for 0.1, 0.5 BTC" />
+        </div>
+        <Button styleName="button" fullWidth brand disabled={isDisabled} onClick={this.handleNext}>
+          <FormattedMessage id="AddOffer396" defaultMessage="Next" />
         </Button>
       </div>
     )

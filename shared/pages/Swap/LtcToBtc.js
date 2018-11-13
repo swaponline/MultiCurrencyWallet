@@ -9,6 +9,7 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import TimerButton from 'components/controls/TimerButton/TimerButton'
 import Button from 'components/controls/Button/Button'
 import Timer from './Timer/Timer'
+import { FormattedMessage } from 'react-intl'
 
 
 export default class LtcToBtc extends Component {
@@ -106,10 +107,14 @@ export default class LtcToBtc extends Component {
         {
           !this.swap.id && (
             this.swap.isMy ? (
-              <h3>This order doesn&apos;t have a buyer</h3>
+              <h3>
+                <FormattedMessage id="doesn&apos" defaultMessage="This order doesn&apos;t have a buyer" />
+              </h3>
             ) : (
               <Fragment>
-                <h3>The order creator is offline. Waiting for him..</h3>
+                <h3>
+                  <FormattedMessage id="offline" defaultMessage="The order creator is offline. Waiting for him.." />
+                </h3>
                 <InlineLoader />
               </Fragment>
             )
@@ -118,7 +123,9 @@ export default class LtcToBtc extends Component {
         {
           flow.isWaitingForOwner && (
             <Fragment>
-              <h3>Waiting for other user when he connect to the order</h3>
+              <h3>
+                <FormattedMessage id="Waiting" defaultMessage="Waiting for other user when he connect to the order" />
+              </h3>
               <InlineLoader />
             </Fragment>
           )
@@ -126,16 +133,25 @@ export default class LtcToBtc extends Component {
         {
           flow.step === 1 && (
             <Fragment>
-              <div>Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation.</div>
-              <TimerButton timeLeft={5} brand onClick={this.signSwap}>Sign</TimerButton>
+              <div>
+                <FormattedMessage
+                  id="Confirmation"
+                  defaultMessage=
+                    "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation." />
+              </div>
+              <TimerButton timeLeft={5} brand onClick={this.signSwap}>
+                <FormattedMessage id="Sign" defaultMessage="Sign" />
+              </TimerButton>
               {
                 (flow.isSignFetching || flow.signTransactionHash) && (
                   <Fragment>
-                    <h4>Please wait. Confirmation processing</h4>
+                    <h4>
+                      <FormattedMessage id="Confirmation" defaultMessage="Please wait. Confirmation processing" />
+                    </h4>
                     {
                       flow.signTransactionHash && (
                         <div>
-                        Transaction:
+                          <FormattedMessage id="Transaction" defaultMessage="Transaction: " />
                           <strong>
                             <a
                               href={`${config.link.ltc}/tx/${flow.signTransactionHash}`}
@@ -162,7 +178,9 @@ export default class LtcToBtc extends Component {
         {
           flow.isMeSigned && (
             <Fragment>
-              <h3>2. Waiting BTC Owner creates Secret Key, creates BTC Script and charges it</h3>
+              <h3>
+                <FormattedMessage id="LTCTOBTC179" defaultMessage="2. Waiting BTC Owner creates Secret Key, creates BTC Script and charges it" />
+              </h3>
               {
                 flow.step === 2 && (
                   <InlineLoader />
@@ -172,10 +190,15 @@ export default class LtcToBtc extends Component {
               {
                 flow.secretHash && flow.btcScriptValues && (
                   <Fragment>
-                    <h3>3. Bitcoin Script created and charged. Please check the information below</h3>
-                    <div>Secret Hash: <strong>{flow.secretHash}</strong></div>
+                    <h3>
+                      <FormattedMessage id="LTCTOBTC191" defaultMessage="3. Bitcoin Script created and charged. Please check the information below" />
+                    </h3>
                     <div>
-                        Script address:
+                      <FormattedMessage id="SecretHash" defaultMessage="Secret Hash: " />
+                      <strong>{flow.secretHash}</strong>
+                    </div>
+                    <div>
+                      <FormattedMessage id="Scriptaddress" defaultMessage="Script address: " />
                       <strong>
                         {
                           flow.btcScriptCreatingTransactionHash && (
@@ -192,7 +215,11 @@ export default class LtcToBtc extends Component {
                     </div>
                     <br />
                     <Fragment>
-                      { flow.btcScriptValues && <span onClick={this.toggleBitcoinScript}>Show bitcoin script</span> }
+                      { flow.btcScriptValues &&
+                      <span onClick={this.toggleBitcoinScript}>
+                        <FormattedMessage id="LTCTOBTC216" defaultMessage="Show bitcoin script" />
+                      </span>
+                      }
                       { isShowingBitcoinScript && (
                         <pre>
                           <code>{`
@@ -227,7 +254,9 @@ export default class LtcToBtc extends Component {
                       flow.step === 3 && (
                         <Fragment>
                           <br />
-                          <TimerButton timeLeft={5} brand onClick={this.confirmBTCScriptChecked}>Everything is OK. Continue</TimerButton>
+                          <TimerButton timeLeft={5} brand onClick={this.confirmBTCScriptChecked}>
+                            <FormattedMessage id="OK" defaultMessage="Everything is OK. Continue" />
+                          </TimerButton>
                         </Fragment>
                       )
                     }
@@ -238,23 +267,38 @@ export default class LtcToBtc extends Component {
               {
                 flow.step === 4 && !flow.isBalanceEnough && !flow.isBalanceFetching && (
                   <Fragment>
-                    <h3>Not enough money for this swap. Please fund the balance</h3>
+                    <h3>
+                      <FormattedMessage id="Notenough" defaultMessage="Not enough money for this swap. Please fund the balance" />
+                    </h3>
                     <div>
-                      <div>Your balance: <strong>{flow.balance}</strong> {this.swap.sellCurrency}</div>
-                      <div>Required balance: <strong>{this.swap.sellAmount.toNumber()}</strong> {this.swap.sellCurrency}</div>
-                      <div>Your address: {this.swap.flow.myLtcAddress}</div>
+                      <div>
+                        <FormattedMessage id="balance" defaultMessage="Your balance: " />
+                        <strong>{flow.balance}</strong> {this.swap.sellCurrency}
+                      </div>
+                      <div>
+                        <FormattedMessage id="Required" defaultMessage="Required balance: " />
+                        <strong>{this.swap.sellAmount.toNumber()}</strong> {this.swap.sellCurrency}
+                      </div>
+                      <div>
+                        <FormattedMessage id="address" defaultMessage="Your address: " />
+                        {this.swap.flow.myLtcAddress}
+                      </div>
                       <hr />
                       <span>{flow.address}</span>
                     </div>
                     <br />
-                    <Button brand onClick={this.updateBalance}>Continue</Button>
+                    <Button brand onClick={this.updateBalance}>
+                      <FormattedMessage id="Continue" defaultMessage="Continue" />
+                    </Button>
                   </Fragment>
                 )
               }
               {
                 flow.step === 4 && flow.isBalanceFetching && (
                   <Fragment>
-                    <div>Checking balance..</div>
+                    <div>
+                      <FormattedMessage id="Checkingbalance" defaultMessage="Checking balance.." />
+                    </div>
                     <InlineLoader />
                   </Fragment>
                 )
@@ -263,14 +307,16 @@ export default class LtcToBtc extends Component {
               {
                 (flow.step >= 5 || flow.isLtcScriptFunded) && (
                   <Fragment>
-                    <h3>4. Creating LTC Script. Please wait, it will take a while</h3>
+                    <h3>
+                      <FormattedMessage id="BtcToLtc205" defaultMessage="4. Creating LTC Script. Please wait, it will take a while" />
+                    </h3>
                   </Fragment>
                 )
               }
               {
                 flow.ltcSwapCreationTransactionHash && (
                   <div>
-                    Transaction:
+                    <FormattedMessage id="Transaction" defaultMessage="Transaction: " />
                     <strong>
                       <a
                         href={`${config.link.ltc}/tx/${flow.ltcSwapCreationTransactionHash}`}
@@ -291,7 +337,7 @@ export default class LtcToBtc extends Component {
               {
                 flow.refundTransactionHash && (
                   <div>
-                    Transaction:
+                    <FormattedMessage id="Transaction" defaultMessage="Transaction: " />
                     <strong>
                       <a
                         href={`${config.link.ltc}/tx/${flow.refundTransactionHash}`}
@@ -307,7 +353,9 @@ export default class LtcToBtc extends Component {
               {
                 (flow.step === 6 || flow.isLtcWithdrawn) && (
                   <Fragment>
-                    <h3>5. Waiting BTC Owner adds Secret Key to LTC Contact</h3>
+                    <h3>
+                      <FormattedMessage id="LTCTOBTC350" defaultMessage="5. Waiting BTC Owner adds Secret Key to LTC Contact" />
+                    </h3>
                     {
                       !flow.isLtcWithdrawn && (
                         <InlineLoader />
@@ -319,13 +367,17 @@ export default class LtcToBtc extends Component {
 
               {
                 (flow.step === 7 || flow.isBtcWithdrawn) && (
-                  <h3>6. BTC Owner successfully took money from LTC Script and left Secret Key. Requesting withdrawal from BTC Script. Please wait</h3>
+                  <h3>
+                    <FormattedMessage
+                      id="LTCTOBTC365"
+                      defaultMessage="6. BTC Owner successfully took money from LTC Script and left Secret Key. Requesting withdrawal from BTC Script. Please wait" />
+                  </h3>
                 )
               }
               {
                 flow.btcSwapWithdrawTransactionHash && (
                   <div>
-                    Transaction:
+                    <FormattedMessage id="Transaction" defaultMessage="Transaction: " />
                     <strong>
                       <a
                         href={`${config.link.bitpay}/tx/${flow.btcSwapWithdrawTransactionHash}`}
@@ -347,15 +399,23 @@ export default class LtcToBtc extends Component {
               {
                 flow.isBtcWithdrawn && (
                   <Fragment>
-                    <h3>7. Money was transferred to your wallet. Check the balance.</h3>
-                    <h2>Thank you for using Swap.Online!</h2>
+                    <h3>
+                      <FormattedMessage id="LTCTOBTC396" defaultMessage="7. Money was transferred to your wallet. Check the balance." />
+                    </h3>
+                    <h2>
+                      <FormattedMessage id="Thank" defaultMessage="Thank you for using Swap.Online!" />
+                    </h2>
                   </Fragment>
                 )
               }
               {
                 flow.step >= 6 && !flow.isFinished && (
                   <div style={{ display: 'flex', alignItems: 'center' }}>
-                    { enabledButton && !flow.isBtcWithdrawn && <Button brand onClick={this.tryRefund}>TRY REFUND</Button> }
+                    { enabledButton && !flow.isBtcWithdrawn &&
+                    <Button brand onClick={this.tryRefund}>
+                      <FormattedMessage id="REFUND" defaultMessage="TRY REFUND" />
+                    </Button>
+                    }
                     <Timer
                       lockTime={(flow.btcScriptValues.lockTime - 5400) * 1000}
                       enabledButton={() => this.setState({ enabledButton: true })}
@@ -366,7 +426,7 @@ export default class LtcToBtc extends Component {
               {
                 flow.refundTransactionHash && (
                   <div>
-                    Transaction:
+                    <FormattedMessage id="Transaction" defaultMessage="Transaction: " />
                     <strong>
                       <a
                         href={`${config.link.bitpay}/tx/${flow.refundTransactionHash}`}

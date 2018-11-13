@@ -35,3 +35,15 @@
     justify-content: center;
   }
 }
+
+@include media-mobile {
+  .faqContainer {
+    display: none;
+  }
+  .videoContainer {
+    margin-bottom: -45px;
+    iframe {
+      height: 300px;
+    }
+  }
+}

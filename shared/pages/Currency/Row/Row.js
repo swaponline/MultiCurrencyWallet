@@ -7,6 +7,7 @@ import cssModules from 'react-css-modules'
 import styles from './Row.scss'
 
 import Coins from 'components/Coins/Coins'
+import { FormattedMessage } from 'react-intl'
 
 
 @cssModules(styles)
@@ -26,10 +27,15 @@ export default class Row extends Component {
           <Coins styleName="coins" names={[ from, to ]} size={40} />
         </td>
         <td>
-          <span>Exchange {from.toUpperCase()}/{to.toUpperCase()}</span>
+          <span>
+            <FormattedMessage id="Row30" defaultMessage="Exchange " />
+            {from.toUpperCase()}/{to.toUpperCase()}
+          </span>
         </td>
         <td>
-          <Link styleName="button" to={`${links.home}${from.toLowerCase()}-${to.toLowerCase()}`}>Exchange</Link>
+          <Link styleName="button" to={`${links.home}${from.toLowerCase()}-${to.toLowerCase()}`}>
+            <FormattedMessage id="Row35" defaultMessage="Exchange " />
+          </Link>
         </td>
       </tr>
     )

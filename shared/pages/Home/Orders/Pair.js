@@ -59,9 +59,7 @@ export const parsePair = (str) => {
     throw new Error(`ParseTickerError: Wrong tokens: ${str}`)
   }
 
-  if (TRADE_TICKERS.includes(str)) {
-    str = str
-  } else {
+  if (!TRADE_TICKERS.includes(str)) {
     str = tokens.reverse().join('-')
   }
 
@@ -84,7 +82,7 @@ export default class Pair {
     this.amount = BigNumber(amount)
 
     const { MAIN, BASE } = parsePair(ticker)
-    if (!MAIN || !BASE) throw new Error(`CreateOrderError: No currency: ${main}-${base}`)
+    if (!MAIN || !BASE) throw new Error(`CreateOrderError: No currency: ${MAIN}-${BASE}`)
 
     this.ticker = ticker
     this.main = MAIN
@@ -128,10 +126,10 @@ export default class Pair {
     if (![PAIR_ASK, PAIR_BID].includes(type)) throw new Error(`CreateOrderError: Wrong order type: ${type}`)
 
     const base = { currency: BASE, amount: amount.times(price) }
-    const main = { currency: MAIN, amount: amount }
+    const main = { currency: MAIN, amount }
 
-    const buy = (type == PAIR_ASK) ? base : main
-    const sell = (type == PAIR_ASK) ? main : base
+    const buy = (type === PAIR_ASK) ? base : main
+    const sell = (type === PAIR_ASK) ? main : base
 
     return {
       buyCurrency: buy.currency,
@@ -151,14 +149,14 @@ export default class Pair {
     }
 
     // ASK means sellCurrency is ETH, then sell is main
-    const main_amount = BigNumber(type === PAIR_ASK ? sellAmount : buyAmount)
-    const base_amount = BigNumber(type === PAIR_ASK ? buyAmount : sellAmount)
+    const mainAmount = BigNumber(type === PAIR_ASK ? sellAmount : buyAmount)
+    const baseAmount = BigNumber(type === PAIR_ASK ? buyAmount : sellAmount)
 
     return new Pair({
       ticker,
       type,
-      price: base_amount.div(main_amount),
-      amount: main_amount,
+      price: baseAmount.div(mainAmount),
+      amount: mainAmount,
     })
   }
 

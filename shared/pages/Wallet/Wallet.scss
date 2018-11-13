@@ -1,3 +1,14 @@
 .coinsActionsBlock {
   margin: 25px 0px;
 }
+.sectionWalletMobile {
+	margin-top: -88px;
+}
+.sectionWallet {
+	margin-top: 88px;
+}
+@include media-mobile { 
+	.sectionWalletMobile {
+		margin-top: 0px;
+	}
+}

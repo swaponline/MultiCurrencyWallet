@@ -7,6 +7,7 @@ import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
 import { btc, request, constants, api } from 'helpers'
 
+
 const login = (privateKey) => {
   let keyPair
 
@@ -47,8 +48,8 @@ const getBalance = () => {
 
   return request.get(`${api.getApiServer('bitpay')}/addr/${address}`)
     .then(({ balance, unconfirmedBalance }) => {
-      console.log('BTC Balance:', balance)
-      console.log('BTC unconfirmedBalance Balance:', unconfirmedBalance)
+      console.log('BTC Balance: ', balance)
+      console.log('BTC unconfirmedBalance Balance: ', unconfirmedBalance)
       reducers.user.setBalance({ name: 'btcData', amount: balance, unconfirmedBalance })
       return balance
     }, () => Promise.reject())
@@ -179,5 +180,5 @@ export default {
   broadcastTx,
   fetchTx,
   fetchBalance,
-  signMessage
+  signMessage,
 }

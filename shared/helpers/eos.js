@@ -1,6 +1,7 @@
 import { getState } from 'redux/core'
 import config from 'app-config'
 
+
 let eosInstance = null
 let telosInstance = null
 let eccInstance = null
@@ -15,7 +16,8 @@ const keyProvider = (telos = false) => {
 
     if (pubkeys || telos) {
       return [activePrivateKey]
-    } else {
+    }
+    else {
       return [activePublicKey]
     }
   }
@@ -41,7 +43,7 @@ const setupEOS = async () => {
     chainId: telosChainId,
     httpEndpoint: telosHttpEndpoint,
     keyProvider: telosKeyProvider,
-    keyPrefix: 'TLOS'
+    keyPrefix: 'TLOS',
   })
 
   eccInstance = EOS.modules.ecc
@@ -61,23 +63,23 @@ const eos = {
   async getInstance() {
     await init()
     return eosInstance
-  }
+  },
 }
 
 const ecc = {
   async getInstance() {
     await init()
     return eccInstance
-  }
+  },
 }
 
 const telos = {
   async getInstance() {
     await init()
     return telosInstance
-  }
+  },
 }
 
 export {
-  eos, telos, ecc
+  eos, telos, ecc,
 }

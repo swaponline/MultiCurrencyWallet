@@ -1,4 +1,5 @@
 import React from 'react'
+import { isMobile } from 'react-device-detect'
 
 import CSSModules from 'react-css-modules'
 import styles from './Table.scss'
@@ -14,7 +15,7 @@ export default class Table extends React.Component {
 
     this.state = {
       sticky: false,
-      selectId: 0
+      selectId: 0,
     }
   }
 
@@ -75,7 +76,7 @@ export default class Table extends React.Component {
     const { sticky } = this.state
     return (
       <table styleName={sticky ? 'table table-fixed' : 'table'} className={className} ref={(table) => this.linkOnTable = table}>
-        <thead ref={(thead) => this.linkOnTableHead = thead}>
+        <thead ref={(thead) => this.linkOnTableHead = thead} styleName={isMobile ? 'mobileThead' : ''}>
           <tr>
             {
               titles.filter(title => !!title).map((title, index) => (

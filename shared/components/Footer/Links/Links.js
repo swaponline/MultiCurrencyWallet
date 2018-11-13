@@ -10,7 +10,6 @@ const link = [
   [
     { link: links.career, title: 'Careers', header: 'Company' },
     { link: links.button, title: 'Use swap.button' },
-    { link: links.etherdelta, title: 'Buy&Sell Token' },
     { link: links.about, title: 'About Us' },
   ],
   [

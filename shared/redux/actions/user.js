@@ -84,7 +84,6 @@ const getBalances = () => {
     })
   // actions.nimiq.getBalance()
 }
-
 const getDemoMoney = process.env.MAINNET ? () => {} : () => {
   request.get('https://swap.wpmix.net/demokeys.php', {})
     .then((r) => {

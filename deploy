@@ -1,0 +1,31 @@
+#!/bin/sh
+
+# build
+npm run build:mainnet
+
+# update repo or clone
+
+# git clone git@github.com:swaponline/mainnet.build.git
+cd mainnet.build
+git pull
+
+# clean React code from repo
+rm -rf assets
+rm -rf images
+rm -rf fonts
+rm -rf *.css
+rm -rf *.js
+
+# update files in repo
+cp -rf ../build-mainnet/* ./
+# \cp build-mainnet/* mainnet.build/
+
+# commit build to repo
+
+DATE=`date '+%Y-%m-%d %H:%M:%S'`
+git add .
+git commit -m "build $DATE"
+git push
+
+# return back to root
+cd ..

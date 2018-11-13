@@ -3,9 +3,8 @@ import React, { PureComponent } from 'react'
 import Swap from 'swap.swap'
 
 import { connect } from 'redaction'
-import { links } from 'helpers'
+import { links, constants } from 'helpers'
 import actions from 'redux/actions'
-import { constants } from 'helpers'
 
 import { swapComponents } from './swaps'
 import Share from './Share/Share'
@@ -35,15 +34,17 @@ export default class SwapComponent extends PureComponent {
       const swap = new Swap(orderId)
       const SwapComponent = swapComponents[swap.flow._flowName]
 
+      window.swap = swap
+
       this.setState({
         SwapComponent,
         swap,
       })
 
     } catch (error) {
-       actions.notifications.show(constants.notifications.ErrorNotification, { error: 'Sorry, but this order do not exsit already', center: true, })
-       this.props.history.push(links.exchange)
-     }
+      actions.notifications.show(constants.notifications.ErrorNotification, { error: 'Sorry, but this order do not exsit already', center: true })
+      this.props.history.push(links.exchange)
+    }
 
     this.setSaveSwapId(orderId)
   }

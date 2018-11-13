@@ -5,8 +5,9 @@ import moment from 'moment-with-locales-es6'
 
 export default {
   env: 'production',
-  entry: 'testnet-local',
+  entry: 'testnet',
   local: 'local',
+  dir: 'testnet-local',
 
   base: './',
   publicPath: `.${baseConfig.publicPath}`,
