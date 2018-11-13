@@ -144,7 +144,7 @@ export default class AddOffer extends Component {
     sellCurrency = value
 
     await this.checkBalance(sellCurrency)
-    
+
     await this.updateExchangeRate(sellCurrency, buyCurrency)
     const { exchangeRate } = this.state
     buyAmount = new BigNumber(String(sellAmount) || 0).multipliedBy(exchangeRate)
@@ -363,7 +363,7 @@ export default class AddOffer extends Component {
       || this.isEthOrERC20()
 
     linked.sellAmount.check((value) => value > minAmount[sellCurrency], `Amount must be greater than ${minAmount[sellCurrency]} `)
-    linked.sellAmount.check((value) => value <= balance, `Amount must be bigger than on your balance`)
+    linked.sellAmount.check((value) => value <= balance, `The balance must be greater than the amount you entered.`)
 
     return (
       <div styleName="wrapper">
