@@ -8,14 +8,16 @@ import cssModules from 'react-css-modules'
 import styles from './Row.scss'
 
 import { Link } from 'react-router-dom'
-import CopyToClipboard from 'react-copy-to-clipboard'
+import { withRouter } from 'react-router'
+import { links } from 'helpers'
 
 import Coin from 'components/Coin/Coin'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import WithdrawButton from 'components/controls/WithdrawButton/WithdrawButton'
+import Href from 'components/Href/Href'
 
 import LinkAccount from '../LinkAccount/LinkAcount'
-import { withRouter } from 'react-router'
+import CopyToClipboard from 'react-copy-to-clipboard'
 import ReactTooltip from 'react-tooltip'
 import { FormattedMessage } from 'react-intl'
 
@@ -305,7 +307,8 @@ export default class Row extends Component {
         ) }
         <td>
           <div>
-            { isMobile && (
+            {
+              isMobile && (
               <WithdrawButton onClick={this.handleReceive} styleName="marginRight">
                 <i className="fas fa-qrcode" />
                 <span>
@@ -313,32 +316,50 @@ export default class Row extends Component {
                 </span>
               </WithdrawButton>
             )}
-            <WithdrawButton onClick={this.handleWithdraw} datatip="Send your currency" styleName="marginRight" disabled={isBalanceEmpty}>
-              <i className="fas fa-arrow-alt-circle-right" />
-              <span>
-                <FormattedMessage id="Row305" defaultMessage="Send" />
-              </span>
-              <ReactTooltip type="light" effect="solid" />
-            </WithdrawButton>
             {
-              tradeAllowed && (
-                <WithdrawButton datatip="Swap your currency or create order to swap" onClick={() => this.handleGoTrade(currency)} disabled={isBalanceEmpty}>
+              !isBalanceEmpty && (<WithdrawButton onClick={this.handleWithdraw} styleName="marginRight">
+                <i className="fas fa-arrow-alt-circle-right" />
+                <span>
+                  <FormattedMessage id="Row305" defaultMessage="Send" />
+                </span>
+              </WithdrawButton>
+            )
+            }
+            {
+              !isBalanceEmpty && tradeAllowed && (
+                <WithdrawButton onClick={() => this.handleGoTrade(currency)}>
                   <i className="fas fa-exchange-alt" />
                   <span>
                     <FormattedMessage id="RowWallet313" defaultMessage="Exchange" />
                   </span>
-                  <ReactTooltip type="light" effect="solid" />
                 </WithdrawButton>
               )
+            }
+            {
+              isBalanceEmpty && (
+                <WithdrawButton disable="true" dataFor="true" styleName="marginRight">
+                  <span>
+                    <FormattedMessage id="RowWallet343" defaultMessage="Send" />
+                  </span>
+                </WithdrawButton>
+              )
+            }
+            {
+              (
+              isBalanceEmpty && tradeAllowed && (
+                <WithdrawButton disable="true" dataFor="true">
+                  <span>
+                    <FormattedMessage id="RowWallet353" defaultMessage="Exchange" />
+                  </span>
+                </WithdrawButton>
+              )
+            )
             }
             {
               isMobile && (currency === 'EOS' && !eosAccountActivated && <button styleName="button buttonActivate" onClick={this.handleEosBuyAccount} data-tip data-for="Activate">Activate</button>)
             }
           </div>
-
-
         </td>
-
       </tr>
     )
   }
