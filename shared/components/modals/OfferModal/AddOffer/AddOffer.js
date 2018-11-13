@@ -144,7 +144,7 @@ export default class AddOffer extends Component {
     sellCurrency = value
 
     await this.checkBalance(sellCurrency)
-    
+
     await this.updateExchangeRate(sellCurrency, buyCurrency)
     const { exchangeRate } = this.state
     buyAmount = new BigNumber(String(sellAmount) || 0).multipliedBy(exchangeRate)
