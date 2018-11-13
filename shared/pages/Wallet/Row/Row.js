@@ -191,7 +191,6 @@ export default class Row extends Component {
               <div styleName="no-select-inline" onClick={this.handleReloadBalance} >
                 <i className="fas fa-sync-alt" styleName="icon" />
                 <span>{String(balance).length > 4 ? balance.toFixed(4) : balance}{' '}{currency}</span>
-
                 { currency === 'BTC' && unconfirmedBalance !== 0 && (
                   <Fragment>
                     <br />
@@ -224,7 +223,6 @@ export default class Row extends Component {
           }
           <span styleName="mobileName">{fullName}</span>
         </td>
-
         { !isMobile && (
           <Fragment>
             <CopyToClipboard
@@ -235,16 +233,10 @@ export default class Row extends Component {
                 {
                   !contractAddress ? (
                     <div styleName="notContractAddress">
-
                       {
-                        address !== '' && <i
-                          className="far fa-copy"
-                          styleName="icon"
-                          data-tip
-                          data-for="Copy"
-                          style={{ width: '14px' }} />
+                         address !== '' && <i className="far fa-copy" styleName="icon" data-tip data-for="Copy" style={{ width: '14px' }} />
                       }
-                      <LinkAccount type={currency} address={address} >{address}</LinkAccount>
+                      <LinkAccount type={currency} address={address} > {address}</LinkAccount>
                       <ReactTooltip id="Copy" type="light" effect="solid">
                         <span>
                           <FormattedMessage id="Row235" defaultMessage="Copy" />
@@ -265,15 +257,13 @@ export default class Row extends Component {
                       )
                       }
                     </div>
-
                   ) : (
                     <Fragment>
-                      <i className="far fa-copy" styleName="icon" />
-                      <LinkAccount type={currency} contractAddress={contractAddress} address={address} >{address}</LinkAccount>
+                      <i className="far fa-copy" styleName="icon" data-tip data-for="Copy" style={{ width: '14px' }} />
+                      <LinkAccount type={currency} contractAddress={contractAddress} address={address} > {address}</LinkAccount>
                     </Fragment>
                   )
                 }
-
                 {
                   currency === 'EOS' && !eosAccountActivated && <button styleName="button buttonActivate" onClick={this.handleEosBuyAccount} data-tip data-for="Activate">Activate</button>
                 }
