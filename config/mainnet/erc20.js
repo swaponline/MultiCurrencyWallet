@@ -174,4 +174,16 @@ export default {
     decimals: 18,
     fullName: 'Streamr DATAcoin',
   },
+  gai: {
+    address: '0x74f276ca78133e156f52f8fe7b2d003f4e321aaa',
+    decimals: 5,
+    fullName: 'GraphGrail Ai',
+  },
+  emtv: {
+    address: '0x07a7ed332c595b53a317afcee50733af571475e7',
+    decimals: 18,
+    fullName: 'Multiversum',
+  },
+
+
 }
