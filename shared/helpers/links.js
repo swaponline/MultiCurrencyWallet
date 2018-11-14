@@ -5,7 +5,7 @@ export default {
   currencyWallet: '/wallet',
   swap: '/swap',
   feed: '/feed',
-  affiliate: '/affiliate',
+  aboutus: '/aboutus',
   listing: '/listing',
   test: 'https://testnet.swap.online',
   main: 'https://swap.online/',
