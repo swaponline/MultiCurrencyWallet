@@ -164,7 +164,7 @@ export default {
     decimals: 0,
     fullName: 'PIX Token',
   },
-  dax: {
+  dao: {
     address: '0x543ff227f64aa17ea132bf9886cab5db55dcaddf',
     decimals: 18,
     fullName: 'DAO Stack',
