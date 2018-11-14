@@ -1,3 +1,9 @@
 .content {
   min-width: 400px;
 }
+
+@include media-mobile { 
+	.content {
+		min-width: auto;
+	}
+}

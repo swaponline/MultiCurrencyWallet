@@ -75,3 +75,9 @@ textarea.input {
     text-decoration: underline !important;
   }
 }
+
+@include media-mobile { 
+  .input {
+    font-size: 14px;
+  }
+}

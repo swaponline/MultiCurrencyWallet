@@ -61,3 +61,12 @@
   padding: 40px 0 100px;
   font-size: 16px;
 }
+
+@include media-mobile { 
+  .modal {
+    padding: 15px 15px;
+  }
+  .content { 
+    min-width: auto;
+  }
+}

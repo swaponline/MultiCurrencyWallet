@@ -76,7 +76,7 @@ export default class Table extends React.Component {
     const { sticky } = this.state
     return (
       <table styleName={sticky ? 'table table-fixed' : 'table'} className={className} ref={(table) => this.linkOnTable = table}>
-        <thead ref={(thead) => this.linkOnTableHead = thead} styleName={isMobile ? 'mobileThead' : ''}>
+        <thead ref={(thead) => this.linkOnTableHead = thead}>
           <tr>
             {
               titles.filter(title => !!title).map((title, index) => (

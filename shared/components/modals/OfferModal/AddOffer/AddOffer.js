@@ -17,6 +17,7 @@ import SelectGroup from './SelectGroup/SelectGroup'
 
 import Button from 'components/controls/Button/Button'
 import Toggle from 'components/controls/Toggle/Toggle'
+import Input from 'components/forms/Input/Input'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage } from 'react-intl'
 
@@ -366,7 +367,7 @@ export default class AddOffer extends Component {
     linked.sellAmount.check((value) => value <= balance, `Amount must be less than your balance`)
 
     return (
-      <div styleName="wrapper">
+      <div styleName="wrapper addOffer">
         { this.isEthOrERC20() &&
           <span styleName="error">
             <FormattedMessage id="transaction27" defaultMessage="For a swap, you need" />
@@ -400,7 +401,7 @@ export default class AddOffer extends Component {
           isInteger={isBuyFieldInteger}
           placeholder="Enter buy amount"
         />
-        <div>
+        <div styleName="exchangeRate">
           <ExchangeRateGroup
             label="Exchange rate"
             inputValueLink={linked.exchangeRate.pipe(this.handleExchangeRateChange)}
