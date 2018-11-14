@@ -164,7 +164,7 @@ export default {
     decimals: 0,
     fullName: 'PIX Token',
   },
-  dax: {
+  gen: {
     address: '0x543ff227f64aa17ea132bf9886cab5db55dcaddf',
     decimals: 18,
     fullName: 'DAO Stack',
@@ -173,5 +173,20 @@ export default {
     address: '0x0cf0ee63788a0849fe5297f3407f701e122cc023',
     decimals: 18,
     fullName: 'Streamr DATAcoin',
+  },
+  gai: {
+    address: '0x74f276ca78133e156f52f8fe7b2d003f4e321aaa',
+    decimals: 5,
+    fullName: 'GraphGrail Ai',
+  },
+  emtv: {
+    address: '0x07a7ed332c595b53a317afcee50733af571475e7',
+    decimals: 18,
+    fullName: 'Multiversum',
+  },
+  cgc: {
+    address: '0x2d9765a94ff22e0ca3afc3e3f4b116de2b67582a',
+    decimals: 16,
+    fullName: 'CGC',
   },
 }
