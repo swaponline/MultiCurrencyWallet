@@ -164,7 +164,7 @@ export default {
     decimals: 0,
     fullName: 'PIX Token',
   },
-  dax: {
+  gen: {
     address: '0x543ff227f64aa17ea132bf9886cab5db55dcaddf',
     decimals: 18,
     fullName: 'DAO Stack',
@@ -184,6 +184,9 @@ export default {
     decimals: 18,
     fullName: 'Multiversum',
   },
-
-
+  cgc: {
+  address: '0x2d9765a94ff22e0ca3afc3e3f4b116de2b67582a',
+  decimals: 16,
+  fullName: 'CGC',
+  },
 }
