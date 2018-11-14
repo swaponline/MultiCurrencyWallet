@@ -31,3 +31,23 @@
     text-decoration: underline !important;
   }
 }
+
+@include media-mobile {
+  .addOffer {
+    width: 100%;
+    .sellGroup {
+      margin-bottom: 75px;
+    }
+    .error {
+      span:nth-child(1) {
+        margin-right: 5px;
+      }
+      span:nth-child(2){
+        display: block;
+      }
+    }
+    .exchangeRate {
+      margin: 25px 0;
+    }
+  }
+}

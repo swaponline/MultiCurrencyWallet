@@ -131,23 +131,30 @@
   display: none;
 }
 
+button:disabled,
+button[disabled]{
+  background-color: #dbdbdb;
+  cursor: default;
+  color: #626262;
+}
 
-@include media-tablet {
-  .yourAddress {
-    display: none;
-  }
+.actButton, .useButton {
+  display: none;
 }
 
 @include media-mobile {
   .mobileName {
     display: block;
   }
+
   .yourAddress {
     display: none;
   }
+
   .table_balance-cell {
     min-width: 75px;
   }
+
   .no-select-inline {
     font-size: 15px;
     position: absolute;
@@ -155,11 +162,13 @@
     background: transparent!important;
     top: 23px;
   }
+
   .mobileName {
     color: #000;
     display: block;
     font-size: 16px;
   }
+
   tr.showButtons {
     color: #000;
     height: 120px;
@@ -173,12 +182,7 @@
         position: absolute;
       }
     }
-    button:disabled,
-    button[disabled]{
-      background-color: #dbdbdb;
-      cursor: default;
-      color: #626262;
-    }
+
     .mobileName {
       position: absolute;
       left: 70px;
@@ -189,7 +193,15 @@
     .buttonActivate {
       top: -45px;
     }
-  }
+
+    tr.hidden {
+       td:nth-child(5) {
+         div {
+           display: none;
+         }
+       }
+     }
+
   .unconfirmedBalance {
     position: absolute;
     right: 0;
@@ -208,4 +220,5 @@
     top: -47px;
     left: 103px;
   }
+}
 }

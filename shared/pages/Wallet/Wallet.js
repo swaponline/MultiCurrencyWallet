@@ -87,7 +87,7 @@ export default class Wallet extends Component {
   render() {
     const { view, zeroBalance } = this.state
     const { items, tokens, currencies, hiddenCoinsList } = this.props
-    const titles = [ 'Coin', 'Name', 'Balance', !isMobile && 'Your Address', isMobile ? 'Send, receive, swap' :  'Actions' ]
+    const titles = [ 'Coin', 'Name', 'Balance', 'Your Address', isMobile ? 'Send, receive, swap' :  'Actions' ]
 
     const keysSaved = localStorage.getItem(constants.localStorage.privateKeysSaved)
     const testNetSkip = localStorage.getItem(constants.localStorage.testnetSkip)

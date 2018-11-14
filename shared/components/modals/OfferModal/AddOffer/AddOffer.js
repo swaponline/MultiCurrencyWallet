@@ -10,6 +10,7 @@ import { BigNumber } from 'bignumber.js'
 
 import styles from './AddOffer.scss'
 import cssModules from 'react-css-modules'
+import Input from 'components/forms/Input/Input'
 
 import Select from './Select/Select'
 import ExchangeRateGroup from './ExchangeRateGroup/ExchangeRateGroup'
@@ -144,7 +145,7 @@ export default class AddOffer extends Component {
     sellCurrency = value
 
     await this.checkBalance(sellCurrency)
-    
+
     await this.updateExchangeRate(sellCurrency, buyCurrency)
     const { exchangeRate } = this.state
     buyAmount = new BigNumber(String(sellAmount) || 0).multipliedBy(exchangeRate)
@@ -366,7 +367,7 @@ export default class AddOffer extends Component {
     linked.sellAmount.check((value) => value <= balance, `Amount must be less than your balance`)
 
     return (
-      <div styleName="wrapper">
+      <div styleName="wrapper addOffer">
         { this.isEthOrERC20() &&
           <span styleName="error">
             <FormattedMessage id="transaction27" defaultMessage="For a swap, you need" />
@@ -400,7 +401,7 @@ export default class AddOffer extends Component {
           isInteger={isBuyFieldInteger}
           placeholder="Enter buy amount"
         />
-        <div>
+        <div styleName="exchangeRate">
           <ExchangeRateGroup
             label="Exchange rate"
             inputValueLink={linked.exchangeRate.pipe(this.handleExchangeRateChange)}

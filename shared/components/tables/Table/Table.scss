@@ -290,9 +290,9 @@ table.wallet {
       display: table-row;
     }
   }
-  th:nth-child(4) {
-    display: none;
-  }
+  // th:nth-child(4) {
+  //   display: none;
+  // }
   .mobileThead {
     th:nth-child(4) {
       display: block;
@@ -329,6 +329,7 @@ table.wallet {
         position: absolute;
         bottom: 0;
         left: 20px;
+        right: 20px;
       }
     }
 
@@ -340,7 +341,7 @@ table.wallet {
       width: 54%;
       max-width: 80px;
     }
-    td:nth-child(4) {
+    td:nth-child(5) {
       width: 26%;
       div {
         position: absolute;
