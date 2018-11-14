@@ -187,6 +187,6 @@ export default {
   cgc: {
     address: '0x2d9765a94ff22e0ca3afc3e3f4b116de2b67582a',
     decimals: 16,
-    fullName: 'CGC',
+    fullName: 'CGCOINS',
   },
 }
