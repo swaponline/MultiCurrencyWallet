@@ -63,6 +63,22 @@
     background: #dfc5ff;
   }
 }
+
+.disbutton {
+  @include inline-block;
+  height: 40px;
+  background: #dbdbdb;
+  padding: 0 25px;
+  cursor: pointer;
+  line-height: 40px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #626262;
+  border-radius: 20px;
+  margin-right: 10px;
+ }
+
+
 .buttonActivate {
   margin-left: 15px;
 }
@@ -144,7 +160,7 @@ button[disabled]{
 }
 
 
-@include media-mobile { 
+@include media-mobile {
   .mobileName {
     display: block;
   }

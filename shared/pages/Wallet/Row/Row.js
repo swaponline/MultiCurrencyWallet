@@ -12,7 +12,6 @@ import CopyToClipboard from 'react-copy-to-clipboard'
 
 import Coin from 'components/Coin/Coin'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
-import WithdrawButton from 'components/controls/WithdrawButton/WithdrawButton'
 
 import LinkAccount from '../LinkAccount/LinkAcount'
 import { withRouter } from 'react-router'
@@ -268,7 +267,6 @@ export default class Row extends Component {
                     </Fragment>
                   )
                 }
-
                 <div styleName="actButton">
                   {currency === 'EOS' && !eosAccountActivated && <button styleName="button buttonActivate" onClick={this.handleEosBuyAccount} data-tip data-for="Activate">Activate</button>}
                 </div>
@@ -277,8 +275,7 @@ export default class Row extends Component {
                     <FormattedMessage id="Row256" defaultMessage="Buy this account" />
                   </span>
                 </ReactTooltip>
-
-                <div styleName="useButton"> 
+                <div styleName="useButton">
                   {
                     currency === 'EOS' &&
                     <button styleName="button" onClick={this.handleEosRegister} data-tip data-for="Use">
@@ -301,28 +298,59 @@ export default class Row extends Component {
           </Fragment>
         <td>
           <div>
-            <WithdrawButton onClick={this.handleWithdraw} styleName="marginRight" disabled={isBalanceEmpty}>
+            <button onClick={this.handleWithdraw} styleName="button" data-tip data-for="Deposit">
               <i className="fas fa-qrcode" />
               <span>
                 <FormattedMessage id="Row313" defaultMessage="Deposit" />
               </span>
-            </WithdrawButton>
-            <WithdrawButton onClick={this.handleWithdraw} datatip="Send your currency" styleName="marginRight" disabled={isBalanceEmpty}>
-              <i className="fas fa-arrow-alt-circle-right" />
-              <span>
-                <FormattedMessage id="Row305" defaultMessage="Send" />
-              </span>
-            </WithdrawButton>
+            </button>
+            <ReactTooltip id="Deposit" type="light" effect="solid">
+            <span>
+              <FormattedMessage id="Row268" defaultMessage="Deposit funds to this address of currency wallet" />
+            </span>
+            </ReactTooltip>
+          {
+            !isBalanceEmpty && (<button onClick={this.handleWithdraw} datatip="Send your currency" styleName="button" disabled={isBalanceEmpty}>
+            <i className="fas fa-arrow-alt-circle-right" />
+            <span>
+              <FormattedMessage id="Row305" defaultMessage="Send" />
+            </span>
+            </button>
+          )}
             {
-              tradeAllowed && (
-                <WithdrawButton onClick={() => this.handleGoTrade(currency)} disabled={isBalanceEmpty}>
+              !isBalanceEmpty && tradeAllowed && (
+                <button onClick={() => this.handleGoTrade(currency)} disabled={isBalanceEmpty} styleName="button">
                   <i className="fas fa-exchange-alt" />
                   <span>
                     <FormattedMessage id="RowWallet313" defaultMessage="Exchange" />
                   </span>
-                </WithdrawButton>
+                </button>
               )
             }
+            {
+              isBalanceEmpty && (
+                <button styleName="disbutton" dataFor="true" disable="true" data-tip data-for="disable">
+                  <i className="fas fa-arrow-alt-circle-right" />
+                  <span>
+                    <FormattedMessage id="Row305" defaultMessage="Send" />
+                  </span>
+                </button>
+            )}
+              {
+                isBalanceEmpty && tradeAllowed && (
+                  <button styleName="disbutton" data-tip data-for="disable">
+                    <i className="fas fa-exchange-alt" />
+                    <span>
+                      <FormattedMessage id="RowWallet313" defaultMessage="Exchange" />
+                    </span>
+                  </button>
+                )
+              }
+              <ReactTooltip id="disable" type="light" effect="solid" multiline={true}>
+              <span>
+                <FormattedMessage id="Row268" defaultMessage="You can not send or exchange this asset, because you have a zero balance." />
+              </span>
+              </ReactTooltip>
             {
               isMobile && (currency === 'EOS' && !eosAccountActivated && <button styleName="button buttonActivate" onClick={this.handleEosBuyAccount} data-tip data-for="Activate">Activate</button>)
             }

@@ -23,3 +23,17 @@
     margin-bottom: 10px;
   }
 }
+
+.disable {
+  @include inline-block;
+  height: 40px;
+  background: #dbdbdb;
+  padding: 0 25px;
+  cursor: pointer;
+  line-height: 40px;
+  font-size: 16px;
+  border: none;
+  font-weight: 500;
+  color: #626262;
+  border-radius: 20px;
+}
