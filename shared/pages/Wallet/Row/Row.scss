@@ -147,8 +147,9 @@
   display: none;
 }
 
-button:disabled,
-button[disabled]{
+tr button:disabled,
+tr button[disabled],
+tr button[disabled]:hover {
   background-color: #dbdbdb;
   cursor: default;
   color: #626262;
@@ -157,6 +158,23 @@ button[disabled]{
 
 .actButton, .useButton {
   display: none;
+}
+
+.walletButtons {
+  color: inherit;
+}
+
+.notActivated {
+  button:nth-child(2),
+  button:nth-child(3) {
+    display: none!important;
+  }
+}
+
+@media all and (min-width: 570px) and (max-width:900px) {
+  .buttonActivate {
+    margin-left: 0px;
+  }
 }
 
 

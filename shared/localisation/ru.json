@@ -1,7 +1,7 @@
 [
   {
-    "id": "menu.affiliate",
-    "message": "Филиал",
+    "id": "menu.aboutus",
+    "message": "О Нас",
     "files": [
       "shared/components/Header/Header.js"
     ]

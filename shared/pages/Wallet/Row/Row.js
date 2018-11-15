@@ -45,8 +45,14 @@ export default class Row extends Component {
     this.handleCheckBalance()
   }
 
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.handleSliceAddress);
+  }
+
   componentDidMount() {
     const { hiddenCoinsList } = this.props
+
+    window.addEventListener("resize", this.handleSliceAddress);
 
     Object.keys(config.erc20)
       .forEach(name => {
@@ -84,7 +90,12 @@ export default class Row extends Component {
 
   handleSliceAddress = () => {
     const { address } = this.props;
-    return address.substr(0, 6) + '...' + address.substr(address.length - 2);
+    if(window.innerWidth < 1080 || isMobile) {
+      return address.substr(0, 6) + '...' + address.substr(address.length - 2)
+    }
+    else {
+      return address
+    }
   }
 
   handleTouchClear = (e) => {
@@ -239,7 +250,7 @@ export default class Row extends Component {
                       {
                          address !== '' && <i className="far fa-copy" styleName="icon" data-tip data-for="Copy" style={{ width: '14px' }} />
                       }
-                      <LinkAccount type={currency} address={address}>{isMobile ? this.handleSliceAddress() : address}</LinkAccount>
+                      <LinkAccount type={currency} address={address}>{this.handleSliceAddress()}</LinkAccount>
                       <ReactTooltip id="Copy" type="light" effect="solid">
                         <span>
                           <FormattedMessage id="Row235" defaultMessage="Copy" />
@@ -263,7 +274,7 @@ export default class Row extends Component {
                   ) : (
                     <Fragment>
                       <i className="far fa-copy" styleName="icon" data-tip data-for="Copy" style={{ width: '14px' }} />
-                      <LinkAccount type={currency} contractAddress={contractAddress} address={address} >{isMobile ? this.handleSliceAddress() : address}</LinkAccount>
+                      <LinkAccount type={currency} contractAddress={contractAddress} address={address} >{this.handleSliceAddress()}</LinkAccount>
                     </Fragment>
                   )
                 }
