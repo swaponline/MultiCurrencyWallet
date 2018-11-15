@@ -11,6 +11,7 @@ const link = [
     { link: links.career, title: 'Careers', header: 'Company' },
     { link: links.button, title: 'Use swap.button' },
     { link: links.about, title: 'About Us' },
+    { link: links.extension, title: 'Swap.Online Chrome Extension' },
   ],
   [
     { link: links.concept, title: 'Concept (PDF)', header: 'Documentation' },
