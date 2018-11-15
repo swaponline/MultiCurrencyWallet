@@ -7,7 +7,7 @@ import CurrencyIcon from 'components/ui/CurrencyIcon/CurrencyIcon'
 
 
 const Option = ({ icon, title }) => (
-  <Fragment styleName="optionrow">
+  <Fragment>
     <CurrencyIcon styleName="icon" name={icon} />
     {title}
   </Fragment>
