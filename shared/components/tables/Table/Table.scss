@@ -290,12 +290,34 @@ table.wallet {
       display: table-row;
     }
   }
-  // th:nth-child(4) {
-  //   display: none;
-  // }
+
   .mobileThead {
     th:nth-child(4) {
       display: block;
+    }
+  }
+}
+
+@media all and (min-width: 570px) and (max-width:900px) {
+  table.wallet {
+    td:nth-child(1),
+    th:nth-child(1) {
+      display: none;
+    }
+    td:nth-child(4) {
+      width: 80px;
+    }
+    td:nth-child(5) {
+      div {
+        display: flex;
+        align-items: initial;
+        flex-direction: column;
+        button {
+          margin-bottom: 10px;
+          margin-right: 0;
+          max-width: 125px;
+        }
+      }
     }
   }
 }
