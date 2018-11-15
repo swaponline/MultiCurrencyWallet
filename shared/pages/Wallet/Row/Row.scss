@@ -159,7 +159,7 @@ button[disabled]{
 }
 
 
-@include media-mobile { 
+@include media-mobile {
   .mobileName {
     display: block;
   }
@@ -236,5 +236,4 @@ button[disabled]{
     top: -47px;
     left: 103px;
   }
-}
 }
