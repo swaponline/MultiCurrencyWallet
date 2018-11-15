@@ -1,17 +1,36 @@
-# Template PR swap.react
+# Pull request template
 
-`Build not working ? PR closed : Merge`
+## Checklist
 
-* Code matches style guide 😏
-  - [ ] [js](https://github.com/airbnb/javascript#ecmascript-6-es-2015-styles)
-  - [ ] [react](https://github.com/airbnb/javascript/tree/master/react)
-  - [ ] [css/sass](https://github.com/airbnb/css)
-* PR description includes  😋
-  - [ ] issue number
-  - [ ] brief description of the work
-  - [ ] why you chose this solution
-* Git 😈
-  - [ ] `git pull --rebase origin develop` [help](https://git-scm.com/book/en/v2/Git-Branching-Rebasing)
+<!-- You have to tick all the boxes -->
 
-For the correct PR bonus tokens ✨
-💔Thank you!
+- [ ] I have read the [CONTRIBUTING](https://telegra.ph/CHernovik-CONTRIBUTING-11-12) guide
+- [ ] branch rebased on `develop`
+- [ ] styleguide check
+- [ ] video or screenshot attached
+- [ ] keep simple
+- [ ] testing instruction attached
+
+
+### Description
+
+<!-- Include issue number and motivation for these code changes -->
+
+
+
+
+### Video or screenshot
+
+<!-- Paste video or screenshots -->
+
+
+
+
+### What and how to test
+
+<!-- What reviewer should do? -->
+
+
+
+
+
