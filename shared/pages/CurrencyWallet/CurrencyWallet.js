@@ -102,10 +102,10 @@ export default class CurrencyWallet extends Component {
           } />
         <PageHeadline styleName="title" subTitle={!!seoPage ? seoPage.h1 : `Your online ${fullName} (${currency}) web wallet with Atomic Swap.`} />
         <h3 styleName="subtitle">
-          <FormattedMessage id="CurrencyWallet95" defaultMessage="Your address:" />
+          <FormattedMessage id="CurrencyWallet95" defaultMessage="Your address: " />
           <span>{address}</span> <br /> Your {fullName} balance: {balance}{' '}{currency.toUpperCase()}
         </h3>
-        {!eosAccountActivated && (<Button onClick={this.handleEosBuyAccount} gray>
+        {currency === 'EOS' && !eosAccountActivated && (<Button onClick={this.handleEosBuyAccount} gray>
           <FormattedMessage id="CurrencyWallet105" defaultMessage="Activate account" />
         </Button>)}
         <div styleName="inRow">

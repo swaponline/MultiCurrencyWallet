@@ -1,7 +1,7 @@
 [
   {
-    "id": "menu.affiliate",
-    "message": "Affiliate",
+    "id": "menu.aboutus",
+    "message": "About Us",
     "files": [
       "shared/components/Header/Header.js"
     ]
