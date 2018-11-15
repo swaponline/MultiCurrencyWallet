@@ -6,7 +6,7 @@
 
 - [ ] I have read the [CONTRIBUTING](https://telegra.ph/CHernovik-CONTRIBUTING-11-12) guide
 - [ ] branch rebased on `develop`
-- [ ] styleguide check
+- [ ] styleguide check `npx eslint shared/**/*.js`
 - [ ] video or screenshot attached
 - [ ] keep simple
 - [ ] testing instruction attached
