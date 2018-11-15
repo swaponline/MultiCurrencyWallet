@@ -131,8 +131,9 @@
   display: none;
 }
 
-button:disabled,
-button[disabled]{
+tr.showButtons button:disabled,
+tr.showButtons button[disabled],
+tr.showButtons button[disabled]:hover {
   background-color: #dbdbdb;
   cursor: default;
   color: #626262;

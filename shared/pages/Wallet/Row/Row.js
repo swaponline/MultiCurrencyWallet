@@ -301,7 +301,7 @@ export default class Row extends Component {
           </Fragment>
         <td>
           <div>
-            <WithdrawButton onClick={this.handleWithdraw} styleName="marginRight" disabled={isBalanceEmpty}>
+            <WithdrawButton onClick={this.handleReceive} styleName="marginRight">
               <i className="fas fa-qrcode" />
               <span>
                 <FormattedMessage id="Row313" defaultMessage="Deposit" />
