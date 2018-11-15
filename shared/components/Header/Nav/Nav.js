@@ -54,6 +54,13 @@ export default class Nav extends Component {
               ))
           }
           {
+            process.env.MAINNET || process.env.TESTNET && (
+              <a href={links.listing} styleName="link" target="_blank" rel="noreferrer noopener">
+                <FormattedMessage id="Nav88" defaultMessage="Listing" />
+              </a>
+            )
+          }
+          {
             process.env.MAINNET && (
               <a href={links.test} styleName="link" target="_blank" rel="noreferrer noopener">
                 <FormattedMessage id="Nav88" defaultMessage="Testnet" />

@@ -42,13 +42,7 @@ const messages = defineMessages({
     description: 'Menu item "Affiliate"',
     defaultMessage: 'Affiliate',
   },
-  listing: {
-    id: 'menu.listing',
-    description: 'Menu item "Listing"',
-    defaultMessage: 'Listing',
-  },
 })
-
 
 @injectIntl
 @withRouter
@@ -92,11 +86,6 @@ export default class Header extends Component {
         {
           title: props.intl.formatMessage(messages.affiliate),
           link: links.affiliate,
-          isMobile: false,
-        },
-        {
-          title: props.intl.formatMessage(messages.listing),
-          link: links.listing,
           isMobile: false,
         },
       ],

@@ -6,7 +6,7 @@ export default {
   swap: '/swap',
   feed: '/feed',
   affiliate: '/affiliate',
-  listing: '/listing',
+  listing: 'https://listing.swap.online/',
   test: 'https://testnet.swap.online',
   main: 'https://swap.online/',
   coins: '/coins',
