@@ -9,7 +9,7 @@ import { Link, Redirect } from 'react-router-dom'
 
 import Avatar from 'components/Avatar/Avatar'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
-import RemoveButton from 'components/controls/RemoveButton/RemoveButton'
+import { Button, RemoveButton } from 'components/controls'
 
 import Pair from '../Pair'
 import PAIR_TYPES from 'helpers/constants/PAIR_TYPES'
@@ -49,6 +49,44 @@ export default class Row extends Component {
     })
   }
 
+  handleGoTrade = async (currency) => {
+    const balance = await actions.eth.getBalance()
+    return (balance >= 0.005 || currency.toLowerCase() !== 'eos')
+  }
+
+  removeOrder = (orderId) => {
+    if (confirm('Are your sure ?')) {
+      actions.core.removeOrder(orderId)
+      actions.core.updateCore()
+    }
+  }
+
+  sendRequest = async (orderId, currency) => {
+    const check = await this.handleGoTrade(currency)
+
+    if (check) {
+      this.setState({ isFetching: true })
+
+      setTimeout(() => {
+        this.setState(() => ({ isFetching: false }))
+      }, 15 * 1000)
+
+      actions.core.sendRequest(orderId, (isAccepted) => {
+        console.log(`user has ${isAccepted ? 'accepted' : 'declined'} your request`)
+
+        if (isAccepted) {
+          this.setState({ redirect: true, isFetching: false })
+        } else {
+          this.setState({ isFetching: false })
+        }
+
+      })
+    } else {
+      actions.modals.open(constants.modals.EthChecker, {})
+    }
+
+    actions.core.updateCore()
+  }
 
   render() {
     const { balance, isFetching } = this.state
@@ -102,7 +140,7 @@ export default class Row extends Component {
         <td>
           {
             peer === ownerPeer ? (
-              <RemoveButton onClick={() => this.props.removeOrder(id)} />
+              <RemoveButton onClick={() => this.removeOrder(id)} />
             ) : (
               <Fragment>
                 {
@@ -132,7 +170,7 @@ export default class Row extends Component {
                       ) : (
                         <RequestButton
                           disabled={balance >= Number(buyAmount)}
-                          onClick={() => this.props.sendRequest(id, isMy ? sellCurrency : buyCurrency)}
+                          onClick={() => this.sendRequest(id, isMy ? sellCurrency : buyCurrency)}
                           data={{ type, amount, main, total, base }}
                           onMouseEnter={() => this.setState(() => ({ enterButton: true }))}
                           onMouseLeave={() => this.setState(() => ({ enterButton: false }))}
