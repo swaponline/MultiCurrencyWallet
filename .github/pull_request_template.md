@@ -4,12 +4,14 @@
 
 <!-- You have to tick all the boxes -->
 
-- [ ] I have read the [CONTRIBUTING](https://telegra.ph/CHernovik-CONTRIBUTING-11-12) guide
+- [ ] I have read the [CONTRIBUTING](https://github.com/swaponline/swap.react/wiki/Contribution) guide
 - [ ] branch rebased on `develop`
 - [ ] styleguide check `npx eslint shared/**/*.js`
-- [ ] video or screenshot attached
+- [ ] good naming
 - [ ] keep simple
+- [ ] video or screenshot attached
 - [ ] testing instruction attached
+- [ ] check your PR once again
 
 
 ### Description
