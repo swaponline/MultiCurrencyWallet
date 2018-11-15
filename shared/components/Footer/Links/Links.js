@@ -14,7 +14,7 @@ const link = [
   ],
   [
     { link: links.concept, title: 'Concept (PDF)', header: 'Documentation' },
-    { link: links.description, title: 'Technical Description' },
+    { link: links.description, title: 'White Paper (draft)' },
     { link: links.reuters, title: 'Details of Our DEX' },
     { link: links.research, title: 'DEX Trend Research' },
   ],
