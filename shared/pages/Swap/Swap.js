@@ -51,7 +51,7 @@ export default class SwapComponent extends PureComponent {
       })
 
     } catch (error) {
-      actions.notifications.show(constants.notifications.ErrorNotification, { error: 'Sorry, but this order do not exsit already', center: true })
+      actions.notifications.show(constants.notifications.ErrorNotification, { error: 'Sorry, but this order do not exsit already' })
       this.props.history.push(links.exchange)
     }
 
