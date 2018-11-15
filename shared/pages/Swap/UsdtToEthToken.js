@@ -13,13 +13,12 @@ import { FormattedMessage } from 'react-intl'
 
 export default class UsdtToEthToken extends Component {
 
-  constructor({ swap, currencyData }) {
+  constructor({ swap }) {
     super()
 
     this.swap = swap
 
     this.state = {
-      currencyAddress: currencyData.address,
       flow: this.swap.flow.state,
       secret: crypto.randomBytes(32).toString('hex'),
       enabledButton: false,
@@ -69,7 +68,7 @@ export default class UsdtToEthToken extends Component {
 
   render() {
     const { children } = this.props
-    const { currencyAddress, secret, flow, enabledButton } = this.state
+    const { secret, flow, enabledButton } = this.state
 
     return (
       <div>
@@ -155,9 +154,7 @@ export default class UsdtToEthToken extends Component {
                       </div>
                       <div>
                         <FormattedMessage id="UsdrToEthToken147" defaultMessage="Your address: " />
-                        <a href={`${config.link.etherscan}/address/${currencyAddress}`} target="_blank" el="noopener noreferrer">
-                          {currencyAddress}
-                        </a>
+                        {this.swap.flow.myBtcAddress}
                       </div>
 
                       <hr />
@@ -182,7 +179,7 @@ export default class UsdtToEthToken extends Component {
               }
 
               {
-                flow.step === 4 && flow.usdtScriptValues && (
+                (flow.step === 4 || flow.usdtScriptValues) && (
                   <Fragment>
                     <FormattedMessage id="UsdrToEthToken174" defaultMessage="3. Creating Bitcoin Omni Script. Please wait, it will take a while">
                       {message => <h3>{message} </h3>}
