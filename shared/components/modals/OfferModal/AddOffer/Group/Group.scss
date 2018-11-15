@@ -21,3 +21,20 @@
 input:disabled {
   background-color:#eee;
 }
+
+@include media-mobile { 
+  .groupField {
+    width: calc(100vw - 35px);
+    display: flex;
+    justify-content: space-between;
+  }
+  .groupField:first-child {
+    margin-bottom: 75px;
+  }
+  .inputRoot {
+    text-align: left;
+  }
+  .inputContainer input {
+    font-size: 14px;
+  }
+}
