@@ -16,13 +16,12 @@ import { FormattedMessage } from 'react-intl'
 
 export default class BtcToEthToken extends Component {
 
-  constructor({ swap, currencyData }) {
+  constructor({ swap }) {
     super()
 
     this.swap = swap
 
     this.state = {
-      currencyAddress: currencyData.address,
       flow: this.swap.flow.state,
       secret: crypto.randomBytes(32).toString('hex'),
       enabledButton: false,
@@ -80,7 +79,7 @@ export default class BtcToEthToken extends Component {
   render() {
     const { children } = this.props
 
-    const { currencyAddress, secret, flow, enabledButton, destinationAddressTimer } = this.state
+    const { secret, flow, enabledButton, destinationAddressTimer } = this.state
     const linked = Link.all(this, 'destinationBuyAddress')
 
     linked.destinationBuyAddress.check((value) => value !== '', 'Please enter ETH address for tokens')
@@ -186,11 +185,7 @@ export default class BtcToEthToken extends Component {
                         {message => <div>{message}<strong>{this.swap.sellAmount.toNumber()}</strong> {this.swap.sellCurrency}</div>}
                       </FormattedMessage>
                       <FormattedMessage id="BtcToEthToken140" defaultMessage="Your address: ">
-                        {message => <div>{message}{
-                          <a href={`${config.link.bitpay}/address/${currencyAddress}`} target="_blank" el="noopener noreferrer">
-                            {currencyAddress}
-                          </a>
-                        }</div>}
+                       {message => <div>{message}{this.swap.flow.myBtcAddress}</div>}
                       </FormattedMessage>
                       <hr />
                       <span>{flow.address}</span>
