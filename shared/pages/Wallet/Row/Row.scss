@@ -158,7 +158,8 @@ button[disabled]{
   display: none;
 }
 
-@include media-mobile {
+
+@include media-mobile { 
   .mobileName {
     display: block;
   }
@@ -209,15 +210,14 @@ button[disabled]{
     .buttonActivate {
       top: -45px;
     }
-
-    tr.hidden {
-       td:nth-child(5) {
-         div {
-           display: none;
-         }
-       }
-     }
-
+  }
+  tr.hidden {
+    td:nth-child(5) {
+      div {
+        display: none;
+      }
+    }
+  }
   .unconfirmedBalance {
     position: absolute;
     right: 0;

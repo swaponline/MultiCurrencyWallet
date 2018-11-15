@@ -76,7 +76,7 @@ textarea.input {
   }
 }
 
-@include media-mobile {
+@include media-mobile { 
   .input {
     font-size: 14px;
   }

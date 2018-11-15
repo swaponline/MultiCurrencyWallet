@@ -83,9 +83,9 @@ export default class Row extends Component {
   }
 
   handleSliceAddress = () => {
-      const { address } = this.props;
-      return address.substr(0, 6) + '...' + address.substr(address.length - 2);
-    }
+    const { address } = this.props;
+    return address.substr(0, 6) + '...' + address.substr(address.length - 2);
+  }
 
   handleTouchClear = (e) => {
     this.setState({
@@ -267,23 +267,22 @@ export default class Row extends Component {
                     </Fragment>
                   )
                 }
-                  <div styleName="actButton">
-                    {currency === 'EOS' && !eosAccountActivated && <button styleName="button buttonActivate" onClick={this.handleEosBuyAccount} data-tip data-for="Activate">Activate</button>}
-                  </div>
+                <div styleName="actButton">
+                  {currency === 'EOS' && !eosAccountActivated && <button styleName="button buttonActivate" onClick={this.handleEosBuyAccount} data-tip data-for="Activate">Activate</button>}
+                </div>
                 <ReactTooltip id="Activate" type="light" effect="solid">
                   <span>
                     <FormattedMessage id="Row256" defaultMessage="Buy this account" />
                   </span>
                 </ReactTooltip>
-
-                <div styleName="useButton">
-                {
-                  currency === 'EOS' &&
-                  <button styleName="button" onClick={this.handleEosRegister} data-tip data-for="Use">
-                    <FormattedMessage id="Row263" defaultMessage="Use another" />
-                  </button>
-                }
-              </div>
+                <div styleName="useButton"> 
+                  {
+                    currency === 'EOS' &&
+                    <button styleName="button" onClick={this.handleEosRegister} data-tip data-for="Use">
+                      <FormattedMessage id="Row263" defaultMessage="Use another" />
+                    </button>
+                  }
+                </div>
                 <ReactTooltip id="Use" type="light" effect="solid">
                   <span>
                     <FormattedMessage id="Row268" defaultMessage="Login with your existing eos account" />
@@ -356,10 +355,7 @@ export default class Row extends Component {
               isMobile && (currency === 'EOS' && !eosAccountActivated && <button styleName="button buttonActivate" onClick={this.handleEosBuyAccount} data-tip data-for="Activate">Activate</button>)
             }
           </div>
-
-
         </td>
-
       </tr>
     )
   }

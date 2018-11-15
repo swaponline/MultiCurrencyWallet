@@ -2,7 +2,7 @@
   border-radius: 0 6px 6px 0 !important;
 }
 
-@include media-mobile {
+@include media-mobile { 
 	.currencySelect {
 		width: 140px;
 	}
@@ -12,3 +12,4 @@
 		margin-left: 5px;
 	}
 } 
+

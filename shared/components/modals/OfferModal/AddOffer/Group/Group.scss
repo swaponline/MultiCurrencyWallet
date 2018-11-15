@@ -22,7 +22,7 @@ input:disabled {
   background-color:#eee;
 }
 
-@include media-mobile {
+@include media-mobile { 
   .groupField {
     width: calc(100vw - 35px);
     display: flex;
