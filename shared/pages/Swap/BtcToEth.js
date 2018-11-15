@@ -14,12 +14,13 @@ import { FormattedMessage } from 'react-intl'
 
 export default class BtcToEth extends Component {
 
-  constructor({ swap }) {
+  constructor({ swap, currencyData }) {
     super()
 
     this.swap = swap
 
     this.state = {
+      currencyAddress: currencyData.address,
       flow: this.swap.flow.state,
       secret: crypto.randomBytes(32).toString('hex'),
       enabledButton: false,
@@ -85,7 +86,7 @@ export default class BtcToEth extends Component {
 
   render() {
     const { children } = this.props
-    const { secret, flow, enabledButton } = this.state
+    const { currencyAddress, secret, flow, enabledButton } = this.state
 
     return (
       <div>
@@ -172,7 +173,9 @@ export default class BtcToEth extends Component {
                       <div>
                         <div>
                           <FormattedMessage id="BtcToEth167" defaultMessage="Your address: " />
-                          {this.swap.flow.myBtcAddress}
+                          <a href={`${config.link.bitpay}/address/${currencyAddress}`} target="_blank" el="noopener noreferrer">
+                            {currencyAddress}
+                          </a>
                         </div>
                         <hr />
                         <span>{flow.address}</span>
@@ -180,7 +183,6 @@ export default class BtcToEth extends Component {
                       <br />
                       <Button brand onClick={this.updateBalance}>
                         <FormattedMessage id="174" defaultMessage="Continue" />
-                        {this.swap.flow.myBtcAddress}
                       </Button>
                     </div>
                   </Fragment>
@@ -198,7 +200,7 @@ export default class BtcToEth extends Component {
               }
 
               {
-                (flow.step === 4 || flow.btcScriptValues) && (
+                flow.step === 4 && flow.btcScriptValues && (
                   <Fragment>
                     <FormattedMessage id="BtcToEth194" defaultMessage="3. Creating Bitcoin Script. Please wait, it will take a while" >
                       {message => <h3>{message}</h3>}

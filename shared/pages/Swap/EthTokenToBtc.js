@@ -12,12 +12,13 @@ import { FormattedMessage } from 'react-intl'
 
 export default class EthTokenToBtc extends Component {
 
-  constructor({ swap }) {
+  constructor({ swap, currencyData }) {
     super()
 
     this.swap = swap
 
     this.state = {
+      currencyAddress: currencyData.address,
       flow: this.swap.flow.state,
       enabledButton: false,
     }
@@ -61,7 +62,7 @@ export default class EthTokenToBtc extends Component {
 
   render() {
     const { children } = this.props
-    const { flow, enabledButton, isShowingBitcoinScript } = this.state
+    const { currencyAddress, flow, enabledButton, isShowingBitcoinScript } = this.state
 
     return (
       <div>
@@ -245,7 +246,11 @@ export default class EthTokenToBtc extends Component {
                         {message => <div>{message}<strong>{this.swap.sellAmount.toNumber()}</strong> {this.swap.sellCurrency}</div>}
                       </FormattedMessage>
                       <FormattedMessage id="EthTokenBtc251" defaultMessage="Your address: ">
-                        {message => <div>{message}{this.swap.flow.myEthAddress}</div>}
+                        {message => <div>{message}{
+                          <a href={`${config.link.etherscan}/address/${currencyAddress}`} target="_blank" el="noopener noreferrer">
+                            {currencyAddress}
+                          </a>
+                        }</div>}
                       </FormattedMessage>
                       <hr />
                       <span>{flow.address}</span>
