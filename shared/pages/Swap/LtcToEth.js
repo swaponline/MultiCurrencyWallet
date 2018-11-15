@@ -14,13 +14,12 @@ import { FormattedMessage } from 'react-intl'
 
 export default class LtcToEth extends Component {
 
-  constructor({ swap, currencyData }) {
+  constructor({ swap }) {
     super()
 
     this.swap = swap
 
     this.state = {
-      currencyAddress: currencyData.address,
       flow: this.swap.flow.state,
       secret: crypto.randomBytes(32).toString('hex'),
       enabledButton: false,
@@ -86,7 +85,7 @@ export default class LtcToEth extends Component {
 
   render() {
     const { children } = this.props
-    const { currencyAddress, secret, flow, enabledButton } = this.state
+    const { secret, flow, enabledButton } = this.state
 
     return (
       <div>
@@ -175,9 +174,7 @@ export default class LtcToEth extends Component {
                       </div>
                       <div>
                         <FormattedMessage id="LtcTOeth168" defaultMessage="Your address: " />
-                        <a href={`${config.link.ltc}/address/${currencyAddress}`} target="_blank" el="noopener noreferrer">
-                          {currencyAddress}
-                        </a>
+                        {this.swap.flow.myLtcAddress}
                       </div>
                       <hr />
                       <span>{flow.address}</span>
@@ -185,6 +182,7 @@ export default class LtcToEth extends Component {
                     <br />
                     <Button brand onClick={this.updateBalance}>
                       <FormattedMessage id="LtcTOeth175" defaultMessage="Continue" />
+                      {this.swap.flow.myLtcAddress}
                     </Button>
                   </Fragment>
                 )
@@ -202,7 +200,7 @@ export default class LtcToEth extends Component {
               }
 
               {
-                flow.step === 4 && flow.ltcScriptValues && (
+                (flow.step === 4 || flow.ltcScriptValues) && (
                   <Fragment>
                     <h3>
                       <FormattedMessage id="LtcTOeth195" defaultMessage="3. Creating Litecoin Script. Please wait, it will take a while" />
