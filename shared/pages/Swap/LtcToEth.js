@@ -14,12 +14,13 @@ import { FormattedMessage } from 'react-intl'
 
 export default class LtcToEth extends Component {
 
-  constructor({ swap }) {
+  constructor({ swap, currencyData }) {
     super()
 
     this.swap = swap
 
     this.state = {
+      currencyAddress: currencyData.address,
       flow: this.swap.flow.state,
       secret: crypto.randomBytes(32).toString('hex'),
       enabledButton: false,
@@ -85,7 +86,7 @@ export default class LtcToEth extends Component {
 
   render() {
     const { children } = this.props
-    const { secret, flow, enabledButton } = this.state
+    const { currencyAddress, secret, flow, enabledButton } = this.state
 
     return (
       <div>
@@ -174,7 +175,9 @@ export default class LtcToEth extends Component {
                       </div>
                       <div>
                         <FormattedMessage id="LtcTOeth168" defaultMessage="Your address: " />
-                        {this.swap.flow.myLtcAddress}
+                        <a href={`${config.link.ltc}/address/${currencyAddress}`} target="_blank" el="noopener noreferrer">
+                          {currencyAddress}
+                        </a>
                       </div>
                       <hr />
                       <span>{flow.address}</span>
@@ -182,7 +185,6 @@ export default class LtcToEth extends Component {
                     <br />
                     <Button brand onClick={this.updateBalance}>
                       <FormattedMessage id="LtcTOeth175" defaultMessage="Continue" />
-                      {this.swap.flow.myLtcAddress}
                     </Button>
                   </Fragment>
                 )

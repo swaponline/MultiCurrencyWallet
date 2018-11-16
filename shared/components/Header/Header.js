@@ -37,10 +37,10 @@ const messages = defineMessages({
     description: 'Menu item "History"',
     defaultMessage: 'History',
   },
-  affiliate: {
-    id: 'menu.affiliate',
-    description: 'Menu item "Affiliate"',
-    defaultMessage: 'Affiliate',
+  aboutus: {
+    id: 'menu.aboutus',
+    description: 'Menu item "About Us"',
+    defaultMessage: 'About Us',
   },
   listing: {
     id: 'menu.listing',
@@ -90,8 +90,8 @@ export default class Header extends Component {
           icon: 'history',
         },
         {
-          title: props.intl.formatMessage(messages.affiliate),
-          link: links.affiliate,
+          title: props.intl.formatMessage(messages.aboutus),
+          link: links.aboutus,
           isMobile: false,
         },
         {
