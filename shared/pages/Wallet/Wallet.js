@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { Component } from 'react'
 import propTypes from 'prop-types'
 
 import { isMobile } from 'react-device-detect'
@@ -42,7 +42,7 @@ import { FormattedMessage } from 'react-intl'
   })
 )
 @CSSModules(stylesWallet, { allowMultiple: true })
-export default class Wallet extends PureComponent {
+export default class Wallet extends Component {
 
   static propTypes = {
     core: propTypes.object,
