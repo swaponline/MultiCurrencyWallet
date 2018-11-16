@@ -47,8 +47,7 @@ export default class WithdrawModal extends React.Component {
 
   setBalanceOnState = async (currency) => {
     const balance = await actions[currency.toLowerCase()].getBalance(currency.toLowerCase())
-    this.setState(() => ({ balance }))
-  }
+ }
 
   handleSubmit = () => {
     const { address: to, amount } = this.state

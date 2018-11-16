@@ -46,6 +46,7 @@ export default class Home extends Component {
       buyCurrency: buy || buyCurrency || 'swap',
       sellCurrency: sell || sellCurrency || 'btc',
       invalidPair: false,
+      isShow: false,
     }
   }
 
@@ -125,19 +126,22 @@ export default class Home extends Component {
   handleShowOrders = () => {
     const { history, filter } = this.props
 
-    this.setState(() => ({ isVisible: false }))
+    this.setState(() => ({
+      isVisible: false,
+      isShow: true
+    }))
     history.replace(filter.toLowerCase())
   }
 
   render() {
     const { match: { params: { orderId } }, history: { location: { pathname } }, currencies, history, filter } = this.props
-    const { buyCurrency, sellCurrency, invalidPair } = this.state
+    const { buyCurrency, sellCurrency, invalidPair, isShow } = this.state
 
     return (
       <section style={{ position: 'relative', width: '100%' }}>
         <PageHeadline>
           {
-            pathname === links.exchange ? (
+            !isShow ? (
               <Fragment>
                 <CurrencyDirectionChooser
                   handleSellCurrencySelect={this.handleSellCurrencySelect}

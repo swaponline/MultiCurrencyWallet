@@ -104,7 +104,7 @@ export default class PrivateKeysModal extends React.PureComponent {
                   <FormattedMessage id="PrivateKeysModal99" defaultMessage="It`s very important because If you don`t " />
                   <FormattedMessage id="PrivateKeysModal105" defaultMessage="there is a big chance you will loose your money. " />
                 </div>
-                <FormattedMessage id="PrivateKeysModal105" defaultMessage="We do not store your private keys and will not be able to restore them!">
+                <FormattedMessage id="PrivateKeysModal106" defaultMessage="We do not store your private keys and will not be able to restore them!">
                   {message => <div styleName="subTitle">{message}</div>}
                 </FormattedMessage>
                 <div styleName="buttonContainer">

@@ -145,7 +145,7 @@ export default class AddOffer extends Component {
     sellCurrency = value
 
     await this.checkBalance(sellCurrency)
-    
+
     await this.updateExchangeRate(sellCurrency, buyCurrency)
     const { exchangeRate } = this.state
     buyAmount = new BigNumber(String(sellAmount) || 0).multipliedBy(exchangeRate)
@@ -372,7 +372,7 @@ export default class AddOffer extends Component {
           <span styleName="error">
             <FormattedMessage id="transaction27" defaultMessage="For a swap, you need" />
             {minAmount.eth}
-            <FormattedMessage id="transaction27" defaultMessage="ETH on your balance" />
+            <FormattedMessage id="transaction28" defaultMessage="ETH on your balance" />
           </span>
         }
         <SelectGroup

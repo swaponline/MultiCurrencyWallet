@@ -289,7 +289,7 @@ export default class Row extends Component {
                   </span>
                 </ReactTooltip>
 
-                <div styleName="useButton"> 
+                <div styleName="useButton">
                   {
                     currency === 'EOS' &&
                     <button styleName="button" onClick={this.handleEosRegister} data-tip data-for="Use">
