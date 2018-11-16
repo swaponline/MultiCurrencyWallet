@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { constants } from 'helpers'
 import actions from 'redux/actions'
 import Link from 'sw-valuelink'
+import { BigNumber } from 'bignumber.js'
 
 import cssModules from 'react-css-modules'
 import styles from './WithdrawModal.scss'
@@ -51,7 +52,7 @@ export default class WithdrawModal extends React.Component {
     const balance = await actions[currency.toLowerCase()].getBalance(currency.toLowerCase())
 
     const finalBalance = unconfirmedBalance !== undefined && unconfirmedBalance < 0
-      ? Number(balance) + Number(unconfirmedBalance)
+      ? BigNumber(balance) + BigNumber(unconfirmedBalance)
       : balance
 
     this.setState(() => ({ balance: finalBalance }))
@@ -73,7 +74,7 @@ export default class WithdrawModal extends React.Component {
       return
     }
 
-    actions[currency.toLowerCase()].send(contractAddress || address, to, Number(amount), decimals)
+    actions[currency.toLowerCase()].send(contractAddress || address, to, BigNumber(amount), decimals)
       .then(() => {
         actions.loader.hide()
         actions[currency.toLowerCase()].getBalance(currency)
@@ -118,13 +119,13 @@ export default class WithdrawModal extends React.Component {
         <Input valueLink={linked.address} focusOnInit pattern="0-9a-zA-Z" placeholder="Enter address" />
         <p style={{ marginTop: '20px' }}>
           <FormattedMessage id="Withdrow113" defaultMessage="Your balance: " />
-          {Number(balance).toFixed(4)}
+          {balance}
           {data.currency.toUpperCase()}
         </p>
         <FieldLabel inRow>
           <FormattedMessage id="Withdrow118" defaultMessage="Amount " />
         </FieldLabel>
-        <Input valueLink={linked.amount} pattern="0-9\." placeholder={`Enter amount, you have ${Number(balance).toFixed(4)}`} />
+        <Input valueLink={linked.amount} pattern="0-9\." placeholder={`Enter amount, you have ${balance}`} />
         {
           !linked.amount.error && (
             <div styleName="note">
