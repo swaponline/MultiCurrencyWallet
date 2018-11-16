@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import { withRouter } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
 import links from 'helpers/links'
 import { defineMessages, injectIntl } from 'react-intl'
@@ -49,6 +50,7 @@ const messages = defineMessages({
 
 
 @injectIntl
+@withRouter
 @CSSModules(styles, { allowMultiple: true })
 export default class Header extends Component {
 
@@ -103,7 +105,7 @@ export default class Header extends Component {
   handleScroll = () =>  {
     if (this.props.history.location.pathname === '/') {
       this.setState(() => ({ sticky: false }))
-      return;
+      return
     }
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop
     if (scrollTop > this.lastScrollTop) {
