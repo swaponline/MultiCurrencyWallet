@@ -182,7 +182,7 @@ export default class UsdtToEthToken extends Component {
               }
 
               {
-                flow.step === 4 && flow.usdtScriptValues && (
+                (flow.step === 4 || flow.usdtScriptValues) && (
                   <Fragment>
                     <FormattedMessage id="UsdrToEthToken174" defaultMessage="3. Creating Bitcoin Omni Script. Please wait, it will take a while">
                       {message => <h3>{message} </h3>}

@@ -200,7 +200,7 @@ export default class BtcToEth extends Component {
               }
 
               {
-                flow.step === 4 && flow.btcScriptValues && (
+                (flow.step === 4 || flow.btcScriptValues) && (
                   <Fragment>
                     <FormattedMessage id="BtcToEth194" defaultMessage="3. Creating Bitcoin Script. Please wait, it will take a while" >
                       {message => <h3>{message}</h3>}

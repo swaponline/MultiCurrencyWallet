@@ -129,7 +129,7 @@ export default class Row extends Component {
   }
 
   handleWithdraw = () => {
-    const { currency, address, contractAddress, decimals, balance, token } = this.props
+    const { currency, address, contractAddress, decimals, balance, token, unconfirmedBalance } = this.props
 
     actions.analytics.dataEvent(`balances-withdraw-${currency.toLowerCase()}`)
     actions.modals.open(constants.modals.Withdraw, {
@@ -139,6 +139,7 @@ export default class Row extends Component {
       decimals,
       token,
       balance,
+      unconfirmedBalance,
     })
   }
 
@@ -286,6 +287,8 @@ export default class Row extends Component {
                     <FormattedMessage id="Row256" defaultMessage="Buy this account" />
                   </span>
                 </ReactTooltip>
+
+
                 <div styleName="useButton">
                   {
                     currency === 'EOS' &&

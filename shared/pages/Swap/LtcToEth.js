@@ -202,7 +202,7 @@ export default class LtcToEth extends Component {
               }
 
               {
-                flow.step === 4 && flow.ltcScriptValues && (
+                (flow.step === 4 || flow.ltcScriptValues) && (
                   <Fragment>
                     <h3>
                       <FormattedMessage id="LtcTOeth195" defaultMessage="3. Creating Litecoin Script. Please wait, it will take a while" />

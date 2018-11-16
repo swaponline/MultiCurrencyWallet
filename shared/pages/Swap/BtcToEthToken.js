@@ -6,7 +6,10 @@ import { BigNumber } from 'bignumber.js'
 
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import TimerButton from 'components/controls/TimerButton/TimerButton'
+import Link from 'sw-valuelink'
+import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
+import swapApp from 'swap.app'
 import Timer from './Timer/Timer'
 import { FormattedMessage } from 'react-intl'
 
@@ -23,6 +26,8 @@ export default class BtcToEthToken extends Component {
       flow: this.swap.flow.state,
       secret: crypto.randomBytes(32).toString('hex'),
       enabledButton: false,
+      destinationAddressTimer: true,
+      destinationBuyAddress: (this.swap.destinationBuyAddress) ? this.swap.destinationBuyAddress : swapApp.services.auth.accounts.eth.address
     }
   }
 
@@ -46,6 +51,17 @@ export default class BtcToEthToken extends Component {
     this.swap.flow.submitSecret(secret)
   }
 
+  confirmAddress = () => {
+    this.swap.setDestinationBuyAddress(this.state.destinationBuyAddress);
+    this.setState();
+  }
+
+  destinationAddressFocus = () => {
+    this.setState( {
+      destinationAddressTimer: false
+    } );
+  }
+
   updateBalance = () => {
     this.swap.flow.syncBalance()
   }
@@ -63,7 +79,11 @@ export default class BtcToEthToken extends Component {
 
   render() {
     const { children } = this.props
-    const { currencyAddress, secret, flow, enabledButton } = this.state
+
+    const { currencyAddress, secret, flow, enabledButton, destinationAddressTimer } = this.state
+    const linked = Link.all(this, 'destinationBuyAddress')
+
+    linked.destinationBuyAddress.check((value) => value !== '', 'Please enter ETH address for tokens')
 
     return (
       <div>
@@ -84,8 +104,31 @@ export default class BtcToEthToken extends Component {
             </Fragment>
           )
         }
+
         {
-          (flow.step === 1 || flow.isMeSigned) && (
+          (!flow.isWaitingForOwner && (this.swap.destinationBuyAddress===null)) && (
+          <Fragment>
+            <FormattedMessage id="BtcToEthTokenAddress1" defaultMessage="Confirm destination address (by default - swap.online wallet)">
+              {message => <h3>{message}</h3>}
+            </FormattedMessage>
+            <Input valueLink={linked.destinationBuyAddress} onFocus={this.destinationAddressFocus} styleName="input" pattern="0-9a-zA-Z" />
+            <hr />
+            { destinationAddressTimer && (
+              <TimerButton timeLeft={10} brand onClick={this.confirmAddress}>
+                <FormattedMessage id="BtcToEthTokenAddress2" defaultMessage="Confirm address " />
+              </TimerButton>
+            ) }
+            { !destinationAddressTimer && (
+              <Button brand onClick={this.confirmAddress} styleName="button"> 
+                <FormattedMessage id="BtcToEthTokenAddress2" defaultMessage="Confirm address" />
+              </Button>
+            ) }
+          </Fragment>
+          )
+        }
+
+        {
+          (this.swap.destinationBuyAddress && (flow.step === 1 || flow.isMeSigned)) && (
             <Fragment>
               <FormattedMessage id="BtcToEthToken87" defaultMessage="1. Waiting participant confirm this swap">
                 {message => <h3>{message}</h3>}
@@ -98,7 +141,7 @@ export default class BtcToEthToken extends Component {
         {/* ----------------------------------------------------------- */}
 
         {
-          flow.isParticipantSigned && (
+          flow.isParticipantSigned && this.swap.destinationBuyAddress && (
             <Fragment>
               <FormattedMessage id="BtcToEthToken100" defaultMessage="2. Create a secret key">
                 {message => <h3>{message}</h3>}
@@ -144,9 +187,9 @@ export default class BtcToEthToken extends Component {
                       </FormattedMessage>
                       <FormattedMessage id="BtcToEthToken140" defaultMessage="Your address: ">
                         {message => <div>{message}{
-                          <a href={`${config.link.bitpay}/address/${currencyAddress}`} target="_blank" el="noopener noreferrer">
-                            {currencyAddress}
-                          </a>
+                           <a href={`${config.link.bitpay}/address/${currencyAddress}`} target="_blank" el="noopener noreferrer">
+                             {currencyAddress}
+                           </a>
                         }</div>}
                       </FormattedMessage>
                       <hr />
@@ -338,6 +381,7 @@ export default class BtcToEthToken extends Component {
             </Fragment>
           )
         }
+
         <br />
         {/* { !flow.isFinished && <Button green onClick={this.addGasPrice}>Add gas price</Button> } */}
         { children }
