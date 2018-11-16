@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { constants } from 'helpers'
 import actions from 'redux/actions'
 import Link from 'sw-valuelink'
-import { BigNumber } from 'bignumber.js'
 
 import cssModules from 'react-css-modules'
 import styles from './WithdrawModal.scss'
