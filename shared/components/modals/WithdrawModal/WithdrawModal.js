@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { constants } from 'helpers'
 import actions from 'redux/actions'
 import Link from 'sw-valuelink'
+import { BigNumber } from 'bignumber.js'
 
 import cssModules from 'react-css-modules'
 import styles from './WithdrawModal.scss'
@@ -46,8 +47,15 @@ export default class WithdrawModal extends React.Component {
   }
 
   setBalanceOnState = async (currency) => {
+    const { data: { unconfirmedBalance } } = this.props
+
     const balance = await actions[currency.toLowerCase()].getBalance(currency.toLowerCase())
-    this.setState(() => ({ balance }))
+
+    const finalBalance = unconfirmedBalance !== undefined && unconfirmedBalance < 0
+      ? BigNumber(balance) + BigNumber(unconfirmedBalance)
+      : balance
+
+    this.setState(() => ({ balance: finalBalance }))
   }
 
   handleSubmit = () => {
@@ -66,7 +74,7 @@ export default class WithdrawModal extends React.Component {
       return
     }
 
-    actions[currency.toLowerCase()].send(contractAddress || address, to, Number(amount), decimals)
+    actions[currency.toLowerCase()].send(contractAddress || address, to, BigNumber(amount), decimals)
       .then(() => {
         actions.loader.hide()
         actions[currency.toLowerCase()].getBalance(currency)
