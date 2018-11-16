@@ -119,13 +119,13 @@ export default class WithdrawModal extends React.Component {
         <Input valueLink={linked.address} focusOnInit pattern="0-9a-zA-Z" placeholder="Enter address" />
         <p style={{ marginTop: '20px' }}>
           <FormattedMessage id="Withdrow113" defaultMessage="Your balance: " />
-          {balance}
+          {Number(balance).toFixed(5)}
           {data.currency.toUpperCase()}
         </p>
         <FieldLabel inRow>
           <FormattedMessage id="Withdrow118" defaultMessage="Amount " />
         </FieldLabel>
-        <Input valueLink={linked.amount} pattern="0-9\." placeholder={`Enter amount, you have ${balance}`} />
+        <Input valueLink={linked.amount} pattern="0-9\." placeholder={`Enter amount, you have ${Number(balance).toFixed(5)}`} />
         {
           !linked.amount.error && (
             <div styleName="note">
