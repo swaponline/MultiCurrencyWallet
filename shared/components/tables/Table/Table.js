@@ -14,40 +14,19 @@ export default class Table extends React.Component {
     super()
 
     this.state = {
-      sticky: false,
       selectId: 0,
     }
   }
 
   componentDidMount() {
     if (this.props.id === 'table-wallet')  {
-      window.addEventListener('scroll', this.handleScrollTable)
       window.addEventListener('resize', this.handleResponsiveTable)
       this.handleResponsiveTable()
     }
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScrollTable)
     window.removeEventListener('resize', this.handleResponsiveTable)
-  }
-
-  handleScrollTable = () => {
-    let scrollTop = window.pageYOffset || document.documentElement.scrollTop
-    let tableOffset = this.linkOnTable.offsetTop
-    let tableHeight = this.linkOnTable.clientHeight
-    if (scrollTop > tableOffset && scrollTop < tableOffset + tableHeight && tableHeight > 400) {
-
-      reducers.menu.setIsDisplayingTable(true)
-
-      this.setState(() => ({ sticky: true }))
-
-    } else {
-
-      this.setState(() => ({ sticky: false }))
-
-      reducers.menu.setIsDisplayingTable(false)
-    }
   }
 
   handleSelectId = (id) => {
@@ -67,15 +46,14 @@ export default class Table extends React.Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     const { rows, isLoading } = this.props
-    return isLoading !== nextProps.isLoading || rows !== nextProps.rows || this.state.sticky !== nextState.sticky || this.state.selectId !== nextState.selectId
+    return isLoading !== nextProps.isLoading || rows !== nextProps.rows || this.state.selectId !== nextState.selectId
   }
 
 
   render() {
     const { titles, rows, rowRender, textIfEmpty, isLoading, loadingText, className } = this.props
-    const { sticky } = this.state
     return (
-      <table styleName={sticky ? 'table table-fixed' : 'table'} className={className} ref={(table) => this.linkOnTable = table}>
+      <table styleName="table" className={className} ref={(table) => this.linkOnTable = table}>
         <thead ref={(thead) => this.linkOnTableHead = thead}>
           <tr>
             {
