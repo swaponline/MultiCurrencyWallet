@@ -26,7 +26,9 @@ export default class Table extends React.Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.handleResponsiveTable)
+    if (this.props.id === 'table-wallet')  {
+      window.removeEventListener('resize', this.handleResponsiveTable)
+    }
   }
 
   handleSelectId = (id) => {
