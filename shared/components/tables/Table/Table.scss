@@ -6,14 +6,8 @@
   margin-bottom: 20px;
   thead {
     box-shadow: rgba(#000 ,0.03) 0 3px 3px 0;
-    position: sticky;
-    top: 0;
     background: #fff;
-    z-index: 100;
-    width: 100%;
-    display: block;
   }
-
   tbody {
 
     tr {
@@ -77,6 +71,11 @@
   }
   thead {
     height: 41px;
+    position: sticky;
+    top: 0;
+    display: block;
+    z-index: 100;
+    width: 100%;
   }
 }
 
