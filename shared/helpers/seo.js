@@ -62,9 +62,9 @@ const seo = {
       description: 'History',
     },
     {
-      uri: '/affiliate',
-      title: 'Affiliate',
-      description: 'Affiliate',
+      uri: '/aboutus',
+      title: 'About Us',
+      description: 'About Us',
     },
     {
       uri: '/listing',

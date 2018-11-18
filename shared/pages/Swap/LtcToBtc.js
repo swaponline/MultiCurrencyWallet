@@ -14,12 +14,13 @@ import { FormattedMessage } from 'react-intl'
 
 export default class LtcToBtc extends Component {
 
-  constructor({ swap }) {
+  constructor({ swap, currencyData }) {
     super()
 
     this.swap = swap
 
     this.state = {
+      currencyAddress: currencyData.address,
       flow: this.swap.flow.state,
       enabledButton: false,
       isShowingBitcoinScript: false,
@@ -94,7 +95,7 @@ export default class LtcToBtc extends Component {
 
   render() {
     const { children } = this.props
-    const { flow, enabledButton, isShowingBitcoinScript } = this.state
+    const { currencyAddress, flow, enabledButton, isShowingBitcoinScript } = this.state
 
     return (
       <div>
@@ -281,7 +282,9 @@ export default class LtcToBtc extends Component {
                       </div>
                       <div>
                         <FormattedMessage id="address" defaultMessage="Your address: " />
-                        {this.swap.flow.myLtcAddress}
+                        <a href={`${config.link.ltc}/address/${currencyAddress}`} target="_blank" el="noopener noreferrer">
+                          {currencyAddress}
+                        </a>
                       </div>
                       <hr />
                       <span>{flow.address}</span>
