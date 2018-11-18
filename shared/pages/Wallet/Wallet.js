@@ -33,6 +33,7 @@ import { FormattedMessage } from 'react-intl'
       balance: data.balance,
       currency: data.currency,
       fullName: data.fullName,
+      unconfirmedBalance: data.unconfirmedBalance,
       isBalanceFetched: data.isBalanceFetched,
       privateKey: data.privateKey,
       publicKey: data.publicKey,
