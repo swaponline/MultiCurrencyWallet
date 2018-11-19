@@ -289,7 +289,7 @@ export default class Row extends Component {
                   </span>
                 </ReactTooltip>
 
-                <div styleName="useButton"> 
+                <div styleName="useButton">
                   {
                     currency === 'EOS' &&
                     <button styleName="button" onClick={this.handleEosRegister} data-tip data-for="Use">
@@ -312,13 +312,17 @@ export default class Row extends Component {
           </Fragment>
         <td>
           <div styleName={currency === 'EOS' && !eosAccountActivated ? 'notActivated' : ''}>
-            <WithdrawButton onClick={this.handleReceive} styleName="marginRight">
+            <button onClick={`this.handleReceive`} styleName="button" data-tip data-for={`deposit${currency}`}>
               <i className="fas fa-qrcode" />
               <span>
                 <FormattedMessage id="Row313" defaultMessage="Deposit" />
               </span>
-            </WithdrawButton>
-            <WithdrawButton onClick={this.handleWithdraw} datatip="Send your currency" styleName="marginRight" disabled={isBalanceEmpty}>
+            </button>
+            <ReactTooltip id={`deposit${currency}`} type="light" effect="solid">
+                <FormattedMessage id="WithdrawButton29" defaultMessage="Deposit funds to this address of currency wallet" />
+            </ReactTooltip>
+
+            <WithdrawButton onClick={this.handleWithdraw} styleName="marginRight" disable={isBalanceEmpty} datafor={`send${currency}`} currency={currency}>
               <i className="fas fa-arrow-alt-circle-right" />
               <span>
                 <FormattedMessage id="Row305" defaultMessage="Send" />
@@ -326,7 +330,7 @@ export default class Row extends Component {
             </WithdrawButton>
             {
               tradeAllowed && (
-                <WithdrawButton onClick={() => this.handleGoTrade(currency)} disabled={isBalanceEmpty}>
+                <WithdrawButton onClick={() => this.handleGoTrade(currency)} disable={isBalanceEmpty} datafor={`exchange${currency}`} currency={currency}>
                   <i className="fas fa-exchange-alt" />
                   <span>
                     <FormattedMessage id="RowWallet313" defaultMessage="Exchange" />
