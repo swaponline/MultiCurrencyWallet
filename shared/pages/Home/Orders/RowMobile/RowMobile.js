@@ -7,9 +7,12 @@ import actions from 'redux/actions'
 import { links, constants } from 'helpers'
 import { Link, Redirect } from 'react-router-dom'
 
+import cssModules from 'react-css-modules'
+import styles from './RowMobile.scss'
+
 import Avatar from 'components/Avatar/Avatar'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
-import { Button, RemoveButton } from 'components/controls'
+import RemoveButton from 'components/controls/RemoveButton/RemoveButton'
 
 import Pair from '../Pair'
 import PAIR_TYPES from 'helpers/constants/PAIR_TYPES'
@@ -20,7 +23,9 @@ import { FormattedMessage } from 'react-intl'
 @connect({
   peer: 'ipfs.peer',
 })
-export default class Row extends Component {
+
+@cssModules(styles)
+export default class RowMobile extends Component {
 
   static propTypes = {
     row: PropTypes.object,
@@ -105,37 +110,21 @@ export default class Row extends Component {
     return (
       <tr style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}>
         <td>
-          <Avatar
-            value={ownerPeer}
-            size={45}
-          />
-        </td>
-        <td>
-          <span style={{ color: 'gray' }}>
-            {type === PAIR_TYPES.BID ? 'buys' : 'sells'}
-          </span>
-          {' '}
-          {
-            `${amount.toFixed(5)} ${main}`
-          }
-        </td>
-        <td>
-          <span style={{ color: 'gray' }}>
-            <FormattedMessage id="Row122" defaultMessage="at price" />
-          </span>
-          {' '}
-          {
-            `${price.toFixed(5)} ${base}`
-          }
-        </td>
-        <td>
-          <span style={{ color: 'gray' }}>
-            <FormattedMessage id="Row131" defaultMessage="for" />
-          </span>
-          {' '}
-          {
-            `${total.toFixed(5)} ${base}`
-          }
+          <div styleName="bigContainer">
+            <div styleName="tdContainer-1">
+              <span styleName="firstType">
+                {type === PAIR_TYPES.BID ? 'You have' : 'You get'}
+              </span>
+              <span>{`${amount.toFixed(5)} ${main}`}</span>
+            </div>
+            <div><i className="fas fa-exchange-alt" /></div>
+            <div styleName="tdContainer-2">
+              <span styleName="secondType">
+                <FormattedMessage id="RowM122" defaultMessage="You get" />
+              </span>
+              <span>{`${total.toFixed(5)} ${base}`}</span>
+            </div>
+          </div>
         </td>
         <td>
           {
@@ -147,28 +136,29 @@ export default class Row extends Component {
                   isRequested ? (
                     <Fragment>
                       <div style={{ color: 'red' }}>
-                        <FormattedMessage id="Row148" defaultMessage="REQUESTING" />
+                        <FormattedMessage id="RowM136" defaultMessage="REQUESTING" />
                       </div>
                       <Link to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`}>
-                        <FormattedMessage id="Row151" defaultMessage="Go to the swap" />
+                        <FormattedMessage id="RowM139" defaultMessage="Go to the swap" />
                       </Link>
                     </Fragment>
                   ) : (
                     isProcessing ? (
-                      <FormattedMessage id="Row157" defaultMessage="This order is in execution">
-                        {message => <span>{message}</span>}
-                      </FormattedMessage>
+                      <span>
+                        <FormattedMessage id="RowM145" defaultMessage="This order is in execution" />
+                      </span>
                     ) : (
                       isFetching ? (
                         <Fragment>
                           <InlineLoader />
                           <br />
-                          <FormattedMessage id="Row165" defaultMessage="Please wait while we confirm your request">
-                            {message => <span>{message}</span>}
-                          </FormattedMessage>
+                          <span>
+                            <FormattedMessage id="RowM153" defaultMessage="Please wait while we confirm your request" />
+                          </span>
                         </Fragment>
                       ) : (
                         <RequestButton
+                          styleName="startButton"
                           disabled={balance >= Number(buyAmount)}
                           onClick={() => this.sendRequest(id, isMy ? sellCurrency : buyCurrency)}
                           data={{ type, amount, main, total, base }}
@@ -176,13 +166,7 @@ export default class Row extends Component {
                           onMouseLeave={() => this.setState(() => ({ enterButton: false }))}
                           move={this.state.enterButton}
                         >
-                          {type === PAIR_TYPES.BID ? 'SELL' : 'BUY'}
-                          {' '}
-                          {amount.toFixed(4)}{' '}{main}
-                          <br />
-                          FOR
-                          {' '}
-                          {total.toFixed(4)}{' '}{base}
+                          <FormattedMessage id="RowM166" defaultMessage="Start" />
                         </RequestButton>
                       )
                     )
