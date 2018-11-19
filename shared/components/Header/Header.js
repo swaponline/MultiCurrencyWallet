@@ -124,7 +124,7 @@ export default class Header extends Component {
   }
 
   render() {
-    const { isDisplayingTable } = this.props
+    const { isDisplayingTable, intl: { locale } } = this.props
     const { sticky, menuItems } = this.state
 
     if (isMobile) {

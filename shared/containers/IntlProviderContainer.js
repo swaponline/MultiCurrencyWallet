@@ -21,24 +21,15 @@ const translations = {
 }
 
 export default class IntlProviderContainer extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      defaultLocale: defaultLocale(),
-    }
-  }
-
   render() {
-
-    const { defaultLocale } = this.state
     const { children } = this.props
     return (
       <Switch>
         <Route path={localisePrefix} render={props => {
-          const currentLocale = props.match.params.locale || defaultLocale
+          const currentLocale = props.match.params.locale || defaultLocale()
           const messages = translations[currentLocale]
           return (
-            <IntlProvider {...props} locale={currentLocale} defaultLocale={defaultLocale} messages={messages}>
+            <IntlProvider {...props} key={currentLocale} locale={currentLocale} defaultLocale={defaultLocale()} messages={messages}>
               {children}
             </IntlProvider>
           )

@@ -7,9 +7,10 @@ import { NavLink, withRouter } from 'react-router-dom'
 import cx from 'classnames'
 import styles from './Nav.scss'
 import CSSModules from 'react-css-modules'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 
 
+@injectIntl
 @withRouter
 @CSSModules(styles, { allowMultiple: true })
 export default class Nav extends Component {
@@ -32,7 +33,7 @@ export default class Nav extends Component {
   }
 
   render() {
-    const { menu } = this.props
+    const { menu, intl: { locale } } = this.props
 
     return (
       <div styleName="nav">
@@ -46,7 +47,7 @@ export default class Nav extends Component {
                   key={title}
                   exact={exact}
                   styleName="link"
-                  to={link}
+                  to={`/${locale}${link}`}
                   activeClassName={styles.active}
                 >
                   {title}
