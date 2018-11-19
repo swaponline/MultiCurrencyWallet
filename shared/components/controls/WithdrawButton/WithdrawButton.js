@@ -13,11 +13,8 @@ const WithdrawButton = (props) => {
   const {
     onClick,
     children,
-    className,
     disable,
-    currency,
-    deposit,
-    rest,
+    ...rest,
   } = props
 
   const styleName = cx('withdrawButton', {
@@ -25,23 +22,13 @@ const WithdrawButton = (props) => {
   })
 
   return (
-    <Fragment>
-      <button onClick={!disable ? onClick : () => {}} styleName={styleName} data-tip data-for={currency} {...rest}>
+      <button onClick={!disable ? onClick : () => {}} styleName={styleName} {...rest}>
         {children}
       </button>
-      {
-        disable && (
-        <ReactTooltip id={`${currency}`} type="light" effect="solid">
-          <FormattedMessage id="WithdrawButton32" defaultMessage="You can not send and exchange this asset, because you have a zero balance." />
-        </ReactTooltip>
-        )
-      }
-    </Fragment>
   )
 
   WithdrawButton.propTypes = {
     onClick: PropTypes.func.isRequired,
-    children: PropTypes.node,
     className: PropTypes.string,
     disabled: PropTypes.bool
   }

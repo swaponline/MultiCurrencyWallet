@@ -12,7 +12,7 @@ import CopyToClipboard from 'react-copy-to-clipboard'
 
 import Coin from 'components/Coin/Coin'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
-import WithdrawButton from 'components/controls/WithdrawButton/WithdrawButton'
+import BtnTooltip from 'components/controls/WithdrawButton/BtnTooltip'
 
 import LinkAccount from '../LinkAccount/LinkAcount'
 import { withRouter } from 'react-router'
@@ -39,6 +39,8 @@ export default class Row extends Component {
     this.setState({
       tradeAllowed: !!currencies.find(c => c.value === currency.toLowerCase()),
     })
+    
+    this.handleCheckBalance()
   }
 
   componentWillReceiveProps(newProps) {
@@ -320,21 +322,14 @@ export default class Row extends Component {
             <ReactTooltip id={`deposit${currency}`} type="light" effect="solid">
                 <FormattedMessage id="WithdrawButton29" defaultMessage="Deposit funds to this address of currency wallet" />
             </ReactTooltip>
-
-            <WithdrawButton onClick={this.handleWithdraw} disable={isBalanceEmpty} currency={currency}>
+            <BtnTooltip onClick={this.handleWithdraw} disable={isBalanceEmpty} id={currency} text="Send" >
               <i className="fas fa-arrow-alt-circle-right" />
-              <span>
-                <FormattedMessage id="Row305" defaultMessage="Send" />
-              </span>
-            </WithdrawButton>
+            </BtnTooltip>
             {
               tradeAllowed && (
-                <WithdrawButton onClick={() => this.handleGoTrade(currency)} disable={isBalanceEmpty} currency={currency}>
+                <BtnTooltip onClick={() => this.handleGoTrade(currency)} disable={isBalanceEmpty} id={currency}  text="Echange" >
                   <i className="fas fa-exchange-alt" />
-                  <span>
-                    <FormattedMessage id="RowWallet313" defaultMessage="Exchange" />
-                  </span>
-                </WithdrawButton>
+                </BtnTooltip>
               )
             }
             {
