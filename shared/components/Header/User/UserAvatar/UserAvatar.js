@@ -33,16 +33,16 @@ export default class UserAvatar extends Component {
     })
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentDidUpdate(prevProps) {
     const { feeds, soundClick, changeView } = this.props
 
-    if (nextProps.feeds.length > feeds.length) {
+    if (prevProps.feeds.length < feeds.length) {
       changeView()
 
       this.setState({
-        feeds: nextProps.feeds,
+        feeds: feeds,
         animation: 'user shake new',
-      })
+      });
 
       setTimeout(() => {
         this.setState({
@@ -53,7 +53,6 @@ export default class UserAvatar extends Component {
       soundClick()
     }
   }
-
 
   render() {
     const { animation } = this.state

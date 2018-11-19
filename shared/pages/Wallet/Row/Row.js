@@ -33,6 +33,12 @@ export default class Row extends Component {
     isBalanceEmpty: true
   }
 
+  static getDerivedStateFromProps({ balance }) {
+    return {
+      isBalanceEmpty: balance === 0
+    };
+  }
+
   componentWillMount() {
     const { currency, currencies } = this.props
 
@@ -40,10 +46,6 @@ export default class Row extends Component {
       tradeAllowed: !!currencies.find(c => c.value === currency.toLowerCase()),
     })
 
-  }
-
-  componentWillReceiveProps(newProps) {
-    this.handleCheckBalance()
   }
 
   componentWillUnmount() {
@@ -156,15 +158,6 @@ export default class Row extends Component {
     this.setState({
       showMobileButtons: true,
     })
-  }
-
-  handleCheckBalance = () => {
-    const { balance } = this.props;
-    if( balance > 0 ) {
-      this.setState({
-        isBalanceEmpty: false
-      })
-    }
   }
 
   handleGoTrade = (currency) => {

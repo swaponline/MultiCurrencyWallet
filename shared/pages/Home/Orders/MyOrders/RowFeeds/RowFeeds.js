@@ -25,11 +25,11 @@ export default class RowFeeds extends Component {
     isLinkCopied: false,
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps !== this.props) {
-      this.setState()
-    }
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   if (nextProps !== this.props) {
+  //     this.setState()
+  //   }
+  // }
 
   handleCopyLink = () => {
     this.setState({
@@ -44,6 +44,7 @@ export default class RowFeeds extends Component {
   }
 
   render() {
+    console.log('render row feed');
     const { isLinkCopied } = this.state
     const { row: { requests, buyAmount, buyCurrency, sellAmount, sellCurrency, exchangeRate, id }, declineRequest, acceptRequest, removeOrder } = this.props
 

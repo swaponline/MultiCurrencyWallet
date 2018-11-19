@@ -92,7 +92,8 @@ export default class Wallet extends Component {
     });
   }
 
-  componentWillReceiveProps({ items, tokens }) {
+  componentDidUpdate() {
+    const { items, tokens } = this.props;
     const data = [].concat(items, tokens)
 
     data.forEach(item => {

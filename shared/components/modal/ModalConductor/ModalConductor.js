@@ -23,9 +23,7 @@ export default class ModalConductor extends Component {
     offsetTop: 0,
   }
 
-  componentWillReceiveProps({ modals }) {
-    const { offsetTop } = this.state
-
+  static getDerivedStateFromProps({ modals }, { offsetTop }) {
     const myOffsetTop = getPageOffset().y
 
     // When modal is showing add overflow: hidden to body and padding-right: ${scrollWidth}
@@ -35,9 +33,9 @@ export default class ModalConductor extends Component {
       document.body.style.paddingRight = `${getScrollBarWidth()}px`
 
       if (myOffsetTop > 0) {
-        this.setState({
+        return {
           offsetTop: myOffsetTop,
-        })
+        };
       }
     }
     else {
@@ -47,9 +45,9 @@ export default class ModalConductor extends Component {
       if (offsetTop > 0) {
         window.scrollTo(0, offsetTop)
 
-        this.setState({
+        return {
           offsetTop: 0,
-        })
+        };
       }
     }
   }
