@@ -236,7 +236,7 @@ export default class Row extends Component {
 
     return (
       <tr
-        className="mobile-row"
+        styleName="mobile-row"
         style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}
       >
         <td>
@@ -322,10 +322,10 @@ export default class Row extends Component {
       return <Redirect push to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`} />
     }
 
-    if (isMobile) {
+    //if (isMobile) {
       return this.renderMobileContent();
-    } else {
-      return this.renderWebContent();
-    }
+    // } else {
+    //   return this.renderWebContent();
+    // }
   }
 }
