@@ -322,10 +322,10 @@ export default class Row extends Component {
       return <Redirect push to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`} />
     }
 
-    //if (isMobile) {
+    if (isMobile) {
       return this.renderMobileContent();
-    // } else {
-    //   return this.renderWebContent();
-    // }
+    } else {
+      return this.renderWebContent();
+    }
   }
 }
