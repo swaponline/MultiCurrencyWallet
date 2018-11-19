@@ -50,6 +50,7 @@ export default class ModalConductor extends Component {
         };
       }
     }
+    return null;
   }
 
   render() {
