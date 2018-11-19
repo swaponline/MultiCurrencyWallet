@@ -35,7 +35,6 @@ export default class WithdrawModal extends React.Component {
   }
 
   state = {
-    isSubmitted: false,
     isShipped: false,
     address: '',
     amount: '',
@@ -64,14 +63,6 @@ export default class WithdrawModal extends React.Component {
     this.setState(() => ({ isShipped: true }))
 
     this.setBalanceOnState(currency)
-    this.setState(() => ({ isShipped: true }))
-
-    if (!to || !amount || amount < minAmount[currency.toLowerCase()] || amount > balance) {
-      this.setState({
-        isSubmitted: true,
-      })
-      return
-    }
 
     actions[currency.toLowerCase()].send(contractAddress || address, to, Number(amount), decimals)
       .then(() => {
@@ -91,15 +82,15 @@ export default class WithdrawModal extends React.Component {
   }
 
   render() {
-    const { isSubmitted, address, amount, balance, isShipped } = this.state
+    const { address, amount, balance, isShipped } = this.state
     const { name, data } = this.props
 
     const linked = Link.all(this, 'address', 'amount')
-    const isDisabled = !address || !amount || isShipped
+    const isDisabled = !address || !amount || isShipped || Number(amount) < minAmount[data.currency.toLowerCase()] || Number(amount) > balance
 
-    if (isSubmitted) {
-      linked.amount.check((value) => value < balance, `Amount must be less than your balance`)
-      linked.amount.check((value) => value > minAmount[data.currency], `Amount must be greater than ${minAmount[data.currency.toLowerCase()]} `)
+    if (Number(amount) !== 0) {
+      linked.amount.check((value) => Number(value) < balance, `Amount must be less than your balance`)
+      linked.amount.check((value) => Number(value) > minAmount[data.currency.toLowerCase()], `Amount must be greater than ${minAmount[data.currency.toLowerCase()]} `)
     }
 
     return (
