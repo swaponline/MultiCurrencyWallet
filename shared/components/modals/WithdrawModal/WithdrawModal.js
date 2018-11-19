@@ -40,8 +40,8 @@ export default class WithdrawModal extends React.Component {
     address: '',
     amount: '',
   }
-
-  componentWillMount() {
+  constructor(props) {
+    super(props)
     this.setBalanceOnState(this.props.data.currency)
   }
 

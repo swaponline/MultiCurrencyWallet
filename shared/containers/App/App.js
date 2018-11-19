@@ -53,9 +53,6 @@ export default class App extends React.Component {
       multiTabs: false,
       error: '',
     }
-  }
-
-  componentWillMount() {
     localStorage.setItem(constants.localStorage.activeTabId, Date.now())
 
     if (localStorage.getItem(constants.localStorage.activeTabId)) {

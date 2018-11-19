@@ -33,8 +33,8 @@ export default class SaveKeysModal extends React.Component {
     state = {
       view: this.props.view,
     }
-
-    componentWillMount = () => {
+    constructor(props) {
+      super(props)
       fixBodyOverflow(true)
     }
 

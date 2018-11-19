@@ -38,14 +38,10 @@ export default class Row extends Component {
       isBalanceEmpty: balance === 0
     };
   }
-
-  componentWillMount() {
+  constructor(props) {
+    super(props);
     const { currency, currencies } = this.props
-
-    this.setState({
-      tradeAllowed: !!currencies.find(c => c.value === currency.toLowerCase()),
-    })
-
+    this.state.tradeAllowed = !!currencies.find(c => c.value === currency.toLowerCase());
   }
 
   componentWillUnmount() {

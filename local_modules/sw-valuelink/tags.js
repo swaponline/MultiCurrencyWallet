@@ -98,9 +98,6 @@ class NumberInput extends Component {
         event.preventDefault()
       }
     }
-  }
-
-  componentWillMount() {
     this.setAndConvert(this.props.valueLink.value)
   }
 
