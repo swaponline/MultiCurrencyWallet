@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import config from 'app-config'
+import cx from 'classnames'
 
 import CSSModules from 'react-css-modules'
 import styles from './WithdrawButton.scss'
@@ -14,36 +15,28 @@ const WithdrawButton = (props) => {
     children,
     className,
     disable,
-    datafor,
     currency,
     deposit,
+    rest,
   } = props
+
+  const styleName = cx('withdrawButton', {
+    'disable': disable
+  })
 
   return (
     <Fragment>
-    {
-      !disable &&
-      (
-      <button styleName="withdrawButton" onClick={onClick} className={className} data-tip data-for={datafor} currency={currency}>
+      <button onClick={!disable ? onClick : () => {}} styleName={styleName} data-tip data-for={`${currency}`} {...rest}>
         {children}
       </button>
-      )
-    }
-    {
-      disable &&
-      (
-        <button styleName="disable" className={className} data-tip data-for={datafor} onClick={onClick} disable={disable}>
-          {children}
-        </button>
-      )
-    }
-    <ReactTooltip id={`send${currency}`} type="light" effect="solid">
-      <FormattedMessage id="WithdrawButton32" defaultMessage="You can not send this asset, because you have a zero balance." />
-    </ReactTooltip>
-    <ReactTooltip id={`exchange${currency}`} type="light" effect="solid">
-        <FormattedMessage id="WithdrawButton35" defaultMessage="You can not exchange this asset, because you have a zero balance." />
-    </ReactTooltip>
-   </Fragment>
+      {
+        disable && (
+        <ReactTooltip id={`${currency}`} type="light" effect="solid">
+          <FormattedMessage id="WithdrawButton32" defaultMessage="You can not send and exchange this asset, because you have a zero balance." />
+        </ReactTooltip>
+        )
+      }
+    </Fragment>
   )
 
   WithdrawButton.propTypes = {
@@ -53,4 +46,4 @@ const WithdrawButton = (props) => {
     disabled: PropTypes.bool
   }
 }
-export default CSSModules(WithdrawButton, styles)
+export default CSSModules(WithdrawButton, styles, { allowMultiple: true })

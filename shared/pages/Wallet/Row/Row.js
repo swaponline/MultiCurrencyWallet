@@ -180,7 +180,7 @@ export default class Row extends Component {
     const { currency, balance, isBalanceFetched, address, contractAddress, fullName, unconfirmedBalance } = this.props
     const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true"
     const telosAccountActivated = localStorage.getItem(constants.localStorage.telosAccountActivated) === "true"
-
+console.log(currency)
     return (
       <tr
         styleName={this.props.index === this.props.selectId || !isMobile ? 'showButtons' : 'hidden'}
@@ -312,7 +312,7 @@ export default class Row extends Component {
           </Fragment>
         <td>
           <div styleName={currency === 'EOS' && !eosAccountActivated ? 'notActivated' : ''}>
-            <button onClick={`this.handleReceive`} styleName="button" data-tip data-for={`deposit${currency}`}>
+            <button onClick={this.handleReceive} styleName="button" data-tip data-for={`deposit${currency}`}>
               <i className="fas fa-qrcode" />
               <span>
                 <FormattedMessage id="Row313" defaultMessage="Deposit" />
@@ -322,7 +322,7 @@ export default class Row extends Component {
                 <FormattedMessage id="WithdrawButton29" defaultMessage="Deposit funds to this address of currency wallet" />
             </ReactTooltip>
 
-            <WithdrawButton onClick={this.handleWithdraw} styleName="marginRight" disable={isBalanceEmpty} datafor={`send${currency}`} currency={currency}>
+            <WithdrawButton onClick={this.handleWithdraw} disable={isBalanceEmpty} datafor={`${currency}`} currency={currency}>
               <i className="fas fa-arrow-alt-circle-right" />
               <span>
                 <FormattedMessage id="Row305" defaultMessage="Send" />
@@ -330,7 +330,7 @@ export default class Row extends Component {
             </WithdrawButton>
             {
               tradeAllowed && (
-                <WithdrawButton onClick={() => this.handleGoTrade(currency)} disable={isBalanceEmpty} datafor={`exchange${currency}`} currency={currency}>
+                <WithdrawButton onClick={() => this.handleGoTrade(currency)} disable={isBalanceEmpty} datafor={`${currency}`} currency={currency}>
                   <i className="fas fa-exchange-alt" />
                   <span>
                     <FormattedMessage id="RowWallet313" defaultMessage="Exchange" />
