@@ -26,7 +26,7 @@ const WithdrawButton = (props) => {
 
   return (
     <Fragment>
-      <button onClick={!disable ? onClick : () => {}} styleName={styleName} data-tip data-for={`${currency}`} {...rest}>
+      <button onClick={!disable ? onClick : () => {}} styleName={styleName} data-tip data-for={currency} {...rest}>
         {children}
       </button>
       {
