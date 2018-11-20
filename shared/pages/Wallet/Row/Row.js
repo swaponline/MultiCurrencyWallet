@@ -35,8 +35,8 @@ import { FormattedMessage } from 'react-intl'
       bchData,
       ltcData,
       usdtData,
-      ...Object.keys(tokensData).map(k => (tokensData[k]))
-    ].map(({account, keyPair, ...data}) => ({
+      ...Object.keys(tokensData).map(k => (tokensData[k])),
+    ].map(({ account, keyPair, ...data }) => ({
       ...data,
     })).find((item) => item.currency === currency),
   })
@@ -82,7 +82,7 @@ export default class Row extends Component {
       })
   }
   componentDidUpdate() {
-    const { item } = this.props;
+    const { item } = this.props
     if (item.balance > 0) {
       actions.analytics.balanceEvent(item.currency, item.balance)
     }
@@ -106,13 +106,10 @@ export default class Row extends Component {
       isBalanceFetching: false,
     }))
   }
-  
   shouldComponentUpdate(nextProps, nextState) {
-    const getComparableProps = ({ item }) => {
-      return {
-        item,
-      };
-    };
+    const getComparableProps = ({ item }) => ({
+      item,
+    })
     return JSON.stringify({
       ...getComparableProps(nextProps),
       ...nextState,
@@ -121,13 +118,11 @@ export default class Row extends Component {
       ...this.state,
     })
   }
-  
   handleTouch = (e) => {
     this.setState({
       isTouch: true,
     })
   }
-
   handleSliceAddress = () => {
     const { address } = this.props
     if(window.innerWidth < 1080 || isMobile) {
@@ -178,7 +173,7 @@ export default class Row extends Component {
         currency,
         address,
         balance,
-      }
+      },
     } = this.props
     actions.analytics.dataEvent(`balances-withdraw-${currency.toLowerCase()}`)
     actions.modals.open(constants.modals.Withdraw, {
@@ -188,7 +183,7 @@ export default class Row extends Component {
       decimals,
       token,
       balance,
-      unconfirmedBalance
+      unconfirmedBalance,
     })
   }
 
