@@ -35,7 +35,7 @@ export default class ModalConductor extends Component {
       if (myOffsetTop > 0) {
         return {
           offsetTop: myOffsetTop,
-        };
+        }
       }
     }
     else {
@@ -47,10 +47,10 @@ export default class ModalConductor extends Component {
 
         return {
           offsetTop: 0,
-        };
+        }
       }
     }
-    return null;
+    return null
   }
 
   render() {

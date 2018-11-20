@@ -38,7 +38,7 @@ export default class RowMobile extends Component {
   }
 
   constructor(props) {
-    super(props);
+    super(props)
     const { row: {  sellCurrency, isMy, buyCurrency } } = this.props
     if (isMy) {
       this.checkBalance(sellCurrency)

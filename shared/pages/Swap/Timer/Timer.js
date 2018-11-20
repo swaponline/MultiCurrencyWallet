@@ -16,7 +16,7 @@ export default class Timer extends React.Component {
 
   constructor(props) {
     super(props)
-    const { lockTime } = props;
+    const { lockTime } = props
     console.log(lockTime)
 
     const dateNow = new Date().getTime()

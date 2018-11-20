@@ -38,7 +38,7 @@ export default class Row extends Component {
     balance: 0,
   }
   constructor(props) {
-    super(props);
+    super(props)
     const { row: {  sellCurrency, isMy, buyCurrency } } = this.props
     if (isMy) {
       this.checkBalance(sellCurrency)
@@ -323,9 +323,9 @@ export default class Row extends Component {
     }
 
     if (isMobile) {
-      return this.renderMobileContent();
+      return this.renderMobileContent()
     } else {
-      return this.renderWebContent();
+      return this.renderWebContent()
     }
   }
 }

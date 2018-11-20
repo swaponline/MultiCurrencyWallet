@@ -66,7 +66,7 @@ export default class Wallet extends Component {
     super(props)
     process.env.MAINNET && localStorage.setItem(constants.localStorage.testnetSkip, true)
     if (localStorage.getItem(constants.localStorage.privateKeysSaved)) {
-      this.state.view = 'checkKeys';
+      this.state.view = 'checkKeys'
     } else {
       // actions.modals.open(constants.modals.PrivateKeys, {})
     }
@@ -83,18 +83,18 @@ export default class Wallet extends Component {
       tokens: props.tokens,
       currencies: props.currencies,
       hiddenCoinsList: props.hiddenCoinsList,
-    });
+    })
     return JSON.stringify({
       ...getComparableProps(this.props),
       ...this.state,
     }) !== JSON.stringify({
       ...getComparableProps(nextProps),
       ...nextState,
-    });
+    })
   }
 
   componentDidUpdate() {
-    const { items, tokens } = this.props;
+    const { items, tokens } = this.props
     const data = [].concat(items, tokens)
 
     data.forEach(item => {

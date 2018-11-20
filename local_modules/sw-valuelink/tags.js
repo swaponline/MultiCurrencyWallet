@@ -102,7 +102,7 @@ class NumberInput extends Component {
   }
 
   componentDidUpdate() {
-    const { valueLink } = this.props;
+    const { valueLink } = this.props
 
     if (Number(valueLink.value) !== Number(this.value)) {
       this.setAndConvert(valueLink.value) // keep state being synced

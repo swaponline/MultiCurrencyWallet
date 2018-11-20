@@ -13,12 +13,12 @@ export default class Seo extends Component {
   
   state = {
     seoPage: getSeoPage(this.props.location.pathname), 
-  };
+  }
   
   static getDerivedStateFromProps({ location: { pathname } }) {
     return {
       seoPage: getSeoPage(pathname)
-    };
+    }
   }
 
   shouldComponentUpdate(nextProps) {
@@ -26,7 +26,7 @@ export default class Seo extends Component {
   }
   
   render() {
-    const { seoPage } = this.state;
+    const { seoPage } = this.state
     if (!seoPage) {
       return null
     }
