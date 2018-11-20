@@ -31,8 +31,8 @@ export default class Row extends Component {
     enterButton: false,
     balance: 0,
   }
-
-  componentWillMount() {
+  constructor(props) {
+    super(props);
     const { row: {  sellCurrency, isMy, buyCurrency } } = this.props
     if (isMy) {
       this.checkBalance(sellCurrency)

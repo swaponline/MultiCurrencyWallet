@@ -14,29 +14,21 @@ export default class Timer extends React.Component {
 
   timer = null
 
-  constructor({ lockTime }) {
-    super()
-
-    this.state = {
-      lockTime,
-      timeLeft: null,
-    }
-  }
-
-  componentDidMount() {
-    this.tick()
-  }
-
-  componentWillMount() {
-    const { lockTime } = this.state
+  constructor(props) {
+    super(props)
+    const { lockTime } = props;
     console.log(lockTime)
 
     const dateNow = new Date().getTime()
     const timeLeft = lockTime - dateNow
-
-    this.setState({
+    this.state = {
+      lockTime,
       timeLeft,
-    })
+    }  
+  }
+  
+  componentDidMount() {
+    this.tick()
   }
 
   tick = () => {

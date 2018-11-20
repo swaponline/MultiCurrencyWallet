@@ -47,7 +47,6 @@ export default class Home extends Component {
       sellCurrency: sell || sellCurrency || 'btc',
       invalidPair: false,
     }
-    const { match: { params: { buy, sell } } } = this.props
 
     if (!sell || !buy) {
       return

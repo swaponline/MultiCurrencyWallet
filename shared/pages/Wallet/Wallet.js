@@ -62,10 +62,11 @@ export default class Wallet extends Component {
     zeroBalance: true,
   }
 
-  componentWillMount() {
+  constructor(props) {
+    super(props)
     process.env.MAINNET && localStorage.setItem(constants.localStorage.testnetSkip, true)
     if (localStorage.getItem(constants.localStorage.privateKeysSaved)) {
-      this.changeView('checkKeys')
+      this.state.view = 'checkKeys';
     } else {
       // actions.modals.open(constants.modals.PrivateKeys, {})
     }

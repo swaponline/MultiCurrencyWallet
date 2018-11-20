@@ -27,7 +27,8 @@ export default class SwapComponent extends PureComponent {
     currencyData: null,
   }
 
-  componentWillMount() {
+  constructor(props) {
+    super(props)
     const { items, tokenItems } = this.props
     let { match : { params : { orderId } }, history } = this.props
 
