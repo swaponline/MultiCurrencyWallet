@@ -328,7 +328,7 @@ export default class Row extends Component {
             </BtnTooltip>
             {
               tradeAllowed && (
-                <BtnTooltip onClick={() => this.handleGoTrade(currency)} disable={isBalanceEmpty} id={currency}  text="Echange" >
+                <BtnTooltip onClick={() => this.handleGoTrade(currency)} disable={isBalanceEmpty} id={currency}  text="Exchange" >
                   <i className="fas fa-exchange-alt" />
                 </BtnTooltip>
               )
