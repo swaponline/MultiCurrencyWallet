@@ -25,9 +25,6 @@ export default class EthToBtc extends Component {
       enabledButton: false,
       isShowingBitcoinScript: false,
     }
-  }
-
-  componentWillMount() {
     this.swap.on('state update', this.handleFlowStateUpdate)
   }
 

@@ -10,8 +10,8 @@ export default class Core extends Component {
   state = {
     orders: [],
   }
-
-  componentWillMount() {
+  constructor(props) {
+    super(props)
     actions.core.getSwapHistory()
     SwapApp.services.orders
       .on('new orders', this.updateOrders)

@@ -18,9 +18,6 @@ export default class EosToBtc extends Component {
       flow: this.swap.flow.state,
       enabledButton: false,
     }
-  }
-
-  componentWillMount() {
     this.swap.on('state update', this.handleFlowStateUpdate)
   }
 

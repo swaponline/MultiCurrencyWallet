@@ -98,17 +98,14 @@ class NumberInput extends Component {
         event.preventDefault()
       }
     }
-  }
-
-  componentWillMount() {
     this.setAndConvert(this.props.valueLink.value)
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { valueLink: next } = nextProps
+  componentDidUpdate() {
+    const { valueLink } = this.props
 
-    if (Number(next.value) !== Number(this.value)) {
-      this.setAndConvert(next.value) // keep state being synced
+    if (Number(valueLink.value) !== Number(this.value)) {
+      this.setAndConvert(valueLink.value) // keep state being synced
     }
   }
 

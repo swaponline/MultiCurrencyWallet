@@ -10,27 +10,27 @@ export default class Seo extends Component {
   static propTypes = {
     location: PropTypes.object.isRequired,
   }
-
-  constructor(props) {
-    super(props)
-    this.seoPage = getSeoPage(props.location.pathname)
+  
+  state = {
+    seoPage: getSeoPage(this.props.location.pathname), 
   }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.location.pathname !== this.props.location.pathname) {
-      this.seoPage = getSeoPage(nextProps.location.pathname)
+  
+  static getDerivedStateFromProps({ location: { pathname } }) {
+    return {
+      seoPage: getSeoPage(pathname)
     }
   }
 
   shouldComponentUpdate(nextProps) {
     return this.props.location.pathname !== nextProps.location.pathname
   }
-
+  
   render() {
-    if (!this.seoPage) {
+    const { seoPage } = this.state
+    if (!seoPage) {
       return null
     }
-    const { uri, title, description } = this.seoPage
+    const { uri, title, description } = seoPage
 
     const url = getUrl(uri)
     return (

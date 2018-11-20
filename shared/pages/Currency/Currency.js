@@ -27,7 +27,15 @@ export default class Currency extends Component {
   state = {
     isBalanceFetching: false,
   }
+  constructor(props) {
+    super(props)
+    if (!this.getCoin()) {
+      this.props.history.push('/')
+      return false
+    }
 
+    this.handleReloadBalance()
+  }
   getRows = () => {
     let { match:{ params: { currency } } } = this.props
     currency = currency.toLowerCase()
@@ -77,15 +85,6 @@ export default class Currency extends Component {
 
   handleInWalletChange = (val) => val ? actions.core.markCoinAsVisible(this.getCoin().currency) :
     actions.core.markCoinAsHidden(this.getCoin().currency)
-
-  componentWillMount = () => {
-    if (!this.getCoin()) {
-      this.props.history.push('/')
-      return false
-    }
-
-    this.handleReloadBalance()
-  }
 
   render() {
     const { match: { params: { currency } } } = this.props
