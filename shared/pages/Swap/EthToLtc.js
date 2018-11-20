@@ -14,12 +14,13 @@ import { FormattedMessage } from 'react-intl'
 
 export default class EthToLtc extends Component {
 
-  constructor({ swap }) {
+  constructor({ swap, currencyData }) {
     super()
 
     this.swap = swap
 
     this.state = {
+      currencyAddress: currencyData.address,
       flow: this.swap.flow.state,
       enabledButton: false,
       isShowingLitecoinScript: false,
@@ -83,7 +84,7 @@ export default class EthToLtc extends Component {
 
   render() {
     const { children } = this.props
-    const { flow, enabledButton, isShowingLitecoinScript } = this.state
+    const { currencyAddress, flow, enabledButton, isShowingLitecoinScript } = this.state
 
     return (
       <div>
@@ -276,7 +277,9 @@ export default class EthToLtc extends Component {
                       </div>
                       <div>
                         <FormattedMessage id="EthToLtc270" defaultMessage="Your address: " />
-                        {this.swap.flow.myEthAddress}
+                        <a href={`${config.link.etherscan}/address/${currencyAddress}`} target="_blank" el="noopener noreferrer">
+                          {currencyAddress}
+                        </a>
                       </div>
                       <hr />
                       <span>{flow.address}</span>

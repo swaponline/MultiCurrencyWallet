@@ -63,6 +63,10 @@
     background: #dfc5ff;
   }
 }
+
+.disbutton {
+  onClick: none; 
+}
 .buttonActivate {
   margin-left: 15px;
 }
@@ -92,28 +96,9 @@
   margin-right: 5px;
 }
 
-.button {
-  @include inline-block;
-  height: 40px;
-  background: #f8f3fe;
-  padding: 0 25px;
-  cursor: pointer;
-  line-height: 40px;
-  font-size: 16px;
-  font-weight: 500;
-  color: #7c1de9;
-  border-radius: 20px;
-  margin-right: 10px;
-
-  &:hover {
-    color: #7c1de9;
-    background: #dfc5ff;
-  }
-}
-
 .table_balance-cell {
-  min-width: 124px; 
-  max-width: 124px;
+  min-width: 170px;
+  max-width: 170px;
 }
 
 .mobileName {
@@ -131,14 +116,38 @@
   display: none;
 }
 
+tr button:disabled,
+tr button[disabled],
+tr button[disabled]:hover {
+  background-color: #dbdbdb;
+  cursor: default;
+  color: #626262;
+}
 
-@include media-tablet { 
-  .yourAddress {
-    display: none;
+
+.actButton, .useButton {
+  display: none;
+}
+
+.walletButtons {
+  color: inherit;
+}
+
+.notActivated {
+  button:nth-child(2),
+  button:nth-child(3) {
+    display: none!important;
   }
 }
 
-@include media-mobile { 
+@media all and (min-width: 570px) and (max-width:900px) {
+  .buttonActivate {
+    margin-left: 0px;
+  }
+}
+
+
+@include media-mobile {
   .mobileName {
     display: block;
   }
@@ -173,12 +182,6 @@
         position: absolute;
       }
     }
-    button:disabled,
-    button[disabled]{
-      background-color: #dbdbdb;
-      cursor: default;
-      color: #626262;
-    }
     .mobileName {
       position: absolute;
       left: 70px;
@@ -188,6 +191,13 @@
     }
     .buttonActivate {
       top: -45px;
+    }
+  }
+  tr.hidden {
+    td:nth-child(5) {
+      div {
+        display: none;
+      }
     }
   }
   .unconfirmedBalance {
@@ -209,8 +219,3 @@
     left: 103px;
   }
 }
-
-
-
-
-

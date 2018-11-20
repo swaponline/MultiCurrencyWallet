@@ -12,12 +12,13 @@ import { FormattedMessage } from 'react-intl'
 
 export default class EthTokenToUsdt extends Component {
 
-  constructor({ swap }) {
+  constructor({ swap, currencyData }) {
     super()
 
     this.swap = swap
 
     this.state = {
+      currencyAddress: currencyData.address,
       flow: this.swap.flow.state,
       enabledButton: false,
     }
@@ -67,7 +68,7 @@ export default class EthTokenToUsdt extends Component {
 
   render() {
     const { children } = this.props
-    const { flow, enabledButton, isShowingBitcoinScript } = this.state
+    const { currencyAddress, flow, enabledButton, isShowingBitcoinScript } = this.state
 
     return (
       <div>
@@ -261,7 +262,9 @@ export default class EthTokenToUsdt extends Component {
                       </div>
                       <div>
                         <FormattedMessage id="EthTokenToUsdt260" defaultMessage="Your address: " />
-                        {this.swap.flow.myEthAddress}
+                        <a href={`${config.link.usdt}/address/${currencyAddress}`} target="_blank" el="noopener noreferrer">
+                          {currencyAddress}
+                        </a>
                       </div>
                       <div>
                         <hr />

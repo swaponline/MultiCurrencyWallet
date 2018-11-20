@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { connect } from 'redaction'
 import { withRouter } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
 import links from 'helpers/links'
@@ -37,10 +36,10 @@ const messages = defineMessages({
     description: 'Menu item "History"',
     defaultMessage: 'History',
   },
-  affiliate: {
-    id: 'menu.affiliate',
-    description: 'Menu item "Affiliate"',
-    defaultMessage: 'Affiliate',
+  aboutus: {
+    id: 'menu.aboutus',
+    description: 'Menu item "About Us"',
+    defaultMessage: 'About Us',
   },
   listing: {
     id: 'menu.listing',
@@ -52,20 +51,11 @@ const messages = defineMessages({
 
 @injectIntl
 @withRouter
-@connect(({ menu: { isDisplayingTable } }) => ({
-  isDisplayingTable,
-}))
 @CSSModules(styles, { allowMultiple: true })
-
-
 export default class Header extends Component {
 
   static propTypes = {
-    isDisplayingTable: PropTypes.bool.isRequired,
-  }
-
-  static defaulProps = {
-    isDisplayingTable: false,
+    history: PropTypes.object.isRequired,
   }
 
   constructor(props) {
@@ -90,8 +80,8 @@ export default class Header extends Component {
           icon: 'history',
         },
         {
-          title: props.intl.formatMessage(messages.affiliate),
-          link: links.affiliate,
+          title: props.intl.formatMessage(messages.aboutus),
+          link: links.aboutus,
           isMobile: false,
         },
         {
@@ -113,6 +103,10 @@ export default class Header extends Component {
   }
 
   handleScroll = () =>  {
+    if (this.props.history.location.pathname === '/') {
+      this.setState(() => ({ sticky: false }))
+      return
+    }
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop
     if (scrollTop > this.lastScrollTop) {
       this.setState(() => ({ sticky: false }))
@@ -124,7 +118,6 @@ export default class Header extends Component {
   }
 
   render() {
-    const { isDisplayingTable } = this.props
     const { sticky, menuItems } = this.state
 
     if (isMobile) {
@@ -132,7 +125,7 @@ export default class Header extends Component {
     }
 
     return (
-      <div styleName={sticky && !isDisplayingTable ? 'header header-fixed' : 'header'}>
+      <div styleName={sticky ? 'header header-fixed' : 'header'}>
         <WidthContainer styleName="container">
           <Logo withLink />
           <Nav menu={menuItems} />
