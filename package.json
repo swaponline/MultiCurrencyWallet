@@ -4,12 +4,21 @@
   "description": "swap.online",
   "private": true,
   "main": "./bin/server",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix --cache ./shared --ext js",
+      "git add"
+    ]
+  },
   "scripts": {
     "test": "cypress open",
     "eslint": "eslint --fix --cache ./shared --ext js",
-    "validate": "eslint --cache ./shared --ext js",
-    "lint-staged": "LIST=`git diff-index --name-only --diff-filter=d HEAD | grep .*\\.js | grep -v json`; if [ \"$LIST\" ]; then eslint --fix $LIST; fi",
-    "lint-last-commit": "LIST=`git diff-index --name-only --diff-filter=d HEAD^ | grep .*\\.js | grep -v json`; if [ \"$LIST\" ]; then eslint --fix $LIST; fi",
+    "validate": "lint-diff develop",
     "start": "npm run dev",
     "dev": "npm run dev:testnet",
     "prod": "npm run dev:mainnet",
@@ -98,7 +107,10 @@
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^2.30.1",
     "human-standard-token-abi": "^1.0.2",
+    "husky": "^1.1.4",
     "jdenticon": "^2.1.0",
+    "lint-diff": "^1.2.1",
+    "lint-staged": "^8.0.5",
     "lodash": "^4.17.5",
     "moment": "^2.22.1",
     "moment-with-locales-es6": "^1.0.1",
