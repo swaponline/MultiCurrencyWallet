@@ -54,7 +54,7 @@ export default class Row extends Component {
     isBalanceEmpty: true
   }
 
-  static getDerivedStateFromProps({ balance }) {
+  static getDerivedStateFromProps({ item: { balance } }) {
     return {
       isBalanceEmpty: balance === 0
     }
@@ -98,7 +98,7 @@ export default class Row extends Component {
       isBalanceFetching: true,
     })
 
-    const { currency } = this.props
+    const { item: { currency } } = this.props
 
     await actions[currency.toLowerCase()].getBalance(currency.toLowerCase())
 
@@ -124,7 +124,7 @@ export default class Row extends Component {
     })
   }
   handleSliceAddress = () => {
-    const { address } = this.props
+    const { item: { address } } = this.props
     if(window.innerWidth < 1080 || isMobile) {
       return address.substr(0, 6) + '...' + address.substr(address.length - 2)
     }
@@ -229,6 +229,7 @@ export default class Row extends Component {
         contractAddress,
       },
     } = this.props
+    console.log('props', this.props);
     const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true"
     const telosAccountActivated = localStorage.getItem(constants.localStorage.telosAccountActivated) === "true"
 
