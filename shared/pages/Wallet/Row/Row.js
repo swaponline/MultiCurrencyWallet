@@ -36,18 +36,8 @@ import { FormattedMessage } from 'react-intl'
       ltcData,
       usdtData,
       ...Object.keys(tokensData).map(k => (tokensData[k]))
-    ].map((data) => ({
-      address: data.address,
-      balance: data.balance,
-      currency: data.currency,
-      fullName: data.fullName,
-      unconfirmedBalance: data.unconfirmedBalance,
-      isBalanceFetched: data.isBalanceFetched,
-      privateKey: data.privateKey,
-      publicKey: data.publicKey,
-      contractAddress: data.contractAddress,
-      decimals: data.decimals,
-      token: data.token,
+    ].map(({account, keyPair, ...data}) => ({
+      ...data,
     })).find((item) => item.currency === currency),
   })
 )
@@ -125,10 +115,10 @@ export default class Row extends Component {
     };
     return JSON.stringify({
       ...getComparableProps(nextProps),
-      ...nextState
+      ...nextState,
     }) !== JSON.stringify({
       ...getComparableProps(this.props),
-      ...this.state
+      ...this.state,
     })
   }
   
