@@ -34,8 +34,8 @@ export default class TextareaAutosize extends Component {
     this.dispatchEvent(DESTROY)
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.getValue(prevProps) !== this.getValue(this.props)) {
+  componentWillReceiveProps(nextProps) {
+    if (this.getValue(nextProps) !== this.getValue(this.props)) {
       this.dispatchEvent(UPDATE, true)
     }
   }

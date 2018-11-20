@@ -33,25 +33,28 @@ export default class Row extends Component {
     isBalanceEmpty: true
   }
 
-  static getDerivedStateFromProps({ balance }) {
-    return {
-      isBalanceEmpty: balance === 0
-    }
-  }
-  constructor(props) {
-    super(props)
+  componentWillMount() {
     const { currency, currencies } = this.props
-    this.state.tradeAllowed = !!currencies.find(c => c.value === currency.toLowerCase())
+
+    this.setState({
+      tradeAllowed: !!currencies.find(c => c.value === currency.toLowerCase()),
+    })
+    
+    this.handleCheckBalance()
+  }
+
+  componentWillReceiveProps(newProps) {
+    this.handleCheckBalance()
   }
 
   componentWillUnmount() {
-    window.removeEventListener("resize", this.handleSliceAddress)
+    window.removeEventListener("resize", this.handleSliceAddress);
   }
 
   componentDidMount() {
     const { hiddenCoinsList } = this.props
 
-    window.addEventListener("resize", this.handleSliceAddress)
+    window.addEventListener("resize", this.handleSliceAddress);
 
     Object.keys(config.erc20)
       .forEach(name => {
@@ -88,7 +91,7 @@ export default class Row extends Component {
   }
 
   handleSliceAddress = () => {
-    const { address } = this.props
+    const { address } = this.props;
     if(window.innerWidth < 1080 || isMobile) {
       return address.substr(0, 6) + '...' + address.substr(address.length - 2)
     }
@@ -155,6 +158,15 @@ export default class Row extends Component {
     this.setState({
       showMobileButtons: true,
     })
+  }
+
+  handleCheckBalance = () => {
+    const { balance } = this.props;
+    if( balance > 0 ) {
+      this.setState({
+        isBalanceEmpty: false
+      })
+    }
   }
 
   handleGoTrade = (currency) => {

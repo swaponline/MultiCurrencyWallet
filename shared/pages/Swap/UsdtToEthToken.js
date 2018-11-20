@@ -24,6 +24,9 @@ export default class UsdtToEthToken extends Component {
       secret: crypto.randomBytes(32).toString('hex'),
       enabledButton: false,
     }
+  }
+
+  componentWillMount() {
     this.swap.on('state update', this.handleFlowStateUpdate)
   }
 
