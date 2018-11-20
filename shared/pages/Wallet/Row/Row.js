@@ -231,7 +231,6 @@ export default class Row extends Component {
         contractAddress,
       },
     } = this.props
-    console.log('props', this.props);
     const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true"
     const telosAccountActivated = localStorage.getItem(constants.localStorage.telosAccountActivated) === "true"
 
