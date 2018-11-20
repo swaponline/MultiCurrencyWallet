@@ -6,7 +6,7 @@
 
 - [ ] I have read the [CONTRIBUTING](https://github.com/swaponline/swap.react/wiki/Contribution) guide
 - [ ] branch rebased on `develop`
-- [ ] styleguide check `npm run validate`
+- [ ] styleguide check `npm run lint-staged`
 - [ ] good naming
 - [ ] keep simple
 - [ ] video or screenshot attached

@@ -8,6 +8,8 @@
     "test": "cypress open",
     "eslint": "eslint --fix --cache ./shared --ext js",
     "validate": "eslint --cache ./shared --ext js",
+    "lint-staged": "LIST=`git diff-index --name-only --diff-filter=d HEAD | grep .*\\.js | grep -v json`; if [ \"$LIST\" ]; then eslint --fix $LIST; fi",
+    "lint-last-commit": "LIST=`git diff-index --name-only --diff-filter=d HEAD^ | grep .*\\.js | grep -v json`; if [ \"$LIST\" ]; then eslint --fix $LIST; fi",
     "start": "npm run dev",
     "dev": "npm run dev:testnet",
     "prod": "npm run dev:mainnet",
