@@ -107,8 +107,10 @@ export default class Row extends Component {
     }))
   }
   shouldComponentUpdate(nextProps, nextState) {
-    const getComparableProps = ({ item }) => ({
+    const getComparableProps = ({ item, index, selectId }) => ({
       item,
+      index,
+      selectId,
     })
     return JSON.stringify({
       ...getComparableProps(nextProps),
