@@ -25,6 +25,9 @@ export default class EthToLtc extends Component {
       enabledButton: false,
       isShowingLitecoinScript: false,
     }
+  }
+
+  componentWillMount() {
     this.swap.on('state update', this.handleFlowStateUpdate)
   }
 

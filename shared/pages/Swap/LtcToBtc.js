@@ -25,6 +25,9 @@ export default class LtcToBtc extends Component {
       enabledButton: false,
       isShowingBitcoinScript: false,
     }
+  }
+
+  componentWillMount() {
     this.swap.on('state update', this.handleFlowStateUpdate)
   }
 

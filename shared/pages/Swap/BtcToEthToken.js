@@ -29,6 +29,9 @@ export default class BtcToEthToken extends Component {
       destinationAddressTimer: true,
       destinationBuyAddress: (this.swap.destinationBuyAddress) ? this.swap.destinationBuyAddress : swapApp.services.auth.accounts.eth.address
     }
+  }
+
+  componentWillMount() {
     this.swap.on('state update', this.handleFlowStateUpdate)
   }
 
@@ -49,14 +52,14 @@ export default class BtcToEthToken extends Component {
   }
 
   confirmAddress = () => {
-    this.swap.setDestinationBuyAddress(this.state.destinationBuyAddress)
-    this.setState()
+    this.swap.setDestinationBuyAddress(this.state.destinationBuyAddress);
+    this.setState();
   }
 
   destinationAddressFocus = () => {
     this.setState( {
       destinationAddressTimer: false
-    } )
+    } );
   }
 
   updateBalance = () => {
