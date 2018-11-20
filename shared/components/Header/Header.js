@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { connect } from 'redaction'
 import { withRouter } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
 import links from 'helpers/links'
@@ -15,7 +14,7 @@ import Nav from './Nav/Nav'
 import User from './User/User'
 import NavMobile from './NavMobile/NavMobile'
 
-import Logo from 'components/Logo/Logo'
+import LogoTooltip from 'components/Logo/LogoTooltip'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 
 
@@ -52,20 +51,11 @@ const messages = defineMessages({
 
 @injectIntl
 @withRouter
-@connect(({ menu: { isDisplayingTable } }) => ({
-  isDisplayingTable,
-}))
 @CSSModules(styles, { allowMultiple: true })
-
-
 export default class Header extends Component {
 
   static propTypes = {
-    isDisplayingTable: PropTypes.bool.isRequired,
-  }
-
-  static defaulProps = {
-    isDisplayingTable: false,
+    history: PropTypes.object.isRequired,
   }
 
   constructor(props) {
@@ -113,6 +103,10 @@ export default class Header extends Component {
   }
 
   handleScroll = () =>  {
+    if (this.props.history.location.pathname === '/') {
+      this.setState(() => ({ sticky: false }))
+      return
+    }
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop
     if (scrollTop > this.lastScrollTop) {
       this.setState(() => ({ sticky: false }))
@@ -124,7 +118,6 @@ export default class Header extends Component {
   }
 
   render() {
-    const { isDisplayingTable, intl: { locale } } = this.props
     const { sticky, menuItems } = this.state
 
     if (isMobile) {
@@ -132,11 +125,11 @@ export default class Header extends Component {
     }
 
     return (
-      <div styleName={sticky && !isDisplayingTable ? 'header header-fixed' : 'header'}>
+      <div styleName={sticky ? 'header header-fixed' : 'header'}>
         <WidthContainer styleName="container">
-          <Logo withLink />
-          <Nav menu={menuItems} />
-          <Logo withLink mobile />
+          <LogoTooltip withLink />
+            <Nav menu={menuItems} />
+          <LogoTooltip withLink mobile />
           <User />
         </WidthContainer>
       </div>

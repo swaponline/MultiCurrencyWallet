@@ -205,7 +205,7 @@
   },
   {
     "id": "logo29",
-    "message": "Go Home",
+    "message": "Домой",
     "files": [
       "shared/components/Logo/Logo.js"
     ]
