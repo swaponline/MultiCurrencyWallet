@@ -18,7 +18,7 @@
   "scripts": {
     "test": "cypress open",
     "eslint": "eslint --fix --cache ./shared --ext js",
-    "validate": "lint-diff origin/develop",
+    "validate": "lint-diff",
     "start": "npm run dev",
     "dev": "npm run dev:testnet",
     "prod": "npm run dev:mainnet",

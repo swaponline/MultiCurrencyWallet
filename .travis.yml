@@ -28,7 +28,7 @@ script:
 #- yarn test:unit -- --coverage
 #- yarn test:snapshot -- --coverage
 - echo "____________LINT________________"
-- yarn validate
+- yarn validate $TRAVIS_COMMIT_RANGE
 - echo "________Build mainnet___________"
 - yarn build:mainnet
 - echo "________Build testnet___________"
