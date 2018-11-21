@@ -60,7 +60,6 @@ export const reverseCurrency = (state, { value }) => ({
       ]
 
       stateWithoutValue.splice(0, 0, state.items[index])
-      
       return stateWithoutValue
     }
     return null
