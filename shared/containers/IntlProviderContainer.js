@@ -25,15 +25,17 @@ export default class IntlProviderContainer extends Component {
     const { children } = this.props
     return (
       <Switch>
-        <Route path={localisePrefix} render={props => {
-          const currentLocale = props.match.params.locale || defaultLocale()
-          const messages = translations[currentLocale]
-          return (
-            <IntlProvider {...props} key={currentLocale} locale={currentLocale} defaultLocale={defaultLocale()} messages={messages}>
-              {children}
-            </IntlProvider>
-          )
-        }}
+        <Route
+          path={localisePrefix}
+          render={props => {
+            const currentLocale = props.match.params.locale || defaultLocale()
+            const messages = translations[currentLocale]
+            return (
+              <IntlProvider {...props} key={currentLocale} locale={currentLocale} defaultLocale={defaultLocale()} messages={messages}>
+                {children}
+              </IntlProvider>
+            )
+          }}
         />
       </Switch>
     )

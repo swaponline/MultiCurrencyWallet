@@ -82,14 +82,14 @@ export default class Wallet extends Component {
       tokens: props.tokens,
       currencies: props.currencies,
       hiddenCoinsList: props.hiddenCoinsList,
-    });
+    })
     return JSON.stringify({
       ...getComparableProps(this.props),
       ...this.state,
     }) !== JSON.stringify({
       ...getComparableProps(nextProps),
       ...nextState,
-    });
+    })
   }
 
   componentWillReceiveProps({ items, tokens }) {

@@ -27,7 +27,7 @@ export default class BtcToEthToken extends Component {
       secret: crypto.randomBytes(32).toString('hex'),
       enabledButton: false,
       destinationAddressTimer: true,
-      destinationBuyAddress: (this.swap.destinationBuyAddress) ? this.swap.destinationBuyAddress : swapApp.services.auth.accounts.eth.address
+      destinationBuyAddress: (this.swap.destinationBuyAddress) ? this.swap.destinationBuyAddress : swapApp.services.auth.accounts.eth.address,
     }
   }
 
@@ -52,14 +52,14 @@ export default class BtcToEthToken extends Component {
   }
 
   confirmAddress = () => {
-    this.swap.setDestinationBuyAddress(this.state.destinationBuyAddress);
-    this.setState();
+    this.swap.setDestinationBuyAddress(this.state.destinationBuyAddress)
+    this.setState()
   }
 
   destinationAddressFocus = () => {
-    this.setState( {
+    this.setState({
       destinationAddressTimer: false
-    } );
+    })
   }
 
   updateBalance = () => {
@@ -106,24 +106,24 @@ export default class BtcToEthToken extends Component {
         }
 
         {
-          (!flow.isWaitingForOwner && (this.swap.destinationBuyAddress===null)) && (
-          <Fragment>
-            <FormattedMessage id="BtcToEthTokenAddress1" defaultMessage="Confirm destination address (by default - swap.online wallet)">
-              {message => <h3>{message}</h3>}
-            </FormattedMessage>
-            <Input valueLink={linked.destinationBuyAddress} onFocus={this.destinationAddressFocus} styleName="input" pattern="0-9a-zA-Z" />
-            <hr />
-            { destinationAddressTimer && (
-              <TimerButton timeLeft={10} brand onClick={this.confirmAddress}>
-                <FormattedMessage id="BtcToEthTokenAddress2" defaultMessage="Confirm address " />
-              </TimerButton>
-            ) }
-            { !destinationAddressTimer && (
-              <Button brand onClick={this.confirmAddress} styleName="button"> 
-                <FormattedMessage id="BtcToEthTokenAddress2" defaultMessage="Confirm address" />
-              </Button>
-            ) }
-          </Fragment>
+          (!flow.isWaitingForOwner && (this.swap.destinationBuyAddress === null)) && (
+            <Fragment>
+              <FormattedMessage id="BtcToEthTokenAddress1" defaultMessage="Confirm destination address (by default - swap.online wallet)">
+                {message => <h3>{message}</h3>}
+              </FormattedMessage>
+              <Input valueLink={linked.destinationBuyAddress} onFocus={this.destinationAddressFocus} styleName="input" pattern="0-9a-zA-Z" />
+              <hr />
+              { destinationAddressTimer && (
+                <TimerButton timeLeft={10} brand onClick={this.confirmAddress}>
+                  <FormattedMessage id="BtcToEthTokenAddress2" defaultMessage="Confirm address " />
+                </TimerButton>
+              ) }
+              { !destinationAddressTimer && (
+                <Button brand onClick={this.confirmAddress} styleName="button">
+                  <FormattedMessage id="BtcToEthTokenAddress2" defaultMessage="Confirm address" />
+                </Button>
+              ) }
+            </Fragment>
           )
         }
 
@@ -186,11 +186,16 @@ export default class BtcToEthToken extends Component {
                         {message => <div>{message}<strong>{this.swap.sellAmount.toNumber()}</strong> {this.swap.sellCurrency}</div>}
                       </FormattedMessage>
                       <FormattedMessage id="BtcToEthToken140" defaultMessage="Your address: ">
-                        {message => <div>{message}{
-                           <a href={`${config.link.bitpay}/address/${currencyAddress}`} target="_blank" el="noopener noreferrer">
-                             {currencyAddress}
-                           </a>
-                        }</div>}
+                        {message =>
+                          <div>
+                            {message}
+                            {
+                              <a href={`${config.link.bitpay}/address/${currencyAddress}`} target="_blank" el="noopener noreferrer">
+                                {currencyAddress}
+                              </a>
+                            }
+                          </div>
+                        }
                       </FormattedMessage>
                       <hr />
                       <span>{flow.address}</span>
@@ -226,7 +231,8 @@ export default class BtcToEthToken extends Component {
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        Top up BTC Script {flow.scriptAddress}
+                        <FormattedMessage id="BtcToEthToken236" defaultMessage="Top up BTC Script " />
+                        {flow.scriptAddress}
                       </a>
                     }
                     {

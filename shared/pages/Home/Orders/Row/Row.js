@@ -106,9 +106,9 @@ export default class Row extends Component {
         sellAmount,
         isRequested,
         isProcessing,
-        owner: {  peer: ownerPeer }
+        owner: {  peer: ownerPeer },
       },
-      peer
+      peer,
     } = this.props
 
     const pair = Pair.fromOrder(this.props.row)
@@ -225,9 +225,9 @@ export default class Row extends Component {
         sellAmount,
         isRequested,
         isProcessing,
-        owner: {  peer: ownerPeer }
+        owner: {  peer: ownerPeer },
       },
-      peer
+      peer,
     } = this.props
 
     const pair = Pair.fromOrder(this.props.row)

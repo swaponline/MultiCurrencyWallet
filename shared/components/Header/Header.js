@@ -128,7 +128,7 @@ export default class Header extends Component {
       <div styleName={sticky ? 'header header-fixed' : 'header'}>
         <WidthContainer styleName="container">
           <LogoTooltip withLink />
-            <Nav menu={menuItems} />
+          <Nav menu={menuItems} />
           <LogoTooltip withLink mobile />
           <User />
         </WidthContainer>

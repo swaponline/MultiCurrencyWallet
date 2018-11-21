@@ -235,9 +235,7 @@ export default class EthTokenToBtc extends Component {
               {
                 flow.step === 4 && !flow.isBalanceEnough && !flow.isBalanceFetching && (
                   <Fragment>
-                    <FormattedMessage id="EthTokenBtc241" defaultMessage="Not enough money for this swap. Please fund the balance">
-                      {message => <h3>{message} </h3>}
-                    </FormattedMessage>
+                    <FormattedMessage id="EthTokenBtc241" defaultMessage="Not enough money for this swap. Please fund the balance" />
                     <div>
                       <FormattedMessage id="EthTokenBtc245" defaultMessage="Your balance: ">
                         {message => <div>{message}<strong>{flow.balance}</strong> {this.swap.sellCurrency}</div>}
@@ -246,11 +244,18 @@ export default class EthTokenToBtc extends Component {
                         {message => <div>{message}<strong>{this.swap.sellAmount.toNumber()}</strong> {this.swap.sellCurrency}</div>}
                       </FormattedMessage>
                       <FormattedMessage id="EthTokenBtc251" defaultMessage="Your address: ">
-                        {message => <div>{message}{
-                          <a href={`${config.link.etherscan}/address/${currencyAddress}`} target="_blank" el="noopener noreferrer">
-                            {currencyAddress}
-                          </a>
-                        }</div>}
+                        {message =>
+                          <div>{message}
+                            {
+                              <a href={`${config.link.etherscan}/address/${currencyAddress}`}
+                                target="_blank"
+                                el="noopener noreferrer"
+                              >
+                                {currencyAddress}
+                              </a>
+                            }
+                          </div>
+                        }
                       </FormattedMessage>
                       <hr />
                       <span>{flow.address}</span>

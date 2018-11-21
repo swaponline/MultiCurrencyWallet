@@ -217,7 +217,10 @@ export default class PartialClosure extends Component {
               placeholder="Enter amount"
               currencies={currencies}
             />
-            <p>Max amount for offer: {maxAmount}{' '}{getCurrency.toUpperCase()}</p>
+            <p>
+              <FormattedMessage id="partial221" defaultMessage="Max amount for offer: " />
+              {maxAmount}{' '}{getCurrency.toUpperCase()}
+            </p>
             <SelectGroup
               inputValueLink={linked.getAmount}
               selectedValue={getCurrency}
@@ -226,18 +229,26 @@ export default class PartialClosure extends Component {
               disabled
               currencies={currencies}
             />
-            {isNonOffers && (<p styleName="error">No offers </p>)}
-            {isDeclinedOffer && (<p styleName="error">Offer is declined</p>)}
+            {isNonOffers && (
+              <p styleName="error">
+                <FormattedMessage id="partial221" defaultMessage="No offers " />
+              </p>
+            )}
+            {isDeclinedOffer && (
+              <p styleName="error">
+                <FormattedMessage id="partial238" defaultMessage="Offer is declined " />
+              </p>
+            )}
             {
               isFetching && (
                 <span>
-                  Wait participant:
+                  <FormattedMessage id="partial244" defaultMessage="Wait participant: " />
                   <InlineLoader />
                 </span>
               )
             }
             <Button styleName="button" brand fullWidth onClick={this.sendRequest} disabled={isNonOffers}>
-              Start
+              <FormattedMessage id="partial244" defaultMessage="Start: " />
             </Button>
           </div>
         </div>

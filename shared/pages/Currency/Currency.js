@@ -80,7 +80,7 @@ export default class Currency extends Component {
     actions.core.markCoinAsHidden(this.getCoin().currency)
 
   componentWillMount = () => {
-    const{ intl: { locale } } = this.props
+    const { intl: { locale } } = this.props
     if (!this.getCoin()) {
       this.props.history.push(`/${locale}/`)
       return false

@@ -178,8 +178,8 @@ export default class BtcToLtc extends Component {
                       <div>
                         <FormattedMessage id="address" defaultMessage="Your address: " />
                         <a href={`${config.link.bitpay}/address/${currencyAddress}`} target="_blank" el="noopener noreferrer">
-                         {currencyAddress}
-                       </a>
+                          {currencyAddress}
+                        </a>
                       </div>
                       <hr />
                       <span>{flow.address}</span>

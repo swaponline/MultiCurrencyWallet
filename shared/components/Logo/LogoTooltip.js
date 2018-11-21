@@ -11,7 +11,7 @@ const LogoTooltip = (props) => {
     <Fragment>
       <Logo withLink />
       <ReactTooltip id="logo" type="light" effect="solid">
-       <FormattedMessage id="logo29" defaultMessage="Go Home" />
+        <FormattedMessage id="logo29" defaultMessage="Go Home" />
       </ReactTooltip>
     </Fragment>
   )
