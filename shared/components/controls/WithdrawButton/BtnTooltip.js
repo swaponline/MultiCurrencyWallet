@@ -20,7 +20,7 @@ import { FormattedMessage } from 'react-intl'
         <WithdrawButton disable={disable} onClick={onClick} data-tip data-for={id} {...rest}>
           {children}
           <span>
-            <FormattedMessage id="Row327"  defaultMessage={text} />
+            {text}
           </span>
         </WithdrawButton>
         {

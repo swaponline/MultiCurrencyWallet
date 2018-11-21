@@ -38,8 +38,8 @@ export default class ReceiveModal extends React.Component {
     return (
       <Modal name={name} title="Receive">
         <div styleName="content" style={{ textAlign: "center" }}>
-          <FormattedMessage id="ReceiveModal" defaultMessage={`This is your address for receive ${currency}`}>
-            {message => <p style={{ fontSize: 25 }}>{message}</p>}
+          <FormattedMessage id="ReceiveModal" defaultMessage={`This is your address for receive`}>
+            {message => <p style={{ fontSize: 25 }}>{`${message} ${currency}`}</p>}
           </FormattedMessage>
           <CopyToClipboard
             text={address}

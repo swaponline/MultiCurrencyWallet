@@ -140,7 +140,7 @@ export default class BtcToLtc extends Component {
                     <input type="text" placeholder="Secret Key" defaultValue={secret} />
                     <br />
                     <TimerButton timeLeft={5} brand onClick={this.submitSecret}>
-                      <FormattedMessage id="LTCTOBTC179" defaultMessage="Confirm" />
+                      <FormattedMessage id="BtcToLtc.Confirm" defaultMessage="Confirm" />
                     </TimerButton>
                   </Fragment>
                 ) : (
@@ -367,7 +367,7 @@ export default class BtcToLtc extends Component {
                 flow.isLtcWithdrawn && (
                   <Fragment>
                     <h3>
-                      <FormattedMessage id="SecretHash" defaultMessage="6. Money was transferred to your wallet. Check the balance." />
+                      <FormattedMessage id="MoneyWasTransferred" defaultMessage="6. Money was transferred to your wallet. Check the balance." />
                     </h3>
                     <h2>
                       <FormattedMessage id="Thank" defaultMessage="Thank you for using Swap.Online!" />

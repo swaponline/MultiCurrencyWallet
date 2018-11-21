@@ -1,4 +1,3 @@
-
 [
   {
     "id": "174",
@@ -9,10 +8,7 @@
   },
   {
     "id": "menu.anoutus",
-    "message": "About Us",
-    "files": [
-      "shared/components/Header/Header.js"
-    ]
+    "message": "About Us"
   },
   {
     "id": "menu.exchange",
@@ -207,7 +203,7 @@
     "id": "logo29",
     "message": "Go Home",
     "files": [
-      "shared/components/Logo/Logo.js"
+      "shared/components/Logo/LogoTooltip.js"
     ]
   },
   {
@@ -786,10 +782,7 @@
   },
   {
     "id": "RowMhistory49",
-    "message": "Refund not available",
-    "files": [
-      "shared/pages/History/SwapsHistory/RowHistory/RowHistory.js"
-    ]
+    "message": "Refund not available"
   },
   {
     "id": "SwapHisrory21",
@@ -1012,42 +1005,42 @@
     "id": "RowM122",
     "message": "You get",
     "files": [
-      "shared/pages/Home/Orders/RowMobile/RowMobile.js"
+      "shared/pages/Home/Orders/Row/Row.js"
     ]
   },
   {
     "id": "RowM136",
     "message": "REQUESTING",
     "files": [
-      "shared/pages/Home/Orders/RowMobile/RowMobile.js"
+      "shared/pages/Home/Orders/Row/Row.js"
     ]
   },
   {
     "id": "RowM139",
     "message": "Go to the swap",
     "files": [
-      "shared/pages/Home/Orders/RowMobile/RowMobile.js"
+      "shared/pages/Home/Orders/Row/Row.js"
     ]
   },
   {
     "id": "RowM145",
     "message": "This order is in execution",
     "files": [
-      "shared/pages/Home/Orders/RowMobile/RowMobile.js"
+      "shared/pages/Home/Orders/Row/Row.js"
     ]
   },
   {
     "id": "RowM153",
     "message": "Please wait while we confirm your request",
     "files": [
-      "shared/pages/Home/Orders/RowMobile/RowMobile.js"
+      "shared/pages/Home/Orders/Row/Row.js"
     ]
   },
   {
     "id": "RowM166",
     "message": "Start",
     "files": [
-      "shared/pages/Home/Orders/RowMobile/RowMobile.js"
+      "shared/pages/Home/Orders/Row/Row.js"
     ]
   },
   {
@@ -2697,10 +2690,7 @@
   },
   {
     "id": "Row305",
-    "message": "Send",
-    "files": [
-      "shared/pages/Wallet/Row/Row.js"
-    ]
+    "message": "Send"
   },
   {
     "id": "Row313",
@@ -2732,10 +2722,7 @@
   },
   {
     "id": "RowWallet313",
-    "message": "Exchange",
-    "files": [
-      "shared/pages/Wallet/Row/Row.js"
-    ]
+    "message": "Exchange"
   },
   {
     "id": "AddOffer396",
@@ -2826,6 +2813,487 @@
     "message": "Before you continue be sure to save your private keys! {br} {br} there is a big chance you will loose your money.",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "menu.aboutus",
+    "message": "About Us",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
+    "id": "BtcToEthTokenAddress1",
+    "message": "Confirm destination address (by default - swap.online wallet)",
+    "files": [
+      "shared/pages/Swap/BtcToEthToken.js"
+    ]
+  },
+  {
+    "id": "BtcToEthTokenAddress2",
+    "message": "Confirm address",
+    "files": [
+      "shared/pages/Swap/BtcToEthToken.js"
+    ]
+  },
+  {
+    "id": "WithdrawButton29",
+    "message": "Deposit funds to this address of currency wallet",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "WithdrawButton32",
+    "message": "You can not send and exchange this asset, because you have a zero balance.",
+    "files": [
+      "shared/components/controls/WithdrawButton/BtnTooltip.js"
+    ]
+  },
+  {
+    "id": "Listing1",
+    "message": "How to list your asset on swap.online",
+    "files": [
+      "shared/pages/Listing/Listing.js"
+    ]
+  },
+  {
+    "id": "listing.listing1",
+    "message": "1. We can list your token on swap.online ;",
+    "files": [
+      "shared/pages/Listing/Listing.js"
+    ]
+  },
+  {
+    "id": "listing.listing10",
+    "message": "SWAP.Online will be cryptocurrency Pink Sheets market.",
+    "files": [
+      "shared/pages/Listing/Listing.js"
+    ]
+  },
+  {
+    "id": "listing.listing12",
+    "message": "It’s well known that even in traditional stock market, one willing to be quoted must meet the requirements of SEC, or as far as the OTC Market Group Inc. markets (OTCQX and OTCQB) are concerned, must show the big income and seek the support of the influential consulting agencies. Moreover, the information about the company audit must be provided annually to the SEC or SEC-approved regulators.",
+    "files": [
+      "shared/pages/Listing/Listing.js"
+    ]
+  },
+  {
+    "id": "listing.listing13",
+    "message": "Some of the cryptocurrency ‘fat cats’ allow themselves to do the same. For example, Localbitcoins CEO said they would newer list a token of the project with less than USD1B capitalisation. Cryptobridge and some related centralized exchanges ask for the USD 23 thousand (in BTS equivalent) for the token owner to be listed.",
+    "files": [
+      "shared/pages/Listing/Listing.js"
+    ]
+  },
+  {
+    "id": "listing.listing14",
+    "message": "That is not about us.",
+    "files": [
+      "shared/pages/Listing/Listing.js"
+    ]
+  },
+  {
+    "id": "listing.listing15",
+    "message": "As our transactions is peer-to-peer, based on the Atomic Swaps technology, we can add to the balances every token corresponding some our criterias. Obviously, clearly fraudulent projects are to be rejected from the very beginning. But all other start-ups on the different stages of development are welcome.",
+    "files": [
+      "shared/pages/Listing/Listing.js"
+    ]
+  },
+  {
+    "id": "listing.listing16",
+    "message": "In contradiction to the widespread Ethereum-pegged exchanges, the main currency to be changed on tokens in our project is Bitcoin. It can be treated as our killer-feature: for the crypto-newbies and vast majority of small customers Bitcoin is much clearer and easy to buy via Localbitcoins etc.",
+    "files": [
+      "shared/pages/Listing/Listing.js"
+    ]
+  },
+  {
+    "id": "listing.listing17",
+    "message": "We offer two-level way of access to the balances. On the first stage, we analyze the level of project technical development, collect the basic information (name, ticker, logo) and add the token to trading balances.",
+    "files": [
+      "shared/pages/Listing/Listing.js"
+    ]
+  },
+  {
+    "id": "listing.listing18",
+    "message": "Then, to start trading with Bitcoin, the project should publish the information about the collaboration with SWAP.Online on every social platform and on the web-site forum. With this information published, our developers will release the final version of the exchange to client’s token. This option is available for the first ten projects only.",
+    "files": [
+      "shared/pages/Listing/Listing.js"
+    ]
+  },
+  {
+    "id": "listing.listing19",
+    "message": "The conditions of delisting are discussed, but at the moment, we plan to expel twenty per cent worst tokens every month.",
+    "files": [
+      "shared/pages/Listing/Listing.js"
+    ]
+  },
+  {
+    "id": "listing.listing2",
+    "message": "2. To list your tokens, please send us the link to your peoject, erc20 address, icon, name and ticker (short name) to team@swap.online;",
+    "files": [
+      "shared/pages/Listing/Listing.js"
+    ]
+  },
+  {
+    "id": "listing.listing20",
+    "message": "Thus, you token can start to be quoted in free and decentralized manner as quickly as possible for your unlimited profit.",
+    "files": [
+      "shared/pages/Listing/Listing.js"
+    ]
+  },
+  {
+    "id": "listing.listing21",
+    "message": "Stay with us.",
+    "files": [
+      "shared/pages/Listing/Listing.js"
+    ]
+  },
+  {
+    "id": "listing.listing22",
+    "message": "Grow with us.",
+    "files": [
+      "shared/pages/Listing/Listing.js"
+    ]
+  },
+  {
+    "id": "listing.listing23",
+    "message": "Earn with us.",
+    "files": [
+      "shared/pages/Listing/Listing.js"
+    ]
+  },
+  {
+    "id": "listing.listing3",
+    "message": "3. We as well will announce listing of your tokens on our social media, mutial PR will benefit both sides.",
+    "files": [
+      "shared/pages/Listing/Listing.js"
+    ]
+  },
+  {
+    "id": "listing.listing4",
+    "message": "Crypto Pink Sheets: ALL Coins Welcome To SWAP.Online!",
+    "files": [
+      "shared/pages/Listing/Listing.js"
+    ]
+  },
+  {
+    "id": "listing.listing5",
+    "message": "OTC-approach-crypto market to be opened in Aug, 2018.",
+    "files": [
+      "shared/pages/Listing/Listing.js"
+    ]
+  },
+  {
+    "id": "listing.listing6",
+    "message": "There was one company in the U.S. in the year of 1913, the National Quotation Bureau. They brought to life very simple idea - to provide every entity with the ability to be quoted freely, without complicated safety and control proceedings. The list of the bond orders was primarily published on the yellow paper and the stock orders were published on the pink paper. The Pink Sheets, as the lists were immediately called by the traders. rapidly became very popular among the market players. Every firm opened in the U.S. or abroad was able to publish its securities quotations in the list of Pink Sheets. With the increasing requirements of NYSE and NASDAQ and growing demands of the SEC to the information regarding the company applying the market, the interest to the Pink Sheets arose very fast. In September, 1990, the NQB introduced the real-time Electronic Quotation Service, so the over-the-counter trading entered the Internet. By the year 2010 the operators of the Pink Sheets trading were acquisited by the OTC Market Group, Inc. In 2014, two of five U.S. stock trades were over-the-counter.",
+    "files": [
+      "shared/pages/Listing/Listing.js"
+    ]
+  },
+  {
+    "id": "listing.listing7",
+    "message": "Wal-Mart was the Pink Sheet company in 1972 and earned there USD 1B.",
+    "files": [
+      "shared/pages/Listing/Listing.js"
+    ]
+  },
+  {
+    "id": "listing.listing8",
+    "message": "Navistar International, the 12-billion-dollar-corporation, came to the Pink Sheets Market in 2006 leaving the NYSE due to some issues with the auditor board..",
+    "files": [
+      "shared/pages/Listing/Listing.js"
+    ]
+  },
+  {
+    "id": "listing.listing9",
+    "message": "In SWAP. Online we have noticed that Pink Sheets principles are very close to the initial meaning of cryptocurrencies. Both of them are based on the faith in transparency, decentralization, bilateral responsibility of buyer and seller. As we decided to make the exchange of crypto really",
+    "files": [
+      "shared/pages/Listing/Listing.js"
+    ]
+  },
+  {
+    "id": "listing.listing9a",
+    "message": "safe, rapid and decentralized, we couldn’t go about this another way.",
+    "files": [
+      "shared/pages/Listing/Listing.js"
+    ]
+  },
+  {
+    "id": "BTCTOLTC132",
+    "message": "2. Create a secret key",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js"
+    ]
+  },
+  {
+    "id": "BTCtoLTC236",
+    "message": "Create refund hex",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js"
+    ]
+  },
+  {
+    "id": "BTCtoLTC246",
+    "message": "How refund your money ?",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js"
+    ]
+  },
+  {
+    "id": "BTCtoLTC262",
+    "message": "4. LTC Owner received Bitcoin Script and Secret Hash. Waiting when he creates LTC Script",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js"
+    ]
+  },
+  {
+    "id": "BTCtoLTC276",
+    "message": "5. Litecoin Script created and charged. Please check the information below",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js"
+    ]
+  },
+  {
+    "id": "BTCtoLTC301",
+    "message": "Show litecoin script",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js"
+    ]
+  },
+  {
+    "id": "BtcToLtc.Confirm",
+    "message": "Confirm",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js"
+    ]
+  },
+  {
+    "id": "BtcToLtc205",
+    "message": "3. Creating Bitcoin Script. Please wait, it will take a while",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js"
+    ]
+  },
+  {
+    "id": "Checkingbalance",
+    "message": "Checking balance..",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js",
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "Continue",
+    "message": "Continue",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js",
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "LTCTOBTC147",
+    "message": "Save the secret key! Otherwise there will be a chance you loose your money!",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js"
+    ]
+  },
+  {
+    "id": "LTCTOBTC150",
+    "message": "Secret Key:",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js"
+    ]
+  },
+  {
+    "id": "MoneyWasTransferred",
+    "message": "6. Money was transferred to your wallet. Check the balance.",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js"
+    ]
+  },
+  {
+    "id": "Notenough",
+    "message": "Not enough money for this swap. Please fund the balance",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js",
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "REFUND",
+    "message": "TRY REFUND",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js",
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "Required",
+    "message": "Required balance:",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js",
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "Scriptaddress:",
+    "message": "Script address:",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js"
+    ]
+  },
+  {
+    "id": "SecretHash",
+    "message": "Secret Hash:",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js",
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "Thank",
+    "message": "Thank you for using Swap.Online!",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js",
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "Transaction",
+    "message": "Transaction:",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js",
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "Waiting",
+    "message": "Waiting for other user when he connect to the order",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js",
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "address",
+    "message": "Your address:",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js",
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "balance",
+    "message": "Your balance:",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js",
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "doesn't",
+    "message": "This order doesn't have a buyer",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js"
+    ]
+  },
+  {
+    "id": "offline",
+    "message": "The order creator is offline. Waiting for him..",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js",
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "Confirmation",
+    "message": "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation.",
+    "files": [
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "LTCTOBTC191",
+    "message": "3. Bitcoin Script created and charged. Please check the information below",
+    "files": [
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "LTCTOBTC216",
+    "message": "Show bitcoin script",
+    "files": [
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "LTCTOBTC350",
+    "message": "5. Waiting BTC Owner adds Secret Key to LTC Contact",
+    "files": [
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "LTCTOBTC365",
+    "message": "6. BTC Owner successfully took money from LTC Script and left Secret Key. Requesting withdrawal from BTC Script. Please wait",
+    "files": [
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "LTCTOBTC396",
+    "message": "7. Money was transferred to your wallet. Check the balance.",
+    "files": [
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "LtcToBtc.Confirm",
+    "message": "2. Waiting BTC Owner creates Secret Key, creates BTC Script and charges it",
+    "files": [
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "LtcToBtc205",
+    "message": "4. Creating LTC Script. Please wait, it will take a while",
+    "files": [
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "OK",
+    "message": "Everything is OK. Continue",
+    "files": [
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "PleaseWaitConfirmationProcessing",
+    "message": "Please wait. Confirmation processing",
+    "files": [
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "Scriptaddress",
+    "message": "Script address:",
+    "files": [
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "Sign",
+    "message": "Sign",
+    "files": [
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "doesn&apos",
+    "message": "This order doesn't have a buyer",
+    "files": [
+      "shared/pages/Swap/LtcToBtc.js"
     ]
   }
 ]

@@ -13,7 +13,7 @@ import { injectIntl } from 'react-intl'
 
 
 @injectIntl
-@CSSModules(styles, Logo )
+@CSSModules(styles, Logo)
 export default class Logo extends Component {
 
   static propTypes = {
@@ -22,7 +22,7 @@ export default class Logo extends Component {
     mobile: PropTypes.bool,
   }
 
-  render () {
+  render() {
     const { colored, withLink, mobile, intl: { locale } } = this.props
 
     const imgNode = React.createElement('img', {
@@ -34,12 +34,12 @@ export default class Logo extends Component {
     return (
       <Fragment>
         {withLink ?
-          (<Link styleName={mobile ? 'mobile' : 'logo'} data-tip data-for="logo" to={`/${locale}${links.home}`}>
-          {imgNode}
+          (<Link styleName={mobile ? 'mobile' : 'logo'} data-tip data-for="logo" to={`/`}>
+            {imgNode}
           </Link>
-        ) : (
-      <div>{imgNode}</div>
-        )
+          ) : (
+            <div>{imgNode}</div>
+          )
         }
       </Fragment>
     )
