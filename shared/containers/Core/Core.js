@@ -30,13 +30,13 @@ export default class Core extends Component {
       .off('remove order', this.updateOrders)
       .off('new order request', this.updateOrders)
     if (SwapApp.services.room.connection) {
-      console.log('leave room');
+      console.log('leave room')
       SwapApp.services.room.connection
         .removeListener('peer joined', actions.ipfs.userJoined)
         .removeListener('peer left', actions.ipfs.userLeft)
       SwapApp.services.room
         .off('request partial closure', this.createOrder)
-      SwapApp.services.room.connection.leave();
+      SwapApp.services.room.connection.leave()
     }
   }
 
