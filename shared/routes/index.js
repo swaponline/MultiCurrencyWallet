@@ -6,7 +6,6 @@ import { links }    from 'helpers'
 import SwapComponent    from 'pages/Swap/Swap'
 import Home             from 'pages/Home/Home'
 import Wallet           from 'pages/Wallet/Wallet'
-import Listing          from 'pages/Listing/Listing'
 import History          from 'pages/History/History'
 import NotFound         from 'pages/NotFound/NotFound'
 import About            from 'pages/About/About'
@@ -27,7 +26,6 @@ const routes = (
 
     <Route path={links.partial} component={PartialClosure} />
     <Route path={links.aboutus} component={About} />
-    <Route path={links.listing} component={Listing} />
     <Route path={links.history} component={History} />
 
     <Route path={`${links.home}:currency`} component={Currency} />
