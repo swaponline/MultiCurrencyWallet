@@ -21,6 +21,9 @@ export default class BtcToEos extends Component {
       isSubmitted: false,
       enabledButton: false,
     }
+  }
+
+  componentWillMount() {
     this.swap.on('state update', this.handleFlowStateUpdate)
   }
 
