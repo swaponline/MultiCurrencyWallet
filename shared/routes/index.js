@@ -19,7 +19,7 @@ import CurrencyWallet   from 'pages/CurrencyWallet/CurrencyWallet'
 const routes = (
   <Switch>
     <Route path={`${localisePrefix}${links.swap}/:buy-:sell/:orderId`} component={Home} />
-    <Route path={`${links.home}:buy-:sell`} component={Home} />
+    <Route path={`${localisePrefix}${links.home}:buy-:sell`} component={Home} />
     <Route path={`${localisePrefix}${links.exchange}`} component={Home} />
     <Route path={`${localisePrefix}${links.partial}`} component={PartialClosure} />
     <Route path={`${localisePrefix}${links.aboutus}`} component={About} />

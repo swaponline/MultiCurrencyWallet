@@ -225,7 +225,7 @@
   },
   {
     "id": "EosRegAccountModal63",
-    "message": "Sorry, error occured during activation",
+    "message": "Sorry, error occurred during activation",
     "files": [
       "shared/components/modals/EosRegisterModal/EosRegisterModal.js"
     ]
@@ -260,7 +260,7 @@
   },
   {
     "id": "EosBuyAccountModal103",
-    "message": "Sorry, error occured during activation, try again",
+    "message": "Sorry, error occurred during activation, try again",
     "files": [
       "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
     ]
@@ -288,7 +288,7 @@
   },
   {
     "id": "EosBuyAccountModal78",
-    "message": "APrivate key",
+    "message": "Private key",
     "files": [
       "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
     ]
@@ -456,7 +456,7 @@
   },
   {
     "id": "TelosRegister64",
-    "message": "Sorry, error occured during activation",
+    "message": "Sorry, error occurred during activation",
     "files": [
       "shared/components/modals/TelosRegisterModal/TelosRegisterModal.js"
     ]
@@ -784,7 +784,7 @@
     ]
   },
   {
-    "id": "RowMhistory49",
+    "id": "RowHistory49",
     "message": "Refund not available"
   },
   {
@@ -2007,7 +2007,7 @@
   },
   {
     "id": "EthTokenToUsdt276",
-    "message": "hecking balance..",
+    "message": "Checking balance..",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
@@ -2813,7 +2813,7 @@
   },
   {
     "id": "PrivateKeysModal991",
-    "message": "Before you continue be sure to save your private keys! {br} {br} there is a big chance you will loose your money.",
+    "message": "Before you continue be sure to save your private keys! There is a big chance you will loose your money.",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
@@ -3290,6 +3290,20 @@
     "message": "This order doesn't have a buyer",
     "files": [
       "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "Row328",
+    "message": "Send",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row334",
+    "message": "Exchange",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
     ]
   }
 ]

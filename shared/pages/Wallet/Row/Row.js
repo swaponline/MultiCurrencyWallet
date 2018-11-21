@@ -17,9 +17,11 @@ import BtnTooltip from 'components/controls/WithdrawButton/BtnTooltip'
 import LinkAccount from '../LinkAccount/LinkAcount'
 import { withRouter } from 'react-router'
 import ReactTooltip from 'react-tooltip'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
+import { links }    from 'helpers'
 
 
+@injectIntl
 @withRouter
 @cssModules(styles, { allowMultiple: true })
 export default class Row extends Component {
@@ -39,7 +41,7 @@ export default class Row extends Component {
     this.setState({
       tradeAllowed: !!currencies.find(c => c.value === currency.toLowerCase()),
     })
-    
+
     this.handleCheckBalance()
   }
 
@@ -170,7 +172,8 @@ export default class Row extends Component {
   }
 
   handleGoTrade = (currency) => {
-    this.props.history.push(`/${currency.toLowerCase()}`)
+    const {intl: { locale }} = this.props
+    this.props.history.push(`/${locale}/${currency.toLowerCase()}`)
   }
 
   handleMarkCoinAsHidden = (coin) => {
@@ -179,7 +182,7 @@ export default class Row extends Component {
 
   render() {
     const { isBalanceFetching, tradeAllowed, isAddressCopied, isTouch, isBalanceEmpty } = this.state
-    const { currency, balance, isBalanceFetched, address, contractAddress, fullName, unconfirmedBalance } = this.props
+    const { currency, balance, isBalanceFetched, address, contractAddress, fullName, unconfirmedBalance, intl: { locale } } = this.props
     const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true"
     const telosAccountActivated = localStorage.getItem(constants.localStorage.telosAccountActivated) === "true"
 
@@ -192,12 +195,12 @@ export default class Row extends Component {
         style={isTouch && this.props.index !== this.props.selectId ?  { background: '#f5f5f5' } : { background: '#fff' }}
       >
         <td>
-          <Link to={`/${fullName}-wallet`} title={`Online ${fullName} wallet`}>
+          <Link to={`/${locale}/${fullName}-wallet`} title={`Online ${fullName} wallet`}>
             <Coin name={currency} />
           </Link>
         </td>
         <td>
-          <Link to={`/${fullName}-wallet`} title={`Online ${fullName} wallet`}>
+          <Link to={`/${locale}/${fullName}-wallet`} title={`Online ${fullName} wallet`}>
             {fullName}
           </Link>
         </td>
@@ -323,13 +326,15 @@ export default class Row extends Component {
             <ReactTooltip id={`deposit${currency}`} type="light" effect="solid">
                 <FormattedMessage id="WithdrawButton29" defaultMessage="Deposit funds to this address of currency wallet" />
             </ReactTooltip>
-            <BtnTooltip onClick={this.handleWithdraw} disable={isBalanceEmpty} id={currency} text="Send" >
+            <BtnTooltip onClick={this.handleWithdraw} disable={isBalanceEmpty} id={currency} >
               <i className="fas fa-arrow-alt-circle-right" />
+              <FormattedMessage id="Row328" defaultMessage="Send" />
             </BtnTooltip>
             {
               tradeAllowed && (
-                <BtnTooltip onClick={() => this.handleGoTrade(currency)} disable={isBalanceEmpty} id={currency}  text="Echange" >
+                <BtnTooltip onClick={() => this.handleGoTrade(currency)} disable={isBalanceEmpty} id={currency} >
                   <i className="fas fa-exchange-alt" />
+                  <FormattedMessage id="Row334" defaultMessage="Exchane" />
                 </BtnTooltip>
               )
             }

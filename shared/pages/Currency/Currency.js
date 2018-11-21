@@ -13,9 +13,10 @@ import Row from './Row/Row'
 import actions from 'redux/actions'
 
 import { withRouter } from 'react-router'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 
 
+@injectIntl
 @withRouter
 @connect(({ core: { hiddenCoinsList }, user: { ethData, btcData, ltcData, tokensData, eosData, nimData, usdtData } }) => ({
   tokens: Object.keys(tokensData).map(k => (tokensData[k])),
@@ -79,8 +80,9 @@ export default class Currency extends Component {
     actions.core.markCoinAsHidden(this.getCoin().currency)
 
   componentWillMount = () => {
+    const{ intl: { locale } } = this.props
     if (!this.getCoin()) {
-      this.props.history.push('/')
+      this.props.history.push(`/${locale}/`)
       return false
     }
 

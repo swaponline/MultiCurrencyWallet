@@ -16,9 +16,10 @@ import Amounts from './Amounts/Amounts'
 import ExchangeRate from './ExchangeRate/ExchangeRate'
 import Fee from './Fee/Fee'
 import { connect } from 'redaction'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 
 
+@injectIntl
 @connect(({ currencies: { items: currencies }, user: { ethData: { address } } }) => ({
   currencies,
   address,
@@ -56,7 +57,7 @@ export default class ConfirmOffer extends Component {
   }
 
   render() {
-    const { offer: { buyAmount, sellAmount, buyCurrency, sellCurrency, exchangeRate }, onBack, currencies } = this.props
+    const { offer: { buyAmount, sellAmount, buyCurrency, sellCurrency, exchangeRate }, onBack, currencies, intl: { locale } } = this.props
 
     return (
       <Fragment>
@@ -68,7 +69,7 @@ export default class ConfirmOffer extends Component {
           <Button styleName="button" gray onClick={onBack}>
             <FormattedMessage id="ConfirmOffer69" defaultMessage="Back" />
           </Button>
-          <Link styleName="link" to={`${links.home}${buyCurrency}-${sellCurrency}`}>
+          <Link styleName="link" to={`/${locale}${links.home}${buyCurrency}-${sellCurrency}`}>
             <Button styleName="button" id="confirm" brand onClick={this.handleConfirm}>
               <FormattedMessage id="ConfirmOffer73" defaultMessage="Add" />
             </Button>

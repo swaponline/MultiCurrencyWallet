@@ -14,7 +14,7 @@ const WithdrawButton = (props) => {
     onClick,
     children,
     disable,
-    ...rest,
+    ...rest
   } = props
 
   const styleName = cx('withdrawButton', {

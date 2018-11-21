@@ -16,12 +16,13 @@ import { Button, Toggle } from 'components/controls'
 
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
+import { FormattedMessage, injectIntl } from 'react-intl'
 
 
 const filterIsPartial = (orders) => orders
   .filter(order => order.isPartialClosure)
 
-
+@injectIntl
 @connect(({ currencies, core: { orders } }) => ({
   currencies: currencies.items,
   orders: filterIsPartial(orders),
@@ -182,14 +183,14 @@ export default class PartialClosure extends Component {
   }
 
   render() {
-    const { currencies } = this.props
+    const { currencies, intl: { locale } } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect,
       orderId, isDeclinedOffer, isFetching, maxAmount } = this.state
 
     const linked = Link.all(this, 'haveAmount', 'getAmount')
 
     if (redirect) {
-      return <Redirect push to={`${links.swap}/${getCurrency}-${haveCurrency}/${orderId}`} />
+      return <Redirect push to={`/${locale}${links.swap}/${getCurrency}-${haveCurrency}/${orderId}`} />
     }
 
     return (

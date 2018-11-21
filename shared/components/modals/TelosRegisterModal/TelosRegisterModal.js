@@ -63,7 +63,7 @@ export default class TelosRegisterModal extends React.Component {
         </FieldLabel>
         <Input valueLink={linked.privateKey} />
         { error && (
-          <FormattedMessage id="TelosRegister64" defaultMessage="Sorry, error occured during activation">
+          <FormattedMessage id="TelosRegister64" defaultMessage="Sorry, error occurred during activation">
             {message => <div styleName="error">{message}</div>}
           </FormattedMessage>
         )

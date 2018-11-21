@@ -222,7 +222,7 @@
   },
   {
     "id": "EosRegAccountModal63",
-    "message": "Sorry, error occured during activation",
+    "message": "Sorry, error occurred during activation",
     "files": [
       "shared/components/modals/EosRegisterModal/EosRegisterModal.js"
     ]
@@ -257,7 +257,7 @@
   },
   {
     "id": "EosBuyAccountModal103",
-    "message": "Sorry, error occured during activation, try again",
+    "message": "Sorry, error occurred during activation, try again",
     "files": [
       "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
     ]
@@ -411,7 +411,7 @@
   },
   {
     "id": "ReceiveModal",
-    "message": "This is your address for receive {currency}",
+    "message": "This is your address for receive ",
     "files": [
       "shared/components/modals/ReceiveModal/ReceiveModal.js"
     ]
@@ -453,7 +453,7 @@
   },
   {
     "id": "TelosRegister64",
-    "message": "Sorry, error occured during activation",
+    "message": "Sorry, error occurred during activation",
     "files": [
       "shared/components/modals/TelosRegisterModal/TelosRegisterModal.js"
     ]
@@ -781,7 +781,7 @@
     ]
   },
   {
-    "id": "RowMhistory49",
+    "id": "RowHistory49",
     "message": "Refund not available"
   },
   {
@@ -2004,7 +2004,7 @@
   },
   {
     "id": "EthTokenToUsdt276",
-    "message": "hecking balance..",
+    "message": "Checking balance..",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
@@ -3294,6 +3294,20 @@
     "message": "This order doesn't have a buyer",
     "files": [
       "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "Row328",
+    "message": "Send",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row334",
+    "message": "Send",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
     ]
   }
 ]

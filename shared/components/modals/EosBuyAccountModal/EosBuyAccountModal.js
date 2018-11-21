@@ -79,7 +79,7 @@ export default class EosBuyAccountModal extends React.Component {
           </div>
           <div>
             <FieldLabel inRow>
-              <FormattedMessage id="EosBuyAccountModal78" defaultMessage="APrivate key" />
+              <FormattedMessage id="EosBuyAccountModal78" defaultMessage="Private key" />
               <Tooltip text="Private key for active and owner permissions" />
             </FieldLabel>
             <Input readOnly="true" valueLink={linked.activePrivateKey} />
@@ -100,7 +100,7 @@ export default class EosBuyAccountModal extends React.Component {
           </div>
           { error && (
             <div styleName="error">
-              <FormattedMessage id="EosBuyAccountModal103" defaultMessage="Sorry, error occured during activation, try again" />
+              <FormattedMessage id="EosBuyAccountModal103" defaultMessage="Sorry, error occurred during activation, try again" />
             </div>
           )}
           { activationPayment && (

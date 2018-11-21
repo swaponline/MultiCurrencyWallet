@@ -1,15 +1,16 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { links }    from 'helpers'
+import { links } from 'helpers'
 
 import cssModules from 'react-css-modules'
 import styles from './Row.scss'
 
 import Coins from 'components/Coins/Coins'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 
 
+@injectIntl
 @cssModules(styles)
 export default class Row extends Component {
 
@@ -19,7 +20,7 @@ export default class Row extends Component {
   }
 
   render() {
-    const { from, to } = this.props
+    const { from, to, intl: { locale } } = this.props
 
     return (
       <tr>
@@ -33,7 +34,7 @@ export default class Row extends Component {
           </span>
         </td>
         <td>
-          <Link styleName="button" to={`${links.home}${from.toLowerCase()}-${to.toLowerCase()}`}>
+          <Link styleName="button" to={`/${locale}${links.home}${from.toLowerCase()}-${to.toLowerCase()}`}>
             <FormattedMessage id="Row35" defaultMessage="Exchange " />
           </Link>
         </td>

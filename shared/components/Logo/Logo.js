@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import { links } from 'helpers'
 
 import CSSModules from 'react-css-modules'
@@ -34,9 +34,9 @@ export default class Logo extends Component {
     return (
       <Fragment>
         {withLink ?
-          (<Link styleName={mobile ? 'mobile' : 'logo'} data-tip data-for="logo" to={`/`}>
+          (<a styleName={mobile ? 'mobile' : 'logo'} data-tip data-for="logo" href={'/'}>
             {imgNode}
-          </Link>
+          </a>
           ) : (
             <div>{imgNode}</div>
           )

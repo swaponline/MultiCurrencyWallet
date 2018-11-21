@@ -63,7 +63,7 @@ export default class EosRegisterModal extends React.Component {
         <Input valueLink={linked.privateKey} />
         { error && (
           <div styleName="error">
-            <FormattedMessage id="EosRegAccountModal63" defaultMessage="Sorry, error occured during activation" />
+            <FormattedMessage id="EosRegAccountModal63" defaultMessage="Sorry, error occurred during activation" />
           </div>
         )
         }

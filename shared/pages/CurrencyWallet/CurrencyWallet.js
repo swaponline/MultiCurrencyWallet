@@ -17,7 +17,7 @@ import { Button } from 'components/controls'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import PageSeo from 'components/Seo/PageSeo'
 import { getSeoPage } from 'helpers/seo'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 
 
 @connect(({ core, user,  history: { transactions, swapHistory } }) => ({
@@ -26,6 +26,7 @@ import { FormattedMessage } from 'react-intl'
   txHistory: transactions,
   swapHistory,
 }))
+@injectIntl
 @withRouter
 @CSSModules(styles)
 export default class CurrencyWallet extends Component {
@@ -77,7 +78,7 @@ export default class CurrencyWallet extends Component {
   }
 
   render() {
-    let { swapHistory, txHistory, location } = this.props
+    let { swapHistory, txHistory, location, intl: { locale } } = this.props
     const { fullName, address, balance, currency } = this.state
 
     txHistory = txHistory
@@ -112,7 +113,7 @@ export default class CurrencyWallet extends Component {
           <Button brand style={{ marginRight: '15px' }} onClick={this.handleWithdraw}>
             <FormattedMessage id="CurrencyWallet100" defaultMessage="Send" />
           </Button>
-          <Link to={`${links.home}${currency.toLowerCase()}`} >
+          <Link to={`${locale}${links.home}${currency.toLowerCase()}`} >
             <Button gray>
               <FormattedMessage id="CurrencyWallet104" defaultMessage="Exchange" />
             </Button>
