@@ -30,8 +30,8 @@ export default class Core extends Component {
       .off('remove order', this.updateOrders)
       .off('new order request', this.updateOrders)
     SwapApp.services.room.connection
-      .off('peer joined', actions.ipfs.userJoined)
-      .off('peer left', actions.ipfs.userLeft)
+      .removeListener('peer joined', actions.ipfs.userJoined)
+      .removeListener('peer left', actions.ipfs.userLeft)
   }
 
   setIpfs = () => {
@@ -71,7 +71,7 @@ export default class Core extends Component {
       }
     }
 
-    SwapApp.services.room.on('ready', setupIPFS)
+    SwapApp.services.room.once('ready', setupIPFS)
 
     const ipfsLoadingInterval = setInterval(setupIPFS, 5000)
   }
