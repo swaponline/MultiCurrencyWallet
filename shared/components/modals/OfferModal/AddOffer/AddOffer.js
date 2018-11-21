@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 
 import { connect } from 'redaction'
 import actions from 'redux/actions'
+import reducers from 'redux/core/reducers'
 
 import Link from 'sw-valuelink'
 import config from 'app-config'
@@ -108,6 +109,8 @@ export default class AddOffer extends Component {
   handleBuyCurrencySelect = async ({ value }) => {
     let { buyCurrency, sellCurrency, buyAmount, sellAmount } = this.state
 
+    reducers.currencies.reverseCurrency({ value })
+
     if (value === sellCurrency) {
       sellCurrency = buyCurrency
     }
@@ -138,6 +141,8 @@ export default class AddOffer extends Component {
   handleSellCurrencySelect = async ({ value }) => {
     let { buyCurrency, sellCurrency, sellAmount, buyAmount } = this.state
 
+    reducers.currencies.reverseCurrency({ value })
+
     if (value === buyCurrency) {
       buyCurrency = sellCurrency
     }
@@ -145,7 +150,7 @@ export default class AddOffer extends Component {
     sellCurrency = value
 
     await this.checkBalance(sellCurrency)
-    
+
     await this.updateExchangeRate(sellCurrency, buyCurrency)
     const { exchangeRate } = this.state
     buyAmount = new BigNumber(String(sellAmount) || 0).multipliedBy(exchangeRate)

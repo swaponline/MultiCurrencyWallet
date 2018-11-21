@@ -51,6 +51,21 @@ process.env.MAINNET && initialState.items.unshift({
   fullTitle: 'USD Tether',
 })
 
+export const reverseCurrency = (state, { value }) => ({
+  items: [].concat(...state.items.map((item, index) => {
+    if (item.value === value) {
+      const stateWithoutValue = [
+        ...state.items.slice(0, index),
+        ...state.items.slice(index + 1),
+      ]
+
+      stateWithoutValue.splice(0, 0, state.items[index])
+      
+      return stateWithoutValue
+    }
+    return null
+  }).filter(item => item !== null)),
+})
 
 export {
   initialState,
