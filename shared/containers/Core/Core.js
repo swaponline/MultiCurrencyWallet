@@ -12,6 +12,7 @@ export default class Core extends Component {
   }
 
   componentWillMount() {
+    console.log('will mount');
     actions.core.getSwapHistory()
     SwapApp.services.orders
       .on('new orders', this.updateOrders)
@@ -66,6 +67,9 @@ export default class Core extends Component {
         console.log('ipfs loaded')
 
       SwapApp.services.room
+        .off('request partial closure', this.createOrder)
+
+      SwapApp.services.room
         .on('request partial closure', this.createOrder)
 
         actions.ipfs.set({
@@ -77,7 +81,7 @@ export default class Core extends Component {
       }
     }
 
-    SwapApp.services.room.once('ready', setupIPFS)
+    SwapApp.services.room.on('ready', setupIPFS)
 
     const ipfsLoadingInterval = setInterval(setupIPFS, 5000)
   }
