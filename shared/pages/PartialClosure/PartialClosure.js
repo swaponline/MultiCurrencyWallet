@@ -39,7 +39,7 @@ export default class PartialClosure extends Component {
     this.state = {
       haveCurrency: 'btc',
       getCurrency: 'eth',
-      haveAmount: '',
+      haveAmount: 0,
       getAmount: '',
       maxAmount: 0,
       peer: '',
@@ -48,13 +48,26 @@ export default class PartialClosure extends Component {
       isFetching: false,
       isDeclinedOffer: false,
     }
+
+    let timer
+  }
+
+  componentDidMount() {
+    this.timer = setInterval(() => {
+      this.setAmount(this.state.haveAmount)
+    }, 1000)
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer)
   }
 
   static getDerivedStateFromProps({ orders }, { haveCurrency, getCurrency, haveAmount }) {
     if (!Array.isArray(orders)) { return }
 
+    console.log('orders', orders)
+
     const filteredOrders = orders.filter(order => !order.isMy
-      && order.buyAmount > haveAmount
       && order.sellCurrency === getCurrency.toUpperCase()
       && order.buyCurrency === haveCurrency.toUpperCase())
 
