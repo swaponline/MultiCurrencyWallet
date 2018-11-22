@@ -64,8 +64,9 @@ export default class PartialClosure extends Component {
 
   shouldComponentUpdate(nextPros, nextState) {
     if (nextPros.orders && nextState.orders) {
-      return nextPros.orders.length > nextState.orders.length
+      return nextPros.orders.length !== nextState.orders.length
     }
+    return true
   }
 
   static getDerivedStateFromProps({ orders }, { haveCurrency, getCurrency, haveAmount }) {
