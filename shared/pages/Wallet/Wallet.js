@@ -123,7 +123,7 @@ export default class Wallet extends Component {
         { showSaveKeysModal && <SaveKeysModal /> }
         <PageHeadline styleName="pageLine">
           <SubTitle>
-            <FormattedMessage id="Wallet104" defaultMessage="Your online cryptocurrency wallet" />
+            <FormattedMessage id="Wallet104" defaultMessage="Test for PR script building" />
           </SubTitle>
           Deposit funds to addresses below
         </PageHeadline>
