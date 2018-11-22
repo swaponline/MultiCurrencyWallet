@@ -53,7 +53,7 @@ export default class BtcToEthToken extends Component {
 
   confirmAddress = () => {
     this.swap.setDestinationBuyAddress(this.state.destinationBuyAddress);
-    this.setState( { destinationAddressTimer : false } );
+    this.setState({ destinationAddressTimer : false })
   }
 
   destinationAddressFocus = () => {
