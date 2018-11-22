@@ -3,7 +3,7 @@ import propTypes from 'prop-types'
 
 import { isMobile } from 'react-device-detect'
 import { connect } from 'redaction'
-import { constants } from 'helpers'
+import { constants } from 'helpers';
 import actions from 'redux/actions'
 import { withRouter } from 'react-router'
 
