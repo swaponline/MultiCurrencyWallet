@@ -49,7 +49,7 @@ export default class PartialClosure extends Component {
       isFetching: false,
       isDeclinedOffer: false,
       customWalletUse: false,
-      customWallet: ''
+      customWallet: '',
     }
   }
 
@@ -78,8 +78,10 @@ export default class PartialClosure extends Component {
       sellCurrency: getCurrency,
       sellAmount: getAmount,
       buyAmount: haveAmount,
-      // Тут важный момент.... так как в данной реализации поля для ордера формирует покупатель.... и продавец использует эту структуру чтобы создать ордер - то используем Sell (продавец будет знать, куда продавать)
-      destinationSellAddress: (customWalletUse) ? customWallet : null 
+      // Тут важный момент.... так как в данной реализации поля для ордера формирует 
+      // покупатель.... и продавец использует эту структуру чтобы создать ордер - 
+      // то используем Sell (продавец будет знать, куда продавать)
+      destinationSellAddress: (customWalletUse) ? customWallet : null,
     }
 
     this.setState(() => ({ isFetching: true }))
@@ -159,9 +161,9 @@ export default class PartialClosure extends Component {
   }
 
   handleCustomWalletUse = () => {
-    this.setState( {
-      customWalletUse: !this.state.customWalletUse
-    } );
+    this.setState({
+      customWalletUse: !this.state.customWalletUse,
+    })
   }
 
   handleSetGetValue = ({ value }) => {
@@ -197,7 +199,7 @@ export default class PartialClosure extends Component {
     const { haveCurrency, getCurrency, isNonOffers, redirect,
       orderId, isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet } = this.state
 
-    const linked = Link.all(this, 'haveAmount', 'getAmount', 'customWallet' )
+    const linked = Link.all(this, 'haveAmount', 'getAmount', 'customWallet')
 
     if (redirect) {
       return <Redirect push to={`${links.swap}/${getCurrency}-${haveCurrency}/${orderId}`} />
