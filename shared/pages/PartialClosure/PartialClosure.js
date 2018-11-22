@@ -13,10 +13,11 @@ import { Redirect } from 'react-router-dom'
 
 import SelectGroup from './SelectGroup/SelectGroup'
 import { Button, Toggle } from 'components/controls'
+import Input from 'components/forms/Input/Input'
+import Tooltip from 'components/ui/Tooltip/Tooltip'
 
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
-
 
 const filterIsPartial = (orders) => orders
   .filter(order => order.isPartialClosure)
@@ -47,6 +48,8 @@ export default class PartialClosure extends Component {
       isNonOffers: false,
       isFetching: false,
       isDeclinedOffer: false,
+      customWalletUse: false,
+      customWallet: ''
     }
   }
 
@@ -64,7 +67,7 @@ export default class PartialClosure extends Component {
   }
 
   sendRequest = () => {
-    const { getAmount, haveAmount, haveCurrency, getCurrency, peer, orderId } = this.state
+    const { getAmount, haveAmount, haveCurrency, getCurrency, peer, orderId, customWalletUse, customWallet } = this.state
 
     if (!String(getAmount) || !peer || !orderId || !String(haveAmount)) {
       return
@@ -75,6 +78,8 @@ export default class PartialClosure extends Component {
       sellCurrency: getCurrency,
       sellAmount: getAmount,
       buyAmount: haveAmount,
+      // Тут важный момент.... так как в данной реализации поля для ордера формирует покупатель.... и продавец использует эту структуру чтобы создать ордер - то используем Sell (продавец будет знать, куда продавать)
+      destinationSellAddress: (customWalletUse) ? customWallet : null 
     }
 
     this.setState(() => ({ isFetching: true }))
@@ -153,6 +158,12 @@ export default class PartialClosure extends Component {
     }), console.log(`this state ${this.state.getAmount} ${this.state.haveAmount}`))
   }
 
+  handleCustomWalletUse = () => {
+    this.setState( {
+      customWalletUse: !this.state.customWalletUse
+    } );
+  }
+
   handleSetGetValue = ({ value }) => {
     let { getCurrency, haveCurrency } = this.state
 
@@ -184,9 +195,9 @@ export default class PartialClosure extends Component {
   render() {
     const { currencies } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect,
-      orderId, isDeclinedOffer, isFetching, maxAmount } = this.state
+      orderId, isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet } = this.state
 
-    const linked = Link.all(this, 'haveAmount', 'getAmount')
+    const linked = Link.all(this, 'haveAmount', 'getAmount', 'customWallet' )
 
     if (redirect) {
       return <Redirect push to={`${links.swap}/${getCurrency}-${haveCurrency}/${orderId}`} />
@@ -225,6 +236,15 @@ export default class PartialClosure extends Component {
               disabled
               currencies={currencies}
             />
+            <div>
+              <Toggle checked={customWalletUse} onChange={this.handleCustomWalletUse} /> Use custom wallet for buy currency
+              <Tooltip text="To change default wallet for buy currency. Leave empty for use Swap.Online wallet" />
+            </div>
+            { customWalletUse && (
+              <div>
+                <Input valueLink={linked.customWallet} pattern="0-9a-zA-Z" />
+              </div>
+            ) }
             {isNonOffers && (<p styleName="error">No offers </p>)}
             {isDeclinedOffer && (<p styleName="error">Offer is declined</p>)}
             {
