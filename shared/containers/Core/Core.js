@@ -65,9 +65,9 @@ export default class Core extends Component {
         clearInterval(ipfsLoadingInterval)
         console.log('ipfs loaded')
 
-      SwapApp.services.room.off('request partial closure', this.createOrder)
+        SwapApp.services.room.off('request partial closure', this.createOrder)
 
-      SwapApp.services.room.on('request partial closure', this.createOrder)
+        SwapApp.services.room.on('request partial closure', this.createOrder)
 
         actions.ipfs.set({
           isOnline,
