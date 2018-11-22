@@ -176,7 +176,7 @@ export default {
   },
   gai: {
     address: '0xf207ccfe6d1b90b0b7817ce2d5d262af1514e37b',
-    decimals: 5,
+    decimals: 18,
     fullName: 'GraphGrailAi Token',
   },
   emtv: {
