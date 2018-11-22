@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 
 import cssModules from 'react-css-modules'
 import styles from './Option.scss'
