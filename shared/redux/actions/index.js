@@ -14,6 +14,7 @@ import bch from './bch'
 import ltc from './ltc'
 import eth from './eth'
 import eos from './eos'
+import xlm from './xlm'
 import tlos from './tlos'
 import token from './token'
 import nimiq from './nimiq'
@@ -38,6 +39,7 @@ Object.keys(config.erc20)
 export default {
   ...tokens,
   filter,
+  xlm,
   modals,
   loader,
   notifications,

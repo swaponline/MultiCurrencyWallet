@@ -14,7 +14,9 @@ const sign = async () => {
   const ltcPrivateKey = localStorage.getItem(constants.privateKeyNames.ltc)
   const ethPrivateKey = localStorage.getItem(constants.privateKeyNames.eth)
   const _ethPrivateKey = actions.eth.login(ethPrivateKey)
+  const xmlPrivateKey = localStorage.getItem(constants.privateKeyNames.xlm)
 
+  actions.xml.login(xmlPrivateKey)
   actions.btc.login(btcPrivateKey)
   actions.bch.login(bchPrivateKey)
   actions.usdt.login(btcPrivateKey)
@@ -72,6 +74,7 @@ const sign = async () => {
 const getBalances = () => {
   actions.eth.getBalance()
   actions.btc.getBalance()
+  actions.xml.getBalance()
   actions.bch.getBalance()
   actions.ltc.getBalance()
   actions.usdt.getBalance()
