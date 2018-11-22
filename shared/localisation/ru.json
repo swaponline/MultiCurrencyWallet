@@ -162,7 +162,7 @@
   },
   {
     "id": "transactionLink28",
-    "message": "Транзакция:",
+    "message": "Транзакция: ",
     "files": [
       "shared/components/Href/TransactionLink.js"
     ]
@@ -267,7 +267,7 @@
   },
   {
     "id": "EosBuyAccountModal109",
-    "message": "Платежная операция:",
+    "message": "Платежная операция: ",
     "files": [
       "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
     ]
@@ -694,7 +694,7 @@
   },
   {
     "id": "Currency101",
-    "message": "Баланс:",
+    "message": "Баланс: ",
     "files": [
       "shared/pages/Currency/Currency.js"
     ]
@@ -729,7 +729,7 @@
   },
   {
     "id": "CurrencyWallet95",
-    "message": "Ваш адрес:",
+    "message": "Ваш адрес: ",
     "files": [
       "shared/pages/CurrencyWallet/CurrencyWallet.js"
     ]
@@ -1104,7 +1104,7 @@
   },
   {
     "id": "BtcToEos77",
-    "message": "Хэш:",
+    "message": "Хэш: ",
     "files": [
       "shared/pages/Swap/BtcToEos.js"
     ]
@@ -1181,7 +1181,7 @@
   },
   {
     "id": "BtcToEth160",
-    "message": "Ваш Баланс:",
+    "message": "Ваш Баланс: ",
     "files": [
       "shared/pages/Swap/BtcToEth.js"
     ]
@@ -1314,7 +1314,7 @@
   },
   {
     "id": "BtcToEthToken117",
-    "message": "Секретный ключ:",
+    "message": "Секретный ключ: ",
     "files": [
       "shared/pages/Swap/BtcToEthToken.js"
     ]
@@ -1335,7 +1335,7 @@
   },
   {
     "id": "BtcToEthToken134",
-    "message": "Ваш Баланс:",
+    "message": "Ваш Баланс: ",
     "files": [
       "shared/pages/Swap/BtcToEthToken.js"
     ]
@@ -1349,7 +1349,7 @@
   },
   {
     "id": "BtcToEthToken140",
-    "message": "Ваш адрес:",
+    "message": "Ваш адрес: ",
     "files": [
       "shared/pages/Swap/BtcToEthToken.js"
     ]
@@ -1377,7 +1377,7 @@
   },
   {
     "id": "BtcToEthToken172",
-    "message": "Транзакция:",
+    "message": "Транзакция: ",
     "files": [
       "shared/pages/Swap/BtcToEthToken.js"
     ]
@@ -1405,7 +1405,7 @@
   },
   {
     "id": "BtcToEthToken243",
-    "message": "Транзакция:",
+    "message": "Транзакция: ",
     "files": [
       "shared/pages/Swap/BtcToEthToken.js"
     ]
@@ -1419,7 +1419,7 @@
   },
   {
     "id": "BtcToEthToken267",
-    "message": "Транзакция:",
+    "message": "Транзакция: ",
     "files": [
       "shared/pages/Swap/BtcToEthToken.js"
     ]
@@ -1447,7 +1447,7 @@
   },
   {
     "id": "BtcToEthToken316",
-    "message": "Транзакция:",
+    "message": "Транзакция: ",
     "files": [
       "shared/pages/Swap/BtcToEthToken.js"
     ]
@@ -1552,7 +1552,7 @@
   },
   {
     "id": "EthToBtc139",
-    "message": "Транзакция:",
+    "message": "Транзакция: ",
     "files": [
       "shared/pages/Swap/EthToBtc.js"
     ]
@@ -1650,14 +1650,14 @@
   },
   {
     "id": "EthToBtc305",
-    "message": "Транзакция:",
+    "message": "Транзакция: ",
     "files": [
       "shared/pages/Swap/EthToBtc.js"
     ]
   },
   {
     "id": "EthToBtc326",
-    "message": "Транзакция:",
+    "message": "Транзакция: ",
     "files": [
       "shared/pages/Swap/EthToBtc.js"
     ]
@@ -1678,7 +1678,7 @@
   },
   {
     "id": "EthToBtc364",
-    "message": "Транзакция:",
+    "message": "Транзакция: ",
     "files": [
       "shared/pages/Swap/EthToBtc.js"
     ]
@@ -1706,7 +1706,7 @@
   },
   {
     "id": "EthToBtc412",
-    "message": "Транзакция:",
+    "message": "Транзакция: ",
     "files": [
       "shared/pages/Swap/EthToBtc.js"
     ]
@@ -1734,7 +1734,7 @@
   },
   {
     "id": "EthTokenBtc116",
-    "message": "Транзакция:",
+    "message": "Транзакция: ",
     "files": [
       "shared/pages/Swap/EthTokenToBtc.js"
     ]
@@ -2725,7 +2725,10 @@
   },
   {
     "id": "RowWallet313",
-    "message": "Обмен"
+    "message": "Обмен",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
   },
   {
     "id": "AddOffer396",
@@ -3350,7 +3353,7 @@
   },
   {
     "id": "partial221",
-    "message": "Максимальная сумма:",
+    "message": "Максимальо возможная сумма: ",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]

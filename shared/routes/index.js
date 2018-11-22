@@ -18,21 +18,25 @@ import CurrencyWallet   from 'pages/CurrencyWallet/CurrencyWallet'
 
 const routes = (
   <Switch>
-    <Route path={`${localisePrefix}${links.swap}/:buy-:sell/:orderId`} component={Home} />
+    <Route path={`${localisePrefix}${links.swap}/:buy-:sell/:orderId`} component={SwapComponent} />
+
+    <Route path={`${localisePrefix}/:fullName-wallet`} component={CurrencyWallet} />
+
+    <Route path={`${localisePrefix}${links.home}:buy-:sell/:orderId`} component={Home} />
     <Route path={`${localisePrefix}${links.home}:buy-:sell`} component={Home} />
     <Route path={`${localisePrefix}${links.exchange}`} component={Home} />
+
     <Route path={`${localisePrefix}${links.partial}`} component={PartialClosure} />
     <Route path={`${localisePrefix}${links.aboutus}`} component={About} />
     <Route path={`${localisePrefix}${links.listing}`} component={Listing} />
     <Route path={`${localisePrefix}${links.history}`} component={History} />
 
     <Route exact path={`${localisePrefix}${links.home}`} component={Wallet} />
-
-    <Route path={`${localisePrefix}/:fullName-wallet`} component={CurrencyWallet} />
     <Route path={`${localisePrefix}${links.home}:currency`} component={Currency} />
 
     <Route component={NotFound} />
   </Switch>
+
 )
 
 export default routes

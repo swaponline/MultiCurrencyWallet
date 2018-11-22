@@ -82,7 +82,7 @@ export default class Currency extends Component {
   componentWillMount = () => {
     const { intl: { locale } } = this.props
     if (!this.getCoin()) {
-      this.props.history.push(`/${locale}/`)
+      this.props.history.push(`${locale}/`)
       return false
     }
 
@@ -102,9 +102,10 @@ export default class Currency extends Component {
           </Fragment>
           <div>
             <FormattedMessage id="Currency101" defaultMessage="Balance: " />
-            <span>{(String(balance).length > 5 ? balance.toFixed(5) : balance) || 0} {currency}</span>
+            <span>{(String(balance).length > 5 ? balance.toFixed(5) : balance) || 0} {currency.toUpperCase()}</span>
           </div>
-          <Toggle onChange={this.handleInWalletChange} checked={this.isInWallet()} />Added to Wallet
+          <Toggle onChange={this.handleInWalletChange} checked={this.isInWallet()} />
+          <FormattedMessage id="Currency108" defaultMessage="Added to Wallet" />
         </PageHeadline>
         <Table
           titles={['Coin', 'Exchange', '']}

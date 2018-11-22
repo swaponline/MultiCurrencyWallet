@@ -113,7 +113,7 @@ export default class CurrencyWallet extends Component {
           <Button brand style={{ marginRight: '15px' }} onClick={this.handleWithdraw}>
             <FormattedMessage id="CurrencyWallet100" defaultMessage="Send" />
           </Button>
-          <Link to={`${locale}${links.home}${currency.toLowerCase()}`} >
+          <Link to={`/${locale}/${currency.toLowerCase()}`} >
             <Button gray>
               <FormattedMessage id="CurrencyWallet104" defaultMessage="Exchange" />
             </Button>

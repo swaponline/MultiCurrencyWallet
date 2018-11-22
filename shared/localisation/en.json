@@ -267,7 +267,7 @@
   },
   {
     "id": "EosBuyAccountModal109",
-    "message": "Payment transaction:",
+    "message": "Payment transaction: ",
     "files": [
       "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
     ]
@@ -477,7 +477,7 @@
   },
   {
     "id": "ErrorNotification15",
-    "message": "Error:",
+    "message": "Error: ",
     "files": [
       "shared/components/notifications/ErrorNotification/ErrorNotification.js"
     ]
@@ -505,7 +505,7 @@
   },
   {
     "id": "Withdrow113",
-    "message": "Your balance:",
+    "message": "Your balance: ",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
@@ -694,7 +694,7 @@
   },
   {
     "id": "Currency101",
-    "message": "Balance:",
+    "message": "Balance: ",
     "files": [
       "shared/pages/Currency/Currency.js"
     ]
@@ -729,7 +729,7 @@
   },
   {
     "id": "CurrencyWallet95",
-    "message": "Your address:",
+    "message": "Your address: ",
     "files": [
       "shared/pages/CurrencyWallet/CurrencyWallet.js"
     ]
@@ -908,56 +908,56 @@
   },
   {
     "id": "orders148",
-    "message": "orders of those who",
+    "message": "orders of those who ",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]
   },
   {
     "id": "orders150",
-    "message": "sell",
+    "message": " sell ",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]
   },
   {
     "id": "orders153",
-    "message": "to you",
+    "message": " to you",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]
   },
   {
     "id": "orders174",
-    "message": "SELL",
+    "message": "SELL ",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]
   },
   {
     "id": "orders176",
-    "message": "HERE",
+    "message": " HERE ",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]
   },
   {
     "id": "orders179",
-    "message": "orders that",
+    "message": "orders that ",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]
   },
   {
     "id": "orders181",
-    "message": "buy",
+    "message": " buy ",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]
   },
   {
     "id": "orders184",
-    "message": "from you",
+    "message": " from you",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]
@@ -1006,7 +1006,7 @@
   },
   {
     "id": "RowM122",
-    "message": "You get",
+    "message": "You get ",
     "files": [
       "shared/pages/Home/Orders/Row/Row.js"
     ]
@@ -1097,14 +1097,14 @@
   },
   {
     "id": "BtcToEos74",
-    "message": "Secret:",
+    "message": "Secret: ",
     "files": [
       "shared/pages/Swap/BtcToEos.js"
     ]
   },
   {
     "id": "BtcToEos77",
-    "message": "Hash:",
+    "message": "Hash: ",
     "files": [
       "shared/pages/Swap/BtcToEos.js"
     ]
@@ -1160,14 +1160,14 @@
   },
   {
     "id": "BtcToEth143",
-    "message": "Secret Key:",
+    "message": "Secret Key: ",
     "files": [
       "shared/pages/Swap/BtcToEth.js"
     ]
   },
   {
     "id": "BtcToEth146",
-    "message": "Secret Hash:",
+    "message": "Secret Hash: ",
     "files": [
       "shared/pages/Swap/BtcToEth.js"
     ]
@@ -1181,21 +1181,21 @@
   },
   {
     "id": "BtcToEth160",
-    "message": "Your balance:",
+    "message": "Your balance: ",
     "files": [
       "shared/pages/Swap/BtcToEth.js"
     ]
   },
   {
     "id": "BtcToEth163",
-    "message": "Required balance:",
+    "message": "Required balance: ",
     "files": [
       "shared/pages/Swap/BtcToEth.js"
     ]
   },
   {
     "id": "BtcToEth167",
-    "message": "Your address:",
+    "message": "Your address: ",
     "files": [
       "shared/pages/Swap/BtcToEth.js"
     ]
@@ -1216,7 +1216,7 @@
   },
   {
     "id": "BtcToEth199",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/BtcToEth.js"
     ]
@@ -1244,7 +1244,7 @@
   },
   {
     "id": "BtcToEth266",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/BtcToEth.js"
     ]
@@ -1258,7 +1258,7 @@
   },
   {
     "id": "BtcToEth289",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/BtcToEth.js"
     ]
@@ -1286,7 +1286,7 @@
   },
   {
     "id": "BtcToEth338",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/BtcToEth.js"
     ]
@@ -1314,14 +1314,14 @@
   },
   {
     "id": "BtcToEthToken117",
-    "message": "Secret Key:",
+    "message": "Secret Key: ",
     "files": [
       "shared/pages/Swap/BtcToEthToken.js"
     ]
   },
   {
     "id": "BtcToEthToken120",
-    "message": "Secret Hash:",
+    "message": "Secret Hash: ",
     "files": [
       "shared/pages/Swap/BtcToEthToken.js"
     ]
@@ -1335,21 +1335,21 @@
   },
   {
     "id": "BtcToEthToken134",
-    "message": "Your balance:",
+    "message": "Your balance: ",
     "files": [
       "shared/pages/Swap/BtcToEthToken.js"
     ]
   },
   {
     "id": "BtcToEthToken137",
-    "message": "Required balance:",
+    "message": "Required balance: ",
     "files": [
       "shared/pages/Swap/BtcToEthToken.js"
     ]
   },
   {
     "id": "BtcToEthToken140",
-    "message": "Your address:",
+    "message": "Your address: ",
     "files": [
       "shared/pages/Swap/BtcToEthToken.js"
     ]
@@ -1377,7 +1377,7 @@
   },
   {
     "id": "BtcToEthToken172",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/BtcToEthToken.js"
     ]
@@ -1405,7 +1405,7 @@
   },
   {
     "id": "BtcToEthToken243",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/BtcToEthToken.js"
     ]
@@ -1419,7 +1419,7 @@
   },
   {
     "id": "BtcToEthToken267",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/BtcToEthToken.js"
     ]
@@ -1447,7 +1447,7 @@
   },
   {
     "id": "BtcToEthToken316",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/BtcToEthToken.js"
     ]
@@ -1552,7 +1552,7 @@
   },
   {
     "id": "EthToBtc139",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/EthToBtc.js"
     ]
@@ -1573,14 +1573,14 @@
   },
   {
     "id": "EthToBtc182",
-    "message": "Secret Hash:",
+    "message": "Secret Hash: ",
     "files": [
       "shared/pages/Swap/EthToBtc.js"
     ]
   },
   {
     "id": "EthToBtc185",
-    "message": "Script address:",
+    "message": "Script address: ",
     "files": [
       "shared/pages/Swap/EthToBtc.js"
     ]
@@ -1608,21 +1608,21 @@
   },
   {
     "id": "EthToBtc264",
-    "message": "Your balance:",
+    "message": "Your balance: ",
     "files": [
       "shared/pages/Swap/EthToBtc.js"
     ]
   },
   {
     "id": "EthToBtc267",
-    "message": "Required balance:",
+    "message": "Required balance: ",
     "files": [
       "shared/pages/Swap/EthToBtc.js"
     ]
   },
   {
     "id": "EthToBtc270",
-    "message": "Your address:",
+    "message": "Your address: ",
     "files": [
       "shared/pages/Swap/EthToBtc.js"
     ]
@@ -1650,14 +1650,14 @@
   },
   {
     "id": "EthToBtc305",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/EthToBtc.js"
     ]
   },
   {
     "id": "EthToBtc326",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/EthToBtc.js"
     ]
@@ -1678,7 +1678,7 @@
   },
   {
     "id": "EthToBtc364",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/EthToBtc.js"
     ]
@@ -1706,7 +1706,7 @@
   },
   {
     "id": "EthToBtc412",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/EthToBtc.js"
     ]
@@ -1734,7 +1734,7 @@
   },
   {
     "id": "EthTokenBtc116",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/EthTokenToBtc.js"
     ]
@@ -1755,14 +1755,14 @@
   },
   {
     "id": "EthTokenBtc162",
-    "message": "Secret Hash:",
+    "message": "Secret Hash: ",
     "files": [
       "shared/pages/Swap/EthTokenToBtc.js"
     ]
   },
   {
     "id": "EthTokenBtc165",
-    "message": "Script address:",
+    "message": "Script address: ",
     "files": [
       "shared/pages/Swap/EthTokenToBtc.js"
     ]
@@ -1790,21 +1790,21 @@
   },
   {
     "id": "EthTokenBtc245",
-    "message": "Your balance:",
+    "message": "Your balance: ",
     "files": [
       "shared/pages/Swap/EthTokenToBtc.js"
     ]
   },
   {
     "id": "EthTokenBtc248",
-    "message": "Required balance:",
+    "message": "Required balance: ",
     "files": [
       "shared/pages/Swap/EthTokenToBtc.js"
     ]
   },
   {
     "id": "EthTokenBtc251",
-    "message": "Your address:",
+    "message": "Your address: ",
     "files": [
       "shared/pages/Swap/EthTokenToBtc.js"
     ]
@@ -1832,14 +1832,14 @@
   },
   {
     "id": "EthTokenBtc283",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/EthTokenToBtc.js"
     ]
   },
   {
     "id": "EthTokenBtc303",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/EthTokenToBtc.js"
     ]
@@ -1860,7 +1860,7 @@
   },
   {
     "id": "EthTokenBtc342",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/EthTokenToBtc.js"
     ]
@@ -1923,7 +1923,7 @@
   },
   {
     "id": "EthTokenToUsdt123",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
@@ -1944,14 +1944,14 @@
   },
   {
     "id": "EthTokenToUsdt169",
-    "message": "Secret Hash:",
+    "message": "Secret Hash: ",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
   },
   {
     "id": "EthTokenToUsdt172",
-    "message": "Script address:",
+    "message": "Script address: ",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
@@ -1979,21 +1979,21 @@
   },
   {
     "id": "EthTokenToUsdt253",
-    "message": "Your balance:",
+    "message": "Your balance: ",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
   },
   {
     "id": "EthTokenToUsdt257",
-    "message": "Required balance:",
+    "message": "Required balance: ",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
   },
   {
     "id": "EthTokenToUsdt260",
-    "message": "Your address:",
+    "message": "Your address: ",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
@@ -2021,14 +2021,14 @@
   },
   {
     "id": "EthTokenToUsdt292",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
   },
   {
     "id": "EthTokenToUsdt313",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
@@ -2049,7 +2049,7 @@
   },
   {
     "id": "EthTokenToUsdt352",
-    "message": "USDT withdrawal transaction:",
+    "message": "USDT withdrawal transaction: ",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
@@ -2126,7 +2126,7 @@
   },
   {
     "id": "EthToLtc139",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/EthToLtc.js"
     ]
@@ -2147,14 +2147,14 @@
   },
   {
     "id": "EthToLtc182",
-    "message": "Secret Hash:",
+    "message": "Secret Hash: ",
     "files": [
       "shared/pages/Swap/EthToLtc.js"
     ]
   },
   {
     "id": "EthToLtc185",
-    "message": "Script address:",
+    "message": "Script address: ",
     "files": [
       "shared/pages/Swap/EthToLtc.js"
     ]
@@ -2182,21 +2182,21 @@
   },
   {
     "id": "EthToLtc264",
-    "message": "Your balance:",
+    "message": "Your balance: ",
     "files": [
       "shared/pages/Swap/EthToLtc.js"
     ]
   },
   {
     "id": "EthToLtc267",
-    "message": "Required balance:",
+    "message": "Required balance: ",
     "files": [
       "shared/pages/Swap/EthToLtc.js"
     ]
   },
   {
     "id": "EthToLtc270",
-    "message": "Your address:",
+    "message": "Your address: ",
     "files": [
       "shared/pages/Swap/EthToLtc.js"
     ]
@@ -2224,14 +2224,14 @@
   },
   {
     "id": "EthToLtc305",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/EthToLtc.js"
     ]
   },
   {
     "id": "EthToLtc326",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/EthToLtc.js"
     ]
@@ -2252,7 +2252,7 @@
   },
   {
     "id": "EthToLtc364",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/EthToLtc.js"
     ]
@@ -2280,7 +2280,7 @@
   },
   {
     "id": "EthToLtc412",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/EthToLtc.js"
     ]
@@ -2336,14 +2336,14 @@
   },
   {
     "id": "LtcTOeth145",
-    "message": "Secret Key:",
+    "message": "Secret Key: ",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
   },
   {
     "id": "LtcTOeth148",
-    "message": "Secret Hash:",
+    "message": "Secret Hash: ",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
@@ -2357,21 +2357,21 @@
   },
   {
     "id": "LtcTOeth162",
-    "message": "Your balance:",
+    "message": "Your balance: ",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
   },
   {
     "id": "LtcTOeth165",
-    "message": "Required balance:",
+    "message": "Required balance: ",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
   },
   {
     "id": "LtcTOeth168",
-    "message": "Your address:",
+    "message": "Your address: ",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
@@ -2399,7 +2399,7 @@
   },
   {
     "id": "LtcTOeth200",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
@@ -2427,7 +2427,7 @@
   },
   {
     "id": "LtcTOeth267",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
@@ -2441,7 +2441,7 @@
   },
   {
     "id": "LtcTOeth290",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
@@ -2469,7 +2469,7 @@
   },
   {
     "id": "LtcTOeth338",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
@@ -2497,14 +2497,14 @@
   },
   {
     "id": "UsdrToEthToken124",
-    "message": "Secret Key:",
+    "message": "Secret Key: ",
     "files": [
       "shared/pages/Swap/UsdtToEthToken.js"
     ]
   },
   {
     "id": "UsdrToEthToken127",
-    "message": "Secret Hash:",
+    "message": "Secret Hash: ",
     "files": [
       "shared/pages/Swap/UsdtToEthToken.js"
     ]
@@ -2518,21 +2518,21 @@
   },
   {
     "id": "UsdrToEthToken141",
-    "message": "Your balance:",
+    "message": "Your balance: ",
     "files": [
       "shared/pages/Swap/UsdtToEthToken.js"
     ]
   },
   {
     "id": "UsdrToEthToken144",
-    "message": "Required balance:",
+    "message": "Required balance: ",
     "files": [
       "shared/pages/Swap/UsdtToEthToken.js"
     ]
   },
   {
     "id": "UsdrToEthToken147",
-    "message": "Your address:",
+    "message": "Your address: ",
     "files": [
       "shared/pages/Swap/UsdtToEthToken.js"
     ]
@@ -2560,7 +2560,7 @@
   },
   {
     "id": "UsdrToEthToken179",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/UsdtToEthToken.js"
     ]
@@ -2588,7 +2588,7 @@
   },
   {
     "id": "UsdrToEthToken246",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/UsdtToEthToken.js"
     ]
@@ -2602,7 +2602,7 @@
   },
   {
     "id": "UsdrToEthToken271",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/UsdtToEthToken.js"
     ]
@@ -2630,7 +2630,7 @@
   },
   {
     "id": "UsdrToEthToken320",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/UsdtToEthToken.js"
     ]
@@ -3095,7 +3095,7 @@
   },
   {
     "id": "LTCTOBTC150",
-    "message": "Secret Key:",
+    "message": "Secret Key: ",
     "files": [
       "shared/pages/Swap/BtcToLtc.js"
     ]
@@ -3125,7 +3125,7 @@
   },
   {
     "id": "Required",
-    "message": "Required balance:",
+    "message": "Required balance: ",
     "files": [
       "shared/pages/Swap/BtcToLtc.js",
       "shared/pages/Swap/LtcToBtc.js"
@@ -3133,7 +3133,7 @@
   },
   {
     "id": "Scriptaddress:",
-    "message": "Script address:",
+    "message": "Script address: ",
     "files": [
       "shared/pages/Swap/BtcToLtc.js"
     ]
@@ -3156,7 +3156,7 @@
   },
   {
     "id": "Transaction",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/BtcToLtc.js",
       "shared/pages/Swap/LtcToBtc.js"
@@ -3172,7 +3172,7 @@
   },
   {
     "id": "address",
-    "message": "Your address:",
+    "message": "Your address: ",
     "files": [
       "shared/pages/Swap/BtcToLtc.js",
       "shared/pages/Swap/LtcToBtc.js"
@@ -3180,7 +3180,7 @@
   },
   {
     "id": "balance",
-    "message": "Your balance:",
+    "message": "Your balance: ",
     "files": [
       "shared/pages/Swap/BtcToLtc.js",
       "shared/pages/Swap/LtcToBtc.js"
@@ -3273,7 +3273,7 @@
   },
   {
     "id": "Scriptaddress",
-    "message": "Script address:",
+    "message": "Script address: ",
     "files": [
       "shared/pages/Swap/LtcToBtc.js"
     ]
@@ -3350,7 +3350,7 @@
   },
   {
     "id": "partial221",
-    "message": "Max amount for offer:",
+    "message": "Max amount for offer: ",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -3371,14 +3371,14 @@
   },
   {
     "id": "partial244",
-    "message": "Wait participant:",
+    "message": "Wait participant: ",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
   },
   {
     "id": "partial251",
-    "message": "Start:",
+    "message": "Start: ",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
