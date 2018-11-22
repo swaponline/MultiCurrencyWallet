@@ -63,6 +63,10 @@
     background: #dfc5ff;
   }
 }
+
+.disbutton {
+  onClick: none; 
+}
 .buttonActivate {
   margin-left: 15px;
 }
@@ -90,25 +94,6 @@
 
 .icon {
   margin-right: 5px;
-}
-
-.button {
-  @include inline-block;
-  height: 40px;
-  background: #f8f3fe;
-  padding: 0 25px;
-  cursor: pointer;
-  line-height: 40px;
-  font-size: 16px;
-  font-weight: 500;
-  color: #7c1de9;
-  border-radius: 20px;
-  margin-right: 10px;
-
-  &:hover {
-    color: #7c1de9;
-    background: #dfc5ff;
-  }
 }
 
 .table_balance-cell {

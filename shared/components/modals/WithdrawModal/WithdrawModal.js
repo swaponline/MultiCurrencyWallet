@@ -35,7 +35,6 @@ export default class WithdrawModal extends React.Component {
   }
 
   state = {
-    isSubmitted: false,
     isShipped: false,
     address: '',
     amount: '',
@@ -46,8 +45,15 @@ export default class WithdrawModal extends React.Component {
   }
 
   setBalanceOnState = async (currency) => {
+    const { data: { unconfirmedBalance } } = this.props
+
     const balance = await actions[currency.toLowerCase()].getBalance(currency.toLowerCase())
-    this.setState(() => ({ balance }))
+
+    const finalBalance = unconfirmedBalance !== undefined && unconfirmedBalance < 0
+      ? Number(balance) + Number(unconfirmedBalance)
+      : balance
+
+    this.setState(() => ({ balance: finalBalance }))
   }
 
   handleSubmit = () => {
@@ -57,13 +63,6 @@ export default class WithdrawModal extends React.Component {
     this.setState(() => ({ isShipped: true }))
 
     this.setBalanceOnState(currency)
-
-    if (!to || !amount || amount < minAmount[currency.toLowerCase()] || amount > balance) {
-      this.setState({
-        isSubmitted: true,
-      })
-      return
-    }
 
     actions[currency.toLowerCase()].send(contractAddress || address, to, Number(amount), decimals)
       .then(() => {
@@ -83,17 +82,18 @@ export default class WithdrawModal extends React.Component {
   }
 
   render() {
-    const { isSubmitted, address, amount, balance, isShipped } = this.state
-    let { name, data: { currency } } = this.props
 
-    currency = currency.toLowerCase()
+    const { address, amount, balance, isShipped } = this.state
+    const { name, data } = this.props
+
 
     const linked = Link.all(this, 'address', 'amount')
-    const isDisabled = !address || !amount || isShipped
+    const isDisabled = !address || !amount || isShipped || Number(amount) < minAmount[data.currency.toLowerCase()] || Number(amount) > balance
 
-    if (isSubmitted) {
-      linked.amount.check((value) => value < balance, `Amount must be less than your balance`)
-      linked.amount.check((value) => value > minAmount[currency], `Amount must be greater than ${minAmount[currency]} `)
+    if (Number(amount) !== 0) {
+      linked.amount.check((value) => Number(value) < balance, `Amount must be less than your balance`)
+      linked.amount.check((value) => Number(value) > minAmount[data.currency.toLowerCase()], `Amount must be greater than ${minAmount[data.currency.toLowerCase()]} `)
+
     }
 
     return (
@@ -112,13 +112,15 @@ export default class WithdrawModal extends React.Component {
         <Input valueLink={linked.address} focusOnInit pattern="0-9a-zA-Z" placeholder="Enter address" />
         <p style={{ marginTop: '20px' }}>
           <FormattedMessage id="Withdrow113" defaultMessage="Your balance: " />
-          {balance}
-          {currency.toUpperCase()}
+
+          {Number(balance).toFixed(5)}
+          {data.currency.toUpperCase()}
+
         </p>
         <FieldLabel inRow>
           <FormattedMessage id="Withdrow118" defaultMessage="Amount " />
         </FieldLabel>
-        <Input valueLink={linked.amount} pattern="0-9\." placeholder={`Enter amount, you have ${balance}`} />
+        <Input valueLink={linked.amount} pattern="0-9\." placeholder={`Enter amount, you have ${Number(balance).toFixed(5)}`} />
         {
           !linked.amount.error && (
             <div styleName="note">
