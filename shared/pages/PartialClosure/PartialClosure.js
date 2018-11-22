@@ -54,7 +54,7 @@ export default class PartialClosure extends Component {
 
   componentDidMount() {
     this.timer = setInterval(() => {
-      this.setAmount(this.state.haveAmount)
+      this.setOrders()
     }, 1000)
   }
 
@@ -63,16 +63,16 @@ export default class PartialClosure extends Component {
   }
 
   shouldComponentUpdate(nextPros) {
-    if (nextPros.orders && this.props.orders) {
-      return nextPros.orders.length !== this.props.orders.length
+    if (nextPros.orders && this.props.orders && nextPros.orders > 0) {
+      if (nextPros.orders.length === this.props.orders.length) {
+        return false
+      }
     }
     return true
   }
 
-  static getDerivedStateFromProps({ orders }, { haveCurrency, getCurrency, haveAmount }) {
+  static getDerivedStateFromProps({ orders }, { haveCurrency, getCurrency }) {
     if (!Array.isArray(orders)) { return }
-
-    console.log('orders', orders)
 
     const filteredOrders = orders.filter(order => !order.isMy
       && order.sellCurrency === getCurrency.toUpperCase()
@@ -146,7 +146,9 @@ export default class PartialClosure extends Component {
 
   setAmount = (value) => {
     this.setState(() => ({ haveAmount: value, maxAmount: 0 }))
+  }
 
+  setOrders = () => {
     const { filteredOrders } = this.state
 
     if (filteredOrders.length === 0) {
@@ -157,7 +159,7 @@ export default class PartialClosure extends Component {
     const sortedOrder = filteredOrders
       .sort((a, b) => Number(a.buyAmount.dividedBy(a.sellAmount)) - Number(b.buyAmount.dividedBy(b.sellAmount)))
     const exRate = sortedOrder[0].buyAmount.dividedBy(sortedOrder[0].sellAmount)
-    const getAmount = new BigNumber(String(value)).dividedBy(exRate)
+    const getAmount = new BigNumber(String(this.state.haveAmount)).dividedBy(exRate)
 
     const checkAmount = this.setAmountOnState(sortedOrder[0].sellAmount, getAmount)
 
@@ -184,7 +186,7 @@ export default class PartialClosure extends Component {
       maxAmount: 0,
       haveCurrency,
       getCurrency: value,
-    }), this.setAmount(this.state.haveAmount))
+    }), this.setOrders())
   }
 
   handleSetHaveValue = ({ value }) => {
@@ -198,7 +200,7 @@ export default class PartialClosure extends Component {
       maxAmount: 0,
       getCurrency,
       haveCurrency: value,
-    }), this.setAmount(this.state.haveAmount))
+    }), this.setOrders())
   }
 
   render() {
