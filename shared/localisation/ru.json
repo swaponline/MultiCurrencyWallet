@@ -785,10 +785,7 @@
   },
   {
     "id": "RowHistory49",
-    "message": "Возврат невозможен",
-    "files": [
-      "shared/pages/History/SwapsHistory/RowHistory/RowHistory.js"
-    ]
+    "message": "Возврат невозможен"
   },
   {
     "id": "SwapHisrory21",
@@ -2046,7 +2043,6 @@
   {
     "id": "EthTokenToUsdt345",
     "message": "6. Владелец USDT успешно получил средства из ETH Контракта и отправил Секретный ключ. Запрос о снятии с BTC Script. Пожалуйста, подождите",
-
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
@@ -2697,10 +2693,7 @@
   },
   {
     "id": "Row305",
-    "message": "Отправить",
-    "files": [
-      "shared/pages/Wallet/Row/Row.js"
-    ]
+    "message": "Отправить"
   },
   {
     "id": "Row313",
@@ -2732,10 +2725,7 @@
   },
   {
     "id": "RowWallet313",
-    "message": "Обмен",
-    "files": [
-      "shared/pages/Wallet/Row/Row.js"
-    ]
+    "message": "Обмен"
   },
   {
     "id": "AddOffer396",
@@ -3314,6 +3304,83 @@
     "message": "Обменять",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "AddOffer418",
+    "message": "Пользовательский курс обмена",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "AddOffer423",
+    "message": "Доступно частичное закрытие",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken236",
+    "message": "Создание BTC Script",
+    "files": [
+      "shared/pages/Swap/BtcToEthToken.js"
+    ]
+  },
+  {
+    "id": "Row277",
+    "message": "не активирован ",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row310",
+    "message": "Войдите в систему с помощью существующей учетной записи EOS",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row354",
+    "message": "Активировать",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "partial221",
+    "message": "Максимальная сумма:",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial234",
+    "message": "Нет предложений на обмен",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial238",
+    "message": "Предложение отклонено",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial244",
+    "message": "Ожидание участника: ",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial251",
+    "message": "Начать: ",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
     ]
   }
 ]

@@ -231,7 +231,7 @@ export default class PartialClosure extends Component {
             />
             {isNonOffers && (
               <p styleName="error">
-                <FormattedMessage id="partial221" defaultMessage="No offers " />
+                <FormattedMessage id="partial234" defaultMessage="No offers " />
               </p>
             )}
             {isDeclinedOffer && (
@@ -248,7 +248,7 @@ export default class PartialClosure extends Component {
               )
             }
             <Button styleName="button" brand fullWidth onClick={this.sendRequest} disabled={isNonOffers}>
-              <FormattedMessage id="partial244" defaultMessage="Start: " />
+              <FormattedMessage id="partial251" defaultMessage="Start: " />
             </Button>
           </div>
         </div>

@@ -18,7 +18,7 @@ const WithdrawButton = (props) => {
   } = props
 
   const styleName = cx('withdrawButton', {
-    'disable': disableб
+    'disable': disable,
   })
 
   return (

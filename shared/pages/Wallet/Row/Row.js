@@ -307,7 +307,7 @@ export default class Row extends Component {
               </div>
               <ReactTooltip id="Use" type="light" effect="solid">
                 <span>
-                  <FormattedMessage id="Row268" defaultMessage="Login with your existing eos account" />
+                  <FormattedMessage id="Row310" defaultMessage="Login with your existing eos account" />
                 </span>
               </ReactTooltip>
               { isAddressCopied &&
