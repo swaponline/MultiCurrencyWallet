@@ -17,9 +17,9 @@ import { FormattedMessage } from 'react-intl'
 
 
 @withRouter
-@connect(({ core: { hiddenCoinsList }, user: { ethData, btcData, ltcData, tokensData, eosData, nimData, usdtData, xlmData } }) => ({
+@connect(({ core: { hiddenCoinsList }, user: { ethData, btcData, ltcData, tokensData, eosData, nimData, usdtData } }) => ({
   tokens: Object.keys(tokensData).map(k => (tokensData[k])),
-  items: [ ethData, btcData, eosData, usdtData, ltcData, xlmData /* nimData */ ],
+  items: [ ethData, btcData, eosData, usdtData, ltcData /* nimData */ ],
   hiddenCoinsList,
 }))
 export default class Currency extends Component {
