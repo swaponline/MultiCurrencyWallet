@@ -62,9 +62,9 @@ export default class PartialClosure extends Component {
     clearInterval(this.timer)
   }
 
-  shouldComponentUpdate(nextPros, nextState) {
-    if (nextPros.orders && nextState.orders) {
-      return nextPros.orders.length !== nextState.orders.length
+  shouldComponentUpdate(nextPros) {
+    if (nextPros.orders && this.props.orders) {
+      return nextPros.orders.length !== this.props.orders.length
     }
     return true
   }
