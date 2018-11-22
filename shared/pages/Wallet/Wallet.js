@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
-import { isMobile } from 'react-device-detect'
 
+import { isMobile } from 'react-device-detect'
 import { connect } from 'redaction'
 import { constants } from 'helpers'
 import actions from 'redux/actions'
@@ -20,7 +20,6 @@ import KeyActionsPanel from 'components/KeyActionsPanel/KeyActionsPanel'
 import SaveKeysModal from 'components/modals/SaveKeysModal/SaveKeysModal'
 import { FormattedMessage } from 'react-intl'
 
-
 @withRouter
 @connect(
   ({
@@ -29,7 +28,16 @@ import { FormattedMessage } from 'react-intl'
     currencies: { items: currencies },
   }) => ({
     tokens: Object.keys(tokensData).map(k => (tokensData[k])),
-    items: [btcData, ethData, eosData, telosData, bchData, ltcData, usdtData /* nimData */ ],
+    items: [btcData, ethData, eosData, telosData, bchData, ltcData, usdtData /* nimData */ ].map((data) => ({
+      address: data.address,
+      balance: data.balance,
+      currency: data.currency,
+      fullName: data.fullName,
+      unconfirmedBalance: data.unconfirmedBalance,
+      isBalanceFetched: data.isBalanceFetched,
+      privateKey: data.privateKey,
+      publicKey: data.publicKey,
+    })),
     currencies,
     hiddenCoinsList,
   })
@@ -66,6 +74,22 @@ export default class Wallet extends Component {
   componentDidMount() {
     actions.user.getBalances()
     actions.analytics.dataEvent('open-page-balances')
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    const getComparableProps = (props) => ({
+      items: props.items,
+      tokens: props.tokens,
+      currencies: props.currencies,
+      hiddenCoinsList: props.hiddenCoinsList,
+    });
+    return JSON.stringify({
+      ...getComparableProps(this.props),
+      ...this.state,
+    }) !== JSON.stringify({
+      ...getComparableProps(nextProps),
+      ...nextState,
+    });
   }
 
   componentWillReceiveProps({ items, tokens }) {
@@ -109,7 +133,7 @@ export default class Wallet extends Component {
           titles={titles}
           rows={[...items, ...tokens].filter(coin => !hiddenCoinsList.includes(coin.currency))}
           rowRender={(row, index, selectId, handleSelectId) => (
-            <Row key={index} {...row} currencies={currencies} hiddenCoinsList={hiddenCoinsList} selectId={selectId} index={index} handleSelectId={handleSelectId} />
+            <Row key={row.currency} {...row} currencies={currencies} hiddenCoinsList={hiddenCoinsList} selectId={selectId} index={index} handleSelectId={handleSelectId} />
           )}
         />
         <KeyActionsPanel />

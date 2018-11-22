@@ -125,7 +125,7 @@ export default class PartialClosure extends Component {
   }
 
   setAmount = (value) => {
-    this.setState(() => ({ haveAmount: new BigNumber(String(value)) }))
+    this.setState(() => ({ haveAmount: value, maxAmount: 0 }))
 
     const { filteredOrders } = this.state
 
@@ -161,6 +161,7 @@ export default class PartialClosure extends Component {
     }
 
     this.setState(() => ({
+      maxAmount: 0,
       haveCurrency,
       getCurrency: value,
     }), this.setAmount(this.state.haveAmount))
@@ -174,6 +175,7 @@ export default class PartialClosure extends Component {
     }
 
     this.setState(() => ({
+      maxAmount: 0,
       getCurrency,
       haveCurrency: value,
     }), this.setAmount(this.state.haveAmount))
