@@ -141,7 +141,8 @@ tr button[disabled]:hover {
 
 
 .actButton, .useButton {
-  display: none;
+  display:  inline-block;
+  margin-left: 10px;
 }
 
 .walletButtons {
@@ -162,7 +163,7 @@ tr button[disabled]:hover {
 }
 
 
-@include media-mobile { 
+@include media-mobile {
   .mobileName {
     display: block;
   }

@@ -24,19 +24,16 @@ import { FormattedMessage } from 'react-intl'
 @connect(
   ({
     core: { hiddenCoinsList },
-    user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, usdtData, ltcData },
+    user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, usdtData, ltcData, xmlData },
     currencies: { items: currencies },
   }) => ({
     tokens: Object.keys(tokensData).map(k => (tokensData[k])),
-    items: [btcData, ethData, eosData, telosData, bchData, ltcData, usdtData /* nimData */ ].map((data) => ({
+    items: [btcData, ethData, eosData, telosData, bchData, ltcData, usdtData, xmlData /* nimData */ ].map((data) => ({
       address: data.address,
       balance: data.balance,
       currency: data.currency,
       fullName: data.fullName,
       unconfirmedBalance: data.unconfirmedBalance,
-      isBalanceFetched: data.isBalanceFetched,
-      privateKey: data.privateKey,
-      publicKey: data.publicKey,
     })),
     currencies,
     hiddenCoinsList,
@@ -82,14 +79,14 @@ export default class Wallet extends Component {
       tokens: props.tokens,
       currencies: props.currencies,
       hiddenCoinsList: props.hiddenCoinsList,
-    });
+    })
     return JSON.stringify({
       ...getComparableProps(this.props),
       ...this.state,
     }) !== JSON.stringify({
       ...getComparableProps(nextProps),
       ...nextState,
-    });
+    })
   }
 
   componentWillReceiveProps({ items, tokens }) {
@@ -109,7 +106,7 @@ export default class Wallet extends Component {
   }
 
   render() {
-    const { view, zeroBalance } = this.state
+    const { zeroBalance } = this.state
     const { items, tokens, currencies, hiddenCoinsList } = this.props
     const titles = [ 'Coin', 'Name', 'Balance', 'Your Address', isMobile ? 'Send, receive, swap' :  'Actions' ]
 
@@ -133,7 +130,15 @@ export default class Wallet extends Component {
           titles={titles}
           rows={[...items, ...tokens].filter(coin => !hiddenCoinsList.includes(coin.currency))}
           rowRender={(row, index, selectId, handleSelectId) => (
-            <Row key={row.currency} {...row} currencies={currencies} hiddenCoinsList={hiddenCoinsList} selectId={selectId} index={index} handleSelectId={handleSelectId} />
+            <Row
+              key={row.currency}
+              currencies={currencies}
+              hiddenCoinsList={hiddenCoinsList}
+              selectId={selectId}
+              index={index}
+              handleSelectId={handleSelectId}
+              {...row}
+            />
           )}
         />
         <KeyActionsPanel />

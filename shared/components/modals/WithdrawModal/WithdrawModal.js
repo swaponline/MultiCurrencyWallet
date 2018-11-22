@@ -57,7 +57,6 @@ export default class WithdrawModal extends React.Component {
     this.setState(() => ({ isShipped: true }))
 
     this.setBalanceOnState(currency)
-    this.setState(() => ({ isShipped: true }))
 
     if (!to || !amount || amount < minAmount[currency.toLowerCase()] || amount > balance) {
       this.setState({
@@ -69,7 +68,7 @@ export default class WithdrawModal extends React.Component {
     actions[currency.toLowerCase()].send(contractAddress || address, to, Number(amount), decimals)
       .then(() => {
         actions.loader.hide()
-        actions[currency.toLowerCase()].getBalance(currency)
+        actions[currency.toLowerCase()].getBalance(currency.toLowerCase())
         this.setBalanceOnState(currency)
 
         actions.notifications.show(constants.notifications.SuccessWithdraw, {
@@ -85,24 +84,26 @@ export default class WithdrawModal extends React.Component {
 
   render() {
     const { isSubmitted, address, amount, balance, isShipped } = this.state
-    const { name, data } = this.props
+    let { name, data: { currency } } = this.props
+
+    currency = currency.toLowerCase()
 
     const linked = Link.all(this, 'address', 'amount')
     const isDisabled = !address || !amount || isShipped
 
     if (isSubmitted) {
       linked.amount.check((value) => value < balance, `Amount must be less than your balance`)
-      linked.amount.check((value) => value > minAmount[data.currency], `Amount must be greater than ${minAmount[data.currency.toLowerCase()]} `)
+      linked.amount.check((value) => value > minAmount[currency], `Amount must be greater than ${minAmount[currency]} `)
     }
 
     return (
-      <Modal name={name} title={`Withdraw ${data.currency.toUpperCase()}`}>
+      <Modal name={name} title={`Withdraw ${currency.toUpperCase()}`}>
         <p
           style={{ fontSize: '16px' }}
         >
-          {`Please notice, that you need to have minimum ${minAmount[data.currency.toLowerCase()]} amount `}
+          {`Please notice, that you need to have minimum ${minAmount[currency]} amount `}
           <br />
-          of the {data.currency} on your wallet, to use it for miners fee
+          of the {currency} on your wallet, to use it for miners fee
         </p>
         <FieldLabel inRow>
           <FormattedMessage id="Withdrow108" defaultMessage="Address " />
@@ -112,7 +113,7 @@ export default class WithdrawModal extends React.Component {
         <p style={{ marginTop: '20px' }}>
           <FormattedMessage id="Withdrow113" defaultMessage="Your balance: " />
           {balance}
-          {data.currency.toUpperCase()}
+          {currency.toUpperCase()}
         </p>
         <FieldLabel inRow>
           <FormattedMessage id="Withdrow118" defaultMessage="Amount " />
@@ -122,7 +123,7 @@ export default class WithdrawModal extends React.Component {
           !linked.amount.error && (
             <div styleName="note">
               <FormattedMessage id="WithdrawModal106" defaultMessage="No less than " />
-              {minAmount[data.currency.toLowerCase()]}
+              {minAmount[currency]}
             </div>
           )
         }

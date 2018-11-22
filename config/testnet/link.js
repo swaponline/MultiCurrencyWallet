@@ -1,4 +1,5 @@
 export default {
+  xml: 'http://testnet.stellarchain.io',
   bitpay: 'https://test-insight.swap.online/insight',
   etherscan: 'https://rinkeby.etherscan.io',
   eos: 'https://eospark.com/Jungle',

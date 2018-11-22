@@ -1,4 +1,5 @@
 export default {
+  xml: 'http://stellarchain.io',
   bitpay: 'https://insight.bitpay.com',
   etherscan: 'https://etherscan.io',
   eos: 'https://eospark.com/MainNet',

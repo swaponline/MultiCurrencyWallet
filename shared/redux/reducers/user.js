@@ -5,6 +5,11 @@ export const initialState = {
     currency: 'ETH',
     fullName: 'Ethereum',
   },
+  xmlData: {
+    balance: 0,
+    currency: 'XML',
+    fullName: 'Stellar',
+  },
   btcData: {
     balance: 0,
     isBalanceFetched: false,

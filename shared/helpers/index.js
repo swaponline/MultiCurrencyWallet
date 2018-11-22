@@ -3,6 +3,7 @@ import btc from './btc'
 import bcash from './bcash'
 import ltc from './ltc'
 import web3 from './web3'
+import xml from './xml'
 import links from './links'
 import request from './request'
 import constants from './constants'
@@ -27,6 +28,7 @@ export {
   tips,
   btc,
   ltc,
+  xml,
   web3,
   utils,
   links,
