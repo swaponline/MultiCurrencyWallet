@@ -73,14 +73,14 @@ export default class PartialClosure extends Component {
       return
     }
 
+    // Тут важный момент.... так как в данной реализации поля для ордера формирует 
+    // покупатель.... и продавец использует эту структуру чтобы создать ордер - 
+    // то используем Sell (продавец будет знать, куда продавать)
     const order = {
       buyCurrency: haveCurrency,
       sellCurrency: getCurrency,
       sellAmount: getAmount,
       buyAmount: haveAmount,
-      // Тут важный момент.... так как в данной реализации поля для ордера формирует 
-      // покупатель.... и продавец использует эту структуру чтобы создать ордер - 
-      // то используем Sell (продавец будет знать, куда продавать)
       destinationSellAddress: (customWalletUse) ? customWallet : null,
     }
 
