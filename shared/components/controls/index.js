@@ -3,7 +3,7 @@ import TimerButton from './TimerButton/TimerButton' // HOC by timer
 import Button from './Button/Button' // constructor buttons
 
 /* Just button */
-
+import Switcher from './switcher/switcher'
 import Flip from './Flip/Flip'
 import RemoveButton from './RemoveButton/RemoveButton'
 import WithdrawButton from './WithdrawButton/WithdrawButton'
@@ -14,6 +14,7 @@ export {
   TimerButton,
   Button,
 
+  Switcher,
   Flip,
   RemoveButton,
   WithdrawButton,
