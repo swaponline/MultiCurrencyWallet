@@ -367,7 +367,7 @@ switching = async ({ value }) => {
   this.setState({
     sellCurrency: buyCurrency,
     buyCurrency: sellCurrency,
-   })
+  })
 }
 
   render() {
