@@ -880,17 +880,11 @@
   },
   {
     "id": "Orders117",
-    "message": "No such ticker. Redirecting to SWAP-BTC exchange...",
-    "files": [
-      "shared/pages/Home/Orders/Orders.js"
-    ]
+    "message": "No such ticker. Redirecting to SWAP-BTC exchange..."
   },
   {
     "id": "Orders128",
-    "message": "Create offer",
-    "files": [
-      "shared/pages/Home/Orders/Orders.js"
-    ]
+    "message": "Create offer"
   },
   {
     "id": "orders143",
@@ -3388,6 +3382,600 @@
     "message": "Added to Wallet",
     "files": [
       "shared/pages/Currency/Currency.js"
+    ]
+  },
+  {
+    "id": "Currency102",
+    "message": "Trade",
+    "files": [
+      "shared/pages/Currency/Currency.js"
+    ]
+  },
+  {
+    "id": "CurrencyWallet107",
+    "message": "Your",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "CurrencyWallet128",
+    "message": "History your transactions",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "Company",
+    "message": "Company",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "AboutUS14",
+    "message": "About Us",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "Careers",
+    "message": "Careers",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "ChromeExtension",
+    "message": "Swap.Online Chrome Extension",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "Concept",
+    "message": "Concept (PDF)",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "Contacts",
+    "message": "Contacts",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "DEXTrendResearch",
+    "message": "DEX Trend Research",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "DEXdetails",
+    "message": "Details of Our DEX",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "Documentation",
+    "message": "Documentation",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "Legal",
+    "message": "Legal",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "LegalOpinion",
+    "message": "Legal Opinion",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "PrivacyPolicy",
+    "message": "Privacy Policy",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "Resources",
+    "message": "Resources",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "SendBitcoinTransacton",
+    "message": "Send Bitcoin Transacton",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "Terms",
+    "message": "Terms",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "Useswapbutton",
+    "message": "Use swap.button",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "WhitePaperdraft",
+    "message": "White Paper (draft)",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "Wiki",
+    "message": "Wiki",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "Actions",
+    "message": "Actions",
+    "files": [
+      "shared/components/modals/ShowMoreCoins/ShowMoreCoins.js"
+    ]
+  },
+  {
+    "id": "Coin",
+    "message": "Coin",
+    "files": [
+      "shared/components/modals/ShowMoreCoins/ShowMoreCoins.js"
+    ]
+  },
+  {
+    "id": "Name",
+    "message": "Name",
+    "files": [
+      "shared/components/modals/ShowMoreCoins/ShowMoreCoins.js"
+    ]
+  },
+  {
+    "id": "Coin113",
+    "message": "Coin",
+    "files": [
+      "shared/pages/Currency/Currency.js"
+    ]
+  },
+  {
+    "id": "Exchange113",
+    "message": "Exchange",
+    "files": [
+      "shared/pages/Currency/Currency.js"
+    ]
+  },
+  {
+    "id": "Amount130",
+    "message": "Amount",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "Coin130",
+    "message": "Coin",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "Statement130",
+    "message": "Statement",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "Status130",
+    "message": "Status",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "Amount61",
+    "message": "Amount",
+    "files": [
+      "shared/pages/History/History.js"
+    ]
+  },
+  {
+    "id": "Coin61",
+    "message": "Coin",
+    "files": [
+      "shared/pages/History/History.js"
+    ]
+  },
+  {
+    "id": "Statement61",
+    "message": "Statement",
+    "files": [
+      "shared/pages/History/History.js"
+    ]
+  },
+  {
+    "id": "Status61",
+    "message": "Status",
+    "files": [
+      "shared/pages/History/History.js"
+    ]
+  },
+  {
+    "id": "SwapHisrory14",
+    "message": "Avatar",
+    "files": [
+      "shared/pages/History/SwapsHistory/SwapsHistory.js"
+    ]
+  },
+  {
+    "id": "SwapHisrory15",
+    "message": "Exchange",
+    "files": [
+      "shared/pages/History/SwapsHistory/SwapsHistory.js"
+    ]
+  },
+  {
+    "id": "SwapHisrory16",
+    "message": "You buy",
+    "files": [
+      "shared/pages/History/SwapsHistory/SwapsHistory.js"
+    ]
+  },
+  {
+    "id": "SwapHisrory17",
+    "message": "You sell",
+    "files": [
+      "shared/pages/History/SwapsHistory/SwapsHistory.js"
+    ]
+  },
+  {
+    "id": "SwapHisrory18",
+    "message": "Exchange rate",
+    "files": [
+      "shared/pages/History/SwapsHistory/SwapsHistory.js"
+    ]
+  },
+  {
+    "id": "SwapHisrory19",
+    "message": "Status refund",
+    "files": [
+      "shared/pages/History/SwapsHistory/SwapsHistory.js"
+    ]
+  },
+  {
+    "id": "SwapHisrory20",
+    "message": "Status order",
+    "files": [
+      "shared/pages/History/SwapsHistory/SwapsHistory.js"
+    ]
+  },
+  {
+    "id": "SwapHisrory211",
+    "message": "Lock time",
+    "files": [
+      "shared/pages/History/SwapsHistory/SwapsHistory.js"
+    ]
+  },
+  {
+    "id": "SwapHisrory22",
+    "message": "Link",
+    "files": [
+      "shared/pages/History/SwapsHistory/SwapsHistory.js"
+    ]
+  },
+  {
+    "id": "MyOrders19",
+    "message": "EXCHANGE",
+    "files": [
+      "shared/pages/Home/Orders/MyOrders/MyOrders.js"
+    ]
+  },
+  {
+    "id": "MyOrders20",
+    "message": "YOU GET",
+    "files": [
+      "shared/pages/Home/Orders/MyOrders/MyOrders.js"
+    ]
+  },
+  {
+    "id": "MyOrders21",
+    "message": "YOU HAVE",
+    "files": [
+      "shared/pages/Home/Orders/MyOrders/MyOrders.js"
+    ]
+  },
+  {
+    "id": "MyOrders22",
+    "message": "EXCHANGE RATE",
+    "files": [
+      "shared/pages/Home/Orders/MyOrders/MyOrders.js"
+    ]
+  },
+  {
+    "id": "MyOrders231",
+    "message": "SHARE",
+    "files": [
+      "shared/pages/Home/Orders/MyOrders/MyOrders.js"
+    ]
+  },
+  {
+    "id": "MyOrders24",
+    "message": "ACTIONS",
+    "files": [
+      "shared/pages/Home/Orders/MyOrders/MyOrders.js"
+    ]
+  },
+  {
+    "id": "Orders101",
+    "message": "OWNER"
+  },
+  {
+    "id": "Orders102",
+    "message": "AMOUNT"
+  },
+  {
+    "id": "Orders103",
+    "message": "PRICE FOR 1 "
+  },
+  {
+    "id": "Orders105",
+    "message": "TOTAL"
+  },
+  {
+    "id": "Orders106",
+    "message": "START EXCHANGE"
+  },
+  {
+    "id": "Wallet114",
+    "message": "Coin",
+    "files": [
+      "shared/pages/Wallet/Wallet.js"
+    ]
+  },
+  {
+    "id": "Wallet115",
+    "message": "Name",
+    "files": [
+      "shared/pages/Wallet/Wallet.js"
+    ]
+  },
+  {
+    "id": "Wallet116",
+    "message": "Balance ",
+    "files": [
+      "shared/pages/Wallet/Wallet.js"
+    ]
+  },
+  {
+    "id": "Wallet117",
+    "message": "Your Address ",
+    "files": [
+      "shared/pages/Wallet/Wallet.js"
+    ]
+  },
+  {
+    "id": "Wallet118",
+    "message": "Send, receive, swap",
+    "files": [
+      "shared/pages/Wallet/Wallet.js"
+    ]
+  },
+  {
+    "id": "Wallet119",
+    "message": "Actions",
+    "files": [
+      "shared/pages/Wallet/Wallet.js"
+    ]
+  },
+  {
+    "id": "Orders141",
+    "message": "No such ticker. Redirecting to SWAP-BTC exchange...",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "Orders151",
+    "message": "my Orders",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "orders101",
+    "message": "OWNER",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "orders102",
+    "message": "AMOUNT",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "orders103",
+    "message": "PRICE FOR 1",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "orders105",
+    "message": "TOTAL",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "orders106",
+    "message": "START EXCHANGE",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "orders120",
+    "message": "Atomic Swap"
+  },
+  {
+    "id": "orders122",
+    "message": "to"
+  },
+  {
+    "id": "orders124",
+    "message": "Instant Exchange"
+  },
+  {
+    "id": "orders128",
+    "message": "Create offer",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "orders130",
+    "message": "Best exchange rate for"
+  },
+  {
+    "id": "orders132",
+    "message": "to"
+  },
+  {
+    "id": "orders134",
+    "message": "Swap.Online wallet provides instant exchange using Atomic Swap Protocol."
+  },
+  {
+    "id": "orders138",
+    "message": "no limit exchange with 0 fee",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "orders1499",
+    "message": "Hide",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "orders1501",
+    "message": "Show"
+  },
+  {
+    "id": "Row134",
+    "message": "buys",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row136",
+    "message": "sells",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "addoffer381",
+    "message": "Sell",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "addoffer396",
+    "message": "Buy",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "addoffer406",
+    "message": "Exchange rate",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "Table95",
+    "message": "The table is empty",
+    "files": [
+      "shared/components/tables/Table/Table.js"
+    ]
+  },
+  {
+    "id": "Table96",
+    "message": "Loading...",
+    "files": [
+      "shared/components/tables/Table/Table.js"
+    ]
+  },
+  {
+    "id": "filter14",
+    "message": "All",
+    "files": [
+      "shared/pages/History/Filter/Filter.js"
+    ]
+  },
+  {
+    "id": "filter15",
+    "message": "Sent",
+    "files": [
+      "shared/pages/History/Filter/Filter.js"
+    ]
+  },
+  {
+    "id": "filter16",
+    "message": "Received",
+    "files": [
+      "shared/pages/History/Filter/Filter.js"
+    ]
+  },
+  {
+    "id": "Amount68",
+    "message": "History",
+    "files": [
+      "shared/pages/History/History.js"
+    ]
+  },
+  {
+    "id": "Reqstbttn15",
+    "message": "SELL",
+    "files": [
+      "shared/pages/Home/Orders/RequestButton/RequestButton.js"
+    ]
+  },
+  {
+    "id": "Reqstbttn16",
+    "message": "BUY",
+    "files": [
+      "shared/pages/Home/Orders/RequestButton/RequestButton.js"
     ]
   }
 ]

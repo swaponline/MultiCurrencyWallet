@@ -97,7 +97,18 @@ export default class Orders extends Component {
     buyCurrency = buyCurrency.toUpperCase()
     sellCurrency = sellCurrency.toUpperCase()
 
-    const titles = [ 'OWNER', `AMOUNT`, `PRICE FOR 1 ${buyCurrency}`, `TOTAL`, 'START EXCHANGE' ]
+    const titles = [
+      <FormattedMessage id="orders101" defaultMessage="OWNER" />,
+      <FormattedMessage id="orders102" defaultMessage="AMOUNT" /> ,
+      <span>
+      <FormattedMessage id="orders103" defaultMessage="PRICE FOR 1 "/>
+      {buyCurrency}
+      </span>,
+      <FormattedMessage id="orders105" defaultMessage="TOTAL" /> ,
+      <FormattedMessage id="orders106" defaultMessage="START EXCHANGE" />
+    ]
+
+
     const { isOnline, myOrders, orderId, invalidPair, location, currencies } = this.props
 
     const buyCurrencyFullName = (currencies.find(c => c.name === buyCurrency) || {}).fullTitle
@@ -105,25 +116,31 @@ export default class Orders extends Component {
 
     return (
       <Fragment>
-        <PageSeo
-          location={location}
-          defaultTitle={
-            `Atomic Swap ${buyCurrencyFullName} (${buyCurrency}) to ${sellCurrencyFullName} (${sellCurrency}) Instant Exchange`}
-          defaultDescription={`Best exchange rate for ${buyCurrencyFullName} (${buyCurrency}) to ${sellCurrencyFullName} (${sellCurrency}).
-               Swap.Online wallet provides instant exchange using Atomic Swap Protocol.`
-          } />
-        <Title>{buyCurrency}/{sellCurrency} no limit exchange with 0 fee</Title>
+      <PageSeo
+        location={location}
+        defaultTitle={
+          `Atomic Swap ${buyCurrencyFullName} (${buyCurrency}) to ${sellCurrencyFullName} (${sellCurrency}) Instant Exchange`}
+        defaultDescription={`Best exchange rate for ${buyCurrencyFullName} (${buyCurrency}) to ${sellCurrencyFullName} (${sellCurrency}).
+             Swap.Online wallet provides instant exchange using Atomic Swap Protocol.`
+        } />
+        <Title>
+          {buyCurrency}/{sellCurrency}
+          <FormattedMessage id="orders138" defaultMessage="no limit exchange with 0 fee" />
+        </Title>
         { invalidPair &&
-          <FormattedMessage id="Orders117" defaultMessage="No such ticker. Redirecting to SWAP-BTC exchange..." >
+          <FormattedMessage id="Orders141" defaultMessage="No such ticker. Redirecting to SWAP-BTC exchange..." >
             {message => <p>{message}</p>}
           </FormattedMessage>
         }
         <div styleName="buttonRow">
           <Button green styleName="button" disabled={myOrders.length === 0} onClick={() => this.setState(state => ({ isVisible: !state.isVisible }))}>
-            {isVisible ? 'Hide' : 'Show'} my Orders
+            {isVisible ?
+              <FormattedMessage id="orders1499" defaultMessage="Hide" />
+              :
+              <FormattedMessage id="Orders151" defaultMessage="my Orders" />}
           </Button>
           <Button gray styleName="button" onClick={this.createOffer}>
-            <FormattedMessage id="Orders128" defaultMessage="Create offer" />
+            <FormattedMessage id="orders128" defaultMessage="Create offer" />
           </Button>
         </div>
         {

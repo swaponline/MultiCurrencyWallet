@@ -130,7 +130,11 @@ export default class Row extends Component {
         </td>
         <td>
           <span style={{ color: 'gray' }}>
-            {type === PAIR_TYPES.BID ? 'buys' : 'sells'}
+            {type === PAIR_TYPES.BID ?
+              <FormattedMessage id="Row134" defaultMessage="buys" />
+              :
+              <FormattedMessage id="Row136" defaultMessage="sells" />
+            }
           </span>
           {' '}
           {

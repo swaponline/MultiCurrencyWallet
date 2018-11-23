@@ -363,6 +363,7 @@ export default class AddOffer extends Component {
       || sellAmount > balance || sellAmount < minAmount[sellCurrency]
       || this.isEthOrERC20()
 
+
     linked.sellAmount.check((value) => value > minAmount[sellCurrency], `Amount must be greater than ${minAmount[sellCurrency]} `)
     linked.sellAmount.check((value) => value <= balance, `Amount must be less than your balance`)
 
@@ -377,7 +378,7 @@ export default class AddOffer extends Component {
         }
         <SelectGroup
           styleName="sellGroup"
-          label="Sell"
+          label={<FormattedMessage id="addoffer381" defaultMessage="Sell" />}
           inputValueLink={linked.sellAmount.pipe(this.handleSellAmountChange)}
           selectedCurrencyValue={sellCurrency}
           onCurrencySelect={this.handleSellCurrencySelect}
@@ -392,7 +393,7 @@ export default class AddOffer extends Component {
           currency={sellCurrency}
         />
         <SelectGroup
-          label="Buy"
+          label={<FormattedMessage id="addoffer396" defaultMessage="Buy" />}
           inputValueLink={linked.buyAmount.pipe(this.handleBuyAmountChange)}
           selectedCurrencyValue={buyCurrency}
           onCurrencySelect={this.handleBuyCurrencySelect}
@@ -403,7 +404,7 @@ export default class AddOffer extends Component {
         />
         <div styleName="exchangeRate">
           <ExchangeRateGroup
-            label="Exchange rate"
+            label={<FormattedMessage id="addoffer406" defaultMessage="Exchange rate" />}
             inputValueLink={linked.exchangeRate.pipe(this.handleExchangeRateChange)}
             currency={false}
             disabled={!manualRate}

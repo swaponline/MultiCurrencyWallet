@@ -104,7 +104,11 @@ export default class CurrencyWallet extends Component {
         <PageHeadline styleName="title" subTitle={!!seoPage ? seoPage.h1 : `Your online ${fullName} (${currency}) web wallet with Atomic Swap.`} />
         <h3 styleName="subtitle">
           <FormattedMessage id="CurrencyWallet95" defaultMessage="Your address: " />
-          <span>{address}</span> <br /> Your {fullName} balance: {balance}{' '}{currency.toUpperCase()}
+          <span>{address}</span> <br />
+          <FormattedMessage id="CurrencyWallet107" defaultMessage= "Your" />
+          {fullName}
+          <FormattedMessage id="CurrencyWallet110" defaultMessage= "balance" />
+           : {balance}{' '}{currency.toUpperCase()}
         </h3>
         {currency === 'EOS' && !eosAccountActivated && (<Button onClick={this.handleEosBuyAccount} gray>
           <FormattedMessage id="CurrencyWallet105" defaultMessage="Activate account" />
@@ -121,9 +125,15 @@ export default class CurrencyWallet extends Component {
         </div>
         { swapHistory.length > 0 && <SwapsHistory orders={swapHistory} /> }
         <h2 style={{ marginTop: '20px' }} >
-          <FormattedMessage id="CurrencyWallet110" defaultMessage="History your transactions" />
+          <FormattedMessage id="CurrencyWallet128" defaultMessage="History your transactions" />
         </h2>
-        {txHistory && (<Table titles={[ 'Coin', 'Status', 'Statement', 'Amount' ]} rows={txHistory}styleName="table" rowRender={(row) => (<Row key={row.hash} {...row} />)} />)}
+        {txHistory && (<Table titles={[
+          <FormattedMessage id="Coin130" defaultMessage="Coin" />,
+          <FormattedMessage id="Status130" defaultMessage="Status" />,
+          <FormattedMessage id="Statement130" defaultMessage="Statement" />,
+          <FormattedMessage id="Amount130" defaultMessage="Amount" />
+        ]}
+        rows={txHistory}styleName="table" rowRender={(row) => (<Row key={row.hash} {...row} />)} />)}
       </div>
     )
   }

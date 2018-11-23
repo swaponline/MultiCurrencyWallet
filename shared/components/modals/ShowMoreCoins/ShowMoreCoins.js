@@ -27,7 +27,11 @@ import { FormattedMessage } from 'react-intl'
 export default class ShowMoreCoins extends Component {
   render() {
     const { name, items, tokens, currencies, hiddenCoinsList } = this.props
-    const titles = ['Coin', 'Name', 'Actions']
+    const titles = [
+      <FormattedMessage id="Coin" defaultMessage="Coin" />,
+      <FormattedMessage id="Name" defaultMessage="Name" />,
+      <FormattedMessage id="Actions" defaultMessage="Actions" />
+    ]
 
     return (
       <Modal name={name} title="Show More Coins" shouldCenterVertically={false}>

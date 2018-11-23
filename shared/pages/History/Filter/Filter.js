@@ -8,9 +8,14 @@ import CSSModules from 'react-css-modules'
 import styles from './Filter.scss'
 
 import FilterLink from './FilterLink/FilterLink'
+import { FormattedMessage } from 'react-intl'
 
 
-const filters = ['All', 'Sent', 'Received']
+const filters = [
+  <FormattedMessage id="filter14" defaultMessage="All" />,
+  <FormattedMessage id="filter15" defaultMessage="Sent" />,
+  <FormattedMessage id="filter16" defaultMessage="Received" />
+]
 
 const Filter = ({ filter }) => {
 
@@ -42,4 +47,3 @@ Filter.propTypes = {
 export default connect(({ history: { filter } }) => ({
   filter,
 }))(CSSModules(Filter, styles))
-

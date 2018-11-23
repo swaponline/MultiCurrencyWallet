@@ -111,7 +111,16 @@ export default class Wallet extends Component {
   render() {
     const { view, zeroBalance } = this.state
     const { items, tokens, currencies, hiddenCoinsList } = this.props
-    const titles = [ 'Coin', 'Name', 'Balance', 'Your Address', isMobile ? 'Send, receive, swap' :  'Actions' ]
+    const titles = [
+      <FormattedMessage id="Wallet114" defaultMessage="Coin" />,
+      <FormattedMessage id="Wallet115" defaultMessage="Name" />,
+      <FormattedMessage id="Wallet116" defaultMessage="Balance" />,
+      <FormattedMessage id="Wallet117" defaultMessage="Your Address" /> ,
+       isMobile ?
+       <FormattedMessage id="Wallet118" defaultMessage="Send, receive, swap" />
+       :
+       <FormattedMessage id="Wallet119" defaultMessage="Actions" />
+    ]
 
     const keysSaved = localStorage.getItem(constants.localStorage.privateKeysSaved)
     const testNetSkip = localStorage.getItem(constants.localStorage.testnetSkip)

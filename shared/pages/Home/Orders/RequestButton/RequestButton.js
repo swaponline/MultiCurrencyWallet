@@ -3,6 +3,7 @@ import React from 'react'
 import cssModules from 'react-css-modules'
 import styles from './RequestButton.scss'
 import PAIR_TYPES from 'helpers/constants/PAIR_TYPES'
+import { FormattedMessage } from 'react-intl'
 
 
 const RequestButton = ({ disabled, children, data: { type, base, amount, total, main }, move, ...rest  }) =>  (
@@ -10,7 +11,11 @@ const RequestButton = ({ disabled, children, data: { type, base, amount, total, 
     {
       move ? (
         <React.Fragment>
-          {type === PAIR_TYPES.BID ? 'SELL' : 'BUY'}
+          {type === PAIR_TYPES.BID ?
+            <FormattedMessage id="Reqstbttn15" defaultMessage="SELL" />
+            :
+            <FormattedMessage id="Reqstbttn16" defaultMessage="BUY" />
+          }
           {' '}
           {amount.toFixed(4)}{' '}{main}
           <br />
