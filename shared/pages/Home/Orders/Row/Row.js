@@ -249,14 +249,18 @@ export default class Row extends Component {
           <div styleName="bigContainer">
             <div styleName="tdContainer-1">
               <span styleName="firstType">
-                {type === PAIR_TYPES.BID ? 'You have' : 'You get'}
+                {type === PAIR_TYPES.BID
+                  ? (<FormattedMessage id="RowMobileFirstTypeYouHave" defaultMessage="You have" />)
+                  : (<FormattedMessage id="RowMobileFirstTypeYouGet" defaultMessage="You get" />)}
               </span>
               <span>{`${amount.toFixed(5)} ${main}`}</span>
             </div>
             <div><i className="fas fa-exchange-alt" /></div>
             <div styleName="tdContainer-2">
               <span styleName="secondType">
-                <FormattedMessage id="RowM122" defaultMessage="You get" />
+                {type === PAIR_TYPES.BID
+                  ? (<FormattedMessage id="RowMobileSecondTypeYouGet" defaultMessage="You get" />)
+                  : (<FormattedMessage id="RowMobileSecondTypeYouHave" defaultMessage="You have" />)}
               </span>
               <span>{`${total.toFixed(5)} ${base}`}</span>
             </div>
