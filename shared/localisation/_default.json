@@ -3386,5 +3386,12 @@
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
+  },
+  {
+    "id": "Currency108",
+    "message": "Added to Wallet",
+    "files": [
+      "shared/pages/Currency/Currency.js"
+    ]
   }
 ]

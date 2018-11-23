@@ -13,9 +13,9 @@ import CSSModules from 'react-css-modules'
 import ArrowRightSvg from './images/arrow-right.svg'
 
 import { TimerButton } from 'components/controls'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 
-
+@injectIntl
 @withRouter
 @connect({
   feeds: 'feeds.items',
@@ -53,13 +53,13 @@ export default class UserTooltip extends Component {
   }
 
   render() {
-    const { feeds, peer: mePeer } = this.props
+    const { feeds, peer: mePeer, intl: { locale } } = this.props
 
     return !!feeds.length && (
       <div styleName="column" >
         { feeds.length < 3  ? (
           feeds.map(row => {
-            const { request, content: { buyAmount, buyCurrency, sellAmount, sellCurrency }, id, peer: ownerPeer } = row
+            const { request, content: { buyAmount, buyCurrency, sellAmount, sellCurrency }, id, peer: ownerPeer, } = row
 
             return (
               mePeer === ownerPeer &&
@@ -78,17 +78,17 @@ export default class UserTooltip extends Component {
                     </div>
                   </div>
                   <span styleName="decline" onClick={() => this.declineRequest(id, peer)} />
-                  <Link to={`${links.swap}/${sellCurrency}-${buyCurrency}/${id}`}>
+                  <Link to={`/${locale}${links.swap}/${sellCurrency}-${buyCurrency}/${id}`}>
                     <div styleName="checked" onClick={() => this.acceptRequest(id, peer)} />
                   </Link>
-                  <TimerButton isButton={false} onClick={() => this.autoAcceptRequest(id, peer, `${links.swap}/${sellCurrency}-${buyCurrency}/${id}`)} />
+                  <TimerButton isButton={false} onClick={() => this.autoAcceptRequest(id, peer, `/${locale}${links.swap}/${sellCurrency}-${buyCurrency}/${id}`)} />
                 </div>
               ))
             )
           })
         ) : (
           <div styleName="feed" >
-            <Link to={links.feed} >
+            <Link to={`/${locale}${links.feed}`} >
               <FormattedMessage id="QUESTION15" defaultMessage="Go to the feed page" />
             </Link>
           </div>

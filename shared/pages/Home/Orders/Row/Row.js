@@ -19,9 +19,9 @@ import { Button, RemoveButton } from 'components/controls'
 import Pair from '../Pair'
 import PAIR_TYPES from 'helpers/constants/PAIR_TYPES'
 import RequestButton from '../RequestButton/RequestButton'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 
-
+@injectIntl
 @connect({
   peer: 'ipfs.peer',
 })
@@ -109,6 +109,7 @@ export default class Row extends Component {
         owner: {  peer: ownerPeer },
       },
       peer,
+      intl: { locale },
     } = this.props
 
     const pair = Pair.fromOrder(this.props.row)
@@ -116,7 +117,7 @@ export default class Row extends Component {
     const { price, amount, total, main, base, type } = pair
 
     if (this.state.redirect) {
-      return <Redirect push to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`} />
+      return <Redirect push to={`/${locale}${links.swap}/${buyCurrency}-${sellCurrency}/${id}`} />
     }
 
     return (
@@ -166,7 +167,7 @@ export default class Row extends Component {
                       <div style={{ color: 'red' }}>
                         <FormattedMessage id="Row148" defaultMessage="REQUESTING" />
                       </div>
-                      <Link to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`}>
+                      <Link to={`/${locale}${links.swap}/${buyCurrency}-${sellCurrency}/${id}`}>
                         <FormattedMessage id="Row151" defaultMessage="Go to the swap" />
                       </Link>
                     </Fragment>
@@ -228,6 +229,7 @@ export default class Row extends Component {
         owner: {  peer: ownerPeer },
       },
       peer,
+      intl: { locale },
     } = this.props
 
     const pair = Pair.fromOrder(this.props.row)
@@ -268,7 +270,7 @@ export default class Row extends Component {
                       <div style={{ color: 'red' }}>
                         <FormattedMessage id="RowM136" defaultMessage="REQUESTING" />
                       </div>
-                      <Link to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`}>
+                      <Link to={`/${locale}${links.swap}/${buyCurrency}-${sellCurrency}/${id}`}>
                         <FormattedMessage id="RowM139" defaultMessage="Go to the swap" />
                       </Link>
                     </Fragment>
@@ -316,10 +318,11 @@ export default class Row extends Component {
         buyCurrency,
         sellCurrency,
       },
+      intl: { locale },
     } = this.props
 
     if (this.state.redirect) {
-      return <Redirect push to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`} />
+      return <Redirect push to={`/${locale}${links.swap}/${buyCurrency}-${sellCurrency}/${id}`} />
     }
 
     if (isMobile) {
