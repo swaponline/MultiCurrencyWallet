@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { constants } from 'helpers'
 import actions from 'redux/actions'
@@ -38,6 +38,7 @@ export default class WithdrawModal extends React.Component {
     isShipped: false,
     address: '',
     amount: '',
+    showWarning: '',
   }
 
   componentWillMount() {
@@ -81,53 +82,74 @@ export default class WithdrawModal extends React.Component {
       })
   }
 
-  render() {
-    const { address, amount, balance, isShipped } = this.state
-    const { name, data } = this.props
+All = () => {
+  const { amount, balance, showWarning } = this.state
+  const { data } = this.props
+  const balanceMiner = balance !== 0 ?
+    Number(balance) - minAmount[data.currency.toLowerCase()]
+    :
+    balance
+  this.setState({
+    amount: balanceMiner,
+    showWarning: 'true',
+  })
+}
 
-    const linked = Link.all(this, 'address', 'amount')
-    const isDisabled = !address || !amount || isShipped || Number(amount) < minAmount[data.currency.toLowerCase()] || Number(amount) > balance
+render() {
+  const { address, amount, balance, isShipped, showWarning } = this.state
+  const { name, data } = this.props
 
-    if (Number(amount) !== 0) {
-      linked.amount.check((value) => Number(value) < balance, `Amount must be less than your balance`)
-      linked.amount.check((value) => Number(value) > minAmount[data.currency.toLowerCase()], `Amount must be greater than ${minAmount[data.currency.toLowerCase()]} `)
-    }
+  const linked = Link.all(this, 'address', 'amount')
+  const isDisabled = !address || !amount || isShipped || Number(amount) < minAmount[data.currency.toLowerCase()] || Number(amount) > balance
 
-    return (
-      <Modal name={name} title={`Withdraw ${data.currency.toUpperCase()}`}>
-        <p
-          style={{ fontSize: '16px' }}
-        >
-          {`Please notice, that you need to have minimum ${minAmount[data.currency.toLowerCase()]} amount `}
-          <br />
-          of the {data.currency} on your wallet, to use it for miners fee
-        </p>
-        <FieldLabel inRow>
-          <FormattedMessage id="Withdrow108" defaultMessage="Address " />
-          <Tooltip text="destination address " />
-        </FieldLabel>
-        <Input valueLink={linked.address} focusOnInit pattern="0-9a-zA-Z" placeholder="Enter address" />
-        <p style={{ marginTop: '20px' }}>
-          <FormattedMessage id="Withdrow113" defaultMessage="Your balance: " />
-          {Number(balance).toFixed(5)}
-          {data.currency.toUpperCase()}
-        </p>
-        <FieldLabel inRow>
-          <FormattedMessage id="Withdrow118" defaultMessage="Amount " />
-        </FieldLabel>
-        <Input valueLink={linked.amount} pattern="0-9\." placeholder={`Enter amount, you have ${Number(balance).toFixed(5)}`} />
-        {
-          !linked.amount.error && (
-            <div styleName="note">
-              <FormattedMessage id="WithdrawModal106" defaultMessage="No less than " />
-              {minAmount[data.currency.toLowerCase()]}
-            </div>
+  if (Number(amount) !== 0) {
+    linked.amount.check((value) => Number(value) < balance, `Amount must be less than your balance`)
+    linked.amount.check((value) => Number(value) > minAmount[data.currency.toLowerCase()], `Amount must be greater than ${minAmount[data.currency.toLowerCase()]} `)
+  }
+  return (
+    <Modal name={name} title={`Withdraw ${data.currency.toUpperCase()}`}>
+      <p
+        style={{ fontSize: '16px' }}
+      >
+        {`Please notice, that you need to have minimum ${minAmount[data.currency.toLowerCase()]} amount `}
+        <br />
+        of the {data.currency} on your wallet, to use it for miners fee
+      </p>
+      <FieldLabel inRow>
+        <FormattedMessage id="Withdrow108" defaultMessage="Address " />
+        <Tooltip text="destination address " />
+      </FieldLabel>        <Input valueLink={linked.address} focusOnInit pattern="0-9a-zA-Z" placeholder="Enter address" />
+      <p style={{ marginTop: '20px' }}>
+        <FormattedMessage id="Withdrow113" defaultMessage="Your balance: " />
+        {Number(balance).toFixed(5)}
+        {data.currency.toUpperCase()}
+      </p>
+      <FieldLabel inRow>
+        <FormattedMessage id="Withdrow118" defaultMessage="Amount " />
+        <span styleName="cell" onClick={this.All}>
+          <FormattedMessage id="Select24" defaultMessage="SEND ALL" />
+        </span>
+        { showWarning && (
+          <a style={{ color: 'red' }}>
+            <FormattedMessage id="WithdrawModal132" defaultMessage=" Do not forget about miners fee " />
+            {minAmount[data.currency.toLowerCase()]}
+          </a>
           )
         }
-        <Button styleName="button" brand fullWidth disabled={isDisabled} onClick={this.handleSubmit}>
-          <FormattedMessage id="WithdrawModal111" defaultMessage="Transfer " />
-        </Button>
-      </Modal>
-    )
-  }
+      </FieldLabel>
+      <Input valueLink={linked.amount} pattern="0-9\." placeholder={`Enter amount, you have ${Number(balance).toFixed(5)}`} />
+      {
+        !linked.amount.error && (
+          <div styleName="note">
+            <FormattedMessage id="WithdrawModal106" defaultMessage="No less than " />
+            {minAmount[data.currency.toLowerCase()]}
+          </div>
+        )
+      }
+      <Button styleName="button" brand fullWidth disabled={isDisabled} onClick={this.handleSubmit}>
+        <FormattedMessage id="WithdrawModal111" defaultMessage="Transfer " />
+      </Button>
+    </Modal>
+  )
+}
 }

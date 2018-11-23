@@ -7,3 +7,11 @@
 .button {
   margin-top: 40px;
 }
+.cell {
+  color: #3b95ff;
+  cursor: pointer;
+
+  &:hover {
+    color: darken(#3b95ff, 1)
+  }
+}
