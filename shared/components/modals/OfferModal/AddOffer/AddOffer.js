@@ -406,7 +406,7 @@ switching = async ({ value }) => {
           changeBalance={this.changeBalance}
           balance={balance}
           currency={sellCurrency}
-        switching={this.switching}
+          switching={this.switching}
         />
         <SelectGroup
           label="Buy"
