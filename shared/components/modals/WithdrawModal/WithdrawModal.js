@@ -98,9 +98,17 @@ export default class WithdrawModal extends React.Component {
         <p
           style={{ fontSize: '16px' }}
         >
-          {`Please notice, that you need to have minimum ${minAmount[data.currency.toLowerCase()]} amount `}
+          {
+            <span>
+              <FormattedMessage id="Withdrow101" defaultMessage="Please notice, that you need to have minimum  " />
+              {minAmount[data.currency.toLowerCase()]}
+              <FormattedMessage id="Withdrow105" defaultMessage="amount " />
+            </span>
+          }
           <br />
-          of the {data.currency} on your wallet, to use it for miners fee
+          <FormattedMessage id="Withdrow109" defaultMessage="of the " />
+          {data.currency}
+          <FormattedMessage id="Withdrow111" defaultMessage=" on your wallet, to use it for miners fee " />
         </p>
         <FieldLabel inRow>
           <FormattedMessage id="Withdrow108" defaultMessage="Address " />

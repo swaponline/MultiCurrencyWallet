@@ -61,7 +61,11 @@ export default class ReceiveModal extends React.Component {
                 disabled={isAddressCopied}
                 fullWidth
               >
-                { isAddressCopied ? 'Address copied to clipboard' : 'Copy to clipboard' }
+                { isAddressCopied ?
+                  <FormattedMessage id="recieved65" defaultMessage="Address copied to clipboard" />
+                  :
+                  <FormattedMessage id="recieved67" defaultMessage="Copy to clipboard" />
+                }
               </Button>
             </p>
           </CopyToClipboard>

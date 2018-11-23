@@ -997,10 +997,7 @@
   },
   {
     "id": "RowM122",
-    "message": "You get",
-    "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
-    ]
+    "message": "You get"
   },
   {
     "id": "RowM136",
@@ -3942,24 +3939,15 @@
   },
   {
     "id": "filter14",
-    "message": "All",
-    "files": [
-      "shared/pages/History/Filter/Filter.js"
-    ]
+    "message": "All"
   },
   {
     "id": "filter15",
-    "message": "Sent",
-    "files": [
-      "shared/pages/History/Filter/Filter.js"
-    ]
+    "message": "Sent"
   },
   {
     "id": "filter16",
-    "message": "Received",
-    "files": [
-      "shared/pages/History/Filter/Filter.js"
-    ]
+    "message": "Received"
   },
   {
     "id": "Amount68",
@@ -3980,6 +3968,153 @@
     "message": "BUY",
     "files": [
       "shared/pages/Home/Orders/RequestButton/RequestButton.js"
+    ]
+  },
+  {
+    "id": "add367",
+    "message": "Amount must be greater than",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "add368",
+    "message": "Amount must be less than your balance",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "ExchangeRate12",
+    "message": "Exchange Rate",
+    "files": [
+      "shared/components/modals/OfferModal/ConfirmOffer/ExchangeRate/ExchangeRate.js"
+    ]
+  },
+  {
+    "id": "amount",
+    "message": "Exchange",
+    "files": [
+      "shared/components/modals/OfferModal/ConfirmOffer/Amounts/Amounts.js"
+    ]
+  },
+  {
+    "id": "fee9",
+    "message": "Miner fee",
+    "files": [
+      "shared/components/modals/OfferModal/ConfirmOffer/Fee/Fee.js"
+    ]
+  },
+  {
+    "id": "recieved65",
+    "message": "Address copied to clipboard",
+    "files": [
+      "shared/components/modals/ReceiveModal/ReceiveModal.js"
+    ]
+  },
+  {
+    "id": "recieved67",
+    "message": "Copy to clipboard",
+    "files": [
+      "shared/components/modals/ReceiveModal/ReceiveModal.js"
+    ]
+  },
+  {
+    "id": "Withdrow101",
+    "message": "Please notice, that you need to have minimum",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Withdrow105",
+    "message": "amount",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Withdrow109",
+    "message": "of the",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Withdrow111",
+    "message": "on your wallet, to use it for miners fee",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "RowHistory94",
+    "message": "Finished",
+    "files": [
+      "shared/pages/History/SwapsHistory/RowHistory/RowHistory.js"
+    ]
+  },
+  {
+    "id": "RowHistory96",
+    "message": "Uncompleted",
+    "files": [
+      "shared/pages/History/SwapsHistory/RowHistory/RowHistory.js"
+    ]
+  },
+  {
+    "id": "Row202",
+    "message": "SELL",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row204",
+    "message": "BUY",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row209",
+    "message": "FOR",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowMobileFirstTypeYouGet",
+    "message": "You get",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowMobileFirstTypeYouHave",
+    "message": "You have",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowMobileSecondTypeYouGet",
+    "message": "You get",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowMobileSecondTypeYouHave",
+    "message": "You have",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Wallet137",
+    "message": "Deposit funds to addresses below",
+    "files": [
+      "shared/pages/Wallet/Wallet.js"
     ]
   }
 ]

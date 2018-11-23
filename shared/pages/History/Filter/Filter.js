@@ -11,11 +11,7 @@ import FilterLink from './FilterLink/FilterLink'
 import { FormattedMessage } from 'react-intl'
 
 
-const filters = [
-  <FormattedMessage id="filter14" defaultMessage="All" />,
-  <FormattedMessage id="filter15" defaultMessage="Sent" />,
-  <FormattedMessage id="filter16" defaultMessage="Received" />
-]
+const filters = ['All', 'Sent', 'Received']
 
 const Filter = ({ filter }) => {
 

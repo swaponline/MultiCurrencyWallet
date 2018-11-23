@@ -90,7 +90,11 @@ import { FormattedMessage, injectIntl } from 'react-intl'
            }
          </td>
          <td>
-           { isFinished ? 'Finished' : 'Uncompleted' }
+           { isFinished ?
+             <FormattedMessage id="RowHistory94" defaultMessage="Finished" />
+             :
+             <FormattedMessage id="RowHistory96" defaultMessage="Uncompleted" />
+           }
          </td>
          <td>
            { lockDateAndTime.split(' ').map((item, key) => <Fragment key={key}>{item}<br /></Fragment>) }

@@ -8,8 +8,12 @@ import Value from '../Value/Value'
 import { FormattedMessage } from 'react-intl'
 
 
+const title = [
+  <FormattedMessage id="ExchangeRate12" defaultMessage="Exchange Rate" />
+]
+
 const ExchangeRate = ({ value, buyCurrency, sellCurrency }) => (
-  <Row title="Exchange rate">
+  <Row title={title}>
     <Value value={1 / Number(value)} currency={sellCurrency} />
     <FormattedMessage id="ExchangeRate14" defaultMessage="=">
       {message => <div styleName="equal">{message}</div>}

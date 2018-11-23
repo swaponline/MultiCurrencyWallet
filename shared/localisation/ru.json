@@ -1000,10 +1000,7 @@
   },
   {
     "id": "RowM122",
-    "message": "Вы получите",
-    "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
-    ]
+    "message": "Вы получите"
   },
   {
     "id": "RowM136",
@@ -3938,24 +3935,15 @@
   },
   {
     "id": "filter14",
-    "message": "Все",
-    "files": [
-      "shared/pages/History/Filter/Filter.js"
-    ]
+    "message": "Все"
   },
   {
     "id": "filter15",
-    "message": "Отправленые",
-    "files": [
-      "shared/pages/History/Filter/Filter.js"
-    ]
+    "message": "Отправленые"
   },
   {
     "id": "filter16",
-    "message": "Полученныу",
-    "files": [
-      "shared/pages/History/Filter/Filter.js"
-    ]
+    "message": "Полученныу"
   },
   {
     "id": "Amount68",
@@ -3976,6 +3964,153 @@
     "message": "КУПИТЬ",
     "files": [
       "shared/pages/Home/Orders/RequestButton/RequestButton.js"
+    ]
+  },
+  {
+    "id": "add367",
+    "message": "Введенное число должна быть больше",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "add368",
+    "message": "Введенное число должно быть меньше вашего баланса",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "ExchangeRate12",
+    "message": "Курс обмена",
+    "files": [
+      "shared/components/modals/OfferModal/ConfirmOffer/ExchangeRate/ExchangeRate.js"
+    ]
+  },
+  {
+    "id": "amount",
+    "message": "Обмен",
+    "files": [
+      "shared/components/modals/OfferModal/ConfirmOffer/Amounts/Amounts.js"
+    ]
+  },
+  {
+    "id": "fee9",
+    "message": "Комиссия майнеров",
+    "files": [
+      "shared/components/modals/OfferModal/ConfirmOffer/Fee/Fee.js"
+    ]
+  },
+  {
+    "id": "recieved65",
+    "message": "Адресс скопирован",
+    "files": [
+      "shared/components/modals/ReceiveModal/ReceiveModal.js"
+    ]
+  },
+  {
+    "id": "recieved67",
+    "message": "Скопировать",
+    "files": [
+      "shared/components/modals/ReceiveModal/ReceiveModal.js"
+    ]
+  },
+  {
+    "id": "Withdrow101",
+    "message": "Обратите внимание, что вам нужно иметь минимум",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Withdrow105",
+    "message": " ",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Withdrow109",
+    "message": " ",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Withdrow111",
+    "message": "на свой кошелек, для платы майнерам",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "RowHistory94",
+    "message": "Выполнено",
+    "files": [
+      "shared/pages/History/SwapsHistory/RowHistory/RowHistory.js"
+    ]
+  },
+  {
+    "id": "RowHistory96",
+    "message": "Выполняется",
+    "files": [
+      "shared/pages/History/SwapsHistory/RowHistory/RowHistory.js"
+    ]
+  },
+  {
+    "id": "Row202",
+    "message": "ПРОДАТЬ ",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row204",
+    "message": "КУПИТЬ ",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row209",
+    "message": "ЗА ",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowMobileFirstTypeYouGet",
+    "message": "Вы получите ",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowMobileFirstTypeYouHave",
+    "message": "Вы имеете",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowMobileSecondTypeYouGet",
+    "message": "Вы получите ",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowMobileSecondTypeYouHave",
+    "message": "Вы имеете ",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Wallet137",
+    "message": "Пополняйте кошелек, на адреса указанные ниже",
+    "files": [
+      "shared/pages/Wallet/Wallet.js"
     ]
   }
 ]
