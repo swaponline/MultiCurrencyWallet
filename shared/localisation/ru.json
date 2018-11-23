@@ -379,7 +379,7 @@
   },
   {
     "id": "Select24",
-    "message": "Весь баланс ",
+    "message": "ВСЕ! ",
     "files": [
       "shared/components/modals/OfferModal/AddOffer/Select/Select.js"
     ]
@@ -2828,7 +2828,7 @@
   },
   {
     "id": "WithdrawButton29",
-    "message": "Пополнить данный адрес криптовалюты",
+    "message": "Пополнить баланс ",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
@@ -3924,7 +3924,7 @@
   },
   {
     "id": "Table95",
-    "message": "Нет активных предложений на обмен",
+    "message": "таблица пуста",
     "files": [
       "shared/components/tables/Table/Table.js"
     ]

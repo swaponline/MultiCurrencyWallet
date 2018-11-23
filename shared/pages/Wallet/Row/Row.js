@@ -327,7 +327,8 @@ export default class Row extends Component {
               </span>
             </button>
             <ReactTooltip id={`deposit${currency}`} type="light" effect="solid">
-              <FormattedMessage id="WithdrawButton29" defaultMessage="Deposit funds to this address of currency wallet" />
+              <FormattedMessage id="WithdrawButton29" defaultMessage="Deposit funds to " />
+              {currency}
             </ReactTooltip>
             <BtnTooltip onClick={this.handleWithdraw} disable={isBalanceEmpty} id={currency} >
               <i className="fas fa-arrow-alt-circle-right" />

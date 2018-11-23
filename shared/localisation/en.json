@@ -2828,7 +2828,7 @@
   },
   {
     "id": "WithdrawButton29",
-    "message": "Deposit funds to this address of currency wallet",
+    "message": "Deposit funds to ",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
