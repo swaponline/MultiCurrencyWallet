@@ -39,7 +39,7 @@ export default class Row extends Component {
     this.setState({
       tradeAllowed: !!currencies.find(c => c.value === currency.toLowerCase()),
     })
-    
+
     this.handleCheckBalance()
   }
 

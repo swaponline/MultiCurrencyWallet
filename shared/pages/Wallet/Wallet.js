@@ -19,6 +19,8 @@ import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import KeyActionsPanel from 'components/KeyActionsPanel/KeyActionsPanel'
 import SaveKeysModal from 'components/modals/SaveKeysModal/SaveKeysModal'
 import { FormattedMessage } from 'react-intl'
+import Hidebtn from 'components/controls/Hidebtn/Hidebtn'
+
 
 @withRouter
 @connect(
@@ -60,6 +62,7 @@ export default class Wallet extends Component {
   state = {
     view: 'off',
     zeroBalance: true,
+    isVisible: false,
   }
 
   componentWillMount() {
@@ -108,9 +111,41 @@ export default class Wallet extends Component {
     })
   }
 
+  hideZeroBalance = () => {
+    const { isVisible } = this.state
+    const { items, tokens } = this.props
+
+    const data = [].concat(items, tokens)
+
+    data.forEach(item => {
+      if (item.balance === 0 && item.currency !== 'SWAP' && item.currency !== 'USDT'  && item.currency !== 'BTC' && item.currency !== 'ETH') {
+        actions.core.markCoinAsHidden(item.currency)
+      }
+    })
+
+    this.setState(state => ({
+      isVisible: !state.isVisible,
+    }))
+  }
+
+  showZeroBalance = () => {
+    const { isVisible } = this.state
+    const { items, tokens } = this.props
+
+    const data = [].concat(items, tokens)
+
+    data.forEach(item => {
+      if (item.balance === 0) {
+        actions.core.markCoinAsVisible(item.currency)
+      }
+    })
+
+    this.setState(state => ({ isVisible: !state.isVisible }))
+  }
+
   render() {
-    const { view, zeroBalance } = this.state
-    const { items, tokens, currencies, hiddenCoinsList } = this.props
+    const { view, zeroBalance, currency, balance, isVisible } = this.state
+    const { items, tokens, currencies, hiddenCoinsList, data } = this.props
     const titles = [ 'Coin', 'Name', 'Balance', 'Your Address', isMobile ? 'Send, receive, swap' :  'Actions' ]
 
     const keysSaved = localStorage.getItem(constants.localStorage.privateKeysSaved)
@@ -127,6 +162,15 @@ export default class Wallet extends Component {
           </SubTitle>
           Deposit funds to addresses below
         </PageHeadline>
+        <Hidebtn brand onClick={isVisible ? this.showZeroBalance : this.hideZeroBalance}>
+          {
+            isVisible ?
+              <FormattedMessage id="Hidebtn24" defaultMessage="Show" />
+              :
+              <FormattedMessage id="Hidebtn26" defaultMessage="Hide" />
+          }
+          <FormattedMessage id="Hidebtn28" defaultMessage=" zero balance tokens" />
+        </Hidebtn>
         <Table
           id="table-wallet"
           className={styles.wallet}

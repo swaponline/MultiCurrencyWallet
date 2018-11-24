@@ -1,0 +1,29 @@
+.Hidebtn {
+  height: 28px;
+  padding: 0 8px;
+  @include inline-block;
+  cursor: pointer;
+  line-height: 28px;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 9px;
+  border: none;
+  border-radius: 3px;
+  margin-top: 10px;
+  position: absolute;
+  z-index: 100;
+  @include no-user-select;
+  transition:
+    background-color 0.23s ease,
+    color 0.23s ease;
+}
+
+.brand {
+  background-color: #E72BB3;
+  box-shadow: 0,5px 0,5px 3px #929292;
+  color: #fff;
+
+  &:hover {
+    background-color: lighten(#E72BB3, 5%);
+  }
+}
