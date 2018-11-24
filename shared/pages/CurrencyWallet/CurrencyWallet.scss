@@ -26,7 +26,13 @@
   margin-top: 20px;
   display: flex;
   width: 220px;
-  justify-content: space-between;
+  justify-content:space-between;
+}
+.inRowru {
+  margin-top: 20px;
+  display: flex;
+  width: 250px;
+  justify-content:space-between;
 }
 
 @include media-tablet-landscape-and-lower {

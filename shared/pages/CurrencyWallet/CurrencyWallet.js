@@ -91,7 +91,6 @@ export default class CurrencyWallet extends Component {
     const seoPage = getSeoPage(location.pathname)
 
     const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true"
-
     return (
       <div className="root">
         <PageSeo
@@ -101,7 +100,13 @@ export default class CurrencyWallet extends Component {
           defaultDescription={
             `Atomic Swap Wallet allows you to manage and securely exchange ${fullName} (${currency}) with 0% fees. Based on Multi-Sig and Atomic Swap technologies.`
           } />
-        <PageHeadline styleName="title" subTitle={!!seoPage ? seoPage.h1 : `Your online ${fullName} (${currency}) web wallet with Atomic Swap.`} />
+        <PageHeadline styleName="title" subTitle={!!seoPage ? seoPage.h1 :
+          <span>
+            <FormattedMessage id="currencywallet103" defaultMessage="Your online" />
+            {fullName} ({currency})
+            <FormattedMessage id="currencywallet107" defaultMessage="web wallet with Atomic Swap." />
+          </span>
+        } />
         <h3 styleName="subtitle">
           <FormattedMessage id="CurrencyWallet95" defaultMessage="Your address: " />
           <span>{address}</span> <br />
@@ -113,12 +118,12 @@ export default class CurrencyWallet extends Component {
         {currency === 'EOS' && !eosAccountActivated && (<Button onClick={this.handleEosBuyAccount} gray>
           <FormattedMessage id="CurrencyWallet105" defaultMessage="Activate account" />
         </Button>)}
-        <div styleName="inRow">
-          <Button brand style={{ marginRight: '15px' }} onClick={this.handleWithdraw}>
+        <div styleName={`${locale}`== 'ru' ? "inRowru" : "inRow" }>
+          <Button brand onClick={this.handleWithdraw}>
             <FormattedMessage id="CurrencyWallet100" defaultMessage="Send" />
           </Button>
           <Link to={`/${locale}/${currency.toLowerCase()}`} >
-            <Button gray>
+            <Button gray style={{ marginLeftt: '15px' }}>
               <FormattedMessage id="CurrencyWallet104" defaultMessage="Exchange" />
             </Button>
           </Link>

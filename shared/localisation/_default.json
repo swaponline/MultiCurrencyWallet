@@ -4116,5 +4116,19 @@
     "files": [
       "shared/pages/Wallet/Wallet.js"
     ]
+  },
+  {
+    "id": "currencywallet103",
+    "message": "Your online",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "currencywallet107",
+    "message": "web wallet with Atomic Swap.",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
   }
 ]

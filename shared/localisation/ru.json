@@ -4112,5 +4112,19 @@
     "files": [
       "shared/pages/Wallet/Wallet.js"
     ]
+  },
+  {
+    "id": "currencywallet103",
+    "message": "Ваш Онлайн ",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "currencywallet107",
+    "message": " кошелек, основанный на технологии Atomic Swap.",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
   }
 ]
