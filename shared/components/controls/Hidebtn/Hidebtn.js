@@ -11,7 +11,7 @@ const {
   children,
   className,
   brand,
-  ...rest,
+  ...rest
 } = props
 
 const styleName = cx('Hidebtn', {
