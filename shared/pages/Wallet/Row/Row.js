@@ -127,8 +127,8 @@ export default class Row extends Component {
     })
   }
   handleSliceAddress = () => {
-    const { item: { address } } = this.props
-    if(window.innerWidth < 1080 || isMobile) {
+    const { address } = this.props;
+    if (window.innerWidth < 1120 || isMobile) {
       return address.substr(0, 6) + '...' + address.substr(address.length - 2)
     }
     else {
@@ -298,7 +298,7 @@ export default class Row extends Component {
               text={address}
               onCopy={this.handleCopyAddress}
             >
-              <td styleName="yourAddress">
+              <td styleName={currency === 'EOS' && !eosAccountActivated ? 'yourAddressWithOptions' : 'yourAddress'}>
                 {
                   !contractAddress ? (
                     <div styleName="notContractAddress">
@@ -311,20 +311,22 @@ export default class Row extends Component {
                           <FormattedMessage id="Row235" defaultMessage="Copy" />
                         </span>
                       </ReactTooltip>
-                      { currency === 'EOS' && !eosAccountActivated && (
-                        <Fragment>
-                          <br />
-                          <span styleName="notActiveLink">not activated</span>
-                        </Fragment>
-                      )
-                      }
-                      { currency === 'TLOS' && !telosAccountActivated && (
-                        <Fragment>
-                          <br />
-                          <span styleName="notActiveLink">not activated</span>
-                        </Fragment>
-                      )
-                      }
+                     
+                        { currency === 'EOS' && !eosAccountActivated && (
+                          <Fragment>
+                            <br />
+                            <span styleName="notActiveLink">not activated</span>
+                          </Fragment>
+                        )
+                        }
+                        { currency === 'TLOS' && !telosAccountActivated && (
+                          <Fragment>
+                            <br />
+                            <span styleName="notActiveLink">not activated</span>
+                          </Fragment>
+                        )
+                        }
+                     
                     </div>
                   ) : (
                     <Fragment>
@@ -333,24 +335,6 @@ export default class Row extends Component {
                     </Fragment>
                   )
                 }
-
-                <div styleName="actButton">
-                  {currency === 'EOS' && !eosAccountActivated && <button styleName="button buttonActivate" onClick={this.handleEosBuyAccount} data-tip data-for="Activate">Activate</button>}
-                </div>
-                <ReactTooltip id="Activate" type="light" effect="solid">
-                  <span>
-                    <FormattedMessage id="Row256" defaultMessage="Buy this account" />
-                  </span>
-                </ReactTooltip>
-
-                <div styleName="useButton">
-                  {
-                    currency === 'EOS' &&
-                    <button styleName="button" onClick={this.handleEosRegister} data-tip data-for="Use">
-                      <FormattedMessage id="Row263" defaultMessage="Use another" />
-                    </button>
-                  }
-                </div>
                 <ReactTooltip id="Use" type="light" effect="solid">
                   <span>
                     <FormattedMessage id="Row268" defaultMessage="Login with your existing eos account" />
@@ -361,6 +345,30 @@ export default class Row extends Component {
                     <FormattedMessage id="Row293" defaultMessage="Address copied to clipboard" />
                   </p>
                 }
+                <div styleName="activeControlButtons">
+                 <div styleName="actButton">
+                   {currency === 'EOS' && !eosAccountActivated && <button styleName="button buttonActivate" onClick={this.handleEosBuyAccount} data-tip data-for="Activate">Activate</button>}
+                 </div>
+                 <ReactTooltip id="Activate" type="light" effect="solid">
+                   <span>
+                     <FormattedMessage id="Row256" defaultMessage="Buy this account" />
+                   </span>
+                 </ReactTooltip>
+
+                 <div styleName="useButton"> 
+                   {
+                     currency === 'EOS' &&
+                     <button styleName="button" onClick={this.handleEosRegister} data-tip data-for="Use">
+                       <FormattedMessage id="Row263" defaultMessage="Use another" />
+                     </button>
+                   }
+                 </div>
+                 <ReactTooltip id="Use" type="light" effect="solid">
+                   <span>
+                     <FormattedMessage id="Row268" defaultMessage="Login with your existing eos account" />
+                   </span>
+                 </ReactTooltip>
+                </div>
               </td>
             </CopyToClipboard>
           </Fragment>
@@ -387,6 +395,11 @@ export default class Row extends Component {
             }
             {
               isMobile && (currency === 'EOS' && !eosAccountActivated && <button styleName="button buttonActivate" onClick={this.handleEosBuyAccount} data-tip data-for="Activate">Activate</button>)
+            }
+            { isMobile &&  (currency === 'EOS' &&
+              <button styleName="button buttonUseAnother" onClick={this.handleEosRegister} data-tip data-for="Use">
+                <FormattedMessage id="Row263" defaultMessage="Use another" />
+              </button>)
             }
           </div>
         </td>

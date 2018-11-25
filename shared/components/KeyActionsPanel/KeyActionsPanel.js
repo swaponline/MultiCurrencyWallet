@@ -3,6 +3,9 @@ import PropTypes from 'prop-types'
 
 import { connect } from 'redaction'
 import actions from 'redux/actions'
+import styles from './KeyActionsPanel.scss'
+
+import CSSModules from 'react-css-modules'
 
 import { constants } from 'helpers'
 import { WithdrawButton } from 'components/controls'
@@ -10,6 +13,7 @@ import { FormattedMessage } from 'react-intl'
 
 
 @connect(({ core: { hiddenCoinsList } }) => ({ hiddenCoinsList }))
+@CSSModules(styles, { allowMultiple: true })
 export default class KeyActionsPanel extends Component {
 
   static propTypes = {
@@ -40,7 +44,7 @@ export default class KeyActionsPanel extends Component {
     const { hiddenCoinsList } = this.props
 
     return (
-      <div>
+      <div styleName="WithdrawButtonContainer">
         { process.env.TESTNET &&
         <WithdrawButton onClick={this.handleClear} >
           <FormattedMessage id="KeyActionsPanel43" defaultMessage="Exit" />

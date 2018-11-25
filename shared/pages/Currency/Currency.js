@@ -9,6 +9,9 @@ import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import Table from 'components/tables/Table/Table'
 import Toggle from 'components/controls/Toggle/Toggle'
 
+import cssModules from 'react-css-modules'
+import styles from './Currency.scss'
+
 import Row from './Row/Row'
 import actions from 'redux/actions'
 
@@ -16,6 +19,7 @@ import { withRouter } from 'react-router'
 import { FormattedMessage } from 'react-intl'
 
 
+@cssModules(styles)
 @withRouter
 @connect(({ core: { hiddenCoinsList }, user: { ethData, btcData, ltcData, tokensData, eosData, nimData, usdtData } }) => ({
   tokens: Object.keys(tokensData).map(k => (tokensData[k])),
@@ -92,7 +96,7 @@ export default class Currency extends Component {
     const { balance } = this.getCoin()
 
     return (
-      <section>
+      <section styleName="currencySection">
         <PageHeadline>
           <Fragment>
             <Title>{currency}</Title>
@@ -105,7 +109,7 @@ export default class Currency extends Component {
           <Toggle onChange={this.handleInWalletChange} checked={this.isInWallet()} />Added to Wallet
         </PageHeadline>
         <Table
-          titles={['Coin', 'Exchange', '']}
+          titles={['', '']}
           rows={this.getRows()}
           rowRender={(row, index) => (
             <Row key={index} {...row} />
