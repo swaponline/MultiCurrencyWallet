@@ -20,7 +20,7 @@ const login = (privateKey) => {
     address,
   }
   console.info('Logged in with Stellar', data)
-  reducers.user.setAuthData({ name: 'xlm', data })
+  reducers.user.setAuthData({ name: 'xlmData', data })
 }
 
 const initAccount = (address) => {
@@ -34,16 +34,19 @@ const initAccount = (address) => {
 }
 
 const getBalance = () => {
-  const { user: { xlm: { address } } } = getState()
+  const { user: { xlmData: { address } } } = getState()
+
   if (typeof address !== 'string') {
-    return Promise.reject(false)
+    return
   }
-  console.log('address', address)
+
   return server.loadAccount(address)
     .then(({ balances }) => {
-      console.log('xlm Balance: ', balances)
-      reducers.user.setBalance({ name: 'xlmData', amount: balances })
+
+      reducers.user.setBalance({ name: 'xlmData', amount: balances || 0 })
       return balances
+    }).catch(error => {
+      reducers.user.setBalance({ name: 'xlmData', amount: 0 })
     })
 }
 

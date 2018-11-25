@@ -39,7 +39,7 @@ export default class Row extends Component {
     this.setState({
       tradeAllowed: !!currencies.find(c => c.value === currency.toLowerCase()),
     })
-    
+
     this.handleCheckBalance()
   }
 
@@ -65,23 +65,19 @@ export default class Row extends Component {
   }
 
   handleReloadBalance = async () => {
-    const { isBalanceFetching } = this.state
-
-    if (isBalanceFetching) {
-      return null
-    }
+    const { currency } = this.props
 
     this.setState({
       isBalanceFetching: true,
     })
 
-    const { currency } = this.props
+    const balance = await actions[currency.toLowerCase()].getBalance(currency.toLowerCase())
 
-    await actions[currency.toLowerCase()].getBalance(currency.toLowerCase())
-
-    this.setState(() => ({
-      isBalanceFetching: false,
-    }))
+    if (!balance) {
+      this.setState(() => ({
+        isBalanceFetching: false,
+      }))
+    }
   }
 
   handleTouch = (e) => {
