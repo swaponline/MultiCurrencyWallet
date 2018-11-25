@@ -3,7 +3,7 @@ export default {
   btc: `${process.env.ENTRY}:btc:privateKey`,
   bch: `${process.env.ENTRY}:bch:privateKey`,
   ltc: `${process.env.ENTRY}:ltc:privateKey`,
-  xlm: `${process.env.ENTRY}:xml:privateKey`,
+  xlm: `${process.env.ENTRY}:xlm:privateKey`,
   eosPrivateKey: `${process.env.ENTRY}:eos:privateKey`,
   eosPublicKey: `${process.env.ENTRY}:eos:publicKey`,
   eosAccount: `${process.env.ENTRY}:eos:account`,

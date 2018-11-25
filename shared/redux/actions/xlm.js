@@ -1,17 +1,17 @@
 import sdk from 'stellar-sdk'
 import { getState } from 'redux/core'
-import { constants, xml } from 'helpers'
+import { constants, xlm } from 'helpers'
 import reducers from 'redux/core/reducers'
 
 
-const server = xml.initServer()
+const server = xlm.initServer()
 
 
 const login = (privateKey) => {
   const keypair = privateKey
     ? sdk.Keypair.fromSecret(privateKey)
     : sdk.Keypair.random()
-  localStorage.setItem(constants.privateKeyNames.xml, keypair.secret())
+  localStorage.setItem(constants.privateKeyNames.xlm, keypair.secret())
   const account = new sdk.Account(keypair.publicKey(), '1')
   const address = keypair.publicKey()
   const data = {
@@ -20,7 +20,7 @@ const login = (privateKey) => {
     address,
   }
   console.info('Logged in with Stellar', data)
-  reducers.user.setAuthData({ name: 'xmlData', data })
+  reducers.user.setAuthData({ name: 'xlm', data })
 }
 
 const initAccount = (address) => {
@@ -34,15 +34,15 @@ const initAccount = (address) => {
 }
 
 const getBalance = () => {
-  const { user: { xmlData: { address } } } = getState()
+  const { user: { xlm: { address } } } = getState()
   if (typeof address !== 'string') {
     return Promise.reject(false)
   }
   console.log('address', address)
   return server.loadAccount(address)
     .then(({ balances }) => {
-      console.log('XML Balance: ', balances)
-      reducers.user.setBalance({ name: 'xmlData', amount: balances })
+      console.log('xlm Balance: ', balances)
+      reducers.user.setBalance({ name: 'xlmData', amount: balances })
       return balances
     })
 }
