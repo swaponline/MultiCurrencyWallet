@@ -71,6 +71,10 @@ export default class App extends React.Component {
     if (!localStorage.getItem(constants.localStorage.demoMoneyReceived)) {
       actions.user.getDemoMoney()
     }
+
+    if (process.env.LOCAL !== 'local') {
+      actions.pushNotification.initializeFirebase()
+    }
   }
 
   componentWillUnmount() {
