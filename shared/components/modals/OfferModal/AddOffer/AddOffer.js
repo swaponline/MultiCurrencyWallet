@@ -363,9 +363,17 @@ export default class AddOffer extends Component {
       || sellAmount > balance || sellAmount < minAmount[sellCurrency]
       || this.isEthOrERC20()
 
-    linked.sellAmount.check((value) => value > minAmount[sellCurrency], `Amount must be greater than ${minAmount[sellCurrency]} `)
-    linked.sellAmount.check((value) => value <= balance, `Amount must be less than your balance `)
-
+    linked.sellAmount.check((value) => Number(value) > minAmount[sellCurrency],
+      <span style={{ position: 'relative', marginRight: '44px' }}>
+        <FormattedMessage id="transaction368" defaultMessage="Amount must be greater than " />
+        {minAmount[sellCurrency]}
+      </span>
+    )
+    linked.sellAmount.check((value) => Number(value) <= balance,
+      <span style={{ position: 'relative', marginRight: '44px' }}>
+        <FormattedMessage id="transaction376" defaultMessage="Amount must be less than your balance " />
+      </span>
+    )
     return (
       <div styleName="wrapper addOffer">
         { this.isEthOrERC20() &&

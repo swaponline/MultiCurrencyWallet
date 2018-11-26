@@ -89,7 +89,7 @@ export default class WithdrawModal extends React.Component {
     const isDisabled = !address || !amount || isShipped || Number(amount) < minAmount[data.currency.toLowerCase()] || Number(amount) > balance
 
     if (Number(amount) !== 0) {
-      linked.amount.check((value) => Number(value) < balance, `Amount must be less than your balance`)
+      linked.amount.check((value) => Number(value) < balance, `Amount must be less than your balance `)
       linked.amount.check((value) => Number(value) > minAmount[data.currency.toLowerCase()], `Amount must be greater than ${minAmount[data.currency.toLowerCase()]} `)
     }
 
