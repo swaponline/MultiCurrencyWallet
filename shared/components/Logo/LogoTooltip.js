@@ -6,7 +6,7 @@ import ReactTooltip from 'react-tooltip'
 import { FormattedMessage, injectIntl } from 'react-intl'
 
 
-const LogoTooltip = (props) => {
+const LogoTooltip = (props) => ({
   return (
     <Fragment>
       <Logo withLink />
@@ -15,5 +15,5 @@ const LogoTooltip = (props) => {
       </ReactTooltip>
     </Fragment>
   )
-}
+})
 export default LogoTooltip

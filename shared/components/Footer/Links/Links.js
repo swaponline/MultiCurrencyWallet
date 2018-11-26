@@ -12,7 +12,7 @@ const link = [
     { link: links.career, title: <FormattedMessage id="Careers" defaultMessage="Careers" />, header:   <FormattedMessage id="Company" defaultMessage="Company" /> },
     { link: links.button, title: <FormattedMessage id="Useswapbutton" defaultMessage="Use swap.button" /> },
     { link: links.about, title: <FormattedMessage id="AboutUS14" defaultMessage="About Us" /> },
-    { link: links.extension, title: <FormattedMessage id="ChromeExtension" defaultMessage="Swap.Online Chrome Extension" />},
+    { link: links.extension, title: <FormattedMessage id="ChromeExtension" defaultMessage="Swap.Online Chrome Extension" /> },
   ],
   [
     { link: links.concept, title: <FormattedMessage id="Concept" defaultMessage="Concept (PDF)" />,

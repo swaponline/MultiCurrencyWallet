@@ -202,7 +202,7 @@ export default class Row extends Component {
                             <FormattedMessage id="Row202" defaultMessage="SELL" />
                             :
                             <FormattedMessage id="Row204" defaultMessage="BUY" />
-                           }
+                          }
                           {' '}
                           {amount.toFixed(4)}{' '}{main}
                           <br />

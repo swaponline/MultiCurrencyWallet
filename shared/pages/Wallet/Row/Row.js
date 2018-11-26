@@ -289,7 +289,10 @@ export default class Row extends Component {
               }
 
               <div styleName="actButton">
-                {currency === 'EOS' && !eosAccountActivated && <button styleName="button buttonActivate" onClick={this.handleEosBuyAccount} data-tip data-for="Activate">Activate</button>}
+                {currency === 'EOS' && !eosAccountActivated &&
+                <button styleName="button buttonActivate" onClick={this.handleEosBuyAccount} data-tip data-for="Activate">
+                  <FormattedMessage id="Row294" defaultMessage="Activatet" />
+                </button>}
               </div>
               <ReactTooltip id="Activate" type="light" effect="solid">
                 <span>

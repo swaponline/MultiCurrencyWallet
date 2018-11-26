@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl'
 
 
 const title = [
-  <FormattedMessage id="fee9" defaultMessage="Miner fee" />
+  <FormattedMessage id="fee9" defaultMessage="Miner fee" />,
 ]
 
 const Fee = ({ amount, currency }) => (

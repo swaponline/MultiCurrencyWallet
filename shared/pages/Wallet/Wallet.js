@@ -115,11 +115,11 @@ export default class Wallet extends Component {
       <FormattedMessage id="Wallet114" defaultMessage="Coin" />,
       <FormattedMessage id="Wallet115" defaultMessage="Name" />,
       <FormattedMessage id="Wallet116" defaultMessage="Balance" />,
-      <FormattedMessage id="Wallet117" defaultMessage="Your Address" /> ,
-       isMobile ?
-       <FormattedMessage id="Wallet118" defaultMessage="Send, receive, swap" />
-       :
-       <FormattedMessage id="Wallet119" defaultMessage="Actions" />
+      <FormattedMessage id="Wallet117" defaultMessage="Your Address" />,
+      isMobile ?
+        <FormattedMessage id="Wallet118" defaultMessage="Send, receive, swap" />
+        :
+        <FormattedMessage id="Wallet119" defaultMessage="Actions" />,
     ]
 
     const keysSaved = localStorage.getItem(constants.localStorage.privateKeysSaved)

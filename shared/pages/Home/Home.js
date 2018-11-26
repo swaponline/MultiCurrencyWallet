@@ -47,7 +47,7 @@ export default class Home extends Component {
       sellCurrency: sell || sellCurrency || 'btc',
       invalidPair: false,
       isShow: false,
-      exchange: `/${locale}${links.exchange}`
+      exchange: `/${locale}${links.exchange}`,
     }
   }
 
@@ -129,7 +129,7 @@ export default class Home extends Component {
 
     this.setState(() => ({
       isVisible: false,
-      isShow: true
+      isShow: true,
     }))
     history.replace(filter.toLowerCase())
   }
@@ -137,7 +137,7 @@ export default class Home extends Component {
   render() {
     const { match: { params: { orderId } }, history: { location: { pathname } }, currencies, history, filter, intl: { locale } } = this.props
     const { buyCurrency, sellCurrency, invalidPair, isShow, exchange } = this.state
-console.log('exchange', exchange)
+
     return (
       <section style={{ position: 'relative', width: '100%' }}>
         <PageHeadline>
