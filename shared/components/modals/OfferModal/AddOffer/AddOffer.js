@@ -145,7 +145,7 @@ export default class AddOffer extends Component {
     sellCurrency = value
 
     await this.checkBalance(sellCurrency)
-    
+
     await this.updateExchangeRate(sellCurrency, buyCurrency)
     const { exchangeRate } = this.state
     buyAmount = new BigNumber(String(sellAmount) || 0).multipliedBy(exchangeRate)
@@ -354,6 +354,21 @@ export default class AddOffer extends Component {
     this.setState({ manualRate: value })
   }
 
+  switching = async ({ value }) => {
+    const { sellCurrency, buyCurrency } = this.state
+
+    await this.checkBalance(buyCurrency)
+
+    await this.updateExchangeRate(sellCurrency, buyCurrency)
+
+    const { exchangeRate } = this.state
+
+    this.setState({
+      sellCurrency: buyCurrency,
+      buyCurrency: sellCurrency,
+    })
+  }
+
   render() {
     const { currencies, tokenItems } = this.props
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency,
@@ -390,6 +405,7 @@ export default class AddOffer extends Component {
           changeBalance={this.changeBalance}
           balance={balance}
           currency={sellCurrency}
+          switching={this.switching}
         />
         <SelectGroup
           label="Buy"
