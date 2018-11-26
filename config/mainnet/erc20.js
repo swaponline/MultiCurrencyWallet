@@ -189,4 +189,9 @@ export default {
     decimals: 16,
     fullName: 'CGCOINS',
   },
+  dov: {
+    address: '0xac3211a5025414Af2866FF09c23FC18bc97e79b1',
+    decimals: 18,
+    fullName: 'DOVU',
+  },
 }
