@@ -95,6 +95,10 @@ export default class WithdrawModal extends React.Component {
 
     return (
       <Modal name={name} title={`Withdraw ${data.currency.toUpperCase()}`}>
+        <p style={{ color: 'red' }}>
+          <FormattedMessage id="Withdrow108" defaultMessage="Make sure that the wallet where you send the funds supports " />
+          {data.currency.toUpperCase()}!
+        </p>
         <p
           style={{ fontSize: '16px' }}
         >
