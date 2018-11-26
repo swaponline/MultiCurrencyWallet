@@ -11,7 +11,7 @@ const Select = ({ balance, currency, changeBalance }) => (
       {message => <FieldLabel inRow >{message}</FieldLabel>}
     </FormattedMessage>
     <div styleName="groupField">
-      <p>{currency.toUpperCase()} { balance ? parseFloat(balance).toFixed(3) : 0.00 }</p>
+      <p>{currency.toUpperCase()} { balance ? parseFloat(balance).toFixed(5) : 0.00 }</p>
       <div styleName="cell" onClick={() => changeBalance(balance / 10)}>
         <FormattedMessage id="Select15" defaultMessage="Sell " />
         1/10

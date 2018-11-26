@@ -16,8 +16,8 @@ import { FormattedMessage } from 'react-intl'
 
 
 const minAmount = {
-  eth: 0.05,
-  btc: 0.004,
+  eth: 0.005,
+  btc: 0.001,
   eos: 1,
   tlos: 1,
   noxon: 1,
@@ -95,6 +95,10 @@ export default class WithdrawModal extends React.Component {
 
     return (
       <Modal name={name} title={`Withdraw ${data.currency.toUpperCase()}`}>
+        <p style={{ color: 'red' }}>
+          <FormattedMessage id="Withdrow108" defaultMessage="Make sure that the wallet where you send the funds supports " />
+          {data.currency.toUpperCase()}!
+        </p>
         <p
           style={{ fontSize: '16px' }}
         >
@@ -110,6 +114,7 @@ export default class WithdrawModal extends React.Component {
         <p style={{ marginTop: '20px' }}>
           <FormattedMessage id="Withdrow113" defaultMessage="Your balance: " />
           {Number(balance).toFixed(5)}
+          {' '}
           {data.currency.toUpperCase()}
         </p>
         <FieldLabel inRow>

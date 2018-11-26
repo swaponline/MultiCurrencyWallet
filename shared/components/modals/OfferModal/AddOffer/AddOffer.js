@@ -25,8 +25,8 @@ import { isNumberValid, isNumberStringFormatCorrect, mathConstants } from 'helpe
 
 
 const minAmount = {
-  eth: 0.05,
-  btc: 0.004,
+  eth: 0.005,
+  btc: 0.001,
   ltc: 0.1,
   eos: 1,
   noxon: 1,
@@ -145,7 +145,7 @@ export default class AddOffer extends Component {
     sellCurrency = value
 
     await this.checkBalance(sellCurrency)
-    
+
     await this.updateExchangeRate(sellCurrency, buyCurrency)
     const { exchangeRate } = this.state
     buyAmount = new BigNumber(String(sellAmount) || 0).multipliedBy(exchangeRate)
@@ -364,15 +364,15 @@ export default class AddOffer extends Component {
       || this.isEthOrERC20()
 
     linked.sellAmount.check((value) => value > minAmount[sellCurrency], `Amount must be greater than ${minAmount[sellCurrency]} `)
-    linked.sellAmount.check((value) => value <= balance, `Amount must be less than your balance`)
+    linked.sellAmount.check((value) => value <= balance, `Amount must be less than your balance `)
 
     return (
       <div styleName="wrapper addOffer">
         { this.isEthOrERC20() &&
           <span styleName="error">
-            <FormattedMessage id="transaction27" defaultMessage="For a swap, you need" />
+            <FormattedMessage id="transaction27" defaultMessage="For a swap, you need " />
             {minAmount.eth}
-            <FormattedMessage id="transaction27" defaultMessage="ETH on your balance" />
+            <FormattedMessage id="transaction27" defaultMessage=" ETH on your balance" />
           </span>
         }
         <SelectGroup
