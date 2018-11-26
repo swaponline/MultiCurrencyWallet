@@ -27,17 +27,10 @@ import { FormattedMessage } from 'react-intl'
     user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, usdtData, ltcData },
     currencies: { items: currencies },
   }) => ({
-    tokens: Object.keys(tokensData).map(k => (tokensData[k])),
-    items: [btcData, ethData, eosData, telosData, bchData, ltcData, usdtData /* nimData */ ].map((data) => ({
-      address: data.address,
-      balance: data.balance,
-      currency: data.currency,
-      fullName: data.fullName,
-      unconfirmedBalance: data.unconfirmedBalance,
-      isBalanceFetched: data.isBalanceFetched,
-      privateKey: data.privateKey,
-      publicKey: data.publicKey,
-    })),
+    tokens: Object.keys(tokensData).map(k => (tokensData[k].currency)),
+    items: [btcData, ethData, eosData, telosData, bchData, ltcData, usdtData /* nimData */ ].map((data) => (
+      data.currency
+    )),
     currencies,
     hiddenCoinsList,
   })
@@ -92,16 +85,6 @@ export default class Wallet extends Component {
     });
   }
 
-  componentWillReceiveProps({ items, tokens }) {
-    const data = [].concat(items, tokens)
-
-    data.forEach(item => {
-      if (item.balance > 0) {
-        actions.analytics.balanceEvent(item.currency, item.balance)
-      }
-    })
-  }
-
   changeView = (view) => {
     this.setState({
       view,
@@ -131,9 +114,9 @@ export default class Wallet extends Component {
           id="table-wallet"
           className={styles.wallet}
           titles={titles}
-          rows={[...items, ...tokens].filter(coin => !hiddenCoinsList.includes(coin.currency))}
+          rows={[...items, ...tokens].filter(currency => !hiddenCoinsList.includes(currency))}
           rowRender={(row, index, selectId, handleSelectId) => (
-            <Row key={row.currency} {...row} currencies={currencies} hiddenCoinsList={hiddenCoinsList} selectId={selectId} index={index} handleSelectId={handleSelectId} />
+            <Row key={row} currency={row} currencies={currencies} hiddenCoinsList={hiddenCoinsList} selectId={selectId} index={index} handleSelectId={handleSelectId} />
           )}
         />
         <KeyActionsPanel />
