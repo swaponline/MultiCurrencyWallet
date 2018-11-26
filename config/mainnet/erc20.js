@@ -189,4 +189,10 @@ export default {
     decimals: 16,
     fullName: 'CGCOINS',
   },
+  xbx: {
+    address: '0x2c745664FB4e9528fB32487D834e4aACffF1F027',
+    decimals: 18,
+    fullName: 'Bitex Coin',
+  },
+
 }
