@@ -1,11 +1,18 @@
 .groupField {
   width: 100%;
   display: inline-flex;
+  vertical-align: center;
   height: 60px;
   margin-bottom: 10px;
   box-shadow: rgba(#000, 0.08) 0 3px 9px 0;
   border-radius: 6px;
   text-align: center;
+}
+
+.textUsd {
+  line-height: 60px;
+  padding-left: 25px;
+  padding-right: 25px;
 }
 
 .inputRoot {

@@ -1,6 +1,14 @@
 .button {
   margin-top: 20px;
+  width: 45%;
+  font-size: 14px;
 }
+
+.rowBtn {
+  display: flex;
+  justify-content: space-around;
+}
+
 
 .section {
   display: flex;
@@ -8,10 +16,33 @@
   flex-wrap: wrap;
 }
 
-.block {
+.block, .blockVideo {
   width: 400px;
 }
 
 .error {
   color: red;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+}
+
+.flipButton {
+  transform: rotate(90deg);
+  display: inline-block;
+  margin: 0 0 0 calc(50% - 12px);
+  padding: 0;
+}
+
+@include media-mobile {
+  .section {
+    margin-top: 20px;
+    justify-content: center;
+  }
+
+  .blockVideo {
+    display: none;
+  }
 }

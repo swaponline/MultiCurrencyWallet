@@ -8,7 +8,7 @@ import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import CurrencySelect from 'components/ui/CurrencySelect/CurrencySelect'
 
 // TODO to split data and view this component
-const SelectGroup = ({ selectedValue, onSelect, currencies, placeholder, label, disabled, className, inputValueLink }) => (
+const SelectGroup = ({ selectedValue, onSelect, usd, currencies, placeholder, label, disabled, className, inputValueLink }) => (
   <div>
     <FieldLabel inRow>{label}</FieldLabel>
     <div styleName="groupField" className={className}>
@@ -21,6 +21,7 @@ const SelectGroup = ({ selectedValue, onSelect, currencies, placeholder, label, 
         pattern="0-9."
         disabled={disabled}
       />
+      {usd && <p styleName="textUsd" >{usd}$</p>}
       <CurrencySelect
         styleName="currencySelect"
         selectedValue={selectedValue}

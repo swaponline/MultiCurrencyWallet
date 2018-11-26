@@ -12,7 +12,7 @@ import { BigNumber } from 'bignumber.js'
 import { Redirect } from 'react-router-dom'
 
 import SelectGroup from './SelectGroup/SelectGroup'
-import { Button, Toggle } from 'components/controls'
+import { Button, Toggle, Flip } from 'components/controls'
 
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
@@ -56,6 +56,8 @@ export default class PartialClosure extends Component {
     this.timer = setInterval(() => {
       this.setOrders()
     }, 1000)
+
+    this.getUsdBalance()
   }
 
   componentWillUnmount() {
@@ -81,6 +83,21 @@ export default class PartialClosure extends Component {
     return {
       filteredOrders,
     }
+  }
+
+  getUsdBalance = async () => {
+    const { haveCurrency, getCurrency, haveAmount, getAmount } = this.state
+
+    const exHaveRate = await actions.user.getExchangeRate(haveCurrency, 'usd')
+    const exGetRate = await actions.user.getExchangeRate(getCurrency, 'usd')
+
+    const haveUsd = ((haveAmount || 0) * Number(exHaveRate)).toFixed(2)
+    const getUsd = ((getAmount || 0) * Number(exGetRate)).toFixed(2)
+
+    this.setState(() => ({
+      haveUsd,
+      getUsd,
+    }))
   }
 
   sendRequest = () => {
@@ -141,7 +158,7 @@ export default class PartialClosure extends Component {
       getAmount,
     }))
 
-    return getAmount.isLessThan(maxAmount)
+    return getAmount.isLessThanOrEqualTo(maxAmount)
   }
 
   setAmount = (value) => {
@@ -203,10 +220,17 @@ export default class PartialClosure extends Component {
     }), this.setOrders())
   }
 
+  handleFlipCurrency = () => {
+    this.setState(() => ({
+      haveCurrency: this.state.getCurrency,
+      getCurrency: this.state.haveCurrency,
+    }))
+  }
+
   render() {
     const { currencies } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect,
-      orderId, isDeclinedOffer, isFetching, maxAmount } = this.state
+      orderId, isDeclinedOffer, isFetching, maxAmount, getUsd, haveUsd } = this.state
 
     const linked = Link.all(this, 'haveAmount', 'getAmount')
 
@@ -218,7 +242,7 @@ export default class PartialClosure extends Component {
       <Fragment>
         <PageHeadline subTitle="Partial closure offers" />
         <div styleName="section">
-          <div styleName="block">
+          <div styleName="blockVideo">
             <iframe
               title="swap online video"
               width="560"
@@ -234,20 +258,27 @@ export default class PartialClosure extends Component {
               inputValueLink={linked.haveAmount.pipe(this.setAmount)}
               selectedValue={haveCurrency}
               onSelect={this.handleSetHaveValue}
-              label="You have"
+              label="You sell"
               placeholder="Enter amount"
               currencies={currencies}
+              usd={haveUsd}
             />
-            <p>Max amount for offer: {maxAmount}{' '}{getCurrency.toUpperCase()}</p>
+            <Flip onClick={this.handleFlipCurrency} styleName="flipButton" />
             <SelectGroup
               inputValueLink={linked.getAmount}
               selectedValue={getCurrency}
               onSelect={this.handleSetGetValue}
-              label="You get"
+              label="You buy"
               disabled
+              usd={getUsd}
               currencies={currencies}
             />
-            {isNonOffers && (<p styleName="error">No offers </p>)}
+            <p>Max amount for offer: {maxAmount}{' '}{getCurrency.toUpperCase()}</p>
+            {isNonOffers && (
+              <p styleName="error">
+                No orders found, try to reduce the amount
+              </p>
+            )}
             {isDeclinedOffer && (<p styleName="error">Offer is declined</p>)}
             {
               isFetching && (
@@ -257,9 +288,14 @@ export default class PartialClosure extends Component {
                 </span>
               )
             }
-            <Button styleName="button" brand fullWidth onClick={this.sendRequest} disabled={isNonOffers}>
-              Start
-            </Button>
+            <div styleName="rowBtn">
+              <Button styleName="button" brand onClick={this.sendRequest} disabled={isNonOffers}>
+                Exchange now
+              </Button>
+              <Button styleName="button" gray onClick={this.sendRequest} >
+                Show order book
+              </Button>
+            </div>
           </div>
         </div>
       </Fragment>
