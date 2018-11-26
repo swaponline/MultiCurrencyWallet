@@ -30,7 +30,7 @@ const WithdrawButton = (props) => {
   WithdrawButton.propTypes = {
     onClick: PropTypes.func.isRequired,
     className: PropTypes.string,
-    disabled: PropTypes.boolб
+    disabled: PropTypes.bool,
   }
 }
 export default CSSModules(WithdrawButton, styles, { allowMultiple: true })

@@ -59,7 +59,7 @@ export default class UserTooltip extends Component {
       <div styleName="column" >
         { feeds.length < 3  ? (
           feeds.map(row => {
-            const { request, content: { buyAmount, buyCurrency, sellAmount, sellCurrency }, id, peer: ownerPeer, } = row
+            const { request, content: { buyAmount, buyCurrency, sellAmount, sellCurrency }, id, peer: ownerPeer } = row
 
             return (
               mePeer === ownerPeer &&

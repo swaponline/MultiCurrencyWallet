@@ -245,7 +245,6 @@ export default class EthToBtc extends Component {
 
                     <br />
                     <br />
-
                     {
                       flow.step === 3 && (
                         <Fragment>
@@ -259,7 +258,6 @@ export default class EthToBtc extends Component {
                   </Fragment>
                 )
               }
-
               {
                 flow.step === 4 && !flow.isBalanceEnough && !flow.isBalanceFetching && (
                   <Fragment>

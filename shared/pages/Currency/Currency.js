@@ -99,7 +99,7 @@ export default class Currency extends Component {
           <Fragment>
             <Title>{currency}</Title>
             <SubTitle>{currency.toUpperCase()}
-              <FormattedMessage id="Currency102" defaultMessage="Trade"/>
+              <FormattedMessage id="Currency102" defaultMessage="Trade" />
             </SubTitle>
           </Fragment>
           <div>
@@ -113,7 +113,7 @@ export default class Currency extends Component {
           titles={[
             <FormattedMessage id="Coin113" defaultMessage="Coin" />,
             <FormattedMessage id="Exchange113" defaultMessage="Exchange" />,
-            ''
+            '',
           ]}
           rows={this.getRows()}
           rowRender={(row, index) => (

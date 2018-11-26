@@ -100,7 +100,9 @@ export default class CurrencyWallet extends Component {
           defaultDescription={
             `Atomic Swap Wallet allows you to manage and securely exchange ${fullName} (${currency}) with 0% fees. Based on Multi-Sig and Atomic Swap technologies.`
           } />
-        <PageHeadline styleName="title" subTitle={!!seoPage ? seoPage.h1 :
+        <PageHeadline
+          styleName="title"
+          subTitle={!!seoPage ? seoPage.h1 :
           <span>
             <FormattedMessage id="currencywallet103" defaultMessage="Your online" />
             {fullName} ({currency})
@@ -110,15 +112,15 @@ export default class CurrencyWallet extends Component {
         <h3 styleName="subtitle">
           <FormattedMessage id="CurrencyWallet95" defaultMessage="Your address: " />
           <span>{address}</span> <br />
-          <FormattedMessage id="CurrencyWallet107" defaultMessage= "Your" />
+          <FormattedMessage id="CurrencyWallet107" defaultMessage="Your" />
           {fullName}
-          <FormattedMessage id="CurrencyWallet110" defaultMessage= "balance" />
+          <FormattedMessage id="CurrencyWallet110" defaultMessage="balance" />
            : {balance}{' '}{currency.toUpperCase()}
         </h3>
         {currency === 'EOS' && !eosAccountActivated && (<Button onClick={this.handleEosBuyAccount} gray>
           <FormattedMessage id="CurrencyWallet105" defaultMessage="Activate account" />
         </Button>)}
-        <div styleName={`${locale}`== 'ru' ? "inRowru" : "inRow" }>
+        <div styleName={`${locale}` === 'ru' ? 'inRowru' : 'inRow'}>
           <Button brand onClick={this.handleWithdraw}>
             <FormattedMessage id="CurrencyWallet100" defaultMessage="Send" />
           </Button>
@@ -132,13 +134,17 @@ export default class CurrencyWallet extends Component {
         <h2 style={{ marginTop: '20px' }} >
           <FormattedMessage id="CurrencyWallet128" defaultMessage="History your transactions" />
         </h2>
-        {txHistory && (<Table titles={[
-          <FormattedMessage id="Coin130" defaultMessage="Coin" />,
-          <FormattedMessage id="Status130" defaultMessage="Status" />,
-          <FormattedMessage id="Statement130" defaultMessage="Statement" />,
-          <FormattedMessage id="Amount130" defaultMessage="Amount" />
-        ]}
-        rows={txHistory}styleName="table" rowRender={(row) => (<Row key={row.hash} {...row} />)} />)}
+        {txHistory && (<Table
+          titles={[
+            <FormattedMessage id="Coin130" defaultMessage="Coin" />,
+            <FormattedMessage id="Status130" defaultMessage="Status" />,
+            <FormattedMessage id="Statement130" defaultMessage="Statement" />,
+            <FormattedMessage id="Amount130" defaultMessage="Amount" />,
+          ]}
+          rows={txHistory}
+          styleName="table"
+          rowRender={(row) => (<Row key={row.hash} {...row} />)}
+        />)}
       </div>
     )
   }

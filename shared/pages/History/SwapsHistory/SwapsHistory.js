@@ -18,9 +18,9 @@ export default class SwapsHistory extends PureComponent {
       <FormattedMessage id="SwapHisrory18" defaultMessage="Exchange rate" />,
       <FormattedMessage id="SwapHisrory19" defaultMessage="Status refund" />,
       <FormattedMessage id="SwapHisrory20" defaultMessage="Status order" />,
-      <FormattedMessage id="SwapHisrory211" defaultMessage="Lock time" /> ,
-      <FormattedMessage id="SwapHisrory22" defaultMessage="Link" />
-     ]
+      <FormattedMessage id="SwapHisrory211" defaultMessage="Lock time" />,
+      <FormattedMessage id="SwapHisrory22" defaultMessage="Link" />,
+    ]
 
     if (orders === null || orders.length === 0) {
       return null

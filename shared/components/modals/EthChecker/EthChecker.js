@@ -14,7 +14,7 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 
 
 @injectIntl
-@CSSModules( styles)
+@CSSModules(styles)
 export default class EthChecker extends Component {
   render() {
 

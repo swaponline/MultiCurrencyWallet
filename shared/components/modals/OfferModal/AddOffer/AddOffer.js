@@ -365,8 +365,8 @@ export default class AddOffer extends Component {
 
 
     linked.sellAmount.check((value) => value > minAmount[sellCurrency],
-    <span> <FormattedMessage id="add367" defaultMessage="Amount must be greater than" /> {minAmount[sellCurrency]} </span>)
-    linked.sellAmount.check((value) => value <= balance, <FormattedMessage id="add368" defaultMessage="Amount must be less than your balance" /> )
+      <span> <FormattedMessage id="add367" defaultMessage="Amount must be greater than" /> {minAmount[sellCurrency]} </span>)
+    linked.sellAmount.check((value) => value <= balance, <FormattedMessage id="add368" defaultMessage="Amount must be less than your balance" />)
 
     return (
       <div styleName="wrapper addOffer">

@@ -30,7 +30,7 @@ export default class ShowMoreCoins extends Component {
     const titles = [
       <FormattedMessage id="Coin" defaultMessage="Coin" />,
       <FormattedMessage id="Name" defaultMessage="Name" />,
-      <FormattedMessage id="Actions" defaultMessage="Actions" />
+      <FormattedMessage id="Actions" defaultMessage="Actions" />,
     ]
 
     return (

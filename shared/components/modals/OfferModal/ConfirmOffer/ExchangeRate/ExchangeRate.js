@@ -9,7 +9,7 @@ import { FormattedMessage } from 'react-intl'
 
 
 const title = [
-  <FormattedMessage id="ExchangeRate12" defaultMessage="Exchange Rate" />
+  <FormattedMessage id="ExchangeRate12" defaultMessage="Exchange Rate" />,
 ]
 
 const ExchangeRate = ({ value, buyCurrency, sellCurrency }) => (

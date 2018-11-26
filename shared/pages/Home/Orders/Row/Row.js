@@ -199,9 +199,9 @@ export default class Row extends Component {
                           move={this.state.enterButton}
                         >
                           {type === PAIR_TYPES.BID ?
-                             <FormattedMessage id="Row202" defaultMessage="SELL" />
-                             :
-                             <FormattedMessage id="Row204" defaultMessage="BUY" />
+                            <FormattedMessage id="Row202" defaultMessage="SELL" />
+                            :
+                            <FormattedMessage id="Row204" defaultMessage="BUY" />
                            }
                           {' '}
                           {amount.toFixed(4)}{' '}{main}

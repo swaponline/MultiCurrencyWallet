@@ -34,12 +34,7 @@ export default class Logo extends Component {
     return (
       <Fragment>
         {withLink ?
-          (<a styleName={mobile ? 'mobile' : 'logo'} data-tip data-for="logo" href={'/'}>
-            {imgNode}
-          </a>
-          ) : (
-            <div>{imgNode}</div>
-          )
+          (<a styleName={mobile ? 'mobile' : 'logo'} data-tip data-for="logo" href="/">{imgNode}</a>) : (<div>{imgNode}</div>)
         }
       </Fragment>
     )

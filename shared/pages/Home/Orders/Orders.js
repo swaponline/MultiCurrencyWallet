@@ -99,13 +99,13 @@ export default class Orders extends Component {
 
     const titles = [
       <FormattedMessage id="orders101" defaultMessage="OWNER" />,
-      <FormattedMessage id="orders102" defaultMessage="AMOUNT" /> ,
+      <FormattedMessage id="orders102" defaultMessage="AMOUNT" />,
       <span>
-      <FormattedMessage id="orders103" defaultMessage="PRICE FOR 1 "/>
-      {buyCurrency}
+        <FormattedMessage id="orders103" defaultMessage="PRICE FOR 1 " />
+        {buyCurrency}
       </span>,
-      <FormattedMessage id="orders105" defaultMessage="TOTAL" /> ,
-      <FormattedMessage id="orders106" defaultMessage="START EXCHANGE" />
+      <FormattedMessage id="orders105" defaultMessage="TOTAL" />,
+      <FormattedMessage id="orders106" defaultMessage="START EXCHANGE" />,
     ]
 
 
@@ -116,13 +116,13 @@ export default class Orders extends Component {
 
     return (
       <Fragment>
-      <PageSeo
-        location={location}
-        defaultTitle={
-          `Atomic Swap ${buyCurrencyFullName} (${buyCurrency}) to ${sellCurrencyFullName} (${sellCurrency}) Instant Exchange`}
-        defaultDescription={`Best exchange rate for ${buyCurrencyFullName} (${buyCurrency}) to ${sellCurrencyFullName} (${sellCurrency}).
-             Swap.Online wallet provides instant exchange using Atomic Swap Protocol.`
-        } />
+        <PageSeo
+          location={location}
+          defaultTitle={
+            `Atomic Swap ${buyCurrencyFullName} (${buyCurrency}) to ${sellCurrencyFullName} (${sellCurrency}) Instant Exchange`}
+          defaultDescription={`Best exchange rate for ${buyCurrencyFullName} (${buyCurrency}) to ${sellCurrencyFullName} (${sellCurrency}).
+               Swap.Online wallet provides instant exchange using Atomic Swap Protocol.`
+          } />
         <Title>
           {buyCurrency}/{sellCurrency}
           <FormattedMessage id="orders138" defaultMessage="no limit exchange with 0 fee" />

@@ -10,27 +10,28 @@ import { FormattedMessage } from 'react-intl'
 const link = [
   [
     { link: links.career, title: <FormattedMessage id="Careers" defaultMessage="Careers" />, header:   <FormattedMessage id="Company" defaultMessage="Company" /> },
-    { link: links.button, title: <FormattedMessage id="Useswapbutton" defaultMessage="Use swap.button" />},
-    { link: links.about, title: <FormattedMessage id="AboutUS14" defaultMessage="About Us" />},
+    { link: links.button, title: <FormattedMessage id="Useswapbutton" defaultMessage="Use swap.button" /> },
+    { link: links.about, title: <FormattedMessage id="AboutUS14" defaultMessage="About Us" /> },
     { link: links.extension, title: <FormattedMessage id="ChromeExtension" defaultMessage="Swap.Online Chrome Extension" />},
   ],
   [
-    { link: links.concept, title: <FormattedMessage id="Concept" defaultMessage="Concept (PDF)" />, header: <FormattedMessage id="Documentation" defaultMessage="Documentation" /> },
+    { link: links.concept, title: <FormattedMessage id="Concept" defaultMessage="Concept (PDF)" />,
+      header: <FormattedMessage id="Documentation" defaultMessage="Documentation" /> },
     { link: links.description, title: <FormattedMessage id="WhitePaperdraft" defaultMessage="White Paper (draft)" /> },
-    { link: links.reuters, title: <FormattedMessage id="DEXdetails" defaultMessage="Details of Our DEX" />},
-    { link: links.research, title: <FormattedMessage id="DEXTrendResearch" defaultMessage="DEX Trend Research" />},
+    { link: links.reuters, title: <FormattedMessage id="DEXdetails" defaultMessage="Details of Our DEX" /> },
+    { link: links.research, title: <FormattedMessage id="DEXTrendResearch" defaultMessage="DEX Trend Research" /> },
   ],
   [
-    { link: links.wiki, title: <FormattedMessage id="Wiki" defaultMessage="Wiki" />, header: <FormattedMessage id="Resources" defaultMessage="Resources" />},
-    { link: links.bitcointalkSendTx, title: <FormattedMessage id="SendBitcoinTransacton" defaultMessage="Send Bitcoin Transacton" />},
+    { link: links.wiki, title: <FormattedMessage id="Wiki" defaultMessage="Wiki" />, header: <FormattedMessage id="Resources" defaultMessage="Resources" /> },
+    { link: links.bitcointalkSendTx, title: <FormattedMessage id="SendBitcoinTransacton" defaultMessage="Send Bitcoin Transacton" /> },
     { link: links.github, title: 'github/swap.core' },
     { link: links.githubButton, title: 'github/swap.button ' },
   ],
   [
-    { link: links.terms, title: <FormattedMessage id="Terms" defaultMessage="Terms" />, header: <FormattedMessage id="Legal" defaultMessage="Legal" />},
-    { link: links.privacyPolicy, title: <FormattedMessage id="PrivacyPolicy" defaultMessage="Privacy Policy" />},
+    { link: links.terms, title: <FormattedMessage id="Terms" defaultMessage="Terms" />, header: <FormattedMessage id="Legal" defaultMessage="Legal" /> },
+    { link: links.privacyPolicy, title: <FormattedMessage id="PrivacyPolicy" defaultMessage="Privacy Policy" /> },
     { link: links.contacts, title: <FormattedMessage id="Contacts" defaultMessage="Contacts" /> },
-    { link: links.legalOpinion, title: <FormattedMessage id="LegalOpinion" defaultMessage="Legal Opinion" />},
+    { link: links.legalOpinion, title: <FormattedMessage id="LegalOpinion" defaultMessage="Legal Opinion" /> },
   ],
 ]
 

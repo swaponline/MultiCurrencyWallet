@@ -189,11 +189,7 @@ export default class BtcToEthToken extends Component {
                         {message =>
                           <div>
                             {message}
-                            {
-                              <a href={`${config.link.bitpay}/address/${currencyAddress}`} target="_blank" el="noopener noreferrer">
-                                {currencyAddress}
-                              </a>
-                            }
+                            {<a href={`${config.link.bitpay}/address/${currencyAddress}`} target="_blank" el="noopener noreferrer">{currencyAddress}</a>}
                           </div>
                         }
                       </FormattedMessage>

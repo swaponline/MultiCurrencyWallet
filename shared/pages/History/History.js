@@ -62,10 +62,10 @@ export default class History extends Component {
       <FormattedMessage id="Coin61" defaultMessage="Coin" />,
       <FormattedMessage id="Status61" defaultMessage="Status" />,
       <FormattedMessage id="Statement61" defaultMessage="Statement" />,
-      <FormattedMessage id="Amount61" defaultMessage="Amount" />
+      <FormattedMessage id="Amount61" defaultMessage="Amount" />,
     ]
     const subTitle = [
-      <FormattedMessage id="Amount68" defaultMessage="History" />
+      <FormattedMessage id="Amount68" defaultMessage="History" />,
     ]
 
     return (

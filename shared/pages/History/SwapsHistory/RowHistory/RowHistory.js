@@ -16,7 +16,7 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 
 @injectIntl
 @CSSModules(styles, { allowMultiple: true })
- export default class RowHistory extends Component {
+export default class RowHistory extends Component {
 
    static propTypes = {
      row: PropTypes.object,
@@ -24,7 +24,7 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 
    render() {
 
-     const { row, intl: { locale }, } = this.props
+     const { row, intl: { locale } } = this.props
 
      if (row === 'undefined') {
        return null
