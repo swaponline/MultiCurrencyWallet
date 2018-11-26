@@ -27,7 +27,7 @@
   font-size: 12px;
   color: #c9c9c9;
   position: absolute;
-  bottom: 30px;
+  bottom: -17px;
 }
 
 .unconfirmedBalance {
@@ -128,10 +128,10 @@ tr button[disabled]:hover {
   position: relative;
   min-width: 200px;
 }
-.yourAddressWithOptions {
-  display: flex;
-  height: 105px;
+.yourAddressWithOptions { 
   position: relative;
+  display: flex;
+  justify-content: space-between;
 }
 
 .walletButtons {
@@ -141,9 +141,8 @@ tr button[disabled]:hover {
 .activeControlButtons {
   color: inherit;
   display: flex;
-  margin-left: 0px;
+  margin-left: 10px;
   bottom: 0;
-  position: absolute;
   .buttonActivate,
   .buttonUseAnother {
    display: block;
@@ -156,12 +155,13 @@ tr button[disabled]:hover {
     background: rgba(61, 226, 91, 0.7);
     height: 25px;
     line-height: 25px;
-    padding: 0 15px;
+    padding: 0px 25px;
     margin-left: 31px;
     margin: 0;
-    margin-bottom: 10px;
-    font-size: 13px;
+    margin-bottom: 0;
+    font-size: 16px;
     margin-right: 10px;
+    height: 40px;
     &:hover {
       color: #ffffff;
       background: rgba(61, 226, 91, 0.8);
@@ -175,8 +175,10 @@ tr button[disabled]:hover {
     border: 1px solid #dbdbdb;
     height: 25px;
     line-height: 15px;
-    padding: 0 15px;
-    font-size: 13px;
+    padding: 0 25px;
+    font-size: 16px;
+    height: 40px;
+    margin-right: -10px;
     &:hover {
       background: #ffffff;
       color: #8c8c8c;
@@ -190,7 +192,7 @@ tr button[disabled]:hover {
   display: none;
  }
 
-@media all and (min-width: 570px) and (max-width:900px) {
+@media all and (min-width: 570px) and (max-width:1024px) {
   .buttonActivate {
     margin-left: 0px;
   }
@@ -210,7 +212,7 @@ tr button[disabled]:hover {
 
 
 
-@media all and (min-width: 320px) and (max-width:900px) {
+@media all and (min-width: 320px) and (max-width:1024px) {
   .mobileName {
     display: block;
   }

@@ -291,7 +291,7 @@ table.wallet {
 }
 
 
-@media all and (min-width: 570px) and (max-width:900px) {
+@media all and (min-width: 570px) and (max-width:1024px) {
   table.wallet {
     td:nth-child(4) {
       width: 80px;
@@ -354,7 +354,7 @@ table.wallet {
 }
 
 
-@media all and (min-width: 320px) and (max-width:900px) {
+@media all and (min-width: 320px) and (max-width:1024px) {
   .table.exchange {
     min-height: 130px;
     margin-bottom: 40px;
