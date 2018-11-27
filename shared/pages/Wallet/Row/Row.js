@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import actions from 'redux/actions'
+import { connect } from 'redaction'
 import { constants } from 'helpers'
 import config from 'app-config'
 import { isMobile } from 'react-device-detect'
@@ -19,8 +20,28 @@ import { withRouter } from 'react-router'
 import ReactTooltip from 'react-tooltip'
 import { FormattedMessage } from 'react-intl'
 
-
 @withRouter
+@connect(
+  ({
+    user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, usdtData, ltcData },
+    currencies: { items: currencies },
+  }, { currency }) => ({
+    currencies,
+    item: [
+      btcData,
+      ethData,
+      eosData,
+      telosData,
+      bchData,
+      ltcData,
+      usdtData,
+      ...Object.keys(tokensData).map(k => (tokensData[k])),
+    ].map(({ account, keyPair, ...data }) => ({
+      ...data,
+    })).find((item) => item.currency === currency),
+  })
+)
+
 @cssModules(styles, { allowMultiple: true })
 export default class Row extends Component {
 
@@ -33,18 +54,16 @@ export default class Row extends Component {
     isBalanceEmpty: true
   }
 
-  componentWillMount() {
+  static getDerivedStateFromProps({ item: { balance } }) {
+    return {
+      isBalanceEmpty: balance === 0,
+    }
+  }
+  constructor(props) {
+    super(props)
     const { currency, currencies } = this.props
 
-    this.setState({
-      tradeAllowed: !!currencies.find(c => c.value === currency.toLowerCase()),
-    })
-    
-    this.handleCheckBalance()
-  }
-
-  componentWillReceiveProps(newProps) {
-    this.handleCheckBalance()
+    this.state.tradeAllowed = !!currencies.find(c => c.value === currency.toLowerCase())
   }
 
   componentWillUnmount() {
@@ -63,7 +82,12 @@ export default class Row extends Component {
         }
       })
   }
-
+  componentDidUpdate() {
+    const { item } = this.props
+    if (item.balance > 0) {
+      actions.analytics.balanceEvent(item.currency, item.balance)
+    }
+  }
   handleReloadBalance = async () => {
     const { isBalanceFetching } = this.state
 
@@ -75,7 +99,7 @@ export default class Row extends Component {
       isBalanceFetching: true,
     })
 
-    const { currency } = this.props
+    const { item: { currency } } = this.props
 
     await actions[currency.toLowerCase()].getBalance(currency.toLowerCase())
 
@@ -83,15 +107,27 @@ export default class Row extends Component {
       isBalanceFetching: false,
     }))
   }
-
+  shouldComponentUpdate(nextProps, nextState) {
+    const getComparableProps = ({ item, index, selectId }) => ({
+      item,
+      index,
+      selectId,
+    })
+    return JSON.stringify({
+      ...getComparableProps(nextProps),
+      ...nextState,
+    }) !== JSON.stringify({
+      ...getComparableProps(this.props),
+      ...this.state,
+    })
+  }
   handleTouch = (e) => {
     this.setState({
       isTouch: true,
     })
   }
-
   handleSliceAddress = () => {
-    const { address } = this.props;
+    const { item: { address } } = this.props
     if(window.innerWidth < 1080 || isMobile) {
       return address.substr(0, 6) + '...' + address.substr(address.length - 2)
     }
@@ -131,8 +167,17 @@ export default class Row extends Component {
   }
 
   handleWithdraw = () => {
-    const { currency, address, contractAddress, decimals, balance, token, unconfirmedBalance } = this.props
-
+    const {
+      item: {
+        decimals,
+        token,
+        contractAddress,
+        unconfirmedBalance,
+        currency,
+        address,
+        balance,
+      },
+    } = this.props
     actions.analytics.dataEvent(`balances-withdraw-${currency.toLowerCase()}`)
     actions.modals.open(constants.modals.Withdraw, {
       currency,
@@ -141,7 +186,7 @@ export default class Row extends Component {
       decimals,
       token,
       balance,
-      unconfirmedBalance
+      unconfirmedBalance,
     })
   }
 
@@ -160,15 +205,6 @@ export default class Row extends Component {
     })
   }
 
-  handleCheckBalance = () => {
-    const { balance } = this.props;
-    if( balance > 0 ) {
-      this.setState({
-        isBalanceEmpty: false
-      })
-    }
-  }
-
   handleGoTrade = (currency) => {
     this.props.history.push(`/${currency.toLowerCase()}`)
   }
@@ -178,8 +214,24 @@ export default class Row extends Component {
   }
 
   render() {
-    const { isBalanceFetching, tradeAllowed, isAddressCopied, isTouch, isBalanceEmpty } = this.state
-    const { currency, balance, isBalanceFetched, address, contractAddress, fullName, unconfirmedBalance } = this.props
+    const {
+      isBalanceFetching,
+      tradeAllowed,
+      isAddressCopied,
+      isTouch,
+      isBalanceEmpty,
+    } = this.state
+    const {
+      item: {
+        currency,
+        balance,
+        isBalanceFetched,
+        address,
+        fullName,
+        unconfirmedBalance,
+        contractAddress,
+      },
+    } = this.props
     const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true"
     const telosAccountActivated = localStorage.getItem(constants.localStorage.telosAccountActivated) === "true"
 
