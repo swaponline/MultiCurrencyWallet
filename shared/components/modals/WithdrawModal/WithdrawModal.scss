@@ -1,17 +1,61 @@
 .note {
-  margin-top: 6px;
   font-size: 14px;
   color: #aaa;
+  height: 0px;
+
+
 }
 
-.button {
-  margin-top: 40px;
+.buttonFull{
+  margin-top: 50px;
+  display: block;
 }
+
 .cell {
   color: #3b95ff;
   cursor: pointer;
+  display: block;
 
   &:hover {
     color: darken(#3b95ff, 1)
   }
+}
+.group {
+  width: 100%;
+  display: inline-flex;
+  height: 60px;
+  border-radius: 6px;
+  text-align: center;
+
+}
+.input {
+  width: 85%;
+  text-align: left;
+  display: block;
+
+}
+
+.button {
+  height: 100%;
+  width: 80px;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  vertical-align: middle;
+  color: #7c1de9;
+  background: #f8f3fe;
+  box-shadow: rgba(#000, 0.08) 0 3px 9px 0;
+  cursor: pointer;
+  line-height: 60px;
+  text-transform: uppercase;
+  text-align: center;
+  border-radius: 6px;
+  display: block;
+
+
+  font-size: 18px;
+  &:hover {
+    color: #7c1de9;
+    background: #dfc5ff;
+  }
+
 }
