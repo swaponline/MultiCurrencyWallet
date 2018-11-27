@@ -41,11 +41,6 @@ const messages = defineMessages({
     description: 'Menu item "About Us"',
     defaultMessage: 'About Us',
   },
-  listing: {
-    id: 'menu.listing',
-    description: 'Menu item "Listing"',
-    defaultMessage: 'Listing',
-  },
 })
 
 
@@ -82,11 +77,6 @@ export default class Header extends Component {
         {
           title: props.intl.formatMessage(messages.aboutus),
           link: links.aboutus,
-          isMobile: false,
-        },
-        {
-          title: props.intl.formatMessage(messages.listing),
-          link: links.listing,
           isMobile: false,
         },
       ],
