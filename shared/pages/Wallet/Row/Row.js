@@ -296,8 +296,7 @@ export default class Row extends Component {
           <Fragment>
             <CopyToClipboard
               text={address}
-              onCopy={this.handleCopyAddress}
-            >
+              onCopy={this.handleCopyAddress}>
               <td styleName={currency === 'EOS' && !eosAccountActivated ? 'yourAddressWithOptions' : 'yourAddress'}>
                 {
                   !contractAddress ? (

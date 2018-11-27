@@ -29,7 +29,7 @@ export default class Row extends Component {
             <div styleName="exchangeRow">
               <Coin styleName="coin" name={from} size={40} />
               {from.toUpperCase()}
-              <Flip/>
+              <Flip />
               <Coin styleName="coin" name={to} size={40} />
               {to.toUpperCase()}
             </div>
@@ -38,7 +38,7 @@ export default class Row extends Component {
         <td>
           <Link styleName="button" to={`${links.home}${from.toLowerCase()}-${to.toLowerCase()}`}>
             <FormattedMessage id="Row35" defaultMessage="Exchange " />
-            <span styleName="exchangePrice">at price 0.00380 BTC</span>
+            {/*<div styleName="exchangePrice">at price 0.00380 BTC</div>*/}
           </Link>
         </td>
       </tr>
