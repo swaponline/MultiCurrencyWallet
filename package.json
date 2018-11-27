@@ -115,7 +115,7 @@
     "moment": "^2.22.1",
     "moment-with-locales-es6": "^1.0.1",
     "node-sass": "^4.9.4",
-    "nodemon": "^1.17.3",
+    "nodemon": "^1.18.7",
     "postcss-loader": "^2.1.4",
     "progress-bar-webpack-plugin": "^1.11.0",
     "prop-types": "^15.6.1",
