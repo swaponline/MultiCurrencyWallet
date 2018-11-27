@@ -2,6 +2,9 @@ import config from 'app-config'
 
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
+import path from 'path'
+import CopyWebpackPlugin from 'copy-webpack-plugin'
+
 
 export default (webpackConfig) => {
 
@@ -29,6 +32,13 @@ export default (webpackConfig) => {
 
   webpackConfig.plugins.push(
     // new BundleAnalyzerPlugin()
+    new CopyWebpackPlugin([
+      {
+        from: 'client/firebase-messaging-sw.js',
+        to: '',
+        toType: 'file',
+      },
+    ]),
   )
 
   return webpackConfig
