@@ -60,6 +60,7 @@
   position: relative
 }
 
+
 @include media-mobile { 
   .exchangeRow {
     width: 180px;
@@ -76,7 +77,7 @@
   }
   .exchangeTr {
     position: relative;
-    height: 100px;
+    height: 88px;
   }
   .button {
     width: auto;
@@ -87,7 +88,7 @@
     position: relative;
     line-height: 35px;
     margin-left: -10px;
-    margin-top: -12px;
+    margin-top: 0px;
   }
   .coin {
     width: 35px !important;

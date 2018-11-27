@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react'
 
 import { connect } from 'redaction'
 import { constants } from 'helpers'
+import { isMobile } from 'react-device-detect'
 
 import Title from 'components/PageHeadline/Title/Title'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
@@ -9,7 +10,7 @@ import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import Table from 'components/tables/Table/Table'
 import Toggle from 'components/controls/Toggle/Toggle'
 
-import cssModules from 'react-css-modules'
+import CSSModules from 'react-css-modules'
 import styles from './Currency.scss'
 
 import Row from './Row/Row'
@@ -19,13 +20,13 @@ import { withRouter } from 'react-router'
 import { FormattedMessage } from 'react-intl'
 
 
-@cssModules(styles)
 @withRouter
 @connect(({ core: { hiddenCoinsList }, user: { ethData, btcData, ltcData, tokensData, eosData, nimData, usdtData } }) => ({
   tokens: Object.keys(tokensData).map(k => (tokensData[k])),
   items: [ ethData, btcData, eosData, usdtData, ltcData /* nimData */ ],
   hiddenCoinsList,
 }))
+@CSSModules(styles, { allowMultiple: true })
 export default class Currency extends Component {
 
   state = {
@@ -96,17 +97,21 @@ export default class Currency extends Component {
     const { balance } = this.getCoin()
 
     return (
-      <section styleName="currencySection">
+      <section styleName={isMobile ? 'currencyMobileSection' : 'currencyMediaSection'}>
         <PageHeadline>
           <Fragment>
-            <Title>{currency}</Title>
+            <div styleName="currencyTitle">
+              <Title>{currency}</Title>
+            </div>
             <SubTitle>{currency.toUpperCase()} Trade</SubTitle>
           </Fragment>
-          <div>
+          <div styleName="currencyBalance">
             <FormattedMessage id="Currency101" defaultMessage="Balance: " />
-            <span>{(String(balance).length > 5 ? balance.toFixed(5) : balance) || 0} {currency}</span>
+            <span styleName="currencyBalanceValue">{(String(balance).length > 5 ? balance.toFixed(5) : balance) || 0} {currency}</span>
           </div>
-          <Toggle onChange={this.handleInWalletChange} checked={this.isInWallet()} />Added to Wallet
+          <div styleName="currencyToggle">
+            <Toggle onChange={this.handleInWalletChange} checked={this.isInWallet()} />Added to Wallet
+          </div>
         </PageHeadline>
         <Table
           titles={['', '']}
