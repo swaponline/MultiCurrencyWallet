@@ -18,6 +18,7 @@ import { FormattedMessage } from 'react-intl'
 const minAmount = {
   eth: 0.005,
   btc: 0.001,
+  ltc: 0.1,
   eos: 1,
   tlos: 1,
   noxon: 1,
