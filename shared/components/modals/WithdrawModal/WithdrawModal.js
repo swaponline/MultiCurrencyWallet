@@ -16,8 +16,9 @@ import { FormattedMessage } from 'react-intl'
 
 
 const minAmount = {
-  eth: 0.05,
-  btc: 0.004,
+  eth: 0.005,
+  btc: 0.001,
+  ltc: 0.1,
   eos: 1,
   tlos: 1,
   noxon: 1,
@@ -89,7 +90,7 @@ export default class WithdrawModal extends React.Component {
     const isDisabled = !address || !amount || isShipped || Number(amount) < minAmount[data.currency.toLowerCase()] || Number(amount) > balance
 
     if (Number(amount) !== 0) {
-      linked.amount.check((value) => Number(value) < balance, `Amount must be less than your balance`)
+      linked.amount.check((value) => Number(value) < balance, `Amount must be less than your balance `)
       linked.amount.check((value) => Number(value) > minAmount[data.currency.toLowerCase()], `Amount must be greater than ${minAmount[data.currency.toLowerCase()]} `)
     }
 
@@ -114,6 +115,7 @@ export default class WithdrawModal extends React.Component {
         <p style={{ marginTop: '20px' }}>
           <FormattedMessage id="Withdrow113" defaultMessage="Your balance: " />
           {Number(balance).toFixed(5)}
+          {' '}
           {data.currency.toUpperCase()}
         </p>
         <FieldLabel inRow>

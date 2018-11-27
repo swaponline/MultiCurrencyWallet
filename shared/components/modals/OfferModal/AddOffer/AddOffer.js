@@ -25,8 +25,8 @@ import { isNumberValid, isNumberStringFormatCorrect, mathConstants } from 'helpe
 
 
 const minAmount = {
-  eth: 0.05,
-  btc: 0.004,
+  eth: 0.005,
+  btc: 0.001,
   ltc: 0.1,
   eos: 1,
   noxon: 1,
@@ -378,16 +378,24 @@ export default class AddOffer extends Component {
       || sellAmount > balance || sellAmount < minAmount[sellCurrency]
       || this.isEthOrERC20()
 
-    linked.sellAmount.check((value) => value > minAmount[sellCurrency], `Amount must be greater than ${minAmount[sellCurrency]} `)
-    linked.sellAmount.check((value) => value <= balance, `Amount must be less than your balance`)
-
+    linked.sellAmount.check((value) => Number(value) > minAmount[sellCurrency],
+      <span style={{ position: 'relative', marginRight: '44px' }}>
+        <FormattedMessage id="transaction368" defaultMessage="Amount must be greater than " />
+        {minAmount[sellCurrency]}
+      </span>
+    )
+    linked.sellAmount.check((value) => Number(value) <= balance,
+      <span style={{ position: 'relative', marginRight: '44px' }}>
+        <FormattedMessage id="transaction376" defaultMessage="Amount must be less than your balance " />
+      </span>
+    )
     return (
       <div styleName="wrapper addOffer">
         { this.isEthOrERC20() &&
           <span styleName="error">
-            <FormattedMessage id="transaction27" defaultMessage="For a swap, you need" />
+            <FormattedMessage id="transaction27" defaultMessage="For a swap, you need " />
             {minAmount.eth}
-            <FormattedMessage id="transaction27" defaultMessage="ETH on your balance" />
+            <FormattedMessage id="transaction27" defaultMessage=" ETH on your balance" />
           </span>
         }
         <SelectGroup
