@@ -17,7 +17,7 @@ import ReactTooltip from 'react-tooltip'
 
 
 const minAmount = {
-  eth: 0.05,
+  eth: 0.001,
   btc: 0.004,
   eos: 1,
   tlos: 1,
