@@ -29,9 +29,15 @@ export default class Core extends Component {
       .off('order update', this.updateOrders)
       .off('remove order', this.updateOrders)
       .off('new order request', this.updateOrders)
-    SwapApp.services.room.connection
-      .off('peer joined', actions.ipfs.userJoined)
-      .off('peer left', actions.ipfs.userLeft)
+    if (SwapApp.services.room.connection) {
+      console.log('leave room')
+      SwapApp.services.room.connection
+        .removeListener('peer joined', actions.ipfs.userJoined)
+        .removeListener('peer left', actions.ipfs.userLeft)
+      SwapApp.services.room
+        .off('request partial closure', this.createOrder)
+      SwapApp.services.room.connection.leave()
+    }
   }
 
   setIpfs = () => {
@@ -59,8 +65,9 @@ export default class Core extends Component {
         clearInterval(ipfsLoadingInterval)
         console.log('ipfs loaded')
 
-      SwapApp.services.room
-        .on('request partial closure', this.createOrder)
+        SwapApp.services.room.off('request partial closure', this.createOrder)
+
+        SwapApp.services.room.on('request partial closure', this.createOrder)
 
         actions.ipfs.set({
           isOnline,

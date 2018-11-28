@@ -189,4 +189,9 @@ export default {
     decimals: 16,
     fullName: 'CGCOINS',
   },
+  vite: {
+    address: '0x1b793E49237758dBD8b752AFC9Eb4b329d5Da016',
+    decimals: 18,
+    fullName: 'ViteToken',
+  },
 }
