@@ -21,7 +21,6 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 
 import config from 'app-config'
 
-
 const filterIsPartial = (orders) => orders
   .filter(order => order.isPartialClosure)
 
@@ -200,8 +199,8 @@ export default class PartialClosure extends Component {
   customWalletAllowed() {
     const { haveCurrency, getCurrency } = this.state
 
-    if (haveCurrency === 'btc') {
-      if (config.erc20[getCurrency] !== undefined) return true
+    if ( haveCurrency == 'btc' ) {
+      if (config.erc20[ getCurrency ] !==undefined ) return true
     }
 
     return false
@@ -253,19 +252,18 @@ export default class PartialClosure extends Component {
             />
             {
               this.customWalletAllowed() && (
-                <Fragment>
-                  <div styleName="walletToggle">
-                    <Toggle checked={!customWalletUse} onChange={this.handleCustomWalletUse} /> Use Swap.Online wallet
-                    <Tooltip text="To change default wallet for buy currency. Leave empty for use Swap.Online wallet" />
+              <Fragment>
+                <div styleName="walletToggle">
+                  <Toggle checked={!customWalletUse} onChange={this.handleCustomWalletUse} /> Use Swap.Online wallet
+                  <Tooltip text="To change default wallet for buy currency. Leave empty for use Swap.Online wallet" />
+                </div>
+                { customWalletUse && (
+                  <div styleName="walletInput">
+                    <Input valueLink={linked.customWallet} pattern="0-9a-zA-Z" />
                   </div>
-                  { customWalletUse && (
-                    <div styleName="walletInput">
-                      <Input valueLink={linked.customWallet} pattern="0-9a-zA-Z" />
-                    </div>
-                  ) }
-                </Fragment>
-              )
-            }
+                ) }
+              </Fragment>
+            ) }
             {isNonOffers && (<p styleName="error">No offers </p>)}
             {isDeclinedOffer && (<p styleName="error">Offer is declined</p>)}
             {
