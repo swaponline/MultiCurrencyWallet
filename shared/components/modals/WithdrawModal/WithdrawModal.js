@@ -40,6 +40,7 @@ export default class WithdrawModal extends React.Component {
     isShipped: false,
     address: '',
     amount: '',
+    minus: '',
   }
 
   componentWillMount() {
@@ -84,7 +85,7 @@ export default class WithdrawModal extends React.Component {
   }
 
 All = () => {
-  const { amount, balance, showWarning } = this.state
+  const { amount, balance } = this.state
   const { data } = this.props
   const balanceMiner = balance !== 0 ?
     Number(balance) - minAmount[data.currency.toLowerCase()]
@@ -96,7 +97,7 @@ All = () => {
 }
 
 render() {
-  const { address, amount, balance, isShipped, showWarning } = this.state
+  const { address, amount, balance, isShipped, minus } = this.state
   const { name, data } = this.props
 
   const linked = Link.all(this, 'address', 'amount')
@@ -105,13 +106,13 @@ render() {
 
   if (Number(amount) !== 0) {
     linked.amount.check((value) => Number(value) + minAmount[data.currency.toLowerCase()] <= balance,
-      <div style={{ width: '350px', fontSize: '12px' }}>
+      <div style={{ width: '340px', fontSize: '12px' }}>
         <FormattedMessage id="Withdrow108" defaultMessage="The amount must be less than your balance on the miners fee " />
         {minAmount[data.currency.toLowerCase()]}
       </div>
     )
     linked.amount.check((value) => Number(value) > minAmount[data.currency.toLowerCase()],
-      <div style={{ width: '350px', fontSize: '12px' }}>
+      <div style={{ width: '340px', fontSize: '12px' }}>
         <FormattedMessage id="Withdrow108" defaultMessage="Amount must be greater than  " />
         {minAmount[data.currency.toLowerCase()]}
       </div>
@@ -121,32 +122,35 @@ render() {
   if (this.state.amount < 0) {
     this.setState({
       amount: '',
+      minus: true,
+
     })
   }
   return (
     <Modal name={name} title={`Withdraw ${data.currency.toUpperCase()}`}>
       <p
-        style={{ fontSize: '16px' }}
+        style={{ fontSize: '16px', textAlign: 'center' }}
       >
-        {`Please notice, that you need to have minimum ${minAmount[data.currency.toLowerCase()]} amount `}
+        Please note: Miners fee is {minAmount[data.currency.toLowerCase()]}.
         <br />
-        of the {data.currency} on your wallet, to use it for miners fee
+       Your balance must exceed this sum to perform transaction.
       </p>
       <FieldLabel inRow>
         <FormattedMessage id="Withdrow108" defaultMessage="Address " />
-        <Tooltip text="destination address " />
+        <Tooltip text={`Make sure the wallet you are sending the funds to supports ${data.currency.toUpperCase()}`} />
       </FieldLabel>
-      <Input valueLink={linked.address} focusOnInit pattern="0-9a-zA-Z" placeholder="Enter address" />
+      <Input valueLink={linked.address} focusOnInit pattern="0-9a-zA-Z" placeholder={`Enter ${data.currency.toUpperCase()} address to transfer the funds` }/>
       <p style={{ marginTop: '20px' }}>
         <FormattedMessage id="Withdrow113" defaultMessage="Your balance: " />
         {Number(balance).toFixed(5)}
+        {' '}
         {data.currency.toUpperCase()}
       </p>
       <FieldLabel inRow>
         <FormattedMessage id="Withdrow118" defaultMessage="Amount " />
       </FieldLabel>
       <div styleName="group">
-        <Input styleName="input" valueLink={linked.amount} pattern="0-9\." placeholder={`Enter amount, you have ${Number(balance).toFixed(5)}`} />
+        <Input styleName="input" valueLink={linked.amount} pattern="0-9\." placeholder={`Enter the amount. You have ${Number(balance).toFixed(5)}`} />
         <buttton styleName="button" onClick={this.All} data-tip data-for="Withdrow134">
           <FormattedMessage id="Select24" defaultMessage="MAX" />
         </buttton>
@@ -158,14 +162,15 @@ render() {
       </div>
       {
         !linked.amount.error && (
-          <div styleName="note">
+          <div styleName={minus ? "rednote" : "note"}>
             <FormattedMessage id="WithdrawModal106" defaultMessage="No less than " />
             {minAmount[data.currency.toLowerCase()]}
           </div>
         )
       }
       <Button styleName="buttonFull" brand fullWidth disabled={isDisabled} onClick={this.handleSubmit}>
-        <FormattedMessage id="WithdrawModal111" defaultMessage="Transfer " />
+        <FormattedMessage id="WithdrawModal111" defaultMessage="Withdraw " />
+        {data.currency.toUpperCase()}
       </Button>
     </Modal>
   )

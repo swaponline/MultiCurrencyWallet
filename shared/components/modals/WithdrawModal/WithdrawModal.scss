@@ -2,12 +2,19 @@
   font-size: 14px;
   color: #aaa;
   height: 0px;
+  margin-top: 2px;
+}
 
-
+.rednote {
+  font-size: 14px;
+  color: #aaa;
+  height: 0px;
+  margin-top: 2px;
+  color: $color-f-error;
 }
 
 .buttonFull{
-  margin-top: 50px;
+  margin-top: 55px;
   display: block;
 }
 
@@ -20,19 +27,18 @@
     color: darken(#3b95ff, 1)
   }
 }
+
 .group {
   width: 100%;
   display: inline-flex;
   height: 60px;
   border-radius: 6px;
   text-align: center;
-
 }
 .input {
-  width: 85%;
+  width: 100%;
   text-align: left;
   display: block;
-
 }
 
 .button {
@@ -50,8 +56,6 @@
   text-align: center;
   border-radius: 6px;
   display: block;
-
-
   font-size: 18px;
   &:hover {
     color: #7c1de9;
