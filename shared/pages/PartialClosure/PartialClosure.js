@@ -19,6 +19,8 @@ import Tooltip from 'components/ui/Tooltip/Tooltip'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 
+import config from 'app-config'
+
 const filterIsPartial = (orders) => orders
   .filter(order => order.isPartialClosure)
 
@@ -81,7 +83,7 @@ export default class PartialClosure extends Component {
       sellCurrency: getCurrency,
       sellAmount: getAmount,
       buyAmount: haveAmount,
-      destinationSellAddress: (customWalletUse) ? customWallet : null,
+      destinationSellAddress: (customWalletUse && this.customWalletAllowed()) ? customWallet : null,
     }
 
     this.setState(() => ({ isFetching: true }))
@@ -194,6 +196,16 @@ export default class PartialClosure extends Component {
     }), this.setAmount(this.state.haveAmount))
   }
 
+  customWalletAllowed() {
+    const { haveCurrency, getCurrency } = this.state
+
+    if ( haveCurrency == 'btc' ) {
+      if (config.erc20[ getCurrency ] !==undefined ) return true
+    }
+
+    return false
+  }
+
   render() {
     const { currencies } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect,
@@ -238,14 +250,19 @@ export default class PartialClosure extends Component {
               disabled
               currencies={currencies}
             />
-            <div>
-              <Toggle checked={customWalletUse} onChange={this.handleCustomWalletUse} /> Use custom wallet for buy currency
-              <Tooltip text="To change default wallet for buy currency. Leave empty for use Swap.Online wallet" />
-            </div>
-            { customWalletUse && (
-              <div>
-                <Input valueLink={linked.customWallet} pattern="0-9a-zA-Z" />
-              </div>
+            {
+              this.customWalletAllowed() && (
+              <Fragment>
+                <div styleName="walletToggle">
+                  <Toggle checked={!customWalletUse} onChange={this.handleCustomWalletUse} /> Use Swap.Online wallet
+                  <Tooltip text="To change default wallet for buy currency. Leave empty for use Swap.Online wallet" />
+                </div>
+                { customWalletUse && (
+                  <div styleName="walletInput">
+                    <Input valueLink={linked.customWallet} pattern="0-9a-zA-Z" />
+                  </div>
+                ) }
+              </Fragment>
             ) }
             {isNonOffers && (<p styleName="error">No offers </p>)}
             {isDeclinedOffer && (<p styleName="error">Offer is declined</p>)}
