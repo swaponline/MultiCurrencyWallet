@@ -178,6 +178,7 @@ export default class Row extends Component {
         balance,
       },
     } = this.props
+
     actions.analytics.dataEvent(`balances-withdraw-${currency.toLowerCase()}`)
     actions.modals.open(constants.modals.Withdraw, {
       currency,
