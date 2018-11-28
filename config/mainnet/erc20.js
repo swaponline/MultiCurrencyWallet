@@ -189,4 +189,9 @@ export default {
     decimals: 16,
     fullName: 'CGCOINS',
   },
+  mot: {
+    address: '0x263c618480dbe35c300d8d5ecda19bbb986acaed',
+    decimals: 18,
+    fullName: 'MOT',
+  },
 }
