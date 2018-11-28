@@ -175,9 +175,9 @@ export default {
     fullName: 'Streamr DATAcoin',
   },
   gai: {
-    address: '0x74f276ca78133e156f52f8fe7b2d003f4e321aaa',
-    decimals: 5,
-    fullName: 'GraphGrail Ai',
+    address: '0xf207ccfe6d1b90b0b7817ce2d5d262af1514e37b',
+    decimals: 18,
+    fullName: 'GraphGrailAi Token',
   },
   emtv: {
     address: '0x07a7ed332c595b53a317afcee50733af571475e7',
@@ -188,5 +188,10 @@ export default {
     address: '0x2d9765a94ff22e0ca3afc3e3f4b116de2b67582a',
     decimals: 16,
     fullName: 'CGCOINS',
+  },
+  vite: {
+    address: '0x1b793E49237758dBD8b752AFC9Eb4b329d5Da016',
+    decimals: 18,
+    fullName: 'ViteToken',
   },
 }

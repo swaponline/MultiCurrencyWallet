@@ -1,3 +1,4 @@
+import SubscribeModal from './SubscribeModal/SubscribeModal'
 import OfferModal from './OfferModal/OfferModal'
 import WithdrawModal from './WithdrawModal/WithdrawModal'
 import PrivateKeysModal from './PrivateKeysModal/PrivateKeysModal'
@@ -12,6 +13,7 @@ import ReceiveModal from './ReceiveModal/ReceiveModal'
 
 
 export default {
+  SubscribeModal,
   OfferModal,
   WithdrawModal,
   PrivateKeysModal,
