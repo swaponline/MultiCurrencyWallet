@@ -190,7 +190,7 @@ render() {
         <FormattedMessage id="Withdrow108" defaultMessage="Address " />
         <Tooltip text={`Make sure the wallet you are sending the funds to supports ${data.currency.toUpperCase()}`} />
       </FieldLabel>
-      <Input valueLink={linked.address} focusOnInit pattern="0-9a-zA-Z" placeholder={`Enter ${data.currency.toUpperCase()} address to transfer the funds` }/>
+      <Input valueLink={linked.address} focusOnInit pattern="0-9a-zA-Z" placeholder={`Enter ${data.currency.toUpperCase()} address to transfer the funds`} />
       <p style={{ marginTop: '20px' }}>
         <FormattedMessage id="Withdrow113" defaultMessage="Your balance: " />
         {Number(balance).toFixed(5)}
@@ -213,7 +213,7 @@ render() {
       </div>
       {
         !linked.amount.error && (
-          <div styleName={minus ? "rednote" : "note"}>
+          <div styleName={minus ? 'rednote' : 'note'}>
             <FormattedMessage id="WithdrawModal106" defaultMessage="No less than " />
             {minAmount[data.currency.toLowerCase()]}
           </div>
