@@ -2,6 +2,9 @@ import webpack from 'webpack'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import config from 'app-config'
 
+import path from 'path'
+import CopyWebpackPlugin from 'copy-webpack-plugin'
+
 
 export default (webpackConfig) => {
 
@@ -34,6 +37,13 @@ export default (webpackConfig) => {
       // this assumes your vendor imports exist in the node_modules directory
       minChunks: (module) => module.context && module.context.indexOf('node_modules') >= 0,
     }),
+    new CopyWebpackPlugin([
+      {
+        from: 'client/firebase-messaging-sw.js',
+        to: '',
+        toType: 'file',
+      },
+    ]),
   )
 
   return webpackConfig
