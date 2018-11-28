@@ -155,18 +155,22 @@ export default class PartialClosure extends Component {
 
     this.setState(() => ({
       maxAmount: String(maxAmount),
-      getAmount,
+      getAmount: this.getFixed(getAmount),
     }))
 
     return getAmount.isLessThanOrEqualTo(maxAmount)
   }
 
+  getFixed = (value) => Number(value).toFixed(5)
+
   setAmount = (value) => {
     this.setState(() => ({ haveAmount: value, maxAmount: 0 }))
+    this.getUsdBalance()
   }
 
   setOrders = () => {
     const { filteredOrders } = this.state
+    this.getUsdBalance()
 
     if (filteredOrders.length === 0) {
       this.setNoOfferState()
@@ -227,6 +231,11 @@ export default class PartialClosure extends Component {
     }))
   }
 
+  handlePush = () => {
+    const { haveCurrency, getCurrency } = this.state
+    this.props.history.push(`${haveCurrency}-${getCurrency}`)
+  }
+
   render() {
     const { currencies } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect,
@@ -274,7 +283,7 @@ export default class PartialClosure extends Component {
               currencies={currencies}
             />
             <p>Max amount for offer: {maxAmount}{' '}{getCurrency.toUpperCase()}</p>
-            {isNonOffers && (
+            {maxAmount > 0 && isNonOffers && (
               <p styleName="error">
                 No orders found, try to reduce the amount
               </p>
@@ -292,7 +301,7 @@ export default class PartialClosure extends Component {
               <Button styleName="button" brand onClick={this.sendRequest} disabled={isNonOffers}>
                 Exchange now
               </Button>
-              <Button styleName="button" gray onClick={this.sendRequest} >
+              <Button styleName="button" gray onClick={this.handlePush} >
                 Show order book
               </Button>
             </div>

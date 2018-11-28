@@ -1,5 +1,6 @@
 import config from 'app-config'
 
+
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 

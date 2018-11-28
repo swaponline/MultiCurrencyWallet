@@ -31,8 +31,8 @@
 
 .flipButton {
   transform: rotate(90deg);
-  display: inline-block;
-  margin: 0 0 0 calc(50% - 12px);
+  margin-left: calc(90% - 12px);
+  margin-bottom: -20px;
   padding: 0;
 }
 
@@ -44,5 +44,9 @@
 
   .blockVideo {
     display: none;
+  }
+
+  .button {
+    font-size: 12px;
   }
 }

@@ -21,7 +21,10 @@ const SelectGroup = ({ selectedValue, onSelect, usd, currencies, placeholder, la
         pattern="0-9."
         disabled={disabled}
       />
-      {usd && <p styleName="textUsd" >{usd}$</p>}
+      {
+        (selectedValue === 'eth' || selectedValue === 'btc') &&
+          <p styleName="textUsd" >{`~${usd}`}$</p>
+      }
       <CurrencySelect
         styleName="currencySelect"
         selectedValue={selectedValue}

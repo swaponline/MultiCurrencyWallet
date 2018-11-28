@@ -64,7 +64,7 @@ export default class AddOffer extends Component {
       isSellFieldInteger: false,
       isBuyFieldInteger: false,
       manualRate: false,
-      isPartialClosure: false,
+      isPartialClosure: true,
     }
   }
 

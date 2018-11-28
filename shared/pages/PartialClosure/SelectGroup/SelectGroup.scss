@@ -7,12 +7,15 @@
   box-shadow: rgba(#000, 0.08) 0 3px 9px 0;
   border-radius: 6px;
   text-align: center;
+  position: relative;
 }
 
 .textUsd {
-  line-height: 60px;
-  padding-left: 25px;
-  padding-right: 25px;
+  top: 22px;
+  left: 185px;
+  font-size: 15px;
+  color: #828795;
+  position: absolute;
 }
 
 .inputRoot {
@@ -31,4 +34,15 @@ input:disabled {
 
 .currencySelect {
   border-radius: 0 6px 6px 0 !important;
+}
+
+@include media-mobile {
+
+  .textUsd {
+    left: 165px;
+  }
+
+  .currencySelect {
+    width: 130px;
+  }
 }
