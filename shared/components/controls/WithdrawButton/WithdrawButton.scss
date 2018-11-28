@@ -10,6 +10,7 @@
   font-weight: 500;
   color: #7c1de9;
   border-radius: 20px;
+  margin-right: 10px;
 
   &:hover {
     color: #7c1de9;
@@ -22,4 +23,20 @@
     margin-right: 10px;
     margin-bottom: 10px;
   }
+}
+
+.disable {
+  @include inline-block;
+  height: 40px;
+  background: #dbdbdb;
+  padding: 0 25px;
+  cursor: pointer;
+  line-height: 40px;
+  font-size: 16px;
+  border: none;
+  font-weight: 500;
+  color: #626262;
+  border-radius: 20px;
+  margin-right: 10px;
+
 }
