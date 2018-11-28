@@ -349,7 +349,9 @@ export default class Row extends Component {
               <div styleName="activeControlButtons">
                 <div styleName="actButton">
                   {currency === 'EOS' && !eosAccountActivated &&
-                    <button styleName="button buttonActivate" onClick={this.handleEosBuyAccount} data-tip data-for="Activate">Activate</button>
+                    <button styleName="button buttonActivate" onClick={this.handleEosBuyAccount} data-tip data-for="Activate">
+                      <FormattedMessage id="Row293" defaultMessage="Activate" />
+                    </button>
                   }
                 </div>
                 <ReactTooltip id="Activate" type="light" effect="solid">
