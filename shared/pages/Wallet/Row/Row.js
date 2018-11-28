@@ -313,14 +313,18 @@ export default class Row extends Component {
                     { currency === 'EOS' && !eosAccountActivated && (
                       <Fragment>
                         <br />
-                        <span styleName="notActiveLink">not activated</span>
+                        <span styleName="notActiveLink">
+                          <FormattedMessage id="Row235" defaultMessage="not activated" />
+                        </span>
                       </Fragment>
                     )
                     }
                     { currency === 'TLOS' && !telosAccountActivated && (
                       <Fragment>
                         <br />
-                        <span styleName="notActiveLink">not activated</span>
+                        <span styleName="notActiveLink">
+                          <FormattedMessage id="Row235" defaultMessage="not activated" />
+                        </span>
                       </Fragment>
                     )
                     }
