@@ -65,7 +65,7 @@
 }
 
 .disbutton {
-  onClick: none; 
+  onClick: none;
 }
 .buttonActivate {
   margin-left: 15px;
@@ -128,7 +128,7 @@ tr button[disabled]:hover {
   position: relative;
   min-width: 200px;
 }
-.yourAddressWithOptions { 
+.yourAddressWithOptions {
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -199,13 +199,21 @@ tr button[disabled]:hover {
   .yourAddress {
     display: table-cell;
   }
-  .actButton,
-  .useButton {
-    display: none;
+  .buttonActivate {
+    top: auto;
+  }
+  .activeControlButtons {
+    color: inherit;
+    display: flex;
+    left: 170px;
+    top: -65px;
+    position: absolute;
+    flex-direction: row;
   }
   .notActivated {
     display: flex;
     max-width: 140px;
+    display: none;
     align-items: flex-end!important;
   }
 }
@@ -224,7 +232,16 @@ tr button[disabled]:hover {
     width: auto!important;
   }
   .yourAddressWithOptions {
-    display: none;
+    position: absolute;
+    right: 40px;
+    bottom: 10px;
+    width: 100%!important;
+    .notContractAddress {
+      position: absolute;
+      right: -20px;
+      bottom: 15px;
+      display: none;
+    }
   }
   .table_balance-cell {
     min-width: 75px;
@@ -251,6 +268,11 @@ tr button[disabled]:hover {
     box-shadow: rgba(0, 0, 0, 0.08) 0px 0px 20px 0;
     margin-bottom: 10px;
     margin-top: 10px;
+    .yourAddressWithOptions {
+      .notContractAddress {
+        display: block;
+      }
+    }
     .yourAddress {
       display: block;
     }
@@ -268,7 +290,7 @@ tr button[disabled]:hover {
       color: #000;
     }
     .buttonActivate {
-      top: -47px;
+      top: 0px;
     }
   }
   tr.hidden {
@@ -288,11 +310,9 @@ tr button[disabled]:hover {
     }
   }
   .buttonActivate {
-    position: absolute;
     right: 0;
     height: 22px;
     line-height: 0px;
-    font-size: 10px!important;
     top: -47px;
     left: 103px;
     color: #ffffff;
@@ -303,19 +323,20 @@ tr button[disabled]:hover {
     margin-left: 31px;
     margin: 0;
     margin-bottom: 10px;
-    font-size: 13px;
-    margin-right: 10px;
+    font-size: 13px!important;
+    margin-right: 5px!important;
+    width: 115px;
   }
   .buttonUseAnother {
-    font-size: 10px!important;
     background: #ffffff;
     color: #8c8c8c;
     border: 1px solid #dbdbdb;
     height: 25px;
     line-height: 15px;
-    padding: 0 15px;
+    padding: 0 15px!important;
     display: none;
-    font-size: 13px;
+    width: 115px;
+    font-size: 13px!important;
   }
 }
 
@@ -327,5 +348,26 @@ tr button[disabled]:hover {
       .yourAddress {
         display: none
     }
+  }
+  .yourAddressWithOptions {
+    position: absolute;
+    right: -90px;
+    bottom: 50px;
+    width: 100%!important;
+    .notContractAddress {
+      display: none;
+    }
+  }
+  .buttonActivate {
+    width: 75px;
+    height: 26px!important;
+    padding: 0!important;
+    position: absolute;
+    left: 16px;
+    top: -17px!important;
+  }
+  .buttonUseAnother {
+    width: 100px;
+    display: none!important;
   }
 }

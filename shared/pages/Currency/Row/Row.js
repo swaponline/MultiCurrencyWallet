@@ -38,7 +38,6 @@ export default class Row extends Component {
         <td>
           <Link styleName="button" to={`${links.home}${from.toLowerCase()}-${to.toLowerCase()}`}>
             <FormattedMessage id="Row35" defaultMessage="Exchange " />
-            {/*<div styleName="exchangePrice">at price 0.00380 BTC</div>*/}
           </Link>
         </td>
       </tr>
