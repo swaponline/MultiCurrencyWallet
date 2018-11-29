@@ -1,0 +1,21 @@
+.Switching {
+  display: flex;
+  align-items: center;
+  background: url('./images/Switching.svg') 50% 50% no-repeat;
+  height: 58px;
+  width: 32px;
+  cursor: pointer;
+  margin: 0px 25px;
+  border: none;
+  transform: rotate(90deg);
+}
+ @include media-mobile {
+  .Switching {
+    position: absolute;
+    -webkit-transform: scale(0.6);
+    transform: scale(0.6);
+    left: 50%;
+    margin-left: -17px;
+    margin-top: -29px;
+  }
+}
