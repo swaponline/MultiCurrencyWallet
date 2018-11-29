@@ -245,9 +245,10 @@ export default class EthTokenToBtc extends Component {
                       </FormattedMessage>
                       <FormattedMessage id="EthTokenBtc251" defaultMessage="Your address: ">
                         {message =>
-                          (<div>{message}
-                            {<a href={`${config.link.etherscan}/address/${currencyAddress}`} target="_blank" rel="noopener noreferrer">{currencyAddress}</a>}
-                          </div>
+                          (
+                            <div>{message}
+                              {<a href={`${config.link.etherscan}/address/${currencyAddress}`} target="_blank" rel="noopener noreferrer">{currencyAddress}</a>}
+                            </div>
                           )
                         }
                       </FormattedMessage>
