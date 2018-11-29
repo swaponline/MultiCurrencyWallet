@@ -9,6 +9,7 @@ import constants from './constants'
 import localStorage from './localStorage'
 import api from './api'
 import tips from './tips'
+import xlm from './xlm'
 import * as utils from './utils'
 
 // Methods
@@ -23,6 +24,7 @@ import { migrate } from './migrations/'
 
 export {
   eos,
+  xlm,
   bcash,
   tips,
   btc,

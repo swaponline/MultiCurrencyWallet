@@ -59,6 +59,7 @@ export default class Row extends Component {
       isBalanceEmpty: balance === 0,
     }
   }
+
   constructor(props) {
     super(props)
     const { currency, currencies } = this.props
@@ -89,23 +90,19 @@ export default class Row extends Component {
     }
   }
   handleReloadBalance = async () => {
-    const { isBalanceFetching } = this.state
-
-    if (isBalanceFetching) {
-      return null
-    }
-
     this.setState({
       isBalanceFetching: true,
     })
 
     const { item: { currency } } = this.props
 
-    await actions[currency.toLowerCase()].getBalance(currency.toLowerCase())
+    сonst balance = await actions[currency.toLowerCase()].getBalance(currency.toLowerCase())
 
-    this.setState(() => ({
-      isBalanceFetching: false,
-    }))
+    if (!balance) {
+      this.setState(() => ({
+        isBalanceFetching: false,
+      }))
+    }
   }
   shouldComponentUpdate(nextProps, nextState) {
     const getComparableProps = ({ item, index, selectId }) => ({
