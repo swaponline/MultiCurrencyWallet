@@ -282,27 +282,27 @@ export default class PartialClosure extends Component {
               usd={getUsd}
               currencies={currencies}
             />
-            <p>Max amount for offer: {maxAmount}{' '}{getCurrency.toUpperCase()}</p>
+            <p>{`Max amount for offer:`} {maxAmount}{' '}{getCurrency.toUpperCase()}</p>
             {maxAmount > 0 && isNonOffers && (
               <p styleName="error">
-                No orders found, try to reduce the amount
+                {`No orders found, try to reduce the amount`}
               </p>
             )}
-            {isDeclinedOffer && (<p styleName="error">Offer is declined</p>)}
+            {isDeclinedOffer && (<p styleName="error">{`Offer is declined`}</p>)}
             {
               isFetching && (
                 <span>
-                  Wait participant:
+                  {` Wait participant:`}
                   <InlineLoader />
                 </span>
               )
             }
             <div styleName="rowBtn">
               <Button styleName="button" brand onClick={this.sendRequest} disabled={isNonOffers}>
-                Exchange now
+                {`Exchange now`}
               </Button>
               <Button styleName="button" gray onClick={this.handlePush} >
-                Show order book
+                {`Show order book`}
               </Button>
             </div>
           </div>
