@@ -113,7 +113,7 @@ export default class Row extends Component {
       this.setState({
         isFlag: true,
       })
-      }
+    }
   }
 
   handleReloadBalance = async () => {
