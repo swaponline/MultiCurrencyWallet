@@ -103,17 +103,16 @@ export default class Row extends Component {
           item.currency !== 'SWAP' &&
           item.currency !== 'USDT' &&
           item.currency !== 'BTC' &&
-          item.currency !== 'ETH'
-      ) {
+          item.currency !== 'ETH') {
         this.setState({
           isCoinHidden: true,
         })
         actions.core.markCoinAsHidden(item.currency)
       }
     } else {
-        this.setState({
-          isFlag: true,
-        })
+      this.setState({
+        isFlag: true,
+      })
       }
   }
 
