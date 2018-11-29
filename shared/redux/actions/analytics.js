@@ -17,6 +17,19 @@ const balanceEvent = (currency, balance) => {
   })
 }
 
+const getTracker = () => {
+  if (window.ga) {
+    try {
+      return window.ga.getAll()[0]
+    } catch (error) {
+      console.log(error)
+      return undefined
+    }
+  } else {
+    return undefined
+  }
+}
+
 const errorEvent = (eventAction) => {
   if (window.ga) {
     const tracker = window.ga.getAll()[0]
@@ -45,6 +58,7 @@ if (!process.env.EXTENSION) {
 }
 
 export default {
+  getTracker,
   dataEvent,
   swapEvent,
   balanceEvent,

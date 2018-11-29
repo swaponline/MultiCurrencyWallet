@@ -154,7 +154,6 @@ export default class Row extends Component {
       isTouch: true,
     })
   }
-
   handleSliceAddress = () => {
     const {
       item: {

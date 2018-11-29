@@ -4,6 +4,8 @@ export default {
   activeTabId: 'activeTabId',
   hiddenCoinsList: 'hiddenCoinsList',
   testnetSkip: 'testnetSkip',
+  enter: 'enter',
+  reject: 'reject',
   storageRevision: '_revision',
   eosActivationPayment: `${process.env.ENTRY}:eos:activationPayment`,
   eosAccountActivated: `${process.env.ENTRY}:eos:activationFlag`,
