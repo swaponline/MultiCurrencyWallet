@@ -51,7 +51,9 @@ export default class Row extends Component {
     tradeAllowed: false,
     isAddressCopied: false,
     isTouch: false,
-    isBalanceEmpty: true
+    isBalanceEmpty: true,
+    isFlag: false,
+    isCoinHidden: false,
   }
 
   static getDerivedStateFromProps({ item: { balance } }) {
@@ -83,11 +85,38 @@ export default class Row extends Component {
       })
   }
   componentDidUpdate() {
-    const { item } = this.props
+    const { item, items } = this.props
     if (item.balance > 0) {
       actions.analytics.balanceEvent(item.currency, item.balance)
     }
+    this.hideZero()
+
   }
+
+  hideZero = () => {
+    const { item, items } = this.props
+    const { isFlag, isCoinHidden } = this.state
+
+    if (isFlag === true) {
+      if (item.balance === 0 &&
+          isCoinHidden === false &&
+          item.currency !== 'SWAP' &&
+          item.currency !== 'USDT' &&
+          item.currency !== 'BTC' &&
+          item.currency !== 'ETH'
+      ) {
+        this.setState({
+          isCoinHidden: true,
+        })
+        actions.core.markCoinAsHidden(item.currency)
+      }
+    } else {
+        this.setState({
+          isFlag: true,
+        })
+      }
+  }
+
   handleReloadBalance = async () => {
     const { isBalanceFetching } = this.state
 
