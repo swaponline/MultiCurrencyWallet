@@ -111,10 +111,10 @@ export default class Row extends Component {
         actions.core.markCoinAsHidden(item.currency)
       }
     } else {
-        this.setState({
-          isFlag: true,
-        })
-      }
+      this.setState({
+        isFlag: true,
+      })
+    }
   }
 
   handleReloadBalance = async () => {
