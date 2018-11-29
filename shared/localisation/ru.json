@@ -4178,5 +4178,152 @@
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
+  },
+  {
+    "id": "CDC52",
+    "message": "Список предложений",
+    "files": [
+      "shared/components/CurrencyDirectionChooser/CurrencyDirectionChooser.js"
+    ]
+  },
+  {
+    "id": "Eos71",
+    "message": "Этот аккаунт будет зарегестрировать в сети EOS blockchain",
+    "files": [
+      "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
+    ]
+  },
+  {
+    "id": "Eos75",
+    "message": "Приватный ключ для подтверждения операций ",
+    "files": [
+      "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
+    ]
+  },
+  {
+    "id": "Eos79",
+    "message": "Публичный ключ, связанный с учетной записью",
+    "files": [
+      "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
+    ]
+  },
+  {
+    "id": "Eos83",
+    "message": "Эта сумма будет снята с вашего BTC счета",
+    "files": [
+      "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
+    ]
+  },
+  {
+    "id": "Eos53",
+    "message": "Введите Ваш EOS аккаунт",
+    "files": [
+      "shared/components/modals/EosRegisterModal/EosRegisterModal.js"
+    ]
+  },
+  {
+    "id": "Eos57",
+    "message": "Введите приватный ключ для активного разрешения",
+    "files": [
+      "shared/components/modals/EosRegisterModal/EosRegisterModal.js"
+    ]
+  },
+  {
+    "id": "add408",
+    "message": "Для изменения курса обмена",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "addOffer448",
+    "message": "Вы получите запросы на обмен ",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "addOffer449",
+    "message": "или сумму, меньше, чем общая сумма, которую вы хотите продать. ",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "addOffer450",
+    "message": "Например, Вы хотите продать 1 BTC,",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "addOffer451",
+    "message": "или сумму, меньше, чем общая сумма, которую вы хотите продать. ",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "TelosRegister46",
+    "message": "Введите TELOS имя аккаунта",
+    "files": [
+      "shared/components/modals/TelosRegisterModal/TelosRegisterModal.js"
+    ]
+  },
+  {
+    "id": "TelosRegister52",
+    "message": "Введите Ваш TELOS секретный ключ",
+    "files": [
+      "shared/components/modals/TelosRegisterModal/TelosRegisterModal.js"
+    ]
+  },
+  {
+    "id": "WTH273",
+    "message": "Убедитесь что отправляете средства на кошелек",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "WTHl274",
+    "message": "который поддерживает данную криптовалюту",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "partial223",
+    "message": "Для изменения кошелька по умолчанию для валюты покупки.",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial224",
+    "message": "Оставьте пустым для использования Swap.Online кошелька",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial225",
+    "message": "Предложения частичного закрытия",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial243",
+    "message": "У вас есть",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial255",
+    "message": "Вы получите",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
   }
 ]

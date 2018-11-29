@@ -48,7 +48,9 @@ export default class CurrencyDirectionChooser extends Component {
     const { buyCurrency, sellCurrency,
       flipCurrency, handleBuyCurrencySelect, handleSellCurrencySelect, handleSubmit,
       currencies } = this.props
-
+    const text = [
+      <FormattedMessage id="CDC52" defaultMessage="Offer list" />,
+    ]
     return (
       <div styleName="choice">
         <div styleName="row title">
@@ -84,7 +86,7 @@ export default class CurrencyDirectionChooser extends Component {
           </div>
 
           <FormattedMessage id="CurrencyDirectionChooser86" defaultMessage="SHOW ORDERS ">
-            {message =>   <Button styleName="button" brand onClick={handleSubmit}>{message}<Tooltip text="Offer list" /></Button>}
+            {message =>   <Button styleName="button" brand onClick={handleSubmit}>{message}<Tooltip text={text} id="cdc87" /></Button>}
           </FormattedMessage>
         </div>
       </div>

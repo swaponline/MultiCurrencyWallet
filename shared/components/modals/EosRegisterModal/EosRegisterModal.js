@@ -49,16 +49,24 @@ export default class EosRegisterModal extends React.Component {
     const linked = Link.all(this, 'accountName', 'privateKey')
     const isDisabled = !accountName || !privateKey
 
+    const text = [
+      <FormattedMessage id="Eos53" defaultMessage="Enter your EOS account name" />,
+    ]
+
+    const text1 = [
+      <FormattedMessage id="Eos57" defaultMessage="Enter private key for active permission" />,
+    ]
+
     return (
       <Modal name={name} title="EOS Login">
         <FieldLabel inRow>
           <FormattedMessage id="EosRegAccountModal54" defaultMessage="Account name" />
-          <Tooltip text="Enter your EOS account name" />
+          <Tooltip text={text} id="EoSR92" />
         </FieldLabel>
         <Input valueLink={linked.accountName} />
         <FieldLabel inRow>
           <FormattedMessage id="EosRegAccountModal58" defaultMessage="Active private key" />
-          <Tooltip text="Enter private key for active permission" />
+          <Tooltip text={text} id="EoSR69" />
         </FieldLabel>
         <Input valueLink={linked.privateKey} />
         { error && (

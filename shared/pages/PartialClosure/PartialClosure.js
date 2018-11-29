@@ -219,6 +219,11 @@ export default class PartialClosure extends Component {
       return <Redirect push to={`/${locale}${links.swap}/${getCurrency}-${haveCurrency}/${orderId}`} />
     }
 
+    const text = [
+      <FormattedMessage id="partial223" defaultMessage="To change default wallet for buy currency. " />,
+      <FormattedMessage id="partial224" defaultMessage="Leave empty for use Swap.Online wallet " />,
+    ]
+
     return (
       <Fragment>
         <PageHeadline subTitle={
@@ -262,7 +267,7 @@ export default class PartialClosure extends Component {
                   <div styleName="walletToggle">
                     <Toggle checked={!customWalletUse} onChange={this.handleCustomWalletUse} />
                     <FormattedMessage id="partial244" defaultMessage=" Use Swap.Online wallet " />
-                    <Tooltip text="To change default wallet for buy currency. Leave empty for use Swap.Online wallet" />
+                    <Tooltip text={text} id="Partial279" />
                   </div>
                   { customWalletUse && (
                     <div styleName="walletInput">

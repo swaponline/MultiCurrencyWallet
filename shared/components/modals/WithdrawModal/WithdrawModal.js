@@ -170,6 +170,14 @@ export default class WithdrawModal extends React.Component {
         })
       }
 
+      const text = [
+        <div style={{ textAlign: 'center' }}>
+          <FormattedMessage id="WTH273" defaultMessage="Make sure the wallet you " />
+          <FormattedMessage id="WTHl274" defaultMessage="are sending the funds to supports" />
+          {data.currency.toUpperCase()}
+        </div>,
+      ]
+
       return (
         <Modal name={name} title={`Withdraw ${data.currency.toUpperCase()}`}>
           { tokenFee &&
@@ -192,7 +200,7 @@ export default class WithdrawModal extends React.Component {
           }
           <FieldLabel inRow>
             <FormattedMessage id="Withdrow1194" defaultMessage="Address " />
-            <Tooltip text={`Make sure the wallet you are sending the funds to supports ${data.currency.toUpperCase()}`} />
+            <Tooltip text={text} id="WtH203" />
           </FieldLabel>
           <Input valueLink={linked.address} focusOnInit pattern="0-9a-zA-Z" placeholder={`Enter ${data.currency.toUpperCase()} address to transfer the funds`} />
           <p style={{ marginTop: '20px' }}>

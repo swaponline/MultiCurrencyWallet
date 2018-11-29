@@ -369,6 +369,8 @@ export default class AddOffer extends Component {
     })
   }
 
+
+
   render() {
     const { currencies, tokenItems } = this.props
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency,
@@ -389,6 +391,23 @@ export default class AddOffer extends Component {
         <FormattedMessage id="transaction376" defaultMessage="Amount must be less than your balance " />
       </span>
     )
+    const text = [
+      <div style={{ textAlign: 'center' }} >
+        <FormattedMessage id="addOffer448" defaultMessage="You will receive exchange requests" />
+        <br />
+        <FormattedMessage id="addOffer449" defaultMessage="or the amount less than the total amount you want sell." />
+        <br />
+        <FormattedMessage id="addOffer450" defaultMessage="For example you want to sell 1 BTC," />
+        <br />
+        <FormattedMessage id="addOffer451" defaultMessage="or the amount less than the total amount you want sell." />
+        <br />
+      </div>,
+    ]
+
+    const text1 = [
+      <FormattedMessage id="add408" defaultMessage="To change the exchange rate " />,
+    ]
+
     return (
       <div styleName="wrapper addOffer">
         { this.isEthOrERC20() &&
@@ -440,12 +459,12 @@ export default class AddOffer extends Component {
         <div>
           <Toggle checked={manualRate} onChange={this.handleManualRate} />
           <FormattedMessage id="AddOffer418" defaultMessage="Custom exchange rate" />
-          <Tooltip text="To change the exchange rate" />
+          <Tooltip text={text1} id="add264" />
         </div>
         <div>
           <Toggle checked={isPartialClosure} onChange={() => this.setState((state) => ({ isPartialClosure: !state.isPartialClosure }))} />
           <FormattedMessage id="AddOffer423" defaultMessage="Enabled to partial closure" />
-          <Tooltip text="You will receive exchange requests <br/> or the amount less than the total amount you want sell. <br/> For example you want to sell 1 BTC, <br/> other users can send you exchange requests for 0.1, 0.5 BTC" />
+          <Tooltip text={text} id="add547" />
         </div>
         <Button styleName="button" fullWidth brand disabled={isDisabled} onClick={this.handleNext}>
           <FormattedMessage id="AddOffer396" defaultMessage="Next" />

@@ -67,34 +67,50 @@ export default class EosBuyAccountModal extends React.Component {
 
     const activationPayment = localStorage.getItem(constants.localStorage.eosActivationPayment)
 
+    const text = [
+      <FormattedMessage id="Eos71" defaultMessage="This account will be registered in EOS blockchain" />,
+    ]
+
+    const text1 = [
+      <FormattedMessage id="Eos75" defaultMessage="Private key for active and owner permissions" />,
+    ]
+
+    const text2 = [
+      <FormattedMessage id="Eos79" defaultMessage="Public key associated with account" />,
+    ]
+
+    const text3 = [
+      <FormattedMessage id="Eos83" defaultMessage="This amount will be withdrawn from your BTC wallet" />,
+    ]
+
     return (
       <Fragment>
         <Modal name={name} title="EOS Register">
           <div>
             <FieldLabel inRow>
               <FormattedMessage id="EosBuyAccountModal72" defaultMessage="Account name" />
-              <Tooltip text="This account will be registered in EOS blockchain" />
+              <Tooltip text={text} id="EoS92" />
             </FieldLabel>
             <Input readOnly="true" valueLink={linked.accountName} />
           </div>
           <div>
             <FieldLabel inRow>
               <FormattedMessage id="EosBuyAccountModal78" defaultMessage="Private key" />
-              <Tooltip text="Private key for active and owner permissions" />
+              <Tooltip text={text1} id="EoS90" />
             </FieldLabel>
             <Input readOnly="true" valueLink={linked.activePrivateKey} />
           </div>
           <div>
             <FieldLabel inRow>
               <FormattedMessage id="EosBuyAccountModal84" defaultMessage="Public key" />
-              <Tooltip text="Public key associated with account" />
+              <Tooltip text={text2} id="EoS106" />
             </FieldLabel>
             <Input readOnly="true" valueLink={linked.activePublicKey} />
           </div>
           <div>
             <FieldLabel inRow>
               <FormattedMessage id="EosBuyAccountModal90" defaultMessage="Price (BTC)" />
-              <Tooltip text="This amount will be withdrawn from your BTC wallet" />
+              <Tooltip text={text3} id="EoS113" />
             </FieldLabel>
             <Input readOnly="true" valueLink={linked.price} />
           </div>

@@ -4178,5 +4178,152 @@
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
+  },
+  {
+    "id": "CDC52",
+    "message": "Offer list",
+    "files": [
+      "shared/components/CurrencyDirectionChooser/CurrencyDirectionChooser.js"
+    ]
+  },
+  {
+    "id": "Eos71",
+    "message": "This account will be registered in EOS blockchain",
+    "files": [
+      "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
+    ]
+  },
+  {
+    "id": "Eos75",
+    "message": "Private key for active and owner permissions",
+    "files": [
+      "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
+    ]
+  },
+  {
+    "id": "Eos79",
+    "message": "Public key associated with account",
+    "files": [
+      "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
+    ]
+  },
+  {
+    "id": "Eos83",
+    "message": "This amount will be withdrawn from your BTC wallet",
+    "files": [
+      "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
+    ]
+  },
+  {
+    "id": "Eos53",
+    "message": "Enter your EOS account name",
+    "files": [
+      "shared/components/modals/EosRegisterModal/EosRegisterModal.js"
+    ]
+  },
+  {
+    "id": "Eos57",
+    "message": "Enter private key for active permission",
+    "files": [
+      "shared/components/modals/EosRegisterModal/EosRegisterModal.js"
+    ]
+  },
+  {
+    "id": "add408",
+    "message": "To change the exchange rate",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "addOffer448",
+    "message": "You will receive exchange requests",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "addOffer449",
+    "message": "or the amount less than the total amount you want sell.",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "addOffer450",
+    "message": "For example you want to sell 1 BTC,",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "addOffer451",
+    "message": "or the amount less than the total amount you want sell.",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "TelosRegister46",
+    "message": "Enter TELOS account name",
+    "files": [
+      "shared/components/modals/TelosRegisterModal/TelosRegisterModal.js"
+    ]
+  },
+  {
+    "id": "TelosRegister52",
+    "message": "Enter your TELOS secret key",
+    "files": [
+      "shared/components/modals/TelosRegisterModal/TelosRegisterModal.js"
+    ]
+  },
+  {
+    "id": "WTH273",
+    "message": "Make sure the wallet you",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "WTHl274",
+    "message": "are sending the funds to supports",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "partial223",
+    "message": "To change default wallet for buy currency.",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial224",
+    "message": "Leave empty for use Swap.Online wallet",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial225",
+    "message": "Partial closure offers",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial243",
+    "message": "You have",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial255",
+    "message": "You get",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
   }
 ]
