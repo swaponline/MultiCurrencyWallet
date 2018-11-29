@@ -37,8 +37,10 @@ export default class CurrencyWallet extends Component {
       name: null,
       address: null,
       balance: null,
+      isBalanceEmpty: false,
     }
   }
+
 
   static getDerivedStateFromProps(nextProps) {
     const { user, match: { params: { fullName } } } = nextProps
@@ -56,6 +58,7 @@ export default class CurrencyWallet extends Component {
       decimals,
       fullName,
       balance,
+      isBalanceEmpty: balance === 0,
     }
   }
 
@@ -78,7 +81,7 @@ export default class CurrencyWallet extends Component {
 
   render() {
     let { swapHistory, txHistory, location } = this.props
-    const { fullName, address, balance, currency } = this.state
+    const { fullName, address, balance, currency, isBalanceEmpty } = this.state
 
     txHistory = txHistory
       .filter(tx => tx.type === currency.toLowerCase())
@@ -90,7 +93,6 @@ export default class CurrencyWallet extends Component {
     const seoPage = getSeoPage(location.pathname)
 
     const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true"
-
     return (
       <div className="root">
         <PageSeo
@@ -109,11 +111,11 @@ export default class CurrencyWallet extends Component {
           <FormattedMessage id="CurrencyWallet105" defaultMessage="Activate account" />
         </Button>)}
         <div styleName="inRow">
-          <Button brand style={{ marginRight: '15px' }} onClick={this.handleWithdraw}>
+          <Button brand style={{ marginRight: '15px' }} onClick={this.handleWithdraw} disabled={isBalanceEmpty}>
             <FormattedMessage id="CurrencyWallet100" defaultMessage="Send" />
           </Button>
           <Link to={`${links.home}${currency.toLowerCase()}`} >
-            <Button gray>
+            <Button gray disabled={isBalanceEmpty}>
               <FormattedMessage id="CurrencyWallet104" defaultMessage="Exchange" />
             </Button>
           </Link>
