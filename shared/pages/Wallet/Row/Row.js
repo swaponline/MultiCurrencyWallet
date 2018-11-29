@@ -90,30 +90,31 @@ export default class Row extends Component {
       actions.analytics.balanceEvent(item.currency, item.balance)
     }
     this.hideZero()
-
   }
 
   hideZero = () => {
     const { item, items } = this.props
     const { isFlag, isCoinHidden } = this.state
+    const fullBalance = Number(item.balance) + (item.unconfirmedBalance === undefined ? 0 : Number(item.unconfirmedBalance))
 
     if (isFlag === true) {
-      if (item.balance === 0 &&
+      if (fullBalance === 0 &&
           isCoinHidden === false &&
           item.currency !== 'SWAP' &&
           item.currency !== 'USDT' &&
           item.currency !== 'BTC' &&
-          item.currency !== 'ETH') {
+          item.currency !== 'ETH'
+      ) {
         this.setState({
           isCoinHidden: true,
         })
         actions.core.markCoinAsHidden(item.currency)
       }
     } else {
-      this.setState({
-        isFlag: true,
-      })
-    }
+        this.setState({
+          isFlag: true,
+        })
+      }
   }
 
   handleReloadBalance = async () => {
