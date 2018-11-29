@@ -1,4 +1,7 @@
-import firebase from 'firebase'
+import firebase from 'firebase/app'
+import 'firebase/auth'
+import 'firebase/messaging'
+import 'firebase/database'
 import { config } from './config/firebase'
 
 import actions from 'redux/actions'
