@@ -108,7 +108,8 @@ export default class CurrencyWallet extends Component {
             {fullName} ({currency})
             <FormattedMessage id="currencywallet107" defaultMessage="web wallet with Atomic Swap." />
           </span>
-        } />
+          }
+        />
         <h3 styleName="subtitle">
           <FormattedMessage id="CurrencyWallet95" defaultMessage="Your address: " />
           <span>{address}</span> <br />

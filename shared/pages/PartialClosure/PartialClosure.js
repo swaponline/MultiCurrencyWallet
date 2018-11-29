@@ -221,8 +221,8 @@ export default class PartialClosure extends Component {
 
     return (
       <Fragment>
-        <PageHeadline subTitle=
-        {<FormattedMessage id="partial225" defaultMessage="Partial closure offers" />} />
+        <PageHeadline subTitle={
+          <FormattedMessage id="partial225" defaultMessage="Partial closure offers" />} />
         <div styleName="section">
           <div styleName="block">
             <iframe
