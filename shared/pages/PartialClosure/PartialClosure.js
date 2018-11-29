@@ -288,7 +288,11 @@ export default class PartialClosure extends Component {
                 {`No orders found, try to reduce the amount`}
               </p>
             )}
-            {isDeclinedOffer && (<p styleName="error">{`Offer is declined`}</p>)}
+            {isDeclinedOffer && (
+              <p styleName="error">
+                {`Offer is declined`}
+              </p>
+            )}
             {
               isFetching && (
                 <span>
