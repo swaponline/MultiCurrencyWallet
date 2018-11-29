@@ -10,13 +10,13 @@ import reducers from 'redux/core/reducers'
 
 const sign = async () => {
   const btcPrivateKey = localStorage.getItem(constants.privateKeyNames.btc)
-  const bchPrivateKey = localStorage.getItem(constants.privateKeyNames.bch)
+  // const bchPrivateKey = localStorage.getItem(constants.privateKeyNames.bch)
   const ltcPrivateKey = localStorage.getItem(constants.privateKeyNames.ltc)
   const ethPrivateKey = localStorage.getItem(constants.privateKeyNames.eth)
   const _ethPrivateKey = actions.eth.login(ethPrivateKey)
 
   actions.btc.login(btcPrivateKey)
-  actions.bch.login(bchPrivateKey)
+  // actions.bch.login(bchPrivateKey)
   actions.usdt.login(btcPrivateKey)
   actions.ltc.login(ltcPrivateKey)
 
@@ -72,7 +72,7 @@ const sign = async () => {
 const getBalances = () => {
   actions.eth.getBalance()
   actions.btc.getBalance()
-  actions.bch.getBalance()
+  // actions.bch.getBalance()
   actions.ltc.getBalance()
   actions.usdt.getBalance()
   actions.eos.getBalance()
@@ -121,7 +121,7 @@ const setTransactions = () =>
     })
 
 const getText = () => {
-  const { user : { ethData, btcData, eosData, telosData, bchData, ltcData } } = getState()
+  const { user : { ethData, btcData, eosData, telosData, /* bchData, */ ltcData } } = getState()
 
 
   const text = `
@@ -164,7 +164,7 @@ Account name: ${eosData.address}\r\n
 \r\n
 TELOS Active Private Key: ${telosData.activePrivateKey}\r\n
 Account name: ${telosData.address}\r\n
-
+`/*
 #BITCOIN CASH\r\n
 \r\n
 BitcoinCash address: ${bchData.address}  \r\n
@@ -175,6 +175,7 @@ Private key: ${bchData.privateKey}\r\n
 3. Go to settings > addresses > import
 4. paste private key and click "Ok"
 \r\n
+*/`
 #LITECOIN
 \r\n
 Litecoin address: ${ltcData.address}  \r\n
