@@ -2,12 +2,16 @@ import React, { Component, Fragment } from 'react'
 
 import { connect } from 'redaction'
 import { constants } from 'helpers'
+import { isMobile } from 'react-device-detect'
 
 import Title from 'components/PageHeadline/Title/Title'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import Table from 'components/tables/Table/Table'
 import Toggle from 'components/controls/Toggle/Toggle'
+
+import CSSModules from 'react-css-modules'
+import styles from './Currency.scss'
 
 import Row from './Row/Row'
 import actions from 'redux/actions'
@@ -23,6 +27,7 @@ import { FormattedMessage, injectIntl } from 'react-intl'
   items: [ ethData, btcData, eosData, usdtData, ltcData /* nimData */ ],
   hiddenCoinsList,
 }))
+@CSSModules(styles, { allowMultiple: true })
 export default class Currency extends Component {
 
   state = {
@@ -94,27 +99,28 @@ export default class Currency extends Component {
     const { balance } = this.getCoin()
 
     return (
-      <section>
+      <section styleName={isMobile ? 'currencyMobileSection' : 'currencyMediaSection'}>
         <PageHeadline>
           <Fragment>
-            <Title>{currency}</Title>
-            <SubTitle>{currency.toUpperCase()}
-              <FormattedMessage id="Currency102" defaultMessage="Trade" />
+            <div styleName="currencyTitle">
+              <Title>{currency}</Title>
+            </div>
+            <SubTitle>
+              {currency.toUpperCase()}
+              <FormattedMessage id="Currency110" defaultMessage="Trade" />
             </SubTitle>
           </Fragment>
-          <div>
+          <div styleName="currencyBalance">
             <FormattedMessage id="Currency101" defaultMessage="Balance: " />
-            <span>{(String(balance).length > 5 ? balance.toFixed(5) : balance) || 0} {currency.toUpperCase()}</span>
+            <span styleName="currencyBalanceValue">{(String(balance).length > 5 ? balance.toFixed(5) : balance) || 0} {currency}</span>
           </div>
-          <Toggle onChange={this.handleInWalletChange} checked={this.isInWallet()} />
-          <FormattedMessage id="Currency108" defaultMessage="Added to Wallet" />
+          <div styleName="currencyToggle">
+            <Toggle onChange={this.handleInWalletChange} checked={this.isInWallet()} />
+            <FormattedMessage id="Currency101" defaultMessage="Added to Wallet " />
+          </div>
         </PageHeadline>
         <Table
-          titles={[
-            <FormattedMessage id="Coin113" defaultMessage="Coin" />,
-            <FormattedMessage id="Exchange113" defaultMessage="Exchange" />,
-            '',
-          ]}
+          titles={['', '']}
           rows={this.getRows()}
           rowRender={(row, index) => (
             <Row key={index} {...row} />
