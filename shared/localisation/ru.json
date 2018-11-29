@@ -2823,7 +2823,7 @@
   },
   {
     "id": "WithdrawButton32",
-    "message": "Вы не можете выполнять опрерации по обмену и отпраки, потому что у вас нулевой баланс.",
+    "message": "При нажатии на кнопку, в поле появится весь Ваш баланс за вычетом комиссии майнер",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]

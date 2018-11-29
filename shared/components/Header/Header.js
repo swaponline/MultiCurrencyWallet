@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
 import links from 'helpers/links'
 import { defineMessages, injectIntl } from 'react-intl'
+import SwitchLang from 'shared/components/SwitchLang/SwitchLang'
 
 
 import CSSModules from 'react-css-modules'
@@ -56,6 +57,7 @@ export default class Header extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      lang: true,
       sticky: false,
       menuItems: [
         {
@@ -86,8 +88,8 @@ export default class Header extends Component {
 
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll)
+    this.checkLang()
   }
-
   componentWillUnmount() {
     window.removeEventListener('scroll', this.handleScroll)
   }
@@ -107,8 +109,24 @@ export default class Header extends Component {
     this.lastScrollTop = scrollTop
   }
 
+checkLang = () => {
+  const { intl: { locale, defaultLocale } } = this.props
+  if (locale === 'ru') {
+    this.setState({
+      lang: false,
+    })
+  }
+  else {
+    this.setState({
+      lang: true,
+    })
+  }
+}
+
+
   render() {
-    const { sticky, menuItems } = this.state
+  const { sticky, menuItems, lang } = this.state
+  const { intl: { locale }, pathname } = this.props
 
     if (isMobile) {
       return <NavMobile menu={menuItems} />
@@ -119,7 +137,9 @@ export default class Header extends Component {
         <WidthContainer styleName="container">
           <LogoTooltip withLink />
           <Nav menu={menuItems} />
-          <LogoTooltip withLink mobile />
+          <SwitchLang styleName="buttonLan" onClick={this.checkLang} href={lang ? '/ru' : '/en'} >
+            {lang ? 'RU' : 'EN'}
+          </SwitchLang>
           <User />
         </WidthContainer>
       </div>

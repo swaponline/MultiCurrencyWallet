@@ -3,6 +3,26 @@
   align-items: center;
 }
 
+.buttonLan {
+  color: #fff;
+
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  margin-right: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.buttonLan:hover{
+  color: #fff;
+}
+
 .header {
 	height: 88px;
 	width: 100%;
