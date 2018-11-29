@@ -262,7 +262,7 @@ export default class PartialClosure extends Component {
   render() {
     const { currencies } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect, orderId,
-      isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet, getUsd, haveUsd
+      isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet, getUsd, haveUsd,
     } = this.state
 
     const linked = Link.all(this, 'haveAmount', 'getAmount', 'customWallet')
