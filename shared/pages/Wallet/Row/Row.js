@@ -236,6 +236,7 @@ export default class Row extends Component {
         unconfirmedBalance,
         contractAddress,
       },
+      intl: { locale },
     } = this.props
 
     const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true"
@@ -342,7 +343,7 @@ export default class Row extends Component {
               }
               <ReactTooltip id="Use" type="light" effect="solid">
                 <span>
-                  <FormattedMessage id="Row268" defaultMessage="Login with your existing eos account" />
+                  <FormattedMessage id="Row346" defaultMessage="Login with your existing eos account" />
                 </span>
               </ReactTooltip>
               { isAddressCopied &&
@@ -354,7 +355,7 @@ export default class Row extends Component {
                 <div styleName="actButton">
                   {currency === 'EOS' && !eosAccountActivated &&
                     <button styleName="button buttonActivate" onClick={this.handleEosBuyAccount} data-tip data-for="Activate">
-                      <FormattedMessage id="Row293" defaultMessage="Activate" />
+                      <FormattedMessage id="Row358" defaultMessage="Activate" />
                     </button>
                   }
                 </div>
@@ -373,7 +374,7 @@ export default class Row extends Component {
                 </div>
                 <ReactTooltip id="Use" type="light" effect="solid">
                   <span>
-                    <FormattedMessage id="Row268" defaultMessage="Login with your existing eos account" />
+                    <FormattedMessage id="Row377" defaultMessage="Login with your existing eos account" />
                   </span>
                 </ReactTooltip>
               </div>

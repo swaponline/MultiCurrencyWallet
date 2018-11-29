@@ -116,7 +116,7 @@ export default class Currency extends Component {
           </div>
           <div styleName="currencyToggle">
             <Toggle onChange={this.handleInWalletChange} checked={this.isInWallet()} />
-            <FormattedMessage id="Currency101" defaultMessage="Added to Wallet " />
+            <FormattedMessage id="Currency119" defaultMessage="Added to Wallet " />
           </div>
         </PageHeadline>
         <Table

@@ -29,10 +29,7 @@
   },
   {
     "id": "menu.listing",
-    "message": "Listing",
-    "files": [
-      "shared/components/Header/Header.js"
-    ]
+    "message": "Listing"
   },
   {
     "id": "menu.wallet",
@@ -99,7 +96,7 @@
   },
   {
     "id": "Nav88",
-    "message": "Testnet",
+    "message": "Listing",
     "files": [
       "shared/components/Header/Nav/Nav.js"
     ]
@@ -372,7 +369,7 @@
   },
   {
     "id": "Select15",
-    "message": "Sell",
+    "message": "Sell ",
     "files": [
       "shared/components/modals/OfferModal/AddOffer/Select/Select.js"
     ]
@@ -400,7 +397,7 @@
   },
   {
     "id": "ExchangeRate14",
-    "message": "=",
+    "message": "  =  ",
     "files": [
       "shared/components/modals/OfferModal/ConfirmOffer/ExchangeRate/ExchangeRate.js"
     ]
@@ -484,7 +481,7 @@
   },
   {
     "id": "WithdrawModal106",
-    "message": "No less than",
+    "message": "No less than ",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
@@ -736,10 +733,7 @@
   },
   {
     "id": "Row30",
-    "message": "Exchange",
-    "files": [
-      "shared/pages/Currency/Row/Row.js"
-    ]
+    "message": "Exchange"
   },
   {
     "id": "Row35",
@@ -2670,7 +2664,7 @@
   },
   {
     "id": "Row268",
-    "message": "Login with your existing eos account",
+    "message": "Not activated",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
@@ -2734,10 +2728,7 @@
   },
   {
     "id": "transaction28",
-    "message": "ETH on your balance",
-    "files": [
-      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
-    ]
+    "message": "ETH on your balance"
   },
   {
     "id": "PrivateKeysModal105",
@@ -2834,176 +2825,104 @@
     "id": "WithdrawButton32",
     "message": "You can not send and exchange this asset, because you have a zero balance.",
     "files": [
-      "shared/components/controls/WithdrawButton/BtnTooltip.js"
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
   },
   {
     "id": "Listing1",
-    "message": "How to list your asset on swap.online",
-    "files": [
-      "shared/pages/Listing/Listing.js"
-    ]
+    "message": "How to list your asset on swap.online"
   },
   {
     "id": "listing.listing1",
-    "message": "1. We can list your token on swap.online ;",
-    "files": [
-      "shared/pages/Listing/Listing.js"
-    ]
+    "message": "1. We can list your token on swap.online ;"
   },
   {
     "id": "listing.listing10",
-    "message": "SWAP.Online will be cryptocurrency Pink Sheets market.",
-    "files": [
-      "shared/pages/Listing/Listing.js"
-    ]
+    "message": "SWAP.Online will be cryptocurrency Pink Sheets market."
   },
   {
     "id": "listing.listing12",
-    "message": "It’s well known that even in traditional stock market, one willing to be quoted must meet the requirements of SEC, or as far as the OTC Market Group Inc. markets (OTCQX and OTCQB) are concerned, must show the big income and seek the support of the influential consulting agencies. Moreover, the information about the company audit must be provided annually to the SEC or SEC-approved regulators.",
-    "files": [
-      "shared/pages/Listing/Listing.js"
-    ]
+    "message": "It’s well known that even in traditional stock market, one willing to be quoted must meet the requirements of SEC, or as far as the OTC Market Group Inc. markets (OTCQX and OTCQB) are concerned, must show the big income and seek the support of the influential consulting agencies. Moreover, the information about the company audit must be provided annually to the SEC or SEC-approved regulators."
   },
   {
     "id": "listing.listing13",
-    "message": "Some of the cryptocurrency ‘fat cats’ allow themselves to do the same. For example, Localbitcoins CEO said they would newer list a token of the project with less than USD1B capitalisation. Cryptobridge and some related centralized exchanges ask for the USD 23 thousand (in BTS equivalent) for the token owner to be listed.",
-    "files": [
-      "shared/pages/Listing/Listing.js"
-    ]
+    "message": "Some of the cryptocurrency ‘fat cats’ allow themselves to do the same. For example, Localbitcoins CEO said they would newer list a token of the project with less than USD1B capitalisation. Cryptobridge and some related centralized exchanges ask for the USD 23 thousand (in BTS equivalent) for the token owner to be listed."
   },
   {
     "id": "listing.listing14",
-    "message": "That is not about us.",
-    "files": [
-      "shared/pages/Listing/Listing.js"
-    ]
+    "message": "That is not about us."
   },
   {
     "id": "listing.listing15",
-    "message": "As our transactions is peer-to-peer, based on the Atomic Swaps technology, we can add to the balances every token corresponding some our criterias. Obviously, clearly fraudulent projects are to be rejected from the very beginning. But all other start-ups on the different stages of development are welcome.",
-    "files": [
-      "shared/pages/Listing/Listing.js"
-    ]
+    "message": "As our transactions is peer-to-peer, based on the Atomic Swaps technology, we can add to the balances every token corresponding some our criterias. Obviously, clearly fraudulent projects are to be rejected from the very beginning. But all other start-ups on the different stages of development are welcome."
   },
   {
     "id": "listing.listing16",
-    "message": "In contradiction to the widespread Ethereum-pegged exchanges, the main currency to be changed on tokens in our project is Bitcoin. It can be treated as our killer-feature: for the crypto-newbies and vast majority of small customers Bitcoin is much clearer and easy to buy via Localbitcoins etc.",
-    "files": [
-      "shared/pages/Listing/Listing.js"
-    ]
+    "message": "In contradiction to the widespread Ethereum-pegged exchanges, the main currency to be changed on tokens in our project is Bitcoin. It can be treated as our killer-feature: for the crypto-newbies and vast majority of small customers Bitcoin is much clearer and easy to buy via Localbitcoins etc."
   },
   {
     "id": "listing.listing17",
-    "message": "We offer two-level way of access to the balances. On the first stage, we analyze the level of project technical development, collect the basic information (name, ticker, logo) and add the token to trading balances.",
-    "files": [
-      "shared/pages/Listing/Listing.js"
-    ]
+    "message": "We offer two-level way of access to the balances. On the first stage, we analyze the level of project technical development, collect the basic information (name, ticker, logo) and add the token to trading balances."
   },
   {
     "id": "listing.listing18",
-    "message": "Then, to start trading with Bitcoin, the project should publish the information about the collaboration with SWAP.Online on every social platform and on the web-site forum. With this information published, our developers will release the final version of the exchange to client’s token. This option is available for the first ten projects only.",
-    "files": [
-      "shared/pages/Listing/Listing.js"
-    ]
+    "message": "Then, to start trading with Bitcoin, the project should publish the information about the collaboration with SWAP.Online on every social platform and on the web-site forum. With this information published, our developers will release the final version of the exchange to client’s token. This option is available for the first ten projects only."
   },
   {
     "id": "listing.listing19",
-    "message": "The conditions of delisting are discussed, but at the moment, we plan to expel twenty per cent worst tokens every month.",
-    "files": [
-      "shared/pages/Listing/Listing.js"
-    ]
+    "message": "The conditions of delisting are discussed, but at the moment, we plan to expel twenty per cent worst tokens every month."
   },
   {
     "id": "listing.listing2",
-    "message": "2. To list your tokens, please send us the link to your peoject, erc20 address, icon, name and ticker (short name) to team@swap.online;",
-    "files": [
-      "shared/pages/Listing/Listing.js"
-    ]
+    "message": "2. To list your tokens, please send us the link to your peoject, erc20 address, icon, name and ticker (short name) to team@swap.online;"
   },
   {
     "id": "listing.listing20",
-    "message": "Thus, you token can start to be quoted in free and decentralized manner as quickly as possible for your unlimited profit.",
-    "files": [
-      "shared/pages/Listing/Listing.js"
-    ]
+    "message": "Thus, you token can start to be quoted in free and decentralized manner as quickly as possible for your unlimited profit."
   },
   {
     "id": "listing.listing21",
-    "message": "Stay with us.",
-    "files": [
-      "shared/pages/Listing/Listing.js"
-    ]
+    "message": "Stay with us."
   },
   {
     "id": "listing.listing22",
-    "message": "Grow with us.",
-    "files": [
-      "shared/pages/Listing/Listing.js"
-    ]
+    "message": "Grow with us."
   },
   {
     "id": "listing.listing23",
-    "message": "Earn with us.",
-    "files": [
-      "shared/pages/Listing/Listing.js"
-    ]
+    "message": "Earn with us."
   },
   {
     "id": "listing.listing3",
-    "message": "3. We as well will announce listing of your tokens on our social media, mutial PR will benefit both sides.",
-    "files": [
-      "shared/pages/Listing/Listing.js"
-    ]
+    "message": "3. We as well will announce listing of your tokens on our social media, mutial PR will benefit both sides."
   },
   {
     "id": "listing.listing4",
-    "message": "Crypto Pink Sheets: ALL Coins Welcome To SWAP.Online!",
-    "files": [
-      "shared/pages/Listing/Listing.js"
-    ]
+    "message": "Crypto Pink Sheets: ALL Coins Welcome To SWAP.Online!"
   },
   {
     "id": "listing.listing5",
-    "message": "OTC-approach-crypto market to be opened in Aug, 2018.",
-    "files": [
-      "shared/pages/Listing/Listing.js"
-    ]
+    "message": "OTC-approach-crypto market to be opened in Aug, 2018."
   },
   {
     "id": "listing.listing6",
-    "message": "There was one company in the U.S. in the year of 1913, the National Quotation Bureau. They brought to life very simple idea - to provide every entity with the ability to be quoted freely, without complicated safety and control proceedings. The list of the bond orders was primarily published on the yellow paper and the stock orders were published on the pink paper. The Pink Sheets, as the lists were immediately called by the traders. rapidly became very popular among the market players. Every firm opened in the U.S. or abroad was able to publish its securities quotations in the list of Pink Sheets. With the increasing requirements of NYSE and NASDAQ and growing demands of the SEC to the information regarding the company applying the market, the interest to the Pink Sheets arose very fast. In September, 1990, the NQB introduced the real-time Electronic Quotation Service, so the over-the-counter trading entered the Internet. By the year 2010 the operators of the Pink Sheets trading were acquisited by the OTC Market Group, Inc. In 2014, two of five U.S. stock trades were over-the-counter.",
-    "files": [
-      "shared/pages/Listing/Listing.js"
-    ]
+    "message": "There was one company in the U.S. in the year of 1913, the National Quotation Bureau. They brought to life very simple idea - to provide every entity with the ability to be quoted freely, without complicated safety and control proceedings. The list of the bond orders was primarily published on the yellow paper and the stock orders were published on the pink paper. The Pink Sheets, as the lists were immediately called by the traders. rapidly became very popular among the market players. Every firm opened in the U.S. or abroad was able to publish its securities quotations in the list of Pink Sheets. With the increasing requirements of NYSE and NASDAQ and growing demands of the SEC to the information regarding the company applying the market, the interest to the Pink Sheets arose very fast. In September, 1990, the NQB introduced the real-time Electronic Quotation Service, so the over-the-counter trading entered the Internet. By the year 2010 the operators of the Pink Sheets trading were acquisited by the OTC Market Group, Inc. In 2014, two of five U.S. stock trades were over-the-counter."
   },
   {
     "id": "listing.listing7",
-    "message": "Wal-Mart was the Pink Sheet company in 1972 and earned there USD 1B.",
-    "files": [
-      "shared/pages/Listing/Listing.js"
-    ]
+    "message": "Wal-Mart was the Pink Sheet company in 1972 and earned there USD 1B."
   },
   {
     "id": "listing.listing8",
-    "message": "Navistar International, the 12-billion-dollar-corporation, came to the Pink Sheets Market in 2006 leaving the NYSE due to some issues with the auditor board..",
-    "files": [
-      "shared/pages/Listing/Listing.js"
-    ]
+    "message": "Navistar International, the 12-billion-dollar-corporation, came to the Pink Sheets Market in 2006 leaving the NYSE due to some issues with the auditor board.."
   },
   {
     "id": "listing.listing9",
-    "message": "In SWAP. Online we have noticed that Pink Sheets principles are very close to the initial meaning of cryptocurrencies. Both of them are based on the faith in transparency, decentralization, bilateral responsibility of buyer and seller. As we decided to make the exchange of crypto really",
-    "files": [
-      "shared/pages/Listing/Listing.js"
-    ]
+    "message": "In SWAP. Online we have noticed that Pink Sheets principles are very close to the initial meaning of cryptocurrencies. Both of them are based on the faith in transparency, decentralization, bilateral responsibility of buyer and seller. As we decided to make the exchange of crypto really"
   },
   {
     "id": "listing.listing9a",
-    "message": "safe, rapid and decentralized, we couldn’t go about this another way.",
-    "files": [
-      "shared/pages/Listing/Listing.js"
-    ]
+    "message": "safe, rapid and decentralized, we couldn’t go about this another way."
   },
   {
     "id": "BTCTOLTC132",
@@ -3327,17 +3246,11 @@
   },
   {
     "id": "Row310",
-    "message": "Login with your existing eos account",
-    "files": [
-      "shared/pages/Wallet/Row/Row.js"
-    ]
+    "message": "Not activated"
   },
   {
     "id": "Row354",
-    "message": "Activate",
-    "files": [
-      "shared/pages/Wallet/Row/Row.js"
-    ]
+    "message": "Activate"
   },
   {
     "id": "partial221",
@@ -3348,17 +3261,11 @@
   },
   {
     "id": "partial234",
-    "message": "No offers",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
-    ]
+    "message": "No offers"
   },
   {
     "id": "partial238",
-    "message": "Offer is declined",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
-    ]
+    "message": "Offer is declined"
   },
   {
     "id": "partial244",
@@ -3376,17 +3283,11 @@
   },
   {
     "id": "Currency108",
-    "message": "Added to Wallet",
-    "files": [
-      "shared/pages/Currency/Currency.js"
-    ]
+    "message": "Added to Wallet"
   },
   {
     "id": "Currency102",
-    "message": "Trade",
-    "files": [
-      "shared/pages/Currency/Currency.js"
-    ]
+    "message": " Trade"
   },
   {
     "id": "CurrencyWallet107",
@@ -3551,17 +3452,11 @@
   },
   {
     "id": "Coin113",
-    "message": "Coin",
-    "files": [
-      "shared/pages/Currency/Currency.js"
-    ]
+    "message": "Coin"
   },
   {
     "id": "Exchange113",
-    "message": "Exchange",
-    "files": [
-      "shared/pages/Currency/Currency.js"
-    ]
+    "message": "Exchange"
   },
   {
     "id": "Amount130",
@@ -3968,17 +3863,11 @@
   },
   {
     "id": "add367",
-    "message": "Amount must be greater than",
-    "files": [
-      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
-    ]
+    "message": "Amount must be greater than"
   },
   {
     "id": "add368",
-    "message": "Amount must be less than your balance",
-    "files": [
-      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
-    ]
+    "message": "Amount must be less than your balance"
   },
   {
     "id": "ExchangeRate12",
@@ -4017,31 +3906,19 @@
   },
   {
     "id": "Withdrow101",
-    "message": "Please notice, that you need to have minimum",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "Please notice, that you need to have minimum"
   },
   {
     "id": "Withdrow105",
-    "message": "amount",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "amount"
   },
   {
     "id": "Withdrow109",
-    "message": "of the",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "of the"
   },
   {
     "id": "Withdrow111",
-    "message": "on your wallet, to use it for miners fee",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "on your wallet, to use it for miners fee"
   },
   {
     "id": "RowHistory94",
@@ -4125,6 +4002,181 @@
     "message": "web wallet with Atomic Swap.",
     "files": [
       "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "SubscribeModal000",
+    "message": "Thanks!{br}When we send the token you will receive a notification",
+    "files": [
+      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+    ]
+  },
+  {
+    "id": "SubscribeModal001",
+    "message": "Join whitelist and get 1 SWAP token",
+    "files": [
+      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+    ]
+  },
+  {
+    "id": "SubscribeModal002",
+    "message": "Wait please",
+    "files": [
+      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+    ]
+  },
+  {
+    "id": "SubscribeModal003",
+    "message": "Join whitelist",
+    "files": [
+      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+    ]
+  },
+  {
+    "id": "SubscribeModal004",
+    "message": "click on this button to allow push notifications",
+    "files": [
+      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+    ]
+  },
+  {
+    "id": "WithdrawButton25",
+    "message": "You can not send and exchange this asset, because you have a zero balance.",
+    "files": [
+      "shared/components/controls/WithdrawButton/BtnTooltip.js"
+    ]
+  },
+  {
+    "id": "Nav63",
+    "message": "Testnet",
+    "files": [
+      "shared/components/Header/Nav/Nav.js"
+    ]
+  },
+  {
+    "id": "transaction368",
+    "message": "Amount must be greater than",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "transaction376",
+    "message": "Amount must be less than your balance",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "transaction398",
+    "message": "ETH on your balance",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "Select210",
+    "message": "MAX",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Withdrow1194",
+    "message": "Address",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Withdrow159",
+    "message": "Amount must be greater than",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Withdrow172",
+    "message": "Please note: Miners fee is ",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Withdrow174",
+    "message": "Your balance must exceed this sum to perform transaction.",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Withdrow178",
+    "message": "Please note: Miners fee is ",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Withdrow180",
+    "message": "Your balance must exceed this sum to perform transaction.",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Currency110",
+    "message": " Trade",
+    "files": [
+      "shared/pages/Currency/Currency.js"
+    ]
+  },
+  {
+    "id": "Currency119",
+    "message": "Added to Wallet",
+    "files": [
+      "shared/pages/Currency/Currency.js"
+    ]
+  },
+  {
+    "id": "partial277",
+    "message": "No offers",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial284",
+    "message": "Offer is declined",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial291",
+    "message": "Wait participant:",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "Row346",
+    "message": "Not activated",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row358",
+    "message": "Activate",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row377",
+    "message": "Not activated",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
     ]
   }
 ]

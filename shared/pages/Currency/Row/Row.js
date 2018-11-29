@@ -8,7 +8,7 @@ import styles from './Row.scss'
 
 import Coin from 'components/Coin/Coin'
 import Flip from 'components/controls/Flip/Flip'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 
 
 @injectIntl

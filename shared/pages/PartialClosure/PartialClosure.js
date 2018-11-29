@@ -221,7 +221,8 @@ export default class PartialClosure extends Component {
 
     return (
       <Fragment>
-        <PageHeadline subTitle="Partial closure offers" />
+        <PageHeadline subTitle=
+        {<FormattedMessage id="partial225" defaultMessage="Partial closure offers" />} />
         <div styleName="section">
           <div styleName="block">
             <iframe
@@ -239,7 +240,7 @@ export default class PartialClosure extends Component {
               inputValueLink={linked.haveAmount.pipe(this.setAmount)}
               selectedValue={haveCurrency}
               onSelect={this.handleSetHaveValue}
-              label="You have"
+              label={<FormattedMessage id="partial243" defaultMessage="You have" />}
               placeholder="Enter amount"
               currencies={currencies}
             />
@@ -251,7 +252,7 @@ export default class PartialClosure extends Component {
               inputValueLink={linked.getAmount}
               selectedValue={getCurrency}
               onSelect={this.handleSetGetValue}
-              label="You get"
+              label={<FormattedMessage id="partial255" defaultMessage="You get" />}
               disabled
               currencies={currencies}
             />
@@ -274,21 +275,21 @@ export default class PartialClosure extends Component {
             {isNonOffers &&
               (
                 <p styleName="error">
-                  <FormattedMessage id="partial244" defaultMessage="No offers" />
+                  <FormattedMessage id="partial277" defaultMessage="No offers" />
                 </p>
               )
             }
             {isDeclinedOffer &&
               (
                 <p styleName="error">
-                  <FormattedMessage id="partial244" defaultMessage="Offer is declined" />
+                  <FormattedMessage id="partial284" defaultMessage="Offer is declined" />
                 </p>
               )
             }
             {
               isFetching && (
                 <span>
-                  <FormattedMessage id="partial244" defaultMessage="Wait participant: " />
+                  <FormattedMessage id="partial291" defaultMessage="Wait participant: " />
                   <InlineLoader />
                 </span>
               )

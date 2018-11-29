@@ -27,7 +27,6 @@ const routes = (
 
     <Route path={`${localisePrefix}${links.partial}`} component={PartialClosure} />
     <Route path={`${localisePrefix}${links.aboutus}`} component={About} />
-    <Route path={`${localisePrefix}${links.listing}`} component={Listing} />
     <Route path={`${localisePrefix}${links.history}`} component={History} />
 
 

@@ -156,7 +156,7 @@ export default class WithdrawModal extends React.Component {
           !tokenFee &&
           (
             <div style={{ width: '340px', fontSize: '12px' }}>
-              <FormattedMessage id="Withdrow108" defaultMessage="Amount must be greater than  " />
+              <FormattedMessage id="Withdrow159" defaultMessage="Amount must be greater than  " />
               {minAmount[data.currency.toLowerCase()]}
             </div>
           )
@@ -191,7 +191,7 @@ export default class WithdrawModal extends React.Component {
             )
           }
           <FieldLabel inRow>
-            <FormattedMessage id="Withdrow108" defaultMessage="Address " />
+            <FormattedMessage id="Withdrow1194" defaultMessage="Address " />
             <Tooltip text={`Make sure the wallet you are sending the funds to supports ${data.currency.toUpperCase()}`} />
           </FieldLabel>
           <Input valueLink={linked.address} focusOnInit pattern="0-9a-zA-Z" placeholder={`Enter ${data.currency.toUpperCase()} address to transfer the funds`} />
@@ -207,7 +207,7 @@ export default class WithdrawModal extends React.Component {
           <div styleName="group">
             <Input styleName="input" valueLink={linked.amount} pattern="0-9\." placeholder={`Enter the amount. You have ${Number(balance).toFixed(5)}`} />
             <buttton styleName="button" onClick={this.All} data-tip data-for="Withdrow134">
-              <FormattedMessage id="Select24" defaultMessage="MAX" />
+              <FormattedMessage id="Select210" defaultMessage="MAX" />
             </buttton>
             <ReactTooltip id="Withdrow134" type="light" effect="solid">
               <FormattedMessage
