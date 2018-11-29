@@ -173,6 +173,7 @@ export default class WithdrawModal extends React.Component {
       const text = [
         <div style={{ textAlign: 'center' }}>
           <FormattedMessage id="WTH273" defaultMessage="Make sure the wallet you " />
+          <br />
           <FormattedMessage id="WTHl274" defaultMessage="are sending the funds to supports" />
           {data.currency.toUpperCase()}
         </div>,

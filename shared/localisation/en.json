@@ -40,7 +40,7 @@
   },
   {
     "id": "LtcToEth.orderCreatorIsOffline",
-    "message": "The order creator is offline. Waiting for him..",
+    "message": "The order creator is offline. Waiting for him.. ",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
@@ -159,7 +159,7 @@
   },
   {
     "id": "transactionLink28",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/components/Href/TransactionLink.js"
     ]
@@ -194,7 +194,7 @@
   },
   {
     "id": "Loader21",
-    "message": "Please wait, it takes from 3 to 5 minutes to complete the transaction.",
+    "message": "Please wait, it takes from 3 to 5 minutes to complete the transaction. ",
     "files": [
       "shared/components/loaders/Loader/Loader.js"
     ]
@@ -236,7 +236,7 @@
   },
   {
     "id": "Approve70",
-    "message": "Please set the amount limit that the swap smart contract can deduct from your account. We do not recommend setting any limits.",
+    "message": "Please set the amount limit that the swap smart contract can deduct from your account. We do not recommend setting any limits. ",
     "files": [
       "shared/components/modals/Approve/Approve.js"
     ]
@@ -404,7 +404,7 @@
   },
   {
     "id": "Feld82",
-    "message": "INVALID PRIVATE KEY! You should pass correct value! Try again!",
+    "message": "INVALID PRIVATE KEY! You should pass correct value! Try again! ",
     "files": [
       "shared/components/modals/PrivateKeysModal/Field2/Field2.js"
     ]
@@ -467,7 +467,7 @@
   },
   {
     "id": "ErrorNotification12",
-    "message": "Oops, looks like something went wrong!",
+    "message": "Oops, looks like something went wrong! ",
     "files": [
       "shared/components/notifications/ErrorNotification/ErrorNotification.js"
     ]
@@ -544,7 +544,7 @@
   },
   {
     "id": "SaveKeys24",
-    "message": "the button or take a screenshot of this page, then confirm it and click here.",
+    "message": "the button or take a screenshot of this page, then confirm it and click here. ",
     "files": [
       "shared/components/SaveKeys/SaveKeys.js"
     ]
@@ -558,7 +558,7 @@
   },
   {
     "id": "SwapProgress105",
-    "message": "3. Checking balance..",
+    "message": "3. Checking balance.. ",
     "files": [
       "shared/components/SwapProgress/SwapProgress.js"
     ]
@@ -586,14 +586,14 @@
   },
   {
     "id": "SwapProgress129",
-    "message": "7. Money was transferred to your wallet. Check the balance.",
+    "message": "7. Money was transferred to your wallet. Check the balance. ",
     "files": [
       "shared/components/SwapProgress/SwapProgress.js"
     ]
   },
   {
     "id": "SwapProgress135",
-    "message": "Thank you for using Swap.Online!",
+    "message": "Thank you for using Swap.Online! ",
     "files": [
       "shared/components/SwapProgress/SwapProgress.js"
     ]
@@ -628,7 +628,7 @@
   },
   {
     "id": "SwapProgress50",
-    "message": "4. Checking balance..",
+    "message": "4. Checking balance.. ",
     "files": [
       "shared/components/SwapProgress/SwapProgress.js"
     ]
@@ -649,28 +649,28 @@
   },
   {
     "id": "SwapProgress68",
-    "message": "7. Money was transferred to your wallet. Check the balance.",
+    "message": "7. Money was transferred to your wallet. Check the balance. ",
     "files": [
       "shared/components/SwapProgress/SwapProgress.js"
     ]
   },
   {
     "id": "SwapProgress74",
-    "message": "Thank you for using Swap.Online!",
+    "message": "Thank you for using Swap.Online! ",
     "files": [
       "shared/components/SwapProgress/SwapProgress.js"
     ]
   },
   {
     "id": "SwapProgress80",
-    "message": "Thank you for using Swap.Online!",
+    "message": "Thank you for using Swap.Online! ",
     "files": [
       "shared/components/SwapProgress/SwapProgress.js"
     ]
   },
   {
     "id": "SwapProgress93",
-    "message": "1. The order creator is offline. Waiting for him..",
+    "message": "1. The order creator is offline. Waiting for him.. ",
     "files": [
       "shared/components/SwapProgress/SwapProgress.js"
     ]
@@ -684,7 +684,7 @@
   },
   {
     "id": "Tooltip11",
-    "message": "?",
+    "message": "? ",
     "files": [
       "shared/components/ui/Tooltip/Tooltip.js"
     ]
@@ -719,7 +719,7 @@
   },
   {
     "id": "CurrencyWallet110",
-    "message": "History your transactions",
+    "message": " History your transactions",
     "files": [
       "shared/pages/CurrencyWallet/CurrencyWallet.js"
     ]
@@ -867,14 +867,14 @@
   },
   {
     "id": "Home153",
-    "message": "What is atomic swap?",
+    "message": "What is atomic swap? ",
     "files": [
       "shared/pages/Home/Home.js"
     ]
   },
   {
     "id": "Orders117",
-    "message": "No such ticker. Redirecting to SWAP-BTC exchange..."
+    "message": "No such ticker. Redirecting to SWAP-BTC exchange... "
   },
   {
     "id": "Orders128",
@@ -1033,7 +1033,7 @@
   },
   {
     "id": "NotFound8",
-    "message": "Page not found!",
+    "message": "Page not found! ",
     "files": [
       "shared/pages/NotFound/NotFound.js"
     ]
@@ -1110,14 +1110,14 @@
   },
   {
     "id": "BtcToEth105",
-    "message": "The order creator is offline. Waiting for him..",
+    "message": "The order creator is offline. Waiting for him.. ",
     "files": [
       "shared/pages/Swap/BtcToEth.js"
     ]
   },
   {
     "id": "BtcToEth116",
-    "message": "We are waiting for a market maker. If it does not appear within 5 minutes, the swap will be canceled automatically.",
+    "message": "We are waiting for a market maker. If it does not appear within 5 minutes, the swap will be canceled automatically. ",
     "files": [
       "shared/pages/Swap/BtcToEth.js"
     ]
@@ -1138,7 +1138,7 @@
   },
   {
     "id": "BtcToEth140",
-    "message": "Save the secret key! Otherwise there will be a chance you loose your money!",
+    "message": "Save the secret key! Otherwise there will be a chance you loose your money! ",
     "files": [
       "shared/pages/Swap/BtcToEth.js"
     ]
@@ -1187,7 +1187,7 @@
   },
   {
     "id": "BtcToEth183",
-    "message": "Checking balance..",
+    "message": "Checking balance.. ",
     "files": [
       "shared/pages/Swap/BtcToEth.js"
     ]
@@ -1215,7 +1215,7 @@
   },
   {
     "id": "BtcToEth233",
-    "message": "How refund your money ?",
+    "message": "How refund your money ? ",
     "files": [
       "shared/pages/Swap/BtcToEth.js"
     ]
@@ -1250,14 +1250,14 @@
   },
   {
     "id": "BtcToEth312",
-    "message": "6. Money was transferred to your wallet. Check the balance.",
+    "message": "6. Money was transferred to your wallet. Check the balance. ",
     "files": [
       "shared/pages/Swap/BtcToEth.js"
     ]
   },
   {
     "id": "BtcToEth315",
-    "message": "Thank you for using Swap.Online!",
+    "message": "Thank you for using Swap.Online! ",
     "files": [
       "shared/pages/Swap/BtcToEth.js"
     ]
@@ -1292,7 +1292,7 @@
   },
   {
     "id": "BtcToEthToken114",
-    "message": "Save the secret key! Otherwise there will be a chance you loose your money!",
+    "message": "Save the secret key! Otherwise there will be a chance you loose your money! ",
     "files": [
       "shared/pages/Swap/BtcToEthToken.js"
     ]
@@ -1348,7 +1348,7 @@
   },
   {
     "id": "BtcToEthToken156",
-    "message": "Checking balance..",
+    "message": "Checking balance.. ",
     "files": [
       "shared/pages/Swap/BtcToEthToken.js"
     ]
@@ -1376,7 +1376,7 @@
   },
   {
     "id": "BtcToEthToken207",
-    "message": "How refund your money?",
+    "message": "How refund your money? ",
     "files": [
       "shared/pages/Swap/BtcToEthToken.js"
     ]
@@ -1411,14 +1411,14 @@
   },
   {
     "id": "BtcToEthToken290",
-    "message": "6. Money was transferred to your wallet. Check the balance.",
+    "message": "6. Money was transferred to your wallet. Check the balance. ",
     "files": [
       "shared/pages/Swap/BtcToEthToken.js"
     ]
   },
   {
     "id": "BtcToEthToken293",
-    "message": "Thank you for using Swap.Online!",
+    "message": "Thank you for using Swap.Online! ",
     "files": [
       "shared/pages/Swap/BtcToEthToken.js"
     ]
@@ -1439,7 +1439,7 @@
   },
   {
     "id": "BtcToEthToken77",
-    "message": "We are waiting for a market maker. If it does not appear within 5 minutes, the swap will be canceled automatically.",
+    "message": "We are waiting for a market maker. If it does not appear within 5 minutes, the swap will be canceled automatically. ",
     "files": [
       "shared/pages/Swap/BtcToEthToken.js"
     ]
@@ -1502,7 +1502,7 @@
   },
   {
     "id": "EthToBtc104",
-    "message": "The order creator is offline. Waiting for him..",
+    "message": "The order creator is offline. Waiting for him.. ",
     "files": [
       "shared/pages/Swap/EthToBtc.js"
     ]
@@ -1516,7 +1516,7 @@
   },
   {
     "id": "EthToBtc125",
-    "message": "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation.",
+    "message": "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation. ",
     "files": [
       "shared/pages/Swap/EthToBtc.js"
     ]
@@ -1621,7 +1621,7 @@
   },
   {
     "id": "EthToBtc286",
-    "message": "Checking balance..",
+    "message": "Checking balance.. ",
     "files": [
       "shared/pages/Swap/EthToBtc.js"
     ]
@@ -1670,14 +1670,14 @@
   },
   {
     "id": "EthToBtc387",
-    "message": "7. Money was transferred to your wallet. Check the balance.",
+    "message": "7. Money was transferred to your wallet. Check the balance. ",
     "files": [
       "shared/pages/Swap/EthToBtc.js"
     ]
   },
   {
     "id": "EthToBtc390",
-    "message": "Thank you for using Swap.Online!",
+    "message": "Thank you for using Swap.Online! ",
     "files": [
       "shared/pages/Swap/EthToBtc.js"
     ]
@@ -1803,7 +1803,7 @@
   },
   {
     "id": "EthTokenBtc267",
-    "message": "Checking balance..",
+    "message": "Checking balance.. ",
     "files": [
       "shared/pages/Swap/EthTokenToBtc.js"
     ]
@@ -1852,7 +1852,7 @@
   },
   {
     "id": "EthTokenBtc365",
-    "message": "Thank you for using Swap.Online!",
+    "message": "Thank you for using Swap.Online! ",
     "files": [
       "shared/pages/Swap/EthTokenToBtc.js"
     ]
@@ -1880,14 +1880,14 @@
   },
   {
     "id": "EthTokenBtc94",
-    "message": "Confirmation of the transaction is necessary for crediting the reputation.If a user does not bring the deal to the end he gets a negative reputation.",
+    "message": "Confirmation of the transaction is necessary for crediting the reputation.If a user does not bring the deal to the end he gets a negative reputation. ",
     "files": [
       "shared/pages/Swap/EthTokenToBtc.js"
     ]
   },
   {
     "id": "EthTokenToUsdt101",
-    "message": "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation.",
+    "message": "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation. ",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
@@ -1992,7 +1992,7 @@
   },
   {
     "id": "EthTokenToUsdt276",
-    "message": "Checking balance..",
+    "message": "Checking balance.. ",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
@@ -2041,14 +2041,14 @@
   },
   {
     "id": "EthTokenToUsdt377",
-    "message": "7. Money was transferred to your wallet. Check the balance.",
+    "message": "7. Money was transferred to your wallet. Check the balance. ",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
   },
   {
     "id": "EthTokenToUsdt380",
-    "message": "Thank you for using Swap.Online!",
+    "message": "Thank you for using Swap.Online! ",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
@@ -2076,7 +2076,7 @@
   },
   {
     "id": "EthToLtc104",
-    "message": "The order creator is offline. Waiting for him..",
+    "message": "The order creator is offline. Waiting for him.. ",
     "files": [
       "shared/pages/Swap/EthToLtc.js"
     ]
@@ -2090,7 +2090,7 @@
   },
   {
     "id": "EthToLtc125",
-    "message": "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation.",
+    "message": "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation. ",
     "files": [
       "shared/pages/Swap/EthToLtc.js"
     ]
@@ -2195,7 +2195,7 @@
   },
   {
     "id": "EthToLtc286",
-    "message": "Checking balance..",
+    "message": "Checking balance.. ",
     "files": [
       "shared/pages/Swap/EthToLtc.js"
     ]
@@ -2244,14 +2244,14 @@
   },
   {
     "id": "EthToLtc386",
-    "message": "7. Money was transferred to your wallet. Check the balance.",
+    "message": "7. Money was transferred to your wallet. Check the balance. ",
     "files": [
       "shared/pages/Swap/EthToLtc.js"
     ]
   },
   {
     "id": "EthToLtc389",
-    "message": "Thank you for using Swap.Online!",
+    "message": "Thank you for using Swap.Online! ",
     "files": [
       "shared/pages/Swap/EthToLtc.js"
     ]
@@ -2293,7 +2293,7 @@
   },
   {
     "id": "LtcTOeth117",
-    "message": "We are waiting for a market maker. If it does not appear within 5 minutes, the swap will be canceled automatically.",
+    "message": "We are waiting for a market maker. If it does not appear within 5 minutes, the swap will be canceled automatically. ",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
@@ -2314,7 +2314,7 @@
   },
   {
     "id": "LtcTOeth142",
-    "message": "Save the secret key! Otherwise there will be a chance you loose your money!",
+    "message": "Save the secret key! Otherwise there will be a chance you loose your money! ",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
@@ -2370,7 +2370,7 @@
   },
   {
     "id": "LtcTOeth184",
-    "message": "Checking balance..",
+    "message": "Checking balance.. ",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
@@ -2398,7 +2398,7 @@
   },
   {
     "id": "LtcTOeth234",
-    "message": "How refund your money ?",
+    "message": "How refund your money ? ",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
@@ -2433,14 +2433,14 @@
   },
   {
     "id": "LtcTOeth313",
-    "message": "6. Money was transferred to your wallet. Check the balance.",
+    "message": "6. Money was transferred to your wallet. Check the balance. ",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
   },
   {
     "id": "LtcTOeth315",
-    "message": "Thank you for using Swap.Online!",
+    "message": "Thank you for using Swap.Online! ",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
@@ -2475,7 +2475,7 @@
   },
   {
     "id": "UsdrToEthToken121",
-    "message": "Save the secret key! Otherwise there will be a chance that you'll lose your money!",
+    "message": "Save the secret key! Otherwise there will be a chance that you'll lose your money! ",
     "files": [
       "shared/pages/Swap/UsdtToEthToken.js"
     ]
@@ -2531,7 +2531,7 @@
   },
   {
     "id": "UsdrToEthToken163",
-    "message": "Checking balance...",
+    "message": "Checking balance... ",
     "files": [
       "shared/pages/Swap/UsdtToEthToken.js"
     ]
@@ -2559,7 +2559,7 @@
   },
   {
     "id": "UsdrToEthToken213",
-    "message": "How to refund your money?",
+    "message": "How to refund your money? ",
     "files": [
       "shared/pages/Swap/UsdtToEthToken.js"
     ]
@@ -2594,14 +2594,14 @@
   },
   {
     "id": "UsdrToEthToken294",
-    "message": "6. Money was transferred to your wallet. Check the balance.",
+    "message": "6. Money was transferred to your wallet. Check the balance. ",
     "files": [
       "shared/pages/Swap/UsdtToEthToken.js"
     ]
   },
   {
     "id": "UsdrToEthToken297",
-    "message": "Thank you for using Swap.Online!",
+    "message": "Thank you for using Swap.Online! ",
     "files": [
       "shared/pages/Swap/UsdtToEthToken.js"
     ]
@@ -2622,7 +2622,7 @@
   },
   {
     "id": "UsdrToEthToken83",
-    "message": "We are waiting for a market maker. If it does not appear within 5 minutes, the swap will be canceled automatically.",
+    "message": "We are waiting for a market maker. If it does not appear within 5 minutes, the swap will be canceled automatically. ",
     "files": [
       "shared/pages/Swap/UsdtToEthToken.js"
     ]
@@ -2732,14 +2732,14 @@
   },
   {
     "id": "PrivateKeysModal105",
-    "message": "there is a big chance you will loose your money.",
+    "message": "there is a big chance you will loose your money. ",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
   },
   {
     "id": "PrivateKeysModal106",
-    "message": "We do not store your private keys and will not be able to restore them!",
+    "message": "We do not store your private keys and will not be able to restore them! ",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
@@ -2774,14 +2774,14 @@
   },
   {
     "id": "PrivateKeysModal130",
-    "message": "Please fill information below from instruction.txt file. We`d like to be sure that you saved the private keys before you can continue to the site.",
+    "message": "Please fill information below from instruction.txt file. We`d like to be sure that you saved the private keys before you can continue to the site. ",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
   },
   {
     "id": "PrivateKeysModal145",
-    "message": "GO TO THE SITE!",
+    "message": "GO TO THE SITE! ",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
@@ -2795,7 +2795,7 @@
   },
   {
     "id": "PrivateKeysModal991",
-    "message": "Before you continue be sure to save your private keys! There is a big chance you will loose your money.",
+    "message": "Before you continue be sure to save your private keys! There is a big chance you will loose your money. ",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
@@ -2823,7 +2823,7 @@
   },
   {
     "id": "WithdrawButton32",
-    "message": "You can not send and exchange this asset, because you have a zero balance.",
+    "message": "You can not send and exchange this asset, because you have a zero balance. ",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
@@ -2838,39 +2838,39 @@
   },
   {
     "id": "listing.listing10",
-    "message": "SWAP.Online will be cryptocurrency Pink Sheets market."
+    "message": "SWAP.Online will be cryptocurrency Pink Sheets market. "
   },
   {
     "id": "listing.listing12",
-    "message": "It’s well known that even in traditional stock market, one willing to be quoted must meet the requirements of SEC, or as far as the OTC Market Group Inc. markets (OTCQX and OTCQB) are concerned, must show the big income and seek the support of the influential consulting agencies. Moreover, the information about the company audit must be provided annually to the SEC or SEC-approved regulators."
+    "message": "It’s well known that even in traditional stock market, one willing to be quoted must meet the requirements of SEC, or as far as the OTC Market Group Inc. markets (OTCQX and OTCQB) are concerned, must show the big income and seek the support of the influential consulting agencies. Moreover, the information about the company audit must be provided annually to the SEC or SEC-approved regulators. "
   },
   {
     "id": "listing.listing13",
-    "message": "Some of the cryptocurrency ‘fat cats’ allow themselves to do the same. For example, Localbitcoins CEO said they would newer list a token of the project with less than USD1B capitalisation. Cryptobridge and some related centralized exchanges ask for the USD 23 thousand (in BTS equivalent) for the token owner to be listed."
+    "message": "Some of the cryptocurrency ‘fat cats’ allow themselves to do the same. For example, Localbitcoins CEO said they would newer list a token of the project with less than USD1B capitalisation. Cryptobridge and some related centralized exchanges ask for the USD 23 thousand (in BTS equivalent) for the token owner to be listed. "
   },
   {
     "id": "listing.listing14",
-    "message": "That is not about us."
+    "message": "That is not about us. "
   },
   {
     "id": "listing.listing15",
-    "message": "As our transactions is peer-to-peer, based on the Atomic Swaps technology, we can add to the balances every token corresponding some our criterias. Obviously, clearly fraudulent projects are to be rejected from the very beginning. But all other start-ups on the different stages of development are welcome."
+    "message": "As our transactions is peer-to-peer, based on the Atomic Swaps technology, we can add to the balances every token corresponding some our criterias. Obviously, clearly fraudulent projects are to be rejected from the very beginning. But all other start-ups on the different stages of development are welcome. "
   },
   {
     "id": "listing.listing16",
-    "message": "In contradiction to the widespread Ethereum-pegged exchanges, the main currency to be changed on tokens in our project is Bitcoin. It can be treated as our killer-feature: for the crypto-newbies and vast majority of small customers Bitcoin is much clearer and easy to buy via Localbitcoins etc."
+    "message": "In contradiction to the widespread Ethereum-pegged exchanges, the main currency to be changed on tokens in our project is Bitcoin. It can be treated as our killer-feature: for the crypto-newbies and vast majority of small customers Bitcoin is much clearer and easy to buy via Localbitcoins etc. "
   },
   {
     "id": "listing.listing17",
-    "message": "We offer two-level way of access to the balances. On the first stage, we analyze the level of project technical development, collect the basic information (name, ticker, logo) and add the token to trading balances."
+    "message": "We offer two-level way of access to the balances. On the first stage, we analyze the level of project technical development, collect the basic information (name, ticker, logo) and add the token to trading balances. "
   },
   {
     "id": "listing.listing18",
-    "message": "Then, to start trading with Bitcoin, the project should publish the information about the collaboration with SWAP.Online on every social platform and on the web-site forum. With this information published, our developers will release the final version of the exchange to client’s token. This option is available for the first ten projects only."
+    "message": "Then, to start trading with Bitcoin, the project should publish the information about the collaboration with SWAP.Online on every social platform and on the  web-site forum. With this information published, our developers will release the final version of the exchange to client’s token. This option is available for the first ten projects only. "
   },
   {
     "id": "listing.listing19",
-    "message": "The conditions of delisting are discussed, but at the moment, we plan to expel twenty per cent worst tokens every month."
+    "message": "The conditions of delisting are discussed, but at the moment, we plan to expel twenty per cent worst tokens every month. "
   },
   {
     "id": "listing.listing2",
@@ -2878,43 +2878,43 @@
   },
   {
     "id": "listing.listing20",
-    "message": "Thus, you token can start to be quoted in free and decentralized manner as quickly as possible for your unlimited profit."
+    "message": "Thus, you token can start to be quoted in free and decentralized manner as quickly as possible for your unlimited profit. "
   },
   {
     "id": "listing.listing21",
-    "message": "Stay with us."
+    "message": "Stay with us. "
   },
   {
     "id": "listing.listing22",
-    "message": "Grow with us."
+    "message": "Grow with us. "
   },
   {
     "id": "listing.listing23",
-    "message": "Earn with us."
+    "message": "Earn with us. "
   },
   {
     "id": "listing.listing3",
-    "message": "3. We as well will announce listing of your tokens on our social media, mutial PR will benefit both sides."
+    "message": "3. We as well will announce listing of your tokens on our social media, mutial PR will benefit both sides. "
   },
   {
     "id": "listing.listing4",
-    "message": "Crypto Pink Sheets: ALL Coins Welcome To SWAP.Online!"
+    "message": "Crypto Pink Sheets: ALL Coins Welcome To SWAP.Online! "
   },
   {
     "id": "listing.listing5",
-    "message": "OTC-approach-crypto market to be opened in Aug, 2018."
+    "message": "OTC-approach-crypto market to be opened in Aug, 2018. "
   },
   {
     "id": "listing.listing6",
-    "message": "There was one company in the U.S. in the year of 1913, the National Quotation Bureau. They brought to life very simple idea - to provide every entity with the ability to be quoted freely, without complicated safety and control proceedings. The list of the bond orders was primarily published on the yellow paper and the stock orders were published on the pink paper. The Pink Sheets, as the lists were immediately called by the traders. rapidly became very popular among the market players. Every firm opened in the U.S. or abroad was able to publish its securities quotations in the list of Pink Sheets. With the increasing requirements of NYSE and NASDAQ and growing demands of the SEC to the information regarding the company applying the market, the interest to the Pink Sheets arose very fast. In September, 1990, the NQB introduced the real-time Electronic Quotation Service, so the over-the-counter trading entered the Internet. By the year 2010 the operators of the Pink Sheets trading were acquisited by the OTC Market Group, Inc. In 2014, two of five U.S. stock trades were over-the-counter."
+    "message": "There was one company in the U.S. in the year of 1913, the National Quotation Bureau. They brought to life very simple idea - to provide every entity with the ability to be quoted freely, without complicated safety and control proceedings. The list of the bond orders was primarily published on the yellow paper and the stock orders were published on the pink paper. The Pink Sheets, as the lists were immediately called by the traders. rapidly became very popular among the market players. Every firm opened in the U.S. or abroad was able to publish its securities quotations in the list of Pink Sheets. With the increasing requirements of NYSE and NASDAQ and growing demands of the SEC to the information regarding the company applying the market, the interest to the Pink Sheets arose very fast. In September, 1990, the NQB introduced the real-time Electronic Quotation Service, so the over-the-counter trading entered the Internet. By the year 2010 the operators of the Pink Sheets trading were acquisited by the OTC Market Group, Inc. In 2014, two of five U.S. stock trades were over-the-counter. "
   },
   {
     "id": "listing.listing7",
-    "message": "Wal-Mart was the Pink Sheet company in 1972 and earned there USD 1B."
+    "message": "Wal-Mart was the Pink Sheet company in 1972 and earned there USD 1B. "
   },
   {
     "id": "listing.listing8",
-    "message": "Navistar International, the 12-billion-dollar-corporation, came to the Pink Sheets Market in 2006 leaving the NYSE due to some issues with the auditor board.."
+    "message": "Navistar International, the 12-billion-dollar-corporation, came to the Pink Sheets Market in 2006 leaving the NYSE due to some issues with the auditor board.. "
   },
   {
     "id": "listing.listing9",
@@ -2922,7 +2922,7 @@
   },
   {
     "id": "listing.listing9a",
-    "message": "safe, rapid and decentralized, we couldn’t go about this another way."
+    "message": "safe, rapid and decentralized, we couldn’t go about this another way. "
   },
   {
     "id": "BTCTOLTC132",
@@ -2940,7 +2940,7 @@
   },
   {
     "id": "BTCtoLTC246",
-    "message": "How refund your money ?",
+    "message": "How refund your money ? ",
     "files": [
       "shared/pages/Swap/BtcToLtc.js"
     ]
@@ -2982,7 +2982,7 @@
   },
   {
     "id": "Checkingbalance",
-    "message": "Checking balance..",
+    "message": "Checking balance.. ",
     "files": [
       "shared/pages/Swap/BtcToLtc.js",
       "shared/pages/Swap/LtcToBtc.js"
@@ -2998,7 +2998,7 @@
   },
   {
     "id": "LTCTOBTC147",
-    "message": "Save the secret key! Otherwise there will be a chance you loose your money!",
+    "message": "Save the secret key! Otherwise there will be a chance you loose your money! ",
     "files": [
       "shared/pages/Swap/BtcToLtc.js"
     ]
@@ -3012,7 +3012,7 @@
   },
   {
     "id": "MoneyWasTransferred",
-    "message": "6. Money was transferred to your wallet. Check the balance.",
+    "message": "6. Money was transferred to your wallet. Check the balance. ",
     "files": [
       "shared/pages/Swap/BtcToLtc.js"
     ]
@@ -3042,7 +3042,7 @@
     ]
   },
   {
-    "id": "Scriptaddress:",
+    "id": "Scriptaddress: ",
     "message": "Script address: ",
     "files": [
       "shared/pages/Swap/BtcToLtc.js"
@@ -3050,7 +3050,7 @@
   },
   {
     "id": "SecretHash",
-    "message": "Secret Hash:",
+    "message": "Secret Hash: ",
     "files": [
       "shared/pages/Swap/BtcToLtc.js",
       "shared/pages/Swap/LtcToBtc.js"
@@ -3058,7 +3058,7 @@
   },
   {
     "id": "Thank",
-    "message": "Thank you for using Swap.Online!",
+    "message": "Thank you for using Swap.Online! ",
     "files": [
       "shared/pages/Swap/BtcToLtc.js",
       "shared/pages/Swap/LtcToBtc.js"
@@ -3105,7 +3105,7 @@
   },
   {
     "id": "offline",
-    "message": "The order creator is offline. Waiting for him..",
+    "message": "The order creator is offline. Waiting for him.. ",
     "files": [
       "shared/pages/Swap/BtcToLtc.js",
       "shared/pages/Swap/LtcToBtc.js"
@@ -3113,7 +3113,7 @@
   },
   {
     "id": "Confirmation",
-    "message": "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation.",
+    "message": "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation. ",
     "files": [
       "shared/pages/Swap/LtcToBtc.js"
     ]
@@ -3148,7 +3148,7 @@
   },
   {
     "id": "LTCTOBTC396",
-    "message": "7. Money was transferred to your wallet. Check the balance.",
+    "message": "7. Money was transferred to your wallet. Check the balance. ",
     "files": [
       "shared/pages/Swap/LtcToBtc.js"
     ]
@@ -3291,14 +3291,14 @@
   },
   {
     "id": "CurrencyWallet107",
-    "message": "Your",
+    "message": "Your ",
     "files": [
       "shared/pages/CurrencyWallet/CurrencyWallet.js"
     ]
   },
   {
     "id": "CurrencyWallet128",
-    "message": "History your transactions",
+    "message": " History your transactions",
     "files": [
       "shared/pages/CurrencyWallet/CurrencyWallet.js"
     ]
@@ -3683,7 +3683,7 @@
   },
   {
     "id": "Orders141",
-    "message": "No such ticker. Redirecting to SWAP-BTC exchange...",
+    "message": "No such ticker. Redirecting to SWAP-BTC exchange... ",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]
@@ -3759,7 +3759,7 @@
   },
   {
     "id": "orders134",
-    "message": "Swap.Online wallet provides instant exchange using Atomic Swap Protocol."
+    "message": "Swap.Online wallet provides instant exchange using Atomic Swap Protocol. "
   },
   {
     "id": "orders138",
@@ -3823,7 +3823,7 @@
   },
   {
     "id": "Table96",
-    "message": "Loading...",
+    "message": "Loading... ",
     "files": [
       "shared/components/tables/Table/Table.js"
     ]
@@ -3863,7 +3863,7 @@
   },
   {
     "id": "add367",
-    "message": "Amount must be greater than"
+    "message": "Amount must be greater than "
   },
   {
     "id": "add368",
@@ -3999,7 +3999,7 @@
   },
   {
     "id": "currencywallet107",
-    "message": "web wallet with Atomic Swap.",
+    "message": " web wallet with Atomic Swap. ",
     "files": [
       "shared/pages/CurrencyWallet/CurrencyWallet.js"
     ]
@@ -4041,7 +4041,7 @@
   },
   {
     "id": "WithdrawButton25",
-    "message": "You can not send and exchange this asset, because you have a zero balance.",
+    "message": "You can not send and exchange this asset, because you have a zero balance. ",
     "files": [
       "shared/components/controls/WithdrawButton/BtnTooltip.js"
     ]
@@ -4055,7 +4055,7 @@
   },
   {
     "id": "transaction368",
-    "message": "Amount must be greater than",
+    "message": "Amount must be greater than ",
     "files": [
       "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
     ]
@@ -4090,7 +4090,7 @@
   },
   {
     "id": "Withdrow159",
-    "message": "Amount must be greater than",
+    "message": "Amount must be greater than ",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
@@ -4104,7 +4104,7 @@
   },
   {
     "id": "Withdrow174",
-    "message": "Your balance must exceed this sum to perform transaction.",
+    "message": "Your balance must exceed this sum to perform transaction. ",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
@@ -4118,7 +4118,7 @@
   },
   {
     "id": "Withdrow180",
-    "message": "Your balance must exceed this sum to perform transaction.",
+    "message": "Your balance must exceed this sum to perform transaction. ",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
@@ -4153,7 +4153,7 @@
   },
   {
     "id": "partial291",
-    "message": "Wait participant:",
+    "message": "Wait participant: ",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -4244,21 +4244,21 @@
   },
   {
     "id": "addOffer449",
-    "message": "or the amount less than the total amount you want sell.",
+    "message": "or the amount less than the total amount you want sell. ",
     "files": [
       "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
     ]
   },
   {
     "id": "addOffer450",
-    "message": "For example you want to sell 1 BTC,",
+    "message": "For example you want to sell 1 BTC, ",
     "files": [
       "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
     ]
   },
   {
     "id": "addOffer451",
-    "message": "or the amount less than the total amount you want sell.",
+    "message": "other users can send you exchange requests for 0.1, 0.5 BTC. ",
     "files": [
       "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
     ]
@@ -4293,7 +4293,7 @@
   },
   {
     "id": "partial223",
-    "message": "To change default wallet for buy currency.",
+    "message": "To change default wallet for buy currency. ",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]

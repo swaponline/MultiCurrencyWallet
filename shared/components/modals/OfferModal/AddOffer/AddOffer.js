@@ -399,7 +399,7 @@ export default class AddOffer extends Component {
         <br />
         <FormattedMessage id="addOffer450" defaultMessage="For example you want to sell 1 BTC," />
         <br />
-        <FormattedMessage id="addOffer451" defaultMessage="or the amount less than the total amount you want sell." />
+        <FormattedMessage id="addOffer451" defaultMessage="other users can send you exchange requests for 0.1, 0.5 BTC" />
         <br />
       </div>,
     ]

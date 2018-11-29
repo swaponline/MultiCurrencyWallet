@@ -4262,7 +4262,7 @@
   },
   {
     "id": "addOffer451",
-    "message": "or the amount less than the total amount you want sell.",
+    "message": "other users can send you exchange requests for 0.1, 0.5 BTC.",
     "files": [
       "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
     ]

@@ -66,7 +66,7 @@ export default class EosRegisterModal extends React.Component {
         <Input valueLink={linked.accountName} />
         <FieldLabel inRow>
           <FormattedMessage id="EosRegAccountModal58" defaultMessage="Active private key" />
-          <Tooltip text={text} id="EoSR69" />
+          <Tooltip text={text1} id="EoSR69" />
         </FieldLabel>
         <Input valueLink={linked.privateKey} />
         { error && (
