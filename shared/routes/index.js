@@ -22,9 +22,8 @@ const routes = (
 
     <Route path={`${links.home}:buy-:sell/:orderId`} component={Home} />
     <Route path={`${links.home}:buy-:sell`} component={Home} />
-    <Route path={links.exchange} component={Home} />
+    <Route path={links.exchange} component={PartialClosure} />
 
-    <Route path={links.partial} component={PartialClosure} />
     <Route path={links.aboutus} component={About} />
     <Route path={links.history} component={History} />
 

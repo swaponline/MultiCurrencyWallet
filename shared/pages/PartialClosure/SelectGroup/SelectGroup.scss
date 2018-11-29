@@ -3,9 +3,28 @@
   display: inline-flex;
   height: 60px;
   margin-bottom: 10px;
+  vertical-align: center;
   box-shadow: rgba(#000, 0.08) 0 3px 9px 0;
   border-radius: 6px;
   text-align: center;
+  position: relative;
+}
+
+.textUsd {
+  top: 22px;
+  left: 185px;
+  font-size: 15px;
+  color: #828795;
+  position: absolute;
+}
+
+@include media-mobile {
+  .textUsd {
+    left: 165px;
+  }
+  .currencySelect {
+    width: 130px;
+  }
 }
 
 .inputRoot {

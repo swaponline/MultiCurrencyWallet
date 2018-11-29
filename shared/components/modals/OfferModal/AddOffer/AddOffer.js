@@ -64,7 +64,7 @@ export default class AddOffer extends Component {
       isSellFieldInteger: false,
       isBuyFieldInteger: false,
       manualRate: false,
-      isPartialClosure: false,
+      isPartialClosure: true,
     }
   }
 
@@ -442,7 +442,8 @@ export default class AddOffer extends Component {
           <Tooltip text="To change the exchange rate" />
         </div>
         <div>
-          <Toggle checked={isPartialClosure} onChange={() => this.setState((state) => ({ isPartialClosure: !state.isPartialClosure }))} /> Enabled to partial closure
+          <Toggle checked={isPartialClosure} onChange={() => this.setState((state) => ({ isPartialClosure: !state.isPartialClosure }))} />
+          <FormattedMessage id="AddOffer446" defaultMessage="Allow partial fulfillment" />
           <Tooltip
           text="Partial closure means that you will receive exchange requests <br/> or the amount less than the total amount you want sell. <br/> For example if you want to sell 1 BTC, <br/> other users can send you exchange requests for 0.1, 0.5 BTC" />
         </div>

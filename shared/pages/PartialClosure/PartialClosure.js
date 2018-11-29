@@ -12,7 +12,7 @@ import { BigNumber } from 'bignumber.js'
 import { Redirect } from 'react-router-dom'
 
 import SelectGroup from './SelectGroup/SelectGroup'
-import { Button, Toggle } from 'components/controls'
+import { Button, Toggle, Flip } from 'components/controls'
 import Input from 'components/forms/Input/Input'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 
@@ -43,7 +43,7 @@ export default class PartialClosure extends Component {
     this.state = {
       haveCurrency: 'btc',
       getCurrency: 'eth',
-      haveAmount: '',
+      haveAmount: 0,
       getAmount: '',
       maxAmount: 0,
       peer: '',
@@ -54,19 +54,54 @@ export default class PartialClosure extends Component {
       customWalletUse: false,
       customWallet: '',
     }
+
+    let timer
   }
 
-  static getDerivedStateFromProps({ orders }, { haveCurrency, getCurrency, haveAmount }) {
+  componentDidMount() {
+    this.timer = setInterval(() => {
+      this.setOrders()
+    }, 1000)
+    this.getUsdBalance()
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer)
+  }
+  shouldComponentUpdate(nextPros) {
+    if (nextPros.orders && this.props.orders && nextPros.orders > 0) {
+      if (nextPros.orders.length === this.props.orders.length) {
+        return false
+      }
+    }
+    return true
+  }
+
+  static getDerivedStateFromProps({ orders }, { haveCurrency, getCurrency }) {
     if (!Array.isArray(orders)) { return }
 
     const filteredOrders = orders.filter(order => !order.isMy
-      && order.buyAmount > haveAmount
       && order.sellCurrency === getCurrency.toUpperCase()
       && order.buyCurrency === haveCurrency.toUpperCase())
 
     return {
       filteredOrders,
     }
+  }
+
+  getUsdBalance = async () => {
+    const { haveCurrency, getCurrency, haveAmount, getAmount } = this.state
+
+    const exHaveRate = await actions.user.getExchangeRate(haveCurrency, 'usd')
+    const exGetRate = await actions.user.getExchangeRate(getCurrency, 'usd')
+
+    const haveUsd = ((haveAmount || 0) * Number(exHaveRate)).toFixed(2)
+    const getUsd = ((getAmount || 0) * Number(exGetRate)).toFixed(2)
+
+    this.setState(() => ({
+      haveUsd,
+      getUsd,
+    }))
   }
 
   sendRequest = () => {
@@ -128,16 +163,21 @@ export default class PartialClosure extends Component {
 
     this.setState(() => ({
       maxAmount: String(maxAmount),
-      getAmount,
+      getAmount: this.getFixed(getAmount),
     }))
 
-    return getAmount.isLessThan(maxAmount)
+    return getAmount.isLessThanOrEqualTo(maxAmount)
   }
+
+  getFixed = (value) => Number(value).toFixed(5)
 
   setAmount = (value) => {
     this.setState(() => ({ haveAmount: value, maxAmount: 0 }))
+    this.getUsdBalance()
+  }
 
-    const { filteredOrders } = this.state
+  setOrders = () => {
+    const { filteredOrders, haveAmount } = this.state
 
     if (filteredOrders.length === 0) {
       this.setNoOfferState()
@@ -147,7 +187,7 @@ export default class PartialClosure extends Component {
     const sortedOrder = filteredOrders
       .sort((a, b) => Number(a.buyAmount.dividedBy(a.sellAmount)) - Number(b.buyAmount.dividedBy(b.sellAmount)))
     const exRate = sortedOrder[0].buyAmount.dividedBy(sortedOrder[0].sellAmount)
-    const getAmount = new BigNumber(String(value)).dividedBy(exRate)
+    const getAmount = new BigNumber(String()).dividedBy(exRate)
 
     const checkAmount = this.setAmountOnState(sortedOrder[0].sellAmount, getAmount)
 
@@ -180,7 +220,7 @@ export default class PartialClosure extends Component {
       maxAmount: 0,
       haveCurrency,
       getCurrency: value,
-    }), this.setAmount(this.state.haveAmount))
+    }), this.setOrders())
   }
 
   handleSetHaveValue = ({ value }) => {
@@ -194,7 +234,19 @@ export default class PartialClosure extends Component {
       maxAmount: 0,
       getCurrency,
       haveCurrency: value,
-    }), this.setAmount(this.state.haveAmount))
+    }), this.setOrders())
+  }
+
+  handleFlipCurrency = () => {
+    this.setState(() => ({
+      haveCurrency: this.state.getCurrency,
+      getCurrency: this.state.haveCurrency,
+    }))
+  }
+
+  handlePush = () => {
+    const { haveCurrency, getCurrency } = this.state
+    this.props.history.push(`${haveCurrency}-${getCurrency}`)
   }
 
   customWalletAllowed() {
@@ -209,8 +261,9 @@ export default class PartialClosure extends Component {
 
   render() {
     const { currencies } = this.props
-    const { haveCurrency, getCurrency, isNonOffers, redirect,
-      orderId, isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet } = this.state
+    const { haveCurrency, getCurrency, isNonOffers, redirect, orderId,
+      isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet, getUsd, haveUsd
+    } = this.state
 
     const linked = Link.all(this, 'haveAmount', 'getAmount', 'customWallet')
 
@@ -222,7 +275,7 @@ export default class PartialClosure extends Component {
       <Fragment>
         <PageHeadline subTitle="Partial closure offers" />
         <div styleName="section">
-          <div styleName="block">
+          <div styleName="blockVideo">
             <iframe
               title="swap online video"
               width="560"
@@ -238,18 +291,20 @@ export default class PartialClosure extends Component {
               inputValueLink={linked.haveAmount.pipe(this.setAmount)}
               selectedValue={haveCurrency}
               onSelect={this.handleSetHaveValue}
-              label="You have"
+              label="You sell"
               placeholder="Enter amount"
+              usd={getUsd}
               currencies={currencies}
             />
-            <p>Max amount for offer: {maxAmount}{' '}{getCurrency.toUpperCase()}</p>
+            <Flip onClick={this.handleFlipCurrency} styleName="flipButton" />
             <SelectGroup
               inputValueLink={linked.getAmount}
               selectedValue={getCurrency}
               onSelect={this.handleSetGetValue}
-              label="You get"
+              label="You buy"
               disabled
               currencies={currencies}
+              usd={getUsd}
             />
             {
               this.customWalletAllowed() && (
@@ -266,19 +321,33 @@ export default class PartialClosure extends Component {
                 </Fragment>
               )
             }
-            {isNonOffers && (<p styleName="error">No offers </p>)}
-            {isDeclinedOffer && (<p styleName="error">Offer is declined</p>)}
+            <p>{`Max amount for offer:`} {maxAmount}{' '}{getCurrency.toUpperCase()}</p>
+            {maxAmount > 0 && isNonOffers && (
+              <p styleName="error">
+                {`No orders found, try to reduce the amount`}
+              </p>
+            )}
+            {isDeclinedOffer && (
+              <p styleName="error">
+                {`Offer is declined`}
+              </p>
+            )}
             {
               isFetching && (
                 <span>
-                  Wait participant:
+                  {` Wait participant: `}
                   <InlineLoader />
                 </span>
               )
             }
-            <Button styleName="button" brand fullWidth onClick={this.sendRequest} disabled={isNonOffers}>
-              Start
-            </Button>
+            <div styleName="rowBtn">
+              <Button styleName="button" brand onClick={this.sendRequest} disabled={isNonOffers}>
+                {`Exchange now`}
+              </Button>
+              <Button styleName="button" gray onClick={this.handlePush} >
+                {`Show order book`}
+              </Button>
+            </div>
           </div>
         </div>
       </Fragment>
