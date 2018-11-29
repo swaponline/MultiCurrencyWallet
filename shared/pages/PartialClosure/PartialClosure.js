@@ -273,7 +273,7 @@ export default class PartialClosure extends Component {
 
     return (
       <Fragment>
-        <PageHeadline subTitle="Partial closure offers" />
+        <PageHeadline subTitle="Fast cryptocurrency exchange using atomicswap" />
         <div styleName="section">
           <div styleName="blockVideo">
             <iframe
