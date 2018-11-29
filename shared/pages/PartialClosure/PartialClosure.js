@@ -98,6 +98,9 @@ export default class PartialClosure extends Component {
     const haveUsd = ((haveAmount || 0) * Number(exHaveRate)).toFixed(2)
     const getUsd = ((getAmount || 0) * Number(exGetRate)).toFixed(2)
 
+    console.log('getUsd', getUsd)
+    console.log('haveUsd', haveUsd)
+
     this.setState(() => ({
       haveUsd,
       getUsd,
@@ -177,6 +180,7 @@ export default class PartialClosure extends Component {
   }
 
   setOrders = () => {
+    this.getUsdBalance()
     const { filteredOrders, haveAmount } = this.state
 
     if (filteredOrders.length === 0) {
@@ -293,7 +297,7 @@ export default class PartialClosure extends Component {
               onSelect={this.handleSetHaveValue}
               label="You sell"
               placeholder="Enter amount"
-              usd={getUsd}
+              usd={haveUsd}
               currencies={currencies}
             />
             <Flip onClick={this.handleFlipCurrency} styleName="flipButton" />
