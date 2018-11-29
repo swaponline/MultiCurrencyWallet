@@ -194,4 +194,19 @@ export default {
     decimals: 18,
     fullName: 'ViteToken',
   },
+  mot: {
+    address: '0x263c618480dbe35c300d8d5ecda19bbb986acaed',
+    decimals: 18,
+    fullName: 'MOT',
+  },
+  dov: {
+    address: '0xac3211a5025414Af2866FF09c23FC18bc97e79b1',
+    decimals: 18,
+    fullName: 'DOVU',
+  },
+  xbx: {
+    address: '0x2c745664FB4e9528fB32487D834e4aACffF1F027',
+    decimals: 18,
+    fullName: 'Bitex Coin',
+  },
 }
