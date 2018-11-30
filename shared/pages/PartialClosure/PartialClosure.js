@@ -113,13 +113,12 @@ export default class PartialClosure extends Component {
       peer, orderId, customWalletUse, customWallet,
     } = this.state
 
+    console.log('sendRequest', getAmount, peer, orderId, haveAmount)
+
     if (!String(getAmount) || !peer || !orderId || !String(haveAmount)) {
       return
     }
 
-    // Тут важный момент.... так как в данной реализации поля для ордера формирует
-    // покупатель.... и продавец использует эту структуру чтобы создать ордер -
-    // то используем Sell (продавец будет знать, куда продавать)
     const order = {
       buyCurrency: haveCurrency,
       sellCurrency: getCurrency,
@@ -127,6 +126,8 @@ export default class PartialClosure extends Component {
       buyAmount: haveAmount,
       destinationSellAddress: (customWalletUse && this.customWalletAllowed()) ? customWallet : null,
     }
+
+    console.log('sendRequest order', order)
 
     this.setState(() => ({ isFetching: true }))
 
@@ -252,7 +253,7 @@ export default class PartialClosure extends Component {
         getUsd: Number(getUsd).toFixed(2),
         isNonOffers: false,
         peer: item.peer,
-        orderId: item.id,
+        orderId: item.orderId,
       }))
     })
 
