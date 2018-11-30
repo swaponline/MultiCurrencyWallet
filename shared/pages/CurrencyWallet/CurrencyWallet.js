@@ -103,11 +103,11 @@ export default class CurrencyWallet extends Component {
         <PageHeadline
           styleName="title"
           subTitle={!!seoPage ? seoPage.h1 :
-          <span>
-            <FormattedMessage id="currencywallet103" defaultMessage="Your online" />
-            {fullName} ({currency})
-            <FormattedMessage id="currencywallet107" defaultMessage="web wallet with Atomic Swap." />
-          </span>
+            <span>
+              <FormattedMessage id="currencywallet103" defaultMessage="Your online" />
+              {fullName} ({currency})
+              <FormattedMessage id="currencywallet107" defaultMessage="web wallet with Atomic Swap." />
+            </span>
           }
         />
         <h3 styleName="subtitle">

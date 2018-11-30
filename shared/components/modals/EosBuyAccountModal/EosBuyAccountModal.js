@@ -95,7 +95,7 @@ export default class EosBuyAccountModal extends React.Component {
               <FormattedMessage id="EosBuyAccountModal72" defaultMessage="Account name" />
               <Tooltip text={text} id="EoS92" />
             </FieldLabel>
-            <Input readOnly="true" valueLink={linked.accountName} styleName="input"/>
+            <Input readOnly="true" valueLink={linked.accountName} styleName="input" />
           </div>
           <div styleName="margin">
             <FieldLabel inRow>

@@ -2682,7 +2682,7 @@
   },
   {
     "id": "Row313",
-    "message": "Пополнить баланс",
+    "message": "Пополнить",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
@@ -2816,7 +2816,7 @@
   },
   {
     "id": "WithdrawButton29",
-    "message": "Пополнить баланс ",
+    "message": "Пополнить",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]

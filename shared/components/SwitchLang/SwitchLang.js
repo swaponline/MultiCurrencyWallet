@@ -3,14 +3,8 @@ import React, { Component, Fragment } from 'react'
 import CSSModules from 'react-css-modules'
 
 
-export default class SwitchLang extends Component {
+const SwitchLang = ({ className, children, onClick, href }) => (
+    <a className={className} style={{ color: 'white' }} onClick={onClick} href={href}>{children}</a>
+)
 
-  render() {
-    const { className, children, onClick, href  } = this.props
-
-    return (
-      <a className={className} style={{ color: 'white' }} onClick={onClick} href={href}>{children}</a>
-    )
-  }
-
-}
+export default SwitchLang
