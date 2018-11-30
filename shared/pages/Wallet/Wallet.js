@@ -104,7 +104,7 @@ export default class Wallet extends Component {
     return (
       <section styleName={isMobile ? 'sectionWalletMobile' : 'sectionWallet'}>
         { showSaveKeysModal && <SaveKeysModal /> }
-        <PageHeadline styleName="pageLine">
+        <PageHeadline style={{ marginLeft: '10px', height: '130px' }}>
           <SubTitle>
             <FormattedMessage id="Wallet104" defaultMessage="Your online cryptocurrency wallet" />
           </SubTitle>

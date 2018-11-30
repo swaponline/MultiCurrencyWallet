@@ -12,16 +12,10 @@
 	.sectionWalletMobile {
 		margin-top: -88px;
 	}
-	.pageLine {
-		margin-left: 10px;
-	}
 }
 
-@include media-mobile { 
+@include media-mobile {
 	.sectionWalletMobile {
 		margin-top: 0px;
 	}
 }
-
-
-    
