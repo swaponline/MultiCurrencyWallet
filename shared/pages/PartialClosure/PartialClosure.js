@@ -205,14 +205,6 @@ export default class PartialClosure extends Component {
         const exRate = item.buyAmount.dividedBy(item.sellAmount)
         const getAmount = new BigNumber(String(haveAmount)).dividedBy(exRate)
 
-        const haveUsd = new BigNumber(String(exHaveRate)).multipliedBy(haveAmount)
-        const getUsd  = new BigNumber(String(exGetRate)).multipliedBy(getAmount)
-
-        this.setState(() => ({
-          haveUsd: Number(haveUsd).toFixed(2),
-          getUsd: Number(getUsd).toFixed(2),
-        }))
-
         return {
           sellAmount: item.sellAmount,
           buyAmount: item.buyAmount,
@@ -222,6 +214,8 @@ export default class PartialClosure extends Component {
           peer: item.owner.peer,
         }
       })
+
+    this.getUsdBalance()
 
     console.log('sortedOrder', sortedOrder)
 
@@ -237,7 +231,7 @@ export default class PartialClosure extends Component {
   }
 
   setOrderOnState = (orders) => {
-    const { haveAmount } = this.state
+    const { haveAmount, exHaveRate, exGetRate } = this.state
 
     console.log('setOrderOnState', orders)
 
@@ -250,7 +244,12 @@ export default class PartialClosure extends Component {
         return
       }
 
+      const haveUsd = new BigNumber(String(exHaveRate)).multipliedBy(haveAmount)
+      const getUsd  = new BigNumber(String(exGetRate)).multipliedBy(item.getAmount)
+
       this.setState(() => ({
+        haveUsd: Number(haveUsd).toFixed(2),
+        getUsd: Number(getUsd).toFixed(2),
         isNonOffers: false,
         peer: item.peer,
         orderId: item.id,
@@ -273,8 +272,9 @@ export default class PartialClosure extends Component {
       haveCurrency = getCurrency
     }
 
+    this.setClearState()
+
     this.setState(() => ({
-      maxAmount: 0,
       haveCurrency,
       getCurrency: value,
     }))
@@ -287,14 +287,16 @@ export default class PartialClosure extends Component {
       getCurrency = haveCurrency
     }
 
+    this.setClearState()
+
     this.setState(() => ({
-      maxAmount: 0,
       getCurrency,
       haveCurrency: value,
     }))
   }
 
   handleFlipCurrency = () => {
+    this.setClearState()
     this.setState(() => ({
       haveCurrency: this.state.getCurrency,
       getCurrency: this.state.haveCurrency,
@@ -304,6 +306,22 @@ export default class PartialClosure extends Component {
   handlePush = () => {
     const { haveCurrency, getCurrency } = this.state
     this.props.history.push(`${haveCurrency}-${getCurrency}`)
+  }
+
+  setClearState = () => {
+    this.setState(() => ({
+      haveAmount: 0,
+      haveUsd: 0,
+      getUsd: 0,
+      getAmount: '',
+      maxAmount: 0,
+      peer: '',
+      isNonOffers: false,
+      isFetching: false,
+      isDeclinedOffer: false,
+      customWalletUse: false,
+      customWallet: '',
+    }))
   }
 
   customWalletAllowed() {
