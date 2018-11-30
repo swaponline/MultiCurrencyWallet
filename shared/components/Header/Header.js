@@ -124,8 +124,8 @@ checkLang = () => {
 }
 
   render() {
-    const { sticky, menuItems, lang } = this.state
-    const { intl: { locale }, pathname } = this.props
+  const { sticky, menuItems, lang } = this.state
+  const { intl: { locale }, pathname } = this.props
 
     if (isMobile) {
       return <NavMobile menu={menuItems} />
