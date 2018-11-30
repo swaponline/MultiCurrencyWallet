@@ -44,6 +44,8 @@ export default class PartialClosure extends Component {
       haveCurrency: 'btc',
       getCurrency: 'eth',
       haveAmount: 0,
+      haveUsd: 0,
+      getUsd: 0,
       getAmount: '',
       maxAmount: 0,
       peer: '',
@@ -59,12 +61,11 @@ export default class PartialClosure extends Component {
   }
 
   componentDidMount() {
-    this.setOrders()
     this.getUsdBalance()
 
     this.timer = setInterval(() => {
       this.setOrders()
-    }, 30000)
+    }, 2000)
   }
 
   componentWillUnmount() {
@@ -92,20 +93,17 @@ export default class PartialClosure extends Component {
   }
 
   getUsdBalance = async () => {
-    const { haveCurrency, getCurrency, haveAmount, getAmount } = this.state
+    const { haveCurrency, getCurrency } = this.state
 
     const exHaveRate = await actions.user.getExchangeRate(haveCurrency, 'usd')
     const exGetRate = await actions.user.getExchangeRate(getCurrency, 'usd')
 
-    const haveUsd = ((haveAmount || 0) * Number(exHaveRate)).toFixed(2)
-    const getUsd = ((getAmount || 0) * Number(exGetRate)).toFixed(2)
-
-    console.log('getUsd', getUsd)
-    console.log('haveUsd', haveUsd)
+    console.log('exHaveRate', exHaveRate)
+    console.log('exGetRate', exGetRate)
 
     this.setState(() => ({
-      haveUsd,
-      getUsd,
+      exHaveRate,
+      exGetRate,
     }))
   }
 
@@ -186,26 +184,34 @@ export default class PartialClosure extends Component {
     this.setState(() => ({ haveAmount: value, maxAmount: 0 }))
   }
 
-  setOrders = () => {
-    const { filteredOrders, haveAmount } = this.state
-
-    this.setState(() => ({
-      isSearching: true,
-    }))
+  setOrders = async () => {
+    const { filteredOrders, haveAmount, exHaveRate, exGetRate } = this.state
 
     if (filteredOrders.length === 0) {
       this.setNoOfferState()
       return
     }
 
+    this.setState(() => ({
+      isSearching: true,
+    }))
+
+    console.log('filteredOrders', filteredOrders)
+
     const sortedOrder = filteredOrders
       .sort((a, b) => Number(a.buyAmount.dividedBy(a.sellAmount)) - Number(b.buyAmount.dividedBy(b.sellAmount)))
       .map((item, index) => {
 
       const exRate = item.buyAmount.dividedBy(item.sellAmount)
-      const getAmount = new BigNumber(String(this.state.haveAmount)).dividedBy(exRate)
+      const getAmount = new BigNumber(String(haveAmount)).dividedBy(exRate)
 
-      console.log('item', item)
+      const haveUsd = new BigNumber(String(exHaveRate)).multipliedBy(haveAmount)
+      const getUsd  = new BigNumber(String(exGetRate)).multipliedBy(getAmount)
+
+      this.setState(() => ({
+        haveUsd: Number(haveUsd).toFixed(2),
+        getUsd: Number(getUsd).toFixed(2),
+      }))
 
       return {
         sellAmount: item.sellAmount,
@@ -219,7 +225,9 @@ export default class PartialClosure extends Component {
 
     console.log('sortedOrder', sortedOrder)
 
-    const search = this.setOrderOnState(sortedOrder)
+    const search = await this.setOrderOnState(sortedOrder)
+
+    console.log('search', search)
 
     if (search) {
       this.setState(() => ({
@@ -231,16 +239,21 @@ export default class PartialClosure extends Component {
   setOrderOnState = (orders) => {
     const { haveAmount } = this.state
 
+    console.log('setOrderOnState', orders)
+
     orders.forEach(item => {
-      this.getUsdBalance()
+      console.log('item', item)
+
       const checkAmount = this.setAmountOnState(item.sellAmount, item.getAmount)
 
       if (!checkAmount) {
+        console.log('checkAmount')
         this.setNoOfferState()
         return
       }
 
       if (haveAmount > Number(item.sellAmount)) {
+        console.log('haveAmount', haveAmount, 'sellAmount', Number(item.sellAmount))
         this.setState(() => ({
           isNonOffers: false,
           peer: item.peer,

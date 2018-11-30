@@ -22,7 +22,7 @@ const SelectGroup = ({ selectedValue, onSelect, currencies, usd, placeholder, la
         disabled={disabled}
       />
       {
-        (selectedValue === 'eth' || selectedValue === 'btc') &&
+        (selectedValue === 'eth' || selectedValue === 'btc') && usd > 0 &&
         <p styleName="textUsd" >{`~${usd}`}$</p>
       }
       <CurrencySelect
