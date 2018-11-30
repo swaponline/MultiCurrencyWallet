@@ -243,23 +243,18 @@ export default class PartialClosure extends Component {
 
     orders.forEach(item => {
       console.log('item', item)
-
       const checkAmount = this.setAmountOnState(item.sellAmount, item.getAmount)
 
       if (!checkAmount) {
-        console.log('checkAmount')
         this.setNoOfferState()
         return
       }
 
-      if (haveAmount > Number(item.sellAmount)) {
-        console.log('haveAmount', haveAmount, 'sellAmount', Number(item.sellAmount))
-        this.setState(() => ({
-          isNonOffers: false,
-          peer: item.peer,
-          orderId: item.id,
-        }))
-      }
+      this.setState(() => ({
+        isNonOffers: false,
+        peer: item.peer,
+        orderId: item.id,
+      }))
     })
 
     return true
