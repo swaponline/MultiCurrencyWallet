@@ -18,6 +18,7 @@ import PageHeadline from 'components/PageHeadline/PageHeadline'
 import PageSeo from 'components/Seo/PageSeo'
 import { getSeoPage } from 'helpers/seo'
 import { FormattedMessage } from 'react-intl'
+import ReactTooltip from 'react-tooltip'
 
 
 @connect(({ core, user,  history: { transactions, swapHistory } }) => ({
@@ -62,6 +63,15 @@ export default class CurrencyWallet extends Component {
     }
   }
 
+  handleReceive = () => {
+    const { currency, address } = this.props
+
+    actions.modals.open(constants.modals.ReceiveModal, {
+      currency,
+      address,
+    })
+  }
+
   handleWithdraw = () => {
     const { currency, address, contractAddress, decimals, balance } = this.state
 
@@ -73,6 +83,9 @@ export default class CurrencyWallet extends Component {
       decimals,
       balance,
     })
+  }
+  handleGoTrade = (currency) => {
+    this.props.history.push(`/${currency.toLowerCase()}`)
   }
 
   handleEosBuyAccount = async () => {
@@ -111,14 +124,20 @@ export default class CurrencyWallet extends Component {
           <FormattedMessage id="CurrencyWallet105" defaultMessage="Activate account" />
         </Button>)}
         <div styleName="inRow">
-          <Button brand style={{ marginRight: '15px' }} onClick={this.handleWithdraw} disabled={isBalanceEmpty}>
+          <button brand styleName="buttonD" onClick={this.handleReceive} data-tip data-for={`deposit${currency}`}>
+            <span>
+              <FormattedMessage id="Row313" defaultMessage="Deposit" />
+            </span>
+          </button>
+          <button styleName={isBalanceEmpty ? 'disable' : 'buttonD'} onClick={!isBalanceEmpty && this.handleWithdraw} >
             <FormattedMessage id="CurrencyWallet100" defaultMessage="Send" />
+          </button>
+          <ReactTooltip id="132cW" type="light" effect="solid">
+            <FormattedMessage id="133cW" defaultMessage="You can not send this asset, because you have a zero balance." />
+          </ReactTooltip>
+          <Button gray styleName="button" onClick={() => this.handleGoTrade(currency)}>
+            <FormattedMessage id="CurrencyWallet104" defaultMessage="Exchange" />
           </Button>
-          <Link to={`${links.home}${currency.toLowerCase()}`} >
-            <Button gray disabled={isBalanceEmpty}>
-              <FormattedMessage id="CurrencyWallet104" defaultMessage="Exchange" />
-            </Button>
-          </Link>
         </div>
         { swapHistory.length > 0 && <SwapsHistory orders={swapHistory} /> }
         <h2 style={{ marginTop: '20px' }} >
