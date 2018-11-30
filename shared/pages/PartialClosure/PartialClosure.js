@@ -59,10 +59,12 @@ export default class PartialClosure extends Component {
   }
 
   componentDidMount() {
+    this.setOrders()
+    this.getUsdBalance()
+
     this.timer = setInterval(() => {
       this.setOrders()
-    }, 1000)
-    this.getUsdBalance()
+    }, 30000)
   }
 
   componentWillUnmount() {
@@ -108,7 +110,10 @@ export default class PartialClosure extends Component {
   }
 
   sendRequest = () => {
-    const { getAmount, haveAmount, haveCurrency, getCurrency, peer, orderId, customWalletUse, customWallet } = this.state
+    const {
+      getAmount, haveAmount, haveCurrency,getCurrency,
+      peer,orderId, customWalletUse, customWallet,
+    } = this.state
 
     if (!String(getAmount) || !peer || !orderId || !String(haveAmount)) {
       return
@@ -164,8 +169,11 @@ export default class PartialClosure extends Component {
 
   setAmountOnState = (maxAmount, getAmount) => {
 
+    console.log('maxAmount', Number(maxAmount))
+    console.log('getAmount', this.getFixed(getAmount))
+
     this.setState(() => ({
-      maxAmount: String(maxAmount),
+      maxAmount: Number(maxAmount),
       getAmount: this.getFixed(getAmount),
     }))
 
@@ -176,12 +184,14 @@ export default class PartialClosure extends Component {
 
   setAmount = (value) => {
     this.setState(() => ({ haveAmount: value, maxAmount: 0 }))
-    this.getUsdBalance()
   }
 
   setOrders = () => {
-    this.getUsdBalance()
     const { filteredOrders, haveAmount } = this.state
+
+    this.setState(() => ({
+      isSearching: true,
+    }))
 
     if (filteredOrders.length === 0) {
       this.setNoOfferState()
@@ -190,21 +200,56 @@ export default class PartialClosure extends Component {
 
     const sortedOrder = filteredOrders
       .sort((a, b) => Number(a.buyAmount.dividedBy(a.sellAmount)) - Number(b.buyAmount.dividedBy(b.sellAmount)))
-    const exRate = sortedOrder[0].buyAmount.dividedBy(sortedOrder[0].sellAmount)
-    const getAmount = new BigNumber(String()).dividedBy(exRate)
+      .map((item, index) => {
 
-    const checkAmount = this.setAmountOnState(sortedOrder[0].sellAmount, getAmount)
+      const exRate = item.buyAmount.dividedBy(item.sellAmount)
+      const getAmount = new BigNumber(String(this.state.haveAmount)).dividedBy(exRate)
 
-    if (!checkAmount) {
-      this.setNoOfferState()
-      return
+      console.log('item', item)
+
+      return {
+        sellAmount: item.sellAmount,
+        buyAmount: item.buyAmount,
+        exRate,
+        getAmount,
+        orderId: item.id,
+        peer: item.owner.peer,
+      }
+    })
+
+    console.log('sortedOrder', sortedOrder)
+
+    const search = this.setOrderOnState(sortedOrder)
+
+    if (search) {
+      this.setState(() => ({
+        isSearching: false,
+      }))
     }
+  }
 
-    this.setState(() => ({
-      isNonOffers: false,
-      peer: sortedOrder[0].owner.peer,
-      orderId: sortedOrder[0].id,
-    }), console.log(`this state ${this.state.getAmount} ${this.state.haveAmount}`))
+  setOrderOnState = (orders) => {
+    const { haveAmount } = this.state
+
+    orders.forEach(item => {
+      this.getUsdBalance()
+      const checkAmount = this.setAmountOnState(item.sellAmount, item.getAmount)
+
+      if (!checkAmount) {
+        this.setNoOfferState()
+        return
+      }
+
+      if (haveAmount > Number(item.sellAmount)) {
+        this.setState(() => ({
+          isNonOffers: false,
+          peer: item.peer,
+          orderId: item.id,
+        }))
+      }
+    })
+
+    return true
   }
 
   handleCustomWalletUse = () => {
@@ -265,7 +310,7 @@ export default class PartialClosure extends Component {
 
   render() {
     const { currencies } = this.props
-    const { haveCurrency, getCurrency, isNonOffers, redirect, orderId,
+    const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching,
       isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet, getUsd, haveUsd,
     } = this.state
 
@@ -310,6 +355,14 @@ export default class PartialClosure extends Component {
               currencies={currencies}
               usd={getUsd}
             />
+            {
+              isSearching && (
+                <span>
+                  {` Wait search orders: `}
+                  <InlineLoader />
+                </span>
+              )
+            }
             {
               this.customWalletAllowed() && (
                 <Fragment>
