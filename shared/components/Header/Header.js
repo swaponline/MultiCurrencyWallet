@@ -12,6 +12,7 @@ import styles from './Header.scss'
 
 import Nav from './Nav/Nav'
 import User from './User/User'
+import AddOfferButton from './User/AddOfferButton/AddOfferButton'
 import NavMobile from './NavMobile/NavMobile'
 
 import Logo from 'components/Logo/Logo'
@@ -111,7 +112,12 @@ export default class Header extends Component {
     const { sticky, menuItems } = this.state
 
     if (isMobile) {
-      return <NavMobile menu={menuItems} />
+      return (
+        <div>
+          <NavMobile menu={menuItems} />
+          <AddOfferButton mobile />
+        </div>
+      )
     }
 
     return (
