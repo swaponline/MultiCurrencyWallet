@@ -109,8 +109,8 @@ export default class PartialClosure extends Component {
 
   sendRequest = () => {
     const {
-      getAmount, haveAmount, haveCurrency,getCurrency,
-      peer,orderId, customWalletUse, customWallet,
+      getAmount, haveAmount, haveCurrency, getCurrency,
+      peer, orderId, customWalletUse, customWallet,
     } = this.state
 
     if (!String(getAmount) || !peer || !orderId || !String(haveAmount)) {
@@ -202,26 +202,26 @@ export default class PartialClosure extends Component {
       .sort((a, b) => Number(a.buyAmount.dividedBy(a.sellAmount)) - Number(b.buyAmount.dividedBy(b.sellAmount)))
       .map((item, index) => {
 
-      const exRate = item.buyAmount.dividedBy(item.sellAmount)
-      const getAmount = new BigNumber(String(haveAmount)).dividedBy(exRate)
+        const exRate = item.buyAmount.dividedBy(item.sellAmount)
+        const getAmount = new BigNumber(String(haveAmount)).dividedBy(exRate)
 
-      const haveUsd = new BigNumber(String(exHaveRate)).multipliedBy(haveAmount)
-      const getUsd  = new BigNumber(String(exGetRate)).multipliedBy(getAmount)
+        const haveUsd = new BigNumber(String(exHaveRate)).multipliedBy(haveAmount)
+        const getUsd  = new BigNumber(String(exGetRate)).multipliedBy(getAmount)
 
-      this.setState(() => ({
-        haveUsd: Number(haveUsd).toFixed(2),
-        getUsd: Number(getUsd).toFixed(2),
-      }))
+        this.setState(() => ({
+          haveUsd: Number(haveUsd).toFixed(2),
+          getUsd: Number(getUsd).toFixed(2),
+        }))
 
-      return {
-        sellAmount: item.sellAmount,
-        buyAmount: item.buyAmount,
-        exRate,
-        getAmount,
-        orderId: item.id,
-        peer: item.owner.peer,
-      }
-    })
+        return {
+          sellAmount: item.sellAmount,
+          buyAmount: item.buyAmount,
+          exRate,
+          getAmount,
+          orderId: item.id,
+          peer: item.owner.peer,
+        }
+      })
 
     console.log('sortedOrder', sortedOrder)
 
@@ -282,7 +282,7 @@ export default class PartialClosure extends Component {
       maxAmount: 0,
       haveCurrency,
       getCurrency: value,
-    }), this.setOrders())
+    }))
   }
 
   handleSetHaveValue = ({ value }) => {
@@ -296,7 +296,7 @@ export default class PartialClosure extends Component {
       maxAmount: 0,
       getCurrency,
       haveCurrency: value,
-    }), this.setOrders())
+    }))
   }
 
   handleFlipCurrency = () => {
