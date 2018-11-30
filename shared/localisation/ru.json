@@ -1544,7 +1544,7 @@
   },
   {
     "id": "EthToBtc167",
-    "message": "2. Ожидание, Владелец BTC создает Cекретный ключ,BTC Script и пополняет его. ",
+    "message": "2. Ожидание, Владелец BTC создает Cекретный ключ, BTC Script и пополняет его. ",
     "files": [
       "shared/pages/Swap/EthToBtc.js"
     ]
@@ -3152,7 +3152,7 @@
   },
   {
     "id": "LtcToBtc.Confirm",
-    "message": "2. Ожидание, Владелец BTC создает Cекретный ключ,BTC Script и пополняет его. ",
+    "message": "2. Ожидание, Владелец BTC создает Cекретный ключ, BTC Script и пополняет его. ",
     "files": [
       "shared/pages/Swap/LtcToBtc.js"
     ]
