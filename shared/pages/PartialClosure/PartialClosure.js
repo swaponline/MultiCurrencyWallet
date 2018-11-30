@@ -232,30 +232,38 @@ export default class PartialClosure extends Component {
   }
 
   setOrderOnState = (orders) => {
-    const { haveAmount, exHaveRate, exGetRate } = this.state
+    const { exHaveRate, exGetRate } = this.state
+    const haveAmount = new BigNumber(this.state.haveAmount)
 
     console.log('setOrderOnState', orders)
 
+    let maxAllowedSellAmount = new BigNumber(0)
+    let maxAllowedGetAmount = new BigNumber(0)
+
     orders.forEach(item => {
-      console.log('item', item)
-      const checkAmount = this.setAmountOnState(item.sellAmount, item.getAmount)
+      maxAllowedSellAmount = (maxAllowedSellAmount.isLessThanOrEqualTo(item.sellAmount)) ? item.sellAmount : maxAllowedSellAmount      
 
-      if (!checkAmount) {
-        this.setNoOfferState()
-        return
+      if (haveAmount.isLessThanOrEqualTo(item.buyAmount)) {
+        console.log('item', item)
+        maxAllowedGetAmount = (maxAllowedGetAmount.isLessThanOrEqualTo(item.getAmount)) ? item.getAmount : maxAllowedGetAmount
+        const haveUsd = new BigNumber(String(exHaveRate)).multipliedBy(haveAmount)
+        const getUsd  = new BigNumber(String(exGetRate)).multipliedBy(item.getAmount)
+
+        this.setState(() => ({
+          haveUsd: Number(haveUsd).toFixed(2),
+          getUsd: Number(getUsd).toFixed(2),
+          isNonOffers: false,
+          peer: item.peer,
+          orderId: item.orderId,
+        }))
       }
-
-      const haveUsd = new BigNumber(String(exHaveRate)).multipliedBy(haveAmount)
-      const getUsd  = new BigNumber(String(exGetRate)).multipliedBy(item.getAmount)
-
-      this.setState(() => ({
-        haveUsd: Number(haveUsd).toFixed(2),
-        getUsd: Number(getUsd).toFixed(2),
-        isNonOffers: false,
-        peer: item.peer,
-        orderId: item.orderId,
-      }))
     })
+
+    const checkAmount = this.setAmountOnState(maxAllowedSellAmount, maxAllowedGetAmount)
+
+    if (!checkAmount) {
+      this.setNoOfferState()
+    }
 
     return true
   }
