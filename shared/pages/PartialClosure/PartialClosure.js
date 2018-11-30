@@ -234,14 +234,14 @@ export default class PartialClosure extends Component {
   setOrderOnState = (orders) => {
     const { exHaveRate, exGetRate } = this.state
     const haveAmount = new BigNumber(this.state.haveAmount)
-
+    
     console.log('setOrderOnState', orders)
 
     let maxAllowedSellAmount = new BigNumber(0)
     let maxAllowedGetAmount = new BigNumber(0)
 
     orders.forEach(item => {
-      maxAllowedSellAmount = (maxAllowedSellAmount.isLessThanOrEqualTo(item.sellAmount)) ? item.sellAmount : maxAllowedSellAmount      
+      maxAllowedSellAmount = (maxAllowedSellAmount.isLessThanOrEqualTo(item.sellAmount)) ? item.sellAmount : maxAllowedSellAmount
 
       if (haveAmount.isLessThanOrEqualTo(item.buyAmount)) {
         console.log('item', item)
@@ -264,7 +264,6 @@ export default class PartialClosure extends Component {
     if (!checkAmount) {
       this.setNoOfferState()
     }
-
     return true
   }
 
@@ -398,6 +397,12 @@ export default class PartialClosure extends Component {
                 </span>
               )
             }
+            <p>{`Max amount for offer:`} {maxAmount}{' '}{getCurrency.toUpperCase()}</p>
+            {maxAmount > 0 && isNonOffers && (
+              <p styleName="error">
+                {`No orders found, try to reduce the amount`}
+              </p>
+            )}
             {
               this.customWalletAllowed() && (
                 <Fragment>
@@ -407,18 +412,12 @@ export default class PartialClosure extends Component {
                   </div>
                   { customWalletUse && (
                     <div styleName="walletInput">
-                      <Input valueLink={linked.customWallet} pattern="0-9a-zA-Z" />
+                      <Input valueLink={linked.customWallet} pattern="0-9a-zA-Z" placeholder="Enter the address of ETH wallet" />
                     </div>
                   ) }
                 </Fragment>
               )
             }
-            <p>{`Max amount for offer:`} {maxAmount}{' '}{getCurrency.toUpperCase()}</p>
-            {maxAmount > 0 && isNonOffers && (
-              <p styleName="error">
-                {`No orders found, try to reduce the amount`}
-              </p>
-            )}
             {isDeclinedOffer && (
               <p styleName="error">
                 {`Offer is declined`}
