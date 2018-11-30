@@ -101,8 +101,12 @@ export default class ImportKeys extends Component {
       linked.btcKey.check((value) => value.length > 27, 'Please valid BTC private key')
     }
 
+    const title = [
+      <FormattedMessage id="Import" defaultMessage="Import keys" />,
+    ]
+
     return (
-      <Modal name={this.props.name} title="Import keys">
+      <Modal name={this.props.name} title={title}>
         <div styleName="modal">
           <FormattedMessage id="ImportKeys107" defaultMessage="This procedure will rewrite your private key. If you are not sure about it, we recommend to press cancel">
             {message => <p>{message}</p>}

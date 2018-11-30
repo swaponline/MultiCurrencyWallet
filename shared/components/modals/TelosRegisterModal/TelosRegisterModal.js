@@ -58,8 +58,12 @@ export default class TelosRegisterModal extends React.Component {
       <FormattedMessage id="TelosRegister52" defaultMessage="Enter your TELOS secret key" />,
     ]
 
+    const title = [
+      <FormattedMessage id="TELOSLogin" defaultMessage="TELOS Login" />,
+    ]
+
     return (
-      <Modal name={name} title="TELOS Login">
+      <Modal name={name} title={title}>
         <FieldLabel inRow>
           <FormattedMessage id="TelosRegister55" defaultMessage="Account name" />
           <Tooltip text={text} id="TelOSR92" />

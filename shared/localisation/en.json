@@ -3043,10 +3043,7 @@
   },
   {
     "id": "Scriptaddress: ",
-    "message": "Script address: ",
-    "files": [
-      "shared/pages/Swap/BtcToLtc.js"
-    ]
+    "message": "Script address: "
   },
   {
     "id": "SecretHash",
@@ -4324,6 +4321,125 @@
     "message": "You get",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "Approve66",
+    "message": "Approve token",
+    "files": [
+      "shared/components/modals/Approve/Approve.js"
+    ]
+  },
+  {
+    "id": "Eos87",
+    "message": "EOS Register",
+    "files": [
+      "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
+    ]
+  },
+  {
+    "id": "Eos61",
+    "message": "EOS Login",
+    "files": [
+      "shared/components/modals/EosRegisterModal/EosRegisterModal.js"
+    ]
+  },
+  {
+    "id": "Approve",
+    "message": "Approve token",
+    "files": [
+      "shared/components/modals/EthChecker/EthChecker.js"
+    ]
+  },
+  {
+    "id": "Import",
+    "message": "Import keys",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "Add52",
+    "message": "Add offer",
+    "files": [
+      "shared/components/modals/OfferModal/OfferModal.js"
+    ]
+  },
+  {
+    "id": "Confirm52",
+    "message": "Confirm offer",
+    "files": [
+      "shared/components/modals/OfferModal/OfferModal.js"
+    ]
+  },
+  {
+    "id": "editOffer",
+    "message": "editOffer",
+    "files": [
+      "shared/components/modals/OfferModal/OfferModal.js"
+    ]
+  },
+  {
+    "id": "ImCAUTIONport",
+    "message": "CAUTION!",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "Receive",
+    "message": "Receive",
+    "files": [
+      "shared/components/modals/ReceiveModal/ReceiveModal.js"
+    ]
+  },
+  {
+    "id": "Areyousure?",
+    "message": "Are you sure ?",
+    "files": [
+      "shared/components/modals/SaveKeysModal/SaveKeysModal.js"
+    ]
+  },
+  {
+    "id": "ShMoreCoins",
+    "message": "Show More Coins",
+    "files": [
+      "shared/components/modals/ShowMoreCoins/ShowMoreCoins.js"
+    ]
+  },
+  {
+    "id": "TELOSLogin",
+    "message": "TELOS Login",
+    "files": [
+      "shared/components/modals/TelosRegisterModal/TelosRegisterModal.js"
+    ]
+  },
+  {
+    "id": "Subscribe55",
+    "message": "Subscribe",
+    "files": [
+      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+    ]
+  },
+  {
+    "id": "Withdraw183",
+    "message": "Withdraw",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Row158",
+    "message": "for",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Scriptaddress:",
+    "message": "Script address:",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js"
     ]
   }
 ]

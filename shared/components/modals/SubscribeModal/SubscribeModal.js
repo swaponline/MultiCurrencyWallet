@@ -51,8 +51,12 @@ export default class SubscribeModal extends React.Component {
     const { isSubscribed, isSubmited } = this.state
     const { name } = this.props
 
+    const title = [
+      <FormattedMessage id="Subscribe55" defaultMessage="Subscribe" />,
+    ]
+
     return (
-      <Modal name={name} title="Subscribe">
+      <Modal name={name} title={title}>
         {
           isSubscribed ? (
             <p styleName="thanks">

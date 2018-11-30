@@ -10,6 +10,7 @@ import Modal from 'components/modal/Modal/Modal'
 
 import ConfirmOffer from './ConfirmOffer/ConfirmOffer'
 import AddOffer from './AddOffer/AddOffer'
+import { FormattedMessage } from 'react-intl'
 
 
 @cssModules(styles)
@@ -20,7 +21,7 @@ export default class Offer extends React.Component {
   }
 
   state = {
-    view: 'editOffer', // editOffer / confirmOffer
+    view: 'editOffer',
     offer: {
       buyCurrency: this.props.data.buyCurrency,
       sellCurrency: this.props.data.sellCurrency,
@@ -33,7 +34,7 @@ export default class Offer extends React.Component {
 
   handleMoveToConfirmation = (offer) => {
     this.setState({
-      view: 'confirmOffer',
+      view: "Confirm offer",
       offer,
     })
   }
@@ -41,7 +42,7 @@ export default class Offer extends React.Component {
   handleMoveToOfferEditing = () => {
     actions.analytics.dataEvent('orderbook-addoffer-click-confirm-button')
     this.setState({
-      view: 'editOffer',
+      view: "editOffer",
     })
   }
 
@@ -49,7 +50,7 @@ export default class Offer extends React.Component {
     const { view, offer } = this.state
     const { name } = this.props
 
-    const title = view === 'editOffer' ? 'Add offer' : 'Confirm offer'
+    const title = view === "editOffer" ? <FormattedMessage id="Add52" defaultMessage="Add offer" /> :  <FormattedMessage id="Confirm52" defaultMessage="Confirm Offer" />
 
     return (
       <Modal name={name} title={title}>

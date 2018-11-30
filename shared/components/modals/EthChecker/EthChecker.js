@@ -20,8 +20,12 @@ export default class EthChecker extends Component {
 
     const { name, intl: { locale }  } = this.props
 
+    const title = [
+      <FormattedMessage id="Approve" defaultMessage="Approve token" />,
+    ]
+
     return (
-      <Modal name={name} title="Approve token">
+      <Modal name={name} title={title}>
         <div styleName="content">
           <FormattedMessage id="EthChecker19" defaultMessage="This token works on Ethereum blockchain. To swap this token you must have at least 0.02 ETH on your balance">
             {message => <p>{message}</p>}

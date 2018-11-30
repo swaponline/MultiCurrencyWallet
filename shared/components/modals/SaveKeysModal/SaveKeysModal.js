@@ -55,6 +55,10 @@ export default class SaveKeysModal extends React.Component {
     render() {
       const { view } = this.state
 
+      const title = [
+        <FormattedMessage id="Areyousure?" defaultMessage="Are you sure ?" />,
+      ]
+
       return (
         <Overlay>
           <Center keepFontSize>
@@ -80,7 +84,7 @@ export default class SaveKeysModal extends React.Component {
                   createPortal(
                     <Confirm
                       rootClassName={styles.areYouSure}
-                      title="Are you sure ?"
+                      title={title}
                       isConfirm={() => this.handleConfirm()}
                       isReject={() => this.changeView(views.saveKeys)}
                       animation={view === views.confirm}

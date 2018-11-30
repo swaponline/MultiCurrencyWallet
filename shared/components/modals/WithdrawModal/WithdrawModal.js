@@ -179,8 +179,13 @@ export default class WithdrawModal extends React.Component {
         </div>,
       ]
 
+      const title = [
+        <FormattedMessage id="Withdraw183" defaultMessage="Withdraw" />,
+        `${data.currency.toUpperCase()}`,
+      ]
+
       return (
-        <Modal name={name} title={`Withdraw ${data.currency.toUpperCase()}`}>
+        <Modal name={name} title={title}>
           { tokenFee &&
             (
               <p style={{ fontSize: '16px', textAlign: 'center', color: 'red' }}>

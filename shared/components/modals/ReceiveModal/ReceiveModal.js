@@ -35,8 +35,12 @@ export default class ReceiveModal extends React.Component {
   render() {
     const { props: { name, data: { currency, address } }, state: { isAddressCopied } } = this
 
+    const title = [
+      <FormattedMessage id="Receive" defaultMessage="Receive" />,
+    ]
+
     return (
-      <Modal name={name} title="Receive">
+      <Modal name={name} title={title}>
         <div styleName="content" style={{ textAlign: "center" }}>
           <FormattedMessage id="ReceiveModal" defaultMessage="This is your address for receive">
             {message => <p style={{ fontSize: 25 }}>{`${message} ${currency}`}</p>}

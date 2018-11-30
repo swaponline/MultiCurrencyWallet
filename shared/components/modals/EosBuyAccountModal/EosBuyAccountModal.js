@@ -83,31 +83,35 @@ export default class EosBuyAccountModal extends React.Component {
       <FormattedMessage id="Eos83" defaultMessage="This amount will be withdrawn from your BTC wallet" />,
     ]
 
+    const title = [
+      <FormattedMessage id="Eos87" defaultMessage="EOS Register" />,
+    ]
+
     return (
       <Fragment>
-        <Modal name={name} title="EOS Register">
-          <div>
+        <Modal name={name} title={title} >
+          <div styleName="margin">
             <FieldLabel inRow>
               <FormattedMessage id="EosBuyAccountModal72" defaultMessage="Account name" />
               <Tooltip text={text} id="EoS92" />
             </FieldLabel>
-            <Input readOnly="true" valueLink={linked.accountName} />
+            <Input readOnly="true" valueLink={linked.accountName} styleName="input"/>
           </div>
-          <div>
+          <div styleName="margin">
             <FieldLabel inRow>
               <FormattedMessage id="EosBuyAccountModal78" defaultMessage="Private key" />
               <Tooltip text={text1} id="EoS90" />
             </FieldLabel>
             <Input readOnly="true" valueLink={linked.activePrivateKey} />
           </div>
-          <div>
+          <div styleName="margin">
             <FieldLabel inRow>
               <FormattedMessage id="EosBuyAccountModal84" defaultMessage="Public key" />
               <Tooltip text={text2} id="EoS106" />
             </FieldLabel>
             <Input readOnly="true" valueLink={linked.activePublicKey} />
           </div>
-          <div>
+          <div styleName="margin">
             <FieldLabel inRow>
               <FormattedMessage id="EosBuyAccountModal90" defaultMessage="Price (BTC)" />
               <Tooltip text={text3} id="EoS113" />

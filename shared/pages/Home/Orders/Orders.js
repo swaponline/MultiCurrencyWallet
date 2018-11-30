@@ -123,7 +123,7 @@ export default class Orders extends Component {
           defaultDescription={`Best exchange rate for ${buyCurrencyFullName} (${buyCurrency}) to ${sellCurrencyFullName} (${sellCurrency}).
                Swap.Online wallet provides instant exchange using Atomic Swap Protocol.`
           } />
-        <Title>
+        <Title style={{ fontFamily: 'arial' }}>
           {buyCurrency}/{sellCurrency}
           <FormattedMessage id="orders138" defaultMessage="no limit exchange with 0 fee" />
         </Title>

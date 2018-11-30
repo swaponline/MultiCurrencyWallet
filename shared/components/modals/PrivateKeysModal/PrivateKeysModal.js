@@ -84,13 +84,17 @@ export default class PrivateKeysModal extends React.PureComponent {
     const btcValidated = Link.state(this, 'btcValidated')
     const isValidated = ethValidated.value && btcValidated.value
 
+    const title = [
+      <FormattedMessage id="ImCAUTIONport" defaultMessage="CAUTION!" />,
+    ]
+
     return (
       <Modal
         styleName="modal"
         name={name}
         showCloseButton={false}
         showLogo={false}
-        title="CAUTION!"
+        title={title}
       >
         <div styleName="content">
           {

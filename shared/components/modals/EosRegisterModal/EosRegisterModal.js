@@ -57,8 +57,12 @@ export default class EosRegisterModal extends React.Component {
       <FormattedMessage id="Eos57" defaultMessage="Enter private key for active permission" />,
     ]
 
+    const title = [
+      <FormattedMessage id="Eos61" defaultMessage="EOS Login" />,
+    ]
+
     return (
-      <Modal name={name} title="EOS Login">
+      <Modal name={name} title={title}>
         <FieldLabel inRow>
           <FormattedMessage id="EosRegAccountModal54" defaultMessage="Account name" />
           <Tooltip text={text} id="EoSR92" />

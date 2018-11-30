@@ -63,9 +63,12 @@ export default class Offer extends React.Component {
       linked.amount.check((value) => value <= 0, `Amount must be greater than 1 `)
     }
 
+    const title = [
+      <FormattedMessage id="Approve66" defaultMessage="Approve token" />,
+    ]
 
     return (
-      <Modal name={name} title="Approve token">
+      <Modal name={name} title={title}>
         <div styleName="content">
           <FormattedMessage
             id="Approve70"

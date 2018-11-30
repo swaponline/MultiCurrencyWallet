@@ -33,8 +33,12 @@ export default class ShowMoreCoins extends Component {
       <FormattedMessage id="Actions" defaultMessage="Actions" />,
     ]
 
+    const title2 = [
+      <FormattedMessage id="ShMoreCoins" defaultMessage="Show More Coins" />,
+    ]
+
     return (
-      <Modal name={name} title="Show More Coins" shouldCenterVertically={false}>
+      <Modal name={name} title={title2} shouldCenterVertically={false}>
         <div styleName="modal">
           <div styleName="modal_column">
             <SubTitle styleName="modal_column-title">

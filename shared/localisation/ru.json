@@ -614,7 +614,7 @@
   },
   {
     "id": "SwapProgress38",
-    "message": "2. Ожидание, Владелец BTC создает секретный ключ, создает BTC Script и загружает его",
+    "message": "2. Ожидание, Владелец BTC создает секретный ключ, создает BTC Script и пополняет его",
     "files": [
       "shared/components/SwapProgress/SwapProgress.js"
     ]
@@ -882,7 +882,7 @@
   },
   {
     "id": "orders143",
-    "message": "ПОКУПКА ",
+    "message": "КУПИТЬ ",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]
@@ -896,7 +896,7 @@
   },
   {
     "id": "orders148",
-    "message": "Ордера на ",
+    "message": "Здесь размещены ордера на ",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]
@@ -917,7 +917,7 @@
   },
   {
     "id": "orders174",
-    "message": "ПРОДАЖА ",
+    "message": "ПРОДАТЬ ",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]
@@ -931,7 +931,7 @@
   },
   {
     "id": "orders179",
-    "message": "Ордера на ",
+    "message": "Здесь размещены ордера на ",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]
@@ -1544,7 +1544,7 @@
   },
   {
     "id": "EthToBtc167",
-    "message": "2. Ожидание, Владелец BTC создает Cекретный ключ,BTC Script и загружает его. ",
+    "message": "2. Ожидание, Владелец BTC создает Cекретный ключ,BTC Script и пополняет его. ",
     "files": [
       "shared/pages/Swap/EthToBtc.js"
     ]
@@ -1726,7 +1726,7 @@
   },
   {
     "id": "EthTokenBtc147",
-    "message": "2. Ожидание, Владелец BTC создает Cекретный ключ, BTC Script и загружает его. ",
+    "message": "2. Ожидание, Владелец BTC создает Cекретный ключ, BTC Script и пополняет его. ",
     "files": [
       "shared/pages/Swap/EthTokenToBtc.js"
     ]
@@ -1915,7 +1915,7 @@
   },
   {
     "id": "EthTokenToUsdt154",
-    "message": "2. Ожидание, Владелец USDT создает Секретный ключ, создает BTC Omni Script и загружает его",
+    "message": "2. Ожидание, Владелец USDT создает Секретный ключ, создает BTC Omni Script и пополняет его",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
@@ -2118,7 +2118,7 @@
   },
   {
     "id": "EthToLtc167",
-    "message": "2. Ожидание, Владелец LTC создает Секретный ключ, создает LTC Script и загружает его",
+    "message": "2. Ожидание, Владелец LTC создает Секретный ключ, создает LTC Script и пополняет его",
     "files": [
       "shared/pages/Swap/EthToLtc.js"
     ]
@@ -3043,10 +3043,7 @@
   },
   {
     "id": "Scriptaddress: ",
-    "message": "Script адрес: ",
-    "files": [
-      "shared/pages/Swap/BtcToLtc.js"
-    ]
+    "message": "Script адрес: "
   },
   {
     "id": "SecretHash",
@@ -3155,7 +3152,7 @@
   },
   {
     "id": "LtcToBtc.Confirm",
-    "message": "2. Ожидание, Владелец BTC создает Cекретный ключ,BTC Script и загружает его. ",
+    "message": "2. Ожидание, Владелец BTC создает Cекретный ключ,BTC Script и пополняет его. ",
     "files": [
       "shared/pages/Swap/LtcToBtc.js"
     ]
@@ -3781,14 +3778,14 @@
   },
   {
     "id": "Row134",
-    "message": "покупка",
+    "message": "продать",
     "files": [
       "shared/pages/Home/Orders/Row/Row.js"
     ]
   },
   {
     "id": "Row136",
-    "message": "продажа",
+    "message": "продает",
     "files": [
       "shared/pages/Home/Orders/Row/Row.js"
     ]
@@ -4324,6 +4321,125 @@
     "message": "Вы получите",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "Approve66",
+    "message": "Подтвердить токен",
+    "files": [
+      "shared/components/modals/Approve/Approve.js"
+    ]
+  },
+  {
+    "id": "Eos87",
+    "message": "EOS регистрация",
+    "files": [
+      "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
+    ]
+  },
+  {
+    "id": "Eos61",
+    "message": "EOS вход",
+    "files": [
+      "shared/components/modals/EosRegisterModal/EosRegisterModal.js"
+    ]
+  },
+  {
+    "id": "Approve",
+    "message": "Подтвердить токен",
+    "files": [
+      "shared/components/modals/EthChecker/EthChecker.js"
+    ]
+  },
+  {
+    "id": "Import",
+    "message": "Загрузить ключи",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "Add52",
+    "message": "Добавить предложение на обмен",
+    "files": [
+      "shared/components/modals/OfferModal/OfferModal.js"
+    ]
+  },
+  {
+    "id": "Confirm52",
+    "message": "Подтверждение данных",
+    "files": [
+      "shared/components/modals/OfferModal/OfferModal.js"
+    ]
+  },
+  {
+    "id": "editOffer",
+    "message": "editOffer",
+    "files": [
+      "shared/components/modals/OfferModal/OfferModal.js"
+    ]
+  },
+  {
+    "id": "ImCAUTIONport",
+    "message": "ВНИМАНИЕ!",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "Receive",
+    "message": "Пополнение баланса",
+    "files": [
+      "shared/components/modals/ReceiveModal/ReceiveModal.js"
+    ]
+  },
+  {
+    "id": "Areyousure?",
+    "message": "Вы уверены ?",
+    "files": [
+      "shared/components/modals/SaveKeysModal/SaveKeysModal.js"
+    ]
+  },
+  {
+    "id": "ShMoreCoins",
+    "message": "Добавление токенов на главную страницу",
+    "files": [
+      "shared/components/modals/ShowMoreCoins/ShowMoreCoins.js"
+    ]
+  },
+  {
+    "id": "TELOSLogin",
+    "message": "TELOS вход",
+    "files": [
+      "shared/components/modals/TelosRegisterModal/TelosRegisterModal.js"
+    ]
+  },
+  {
+    "id": "Subscribe55",
+    "message": "Подписка",
+    "files": [
+      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+    ]
+  },
+  {
+    "id": "Withdraw183",
+    "message": "Отправка ",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Row158",
+    "message": "покупает",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Scriptaddress:",
+    "message": "Адрес скрипта: ",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js"
     ]
   }
 ]
