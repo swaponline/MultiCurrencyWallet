@@ -25,7 +25,7 @@ export default class AddOfferButton extends Component {
       <div styleName={mobile ? 'mobile' : ''}>
         {
           process.env.LOCAL !== 'local' && (
-            <Fragment>
+            <div styleName="buttonWrap">
               {
                 process.env.TESTNET ? (
                   <Fragment>
@@ -54,7 +54,7 @@ export default class AddOfferButton extends Component {
               <button styleName="buttonMobile" onClick={this.handleSubscribe} /* eslint-disable-line */ >
                 <i className="fa fa-gift" aria-hidden="true" />
               </button>
-            </Fragment>
+            </div>
           )
         }
       </div>
