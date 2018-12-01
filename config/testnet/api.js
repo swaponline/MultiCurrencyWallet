@@ -1,6 +1,6 @@
 export default {
   blocktrail: 'https://api.blocktrail.com/v1/tBTC',
-  bitpay: 'https://test-insight.bitpay.com/api',
+  bitpay: 'https://test-insight.swap.online/insight-api', //https://test-insight.bitpay.com/api
   etherscan: 'https://rinkeby.etherscan.io/api',
   // bch: 'https://bch-insight.bitpay.com/api',
   ltc: 'https://ltctest.coinapp.io/api',
