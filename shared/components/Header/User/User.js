@@ -18,6 +18,7 @@ import Avatar from 'components/Avatar/Avatar'
 @connect({
   feeds: 'feeds.items',
   peer: 'ipfs.peer',
+  reputation: 'ipfs.reputation',
 })
 @CSSModules(styles)
 export default class User extends React.Component {
@@ -54,7 +55,7 @@ export default class User extends React.Component {
 
   render() {
     const { view } = this.state
-    const { feeds, peer } = this.props
+    const { feeds, peer, reputation } = this.props
 
     return (
       <div styleName="user-cont">
@@ -72,11 +73,16 @@ export default class User extends React.Component {
           />
         }
         {!!peer && (
-          <Avatar
-            className={styles.avatar}
-            value={peer}
-            size={40}
-          />
+          <div styleName="avatar-container">
+            <Avatar
+              className={styles.avatar}
+              value={peer}
+              size={40}
+            />
+            { Number.isInteger(reputation) && (
+              <div styleName="avatar-reputation-centered">{reputation}</div>
+            )}
+          </div>
         )}
       </div>
     )

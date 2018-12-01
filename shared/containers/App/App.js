@@ -87,6 +87,7 @@ export default class App extends React.Component {
 
     setTimeout(() => {
       actions.user.sign()
+      actions.user.getReputation()
       createSwapApp()
       this.setState({ fetching: true })
     }, 1000)
