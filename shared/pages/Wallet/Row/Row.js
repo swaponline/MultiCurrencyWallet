@@ -23,7 +23,7 @@ import { FormattedMessage } from 'react-intl'
 @withRouter
 @connect(
   ({
-    user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, usdtData, ltcData },
+    user: { ethData, btcData, /* bchData, */ tokensData, eosData, telosData, nimData, usdtData, ltcData },
     currencies: { items: currencies },
   }, { currency }) => ({
     currencies,
@@ -32,7 +32,7 @@ import { FormattedMessage } from 'react-intl'
       ethData,
       eosData,
       telosData,
-      bchData,
+      /* bchData, */
       ltcData,
       usdtData,
       ...Object.keys(tokensData).map(k => (tokensData[k])),
