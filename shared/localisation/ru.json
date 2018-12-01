@@ -411,7 +411,7 @@
   },
   {
     "id": "ReceiveModal",
-    "message": "Ваш адрес для получения ",
+    "message": "Адрес для получения ",
     "files": [
       "shared/components/modals/ReceiveModal/ReceiveModal.js"
     ]
@@ -4080,7 +4080,7 @@
   },
   {
     "id": "Withdrow1194",
-    "message": "Адрес",
+    "message": "Адрес ",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]

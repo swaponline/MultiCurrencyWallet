@@ -13,6 +13,7 @@ import styles from './Header.scss'
 
 import Nav from './Nav/Nav'
 import User from './User/User'
+import AddOfferButton from './User/AddOfferButton/AddOfferButton'
 import NavMobile from './NavMobile/NavMobile'
 
 import LogoTooltip from 'components/Logo/LogoTooltip'
@@ -128,7 +129,12 @@ checkLang = () => {
   const { intl: { locale }, pathname } = this.props
 
     if (isMobile) {
-      return <NavMobile menu={menuItems} />
+      return (
+        <div>
+          <NavMobile menu={menuItems} />
+          <AddOfferButton mobile />
+        </div>
+      )
     }
 
     return (

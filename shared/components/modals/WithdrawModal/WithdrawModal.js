@@ -32,10 +32,10 @@ const minAmount = {
 @connect(
   ({
     currencies,
-    user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, usdtData, ltcData },
+    user: { ethData, btcData, /* bchData, */ tokensData, eosData, telosData, nimData, usdtData, ltcData },
   }) => ({
     currencies: currencies.items,
-    items: [ ethData, btcData, eosData, telosData, bchData, ltcData, usdtData /* nimData */ ],
+    items: [ ethData, btcData, eosData, telosData, /* bchData, */ ltcData, usdtData /* nimData */ ],
     tokenItems: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
   })
 )
@@ -198,7 +198,7 @@ export default class WithdrawModal extends React.Component {
           {!tokenFee &&
             (
               <p style={{ fontSize: '16px', textAlign: 'center' }}>
-                <FormattedMessage id="Withdrow178" defaultMessage="Please note: Miners fee is " />{minAmount[data.currency.toLowerCase()]}.
+                <FormattedMessage id="Withdrow178" defaultMessage="Please note: Miners fee is " />{minAmount[data.currency.toLowerCase()]} {data.currency.toUpperCase()}.
                 <br />
                 <FormattedMessage id="Withdrow180" defaultMessage="Your balance must exceed this sum to perform transaction. " />
               </p>
