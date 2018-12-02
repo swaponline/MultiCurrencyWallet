@@ -22,7 +22,7 @@ export default class CurrencyButton extends Component {
       currency,
       deposit,
       wallet,
-      ...rest,
+      ...rest
     } = this.props
 
     const styleName = cx('button', {
