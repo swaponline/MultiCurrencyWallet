@@ -4494,5 +4494,12 @@
     "files": [
       "shared/pages/Swap/Timer/Timer.js"
     ]
+  },
+  {
+    "id": "BtcToEthToken275",
+    "message": "Refund hex transaction:",
+    "files": [
+      "shared/pages/Swap/BtcToEthToken.js"
+    ]
   }
 ]

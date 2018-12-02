@@ -4010,7 +4010,7 @@
   },
   {
     "id": "SubscribeModal001",
-    "message": "Join whitelist и получите 1 SWAP токен",
+    "message": "Включите уведомления и получите 1 SWAP токен",
     "files": [
       "shared/components/modals/SubscribeModal/SubscribeModal.js"
     ]
@@ -4024,7 +4024,7 @@
   },
   {
     "id": "SubscribeModal003",
-    "message": "Join whitelist",
+    "message": "Включить уведомления",
     "files": [
       "shared/components/modals/SubscribeModal/SubscribeModal.js"
     ]
@@ -4483,7 +4483,7 @@
   },
   {
     "id": "timer67",
-    "message": "минут до возврата средств",
+    "message": " минут(ы) до возврата средств",
     "files": [
       "shared/pages/Swap/Timer/Timer.js"
     ]
@@ -4493,6 +4493,13 @@
     "message": "Возможен возврат",
     "files": [
       "shared/pages/Swap/Timer/Timer.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken275",
+    "message": "Операция возврата транзакции: ",
+    "files": [
+      "shared/pages/Swap/BtcToEthToken.js"
     ]
   }
 ]

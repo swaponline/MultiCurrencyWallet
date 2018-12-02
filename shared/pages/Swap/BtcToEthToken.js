@@ -272,7 +272,8 @@ export default class BtcToEthToken extends Component {
                           <a href="https://wiki.swap.online/faq/my-swap-got-stuck-and-my-bitcoin-has-been-withdrawn-what-to-do/" target="_blank" rel="noopener noreferrer">
                             <FormattedMessage id="BtcToEthToken207" defaultMessage="How refund your money? " />
                           </a>
-                          Refund hex transaction: <code> {flow.refundTxHex} </code>
+                          <FormattedMessage id="BtcToEthToken275" defaultMessage="Refund hex transaction: " />
+                          <code> {flow.refundTxHex} </code>
                         </div>
                       )
                     }
