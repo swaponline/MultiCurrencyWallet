@@ -259,6 +259,7 @@ export default class PartialClosure extends Component {
       } else {
         this.setState(() => ({
           isNonOffers: true,
+          getUsd: Number(0).toFixed(2),
         }))
       }
     })
