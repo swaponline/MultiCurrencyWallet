@@ -19,7 +19,7 @@ import PageSeo from 'components/Seo/PageSeo'
 import { getSeoPage } from 'helpers/seo'
 import { FormattedMessage } from 'react-intl'
 import ReactTooltip from 'react-tooltip'
-
+import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
 
 @connect(({ core, user,  history: { transactions, swapHistory } }) => ({
   user,
@@ -64,7 +64,7 @@ export default class CurrencyWallet extends Component {
   }
 
   handleReceive = () => {
-    const { currency, address } = this.props
+    const { currency, address } = this.state
 
     actions.modals.open(constants.modals.ReceiveModal, {
       currency,
@@ -104,8 +104,16 @@ export default class CurrencyWallet extends Component {
       .filter(swap => swap.sellCurrency === currency || swap.buyCurrency === currency)
 
     const seoPage = getSeoPage(location.pathname)
-
     const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true"
+
+    const text1 = [
+      <FormattedMessage id="CurrencyWallet110" defaultMessage="Deposit funds to this address of currency wallet" />,
+    ]
+
+    const text2 = [
+      <FormattedMessage id="CurrencyWallet113" defaultMessage="You can not send this asset, because you have a zero balance." />,
+    ]
+
     return (
       <div className="root">
         <PageSeo
@@ -124,18 +132,16 @@ export default class CurrencyWallet extends Component {
           <FormattedMessage id="CurrencyWallet105" defaultMessage="Activate account" />
         </Button>)}
         <div styleName="inRow">
-          <button brand styleName="buttonD" onClick={this.handleReceive} data-tip data-for={`deposit${currency}`}>
-            <span>
-              <FormattedMessage id="Row313" defaultMessage="Deposit" />
-            </span>
-          </button>
-          <button styleName={isBalanceEmpty ? 'disable' : 'buttonD'} onClick={!isBalanceEmpty && this.handleWithdraw} >
+          <CurrencyButton onClick={this.handleReceive} data={`deposit${currency}`} text={text1} >
+            <FormattedMessage id="Row313" defaultMessage="Deposit" />
+          </CurrencyButton>
+          <CurrencyButton  onClick={this.handleWithdraw} disable={isBalanceEmpty} data={isBalanceEmpty && address} text={text2} >
             <FormattedMessage id="CurrencyWallet100" defaultMessage="Send" />
-          </button>
+          </CurrencyButton>
           <ReactTooltip id="132cW" type="light" effect="solid">
             <FormattedMessage id="133cW" defaultMessage="You can not send this asset, because you have a zero balance." />
           </ReactTooltip>
-          <Button gray styleName="button" onClick={() => this.handleGoTrade(currency)}>
+          <Button gray onClick={() => this.handleGoTrade(currency)}>
             <FormattedMessage id="CurrencyWallet104" defaultMessage="Exchange" />
           </Button>
         </div>
