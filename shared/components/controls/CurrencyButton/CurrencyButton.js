@@ -8,7 +8,6 @@ import cx from 'classnames'
 import { connect } from 'redaction'
 
 
-
 @CSSModules(styles, { allowMultiple: true })
 export default class CurrencyButton extends Component {
 
@@ -27,7 +26,7 @@ export default class CurrencyButton extends Component {
 
     const styleName = cx('button', {
       'disable': disable,
-      'wallet': wallet
+      'wallet': wallet,
     })
 
     return (
