@@ -4374,10 +4374,7 @@
   },
   {
     "id": "editOffer",
-    "message": "editOffer",
-    "files": [
-      "shared/components/modals/OfferModal/OfferModal.js"
-    ]
+    "message": "editOffer"
   },
   {
     "id": "ImCAUTIONport",
@@ -4440,6 +4437,62 @@
     "message": "Script address:",
     "files": [
       "shared/pages/Swap/BtcToLtc.js"
+    ]
+  },
+  {
+    "id": "RowHistory281",
+    "message": "Received",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowHistory282",
+    "message": "Sent",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowHistory34",
+    "message": "Confirmed",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowHistory341",
+    "message": "Confirm",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowHistory342",
+    "message": "Unconfirmed",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "BtcToEth248",
+    "message": "Refund hex transaction:",
+    "files": [
+      "shared/pages/Swap/BtcToEth.js"
+    ]
+  },
+  {
+    "id": "timer67",
+    "message": "minute left for refund",
+    "files": [
+      "shared/pages/Swap/Timer/Timer.js"
+    ]
+  },
+  {
+    "id": "timer68",
+    "message": "refund ready",
+    "files": [
+      "shared/pages/Swap/Timer/Timer.js"
     ]
   }
 ]

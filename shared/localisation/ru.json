@@ -96,7 +96,7 @@
   },
   {
     "id": "Nav88",
-    "message": "Listing",
+    "message": "Листинг",
     "files": [
       "shared/components/Header/Nav/Nav.js"
     ]
@@ -4374,10 +4374,7 @@
   },
   {
     "id": "editOffer",
-    "message": "editOffer",
-    "files": [
-      "shared/components/modals/OfferModal/OfferModal.js"
-    ]
+    "message": "editOffer"
   },
   {
     "id": "ImCAUTIONport",
@@ -4440,6 +4437,62 @@
     "message": "Адрес скрипта: ",
     "files": [
       "shared/pages/Swap/BtcToLtc.js"
+    ]
+  },
+  {
+    "id": "RowHistory281",
+    "message": "Получено",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowHistory282",
+    "message": "Отправлено",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowHistory34",
+    "message": "Подтверждено",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowHistory341",
+    "message": "Подтверждений",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowHistory342",
+    "message": "Не подтверждено",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "BtcToEth248",
+    "message": "Возврата транзакции: ",
+    "files": [
+      "shared/pages/Swap/BtcToEth.js"
+    ]
+  },
+  {
+    "id": "timer67",
+    "message": "минут до возврата средств",
+    "files": [
+      "shared/pages/Swap/Timer/Timer.js"
+    ]
+  },
+  {
+    "id": "timer68",
+    "message": "Возможен возврат",
+    "files": [
+      "shared/pages/Swap/Timer/Timer.js"
     ]
   }
 ]
