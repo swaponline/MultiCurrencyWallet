@@ -175,16 +175,16 @@ Private key: ${bchData.privateKey}\r\n
 3. Go to settings > addresses > import
 4. paste private key and click "Ok"
 \r\n
-*/`
+*/ + `
 #LITECOIN
 \r\n
 Litecoin address: ${ltcData.address}  \r\n
 Private key: ${ltcData.privateKey}\r\n
 \r\n
-1. Go to blockchain.info
-2. login
-3. Go to settings > addresses > import
-4. paste private key and click "Ok"
+1. Go to blockchain.info\r\n
+2. login\r\n
+3. Go to settings > addresses > import\r\n
+4. paste private key and click "Ok"\r\n
 \r\n
 `
 
