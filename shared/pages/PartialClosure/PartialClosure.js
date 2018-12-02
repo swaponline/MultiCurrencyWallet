@@ -256,6 +256,10 @@ export default class PartialClosure extends Component {
           peer: item.peer,
           orderId: item.orderId,
         }))
+      } else {
+        this.setState(() => ({
+          isNonOffers: true,
+        }))
       }
     })
 
