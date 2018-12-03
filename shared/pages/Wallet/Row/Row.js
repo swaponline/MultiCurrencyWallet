@@ -246,7 +246,7 @@ export default class Row extends Component {
     const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true"
     const telosAccountActivated = localStorage.getItem(constants.localStorage.telosAccountActivated) === "true"
 
-    const text1 = [
+    const toolTipDeposit = [
       <FormattedMessage id="CurrencyWallet110" defaultMessage="Deposit funds to this address of currency wallet" />,
     ]
 
@@ -391,7 +391,7 @@ export default class Row extends Component {
         </Fragment>
         <td>
           <div styleName={currency === 'EOS' && !eosAccountActivated ? 'notActivated' : ''}>
-            <CurrencyButton onClick={this.handleReceive} data={`deposit${currency}`} text={text1} wallet="true">
+            <CurrencyButton onClick={this.handleReceive} data={`deposit${currency}`} text={toolTipDeposit} wallet="true">
               <FormattedMessage id="Row313" defaultMessage="Deposit" />
             </CurrencyButton>
             <BtnTooltip onClick={this.handleWithdraw} disable={isBalanceEmpty} id={currency} text="Send" >

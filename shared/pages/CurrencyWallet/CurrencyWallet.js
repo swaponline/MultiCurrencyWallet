@@ -106,11 +106,11 @@ export default class CurrencyWallet extends Component {
     const seoPage = getSeoPage(location.pathname)
     const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true"
 
-    const text1 = [
+    const toolTipDeposit = [
       <FormattedMessage id="CurrencyWallet110" defaultMessage="Deposit funds to this address of currency wallet" />,
     ]
 
-    const text2 = [
+    const toolTipSend = [
       <FormattedMessage id="CurrencyWallet113" defaultMessage="You can not send this asset, because you have a zero balance." />,
     ]
 
@@ -132,15 +132,12 @@ export default class CurrencyWallet extends Component {
           <FormattedMessage id="CurrencyWallet105" defaultMessage="Activate account" />
         </Button>)}
         <div styleName="inRow">
-          <CurrencyButton onClick={this.handleReceive} data={`deposit${currency}`} text={text1} >
+          <CurrencyButton onClick={this.handleReceive} data={`deposit${currency}`} text={toolTipDeposit} >
             <FormattedMessage id="Row313" defaultMessage="Deposit" />
           </CurrencyButton>
-          <CurrencyButton  onClick={this.handleWithdraw} disable={isBalanceEmpty} data={isBalanceEmpty && address} text={text2} >
+          <CurrencyButton  onClick={this.handleWithdraw} disable={isBalanceEmpty} data={isBalanceEmpty && address} text={toolTipSend} >
             <FormattedMessage id="CurrencyWallet100" defaultMessage="Send" />
           </CurrencyButton>
-          <ReactTooltip id="132cW" type="light" effect="solid">
-            <FormattedMessage id="133cW" defaultMessage="You can not send this asset, because you have a zero balance." />
-          </ReactTooltip>
           <Button gray onClick={() => this.handleGoTrade(currency)}>
             <FormattedMessage id="CurrencyWallet104" defaultMessage="Exchange" />
           </Button>
