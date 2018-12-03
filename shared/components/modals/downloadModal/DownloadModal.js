@@ -64,16 +64,12 @@ export default class DownloadModal extends React.Component {
         <div styleName="style">
           <p><FormattedMessage id="down17" defaultMessage="Ethereum address: " /><a>{ethData.address}</a></p>
           <p><FormattedMessage id="down17" defaultMessage="Ethereum Private key: " /><a>{ethData.privateKey}</a></p>
-
           <p><FormattedMessage id="down17" defaultMessage="Bitcoin address: " /><a>{btcData.address}</a></p>
           <p><FormattedMessage id="down17" defaultMessage="Bitcoin Private key: " /><a>{btcData.privateKey}</a></p>
-
           <p><FormattedMessage id="down17" defaultMessage="EOS Master Private Key: " /><a>{eosData.masterPrivateKey}</a></p>
           <p><FormattedMessage id="down17" defaultMessage="EOS Account name: " /><a>{eosData.address}</a></p>
-
           <p><FormattedMessage id="down17" defaultMessage="TELOS Active Private Key: " /><a>{telosData.activePrivateKey}</a></p>
           <p><FormattedMessage id="down17" defaultMessage="TELOS Account name: " /><a>{telosData.address}</a></p>
-
           <p><FormattedMessage id="down17" defaultMessage="Litecoin address: " /><a>{ltcData.address}</a></p>
           <p><FormattedMessage id="down17" defaultMessage="Litecoin Private key: " /><a>{ltcData.privateKey}</a></p>
         </div>
