@@ -24,7 +24,7 @@ export default class AddOfferButton extends Component {
     return (
       <div styleName={mobile ? 'mobile' : ''}>
         {
-          process.env.LOCAL !== 'local' && (
+          process.env.LOCAL !== 'local' && !('safari' in window) && (
             <div styleName="buttonWrap">
               {
                 process.env.TESTNET ? (
