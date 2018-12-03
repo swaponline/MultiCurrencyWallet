@@ -36,6 +36,7 @@ export default class BtcToEth extends Component {
   }
 
   handleFlowStateUpdate = (values) => {
+
     const stepNumbers = {
       1: 'sign',
       2: 'submit-secret',
@@ -52,9 +53,12 @@ export default class BtcToEth extends Component {
     this.setState({
       flow: values,
     })
+
+    this.overProgress(values, Object.keys(stepNumbers).length)
+
   }
 
-  overProgress = ({ flow, length }) => {
+  overProgress = (flow, length) => {
     actions.loader.show(true, '', '', true, { flow, length, name: 'BTC2ETH' })
   }
 

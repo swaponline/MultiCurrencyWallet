@@ -1,13 +1,30 @@
+// export const initialState = {
+//   isVisible: false,
+//   data: {},
+// }
+//
+// export const setVisibility = (state, payload) => ({
+//   ...state,
+//   isVisible: payload.isVisible,
+//   data: {
+//     text: payload.text,
+//     txId: payload.txId,
+//   },
+// })
+
 export const initialState = {
   isVisible: false,
-  data: {},
+  text: false,
+  txId: null,
+  swap: false,
+  data: null
 }
 
 export const setVisibility = (state, payload) => ({
   ...state,
   isVisible: payload.isVisible,
-  data: {
-    text: payload.text,
-    txId: payload.txId,
-  },
+  text: payload.text,
+  txId: payload.txId,
+  swap: payload.swap,
+  data: payload.data,
 })

@@ -61,7 +61,11 @@
 }
 .info {
   margin-top: 15px;
-  display: block;
+  display: inline-block;
+  position: relative;
+  div:first-child {
+    display: inline-block;
+  }
 }
 .headerContent {
   height: 100%;
@@ -77,7 +81,6 @@
   line-height: 22px;
   font-size: 24px;
   text-align: center;
-
   &.uppercase {
     text-transform: uppercase;
   }
@@ -100,4 +103,39 @@
   border-bottom: 1px solid #ddd;
 }
 
+.animated-dots {
+  display: inline-block;
+  height: 12px;
+  position: absolute;
+  bottom: 30px;
+  right: -33px;
+}
 
+.animated-dots span {
+  color: #6d18e4;
+  font-size: 33px;
+  animation-name: blink;
+  animation-duration: 1.4s;
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
+}
+
+.animated-dots span:nth-child(2) {
+  animation-delay: .2s;
+}
+
+.animated-dots span:nth-child(3) {
+  animation-delay: .4s;
+}
+
+@keyframes blink {
+  0% {
+    opacity: .2;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: .2;
+  }
+}

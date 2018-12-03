@@ -165,7 +165,9 @@ export default class SwapProgress extends Component {
             <div styleName="bar" style={{ width: `${progress}%` }} />
           </div>
           <span styleName="steps">{flow.step} / {length} steps</span>
-          <span styleName="info">{name === 'ETH2BTC' ? this.handleStepEthToBtc(flow.step) : this.handleStepBtcToEth(flow.step)}</span>
+          <div styleName="info">
+            {name === 'ETH2BTC' ? this.handleStepEthToBtc(flow.step) : this.handleStepBtcToEth(flow.step)}
+          </div>
         </div>
       </div>
     )

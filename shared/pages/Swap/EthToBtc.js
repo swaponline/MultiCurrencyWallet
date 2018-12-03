@@ -54,9 +54,11 @@ export default class EthToBtc extends Component {
     this.setState({
       flow: values,
     })
+
+    this.overProgress(values, Object.keys(stepNumbers).length)
   }
 
-  overProgress = ({ flow, length }) => {
+  overProgress = (flow, length) => {
     actions.loader.show(true, '', '', true, { flow, length, name: 'ETH2BTC' })
   }
 
