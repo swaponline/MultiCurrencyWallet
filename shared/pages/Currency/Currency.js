@@ -109,7 +109,6 @@ export default class Currency extends Component {
             <FormattedMessage id="Currency101" defaultMessage="Balance: " />
             <span styleName="currencyBalanceValue">{(String(balance).length > 5 ? balance.toFixed(5) : balance) || 0} {currency}</span>
           </div>
-          
         </PageHeadline>
         <Table
           titles={['', '']}
