@@ -26,7 +26,7 @@ import { FormattedMessage } from 'react-intl'
         {
           disable && (
           <ReactTooltip id={id} type="light" effect="solid">
-            <FormattedMessage id="WithdrawButton32" defaultMessage="You can not send and exchange this asset, because you have a zero balance." />
+            <FormattedMessage id="WithdrawButton32" defaultMessage="You can not send this asset, because you have a zero balance." />
           </ReactTooltip>)
         }
       </Fragment>
