@@ -42,36 +42,45 @@ export default class DownloadModal extends React.Component {
         this.setState({
           isTextCopied: false,
         })
-      }, 500)
+      }, 15 * 1000)
     })
   }
 
   render() {
     const { name, items: [ ethData, btcData, eosData, telosData, /* bchData, */ ltcData, usdtData /* nimData */ ] } = this.props
-
+    const { isTextCopied } = this.state
     const text = actions.user.getText()
 
     return (
       <Modal name={name} title="We don`t store your private keys and will not be able to restore them!">
         <div styleName="subTitle">
-          <p><FormattedMessage id="down17" defaultMessage="It seems like you're using an IPhone or an IPad." /></p>
-          <p><FormattedMessage id="down17" defaultMessage="Just copy this keys and paste into notepad textarea" /> </p>
-          <p><FormattedMessage id="down17" defaultMessage="Or make the screen shot" /> </p>
+          <p><FormattedMessage id="down57" defaultMessage="It seems like you're using an IPhone or an IPad." /></p>
+          <p><FormattedMessage id="down58" defaultMessage="Just copy this keys and paste into notepad textarea" /> </p>
+          <p><FormattedMessage id="down59" defaultMessage="Or make the screen shot" /> </p>
         </div>
         <CopyToClipboard text={text} onCopy={this.handleCopyText}>
-          <Button styleName="button" brand > Copy to clipboard</Button>
+          <Button styleName="button" brand disabled={isTextCopied}>
+            { isTextCopied ?
+              <FormattedMessage id="down64" defaultMessage="Address copied to clipboard" /> :
+              <FormattedMessage id="down65" defaultMessage="Copy to clipboard" />
+            }
+          </Button>
         </CopyToClipboard>
         <div styleName="style">
-          <p><FormattedMessage id="down17" defaultMessage="Ethereum address: " /><a>{ethData.address}</a></p>
-          <p><FormattedMessage id="down17" defaultMessage="Ethereum Private key: " /><a>{ethData.privateKey}</a></p>
-          <p><FormattedMessage id="down17" defaultMessage="Bitcoin address: " /><a>{btcData.address}</a></p>
-          <p><FormattedMessage id="down17" defaultMessage="Bitcoin Private key: " /><a>{btcData.privateKey}</a></p>
-          <p><FormattedMessage id="down17" defaultMessage="EOS Master Private Key: " /><a>{eosData.masterPrivateKey}</a></p>
-          <p><FormattedMessage id="down17" defaultMessage="EOS Account name: " /><a>{eosData.address}</a></p>
-          <p><FormattedMessage id="down17" defaultMessage="TELOS Active Private Key: " /><a>{telosData.activePrivateKey}</a></p>
-          <p><FormattedMessage id="down17" defaultMessage="TELOS Account name: " /><a>{telosData.address}</a></p>
-          <p><FormattedMessage id="down17" defaultMessage="Litecoin address: " /><a>{ltcData.address}</a></p>
-          <p><FormattedMessage id="down17" defaultMessage="Litecoin Private key: " /><a>{ltcData.privateKey}</a></p>
+          <p><FormattedMessage id="down70" defaultMessage="Ethereum address: " /><a>{ethData.address}</a></p>
+          <p><FormattedMessage id="down71" defaultMessage="Ethereum Private key: " /><a>{ethData.privateKey}</a></p>
+
+          <p><FormattedMessage id="down73" defaultMessage="Bitcoin address: " /><a>{btcData.address}</a></p>
+          <p><FormattedMessage id="down74" defaultMessage="Bitcoin Private key: " /><a>{btcData.privateKey}</a></p>
+
+          <p><FormattedMessage id="down76" defaultMessage="EOS Master Private Key: " /><a>{eosData.masterPrivateKey}</a></p>
+          <p><FormattedMessage id="down77" defaultMessage="EOS Account name: " /><a>{eosData.address}</a></p>
+
+          <p><FormattedMessage id="down79" defaultMessage="TELOS Active Private Key: " /><a>{telosData.activePrivateKey}</a></p>
+          <p><FormattedMessage id="down80" defaultMessage="TELOS Account name: " /><a>{telosData.address}</a></p>
+
+          <p><FormattedMessage id="down81" defaultMessage="Litecoin address: " /><a>{ltcData.address}</a></p>
+          <p><FormattedMessage id="down83" defaultMessage="Litecoin Private key: " /><a>{ltcData.privateKey}</a></p>
         </div>
       </Modal>
     )
