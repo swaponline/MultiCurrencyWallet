@@ -49,6 +49,7 @@ export default class DownloadModal extends React.Component {
   render() {
     const { name, items: [ ethData, btcData, eosData, telosData, /* bchData, */ ltcData, usdtData /* nimData */ ] } = this.props
     const { isTextCopied } = this.state
+    
     const text = actions.user.getText()
 
     return (
