@@ -19,11 +19,13 @@ import LinkAccount from '../LinkAccount/LinkAcount'
 import { withRouter } from 'react-router'
 import ReactTooltip from 'react-tooltip'
 import { FormattedMessage } from 'react-intl'
+import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
+
 
 @withRouter
 @connect(
   ({
-    user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, usdtData, ltcData },
+    user: { ethData, btcData, /* bchData, */ tokensData, eosData, telosData, nimData, usdtData, ltcData },
     currencies: { items: currencies },
   }, { currency }) => ({
     currencies,
@@ -32,7 +34,7 @@ import { FormattedMessage } from 'react-intl'
       ethData,
       eosData,
       telosData,
-      bchData,
+      /* bchData, */
       ltcData,
       usdtData,
       ...Object.keys(tokensData).map(k => (tokensData[k])),
@@ -127,13 +129,14 @@ export default class Row extends Component {
     })
   }
   handleSliceAddress = () => {
-    const { item: { address } } = this.props
-    if(window.innerWidth < 1080 || isMobile) {
-      return address.substr(0, 6) + '...' + address.substr(address.length - 2)
-    }
-    else {
-      return address
-    }
+    const {
+      item: {
+        address,
+      },
+    } = this.props
+    let firstPart = address.substr(0, 6)
+    let secondPart = address.substr(address.length - 2)
+    return (window.innerWidth < 1120 || isMobile) ? `${firstPart}...${secondPart}` : address
   }
 
   handleTouchClear = (e) => {
@@ -178,6 +181,7 @@ export default class Row extends Component {
         balance,
       },
     } = this.props
+
     actions.analytics.dataEvent(`balances-withdraw-${currency.toLowerCase()}`)
     actions.modals.open(constants.modals.Withdraw, {
       currency,
@@ -191,7 +195,12 @@ export default class Row extends Component {
   }
 
   handleReceive = () => {
-    const { currency, address } = this.props
+    const {
+      item: {
+        currency,
+        address,
+      },
+    } = this.props
 
     actions.modals.open(constants.modals.ReceiveModal, {
       currency,
@@ -221,6 +230,7 @@ export default class Row extends Component {
       isTouch,
       isBalanceEmpty,
     } = this.state
+
     const {
       item: {
         currency,
@@ -232,8 +242,13 @@ export default class Row extends Component {
         contractAddress,
       },
     } = this.props
+
     const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true"
     const telosAccountActivated = localStorage.getItem(constants.localStorage.telosAccountActivated) === "true"
+
+    const toolTipDeposit = [
+      <FormattedMessage id="CurrencyWallet110" defaultMessage="Deposit funds to this address of currency wallet" />,
+    ]
 
     return (
       <tr
@@ -293,60 +308,74 @@ export default class Row extends Component {
           }
           <span styleName="mobileName">{fullName}</span>
         </td>
-          <Fragment>
-            <CopyToClipboard
-              text={address}
-              onCopy={this.handleCopyAddress}
-            >
-              <td styleName="yourAddress">
-                {
-                  !contractAddress ? (
-                    <div styleName="notContractAddress">
-                      {
-                         address !== '' && <i className="far fa-copy" styleName="icon" data-tip data-for="Copy" style={{ width: '14px' }} />
-                      }
-                      <LinkAccount type={currency} address={address}>{this.handleSliceAddress()}</LinkAccount>
-                      <ReactTooltip id="Copy" type="light" effect="solid">
-                        <span>
-                          <FormattedMessage id="Row235" defaultMessage="Copy" />
+        <Fragment>
+          <CopyToClipboard text={address} onCopy={this.handleCopyAddress}>
+            <td styleName={currency === 'EOS' && !eosAccountActivated ? 'yourAddressWithOptions' : 'yourAddress'}>
+              {
+                !contractAddress ? (
+                  <div styleName="notContractAddress">
+                    {
+                      address !== '' && <i className="far fa-copy" styleName="icon" data-tip data-for="Copy" style={{ width: '14px' }} />
+                    }
+                    <LinkAccount type={currency} address={address}>{this.handleSliceAddress()}</LinkAccount>
+                    <ReactTooltip id="Copy" type="light" effect="solid">
+                      <span>
+                        <FormattedMessage id="Row235" defaultMessage="Copy" />
+                      </span>
+                    </ReactTooltip>
+                    { currency === 'EOS' && !eosAccountActivated && (
+                      <Fragment>
+                        <br />
+                        <span styleName="notActiveLink">
+                          <FormattedMessage id="Row235" defaultMessage="not activated" />
                         </span>
-                      </ReactTooltip>
-                      { currency === 'EOS' && !eosAccountActivated && (
-                        <Fragment>
-                          <br />
-                          <span styleName="notActiveLink">not activated</span>
-                        </Fragment>
-                      )
-                      }
-                      { currency === 'TLOS' && !telosAccountActivated && (
-                        <Fragment>
-                          <br />
-                          <span styleName="notActiveLink">not activated</span>
-                        </Fragment>
-                      )
-                      }
-                    </div>
-                  ) : (
-                    <Fragment>
-                      <i className="far fa-copy" styleName="icon" data-tip data-for="Copy" style={{ width: '14px' }} />
-                      <LinkAccount type={currency} contractAddress={contractAddress} address={address} >{this.handleSliceAddress()}</LinkAccount>
-                    </Fragment>
-                  )
-                }
-
+                      </Fragment>
+                    )
+                    }
+                    { currency === 'TLOS' && !telosAccountActivated && (
+                      <Fragment>
+                        <br />
+                        <span styleName="notActiveLink">
+                          <FormattedMessage id="Row235" defaultMessage="not activated" />
+                        </span>
+                      </Fragment>
+                    )
+                    }
+                  </div>
+                ) : (
+                  <Fragment>
+                    <i className="far fa-copy" styleName="icon" data-tip data-for="Copy" style={{ width: '14px' }} />
+                    <LinkAccount type={currency} contractAddress={contractAddress} address={address} >{this.handleSliceAddress()}</LinkAccount>
+                  </Fragment>
+                )
+              }
+              <ReactTooltip id="Use" type="light" effect="solid">
+                <span>
+                  <FormattedMessage id="Row268" defaultMessage="Login with your existing eos account" />
+                </span>
+              </ReactTooltip>
+              { isAddressCopied &&
+                <p styleName="copied" >
+                  <FormattedMessage id="Row293" defaultMessage="Address copied to clipboard" />
+                </p>
+              }
+              <div styleName="activeControlButtons">
                 <div styleName="actButton">
-                  {currency === 'EOS' && !eosAccountActivated && <button styleName="button buttonActivate" onClick={this.handleEosBuyAccount} data-tip data-for="Activate">Activate</button>}
+                  {currency === 'EOS' && !eosAccountActivated &&
+                    <button styleName="button buttonActivate" onClick={this.handleEosBuyAccount} data-tip data-for="Activate">
+                      <FormattedMessage id="Row293" defaultMessage="Activate" />
+                    </button>
+                  }
                 </div>
                 <ReactTooltip id="Activate" type="light" effect="solid">
                   <span>
                     <FormattedMessage id="Row256" defaultMessage="Buy this account" />
                   </span>
                 </ReactTooltip>
-
                 <div styleName="useButton">
                   {
                     currency === 'EOS' &&
-                    <button styleName="button" onClick={this.handleEosRegister} data-tip data-for="Use">
+                    <button styleName="button buttonUseAnother" onClick={this.handleEosRegister} data-tip data-for="Use">
                       <FormattedMessage id="Row263" defaultMessage="Use another" />
                     </button>
                   }
@@ -356,37 +385,24 @@ export default class Row extends Component {
                     <FormattedMessage id="Row268" defaultMessage="Login with your existing eos account" />
                   </span>
                 </ReactTooltip>
-                { isAddressCopied &&
-                  <p styleName="copied" >
-                    <FormattedMessage id="Row293" defaultMessage="Address copied to clipboard" />
-                  </p>
-                }
-              </td>
-            </CopyToClipboard>
-          </Fragment>
+              </div>
+            </td>
+          </CopyToClipboard>
+        </Fragment>
         <td>
           <div styleName={currency === 'EOS' && !eosAccountActivated ? 'notActivated' : ''}>
-            <button onClick={this.handleReceive} styleName="button" data-tip data-for={`deposit${currency}`}>
-              <i className="fas fa-qrcode" />
-              <span>
-                <FormattedMessage id="Row313" defaultMessage="Deposit" />
-              </span>
-            </button>
-            <ReactTooltip id={`deposit${currency}`} type="light" effect="solid">
-                <FormattedMessage id="WithdrawButton29" defaultMessage="Deposit funds to this address of currency wallet" />
-            </ReactTooltip>
+            <CurrencyButton onClick={this.handleReceive} data={`deposit${currency}`} text={toolTipDeposit} wallet="true">
+              <FormattedMessage id="Row313" defaultMessage="Deposit" />
+            </CurrencyButton>
             <BtnTooltip onClick={this.handleWithdraw} disable={isBalanceEmpty} id={currency} text="Send" >
               <i className="fas fa-arrow-alt-circle-right" />
             </BtnTooltip>
             {
               tradeAllowed && (
-                <BtnTooltip onClick={() => this.handleGoTrade(currency)} disable={isBalanceEmpty} id={currency}  text="Exchange" >
+                <BtnTooltip onClick={() => this.handleGoTrade(currency)} styleName={isBalanceEmpty && 'disableWth'} text="Exchange" >
                   <i className="fas fa-exchange-alt" />
                 </BtnTooltip>
               )
-            }
-            {
-              isMobile && (currency === 'EOS' && !eosAccountActivated && <button styleName="button buttonActivate" onClick={this.handleEosBuyAccount} data-tip data-for="Activate">Activate</button>)
             }
           </div>
         </td>

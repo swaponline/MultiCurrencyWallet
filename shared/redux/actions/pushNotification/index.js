@@ -1,4 +1,7 @@
-import firebase from 'firebase'
+import firebase from 'firebase/app'
+import 'firebase/auth'
+import 'firebase/messaging'
+import 'firebase/database'
 import { config } from './config/firebase'
 
 import actions from 'redux/actions'
@@ -44,19 +47,21 @@ const askPermission = () =>
   })
 
 const initializeFirebase = () => {
-  firebase.initializeApp(config)
+  if (!firebase.apps.length) {
+    firebase.initializeApp(config)
 
-  navigator.serviceWorker
-    .register('firebase-messaging-sw.js', { scope: './' })
-    .then((registration) => firebase.messaging().useServiceWorker(registration))
+    navigator.serviceWorker
+      .register('firebase-messaging-sw.js', { scope: './' })
+      .then((registration) => firebase.messaging().useServiceWorker(registration))
 
-  const messaging = firebase.messaging()
+    const messaging = firebase.messaging()
 
-  messaging.onMessage((payload) => {
-    console.log('Message received. ', payload)
-    const message = payload.notification.body
-    actions.notifications.show('Message', { message })
-  })
+    messaging.onMessage((payload) => {
+      console.log('Message received. ', payload)
+      const message = payload.notification.body
+      actions.notifications.show('Message', { message })
+    })
+  }
 }
 
 const registrationFirebase = (data = {}) =>

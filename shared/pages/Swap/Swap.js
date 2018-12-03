@@ -12,9 +12,9 @@ import EmergencySave from './EmergencySave/EmergencySave'
 
 
 @connect(({
-  user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, usdtData, ltcData },
+  user: { ethData, btcData, /* bchData, */ tokensData, eosData, telosData, nimData, usdtData, ltcData },
 }) => ({
-  items: [ ethData, btcData, eosData, telosData, bchData, ltcData, usdtData /* nimData */ ],
+  items: [ ethData, btcData, eosData, telosData, /* bchData, */ ltcData, usdtData /* nimData */ ],
   tokenItems: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
   errors: 'api.errors',
   checked: 'api.checked',
