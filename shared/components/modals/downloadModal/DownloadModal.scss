@@ -1,0 +1,22 @@
+@include media-mobile {
+  .subTitle {
+    text-align: center;
+    width: 100%;
+    font-size: 14px;
+  }
+  .style {
+    width: 100%;
+    font-size: 14px;
+    margin-top: 10%;
+  }
+
+  .button {
+    width: 100%;
+    display: block;
+    padding: 0;
+  }
+  a {
+    font-size: 9.5px;
+
+  }
+}
