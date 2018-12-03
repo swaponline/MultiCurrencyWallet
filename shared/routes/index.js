@@ -23,12 +23,11 @@ const routes = (
 
     <Route path={`${localisePrefix}${links.home}:buy-:sell/:orderId`} component={Home} />
     <Route path={`${localisePrefix}${links.home}:buy-:sell`} component={Home} />
-    <Route path={`${localisePrefix}${links.exchange}`} component={Home} />
+    <Route path={`${localisePrefix}${links.exchange}`} component={PartialClosure} />
 
     <Route path={`${localisePrefix}${links.partial}`} component={PartialClosure} />
     <Route path={`${localisePrefix}${links.aboutus}`} component={About} />
     <Route path={`${localisePrefix}${links.history}`} component={History} />
-
 
     <Route exact path={`${localisePrefix}${links.home}`} component={Wallet} />
     <Route path={`${localisePrefix}${links.home}:currency`} component={Currency} />

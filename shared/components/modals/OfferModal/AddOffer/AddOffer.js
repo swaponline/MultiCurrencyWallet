@@ -64,7 +64,7 @@ export default class AddOffer extends Component {
       isSellFieldInteger: false,
       isBuyFieldInteger: false,
       manualRate: false,
-      isPartialClosure: false,
+      isPartialClosure: true,
     }
   }
 
@@ -465,6 +465,7 @@ export default class AddOffer extends Component {
           <Toggle checked={isPartialClosure} onChange={() => this.setState((state) => ({ isPartialClosure: !state.isPartialClosure }))} />
           <FormattedMessage id="AddOffer423" defaultMessage="Enabled to partial closure" />
           <Tooltip text={text} id="add547" />
+
         </div>
         <Button styleName="button" fullWidth brand disabled={isDisabled} onClick={this.handleNext}>
           <FormattedMessage id="AddOffer396" defaultMessage="Next" />
