@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 
 import { connect } from 'redaction'
@@ -13,6 +13,8 @@ import UserTooltip from './UserTooltip/UserTooltip'
 import AddOfferButton from './AddOfferButton/AddOfferButton'
 
 import Avatar from 'components/Avatar/Avatar'
+import ReactTooltip from 'react-tooltip'
+import { FormattedMessage } from 'react-intl'
 
 
 @connect({
@@ -73,16 +75,23 @@ export default class User extends React.Component {
           />
         }
         {!!peer && (
-          <div styleName="avatar-container">
-            <Avatar
-              className={styles.avatar}
-              value={peer}
-              size={40}
-            />
-            { Number.isInteger(reputation) && (
-              <div styleName="avatar-reputation-centered">{reputation}</div>
-            )}
-          </div>
+          <Fragment>
+            <div styleName="avatar-container" data-tip data-for="gravatar">
+              <Avatar
+                className={styles.avatar}
+                value={peer}
+                size={40}
+              />
+              { Number.isInteger(reputation) && (
+                <div styleName="avatar-reputation-centered">{reputation}</div>
+              )}
+            </div>
+            <ReactTooltip id="gravatar" type="light" effect="solid" >
+              <span>
+                <FormattedMessage id="avatar24" defaultMessage="Automatically created gravatar. its unique for every profile. You can see your reputation at the center" />
+              </span>
+            </ReactTooltip>
+          </Fragment>
         )}
       </div>
     )
