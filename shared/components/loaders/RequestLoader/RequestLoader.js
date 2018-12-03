@@ -2,11 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { connect } from 'redaction'
-
 import Loader from '../Loader/Loader'
 import SwapProgress from 'components/SwapProgress/SwapProgress'
 
-const RequestLoader = ({ isVisible, text, txId, swap, data}) => {
+
+const RequestLoader = ({ isVisible, text, txId, swap, data }) =>  {
   if (!isVisible) {
     return null
   }
@@ -16,7 +16,6 @@ const RequestLoader = ({ isVisible, text, txId, swap, data}) => {
 }
 
 
-
 export default connect({
   isVisible: 'loader.isVisible',
   text: 'loader.text',
@@ -24,8 +23,6 @@ export default connect({
   swap: 'loader.swap',
   data: 'loader.data',
 })(RequestLoader)
-
-
 
 // const RequestLoader = ({ isVisible, text, txId, swap, data}) => {
 //   // if (!isVisible) {
