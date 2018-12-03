@@ -74,7 +74,7 @@ export default class App extends React.Component {
       actions.user.getDemoMoney()
     }
 
-    if (process.env.LOCAL !== 'local') {
+    if (process.env.LOCAL !== 'local' && !('safari' in window)) {
       actions.pushNotification.initializeFirebase()
     }
   }
