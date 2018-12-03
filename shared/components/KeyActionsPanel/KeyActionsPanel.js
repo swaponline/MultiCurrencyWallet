@@ -30,7 +30,7 @@ export default class KeyActionsPanel extends Component {
 
   handleDownload = () => {
     if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
-      actions.modals.open(constants.modals.DownloadModal)
+      actions.modals.open(constants.modals.downloadModal)
     } else {
       actions.user.downloadPrivateKeys()
     }

@@ -5,7 +5,7 @@ import { connect } from 'redaction'
 import actions from 'redux/actions'
 
 import cssModules from 'react-css-modules'
-import styles from './DownloadModal.scss'
+import styles from './downloadModal.scss'
 
 import Modal from 'components/modal/Modal/Modal'
 import Button from 'components/controls/Button/Button'
@@ -25,7 +25,7 @@ import { FormattedMessage } from 'react-intl'
   })
 )
 @cssModules(styles)
-export default class DownloadModal extends React.Component {
+export default class downloadModal extends React.Component {
 
   constructor(props) {
     super(props)
