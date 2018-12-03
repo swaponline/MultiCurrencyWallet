@@ -139,3 +139,19 @@
     opacity: .2;
   }
 }
+
+@include media-mobile {
+  .container {
+    width: 85%;
+  }
+  .info {
+    margin-top: 5px;
+    div {
+      font-size: 13px;
+    }
+  }
+  .steps {
+    font-size: 12px;
+    top: -25px;
+  }
+}
