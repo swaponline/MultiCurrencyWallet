@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 
 import { connect } from 'redaction'
@@ -13,11 +13,14 @@ import UserTooltip from './UserTooltip/UserTooltip'
 import AddOfferButton from './AddOfferButton/AddOfferButton'
 
 import Avatar from 'components/Avatar/Avatar'
+import ReactTooltip from 'react-tooltip'
+import { FormattedMessage } from 'react-intl'
 
 
 @connect({
   feeds: 'feeds.items',
   peer: 'ipfs.peer',
+  reputation: 'ipfs.reputation',
 })
 @CSSModules(styles)
 export default class User extends React.Component {
@@ -54,7 +57,7 @@ export default class User extends React.Component {
 
   render() {
     const { view } = this.state
-    const { feeds, peer } = this.props
+    const { feeds, peer, reputation } = this.props
 
     return (
       <div styleName="user-cont">
@@ -72,11 +75,27 @@ export default class User extends React.Component {
           />
         }
         {!!peer && (
-          <Avatar
-            className={styles.avatar}
-            value={peer}
-            size={40}
-          />
+          <Fragment>
+            <div styleName="avatar-container" data-tip data-for="gravatar">
+              <Avatar
+                className={styles.avatar}
+                value={peer}
+                size={40}
+              />
+              { Number.isInteger(reputation) && (
+                <div styleName="avatar-reputation-centered">{reputation}</div>
+              )}
+            </div>
+            <ReactTooltip id="gravatar" type="light" effect="solid" >
+              <span>
+                <FormattedMessage
+                  id="avatar24"
+                  defaultMessage="This is your (personal) gravatar, it is unique for each user.
+                  The number is your rating within the system (it grows with the number of successful swaps)"
+                />
+              </span>
+            </ReactTooltip>
+          </Fragment>
         )}
       </div>
     )
