@@ -53,15 +53,15 @@
   transition: width 0.6s ease;
 }
 .steps {
-  color: #000;
+  color: #8e8e8e;
   position: absolute;
-  right: 0;
-  top: -35px;
+  right: -95px;
+  top: -3px;
   font-size: 16px;
 }
 .info {
-  margin-top: 15px;
-  display: inline-block;
+  margin-top: 10px;
+  display: block;
   position: relative;
   div:first-child {
     display: inline-block;
@@ -126,6 +126,25 @@
 
 .animated-dots span:nth-child(3) {
   animation-delay: .4s;
+}
+
+.link {
+  color: #fff;
+  background: #e91db4;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 20px;
+  display: block;
+  width: max-content;
+  text-transform: uppercase;
+  border-radius: 20px;
+  margin: auto;
+  margin-top: 20px;
+  font-size: 16px;
+  &:hover {
+    background-color: #ff1fc5;
+    color: #fff;
+  }
 }
 
 @keyframes blink {

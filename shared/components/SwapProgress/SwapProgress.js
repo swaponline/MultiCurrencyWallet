@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import actions from 'redux/actions'
+import { links } from 'helpers'
 
 import CSSModules from 'react-css-modules'
 import styles from './SwapProgress.scss'
@@ -11,6 +12,7 @@ import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 import Title from 'components/PageHeadline/Title/Title'
 import Logo from 'components/Logo/Logo'
 import { FormattedMessage } from 'react-intl'
+import { Button } from 'components/controls'
 
 
 @CSSModules(styles, { allowMultiple: true })
@@ -167,6 +169,10 @@ export default class SwapProgress extends Component {
           <span styleName="steps">{flow.step} / {length} steps</span>
           <div styleName="info">
             {name === 'ETH2BTC' ? this.handleStepEthToBtc(flow.step) : this.handleStepBtcToEth(flow.step)}
+            {flow.step === length ?
+              <a href={links.home} styleName="link">
+                <FormattedMessage id="Nav88" defaultMessage="Check balances" />
+              </a>  : ''}
           </div>
         </div>
       </div>
