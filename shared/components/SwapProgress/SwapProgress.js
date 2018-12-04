@@ -143,37 +143,21 @@ export default class SwapProgress extends Component {
     }
   }
 
-  close = () => {
-    actions.loader.hide()
-  }
+  // close = () => {
+  //   actions.loader.hide()
+  // }
 
   render() {
-    const { data: { flow, name, length }, whiteLogo } = this.props
-    const progress = Math.floor(100 / length * flow.step)
+    // const { data: { flow, name, length }, whiteLogo } = this.props
+    const progress = Math.floor(100 / this.props.stepLength * this.props.data.step)
 
     return (
       <div styleName="overlay">
-        <div styleName="header">
-          <WidthContainer styleName="headerContent">
-            <Logo colored={!whiteLogo} />
-            <FormattedMessage id="SwapProgress157" defaultMessage="SwapProgress">
-              {message => <div role="title" styleName="title">{message}</div>}
-            </FormattedMessage>
-            <CloseIcon styleName="closeButton" onClick={this.close} data-testid="modalCloseIcon" />
-          </WidthContainer>
-        </div>
         <div styleName="container">
           <div styleName="progress">
             <div styleName="bar" style={{ width: `${progress}%` }} />
           </div>
-          <span styleName="steps">{flow.step} / {length} steps</span>
-          <div styleName="info">
-            {name === 'ETH2BTC' ? this.handleStepEthToBtc(flow.step) : this.handleStepBtcToEth(flow.step)}
-            {flow.step === length ?
-              <a href={links.home} styleName="link">
-                <FormattedMessage id="Nav88" defaultMessage="Check balances" />
-              </a>  : ''}
-          </div>
+          <span styleName="steps">{this.props.data.step} / {this.props.stepLength} steps</span>
         </div>
       </div>
     )

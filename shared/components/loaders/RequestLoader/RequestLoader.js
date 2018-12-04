@@ -11,7 +11,7 @@ const RequestLoader = ({ isVisible, text, txId, swap, data }) =>  {
     return null
   }
   return (
-    swap ? <SwapProgress data={data} /> : <Loader text={text} txId={txId} />
+    <Loader text={text} txId={txId} />
   )
 }
 
