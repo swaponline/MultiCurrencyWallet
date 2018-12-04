@@ -88,7 +88,11 @@ export default class User extends React.Component {
             </div>
             <ReactTooltip id="gravatar" type="light" effect="solid" >
               <span>
-                <FormattedMessage id="avatar24" defaultMessage="Automatically created gravatar. its unique for every profile. You can see your reputation at the center" />
+                <FormattedMessage
+                  id="avatar24"
+                  defaultMessage="This is your (personal) gravatar, it is unique for each user.
+                  The number is your rating within the system (it grows with the number of successful swaps)"
+                />
               </span>
             </ReactTooltip>
           </Fragment>
