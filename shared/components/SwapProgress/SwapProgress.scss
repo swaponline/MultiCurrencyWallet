@@ -159,6 +159,16 @@
   }
 }
 
+@include media-tablet {
+  .container {
+    width: 63%;
+  }
+  .steps {
+    top: -30px;
+    right: 0;
+  }
+}
+
 @include media-mobile {
   .container {
     width: 85%;
@@ -170,7 +180,11 @@
     }
   }
   .steps {
-    font-size: 12px;
+    font-size: 13px;
     top: -25px;
+    right: 0;
+  }
+  .link {
+    font-size: 13px;
   }
 }
