@@ -23,6 +23,7 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import config from 'app-config'
 import swapApp from 'swap.app'
 
+
 const filterIsPartial = (orders) => orders
   .filter(order => order.isPartialClosure)
 
@@ -346,8 +347,6 @@ export default class PartialClosure extends Component {
       this.setState({
         customWallet: swapApp.services.auth.accounts.eth.address,
       })
-
-      return
     }
   }
 
@@ -421,7 +420,7 @@ export default class PartialClosure extends Component {
                   ) }
                   <div styleName="walletToggle">
                     <Toggle checked={!customWalletUse} onChange={this.handleCustomWalletUse} />
-                    <a href="#" onClick={ e => this.useSystemWallet(e) }>Use Swap.Online wallet</a>
+                    <a href="#" onClick={e => this.useSystemWallet(e)}>Use Swap.Online wallet</a>
                     <Tooltip text="To change default wallet for buy currency. Leave empty for use Swap.Online wallet" />
                   </div>
                 </Fragment>
