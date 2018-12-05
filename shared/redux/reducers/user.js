@@ -113,3 +113,14 @@ export const setTokenApprove = (state, { name, approve }) => ({
     },
   },
 })
+
+export const setReputation = (state, { name, reputation }) => ({
+  ...state,
+  tokensData: {
+    ...state.tokensData,
+  },
+  [name]: {
+    ...state[name],
+    reputation: Number(reputation),
+  },
+})
