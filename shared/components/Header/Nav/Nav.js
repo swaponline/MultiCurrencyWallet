@@ -41,17 +41,33 @@ export default class Nav extends Component {
             menu
               .filter(i => i.isDesktop !== false)
               .map(({ title, link, exact }) => (
-                <NavLink
-                  onClick={this.handleScrollToTopClick}
-                  key={title}
-                  exact={exact}
-                  styleName="link"
-                  to={link}
-                  activeClassName={styles.active}
-                >
-                  {title}
-                </NavLink>
-              ))
+                <Fragment>
+                  {title === 'Exchange' ? (
+                    <NavLink
+                      data-tut="reactour__exchange"
+                      onClick={this.handleScrollToTopClick}
+                      key={title}
+                      exact={exact}
+                      styleName="link"
+                      to={link}
+                      activeClassName={styles.active}
+                    >
+                      {title}
+                    </NavLink>) :
+                    <NavLink
+                      onClick={this.handleScrollToTopClick}
+                      key={title}
+                      exact={exact}
+                      styleName="link"
+                      to={link}
+                      activeClassName={styles.active}
+                    >
+                      {title}
+                    </NavLink>}
+                </Fragment>
+
+              )
+              )
           }
           <a href={links.listing} styleName="link" target="_blank" rel="noreferrer noopener">
             <FormattedMessage id="Nav88" defaultMessage="Listing" />

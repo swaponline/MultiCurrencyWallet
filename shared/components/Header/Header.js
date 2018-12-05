@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
 import links from 'helpers/links'
-import { defineMessages, injectIntl } from 'react-intl'
-
+import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
+import Tour from 'reactour'
 
 import CSSModules from 'react-css-modules'
 import styles from './Header.scss'
@@ -57,6 +57,8 @@ export default class Header extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      isTourOpen: false,
+      isShowingMore: false,
       sticky: false,
       menuItems: [
         {
@@ -108,8 +110,23 @@ export default class Header extends Component {
     this.lastScrollTop = scrollTop
   }
 
+  toggleShowMore = () => {
+    this.setState(prevState => ({
+      isShowingMore: !prevState.isShowingMore,
+    }))
+  }
+
+  closeTour = () => {
+    this.setState({ isTourOpen: false })
+  }
+
+  openTour = () => {
+    this.setState({ isTourOpen: true })
+  }
+
   render() {
-    const { sticky, menuItems } = this.state
+    const { sticky, menuItems, isTourOpen, isShowingMore } = this.state
+    const accentColor = '#510ed8'
 
     if (isMobile) {
       return (
@@ -126,9 +143,68 @@ export default class Header extends Component {
           <Logo withLink />
           <Nav menu={menuItems} />
           <Logo withLink mobile />
-          <User />
+          <User openTour={this.openTour} />
+          <Tour
+            onRequestClose={this.closeTour}
+            steps={tourConfig}
+            isOpen={isTourOpen}
+            maskClassName="mask"
+            className="helper"
+            rounded={5}
+            accentColor={accentColor}
+          />
         </WidthContainer>
       </div>
     )
   }
 }
+
+const tourConfig = [
+  {
+    selector: '[data-tut="reactour__address"]',
+    content: `This is your personal bitcoin address.
+      We do not store your private keys. Everything is being kept in your browser.
+      No server, no back-end, completely decentralized. `,
+  },
+  {
+    selector: '[data-tut="reactour__save"]',
+    content: `We dont store your keys, please save it in the safe place`,
+  },
+  {
+    selector: '[data-tut="reactour__balance"]',
+    content: `This is your bitcoin balance. You can close your browser, reboot your computer, but your funds will be safe`,
+  },
+  {
+    selector: '[data-tut="reactour__store"]',
+    content: `You can store crypto of different blockcahins including Bitcoin, Ethereum, EOS, Bitcoin Cash, Litecoin and various tokens`,
+  },
+  {
+    selector: '[data-tut="reactour__exchange"]',
+    content: `Our killer feature is peer-to-peer exchange available in our wallet. You can perfrom Atomic Swaps with any crypto listed in our wallet. Click here!`,
+  },
+  {
+    selector: '[data-tut="reactour__subscribe"]',
+    content: `Join to our white list discounts, gifts, better exchange rates, etc.`,
+  },
+  {
+    selector: '[data-tut="reactour__goTo"]',
+    content: ({ goTo }) => (
+      <div>
+        <strong><FormattedMessage id="Header194" defaultMessage="Do not foget to save your keys" /></strong>
+        <button
+          style={{
+            border: '1px solid #f7f7f7',
+            background: 'none',
+            padding: '.3em .7em',
+            fontSize: 'inherit',
+            display: 'block',
+            cursor: 'pointer',
+            margin: '1em auto',
+          }}
+          onClick={() => goTo(1)}
+        >
+          <FormattedMessage id="Header207" defaultMessage="show how to save" />
+        </button>
+      </div>),
+  },
+]
