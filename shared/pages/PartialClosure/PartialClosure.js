@@ -14,13 +14,14 @@ import { Redirect } from 'react-router-dom'
 import SelectGroup from './SelectGroup/SelectGroup'
 import { Button, Toggle, Flip } from 'components/controls'
 import Input from 'components/forms/Input/Input'
+import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 
 import config from 'app-config'
-
+import swapApp from 'swap.app'
 
 const filterIsPartial = (orders) => orders
   .filter(order => order.isPartialClosure)
@@ -337,6 +338,19 @@ export default class PartialClosure extends Component {
     }))
   }
 
+  useSystemWallet = (e) => {
+    e.preventDefault()
+    const { getCurrency } = this.state
+
+    if ((config.erc20[getCurrency] !== undefined) || (getCurrency === 'eth')) {
+      this.setState({
+        customWallet: swapApp.services.auth.accounts.eth.address,
+      })
+
+      return
+    }
+  }
+
   customWalletAllowed() {
     const { haveCurrency, getCurrency } = this.state
 
@@ -395,6 +409,25 @@ export default class PartialClosure extends Component {
               usd={getUsd}
             />
             {
+              this.customWalletAllowed() && (
+                <Fragment>
+                  { customWalletUse && (
+                    <Fragment>
+                      <FieldLabel inRow>Your wallet address</FieldLabel>
+                      <div styleName="walletInput">
+                        <Input valueLink={linked.customWallet} pattern="0-9a-zA-Z" placeholder="Enter the address of ETH wallet" />
+                      </div>
+                    </Fragment>
+                  ) }
+                  <div styleName="walletToggle">
+                    <Toggle checked={!customWalletUse} onChange={this.handleCustomWalletUse} />
+                    <a href="#" onClick={ e => this.useSystemWallet(e) }>Use Swap.Online wallet</a>
+                    <Tooltip text="To change default wallet for buy currency. Leave empty for use Swap.Online wallet" />
+                  </div>
+                </Fragment>
+              )
+            }
+            {
               isSearching && (
                 <span>
                   {` Wait search orders: `}
@@ -408,21 +441,6 @@ export default class PartialClosure extends Component {
                 {`No orders found, try to reduce the amount`}
               </p>
             )}
-            {
-              this.customWalletAllowed() && (
-                <Fragment>
-                  <div styleName="walletToggle">
-                    <Toggle checked={!customWalletUse} onChange={this.handleCustomWalletUse} /> Use Swap.Online wallet
-                    <Tooltip text="To change default wallet for buy currency. Leave empty for use Swap.Online wallet" />
-                  </div>
-                  { customWalletUse && (
-                    <div styleName="walletInput">
-                      <Input valueLink={linked.customWallet} pattern="0-9a-zA-Z" placeholder="Enter the address of ETH wallet" />
-                    </div>
-                  ) }
-                </Fragment>
-              )
-            }
             {isDeclinedOffer && (
               <p styleName="error">
                 {`Offer is declined`}
