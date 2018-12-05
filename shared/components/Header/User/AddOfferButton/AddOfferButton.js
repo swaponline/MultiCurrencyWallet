@@ -20,11 +20,14 @@ export default class AddOfferButton extends Component {
 
   render() {
     const { mobile } = this.props
+    const iOSSafari = /iP(ad|od|hone)/i.test(window.navigator.userAgent)
+                    && /WebKit/i.test(window.navigator.userAgent)
+                    && !(/(CriOS|FxiOS|OPiOS|mercury)/i.test(window.navigator.userAgent))
 
     return (
       <div styleName={mobile ? 'mobile' : ''}>
         {
-          process.env.LOCAL !== 'local' && !('safari' in window) && (
+          process.env.LOCAL !== 'local' && !iOSSafari && (
             <div styleName="buttonWrap">
               {
                 process.env.TESTNET ? (
