@@ -19,6 +19,7 @@ import Tooltip from 'components/ui/Tooltip/Tooltip'
 
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
+import { FormattedMessage } from 'react-intl'
 
 import config from 'app-config'
 import swapApp from 'swap.app'
@@ -412,7 +413,9 @@ export default class PartialClosure extends Component {
                 <Fragment>
                   { customWalletUse && (
                     <Fragment>
-                      <FieldLabel inRow>Your wallet address</FieldLabel>
+                      <FieldLabel inRow>
+                        <FormattedMessage id="PartialYourWalletAddress" defaultMessage="Your wallet address" />
+                      </FieldLabel>
                       <div styleName="walletInput">
                         <Input valueLink={linked.customWallet} pattern="0-9a-zA-Z" placeholder="Enter the address of ETH wallet" />
                       </div>
@@ -420,7 +423,9 @@ export default class PartialClosure extends Component {
                   ) }
                   <div styleName="walletToggle">
                     <Toggle checked={!customWalletUse} onChange={this.handleCustomWalletUse} />
-                    <a href="#" onClick={e => this.useSystemWallet(e)}>Use Swap.Online wallet</a>
+                    <a href="#" onClick={e => this.useSystemWallet(e)}>
+                      <FormattedMessage id="PartialUseSwapOnlineWallet" defaultMessage="Use Swap.Online wallet" />
+                    </a>
                     <Tooltip text="To change default wallet for buy currency. Leave empty for use Swap.Online wallet" />
                   </div>
                 </Fragment>
