@@ -6,11 +6,17 @@ import styles from './SelectGroup.scss'
 import Input from 'components/forms/Input/Input'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import CurrencySelect from 'components/ui/CurrencySelect/CurrencySelect'
+import Tooltip from 'components/ui/Tooltip/Tooltip'
 
 // TODO to split data and view this component
-const SelectGroup = ({ selectedValue, onSelect, currencies, usd, placeholder, label, disabled, className, inputValueLink }) => (
+const SelectGroup = ({ selectedValue, onSelect, currencies, usd, placeholder, label, disabled, className, inputValueLink, tooltip }) => (
   <div>
-    <FieldLabel inRow>{label}</FieldLabel>
+    <FieldLabel inRow>
+      <strong>
+        {label}
+      </strong>
+      <Tooltip text={tooltip} />
+    </FieldLabel>
     <div styleName="groupField" className={className}>
       <Input
         styleName="inputRoot"

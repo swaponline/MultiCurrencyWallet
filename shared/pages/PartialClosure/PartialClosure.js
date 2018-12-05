@@ -28,10 +28,15 @@ import swapApp from 'swap.app'
 const filterIsPartial = (orders) => orders
   .filter(order => order.isPartialClosure)
 
-
-@connect(({ currencies, core: { orders } }) => ({
+@connect(({
+  currencies,
+  core: { orders },
+  user: { ethData, btcData, /* bchData, */ tokensData, eosData, telosData, nimData, usdtData, ltcData },
+}) => ({
   currencies: currencies.items,
   orders: filterIsPartial(orders),
+  currenciesData: [ ethData, btcData, eosData, telosData, /* bchData, */ ltcData, usdtData /* nimData */ ],
+  tokensData: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
 }))
 @CSSModules(styles)
 export default class PartialClosure extends Component {
@@ -51,6 +56,7 @@ export default class PartialClosure extends Component {
       getUsd: 0,
       getAmount: '',
       maxAmount: 0,
+      maxBuyAmount: 0,
       peer: '',
       filteredOrders: [],
       isNonOffers: false,
@@ -61,10 +67,19 @@ export default class PartialClosure extends Component {
     }
 
     let timer
+    let wallets
   }
 
   componentDidMount() {
     this.getUsdBalance()
+
+    this.wallets = {}
+    this.props.currenciesData.forEach(item => {
+      this.wallets[item.currency] = item.address
+    })
+    this.props.tokensData.forEach(item => {
+      this.wallets[item.currency] = item.address
+    })
 
     this.timer = setInterval(() => {
       this.setOrders()
@@ -98,16 +113,20 @@ export default class PartialClosure extends Component {
   getUsdBalance = async () => {
     const { haveCurrency, getCurrency } = this.state
 
-    const exHaveRate = await actions.user.getExchangeRate(haveCurrency, 'usd')
-    const exGetRate = await actions.user.getExchangeRate(getCurrency, 'usd')
+    try {
+      const exHaveRate = await actions.user.getExchangeRate(haveCurrency, 'usd')
+      const exGetRate = await actions.user.getExchangeRate(getCurrency, 'usd')
 
-    console.log('exHaveRate', exHaveRate)
-    console.log('exGetRate', exGetRate)
+      console.log('exHaveRate', exHaveRate)
+      console.log('exGetRate', exGetRate)
 
-    this.setState(() => ({
-      exHaveRate,
-      exGetRate,
-    }))
+      this.setState(() => ({
+        exHaveRate,
+        exGetRate,
+      }))
+    } catch (e) {
+      console.log('Cryptonator offline')
+    }
   }
 
   sendRequest = () => {
@@ -169,7 +188,7 @@ export default class PartialClosure extends Component {
     this.setState(() => ({ isNonOffers: true }))
   }
 
-  setAmountOnState = (maxAmount, getAmount) => {
+  setAmountOnState = (maxAmount, getAmount, buyAmount) => {
 
     console.log('maxAmount', Number(maxAmount))
     console.log('getAmount', this.getFixed(getAmount))
@@ -177,6 +196,7 @@ export default class PartialClosure extends Component {
     this.setState(() => ({
       maxAmount: Number(maxAmount),
       getAmount: this.getFixed(getAmount),
+      maxBuyAmount: this.getFixed(buyAmount),
     }))
 
     return getAmount.isLessThanOrEqualTo(maxAmount)
@@ -242,9 +262,11 @@ export default class PartialClosure extends Component {
 
     let maxAllowedSellAmount = new BigNumber(0)
     let maxAllowedGetAmount = new BigNumber(0)
+    let maxAllowedBuyAmount = new BigNumber(0)
 
     orders.forEach(item => {
       maxAllowedSellAmount = (maxAllowedSellAmount.isLessThanOrEqualTo(item.sellAmount)) ? item.sellAmount : maxAllowedSellAmount
+      maxAllowedBuyAmount = (maxAllowedBuyAmount.isLessThanOrEqualTo(item.buyAmount)) ? item.buyAmount : maxAllowedBuyAmount
 
       if (haveAmount.isLessThanOrEqualTo(item.buyAmount)) {
         console.log('item', item)
@@ -267,7 +289,7 @@ export default class PartialClosure extends Component {
       }
     })
 
-    const checkAmount = this.setAmountOnState(maxAllowedSellAmount, maxAllowedGetAmount)
+    const checkAmount = this.setAmountOnState(maxAllowedSellAmount, maxAllowedGetAmount, maxAllowedBuyAmount)
 
     if (!checkAmount) {
       this.setNoOfferState()
@@ -276,8 +298,11 @@ export default class PartialClosure extends Component {
   }
 
   handleCustomWalletUse = () => {
+    const newCustomWalletUse = !this.state.customWalletUse
+
     this.setState({
-      customWalletUse: !this.state.customWalletUse,
+      customWalletUse: newCustomWalletUse,
+      customWallet: (!newCustomWalletUse) ? '' : this.getSystemWallet(),
     })
   }
 
@@ -331,6 +356,7 @@ export default class PartialClosure extends Component {
       getUsd: 0,
       getAmount: '',
       maxAmount: 0,
+      maxBuyAmount: 0,
       peer: '',
       isNonOffers: false,
       isFetching: false,
@@ -340,15 +366,10 @@ export default class PartialClosure extends Component {
     }))
   }
 
-  useSystemWallet = (e) => {
-    e.preventDefault()
+  getSystemWallet = () => {
     const { getCurrency } = this.state
 
-    if ((config.erc20[getCurrency] !== undefined) || (getCurrency === 'eth')) {
-      this.setState({
-        customWallet: swapApp.services.auth.accounts.eth.address,
-      })
-    }
+    return this.wallets[getCurrency.toUpperCase()]
   }
 
   customWalletAllowed() {
@@ -365,6 +386,7 @@ export default class PartialClosure extends Component {
     const { currencies } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching,
       isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet, getUsd, haveUsd,
+      maxBuyAmount,
     } = this.state
 
     const linked = Link.all(this, 'haveAmount', 'getAmount', 'customWallet')
@@ -394,6 +416,7 @@ export default class PartialClosure extends Component {
               selectedValue={haveCurrency}
               onSelect={this.handleSetHaveValue}
               label="You sell"
+              tooltip="The amount you have in your swap.online wallet or external wallet that you want to exchange"
               placeholder="Enter amount"
               usd={haveUsd}
               currencies={currencies}
@@ -404,33 +427,11 @@ export default class PartialClosure extends Component {
               selectedValue={getCurrency}
               onSelect={this.handleSetGetValue}
               label="You buy"
+              tooltip="The amount you receive after the swap"
               disabled
               currencies={currencies}
               usd={getUsd}
             />
-            {
-              this.customWalletAllowed() && (
-                <Fragment>
-                  { customWalletUse && (
-                    <Fragment>
-                      <FieldLabel inRow>
-                        <FormattedMessage id="PartialYourWalletAddress" defaultMessage="Your wallet address" />
-                      </FieldLabel>
-                      <div styleName="walletInput">
-                        <Input valueLink={linked.customWallet} pattern="0-9a-zA-Z" placeholder="Enter the address of ETH wallet" />
-                      </div>
-                    </Fragment>
-                  ) }
-                  <div styleName="walletToggle">
-                    <Toggle checked={!customWalletUse} onChange={this.handleCustomWalletUse} />
-                    <a href="#" onClick={e => this.useSystemWallet(e)}>
-                      <FormattedMessage id="PartialUseSwapOnlineWallet" defaultMessage="Use Swap.Online wallet" />
-                    </a>
-                    <Tooltip text="To change default wallet for buy currency. Leave empty for use Swap.Online wallet" />
-                  </div>
-                </Fragment>
-              )
-            }
             {
               isSearching && (
                 <span>
@@ -439,7 +440,12 @@ export default class PartialClosure extends Component {
                 </span>
               )
             }
-            <p>{`Max amount for offer:`} {maxAmount}{' '}{getCurrency.toUpperCase()}</p>
+            <p>
+              <FormattedMessage id="PartialPrice" defaultMessage="Price :" />
+              {maxAmount}{' '}{getCurrency.toUpperCase()}
+              <FormattedMessage id="PartialPriceEqual" defaultMessage="=" />
+              {maxBuyAmount}{' '}{haveCurrency.toUpperCase()}
+            </p>
             {maxAmount > 0 && isNonOffers && (
               <p styleName="error">
                 {`No orders found, try to reduce the amount`}
@@ -456,6 +462,25 @@ export default class PartialClosure extends Component {
                   {` Wait participant: `}
                   <InlineLoader />
                 </span>
+              )
+            }
+            {
+              this.customWalletAllowed() && (
+                <Fragment>
+                  <FieldLabel inRow>
+                    <strong>
+                      <FormattedMessage id="PartialYourWalletAddress" defaultMessage="Your wallet address" />
+                    </strong>
+                    <Tooltip text="Your wallet address to where cryptocurrency will be sent after the swap" />
+                  </FieldLabel>
+                  <div styleName="walletInput">
+                    <Input valueLink={linked.customWallet} pattern="0-9a-zA-Z" placeholder="Enter the address of ETH wallet" />
+                  </div>
+                  <div styleName="walletToggle">
+                    <Toggle checked={customWalletUse} onChange={this.handleCustomWalletUse} />
+                    <FormattedMessage id="PartialUseSwapOnlineWallet" defaultMessage="Use Swap.Online wallet" />
+                  </div>
+                </Fragment>
               )
             }
             <div styleName="rowBtn">
