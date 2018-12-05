@@ -56,7 +56,7 @@ export default class PartialClosure extends Component {
       getUsd: 0,
       getAmount: '',
       maxAmount: 0,
-      maxBuyAmount: 0,
+      maxBuyAmount: new BigNumber(0),
       peer: '',
       filteredOrders: [],
       isNonOffers: false,
@@ -196,7 +196,7 @@ export default class PartialClosure extends Component {
     this.setState(() => ({
       maxAmount: Number(maxAmount),
       getAmount: this.getFixed(getAmount),
-      maxBuyAmount: this.getFixed(buyAmount),
+      maxBuyAmount: buyAmount,
     }))
 
     return getAmount.isLessThanOrEqualTo(maxAmount)
@@ -356,7 +356,7 @@ export default class PartialClosure extends Component {
       getUsd: 0,
       getAmount: '',
       maxAmount: 0,
-      maxBuyAmount: 0,
+      maxBuyAmount: new BigNumber(0),
       peer: '',
       isNonOffers: false,
       isFetching: false,
@@ -389,6 +389,7 @@ export default class PartialClosure extends Component {
       maxBuyAmount,
     } = this.state
 
+    const oneCryptoCost = (maxBuyAmount.isLessThanOrEqualTo(0)) ? 0 :  maxBuyAmount.div(maxAmount).toFixed(5)
     const linked = Link.all(this, 'haveAmount', 'getAmount', 'customWallet')
 
     if (redirect) {
@@ -441,10 +442,11 @@ export default class PartialClosure extends Component {
               )
             }
             <p>
-              <FormattedMessage id="PartialPrice" defaultMessage="Price :" />
-              {maxAmount}{' '}{getCurrency.toUpperCase()}
+              <FormattedMessage id="PartialPrice" defaultMessage="Price: " />
+              <FormattedMessage id="PartialOneCurrencyUnit" defaultMessage="1 " />
+              {getCurrency.toUpperCase()}
               <FormattedMessage id="PartialPriceEqual" defaultMessage="=" />
-              {maxBuyAmount}{' '}{haveCurrency.toUpperCase()}
+              {oneCryptoCost}{' '}{haveCurrency.toUpperCase()}
             </p>
             {maxAmount > 0 && isNonOffers && (
               <p styleName="error">
