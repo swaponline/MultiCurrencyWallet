@@ -25,8 +25,8 @@ import { isNumberValid, isNumberStringFormatCorrect, mathConstants } from 'helpe
 
 
 const minAmount = {
-  eth: 0.05,
-  btc: 0.004,
+  eth: 0.005,
+  btc: 0.001,
   ltc: 0.1,
   eos: 1,
   noxon: 1,
@@ -38,10 +38,10 @@ const minAmount = {
 @connect(
   ({
     currencies,
-    user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, usdtData, ltcData },
+    user: { ethData, btcData, /* bchData, */ tokensData, eosData, telosData, nimData, usdtData, ltcData },
   }) => ({
     currencies: currencies.items,
-    items: [ ethData, btcData, eosData, telosData, bchData, ltcData, usdtData /* nimData */ ],
+    items: [ ethData, btcData, eosData, telosData, /* bchData, */ ltcData, usdtData /* nimData */ ],
     tokenItems: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
   })
 )
@@ -64,7 +64,7 @@ export default class AddOffer extends Component {
       isSellFieldInteger: false,
       isBuyFieldInteger: false,
       manualRate: false,
-      isPartialClosure: false,
+      isPartialClosure: true,
     }
   }
 
@@ -145,7 +145,7 @@ export default class AddOffer extends Component {
     sellCurrency = value
 
     await this.checkBalance(sellCurrency)
-    
+
     await this.updateExchangeRate(sellCurrency, buyCurrency)
     const { exchangeRate } = this.state
     buyAmount = new BigNumber(String(sellAmount) || 0).multipliedBy(exchangeRate)
@@ -354,6 +354,21 @@ export default class AddOffer extends Component {
     this.setState({ manualRate: value })
   }
 
+  switching = async ({ value }) => {
+    const { sellCurrency, buyCurrency } = this.state
+
+    await this.checkBalance(buyCurrency)
+
+    await this.updateExchangeRate(sellCurrency, buyCurrency)
+
+    const { exchangeRate } = this.state
+
+    this.setState({
+      sellCurrency: buyCurrency,
+      buyCurrency: sellCurrency,
+    })
+  }
+
   render() {
     const { currencies, tokenItems } = this.props
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency,
@@ -363,16 +378,24 @@ export default class AddOffer extends Component {
       || sellAmount > balance || sellAmount < minAmount[sellCurrency]
       || this.isEthOrERC20()
 
-    linked.sellAmount.check((value) => value > minAmount[sellCurrency], `Amount must be greater than ${minAmount[sellCurrency]} `)
-    linked.sellAmount.check((value) => value <= balance, `Amount must be less than your balance`)
-
+    linked.sellAmount.check((value) => Number(value) > minAmount[sellCurrency],
+      <span style={{ position: 'relative', marginRight: '44px' }}>
+        <FormattedMessage id="transaction368" defaultMessage="Amount must be greater than " />
+        {minAmount[sellCurrency]}
+      </span>
+    )
+    linked.sellAmount.check((value) => Number(value) <= balance,
+      <span style={{ position: 'relative', marginRight: '44px' }}>
+        <FormattedMessage id="transaction376" defaultMessage="Amount must be less than your balance " />
+      </span>
+    )
     return (
       <div styleName="wrapper addOffer">
         { this.isEthOrERC20() &&
           <span styleName="error">
-            <FormattedMessage id="transaction27" defaultMessage="For a swap, you need" />
+            <FormattedMessage id="transaction27" defaultMessage="For a swap, you need " />
             {minAmount.eth}
-            <FormattedMessage id="transaction27" defaultMessage="ETH on your balance" />
+            <FormattedMessage id="transaction27" defaultMessage=" ETH on your balance" />
           </span>
         }
         <SelectGroup
@@ -390,6 +413,7 @@ export default class AddOffer extends Component {
           changeBalance={this.changeBalance}
           balance={balance}
           currency={sellCurrency}
+          switching={this.switching}
         />
         <SelectGroup
           label="Buy"
@@ -418,7 +442,8 @@ export default class AddOffer extends Component {
           <Tooltip text="To change the exchange rate" />
         </div>
         <div>
-          <Toggle checked={isPartialClosure} onChange={() => this.setState((state) => ({ isPartialClosure: !state.isPartialClosure }))} /> Enabled to partial closure
+          <Toggle checked={isPartialClosure} onChange={() => this.setState((state) => ({ isPartialClosure: !state.isPartialClosure }))} />
+          <FormattedMessage id="AddOffer446" defaultMessage="Allow partial fulfillment" />
           <Tooltip
           text="Partial closure means that you will receive exchange requests <br/> or the amount less than the total amount you want sell. <br/> For example if you want to sell 1 BTC, <br/> other users can send you exchange requests for 0.1, 0.5 BTC" />
         </div>

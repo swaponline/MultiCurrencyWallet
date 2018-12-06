@@ -1,0 +1,24 @@
+.currencyBalanceValue {
+	font-weight: bold;
+}
+@media all and (min-width: 320px) and (max-width: 570px) {
+	.currencyTitle,
+	.currencyToggle {
+		display: none;
+	}
+	.currencyBalance {
+		margin-bottom: 20px;
+	}
+	.currencyMediaSection {
+		margin-top: 85px;
+	}
+	.currencyMobileSection {
+		margin-bottom: -70px;
+	}
+}
+
+@media all and (min-width: 570px) and (max-width:1024px) {
+  .currencyMobileSection {
+  	margin-top: -70px;
+  }
+}

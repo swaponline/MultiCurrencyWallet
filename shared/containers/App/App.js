@@ -56,25 +56,31 @@ export default class App extends React.Component {
   }
 
   componentWillMount() {
-    localStorage.setItem(constants.localStorage.activeTabId, Date.now())
-
-    if (localStorage.getItem(constants.localStorage.activeTabId)) {
-      localStorage.setItem(constants.localStorage.activeTabId, Date.now())
-    }
-
-    this.localStorageListener = localStorage.subscribe(constants.localStorage.activeTabId, (newValue) => {
-      if (newValue !== localStorage.getItem(constants.localStorage.activeTabId)) {
+    const myId = Date.now().toString()
+    localStorage.setItem(constants.localStorage.enter, myId)
+    const enterSub = localStorage.subscribe(constants.localStorage.enter, () => {
+      localStorage.setItem(constants.localStorage.reject, myId)
+    })
+    const rejectSub = localStorage.subscribe(constants.localStorage.reject, (id) => {
+      if (id && id !== myId) {
         this.setState({ multiTabs: true })
+        localStorage.unsubscribe(rejectSub)
+        localStorage.unsubscribe(enterSub)
+        localStorage.removeItem(constants.localStorage.reject)
       }
     })
+
+    const iOSSafari = /iP(ad|od|hone)/i.test(window.navigator.userAgent)
+                    && /WebKit/i.test(window.navigator.userAgent)
+                    && !(/(CriOS|FxiOS|OPiOS|mercury)/i.test(window.navigator.userAgent))
 
     if (!localStorage.getItem(constants.localStorage.demoMoneyReceived)) {
       actions.user.getDemoMoney()
     }
-  }
 
-  componentWillUnmount() {
-    localStorage.unsubscribe(this.localStorageListener)
+    if (process.env.LOCAL !== 'local' && !iOSSafari) {
+      actions.pushNotification.initializeFirebase()
+    }
   }
 
   componentDidMount() {

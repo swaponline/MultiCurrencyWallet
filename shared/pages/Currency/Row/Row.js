@@ -6,7 +6,8 @@ import { links }    from 'helpers'
 import cssModules from 'react-css-modules'
 import styles from './Row.scss'
 
-import Coins from 'components/Coins/Coins'
+import Coin from 'components/Coin/Coin'
+import Flip from 'components/controls/Flip/Flip'
 import { FormattedMessage } from 'react-intl'
 
 
@@ -22,14 +23,16 @@ export default class Row extends Component {
     const { from, to } = this.props
 
     return (
-      <tr>
-        <td>
-          <Coins styleName="coins" names={[ from, to ]} size={40} />
-        </td>
+      <tr styleName="exchangeTr">
         <td>
           <span>
-            <FormattedMessage id="Row30" defaultMessage="Exchange " />
-            {from.toUpperCase()}/{to.toUpperCase()}
+            <div styleName="exchangeRow">
+              <Coin styleName="coin" name={from} size={40} />
+              {from.toUpperCase()}
+              <Flip />
+              <Coin styleName="coin" name={to} size={40} />
+              {to.toUpperCase()}
+            </div>
           </span>
         </td>
         <td>
@@ -41,3 +44,4 @@ export default class Row extends Component {
     )
   }
 }
+

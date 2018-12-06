@@ -1,3 +1,7 @@
+.buttonWrap {
+  display: flex;
+}
+
 .button, .buttonMobile {
   min-width: 40px;
   height: 40px;
@@ -19,12 +23,11 @@
 }
 
 .buttonMobile {
-  background: #e91db4 url('./images/add.svg') 50% 50% no-repeat;
   padding: 0;
   display: none;
 }
 
-@media screen and (max-width: 860px){
+@media (max-width: 860px){
   .buttonMobile {
     display: block;
   }
@@ -32,4 +35,26 @@
   .button {
     display: none;
   }
+}
+
+.mobile {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  z-index: 10;
+}
+
+.mobile .buttonMobile {
+  min-width: 48px;
+  height: 48px;
+  line-height: 48px;
+  border-radius: 48px;
+  display: block;
+  margin-right: 20px;
+  margin-bottom: 100px;
+}
+
+.mobile .button {
+  display: none;
 }

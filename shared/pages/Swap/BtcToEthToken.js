@@ -53,7 +53,7 @@ export default class BtcToEthToken extends Component {
 
   confirmAddress = () => {
     this.swap.setDestinationBuyAddress(this.state.destinationBuyAddress);
-    this.setState();
+    this.setState({ destinationAddressTimer : false })
   }
 
   destinationAddressFocus = () => {
@@ -112,7 +112,6 @@ export default class BtcToEthToken extends Component {
               {message => <h3>{message}</h3>}
             </FormattedMessage>
             <Input valueLink={linked.destinationBuyAddress} onFocus={this.destinationAddressFocus} styleName="input" pattern="0-9a-zA-Z" />
-            <hr />
             { destinationAddressTimer && (
               <TimerButton timeLeft={10} brand onClick={this.confirmAddress}>
                 <FormattedMessage id="BtcToEthTokenAddress2" defaultMessage="Confirm address " />

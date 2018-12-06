@@ -1,0 +1,18 @@
+.WithdrawButtonContainer {
+  display: flex;
+  width: 700;
+  margin-right: 15px;
+}
+
+@include media-tablet {
+	.WithdrawButtonContainer {
+		margin-left: -20px;
+	}
+}
+
+@include media-mobile {
+	.WithdrawButtonContainer {
+		flex-direction: column;
+		align-items: end;
+	}
+}
