@@ -94,8 +94,10 @@ export default class Header extends Component {
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll)
 
-    if (!localStorage.getItem(constants.localStorage.openTour)) {
-      this.openTour()
+    if (this.props.history.location.pathname === '/') {
+      if (!localStorage.getItem(constants.localStorage.openTour)) {
+        this.openTour()
+      }
     }
   }
 
