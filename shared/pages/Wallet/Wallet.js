@@ -66,6 +66,7 @@ export default class Wallet extends Component {
     if (!process.env.MAINNET) {
       localStorage.setItem(constants.localStorage.testnetSkip, 'true')
     } else {
+      localStorage.setItem(constants.localStorage.privateKeysSaved, 'false')
       localStorage.setItem(constants.localStorage.testnetSkip, 'false')
     }
   }
@@ -80,12 +81,14 @@ export default class Wallet extends Component {
     })
 
     const { zeroBalance } = this.state
-    const testSkip = localStorage.getItem(constants.localStorage.testnetSkip)
 
-    if (localStorage.getItem(constants.localStorage.privateKeysSaved) && zeroBalance) {
+    const testSkip = localStorage.getItem(constants.localStorage.testnetSkip)
+    const saveKeys = localStorage.getItem(constants.localStorage.privateKeysSaved)
+
+    if (saveKeys === 'false' && zeroBalance) {
       this.changeView('checkKeys')
     } else {
-      if (!(testSkip === 'true')) {
+      if (testSkip === 'false') {
         this.setState(() => ({ saveKeys: true }))
       }
     }
