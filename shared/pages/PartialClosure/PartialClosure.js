@@ -239,8 +239,6 @@ export default class PartialClosure extends Component {
         }
       })
 
-    this.getUsdBalance()
-
     console.log('sortedOrder', sortedOrder)
 
     const search = await this.setOrderOnState(sortedOrder)
@@ -271,8 +269,8 @@ export default class PartialClosure extends Component {
       if (haveAmount.isLessThanOrEqualTo(item.buyAmount)) {
         console.log('item', item)
         maxAllowedGetAmount = (maxAllowedGetAmount.isLessThanOrEqualTo(item.getAmount)) ? item.getAmount : maxAllowedGetAmount
-        const haveUsd = new BigNumber(String(exHaveRate)).multipliedBy(haveAmount)
-        const getUsd  = new BigNumber(String(exGetRate)).multipliedBy(item.getAmount)
+        const haveUsd = new BigNumber(String(exHaveRate)).multipliedBy(new BigNumber(haveAmount))
+        const getUsd  = new BigNumber(String(exGetRate)).multipliedBy(new BigNumber(item.getAmount))
 
         this.setState(() => ({
           haveUsd: Number(haveUsd).toFixed(2),
