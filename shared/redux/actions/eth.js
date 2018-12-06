@@ -45,16 +45,6 @@ const getBalance = () => {
     })
 }
 
-const getReputation = () =>
-  new Promise(async (resolve) => {
-    const { user: { ethData: { address } } } = getState()
-
-    const response = await request.get(`${api.getApiServer('swapsExplorer')}/reputation/${address}`)
-    const reputation = Number.isInteger(response.reputation) ? response.reputation : 0
-    reducers.user.setReputation({ name: 'ethData', reputation })
-    resolve(reputation)
-  })
-
 const fetchBalance = (address) =>
   web3.eth.getBalance(address)
     .then(result => Number(web3.utils.fromWei(result)))
@@ -125,5 +115,4 @@ export default {
   getBalance,
   fetchBalance,
   getTransaction,
-  getReputation,
 }
