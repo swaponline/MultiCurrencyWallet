@@ -440,7 +440,7 @@ export default class PartialClosure extends Component {
             {
               (isSearching || (isNonOffers && maxAmount === 0)) && (
                 <span>
-                  {` Wait search orders: `}
+                  <FormattedMessage id="PartialPriceSearch" defaultMessage="Searching orders..." />
                   <InlineLoader />
                 </span>
               )
@@ -448,10 +448,6 @@ export default class PartialClosure extends Component {
             { oneCryptoCost.isGreaterThan(0) && oneCryptoCost.isFinite() && (
               <p>
                 <FormattedMessage id="PartialPrice" defaultMessage={`Price: 1 ${getCurrency.toUpperCase()} = ${oneCryptoCost.toFixed(5)} ${haveCurrency.toUpperCase()}`} />
-                <FormattedMessage id="PartialOneCurrencyUnit" defaultMessage="1 " />
-                {getCurrency.toUpperCase()}
-                <FormattedMessage id="PartialPriceEqual" defaultMessage="=" />
-                {oneCryptoCost.toFixed(5)}{' '}{haveCurrency.toUpperCase()}
               </p>
             )}
             { !oneCryptoCost.isFinite() && !isNonOffers && (
@@ -464,9 +460,6 @@ export default class PartialClosure extends Component {
                 </p>
                 <p styleName="error">
                   <FormattedMessage id="PartialPriceReduceMin" defaultMessage={`Maximum available amount: ${maxAmount} ${getCurrency.toUpperCase()}`} />
-                  {maxAmount}
-                  {` `}
-                  {getCurrency.toUpperCase()}
                 </p>
               </Fragment>
             )}
