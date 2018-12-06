@@ -11,7 +11,7 @@ import core from './core'
 import filter from './filter'
 
 import btc from './btc'
-import bch from './bch'
+// import bch from './bch'
 import ltc from './ltc'
 import eth from './eth'
 import eos from './eos'
@@ -46,7 +46,7 @@ export default {
   user,
   core,
   ltc,
-  bch,
+  // bch,
   btc,
   usdt,
   eth,
