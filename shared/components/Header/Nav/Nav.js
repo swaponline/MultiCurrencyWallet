@@ -40,30 +40,11 @@ export default class Nav extends Component {
           {
             menu
               .filter(i => i.isDesktop !== false)
-              .map(({ title, link, exact }) => (
+              .map(({ title, link, exact, tour }) => (
                 <Fragment>
-                  {title === 'Exchange' ? (
-                    <NavLink
-                      data-tut="reactour__exchange"
-                      onClick={this.handleScrollToTopClick}
-                      key={title}
-                      exact={exact}
-                      styleName="link"
-                      to={link}
-                      activeClassName={styles.active}
-                    >
-                      {title}
-                    </NavLink>) :
-                    <NavLink
-                      onClick={this.handleScrollToTopClick}
-                      key={title}
-                      exact={exact}
-                      styleName="link"
-                      to={link}
-                      activeClassName={styles.active}
-                    >
-                      {title}
-                    </NavLink>}
+                  <NavLink onClick={this.handleScrollToTopClick} key={title} data-tut={`${tour}`} exact={exact} styleName="link" to={link} activeClassName={styles.active}>
+                    {title}
+                  </NavLink>
                 </Fragment>
 
               )
