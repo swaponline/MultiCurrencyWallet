@@ -2,6 +2,7 @@ export default {
   privateKeysSaved: 'privateKeysSaved',
   demoMoneyReceived: 'demoMoneyReceived',
   activeTabId: 'activeTabId',
+  openTour: 'openTour',
   hiddenCoinsList: 'hiddenCoinsList',
   testnetSkip: 'testnetSkip',
   enter: 'enter',

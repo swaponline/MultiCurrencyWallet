@@ -167,11 +167,13 @@
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^5.0.0-alpha.9",
     "react-tooltip": "^3.9.0",
+    "reactour": "^1.10.0",
     "rebuild": "^0.1.2",
     "redaction": "^4.2.1",
     "redux": "^4.0.0",
     "rename-files": "0.0.2",
     "replace": "^1.0.0",
-    "reverse": "^4.0.0"
+    "reverse": "^4.0.0",
+    "styled-components": "^4.1.2"
   }
 }
