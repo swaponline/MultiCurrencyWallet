@@ -50,7 +50,6 @@
   "author": "@nikdementev",
   "license": "ISC",
   "devDependencies": {
-    "@nimiq/core": "^1.1.2",
     "abortcontroller-polyfill": "^1.1.9",
     "app-module-path": "^2.2.0",
     "autoprefixer": "^8.5.0",
@@ -148,7 +147,7 @@
     "copy-webpack-plugin": "^4.6.0",
     "ethereum-input-data-decoder": "0.0.12",
     "firebase": "^5.5.9",
-    "ipfs": "^0.32.3",
+    "ipfs": "^0.33.1",
     "ipfs-pubsub-room": "^1.4.0",
     "node-gyp": "^3.8.0",
     "react": "^16.3.2",
