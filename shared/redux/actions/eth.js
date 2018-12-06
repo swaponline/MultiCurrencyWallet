@@ -46,23 +46,24 @@ const getBalance = () => {
 }
 
 const getReputation = () =>
-  new Promise(async (resolve) => {
+  new Promise(async (resolve, reject) => {
     const { user: { ethData: { address, privateKey } } } = getState()
-
     const addressOwnerSignature = web3.eth.accounts.sign(address, privateKey)
 
-    const response = await request.post(`${api.getApiServer('swapsExplorer')}/reputation`, {
+    request.post(`${api.getApiServer('swapsExplorer')}/reputation`, {
       json: true,
       body: {
         address,
         addressOwnerSignature,
       },
+    }).then((response) => {
+      const { reputation, reputationOracleSignature } = response
+
+      reducers.user.setReputation({ name: 'ethData', reputation, reputationOracleSignature })
+      resolve(reputation)
+    }).catch((error) => {
+      reject(error)
     })
-
-    const { reputation, reputationOracleSignature } = response
-
-    reducers.user.setReputation({ name: 'ethData', reputation, reputationOracleSignature })
-    resolve(reputation)
   })
 
 

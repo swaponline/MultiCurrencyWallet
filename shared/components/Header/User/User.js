@@ -58,6 +58,7 @@ export default class User extends React.Component {
   render() {
     const { view } = this.state
     const { feeds, peer, reputation } = this.props
+    const reputationPlaceholder = '?'
 
     return (
       <div styleName="user-cont">
@@ -82,9 +83,7 @@ export default class User extends React.Component {
                 value={peer}
                 size={40}
               />
-              { Number.isInteger(reputation) && (
-                <div styleName="avatar-reputation-centered">{reputation}</div>
-              )}
+              <div styleName="avatar-reputation-centered">{ Number.isInteger(reputation) ? reputation : reputationPlaceholder }</div>
             </div>
             <ReactTooltip id="gravatar" type="light" effect="solid" >
               <span>

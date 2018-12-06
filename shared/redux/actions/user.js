@@ -75,9 +75,13 @@ const getReputation = async () => {
   Promise.all([btcReputationPromise, ethReputationPromise])
     .then(([btcReputation, ethReputation]) => {
       const totalReputation = Number(btcReputation) + Number(ethReputation)
-      reducers.ipfs.set({ reputation: totalReputation })
+      if (Number.isInteger(totalReputation)) {
+        reducers.ipfs.set({ reputation: totalReputation })
+      } else {
+        reducers.ipfs.set({ reputation: null })
+      }
     }).catch((error) => {
-      console.error(error)
+      console.error(`unknown reputation`, error)
     })
 }
 

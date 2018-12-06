@@ -6,7 +6,7 @@ export const initialState = {
   onlineUsers: 0,
   serverAddress: config.ipfs.server,
   peer: '',
-  reputation: 0,
+  reputation: null,
 }
 
 export const set = (state, payload) => ({
