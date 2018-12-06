@@ -31,6 +31,9 @@ import { FormattedMessage } from 'react-intl'
     items: [btcData, ethData, eosData, telosData, bchData, ltcData, usdtData /* nimData */ ].map((data) => (
       data.currency
     )),
+    currencyBalance: [btcData, ethData, eosData, telosData, bchData, ltcData, usdtData /* nimData */ ].map((cur) => (
+      cur.balance
+    )),
     currencies,
     hiddenCoinsList,
   })
@@ -53,29 +56,57 @@ export default class Wallet extends Component {
   state = {
     view: 'off',
     zeroBalance: true,
+    saveKeys: false,
   }
 
   componentWillMount() {
-    process.env.MAINNET && localStorage.setItem(constants.localStorage.testnetSkip, true)
-    if (localStorage.getItem(constants.localStorage.privateKeysSaved)) {
-      this.changeView('checkKeys')
+    actions.user.getBalances()
+    actions.analytics.dataEvent('open-page-balances')
+
+    if (!process.env.MAINNET) {
+      localStorage.setItem(constants.localStorage.testnetSkip, 'true')
     } else {
-      // actions.modals.open(constants.modals.PrivateKeys, {})
+      localStorage.setItem(constants.localStorage.testnetSkip, 'false')
     }
   }
 
-  componentDidMount() {
-    actions.user.getBalances()
-    actions.analytics.dataEvent('open-page-balances')
+  componentWillReceiveProps() {
+    const { currencyBalance } = this.props
+
+    currencyBalance.forEach(cur => {
+      if (cur > 0) {
+        this.setState(() => ({ zeroBalance: false }))
+      }
+    })
+
+    const { zeroBalance } = this.state
+    const testSkip = localStorage.getItem(constants.localStorage.testnetSkip)
+
+    if (localStorage.getItem(constants.localStorage.privateKeysSaved) && zeroBalance) {
+      this.changeView('checkKeys')
+    } else {
+      if (!(testSkip === 'true')) {
+        this.setState(() => ({ saveKeys: true }))
+      }
+    }
+  }
+
+  componentDidUpdate() {
+    const { saveKeys } = this.state
+
+    if (saveKeys) {
+      actions.modals.open(constants.modals.PrivateKeys, {})
+    }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
     const getComparableProps = (props) => ({
-      items: props.items,
-      tokens: props.tokens,
-      currencies: props.currencies,
-      hiddenCoinsList: props.hiddenCoinsList,
-    });
+        items: props.items,
+        currencyBalance: props.currencyBalance,
+        tokens: props.tokens,
+        currencies: props.currencies,
+        hiddenCoinsList: props.hiddenCoinsList,
+      })
     return JSON.stringify({
       ...getComparableProps(this.props),
       ...this.state,
