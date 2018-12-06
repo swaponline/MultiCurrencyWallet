@@ -63,12 +63,10 @@ export default class Wallet extends Component {
     actions.user.getBalances()
     actions.analytics.dataEvent('open-page-balances')
 
-    if (!process.env.MAINNET) {
+    if (process.env.MAINNET) {
       localStorage.setItem(constants.localStorage.testnetSkip, true)
-    } else {
-      localStorage.setItem(constants.localStorage.privateKeysSaved, true)
-      localStorage.setItem(constants.localStorage.testnetSkip, false)
     }
+
   }
 
   componentWillReceiveProps() {
@@ -83,12 +81,16 @@ export default class Wallet extends Component {
     const { zeroBalance } = this.state
 
     const testSkip = JSON.parse(localStorage.getItem(constants.localStorage.testnetSkip))
-    const saveKeys = JSON.parse(localStorage.getItem(constants.localStorage.privateKeysSaved))
+    const saveKeys = JSON.parse(localStorage.getItem(constants.localStorage.privateKeysSaved)) || false
 
-    if (saveKeys && zeroBalance) {
+    console.log('testSkip', testSkip)
+    console.log('saveKeys', saveKeys)
+    console.log('zeroBalance', zeroBalance)
+
+    if (!saveKeys && zeroBalance) {
       this.changeView('checkKeys')
     } else {
-      if (testSkip) {
+      if (testSkip && !saveKeys) {
         this.setState(() => ({ saveKeys: true }))
       }
     }
