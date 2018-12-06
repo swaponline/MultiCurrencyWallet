@@ -438,7 +438,7 @@ export default class PartialClosure extends Component {
               usd={getUsd}
             />
             {
-              isSearching || (isNonOffers && maxAmount === 0) && (
+              (isSearching || (isNonOffers && maxAmount === 0)) && (
                 <span>
                   {` Wait search orders: `}
                   <InlineLoader />
