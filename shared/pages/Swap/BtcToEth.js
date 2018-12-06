@@ -212,7 +212,18 @@ export default class BtcToEth extends Component {
                 (flow.step === 4 || flow.btcScriptValues) && (
                   <Fragment>
                     <FormattedMessage id="BtcToEth194" defaultMessage="4. Creating Bitcoin Script. Please wait, it will take a while" >
-                      {message => <h3 style={{ color: '#5100dc', textTransform: 'uppercase', fontSize: '20px', marginTop: '20px', borderTop: '1px solid #5100dc', paddingTop: '20px' }}>{message}</h3>}
+                      {
+                        message => (
+                          <h3 style={{
+                            color: '#5100dc',
+                            textTransform: 'uppercase',
+                            fontSize: '20px',
+                            marginTop: '20px',
+                            borderTop: '1px solid #5100dc',
+                            paddingTop: '20px' }}>{message}
+                          </h3>
+                        )
+                      }
                     </FormattedMessage>
                     {
                       flow.btcScriptCreatingTransactionHash && (
@@ -265,7 +276,18 @@ export default class BtcToEth extends Component {
                 (flow.step === 5 || flow.isEthContractFunded) && (
                   <Fragment>
                     <FormattedMessage id="BtcToEth253" defaultMessage="5. ETH Owner received Bitcoin Script and Secret Hash. Waiting when he creates ETH Contract" >
-                      {message => <h3 style={{ color: '#5100dc', textTransform: 'uppercase', fontSize: '20px', marginTop: '20px', borderTop: '1px solid #5100dc', paddingTop: '20px' }}>{message}</h3>}
+                      {
+                        message => (
+                          <h3 style={{
+                            color: '#5100dc',
+                            textTransform: 'uppercase',
+                            fontSize: '20px',
+                            marginTop: '20px',
+                            borderTop: '1px solid #5100dc',
+                            paddingTop: '20px' }}>{message}
+                          </h3>
+                        )
+                      }
                     </FormattedMessage>
                     {
                       !flow.isEthContractFunded && (
@@ -294,7 +316,18 @@ export default class BtcToEth extends Component {
               {
                 (flow.step === 6 || flow.isEthWithdrawn) && (
                   <FormattedMessage id="BtcToEth282" defaultMessage="6. ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait" >
-                    {message => <h3 style={{ color: '#5100dc', textTransform: 'uppercase', fontSize: '20px', marginTop: '20px', borderTop: '1px solid #5100dc', paddingTop: '20px' }}>{message}</h3>}
+                    {
+                      message => (
+                        <h3 style={{
+                          color: '#5100dc',
+                          textTransform: 'uppercase',
+                          fontSize: '20px',
+                          marginTop: '20px',
+                          borderTop: '1px solid #5100dc',
+                          paddingTop: '20px' }}>{message}
+                        </h3>
+                      )
+                    }
                   </FormattedMessage>
                 )
               }
@@ -324,10 +357,32 @@ export default class BtcToEth extends Component {
                 flow.isEthWithdrawn && (
                   <Fragment>
                     <FormattedMessage id="BtcToEth312" defaultMessage="7. Money was transferred to your wallet. Check the balance. ">
-                      {message => <h3 style={{ color: '#5100dc', textTransform: 'uppercase', fontSize: '20px', marginTop: '20px', borderTop: '1px solid #5100dc', paddingTop: '20px' }}>{message}</h3>}
+                      {
+                        message => (
+                          <h3 style={{
+                            color: '#5100dc',
+                            textTransform: 'uppercase',
+                            fontSize: '20px',
+                            marginTop: '20px',
+                            borderTop: '1px solid #5100dc',
+                            paddingTop: '20px' }}>{message}
+                          </h3>
+                        )
+                      }
                     </FormattedMessage>
                     <FormattedMessage id="BtcToEth315" defaultMessage="Thank you for using Swap.Online!">
-                      {message => <h2 style={{ color: '#5100dc', textTransform: 'uppercase', fontSize: '20px', marginTop: '20px', borderTop: '1px solid #5100dc', paddingTop: '20px' }}>{message}</h2>}
+                      {
+                        message => (
+                          <h3 style={{
+                            color: '#5100dc',
+                            textTransform: 'uppercase',
+                            fontSize: '20px',
+                            marginTop: '20px',
+                            borderTop: '1px solid #5100dc',
+                            paddingTop: '20px' }}>{message}
+                          </h3>
+                        )
+                      }
                     </FormattedMessage>
                   </Fragment>
                 )
