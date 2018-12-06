@@ -101,12 +101,12 @@ export default class Wallet extends Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     const getComparableProps = (props) => ({
-        items: props.items,
-        currencyBalance: props.currencyBalance,
-        tokens: props.tokens,
-        currencies: props.currencies,
-        hiddenCoinsList: props.hiddenCoinsList,
-      })
+      items: props.items,
+      currencyBalance: props.currencyBalance,
+      tokens: props.tokens,
+      currencies: props.currencies,
+      hiddenCoinsList: props.hiddenCoinsList,
+    })
     return JSON.stringify({
       ...getComparableProps(this.props),
       ...this.state,
