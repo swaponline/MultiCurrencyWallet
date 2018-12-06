@@ -496,7 +496,7 @@ export default class PartialClosure extends Component {
             {
               this.customWalletAllowed() && (
                 <Fragment>
-                  <FieldLabel inRow>
+                  <FieldLabel>
                     <strong>
                       <FormattedMessage id="PartialYourWalletAddress" defaultMessage="Your wallet address" />
                     </strong>
