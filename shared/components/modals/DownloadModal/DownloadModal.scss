@@ -1,0 +1,28 @@
+@include media-mobile {
+  .subTitle {
+    text-align: center;
+    width: 100%;
+    font-size: 14px;
+    margin-bottom: 15px
+
+  }
+  .indent {
+    position: relative;
+    margin-top: 20px;
+  }
+  .content {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .button {
+    width: 100%;
+    display: block;
+    padding: 0;
+  }
+  p {
+    font-size: 9.5px;
+    margin-bottom: 5px;
+
+  }
+}

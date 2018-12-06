@@ -229,4 +229,5 @@ export default {
   setTransactions,
   downloadPrivateKeys,
   getReputation,
+  getText,
 }
