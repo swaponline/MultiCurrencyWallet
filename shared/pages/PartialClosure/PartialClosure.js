@@ -389,7 +389,7 @@ export default class PartialClosure extends Component {
       maxBuyAmount, getAmount,
     } = this.state
 
-    const oneCryptoCost = (maxBuyAmount.isLessThanOrEqualTo(0)) ? new BigNumber(0) :  maxBuyAmount.div(maxAmount)
+    const oneCryptoCost = maxBuyAmount.isLessThanOrEqualTo(0) ? new BigNumber(0) :  maxBuyAmount.div(maxAmount)
     const linked = Link.all(this, 'haveAmount', 'getAmount', 'customWallet')
 
     if (redirect) {
