@@ -80,7 +80,9 @@ export default class Wallet extends Component {
   componentWillReceiveProps() {
     const { saveKeys, testSkip } = this.state
 
-    if (saveKeys || testSkip) {
+    const openTour = JSON.parse(localStorage.getItem(constants.localStorage.openTour))
+
+    if (saveKeys || testSkip || !openTour) {
       return
     }
 
