@@ -119,7 +119,6 @@ export default class Wallet extends Component {
   }
 
   render() {
-    const { zeroBalance } = this.state
     const { items, tokens, currencies, hiddenCoinsList } = this.props
     const titles = [ 'Coin', 'Name', 'Balance', 'Your Address', isMobile ? 'Send, receive, swap' :  'Actions' ]
 
