@@ -372,6 +372,23 @@ export default class PartialClosure extends Component {
     return this.wallets[getCurrency.toUpperCase()]
   }
 
+  customWalletValid() {
+    const { haveCurrency, getCurrency, customWallet } = this.state
+
+    if (haveCurrency === 'btc') {
+      if (config.erc20[getCurrency] !== undefined) {
+        if (!/^(0x)?[0-9a-f]{40}$/i.test(customWallet)) {
+          return false
+        } else if (/^(0x)?[0-9a-f]{40}$/.test(customWallet.toLowerCase())) {
+          return true
+        }
+        return false
+      }
+    }
+
+    return true
+  }
+
   customWalletAllowed() {
     const { haveCurrency, getCurrency } = this.state
 
@@ -398,7 +415,7 @@ export default class PartialClosure extends Component {
 
     let canDoOrder = !isNonOffers
     if (!(Number(getAmount) > 0)) canDoOrder = false
-    if (this.customWalletAllowed() && !customWallet) canDoOrder = false
+    if (this.customWalletAllowed() && !this.customWalletValid()) canDoOrder = false
 
     return (
       <Fragment>
