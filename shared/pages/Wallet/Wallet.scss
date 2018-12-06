@@ -1,27 +1,30 @@
 .coinsActionsBlock {
   margin: 25px 0px;
 }
+
 .sectionWalletMobile {
 	margin-top: -88px;
 }
+
 .sectionWallet {
 	margin-top: 88px;
+}
+
+.pageLine {
+  height: 130px;
 }
 
 @media all and (min-width: 570px) and (max-width:700px) {
 	.sectionWalletMobile {
 		margin-top: -88px;
 	}
-	.pageLine {
-		margin-left: 10px;
-	}
+  .pageLine {
+    margin-left: 10px;
+  }
 }
 
-@include media-mobile { 
+@include media-mobile {
 	.sectionWalletMobile {
 		margin-top: 0px;
 	}
 }
-
-
-    

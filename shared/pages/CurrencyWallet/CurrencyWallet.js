@@ -18,7 +18,8 @@ import PageHeadline from 'components/PageHeadline/PageHeadline'
 import PageSeo from 'components/Seo/PageSeo'
 import { getSeoPage } from 'helpers/seo'
 import { FormattedMessage } from 'react-intl'
-
+import ReactTooltip from 'react-tooltip'
+import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
 
 @connect(({ core, user,  history: { transactions, swapHistory } }) => ({
   user,
@@ -37,8 +38,10 @@ export default class CurrencyWallet extends Component {
       name: null,
       address: null,
       balance: null,
+      isBalanceEmpty: false,
     }
   }
+
 
   static getDerivedStateFromProps(nextProps) {
     const { user, match: { params: { fullName } } } = nextProps
@@ -56,7 +59,17 @@ export default class CurrencyWallet extends Component {
       decimals,
       fullName,
       balance,
+      isBalanceEmpty: balance === 0,
     }
+  }
+
+  handleReceive = () => {
+    const { currency, address } = this.state
+
+    actions.modals.open(constants.modals.ReceiveModal, {
+      currency,
+      address,
+    })
   }
 
   handleWithdraw = () => {
@@ -71,6 +84,9 @@ export default class CurrencyWallet extends Component {
       balance,
     })
   }
+  handleGoTrade = (currency) => {
+    this.props.history.push(`/${currency.toLowerCase()}`)
+  }
 
   handleEosBuyAccount = async () => {
     actions.modals.open(constants.modals.EosBuyAccount)
@@ -78,7 +94,7 @@ export default class CurrencyWallet extends Component {
 
   render() {
     let { swapHistory, txHistory, location } = this.props
-    const { fullName, address, balance, currency } = this.state
+    const { fullName, address, balance, currency, isBalanceEmpty } = this.state
 
     txHistory = txHistory
       .filter(tx => tx.type === currency.toLowerCase())
@@ -88,8 +104,15 @@ export default class CurrencyWallet extends Component {
       .filter(swap => swap.sellCurrency === currency || swap.buyCurrency === currency)
 
     const seoPage = getSeoPage(location.pathname)
-
     const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true"
+
+    const toolTipDeposit = [
+      <FormattedMessage id="CurrencyWallet110" defaultMessage="Deposit funds to this address of currency wallet" />,
+    ]
+
+    const toolTipSend = [
+      <FormattedMessage id="CurrencyWallet113" defaultMessage="You can not send this asset, because you have a zero balance." />,
+    ]
 
     return (
       <div className="root">
@@ -109,14 +132,15 @@ export default class CurrencyWallet extends Component {
           <FormattedMessage id="CurrencyWallet105" defaultMessage="Activate account" />
         </Button>)}
         <div styleName="inRow">
-          <Button brand style={{ marginRight: '15px' }} onClick={this.handleWithdraw}>
+          <CurrencyButton onClick={this.handleReceive} data={`deposit${currency}`} text={toolTipDeposit} >
+            <FormattedMessage id="Row313" defaultMessage="Deposit" />
+          </CurrencyButton>
+          <CurrencyButton  onClick={this.handleWithdraw} disable={isBalanceEmpty} data={isBalanceEmpty && address} text={toolTipSend} >
             <FormattedMessage id="CurrencyWallet100" defaultMessage="Send" />
+          </CurrencyButton>
+          <Button gray onClick={() => this.handleGoTrade(currency)}>
+            <FormattedMessage id="CurrencyWallet104" defaultMessage="Exchange" />
           </Button>
-          <Link to={`${links.home}${currency.toLowerCase()}`} >
-            <Button gray>
-              <FormattedMessage id="CurrencyWallet104" defaultMessage="Exchange" />
-            </Button>
-          </Link>
         </div>
         { swapHistory.length > 0 && <SwapsHistory orders={swapHistory} /> }
         <h2 style={{ marginTop: '20px' }} >

@@ -1,5 +1,12 @@
 .button {
   margin-top: 20px;
+  width: 45%;
+  font-size: 14px;
+}
+
+.rowBtn {
+  display: flex;
+  justify-content: space-around;
 }
 
 .walletToggle {
@@ -22,4 +29,31 @@
 
 .error {
   color: red;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+}
+
+.flipButton {
+  transform: rotate(90deg);
+  margin-left: calc(90% - 12px);
+  margin-bottom: -20px;
+  padding: 0;
+}
+
+@include media-mobile {
+  .section {
+    margin-top: 20px;
+    justify-content: center;
+  }
+
+  .blockVideo {
+    display: none;
+  }
+
+  .button {
+    font-size: 12px;
+  }
 }

@@ -19,11 +19,13 @@ import LinkAccount from '../LinkAccount/LinkAcount'
 import { withRouter } from 'react-router'
 import ReactTooltip from 'react-tooltip'
 import { FormattedMessage } from 'react-intl'
+import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
+
 
 @withRouter
 @connect(
   ({
-    user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, usdtData, ltcData },
+    user: { ethData, btcData, /* bchData, */ tokensData, eosData, telosData, nimData, usdtData, ltcData },
     currencies: { items: currencies },
   }, { currency }) => ({
     currencies,
@@ -32,7 +34,7 @@ import { FormattedMessage } from 'react-intl'
       ethData,
       eosData,
       telosData,
-      bchData,
+      /* bchData, */
       ltcData,
       usdtData,
       ...Object.keys(tokensData).map(k => (tokensData[k])),
@@ -193,7 +195,12 @@ export default class Row extends Component {
   }
 
   handleReceive = () => {
-    const { currency, address } = this.props
+    const {
+      item: {
+        currency,
+        address,
+      },
+    } = this.props
 
     actions.modals.open(constants.modals.ReceiveModal, {
       currency,
@@ -223,6 +230,7 @@ export default class Row extends Component {
       isTouch,
       isBalanceEmpty,
     } = this.state
+
     const {
       item: {
         currency,
@@ -237,6 +245,10 @@ export default class Row extends Component {
 
     const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true"
     const telosAccountActivated = localStorage.getItem(constants.localStorage.telosAccountActivated) === "true"
+
+    const toolTipDeposit = [
+      <FormattedMessage id="CurrencyWallet110" defaultMessage="Deposit funds to this address of currency wallet" />,
+    ]
 
     return (
       <tr
@@ -379,21 +391,15 @@ export default class Row extends Component {
         </Fragment>
         <td>
           <div styleName={currency === 'EOS' && !eosAccountActivated ? 'notActivated' : ''}>
-            <button onClick={this.handleReceive} styleName="button" data-tip data-for={`deposit${currency}`}>
-              <i className="fas fa-qrcode" />
-              <span>
-                <FormattedMessage id="Row313" defaultMessage="Deposit" />
-              </span>
-            </button>
-            <ReactTooltip id={`deposit${currency}`} type="light" effect="solid">
-              <FormattedMessage id="WithdrawButton29" defaultMessage="Deposit funds to this address of currency wallet" />
-            </ReactTooltip>
+            <CurrencyButton onClick={this.handleReceive} data={`deposit${currency}`} text={toolTipDeposit} wallet="true">
+              <FormattedMessage id="Row313" defaultMessage="Deposit" />
+            </CurrencyButton>
             <BtnTooltip onClick={this.handleWithdraw} disable={isBalanceEmpty} id={currency} text="Send" >
               <i className="fas fa-arrow-alt-circle-right" />
             </BtnTooltip>
             {
               tradeAllowed && (
-                <BtnTooltip onClick={() => this.handleGoTrade(currency)} disable={isBalanceEmpty} id={currency}  text="Exchange" >
+                <BtnTooltip onClick={() => this.handleGoTrade(currency)} styleName={isBalanceEmpty && 'disableWth'} text="Exchange" >
                   <i className="fas fa-exchange-alt" />
                 </BtnTooltip>
               )

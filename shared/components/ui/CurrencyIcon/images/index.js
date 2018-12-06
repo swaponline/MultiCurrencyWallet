@@ -3,7 +3,7 @@ import eth from './eth.svg'
 import icx from './icx.svg'
 import waves from './waves.svg'
 import xrp from './xrp.svg'
-import bch from './bch.svg'
+// import bch from './bch.svg'
 import nim from './nim.svg'
 import eos from './eos.svg'
 import swap from './swap.svg'
@@ -26,7 +26,7 @@ export default {
   bxb,
   kn,
   ltc,
-  bch,
+  // bch,
   drt,
   lev,
   arn,
