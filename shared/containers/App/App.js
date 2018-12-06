@@ -70,11 +70,15 @@ export default class App extends React.Component {
       }
     })
 
+    const iOSSafari = /iP(ad|od|hone)/i.test(window.navigator.userAgent)
+                    && /WebKit/i.test(window.navigator.userAgent)
+                    && !(/(CriOS|FxiOS|OPiOS|mercury)/i.test(window.navigator.userAgent))
+
     if (!localStorage.getItem(constants.localStorage.demoMoneyReceived)) {
       actions.user.getDemoMoney()
     }
 
-    if (process.env.LOCAL !== 'local' && !('safari' in window)) {
+    if (process.env.LOCAL !== 'local' && !iOSSafari) {
       actions.pushNotification.initializeFirebase()
     }
   }
@@ -87,7 +91,6 @@ export default class App extends React.Component {
 
     setTimeout(() => {
       actions.user.sign()
-      actions.user.getReputation()
       createSwapApp()
       this.setState({ fetching: true })
     }, 1000)
