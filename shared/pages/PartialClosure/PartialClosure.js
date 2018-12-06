@@ -146,7 +146,7 @@ export default class PartialClosure extends Component {
       sellCurrency: getCurrency,
       sellAmount: getAmount,
       buyAmount: haveAmount,
-      destinationSellAddress: (customWalletUse && this.customWalletAllowed()) ? customWallet : null,
+      destinationSellAddress: (this.customWalletAllowed()) ? customWallet : null,
     }
 
     console.log('sendRequest order', order)
@@ -386,15 +386,19 @@ export default class PartialClosure extends Component {
     const { currencies } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching,
       isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet, getUsd, haveUsd,
-      maxBuyAmount,
+      maxBuyAmount, getAmount,
     } = this.state
 
-    const oneCryptoCost = (maxBuyAmount.isLessThanOrEqualTo(0)) ? 0 :  maxBuyAmount.div(maxAmount).toFixed(5)
+    const oneCryptoCost = (maxBuyAmount.isLessThanOrEqualTo(0)) ? new BigNumber(0) :  maxBuyAmount.div(maxAmount)
     const linked = Link.all(this, 'haveAmount', 'getAmount', 'customWallet')
 
     if (redirect) {
       return <Redirect push to={`${links.swap}/${getCurrency}-${haveCurrency}/${orderId}`} />
     }
+
+    let canDoOrder = !isNonOffers
+    if (!(Number(getAmount) > 0)) canDoOrder = false
+    if (this.customWalletAllowed() && !customWallet) canDoOrder = false
 
     return (
       <Fragment>
@@ -434,24 +438,37 @@ export default class PartialClosure extends Component {
               usd={getUsd}
             />
             {
-              isSearching && (
+              isSearching || (isNonOffers && maxAmount === 0) && (
                 <span>
                   {` Wait search orders: `}
                   <InlineLoader />
                 </span>
               )
             }
-            <p>
-              <FormattedMessage id="PartialPrice" defaultMessage="Price: " />
-              <FormattedMessage id="PartialOneCurrencyUnit" defaultMessage="1 " />
-              {getCurrency.toUpperCase()}
-              <FormattedMessage id="PartialPriceEqual" defaultMessage="=" />
-              {oneCryptoCost}{' '}{haveCurrency.toUpperCase()}
-            </p>
-            {maxAmount > 0 && isNonOffers && (
-              <p styleName="error">
-                {`No orders found, try to reduce the amount`}
+            { oneCryptoCost.isGreaterThan(0) && oneCryptoCost.isFinite() && (
+              <p>
+                <FormattedMessage id="PartialPrice" defaultMessage="Price: " />
+                <FormattedMessage id="PartialOneCurrencyUnit" defaultMessage="1 " />
+                {getCurrency.toUpperCase()}
+                <FormattedMessage id="PartialPriceEqual" defaultMessage="=" />
+                {oneCryptoCost.toFixed(5)}{' '}{haveCurrency.toUpperCase()}
               </p>
+            )}
+            { !oneCryptoCost.isFinite() && !isNonOffers && (
+              <FormattedMessage id="PartialPriceCalc" defaultMessage="Calc price" />
+            )}
+            {maxAmount > 0 && isNonOffers && (
+              <Fragment>
+                <p styleName="error">
+                  <FormattedMessage id="PartialPriceNoOrdersReduce" defaultMessage="No orders found, try to reduce the amount" />
+                </p>
+                <p styleName="error">
+                  <FormattedMessage id="PartialPriceReduceMin" defaultMessage="Maximum available amount: " />
+                  {maxAmount}
+                  {` `}
+                  {getCurrency.toUpperCase()}
+                </p>
+              </Fragment>
             )}
             {isDeclinedOffer && (
               <p styleName="error">
@@ -476,7 +493,7 @@ export default class PartialClosure extends Component {
                     <Tooltip text="Your wallet address to where cryptocurrency will be sent after the swap" />
                   </FieldLabel>
                   <div styleName="walletInput">
-                    <Input valueLink={linked.customWallet} pattern="0-9a-zA-Z" placeholder="Enter the address of ETH wallet" />
+                    <Input required valueLink={linked.customWallet} pattern="0-9a-zA-Z" placeholder="Enter the address of ETH wallet" />
                   </div>
                   <div styleName="walletToggle">
                     <Toggle checked={customWalletUse} onChange={this.handleCustomWalletUse} />
@@ -486,7 +503,7 @@ export default class PartialClosure extends Component {
               )
             }
             <div styleName="rowBtn">
-              <Button styleName="button" brand onClick={this.sendRequest} disabled={isNonOffers}>
+              <Button styleName="button" brand onClick={this.sendRequest} disabled={!canDoOrder}>
                 {`Exchange now`}
               </Button>
               <Button styleName="button" gray onClick={this.handlePush} >
