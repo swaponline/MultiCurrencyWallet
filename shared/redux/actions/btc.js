@@ -55,16 +55,6 @@ const getBalance = () => {
     }, () => Promise.reject())
 }
 
-const getReputation = () =>
-  new Promise(async (resolve) => {
-    const { user: { btcData: { address } } } = getState()
-
-    const response = await request.get(`${api.getApiServer('swapsExplorer')}/reputation/${address}`)
-    const reputation = Number.isInteger(response.reputation) ? response.reputation : 0
-    reducers.user.setReputation({ name: 'btcData', reputation })
-    resolve(reputation)
-  })
-
 const fetchBalance = (address) =>
   request.get(`${api.getApiServer('bitpay')}/addr/${address}`)
     .then(({ balance }) => balance)
@@ -191,5 +181,4 @@ export default {
   fetchTx,
   fetchBalance,
   signMessage,
-  getReputation,
 }

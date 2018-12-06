@@ -69,16 +69,6 @@ const sign = async () => {
   telosSign()
 }
 
-const getReputation = async () => {
-  const btcReputationPromise = actions.btc.getReputation()
-  const ethReputationPromise = actions.eth.getReputation()
-  Promise.all([btcReputationPromise, ethReputationPromise])
-    .then(([btcReputation, ethReputation]) => {
-      const totalReputation = Number(btcReputation) + Number(ethReputation)
-      reducers.ipfs.set({ reputation: totalReputation })
-    })
-}
-
 const getBalances = () => {
   actions.eth.getBalance()
   actions.btc.getBalance()
@@ -228,5 +218,4 @@ export default {
   getExchangeRate,
   setTransactions,
   downloadPrivateKeys,
-  getReputation,
 }
