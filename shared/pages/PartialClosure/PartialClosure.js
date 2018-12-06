@@ -490,6 +490,7 @@ export default class PartialClosure extends Component {
                     <strong>
                       <FormattedMessage id="PartialYourWalletAddress" defaultMessage="Your wallet address" />
                     </strong>
+                    &nbsp;
                     <Tooltip text="Your wallet address to where cryptocurrency will be sent after the swap" />
                   </FieldLabel>
                   <div styleName="walletInput">
