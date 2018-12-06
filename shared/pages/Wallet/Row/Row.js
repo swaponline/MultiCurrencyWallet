@@ -252,6 +252,7 @@ export default class Row extends Component {
 
     return (
       <tr
+        data-tut="reactour__store"
         styleName={this.props.index === this.props.selectId || !isMobile ? 'showButtons' : 'hidden'}
         onClick={() => { this.props.handleSelectId(this.props.index) }}
         onTouchEnd={this.handleTouchClear}
@@ -268,7 +269,7 @@ export default class Row extends Component {
             {fullName}
           </Link>
         </td>
-        <td styleName="table_balance-cell">
+        <td styleName="table_balance-cell" data-tut="reactour__balance">
           {
             !isBalanceFetched || isBalanceFetching ? (
               <InlineLoader />
@@ -310,7 +311,7 @@ export default class Row extends Component {
         </td>
         <Fragment>
           <CopyToClipboard text={address} onCopy={this.handleCopyAddress}>
-            <td styleName={currency === 'EOS' && !eosAccountActivated ? 'yourAddressWithOptions' : 'yourAddress'}>
+            <td data-tut="reactour__address" styleName={currency === 'EOS' && !eosAccountActivated ? 'yourAddressWithOptions' : 'yourAddress'}>
               {
                 !contractAddress ? (
                   <div styleName="notContractAddress">

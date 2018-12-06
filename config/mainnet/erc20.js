@@ -208,5 +208,14 @@ export default {
     decimals: 18,
     fullName: 'Bitex Coin',
   },
-
+  lif: {
+    address: '0xEB9951021698B42e4399f9cBb6267Aa35F82D59D',
+    decimals: 18,
+    fullName: 'WindingTree',
+  },
+  time: {
+    address: '0x6531f133e6DeeBe7F2dcE5A0441aA7ef330B4e53',
+    decimals: 8,
+    fullName: 'ChronoBank',
+  },
 }
