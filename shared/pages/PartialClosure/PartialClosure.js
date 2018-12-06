@@ -447,7 +447,7 @@ export default class PartialClosure extends Component {
             }
             { oneCryptoCost.isGreaterThan(0) && oneCryptoCost.isFinite() && (
               <p>
-                <FormattedMessage id="PartialPrice" defaultMessage="Price: " />
+                <FormattedMessage id="PartialPrice" defaultMessage={`Price: 1 ${getCurrency.toUpperCase()} = ${oneCryptoCost.toFixed(5)} ${haveCurrency.toUpperCase()}`} />
                 <FormattedMessage id="PartialOneCurrencyUnit" defaultMessage="1 " />
                 {getCurrency.toUpperCase()}
                 <FormattedMessage id="PartialPriceEqual" defaultMessage="=" />
