@@ -2,6 +2,10 @@ import React, { Component, Fragment } from 'react'
 
 import crypto from 'crypto'
 import config from 'app-config'
+
+import CSSModules from 'react-css-modules'
+import styles from './Swap.scss'
+
 import { BigNumber } from 'bignumber.js'
 
 import actions from 'redux/actions'
@@ -93,6 +97,13 @@ export default class BtcToEth extends Component {
   render() {
     const { children } = this.props
     const { currencyAddress, secret, flow, enabledButton } = this.state
+    const headingStyle = {
+      color: '#5100dc',
+      textTransform: 'uppercase',
+      fontSize: '20px',
+      marginTop: '20px',
+      borderTop: '1px solid #5100dc',
+      paddingTop: '20px' }
 
     return (
       <div>
@@ -214,14 +225,7 @@ export default class BtcToEth extends Component {
                     <FormattedMessage id="BtcToEth194" defaultMessage="4. Creating Bitcoin Script. Please wait, it will take a while" >
                       {
                         message => (
-                          <h3 style={{
-                            color: '#5100dc',
-                            textTransform: 'uppercase',
-                            fontSize: '20px',
-                            marginTop: '20px',
-                            borderTop: '1px solid #5100dc',
-                            paddingTop: '20px' }}>{message}
-                          </h3>
+                          <h3 style={headingStyle}>{message}</h3>
                         )
                       }
                     </FormattedMessage>
@@ -278,14 +282,7 @@ export default class BtcToEth extends Component {
                     <FormattedMessage id="BtcToEth253" defaultMessage="5. ETH Owner received Bitcoin Script and Secret Hash. Waiting when he creates ETH Contract" >
                       {
                         message => (
-                          <h3 style={{
-                            color: '#5100dc',
-                            textTransform: 'uppercase',
-                            fontSize: '20px',
-                            marginTop: '20px',
-                            borderTop: '1px solid #5100dc',
-                            paddingTop: '20px' }}>{message}
-                          </h3>
+                          <h3 style={headingStyle}>{message}</h3>
                         )
                       }
                     </FormattedMessage>
@@ -318,14 +315,7 @@ export default class BtcToEth extends Component {
                   <FormattedMessage id="BtcToEth282" defaultMessage="6. ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait" >
                     {
                       message => (
-                        <h3 style={{
-                          color: '#5100dc',
-                          textTransform: 'uppercase',
-                          fontSize: '20px',
-                          marginTop: '20px',
-                          borderTop: '1px solid #5100dc',
-                          paddingTop: '20px' }}>{message}
-                        </h3>
+                        <h3 style={headingStyle}>{message}</h3>
                       )
                     }
                   </FormattedMessage>
@@ -359,28 +349,14 @@ export default class BtcToEth extends Component {
                     <FormattedMessage id="BtcToEth312" defaultMessage="7. Money was transferred to your wallet. Check the balance. ">
                       {
                         message => (
-                          <h3 style={{
-                            color: '#5100dc',
-                            textTransform: 'uppercase',
-                            fontSize: '20px',
-                            marginTop: '20px',
-                            borderTop: '1px solid #5100dc',
-                            paddingTop: '20px' }}>{message}
-                          </h3>
+                          <h3 style={headingStyle}>{message}</h3>
                         )
                       }
                     </FormattedMessage>
                     <FormattedMessage id="BtcToEth315" defaultMessage="Thank you for using Swap.Online!">
                       {
                         message => (
-                          <h3 style={{
-                            color: '#5100dc',
-                            textTransform: 'uppercase',
-                            fontSize: '20px',
-                            marginTop: '20px',
-                            borderTop: '1px solid #5100dc',
-                            paddingTop: '20px' }}>{message}
-                          </h3>
+                          <h3 style={headingStyle}>{message}</h3>
                         )
                       }
                     </FormattedMessage>
