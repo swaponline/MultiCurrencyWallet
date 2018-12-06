@@ -24,12 +24,15 @@ import { FormattedMessage } from 'react-intl'
 @connect(
   ({
     core: { hiddenCoinsList },
-    user: { ethData, btcData, /* bchData, */ tokensData, eosData, telosData, nimData, usdtData, ltcData },
+    user: { ethData, btcData, tokensData, eosData, telosData, nimData, usdtData, ltcData },
     currencies: { items: currencies },
   }) => ({
     tokens: Object.keys(tokensData).map(k => (tokensData[k].currency)),
-    items: [btcData, ethData, eosData, telosData, /* bchData, */ ltcData, usdtData /* nimData */ ].map((data) => (
+    items: [btcData, ethData, eosData, telosData, ltcData, usdtData /* nimData */ ].map((data) => (
       data.currency
+    )),
+    currencyBalance: [btcData, ethData, eosData, telosData, ltcData, usdtData /* nimData */ ].map((cur) => (
+      cur.balance
     )),
     currencies,
     hiddenCoinsList,
@@ -53,29 +56,62 @@ export default class Wallet extends Component {
   state = {
     view: 'off',
     zeroBalance: true,
+    saveKeys: false,
   }
 
   componentWillMount() {
-    process.env.MAINNET && localStorage.setItem(constants.localStorage.testnetSkip, true)
-    if (localStorage.getItem(constants.localStorage.privateKeysSaved)) {
+    actions.user.getBalances()
+    actions.analytics.dataEvent('open-page-balances')
+
+    if (process.env.MAINNET) {
+      localStorage.setItem(constants.localStorage.testnetSkip, true)
+    }
+
+  }
+
+  componentWillReceiveProps() {
+    const { currencyBalance } = this.props
+
+    currencyBalance.forEach(cur => {
+      if (cur > 0) {
+        this.setState(() => ({ zeroBalance: false }))
+      }
+    })
+
+    const { zeroBalance } = this.state
+
+    const testSkip = JSON.parse(localStorage.getItem(constants.localStorage.testnetSkip))
+    const saveKeys = JSON.parse(localStorage.getItem(constants.localStorage.privateKeysSaved)) || false
+
+    console.log('testSkip', testSkip)
+    console.log('saveKeys', saveKeys)
+    console.log('zeroBalance', zeroBalance)
+
+    if (!saveKeys && zeroBalance) {
       this.changeView('checkKeys')
     } else {
-      // actions.modals.open(constants.modals.PrivateKeys, {})
+      if (testSkip && !saveKeys) {
+        this.setState(() => ({ saveKeys: true }))
+      }
     }
   }
 
-  componentDidMount() {
-    actions.user.getBalances()
-    actions.analytics.dataEvent('open-page-balances')
+  componentDidUpdate() {
+    const { saveKeys } = this.state
+
+    if (saveKeys) {
+      actions.modals.open(constants.modals.PrivateKeys, {})
+    }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
     const getComparableProps = (props) => ({
       items: props.items,
+      currencyBalance: props.currencyBalance,
       tokens: props.tokens,
       currencies: props.currencies,
       hiddenCoinsList: props.hiddenCoinsList,
-    });
+    })
     return JSON.stringify({
       ...getComparableProps(this.props),
       ...this.state,
