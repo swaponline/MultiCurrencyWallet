@@ -3,8 +3,8 @@ import React, { Component, Fragment } from 'react'
 import crypto from 'crypto'
 import config from 'app-config'
 
-import CSSModules from 'react-css-modules'
-import styles from './Swap.scss'
+// import CSSModules from 'react-css-modules'
+// import styles from './Swap.scss'
 
 import { BigNumber } from 'bignumber.js'
 
