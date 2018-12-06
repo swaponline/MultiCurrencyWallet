@@ -96,7 +96,7 @@ export default class BtcToEth extends Component {
 
     return (
       <div>
-        <div style={{ position: 'relative', marginBottom: '30px' }}>
+        <div style={{ width: '500px', margin: 'auto' }}>
           {
             this.swap.id && (
               <strong>{this.swap.sellAmount.toNumber()} {this.swap.sellCurrency} &#10230; {this.swap.buyAmount.toNumber()} {this.swap.buyCurrency}</strong>
@@ -126,7 +126,7 @@ export default class BtcToEth extends Component {
               <FormattedMessage
                 id="BtcToEth116"
                 defaultMessage="1. We are waiting for a market maker. If it does not appear within 5 minutes, the swap will be canceled automatically.">
-                {message => <h3>{message}</h3>}
+                {message => <h3 style={{ color: '#5100dc', textTransform: 'uppercase', fontSize: '20px', marginTop: '20px' }}>{message}</h3>}
               </FormattedMessage>
               <InlineLoader />
             </Fragment>
@@ -136,7 +136,7 @@ export default class BtcToEth extends Component {
           flow.isParticipantSigned && (
             <Fragment>
               <FormattedMessage id="BtcToEth126" defaultMessage="2. Create a secret key">
-                {message => <h3>{message}</h3>}
+                {message => <h3 style={{ color: '#5100dc', textTransform: 'uppercase', fontSize: '20px', marginTop: '20px' }}>{message}</h3>}
               </FormattedMessage>
               {
                 !flow.secretHash ? (
@@ -158,7 +158,7 @@ export default class BtcToEth extends Component {
                     </div>
                     <div>
                       <FormattedMessage id="BtcToEth146" defaultMessage="Secret Hash: " />
-                      <strong>{flow.secretHash}</strong>
+                      <strong style={{ display: 'block' }}>{flow.secretHash}</strong>
                     </div>
                   </Fragment>
                 )
@@ -167,7 +167,7 @@ export default class BtcToEth extends Component {
               {
                 flow.step === 3 && !flow.isBalanceEnough && !flow.isBalanceFetching && (
                   <Fragment>
-                    <h3>
+                    <h3 style={{ color: '#5100dc', textTransform: 'uppercase', fontSize: '20px', marginTop: '20px', borderTop: '1px solid #000' }}>
                       <FormattedMessage id="BtcToEth156" defaultMessage="Not enough money for this swap. Please charge the balance" />
                     </h3>
                     <div>
@@ -198,10 +198,10 @@ export default class BtcToEth extends Component {
                 )
               }
               {
-                flow.step === 3 || flow.isBalanceFetching && (
+                flow.step === 3 && flow.isBalanceFetching && (
                   <Fragment>
                     <FormattedMessage id="BtcToEth183" defaultMessage="Checking balance..">
-                      {message => <div>{message}</div>}
+                      {message => <div style={{ color: '#5100dc', textTransform: 'uppercase', fontSize: '20px', marginTop: '20px' }}>{message}</div>}
                     </FormattedMessage>
                     <InlineLoader />
                   </Fragment>
@@ -212,7 +212,7 @@ export default class BtcToEth extends Component {
                 (flow.step === 4 || flow.btcScriptValues) && (
                   <Fragment>
                     <FormattedMessage id="BtcToEth194" defaultMessage="4. Creating Bitcoin Script. Please wait, it will take a while" >
-                      {message => <h3>{message}</h3>}
+                      {message => <h3 style={{ color: '#5100dc', textTransform: 'uppercase', fontSize: '20px', marginTop: '20px', borderTop: '1px solid #5100dc', paddingTop: '20px' }}>{message}</h3>}
                     </FormattedMessage>
                     {
                       flow.btcScriptCreatingTransactionHash && (
@@ -265,7 +265,7 @@ export default class BtcToEth extends Component {
                 (flow.step === 5 || flow.isEthContractFunded) && (
                   <Fragment>
                     <FormattedMessage id="BtcToEth253" defaultMessage="5. ETH Owner received Bitcoin Script and Secret Hash. Waiting when he creates ETH Contract" >
-                      {message => <h3>{message}</h3>}
+                      {message => <h3 style={{ color: '#5100dc', textTransform: 'uppercase', fontSize: '20px', marginTop: '20px', borderTop: '1px solid #5100dc', paddingTop: '20px' }}>{message}</h3>}
                     </FormattedMessage>
                     {
                       !flow.isEthContractFunded && (
@@ -294,7 +294,7 @@ export default class BtcToEth extends Component {
               {
                 (flow.step === 6 || flow.isEthWithdrawn) && (
                   <FormattedMessage id="BtcToEth282" defaultMessage="6. ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait" >
-                    {message => <h3>{message}</h3>}
+                    {message => <h3 style={{ color: '#5100dc', textTransform: 'uppercase', fontSize: '20px', marginTop: '20px', borderTop: '1px solid #5100dc', paddingTop: '20px' }}>{message}</h3>}
                   </FormattedMessage>
                 )
               }
@@ -324,10 +324,10 @@ export default class BtcToEth extends Component {
                 flow.isEthWithdrawn && (
                   <Fragment>
                     <FormattedMessage id="BtcToEth312" defaultMessage="7. Money was transferred to your wallet. Check the balance. ">
-                      {message => <h3>{message}</h3>}
+                      {message => <h3 style={{ color: '#5100dc', textTransform: 'uppercase', fontSize: '20px', marginTop: '20px', borderTop: '1px solid #5100dc', paddingTop: '20px' }}>{message}</h3>}
                     </FormattedMessage>
                     <FormattedMessage id="BtcToEth315" defaultMessage="Thank you for using Swap.Online!">
-                      {message => <h2>{message}</h2>}
+                      {message => <h2 style={{ color: '#5100dc', textTransform: 'uppercase', fontSize: '20px', marginTop: '20px', borderTop: '1px solid #5100dc', paddingTop: '20px' }}>{message}</h2>}
                     </FormattedMessage>
                   </Fragment>
                 )
