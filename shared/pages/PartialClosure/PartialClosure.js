@@ -68,9 +68,11 @@ export default class PartialClosure extends Component {
 
     let timer
     let wallets
+    let usdRates
   }
 
   componentDidMount() {
+    this.usdRates = {}
     this.getUsdBalance()
 
     this.wallets = {}
@@ -114,11 +116,16 @@ export default class PartialClosure extends Component {
     const { haveCurrency, getCurrency } = this.state
 
     try {
-      const exHaveRate = await actions.user.getExchangeRate(haveCurrency, 'usd')
-      const exGetRate = await actions.user.getExchangeRate(getCurrency, 'usd')
+      const exHaveRate = (this.usdRates[haveCurrency] !== undefined) ?
+        this.usdRates[haveCurrency] : await actions.user.getExchangeRate(haveCurrency, 'usd')
+      const exGetRate = (this.usdRates[getCurrency] !== undefined) ?
+        this.usdRates[getCurrency] : await actions.user.getExchangeRate(getCurrency, 'usd')
 
       console.log('exHaveRate', exHaveRate)
       console.log('exGetRate', exGetRate)
+
+      this.usdRates[haveCurrency] = exHaveRate
+      this.usdRates[getCurrency] = exGetRate
 
       this.setState(() => ({
         exHaveRate,
@@ -240,6 +247,8 @@ export default class PartialClosure extends Component {
       })
 
     console.log('sortedOrder', sortedOrder)
+
+    this.getUsdBalance()
 
     const search = await this.setOrderOnState(sortedOrder)
 
@@ -438,7 +447,7 @@ export default class PartialClosure extends Component {
               label="You sell"
               tooltip="The amount you have in your swap.online wallet or external wallet that you want to exchange"
               placeholder="Enter amount"
-              usd={haveUsd}
+              usd={(maxAmount > 0 && isNonOffers) ? 0 : haveUsd}
               currencies={currencies}
             />
             <Flip onClick={this.handleFlipCurrency} styleName="flipButton" />
