@@ -31,7 +31,22 @@ const removeOrder = (orderId) => {
 const sendRequest = (orderId, callback) => {
   const order = SwapApp.services.orders.getByKey(orderId)
 
-  order.sendRequest(callback)
+  const getUserCurrencyData = (currency) => {
+    switch (currency.toUpperCase()) {
+      case 'BTC':
+        return getState().user.btcData
+
+      case 'ETH':
+        return getState().user.ethData
+
+      default:
+        return {}
+    }
+  }
+
+  const { address, reputation, reputationProof } = getUserCurrencyData(order.buyCurrency)
+
+  order.sendRequest(callback, { address, reputation, reputationProof })
 }
 
 const createOrder = (data) => {

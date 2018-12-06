@@ -55,16 +55,6 @@ const getBalance = () => {
     }, () => Promise.reject())
 }
 
-const getReputation = () =>
-  new Promise(async (resolve) => {
-    const { user: { btcData: { address } } } = getState()
-
-    const response = await request.get(`${api.getApiServer('swapsExplorer')}/reputation/${address}`)
-    const reputation = Number.isInteger(response.reputation) ? response.reputation : 0
-    reducers.user.setReputation({ name: 'btcData', reputation })
-    resolve(reputation)
-  })
-
 const fetchBalance = (address) =>
   request.get(`${api.getApiServer('bitpay')}/addr/${address}`)
     .then(({ balance }) => balance)
@@ -179,6 +169,26 @@ const signMessage = (message, encodedPrivateKey) => {
 
   return signature.toString('base64')
 }
+
+const getReputation = () =>
+  new Promise(async (resolve) => {
+    const { user: { btcData: { address, privateKey } } } = getState()
+
+    const addressOwnerSignature = signMessage(address, privateKey)
+
+    const response = await request.post(`${api.getApiServer('swapsExplorer')}/reputation`, {
+      json: true,
+      body: {
+        address,
+        addressOwnerSignature,
+      },
+    })
+
+    const { reputation, reputationOracleSignature } = response
+
+    reducers.user.setReputation({ name: 'btcData', reputation, reputationOracleSignature })
+    resolve(reputation)
+  })
 
 export default {
   login,

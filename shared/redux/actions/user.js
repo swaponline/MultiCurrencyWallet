@@ -76,6 +76,8 @@ const getReputation = async () => {
     .then(([btcReputation, ethReputation]) => {
       const totalReputation = Number(btcReputation) + Number(ethReputation)
       reducers.ipfs.set({ reputation: totalReputation })
+    }).catch((error) => {
+      console.error(error)
     })
 }
 

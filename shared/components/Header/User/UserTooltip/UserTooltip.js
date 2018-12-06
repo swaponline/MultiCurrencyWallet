@@ -67,9 +67,9 @@ export default class UserTooltip extends Component {
                 <div styleName="userTooltip" >
                   <div key={peer}>
                     <div styleName="title">
-                      <FormattedMessage id="userTooltip68" defaultMessage="User with" />
+                      <FormattedMessage id="userTooltip68" defaultMessage="User(" />
                       <b>{reputation}</b>
-                      <FormattedMessage id="userTooltip72" defaultMessage="reputation wants to swap" />
+                      <FormattedMessage id="userTooltip72" defaultMessage=") wants to swap" />
                     </div>
                     <div styleName="currency">
                       <span>{buyAmount.toFixed(5)} <span styleName="coin">{buyCurrency}</span></span>
