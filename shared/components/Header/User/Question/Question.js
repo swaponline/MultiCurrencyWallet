@@ -7,9 +7,9 @@ import ReactTooltip from 'react-tooltip'
 import { FormattedMessage } from 'react-intl'
 
 
-const Question = () => (
+const Question = ({ openTour }) => (
   <Fragment>
-    <a href="https://wiki.swap.online/faq" target="_blank" rel="noreferrer noopener" styleName="question" data-tip data-for="Knowmore">?</a>
+    <a onClick={openTour} styleName="question" data-tip data-for="Knowmore"><FormattedMessage id="question12" defaultMessage="?" /></a>
     <ReactTooltip id="Knowmore" type="light" effect="solid">
       <span>
         <FormattedMessage id="question15" defaultMessage="Know more about us" />

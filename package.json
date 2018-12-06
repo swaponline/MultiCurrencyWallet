@@ -50,7 +50,6 @@
   "author": "@nikdementev",
   "license": "ISC",
   "devDependencies": {
-    "@nimiq/core": "^1.1.2",
     "abortcontroller-polyfill": "^1.1.9",
     "app-module-path": "^2.2.0",
     "autoprefixer": "^8.5.0",
@@ -148,7 +147,7 @@
     "copy-webpack-plugin": "^4.6.0",
     "ethereum-input-data-decoder": "0.0.12",
     "firebase": "^5.5.9",
-    "ipfs": "^0.32.3",
+    "ipfs": "^0.33.1",
     "ipfs-pubsub-room": "^1.4.0",
     "node-gyp": "^3.8.0",
     "react": "^16.3.2",
@@ -168,11 +167,13 @@
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^5.0.0-alpha.9",
     "react-tooltip": "^3.9.0",
+    "reactour": "^1.10.0",
     "rebuild": "^0.1.2",
     "redaction": "^4.2.1",
     "redux": "^4.0.0",
     "rename-files": "0.0.2",
     "replace": "^1.0.0",
-    "reverse": "^4.0.0"
+    "reverse": "^4.0.0",
+    "styled-components": "^4.1.2"
   }
 }
