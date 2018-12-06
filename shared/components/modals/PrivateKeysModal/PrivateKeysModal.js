@@ -147,9 +147,9 @@ export default class PrivateKeysModal extends React.PureComponent {
                   valueLink={btcValidated}
                 />
                 {
-                <Button white styleName="button" onClick={() => this.setState(() => ({ view: 'saveKeys' }))}>
-                  <FormattedMessage id="PrivateKeysModal144" defaultMessage="Back" />
-                </Button>
+                  <Button white styleName="button" onClick={() => this.setState(() => ({ view: 'saveKeys' }))}>
+                    <FormattedMessage id="PrivateKeysModal144" defaultMessage="Back" />
+                  </Button>
                 }
                 {
                   isValidated && (
