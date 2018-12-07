@@ -32,7 +32,7 @@ export default class ImportKeys extends Component {
     keySave: false,
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const saveKeys = JSON.parse(localStorage.getItem(constants.localStorage.privateKeysSaved))
 
     if (saveKeys) {
@@ -49,7 +49,7 @@ export default class ImportKeys extends Component {
     }
     this.setState({ isDisabled: false })
 
-    const withOx = ethKey.substring(0,2)
+    const withOx = ethKey.substring(0, 2)
 
     if (withOx !== '0x') {
       ethKey = `0x${ethKey}`
@@ -145,7 +145,7 @@ export default class ImportKeys extends Component {
             onClick={this.handleBtcImportKey}
           />
           {
-            !keySave && <span styleName="error"> Please save your private keys</span>
+            !keySave && <span styleName="error">{'Please save your private keys'}</span>
           }
           <Button brand disabled={isDisabled || keySave} styleName="button" onClick={this.handleImportKeys}>
             <FormattedMessage id="ImportKeys130" defaultMessage="Confirm" />
