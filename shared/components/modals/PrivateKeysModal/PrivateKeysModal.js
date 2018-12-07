@@ -55,7 +55,6 @@ export default class PrivateKeysModal extends React.PureComponent {
 
   handleDownload = () => {
     actions.user.downloadPrivateKeys()
-    localStorage.setItem(constants.localStorage.privateKeysSaved, true)
     actions.notifications.show(constants.notifications.Message, {
       message: 'Check your browser downloads',
     }
