@@ -145,7 +145,11 @@ export default class ImportKeys extends Component {
             onClick={this.handleBtcImportKey}
           />
           {
-            !keySave && <span styleName="error">{'Please save your private keys'}</span>
+            !keySave && (
+              <span styleName="error">
+                <FormattedMessage id="errorImportKeys" defaultMessage=" Please save your private keys" />
+              </span>
+            )
           }
           <Button brand disabled={isDisabled || keySave} styleName="button" onClick={this.handleImportKeys}>
             <FormattedMessage id="ImportKeys130" defaultMessage="Confirm" />
