@@ -36,6 +36,7 @@ export default class KeyActionsPanel extends Component {
     }
   }
 
+
   handleImportKeys = () => {
     actions.modals.open(constants.modals.ImportKeys, {})
   }
@@ -54,7 +55,7 @@ export default class KeyActionsPanel extends Component {
           <FormattedMessage id="KeyActionsPanel43" defaultMessage="Exit" />
         </WithdrawButton>
         }
-        <WithdrawButton onClick={this.handleDownload}>
+        <WithdrawButton data-tut="reactour__save" onClick={this.handleDownload}>
           <FormattedMessage id="KeyActionsPanel46" defaultMessage="Download keys" />
         </WithdrawButton>
         <WithdrawButton onClick={this.handleImportKeys}>

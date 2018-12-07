@@ -43,7 +43,7 @@ export default class AddOfferButton extends Component {
                   </Fragment>
                 ) : (
                   <Fragment>
-                    <button styleName="button" onClick={this.handleSubscribe} /* eslint-disable-line */ data-tip data-for="subscribe" >
+                    <button styleName="button" data-tut="reactour__subscribe" onClick={this.handleSubscribe} /* eslint-disable-line */ data-tip data-for="subscribe" >
                       <FormattedMessage id="ADDoffer29" defaultMessage="Subscribe" />
                     </button>
                     <ReactTooltip id="subscribe" type="light" effect="solid">
