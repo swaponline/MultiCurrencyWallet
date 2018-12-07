@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import actions from 'redux/actions'
+import { links } from 'helpers'
 
 import CSSModules from 'react-css-modules'
 import styles from './SwapProgress.scss'
@@ -11,6 +12,7 @@ import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 import Title from 'components/PageHeadline/Title/Title'
 import Logo from 'components/Logo/Logo'
 import { FormattedMessage } from 'react-intl'
+import { Button } from 'components/controls'
 
 
 @CSSModules(styles, { allowMultiple: true })
@@ -141,31 +143,21 @@ export default class SwapProgress extends Component {
     }
   }
 
-  close = () => {
-    actions.loader.hide()
-  }
+  // close = () => {
+  //   actions.loader.hide()
+  // }
 
   render() {
-    const { data: { flow, name, length }, whiteLogo } = this.props
-    const progress = Math.floor(100 / length * flow.step)
+    // const { data: { flow, name, length }, whiteLogo } = this.props
+    const progress = Math.floor(100 / this.props.stepLength * this.props.data.step)
 
     return (
       <div styleName="overlay">
-        <div styleName="header">
-          <WidthContainer styleName="headerContent">
-            <Logo colored={!whiteLogo} />
-            <FormattedMessage id="SwapProgress157" defaultMessage="SwapProgress">
-              {message => <div role="title" styleName="title">{message}</div>}
-            </FormattedMessage>
-            <CloseIcon styleName="closeButton" onClick={this.close} data-testid="modalCloseIcon" />
-          </WidthContainer>
-        </div>
         <div styleName="container">
           <div styleName="progress">
             <div styleName="bar" style={{ width: `${progress}%` }} />
           </div>
-          <span styleName="steps">{flow.step} / {length} steps</span>
-          <span styleName="info">{name === 'ETH2BTC' ? this.handleStepEthToBtc(flow.step) : this.handleStepBtcToEth(flow.step)}</span>
+          <span styleName="steps">{this.props.data.step} / {this.props.stepLength} steps</span>
         </div>
       </div>
     )
