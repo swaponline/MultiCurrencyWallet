@@ -151,7 +151,7 @@ export default class ImportKeys extends Component {
               </span>
             )
           }
-          <Button brand disabled={isDisabled || keySave} styleName="button" onClick={this.handleImportKeys}>
+          <Button brand disabled={isDisabled || !keySave} styleName="button" onClick={this.handleImportKeys}>
             <FormattedMessage id="ImportKeys130" defaultMessage="Confirm" />
           </Button>
           <Button gray styleName="button" onClick={this.handleCloseModal}>
