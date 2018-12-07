@@ -12,26 +12,20 @@ import Button from 'components/controls/Button/Button'
 import CopyToClipboard from 'react-copy-to-clipboard'
 
 import { FormattedMessage } from 'react-intl'
-import RowDownload from './row'
+
 
 @connect(
   ({
-    currencies,
     user: { ethData, btcData, /* bchData, */ tokensData, eosData, telosData, nimData, usdtData, ltcData },
   }) => ({
-    currencies: currencies.items,
     items: [ ethData, btcData, eosData, telosData, /* bchData, */ ltcData, usdtData /* nimData */ ],
-    tokenItems: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
   })
 )
 @cssModules(styles)
 export default class DownloadModal extends React.Component {
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      isTextCopied: false,
-    }
+  state = {
+    isTextCopied: false,
   }
 
   handleCopyText = () => {
@@ -52,12 +46,20 @@ export default class DownloadModal extends React.Component {
 
     const textToCopy = actions.user.getText()
 
-    const account = () => (
+    const RowDownload = ({ id, msg, item }) => (
+      <p style={{ fontSize: '16px' }}>
+        {item}
+        {' '}
+        <FormattedMessage  id={id} defaultMessage={msg} />
+      </p>
+    )
+
+    const Account = () => (
       items.map(item => (
         <Fragment>
           <RowDownload
             id={`${item.currency}${item.fullName}`}
-            msg={`${item.currency}` === 'EOS' || `${item.currency}` === 'TLOS' ? ' Account name: ' : ' address: '}
+            msg={`${item.currency}` === 'EOS' || `${item.currency}` === 'TLOS' ? 'Account name:' : 'Address:'}
             item={item.fullName}
           />
           <p>{item.address}</p>
@@ -74,20 +76,18 @@ export default class DownloadModal extends React.Component {
     return (
       <Modal name={name} title="We don`t store your private keys and will not be able to restore them!">
         <div styleName="subTitle">
-          <FormattedMessage id="down57" defaultMessage="It seems like you're using an IPhone or an IPad." />
-          <FormattedMessage id="down58" defaultMessage=" Just copy this keys and paste into notepad textarea." />
-          <FormattedMessage id="down59" defaultMessage=" Or make the screen shot" />
+          <RowDownload id="down57" msg="It seems like you're using an IPhone or an IPad. Just copy this keys and paste into notepad textarea." />
         </div>
         <CopyToClipboard text={textToCopy} onCopy={this.handleCopyText}>
           <Button styleName="button" brand disabled={isTextCopied}>
             { isTextCopied ?
-              <FormattedMessage id="down64" defaultMessage="Address copied to clipboard" /> :
-              <FormattedMessage id="down65" defaultMessage="Copy to clipboard" />
+              <RowDownload id="down64" msg="Address copied to clipboard" /> :
+              <RowDownload id="down65" msg="Copy to clipboard" />
             }
           </Button>
         </CopyToClipboard>
         <div styleName="indent">
-          {account()}
+          <Account />
         </div>
       </Modal>
     )
