@@ -55,9 +55,11 @@ export default class PrivateKeysModal extends React.PureComponent {
 
   handleDownload = () => {
     actions.user.downloadPrivateKeys()
+    localStorage.setItem(constants.localStorage.privateKeysSaved, true)
     actions.notifications.show(constants.notifications.Message, {
       message: 'Check your browser downloads',
-    })
+    }
+  )
 
     this.setState(() => ({ isDownload: true }))
   }
@@ -120,7 +122,7 @@ export default class PrivateKeysModal extends React.PureComponent {
                     <FormattedMessage id="PrivateKeysModal118" defaultMessage="Then click here">
                       {message => <span styleName="text">{message}</span>}
                     </FormattedMessage>
-                    <Button brand disabled={!isDownload} styleName="button" onClick={this.handleNext} >
+                    <Button brand styleName="button" onClick={this.handleNext} >
                       <FormattedMessage id="PrivateKeysModal121" defaultMessage="Next step" />
                     </Button>
                   </div>
