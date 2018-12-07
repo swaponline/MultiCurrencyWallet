@@ -29,6 +29,15 @@ export default class ImportKeys extends Component {
     isImportedBtc: false,
 
     isDisabled: true,
+    keySave: false,
+  }
+
+  componentDidMount() {
+    const saveKeys = JSON.parse(localStorage.getItem(constants.localStorage.privateKeysSaved))
+
+    if (saveKeys) {
+      this.setState(() => ({ keySave: true }))
+    }
   }
 
   handleEthImportKey = () => {
@@ -93,7 +102,11 @@ export default class ImportKeys extends Component {
   }
 
   render() {
-    const { isSubmittedEth, isSubmittedBtc, isImportedEth, isImportedBtc, isDisabled } = this.state
+    const {
+      isSubmittedEth, isSubmittedBtc, isImportedEth,
+      isImportedBtc, isDisabled, keySave,
+    } = this.state
+
     const linked = Link.all(this, 'ethKey', 'btcKey')
 
     if (isSubmittedEth) {
@@ -131,7 +144,10 @@ export default class ImportKeys extends Component {
             disabled={isImportedBtc}
             onClick={this.handleBtcImportKey}
           />
-          <Button brand disabled={isDisabled} styleName="button" onClick={this.handleImportKeys}>
+          {
+            !keySave && <span styleName="error"> Please save your private keys</span>
+          }
+          <Button brand disabled={isDisabled || keySave} styleName="button" onClick={this.handleImportKeys}>
             <FormattedMessage id="ImportKeys130" defaultMessage="Confirm" />
           </Button>
           <Button gray styleName="button" onClick={this.handleCloseModal}>
