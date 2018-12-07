@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { links }    from 'helpers'
+import { links, constants }    from 'helpers'
 import actions from 'redux/actions'
-import { constants } from 'helpers'
 
 import cssModules from 'react-css-modules'
 import styles from './Row.scss'
@@ -49,7 +48,7 @@ export default class Row extends Component {
       token,
       balance,
       unconfirmedBalance,
-    }
+    },
     } = this.props
 
     actions.analytics.dataEvent(`balances-withdraw-${currency.toLowerCase()}`)
