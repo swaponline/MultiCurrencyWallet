@@ -36,7 +36,7 @@ export default class Row extends Component {
     isFetching: false,
     enterButton: false,
     balance: 0,
-    windowWidth: 0
+    windowWidth: 0,
   }
 
   componentDidMount() {
