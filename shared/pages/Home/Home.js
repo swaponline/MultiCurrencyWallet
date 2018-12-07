@@ -157,7 +157,7 @@ export default class Home extends Component {
 
                   <div styleName="videoFaqContainer">
                     <iframe
-                      title="What is atomic swap?"
+                      title="What1 is atomic swap?"
                       width="700"
                       height="480"
                       src="https://www.youtube.com/embed/Jhrb7xOT_7s"
