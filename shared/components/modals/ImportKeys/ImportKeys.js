@@ -32,7 +32,7 @@ export default class ImportKeys extends Component {
   }
 
   handleEthImportKey = () => {
-    const { ethKey } = this.state
+    let { ethKey } = this.state
 
     if (!ethKey || ethKey.length < 40) {
       this.setState({ isSubmittedEth: true })
@@ -40,6 +40,11 @@ export default class ImportKeys extends Component {
     }
     this.setState({ isDisabled: false })
 
+    const withOx = ethKey.substring(0,2)
+
+    if (withOx !== '0x') {
+      ethKey = `0x${ethKey}`
+    }
 
     try {
       actions.eth.login(ethKey)
