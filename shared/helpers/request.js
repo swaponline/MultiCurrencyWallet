@@ -17,7 +17,7 @@ const createResponseHandler = (req, opts) => {
     }
 
     if (serverError) {
-      throw new Error(`Connection failed: ${debug}, server error:${serverError}`)
+      return reject(new Error(`Connection failed: ${debug}, server error:${serverError}`))
     }
 
     if (err) {
