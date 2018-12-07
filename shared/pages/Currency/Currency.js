@@ -34,9 +34,11 @@ export default class Currency extends Component {
   }
 
   getRows = () => {
-    let { match:{ params: { currency } } } = this.props
+    let { match:{ params: { currency, address } }, items } = this.props
     currency = currency.toLowerCase()
 
+    const itemCurrency = items.filter(item => item.currency.toLowerCase() === currency)
+    const selectCurrency = itemCurrency[0]
     return constants.tradeTicker
       .filter(ticker => {
         ticker = ticker.split('-')
@@ -49,7 +51,8 @@ export default class Currency extends Component {
         return {
           from: pair[0],
           to: pair[1],
-          currency: currency,
+          itemCurrency,
+          selectCurrency,
         }
       })
   }
@@ -94,10 +97,9 @@ export default class Currency extends Component {
   }
 
   render() {
-    const { match: { params: { currency } }, address} = this.props
+    const { match: { params: { currency } } } = this.props
     const { isBalanceEmpty } = this.state
     const { balance } = this.getCoin()
-console.log(currency.address)
     return (
       <section styleName={isMobile ? 'currencyMobileSection' : 'currencyMediaSection'}>
         <PageHeadline>
