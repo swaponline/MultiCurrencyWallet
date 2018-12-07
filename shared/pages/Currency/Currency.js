@@ -49,6 +49,7 @@ export default class Currency extends Component {
         return {
           from: pair[0],
           to: pair[1],
+          currency: currency,
         }
       })
   }
@@ -93,9 +94,10 @@ export default class Currency extends Component {
   }
 
   render() {
-    const { match: { params: { currency } } } = this.props
+    const { match: { params: { currency } }, address} = this.props
+    const { isBalanceEmpty } = this.state
     const { balance } = this.getCoin()
-
+console.log(currency.address)
     return (
       <section styleName={isMobile ? 'currencyMobileSection' : 'currencyMediaSection'}>
         <PageHeadline>
