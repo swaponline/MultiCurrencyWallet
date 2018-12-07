@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
 import links from 'helpers/links'
-import { defineMessages, injectIntl } from 'react-intl'
 import SwitchLang from 'shared/components/SwitchLang/SwitchLang'
 import { constants } from 'helpers'
 import config from 'app-config'
@@ -22,6 +21,7 @@ import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 import Tour from 'reactour'
+import Logo from 'components/Logo/Logo'
 
 
 let lastScrollTop = 0
@@ -138,9 +138,6 @@ checkLang = () => {
   }
 }
 
-  render() {
-  const { sticky, menuItems, lang } = this.state
-  const { intl: { locale }, pathname } = this.props
   toggleShowMore = () => {
     this.setState(prevState => ({
       isShowingMore: !prevState.isShowingMore,
@@ -159,6 +156,8 @@ checkLang = () => {
 
   render() {
     const { sticky, menuItems, isTourOpen, isShowingMore, lang } = this.state
+    const { intl: { locale }, pathname } = this.props
+
     const accentColor = '#510ed8'
 
     if (isMobile) {
@@ -178,7 +177,6 @@ checkLang = () => {
           <SwitchLang styleName="buttonLan" onClick={this.checkLang} href={lang ? '/ru' : '/en'} >
             {lang ? 'RU' : 'EN'}
           </SwitchLang>
-          <User />
           <Logo withLink mobile />
           <User openTour={this.openTour} />
           <Tour
