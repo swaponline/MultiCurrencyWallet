@@ -24,12 +24,15 @@ import { FormattedMessage } from 'react-intl'
 @connect(
   ({
     core: { hiddenCoinsList },
-    user: { ethData, btcData, /* bchData, */ tokensData, eosData, telosData, nimData, usdtData, ltcData },
+    user: { ethData, btcData, tokensData, eosData, telosData, nimData, usdtData, ltcData },
     currencies: { items: currencies },
   }) => ({
     tokens: Object.keys(tokensData).map(k => (tokensData[k].currency)),
-    items: [btcData, ethData, eosData, telosData, /* bchData, */ ltcData, usdtData /* nimData */ ].map((data) => (
+    items: [btcData, ethData, eosData, telosData, ltcData, usdtData /* nimData */ ].map((data) => (
       data.currency
+    )),
+    currencyBalance: [btcData, ethData, eosData, telosData, ltcData, usdtData /* nimData */ ].map((cur) => (
+      cur.balance
     )),
     currencies,
     hiddenCoinsList,
@@ -51,31 +54,63 @@ export default class Wallet extends Component {
   }
 
   state = {
-    view: 'off',
-    zeroBalance: true,
+    saveKeys: false,
+    openModal: false,
   }
 
   componentWillMount() {
-    process.env.MAINNET && localStorage.setItem(constants.localStorage.testnetSkip, true)
-    if (localStorage.getItem(constants.localStorage.privateKeysSaved)) {
-      this.changeView('checkKeys')
-    } else {
-      // actions.modals.open(constants.modals.PrivateKeys, {})
-    }
-  }
-
-  componentDidMount() {
     actions.user.getBalances()
     actions.analytics.dataEvent('open-page-balances')
+
+    if (process.env.MAINNET) {
+      localStorage.setItem(constants.localStorage.testnetSkip, false)
+    } else {
+      localStorage.setItem(constants.localStorage.testnetSkip, true)
+    }
+
+    const testSkip = JSON.parse(localStorage.getItem(constants.localStorage.testnetSkip))
+    const saveKeys = JSON.parse(localStorage.getItem(constants.localStorage.privateKeysSaved))
+
+    this.setState(() => ({
+      testSkip,
+      saveKeys,
+    }))
+  }
+
+  componentWillReceiveProps() {
+    const { saveKeys, testSkip } = this.state
+
+    const openTour = JSON.parse(localStorage.getItem(constants.localStorage.openTour))
+
+    if (saveKeys || testSkip || !openTour) {
+      return
+    }
+
+    const { currencyBalance } = this.props
+
+    currencyBalance.forEach(cur => {
+      if (cur > 0) {
+        this.setState(() => ({ openModal: true }))
+      }
+    })
+  }
+
+  componentDidUpdate() {
+    const { openModal } = this.state
+
+    if (openModal) {
+      actions.modals.open(constants.modals.PrivateKeys, {})
+    }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
     const getComparableProps = (props) => ({
       items: props.items,
+      currencyBalance: props.currencyBalance,
       tokens: props.tokens,
       currencies: props.currencies,
       hiddenCoinsList: props.hiddenCoinsList,
-    });
+    })
     return JSON.stringify({
       ...getComparableProps(this.props),
       ...this.state,
@@ -85,25 +120,12 @@ export default class Wallet extends Component {
     });
   }
 
-  changeView = (view) => {
-    this.setState({
-      view,
-    })
-  }
-
   render() {
-    const { view, zeroBalance } = this.state
     const { items, tokens, currencies, hiddenCoinsList } = this.props
     const titles = [ 'Coin', 'Name', 'Balance', 'Your Address', isMobile ? 'Send, receive, swap' :  'Actions' ]
 
-    const keysSaved = localStorage.getItem(constants.localStorage.privateKeysSaved)
-    const testNetSkip = localStorage.getItem(constants.localStorage.testnetSkip)
-
-    const showSaveKeysModal = !zeroBalance && !keysSaved && !testNetSkip // non-zero balance and no keys saved
-
     return (
       <section styleName={isMobile ? 'sectionWalletMobile' : 'sectionWallet'}>
-        { showSaveKeysModal && <SaveKeysModal /> }
         <PageHeadline styleName="pageLine">
           <SubTitle>
             <FormattedMessage id="Wallet104" defaultMessage="Your online cryptocurrency wallet" />

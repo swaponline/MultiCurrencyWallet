@@ -94,8 +94,10 @@ export default class Header extends Component {
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll)
 
-    if (!localStorage.getItem(constants.localStorage.openTour)) {
-      this.openTour()
+    if (this.props.history.location.pathname === '/') {
+      if (!localStorage.getItem(constants.localStorage.openTour)) {
+        this.openTour()
+      }
     }
   }
 
@@ -127,12 +129,11 @@ export default class Header extends Component {
 
   closeTour = () => {
     this.setState({ isTourOpen: false })
+    localStorage.setItem(constants.localStorage.openTour, true)
   }
 
   openTour = () => {
     this.setState({ isTourOpen: true })
-    localStorage.setItem(constants.localStorage.openTour, true)
-
   }
 
   render() {
@@ -184,7 +185,7 @@ const tourSteps = [
   },
   {
     selector: '[data-tut="reactour__store"]',
-    content: `You can store crypto of different blockcahins including Bitcoin, Ethereum, EOS, Bitcoin Cash, Litecoin and various token`,
+    content: `You can store crypto of different blockchains including Bitcoin, Ethereum, EOS, Bitcoin Cash, Litecoin and various token`,
   },
   {
     selector: '[data-tut="reactour__exchange"]',
@@ -199,7 +200,7 @@ const tourSteps = [
     selector: '[data-tut="reactour__goTo"]',
     content: ({ goTo }) => (
       <div>
-        <strong><FormattedMessage id="Header194" defaultMessage="Do not foget to save your keys" /></strong>
+        <strong><FormattedMessage id="Header194" defaultMessage="Do not forget to save your keys" /></strong>
         <button
           style={{
             border: '1px solid #f7f7f7',
