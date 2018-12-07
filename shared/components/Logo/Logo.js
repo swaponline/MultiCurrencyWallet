@@ -10,6 +10,7 @@ import styles from './Logo.scss'
 import logoImage from './images/logo.svg'
 import coloredLogoImage from './images/logo-colored.svg'
 import { injectIntl } from 'react-intl'
+import { localisedUrl } from 'helpers/locale'
 
 
 @injectIntl
@@ -35,7 +36,7 @@ export default class Logo extends Component {
       <Fragment>
         {withLink ?
           (
-            <Link styleName={mobile ? 'mobile' : 'logo'} data-tip data-for="logo" to={`/${locale}/`}>
+            <Link styleName={mobile ? 'mobile' : 'logo'} data-tip data-for="logo" to={localisedUrl(locale, '/')}>
               {imgNode}
             </Link>
           ) : (<div>{imgNode}</div>)

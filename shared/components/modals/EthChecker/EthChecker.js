@@ -11,6 +11,7 @@ import styles from './EthChecker.scss'
 import { Modal } from 'components/modal'
 import { Button } from 'components/controls'
 import { FormattedMessage, injectIntl } from 'react-intl'
+import { localisedUrl } from 'helpers/locale'
 
 
 @injectIntl
@@ -30,7 +31,7 @@ export default class EthChecker extends Component {
           <FormattedMessage id="EthChecker19" defaultMessage="This token works on Ethereum blockchain. To swap this token you must have at least 0.02 ETH on your balance">
             {message => <p>{message}</p>}
           </FormattedMessage>
-          <Link to={`/${locale}${links.home}`}>
+          <Link to={localisedUrl(locale, links.home)}>
             <Button styleName="button" brand fullWidth onClick={() => actions.modals.close(name)}>
               <FormattedMessage id="EthChecker23" defaultMessage="Go wallet" />
             </Button>

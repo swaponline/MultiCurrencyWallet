@@ -15,6 +15,7 @@ import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import FaqExpandableItem from 'components/FaqExpandableItem/FaqExpandableItem'
 import CurrencyDirectionChooser from 'components/CurrencyDirectionChooser/CurrencyDirectionChooser'
 import { FormattedMessage, injectIntl } from 'react-intl'
+import { localisedUrl } from 'helpers/locale'
 
 import Orders from './Orders/Orders'
 
@@ -47,7 +48,7 @@ export default class Home extends Component {
       sellCurrency: sell || sellCurrency || 'btc',
       invalidPair: false,
       isShow: false,
-      exchange: `/${locale}${links.exchange}`,
+      exchange: localisedUrl(locale, links.exchange),
     }
   }
 

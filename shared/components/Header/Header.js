@@ -22,6 +22,8 @@ import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 import Tour from 'reactour'
 import Logo from 'components/Logo/Logo'
+import { relocalisedUrl } from 'helpers/locale'
+import { localisedUrl } from '../../helpers/locale';
 
 
 let lastScrollTop = 0
@@ -62,7 +64,6 @@ export default class Header extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      lang: true,
       isTourOpen: false,
       isShowingMore: false,
       sticky: false,
@@ -96,7 +97,6 @@ export default class Header extends Component {
 
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll)
-    this.checkLang()
 
     if (this.props.history.location.pathname === '/') {
       if (!localStorage.getItem(constants.localStorage.openTour)) {
@@ -124,20 +124,6 @@ export default class Header extends Component {
     this.lastScrollTop = scrollTop
   }
 
-checkLang = () => {
-  const { intl: { locale, defaultLocale } } = this.props
-  if (locale === 'ru') {
-    this.setState({
-      lang: false,
-    })
-  }
-  else {
-    this.setState({
-      lang: true,
-    })
-  }
-}
-
   toggleShowMore = () => {
     this.setState(prevState => ({
       isShowingMore: !prevState.isShowingMore,
@@ -155,7 +141,7 @@ checkLang = () => {
   }
 
   render() {
-    const { sticky, menuItems, isTourOpen, isShowingMore, lang } = this.state
+    const { sticky, menuItems, isTourOpen, isShowingMore } = this.state
     const { intl: { locale }, pathname } = this.props
 
     const accentColor = '#510ed8'
@@ -174,8 +160,8 @@ checkLang = () => {
         <WidthContainer styleName="container">
           <LogoTooltip withLink />
           <Nav menu={menuItems} />
-          <SwitchLang styleName="buttonLan" onClick={this.checkLang} href={lang ? '/ru' : '/en'} >
-            {lang ? 'RU' : 'EN'}
+          <SwitchLang styleName="buttonLan" href={relocalisedUrl(locale)}>
+            {locale.toUpperCase() === 'EN' ? 'RU' : 'EN'}
           </SwitchLang>
           <Logo withLink mobile />
           <User openTour={this.openTour} />

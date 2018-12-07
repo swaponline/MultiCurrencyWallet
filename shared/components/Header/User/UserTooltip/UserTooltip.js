@@ -14,6 +14,8 @@ import ArrowRightSvg from './images/arrow-right.svg'
 
 import { TimerButton } from 'components/controls'
 import { FormattedMessage, injectIntl } from 'react-intl'
+import { localisedUrl } from 'helpers/locale'
+
 
 @injectIntl
 @withRouter
@@ -78,17 +80,17 @@ export default class UserTooltip extends Component {
                     </div>
                   </div>
                   <span styleName="decline" onClick={() => this.declineRequest(id, peer)} />
-                  <Link to={`/${locale}${links.swap}/${sellCurrency}-${buyCurrency}/${id}`}>
+                  <Link to={`${localisedUrl(locale, links.swap)}/${sellCurrency}-${buyCurrency}/${id}`}>
                     <div styleName="checked" onClick={() => this.acceptRequest(id, peer)} />
                   </Link>
-                  <TimerButton isButton={false} onClick={() => this.autoAcceptRequest(id, peer, `/${locale}${links.swap}/${sellCurrency}-${buyCurrency}/${id}`)} />
+                  <TimerButton isButton={false} onClick={() => this.autoAcceptRequest(id, peer, `/${localisedUrl(locale, links.swap)}/${sellCurrency}-${buyCurrency}/${id}`)} />
                 </div>
               ))
             )
           })
         ) : (
           <div styleName="feed" >
-            <Link to={`/${locale}${links.feed}`} >
+            <Link to={localisedUrl(locale, links.feed)}>
               <FormattedMessage id="QUESTION15" defaultMessage="Go to the feed page" />
             </Link>
           </div>

@@ -20,6 +20,7 @@ import Tooltip from 'components/ui/Tooltip/Tooltip'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { FormattedMessage, injectIntl } from 'react-intl'
+import { localisedUrl } from 'helpers/locale'
 
 
 import config from 'app-config'
@@ -419,7 +420,7 @@ export default class PartialClosure extends Component {
     const linked = Link.all(this, 'haveAmount', 'getAmount', 'customWallet')
 
     if (redirect) {
-      return <Redirect push to={`/${locale}${links.swap}/${getCurrency}-${haveCurrency}/${orderId}`} />
+      return <Redirect push to={`${localisedUrl(locale, links.swap)}/${getCurrency}-${haveCurrency}/${orderId}`} />
     }
 
     const text = [

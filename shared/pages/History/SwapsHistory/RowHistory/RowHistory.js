@@ -12,6 +12,7 @@ import Coins from 'components/Coins/Coins'
 import Timer from 'pages/Swap/Timer/Timer'
 import Avatar from 'components/Avatar/Avatar'
 import { FormattedMessage, injectIntl } from 'react-intl'
+import { localisedUrl } from 'helpers/locale'
 
 
 @injectIntl
@@ -102,11 +103,11 @@ export default class RowHistory extends Component {
          <td>
            {
              isMy ? (
-               <Link to={`/${locale}${links.swap}/${sellCurrency}-${buyCurrency}/${id}`}>
+               <Link to={`${localisedUrl(locale, links.swap)}/${sellCurrency}-${buyCurrency}/${id}`}>
                  <FormattedMessage id="RowHistory91" defaultMessage="Link to the swap" />
                </Link>
              ) : (
-               <Link to={`/${locale}${links.swap}/${buyCurrency}-${sellCurrency}/${id}`}>
+               <Link to={`${localisedUrl(locale, links.swap)}/${buyCurrency}-${sellCurrency}/${id}`}>
                  <FormattedMessage id="RowHistory95" defaultMessage="Link to the swap" />
                </Link>
              )

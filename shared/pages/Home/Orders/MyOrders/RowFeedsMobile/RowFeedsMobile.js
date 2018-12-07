@@ -12,6 +12,7 @@ import ShareImg from './images/share-alt-solid.svg'
 
 import Coins from 'components/Coins/Coins'
 import { FormattedMessage, injectIntl } from 'react-intl'
+import { localisedUrl } from 'helpers/locale'
 
 
 @injectIntl
@@ -82,7 +83,7 @@ export default class RowFeedsMoble extends Component {
                 <div styleName="delete" onClick={() => declineRequest(id, requests[0].peer)} >
                   <FormattedMessage id="RowMFeed82" defaultMessage="Decline" />
                 </div>
-                <Link to={`/${locale}${links.swap}/${sellCurrency.toLowerCase()}-${buyCurrency.toLowerCase()}/${id}`}>
+                <Link to={`${localisedUrl(locale, links.swap)}/${sellCurrency.toLowerCase()}-${buyCurrency.toLowerCase()}/${id}`}>
                   <div styleName="accept" onClick={() => acceptRequest(id, requests[0].peer)} >
                     <FormattedMessage id="RowMFeed85" defaultMessage="Accept" />
                   </div>

@@ -9,6 +9,7 @@ import styles from './Row.scss'
 import Coin from 'components/Coin/Coin'
 import Flip from 'components/controls/Flip/Flip'
 import { FormattedMessage, injectIntl } from 'react-intl'
+import { localisedUrl } from 'helpers/locale'
 
 
 @injectIntl
@@ -37,7 +38,7 @@ export default class Row extends Component {
           </span>
         </td>
         <td>
-          <Link styleName="button" to={`/${locale}${links.home}${from.toLowerCase()}-${to.toLowerCase()}`}>
+          <Link styleName="button" to={`${localisedUrl(locale, links.home)}/${from.toLowerCase()}-${to.toLowerCase()}`}>
             <FormattedMessage id="Row35" defaultMessage="Exchange " />
           </Link>
         </td>

@@ -10,6 +10,7 @@ import { swapComponents } from './swaps'
 import Share from './Share/Share'
 import EmergencySave from './EmergencySave/EmergencySave'
 import { injectIntl } from 'react-intl'
+import { localisedUrl } from 'helpers/locale'
 
 @injectIntl
 @connect(({
@@ -33,7 +34,7 @@ export default class SwapComponent extends PureComponent {
     let { match : { params : { orderId } }, history } = this.props
 
     if (!orderId) {
-      history.push(`${locale}${links.exchange}`)
+      history.push(localisedUrl(links.exchange))
       return
     }
 
@@ -53,7 +54,7 @@ export default class SwapComponent extends PureComponent {
 
     } catch (error) {
       actions.notifications.show(constants.notifications.ErrorNotification, { error: 'Sorry, but this order do not exsit already' })
-      this.props.history.push(`${locale}${links.exchange}`)
+      this.props.history.push(localisedUrl(links.exchange))
     }
 
     this.setSaveSwapId(orderId)

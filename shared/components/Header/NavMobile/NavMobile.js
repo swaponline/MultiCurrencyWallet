@@ -6,6 +6,7 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 
 import CSSModules from 'react-css-modules'
 import styles from './NavMobile.scss'
+import { localisedUrl } from 'helpers/locale'
 
 
 @injectIntl
@@ -28,7 +29,7 @@ export default class NavMobile extends Component {
               <NavLink
                 key={title}
                 exact={exact}
-                to={`/${locale}${link}`}
+                to={localisedUrl(locale, link)}
                 activeClassName={styles.active}
               >
                 <i className={`fas fa-${icon}`} aria-hidden="true" />
