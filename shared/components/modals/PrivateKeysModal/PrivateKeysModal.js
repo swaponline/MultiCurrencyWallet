@@ -37,7 +37,6 @@ export default class PrivateKeysModal extends React.PureComponent {
     view: views.saveKeys,
     ethValidated: false,
     btcValidated: false,
-    isDownload: false,
   }
 
   changeView = (view) => {
@@ -57,10 +56,7 @@ export default class PrivateKeysModal extends React.PureComponent {
     actions.user.downloadPrivateKeys()
     actions.notifications.show(constants.notifications.Message, {
       message: 'Check your browser downloads',
-    }
-  )
-
-    this.setState(() => ({ isDownload: true }))
+    })
   }
 
   handleNext = () => {
@@ -79,7 +75,7 @@ export default class PrivateKeysModal extends React.PureComponent {
   }
 
   render() {
-    const { view, isDownload } = this.state
+    const { view } = this.state
     const { name, ethData, btcData } = this.props
 
     const ethValidated = Link.state(this, 'ethValidated')
