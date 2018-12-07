@@ -218,7 +218,5 @@ export default {
   getExchangeRate,
   setTransactions,
   downloadPrivateKeys,
-  getReputation,
   getText,
-
 }
