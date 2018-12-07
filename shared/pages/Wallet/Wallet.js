@@ -54,9 +54,8 @@ export default class Wallet extends Component {
   }
 
   state = {
-    view: 'off',
-    zeroBalance: true,
     saveKeys: false,
+    openModal: false,
   }
 
   componentWillMount() {
@@ -64,42 +63,42 @@ export default class Wallet extends Component {
     actions.analytics.dataEvent('open-page-balances')
 
     if (process.env.MAINNET) {
+      localStorage.setItem(constants.localStorage.testnetSkip, false)
+    } else {
       localStorage.setItem(constants.localStorage.testnetSkip, true)
     }
 
+    const testSkip = JSON.parse(localStorage.getItem(constants.localStorage.testnetSkip))
+    const saveKeys = JSON.parse(localStorage.getItem(constants.localStorage.privateKeysSaved))
+
+    this.setState(() => ({
+      testSkip,
+      saveKeys,
+    }))
   }
 
   componentWillReceiveProps() {
+    const { saveKeys, testSkip } = this.state
+
+    const openTour = JSON.parse(localStorage.getItem(constants.localStorage.openTour))
+
+    if (saveKeys || testSkip || !openTour) {
+      return
+    }
+
     const { currencyBalance } = this.props
 
     currencyBalance.forEach(cur => {
       if (cur > 0) {
-        this.setState(() => ({ zeroBalance: false }))
+        this.setState(() => ({ openModal: true }))
       }
     })
-
-    const { zeroBalance } = this.state
-
-    const testSkip = JSON.parse(localStorage.getItem(constants.localStorage.testnetSkip))
-    const saveKeys = JSON.parse(localStorage.getItem(constants.localStorage.privateKeysSaved)) || false
-
-    console.log('testSkip', testSkip)
-    console.log('saveKeys', saveKeys)
-    console.log('zeroBalance', zeroBalance)
-
-    if (!saveKeys && zeroBalance) {
-      this.changeView('checkKeys')
-    } else {
-      if (testSkip && !saveKeys) {
-        this.setState(() => ({ saveKeys: true }))
-      }
-    }
   }
 
   componentDidUpdate() {
-    const { saveKeys } = this.state
+    const { openModal } = this.state
 
-    if (saveKeys) {
+    if (openModal) {
       actions.modals.open(constants.modals.PrivateKeys, {})
     }
   }
@@ -121,25 +120,12 @@ export default class Wallet extends Component {
     });
   }
 
-  changeView = (view) => {
-    this.setState({
-      view,
-    })
-  }
-
   render() {
-    const { view, zeroBalance } = this.state
     const { items, tokens, currencies, hiddenCoinsList } = this.props
     const titles = [ 'Coin', 'Name', 'Balance', 'Your Address', isMobile ? 'Send, receive, swap' :  'Actions' ]
 
-    const keysSaved = localStorage.getItem(constants.localStorage.privateKeysSaved)
-    const testNetSkip = localStorage.getItem(constants.localStorage.testnetSkip)
-
-    const showSaveKeysModal = !zeroBalance && !keysSaved && !testNetSkip // non-zero balance and no keys saved
-
     return (
       <section styleName={isMobile ? 'sectionWalletMobile' : 'sectionWallet'}>
-        { showSaveKeysModal && <SaveKeysModal /> }
         <PageHeadline styleName="pageLine">
           <SubTitle>
             <FormattedMessage id="Wallet104" defaultMessage="Your online cryptocurrency wallet" />

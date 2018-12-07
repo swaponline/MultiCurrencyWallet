@@ -129,12 +129,11 @@ export default class Header extends Component {
 
   closeTour = () => {
     this.setState({ isTourOpen: false })
+    localStorage.setItem(constants.localStorage.openTour, true)
   }
 
   openTour = () => {
     this.setState({ isTourOpen: true })
-    localStorage.setItem(constants.localStorage.openTour, true)
-
   }
 
   render() {
