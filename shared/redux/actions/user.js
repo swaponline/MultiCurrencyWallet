@@ -207,6 +207,8 @@ const downloadPrivateKeys = () => {
   actions.notifications.show(constants.notifications.Message, {
     message,
   })
+
+  localStorage.setItem(constants.localStorage.privateKeysSaved, true)
 }
 
 window.downloadPrivateKeys = downloadPrivateKeys

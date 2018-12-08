@@ -89,7 +89,7 @@ export default class SwapComponent extends PureComponent {
     }
 
     return (
-      <div style={{ paddingLeft: '30px', paddingTop: '30px' }}>
+      <div style={{ paddingLeft: '30px', paddingTop: '60px', width: '500px', margin: 'auto', minHeight: 'calc(100vh - 75px)' }}>
         <SwapComponent swap={swap} currencyData={currencyData}>
           <Share flow={swap.flow} />
           <EmergencySave flow={swap.flow} />
