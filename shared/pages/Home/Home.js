@@ -8,6 +8,7 @@ import { links, constants } from 'helpers'
 
 import actions from 'redux/actions'
 import { connect } from 'redaction'
+import { isMobile } from 'react-device-detect'
 
 import Center from 'components/layout/Center/Center'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
@@ -134,7 +135,7 @@ export default class Home extends Component {
     const { buyCurrency, sellCurrency, invalidPair } = this.state
 
     return (
-      <section style={{ position: 'relative', width: '100%' }}>
+      <section styleName={isMobile ? 'sectionContainerMobile' : 'sectionContainer'}>
         <PageHeadline>
           {
             pathname === links.exchange ? (
