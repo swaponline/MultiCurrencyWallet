@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 
 import { connect } from 'redaction'
-import { constants } from 'helpers'
+import { constants, links } from 'helpers'
 import { isMobile } from 'react-device-detect'
 
 import Title from 'components/PageHeadline/Title/Title'
@@ -9,6 +9,7 @@ import PageHeadline from 'components/PageHeadline/PageHeadline'
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import Table from 'components/tables/Table/Table'
 import Toggle from 'components/controls/Toggle/Toggle'
+import { Link, Redirect } from 'react-router-dom'
 
 import CSSModules from 'react-css-modules'
 import styles from './Currency.scss'
@@ -18,6 +19,7 @@ import actions from 'redux/actions'
 
 import { withRouter } from 'react-router'
 import { FormattedMessage } from 'react-intl'
+import NotFound         from 'pages/NotFound/NotFound'
 
 
 @withRouter
@@ -31,6 +33,22 @@ export default class Currency extends Component {
 
   state = {
     isBalanceFetching: false,
+    balance: '',
+  }
+
+  componentWillMount() {
+    const { match: { params: { currency } }, items } = this.props
+    const item = items.map(item => item.currency.toLowerCase())
+
+    if (currency !== item) {
+      this.props.history.push('/NotFound')
+      return
+    }
+    this.getCoin()
+    const balance = this.getCoin()
+
+    this.setState({ balance })
+    this.handleReloadBalance()
   }
 
   getRows = () => {
@@ -83,18 +101,9 @@ export default class Currency extends Component {
   handleInWalletChange = (val) => val ? actions.core.markCoinAsVisible(this.getCoin().currency) :
     actions.core.markCoinAsHidden(this.getCoin().currency)
 
-  componentWillMount = () => {
-    if (!this.getCoin()) {
-      this.props.history.push('/')
-      return false
-    }
-
-    this.handleReloadBalance()
-  }
-
   render() {
     const { match: { params: { currency } } } = this.props
-    const { balance } = this.getCoin()
+    const { balance } = this.state
 
     return (
       <section styleName={isMobile ? 'currencyMobileSection' : 'currencyMediaSection'}>
