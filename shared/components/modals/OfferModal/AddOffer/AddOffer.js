@@ -38,9 +38,11 @@ const minAmount = {
 @connect(
   ({
     currencies,
+    addSelectedItems,
     user: { ethData, btcData, /* bchData, */ tokensData, eosData, telosData, nimData, usdtData, ltcData },
   }) => ({
     currencies: currencies.items,
+    addSelectedItems: currencies.addSelectedItems[0],
     items: [ ethData, btcData, eosData, telosData, /* bchData, */ ltcData, usdtData /* nimData */ ],
     tokenItems: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
   })
@@ -72,6 +74,8 @@ export default class AddOffer extends Component {
     const { sellCurrency, buyCurrency } = this.state
     this.checkBalance(sellCurrency)
     this.updateExchangeRate(sellCurrency, buyCurrency)
+    actions.pairs.selectPair(sellCurrency)
+
   }
 
   checkBalance = async (sellCurrency) => {
@@ -143,6 +147,7 @@ export default class AddOffer extends Component {
     }
 
     sellCurrency = value
+    actions.pairs.selectPair(sellCurrency)
 
     await this.checkBalance(sellCurrency)
 
@@ -369,8 +374,18 @@ export default class AddOffer extends Component {
     })
   }
 
+chooseProps = () => {
+  const { currencies, tokenItems, addSelectedItems } = this.props
+
+  if (addSelectedItems === undefined) {
+    return currencies
+  } else {
+    return addSelectedItems
+  }
+}
+
   render() {
-    const { currencies, tokenItems } = this.props
+    const { currencies, tokenItems, addSelectedItems } = this.props
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency,
       balance, isBuyFieldInteger, isSellFieldInteger, ethBalance, manualRate, isPartialClosure } = this.state
     const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
@@ -389,6 +404,8 @@ export default class AddOffer extends Component {
         <FormattedMessage id="transaction376" defaultMessage="Amount must be less than your balance " />
       </span>
     )
+
+    console.log('this.props', addSelectedItems)
     return (
       <div styleName="wrapper addOffer">
         { this.isEthOrERC20() &&
@@ -421,7 +438,7 @@ export default class AddOffer extends Component {
           selectedCurrencyValue={buyCurrency}
           onCurrencySelect={this.handleBuyCurrencySelect}
           id="buyAmount"
-          currencies={currencies}
+          currencies={this.chooseProps()}
           isInteger={isBuyFieldInteger}
           placeholder="Enter buy amount"
         />
