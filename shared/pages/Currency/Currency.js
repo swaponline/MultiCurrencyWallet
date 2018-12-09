@@ -95,15 +95,15 @@ export default class Currency extends Component {
   handleReceive = () => {
     let { match:{ params: { currency } }, items } = this.props
     const itemCurrency = items.filter(item => item.currency.toLowerCase() === currency)[0]
-    const address = itemCurrency.address
+    const { address } = itemCurrency
 
     currency = currency.toUpperCase()
 
     actions.modals.open(constants.modals.ReceiveModal, {
       currency,
       address,
-  })
-}
+    })
+  }
 
   handleWithdraw = () => {
     let { match:{ params: { currency } }, items } = this.props
