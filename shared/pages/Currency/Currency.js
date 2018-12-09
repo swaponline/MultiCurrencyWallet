@@ -45,7 +45,7 @@ export default class Currency extends Component {
       return
     }
     this.getCoin()
-    const balance = this.getCoin()
+    const { balance } = this.getCoin()
 
     this.setState({ balance })
     this.handleReloadBalance()
