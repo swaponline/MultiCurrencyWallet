@@ -8,7 +8,6 @@ import Title from 'components/PageHeadline/Title/Title'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import Table from 'components/tables/Table/Table'
-import Toggle from 'components/controls/Toggle/Toggle'
 
 import CSSModules from 'react-css-modules'
 import styles from './Currency.scss'
@@ -90,7 +89,6 @@ export default class Currency extends Component {
       this.props.history.push('/')
       return false
     }
-
     this.handleReloadBalance()
   }
 
@@ -110,27 +108,19 @@ export default class Currency extends Component {
   handleWithdraw = () => {
     let { match:{ params: { currency } }, items } = this.props
     const itemCurrency = items.filter(item => item.currency.toLowerCase() === currency)[0]
-    
+
     actions.analytics.dataEvent(`balances-withdraw-${currency.toLowerCase()}`)
     actions.modals.open(constants.modals.Withdraw, {
       ...itemCurrency,
     })
   }
 
-  checkBalance = () => {
-    const { selectCurrency:{ balance } } = this.props
-    if (balance === 0) {
-      this.setState({
-        isBalanceEmpty: true,
-      })
-    }
-  }
-
-
   render() {
     const { match: { params: { currency } } } = this.props
     const { isBalanceEmpty } = this.state
+
     const { balance } = this.getCoin()
+
     return (
       <section styleName={isMobile ? 'currencyMobileSection' : 'currencyMediaSection'}>
         <PageHeadline>
@@ -152,7 +142,8 @@ export default class Currency extends Component {
             <CurrencyButton
               wallet="true"
               onClick={this.handleWithdraw}
-              text={<FormattedMessage id="CurrencyWallet113" defaultMessage="You can not send this asset, because you have a zero balance." />}>
+              data={false}
+              text={isBalanceEmpty && <FormattedMessage id="CurrencyWallet113" defaultMessage="You can not send this asset, because you have a zero balance." />}>
               <FormattedMessage id="CurrencyWallet100" defaultMessage="Send" />
             </CurrencyButton>
           </div>
