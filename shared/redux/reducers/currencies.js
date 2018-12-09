@@ -55,11 +55,11 @@ process.env.MAINNET && initialState.items.unshift({
 const addSelectedItems = (state, payload) => ({
   ...state,
   addSelectedItems: [
-    payload
-  ]
+    payload,
+  ],
 })
 
 export {
   initialState,
-  addSelectedItems
+  addSelectedItems,
 }

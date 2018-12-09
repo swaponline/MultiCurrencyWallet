@@ -384,75 +384,75 @@ chooseProps = () => {
   }
 }
 
-  render() {
-    const { currencies, tokenItems, addSelectedItems } = this.props
-    const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency,
-      balance, isBuyFieldInteger, isSellFieldInteger, ethBalance, manualRate, isPartialClosure } = this.state
-    const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
-    const isDisabled = !exchangeRate || !buyAmount && !sellAmount
-      || sellAmount > balance || sellAmount < minAmount[sellCurrency]
-      || this.isEthOrERC20()
+render() {
+  const { currencies, tokenItems, addSelectedItems } = this.props
+  const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency,
+    balance, isBuyFieldInteger, isSellFieldInteger, ethBalance, manualRate, isPartialClosure } = this.state
+  const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
+  const isDisabled = !exchangeRate || !buyAmount && !sellAmount
+    || sellAmount > balance || sellAmount < minAmount[sellCurrency]
+    || this.isEthOrERC20()
 
-    linked.sellAmount.check((value) => Number(value) > minAmount[sellCurrency],
-      <span style={{ position: 'relative', marginRight: '44px' }}>
-        <FormattedMessage id="transaction368" defaultMessage="Amount must be greater than " />
-        {minAmount[sellCurrency]}
-      </span>
-    )
-    linked.sellAmount.check((value) => Number(value) <= balance,
-      <span style={{ position: 'relative', marginRight: '44px' }}>
-        <FormattedMessage id="transaction376" defaultMessage="Amount must be less than your balance " />
-      </span>
-    )
+  linked.sellAmount.check((value) => Number(value) > minAmount[sellCurrency],
+    <span style={{ position: 'relative', marginRight: '44px' }}>
+      <FormattedMessage id="transaction368" defaultMessage="Amount must be greater than " />
+      {minAmount[sellCurrency]}
+    </span>
+  )
+  linked.sellAmount.check((value) => Number(value) <= balance,
+    <span style={{ position: 'relative', marginRight: '44px' }}>
+      <FormattedMessage id="transaction376" defaultMessage="Amount must be less than your balance " />
+    </span>
+  )
 
-    console.log('this.props', addSelectedItems)
-    return (
-      <div styleName="wrapper addOffer">
-        { this.isEthOrERC20() &&
-          <span styleName="error">
-            <FormattedMessage id="transaction27" defaultMessage="For a swap, you need " />
-            {minAmount.eth}
-            <FormattedMessage id="transaction27" defaultMessage=" ETH on your balance" />
-          </span>
-        }
-        <SelectGroup
-          styleName="sellGroup"
-          label="Sell"
-          inputValueLink={linked.sellAmount.pipe(this.handleSellAmountChange)}
-          selectedCurrencyValue={sellCurrency}
-          onCurrencySelect={this.handleSellCurrencySelect}
-          id="sellAmount"
-          currencies={currencies}
-          isInteger={isSellFieldInteger}
-          placeholder="Enter sell amount"
+  console.log('this.props', addSelectedItems)
+  return (
+    <div styleName="wrapper addOffer">
+      { this.isEthOrERC20() &&
+        <span styleName="error">
+          <FormattedMessage id="transaction27" defaultMessage="For a swap, you need " />
+          {minAmount.eth}
+          <FormattedMessage id="transaction27" defaultMessage=" ETH on your balance" />
+        </span>
+      }
+      <SelectGroup
+        styleName="sellGroup"
+        label="Sell"
+        inputValueLink={linked.sellAmount.pipe(this.handleSellAmountChange)}
+        selectedCurrencyValue={sellCurrency}
+        onCurrencySelect={this.handleSellCurrencySelect}
+        id="sellAmount"
+        currencies={currencies}
+        isInteger={isSellFieldInteger}
+        placeholder="Enter sell amount"
+      />
+      <Select
+        changeBalance={this.changeBalance}
+        balance={balance}
+        currency={sellCurrency}
+        switching={this.switching}
+      />
+      <SelectGroup
+        label="Buy"
+        inputValueLink={linked.buyAmount.pipe(this.handleBuyAmountChange)}
+        selectedCurrencyValue={buyCurrency}
+        onCurrencySelect={this.handleBuyCurrencySelect}
+        id="buyAmount"
+        currencies={this.chooseProps()}
+        isInteger={isBuyFieldInteger}
+        placeholder="Enter buy amount"
+      />
+      <div styleName="exchangeRate">
+        <ExchangeRateGroup
+          label="Exchange rate"
+          inputValueLink={linked.exchangeRate.pipe(this.handleExchangeRateChange)}
+          currency={false}
+          disabled={!manualRate}
+          id="exchangeRate"
+          placeholder="Enter exchange rate amount"
+          buyCurrency={buyCurrency}
+          sellCurrency={sellCurrency}
         />
-        <Select
-          changeBalance={this.changeBalance}
-          balance={balance}
-          currency={sellCurrency}
-          switching={this.switching}
-        />
-        <SelectGroup
-          label="Buy"
-          inputValueLink={linked.buyAmount.pipe(this.handleBuyAmountChange)}
-          selectedCurrencyValue={buyCurrency}
-          onCurrencySelect={this.handleBuyCurrencySelect}
-          id="buyAmount"
-          currencies={this.chooseProps()}
-          isInteger={isBuyFieldInteger}
-          placeholder="Enter buy amount"
-        />
-        <div styleName="exchangeRate">
-          <ExchangeRateGroup
-            label="Exchange rate"
-            inputValueLink={linked.exchangeRate.pipe(this.handleExchangeRateChange)}
-            currency={false}
-            disabled={!manualRate}
-            id="exchangeRate"
-            placeholder="Enter exchange rate amount"
-            buyCurrency={buyCurrency}
-            sellCurrency={sellCurrency}
-          />
         </div>
         <div>
           <Toggle checked={manualRate} onChange={this.handleManualRate} /> Custom exchange rate

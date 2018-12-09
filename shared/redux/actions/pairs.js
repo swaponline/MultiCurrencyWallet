@@ -11,14 +11,14 @@ const selectPair = (value) => {
 }
 
 const pairs = {
-    eth: ['LTC', 'BTC', 'ETH'],
-    btc: ['EOS', 'ETH', 'LTC', 'BTC',
+  eth: ['LTC', 'BTC', 'ETH'],
+  btc: ['EOS', 'ETH', 'LTC', 'BTC',
     ...(Object.keys(config.erc20)
-        .map(key => key.toUpperCase())),],
-    eos: ['BTC', 'EOS'],
-    ltc: ['EOS', 'BTC', 'LTC'],
-    usdt: ['USDT', ...(Object.keys(config.erc20)
-        .map(key => key.toUpperCase())),],
+      .map(key => key.toUpperCase())) ],
+  eos: ['BTC', 'EOS'],
+  ltc: ['EOS', 'BTC', 'LTC'],
+  usdt: ['USDT', ...(Object.keys(config.erc20)
+    .map(key => key.toUpperCase())) ],
 }
 Object.keys(config.erc20)
   .forEach(key => {
@@ -27,6 +27,6 @@ Object.keys(config.erc20)
 
 
 
- export default {
-   selectPair
- }
+export default {
+  selectPair,
+}
