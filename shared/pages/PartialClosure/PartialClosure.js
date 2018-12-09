@@ -482,7 +482,7 @@ export default class PartialClosure extends Component {
             }
             { oneCryptoCost.isGreaterThan(0) && oneCryptoCost.isFinite() && (
               <p>
-                <FormattedMessage id="PartialPrice" defaultMessage={`Price: 1 ${getCurrency.toUpperCase()} = ${oneCryptoCost.toFixed(5)} ${haveCurrency.toUpperCase()}`} />
+                `Price: 1 ${getCurrency.toUpperCase()} = ${oneCryptoCost.toFixed(5)} ${haveCurrency.toUpperCase()}`}
               </p>
             )}
             { !oneCryptoCost.isFinite() && !isNonOffers && (
@@ -494,7 +494,8 @@ export default class PartialClosure extends Component {
                   <FormattedMessage id="PartialPriceNoOrdersReduce" defaultMessage="No orders found, try to reduce the amount" />
                 </p>
                 <p styleName="error">
-                  <FormattedMessage id="PartialPriceReduceMin" defaultMessage={`Maximum available amount: ${maxAmount} ${getCurrency.toUpperCase()}`} />
+                  <FormattedMessage id="PartialPriceReduceMin" defaultMessage='Maximum available amount: ' />
+                  {maxAmount}{' '}{getCurrency.toUpperCase()}
                 </p>
               </Fragment>
             )}

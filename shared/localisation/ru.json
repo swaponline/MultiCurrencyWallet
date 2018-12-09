@@ -600,10 +600,7 @@
   },
   {
     "id": "SwapProgress157",
-    "message": "Статтус обмена",
-    "files": [
-      "shared/components/SwapProgress/SwapProgress.js"
-    ]
+    "message": "Статтус обмена"
   },
   {
     "id": "SwapProgress32",
@@ -721,7 +718,8 @@
     "id": "CurrencyWallet110",
     "message": " баланс",
     "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+      "shared/pages/CurrencyWallet/CurrencyWallet.js",
+      "shared/pages/Wallet/Row/Row.js"
     ]
   },
   {
@@ -2684,6 +2682,7 @@
     "id": "Row313",
     "message": "Пополнить",
     "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js",
       "shared/pages/Wallet/Row/Row.js"
     ]
   },
@@ -2732,10 +2731,7 @@
   },
   {
     "id": "PrivateKeysModal105",
-    "message": "есть большой шанс, что Вы потеряете свои деньги. ",
-    "files": [
-      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
-    ]
+    "message": "есть большой шанс, что Вы потеряете свои деньги. "
   },
   {
     "id": "PrivateKeysModal106",
@@ -2816,10 +2812,7 @@
   },
   {
     "id": "WithdrawButton29",
-    "message": "Пополнить",
-    "files": [
-      "shared/pages/Wallet/Row/Row.js"
-    ]
+    "message": "Пополнить"
   },
   {
     "id": "WithdrawButton32",
@@ -3266,17 +3259,11 @@
   },
   {
     "id": "partial244",
-    "message": "Ожидание участника: ",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
-    ]
+    "message": "Ожидание участника: "
   },
   {
     "id": "partial251",
-    "message": "Начать: ",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
-    ]
+    "message": "Начать: "
   },
   {
     "id": "Currency108",
@@ -4136,17 +4123,11 @@
   },
   {
     "id": "partial277",
-    "message": "Нет предложений",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
-    ]
+    "message": "Нет предложений"
   },
   {
     "id": "partial284",
-    "message": "Предложение отклонено",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
-    ]
+    "message": "Предложение отклонено"
   },
   {
     "id": "partial291",
@@ -4304,10 +4285,7 @@
   },
   {
     "id": "partial225",
-    "message": "Предложения частичного закрытия",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
-    ]
+    "message": "Предложения частичного закрытия"
   },
   {
     "id": "partial243",
@@ -4500,6 +4478,141 @@
     "message": "Операция возврата транзакции: ",
     "files": [
       "shared/pages/Swap/BtcToEthToken.js"
+    ]
+  },
+  {
+    "id": "Header184",
+    "message": "Это Ваш персональный Bitcoin адрес. Мы не храним приватные ключи. Все данные хранятся в Вашем браузере. Без сервера и Бэк-енда, полная Децентрализация.",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
+    "id": "Header188",
+    "message": "Swap Online НЕ ХРАНИТ Ваши приватные ключи, пожалуйста, скачайте их и храните в безопасном месте.",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
+    "id": "Header192",
+    "message": "Это Ваш Биткин баланс. Вы можете закрыть браузер, перезапустить компьютер. Ваши средства будут в безопасности. Только не звбудте сохранить Ваши приватные ключи. ",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
+    "id": "Header194",
+    "message": "Не забудте сохранить Ваши приватные ключи",
+    "files": [
+      "shared/components/Header/Header.js",
+      "shared/components/Header/TourSteps.js"
+    ]
+  },
+  {
+    "id": "Header196",
+    "message": "Вы можете хранить криптовалюты разных blockchains сетей, таких как Bitcoin, Ethereum, EOS, Bitcoin Cash, Litecoin и различные токены",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
+    "id": "Header200",
+    "message": "Наша особенность - одноранговый обмен, доступный в нашем кошельке, основанный на технологии Atomic Swap. Вы можете выполнять своп с любым криптовалютой, указанной в нашем кошельке.",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
+    "id": "Header205",
+    "message": "Присоединяйтесь к сwhite list скидоки, подарки, выгодные курсы и т. д",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
+    "id": "Header207",
+    "message": "Показать, как сохранить",
+    "files": [
+      "shared/components/Header/Header.js",
+      "shared/components/Header/TourSteps.js"
+    ]
+  },
+  {
+    "id": "question12",
+    "message": "?",
+    "files": [
+      "shared/components/Header/User/Question/Question.js"
+    ]
+  },
+  {
+    "id": "errorImportKeys",
+    "message": "Пожалуйста сохраните приватные ключи",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal144",
+    "message": "Назад",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "CurrencyWallet113",
+    "message": "Вы не можете отправить данную валюту, потому что у вас нулевой баланс ..",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "CurrencyWallet143",
+    "message": "Баланс",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "PartialPriceCalc",
+    "message": "Расчет цены",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "PartialPriceNoOrdersReduce",
+    "message": "Предложения не найдены, попробуйте уменьшить сумму",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "PartialPriceReduceMin",
+    "message": "Максимально возможная сумма: ",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "PartialPriceSearch",
+    "message": "поиск предложений...",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "PartialUseSwapOnlineWallet",
+    "message": "Используйте Swap.Online кошелек",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "PartialYourWalletAddress",
+    "message": "Ваш адрес кошелька ",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
     ]
   }
 ]

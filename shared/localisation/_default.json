@@ -597,10 +597,7 @@
   },
   {
     "id": "SwapProgress157",
-    "message": "SwapProgress",
-    "files": [
-      "shared/components/SwapProgress/SwapProgress.js"
-    ]
+    "message": "SwapProgress"
   },
   {
     "id": "SwapProgress32",
@@ -718,7 +715,8 @@
     "id": "CurrencyWallet110",
     "message": "History your transactions",
     "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+      "shared/pages/CurrencyWallet/CurrencyWallet.js",
+      "shared/pages/Wallet/Row/Row.js"
     ]
   },
   {
@@ -2681,6 +2679,7 @@
     "id": "Row313",
     "message": "Deposit",
     "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js",
       "shared/pages/Wallet/Row/Row.js"
     ]
   },
@@ -2729,10 +2728,7 @@
   },
   {
     "id": "PrivateKeysModal105",
-    "message": "there is a big chance you will loose your money.",
-    "files": [
-      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
-    ]
+    "message": "there is a big chance you will loose your money."
   },
   {
     "id": "PrivateKeysModal106",
@@ -2820,10 +2816,7 @@
   },
   {
     "id": "WithdrawButton29",
-    "message": "Deposit funds to this address of currency wallet",
-    "files": [
-      "shared/pages/Wallet/Row/Row.js"
-    ]
+    "message": "Deposit funds to this address of currency wallet"
   },
   {
     "id": "WithdrawButton32",
@@ -3273,17 +3266,11 @@
   },
   {
     "id": "partial244",
-    "message": "Wait participant:",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
-    ]
+    "message": "Wait participant:"
   },
   {
     "id": "partial251",
-    "message": "Start:",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
-    ]
+    "message": "Start:"
   },
   {
     "id": "Currency108",
@@ -4143,17 +4130,11 @@
   },
   {
     "id": "partial277",
-    "message": "No offers",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
-    ]
+    "message": "No offers"
   },
   {
     "id": "partial284",
-    "message": "Offer is declined",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
-    ]
+    "message": "Offer is declined"
   },
   {
     "id": "partial291",
@@ -4311,10 +4292,7 @@
   },
   {
     "id": "partial225",
-    "message": "Partial closure offers",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
-    ]
+    "message": "Partial closure offers"
   },
   {
     "id": "partial243",
@@ -4500,6 +4478,141 @@
     "message": "Refund hex transaction:",
     "files": [
       "shared/pages/Swap/BtcToEthToken.js"
+    ]
+  },
+  {
+    "id": "Header184",
+    "message": "This is your personal bitcoin address. We do not store your private keys. Everything is kept in your browser. No server, no back-end, completely decentralized.",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
+    "id": "Header188",
+    "message": "Swap Online does NOT store your private keys, please download and keep them in a secured place",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
+    "id": "Header192",
+    "message": "This is your bitcoin balance. You can close your browser, reboot your computer. Your funds will remain safe, just don't forget to save your private keys",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
+    "id": "Header194",
+    "message": "Do not forget to save your keys",
+    "files": [
+      "shared/components/Header/Header.js",
+      "shared/components/Header/TourSteps.js"
+    ]
+  },
+  {
+    "id": "Header196",
+    "message": "You can store crypto of different blockchains including Bitcoin, Ethereum, EOS, Bitcoin Cash, Litecoin and various token",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
+    "id": "Header200",
+    "message": "Our killer feature is the peer-to-peer exchange available in our wallet powered by atomic swap technology. You can perfrom swaps with any crypto listed in our wallet.",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
+    "id": "Header205",
+    "message": "Join to our white list discounts, gifts, better exchange rates, etc.",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
+    "id": "Header207",
+    "message": "show how to save",
+    "files": [
+      "shared/components/Header/Header.js",
+      "shared/components/Header/TourSteps.js"
+    ]
+  },
+  {
+    "id": "question12",
+    "message": "?",
+    "files": [
+      "shared/components/Header/User/Question/Question.js"
+    ]
+  },
+  {
+    "id": "errorImportKeys",
+    "message": "Please save your private keys",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal144",
+    "message": "Back",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "CurrencyWallet113",
+    "message": "You can not send this asset, because you have a zero balance.",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "CurrencyWallet143",
+    "message": "balance",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "PartialPriceCalc",
+    "message": "Calc price",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "PartialPriceNoOrdersReduce",
+    "message": "No orders found, try to reduce the amount",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "PartialPriceReduceMin",
+    "message": "Maximum available amount:",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "PartialPriceSearch",
+    "message": "Searching orders...",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "PartialUseSwapOnlineWallet",
+    "message": "Use Swap.Online wallet",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "PartialYourWalletAddress",
+    "message": "Your wallet address",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
     ]
   }
 ]

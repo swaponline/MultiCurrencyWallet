@@ -140,7 +140,7 @@ export default class CurrencyWallet extends Component {
           <span>{address}</span> <br />
           <FormattedMessage id="CurrencyWallet107" defaultMessage="Your" />
           {fullName}
-          <FormattedMessage id="CurrencyWallet110" defaultMessage="balance" />
+          <FormattedMessage id="CurrencyWallet143" defaultMessage="balance" />
            : {balance}{' '}{currency.toUpperCase()}
         </h3>
         {currency === 'EOS' && !eosAccountActivated && (<Button onClick={this.handleEosBuyAccount} gray>

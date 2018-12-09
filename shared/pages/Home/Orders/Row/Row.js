@@ -346,12 +346,11 @@ export default class Row extends Component {
                           )
                         )
                       )
+                    ))
                     }
                   </Fragment>
                 )
               }
-            </div>
-          </div>
         </td>
       </tr>
     )
