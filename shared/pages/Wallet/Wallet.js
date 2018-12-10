@@ -130,9 +130,9 @@ export default class Wallet extends Component {
           <SubTitle>
             <FormattedMessage id="Wallet104" defaultMessage="Your online cryptocurrency wallet" />
           </SubTitle>
-          Deposit funds to addresses below
         </PageHeadline>
         <KeyActionsPanel />
+        <span styleName="depositText">Deposit funds to addresses below</span>
         <Table
           id="table-wallet"
           className={styles.wallet}
