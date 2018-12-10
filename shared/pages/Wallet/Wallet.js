@@ -132,7 +132,9 @@ export default class Wallet extends Component {
           </SubTitle>
         </PageHeadline>
         <KeyActionsPanel />
-        <span styleName="depositText">Deposit funds to addresses below</span>
+        <div styleName="depositText">
+          <FormattedMessage id="Wallet105" defaultMessage="Deposit funds to addresses below" />
+        </div>
         <Table
           id="table-wallet"
           className={styles.wallet}
