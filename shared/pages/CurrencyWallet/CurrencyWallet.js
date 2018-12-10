@@ -21,6 +21,7 @@ import { getSeoPage } from 'helpers/seo'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import ReactTooltip from 'react-tooltip'
 import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
+import { localisedUrl } from '../../helpers/locale'
 
 @connect(({ core, user,  history: { transactions, swapHistory } }) => ({
   user,
@@ -87,7 +88,8 @@ export default class CurrencyWallet extends Component {
     })
   }
   handleGoTrade = (currency) => {
-    this.props.history.push(`/${currency.toLowerCase()}`)
+    const { intl: { locale } } = this.props
+    this.props.history.push(localisedUrl(locale, currency.toLowerCase()))
   }
 
   handleEosBuyAccount = async () => {

@@ -18,6 +18,7 @@ import actions from 'redux/actions'
 
 import { withRouter } from 'react-router'
 import { FormattedMessage, injectIntl } from 'react-intl'
+import { localisedUrl } from '../../helpers/locale'
 
 
 @injectIntl
@@ -87,7 +88,7 @@ export default class Currency extends Component {
   componentWillMount = () => {
     const { intl: { locale } } = this.props
     if (!this.getCoin()) {
-      this.props.history.push(`${locale}/`)
+      this.props.history.push(localisedUrl(locale, '/'))
       return false
     }
 

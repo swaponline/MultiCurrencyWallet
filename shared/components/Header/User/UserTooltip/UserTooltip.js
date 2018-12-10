@@ -50,8 +50,9 @@ export default class UserTooltip extends Component {
   }
 
   autoAcceptRequest = (orderId, participantPeer, link) => {
+    const { intl: { locale } } = this.props
     this.acceptRequest(orderId, participantPeer)
-    this.props.history.push(link)
+    this.props.history.push(localisedUrl(locale, link))
   }
 
   render() {
