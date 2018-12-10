@@ -117,7 +117,7 @@ export default class Wallet extends Component {
     }) !== JSON.stringify({
       ...getComparableProps(nextProps),
       ...nextState,
-    });
+    })
   }
 
   render() {
