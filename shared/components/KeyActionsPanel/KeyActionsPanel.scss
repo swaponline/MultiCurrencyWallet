@@ -2,17 +2,36 @@
   display: flex;
   width: 700;
   margin-right: 15px;
+  margin-top: 20px;
+  margin-bottom: -20px;
 }
 
 @include media-tablet {
 	.WithdrawButtonContainer {
-		margin-left: -20px;
+		margin-left: 0;
+    margin-top: 0;
+    margin-bottom: 5px;
 	}
 }
 
 @include media-mobile {
 	.WithdrawButtonContainer {
 		flex-direction: column;
-		align-items: end;
+		margin: 0;
+    margin-bottom: -12px;
+    display: flex;
+    justify-content: start;
+    align-items: baseline;
+    margin-top: -15px;
+    button {
+      font-size: 13px;
+    }
+  }
+}
+
+
+@media all and (min-width: 320px) and (max-width: 364px) {
+  .WithdrawButtonContainer {
+    margin-top: 10px;
 	}
 }

@@ -132,6 +132,7 @@ export default class Wallet extends Component {
           </SubTitle>
           Deposit funds to addresses below
         </PageHeadline>
+        <KeyActionsPanel />
         <Table
           id="table-wallet"
           className={styles.wallet}
@@ -141,7 +142,6 @@ export default class Wallet extends Component {
             <Row key={row} currency={row} currencies={currencies} hiddenCoinsList={hiddenCoinsList} selectId={selectId} index={index} handleSelectId={handleSelectId} />
           )}
         />
-        <KeyActionsPanel />
       </section>
     )
   }
