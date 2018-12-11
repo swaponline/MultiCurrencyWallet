@@ -249,3 +249,4 @@ export default class WithdrawModal extends React.Component {
       )
     }
 }
+
