@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { withRouter } from 'react-router-dom'
 import { connect } from 'redaction'
 
 import styles from './User.scss'
@@ -15,6 +16,7 @@ import AddOfferButton from './AddOfferButton/AddOfferButton'
 import Avatar from 'components/Avatar/Avatar'
 
 
+@withRouter
 @connect({
   feeds: 'feeds.items',
   peer: 'ipfs.peer',
@@ -34,6 +36,11 @@ export default class User extends React.Component {
 
   state = {
     view: true,
+    path: false,
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.checkPath()
   }
 
   handleChangeView = () => {
@@ -52,15 +59,29 @@ export default class User extends React.Component {
     audio.autoplay = true
   }
 
-  render() {
-    const { view } = this.state
+  checkPath = () => {
+    const { history: { location: { pathname } } } = this.props
+    const { path } = this.state
+    if  (pathname === '/ru' || pathname === '/') {
+      this.setState({
+        path: true,
+      })
+    } else {
+      this.setState({
+        path: false,
+      })
+    }
+  }
 
-    const { feeds, peer, reputation, openTour } = this.props
+  render() {
+    const { view, path } = this.state
+
+    const { feeds, peer, reputation, openTour, history: { location: { pathname } } } = this.props
 
     return (
       <div styleName="user-cont">
         <AddOfferButton />
-        <Question openTour={openTour} />
+        {path && (<Question openTour={openTour} />)}
         <UserAvatar
           isToggle={this.handleToggleTooltip}
           feeds={feeds}

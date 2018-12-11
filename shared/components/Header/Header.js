@@ -63,7 +63,6 @@ export default class Header extends Component {
       isTourOpen: false,
       isShowingMore: false,
       sticky: false,
-      path: false,
       menuItems: [
         {
           title: props.intl.formatMessage(messages.wallet),
@@ -105,11 +104,6 @@ export default class Header extends Component {
   }
   componentWillUnmount() {
     window.removeEventListener('scroll', this.handleScroll)
-
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.checkPath()
   }
 
   handleScroll = () =>  {
@@ -158,7 +152,7 @@ export default class Header extends Component {
 
   render() {
     const { sticky, menuItems, isTourOpen, isShowingMore, path } = this.state
-    const { intl: { locale }, history: { location: { pathname } } } = this.props
+    const { intl: { locale } } = this.props
 
     const accentColor = '#510ed8'
 
@@ -177,7 +171,7 @@ export default class Header extends Component {
           <Logo withLink />
           <Nav menu={menuItems} />
           <Logo withLink mobile />
-          <User openTour={path && this.openTour} />
+          <User openTour={this.openTour} />
           <Tour
             steps={tourSteps}
             onRequestClose={this.closeTour}

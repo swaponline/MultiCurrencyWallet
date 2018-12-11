@@ -310,8 +310,8 @@ export default class Row extends Component {
           <span styleName="mobileName">{fullName}</span>
         </td>
         <Fragment>
-          <CopyToClipboard text={address} onCopy={this.handleCopyAddress}>
-            <td data-tut="reactour__address" styleName={currency === 'EOS' && !eosAccountActivated ? 'yourAddressWithOptions' : 'yourAddress'}>
+          <CopyToClipboard text={address} data-tut="reactour__address" onCopy={this.handleCopyAddress}>
+            <td styleName={currency === 'EOS' && !eosAccountActivated ? 'yourAddressWithOptions' : 'yourAddress'}>
               {
                 !contractAddress ? (
                   <div styleName="notContractAddress">
