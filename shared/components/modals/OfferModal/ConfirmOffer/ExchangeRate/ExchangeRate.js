@@ -15,9 +15,11 @@ const title = [
 const ExchangeRate = ({ value, buyCurrency, sellCurrency }) => (
   <Row title={title}>
     <Value value={1 / Number(value)} currency={sellCurrency} />
-    <FormattedMessage id="ExchangeRate14" defaultMessage="=">
-      {message => <div styleName="equal">{message}</div>}
-    </FormattedMessage>
+    {' '}
+    <div styleName="equal">
+      <FormattedMessage id="ExchangeRate14" defaultMessage="=" />
+    </div>
+    {' '}
     <Value value={1} currency={buyCurrency} />
   </Row>
 )

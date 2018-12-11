@@ -181,6 +181,7 @@ export default class WithdrawModal extends React.Component {
 
       const title = [
         <FormattedMessage id="Withdraw183" defaultMessage="Withdraw" />,
+        ' ',
         `${data.currency.toUpperCase()}`,
       ]
 
@@ -206,6 +207,7 @@ export default class WithdrawModal extends React.Component {
           }
           <FieldLabel inRow>
             <FormattedMessage id="Withdrow1194" defaultMessage="Address " />
+            {' '}
             <Tooltip text={text} id="WtH203" />
           </FieldLabel>
           <Input valueLink={linked.address} focusOnInit pattern="0-9a-zA-Z" placeholder={`Enter ${data.currency.toUpperCase()} address to transfer the funds`} />
@@ -233,12 +235,14 @@ export default class WithdrawModal extends React.Component {
             !linked.amount.error && (
               <div styleName={minus ? 'rednote' : 'note'}>
                 <FormattedMessage id="WithdrawModal106" defaultMessage="No less than " />
+                {' '}
                 {minAmount[data.currency.toLowerCase()]}
               </div>
             )
           }
           <Button styleName="buttonFull" brand fullWidth disabled={isDisabled} onClick={this.handleSubmit}>
-            <FormattedMessage id="WithdrawModal111" defaultMessage="Withdraw " />
+            <FormattedMessage id="WithdrawModal111" defaultMessage="Withdraw" />
+            {' '}
             {data.currency.toUpperCase()}
           </Button>
         </Modal>

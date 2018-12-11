@@ -19,10 +19,9 @@ import { Button, RemoveButton } from 'components/controls'
 import Pair from '../Pair'
 import PAIR_TYPES from 'helpers/constants/PAIR_TYPES'
 import RequestButton from '../RequestButton/RequestButton'
-import { FormattedMessage, injectIntl } from 'react-intl'
-import { localisedUrl } from 'helpers/locale'
+import { FormattedMessage } from 'react-intl'
 
-@injectIntl
+
 @connect({
   peer: 'ipfs.peer',
 })
@@ -120,7 +119,6 @@ export default class Row extends Component {
         owner: {  peer: ownerPeer },
       },
       peer,
-      intl: { locale },
     } = this.props
 
     const pair = Pair.fromOrder(this.props.row)
@@ -128,7 +126,7 @@ export default class Row extends Component {
     const { price, amount, total, main, base, type } = pair
 
     if (this.state.redirect) {
-      return <Redirect push to={`${localisedUrl(locale, links.swap)}/${buyCurrency}-${sellCurrency}/${id}`} />
+      return <Redirect push to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`} />
     }
 
     return (
@@ -141,11 +139,7 @@ export default class Row extends Component {
         </td>
         <td>
           <span style={{ color: 'gray' }}>
-            {type === PAIR_TYPES.BID ?
-              <FormattedMessage id="Row134" defaultMessage="buys" />
-              :
-              <FormattedMessage id="Row136" defaultMessage="sells" />
-            }
+            {type === PAIR_TYPES.BID ? 'buys' : 'sells'}
           </span>
           {' '}
           {
@@ -163,12 +157,7 @@ export default class Row extends Component {
         </td>
         <td>
           <span style={{ color: 'gray' }}>
-            {
-              type === PAIR_TYPES.BID ?
-                <FormattedMessage id="Row131" defaultMessage="for" />
-                :
-                <FormattedMessage id="Row158" defaultMessage="for" />
-            }
+            <FormattedMessage id="Row131" defaultMessage="for" />
           </span>
           {' '}
           {
@@ -187,7 +176,7 @@ export default class Row extends Component {
                       <div style={{ color: 'red' }}>
                         <FormattedMessage id="Row148" defaultMessage="REQUESTING" />
                       </div>
-                      <Link to={`${localisedUrl(locale, links.swap)}/${buyCurrency}-${sellCurrency}/${id}`}>
+                      <Link to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`}>
                         <FormattedMessage id="Row151" defaultMessage="Go to the swap" />
                       </Link>
                     </Fragment>
@@ -214,15 +203,11 @@ export default class Row extends Component {
                           onMouseLeave={() => this.setState(() => ({ enterButton: false }))}
                           move={this.state.enterButton}
                         >
-                          {type === PAIR_TYPES.BID ?
-                            <FormattedMessage id="Row202" defaultMessage="SELL" />
-                            :
-                            <FormattedMessage id="Row204" defaultMessage="BUY" />
-                          }
+                          {type === PAIR_TYPES.BID ? 'SELL' : 'BUY'}
                           {' '}
                           {amount.toFixed(4)}{' '}{main}
                           <br />
-                          <FormattedMessage id="Row209" defaultMessage="FOR" />
+                          FOR
                           {' '}
                           {total.toFixed(4)}{' '}{base}
                         </RequestButton>
@@ -253,7 +238,6 @@ export default class Row extends Component {
         owner: {  peer: ownerPeer },
       },
       peer,
-      intl: { locale },
     } = this.props
 
     const pair = Pair.fromOrder(this.props.row)
@@ -284,31 +268,14 @@ export default class Row extends Component {
               </span>
               <span>{`${total.toFixed(5)} ${base}`}</span>
             </div>
-          </div>
-        </td>
-        <td>
-          {
-            peer === ownerPeer ? (
-              <RemoveButton onClick={() => this.removeOrder(id)} />
-            ) : (
-              <Fragment>
-                {
-                  isRequested ? (
-                    <Fragment>
-                      <div style={{ color: 'red' }}>
-                        <FormattedMessage id="RowM136" defaultMessage="REQUESTING" />
-                      </div>
-                      <Link to={`${localisedUrl(locale, links.swap)}/${buyCurrency}-${sellCurrency}/${id}`}>
-                        <FormattedMessage id="RowM139" defaultMessage="Go to the swap" />
-                      </Link>
-                    </Fragment>
-                  ) : (
-                    isProcessing ? (
-                      <span>
-                        <FormattedMessage id="RowM145" defaultMessage="This order is in execution" />
-                      </span>
-                    ) : (
-                      isFetching ? (
+            <div styleName="tdContainer-3">
+              {
+                peer === ownerPeer ? (
+                  <RemoveButton onClick={() => this.removeOrder(id)} />
+                ) : (
+                  <Fragment>
+                    {
+                      isRequested ? (
                         <Fragment>
                           <div style={{ color: 'red' }}>
                             <FormattedMessage id="RowM136" defaultMessage="REQUESTING" />
@@ -346,11 +313,12 @@ export default class Row extends Component {
                           )
                         )
                       )
-                    ))
                     }
                   </Fragment>
                 )
               }
+            </div>
+          </div>
         </td>
       </tr>
     )
@@ -369,11 +337,10 @@ export default class Row extends Component {
         buyCurrency,
         sellCurrency,
       },
-      intl: { locale },
     } = this.props
 
     if (this.state.redirect) {
-      return <Redirect push to={`${localisedUrl(locale, links.swap)}/${buyCurrency}-${sellCurrency}/${id}`} />
+      return <Redirect push to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`} />
     }
     if (this.state.windowWidth < mobileBreakpoint)  {
       return this.renderMobileContent()

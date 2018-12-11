@@ -1,7 +1,8 @@
 .button {
   padding: 5px 10px;
   height: 60px;
-  width: 180px;
+  min-width: 180px;
+  max-width: 200px;
   background-color: #e91db4;
   position: relative;
   opacity: 0.8;
@@ -21,5 +22,11 @@
 
   &:hover {
     opacity: 0.5;
+  }
+}
+@include media-mobile {
+  .button {
+    height: 60px;
+    min-width: 30px;
   }
 }

@@ -145,14 +145,14 @@
   },
   {
     "id": "userTooltip68",
-    "message": "User with",
+    "message": "User with ",
     "files": [
       "shared/components/Header/User/UserTooltip/UserTooltip.js"
     ]
   },
   {
     "id": "userTooltip72",
-    "message": "reputation wants to swap",
+    "message": " reputation wants to swap",
     "files": [
       "shared/components/Header/User/UserTooltip/UserTooltip.js"
     ]
@@ -208,28 +208,28 @@
   },
   {
     "id": "EosRegAccountModal54",
-    "message": "Account name",
+    "message": "Account name ",
     "files": [
       "shared/components/modals/EosRegisterModal/EosRegisterModal.js"
     ]
   },
   {
     "id": "EosRegAccountModal58",
-    "message": "Active private key",
+    "message": "Active private key ",
     "files": [
       "shared/components/modals/EosRegisterModal/EosRegisterModal.js"
     ]
   },
   {
     "id": "EosRegAccountModal63",
-    "message": "Sorry, error occurred during activation",
+    "message": "Sorry, error occurred during activation ",
     "files": [
       "shared/components/modals/EosRegisterModal/EosRegisterModal.js"
     ]
   },
   {
     "id": "EosRegAccountModal70",
-    "message": "Login",
+    "message": "Login ",
     "files": [
       "shared/components/modals/EosRegisterModal/EosRegisterModal.js"
     ]
@@ -327,7 +327,7 @@
   },
   {
     "id": "ImportKeys110",
-    "message": "Please enter eth private key",
+    "message": "Please enter ETH private key",
     "files": [
       "shared/components/modals/ImportKeys/ImportKeys.js"
     ]
@@ -488,14 +488,14 @@
   },
   {
     "id": "WithdrawModal111",
-    "message": "Transfer",
+    "message": "Withdraw ",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
   },
   {
     "id": "Withdrow108",
-    "message": "Address",
+    "message": "The amount must be less than your balance on the miners fee ",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
@@ -2816,7 +2816,7 @@
   },
   {
     "id": "WithdrawButton32",
-    "message": "You can not send and exchange this asset, because you have a zero balance. ",
+    "message": "when you click this button, in the field, an amount equal to your balance minus the miners commission will appear. ",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
@@ -3765,17 +3765,11 @@
   },
   {
     "id": "Row134",
-    "message": "buys",
-    "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
-    ]
+    "message": "buys"
   },
   {
     "id": "Row136",
-    "message": "sells",
-    "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
-    ]
+    "message": "sells"
   },
   {
     "id": "addoffer381",
@@ -3920,24 +3914,15 @@
   },
   {
     "id": "Row202",
-    "message": "SELL",
-    "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
-    ]
+    "message": "SELL"
   },
   {
     "id": "Row204",
-    "message": "BUY",
-    "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
-    ]
+    "message": "BUY"
   },
   {
     "id": "Row209",
-    "message": "FOR",
-    "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
-    ]
+    "message": "FOR"
   },
   {
     "id": "RowMobileFirstTypeYouGet",
@@ -4405,10 +4390,7 @@
   },
   {
     "id": "Row158",
-    "message": "for",
-    "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
-    ]
+    "message": "for"
   },
   {
     "id": "Scriptaddress:",
@@ -4613,6 +4595,90 @@
     "message": "Your wallet address",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "importkeys118",
+    "message": "Please enter BTC private key",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "importkeys119",
+    "message": "Please valid BTC private key",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "PartialPriceSearch483",
+    "message": "Price: 1",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial437",
+    "message": "Fast cryptocurrency exchange using atomicswap",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial462",
+    "message": "The amount you have in your swap.online wallet or external wallet that you want to exchange",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial478",
+    "message": "The amount you receive after the swap",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial541",
+    "message": "Exchange now",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial544",
+    "message": "Show order book",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "down57",
+    "message": "It seems like you're using an IPhone or an IPad. Just copy this keys and paste into notepad textarea.",
+    "files": [
+      "shared/components/modals/DownloadModal/DownloadModal.js"
+    ]
+  },
+  {
+    "id": "down64",
+    "message": "Address copied to clipboard",
+    "files": [
+      "shared/components/modals/DownloadModal/DownloadModal.js"
+    ]
+  },
+  {
+    "id": "down65",
+    "message": "Copy to clipboard",
+    "files": [
+      "shared/components/modals/DownloadModal/DownloadModal.js"
+    ]
+  },
+  {
+    "id": "down97",
+    "message": "We don`t store your private keys and will not be able to restore them!",
+    "files": [
+      "shared/components/modals/DownloadModal/DownloadModal.js"
     ]
   }
 ]

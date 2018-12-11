@@ -93,6 +93,7 @@ export default class EosBuyAccountModal extends React.Component {
           <div styleName="margin">
             <FieldLabel inRow>
               <FormattedMessage id="EosBuyAccountModal72" defaultMessage="Account name" />
+              {' '}
               <Tooltip text={text} id="EoS92" />
             </FieldLabel>
             <Input readOnly="true" valueLink={linked.accountName} styleName="input" />
@@ -100,6 +101,7 @@ export default class EosBuyAccountModal extends React.Component {
           <div styleName="margin">
             <FieldLabel inRow>
               <FormattedMessage id="EosBuyAccountModal78" defaultMessage="Private key" />
+              {' '}
               <Tooltip text={text1} id="EoS90" />
             </FieldLabel>
             <Input readOnly="true" valueLink={linked.activePrivateKey} />
@@ -107,6 +109,7 @@ export default class EosBuyAccountModal extends React.Component {
           <div styleName="margin">
             <FieldLabel inRow>
               <FormattedMessage id="EosBuyAccountModal84" defaultMessage="Public key" />
+              {' '}
               <Tooltip text={text2} id="EoS106" />
             </FieldLabel>
             <Input readOnly="true" valueLink={linked.activePublicKey} />
@@ -114,6 +117,7 @@ export default class EosBuyAccountModal extends React.Component {
           <div styleName="margin">
             <FieldLabel inRow>
               <FormattedMessage id="EosBuyAccountModal90" defaultMessage="Price (BTC)" />
+              {' '}
               <Tooltip text={text3} id="EoS113" />
             </FieldLabel>
             <Input readOnly="true" valueLink={linked.price} />

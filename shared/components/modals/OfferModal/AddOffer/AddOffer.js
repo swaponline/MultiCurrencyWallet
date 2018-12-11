@@ -412,9 +412,11 @@ export default class AddOffer extends Component {
       <div styleName="wrapper addOffer">
         { this.isEthOrERC20() &&
           <span styleName="error">
-            <FormattedMessage id="transaction27" defaultMessage="For a swap, you need " />
+            <FormattedMessage id="transaction27" defaultMessage="For a swap, you need" />
+            {' '}
             {minAmount.eth}
-            <FormattedMessage id="transaction398" defaultMessage=" ETH on your balance" />
+            {' '}
+            <FormattedMessage id="transaction398" defaultMessage="ETH on your balance" />
           </span>
         }
         <SelectGroup

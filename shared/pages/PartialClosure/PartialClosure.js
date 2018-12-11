@@ -357,7 +357,7 @@ export default class PartialClosure extends Component {
   handlePush = () => {
     const { intl: { locale } } = this.props
     const { haveCurrency, getCurrency } = this.state
-    this.props.history.push(localisedUrl(locale, `${haveCurrency} - ${getCurrency}`))
+    this.props.history.push(localisedUrl(locale, `/${haveCurrency} - ${getCurrency}`))
   }
 
   setClearState = () => {
@@ -428,13 +428,18 @@ export default class PartialClosure extends Component {
       <FormattedMessage id="partial223" defaultMessage="To change default wallet for buy currency. " />,
       <FormattedMessage id="partial224" defaultMessage="Leave empty for use Swap.Online wallet " />,
     ]
+
+    const suTitle = [
+      <FormattedMessage id="partial437" defaultMessage="Fast cryptocurrency exchange using atomicswap" />,
+    ]
+
     let canDoOrder = !isNonOffers
     if (!(Number(getAmount) > 0)) canDoOrder = false
     if (this.customWalletAllowed() && !this.customWalletValid()) canDoOrder = false
 
     return (
       <Fragment>
-        <PageHeadline subTitle="Fast cryptocurrency exchange using atomicswap" />
+        <PageHeadline subTitle={suTitle} />
         <div styleName="section">
           <div styleName="blockVideo">
             <iframe
@@ -453,7 +458,8 @@ export default class PartialClosure extends Component {
               selectedValue={haveCurrency}
               onSelect={this.handleSetHaveValue}
               label={<FormattedMessage id="partial243" defaultMessage="You sell" />}
-              tooltip="The amount you have in your swap.online wallet or external wallet that you want to exchange"
+              id="partialClosure456"
+              tooltip={<FormattedMessage id="partial462" defaultMessage="The amount you have in your swap.online wallet or external wallet that you want to exchange" />}
               placeholder="Enter amount"
               usd={(maxAmount > 0 && isNonOffers) ? 0 : haveUsd}
               currencies={currencies}
@@ -468,7 +474,8 @@ export default class PartialClosure extends Component {
               selectedValue={getCurrency}
               onSelect={this.handleSetGetValue}
               label={<FormattedMessage id="partial255" defaultMessage="You get" />}
-              tooltip="The amount you receive after the swap"
+              id="partialClosure472"
+              tooltip={<FormattedMessage id="partial478" defaultMessage="The amount you receive after the swap" />}
               disabled
               currencies={currencies}
               usd={getUsd}
@@ -482,9 +489,10 @@ export default class PartialClosure extends Component {
               )
             }
             { oneCryptoCost.isGreaterThan(0) && oneCryptoCost.isFinite() && (
-              <p>
-                `Price: 1 ${getCurrency.toUpperCase()} = ${oneCryptoCost.toFixed(5)} ${haveCurrency.toUpperCase()}`}
-              </p>
+              <div>
+                <FormattedMessage id="PartialPriceSearch483" defaultMessage="Price: 1" />
+                {getCurrency.toUpperCase()} = {oneCryptoCost.toFixed(5)} {haveCurrency.toUpperCase()}
+              </div>
             )}
             { !oneCryptoCost.isFinite() && !isNonOffers && (
               <FormattedMessage id="PartialPriceCalc" defaultMessage="Calc price" />
@@ -509,7 +517,6 @@ export default class PartialClosure extends Component {
               isFetching && (
                 <span>
                   <FormattedMessage id="partial291" defaultMessage="Wait participant: " />
-
                   <InlineLoader />
                 </span>
               )
@@ -537,10 +544,10 @@ export default class PartialClosure extends Component {
             }
             <div styleName="rowBtn">
               <Button styleName="button" brand onClick={this.sendRequest} disabled={!canDoOrder}>
-                {`Exchange now`}
+                <FormattedMessage id="partial541" defaultMessage="Exchange now" />
               </Button>
               <Button styleName="button" gray onClick={this.handlePush} >
-                {`Show order book`}
+                <FormattedMessage id="partial544" defaultMessage="Show order book" />
               </Button>
             </div>
           </div>

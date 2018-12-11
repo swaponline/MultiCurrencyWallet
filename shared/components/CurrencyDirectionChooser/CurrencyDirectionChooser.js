@@ -84,10 +84,10 @@ export default class CurrencyDirectionChooser extends Component {
               />
             </div>
           </div>
-
-          <FormattedMessage id="CurrencyDirectionChooser86" defaultMessage="SHOW ORDERS ">
-            {message =>   <Button styleName="button" brand onClick={handleSubmit}>{message}<Tooltip text={text} id="cdc87" /></Button>}
-          </FormattedMessage>
+          <Button styleName="button" brand onClick={handleSubmit}>
+            <FormattedMessage id="CurrencyDirectionChooser86" defaultMessage="SHOW ORDERS " />
+          </Button>
+          <Tooltip text={text} id="cdc87" />
         </div>
       </div>
     )

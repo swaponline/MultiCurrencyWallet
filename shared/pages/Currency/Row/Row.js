@@ -5,20 +5,28 @@ import { links } from 'helpers'
 
 import cssModules from 'react-css-modules'
 import styles from './Row.scss'
+import { withRouter } from 'react-router'
 
 import Coin from 'components/Coin/Coin'
 import Flip from 'components/controls/Flip/Flip'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
+import BtnTooltip from 'components/controls/WithdrawButton/BtnTooltip'
 
 
 @injectIntl
+@withRouter
 @cssModules(styles)
 export default class Row extends Component {
 
   static propTypes = {
     from: PropTypes.string.isRequired,
     to: PropTypes.string.isRequired,
+  }
+
+  handlePush = () => {
+    const { from, to, intl: { locale } } = this.props
+    this.props.history.push(localisedUrl(locale, `/${from.toLowerCase()} - ${to.toLowerCase()}`))
   }
 
   render() {
@@ -38,9 +46,9 @@ export default class Row extends Component {
           </span>
         </td>
         <td>
-          <Link styleName="button" to={`${localisedUrl(locale, links.home)}/${from.toLowerCase()}-${to.toLowerCase()}`}>
-            <FormattedMessage id="Row35" defaultMessage="Exchange " />
-          </Link>
+          <BtnTooltip onClick={() => this.handlePush()} text="Exchange" >
+            <FormattedMessage id="Row35" defaultMessage="Exchange" />
+          </BtnTooltip>
         </td>
       </tr>
     )

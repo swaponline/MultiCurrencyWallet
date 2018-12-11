@@ -115,8 +115,8 @@ export default class ImportKeys extends Component {
     }
 
     if (isSubmittedBtc) {
-      linked.btcKey.check((value) => value !== '', 'Please enter BTC private key')
-      linked.btcKey.check((value) => value.length > 27, 'Please valid BTC private key')
+      linked.btcKey.check((value) => value !== '', <FormattedMessage id="importkeys118" defaultMessage="Please enter BTC private key" />)
+      linked.btcKey.check((value) => value.length > 27, <FormattedMessage id="importkeys119" defaultMessage="Please valid BTC private key" />)
     }
 
     const title = [
@@ -129,7 +129,7 @@ export default class ImportKeys extends Component {
           <FormattedMessage id="ImportKeys107" defaultMessage="This procedure will rewrite your private key. If you are not sure about it, we recommend to press cancel">
             {message => <p>{message}</p>}
           </FormattedMessage>
-          <FormattedMessage id="ImportKeys110" defaultMessage="Please enter eth private key">
+          <FormattedMessage id="ImportKeys110" defaultMessage="Please enter ETH private key">
             {message => <FieldLabel>{message}</FieldLabel>}
           </FormattedMessage>
           <Group
@@ -139,7 +139,7 @@ export default class ImportKeys extends Component {
             onClick={this.handleEthImportKey}
           />
 
-          <FormattedMessage id="ImportKeys120" defaultMessage="Please enter btc private key in WIF format">
+          <FormattedMessage id="ImportKeys120" defaultMessage="Please enter BTC private key in WIF format">
             {message => <FieldLabel>{message}</FieldLabel>}
           </FormattedMessage>
           <Group

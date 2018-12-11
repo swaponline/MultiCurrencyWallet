@@ -23,7 +23,7 @@ import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 import Tour from 'reactour'
 import Logo from 'components/Logo/Logo'
 import { relocalisedUrl } from 'helpers/locale'
-import { localisedUrl } from '../../helpers/locale';
+import { localisedUrl } from '../../helpers/locale'
 
 
 let lastScrollTop = 0

@@ -324,7 +324,7 @@
   },
   {
     "id": "ImportKeys110",
-    "message": "Please enter eth private key",
+    "message": "Please enter ETH private key",
     "files": [
       "shared/components/modals/ImportKeys/ImportKeys.js"
     ]
@@ -3772,17 +3772,11 @@
   },
   {
     "id": "Row134",
-    "message": "buys",
-    "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
-    ]
+    "message": "buys"
   },
   {
     "id": "Row136",
-    "message": "sells",
-    "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
-    ]
+    "message": "sells"
   },
   {
     "id": "addoffer381",
@@ -3927,24 +3921,15 @@
   },
   {
     "id": "Row202",
-    "message": "SELL",
-    "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
-    ]
+    "message": "SELL"
   },
   {
     "id": "Row204",
-    "message": "BUY",
-    "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
-    ]
+    "message": "BUY"
   },
   {
     "id": "Row209",
-    "message": "FOR",
-    "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
-    ]
+    "message": "FOR"
   },
   {
     "id": "RowMobileFirstTypeYouGet",
@@ -4173,49 +4158,49 @@
   },
   {
     "id": "Eos71",
-    "message": "This account will be registered in EOS blockchain",
+    "message": "This account will be registered in EOS blockchain ",
     "files": [
       "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
     ]
   },
   {
     "id": "Eos75",
-    "message": "Private key for active and owner permissions",
+    "message": "Private key for active and owner permissions ",
     "files": [
       "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
     ]
   },
   {
     "id": "Eos79",
-    "message": "Public key associated with account",
+    "message": "Public key associated with account ",
     "files": [
       "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
     ]
   },
   {
     "id": "Eos83",
-    "message": "This amount will be withdrawn from your BTC wallet",
+    "message": "This amount will be withdrawn from your BTC wallet ",
     "files": [
       "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
     ]
   },
   {
     "id": "Eos53",
-    "message": "Enter your EOS account name",
+    "message": "Enter your EOS account name ",
     "files": [
       "shared/components/modals/EosRegisterModal/EosRegisterModal.js"
     ]
   },
   {
     "id": "Eos57",
-    "message": "Enter private key for active permission",
+    "message": "Enter private key for active permission ",
     "files": [
       "shared/components/modals/EosRegisterModal/EosRegisterModal.js"
     ]
   },
   {
     "id": "add408",
-    "message": "To change the exchange rate",
+    "message": "To change the exchange rate ",
     "files": [
       "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
     ]
@@ -4412,10 +4397,7 @@
   },
   {
     "id": "Row158",
-    "message": "for",
-    "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
-    ]
+    "message": "for"
   },
   {
     "id": "RowHistory281",
@@ -4613,6 +4595,90 @@
     "message": "Your wallet address",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "importkeys118",
+    "message": "Please enter BTC private key",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "importkeys119",
+    "message": "Please valid BTC private key",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "PartialPriceSearch483",
+    "message": "Price: 1",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial437",
+    "message": "Fast cryptocurrency exchange using atomicswap",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial462",
+    "message": "The amount you have in your swap.online wallet or external wallet that you want to exchange",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial478",
+    "message": "The amount you receive after the swap",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial541",
+    "message": "Exchange now",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial544",
+    "message": "Show order book",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "down57",
+    "message": "It seems like you're using an IPhone or an IPad. Just copy this keys and paste into notepad textarea.",
+    "files": [
+      "shared/components/modals/DownloadModal/DownloadModal.js"
+    ]
+  },
+  {
+    "id": "down64",
+    "message": "Address copied to clipboard",
+    "files": [
+      "shared/components/modals/DownloadModal/DownloadModal.js"
+    ]
+  },
+  {
+    "id": "down65",
+    "message": "Copy to clipboard",
+    "files": [
+      "shared/components/modals/DownloadModal/DownloadModal.js"
+    ]
+  },
+  {
+    "id": "down97",
+    "message": "We don`t store your private keys and will not be able to restore them!",
+    "files": [
+      "shared/components/modals/DownloadModal/DownloadModal.js"
     ]
   }
 ]

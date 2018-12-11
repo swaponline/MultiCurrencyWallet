@@ -327,14 +327,14 @@
   },
   {
     "id": "ImportKeys110",
-    "message": "Введите Ваш приватный ключ",
+    "message": "Введите Ваш ETH приватный ключ",
     "files": [
       "shared/components/modals/ImportKeys/ImportKeys.js"
     ]
   },
   {
     "id": "ImportKeys120",
-    "message": "Введите Ваш btc приватный ключ в WIF формате",
+    "message": "Введите Ваш BTC приватный ключ в WIF формате",
     "files": [
       "shared/components/modals/ImportKeys/ImportKeys.js"
     ]
@@ -495,7 +495,7 @@
   },
   {
     "id": "Withdrow108",
-    "message": "Адрес ",
+    "message": "Сумма должна быть меньше вашего баланса на комиссию манеров ",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
@@ -716,7 +716,7 @@
   },
   {
     "id": "CurrencyWallet110",
-    "message": " баланс",
+    "message": "Внесите средства на этот адрес кошелька",
     "files": [
       "shared/pages/CurrencyWallet/CurrencyWallet.js",
       "shared/pages/Wallet/Row/Row.js"
@@ -3765,17 +3765,11 @@
   },
   {
     "id": "Row134",
-    "message": "продать",
-    "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
-    ]
+    "message": "продать"
   },
   {
     "id": "Row136",
-    "message": "продает",
-    "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
-    ]
+    "message": "продает"
   },
   {
     "id": "addoffer381",
@@ -3920,24 +3914,15 @@
   },
   {
     "id": "Row202",
-    "message": "ПРОДАТЬ ",
-    "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
-    ]
+    "message": "ПРОДАТЬ "
   },
   {
     "id": "Row204",
-    "message": "КУПИТЬ ",
-    "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
-    ]
+    "message": "КУПИТЬ "
   },
   {
     "id": "Row209",
-    "message": "ЗА ",
-    "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
-    ]
+    "message": "ЗА "
   },
   {
     "id": "RowMobileFirstTypeYouGet",
@@ -4338,7 +4323,7 @@
   },
   {
     "id": "Add52",
-    "message": "Добавить предложение на обмен",
+    "message": "Создать предложение на обмен",
     "files": [
       "shared/components/modals/OfferModal/OfferModal.js"
     ]
@@ -4398,17 +4383,14 @@
   },
   {
     "id": "Withdraw183",
-    "message": "Отправка ",
+    "message": "Перевод ",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
   },
   {
     "id": "Row158",
-    "message": "покупает",
-    "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
-    ]
+    "message": "покупает"
   },
   {
     "id": "Scriptaddress:",
@@ -4613,6 +4595,90 @@
     "message": "Ваш адрес кошелька ",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "importkeys118",
+    "message": "Пожалуйста введите BTC секретный ключ ",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "importkeys119",
+    "message": "Недействительный BTC секретный ключ",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "PartialPriceSearch483",
+    "message": "Курс: 1",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial437",
+    "message": "Быстрый обмен криптовалютой с использованием Atomic Swap",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial462",
+    "message": "Сумма, которую вы хотите обменять используя кошелек swap.online или внешний кошелек",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial478",
+    "message": "Сумма, которую вы получите после обмена",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial541",
+    "message": "Обменяться",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial544",
+    "message": "Показать предложения",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "down57",
+    "message": "Похоже, что Вы используете IPhone или IPad. Скопируйте секретные ключи и адреса в надеждное место.",
+    "files": [
+      "shared/components/modals/DownloadModal/DownloadModal.js"
+    ]
+  },
+  {
+    "id": "down64",
+    "message": "Скопировано в буфер обмена",
+    "files": [
+      "shared/components/modals/DownloadModal/DownloadModal.js"
+    ]
+  },
+  {
+    "id": "down65",
+    "message": "Скопировтаь",
+    "files": [
+      "shared/components/modals/DownloadModal/DownloadModal.js"
+    ]
+  },
+  {
+    "id": "down97",
+    "message": "Мы не храним Ваши ключи или адреса! И не сможем их востановить!",
+    "files": [
+      "shared/components/modals/DownloadModal/DownloadModal.js"
     ]
   }
 ]

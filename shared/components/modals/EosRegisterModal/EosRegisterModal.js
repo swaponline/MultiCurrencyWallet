@@ -50,37 +50,39 @@ export default class EosRegisterModal extends React.Component {
     const isDisabled = !accountName || !privateKey
 
     const text = [
-      <FormattedMessage id="Eos53" defaultMessage="Enter your EOS account name" />,
+      <FormattedMessage id="Eos53" defaultMessage="Enter your EOS account name " />,
     ]
 
     const text1 = [
-      <FormattedMessage id="Eos57" defaultMessage="Enter private key for active permission" />,
+      <FormattedMessage id="Eos57" defaultMessage="Enter private key for active permission " />,
     ]
 
     const title = [
-      <FormattedMessage id="Eos61" defaultMessage="EOS Login" />,
+      <FormattedMessage id="Eos61" defaultMessage="EOS Login " />,
     ]
 
     return (
       <Modal name={name} title={title}>
         <FieldLabel inRow>
-          <FormattedMessage id="EosRegAccountModal54" defaultMessage="Account name" />
+          <FormattedMessage id="EosRegAccountModal54" defaultMessage="Account name " />
+          {' '}
           <Tooltip text={text} id="EoSR92" />
         </FieldLabel>
         <Input valueLink={linked.accountName} />
         <FieldLabel inRow>
-          <FormattedMessage id="EosRegAccountModal58" defaultMessage="Active private key" />
+          <FormattedMessage id="EosRegAccountModal58" defaultMessage="Active private key " />
+          {' '}
           <Tooltip text={text1} id="EoSR69" />
         </FieldLabel>
         <Input valueLink={linked.privateKey} />
         { error && (
           <div styleName="error">
-            <FormattedMessage id="EosRegAccountModal63" defaultMessage="Sorry, error occurred during activation" />
+            <FormattedMessage id="EosRegAccountModal63" defaultMessage="Sorry, error occurred during activation " />
           </div>
         )
         }
         <Button styleName="button" brand fullWidth disabled={isDisabled} onClick={this.handleSubmit}>
-          <FormattedMessage id="EosRegAccountModal70" defaultMessage="Login" />
+          <FormattedMessage id="EosRegAccountModal70" defaultMessage="Login " />
         </Button>
       </Modal>
     )
