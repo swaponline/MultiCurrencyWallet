@@ -30,6 +30,8 @@ export default class EthToBtc extends Component {
 
   componentWillMount() {
     this.swap.on('state update', this.handleFlowStateUpdate)
+
+    console.log('this swap', this.state.flow)
   }
 
   componentWillUnmount() {
