@@ -139,8 +139,11 @@ export default class Wallet extends Component {
           <SubTitle style={{ fontFamily: 'Arial' }}>
             <FormattedMessage id="Wallet104" defaultMessage="Your online cryptocurrency wallet" />
           </SubTitle>
-          <FormattedMessage id="Wallet137" defaultMessage="Deposit funds to addresses below" />
         </PageHeadline>
+        <KeyActionsPanel />
+        <div styleName="depositText">
+          <FormattedMessage id="Wallet137" defaultMessage="Deposit funds to addresses below" />
+        </div>
         <Table
           id="table-wallet"
           className={styles.wallet}
@@ -150,7 +153,6 @@ export default class Wallet extends Component {
             <Row key={row} currency={row} currencies={currencies} hiddenCoinsList={hiddenCoinsList} selectId={selectId} index={index} handleSelectId={handleSelectId} />
           )}
         />
-        <KeyActionsPanel />
       </section>
     )
   }

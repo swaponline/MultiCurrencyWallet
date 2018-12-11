@@ -37,7 +37,6 @@ export default class PrivateKeysModal extends React.PureComponent {
     view: views.saveKeys,
     ethValidated: false,
     btcValidated: false,
-    isDownload: false,
   }
 
   changeView = (view) => {
@@ -58,8 +57,6 @@ export default class PrivateKeysModal extends React.PureComponent {
     actions.notifications.show(constants.notifications.Message, {
       message: 'Check your browser downloads',
     })
-
-    this.setState(() => ({ isDownload: true }))
   }
 
   handleNext = () => {
@@ -78,7 +75,7 @@ export default class PrivateKeysModal extends React.PureComponent {
   }
 
   render() {
-    const { view, isDownload } = this.state
+    const { view } = this.state
     const { name, ethData, btcData } = this.props
 
     const ethValidated = Link.state(this, 'ethValidated')
@@ -124,7 +121,7 @@ export default class PrivateKeysModal extends React.PureComponent {
                     <FormattedMessage id="PrivateKeysModal118" defaultMessage="Then click here">
                       {message => <span styleName="text">{message}</span>}
                     </FormattedMessage>
-                    <Button brand disabled={!isDownload} styleName="button" onClick={this.handleNext} >
+                    <Button brand styleName="button" onClick={this.handleNext} >
                       <FormattedMessage id="PrivateKeysModal121" defaultMessage="Next step" />
                     </Button>
                   </div>
