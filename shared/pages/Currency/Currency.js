@@ -116,14 +116,14 @@ export default class Currency extends Component {
     })
   }
 
-checkBalance = () => {
-  const { isBalanceEmpty } = this.state
-  const { balance } = this.getCoin()
+  checkBalance = () => {
+    const { isBalanceEmpty } = this.state
+    const { balance } = this.getCoin()
 
-  if (balance === 0) {
-    this.setState({ isBalanceEmpty: true })
+    if (balance === 0) {
+      this.setState({ isBalanceEmpty: true })
+    }
   }
-}
 
   render() {
     const { match: { params: { currency } } } = this.props
