@@ -503,7 +503,7 @@ export default class PartialClosure extends Component {
                   <FormattedMessage id="PartialPriceNoOrdersReduce" defaultMessage="No orders found, try to reduce the amount" />
                 </p>
                 <p styleName="error">
-                  <FormattedMessage id="PartialPriceReduceMin" defaultMessage='Maximum available amount: ' />
+                  <FormattedMessage id="PartialPriceReduceMin" defaultMessage="Maximum available amount: " />
                   {maxAmount}{' '}{getCurrency.toUpperCase()}
                 </p>
               </Fragment>

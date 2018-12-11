@@ -129,7 +129,9 @@ export default class CurrencyWallet extends Component {
           } />
         <PageHeadline
           styleName="title"
-          subTitle={!!seoPage ? seoPage.h1 :
+          subTitle={!!seoPage ?
+            seoPage.h1
+            :
             <span>
               <FormattedMessage id="currencywallet103" defaultMessage="Your online" />
               {fullName} ({currency})
