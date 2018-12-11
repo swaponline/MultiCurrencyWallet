@@ -95,6 +95,8 @@ export default class Header extends Component {
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll)
 
+    this.checkPath()
+
     if (this.props.history.location.pathname === '/') {
       if (!localStorage.getItem(constants.localStorage.openTour)) {
         this.openTour()
@@ -175,15 +177,15 @@ export default class Header extends Component {
           <Logo withLink />
           <Nav menu={menuItems} />
           <Logo withLink mobile />
-          <User openTour={this.openTour} />
-          {path &&  (<Tour
+          <User openTour={path && this.openTour} />
+          <Tour
             steps={tourSteps}
             onRequestClose={this.closeTour}
             isOpen={isTourOpen}
             maskClassName="mask"
             className="helper"
             accentColor={accentColor}
-          />)}
+          />
         </WidthContainer>
       </div>
     )
