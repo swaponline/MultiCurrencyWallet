@@ -12,7 +12,6 @@ const FieldLabel = ({ children, inRow }) => (
 )
 
 FieldLabel.propTypes = {
-  children: PropTypes.element.isRequired,
   inRow: PropTypes.bool,
 }
 

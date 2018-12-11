@@ -47,8 +47,8 @@ export default class Wallet extends Component {
     currencies: propTypes.array,
     hiddenCoinsList: propTypes.array,
     history: propTypes.object,
-    items: propTypes.arrayOf(propTypes.object),
-    tokens: propTypes.arrayOf(propTypes.object),
+    items: propTypes.arrayOf(propTypes.string),
+    tokens: propTypes.arrayOf(propTypes.string),
     location: propTypes.object,
     match: propTypes.object,
   }

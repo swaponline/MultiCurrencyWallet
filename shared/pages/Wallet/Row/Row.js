@@ -247,7 +247,7 @@ export default class Row extends Component {
     const telosAccountActivated = localStorage.getItem(constants.localStorage.telosAccountActivated) === "true"
 
     const toolTipDeposit = [
-      <FormattedMessage id="CurrencyWallet110" defaultMessage="Deposit funds to this address of currency wallet" />,
+      <FormattedMessage key="CurrencyWallet110" id="CurrencyWallet110" defaultMessage="Deposit funds to this address of currency wallet" />,
     ]
 
     return (
