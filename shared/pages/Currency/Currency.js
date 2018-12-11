@@ -84,12 +84,13 @@ export default class Currency extends Component {
   handleInWalletChange = (val) => val ? actions.core.markCoinAsVisible(this.getCoin().currency) :
     actions.core.markCoinAsHidden(this.getCoin().currency)
 
-  componentWillMount = () => {
+  componentWillMount = async () => {
     if (!this.getCoin()) {
       this.props.history.push('/')
       return false
     }
     this.handleReloadBalance()
+    await this.checkBalance()
   }
 
   handleReceive = () => {
@@ -115,10 +116,18 @@ export default class Currency extends Component {
     })
   }
 
+checkBalance = () => {
+  const { isBalanceEmpty } = this.state
+  const { balance } = this.getCoin()
+
+  if (balance === 0) {
+    this.setState({ isBalanceEmpty: true })
+  }
+}
+
   render() {
     const { match: { params: { currency } } } = this.props
     const { isBalanceEmpty } = this.state
-
     const { balance } = this.getCoin()
 
     return (
@@ -142,8 +151,9 @@ export default class Currency extends Component {
             <CurrencyButton
               wallet="true"
               onClick={this.handleWithdraw}
-              data={false}
-              text={isBalanceEmpty && <FormattedMessage id="CurrencyWallet113" defaultMessage="You can not send this asset, because you have a zero balance." />}>
+              disable={isBalanceEmpty}
+              data={isBalanceEmpty && `send${currency}`}
+              text={isBalanceEmpty && (<FormattedMessage id="CurrencyWallet113" defaultMessage="You can not send this asset, because you have a zero balance." />)}>
               <FormattedMessage id="CurrencyWallet100" defaultMessage="Send" />
             </CurrencyButton>
           </div>
