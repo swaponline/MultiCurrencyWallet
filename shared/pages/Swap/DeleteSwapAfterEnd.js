@@ -13,8 +13,8 @@ class DeleteSwapAfterEnd extends Component {
           isFinished: PropTypes.bool.isRequired,
         }).isRequired,
       }),
+      id: PropTypes.string.isRequired,
     }).isRequired,
-    orderId: PropTypes.string.isRequired,
   }
 
   constructor({ swap }) {
@@ -31,10 +31,10 @@ class DeleteSwapAfterEnd extends Component {
   }
 
   autoDeleteOrder = () => {
-    const { swap, orderId } = this.props
+    const { swap } = this.props
 
     if (swap.flow.state.isFinished) {
-      actions.core.removeOrder(orderId)
+      actions.core.removeOrder(swap.id)
     }
   }
 

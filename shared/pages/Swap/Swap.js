@@ -97,7 +97,7 @@ export default class SwapComponent extends PureComponent {
           <EmergencySave flow={swap.flow} />
           {
             peer === swap.owner.peer && (
-              <DeleteSwapAfterEnd swap={swap} orderId={swap.id} />
+              <DeleteSwapAfterEnd swap={swap} />
             )
           }
         </SwapComponent>
