@@ -47,7 +47,7 @@ const askPermission = () =>
   })
 
 const initializeFirebase = () => {
-  if (!firebase.apps.length) {
+  if (!firebase.apps.length && 'serviceWorker' in navigator) {
     firebase.initializeApp(config)
 
     navigator.serviceWorker

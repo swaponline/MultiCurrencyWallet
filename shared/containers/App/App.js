@@ -73,12 +73,13 @@ export default class App extends React.Component {
     const iOSSafari = /iP(ad|od|hone)/i.test(window.navigator.userAgent)
                     && /WebKit/i.test(window.navigator.userAgent)
                     && !(/(CriOS|FxiOS|OPiOS|mercury)/i.test(window.navigator.userAgent))
+    const isSafari = ('safari' in window)
 
     if (!localStorage.getItem(constants.localStorage.demoMoneyReceived)) {
       actions.user.getDemoMoney()
     }
 
-    if (process.env.LOCAL !== 'local' && !iOSSafari) {
+    if (process.env.LOCAL !== 'local' && !iOSSafari && !isSafari) {
       actions.pushNotification.initializeFirebase()
     }
   }
