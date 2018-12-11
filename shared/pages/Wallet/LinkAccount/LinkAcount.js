@@ -6,7 +6,7 @@ import Href from 'components/Href/Href'
 
 const erc20LinkAcount = (type, children, address, contractAddress) => Object.keys(config.erc20)
   .map(key => type.toLowerCase() === key
-   && <Href tab={`${config.link.etherscan}/token/${contractAddress}?a=${address}`} >{children}</Href>
+   && <Href key={key} tab={`${config.link.etherscan}/token/${contractAddress}?a=${address}`} >{children}</Href>
   )
 
 const LinkAccount = ({ type, children, address, contractAddress }) => (

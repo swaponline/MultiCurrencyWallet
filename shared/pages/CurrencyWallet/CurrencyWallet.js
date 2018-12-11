@@ -111,11 +111,11 @@ export default class CurrencyWallet extends Component {
     const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true"
 
     const toolTipDeposit = [
-      <FormattedMessage id="CurrencyWallet110" defaultMessage="Deposit funds to this address of currency wallet" />,
+      <FormattedMessage key="CurrencyWallet110" id="CurrencyWallet110" defaultMessage="Deposit funds to this address of currency wallet" />,
     ]
 
     const toolTipSend = [
-      <FormattedMessage id="CurrencyWallet113" defaultMessage="You can not send this asset, because you have a zero balance." />,
+      <FormattedMessage key="CurrencyWallet113" id="CurrencyWallet113" defaultMessage="You can not send this asset, because you have a zero balance." />,
     ]
 
     return (
