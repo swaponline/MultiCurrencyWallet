@@ -4487,8 +4487,7 @@
     "id": "Header194",
     "message": "Do not forget to save your keys",
     "files": [
-      "shared/components/Header/Header.js",
-      "shared/components/Header/TourSteps.js"
+      "shared/components/Header/Header.js"
     ]
   },
   {
@@ -4516,8 +4515,7 @@
     "id": "Header207",
     "message": "show how to save",
     "files": [
-      "shared/components/Header/Header.js",
-      "shared/components/Header/TourSteps.js"
+      "shared/components/Header/Header.js"
     ]
   },
   {
@@ -4679,6 +4677,34 @@
     "message": "We don`t store your private keys and will not be able to restore them!",
     "files": [
       "shared/components/modals/DownloadModal/DownloadModal.js"
+    ]
+  },
+  {
+    "id": "Reqstbttn22",
+    "message": "FOR",
+    "files": [
+      "shared/pages/Home/Orders/RequestButton/RequestButton.js"
+    ]
+  },
+  {
+    "id": "Row206",
+    "message": "BUY",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row2061",
+    "message": "SELL",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row210",
+    "message": "FOR",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
     ]
   }
 ]

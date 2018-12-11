@@ -1024,7 +1024,7 @@
   },
   {
     "id": "RowM166",
-    "message": "Начать",
+    "message": "Старт",
     "files": [
       "shared/pages/Home/Orders/Row/Row.js"
     ]
@@ -4478,7 +4478,7 @@
   },
   {
     "id": "Header192",
-    "message": "Это Ваш Биткин баланс. Вы можете закрыть браузер, перезапустить компьютер. Ваши средства будут в безопасности. Только не звбудте сохранить Ваши приватные ключи. ",
+    "message": "Это Ваш Bitcoin баланс. Вы можете закрыть браузер, перезапустить компьютер. Ваши средства будут в безопасности. Только не забудте сохранить Ваши приватные ключи. ",
     "files": [
       "shared/components/Header/Header.js"
     ]
@@ -4487,8 +4487,7 @@
     "id": "Header194",
     "message": "Не забудте сохранить Ваши приватные ключи",
     "files": [
-      "shared/components/Header/Header.js",
-      "shared/components/Header/TourSteps.js"
+      "shared/components/Header/Header.js"
     ]
   },
   {
@@ -4516,8 +4515,7 @@
     "id": "Header207",
     "message": "Показать, как сохранить",
     "files": [
-      "shared/components/Header/Header.js",
-      "shared/components/Header/TourSteps.js"
+      "shared/components/Header/Header.js"
     ]
   },
   {
@@ -4648,7 +4646,7 @@
   },
   {
     "id": "partial544",
-    "message": "Показать предложения",
+    "message": "Предложения",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -4679,6 +4677,34 @@
     "message": "Мы не храним Ваши ключи или адреса! И не сможем их востановить!",
     "files": [
       "shared/components/modals/DownloadModal/DownloadModal.js"
+    ]
+  },
+  {
+    "id": "Reqstbttn22",
+    "message": "ЗА",
+    "files": [
+      "shared/pages/Home/Orders/RequestButton/RequestButton.js"
+    ]
+  },
+  {
+    "id": "Row206",
+    "message": "КУПИТЬ",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row2061",
+    "message": "ПРОДАТЬ",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row210",
+    "message": "ЗА",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
     ]
   }
 ]

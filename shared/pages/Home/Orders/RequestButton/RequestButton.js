@@ -19,7 +19,7 @@ const RequestButton = ({ disabled, children, data: { type, base, amount, total, 
           {' '}
           {amount.toFixed(4)}{' '}{main}
           <br />
-          FOR
+          <FormattedMessage id="Reqstbttn22" defaultMessage="FOR" />
           {' '}
           {total.toFixed(4)}{' '}{base}
         </React.Fragment>

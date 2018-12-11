@@ -203,11 +203,11 @@ export default class Row extends Component {
                           onMouseLeave={() => this.setState(() => ({ enterButton: false }))}
                           move={this.state.enterButton}
                         >
-                          {type === PAIR_TYPES.BID ? 'SELL' : 'BUY'}
+                          {type === PAIR_TYPES.BID ? <FormattedMessage id="Row2061" defaultMessage="SELL" /> : <FormattedMessage id="Row206" defaultMessage="BUY" />}
                           {' '}
                           {amount.toFixed(4)}{' '}{main}
                           <br />
-                          FOR
+                          <FormattedMessage id="Row210" defaultMessage="FOR" />
                           {' '}
                           {total.toFixed(4)}{' '}{base}
                         </RequestButton>
