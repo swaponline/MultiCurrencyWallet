@@ -10,7 +10,7 @@ import Sound from 'helpers/Sound/Sound.mp4'
 import Question from './Question/Question'
 import UserAvatar from './UserAvatar/UserAvatar'
 import UserTooltip from './UserTooltip/UserTooltip'
-import AddOfferButton from './AddOfferButton/AddOfferButton'
+import SubscribeButton from './SubscribeButton/SubscribeButton'
 
 import Avatar from 'components/Avatar/Avatar'
 
@@ -59,7 +59,7 @@ export default class User extends React.Component {
 
     return (
       <div styleName="user-cont">
-        <AddOfferButton />
+        <SubscribeButton />
         <Question openTour={openTour} />
         <UserAvatar
           isToggle={this.handleToggleTooltip}

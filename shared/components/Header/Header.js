@@ -12,7 +12,7 @@ import styles from './Header.scss'
 
 import Nav from './Nav/Nav'
 import User from './User/User'
-import AddOfferButton from './User/AddOfferButton/AddOfferButton'
+import SubscribeButton from './User/SubscribeButton/SubscribeButton'
 import NavMobile from './NavMobile/NavMobile'
 
 import Logo from 'components/Logo/Logo'
@@ -144,7 +144,7 @@ export default class Header extends Component {
       return (
         <div>
           <NavMobile menu={menuItems} />
-          <AddOfferButton mobile />
+          <SubscribeButton mobile />
         </div>
       )
     }
