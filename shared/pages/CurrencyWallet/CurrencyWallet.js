@@ -135,9 +135,6 @@ export default class CurrencyWallet extends Component {
           <CurrencyButton onClick={this.handleReceive} data={`deposit${currency}`} text={toolTipDeposit} >
             <FormattedMessage id="Row313" defaultMessage="Deposit" />
           </CurrencyButton>
-          <CurrencyButton onClick={() => actions.xlm.initAccount(address)} data={`deposit${currency}`} text={toolTipDeposit} >
-            <FormattedMessage id="Row313" defaultMessage="Activate" />
-          </CurrencyButton>
           <CurrencyButton  onClick={this.handleWithdraw} disable={isBalanceEmpty} data={isBalanceEmpty && address} text={toolTipSend} >
             <FormattedMessage id="CurrencyWallet100" defaultMessage="Send" />
           </CurrencyButton>
