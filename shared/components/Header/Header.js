@@ -103,8 +103,6 @@ export default class Header extends Component {
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll)
 
-    this.checkPath()
-
     if (this.props.history.location.pathname === '/') {
       if (!localStorage.getItem(constants.localStorage.openTour)) {
         this.openTour()
@@ -143,20 +141,6 @@ export default class Header extends Component {
 
   openTour = () => {
     this.setState({ isTourOpen: true })
-  }
-
-  checkPath = () => {
-    const { history: { location: { pathname } } } = this.props
-    const { path } = this.state
-    if  (pathname === '/ru' || pathname === '/') {
-      this.setState({
-        path: true,
-      })
-    } else {
-      this.setState({
-        path: false,
-      })
-    }
   }
 
   render() {
