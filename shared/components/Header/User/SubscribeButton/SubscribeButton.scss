@@ -1,11 +1,8 @@
-.buttonWrap {
-  display: flex;
-}
-
 .button, .buttonMobile {
+  display: flex;
+  align-items: center;
   min-width: 40px;
   height: 40px;
-  line-height: 40px;
   padding: 0 20px;
   background-color: #e91db4;
   margin-right: 10px;
