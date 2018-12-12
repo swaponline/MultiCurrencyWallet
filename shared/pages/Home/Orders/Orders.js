@@ -153,9 +153,9 @@ export default class Orders extends Component {
           className={tableStyles.exchange}
           titles={titles}
           rows={sellOrders}
-          rowRender={(row, index) => (
+          rowRender={(row) => (
             <Row
-              key={index}
+              key={row.id}
               orderId={orderId}
               row={row}
             />
@@ -180,9 +180,9 @@ export default class Orders extends Component {
           className={tableStyles.exchange}
           titles={titles}
           rows={buyOrders}
-          rowRender={(row, index) => (
+          rowRender={(row) => (
             <Row
-              key={index}
+              key={row.id}
               orderId={orderId}
               row={row}
             />

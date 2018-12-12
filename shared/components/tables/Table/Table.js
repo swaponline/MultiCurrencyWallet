@@ -81,9 +81,11 @@ export default class Table extends React.Component {
             )
           }
           {
-            !isLoading && !!rows.length && rows.map((row, rowIndex) => (
-              typeof rowRender === 'function' && rowRender(row, rowIndex, this.state.selectId, this.handleSelectId)
-            ))
+            !isLoading && !!rows.length && rows.map((row, rowIndex) => {
+              if (typeof rowRender === 'function') {
+                return rowRender(row, rowIndex, this.state.selectId, this.handleSelectId)
+              }
+            })
           }
         </tbody>
       </table>
