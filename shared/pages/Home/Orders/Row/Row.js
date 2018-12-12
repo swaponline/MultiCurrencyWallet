@@ -199,9 +199,6 @@ export default class Row extends Component {
                           disabled={balance >= Number(buyAmount)}
                           onClick={() => this.sendRequest(id, isMy ? sellCurrency : buyCurrency)}
                           data={{ type, amount, main, total, base }}
-                          onMouseEnter={() => this.setState(() => ({ enterButton: true }))}
-                          onMouseLeave={() => this.setState(() => ({ enterButton: false }))}
-                          move={this.state.enterButton}
                         >
                           {type === PAIR_TYPES.BID ? <FormattedMessage id="Row2061" defaultMessage="SELL" /> : <FormattedMessage id="Row206" defaultMessage="BUY" />}
                           {' '}

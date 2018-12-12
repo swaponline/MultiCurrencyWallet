@@ -1,24 +1,28 @@
 import React, { Component, Fragment } from 'react'
 
 import { connect } from 'redaction'
-import { constants } from 'helpers'
+import { constants, links } from 'helpers'
 import { isMobile } from 'react-device-detect'
+import { withRouter } from 'react-router'
+import actions from 'redux/actions'
+
+import { Link, Redirect } from 'react-router-dom'
+import { FormattedMessage } from 'react-intl'
+
+import CSSModules from 'react-css-modules'
+import styles from './Currency.scss'
 
 import Title from 'components/PageHeadline/Title/Title'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import Table from 'components/tables/Table/Table'
 import Toggle from 'components/controls/Toggle/Toggle'
-
-import CSSModules from 'react-css-modules'
-import styles from './Currency.scss'
-
 import Row from './Row/Row'
-import actions from 'redux/actions'
 
 import { withRouter } from 'react-router'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from '../../helpers/locale'
+
 
 
 @injectIntl
@@ -33,6 +37,23 @@ export default class Currency extends Component {
 
   state = {
     isBalanceFetching: false,
+    balance: '',
+  }
+
+  componentWillMount() {
+    const { match: { params: { currency } }, items } = this.props
+    const item = items.map(item => item.currency.toLowerCase())
+
+    if (!item.includes(currency)) {
+      this.props.history.push('/NotFound')
+      console.log(item)
+      return
+    }
+    this.getCoin()
+    const { balance } = this.getCoin()
+
+    this.setState({ balance })
+    this.handleReloadBalance()
   }
 
   getRows = () => {
@@ -97,7 +118,7 @@ export default class Currency extends Component {
 
   render() {
     const { match: { params: { currency } } } = this.props
-    const { balance } = this.getCoin()
+    const { balance } = this.state
 
     return (
       <section styleName={isMobile ? 'currencyMobileSection' : 'currencyMediaSection'}>
