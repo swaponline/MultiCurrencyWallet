@@ -29,9 +29,25 @@ import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
 @CSSModules(styles, { allowMultiple: true })
 export default class Currency extends Component {
 
-  state = {
-    isBalanceFetching: false,
-    isBalanceEmpty: false,
+
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      isBalanceFetching: false,
+      isBalanceEmpty: false,
+    }
+
+    if (!this.getCoin()) {
+      this.props.history.push('/')
+      return false
+    }
+    this.handleReloadBalance()
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.checkBalance()
+    this.handleReloadBalance()
   }
 
   getRows = () => {
@@ -84,15 +100,6 @@ export default class Currency extends Component {
   handleInWalletChange = (val) => val ? actions.core.markCoinAsVisible(this.getCoin().currency) :
     actions.core.markCoinAsHidden(this.getCoin().currency)
 
-  componentWillMount = async () => {
-    if (!this.getCoin()) {
-      this.props.history.push('/')
-      return false
-    }
-    this.handleReloadBalance()
-    await this.checkBalance()
-  }
-
   handleReceive = () => {
     let { match:{ params: { currency } }, items } = this.props
     const itemCurrency = items.filter(item => item.currency.toLowerCase() === currency)[0]
@@ -122,6 +129,8 @@ export default class Currency extends Component {
 
     if (balance === 0) {
       this.setState({ isBalanceEmpty: true })
+    } else {
+      this.setState({ isBalanceEmpty: false })
     }
   }
 
