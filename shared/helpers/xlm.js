@@ -1,21 +1,17 @@
 import sdk from 'stellar-sdk'
+import config from 'app-config'
 
 
-const initServer = (network) => {
-  let horizonUrl
+const server = new sdk.Server(config.api.horizon)
 
-  if (network === 'public') {
-    horizonUrl = 'https://horizon.stellar.org'
-    sdk.Network.usePublicNetwork()
-  } else {
-    horizonUrl = 'https://horizon-testnet.stellar.org'
-    sdk.Network.useTestNetwork()
-  }
 
-  return new sdk.Server(horizonUrl)
+if (process.env.MAINNET) {
+  sdk.Network.usePublicNetwork()
+} else {
+  sdk.Network.useTestNetwork()
 }
 
 
 export default {
-  initServer,
+  server,
 }

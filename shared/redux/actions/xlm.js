@@ -3,9 +3,6 @@ import { getState } from 'redux/core'
 import { constants, xlm } from 'helpers'
 import reducers from 'redux/core/reducers'
 
-// public: main net
-const server = xlm.initServer('test')
-
 
 const login = (privateKey) => {
   const keypair = privateKey
@@ -29,14 +26,12 @@ const login = (privateKey) => {
 
 
 const initAccount = (address) => {
-  const admin = sdk.Keypair.fromSecret('SDA7HRNGXC5S4AWMTANDVBXLPVSDMRXGAURMACE2D3NQDO2M7I2STWUG')
+  const key = 'SAXCEVKSHIKH3MSEK26NJ6HXBLNA5EMT7CDZIBYHHI3TLERQZ6RGGLRZ'
+  const keyPair = sdk.Keypair.fromSecret(key)
 
-  console.log('admin', admin)
-  console.log('admin', admin.publicKey())
-
-  return runOperation(admin, 'createAccount', {
+  return runOperation(keyPair, 'createAccount', {
     destination: address,
-    startingBalance: String(50),
+    startingBalance: String(1.5),
   })
 }
 
@@ -48,12 +43,18 @@ const getBalance = async () => {
     return
   }
 
-  const balance = await server.loadAccount(address)
-    .then(({ balances }) => balances)
+  const balance = await xlm.server.loadAccount(address)
+    .then(({ balances }) => {
+      console.log('XLM balances', balances[0].balance)
+      return balances[0].balance
+    })
     .catch((error) => {
       console.error(error.message || error)
       return 0
     })
+
+  console.log('XLM balance', balance)
+  reducers.user.setBalance({ name: 'xlmData', amount: balance })
 
   return balance
 }
@@ -66,15 +67,15 @@ const runOperation = (from, type, options) => {
     return Promise.reject(new Error(`Unknown operation type: ${type}`))
   }
 
-  let transaction
-  return server.loadAccount(from.publicKey())
+  return xlm.server.loadAccount(from.publicKey())
     .then(sourceAccount => {
       const operation = operationBuilder.call(sdk.Operation, options)
-      transaction = new sdk.TransactionBuilder(sourceAccount)
+      const tx = new sdk.TransactionBuilder(sourceAccount)
         .addOperation(operation)
         .build()
-      transaction.sign(from)
-      return server.submitTransaction(transaction)
+
+      tx.sign(from)
+      return xlm.server.submitTransaction(tx)
     })
 }
 
