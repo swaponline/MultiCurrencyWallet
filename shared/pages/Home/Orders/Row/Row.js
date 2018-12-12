@@ -129,9 +129,6 @@ export default class Row extends Component {
       return <Redirect push to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`} />
     }
 
-    console.log('row', this.props.row.exchangeRate)
-    console.log('row', this.state.isFetching)
-
     return (
       <tr style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}>
         <td>
