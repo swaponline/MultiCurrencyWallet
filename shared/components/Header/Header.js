@@ -3,9 +3,12 @@ import PropTypes from 'prop-types'
 
 import { withRouter } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
+
 import links from 'helpers/links'
 import { constants } from 'helpers'
 import config from 'app-config'
+import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
+import Tour from 'reactour'
 
 import CSSModules from 'react-css-modules'
 import styles from './Header.scss'
@@ -17,9 +20,6 @@ import NavMobile from './NavMobile/NavMobile'
 
 import Logo from 'components/Logo/Logo'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
-
-import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
-import Tour from 'reactour'
 
 
 let lastScrollTop = 0
@@ -57,9 +57,18 @@ export default class Header extends Component {
     history: PropTypes.object.isRequired,
   }
 
+  static getDerivedStateFromProps({ history: { location: { pathname } } }) {
+    console.log('pathname', pathname)
+    if  (pathname === '/ru' || pathname === '/') {
+      return { path: true }
+    }
+    return { path: false }
+  }
+
   constructor(props) {
     super(props)
     this.state = {
+      path: false,
       isTourOpen: false,
       isShowingMore: false,
       sticky: false,
@@ -100,10 +109,8 @@ export default class Header extends Component {
       }
     }
   }
-
   componentWillUnmount() {
     window.removeEventListener('scroll', this.handleScroll)
-
   }
 
   handleScroll = () =>  {
@@ -137,7 +144,9 @@ export default class Header extends Component {
   }
 
   render() {
-    const { sticky, menuItems, isTourOpen, isShowingMore } = this.state
+    const { sticky, menuItems, isTourOpen, isShowingMore, path } = this.state
+    const { intl: { locale }, history } = this.props
+
     const accentColor = '#510ed8'
 
     if (isMobile) {
@@ -155,7 +164,7 @@ export default class Header extends Component {
           <Logo withLink />
           <Nav menu={menuItems} />
           <Logo withLink mobile />
-          <User openTour={this.openTour} />
+          <User openTour={this.openTour} path={path} />
           <Tour
             steps={tourSteps}
             onRequestClose={this.closeTour}
@@ -169,32 +178,33 @@ export default class Header extends Component {
     )
   }
 }
-
+/* eslint-disable */
 const tourSteps = [
   {
     selector: '[data-tut="reactour__address"]',
-    content: `This is your personal bitcoin address. We do not store your private keys. Everything is kept in your browser. No server, no back-end, completely decentralized. `,
+    content: <FormattedMessage
+      id="Header184"
+      defaultMessage="This is your personal bitcoin address. We do not store your private keys. Everything is kept in your browser. No server, no back-end, completely decentralized. " />,
   },
   {
     selector: '[data-tut="reactour__save"]',
-    content: `Swap Online does NOT store your private keys, please download and keep them in a secured place`,
+    content: <FormattedMessage id="Header188" defaultMessage="Swap Online does NOT store your private keys, please download and keep them in a secured place" />,
   },
   {
     selector: '[data-tut="reactour__balance"]',
-    content: `This is your bitcoin balance. You can close your browser, reboot your computer. Your funds will remain safe, just don't forget to save your private keys`,
+    content: <FormattedMessage id="Header192" defaultMessage="This is your bitcoin balance. You can close your browser, reboot your computer. Your funds will remain safe, just don't forget to save your private keys" />,
   },
   {
     selector: '[data-tut="reactour__store"]',
-    content: `You can store crypto of different blockchains including Bitcoin, Ethereum, EOS, Bitcoin Cash, Litecoin and various token`,
+    content: <FormattedMessage id="Header196" defaultMessage="You can store crypto of different blockchains including Bitcoin, Ethereum, EOS, Bitcoin Cash, Litecoin and various token" />,
   },
   {
     selector: '[data-tut="reactour__exchange"]',
-    content: `Our killer feature is the peer-to-peer exchange available in our wallet powered by atomic swap
-      technology. You can perfrom swaps with any crypto listed in our wallet.`,
+    content: <FormattedMessage id="Header200" defaultMessage="Our killer feature is the peer-to-peer exchange available in our wallet powered by atomic swap technology. You can perfrom swaps with any crypto listed in our wallet." />,
   },
   {
     selector: '[data-tut="reactour__subscribe"]',
-    content: `Join to our white list discounts, gifts, better exchange rates, etc.`,
+    content: <FormattedMessage id="Header205" defaultMessage="Join to our white list discounts, gifts, better exchange rates, etc." />,
   },
   {
     selector: '[data-tut="reactour__goTo"]',
@@ -217,5 +227,5 @@ const tourSteps = [
         </button>
       </div>),
   },
-
 ]
+/* eslint-disable */

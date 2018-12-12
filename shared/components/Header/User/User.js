@@ -55,12 +55,14 @@ export default class User extends React.Component {
   render() {
     const { view } = this.state
 
-    const { feeds, peer, reputation, openTour } = this.props
+    const {
+      feeds, peer, reputation, openTour, path,
+    } = this.props
 
     return (
       <div styleName="user-cont">
         <SubscribeButton />
-        <Question openTour={openTour} />
+        {path && (<Question openTour={openTour} />)}
         <UserAvatar
           isToggle={this.handleToggleTooltip}
           feeds={feeds}
