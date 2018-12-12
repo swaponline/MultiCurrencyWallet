@@ -21,7 +21,9 @@ import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
 
 
 @withRouter
-@connect(({ core: { hiddenCoinsList }, user: { ethData, btcData, ltcData, tokensData, eosData, nimData, usdtData } }) => ({
+@connect(({
+  core: { hiddenCoinsList },
+  user: { ethData, btcData, ltcData, tokensData, eosData, nimData, usdtData } }) => ({
   tokens: Object.keys(tokensData).map(k => (tokensData[k])),
   items: [ ethData, btcData, eosData, usdtData, ltcData /* nimData */ ],
   hiddenCoinsList,
@@ -35,18 +37,16 @@ export default class Currency extends Component {
 
     this.state = {
       isBalanceFetching: false,
-      isBalanceEmpty: false,
+      isBalanceEmpty: true,
+      balance: 0,
     }
 
     if (!this.getCoin()) {
       this.props.history.push('/')
-      return false
     }
-    this.handleReloadBalance()
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.checkBalance()
+  componentDidMount() {
     this.handleReloadBalance()
   }
 
@@ -73,26 +73,19 @@ export default class Currency extends Component {
   getCurrencyName = () => this.props.match.params.currency.toLowerCase()
   getCoin = () => [...this.props.items, ...this.props.tokens].find(coin => coin.currency.toLowerCase() === this.getCurrencyName())
 
-  handleReloadBalance = () => {
-    const { isBalanceFetching } = this.state
-    const coin = this.getCoin()
-    const currency = coin.currency.toLowerCase()
-    const token = !!coin.token
-    const action = token ? 'token' : currency
+  handleReloadBalance = async () => {
+    let { match:{ params: { currency } } } = this.props
+    currency = currency.toLowerCase()
 
-    if (isBalanceFetching) {
-      return null
+    const balance = await actions[currency].getBalance(currency)
+
+    if (balance > 0) {
+      this.setState(() => ({
+        isBalanceEmpty: false,
+        balance,
+      }))
     }
 
-    this.setState({
-      isBalanceFetching: true,
-    })
-
-    actions[action]
-      .getBalance(currency)
-      .finally(() => this.setState({
-        isBalanceFetching: false,
-      }))
   }
 
   isInWallet = () => !this.props.hiddenCoinsList.includes(this.getCoin().currency)
@@ -123,21 +116,9 @@ export default class Currency extends Component {
     })
   }
 
-  checkBalance = () => {
-    const { isBalanceEmpty } = this.state
-    const { balance } = this.getCoin()
-
-    if (balance === 0) {
-      this.setState({ isBalanceEmpty: true })
-    } else {
-      this.setState({ isBalanceEmpty: false })
-    }
-  }
-
   render() {
     const { match: { params: { currency } } } = this.props
-    const { isBalanceEmpty } = this.state
-    const { balance } = this.getCoin()
+    const { isBalanceEmpty, balance } = this.state
 
     return (
       <section styleName={isMobile ? 'currencyMobileSection' : 'currencyMediaSection'}>
@@ -153,16 +134,24 @@ export default class Currency extends Component {
             <CurrencyButton
               wallet="true"
               onClick={this.handleReceive}
-              data={`currency${currency}`}
-              text={<FormattedMessage id="CurrencyWallet110" defaultMessage="Deposit funds to this address of currency wallet" />} >
+              dataTooltip={{
+                id: `currency${currency}`,
+                isActive: true,
+                text: 'Deposit funds to this address of currency wallet',
+              }}
+            >
               <FormattedMessage id="Row313" defaultMessage="Deposit" />
             </CurrencyButton>
             <CurrencyButton
               wallet="true"
+              dataTooltip={{
+                isActive: isBalanceEmpty,
+                id: `send${currency}`,
+                text: 'You can not send this asset, because you have a zero balance.',
+              }}
               onClick={this.handleWithdraw}
               disable={isBalanceEmpty}
-              data={isBalanceEmpty && `send${currency}`}
-              text={isBalanceEmpty && (<FormattedMessage id="CurrencyWallet113" defaultMessage="You can not send this asset, because you have a zero balance." />)}>
+            >
               <FormattedMessage id="CurrencyWallet100" defaultMessage="Send" />
             </CurrencyButton>
           </div>
