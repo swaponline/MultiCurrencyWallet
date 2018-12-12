@@ -136,7 +136,7 @@ export default class Wallet extends Component {
     return (
       <section styleName={isMobile ? 'sectionWalletMobile' : 'sectionWallet'}>
         <PageHeadline styleName="pageLine">
-          <SubTitle style={{ fontFamily: 'Arial' }}>
+          <SubTitle>
             <FormattedMessage id="Wallet104" defaultMessage="Your online cryptocurrency wallet" />
           </SubTitle>
         </PageHeadline>
