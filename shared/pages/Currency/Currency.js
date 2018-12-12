@@ -42,9 +42,12 @@ export default class Currency extends Component {
     }
 
     const { match: { params: { currency } }, items, tokens } = this.props
-    const item = items.map(item => item.currency.toLowerCase()).concat(tokens.map(token => token.currency.toLowerCase()))
 
-    if (!item.includes(currency)) {
+    const item = items.map(item => item.currency.toLowerCase())
+    const token = tokens.map(token => token.currency.toLowerCase())
+    const currencyData = item.concat(token)
+
+    if (!currencyData.includes(currency)) {
       this.props.history.push('/NotFound')
       return
     }
