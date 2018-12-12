@@ -41,6 +41,17 @@ export default class Currency extends Component {
       balance: 0,
     }
 
+    const { match: { params: { currency } }, items, tokens } = this.props
+    const item = items.map(item => item.currency.toLowerCase()).concat(tokens.map(token => token.currency.toLowerCase()))
+
+    if (!item.includes(currency)) {
+      this.props.history.push('/NotFound')
+      return
+    }
+    this.getCoin()
+    const { balance } = this.getCoin()
+    this.setState({ balance })
+
     if (!this.getCoin()) {
       this.props.history.push('/')
     }
@@ -49,6 +60,7 @@ export default class Currency extends Component {
   componentDidMount() {
     this.handleReloadBalance()
   }
+
 
   getRows = () => {
     let { match:{ params: { currency, address } }, items } = this.props
@@ -117,9 +129,8 @@ export default class Currency extends Component {
   }
 
   render() {
-    const { match: { params: { currency } } } = this.props
+    const { match: { params: { currency } }, items } = this.props
     const { isBalanceEmpty, balance } = this.state
-
     return (
       <section styleName={isMobile ? 'currencyMobileSection' : 'currencyMediaSection'}>
         <PageHeadline>
