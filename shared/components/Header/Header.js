@@ -57,9 +57,18 @@ export default class Header extends Component {
     history: PropTypes.object.isRequired,
   }
 
+  static getDerivedStateFromProps({ history: { location: { pathname } } }) {
+    console.log('pathname', pathname)
+    if  (pathname === '/ru' || pathname === '/') {
+      return { path: true }
+    }
+    return { path: false }
+  }
+
   constructor(props) {
     super(props)
     this.state = {
+      path: false,
       isTourOpen: false,
       isShowingMore: false,
       sticky: false,
@@ -152,7 +161,7 @@ export default class Header extends Component {
 
   render() {
     const { sticky, menuItems, isTourOpen, isShowingMore, path } = this.state
-    const { intl: { locale } } = this.props
+    const { intl: { locale }, history } = this.props
 
     const accentColor = '#510ed8'
 
@@ -171,7 +180,7 @@ export default class Header extends Component {
           <Logo withLink />
           <Nav menu={menuItems} />
           <Logo withLink mobile />
-          <User openTour={this.openTour} />
+          <User openTour={this.openTour} path={path} />
           <Tour
             steps={tourSteps}
             onRequestClose={this.closeTour}

@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { withRouter } from 'react-router-dom'
 import { connect } from 'redaction'
 
 import styles from './User.scss'
@@ -16,7 +15,6 @@ import SubscribeButton from './SubscribeButton/SubscribeButton'
 import Avatar from 'components/Avatar/Avatar'
 
 
-@withRouter
 @connect({
   feeds: 'feeds.items',
   peer: 'ipfs.peer',
@@ -36,11 +34,6 @@ export default class User extends React.Component {
 
   state = {
     view: true,
-    path: false,
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.checkPath()
   }
 
   handleChangeView = () => {
@@ -59,24 +52,12 @@ export default class User extends React.Component {
     audio.autoplay = true
   }
 
-  checkPath = () => {
-    const { history: { location: { pathname } } } = this.props
-    const { path } = this.state
-    if  (pathname === '/ru' || pathname === '/') {
-      this.setState({
-        path: true,
-      })
-    } else {
-      this.setState({
-        path: false,
-      })
-    }
-  }
-
   render() {
-    const { view, path } = this.state
+    const { view } = this.state
 
-    const { feeds, peer, reputation, openTour, history: { location: { pathname } } } = this.props
+    const {
+      feeds, peer, reputation, openTour, path,
+    } = this.props
 
     return (
       <div styleName="user-cont">
