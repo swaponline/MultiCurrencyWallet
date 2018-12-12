@@ -129,6 +129,9 @@ export default class Row extends Component {
       return <Redirect push to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`} />
     }
 
+    console.log('row', this.props.row.exchangeRate)
+    console.log('row', this.state.isFetching)
+
     return (
       <tr style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}>
         <td>
@@ -199,9 +202,6 @@ export default class Row extends Component {
                           disabled={balance >= Number(buyAmount)}
                           onClick={() => this.sendRequest(id, isMy ? sellCurrency : buyCurrency)}
                           data={{ type, amount, main, total, base }}
-                          onMouseEnter={() => this.setState(() => ({ enterButton: true }))}
-                          onMouseLeave={() => this.setState(() => ({ enterButton: false }))}
-                          move={this.state.enterButton}
                         >
                           {type === PAIR_TYPES.BID ? 'SELL' : 'BUY'}
                           {' '}
