@@ -80,9 +80,8 @@ export default class User extends React.Component {
 
     return (
       <div styleName="user-cont">
-        <AddOfferButton />
-        {path && (<Question openTour={openTour} />)}
         <SubscribeButton />
+        {path && (<Question openTour={openTour} />)}
         <UserAvatar
           isToggle={this.handleToggleTooltip}
           feeds={feeds}
