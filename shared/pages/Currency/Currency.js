@@ -48,9 +48,6 @@ export default class Currency extends Component {
       this.props.history.push('/NotFound')
       return
     }
-    this.getCoin()
-    const { balance } = this.getCoin()
-    this.setState({ balance })
 
     if (!this.getCoin()) {
       this.props.history.push('/')
