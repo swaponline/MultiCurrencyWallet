@@ -16,11 +16,13 @@ export default class CurrencyButton extends Component {
       onClick,
       children,
       disable,
-      data,
+      dataTooltip,
+      id,
       text,
       currency,
       deposit,
       wallet,
+      isActive,
       ...rest
     } = this.props
 
@@ -31,12 +33,16 @@ export default class CurrencyButton extends Component {
 
     return (
       <Fragment>
-        <button styleName={styleName} onClick={!disable ? onClick : () => {}} data-tip data-for={data} {...rest}>
+        <button styleName={styleName} onClick={!disable ? onClick : () => {}} data-tip data-for={dataTooltip.id} {...rest}>
           {children}
         </button>
-        <ReactTooltip id={data} type="light" effect="solid">
-          {text}
-        </ReactTooltip>
+        {
+          dataTooltip.isActive && (
+            <ReactTooltip id={dataTooltip.id} type="light" effect="solid">
+              <FormattedMessage id={dataTooltip.id} defaultMessage={dataTooltip.text} />
+            </ReactTooltip>
+          )
+        }
       </Fragment>
     )
   }
