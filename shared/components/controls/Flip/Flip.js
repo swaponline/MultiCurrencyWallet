@@ -10,7 +10,7 @@ const Flip = ({ onClick, className }) => (
 )
 
 Flip.propTypes = {
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
   className: PropTypes.string,
 }
 

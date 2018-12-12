@@ -8,6 +8,7 @@ import { links, constants } from 'helpers'
 
 import actions from 'redux/actions'
 import { connect } from 'redaction'
+import { isMobile } from 'react-device-detect'
 
 import Center from 'components/layout/Center/Center'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
@@ -134,7 +135,7 @@ export default class Home extends Component {
     const { buyCurrency, sellCurrency, invalidPair } = this.state
 
     return (
-      <section style={{ position: 'relative', width: '100%' }}>
+      <section styleName={isMobile ? 'sectionContainerMobile' : 'sectionContainer'}>
         <PageHeadline>
           {
             pathname === links.exchange ? (
@@ -157,7 +158,7 @@ export default class Home extends Component {
 
                   <div styleName="videoFaqContainer">
                     <iframe
-                      title="What is atomic swap?"
+                      title="What1 is atomic swap?"
                       width="700"
                       height="480"
                       src="https://www.youtube.com/embed/Jhrb7xOT_7s"

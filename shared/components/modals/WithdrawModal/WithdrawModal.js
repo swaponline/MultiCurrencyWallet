@@ -20,7 +20,7 @@ import ReactTooltip from 'react-tooltip'
 
 const minAmount = {
   eth: 0.001,
-  btc: 0.004,
+  btc: 0.00015,
   ltc: 0.1,
   eos: 1,
   tlos: 1,
@@ -67,7 +67,6 @@ export default class WithdrawModal extends React.Component {
       .forEach(key => {
         if (data.currency === config.erc20[key].fullName) {
           this.setState({ tokenFee: true })
-
         }
       })
   }
@@ -171,7 +170,7 @@ render() {
       { tokenFee &&
         (
           <p style={{ fontSize: '16px', textAlign: 'center', color: 'red' }}>
-            <FormattedMessage id="Withdrow172" defaultMessage="Please note: Miners fee is " />{minAmount.eth} ETH
+            <FormattedMessage id="Withdrow172" defaultMessage="Please note: Miners fee is up to " />{minAmount.eth} ETH
             <br />
             <FormattedMessage id="Withdrow174" defaultMessage="Your balance must exceed this sum to perform transaction. " />
           </p>
@@ -180,7 +179,7 @@ render() {
       {!tokenFee &&
         (
           <p style={{ fontSize: '16px', textAlign: 'center' }}>
-            <FormattedMessage id="Withdrow178" defaultMessage="Please note: Miners fee is " />{minAmount[data.currency.toLowerCase()]}.
+            <FormattedMessage id="Withdrow178" defaultMessage="Please note: Miners fee is up to " />{minAmount[data.currency.toLowerCase()]}{' '}{data.currency.toUpperCase()}.
             <br />
             <FormattedMessage id="Withdrow180" defaultMessage="Your balance must exceed this sum to perform transaction. " />
           </p>

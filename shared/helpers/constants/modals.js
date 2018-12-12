@@ -11,4 +11,5 @@ export default {
   ShowMoreCoins: 'ShowMoreCoins',
   EthChecker: 'EthChecker',
   ReceiveModal: 'ReceiveModal',
+  DownloadModal: 'DownloadModal',
 }

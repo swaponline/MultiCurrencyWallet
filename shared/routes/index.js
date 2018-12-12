@@ -16,6 +16,7 @@ import CurrencyWallet   from 'pages/CurrencyWallet/CurrencyWallet'
 
 const routes = (
   <Switch>
+
     <Route path={`${links.swap}/:buy-:sell/:orderId`} component={SwapComponent} />
 
     <Route path="/:fullName-wallet" component={CurrencyWallet} />
@@ -27,11 +28,11 @@ const routes = (
     <Route path={links.aboutus} component={About} />
     <Route path={links.history} component={History} />
 
+    <Route path="/NotFound" component={NotFound} />
+
     <Route path={`${links.home}:currency`} component={Currency} />
     <Route exact path={links.home} component={Wallet} />
 
-
-    <Route component={NotFound} />
   </Switch>
 )
 

@@ -20,11 +20,17 @@
 .section {
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap;
+}
+.blockVideo {
+  flex-basis: 58%;
+  iframe {
+    width: 100%;
+    height: 355px;
+  }
 }
 
 .block {
-  width: 400px;
+  flex-basis: 37%;
 }
 
 .error {
@@ -43,17 +49,36 @@
   padding: 0;
 }
 
-@include media-mobile {
+@include media-tablet {
+  .blockVideo {
+    flex-basis: 50%;
+  }
+  .block {
+    flex-basis: 45%;
+  }
+  .button {
+    font-size: 12px;
+  }
+}
+@media all and (min-width: 320px) and (max-width: 830px) {
   .section {
     margin-top: 20px;
     justify-content: center;
+    flex-direction: column-reverse;
+    max-width: 400px;
+    margin: auto;
   }
-
-  .blockVideo {
-    display: none;
-  }
-
   .button {
     font-size: 12px;
+  }
+  .block {
+    margin-bottom: 80px;
+    margin-top: 60px;
+  }
+}
+
+@media all and (min-width: 320px) and (max-width: 400px) {
+  .button {
+    font-size: 9px;
   }
 }
