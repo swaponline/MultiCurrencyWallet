@@ -250,10 +250,6 @@ export default class Row extends Component {
     const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true"
     const telosAccountActivated = localStorage.getItem(constants.localStorage.telosAccountActivated) === "true"
 
-    const toolTipDeposit = [
-      <FormattedMessage key="CurrencyWallet110" id="CurrencyWallet110" defaultMessage="Deposit funds to this address of currency wallet" />,
-    ]
-
     return (
       <tr
         data-tut="reactour__store"
@@ -314,8 +310,8 @@ export default class Row extends Component {
           <span styleName="mobileName">{fullName}</span>
         </td>
         <Fragment>
-          <CopyToClipboard text={address} onCopy={this.handleCopyAddress}>
-            <td data-tut="reactour__address" styleName={currency === 'EOS' && !eosAccountActivated ? 'yourAddressWithOptions' : 'yourAddress'}>
+          <CopyToClipboard text={address} data-tut="reactour__address" onCopy={this.handleCopyAddress}>
+            <td styleName={currency === 'EOS' && !eosAccountActivated ? 'yourAddressWithOptions' : 'yourAddress'}>
               {
                 !contractAddress ? (
                   <div styleName="notContractAddress">
@@ -396,7 +392,14 @@ export default class Row extends Component {
         </Fragment>
         <td>
           <div styleName={currency === 'EOS' && !eosAccountActivated ? 'notActivated' : ''}>
-            <CurrencyButton onClick={this.handleReceive} data={`deposit${currency}`} text={toolTipDeposit} wallet="true">
+            <CurrencyButton
+              onClick={this.handleReceive}
+              dataTooltip={{
+                id: `deposit${currency}`,
+                text: 'Deposit funds to this address of currency wallet',
+                isActive: 'true',
+              }}
+              wallet="true">
               <FormattedMessage id="Row313" defaultMessage="Deposit" />
             </CurrencyButton>
             <BtnTooltip onClick={this.handleWithdraw} disable={isBalanceEmpty} id={currency} text="Send" >
