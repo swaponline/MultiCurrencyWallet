@@ -3,7 +3,7 @@ import config from 'app-config'
 import modals from './modals'
 import loader from './loader'
 import notifications from './notifications'
-import pushNotification from './pushNotification/index'
+import firebase from './firebase/index'
 
 import user from './user'
 import feed from './feed'
@@ -42,7 +42,7 @@ export default {
   modals,
   loader,
   notifications,
-  pushNotification,
+  firebase,
   user,
   core,
   ltc,
