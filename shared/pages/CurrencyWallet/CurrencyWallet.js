@@ -144,6 +144,7 @@ export default class CurrencyWallet extends Component {
           <span>{address}</span> <br />
           <FormattedMessage id="CurrencyWallet107" defaultMessage="Your" />
           {fullName}
+          {' '}
           <FormattedMessage id="CurrencyWallet143" defaultMessage="balance" />
            : {balance}{' '}{currency.toUpperCase()}
         </h3>

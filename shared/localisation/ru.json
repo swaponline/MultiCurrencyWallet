@@ -4151,7 +4151,7 @@
   },
   {
     "id": "Eos71",
-    "message": "Этот аккаунт будет зарегестрировать в сети EOS blockchain",
+    "message": "Этот аккаунт будет зарегестрирован в сети EOS blockchain",
     "files": [
       "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
     ]
@@ -4179,7 +4179,7 @@
   },
   {
     "id": "Eos53",
-    "message": "Введите Ваш EOS аккаунт",
+    "message": "Введите Ваш EOS логин",
     "files": [
       "shared/components/modals/EosRegisterModal/EosRegisterModal.js"
     ]
@@ -4207,7 +4207,7 @@
   },
   {
     "id": "addOffer449",
-    "message": "или сумму, меньше, чем общая сумма, которую вы хотите продать. ",
+    "message": "на сумму, меньше, чем общая сумма, которую вы хотите продать. ",
     "files": [
       "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
     ]
