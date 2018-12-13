@@ -355,8 +355,8 @@ export default class PartialClosure extends Component {
     const { haveCurrency, getCurrency } = this.state
 
     let historyLink = `${haveCurrency}-${getCurrency}`
-    if ((haveCurrency === 'btc' && getCurrency === 'ustd') || (haveCurrency === 'ustd' && getCurrency === 'btc')) {
-      historyLink = 'btc-ustd'
+    if ((haveCurrency === 'btc' && getCurrency === 'usdt') || (haveCurrency === 'usdt' && getCurrency === 'btc')) {
+      historyLink = 'btc-usdt'
     } else {
       if (haveCurrency === 'btc') {
         historyLink = `${getCurrency}-${haveCurrency}`
