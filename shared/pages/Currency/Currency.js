@@ -43,8 +43,7 @@ export default class Currency extends Component {
 
     const item = items.map(item => item.currency.toLowerCase())
     if (!item.includes(currency)) {
-      history.push('/NotFound')
-      return
+      return history.push('/NotFound')
     }
   }
 

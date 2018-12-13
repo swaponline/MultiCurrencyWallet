@@ -44,8 +44,7 @@ export default class CurrencyWallet extends Component {
     const item = items.map(item => item.fullName.toLowerCase())
 
     if (!item.includes(fullName.toLowerCase())) {
-      history.push('/NotFound')
-      return
+      return  window.location.href = '/NotFound'
     }
   }
   componentDidMount() {
