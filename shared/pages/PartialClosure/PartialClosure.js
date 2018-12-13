@@ -376,6 +376,7 @@ export default class PartialClosure extends Component {
     const { haveCurrency, getCurrency, customWallet } = this.state
 
     if (haveCurrency === 'btc') {
+      // btc-token
       if (config.erc20[getCurrency] !== undefined) {
         if (!/^(0x)?[0-9a-f]{40}$/i.test(customWallet)) {
           return false
@@ -393,9 +394,20 @@ export default class PartialClosure extends Component {
     const { haveCurrency, getCurrency } = this.state
 
     if (haveCurrency === 'btc') {
+      // btc-token
       if (config.erc20[getCurrency] !== undefined) return true
+      // btc-eth
+      if (getCurrency === 'eth') return true
+    }
+    if (config.erc20[haveCurrency] !== undefined) {
+      // token-btc
+      if (getCurrency === 'btc') return true
     }
 
+    if (haveCurrency === 'eth') {
+      // eth-btc
+      if (getCurrency === 'btc') return true
+    }
     return false
   }
 
