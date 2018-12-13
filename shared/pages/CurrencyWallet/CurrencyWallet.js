@@ -110,14 +110,6 @@ export default class CurrencyWallet extends Component {
     const seoPage = getSeoPage(location.pathname)
     const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true"
 
-    const toolTipDeposit = [
-      <FormattedMessage key="CurrencyWallet110" id="CurrencyWallet110" defaultMessage="Deposit funds to this address of currency wallet" />,
-    ]
-
-    const toolTipSend = [
-      <FormattedMessage key="CurrencyWallet113" id="CurrencyWallet113" defaultMessage="You can not send this asset, because you have a zero balance." />,
-    ]
-
     return (
       <div className="root">
         <PageSeo
@@ -151,10 +143,25 @@ export default class CurrencyWallet extends Component {
           <FormattedMessage id="CurrencyWallet105" defaultMessage="Activate account" />
         </Button>)}
         <div styleName={`${locale}` === 'ru' ? 'inRowru' : 'inRow'}>
-          <CurrencyButton onClick={this.handleReceive} data={`deposit${currency}`} text={toolTipDeposit} >
+          <CurrencyButton
+            onClick={this.handleReceive}
+            dataTooltip={{
+              id: `deposit${currency}`,
+              text: 'Deposit funds to this address of currency wallet',
+              isActive: 'isBalanceEmpty',
+            }}
+          >
             <FormattedMessage id="Row313" defaultMessage="Deposit" />
           </CurrencyButton>
-          <CurrencyButton  onClick={this.handleWithdraw} disable={isBalanceEmpty} data={isBalanceEmpty && address} text={toolTipSend} >
+          <CurrencyButton
+            onClick={this.handleWithdraw}
+            disable={isBalanceEmpty}
+            dataTooltip={{
+              id: `send${currency}`,
+              text: `You can not send this asset, because you have a zero balance.`,
+              isActive: isBalanceEmpty,
+            }}
+          >
             <FormattedMessage id="CurrencyWallet100" defaultMessage="Send" />
           </CurrencyButton>
           <Button gray onClick={() => this.handleGoTrade(currency)}>

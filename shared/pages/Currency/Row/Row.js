@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { links } from 'helpers'
+
+import { links, constants }    from 'helpers'
+import actions from 'redux/actions'
 
 import cssModules from 'react-css-modules'
 import styles from './Row.scss'

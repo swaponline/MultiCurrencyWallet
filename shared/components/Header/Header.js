@@ -3,10 +3,13 @@ import PropTypes from 'prop-types'
 
 import { withRouter } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
+
 import links from 'helpers/links'
 import SwitchLang from 'shared/components/SwitchLang/SwitchLang'
 import { constants } from 'helpers'
 import config from 'app-config'
+import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
+import Tour from 'reactour'
 
 import CSSModules from 'react-css-modules'
 import styles from './Header.scss'
@@ -61,9 +64,18 @@ export default class Header extends Component {
     history: PropTypes.object.isRequired,
   }
 
+  static getDerivedStateFromProps({ history: { location: { pathname } } }) {
+    console.log('pathname', pathname)
+    if  (pathname === '/ru' || pathname === '/') {
+      return { path: true }
+    }
+    return { path: false }
+  }
+
   constructor(props) {
     super(props)
     this.state = {
+      path: false,
       isTourOpen: false,
       isShowingMore: false,
       sticky: false,
@@ -106,7 +118,6 @@ export default class Header extends Component {
   }
   componentWillUnmount() {
     window.removeEventListener('scroll', this.handleScroll)
-
   }
 
   handleScroll = () =>  {
@@ -140,8 +151,9 @@ export default class Header extends Component {
   }
 
   render() {
-    const { sticky, menuItems, isTourOpen, isShowingMore } = this.state
-    const { intl: { locale }, pathname } = this.props
+
+    const { sticky, menuItems, isTourOpen, isShowingMore, path } = this.state
+    const { intl: { locale }, history, pathname } = this.props
 
     const accentColor = '#510ed8'
 
@@ -163,7 +175,7 @@ export default class Header extends Component {
             {locale.toUpperCase() === 'EN' ? 'RU' : 'EN'}
           </SwitchLang>
           <Logo withLink mobile />
-          <User openTour={this.openTour} />
+          <User openTour={this.openTour} path={path} />
           <Tour
             steps={tourSteps}
             onRequestClose={this.closeTour}
