@@ -3,6 +3,8 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'redaction'
 import { constants } from 'helpers'
 import { isMobile } from 'react-device-detect'
+import { withRouter } from 'react-router'
+
 
 import Title from 'components/PageHeadline/Title/Title'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
@@ -15,7 +17,6 @@ import styles from './Currency.scss'
 import Row from './Row/Row'
 import actions from 'redux/actions'
 
-import { withRouter } from 'react-router'
 import { FormattedMessage } from 'react-intl'
 import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
 
@@ -23,17 +24,16 @@ import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
 @withRouter
 @connect(({
   core: { hiddenCoinsList },
-  user: { ethData, btcData, ltcData, tokensData, eosData, nimData, usdtData } }) => ({
-  tokens: Object.keys(tokensData).map(k => (tokensData[k])),
-  items: [ ethData, btcData, eosData, usdtData, ltcData /* nimData */ ],
+  user: { ethData, btcData, ltcData, tokensData, telosData, eosData, nimData, usdtData } }) => ({
+  items: [ ethData, btcData, eosData, usdtData, telosData, ltcData, ...Object.keys(tokensData).map(k => (tokensData[k])) /* nimData */ ],
   hiddenCoinsList,
 }))
 @CSSModules(styles, { allowMultiple: true })
 export default class Currency extends Component {
 
 
-  constructor(props) {
-    super(props)
+  constructor({ match: { params: { currency } }, items, tokens, history }) {
+    super()
 
     this.state = {
       isBalanceFetching: false,
@@ -41,14 +41,16 @@ export default class Currency extends Component {
       balance: 0,
     }
 
-    if (!this.getCoin()) {
-      this.props.history.push('/')
+    const item = items.map(item => item.currency.toLowerCase())
+    if (!item.includes(currency)) {
+      return history.push('/NotFound')
     }
   }
 
   componentDidMount() {
     this.handleReloadBalance()
   }
+
 
   getRows = () => {
     let { match:{ params: { currency, address } }, items } = this.props
@@ -117,9 +119,8 @@ export default class Currency extends Component {
   }
 
   render() {
-    const { match: { params: { currency } } } = this.props
+    const { match: { params: { currency } }, items } = this.props
     const { isBalanceEmpty, balance } = this.state
-
     return (
       <section styleName={isMobile ? 'currencyMobileSection' : 'currencyMediaSection'}>
         <PageHeadline>
