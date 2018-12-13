@@ -22,8 +22,8 @@ import ReactTooltip from 'react-tooltip'
 import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
 
 @connect(({ core, user,  history: { transactions, swapHistory },
-  user: { ethData, btcData, ltcData, tokensData, eosData, nimData, usdtData } }) => ({
-  items: [ ethData, btcData, eosData, usdtData, ltcData, ...Object.keys(tokensData).map(k => (tokensData[k])) /* nimData */ ],
+  user: { ethData, btcData, ltcData, tokensData, eosData, nimData, usdtData, telosData } }) => ({
+  items: [ ethData, btcData, eosData, usdtData, ltcData, telosData, ...Object.keys(tokensData).map(k => (tokensData[k])) /* nimData */ ],
   user,
   hiddenCoinsList: core.hiddenCoinsList,
   txHistory: transactions,
@@ -35,7 +35,6 @@ export default class CurrencyWallet extends Component {
 
   constructor({ user, match: { params: { fullName } }, items, history }) {
     super()
-
     this.state = {
       name: null,
       address: null,
@@ -46,9 +45,9 @@ export default class CurrencyWallet extends Component {
 
     if (!item.includes(fullName.toLowerCase())) {
       history.push('/NotFound')
+      return
     }
   }
-
   componentDidMount() {
     this.handleCheckBalance()
   }

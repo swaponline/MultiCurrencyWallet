@@ -24,8 +24,8 @@ import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
 @withRouter
 @connect(({
   core: { hiddenCoinsList },
-  user: { ethData, btcData, ltcData, tokensData, eosData, nimData, usdtData } }) => ({
-  items: [ ethData, btcData, eosData, usdtData, ltcData, ...Object.keys(tokensData).map(k => (tokensData[k])) /* nimData */ ],
+  user: { ethData, btcData, ltcData, tokensData, telosData, eosData, nimData, usdtData } }) => ({
+  items: [ ethData, btcData, eosData, usdtData, telosData, ltcData, ...Object.keys(tokensData).map(k => (tokensData[k])) /* nimData */ ],
   hiddenCoinsList,
 }))
 @CSSModules(styles, { allowMultiple: true })
