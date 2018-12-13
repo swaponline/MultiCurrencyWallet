@@ -21,6 +21,7 @@ import { FormattedMessage } from 'react-intl'
 import ReactTooltip from 'react-tooltip'
 import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
 
+
 @connect(({ core, user,  history: { transactions, swapHistory },
   user: { ethData, btcData, ltcData, tokensData, eosData, nimData, usdtData, telosData } }) => ({
   items: [ ethData, btcData, eosData, usdtData, ltcData, telosData, ...Object.keys(tokensData).map(k => (tokensData[k])) /* nimData */ ],
@@ -29,9 +30,32 @@ import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
   txHistory: transactions,
   swapHistory,
 }))
+
+
 @withRouter
 @CSSModules(styles)
 export default class CurrencyWallet extends Component {
+
+  static getDerivedStateFromProps(nextProps) {
+    let { match:{ params: { fullName } }, items } = nextProps
+    const itemCurrency = items.filter(item => item.fullName.toLowerCase() === fullName.toLowerCase())[0]
+    const {
+      currency,
+      address,
+      contractAddress,
+      decimals,
+      balance,
+    } = itemCurrency
+
+    return {
+      currency,
+      address,
+      contractAddress,
+      decimals,
+      balance,
+      isBalanceEmpty: balance === 0,
+    }
+  }
 
   constructor({ user, match: { params: { fullName } }, items, history }) {
     super()
@@ -41,27 +65,16 @@ export default class CurrencyWallet extends Component {
       balance: null,
       isBalanceEmpty: false,
     }
+
     const item = items.map(item => item.fullName.toLowerCase())
 
     if (!item.includes(fullName.toLowerCase())) {
       return  window.location.href = '/NotFound'
     }
   }
-  componentDidMount() {
-    this.handleCheckBalance()
-  }
 
-  handleCheckBalance = () => {
-    let { match:{ params: { fullName } }, items } = this.props
 
-    const itemCurrency = items.filter(item => item.fullName.toLowerCase() === fullName.toLowerCase())[0]
 
-    if (itemCurrency.balance === 0) {
-      this.setState(() => ({
-        isBalanceEmpty: true,
-      }))
-    }
-  }
 
   handleReceive = () => {
     const { currency, address } = this.state
@@ -73,7 +86,15 @@ export default class CurrencyWallet extends Component {
   }
 
   handleWithdraw = () => {
-    const { currency, address, contractAddress, decimals, balance } = this.state
+    let { match:{ params: { fullName } }, items } = this.props
+    const {
+      currency,
+      address,
+      contractAddress,
+      decimals,
+      balance,
+      isBalanceEmpty,
+    } = this.state
 
     actions.analytics.dataEvent(`balances-withdraw-${currency.toLowerCase()}`)
     actions.modals.open(constants.modals.Withdraw, {
@@ -93,17 +114,22 @@ export default class CurrencyWallet extends Component {
   }
 
   render() {
-    let { swapHistory, txHistory, location, match:{ params: { fullName } }, items } = this.props
-    const { isBalanceEmpty } = this.state
-
-    const itemCurrency = items.filter(item => item.fullName.toLowerCase() === fullName.toLowerCase())[0]
+    let { swapHistory, txHistory, location, match:{ params: { fullName } } } = this.props
+    const {
+      currency,
+      address,
+      contractAddress,
+      decimals,
+      balance,
+      isBalanceEmpty,
+    } = this.state
 
     txHistory = txHistory
-      .filter(tx => tx.type === itemCurrency.currency.toLowerCase())
+      .filter(tx => tx.type === currency.toLowerCase())
 
     swapHistory = Object.keys(swapHistory)
       .map(key => swapHistory[key])
-      .filter(swap => swap.sellCurrency === itemCurrency.currency || swap.buyCurrency === itemCurrency.currency)
+      .filter(swap => swap.sellCurrency === currency || swap.buyCurrency === currency)
 
     const seoPage = getSeoPage(location.pathname)
     const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true"
@@ -113,23 +139,23 @@ export default class CurrencyWallet extends Component {
         <PageSeo
           location={location}
           defaultTitle={
-            `Swap.Online - ${fullName} (${itemCurrency.currency}) Web Wallet with Atomic Swap.`}
+            `Swap.Online - ${fullName} (${currency}) Web Wallet with Atomic Swap.`}
           defaultDescription={
-            `Atomic Swap Wallet allows you to manage and securely exchange ${fullName} (${itemCurrency.currency}) with 0% fees. Based on Multi-Sig and Atomic Swap technologies.`
+            `Atomic Swap Wallet allows you to manage and securely exchange ${fullName} (${currency}) with 0% fees. Based on Multi-Sig and Atomic Swap technologies.`
           } />
-        <PageHeadline styleName="title" subTitle={!!seoPage ? seoPage.h1 : `Your online ${fullName} (${itemCurrency.currency}) web wallet with Atomic Swap.`} />
+        <PageHeadline styleName="title" subTitle={!!seoPage ? seoPage.h1 : `Your online ${fullName} (${currency}) web wallet with Atomic Swap.`} />
         <h3 styleName="subtitle">
           <FormattedMessage id="CurrencyWallet95" defaultMessage="Your address: " />
-          <span>{itemCurrency.address}</span> <br /> Your {fullName} balance: {itemCurrency.balance}{' '}{itemCurrency.currency.toUpperCase()}
+          <span>{address}</span> <br /> Your {fullName} balance: {balance}{' '}{currency.toUpperCase()}
         </h3>
-        {itemCurrency.currency === 'EOS' && !eosAccountActivated && (<Button onClick={this.handleEosBuyAccount} gray>
+        {currency === 'EOS' && !eosAccountActivated && (<Button onClick={this.handleEosBuyAccount} gray>
           <FormattedMessage id="CurrencyWallet105" defaultMessage="Activate account" />
         </Button>)}
         <div styleName="inRow">
           <CurrencyButton
             onClick={this.handleReceive}
             dataTooltip={{
-              id: `deposit${itemCurrency.currency}`,
+              id: `deposit${currency}`,
               text: 'Deposit funds to this address of currency wallet',
               isActive: 'isBalanceEmpty',
             }}
@@ -140,14 +166,14 @@ export default class CurrencyWallet extends Component {
             onClick={this.handleWithdraw}
             disable={isBalanceEmpty}
             dataTooltip={{
-              id: `send${itemCurrency.currency}`,
+              id: `send${currency}`,
               text: `You can not send this asset, because you have a zero balance.`,
               isActive: isBalanceEmpty,
             }}
           >
             <FormattedMessage id="CurrencyWallet100" defaultMessage="Send" />
           </CurrencyButton>
-          <Button gray onClick={() => this.handleGoTrade(itemCurrency.currency)}>
+          <Button gray onClick={() => this.handleGoTrade(currency)}>
             <FormattedMessage id="CurrencyWallet104" defaultMessage="Exchange" />
           </Button>
         </div>
