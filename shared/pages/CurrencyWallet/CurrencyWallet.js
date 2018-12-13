@@ -21,7 +21,9 @@ import { FormattedMessage } from 'react-intl'
 import ReactTooltip from 'react-tooltip'
 import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
 
-@connect(({ core, user,  history: { transactions, swapHistory } }) => ({
+@connect(({ core, user,  history: { transactions, swapHistory },
+  user: { ethData, btcData, ltcData, tokensData, eosData, nimData, usdtData } }) => ({
+  items: [ ethData, btcData, eosData, usdtData, ltcData, ...Object.keys(tokensData).map(k => (tokensData[k])) /* nimData */ ],
   user,
   hiddenCoinsList: core.hiddenCoinsList,
   txHistory: transactions,
@@ -31,8 +33,8 @@ import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
 @CSSModules(styles)
 export default class CurrencyWallet extends Component {
 
-  constructor(props) {
-    super(props)
+  constructor({ user, match: { params: { fullName } }, items, history }) {
+    super()
 
     this.state = {
       name: null,
@@ -40,26 +42,26 @@ export default class CurrencyWallet extends Component {
       balance: null,
       isBalanceEmpty: false,
     }
+    const item = items.map(item => item.fullName.toLowerCase())
+
+    if (!item.includes(fullName.toLowerCase())) {
+      history.push('/NotFound')
+    }
   }
 
+  componentDidMount() {
+    this.handleCheckBalance()
+  }
 
-  static getDerivedStateFromProps(nextProps) {
-    const { user, match: { params: { fullName } } } = nextProps
+  handleCheckBalance = () => {
+    let { match:{ params: { fullName } }, items } = this.props
 
-    const currencyData = Object.values(user)
-      .concat(Object.values(user.tokensData))
-      .filter(v => v.fullName && v.fullName.toLowerCase() === fullName.toLowerCase())[0]
+    const itemCurrency = items.filter(item => item.fullName.toLowerCase() === fullName.toLowerCase())[0]
 
-    const { currency, address, contractAddress, decimals, balance } = currencyData
-
-    return {
-      currency,
-      address,
-      contractAddress,
-      decimals,
-      fullName,
-      balance,
-      isBalanceEmpty: balance === 0,
+    if (itemCurrency.balance === 0) {
+      this.setState(() => ({
+        isBalanceEmpty: true,
+      }))
     }
   }
 
@@ -93,15 +95,17 @@ export default class CurrencyWallet extends Component {
   }
 
   render() {
-    let { swapHistory, txHistory, location } = this.props
-    const { fullName, address, balance, currency, isBalanceEmpty } = this.state
+    let { swapHistory, txHistory, location, match:{ params: { fullName } }, items } = this.props
+    const { isBalanceEmpty } = this.state
+
+    const itemCurrency = items.filter(item => item.fullName.toLowerCase() === fullName.toLowerCase())[0]
 
     txHistory = txHistory
-      .filter(tx => tx.type === currency.toLowerCase())
+      .filter(tx => tx.type === itemCurrency.currency.toLowerCase())
 
     swapHistory = Object.keys(swapHistory)
       .map(key => swapHistory[key])
-      .filter(swap => swap.sellCurrency === currency || swap.buyCurrency === currency)
+      .filter(swap => swap.sellCurrency === itemCurrency.currency || swap.buyCurrency === itemCurrency.currency)
 
     const seoPage = getSeoPage(location.pathname)
     const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true"
@@ -111,23 +115,23 @@ export default class CurrencyWallet extends Component {
         <PageSeo
           location={location}
           defaultTitle={
-            `Swap.Online - ${fullName} (${currency}) Web Wallet with Atomic Swap.`}
+            `Swap.Online - ${fullName} (${itemCurrency.currency}) Web Wallet with Atomic Swap.`}
           defaultDescription={
-            `Atomic Swap Wallet allows you to manage and securely exchange ${fullName} (${currency}) with 0% fees. Based on Multi-Sig and Atomic Swap technologies.`
+            `Atomic Swap Wallet allows you to manage and securely exchange ${fullName} (${itemCurrency.currency}) with 0% fees. Based on Multi-Sig and Atomic Swap technologies.`
           } />
-        <PageHeadline styleName="title" subTitle={!!seoPage ? seoPage.h1 : `Your online ${fullName} (${currency}) web wallet with Atomic Swap.`} />
+        <PageHeadline styleName="title" subTitle={!!seoPage ? seoPage.h1 : `Your online ${fullName} (${itemCurrency.currency}) web wallet with Atomic Swap.`} />
         <h3 styleName="subtitle">
           <FormattedMessage id="CurrencyWallet95" defaultMessage="Your address: " />
-          <span>{address}</span> <br /> Your {fullName} balance: {balance}{' '}{currency.toUpperCase()}
+          <span>{itemCurrency.address}</span> <br /> Your {fullName} balance: {itemCurrency.balance}{' '}{itemCurrency.currency.toUpperCase()}
         </h3>
-        {currency === 'EOS' && !eosAccountActivated && (<Button onClick={this.handleEosBuyAccount} gray>
+        {itemCurrency.currency === 'EOS' && !eosAccountActivated && (<Button onClick={this.handleEosBuyAccount} gray>
           <FormattedMessage id="CurrencyWallet105" defaultMessage="Activate account" />
         </Button>)}
         <div styleName="inRow">
           <CurrencyButton
             onClick={this.handleReceive}
             dataTooltip={{
-              id: `deposit${currency}`,
+              id: `deposit${itemCurrency.currency}`,
               text: 'Deposit funds to this address of currency wallet',
               isActive: 'isBalanceEmpty',
             }}
@@ -138,14 +142,14 @@ export default class CurrencyWallet extends Component {
             onClick={this.handleWithdraw}
             disable={isBalanceEmpty}
             dataTooltip={{
-              id: `send${currency}`,
+              id: `send${itemCurrency.currency}`,
               text: `You can not send this asset, because you have a zero balance.`,
               isActive: isBalanceEmpty,
             }}
           >
             <FormattedMessage id="CurrencyWallet100" defaultMessage="Send" />
           </CurrencyButton>
-          <Button gray onClick={() => this.handleGoTrade(currency)}>
+          <Button gray onClick={() => this.handleGoTrade(itemCurrency.currency)}>
             <FormattedMessage id="CurrencyWallet104" defaultMessage="Exchange" />
           </Button>
         </div>

@@ -3,6 +3,8 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'redaction'
 import { constants } from 'helpers'
 import { isMobile } from 'react-device-detect'
+import { withRouter } from 'react-router'
+
 
 import Title from 'components/PageHeadline/Title/Title'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
@@ -15,7 +17,6 @@ import styles from './Currency.scss'
 import Row from './Row/Row'
 import actions from 'redux/actions'
 
-import { withRouter } from 'react-router'
 import { FormattedMessage } from 'react-intl'
 import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
 
@@ -24,16 +25,15 @@ import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
 @connect(({
   core: { hiddenCoinsList },
   user: { ethData, btcData, ltcData, tokensData, eosData, nimData, usdtData } }) => ({
-  tokens: Object.keys(tokensData).map(k => (tokensData[k])),
-  items: [ ethData, btcData, eosData, usdtData, ltcData /* nimData */ ],
+  items: [ ethData, btcData, eosData, usdtData, ltcData, ...Object.keys(tokensData).map(k => (tokensData[k])) /* nimData */ ],
   hiddenCoinsList,
 }))
 @CSSModules(styles, { allowMultiple: true })
 export default class Currency extends Component {
 
 
-  constructor(props) {
-    super(props)
+  constructor({ match: { params: { currency } }, items, tokens, history }) {
+    super()
 
     this.state = {
       isBalanceFetching: false,
@@ -41,19 +41,10 @@ export default class Currency extends Component {
       balance: 0,
     }
 
-    const { match: { params: { currency } }, items, tokens } = this.props
-
     const item = items.map(item => item.currency.toLowerCase())
-    const token = tokens.map(token => token.currency.toLowerCase())
-    const currencyData = item.concat(token)
-
-    if (!currencyData.includes(currency)) {
-      this.props.history.push('/NotFound')
+    if (!item.includes(currency)) {
+      history.push('/NotFound')
       return
-    }
-
-    if (!this.getCoin()) {
-      this.props.history.push('/')
     }
   }
 
