@@ -4,23 +4,20 @@
 }
 
 .buttonLan {
-  color: #fff;
+  color: #7c1de9!important;
 
   width: 40px;
   height: 40px;
   border-radius: 20px;
-  background: rgba(255,255,255,0.1);
+  background: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
   margin-right: 10px;
-  font-size: 15px;
-  font-weight: 500;
+  font-size: 18px;
+  font-weight: bold;
   cursor: pointer;
-}
-.buttonLan:hover{
-  color: #fff;
 }
 
 .header {
