@@ -353,7 +353,17 @@ export default class PartialClosure extends Component {
 
   handlePush = () => {
     const { haveCurrency, getCurrency } = this.state
-    this.props.history.push(`${getCurrency}-${haveCurrency}`)
+
+    let historyLink = `${haveCurrency}-${getCurrency}`
+    if ((haveCurrency === 'btc' && getCurrency === 'ustd') || (haveCurrency === 'ustd' && getCurrency === 'btc')) {
+      historyLink = 'btc-ustd'
+    } else {
+      if (haveCurrency === 'btc') {
+        historyLink = `${getCurrency}-${haveCurrency}`
+      }
+    }
+
+    this.props.history.push(historyLink)
   }
 
   setClearState = () => {
