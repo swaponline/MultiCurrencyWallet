@@ -129,7 +129,7 @@ export default class Currency extends Component {
     actions.modals.open(constants.modals.Withdraw, {
       ...itemCurrency,
     })
- }
+  }
 
   render() {
     const { match: { params: { currency } } } = this.props
