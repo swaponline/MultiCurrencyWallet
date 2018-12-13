@@ -10,6 +10,7 @@ import ImportKeys from './ImportKeys/ImportKeys'
 import ShowMoreCoins from './ShowMoreCoins/ShowMoreCoins'
 import EthChecker from './EthChecker/EthChecker'
 import ReceiveModal from './ReceiveModal/ReceiveModal'
+import DownloadModal from './DownloadModal/DownloadModal'
 
 
 export default {
@@ -25,4 +26,5 @@ export default {
   Approve,
   EthChecker,
   ReceiveModal,
+  DownloadModal,
 }

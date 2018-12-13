@@ -21,47 +21,60 @@ import { FormattedMessage } from 'react-intl'
 import ReactTooltip from 'react-tooltip'
 import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
 
-@connect(({ core, user,  history: { transactions, swapHistory } }) => ({
+
+@connect(({ core, user,  history: { transactions, swapHistory },
+  user: { ethData, btcData, ltcData, tokensData, eosData, nimData, usdtData, telosData } }) => ({
+  items: [ ethData, btcData, eosData, usdtData, ltcData, telosData, ...Object.keys(tokensData).map(k => (tokensData[k])) /* nimData */ ],
   user,
   hiddenCoinsList: core.hiddenCoinsList,
   txHistory: transactions,
   swapHistory,
 }))
+
+
 @withRouter
 @CSSModules(styles)
 export default class CurrencyWallet extends Component {
 
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      name: null,
-      address: null,
-      balance: null,
-      isBalanceEmpty: false,
-    }
-  }
-
-
   static getDerivedStateFromProps(nextProps) {
-    const { user, match: { params: { fullName } } } = nextProps
-
-    const currencyData = Object.values(user)
-      .concat(Object.values(user.tokensData))
-      .filter(v => v.fullName && v.fullName.toLowerCase() === fullName.toLowerCase())[0]
-
-    const { currency, address, contractAddress, decimals, balance } = currencyData
+    let { match:{ params: { fullName } }, items } = nextProps
+    const itemCurrency = items.filter(item => item.fullName.toLowerCase() === fullName.toLowerCase())[0]
+    const {
+      currency,
+      address,
+      contractAddress,
+      decimals,
+      balance,
+    } = itemCurrency
 
     return {
       currency,
       address,
       contractAddress,
       decimals,
-      fullName,
       balance,
       isBalanceEmpty: balance === 0,
     }
   }
+
+  constructor({ user, match: { params: { fullName } }, items, history }) {
+    super()
+    this.state = {
+      name: null,
+      address: null,
+      balance: null,
+      isBalanceEmpty: false,
+    }
+
+    const item = items.map(item => item.fullName.toLowerCase())
+
+    if (!item.includes(fullName.toLowerCase())) {
+      return  window.location.href = '/NotFound'
+    }
+  }
+
+
+
 
   handleReceive = () => {
     const { currency, address } = this.state
@@ -73,7 +86,15 @@ export default class CurrencyWallet extends Component {
   }
 
   handleWithdraw = () => {
-    const { currency, address, contractAddress, decimals, balance } = this.state
+    let { match:{ params: { fullName } }, items } = this.props
+    const {
+      currency,
+      address,
+      contractAddress,
+      decimals,
+      balance,
+      isBalanceEmpty,
+    } = this.state
 
     actions.analytics.dataEvent(`balances-withdraw-${currency.toLowerCase()}`)
     actions.modals.open(constants.modals.Withdraw, {
@@ -93,8 +114,15 @@ export default class CurrencyWallet extends Component {
   }
 
   render() {
-    let { swapHistory, txHistory, location } = this.props
-    const { fullName, address, balance, currency, isBalanceEmpty } = this.state
+    let { swapHistory, txHistory, location, match:{ params: { fullName } } } = this.props
+    const {
+      currency,
+      address,
+      contractAddress,
+      decimals,
+      balance,
+      isBalanceEmpty,
+    } = this.state
 
     txHistory = txHistory
       .filter(tx => tx.type === currency.toLowerCase())
@@ -105,14 +133,6 @@ export default class CurrencyWallet extends Component {
 
     const seoPage = getSeoPage(location.pathname)
     const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true"
-
-    const toolTipDeposit = [
-      <FormattedMessage id="CurrencyWallet110" defaultMessage="Deposit funds to this address of currency wallet" />,
-    ]
-
-    const toolTipSend = [
-      <FormattedMessage id="CurrencyWallet113" defaultMessage="You can not send this asset, because you have a zero balance." />,
-    ]
 
     return (
       <div className="root">
@@ -132,10 +152,25 @@ export default class CurrencyWallet extends Component {
           <FormattedMessage id="CurrencyWallet105" defaultMessage="Activate account" />
         </Button>)}
         <div styleName="inRow">
-          <CurrencyButton onClick={this.handleReceive} data={`deposit${currency}`} text={toolTipDeposit} >
+          <CurrencyButton
+            onClick={this.handleReceive}
+            dataTooltip={{
+              id: `deposit${currency}`,
+              text: 'Deposit funds to this address of currency wallet',
+              isActive: 'isBalanceEmpty',
+            }}
+          >
             <FormattedMessage id="Row313" defaultMessage="Deposit" />
           </CurrencyButton>
-          <CurrencyButton  onClick={this.handleWithdraw} disable={isBalanceEmpty} data={isBalanceEmpty && address} text={toolTipSend} >
+          <CurrencyButton
+            onClick={this.handleWithdraw}
+            disable={isBalanceEmpty}
+            dataTooltip={{
+              id: `send${currency}`,
+              text: `You can not send this asset, because you have a zero balance.`,
+              isActive: isBalanceEmpty,
+            }}
+          >
             <FormattedMessage id="CurrencyWallet100" defaultMessage="Send" />
           </CurrencyButton>
           <Button gray onClick={() => this.handleGoTrade(currency)}>

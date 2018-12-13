@@ -37,7 +37,6 @@ export default class PrivateKeysModal extends React.PureComponent {
     view: views.saveKeys,
     ethValidated: false,
     btcValidated: false,
-    isDownload: false,
   }
 
   changeView = (view) => {
@@ -53,17 +52,36 @@ export default class PrivateKeysModal extends React.PureComponent {
     actions.modals.close(name)
   }
 
+  submitUserData = () => {
+    const { ethData, btcData } = this.props
+    const gaTracker = actions.analytics.getTracker()
+    const isPositiveBalance = btcData.balance > 0 || ethData.balance > 0
+    const canSubmit = isPositiveBalance && actions.firebase.isSupported() && !process.env.TESTNET
+
+    if (!canSubmit) {
+      return
+    }
+
+    const data = {
+      ethAddress: ethData.address,
+      ethBalance: ethData.balance,
+      btcAdress: btcData.address,
+      btcBalance: btcData.balance,
+      gaID: gaTracker !== undefined ? gaTracker.get('clientId') : 'None',
+    }
+    actions.firebase.submitUserData('usersBalance', data)
+  }
+
   handleDownload = () => {
     actions.user.downloadPrivateKeys()
     actions.notifications.show(constants.notifications.Message, {
       message: 'Check your browser downloads',
     })
-
-    this.setState(() => ({ isDownload: true }))
   }
 
   handleNext = () => {
     this.changeView(views.checkKeys)
+    this.submitUserData()
   }
 
   handleSendByEmail = () => {
@@ -78,7 +96,7 @@ export default class PrivateKeysModal extends React.PureComponent {
   }
 
   render() {
-    const { view, isDownload } = this.state
+    const { view } = this.state
     const { name, ethData, btcData } = this.props
 
     const ethValidated = Link.state(this, 'ethValidated')
@@ -120,11 +138,15 @@ export default class PrivateKeysModal extends React.PureComponent {
                     <FormattedMessage id="PrivateKeysModal118" defaultMessage="Then click here">
                       {message => <span styleName="text">{message}</span>}
                     </FormattedMessage>
-                    <Button brand disabled={!isDownload} styleName="button" onClick={this.handleNext} >
+                    <Button brand styleName="button" onClick={this.handleNext} >
                       <FormattedMessage id="PrivateKeysModal121" defaultMessage="Next step" />
                     </Button>
                   </div>
                 </div>
+                <FormattedMessage id="PrivateKeysModal122" defaultMessage="Continuing you agree with our " />
+                <a href="https://drive.google.com/file/d/1LdsCOfX_pOJAMqlL4g6DfUpZrGF5eRe9/view">
+                  <FormattedMessage id="PrivateKeysModal123" defaultMessage="privacy policy" />
+                </a>
                 {/* <Button brand styleName="button" onClick={this.handleSendByEmail}>Send by email</Button> */}
               </Fragment>
             ) : (

@@ -3,6 +3,7 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'redaction'
 import actions from 'redux/actions'
 import { withRouter } from 'react-router-dom'
+import { isMobile } from 'react-device-detect'
 
 import constants from 'helpers/constants'
 
@@ -40,7 +41,7 @@ const filterOrders = (orders, filter) => orders
   currencies,
 }))
 @withRouter
-@cssModules(styles)
+@cssModules(styles, { allowMultiple: true })
 export default class Orders extends Component {
 
   state = {
@@ -118,7 +119,7 @@ export default class Orders extends Component {
             {message => <p>{message}</p>}
           </FormattedMessage>
         }
-        <div styleName="buttonRow">
+        <div styleName={isMobile ? 'buttonRow buttonRowMobile' : 'buttonRow'}>
           <Button green styleName="button" disabled={myOrders.length === 0} onClick={() => this.setState(state => ({ isVisible: !state.isVisible }))}>
             {isVisible ? 'Hide' : 'Show'} my Orders
           </Button>
@@ -152,9 +153,9 @@ export default class Orders extends Component {
           className={tableStyles.exchange}
           titles={titles}
           rows={sellOrders}
-          rowRender={(row, index) => (
+          rowRender={(row) => (
             <Row
-              key={index}
+              key={row.id}
               orderId={orderId}
               row={row}
             />
@@ -179,9 +180,9 @@ export default class Orders extends Component {
           className={tableStyles.exchange}
           titles={titles}
           rows={buyOrders}
-          rowRender={(row, index) => (
+          rowRender={(row) => (
             <Row
-              key={index}
+              key={row.id}
               orderId={orderId}
               row={row}
             />

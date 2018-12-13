@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { links }    from 'helpers'
+import { links, constants }    from 'helpers'
+import actions from 'redux/actions'
 
 import cssModules from 'react-css-modules'
 import styles from './Row.scss'
@@ -21,7 +22,6 @@ export default class Row extends Component {
 
   render() {
     const { from, to } = this.props
-
     return (
       <tr styleName="exchangeTr">
         <td>
@@ -44,4 +44,3 @@ export default class Row extends Component {
     )
   }
 }
-

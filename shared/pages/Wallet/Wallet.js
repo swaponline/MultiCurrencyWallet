@@ -47,8 +47,8 @@ export default class Wallet extends Component {
     currencies: propTypes.array,
     hiddenCoinsList: propTypes.array,
     history: propTypes.object,
-    items: propTypes.arrayOf(propTypes.object),
-    tokens: propTypes.arrayOf(propTypes.object),
+    items: propTypes.arrayOf(propTypes.string),
+    tokens: propTypes.arrayOf(propTypes.string),
     location: propTypes.object,
     match: propTypes.object,
   }
@@ -117,7 +117,7 @@ export default class Wallet extends Component {
     }) !== JSON.stringify({
       ...getComparableProps(nextProps),
       ...nextState,
-    });
+    })
   }
 
   render() {
@@ -130,8 +130,11 @@ export default class Wallet extends Component {
           <SubTitle>
             <FormattedMessage id="Wallet104" defaultMessage="Your online cryptocurrency wallet" />
           </SubTitle>
-          Deposit funds to addresses below
         </PageHeadline>
+        <KeyActionsPanel />
+        <div styleName="depositText">
+          <FormattedMessage id="Wallet105" defaultMessage="Deposit funds to addresses below" />
+        </div>
         <Table
           id="table-wallet"
           className={styles.wallet}
@@ -141,7 +144,6 @@ export default class Wallet extends Component {
             <Row key={row} currency={row} currencies={currencies} hiddenCoinsList={hiddenCoinsList} selectId={selectId} index={index} handleSelectId={handleSelectId} />
           )}
         />
-        <KeyActionsPanel />
       </section>
     )
   }
