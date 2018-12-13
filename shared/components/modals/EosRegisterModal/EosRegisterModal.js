@@ -15,6 +15,12 @@ import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage } from 'react-intl'
 
 
+const text = [
+  <FormattedMessage id="Eos53" defaultMessage="Enter your EOS account name " />,
+  <FormattedMessage id="Eos57" defaultMessage="Enter private key for active permission " />,
+  <FormattedMessage id="Eos61" defaultMessage="EOS Login " />,
+]
+
 @cssModules(styles)
 export default class EosRegisterModal extends React.Component {
 
@@ -49,30 +55,18 @@ export default class EosRegisterModal extends React.Component {
     const linked = Link.all(this, 'accountName', 'privateKey')
     const isDisabled = !accountName || !privateKey
 
-    const text = [
-      <FormattedMessage id="Eos53" defaultMessage="Enter your EOS account name " />,
-    ]
-
-    const text1 = [
-      <FormattedMessage id="Eos57" defaultMessage="Enter private key for active permission " />,
-    ]
-
-    const title = [
-      <FormattedMessage id="Eos61" defaultMessage="EOS Login " />,
-    ]
-
     return (
-      <Modal name={name} title={title}>
+      <Modal name={name} title={text[2]}>
         <FieldLabel inRow>
           <FormattedMessage id="EosRegAccountModal54" defaultMessage="Account name " />
           {' '}
-          <Tooltip text={text} id="EoSR92" />
+          <Tooltip text={text[0]} id="EoSR92" />
         </FieldLabel>
         <Input valueLink={linked.accountName} />
         <FieldLabel inRow>
           <FormattedMessage id="EosRegAccountModal58" defaultMessage="Active private key " />
           {' '}
-          <Tooltip text={text1} id="EoSR69" />
+          <Tooltip text={text[1]} id="EoSR69" />
         </FieldLabel>
         <Input valueLink={linked.privateKey} />
         { error && (

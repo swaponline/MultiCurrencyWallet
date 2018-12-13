@@ -10,6 +10,10 @@ import { Button } from 'components/controls'
 import { FormattedMessage } from 'react-intl'
 
 
+const title = [
+  <FormattedMessage id="Receive" defaultMessage="Receive" />,
+]
+
 @cssModules(styles)
 export default class ReceiveModal extends React.Component {
 
@@ -34,10 +38,6 @@ export default class ReceiveModal extends React.Component {
 
   render() {
     const { props: { name, data: { currency, address } }, state: { isAddressCopied } } = this
-
-    const title = [
-      <FormattedMessage id="Receive" defaultMessage="Receive" />,
-    ]
 
     return (
       <Modal name={name} title={title}>

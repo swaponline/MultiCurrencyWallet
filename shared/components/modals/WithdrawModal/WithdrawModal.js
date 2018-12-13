@@ -115,13 +115,12 @@ export default class WithdrawModal extends React.Component {
   }
 
 
-    All = () => {
+    sellAllBalance = () => {
       const { amount, balance } = this.state
       const { data } = this.props
-      const balanceMiner = balance !== 0 ?
-        Number(balance) - minAmount[data.currency.toLowerCase()]
-        :
-        balance
+      const balanceMiner = balance !== 0
+        ? Number(balance) - minAmount[data.currency.toLowerCase()]
+        : balance
       this.setState({
         amount: balanceMiner,
       })
@@ -138,6 +137,21 @@ export default class WithdrawModal extends React.Component {
     render() {
       const { address, amount, balance, isShipped, minus, ethBalance, tokenFee } = this.state
       const { name, data, tokenItems } = this.props
+
+      const text = [
+        <div style={{ textAlign: 'center' }}>
+          <FormattedMessage id="WTH273" defaultMessage="Make sure the wallet you " />
+          <br />
+          <FormattedMessage id="WTHl274" defaultMessage="are sending the funds to supports" />
+          {data.currency.toUpperCase()}
+        </div>,
+      ]
+
+      const title = [
+        <FormattedMessage id="Withdraw183" defaultMessage="Withdraw" />,
+        ' ',
+        `${data.currency.toUpperCase()}`,
+      ]
 
       const linked = Link.all(this, 'address', 'amount')
       const isDisabled =
@@ -169,21 +183,6 @@ export default class WithdrawModal extends React.Component {
           minus: true,
         })
       }
-
-      const text = [
-        <div style={{ textAlign: 'center' }}>
-          <FormattedMessage id="WTH273" defaultMessage="Make sure the wallet you " />
-          <br />
-          <FormattedMessage id="WTHl274" defaultMessage="are sending the funds to supports" />
-          {data.currency.toUpperCase()}
-        </div>,
-      ]
-
-      const title = [
-        <FormattedMessage id="Withdraw183" defaultMessage="Withdraw" />,
-        ' ',
-        `${data.currency.toUpperCase()}`,
-      ]
 
       return (
         <Modal name={name} title={title}>
@@ -222,7 +221,7 @@ export default class WithdrawModal extends React.Component {
           </FieldLabel>
           <div styleName="group">
             <Input styleName="input" valueLink={linked.amount} pattern="0-9\." placeholder={`Enter the amount. You have ${Number(balance).toFixed(5)}`} />
-            <buttton styleName="button" onClick={this.All} data-tip data-for="Withdrow134">
+            <buttton styleName="button" onClick={this.sellAllBalance} data-tip data-for="Withdrow134">
               <FormattedMessage id="Select210" defaultMessage="MAX" />
             </buttton>
             <ReactTooltip id="Withdrow134" type="light" effect="solid">
@@ -249,4 +248,3 @@ export default class WithdrawModal extends React.Component {
       )
     }
 }
-

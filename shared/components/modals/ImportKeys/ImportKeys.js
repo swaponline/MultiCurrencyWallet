@@ -15,6 +15,10 @@ import { Button } from 'components/controls'
 import { FormattedMessage } from 'react-intl'
 
 
+const title = [
+  <FormattedMessage id="Import" defaultMessage="Import keys" />,
+]
+
 @cssModules(styles)
 export default class ImportKeys extends Component {
 
@@ -118,10 +122,6 @@ export default class ImportKeys extends Component {
       linked.btcKey.check((value) => value !== '', <FormattedMessage id="importkeys118" defaultMessage="Please enter BTC private key" />)
       linked.btcKey.check((value) => value.length > 27, <FormattedMessage id="importkeys119" defaultMessage="Please valid BTC private key" />)
     }
-
-    const title = [
-      <FormattedMessage id="Import" defaultMessage="Import keys" />,
-    ]
 
     return (
       <Modal name={this.props.name} title={title}>

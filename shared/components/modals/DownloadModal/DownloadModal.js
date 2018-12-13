@@ -15,6 +15,11 @@ import { FormattedMessage } from 'react-intl'
 
 import { withRouter } from 'react-router'
 
+
+const title = [
+  <FormattedMessage id="down97" defaultMessage="We don`t store your private keys and will not be able to restore them!" />,
+]
+
 @withRouter
 @connect(
   ({
@@ -65,36 +70,26 @@ export default class DownloadModal extends React.Component {
     const Account = () => (
       items.map(item => (
         <Fragment>
-          {
-            Ru ? (
-              <p style={{ fontSize: '16px' }}>
-                {item.fullName}
-                {' '}
-                {`${item.currency}` === 'EOS' || `${item.currency}` === 'TLOS' ? 'Имя Аккаунта:' : 'Адрес:'}
-              </p>
-            ) : (
-              <p style={{ fontSize: '16px' }}>
-                {item.fullName}
-                {' '}
-                {`${item.currency}` === 'EOS' || `${item.currency}` === 'TLOS' ? 'Account name:' : 'Address:'}
-              </p>
-            )
-          }
-          <p>{item.address}</p>
-          <p style={{ fontSize: '16px' }}>
+          <a>
             {item.fullName}
             {' '}
-            {Ru ? 'Приватный ключ' : 'Private key'}
+            {
+              `${item.currency}` === 'EOS' || `${item.currency}` === 'TLOS'
+                ? <FormattedMessage id="downloadModal73" defaultMessage="Account name:" />
+                : <FormattedMessage id="downloadModal75" defaultMessage="Address:" />
+            }
+          </a>
+          <p>{item.address}</p>
+          <a>
+            {item.fullName}
             {' '}
-          </p>
+            <FormattedMessage id="downloadModal782" defaultMessage="Private key" />
+            {' '}
+          </a>
           <p>{item.privateKey}</p>
         </Fragment>
       ))
     )
-
-    const title = [
-      <FormattedMessage id="down97" defaultMessage="We don`t store your private keys and will not be able to restore them!" />,
-    ]
 
     return (
       <Modal name={name} title={title}>

@@ -50,7 +50,9 @@ export default class Offer extends React.Component {
     const { view, offer } = this.state
     const { name } = this.props
 
-    const title = view === 'editOffer' ? <FormattedMessage id="Add52" defaultMessage="Add offer" /> :  <FormattedMessage id="Confirm52" defaultMessage="Confirm Offer" />
+    const title = view === 'editOffer'
+      ? <FormattedMessage id="Add52" defaultMessage="Add offer" />
+      : <FormattedMessage id="Confirm52" defaultMessage="Confirm Offer" />
 
     return (
       <Modal name={name} title={title}>

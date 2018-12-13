@@ -15,6 +15,10 @@ import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage } from 'react-intl'
 
 
+const text = [
+  <FormattedMessage id="CDC52" defaultMessage="Offer list" />,
+]
+
 @CSSModules(styles, { allowMultiple: true })
 export default class CurrencyDirectionChooser extends Component {
 
@@ -48,9 +52,7 @@ export default class CurrencyDirectionChooser extends Component {
     const { buyCurrency, sellCurrency,
       flipCurrency, handleBuyCurrencySelect, handleSellCurrencySelect, handleSubmit,
       currencies } = this.props
-    const text = [
-      <FormattedMessage id="CDC52" defaultMessage="Offer list" />,
-    ]
+
     return (
       <div styleName="choice">
         <div styleName="row title">

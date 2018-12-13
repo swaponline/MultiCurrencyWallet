@@ -1,5 +1,6 @@
 import React, { Fragment, Component } from 'react'
 import { connect } from 'redaction'
+import { isMobile } from 'react-device-detect'
 
 import CSSModules from 'react-css-modules'
 import styles from './SaveKeys.scss'

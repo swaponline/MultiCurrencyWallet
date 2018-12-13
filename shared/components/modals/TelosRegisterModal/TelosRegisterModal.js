@@ -15,6 +15,12 @@ import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage } from 'react-intl'
 
 
+const text = [
+  <FormattedMessage id="TelosRegister46" defaultMessage="Enter TELOS account name " />,
+  <FormattedMessage id="TelosRegister52" defaultMessage="Enter your TELOS secret key" />,
+  <FormattedMessage id="TELOSLogin" defaultMessage="TELOS Login" />,
+]
+
 @cssModules(styles)
 export default class TelosRegisterModal extends React.Component {
 
@@ -50,28 +56,16 @@ export default class TelosRegisterModal extends React.Component {
     const linked = Link.all(this, 'accountName', 'privateKey')
     const isDisabled = !accountName || !privateKey
 
-    const text = [
-      <FormattedMessage id="TelosRegister46" defaultMessage="Enter TELOS account name " />,
-    ]
-
-    const text1 = [
-      <FormattedMessage id="TelosRegister52" defaultMessage="Enter your TELOS secret key" />,
-    ]
-
-    const title = [
-      <FormattedMessage id="TELOSLogin" defaultMessage="TELOS Login" />,
-    ]
-
     return (
-      <Modal name={name} title={title}>
+      <Modal name={name} title={text[3]}>
         <FieldLabel inRow>
           <FormattedMessage id="TelosRegister55" defaultMessage="Account name" />
-          <Tooltip text={text} id="TelOSR92" />
+          <Tooltip text={text[0]} id="TelOSR92" />
         </FieldLabel>
         <Input valueLink={linked.accountName} />
         <FieldLabel inRow>
           <FormattedMessage id="TelosRegister59" defaultMessage="Private key" />
-          <Tooltip text={text1} id="TelOSR70" />
+          <Tooltip text={text[1]} id="TelOSR70" />
         </FieldLabel>
         <Input valueLink={linked.privateKey} />
         { error && (

@@ -20,6 +20,10 @@ const views = {
   checkKeys: 'checkKeys',
 }
 
+const title = [
+  <FormattedMessage id="ImCAUTIONport" defaultMessage="CAUTION!" />,
+]
+
 @connect({
   ethData: 'user.ethData',
   btcData: 'user.btcData',
@@ -81,10 +85,6 @@ export default class PrivateKeysModal extends React.PureComponent {
     const ethValidated = Link.state(this, 'ethValidated')
     const btcValidated = Link.state(this, 'btcValidated')
     const isValidated = ethValidated.value && btcValidated.value
-
-    const title = [
-      <FormattedMessage id="ImCAUTIONport" defaultMessage="CAUTION!" />,
-    ]
 
     return (
       <Modal

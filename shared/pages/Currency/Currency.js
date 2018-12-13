@@ -7,7 +7,6 @@ import { withRouter } from 'react-router'
 import actions from 'redux/actions'
 
 import { Link, Redirect } from 'react-router-dom'
-import { FormattedMessage } from 'react-intl'
 
 import CSSModules from 'react-css-modules'
 import styles from './Currency.scss'
@@ -19,7 +18,6 @@ import Table from 'components/tables/Table/Table'
 import Toggle from 'components/controls/Toggle/Toggle'
 import Row from './Row/Row'
 
-import { withRouter } from 'react-router'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from '../../helpers/locale'
 

@@ -105,28 +105,28 @@
     "id": "ADDoffer22",
     "message": "Перейти в Mainnet",
     "files": [
-      "shared/components/Header/User/AddOfferButton/AddOfferButton.js"
+      "shared/components/Header/User/SubscribeButton/SubscribeButton.js"
     ]
   },
   {
     "id": "ADDoffer2218",
     "message": "Mainnet",
     "files": [
-      "shared/components/Header/User/AddOfferButton/AddOfferButton.js"
+      "shared/components/Header/User/SubscribeButton/SubscribeButton.js"
     ]
   },
   {
     "id": "ADDoffer29",
     "message": "Подписаться",
     "files": [
-      "shared/components/Header/User/AddOfferButton/AddOfferButton.js"
+      "shared/components/Header/User/SubscribeButton/SubscribeButton.js"
     ]
   },
   {
     "id": "ADDoffer33",
     "message": "Подписаться на обновление новостей Swap.Online",
     "files": [
-      "shared/components/Header/User/AddOfferButton/AddOfferButton.js"
+      "shared/components/Header/User/SubscribeButton/SubscribeButton.js"
     ]
   },
   {
@@ -173,14 +173,14 @@
   },
   {
     "id": "KeyActionsPanel46",
-    "message": "Скачать приватные ключи",
+    "message": "Скачать ключи",
     "files": [
       "shared/components/KeyActionsPanel/KeyActionsPanel.js"
     ]
   },
   {
     "id": "KeyActionsPanel49",
-    "message": "Импортировать ключи",
+    "message": "Импортировать",
     "files": [
       "shared/components/KeyActionsPanel/KeyActionsPanel.js"
     ]
@@ -3968,7 +3968,7 @@
   },
   {
     "id": "currencywallet107",
-    "message": " кошелек, основанный на технологии Atomic Swap. ",
+    "message": " кошелек, в основе которого лежит технология Atomic Swap. ",
     "files": [
       "shared/pages/CurrencyWallet/CurrencyWallet.js"
     ]
@@ -4316,7 +4316,7 @@
   },
   {
     "id": "Import",
-    "message": "Импортировать ключи",
+    "message": "Импортировать",
     "files": [
       "shared/components/modals/ImportKeys/ImportKeys.js"
     ]
@@ -4499,7 +4499,7 @@
   },
   {
     "id": "Header200",
-    "message": "Наша особенность - одноранговый обмен, доступный в нашем кошельке, основанный на технологии Atomic Swap. Вы можете выполнять обмен с любой криптовалютой, указанной в нашем кошельке.",
+    "message": "Наша особенность - одноранговый обмен, доступный в нашем кошельке, в основе которого лежит технология Atomic Swap. Вы можете выполнять обмен с любой криптовалютой, указанной в нашем кошельке.",
     "files": [
       "shared/components/Header/Header.js"
     ]
@@ -4705,6 +4705,34 @@
     "message": "ЗА",
     "files": [
       "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "downloadModal73",
+    "message": "Имя аккаунта:",
+    "files": [
+      "shared/components/modals/DownloadModal/DownloadModal.js"
+    ]
+  },
+  {
+    "id": "downloadModal75",
+    "message": "Адрес:",
+    "files": [
+      "shared/components/modals/DownloadModal/DownloadModal.js"
+    ]
+  },
+  {
+    "id": "downloadModal782",
+    "message": "Приватный ключ",
+    "files": [
+      "shared/components/modals/DownloadModal/DownloadModal.js"
+    ]
+  },
+  {
+    "id": "SaveKe35",
+    "message": "Скачать",
+    "files": [
+      "shared/components/SaveKeys/SaveKeys.js"
     ]
   }
 ]

@@ -30,6 +30,15 @@ import swapApp from 'swap.app'
 const filterIsPartial = (orders) => orders
   .filter(order => order.isPartialClosure)
 
+const text = [
+  <FormattedMessage id="partial223" defaultMessage="To change default wallet for buy currency. " />,
+  <FormattedMessage id="partial224" defaultMessage="Leave empty for use Swap.Online wallet " />,
+]
+
+const suTitle = [
+  <FormattedMessage id="partial437" defaultMessage="Fast cryptocurrency exchange using atomicswap" />,
+]
+
 @injectIntl
 @connect(({
   currencies,
@@ -423,15 +432,6 @@ export default class PartialClosure extends Component {
     if (redirect) {
       return <Redirect push to={`${localisedUrl(locale, links.swap)}/${getCurrency}-${haveCurrency}/${orderId}`} />
     }
-
-    const text = [
-      <FormattedMessage id="partial223" defaultMessage="To change default wallet for buy currency. " />,
-      <FormattedMessage id="partial224" defaultMessage="Leave empty for use Swap.Online wallet " />,
-    ]
-
-    const suTitle = [
-      <FormattedMessage id="partial437" defaultMessage="Fast cryptocurrency exchange using atomicswap" />,
-    ]
 
     let canDoOrder = !isNonOffers
     if (!(Number(getAmount) > 0)) canDoOrder = false

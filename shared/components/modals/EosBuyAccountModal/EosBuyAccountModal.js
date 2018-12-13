@@ -17,6 +17,14 @@ import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage } from 'react-intl'
 
 
+const text = [
+  <FormattedMessage id="Eos71" defaultMessage="This account will be registered in EOS blockchain" />,
+  <FormattedMessage id="Eos75" defaultMessage="Private key for active and owner permissions" />,
+  <FormattedMessage id="Eos79" defaultMessage="Public key associated with account" />,
+  <FormattedMessage id="Eos83" defaultMessage="This amount will be withdrawn from your BTC wallet" />,
+  <FormattedMessage id="Eos87" defaultMessage="EOS Register" />,
+]
+
 @cssModules(styles)
 export default class EosBuyAccountModal extends React.Component {
 
@@ -67,34 +75,14 @@ export default class EosBuyAccountModal extends React.Component {
 
     const activationPayment = localStorage.getItem(constants.localStorage.eosActivationPayment)
 
-    const text = [
-      <FormattedMessage id="Eos71" defaultMessage="This account will be registered in EOS blockchain" />,
-    ]
-
-    const text1 = [
-      <FormattedMessage id="Eos75" defaultMessage="Private key for active and owner permissions" />,
-    ]
-
-    const text2 = [
-      <FormattedMessage id="Eos79" defaultMessage="Public key associated with account" />,
-    ]
-
-    const text3 = [
-      <FormattedMessage id="Eos83" defaultMessage="This amount will be withdrawn from your BTC wallet" />,
-    ]
-
-    const title = [
-      <FormattedMessage id="Eos87" defaultMessage="EOS Register" />,
-    ]
-
     return (
       <Fragment>
-        <Modal name={name} title={title} >
+        <Modal name={name} title={text[4]} >
           <div styleName="margin">
             <FieldLabel inRow>
               <FormattedMessage id="EosBuyAccountModal72" defaultMessage="Account name" />
               {' '}
-              <Tooltip text={text} id="EoS92" />
+              <Tooltip text={text[0]} id="EoS92" />
             </FieldLabel>
             <Input readOnly="true" valueLink={linked.accountName} styleName="input" />
           </div>
@@ -102,7 +90,7 @@ export default class EosBuyAccountModal extends React.Component {
             <FieldLabel inRow>
               <FormattedMessage id="EosBuyAccountModal78" defaultMessage="Private key" />
               {' '}
-              <Tooltip text={text1} id="EoS90" />
+              <Tooltip text={text[1]} id="EoS90" />
             </FieldLabel>
             <Input readOnly="true" valueLink={linked.activePrivateKey} />
           </div>
@@ -110,7 +98,7 @@ export default class EosBuyAccountModal extends React.Component {
             <FieldLabel inRow>
               <FormattedMessage id="EosBuyAccountModal84" defaultMessage="Public key" />
               {' '}
-              <Tooltip text={text2} id="EoS106" />
+              <Tooltip text={text[2]} id="EoS106" />
             </FieldLabel>
             <Input readOnly="true" valueLink={linked.activePublicKey} />
           </div>
@@ -118,7 +106,7 @@ export default class EosBuyAccountModal extends React.Component {
             <FieldLabel inRow>
               <FormattedMessage id="EosBuyAccountModal90" defaultMessage="Price (BTC)" />
               {' '}
-              <Tooltip text={text3} id="EoS113" />
+              <Tooltip text={text[3]} id="EoS113" />
             </FieldLabel>
             <Input readOnly="true" valueLink={linked.price} />
           </div>

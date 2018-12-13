@@ -14,16 +14,17 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 
 
+const title = [
+  <FormattedMessage id="Approve" defaultMessage="Approve token" />,
+]
+
+
 @injectIntl
 @CSSModules(styles)
 export default class EthChecker extends Component {
   render() {
 
     const { name, intl: { locale }  } = this.props
-
-    const title = [
-      <FormattedMessage id="Approve" defaultMessage="Approve token" />,
-    ]
 
     return (
       <Modal name={name} title={title}>

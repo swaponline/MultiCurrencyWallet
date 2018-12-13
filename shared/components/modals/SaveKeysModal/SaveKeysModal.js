@@ -20,6 +20,10 @@ const views = {
   approve: 'approve',
 }
 
+const title = [
+  <FormattedMessage id="Areyousure?" defaultMessage="Are you sure ?" />,
+]
+
 export default class SaveKeysModal extends React.Component {
 
     static propTypes = {
@@ -54,10 +58,6 @@ export default class SaveKeysModal extends React.Component {
 
     render() {
       const { view } = this.state
-
-      const title = [
-        <FormattedMessage id="Areyousure?" defaultMessage="Are you sure ?" />,
-      ]
 
       return (
         <Overlay>

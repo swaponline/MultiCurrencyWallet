@@ -17,6 +17,16 @@ import Row from './Row/Row'
 import { FormattedMessage } from 'react-intl'
 
 
+const titles = [
+  <FormattedMessage id="Coin" defaultMessage="Coin" />,
+  <FormattedMessage id="Name" defaultMessage="Name" />,
+  <FormattedMessage id="Actions" defaultMessage="Actions" />,
+]
+
+const title2 = [
+  <FormattedMessage id="ShMoreCoins" defaultMessage="Show More Coins" />,
+]
+
 @connect(({
   core: { hiddenCoinsList },
   user: { ethData, btcData, ltcData, telosData, /* bchData, */ tokensData, eosData, nimData, usdtData },
@@ -31,15 +41,6 @@ import { FormattedMessage } from 'react-intl'
 export default class ShowMoreCoins extends Component {
   render() {
     const { name, items, tokens, currencies, hiddenCoinsList } = this.props
-    const titles = [
-      <FormattedMessage id="Coin" defaultMessage="Coin" />,
-      <FormattedMessage id="Name" defaultMessage="Name" />,
-      <FormattedMessage id="Actions" defaultMessage="Actions" />,
-    ]
-
-    const title2 = [
-      <FormattedMessage id="ShMoreCoins" defaultMessage="Show More Coins" />,
-    ]
 
     return (
       <Modal name={name} title={title2} shouldCenterVertically={false}>

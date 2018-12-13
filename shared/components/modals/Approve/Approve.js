@@ -15,6 +15,10 @@ import { FieldLabel, Input } from 'components/forms'
 import { FormattedMessage } from 'react-intl'
 
 
+const title = [
+  <FormattedMessage id="Approve66" defaultMessage="Approve token" />,
+]
+
 @cssModules(styles)
 export default class Offer extends React.Component {
 
@@ -62,10 +66,6 @@ export default class Offer extends React.Component {
     if (isSubmitted) {
       linked.amount.check((value) => value <= 0, `Amount must be greater than 1 `)
     }
-
-    const title = [
-      <FormattedMessage id="Approve66" defaultMessage="Approve token" />,
-    ]
 
     return (
       <Modal name={name} title={title}>

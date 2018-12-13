@@ -12,6 +12,10 @@ import Button from 'components/controls/Button/Button'
 import { FormattedMessage } from 'react-intl'
 
 
+const title = [
+  <FormattedMessage id="Subscribe55" defaultMessage="Subscribe" />,
+]
+
 @connect(
   ({
     user: { ethData, btcData },
@@ -50,10 +54,6 @@ export default class SubscribeModal extends React.Component {
   render() {
     const { isSubscribed, isSubmited } = this.state
     const { name } = this.props
-
-    const title = [
-      <FormattedMessage id="Subscribe55" defaultMessage="Subscribe" />,
-    ]
 
     return (
       <Modal name={name} title={title}>

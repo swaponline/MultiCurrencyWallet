@@ -105,28 +105,28 @@
     "id": "ADDoffer22",
     "message": "Start to real Swap",
     "files": [
-      "shared/components/Header/User/AddOfferButton/AddOfferButton.js"
+      "shared/components/Header/User/SubscribeButton/SubscribeButton.js"
     ]
   },
   {
     "id": "ADDoffer2218",
     "message": "Mainnet",
     "files": [
-      "shared/components/Header/User/AddOfferButton/AddOfferButton.js"
+      "shared/components/Header/User/SubscribeButton/SubscribeButton.js"
     ]
   },
   {
     "id": "ADDoffer29",
     "message": "Subscribe",
     "files": [
-      "shared/components/Header/User/AddOfferButton/AddOfferButton.js"
+      "shared/components/Header/User/SubscribeButton/SubscribeButton.js"
     ]
   },
   {
     "id": "ADDoffer33",
     "message": "Get subscribed for the Swap.Online news",
     "files": [
-      "shared/components/Header/User/AddOfferButton/AddOfferButton.js"
+      "shared/components/Header/User/SubscribeButton/SubscribeButton.js"
     ]
   },
   {
@@ -4705,6 +4705,34 @@
     "message": "FOR",
     "files": [
       "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "downloadModal73",
+    "message": "Account name:",
+    "files": [
+      "shared/components/modals/DownloadModal/DownloadModal.js"
+    ]
+  },
+  {
+    "id": "downloadModal75",
+    "message": "Address:",
+    "files": [
+      "shared/components/modals/DownloadModal/DownloadModal.js"
+    ]
+  },
+  {
+    "id": "downloadModal782",
+    "message": "Private key",
+    "files": [
+      "shared/components/modals/DownloadModal/DownloadModal.js"
+    ]
+  },
+  {
+    "id": "SaveKe35",
+    "message": "Download",
+    "files": [
+      "shared/components/SaveKeys/SaveKeys.js"
     ]
   }
 ]
