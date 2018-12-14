@@ -256,7 +256,6 @@ export default class EthToBtc extends Component {
                     </Fragment>
 
                     <br />
-                    <br />
 
                     {
                       flow.step === 3 && (

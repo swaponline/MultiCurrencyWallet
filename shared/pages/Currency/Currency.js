@@ -105,7 +105,22 @@ export default class Currency extends Component {
       return false
     }
 
-    this.handleReloadBalance()
+    currency = currency.toUpperCase()
+
+    actions.modals.open(constants.modals.ReceiveModal, {
+      currency,
+      address,
+    })
+  }
+
+  handleWithdraw = () => {
+    let { match:{ params: { currency } }, items } = this.props
+    const itemCurrency = items.filter(item => item.currency.toLowerCase() === currency)[0]
+
+    actions.analytics.dataEvent(`balances-withdraw-${currency.toLowerCase()}`)
+    actions.modals.open(constants.modals.Withdraw, {
+      ...itemCurrency,
+    })
   }
 
   handleReceive = () => {

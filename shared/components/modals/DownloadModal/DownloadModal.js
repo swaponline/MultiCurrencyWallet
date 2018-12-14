@@ -86,6 +86,7 @@ export default class DownloadModal extends React.Component {
             <FormattedMessage id="downloadModal782" defaultMessage="Private key" />
             {' '}
           </a>
+
           <p>{item.privateKey}</p>
         </Fragment>
       ))
