@@ -14,6 +14,7 @@ const Tooltip = ({ children, id }) => (
     <ReactTooltip id={id} effect="solid" type="light" multiline >
       {children}
     </ReactTooltip>
+
   </Fragment>
 )
 

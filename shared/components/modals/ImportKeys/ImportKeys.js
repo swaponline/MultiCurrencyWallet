@@ -23,6 +23,7 @@ const title = defineMessages({
 })
 
 @injectIntl
+
 @cssModules(styles)
 export default class ImportKeys extends Component {
 
@@ -151,6 +152,10 @@ export default class ImportKeys extends Component {
     if (isSubmittedBtc) {
       linked.btcKey.check((value) => value !== '', <FormattedMessage id="importkeys118" defaultMessage="Please enter BTC private key" />)
       linked.btcKey.check((value) => value.length > 27, <FormattedMessage id="importkeys119" defaultMessage="Please valid BTC private key" />)
+    }
+
+    if (isSubmittedXlm) {
+      linked.btcKey.check((value) => value !== '', 'Please enter XLM private key')
     }
 
     if (isSubmittedXlm) {

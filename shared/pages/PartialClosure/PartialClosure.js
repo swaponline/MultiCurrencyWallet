@@ -369,6 +369,7 @@ export default class PartialClosure extends Component {
     const { intl: { locale } } = this.props
     const { haveCurrency, getCurrency } = this.state
     this.props.history.push(localisedUrl(locale, `/${haveCurrency} - ${getCurrency}`))
+
     const tradeTicker = `${haveCurrency}-${getCurrency}`
 
     if (constants.tradeTicker.includes(tradeTicker.toUpperCase())) {
