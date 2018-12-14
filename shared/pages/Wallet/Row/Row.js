@@ -396,21 +396,20 @@ export default class Row extends Component {
               onClick={this.handleReceive}
               dataTooltip={{
                 id: `deposit${currency}`,
-                text: 'Deposit funds to this address of currency wallet',
-                isActive: 'true',
+                deposit: true,
               }}
               wallet="true">
               <FormattedMessage id="Row313" defaultMessage="Deposit" />
             </CurrencyButton>
-            <BtnTooltip onClick={this.handleWithdraw} disable={isBalanceEmpty} id={currency}>
+            <BtnTooltip onClick={this.handleWithdraw} disable={isBalanceEmpty} id={`row${currency}`}>
               <i className="fas fa-arrow-alt-circle-right" />
               <FormattedMessage id="Row328" defaultMessage="Send" />
             </BtnTooltip>
             {
               tradeAllowed && (
-                <BtnTooltip onClick={() => this.handleGoTrade(currency)} styleName={isBalanceEmpty && 'disableWth'}> 
+                <BtnTooltip onClick={() => this.handleGoTrade(currency)} styleName={isBalanceEmpty && 'disableWth'}>
                   <i className="fas fa-exchange-alt" />
-                  <FormattedMessage id="Row334" defaultMessage="Exchane" />
+                  <FormattedMessage id="Row334" defaultMessage="Exchange" />
                 </BtnTooltip>
               )
             }

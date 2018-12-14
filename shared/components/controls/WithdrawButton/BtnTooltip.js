@@ -19,12 +19,6 @@ import { FormattedMessage } from 'react-intl'
       <Fragment>
         <WithdrawButton disable={disable} onClick={onClick} data-tip data-for={id} {...rest}>
           {children}
-          <span>
-            <FormattedMessage id={`id`}  defaultMessage={`text`} values={{
-              text: {text},
-              id: {id},
-           }}/>
-          </span>
         </WithdrawButton>
         {
           disable && (

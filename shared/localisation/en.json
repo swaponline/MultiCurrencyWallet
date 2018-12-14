@@ -4689,11 +4689,7 @@
   },
   {
     "id": "id",
-    "message": "text",
-    "files": [
-      "shared/components/controls/CurrencyButton/CurrencyButton.js",
-      "shared/components/controls/WithdrawButton/BtnTooltip.js"
-    ]
+    "message": "text"
   },
   {
     "id": "WithdrawButton322",
@@ -4742,6 +4738,28 @@
     "message": "orders of those who {buy} {buyCurrency} from you",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "{id}",
+    "message": "{text}"
+  },
+  {
+    "id": "{idCur}",
+    "message": "{textCur}"
+  },
+  {
+    "id": "CurrencyButton41",
+    "message": "Deposit funds to this address of currency wallet",
+    "files": [
+      "shared/components/controls/CurrencyButton/CurrencyButton.js"
+    ]
+  },
+  {
+    "id": "CurrencyButton42",
+    "message": "You can not send this asset, because you have a zero balance.",
+    "files": [
+      "shared/components/controls/CurrencyButton/CurrencyButton.js"
     ]
   }
 ]

@@ -137,8 +137,7 @@ export default class Currency extends Component {
               onClick={this.handleReceive}
               dataTooltip={{
                 id: `currency${currency}`,
-                isActive: true,
-                text: 'Deposit funds to this address of currency wallet',
+                deposit: true,
               }}
             >
               <FormattedMessage id="Row313" defaultMessage="Deposit" />
@@ -148,7 +147,6 @@ export default class Currency extends Component {
               dataTooltip={{
                 isActive: isBalanceEmpty,
                 id: `send${currency}`,
-                text: 'You can not send this asset, because you have a zero balance.',
               }}
               onClick={this.handleWithdraw}
               disable={isBalanceEmpty}

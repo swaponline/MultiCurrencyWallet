@@ -4723,14 +4723,6 @@
     ]
   },
   {
-    "id": "id",
-    "message": "text",
-    "files": [
-      "shared/components/controls/CurrencyButton/CurrencyButton.js",
-      "shared/components/controls/WithdrawButton/BtnTooltip.js"
-    ]
-  },
-  {
     "id": "orders189",
     "message": "ПОКУПКУ",
     "files": [
@@ -4742,6 +4734,20 @@
     "message": "ордера на {buy} {buyCurrency} ",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "CurrencyButton41",
+    "message": "Пополнение баланса данной криптовалюты",
+    "files": [
+      "shared/components/controls/CurrencyButton/CurrencyButton.js"
+    ]
+  },
+  {
+    "id": "CurrencyButton42",
+    "message": "Вы не можете отправить данную валюту, недостаточно средств.",
+    "files": [
+      "shared/components/controls/CurrencyButton/CurrencyButton.js"
     ]
   }
 ]
