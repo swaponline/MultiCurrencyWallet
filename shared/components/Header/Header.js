@@ -63,7 +63,6 @@ export default class Header extends Component {
   }
 
   static getDerivedStateFromProps({ history: { location: { pathname } } }) {
-    console.log('pathname', pathname)
     if  (pathname === '/ru' || pathname === '/') {
       return { path: true }
     }
