@@ -15,18 +15,24 @@ import { Button } from 'components/controls'
 import { FormattedMessage } from 'react-intl'
 
 
+window.actions = actions
+
+
 @cssModules(styles)
 export default class ImportKeys extends Component {
 
   state = {
     ethKey: '',
     btcKey: '',
+    xlmKey: '',
 
     isSubmittedEth: false,
     isSubmittedBtc: false,
+    isSubmittedXlm: false,
 
     isImportedEth: false,
     isImportedBtc: false,
+    isImportedXlm: false,
 
     isDisabled: true,
     keySave: false,
@@ -87,6 +93,27 @@ export default class ImportKeys extends Component {
     }
   }
 
+  handleXlmImportKey = () => {
+    const { xlmKey } = this.state
+
+    if (!xlmKey) {
+      this.setState({ isSubmittedXlm: true })
+      return
+    }
+    this.setState({ isDisabled: false })
+
+
+    try {
+      actions.xlm.login(xlmKey)
+      this.setState({
+        isImportedXlm: true,
+        isDisabled: false,
+      })
+    } catch (e) {
+      this.setState({ isSubmittedXlm: true })
+    }
+  }
+
 
   handleImportKeys = () => {
     const { isDisabled } = this.state
@@ -103,11 +130,11 @@ export default class ImportKeys extends Component {
 
   render() {
     const {
-      isSubmittedEth, isSubmittedBtc, isImportedEth,
-      isImportedBtc, isDisabled, keySave,
+      isSubmittedEth, isSubmittedBtc, isSubmittedXlm,
+      isImportedEth, isImportedBtc, isImportedXlm, isDisabled, keySave,
     } = this.state
 
-    const linked = Link.all(this, 'ethKey', 'btcKey')
+    const linked = Link.all(this, 'ethKey', 'btcKey', 'xlmKey')
 
     if (isSubmittedEth) {
       linked.ethKey.check((value) => value !== '', 'Please enter ETH private key')
@@ -117,6 +144,10 @@ export default class ImportKeys extends Component {
     if (isSubmittedBtc) {
       linked.btcKey.check((value) => value !== '', 'Please enter BTC private key')
       linked.btcKey.check((value) => value.length > 27, 'Please valid BTC private key')
+    }
+
+    if (isSubmittedXlm) {
+      linked.btcKey.check((value) => value !== '', 'Please enter XLM private key')
     }
 
     return (
@@ -143,6 +174,16 @@ export default class ImportKeys extends Component {
             placeholder="Key in WIF format"
             disabled={isImportedBtc}
             onClick={this.handleBtcImportKey}
+          />
+
+          <FormattedMessage id="ImportKeys176" defaultMessage="Please enter xlm private key">
+            {message => <FieldLabel>{message}</FieldLabel>}
+          </FormattedMessage>
+          <Group
+            inputLink={linked.xlmKey}
+            placeholder="Key"
+            disabled={isImportedXlm}
+            onClick={this.handleXlmImportKey}
           />
           {
             !keySave && (
