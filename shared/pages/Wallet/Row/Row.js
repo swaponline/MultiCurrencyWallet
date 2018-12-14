@@ -402,13 +402,13 @@ export default class Row extends Component {
               wallet="true">
               <FormattedMessage id="Row313" defaultMessage="Deposit" />
             </CurrencyButton>
-            <BtnTooltip onClick={this.handleWithdraw} disable={isBalanceEmpty} id={currency} text="Send" >
+            <BtnTooltip onClick={this.handleWithdraw} disable={isBalanceEmpty} id={currency}>
               <i className="fas fa-arrow-alt-circle-right" />
               <FormattedMessage id="Row328" defaultMessage="Send" />
             </BtnTooltip>
             {
               tradeAllowed && (
-                <BtnTooltip onClick={() => this.handleGoTrade(currency)} styleName={isBalanceEmpty && 'disableWth'} text="Exchange" >
+                <BtnTooltip onClick={() => this.handleGoTrade(currency)} styleName={isBalanceEmpty && 'disableWth'}> 
                   <i className="fas fa-exchange-alt" />
                   <FormattedMessage id="Row334" defaultMessage="Exchane" />
                 </BtnTooltip>

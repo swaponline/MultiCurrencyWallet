@@ -17,54 +17,64 @@ import { Button } from 'components/controls'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import PageSeo from 'components/Seo/PageSeo'
 import { getSeoPage } from 'helpers/seo'
-
-import { FormattedMessage, injectIntl } from 'react-intl'
+import { FormattedMessage } from 'react-intl'
 import ReactTooltip from 'react-tooltip'
 import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
-import { localisedUrl } from '../../helpers/locale'
 
-@connect(({ core, user,  history: { transactions, swapHistory } }) => ({
+
+@connect(({ core, user,  history: { transactions, swapHistory },
+  user: { ethData, btcData, ltcData, tokensData, eosData, nimData, usdtData, telosData } }) => ({
+  items: [ ethData, btcData, eosData, usdtData, ltcData, telosData, ...Object.keys(tokensData).map(k => (tokensData[k])) /* nimData */ ],
   user,
   hiddenCoinsList: core.hiddenCoinsList,
   txHistory: transactions,
   swapHistory,
 }))
-@injectIntl
+
+
 @withRouter
 @CSSModules(styles)
 export default class CurrencyWallet extends Component {
 
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      name: null,
-      address: null,
-      balance: null,
-      isBalanceEmpty: false,
-    }
-  }
-
-
   static getDerivedStateFromProps(nextProps) {
-    const { user, match: { params: { fullName } } } = nextProps
-
-    const currencyData = Object.values(user)
-      .concat(Object.values(user.tokensData))
-      .filter(v => v.fullName && v.fullName.toLowerCase() === fullName.toLowerCase())[0]
-
-    const { currency, address, contractAddress, decimals, balance } = currencyData
+    let { match:{ params: { fullName } }, items } = nextProps
+    const itemCurrency = items.filter(item => item.fullName.toLowerCase() === fullName.toLowerCase())[0]
+    const {
+      currency,
+      address,
+      contractAddress,
+      decimals,
+      balance,
+    } = itemCurrency
 
     return {
       currency,
       address,
       contractAddress,
       decimals,
-      fullName,
       balance,
       isBalanceEmpty: balance === 0,
     }
   }
+
+  constructor({ user, match: { params: { fullName } }, items, history }) {
+    super()
+    this.state = {
+      name: null,
+      address: null,
+      balance: null,
+      isBalanceEmpty: false,
+    }
+
+    const item = items.map(item => item.fullName.toLowerCase())
+
+    if (!item.includes(fullName.toLowerCase())) {
+      return  window.location.href = '/NotFound'
+    }
+  }
+
+
+
 
   handleReceive = () => {
     const { currency, address } = this.state
@@ -76,7 +86,15 @@ export default class CurrencyWallet extends Component {
   }
 
   handleWithdraw = () => {
-    const { currency, address, contractAddress, decimals, balance } = this.state
+    let { match:{ params: { fullName } }, items } = this.props
+    const {
+      currency,
+      address,
+      contractAddress,
+      decimals,
+      balance,
+      isBalanceEmpty,
+    } = this.state
 
     actions.analytics.dataEvent(`balances-withdraw-${currency.toLowerCase()}`)
     actions.modals.open(constants.modals.Withdraw, {
@@ -88,8 +106,7 @@ export default class CurrencyWallet extends Component {
     })
   }
   handleGoTrade = (currency) => {
-    const { intl: { locale } } = this.props
-    this.props.history.push(localisedUrl(locale, `/${currency.toLowerCase()}`))
+    this.props.history.push(`/${currency.toLowerCase()}`)
   }
 
   handleEosBuyAccount = async () => {
@@ -97,8 +114,15 @@ export default class CurrencyWallet extends Component {
   }
 
   render() {
-    let { swapHistory, txHistory, location, intl: { locale } } = this.props
-    const { fullName, address, balance, currency, isBalanceEmpty } = this.state
+    let { swapHistory, txHistory, location, match:{ params: { fullName } } } = this.props
+    const {
+      currency,
+      address,
+      contractAddress,
+      decimals,
+      balance,
+      isBalanceEmpty,
+    } = this.state
 
     txHistory = txHistory
       .filter(tx => tx.type === currency.toLowerCase())
@@ -119,31 +143,32 @@ export default class CurrencyWallet extends Component {
           defaultDescription={
             `Atomic Swap Wallet allows you to manage and securely exchange ${fullName} (${currency}) with 0% fees. Based on Multi-Sig and Atomic Swap technologies.`
           } />
-        <PageHeadline
-          styleName="title"
-          subTitle={!!seoPage ?
-            seoPage.h1
-            :
-            <span>
-              <FormattedMessage id="currencywallet103" defaultMessage="Your online" />
-              {fullName} ({currency})
-              <FormattedMessage id="currencywallet107" defaultMessage="web wallet with Atomic Swap." />
-            </span>
-          }
-        />
-        <h3 styleName="subtitle">
-          <FormattedMessage id="CurrencyWallet95" defaultMessage="Your address: " />
-          <span>{address}</span> <br />
-          <FormattedMessage id="CurrencyWallet107" defaultMessage="Your" />
-          {fullName}
-          {' '}
-          <FormattedMessage id="CurrencyWallet143" defaultMessage="balance" />
-           : {balance}{' '}{currency.toUpperCase()}
-        </h3>
+          <PageHeadline styleName="title" subTitle={!!seoPage
+            ? seoPage.h1
+            : <FormattedMessage
+                id="CurrencyWallet141"
+                defaultMessage={`Swap.Online - {fullName}({currency}) Web Wallet with Atomic Swap.`}
+                values={{
+                  fullName:`${fullName}`,
+                  currency: `${currency}`
+                }}
+              />}
+          />
+          <h3 styleName="subtitle">
+            <FormattedMessage id="CurrencyWallet167" defaultMessage={`Your address: {address}{br}Your {fullName} balance: {balance} {currency}`}
+              values={{
+                address:  <span>{address}</span>,
+                br: <br />,
+                fullName: `${fullName}`,
+                balance: `${balance}`,
+                currency: `${currency.toUpperCase()}`,
+              }}
+            />
+          </h3>
         {currency === 'EOS' && !eosAccountActivated && (<Button onClick={this.handleEosBuyAccount} gray>
           <FormattedMessage id="CurrencyWallet105" defaultMessage="Activate account" />
         </Button>)}
-        <div styleName={`${locale}` === 'ru' ? 'inRowru' : 'inRow'}>
+        <div styleName="inRow">
           <CurrencyButton
             onClick={this.handleReceive}
             dataTooltip={{
@@ -171,19 +196,9 @@ export default class CurrencyWallet extends Component {
         </div>
         { swapHistory.length > 0 && <SwapsHistory orders={swapHistory} /> }
         <h2 style={{ marginTop: '20px' }} >
-          <FormattedMessage id="CurrencyWallet128" defaultMessage="History your transactions" />
+          <FormattedMessage id="CurrencyWallet110" defaultMessage="History your transactions" />
         </h2>
-        {txHistory && (<Table
-          titles={[
-            <FormattedMessage id="Coin130" defaultMessage="Coin" />,
-            <FormattedMessage id="Status130" defaultMessage="Status" />,
-            <FormattedMessage id="Statement130" defaultMessage="Statement" />,
-            <FormattedMessage id="Amount130" defaultMessage="Amount" />,
-          ]}
-          rows={txHistory}
-          styleName="table"
-          rowRender={(row) => (<Row key={row.hash} {...row} />)}
-        />)}
+        {txHistory && (<Table titles={[ 'Coin', 'Status', 'Statement', 'Amount' ]} rows={txHistory}styleName="table" rowRender={(row) => (<Row key={row.hash} {...row} />)} />)}
       </div>
     )
   }

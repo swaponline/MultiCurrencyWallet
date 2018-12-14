@@ -148,21 +148,20 @@ export default class Row extends Component {
         </td>
         <td>
           <span style={{ color: 'gray' }}>
-            <FormattedMessage id="Row122" defaultMessage="at price" />
+            <FormattedMessage id="Row1511" defaultMessage={`at price {price}`}
+            values={{
+              price: `${price.toFixed(5)} ${base}`
+             }}/>
           </span>
-          {' '}
-          {
-            `${price.toFixed(5)} ${base}`
-          }
         </td>
         <td>
           <span style={{ color: 'gray' }}>
-            <FormattedMessage id="Row131" defaultMessage="for" />
+            <FormattedMessage id="Row159" defaultMessage={`for {total}`}
+              values={{
+                total: `${total.toFixed(5)} ${base}`
+              }}
+            />
           </span>
-          {' '}
-          {
-            `${total.toFixed(5)} ${base}`
-          }
         </td>
         <td>
           {

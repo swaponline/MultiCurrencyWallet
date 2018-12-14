@@ -531,17 +531,11 @@
   },
   {
     "id": "SaveKeys23",
-    "message": "These are your private keys. Download the keys by  clicking on",
-    "files": [
-      "shared/components/SaveKeys/SaveKeys.js"
-    ]
+    "message": "These are your private keys. Download the keys by  clicking on"
   },
   {
     "id": "SaveKeys24",
-    "message": "the button or take a screenshot of this page, then confirm it and click here. ",
-    "files": [
-      "shared/components/SaveKeys/SaveKeys.js"
-    ]
+    "message": "the button or take a screenshot of this page, then confirm it and click here. "
   },
   {
     "id": "SaveKeys26",
@@ -711,14 +705,14 @@
   },
   {
     "id": "CurrencyWallet110",
-    "message": " History your transactions"
-  },
-  {
-    "id": "CurrencyWallet95",
-    "message": "Your address: ",
+    "message": " History your transactions",
     "files": [
       "shared/pages/CurrencyWallet/CurrencyWallet.js"
     ]
+  },
+  {
+    "id": "CurrencyWallet95",
+    "message": "Your address: "
   },
   {
     "id": "Row30",
@@ -871,24 +865,15 @@
   },
   {
     "id": "orders143",
-    "message": "BUY",
-    "files": [
-      "shared/pages/Home/Orders/Orders.js"
-    ]
+    "message": "BUY"
   },
   {
     "id": "orders145",
-    "message": "HERE",
-    "files": [
-      "shared/pages/Home/Orders/Orders.js"
-    ]
+    "message": "HERE"
   },
   {
     "id": "orders148",
-    "message": "orders of those who ",
-    "files": [
-      "shared/pages/Home/Orders/Orders.js"
-    ]
+    "message": "orders of those who "
   },
   {
     "id": "orders150",
@@ -899,10 +884,7 @@
   },
   {
     "id": "orders153",
-    "message": " to you",
-    "files": [
-      "shared/pages/Home/Orders/Orders.js"
-    ]
+    "message": " to you"
   },
   {
     "id": "orders174",
@@ -913,45 +895,27 @@
   },
   {
     "id": "orders176",
-    "message": " HERE ",
-    "files": [
-      "shared/pages/Home/Orders/Orders.js"
-    ]
+    "message": " HERE "
   },
   {
     "id": "orders179",
-    "message": "orders that ",
-    "files": [
-      "shared/pages/Home/Orders/Orders.js"
-    ]
+    "message": "orders that "
   },
   {
     "id": "orders181",
-    "message": " buy ",
-    "files": [
-      "shared/pages/Home/Orders/Orders.js"
-    ]
+    "message": " buy "
   },
   {
     "id": "orders184",
-    "message": " from you",
-    "files": [
-      "shared/pages/Home/Orders/Orders.js"
-    ]
+    "message": " from you"
   },
   {
     "id": "Row122",
-    "message": "at price",
-    "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
-    ]
+    "message": "at price"
   },
   {
     "id": "Row131",
-    "message": "for",
-    "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
-    ]
+    "message": "for"
   },
   {
     "id": "Row148",
@@ -3267,17 +3231,11 @@
   },
   {
     "id": "CurrencyWallet107",
-    "message": "Your ",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "Your "
   },
   {
     "id": "CurrencyWallet128",
-    "message": " History your transactions",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": " History your transactions"
   },
   {
     "id": "Company",
@@ -3436,31 +3394,19 @@
   },
   {
     "id": "Amount130",
-    "message": "Amount",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "Amount"
   },
   {
     "id": "Coin130",
-    "message": "Coin",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "Coin"
   },
   {
     "id": "Statement130",
-    "message": "Statement",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "Statement"
   },
   {
     "id": "Status130",
-    "message": "Status",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "Status"
   },
   {
     "id": "Amount61",
@@ -3953,17 +3899,11 @@
   },
   {
     "id": "currencywallet103",
-    "message": "Your online",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "Your online"
   },
   {
     "id": "currencywallet107",
-    "message": " web wallet with Atomic Swap. ",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": " web wallet with Atomic Swap. "
   },
   {
     "id": "SubscribeModal000",
@@ -4002,10 +3942,7 @@
   },
   {
     "id": "WithdrawButton25",
-    "message": "You can not send and exchange this asset, because you have a zero balance. ",
-    "files": [
-      "shared/components/controls/WithdrawButton/BtnTooltip.js"
-    ]
+    "message": "You can not send and exchange this asset, because you have a zero balance. "
   },
   {
     "id": "Nav63",
@@ -4086,17 +4023,11 @@
   },
   {
     "id": "Currency110",
-    "message": " Trade",
-    "files": [
-      "shared/pages/Currency/Currency.js"
-    ]
+    "message": " Trade"
   },
   {
     "id": "Currency119",
-    "message": "Added to Wallet",
-    "files": [
-      "shared/pages/Currency/Currency.js"
-    ]
+    "message": "Added to Wallet"
   },
   {
     "id": "partial277",
@@ -4222,17 +4153,11 @@
   },
   {
     "id": "WTH273",
-    "message": "Make sure the wallet you",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "Make sure the wallet you"
   },
   {
     "id": "WTHl274",
-    "message": "are sending the funds to supports",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "are sending the funds to supports"
   },
   {
     "id": "partial223",
@@ -4525,10 +4450,7 @@
   },
   {
     "id": "CurrencyWallet143",
-    "message": "balance",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "balance"
   },
   {
     "id": "PartialPriceCalc",
@@ -4735,6 +4657,91 @@
     "message": "You will receive exchange requests or the {p} amount less than the total amount you want {p} sell. For example you want to sell 1 BTC,\n        other users can send you exchange requests {p}for 0.1, 0.5 BTC",
     "files": [
       "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "WTH275",
+    "message": "Make sure the wallet you {br}are sending the funds to supports",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "SaveKeys235",
+    "message": "These are your private keys.{br} Download the keys by clicking on the button\n              {br} or take a screenshot of this page, then confirm it and click here.",
+    "files": [
+      "shared/components/SaveKeys/SaveKeys.js"
+    ]
+  },
+  {
+    "id": "orders156",
+    "message": "BUY {buyCurrency} HERE",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "orders159",
+    "message": "orders of those who {sell} {buyCurrency} to you",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "id",
+    "message": "text",
+    "files": [
+      "shared/components/controls/CurrencyButton/CurrencyButton.js",
+      "shared/components/controls/WithdrawButton/BtnTooltip.js"
+    ]
+  },
+  {
+    "id": "WithdrawButton322",
+    "message": "You can not send this asset, because you have a zero balance.",
+    "files": [
+      "shared/components/controls/WithdrawButton/BtnTooltip.js"
+    ]
+  },
+  {
+    "id": "Row1511",
+    "message": "at price {price}",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row159",
+    "message": "for {total}",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "CurrencyWallet141",
+    "message": "Swap.Online - {fullName}({currency}) Web Wallet with Atomic Swap.",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "CurrencyWallet167",
+    "message": "Your address: {address}{br}Your {fullName} balance: {currency}",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "orders189",
+    "message": "buy",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "orders186",
+    "message": "orders of those who {buy} {buyCurrency} from you",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
     ]
   }
 ]

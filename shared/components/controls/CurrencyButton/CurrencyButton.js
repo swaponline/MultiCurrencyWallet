@@ -39,6 +39,10 @@ export default class CurrencyButton extends Component {
         {
           dataTooltip.isActive && (
             <ReactTooltip id={dataTooltip.id} type="light" effect="solid">
+              <FormattedMessage id={`id`} defaultMessage={`text`} value={{
+                text: dataTooltip.text,
+                id: dataTooltip.id,
+              }} />
             </ReactTooltip>
           )
         }

@@ -531,17 +531,11 @@
   },
   {
     "id": "SaveKeys23",
-    "message": "Это ваши приватные ключи. Для того, чтобы скачать ключи, нажмите на кнопку",
-    "files": [
-      "shared/components/SaveKeys/SaveKeys.js"
-    ]
+    "message": "Это ваши приватные ключи. Для того, чтобы скачать ключи, нажмите на кнопку"
   },
   {
     "id": "SaveKeys24",
-    "message": " или сделайте снимок этой страницы, затем подтвердите и нажмите здесь. ",
-    "files": [
-      "shared/components/SaveKeys/SaveKeys.js"
-    ]
+    "message": " или сделайте снимок этой страницы, затем подтвердите и нажмите здесь. "
   },
   {
     "id": "SaveKeys26",
@@ -711,14 +705,14 @@
   },
   {
     "id": "CurrencyWallet110",
-    "message": "Внесите средства на этот адрес кошелька"
-  },
-  {
-    "id": "CurrencyWallet95",
-    "message": "Ваш адрес: ",
+    "message": "История Ваших транзакций",
     "files": [
       "shared/pages/CurrencyWallet/CurrencyWallet.js"
     ]
+  },
+  {
+    "id": "CurrencyWallet95",
+    "message": "Ваш адрес: "
   },
   {
     "id": "Row30",
@@ -871,24 +865,15 @@
   },
   {
     "id": "orders143",
-    "message": "КУПИТЬ ",
-    "files": [
-      "shared/pages/Home/Orders/Orders.js"
-    ]
+    "message": "КУПИТЬ "
   },
   {
     "id": "orders145",
-    "message": " ",
-    "files": [
-      "shared/pages/Home/Orders/Orders.js"
-    ]
+    "message": " "
   },
   {
     "id": "orders148",
-    "message": "Здесь размещены ордера на ",
-    "files": [
-      "shared/pages/Home/Orders/Orders.js"
-    ]
+    "message": "Здесь размещены ордера на "
   },
   {
     "id": "orders150",
@@ -899,10 +884,7 @@
   },
   {
     "id": "orders153",
-    "message": " ",
-    "files": [
-      "shared/pages/Home/Orders/Orders.js"
-    ]
+    "message": " "
   },
   {
     "id": "orders174",
@@ -913,45 +895,27 @@
   },
   {
     "id": "orders176",
-    "message": " ",
-    "files": [
-      "shared/pages/Home/Orders/Orders.js"
-    ]
+    "message": " "
   },
   {
     "id": "orders179",
-    "message": "Здесь размещены ордера на ",
-    "files": [
-      "shared/pages/Home/Orders/Orders.js"
-    ]
+    "message": "Здесь размещены ордера на "
   },
   {
     "id": "orders181",
-    "message": " ПОКУПКУ ",
-    "files": [
-      "shared/pages/Home/Orders/Orders.js"
-    ]
+    "message": " ПОКУПКУ "
   },
   {
     "id": "orders184",
-    "message": " ",
-    "files": [
-      "shared/pages/Home/Orders/Orders.js"
-    ]
+    "message": " "
   },
   {
     "id": "Row122",
-    "message": "по цене",
-    "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
-    ]
+    "message": "по цене"
   },
   {
     "id": "Row131",
-    "message": "купить",
-    "files": [
-      "shared/pages/Home/Orders/Row/Row.js"
-    ]
+    "message": "купить"
   },
   {
     "id": "Row148",
@@ -3267,17 +3231,11 @@
   },
   {
     "id": "CurrencyWallet107",
-    "message": "Ваш ",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "Ваш "
   },
   {
     "id": "CurrencyWallet128",
-    "message": "История Ваших транзакций",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "История Ваших транзакций"
   },
   {
     "id": "Company",
@@ -3436,31 +3394,19 @@
   },
   {
     "id": "Amount130",
-    "message": "Сумма",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "Сумма"
   },
   {
     "id": "Coin130",
-    "message": "Валюта",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "Валюта"
   },
   {
     "id": "Statement130",
-    "message": "Отчет",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "Отчет"
   },
   {
     "id": "Status130",
-    "message": "Статус",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "Статус"
   },
   {
     "id": "Amount61",
@@ -3953,17 +3899,11 @@
   },
   {
     "id": "currencywallet103",
-    "message": "Ваш Онлайн ",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "Ваш Онлайн "
   },
   {
     "id": "currencywallet107",
-    "message": " кошелек, в основе которого лежит технология Atomic Swap. ",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": " кошелек, в основе которого лежит технология Atomic Swap. "
   },
   {
     "id": "SubscribeModal000",
@@ -4002,10 +3942,7 @@
   },
   {
     "id": "WithdrawButton25",
-    "message": "Вы не можете отправлять и обменивать эту криптовалюту, потому что у вас нулевой баланс. ",
-    "files": [
-      "shared/components/controls/WithdrawButton/BtnTooltip.js"
-    ]
+    "message": "Вы не можете отправлять и обменивать эту криптовалюту, потому что у вас нулевой баланс. "
   },
   {
     "id": "Nav63",
@@ -4086,17 +4023,11 @@
   },
   {
     "id": "Currency110",
-    "message": " Валютные пары",
-    "files": [
-      "shared/pages/Currency/Currency.js"
-    ]
+    "message": " Валютные пары"
   },
   {
     "id": "Currency119",
-    "message": "Добавить в кошелек",
-    "files": [
-      "shared/pages/Currency/Currency.js"
-    ]
+    "message": "Добавить в кошелек"
   },
   {
     "id": "partial277",
@@ -4222,17 +4153,11 @@
   },
   {
     "id": "WTH273",
-    "message": "Убедитесь что отправляете средства на кошелек ",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "Убедитесь что отправляете средства на кошелек "
   },
   {
     "id": "WTHl274",
-    "message": "который поддерживает ",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "который поддерживает "
   },
   {
     "id": "partial223",
@@ -4525,10 +4450,7 @@
   },
   {
     "id": "CurrencyWallet143",
-    "message": "Баланс",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "Баланс"
   },
   {
     "id": "PartialPriceCalc",
@@ -4718,7 +4640,7 @@
   },
   {
     "id": "EthTokenToUsdt375",
-    "message": "Please note that USDT withdrawal may take a while to mine and to propagate the network.\n                    Due to Omni Protocol properties, the transaction may show up at the OmniExplorer in up to 20 minutes.",
+    "message": "Обратите внимание, что снятие USDT может занять некоторое время для майнинга и распространения сети.\n                    Due to Omni Protocol properties, the transaction may show up at the OmniExplorer in up to 20 minutes.",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
@@ -4735,6 +4657,91 @@
     "message": "Вы получите запросы на обмен, сумма {p} будет меньше той суммы, которую вы хотите продать.{p} Например, вы хотите продать 1 BTC, другие пользователи \n {p} могут отправлять запросы на обмен на 0,1, 0,5 BTC",
     "files": [
       "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "WTH275",
+    "message": "Убедитесь, что кошелек, на который вы отправляете {br} поддерживает данную валюту ",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "SaveKeys235",
+    "message": "Ваши приватные ключи.{br} Загрузите их, нажав на кнопку\n{br} или сделайте снимок экрана, затем подвердите действие.",
+    "files": [
+      "shared/components/SaveKeys/SaveKeys.js"
+    ]
+  },
+  {
+    "id": "orders156",
+    "message": "КУПИТЬ {buyCurrency}",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "orders159",
+    "message": "ордера на {sell} {buyCurrency} ",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "WithdrawButton322",
+    "message": "Вы не можете отправить данную валюту, недостаточно средств.",
+    "files": [
+      "shared/components/controls/WithdrawButton/BtnTooltip.js"
+    ]
+  },
+  {
+    "id": "Row1511",
+    "message": "цена {price}",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row159",
+    "message": "за {total}",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "CurrencyWallet141",
+    "message": "Swap.Online - {fullName}({currency}) онлайн кошелек, работащюий на технологии Atomic Swap.",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "CurrencyWallet167",
+    "message": "Ваш адрес: {address}{br}Ваш {fullName} баланс: {currency}",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "id",
+    "message": "text",
+    "files": [
+      "shared/components/controls/CurrencyButton/CurrencyButton.js",
+      "shared/components/controls/WithdrawButton/BtnTooltip.js"
+    ]
+  },
+  {
+    "id": "orders189",
+    "message": "ПОКУПКУ",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "orders186",
+    "message": "ордера на {buy} {buyCurrency} ",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
     ]
   }
 ]
