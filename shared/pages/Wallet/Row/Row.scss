@@ -27,7 +27,23 @@
   font-size: 12px;
   color: #c9c9c9;
   position: absolute;
-  bottom: -20px;
+  bottom: -17px;
+}
+
+.disableWth {
+  @include inline-block;
+  height: 40px;
+  background: #dbdbdb;
+  padding: 0 25px;
+  cursor: pointer;
+  line-height: 40px;
+  font-size: 16px;
+  border: none;
+  font-weight: 500;
+  color: #626262;
+  border-radius: 20px;
+  margin-right: 10px;
+
 }
 
 .unconfirmedBalance {
@@ -63,6 +79,10 @@
     background: #dfc5ff;
   }
 }
+
+.disbutton {
+  onClick: none;
+}
 .buttonActivate {
   margin-left: 15px;
 }
@@ -90,25 +110,6 @@
 
 .icon {
   margin-right: 5px;
-}
-
-.button {
-  @include inline-block;
-  height: 40px;
-  background: #f8f3fe;
-  padding: 0 25px;
-  cursor: pointer;
-  line-height: 40px;
-  font-size: 16px;
-  font-weight: 500;
-  color: #7c1de9;
-  border-radius: 20px;
-  margin-right: 10px;
-
-  &:hover {
-    color: #7c1de9;
-    background: #dfc5ff;
-  }
 }
 
 .table_balance-cell {
@@ -139,35 +140,128 @@ tr button[disabled]:hover {
   color: #626262;
 }
 
-
-.actButton, .useButton {
-  display: none;
+.yourAddress {
+  position: relative;
+  min-width: 200px;
+}
+.yourAddressWithOptions {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
 }
 
 .walletButtons {
   color: inherit;
 }
 
-.notActivated {
-  button:nth-child(2),
-  button:nth-child(3) {
-    display: none!important;
+.activeControlButtons {
+  color: inherit;
+  display: flex;
+  margin-left: 10px;
+  bottom: 0;
+  .buttonActivate,
+  .buttonUseAnother {
+   display: block;
   }
 }
 
-@media all and (min-width: 570px) and (max-width:900px) {
+.actButton {
+  button {
+    color: #ffffff;
+    width: auto;
+    background: rgba(61, 226, 91, 0.7);
+    height: 25px;
+    line-height: 25px;
+    padding: 0px 25px;
+    margin-left: 31px;
+    margin: 0;
+    margin-bottom: 0;
+    font-size: 16px;
+    margin-right: 10px;
+    height: 40px;
+    &:hover {
+      color: #ffffff;
+      background: rgba(61, 226, 91, 0.8);
+    }
+  }
+}
+.useButton {
+  button {
+    background: #ffffff;
+    color: #8c8c8c;
+    border: 1px solid #dbdbdb;
+    height: 25px;
+    line-height: 15px;
+    padding: 0 25px;
+    font-size: 16px;
+    height: 40px;
+    margin-right: -10px;
+    &:hover {
+      background: #ffffff;
+      color: #8c8c8c;
+      border: 1px solid #dbdbdb;
+    }
+  }
+}
+
+ .buttonActivate,
+ .buttonUseAnother {
+  display: none;
+ }
+
+@media all and (min-width: 570px) and (max-width:1024px) {
   .buttonActivate {
     margin-left: 0px;
   }
+  .yourAddress {
+    display: table-cell;
+  }
+  .buttonActivate {
+    top: auto;
+  }
+  .activeControlButtons {
+    color: inherit;
+    display: flex;
+    left: 170px;
+    top: -65px;
+    position: absolute;
+    flex-direction: row;
+  }
+  .notActivated {
+    display: flex;
+    max-width: 140px;
+    display: none;
+    align-items: flex-end!important;
+  }
 }
 
 
-@include media-mobile { 
+
+@media all and (min-width: 320px) and (max-width:1024px) {
+  .notActiveLink {
+    bottom: -10px;
+  }
   .mobileName {
     display: block;
   }
   .yourAddress {
-    display: none;
+    position: absolute;
+    bottom: 0;
+    right: 10px;
+    min-width: 80px;
+    width: auto!important;
+  }
+  .yourAddressWithOptions {
+    position: absolute;
+    right: 40px;
+    bottom: 10px;
+    width: 100%!important;
+    .notContractAddress {
+      position: absolute;
+      right: -20px;
+      bottom: 15px;
+      display: none;
+    }
   }
   .table_balance-cell {
     min-width: 75px;
@@ -178,6 +272,9 @@ tr button[disabled]:hover {
     right: 20px;
     background: transparent!important;
     top: 23px;
+  }
+  .yourAddress {
+    display: none;
   }
   .mobileName {
     color: #000;
@@ -191,6 +288,14 @@ tr button[disabled]:hover {
     box-shadow: rgba(0, 0, 0, 0.08) 0px 0px 20px 0;
     margin-bottom: 10px;
     margin-top: 10px;
+    .yourAddressWithOptions {
+      .notContractAddress {
+        display: block;
+      }
+    }
+    .yourAddress {
+      display: block;
+    }
     td:nth-child(1) {
       a {
         top: 14px;
@@ -205,7 +310,7 @@ tr button[disabled]:hover {
       color: #000;
     }
     .buttonActivate {
-      top: -45px;
+      top: 0px;
     }
   }
   tr.hidden {
@@ -225,12 +330,64 @@ tr button[disabled]:hover {
     }
   }
   .buttonActivate {
-    position: absolute;
     right: 0;
     height: 22px;
     line-height: 0px;
-    font-size: 10px!important;
     top: -47px;
     left: 103px;
+    color: #ffffff;
+    background: rgba(61, 226, 91, 0.7);
+    height: 25px;
+    line-height: 25px;
+    padding: 0 15px;
+    margin-left: 31px;
+    margin: 0;
+    margin-bottom: 10px;
+    font-size: 13px!important;
+    margin-right: 5px!important;
+    width: 115px;
+  }
+  .buttonUseAnother {
+    background: #ffffff;
+    color: #8c8c8c;
+    border: 1px solid #dbdbdb;
+    height: 25px;
+    line-height: 15px;
+    padding: 0 15px!important;
+    display: none;
+    width: 115px;
+    font-size: 13px!important;
+  }
+}
+
+@media all and (min-width: 320px) and (max-width: 570px) {
+  .yourAddress {
+    display: none;
+  }
+  tr.showButtons {
+      .yourAddress {
+        display: none
+    }
+  }
+  .yourAddressWithOptions {
+    position: absolute;
+    right: -90px;
+    bottom: 50px;
+    width: 100%!important;
+    .notContractAddress {
+      display: none;
+    }
+  }
+  .buttonActivate {
+    width: 75px;
+    height: 26px!important;
+    padding: 0!important;
+    position: absolute;
+    left: 16px;
+    top: -17px!important;
+  }
+  .buttonUseAnother {
+    width: 100px;
+    display: none!important;
   }
 }

@@ -3,6 +3,7 @@ import config from 'app-config'
 import modals from './modals'
 import loader from './loader'
 import notifications from './notifications'
+import pushNotification from './pushNotification/index'
 
 import user from './user'
 import feed from './feed'
@@ -10,7 +11,7 @@ import core from './core'
 import filter from './filter'
 
 import btc from './btc'
-import bch from './bch'
+// import bch from './bch'
 import ltc from './ltc'
 import eth from './eth'
 import eos from './eos'
@@ -41,10 +42,11 @@ export default {
   modals,
   loader,
   notifications,
+  pushNotification,
   user,
   core,
   ltc,
-  bch,
+  // bch,
   btc,
   usdt,
   eth,

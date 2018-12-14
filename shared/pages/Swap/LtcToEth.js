@@ -14,12 +14,13 @@ import { FormattedMessage } from 'react-intl'
 
 export default class LtcToEth extends Component {
 
-  constructor({ swap }) {
+  constructor({ swap, currencyData }) {
     super()
 
     this.swap = swap
 
     this.state = {
+      currencyAddress: currencyData.address,
       flow: this.swap.flow.state,
       secret: crypto.randomBytes(32).toString('hex'),
       enabledButton: false,
@@ -85,7 +86,7 @@ export default class LtcToEth extends Component {
 
   render() {
     const { children } = this.props
-    const { secret, flow, enabledButton } = this.state
+    const { currencyAddress, secret, flow, enabledButton } = this.state
 
     return (
       <div>
@@ -97,14 +98,14 @@ export default class LtcToEth extends Component {
         {
           !this.swap.id && (
             this.swap.isMy ? (
-              <FormattedMessage id="LtcTOeth101" defaultMessage="This order doesn&apos;t have a buyer">
-                {message => <h3>{message}</h3>}
-              </FormattedMessage>
+              <h3>
+                <FormattedMessage id="LtcTOeth101" defaultMessage="This order doesn&apos;t have a buyer" />
+              </h3>
             ) : (
               <Fragment>
-                <FormattedMessage id="LtcToEth.orderCreatorIsOffline" defaultMessage="The order creator is offline. Waiting for him..">
-                  {message => <h3>{message}</h3>}
-                </FormattedMessage>
+                <h3>
+                  <FormattedMessage id="LtcToEth.orderCreatorIsOffline" defaultMessage="The order creator is offline. Waiting for him.." />
+                </h3>
                 <InlineLoader />
               </Fragment>
             )
@@ -113,11 +114,11 @@ export default class LtcToEth extends Component {
         {
           !flow.isParticipantSigned && (
             <Fragment>
-              <FormattedMessage
-                id="LtcTOeth117"
-                defaultMessage="We are waiting for a market maker. If it does not appear within 5 minutes, the swap will be canceled automatically.">
-                {message => <h3>{message}</h3>}
-              </FormattedMessage>
+              <h3>
+                <FormattedMessage
+                  id="LtcTOeth117"
+                  defaultMessage="We are waiting for a market maker. If it does not appear within 5 minutes, the swap will be canceled automatically." />
+              </h3>
               <InlineLoader />
             </Fragment>
           )
@@ -125,10 +126,9 @@ export default class LtcToEth extends Component {
         {
           flow.isParticipantSigned && (
             <Fragment>
-              <FormattedMessage id="LtcTOeth127" defaultMessage="2. Create a secret key">
-                {message => <h3>{message}</h3>}
-              </FormattedMessage>
-
+              <h3>
+                <FormattedMessage id="LtcTOeth127" defaultMessage="2. Create a secret key" />
+              </h3>
               {
                 !flow.secretHash ? (
                   <Fragment>
@@ -140,9 +140,9 @@ export default class LtcToEth extends Component {
                   </Fragment>
                 ) : (
                   <Fragment>
-                    <FormattedMessage id="LtcTOeth142" defaultMessage="Save the secret key! Otherwise there will be a chance you loose your money!">
-                      {message => <div>{message}</div>}
-                    </FormattedMessage>
+                    <div>
+                      <FormattedMessage id="LtcTOeth142" defaultMessage="Save the secret key! Otherwise there will be a chance you loose your money!" />
+                    </div>
                     <div>
                       <FormattedMessage id="LtcTOeth145" defaultMessage="Secret Key: " />
                       <strong>{flow.secret}</strong>
@@ -174,7 +174,9 @@ export default class LtcToEth extends Component {
                       </div>
                       <div>
                         <FormattedMessage id="LtcTOeth168" defaultMessage="Your address: " />
-                        {this.swap.flow.myLtcAddress}
+                        <a href={`${config.link.ltc}/address/${currencyAddress}`} target="_blank" el="noopener noreferrer">
+                          {currencyAddress}
+                        </a>
                       </div>
                       <hr />
                       <span>{flow.address}</span>
@@ -182,7 +184,6 @@ export default class LtcToEth extends Component {
                     <br />
                     <Button brand onClick={this.updateBalance}>
                       <FormattedMessage id="LtcTOeth175" defaultMessage="Continue" />
-                      {this.swap.flow.myLtcAddress}
                     </Button>
                   </Fragment>
                 )
@@ -262,9 +263,9 @@ export default class LtcToEth extends Component {
               {
                 (flow.step === 5 || flow.isEthContractFunded) && (
                   <Fragment>
-                    <FormattedMessage id="LtcTOeth254" defaultMessage="4. ETH Owner received Litecoin Script and Secret Hash. Waiting when he creates ETH Contract">
-                      {message => <h3>{message}</h3> }
-                    </FormattedMessage>
+                    <h3>
+                      <FormattedMessage id="LtcTOeth254" defaultMessage="4. ETH Owner received Litecoin Script and Secret Hash. Waiting when he creates ETH Contract" />
+                    </h3>
                     {
                       !flow.isEthContractFunded && (
                         <InlineLoader />
@@ -291,9 +292,9 @@ export default class LtcToEth extends Component {
               }
               {
                 (flow.step === 6 || flow.isEthWithdrawn) && (
-                  <FormattedMessage id="LtcTOeth283" defaultMessage="5. ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait">
-                    {message => <h3>{message}</h3> }
-                  </FormattedMessage>
+                  <h3>
+                    <FormattedMessage id="LtcTOeth283" defaultMessage="5. ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait" />
+                  </h3>
                 )
               }
               {

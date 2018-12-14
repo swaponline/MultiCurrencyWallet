@@ -58,13 +58,21 @@ export default class History extends Component {
 
   render() {
     const { items, swapHistory } = this.props
-    const titles = [ 'Coin', 'Status', 'Statement', 'Amount' ]
+    const titles = [
+      <FormattedMessage id="Coin61" defaultMessage="Coin" />,
+      <FormattedMessage id="Status61" defaultMessage="Status" />,
+      <FormattedMessage id="Statement61" defaultMessage="Statement" />,
+      <FormattedMessage id="Amount61" defaultMessage="Amount" />,
+    ]
+    const subTitle = [
+      <FormattedMessage id="Amount68" defaultMessage="History" />,
+    ]
 
     return (
       <section>
-        <PageHeadline subTitle="History" />
+        <PageHeadline subTitle={subTitle} />
         { swapHistory.length > 0 && <SwapsHistory orders={swapHistory.filter(item => item.step >= 4)} /> }
-        <h3 data-tip data-for="transactions" style={{ width:'200px' }}>
+        <h3 data-tip data-for="transactions" style={{ width:'210px' }}>
           <FormattedMessage id="history68" defaultMessage="All transactions" />
         </h3>
         <ReactTooltip id="transactions" type="light" effect="solid">

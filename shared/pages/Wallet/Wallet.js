@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import propTypes from 'prop-types'
-import { isMobile } from 'react-device-detect'
 
+import { isMobile } from 'react-device-detect'
 import { connect } from 'redaction'
 import { constants } from 'helpers'
 import actions from 'redux/actions'
@@ -20,16 +20,20 @@ import KeyActionsPanel from 'components/KeyActionsPanel/KeyActionsPanel'
 import SaveKeysModal from 'components/modals/SaveKeysModal/SaveKeysModal'
 import { FormattedMessage } from 'react-intl'
 
-
 @withRouter
 @connect(
   ({
     core: { hiddenCoinsList },
-    user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, usdtData, ltcData },
+    user: { ethData, btcData, tokensData, eosData, telosData, nimData, usdtData, ltcData },
     currencies: { items: currencies },
   }) => ({
-    tokens: Object.keys(tokensData).map(k => (tokensData[k])),
-    items: [btcData, ethData, eosData, telosData, bchData, ltcData, usdtData /* nimData */ ],
+    tokens: Object.keys(tokensData).map(k => (tokensData[k].currency)),
+    items: [btcData, ethData, eosData, telosData, ltcData, usdtData /* nimData */ ].map((data) => (
+      data.currency
+    )),
+    currencyBalance: [btcData, ethData, eosData, telosData, ltcData, usdtData /* nimData */ ].map((cur) => (
+      cur.balance
+    )),
     currencies,
     hiddenCoinsList,
   })
@@ -43,76 +47,112 @@ export default class Wallet extends Component {
     currencies: propTypes.array,
     hiddenCoinsList: propTypes.array,
     history: propTypes.object,
-    items: propTypes.arrayOf(propTypes.object),
-    tokens: propTypes.arrayOf(propTypes.object),
+    items: propTypes.arrayOf(propTypes.string),
+    tokens: propTypes.arrayOf(propTypes.string),
     location: propTypes.object,
     match: propTypes.object,
   }
 
   state = {
-    view: 'off',
-    zeroBalance: true,
+    saveKeys: false,
+    openModal: false,
   }
 
   componentWillMount() {
-    process.env.MAINNET && localStorage.setItem(constants.localStorage.testnetSkip, true)
-    if (localStorage.getItem(constants.localStorage.privateKeysSaved)) {
-      this.changeView('checkKeys')
-    } else {
-      // actions.modals.open(constants.modals.PrivateKeys, {})
-    }
-  }
-
-  componentDidMount() {
     actions.user.getBalances()
     actions.analytics.dataEvent('open-page-balances')
+
+    if (process.env.MAINNET) {
+      localStorage.setItem(constants.localStorage.testnetSkip, false)
+    } else {
+      localStorage.setItem(constants.localStorage.testnetSkip, true)
+    }
+
+    const testSkip = JSON.parse(localStorage.getItem(constants.localStorage.testnetSkip))
+    const saveKeys = JSON.parse(localStorage.getItem(constants.localStorage.privateKeysSaved))
+
+    this.setState(() => ({
+      testSkip,
+      saveKeys,
+    }))
   }
 
-  componentWillReceiveProps({ items, tokens }) {
-    const data = [].concat(items, tokens)
+  componentWillReceiveProps() {
+    const { saveKeys, testSkip } = this.state
 
-    data.forEach(item => {
-      if (item.balance > 0) {
-        actions.analytics.balanceEvent(item.currency, item.balance)
+    const openTour = JSON.parse(localStorage.getItem(constants.localStorage.openTour))
+
+    if (saveKeys || testSkip || !openTour) {
+      return
+    }
+
+    const { currencyBalance } = this.props
+
+    currencyBalance.forEach(cur => {
+      if (cur > 0) {
+        this.setState(() => ({ openModal: true }))
       }
     })
   }
 
-  changeView = (view) => {
-    this.setState({
-      view,
+  componentDidUpdate() {
+    const { openModal } = this.state
+
+    if (openModal) {
+      actions.modals.open(constants.modals.PrivateKeys, {})
+    }
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    const getComparableProps = (props) => ({
+      items: props.items,
+      currencyBalance: props.currencyBalance,
+      tokens: props.tokens,
+      currencies: props.currencies,
+      hiddenCoinsList: props.hiddenCoinsList,
+    })
+    return JSON.stringify({
+      ...getComparableProps(this.props),
+      ...this.state,
+    }) !== JSON.stringify({
+      ...getComparableProps(nextProps),
+      ...nextState,
     })
   }
 
   render() {
-    const { view, zeroBalance } = this.state
     const { items, tokens, currencies, hiddenCoinsList } = this.props
-    const titles = [ 'Coin', 'Name', 'Balance', 'Your Address', isMobile ? 'Send, receive, swap' :  'Actions' ]
-
-    const keysSaved = localStorage.getItem(constants.localStorage.privateKeysSaved)
-    const testNetSkip = localStorage.getItem(constants.localStorage.testnetSkip)
-
-    const showSaveKeysModal = !zeroBalance && !keysSaved && !testNetSkip // non-zero balance and no keys saved
+    const titles = [
+      <FormattedMessage id="Wallet114" defaultMessage="Coin" />,
+      <FormattedMessage id="Wallet115" defaultMessage="Name" />,
+      <FormattedMessage id="Wallet116" defaultMessage="Balance" />,
+      <FormattedMessage id="Wallet117" defaultMessage="Your Address" />,
+      isMobile ?
+        <FormattedMessage id="Wallet118" defaultMessage="Send, receive, swap" />
+        :
+        <FormattedMessage id="Wallet119" defaultMessage="Actions" />,
+    ]
 
     return (
       <section styleName={isMobile ? 'sectionWalletMobile' : 'sectionWallet'}>
-        { showSaveKeysModal && <SaveKeysModal /> }
         <PageHeadline styleName="pageLine">
           <SubTitle>
             <FormattedMessage id="Wallet104" defaultMessage="Your online cryptocurrency wallet" />
           </SubTitle>
-          Deposit funds to addresses below
         </PageHeadline>
+        <KeyActionsPanel />
+        <div styleName="depositText">
+          <FormattedMessage id="Wallet137" defaultMessage="Deposit funds to addresses below" />
+        </div>
         <Table
           id="table-wallet"
           className={styles.wallet}
           titles={titles}
-          rows={[...items, ...tokens].filter(coin => !hiddenCoinsList.includes(coin.currency))}
+          rows={[...items, ...tokens].filter(currency => !hiddenCoinsList.includes(currency))}
           rowRender={(row, index, selectId, handleSelectId) => (
-            <Row key={index} {...row} currencies={currencies} hiddenCoinsList={hiddenCoinsList} selectId={selectId} index={index} handleSelectId={handleSelectId} />
+            <Row key={row} currency={row} currencies={currencies} hiddenCoinsList={hiddenCoinsList} selectId={selectId} index={index} handleSelectId={handleSelectId} />
           )}
         />
-        <KeyActionsPanel />
       </section>
     )
   }

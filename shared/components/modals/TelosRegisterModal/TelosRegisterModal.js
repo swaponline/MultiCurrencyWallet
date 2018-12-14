@@ -15,6 +15,12 @@ import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage } from 'react-intl'
 
 
+const text = [
+  <FormattedMessage id="TelosRegister46" defaultMessage="Enter TELOS account name " />,
+  <FormattedMessage id="TelosRegister52" defaultMessage="Enter your TELOS secret key" />,
+  <FormattedMessage id="TELOSLogin" defaultMessage="TELOS Login" />,
+]
+
 @cssModules(styles)
 export default class TelosRegisterModal extends React.Component {
 
@@ -51,21 +57,21 @@ export default class TelosRegisterModal extends React.Component {
     const isDisabled = !accountName || !privateKey
 
     return (
-      <Modal name={name} title="TELOS Login">
+      <Modal name={name} title={text[3]}>
         <FieldLabel inRow>
           <FormattedMessage id="TelosRegister55" defaultMessage="Account name" />
-          <Tooltip text="Enter TELOS account name" />
+          <Tooltip text={text[0]} id="TelOSR92" />
         </FieldLabel>
         <Input valueLink={linked.accountName} />
         <FieldLabel inRow>
           <FormattedMessage id="TelosRegister59" defaultMessage="Private key" />
-          <Tooltip text="Enter your TELOS secret key" />
+          <Tooltip text={text[1]} id="TelOSR70" />
         </FieldLabel>
         <Input valueLink={linked.privateKey} />
         { error && (
-          <FormattedMessage id="TelosRegister64" defaultMessage="Sorry, error occured during activation">
-            {message => <div styleName="error">{message}</div>}
-          </FormattedMessage>
+          <div styleName="error">
+            <FormattedMessage id="TelosRegister64" defaultMessage="Sorry, error occurred during activation" />
+          </div>
         )
         }
         <Button styleName="button" brand fullWidth disabled={isDisabled} onClick={this.handleSubmit}>

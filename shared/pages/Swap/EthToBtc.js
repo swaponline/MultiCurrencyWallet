@@ -7,6 +7,7 @@ import { BigNumber } from 'bignumber.js'
 
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import TimerButton from 'components/controls/TimerButton/TimerButton'
+import SwapProgress from 'components/SwapProgress/SwapProgress'
 import Button from 'components/controls/Button/Button'
 import Timer from './Timer/Timer'
 import { FormattedMessage } from 'react-intl'
@@ -14,12 +15,13 @@ import { FormattedMessage } from 'react-intl'
 
 export default class EthToBtc extends Component {
 
-  constructor({ swap }) {
+  constructor({ swap, currencyData }) {
     super()
 
     this.swap = swap
 
     this.state = {
+      currencyAddress: currencyData.address,
       flow: this.swap.flow.state,
       enabledButton: false,
       isShowingBitcoinScript: false,
@@ -53,11 +55,13 @@ export default class EthToBtc extends Component {
     this.setState({
       flow: values,
     })
+
+    // this.overProgress(values, Object.keys(stepNumbers).length)
   }
 
-  overProgress = ({ flow, length }) => {
-    actions.loader.show(true, '', '', true, { flow, length, name: 'ETH2BTC' })
-  }
+  // overProgress = (flow, length) => {
+  //   actions.loader.show(true, '', '', true, { flow, length, name: 'ETH2BTC' })
+  // }
 
   signSwap = () => {
     this.swap.flow.sign()
@@ -83,27 +87,36 @@ export default class EthToBtc extends Component {
 
   render() {
     const { children } = this.props
-    const { flow, enabledButton, isShowingBitcoinScript } = this.state
+    const { currencyAddress, flow, enabledButton, isShowingBitcoinScript } = this.state
+    const headingStyle = {
+      color: '#5100dc',
+      textTransform: 'uppercase',
+      fontSize: '20px',
+      marginTop: '20px',
+      borderTop: '1px solid #5100dc',
+      paddingTop: '20px' }
 
     return (
       <div>
-        {
-          this.swap.id && (
-            <strong>{this.swap.sellAmount.toNumber()} {this.swap.sellCurrency} &#10230; {this.swap.buyAmount.toNumber()} {this.swap.buyCurrency}</strong>
-          )
-        }
-
+        <div style={{ position: 'relative' }}>
+          {
+            this.swap.id && (
+              <strong>{this.swap.sellAmount.toNumber()} {this.swap.sellCurrency} &#10230; {this.swap.buyAmount.toNumber()} {this.swap.buyCurrency}</strong>
+            )
+          }
+          <SwapProgress data={flow} name="ETH-BTC" stepLength={9} />
+        </div>
         {
           !this.swap.id && (
             this.swap.isMy ? (
-              <FormattedMessage id="EthToBtc99" defaultMessage="This order doesn&apos;t have a buyer">
-                {message => <h3>{message}</h3>}
-              </FormattedMessage>
+              <h3>
+                <FormattedMessage id="EthToBtc99" defaultMessage="This order doesn&apos;t have a buyer" />
+              </h3>
             ) : (
               <Fragment>
-                <FormattedMessage id="EthToBtc104" defaultMessage="The order creator is offline. Waiting for him..">
-                  {message => <h3>{message}</h3>}
-                </FormattedMessage>
+                <h3>
+                  <FormattedMessage id="EthToBtc104" defaultMessage="The order creator is offline. Waiting for him.." />
+                </h3>
                 <InlineLoader />
               </Fragment>
             )
@@ -112,9 +125,9 @@ export default class EthToBtc extends Component {
         {
           flow.isWaitingForOwner && (
             <Fragment>
-              <FormattedMessage id="EthToBtc115" defaultMessage="Waiting for other user when he connect to the order">
-                {message => <h3>{message}</h3>}
-              </FormattedMessage>
+              <h3 style={headingStyle}>
+                <FormattedMessage id="EthToBtc115" defaultMessage="Waiting for other user when he connect to the order" />
+              </h3>
               <InlineLoader />
             </Fragment>
           )
@@ -122,21 +135,21 @@ export default class EthToBtc extends Component {
         {
           flow.step === 1 && (
             <Fragment>
-              <FormattedMessage
-                id="EthToBtc125"
-                defaultMessage=
-                  "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation.">
-                {message => <div>{message}</div>}
-              </FormattedMessage>
+              <div>
+                <FormattedMessage
+                  id="EthToBtc125"
+                  defaultMessage=
+                    "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation." />
+              </div>
               <TimerButton timeLeft={5} brand onClick={this.signSwap}>
                 <FormattedMessage id="EthToBtc128" defaultMessage="Sign" />
               </TimerButton>
               {
                 (flow.isSignFetching || flow.signTransactionHash) && (
                   <Fragment>
-                    <FormattedMessage id="EthToBtc134" defaultMessage="Please wait. Confirmation processing">
-                      {message => <h4>{message}</h4>}
-                    </FormattedMessage>
+                    <h4>
+                      <FormattedMessage id="EthToBtc134" defaultMessage="Please wait. Confirmation processing" />
+                    </h4>
                     {
                       flow.signTransactionHash && (
                         <div>
@@ -168,9 +181,9 @@ export default class EthToBtc extends Component {
         {
           flow.isMeSigned && (
             <Fragment>
-              <FormattedMessage id="EthToBtc167" defaultMessage="2. Waiting BTC Owner creates Secret Key, creates BTC Script and charges it">
-                {message => <h3>{message}</h3>}
-              </FormattedMessage>
+              <h3 style={headingStyle}>
+                <FormattedMessage id="EthToBtc167" defaultMessage="2. Waiting BTC Owner creates Secret Key, creates BTC Script and charges it" />
+              </h3>
               {
                 flow.step === 2 && (
                   <InlineLoader />
@@ -180,9 +193,9 @@ export default class EthToBtc extends Component {
               {
                 flow.secretHash && flow.btcScriptValues && (
                   <Fragment>
-                    <FormattedMessage id="EthToBtc179" defaultMessage="3. Bitcoin Script created and charged. Please check the information below">
-                      {message => <h3>{message}</h3>}
-                    </FormattedMessage>
+                    <h3 style={headingStyle}>
+                      <FormattedMessage id="EthToBtc179" defaultMessage="3. Bitcoin Script created and charged. Please check the information below" />
+                    </h3>
                     <div>
                       <FormattedMessage id="EthToBtc182" defaultMessage="Secret Hash: " />
                       <strong>{flow.secretHash}</strong>
@@ -258,13 +271,12 @@ export default class EthToBtc extends Component {
                   </Fragment>
                 )
               }
-
               {
                 flow.step === 4 && !flow.isBalanceEnough && !flow.isBalanceFetching && (
                   <Fragment>
-                    <FormattedMessage id="EthToBtc260" defaultMessage="Not enough money for this swap. Please fund the balance">
-                      {message => <h3>{message}</h3>}
-                    </FormattedMessage>
+                    <h3 style={headingStyle}>
+                      <FormattedMessage id="EthToBtc260" defaultMessage="Not enough money for this swap. Please fund the balance" />
+                    </h3>
                     <div>
                       <div>
                         <FormattedMessage id="EthToBtc264" defaultMessage="Your balance: " />
@@ -276,7 +288,9 @@ export default class EthToBtc extends Component {
                       </div>
                       <div>
                         <FormattedMessage id="EthToBtc270" defaultMessage="Your address: " />
-                        {this.swap.flow.myEthAddress}
+                        <a href={`${config.link.etherscan}/address/${currencyAddress}`} target="_blank" el="noopener noreferrer">
+                          {currencyAddress}
+                        </a>
                       </div>
                       <hr />
                       <span>{flow.address}</span>
@@ -291,9 +305,9 @@ export default class EthToBtc extends Component {
               {
                 flow.step === 4 && flow.isBalanceFetching && (
                   <Fragment>
-                    <FormattedMessage id="EthToBtc286" defaultMessage="Checking balance..">
-                      {message => <div>{message}</div>}
-                    </FormattedMessage>
+                    <div>
+                      <FormattedMessage id="EthToBtc286" defaultMessage="Checking balance.." />
+                    </div>
                     <InlineLoader />
                   </Fragment>
                 )
@@ -302,9 +316,9 @@ export default class EthToBtc extends Component {
               {
                 (flow.step >= 5 || flow.isEthContractFunded) && (
                   <Fragment>
-                    <FormattedMessage id="EthToBtc297" defaultMessage="4. Creating Ethereum Contract. Please wait, it will take a while">
-                      {message => <h3>{message}</h3>}
-                    </FormattedMessage>
+                    <h3 style={headingStyle}>
+                      <FormattedMessage id="EthToBtc297" defaultMessage="5. Creating Ethereum Contract. Please wait, it will take a while" />
+                    </h3>
                   </Fragment>
                 )
               }
@@ -348,9 +362,9 @@ export default class EthToBtc extends Component {
               {
                 (flow.step === 6 || flow.isEthWithdrawn) && (
                   <Fragment>
-                    <FormattedMessage id="EthToBtc343" defaultMessage="5. Waiting BTC Owner adds Secret Key to ETH Contact">
-                      {message => <h3>{message}</h3>}
-                    </FormattedMessage>
+                    <h3 style={headingStyle}>
+                      <FormattedMessage id="EthToBtc343" defaultMessage="6. Waiting BTC Owner adds Secret Key to ETH Contact" />
+                    </h3>
                     {
                       !flow.isEthWithdrawn && (
                         <InlineLoader />
@@ -362,13 +376,13 @@ export default class EthToBtc extends Component {
 
               {
                 (flow.step === 7 || flow.isBtcWithdrawn) && (
-                  <FormattedMessage
-                    id="EthToBtc357"
-                    defaultMessage=
-                      "6. BTC Owner successfully took money from ETH Contract and left Secret Key. Requesting withdrawal from BTC Script. Please wait"
-                  >
-                    {message => <h3>{message}</h3>}
-                  </FormattedMessage>
+                  <h3 style={headingStyle}>
+                    <FormattedMessage
+                      id="EthToBtc357"
+                      defaultMessage={`7. BTC Owner successfully took money from ETH Contract and
+                        left Secret Key. Requesting withdrawal from BTC Script. Please wait`}
+                    />
+                  </h3>
                 )
               }
               {
@@ -396,12 +410,12 @@ export default class EthToBtc extends Component {
               {
                 flow.isBtcWithdrawn && (
                   <Fragment>
-                    <FormattedMessage id="EthToBtc387" defaultMessage="7. Money was transferred to your wallet. Check the balance.">
-                      {message => <h3>{message}</h3>}
-                    </FormattedMessage>
-                    <FormattedMessage id="EthToBtc390" defaultMessage="Thank you for using Swap.Online!">
-                      {message => <h2>{message}</h2>}
-                    </FormattedMessage>
+                    <h3 style={headingStyle}>
+                      <FormattedMessage id="EthToBtc387" defaultMessage="8. Money was transferred to your wallet. Check the balance." />
+                    </h3>
+                    <h3 style={headingStyle}>
+                      <FormattedMessage id="EthToBtc390" defaultMessage="Thank you for using Swap.Online!" />
+                    </h3>
                   </Fragment>
                 )
               }

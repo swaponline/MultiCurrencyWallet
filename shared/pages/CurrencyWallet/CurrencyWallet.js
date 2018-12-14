@@ -17,8 +17,11 @@ import { Button } from 'components/controls'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import PageSeo from 'components/Seo/PageSeo'
 import { getSeoPage } from 'helpers/seo'
-import { FormattedMessage } from 'react-intl'
 
+import { FormattedMessage, injectIntl } from 'react-intl'
+import ReactTooltip from 'react-tooltip'
+import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
+import { localisedUrl } from '../../helpers/locale'
 
 @connect(({ core, user,  history: { transactions, swapHistory } }) => ({
   user,
@@ -26,6 +29,7 @@ import { FormattedMessage } from 'react-intl'
   txHistory: transactions,
   swapHistory,
 }))
+@injectIntl
 @withRouter
 @CSSModules(styles)
 export default class CurrencyWallet extends Component {
@@ -37,8 +41,10 @@ export default class CurrencyWallet extends Component {
       name: null,
       address: null,
       balance: null,
+      isBalanceEmpty: false,
     }
   }
+
 
   static getDerivedStateFromProps(nextProps) {
     const { user, match: { params: { fullName } } } = nextProps
@@ -56,7 +62,17 @@ export default class CurrencyWallet extends Component {
       decimals,
       fullName,
       balance,
+      isBalanceEmpty: balance === 0,
     }
+  }
+
+  handleReceive = () => {
+    const { currency, address } = this.state
+
+    actions.modals.open(constants.modals.ReceiveModal, {
+      currency,
+      address,
+    })
   }
 
   handleWithdraw = () => {
@@ -71,14 +87,18 @@ export default class CurrencyWallet extends Component {
       balance,
     })
   }
+  handleGoTrade = (currency) => {
+    const { intl: { locale } } = this.props
+    this.props.history.push(localisedUrl(locale, `/${currency.toLowerCase()}`))
+  }
 
   handleEosBuyAccount = async () => {
     actions.modals.open(constants.modals.EosBuyAccount)
   }
 
   render() {
-    let { swapHistory, txHistory, location } = this.props
-    const { fullName, address, balance, currency } = this.state
+    let { swapHistory, txHistory, location, intl: { locale } } = this.props
+    const { fullName, address, balance, currency, isBalanceEmpty } = this.state
 
     txHistory = txHistory
       .filter(tx => tx.type === currency.toLowerCase())
@@ -88,7 +108,6 @@ export default class CurrencyWallet extends Component {
       .filter(swap => swap.sellCurrency === currency || swap.buyCurrency === currency)
 
     const seoPage = getSeoPage(location.pathname)
-
     const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true"
 
     return (
@@ -100,29 +119,71 @@ export default class CurrencyWallet extends Component {
           defaultDescription={
             `Atomic Swap Wallet allows you to manage and securely exchange ${fullName} (${currency}) with 0% fees. Based on Multi-Sig and Atomic Swap technologies.`
           } />
-        <PageHeadline styleName="title" subTitle={!!seoPage ? seoPage.h1 : `Your online ${fullName} (${currency}) web wallet with Atomic Swap.`} />
+        <PageHeadline
+          styleName="title"
+          subTitle={!!seoPage ?
+            seoPage.h1
+            :
+            <span>
+              <FormattedMessage id="currencywallet103" defaultMessage="Your online" />
+              {fullName} ({currency})
+              <FormattedMessage id="currencywallet107" defaultMessage="web wallet with Atomic Swap." />
+            </span>
+          }
+        />
         <h3 styleName="subtitle">
           <FormattedMessage id="CurrencyWallet95" defaultMessage="Your address: " />
-          <span>{address}</span> <br /> Your {fullName} balance: {balance}{' '}{currency.toUpperCase()}
+          <span>{address}</span> <br />
+          <FormattedMessage id="CurrencyWallet107" defaultMessage="Your" />
+          {fullName}
+          {' '}
+          <FormattedMessage id="CurrencyWallet143" defaultMessage="balance" />
+           : {balance}{' '}{currency.toUpperCase()}
         </h3>
         {currency === 'EOS' && !eosAccountActivated && (<Button onClick={this.handleEosBuyAccount} gray>
           <FormattedMessage id="CurrencyWallet105" defaultMessage="Activate account" />
         </Button>)}
-        <div styleName="inRow">
-          <Button brand style={{ marginRight: '15px' }} onClick={this.handleWithdraw}>
+        <div styleName={`${locale}` === 'ru' ? 'inRowru' : 'inRow'}>
+          <CurrencyButton
+            onClick={this.handleReceive}
+            dataTooltip={{
+              id: `deposit${currency}`,
+              text: 'Deposit funds to this address of currency wallet',
+              isActive: 'isBalanceEmpty',
+            }}
+          >
+            <FormattedMessage id="Row313" defaultMessage="Deposit" />
+          </CurrencyButton>
+          <CurrencyButton
+            onClick={this.handleWithdraw}
+            disable={isBalanceEmpty}
+            dataTooltip={{
+              id: `send${currency}`,
+              text: `You can not send this asset, because you have a zero balance.`,
+              isActive: isBalanceEmpty,
+            }}
+          >
             <FormattedMessage id="CurrencyWallet100" defaultMessage="Send" />
+          </CurrencyButton>
+          <Button gray onClick={() => this.handleGoTrade(currency)}>
+            <FormattedMessage id="CurrencyWallet104" defaultMessage="Exchange" />
           </Button>
-          <Link to={`${links.home}${currency.toLowerCase()}`} >
-            <Button gray>
-              <FormattedMessage id="CurrencyWallet104" defaultMessage="Exchange" />
-            </Button>
-          </Link>
         </div>
         { swapHistory.length > 0 && <SwapsHistory orders={swapHistory} /> }
         <h2 style={{ marginTop: '20px' }} >
-          <FormattedMessage id="CurrencyWallet110" defaultMessage="History your transactions" />
+          <FormattedMessage id="CurrencyWallet128" defaultMessage="History your transactions" />
         </h2>
-        {txHistory && (<Table titles={[ 'Coin', 'Status', 'Statement', 'Amount' ]} rows={txHistory}styleName="table" rowRender={(row) => (<Row key={row.hash} {...row} />)} />)}
+        {txHistory && (<Table
+          titles={[
+            <FormattedMessage id="Coin130" defaultMessage="Coin" />,
+            <FormattedMessage id="Status130" defaultMessage="Status" />,
+            <FormattedMessage id="Statement130" defaultMessage="Statement" />,
+            <FormattedMessage id="Amount130" defaultMessage="Amount" />,
+          ]}
+          rows={txHistory}
+          styleName="table"
+          rowRender={(row) => (<Row key={row.hash} {...row} />)}
+        />)}
       </div>
     )
   }

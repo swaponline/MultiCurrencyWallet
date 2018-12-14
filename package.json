@@ -4,10 +4,21 @@
   "description": "swap.online",
   "private": true,
   "main": "./bin/server",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix --cache ./shared --ext js",
+      "git add"
+    ]
+  },
   "scripts": {
     "test": "cypress open",
     "eslint": "eslint --fix --cache ./shared --ext js",
-    "validate": "eslint --cache ./shared --ext js",
+    "validate": "lint-diff",
     "start": "npm run dev",
     "dev": "npm run dev:testnet",
     "prod": "npm run dev:mainnet",
@@ -39,7 +50,6 @@
   "author": "@nikdementev",
   "license": "ISC",
   "devDependencies": {
-    "@nimiq/core": "^1.1.2",
     "abortcontroller-polyfill": "^1.1.9",
     "app-module-path": "^2.2.0",
     "autoprefixer": "^8.5.0",
@@ -66,7 +76,6 @@
     "babel-register": "^6.26.0",
     "bigi": "^1.4.2",
     "bignumber.js": "^7.2.1",
-    "bitcoincashjs": "^0.1.10",
     "bitcoinjs-lib": "^3.3.2",
     "body-parser": "^1.18.3",
     "chalk": "^2.4.1",
@@ -96,12 +105,15 @@
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^2.30.1",
     "human-standard-token-abi": "^1.0.2",
+    "husky": "^1.1.4",
     "jdenticon": "^2.1.0",
+    "lint-diff": "^1.2.1",
+    "lint-staged": "^8.0.5",
     "lodash": "^4.17.5",
     "moment": "^2.22.1",
     "moment-with-locales-es6": "^1.0.1",
     "node-sass": "^4.9.4",
-    "nodemon": "^1.17.3",
+    "nodemon": "^1.18.7",
     "postcss-loader": "^2.1.4",
     "progress-bar-webpack-plugin": "^1.11.0",
     "prop-types": "^15.6.1",
@@ -132,8 +144,10 @@
     "bitcoinjs-message": "^2.0.0",
     "coininfo": "git+https://github.com/cryptocoinjs/coininfo.git",
     "copy-dir-cli": "0.0.3",
+    "copy-webpack-plugin": "^4.6.0",
     "ethereum-input-data-decoder": "0.0.12",
-    "ipfs": "^0.32.3",
+    "firebase": "^5.5.9",
+    "ipfs": "^0.33.1",
     "ipfs-pubsub-room": "^1.4.0",
     "node-gyp": "^3.8.0",
     "react": "^16.3.2",
@@ -153,10 +167,13 @@
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^5.0.0-alpha.9",
     "react-tooltip": "^3.9.0",
+    "reactour": "^1.10.0",
     "rebuild": "^0.1.2",
     "redaction": "^4.2.1",
     "redux": "^4.0.0",
+    "rename-files": "0.0.2",
     "replace": "^1.0.0",
-    "reverse": "^4.0.0"
+    "reverse": "^4.0.0",
+    "styled-components": "^4.1.2"
   }
 }

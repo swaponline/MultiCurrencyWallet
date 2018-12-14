@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import actions from 'redux/actions'
-import { constants } from 'helpers'
+import { connect } from 'redaction'
+import { constants, links } from 'helpers'
 import config from 'app-config'
 import { isMobile } from 'react-device-detect'
 
@@ -12,15 +13,39 @@ import CopyToClipboard from 'react-copy-to-clipboard'
 
 import Coin from 'components/Coin/Coin'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
-import WithdrawButton from 'components/controls/WithdrawButton/WithdrawButton'
+import BtnTooltip from 'components/controls/WithdrawButton/BtnTooltip'
 
 import LinkAccount from '../LinkAccount/LinkAcount'
 import { withRouter } from 'react-router'
 import ReactTooltip from 'react-tooltip'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
+import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
+import { relocalisedUrl, localisedUrl } from 'helpers/locale'
 
 
+@injectIntl
 @withRouter
+@connect(
+  ({
+    user: { ethData, btcData, /* bchData, */ tokensData, eosData, telosData, nimData, usdtData, ltcData },
+    currencies: { items: currencies },
+  }, { currency }) => ({
+    currencies,
+    item: [
+      btcData,
+      ethData,
+      eosData,
+      telosData,
+      /* bchData, */
+      ltcData,
+      usdtData,
+      ...Object.keys(tokensData).map(k => (tokensData[k])),
+    ].map(({ account, keyPair, ...data }) => ({
+      ...data,
+    })).find((item) => item.currency === currency),
+  })
+)
+
 @cssModules(styles, { allowMultiple: true })
 export default class Row extends Component {
 
@@ -30,30 +55,29 @@ export default class Row extends Component {
     tradeAllowed: false,
     isAddressCopied: false,
     isTouch: false,
-    isBalanceEmpty: true
+    isBalanceEmpty: true,
   }
 
-  componentWillMount() {
+  static getDerivedStateFromProps({ item: { balance } }) {
+    return {
+      isBalanceEmpty: balance === 0,
+    }
+  }
+  constructor(props) {
+    super(props)
     const { currency, currencies } = this.props
 
-    this.setState({
-      tradeAllowed: !!currencies.find(c => c.value === currency.toLowerCase()),
-    })
-
-  }
-
-  componentWillReceiveProps(newProps) {
-    this.handleCheckBalance()
+    this.state.tradeAllowed = !!currencies.find(c => c.value === currency.toLowerCase())
   }
 
   componentWillUnmount() {
-    window.removeEventListener("resize", this.handleSliceAddress);
+    window.removeEventListener('resize', this.handleSliceAddress)
   }
 
   componentDidMount() {
     const { hiddenCoinsList } = this.props
 
-    window.addEventListener("resize", this.handleSliceAddress);
+    window.addEventListener('resize', this.handleSliceAddress)
 
     Object.keys(config.erc20)
       .forEach(name => {
@@ -62,7 +86,12 @@ export default class Row extends Component {
         }
       })
   }
-
+  componentDidUpdate() {
+    const { item } = this.props
+    if (item.balance > 0) {
+      actions.analytics.balanceEvent(item.currency, item.balance)
+    }
+  }
   handleReloadBalance = async () => {
     const { isBalanceFetching } = this.state
 
@@ -74,7 +103,7 @@ export default class Row extends Component {
       isBalanceFetching: true,
     })
 
-    const { currency } = this.props
+    const { item: { currency } } = this.props
 
     await actions[currency.toLowerCase()].getBalance(currency.toLowerCase())
 
@@ -82,21 +111,34 @@ export default class Row extends Component {
       isBalanceFetching: false,
     }))
   }
-
+  shouldComponentUpdate(nextProps, nextState) {
+    const getComparableProps = ({ item, index, selectId }) => ({
+      item,
+      index,
+      selectId,
+    })
+    return JSON.stringify({
+      ...getComparableProps(nextProps),
+      ...nextState,
+    }) !== JSON.stringify({
+      ...getComparableProps(this.props),
+      ...this.state,
+    })
+  }
   handleTouch = (e) => {
     this.setState({
       isTouch: true,
     })
   }
-
   handleSliceAddress = () => {
-    const { address } = this.props;
-    if(window.innerWidth < 1080 || isMobile) {
-      return address.substr(0, 6) + '...' + address.substr(address.length - 2)
-    }
-    else {
-      return address
-    }
+    const {
+      item: {
+        address,
+      },
+    } = this.props
+    let firstPart = address.substr(0, 6)
+    let secondPart = address.substr(address.length - 2)
+    return (window.innerWidth < 1120 || isMobile) ? `${firstPart}...${secondPart}` : address
   }
 
   handleTouchClear = (e) => {
@@ -130,7 +172,17 @@ export default class Row extends Component {
   }
 
   handleWithdraw = () => {
-    const { currency, address, contractAddress, decimals, balance, token } = this.props
+    const {
+      item: {
+        decimals,
+        token,
+        contractAddress,
+        unconfirmedBalance,
+        currency,
+        address,
+        balance,
+      },
+    } = this.props
 
     actions.analytics.dataEvent(`balances-withdraw-${currency.toLowerCase()}`)
     actions.modals.open(constants.modals.Withdraw, {
@@ -140,11 +192,17 @@ export default class Row extends Component {
       decimals,
       token,
       balance,
+      unconfirmedBalance,
     })
   }
 
   handleReceive = () => {
-    const { currency, address } = this.props
+    const {
+      item: {
+        currency,
+        address,
+      },
+    } = this.props
 
     actions.modals.open(constants.modals.ReceiveModal, {
       currency,
@@ -158,17 +216,9 @@ export default class Row extends Component {
     })
   }
 
-  handleCheckBalance = () => {
-    const { balance } = this.props;
-    if( balance > 0 ) {
-      this.setState({
-        isBalanceEmpty: false
-      })
-    }
-  }
-
   handleGoTrade = (currency) => {
-    this.props.history.push(`/${currency.toLowerCase()}`)
+    const { intl: { locale } } = this.props
+    this.props.history.push(localisedUrl(locale, `/${currency.toLowerCase()}`))
   }
 
   handleMarkCoinAsHidden = (coin) => {
@@ -176,13 +226,33 @@ export default class Row extends Component {
   }
 
   render() {
-    const { isBalanceFetching, tradeAllowed, isAddressCopied, isTouch, isBalanceEmpty } = this.state
-    const { currency, balance, isBalanceFetched, address, contractAddress, fullName, unconfirmedBalance } = this.props
+    const {
+      isBalanceFetching,
+      tradeAllowed,
+      isAddressCopied,
+      isTouch,
+      isBalanceEmpty,
+    } = this.state
+
+    const {
+      item: {
+        currency,
+        balance,
+        isBalanceFetched,
+        address,
+        fullName,
+        unconfirmedBalance,
+        contractAddress,
+      },
+      intl: { locale },
+    } = this.props
+
     const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true"
     const telosAccountActivated = localStorage.getItem(constants.localStorage.telosAccountActivated) === "true"
 
     return (
       <tr
+        data-tut="reactour__store"
         styleName={this.props.index === this.props.selectId || !isMobile ? 'showButtons' : 'hidden'}
         onClick={() => { this.props.handleSelectId(this.props.index) }}
         onTouchEnd={this.handleTouchClear}
@@ -190,16 +260,16 @@ export default class Row extends Component {
         style={isTouch && this.props.index !== this.props.selectId ?  { background: '#f5f5f5' } : { background: '#fff' }}
       >
         <td>
-          <Link to={`/${fullName}-wallet`} title={`Online ${fullName} wallet`}>
+          <Link to={`/${locale}/${fullName}-wallet`} title={`Online ${fullName} wallet`}>
             <Coin name={currency} />
           </Link>
         </td>
         <td>
-          <Link to={`/${fullName}-wallet`} title={`Online ${fullName} wallet`}>
+          <Link to={`/${locale}/${fullName}-wallet`} title={`Online ${fullName} wallet`}>
             {fullName}
           </Link>
         </td>
-        <td styleName="table_balance-cell">
+        <td styleName="table_balance-cell" data-tut="reactour__balance">
           {
             !isBalanceFetched || isBalanceFetching ? (
               <InlineLoader />
@@ -239,103 +309,110 @@ export default class Row extends Component {
           }
           <span styleName="mobileName">{fullName}</span>
         </td>
-          <Fragment>
-            <CopyToClipboard
-              text={address}
-              onCopy={this.handleCopyAddress}
-            >
-              <td styleName="yourAddress">
-                {
-                  !contractAddress ? (
-                    <div styleName="notContractAddress">
-                      {
-                         address !== '' && <i className="far fa-copy" styleName="icon" data-tip data-for="Copy" style={{ width: '14px' }} />
-                      }
-                      <LinkAccount type={currency} address={address}>{this.handleSliceAddress()}</LinkAccount>
-                      <ReactTooltip id="Copy" type="light" effect="solid">
-                        <span>
-                          <FormattedMessage id="Row235" defaultMessage="Copy" />
+        <Fragment>
+          <CopyToClipboard text={address} data-tut="reactour__address" onCopy={this.handleCopyAddress}>
+            <td styleName={currency === 'EOS' && !eosAccountActivated ? 'yourAddressWithOptions' : 'yourAddress'}>
+              {
+                !contractAddress ? (
+                  <div styleName="notContractAddress">
+                    {
+                      address !== '' && <i className="far fa-copy" styleName="icon" data-tip data-for="Copy" style={{ width: '14px' }} />
+                    }
+                    <LinkAccount type={currency} address={address}>{this.handleSliceAddress()}</LinkAccount>
+                    <ReactTooltip id="Copy" type="light" effect="solid">
+                      <span>
+                        <FormattedMessage id="Row235" defaultMessage="Copy" />
+                      </span>
+                    </ReactTooltip>
+                    { currency === 'EOS' && !eosAccountActivated && (
+                      <Fragment>
+                        <br />
+                        <span styleName="notActiveLink">
+                          <FormattedMessage id="Row268" defaultMessage="not activated" />
                         </span>
-                      </ReactTooltip>
-                      { currency === 'EOS' && !eosAccountActivated && (
-                        <Fragment>
-                          <br />
-                          <span styleName="notActiveLink">not activated</span>
-                        </Fragment>
-                      )
-                      }
-                      { currency === 'TLOS' && !telosAccountActivated && (
-                        <Fragment>
-                          <br />
-                          <span styleName="notActiveLink">not activated</span>
-                        </Fragment>
-                      )
-                      }
-                    </div>
-                  ) : (
-                    <Fragment>
-                      <i className="far fa-copy" styleName="icon" data-tip data-for="Copy" style={{ width: '14px' }} />
-                      <LinkAccount type={currency} contractAddress={contractAddress} address={address} >{this.handleSliceAddress()}</LinkAccount>
-                    </Fragment>
-                  )
-                }
-
+                      </Fragment>
+                    )
+                    }
+                    { currency === 'TLOS' && !telosAccountActivated && (
+                      <Fragment>
+                        <br />
+                        <span styleName="notActiveLink">
+                          <FormattedMessage id="Row277" defaultMessage="not activated" />
+                        </span>
+                      </Fragment>
+                    )
+                    }
+                  </div>
+                ) : (
+                  <Fragment>
+                    <i className="far fa-copy" styleName="icon" data-tip data-for="Copy" style={{ width: '14px' }} />
+                    <LinkAccount type={currency} contractAddress={contractAddress} address={address} >{this.handleSliceAddress()}</LinkAccount>
+                  </Fragment>
+                )
+              }
+              <ReactTooltip id="Use" type="light" effect="solid">
+                <span>
+                  <FormattedMessage id="Row346" defaultMessage="Login with your existing eos account" />
+                </span>
+              </ReactTooltip>
+              { isAddressCopied &&
+                <p styleName="copied" >
+                  <FormattedMessage id="Row293" defaultMessage="Address copied to clipboard" />
+                </p>
+              }
+              <div styleName="activeControlButtons">
                 <div styleName="actButton">
-                  {currency === 'EOS' && !eosAccountActivated && <button styleName="button buttonActivate" onClick={this.handleEosBuyAccount} data-tip data-for="Activate">Activate</button>}
+                  {currency === 'EOS' && !eosAccountActivated &&
+                    <button styleName="button buttonActivate" onClick={this.handleEosBuyAccount} data-tip data-for="Activate">
+                      <FormattedMessage id="Row358" defaultMessage="Activate" />
+                    </button>
+                  }
                 </div>
                 <ReactTooltip id="Activate" type="light" effect="solid">
                   <span>
                     <FormattedMessage id="Row256" defaultMessage="Buy this account" />
                   </span>
                 </ReactTooltip>
-
-                <div styleName="useButton"> 
+                <div styleName="useButton">
                   {
                     currency === 'EOS' &&
-                    <button styleName="button" onClick={this.handleEosRegister} data-tip data-for="Use">
+                    <button styleName="button buttonUseAnother" onClick={this.handleEosRegister} data-tip data-for="Use">
                       <FormattedMessage id="Row263" defaultMessage="Use another" />
                     </button>
                   }
                 </div>
                 <ReactTooltip id="Use" type="light" effect="solid">
                   <span>
-                    <FormattedMessage id="Row268" defaultMessage="Login with your existing eos account" />
+                    <FormattedMessage id="Row377" defaultMessage="Login with your existing eos account" />
                   </span>
                 </ReactTooltip>
-                { isAddressCopied &&
-                  <p styleName="copied" >
-                    <FormattedMessage id="Row293" defaultMessage="Address copied to clipboard" />
-                  </p>
-                }
-              </td>
-            </CopyToClipboard>
-          </Fragment>
+              </div>
+            </td>
+          </CopyToClipboard>
+        </Fragment>
         <td>
           <div styleName={currency === 'EOS' && !eosAccountActivated ? 'notActivated' : ''}>
-            <WithdrawButton onClick={this.handleReceive} styleName="marginRight">
-              <i className="fas fa-qrcode" />
-              <span>
-                <FormattedMessage id="Row313" defaultMessage="Deposit" />
-              </span>
-            </WithdrawButton>
-            <WithdrawButton onClick={this.handleWithdraw} datatip="Send your currency" styleName="marginRight" disabled={isBalanceEmpty}>
+            <CurrencyButton
+              onClick={this.handleReceive}
+              dataTooltip={{
+                id: `deposit${currency}`,
+                text: 'Deposit funds to this address of currency wallet',
+                isActive: 'true',
+              }}
+              wallet="true">
+              <FormattedMessage id="Row313" defaultMessage="Deposit" />
+            </CurrencyButton>
+            <BtnTooltip onClick={this.handleWithdraw} disable={isBalanceEmpty} id={currency} text="Send" >
               <i className="fas fa-arrow-alt-circle-right" />
-              <span>
-                <FormattedMessage id="Row305" defaultMessage="Send" />
-              </span>
-            </WithdrawButton>
+              <FormattedMessage id="Row328" defaultMessage="Send" />
+            </BtnTooltip>
             {
               tradeAllowed && (
-                <WithdrawButton onClick={() => this.handleGoTrade(currency)} disabled={isBalanceEmpty}>
+                <BtnTooltip onClick={() => this.handleGoTrade(currency)} styleName={isBalanceEmpty && 'disableWth'} text="Exchange" >
                   <i className="fas fa-exchange-alt" />
-                  <span>
-                    <FormattedMessage id="RowWallet313" defaultMessage="Exchange" />
-                  </span>
-                </WithdrawButton>
+                  <FormattedMessage id="Row334" defaultMessage="Exchane" />
+                </BtnTooltip>
               )
-            }
-            {
-              isMobile && (currency === 'EOS' && !eosAccountActivated && <button styleName="button buttonActivate" onClick={this.handleEosBuyAccount} data-tip data-for="Activate">Activate</button>)
             }
           </div>
         </td>

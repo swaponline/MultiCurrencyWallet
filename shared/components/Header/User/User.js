@@ -10,7 +10,7 @@ import Sound from 'helpers/Sound/Sound.mp4'
 import Question from './Question/Question'
 import UserAvatar from './UserAvatar/UserAvatar'
 import UserTooltip from './UserTooltip/UserTooltip'
-import AddOfferButton from './AddOfferButton/AddOfferButton'
+import SubscribeButton from './SubscribeButton/SubscribeButton'
 
 import Avatar from 'components/Avatar/Avatar'
 
@@ -54,12 +54,15 @@ export default class User extends React.Component {
 
   render() {
     const { view } = this.state
-    const { feeds, peer } = this.props
+
+    const {
+      feeds, peer, reputation, openTour, path,
+    } = this.props
 
     return (
       <div styleName="user-cont">
-        <AddOfferButton />
-        <Question />
+        <SubscribeButton />
+        {path && (<Question openTour={openTour} />)}
         <UserAvatar
           isToggle={this.handleToggleTooltip}
           feeds={feeds}

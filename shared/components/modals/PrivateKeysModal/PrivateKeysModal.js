@@ -20,6 +20,10 @@ const views = {
   checkKeys: 'checkKeys',
 }
 
+const title = [
+  <FormattedMessage id="ImCAUTIONport" defaultMessage="CAUTION!" />,
+]
+
 @connect({
   ethData: 'user.ethData',
   btcData: 'user.btcData',
@@ -57,8 +61,6 @@ export default class PrivateKeysModal extends React.PureComponent {
     actions.notifications.show(constants.notifications.Message, {
       message: 'Check your browser downloads',
     })
-
-    // this.changeView(views.checkKeys)
   }
 
   handleNext = () => {
@@ -90,7 +92,7 @@ export default class PrivateKeysModal extends React.PureComponent {
         name={name}
         showCloseButton={false}
         showLogo={false}
-        title="CAUTION!"
+        title={title}
       >
         <div styleName="content">
           {
@@ -99,29 +101,28 @@ export default class PrivateKeysModal extends React.PureComponent {
                 <div styleName="title">
                   <FormattedMessage
                     id="PrivateKeysModal991"
-                    defaultMessage="Before you continue be sure to save your private keys! {br} {br} there is a big chance you will loose your money. "
+                    defaultMessage="Before you continue be sure to save your private keys!"
                   />
-                  <FormattedMessage id="PrivateKeysModal99" defaultMessage="It`s very important because If you don`t " />
-                  <FormattedMessage id="PrivateKeysModal105" defaultMessage="there is a big chance you will loose your money. " />
+                  <FormattedMessage id="PrivateKeysModal99" defaultMessage="It`s very important" />
                 </div>
-                <FormattedMessage id="PrivateKeysModal105" defaultMessage="We do not store your private keys and will not be able to restore them!">
-                  {message => <div styleName="subTitle">{message}</div>}
-                </FormattedMessage>
+                <div styleName="subTitle">
+                  <FormattedMessage id="PrivateKeysModal106" defaultMessage="We do not store your private keys and will not be able to restore them!" />
+                </div>
                 <div styleName="buttonContainer">
                   <div styleName="buttonSubContainer">
-                    <FormattedMessage id="PrivateKeysModal110" defaultMessage="Click here">
-                      {message => <span styleName="text">{message}</span>}
-                    </FormattedMessage>
-                    <span styleName="button" onClick={this.handleDownload}>
-                      <FormattedMessage id="PrivateKeysModal113" defaultMessage="1. DOWNLOAD KEYS & INSTRUCTION" />
+                    <span styleName="text">
+                      <FormattedMessage id="PrivateKeysModal110" defaultMessage="Click here" />
                     </span>
+                    <Button brand styleName="button" onClick={this.handleDownload}>
+                      <FormattedMessage id="PrivateKeysModal113" defaultMessage="Download keys" />
+                    </Button>
                   </div>
                   <div styleName="buttonSubContainer">
-                    <FormattedMessage id="PrivateKeysModal118" defaultMessage="Then click here">
-                      {message => <span styleName="text">{message}</span>}
-                    </FormattedMessage>
-                    <Button brand styleName="button"onClick={this.handleNext}>
-                      <FormattedMessage id="PrivateKeysModal121" defaultMessage="2. NEXT STEP" />
+                    <span styleName="text">
+                      <FormattedMessage id="PrivateKeysModal118" defaultMessage="Then click here" />
+                    </span>
+                    <Button brand styleName="button" onClick={this.handleNext} >
+                      <FormattedMessage id="PrivateKeysModal121" defaultMessage="Next step" />
                     </Button>
                   </div>
                 </div>
@@ -129,13 +130,13 @@ export default class PrivateKeysModal extends React.PureComponent {
               </Fragment>
             ) : (
               <Fragment>
-                <FormattedMessage
-                  id="PrivateKeysModal130"
-                  defaultMessage=
-                    "Please fill information below from instruction.txt file. We`d like to be sure that you saved the private keys before you can continue to the site."
-                >
-                  {message => <div styleName="title">{message}</div>}
-                </FormattedMessage>
+                <div styleName="title">
+                  <FormattedMessage
+                    id="PrivateKeysModal130"
+                    defaultMessage=
+                      "Please fill information below from instruction.txt file. We`d like to be sure that you saved the private keys before you can continue to the site."
+                  />
+                </div>
                 <Field2
                   label={ethData.currency}
                   privateKey={ethData.privateKey}
@@ -146,6 +147,11 @@ export default class PrivateKeysModal extends React.PureComponent {
                   privateKey={btcData.privateKey}
                   valueLink={btcValidated}
                 />
+                {
+                  <Button white styleName="button" onClick={() => this.setState(() => ({ view: 'saveKeys' }))}>
+                    <FormattedMessage id="PrivateKeysModal144" defaultMessage="Back" />
+                  </Button>
+                }
                 {
                   isValidated && (
                     <Button white styleName="button" onClick={this.handleKeysSubmit}>

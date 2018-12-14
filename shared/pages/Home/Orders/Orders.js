@@ -3,7 +3,6 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'redaction'
 import actions from 'redux/actions'
 import { withRouter } from 'react-router-dom'
-
 import { isMobile } from 'react-device-detect'
 
 import constants from 'helpers/constants'
@@ -19,7 +18,6 @@ import PageSeo from 'components/Seo/PageSeo'
 
 import Pair from './Pair'
 import Row from './Row/Row'
-import RowMobile from './RowMobile/RowMobile'
 import MyOrders from './MyOrders/MyOrders'
 import { FormattedMessage } from 'react-intl'
 
@@ -43,7 +41,7 @@ const filterOrders = (orders, filter) => orders
   currencies,
 }))
 @withRouter
-@cssModules(styles)
+@cssModules(styles, { allowMultiple: true })
 export default class Orders extends Component {
 
   state = {
@@ -100,7 +98,18 @@ export default class Orders extends Component {
     buyCurrency = buyCurrency.toUpperCase()
     sellCurrency = sellCurrency.toUpperCase()
 
-    const titles = [ 'OWNER', `AMOUNT`, `PRICE FOR 1 ${buyCurrency}`, `TOTAL`, 'START EXCHANGE' ]
+    const titles = [
+      <FormattedMessage id="orders101" defaultMessage="OWNER" />,
+      <FormattedMessage id="orders102" defaultMessage="AMOUNT" />,
+      <span>
+        <FormattedMessage id="orders103" defaultMessage="PRICE FOR 1 " />
+        {buyCurrency}
+      </span>,
+      <FormattedMessage id="orders105" defaultMessage="TOTAL" />,
+      <FormattedMessage id="orders106" defaultMessage="START EXCHANGE" />,
+    ]
+
+
     const { isOnline, myOrders, orderId, invalidPair, location, currencies } = this.props
 
     const buyCurrencyFullName = (currencies.find(c => c.name === buyCurrency) || {}).fullTitle
@@ -115,18 +124,24 @@ export default class Orders extends Component {
           defaultDescription={`Best exchange rate for ${buyCurrencyFullName} (${buyCurrency}) to ${sellCurrencyFullName} (${sellCurrency}).
                Swap.Online wallet provides instant exchange using Atomic Swap Protocol.`
           } />
-        <Title>{buyCurrency}/{sellCurrency} no limit exchange with 0 fee</Title>
+        <Title style={{ fontFamily: 'arial' }}>
+          {buyCurrency}/{sellCurrency}
+          <FormattedMessage id="orders138" defaultMessage="no limit exchange with 0 fee" />
+        </Title>
         { invalidPair &&
-          <FormattedMessage id="Orders117" defaultMessage="No such ticker. Redirecting to SWAP-BTC exchange..." >
-            {message => <p>{message}</p>}
-          </FormattedMessage>
+          <p>
+            <FormattedMessage id="Orders141" defaultMessage="No such ticker. Redirecting to SWAP-BTC exchange..." />
+          </p>
         }
-        <div styleName="buttonRow">
+        <div styleName={isMobile ? 'buttonRow buttonRowMobile' : 'buttonRow'}>
           <Button green styleName="button" disabled={myOrders.length === 0} onClick={() => this.setState(state => ({ isVisible: !state.isVisible }))}>
-            {isVisible ? 'Hide' : 'Show'} my Orders
+            {isVisible ?
+              <FormattedMessage id="orders1499" defaultMessage="Hide" />
+              :
+              <FormattedMessage id="Orders151" defaultMessage="my Orders" />}
           </Button>
           <Button gray styleName="button" onClick={this.createOffer}>
-            <FormattedMessage id="Orders128" defaultMessage="Create offer" />
+            <FormattedMessage id="orders128" defaultMessage="Create offer" />
           </Button>
         </div>
         {
@@ -138,9 +153,7 @@ export default class Orders extends Component {
           />
         }
         <h3 styleName="ordersHeading">
-          <FormattedMessage id="orders143" defaultMessage="BUY " />
-          {buyCurrency}
-          <FormattedMessage id="orders145" defaultMessage=" HERE" />
+          <FormattedMessage id="orders156" defaultMessage="BUY {buyCurrency} HERE" values={{ buyCurrency: {buyCurrency} }} />
         </h3>
         <p>
           <FormattedMessage id="orders148" defaultMessage=" orders of those who " />
@@ -155,13 +168,9 @@ export default class Orders extends Component {
           className={tableStyles.exchange}
           titles={titles}
           rows={sellOrders}
-          rowRender={(row, index) => (
-            isMobile &&  <RowMobile
-              key={index}
-              orderId={orderId}
-              row={row}
-            /> || <Row
-              key={index}
+          rowRender={(row) => (
+            <Row
+              key={row.id}
               orderId={orderId}
               row={row}
             />
@@ -186,13 +195,9 @@ export default class Orders extends Component {
           className={tableStyles.exchange}
           titles={titles}
           rows={buyOrders}
-          rowRender={(row, index) => (
-            isMobile &&  <RowMobile
-              key={index}
-              orderId={orderId}
-              row={row}
-            /> || <Row
-              key={index}
+          rowRender={(row) => (
+            <Row
+              key={row.id}
               orderId={orderId}
               row={row}
             />

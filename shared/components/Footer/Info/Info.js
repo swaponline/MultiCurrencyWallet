@@ -41,7 +41,7 @@ class Info extends React.Component {
       <div styleName="title">
         <span>
           <span styleName={isOnline ? 'connect' : 'disconnect'}>
-            {isOnline ? 'Connected ' : 'Loading or not available '}
+            {isOnline ? 'Connected ' : 'Connecting '}
           </span>
           to IPFS signal {serverAddress} / peers online: {onlineUsers}
         </span>

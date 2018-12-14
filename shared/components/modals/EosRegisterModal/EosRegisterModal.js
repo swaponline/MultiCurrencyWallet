@@ -15,6 +15,12 @@ import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage } from 'react-intl'
 
 
+const text = [
+  <FormattedMessage id="Eos53" defaultMessage="Enter your EOS account name " />,
+  <FormattedMessage id="Eos57" defaultMessage="Enter private key for active permission " />,
+  <FormattedMessage id="Eos61" defaultMessage="EOS Login " />,
+]
+
 @cssModules(styles)
 export default class EosRegisterModal extends React.Component {
 
@@ -50,25 +56,27 @@ export default class EosRegisterModal extends React.Component {
     const isDisabled = !accountName || !privateKey
 
     return (
-      <Modal name={name} title="EOS Login">
+      <Modal name={name} title={text[2]}>
         <FieldLabel inRow>
-          <FormattedMessage id="EosRegAccountModal54" defaultMessage="Account name" />
-          <Tooltip text="Enter your EOS account name" />
+          <FormattedMessage id="EosRegAccountModal54" defaultMessage="Account name " />
+          {' '}
+          <Tooltip text={text[0]} id="EoSR92" />
         </FieldLabel>
         <Input valueLink={linked.accountName} />
         <FieldLabel inRow>
-          <FormattedMessage id="EosRegAccountModal58" defaultMessage="Active private key" />
-          <Tooltip text="Enter private key for active permission" />
+          <FormattedMessage id="EosRegAccountModal58" defaultMessage="Active private key " />
+          {' '}
+          <Tooltip text={text[1]} id="EoSR69" />
         </FieldLabel>
         <Input valueLink={linked.privateKey} />
         { error && (
           <div styleName="error">
-            <FormattedMessage id="EosRegAccountModal63" defaultMessage="Sorry, error occured during activation" />
+            <FormattedMessage id="EosRegAccountModal63" defaultMessage="Sorry, error occurred during activation " />
           </div>
         )
         }
         <Button styleName="button" brand fullWidth disabled={isDisabled} onClick={this.handleSubmit}>
-          <FormattedMessage id="EosRegAccountModal70" defaultMessage="Login" />
+          <FormattedMessage id="EosRegAccountModal70" defaultMessage="Login " />
         </Button>
       </Modal>
     )

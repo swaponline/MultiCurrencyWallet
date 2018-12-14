@@ -20,6 +20,10 @@ const views = {
   approve: 'approve',
 }
 
+const title = [
+  <FormattedMessage id="Areyousure?" defaultMessage="Are you sure ?" />,
+]
+
 export default class SaveKeysModal extends React.Component {
 
     static propTypes = {
@@ -80,7 +84,7 @@ export default class SaveKeysModal extends React.Component {
                   createPortal(
                     <Confirm
                       rootClassName={styles.areYouSure}
-                      title="Are you sure ?"
+                      title={title}
                       isConfirm={() => this.handleConfirm()}
                       isReject={() => this.changeView(views.saveKeys)}
                       animation={view === views.confirm}

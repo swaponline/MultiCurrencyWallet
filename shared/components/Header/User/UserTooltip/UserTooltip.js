@@ -13,9 +13,11 @@ import CSSModules from 'react-css-modules'
 import ArrowRightSvg from './images/arrow-right.svg'
 
 import { TimerButton } from 'components/controls'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
+import { localisedUrl } from 'helpers/locale'
 
 
+@injectIntl
 @withRouter
 @connect({
   feeds: 'feeds.items',
@@ -48,12 +50,13 @@ export default class UserTooltip extends Component {
   }
 
   autoAcceptRequest = (orderId, participantPeer, link) => {
+    const { intl: { locale } } = this.props
     this.acceptRequest(orderId, participantPeer)
-    this.props.history.push(link)
+    this.props.history.push(localisedUrl(locale, link))
   }
 
   render() {
-    const { feeds, peer: mePeer } = this.props
+    const { feeds, peer: mePeer, intl: { locale } } = this.props
 
     return !!feeds.length && (
       <div styleName="column" >
@@ -67,9 +70,7 @@ export default class UserTooltip extends Component {
                 <div styleName="userTooltip" >
                   <div key={peer}>
                     <div styleName="title">
-                      <FormattedMessage id="userTooltip68" defaultMessage="User with" />
-                      <b>{reputation}</b>
-                      <FormattedMessage id="userTooltip72" defaultMessage="reputation wants to swap" />
+                      <FormattedMessage id="reputationMSG" defaultMessage={`User with {reputationRate} reputation wants to swap`} values={{ reputationRate: <b>{reputation}</b>, }} />
                     </div>
                     <div styleName="currency">
                       <span>{buyAmount.toFixed(5)} <span styleName="coin">{buyCurrency}</span></span>
@@ -78,17 +79,17 @@ export default class UserTooltip extends Component {
                     </div>
                   </div>
                   <span styleName="decline" onClick={() => this.declineRequest(id, peer)} />
-                  <Link to={`${links.swap}/${sellCurrency}-${buyCurrency}/${id}`}>
+                  <Link to={`${localisedUrl(locale, links.swap)}/${sellCurrency}-${buyCurrency}/${id}`}>
                     <div styleName="checked" onClick={() => this.acceptRequest(id, peer)} />
                   </Link>
-                  <TimerButton isButton={false} onClick={() => this.autoAcceptRequest(id, peer, `${links.swap}/${sellCurrency}-${buyCurrency}/${id}`)} />
+                  <TimerButton isButton={false} onClick={() => this.autoAcceptRequest(id, peer, `/${localisedUrl(locale, links.swap)}/${sellCurrency}-${buyCurrency}/${id}`)} />
                 </div>
               ))
             )
           })
         ) : (
           <div styleName="feed" >
-            <Link to={links.feed} >
+            <Link to={localisedUrl(locale, links.feed)}>
               <FormattedMessage id="QUESTION15" defaultMessage="Go to the feed page" />
             </Link>
           </div>

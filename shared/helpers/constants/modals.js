@@ -1,4 +1,5 @@
 export default {
+  Subscribe: 'SubscribeModal',
   Withdraw: 'WithdrawModal',
   Offer: 'OfferModal',
   PrivateKeys: 'PrivateKeysModal',
@@ -10,4 +11,5 @@ export default {
   ShowMoreCoins: 'ShowMoreCoins',
   EthChecker: 'EthChecker',
   ReceiveModal: 'ReceiveModal',
+  DownloadModal: 'DownloadModal',
 }

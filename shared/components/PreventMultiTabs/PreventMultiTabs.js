@@ -6,11 +6,11 @@ import { FormattedMessage } from 'react-intl'
 
 const PreventMultiTabs = () => (
   <WidthContainer>
-    <FormattedMessage id="PreventMultiTabs" defaultMessage="Such error, many tabs">
-      {message => <h1>{message}</h1>}
-    </FormattedMessage>
-    Swap.Online supports only one active tab.
-    Please reload this page to continue using this tab or close it.
+    <h1>
+      <FormattedMessage id="PreventMultiTabs" defaultMessage="Such error, many tabs" />
+    </h1>
+    <FormattedMessage id="PreventMultiTabs12" defaultMessage={`Swap.Online supports only one active tab.
+    Please reload this page to continue using this tab or close it`} />
   </WidthContainer>
 )
 

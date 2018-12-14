@@ -10,6 +10,10 @@ import { Button } from 'components/controls'
 import { FormattedMessage } from 'react-intl'
 
 
+const title = [
+  <FormattedMessage id="Receive" defaultMessage="Receive" />,
+]
+
 @cssModules(styles)
 export default class ReceiveModal extends React.Component {
 
@@ -36,11 +40,11 @@ export default class ReceiveModal extends React.Component {
     const { props: { name, data: { currency, address } }, state: { isAddressCopied } } = this
 
     return (
-      <Modal name={name} title="Receive">
+      <Modal name={name} title={title}>
         <div styleName="content" style={{ textAlign: "center" }}>
-          <FormattedMessage id="ReceiveModal" defaultMessage={`This is your address for receive ${currency}`}>
-            {message => <p style={{ fontSize: 25 }}>{message}</p>}
-          </FormattedMessage>
+          <p style={{ fontSize: 25 }}>
+            <FormattedMessage id="ReceiveModal" defaultMessage="This is your address for receive" />
+          </p>
           <CopyToClipboard
             text={address}
             onCopy={this.handleCopyAddress}
@@ -61,7 +65,11 @@ export default class ReceiveModal extends React.Component {
                 disabled={isAddressCopied}
                 fullWidth
               >
-                { isAddressCopied ? 'Address copied to clipboard' : 'Copy to clipboard' }
+                { isAddressCopied ?
+                  <FormattedMessage id="recieved65" defaultMessage="Address copied to clipboard" />
+                  :
+                  <FormattedMessage id="recieved67" defaultMessage="Copy to clipboard" />
+                }
               </Button>
             </p>
           </CopyToClipboard>

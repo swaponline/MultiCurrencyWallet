@@ -17,6 +17,7 @@ before_script:
 #- yarn add jest --save-dev
 #- yarn add react-test-renderer --save-dev
 #- yarn add ignore-styles --save-dev
+- yarn add lint-diff --save-dev
 - echo "_________YARN install___________"
 - yarn install
 - echo "__________YARN start____________"
@@ -27,7 +28,7 @@ script:
 #- yarn test:unit -- --coverage
 #- yarn test:snapshot -- --coverage
 - echo "____________LINT________________"
-# - yarn eslint
+- yarn validate $TRAVIS_COMMIT_RANGE
 - echo "________Build mainnet___________"
 - yarn build:mainnet
 - echo "________Build testnet___________"
