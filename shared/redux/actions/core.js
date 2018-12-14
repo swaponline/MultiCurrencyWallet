@@ -3,6 +3,7 @@ import actions from 'redux/actions'
 import { getState } from 'redux/core'
 import SwapApp from 'swap.app'
 import { constants } from 'helpers'
+import Pair from 'pages/Home/Orders/Pair'
 
 
 const getOrders = (orders) => {
@@ -32,6 +33,28 @@ const sendRequest = (orderId, callback) => {
   const order = SwapApp.services.orders.getByKey(orderId)
 
   order.sendRequest(callback)
+}
+
+const sendRequestForPartial = (orderId, newValues, callback) => {
+  const order = SwapApp.services.orders.getByKey(orderId)
+
+  order.sendRequestForPartial(newValues,
+    (newOrder, isAccepted) => {
+      console.error('newOrder', newOrder)
+      console.error('newOrder', isAccepted)
+
+      callback(newOrder, isAccepted)
+    },
+    // newOrder => true,
+    (oldOrder, newOrder) => {
+      const oldPrice = Pair.fromOrder(oldOrder).price
+      const newPrice = Pair.fromOrder(newOrder).price
+
+      console.log('prices', oldPrice.toString(), newPrice.toString())
+      // | new - old | / old < 5%
+      return newPrice.minus(oldPrice).abs().div(oldPrice).isLessThanOrEqualTo(0.05)
+    }
+  )
 }
 
 const createOrder = (data) => {
@@ -91,6 +114,7 @@ export default {
   getSwapHistory,
   updateCore,
   sendRequest,
+  sendRequestForPartial,
   acceptRequest,
   declineRequest,
   removeOrder,
