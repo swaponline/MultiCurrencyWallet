@@ -11,14 +11,7 @@ import { FormattedMessage } from 'react-intl'
 
 
 const handleSubscribe = () => {
-  const isLocalNet = process.env.LOCAL === 'local'
-  const isSupportedServiceWorker = 'serviceWorker' in navigator
-  const iOSSafari = /iP(ad|od|hone)/i.test(window.navigator.userAgent)
-                  && /WebKit/i.test(window.navigator.userAgent)
-                  && !(/(CriOS|FxiOS|OPiOS|mercury)/i.test(window.navigator.userAgent))
-  const isSafari = ('safari' in window)
-
-  if (!isLocalNet && isSupportedServiceWorker && !iOSSafari && !isSafari) {
+  if (actions.firebase.isSupported()) {
     actions.analytics.dataEvent('subscribe')
     actions.modals.open(constants.modals.Subscribe, {})
   } else {

@@ -42,9 +42,9 @@ export default class SubscribeModal extends React.Component {
 
     this.setState(() => ({ isSubmited: true }))
 
-    const result = await actions.pushNotification.registrationFirebase({
-      eth: ethAddress,
-      btc: btcAddress,
+    const result = await actions.firebase.subscribe({
+      ethAddress,
+      btcAddress,
       gaID: gaTracker !== undefined ? gaTracker.get('clientId') : 'None',
     })
 

@@ -4,20 +4,21 @@ import { connect } from 'redaction'
 import { constants } from 'helpers'
 import { isMobile } from 'react-device-detect'
 import { withRouter } from 'react-router'
+import actions from 'redux/actions'
 
+import { Link, Redirect } from 'react-router-dom'
+import { FormattedMessage, injectIntl } from 'react-intl'
+import { localisedUrl } from '../../helpers/locale'
+
+import CSSModules from 'react-css-modules'
+import styles from './Currency.scss'
 
 import Title from 'components/PageHeadline/Title/Title'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import Table from 'components/tables/Table/Table'
 
-import CSSModules from 'react-css-modules'
-import styles from './Currency.scss'
-
 import Row from './Row/Row'
-import actions from 'redux/actions'
-
-import { FormattedMessage } from 'react-intl'
 import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
 
 

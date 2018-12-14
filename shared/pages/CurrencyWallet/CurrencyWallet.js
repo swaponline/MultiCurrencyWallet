@@ -31,6 +31,7 @@ import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
   swapHistory,
 }))
 
+@injectIntl
 
 @withRouter
 @CSSModules(styles)
@@ -114,7 +115,8 @@ export default class CurrencyWallet extends Component {
   }
 
   render() {
-    let { swapHistory, txHistory, location, match:{ params: { fullName } } } = this.props
+
+    let { swapHistory, txHistory, location, match:{ params: { fullName } },  intl: { locale } } = this.props
     const {
       currency,
       address,
