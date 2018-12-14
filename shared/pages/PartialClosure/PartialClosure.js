@@ -162,33 +162,23 @@ export default class PartialClosure extends Component {
       return
     }
 
-    const order = {
-      buyCurrency: haveCurrency,
-      sellCurrency: getCurrency,
+    const newValues = {
       sellAmount: getAmount,
-      buyAmount: haveAmount,
-      destinationSellAddress: (this.customWalletAllowed()) ? customWallet : null,
     }
+    // destinationSellAddress: (this.customWalletAllowed()) ? customWallet : null,
 
-    console.log('sendRequest order', order)
+    console.log('sendRequest order', newValues)
 
     this.setState(() => ({ isFetching: true }))
 
-    actions.core.requestToPeer('request partial closure', peer, { order, orderId }, (orderId) => {
-      console.log('orderId', orderId)
-      // TODO change callback on boolean type
-      if (orderId) {
-        actions.core.sendRequest(orderId, (isAccept) => {
-          if (isAccept) {
-            this.setState(() => ({
-              redirect: true,
-              isFetching: false,
-              orderId,
-            }))
-          } else {
-            this.setDeclinedOffer()
-          }
-        })
+    actions.core.sendRequestForPartial(orderId, newValues, (newOrder, isAccepted) => {
+      console.log('sendRequest order', newOrder, isAccepted)
+      if (isAccepted) {
+        this.setState(() => ({
+          redirect: true,
+          isFetching: false,
+          orderId: newOrder.id,
+        }))
       } else {
         this.setDeclinedOffer()
       }
