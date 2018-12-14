@@ -38,7 +38,7 @@ const messages = defineMessages({
   history: {
     id: 'menu.history',
     description: 'Menu item "History"',
-    defaultMessage: 'History',
+    defaultMessage: 'My History',
   },
   aboutus: {
     id: 'menu.aboutus',
