@@ -31,15 +31,15 @@ const getTracker = () => {
 }
 
 const errorEvent = (eventAction) => {
-  if (window.ga) {
-    const tracker = window.ga.getAll()[0]
+  if (getTracker()) {
+    const tracker = getTracker()
     tracker.send({ hitType: 'event', eventCategory: 'fatalError', eventAction })
   }
 }
 
 const swapEvent = (eventAction, eventLabel) => {
-  if (window.ga) {
-    const tracker = window.ga.getAll()[0]
+  if (getTracker()) {
+    const tracker = getTracker()
     tracker.send({ hitType: 'event', eventCategory: 'Swap', eventAction, eventLabel })
   }
 
