@@ -11,7 +11,7 @@ const Tooltip = ({ text }) => (
     <span data-tip={text} styleName="tooltip">
       <FormattedMessage id="Tooltip11" defaultMessage="?" />
     </span>
-    <ReactTooltip effect="solid" type="light" multiline={true}/>
+    <ReactTooltip effect="solid" type="light" multiline />
   </Fragment>
 )
 
