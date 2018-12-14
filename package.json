@@ -174,6 +174,7 @@
     "rename-files": "0.0.2",
     "replace": "^1.0.0",
     "reverse": "^4.0.0",
+    "stellar-sdk": "^0.11.0",
     "styled-components": "^4.1.2"
   }
 }

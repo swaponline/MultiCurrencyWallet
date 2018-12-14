@@ -12,15 +12,15 @@ import { constants } from 'helpers'
 import cssModules from 'react-css-modules'
 import styles from './TelosRegisterModal.scss'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
 
-const text = [
-  <FormattedMessage id="TelosRegister46" defaultMessage="Enter TELOS account name " />,
-  <FormattedMessage id="TelosRegister52" defaultMessage="Enter your TELOS secret key" />,
-  <FormattedMessage id="TELOSLogin" defaultMessage="TELOS Login" />,
-]
-
+const title = defineMessages({
+  TelosRegisterTitle: {
+    id: 'TELOSLogin',
+    defaultMessage: 'TELOS Login',
+  },
+})
 @cssModules(styles)
 export default class TelosRegisterModal extends React.Component {
 
@@ -51,21 +51,25 @@ export default class TelosRegisterModal extends React.Component {
 
   render() {
     const { accountName, privateKey, error } = this.state
-    const { name } = this.props
+    const { name, intl } = this.props
 
     const linked = Link.all(this, 'accountName', 'privateKey')
     const isDisabled = !accountName || !privateKey
 
     return (
-      <Modal name={name} title={text[3]}>
+      <Modal name={name} title={intl.formatMessage(title.TelosRegisterTitle)}>
         <FieldLabel inRow>
           <FormattedMessage id="TelosRegister55" defaultMessage="Account name" />
-          <Tooltip text={text[0]} id="TelOSR92" />
+          <Tooltip id="TelOSR92" >
+            <FormattedMessage id="TelosRegister46" defaultMessage="Enter TELOS account name " />
+          </Tooltip>
         </FieldLabel>
         <Input valueLink={linked.accountName} />
         <FieldLabel inRow>
           <FormattedMessage id="TelosRegister59" defaultMessage="Private key" />
-          <Tooltip text={text[1]} id="TelOSR70" />
+          <Tooltip id="TelOSR70">
+            <FormattedMessage id="TelosRegister52" defaultMessage="Enter your TELOS secret key" />
+          </Tooltip>
         </FieldLabel>
         <Input valueLink={linked.privateKey} />
         { error && (

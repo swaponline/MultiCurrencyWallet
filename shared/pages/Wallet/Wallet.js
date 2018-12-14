@@ -24,14 +24,14 @@ import { FormattedMessage } from 'react-intl'
 @connect(
   ({
     core: { hiddenCoinsList },
-    user: { ethData, btcData, tokensData, eosData, telosData, nimData, usdtData, ltcData },
+    user: { ethData, btcData, tokensData, eosData, xlmData, telosData, nimData, usdtData, ltcData },
     currencies: { items: currencies },
   }) => ({
     tokens: Object.keys(tokensData).map(k => (tokensData[k].currency)),
-    items: [btcData, ethData, eosData, telosData, ltcData, usdtData /* nimData */ ].map((data) => (
+    items: [btcData, ethData, eosData, telosData, xlmData, ltcData, usdtData /* nimData */ ].map((data) => (
       data.currency
     )),
-    currencyBalance: [btcData, ethData, eosData, telosData, ltcData, usdtData /* nimData */ ].map((cur) => (
+    currencyBalance: [btcData, ethData, eosData, xlmData, telosData, ltcData, usdtData /* nimData */ ].map((cur) => (
       cur.balance
     )),
     currencies,

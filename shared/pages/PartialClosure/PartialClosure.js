@@ -26,6 +26,8 @@ import { localisedUrl } from 'helpers/locale'
 import config from 'app-config'
 import swapApp from 'swap.app'
 
+import constants from 'helpers/constants'
+
 
 const filterIsPartial = (orders) => orders
   .filter(order => order.isPartialClosure)
@@ -367,6 +369,13 @@ export default class PartialClosure extends Component {
     const { intl: { locale } } = this.props
     const { haveCurrency, getCurrency } = this.state
     this.props.history.push(localisedUrl(locale, `/${haveCurrency} - ${getCurrency}`))
+    const tradeTicker = `${haveCurrency}-${getCurrency}`
+
+    if (constants.tradeTicker.includes(tradeTicker.toUpperCase())) {
+      this.props.history.push(tradeTicker)
+    } else {
+      this.props.history.push(tradeTicker.split('-').reverse().join('-'))
+    }
   }
 
   setClearState = () => {
@@ -530,7 +539,9 @@ export default class PartialClosure extends Component {
                       <FormattedMessage id="PartialYourWalletAddress" defaultMessage="Your wallet address" />
                     </strong>
                     &nbsp;
-                    <Tooltip text="Your wallet address to where cryptocurrency will be sent after the swap" />
+                    <Tooltip id="PartialClosure">
+                      <FormattedMessage id="PartialClosure" defaultMessage="Your wallet address to where cryptocurrency will be sent after the swap" />
+                    </Tooltip >
                   </FieldLabel>
                   <div styleName="walletInput">
                     <Input required valueLink={linked.customWallet} pattern="0-9a-zA-Z" placeholder="Enter the address of ETH wallet" />

@@ -122,6 +122,7 @@ export default class EthToLtc extends Component {
         }
         {
           flow.step === 1 && (
+            /* eslint-disable */
             <Fragment>
               <div>
                 <FormattedMessage
@@ -129,6 +130,7 @@ export default class EthToLtc extends Component {
                   defaultMessage=
                     "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation."
                 />
+                /* eslint-enable */
               </div>
               <TimerButton timeLeft={5} brand onClick={this.signSwap}>
                 <FormattedMessage id="EthToLtc128" defaultMessage="Sign" />

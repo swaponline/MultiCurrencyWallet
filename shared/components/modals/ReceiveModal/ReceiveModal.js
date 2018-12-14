@@ -7,13 +7,17 @@ import styles from './ReceiveModal.scss'
 import QR from 'components/QR/QR'
 import { Modal } from 'components/modal'
 import { Button } from 'components/controls'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 
 
-const title = [
-  <FormattedMessage id="Receive" defaultMessage="Receive" />,
-]
+const title = defineMessages({
+  Receive: {
+    id: 'Receive',
+    defaultMessage: 'Receive',
+  },
+})
 
+@injectIntl
 @cssModules(styles)
 export default class ReceiveModal extends React.Component {
 
@@ -37,10 +41,10 @@ export default class ReceiveModal extends React.Component {
   }
 
   render() {
-    const { props: { name, data: { currency, address } }, state: { isAddressCopied } } = this
+    const { props: { name, intl, data: { currency, address } }, state: { isAddressCopied } } = this
 
     return (
-      <Modal name={name} title={title}>
+      <Modal name={name} title={intl.formatMessage(title.Receive)}>
         <div styleName="content" style={{ textAlign: "center" }}>
           <p style={{ fontSize: 25 }}>
             <FormattedMessage id="ReceiveModal" defaultMessage="This is your address for receive" />

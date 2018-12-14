@@ -97,6 +97,7 @@ export default class EthTokenToUsdt extends Component {
         }
         {
           flow.step === 1 && (
+            /* eslint-disable */
             <Fragment>
               <div>
                 <FormattedMessage
@@ -105,6 +106,7 @@ export default class EthTokenToUsdt extends Component {
                     "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation."
                 />
               </div>
+
               {
                 !flow.isSignFetching && !flow.isMeSigned && (
                   <Fragment>
@@ -146,6 +148,7 @@ export default class EthTokenToUsdt extends Component {
                 )
               }
             </Fragment>
+            /* eslint-enable */
           )
         }
 
@@ -361,6 +364,7 @@ export default class EthTokenToUsdt extends Component {
               }
               {
                 flow.usdtSwapWithdrawTransactionHash && (
+                  /* eslint-disable */
                   <div>
                     <FormattedMessage id="EthTokenToUsdt352" defaultMessage="USDT withdrawal transaction: " />
                     <strong>
@@ -372,9 +376,12 @@ export default class EthTokenToUsdt extends Component {
                         {flow.usdtSwapWithdrawTransactionHash}
                       </a>
                     </strong>
-                    <FormattedMessage id="EthTokenToUsdt375" defaultMessage={`Please note that USDT withdrawal may take a while to mine and to propagate the network.
-                    Due to Omni Protocol properties, the transaction may show up at the OmniExplorer in up to 20 minutes.`} />
+                    <FormattedMessage
+                      id="EthTokenToUsdt375"
+                      defaultMessage="Please note that USDT withdrawal may take a while to mine and to propagate the network. Due to Omni Protocol properties, the transaction may show up at the OmniExplorer in up to 20 minutes."
+                    />
                   </div>
+                  /* eslint-enable */
                 )
               }
               {

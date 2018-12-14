@@ -70,7 +70,11 @@ export default class UserTooltip extends Component {
                 <div styleName="userTooltip" >
                   <div key={peer}>
                     <div styleName="title">
-                      <FormattedMessage id="reputationMSG" defaultMessage={`User with {reputationRate} reputation wants to swap`} values={{ reputationRate: <b>{reputation}</b>, }} />
+                      <FormattedMessage
+                        id="reputationMSG"
+                        defaultMessage={`User with {reputationRate} reputation wants to swap`}
+                        values={{ reputationRate: <b>{reputation}</b> }}
+                      />
                     </div>
                     <div styleName="currency">
                       <span>{buyAmount.toFixed(5)} <span styleName="coin">{buyCurrency}</span></span>

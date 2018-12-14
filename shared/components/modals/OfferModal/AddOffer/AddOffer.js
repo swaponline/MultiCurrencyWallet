@@ -34,16 +34,6 @@ const minAmount = {
   jot: 1,
 }
 
-const text = [
-  <div style={{ textAlign: 'center' }} >
-    <FormattedMessage id="addOfferPartialTooltip"
-      defaultMessage={`You will receive exchange requests or the {p} amount less than the total amount you want {p} sell. For example you want to sell 1 BTC,
-        other users can send you exchange requests {p}for 0.1, 0.5 BTC`}
-      values={{ p: <br/> }}/>
-  </div>,
-  <FormattedMessage id="add408" defaultMessage="To change the exchange rate " />,
-]
-
 @connect(
   ({
     currencies,
@@ -454,13 +444,23 @@ export default class AddOffer extends Component {
         <div>
           <Toggle checked={manualRate} onChange={this.handleManualRate} />
           <FormattedMessage id="AddOffer418" defaultMessage="Custom exchange rate" />
-          <Tooltip text={text[1]} id="add264" />
+          <Tooltip id="add264">
+            <FormattedMessage id="add408" defaultMessage="To change the exchange rate " />
+          </Tooltip>
         </div>
         <div>
           <Toggle checked={isPartialClosure} onChange={() => this.setState((state) => ({ isPartialClosure: !state.isPartialClosure }))} />
           <FormattedMessage id="AddOffer423" defaultMessage="Enabled to partial closure" />
-          <Tooltip text={text[0]} id="add547" />
-
+          <Tooltip id="add547">
+            <div style={{ textAlign: 'center' }} >
+              <FormattedMessage
+                id="addOfferPartialTooltip"
+                defaultMessage={`You will receive exchange requests or the {p} amount less than the total amount you want {p} sell. For example you want to sell 1 BTC,
+                  other users can send you exchange requests {p}for 0.1, 0.5 BTC`}
+                values={{ p: <br /> }}
+              />
+            </div>
+          </Tooltip>
         </div>
         <Button styleName="button" fullWidth brand disabled={isDisabled} onClick={this.handleNext}>
           <FormattedMessage id="AddOffer396" defaultMessage="Next" />

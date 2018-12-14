@@ -27,13 +27,14 @@ import { relocalisedUrl, localisedUrl } from 'helpers/locale'
 @withRouter
 @connect(
   ({
-    user: { ethData, btcData, /* bchData, */ tokensData, eosData, telosData, nimData, usdtData, ltcData },
+    user: { ethData, btcData, /* bchData, */ tokensData, eosData, xlmData, telosData, nimData, usdtData, ltcData },
     currencies: { items: currencies },
   }, { currency }) => ({
     currencies,
     item: [
       btcData,
       ethData,
+      xlmData,
       eosData,
       telosData,
       /* bchData, */
@@ -63,6 +64,7 @@ export default class Row extends Component {
       isBalanceEmpty: balance === 0,
     }
   }
+
   constructor(props) {
     super(props)
     const { currency, currencies } = this.props

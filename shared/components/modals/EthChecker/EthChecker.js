@@ -10,24 +10,26 @@ import styles from './EthChecker.scss'
 
 import { Modal } from 'components/modal'
 import { Button } from 'components/controls'
-import { FormattedMessage, injectIntl } from 'react-intl'
+import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 
 
-const title = [
-  <FormattedMessage id="Approve" defaultMessage="Approve token" />,
-]
-
+const title = defineMessages({
+  Approve: {
+    id: 'Approve',
+    defaultMessage: 'Approve token!',
+  },
+})
 
 @injectIntl
 @CSSModules(styles)
 export default class EthChecker extends Component {
   render() {
 
-    const { name, intl: { locale }  } = this.props
+    const { name, intl: { locale }, intl  } = this.props
 
     return (
-      <Modal name={name} title={title}>
+      <Modal name={name} title={intl.formatMessage(title.Approve)}>
         <div styleName="content">
           <p>
             <FormattedMessage id="EthChecker19" defaultMessage="This token works on Ethereum blockchain. To swap this token you must have at least 0.02 ETH on your balance" />

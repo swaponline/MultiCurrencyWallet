@@ -134,6 +134,7 @@ export default class EthToBtc extends Component {
         }
         {
           flow.step === 1 && (
+            /* eslint-disable */
             <Fragment>
               <div>
                 <FormattedMessage
@@ -141,6 +142,7 @@ export default class EthToBtc extends Component {
                   defaultMessage=
                     "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation." />
               </div>
+              /* eslint-enable */
               <TimerButton timeLeft={5} brand onClick={this.signSwap}>
                 <FormattedMessage id="EthToBtc128" defaultMessage="Sign" />
               </TimerButton>
@@ -378,8 +380,7 @@ export default class EthToBtc extends Component {
                   <h3 style={headingStyle}>
                     <FormattedMessage
                       id="EthToBtc357"
-                      defaultMessage={`7. BTC Owner successfully took money from ETH Contract and
-                        left Secret Key. Requesting withdrawal from BTC Script. Please wait`}
+                      defaultMessage="7. BTC Owner successfully took money from ETH Contract and left Secret Key. Requesting withdrawal from BTC Script. Please wait"
                     />
                   </h3>
                 )

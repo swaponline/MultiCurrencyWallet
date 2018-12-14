@@ -3995,31 +3995,19 @@
   },
   {
     "id": "Withdrow172",
-    "message": "Please note: Miners fee is ",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "Please note: Miners fee is "
   },
   {
     "id": "Withdrow174",
-    "message": "Your balance must exceed this sum to perform transaction. ",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "Your balance must exceed this sum to perform transaction. "
   },
   {
     "id": "Withdrow178",
-    "message": "Please note: Miners fee is ",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "Please note: Miners fee is "
   },
   {
     "id": "Withdrow180",
-    "message": "Your balance must exceed this sum to perform transaction. ",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "Your balance must exceed this sum to perform transaction. "
   },
   {
     "id": "Currency110",
@@ -4260,10 +4248,7 @@
   },
   {
     "id": "Areyousure?",
-    "message": "Are you sure ?",
-    "files": [
-      "shared/components/modals/SaveKeysModal/SaveKeysModal.js"
-    ]
+    "message": "Are you sure ?"
   },
   {
     "id": "ShMoreCoins",
@@ -4288,10 +4273,7 @@
   },
   {
     "id": "Withdraw183",
-    "message": "Withdraw",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "Withdraw"
   },
   {
     "id": "Row158",
@@ -4721,10 +4703,7 @@
   },
   {
     "id": "CurrencyWallet167",
-    "message": "Your address: {address}{br}Your {fullName} balance: {currency}",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "Your address: {address}{br}Your {fullName} balance: {currency}"
   },
   {
     "id": "orders189",
@@ -4760,6 +4739,90 @@
     "message": "You can not send this asset, because you have a zero balance.",
     "files": [
       "shared/components/controls/CurrencyButton/CurrencyButton.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal122",
+    "message": "Continuing you agree with our",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal123",
+    "message": "privacy policy",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "Areyousure",
+    "message": "Are you sure ?",
+    "files": [
+      "shared/components/modals/SaveKeysModal/SaveKeysModal.js"
+    ]
+  },
+  {
+    "id": "PartialClosure",
+    "message": "Your wallet address to where cryptocurrency will be sent after the swap",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "CurrencyWallet168",
+    "message": "Your address: {address}{br}Your {fullName} balance: {balance} {currency}",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "currencyWallet27",
+    "message": "Coin",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "currencyWallet28",
+    "message": "Status",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "currencyWallet29",
+    "message": "Statement",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "currencyWallet30",
+    "message": "Amount",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "Withdraw18333",
+    "message": "Withdraw {data$}",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Withdrow183",
+    "message": "Please note: Miners fee is {values} ETH {br}Your balance must exceed this sum to perform transaction.",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Withdrow192",
+    "message": "Please note: Miners fee is {minAmount} {data}.  {br}Your balance must exceed this sum to perform transaction.",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
   }
 ]

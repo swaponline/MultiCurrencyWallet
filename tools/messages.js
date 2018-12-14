@@ -1,15 +1,16 @@
 import {
-  transform
+  transform,
 } from 'babel-core'
 import {
   readFile,
   writeFile,
-  glob
+  glob,
 } from './libs/fs'
+
 
 const locales = {
   en: 'English',
-  ru: 'Russian'
+  ru: 'Russian',
 }
 
 const GLOB_PATTERN = 'shared/**/*.{js,ts,tsx}'
@@ -25,7 +26,7 @@ async function writeMessages(fileName, msgs) {
 
 /**
  * merge messages to source files
- **/
+ * */
 async function mergeToJson(locale, toBuild) {
   const fileName = `shared/localisation/${locale}.json`
   const oldMessages = {}
@@ -79,7 +80,7 @@ async function mergeToJson(locale, toBuild) {
 
 /**
  * Call everytime before updating file!
- **/
+ * */
 function mergeMessages() {
   messages = {}
   Object.keys(fileToMessages).forEach(fileName => {
@@ -105,7 +106,7 @@ function mergeMessages() {
         description: newMsg.description || message.description,
         defaultMessage: newMsg.defaultMessage || message.defaultMessage,
         message: newMsg.message || message.message || '',
-        files: message.files ? [...message.files, fileName].sort() : [fileName]
+        files: message.files ? [...message.files, fileName].sort() : [fileName],
       }
     })
   })
@@ -140,12 +141,12 @@ async function extractMessages() {
       const source = await readFile(fileName)
       const posixName = posixPath(fileName)
       const result = transform(source, {
-          babelrc: true,
-          plugins: [
-            'react-intl',
-          ],
-          filename: fileName
-        })
+        babelrc: true,
+        plugins: [
+          'react-intl',
+        ],
+        filename: fileName,
+      })
         .metadata['react-intl']
       if (result.messages && result.messages.length) {
         fileToMessages[posixName] = result.messages.sort(compareMessages)

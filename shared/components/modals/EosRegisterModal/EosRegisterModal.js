@@ -12,15 +12,18 @@ import { constants } from 'helpers'
 import cssModules from 'react-css-modules'
 import styles from './EosRegisterModal.scss'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
 
-const text = [
-  <FormattedMessage id="Eos53" defaultMessage="Enter your EOS account name " />,
-  <FormattedMessage id="Eos57" defaultMessage="Enter private key for active permission " />,
-  <FormattedMessage id="Eos61" defaultMessage="EOS Login " />,
-]
 
+const title = defineMessages({
+  EosRegisterTitle: {
+    id: 'Eos61',
+    defaultMessage: 'EOS Login',
+  },
+})
+
+@injectIntl
 @cssModules(styles)
 export default class EosRegisterModal extends React.Component {
 
@@ -50,23 +53,27 @@ export default class EosRegisterModal extends React.Component {
 
   render() {
     const { accountName, privateKey, error } = this.state
-    const { name } = this.props
+    const { name, intl } = this.props
 
     const linked = Link.all(this, 'accountName', 'privateKey')
     const isDisabled = !accountName || !privateKey
 
     return (
-      <Modal name={name} title={text[2]}>
+      <Modal name={name} title={intl.formatMessage(title.EosRegisterTitle)}>
         <FieldLabel inRow>
           <FormattedMessage id="EosRegAccountModal54" defaultMessage="Account name " />
           {' '}
-          <Tooltip text={text[0]} id="EoSR92" />
+          <Tooltip id="EoSR92">
+            <FormattedMessage id="Eos53" defaultMessage="Enter your EOS account name " />,
+          </Tooltip>
         </FieldLabel>
         <Input valueLink={linked.accountName} />
         <FieldLabel inRow>
           <FormattedMessage id="EosRegAccountModal58" defaultMessage="Active private key " />
           {' '}
-          <Tooltip text={text[1]} id="EoSR69" />
+          <Tooltip id="EoSR69">
+            <FormattedMessage id="Eos57" defaultMessage="Enter private key for active permission " />,
+          </Tooltip>
         </FieldLabel>
         <Input valueLink={linked.privateKey} />
         { error && (

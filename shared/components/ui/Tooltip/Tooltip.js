@@ -6,13 +6,13 @@ import styles from './Tooltip.scss'
 import { FormattedMessage } from 'react-intl'
 
 
-const Tooltip = ({ text, id }) => (
+const Tooltip = ({ children, id }) => (
   <Fragment>
     <span data-tip data-for={id} styleName="tooltip">
       <FormattedMessage id="Tooltip11" defaultMessage="?" />
     </span>
-    <ReactTooltip id={id} effect="solid" type="light" >
-      <span>{text}</span>
+    <ReactTooltip id={id} effect="solid" type="light" multiline >
+      {children}
     </ReactTooltip>
   </Fragment>
 )

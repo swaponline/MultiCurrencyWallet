@@ -3995,31 +3995,19 @@
   },
   {
     "id": "Withdrow172",
-    "message": "Обратите внимание: комиссия майнеров ",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "Обратите внимание: комиссия майнеров "
   },
   {
     "id": "Withdrow174",
-    "message": "Для выполнения транзакции баланс должен превышать эту сумму. ",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "Для выполнения транзакции баланс должен превышать эту сумму. "
   },
   {
     "id": "Withdrow178",
-    "message": "Обратите внимание: комиссия майнеров ",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "Обратите внимание: комиссия майнеров "
   },
   {
     "id": "Withdrow180",
-    "message": "Ваш баланс должен превышать эту сумму для выполнения транзакции. ",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "Ваш баланс должен превышать эту сумму для выполнения транзакции. "
   },
   {
     "id": "Currency110",
@@ -4260,10 +4248,7 @@
   },
   {
     "id": "Areyousure?",
-    "message": "Вы уверены ?",
-    "files": [
-      "shared/components/modals/SaveKeysModal/SaveKeysModal.js"
-    ]
+    "message": "Вы уверены ?"
   },
   {
     "id": "ShMoreCoins",
@@ -4288,10 +4273,7 @@
   },
   {
     "id": "Withdraw183",
-    "message": "Перевод ",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "Перевод "
   },
   {
     "id": "Row158",
@@ -4717,10 +4699,7 @@
   },
   {
     "id": "CurrencyWallet167",
-    "message": "Ваш адрес: {address}{br}Ваш {fullName} баланс: {currency}",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "Ваш адрес: {address}{br}Ваш {fullName} баланс: {currency}"
   },
   {
     "id": "orders189",
@@ -4748,6 +4727,90 @@
     "message": "Вы не можете отправить данную валюту, недостаточно средств.",
     "files": [
       "shared/components/controls/CurrencyButton/CurrencyButton.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal122",
+    "message": "Продолжив Вы соглашаетесь",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal123",
+    "message": "политика конфиденциальности",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "Areyousure",
+    "message": "Вы уверены ?",
+    "files": [
+      "shared/components/modals/SaveKeysModal/SaveKeysModal.js"
+    ]
+  },
+  {
+    "id": "PartialClosure",
+    "message": "Адрес Вашего кошелька, на который после обмена будет отправлена ​​криптовалюта",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "CurrencyWallet168",
+    "message": "Ваш адрес: {address}{br}Ваш {fullName} баланс: {balance} {currency}",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "currencyWallet27",
+    "message": "Валюта",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "currencyWallet28",
+    "message": "Статус",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "currencyWallet29",
+    "message": "Статус",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "currencyWallet30",
+    "message": "Сумма",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "Withdraw18333",
+    "message": "Отправка {data$}",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Withdrow183",
+    "message": "Обратите внимание: комиссия майнеров {values} ETH {br}Ваш баланс должен превышать эту сумму для совершения транзакции.",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Withdrow192",
+    "message": "Обратите внимание: комиссия майнеров {data}.  {br}Ваш баланс должен превышать эту сумму для совершения транзакции.",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
   }
 ]

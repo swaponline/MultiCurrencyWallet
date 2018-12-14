@@ -11,15 +11,19 @@ import Modal from 'components/modal/Modal/Modal'
 import Button from 'components/controls/Button/Button'
 import CopyToClipboard from 'react-copy-to-clipboard'
 
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
 import { withRouter } from 'react-router'
 
 
-const title = [
-  <FormattedMessage id="down97" defaultMessage="We don`t store your private keys and will not be able to restore them!" />,
-]
+const title = defineMessages({
+  downloadModal: {
+    id: 'down97',
+    defaultMessage: 'We don`t store your private keys and will not be able to restore them!',
+  },
+})
 
+@injectIntl
 @withRouter
 @connect(
   ({
@@ -63,7 +67,7 @@ export default class DownloadModal extends React.Component {
 
   render() {
     const { isTextCopied, Ru } = this.state
-    const { items, name, match:{ params:{ locale } } } = this.props
+    const { items, name, match:{ params:{ locale } }, intl } = this.props
 
     const textToCopy = actions.user.getText()
 
@@ -93,7 +97,7 @@ export default class DownloadModal extends React.Component {
     )
 
     return (
-      <Modal name={name} title={title}>
+      <Modal name={name} title={intl.formatMessage(title.downloadModal)}>
         <div styleName="subTitle">
           <FormattedMessage  id="down57" defaultMessage="It seems like you're using an IPhone or an IPad. Just copy this keys and paste into notepad textarea." />
         </div>

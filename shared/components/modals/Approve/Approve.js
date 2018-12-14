@@ -12,13 +12,17 @@ import styles from './Approve.scss'
 import { Modal } from 'components/modal'
 import { Button } from 'components/controls'
 import { FieldLabel, Input } from 'components/forms'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
 
-const title = [
-  <FormattedMessage id="Approve66" defaultMessage="Approve token" />,
-]
+const title = defineMessages({
+  approveTitle: {
+    id: 'Approve66',
+    defaultMessage: 'Approve token',
+  },
+})
 
+@injectIntl
 @cssModules(styles)
 export default class Offer extends React.Component {
 
@@ -58,7 +62,7 @@ export default class Offer extends React.Component {
   }
 
   render() {
-    const { name } = this.props
+    const { name, intl } = this.props
     const { amount, isSubmitted } = this.state
     const linked = Link.all(this, 'amount')
     const isDisabled = !amount
@@ -68,7 +72,7 @@ export default class Offer extends React.Component {
     }
 
     return (
-      <Modal name={name} title={title}>
+      <Modal name={name} title={intl.formatMessage(title.approveTitle)}>
         <div styleName="content">
           <p>
             <FormattedMessage

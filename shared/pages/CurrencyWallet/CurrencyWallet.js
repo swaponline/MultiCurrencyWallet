@@ -17,10 +17,18 @@ import { Button } from 'components/controls'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import PageSeo from 'components/Seo/PageSeo'
 import { getSeoPage } from 'helpers/seo'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 import ReactTooltip from 'react-tooltip'
 import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
+import { localisedUrl } from 'helpers/locale'
 
+
+const titles = [
+  <FormattedMessage id="currencyWallet27"  defaultMessage="Coin" />,
+  <FormattedMessage id="currencyWallet28"  defaultMessage="Status" />,
+  <FormattedMessage id="currencyWallet29"  defaultMessage="Statement" />,
+  <FormattedMessage id="currencyWallet30"  defaultMessage="Amount" />,
+]
 
 @connect(({ core, user,  history: { transactions, swapHistory },
   user: { ethData, btcData, ltcData, tokensData, eosData, nimData, usdtData, telosData } }) => ({
@@ -32,7 +40,6 @@ import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
 }))
 
 @injectIntl
-
 @withRouter
 @CSSModules(styles)
 export default class CurrencyWallet extends Component {
@@ -107,7 +114,8 @@ export default class CurrencyWallet extends Component {
     })
   }
   handleGoTrade = (currency) => {
-    this.props.history.push(`/${currency.toLowerCase()}`)
+    const { intl: { locale } } = this.props
+    this.props.history.push(localisedUrl(locale, `/${currency.toLowerCase()}`))
   }
 
   handleEosBuyAccount = async () => {
@@ -137,6 +145,8 @@ export default class CurrencyWallet extends Component {
     const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true"
 
     return (
+      /* eslint-disable */
+
       <div className="root">
         <PageSeo
           location={location}
@@ -145,28 +155,32 @@ export default class CurrencyWallet extends Component {
           defaultDescription={
             `Atomic Swap Wallet allows you to manage and securely exchange ${fullName} (${currency}) with 0% fees. Based on Multi-Sig and Atomic Swap technologies.`
           } />
-          <PageHeadline styleName="title" subTitle={!!seoPage
+        <PageHeadline
+          styleName="title"
+          subTitle={!!seoPage
             ? seoPage.h1
             : <FormattedMessage
-                id="CurrencyWallet141"
-                defaultMessage={`Swap.Online - {fullName}({currency}) Web Wallet with Atomic Swap.`}
-                values={{
-                  fullName:`${fullName}`,
-                  currency: `${currency}`
-                }}
-              />}
-          />
-          <h3 styleName="subtitle">
-            <FormattedMessage id="CurrencyWallet167" defaultMessage={`Your address: {address}{br}Your {fullName} balance: {balance} {currency}`}
+              id="CurrencyWallet141"
+              defaultMessage={`Swap.Online - {fullName}({currency}) Web Wallet with Atomic Swap.`}
               values={{
-                address:  <span>{address}</span>,
-                br: <br />,
-                fullName: `${fullName}`,
-                balance: `${balance}`,
-                currency: `${currency.toUpperCase()}`,
+                fullName:`${fullName}`,
+                currency: `${currency}`,
               }}
-            />
-          </h3>
+            />}
+        />
+        <h3 styleName="subtitle">
+          <FormattedMessage
+            id="CurrencyWallet168"
+            defaultMessage={`Your address: {address}{br}Your {fullName} balance: {balance} {currency}`}
+            values={{
+              address:  <span>{address}</span>,
+              br: <br />,
+              fullName: `${fullName}`,
+              balance: `${balance}`,
+              currency: `${currency.toUpperCase()}`,
+            }}
+          />
+        </h3>
         {currency === 'EOS' && !eosAccountActivated && (<Button onClick={this.handleEosBuyAccount} gray>
           <FormattedMessage id="CurrencyWallet105" defaultMessage="Activate account" />
         </Button>)}
@@ -175,8 +189,7 @@ export default class CurrencyWallet extends Component {
             onClick={this.handleReceive}
             dataTooltip={{
               id: `deposit${currency}`,
-              text: 'Deposit funds to this address of currency wallet',
-              isActive: 'isBalanceEmpty',
+              deposit: 'true',
             }}
           >
             <FormattedMessage id="Row313" defaultMessage="Deposit" />
@@ -186,7 +199,6 @@ export default class CurrencyWallet extends Component {
             disable={isBalanceEmpty}
             dataTooltip={{
               id: `send${currency}`,
-              text: `You can not send this asset, because you have a zero balance.`,
               isActive: isBalanceEmpty,
             }}
           >
@@ -200,8 +212,9 @@ export default class CurrencyWallet extends Component {
         <h2 style={{ marginTop: '20px' }} >
           <FormattedMessage id="CurrencyWallet110" defaultMessage="History your transactions" />
         </h2>
-        {txHistory && (<Table titles={[ 'Coin', 'Status', 'Statement', 'Amount' ]} rows={txHistory}styleName="table" rowRender={(row) => (<Row key={row.hash} {...row} />)} />)}
+        {txHistory && (<Table titles={titles} rows={txHistory}styleName="table" rowRender={(row) => (<Row key={row.hash} {...row} />)} />)}
       </div>
     )
+ /* eslint-enable */
   }
 }

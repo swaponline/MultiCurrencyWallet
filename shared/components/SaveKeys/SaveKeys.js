@@ -26,7 +26,7 @@ export default class SaveKeys extends Component {
             id="SaveKeys235"
             defaultMessage={`These are your private keys.{br} Download the keys by clicking on the button
               {br} or take a screenshot of this page, then confirm it and click here.`}
-            values={{ br: <br/> }} />
+            values={{ br: <br /> }} />
           <span styleName="linked" onClick={isChange}>
             <FormattedMessage id="SaveKeys26" defaultMessage="I saved the keys in a safe place" />
             <br />

@@ -14,7 +14,7 @@ import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import ReactTooltip from 'react-tooltip'
 
 
@@ -29,6 +29,7 @@ const minAmount = {
   jot: 1,
 }
 
+@injectIntl
 @connect(
   ({
     currencies,
@@ -138,19 +139,6 @@ export default class WithdrawModal extends React.Component {
       const { address, amount, balance, isShipped, minus, ethBalance, tokenFee } = this.state
       const { name, data, tokenItems } = this.props
 
-      const text = [
-        <div style={{ textAlign: 'center' }}>
-          <FormattedMessage id="WTH275" defaultMessage="Make sure the wallet you {br }are sending the funds to supports" values={{ br: <br/> }}/>
-          {data.currency.toUpperCase()}
-        </div>,
-      ]
-
-      const title = [
-        <FormattedMessage id="Withdraw183" defaultMessage="Withdraw" />,
-        ' ',
-        `${data.currency.toUpperCase()}`,
-      ]
-
       const linked = Link.all(this, 'address', 'amount')
       const isDisabled =
         !address || !amount || isShipped || Number(amount) < minAmount[data.currency.toLowerCase()]
@@ -182,30 +170,44 @@ export default class WithdrawModal extends React.Component {
         })
       }
 
+      const title = [
+        <FormattedMessage id="Withdraw18333" defaultMessage={`Withdraw {data}`} values={{ data: `${data.currency.toUpperCase()}` }} />,
+      ]
+
       return (
         <Modal name={name} title={title}>
           { tokenFee &&
             (
               <p style={{ fontSize: '16px', textAlign: 'center', color: 'red' }}>
-                <FormattedMessage id="Withdrow172" defaultMessage="Please note: Miners fee is " />{minAmount.eth} ETH
-                <br />
-                <FormattedMessage id="Withdrow174" defaultMessage="Your balance must exceed this sum to perform transaction. " />
+                <FormattedMessage
+                  id="Withdrow183"
+                  defaultMessage={`Please note: Miners fee is {values} ETH {br}Your balance must exceed this sum to perform transaction.`}
+                  values={{ minAmount: `${minAmount.eth}`, br: <br /> }} />
               </p>
             )
           }
           {!tokenFee &&
             (
               <p style={{ fontSize: '16px', textAlign: 'center' }}>
-                <FormattedMessage id="Withdrow178" defaultMessage="Please note: Miners fee is " />{minAmount[data.currency.toLowerCase()]} {data.currency.toUpperCase()}.
-                <br />
-                <FormattedMessage id="Withdrow180" defaultMessage="Your balance must exceed this sum to perform transaction. " />
+                <FormattedMessage
+                  id="Withdrow192"
+                  defaultMessage="Please note: Miners fee is {minAmount} {data}.  {br}Your balance must exceed this sum to perform transaction. "
+                  values={{ minAmount: `${minAmount[data.currency.toLowerCase()]}`, br: <br />, data: `${data.currency.toUpperCase()}` }} />
               </p>
             )
           }
           <FieldLabel inRow>
             <FormattedMessage id="Withdrow1194" defaultMessage="Address " />
             {' '}
-            <Tooltip text={text} id="WtH203" />
+            <Tooltip id="WtH203" >
+              <div style={{ textAlign: 'center' }}>
+                <FormattedMessage
+                  id="WTH275"
+                  defaultMessage="Make sure the wallet you {br }are sending the funds to supports {currency}"
+                  values={{ br: <br />, currency: `${data.currency.toUpperCase()}` }}
+                />
+              </div>
+            </Tooltip>
           </FieldLabel>
           <Input valueLink={linked.address} focusOnInit pattern="0-9a-zA-Z" placeholder={`Enter ${data.currency.toUpperCase()} address to transfer the funds`} />
           <p style={{ marginTop: '20px' }}>

@@ -12,18 +12,21 @@ import styles from './PrivateKeysModal.scss'
 import Field2 from './Field2/Field2'
 import Modal from 'components/modal/Modal/Modal'
 import Button from 'components/controls/Button/Button'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 
 
 const views = {
   saveKeys: 'saveKeys',
   checkKeys: 'checkKeys',
 }
+const title = defineMessages({
+  PrivateKeysModal: {
+    id: 'ImCAUTIONport',
+    defaultMessage: 'CAUTION!',
+  },
+})
 
-const title = [
-  <FormattedMessage id="ImCAUTIONport" defaultMessage="CAUTION!" />,
-]
-
+@injectIntl
 @connect({
   ethData: 'user.ethData',
   btcData: 'user.btcData',
@@ -101,7 +104,7 @@ export default class PrivateKeysModal extends React.PureComponent {
 
   render() {
     const { view } = this.state
-    const { name, ethData, btcData } = this.props
+    const { name, ethData, btcData, intl } = this.props
 
     const ethValidated = Link.state(this, 'ethValidated')
     const btcValidated = Link.state(this, 'btcValidated')
@@ -113,7 +116,7 @@ export default class PrivateKeysModal extends React.PureComponent {
         name={name}
         showCloseButton={false}
         showLogo={false}
-        title={title}
+        title={intl.formatMessage(title.PrivateKeysModal)}
       >
         <div styleName="content">
           {
@@ -154,12 +157,13 @@ export default class PrivateKeysModal extends React.PureComponent {
                 {/* <Button brand styleName="button" onClick={this.handleSendByEmail}>Send by email</Button> */}
               </Fragment>
             ) : (
+              /* eslint-disable */
               <Fragment>
                 <div styleName="title">
                   <FormattedMessage
                     id="PrivateKeysModal130"
                     defaultMessage=
-                      "Please fill information below from instruction.txt file. We`d like to be sure that you saved the private keys before you can continue to the site."
+                      "Please fill information below from instruction.txt file. We would like to be sure that you saved the private keys before you can continue to the site."
                   />
                 </div>
                 <Field2
@@ -185,6 +189,7 @@ export default class PrivateKeysModal extends React.PureComponent {
                   )
                 }
               </Fragment>
+              /* eslint-enable */
             )
           }
         </div>

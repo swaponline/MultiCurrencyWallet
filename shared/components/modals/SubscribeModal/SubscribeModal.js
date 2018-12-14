@@ -9,12 +9,15 @@ import styles from './SubscribeModal.scss'
 
 import Modal from 'components/modal/Modal/Modal'
 import Button from 'components/controls/Button/Button'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 
 
-const title = [
-  <FormattedMessage id="Subscribe55" defaultMessage="Subscribe" />,
-]
+const title = defineMessages({
+  subscribeModal: {
+    id: 'Subscribe55',
+    defaultMessage: 'Subscribe',
+  },
+})
 
 @connect(
   ({
@@ -24,6 +27,7 @@ const title = [
     btcAddress: btcData.address,
   })
 )
+@injectIntl
 @cssModules(styles)
 export default class SubscribeModal extends React.Component {
 
@@ -53,10 +57,10 @@ export default class SubscribeModal extends React.Component {
 
   render() {
     const { isSubscribed, isSubmited } = this.state
-    const { name } = this.props
+    const { name, intl } = this.props
 
     return (
-      <Modal name={name} title={title}>
+      <Modal name={name} title={intl.formatMessage(title.subscribeModal)}>
         {
           isSubscribed ? (
             <p styleName="thanks">

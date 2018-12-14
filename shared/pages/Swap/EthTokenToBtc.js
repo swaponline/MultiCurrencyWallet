@@ -90,14 +90,15 @@ export default class EthTokenToBtc extends Component {
           )
         }
         {
+          /* eslint-disable */
           flow.step === 1 && (
             <Fragment>
               <div>
                 <FormattedMessage
                   id="EthTokenBtc94"
-                  defaultMessage={`Confirmation of the transaction is necessary for crediting the reputation.
-                    If a user does not bring the deal to the end he gets a negative reputation.`}
+                  defaultMessage="Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation."
                 />
+                /* eslint-disable */
               </div>
               {
                 !flow.isSignFetching && !flow.isMeSigned && (

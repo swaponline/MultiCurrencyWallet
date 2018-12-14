@@ -157,12 +157,12 @@ export default class Orders extends Component {
         </h3>
         <p>
           <FormattedMessage
-          id="orders159"
-          defaultMessage= {`orders of those who {sell} {buyCurrency} to you`}
-          values={{
-            sell: <i><FormattedMessage id="orders150" defaultMessage="sell" /></i>,
-            buyCurrency: `${buyCurrency}`,
-           }} />
+            id="orders159"
+            defaultMessage={`orders of those who {sell} {buyCurrency} to you`}
+            values={{
+              sell: <i><FormattedMessage id="orders150" defaultMessage="sell" /></i>,
+              buyCurrency: `${buyCurrency}`,
+            }} />
         </p>
         <Table
           id="table_exchange"
@@ -184,11 +184,11 @@ export default class Orders extends Component {
         <p>
           <FormattedMessage
             id="orders186"
-            defaultMessage= {`orders of those who {buy} {buyCurrency} from you`}
+            defaultMessage={`orders of those who {buy} {buyCurrency} from you`}
             values={{
               buy: <i><FormattedMessage id="orders189" defaultMessage="buy" /></i>,
               buyCurrency: `${buyCurrency}`,
-             }} />
+            }} />
         </p>
         <Table
           id="table_exchange"
