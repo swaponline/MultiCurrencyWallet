@@ -24,6 +24,8 @@ import { FormattedMessage } from 'react-intl'
 import config from 'app-config'
 import swapApp from 'swap.app'
 
+import constants from 'helpers/constants'
+
 
 const filterIsPartial = (orders) => orders
   .filter(order => order.isPartialClosure)
@@ -353,7 +355,13 @@ export default class PartialClosure extends Component {
 
   handlePush = () => {
     const { haveCurrency, getCurrency } = this.state
-    this.props.history.push(`${haveCurrency}-${getCurrency}`)
+    const tradeTicker = `${haveCurrency}-${getCurrency}`
+
+    if (constants.tradeTicker.includes(tradeTicker.toUpperCase())) {
+      this.props.history.push(tradeTicker)
+    } else {
+      this.props.history.push(tradeTicker.split('-').reverse().join('-'))
+    }
   }
 
   setClearState = () => {
