@@ -39,7 +39,7 @@ export default class UserAvatar extends Component {
     const { feeds, soundClick, changeView, history, getInfoBySwapId } = this.props
     const path = history.location.pathname.split('/')[1]
 
-    if (path === 'swap') {
+    if (path === 'swaps') {
       const swapId = history.location.pathname.split('/')[3]
       const swapInfo = getInfoBySwapId(swapId)
 
