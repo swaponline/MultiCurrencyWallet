@@ -473,7 +473,9 @@ export default class PartialClosure extends Component {
               (isSearching || (isNonOffers && maxAmount === 0)) && (
                 <span>
                   <FormattedMessage id="PartialPriceSearch" defaultMessage="Searching orders..." />
-                  <InlineLoader />
+                  <div styleName="loaderHolder">
+                    <InlineLoader />
+                  </div>
                 </span>
               )
             }
@@ -504,7 +506,9 @@ export default class PartialClosure extends Component {
               isFetching && (
                 <span>
                   {` Wait participant: `}
-                  <InlineLoader />
+                  <div styleName="loaderHolder">
+                    <InlineLoader />
+                  </div>
                 </span>
               )
             }
