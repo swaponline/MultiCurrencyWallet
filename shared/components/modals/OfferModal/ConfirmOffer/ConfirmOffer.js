@@ -53,7 +53,7 @@ export default class ConfirmOffer extends Component {
     }
 
     actions.analytics.dataEvent('orderbook-addoffer-click-confirm-button')
-    actions.core.createOrder(data)
+    actions.core.createOrder(data, isPartial)
     actions.core.updateCore()
   }
 

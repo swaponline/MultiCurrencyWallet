@@ -35,7 +35,7 @@ export default class UserTooltip extends Component {
 
             return (
               mePeer === ownerPeer &&
-              request.map(({ peer, reputation }) => (
+              request.map(({ participant: { peer }, reputation }) => (
                 <div styleName="userTooltip" >
                   <div key={peer}>
                     <div styleName="title">
