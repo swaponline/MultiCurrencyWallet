@@ -45,10 +45,10 @@ export default class UserAvatar extends Component {
 
       if (!swapInfo.isFinished) {
         feeds.forEach(offer => {
-          const { id, owner } = offer
+          const { id, peer } = offer
 
           if (id === swapId) {
-            this.props.declineRequest(id, owner.peer)
+            this.props.declineRequest(id, peer)
             changeView()
             return
           }
