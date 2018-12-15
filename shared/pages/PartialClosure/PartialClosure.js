@@ -231,9 +231,9 @@ export default class PartialClosure extends Component {
       isSearching: true,
     }))
 
-    console.log('filteredOrders', filteredOrders)
+    console.log('filteredOrders', filteredOrders.length)
 
-    const sortedOrder = filteredOrders
+    const sortedOrders = filteredOrders
       .sort((a, b) => Number(a.buyAmount.dividedBy(a.sellAmount)) - Number(b.buyAmount.dividedBy(b.sellAmount)))
       .map((item, index) => {
 
@@ -250,15 +250,15 @@ export default class PartialClosure extends Component {
         }
       })
 
-    console.log('sortedOrder', sortedOrder)
+    console.log('sortedOrder', sortedOrders.length)
 
     this.getUsdBalance()
 
-    const search = await this.setOrderOnState(sortedOrder)
+    const didFound = await this.setOrderOnState(sortedOrders)
 
-    console.log('search', search)
+    console.log('didFound', didFound)
 
-    if (search) {
+    if (didFound) {
       this.setState(() => ({
         isSearching: false,
       }))
