@@ -5,6 +5,7 @@ import SwapApp from 'swap.app'
 import { constants } from 'helpers'
 import Pair from 'pages/Home/Orders/Pair'
 
+const debug = (...args) => console.log(...args)
 
 const getOrders = (orders) => {
   reducers.core.getOrders({ orders })
@@ -57,8 +58,62 @@ const sendRequestForPartial = (orderId, newValues, callback) => {
   )
 }
 
-const createOrder = (data) => {
-  return SwapApp.services.orders.create(data)
+const createOrder = (data, isPartial = false) => {
+  if (!isPartial) {
+    return SwapApp.services.orders.create(data)
+  }
+
+  const order = SwapApp.services.orders.create(data)
+
+  const { price } = Pair.fromOrder(order)
+
+  order.setRequestHandlerForPartial('sellAmount', ({ sellAmount }, oldOrder) => {
+    const oldPair = Pair.fromOrder(oldOrder)
+
+    debug('oldPair', oldPair)
+
+    // if BID, then
+    // price == buyAmount / sellAmount
+
+    const buyAmount = oldPair.isBid()
+      ? sellAmount.div(price)
+      : sellAmount.times(price)
+
+    debug('newBuyAmount', buyAmount)
+
+    const newOrder = ({ sellAmount, buyAmount })
+
+    debug('newOrder', newOrder)
+
+    return newOrder
+  })
+
+  order.setRequestHandlerForPartial('buyAmount', ({ buyAmount }, oldOrder) => {
+    const oldPair = Pair.fromOrder(oldOrder)
+
+    debug('oldPair', oldPair)
+    // BUY [main] = SELL [base] CURRENCY
+    // price = [main]/[base] = [buy]/[sell]
+
+    // BUY 10 ETH = SELL 1 BTC
+    // price = 10 = buyAmount / sellAmount
+    // newSellAmount = buyAmount / price
+
+    const sellAmount = oldPair.isBid()
+      ? buyAmount.times(price)
+      : buyAmount.div(price)
+
+
+    debug('newSellAmount', sellAmount)
+
+    const newOrder = ({ sellAmount, buyAmount })
+
+    debug('newOrder', newOrder)
+
+    return newOrder
+  })
+
+  return order
 }
 
 const requestToPeer = (event, peer, data, callback) => {
