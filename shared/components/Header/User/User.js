@@ -38,8 +38,6 @@ export default class User extends React.Component {
 
   state = {
     view: true,
-    redirect: false,
-    link: '',
   }
 
   handleChangeView = () => {
