@@ -4,17 +4,6 @@
   "description": "swap.online",
   "private": true,
   "main": "./bin/server",
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.js": [
-      "eslint --fix --cache ./shared --ext js",
-      "git add"
-    ]
-  },
   "scripts": {
     "test": "cypress open",
     "eslint": "eslint --fix --cache ./shared --ext js",
