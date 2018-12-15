@@ -4,7 +4,7 @@
 
 <!-- You have to tick all the boxes -->
 
-- [ ] I have read the [CONTRIBUTING](https://github.com/swaponline/swap.react/wiki/Contribution) guide
+- [ ] I have read the [CONTRIBUTING](https://github.com/swaponline/swap.react/wiki/CONTRIBUTING) guide
 - [ ] branch rebased on `develop`
 - [ ] styleguide check `npm run validate`
 - [ ] good naming
