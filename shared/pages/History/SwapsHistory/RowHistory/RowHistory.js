@@ -20,7 +20,11 @@ const RowHistory = ({ row }) => {
     return null
   }
 
-  let { buyAmount, buyCurrency, sellAmount, btcScriptValues, ltcScriptValues, usdtScriptValues, isRefunded, isMy, sellCurrency, isFinished, id, scriptValues } = row
+  let {
+    buyAmount, buyCurrency, sellAmount, btcScriptCreatingTransactionHash,
+    btcScriptValues, ltcScriptValues, usdtScriptValues, isRefunded, isMy, sellCurrency,
+    isFinished, id, scriptValues,
+  } = row
 
   const values  = btcScriptValues || ltcScriptValues || usdtScriptValues || scriptValues
   const data = Date.now() / 1000
@@ -67,7 +71,7 @@ const RowHistory = ({ row }) => {
       </td>
       <td>
         {
-          values && !isRefunded && !isFinished ? (
+          values && !isRefunded && !isFinished && btcScriptCreatingTransactionHash ? (
             <Timer
               lockTime={values.lockTime * 1000}
               enabledButton={() => {}}
