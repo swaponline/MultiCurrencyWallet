@@ -2,12 +2,15 @@ import reducers from 'redux/core/reducers'
 import actions from 'redux/actions'
 import { getState } from 'redux/core'
 import SwapApp from 'swap.app'
+import Swap from 'swap.swap'
 import { constants } from 'helpers'
 
 
 const getOrders = (orders) => {
   reducers.core.getOrders({ orders })
 }
+
+const getSwapById = (id) => new Swap(id)
 
 const setFilter = (filter) => {
   reducers.core.setFilter({ filter })
@@ -85,6 +88,7 @@ const markCoinAsVisible = (coin) => {
 }
 
 export default {
+  getSwapById,
   getOrders,
   setFilter,
   createOrder,
