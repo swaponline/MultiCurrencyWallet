@@ -116,9 +116,9 @@ export default class Row extends Component {
         sellAmount,
         isRequested,
         isProcessing,
-        owner: {  peer: ownerPeer }
+        owner: {  peer: ownerPeer },
       },
-      peer
+      peer,
     } = this.props
 
     const pair = Pair.fromOrder(this.props.row)
@@ -148,21 +148,24 @@ export default class Row extends Component {
         </td>
         <td>
           <span style={{ color: 'gray' }}>
-            <FormattedMessage id="Row122" defaultMessage="at price" />
+            <FormattedMessage
+              id="Row1511"
+              defaultMessage={`at price {price}`}
+              values={{
+                price: `${price.toFixed(5)} ${base}`,
+              }} />
           </span>
-          {' '}
-          {
-            `${price.toFixed(5)} ${base}`
-          }
         </td>
         <td>
           <span style={{ color: 'gray' }}>
-            <FormattedMessage id="Row131" defaultMessage="for" />
+            <FormattedMessage
+              id="Row159"
+              defaultMessage={`for {total}`}
+              values={{
+                total: `${total.toFixed(5)} ${base}`,
+              }}
+            />
           </span>
-          {' '}
-          {
-            `${total.toFixed(5)} ${base}`
-          }
         </td>
         <td>
           {
@@ -182,17 +185,17 @@ export default class Row extends Component {
                     </Fragment>
                   ) : (
                     isProcessing ? (
-                      <FormattedMessage id="Row157" defaultMessage="This order is in execution">
-                        {message => <span>{message}</span>}
-                      </FormattedMessage>
+                      <span>
+                        <FormattedMessage id="Row157" defaultMessage="This order is in execution" />
+                      </span>
                     ) : (
                       isFetching ? (
                         <Fragment>
                           <InlineLoader />
                           <br />
-                          <FormattedMessage id="Row165" defaultMessage="Please wait while we confirm your request">
-                            {message => <span>{message}</span>}
-                          </FormattedMessage>
+                          <span>
+                            <FormattedMessage id="Row165" defaultMessage="Please wait while we confirm your request" />
+                          </span>
                         </Fragment>
                       ) : (
                         <RequestButton
@@ -200,11 +203,11 @@ export default class Row extends Component {
                           onClick={() => this.sendRequest(id, isMy ? sellCurrency : buyCurrency)}
                           data={{ type, amount, main, total, base }}
                         >
-                          {type === PAIR_TYPES.BID ? 'SELL' : 'BUY'}
+                          {type === PAIR_TYPES.BID ? <FormattedMessage id="Row2061" defaultMessage="SELL" /> : <FormattedMessage id="Row206" defaultMessage="BUY" />}
                           {' '}
                           {amount.toFixed(4)}{' '}{main}
                           <br />
-                          FOR
+                          <FormattedMessage id="Row210" defaultMessage="FOR" />
                           {' '}
                           {total.toFixed(4)}{' '}{base}
                         </RequestButton>
@@ -232,9 +235,9 @@ export default class Row extends Component {
         sellAmount,
         isRequested,
         isProcessing,
-        owner: {  peer: ownerPeer }
+        owner: {  peer: ownerPeer },
       },
-      peer
+      peer,
     } = this.props
 
     const pair = Pair.fromOrder(this.props.row)

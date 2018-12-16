@@ -20,6 +20,7 @@ import { localisedUrl } from 'helpers/locale'
 @CSSModules(styles, { allowMultiple: true })
 export default class RowHistory extends Component {
 
+
   static propTypes = {
     row: PropTypes.object,
   }

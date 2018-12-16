@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import actions from 'redux/actions'
 import { connect } from 'redaction'
-import { constants } from 'helpers'
+import { constants, links } from 'helpers'
 import config from 'app-config'
 import { isMobile } from 'react-device-detect'
 
@@ -18,10 +18,12 @@ import BtnTooltip from 'components/controls/WithdrawButton/BtnTooltip'
 import LinkAccount from '../LinkAccount/LinkAcount'
 import { withRouter } from 'react-router'
 import ReactTooltip from 'react-tooltip'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
+import { relocalisedUrl, localisedUrl } from 'helpers/locale'
 
 
+@injectIntl
 @withRouter
 @connect(
   ({
@@ -71,13 +73,13 @@ export default class Row extends Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener("resize", this.handleSliceAddress);
+    window.removeEventListener('resize', this.handleSliceAddress)
   }
 
   componentDidMount() {
     const { hiddenCoinsList } = this.props
 
-    window.addEventListener("resize", this.handleSliceAddress);
+    window.addEventListener('resize', this.handleSliceAddress)
 
     Object.keys(config.erc20)
       .forEach(name => {
@@ -217,7 +219,8 @@ export default class Row extends Component {
   }
 
   handleGoTrade = (currency) => {
-    this.props.history.push(`/${currency.toLowerCase()}`)
+    const { intl: { locale } } = this.props
+    this.props.history.push(localisedUrl(locale, `/${currency.toLowerCase()}`))
   }
 
   handleMarkCoinAsHidden = (coin) => {
@@ -243,6 +246,7 @@ export default class Row extends Component {
         unconfirmedBalance,
         contractAddress,
       },
+      intl: { locale },
     } = this.props
 
     const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true"
@@ -258,12 +262,12 @@ export default class Row extends Component {
         style={isTouch && this.props.index !== this.props.selectId ?  { background: '#f5f5f5' } : { background: '#fff' }}
       >
         <td>
-          <Link to={`/${fullName}-wallet`} title={`Online ${fullName} wallet`}>
+          <Link to={`/${locale}/${fullName}-wallet`} title={`Online ${fullName} wallet`}>
             <Coin name={currency} />
           </Link>
         </td>
         <td>
-          <Link to={`/${fullName}-wallet`} title={`Online ${fullName} wallet`}>
+          <Link to={`/${locale}/${fullName}-wallet`} title={`Online ${fullName} wallet`}>
             {fullName}
           </Link>
         </td>
@@ -326,7 +330,7 @@ export default class Row extends Component {
                       <Fragment>
                         <br />
                         <span styleName="notActiveLink">
-                          <FormattedMessage id="Row235" defaultMessage="not activated" />
+                          <FormattedMessage id="Row268" defaultMessage="not activated" />
                         </span>
                       </Fragment>
                     )
@@ -335,7 +339,7 @@ export default class Row extends Component {
                       <Fragment>
                         <br />
                         <span styleName="notActiveLink">
-                          <FormattedMessage id="Row235" defaultMessage="not activated" />
+                          <FormattedMessage id="Row277" defaultMessage="not activated" />
                         </span>
                       </Fragment>
                     )
@@ -350,7 +354,7 @@ export default class Row extends Component {
               }
               <ReactTooltip id="Use" type="light" effect="solid">
                 <span>
-                  <FormattedMessage id="Row268" defaultMessage="Login with your existing eos account" />
+                  <FormattedMessage id="Row346" defaultMessage="Login with your existing eos account" />
                 </span>
               </ReactTooltip>
               { isAddressCopied &&
@@ -362,7 +366,7 @@ export default class Row extends Component {
                 <div styleName="actButton">
                   {currency === 'EOS' && !eosAccountActivated &&
                     <button styleName="button buttonActivate" onClick={this.handleEosBuyAccount} data-tip data-for="Activate">
-                      <FormattedMessage id="Row293" defaultMessage="Activate" />
+                      <FormattedMessage id="Row358" defaultMessage="Activate" />
                     </button>
                   }
                 </div>
@@ -381,7 +385,7 @@ export default class Row extends Component {
                 </div>
                 <ReactTooltip id="Use" type="light" effect="solid">
                   <span>
-                    <FormattedMessage id="Row268" defaultMessage="Login with your existing eos account" />
+                    <FormattedMessage id="Row377" defaultMessage="Login with your existing eos account" />
                   </span>
                 </ReactTooltip>
               </div>
@@ -394,19 +398,20 @@ export default class Row extends Component {
               onClick={this.handleReceive}
               dataTooltip={{
                 id: `deposit${currency}`,
-                text: 'Deposit funds to this address of currency wallet',
-                isActive: 'true',
+                deposit: true,
               }}
               wallet="true">
               <FormattedMessage id="Row313" defaultMessage="Deposit" />
             </CurrencyButton>
-            <BtnTooltip onClick={this.handleWithdraw} disable={isBalanceEmpty} id={currency} text="Send" >
+            <BtnTooltip onClick={this.handleWithdraw} disable={isBalanceEmpty} id={`row${currency}`}>
               <i className="fas fa-arrow-alt-circle-right" />
+              <FormattedMessage id="Row328" defaultMessage="Send" />
             </BtnTooltip>
             {
               tradeAllowed && (
-                <BtnTooltip onClick={() => this.handleGoTrade(currency)} styleName={isBalanceEmpty && 'disableWth'} text="Exchange" >
+                <BtnTooltip onClick={() => this.handleGoTrade(currency)} styleName={isBalanceEmpty && 'disableWth'}>
                   <i className="fas fa-exchange-alt" />
+                  <FormattedMessage id="Row334" defaultMessage="Exchange" />
                 </BtnTooltip>
               )
             }

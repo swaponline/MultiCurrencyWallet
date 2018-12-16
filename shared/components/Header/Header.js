@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
 
 import links from 'helpers/links'
+import SwitchLang from 'shared/components/SwitchLang/SwitchLang'
 import { constants } from 'helpers'
 import config from 'app-config'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
@@ -18,8 +19,12 @@ import User from './User/User'
 import SubscribeButton from './User/SubscribeButton/SubscribeButton'
 import NavMobile from './NavMobile/NavMobile'
 
-import Logo from 'components/Logo/Logo'
+import LogoTooltip from 'components/Logo/LogoTooltip'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
+
+import Logo from 'components/Logo/Logo'
+import { relocalisedUrl } from 'helpers/locale'
+import { localisedUrl } from '../../helpers/locale'
 
 
 let lastScrollTop = 0
@@ -143,8 +148,9 @@ export default class Header extends Component {
   }
 
   render() {
+
     const { sticky, menuItems, isTourOpen, isShowingMore, path } = this.state
-    const { intl: { locale }, history } = this.props
+    const { intl: { locale }, history, pathname } = this.props
 
     const accentColor = '#510ed8'
 
@@ -160,8 +166,11 @@ export default class Header extends Component {
     return (
       <div styleName={sticky ? 'header header-fixed' : 'header'}>
         <WidthContainer styleName="container">
-          <Logo withLink />
+          <LogoTooltip withLink />
           <Nav menu={menuItems} />
+          <SwitchLang styleName="buttonLan" href={relocalisedUrl(locale)}>
+            {locale.toUpperCase() === 'EN' ? 'RU' : 'EN'}
+          </SwitchLang>
           <Logo withLink mobile />
           <User openTour={this.openTour} path={path} />
           <Tour
