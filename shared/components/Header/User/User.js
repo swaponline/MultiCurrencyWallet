@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Redirect } from 'react-router-dom'
 import { withRouter } from 'react-router'
 import actions from 'redux/actions'
 import { connect } from 'redaction'
