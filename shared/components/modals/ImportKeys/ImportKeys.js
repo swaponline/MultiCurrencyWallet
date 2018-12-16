@@ -147,7 +147,7 @@ export default class ImportKeys extends Component {
     }
 
     if (isSubmittedXlm) {
-      linked.btcKey.check((value) => value !== '', 'Please enter XLM private key')
+      linked.xlmKey.check((value) => value !== '', 'Please enter XLM private key')
     }
 
     return (

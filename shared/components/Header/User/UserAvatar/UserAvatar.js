@@ -44,7 +44,6 @@ export default class UserAvatar extends Component {
       const swapInfo = getInfoBySwapId(swapId)
 
       if (!swapInfo.isFinished) {
-        soundClick = () => {}
         feeds.forEach(offer => {
           const { id, peer } = offer
 
