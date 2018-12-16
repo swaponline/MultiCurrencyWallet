@@ -17,6 +17,8 @@ import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import ReactTooltip from 'react-tooltip'
 
+import { isCoinAddress } from 'swap.app/util/typeforce'
+
 
 const minAmount = {
   eth: 0.001,
@@ -135,13 +137,23 @@ export default class WithdrawModal extends React.Component {
       )
     }
 
+    addressIsCorrect() {
+      const { data } = this.props
+      const { address } = this.state
+
+      return isCoinAddress[data.currency.toUpperCase()](address)
+    }
+
     render() {
       const { address, amount, balance, isShipped, minus, ethBalance, tokenFee } = this.state
       const { name, data, tokenItems } = this.props
 
       const linked = Link.all(this, 'address', 'amount')
+
+
       const isDisabled =
         !address || !amount || isShipped || Number(amount) < minAmount[data.currency.toLowerCase()]
+        || !this.addressIsCorrect()
         || Number(amount) + minAmount[data.currency.toLowerCase()] > balance
         || this.isEthOrERC20()
 
@@ -210,6 +222,13 @@ export default class WithdrawModal extends React.Component {
             </Tooltip>
           </FieldLabel>
           <Input valueLink={linked.address} focusOnInit pattern="0-9a-zA-Z" placeholder={`Enter ${data.currency.toUpperCase()} address to transfer the funds`} />
+          {address && !this.addressIsCorrect() && (
+            <div styleName="rednote">
+              <FormattedMessage
+                id="WithdrawIncorectAddress"
+                defaultMessage="Your address not correct" />
+            </div>
+          )}
           <p style={{ marginTop: '20px' }}>
             <FormattedMessage id="Withdrow113" defaultMessage="Your balance: " />
             {Number(balance).toFixed(5)}
