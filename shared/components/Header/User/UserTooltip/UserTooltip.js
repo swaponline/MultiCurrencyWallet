@@ -20,7 +20,6 @@ import { localisedUrl } from 'helpers/locale'
   feeds: 'feeds.items',
   peer: 'ipfs.peer',
 })
-
 @CSSModules(styles)
 export default class UserTooltip extends Component {
 
@@ -59,8 +58,8 @@ export default class UserTooltip extends Component {
                     </div>
                   </div>
                   <span styleName="decline" onClick={() => this.props.declineRequest(id, peer)} />
-                  <div styleName="checked" onClick={() => this.props.acceptRequest(id, peer, `/${localisedUrl(locale, links.swap)}/${sellCurrency}-${buyCurrency}/${id}`)} />
-                  <TimerButton isButton={false} onClick={() => this.acceptRequest(id, peer, `/${localisedUrl(locale, links.swap)}/${sellCurrency}-${buyCurrency}/${id}`)} />
+                  <div styleName="checked" onClick={() => this.props.acceptRequest(id, peer, `${links.swap}/${sellCurrency}-${buyCurrency}/${id}`)} />
+                  <TimerButton isButton={false} onClick={() => this.props.acceptRequest(id, peer, `${links.swap}/${sellCurrency}-${buyCurrency}/${id}`)} />
                 </div>
               ))
             )

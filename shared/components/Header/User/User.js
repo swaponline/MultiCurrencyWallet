@@ -8,6 +8,7 @@ import { connect } from 'redaction'
 import styles from './User.scss'
 import CSSModules from 'react-css-modules'
 import Sound from 'helpers/Sound/Sound.mp4'
+import { localisedUrl } from 'helpers/locale'
 
 import Question from './Question/Question'
 import UserAvatar from './UserAvatar/UserAvatar'
@@ -15,8 +16,10 @@ import UserTooltip from './UserTooltip/UserTooltip'
 import SubscribeButton from './SubscribeButton/SubscribeButton'
 
 import Avatar from 'components/Avatar/Avatar'
+import { injectIntl } from 'react-intl'
 
 
+@injectIntl
 @withRouter
 @connect({
   feeds: 'feeds.items',
@@ -61,7 +64,7 @@ export default class User extends React.Component {
   }
 
   acceptRequest = async (orderId, participantPeer, link) => {
-    const { toggle, history } = this.props
+    const { toggle, history, intl: { locale } } = this.props
 
     actions.core.acceptRequest(orderId, participantPeer)
     actions.core.updateCore()
