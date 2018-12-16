@@ -265,7 +265,7 @@ export default class BtcToEth extends Component {
                             <FormattedMessage id="BtcToEth233" defaultMessage="How refund your money ?" />
                           </a>
                           <FormattedMessage id="BtcToEth248" defaultMessage="Refund hex transaction: " />
-                          <code> {flow.refundTxHex}</code>
+                          <code> {flow.refundTxHex} </code>
                         </div>
                       )
                     }

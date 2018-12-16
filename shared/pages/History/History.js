@@ -65,7 +65,7 @@ export default class History extends Component {
   )
 
   render() {
-    const { items, swapHistory, formatMessage } = this.props
+    const { items, swapHistory, intl } = this.props
     const titles = [
       <FormattedMessage id="Coin61" defaultMessage="Coin" />,
       <FormattedMessage id="Status61" defaultMessage="Status" />,
@@ -75,7 +75,7 @@ export default class History extends Component {
 
     return (
       <section>
-        <PageHeadline subTitle={formatMessage(subTitle.subTitleHistory)} />
+        <PageHeadline subTitle={intl.formatMessage(subTitle.subTitleHistory)} />
         { swapHistory.length > 0 && <SwapsHistory orders={swapHistory.filter(item => item.step >= 4)} /> }
         <h3 data-tip data-for="transactions" style={{ width:'210px' }}>
           <FormattedMessage id="history68" defaultMessage="All transactions" />
