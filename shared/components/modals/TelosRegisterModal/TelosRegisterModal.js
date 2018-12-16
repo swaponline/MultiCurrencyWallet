@@ -12,9 +12,15 @@ import { constants } from 'helpers'
 import cssModules from 'react-css-modules'
 import styles from './TelosRegisterModal.scss'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
 
+const title = defineMessages({
+  TelosRegisterTitle: {
+    id: 'TELOSLogin',
+    defaultMessage: 'TELOS Login',
+  },
+})
 @cssModules(styles)
 export default class TelosRegisterModal extends React.Component {
 
@@ -45,27 +51,31 @@ export default class TelosRegisterModal extends React.Component {
 
   render() {
     const { accountName, privateKey, error } = this.state
-    const { name } = this.props
+    const { name, intl } = this.props
 
     const linked = Link.all(this, 'accountName', 'privateKey')
     const isDisabled = !accountName || !privateKey
 
     return (
-      <Modal name={name} title="TELOS Login">
+      <Modal name={name} title={intl.formatMessage(title.TelosRegisterTitle)}>
         <FieldLabel inRow>
           <FormattedMessage id="TelosRegister55" defaultMessage="Account name" />
-          <Tooltip text="Enter TELOS account name" />
+          <Tooltip id="TelOSR92" >
+            <FormattedMessage id="TelosRegister46" defaultMessage="Enter TELOS account name " />
+          </Tooltip>
         </FieldLabel>
         <Input valueLink={linked.accountName} />
         <FieldLabel inRow>
           <FormattedMessage id="TelosRegister59" defaultMessage="Private key" />
-          <Tooltip text="Enter your TELOS secret key" />
+          <Tooltip id="TelOSR70">
+            <FormattedMessage id="TelosRegister52" defaultMessage="Enter your TELOS secret key" />
+          </Tooltip>
         </FieldLabel>
         <Input valueLink={linked.privateKey} />
         { error && (
-          <FormattedMessage id="TelosRegister64" defaultMessage="Sorry, error occured during activation">
-            {message => <div styleName="error">{message}</div>}
-          </FormattedMessage>
+          <div styleName="error">
+            <FormattedMessage id="TelosRegister64" defaultMessage="Sorry, error occurred during activation" />
+          </div>
         )
         }
         <Button styleName="button" brand fullWidth disabled={isDisabled} onClick={this.handleSubmit}>

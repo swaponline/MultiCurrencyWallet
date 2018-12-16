@@ -122,7 +122,16 @@ export default class Wallet extends Component {
 
   render() {
     const { items, tokens, currencies, hiddenCoinsList } = this.props
-    const titles = [ 'Coin', 'Name', 'Balance', 'Your Address', isMobile ? 'Send, receive, swap' :  'Actions' ]
+    const titles = [
+      <FormattedMessage id="Wallet114" defaultMessage="Coin" />,
+      <FormattedMessage id="Wallet115" defaultMessage="Name" />,
+      <FormattedMessage id="Wallet116" defaultMessage="Balance" />,
+      <FormattedMessage id="Wallet117" defaultMessage="Your Address" />,
+      isMobile ?
+        <FormattedMessage id="Wallet118" defaultMessage="Send, receive, swap" />
+        :
+        <FormattedMessage id="Wallet119" defaultMessage="Actions" />,
+    ]
 
     return (
       <section styleName={isMobile ? 'sectionWalletMobile' : 'sectionWallet'}>
@@ -133,7 +142,7 @@ export default class Wallet extends Component {
         </PageHeadline>
         <KeyActionsPanel />
         <div styleName="depositText">
-          <FormattedMessage id="Wallet105" defaultMessage="Deposit funds to addresses below" />
+          <FormattedMessage id="Wallet137" defaultMessage="Deposit funds to addresses below" />
         </div>
         <Table
           id="table-wallet"

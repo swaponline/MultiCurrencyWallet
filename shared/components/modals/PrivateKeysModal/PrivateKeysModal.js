@@ -12,14 +12,21 @@ import styles from './PrivateKeysModal.scss'
 import Field2 from './Field2/Field2'
 import Modal from 'components/modal/Modal/Modal'
 import Button from 'components/controls/Button/Button'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 
 
 const views = {
   saveKeys: 'saveKeys',
   checkKeys: 'checkKeys',
 }
+const title = defineMessages({
+  PrivateKeysModal: {
+    id: 'ImCAUTIONport',
+    defaultMessage: 'CAUTION!',
+  },
+})
 
+@injectIntl
 @connect({
   ethData: 'user.ethData',
   btcData: 'user.btcData',
@@ -97,7 +104,7 @@ export default class PrivateKeysModal extends React.PureComponent {
 
   render() {
     const { view } = this.state
-    const { name, ethData, btcData } = this.props
+    const { name, ethData, btcData, intl } = this.props
 
     const ethValidated = Link.state(this, 'ethValidated')
     const btcValidated = Link.state(this, 'btcValidated')
@@ -109,7 +116,7 @@ export default class PrivateKeysModal extends React.PureComponent {
         name={name}
         showCloseButton={false}
         showLogo={false}
-        title="CAUTION!"
+        title={intl.formatMessage(title.PrivateKeysModal)}
       >
         <div styleName="content">
           {
@@ -122,22 +129,22 @@ export default class PrivateKeysModal extends React.PureComponent {
                   />
                   <FormattedMessage id="PrivateKeysModal99" defaultMessage="It`s very important" />
                 </div>
-                <FormattedMessage id="PrivateKeysModal105" defaultMessage="We do not store your private keys and will not be able to restore them!">
-                  {message => <div styleName="subTitle">{message}</div>}
-                </FormattedMessage>
+                <div styleName="subTitle">
+                  <FormattedMessage id="PrivateKeysModal106" defaultMessage="We do not store your private keys and will not be able to restore them!" />
+                </div>
                 <div styleName="buttonContainer">
                   <div styleName="buttonSubContainer">
-                    <FormattedMessage id="PrivateKeysModal110" defaultMessage="Click here">
-                      {message => <span styleName="text">{message}</span>}
-                    </FormattedMessage>
+                    <span styleName="text">
+                      <FormattedMessage id="PrivateKeysModal110" defaultMessage="Click here" />
+                    </span>
                     <Button brand styleName="button" onClick={this.handleDownload}>
                       <FormattedMessage id="PrivateKeysModal113" defaultMessage="Download keys" />
                     </Button>
                   </div>
                   <div styleName="buttonSubContainer">
-                    <FormattedMessage id="PrivateKeysModal118" defaultMessage="Then click here">
-                      {message => <span styleName="text">{message}</span>}
-                    </FormattedMessage>
+                    <span styleName="text">
+                      <FormattedMessage id="PrivateKeysModal118" defaultMessage="Then click here" />
+                    </span>
                     <Button brand styleName="button" onClick={this.handleNext} >
                       <FormattedMessage id="PrivateKeysModal121" defaultMessage="Next step" />
                     </Button>
@@ -150,14 +157,15 @@ export default class PrivateKeysModal extends React.PureComponent {
                 {/* <Button brand styleName="button" onClick={this.handleSendByEmail}>Send by email</Button> */}
               </Fragment>
             ) : (
+              /* eslint-disable */
               <Fragment>
-                <FormattedMessage
-                  id="PrivateKeysModal130"
-                  defaultMessage=
-                    "Please fill information below from instruction.txt file. We`d like to be sure that you saved the private keys before you can continue to the site."
-                >
-                  {message => <div styleName="title">{message}</div>}
-                </FormattedMessage>
+                <div styleName="title">
+                  <FormattedMessage
+                    id="PrivateKeysModal130"
+                    defaultMessage=
+                      "Please fill information below from instruction.txt file. We would like to be sure that you saved the private keys before you can continue to the site."
+                  />
+                </div>
                 <Field2
                   label={ethData.currency}
                   privateKey={ethData.privateKey}
@@ -181,6 +189,7 @@ export default class PrivateKeysModal extends React.PureComponent {
                   )
                 }
               </Fragment>
+              /* eslint-enable */
             )
           }
         </div>
