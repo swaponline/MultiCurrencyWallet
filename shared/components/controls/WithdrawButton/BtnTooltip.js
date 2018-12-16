@@ -19,14 +19,11 @@ import { FormattedMessage } from 'react-intl'
       <Fragment>
         <WithdrawButton disable={disable} onClick={onClick} data-tip data-for={id} {...rest}>
           {children}
-          <span>
-            <FormattedMessage id="Row327"  defaultMessage={text} />
-          </span>
         </WithdrawButton>
         {
           disable && (
           <ReactTooltip id={id} type="light" effect="solid">
-            <FormattedMessage id="WithdrawButton32" defaultMessage="You can not send this asset, because you have a zero balance." />
+            <FormattedMessage id="WithdrawButton322" defaultMessage="You can not send this asset, because you have a zero balance." />
           </ReactTooltip>)
         }
       </Fragment>

@@ -8,12 +8,12 @@ import { FormattedMessage } from 'react-intl'
 
 const ErrorNotification = ({ data, name }) => (
   <Notification soundPlay={false} name={name} type={name}>
-    <FormattedMessage id="ErrorNotification12" defaultMessage="Oops, looks like something went wrong!">
-      {message => <h3>{message}</h3>}
-    </FormattedMessage>
-    <FormattedMessage id="ErrorNotification15" defaultMessage="Error: ">
-      {message => <p>{message}{data.error}</p>}
-    </FormattedMessage>
+    <h3>
+      <FormattedMessage id="ErrorNotification12" defaultMessage="Oops, looks like something went wrong!" />
+    </h3>
+    <p>
+      <FormattedMessage id="ErrorNotification15" defaultMessage="Error: " />
+    </p>
   </Notification>
 )
 

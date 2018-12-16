@@ -31,57 +31,57 @@ export default class SwapProgress extends Component {
     switch (step) {
       case 1:
         return (
-          <FormattedMessage id="SwapProgress32" defaultMessage="1. Please wait. Confirmation processing">
-            {message => <Title>{message}</Title>}
-          </FormattedMessage>
+          <Title>
+            <FormattedMessage id="SwapProgress32" defaultMessage="1. Please wait. Confirmation processing" />
+          </Title>
         )
       case 2:
         return (
-          <FormattedMessage id="SwapProgress38" defaultMessage="2. Waiting BTC Owner creates Secret Key, creates BTC Script and charges it">
-            {message => <Title>{message}</Title>}
-          </FormattedMessage>
+          <Title>
+            <FormattedMessage id="SwapProgress38" defaultMessage="2. Waiting BTC Owner creates Secret Key, creates BTC Script and charges it" />
+          </Title>
         )
       case 3:
         return (
-          <FormattedMessage id="SwapProgress44" defaultMessage="3. Bitcoin Script created and charged. Please check the information below">
-            {message => <Title>{message}</Title>}
-          </FormattedMessage>
+          <Title>
+            <FormattedMessage id="SwapProgress44" defaultMessage="3. Bitcoin Script created and charged. Please check the information below" />
+          </Title>
         )
       case 4:
         return (
-          <FormattedMessage id="SwapProgress50" defaultMessage="4. Checking balance..">
-            {message => <Title>{message}</Title>}
-          </FormattedMessage>
+          <Title>
+            <FormattedMessage id="SwapProgress50" defaultMessage="4. Checking balance.." />
+          </Title>
         )
       case 5:
         return (
-          <FormattedMessage id="SwapProgress56" defaultMessage="5. Creating Ethereum Contract. Please wait, it will take a while">
-            {message => <Title>{message}</Title>}
-          </FormattedMessage>
+          <Title>
+            <FormattedMessage id="SwapProgress56" defaultMessage="5. Creating Ethereum Contract. Please wait, it will take a while" />
+          </Title>
         )
       case 6:
         return (
-          <FormattedMessage id="SwapProgress62" defaultMessage="6. Waiting BTC Owner adds Secret Key to ETH Contact">
-            {message => <Title>{message}</Title>}
-          </FormattedMessage>
+          <Title>
+            <FormattedMessage id="SwapProgress62" defaultMessage="6. Waiting BTC Owner adds Secret Key to ETH Contact" />
+          </Title>
         )
       case 7:
         return (
-          <FormattedMessage id="SwapProgress68" defaultMessage="7. Money was transferred to your wallet. Check the balance.">
-            {message => <Title>{message}</Title>}
-          </FormattedMessage>
+          <Title>
+            <FormattedMessage id="SwapProgress68" defaultMessage="7. Money was transferred to your wallet. Check the balance." />
+          </Title>
         )
       case 8:
         return (
-          <FormattedMessage id="SwapProgress74" defaultMessage="Thank you for using Swap.Online!">
-            {message => <Title>{message}</Title>}
-          </FormattedMessage>
+          <Title>
+            <FormattedMessage id="SwapProgress74" defaultMessage="Thank you for using Swap.Online!" />
+          </Title>
         )
       case 9:
         return (
-          <FormattedMessage id="SwapProgress80" defaultMessage="Thank you for using Swap.Online!">
-            {message => <Title>{message}</Title>}
-          </FormattedMessage>
+          <Title>
+            <FormattedMessage id="SwapProgress80" defaultMessage="Thank you for using Swap.Online!" />
+          </Title>
         )
       default:
         return null
@@ -92,51 +92,51 @@ export default class SwapProgress extends Component {
     switch (step) {
       case 1:
         return (
-          <FormattedMessage id="SwapProgress93" defaultMessage="1. The order creator is offline. Waiting for him..">
-            {message => <Title>{message}</Title>}
-          </FormattedMessage>
+          <Title>
+            <FormattedMessage id="SwapProgress93" defaultMessage="1. The order creator is offline. Waiting for him.." />
+          </Title>
         )
       case 2:
         return (
-          <FormattedMessage id="SwapProgress99" defaultMessage="2. Create a secret key">
-            {message => <Title>{message}</Title>}
-          </FormattedMessage>
+          <Title>
+            <FormattedMessage id="SwapProgress99" defaultMessage="2. Create a secret key" />
+          </Title>
         )
       case 3:
         return (
-          <FormattedMessage id="SwapProgress105" defaultMessage="3. Checking balance..">
-            {message => <Title>{message}</Title>}
-          </FormattedMessage>
+          <Title>
+            <FormattedMessage id="SwapProgress105" defaultMessage="3. Checking balance.." />
+          </Title>
         )
       case 4:
         return (
-          <FormattedMessage id="SwapProgress111" defaultMessage="4. Creating Bitcoin Script. Please wait, it will take a while">
-            {message => <Title>{message}</Title>}
-          </FormattedMessage>
+          <Title>
+            <FormattedMessage id="SwapProgress111" defaultMessage="4. Creating Bitcoin Script. Please wait, it will take a while" />
+          </Title>
         )
       case 5:
         return (
-          <FormattedMessage id="SwapProgress117" defaultMessage="5. ETH Owner received Bitcoin Script and Secret Hash. Waiting when he creates ETH Contract">
-            {message => <Title>{message}</Title>}
-          </FormattedMessage>
+          <Title>
+            <FormattedMessage id="SwapProgress117" defaultMessage="5. ETH Owner received Bitcoin Script and Secret Hash. Waiting when he creates ETH Contract" />
+          </Title>
         )
       case 6:
         return (
-          <FormattedMessage id="SwapProgress123" defaultMessage="6. ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait">
-            {message => <Title>{message}</Title>}
-          </FormattedMessage>
+          <Title>
+            <FormattedMessage id="SwapProgress123" defaultMessage="6. ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait" />
+          </Title>
         )
       case 7:
         return  (
-          <FormattedMessage id="SwapProgress129" defaultMessage="7. Money was transferred to your wallet. Check the balance.">
-            {message => <Title>{message}</Title>}
-          </FormattedMessage>
+          <Title>
+            <FormattedMessage id="SwapProgress129" defaultMessage="7. Money was transferred to your wallet. Check the balance." />
+          </Title>
         )
       case 8:
         return (
-          <FormattedMessage id="SwapProgress135" defaultMessage="Thank you for using Swap.Online!">
-            {message => <Title>{message}</Title>}
-          </FormattedMessage>
+          <Title>
+            <FormattedMessage id="SwapProgress135" defaultMessage="Thank you for using Swap.Online!" />
+          </Title>
         )
       default:
         return null

@@ -3,6 +3,23 @@
   align-items: center;
 }
 
+.buttonLan {
+  color: #7c1de9!important;
+
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  margin-right: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
 .header {
 	height: 88px;
 	width: 100%;

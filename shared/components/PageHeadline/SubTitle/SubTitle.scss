@@ -2,6 +2,7 @@
   margin-top: 20px;
   @include ff-bold;
   font-size: 30px;
+  font-family: Arial;
 }
 
 @include media-mobile {
@@ -9,4 +10,4 @@
     font-size: 20px;
     line-height: 1.4;
   }
-} 
+}

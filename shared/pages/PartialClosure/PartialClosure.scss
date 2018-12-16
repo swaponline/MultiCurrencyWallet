@@ -49,6 +49,23 @@
   padding: 0;
 }
 
+.withLoader {
+  display: block;
+  position: relative;
+  
+}
+.loaderHolder {
+  display: inline-block;
+}
+@include media-mobile { 
+  .loaderHolder {
+    display: block;
+    position: relative;
+    margin-top: -42px;
+    padding-bottom: 42px;
+  }
+}
+
 @include media-tablet {
   .blockVideo {
     flex-basis: 50%;

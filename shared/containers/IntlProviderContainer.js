@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { IntlProvider, addLocaleData } from 'react-intl'
+import { Switch } from 'react-router-dom'
+import { Route } from 'react-router'
 import localeEn from 'react-intl/locale-data/en'
 import localeRu from 'react-intl/locale-data/ru'
 
@@ -10,7 +12,7 @@ import myEn from 'localisation/en.json'
 import myRu from 'localisation/ru.json'
 
 
-import { reduceMessages, currentLocale, defaultLocale } from 'helpers/locale'
+import { reduceMessages, defaultLocale, localisePrefix } from 'helpers/locale'
 
 
 const translations = {
@@ -19,21 +21,23 @@ const translations = {
 }
 
 export default class IntlProviderContainer extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      currentLocale: currentLocale(),
-      defaultLocale: defaultLocale(),
-    }
-  }
-
   render() {
-    const { currentLocale, defaultLocale } = this.state
-    const messages = translations[currentLocale]
+    const { children } = this.props
     return (
-      <IntlProvider locale={currentLocale} defaultLocale={defaultLocale} messages={messages}>
-        {this.props.children}
-      </IntlProvider>
+      <Switch>
+        <Route
+          path={localisePrefix}
+          render={props => {
+            const currentLocale = props.match.params.locale || defaultLocale()
+            const messages = translations[currentLocale]
+            return (
+              <IntlProvider {...props} key={currentLocale} locale={currentLocale} defaultLocale={defaultLocale()} messages={messages}>
+                {children}
+              </IntlProvider>
+            )
+          }}
+        />
+      </Switch>
     )
   }
 }

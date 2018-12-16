@@ -52,9 +52,9 @@ export default class CurrencyDirectionChooser extends Component {
     return (
       <div styleName="choice">
         <div styleName="row title">
-          <FormattedMessage id="CurrencyDirectionChooser54" defaultMessage=" Choose the direction of exchange">
-            {message => <SubTitle>{message}</SubTitle>}
-          </FormattedMessage>
+          <SubTitle>
+            <FormattedMessage id="CurrencyDirectionChooser54" defaultMessage=" Choose the direction of exchange" />
+          </SubTitle>
         </div>
         <div styleName="row formRow">
           <div styleName="row">
@@ -82,10 +82,12 @@ export default class CurrencyDirectionChooser extends Component {
               />
             </div>
           </div>
-
-          <FormattedMessage id="CurrencyDirectionChooser86" defaultMessage="SHOW ORDERS ">
-            {message =>   <Button styleName="button" brand onClick={handleSubmit}>{message}<Tooltip text="Offer list" /></Button>}
-          </FormattedMessage>
+          <Button styleName="button" brand onClick={handleSubmit}>
+            <FormattedMessage id="CurrencyDirectionChooser86" defaultMessage="SHOW ORDERS " />
+          </Button>
+          <Tooltip id="cdc87" >
+            <FormattedMessage id="CDC52" defaultMessage="Offer list" />
+          </Tooltip>
         </div>
       </div>
     )
