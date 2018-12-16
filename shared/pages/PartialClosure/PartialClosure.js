@@ -30,7 +30,7 @@ import constants from 'helpers/constants'
 
 
 const filterIsPartial = (orders) => orders
-  .filter(order => order.isPartialClosure)
+  .filter(order => order.isPartialClosure && !order.isProcessing)
 
 const text = [
   <FormattedMessage id="partial223" defaultMessage="To change default wallet for buy currency. " />,
@@ -279,8 +279,6 @@ export default class PartialClosure extends Component {
     const { exHaveRate, exGetRate } = this.state
     const haveAmount = new BigNumber(this.state.haveAmount)
 
-    console.log('setOrderOnState', orders)
-
     let maxAllowedSellAmount = new BigNumber(0)
     let maxAllowedGetAmount = new BigNumber(0)
     let maxAllowedBuyAmount = new BigNumber(0)
@@ -288,9 +286,7 @@ export default class PartialClosure extends Component {
     orders.forEach(item => {
       maxAllowedSellAmount = (maxAllowedSellAmount.isLessThanOrEqualTo(item.sellAmount)) ? item.sellAmount : maxAllowedSellAmount
       maxAllowedBuyAmount = (maxAllowedBuyAmount.isLessThanOrEqualTo(item.buyAmount)) ? item.buyAmount : maxAllowedBuyAmount
-
       if (haveAmount.isLessThanOrEqualTo(item.buyAmount)) {
-        console.log('item', item)
         maxAllowedGetAmount = (maxAllowedGetAmount.isLessThanOrEqualTo(item.getAmount)) ? item.getAmount : maxAllowedGetAmount
         const haveUsd = new BigNumber(String(exHaveRate)).multipliedBy(new BigNumber(haveAmount))
         const getUsd  = new BigNumber(String(exGetRate)).multipliedBy(new BigNumber(item.getAmount))

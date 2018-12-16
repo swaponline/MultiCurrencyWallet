@@ -3,7 +3,7 @@ export default {
   exchange: '/exchange',
   history: '/history',
   currencyWallet: '/wallet',
-  swap: '/swap',
+  swap: '/swaps',
   feed: '/feed',
   aboutus: '/aboutus',
   listing: 'https://listing.swap.online/',

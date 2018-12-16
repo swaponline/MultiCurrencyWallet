@@ -2,11 +2,9 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { connect } from 'redaction'
-import actions from 'redux/actions'
 
 import { links } from 'helpers'
 import { Link } from 'react-router-dom'
-import { withRouter } from 'react-router'
 
 import styles from './UserTooltip.scss'
 import CSSModules from 'react-css-modules'
@@ -23,11 +21,11 @@ import { localisedUrl } from 'helpers/locale'
   feeds: 'feeds.items',
   peer: 'ipfs.peer',
 })
+
 @CSSModules(styles)
 export default class UserTooltip extends Component {
 
   static propTypes = {
-    toggle: PropTypes.func.isRequired,
     feeds: PropTypes.array.isRequired,
     peer: PropTypes.string.isRequired,
   }
@@ -53,6 +51,8 @@ export default class UserTooltip extends Component {
     const { intl: { locale } } = this.props
     this.acceptRequest(orderId, participantPeer)
     this.props.history.push(localisedUrl(locale, link))
+    declineRequest: PropTypes.func.isRequired,
+    acceptRequest: PropTypes.func.isRequired,
   }
 
   render() {

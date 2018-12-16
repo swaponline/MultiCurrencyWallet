@@ -2,6 +2,9 @@ import React, { PureComponent } from 'react'
 
 import Swap from 'swap.swap'
 
+import CSSModules from 'react-css-modules'
+import styles from './Swap.scss'
+
 import { connect } from 'redaction'
 import { links, constants } from 'helpers'
 import actions from 'redux/actions'
@@ -25,6 +28,7 @@ import DeleteSwapAfterEnd from './DeleteSwapAfterEnd'
   checked: 'api.checked',
   peer,
 }))
+@CSSModules(styles)
 export default class SwapComponent extends PureComponent {
 
   state = {
@@ -94,7 +98,7 @@ export default class SwapComponent extends PureComponent {
     }
 
     return (
-      <div style={{ paddingLeft: '30px', paddingTop: '60px', width: '500px', margin: 'auto', minHeight: 'calc(100vh - 75px)' }}>
+      <div styleName="swap">
         <SwapComponent swap={swap} currencyData={currencyData}>
           <Share flow={swap.flow} />
           <EmergencySave flow={swap.flow} />
