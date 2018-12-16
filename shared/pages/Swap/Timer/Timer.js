@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import CSSModules from 'react-css-modules'
 import styles from './Timer.scss'
+import { FormattedMessage } from 'react-intl'
 
 
 @CSSModules(styles)
@@ -62,9 +63,12 @@ export default class Timer extends React.Component {
       <div styleName="timer">
         {
           min > 0 ? (
-            `${min} minute left for refund`
+            <span>
+              {min}
+              <FormattedMessage id="timer67" defaultMessage="minute left for refund" />
+            </span>
           ) : (
-            'refund ready'
+            <FormattedMessage id="timer68" defaultMessage="refund ready" />
           )
         }
       </div>

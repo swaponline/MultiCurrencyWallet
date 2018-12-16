@@ -57,12 +57,18 @@ const getSwapHistory = () => {
     return
   }
 
-  const historySwap = swapId.map(item => ({
-    ...SwapApp.env.storage.getItem(`swap.${item}`),
-    ...SwapApp.env.storage.getItem(`flow.${item}`),
-  }))
+  const historySwap = swapId.map(item => getInformationAboutSwap(item))
 
   reducers.history.setSwapHistory(historySwap)
+}
+
+const getInformationAboutSwap = (swapId) => {
+  if (swapId.length > 0 && typeof swapId === 'string') {
+    return {
+      ...SwapApp.env.storage.getItem(`swap.${swapId}`),
+      ...SwapApp.env.storage.getItem(`flow.${swapId}`),
+    }
+  }
 }
 
 const markCoinAsHidden = (coin) => {
@@ -91,4 +97,5 @@ export default {
   markCoinAsHidden,
   markCoinAsVisible,
   requestToPeer,
+  getInformationAboutSwap,
 }

@@ -37,9 +37,17 @@ export default class CurrencyButton extends Component {
           {children}
         </button>
         {
+          dataTooltip.deposit && (
+            <ReactTooltip id={dataTooltip.id} type="light" effect="solid">
+              <FormattedMessage id="CurrencyButton41" defaultMessage="Deposit funds to this address of currency wallet" />
+            </ReactTooltip>
+          )
+        }
+
+        {
           dataTooltip.isActive && (
             <ReactTooltip id={dataTooltip.id} type="light" effect="solid">
-              <FormattedMessage id={dataTooltip.id} defaultMessage={dataTooltip.text} />
+              <FormattedMessage id="CurrencyButton42" defaultMessage="You can not send this asset, because you have a zero balance." />
             </ReactTooltip>
           )
         }

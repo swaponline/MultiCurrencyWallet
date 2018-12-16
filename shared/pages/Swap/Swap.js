@@ -12,9 +12,12 @@ import actions from 'redux/actions'
 import { swapComponents } from './swaps'
 import Share from './Share/Share'
 import EmergencySave from './EmergencySave/EmergencySave'
+import { injectIntl } from 'react-intl'
+import { localisedUrl } from 'helpers/locale'
 import DeleteSwapAfterEnd from './DeleteSwapAfterEnd'
 
 
+@injectIntl
 @connect(({
   user: { ethData, btcData, /* bchData, */ tokensData, eosData, telosData, nimData, usdtData, ltcData },
   ipfs: { peer },
@@ -35,11 +38,11 @@ export default class SwapComponent extends PureComponent {
   }
 
   componentWillMount() {
-    const { items, tokenItems } = this.props
+    const { items, tokenItems, intl: { locale } } = this.props
     let { match : { params : { orderId } }, history } = this.props
 
     if (!orderId) {
-      history.push(links.exchange)
+      history.push(localisedUrl(links.exchange))
       return
     }
 
@@ -59,7 +62,7 @@ export default class SwapComponent extends PureComponent {
 
     } catch (error) {
       actions.notifications.show(constants.notifications.ErrorNotification, { error: 'Sorry, but this order do not exsit already' })
-      this.props.history.push(links.exchange)
+      this.props.history.push(localisedUrl(links.exchange))
     }
 
     this.setSaveSwapId(orderId)
