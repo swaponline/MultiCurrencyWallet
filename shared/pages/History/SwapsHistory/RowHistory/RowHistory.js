@@ -32,10 +32,10 @@ export default class RowHistory extends Component {
      }
 
      let {
-        buyAmount, buyCurrency, sellAmount, btcScriptCreatingTransactionHash,
-        btcScriptValues, ltcScriptValues, usdtScriptValues, isRefunded, isMy, sellCurrency,
-        isFinished, id, scriptValues,
-      } = row
+       buyAmount, buyCurrency, sellAmount, btcScriptCreatingTransactionHash,
+       btcScriptValues, ltcScriptValues, usdtScriptValues, isRefunded, isMy, sellCurrency,
+       isFinished, id, scriptValues,
+     } = row
 
      const values  = btcScriptValues || ltcScriptValues || usdtScriptValues || scriptValues
      const data = Date.now() / 1000
