@@ -12,11 +12,17 @@ import Group from './Group/Group'
 import { Modal } from 'components/modal'
 import { FieldLabel } from 'components/forms'
 import { Button } from 'components/controls'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 
 
-window.actions = actions
+const title = defineMessages({
+  Import: {
+    id: 'Import',
+    defaultMessage: 'Import keys',
+  },
+})
 
+@injectIntl
 
 @cssModules(styles)
 export default class ImportKeys extends Component {
@@ -158,16 +164,18 @@ export default class ImportKeys extends Component {
       isImportedEth, isImportedBtc, isImportedLtc, isImportedXlm, isDisabled, keySave,
     } = this.state
 
+    const { intl } = this.props
+
     const linked = Link.all(this, 'ethKey', 'btcKey', 'ltcKey', 'xlmKey')
 
     if (isSubmittedEth) {
-      linked.ethKey.check((value) => value !== '', 'Please enter ETH private key')
-      linked.ethKey.check((value) => value.length > 40, 'Please valid ETH private key')
+      linked.ethKey.check((value) => value !== '', <FormattedMessage id="importkeys172" defaultMessage="Please enter ETH private key" />)
+      linked.ethKey.check((value) => value.length > 40, <FormattedMessage id="importkeys173" defaultMessage="Please valid ETH private key" />)
     }
 
     if (isSubmittedBtc) {
-      linked.btcKey.check((value) => value !== '', 'Please enter BTC private key')
-      linked.btcKey.check((value) => value.length > 27, 'Please valid BTC private key')
+      linked.btcKey.check((value) => value !== '', <FormattedMessage id="importkeys118" defaultMessage="Please enter BTC private key" />)
+      linked.btcKey.check((value) => value.length > 27, <FormattedMessage id="importkeys119" defaultMessage="Please valid BTC private key" />)
     }
 
     if (isSubmittedLtc) {
@@ -176,28 +184,27 @@ export default class ImportKeys extends Component {
     }
 
     if (isSubmittedXlm) {
-      linked.xlmKey.check((value) => value !== '', 'Please enter XLM private key')
+      linked.btcKey.check((value) => value !== '', <FormattedMessage id="importkeys187" defaultMessage="Please enter XLM private key" />)
     }
 
     return (
-      <Modal name={this.props.name} title="Import keys">
+      <Modal name={this.props.name} title={intl.formatMessage(title.Import)}>
         <div styleName="modal">
-          <FormattedMessage id="ImportKeys107" defaultMessage="This procedure will rewrite your private key. If you are not sure about it, we recommend to press cancel">
-            {message => <p>{message}</p>}
-          </FormattedMessage>
-          <FormattedMessage id="ImportKeys110" defaultMessage="Please enter eth private key">
-            {message => <FieldLabel>{message}</FieldLabel>}
-          </FormattedMessage>
+          <p>
+            <FormattedMessage id="ImportKeys107" defaultMessage="This procedure will rewrite your private key. If you are not sure about it, we recommend to press cancel" />
+          </p>
+          <FieldLabel>
+            <FormattedMessage id="ImportKeys110" defaultMessage="Please enter ETH private key" />
+          </FieldLabel>
           <Group
             inputLink={linked.ethKey}
             placeholder="Key"
             disabled={isImportedEth}
             onClick={this.handleEthImportKey}
           />
-
-          <FormattedMessage id="ImportKeys120" defaultMessage="Please enter btc private key in WIF format">
-            {message => <FieldLabel>{message}</FieldLabel>}
-          </FormattedMessage>
+          <FieldLabel>
+            <FormattedMessage id="ImportKeys120" defaultMessage="Please enter BTC private key in WIF format" />
+          </FieldLabel>
           <Group
             inputLink={linked.btcKey}
             placeholder="Key in WIF format"
