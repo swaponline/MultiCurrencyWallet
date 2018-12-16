@@ -5,10 +5,15 @@ import styles from './Amounts.scss'
 
 import Row from '../Row/Row'
 import Value from '../Value/Value'
+import { FormattedMessage } from 'react-intl'
 
+
+const title = [
+  <FormattedMessage id="amount" defaultMessage="Exchange" />,
+]
 
 const Amounts = ({ buyAmount, sellAmount, buyCurrency, sellCurrency }) => (
-  <Row title="Exchange">
+  <Row title={title}>
     <Value value={Number(sellAmount)} currency={sellCurrency} />
     <div styleName="arrow" />
     <Value value={Number(buyAmount)} currency={buyCurrency} />
@@ -16,4 +21,3 @@ const Amounts = ({ buyAmount, sellAmount, buyCurrency, sellCurrency }) => (
 )
 
 export default CSSModules(Amounts, styles)
-

@@ -14,9 +14,17 @@ import { getState } from 'redux/core'
 import cssModules from 'react-css-modules'
 import styles from './EosBuyAccountModal.scss'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 
 
+const title = defineMessages({
+  titleEosBuy: {
+    id: 'Eos87',
+    defaultMessage: 'EOS Register',
+  },
+})
+
+@injectIntl
 @cssModules(styles)
 export default class EosBuyAccountModal extends React.Component {
 
@@ -61,46 +69,57 @@ export default class EosBuyAccountModal extends React.Component {
 
   render() {
     const { error, activePrivateKey, activePublicKey, accountName, price } = this.state
-    const { name } = this.props
+    const { name, intl } = this.props
 
     const linked = Link.all(this, 'accountName', 'activePrivateKey', 'activePublicKey', 'price')
-
     const activationPayment = localStorage.getItem(constants.localStorage.eosActivationPayment)
 
     return (
       <Fragment>
-        <Modal name={name} title="EOS Register">
-          <div>
+        <Modal name={name} title={intl.formatMessage(title.titleEosBuy)}>
+          <div styleName="margin">
             <FieldLabel inRow>
               <FormattedMessage id="EosBuyAccountModal72" defaultMessage="Account name" />
-              <Tooltip text="This account will be registered in EOS blockchain" />
+              {' '}
+              <Tooltip>
+                <FormattedMessage id="Eos71" defaultMessage="This account will be registered in EOS blockchain" />
+              </Tooltip>
             </FieldLabel>
-            <Input readOnly="true" valueLink={linked.accountName} />
+            <Input readOnly="true" valueLink={linked.accountName} styleName="input" />
           </div>
-          <div>
+          <div styleName="margin">
             <FieldLabel inRow>
-              <FormattedMessage id="EosBuyAccountModal78" defaultMessage="APrivate key" />
-              <Tooltip text="Private key for active and owner permissions" />
+              <FormattedMessage id="EosBuyAccountModal78" defaultMessage="Private key" />
+              {' '}
+              <Tooltip id="EoS90">
+                <FormattedMessage id="Eos75" defaultMessage="Private key for active and owner permissions" />
+              </Tooltip>
             </FieldLabel>
             <Input readOnly="true" valueLink={linked.activePrivateKey} />
           </div>
-          <div>
+          <div styleName="margin">
             <FieldLabel inRow>
               <FormattedMessage id="EosBuyAccountModal84" defaultMessage="Public key" />
-              <Tooltip text="Public key associated with account" />
+              {' '}
+              <Tooltip id="EoS106">
+                <FormattedMessage id="Eos79" defaultMessage="Public key associated with account" />
+              </Tooltip>
             </FieldLabel>
             <Input readOnly="true" valueLink={linked.activePublicKey} />
           </div>
-          <div>
+          <div styleName="margin">
             <FieldLabel inRow>
               <FormattedMessage id="EosBuyAccountModal90" defaultMessage="Price (BTC)" />
-              <Tooltip text="This amount will be withdrawn from your BTC wallet" />
+              {' '}
+              <Tooltip id="EoS113">
+                <FormattedMessage id="Eos83" defaultMessage="This amount will be withdrawn from your BTC wallet" />
+              </Tooltip>
             </FieldLabel>
             <Input readOnly="true" valueLink={linked.price} />
           </div>
           { error && (
             <div styleName="error">
-              <FormattedMessage id="EosBuyAccountModal103" defaultMessage="Sorry, error occured during activation, try again" />
+              <FormattedMessage id="EosBuyAccountModal103" defaultMessage="Sorry, error occurred during activation, try again" />
             </div>
           )}
           { activationPayment && (

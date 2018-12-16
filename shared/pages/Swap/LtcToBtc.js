@@ -147,7 +147,7 @@ export default class LtcToBtc extends Component {
                 (flow.isSignFetching || flow.signTransactionHash) && (
                   <Fragment>
                     <h4>
-                      <FormattedMessage id="Confirmation" defaultMessage="Please wait. Confirmation processing" />
+                      <FormattedMessage id="PleaseWaitConfirmationProcessing" defaultMessage="Please wait. Confirmation processing" />
                     </h4>
                     {
                       flow.signTransactionHash && (
@@ -180,7 +180,7 @@ export default class LtcToBtc extends Component {
           flow.isMeSigned && (
             <Fragment>
               <h3>
-                <FormattedMessage id="LTCTOBTC179" defaultMessage="2. Waiting BTC Owner creates Secret Key, creates BTC Script and charges it" />
+                <FormattedMessage id="LtcToBtc.Confirm" defaultMessage="2. Waiting BTC Owner creates Secret Key, creates BTC Script and charges it" />
               </h3>
               {
                 flow.step === 2 && (
@@ -311,7 +311,7 @@ export default class LtcToBtc extends Component {
                 (flow.step >= 5 || flow.isLtcScriptFunded) && (
                   <Fragment>
                     <h3>
-                      <FormattedMessage id="BtcToLtc205" defaultMessage="4. Creating LTC Script. Please wait, it will take a while" />
+                      <FormattedMessage id="LtcToBtc205" defaultMessage="4. Creating LTC Script. Please wait, it will take a while" />
                     </h3>
                   </Fragment>
                 )
