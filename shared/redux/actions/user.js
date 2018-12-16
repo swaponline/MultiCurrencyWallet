@@ -124,7 +124,7 @@ const setTransactions = () =>
     })
 
 const getText = () => {
-  const { user : { ethData, btcData, eosData, telosData, /* bchData, */ ltcData } } = getState()
+  const { user : { ethData, btcData, eosData, xlmData, telosData, /* bchData, */ ltcData } } = getState()
 
 
   let text = `
@@ -167,6 +167,12 @@ Private key: ${ltcData.privateKey}\r\n
 2. login\r\n
 3. Go to settings > addresses > import\r\n
 4. paste private key and click "Ok"\r\n
+\r\n
+
+# XLM\r\n
+\r\n
+XLM Private Key: ${xlmData.keypair.secret()}\r\n
+Address name: ${xlmData.address}\r\n
 \r\n
 `
   if (eosData.activePrivateKey) {
