@@ -4812,5 +4812,40 @@
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
+  },
+  {
+    "id": "ImportKeys176",
+    "message": "Пожалуйста введите XLM приватный ключ",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "ImportKeys205",
+    "message": "Пожалуйста введите LTC приватный ключ в WIF формате",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "importkeys172",
+    "message": "Пожалуйста введите ETH приватный ключ",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "importkeys173",
+    "message": "Пожалуйста введите корректный ETH приватный ключ",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "importkeys187",
+    "message": "Пожалуйста введите XLM приватный ключ ",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
   }
 ]

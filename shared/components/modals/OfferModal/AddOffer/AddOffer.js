@@ -444,6 +444,7 @@ export default class AddOffer extends Component {
         <div>
           <Toggle checked={manualRate} onChange={this.handleManualRate} />
           <FormattedMessage id="AddOffer418" defaultMessage="Custom exchange rate" />
+          {' '}
           <Tooltip id="add264">
             <FormattedMessage id="add408" defaultMessage="To change the exchange rate " />
           </Tooltip>
@@ -451,6 +452,7 @@ export default class AddOffer extends Component {
         <div>
           <Toggle checked={isPartialClosure} onChange={() => this.setState((state) => ({ isPartialClosure: !state.isPartialClosure }))} />
           <FormattedMessage id="AddOffer423" defaultMessage="Enabled to partial closure" />
+          {' '}
           <Tooltip id="add547">
             <div style={{ textAlign: 'center' }} >
               <FormattedMessage

@@ -169,17 +169,13 @@ export default class ImportKeys extends Component {
     const linked = Link.all(this, 'ethKey', 'btcKey', 'ltcKey', 'xlmKey')
 
     if (isSubmittedEth) {
-      linked.ethKey.check((value) => value !== '', 'Please enter ETH private key')
-      linked.ethKey.check((value) => value.length > 40, 'Please valid ETH private key')
+      linked.ethKey.check((value) => value !== '', <FormattedMessage id="importkeys172" defaultMessage="Please enter ETH private key" />)
+      linked.ethKey.check((value) => value.length > 40, <FormattedMessage id="importkeys173" defaultMessage="Please valid ETH private key" />)
     }
 
     if (isSubmittedBtc) {
       linked.btcKey.check((value) => value !== '', <FormattedMessage id="importkeys118" defaultMessage="Please enter BTC private key" />)
       linked.btcKey.check((value) => value.length > 27, <FormattedMessage id="importkeys119" defaultMessage="Please valid BTC private key" />)
-    }
-
-    if (isSubmittedXlm) {
-      linked.btcKey.check((value) => value !== '', 'Please enter XLM private key')
     }
 
     if (isSubmittedLtc) {
@@ -188,7 +184,7 @@ export default class ImportKeys extends Component {
     }
 
     if (isSubmittedXlm) {
-      linked.xlmKey.check((value) => value !== '', 'Please enter XLM private key')
+      linked.btcKey.check((value) => value !== '', <FormattedMessage id="importkeys187" defaultMessage="Please enter XLM private key" />)
     }
 
     return (

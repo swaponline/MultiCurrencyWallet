@@ -16,7 +16,9 @@ const SelectGroup = ({ selectedValue, onSelect, currencies, usd, placeholder, la
         {label}
       </strong>
       &nbsp;
-      <Tooltip id={id} text={tooltip} />
+      <Tooltip id={id}>
+        {tooltip}
+      </Tooltip>
     </FieldLabel>
     <div styleName="groupField" className={className}>
       <Input

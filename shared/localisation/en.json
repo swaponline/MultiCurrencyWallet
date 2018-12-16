@@ -4824,5 +4824,40 @@
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
+  },
+  {
+    "id": "ImportKeys176",
+    "message": "Please enter xlm private key",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "ImportKeys205",
+    "message": "Please enter ltc private key in WIF format",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "importkeys172",
+    "message": "Please enter ETH private key",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "importkeys173",
+    "message": "Please valid ETH private key",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "importkeys187",
+    "message": "Please enter XLM private key",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
   }
 ]

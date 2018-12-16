@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { connect } from 'redaction'
+import { withRouter } from 'react-router-dom'
 
 import { links } from 'helpers'
 import { Link } from 'react-router-dom'
@@ -28,6 +29,8 @@ export default class UserTooltip extends Component {
   static propTypes = {
     feeds: PropTypes.array.isRequired,
     peer: PropTypes.string.isRequired,
+    declineRequest: PropTypes.func.isRequired,
+    acceptRequest: PropTypes.func.isRequired,
   }
 
   declineRequest = (orderId, participantPeer) => {
@@ -51,8 +54,6 @@ export default class UserTooltip extends Component {
     const { intl: { locale } } = this.props
     this.acceptRequest(orderId, participantPeer)
     this.props.history.push(localisedUrl(locale, link))
-    declineRequest: PropTypes.func.isRequired,
-    acceptRequest: PropTypes.func.isRequired,
   }
 
   render() {
