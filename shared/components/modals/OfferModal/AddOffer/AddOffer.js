@@ -82,8 +82,6 @@ export default class AddOffer extends Component {
     const currency = items.concat(tokenItems)
       .filter(item => item.currency === sellCurrency.toUpperCase())[0]
 
-    const sleep = time => new Promise(resolve => setTimeout(resolve, time))
-
     const { balance, unconfirmedBalance } = currency
     const finalBalance = unconfirmedBalance !== undefined && unconfirmedBalance < 0
       ? Number(balance) + Number(unconfirmedBalance)
@@ -185,9 +183,7 @@ export default class AddOffer extends Component {
     return value
   }
 
-  handleBuyAmountChange = (value, prev) => {
-    const { exchangeRate, sellAmount, manualRate } = this.state
-
+  handleBuyAmountChange = (value) => {
     if (!isNumberStringFormatCorrect(value)) {
       return undefined
     }
@@ -201,8 +197,6 @@ export default class AddOffer extends Component {
   }
 
   handleSellAmountChange = (value) => {
-    const { exchangeRate, buyAmount } = this.state
-
     if (!isNumberStringFormatCorrect(value)) {
       return undefined
     }
@@ -354,14 +348,16 @@ export default class AddOffer extends Component {
     this.setState({ manualRate: value })
   }
 
-  switching = async ({ value }) => {
-    const { sellCurrency, buyCurrency } = this.state
+  switching = async () => {
+    const { sellCurrency, buyCurrency, sellAmount, buyAmount } = this.state
 
     await this.checkBalance(buyCurrency)
+    await this.updateExchangeRate(buyCurrency, sellCurrency)
 
-    await this.updateExchangeRate(sellCurrency, buyCurrency)
-
-    const { exchangeRate } = this.state
+    if (Number(sellAmount) > 0 || Number(buyAmount) > 0) {
+      this.handleBuyAmountChange(sellAmount)
+      this.handleSellAmountChange(buyAmount)
+    }
 
     this.setState({
       sellCurrency: buyCurrency,
