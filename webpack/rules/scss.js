@@ -22,7 +22,7 @@ export default [
           modules: true,
           localIdentName,
           // importLoaders: 1,
-          minimize: config.env === 'production'
+          minimize: config.env === 'production',
         },
       },
       {
