@@ -178,7 +178,7 @@ export default class Orders extends Component {
               row={row}
             />
           )}
-          isLoading={!isIpfsLoaded}
+          isLoading={sellOrders.length === 0 && !isIpfsLoaded}
         />
         <h3 styleName="ordersHeading">
           <FormattedMessage id="orders174" defaultMessage={`SELL {buyCurrency} HERE`} values={{ buyCurrency: `${buyCurrency}` }} />
@@ -204,7 +204,7 @@ export default class Orders extends Component {
               row={row}
             />
           )}
-          isLoading={!isIpfsLoaded}
+          isLoading={buyOrders.length === 0 && !isIpfsLoaded}
         />
       </Fragment>
     )
