@@ -3,6 +3,7 @@ import config from 'app-config'
 
 export const initialState = {
   isOnline: false,
+  isAllPeersLoaded: false,
   onlineUsers: 0,
   serverAddress: config.ipfs.server,
   peer: '',
@@ -27,4 +28,12 @@ export const userJoined = state => ({
 export const userLeft = state => ({
   ...state,
   onlineUsers: state.onlineUsers - 1,
+})
+
+/**
+ * Событие "Загрузились все пиры".
+ */
+export const allPeersLoaded = state => ({
+  ...state,
+  isAllPeersLoaded: true,
 })

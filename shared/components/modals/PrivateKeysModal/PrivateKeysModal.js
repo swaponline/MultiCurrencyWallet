@@ -157,7 +157,6 @@ export default class PrivateKeysModal extends React.PureComponent {
                 {/* <Button brand styleName="button" onClick={this.handleSendByEmail}>Send by email</Button> */}
               </Fragment>
             ) : (
-              /* eslint-disable */
               <Fragment>
                 <div styleName="title">
                   <FormattedMessage
@@ -189,7 +188,6 @@ export default class PrivateKeysModal extends React.PureComponent {
                   )
                 }
               </Fragment>
-              /* eslint-enable */
             )
           }
         </div>

@@ -2610,7 +2610,7 @@
   },
   {
     "id": "Row263",
-    "message": "Исользовать другой",
+    "message": "Импортировать",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
