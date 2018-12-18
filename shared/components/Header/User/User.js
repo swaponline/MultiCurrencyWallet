@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Redirect } from 'react-router-dom'
 import { withRouter } from 'react-router'
 import actions from 'redux/actions'
 import { connect } from 'redaction'
@@ -17,8 +16,10 @@ import SubscribeButton from './SubscribeButton/SubscribeButton'
 
 import Avatar from 'components/Avatar/Avatar'
 import { injectIntl } from 'react-intl'
+import { localisedUrl } from 'helpers/locale'
 
 
+@withRouter
 @injectIntl
 @connect({
   feeds: 'feeds.items',
