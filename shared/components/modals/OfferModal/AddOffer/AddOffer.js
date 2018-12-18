@@ -87,8 +87,6 @@ export default class AddOffer extends Component {
     const currency = items.concat(tokenItems)
       .filter(item => item.currency === sellCurrency.toUpperCase())[0]
 
-    const sleep = time => new Promise(resolve => setTimeout(resolve, time))
-
     const { balance, unconfirmedBalance } = currency
     const finalBalance = unconfirmedBalance !== undefined && unconfirmedBalance < 0
       ? Number(balance) + Number(unconfirmedBalance)
@@ -192,9 +190,7 @@ export default class AddOffer extends Component {
     return value
   }
 
-  handleBuyAmountChange = (value, prev) => {
-    const { exchangeRate, sellAmount, manualRate } = this.state
-
+  handleBuyAmountChange = (value) => {
     if (!isNumberStringFormatCorrect(value)) {
       return undefined
     }
@@ -208,8 +204,6 @@ export default class AddOffer extends Component {
   }
 
   handleSellAmountChange = (value) => {
-    const { exchangeRate, buyAmount } = this.state
-
     if (!isNumberStringFormatCorrect(value)) {
       return undefined
     }
@@ -361,14 +355,16 @@ export default class AddOffer extends Component {
     this.setState({ manualRate: value })
   }
 
-  switching = async ({ value }) => {
-    const { sellCurrency, buyCurrency } = this.state
+  switching = async () => {
+    const { sellCurrency, buyCurrency, sellAmount, buyAmount } = this.state
 
     await this.checkBalance(buyCurrency)
+    await this.updateExchangeRate(buyCurrency, sellCurrency)
 
-    await this.updateExchangeRate(sellCurrency, buyCurrency)
-
-    const { exchangeRate } = this.state
+    if (Number(sellAmount) > 0 || Number(buyAmount) > 0) {
+      this.handleBuyAmountChange(sellAmount)
+      this.handleSellAmountChange(buyAmount)
+    }
 
     this.setState({
       sellCurrency: buyCurrency,
@@ -435,11 +431,12 @@ export default class AddOffer extends Component {
               defaultMessage="For a swap, you need {minAmount} ETH on your balance"
               values={{ minAmount:`${minAmount.eth}` }}
             />
+
           </span>
         }
         <SelectGroup
           styleName="sellGroup"
-          label="Sell"
+          label={<FormattedMessage id="addoffer381" defaultMessage="Sell" />}
           inputValueLink={linked.sellAmount.pipe(this.handleSellAmountChange)}
           selectedCurrencyValue={sellCurrency}
           onCurrencySelect={this.handleSellCurrencySelect}
@@ -455,7 +452,7 @@ export default class AddOffer extends Component {
           switching={this.switching}
         />
         <SelectGroup
-          label="Buy"
+          label={<FormattedMessage id="addoffer396" defaultMessage="Buy" />}
           inputValueLink={linked.buyAmount.pipe(this.handleBuyAmountChange)}
           selectedCurrencyValue={this.zeroPosition()}
           onCurrencySelect={this.handleBuyCurrencySelect}
@@ -466,7 +463,7 @@ export default class AddOffer extends Component {
         />
         <div styleName="exchangeRate">
           <ExchangeRateGroup
-            label="Exchange rate"
+            label={<FormattedMessage id="addoffer406" defaultMessage="Exchange rate" />}
             inputValueLink={linked.exchangeRate.pipe(this.handleExchangeRateChange)}
             currency={false}
             disabled={!manualRate}

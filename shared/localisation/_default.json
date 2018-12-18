@@ -884,10 +884,6 @@
     "message": "to you"
   },
   {
-    "id": "orders174",
-    "message": "SELL"
-  },
-  {
     "id": "orders176",
     "message": "HERE"
   },
@@ -2669,10 +2665,6 @@
     ]
   },
   {
-    "id": "transaction27",
-    "message": "For a swap, you need"
-  },
-  {
     "id": "transaction28",
     "message": "ETH on your balance"
   },
@@ -3958,10 +3950,6 @@
     ]
   },
   {
-    "id": "transaction398",
-    "message": "ETH on your balance"
-  },
-  {
     "id": "Select210",
     "message": "MAX",
     "files": [
@@ -4906,5 +4894,6 @@
     "files": [
       "shared/components/ui/CurrencyIcon/CurrencyIcon.js"
     ]
+
   }
 ]

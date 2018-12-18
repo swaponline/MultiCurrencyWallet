@@ -887,10 +887,6 @@
     "message": " to you"
   },
   {
-    "id": "orders174",
-    "message": "SELL "
-  },
-  {
     "id": "orders176",
     "message": " HERE "
   },
@@ -2672,10 +2668,6 @@
     ]
   },
   {
-    "id": "transaction27",
-    "message": "For a swap, you need"
-  },
-  {
     "id": "transaction28",
     "message": "ETH on your balance"
   },
@@ -3949,10 +3941,6 @@
     "files": [
       "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
     ]
-  },
-  {
-    "id": "transaction398",
-    "message": "ETH on your balance"
   },
   {
     "id": "Select210",

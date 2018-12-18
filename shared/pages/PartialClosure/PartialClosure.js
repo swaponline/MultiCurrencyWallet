@@ -85,7 +85,6 @@ export default class PartialClosure extends Component {
     let timer
     let wallets
     let usdRates
-
   }
 
   componentDidMount() {
@@ -93,7 +92,7 @@ export default class PartialClosure extends Component {
 
     this.zeroPosition()
     actions.pairs.selectPair(haveCurrency)
-
+    
     this.usdRates = {}
     this.getUsdBalance()
 
@@ -109,7 +108,6 @@ export default class PartialClosure extends Component {
       this.setOrders()
     }, 2000)
   }
-
 
   componentWillUnmount() {
     clearInterval(this.timer)
@@ -340,6 +338,8 @@ export default class PartialClosure extends Component {
       haveCurrency = getCurrency
     }
     getCurrency = value
+
+    this.setClearState()
 
     this.setClearState()
 

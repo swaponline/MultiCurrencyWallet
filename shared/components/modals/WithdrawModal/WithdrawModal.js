@@ -17,6 +17,8 @@ import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import ReactTooltip from 'react-tooltip'
 
+import { isCoinAddress } from 'swap.app/util/typeforce'
+
 
 const minAmount = {
   eth: 0.001,
@@ -115,7 +117,6 @@ export default class WithdrawModal extends React.Component {
       })
   }
 
-
     sellAllBalance = () => {
       const { amount, balance } = this.state
       const { data } = this.props
@@ -210,6 +211,13 @@ export default class WithdrawModal extends React.Component {
             </Tooltip>
           </FieldLabel>
           <Input valueLink={linked.address} focusOnInit pattern="0-9a-zA-Z" placeholder={`Enter ${data.currency.toUpperCase()} address to transfer the funds`} />
+          {address && !this.addressIsCorrect() && (
+            <div styleName="rednote">
+              <FormattedMessage
+                id="WithdrawIncorectAddress"
+                defaultMessage="Your address not correct" />
+            </div>
+          )}
           <p style={{ marginTop: '20px' }}>
             <FormattedMessage id="Withdrow113" defaultMessage="Your balance: " />
             {Number(balance).toFixed(5)}

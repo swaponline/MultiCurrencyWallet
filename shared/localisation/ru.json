@@ -886,10 +886,7 @@
     "id": "orders153",
     "message": " "
   },
-  {
-    "id": "orders174",
-    "message": "ПРОДАТЬ "
-  },
+
   {
     "id": "orders176",
     "message": " "
@@ -2607,7 +2604,7 @@
   },
   {
     "id": "Row263",
-    "message": "Исользовать другой",
+    "message": "Импортировать",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
@@ -2670,10 +2667,6 @@
     "files": [
       "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
     ]
-  },
-  {
-    "id": "transaction27",
-    "message": "Для обмена вам необходимо"
   },
   {
     "id": "transaction28",
@@ -3705,15 +3698,24 @@
   },
   {
     "id": "addoffer381",
-    "message": "Продажа"
+    "message": "Продажа",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
   },
   {
     "id": "addoffer396",
-    "message": "Покупка"
+    "message": "Покупка",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
   },
   {
     "id": "addoffer406",
-    "message": "Курс обмена"
+    "message": "Курс обмена",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
   },
   {
     "id": "Table95",
@@ -3952,7 +3954,10 @@
   },
   {
     "id": "transaction398",
-    "message": "ETH на вашем балансе"
+    "message": "ETH на вашем балансе",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
   },
   {
     "id": "Select210",
