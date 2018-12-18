@@ -2604,7 +2604,7 @@
   },
   {
     "id": "Row263",
-    "message": "Импортировать",
+    "message": "Войти",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
