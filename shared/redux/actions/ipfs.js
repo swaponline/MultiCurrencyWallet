@@ -13,8 +13,13 @@ const userLeft = () => {
   reducers.ipfs.userLeft()
 }
 
+const allPeersLoaded = () => {
+  reducers.ipfs.allPeersLoaded()
+}
+
 export default {
   set,
   userJoined,
   userLeft,
+  allPeersLoaded,
 }

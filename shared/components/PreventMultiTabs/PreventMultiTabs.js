@@ -3,7 +3,6 @@ import React from 'react'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import { FormattedMessage } from 'react-intl'
 
-/* eslint-disable */
 const PreventMultiTabs = () => (
   <WidthContainer>
     <h1>
@@ -15,5 +14,4 @@ const PreventMultiTabs = () => (
     />
   </WidthContainer>
 )
-/* eslint-disable */
 export default PreventMultiTabs

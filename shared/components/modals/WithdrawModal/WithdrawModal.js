@@ -136,6 +136,13 @@ export default class WithdrawModal extends React.Component {
       )
     }
 
+    addressIsCorrect() {
+      const { data } = this.props
+      const { address } = this.state
+
+       return isCoinAddress[data.currency.toUpperCase()](address)
+    }
+
     render() {
       const { address, amount, balance, isShipped, minus, ethBalance, tokenFee } = this.state
       const { name, data, tokenItems } = this.props
@@ -143,7 +150,7 @@ export default class WithdrawModal extends React.Component {
       const linked = Link.all(this, 'address', 'amount')
       const isDisabled =
         !address || !amount || isShipped || Number(amount) < minAmount[data.currency.toLowerCase()]
-        || Number(amount) + minAmount[data.currency.toLowerCase()] > balance
+        || this.addressIsCorrect() || Number(amount) + minAmount[data.currency.toLowerCase()] > balance
         || this.isEthOrERC20()
 
       if (Number(amount) !== 0) {

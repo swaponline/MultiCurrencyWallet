@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import actions from 'redux/actions/index'
 import PropTypes from 'prop-types'
 
 import { Line } from 'rc-progress'
@@ -49,6 +50,7 @@ export default class ProgressBar extends Component {
     const newValue = progressNow + progress
 
     if (progressNow >= maxValue) {
+      actions.ipfs.allPeersLoaded()
       handleClick()
     } else {
       this.timer = setTimeout(this.step, step)

@@ -32,12 +32,13 @@ const filterOrders = (orders, filter) => orders
 
 @connect(({
   core: { orders, filter },
-  ipfs: { isOnline, peer },
+  ipfs: { isOnline, isAllPeersLoaded, peer },
   currencies: { items: currencies },
 }) => ({
   orders: filterOrders(orders, filter),
   myOrders: filterMyOrders(orders, peer),
   isOnline,
+  isAllPeersLoaded,
   currencies,
 }))
 @withRouter
@@ -110,7 +111,8 @@ export default class Orders extends Component {
     ]
 
 
-    const { isOnline, myOrders, orderId, invalidPair, location, currencies } = this.props
+    const { isOnline, isAllPeersLoaded, myOrders, orderId, invalidPair, location, currencies } = this.props
+    const isIpfsLoaded = isOnline && isAllPeersLoaded
 
     const buyCurrencyFullName = (currencies.find(c => c.name === buyCurrency) || {}).fullTitle
     const sellCurrencyFullName = (currencies.find(c => c.name === sellCurrency) || {}).fullTitle
@@ -176,7 +178,7 @@ export default class Orders extends Component {
               row={row}
             />
           )}
-          isLoading={!isOnline}
+          isLoading={sellOrders.length === 0 && !isIpfsLoaded}
         />
         <h3 styleName="ordersHeading">
           <FormattedMessage id="orders182" defaultMessage={`SELL {buyCurrency} HERE`} values={{ buyCurrency: `${buyCurrency}` }} />
@@ -202,7 +204,7 @@ export default class Orders extends Component {
               row={row}
             />
           )}
-          isLoading={!isOnline}
+          isLoading={buyOrders.length === 0 && !isIpfsLoaded}
         />
       </Fragment>
     )

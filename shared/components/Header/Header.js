@@ -186,7 +186,6 @@ export default class Header extends Component {
     )
   }
 }
-/* eslint-disable */
 const tourSteps = [
   {
     selector: '[data-tut="reactour__address"]',
@@ -236,4 +235,3 @@ const tourSteps = [
       </div>),
   },
 ]
-/* eslint-disable */
