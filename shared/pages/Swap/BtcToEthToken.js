@@ -50,7 +50,7 @@ export default class BtcToEthToken extends Component {
     this.setState({
       flow: values,
     })
-  } // add commit
+  }
 
   submitSecret = () => {
     const { secret } = this.state
