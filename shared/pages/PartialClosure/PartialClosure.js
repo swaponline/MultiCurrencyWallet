@@ -22,7 +22,6 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 
-
 import config from 'app-config'
 import swapApp from 'swap.app'
 
@@ -92,7 +91,7 @@ export default class PartialClosure extends Component {
 
     this.zeroPosition()
     actions.pairs.selectPair(haveCurrency)
-    
+
     this.usdRates = {}
     this.getUsdBalance()
 
