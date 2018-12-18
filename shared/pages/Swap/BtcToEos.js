@@ -60,9 +60,9 @@ export default class BtcToEos extends Component {
     return (
       <div>
         <Fragment>
-          <FormattedMessage id="BtcToEos63" defaultMessage="1. Generate secret key">
-            {message => <h3>{message}</h3>}
-          </FormattedMessage>
+          <h3>
+            <FormattedMessage id="BtcToEos63" defaultMessage="1. Generate secret key" />
+          </h3>
           {
             !isSubmitted &&
             <TimerButton brand onClick={this.submitSecret}>
@@ -87,9 +87,9 @@ export default class BtcToEos extends Component {
         {
           flow.step >= 2 &&
           <Fragment>
-            <FormattedMessage id="BtcToEos87" defaultMessage="2. Fund BTC script">
-              {message => <h3>{message}</h3>}
-            </FormattedMessage>
+            <h3>
+              <FormattedMessage id="BtcToEos87" defaultMessage="2. Fund BTC script" />
+            </h3>
             {
               flow.createTx === null && <InlineLoader />
             }
@@ -101,9 +101,9 @@ export default class BtcToEos extends Component {
         {
           flow.step >= 3 &&
           <Fragment>
-            <FormattedMessage id="BtcToEos101" defaultMessage="3. Request to open EOS contract">
-              {message => <h3>{message}</h3>}
-            </FormattedMessage>
+            <h3>
+              <FormattedMessage id="BtcToEos101" defaultMessage="3. Request to open EOS contract" />
+            </h3>
             {
               flow.openTx === null && <InlineLoader />
             }
@@ -115,9 +115,9 @@ export default class BtcToEos extends Component {
         {
           flow.step >= 4 &&
           <Fragment>
-            <FormattedMessage id="BtcToEos115" defaultMessage="4. Withdraw EOS from contract">
-              {message => <h3>{message}</h3>}
-            </FormattedMessage>
+            <h3>
+              <FormattedMessage id="BtcToEos115" defaultMessage="4. Withdraw EOS from contract" />
+            </h3>
             {
               flow.eosWithdrawTx === null && <InlineLoader />
             }
@@ -139,9 +139,9 @@ export default class BtcToEos extends Component {
         {
           flow.step >= 5 &&
           <Fragment>
-            <FormattedMessage id="BtcToEos140" defaultMessage="5. Request to withdraw BTC from script">
-              {message => <h3>{message}</h3>}
-            </FormattedMessage>
+            <h3>
+              <FormattedMessage id="BtcToEos140" defaultMessage="5. Request to withdraw BTC from script" />
+            </h3>
             {
               flow.btcWithdrawTx === null && <InlineLoader />
             }

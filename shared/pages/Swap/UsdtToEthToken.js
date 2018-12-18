@@ -81,11 +81,11 @@ export default class UsdtToEthToken extends Component {
         {
           flow.isWaitingForOwner && (
             <Fragment>
-              <FormattedMessage
-                id="UsdrToEthToken83"
-                defaultMessage="We are waiting for a market maker. If it does not appear within 5 minutes, the swap will be canceled automatically.">
-                {message => <h3>{message}</h3>}
-              </FormattedMessage>
+              <h3>
+                <FormattedMessage
+                  id="UsdrToEthToken83"
+                  defaultMessage="We are waiting for a market maker. If it does not appear within 5 minutes, the swap will be canceled automatically." />
+              </h3>
               <InlineLoader />
             </Fragment>
           )
@@ -93,9 +93,9 @@ export default class UsdtToEthToken extends Component {
         {
           (flow.step === 1 || flow.isMeSigned) && (
             <Fragment>
-              <FormattedMessage id="UsdrToEthToken93" defaultMessage="1. Waiting participant confirm this swap">
-                {message => <h3>{message}</h3>}
-              </FormattedMessage>
+              <h3>
+                <FormattedMessage id="UsdrToEthToken93" defaultMessage="1. Waiting participant confirm this swap" />
+              </h3>
               <InlineLoader />
             </Fragment>
           )
@@ -106,10 +106,9 @@ export default class UsdtToEthToken extends Component {
         {
           flow.isParticipantSigned && (
             <Fragment>
-              <FormattedMessage id="UsdrToEthToken106" defaultMessage="2. Create a secret key">
-                {message => <h3>{message}</h3>}
-              </FormattedMessage>
-
+              <h3>
+                <FormattedMessage id="UsdrToEthToken106" defaultMessage="2. Create a secret key" />
+              </h3>
               {
                 !flow.secretHash ? (
                   <Fragment>
@@ -139,9 +138,9 @@ export default class UsdtToEthToken extends Component {
               {
                 flow.step === 3 && !flow.isBalanceEnough && !flow.isBalanceFetching && (
                   <Fragment>
-                    <FormattedMessage id="UsdrToEthToken137" defaultMessage="Not enough money for this swap. Please charge the balance">
-                      {message => <h3>{message}</h3>}
-                    </FormattedMessage>
+                    <h3>
+                      <FormattedMessage id="UsdrToEthToken137" defaultMessage="Not enough money for this swap. Please charge the balance" />
+                    </h3>
                     <div>
                       <div>
                         <FormattedMessage id="UsdrToEthToken141" defaultMessage="Your balance: " />
@@ -173,9 +172,9 @@ export default class UsdtToEthToken extends Component {
               {
                 flow.step === 3 && flow.isBalanceFetching && (
                   <Fragment>
-                    <FormattedMessage id="UsdrToEthToken163" defaultMessage="Checking balance...">
-                      {message => <div>{message} </div>}
-                    </FormattedMessage>
+                    <div>
+                      <FormattedMessage id="UsdrToEthToken163" defaultMessage="Checking balance..." />
+                    </div>
                     <InlineLoader />
                   </Fragment>
                 )
@@ -184,9 +183,9 @@ export default class UsdtToEthToken extends Component {
               {
                 (flow.step === 4 || flow.usdtScriptValues) && (
                   <Fragment>
-                    <FormattedMessage id="UsdrToEthToken174" defaultMessage="3. Creating Bitcoin Omni Script. Please wait, it will take a while">
-                      {message => <h3>{message} </h3>}
-                    </FormattedMessage>
+                    <h3>
+                      <FormattedMessage id="UsdrToEthToken174" defaultMessage="3. Creating Bitcoin Omni Script. Please wait, it will take a while" />
+                    </h3>
                     {
                       flow.usdtFundingTransactionHash && (
                         <div>
@@ -233,9 +232,9 @@ export default class UsdtToEthToken extends Component {
               {
                 (flow.step === 5 || flow.isEthContractFunded) && (
                   <Fragment>
-                    <FormattedMessage id="UsdrToEthToken233" defaultMessage="4. ETH Owner received Bitcoin Omni Script and Secret Hash. Waiting until he creates ETH Contract">
-                      {message => <h3>{message} </h3>}
-                    </FormattedMessage>
+                    <h3>
+                      <FormattedMessage id="UsdrToEthToken233" defaultMessage="4. ETH Owner received Bitcoin Omni Script and Secret Hash. Waiting until he creates ETH Contract" />
+                    </h3>
                     {
                       !flow.isEthContractFunded && (
                         <InlineLoader />
@@ -285,12 +284,12 @@ export default class UsdtToEthToken extends Component {
               {
                 flow.isEthWithdrawn && (
                   <Fragment>
-                    <FormattedMessage id="UsdrToEthToken294" defaultMessage="6. Money was transferred to your wallet. Check the balance.">
-                      {message => <h3>{message} </h3>}
-                    </FormattedMessage>
-                    <FormattedMessage id="UsdrToEthToken297" defaultMessage="Thank you for using Swap.Online!">
-                      {message => <h2>{message} </h2>}
-                    </FormattedMessage>
+                    <h3>
+                      <FormattedMessage id="UsdrToEthToken294" defaultMessage="6. Money was transferred to your wallet. Check the balance." />
+                    </h3>
+                    <h2>
+                      <FormattedMessage id="UsdrToEthToken297" defaultMessage="Thank you for using Swap.Online!" />
+                    </h2>
                   </Fragment>
                 )
               }

@@ -3,38 +3,58 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'redaction'
 import { constants } from 'helpers'
 import { isMobile } from 'react-device-detect'
+import { withRouter } from 'react-router'
+import actions from 'redux/actions'
+
+import { Link, Redirect } from 'react-router-dom'
+import { FormattedMessage, injectIntl } from 'react-intl'
+import { localisedUrl } from '../../helpers/locale'
+
+import CSSModules from 'react-css-modules'
+import styles from './Currency.scss'
 
 import Title from 'components/PageHeadline/Title/Title'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import Table from 'components/tables/Table/Table'
-import Toggle from 'components/controls/Toggle/Toggle'
-
-import CSSModules from 'react-css-modules'
-import styles from './Currency.scss'
 
 import Row from './Row/Row'
-import actions from 'redux/actions'
-
-import { withRouter } from 'react-router'
-import { FormattedMessage } from 'react-intl'
+import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
 
 
 @withRouter
-@connect(({ core: { hiddenCoinsList }, user: { ethData, btcData, ltcData, tokensData, eosData, nimData, usdtData } }) => ({
-  tokens: Object.keys(tokensData).map(k => (tokensData[k])),
-  items: [ ethData, btcData, eosData, usdtData, ltcData /* nimData */ ],
+@connect(({
+  core: { hiddenCoinsList },
+  user: { ethData, btcData, ltcData, tokensData, telosData, eosData, nimData, usdtData } }) => ({
+  items: [ ethData, btcData, eosData, usdtData, telosData, ltcData, ...Object.keys(tokensData).map(k => (tokensData[k])) /* nimData */ ],
   hiddenCoinsList,
 }))
 @CSSModules(styles, { allowMultiple: true })
 export default class Currency extends Component {
 
-  state = {
-    isBalanceFetching: false,
+
+  constructor({ match: { params: { currency } }, items, tokens, history }) {
+    super()
+
+    this.state = {
+      isBalanceFetching: false,
+      isBalanceEmpty: true,
+      balance: 0,
+    }
+
+    const item = items.map(item => item.currency.toLowerCase())
+    if (!item.includes(currency)) {
+      return history.push('/NotFound')
+    }
   }
 
+  componentDidMount() {
+    this.handleReloadBalance()
+  }
+
+
   getRows = () => {
-    let { match:{ params: { currency } } } = this.props
+    let { match:{ params: { currency, address } }, items } = this.props
     currency = currency.toLowerCase()
 
     return constants.tradeTicker
@@ -56,26 +76,19 @@ export default class Currency extends Component {
   getCurrencyName = () => this.props.match.params.currency.toLowerCase()
   getCoin = () => [...this.props.items, ...this.props.tokens].find(coin => coin.currency.toLowerCase() === this.getCurrencyName())
 
-  handleReloadBalance = () => {
-    const { isBalanceFetching } = this.state
-    const coin = this.getCoin()
-    const currency = coin.currency.toLowerCase()
-    const token = !!coin.token
-    const action = token ? 'token' : currency
+  handleReloadBalance = async () => {
+    let { match:{ params: { currency } } } = this.props
+    currency = currency.toLowerCase()
 
-    if (isBalanceFetching) {
-      return null
+    const balance = await actions[currency].getBalance(currency)
+
+    if (balance > 0) {
+      this.setState(() => ({
+        isBalanceEmpty: false,
+        balance,
+      }))
     }
 
-    this.setState({
-      isBalanceFetching: true,
-    })
-
-    actions[action]
-      .getBalance(currency)
-      .finally(() => this.setState({
-        isBalanceFetching: false,
-      }))
   }
 
   isInWallet = () => !this.props.hiddenCoinsList.includes(this.getCoin().currency)
@@ -83,34 +96,64 @@ export default class Currency extends Component {
   handleInWalletChange = (val) => val ? actions.core.markCoinAsVisible(this.getCoin().currency) :
     actions.core.markCoinAsHidden(this.getCoin().currency)
 
-  componentWillMount = () => {
-    if (!this.getCoin()) {
-      this.props.history.push('/')
-      return false
-    }
+  handleReceive = () => {
+    let { match:{ params: { currency } }, items } = this.props
+    const itemCurrency = items.filter(item => item.currency.toLowerCase() === currency)[0]
+    const { address } = itemCurrency
 
-    this.handleReloadBalance()
+    currency = currency.toUpperCase()
+
+    actions.modals.open(constants.modals.ReceiveModal, {
+      currency,
+      address,
+    })
+  }
+
+  handleWithdraw = () => {
+    let { match:{ params: { currency } }, items } = this.props
+    const itemCurrency = items.filter(item => item.currency.toLowerCase() === currency)[0]
+
+    actions.analytics.dataEvent(`balances-withdraw-${currency.toLowerCase()}`)
+    actions.modals.open(constants.modals.Withdraw, {
+      ...itemCurrency,
+    })
   }
 
   render() {
-    const { match: { params: { currency } } } = this.props
-    const { balance } = this.getCoin()
-
+    const { match: { params: { currency } }, items } = this.props
+    const { isBalanceEmpty, balance } = this.state
     return (
       <section styleName={isMobile ? 'currencyMobileSection' : 'currencyMediaSection'}>
         <PageHeadline>
           <Fragment>
-            <div styleName="currencyTitle">
-              <Title>{currency}</Title>
-            </div>
             <SubTitle>{currency.toUpperCase()} Trade</SubTitle>
           </Fragment>
           <div styleName="currencyBalance">
             <FormattedMessage id="Currency101" defaultMessage="Balance: " />
             <span styleName="currencyBalanceValue">{(String(balance).length > 5 ? balance.toFixed(5) : balance) || 0} {currency}</span>
           </div>
-          <div styleName="currencyToggle">
-            <Toggle onChange={this.handleInWalletChange} checked={this.isInWallet()} />Added to Wallet
+          <div style={{ marginTop: '20px', height: '20px' }}>
+            <CurrencyButton
+              wallet="true"
+              onClick={this.handleReceive}
+              dataTooltip={{
+                id: `currency${currency}`,
+                deposit: true,
+              }}
+            >
+              <FormattedMessage id="Row313" defaultMessage="Deposit" />
+            </CurrencyButton>
+            <CurrencyButton
+              wallet="true"
+              dataTooltip={{
+                isActive: isBalanceEmpty,
+                id: `send${currency}`,
+              }}
+              onClick={this.handleWithdraw}
+              disable={isBalanceEmpty}
+            >
+              <FormattedMessage id="CurrencyWallet100" defaultMessage="Send" />
+            </CurrencyButton>
           </div>
         </PageHeadline>
         <Table

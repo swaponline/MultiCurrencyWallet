@@ -9,8 +9,15 @@ import styles from './SubscribeModal.scss'
 
 import Modal from 'components/modal/Modal/Modal'
 import Button from 'components/controls/Button/Button'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 
+
+const title = defineMessages({
+  subscribeModal: {
+    id: 'Subscribe55',
+    defaultMessage: 'Subscribe',
+  },
+})
 
 @connect(
   ({
@@ -20,6 +27,7 @@ import { FormattedMessage } from 'react-intl'
     btcAddress: btcData.address,
   })
 )
+@injectIntl
 @cssModules(styles)
 export default class SubscribeModal extends React.Component {
 
@@ -38,9 +46,9 @@ export default class SubscribeModal extends React.Component {
 
     this.setState(() => ({ isSubmited: true }))
 
-    const result = await actions.pushNotification.registrationFirebase({
-      eth: ethAddress,
-      btc: btcAddress,
+    const result = await actions.firebase.subscribe({
+      ethAddress,
+      btcAddress,
       gaID: gaTracker !== undefined ? gaTracker.get('clientId') : 'None',
     })
 
@@ -49,10 +57,10 @@ export default class SubscribeModal extends React.Component {
 
   render() {
     const { isSubscribed, isSubmited } = this.state
-    const { name } = this.props
+    const { name, intl } = this.props
 
     return (
-      <Modal name={name} title="Subscribe">
+      <Modal name={name} title={intl.formatMessage(title.subscribeModal)}>
         {
           isSubscribed ? (
             <p styleName="thanks">

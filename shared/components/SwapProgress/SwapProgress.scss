@@ -1,19 +1,21 @@
 
 .overlay {
-  background-color: rgba(255, 255, 255, 1);
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  /* font-size: 10px; */
   z-index: 1000;
+  /* position: absolute; */
+  /* left: 130px; */
+  width: 100%;
+  /* top: 12px; */
+  margin-bottom: 20px;
 }
 .container {
-  width: 500px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
+  width: 100%;
+  position: relative;
+  // width: 500px;
+  // position: absolute;
+  // top: 50%;
+  // left: 50%;
+  // transform: translate(-50%,-50%);
 }
 .progress {
   overflow: hidden;
@@ -53,15 +55,19 @@
   transition: width 0.6s ease;
 }
 .steps {
-  color: #000;
+  color: #8e8e8e;
   position: absolute;
-  right: 0;
-  top: -35px;
+  right: -95px;
+  top: -3px;
   font-size: 16px;
 }
 .info {
-  margin-top: 15px;
+  margin-top: 10px;
   display: block;
+  position: relative;
+  div:first-child {
+    display: inline-block;
+  }
 }
 .headerContent {
   height: 100%;
@@ -77,7 +83,6 @@
   line-height: 22px;
   font-size: 24px;
   text-align: center;
-
   &.uppercase {
     text-transform: uppercase;
   }
@@ -100,4 +105,88 @@
   border-bottom: 1px solid #ddd;
 }
 
+.animated-dots {
+  display: inline-block;
+  height: 12px;
+  position: absolute;
+  bottom: 30px;
+  right: -33px;
+}
 
+.animated-dots span {
+  color: #6d18e4;
+  font-size: 33px;
+  animation-name: blink;
+  animation-duration: 1.4s;
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
+}
+
+.animated-dots span:nth-child(2) {
+  animation-delay: .2s;
+}
+
+.animated-dots span:nth-child(3) {
+  animation-delay: .4s;
+}
+
+.link {
+  color: #fff;
+  background: #e91db4;
+  height: 40px;
+  line-height: 40px;
+  padding: 0 20px;
+  display: block;
+  width: max-content;
+  text-transform: uppercase;
+  border-radius: 20px;
+  margin: auto;
+  margin-top: 20px;
+  font-size: 16px;
+  &:hover {
+    background-color: #ff1fc5;
+    color: #fff;
+  }
+}
+
+@keyframes blink {
+  0% {
+    opacity: .2;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: .2;
+  }
+}
+
+@include media-tablet {
+  .container {
+    width: 63%;
+  }
+  .steps {
+    top: -30px;
+    right: 0;
+  }
+}
+
+@include media-mobile {
+  .container {
+    width: 85%;
+  }
+  .info {
+    margin-top: 5px;
+    div {
+      font-size: 13px;
+    }
+  }
+  .steps {
+    font-size: 13px;
+    top: -25px;
+    right: 0;
+  }
+  .link {
+    font-size: 13px;
+  }
+}

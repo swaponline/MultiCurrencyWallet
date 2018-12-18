@@ -2,6 +2,7 @@ import eos from './eos'
 import btc from './btc'
 import bcash from './bcash'
 import ltc from './ltc'
+import xlm from './xlm'
 import web3 from './web3'
 import links from './links'
 import request from './request'
@@ -23,6 +24,7 @@ import { migrate } from './migrations/'
 
 export {
   eos,
+  xlm,
   bcash,
   tips,
   btc,

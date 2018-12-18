@@ -1,5 +1,12 @@
 [
   {
+    "id": "174",
+    "message": "Продолжить ",
+    "files": [
+      "shared/pages/Swap/BtcToEth.js"
+    ]
+  },
+  {
     "id": "menu.aboutus",
     "message": "О Нас",
     "files": [
@@ -22,10 +29,7 @@
   },
   {
     "id": "menu.listing",
-    "message": "Листинг",
-    "files": [
-      "shared/components/Header/Header.js"
-    ]
+    "message": "Листинг"
   },
   {
     "id": "menu.wallet",
@@ -39,6 +43,4812 @@
     "message": "Автор ушел",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
+    ]
+  },
+  {
+    "id": "avatar24",
+    "message": "Автоматически созданный граватар, уникальный для каждого пользователя. Ваш граватар в правом верхнем углу",
+    "files": [
+      "shared/components/Avatar/Avatar.js"
+    ]
+  },
+  {
+    "id": "ConConfirm25firm20",
+    "message": "Нет",
+    "files": [
+      "shared/components/Confirm/Confirm.js"
+    ]
+  },
+  {
+    "id": "Confirm20",
+    "message": "Да",
+    "files": [
+      "shared/components/Confirm/Confirm.js"
+    ]
+  },
+  {
+    "id": "CDC63",
+    "message": "Обменять ",
+    "files": [
+      "shared/components/CurrencyDirectionChooser/CurrencyDirectionChooser.js"
+    ]
+  },
+  {
+    "id": "CDC75",
+    "message": "На ",
+    "files": [
+      "shared/components/CurrencyDirectionChooser/CurrencyDirectionChooser.js"
+    ]
+  },
+  {
+    "id": "CurrencyDirectionChooser54",
+    "message": "Выберите валютную пару",
+    "files": [
+      "shared/components/CurrencyDirectionChooser/CurrencyDirectionChooser.js"
+    ]
+  },
+  {
+    "id": "CurrencyDirectionChooser86",
+    "message": "ПОКАЗАТЬ ОРДЕРА",
+    "files": [
+      "shared/components/CurrencyDirectionChooser/CurrencyDirectionChooser.js"
+    ]
+  },
+  {
+    "id": "Nav88",
+    "message": "Листинг",
+    "files": [
+      "shared/components/Header/Nav/Nav.js"
+    ]
+  },
+  {
+    "id": "ADDoffer22",
+    "message": "Перейти в Mainnet",
+    "files": [
+      "shared/components/Header/User/SubscribeButton/SubscribeButton.js"
+    ]
+  },
+  {
+    "id": "ADDoffer2218",
+    "message": "Mainnet",
+    "files": [
+      "shared/components/Header/User/SubscribeButton/SubscribeButton.js"
+    ]
+  },
+  {
+    "id": "ADDoffer29",
+    "message": "Подписаться",
+    "files": [
+      "shared/components/Header/User/SubscribeButton/SubscribeButton.js"
+    ]
+  },
+  {
+    "id": "ADDoffer33",
+    "message": "Подписаться на обновление новостей Swap.Online",
+    "files": [
+      "shared/components/Header/User/SubscribeButton/SubscribeButton.js"
+    ]
+  },
+  {
+    "id": "question15",
+    "message": "Узнать о Нас больше",
+    "files": [
+      "shared/components/Header/User/Question/Question.js"
+    ]
+  },
+  {
+    "id": "QUESTION15",
+    "message": "Служба поддержки",
+    "files": [
+      "shared/components/Header/User/UserTooltip/UserTooltip.js"
+    ]
+  },
+  {
+    "id": "userTooltip68",
+    "message": "Пользователь с "
+  },
+  {
+    "id": "userTooltip72",
+    "message": "репутацией предлагает обмен"
+  },
+  {
+    "id": "transactionLink28",
+    "message": "Транзакция: ",
+    "files": [
+      "shared/components/Href/TransactionLink.js"
+    ]
+  },
+  {
+    "id": "KeyActionsPanel43",
+    "message": "Выйти",
+    "files": [
+      "shared/components/KeyActionsPanel/KeyActionsPanel.js"
+    ]
+  },
+  {
+    "id": "KeyActionsPanel46",
+    "message": "Скачать ключи",
+    "files": [
+      "shared/components/KeyActionsPanel/KeyActionsPanel.js"
+    ]
+  },
+  {
+    "id": "KeyActionsPanel49",
+    "message": "Импортировать",
+    "files": [
+      "shared/components/KeyActionsPanel/KeyActionsPanel.js"
+    ]
+  },
+  {
+    "id": "KeyActionsPanel53",
+    "message": "Показать больше валют",
+    "files": [
+      "shared/components/KeyActionsPanel/KeyActionsPanel.js"
+    ]
+  },
+  {
+    "id": "Loader21",
+    "message": "Пожалуйста подождите, потребуется 3-5 минут для проведения транзакции. ",
+    "files": [
+      "shared/components/loaders/Loader/Loader.js"
+    ]
+  },
+  {
+    "id": "logo29",
+    "message": "Домой",
+    "files": [
+      "shared/components/Logo/LogoTooltip.js"
+    ]
+  },
+  {
+    "id": "EosRegAccountModal54",
+    "message": "Имя пользователя",
+    "files": [
+      "shared/components/modals/EosRegisterModal/EosRegisterModal.js"
+    ]
+  },
+  {
+    "id": "EosRegAccountModal58",
+    "message": "Активировать приватный ключ",
+    "files": [
+      "shared/components/modals/EosRegisterModal/EosRegisterModal.js"
+    ]
+  },
+  {
+    "id": "EosRegAccountModal63",
+    "message": "Произошла ошибка при активации",
+    "files": [
+      "shared/components/modals/EosRegisterModal/EosRegisterModal.js"
+    ]
+  },
+  {
+    "id": "EosRegAccountModal70",
+    "message": "Войти",
+    "files": [
+      "shared/components/modals/EosRegisterModal/EosRegisterModal.js"
+    ]
+  },
+  {
+    "id": "Approve70",
+    "message": "Укажите лимит суммы для Смарт контрактов. Мы не рекомендуем устанавливать какие-либо ограничения. ",
+    "files": [
+      "shared/components/modals/Approve/Approve.js"
+    ]
+  },
+  {
+    "id": "Approve73",
+    "message": "Сумма",
+    "files": [
+      "shared/components/modals/Approve/Approve.js"
+    ]
+  },
+  {
+    "id": "Approve80",
+    "message": "Подтвердить",
+    "files": [
+      "shared/components/modals/Approve/Approve.js"
+    ]
+  },
+  {
+    "id": "EosBuyAccountModal103",
+    "message": "Произошла ошибка при активации, попробуйте снова",
+    "files": [
+      "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
+    ]
+  },
+  {
+    "id": "EosBuyAccountModal109",
+    "message": "Транзакция: ",
+    "files": [
+      "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
+    ]
+  },
+  {
+    "id": "EosBuyAccountModal114",
+    "message": "Создать аккаунт",
+    "files": [
+      "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
+    ]
+  },
+  {
+    "id": "EosBuyAccountModal72",
+    "message": "Имя аккаунта",
+    "files": [
+      "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
+    ]
+  },
+  {
+    "id": "EosBuyAccountModal78",
+    "message": "Приватный ключ ",
+    "files": [
+      "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
+    ]
+  },
+  {
+    "id": "EosBuyAccountModal84",
+    "message": "Общедоступный ключ ",
+    "files": [
+      "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
+    ]
+  },
+  {
+    "id": "EosBuyAccountModal90",
+    "message": "Цена (BTC) ",
+    "files": [
+      "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
+    ]
+  },
+  {
+    "id": "EthChecker19",
+    "message": "Этот Токен работает на сети Ethereum blockchain. Для осуществления операций у Вас должно быть не менее 0.02 ETH на балансе",
+    "files": [
+      "shared/components/modals/EthChecker/EthChecker.js"
+    ]
+  },
+  {
+    "id": "EthChecker23",
+    "message": "Кошелек",
+    "files": [
+      "shared/components/modals/EthChecker/EthChecker.js"
+    ]
+  },
+  {
+    "id": "ImportKeys107",
+    "message": "Эта процедура перепишет Ваш общедоступный ключ. Если Вы не уверены, Мы рекомендуем Вам отказаться",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "ImportKeys110",
+    "message": "Введите Ваш ETH приватный ключ",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "ImportKeys120",
+    "message": "Введите Ваш BTC приватный ключ в WIF формате",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "ImportKeys130",
+    "message": "Подтвердить",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "ImportKeys133",
+    "message": "Отменить",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "Group14",
+    "message": "Загрузить",
+    "files": [
+      "shared/components/modals/ImportKeys/Group/Group.js"
+    ]
+  },
+  {
+    "id": "Select10",
+    "message": "Доступная сумма для продажи ",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/Select/Select.js"
+    ]
+  },
+  {
+    "id": "Select15",
+    "message": "  ",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/Select/Select.js"
+    ]
+  },
+  {
+    "id": "Select24",
+    "message": "ВСЕ! ",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/Select/Select.js"
+    ]
+  },
+  {
+    "id": "ConfirmOffer69",
+    "message": "Назад",
+    "files": [
+      "shared/components/modals/OfferModal/ConfirmOffer/ConfirmOffer.js"
+    ]
+  },
+  {
+    "id": "ConfirmOffer73",
+    "message": "Опубликовать",
+    "files": [
+      "shared/components/modals/OfferModal/ConfirmOffer/ConfirmOffer.js"
+    ]
+  },
+  {
+    "id": "ExchangeRate14",
+    "message": "  =  ",
+    "files": [
+      "shared/components/modals/OfferModal/ConfirmOffer/ExchangeRate/ExchangeRate.js"
+    ]
+  },
+  {
+    "id": "Feld82",
+    "message": "НЕВЕРНЫЙ ПРИВАТНЫЙ ключ! Попробуйте снова! ",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/Field2/Field2.js"
+    ]
+  },
+  {
+    "id": "ReceiveModal",
+    "message": "Адрес для получения ",
+    "files": [
+      "shared/components/modals/ReceiveModal/ReceiveModal.js"
+    ]
+  },
+  {
+    "id": "SaveKeysModal",
+    "message": "Testnet: Не спрашивать больше",
+    "files": [
+      "shared/components/modals/SaveKeysModal/SaveKeysModal.js"
+    ]
+  },
+  {
+    "id": "ShowMoreCoins36",
+    "message": "Валюты, показываемые в кошельке",
+    "files": [
+      "shared/components/modals/ShowMoreCoins/ShowMoreCoins.js"
+    ]
+  },
+  {
+    "id": "ShowMoreCoins48",
+    "message": "Скрытые Валюты",
+    "files": [
+      "shared/components/modals/ShowMoreCoins/ShowMoreCoins.js"
+    ]
+  },
+  {
+    "id": "TelosRegister55",
+    "message": "Имя аккаунта",
+    "files": [
+      "shared/components/modals/TelosRegisterModal/TelosRegisterModal.js"
+    ]
+  },
+  {
+    "id": "TelosRegister59",
+    "message": "Приватный ключ",
+    "files": [
+      "shared/components/modals/TelosRegisterModal/TelosRegisterModal.js"
+    ]
+  },
+  {
+    "id": "TelosRegister64",
+    "message": "Произошла ошибка при активации",
+    "files": [
+      "shared/components/modals/TelosRegisterModal/TelosRegisterModal.js"
+    ]
+  },
+  {
+    "id": "TelosRegister69",
+    "message": "Войти",
+    "files": [
+      "shared/components/modals/TelosRegisterModal/TelosRegisterModal.js"
+    ]
+  },
+  {
+    "id": "ErrorNotification12",
+    "message": "Упс!, Что то пошло не так! ",
+    "files": [
+      "shared/components/notifications/ErrorNotification/ErrorNotification.js"
+    ]
+  },
+  {
+    "id": "ErrorNotification15",
+    "message": "Ошибка: ",
+    "files": [
+      "shared/components/notifications/ErrorNotification/ErrorNotification.js"
+    ]
+  },
+  {
+    "id": "WithdrawModal106",
+    "message": "Не меньше чем ",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "WithdrawModal111",
+    "message": "Перевод ",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Withdrow108",
+    "message": "Сумма должна быть меньше вашего баланса на комиссию манеров ",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Withdrow113",
+    "message": "Ваш баланс: ",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Withdrow118",
+    "message": "Сумма",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "PreventMultiTabs",
+    "message": "Слишком много вкладок",
+    "files": [
+      "shared/components/PreventMultiTabs/PreventMultiTabs.js"
+    ]
+  },
+  {
+    "id": "SaveKe33",
+    "message": "Скачать",
+    "files": [
+      "shared/components/SaveKeys/SaveKeys.js"
+    ]
+  },
+  {
+    "id": "SaveKe37",
+    "message": "Скачать текстовый документ, с приватными ключами и адресами кошелька",
+    "files": [
+      "shared/components/SaveKeys/SaveKeys.js"
+    ]
+  },
+  {
+    "id": "SaveKeys23",
+    "message": "Это ваши приватные ключи. Для того, чтобы скачать ключи, нажмите на кнопку"
+  },
+  {
+    "id": "SaveKeys24",
+    "message": " или сделайте снимок этой страницы, затем подтвердите и нажмите здесь. "
+  },
+  {
+    "id": "SaveKeys26",
+    "message": "Я сохранил ключи в надежном месте",
+    "files": [
+      "shared/components/SaveKeys/SaveKeys.js"
+    ]
+  },
+  {
+    "id": "SwapProgress105",
+    "message": "3. Проверяется баланс.. ",
+    "files": [
+      "shared/components/SwapProgress/SwapProgress.js"
+    ]
+  },
+  {
+    "id": "SwapProgress111",
+    "message": "4. Создается Bitcoin Script. Пожалуйста подождите, это займет некоторое время",
+    "files": [
+      "shared/components/SwapProgress/SwapProgress.js"
+    ]
+  },
+  {
+    "id": "SwapProgress117",
+    "message": "5. ETH Владелец получил Bitcoin Script и Хэш. Ожидание, создания ETH контракта ",
+    "files": [
+      "shared/components/SwapProgress/SwapProgress.js"
+    ]
+  },
+  {
+    "id": "SwapProgress123",
+    "message": "6. Пробуем вывести ETH из контракта. Пожалуйста, подождите",
+    "files": [
+      "shared/components/SwapProgress/SwapProgress.js"
+    ]
+  },
+  {
+    "id": "SwapProgress129",
+    "message": "7. Средства перечислены на Ваш кошелек. Проверте баланс. ",
+    "files": [
+      "shared/components/SwapProgress/SwapProgress.js"
+    ]
+  },
+  {
+    "id": "SwapProgress135",
+    "message": "Спасибо за использование Swap.Online! ",
+    "files": [
+      "shared/components/SwapProgress/SwapProgress.js"
+    ]
+  },
+  {
+    "id": "SwapProgress157",
+    "message": "Статтус обмена"
+  },
+  {
+    "id": "SwapProgress32",
+    "message": "1. Пожалуйста, подождите. Обработка подтверждения",
+    "files": [
+      "shared/components/SwapProgress/SwapProgress.js"
+    ]
+  },
+  {
+    "id": "SwapProgress38",
+    "message": "2. Ожидание, Владелец BTC создает секретный ключ, создает BTC Script и пополняет его",
+    "files": [
+      "shared/components/SwapProgress/SwapProgress.js"
+    ]
+  },
+  {
+    "id": "SwapProgress44",
+    "message": "3. Bitcoin Script создан и загружен. Пожалуйста, проверьте информацию ниже",
+    "files": [
+      "shared/components/SwapProgress/SwapProgress.js"
+    ]
+  },
+  {
+    "id": "SwapProgress50",
+    "message": "4. Проверка баланса.. ",
+    "files": [
+      "shared/components/SwapProgress/SwapProgress.js"
+    ]
+  },
+  {
+    "id": "SwapProgress56",
+    "message": "5. Создается Ethereum Контракт. Пожалуйста подожди, это займет некоторое время",
+    "files": [
+      "shared/components/SwapProgress/SwapProgress.js"
+    ]
+  },
+  {
+    "id": "SwapProgress62",
+    "message": "6. Ожидание, пока Владелец BTC добавит Секретный ключ в ETH Контракт",
+    "files": [
+      "shared/components/SwapProgress/SwapProgress.js"
+    ]
+  },
+  {
+    "id": "SwapProgress68",
+    "message": "7. Средства перечислены на Ваш кошелек. Проверте баланс. ",
+    "files": [
+      "shared/components/SwapProgress/SwapProgress.js"
+    ]
+  },
+  {
+    "id": "SwapProgress74",
+    "message": "Благодарим за использование Swap.Online! ",
+    "files": [
+      "shared/components/SwapProgress/SwapProgress.js"
+    ]
+  },
+  {
+    "id": "SwapProgress80",
+    "message": "Благодарим за использование Swap.Online!! ",
+    "files": [
+      "shared/components/SwapProgress/SwapProgress.js"
+    ]
+  },
+  {
+    "id": "SwapProgress93",
+    "message": "1. Создавший ордер, не в сети. Ожидание.. ",
+    "files": [
+      "shared/components/SwapProgress/SwapProgress.js"
+    ]
+  },
+  {
+    "id": "SwapProgress99",
+    "message": "2. Создается Секретный ключ",
+    "files": [
+      "shared/components/SwapProgress/SwapProgress.js"
+    ]
+  },
+  {
+    "id": "Tooltip11",
+    "message": "? ",
+    "files": [
+      "shared/components/ui/Tooltip/Tooltip.js"
+    ]
+  },
+  {
+    "id": "Currency101",
+    "message": "Баланс: ",
+    "files": [
+      "shared/pages/Currency/Currency.js"
+    ]
+  },
+  {
+    "id": "CurrencyWallet100",
+    "message": "Отправить",
+    "files": [
+      "shared/pages/Currency/Currency.js",
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "CurrencyWallet104",
+    "message": "Обмен",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "CurrencyWallet105",
+    "message": "Активировать аккаунт",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "CurrencyWallet110",
+    "message": "История Ваших транзакций",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "CurrencyWallet95",
+    "message": "Ваш адрес: "
+  },
+  {
+    "id": "Row30",
+    "message": "Обмен "
+  },
+  {
+    "id": "Row35",
+    "message": "Обмен",
+    "files": [
+      "shared/pages/Currency/Row/Row.js"
+    ]
+  },
+  {
+    "id": "history68",
+    "message": "Все транзакции",
+    "files": [
+      "shared/pages/History/History.js"
+    ]
+  },
+  {
+    "id": "history72",
+    "message": "Все отправленные и полученные транзакции",
+    "files": [
+      "shared/pages/History/History.js"
+    ]
+  },
+  {
+    "id": "RowHistory76",
+    "message": "Возврат невозможен",
+    "files": [
+      "shared/pages/History/SwapsHistory/RowHistory/RowHistory.js"
+    ]
+  },
+  {
+    "id": "RowHistory91",
+    "message": "Ссылка на обмен",
+    "files": [
+      "shared/pages/History/SwapsHistory/RowHistory/RowHistory.js"
+    ]
+  },
+  {
+    "id": "RowHistory95",
+    "message": "Ссылка на обмен",
+    "files": [
+      "shared/pages/History/SwapsHistory/RowHistory/RowHistory.js"
+    ]
+  },
+  {
+    "id": "RowHistory49",
+    "message": "Возврат невозможен"
+  },
+  {
+    "id": "SwapHisrory21",
+    "message": "История обменов",
+    "files": [
+      "shared/pages/History/SwapsHistory/SwapsHistory.js"
+    ]
+  },
+  {
+    "id": "MyOrders23",
+    "message": "Ваши ордера",
+    "files": [
+      "shared/pages/Home/Orders/MyOrders/MyOrders.js"
+    ]
+  },
+  {
+    "id": "RowFeeds64",
+    "message": "Скопировано",
+    "files": [
+      "shared/pages/Home/Orders/MyOrders/RowFeeds/RowFeeds.js"
+    ]
+  },
+  {
+    "id": "RowFeeds68",
+    "message": "Поделиться",
+    "files": [
+      "shared/pages/Home/Orders/MyOrders/RowFeeds/RowFeeds.js"
+    ]
+  },
+  {
+    "id": "RowFeeds77",
+    "message": "Снизить",
+    "files": [
+      "shared/pages/Home/Orders/MyOrders/RowFeeds/RowFeeds.js"
+    ]
+  },
+  {
+    "id": "RowFeeds81",
+    "message": "Согласиться",
+    "files": [
+      "shared/pages/Home/Orders/MyOrders/RowFeeds/RowFeeds.js"
+    ]
+  },
+  {
+    "id": "RowFeeds87",
+    "message": "Удалить ордер",
+    "files": [
+      "shared/pages/Home/Orders/MyOrders/RowFeeds/RowFeeds.js"
+    ]
+  },
+  {
+    "id": "RowMFeed49",
+    "message": "Вы получите",
+    "files": [
+      "shared/pages/Home/Orders/MyOrders/RowFeedsMobile/RowFeedsMobile.js"
+    ]
+  },
+  {
+    "id": "RowMFeed56",
+    "message": "Вы имеете",
+    "files": [
+      "shared/pages/Home/Orders/MyOrders/RowFeedsMobile/RowFeedsMobile.js"
+    ]
+  },
+  {
+    "id": "RowMFeed69",
+    "message": "Скопировано",
+    "files": [
+      "shared/pages/Home/Orders/MyOrders/RowFeedsMobile/RowFeedsMobile.js"
+    ]
+  },
+  {
+    "id": "RowMFeed82",
+    "message": "Снизить",
+    "files": [
+      "shared/pages/Home/Orders/MyOrders/RowFeedsMobile/RowFeedsMobile.js"
+    ]
+  },
+  {
+    "id": "RowMFeed85",
+    "message": "Согласиться",
+    "files": [
+      "shared/pages/Home/Orders/MyOrders/RowFeedsMobile/RowFeedsMobile.js"
+    ]
+  },
+  {
+    "id": "Home153",
+    "message": "Что такое Atomic swap? ",
+    "files": [
+      "shared/pages/Home/Home.js"
+    ]
+  },
+  {
+    "id": "Orders117",
+    "message": "Данная валютная пара не существует. Перенаправлены на валютную пару SWAP-BTC "
+  },
+  {
+    "id": "Orders128",
+    "message": "Создать Ордер"
+  },
+  {
+    "id": "orders143",
+    "message": "КУПИТЬ "
+  },
+  {
+    "id": "orders145",
+    "message": " "
+  },
+  {
+    "id": "orders148",
+    "message": "Здесь размещены ордера на "
+  },
+  {
+    "id": "orders150",
+    "message": "ПРОДАЖУ ",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "orders153",
+    "message": " "
+  },
+  {
+    "id": "orders174",
+    "message": "ПРОДАТЬ "
+  },
+  {
+    "id": "orders176",
+    "message": " "
+  },
+  {
+    "id": "orders179",
+    "message": "Здесь размещены ордера на "
+  },
+  {
+    "id": "orders181",
+    "message": " ПОКУПКУ "
+  },
+  {
+    "id": "orders184",
+    "message": " "
+  },
+  {
+    "id": "Row122",
+    "message": "по цене"
+  },
+  {
+    "id": "Row131",
+    "message": "купить"
+  },
+  {
+    "id": "Row148",
+    "message": "ЗАПРОС",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row151",
+    "message": "Перейти к обмену",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row157",
+    "message": "Этот ордер выполняется",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row165",
+    "message": "Подождите, Ваш запрос отправлен. ",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowM122",
+    "message": "Вы получите"
+  },
+  {
+    "id": "RowM136",
+    "message": "ЗАПРОС",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowM139",
+    "message": "Перейти к обмену",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowM145",
+    "message": "Этот заказ выполняется",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowM153",
+    "message": "Подождите, Ваш запрос отправлен. ",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowM166",
+    "message": "Старт",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "NotFound8",
+    "message": "Странице не найдена! ",
+    "files": [
+      "shared/pages/NotFound/NotFound.js"
+    ]
+  },
+  {
+    "id": "BtcToEos101",
+    "message": "3. Запрос на открытие EOS Контракта",
+    "files": [
+      "shared/pages/Swap/BtcToEos.js"
+    ]
+  },
+  {
+    "id": "BtcToEos115",
+    "message": "4. Изъятие из EOS Контракта",
+    "files": [
+      "shared/pages/Swap/BtcToEos.js"
+    ]
+  },
+  {
+    "id": "BtcToEos126",
+    "message": "ПОПРОБУЙТЕ ВОЗВРАТ",
+    "files": [
+      "shared/pages/Swap/BtcToEos.js"
+    ]
+  },
+  {
+    "id": "BtcToEos140",
+    "message": "5. Запрос на отзыва BTC из шифра",
+    "files": [
+      "shared/pages/Swap/BtcToEos.js"
+    ]
+  },
+  {
+    "id": "BtcToEos63",
+    "message": "1. Генерируется Секретный ключ",
+    "files": [
+      "shared/pages/Swap/BtcToEos.js"
+    ]
+  },
+  {
+    "id": "BtcToEos67",
+    "message": "Отправить секрет",
+    "files": [
+      "shared/pages/Swap/BtcToEos.js"
+    ]
+  },
+  {
+    "id": "BtcToEos74",
+    "message": "Секрет: ",
+    "files": [
+      "shared/pages/Swap/BtcToEos.js"
+    ]
+  },
+  {
+    "id": "BtcToEos77",
+    "message": "Хэш: ",
+    "files": [
+      "shared/pages/Swap/BtcToEos.js"
+    ]
+  },
+  {
+    "id": "BtcToEos87",
+    "message": "2. Fund BTC script",
+    "files": [
+      "shared/pages/Swap/BtcToEos.js"
+    ]
+  },
+  {
+    "id": "BtcToEth100",
+    "message": "В этом заказе нет покупателя",
+    "files": [
+      "shared/pages/Swap/BtcToEth.js"
+    ]
+  },
+  {
+    "id": "BtcToEth105",
+    "message": "Создатель ордера не в сети. Ожидайте его.. ",
+    "files": [
+      "shared/pages/Swap/BtcToEth.js"
+    ]
+  },
+  {
+    "id": "BtcToEth116",
+    "message": "Ожидаем пользователя, предложившего обмен. Если он не появится в течение 5 минут, обмен будет отменен автоматически. ",
+    "files": [
+      "shared/pages/Swap/BtcToEth.js"
+    ]
+  },
+  {
+    "id": "BtcToEth126",
+    "message": "2. Создается Секретный ключ",
+    "files": [
+      "shared/pages/Swap/BtcToEth.js"
+    ]
+  },
+  {
+    "id": "BtcToEth134",
+    "message": "Подтвердить",
+    "files": [
+      "shared/pages/Swap/BtcToEth.js"
+    ]
+  },
+  {
+    "id": "BtcToEth140",
+    "message": "Сохраните секретный ключ! В противном случае Вы сможете потерять свои деньги! ",
+    "files": [
+      "shared/pages/Swap/BtcToEth.js"
+    ]
+  },
+  {
+    "id": "BtcToEth143",
+    "message": "Секретный ключ: ",
+    "files": [
+      "shared/pages/Swap/BtcToEth.js"
+    ]
+  },
+  {
+    "id": "BtcToEth146",
+    "message": "Хэш: ",
+    "files": [
+      "shared/pages/Swap/BtcToEth.js"
+    ]
+  },
+  {
+    "id": "BtcToEth156",
+    "message": "Недостаточно средст для проведения этой операции. Пожалуйста, пополните свой баланс",
+    "files": [
+      "shared/pages/Swap/BtcToEth.js"
+    ]
+  },
+  {
+    "id": "BtcToEth160",
+    "message": "Ваш Баланс: ",
+    "files": [
+      "shared/pages/Swap/BtcToEth.js"
+    ]
+  },
+  {
+    "id": "BtcToEth163",
+    "message": "Требуемый баланс: ",
+    "files": [
+      "shared/pages/Swap/BtcToEth.js"
+    ]
+  },
+  {
+    "id": "BtcToEth167",
+    "message": "Ваш адрес: ",
+    "files": [
+      "shared/pages/Swap/BtcToEth.js"
+    ]
+  },
+  {
+    "id": "BtcToEth183",
+    "message": "Проверка баланса.. ",
+    "files": [
+      "shared/pages/Swap/BtcToEth.js"
+    ]
+  },
+  {
+    "id": "BtcToEth194",
+    "message": "3. Создается Bitcoin Script. Пожалуйста подождите, это потребует какое то время.. ",
+    "files": [
+      "shared/pages/Swap/BtcToEth.js"
+    ]
+  },
+  {
+    "id": "BtcToEth199",
+    "message": "Транзакция: ",
+    "files": [
+      "shared/pages/Swap/BtcToEth.js"
+    ]
+  },
+  {
+    "id": "BtcToEth226",
+    "message": "Создание транзакции на возврат средств",
+    "files": [
+      "shared/pages/Swap/BtcToEth.js"
+    ]
+  },
+  {
+    "id": "BtcToEth233",
+    "message": "Как вернуть деньги ? ",
+    "files": [
+      "shared/pages/Swap/BtcToEth.js"
+    ]
+  },
+  {
+    "id": "BtcToEth253",
+    "message": "4. Владелец ETH получил Bitcoin Script и Хэш. Ожидаение создания им ETH Контракта",
+    "files": [
+      "shared/pages/Swap/BtcToEth.js"
+    ]
+  },
+  {
+    "id": "BtcToEth266",
+    "message": "Транзакция: ",
+    "files": [
+      "shared/pages/Swap/BtcToEth.js"
+    ]
+  },
+  {
+    "id": "BtcToEth282",
+    "message": "5. Пробуем вывести ETH из контракта. Пожалуйста, подождите",
+    "files": [
+      "shared/pages/Swap/BtcToEth.js"
+    ]
+  },
+  {
+    "id": "BtcToEth289",
+    "message": "Транзакция: ",
+    "files": [
+      "shared/pages/Swap/BtcToEth.js"
+    ]
+  },
+  {
+    "id": "BtcToEth312",
+    "message": "6. Деньги были переведены на Ваш кошелек. Проверьте баланс. ",
+    "files": [
+      "shared/pages/Swap/BtcToEth.js"
+    ]
+  },
+  {
+    "id": "BtcToEth315",
+    "message": "Благодарим за использование Swap.Online!! ",
+    "files": [
+      "shared/pages/Swap/BtcToEth.js"
+    ]
+  },
+  {
+    "id": "BtcToEth325",
+    "message": "ПОПРОБУЙТЕ ВОЗВРАТ",
+    "files": [
+      "shared/pages/Swap/BtcToEth.js"
+    ]
+  },
+  {
+    "id": "BtcToEth338",
+    "message": "Транзакция: ",
+    "files": [
+      "shared/pages/Swap/BtcToEth.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken100",
+    "message": "2. Создается Секретный ключ",
+    "files": [
+      "shared/pages/Swap/BtcToEthToken.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken108",
+    "message": "Подтвердить",
+    "files": [
+      "shared/pages/Swap/BtcToEthToken.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken114",
+    "message": "Сохраните секретный ключ! В противном случае Вы можете потерять деньги! ",
+    "files": [
+      "shared/pages/Swap/BtcToEthToken.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken117",
+    "message": "Секретный ключ: ",
+    "files": [
+      "shared/pages/Swap/BtcToEthToken.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken120",
+    "message": "Хэш: ",
+    "files": [
+      "shared/pages/Swap/BtcToEthToken.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken130",
+    "message": "Недостаточно средст для проведения данной операции. Пожалуйста, пополните свой баланс",
+    "files": [
+      "shared/pages/Swap/BtcToEthToken.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken134",
+    "message": "Ваш Баланс: ",
+    "files": [
+      "shared/pages/Swap/BtcToEthToken.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken137",
+    "message": "Требуемый баланс: ",
+    "files": [
+      "shared/pages/Swap/BtcToEthToken.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken140",
+    "message": "Ваш адрес: ",
+    "files": [
+      "shared/pages/Swap/BtcToEthToken.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken147",
+    "message": "Продолжить",
+    "files": [
+      "shared/pages/Swap/BtcToEthToken.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken156",
+    "message": "Проверка баланса.. ",
+    "files": [
+      "shared/pages/Swap/BtcToEthToken.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken167",
+    "message": "3. Создается Bitcoin Script. Пожалуйста подождите, это займет какое то время",
+    "files": [
+      "shared/pages/Swap/BtcToEthToken.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken172",
+    "message": "Транзакция: ",
+    "files": [
+      "shared/pages/Swap/BtcToEthToken.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken200",
+    "message": "Создание транзакции на возврат средств",
+    "files": [
+      "shared/pages/Swap/BtcToEthToken.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken207",
+    "message": "Как вернуть деньги ? ",
+    "files": [
+      "shared/pages/Swap/BtcToEthToken.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken230",
+    "message": "4. Владелец ETH получил Bitcoin Script и Хэш. Ожидается, создание им ETH Контракта",
+    "files": [
+      "shared/pages/Swap/BtcToEthToken.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken243",
+    "message": "Транзакция: ",
+    "files": [
+      "shared/pages/Swap/BtcToEthToken.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken260",
+    "message": "5. Пробуем вывести ETH из контракта. Пожалуйста, подождите",
+    "files": [
+      "shared/pages/Swap/BtcToEthToken.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken267",
+    "message": "Транзакция: ",
+    "files": [
+      "shared/pages/Swap/BtcToEthToken.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken290",
+    "message": "6. Деньги были переведены на Ваш кошелек. Проверьте баланс. ",
+    "files": [
+      "shared/pages/Swap/BtcToEthToken.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken293",
+    "message": "Благодарим за использование Swap.Online!! ",
+    "files": [
+      "shared/pages/Swap/BtcToEthToken.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken303",
+    "message": "ПОПРОБУЙТЕ ВОЗВРАТ",
+    "files": [
+      "shared/pages/Swap/BtcToEthToken.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken316",
+    "message": "Транзакция: ",
+    "files": [
+      "shared/pages/Swap/BtcToEthToken.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken77",
+    "message": "Мы оживаем создавшего ордер на обмен. Если он не появится в течение 5 минут, обмен будет отменен автоматически. ",
+    "files": [
+      "shared/pages/Swap/BtcToEthToken.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken87",
+    "message": "1. Ожидание подтверждения",
+    "files": [
+      "shared/pages/Swap/BtcToEthToken.js"
+    ]
+  },
+  {
+    "id": "EosToBtc107",
+    "message": "ПОПРОБУЙТЕ ВОЗВРАТ",
+    "files": [
+      "shared/pages/Swap/EosToBtc.js"
+    ]
+  },
+  {
+    "id": "EosToBtc127",
+    "message": "5. Withdraw BTC from script",
+    "files": [
+      "shared/pages/Swap/EosToBtc.js"
+    ]
+  },
+  {
+    "id": "EosToBtc59",
+    "message": "1. Request to fund BTC script",
+    "files": [
+      "shared/pages/Swap/EosToBtc.js"
+    ]
+  },
+  {
+    "id": "EosToBtc73",
+    "message": "2. Проверить BTC script",
+    "files": [
+      "shared/pages/Swap/EosToBtc.js"
+    ]
+  },
+  {
+    "id": "EosToBtc82",
+    "message": "3. Открыть EOS Контракт",
+    "files": [
+      "shared/pages/Swap/EosToBtc.js"
+    ]
+  },
+  {
+    "id": "EosToBtc97",
+    "message": "4. Запрос на снятие EOS с контракта",
+    "files": [
+      "shared/pages/Swap/EosToBtc.js"
+    ]
+  },
+  {
+    "id": "EmergencySave",
+    "message": "Информация об обмене",
+    "files": [
+      "shared/pages/Swap/EmergencySave/EmergencySave.js"
+    ]
+  },
+  {
+    "id": "EthToBtc104",
+    "message": "Создавший ордер не в сети. Ожидание, пока он не появится в сети.. ",
+    "files": [
+      "shared/pages/Swap/EthToBtc.js"
+    ]
+  },
+  {
+    "id": "EthToBtc115",
+    "message": "Ожидание другого пользователя",
+    "files": [
+      "shared/pages/Swap/EthToBtc.js"
+    ]
+  },
+  {
+    "id": "EthToBtc125",
+    "message": "Подтверждение сделки необходимо для формирования репутации. Если пользователь не доводит дело до конца, он получает отрицательную репутацию. ",
+    "files": [
+      "shared/pages/Swap/EthToBtc.js"
+    ]
+  },
+  {
+    "id": "EthToBtc128",
+    "message": "Подписать ",
+    "files": [
+      "shared/pages/Swap/EthToBtc.js"
+    ]
+  },
+  {
+    "id": "EthToBtc134",
+    "message": "Пожалуйста, подождите. Обработка подтверждения",
+    "files": [
+      "shared/pages/Swap/EthToBtc.js"
+    ]
+  },
+  {
+    "id": "EthToBtc139",
+    "message": "Транзакция: ",
+    "files": [
+      "shared/pages/Swap/EthToBtc.js"
+    ]
+  },
+  {
+    "id": "EthToBtc167",
+    "message": "2. Ожидание, Владелец BTC создает Cекретный ключ, BTC Script и пополняет его. ",
+    "files": [
+      "shared/pages/Swap/EthToBtc.js"
+    ]
+  },
+  {
+    "id": "EthToBtc179",
+    "message": "3. Bitcoin Script создан и загружен. Пожалуйста, проверте информацию ниже",
+    "files": [
+      "shared/pages/Swap/EthToBtc.js"
+    ]
+  },
+  {
+    "id": "EthToBtc182",
+    "message": "Хэш: ",
+    "files": [
+      "shared/pages/Swap/EthToBtc.js"
+    ]
+  },
+  {
+    "id": "EthToBtc185",
+    "message": "Script адрес: ",
+    "files": [
+      "shared/pages/Swap/EthToBtc.js"
+    ]
+  },
+  {
+    "id": "EthToBtc204",
+    "message": "Показать Вitcoin script",
+    "files": [
+      "shared/pages/Swap/EthToBtc.js"
+    ]
+  },
+  {
+    "id": "EthToBtc247",
+    "message": "Все отлично. Продолжить",
+    "files": [
+      "shared/pages/Swap/EthToBtc.js"
+    ]
+  },
+  {
+    "id": "EthToBtc260",
+    "message": "Недостаточно средств для данной операции. Пожалуйста пополните баланс",
+    "files": [
+      "shared/pages/Swap/EthToBtc.js"
+    ]
+  },
+  {
+    "id": "EthToBtc264",
+    "message": "Ваш баланс: ",
+    "files": [
+      "shared/pages/Swap/EthToBtc.js"
+    ]
+  },
+  {
+    "id": "EthToBtc267",
+    "message": "Необходимый баланс: ",
+    "files": [
+      "shared/pages/Swap/EthToBtc.js"
+    ]
+  },
+  {
+    "id": "EthToBtc270",
+    "message": "Ваш адрес: ",
+    "files": [
+      "shared/pages/Swap/EthToBtc.js"
+    ]
+  },
+  {
+    "id": "EthToBtc277",
+    "message": "Продолжить",
+    "files": [
+      "shared/pages/Swap/EthToBtc.js"
+    ]
+  },
+  {
+    "id": "EthToBtc286",
+    "message": "Проверка баланса.. ",
+    "files": [
+      "shared/pages/Swap/EthToBtc.js"
+    ]
+  },
+  {
+    "id": "EthToBtc297",
+    "message": "4. Создание контракта Ethereum. Подождите, это займет некоторое время",
+    "files": [
+      "shared/pages/Swap/EthToBtc.js"
+    ]
+  },
+  {
+    "id": "EthToBtc305",
+    "message": "Транзакция: ",
+    "files": [
+      "shared/pages/Swap/EthToBtc.js"
+    ]
+  },
+  {
+    "id": "EthToBtc326",
+    "message": "Транзакция: ",
+    "files": [
+      "shared/pages/Swap/EthToBtc.js"
+    ]
+  },
+  {
+    "id": "EthToBtc343",
+    "message": "5. Ожидание, Владелец BTC добавляет Секретный ключ в ETH Контракт",
+    "files": [
+      "shared/pages/Swap/EthToBtc.js"
+    ]
+  },
+  {
+    "id": "EthToBtc357",
+    "message": "6. Владелец BTC успешно получил средства из ETH Контракта и отправил Секретный ключ. Запрос о снятии с BTC Script. Пожалуйста, подождите",
+    "files": [
+      "shared/pages/Swap/EthToBtc.js"
+    ]
+  },
+  {
+    "id": "EthToBtc364",
+    "message": "Транзакция: ",
+    "files": [
+      "shared/pages/Swap/EthToBtc.js"
+    ]
+  },
+  {
+    "id": "EthToBtc387",
+    "message": "7. Деньги были переведены на Ваш кошелек. Проверьте баланс. ",
+    "files": [
+      "shared/pages/Swap/EthToBtc.js"
+    ]
+  },
+  {
+    "id": "EthToBtc390",
+    "message": "Благодарим за использование Swap.Online!! ",
+    "files": [
+      "shared/pages/Swap/EthToBtc.js"
+    ]
+  },
+  {
+    "id": "EthToBtc400",
+    "message": "ПОПРОБУЙТЕ ВОЗВРАТ",
+    "files": [
+      "shared/pages/Swap/EthToBtc.js"
+    ]
+  },
+  {
+    "id": "EthToBtc412",
+    "message": "Транзакция: ",
+    "files": [
+      "shared/pages/Swap/EthToBtc.js"
+    ]
+  },
+  {
+    "id": "EthToBtc99",
+    "message": "У этого ордера нет покупателя",
+    "files": [
+      "shared/pages/Swap/EthToBtc.js"
+    ]
+  },
+  {
+    "id": "EthTokenBtc102",
+    "message": "Подтвердить",
+    "files": [
+      "shared/pages/Swap/EthTokenToBtc.js"
+    ]
+  },
+  {
+    "id": "EthTokenBtc111",
+    "message": "Пожалуйста, подождите. Обработка подтверждения",
+    "files": [
+      "shared/pages/Swap/EthTokenToBtc.js"
+    ]
+  },
+  {
+    "id": "EthTokenBtc116",
+    "message": "Транзакция: ",
+    "files": [
+      "shared/pages/Swap/EthTokenToBtc.js"
+    ]
+  },
+  {
+    "id": "EthTokenBtc147",
+    "message": "2. Ожидание, Владелец BTC создает Cекретный ключ, BTC Script и пополняет его. ",
+    "files": [
+      "shared/pages/Swap/EthTokenToBtc.js"
+    ]
+  },
+  {
+    "id": "EthTokenBtc159",
+    "message": "3. Bitcoin Script создан и загружен. Пожалуйста, проверте информацию ниже",
+    "files": [
+      "shared/pages/Swap/EthTokenToBtc.js"
+    ]
+  },
+  {
+    "id": "EthTokenBtc162",
+    "message": "Хэш: ",
+    "files": [
+      "shared/pages/Swap/EthTokenToBtc.js"
+    ]
+  },
+  {
+    "id": "EthTokenBtc165",
+    "message": "Script адрес: ",
+    "files": [
+      "shared/pages/Swap/EthTokenToBtc.js"
+    ]
+  },
+  {
+    "id": "EthTokenBtc184",
+    "message": "Показать Вitcoin script",
+    "files": [
+      "shared/pages/Swap/EthTokenToBtc.js"
+    ]
+  },
+  {
+    "id": "EthTokenBtc228",
+    "message": "Все отлично. Продолжить",
+    "files": [
+      "shared/pages/Swap/EthTokenToBtc.js"
+    ]
+  },
+  {
+    "id": "EthTokenBtc241",
+    "message": "Недостаточно средств для данной операции. Пожалуйста пополните баланс",
+    "files": [
+      "shared/pages/Swap/EthTokenToBtc.js"
+    ]
+  },
+  {
+    "id": "EthTokenBtc245",
+    "message": "Ваш баланс: ",
+    "files": [
+      "shared/pages/Swap/EthTokenToBtc.js"
+    ]
+  },
+  {
+    "id": "EthTokenBtc248",
+    "message": "Необходимый баланс: ",
+    "files": [
+      "shared/pages/Swap/EthTokenToBtc.js"
+    ]
+  },
+  {
+    "id": "EthTokenBtc251",
+    "message": "Ваш адрес: ",
+    "files": [
+      "shared/pages/Swap/EthTokenToBtc.js"
+    ]
+  },
+  {
+    "id": "EthTokenBtc258",
+    "message": "Продолжить",
+    "files": [
+      "shared/pages/Swap/EthTokenToBtc.js"
+    ]
+  },
+  {
+    "id": "EthTokenBtc267",
+    "message": "Проверка баланса.. ",
+    "files": [
+      "shared/pages/Swap/EthTokenToBtc.js"
+    ]
+  },
+  {
+    "id": "EthTokenBtc276",
+    "message": "4. Создание контракта Ethereum. Подождите, это займет некоторое время",
+    "files": [
+      "shared/pages/Swap/EthTokenToBtc.js"
+    ]
+  },
+  {
+    "id": "EthTokenBtc283",
+    "message": "Транзакция: ",
+    "files": [
+      "shared/pages/Swap/EthTokenToBtc.js"
+    ]
+  },
+  {
+    "id": "EthTokenBtc303",
+    "message": "Транзакция: ",
+    "files": [
+      "shared/pages/Swap/EthTokenToBtc.js"
+    ]
+  },
+  {
+    "id": "EthTokenBtc321",
+    "message": "5. Ожидание, Владелец BTC добавляет Секретный ключ в ETH Контракт",
+    "files": [
+      "shared/pages/Swap/EthTokenToBtc.js"
+    ]
+  },
+  {
+    "id": "EthTokenBtc335",
+    "message": "6. Владелец BTC успешно получил средства из ETH Контракта и отправил Секретный ключ. Запрос о снятии с BTC Script. Пожалуйста, подождите",
+    "files": [
+      "shared/pages/Swap/EthTokenToBtc.js"
+    ]
+  },
+  {
+    "id": "EthTokenBtc342",
+    "message": "Транзакция: ",
+    "files": [
+      "shared/pages/Swap/EthTokenToBtc.js"
+    ]
+  },
+  {
+    "id": "EthTokenBtc365",
+    "message": "Благодарим за использование Swap.Online! ",
+    "files": [
+      "shared/pages/Swap/EthTokenToBtc.js"
+    ]
+  },
+  {
+    "id": "EthTokenBtc375",
+    "message": "ПОПРОБУЙТЕ ВОЗВРАТ",
+    "files": [
+      "shared/pages/Swap/EthTokenToBtc.js"
+    ]
+  },
+  {
+    "id": "EthTokenBtc77",
+    "message": "Ожидание другого пользователя",
+    "files": [
+      "shared/pages/Swap/EthTokenToBtc.js"
+    ]
+  },
+  {
+    "id": "EthTokenBtc86",
+    "message": "1. Подтвердите свое участие, для начала сделки",
+    "files": [
+      "shared/pages/Swap/EthTokenToBtc.js"
+    ]
+  },
+  {
+    "id": "EthTokenBtc94",
+    "message": "Подтверждение сделки необходимо для формирования репутации. Если пользователь не доводит дело до конца, он получает отрицательную репутацию",
+    "files": [
+      "shared/pages/Swap/EthTokenToBtc.js"
+    ]
+  },
+  {
+    "id": "EthTokenToUsdt101",
+    "message": "Подтверждение сделки необходимо для формирования репутации. Если пользователь не доводит дело до конца, он получает отрицательную репутацию. ",
+    "files": [
+      "shared/pages/Swap/EthTokenToUsdt.js"
+    ]
+  },
+  {
+    "id": "EthTokenToUsdt109",
+    "message": "Подтвердить",
+    "files": [
+      "shared/pages/Swap/EthTokenToUsdt.js"
+    ]
+  },
+  {
+    "id": "EthTokenToUsdt118",
+    "message": "Пожалуйста, подождите. Обработка подтверждения",
+    "files": [
+      "shared/pages/Swap/EthTokenToUsdt.js"
+    ]
+  },
+  {
+    "id": "EthTokenToUsdt123",
+    "message": "Транзакция: ",
+    "files": [
+      "shared/pages/Swap/EthTokenToUsdt.js"
+    ]
+  },
+  {
+    "id": "EthTokenToUsdt154",
+    "message": "2. Ожидание, Владелец USDT создает Секретный ключ, создает BTC Omni Script и пополняет его",
+    "files": [
+      "shared/pages/Swap/EthTokenToUsdt.js"
+    ]
+  },
+  {
+    "id": "EthTokenToUsdt166",
+    "message": "3. Bitcoin Omni Script создан и загружен. Пожалуйста, проверте информацию ниже",
+    "files": [
+      "shared/pages/Swap/EthTokenToUsdt.js"
+    ]
+  },
+  {
+    "id": "EthTokenToUsdt169",
+    "message": "Хэш: ",
+    "files": [
+      "shared/pages/Swap/EthTokenToUsdt.js"
+    ]
+  },
+  {
+    "id": "EthTokenToUsdt172",
+    "message": "Script адрес: ",
+    "files": [
+      "shared/pages/Swap/EthTokenToUsdt.js"
+    ]
+  },
+  {
+    "id": "EthTokenToUsdt192",
+    "message": "Показать BTC script",
+    "files": [
+      "shared/pages/Swap/EthTokenToUsdt.js"
+    ]
+  },
+  {
+    "id": "EthTokenToUsdt236",
+    "message": "Все отлично. Продолжить",
+    "files": [
+      "shared/pages/Swap/EthTokenToUsdt.js"
+    ]
+  },
+  {
+    "id": "EthTokenToUsdt249",
+    "message": "Недостаточно средств для данной операции. Пожалуйста пополните баланс",
+    "files": [
+      "shared/pages/Swap/EthTokenToUsdt.js"
+    ]
+  },
+  {
+    "id": "EthTokenToUsdt253",
+    "message": "Ваш баланс: ",
+    "files": [
+      "shared/pages/Swap/EthTokenToUsdt.js"
+    ]
+  },
+  {
+    "id": "EthTokenToUsdt257",
+    "message": "Необходимый баланс: ",
+    "files": [
+      "shared/pages/Swap/EthTokenToUsdt.js"
+    ]
+  },
+  {
+    "id": "EthTokenToUsdt260",
+    "message": "Ваш адрес: ",
+    "files": [
+      "shared/pages/Swap/EthTokenToUsdt.js"
+    ]
+  },
+  {
+    "id": "EthTokenToUsdt267",
+    "message": "Продолжить",
+    "files": [
+      "shared/pages/Swap/EthTokenToUsdt.js"
+    ]
+  },
+  {
+    "id": "EthTokenToUsdt276",
+    "message": "Проверка баланса.. ",
+    "files": [
+      "shared/pages/Swap/EthTokenToUsdt.js"
+    ]
+  },
+  {
+    "id": "EthTokenToUsdt285",
+    "message": "4. Создание контракта Ethereum. Подождите, это займет некоторое время",
+    "files": [
+      "shared/pages/Swap/EthTokenToUsdt.js"
+    ]
+  },
+  {
+    "id": "EthTokenToUsdt292",
+    "message": "Транзакция: ",
+    "files": [
+      "shared/pages/Swap/EthTokenToUsdt.js"
+    ]
+  },
+  {
+    "id": "EthTokenToUsdt313",
+    "message": "Транзакция: ",
+    "files": [
+      "shared/pages/Swap/EthTokenToUsdt.js"
+    ]
+  },
+  {
+    "id": "EthTokenToUsdt331",
+    "message": "5. Ожидание, Владелец BTC жобавляет Секретный ключь в ETH Контракт",
+    "files": [
+      "shared/pages/Swap/EthTokenToUsdt.js"
+    ]
+  },
+  {
+    "id": "EthTokenToUsdt345",
+    "message": "6. Владелец USDT успешно получил средства из ETH Контракта и отправил Секретный ключ. Запрос о снятии с BTC Script. Пожалуйста, подождите",
+    "files": [
+      "shared/pages/Swap/EthTokenToUsdt.js"
+    ]
+  },
+  {
+    "id": "EthTokenToUsdt352",
+    "message": "USDT транзакция вывода: ",
+    "files": [
+      "shared/pages/Swap/EthTokenToUsdt.js"
+    ]
+  },
+  {
+    "id": "EthTokenToUsdt377",
+    "message": "7. Деньги были переведены на Ваш кошелек. Проверьте баланс. ",
+    "files": [
+      "shared/pages/Swap/EthTokenToUsdt.js"
+    ]
+  },
+  {
+    "id": "EthTokenToUsdt380",
+    "message": "Благодарим за использование Swap.Online!! ",
+    "files": [
+      "shared/pages/Swap/EthTokenToUsdt.js"
+    ]
+  },
+  {
+    "id": "EthTokenToUsdt390",
+    "message": "ПОПРОБУЙТЕ ВОЗВРАТ",
+    "files": [
+      "shared/pages/Swap/EthTokenToUsdt.js"
+    ]
+  },
+  {
+    "id": "EthTokenToUsdt84",
+    "message": "Ожидание другого пользователя",
+    "files": [
+      "shared/pages/Swap/EthTokenToUsdt.js"
+    ]
+  },
+  {
+    "id": "EthTokenToUsdt93",
+    "message": "1. Пожалуйста, подтвердите свое участие, для начала сделки",
+    "files": [
+      "shared/pages/Swap/EthTokenToUsdt.js"
+    ]
+  },
+  {
+    "id": "EthToLtc104",
+    "message": "Создавший ордер не в сети. Ожидание, пока он не появится в сети.. ",
+    "files": [
+      "shared/pages/Swap/EthToLtc.js"
+    ]
+  },
+  {
+    "id": "EthToLtc115",
+    "message": "Ожидание другого пользователя",
+    "files": [
+      "shared/pages/Swap/EthToLtc.js"
+    ]
+  },
+  {
+    "id": "EthToLtc125",
+    "message": "Подтверждение сделки необходимо для формирования репутации. Если пользователь не доводит дело до конца, он получает отрицательную репутацию. ",
+    "files": [
+      "shared/pages/Swap/EthToLtc.js"
+    ]
+  },
+  {
+    "id": "EthToLtc128",
+    "message": "Подписать ",
+    "files": [
+      "shared/pages/Swap/EthToLtc.js"
+    ]
+  },
+  {
+    "id": "EthToLtc134",
+    "message": "Пожалуйста, подождите. Обработка подтверждения",
+    "files": [
+      "shared/pages/Swap/EthToLtc.js"
+    ]
+  },
+  {
+    "id": "EthToLtc139",
+    "message": "Транзакция: ",
+    "files": [
+      "shared/pages/Swap/EthToLtc.js"
+    ]
+  },
+  {
+    "id": "EthToLtc167",
+    "message": "2. Ожидание, Владелец LTC создает Секретный ключ, создает LTC Script и пополняет его",
+    "files": [
+      "shared/pages/Swap/EthToLtc.js"
+    ]
+  },
+  {
+    "id": "EthToLtc179",
+    "message": "3. Litecoin Script создан и загружен. Пожалуйста, проверте информацию ниже",
+    "files": [
+      "shared/pages/Swap/EthToLtc.js"
+    ]
+  },
+  {
+    "id": "EthToLtc182",
+    "message": "Хэш: ",
+    "files": [
+      "shared/pages/Swap/EthToLtc.js"
+    ]
+  },
+  {
+    "id": "EthToLtc185",
+    "message": "Script адрес: ",
+    "files": [
+      "shared/pages/Swap/EthToLtc.js"
+    ]
+  },
+  {
+    "id": "EthToLtc204",
+    "message": "Показать litecoin script",
+    "files": [
+      "shared/pages/Swap/EthToLtc.js"
+    ]
+  },
+  {
+    "id": "EthToLtc247",
+    "message": "Все отлично. Продолжить",
+    "files": [
+      "shared/pages/Swap/EthToLtc.js"
+    ]
+  },
+  {
+    "id": "EthToLtc260",
+    "message": "Недостаточно средств для данной операции. Пожалуйста пополните баланс",
+    "files": [
+      "shared/pages/Swap/EthToLtc.js"
+    ]
+  },
+  {
+    "id": "EthToLtc264",
+    "message": "Ваш баланс: ",
+    "files": [
+      "shared/pages/Swap/EthToLtc.js"
+    ]
+  },
+  {
+    "id": "EthToLtc267",
+    "message": "Необходимый баланс: ",
+    "files": [
+      "shared/pages/Swap/EthToLtc.js"
+    ]
+  },
+  {
+    "id": "EthToLtc270",
+    "message": "Ваш адрес: ",
+    "files": [
+      "shared/pages/Swap/EthToLtc.js"
+    ]
+  },
+  {
+    "id": "EthToLtc277",
+    "message": "Продолжить",
+    "files": [
+      "shared/pages/Swap/EthToLtc.js"
+    ]
+  },
+  {
+    "id": "EthToLtc286",
+    "message": "Проверка баланса.. ",
+    "files": [
+      "shared/pages/Swap/EthToLtc.js"
+    ]
+  },
+  {
+    "id": "EthToLtc297",
+    "message": "4. Создание контракта Ethereum. Подождите, это займет некоторое время",
+    "files": [
+      "shared/pages/Swap/EthToLtc.js"
+    ]
+  },
+  {
+    "id": "EthToLtc305",
+    "message": "Транзакция: ",
+    "files": [
+      "shared/pages/Swap/EthToLtc.js"
+    ]
+  },
+  {
+    "id": "EthToLtc326",
+    "message": "Транзакция: ",
+    "files": [
+      "shared/pages/Swap/EthToLtc.js"
+    ]
+  },
+  {
+    "id": "EthToLtc343",
+    "message": "5. Ожидание, Владелец LTC жобавляет Секретный ключь в ETH Контракт",
+    "files": [
+      "shared/pages/Swap/EthToLtc.js"
+    ]
+  },
+  {
+    "id": "EthToLtc357",
+    "message": "6. Владелец LTC успешно получил средства из ETH Контракта и отправил Секретный ключ. Запрос о снятии с LTC Script. Пожалуйста, подождите",
+    "files": [
+      "shared/pages/Swap/EthToLtc.js"
+    ]
+  },
+  {
+    "id": "EthToLtc364",
+    "message": "Транзакция: ",
+    "files": [
+      "shared/pages/Swap/EthToLtc.js"
+    ]
+  },
+  {
+    "id": "EthToLtc386",
+    "message": "7. Деньги были переведены на Ваш кошелек. Проверьте баланс. ",
+    "files": [
+      "shared/pages/Swap/EthToLtc.js"
+    ]
+  },
+  {
+    "id": "EthToLtc389",
+    "message": "Благодарим за использование Swap.Online!! ",
+    "files": [
+      "shared/pages/Swap/EthToLtc.js"
+    ]
+  },
+  {
+    "id": "EthToLtc399",
+    "message": "ПОПРОБУЙТЕ ВОЗВРАТ",
+    "files": [
+      "shared/pages/Swap/EthToLtc.js"
+    ]
+  },
+  {
+    "id": "EthToLtc412",
+    "message": "Транзакция: ",
+    "files": [
+      "shared/pages/Swap/EthToLtc.js"
+    ]
+  },
+  {
+    "id": "EthToLtc99",
+    "message": "У данного ордера нет покупателя",
+    "files": [
+      "shared/pages/Swap/EthToLtc.js"
+    ]
+  },
+  {
+    "id": "Share",
+    "message": "Share Twitter",
+    "files": [
+      "shared/pages/Swap/Share/Share.js"
+    ]
+  },
+  {
+    "id": "LtcTOeth101",
+    "message": "У данного ордера нет покупателя",
+    "files": [
+      "shared/pages/Swap/LtcToEth.js"
+    ]
+  },
+  {
+    "id": "LtcTOeth117",
+    "message": "Мы оживаем создавшего ордер на обмен. Если он не появится в течение 5 минут, обмен будет отменен автоматически. ",
+    "files": [
+      "shared/pages/Swap/LtcToEth.js"
+    ]
+  },
+  {
+    "id": "LtcTOeth127",
+    "message": "2. Создается Секретный ключ",
+    "files": [
+      "shared/pages/Swap/LtcToEth.js"
+    ]
+  },
+  {
+    "id": "LtcTOeth136",
+    "message": "Подтвердить",
+    "files": [
+      "shared/pages/Swap/LtcToEth.js"
+    ]
+  },
+  {
+    "id": "LtcTOeth142",
+    "message": "Сохраните секретный ключ! В противном случае Вы сможете потерять свои деньги! ",
+    "files": [
+      "shared/pages/Swap/LtcToEth.js"
+    ]
+  },
+  {
+    "id": "LtcTOeth145",
+    "message": "Секретный ключ: ",
+    "files": [
+      "shared/pages/Swap/LtcToEth.js"
+    ]
+  },
+  {
+    "id": "LtcTOeth148",
+    "message": "Хэш: ",
+    "files": [
+      "shared/pages/Swap/LtcToEth.js"
+    ]
+  },
+  {
+    "id": "LtcTOeth158",
+    "message": "Недостаточно средств для этого обмена. Пожалуйста, пополните баланс",
+    "files": [
+      "shared/pages/Swap/LtcToEth.js"
+    ]
+  },
+  {
+    "id": "LtcTOeth162",
+    "message": "Ваш баланс: ",
+    "files": [
+      "shared/pages/Swap/LtcToEth.js"
+    ]
+  },
+  {
+    "id": "LtcTOeth165",
+    "message": "Необходимый баланс: ",
+    "files": [
+      "shared/pages/Swap/LtcToEth.js"
+    ]
+  },
+  {
+    "id": "LtcTOeth168",
+    "message": "Ваш адрес: ",
+    "files": [
+      "shared/pages/Swap/LtcToEth.js"
+    ]
+  },
+  {
+    "id": "LtcTOeth175",
+    "message": "Продолжить",
+    "files": [
+      "shared/pages/Swap/LtcToEth.js"
+    ]
+  },
+  {
+    "id": "LtcTOeth184",
+    "message": "Проверка баланса.. ",
+    "files": [
+      "shared/pages/Swap/LtcToEth.js"
+    ]
+  },
+  {
+    "id": "LtcTOeth195",
+    "message": "3. Создание LTC Omni Script. Подождите, это займет некоторое время",
+    "files": [
+      "shared/pages/Swap/LtcToEth.js"
+    ]
+  },
+  {
+    "id": "LtcTOeth200",
+    "message": "Транзакция: ",
+    "files": [
+      "shared/pages/Swap/LtcToEth.js"
+    ]
+  },
+  {
+    "id": "LtcTOeth227",
+    "message": "Создание транзакции на возврат средств",
+    "files": [
+      "shared/pages/Swap/LtcToEth.js"
+    ]
+  },
+  {
+    "id": "LtcTOeth234",
+    "message": "Как вернуть деньги? ",
+    "files": [
+      "shared/pages/Swap/LtcToEth.js"
+    ]
+  },
+  {
+    "id": "LtcTOeth254",
+    "message": "4. Владелец ETH получил Litecoin Script и Хэш. Ожидается, создание контракта ETH",
+    "files": [
+      "shared/pages/Swap/LtcToEth.js"
+    ]
+  },
+  {
+    "id": "LtcTOeth267",
+    "message": "Транзакция: ",
+    "files": [
+      "shared/pages/Swap/LtcToEth.js"
+    ]
+  },
+  {
+    "id": "LtcTOeth283",
+    "message": "5. Пробуем вывести ETH из контракта. Пожалуйста, подождите",
+    "files": [
+      "shared/pages/Swap/LtcToEth.js"
+    ]
+  },
+  {
+    "id": "LtcTOeth290",
+    "message": "Транзакция: ",
+    "files": [
+      "shared/pages/Swap/LtcToEth.js"
+    ]
+  },
+  {
+    "id": "LtcTOeth313",
+    "message": "6. Деньги были переведены на Ваш кошелек. Проверьте баланс. ",
+    "files": [
+      "shared/pages/Swap/LtcToEth.js"
+    ]
+  },
+  {
+    "id": "LtcTOeth315",
+    "message": "Благодарим за использование Swap.Online!! ",
+    "files": [
+      "shared/pages/Swap/LtcToEth.js"
+    ]
+  },
+  {
+    "id": "LtcTOeth326",
+    "message": "ПОПРОБУЙТЕ ВОЗВРАТ",
+    "files": [
+      "shared/pages/Swap/LtcToEth.js"
+    ]
+  },
+  {
+    "id": "LtcTOeth338",
+    "message": "Транзакция: ",
+    "files": [
+      "shared/pages/Swap/LtcToEth.js"
+    ]
+  },
+  {
+    "id": "UsdrToEthToken106",
+    "message": "2. Создается Секретный ключ",
+    "files": [
+      "shared/pages/Swap/UsdtToEthToken.js"
+    ]
+  },
+  {
+    "id": "UsdrToEthToken115",
+    "message": "Подтвердить",
+    "files": [
+      "shared/pages/Swap/UsdtToEthToken.js"
+    ]
+  },
+  {
+    "id": "UsdrToEthToken121",
+    "message": "Сохраните секретный ключ! В противном случае у вас будет шанс, что Вы потеряете свои деньги! ",
+    "files": [
+      "shared/pages/Swap/UsdtToEthToken.js"
+    ]
+  },
+  {
+    "id": "UsdrToEthToken124",
+    "message": "Секретный ключ: ",
+    "files": [
+      "shared/pages/Swap/UsdtToEthToken.js"
+    ]
+  },
+  {
+    "id": "UsdrToEthToken127",
+    "message": "Хэш: ",
+    "files": [
+      "shared/pages/Swap/UsdtToEthToken.js"
+    ]
+  },
+  {
+    "id": "UsdrToEthToken137",
+    "message": "Недостаточно средств для этого обмена. Пожалуйста, пополните баланс",
+    "files": [
+      "shared/pages/Swap/UsdtToEthToken.js"
+    ]
+  },
+  {
+    "id": "UsdrToEthToken141",
+    "message": "Ваш баланс: ",
+    "files": [
+      "shared/pages/Swap/UsdtToEthToken.js"
+    ]
+  },
+  {
+    "id": "UsdrToEthToken144",
+    "message": "Требуемый баланс: ",
+    "files": [
+      "shared/pages/Swap/UsdtToEthToken.js"
+    ]
+  },
+  {
+    "id": "UsdrToEthToken147",
+    "message": "Ваш адрес: ",
+    "files": [
+      "shared/pages/Swap/UsdtToEthToken.js"
+    ]
+  },
+  {
+    "id": "UsdrToEthToken154",
+    "message": "Продолжить",
+    "files": [
+      "shared/pages/Swap/UsdtToEthToken.js"
+    ]
+  },
+  {
+    "id": "UsdrToEthToken163",
+    "message": "Проверка баланса... ",
+    "files": [
+      "shared/pages/Swap/UsdtToEthToken.js"
+    ]
+  },
+  {
+    "id": "UsdrToEthToken174",
+    "message": "3. Создание BTC Omni Script. Подождите, это займет некоторое время",
+    "files": [
+      "shared/pages/Swap/UsdtToEthToken.js"
+    ]
+  },
+  {
+    "id": "UsdrToEthToken179",
+    "message": "Транзакция: ",
+    "files": [
+      "shared/pages/Swap/UsdtToEthToken.js"
+    ]
+  },
+  {
+    "id": "UsdrToEthToken206",
+    "message": "Создание транзакции на возврат средств",
+    "files": [
+      "shared/pages/Swap/UsdtToEthToken.js"
+    ]
+  },
+  {
+    "id": "UsdrToEthToken213",
+    "message": "Как вернуть деньги? ",
+    "files": [
+      "shared/pages/Swap/UsdtToEthToken.js"
+    ]
+  },
+  {
+    "id": "UsdrToEthToken233",
+    "message": "4. Владелец ETH получил Btc Omni Script и Хэш. Ожидается, создание Контракта ETH",
+    "files": [
+      "shared/pages/Swap/UsdtToEthToken.js"
+    ]
+  },
+  {
+    "id": "UsdrToEthToken246",
+    "message": "Транзакция: ",
+    "files": [
+      "shared/pages/Swap/UsdtToEthToken.js"
+    ]
+  },
+  {
+    "id": "UsdrToEthToken264",
+    "message": "5. Пробуем вывести ETH из контракта. Пожалуйста, подождите",
+    "files": [
+      "shared/pages/Swap/UsdtToEthToken.js"
+    ]
+  },
+  {
+    "id": "UsdrToEthToken271",
+    "message": "Транзакция: ",
+    "files": [
+      "shared/pages/Swap/UsdtToEthToken.js"
+    ]
+  },
+  {
+    "id": "UsdrToEthToken294",
+    "message": "6. Деньги были переведены на ваш кошелек. Проверьте баланс. ",
+    "files": [
+      "shared/pages/Swap/UsdtToEthToken.js"
+    ]
+  },
+  {
+    "id": "UsdrToEthToken297",
+    "message": "Благодарим за использование Swap.Online!! ",
+    "files": [
+      "shared/pages/Swap/UsdtToEthToken.js"
+    ]
+  },
+  {
+    "id": "UsdrToEthToken307",
+    "message": "ПОПРОБУЙТЕ ВОЗВРАТ",
+    "files": [
+      "shared/pages/Swap/UsdtToEthToken.js"
+    ]
+  },
+  {
+    "id": "UsdrToEthToken320",
+    "message": "Транзакция: ",
+    "files": [
+      "shared/pages/Swap/UsdtToEthToken.js"
+    ]
+  },
+  {
+    "id": "UsdrToEthToken83",
+    "message": "Мы оживаем создавшего ордер на обмен. Если он не появится в течение 5 минут, обмен будет отменен автоматически. ",
+    "files": [
+      "shared/pages/Swap/UsdtToEthToken.js"
+    ]
+  },
+  {
+    "id": "UsdrToEthToken93",
+    "message": "1. Ожидание подтверждения",
+    "files": [
+      "shared/pages/Swap/UsdtToEthToken.js"
+    ]
+  },
+  {
+    "id": "Wallet104",
+    "message": "Ваш онлайн криптовалютный кошелек",
+    "files": [
+      "shared/pages/Wallet/Wallet.js"
+    ]
+  },
+  {
+    "id": "Row235",
+    "message": "Скопировать",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row256",
+    "message": "Купить аккаунт",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row263",
+    "message": "Исользовать другой",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row268",
+    "message": "Не активирован",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row293",
+    "message": "Адрес скопирован в буфер обмена",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row305",
+    "message": "Отправить"
+  },
+  {
+    "id": "Row313",
+    "message": "Пополнить",
+    "files": [
+      "shared/pages/Currency/Currency.js",
+      "shared/pages/CurrencyWallet/CurrencyWallet.js",
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowWallet181",
+    "message": "Не подтвержденный баланс ",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowWallet189",
+    "message": "Не подтвержденный баланс ",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowWallet197",
+    "message": "Не подтвержденный баланс ",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowWallet313",
+    "message": "Обмен"
+  },
+  {
+    "id": "AddOffer396",
+    "message": "Далее",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "transaction27",
+    "message": "Для обмена вам необходимо"
+  },
+  {
+    "id": "transaction28",
+    "message": "ETH на Вашем балансе"
+  },
+  {
+    "id": "PrivateKeysModal105",
+    "message": "есть большой шанс, что Вы потеряете свои деньги. "
+  },
+  {
+    "id": "PrivateKeysModal106",
+    "message": "Мы не храним Ваши личные ключи и не сможете их восстановить! ",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal110",
+    "message": "Нажмите сюда",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal113",
+    "message": "1. СКАЧАТЬ КЛЮЧИ И ИНСТРУКЦИЮ",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal118",
+    "message": "Затем нажмите сюда",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal121",
+    "message": "2. Слудующий шаг",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal130",
+    "message": "Пожалуйста, заполните приведенную ниже информацию из файла instruction.txt. Мы хотели бы быть уверены, что Вы сохранили приватные ключи, прежде чем сможете продолжить работу с сайтом. ",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal145",
+    "message": "Перейти на сайт! ",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal99",
+    "message": "Это очень важно, потому что, если Вы не ",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal991",
+    "message": "Прежде чем продолжить, обязательно сохраните приватные ключи! Существует большая вероятность того, что Вы потеряете свои деньги. ",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "BtcToEthTokenAddress1",
+    "message": "Подтвердите адрес получателя (по умолчанию - swap.online wallet)",
+    "files": [
+      "shared/pages/Swap/BtcToEthToken.js"
+    ]
+  },
+  {
+    "id": "BtcToEthTokenAddress2",
+    "message": "Подтвердите адрес",
+    "files": [
+      "shared/pages/Swap/BtcToEthToken.js"
+    ]
+  },
+  {
+    "id": "WithdrawButton29",
+    "message": "Пополнить"
+  },
+  {
+    "id": "WithdrawButton32",
+    "message": "При нажатии на кнопку, в поле появится весь Ваш баланс за вычетом комиссии майнеров",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Listing1",
+    "message": "How to list your asset on swap.online"
+  },
+  {
+    "id": "listing.listing1",
+    "message": "1. We can list your token on swap.online ;"
+  },
+  {
+    "id": "listing.listing10",
+    "message": "SWAP.Online will be cryptocurrency Pink Sheets market. "
+  },
+  {
+    "id": "listing.listing12",
+    "message": "It’s well known that even in traditional stock market, one willing to be quoted must meet the requirements of SEC, or as far as the OTC Market Group Inc. markets (OTCQX and OTCQB) are concerned, must show the big income and seek the support of the influential consulting agencies. Moreover, the information about the company audit must be provided annually to the SEC or SEC-approved regulators. "
+  },
+  {
+    "id": "listing.listing13",
+    "message": "Some of the cryptocurrency ‘fat cats’ allow themselves to do the same. For example, Localbitcoins CEO said they would newer list a token of the project with less than USD1B capitalisation. Cryptobridge and some related centralized exchanges ask for the USD 23 thousand (in BTS equivalent) for the token owner to be listed. "
+  },
+  {
+    "id": "listing.listing14",
+    "message": "That is not about us. "
+  },
+  {
+    "id": "listing.listing15",
+    "message": "As our transactions is peer-to-peer, based on the Atomic Swaps technology, we can add to the balances every token corresponding some our criterias. Obviously, clearly fraudulent projects are to be rejected from the very beginning. But all other start-ups on the different stages of development are welcome. "
+  },
+  {
+    "id": "listing.listing16",
+    "message": "In contradiction to the widespread Ethereum-pegged exchanges, the main currency to be changed on tokens in our project is Bitcoin. It can be treated as our killer-feature: for the crypto-newbies and vast majority of small customers Bitcoin is much clearer and easy to buy via Localbitcoins etc. "
+  },
+  {
+    "id": "listing.listing17",
+    "message": "We offer two-level way of access to the balances. On the first stage, we analyze the level of project technical development, collect the basic information (name, ticker, logo) and add the token to trading balances. "
+  },
+  {
+    "id": "listing.listing18",
+    "message": "Then, to start trading with Bitcoin, the project should publish the information about the collaboration with SWAP.Online on every social platform and on the web-site forum. With this information published, our developers will release the final version of the exchange to client’s token. This option is available for the first ten projects only. "
+  },
+  {
+    "id": "listing.listing19",
+    "message": "The conditions of delisting are discussed, but at the moment, we plan to expel twenty per cent worst tokens every month. "
+  },
+  {
+    "id": "listing.listing2",
+    "message": "2. To list your tokens, please send us the link to your peoject, erc20 address, icon, name and ticker (short name) to team@swap.online;"
+  },
+  {
+    "id": "listing.listing20",
+    "message": "Thus, you token can start to be quoted in free and decentralized manner as quickly as possible for your unlimited profit. "
+  },
+  {
+    "id": "listing.listing21",
+    "message": "Stay with us. "
+  },
+  {
+    "id": "listing.listing22",
+    "message": "Grow with us. "
+  },
+  {
+    "id": "listing.listing23",
+    "message": "Earn with us. "
+  },
+  {
+    "id": "listing.listing3",
+    "message": "3. We as well will announce listing of your tokens on our social media, mutial PR will benefit both sides. "
+  },
+  {
+    "id": "listing.listing4",
+    "message": "Crypto Pink Sheets: ALL Coins Welcome To SWAP.Online! "
+  },
+  {
+    "id": "listing.listing5",
+    "message": "OTC-approach-crypto market to be opened in Aug, 2018. "
+  },
+  {
+    "id": "listing.listing6",
+    "message": "There was one company in the U.S. in the year of 1913, the National Quotation Bureau. They brought to life very simple idea - to provide every entity with the ability to be quoted freely, without complicated safety and control proceedings. The list of the bond orders was primarily published on the yellow paper and the stock orders were published on the pink paper. The Pink Sheets, as the lists were immediately called by the traders. rapidly became very popular among the market players. Every firm opened in the U.S. or abroad was able to publish its securities quotations in the list of Pink Sheets. With the increasing requirements of NYSE and NASDAQ and growing demands of the SEC to the information regarding the company applying the market, the interest to the Pink Sheets arose very fast. In September, 1990, the NQB introduced the real-time Electronic Quotation Service, so the over-the-counter trading entered the Internet. By the year 2010 the operators of the Pink Sheets trading were acquisited by the OTC Market Group, Inc. In 2014, two of five U.S. stock trades were over-the-counter. "
+  },
+  {
+    "id": "listing.listing7",
+    "message": "Wal-Mart was the Pink Sheet company in 1972 and earned there USD 1B. "
+  },
+  {
+    "id": "listing.listing8",
+    "message": "Navistar International, the 12-billion-dollar-corporation, came to the Pink Sheets Market in 2006 leaving the NYSE due to some issues with the auditor board.. "
+  },
+  {
+    "id": "listing.listing9",
+    "message": "In SWAP. Online we have noticed that Pink Sheets principles are very close to the initial meaning of cryptocurrencies. Both of them are based on the faith in transparency, decentralization, bilateral responsibility of buyer and seller. As we decided to make the exchange of crypto really"
+  },
+  {
+    "id": "listing.listing9a",
+    "message": "safe, rapid and decentralized, we couldn’t go about this another way. "
+  },
+  {
+    "id": "BTCTOLTC132",
+    "message": "2. Создается Секретный ключ",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js"
+    ]
+  },
+  {
+    "id": "BTCtoLTC236",
+    "message": "Создание транзакции на возврат средств",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js"
+    ]
+  },
+  {
+    "id": "BTCtoLTC246",
+    "message": "Как вернуть деньги? ",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js"
+    ]
+  },
+  {
+    "id": "BTCtoLTC262",
+    "message": "4. LTC Owner получил Bitcoin Script и Хэш. Ожидается, создание им LTC Script",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js"
+    ]
+  },
+  {
+    "id": "BTCtoLTC276",
+    "message": "5. Litecoin Script создан и загружен. Пожалуйста, проверте информацию ниже",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js"
+    ]
+  },
+  {
+    "id": "BTCtoLTC301",
+    "message": "Показать litecoin script",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js"
+    ]
+  },
+  {
+    "id": "BtcToLtc.Confirm",
+    "message": "Подтвердить",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js"
+    ]
+  },
+  {
+    "id": "BtcToLtc205",
+    "message": "3. Создание BTC Script. Подождите, это займет некоторое время",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js"
+    ]
+  },
+  {
+    "id": "Checkingbalance",
+    "message": "Проверка баланса.. ",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js",
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "Continue",
+    "message": "Продолжить",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js",
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "LTCTOBTC147",
+    "message": "Сохраните секретный ключ! В противном случае Вы сможете потерять свои деньги! ",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js"
+    ]
+  },
+  {
+    "id": "LTCTOBTC150",
+    "message": "Секретный ключ: ",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js"
+    ]
+  },
+  {
+    "id": "MoneyWasTransferred",
+    "message": "6. Деньги были переведены на Ваш кошелек. Проверьте баланс. ",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js"
+    ]
+  },
+  {
+    "id": "Notenough",
+    "message": "Недостаточно средств для данной операции. Пожалуйста пополните баланс",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js",
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "REFUND",
+    "message": "ПОПРОБУЙТЕ ВОЗВРАТ",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js",
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "Required",
+    "message": "Необходимый баланс: ",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js",
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "Scriptaddress: ",
+    "message": "Script адрес: "
+  },
+  {
+    "id": "SecretHash",
+    "message": "Хэш: ",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js",
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "Thank",
+    "message": "Благодарим за использование Swap.Online!! ",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js",
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "Transaction",
+    "message": "Транзакция: ",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js",
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "Waiting",
+    "message": "Ожидание другого пользователя",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js",
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "address",
+    "message": "Ваш адрес: ",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js",
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "balance",
+    "message": "Ваш баланс: ",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js",
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "doesn't",
+    "message": "У данного ордера нет покупателя",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js"
+    ]
+  },
+  {
+    "id": "offline",
+    "message": "Создавший ордер не в сети. Ожидание, пока он не появится в сети.. ",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js",
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "Confirmation",
+    "message": "Подтверждение сделки необходимо для формирования репутации. Если пользователь не доводит дело до конца, он получает отрицательную репутацию. ",
+    "files": [
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "LTCTOBTC191",
+    "message": "3. Bitcoin Script создан и загружен. Пожалуйста, проверьте информацию ниже",
+    "files": [
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "LTCTOBTC216",
+    "message": "Показать Вitcoin script",
+    "files": [
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "LTCTOBTC350",
+    "message": "5. 5. Ожидание, Владелец BTC жобавляет Секретный ключь в LTC Контракт",
+    "files": [
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "LTCTOBTC365",
+    "message": "6. Владелец BTC успешно взял деньги с LTC Script и оставил секретный ключ. Запрос на снятие с BTC Script. пожалуйста, подождите",
+    "files": [
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "LTCTOBTC396",
+    "message": "7. Деньги были переведены на Ваш кошелек. Проверьте баланс. ",
+    "files": [
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "LtcToBtc.Confirm",
+    "message": "2. Ожидание, Владелец BTC создает Cекретный ключ, BTC Script и пополняет его. ",
+    "files": [
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "LtcToBtc205",
+    "message": "4. Создание LTC Script. Подождите, это займет некоторое время",
+    "files": [
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "OK",
+    "message": "Все отлично. Продолжить",
+    "files": [
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "PleaseWaitConfirmationProcessing",
+    "message": "Пожалуйста, подождите. Обработка подтверждения",
+    "files": [
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "Scriptaddress",
+    "message": "Script адрес: ",
+    "files": [
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "Sign",
+    "message": "Подписать ",
+    "files": [
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "doesn&apos",
+    "message": "У данного ордера нет покупателя",
+    "files": [
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "Row328",
+    "message": "Отправить",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row334",
+    "message": "Обменять",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "AddOffer418",
+    "message": "Пользовательский курс обмена",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "AddOffer423",
+    "message": "Доступно частичное закрытие",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken236",
+    "message": "Создание BTC Script",
+    "files": [
+      "shared/pages/Swap/BtcToEthToken.js"
+    ]
+  },
+  {
+    "id": "Row277",
+    "message": "не активирован ",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row310",
+    "message": "Не активированно"
+  },
+  {
+    "id": "Row354",
+    "message": "Активировать"
+  },
+  {
+    "id": "partial221",
+    "message": "Максимальо возможная сумма: ",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial234",
+    "message": "Нет предложений на обмен"
+  },
+  {
+    "id": "partial238",
+    "message": "Предложение отклонено"
+  },
+  {
+    "id": "partial244",
+    "message": "Ожидание участника: "
+  },
+  {
+    "id": "partial251",
+    "message": "Начать: "
+  },
+  {
+    "id": "Currency108",
+    "message": "Добавлено в кошелек "
+  },
+  {
+    "id": "Currency102",
+    "message": " валютные пары"
+  },
+  {
+    "id": "CurrencyWallet107",
+    "message": "Ваш "
+  },
+  {
+    "id": "CurrencyWallet128",
+    "message": "История Ваших транзакций"
+  },
+  {
+    "id": "Company",
+    "message": "О Kомпании",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "AboutUS14",
+    "message": "О нас",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "Careers",
+    "message": "Карьера в Swap.Online",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "ChromeExtension",
+    "message": "Swap.Online расширение для Chrome",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "Concept",
+    "message": "Концепция (PDF)",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "Contacts",
+    "message": "Контакты",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "DEXTrendResearch",
+    "message": "Исследования тенденций DEX",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "DEXdetails",
+    "message": "Больше о нашем DEX",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "Documentation",
+    "message": "Документация",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "Legal",
+    "message": "Юридическая информация",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "LegalOpinion",
+    "message": "Юридическая правомерность",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "PrivacyPolicy",
+    "message": "Политика конфиденциальности",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "Resources",
+    "message": "Ресурсы",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "SendBitcoinTransacton",
+    "message": "Отправить Bitcoin Транзакцию",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "Terms",
+    "message": "Термины",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "Useswapbutton",
+    "message": "Использование swap.button",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "WhitePaperdraft",
+    "message": "Техническая документация",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "Wiki",
+    "message": "Wiki",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "Actions",
+    "message": "Действия",
+    "files": [
+      "shared/components/modals/ShowMoreCoins/ShowMoreCoins.js"
+    ]
+  },
+  {
+    "id": "Coin",
+    "message": "Валюта",
+    "files": [
+      "shared/components/modals/ShowMoreCoins/ShowMoreCoins.js"
+    ]
+  },
+  {
+    "id": "Name",
+    "message": "Имя",
+    "files": [
+      "shared/components/modals/ShowMoreCoins/ShowMoreCoins.js"
+    ]
+  },
+  {
+    "id": "Coin113",
+    "message": "Валюта"
+  },
+  {
+    "id": "Exchange113",
+    "message": "Обмен"
+  },
+  {
+    "id": "Amount130",
+    "message": "Сумма"
+  },
+  {
+    "id": "Coin130",
+    "message": "Валюта"
+  },
+  {
+    "id": "Statement130",
+    "message": "Отчет"
+  },
+  {
+    "id": "Status130",
+    "message": "Статус"
+  },
+  {
+    "id": "Amount61",
+    "message": "Сумма",
+    "files": [
+      "shared/pages/History/History.js"
+    ]
+  },
+  {
+    "id": "Coin61",
+    "message": "Валюта",
+    "files": [
+      "shared/pages/History/History.js"
+    ]
+  },
+  {
+    "id": "Statement61",
+    "message": "Отчет",
+    "files": [
+      "shared/pages/History/History.js"
+    ]
+  },
+  {
+    "id": "Status61",
+    "message": "Статус",
+    "files": [
+      "shared/pages/History/History.js"
+    ]
+  },
+  {
+    "id": "SwapHisrory14",
+    "message": "Аватар",
+    "files": [
+      "shared/pages/History/SwapsHistory/SwapsHistory.js"
+    ]
+  },
+  {
+    "id": "SwapHisrory15",
+    "message": "Обмен",
+    "files": [
+      "shared/pages/History/SwapsHistory/SwapsHistory.js"
+    ]
+  },
+  {
+    "id": "SwapHisrory16",
+    "message": "Покупка",
+    "files": [
+      "shared/pages/History/SwapsHistory/SwapsHistory.js"
+    ]
+  },
+  {
+    "id": "SwapHisrory17",
+    "message": " Продажа ",
+    "files": [
+      "shared/pages/History/SwapsHistory/SwapsHistory.js"
+    ]
+  },
+  {
+    "id": "SwapHisrory18",
+    "message": "Курс обмена",
+    "files": [
+      "shared/pages/History/SwapsHistory/SwapsHistory.js"
+    ]
+  },
+  {
+    "id": "SwapHisrory19",
+    "message": "Информация о возврате",
+    "files": [
+      "shared/pages/History/SwapsHistory/SwapsHistory.js"
+    ]
+  },
+  {
+    "id": "SwapHisrory20",
+    "message": "Статус операции",
+    "files": [
+      "shared/pages/History/SwapsHistory/SwapsHistory.js"
+    ]
+  },
+  {
+    "id": "SwapHisrory211",
+    "message": "Время завершения",
+    "files": [
+      "shared/pages/History/SwapsHistory/SwapsHistory.js"
+    ]
+  },
+  {
+    "id": "SwapHisrory22",
+    "message": "Ссылка",
+    "files": [
+      "shared/pages/History/SwapsHistory/SwapsHistory.js"
+    ]
+  },
+  {
+    "id": "MyOrders19",
+    "message": "ОБМЕН",
+    "files": [
+      "shared/pages/Home/Orders/MyOrders/MyOrders.js"
+    ]
+  },
+  {
+    "id": "MyOrders20",
+    "message": "ВЫ ПОЛУЧИТЕ",
+    "files": [
+      "shared/pages/Home/Orders/MyOrders/MyOrders.js"
+    ]
+  },
+  {
+    "id": "MyOrders21",
+    "message": "ВЫ ИМЕЕТЕ",
+    "files": [
+      "shared/pages/Home/Orders/MyOrders/MyOrders.js"
+    ]
+  },
+  {
+    "id": "MyOrders22",
+    "message": "КУРС ОБМЕНА",
+    "files": [
+      "shared/pages/Home/Orders/MyOrders/MyOrders.js"
+    ]
+  },
+  {
+    "id": "MyOrders231",
+    "message": "ПОДЕЛИТЬСЯ",
+    "files": [
+      "shared/pages/Home/Orders/MyOrders/MyOrders.js"
+    ]
+  },
+  {
+    "id": "MyOrders24",
+    "message": "ДЕЙСТВИЕ",
+    "files": [
+      "shared/pages/Home/Orders/MyOrders/MyOrders.js"
+    ]
+  },
+  {
+    "id": "Orders101",
+    "message": "ВЛАДЕЛЕЦ"
+  },
+  {
+    "id": "Orders102",
+    "message": "СУММА"
+  },
+  {
+    "id": "Orders103",
+    "message": "ЦЕНА ЗА 1 "
+  },
+  {
+    "id": "Orders105",
+    "message": "ВСЕГО"
+  },
+  {
+    "id": "Orders106",
+    "message": "ДЕЙСТВИЯ"
+  },
+  {
+    "id": "Wallet114",
+    "message": "Валюта",
+    "files": [
+      "shared/pages/Wallet/Wallet.js"
+    ]
+  },
+  {
+    "id": "Wallet115",
+    "message": "Имя",
+    "files": [
+      "shared/pages/Wallet/Wallet.js"
+    ]
+  },
+  {
+    "id": "Wallet116",
+    "message": "Баланс",
+    "files": [
+      "shared/pages/Wallet/Wallet.js"
+    ]
+  },
+  {
+    "id": "Wallet117",
+    "message": "Ваш адрес",
+    "files": [
+      "shared/pages/Wallet/Wallet.js"
+    ]
+  },
+  {
+    "id": "Wallet118",
+    "message": "Отправить, получить, обменять",
+    "files": [
+      "shared/pages/Wallet/Wallet.js"
+    ]
+  },
+  {
+    "id": "Wallet119",
+    "message": "Действия",
+    "files": [
+      "shared/pages/Wallet/Wallet.js"
+    ]
+  },
+  {
+    "id": "Orders141",
+    "message": "Данная валютная пара не существует перенаправляем на SWAP-BTC... ",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "Orders151",
+    "message": " Мои ордера",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "orders101",
+    "message": "АВАТАР",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "orders102",
+    "message": "СУММА",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "orders103",
+    "message": "ЦЕНА ЗА 1 ",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "orders105",
+    "message": "ВСЕГО",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "orders106",
+    "message": "ДЕЙСТВИЕ",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "orders120",
+    "message": "Atomic Swap"
+  },
+  {
+    "id": "orders122",
+    "message": "для"
+  },
+  {
+    "id": "orders124",
+    "message": "Моментальный обмен"
+  },
+  {
+    "id": "orders128",
+    "message": "Создать ордер",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "orders130",
+    "message": "Лучший курс обмена "
+  },
+  {
+    "id": "orders132",
+    "message": "для"
+  },
+  {
+    "id": "orders134",
+    "message": "Swap.Online кошелек обеспечивает мгновенный обмен с использованием протокола Atomic Swap. "
+  },
+  {
+    "id": "orders138",
+    "message": " обмен на любую сумму с 0 комиссией",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "orders1499",
+    "message": "Скрыть",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "orders1501",
+    "message": " "
+  },
+  {
+    "id": "Row134",
+    "message": "продать"
+  },
+  {
+    "id": "Row136",
+    "message": "продает"
+  },
+  {
+    "id": "addoffer381",
+    "message": "Продажа"
+  },
+  {
+    "id": "addoffer396",
+    "message": "Покупка"
+  },
+  {
+    "id": "addoffer406",
+    "message": "Курс обмена"
+  },
+  {
+    "id": "Table95",
+    "message": "таблица пуста",
+    "files": [
+      "shared/components/tables/Table/Table.js"
+    ]
+  },
+  {
+    "id": "Table96",
+    "message": "Загрузка... ",
+    "files": [
+      "shared/components/tables/Table/Table.js"
+    ]
+  },
+  {
+    "id": "filter14",
+    "message": "Все"
+  },
+  {
+    "id": "filter15",
+    "message": "Отправленые"
+  },
+  {
+    "id": "filter16",
+    "message": "Полученныу"
+  },
+  {
+    "id": "Amount68",
+    "message": "История",
+    "files": [
+      "shared/pages/History/History.js"
+    ]
+  },
+  {
+    "id": "Reqstbttn15",
+    "message": "ПРОДАТЬ",
+    "files": [
+      "shared/pages/Home/Orders/RequestButton/RequestButton.js"
+    ]
+  },
+  {
+    "id": "Reqstbttn16",
+    "message": "КУПИТЬ",
+    "files": [
+      "shared/pages/Home/Orders/RequestButton/RequestButton.js"
+    ]
+  },
+  {
+    "id": "add367",
+    "message": "Введенное число должна быть больше"
+  },
+  {
+    "id": "add368",
+    "message": "Введенное число должно быть меньше Вашего баланса"
+  },
+  {
+    "id": "ExchangeRate12",
+    "message": "Курс обмена",
+    "files": [
+      "shared/components/modals/OfferModal/ConfirmOffer/ExchangeRate/ExchangeRate.js"
+    ]
+  },
+  {
+    "id": "amount",
+    "message": "Обмен",
+    "files": [
+      "shared/components/modals/OfferModal/ConfirmOffer/Amounts/Amounts.js"
+    ]
+  },
+  {
+    "id": "fee9",
+    "message": "Комиссия майнеров",
+    "files": [
+      "shared/components/modals/OfferModal/ConfirmOffer/Fee/Fee.js"
+    ]
+  },
+  {
+    "id": "recieved65",
+    "message": "Адресс скопирован",
+    "files": [
+      "shared/components/modals/ReceiveModal/ReceiveModal.js"
+    ]
+  },
+  {
+    "id": "recieved67",
+    "message": "Скопировать",
+    "files": [
+      "shared/components/modals/ReceiveModal/ReceiveModal.js"
+    ]
+  },
+  {
+    "id": "Withdrow101",
+    "message": "Обратите внимание, что вам нужно иметь минимум"
+  },
+  {
+    "id": "Withdrow105",
+    "message": " "
+  },
+  {
+    "id": "Withdrow109",
+    "message": " "
+  },
+  {
+    "id": "Withdrow111",
+    "message": "на свой кошелек, для платы майнерам"
+  },
+  {
+    "id": "RowHistory94",
+    "message": "Выполнено",
+    "files": [
+      "shared/pages/History/SwapsHistory/RowHistory/RowHistory.js"
+    ]
+  },
+  {
+    "id": "RowHistory96",
+    "message": "Выполняется",
+    "files": [
+      "shared/pages/History/SwapsHistory/RowHistory/RowHistory.js"
+    ]
+  },
+  {
+    "id": "Row202",
+    "message": "ПРОДАТЬ "
+  },
+  {
+    "id": "Row204",
+    "message": "КУПИТЬ "
+  },
+  {
+    "id": "Row209",
+    "message": "ЗА "
+  },
+  {
+    "id": "RowMobileFirstTypeYouGet",
+    "message": "Вы получите ",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowMobileFirstTypeYouHave",
+    "message": "Вы имеете",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowMobileSecondTypeYouGet",
+    "message": "Вы получите ",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowMobileSecondTypeYouHave",
+    "message": "Вы имеете ",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Wallet137",
+    "message": "Пополняйте кошелек, на адреса указанные ниже",
+    "files": [
+      "shared/pages/Wallet/Wallet.js"
+    ]
+  },
+  {
+    "id": "currencywallet103",
+    "message": "Ваш Онлайн "
+  },
+  {
+    "id": "currencywallet107",
+    "message": " кошелек, в основе которого лежит технология Atomic Swap. "
+  },
+  {
+    "id": "SubscribeModal000",
+    "message": "Спасибо! После отправки, Вы будете уведомлены",
+    "files": [
+      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+    ]
+  },
+  {
+    "id": "SubscribeModal001",
+    "message": "Включите уведомления и получите 1 SWAP токен",
+    "files": [
+      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+    ]
+  },
+  {
+    "id": "SubscribeModal002",
+    "message": "Пожалуйста, подождите",
+    "files": [
+      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+    ]
+  },
+  {
+    "id": "SubscribeModal003",
+    "message": "Включить уведомления",
+    "files": [
+      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+    ]
+  },
+  {
+    "id": "SubscribeModal004",
+    "message": "Нажмите эту кнопку, чтобы разрешить push-уведомления",
+    "files": [
+      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+    ]
+  },
+  {
+    "id": "WithdrawButton25",
+    "message": "Вы не можете отправлять и обменивать эту криптовалюту, потому что у вас нулевой баланс. "
+  },
+  {
+    "id": "Nav63",
+    "message": "Testnet",
+    "files": [
+      "shared/components/Header/Nav/Nav.js"
+    ]
+  },
+  {
+    "id": "transaction368",
+    "message": "Сумма должна быть больше ",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "transaction376",
+    "message": "Сумма должна быть меньше вашего баланса",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "transaction398",
+    "message": "ETH на вашем балансе"
+  },
+  {
+    "id": "Select210",
+    "message": "ВСЕ",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Withdrow1194",
+    "message": "Адрес ",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Withdrow159",
+    "message": "Сумма должна быть больше ",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Withdrow172",
+    "message": "Обратите внимание: комиссия майнеров "
+  },
+  {
+    "id": "Withdrow174",
+    "message": "Для выполнения транзакции баланс должен превышать эту сумму. "
+  },
+  {
+    "id": "Withdrow178",
+    "message": "Обратите внимание: комиссия майнеров "
+  },
+  {
+    "id": "Withdrow180",
+    "message": "Ваш баланс должен превышать эту сумму для выполнения транзакции. "
+  },
+  {
+    "id": "Currency110",
+    "message": " Валютные пары"
+  },
+  {
+    "id": "Currency119",
+    "message": "Добавить в кошелек"
+  },
+  {
+    "id": "partial277",
+    "message": "Нет предложений"
+  },
+  {
+    "id": "partial284",
+    "message": "Предложение отклонено"
+  },
+  {
+    "id": "partial291",
+    "message": "Ожидать Участиника обмена: ",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "Row346",
+    "message": "Не активированно",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row358",
+    "message": "Активировать",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row377",
+    "message": "Не активированно",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "CDC52",
+    "message": "Список предложений",
+    "files": [
+      "shared/components/CurrencyDirectionChooser/CurrencyDirectionChooser.js"
+    ]
+  },
+  {
+    "id": "Eos71",
+    "message": "Этот аккаунт будет зарегестрирован в сети EOS blockchain",
+    "files": [
+      "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
+    ]
+  },
+  {
+    "id": "Eos75",
+    "message": "Приватный ключ для подтверждения операций ",
+    "files": [
+      "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
+    ]
+  },
+  {
+    "id": "Eos79",
+    "message": "Публичный ключ, связанный с учетной записью",
+    "files": [
+      "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
+    ]
+  },
+  {
+    "id": "Eos83",
+    "message": "Эта сумма будет снята с вашего BTC счета",
+    "files": [
+      "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
+    ]
+  },
+  {
+    "id": "Eos53",
+    "message": "Введите Ваш EOS логин",
+    "files": [
+      "shared/components/modals/EosRegisterModal/EosRegisterModal.js"
+    ]
+  },
+  {
+    "id": "Eos57",
+    "message": "Введите приватный ключ, для полного доступа ко всем операциям",
+    "files": [
+      "shared/components/modals/EosRegisterModal/EosRegisterModal.js"
+    ]
+  },
+  {
+    "id": "add408",
+    "message": "Для изменения курса обмена",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "addOffer448",
+    "message": "Вы получите запросы на обмен "
+  },
+  {
+    "id": "addOffer449",
+    "message": "на сумму, меньше, чем общая сумма, которую вы хотите продать. "
+  },
+  {
+    "id": "addOffer450",
+    "message": "Например, Вы хотите продать 1 BTC, "
+  },
+  {
+    "id": "addOffer451",
+    "message": " другие пользователи могут отправлять вам запросы на обмен на 0,1,  0,5 BTC "
+  },
+  {
+    "id": "TelosRegister46",
+    "message": "Введите TELOS имя аккаунта",
+    "files": [
+      "shared/components/modals/TelosRegisterModal/TelosRegisterModal.js"
+    ]
+  },
+  {
+    "id": "TelosRegister52",
+    "message": "Введите Ваш TELOS секретный ключ",
+    "files": [
+      "shared/components/modals/TelosRegisterModal/TelosRegisterModal.js"
+    ]
+  },
+  {
+    "id": "WTH273",
+    "message": "Убедитесь что отправляете средства на кошелек "
+  },
+  {
+    "id": "WTHl274",
+    "message": "который поддерживает "
+  },
+  {
+    "id": "partial223",
+    "message": "Для изменения кошелька по умолчанию для валюты покупки. ",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial224",
+    "message": "Оставьте пустым для использования Swap.Online кошелька",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial225",
+    "message": "Предложения частичного закрытия"
+  },
+  {
+    "id": "partial243",
+    "message": "У вас есть",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial255",
+    "message": "Вы получите",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "Approve66",
+    "message": "Подтвердить токен",
+    "files": [
+      "shared/components/modals/Approve/Approve.js"
+    ]
+  },
+  {
+    "id": "Eos87",
+    "message": "EOS регистрация",
+    "files": [
+      "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
+    ]
+  },
+  {
+    "id": "Eos61",
+    "message": "EOS вход",
+    "files": [
+      "shared/components/modals/EosRegisterModal/EosRegisterModal.js"
+    ]
+  },
+  {
+    "id": "Approve",
+    "message": "Подтвердить токен",
+    "files": [
+      "shared/components/modals/EthChecker/EthChecker.js"
+    ]
+  },
+  {
+    "id": "Import",
+    "message": "Импортировать",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "Add52",
+    "message": "Создать предложение на обмен",
+    "files": [
+      "shared/components/modals/OfferModal/OfferModal.js"
+    ]
+  },
+  {
+    "id": "Confirm52",
+    "message": "Подтверждение данных",
+    "files": [
+      "shared/components/modals/OfferModal/OfferModal.js"
+    ]
+  },
+  {
+    "id": "editOffer",
+    "message": "editOffer"
+  },
+  {
+    "id": "ImCAUTIONport",
+    "message": "ВНИМАНИЕ!",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "Receive",
+    "message": "Пополнение баланса",
+    "files": [
+      "shared/components/modals/ReceiveModal/ReceiveModal.js"
+    ]
+  },
+  {
+    "id": "Areyousure?",
+    "message": "Вы уверены ?"
+  },
+  {
+    "id": "ShMoreCoins",
+    "message": "Добавление токенов на главную страницу",
+    "files": [
+      "shared/components/modals/ShowMoreCoins/ShowMoreCoins.js"
+    ]
+  },
+  {
+    "id": "TELOSLogin",
+    "message": "TELOS вход",
+    "files": [
+      "shared/components/modals/TelosRegisterModal/TelosRegisterModal.js"
+    ]
+  },
+  {
+    "id": "Subscribe55",
+    "message": "Подписка",
+    "files": [
+      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+    ]
+  },
+  {
+    "id": "Withdraw183",
+    "message": "Перевод "
+  },
+  {
+    "id": "Row158",
+    "message": "покупает"
+  },
+  {
+    "id": "Scriptaddress:",
+    "message": "Адрес скрипта: ",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js"
+    ]
+  },
+  {
+    "id": "RowHistory281",
+    "message": "Получено",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowHistory282",
+    "message": "Отправлено",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowHistory34",
+    "message": "Подтверждено",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowHistory341",
+    "message": "Подтверждений",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowHistory342",
+    "message": "Не подтверждено",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
+    "id": "BtcToEth248",
+    "message": "Возврата транзакции: ",
+    "files": [
+      "shared/pages/Swap/BtcToEth.js"
+    ]
+  },
+  {
+    "id": "timer67",
+    "message": " минут(ы) до возврата средств",
+    "files": [
+      "shared/pages/Swap/Timer/Timer.js"
+    ]
+  },
+  {
+    "id": "timer68",
+    "message": "Возможен возврат",
+    "files": [
+      "shared/pages/Swap/Timer/Timer.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken275",
+    "message": "Операция возврата транзакции: ",
+    "files": [
+      "shared/pages/Swap/BtcToEthToken.js"
+    ]
+  },
+  {
+    "id": "Header184",
+    "message": "Это Ваш персональный Bitcoin адрес. Мы не храним приватные ключи. Все данные хранятся в Вашем браузере. Без сервера и Бэк-енда, полная Децентрализация.",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
+    "id": "Header188",
+    "message": "Swap Online НЕ ХРАНИТ Ваши приватные ключи, пожалуйста, скачайте их и храните в безопасном месте.",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
+    "id": "Header192",
+    "message": "Это Ваш Bitcoin баланс. Вы можете закрыть браузер, перезагрузить компьютер. Ваши средства будут в безопасности. Только, не забудте сохранить Ваши приватные ключи. ",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
+    "id": "Header194",
+    "message": "Не забудте сохранить Ваши приватные ключи",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
+    "id": "Header196",
+    "message": "Вы можете хранить криптовалюты разных блокчейн сетей, таких как Bitcoin, Ethereum, EOS, Bitcoin Cash, Litecoin и различные токены",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
+    "id": "Header200",
+    "message": "Наша особенность - одноранговый обмен, доступный в нашем кошельке, в основе которого лежит технология Atomic Swap. Вы можете выполнять обмен с любой криптовалютой, указанной в нашем кошельке.",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
+    "id": "Header205",
+    "message": "Присоединяйтесь к white list - скидоки, подарки, выгодные курсы и т.д",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
+    "id": "Header207",
+    "message": "Показать, как сохранить",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
+    "id": "question12",
+    "message": "?",
+    "files": [
+      "shared/components/Header/User/Question/Question.js"
+    ]
+  },
+  {
+    "id": "errorImportKeys",
+    "message": "Пожалуйста сохраните приватные ключи",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal144",
+    "message": "Назад",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "CurrencyWallet113",
+    "message": "Вы не можете отправить данную валюту, потому что у вас нулевой баланс .."
+  },
+  {
+    "id": "CurrencyWallet143",
+    "message": "Баланс"
+  },
+  {
+    "id": "PartialPriceCalc",
+    "message": "Расчет цены",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "PartialPriceNoOrdersReduce",
+    "message": "Предложения не найдены, попробуйте уменьшить сумму",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "PartialPriceReduceMin",
+    "message": "Максимально возможная сумма: ",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "PartialPriceSearch",
+    "message": "поиск предложений...",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "PartialUseSwapOnlineWallet",
+    "message": "Используйте Swap.Online кошелек",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "PartialYourWalletAddress",
+    "message": "Ваш адрес кошелька ",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "importkeys118",
+    "message": "Пожалуйста введите BTC секретный ключ ",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "importkeys119",
+    "message": "Недействительный BTC секретный ключ",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "PartialPriceSearch483",
+    "message": "Курс: 1",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial437",
+    "message": "Быстрый обмен криптовалютой с использованием Atomic Swap",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial462",
+    "message": "Сумма, которую вы хотите обменять используя кошелек swap.online или внешний кошелек",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial478",
+    "message": "Сумма, которую вы получите после обмена",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial541",
+    "message": "Обменяться",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partial544",
+    "message": "Предложения",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "down57",
+    "message": "Похоже, что Вы используете IPhone или IPad. Скопируйте приватные ключи и адреса в надеждное место.",
+    "files": [
+      "shared/components/modals/DownloadModal/DownloadModal.js"
+    ]
+  },
+  {
+    "id": "down64",
+    "message": "Скопировано в буфер обмена",
+    "files": [
+      "shared/components/modals/DownloadModal/DownloadModal.js"
+    ]
+  },
+  {
+    "id": "down65",
+    "message": "Скопировтаь",
+    "files": [
+      "shared/components/modals/DownloadModal/DownloadModal.js"
+    ]
+  },
+  {
+    "id": "down97",
+    "message": "Мы не храним Ваши ключи или адреса! И не сможем их востановить!",
+    "files": [
+      "shared/components/modals/DownloadModal/DownloadModal.js"
+    ]
+  },
+  {
+    "id": "Reqstbttn22",
+    "message": "ЗА",
+    "files": [
+      "shared/pages/Home/Orders/RequestButton/RequestButton.js"
+    ]
+  },
+  {
+    "id": "Row206",
+    "message": "КУПИТЬ",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row2061",
+    "message": "ПРОДАТЬ",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row210",
+    "message": "ЗА",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "downloadModal73",
+    "message": "Имя аккаунта:",
+    "files": [
+      "shared/components/modals/DownloadModal/DownloadModal.js"
+    ]
+  },
+  {
+    "id": "downloadModal75",
+    "message": "Адрес:",
+    "files": [
+      "shared/components/modals/DownloadModal/DownloadModal.js"
+    ]
+  },
+  {
+    "id": "downloadModal782",
+    "message": "Приватный ключ",
+    "files": [
+      "shared/components/modals/DownloadModal/DownloadModal.js"
+    ]
+  },
+  {
+    "id": "SaveKe35",
+    "message": "Скачать"
+  },
+  {
+    "id": "PreventMultiTabs12",
+    "message": "Swap.Online supports only one active tab.\n    Please reload this page to continue using this tab or close it",
+    "files": [
+      "shared/components/PreventMultiTabs/PreventMultiTabs.js"
+    ]
+  },
+  {
+    "id": "EthTokenToUsdt375",
+    "message": "Обратите внимание, что снятие USDT может занять некоторое время для майнинга и распространения сети.\n                    Due to Omni Protocol properties, the transaction may show up at the OmniExplorer in up to 20 minutes.",
+    "files": [
+      "shared/pages/Swap/EthTokenToUsdt.js"
+    ]
+  },
+  {
+    "id": "reputationMSG",
+    "message": "Пользователь с репутацией {reputationRate} предлагает обмен",
+    "files": [
+      "shared/components/Header/User/UserTooltip/UserTooltip.js"
+    ]
+  },
+  {
+    "id": "addOfferPartialTooltip",
+    "message": "Вы получите запросы на обмен, сумма {p} будет меньше той суммы, которую вы хотите продать.{p} Например, вы хотите продать 1 BTC, другие пользователи \n {p} могут отправлять запросы на обмен на 0,1, 0,5 BTC",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "WTH275",
+    "message": "Убедитесь, что кошелек, на который вы отправляете {br} поддерживает данную валюту ",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "SaveKeys235",
+    "message": "Ваши приватные ключи.{br} Загрузите их, нажав на кнопку\n{br} или сделайте снимок экрана, затем подвердите действие.",
+    "files": [
+      "shared/components/SaveKeys/SaveKeys.js"
+    ]
+  },
+  {
+    "id": "orders156",
+    "message": "КУПИТЬ {buyCurrency}",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "orders159",
+    "message": "ордера на {sell} {buyCurrency} ",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "WithdrawButton322",
+    "message": "Вы не можете отправить данную валюту, недостаточно средств.",
+    "files": [
+      "shared/components/controls/WithdrawButton/BtnTooltip.js"
+    ]
+  },
+  {
+    "id": "Row1511",
+    "message": "цена {price}",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row159",
+    "message": "за {total}",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "CurrencyWallet141",
+    "message": "Swap.Online - {fullName}({currency}) онлайн кошелек, работащюий на технологии Atomic Swap.",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "CurrencyWallet167",
+    "message": "Ваш адрес: {address}{br}Ваш {fullName} баланс: {currency}"
+  },
+  {
+    "id": "orders189",
+    "message": "ПОКУПКУ",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "orders186",
+    "message": "ордера на {buy} {buyCurrency} ",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "CurrencyButton41",
+    "message": "Пополнение баланса данной криптовалюты",
+    "files": [
+      "shared/components/controls/CurrencyButton/CurrencyButton.js"
+    ]
+  },
+  {
+    "id": "CurrencyButton42",
+    "message": "Вы не можете отправить данную валюту, недостаточно средств.",
+    "files": [
+      "shared/components/controls/CurrencyButton/CurrencyButton.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal122",
+    "message": "Продолжив Вы соглашаетесь",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal123",
+    "message": "политика конфиденциальности",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "Areyousure",
+    "message": "Вы уверены ?",
+    "files": [
+      "shared/components/modals/SaveKeysModal/SaveKeysModal.js"
+    ]
+  },
+  {
+    "id": "PartialClosure",
+    "message": "Адрес Вашего кошелька, на который после обмена будет отправлена ​​криптовалюта",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "CurrencyWallet168",
+    "message": "Ваш адрес: {address}{br}Ваш {fullName} баланс: {balance} {currency}",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "currencyWallet27",
+    "message": "Валюта",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "currencyWallet28",
+    "message": "Статус",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "currencyWallet29",
+    "message": "Статус",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "currencyWallet30",
+    "message": "Сумма",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "Withdraw18333",
+    "message": "Отправка {data$}",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Withdrow183",
+    "message": "Обратите внимание: комиссия майнеров {values} ETH {br}Ваш баланс должен превышать эту сумму для совершения транзакции.",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Withdrow192",
+    "message": "Обратите внимание: комиссия майнеров {data}.  {br}Ваш баланс должен превышать эту сумму для совершения транзакции.",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "ImportKeys176",
+    "message": "Пожалуйста введите XLM приватный ключ",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "ImportKeys205",
+    "message": "Пожалуйста введите LTC приватный ключ в WIF формате",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "importkeys172",
+    "message": "Пожалуйста введите ETH приватный ключ",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "importkeys173",
+    "message": "Пожалуйста введите корректный ETH приватный ключ",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "importkeys187",
+    "message": "Пожалуйста введите XLM приватный ключ ",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "orders182",
+    "message": "ПРОДАТЬ {buyCurrency}",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "transaction436",
+    "message": "Для обмена, вам нужно {minAmount} ETH на вашем балансе",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "currencyIcon15",
+    "message": "Ошибка",
+    "files": [
+      "shared/components/ui/CurrencyIcon/CurrencyIcon.js"
     ]
   }
 ]

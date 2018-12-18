@@ -11,7 +11,7 @@ import Center from 'components/layout/Center/Center'
 import Confirm from 'components/Confirm/Confirm'
 import { constants } from 'helpers'
 import styles from './SaveKeysModal.scss'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl, defineMessages  } from 'react-intl'
 
 
 const views = {
@@ -20,6 +20,14 @@ const views = {
   approve: 'approve',
 }
 
+const title = defineMessages({
+  Areyousure: {
+    id: 'Areyousure',
+    defaultMessage: 'Are you sure ?',
+  },
+})
+
+@injectIntl
 export default class SaveKeysModal extends React.Component {
 
     static propTypes = {
@@ -54,7 +62,7 @@ export default class SaveKeysModal extends React.Component {
 
     render() {
       const { view } = this.state
-
+      const { intl } = this.props
       return (
         <Overlay>
           <Center keepFontSize>
@@ -80,7 +88,7 @@ export default class SaveKeysModal extends React.Component {
                   createPortal(
                     <Confirm
                       rootClassName={styles.areYouSure}
-                      title="Are you sure ?"
+                      title={intl.formatMessage(title.Areyousure)}
                       isConfirm={() => this.handleConfirm()}
                       isReject={() => this.changeView(views.saveKeys)}
                       animation={view === views.confirm}

@@ -14,7 +14,9 @@ const sign = async () => {
   const ltcPrivateKey = localStorage.getItem(constants.privateKeyNames.ltc)
   const ethPrivateKey = localStorage.getItem(constants.privateKeyNames.eth)
   const _ethPrivateKey = actions.eth.login(ethPrivateKey)
+  const xlmPrivateKey = localStorage.getItem(constants.privateKeyNames.xlm)
 
+  actions.xlm.login(xlmPrivateKey)
   actions.btc.login(btcPrivateKey)
   // actions.bch.login(bchPrivateKey)
   actions.usdt.login(btcPrivateKey)
@@ -30,7 +32,7 @@ const sign = async () => {
     const eosActivePrivateKey = localStorage.getItem(constants.privateKeyNames.eosPrivateKey)
     const eosActivePublicKey = localStorage.getItem(constants.privateKeyNames.eosPublicKey)
     const eosAccount = localStorage.getItem(constants.privateKeyNames.eosAccount)
-    const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true"
+    const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === 'true'
 
     if (eosActivePrivateKey && eosActivePublicKey && eosAccount) {
       await actions.eos.login(eosAccount, eosActivePrivateKey, eosActivePublicKey)
@@ -49,7 +51,7 @@ const sign = async () => {
     const telosActivePrivateKey = localStorage.getItem(constants.privateKeyNames.telosPrivateKey)
     const telosActivePublicKey = localStorage.getItem(constants.privateKeyNames.telosPublicKey)
     const telosAccount = localStorage.getItem(constants.privateKeyNames.telosAccount)
-    const telosAccountActivated = localStorage.getItem(constants.localStorage.telosAccountActivated) === "true"
+    const telosAccountActivated = localStorage.getItem(constants.localStorage.telosAccountActivated) === 'true'
 
     if (telosActivePrivateKey && telosActivePublicKey && telosAccount) {
       actions.tlos.login(telosAccount, telosActivePrivateKey, telosActivePublicKey)
@@ -72,6 +74,7 @@ const sign = async () => {
 const getBalances = () => {
   actions.eth.getBalance()
   actions.btc.getBalance()
+  actions.xlm.getBalance()
   // actions.bch.getBalance()
   actions.ltc.getBalance()
   actions.usdt.getBalance()
@@ -121,10 +124,10 @@ const setTransactions = () =>
     })
 
 const getText = () => {
-  const { user : { ethData, btcData, eosData, telosData, /* bchData, */ ltcData } } = getState()
+  const { user : { ethData, btcData, eosData, xlmData, telosData, /* bchData, */ ltcData } } = getState()
 
 
-  const text = `
+  let text = `
   You will need this instruction only in case of emergency (if you lost your keys) \r\n
   please do NOT waste your time and go back to swap.online\r\n
   \r\n
@@ -155,27 +158,6 @@ Private key: ${btcData.privateKey}\r\n
 \r\n
 * We don\`t store your private keys and will not be able to restore them!
 \r\n
-# EOS\r\n
-\r\n
-EOS Master Private Key: ${eosData.masterPrivateKey}\r\n
-Account name: ${eosData.address}\r\n
-\r\n
-# TELOS\r\n
-\r\n
-TELOS Active Private Key: ${telosData.activePrivateKey}\r\n
-Account name: ${telosData.address}\r\n
-`/*
-#BITCOIN CASH\r\n
-\r\n
-BitcoinCash address: ${bchData.address}  \r\n
-Private key: ${bchData.privateKey}\r\n
-\r\n
-1. Go to blockchain.info
-2. login
-3. Go to settings > addresses > import
-4. paste private key and click "Ok"
-\r\n
-*/ + `
 #LITECOIN
 \r\n
 Litecoin address: ${ltcData.address}  \r\n
@@ -186,7 +168,26 @@ Private key: ${ltcData.privateKey}\r\n
 3. Go to settings > addresses > import\r\n
 4. paste private key and click "Ok"\r\n
 \r\n
+
+# XLM\r\n
+\r\n
+XLM Private Key: ${xlmData.keypair.secret()}\r\n
+Address name: ${xlmData.address}\r\n
+\r\n
 `
+  if (eosData.activePrivateKey) {
+    text = `
+${text}
+# EOS\r\n
+\r\n
+EOS Master Private Key: ${eosData.activePrivateKey}\r\n
+Account name: ${eosData.address}\r\n
+\r\n
+# TELOS\r\n
+\r\n
+TELOS Active Private Key: ${telosData.activePrivateKey}\r\n
+Account name: ${telosData.address}\r\n`
+  }
 
   return text
 }
@@ -207,6 +208,8 @@ const downloadPrivateKeys = () => {
   actions.notifications.show(constants.notifications.Message, {
     message,
   })
+
+  localStorage.setItem(constants.localStorage.privateKeysSaved, true)
 }
 
 window.downloadPrivateKeys = downloadPrivateKeys
@@ -218,4 +221,5 @@ export default {
   getExchangeRate,
   setTransactions,
   downloadPrivateKeys,
+  getText,
 }

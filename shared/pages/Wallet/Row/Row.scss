@@ -30,6 +30,22 @@
   bottom: -17px;
 }
 
+.disableWth {
+  @include inline-block;
+  height: 40px;
+  background: #dbdbdb;
+  padding: 0 25px;
+  cursor: pointer;
+  line-height: 40px;
+  font-size: 16px;
+  border: none;
+  font-weight: 500;
+  color: #626262;
+  border-radius: 20px;
+  margin-right: 10px;
+
+}
+
 .unconfirmedBalance {
   font-size: 12px;
   color: #c9c9c9;
@@ -152,6 +168,7 @@ tr button[disabled]:hover {
 .actButton {
   button {
     color: #ffffff;
+    width: auto;
     background: rgba(61, 226, 91, 0.7);
     height: 25px;
     line-height: 25px;

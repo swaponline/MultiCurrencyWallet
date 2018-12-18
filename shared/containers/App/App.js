@@ -74,8 +74,8 @@ export default class App extends React.Component {
       actions.user.getDemoMoney()
     }
 
-    if (process.env.LOCAL !== 'local') {
-      actions.pushNotification.initializeFirebase()
+    if (actions.firebase.isSupported()) {
+      actions.firebase.initialize()
     }
   }
 

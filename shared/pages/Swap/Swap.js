@@ -2,6 +2,9 @@ import React, { PureComponent } from 'react'
 
 import Swap from 'swap.swap'
 
+import CSSModules from 'react-css-modules'
+import styles from './Swap.scss'
+
 import { connect } from 'redaction'
 import { links, constants } from 'helpers'
 import actions from 'redux/actions'
@@ -9,16 +12,23 @@ import actions from 'redux/actions'
 import { swapComponents } from './swaps'
 import Share from './Share/Share'
 import EmergencySave from './EmergencySave/EmergencySave'
+import { injectIntl } from 'react-intl'
+import { localisedUrl } from 'helpers/locale'
+import DeleteSwapAfterEnd from './DeleteSwapAfterEnd'
 
 
+@injectIntl
 @connect(({
   user: { ethData, btcData, /* bchData, */ tokensData, eosData, telosData, nimData, usdtData, ltcData },
+  ipfs: { peer },
 }) => ({
   items: [ ethData, btcData, eosData, telosData, /* bchData, */ ltcData, usdtData /* nimData */ ],
   tokenItems: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
   errors: 'api.errors',
   checked: 'api.checked',
+  peer,
 }))
+@CSSModules(styles)
 export default class SwapComponent extends PureComponent {
 
   state = {
@@ -28,11 +38,11 @@ export default class SwapComponent extends PureComponent {
   }
 
   componentWillMount() {
-    const { items, tokenItems } = this.props
+    const { items, tokenItems, intl: { locale } } = this.props
     let { match : { params : { orderId } }, history } = this.props
 
     if (!orderId) {
-      history.push(links.exchange)
+      history.push(localisedUrl(links.exchange))
       return
     }
 
@@ -52,7 +62,7 @@ export default class SwapComponent extends PureComponent {
 
     } catch (error) {
       actions.notifications.show(constants.notifications.ErrorNotification, { error: 'Sorry, but this order do not exsit already' })
-      this.props.history.push(links.exchange)
+      this.props.history.push(localisedUrl(links.exchange))
     }
 
     this.setSaveSwapId(orderId)
@@ -80,17 +90,23 @@ export default class SwapComponent extends PureComponent {
   }
 
   render() {
+    const { peer } = this.props
     const { swap, SwapComponent, currencyData } = this.state
 
-    if (!swap || !SwapComponent) {
+    if (!swap || !SwapComponent || !peer) {
       return null
     }
 
     return (
-      <div style={{ paddingLeft: '30px', paddingTop: '30px' }}>
+      <div styleName="swap">
         <SwapComponent swap={swap} currencyData={currencyData}>
           <Share flow={swap.flow} />
           <EmergencySave flow={swap.flow} />
+          {
+            peer === swap.owner.peer && (
+              <DeleteSwapAfterEnd swap={swap} />
+            )
+          }
         </SwapComponent>
       </div>
     )

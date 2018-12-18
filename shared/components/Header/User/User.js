@@ -1,6 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { Redirect } from 'react-router-dom'
+import { withRouter } from 'react-router'
+import actions from 'redux/actions'
 import { connect } from 'redaction'
 
 import styles from './User.scss'
@@ -10,11 +13,12 @@ import Sound from 'helpers/Sound/Sound.mp4'
 import Question from './Question/Question'
 import UserAvatar from './UserAvatar/UserAvatar'
 import UserTooltip from './UserTooltip/UserTooltip'
-import AddOfferButton from './AddOfferButton/AddOfferButton'
+import SubscribeButton from './SubscribeButton/SubscribeButton'
 
 import Avatar from 'components/Avatar/Avatar'
 
 
+@withRouter
 @connect({
   feeds: 'feeds.items',
   peer: 'ipfs.peer',
@@ -52,23 +56,51 @@ export default class User extends React.Component {
     audio.autoplay = true
   }
 
+  declineRequest = (orderId, participantPeer) => {
+    actions.core.declineRequest(orderId, participantPeer)
+    actions.core.updateCore()
+  }
+
+  acceptRequest = async (orderId, participantPeer, link) => {
+    const { toggle, history } = this.props
+
+    actions.core.acceptRequest(orderId, participantPeer)
+    actions.core.updateCore()
+
+    if (typeof toggle === 'function') {
+      toggle()
+    }
+
+    await history.replace('/')
+    await history.push(link)
+  }
+
   render() {
     const { view } = this.state
-    const { feeds, peer } = this.props
+
+    const {
+      feeds, peer, reputation, openTour, path,
+    } = this.props
 
     return (
       <div styleName="user-cont">
-        <AddOfferButton />
-        <Question />
+        <SubscribeButton />
+        {path && (<Question openTour={openTour} />)}
         <UserAvatar
           isToggle={this.handleToggleTooltip}
           feeds={feeds}
+          declineRequest={this.declineRequest}
+          getInfoBySwapId={actions.core.getInformationAboutSwap}
           soundClick={this.soundClick}
           changeView={this.handleChangeView}
         />
         {
           view && <UserTooltip
+            feeds={feeds}
+            peer={peer}
             toggle={this.handleToggleTooltip}
+            acceptRequest={this.acceptRequest}
+            declineRequest={this.declineRequest}
           />
         }
         {!!peer && (

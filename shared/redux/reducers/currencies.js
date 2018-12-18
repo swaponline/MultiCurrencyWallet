@@ -40,7 +40,7 @@ const initialState = {
         fullTitle: key,
       }))),
   ],
-  addSelectedItems: [],
+  addSelectedItems:[],
 }
 
 // eslint-disable-next-line
