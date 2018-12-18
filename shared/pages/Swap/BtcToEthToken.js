@@ -114,6 +114,8 @@ export default class BtcToEthToken extends Component {
     const { currencyAddress, secret, flow, enabledButton, destinationAddressTimer, isAddressCopied } = this.state
     const linked = Link.all(this, 'destinationBuyAddress')
 
+    console.log('fdsdsfsf' + flow.state)
+
     linked.destinationBuyAddress.check((value) => value !== '', 'Please enter ETH address for tokens')
 
     return (
@@ -236,7 +238,6 @@ export default class BtcToEthToken extends Component {
                           <div> {message}
                             {
                               <a href={`${config.link.bitpay}/address/${currencyAddress}`} target="_blank" rel="noopener noreferrer">
-                                {currencyAddress}
                               </a>
                             }
                           </div>)}
@@ -275,15 +276,8 @@ export default class BtcToEthToken extends Component {
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        <span className={this.props.styles.btcMessage}>
-                          <FormattedMessage id="BtcToEthToken250" defaultMessage="Copy this address and top up">
-                            {message => <h3>{message}</h3>}
-                          </FormattedMessage>
-                          <strong>{this.swap.sellAmount.toNumber()} BTC</strong>
-                          <FormattedMessage id="BtcToEthToken251" defaultMessage="You can send BTC from a wallet of any exchange">
-                            {message => <h3>{message}</h3>}
-                          </FormattedMessage>
-                        </span>
+
+                        <span className={this.props.styles.btcMessage}>Copy this address and top up <strong>{this.swap.sellAmount.toNumber()} BTC</strong> You can send BTC from a wallet of any exchange</span>
                         <CopyToClipboard
                           text={flow.scriptAddress}
                           onCopy={this.handleCopyAddress}
@@ -294,6 +288,7 @@ export default class BtcToEthToken extends Component {
                               className={this.props.styles.linkAddress}
                               onClick={this.onCopyAddress}>{flow.scriptAddress}
                             </a>
+                            <a className={this.props.styles.linkAddress} href={`${config.link.bitpay}/address/${flow.scriptAddress}`} onClick={this.onCopyAddress}>{flow.scriptAddress}</a>
                             <Button
                               styleName="button"
                               brand

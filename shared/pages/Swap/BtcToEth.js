@@ -99,13 +99,6 @@ export default class BtcToEth extends Component {
   render() {
     const { children } = this.props
     const { currencyAddress, secret, flow, enabledButton } = this.state
-    const headingStyle = {
-      color: '#5100dc',
-      textTransform: 'uppercase',
-      fontSize: '20px',
-      marginTop: '20px',
-      borderTop: '1px solid #5100dc',
-      paddingTop: '20px' }
     return (
       <div>
         <div style={{ width: '500px', margin: 'auto' }}>
