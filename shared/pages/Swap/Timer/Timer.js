@@ -30,7 +30,6 @@ export default class Timer extends React.Component {
 
   componentWillMount() {
     const { lockTime } = this.state
-    console.log(lockTime)
 
     const dateNow = new Date().getTime()
     const timeLeft = lockTime - dateNow
