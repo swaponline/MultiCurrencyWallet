@@ -24,7 +24,7 @@ import { localisedUrl } from 'helpers/locale'
 
 
 import config from 'app-config'
-import swapApp from 'swap.app'
+import swapApp, { util } from 'swap.app'
 
 import constants from 'helpers/constants'
 
@@ -395,7 +395,8 @@ export default class PartialClosure extends Component {
       return true
     }
 
-    return /^(0x)?[0-9a-f]{40}$/.test(customWallet.toLowerCase())
+    // TODO: check for BTC address
+    return util.typeforce.isCoinAddress.ETH(customWallet)
   }
 
   customWalletAllowed() {
