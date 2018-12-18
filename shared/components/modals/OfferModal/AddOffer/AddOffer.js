@@ -20,7 +20,6 @@ import Toggle from 'components/controls/Toggle/Toggle'
 import Input from 'components/forms/Input/Input'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage } from 'react-intl'
-import reducers from 'redux/core/reducers'
 import { isNumberValid, isNumberStringFormatCorrect, mathConstants } from 'helpers/math.js'
 
 
