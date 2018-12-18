@@ -2,7 +2,7 @@ import React, { Fragment, Component } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment/moment'
 
-import { links } from 'helpers'
+import { links, localStorage } from 'helpers'
 import actions from 'redux/actions'
 import { Link } from 'react-router-dom'
 
@@ -27,25 +27,25 @@ export default class RowHistory extends Component {
   handleGetFlow = (timeLeft) => {
     let { row: { id } } = this.props
 
-    if (timeLeft > 0) {
+    if (timeLeft < 0) {
       return
     }
 
     const { flow } = actions.core.getSwapById(id)
+
     const { state: {
       isFinished, isRefunded,
-      refundTransactionHash, refundTxHex,
     } } = flow
 
-    if (isFinished
-      && !isRefunded
-      && !refundTransactionHash
-      && !refundTxHex) {
+    if (isFinished || isRefunded) {
       return
     }
 
     flow.tryRefund()
-    localStorage.setItem(`flow.${id}`, flow.state)
+      .then((result) => {
+        console.log('refunded', result)
+        localStorage.setItem(`swap:flow.${id}`, flow.state)
+      })
   }
 
   componentDidMount() {
@@ -81,8 +81,6 @@ export default class RowHistory extends Component {
       ltcScriptValues, usdtScriptValues, isRefunded, isMy, sellCurrency,
       isFinished, id, scriptValues,
     } = row
-
-    console.log('row', row)
 
     const values  = btcScriptValues || ltcScriptValues || usdtScriptValues || scriptValues
     const data = Date.now() / 1000
