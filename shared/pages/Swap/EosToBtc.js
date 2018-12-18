@@ -34,14 +34,6 @@ export default class EosToBtc extends Component {
     })
   }
 
-  verifyScript = () => {
-    const { flow: { scriptValues: { secretHash, recipientPublicKey, ownerPublicKey, lockTime } } } = this.state
-
-    if (secretHash && recipientPublicKey && ownerPublicKey && lockTime) {
-      this.swap.events.dispatch('verify script')
-    }
-  }
-
   tryRefund = () => {
     this.swap.flow.tryRefund()
   }
@@ -49,10 +41,6 @@ export default class EosToBtc extends Component {
   render() {
     const { children } = this.props
     const { flow, enabledButton } = this.state
-
-    if (flow.step === 2) {
-      setTimeout(this.verifyScript, 2000)
-    }
 
     return (
       <div>
