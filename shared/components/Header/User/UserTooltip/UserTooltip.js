@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import { connect } from 'redaction'
 import { withRouter } from 'react-router-dom'
+import actions from 'redux/actions'
 
 import { links } from 'helpers'
 import { Link } from 'react-router-dom'
@@ -14,7 +15,6 @@ import ArrowRightSvg from './images/arrow-right.svg'
 import { TimerButton } from 'components/controls'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
-
 
 @injectIntl
 @withRouter
