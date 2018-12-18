@@ -12,7 +12,7 @@ export const iconNames = Object.keys(icons)
 
 const CurrencyIcon = ({ className, style, name, currency }) => {
   if (typeof name === 'undefined') {
-    return <p>{<FormattedMessage id=" currencyIcon15" defaultMessage="Error" />}</p>
+    return <p>{<FormattedMessage id="currencyIcon15" defaultMessage="Error" />}</p>
   }
   const isIconExist = iconNames.includes(name.toLowerCase())
 

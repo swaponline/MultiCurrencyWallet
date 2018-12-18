@@ -3678,7 +3678,7 @@
   },
   {
     "id": "orders138",
-    "message": "no limit exchange with 0 fee",
+    "message": " no limit exchange with 0 fee",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]

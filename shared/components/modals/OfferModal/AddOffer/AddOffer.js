@@ -382,12 +382,12 @@ export default class AddOffer extends Component {
 
   zeroPosition = () => {
     const { addSelectedItems } = this.props
-    const { buyCurrency, seellCurrency } = this.state
+    const { buyCurrency, sellCurrency } = this.state
 
     if (addSelectedItems !== undefined) {
       const chekerCoinList = addSelectedItems.map(item => item.name)
       if (!chekerCoinList.includes(buyCurrency.toUpperCase())) {
-        if (addSelectedItems[0].name !== seellCurrency) {
+        if (addSelectedItems[0].name !== sellCurrency) {
           this.setState(() => ({
             buyCurrency: addSelectedItems[0].name,
           }))
