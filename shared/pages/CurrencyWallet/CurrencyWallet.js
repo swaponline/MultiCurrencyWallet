@@ -145,8 +145,6 @@ export default class CurrencyWallet extends Component {
     const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true"
 
     return (
-      /* eslint-disable */
-
       <div className="root">
         <PageSeo
           location={location}
@@ -215,6 +213,5 @@ export default class CurrencyWallet extends Component {
         {txHistory && (<Table titles={titles} rows={txHistory}styleName="table" rowRender={(row) => (<Row key={row.hash} {...row} />)} />)}
       </div>
     )
- /* eslint-enable */
   }
 }
