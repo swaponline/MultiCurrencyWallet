@@ -886,7 +886,6 @@
     "id": "orders153",
     "message": " "
   },
-
   {
     "id": "orders176",
     "message": " "
@@ -3954,10 +3953,7 @@
   },
   {
     "id": "transaction398",
-    "message": "ETH на вашем балансе",
-    "files": [
-      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
-    ]
+    "message": "ETH на вашем балансе"
   },
   {
     "id": "Select210",
@@ -4854,6 +4850,13 @@
     "message": "Ошибка",
     "files": [
       "shared/components/ui/CurrencyIcon/CurrencyIcon.js"
+    ]
+  },
+  {
+    "id": "WithdrawIncorectAddress",
+    "message": "Некорректно введен адресс",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
   }
 ]

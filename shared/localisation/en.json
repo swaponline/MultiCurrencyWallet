@@ -3697,15 +3697,24 @@
   },
   {
     "id": "addoffer381",
-    "message": "Sell"
+    "message": "Sell",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
   },
   {
     "id": "addoffer396",
-    "message": "Buy"
+    "message": "Buy",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
   },
   {
     "id": "addoffer406",
-    "message": "Exchange rate"
+    "message": "Exchange rate",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
   },
   {
     "id": "Table95",
@@ -4857,6 +4866,13 @@
     "message": "Error",
     "files": [
       "shared/components/ui/CurrencyIcon/CurrencyIcon.js"
+    ]
+  },
+  {
+    "id": "WithdrawIncorectAddress",
+    "message": "Your address not correct",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
   }
 ]
