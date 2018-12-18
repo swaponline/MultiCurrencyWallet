@@ -16,9 +16,10 @@ import UserTooltip from './UserTooltip/UserTooltip'
 import SubscribeButton from './SubscribeButton/SubscribeButton'
 
 import Avatar from 'components/Avatar/Avatar'
+import { injectIntl } from 'react-intl'
 
 
-@withRouter
+@injectIntl
 @connect({
   feeds: 'feeds.items',
   peer: 'ipfs.peer',
@@ -62,7 +63,7 @@ export default class User extends React.Component {
   }
 
   acceptRequest = async (orderId, participantPeer, link) => {
-    const { toggle, history } = this.props
+    const { toggle, history, intl: { locale } } = this.props
 
     actions.core.acceptRequest(orderId, participantPeer)
     actions.core.updateCore()
@@ -71,8 +72,8 @@ export default class User extends React.Component {
       toggle()
     }
 
-    await history.replace('/')
-    await history.push(link)
+    await history.replace(localisedUrl(locale, '/'))
+    await history.push(localisedUrl(locale, link))
   }
 
   render() {

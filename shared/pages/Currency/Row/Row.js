@@ -28,7 +28,7 @@ export default class Row extends Component {
 
   handlePush = () => {
     const { from, to, intl: { locale } } = this.props
-    this.props.history.push(localisedUrl(locale, `/${from.toLowerCase()} - ${to.toLowerCase()}`))
+    this.props.history.push(localisedUrl(locale, `/${from.toLowerCase()}-${to.toLowerCase()}`))
   }
 
   render() {
@@ -48,7 +48,7 @@ export default class Row extends Component {
           </span>
         </td>
         <td>
-          <BtnTooltip onClick={() => this.handlePush()} text="Exchange" >
+          <BtnTooltip onClick={this.handlePush} text="Exchange" >
             <FormattedMessage id="Row35" defaultMessage="Exchange" />
           </BtnTooltip>
         </td>
