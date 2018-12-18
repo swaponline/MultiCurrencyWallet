@@ -50,7 +50,7 @@ export default class BtcToEthToken extends Component {
     this.setState({
       flow: values,
     })
-  } // add commit
+  }
 
   tryRefund = () => {
     this.swap.flow.tryRefund()
