@@ -77,10 +77,12 @@ export default class RowHistory extends Component {
     }
 
     let {
-      buyAmount, buyCurrency, sellAmount, btcScriptValues,
+      buyAmount, buyCurrency, sellAmount, btcScriptValues, balance,
       ltcScriptValues, usdtScriptValues, isRefunded, isMy, sellCurrency,
       isFinished, id, scriptValues,
     } = row
+
+    console.log('row', row)
 
     const values  = btcScriptValues || ltcScriptValues || usdtScriptValues || scriptValues
     const data = Date.now() / 1000
@@ -127,10 +129,10 @@ export default class RowHistory extends Component {
         </td>
         <td>
           {
-            values && !isRefunded && !isFinished ? (
+            values && !isRefunded && !isFinished && balance > 0 ? (
               <Timer
                 lockTime={values.lockTime * 1000}
-                enabledButton={this.handleGetFlow()}
+                enabledButton={this.handleGetFlow}
               />
             ) : (
               <FormattedMessage id="RowHistory76" defaultMessage="Refund not available" />
