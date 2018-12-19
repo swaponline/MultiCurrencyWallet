@@ -9,7 +9,6 @@ import { connect } from 'redaction'
 import { links, constants } from 'helpers'
 import actions from 'redux/actions'
 
-
 import { swapComponents } from './swaps'
 import Share from './Share/Share'
 import EmergencySave from './EmergencySave/EmergencySave'
@@ -21,11 +20,13 @@ import DeleteSwapAfterEnd from './DeleteSwapAfterEnd'
 @injectIntl
 @connect(({
   user: { ethData, btcData, /* bchData, */ tokensData, eosData, telosData, nimData, usdtData, ltcData },
+  ipfs: { peer },
 }) => ({
   items: [ ethData, btcData, eosData, telosData, /* bchData, */ ltcData, usdtData /* nimData */ ],
   tokenItems: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
   errors: 'api.errors',
   checked: 'api.checked',
+  peer,
 }))
 
 @cssModules(styles, { allowMultiple: true })
@@ -90,20 +91,23 @@ export default class SwapComponent extends PureComponent {
   }
 
   render() {
+    const { peer } = this.props
     const { swap, SwapComponent, currencyData } = this.state
-    console.log(this.props)
-    console.log(this.state)
 
-    if (!swap || !SwapComponent) {
+    if (!swap || !SwapComponent || !peer) {
       return null
     }
 
     return (
-
       <div styleName="swap">
         <SwapComponent swap={swap} currencyData={currencyData} styles={styles}>
           <Share flow={swap.flow} />
           <EmergencySave flow={swap.flow} />
+          {
+            peer === swap.owner.peer && (
+              <DeleteSwapAfterEnd swap={swap} />
+            )
+          }
         </SwapComponent>
       </div>
     )
