@@ -64,7 +64,7 @@ export default class EosRegisterModal extends React.Component {
           <FormattedMessage id="EosRegAccountModal54" defaultMessage="Account name " />
           {' '}
           <Tooltip id="EoSR92">
-            <FormattedMessage id="Eos53" defaultMessage="Enter your EOS account name " />,
+            <FormattedMessage id="Eos53" defaultMessage="Enter your EOS account name " />
           </Tooltip>
         </FieldLabel>
         <Input valueLink={linked.accountName} />
@@ -72,7 +72,7 @@ export default class EosRegisterModal extends React.Component {
           <FormattedMessage id="EosRegAccountModal58" defaultMessage="Active private key " />
           {' '}
           <Tooltip id="EoSR69">
-            <FormattedMessage id="Eos57" defaultMessage="Enter private key for active permission " />,
+            <FormattedMessage id="Eos57" defaultMessage="Enter private key for active permission " />
           </Tooltip>
         </FieldLabel>
         <Input valueLink={linked.privateKey} />

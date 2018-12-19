@@ -103,8 +103,7 @@ export default class Orders extends Component {
       <FormattedMessage id="orders101" defaultMessage="OWNER" />,
       <FormattedMessage id="orders102" defaultMessage="AMOUNT" />,
       <span>
-        <FormattedMessage id="orders103" defaultMessage="PRICE FOR 1 " />
-        {buyCurrency}
+        <FormattedMessage id="orders104" defaultMessage="PRICE FOR 1 {buyCurrency}" values={{ buyCurrency: `${buyCurrency}` }} />
       </span>,
       <FormattedMessage id="orders105" defaultMessage="TOTAL" />,
       <FormattedMessage id="orders106" defaultMessage="START EXCHANGE" />,
@@ -127,8 +126,11 @@ export default class Orders extends Component {
                Swap.Online wallet provides instant exchange using Atomic Swap Protocol.`
           } />
         <Title>
-          {buyCurrency}/{sellCurrency}
-          <FormattedMessage id="orders138" defaultMessage="no limit exchange with 0 fee" />
+          <FormattedMessage
+            id="orders1381"
+            defaultMessage="{pair} no limit exchange with 0 fee"
+            values={{ pair: `${buyCurrency}/${sellCurrency}` }}
+          />
         </Title>
         { invalidPair &&
           <p>
@@ -181,7 +183,7 @@ export default class Orders extends Component {
           isLoading={sellOrders.length === 0 && !isIpfsLoaded}
         />
         <h3 styleName="ordersHeading">
-          <FormattedMessage id="orders174" defaultMessage={`SELL {buyCurrency} HERE`} values={{ buyCurrency: `${buyCurrency}` }} />
+          <FormattedMessage id="orders183" defaultMessage={`SELL {buyCurrency} HERE`} values={{ buyCurrency: `${buyCurrency}` }} />
         </h3>
         <p>
           <FormattedMessage

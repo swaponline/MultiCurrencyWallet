@@ -119,11 +119,15 @@ export default class WithdrawModal extends React.Component {
 
 
     sellAllBalance = () => {
-      const { amount, balance } = this.state
+      const { amount, balance, currency, tokenFee } = this.state
       const { data } = this.props
+
+      const min = tokenFee ? minAmount.eth : minAmount[data.currency.toLowerCase()]
+
       const balanceMiner = balance !== 0
-        ? Number(balance) - minAmount[data.currency.toLowerCase()]
+        ? Number(balance) - min
         : balance
+
       this.setState({
         amount: balanceMiner,
       })
@@ -150,26 +154,41 @@ export default class WithdrawModal extends React.Component {
 
       const linked = Link.all(this, 'address', 'amount')
 
+      const min = tokenFee ? minAmount.eth : minAmount[data.currency.toLowerCase()]
+      const dataCurrency = tokenFee ? 'ETH' : data.currency.toUpperCase()
 
       const isDisabled =
-        !address || !amount || isShipped || Number(amount) < minAmount[data.currency.toLowerCase()]
+        !address || !amount || isShipped || Number(amount) < min
         || !this.addressIsCorrect()
-        || Number(amount) + minAmount[data.currency.toLowerCase()] > balance
+        || Number(amount) + min > balance
         || this.isEthOrERC20()
 
       if (Number(amount) !== 0) {
-        linked.amount.check((value) => Number(value) + minAmount[data.currency.toLowerCase()] <= balance,
+        linked.amount.check((value) => Number(value) + min <= balance,
           <div style={{ width: '340px', fontSize: '12px' }}>
-            <FormattedMessage id="Withdrow108" defaultMessage="The amount must be less than your balance on the miners fee " />
-            {minAmount[data.currency.toLowerCase()]}
+            {tokenFee
+              ? <FormattedMessage
+                id="Withdrow168"
+                defaultMessage="The amount must be less than your balance by the minimum amount for the transaction {min} {currency}"
+                values={{
+                  min: `${minAmount[data.currency.toLowerCase()]}`,
+                  currency: `${data.currency}`,
+                }}
+              />
+              : <FormattedMessage
+                id="Withdrow170"
+                defaultMessage="The amount must be less than your balance on the miners fee {min}"
+                values={{ min: `${min}` }}
+              />
+            }
           </div>
         )
-        linked.amount.check((value) => Number(value) > minAmount[data.currency.toLowerCase()],
+        linked.amount.check((value) => Number(value) > min,
           !tokenFee &&
           (
             <div style={{ width: '340px', fontSize: '12px' }}>
               <FormattedMessage id="Withdrow159" defaultMessage="Amount must be greater than  " />
-              {minAmount[data.currency.toLowerCase()]}
+              {min}
             </div>
           )
         )
@@ -188,26 +207,12 @@ export default class WithdrawModal extends React.Component {
 
       return (
         <Modal name={name} title={title}>
-          { tokenFee &&
-            (
-              <p style={{ fontSize: '16px', textAlign: 'center', color: 'red' }}>
-                <FormattedMessage
-                  id="Withdrow183"
-                  defaultMessage={`Please note: Miners fee is {values} ETH {br}Your balance must exceed this sum to perform transaction.`}
-                  values={{ minAmount: `${minAmount.eth}`, br: <br /> }} />
-              </p>
-            )
-          }
-          {!tokenFee &&
-            (
-              <p style={{ fontSize: '16px', textAlign: 'center' }}>
-                <FormattedMessage
-                  id="Withdrow192"
-                  defaultMessage="Please note: Miners fee is {minAmount} {data}.  {br}Your balance must exceed this sum to perform transaction. "
-                  values={{ minAmount: `${minAmount[data.currency.toLowerCase()]}`, br: <br />, data: `${data.currency.toUpperCase()}` }} />
-              </p>
-            )
-          }
+          <p styleName={tokenFee ? 'rednotes' : 'notice'}>
+            <FormattedMessage
+              id="Withdrow213"
+              defaultMessage="Please note: Miners fee is {minAmount} {data}.  {br}Your balance must exceed this sum to perform transaction. "
+              values={{ minAmount: `${min}`, br: <br />, data: `${dataCurrency}` }} />
+          </p>
           <FieldLabel inRow>
             <FormattedMessage id="Withdrow1194" defaultMessage="Address " />
             {' '}
