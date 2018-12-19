@@ -251,7 +251,7 @@ export default class WithdrawModal extends React.Component {
             </ReactTooltip>
           </div>
           {
-            !linked.amount.error && (
+            !linked.amount.error && !this.isEthOrERC20() && (
               <div styleName={minus ? 'rednote' : 'note'}>
                 <FormattedMessage id="WithdrawModal256" defaultMessage="No less than {minAmount}" values={{ minAmount: `${minAmount[data.currency.toLowerCase()]}` }} />
               </div>
