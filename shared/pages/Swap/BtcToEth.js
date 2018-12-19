@@ -100,13 +100,12 @@ export default class BtcToEth extends Component {
     const { children } = this.props
     const { currencyAddress, secret, flow, enabledButton } = this.state
     const headingStyle = {
-    color: '#5100dc',
-    textTransform: 'uppercase',
-    fontSize: '20px',
-    marginTop: '20px',
-    borderTop: '1px solid #5100dc',
-    paddingTop: '20px' }
-    
+      color: '#5100dc',
+      textTransform: 'uppercase',
+      fontSize: '20px',
+      marginTop: '20px',
+      borderTop: '1px solid #5100dc',
+      paddingTop: '20px' }
     return (
       <div>
         <div style={{ width: '500px', margin: 'auto' }}>
@@ -195,7 +194,7 @@ export default class BtcToEth extends Component {
                       <div>
                         <div>
                           <FormattedMessage id="BtcToEth167" defaultMessage="Your address: " />
-                          <a href={`${config.link.bitpay}/address/${currencyAddress}`} target="_blank" el="noopener noreferrer">
+                          <a href={`${config.link.bitpay}/address/${currencyAddress}`} target="_blank" rel="noopener noreferrer">
                             {currencyAddress}
                           </a>
                         </div>
@@ -236,7 +235,7 @@ export default class BtcToEth extends Component {
                         <div>
                           <FormattedMessage id="BtcToEth199" defaultMessage="Transaction: " />
                           <strong>
-                            <a href={`${config.link.bitpay}/tx/${flow.btcScriptCreatingTransactionHash}`} target="_blank" el="noopener noreferrer">
+                            <a href={`${config.link.bitpay}/tx/${flow.btcScriptCreatingTransactionHash}`} target="_blank" rel="noopener noreferrer">
                               {flow.btcScriptCreatingTransactionHash}
                             </a>
                           </strong>
