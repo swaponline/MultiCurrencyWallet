@@ -103,7 +103,6 @@ export default class BtcToEthToken extends Component {
 
   onCopyAddress = (e) => {
     e.preventDefault()
-    alert('address copied');
   }
   handlerBuyWithCreditCard = (e) => {
     e.preventDefault()
@@ -114,8 +113,6 @@ export default class BtcToEthToken extends Component {
 
     const { currencyAddress, secret, flow, enabledButton, destinationAddressTimer, isAddressCopied } = this.state
     const linked = Link.all(this, 'destinationBuyAddress')
-
-    console.log('fdsdsfsf' + flow.state)
 
     linked.destinationBuyAddress.check((value) => value !== '', 'Please enter ETH address for tokens')
 
@@ -238,7 +235,7 @@ export default class BtcToEthToken extends Component {
                         {message => (
                           <div> {message}
                             {
-                              <a href={`${config.link.bitpay}/address/${currencyAddress}`} target="_blank" el="noopener noreferrer">
+                              <a href={`${config.link.bitpay}/address/${currencyAddress}`} target="_blank" rel="noopener noreferrer">
                                 {currencyAddress}
                               </a>
                             }
@@ -278,13 +275,25 @@ export default class BtcToEthToken extends Component {
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        <span className={this.props.styles.btcMessage}>Copy this address and top up <strong>{this.swap.sellAmount.toNumber()} BTC</strong> You can send BTC from a wallet of any exchange</span>
+                        <span className={this.props.styles.btcMessage}>
+                          <FormattedMessage id="BtcToEthToken250" defaultMessage="Copy this address and top up">
+                            {message => <h3>{message}</h3>}
+                          </FormattedMessage>
+                          <strong>{this.swap.sellAmount.toNumber()} BTC</strong>
+                          <FormattedMessage id="BtcToEthToken251" defaultMessage="You can send BTC from a wallet of any exchange">
+                            {message => <h3>{message}</h3>}
+                          </FormattedMessage>
+                        </span>
                         <CopyToClipboard
                           text={flow.scriptAddress}
                           onCopy={this.handleCopyAddress}
                         >
                           <p className={this.props.styles.qr}>
-                            <a className={this.props.styles.linkAddress} href={`${config.link.bitpay}/address/${flow.scriptAddress}`} onClick={this.onCopyAddress}>{flow.scriptAddress}</a>
+                            <a
+                              href={`${config.link.bitpay}/address/${flow.scriptAddress}`}
+                              className={this.props.styles.linkAddress}
+                              onClick={this.onCopyAddress}>{flow.scriptAddress}
+                            </a>
                             <Button
                               styleName="button"
                               brand
@@ -314,7 +323,12 @@ export default class BtcToEthToken extends Component {
                           <FormattedMessage id="BtcToEthToken170" defaultMessage="Unconfirmed balance: 0 BTC">
                             {message => <span>{message}</span>}
                           </FormattedMessage>
-                          <span className={this.props.styles.lockTime}>Locktime: 1 h 30 min <i className="far fa-clock" /></span>
+                          <span className={this.props.styles.lockTime}>
+                            <FormattedMessage id="BtcToEthToken253" defaultMessage="Locktime: 1 h 30 min">
+                              {message => <span>{message}</span>}
+                            </FormattedMessage>
+                            <i className="far fa-clock" />
+                          </span>
                         </div>
                         <FormattedMessage id="BtcToEthToken171" defaultMessage="Update Balance ">
                           {message =>  <Button brand onClick={this.updateBalance}>{message}</Button>}
