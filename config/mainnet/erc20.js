@@ -224,4 +224,9 @@ export default {
     decimals: 10,
     fullName: 'Ochain',
   },
+  poly: {
+    address: '0x9992ec3cf6a55b00978cddf2b27bc6882d88d1ec',
+    decimals: 18,
+    fullName: 'Polymath',
+  },
 }
