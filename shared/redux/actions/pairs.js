@@ -10,22 +10,25 @@ const selectPair = (value) => {
   const selectedItems = items.filter(item => pairs[value].includes(item.name))
 
   reducers.currencies.addSelectedItems(selectedItems)
+
+  return selectedItems
+
 }
 
 const erc20Tokens = Object.keys(config.erc20)
   .map(key => key.toUpperCase())
 
 const pairs = {
-  eth: ['ETH', 'LTC', 'BTC'],
-  btc: ['BTC', 'EOS', 'ETH', 'LTC', ...erc20Tokens ],
-  eos: ['EOS', 'BTC'],
-  ltc: ['BTC', 'LTC', 'ETH'],
-  usdt: ['USDT', ...erc20Tokens],
+  eth: ['LTC', 'BTC'],
+  btc: [ 'EOS', 'ETH', 'LTC', ...erc20Tokens ],
+  eos: [ 'BTC'],
+  ltc: ['BTC', 'ETH'],
+  usdt: [...erc20Tokens],
 }
 
 Object.keys(config.erc20)
   .forEach(key => {
-    pairs[key] = ['BTC', 'USDT', ...erc20Tokens]
+    pairs[key] = ['BTC', 'USDT']
   })
 
 

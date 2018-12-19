@@ -71,7 +71,6 @@ export default class AddOffer extends Component {
   componentDidMount() {
     const { sellCurrency, buyCurrency, value } = this.state
 
-    this.zeroPosition()
     actions.pairs.selectPair(sellCurrency)
 
     this.checkBalance(sellCurrency)
@@ -110,9 +109,7 @@ export default class AddOffer extends Component {
   handleBuyCurrencySelect = async ({ value }) => {
     let { buyCurrency, sellCurrency, buyAmount, sellAmount } = this.state
 
-    if (value === sellCurrency) {
-      sellCurrency = buyCurrency
-    }
+    this.checkPair(this.state.sellCurrency)
 
     await this.checkBalance(sellCurrency)
 
@@ -142,7 +139,7 @@ export default class AddOffer extends Component {
       buyCurrency = sellCurrency
     }
 
-    actions.pairs.selectPair(value)
+    this.checkPair(value)
 
     await this.checkBalance(sellCurrency)
 
@@ -367,23 +364,16 @@ export default class AddOffer extends Component {
     })
   }
 
-  zeroPosition = () => {
-    const { addSelectedItems } = this.props
-    const { buyCurrency, sellCurrency } = this.state
+  checkPair = (value) => {
+    const selected = actions.pairs.selectPair(value)
 
-    if (addSelectedItems !== undefined) {
-      const chekerCoinList = addSelectedItems.map(item => item.name)
-      if (!chekerCoinList.includes(buyCurrency.toUpperCase())) {
-        addSelectedItems[0].name === undefined
-          ? this.setState(() => ({
-            buyCurrency: 'eth',
-          }))
-          :this.setState(() => ({
-            buyCurrency: 'btc',
-          }))
-      }
+    const check = selected.map(item => item.value).includes(this.state.buyCurrency)
+
+    if (!check) {
+      this.setState(() => ({
+        buyCurrency: selected[0].value,
+      }))
     }
-    return buyCurrency
   }
 
   render() {
@@ -439,7 +429,7 @@ export default class AddOffer extends Component {
         <SelectGroup
           label={<FormattedMessage id="addoffer396" defaultMessage="Buy" />}
           inputValueLink={linked.buyAmount.pipe(this.handleBuyAmountChange)}
-          selectedCurrencyValue={this.zeroPosition()}
+          selectedCurrencyValue={buyCurrency}
           onCurrencySelect={this.handleBuyCurrencySelect}
           id="buyAmount"
           currencies={addSelectedItems}

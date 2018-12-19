@@ -60,6 +60,18 @@ export default class PartialClosure extends Component {
     orders: [],
   }
 
+  static getDerivedStateFromProps({ orders }, { haveCurrency, getCurrency }) {
+    if (!Array.isArray(orders)) { return }
+
+    const filteredOrders = orders.filter(order => !order.isMy
+      && order.sellCurrency === getCurrency.toUpperCase()
+      && order.buyCurrency === haveCurrency.toUpperCase())
+
+    return {
+      filteredOrders,
+    }
+  }
+
   constructor() {
     super()
 
@@ -111,24 +123,13 @@ export default class PartialClosure extends Component {
   }
 
   shouldComponentUpdate(nextPros) {
+
     if (nextPros.orders && this.props.orders && nextPros.orders > 0) {
       if (nextPros.orders.length === this.props.orders.length) {
         return false
       }
     }
     return true
-  }
-
-  static getDerivedStateFromProps({ orders }, { haveCurrency, getCurrency }) {
-    if (!Array.isArray(orders)) { return }
-
-    const filteredOrders = orders.filter(order => !order.isMy
-      && order.sellCurrency === getCurrency.toUpperCase()
-      && order.buyCurrency === haveCurrency.toUpperCase())
-
-    return {
-      filteredOrders,
-    }
   }
 
   getUsdBalance = async () => {
@@ -329,43 +330,26 @@ export default class PartialClosure extends Component {
   }
 
   handleSetGetValue = ({ value }) => {
-    let { getCurrency, haveCurrency } = this.state
-
-    if (haveCurrency === value) {
-      haveCurrency = getCurrency
-    }
-
-    this.setClearState()
-
+    this.checkPair(this.state.haveCurrency)
     this.setState(() => ({
-      haveCurrency,
       getCurrency: value,
     }))
   }
 
   handleSetHaveValue = ({ value }) => {
-    let { getCurrency, haveCurrency } = this.state
-
-    if (getCurrency === value) {
-      getCurrency = haveCurrency
-    }
-    actions.pairs.selectPair(value)
-
-    this.setClearState()
-
+    this.checkPair(value)
     this.setState(() => ({
-      getCurrency,
       haveCurrency: value,
     }))
   }
 
   handleFlipCurrency = () => {
     this.setClearState()
+    this.checkPair(this.state.getCurrency)
     this.setState(() => ({
       haveCurrency: this.state.getCurrency,
       getCurrency: this.state.haveCurrency,
     }))
-    actions.pairs.selectPair(this.state.getCurrency)
   }
 
   handlePush = () => {
@@ -431,28 +415,18 @@ export default class PartialClosure extends Component {
     return false
   }
 
-  zeroPosition = () => {
-    const { addSelectedItems } = this.props
-    const { haveCurrency, getCurrency } = this.state
+  checkPair = (value) => {
+    const selected = actions.pairs.selectPair(value)
 
-    if (addSelectedItems !== undefined) {
-      const chekerCoinList = addSelectedItems.map(item => item.name)
-      if (!chekerCoinList.includes(getCurrency.toUpperCase())) {
-        if (addSelectedItems[0].name !== haveCurrency) {
-          this.setState(() => ({
-            getCurrency: addSelectedItems[0].name,
-          }))
-        } addSelectedItems[0].name === undefined
-          ? this.setState(() => ({
-            getCurrency: 'eth',
-          }))
-          :this.setState(() => ({
-            getCurrency: 'btc',
-          }))
-      }
+    const check = selected.map(item => item.value).includes(this.state.getCurrency)
+
+    if (!check) {
+      this.setState(() => ({
+        getCurrency: selected[0].value,
+      }))
     }
-    return getCurrency
   }
+
 
   render() {
     const { currencies, addSelectedItems, intl: { locale } } = this.props
@@ -506,7 +480,7 @@ export default class PartialClosure extends Component {
             <Flip onClick={this.handleFlipCurrency} styleName="flipButton" />
             <SelectGroup
               inputValueLink={linked.getAmount}
-              selectedValue={this.zeroPosition()}
+              selectedValue={getCurrency}
               onSelect={this.handleSetGetValue}
               label={<FormattedMessage id="partial255" defaultMessage="You get" />}
               id="partialClosure472"
