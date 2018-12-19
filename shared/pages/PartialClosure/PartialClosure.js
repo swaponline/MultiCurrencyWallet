@@ -165,14 +165,17 @@ export default class PartialClosure extends Component {
     const newValues = {
       sellAmount: getAmount,
     }
-    // destinationSellAddress: (this.customWalletAllowed()) ? customWallet : null,
 
-    console.log('sendRequest order', newValues)
+    const destination = {
+      address: this.customWalletAllowed() ? customWallet : null,
+    }
+
+    console.log('sendRequest for partial order', newValues, destination)
 
     this.setState(() => ({ isFetching: true }))
 
-    actions.core.sendRequestForPartial(orderId, newValues, (newOrder, isAccepted) => {
-      console.log('sendRequest order', newOrder, isAccepted)
+    actions.core.sendRequestForPartial(orderId, newValues, destination, (newOrder, isAccepted) => {
+      console.log('sendRequest order received', newOrder, isAccepted)
       if (isAccepted) {
         this.setState(() => ({
           redirect: true,

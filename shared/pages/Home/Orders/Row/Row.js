@@ -87,7 +87,7 @@ export default class Row extends Component {
         this.setState(() => ({ isFetching: false }))
       }, 15 * 1000)
 
-      actions.core.sendRequest(orderId, (isAccepted) => {
+      actions.core.sendRequest(orderId, {}, (isAccepted) => {
         console.log(`user has ${isAccepted ? 'accepted' : 'declined'} your request`)
 
         if (isAccepted) {
