@@ -481,10 +481,7 @@
   },
   {
     "id": "WithdrawModal106",
-    "message": "No less than ",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "No less than "
   },
   {
     "id": "WithdrawModal111",
@@ -4812,10 +4809,7 @@
   },
   {
     "id": "Withdrow168",
-    "message": "The amount must be less than your balance by the minimum amount for the transaction {min} {currency}",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "The amount must be less than your balance by the minimum amount for the transaction {min} {currency}"
   },
   {
     "id": "Withdrow170",
@@ -4878,6 +4872,20 @@
   {
     "id": "Withdrow213",
     "message": "Please note: Miners fee is {minAmount} {data}.  {br}Your balance must exceed this sum to perform transaction.",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "WithdrawModal256",
+    "message": "No less than {minAmount}",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "WithdrawModal263",
+    "message": "You need {minAmount} ETH on your balance",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]

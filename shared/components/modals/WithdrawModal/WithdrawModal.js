@@ -122,10 +122,10 @@ export default class WithdrawModal extends React.Component {
       const { amount, balance, currency, tokenFee } = this.state
       const { data } = this.props
 
-      const min = tokenFee ? minAmount.eth : minAmount[data.currency.toLowerCase()]
+      const minFee = tokenFee ? Number(0) : minAmount[data.currency.toLowerCase()]
 
       const balanceMiner = balance !== 0
-        ? Number(balance) - min
+        ? Number(balance) - minFee
         : balance
 
       this.setState({
@@ -150,7 +150,7 @@ export default class WithdrawModal extends React.Component {
 
     render() {
       const { address, amount, balance, isShipped, minus, ethBalance, tokenFee } = this.state
-      const { name, data, tokenItems } = this.props
+      const { name, data, tokenItems, items } = this.props
 
       const linked = Link.all(this, 'address', 'amount')
 
@@ -158,28 +158,24 @@ export default class WithdrawModal extends React.Component {
       const dataCurrency = tokenFee ? 'ETH' : data.currency.toUpperCase()
 
       const isDisabled =
-        !address || !amount || isShipped || Number(amount) < min
+        !address || !amount || isShipped || Number(amount) < minAmount[data.currency.toLowerCase()]
         || !this.addressIsCorrect()
-        || Number(amount) + min > balance
+        || !tokenFee && (Number(amount) + min > balance)
+        || tokenFee && (Number(amount) > balance)
         || this.isEthOrERC20()
 
       if (Number(amount) !== 0) {
         linked.amount.check((value) => Number(value) + min <= balance,
           <div style={{ width: '340px', fontSize: '12px' }}>
-            {tokenFee
-              ? <FormattedMessage
-                id="Withdrow168"
-                defaultMessage="The amount must be less than your balance by the minimum amount for the transaction {min} {currency}"
+            {!tokenFee &&
+              (<FormattedMessage
+                id="Withdrow170"
+                defaultMessage="The amount must be less than your balance on the miners fee {min} {currency}"
                 values={{
                   min: `${minAmount[data.currency.toLowerCase()]}`,
                   currency: `${data.currency}`,
                 }}
-              />
-              : <FormattedMessage
-                id="Withdrow170"
-                defaultMessage="The amount must be less than your balance on the miners fee {min}"
-                values={{ min: `${min}` }}
-              />
+              />)
             }
           </div>
         )
@@ -257,9 +253,14 @@ export default class WithdrawModal extends React.Component {
           {
             !linked.amount.error && (
               <div styleName={minus ? 'rednote' : 'note'}>
-                <FormattedMessage id="WithdrawModal106" defaultMessage="No less than " />
-                {' '}
-                {minAmount[data.currency.toLowerCase()]}
+                <FormattedMessage id="WithdrawModal256" defaultMessage="No less than {minAmount}" values={{ minAmount: `${minAmount[data.currency.toLowerCase()]}` }} />
+              </div>
+            )
+          }
+          {
+            this.isEthOrERC20() && (
+              <div styleName="rednote">
+                <FormattedMessage id="WithdrawModal263" defaultMessage="You need {minAmount} ETH on your balance" values={{ minAmount: `${min}` }} />
               </div>
             )
           }

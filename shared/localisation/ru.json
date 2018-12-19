@@ -481,10 +481,7 @@
   },
   {
     "id": "WithdrawModal106",
-    "message": "Не меньше чем ",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "Не меньше чем "
   },
   {
     "id": "WithdrawModal111",
@@ -4831,10 +4828,7 @@
   },
   {
     "id": "Withdrow168",
-    "message": "Сумма должны быть меньше, чем Ваш баланс, на минимальную сумму перевода {min} {currency}",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "Сумма должны быть меньше, чем Ваш баланс, на минимальную сумму перевода {min} {currency}"
   },
   {
     "id": "Withdrow170",
@@ -4874,6 +4868,20 @@
   {
     "id": "Withdrow213",
     "message": "Пожалуйста, обратите внимание: комиссия майнеров {minAmount} {data}.  {br}Ваш баланс должен превышать эту сумму для совершения транзакции..",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "WithdrawModal256",
+    "message": "Не меньше чем {minAmount}",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "WithdrawModal263",
+    "message": "Вам нужно иметь {minAmount} ETH на вашем балансе",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
