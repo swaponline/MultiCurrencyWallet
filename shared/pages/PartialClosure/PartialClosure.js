@@ -48,7 +48,7 @@ const suTitle = [
   user: { ethData, btcData, /* bchData, */ tokensData, eosData, telosData, nimData, usdtData, ltcData },
 }) => ({
   currencies: currencies.items,
-  addSelectedItems: currencies.addSelectedItems[0],
+  addSelectedItems: currencies.addSelectedItems,
   orders: filterIsPartial(orders),
   currenciesData: [ ethData, btcData, eosData, telosData, /* bchData, */ ltcData, usdtData /* nimData */ ],
   tokensData: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
@@ -336,14 +336,11 @@ export default class PartialClosure extends Component {
     if (haveCurrency === value) {
       haveCurrency = getCurrency
     }
-    getCurrency = value
-
-    this.setClearState()
 
     this.setClearState()
 
     this.setState(() => ({
-      haveCurrency,
+      haveCurrency: value,
       getCurrency,
     }))
   }
@@ -354,15 +351,13 @@ export default class PartialClosure extends Component {
     if (getCurrency === value) {
       getCurrency = haveCurrency
     }
-    haveCurrency = value
-
-    actions.pairs.selectPair(haveCurrency)
+    actions.pairs.selectPair(value)
 
     this.setClearState()
 
     this.setState(() => ({
       getCurrency,
-      haveCurrency,
+      haveCurrency: value,
     }))
   }
 
@@ -372,6 +367,7 @@ export default class PartialClosure extends Component {
       haveCurrency: this.state.getCurrency,
       getCurrency: this.state.haveCurrency,
     }))
+    actions.pairs.selectPair(this.state.getCurrency)
   }
 
   handlePush = () => {

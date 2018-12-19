@@ -40,7 +40,7 @@ const initialState = {
         fullTitle: key,
       }))),
   ],
-  addSelectedItems:[],
+  addSelectedItems,
 }
 
 // eslint-disable-next-line
@@ -54,9 +54,7 @@ process.env.MAINNET && initialState.items.unshift({
 
 const addSelectedItems = (state, payload) => ({
   ...state,
-  addSelectedItems: [
-    payload,
-  ],
+  addSelectedItems: payload,
 })
 
 export {

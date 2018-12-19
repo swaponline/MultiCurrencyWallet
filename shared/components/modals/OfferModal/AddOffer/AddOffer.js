@@ -40,7 +40,7 @@ const minAmount = {
     user: { ethData, btcData, /* bchData, */ tokensData, eosData, telosData, nimData, usdtData, ltcData },
   }) => ({
     currencies: currencies.items,
-    addSelectedItems: currencies.addSelectedItems[0],
+    addSelectedItems: currencies.addSelectedItems,
     items: [ ethData, btcData, eosData, telosData, /* bchData, */ ltcData, usdtData /* nimData */ ],
     tokenItems: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
   })
@@ -114,8 +114,6 @@ export default class AddOffer extends Component {
       sellCurrency = buyCurrency
     }
 
-    buyCurrency = value
-
     await this.checkBalance(sellCurrency)
 
     await this.updateExchangeRate(sellCurrency, buyCurrency)
@@ -128,7 +126,7 @@ export default class AddOffer extends Component {
       buyAmount = new BigNumber(String(buyAmount) || 0).dp(0, BigNumber.ROUND_HALF_EVEN)
     }
     this.setState({
-      buyCurrency,
+      buyCurrency: value,
       sellCurrency,
       sellAmount: Number.isNaN(sellAmount) ? '' : sellAmount,
       buyAmount: Number.isNaN(buyAmount) ? '' : buyAmount,
@@ -144,9 +142,7 @@ export default class AddOffer extends Component {
       buyCurrency = sellCurrency
     }
 
-    sellCurrency = value
-
-    actions.pairs.selectPair(sellCurrency)
+    actions.pairs.selectPair(value)
 
     await this.checkBalance(sellCurrency)
 
@@ -162,7 +158,7 @@ export default class AddOffer extends Component {
 
     this.setState({
       buyCurrency,
-      sellCurrency,
+      sellCurrency: value,
       buyAmount: Number.isNaN(buyAmount) ? '' : buyAmount,
       sellAmount: Number.isNaN(sellAmount) ? '' : sellAmount,
       isSellFieldInteger,
@@ -354,7 +350,7 @@ export default class AddOffer extends Component {
     this.setState({ manualRate: value })
   }
 
-  switching = async () => {
+  switching = async (value) => {
     const { sellCurrency, buyCurrency, sellAmount, buyAmount } = this.state
 
     await this.checkBalance(buyCurrency)
@@ -364,7 +360,7 @@ export default class AddOffer extends Component {
       this.handleBuyAmountChange(sellAmount)
       this.handleSellAmountChange(buyAmount)
     }
-
+    actions.pairs.selectPair(buyCurrency)
     this.setState({
       sellCurrency: buyCurrency,
       buyCurrency: sellCurrency,
@@ -387,11 +383,6 @@ export default class AddOffer extends Component {
     if (addSelectedItems !== undefined) {
       const chekerCoinList = addSelectedItems.map(item => item.name)
       if (!chekerCoinList.includes(buyCurrency.toUpperCase())) {
-        if (addSelectedItems[0].name !== sellCurrency) {
-          this.setState(() => ({
-            buyCurrency: addSelectedItems[0].name,
-          }))
-        }
         this.setState(() => ({
           buyCurrency: 'btc',
         }))

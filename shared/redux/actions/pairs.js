@@ -31,5 +31,4 @@ Object.keys(config.erc20)
 
 export default {
   selectPair,
-  chooseCurrencyList
 }
