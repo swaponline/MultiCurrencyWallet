@@ -31,23 +31,26 @@ const removeOrder = (orderId) => {
   actions.feed.deleteItemToFeed(orderId)
 }
 
-const sendRequest = (orderId, callback) => {
+const sendRequest = (orderId, { address } = {}, callback) => {
   const order = SwapApp.services.orders.getByKey(orderId)
 
-  order.sendRequest(callback)
+  const destination = {
+    address,
+  }
+
+  order.sendRequest(callback, destination)
 }
 
-const sendRequestForPartial = (orderId, newValues, callback) => {
+const sendRequestForPartial = (orderId, newValues, destination, callback) => {
   const order = SwapApp.services.orders.getByKey(orderId)
 
-  order.sendRequestForPartial(newValues,
+  order.sendRequestForPartial(newValues, destination,
     (newOrder, isAccepted) => {
       console.error('newOrder', newOrder)
       console.error('newOrder', isAccepted)
 
       callback(newOrder, isAccepted)
     },
-    // newOrder => true,
     (oldOrder, newOrder) => {
       const oldPrice = Pair.fromOrder(oldOrder).price
       const newPrice = Pair.fromOrder(newOrder).price
