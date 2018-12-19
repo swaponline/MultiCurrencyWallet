@@ -140,7 +140,7 @@ export default class WithdrawModal extends React.Component {
       const { data } = this.props
       const { address } = this.state
 
-       return isCoinAddress[data.currency.toUpperCase()](address)
+      return isCoinAddress[data.currency.toUpperCase()](address)
     }
 
     render() {

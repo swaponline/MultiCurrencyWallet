@@ -367,15 +367,6 @@ export default class AddOffer extends Component {
     })
   }
 
-  chooseProps = () => {
-    const { currencies, addSelectedItems } = this.props
-
-    if (addSelectedItems === undefined) {
-      return currencies
-    }
-    return addSelectedItems
-  }
-
   zeroPosition = () => {
     const { addSelectedItems } = this.props
     const { buyCurrency, sellCurrency } = this.state
@@ -383,9 +374,13 @@ export default class AddOffer extends Component {
     if (addSelectedItems !== undefined) {
       const chekerCoinList = addSelectedItems.map(item => item.name)
       if (!chekerCoinList.includes(buyCurrency.toUpperCase())) {
-        this.setState(() => ({
-          buyCurrency: 'btc',
-        }))
+        addSelectedItems[0].name === undefined
+          ? this.setState(() => ({
+            buyCurrency: 'eth',
+          }))
+          :this.setState(() => ({
+            buyCurrency: 'btc',
+          }))
       }
     }
     return buyCurrency
@@ -447,7 +442,7 @@ export default class AddOffer extends Component {
           selectedCurrencyValue={this.zeroPosition()}
           onCurrencySelect={this.handleBuyCurrencySelect}
           id="buyAmount"
-          currencies={this.chooseProps()}
+          currencies={addSelectedItems}
           isInteger={isBuyFieldInteger}
           placeholder="Enter buy amount"
         />

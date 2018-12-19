@@ -80,7 +80,6 @@ export default class PartialClosure extends Component {
       customWalletUse: false,
       customWallet: '',
     }
-
     let timer
     let wallets
     let usdRates
@@ -89,7 +88,6 @@ export default class PartialClosure extends Component {
   componentDidMount() {
     const { haveCurrency } = this.state
 
-    this.zeroPosition()
     actions.pairs.selectPair(haveCurrency)
 
     this.usdRates = {}
@@ -340,8 +338,8 @@ export default class PartialClosure extends Component {
     this.setClearState()
 
     this.setState(() => ({
-      haveCurrency: value,
-      getCurrency,
+      haveCurrency,
+      getCurrency: value,
     }))
   }
 
@@ -430,18 +428,7 @@ export default class PartialClosure extends Component {
     if (haveCurrency === 'btc') {
       if (config.erc20[getCurrency] !== undefined) return true
     }
-
     return false
-  }
-
-
-  chooseProps = () => {
-    const { currencies, addSelectedItems } = this.props
-
-    if (addSelectedItems === undefined) {
-      return currencies
-    }
-    return addSelectedItems
   }
 
   zeroPosition = () => {
@@ -455,10 +442,13 @@ export default class PartialClosure extends Component {
           this.setState(() => ({
             getCurrency: addSelectedItems[0].name,
           }))
-        }
-        this.setState(() => ({
-          getCurrency: 'btc',
-        }))
+        } addSelectedItems[0].name === undefined
+          ? this.setState(() => ({
+            getCurrency: 'eth',
+          }))
+          :this.setState(() => ({
+            getCurrency: 'btc',
+          }))
       }
     }
     return getCurrency
@@ -522,7 +512,7 @@ export default class PartialClosure extends Component {
               id="partialClosure472"
               tooltip={<FormattedMessage id="partial478" defaultMessage="The amount you receive after the swap" />}
               disabled
-              currencies={this.chooseProps()}
+              currencies={addSelectedItems}
               usd={getUsd}
             />
             {

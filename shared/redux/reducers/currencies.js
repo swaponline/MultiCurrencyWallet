@@ -40,7 +40,8 @@ const initialState = {
         fullTitle: key,
       }))),
   ],
-  addSelectedItems,
+  addSelectedItems: ['ETH', 'EOS', 'LTC', ...(Object.keys(config.erc20)
+    .map(key => key.toUpperCase())) ],
 }
 
 // eslint-disable-next-line
