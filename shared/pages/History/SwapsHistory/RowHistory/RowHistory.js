@@ -133,8 +133,11 @@ export default class RowHistory extends Component {
                 enabledButton={this.handleGetFlow}
               />
             ) : (
-              <FormattedMessage id="RowHistory76" defaultMessage="Refund not available" />
+              !isRefunded && <FormattedMessage id="RowHistory76" defaultMessage="Refund not available" />
             )
+          }
+          {
+            isRefunded && <FormattedMessage id="RowHistory77" defaultMessage="Refunded" />
           }
         </td>
         <td>
