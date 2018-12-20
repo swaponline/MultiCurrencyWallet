@@ -1,7 +1,7 @@
 [
   {
     "id": "174",
-    "message": "Continue",
+    "message": "continue ",
     "files": [
       "shared/pages/Swap/BtcToEth.js"
     ]
@@ -145,11 +145,17 @@
   },
   {
     "id": "userTooltip68",
-    "message": "User with "
+    "message": "User with ",
+    "files": [
+      "shared/components/Header/User/UserTooltip/UserTooltip.js"
+    ]
   },
   {
     "id": "userTooltip72",
-    "message": " reputation wants to swap"
+    "message": " reputation wants to swap",
+    "files": [
+      "shared/components/Header/User/UserTooltip/UserTooltip.js"
+    ]
   },
   {
     "id": "transactionLink28",
@@ -475,10 +481,7 @@
   },
   {
     "id": "WithdrawModal106",
-    "message": "No less than ",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "No less than "
   },
   {
     "id": "WithdrawModal111",
@@ -489,10 +492,7 @@
   },
   {
     "id": "Withdrow108",
-    "message": "The amount must be less than your balance on the miners fee ",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "The amount must be less than your balance on the miners fee "
   },
   {
     "id": "Withdrow113",
@@ -1287,7 +1287,7 @@
   },
   {
     "id": "BtcToEthToken147",
-    "message": "Continue",
+    "message": "continue ",
     "files": [
       "shared/pages/Swap/BtcToEthToken.js"
     ]
@@ -1469,7 +1469,7 @@
   },
   {
     "id": "EthToBtc128",
-    "message": "Sign",
+    "message": "sign ",
     "files": [
       "shared/pages/Swap/EthToBtc.js"
     ]
@@ -1525,7 +1525,7 @@
   },
   {
     "id": "EthToBtc247",
-    "message": "Everything is OK. Continue",
+    "message": "Everything is OK. continue ",
     "files": [
       "shared/pages/Swap/EthToBtc.js"
     ]
@@ -1560,7 +1560,7 @@
   },
   {
     "id": "EthToBtc277",
-    "message": "Continue",
+    "message": "continue ",
     "files": [
       "shared/pages/Swap/EthToBtc.js"
     ]
@@ -1707,7 +1707,7 @@
   },
   {
     "id": "EthTokenBtc228",
-    "message": "Everything is OK. Continue",
+    "message": "Everything is OK. continue ",
     "files": [
       "shared/pages/Swap/EthTokenToBtc.js"
     ]
@@ -1742,7 +1742,7 @@
   },
   {
     "id": "EthTokenBtc258",
-    "message": "Continue",
+    "message": "continue ",
     "files": [
       "shared/pages/Swap/EthTokenToBtc.js"
     ]
@@ -1896,7 +1896,7 @@
   },
   {
     "id": "EthTokenToUsdt236",
-    "message": "Everything is OK. Continue",
+    "message": "Everything is OK. continue ",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
@@ -1931,7 +1931,7 @@
   },
   {
     "id": "EthTokenToUsdt267",
-    "message": "Continue",
+    "message": "continue ",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
@@ -2043,7 +2043,7 @@
   },
   {
     "id": "EthToLtc128",
-    "message": "Sign",
+    "message": "sign ",
     "files": [
       "shared/pages/Swap/EthToLtc.js"
     ]
@@ -2099,7 +2099,7 @@
   },
   {
     "id": "EthToLtc247",
-    "message": "Everything is OK. Continue",
+    "message": "Everything is OK. continue ",
     "files": [
       "shared/pages/Swap/EthToLtc.js"
     ]
@@ -2134,7 +2134,7 @@
   },
   {
     "id": "EthToLtc277",
-    "message": "Continue",
+    "message": "continue ",
     "files": [
       "shared/pages/Swap/EthToLtc.js"
     ]
@@ -2309,7 +2309,7 @@
   },
   {
     "id": "LtcTOeth175",
-    "message": "Continue",
+    "message": "continue ",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
@@ -2470,7 +2470,7 @@
   },
   {
     "id": "UsdrToEthToken154",
-    "message": "Continue",
+    "message": "continue ",
     "files": [
       "shared/pages/Swap/UsdtToEthToken.js"
     ]
@@ -2712,7 +2712,7 @@
   },
   {
     "id": "PrivateKeysModal130",
-    "message": "Please fill information below from instruction.txt file. We`d like to be sure that you saved the private keys before you can continue to the site. ",
+    "message": "Please fill information below from instruction.txt file. We`d like to be sure that you saved the private keys before you can continue  to the site. ",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
@@ -2733,7 +2733,7 @@
   },
   {
     "id": "PrivateKeysModal991",
-    "message": "Before you continue be sure to save your private keys! There is a big chance you will loose your money. ",
+    "message": "Before you continue  be sure to save your private keys! There is a big chance you will loose your money. ",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
@@ -2924,12 +2924,8 @@
     ]
   },
   {
-    "id": "Continue",
-    "message": "Continue",
-    "files": [
-      "shared/pages/Swap/BtcToLtc.js",
-      "shared/pages/Swap/LtcToBtc.js"
-    ]
+    "id": "continue",
+    "message": "continue "
   },
   {
     "id": "LTCTOBTC147",
@@ -3101,7 +3097,7 @@
   },
   {
     "id": "OK",
-    "message": "Everything is OK. Continue",
+    "message": "Everything is OK. continue ",
     "files": [
       "shared/pages/Swap/LtcToBtc.js"
     ]
@@ -3121,11 +3117,8 @@
     ]
   },
   {
-    "id": "Sign",
-    "message": "Sign",
-    "files": [
-      "shared/pages/Swap/LtcToBtc.js"
-    ]
+    "id": "sign ",
+    "message": "sign "
   },
   {
     "id": "doesn&apos",
@@ -3619,10 +3612,7 @@
   },
   {
     "id": "orders103",
-    "message": "PRICE FOR 1",
-    "files": [
-      "shared/pages/Home/Orders/Orders.js"
-    ]
+    "message": "PRICE FOR 1"
   },
   {
     "id": "orders105",
@@ -3971,38 +3961,6 @@
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
-  },
-  {
-    "id": "Withdrow172",
-    "message": "Please note: Miners fee is "
-  },
-  {
-    "id": "Withdrow174",
-    "message": "Your balance must exceed this sum to perform transaction. "
-  },
-  {
-    "id": "Withdrow178",
-    "message": "Please note: Miners fee is "
-  },
-  {
-    "id": "Withdrow180",
-    "message": "Your balance must exceed this sum to perform transaction. "
-  },
-  {
-    "id": "Currency110",
-    "message": " Trade"
-  },
-  {
-    "id": "Currency119",
-    "message": "Added to Wallet"
-  },
-  {
-    "id": "partial277",
-    "message": "No offers"
-  },
-  {
-    "id": "partial284",
-    "message": "Offer is declined"
   },
   {
     "id": "partial291",
@@ -4471,10 +4429,7 @@
   },
   {
     "id": "PartialPriceSearch483",
-    "message": "Price: 1",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
-    ]
+    "message": "Price: 1"
   },
   {
     "id": "partial437",
@@ -4594,7 +4549,7 @@
   },
   {
     "id": "PreventMultiTabs12",
-    "message": "Swap.Online supports only one active tab.\n    Please reload this page to continue using this tab or close it",
+    "message": "Swap.Online supports only one active tab.\n    Please reload this page to continue  using this tab or close it",
     "files": [
       "shared/components/PreventMultiTabs/PreventMultiTabs.js"
     ]
@@ -4608,10 +4563,7 @@
   },
   {
     "id": "reputationMSG",
-    "message": "User with {reputationRate} reputation wants to swap",
-    "files": [
-      "shared/components/Header/User/UserTooltip/UserTooltip.js"
-    ]
+    "message": "User with {reputationRate} reputation wants to swap"
   },
   {
     "id": "addOfferPartialTooltip",
@@ -4792,17 +4744,11 @@
   },
   {
     "id": "Withdrow183",
-    "message": "Please note: Miners fee is {values} ETH {br}Your balance must exceed this sum to perform transaction.",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "Please note: Miners fee is {values} ETH {br}Your balance must exceed this sum to perform transaction."
   },
   {
     "id": "Withdrow192",
-    "message": "Please note: Miners fee is {minAmount} {data}.  {br}Your balance must exceed this sum to perform transaction.",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "Please note: Miners fee is {minAmount} {data}.  {br}Your balance must exceed this sum to perform transaction."
   },
   {
     "id": "ImportKeys176",
@@ -4840,7 +4786,61 @@
     ]
   },
   {
-    "id": "orders182",
+    "id": "WithdrawIncorectAddress",
+    "message": "Your address not correct",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Withdrow168",
+    "message": "The amount must be less than your balance by the minimum amount for the transaction {min} {currency}"
+  },
+  {
+    "id": "Withdrow170",
+    "message": "The amount must be less than your balance on the miners fee {min}",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "PartialPriceSearch502",
+    "message": "Price: 1 {getCurrency} = {haveCurrency}",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "Continue",
+    "message": "Continue",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js",
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "Sign",
+    "message": "Sign",
+    "files": [
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "orders104",
+    "message": "PRICE FOR 1 {buyCurrency}",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "orders1381",
+    "message": "{pair} no limit exchange with 0 fee",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "orders183",
     "message": "SELL {buyCurrency} HERE",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
@@ -4869,8 +4869,30 @@
     ]
   },
   {
-    "id": "WithdrawIncorectAddress",
-    "message": "Your address not correct",
+    "id": "Withdrow202",
+    "message": "Please note: Miners fee is {minAmount} ETH {br}Your balance must exceed this sum to perform transaction."
+  },
+  {
+    "id": "Withdrow212",
+    "message": "Please note: Miners fee is {minAmount} {data}.  {br}Your balance must exceed this sum to perform transaction."
+  },
+  {
+    "id": "Withdrow213",
+    "message": "Please note: Miners fee is {minAmount} {data}.  {br}Your balance must exceed this sum to perform transaction.",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "WithdrawModal256",
+    "message": "No less than {minAmount}",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "WithdrawModal263",
+    "message": "You need {minAmount} ETH on your balance",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]

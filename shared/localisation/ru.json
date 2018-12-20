@@ -145,11 +145,17 @@
   },
   {
     "id": "userTooltip68",
-    "message": "Пользователь с "
+    "message": "Пользователь с ",
+    "files": [
+      "shared/components/Header/User/UserTooltip/UserTooltip.js"
+    ]
   },
   {
     "id": "userTooltip72",
-    "message": "репутацией предлагает обмен"
+    "message": "репутацией предлагает обмен",
+    "files": [
+      "shared/components/Header/User/UserTooltip/UserTooltip.js"
+    ]
   },
   {
     "id": "transactionLink28",
@@ -475,24 +481,18 @@
   },
   {
     "id": "WithdrawModal106",
-    "message": "Не меньше чем ",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "Не меньше чем "
   },
   {
     "id": "WithdrawModal111",
-    "message": "Перевод ",
+    "message": "перевести ",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
   },
   {
     "id": "Withdrow108",
-    "message": "Сумма должна быть меньше вашего баланса на комиссию манеров ",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "Сумма должна быть меньше вашего баланса на комиссию манеров "
   },
   {
     "id": "Withdrow113",
@@ -885,6 +885,10 @@
   {
     "id": "orders153",
     "message": " "
+  },
+  {
+    "id": "orders174",
+    "message": "ПРОДАТЬ "
   },
   {
     "id": "orders176",
@@ -3545,7 +3549,7 @@
   },
   {
     "id": "Orders106",
-    "message": "ДЕЙСТВИЯ"
+    "message": "Начать обмен"
   },
   {
     "id": "Wallet114",
@@ -3619,10 +3623,7 @@
   },
   {
     "id": "orders103",
-    "message": "ЦЕНА ЗА 1 ",
-    "files": [
-      "shared/pages/Home/Orders/Orders.js"
-    ]
+    "message": "ЦЕНА ЗА 1 "
   },
   {
     "id": "orders105",
@@ -3633,7 +3634,7 @@
   },
   {
     "id": "orders106",
-    "message": "ДЕЙСТВИЕ",
+    "message": "Начать обмен",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]
@@ -3671,10 +3672,7 @@
   },
   {
     "id": "orders138",
-    "message": " обмен на любую сумму с 0 комиссией",
-    "files": [
-      "shared/pages/Home/Orders/Orders.js"
-    ]
+    "message": " обмен на любую сумму с 0 комиссией"
   },
   {
     "id": "orders1499",
@@ -4255,14 +4253,6 @@
     ]
   },
   {
-    "id": "Withdraw183",
-    "message": "Перевод "
-  },
-  {
-    "id": "Row158",
-    "message": "покупает"
-  },
-  {
     "id": "Scriptaddress:",
     "message": "Адрес скрипта: ",
     "files": [
@@ -4475,10 +4465,7 @@
   },
   {
     "id": "PartialPriceSearch483",
-    "message": "Курс: 1",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
-    ]
+    "message": "Курс: 1"
   },
   {
     "id": "partial437",
@@ -4612,10 +4599,7 @@
   },
   {
     "id": "reputationMSG",
-    "message": "Пользователь с репутацией {reputationRate} предлагает обмен",
-    "files": [
-      "shared/components/Header/User/UserTooltip/UserTooltip.js"
-    ]
+    "message": "Пользователь с репутацией {reputationRate} предлагает обмен"
   },
   {
     "id": "addOfferPartialTooltip",
@@ -4777,24 +4761,18 @@
   },
   {
     "id": "Withdraw18333",
-    "message": "Отправка {data$}",
+    "message": "ПЕРЕВОД {data}",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
   },
   {
     "id": "Withdrow183",
-    "message": "Обратите внимание: комиссия майнеров {values} ETH {br}Ваш баланс должен превышать эту сумму для совершения транзакции.",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "Обратите внимание: комиссия майнеров {values} ETH {br}Ваш баланс должен превышать эту сумму для совершения транзакции."
   },
   {
     "id": "Withdrow192",
-    "message": "Обратите внимание: комиссия майнеров {data}.  {br}Ваш баланс должен превышать эту сумму для совершения транзакции.",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "Обратите внимание: комиссия майнеров {data}.  {br}Ваш баланс должен превышать эту сумму для совершения транзакции."
   },
   {
     "id": "ImportKeys176",
@@ -4832,7 +4810,46 @@
     ]
   },
   {
-    "id": "orders182",
+    "id": "WithdrawIncorectAddress",
+    "message": "Некорректно указан адрес",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Withdrow168",
+    "message": "Сумма должны быть меньше, чем Ваш баланс, на минимальную сумму перевода {min} {currency}"
+  },
+  {
+    "id": "Withdrow170",
+    "message": "Сумма должны быть меньше, чем Ваш баланс, на комиссию майнеров {min}",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "PartialPriceSearch502",
+    "message": "Цена: 1 {getCurrency} = {haveCurrency}",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "orders104",
+    "message": "ЦЕНА ЗА 1 {buyCurrency}",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "orders1381",
+    "message": "{pair} обмен на любую сумму с 0 комиссией",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "orders183",
     "message": "ПРОДАТЬ {buyCurrency}",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
@@ -4853,8 +4870,22 @@
     ]
   },
   {
-    "id": "WithdrawIncorectAddress",
-    "message": "Некорректно введен адресс",
+    "id": "Withdrow213",
+    "message": "Пожалуйста, обратите внимание: комиссия майнеров {minAmount} {data}.  {br}Ваш баланс должен превышать эту сумму для совершения транзакции..",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "WithdrawModal256",
+    "message": "Не меньше чем {minAmount}",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "WithdrawModal263",
+    "message": "Вам нужно иметь {minAmount} ETH на вашем балансе",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]

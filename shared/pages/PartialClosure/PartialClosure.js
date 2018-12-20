@@ -23,13 +23,13 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 
 import config from 'app-config'
-import swapApp from 'swap.app'
+import swapApp, { util } from 'swap.app'
 
 import constants from 'helpers/constants'
 
 
 const filterIsPartial = (orders) => orders
-  .filter(order => order.isPartialClosure && !order.isProcessing)
+  .filter(order => order.isPartial && !order.isProcessing)
 
 const text = [
   <FormattedMessage id="partial223" defaultMessage="To change default wallet for buy currency. " />,
@@ -168,33 +168,26 @@ export default class PartialClosure extends Component {
       return
     }
 
-    const order = {
-      buyCurrency: haveCurrency,
-      sellCurrency: getCurrency,
+    const newValues = {
       sellAmount: getAmount,
-      buyAmount: haveAmount,
-      destinationSellAddress: (this.customWalletAllowed()) ? customWallet : null,
     }
 
-    console.log('sendRequest order', order)
+    const destination = {
+      address: this.customWalletAllowed() ? customWallet : null,
+    }
+
+    console.log('sendRequest for partial order', newValues, destination)
 
     this.setState(() => ({ isFetching: true }))
 
-    actions.core.requestToPeer('request partial closure', peer, { order, orderId }, (orderId) => {
-      console.log('orderId', orderId)
-      // TODO change callback on boolean type
-      if (orderId) {
-        actions.core.sendRequest(orderId, (isAccept) => {
-          if (isAccept) {
-            this.setState(() => ({
-              redirect: true,
-              isFetching: false,
-              orderId,
-            }))
-          } else {
-            this.setDeclinedOffer()
-          }
-        })
+    actions.core.sendRequestForPartial(orderId, newValues, destination, (newOrder, isAccepted) => {
+      console.log('sendRequest order received', newOrder, isAccepted)
+      if (isAccepted) {
+        this.setState(() => ({
+          redirect: true,
+          isFetching: false,
+          orderId: newOrder.id,
+        }))
       } else {
         this.setDeclinedOffer()
       }
@@ -247,9 +240,9 @@ export default class PartialClosure extends Component {
       isSearching: true,
     }))
 
-    console.log('filteredOrders', filteredOrders)
+    console.log('filteredOrders', filteredOrders.length)
 
-    const sortedOrder = filteredOrders
+    const sortedOrders = filteredOrders
       .sort((a, b) => Number(a.buyAmount.dividedBy(a.sellAmount)) - Number(b.buyAmount.dividedBy(b.sellAmount)))
       .map((item, index) => {
 
@@ -266,15 +259,15 @@ export default class PartialClosure extends Component {
         }
       })
 
-    console.log('sortedOrder', sortedOrder)
+    console.log('sortedOrder', sortedOrders.length)
 
     this.getUsdBalance()
 
-    const search = await this.setOrderOnState(sortedOrder)
+    const didFound = await this.setOrderOnState(sortedOrders)
 
-    console.log('search', search)
+    console.log('didFound', didFound)
 
-    if (search) {
+    if (didFound) {
       this.setState(() => ({
         isSearching: false,
       }))
@@ -392,27 +385,22 @@ export default class PartialClosure extends Component {
   customWalletValid() {
     const { haveCurrency, getCurrency, customWallet } = this.state
 
-    if (haveCurrency === 'btc') {
-      if (config.erc20[getCurrency] !== undefined) {
-        if (!/^(0x)?[0-9a-f]{40}$/i.test(customWallet)) {
-          return false
-        } else if (/^(0x)?[0-9a-f]{40}$/.test(customWallet.toLowerCase())) {
-          return true
-        }
-        return false
-      }
+    if (!this.customWalletAllowed()) {
+      return true
     }
 
-    return true
+    // TODO: check for BTC address
+    return util.typeforce.isCoinAddress.ETH(customWallet)
   }
 
   customWalletAllowed() {
     const { haveCurrency, getCurrency } = this.state
 
-    if (haveCurrency === 'btc') {
-      if (config.erc20[getCurrency] !== undefined) return true
+    if (haveCurrency !== 'btc') {
+      return false
     }
-    return false
+
+    return config.erc20[getCurrency] !== undefined
   }
 
   checkPair = (value) => {
@@ -501,8 +489,11 @@ export default class PartialClosure extends Component {
             }
             { oneCryptoCost.isGreaterThan(0) && oneCryptoCost.isFinite() && (
               <div>
-                <FormattedMessage id="PartialPriceSearch483" defaultMessage="Price: 1" />
-                {getCurrency.toUpperCase()} = {oneCryptoCost.toFixed(5)} {haveCurrency.toUpperCase()}
+                <FormattedMessage
+                  id="PartialPriceSearch502"
+                  defaultMessage="Price: 1 {getCurrency} = {haveCurrency}"
+                  values={{ getCurrency: `${getCurrency.toUpperCase()}`, haveCurrency: `${oneCryptoCost.toFixed(5)} ${haveCurrency.toUpperCase()}` }}
+                />
               </div>
             )}
             { !oneCryptoCost.isFinite() && !isNonOffers && (
