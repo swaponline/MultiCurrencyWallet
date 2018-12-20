@@ -485,8 +485,11 @@ export default class PartialClosure extends Component {
             }
             { oneCryptoCost.isGreaterThan(0) && oneCryptoCost.isFinite() && (
               <div>
-                <FormattedMessage id="PartialPriceSearch483" defaultMessage="Price: 1" />
-                {getCurrency.toUpperCase()} = {oneCryptoCost.toFixed(5)} {haveCurrency.toUpperCase()}
+                <FormattedMessage
+                  id="PartialPriceSearch502"
+                  defaultMessage="Price: 1 {getCurrency} = {haveCurrency}"
+                  values={{ getCurrency: `${getCurrency.toUpperCase()}`, haveCurrency: `${oneCryptoCost.toFixed(5)} ${haveCurrency.toUpperCase()}` }}
+                />
               </div>
             )}
             { !oneCryptoCost.isFinite() && !isNonOffers && (
