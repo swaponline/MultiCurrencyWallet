@@ -67,7 +67,7 @@ export default class Row extends Component {
 
   handleGoTrade = async (currency) => {
     const balance = await actions.eth.getBalance()
-    return (balance >= 0.005 || currency.toLowerCase() !== 'eos')
+    return (balance >= 0.005 || currency.toLowerCase() === 'eos')
   }
 
   removeOrder = (orderId) => {
