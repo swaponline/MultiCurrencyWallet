@@ -45,12 +45,12 @@ export default class RowFeeds extends Component {
     const { intl: { locale }, row: { buyCurrency, sellCurrency, id } } = this.props
 
     const tradeTicker = `${buyCurrency}-${sellCurrency}`.toLowerCase()
-    const trueUrl = tradeTicker.split('-').reverse().join('-')
+    const reversPair = tradeTicker.split('-').reverse().join('-')
 
     if (constants.tradeTicker.includes(tradeTicker.toUpperCase())) {
       return localisedUrl(locale, `${config.base}${tradeTicker}/${id}`)
     }
-    return localisedUrl(locale, `${config.base}${trueUrl}/${id}`)
+    return localisedUrl(locale, `${config.base}${reversPair}/${id}`)
   }
 
   render() {
