@@ -16,8 +16,8 @@ import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 const Footer = (props) => (
   <div styleName="footer">
     <WidthContainer styleName="container">
-      {!config.isWidget && ( <Links /> )}
-      {!config.isWidget && ( <SocialMenu /> )}
+      {!config.isWidget && (<Links />)}
+      {!config.isWidget && (<SocialMenu />)}
       <Info {...props} />
       <span style={{ color: '#ffffff', fontSize: '12px' }}>{config.time}</span>
     </WidthContainer>

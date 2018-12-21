@@ -27,6 +27,7 @@ import UserTooltip from 'components/Header/User/UserTooltip/UserTooltip'
 
 import config from 'app-config'
 
+
 const userLanguage = (navigator.userLanguage || navigator.language || 'en-gb').split('-')[0]
 moment.locale(userLanguage)
 

@@ -2,6 +2,7 @@ import baseConfig from './default'
 import config from './testnet'
 import moment from 'moment-with-locales-es6'
 
+
 const newERC20 = {}
 newERC20[process.argv[3]] = {
   address: process.argv[2],
@@ -22,5 +23,5 @@ export default {
 
   isWidget: true,
   ...config,
-  erc20: newERC20
+  erc20: newERC20,
 }
