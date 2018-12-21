@@ -149,6 +149,8 @@ export default class Header extends Component {
 
   render() {
 
+    if (config.isWidget) return null
+
     const { sticky, menuItems, isTourOpen, isShowingMore, path } = this.state
     const { intl: { locale }, history, pathname } = this.props
 
