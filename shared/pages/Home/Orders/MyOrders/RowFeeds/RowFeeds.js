@@ -49,9 +49,8 @@ export default class RowFeeds extends Component {
 
     if (constants.tradeTicker.includes(tradeTicker.toUpperCase())) {
       return `${config.base}${locale}/${tradeTicker}/${id}`
-    } else {
-      return `${config.base}${locale}/${trueUrl}/${id}`
-    } }
+    } return `${config.base}${locale}/${trueUrl}/${id}`
+} 
 
   render() {
     const { isLinkCopied, copyText } = this.state
