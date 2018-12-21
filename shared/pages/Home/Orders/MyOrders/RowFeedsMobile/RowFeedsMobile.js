@@ -80,11 +80,11 @@ export default class RowFeedsMoble extends Component {
           {
             Boolean(requests && requests.length) ? (
               <div styleName="buttons">
-                <div styleName="delete" onClick={() => declineRequest(id, requests[0].peer)} >
+                <div styleName="delete" onClick={() => declineRequest(id, requests[0].participant.peer)} >
                   <FormattedMessage id="RowMFeed82" defaultMessage="Decline" />
                 </div>
                 <Link to={`${localisedUrl(locale, links.swap)}/${sellCurrency.toLowerCase()}-${buyCurrency.toLowerCase()}/${id}`}>
-                  <div styleName="accept" onClick={() => acceptRequest(id, requests[0].peer)} >
+                  <div styleName="accept" onClick={() => acceptRequest(id, requests[0].participant.peer)} >
                     <FormattedMessage id="RowMFeed85" defaultMessage="Accept" />
                   </div>
                 </Link>

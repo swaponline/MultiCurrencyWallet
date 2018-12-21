@@ -22,15 +22,14 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 
-
 import config from 'app-config'
-import swapApp from 'swap.app'
+import swapApp, { util } from 'swap.app'
 
 import constants from 'helpers/constants'
 
 
 const filterIsPartial = (orders) => orders
-  .filter(order => order.isPartialClosure && !order.isProcessing)
+  .filter(order => order.isPartial && !order.isProcessing)
 
 const text = [
   <FormattedMessage id="partial223" defaultMessage="To change default wallet for buy currency. " />,
@@ -44,10 +43,12 @@ const suTitle = [
 @injectIntl
 @connect(({
   currencies,
+  addSelectedItems,
   core: { orders },
   user: { ethData, btcData, /* bchData, */ tokensData, eosData, telosData, nimData, usdtData, ltcData },
 }) => ({
   currencies: currencies.items,
+  addSelectedItems: currencies.addSelectedItems,
   orders: filterIsPartial(orders),
   currenciesData: [ ethData, btcData, eosData, telosData, /* bchData, */ ltcData, usdtData /* nimData */ ],
   tokensData: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
@@ -57,6 +58,18 @@ export default class PartialClosure extends Component {
 
   static defaultProps = {
     orders: [],
+  }
+
+  static getDerivedStateFromProps({ orders }, { haveCurrency, getCurrency }) {
+    if (!Array.isArray(orders)) { return }
+
+    const filteredOrders = orders.filter(order => !order.isMy
+      && order.sellCurrency === getCurrency.toUpperCase()
+      && order.buyCurrency === haveCurrency.toUpperCase())
+
+    return {
+      filteredOrders,
+    }
   }
 
   constructor() {
@@ -79,13 +92,16 @@ export default class PartialClosure extends Component {
       customWalletUse: false,
       customWallet: '',
     }
-
     let timer
     let wallets
     let usdRates
   }
 
   componentDidMount() {
+    const { haveCurrency } = this.state
+
+    actions.pairs.selectPair(haveCurrency)
+
     this.usdRates = {}
     this.getUsdBalance()
 
@@ -105,25 +121,15 @@ export default class PartialClosure extends Component {
   componentWillUnmount() {
     clearInterval(this.timer)
   }
+
   shouldComponentUpdate(nextPros) {
+
     if (nextPros.orders && this.props.orders && nextPros.orders > 0) {
       if (nextPros.orders.length === this.props.orders.length) {
         return false
       }
     }
     return true
-  }
-
-  static getDerivedStateFromProps({ orders }, { haveCurrency, getCurrency }) {
-    if (!Array.isArray(orders)) { return }
-
-    const filteredOrders = orders.filter(order => !order.isMy
-      && order.sellCurrency === getCurrency.toUpperCase()
-      && order.buyCurrency === haveCurrency.toUpperCase())
-
-    return {
-      filteredOrders,
-    }
   }
 
   getUsdBalance = async () => {
@@ -162,33 +168,26 @@ export default class PartialClosure extends Component {
       return
     }
 
-    const order = {
-      buyCurrency: haveCurrency,
-      sellCurrency: getCurrency,
+    const newValues = {
       sellAmount: getAmount,
-      buyAmount: haveAmount,
-      destinationSellAddress: (this.customWalletAllowed()) ? customWallet : null,
     }
 
-    console.log('sendRequest order', order)
+    const destination = {
+      address: this.customWalletAllowed() ? customWallet : null,
+    }
+
+    console.log('sendRequest for partial order', newValues, destination)
 
     this.setState(() => ({ isFetching: true }))
 
-    actions.core.requestToPeer('request partial closure', peer, { order, orderId }, (orderId) => {
-      console.log('orderId', orderId)
-      // TODO change callback on boolean type
-      if (orderId) {
-        actions.core.sendRequest(orderId, (isAccept) => {
-          if (isAccept) {
-            this.setState(() => ({
-              redirect: true,
-              isFetching: false,
-              orderId,
-            }))
-          } else {
-            this.setDeclinedOffer()
-          }
-        })
+    actions.core.sendRequestForPartial(orderId, newValues, destination, (newOrder, isAccepted) => {
+      console.log('sendRequest order received', newOrder, isAccepted)
+      if (isAccepted) {
+        this.setState(() => ({
+          redirect: true,
+          isFetching: false,
+          orderId: newOrder.id,
+        }))
       } else {
         this.setDeclinedOffer()
       }
@@ -241,9 +240,9 @@ export default class PartialClosure extends Component {
       isSearching: true,
     }))
 
-    console.log('filteredOrders', filteredOrders)
+    console.log('filteredOrders', filteredOrders.length)
 
-    const sortedOrder = filteredOrders
+    const sortedOrders = filteredOrders
       .sort((a, b) => Number(a.buyAmount.dividedBy(a.sellAmount)) - Number(b.buyAmount.dividedBy(b.sellAmount)))
       .map((item, index) => {
 
@@ -260,15 +259,15 @@ export default class PartialClosure extends Component {
         }
       })
 
-    console.log('sortedOrder', sortedOrder)
+    console.log('sortedOrder', sortedOrders.length)
 
     this.getUsdBalance()
 
-    const search = await this.setOrderOnState(sortedOrder)
+    const didFound = await this.setOrderOnState(sortedOrders)
 
-    console.log('search', search)
+    console.log('didFound', didFound)
 
-    if (search) {
+    if (didFound) {
       this.setState(() => ({
         isSearching: false,
       }))
@@ -324,37 +323,22 @@ export default class PartialClosure extends Component {
   }
 
   handleSetGetValue = ({ value }) => {
-    let { getCurrency, haveCurrency } = this.state
-
-    if (haveCurrency === value) {
-      haveCurrency = getCurrency
-    }
-
-    this.setClearState()
-
+    this.checkPair(this.state.haveCurrency)
     this.setState(() => ({
-      haveCurrency,
       getCurrency: value,
     }))
   }
 
   handleSetHaveValue = ({ value }) => {
-    let { getCurrency, haveCurrency } = this.state
-
-    if (getCurrency === value) {
-      getCurrency = haveCurrency
-    }
-
-    this.setClearState()
-
+    this.checkPair(value)
     this.setState(() => ({
-      getCurrency,
       haveCurrency: value,
     }))
   }
 
   handleFlipCurrency = () => {
     this.setClearState()
+    this.checkPair(this.state.getCurrency)
     this.setState(() => ({
       haveCurrency: this.state.getCurrency,
       getCurrency: this.state.haveCurrency,
@@ -401,32 +385,39 @@ export default class PartialClosure extends Component {
   customWalletValid() {
     const { haveCurrency, getCurrency, customWallet } = this.state
 
-    if (haveCurrency === 'btc') {
-      if (config.erc20[getCurrency] !== undefined) {
-        if (!/^(0x)?[0-9a-f]{40}$/i.test(customWallet)) {
-          return false
-        } else if (/^(0x)?[0-9a-f]{40}$/.test(customWallet.toLowerCase())) {
-          return true
-        }
-        return false
-      }
+    if (!this.customWalletAllowed()) {
+      return true
     }
 
-    return true
+    // TODO: check for BTC address
+    return util.typeforce.isCoinAddress.ETH(customWallet)
   }
 
   customWalletAllowed() {
     const { haveCurrency, getCurrency } = this.state
 
-    if (haveCurrency === 'btc') {
-      if (config.erc20[getCurrency] !== undefined) return true
+    if (haveCurrency !== 'btc') {
+      return false
     }
 
-    return false
+    return config.erc20[getCurrency] !== undefined
   }
 
+  checkPair = (value) => {
+    const selected = actions.pairs.selectPair(value)
+
+    const check = selected.map(item => item.value).includes(this.state.getCurrency)
+
+    if (!check) {
+      this.setState(() => ({
+        getCurrency: selected[0].value,
+      }))
+    }
+  }
+
+
   render() {
-    const { currencies, intl: { locale } } = this.props
+    const { currencies, addSelectedItems, intl: { locale } } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching,
       isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet, getUsd, haveUsd,
       maxBuyAmount, getAmount,
@@ -483,7 +474,7 @@ export default class PartialClosure extends Component {
               id="partialClosure472"
               tooltip={<FormattedMessage id="partial478" defaultMessage="The amount you receive after the swap" />}
               disabled
-              currencies={currencies}
+              currencies={addSelectedItems}
               usd={getUsd}
             />
             {
@@ -498,8 +489,11 @@ export default class PartialClosure extends Component {
             }
             { oneCryptoCost.isGreaterThan(0) && oneCryptoCost.isFinite() && (
               <div>
-                <FormattedMessage id="PartialPriceSearch483" defaultMessage="Price: 1" />
-                {getCurrency.toUpperCase()} = {oneCryptoCost.toFixed(5)} {haveCurrency.toUpperCase()}
+                <FormattedMessage
+                  id="PartialPriceSearch502"
+                  defaultMessage="Price: 1 {getCurrency} = {haveCurrency}"
+                  values={{ getCurrency: `${getCurrency.toUpperCase()}`, haveCurrency: `${oneCryptoCost.toFixed(5)} ${haveCurrency.toUpperCase()}` }}
+                />
               </div>
             )}
             { !oneCryptoCost.isFinite() && !isNonOffers && (

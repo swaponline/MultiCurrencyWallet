@@ -28,10 +28,6 @@
     ]
   },
   {
-    "id": "menu.listing",
-    "message": "Листинг"
-  },
-  {
     "id": "menu.wallet",
     "message": "Кошелек",
     "files": [
@@ -145,11 +141,17 @@
   },
   {
     "id": "userTooltip68",
-    "message": "Пользователь с "
+    "message": "Пользователь с ",
+    "files": [
+      "shared/components/Header/User/UserTooltip/UserTooltip.js"
+    ]
   },
   {
     "id": "userTooltip72",
-    "message": "репутацией предлагает обмен"
+    "message": "репутацией предлагает обмен",
+    "files": [
+      "shared/components/Header/User/UserTooltip/UserTooltip.js"
+    ]
   },
   {
     "id": "transactionLink28",
@@ -475,24 +477,18 @@
   },
   {
     "id": "WithdrawModal106",
-    "message": "Не меньше чем ",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "Не меньше чем "
   },
   {
     "id": "WithdrawModal111",
-    "message": "Перевод ",
+    "message": "перевести ",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
   },
   {
     "id": "Withdrow108",
-    "message": "Сумма должна быть меньше вашего баланса на комиссию манеров ",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "Сумма должна быть меньше вашего баланса на комиссию манеров "
   },
   {
     "id": "Withdrow113",
@@ -528,14 +524,6 @@
     "files": [
       "shared/components/SaveKeys/SaveKeys.js"
     ]
-  },
-  {
-    "id": "SaveKeys23",
-    "message": "Это ваши приватные ключи. Для того, чтобы скачать ключи, нажмите на кнопку"
-  },
-  {
-    "id": "SaveKeys24",
-    "message": " или сделайте снимок этой страницы, затем подтвердите и нажмите здесь. "
   },
   {
     "id": "SaveKeys26",
@@ -585,10 +573,6 @@
     "files": [
       "shared/components/SwapProgress/SwapProgress.js"
     ]
-  },
-  {
-    "id": "SwapProgress157",
-    "message": "Статтус обмена"
   },
   {
     "id": "SwapProgress32",
@@ -711,14 +695,6 @@
     ]
   },
   {
-    "id": "CurrencyWallet95",
-    "message": "Ваш адрес: "
-  },
-  {
-    "id": "Row30",
-    "message": "Обмен "
-  },
-  {
     "id": "Row35",
     "message": "Обмен",
     "files": [
@@ -759,10 +735,6 @@
     "files": [
       "shared/pages/History/SwapsHistory/RowHistory/RowHistory.js"
     ]
-  },
-  {
-    "id": "RowHistory49",
-    "message": "Возврат невозможен"
   },
   {
     "id": "SwapHisrory21",
@@ -856,26 +828,6 @@
     ]
   },
   {
-    "id": "Orders117",
-    "message": "Данная валютная пара не существует. Перенаправлены на валютную пару SWAP-BTC "
-  },
-  {
-    "id": "Orders128",
-    "message": "Создать Ордер"
-  },
-  {
-    "id": "orders143",
-    "message": "КУПИТЬ "
-  },
-  {
-    "id": "orders145",
-    "message": " "
-  },
-  {
-    "id": "orders148",
-    "message": "Здесь размещены ордера на "
-  },
-  {
     "id": "orders150",
     "message": "ПРОДАЖУ ",
     "files": [
@@ -883,39 +835,8 @@
     ]
   },
   {
-    "id": "orders153",
-    "message": " "
-  },
-  {
     "id": "orders174",
-    "message": "ПРОДАТЬ ",
-    "files": [
-      "shared/pages/Home/Orders/Orders.js"
-    ]
-  },
-  {
-    "id": "orders176",
-    "message": " "
-  },
-  {
-    "id": "orders179",
-    "message": "Здесь размещены ордера на "
-  },
-  {
-    "id": "orders181",
-    "message": " ПОКУПКУ "
-  },
-  {
-    "id": "orders184",
-    "message": " "
-  },
-  {
-    "id": "Row122",
-    "message": "по цене"
-  },
-  {
-    "id": "Row131",
-    "message": "купить"
+    "message": "ПРОДАТЬ "
   },
   {
     "id": "Row148",
@@ -944,10 +865,6 @@
     "files": [
       "shared/pages/Home/Orders/Row/Row.js"
     ]
-  },
-  {
-    "id": "RowM122",
-    "message": "Вы получите"
   },
   {
     "id": "RowM136",
@@ -2610,7 +2527,7 @@
   },
   {
     "id": "Row263",
-    "message": "Импортировать",
+    "message": "Войти",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
@@ -2628,10 +2545,6 @@
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
-  },
-  {
-    "id": "Row305",
-    "message": "Отправить"
   },
   {
     "id": "Row313",
@@ -2664,10 +2577,6 @@
     ]
   },
   {
-    "id": "RowWallet313",
-    "message": "Обмен"
-  },
-  {
     "id": "AddOffer396",
     "message": "Далее",
     "files": [
@@ -2680,14 +2589,6 @@
     "files": [
       "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
     ]
-  },
-  {
-    "id": "transaction28",
-    "message": "ETH на Вашем балансе"
-  },
-  {
-    "id": "PrivateKeysModal105",
-    "message": "есть большой шанс, что Вы потеряете свои деньги. "
   },
   {
     "id": "PrivateKeysModal106",
@@ -2776,102 +2677,6 @@
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
-  },
-  {
-    "id": "Listing1",
-    "message": "How to list your asset on swap.online"
-  },
-  {
-    "id": "listing.listing1",
-    "message": "1. We can list your token on swap.online ;"
-  },
-  {
-    "id": "listing.listing10",
-    "message": "SWAP.Online will be cryptocurrency Pink Sheets market. "
-  },
-  {
-    "id": "listing.listing12",
-    "message": "It’s well known that even in traditional stock market, one willing to be quoted must meet the requirements of SEC, or as far as the OTC Market Group Inc. markets (OTCQX and OTCQB) are concerned, must show the big income and seek the support of the influential consulting agencies. Moreover, the information about the company audit must be provided annually to the SEC or SEC-approved regulators. "
-  },
-  {
-    "id": "listing.listing13",
-    "message": "Some of the cryptocurrency ‘fat cats’ allow themselves to do the same. For example, Localbitcoins CEO said they would newer list a token of the project with less than USD1B capitalisation. Cryptobridge and some related centralized exchanges ask for the USD 23 thousand (in BTS equivalent) for the token owner to be listed. "
-  },
-  {
-    "id": "listing.listing14",
-    "message": "That is not about us. "
-  },
-  {
-    "id": "listing.listing15",
-    "message": "As our transactions is peer-to-peer, based on the Atomic Swaps technology, we can add to the balances every token corresponding some our criterias. Obviously, clearly fraudulent projects are to be rejected from the very beginning. But all other start-ups on the different stages of development are welcome. "
-  },
-  {
-    "id": "listing.listing16",
-    "message": "In contradiction to the widespread Ethereum-pegged exchanges, the main currency to be changed on tokens in our project is Bitcoin. It can be treated as our killer-feature: for the crypto-newbies and vast majority of small customers Bitcoin is much clearer and easy to buy via Localbitcoins etc. "
-  },
-  {
-    "id": "listing.listing17",
-    "message": "We offer two-level way of access to the balances. On the first stage, we analyze the level of project technical development, collect the basic information (name, ticker, logo) and add the token to trading balances. "
-  },
-  {
-    "id": "listing.listing18",
-    "message": "Then, to start trading with Bitcoin, the project should publish the information about the collaboration with SWAP.Online on every social platform and on the web-site forum. With this information published, our developers will release the final version of the exchange to client’s token. This option is available for the first ten projects only. "
-  },
-  {
-    "id": "listing.listing19",
-    "message": "The conditions of delisting are discussed, but at the moment, we plan to expel twenty per cent worst tokens every month. "
-  },
-  {
-    "id": "listing.listing2",
-    "message": "2. To list your tokens, please send us the link to your peoject, erc20 address, icon, name and ticker (short name) to team@swap.online;"
-  },
-  {
-    "id": "listing.listing20",
-    "message": "Thus, you token can start to be quoted in free and decentralized manner as quickly as possible for your unlimited profit. "
-  },
-  {
-    "id": "listing.listing21",
-    "message": "Stay with us. "
-  },
-  {
-    "id": "listing.listing22",
-    "message": "Grow with us. "
-  },
-  {
-    "id": "listing.listing23",
-    "message": "Earn with us. "
-  },
-  {
-    "id": "listing.listing3",
-    "message": "3. We as well will announce listing of your tokens on our social media, mutial PR will benefit both sides. "
-  },
-  {
-    "id": "listing.listing4",
-    "message": "Crypto Pink Sheets: ALL Coins Welcome To SWAP.Online! "
-  },
-  {
-    "id": "listing.listing5",
-    "message": "OTC-approach-crypto market to be opened in Aug, 2018. "
-  },
-  {
-    "id": "listing.listing6",
-    "message": "There was one company in the U.S. in the year of 1913, the National Quotation Bureau. They brought to life very simple idea - to provide every entity with the ability to be quoted freely, without complicated safety and control proceedings. The list of the bond orders was primarily published on the yellow paper and the stock orders were published on the pink paper. The Pink Sheets, as the lists were immediately called by the traders. rapidly became very popular among the market players. Every firm opened in the U.S. or abroad was able to publish its securities quotations in the list of Pink Sheets. With the increasing requirements of NYSE and NASDAQ and growing demands of the SEC to the information regarding the company applying the market, the interest to the Pink Sheets arose very fast. In September, 1990, the NQB introduced the real-time Electronic Quotation Service, so the over-the-counter trading entered the Internet. By the year 2010 the operators of the Pink Sheets trading were acquisited by the OTC Market Group, Inc. In 2014, two of five U.S. stock trades were over-the-counter. "
-  },
-  {
-    "id": "listing.listing7",
-    "message": "Wal-Mart was the Pink Sheet company in 1972 and earned there USD 1B. "
-  },
-  {
-    "id": "listing.listing8",
-    "message": "Navistar International, the 12-billion-dollar-corporation, came to the Pink Sheets Market in 2006 leaving the NYSE due to some issues with the auditor board.. "
-  },
-  {
-    "id": "listing.listing9",
-    "message": "In SWAP. Online we have noticed that Pink Sheets principles are very close to the initial meaning of cryptocurrencies. Both of them are based on the faith in transparency, decentralization, bilateral responsibility of buyer and seller. As we decided to make the exchange of crypto really"
-  },
-  {
-    "id": "listing.listing9a",
-    "message": "safe, rapid and decentralized, we couldn’t go about this another way. "
   },
   {
     "id": "BTCTOLTC132",
@@ -2989,10 +2794,6 @@
       "shared/pages/Swap/BtcToLtc.js",
       "shared/pages/Swap/LtcToBtc.js"
     ]
-  },
-  {
-    "id": "Scriptaddress: ",
-    "message": "Script адрес: "
   },
   {
     "id": "SecretHash",
@@ -3191,52 +2992,13 @@
     ]
   },
   {
-    "id": "Row310",
-    "message": "Не активированно"
-  },
-  {
-    "id": "Row354",
-    "message": "Активировать"
-  },
-  {
     "id": "partial221",
     "message": "Максимальо возможная сумма: ",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
   },
-  {
-    "id": "partial234",
-    "message": "Нет предложений на обмен"
-  },
-  {
-    "id": "partial238",
-    "message": "Предложение отклонено"
-  },
-  {
-    "id": "partial244",
-    "message": "Ожидание участника: "
-  },
-  {
-    "id": "partial251",
-    "message": "Начать: "
-  },
-  {
-    "id": "Currency108",
-    "message": "Добавлено в кошелек "
-  },
-  {
-    "id": "Currency102",
-    "message": " валютные пары"
-  },
-  {
-    "id": "CurrencyWallet107",
-    "message": "Ваш "
-  },
-  {
-    "id": "CurrencyWallet128",
-    "message": "История Ваших транзакций"
-  },
+
   {
     "id": "Company",
     "message": "О Kомпании",
@@ -3385,30 +3147,6 @@
     ]
   },
   {
-    "id": "Coin113",
-    "message": "Валюта"
-  },
-  {
-    "id": "Exchange113",
-    "message": "Обмен"
-  },
-  {
-    "id": "Amount130",
-    "message": "Сумма"
-  },
-  {
-    "id": "Coin130",
-    "message": "Валюта"
-  },
-  {
-    "id": "Statement130",
-    "message": "Отчет"
-  },
-  {
-    "id": "Status130",
-    "message": "Статус"
-  },
-  {
     "id": "Amount61",
     "message": "Сумма",
     "files": [
@@ -3542,26 +3280,6 @@
     ]
   },
   {
-    "id": "Orders101",
-    "message": "ВЛАДЕЛЕЦ"
-  },
-  {
-    "id": "Orders102",
-    "message": "СУММА"
-  },
-  {
-    "id": "Orders103",
-    "message": "ЦЕНА ЗА 1 "
-  },
-  {
-    "id": "Orders105",
-    "message": "ВСЕГО"
-  },
-  {
-    "id": "Orders106",
-    "message": "ДЕЙСТВИЯ"
-  },
-  {
     "id": "Wallet114",
     "message": "Валюта",
     "files": [
@@ -3633,10 +3351,7 @@
   },
   {
     "id": "orders103",
-    "message": "ЦЕНА ЗА 1 ",
-    "files": [
-      "shared/pages/Home/Orders/Orders.js"
-    ]
+    "message": "ЦЕНА ЗА 1 "
   },
   {
     "id": "orders105",
@@ -3647,22 +3362,10 @@
   },
   {
     "id": "orders106",
-    "message": "ДЕЙСТВИЕ",
+    "message": "Начать обмен",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]
-  },
-  {
-    "id": "orders120",
-    "message": "Atomic Swap"
-  },
-  {
-    "id": "orders122",
-    "message": "для"
-  },
-  {
-    "id": "orders124",
-    "message": "Моментальный обмен"
   },
   {
     "id": "orders128",
@@ -3672,23 +3375,8 @@
     ]
   },
   {
-    "id": "orders130",
-    "message": "Лучший курс обмена "
-  },
-  {
-    "id": "orders132",
-    "message": "для"
-  },
-  {
-    "id": "orders134",
-    "message": "Swap.Online кошелек обеспечивает мгновенный обмен с использованием протокола Atomic Swap. "
-  },
-  {
     "id": "orders138",
-    "message": " обмен на любую сумму с 0 комиссией",
-    "files": [
-      "shared/pages/Home/Orders/Orders.js"
-    ]
+    "message": " обмен на любую сумму с 0 комиссией"
   },
   {
     "id": "orders1499",
@@ -3696,18 +3384,6 @@
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]
-  },
-  {
-    "id": "orders1501",
-    "message": " "
-  },
-  {
-    "id": "Row134",
-    "message": "продать"
-  },
-  {
-    "id": "Row136",
-    "message": "продает"
   },
   {
     "id": "addoffer381",
@@ -3745,18 +3421,6 @@
     ]
   },
   {
-    "id": "filter14",
-    "message": "Все"
-  },
-  {
-    "id": "filter15",
-    "message": "Отправленые"
-  },
-  {
-    "id": "filter16",
-    "message": "Полученныу"
-  },
-  {
     "id": "Amount68",
     "message": "История",
     "files": [
@@ -3776,14 +3440,6 @@
     "files": [
       "shared/pages/Home/Orders/RequestButton/RequestButton.js"
     ]
-  },
-  {
-    "id": "add367",
-    "message": "Введенное число должна быть больше"
-  },
-  {
-    "id": "add368",
-    "message": "Введенное число должно быть меньше Вашего баланса"
   },
   {
     "id": "ExchangeRate12",
@@ -3821,22 +3477,6 @@
     ]
   },
   {
-    "id": "Withdrow101",
-    "message": "Обратите внимание, что вам нужно иметь минимум"
-  },
-  {
-    "id": "Withdrow105",
-    "message": " "
-  },
-  {
-    "id": "Withdrow109",
-    "message": " "
-  },
-  {
-    "id": "Withdrow111",
-    "message": "на свой кошелек, для платы майнерам"
-  },
-  {
     "id": "RowHistory94",
     "message": "Выполнено",
     "files": [
@@ -3849,18 +3489,6 @@
     "files": [
       "shared/pages/History/SwapsHistory/RowHistory/RowHistory.js"
     ]
-  },
-  {
-    "id": "Row202",
-    "message": "ПРОДАТЬ "
-  },
-  {
-    "id": "Row204",
-    "message": "КУПИТЬ "
-  },
-  {
-    "id": "Row209",
-    "message": "ЗА "
   },
   {
     "id": "RowMobileFirstTypeYouGet",
@@ -3896,14 +3524,6 @@
     "files": [
       "shared/pages/Wallet/Wallet.js"
     ]
-  },
-  {
-    "id": "currencywallet103",
-    "message": "Ваш Онлайн "
-  },
-  {
-    "id": "currencywallet107",
-    "message": " кошелек, в основе которого лежит технология Atomic Swap. "
   },
   {
     "id": "SubscribeModal000",
@@ -3967,10 +3587,7 @@
   },
   {
     "id": "transaction398",
-    "message": "ETH на вашем балансе",
-    "files": [
-      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
-    ]
+    "message": "ETH на вашем балансе"
   },
   {
     "id": "Select210",
@@ -3992,38 +3609,6 @@
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
-  },
-  {
-    "id": "Withdrow172",
-    "message": "Обратите внимание: комиссия майнеров "
-  },
-  {
-    "id": "Withdrow174",
-    "message": "Для выполнения транзакции баланс должен превышать эту сумму. "
-  },
-  {
-    "id": "Withdrow178",
-    "message": "Обратите внимание: комиссия майнеров "
-  },
-  {
-    "id": "Withdrow180",
-    "message": "Ваш баланс должен превышать эту сумму для выполнения транзакции. "
-  },
-  {
-    "id": "Currency110",
-    "message": " Валютные пары"
-  },
-  {
-    "id": "Currency119",
-    "message": "Добавить в кошелек"
-  },
-  {
-    "id": "partial277",
-    "message": "Нет предложений"
-  },
-  {
-    "id": "partial284",
-    "message": "Предложение отклонено"
   },
   {
     "id": "partial291",
@@ -4110,22 +3695,6 @@
     ]
   },
   {
-    "id": "addOffer448",
-    "message": "Вы получите запросы на обмен "
-  },
-  {
-    "id": "addOffer449",
-    "message": "на сумму, меньше, чем общая сумма, которую вы хотите продать. "
-  },
-  {
-    "id": "addOffer450",
-    "message": "Например, Вы хотите продать 1 BTC, "
-  },
-  {
-    "id": "addOffer451",
-    "message": " другие пользователи могут отправлять вам запросы на обмен на 0,1,  0,5 BTC "
-  },
-  {
     "id": "TelosRegister46",
     "message": "Введите TELOS имя аккаунта",
     "files": [
@@ -4140,14 +3709,6 @@
     ]
   },
   {
-    "id": "WTH273",
-    "message": "Убедитесь что отправляете средства на кошелек "
-  },
-  {
-    "id": "WTHl274",
-    "message": "который поддерживает "
-  },
-  {
     "id": "partial223",
     "message": "Для изменения кошелька по умолчанию для валюты покупки. ",
     "files": [
@@ -4160,10 +3721,6 @@
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
-  },
-  {
-    "id": "partial225",
-    "message": "Предложения частичного закрытия"
   },
   {
     "id": "partial243",
@@ -4229,10 +3786,6 @@
     ]
   },
   {
-    "id": "editOffer",
-    "message": "editOffer"
-  },
-  {
     "id": "ImCAUTIONport",
     "message": "ВНИМАНИЕ!",
     "files": [
@@ -4245,10 +3798,6 @@
     "files": [
       "shared/components/modals/ReceiveModal/ReceiveModal.js"
     ]
-  },
-  {
-    "id": "Areyousure?",
-    "message": "Вы уверены ?"
   },
   {
     "id": "ShMoreCoins",
@@ -4270,14 +3819,6 @@
     "files": [
       "shared/components/modals/SubscribeModal/SubscribeModal.js"
     ]
-  },
-  {
-    "id": "Withdraw183",
-    "message": "Перевод "
-  },
-  {
-    "id": "Row158",
-    "message": "покупает"
   },
   {
     "id": "Scriptaddress:",
@@ -4427,14 +3968,6 @@
     ]
   },
   {
-    "id": "CurrencyWallet113",
-    "message": "Вы не можете отправить данную валюту, потому что у вас нулевой баланс .."
-  },
-  {
-    "id": "CurrencyWallet143",
-    "message": "Баланс"
-  },
-  {
     "id": "PartialPriceCalc",
     "message": "Расчет цены",
     "files": [
@@ -4492,10 +4025,7 @@
   },
   {
     "id": "PartialPriceSearch483",
-    "message": "Курс: 1",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
-    ]
+    "message": "Курс: 1"
   },
   {
     "id": "partial437",
@@ -4629,10 +4159,7 @@
   },
   {
     "id": "reputationMSG",
-    "message": "Пользователь с репутацией {reputationRate} предлагает обмен",
-    "files": [
-      "shared/components/Header/User/UserTooltip/UserTooltip.js"
-    ]
+    "message": "Пользователь с репутацией {reputationRate} предлагает обмен"
   },
   {
     "id": "addOfferPartialTooltip",
@@ -4794,24 +4321,18 @@
   },
   {
     "id": "Withdraw18333",
-    "message": "Отправка {data$}",
+    "message": "ПЕРЕВОД {data}",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
   },
   {
     "id": "Withdrow183",
-    "message": "Обратите внимание: комиссия майнеров {values} ETH {br}Ваш баланс должен превышать эту сумму для совершения транзакции.",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "Обратите внимание: комиссия майнеров {values} ETH {br}Ваш баланс должен превышать эту сумму для совершения транзакции."
   },
   {
     "id": "Withdrow192",
-    "message": "Обратите внимание: комиссия майнеров {data}.  {br}Ваш баланс должен превышать эту сумму для совершения транзакции.",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "Обратите внимание: комиссия майнеров {data}.  {br}Ваш баланс должен превышать эту сумму для совершения транзакции."
   },
   {
     "id": "ImportKeys176",
@@ -4846,6 +4367,87 @@
     "message": "Пожалуйста введите XLM приватный ключ ",
     "files": [
       "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "WithdrawIncorectAddress",
+    "message": "Некорректно указан адрес",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Withdrow168",
+    "message": "Сумма должны быть меньше, чем Ваш баланс, на минимальную сумму перевода {min} {currency}"
+  },
+  {
+    "id": "Withdrow170",
+    "message": "Сумма должны быть меньше, чем Ваш баланс, на комиссию майнеров {min}",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "PartialPriceSearch502",
+    "message": "Цена: 1 {getCurrency} = {haveCurrency}",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "orders104",
+    "message": "ЦЕНА ЗА 1 {buyCurrency}",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "orders1381",
+    "message": "{pair} обмен на любую сумму с 0 комиссией",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "orders183",
+    "message": "ПРОДАТЬ {buyCurrency}",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "transaction436",
+    "message": "Для обмена, вам нужно {minAmount} ETH на вашем балансе",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "currencyIcon15",
+    "message": "Ошибка",
+    "files": [
+      "shared/components/ui/CurrencyIcon/CurrencyIcon.js"
+    ]
+  },
+  {
+    "id": "Withdrow213",
+    "message": "Пожалуйста, обратите внимание: комиссия майнеров {minAmount} {data}.  {br}Ваш баланс должен превышать эту сумму для совершения транзакции..",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "WithdrawModal256",
+    "message": "Не меньше чем {minAmount}",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "WithdrawModal263",
+    "message": "Вам нужно иметь {minAmount} ETH на вашем балансе",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
   }
 ]

@@ -20,7 +20,6 @@ import Toggle from 'components/controls/Toggle/Toggle'
 import Input from 'components/forms/Input/Input'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage } from 'react-intl'
-
 import { isNumberValid, isNumberStringFormatCorrect, mathConstants } from 'helpers/math.js'
 
 
@@ -37,9 +36,11 @@ const minAmount = {
 @connect(
   ({
     currencies,
+    addSelectedItems,
     user: { ethData, btcData, /* bchData, */ tokensData, eosData, telosData, nimData, usdtData, ltcData },
   }) => ({
     currencies: currencies.items,
+    addSelectedItems: currencies.addSelectedItems,
     items: [ ethData, btcData, eosData, telosData, /* bchData, */ ltcData, usdtData /* nimData */ ],
     tokenItems: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
   })
@@ -63,14 +64,17 @@ export default class AddOffer extends Component {
       isSellFieldInteger: false,
       isBuyFieldInteger: false,
       manualRate: false,
-      isPartialClosure: true,
+      isPartial: true,
     }
   }
 
   componentDidMount() {
-    const { sellCurrency, buyCurrency } = this.state
+    const { sellCurrency, buyCurrency, value } = this.state
+
+    actions.pairs.selectPair(sellCurrency)
+
     this.checkBalance(sellCurrency)
-    this.updateExchangeRate(sellCurrency, buyCurrency)
+    this.updateExchangeRate(sellCurrency)
   }
 
   checkBalance = async (sellCurrency) => {
@@ -105,11 +109,7 @@ export default class AddOffer extends Component {
   handleBuyCurrencySelect = async ({ value }) => {
     let { buyCurrency, sellCurrency, buyAmount, sellAmount } = this.state
 
-    if (value === sellCurrency) {
-      sellCurrency = buyCurrency
-    }
-
-    buyCurrency = value
+    this.checkPair(this.state.sellCurrency)
 
     await this.checkBalance(sellCurrency)
 
@@ -123,7 +123,7 @@ export default class AddOffer extends Component {
       buyAmount = new BigNumber(String(buyAmount) || 0).dp(0, BigNumber.ROUND_HALF_EVEN)
     }
     this.setState({
-      buyCurrency,
+      buyCurrency: value,
       sellCurrency,
       sellAmount: Number.isNaN(sellAmount) ? '' : sellAmount,
       buyAmount: Number.isNaN(buyAmount) ? '' : buyAmount,
@@ -139,7 +139,7 @@ export default class AddOffer extends Component {
       buyCurrency = sellCurrency
     }
 
-    sellCurrency = value
+    this.checkPair(value)
 
     await this.checkBalance(sellCurrency)
 
@@ -155,7 +155,7 @@ export default class AddOffer extends Component {
 
     this.setState({
       buyCurrency,
-      sellCurrency,
+      sellCurrency: value,
       buyAmount: Number.isNaN(buyAmount) ? '' : buyAmount,
       sellAmount: Number.isNaN(sellAmount) ? '' : sellAmount,
       isSellFieldInteger,
@@ -347,7 +347,7 @@ export default class AddOffer extends Component {
     this.setState({ manualRate: value })
   }
 
-  switching = async () => {
+  switching = async (value) => {
     const { sellCurrency, buyCurrency, sellAmount, buyAmount } = this.state
 
     await this.checkBalance(buyCurrency)
@@ -357,19 +357,29 @@ export default class AddOffer extends Component {
       this.handleBuyAmountChange(sellAmount)
       this.handleSellAmountChange(buyAmount)
     }
-
+    actions.pairs.selectPair(buyCurrency)
     this.setState({
       sellCurrency: buyCurrency,
       buyCurrency: sellCurrency,
     })
   }
 
+  checkPair = (value) => {
+    const selected = actions.pairs.selectPair(value)
 
+    const check = selected.map(item => item.value).includes(this.state.buyCurrency)
+
+    if (!check) {
+      this.setState(() => ({
+        buyCurrency: selected[0].value,
+      }))
+    }
+  }
 
   render() {
-    const { currencies, tokenItems } = this.props
+    const { currencies, tokenItems, addSelectedItems } = this.props
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency,
-      balance, isBuyFieldInteger, isSellFieldInteger, ethBalance, manualRate, isPartialClosure } = this.state
+      balance, isBuyFieldInteger, isSellFieldInteger, ethBalance, manualRate, isPartial } = this.state
     const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
     const isDisabled = !exchangeRate || !buyAmount && !sellAmount
       || sellAmount > balance || sellAmount < minAmount[sellCurrency]
@@ -391,11 +401,12 @@ export default class AddOffer extends Component {
       <div styleName="wrapper addOffer">
         { this.isEthOrERC20() &&
           <span styleName="error">
-            <FormattedMessage id="transaction27" defaultMessage="For a swap, you need" />
-            {' '}
-            {minAmount.eth}
-            {' '}
-            <FormattedMessage id="transaction398" defaultMessage="ETH on your balance" />
+            <FormattedMessage
+              id="transaction436"
+              defaultMessage="For a swap, you need {minAmount} ETH on your balance"
+              values={{ minAmount:`${minAmount.eth}` }}
+            />
+
           </span>
         }
         <SelectGroup
@@ -421,7 +432,7 @@ export default class AddOffer extends Component {
           selectedCurrencyValue={buyCurrency}
           onCurrencySelect={this.handleBuyCurrencySelect}
           id="buyAmount"
-          currencies={currencies}
+          currencies={addSelectedItems}
           isInteger={isBuyFieldInteger}
           placeholder="Enter buy amount"
         />
@@ -446,7 +457,7 @@ export default class AddOffer extends Component {
           </Tooltip>
         </div>
         <div>
-          <Toggle checked={isPartialClosure} onChange={() => this.setState((state) => ({ isPartialClosure: !state.isPartialClosure }))} />
+          <Toggle checked={isPartial} onChange={() => this.setState((state) => ({ isPartial: !state.isPartial }))} />
           <FormattedMessage id="AddOffer423" defaultMessage="Enabled to partial closure" />
           {' '}
           <Tooltip id="add547">
