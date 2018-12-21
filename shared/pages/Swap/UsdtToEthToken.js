@@ -52,6 +52,7 @@ export default class UsdtToEthToken extends Component {
 
   tryRefund = () => {
     this.swap.flow.tryRefund()
+    this.setState(() => ({ enabledButton: false }))
   }
 
   addGasPrice = () => {

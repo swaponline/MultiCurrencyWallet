@@ -84,6 +84,7 @@ export default class BtcToEth extends Component {
 
   tryRefund = () => {
     this.swap.flow.tryRefund()
+    this.setState(() => ({ enabledButton: false }))
   }
 
   getRefundTxHex = () => {

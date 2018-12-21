@@ -52,6 +52,7 @@ export default class EthTokenToUsdt extends Component {
 
   tryRefund = () => {
     this.swap.flow.tryRefund()
+    this.setState(() => ({ enabledButton: false }))
   }
 
   toggleBitcoinScript = () => {

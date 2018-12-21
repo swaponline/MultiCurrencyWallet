@@ -71,6 +71,7 @@ export default class BtcToLtc extends Component {
 
   tryRefund = () => {
     this.swap.flow.tryRefund()
+    this.setState(() => ({ enabledButton: false }))
   }
 
   getRefundTxHex = () => {
