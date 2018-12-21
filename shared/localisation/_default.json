@@ -133,6 +133,20 @@
     ]
   },
   {
+    "id": "userTooltip68",
+    "message": "User with",
+    "files": [
+      "shared/components/Header/User/UserTooltip/UserTooltip.js"
+    ]
+  },
+  {
+    "id": "userTooltip72",
+    "message": "reputation wants to swap",
+    "files": [
+      "shared/components/Header/User/UserTooltip/UserTooltip.js"
+    ]
+  },
+  {
     "id": "transactionLink28",
     "message": "Transaction:",
     "files": [
@@ -456,10 +470,7 @@
   },
   {
     "id": "WithdrawModal106",
-    "message": "No less than",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "No less than"
   },
   {
     "id": "WithdrawModal111",
@@ -470,10 +481,7 @@
   },
   {
     "id": "Withdrow108",
-    "message": "Address",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "Address"
   },
   {
     "id": "Withdrow113",
@@ -825,10 +833,7 @@
   },
   {
     "id": "orders174",
-    "message": "SELL",
-    "files": [
-      "shared/pages/Home/Orders/Orders.js"
-    ]
+    "message": "SELL"
   },
   {
     "id": "Row148",
@@ -3360,10 +3365,7 @@
   },
   {
     "id": "orders103",
-    "message": "PRICE FOR 1",
-    "files": [
-      "shared/pages/Home/Orders/Orders.js"
-    ]
+    "message": "PRICE FOR 1"
   },
   {
     "id": "orders105",
@@ -3388,10 +3390,7 @@
   },
   {
     "id": "orders138",
-    "message": "no limit exchange with 0 fee",
-    "files": [
-      "shared/pages/Home/Orders/Orders.js"
-    ]
+    "message": "no limit exchange with 0 fee"
   },
   {
     "id": "orders1499",
@@ -4052,10 +4051,7 @@
   },
   {
     "id": "PartialPriceSearch483",
-    "message": "Price: 1",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
-    ]
+    "message": "Price: 1"
   },
   {
     "id": "partial437",
@@ -4189,10 +4185,7 @@
   },
   {
     "id": "reputationMSG",
-    "message": "User with {reputationRate} reputation wants to swap",
-    "files": [
-      "shared/components/Header/User/UserTooltip/UserTooltip.js"
-    ]
+    "message": "User with {reputationRate} reputation wants to swap"
   },
   {
     "id": "addOffer39",
@@ -4396,20 +4389,6 @@
     ]
   },
   {
-    "id": "Withdrow183",
-    "message": "Please note: Miners fee is {values} ETH {br}Your balance must exceed this sum to perform transaction.",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
-  },
-  {
-    "id": "Withdrow192",
-    "message": "Please note: Miners fee is {minAmount} {data}.  {br}Your balance must exceed this sum to perform transaction.",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
-  },
-  {
     "id": "ImportKeys176",
     "message": "Please enter xlm private key",
     "files": [
@@ -4442,6 +4421,81 @@
     "message": "Please enter XLM private key",
     "files": [
       "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "WithdrawIncorectAddress",
+    "message": "Your address not correct",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Withdrow168",
+    "message": "The amount must be less than your balance by the minimum amount for the transaction {min} {currency}"
+  },
+  {
+    "id": "Withdrow170",
+    "message": "The amount must be less than your balance on the miners fee {min}",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "PartialPriceSearch502",
+    "message": "Price: 1 {getCurrency} = {haveCurrency}",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "orders104",
+    "message": "PRICE FOR 1 {buyCurrency}",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "orders1381",
+    "message": "{pair} no limit exchange with 0 fee",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "orders183",
+    "message": "SELL {buyCurrency} HERE",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "Withdrow202",
+    "message": "Please note: Miners fee is {minAmount} ETH {br}Your balance must exceed this sum to perform transaction."
+  },
+  {
+    "id": "Withdrow212",
+    "message": "Please note: Miners fee is {minAmount} {data}.  {br}Your balance must exceed this sum to perform transaction."
+  },
+  {
+    "id": "Withdrow213",
+    "message": "Please note: Miners fee is {minAmount} {data}.  {br}Your balance must exceed this sum to perform transaction.",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "WithdrawModal256",
+    "message": "No less than {minAmount}",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "WithdrawModal263",
+    "message": "You need {minAmount} ETH on your balance",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
   }
 ]
