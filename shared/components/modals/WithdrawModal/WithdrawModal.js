@@ -117,7 +117,6 @@ export default class WithdrawModal extends React.Component {
       })
   }
 
-
     sellAllBalance = () => {
       const { amount, balance, currency, tokenFee } = this.state
       const { data } = this.props

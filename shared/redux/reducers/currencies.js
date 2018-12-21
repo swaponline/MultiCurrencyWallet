@@ -40,6 +40,8 @@ const initialState = {
         fullTitle: key,
       }))),
   ],
+  addSelectedItems: ['ETH', 'EOS', 'LTC', ...(Object.keys(config.erc20)
+    .map(key => key.toUpperCase())) ],
 }
 
 // eslint-disable-next-line
@@ -51,7 +53,12 @@ process.env.MAINNET && initialState.items.unshift({
   fullTitle: 'USD Tether',
 })
 
+const addSelectedItems = (state, payload) => ({
+  ...state,
+  addSelectedItems: payload,
+})
 
 export {
   initialState,
+  addSelectedItems,
 }

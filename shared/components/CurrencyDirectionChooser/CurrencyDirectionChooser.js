@@ -6,6 +6,7 @@ import { constants } from 'helpers'
 
 import CSSModules from 'react-css-modules'
 import styles from './CurrencyDirectionChooser.scss'
+import { connect } from 'redaction'
 
 import Flip from 'components/controls/Flip/Flip'
 import Button from 'components/controls/Button/Button'
@@ -15,6 +16,18 @@ import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage } from 'react-intl'
 
 
+@connect(
+  ({
+    currencies,
+    addSelectedItems,
+    user: { ethData, btcData, /* bchData, */ tokensData, eosData, telosData, nimData, usdtData, ltcData },
+  }) => ({
+    currencies: currencies.items,
+    addSelectedItems: currencies.addSelectedItems[0],
+    items: [ ethData, btcData, eosData, telosData, /* bchData, */ ltcData, usdtData /* nimData */ ],
+    tokenItems: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
+  })
+)
 @CSSModules(styles, { allowMultiple: true })
 export default class CurrencyDirectionChooser extends Component {
 
@@ -44,10 +57,19 @@ export default class CurrencyDirectionChooser extends Component {
     actions.analytics.dataEvent('orderbook-click-createoffer-button')
   }
 
+  chooseProps = () => {
+    const { currencies, tokenItems, addSelectedItems } = this.props
+
+    if (addSelectedItems === undefined) {
+      return currencies
+    }
+    return addSelectedItems
+  }
+
   render() {
     const { buyCurrency, sellCurrency,
       flipCurrency, handleBuyCurrencySelect, handleSellCurrencySelect, handleSubmit,
-      currencies } = this.props
+      currencies, addSelectedItems } = this.props
 
     return (
       <div styleName="choice">
@@ -78,7 +100,7 @@ export default class CurrencyDirectionChooser extends Component {
                 styleName="currencySelect currencySelectRight"
                 selectedValue={buyCurrency}
                 onSelect={handleBuyCurrencySelect}
-                currencies={currencies}
+                currencies={this.chooseProps()}
               />
             </div>
           </div>

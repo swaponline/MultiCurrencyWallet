@@ -22,7 +22,6 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 
-
 import config from 'app-config'
 import swapApp, { util } from 'swap.app'
 
@@ -44,10 +43,12 @@ const suTitle = [
 @injectIntl
 @connect(({
   currencies,
+  addSelectedItems,
   core: { orders },
   user: { ethData, btcData, /* bchData, */ tokensData, eosData, telosData, nimData, usdtData, ltcData },
 }) => ({
   currencies: currencies.items,
+  addSelectedItems: currencies.addSelectedItems,
   orders: filterIsPartial(orders),
   currenciesData: [ ethData, btcData, eosData, telosData, /* bchData, */ ltcData, usdtData /* nimData */ ],
   tokensData: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
@@ -57,6 +58,18 @@ export default class PartialClosure extends Component {
 
   static defaultProps = {
     orders: [],
+  }
+
+  static getDerivedStateFromProps({ orders }, { haveCurrency, getCurrency }) {
+    if (!Array.isArray(orders)) { return }
+
+    const filteredOrders = orders.filter(order => !order.isMy
+      && order.sellCurrency === getCurrency.toUpperCase()
+      && order.buyCurrency === haveCurrency.toUpperCase())
+
+    return {
+      filteredOrders,
+    }
   }
 
   constructor() {
@@ -79,13 +92,16 @@ export default class PartialClosure extends Component {
       customWalletUse: false,
       customWallet: '',
     }
-
     let timer
     let wallets
     let usdRates
   }
 
   componentDidMount() {
+    const { haveCurrency } = this.state
+
+    actions.pairs.selectPair(haveCurrency)
+
     this.usdRates = {}
     this.getUsdBalance()
 
@@ -105,25 +121,15 @@ export default class PartialClosure extends Component {
   componentWillUnmount() {
     clearInterval(this.timer)
   }
+
   shouldComponentUpdate(nextPros) {
+
     if (nextPros.orders && this.props.orders && nextPros.orders > 0) {
       if (nextPros.orders.length === this.props.orders.length) {
         return false
       }
     }
     return true
-  }
-
-  static getDerivedStateFromProps({ orders }, { haveCurrency, getCurrency }) {
-    if (!Array.isArray(orders)) { return }
-
-    const filteredOrders = orders.filter(order => !order.isMy
-      && order.sellCurrency === getCurrency.toUpperCase()
-      && order.buyCurrency === haveCurrency.toUpperCase())
-
-    return {
-      filteredOrders,
-    }
   }
 
   getUsdBalance = async () => {
@@ -317,37 +323,22 @@ export default class PartialClosure extends Component {
   }
 
   handleSetGetValue = ({ value }) => {
-    let { getCurrency, haveCurrency } = this.state
-
-    if (haveCurrency === value) {
-      haveCurrency = getCurrency
-    }
-
-    this.setClearState()
-
+    this.checkPair(this.state.haveCurrency)
     this.setState(() => ({
-      haveCurrency,
       getCurrency: value,
     }))
   }
 
   handleSetHaveValue = ({ value }) => {
-    let { getCurrency, haveCurrency } = this.state
-
-    if (getCurrency === value) {
-      getCurrency = haveCurrency
-    }
-
-    this.setClearState()
-
+    this.checkPair(value)
     this.setState(() => ({
-      getCurrency,
       haveCurrency: value,
     }))
   }
 
   handleFlipCurrency = () => {
     this.setClearState()
+    this.checkPair(this.state.getCurrency)
     this.setState(() => ({
       haveCurrency: this.state.getCurrency,
       getCurrency: this.state.haveCurrency,
@@ -412,8 +403,21 @@ export default class PartialClosure extends Component {
     return config.erc20[getCurrency] !== undefined
   }
 
+  checkPair = (value) => {
+    const selected = actions.pairs.selectPair(value)
+
+    const check = selected.map(item => item.value).includes(this.state.getCurrency)
+
+    if (!check) {
+      this.setState(() => ({
+        getCurrency: selected[0].value,
+      }))
+    }
+  }
+
+
   render() {
-    const { currencies, intl: { locale } } = this.props
+    const { currencies, addSelectedItems, intl: { locale } } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching,
       isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet, getUsd, haveUsd,
       maxBuyAmount, getAmount,
@@ -470,7 +474,7 @@ export default class PartialClosure extends Component {
               id="partialClosure472"
               tooltip={<FormattedMessage id="partial478" defaultMessage="The amount you receive after the swap" />}
               disabled
-              currencies={currencies}
+              currencies={addSelectedItems}
               usd={getUsd}
             />
             {

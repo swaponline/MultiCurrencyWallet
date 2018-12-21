@@ -86,7 +86,7 @@ export default class Home extends Component {
     }
 
     this.checkPair(value, buyCurrency)
-
+    actions.pairs.selectPair(sellCurrency)
     this.setState({
       buyCurrency,
       sellCurrency: value,

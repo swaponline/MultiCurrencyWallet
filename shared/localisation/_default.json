@@ -832,10 +832,6 @@
     ]
   },
   {
-    "id": "orders174",
-    "message": "SELL"
-  },
-  {
     "id": "Row148",
     "message": "REQUESTING",
     "files": [
@@ -3390,7 +3386,10 @@
   },
   {
     "id": "orders138",
-    "message": "no limit exchange with 0 fee"
+    "message": " no limit exchange with 0 fee",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
   },
   {
     "id": "orders1499",
@@ -3603,13 +3602,6 @@
   {
     "id": "transaction376",
     "message": "Amount must be less than your balance",
-    "files": [
-      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
-    ]
-  },
-  {
-    "id": "transaction398",
-    "message": "ETH on your balance",
     "files": [
       "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
     ]
@@ -4467,6 +4459,28 @@
     "message": "SELL {buyCurrency} HERE",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "transaction433",
+    "message": "For a swap, you need"
+  },
+  {
+    "id": "transaction435",
+    "message": "ETH on your balance"
+  },
+  {
+    "id": "transaction436",
+    "message": "For a swap, you need {minAmount} ETH on your balance",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "currencyIcon15",
+    "message": "Error",
+    "files": [
+      "shared/components/ui/CurrencyIcon/CurrencyIcon.js"
     ]
   },
   {

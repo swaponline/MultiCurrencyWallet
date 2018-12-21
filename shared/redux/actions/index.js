@@ -20,7 +20,7 @@ import tlos from './tlos'
 import token from './token'
 import nimiq from './nimiq'
 import api from './api'
-
+import pairs from './pairs'
 import referral from './referral'
 import analytics from './analytics'
 
@@ -61,4 +61,5 @@ export default {
   referral,
   ipfs,
   api,
+  pairs,
 }

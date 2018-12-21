@@ -3587,10 +3587,7 @@
   },
   {
     "id": "transaction398",
-    "message": "ETH на вашем балансе",
-    "files": [
-      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
-    ]
+    "message": "ETH на вашем балансе"
   },
   {
     "id": "Select210",
@@ -4416,6 +4413,20 @@
     "message": "ПРОДАТЬ {buyCurrency}",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "transaction436",
+    "message": "Для обмена, вам нужно {minAmount} ETH на вашем балансе",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "currencyIcon15",
+    "message": "Ошибка",
+    "files": [
+      "shared/components/ui/CurrencyIcon/CurrencyIcon.js"
     ]
   },
   {
