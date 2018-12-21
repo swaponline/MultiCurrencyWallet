@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import config from 'app-config'
-import { links } from 'helpers'
-import { Link } from 'react-router-dom'
+import { links, constants } from 'helpers'
+import { Link, withRouter } from 'react-router-dom'
 import CopyToClipboard from 'react-copy-to-clipboard'
 
 import styles from './RowFeeds.scss'
@@ -12,9 +12,10 @@ import ShareImg from './images/share-alt-solid.svg'
 
 import Coins from 'components/Coins/Coins'
 import { FormattedMessage, injectIntl } from 'react-intl'
-import { localisedUrl } from 'helpers/locale'
+import { localisedUrl, locale } from 'helpers/locale'
 
 
+@withRouter
 @injectIntl
 @CSSModules(styles, { allowMultiple: true })
 export default class RowFeeds extends Component {
@@ -25,21 +26,9 @@ export default class RowFeeds extends Component {
 
   state = {
     isLinkCopied: false,
-    copyText: '',
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps !== this.props) {
-      this.setState()
-    }
-  }
-
-  componentDidMount() {
-    this.checkCopyText(this.state.copyText)
   }
 
   handleCopyLink = () => {
-    this.checkCopyText(this.state.copyText)
 
     this.setState({
       isLinkCopied: true,
@@ -53,29 +42,25 @@ export default class RowFeeds extends Component {
   }
 
   checkCopyText = () => {
-    const { row: { buyCurrency, sellCurrency, id } } = this.props
-    const { copyText } = this.state
-    if (buyCurrency.toLowerCase() === 'btc') {
-      this.setState({ copyText: `${config.base}'btc'-${sellCurrency.toLowerCase()}/${id}` })
+    const { intl: { locale }, row: { buyCurrency, sellCurrency, id } } = this.props
+
+    const tradeTicker = `${buyCurrency}-${sellCurrency}`.toLowerCase()
+    const trueUrl = tradeTicker.split('-').reverse().join('-')
+
+    if (constants.tradeTicker.includes(tradeTicker.toUpperCase())) {
+      return `${config.base}${tradeTicker}/${id}`
     } else {
-      if (buyCurrency.toLowerCase() === 'usdt' && sellCurrency.toLowerCase() === 'btc'
-        || buyCurrency.toLowerCase() === 'btc' && sellCurrency.toLowerCase() === 'usdt') {
-        this.setState({ copyText:  `${config.base}'btc'-'usdt'/${id}` })
-      } else {
-        this.setState({ copyText: `${config.base}${buyCurrency.toLowerCase()}-${sellCurrency.toLowerCase()}/${id}` })
-      }
-    }
-  }
+      return `${config.base}${trueUrl}/${id}`
+    } }
 
   render() {
     const { isLinkCopied, copyText } = this.state
     const {
       row: { requests, buyAmount, buyCurrency, sellAmount, sellCurrency, exchangeRate, id },
-      declineRequest,
-      acceptRequest,
-      removeOrder,
-      intl: { locale },
+      declineRequest, acceptRequest, removeOrder, intl: { locale },
     } = this.props
+
+    const text = this.checkCopyText()
 
     return (
       <tr>
@@ -87,7 +72,7 @@ export default class RowFeeds extends Component {
         <td>{`${(exchangeRate || (buyAmount / sellAmount)).toFixed(5)} ${buyCurrency}/${sellCurrency}`}</td>
         <CopyToClipboard
           onCopy={this.handleCopyLink}
-          text={copyText}
+          text={text}
         >
           <td style={{ position: 'relative', cursor: 'pointer' }}>
             { isLinkCopied &&
