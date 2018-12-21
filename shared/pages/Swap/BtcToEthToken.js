@@ -45,6 +45,10 @@ export default class BtcToEthToken extends Component {
     })
   }
 
+  tryRefund = () => {
+    this.swap.flow.tryRefund()
+  }
+
   submitSecret = () => {
     const { secret } = this.state
 

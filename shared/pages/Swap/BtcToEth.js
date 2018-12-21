@@ -40,6 +40,10 @@ export default class BtcToEth extends Component {
     this.swap.off('state update', this.handleFlowStateUpdate)
   }
 
+  tryRefund = () => {
+    this.swap.flow.tryRefund()
+  }
+
   handleFlowStateUpdate = (values) => {
 
     const stepNumbers = {

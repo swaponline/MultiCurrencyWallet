@@ -37,6 +37,10 @@ export default class BtcToEos extends Component {
     })
   }
 
+  tryRefund = () => {
+    this.swap.flow.tryRefund()
+  }
+
   submitSecret = () => {
     const fromHexString = hexString =>
       new Uint8Array(hexString.match(/.{1,2}/g).map(byte => parseInt(byte, 16)))

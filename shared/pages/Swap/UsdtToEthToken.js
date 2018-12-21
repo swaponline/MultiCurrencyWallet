@@ -50,6 +50,10 @@ export default class UsdtToEthToken extends Component {
     this.swap.flow.syncBalance()
   }
 
+  tryRefund = () => {
+    this.swap.flow.tryRefund()
+  }
+
   addGasPrice = () => {
     const gwei =  new BigNumber(String(this.swap.flow.ethTokenSwap.gasPrice)).plus(new BigNumber(1e9))
     this.swap.flow.ethTokenSwap.addGasPrice(gwei)
