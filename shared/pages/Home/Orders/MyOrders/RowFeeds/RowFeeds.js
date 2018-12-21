@@ -52,25 +52,31 @@ export default class RowFeeds extends Component {
     })
   }
 
-checkCopyText = () => {
-  const { row: { buyCurrency, sellCurrency, id } } = this.props
-  const { copyText } = this.state
-  if (buyCurrency.toLowerCase() === 'btc') {
-    this.setState({ copyText: `${config.base}'btc'-${sellCurrency.toLowerCase()}/${id}` })
-  } else {
-    if (buyCurrency.toLowerCase() === 'usdt' && sellCurrency.toLowerCase() === 'btc'
-      || buyCurrency.toLowerCase() === 'btc' && sellCurrency.toLowerCase() === 'usdt') {
-      this.setState({ copyText:  `${config.base}'btc'-'usdt'/${id}` })
+  checkCopyText = () => {
+    const { row: { buyCurrency, sellCurrency, id } } = this.props
+    const { copyText } = this.state
+    if (buyCurrency.toLowerCase() === 'btc') {
+      this.setState({ copyText: `${config.base}'btc'-${sellCurrency.toLowerCase()}/${id}` })
     } else {
-      this.setState({ copyText: `${config.base}${buyCurrency.toLowerCase()}-${sellCurrency.toLowerCase()}/${id}` })
+      if (buyCurrency.toLowerCase() === 'usdt' && sellCurrency.toLowerCase() === 'btc'
+        || buyCurrency.toLowerCase() === 'btc' && sellCurrency.toLowerCase() === 'usdt') {
+        this.setState({ copyText:  `${config.base}'btc'-'usdt'/${id}` })
+      } else {
+        this.setState({ copyText: `${config.base}${buyCurrency.toLowerCase()}-${sellCurrency.toLowerCase()}/${id}` })
+      }
     }
   }
-}
 
   render() {
-    const { isLinkCopied, copyText} = this.state
-    const { row: { requests, buyAmount, buyCurrency, sellAmount, sellCurrency, exchangeRate, id }, declineRequest, acceptRequest, removeOrder, intl: { locale } } = this.props
-console.log('copyText', copyText)
+    const { isLinkCopied, copyText } = this.state
+    const {
+      row: { requests, buyAmount, buyCurrency, sellAmount, sellCurrency, exchangeRate, id },
+      declineRequest,
+      acceptRequest,
+      removeOrder,
+      intl: { locale },
+    } = this.props
+
     return (
       <tr>
         <td>
