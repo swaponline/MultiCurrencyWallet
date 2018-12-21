@@ -25,6 +25,7 @@ export default class RowFeeds extends Component {
 
   state = {
     isLinkCopied: false,
+    copyText: '',
   }
 
   componentWillReceiveProps(nextProps) {
@@ -33,7 +34,13 @@ export default class RowFeeds extends Component {
     }
   }
 
+  componentDidMount() {
+    this.checkCopyText(this.state.copyText)
+  }
+
   handleCopyLink = () => {
+    this.checkCopyText(this.state.copyText)
+
     this.setState({
       isLinkCopied: true,
     }, () => {
@@ -45,10 +52,25 @@ export default class RowFeeds extends Component {
     })
   }
 
-  render() {
-    const { isLinkCopied } = this.state
-    const { row: { requests, buyAmount, buyCurrency, sellAmount, sellCurrency, exchangeRate, id }, declineRequest, acceptRequest, removeOrder, intl: { locale } } = this.props
+checkCopyText = () => {
+  const { row: { buyCurrency, sellCurrency, id } } = this.props
+  const { copyText } = this.state
+  if (buyCurrency.toLowerCase() === 'btc') {
+    this.setState({ copyText: `${config.base}'btc'-${sellCurrency.toLowerCase()}/${id}` })
+  } else {
+    if (buyCurrency.toLowerCase() === 'usdt' && sellCurrency.toLowerCase() === 'btc'
+      || buyCurrency.toLowerCase() === 'btc' && sellCurrency.toLowerCase() === 'usdt') {
+      this.setState({ copyText:  `${config.base}'btc'-'usdt'/${id}` })
+    } else {
+      this.setState({ copyText: `${config.base}${buyCurrency.toLowerCase()}-${sellCurrency.toLowerCase()}/${id}` })
+    }
+  }
+}
 
+  render() {
+    const { isLinkCopied, copyText} = this.state
+    const { row: { requests, buyAmount, buyCurrency, sellAmount, sellCurrency, exchangeRate, id }, declineRequest, acceptRequest, removeOrder, intl: { locale } } = this.props
+console.log('copyText', copyText)
     return (
       <tr>
         <td>
@@ -59,7 +81,7 @@ export default class RowFeeds extends Component {
         <td>{`${(exchangeRate || (buyAmount / sellAmount)).toFixed(5)} ${buyCurrency}/${sellCurrency}`}</td>
         <CopyToClipboard
           onCopy={this.handleCopyLink}
-          text={`${config.base}${buyCurrency.toLowerCase()}-${sellCurrency.toLowerCase()}/${id}`}
+          text={copyText}
         >
           <td style={{ position: 'relative', cursor: 'pointer' }}>
             { isLinkCopied &&
