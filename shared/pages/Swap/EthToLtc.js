@@ -74,6 +74,7 @@ export default class EthToLtc extends Component {
 
   tryRefund = () => {
     this.swap.flow.tryRefund()
+    this.setState(() => ({ enabledButton: false }))
   }
 
   toggleLitecoinScript = () => {
