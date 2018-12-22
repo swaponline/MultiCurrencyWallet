@@ -74,7 +74,7 @@ export default class AddOffer extends Component {
     actions.pairs.selectPair(sellCurrency)
 
     this.checkBalance(sellCurrency)
-    this.updateExchangeRate(sellCurrency)
+    this.updateExchangeRate(sellCurrency, buyCurrency)
   }
 
   checkBalance = async (sellCurrency) => {
