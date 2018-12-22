@@ -4313,10 +4313,7 @@
   },
   {
     "id": "timer67",
-    "message": " минут(ы) до возврата средств",
-    "files": [
-      "shared/pages/Swap/Timer/Timer.js"
-    ]
+    "message": " минут(ы) до возврата средств"
   },
   {
     "id": "timer68",
@@ -4884,6 +4881,20 @@
     "message": "Вам нужно иметь {minAmount} ETH на вашем балансе",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "RowHistory77",
+    "message": "Refunded",
+    "files": [
+      "shared/pages/History/SwapsHistory/RowHistory/RowHistory.js"
+    ]
+  },
+  {
+    "id": "timer671",
+    "message": "{min} минут до возврата",
+    "files": [
+      "shared/pages/Swap/Timer/Timer.js"
     ]
   }
 ]
