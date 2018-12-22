@@ -124,7 +124,6 @@ export default class AddOffer extends Component {
     }
     this.setState({
       buyCurrency: value,
-      sellCurrency,
       sellAmount: Number.isNaN(sellAmount) ? '' : sellAmount,
       buyAmount: Number.isNaN(buyAmount) ? '' : buyAmount,
       isSellFieldInteger: config.erc20[sellCurrency] && config.erc20[sellCurrency].decimals === 0,
@@ -134,10 +133,6 @@ export default class AddOffer extends Component {
 
   handleSellCurrencySelect = async ({ value }) => {
     let { buyCurrency, sellCurrency, sellAmount, buyAmount } = this.state
-
-    if (value === buyCurrency) {
-      buyCurrency = sellCurrency
-    }
 
     this.checkPair(value)
 
@@ -154,7 +149,6 @@ export default class AddOffer extends Component {
     }
 
     this.setState({
-      buyCurrency,
       sellCurrency: value,
       buyAmount: Number.isNaN(buyAmount) ? '' : buyAmount,
       sellAmount: Number.isNaN(sellAmount) ? '' : sellAmount,
