@@ -2585,10 +2585,7 @@
   },
   {
     "id": "transaction27",
-    "message": "For a swap, you need",
-    "files": [
-      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
-    ]
+    "message": "For a swap, you need"
   },
   {
     "id": "PrivateKeysModal106",
@@ -3372,10 +3369,7 @@
   },
   {
     "id": "orders138",
-    "message": " no limit exchange with 0 fee",
-    "files": [
-      "shared/pages/Home/Orders/Orders.js"
-    ]
+    "message": " no limit exchange with 0 fee"
   },
   {
     "id": "orders1499",
@@ -4409,10 +4403,7 @@
   },
   {
     "id": "orders183",
-    "message": "SELL {buyCurrency} HERE",
-    "files": [
-      "shared/pages/Home/Orders/Orders.js"
-    ]
+    "message": "SELL {buyCurrency} HERE"
   },
   {
     "id": "transaction433",
@@ -4477,6 +4468,55 @@
     "message": "{min} minute left for refund",
     "files": [
       "shared/pages/Swap/Timer/Timer.js"
+    ]
+  },
+  {
+    "id": "CurrencyWallet148",
+    "message": "Swap.Online - ${fullName} (${currency}) Web Wallet with Atomic Swap.",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "CurrencyWallet154",
+    "message": "Atomic Swap Wallet allows you to manage and securely exchange ${fullName} (${currency}) with 0% fees. Based on Multi-Sig and Atomic Swap technologies.",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "Orders121",
+    "message": "Atomic Swap {buyCurrencyFullName} ({buyCurrency}) to {sellCurrencyFullName} ({sellCurrency}) Instant Exchange",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "Orders127",
+    "message": "Best exchange rate for {buyCurrencyFullName} ({buyCurrency}) to {sellCurrencyFullName} ({sellCurrency}). Swap.Online wallet provides instant exchange using Atomic Swap Protocol.",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "orders182",
+    "message": "SELL {buyCurrency} HERE",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "Wallet140",
+    "message": "Swap.Online - Cryptocurrency Wallet with Atomic Swap Exchange",
+    "files": [
+      "shared/pages/Wallet/Wallet.js"
+    ]
+  },
+  {
+    "id": "Wallet146",
+    "message": "Our online wallet with Atomic swap algorithms will help you store and exchange cryptocurrency instantly and more secure without third-parties. Decentralized exchange.",
+    "files": [
+      "shared/pages/Wallet/Wallet.js"
     ]
   }
 ]
