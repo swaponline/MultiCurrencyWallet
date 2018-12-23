@@ -74,7 +74,7 @@ export default class AddOffer extends Component {
     actions.pairs.selectPair(sellCurrency)
 
     this.checkBalance(sellCurrency)
-    this.updateExchangeRate(sellCurrency)
+    this.updateExchangeRate(sellCurrency, buyCurrency)
   }
 
   checkBalance = async (sellCurrency) => {
@@ -136,9 +136,9 @@ export default class AddOffer extends Component {
 
     this.checkPair(value)
 
-    await this.checkBalance(sellCurrency)
+    await this.checkBalance(value)
 
-    await this.updateExchangeRate(sellCurrency, buyCurrency)
+    await this.updateExchangeRate(value, buyCurrency)
     const { exchangeRate } = this.state
     buyAmount = new BigNumber(String(sellAmount) || 0).multipliedBy(exchangeRate)
 
