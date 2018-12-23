@@ -19,7 +19,7 @@ import PageSeo from 'components/Seo/PageSeo'
 import Pair from './Pair'
 import Row from './Row/Row'
 import MyOrders from './MyOrders/MyOrders'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 
 
 const filterMyOrders = (orders, peer) => orders
@@ -42,6 +42,7 @@ const filterOrders = (orders, filter) => orders
   currencies,
 }))
 @withRouter
+@injectIntl
 @cssModules(styles, { allowMultiple: true })
 export default class Orders extends Component {
 
@@ -95,7 +96,7 @@ export default class Orders extends Component {
 
   render() {
     const { sellOrders, buyOrders, isVisible } = this.state
-    let { sellCurrency, buyCurrency } = this.props
+    let { sellCurrency, buyCurrency, intl } = this.props
     buyCurrency = buyCurrency.toUpperCase()
     sellCurrency = sellCurrency.toUpperCase()
 
@@ -120,16 +121,13 @@ export default class Orders extends Component {
       <Fragment>
         <PageSeo
           location={location}
-          defaultTitle={
-            `Atomic Swap ${buyCurrencyFullName} (${buyCurrency}) to ${sellCurrencyFullName} (${sellCurrency}) Instant Exchange`}
-          defaultDescription={`Best exchange rate for ${buyCurrencyFullName} (${buyCurrency}) to ${sellCurrencyFullName} (${sellCurrency}).
-               Swap.Online wallet provides instant exchange using Atomic Swap Protocol.`
-          } />
+          defaultTitle={intl.formatMessage({ id: 'OrdersMetaTitle' }, { buyCurrency, sellCurrency, buyCurrencyFullName, sellCurrencyFullName })}
+          defaultDescription={intl.formatMessage({ id: 'OrdersMetaDescription' }, { buyCurrency, sellCurrency, buyCurrencyFullName, sellCurrencyFullName })} />
         <Title>
           <FormattedMessage
             id="orders1381"
             defaultMessage="{pair} no limit exchange with 0 fee"
-            values={{ pair: `${buyCurrency}/${sellCurrency}` }}
+            values={{ pair: `${buyCurrency}/${sellCurrency}`, buyCurrency, sellCurrency, buyCurrencyFullName, sellCurrencyFullName }}
           />
         </Title>
         { invalidPair &&

@@ -2506,7 +2506,7 @@
   },
   {
     "id": "Wallet104",
-    "message": "Ваш онлайн криптовалютный кошелек",
+    "message": "Криптовалютный Кошелек. Децентрализированный Онлайн Обменник.",
     "files": [
       "shared/pages/Wallet/Wallet.js"
     ]
@@ -4400,7 +4400,7 @@
   },
   {
     "id": "orders1381",
-    "message": "{pair} обмен на любую сумму с 0 комиссией",
+    "message": "Атомарный Своп {buyCurrencyFullName} ({buyCurrency}) на {sellCurrencyFullName} ({sellCurrency}) – Моментальный Обмен",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]
@@ -4480,6 +4480,34 @@
     "message": "Ваш онлайн кошелек для {fullName} ({currency}) с функцией Атомарного Свопа и комиссией 0%",
     "files": [
       "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "WalletMetaTitle",
+    "message": "Криптовалютный Кошелек с Возможностью Беспроцентного Обмена",
+    "files": [
+      "shared/pages/Wallet/Wallet.js"
+    ]
+  },
+  {
+    "id": "WalletMetaDescription",
+    "message": "Swap.Online - мультивалютный онлайн кошелек на базе технологии Атомарного Свопа с возможностью хранить и обменивать криптовалюту по лучшему курсу",
+    "files": [
+      "shared/pages/Wallet/Wallet.js"
+    ]
+  },
+  {
+    "id": "OrdersMetaTitle",
+    "message": "Обмен {buyCurrencyFullName} ({buyCurrency}) на {sellCurrencyFullName} ({sellCurrency}) Атомарный Обмен",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "OrdersMetaDescription",
+    "message": "Децентрализированный обменник Swap.Online предлагает вам лучший курс обмена {buyCurrencyFullName} ({buyCurrency}) на {sellCurrencyFullName} ({sellCurrency}). Онлайн кошелек без регистрации.",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
     ]
   }
 ]

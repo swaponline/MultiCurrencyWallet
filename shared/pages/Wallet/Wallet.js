@@ -15,12 +15,12 @@ import Table from 'components/tables/Table/Table'
 import { WithdrawButton } from 'components/controls'
 import styles from 'components/tables/Table/Table.scss'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
+import PageSeo from 'components/Seo/PageSeo'
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import KeyActionsPanel from 'components/KeyActionsPanel/KeyActionsPanel'
 import SaveKeysModal from 'components/modals/SaveKeysModal/SaveKeysModal'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 
-@withRouter
 @connect(
   ({
     core: { hiddenCoinsList },
@@ -38,6 +38,8 @@ import { FormattedMessage } from 'react-intl'
     hiddenCoinsList,
   })
 )
+@injectIntl
+@withRouter
 @CSSModules(stylesWallet, { allowMultiple: true })
 export default class Wallet extends Component {
 
@@ -50,6 +52,7 @@ export default class Wallet extends Component {
     items: propTypes.arrayOf(propTypes.string),
     tokens: propTypes.arrayOf(propTypes.string),
     location: propTypes.object,
+    intl: propTypes.object.isRequired,
     match: propTypes.object,
   }
 
@@ -121,7 +124,7 @@ export default class Wallet extends Component {
   }
 
   render() {
-    const { items, tokens, currencies, hiddenCoinsList } = this.props
+    const { items, tokens, currencies, hiddenCoinsList, intl, location } = this.props
     const titles = [
       <FormattedMessage id="Wallet114" defaultMessage="Coin" />,
       <FormattedMessage id="Wallet115" defaultMessage="Name" />,
@@ -135,6 +138,10 @@ export default class Wallet extends Component {
 
     return (
       <section styleName={isMobile ? 'sectionWalletMobile' : 'sectionWallet'}>
+        <PageSeo
+          location={location}
+          defaultTitle={intl.formatMessage({ id: 'WalletMetaTitle' })}
+          defaultDescription={intl.formatMessage({ id: 'WalletMetaDescription' })} />
         <PageHeadline styleName="pageLine">
           <SubTitle>
             <FormattedMessage id="Wallet104" defaultMessage="Your online cryptocurrency wallet" />
