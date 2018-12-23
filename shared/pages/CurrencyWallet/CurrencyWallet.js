@@ -124,7 +124,7 @@ export default class CurrencyWallet extends Component {
 
   render() {
 
-    let { swapHistory, txHistory, location, match:{ params: { fullName } },  intl: { locale } } = this.props
+    let { swapHistory, txHistory, location, match:{ params: { fullName } },  intl } = this.props
     const {
       currency,
       address,
@@ -148,11 +148,8 @@ export default class CurrencyWallet extends Component {
       <div className="root">
         <PageSeo
           location={location}
-          defaultTitle={
-            `Swap.Online - ${fullName} (${currency}) Web Wallet with Atomic Swap.`}
-          defaultDescription={
-            `Atomic Swap Wallet allows you to manage and securely exchange ${fullName} (${currency}) with 0% fees. Based on Multi-Sig and Atomic Swap technologies.`
-          } />
+          defaultTitle={intl.formatMessage({ id: 'CurrencyWalletMetaTitle' }, { fullName, currency  })}
+          defaultDescription={intl.formatMessage({ id: 'CurrencyWalletMetaDescription' }, { fullName, currency  })} />
         <PageHeadline
           styleName="title"
           subTitle={!!seoPage

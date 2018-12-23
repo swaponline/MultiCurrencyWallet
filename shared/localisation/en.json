@@ -4478,5 +4478,19 @@
     "files": [
       "shared/pages/Swap/Timer/Timer.js"
     ]
+  },
+  {
+    "id": "CurrencyWalletMetaTitle",
+    "message": "Swap.Online - ${fullName} (${currency}) Web Wallet with Atomic Swap.",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "CurrencyWalletMetaDescription",
+    "message": "Atomic Swap Wallet allows you to manage and securely exchange ${fullName} (${currency}) with 0% fees. Based on Multi-Sig and Atomic Swap technologies.",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
   }
 ]

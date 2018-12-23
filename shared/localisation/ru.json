@@ -4216,7 +4216,7 @@
   },
   {
     "id": "CurrencyWallet141",
-    "message": "Swap.Online - {fullName}({currency}) онлайн кошелек, работащюий на технологии Atomic Swap.",
+    "message": "Ваш онлайн кошелек для {fullName} ({currency}) с функцией Атомарного Свопа и комиссией 0%",
     "files": [
       "shared/pages/CurrencyWallet/CurrencyWallet.js"
     ]
@@ -4459,6 +4459,27 @@
     "message": "{min} минут до возврата",
     "files": [
       "shared/pages/Swap/Timer/Timer.js"
+    ]
+  },
+  {
+    "id": "CurrencyWalletMetaTitle",
+    "message": "Онлайн кошелек {fullName} ({currency}) с функцией Атомарного Свопа (Atomic Swap)",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "CurrencyWalletMetaDescription",
+    "message": "Swap.Online - это децентрализированный онлайн веб кошелек для криптовалюты {fullName} ({currency}) без регистрации. Легкий обмен криптовалют внутри кошелька",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "CurrencyWalletH1",
+    "message": "Ваш онлайн кошелек для {fullName} ({currency}) с функцией Атомарного Свопа и комиссией 0%",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
     ]
   }
 ]
