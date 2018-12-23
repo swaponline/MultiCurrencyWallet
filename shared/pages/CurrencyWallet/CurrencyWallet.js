@@ -17,7 +17,7 @@ import { Button } from 'components/controls'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import PageSeo from 'components/Seo/PageSeo'
 import { getSeoPage } from 'helpers/seo'
-import { FormattedMessage, injectIntl } from 'react-intl'
+import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import ReactTooltip from 'react-tooltip'
 import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
 import { localisedUrl } from 'helpers/locale'
@@ -124,7 +124,7 @@ export default class CurrencyWallet extends Component {
 
   render() {
 
-    let { swapHistory, txHistory, location, match:{ params: { fullName } },  intl: { locale } } = this.props
+    let { swapHistory, txHistory, location, match:{ params: { fullName } },  intl } = this.props
     const {
       currency,
       address,
@@ -143,16 +143,25 @@ export default class CurrencyWallet extends Component {
 
     const seoPage = getSeoPage(location.pathname)
     const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true"
+    const title = defineMessages({
+      metaTitle: {
+        id: 'CurrencyWallet148',
+        defaultMessage: 'Swap.Online - ${fullName} (${currency}) Web Wallet with Atomic Swap.',
+      },
+    })
+    const description = defineMessages({
+      metaDescription: {
+        id: 'CurrencyWallet154',
+        defaultMessage: 'Atomic Swap Wallet allows you to manage and securely exchange ${fullName} (${currency}) with 0% fees. Based on Multi-Sig and Atomic Swap technologies.',
+      },
+    })
 
     return (
       <div className="root">
         <PageSeo
           location={location}
-          defaultTitle={
-            `Swap.Online - ${fullName} (${currency}) Web Wallet with Atomic Swap.`}
-          defaultDescription={
-            `Atomic Swap Wallet allows you to manage and securely exchange ${fullName} (${currency}) with 0% fees. Based on Multi-Sig and Atomic Swap technologies.`
-          } />
+          defaultTitle={intl.formatMessage(title.metaTitle, { fullName, currency  })}
+          defaultDescription={intl.formatMessage(description.metaDescription, { fullName, currency  })} />
         <PageHeadline
           styleName="title"
           subTitle={!!seoPage
