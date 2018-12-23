@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+  <title><%= htmlWebpackPlugin.options.title %></title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+  <link rel="stylesheet" href="./assets/css/swap.css?v=1.0.1245">
+  <meta property="og:url" content="https://swap.online">
+  <meta property="og:image" content="https://wiki.swap.online/assets/swap-logo.png">
+
+  <style>
+  	._1rGs3i._3e2bwy {
+    	display:none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="starter-modal d-none" id="starter-modal">
+  	<div class="container">
+  		<div class="starter-modal-container d-flex flex-column h-100 justify-content-around">
+  			<img src="assets/images/swap-logo.svg" alt="" class="starter-modal-logo">
+  			<h2>Online cryptocurrency wallet with peer-to-peer exchange</h2>
+  			<div class="row starter-modal-row order-3 order-md-2">
+  				<div class="col-md-4">
+  					<div class="number-one-item">
+  						<span class="number-one-icon">
+  							<img src="assets/images/number-one-icon-1.svg?v=2" alt="">
+  						</span>
+  						<span class="number-one-title">Multiple blockchains - multiple opportunities for profit</span>
+  					</div>
+  				</div>
+  				<div class="col-md-4">
+  					<div class="number-one-item">
+  						<span class="number-one-icon">
+  							<img src="assets/images/number-one-icon-2.svg?v=2" alt="">
+  						</span>
+  						<span class="number-one-title">Instant exchange:<br> no confirmation required</span>
+  					</div>
+  				</div>
+  				<div class="col-md-4">
+  					<div class="number-one-item">
+  						<span class="number-one-icon">
+  							<img src="assets/images/number-one-icon-3.svg?v=2" alt="">
+  						</span>
+  						<span class="number-one-title">No middlemen, direct<br> wallet-to-wallet exchange</span>
+  					</div>
+  				</div>
+  			</div>
+  			<div class="text-center mb-5 mt-4 mt-md-0 order-2 order-md-3">
+  				<a href="#" class="btn btn-swap btn-lg" id="swap-create-wallet">Create new wallet</a>
+  			</div>
+  		</div>
+  	</div>
+  	<a href="#" class="btn btn-link" id="swap-has-wallet">I already have a wallet on swap online</a>
+  	<i class="fas fa-spinner fa-pulse"></i>
+  </div>
+
+  <div class="alert swap-alert d-none position-relative" id="swap-alert">
+  	<div class="container text-center">Add Swap.Online extension to your Chrome browser for better security<br class="d-lg-none"> and to unlock premium features
+  		<a class="btn btn-light" target="_blank" href="https://chrome.google.com/webstore/detail/swaponline/oldojieloelkkfeacfinhcngmbkepnlm">Add to chrome</a>
+  	</div>
+  	<button type="button" class="close position-absolute" id="swap-alert-close">
+  		<span aria-hidden="true">×</span>
+  	</button>
+  </div>
+
+  <div id="root"></div>
+  <div id="portal"></div>
+
+  <script src="./assets/js/swap.js?ver=1.0.1297"></script>
+
+</body>
+</html>

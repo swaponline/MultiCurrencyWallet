@@ -1,3 +1,4 @@
+**/mainnet-assets/**/*.js
 **/__tests__/**/*.js
 **/*.spec.js
 **/*-sw.js

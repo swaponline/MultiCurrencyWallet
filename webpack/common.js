@@ -3,6 +3,7 @@ import ProgressBarPlugin from 'progress-bar-webpack-plugin'
 import WebappWebpackPlugin from 'webapp-webpack-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import AppConfigPlugin from 'app-config/webpack'
+import CopyWebpackPlugin from 'copy-webpack-plugin'
 import config from 'app-config'
 import rulesMap from './rules'
 
@@ -78,11 +79,11 @@ const webpackConfig = {
     new ProgressBarPlugin({ clear: false }),
     new WebappWebpackPlugin({
       logo: 'favicon.png',
-      path: config.base,
+      path: './',
     }),
     new HtmlWebpackPlugin({
       title: 'Swap.Online - Cryptocurrency Wallet with Atomic Swap Exchange',
-      template: config.paths.client('index.html'),
+      template: config.paths.client(config.entry.concat('.html')),
       hash: false,
       filename: 'index.html',
       inject: 'body',
@@ -93,6 +94,14 @@ const webpackConfig = {
       false,
       /js$/
     ),
+    config.entry === 'mainnet'
+      ? new CopyWebpackPlugin([
+        {
+          from: config.paths.base('client/mainnet-assets'),
+          to: './assets',
+        },
+      ])
+      : () => {},
   ],
 }
 
