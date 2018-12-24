@@ -16,6 +16,7 @@ import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
 import QR from 'components/QR/QR'
 import swapApp from 'swap.app'
+import SwapProgress from 'components/SwapProgress/SwapProgress'
 import Timer from './Timer/Timer'
 import { FormattedMessage } from 'react-intl'
 
@@ -109,9 +110,6 @@ export default class BtcToEthToken extends Component {
     })
   }
 
-  highlightText = (e) => {
-    //alert('2')
-  }
   handlerBuyWithCreditCard = (e) => {
     e.preventDefault()
   }
@@ -130,6 +128,7 @@ export default class BtcToEthToken extends Component {
             <strong>{this.swap.sellAmount.toNumber()} {this.swap.sellCurrency} &#10230; {this.swap.buyAmount.toNumber()} {this.swap.buyCurrency}</strong>
           )
         }
+        <SwapProgress data={flow} name="BTC2ETH" stepLength={8} />
         {
           flow.isWaitingForOwner && (
             <Fragment>
@@ -298,10 +297,10 @@ export default class BtcToEthToken extends Component {
                           <div>
                             <p className={this.props.styles.qr}>
                               <span
-                              href={`${config.link.bitpay}/address/${flow.scriptAddress}`}
-                              className={this.props.styles.linkAddress}
-                              onDoubleClick={this.onCopy}
-                              onClick={this.onCopyAddress}>{flow.scriptAddress}
+                                href={`${config.link.bitpay}/address/${flow.scriptAddress}`}
+                                className={this.props.styles.linkAddress}
+                                onDoubleClick={this.onCopy}
+                                onClick={this.onCopyAddress}>{flow.scriptAddress}
                               </span>
                               <Button
                                 styleName="button"
