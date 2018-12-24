@@ -108,6 +108,7 @@ export default class BtcToEthToken extends Component {
       isPressCtrl: true,
     })
   }
+
   highlightText = (e) => {
     //alert('2')
   }
@@ -120,7 +121,6 @@ export default class BtcToEthToken extends Component {
 
     const { currencyAddress, secret, flow, enabledButton, destinationAddressTimer, isAddressCopied } = this.state
     const linked = Link.all(this, 'destinationBuyAddress')
-
     linked.destinationBuyAddress.check((value) => value !== '', 'Please enter ETH address for tokens')
 
     return (
@@ -277,7 +277,7 @@ export default class BtcToEthToken extends Component {
                     </FormattedMessage>
                     {
                       flow.scriptAddress &&
-                      <a onClick={this.highlightText}
+                      <a
                         className={this.props.styles.topUpLink}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -341,9 +341,11 @@ export default class BtcToEthToken extends Component {
                             <FormattedMessage id="BtcToEthToken336" defaultMessage="You have ">
                               {message => <span>{message}</span>}
                             </FormattedMessage>
-                            <Timer
-                              lockTime={flow.btcScriptValues.lockTime * 1000}
-                            />
+                            <span>
+                              <Timer
+                                lockTime={flow.btcScriptValues.lockTime * 1000}
+                              />
+                            </span>
                             <FormattedMessage id="BtcToEthToken342" defaultMessage="min for make payment">
                               {message => <span>{message}</span>}
                             </FormattedMessage>
