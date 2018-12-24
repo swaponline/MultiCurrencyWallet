@@ -5,9 +5,6 @@ import config from 'app-config'
 import { BigNumber } from 'bignumber.js'
 import actions from 'redux/actions'
 
-import visaImg from './images/cc-visa-brands.svg'
-import masterImg from './images/nodemon.svg'
-
 import CopyToClipboard from 'react-copy-to-clipboard'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import TimerButton from 'components/controls/TimerButton/TimerButton'
