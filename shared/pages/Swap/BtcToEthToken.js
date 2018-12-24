@@ -353,29 +353,6 @@ export default class BtcToEthToken extends Component {
                         <FormattedMessage id="BtcToEthToken171" defaultMessage="Check payment ">
                           {message =>  <Button brand onClick={this.updateBalance}>{message}</Button>}
                         </FormattedMessage>
-
-                        <span className={this.props.styles.swapText}>
-                          <FormattedMessage id="BtcToEthToken175" defaultMessage="or">
-                            {message => <span>{message}</span>}
-                          </FormattedMessage>
-                        </span>
-                        <p className={this.props.styles.cardsContainer}>
-                          <img src={visaImg} alt="" />
-                          <img src={masterImg} alt="" />
-                        </p>
-                        <a
-                          onClick={this.handlerBuyWithCreditCard}
-                          className={this.props.styles.buyWithCard}
-                          href={`https://swap.online/card2card/?addr=${flow.scriptAddress}&amount=${this.swap.sellAmount.toNumber() - flow.balance}`}>
-                          <FormattedMessage id="BtcToEthToken173" defaultMessage="Buy with credit card">
-                            {message => <span>{message}</span>}
-                          </FormattedMessage>
-                          <span className={this.props.styles.comingSoon}>
-                            <FormattedMessage id="BtcToEthToken180" defaultMessage="Coming soon...">
-                              {message => <span>{message}</span>}
-                            </FormattedMessage>
-                          </span>
-                        </a>
                       </a>
                     }
 
