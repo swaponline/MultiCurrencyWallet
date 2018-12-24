@@ -31,7 +31,11 @@ export default class RowHistory extends Component {
       return
     }
 
-    const { flow } = actions.core.getSwapById(id)
+    const swap = actions.core.getSwapById(id)
+
+    console.log('swap', swap)
+
+    const { flow } = swap
 
     const { state: {
       isFinished, isRefunded,

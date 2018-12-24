@@ -15,6 +15,7 @@ import EmergencySave from './EmergencySave/EmergencySave'
 import { injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import DeleteSwapAfterEnd from './DeleteSwapAfterEnd'
+import SwapController from './SwapController'
 
 
 @injectIntl
@@ -107,6 +108,7 @@ export default class SwapComponent extends PureComponent {
               <DeleteSwapAfterEnd swap={swap} />
             )
           }
+          <SwapController swap={swap} />
         </SwapComponent>
       </div>
     )
