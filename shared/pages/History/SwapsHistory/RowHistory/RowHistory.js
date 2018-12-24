@@ -64,9 +64,9 @@ export default class RowHistory extends Component {
       || scriptValues
 
     if (values !== undefined) {
-      this.setState(() => ({locedkTime: values.lockTime * 1000}))
+      this.setState(() => ({ locedkTime: values.lockTime * 1000 }))
     } else {
-      this.setState(() => ({locedkTime: 0}))
+      this.setState(() => ({ locedkTime: 0 }))
     }
   }
 
