@@ -282,7 +282,6 @@ export default class BtcToEthToken extends Component {
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-
                         <span className={this.props.styles.btcMessage}>
                           <FormattedMessage id="BtcToEthToken250" defaultMessage="Copy this address and top up ">
                             {message => <span>{message}</span>}
@@ -303,17 +302,6 @@ export default class BtcToEthToken extends Component {
                               className={this.props.styles.linkAddress}
                               onDoubleClick={this.onCopy}
                               onClick={this.onCopyAddress}>{flow.scriptAddress}
-
-                            <a className={this.props.styles.linkAddress} href={`${config.link.bitpay}/address/${flow.scriptAddress}`} onClick={this.onCopyAddress}>{flow.scriptAddress}</a>
-                            <Button
-                              styleName="button"
-                              brand
-                              onClick={() => {}}
-                              disabled={isAddressCopied}
-                              fullWidth
-                            >
-                              { isAddressCopied ? <i className="fas fa-copy fa-copy-in" /> : <i className="fas fa-copy" /> }
-                            </Button>
                               </span>
                               <Button
                                 styleName="button"
