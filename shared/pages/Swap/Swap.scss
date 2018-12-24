@@ -35,6 +35,13 @@
     top: 4px;
     left: -25px;
   }
+  div {
+    span {
+      span {
+        display: none;
+      }
+    }
+  }
 }
 .btcMessage {
   color: #000;
@@ -100,6 +107,16 @@
   }
 }
 
+.pressCtrlText {
+  display: none;
+}
+
+.pressCtrlTextActive {
+  display: block;
+  margin-bottom: 20px;
+  margin-top: -5px;
+}
+
 .linkAddress,
 .buyWithCard {
   text-decoration: none;
@@ -119,6 +136,10 @@
     color: #000;
     background: #eee;
   }
+}
+
+.linkAddress {
+  cursor: text;
 }
 
 .fa-copy-in {
