@@ -15,6 +15,7 @@ import Table from 'components/tables/Table/Table'
 import Title from 'components/PageHeadline/Title/Title'
 import tableStyles from 'components/tables/Table/Table.scss'
 import PageSeo from 'components/Seo/PageSeo'
+import { getSeoPage } from 'helpers/seo'
 
 import Pair from './Pair'
 import Row from './Row/Row'
@@ -113,6 +114,7 @@ export default class Orders extends Component {
 
     const { isOnline, isAllPeersLoaded, myOrders, orderId, invalidPair, location, currencies } = this.props
     const isIpfsLoaded = isOnline && isAllPeersLoaded
+    const seoPage = getSeoPage(location.pathname)
 
     const buyCurrencyFullName = (currencies.find(c => c.name === buyCurrency) || {}).fullTitle
     const sellCurrencyFullName = (currencies.find(c => c.name === sellCurrency) || {}).fullTitle
@@ -219,6 +221,7 @@ export default class Orders extends Component {
           )}
           isLoading={buyOrders.length === 0 && !isIpfsLoaded}
         />
+        {seoPage && seoPage.footer && <div>{seoPage.footer}</div>}
       </Fragment>
     )
   }

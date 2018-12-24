@@ -220,6 +220,9 @@ export default class CurrencyWallet extends Component {
           <FormattedMessage id="CurrencyWallet110" defaultMessage="History your transactions" />
         </h2>
         {txHistory && (<Table titles={titles} rows={txHistory}styleName="table" rowRender={(row) => (<Row key={row.hash} {...row} />)} />)}
+        {
+          seoPage && seoPage.footer && <div>{seoPage.footer}</div>
+        }
       </div>
     )
   }
