@@ -122,6 +122,17 @@ const seo = {
       title: 'Atomic Swap EOS to Bitcoin (BTC) Instant Exchange',
       description: 'How to exchange EOS to BTC instantly and safely? Use Swap.Online service to exchange coins with atomic swap algorithm. ',
       h1: 'Best Exchange Rate EOS to Bitcoin (BTC) - Atomic Swap',
+      footer: `Swap.Online is proudly presenting first ever decentralized service for direct exchange between Bitcoin and EOS blockchains.
+        Here we’re solving the bulk of problems with the EOS and Bitcoin exchange. Firstly, it is a registration in the EOS network,
+        well-known for its rather cumbersome design. On Swap.Online you can get it in a couple of seconds for small registration fee.
+        Secondly, it is a problem of EOS integration into the wallets with mass-adopted blockchains like Bitcoin and Ethereum.
+        At the moment, vast majority of EOS users store and exchange it via the EOS-pegged services which results in the complicated
+        interaction with Bitcoin and Ethereum.
+        Centralized exchanges offer poor remedy for this problem since they demand KYC/AML-procedures and store users’ keys and funds.
+        Swap.Online team finalized first direct EOS-to-Bitcoin Atomic Swap in September, 2018 and now it allows users to exchange their crypto with no third party involved.
+        EOS itself is one of the world leading dApp-hosting platforms and very promising blockchain widely called ‘Ethereum-killer’ for the high scalability and developability.
+        So, Swap.Online provides users with the possibility to invest in the rising and prospective project using familiar Bitcoin and Ethereum coins.
+        Moreover, even USDT is accepted on our platform which makes the EOS purchasing easier than ever.`,
     },
     {
       uri: '/btc-eos',
@@ -141,6 +152,16 @@ const seo = {
       title: 'Bitcoin (BTC) Web Wallet with Atomic Swap.',
       description: 'Swap.Online Bitcoin Wallet will allow you to exchange your coins using Atomic Swap technology.',
       h1: 'Your online Bitcoin (BTC) web wallet with Atomic Swap.',
+      footer: `Use Swap.Online as your safe and high-performance Bitcoin wallet. Firstly, you need to open https://swap.online/  in your browser.
+        Secondly, please, download your private and public key-pair for the Bitcoin network and save it somewhere in the reliable place.
+        In case of your failure to access your Bitcoin account, no one will be able to help you to restore your funds.
+        With the key downloaded and saved, you can start to store, send, receive and exchange Bitcoin.
+        Nowadays, the trades with USDT, EOS, ETH, BCH, GUSD and multiple amazing ERC-20 tokens are available.
+        Taking the fact into account, you can build your own investment strategy, starting with the Bitcoin  - the most popular blockchain in the world.
+        Mass-adopted in early 2010s it became a first expression of decentralized ‘electronic cash’ system based on Smart Contracts.
+        Swap.Online compares favourably with the rest of Bitcoin wallets since it uses the Atomic Swaps technology allowing
+        the direct interaction between blockchains with nok third party involved. Thus, Swap.Online is not pegged to single blockchain,
+        it allows to store, send, receive and exchange Bitcoin, Ethereum, USDT, BCH and the number of ERC-20 tokens.`,
     },
     {
       uri: '/Eos-wallet',
