@@ -34,6 +34,7 @@ const titles = [
   user: { ethData, btcData, ltcData, tokensData, eosData, nimData, usdtData, telosData } }) => ({
   items: [ ethData, btcData, eosData, usdtData, ltcData, telosData, ...Object.keys(tokensData).map(k => (tokensData[k])) /* nimData */ ],
   user,
+
   hiddenCoinsList: core.hiddenCoinsList,
   txHistory: transactions,
   swapHistory,
@@ -46,7 +47,9 @@ export default class CurrencyWallet extends Component {
 
   static getDerivedStateFromProps(nextProps) {
     let { match:{ params: { fullName } }, items } = nextProps
+
     const itemCurrency = items.filter(item => item.fullName.toLowerCase() === fullName.toLowerCase())[0]
+
     const {
       currency,
       address,
@@ -65,22 +68,22 @@ export default class CurrencyWallet extends Component {
     }
   }
 
-  constructor({ user, match: { params: { fullName } }, items, history }) {
+  constructor({ user, match: { params: { fullName } }, intl: { locale }, items, history }) {
     super()
+
+    const item = items.map(item => item.fullName.toLowerCase())
+
+    if (!item.includes(fullName.toLowerCase())) {
+      window.location.href = localisedUrl(locale, `/NotFound`)
+    }
+
     this.state = {
       name: null,
       address: null,
       balance: null,
       isBalanceEmpty: false,
     }
-
-    const item = items.map(item => item.fullName.toLowerCase())
-
-    if (!item.includes(fullName.toLowerCase())) {
-      return  window.location.href = '/NotFound'
-    }
   }
-
 
 
 
@@ -113,6 +116,7 @@ export default class CurrencyWallet extends Component {
       balance,
     })
   }
+
   handleGoTrade = (currency) => {
     const { intl: { locale } } = this.props
     this.props.history.push(localisedUrl(locale, `/${currency.toLowerCase()}`))
@@ -137,8 +141,7 @@ export default class CurrencyWallet extends Component {
     txHistory = txHistory
       .filter(tx => tx.type === currency.toLowerCase())
 
-    swapHistory = Object.keys(swapHistory)
-      .map(key => swapHistory[key])
+    swapHistory = swapHistory
       .filter(swap => swap.sellCurrency === currency || swap.buyCurrency === currency)
 
     const seoPage = getSeoPage(location.pathname)
@@ -215,7 +218,7 @@ export default class CurrencyWallet extends Component {
             <FormattedMessage id="CurrencyWallet104" defaultMessage="Exchange" />
           </Button>
         </div>
-        { swapHistory.length > 0 && <SwapsHistory orders={swapHistory} /> }
+        { swapHistory.length > 0 && <SwapsHistory orders={swapHistory.filter(item => item.step >= 4)} /> }
         <h2 style={{ marginTop: '20px' }} >
           <FormattedMessage id="CurrencyWallet110" defaultMessage="History your transactions" />
         </h2>
