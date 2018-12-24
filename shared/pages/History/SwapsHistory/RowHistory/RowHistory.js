@@ -24,6 +24,10 @@ export default class RowHistory extends Component {
     row: PropTypes.object,
   }
 
+  state = {
+    locedkTime: 0,
+  }
+
   handleGetFlow = (timeLeft) => {
     let { row: { id } } = this.props
 
@@ -48,7 +52,7 @@ export default class RowHistory extends Component {
       })
   }
 
-  componentDidMount() {
+  lockTime = () => {
     const {
       btcScriptValues, ltcScriptValues,
       usdtScriptValues, scriptValues,
@@ -59,10 +63,19 @@ export default class RowHistory extends Component {
       || usdtScriptValues
       || scriptValues
 
-    const lockTime = values.lockTime * 1000
+    if (values !== undefined) {
+      this.setState(() => ({locedkTime: values.lockTime * 1000}))
+    } else {
+      this.setState(() => ({locedkTime: 0}))
+    }
+  }
+
+
+  componentDidMount() {
+    this.lockTime()
 
     const dateNow = new Date().getTime()
-    const timeLeft = lockTime - dateNow
+    const timeLeft = this.state.locedkTime - dateNow
 
     this.handleGetFlow(timeLeft)
   }
