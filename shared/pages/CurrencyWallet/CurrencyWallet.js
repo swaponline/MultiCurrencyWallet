@@ -45,9 +45,10 @@ const titles = [
 @CSSModules(styles)
 export default class CurrencyWallet extends Component {
 
-  static getDerivedStateFromProps(nextProps) {
-    let { match:{ params: { fullName } }, items } = nextProps
+  static getDerivedStateFromProps( { match:{ params: { fullName } }, intl: { locale }, items, history}) {
+    const item = items.map(item => item.fullName.toLowerCase())
 
+    if (item.includes(fullName.toLowerCase())) {
     const itemCurrency = items.filter(item => item.fullName.toLowerCase() === fullName.toLowerCase())[0]
 
     const {
@@ -65,27 +66,18 @@ export default class CurrencyWallet extends Component {
       decimals,
       balance,
       isBalanceEmpty: balance === 0,
-    }
+    }}
+    history.push(localisedUrl(locale, `/NotFound`))
+
   }
 
-  constructor({ user, match: { params: { fullName } }, intl: { locale }, items, history }) {
-    super()
 
-    const item = items.map(item => item.fullName.toLowerCase())
-
-    if (!item.includes(fullName.toLowerCase())) {
-      window.location.href = localisedUrl(locale, `/NotFound`)
-    }
-
-    this.state = {
+    state = {
       name: null,
       address: null,
       balance: null,
       isBalanceEmpty: false,
     }
-  }
-
-
 
   handleReceive = () => {
     const { currency, address } = this.state
@@ -141,7 +133,8 @@ export default class CurrencyWallet extends Component {
     txHistory = txHistory
       .filter(tx => tx.type === currency.toLowerCase())
 
-    swapHistory = swapHistory
+    swapHistory = Object.keys(swapHistory)
+      .map(key => swapHistory[key])
       .filter(swap => swap.sellCurrency === currency || swap.buyCurrency === currency)
 
     const seoPage = getSeoPage(location.pathname)
@@ -187,7 +180,7 @@ export default class CurrencyWallet extends Component {
               br: <br />,
               fullName: `${fullName}`,
               balance: `${balance}`,
-              currency: `${currency.toUpperCase()}`,
+              currency: `${currency}`
             }}
           />
         </h3>
