@@ -7,6 +7,13 @@ import { links } from 'helpers'
 import CSSModules from 'react-css-modules'
 import styles from './SwapProgress.scss'
 
+import step1_icon from './images/1.gif'
+import step2_icon from './images/2.gif'
+import step3_icon from './images/3.gif'
+import step5_icon from './images/5.gif'
+import step6_icon from './images/6.gif'
+import step7_icon from './images/7.gif'
+
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 import Title from 'components/PageHeadline/Title/Title'
@@ -27,61 +34,86 @@ export default class SwapProgress extends Component {
     whiteLogo: false,
   }
 
+  handleStepChangeImage = (step) => {
+    switch (step) {
+      case 1:
+        return (
+          <img src={step1_icon} alt="step1" />
+        )
+      case 2:
+        return (
+          <img src={step2_icon} alt="step2" />
+        )
+      case 3:
+        return (
+          <img src={step3_icon} alt="step3" />
+        )
+      case 4:
+        return (
+          <img src={step3_icon} alt="step2" />
+        )
+      case 5:
+        return (
+          <img src={step5_icon} alt="step5" />
+        )
+      case 6:
+        return (
+          <img src={step6_icon} alt="step6" />
+        )
+      case 7:
+        return (
+          <img src={step7_icon} alt="step7" />
+        )
+      case 8:
+        return (
+          <img src={step7_icon} alt="step7" />
+        )
+      case 9:
+        return (
+          <img src={step7_icon} alt="step7" />
+        )
+      default:
+        return null
+    }
+  } 
+
   handleStepEthToBtc = (step) => {
     switch (step) {
       case 1:
         return (
-          <Title>
-            <FormattedMessage id="SwapProgress32" defaultMessage="1. Please wait. Confirmation processing" />
-          </Title>
+            <FormattedMessage id="SwapProgress32" defaultMessage="Please wait. Confirmation processing" />
         )
       case 2:
         return (
-          <Title>
-            <FormattedMessage id="SwapProgress38" defaultMessage="2. Waiting BTC Owner creates Secret Key, creates BTC Script and charges it" />
-          </Title>
+            <FormattedMessage id="SwapProgress38" defaultMessage="Waiting BTC Owner creates Secret Key, creates BTC Script and charges it" />
         )
       case 3:
         return (
-          <Title>
-            <FormattedMessage id="SwapProgress44" defaultMessage="3. Bitcoin Script created and charged. Please check the information below" />
-          </Title>
+            <FormattedMessage id="SwapProgress44" defaultMessage="Bitcoin Script created and charged. Please check the information below" />
         )
       case 4:
         return (
-          <Title>
-            <FormattedMessage id="SwapProgress50" defaultMessage="4. Checking balance.." />
-          </Title>
+            <FormattedMessage id="SwapProgress50" defaultMessage="Checking balance.." />
         )
       case 5:
         return (
-          <Title>
-            <FormattedMessage id="SwapProgress56" defaultMessage="5. Creating Ethereum Contract. Please wait, it will take a while" />
-          </Title>
+            <FormattedMessage id="SwapProgress56" defaultMessage="Creating Ethereum Contract. Please wait, it will take a while" />
         )
       case 6:
         return (
-          <Title>
-            <FormattedMessage id="SwapProgress62" defaultMessage="6. Waiting BTC Owner adds Secret Key to ETH Contact" />
-          </Title>
+            <FormattedMessage id="SwapProgress62" defaultMessage="Waiting BTC Owner adds Secret Key to ETH Contact" />
         )
       case 7:
         return (
-          <Title>
-            <FormattedMessage id="SwapProgress68" defaultMessage="7. Money was transferred to your wallet. Check the balance." />
-          </Title>
+            <FormattedMessage id="SwapProgress68" defaultMessage="Money was transferred to your wallet. Check the balance." />
         )
       case 8:
         return (
-          <Title>
-            <FormattedMessage id="SwapProgress74" defaultMessage="Thank you for using Swap.Online!" />
-          </Title>
+            <FormattedMessage id="SwapProgress74" defaultMessage="Thank you for using Swap.Online" />
         )
       case 9:
         return (
-          <Title>
             <FormattedMessage id="SwapProgress80" defaultMessage="Thank you for using Swap.Online!" />
-          </Title>
         )
       default:
         return null
@@ -92,72 +124,69 @@ export default class SwapProgress extends Component {
     switch (step) {
       case 1:
         return (
-          <Title>
-            <FormattedMessage id="SwapProgress93" defaultMessage="1. The order creator is offline. Waiting for him.." />
-          </Title>
+            <FormattedMessage id="SwapProgress93" defaultMessage="The order creator is offline. Waiting for him.." />
         )
       case 2:
         return (
-          <Title>
-            <FormattedMessage id="SwapProgress99" defaultMessage="2. Create a secret key" />
-          </Title>
+            <FormattedMessage id="SwapProgress99" defaultMessage="Create a secret key" />
         )
       case 3:
         return (
-          <Title>
-            <FormattedMessage id="SwapProgress105" defaultMessage="3. Checking balance.." />
-          </Title>
+            <FormattedMessage id="SwapProgress105" defaultMessage="Checking balance.." />
         )
       case 4:
         return (
-          <Title>
-            <FormattedMessage id="SwapProgress111" defaultMessage="4. Creating Bitcoin Script. Please wait, it will take a while" />
-          </Title>
+            <FormattedMessage id="SwapProgress111" defaultMessage="Creating Bitcoin Script. Please wait, it will take a while" />
         )
       case 5:
         return (
-          <Title>
-            <FormattedMessage id="SwapProgress117" defaultMessage="5. ETH Owner received Bitcoin Script and Secret Hash. Waiting when he creates ETH Contract" />
-          </Title>
+            <FormattedMessage id="SwapProgress117" defaultMessage="ETH Owner received Bitcoin Script and Secret Hash. Waiting when he creates ETH Contract" />
         )
       case 6:
         return (
-          <Title>
-            <FormattedMessage id="SwapProgress123" defaultMessage="6. ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait" />
-          </Title>
+            <FormattedMessage id="SwapProgress123" defaultMessage="ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait" />
         )
       case 7:
         return  (
-          <Title>
-            <FormattedMessage id="SwapProgress129" defaultMessage="7. Money was transferred to your wallet. Check the balance." />
-          </Title>
+            <FormattedMessage id="SwapProgress129" defaultMessage="Money was transferred to your wallet. Check the balance." />
         )
       case 8:
         return (
-          <Title>
-            <FormattedMessage id="SwapProgress135" defaultMessage="Thank you for using Swap.Online!" />
-          </Title>
+            <FormattedMessage id="SwapProgress135" defaultMessage="Thank you for using Swap.Onlinde!" />
         )
       default:
         return null
     }
   }
 
-  // close = () => {
-  //   actions.loader.hide()
-  // }
 
   render() {
-    // const { data: { flow, name, length }, whiteLogo } = this.props
-    const progress = Math.floor(100 / this.props.stepLength * this.props.data.step)
+    const progress = Math.floor(360 / this.props.stepLength * this.props.data.step)
 
     return (
       <div styleName="overlay">
         <div styleName="container">
-          <div styleName="progress">
-            <div styleName="bar" style={{ width: `${progress}%` }} />
-          </div>
           <span styleName="steps">{this.props.data.step} / {this.props.stepLength} steps</span>
+          <div styleName="stepContainer">
+            <div styleName={progress > 180 ? 'progress-pie-chart gt-50' : 'progress-pie-chart'}>
+              <div styleName="ppc-progress">
+                <div styleName="ppc-progress-fill" style={{ transform: `rotate(${progress}deg)` }}></div>
+              </div>
+            </div>
+            <div styleName="step">
+              <div styleName="stepImg">
+                {this.handleStepChangeImage(this.props.data.step)}
+              </div>
+              <div styleName="stepInfo">
+                {
+                  this.props.name === 'BTC2ETH' && <h1 styleName="stepHeading">{this.handleStepBtcToEth(this.props.data.step)}</h1>
+                }
+                {
+                  this.props.name === 'ETH2BTC' && <h1 styleName="stepHeading">{this.handleStepEthToBtc(this.props.data.step)}</h1>
+                }
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     )

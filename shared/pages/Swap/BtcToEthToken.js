@@ -122,7 +122,7 @@ export default class BtcToEthToken extends Component {
       <div className={this.props.styles.swapContainer}>
         {
           this.swap.id && (
-            <strong>{this.swap.sellAmount.toNumber()} {this.swap.sellCurrency} &#10230; {this.swap.buyAmount.toNumber()} {this.swap.buyCurrency}</strong>
+            <strong className={this.props.styles.swapGoNumber}>{this.swap.sellAmount.toNumber()} {this.swap.sellCurrency} &#10230; {this.swap.buyAmount.toNumber()} {this.swap.buyCurrency}</strong>
           )
         }
         <SwapProgress data={flow} name="BTC2ETH" stepLength={8} />

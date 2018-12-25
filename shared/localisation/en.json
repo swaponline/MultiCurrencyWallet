@@ -534,35 +534,35 @@
   },
   {
     "id": "SwapProgress105",
-    "message": "3. Checking balance.. ",
+    "message": "Checking balance.. ",
     "files": [
       "shared/components/SwapProgress/SwapProgress.js"
     ]
   },
   {
     "id": "SwapProgress111",
-    "message": "4. Creating Bitcoin Script. Please wait, it will take a while",
+    "message": "Creating Bitcoin Script. Please wait, it will take a while",
     "files": [
       "shared/components/SwapProgress/SwapProgress.js"
     ]
   },
   {
     "id": "SwapProgress117",
-    "message": "5. ETH Owner received Bitcoin Script and Secret Hash. Waiting when he creates ETH Contract",
+    "message": "ETH Owner received Bitcoin Script and Secret Hash. Waiting when he creates ETH Contract",
     "files": [
       "shared/components/SwapProgress/SwapProgress.js"
     ]
   },
   {
     "id": "SwapProgress123",
-    "message": "6. ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait",
+    "message": "ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait",
     "files": [
       "shared/components/SwapProgress/SwapProgress.js"
     ]
   },
   {
     "id": "SwapProgress129",
-    "message": "7. Money was transferred to your wallet. Check the balance. ",
+    "message": "Money was transferred to your wallet. Check the balance. ",
     "files": [
       "shared/components/SwapProgress/SwapProgress.js"
     ]
@@ -580,49 +580,49 @@
   },
   {
     "id": "SwapProgress32",
-    "message": "1. Please wait. Confirmation processing",
+    "message": "Please wait. Confirmation processing",
     "files": [
       "shared/components/SwapProgress/SwapProgress.js"
     ]
   },
   {
     "id": "SwapProgress38",
-    "message": "2. Waiting BTC Owner creates Secret Key, creates BTC Script and charges it",
+    "message": "Waiting BTC Owner creates Secret Key, creates BTC Script and charges it",
     "files": [
       "shared/components/SwapProgress/SwapProgress.js"
     ]
   },
   {
     "id": "SwapProgress44",
-    "message": "3. Bitcoin Script created and charged. Please check the information below",
+    "message": "Bitcoin Script created and charged. Please check the information below",
     "files": [
       "shared/components/SwapProgress/SwapProgress.js"
     ]
   },
   {
     "id": "SwapProgress50",
-    "message": "4. Checking balance.. ",
+    "message": "Checking balance.. ",
     "files": [
       "shared/components/SwapProgress/SwapProgress.js"
     ]
   },
   {
     "id": "SwapProgress56",
-    "message": "5. Creating Ethereum Contract. Please wait, it will take a while",
+    "message": "Creating Ethereum Contract. Please wait, it will take a while",
     "files": [
       "shared/components/SwapProgress/SwapProgress.js"
     ]
   },
   {
     "id": "SwapProgress62",
-    "message": "6. Waiting BTC Owner adds Secret Key to ETH Contact",
+    "message": "Waiting BTC Owner adds Secret Key to ETH Contact",
     "files": [
       "shared/components/SwapProgress/SwapProgress.js"
     ]
   },
   {
     "id": "SwapProgress68",
-    "message": "7. Money was transferred to your wallet. Check the balance. ",
+    "message": "Money was transferred to your wallet. Check the balance. ",
     "files": [
       "shared/components/SwapProgress/SwapProgress.js"
     ]
@@ -643,14 +643,14 @@
   },
   {
     "id": "SwapProgress93",
-    "message": "1. The order creator is offline. Waiting for him.. ",
+    "message": "The order creator is offline. Waiting for him.. ",
     "files": [
       "shared/components/SwapProgress/SwapProgress.js"
     ]
   },
   {
     "id": "SwapProgress99",
-    "message": "2. Create a secret key",
+    "message": "Create a secret key",
     "files": [
       "shared/components/SwapProgress/SwapProgress.js"
     ]
