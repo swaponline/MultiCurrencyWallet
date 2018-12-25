@@ -9,6 +9,7 @@ import config from 'app-config'
 import cssModules from 'react-css-modules'
 import styles from './WithdrawModal.scss'
 
+import { BigNumber } from 'bignumber.js'
 import Modal from 'components/modal/Modal/Modal'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Input from 'components/forms/Input/Input'
@@ -50,29 +51,34 @@ export default class WithdrawModal extends React.Component {
     data: PropTypes.object,
   }
 
-  state = {
-    isShipped: false,
-    address: '',
-    amount: '',
-    minus: '',
-    ethBalance: null,
-    tokenFee: false,
+  constructor(data) {
+    super()
+
+    this.state = {
+      isShipped: false,
+      address: '',
+      amount: '',
+      minus: '',
+      ethBalance: null,
+      tokenFee: false,
+      getUsd: 0,
+    }
   }
 
-  componentWillMount() {
+  componentDidMount() {
+    const { exCurrencyRate } = this.state
+    const { data: { currency } } = this.props
 
-    const { name, data, tokenItems }  = this.props
-    const { currency, ethBalance, tokenFee } = this.state
-
-    this.setBalanceOnState(this.props.data.currency)
+    this.setBalanceOnState(currency)
 
     Object.keys(config.erc20)
       .forEach(key => {
-        if (data.currency === config.erc20[key].fullName) {
+        if (currency === config.erc20[key].fullName) {
           this.setState({ tokenFee: true })
-
         }
       })
+    this.usdRates = {}
+    this.getUsdBalance()
   }
 
   setBalanceOnState = async (currency) => {
@@ -83,7 +89,6 @@ export default class WithdrawModal extends React.Component {
     const finalBalance = unconfirmedBalance !== undefined && unconfirmedBalance < 0
       ? Number(balance) + Number(unconfirmedBalance)
       : balance
-
     const ethBalance = await actions.eth.getBalance()
 
     this.setState(() => ({
@@ -91,6 +96,19 @@ export default class WithdrawModal extends React.Component {
       ethBalance,
     }))
   }
+
+  getUsdBalance = async () => {
+    const { data: { currency } } = this.props
+
+    const exCurrencyRate = await actions.user.getExchangeRate(currency, 'usd')
+
+    this.usdRates[currency] = exCurrencyRate
+
+    this.setState(() => ({
+      exCurrencyRate,
+    }))
+  }
+
 
   handleSubmit = () => {
     const { address: to, amount } = this.state
@@ -120,7 +138,6 @@ export default class WithdrawModal extends React.Component {
     sellAllBalance = () => {
       const { amount, balance, currency, tokenFee } = this.state
       const { data } = this.props
-
       const minFee = tokenFee ? Number(0) : minAmount[data.currency.toLowerCase()]
 
       const balanceMiner = balance !== 0
@@ -148,9 +165,9 @@ export default class WithdrawModal extends React.Component {
     }
 
     render() {
-      const { address, amount, balance, isShipped, minus, ethBalance, tokenFee } = this.state
+      const { address, amount, balance, isShipped, minus, ethBalance, tokenFee, exCurrencyRate } = this.state
       const { name, data, tokenItems, items } = this.props
-
+      console.log('balance', balance)
       const linked = Link.all(this, 'address', 'amount')
 
       const min = tokenFee ? minAmount.eth : minAmount[data.currency.toLowerCase()]
@@ -162,6 +179,8 @@ export default class WithdrawModal extends React.Component {
         || !tokenFee && (Number(amount) + min > balance)
         || tokenFee && (Number(amount) > balance)
         || this.isEthOrERC20()
+      const NanReplacement = balance === undefined ? '...' : Number(balance).toFixed(5)
+      const getUsd = amount * exCurrencyRate
 
       if (Number(amount) !== 0) {
         linked.amount.check((value) => Number(value) + min <= balance,
@@ -239,7 +258,7 @@ export default class WithdrawModal extends React.Component {
             <FormattedMessage id="Withdrow118" defaultMessage="Amount " />
           </FieldLabel>
           <div styleName="group">
-            <Input styleName="input" valueLink={linked.amount} pattern="0-9\." placeholder={`Enter the amount. You have ${Number(balance).toFixed(5)}`} />
+            <Input styleName="input" valueLink={linked.amount} pattern="0-9\." placeholder={`Enter the amount. You have ${NanReplacement}`} usd={getUsd.toFixed(2)} />
             <buttton styleName="button" onClick={this.sellAllBalance} data-tip data-for="Withdrow134">
               <FormattedMessage id="Select210" defaultMessage="MAX" />
             </buttton>
