@@ -90,22 +90,20 @@ const send = (from, to, amount) =>
       gas: '21000',
       value: web3.utils.toWei(String(amount)),
     }
-    let txRaw
 
-    await web3.eth.accounts.signTransaction(params, privateKey)
-      .then(result => {
-        txRaw = web3.eth.sendSignedTransaction(result.rawTransaction)
-      })
+    try {
+      const result  = await web3.eth.accounts.signTransaction(params, privateKey)
+      const txRaw   = await web3.eth.sendSignedTransaction(result.rawTransaction)
 
-    const receipt = await txRaw.on('transactionHash', (hash) => {
-      const txId = `${config.link.etherscan}/tx/${hash}`
+      const txId = `${config.link.etherscan}/tx/${txRaw.transactionHash}`
       actions.loader.show(true, true, txId)
-    })
-      .on('error', (err) => {
-        reject(err)
-      })
 
-    resolve(receipt)
+      resolve(txRaw)
+
+    } catch (error) {
+      console.error(`Error ETH send ${error.message || error}`)
+      reject(error)
+    }
   })
 
 
