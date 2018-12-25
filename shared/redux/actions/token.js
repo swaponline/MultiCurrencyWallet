@@ -133,7 +133,7 @@ const send = (contractAddress, to, amount, decimals) => {
     const receipt = await tokenContract.methods.transfer(to, newAmount).send()
       .on('transactionHash', (hash) => {
         const txId = `${config.link.etherscan}/tx/${hash}`
-        actions.loader.show(true, true, txId)
+        actions.loader.show(true, { txId })
       })
       .on('error', (err) => {
         reject(err)
@@ -160,7 +160,7 @@ const approve = (name, amount) => {
       })
         .on('transactionHash', (hash) => {
           const txId = `${config.link.etherscan}/tx/${hash}`
-          actions.loader.show(true, true, txId)
+          actions.loader.show(true, { txId })
         })
         .on('error', err => {
           reject(err)

@@ -6,12 +6,13 @@ import Loader from '../Loader/Loader'
 import SwapProgress from 'components/SwapProgress/SwapProgress'
 
 
-const RequestLoader = ({ isVisible, text, txId, swap, data }) => {
+const RequestLoader = ({ isVisible, data }) => {
   if (!isVisible) {
     return null
   }
+
   return (
-    <Loader text={text} txId={txId} />
+    <Loader data={data} />
   )
 }
 
