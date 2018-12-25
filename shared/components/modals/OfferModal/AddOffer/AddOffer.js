@@ -74,7 +74,7 @@ export default class AddOffer extends Component {
     actions.pairs.selectPair(sellCurrency)
 
     this.checkBalance(sellCurrency)
-    this.updateExchangeRate(sellCurrency)
+    this.updateExchangeRate(sellCurrency, buyCurrency)
   }
 
   checkBalance = async (sellCurrency) => {
@@ -113,7 +113,7 @@ export default class AddOffer extends Component {
 
     await this.checkBalance(sellCurrency)
 
-    await this.updateExchangeRate(sellCurrency, buyCurrency)
+    await this.updateExchangeRate(sellCurrency, value)
     const { exchangeRate } = this.state
     sellAmount = new BigNumber(String(buyAmount) || 0).multipliedBy(exchangeRate)
 
@@ -124,7 +124,6 @@ export default class AddOffer extends Component {
     }
     this.setState({
       buyCurrency: value,
-      sellCurrency,
       sellAmount: Number.isNaN(sellAmount) ? '' : sellAmount,
       buyAmount: Number.isNaN(buyAmount) ? '' : buyAmount,
       isSellFieldInteger: config.erc20[sellCurrency] && config.erc20[sellCurrency].decimals === 0,
@@ -135,15 +134,11 @@ export default class AddOffer extends Component {
   handleSellCurrencySelect = async ({ value }) => {
     let { buyCurrency, sellCurrency, sellAmount, buyAmount } = this.state
 
-    if (value === buyCurrency) {
-      buyCurrency = sellCurrency
-    }
-
     this.checkPair(value)
 
-    await this.checkBalance(sellCurrency)
+    await this.checkBalance(value)
 
-    await this.updateExchangeRate(sellCurrency, buyCurrency)
+    await this.updateExchangeRate(value, buyCurrency)
     const { exchangeRate } = this.state
     buyAmount = new BigNumber(String(sellAmount) || 0).multipliedBy(exchangeRate)
 
@@ -154,7 +149,6 @@ export default class AddOffer extends Component {
     }
 
     this.setState({
-      buyCurrency,
       sellCurrency: value,
       buyAmount: Number.isNaN(buyAmount) ? '' : buyAmount,
       sellAmount: Number.isNaN(sellAmount) ? '' : sellAmount,

@@ -158,7 +158,7 @@ export default class WithdrawModal extends React.Component {
 
       const isDisabled =
         !address || !amount || isShipped || Number(amount) < minAmount[data.currency.toLowerCase()]
-        // || !this.addressIsCorrect()
+        || !this.addressIsCorrect()
         || !tokenFee && (Number(amount) + min > balance)
         || tokenFee && (Number(amount) > balance)
         || this.isEthOrERC20()

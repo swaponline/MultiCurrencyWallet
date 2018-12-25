@@ -262,12 +262,12 @@ export default class Row extends Component {
         style={isTouch && this.props.index !== this.props.selectId ?  { background: '#f5f5f5' } : { background: '#fff' }}
       >
         <td>
-          <Link to={`/${locale}/${fullName}-wallet`} title={`Online ${fullName} wallet`}>
+          <Link to={localisedUrl(locale, `/${fullName}-wallet`)} title={`Online ${fullName} wallet`}>
             <Coin name={currency} />
           </Link>
         </td>
         <td>
-          <Link to={`/${locale}/${fullName}-wallet`} title={`Online ${fullName} wallet`}>
+          <Link to={localisedUrl(locale, `/${fullName}-wallet`)} title={`Online ${fullName} wallet`}>
             {fullName}
           </Link>
         </td>

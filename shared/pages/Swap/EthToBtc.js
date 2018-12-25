@@ -77,6 +77,7 @@ export default class EthToBtc extends Component {
 
   tryRefund = () => {
     this.swap.flow.tryRefund()
+    this.setState(() => ({ enabledButton: false }))
   }
 
   toggleBitcoinScript = () => {

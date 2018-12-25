@@ -37,6 +37,11 @@ export default class BtcToEos extends Component {
     })
   }
 
+  tryRefund = () => {
+    this.swap.flow.tryRefund()
+    this.setState(() => ({ enabledButton: false }))
+  }
+
   submitSecret = () => {
     const fromHexString = hexString =>
       new Uint8Array(hexString.match(/.{1,2}/g).map(byte => parseInt(byte, 16)))
@@ -51,6 +56,10 @@ export default class BtcToEos extends Component {
     this.setState({
       isSubmitted: true,
     })
+  }
+
+  tryRefund = () => {
+    this.swap.flow.tryRefund()
   }
 
   render() {
@@ -119,34 +128,25 @@ export default class BtcToEos extends Component {
               <FormattedMessage id="BtcToEos115" defaultMessage="4. Withdraw EOS from contract" />
             </h3>
             {
-              flow.eosWithdrawTx === null && <InlineLoader />
+              !flow.eosWithdrawTx && !flow.btcRefundTx && <InlineLoader />
             }
-            {
-              flow.eosWithdrawTx !== null && <TransactionLink type="EOS" id={flow.eosWithdrawTx} />
-            }
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              { enabledButton && !flow.btcWithdrawTx &&
-                <Button brand onClick={this.tryRefund}>
-                  <FormattedMessage id="BtcToEos126" defaultMessage="TRY REFUND" />
-                </Button>
-              }
-              <div>
-                <Timer lockTime={flow.scriptValues.lockTime * 1000} enabledButton={() => this.setState({ enabledButton: true })} />
+            { !flow.eosWithdrawTx && !flow.btcRefundTx &&
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                {enabledButton &&
+                  <Button brand onClick={this.tryRefund}>
+                    <FormattedMessage id="BtcToEos126" defaultMessage="TRY REFUND" />
+                  </Button>
+                }
+                <div>
+                  <Timer lockTime={flow.scriptValues.lockTime * 1000} enabledButton={() => this.setState({ enabledButton: true })} />
+                </div>
               </div>
-            </div>
-          </Fragment>
-        }
-        {
-          flow.step >= 5 &&
-          <Fragment>
-            <h3>
-              <FormattedMessage id="BtcToEos140" defaultMessage="5. Request to withdraw BTC from script" />
-            </h3>
-            {
-              flow.btcWithdrawTx === null && <InlineLoader />
             }
             {
-              flow.btcWithdrawTx !== null && <TransactionLink type="BTC" id={flow.btcWithdrawTx} />
+              flow.eosWithdrawTx && <TransactionLink type="EOS" id={flow.eosWithdrawTx} />
+            }
+            {
+              flow.btcRefundTx && <TransactionLink type="BTC" id={flow.btcRefundTx} />
             }
           </Fragment>
         }
