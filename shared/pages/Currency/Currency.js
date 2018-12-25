@@ -21,7 +21,7 @@ import Table from 'components/tables/Table/Table'
 import Row from './Row/Row'
 import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
 
-
+@injectIntl
 @withRouter
 @connect(({
   core: { hiddenCoinsList },
@@ -33,7 +33,7 @@ import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
 export default class Currency extends Component {
 
 
-  constructor({ match: { params: { currency } }, items, tokens, history }) {
+  constructor({ match: { params: { currency } }, items, tokens, history, intl: { locale } }) {
     super()
 
     this.state = {
@@ -44,7 +44,7 @@ export default class Currency extends Component {
 
     const item = items.map(item => item.currency.toLowerCase())
     if (!item.includes(currency)) {
-      return history.push('/NotFound')
+      history.push(localisedUrl(locale, `/NotFound`))
     }
   }
 
