@@ -181,7 +181,7 @@ export default class CurrencyWallet extends Component {
               br: <br />,
               fullName: `${fullName}`,
               balance: `${balance}`,
-              currency: `${currency}`
+              currency: `${currency}`,
             }}
           />
         </h3>
