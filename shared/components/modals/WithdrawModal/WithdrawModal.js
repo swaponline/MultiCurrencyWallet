@@ -167,7 +167,7 @@ export default class WithdrawModal extends React.Component {
     render() {
       const { address, amount, balance, isShipped, minus, ethBalance, tokenFee, exCurrencyRate } = this.state
       const { name, data, tokenItems, items } = this.props
-
+      console.log('balance', balance)
       const linked = Link.all(this, 'address', 'amount')
 
       const min = tokenFee ? minAmount.eth : minAmount[data.currency.toLowerCase()]
@@ -179,7 +179,7 @@ export default class WithdrawModal extends React.Component {
         || !tokenFee && (Number(amount) + min > balance)
         || tokenFee && (Number(amount) > balance)
         || this.isEthOrERC20()
-
+      const NanReplacement = balance === undefined ? '...' : Number(balance).toFixed(5)
       const getUsd = amount * exCurrencyRate
 
       if (Number(amount) !== 0) {
@@ -258,7 +258,7 @@ export default class WithdrawModal extends React.Component {
             <FormattedMessage id="Withdrow118" defaultMessage="Amount " />
           </FieldLabel>
           <div styleName="group">
-            <Input styleName="input" valueLink={linked.amount} pattern="0-9\." placeholder={`Enter the amount. You have ${Number(balance).toFixed(5)}`} usd={getUsd.toFixed(2)} />
+            <Input styleName="input" valueLink={linked.amount} pattern="0-9\." placeholder={`Enter the amount. You have ${NanReplacement}`} usd={getUsd.toFixed(2)} />
             <buttton styleName="button" onClick={this.sellAllBalance} data-tip data-for="Withdrow134">
               <FormattedMessage id="Select210" defaultMessage="MAX" />
             </buttton>
