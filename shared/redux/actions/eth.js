@@ -91,19 +91,18 @@ const send = (from, to, amount) =>
       value: web3.utils.toWei(String(amount)),
     }
 
-    try {
-      const result  = await web3.eth.accounts.signTransaction(params, privateKey)
-      const txRaw   = await web3.eth.sendSignedTransaction(result.rawTransaction)
+    const result = await web3.eth.accounts.signTransaction(params, privateKey)
+    const receipt = web3.eth.sendSignedTransaction(result.rawTransaction)
+      .on('transactionHash', (hash) => {
+        const txId = `${config.link.etherscan}/tx/${hash}`
+        console.log('tx', txId)
+        actions.loader.show(true, { txId })
+      })
+      .on('error', (err) => {
+        reject(err)
+      })
 
-      const txId = `${config.link.etherscan}/tx/${txRaw.transactionHash}`
-      actions.loader.show(true, true, txId)
-
-      resolve(txRaw)
-
-    } catch (error) {
-      console.error(`Error ETH send ${error.message || error}`)
-      reject(error)
-    }
+    resolve(receipt)
   })
 
 
