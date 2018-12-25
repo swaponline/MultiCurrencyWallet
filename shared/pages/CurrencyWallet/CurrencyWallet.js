@@ -45,30 +45,31 @@ const titles = [
 @CSSModules(styles)
 export default class CurrencyWallet extends Component {
 
-  static getDerivedStateFromProps( { match:{ params: { fullName } }, intl: { locale }, items, history}) {
+  static getDerivedStateFromProps({ match: { params: { fullName } }, intl: { locale }, items, history }) {
     const item = items.map(item => item.fullName.toLowerCase())
 
     if (item.includes(fullName.toLowerCase())) {
     const itemCurrency = items.filter(item => item.fullName.toLowerCase() === fullName.toLowerCase())[0]
 
-    const {
-      currency,
-      address,
-      contractAddress,
-      decimals,
-      balance,
-    } = itemCurrency
+      const {
+        currency,
+        address,
+        contractAddress,
+        decimals,
+        balance,
+      } = itemCurrency
 
-    return {
-      currency,
-      address,
-      contractAddress,
-      decimals,
-      balance,
-      isBalanceEmpty: balance === 0,
-    }}
+      return {
+        currency,
+        address,
+        contractAddress,
+        decimals,
+        balance,
+        isBalanceEmpty: balance === 0,
+      }
+    }
+
     history.push(localisedUrl(locale, `/NotFound`))
-
   }
 
 
