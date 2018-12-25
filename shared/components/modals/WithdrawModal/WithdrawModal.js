@@ -63,7 +63,6 @@ export default class WithdrawModal extends React.Component {
       tokenFee: false,
       getUsd: 0,
     }
-    let usdRates
   }
 
   componentDidMount() {
@@ -101,9 +100,7 @@ export default class WithdrawModal extends React.Component {
   getUsdBalance = async () => {
     const { data: { currency } } = this.props
 
-    const exCurrencyRate = (this.usdRates[currency] !== undefined)
-      ? this.usdRates[currency]
-      : await actions.user.getExchangeRate(currency, 'usd')
+    const exCurrencyRate = await actions.user.getExchangeRate(currency, 'usd')
 
     this.usdRates[currency] = exCurrencyRate
 
