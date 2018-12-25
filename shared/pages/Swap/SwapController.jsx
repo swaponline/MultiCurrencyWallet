@@ -12,22 +12,23 @@ class SwapController extends React.PureComponent {
       online: true,
     }
 
-    this.swap.events.subscribe('participant offline', this.checkStatusUser)
+    this.swap.events.subscribe('check status', this.checkStatusUser)
+    this.dispatchEvent('check status')
   }
 
   componentDidMount() {
-    this.timer()
+    setInterval(() => {
+      this.checkStatusUser()
+    }, 5000)
   }
 
   componentWillUnmount() {
-    this.swap.events.dispatch('participant offline')
-    this.swap.events.unsubscribe('participant offline', this.checkStatusUser)
+    this.dispatchEvent('check status')
+    this.swap.events.unsubscribe('check status', this.checkStatusUser)
   }
 
-  timer() {
-    setTimeout(() => {
-      this.checkStatusUser()
-    }, 5000)
+  dispatchEvent = (event) => {
+    this.swap.events.dispatch(event)
   }
 
   checkStatusUser = () => {
