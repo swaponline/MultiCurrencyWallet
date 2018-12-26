@@ -100,7 +100,7 @@ export default class BtcToEth extends Component {
 
 
   render() {
-    const { children } = this.props
+    const { children, timeLeft } = this.props
     const { currencyAddress, secret, flow, enabledButton } = this.state
     const headingStyle = {
       color: '#5100dc',
@@ -158,7 +158,7 @@ export default class BtcToEth extends Component {
                   <Fragment>
                     <input type="text" placeholder="Secret Key" defaultValue={secret} />
                     <br />
-                    <TimerButton timeLeft={5} brand onClick={this.submitSecret}>
+                    <TimerButton timeLeft={timeLeft} brand onClick={this.submitSecret}>
                       <FormattedMessage id="BtcToEth134" defaultMessage="Confirm" />
                     </TimerButton>
                   </Fragment>

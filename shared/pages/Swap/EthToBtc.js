@@ -25,6 +25,7 @@ export default class EthToBtc extends Component {
       flow: this.swap.flow.state,
       enabledButton: false,
       isShowingBitcoinScript: false,
+      isAmountMoreThan50: false,
     }
   }
 
@@ -37,7 +38,7 @@ export default class EthToBtc extends Component {
   }
 
 
-  handleFlowStateUpdate = (values) => {
+  handleFlowStateUpdate = async (values) => {
     const stepNumbers = {
       1: 'sign',
       2: 'wait-lock-btc',
@@ -55,7 +56,6 @@ export default class EthToBtc extends Component {
     this.setState({
       flow: values,
     })
-
     // this.overProgress(values, Object.keys(stepNumbers).length)
   }
 
@@ -65,6 +65,7 @@ export default class EthToBtc extends Component {
 
   signSwap = () => {
     this.swap.flow.sign()
+    console.log('signSwap')
   }
 
   confirmBTCScriptChecked = () => {
@@ -87,8 +88,8 @@ export default class EthToBtc extends Component {
   }
 
   render() {
-    const { children } = this.props
-    const { currencyAddress, flow, enabledButton, isShowingBitcoinScript } = this.state
+    const { children, timeLeft } = this.props
+    const { currencyAddress, flow, enabledButton, isShowingBitcoinScript, isAmountMoreThan50 } = this.state
     const headingStyle = {
       color: '#5100dc',
       textTransform: 'uppercase',
@@ -142,7 +143,7 @@ export default class EthToBtc extends Component {
                   defaultMessage=
                     "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation." />
               </div>
-              <TimerButton timeLeft={5} brand onClick={this.signSwap}>
+              <TimerButton timeLeft={timeLeft} brand onClick={this.signSwap}>
                 <FormattedMessage id="EthToBtc128" defaultMessage="Sign" />
               </TimerButton>
               {
@@ -262,7 +263,7 @@ export default class EthToBtc extends Component {
                       flow.step === 3 && (
                         <Fragment>
                           <br />
-                          <TimerButton timeLeft={5} brand onClick={this.confirmBTCScriptChecked}>
+                          <TimerButton timeLeft={timeLeft} brand onClick={this.confirmBTCScriptChecked}>
                             <FormattedMessage id="EthToBtc247" defaultMessage="Everything is OK. Continue" />
                           </TimerButton>
                         </Fragment>

@@ -62,7 +62,7 @@ export default class EthTokenToBtc extends Component {
   }
 
   render() {
-    const { children } = this.props
+    const { children, timeLeft } = this.props
     const { currencyAddress, flow, enabledButton, isShowingBitcoinScript } = this.state
 
     return (
@@ -103,7 +103,7 @@ export default class EthTokenToBtc extends Component {
                 !flow.isSignFetching && !flow.isMeSigned && (
                   <Fragment>
                     <br />
-                    <TimerButton timeLeft={5} brand onClick={this.signSwap}>
+                    <TimerButton timeLeft={timeLeft} brand onClick={this.signSwap}>
                       <FormattedMessage id="EthTokenBtc102" defaultMessage="Confirm" />
                     </TimerButton>
                   </Fragment>
@@ -222,7 +222,7 @@ export default class EthTokenToBtc extends Component {
                       flow.step === 3 && (
                         <Fragment>
                           <br />
-                          <TimerButton timeLeft={5} brand onClick={this.confirmBTCScriptChecked}>
+                          <TimerButton timeLeft={timeLeft} brand onClick={this.confirmBTCScriptChecked}>
                             <FormattedMessage id="EthTokenBtc228" defaultMessage="Everything is OK. Continue" />
                           </TimerButton>
                         </Fragment>
