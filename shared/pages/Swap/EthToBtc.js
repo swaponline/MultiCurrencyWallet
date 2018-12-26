@@ -88,7 +88,7 @@ export default class EthToBtc extends Component {
   }
 
   render() {
-    const { children, timeLeft } = this.props
+    const { children, disabledTimer }  = this.props
     const { currencyAddress, flow, enabledButton, isShowingBitcoinScript, isAmountMoreThan50 } = this.state
     const headingStyle = {
       color: '#5100dc',
@@ -143,7 +143,7 @@ export default class EthToBtc extends Component {
                   defaultMessage=
                     "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation." />
               </div>
-              <TimerButton timeLeft={timeLeft} brand onClick={this.signSwap}>
+              <TimerButton disabledTimer={disabledTimer} timeLeft={5} brand onClick={this.signSwap}>
                 <FormattedMessage id="EthToBtc128" defaultMessage="Sign" />
               </TimerButton>
               {
@@ -263,7 +263,7 @@ export default class EthToBtc extends Component {
                       flow.step === 3 && (
                         <Fragment>
                           <br />
-                          <TimerButton timeLeft={timeLeft} brand onClick={this.confirmBTCScriptChecked}>
+                          <TimerButton disabledTimer={disabledTimer} timeLeft={5} brand onClick={this.confirmBTCScriptChecked}>
                             <FormattedMessage id="EthToBtc247" defaultMessage="Everything is OK. Continue" />
                           </TimerButton>
                         </Fragment>

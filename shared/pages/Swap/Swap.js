@@ -36,7 +36,7 @@ export default class SwapComponent extends PureComponent {
     swap: null,
     SwapComponent: null,
     currencyData: null,
-    isAmountMoreThan50Usd: null,
+    isAmountMore: null,
   }
 
   componentWillMount() {
@@ -71,8 +71,10 @@ export default class SwapComponent extends PureComponent {
             const amount = exRate * Number(item.amount)
 
             if (Number(amount) >= 50) {
-              this.setState(() => ({ isAmountMoreThan50Usd: true }))
-            }
+              this.setState(() => ({ isAmountMore: 'enable' }))
+            } else {
+              this.setState(() => ({ isAmountMore: 'disable' }))
+             }
           })
       })
 
@@ -116,14 +118,15 @@ export default class SwapComponent extends PureComponent {
 
   render() {
     const { peer } = this.props
-    const { swap, SwapComponent, currencyData, isAmountMoreThan50Usd } = this.state
+    const { swap, SwapComponent, currencyData, isAmountMore } = this.state
 
-    if (!swap || !SwapComponent || !peer || !isAmountMoreThan50Usd) {
+    if (!swap || !SwapComponent || !peer || !isAmountMore) {
       return null
     }
+
     return (
       <div styleName="swap">
-        <SwapComponent timeLeft={isAmountMoreThan50Usd ? Infinity : 5} swap={swap} currencyData={currencyData} >
+        <SwapComponent disabledTimer={isAmountMore === 'enable'} swap={swap} currencyData={currencyData} >
           <Share flow={swap.flow} />
           <EmergencySave flow={swap.flow} />
           {

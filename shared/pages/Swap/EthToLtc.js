@@ -84,7 +84,7 @@ export default class EthToLtc extends Component {
   }
 
   render() {
-    const { children, timeLeft } = this.props
+    const { children, disabledTimer }  = this.props
     const { currencyAddress, flow, enabledButton, isShowingLitecoinScript } = this.state
 
     return (
@@ -131,7 +131,7 @@ export default class EthToLtc extends Component {
                     "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation."
                 />
               </div>
-              <TimerButton timeLeft={timeLeft} brand onClick={this.signSwap}>
+              <TimerButton disabledTimer={disabledTimer} timeLeft={5} brand onClick={this.signSwap}>
                 <FormattedMessage id="EthToLtc128" defaultMessage="Sign" />
               </TimerButton>
               {
@@ -251,7 +251,7 @@ export default class EthToLtc extends Component {
                       flow.step === 3 && (
                         <Fragment>
                           <br />
-                          <TimerButton timeLeft={timeLeft} brand onClick={this.confirmLTCScriptChecked}>
+                          <TimerButton disabledTimer={disabledTimer} timeLeft={5} brand onClick={this.confirmLTCScriptChecked}>
                             <FormattedMessage id="EthToLtc247" defaultMessage="Everything is OK. Continue" />
                           </TimerButton>
                         </Fragment>
