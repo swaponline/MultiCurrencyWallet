@@ -7,13 +7,6 @@ import { links } from 'helpers'
 import CSSModules from 'react-css-modules'
 import styles from './SwapProgress.scss'
 
-import step1_icon from './images/1.gif'
-import step2_icon from './images/2.gif'
-import step3_icon from './images/3.gif'
-import step5_icon from './images/5.gif'
-import step6_icon from './images/6.gif'
-import step7_icon from './images/7.gif'
-
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 import Title from 'components/PageHeadline/Title/Title'
@@ -34,47 +27,12 @@ export default class SwapProgress extends Component {
     whiteLogo: false,
   }
 
+
+  // TODO add animation css
+
   handleStepChangeImage = (step) => {
-    switch (step) {
-      case 1:
-        return (
-          <img src={step1_icon} alt="step1" />
-        )
-      case 2:
-        return (
-          <img src={step2_icon} alt="step2" />
-        )
-      case 3:
-        return (
-          <img src={step3_icon} alt="step3" />
-        )
-      case 4:
-        return (
-          <img src={step3_icon} alt="step2" />
-        )
-      case 5:
-        return (
-          <img src={step5_icon} alt="step5" />
-        )
-      case 6:
-        return (
-          <img src={step6_icon} alt="step6" />
-        )
-      case 7:
-        return (
-          <img src={step7_icon} alt="step7" />
-        )
-      case 8:
-        return (
-          <img src={step7_icon} alt="step7" />
-        )
-      case 9:
-        return (
-          <img src={step7_icon} alt="step7" />
-        )
-      default:
-        return null
-    }
+    const icon = require(`./images/icon${step}.gif`)
+    return <img src={icon} alt="step" />
   } 
 
   handleStepEthToBtc = (step) => {
