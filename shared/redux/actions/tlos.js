@@ -51,8 +51,9 @@ const login = (accountName, activePrivateKey, activePublicKey) => {
 
 const getBalance = async () => {
   const { user: { telosData: { address } } } = getState()
+  const telosAccountActivated = localStorage.getItem(constants.localStorage.telosAccountActivated) === "true"
 
-  if (typeof address !== 'string') return
+  if (typeof address !== 'string' || !telosAccountActivated) return
 
   try {
     const telosInstance = await telos.getInstance()

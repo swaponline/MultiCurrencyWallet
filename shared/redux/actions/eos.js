@@ -155,8 +155,9 @@ const activateAccount = async ({ accountName, eosPublicKey, btcAddress, signatur
 
 const getBalance = async () => {
   const { user: { eosData: { address } } } = getState()
+  const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true"
 
-  if (typeof address !== 'string') return
+  if (typeof address !== 'string' || !eosAccountActivated) return
 
   const eosInstance = await eos.getInstance()
   try {

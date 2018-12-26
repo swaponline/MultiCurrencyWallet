@@ -340,7 +340,7 @@ export default class Row extends Component {
                         <FormattedMessage id="Row235" defaultMessage="Copy" />
                       </span>
                     </ReactTooltip>
-                    { currency === 'EOS' && !eosAccountActivated && !balanceError && (
+                    { currency === 'EOS' && !eosAccountActivated && (
                       <Fragment>
                         <br />
                         <span styleName="notActiveLink">
@@ -349,7 +349,7 @@ export default class Row extends Component {
                       </Fragment>
                     )
                     }
-                    { currency === 'TLOS' && !telosAccountActivated && !balanceError && (
+                    { currency === 'TLOS' && !telosAccountActivated && (
                       <Fragment>
                         <br />
                         <span styleName="notActiveLink">
