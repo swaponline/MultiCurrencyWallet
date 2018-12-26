@@ -31,47 +31,47 @@ export default class SwapProgress extends Component {
   // TODO add animation css
 
   handleStepChangeImage = (step) => {
-    const icon = require(`./images/icon${step}.gif`)
+    const icon = global.require(`./images/icon${step}.gif`)
     return <img src={icon} alt="step" />
-  } 
+  }
 
   handleStepEthToBtc = (step) => {
     switch (step) {
       case 1:
         return (
-            <FormattedMessage id="SwapProgress32" defaultMessage="Please wait. Confirmation processing" />
+          <FormattedMessage id="SwapProgress32" defaultMessage="Please wait. Confirmation processing" />
         )
       case 2:
         return (
-            <FormattedMessage id="SwapProgress38" defaultMessage="Waiting BTC Owner creates Secret Key, creates BTC Script and charges it" />
+          <FormattedMessage id="SwapProgress38" defaultMessage="Waiting BTC Owner creates Secret Key, creates BTC Script and charges it" />
         )
       case 3:
         return (
-            <FormattedMessage id="SwapProgress44" defaultMessage="Bitcoin Script created and charged. Please check the information below" />
+          <FormattedMessage id="SwapProgress44" defaultMessage="Bitcoin Script created and charged. Please check the information below" />
         )
       case 4:
         return (
-            <FormattedMessage id="SwapProgress50" defaultMessage="Checking balance.." />
+          <FormattedMessage id="SwapProgress50" defaultMessage="Checking balance.." />
         )
       case 5:
         return (
-            <FormattedMessage id="SwapProgress56" defaultMessage="Creating Ethereum Contract. Please wait, it will take a while" />
+          <FormattedMessage id="SwapProgress56" defaultMessage="Creating Ethereum Contract. Please wait, it will take a while" />
         )
       case 6:
         return (
-            <FormattedMessage id="SwapProgress62" defaultMessage="Waiting BTC Owner adds Secret Key to ETH Contact" />
+          <FormattedMessage id="SwapProgress62" defaultMessage="Waiting BTC Owner adds Secret Key to ETH Contact" />
         )
       case 7:
         return (
-            <FormattedMessage id="SwapProgress68" defaultMessage="Money was transferred to your wallet. Check the balance." />
+          <FormattedMessage id="SwapProgress68" defaultMessage="Money was transferred to your wallet. Check the balance." />
         )
       case 8:
         return (
-            <FormattedMessage id="SwapProgress74" defaultMessage="Thank you for using Swap.Online" />
+          <FormattedMessage id="SwapProgress74" defaultMessage="Thank you for using Swap.Online" />
         )
       case 9:
         return (
-            <FormattedMessage id="SwapProgress80" defaultMessage="Thank you for using Swap.Online!" />
+          <FormattedMessage id="SwapProgress80" defaultMessage="Thank you for using Swap.Online!" />
         )
       default:
         return null
@@ -82,35 +82,35 @@ export default class SwapProgress extends Component {
     switch (step) {
       case 1:
         return (
-            <FormattedMessage id="SwapProgress93" defaultMessage="The order creator is offline. Waiting for him.." />
+          <FormattedMessage id="SwapProgress93" defaultMessage="The order creator is offline. Waiting for him.." />
         )
       case 2:
         return (
-            <FormattedMessage id="SwapProgress99" defaultMessage="Create a secret key" />
+          <FormattedMessage id="SwapProgress99" defaultMessage="Create a secret key" />
         )
       case 3:
         return (
-            <FormattedMessage id="SwapProgress105" defaultMessage="Checking balance.." />
+          <FormattedMessage id="SwapProgress105" defaultMessage="Checking balance.." />
         )
       case 4:
         return (
-            <FormattedMessage id="SwapProgress111" defaultMessage="Creating Bitcoin Script. Please wait, it will take a while" />
+          <FormattedMessage id="SwapProgress111" defaultMessage="Creating Bitcoin Script. Please wait, it will take a while" />
         )
       case 5:
         return (
-            <FormattedMessage id="SwapProgress117" defaultMessage="ETH Owner received Bitcoin Script and Secret Hash. Waiting when he creates ETH Contract" />
+          <FormattedMessage id="SwapProgress117" defaultMessage="ETH Owner received Bitcoin Script and Secret Hash. Waiting when he creates ETH Contract" />
         )
       case 6:
         return (
-            <FormattedMessage id="SwapProgress123" defaultMessage="ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait" />
+          <FormattedMessage id="SwapProgress123" defaultMessage="ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait" />
         )
       case 7:
         return  (
-            <FormattedMessage id="SwapProgress129" defaultMessage="Money was transferred to your wallet. Check the balance." />
+          <FormattedMessage id="SwapProgress129" defaultMessage="Money was transferred to your wallet. Check the balance." />
         )
       case 8:
         return (
-            <FormattedMessage id="SwapProgress135" defaultMessage="Thank you for using Swap.Onlinde!" />
+          <FormattedMessage id="SwapProgress135" defaultMessage="Thank you for using Swap.Onlinde!" />
         )
       default:
         return null
@@ -128,7 +128,7 @@ export default class SwapProgress extends Component {
           <div styleName="stepContainer">
             <div styleName={progress > 180 ? 'progress-pie-chart gt-50' : 'progress-pie-chart'}>
               <div styleName="ppc-progress">
-                <div styleName="ppc-progress-fill" style={{ transform: `rotate(${progress}deg)` }}></div>
+                <div styleName="ppc-progress-fill" style={{ transform: `rotate(${progress}deg)` }} />
               </div>
             </div>
             <div styleName="step">
