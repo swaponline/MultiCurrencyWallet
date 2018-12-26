@@ -41,7 +41,7 @@ const getBalance = () => {
       return amount
     })
     .catch((e) => {
-      console.log('Web3 doesn\'t work please again later ',  e.error)
+      reducers.user.setBalanceError({ name: 'ethData' })
     })
 }
 

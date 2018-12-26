@@ -245,6 +245,7 @@ export default class Row extends Component {
         fullName,
         unconfirmedBalance,
         contractAddress,
+        balanceError,
       },
       intl: { locale },
     } = this.props
@@ -276,6 +277,19 @@ export default class Row extends Component {
           <Link to={localisedUrl(locale, `/${fullName}-wallet`)} title={`Online ${fullName} wallet`}>
             {fullName}
           </Link>
+          {balanceError &&
+          <div className={styles.errorMessage}>
+            {fullName}
+            <FormattedMessage
+              id="RowWallet276"
+              defaultMessage=" node is down (You can not perform transactions). " />
+            <a href="https://wiki.swap.online/faq/bitcoin-node-is-down-you-cannot-make-transactions/">
+              <FormattedMessage
+                id="RowWallet282"
+                defaultMessage="Need help?" />
+            </a>
+          </div>
+          }
         </td>
         <td styleName="table_balance-cell" data-tut="reactour__balance">
           {

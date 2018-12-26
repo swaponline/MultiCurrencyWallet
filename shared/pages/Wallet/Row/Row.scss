@@ -208,6 +208,12 @@ tr button[disabled]:hover {
  .buttonUseAnother {
   display: none;
  }
+ .errorMessage {
+   position: absolute;
+   color: red;
+   font-size: 14px;
+   z-index: 5;
+ }
 
 @media all and (min-width: 570px) and (max-width:1024px) {
   .buttonActivate {

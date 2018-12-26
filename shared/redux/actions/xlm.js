@@ -49,7 +49,8 @@ const getBalance = async () => {
       return balances[0].balance
     })
     .catch((error) => {
-      console.error(error.message || error)
+      console.log(error.message || error)
+      reducers.user.setBalanceError({ name: 'xlmData' })
       return 0
     })
 
