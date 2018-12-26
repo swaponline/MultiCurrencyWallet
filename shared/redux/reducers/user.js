@@ -47,6 +47,8 @@ export const initialState = {
   eosData: {
     balance: 0,
     address: '',
+    isAccountActivated: false,
+    isActivationPaymentSent: false,
     isBalanceFetched: true,
     currency: 'EOS',
     fullName: 'Eos',

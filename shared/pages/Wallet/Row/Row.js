@@ -249,8 +249,14 @@ export default class Row extends Component {
       intl: { locale },
     } = this.props
 
-    const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true"
-    const telosAccountActivated = localStorage.getItem(constants.localStorage.telosAccountActivated) === "true"
+    const telosAccountActivated = localStorage.getItem(constants.localStorage.telosAccountActivated) === 'true'
+
+    let eosAccountActivated = false
+    let eosActivationPaymentSent = false
+    if (currency === 'EOS') {
+      eosAccountActivated = this.props.item.isAccountActivated
+      eosActivationPaymentSent = this.props.item.isActivationPaymentSent
+    }
 
     return (
       <tr
@@ -330,7 +336,8 @@ export default class Row extends Component {
                       <Fragment>
                         <br />
                         <span styleName="notActiveLink">
-                          <FormattedMessage id="Row268" defaultMessage="not activated" />
+                          { eosActivationPaymentSent && <InlineLoader /> }
+                          { !eosActivationPaymentSent && <FormattedMessage id="Row268" defaultMessage="not activated" /> }
                         </span>
                       </Fragment>
                     )
