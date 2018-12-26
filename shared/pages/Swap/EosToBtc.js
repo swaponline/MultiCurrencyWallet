@@ -40,7 +40,7 @@ export default class EosToBtc extends Component {
   }
 
   render() {
-    const { children } = this.props
+    const { children, disabledTimer }  = this.props
     const { flow, enabledButton } = this.state
 
     return (

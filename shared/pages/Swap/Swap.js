@@ -36,6 +36,7 @@ export default class SwapComponent extends PureComponent {
     swap: null,
     SwapComponent: null,
     currencyData: null,
+    isAmountMore: null,
   }
 
   componentWillMount() {
@@ -52,6 +53,31 @@ export default class SwapComponent extends PureComponent {
       const SwapComponent = swapComponents[swap.flow._flowName]
       const currencyData = items.concat(tokenItems)
         .filter(item => item.currency === swap.sellCurrency.toUpperCase())[0]
+
+      const currencies = [
+        {
+          currency: swap.sellCurrency,
+          amount: swap.sellAmount,
+        },
+        {
+          currency: swap.buyCurrency,
+          amount: swap.buyAmount,
+        },
+      ]
+
+      currencies.forEach(item => {
+        actions.user.getExchangeRate(item.currency, 'usd')
+          .then(exRate => {
+            const amount = exRate * Number(item.amount)
+
+            if (Number(amount) >= 50) {
+              this.setState(() => ({ isAmountMore: 'enable' }))
+            } else {
+              this.setState(() => ({ isAmountMore: 'disable' }))
+            }
+          })
+      })
+
 
       window.swap = swap
 
@@ -92,15 +118,15 @@ export default class SwapComponent extends PureComponent {
 
   render() {
     const { peer } = this.props
-    const { swap, SwapComponent, currencyData } = this.state
+    const { swap, SwapComponent, currencyData, isAmountMore } = this.state
 
-    if (!swap || !SwapComponent || !peer) {
+    if (!swap || !SwapComponent || !peer || !isAmountMore) {
       return null
     }
 
     return (
       <div styleName="swap">
-        <SwapComponent swap={swap} currencyData={currencyData}>
+        <SwapComponent disabledTimer={isAmountMore === 'enable'} swap={swap} currencyData={currencyData} >
           <Share flow={swap.flow} />
           <EmergencySave flow={swap.flow} />
           {

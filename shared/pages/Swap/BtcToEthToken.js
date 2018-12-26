@@ -83,7 +83,7 @@ export default class BtcToEthToken extends Component {
   }
 
   render() {
-    const { children } = this.props
+    const { children, disabledTimer }  = this.props
 
     const { currencyAddress, secret, flow, enabledButton, destinationAddressTimer } = this.state
     const linked = Link.all(this, 'destinationBuyAddress')
@@ -119,7 +119,7 @@ export default class BtcToEthToken extends Component {
               <Input valueLink={linked.destinationBuyAddress} onFocus={this.destinationAddressFocus} styleName="input" pattern="0-9a-zA-Z" />
               <hr />
               { destinationAddressTimer && (
-                <TimerButton timeLeft={10} brand onClick={this.confirmAddress}>
+                <TimerButton disabledTimer={disabledTimer} timeLeft={5} brand onClick={this.confirmAddress}>
                   <FormattedMessage id="BtcToEthTokenAddress2" defaultMessage="Confirm address " />
                 </TimerButton>
               ) }
@@ -157,7 +157,7 @@ export default class BtcToEthToken extends Component {
                   <Fragment>
                     <input type="text" placeholder="Secret Key" defaultValue={secret} />
                     <br />
-                    <TimerButton timeLeft={5} brand onClick={this.submitSecret}>
+                    <TimerButton disabledTimer={disabledTimer} timeLeft={5} brand onClick={this.submitSecret}>
                       <FormattedMessage id="BtcToEthToken108" defaultMessage="Confirm" />
                     </TimerButton>
                   </Fragment>
@@ -205,7 +205,7 @@ export default class BtcToEthToken extends Component {
                       <span>{flow.address}</span>
                     </div>
                     <br />
-                    <TimerButton brand onClick={this.updateBalance}>
+                    <TimerButton disabledTimer={disabledTimer} brand onClick={this.updateBalance}>
                       <FormattedMessage id="BtcToEthToken147" defaultMessage="Continue" />
                     </TimerButton>
                   </Fragment>
