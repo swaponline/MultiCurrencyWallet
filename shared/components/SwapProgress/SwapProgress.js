@@ -32,7 +32,7 @@ export default class SwapProgress extends Component {
 
   handleStepChangeImage = (step) => {
     // eslint-disable-next-line
-    const icon = global.require(`./images/icon${step}.gif`)
+    const icon = require(`./images/icon${step}.gif`)
     return <img src={icon} alt="step" />
   }
 
