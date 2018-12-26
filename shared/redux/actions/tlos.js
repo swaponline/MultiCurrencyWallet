@@ -54,18 +54,19 @@ const getBalance = async () => {
 
   if (typeof address !== 'string') return
 
-  const telosInstance = await telos.getInstance()
-  const balance = await telosInstance.getCurrencyBalance({
-    code: 'eosio.token',
-    symbol: 'TLOS',
-    account: address,
-  })
-
-  const amount = Number.parseFloat(balance[0]) || 0
-
-  reducers.user.setBalance({ name: 'telosData', amount })
-
-  return amount
+  try {
+    const telosInstance = await telos.getInstance()
+    const balance = await telosInstance.getCurrencyBalance({
+      code: 'eosio.token',
+      symbol: 'TLOS',
+      account: address,
+    })
+    const amount = Number.parseFloat(balance[0]) || 0
+    reducers.user.setBalance({ name: 'telosData', amount })
+    return amount
+  } catch (e) {
+    reducers.user.setBalanceError({ name: 'telosData' })
+  }
 }
 
 const send = async (from, to, amount) => {

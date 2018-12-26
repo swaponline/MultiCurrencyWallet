@@ -159,17 +159,18 @@ const getBalance = async () => {
   if (typeof address !== 'string') return
 
   const eosInstance = await eos.getInstance()
-  const balance = await eosInstance.getCurrencyBalance({
-    code: 'eosio.token',
-    symbol: 'EOS',
-    account: address,
-  })
-
-  const amount = Number.parseFloat(balance[0]) || 0
-
-  reducers.user.setBalance({ name: 'eosData', amount })
-
-  return amount
+  try {
+    const balance = await eosInstance.getCurrencyBalance({
+      code: 'eosio.token',
+      symbol: 'EOS',
+      account: address,
+    })
+    const amount = Number.parseFloat(balance[0]) || 0
+    reducers.user.setBalance({ name: 'eosData', amount })
+    return amount
+  } catch (e) {
+    reducers.user.setBalanceError({ name: 'eosData' })
+  }
 }
 
 const send = async (from, to, amount) => {
