@@ -50,8 +50,8 @@ export default class TimerButton extends Component {
   render() {
     const { timeLeft } = this.state
 
-    if (timeLeft !== Infinity) {
-      return timeLeft
-    } return ' '
+  return timeLeft !== Infinity
+    ? timeLeft
+    : null
   }
 }
