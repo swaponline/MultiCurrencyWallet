@@ -74,7 +74,7 @@ export default class SwapComponent extends PureComponent {
               this.setState(() => ({ isAmountMore: 'enable' }))
             } else {
               this.setState(() => ({ isAmountMore: 'disable' }))
-             }
+            }
           })
       })
 

@@ -24,7 +24,7 @@ export default class TimerButton extends Component {
     return (
       <Button className={className} onClick={onClick} {...rest} >
         {children}
-      {!disabledTimer && <Timer timeLeft={timeLeft} handleClick={onClick} />}
+        {!disabledTimer && <Timer timeLeft={timeLeft} handleClick={onClick} />}
       </Button>
     )
 
