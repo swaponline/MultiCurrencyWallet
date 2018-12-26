@@ -6,8 +6,8 @@ export default {
   // bch: 'https://bch-insight.bitpay.com/api',
   ltc: 'https://ltctest.coinapp.io/api',
   eos: {
-    chainId: '038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca',
-    httpEndpoint: 'https://seven.swap.online/jungle-endpoint',
+    chainId: 'e70aaab8997e1dfce58fbfac80cbbb8fecec7b99cf982a9444273cbc64c41473',
+    httpEndpoint: 'https://jungle2.cryptolions.io',
     registerEndpoint: 'https://seven.swap.online/eos-testnet/buyaccount',
     buyAccountPriceInBTC: 0.01,
     buyAccountPaymentRecipient: 'mnCLLbtNuXfmHHbDunyjqj61o63XjxNCpG',
