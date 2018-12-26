@@ -140,7 +140,7 @@ export default class BtcToEthToken extends Component {
         }
 
         {
-          (!flow.isWaitingForOwner && (this.swap.destinationBuyAddress === null)) && (
+          (!flow.isWaitingForOwner && !this.swap.destinationBuyAddress) && (
             <Fragment>
               <FormattedMessage id="BtcToEthTokenAddress1" defaultMessage="Confirm destination address (by default - swap.online wallet)">
                 {message => <h3>{message}</h3>}
