@@ -50,6 +50,6 @@ export default class TimerButton extends Component {
   render() {
     const { timeLeft } = this.state
 
-  return timeLeft
+    return timeLeft
   }
 }
