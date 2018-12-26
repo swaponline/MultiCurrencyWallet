@@ -31,6 +31,7 @@ export default class SwapProgress extends Component {
   // TODO add animation css
 
   handleStepChangeImage = (step) => {
+    // eslint-disable-next-line
     const icon = global.require(`./images/icon${step}.gif`)
     return <img src={icon} alt="step" />
   }
