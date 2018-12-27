@@ -80,29 +80,25 @@ export default class Row extends Component {
   sendRequest = async (orderId, currency) => {
     const check = await this.handleGoTrade(currency)
 
-    if (check) {
-      this.setState({ isFetching: true })
+    this.setState({ isFetching: true })
 
-      setTimeout(() => {
-        this.setState(() => ({ isFetching: false }))
-      }, 15 * 1000)
+    setTimeout(() => {
+      this.setState(() => ({ isFetching: false }))
+    }, 15 * 1000)
 
-      actions.core.sendRequest(orderId, {}, (isAccepted) => {
-        console.log(`user has ${isAccepted ? 'accepted' : 'declined'} your request`)
+    actions.core.sendRequest(orderId, {}, (isAccepted) => {
+      console.log(`user has ${isAccepted ? 'accepted' : 'declined'} your request`)
 
-        if (isAccepted) {
-          this.setState({ redirect: true, isFetching: false })
+      if (isAccepted) {
+        this.setState({ redirect: true, isFetching: false })
         } else {
           this.setState({ isFetching: false })
-        }
+      }
 
-      })
-    } else {
-      actions.modals.open(constants.modals.EthChecker, {})
-    }
-
+    })
     actions.core.updateCore()
   }
+
   renderWebContent() {
     const { balance, isFetching } = this.state
     const {

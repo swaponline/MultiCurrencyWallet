@@ -2,17 +2,26 @@ import React, { Component, Fragment } from 'react'
 
 import config from 'app-config'
 import { BigNumber } from 'bignumber.js'
+import actions from 'redux/actions'
+import { constants } from 'helpers'
 
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import TimerButton from 'components/controls/TimerButton/TimerButton'
 import Button from 'components/controls/Button/Button'
 import Timer from './Timer/Timer'
 import { FormattedMessage } from 'react-intl'
+import CopyButton from './CopyButton/CopyButton'
 
 
 export default class EthTokenToBtc extends Component {
 
-  constructor({ swap, currencyData }) {
+  static getDerivedStateFromProps({ continueSwap }) {
+    return {
+      continuerSwap: continueSwap,
+    }
+  }
+
+  constructor({ swap, currencyData, ethBalance, continueSwap }) {
     super()
 
     this.swap = swap
@@ -21,10 +30,13 @@ export default class EthTokenToBtc extends Component {
       currencyAddress: currencyData.address,
       flow: this.swap.flow.state,
       enabledButton: false,
+      continuerSwap: continueSwap,
+      isTextCopied: false,
     }
+
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.swap.on('state update', this.handleFlowStateUpdate)
   }
 
@@ -53,6 +65,7 @@ export default class EthTokenToBtc extends Component {
   tryRefund = () => {
     this.swap.flow.tryRefund()
     this.setState(() => ({ enabledButton: false }))
+
   }
 
   toggleBitcoinScript = () => {
@@ -61,9 +74,21 @@ export default class EthTokenToBtc extends Component {
     })
   }
 
+  handleCopyText = () => {
+    this.setState({
+      isTextCopied: true,
+    }, () => {
+      setTimeout(() => {
+        this.setState({
+          isTextCopied: false,
+        })
+      }, 15 * 1000)
+    })
+  }
+
   render() {
     const { children, disabledTimer }  = this.props
-    const { currencyAddress, flow, enabledButton, isShowingBitcoinScript } = this.state
+    const { currencyAddress, flow, enabledButton, isShowingBitcoinScript, continuerSwap, isTextCopied } = this.state
 
     return (
       <div>
@@ -103,7 +128,7 @@ export default class EthTokenToBtc extends Component {
                 !flow.isSignFetching && !flow.isMeSigned && (
                   <Fragment>
                     <br />
-                    <TimerButton disabledTimer={disabledTimer} timeLeft={5} brand onClick={this.signSwap}>
+                    <TimerButton disabledTimer={disabledTimer} timeLeft={10} brand onClick={this.signSwap}>
                       <FormattedMessage id="EthTokenBtc102" defaultMessage="Confirm" />
                     </TimerButton>
                   </Fragment>
@@ -264,6 +289,7 @@ export default class EthTokenToBtc extends Component {
                 )
               }
               {
+
                 flow.step === 4 && flow.isBalanceFetching && (
                   <Fragment>
                     <div>
@@ -277,6 +303,7 @@ export default class EthTokenToBtc extends Component {
                 (flow.step >= 5 || flow.isEthContractFunded) && (
                   <h3>
                     <FormattedMessage id="EthTokenBtc276" defaultMessage="4. Creating Ethereum Contract. Please wait, it will take a while" />
+                    {!continuerSwap && <CopyButton text={currencyAddress} onCopy={this.handleCopyText} isTextCopied={isTextCopied} />}
                   </h3>
                 )
               }
@@ -294,8 +321,7 @@ export default class EthTokenToBtc extends Component {
                   </div>
                 )
               }
-              {
-                flow.step === 5 && (
+              {flow.step === 5 && (
                   <InlineLoader />
                 )
               }
@@ -313,7 +339,7 @@ export default class EthTokenToBtc extends Component {
               }
 
               {
-                (flow.step === 6 || flow.isEthWithdrawn) && (
+                (continuerSwap && (flow.step === 6 || flow.isEthWithdrawn)) && (
                   <Fragment>
                     <h3>
                       <FormattedMessage id="EthTokenBtc321" defaultMessage="5. Waiting BTC Owner adds Secret Key to ETH Contact" />
@@ -328,7 +354,7 @@ export default class EthTokenToBtc extends Component {
               }
 
               {
-                (flow.step === 7 || flow.isBtcWithdrawn) && (
+                (continuerSwap && (flow.step === 7 || flow.isBtcWithdrawn)) && (
                   <h3>
                     <FormattedMessage
                       id="EthTokenBtc335"
@@ -337,7 +363,7 @@ export default class EthTokenToBtc extends Component {
                 )
               }
               {
-                flow.btcSwapWithdrawTransactionHash && (
+                flow.btcSwapWithdrawTransactionHash && continuerSwap && (
                   <div>
                     <FormattedMessage id="EthTokenBtc342" defaultMessage="Transaction: " />
                     <strong>
@@ -355,7 +381,7 @@ export default class EthTokenToBtc extends Component {
               }
 
               {
-                flow.isBtcWithdrawn && (
+                flow.isBtcWithdrawn && continuerSwap && (
                   <Fragment>
                     <h2>
                       <FormattedMessage id="EthTokenBtc365" defaultMessage="Thank you for using Swap.Online!" />

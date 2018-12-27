@@ -37,6 +37,8 @@ export default class SwapComponent extends PureComponent {
     SwapComponent: null,
     currencyData: null,
     isAmountMore: null,
+    ethBalance: null,
+    continueSwap: true,
   }
 
   componentWillMount() {
@@ -51,6 +53,7 @@ export default class SwapComponent extends PureComponent {
     try {
       const swap = new Swap(orderId)
       const SwapComponent = swapComponents[swap.flow._flowName]
+      const ethData = items.filter(item => item.currency === 'ETH')
       const currencyData = items.concat(tokenItems)
         .filter(item => item.currency === swap.sellCurrency.toUpperCase())[0]
 
@@ -65,8 +68,8 @@ export default class SwapComponent extends PureComponent {
         },
       ]
 
-      currencies.forEach(item => {
-        actions.user.getExchangeRate(item.currency, 'usd')
+      currencies.forEach(async item => {
+        await actions.user.getExchangeRate(item.currency, 'usd')
           .then(exRate => {
             const amount = exRate * Number(item.amount)
 
@@ -85,6 +88,7 @@ export default class SwapComponent extends PureComponent {
         SwapComponent,
         swap,
         currencyData,
+        ethData,
       })
 
     } catch (error) {
@@ -93,6 +97,14 @@ export default class SwapComponent extends PureComponent {
     }
 
     this.setSaveSwapId(orderId)
+  }
+
+  componentDidMount() {
+    this.checkEthBalance()
+
+    setInterval(() => {
+      this.checkEthBalance()
+    }, 5000)
   }
 
   // componentWillMount() {
@@ -116,9 +128,20 @@ export default class SwapComponent extends PureComponent {
     localStorage.setItem('swapId', JSON.stringify(swapsId))
   }
 
+  checkEthBalance = async () => {
+    const ethBalance = await actions.eth.getBalance()
+    this.setState(() => ({ ethBalance }))
+
+    if (this.state.ethBalance < 0.01) {
+      this.setState(() => ({ continueSwap: false }))
+    } else {
+      this.setState(() => ({ continueSwap: true }))
+    }
+  }
+
   render() {
     const { peer } = this.props
-    const { swap, SwapComponent, currencyData, isAmountMore } = this.state
+    const { swap, SwapComponent, currencyData, isAmountMore, ethData, continueSwap } = this.state
 
     if (!swap || !SwapComponent || !peer || !isAmountMore) {
       return null
@@ -126,7 +149,13 @@ export default class SwapComponent extends PureComponent {
 
     return (
       <div styleName="swap">
-        <SwapComponent disabledTimer={isAmountMore === 'enable'} swap={swap} currencyData={currencyData} >
+        <SwapComponent
+          disabledTimer={isAmountMore === 'enable'}
+          swap={swap}
+          currencyData={currencyData}
+          continueSwap={continueSwap}
+          ethData={ethData}
+        >
           <Share flow={swap.flow} />
           <EmergencySave flow={swap.flow} />
           {

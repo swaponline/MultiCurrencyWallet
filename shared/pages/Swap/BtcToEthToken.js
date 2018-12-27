@@ -3,6 +3,9 @@ import React, { Component, Fragment } from 'react'
 import crypto from 'crypto'
 import config from 'app-config'
 import { BigNumber } from 'bignumber.js'
+import Swap from 'swap.swap'
+import actions from 'redux/actions'
+import { constants } from 'helpers'
 
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import TimerButton from 'components/controls/TimerButton/TimerButton'
@@ -12,11 +15,18 @@ import Button from 'components/controls/Button/Button'
 import swapApp from 'swap.app'
 import Timer from './Timer/Timer'
 import { FormattedMessage } from 'react-intl'
+import CopyButton from './CopyButton/CopyButton'
 
 
 export default class BtcToEthToken extends Component {
 
-  constructor({ swap, currencyData }) {
+  static getDerivedStateFromProps({ continueSwap }) {
+    return {
+      continuerSwap: continueSwap,
+    }
+  }
+
+  constructor({ swap, currencyData, ethData, continueSwap }) {
     super()
 
     this.swap = swap
@@ -28,10 +38,13 @@ export default class BtcToEthToken extends Component {
       enabledButton: false,
       destinationAddressTimer: true,
       destinationBuyAddress: (this.swap.destinationBuyAddress) ? this.swap.destinationBuyAddress : swapApp.services.auth.accounts.eth.address,
+      isTextCopied: false,
+      ethAddress: ethData.map(item => item.address),
+      continuerSwap: continueSwap,
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.swap.on('state update', this.handleFlowStateUpdate)
   }
 
@@ -40,6 +53,7 @@ export default class BtcToEthToken extends Component {
   }
 
   handleFlowStateUpdate = (values) => {
+
     this.setState({
       flow: values,
     })
@@ -52,7 +66,6 @@ export default class BtcToEthToken extends Component {
 
   submitSecret = () => {
     const { secret } = this.state
-
     this.swap.flow.submitSecret(secret)
   }
 
@@ -82,14 +95,25 @@ export default class BtcToEthToken extends Component {
     }
   }
 
-  render() {
-    const { children, disabledTimer }  = this.props
+  handleCopyText = () => {
+    this.setState({
+      isTextCopied: true,
+    }, () => {
+      setTimeout(() => {
+        this.setState({
+          isTextCopied: false,
+        })
+      }, 15 * 1000)
+    })
+  }
 
-    const { currencyAddress, secret, flow, enabledButton, destinationAddressTimer } = this.state
+  render() {
+    const { children, disabledTimer, swap }  = this.props
+
+    const { currencyAddress, secret, flow, enabledButton, destinationAddressTimer, continuerSwap, isTextCopied } = this.state
     const linked = Link.all(this, 'destinationBuyAddress')
 
     linked.destinationBuyAddress.check((value) => value !== '', 'Please enter ETH address for tokens')
-
     return (
       <div>
         {
@@ -177,7 +201,6 @@ export default class BtcToEthToken extends Component {
                   </Fragment>
                 )
               }
-
               {
                 flow.step === 3 && !flow.isBalanceEnough && !flow.isBalanceFetching && (
                   <Fragment>
@@ -316,11 +339,11 @@ export default class BtcToEthToken extends Component {
                   </div>
                 )
               }
-
               {
                 (flow.step === 6 || flow.isEthWithdrawn) && (
                   <h3>
                     <FormattedMessage id="BtcToEthToken260" defaultMessage="5. ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait" />
+                    {!continuerSwap && <CopyButton text={this.state.ethAddress} onCopy={this.handleCopyText} isTextCopied={isTextCopied} />}
                   </h3>
                 )
               }
@@ -347,7 +370,7 @@ export default class BtcToEthToken extends Component {
               }
 
               {
-                flow.isEthWithdrawn && (
+                (continuerSwap && (flow.isEthWithdrawn)) && (
                   <Fragment>
                     <h3>
                       <FormattedMessage id="BtcToEthToken290" defaultMessage="6. Money was transferred to your wallet. Check the balance." />
@@ -374,7 +397,7 @@ export default class BtcToEthToken extends Component {
                 )
               }
               {
-                flow.refundTransactionHash && (
+                flow.refundTransactionHash && continuerSwap && (
                   <div>
                     <FormattedMessage id="BtcToEthToken316" defaultMessage="Transaction: " />
                     <strong>
