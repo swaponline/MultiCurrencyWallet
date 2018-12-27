@@ -438,17 +438,21 @@ export default class PartialClosure extends Component {
       <Fragment>
         <PageHeadline subTitle={suTitle} />
         <div styleName="section">
-          <div styleName="blockVideo">
-            <iframe
-              title="swap online video"
-              width="560"
-              height="315"
-              src="https://www.youtube-nocookie.com/embed/Jhrb7xOT_7s?controls=0"
-              frameBorder="0"
-              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-          </div>
+          {
+            (config && !config.isWidget) && (
+              <div styleName="blockVideo">
+                <iframe
+                  title="swap online video"
+                  width="560"
+                  height="315"
+                  src="https://www.youtube-nocookie.com/embed/Jhrb7xOT_7s?controls=0"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+            )
+          }
           <div styleName="block">
             <SelectGroup
               inputValueLink={linked.haveAmount.pipe(this.setAmount)}

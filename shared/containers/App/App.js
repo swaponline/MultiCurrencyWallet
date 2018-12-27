@@ -97,7 +97,7 @@ export default class App extends React.Component {
   render() {
     const { fetching, multiTabs, error } = this.state
     const { children, ethAddress, btcAddress, tokenAddress, history /* eosAddress */ } = this.props
-    const isFetching = !ethAddress || !btcAddress || (!tokenAddress && !config.isWidget) || !fetching
+    const isFetching = !ethAddress || !btcAddress || (!tokenAddress && config && !config.isWidget) || !fetching
 
     if (multiTabs) {
       return <PreventMultiTabs />
