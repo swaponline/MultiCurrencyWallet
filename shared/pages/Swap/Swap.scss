@@ -1,7 +1,196 @@
 .swap {
-  padding-left: 30px;
   padding-top: 60px;
   min-height: calc(100vh - 75px);
   width: 500px;
-  margin: auto;
+  margin: auto
+}
+
+.swapContainer {
+  color: #000;
+}
+
+.swapStep-4 {
+  color: #000;
+}
+
+.topUpLink {
+  border: 1px solid #cecece;
+  padding: 20px 15px;
+  margin-top: 10px;
+  font-size: 18px;
+  position: relative;
+  padding: 25px 25px;
+  border-radius: 20px;
+  display: inline-block;
+  text-align: left;
+  padding-bottom: 50px;
+  &:hover {
+    color: #ff1fc5;
+  }
+}
+.lockTime {
+  position: absolute;
+  right: 25px;
+  bottom: 65px;
+  i {
+    position: absolute;
+    top: 4px;
+    left: -25px;
+  }
+  div {
+    span {
+      span {
+        display: none;
+      }
+    }
+  }
+}
+.btcMessage {
+  color: #000;
+  max-width: 480px;
+  display: block;
+}
+.copyText {
+  position: absolute;
+  left: 0px;
+  bottom: -40px;
+  color: #000;
+}
+.swapText {
+  color: #000;
+  display: block;
+  margin-top: 10px;
+  width: 185px;
+  text-align: center;
+}
+
+.qr {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  img {
+    width: 265px;
+  }
+  button {
+    width: auto;
+    margin: auto;
+    height: 56px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    width: 56px;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    background: #eee;
+    color: #000;
+    margin-top: 13px;
+    margin-left: 15px;
+    &:hover {
+      background: #eee
+    }
+  }
+}
+.cardsContainer {
+    display: flex;
+    width: 185px;
+    margin-top: -35px;
+    display: flex;
+    -webkit-justify-content: space-around;
+    -ms-flex-pack: distribute;
+    justify-content: space-between;
+    margin-bottom: -20px;
+    display: none;
+  img {
+    width: 72px;
+  }
+}
+
+.pressCtrlText {
+  display: none;
+}
+
+.pressCtrlTextActive {
+  display: block;
+  margin-bottom: 20px;
+  margin-top: -5px;
+}
+
+.linkAddress,
+.buyWithCard {
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 21px;
+  align-items: center;
+  height: 56px;
+  display: flex;
+  margin-top: 13px;
+  color: #fff;
+  display: flex;
+  background: #fff;
+  padding: 10px 15px;
+  box-shadow: 1px 1px 6px #929292;
+  color: #000;
+  &:hover {
+    color: #000;
+    background: #eee;
+  }
+}
+
+.linkAddress {
+  cursor: text;
+}
+
+.fa-copy-in {
+  background: #000;
+  color: #fff;
+}
+
+.buyWithCard {
+  background: #eee;
+  display: -webkit-inline-box;
+  border-radius: 6px;
+  text-decoration: dashed;
+  color: #000;
+  height: 56px;
+  display: flex;
+  width: fit-content;
+  justify-content: normal;
+  align-items: center;
+  font-size: 17px;
+  margin-top: 0;
+  font-size: 13px;
+  text-align: center;
+  font-weight: 500;
+  padding: 0;
+  width: 182px;
+  justify-content: space-around;
+  text-transform: uppercase;
+  margin-top: 10px;
+  background: #dbdbdb;
+  color: #626262;
+  &:hover {
+    background: #dbdbdb;
+    color: #626262;
+  }
+}
+.comingSoon {
+  display: block;
+  position: absolute;
+  bottom: 13px;
+  font-size: 16px;
+  text-transform: initial;
+}
+.yourBalance {
+  color: #000;
+}
+.fromClient,
+.unconfBalance {
+  color: #000;
+}
+.unconfBalance {
+  margin-bottom: 20px;
 }

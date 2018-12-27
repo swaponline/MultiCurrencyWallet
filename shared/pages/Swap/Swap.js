@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 
 import Swap from 'swap.swap'
 
-import CSSModules from 'react-css-modules'
+import cssModules from 'react-css-modules'
 import styles from './Swap.scss'
 
 import { connect } from 'redaction'
@@ -29,7 +29,8 @@ import SwapController from './SwapController'
   checked: 'api.checked',
   peer,
 }))
-@CSSModules(styles)
+
+@cssModules(styles, { allowMultiple: true })
 export default class SwapComponent extends PureComponent {
 
   state = {
@@ -126,7 +127,7 @@ export default class SwapComponent extends PureComponent {
 
     return (
       <div styleName="swap">
-        <SwapComponent disabledTimer={isAmountMore === 'enable'} swap={swap} currencyData={currencyData} >
+        <SwapComponent disabledTimer={isAmountMore === 'enable'} swap={swap} currencyData={currencyData} styles={styles}>
           <Share flow={swap.flow} />
           <EmergencySave flow={swap.flow} />
           {
