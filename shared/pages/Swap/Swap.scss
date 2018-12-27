@@ -1,4 +1,5 @@
 .swap {
+  padding-left: 30px;
   padding-top: 60px;
   min-height: calc(100vh - 75px);
   width: 500px;
@@ -11,6 +12,18 @@
 
 .swapStep-4 {
   color: #000;
+}
+
+.swapGoNumber {
+  display: block;
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: -35px;
+}
+
+.swapWrapper {
+  position: relative;
+  margin-top: 70px;
 }
 
 .topUpLink {
@@ -28,6 +41,11 @@
     color: #ff1fc5;
   }
 }
+
+.logHide {
+  display: none;
+}
+
 .lockTime {
   position: absolute;
   right: 25px;

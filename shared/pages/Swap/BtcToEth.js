@@ -3,6 +3,9 @@ import React, { Component, Fragment } from 'react'
 import crypto from 'crypto'
 import config from 'app-config'
 
+import CSSModules from 'react-css-modules'
+import styles from './Swap.scss'
+
 import { BigNumber } from 'bignumber.js'
 
 import actions from 'redux/actions'
@@ -97,7 +100,7 @@ export default class BtcToEth extends Component {
 
 
   render() {
-    const { children, disabledTimer }  = this.props
+    const { children } = this.props
     const { currencyAddress, secret, flow, enabledButton } = this.state
     const headingStyle = {
       color: '#5100dc',
@@ -108,300 +111,307 @@ export default class BtcToEth extends Component {
       paddingTop: '20px' }
     return (
       <div>
-        <div style={{ width: '500px', margin: 'auto' }}>
+        <div className={this.props.styles.swapWrapper}>
           {
             this.swap.id && (
-              <strong>{this.swap.sellAmount.toNumber()} {this.swap.sellCurrency} &#10230; {this.swap.buyAmount.toNumber()} {this.swap.buyCurrency}</strong>
+              <strong className={this.props.styles.swapGoNumber}>
+                {this.swap.sellAmount.toNumber()}
+                {this.swap.sellCurrency} &#10230;
+                {this.swap.buyAmount.toNumber()}
+                {this.swap.buyCurrency}
+              </strong>
             )
           }
           <SwapProgress data={flow} name="BTC2ETH" stepLength={8} />
         </div>
-        {
-          !this.swap.id && (
-            this.swap.isMy ? (
-              <FormattedMessage id="BtcToEth100" defaultMessage="This order doesn&apos;t have a buyer">
-                {message => <h3>{message}</h3>}
-              </FormattedMessage>
-            ) : (
-              <Fragment>
-                <FormattedMessage id="BtcToEth105" defaultMessage="The order creator is offline. Waiting for him..">
+        <div className={this.props.styles.logHide}>
+          {
+            !this.swap.id && (
+              this.swap.isMy ? (
+                <FormattedMessage id="BtcToEth100" defaultMessage="This order doesn&apos;t have a buyer">
                   {message => <h3>{message}</h3>}
+                </FormattedMessage>
+              ) : (
+                <Fragment>
+                  <FormattedMessage id="BtcToEth105" defaultMessage="The order creator is offline. Waiting for him..">
+                    {message => <h3>{message}</h3>}
+                  </FormattedMessage>
+                  <InlineLoader />
+                </Fragment>
+              )
+            )
+          }
+          {
+            !flow.isParticipantSigned && (
+              <Fragment>
+                <FormattedMessage
+                  id="BtcToEth116"
+                  defaultMessage="We are waiting for a market maker. If it does not appear within 5 minutes, the swap will be canceled automatically.">
+                  {message => <h3 style={{ color: '#5100dc', textTransform: 'uppercase', fontSize: '20px', marginTop: '20px' }}>{message}</h3>}
                 </FormattedMessage>
                 <InlineLoader />
               </Fragment>
             )
-          )
-        }
-        {
-          !flow.isParticipantSigned && (
-            <Fragment>
-              <FormattedMessage
-                id="BtcToEth116"
-                defaultMessage="We are waiting for a market maker. If it does not appear within 5 minutes, the swap will be canceled automatically.">
-                {message => <h3 style={{ color: '#5100dc', textTransform: 'uppercase', fontSize: '20px', marginTop: '20px' }}>{message}</h3>}
-              </FormattedMessage>
-              <InlineLoader />
-            </Fragment>
-          )
-        }
-        {
-          flow.isParticipantSigned && (
-            <Fragment>
-              <FormattedMessage id="BtcToEth126" defaultMessage="Create a secret key">
-                {message => <h3 style={{ color: '#5100dc', textTransform: 'uppercase', fontSize: '20px', marginTop: '20px' }}>{message}</h3>}
-              </FormattedMessage>
-              {
-                !flow.secretHash ? (
-                  <Fragment>
-                    <input type="text" placeholder="Secret Key" defaultValue={secret} />
-                    <br />
-                    <TimerButton disabledTimer={disabledTimer} timeLeft={5} brand onClick={this.submitSecret}>
-                      <FormattedMessage id="BtcToEth134" defaultMessage="Confirm" />
-                    </TimerButton>
-                  </Fragment>
-                ) : (
-                  <Fragment>
-                    <div>
-                      <FormattedMessage id="BtcToEth140" defaultMessage="Save the secret key! Otherwise there will be a chance you loose your money!" />
-                    </div>
-                    <div>
-                      <FormattedMessage id="BtcToEth143" defaultMessage="Secret Key: " />
-                      <strong>{flow.secret}</strong>
-                    </div>
-                    <div>
-                      <FormattedMessage id="BtcToEth146" defaultMessage="Secret Hash: " />
-                      <strong style={{ display: 'block' }}>{flow.secretHash}</strong>
-                    </div>
-                  </Fragment>
-                )
-              }
-
-              {
-                flow.step === 3 && !flow.isBalanceEnough && !flow.isBalanceFetching && (
-                  <Fragment>
-                    <h3 style={headingStyle}>
-                      <FormattedMessage id="BtcToEth156" defaultMessage="Not enough money for this swap. Please charge the balance" />
-                    </h3>
-                    <div>
-                      <div>
-                        <FormattedMessage id="BtcToEth160" defaultMessage="Your balance: " />
-                        <strong>{flow.balance}</strong> {this.swap.sellCurrency}
-                      </div>
-                      <div>
-                        <FormattedMessage id="BtcToEth163" defaultMessage="Required balance: " />
-                        <strong>{this.swap.sellAmount.toNumber()}</strong> {this.swap.sellCurrency}
-                      </div>
-                      <div>
-                        <div>
-                          <FormattedMessage id="BtcToEth167" defaultMessage="Your address: " />
-                          <a href={`${config.link.bitpay}/address/${currencyAddress}`} target="_blank" rel="noopener noreferrer">
-                            {currencyAddress}
-                          </a>
-                        </div>
-                        <hr />
-                        <span>{flow.address}</span>
-                      </div>
+          }
+          {
+            flow.isParticipantSigned && (
+              <Fragment>
+                <FormattedMessage id="BtcToEth126" defaultMessage="Create a secret key">
+                  {message => <h3 style={{ color: '#5100dc', textTransform: 'uppercase', fontSize: '20px', marginTop: '20px' }}>{message}</h3>}
+                </FormattedMessage>
+                {
+                  !flow.secretHash ? (
+                    <Fragment>
+                      <input type="text" placeholder="Secret Key" defaultValue={secret} />
                       <br />
-                      <Button brand onClick={this.updateBalance}>
-                        <FormattedMessage id="174" defaultMessage="Continue" />
-                      </Button>
-                    </div>
-                  </Fragment>
-                )
-              }
-              {
-                flow.step === 3 && flow.isBalanceFetching && (
-                  <Fragment>
-                    <div style={headingStyle}>
-                      <FormattedMessage id="BtcToEth183" defaultMessage="Checking balance.." />
-                    </div>
-                    <InlineLoader />
-                  </Fragment>
-                )
-              }
+                      <TimerButton timeLeft={5} brand onClick={this.submitSecret}>
+                        <FormattedMessage id="BtcToEth134" defaultMessage="Confirm" />
+                      </TimerButton>
+                    </Fragment>
+                  ) : (
+                    <Fragment>
+                      <div>
+                        <FormattedMessage id="BtcToEth140" defaultMessage="Save the secret key! Otherwise there will be a chance you loose your money!" />
+                      </div>
+                      <div>
+                        <FormattedMessage id="BtcToEth143" defaultMessage="Secret Key: " />
+                        <strong>{flow.secret}</strong>
+                      </div>
+                      <div>
+                        <FormattedMessage id="BtcToEth146" defaultMessage="Secret Hash: " />
+                        <strong style={{ display: 'block' }}>{flow.secretHash}</strong>
+                      </div>
+                    </Fragment>
+                  )
+                }
 
-              {
-                (flow.step === 4 || flow.btcScriptValues) && (
-                  <Fragment>
-                    <FormattedMessage id="BtcToEth194" defaultMessage="Creating Bitcoin Script. Please wait, it will take a while" >
-                      {
-                        message => (
-                          <h3 style={headingStyle}>{message}</h3>
-                        )
-                      }
-                    </FormattedMessage>
-                    {
-                      flow.btcScriptCreatingTransactionHash && (
+                {
+                  flow.step === 3 && !flow.isBalanceEnough && !flow.isBalanceFetching && (
+                    <Fragment>
+                      <h3 style={headingStyle}>
+                        <FormattedMessage id="BtcToEth156" defaultMessage="Not enough money for this swap. Please charge the balance" />
+                      </h3>
+                      <div>
                         <div>
-                          <FormattedMessage id="BtcToEth199" defaultMessage="Transaction: " />
-                          <strong>
-                            <a href={`${config.link.bitpay}/tx/${flow.btcScriptCreatingTransactionHash}`} target="_blank" rel="noopener noreferrer">
-                              {flow.btcScriptCreatingTransactionHash}
+                          <FormattedMessage id="BtcToEth160" defaultMessage="Your balance: " />
+                          <strong>{flow.balance}</strong> {this.swap.sellCurrency}
+                        </div>
+                        <div>
+                          <FormattedMessage id="BtcToEth163" defaultMessage="Required balance: " />
+                          <strong>{this.swap.sellAmount.toNumber()}</strong> {this.swap.sellCurrency}
+                        </div>
+                        <div>
+                          <div>
+                            <FormattedMessage id="BtcToEth167" defaultMessage="Your address: " />
+                            <a href={`${config.link.bitpay}/address/${currencyAddress}`} target="_blank" rel="noopener noreferrer">
+                              {currencyAddress}
                             </a>
-                          </strong>
-                        )
+                          </div>
+                          <hr />
+                          <span>{flow.address}</span>
                         </div>
-                      )
-                    }
-                    {
-                      !flow.btcScriptValues && (
-                        <InlineLoader />
-                      )
-                    }
-                  </Fragment>
-                )
-              }
-              {
-                flow.btcScriptValues && !flow.isFinished && !flow.isEthWithdrawn && (
-                  <Fragment>
-                    <br />
-                    { !flow.refundTxHex &&
-                      <Button brand onClick={this.getRefundTxHex}>
-                        <FormattedMessage id="BtcToEth226" defaultMessage="Create refund hex" />
-                      </Button>
-                    }
-                    {
-                      flow.refundTxHex && (
-                        <div>
-                          <a
-                            href="https://wiki.swap.online/faq/my-swap-got-stuck-and-my-bitcoin-has-been-withdrawn-what-to-do/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            <FormattedMessage id="BtcToEth233" defaultMessage="How refund your money ?" />
-                          </a>
-                          <FormattedMessage id="BtcToEth248" defaultMessage="Refund hex transaction: " />
-                          <code> {flow.refundTxHex} </code>
-                        </div>
-                      )
-                    }
-                  </Fragment>
-                )
-              }
-              {
-                (flow.step === 5 || flow.isEthContractFunded) && (
-                  <Fragment>
-                    <FormattedMessage id="BtcToEth253" defaultMessage="ETH Owner received Bitcoin Script and Secret Hash. Waiting when he creates ETH Contract" >
-                      {
-                        message => (
-                          <h3 style={headingStyle}>{message}</h3>
-                        )
-                      }
-                    </FormattedMessage>
-                    {
-                      !flow.isEthContractFunded && (
-                        <InlineLoader />
-                      )
-                    }
-                  </Fragment>
-                )
-              }
-              {
-                flow.ethSwapCreationTransactionHash && (
-                  <div>
-                    <FormattedMessage id="BtcToEth266" defaultMessage="Transaction: " />
-                    <strong>
-                      <a
-                        href={`${config.link.etherscan}/tx/${flow.ethSwapCreationTransactionHash}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {flow.ethSwapCreationTransactionHash}
-                      </a>
-                    </strong>
-                  </div>
-                )
-              }
-              {
-                (flow.step === 6 || flow.isEthWithdrawn) && (
-                  <FormattedMessage id="BtcToEth282" defaultMessage="ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait" >
-                    {
-                      message => (
-                        <h3 style={headingStyle}>{message}</h3>
-                      )
-                    }
-                  </FormattedMessage>
-                )
-              }
-              {
-                flow.ethSwapWithdrawTransactionHash && (
-                  <div>
-                    <FormattedMessage id="BtcToEth289" defaultMessage="Transaction: " />
-                    <strong>
-                      <a
-                        href={`${config.link.etherscan}/tx/${flow.ethSwapWithdrawTransactionHash}`}
-                        target="_blank"
-                        rel="noreferrer noopener"
-                      >
-                        {flow.ethSwapWithdrawTransactionHash}
-                      </a>
-                    </strong>
-                  </div>
-                )
-              }
-              {
-                flow.step === 6 && (
-                  <InlineLoader />
-                )
-              }
+                        <br />
+                        <Button brand onClick={this.updateBalance}>
+                          <FormattedMessage id="174" defaultMessage="Continue" />
+                        </Button>
+                      </div>
+                    </Fragment>
+                  )
+                }
+                {
+                  flow.step === 3 && flow.isBalanceFetching && (
+                    <Fragment>
+                      <div style={headingStyle}>
+                        <FormattedMessage id="BtcToEth183" defaultMessage="Checking balance.." />
+                      </div>
+                      <InlineLoader />
+                    </Fragment>
+                  )
+                }
 
-              {
-                flow.isEthWithdrawn && (
-                  <Fragment>
-                    <FormattedMessage id="BtcToEth312" defaultMessage="Money was transferred to your wallet. Check the balance. ">
+                {
+                  (flow.step === 4 || flow.btcScriptValues) && (
+                    <Fragment>
+                      <FormattedMessage id="BtcToEth194" defaultMessage="Creating Bitcoin Script. Please wait, it will take a while" >
+                        {
+                          message => (
+                            <h3 style={headingStyle}>{message}</h3>
+                          )
+                        }
+                      </FormattedMessage>
+                      {
+                        flow.btcScriptCreatingTransactionHash && (
+                          <div>
+                            <FormattedMessage id="BtcToEth199" defaultMessage="Transaction: " />
+                            <strong>
+                              <a href={`${config.link.bitpay}/tx/${flow.btcScriptCreatingTransactionHash}`} target="_blank" rel="noopener noreferrer">
+                                {flow.btcScriptCreatingTransactionHash}
+                              </a>
+                            </strong>
+                          )
+                          </div>
+                        )
+                      }
+                      {
+                        !flow.btcScriptValues && (
+                          <InlineLoader />
+                        )
+                      }
+                    </Fragment>
+                  )
+                }
+                {
+                  flow.btcScriptValues && !flow.isFinished && !flow.isEthWithdrawn && (
+                    <Fragment>
+                      <br />
+                      { !flow.refundTxHex &&
+                        <Button brand onClick={this.getRefundTxHex}>
+                          <FormattedMessage id="BtcToEth226" defaultMessage="Create refund hex" />
+                        </Button>
+                      }
+                      {
+                        flow.refundTxHex && (
+                          <div>
+                            <a
+                              href="https://wiki.swap.online/faq/my-swap-got-stuck-and-my-bitcoin-has-been-withdrawn-what-to-do/"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <FormattedMessage id="BtcToEth233" defaultMessage="How refund your money ?" />
+                            </a>
+                            <FormattedMessage id="BtcToEth248" defaultMessage="Refund hex transaction: " />
+                            <code> {flow.refundTxHex} </code>
+                          </div>
+                        )
+                      }
+                    </Fragment>
+                  )
+                }
+                {
+                  (flow.step === 5 || flow.isEthContractFunded) && (
+                    <Fragment>
+                      <FormattedMessage id="BtcToEth253" defaultMessage="ETH Owner received Bitcoin Script and Secret Hash. Waiting when he creates ETH Contract" >
+                        {
+                          message => (
+                            <h3 style={headingStyle}>{message}</h3>
+                          )
+                        }
+                      </FormattedMessage>
+                      {
+                        !flow.isEthContractFunded && (
+                          <InlineLoader />
+                        )
+                      }
+                    </Fragment>
+                  )
+                }
+                {
+                  flow.ethSwapCreationTransactionHash && (
+                    <div>
+                      <FormattedMessage id="BtcToEth266" defaultMessage="Transaction: " />
+                      <strong>
+                        <a
+                          href={`${config.link.etherscan}/tx/${flow.ethSwapCreationTransactionHash}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {flow.ethSwapCreationTransactionHash}
+                        </a>
+                      </strong>
+                    </div>
+                  )
+                }
+                {
+                  (flow.step === 6 || flow.isEthWithdrawn) && (
+                    <FormattedMessage id="BtcToEth282" defaultMessage="ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait" >
                       {
                         message => (
                           <h3 style={headingStyle}>{message}</h3>
                         )
                       }
                     </FormattedMessage>
-                    <FormattedMessage id="BtcToEth315" defaultMessage="Thank you for using Swap.Online!">
-                      {
-                        message => (
-                          <h3 style={headingStyle}>{message}</h3>
-                        )
+                  )
+                }
+                {
+                  flow.ethSwapWithdrawTransactionHash && (
+                    <div>
+                      <FormattedMessage id="BtcToEth289" defaultMessage="Transaction: " />
+                      <strong>
+                        <a
+                          href={`${config.link.etherscan}/tx/${flow.ethSwapWithdrawTransactionHash}`}
+                          target="_blank"
+                          rel="noreferrer noopener"
+                        >
+                          {flow.ethSwapWithdrawTransactionHash}
+                        </a>
+                      </strong>
+                    </div>
+                  )
+                }
+                {
+                  flow.step === 6 && (
+                    <InlineLoader />
+                  )
+                }
+
+                {
+                  flow.isEthWithdrawn && (
+                    <Fragment>
+                      <FormattedMessage id="BtcToEth312" defaultMessage="Money was transferred to your wallet. Check the balance. ">
+                        {
+                          message => (
+                            <h3 style={headingStyle}>{message}</h3>
+                          )
+                        }
+                      </FormattedMessage>
+                      <FormattedMessage id="BtcToEth315" defaultMessage="Thank you for using Swap.Online!">
+                        {
+                          message => (
+                            <h3 style={headingStyle}>{message}</h3>
+                          )
+                        }
+                      </FormattedMessage>
+                    </Fragment>
+                  )
+                }
+                {
+                  flow.step >= 5 && !flow.isFinished && (
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      { enabledButton && !flow.isEthWithdrawn &&
+                        <Button brand onClick={this.tryRefund}>
+                          <FormattedMessage id="BtcToEth325" defaultMessage="TRY REFUND" />
+                        </Button>
                       }
-                    </FormattedMessage>
-                  </Fragment>
-                )
-              }
-              {
-                flow.step >= 5 && !flow.isFinished && (
-                  <div style={{ display: 'flex', alignItems: 'center' }}>
-                    { enabledButton && !flow.isEthWithdrawn &&
-                      <Button brand onClick={this.tryRefund}>
-                        <FormattedMessage id="BtcToEth325" defaultMessage="TRY REFUND" />
-                      </Button>
-                    }
-                    <Timer
-                      lockTime={flow.btcScriptValues.lockTime * 1000}
-                      enabledButton={() => this.setState({ enabledButton: true })}
-                    />
-                  </div>
-                )
-              }
-              {
-                flow.refundTransactionHash && (
-                  <div>
-                    <FormattedMessage id="BtcToEth338" defaultMessage="Transaction: " />
-                    <strong>
-                      <a
-                        href={`${config.link.bitpay}/tx/${flow.refundTransactionHash}`}
-                        target="_blank"
-                        rel="noreferrer noopener"
-                      >
-                        {flow.refundTransactionHash}
-                      </a>
-                    </strong>
-                  </div>
-                )
-              }
-            </Fragment>
-          )
-        }
-        <br />
-        {/* { !flow.isFinished && <Button green onClick={this.addGasPrice}>Add gas price</Button> } */}
-        { children }
+                      <Timer
+                        lockTime={flow.btcScriptValues.lockTime * 1000}
+                        enabledButton={() => this.setState({ enabledButton: true })}
+                      />
+                    </div>
+                  )
+                }
+                {
+                  flow.refundTransactionHash && (
+                    <div>
+                      <FormattedMessage id="BtcToEth338" defaultMessage="Transaction: " />
+                      <strong>
+                        <a
+                          href={`${config.link.bitpay}/tx/${flow.refundTransactionHash}`}
+                          target="_blank"
+                          rel="noreferrer noopener"
+                        >
+                          {flow.refundTransactionHash}
+                        </a>
+                      </strong>
+                    </div>
+                  )
+                }
+              </Fragment>
+            )
+          }
+          <br />
+          {/* { !flow.isFinished && <Button green onClick={this.addGasPrice}>Add gas price</Button> } */}
+          { children }
+        </div>
       </div>
     )
   }
