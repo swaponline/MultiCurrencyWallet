@@ -1,4 +1,4 @@
-import SubscribeModal from './SubscribeModal/SubscribeModal'
+import SignUpModal from './SignUpModal/SignUpModal'
 import OfferModal from './OfferModal/OfferModal'
 import WithdrawModal from './WithdrawModal/WithdrawModal'
 import PrivateKeysModal from './PrivateKeysModal/PrivateKeysModal'
@@ -14,7 +14,7 @@ import DownloadModal from './DownloadModal/DownloadModal'
 
 
 export default {
-  SubscribeModal,
+  SignUpModal,
   OfferModal,
   WithdrawModal,
   PrivateKeysModal,

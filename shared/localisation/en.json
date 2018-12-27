@@ -113,7 +113,7 @@
   },
   {
     "id": "ADDoffer29",
-    "message": "Subscribe",
+    "message": "Sign up",
     "files": [
       "shared/components/Header/User/SubscribeButton/SubscribeButton.js"
     ]
@@ -3516,38 +3516,45 @@
     ]
   },
   {
-    "id": "SubscribeModal000",
-    "message": "Thanks!{br}When we send the token you will receive a notification",
+    "id": "SignUpModal000",
+    "message": "Thanks!{br}You will receive a notification",
     "files": [
-      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+      "shared/components/modals/SignUpModal/SignUpModal.js"
     ]
   },
   {
-    "id": "SubscribeModal001",
-    "message": "Join whitelist and get 1 SWAP token",
+    "id": "SignUpModal001",
+    "message": "Go to my wallet",
     "files": [
-      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+      "shared/components/modals/SignUpModal/SignUpModal.js"
     ]
   },
   {
-    "id": "SubscribeModal002",
+    "id": "SignUpModal002",
     "message": "Wait please",
     "files": [
-      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+      "shared/components/modals/SignUpModal/SignUpModal.js"
     ]
   },
   {
-    "id": "SubscribeModal003",
-    "message": "Join whitelist",
+    "id": "SignUpModal003",
+    "message": "Allow notifications",
     "files": [
-      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+      "shared/components/modals/SignUpModal/SignUpModal.js"
     ]
   },
   {
-    "id": "SubscribeModal004",
-    "message": "click on this button to allow push notifications",
+    "id": "SignUpModal004",
+    "message": "You will receive notifications regarding updates with your account (orders, transactions){br}and monthly updates about our project",
     "files": [
-      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+      "shared/components/modals/SignUpModal/SignUpModal.js"
+    ]
+  },
+  {
+    "id": "SignUpModal005",
+    "message": "No, thanks",
+    "files": [
+      "shared/components/modals/SignUpModal/SignUpModal.js"
     ]
   },
   {
@@ -3800,10 +3807,10 @@
     ]
   },
   {
-    "id": "Subscribe55",
-    "message": "Subscribe",
+    "id": "SignUpModal55",
+    "message": "Sign up",
     "files": [
-      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+      "shared/components/modals/SignUpModal/SignUpModal.js"
     ]
   },
   {
@@ -3917,7 +3924,7 @@
   },
   {
     "id": "Header205",
-    "message": "Join to our white list discounts, gifts, better exchange rates, etc.",
+    "message": "You will receive notifications regarding updates with your account (orders, transactions) and monthly updates about our project",
     "files": [
       "shared/components/Header/Header.js"
     ]

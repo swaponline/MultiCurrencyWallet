@@ -5,6 +5,8 @@ import 'firebase/database'
 import { config } from './config/firebase'
 
 import actions from 'redux/actions'
+import { request } from 'helpers'
+import reducers from 'redux/core/reducers'
 
 
 const authorisation = () =>
@@ -14,16 +16,15 @@ const authorisation = () =>
       .catch((error) => console.log(`Can't sign in: `, error))
   )
 
-const getIP = () =>
+const getIPInfo = () =>
   new Promise(async (resolve) => {
-    const ipRequire = await fetch('https://ipinfo.io/json', {
-      method: 'GET',
-      headers: {
-        'Content-type': 'application/json',
-      },
-    })
-    const ipResponse = await ipRequire.json()
-    resolve(ipResponse)
+    const ipResponse = await request.get('https://ipinfo.io/json')
+
+    const resultData = {
+      ip: ipResponse.ip,
+      locale: ipResponse.country === 'NO' ? 'EN' : ipResponse.country,
+    }
+    resolve(resultData)
   })
 
 const sendData = (userId, dataBasePath, data) =>
@@ -33,7 +34,10 @@ const sendData = (userId, dataBasePath, data) =>
 
     usersRef.child(userId).set(data)
       .then(() => resolve(true))
-      .catch((error) => console.log('Send error: ', error))
+      .catch((error) => {
+        console.log('Send error: ', error)
+        resolve(false)
+      })
   })
 
 const askPermission = () =>
@@ -81,25 +85,20 @@ const getUserID = () =>
 const submitUserData = (dataBasePath = 'usersCommon', data = {}) =>
   new Promise(async resolve => {
     const userID = await getUserID()
-    const ipInfo = await getIP()
+    const ipInfo = await getIPInfo()
 
     if (userID) {
       console.log('Got user ID: ', userID)
 
-      const defaultData = {
-        ip: ipInfo.ip,
-        locale: ipInfo.country === 'NO' ? 'EN' : ipInfo.country,
-      }
-
       const sendResult = await sendData(userID, dataBasePath, {
-        ...defaultData,
+        ...ipInfo,
         ...data,
       })
       resolve(sendResult)
     }
   })
 
-const subscribe = (data = {}) =>
+const signUpFirebase = (data) =>
   new Promise(async resolve => {
     const dataBasePath = 'usersSubscribed'
     const messagingToken = await askPermission()
@@ -114,6 +113,29 @@ const subscribe = (data = {}) =>
     }
   })
 
+const signUpServer = (data) =>
+  new Promise(async (resolve) => {
+    try {
+      const result = await request.post('https://swap.wpmix.net/push2/', data)
+      resolve(result.result === 'ok')
+    } catch (error) {
+      resolve(false)
+    }
+  })
+
+const signUp = (data = {}) =>
+  new Promise(async resolve => {
+    let result = false
+
+    if (isSupported()) {
+      result = await signUpFirebase(data)
+    } else {
+      result = await signUpServer(data)
+    }
+    reducers.signUp.setSigned()
+    resolve(result)
+  })
+
 const isSupported = () => {
   const isLocalNet = process.env.LOCAL === 'local'
   const isSupportedServiceWorker = 'serviceWorker' in navigator
@@ -126,8 +148,9 @@ const isSupported = () => {
 }
 
 export default {
+  getIPInfo,
   initialize,
-  subscribe,
+  signUp,
   submitUserData,
   isSupported,
 }
