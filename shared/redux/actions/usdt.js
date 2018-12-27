@@ -40,13 +40,15 @@ const login = (privateKey) => {
 
 const getBalance = async () => {
   const { user: { usdtData: { address } } } = getState()
-
-  const result = await fetchBalance(address)
-  console.log('result', result)
-  const { balance, unconfirmed } = result
-
-  reducers.user.setBalance({ name: 'usdtData', amount: balance, unconfirmedBalance: unconfirmed || 0 })
-  return balance
+  try {
+    const result = await fetchBalance(address)
+    console.log('result', result)
+    const { balance, unconfirmed } = result
+    reducers.user.setBalance({ name: 'usdtData', amount: balance, unconfirmedBalance: unconfirmed || 0 })
+    return balance
+  } catch (e) {
+    reducers.user.setBalanceError({ name: 'usdtData' })
+  }
 }
 
 const fetchBalance = (address, assetId = 31) =>

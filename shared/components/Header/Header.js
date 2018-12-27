@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import { withRouter } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
+import { connect } from 'redaction'
 
 import links from 'helpers/links'
 import SwitchLang from 'shared/components/SwitchLang/SwitchLang'
@@ -25,6 +26,7 @@ import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import Logo from 'components/Logo/Logo'
 import { relocalisedUrl } from 'helpers/locale'
 import { localisedUrl } from '../../helpers/locale'
+import UserTooltip from 'components/Header/User/UserTooltip/UserTooltip'
 
 
 let lastScrollTop = 0
@@ -55,6 +57,10 @@ const messages = defineMessages({
 
 @injectIntl
 @withRouter
+@connect({
+  feeds: 'feeds.items',
+  peer: 'ipfs.peer',
+})
 @CSSModules(styles, { allowMultiple: true })
 export default class Header extends Component {
 
@@ -150,13 +156,14 @@ export default class Header extends Component {
   render() {
 
     const { sticky, menuItems, isTourOpen, isShowingMore, path } = this.state
-    const { intl: { locale }, history, pathname } = this.props
+    const { intl: { locale }, history, pathname, feeds, peer } = this.props
 
     const accentColor = '#510ed8'
 
     if (isMobile) {
       return (
         <div>
+          <UserTooltip feeds={feeds} peer={peer} />
           <NavMobile menu={menuItems} />
           <SubscribeButton mobile />
         </div>

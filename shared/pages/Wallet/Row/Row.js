@@ -245,12 +245,19 @@ export default class Row extends Component {
         fullName,
         unconfirmedBalance,
         contractAddress,
+        balanceError,
       },
       intl: { locale },
     } = this.props
 
-    const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true"
-    const telosAccountActivated = localStorage.getItem(constants.localStorage.telosAccountActivated) === "true"
+    const telosAccountActivated = localStorage.getItem(constants.localStorage.telosAccountActivated) === 'true'
+
+    let eosAccountActivated = false
+    let eosActivationPaymentSent = false
+    if (currency === 'EOS') {
+      eosAccountActivated = this.props.item.isAccountActivated
+      eosActivationPaymentSent = this.props.item.isActivationPaymentSent
+    }
 
     return (
       <tr
@@ -270,6 +277,19 @@ export default class Row extends Component {
           <Link to={localisedUrl(locale, `/${fullName}-wallet`)} title={`Online ${fullName} wallet`}>
             {fullName}
           </Link>
+          {balanceError &&
+          <div className={styles.errorMessage}>
+            {fullName}
+            <FormattedMessage
+              id="RowWallet276"
+              defaultMessage=" node is down (You can not perform transactions). " />
+            <a href="https://wiki.swap.online/faq/bitcoin-node-is-down-you-cannot-make-transactions/">
+              <FormattedMessage
+                id="RowWallet282"
+                defaultMessage="Need help?" />
+            </a>
+          </div>
+          }
         </td>
         <td styleName="table_balance-cell" data-tut="reactour__balance">
           {
@@ -330,7 +350,8 @@ export default class Row extends Component {
                       <Fragment>
                         <br />
                         <span styleName="notActiveLink">
-                          <FormattedMessage id="Row268" defaultMessage="not activated" />
+                          { eosActivationPaymentSent && <InlineLoader /> }
+                          { !eosActivationPaymentSent && <FormattedMessage id="Row268" defaultMessage="not activated" /> }
                         </span>
                       </Fragment>
                     )

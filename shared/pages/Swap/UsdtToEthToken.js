@@ -73,7 +73,7 @@ export default class UsdtToEthToken extends Component {
   }
 
   render() {
-    const { children } = this.props
+    const { children, disabledTimer }  = this.props
     const { currencyAddress, secret, flow, enabledButton } = this.state
 
     return (
@@ -119,7 +119,7 @@ export default class UsdtToEthToken extends Component {
                   <Fragment>
                     <input type="text" placeholder="Secret Key" defaultValue={secret} />
                     <br />
-                    <TimerButton brand onClick={this.submitSecret}>
+                    <TimerButton disabledTimer={disabledTimer} brand onClick={this.submitSecret}>
                       <FormattedMessage id="UsdrToEthToken115" defaultMessage="Confirm" />
                     </TimerButton>
                   </Fragment>
@@ -168,7 +168,7 @@ export default class UsdtToEthToken extends Component {
                       <span>{flow.address}</span>
                     </div>
                     <br />
-                    <TimerButton brand onClick={this.updateBalance}>
+                    <TimerButton disabledTimer={disabledTimer} brand onClick={this.updateBalance}>
                       <FormattedMessage id="UsdrToEthToken154" defaultMessage="Continue" />
                     </TimerButton>
                   </Fragment>

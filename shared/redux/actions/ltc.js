@@ -51,7 +51,10 @@ const getBalance = () => {
       console.log('LTC unconfirmedBalance Balance: ', unconfirmedBalance)
       reducers.user.setBalance({ name: 'ltcData', amount: balance, unconfirmedBalance })
       return balance
-    }, () => Promise.reject())
+    })
+    .catch(() => {
+      reducers.user.setBalanceError({ name: 'ltcData' })
+    })
 }
 
 const fetchBalance = (address) =>

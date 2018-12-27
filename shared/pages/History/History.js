@@ -47,7 +47,7 @@ export default class History extends Component {
   componentDidMount() {
     actions.analytics.dataEvent('open-page-history')
     actions.user.setTransactions()
-    actions.core.getHistory()
+    actions.core.getSwapHistory()
   }
 
   loadMore = () => {

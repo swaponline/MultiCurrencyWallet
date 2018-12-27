@@ -139,7 +139,7 @@ export default class CurrencyWallet extends Component {
       .filter(swap => swap.sellCurrency === currency || swap.buyCurrency === currency)
 
     const seoPage = getSeoPage(location.pathname)
-    const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true"
+    const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === 'true'
     const title = defineMessages({
       metaTitle: {
         id: 'CurrencyWallet148',
