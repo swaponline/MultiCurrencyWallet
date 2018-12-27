@@ -321,40 +321,50 @@ export default class BtcToEthToken extends Component {
                             </b>
                           </div>
                         </CopyToClipboard>
-                        <div className={this.props.styles.fromClient}>
-                          <FormattedMessage id="BtcToEthToken168" defaultMessage="Required balance: ">
-                            {message => <span>{message}</span>}
-                          </FormattedMessage>
-                          {this.swap.sellAmount.toNumber()} BTC
-                        </div>
-                        <div className={this.props.styles.yourBalance}>
-                          <FormattedMessage id="BtcToEthToken169" defaultMessage="Current balance:">
-                            {message => <span>{message} </span>}
-                          </FormattedMessage>
-                          { flow.scriptBalance} BTC
-                        </div>
-                        <div className={this.props.styles.unconfBalance}>
-                          <FormattedMessage id="BtcToEthToken170" defaultMessage="Unconfirmed balance: 0 BTC">
-                            {message => <span>{message}</span>}
-                          </FormattedMessage>
-                          <span className={this.props.styles.lockTime}>
-                            <i className="far fa-clock" />
-                            <FormattedMessage id="BtcToEthToken336" defaultMessage="You have ">
+                        <div className={this.props.styles.infoWrapper}>
+                          <div className={this.props.styles.fromClient}>
+                            <FormattedMessage id="BtcToEthToken168" defaultMessage="Required balance: ">
                               {message => <span>{message}</span>}
                             </FormattedMessage>
-                            <span>
-                              <Timer
-                                lockTime={flow.btcScriptValues.lockTime * 1000}
-                              />
-                            </span>
-                            <FormattedMessage id="BtcToEthToken342" defaultMessage="min for make payment">
+                            {this.swap.sellAmount.toNumber()} BTC
+                          </div>
+                          <div className={this.props.styles.yourBalance}>
+                            <FormattedMessage id="BtcToEthToken169" defaultMessage="Current balance:">
+                              {message => <span>{message} </span>}
+                            </FormattedMessage>
+                            { flow.scriptBalance} BTC
+                          </div>
+                          <div className={this.props.styles.unconfBalance}>
+                            <FormattedMessage id="BtcToEthToken170" defaultMessage="Unconfirmed balance: 0 BTC">
                               {message => <span>{message}</span>}
                             </FormattedMessage>
+                          </div>
+                          <FormattedMessage id="BtcToEthToken171" defaultMessage="Check payment ">
+                            {message =>  <Button brand onClick={this.updateBalance}>{message}</Button>}
+                          </FormattedMessage>
+                          <span className={this.props.styles.qrImg}>
+                            <QR
+                              network={flow.scriptAddress}
+                              address={flow.scriptAddress}
+                              size={170}
+                            />
                           </span>
                         </div>
-                        <FormattedMessage id="BtcToEthToken171" defaultMessage="Check payment ">
-                          {message =>  <Button brand onClick={this.updateBalance}>{message}</Button>}
-                        </FormattedMessage>
+                        <span className={this.props.styles.lockTime}>
+                          <i className="far fa-clock" />
+                          <FormattedMessage id="BtcToEthToken336" defaultMessage="You have ">
+                            {message => <span>{message}</span>}
+                          </FormattedMessage>
+                          <span>
+                            <Timer
+                              lockTime={flow.btcScriptValues.lockTime * 1000}
+                              defaultMessage={false}
+                            />
+                          </span>
+                          <FormattedMessage id="BtcToEthToken342" defaultMessage="min for make payment">
+                            {message => <span>{message}</span>}
+                          </FormattedMessage>
+                        </span>
                       </a>
                     }
 
