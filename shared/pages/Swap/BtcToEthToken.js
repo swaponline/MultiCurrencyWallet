@@ -345,9 +345,6 @@ export default class BtcToEthToken extends Component {
                             />
                           </span>
                         </div>
-                        <FormattedMessage id="BtcToEthToken171" defaultMessage="Check payment ">
-                          {message =>  <Button brand onClick={this.updateBalance}>{message}</Button>}
-                        </FormattedMessage>
                         <span className={this.props.styles.lockTime}>
                           <i className="far fa-clock" />
                           <FormattedMessage id="BtcToEthToken336" defaultMessage="You have ">
