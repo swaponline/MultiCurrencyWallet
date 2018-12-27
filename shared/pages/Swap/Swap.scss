@@ -23,27 +23,40 @@
   border-radius: 20px;
   display: inline-block;
   text-align: left;
-  padding-bottom: 50px;
+  padding-bottom: 75px;
   &:hover {
     color: #ff1fc5;
   }
 }
+
+.qrImg {
+  position: absolute;
+  right: 50px;
+  top: 5px;
+}
+
+.infoWrapper {
+  position: relative;
+}
+
 .lockTime {
   position: absolute;
-  right: 25px;
-  bottom: 65px;
+  bottom: 20px;
+  left: 50%;
+  width: max-content;
+  transform: translateX(-50%);
   i {
     position: absolute;
     top: 4px;
     left: -25px;
   }
-  div {
-    span {
-      span {
-        display: none;
-      }
-    }
-  }
+  // div {
+  //   span {
+  //     span {
+  //       display: none;
+  //     }
+  //   }
+  // }
 }
 .btcMessage {
   color: #000;
