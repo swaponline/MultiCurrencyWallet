@@ -6,6 +6,7 @@ import { isMobile } from 'react-device-detect'
 import { connect } from 'redaction'
 
 import links from 'helpers/links'
+import actions from 'redux/actions'
 import SwitchLang from 'shared/components/SwitchLang/SwitchLang'
 import { constants } from 'helpers'
 import config from 'app-config'
@@ -17,7 +18,7 @@ import styles from './Header.scss'
 
 import Nav from './Nav/Nav'
 import User from './User/User'
-import SubscribeButton from './User/SubscribeButton/SubscribeButton'
+import SignUpButton from './User/SignUpButton/SignUpButton'
 import NavMobile from './NavMobile/NavMobile'
 
 import LogoTooltip from 'components/Logo/LogoTooltip'
@@ -60,6 +61,7 @@ const messages = defineMessages({
 @connect({
   feeds: 'feeds.items',
   peer: 'ipfs.peer',
+  isSigned: 'signUp.isSigned',
 })
 @CSSModules(styles, { allowMultiple: true })
 export default class Header extends Component {
@@ -113,12 +115,17 @@ export default class Header extends Component {
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll)
 
-    if (this.props.history.location.pathname === '/') {
-      if (!localStorage.getItem(constants.localStorage.openTour)) {
-        this.openTour()
+    if (process.env.MAINNET) {
+      const canShowSubscribeAndTour = (this.props.history.location.pathname === '/' || this.props.history.location.pathname === '/ru')
+        && !localStorage.getItem(constants.localStorage.firstStart)
+
+      if (canShowSubscribeAndTour) {
+        this.openSignUpModal()
+        localStorage.setItem(constants.localStorage.firstStart, true)
       }
     }
   }
+
   componentWillUnmount() {
     window.removeEventListener('scroll', this.handleScroll)
   }
@@ -146,7 +153,10 @@ export default class Header extends Component {
 
   closeTour = () => {
     this.setState({ isTourOpen: false })
-    localStorage.setItem(constants.localStorage.openTour, true)
+  }
+
+  openSignUpModal = () => {
+    actions.modals.open(constants.modals.SignUp, { onClose: this.openTour })
   }
 
   openTour = () => {
@@ -156,7 +166,7 @@ export default class Header extends Component {
   render() {
 
     const { sticky, menuItems, isTourOpen, isShowingMore, path } = this.state
-    const { intl: { locale }, history, pathname, feeds, peer } = this.props
+    const { intl: { locale }, history, pathname, feeds, peer, isSigned } = this.props
 
     const accentColor = '#510ed8'
 
@@ -165,7 +175,7 @@ export default class Header extends Component {
         <div>
           <UserTooltip feeds={feeds} peer={peer} />
           <NavMobile menu={menuItems} />
-          <SubscribeButton mobile />
+          {!isSigned && (<SignUpButton mobile />)}
         </div>
       )
     }
@@ -217,8 +227,10 @@ const tourSteps = [
     content: <FormattedMessage id="Header200" defaultMessage="Our killer feature is the peer-to-peer exchange available in our wallet powered by atomic swap technology. You can perfrom swaps with any crypto listed in our wallet." />,
   },
   {
-    selector: '[data-tut="reactour__subscribe"]',
-    content: <FormattedMessage id="Header205" defaultMessage="Join to our white list discounts, gifts, better exchange rates, etc." />,
+    selector: '[data-tut="reactour__sign-up"]',
+    content: <FormattedMessage
+      id="Header205"
+      defaultMessage="You will receive notifications regarding updates with your account (orders, transactions) and monthly updates about our project" />,
   },
   {
     selector: '[data-tut="reactour__goTo"]',
