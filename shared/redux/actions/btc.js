@@ -95,7 +95,6 @@ const send = async (from, to, amount, feeValue = 15000) => {
 
   const tx            = new bitcoin.TransactionBuilder(btc.network)
   const unspents      = await fetchUnspents(from)
-  console.log('unspents', unspents)
 
   const fundValue     = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
   const totalUnspent  = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
