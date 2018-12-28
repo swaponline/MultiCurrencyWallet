@@ -9,6 +9,7 @@ import * as ipfs from './ipfs'
 import * as api from './api'
 import * as currencies from './currencies'
 import * as menu from './menu'
+import * as signUp from './signUp'
 
 
 export default {
@@ -23,4 +24,5 @@ export default {
   api,
   currencies,
   menu,
+  signUp,
 }

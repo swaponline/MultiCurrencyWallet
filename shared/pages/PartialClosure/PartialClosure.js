@@ -360,7 +360,6 @@ export default class PartialClosure extends Component {
   handlePush = () => {
     const { intl: { locale } } = this.props
     const { haveCurrency, getCurrency } = this.state
-    this.props.history.push(localisedUrl(locale, `/${haveCurrency} - ${getCurrency}`))
 
     const tradeTicker = `${haveCurrency}-${getCurrency}`
 

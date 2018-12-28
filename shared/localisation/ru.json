@@ -113,7 +113,7 @@
   },
   {
     "id": "ADDoffer29",
-    "message": "Подписаться",
+    "message": "Регистрация",
     "files": [
       "shared/components/Header/User/SubscribeButton/SubscribeButton.js"
     ]
@@ -3519,38 +3519,45 @@
     ]
   },
   {
-    "id": "SubscribeModal000",
-    "message": "Спасибо! После отправки, Вы будете уведомлены",
+    "id": "SignUpModal000",
+    "message": "Спасибо!{br}Вы будете получать уведомления",
     "files": [
-      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+      "shared/components/modals/SignUpModal/SignUpModal.js"
     ]
   },
   {
-    "id": "SubscribeModal001",
-    "message": "Включите уведомления и получите 1 SWAP токен",
+    "id": "SignUpModal001",
+    "message": "Перейти в кошелек",
     "files": [
-      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+      "shared/components/modals/SignUpModal/SignUpModal.js"
     ]
   },
   {
-    "id": "SubscribeModal002",
+    "id": "SignUpModal002",
     "message": "Пожалуйста, подождите",
     "files": [
-      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+      "shared/components/modals/SignUpModal/SignUpModal.js"
     ]
   },
   {
-    "id": "SubscribeModal003",
-    "message": "Включить уведомления",
+    "id": "SignUpModal003",
+    "message": "Разрешить уведомления",
     "files": [
-      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+      "shared/components/modals/SignUpModal/SignUpModal.js"
     ]
   },
   {
-    "id": "SubscribeModal004",
-    "message": "Нажмите эту кнопку, чтобы разрешить push-уведомления",
+    "id": "SignUpModal004",
+    "message": "Вы будете получать уведомления об обновлениях с вашей учетной записью (ордера, транзакции) {br}и ежемесячные обновления о нашем проекте",
     "files": [
-      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+      "shared/components/modals/SignUpModal/SignUpModal.js"
+    ]
+  },
+  {
+    "id": "SignUpModal005",
+    "message": "Нет, спасибо",
+    "files": [
+      "shared/components/modals/SignUpModal/SignUpModal.js"
     ]
   },
   {
@@ -3807,10 +3814,10 @@
     ]
   },
   {
-    "id": "Subscribe55",
-    "message": "Подписка",
+    "id": "SignUpModal55",
+    "message": "Регистрация",
     "files": [
-      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+      "shared/components/modals/SignUpModal/SignUpModal.js"
     ]
   },
   {
@@ -3924,7 +3931,7 @@
   },
   {
     "id": "Header205",
-    "message": "Присоединяйтесь к white list - скидоки, подарки, выгодные курсы и т.д",
+    "message": "Вы будете получать уведомления об обновлениях с вашей учетной записью (ордера, транзакции) и ежемесячные обновления о нашем проекте",
     "files": [
       "shared/components/Header/Header.js"
     ]
