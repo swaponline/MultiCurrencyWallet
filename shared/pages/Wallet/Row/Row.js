@@ -139,7 +139,7 @@ export default class Row extends Component {
       },
     } = this.props
     let firstPart = address.substr(0, 6)
-    let secondPart = address.substr(address.length - 2)
+    let secondPart = address.substr(address.length - 4)
     return (window.innerWidth < 1120 || isMobile || address.length > 40) ? `${firstPart}...${secondPart}` : address
   }
 
