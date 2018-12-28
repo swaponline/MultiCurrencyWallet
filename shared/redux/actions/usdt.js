@@ -1,10 +1,10 @@
 import BigInteger from 'bigi'
 import { BigNumber } from 'bignumber.js'
-
+import config from 'app-config'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
 import bitcoin from 'bitcoinjs-lib'
-import { btc, request, constants, api } from 'helpers'
+import { btc, request, constants } from 'helpers'
 
 
 const login = (privateKey) => {
@@ -52,7 +52,7 @@ const getBalance = async () => {
 }
 
 const fetchBalance = (address, assetId = 31) =>
-  request.post(`https://api.omniexplorer.info/v1/address/addr/`, {
+  request.post(`${config.api.usdt}v1/address/addr/`, {
     body: `addr=${address}`,
   })
     .then(response => {
@@ -90,7 +90,102 @@ const fetchBalance = (address, assetId = 31) =>
     })
     .catch(error => console.error(error))
 
+
+const getTransaction = () => {
+  const { user: { usdtData: { address } } } = getState()
+
+  return new Promise((resolve) => {
+    request.post(`${config.api.usdt}v1/address/addr/details/`, {
+      body: `addr=${address}`,
+    })
+      .then((res) => {
+        console.log('res', res)
+        const transactions = res.transactions.map((item) => ({
+          type: 'usdt',
+          hash: item.txid,
+          confirmations: item.confirmations,
+          value: item.amount,
+          date: item.blocktime * 1000,
+          direction: address === item.sendingaddress ? 'in' : 'out',
+        }))
+        resolve(transactions)
+      })
+      .catch(() => {
+        resolve([])
+      })
+  })
+}
+
+const fetchUnspents = (address) =>
+  request.get(`${config.api.bitpay}/addr/${address}/utxo`)
+
+
+const send = (from, to, amount) => {
+  const { user: { usdtData: { privateKey } } } = getState()
+
+  return new Promise(async (resolve) => {
+    const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
+
+    const tx              = new bitcoin.TransactionBuilder(btc.network)
+    const unspents        = await fetchUnspents(from)
+    const feeValue        = 5000
+    const fundValue       = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
+    const totalUnspent    = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
+    const totalValue      = totalUnspent - feeValue - fundValue
+
+    if (totalUnspent < feeValue + 546) {
+      throw new Error(`Total less than fee: ${totalUnspent} < ${546} + ${feeValue}`)
+    }
+
+    unspents.forEach(({ txid, vout }) => tx.addInput(txid, vout, 0xfffffffe))
+
+    const omniOutput = createOmniScript(fundValue)
+
+    tx.addOutput(from, 546)
+    tx.addOutput(from, totalValue)
+    tx.addOutput(omniOutput, 0)
+
+    tx.inputs.forEach((input, index) => {
+      tx.sign(index, keyPair)
+    })
+
+    const txRaw = tx.buildIncomplete()
+    const result = await broadcastTx(txRaw.toHex())
+
+    resolve(result)
+  })
+}
+
+
+const numToHex = (num, len) => {
+  const str = Number(num).toString(16)
+  return '0'.repeat(len - str.length) + str
+}
+
+
+const createOmniScript = (amount) => {
+  const simpleSend = [
+    '6f6d6e69', '0000', '0000', '0000001f',
+    numToHex(amount, 16),
+  ].join('')
+
+  return bitcoin.script.compile([
+    bitcoin.opcodes.OP_RETURN,
+    Buffer.from(simpleSend, 'hex'),
+  ])
+}
+
+
+const broadcastTx = (txRaw) =>
+  request.post(`${config.api.usdt}v1/transaction/pushtx/`, {
+    body: {
+      signedTransaction: txRaw,
+    },
+  })
+
 export default {
+  send,
+  getTransaction,
   login,
   getBalance,
   fetchBalance,

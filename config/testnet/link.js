@@ -6,4 +6,5 @@ export default {
   tlos: 'http://testnet.telosfoundation.io',
   // bch: 'https://www.blocktrail.com/tBCC',
   ltc: 'https://ltctest.coinapp.io/',
+  usdt: 'https://omniexplorer.info/',
 }

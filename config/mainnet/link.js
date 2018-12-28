@@ -7,4 +7,5 @@ export default {
   omniexplorer: 'https://www.omniexplorer.info',
   // bch: 'https://bch-insight.bitpay.com/#',
   ltc: 'https://ltc.coinapp.io/',
+  usdt: 'https://omniexplorer.info/',
 }
