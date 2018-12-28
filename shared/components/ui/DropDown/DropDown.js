@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
@@ -39,9 +40,10 @@ export default class DropDown extends Component {
 
   constructor({ initialValue, selectedValue }) {
     super()
-
     this.state = {
       selectedValue: initialValue || selectedValue || 0,
+      itemsFiltered:[],
+      searchValue:'',
     }
   }
 
@@ -49,6 +51,9 @@ export default class DropDown extends Component {
     const { isToggleActive, toggleOpen, toggleClose } = this.props
 
     if (isToggleActive) {
+      this.setState({
+        searchValue:'',
+      })
       toggleClose()
     }
     else {
@@ -59,10 +64,14 @@ export default class DropDown extends Component {
   handleOptionClick = (item) => {
     const { toggleClose, selectedValue, onSelect } = this.props
 
+    this.setState({
+      searchValue:'',
+    })
     // if there is no passed `selectedValue` then change it
     if (typeof selectedValue === 'undefined') {
       this.setState({
         selectedValue: item.value,
+        itemsFiltered:this.props.items,
       })
     }
 
@@ -86,7 +95,19 @@ export default class DropDown extends Component {
 
     return selectedItem.title
   }
-
+  handleChangee = (e) => {
+    if (e.target.value === '') {
+      this.setState({
+        itemsFiltered:this.props.items,
+        searchValue:'',
+      })
+    } else {
+      this.setState({
+        searchValue: e.target.value.toUpperCase(),
+        itemsFiltered:this.props.items.filter(item => item.name.includes(e.target.value.toUpperCase())),
+      })
+    }
+  }
   renderItem = (item) => {
     const { itemRender } = this.props
 
@@ -109,12 +130,26 @@ export default class DropDown extends Component {
         <div styleName={dropDownStyleName} className={className}>
           <div styleName="selectedItem" onClick={this.toggle}>
             <div styleName="arrow" />
-            {this.renderSelectedItem()}
+            {isToggleActive ? (
+              <input styleName="searchInput" type="text" value={this.state.searchValue} autoFocus onChange={this.handleChangee} />
+            ) : (
+              this.renderSelectedItem()
+            )}
           </div>
           {
             isToggleActive && (
               <div styleName="select">
-                {
+                {isToggleActive && this.state.searchValue.length ? (
+                  this.state.itemsFiltered.map((item) => (
+                    <div
+                      key={item.value}
+                      styleName="option"
+                      onClick={() => this.handleOptionClick(item)}
+                    >
+                      {this.renderItem(item)}
+                    </div>
+                  ))
+                ) : (
                   items.map((item) => (
                     <div
                       key={item.value}
@@ -124,7 +159,7 @@ export default class DropDown extends Component {
                       {this.renderItem(item)}
                     </div>
                   ))
-                }
+                )}
               </div>
             )
           }
