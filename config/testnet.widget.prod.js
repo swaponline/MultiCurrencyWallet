@@ -14,7 +14,7 @@ export default {
   env: 'production',
   entry: 'testnet',
   local: 'online',
-  dir: 'testnet',
+  dir: `testnet-widget`,
 
   base: './',
   publicPath: `.${baseConfig.publicPath}`,
