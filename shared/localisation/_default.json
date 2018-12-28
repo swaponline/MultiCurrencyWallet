@@ -4594,5 +4594,19 @@
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
+  },
+  {
+    "id": "BtcToEthTokenAddress348",
+    "message": "Not enough ETH on your balance for miner fee.{br}{br}Deposit 0.001 ETH to your account {address}",
+    "files": [
+      "shared/pages/Swap/BtcToEthToken.js"
+    ]
+  },
+  {
+    "id": "BtcToEthTokenAddress307",
+    "message": "Not enough ETH on your balance for miner fee.{br}{br}Deposit 0.001 ETH to your account {address}",
+    "files": [
+      "shared/pages/Swap/EthTokenToBtc.js"
+    ]
   }
 ]

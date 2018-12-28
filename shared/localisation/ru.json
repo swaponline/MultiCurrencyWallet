@@ -4534,5 +4534,19 @@
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
+  },
+  {
+    "id": "BtcToEthTokenAddress348",
+    "message": "Недостаточная сумма ETH на вашем балансе, {br}для оплаты комиссии майнеров.{br}{br}Пополните баланс на 0.001 ETH {address}",
+    "files": [
+      "shared/pages/Swap/BtcToEthToken.js"
+    ]
+  },
+  {
+    "id": "BtcToEthTokenAddress307",
+    "message": "Недостаточная сумма ETH на вашем балансе, {br}для оплаты комиссии майнеров.{br}{br}Пополните баланс на 0.001 ETH {address}",
+    "files": [
+      "shared/pages/Swap/EthTokenToBtc.js"
+    ]
   }
 ]
