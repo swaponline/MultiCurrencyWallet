@@ -103,6 +103,7 @@ export const setBalance = (state, { name, amount, unconfirmedBalance }) => ({
     balance: Number(amount),
     unconfirmedBalance,
     isBalanceFetched: true,
+    balanceError: false,
   },
 })
 
@@ -133,6 +134,7 @@ export const setTokenBalance = (state, { name, amount }) => ({
       ...state.tokensData[name],
       balance: Number(amount),
       isBalanceFetched: true,
+      balanceError: false,
     },
   },
 })

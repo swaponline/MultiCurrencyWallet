@@ -298,7 +298,11 @@ export default class Row extends Component {
             ) : (
               <div styleName="no-select-inline" onClick={this.handleReloadBalance} >
                 <i className="fas fa-sync-alt" styleName="icon" />
-                <span>{String(balance).length > 4 ? balance.toFixed(4) : balance}{' '}{currency}</span>
+                <span>
+                  {
+                    balanceError ? '?' : String(balance).length > 4 ? balance.toFixed(4) : balance
+                  }{' '}{currency}
+                </span>
                 { currency === 'BTC' && unconfirmedBalance !== 0 && (
                   <Fragment>
                     <br />
