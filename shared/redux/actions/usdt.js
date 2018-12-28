@@ -129,7 +129,7 @@ const send = (from, to, amount) => {
     const tx              = new bitcoin.TransactionBuilder(btc.network)
     const unspents        = await fetchUnspents(from)
     const feeValue        = 5000
-    const fundValue       = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
+    const sendingValue       = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
     const totalUnspent    = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
     const totalValue      = totalUnspent - feeValue - 546
 
@@ -139,7 +139,7 @@ const send = (from, to, amount) => {
 
     unspents.forEach(({ txid, vout }) => tx.addInput(txid, vout, 0xfffffffe))
 
-    const omniOutput = createOmniScript(fundValue)
+    const omniOutput = createOmniScript(sendingValue)
 
     tx.addOutput(to, 546)
     tx.addOutput(omniOutput, 0)
