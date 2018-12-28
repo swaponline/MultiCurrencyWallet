@@ -109,6 +109,7 @@ const getExchangeRate = (sellCurrency, buyCurrency) =>
 const setTransactions = () =>
   Promise.all([
     actions.btc.getTransaction(),
+    actions.usdt.getTransaction(),
     actions.eth.getTransaction(),
     actions.ltc.getTransaction(),
     ...Object.keys(config.erc20)

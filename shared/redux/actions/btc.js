@@ -88,41 +88,6 @@ const getTransaction = () =>
       })
   })
 
-const createScript = (data) => {
-  const { secretHash, ownerPublicKey, recipientPublicKey, lockTime } = data
-
-  const script = bitcoin.script.compile([
-
-    bitcoin.opcodes.OP_RIPEMD160,
-    Buffer.from(secretHash, 'hex'),
-    bitcoin.opcodes.OP_EQUALVERIFY,
-
-    Buffer.from(recipientPublicKey, 'hex'),
-    bitcoin.opcodes.OP_EQUAL,
-    bitcoin.opcodes.OP_IF,
-
-    Buffer.from(recipientPublicKey, 'hex'),
-    bitcoin.opcodes.OP_CHECKSIG,
-
-    bitcoin.opcodes.OP_ELSE,
-
-    bitcoin.script.number.encode(lockTime),
-    bitcoin.opcodes.OP_CHECKLOCKTIMEVERIFY,
-    bitcoin.opcodes.OP_DROP,
-    Buffer.from(ownerPublicKey, 'hex'),
-    bitcoin.opcodes.OP_CHECKSIG,
-
-    bitcoin.opcodes.OP_ENDIF,
-  ])
-
-  const scriptPubKey  = bitcoin.script.scriptHash.output.encode(bitcoin.crypto.hash160(script))
-  const scriptAddress = bitcoin.address.fromOutputScript(scriptPubKey, { network: btc.network })
-
-  return {
-    scriptAddress,
-  }
-}
-
 
 const send = async (from, to, amount, feeValue = 15000) => {
   const { user: { btcData: { privateKey } } } = getState()
@@ -153,7 +118,6 @@ const send = async (from, to, amount, feeValue = 15000) => {
   return txRaw
 }
 
-
 const fetchUnspents = (address) =>
   request.get(`${api.getApiServer('bitpay')}/addr/${address}/utxo`)
 
@@ -179,7 +143,6 @@ export default {
   getTransaction,
   send,
   fetchUnspents,
-  createScript,
   broadcastTx,
   fetchTx,
   fetchBalance,
