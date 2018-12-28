@@ -38,7 +38,7 @@ export default class SwapComponent extends PureComponent {
     currencyData: null,
     isAmountMore: null,
     ethBalance: null,
-    continueSwap: true,
+    continueSwap: false,
   }
 
   componentWillMount() {
@@ -68,8 +68,8 @@ export default class SwapComponent extends PureComponent {
         },
       ]
 
-      currencies.forEach(async item => {
-        await actions.user.getExchangeRate(item.currency, 'usd')
+      currencies.forEach(item => {
+        actions.user.getExchangeRate(item.currency, 'usd')
           .then(exRate => {
             const amount = exRate * Number(item.amount)
 
@@ -101,11 +101,17 @@ export default class SwapComponent extends PureComponent {
 
   componentDidMount() {
     this.checkEthBalance()
+    let timer
 
-    setInterval(() => {
-      this.checkEthBalance()
+    timer = setInterval(() => {
+      if (this.state.continueSwap === false) {
+        this.checkEthBalance()
+      } else {
+        clearInterval(timer)
+      }
     }, 5000)
   }
+
 
   // componentWillMount() {
   //   actions.api.checkServers()
@@ -132,9 +138,7 @@ export default class SwapComponent extends PureComponent {
     const ethBalance = await actions.eth.getBalance()
     this.setState(() => ({ ethBalance }))
 
-    if (this.state.ethBalance < 0.01) {
-      this.setState(() => ({ continueSwap: false }))
-    } else {
+    if (this.state.ethBalance >= 0.001) {
       this.setState(() => ({ continueSwap: true }))
     }
   }

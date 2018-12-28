@@ -15,7 +15,6 @@ import Button from 'components/controls/Button/Button'
 import swapApp from 'swap.app'
 import Timer from './Timer/Timer'
 import { FormattedMessage } from 'react-intl'
-import CopyButton from './CopyButton/CopyButton'
 
 
 export default class BtcToEthToken extends Component {
@@ -108,7 +107,8 @@ export default class BtcToEthToken extends Component {
   }
 
   render() {
-    const { children, disabledTimer, swap }  = this.props
+    const { children, disabledTimer, swap } = this.props
+    const { ethAddress } = this.state
 
     const { currencyAddress, secret, flow, enabledButton, destinationAddressTimer, continuerSwap, isTextCopied } = this.state
     const linked = Link.all(this, 'destinationBuyAddress')
@@ -341,10 +341,20 @@ export default class BtcToEthToken extends Component {
               }
               {
                 (flow.step === 6 || flow.isEthWithdrawn) && (
-                  <h3>
-                    <FormattedMessage id="BtcToEthToken260" defaultMessage="5. ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait" />
-                    {!continuerSwap && <CopyButton text={this.state.ethAddress} onCopy={this.handleCopyText} isTextCopied={isTextCopied} />}
-                  </h3>
+                  <Fragment>
+                    <h3>
+                      <FormattedMessage id="BtcToEthToken260" defaultMessage="5. ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait" />
+                    </h3>
+                    {!continuerSwap &&
+                      <h3 style={{ color: '#E72BB3', marginTop: '10px' }}>
+                        <FormattedMessage
+                          id="BtcToEthTokenAddress348"
+                          defaultMessage="Not enough ETH on your balance for miner fee.{br}{br}Deposit 0.001 ETH to your account {address}"
+                          values={{ address: `${ethAddress}`, br: <br /> }}
+                        />
+                      </h3>
+                    }
+                  </Fragment>
                 )
               }
               {

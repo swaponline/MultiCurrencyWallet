@@ -91,10 +91,10 @@ export default class Row extends Component {
 
       if (isAccepted) {
         this.setState({ redirect: true, isFetching: false })
-        } else {
-          this.setState({ isFetching: false })
       }
-
+      else {
+        this.setState({ isFetching: false })
+      }
     })
     actions.core.updateCore()
   }
