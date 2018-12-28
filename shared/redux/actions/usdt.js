@@ -141,7 +141,7 @@ const send = (from, to, amount) => {
 
     const omniOutput = createOmniScript(fundValue)
 
-    tx.addOutput(from, 546)
+    tx.addOutput(to, 546)
     tx.addOutput(from, totalValue)
     tx.addOutput(omniOutput, 0)
 
