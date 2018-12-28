@@ -129,9 +129,9 @@ const send = (from, to, amount) => {
     const tx              = new bitcoin.TransactionBuilder(btc.network)
     const unspents        = await fetchUnspents(from)
     const feeValue        = 5000
-    const sendingValue       = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
+    const sendingValue    = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
     const totalUnspent    = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-    const totalValue      = totalUnspent - feeValue - 546
+    const skipValue       = totalUnspent - feeValue - 546
 
     if (totalUnspent < feeValue + 546) {
       throw new Error(`Total less than fee: ${totalUnspent} < ${546} + ${feeValue}`)
@@ -143,7 +143,7 @@ const send = (from, to, amount) => {
 
     tx.addOutput(to, 546)
     tx.addOutput(omniOutput, 0)
-    tx.addOutput(from, totalValue)
+    tx.addOutput(from, skipValue)
 
     tx.inputs.forEach((input, index) => {
       tx.sign(index, keyPair)
