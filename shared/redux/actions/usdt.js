@@ -131,7 +131,7 @@ const send = (from, to, amount) => {
     const feeValue        = 5000
     const fundValue       = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
     const totalUnspent    = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-    const totalValue      = totalUnspent - feeValue - fundValue
+    const totalValue      = totalUnspent - feeValue - 546
 
     if (totalUnspent < feeValue + 546) {
       throw new Error(`Total less than fee: ${totalUnspent} < ${546} + ${feeValue}`)
@@ -142,8 +142,8 @@ const send = (from, to, amount) => {
     const omniOutput = createOmniScript(fundValue)
 
     tx.addOutput(to, 546)
-    tx.addOutput(from, totalValue)
     tx.addOutput(omniOutput, 0)
+    tx.addOutput(from, totalValue)
 
     tx.inputs.forEach((input, index) => {
       tx.sign(index, keyPair)
