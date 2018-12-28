@@ -131,7 +131,6 @@ const updateCore = () => {
   const orders = SwapApp.services.orders.items
 
   getOrders(orders)
-  getSwapHistory()
   actions.feed.getFeedDataFromOrder(orders)
 }
 

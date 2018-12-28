@@ -3,11 +3,8 @@ export const initialState = {
   data: {},
 }
 
-export const setVisibility = (state, payload) => ({
+export const setVisibility = (state, { isVisible, data }) => ({
   ...state,
-  isVisible: payload.isVisible,
-  data: {
-    text: payload.text,
-    txId: payload.txId,
-  },
+  isVisible,
+  data,
 })

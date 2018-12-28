@@ -63,7 +63,7 @@ export default class BtcToEos extends Component {
   }
 
   render() {
-    const { children } = this.props
+    const { children, disabledTimer }  = this.props
     const { flow, isSubmitted, enabledButton } = this.state
 
     return (
@@ -74,7 +74,7 @@ export default class BtcToEos extends Component {
           </h3>
           {
             !isSubmitted &&
-            <TimerButton brand onClick={this.submitSecret}>
+            <TimerButton disabledTimer={disabledTimer} brand onClick={this.submitSecret}>
               <FormattedMessage id="BtcToEos67" defaultMessage="Send secret" />
             </TimerButton>
           }

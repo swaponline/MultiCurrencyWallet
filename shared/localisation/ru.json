@@ -113,7 +113,7 @@
   },
   {
     "id": "ADDoffer29",
-    "message": "Подписаться",
+    "message": "Регистрация",
     "files": [
       "shared/components/Header/User/SubscribeButton/SubscribeButton.js"
     ]
@@ -931,10 +931,7 @@
   },
   {
     "id": "BtcToEos140",
-    "message": "5. Запрос на отзыва BTC из шифра",
-    "files": [
-      "shared/pages/Swap/BtcToEos.js"
-    ]
+    "message": "5. Запрос на отзыва BTC из шифра"
   },
   {
     "id": "BtcToEos63",
@@ -3522,38 +3519,45 @@
     ]
   },
   {
-    "id": "SubscribeModal000",
-    "message": "Спасибо! После отправки, Вы будете уведомлены",
+    "id": "SignUpModal000",
+    "message": "Спасибо!{br}Вы будете получать уведомления",
     "files": [
-      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+      "shared/components/modals/SignUpModal/SignUpModal.js"
     ]
   },
   {
-    "id": "SubscribeModal001",
-    "message": "Включите уведомления и получите 1 SWAP токен",
+    "id": "SignUpModal001",
+    "message": "Перейти в кошелек",
     "files": [
-      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+      "shared/components/modals/SignUpModal/SignUpModal.js"
     ]
   },
   {
-    "id": "SubscribeModal002",
+    "id": "SignUpModal002",
     "message": "Пожалуйста, подождите",
     "files": [
-      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+      "shared/components/modals/SignUpModal/SignUpModal.js"
     ]
   },
   {
-    "id": "SubscribeModal003",
-    "message": "Включить уведомления",
+    "id": "SignUpModal003",
+    "message": "Разрешить уведомления",
     "files": [
-      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+      "shared/components/modals/SignUpModal/SignUpModal.js"
     ]
   },
   {
-    "id": "SubscribeModal004",
-    "message": "Нажмите эту кнопку, чтобы разрешить push-уведомления",
+    "id": "SignUpModal004",
+    "message": "Вы будете получать уведомления об обновлениях с вашей учетной записью (ордера, транзакции) {br}и ежемесячные обновления о нашем проекте",
     "files": [
-      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+      "shared/components/modals/SignUpModal/SignUpModal.js"
+    ]
+  },
+  {
+    "id": "SignUpModal005",
+    "message": "Нет, спасибо",
+    "files": [
+      "shared/components/modals/SignUpModal/SignUpModal.js"
     ]
   },
   {
@@ -3810,10 +3814,10 @@
     ]
   },
   {
-    "id": "Subscribe55",
-    "message": "Подписка",
+    "id": "SignUpModal55",
+    "message": "Регистрация",
     "files": [
-      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+      "shared/components/modals/SignUpModal/SignUpModal.js"
     ]
   },
   {
@@ -3927,7 +3931,7 @@
   },
   {
     "id": "Header205",
-    "message": "Присоединяйтесь к white list - скидоки, подарки, выгодные курсы и т.д",
+    "message": "Вы будете получать уведомления об обновлениях с вашей учетной записью (ордера, транзакции) и ежемесячные обновления о нашем проекте",
     "files": [
       "shared/components/Header/Header.js"
     ]
@@ -4515,6 +4519,20 @@
     "message": "Swap.Online is the decentralized in-browser hot wallet based on the Atomic Swaps technology.\n            As in our wallet all blockchains interact decentralized and no-third-party way, we offer our users to exchange Bitcoin, Ethereum,\n            USD Tether, BCH and EOS for free in a couple of seconds. At the time, Swap.Online charges no commision for the order making and taking.\n            For example, on the vast majority of exchanges, there is a 0,3%-operational fee for the taker of liquidity and 1-5% withdrawal fee.\n            The exchange of crypto and tokens on Swap.Online is conducted in truly\n            decentralized manner as we use the Atomic Swaps technology of peer-to-peer cross-chain interaction.\n            Swap.Online uses IPFS-network for all the operational processes which results in no need for centralized server.\n            The interface of exchange seems to look like that of crypto broker, not of ordinary DEX or CEX. In a couple of clicks,\n            the user can place and take the offer, customizing the price of sent token.\n            Also, the user can exchange the given percentage of his or her amount of tokens available (e.g. ½, ¼ etc.).\n            One more advantage of the Swap.Online exchange service is the usage of one key for the full range of ERC-20 tokens.\n            By the way, if case you’re not interested in exchange of some tokens, you can hide it from the list.\n            Thus, use Swap.Online as your basic exchange for every crypto you’re holding!",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "RowWallet276",
+    "message": " нода не доступна (Вы не можете совершать транзакции). ",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowWallet282",
+    "message": "Требуется помощь?",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
     ]
   }
 ]

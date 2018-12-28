@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 
 import Swap from 'swap.swap'
 
-import CSSModules from 'react-css-modules'
+import cssModules from 'react-css-modules'
 import styles from './Swap.scss'
 
 import { connect } from 'redaction'
@@ -15,6 +15,7 @@ import EmergencySave from './EmergencySave/EmergencySave'
 import { injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import DeleteSwapAfterEnd from './DeleteSwapAfterEnd'
+import SwapController from './SwapController'
 
 
 @injectIntl
@@ -28,13 +29,15 @@ import DeleteSwapAfterEnd from './DeleteSwapAfterEnd'
   checked: 'api.checked',
   peer,
 }))
-@CSSModules(styles)
+
+@cssModules(styles, { allowMultiple: true })
 export default class SwapComponent extends PureComponent {
 
   state = {
     swap: null,
     SwapComponent: null,
     currencyData: null,
+    isAmountMore: null,
   }
 
   componentWillMount() {
@@ -51,6 +54,31 @@ export default class SwapComponent extends PureComponent {
       const SwapComponent = swapComponents[swap.flow._flowName]
       const currencyData = items.concat(tokenItems)
         .filter(item => item.currency === swap.sellCurrency.toUpperCase())[0]
+
+      const currencies = [
+        {
+          currency: swap.sellCurrency,
+          amount: swap.sellAmount,
+        },
+        {
+          currency: swap.buyCurrency,
+          amount: swap.buyAmount,
+        },
+      ]
+
+      currencies.forEach(item => {
+        actions.user.getExchangeRate(item.currency, 'usd')
+          .then(exRate => {
+            const amount = exRate * Number(item.amount)
+
+            if (Number(amount) >= 50) {
+              this.setState(() => ({ isAmountMore: 'enable' }))
+            } else {
+              this.setState(() => ({ isAmountMore: 'disable' }))
+            }
+          })
+      })
+
 
       window.swap = swap
 
@@ -91,15 +119,15 @@ export default class SwapComponent extends PureComponent {
 
   render() {
     const { peer } = this.props
-    const { swap, SwapComponent, currencyData } = this.state
+    const { swap, SwapComponent, currencyData, isAmountMore } = this.state
 
-    if (!swap || !SwapComponent || !peer) {
+    if (!swap || !SwapComponent || !peer || !isAmountMore) {
       return null
     }
 
     return (
       <div styleName="swap">
-        <SwapComponent swap={swap} currencyData={currencyData}>
+        <SwapComponent disabledTimer={isAmountMore === 'enable'} swap={swap} currencyData={currencyData} styles={styles}>
           <Share flow={swap.flow} />
           <EmergencySave flow={swap.flow} />
           {
@@ -107,6 +135,7 @@ export default class SwapComponent extends PureComponent {
               <DeleteSwapAfterEnd swap={swap} />
             )
           }
+          <SwapController swap={swap} />
         </SwapComponent>
       </div>
     )

@@ -4,12 +4,14 @@ export const initialState = {
     isBalanceFetched: false,
     currency: 'ETH',
     fullName: 'Ethereum',
+    balanceError: null,
   },
   btcData: {
     balance: 0,
     isBalanceFetched: false,
     currency: 'BTC',
     fullName: 'Bitcoin',
+    balanceError: null,
   },
   /*
   bchData: {
@@ -23,12 +25,14 @@ export const initialState = {
     balance: 0,
     currency: 'XLM',
     fullName: 'Stellar',
+    balanceError: null,
   },
   ltcData: {
     balance: 0,
     isBalanceFetched: false,
     currency: 'LTC',
     fullName: 'Litecoin',
+    balanceError: null,
   },
   usdtData: {
     address: '0x0',
@@ -37,19 +41,24 @@ export const initialState = {
     isBalanceFetched: false,
     currency: 'USDT',
     fullName: 'USDT',
+    balanceError: null,
   },
   nimData: {
     balance: 0,
     isBalanceFetched: false,
     currency: 'NIM',
     fullName: 'Nimiq',
+    balanceError: null,
   },
   eosData: {
     balance: 0,
     address: '',
+    isAccountActivated: false,
+    isActivationPaymentSent: false,
     isBalanceFetched: true,
     currency: 'EOS',
     fullName: 'Eos',
+    balanceError: null,
   },
   telosData: {
     balance: 0,
@@ -57,6 +66,7 @@ export const initialState = {
     isBalanceFetched: true,
     currency: 'TLOS',
     fullName: 'Telos',
+    balanceError: null,
   },
   tokensData: {},
 }
@@ -93,6 +103,26 @@ export const setBalance = (state, { name, amount, unconfirmedBalance }) => ({
     balance: Number(amount),
     unconfirmedBalance,
     isBalanceFetched: true,
+    balanceError: false,
+  },
+})
+
+export const setBalanceError = (state, { name }) => ({
+  ...state,
+  [name]: {
+    ...state[name],
+    balanceError: true,
+  },
+})
+
+export const setTokenBalanceError = (state, { name }) => ({
+  ...state,
+  tokensData: {
+    ...state.tokensData,
+    [name]: {
+      ...state.tokensData[name],
+      balanceError: true,
+    },
   },
 })
 
@@ -104,6 +134,7 @@ export const setTokenBalance = (state, { name, amount }) => ({
       ...state.tokensData[name],
       balance: Number(amount),
       isBalanceFetched: true,
+      balanceError: false,
     },
   },
 })

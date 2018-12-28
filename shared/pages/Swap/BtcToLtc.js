@@ -92,7 +92,7 @@ export default class BtcToLtc extends Component {
   }
 
   render() {
-    const { children } = this.props
+    const { children, disabledTimer }  = this.props
     const { currencyAddress, secret, flow, enabledButton, isShowingLitecoinScript } = this.state
 
     return (
@@ -140,7 +140,7 @@ export default class BtcToLtc extends Component {
                   <Fragment>
                     <input type="text" placeholder="Secret Key" defaultValue={secret} />
                     <br />
-                    <TimerButton timeLeft={5} brand onClick={this.submitSecret}>
+                    <TimerButton disabledTimer={disabledTimer} timeLeft={5} brand onClick={this.submitSecret}>
                       <FormattedMessage id="BtcToLtc.Confirm" defaultMessage="Confirm" />
                     </TimerButton>
                   </Fragment>

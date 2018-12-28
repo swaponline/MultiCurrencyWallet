@@ -113,7 +113,7 @@
   },
   {
     "id": "ADDoffer29",
-    "message": "Subscribe",
+    "message": "Sign up",
     "files": [
       "shared/components/Header/User/SubscribeButton/SubscribeButton.js"
     ]
@@ -534,35 +534,35 @@
   },
   {
     "id": "SwapProgress105",
-    "message": "3. Checking balance.. ",
+    "message": "Checking balance.. ",
     "files": [
       "shared/components/SwapProgress/SwapProgress.js"
     ]
   },
   {
     "id": "SwapProgress111",
-    "message": "4. Creating Bitcoin Script. Please wait, it will take a while",
+    "message": "Creating Bitcoin Script. Please wait, it will take a while",
     "files": [
       "shared/components/SwapProgress/SwapProgress.js"
     ]
   },
   {
     "id": "SwapProgress117",
-    "message": "5. ETH Owner received Bitcoin Script and Secret Hash. Waiting when he creates ETH Contract",
+    "message": "ETH Owner received Bitcoin Script and Secret Hash. Waiting when he creates ETH Contract",
     "files": [
       "shared/components/SwapProgress/SwapProgress.js"
     ]
   },
   {
     "id": "SwapProgress123",
-    "message": "6. ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait",
+    "message": "ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait",
     "files": [
       "shared/components/SwapProgress/SwapProgress.js"
     ]
   },
   {
     "id": "SwapProgress129",
-    "message": "7. Money was transferred to your wallet. Check the balance. ",
+    "message": "Money was transferred to your wallet. Check the balance. ",
     "files": [
       "shared/components/SwapProgress/SwapProgress.js"
     ]
@@ -580,49 +580,49 @@
   },
   {
     "id": "SwapProgress32",
-    "message": "1. Please wait. Confirmation processing",
+    "message": "Please wait. Confirmation processing",
     "files": [
       "shared/components/SwapProgress/SwapProgress.js"
     ]
   },
   {
     "id": "SwapProgress38",
-    "message": "2. Waiting BTC Owner creates Secret Key, creates BTC Script and charges it",
+    "message": "Waiting BTC Owner creates Secret Key, creates BTC Script and charges it",
     "files": [
       "shared/components/SwapProgress/SwapProgress.js"
     ]
   },
   {
     "id": "SwapProgress44",
-    "message": "3. Bitcoin Script created and charged. Please check the information below",
+    "message": "Bitcoin Script created and charged. Please check the information below",
     "files": [
       "shared/components/SwapProgress/SwapProgress.js"
     ]
   },
   {
     "id": "SwapProgress50",
-    "message": "4. Checking balance.. ",
+    "message": "Checking balance.. ",
     "files": [
       "shared/components/SwapProgress/SwapProgress.js"
     ]
   },
   {
     "id": "SwapProgress56",
-    "message": "5. Creating Ethereum Contract. Please wait, it will take a while",
+    "message": "Creating Ethereum Contract. Please wait, it will take a while",
     "files": [
       "shared/components/SwapProgress/SwapProgress.js"
     ]
   },
   {
     "id": "SwapProgress62",
-    "message": "6. Waiting BTC Owner adds Secret Key to ETH Contact",
+    "message": "Waiting BTC Owner adds Secret Key to ETH Contact",
     "files": [
       "shared/components/SwapProgress/SwapProgress.js"
     ]
   },
   {
     "id": "SwapProgress68",
-    "message": "7. Money was transferred to your wallet. Check the balance. ",
+    "message": "Money was transferred to your wallet. Check the balance. ",
     "files": [
       "shared/components/SwapProgress/SwapProgress.js"
     ]
@@ -643,14 +643,14 @@
   },
   {
     "id": "SwapProgress93",
-    "message": "1. The order creator is offline. Waiting for him.. ",
+    "message": "The order creator is offline. Waiting for him.. ",
     "files": [
       "shared/components/SwapProgress/SwapProgress.js"
     ]
   },
   {
     "id": "SwapProgress99",
-    "message": "2. Create a secret key",
+    "message": "Create a secret key",
     "files": [
       "shared/components/SwapProgress/SwapProgress.js"
     ]
@@ -931,10 +931,7 @@
   },
   {
     "id": "BtcToEos140",
-    "message": "5. Request to withdraw BTC from script",
-    "files": [
-      "shared/pages/Swap/BtcToEos.js"
-    ]
+    "message": "5. Request to withdraw BTC from script"
   },
   {
     "id": "BtcToEos63",
@@ -3519,38 +3516,45 @@
     ]
   },
   {
-    "id": "SubscribeModal000",
-    "message": "Thanks!{br}When we send the token you will receive a notification",
+    "id": "SignUpModal000",
+    "message": "Thanks!{br}You will receive a notification",
     "files": [
-      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+      "shared/components/modals/SignUpModal/SignUpModal.js"
     ]
   },
   {
-    "id": "SubscribeModal001",
-    "message": "Join whitelist and get 1 SWAP token",
+    "id": "SignUpModal001",
+    "message": "Go to my wallet",
     "files": [
-      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+      "shared/components/modals/SignUpModal/SignUpModal.js"
     ]
   },
   {
-    "id": "SubscribeModal002",
+    "id": "SignUpModal002",
     "message": "Wait please",
     "files": [
-      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+      "shared/components/modals/SignUpModal/SignUpModal.js"
     ]
   },
   {
-    "id": "SubscribeModal003",
-    "message": "Join whitelist",
+    "id": "SignUpModal003",
+    "message": "Allow notifications",
     "files": [
-      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+      "shared/components/modals/SignUpModal/SignUpModal.js"
     ]
   },
   {
-    "id": "SubscribeModal004",
-    "message": "click on this button to allow push notifications",
+    "id": "SignUpModal004",
+    "message": "You will receive notifications regarding updates with your account (orders, transactions){br}and monthly updates about our project",
     "files": [
-      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+      "shared/components/modals/SignUpModal/SignUpModal.js"
+    ]
+  },
+  {
+    "id": "SignUpModal005",
+    "message": "No, thanks",
+    "files": [
+      "shared/components/modals/SignUpModal/SignUpModal.js"
     ]
   },
   {
@@ -3803,10 +3807,10 @@
     ]
   },
   {
-    "id": "Subscribe55",
-    "message": "Subscribe",
+    "id": "SignUpModal55",
+    "message": "Sign up",
     "files": [
-      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+      "shared/components/modals/SignUpModal/SignUpModal.js"
     ]
   },
   {
@@ -3920,7 +3924,7 @@
   },
   {
     "id": "Header205",
-    "message": "Join to our white list discounts, gifts, better exchange rates, etc.",
+    "message": "You will receive notifications regarding updates with your account (orders, transactions) and monthly updates about our project",
     "files": [
       "shared/components/Header/Header.js"
     ]
@@ -4531,6 +4535,20 @@
     "message": "Swap.Online is the decentralized in-browser hot wallet based on the Atomic Swaps technology.\n            As in our wallet all blockchains interact decentralized and no-third-party way, we offer our users to exchange Bitcoin, Ethereum,\n            USD Tether, BCH and EOS for free in a couple of seconds. At the time, Swap.Online charges no commision for the order making and taking.\n            For example, on the vast majority of exchanges, there is a 0,3%-operational fee for the taker of liquidity and 1-5% withdrawal fee.\n            The exchange of crypto and tokens on Swap.Online is conducted in truly\n            decentralized manner as we use the Atomic Swaps technology of peer-to-peer cross-chain interaction.\n            Swap.Online uses IPFS-network for all the operational processes which results in no need for centralized server.\n            The interface of exchange seems to look like that of crypto broker, not of ordinary DEX or CEX. In a couple of clicks,\n            the user can place and take the offer, customizing the price of sent token.\n            Also, the user can exchange the given percentage of his or her amount of tokens available (e.g. ½, ¼ etc.).\n            One more advantage of the Swap.Online exchange service is the usage of one key for the full range of ERC-20 tokens.\n            By the way, if case you’re not interested in exchange of some tokens, you can hide it from the list.\n            Thus, use Swap.Online as your basic exchange for every crypto you’re holding!",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "RowWallet276",
+    "message": " node is down (You can not perform transactions). ",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowWallet282",
+    "message": "Need help?",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
     ]
   }
 ]

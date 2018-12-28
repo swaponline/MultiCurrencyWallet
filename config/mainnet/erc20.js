@@ -224,4 +224,9 @@ export default {
     decimals: 10,
     fullName: 'Ochain',
   },
+  cbt: {
+    address: '0x076C97e1c869072eE22f8c91978C99B4bcB02591',
+    decimals: 18,
+    fullName: 'CommerceBlock',
+  },
 }

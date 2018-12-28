@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router'
 import actions from 'redux/actions'
 import { connect } from 'redaction'
+import { constants } from 'helpers'
 
 import styles from './User.scss'
 import CSSModules from 'react-css-modules'
@@ -12,7 +13,7 @@ import Sound from 'helpers/Sound/Sound.mp4'
 import Question from './Question/Question'
 import UserAvatar from './UserAvatar/UserAvatar'
 import UserTooltip from './UserTooltip/UserTooltip'
-import SubscribeButton from './SubscribeButton/SubscribeButton'
+import SignUpButton from './SignUpButton/SignUpButton'
 
 import Avatar from 'components/Avatar/Avatar'
 import { injectIntl } from 'react-intl'
@@ -24,6 +25,7 @@ import { localisedUrl } from 'helpers/locale'
 @connect({
   feeds: 'feeds.items',
   peer: 'ipfs.peer',
+  isSigned: 'signUp.isSigned',
 })
 @CSSModules(styles)
 export default class User extends React.Component {
@@ -81,12 +83,12 @@ export default class User extends React.Component {
     const { view } = this.state
 
     const {
-      feeds, peer, reputation, openTour, path,
+      feeds, peer, reputation, openTour, path, isSigned,
     } = this.props
 
     return (
       <div styleName="user-cont">
-        <SubscribeButton />
+        {!isSigned && (<SignUpButton />)}
         {path && (<Question openTour={openTour} />)}
         <UserAvatar
           isToggle={this.handleToggleTooltip}

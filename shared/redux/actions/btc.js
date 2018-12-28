@@ -52,7 +52,10 @@ const getBalance = () => {
       console.log('BTC unconfirmedBalance Balance: ', unconfirmedBalance)
       reducers.user.setBalance({ name: 'btcData', amount: balance, unconfirmedBalance })
       return balance
-    }, () => Promise.reject())
+    })
+    .catch((e) => {
+      reducers.user.setBalanceError({ name: 'btcData' })
+    })
 }
 
 const fetchBalance = (address) =>
