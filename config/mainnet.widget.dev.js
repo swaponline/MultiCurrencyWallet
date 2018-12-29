@@ -20,4 +20,5 @@ export default {
   isWidget: true,
   ...config,
   erc20: newERC20,
+  erc20token: process.argv[3],
 }
