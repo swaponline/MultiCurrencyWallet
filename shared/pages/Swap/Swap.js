@@ -38,6 +38,8 @@ export default class SwapComponent extends PureComponent {
     SwapComponent: null,
     currencyData: null,
     isAmountMore: null,
+    ethBalance: null,
+    continueSwap: false,
   }
 
   componentWillMount() {
@@ -52,6 +54,7 @@ export default class SwapComponent extends PureComponent {
     try {
       const swap = new Swap(orderId)
       const SwapComponent = swapComponents[swap.flow._flowName]
+      const ethData = items.filter(item => item.currency === 'ETH')
       const currencyData = items.concat(tokenItems)
         .filter(item => item.currency === swap.sellCurrency.toUpperCase())[0]
 
@@ -86,6 +89,7 @@ export default class SwapComponent extends PureComponent {
         SwapComponent,
         swap,
         currencyData,
+        ethData,
       })
 
     } catch (error) {
@@ -95,6 +99,20 @@ export default class SwapComponent extends PureComponent {
 
     this.setSaveSwapId(orderId)
   }
+
+  componentDidMount() {
+    this.checkEthBalance()
+    let timer
+
+    timer = setInterval(() => {
+      if (this.state.continueSwap === false) {
+        this.checkEthBalance()
+      } else {
+        clearInterval(timer)
+      }
+    }, 5000)
+  }
+
 
   // componentWillMount() {
   //   actions.api.checkServers()
@@ -117,9 +135,18 @@ export default class SwapComponent extends PureComponent {
     localStorage.setItem('swapId', JSON.stringify(swapsId))
   }
 
+  checkEthBalance = async () => {
+    const ethBalance = await actions.eth.getBalance()
+    this.setState(() => ({ ethBalance }))
+
+    if (this.state.ethBalance >= 0.001) {
+      this.setState(() => ({ continueSwap: true }))
+    }
+  }
+
   render() {
     const { peer } = this.props
-    const { swap, SwapComponent, currencyData, isAmountMore } = this.state
+    const { swap, SwapComponent, currencyData, isAmountMore, ethData, continueSwap } = this.state
 
     if (!swap || !SwapComponent || !peer || !isAmountMore) {
       return null
@@ -127,7 +154,14 @@ export default class SwapComponent extends PureComponent {
 
     return (
       <div styleName="swap">
-        <SwapComponent disabledTimer={isAmountMore === 'enable'} swap={swap} currencyData={currencyData} styles={styles}>
+        <SwapComponent
+          disabledTimer={isAmountMore === 'enable'}
+          swap={swap}
+          currencyData={currencyData}
+          continueSwap={continueSwap}
+          ethData={ethData}
+          styles={styles}
+        >
           <Share flow={swap.flow} />
           <EmergencySave flow={swap.flow} />
           {

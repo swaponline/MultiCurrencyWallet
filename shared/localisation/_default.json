@@ -3538,6 +3538,20 @@
     ]
   },
   {
+    "id": "SignUpModal111",
+    "message": "Something went wrong{br}Try it later",
+    "files": [
+      "shared/components/modals/SignUpModal/SignUpModal.js"
+    ]
+  },
+  {
+    "id": "SignUpModal133",
+    "message": "Something went wrong.{br}Try it later",
+    "files": [
+      "shared/components/modals/SignUpModal/SignUpModal.js"
+    ]
+  },
+  {
     "id": "SignUpModal000",
     "message": "Thanks!{br}You will receive a notification",
     "files": [
@@ -3574,7 +3588,7 @@
   },
   {
     "id": "SignUpModal005",
-    "message": "No, thanks",
+    "message": "It seems like push notification is not working{br}Please, leave your email for notifications,{br}or try later",
     "files": [
       "shared/components/modals/SignUpModal/SignUpModal.js"
     ]
@@ -4593,6 +4607,20 @@
     "message": "Need help?",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "BtcToEthTokenAddress348",
+    "message": "Not enough ETH on your balance for miner fee.{br}{br}Deposit 0.001 ETH to your account {address}",
+    "files": [
+      "shared/pages/Swap/BtcToEthToken.js"
+    ]
+  },
+  {
+    "id": "BtcToEthTokenAddress307",
+    "message": "Not enough ETH on your balance for miner fee.{br}{br}Deposit 0.001 ETH to your account {address}",
+    "files": [
+      "shared/pages/Swap/EthTokenToBtc.js"
     ]
   }
 ]

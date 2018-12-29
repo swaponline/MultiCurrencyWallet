@@ -3519,6 +3519,20 @@
     ]
   },
   {
+    "id": "SignUpModal111",
+    "message": "Что-то пошло не так{br}Попробуйте позже",
+    "files": [
+      "shared/components/modals/SignUpModal/SignUpModal.js"
+    ]
+  },
+  {
+    "id": "SignUpModal133",
+    "message": "Что-то пошло не так{br}Попробуйте позже",
+    "files": [
+      "shared/components/modals/SignUpModal/SignUpModal.js"
+    ]
+  },
+  {
     "id": "SignUpModal000",
     "message": "Спасибо!{br}Вы будете получать уведомления",
     "files": [
@@ -3555,7 +3569,7 @@
   },
   {
     "id": "SignUpModal005",
-    "message": "Нет, спасибо",
+    "message": "Похоже, что пуш уведомления не работают.{br}Пожалуйста, оставьте свой email для уведомлений",
     "files": [
       "shared/components/modals/SignUpModal/SignUpModal.js"
     ]
@@ -4533,6 +4547,20 @@
     "message": "Требуется помощь?",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "BtcToEthTokenAddress348",
+    "message": "Недостаточная сумма ETH на вашем балансе, {br}для оплаты комиссии майнеров.{br}{br}Пополните баланс на 0.001 ETH {address}",
+    "files": [
+      "shared/pages/Swap/BtcToEthToken.js"
+    ]
+  },
+  {
+    "id": "BtcToEthTokenAddress307",
+    "message": "Недостаточная сумма ETH на вашем балансе, {br}для оплаты комиссии майнеров.{br}{br}Пополните баланс на 0.001 ETH {address}",
+    "files": [
+      "shared/pages/Swap/EthTokenToBtc.js"
     ]
   }
 ]

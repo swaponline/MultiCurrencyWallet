@@ -1,4 +1,4 @@
-.thanks {
+.result {
   font-size: 24px;
   text-align: center;
   margin-bottom: 32px;
@@ -8,22 +8,29 @@
   text-align: center;
   margin-bottom: 64px;
 }
+.input-wrapper {
+  width: 400px;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  margin-bottom: 40px;
+}
+.input {
+  width: 100%;
+}
 .button {
   width: auto;
   padding: 0 16px;
   margin: 0 auto;
   margin-bottom: 32px;
 }
-.button-info {
+.info {
   font-size: 14px;
   text-align: center;
 }
-.cancel-wrapper {
-  display: flex;
-  justify-content: center;
-}
-.cancel {
-  font-size: 14px;
-  text-align: center;
-  color: lightgray;
+
+@media (max-width: 576px) {
+  .input-wrapper {
+    width:100%;
+  }
 }

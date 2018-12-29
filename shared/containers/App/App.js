@@ -24,6 +24,8 @@ import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import NotificationConductor from 'components/notification/NotificationConductor/NotificationConductor'
 import Seo from 'components/Seo/Seo'
 
+import config from 'app-config'
+
 
 const userLanguage = (navigator.userLanguage || navigator.language || 'en-gb').split('-')[0]
 moment.locale(userLanguage)
@@ -73,9 +75,7 @@ export default class App extends React.Component {
       actions.user.getDemoMoney()
     }
 
-    if (actions.firebase.isSupported()) {
-      actions.firebase.initialize()
-    }
+    actions.firebase.initialize()
   }
 
   componentDidMount() {
@@ -94,7 +94,8 @@ export default class App extends React.Component {
   render() {
     const { fetching, multiTabs, error } = this.state
     const { children, ethAddress, btcAddress, tokenAddress, history /* eosAddress */ } = this.props
-    const isFetching = !ethAddress || !btcAddress || !tokenAddress || !fetching
+    const isFetching = !ethAddress || !btcAddress || (!tokenAddress && config && !config.isWidget) || !fetching
+
     if (multiTabs) {
       return <PreventMultiTabs />
     }

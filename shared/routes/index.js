@@ -14,6 +14,8 @@ import Currency         from 'pages/Currency/Currency'
 import PartialClosure   from 'pages/PartialClosure/PartialClosure'
 import CurrencyWallet   from 'pages/CurrencyWallet/CurrencyWallet'
 
+import config from 'app-config'
+
 
 const routes = (
   <Switch>
@@ -28,7 +30,7 @@ const routes = (
     <Route path={`${localisePrefix}${links.aboutus}`} component={About} />
     <Route path={`${localisePrefix}${links.history}`} component={History} />
 
-    <Route exact path={`${localisePrefix}${links.home}`} component={Wallet} />
+    <Route exact path={`${localisePrefix}${links.home}`} component={(config && config.isWidget) ? PartialClosure : Wallet} />
     <Route path={`${localisePrefix}${links.home}:currency`} component={Currency} />
 
     <Route component={NotFound} />
