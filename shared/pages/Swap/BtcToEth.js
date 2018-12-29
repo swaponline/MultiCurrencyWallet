@@ -13,7 +13,6 @@ import { constants } from 'helpers'
 
 import Timer from './Timer/Timer'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
-import SwapProgress from 'components/SwapProgress/SwapProgress'
 import { TimerButton, Button } from 'components/controls'
 import { FormattedMessage } from 'react-intl'
 

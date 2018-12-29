@@ -8,7 +8,6 @@ import { constants } from 'helpers'
 
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import TimerButton from 'components/controls/TimerButton/TimerButton'
-import SwapProgress from 'components/SwapProgress/SwapProgress'
 import Button from 'components/controls/Button/Button'
 import Timer from './Timer/Timer'
 import { FormattedMessage } from 'react-intl'

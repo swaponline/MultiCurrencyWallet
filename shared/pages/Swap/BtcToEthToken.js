@@ -16,7 +16,6 @@ import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
 import QR from 'components/QR/QR'
 import swapApp from 'swap.app'
-import SwapProgress from 'components/SwapProgress/SwapProgress'
 import Timer from './Timer/Timer'
 import { FormattedMessage } from 'react-intl'
 
@@ -47,8 +46,6 @@ export default class BtcToEthToken extends Component {
       ethAddress: ethData.map(item => item.address),
       continuerSwap: continueSwap,
     }
-  }
-
   }
 
   componentWillMount() {
@@ -157,7 +154,6 @@ export default class BtcToEthToken extends Component {
             </strong>
           )
         }
-        <SwapProgress data={flow} name="BTC2ETH" stepLength={8} />
         {
           flow.isWaitingForOwner && (
             <Fragment>
