@@ -4,6 +4,7 @@ import actions from 'redux/actions'
 
 import config from 'app-config'
 import { BigNumber } from 'bignumber.js'
+import { constants } from 'helpers'
 
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import TimerButton from 'components/controls/TimerButton/TimerButton'
@@ -28,16 +29,19 @@ export default class EthToBtc extends Component {
     }
   }
 
+
   componentWillMount() {
     this.swap.on('state update', this.handleFlowStateUpdate)
+    this.handleInitProgress()
   }
 
   componentWillUnmount() {
     this.swap.off('state update', this.handleFlowStateUpdate)
+    //this.handleInitProgress()
   }
 
-
   handleFlowStateUpdate = (values) => {
+
     const stepNumbers = {
       1: 'sign',
       2: 'wait-lock-btc',
@@ -56,12 +60,25 @@ export default class EthToBtc extends Component {
       flow: values,
     })
 
+    this.handleInitProgress()
+
     // this.overProgress(values, Object.keys(stepNumbers).length)
   }
 
   // overProgress = (flow, length) => {
   //   actions.loader.show(true, '', '', true, { flow, length, name: 'ETH2BTC' })
   // }
+
+  handleInitProgress = () => {
+    const { flow } = this.state
+    let swapInfo = {
+      sellAmount: this.swap.sellAmount.toNumber(),
+      sellCurrency: this.swap.sellCurrency,
+      buyAmount: this.swap.buyAmount.toNumber(),
+      buyCurrency: this.swap.buyCurrency
+    }
+    actions.modals.open(constants.modals.SwapProgress, { flow: flow, name: 'ETH2BTC', stepNumbers: 9, swapInfo: swapInfo })
+  }
 
   signSwap = () => {
     this.swap.flow.sign()
@@ -110,7 +127,6 @@ export default class EthToBtc extends Component {
               </strong>
             )
           }
-          <SwapProgress data={flow} name="ETH2BTC" stepLength={9} />
         </div>
         <div className={this.props.styles.logHide}>
           {

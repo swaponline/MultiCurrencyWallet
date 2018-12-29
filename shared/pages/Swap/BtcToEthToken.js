@@ -49,7 +49,9 @@ export default class BtcToEthToken extends Component {
     }
   }
 
-  componentDidMount() {
+  }
+
+  componentWillMount() {
     this.swap.on('state update', this.handleFlowStateUpdate)
   }
 
@@ -148,9 +150,9 @@ export default class BtcToEthToken extends Component {
         {
           this.swap.id && (
             <strong className={this.props.styles.swapGoNumber}>
-              {this.swap.sellAmount.toNumber()}
-              {this.swap.sellCurrency} &#10230;
-              {this.swap.buyAmount.toNumber()}
+              {this.swap.sellAmount.toNumber()}{' '}
+              {this.swap.sellCurrency} &#10230; {' '}
+              {this.swap.buyAmount.toNumber()}{' '}
               {this.swap.buyCurrency}
             </strong>
           )
@@ -356,7 +358,7 @@ export default class BtcToEthToken extends Component {
                             <FormattedMessage id="BtcToEthToken169" defaultMessage="Current balance:">
                               {message => <span>{message} </span>}
                             </FormattedMessage>
-                            { flow.scriptBalance} BTC
+                            { flow.balance} BTC
                           </div>
                           <div className={this.props.styles.unconfBalance}>
                             <FormattedMessage id="BtcToEthToken170" defaultMessage="Unconfirmed balance: 0 BTC">

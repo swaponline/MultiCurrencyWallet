@@ -9,6 +9,7 @@ import styles from './Swap.scss'
 import { BigNumber } from 'bignumber.js'
 
 import actions from 'redux/actions'
+import { constants } from 'helpers'
 
 import Timer from './Timer/Timer'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
@@ -34,10 +35,12 @@ export default class BtcToEth extends Component {
 
   componentWillMount() {
     this.swap.on('state update', this.handleFlowStateUpdate)
+    this.handleInitProgress()
   }
 
   componentWillUnmount() {
     this.swap.off('state update', this.handleFlowStateUpdate)
+    // this.handleInitProgress()
   }
 
   tryRefund = () => {
@@ -45,6 +48,8 @@ export default class BtcToEth extends Component {
   }
 
   handleFlowStateUpdate = (values) => {
+
+    const { flow } = this.state
 
     const stepNumbers = {
       1: 'sign',
@@ -63,9 +68,24 @@ export default class BtcToEth extends Component {
       flow: values,
     })
 
+    this.handleInitProgress()
 
-    // this.overProgress(values, Object.keys(stepNumbers).length)
+    // actions.modals.open(constants.modals.SwapProgress, { flow: flow, name: 'BTC2ETH' })
 
+
+    // this.overProgress(values, Object.keys(stepNumbers).length) <SwapProgress data={flow} name="BTC2ETH" stepLength={8} />
+
+  }
+
+  handleInitProgress = () => {
+    const { flow } = this.state
+    let swapInfo = {
+      sellAmount: this.swap.sellAmount.toNumber(),
+      sellCurrency: this.swap.sellCurrency,
+      buyAmount: this.swap.buyAmount.toNumber(),
+      buyCurrency: this.swap.buyCurrency
+    }
+    actions.modals.open(constants.modals.SwapProgress, { flow: flow, name: 'BTC2ETH', stepNumbers: 8, swapInfo: swapInfo })
   }
 
   // overProgress = (flow, length) => {
@@ -76,6 +96,11 @@ export default class BtcToEth extends Component {
     const { secret } = this.state
 
     this.swap.flow.submitSecret(secret)
+  }
+
+  initSwapProgress = () => {
+    const { flow } = this.state
+    actions.modals.open(constants.modals.SwapProgress, { flow: flow, name: 'BTC2ETH' })
   }
 
   updateBalance = () => {
@@ -115,14 +140,13 @@ export default class BtcToEth extends Component {
           {
             this.swap.id && (
               <strong className={this.props.styles.swapGoNumber}>
-                {this.swap.sellAmount.toNumber()}
-                {this.swap.sellCurrency} &#10230;
-                {this.swap.buyAmount.toNumber()}
+                {this.swap.sellAmount.toNumber()}{' '}
+                {this.swap.sellCurrency} &#10230;{' '}
+                {this.swap.buyAmount.toNumber()}{' '}
                 {this.swap.buyCurrency}
               </strong>
             )
           }
-          <SwapProgress data={flow} name="BTC2ETH" stepLength={8} />
         </div>
         <div className={this.props.styles.logHide}>
           {

@@ -61,6 +61,7 @@ export default class Wallet extends Component {
     openModal: false,
   }
 
+
   componentWillMount() {
     actions.user.getBalances()
     actions.analytics.dataEvent('open-page-balances')
@@ -124,6 +125,7 @@ export default class Wallet extends Component {
   }
 
   render() {
+
     const { items, tokens, currencies, hiddenCoinsList, intl, location } = this.props
     const titles = [
       <FormattedMessage id="Wallet114" defaultMessage="Coin" />,

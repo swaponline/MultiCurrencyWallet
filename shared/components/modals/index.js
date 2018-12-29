@@ -11,6 +11,8 @@ import ShowMoreCoins from './ShowMoreCoins/ShowMoreCoins'
 import EthChecker from './EthChecker/EthChecker'
 import ReceiveModal from './ReceiveModal/ReceiveModal'
 import DownloadModal from './DownloadModal/DownloadModal'
+import SwapProgress from './SwapProgress/SwapProgress'
+
 
 
 export default {
@@ -27,4 +29,5 @@ export default {
   EthChecker,
   ReceiveModal,
   DownloadModal,
+  SwapProgress,
 }

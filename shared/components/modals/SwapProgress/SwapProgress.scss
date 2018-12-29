@@ -83,14 +83,14 @@ $size: 200px;
     @include circle($size);
     clip: rect(0, #{$size/2}, $size, 0);
     background: #5100dc;
-    transition: 0.3s all ease;
+    transition: 0.3s transform ease;
     transform: rotate(200deg);
   }
   .gt-50 & {
     clip: rect(0, #{$size/2}, $size, 0);
     .ppc-progress-fill {
       clip: rect(0, $size, $size, #{$size/2});
-      transition: 0.3s all ease;
+      transition: 0.3s transform ease;
       background: #E5E5E5;
     }
   }
@@ -112,6 +112,50 @@ $size: 200px;
   vertical-align: middle;
 }
 
+.transaction {
+  margin-bottom: 10px;
+  position: relative;
+  color: #000;
+  font-size: 14px;
+  color: #007cff;
+  display: block;
+  text-align: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: end;
+  -webkit-align-items: end;
+  -ms-flex-align: end;
+  align-items: end;
+  left: 10px;
+  span {
+    color: #000;
+    font-weight: 100;
+  }
+}
+
+.swapInfo {
+  text-align: center;
+  display: block;
+  position: absolute;
+  margin-bottom: 15px;
+  top: -35px;
+  font-size: 17px;
+  font-weight: 300;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.transactionWrap {
+  position: absolute;
+  left: 20px;
+  top: 105%;
+}
 
 .bar {
   content: "";
@@ -144,7 +188,7 @@ $size: 200px;
 .steps {
   color: #8e8e8e;
   position: absolute;
-  right: 65px;
+  right: 100px;
   top: 68px;
   font-size: 17px;
 }
@@ -241,7 +285,6 @@ $size: 200px;
 }
 
 .step {
-  margin-top: 50px;
   text-align: center;
   padding: 50px;
   padding-bottom: 30px;
@@ -273,7 +316,7 @@ $size: 200px;
 
 .stepHeading {
   color: #000;
-  font-size: 26px;
+  font-size: 24px;
 }
 
 @keyframes blink {
@@ -316,4 +359,8 @@ $size: 200px;
   .link {
     font-size: 13px;
   }
+}
+
+.content {
+  width: 560px;
 }
