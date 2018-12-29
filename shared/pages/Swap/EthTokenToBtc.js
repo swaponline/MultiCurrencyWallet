@@ -305,6 +305,15 @@ export default class EthTokenToBtc extends Component {
                   </h3>
                 )
               }
+              {!continuerSwap &&
+                <h3 style={{ color: '#E72BB3', marginTop: '10px' }}>
+                  <FormattedMessage
+                    id="BtcToEthTokenAddress307"
+                    defaultMessage="Not enough ETH on your balance for miner fee.{br}{br}Deposit 0.001 ETH to your account {address}"
+                    values={{ address: `${currencyAddress}`, br: <br /> }}
+                  />
+                </h3>
+              }
               {
                 flow.ethSwapCreationTransactionHash && (
                   <div>
@@ -337,20 +346,11 @@ export default class EthTokenToBtc extends Component {
               }
 
               {
-                (flow.step === 6 || (!continuerSwap && flow.isEthWithdrawn)) && (
+                (flow.step === 6 || (continuerSwap && flow.isEthWithdrawn)) && (
                   <Fragment>
                     <h3>
                       <FormattedMessage id="EthTokenBtc321" defaultMessage="5. Waiting BTC Owner adds Secret Key to ETH Contact" />
                     </h3>
-                    {!continuerSwap &&
-                      <h3 style={{ color: '#E72BB3', marginTop: '10px' }}>
-                        <FormattedMessage
-                          id="BtcToEthTokenAddress307"
-                          defaultMessage="Not enough ETH on your balance for miner fee.{br}{br}Deposit 0.001 ETH to your account {address}"
-                          values={{ address: `${currencyAddress}`, br: <br /> }}
-                        />
-                      </h3>
-                    }
                     {
                       !flow.isEthWithdrawn && (
                         <InlineLoader />
