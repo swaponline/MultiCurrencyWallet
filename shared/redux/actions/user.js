@@ -32,14 +32,10 @@ const sign = async () => {
     const eosActivePrivateKey = localStorage.getItem(constants.privateKeyNames.eosPrivateKey)
     const eosActivePublicKey = localStorage.getItem(constants.privateKeyNames.eosPublicKey)
     const eosAccount = localStorage.getItem(constants.privateKeyNames.eosAccount)
-    const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === 'true'
 
     if (eosActivePrivateKey && eosActivePublicKey && eosAccount) {
       await actions.eos.login(eosAccount, eosActivePrivateKey, eosActivePublicKey)
-
-      if (!eosAccountActivated) {
-        await actions.eos.updateActivationStatus()
-      }
+      await actions.eos.waitAccountActivation()
     } else {
       await actions.eos.loginWithNewAccount()
     }
@@ -113,6 +109,7 @@ const getExchangeRate = (sellCurrency, buyCurrency) =>
 const setTransactions = () =>
   Promise.all([
     actions.btc.getTransaction(),
+    actions.usdt.getTransaction(),
     actions.eth.getTransaction(),
     actions.ltc.getTransaction(),
     ...Object.keys(config.erc20)

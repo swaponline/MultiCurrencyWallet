@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 
 import Swap from 'swap.swap'
 
-import CSSModules from 'react-css-modules'
+import cssModules from 'react-css-modules'
 import styles from './Swap.scss'
 
 import { connect } from 'redaction'
@@ -15,6 +15,7 @@ import EmergencySave from './EmergencySave/EmergencySave'
 import { injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import DeleteSwapAfterEnd from './DeleteSwapAfterEnd'
+import SwapController from './SwapController'
 
 
 @injectIntl
@@ -28,13 +29,17 @@ import DeleteSwapAfterEnd from './DeleteSwapAfterEnd'
   checked: 'api.checked',
   peer,
 }))
-@CSSModules(styles)
+
+@cssModules(styles, { allowMultiple: true })
 export default class SwapComponent extends PureComponent {
 
   state = {
     swap: null,
     SwapComponent: null,
     currencyData: null,
+    isAmountMore: null,
+    ethBalance: null,
+    continueSwap: false,
   }
 
   componentWillMount() {
@@ -49,8 +54,34 @@ export default class SwapComponent extends PureComponent {
     try {
       const swap = new Swap(orderId)
       const SwapComponent = swapComponents[swap.flow._flowName]
+      const ethData = items.filter(item => item.currency === 'ETH')
       const currencyData = items.concat(tokenItems)
         .filter(item => item.currency === swap.sellCurrency.toUpperCase())[0]
+
+      const currencies = [
+        {
+          currency: swap.sellCurrency,
+          amount: swap.sellAmount,
+        },
+        {
+          currency: swap.buyCurrency,
+          amount: swap.buyAmount,
+        },
+      ]
+
+      currencies.forEach(item => {
+        actions.user.getExchangeRate(item.currency, 'usd')
+          .then(exRate => {
+            const amount = exRate * Number(item.amount)
+
+            if (Number(amount) >= 50) {
+              this.setState(() => ({ isAmountMore: 'enable' }))
+            } else {
+              this.setState(() => ({ isAmountMore: 'disable' }))
+            }
+          })
+      })
+
 
       window.swap = swap
 
@@ -58,6 +89,7 @@ export default class SwapComponent extends PureComponent {
         SwapComponent,
         swap,
         currencyData,
+        ethData,
       })
 
     } catch (error) {
@@ -67,6 +99,20 @@ export default class SwapComponent extends PureComponent {
 
     this.setSaveSwapId(orderId)
   }
+
+  componentDidMount() {
+    this.checkEthBalance()
+    let timer
+
+    timer = setInterval(() => {
+      if (this.state.continueSwap === false) {
+        this.checkEthBalance()
+      } else {
+        clearInterval(timer)
+      }
+    }, 5000)
+  }
+
 
   // componentWillMount() {
   //   actions.api.checkServers()
@@ -89,17 +135,33 @@ export default class SwapComponent extends PureComponent {
     localStorage.setItem('swapId', JSON.stringify(swapsId))
   }
 
+  checkEthBalance = async () => {
+    const ethBalance = await actions.eth.getBalance()
+    this.setState(() => ({ ethBalance }))
+
+    if (this.state.ethBalance >= 0.001) {
+      this.setState(() => ({ continueSwap: true }))
+    }
+  }
+
   render() {
     const { peer } = this.props
-    const { swap, SwapComponent, currencyData } = this.state
+    const { swap, SwapComponent, currencyData, isAmountMore, ethData, continueSwap } = this.state
 
-    if (!swap || !SwapComponent || !peer) {
+    if (!swap || !SwapComponent || !peer || !isAmountMore) {
       return null
     }
 
     return (
       <div styleName="swap">
-        <SwapComponent swap={swap} currencyData={currencyData}>
+        <SwapComponent
+          disabledTimer={isAmountMore === 'enable'}
+          swap={swap}
+          currencyData={currencyData}
+          continueSwap={continueSwap}
+          ethData={ethData}
+          styles={styles}
+        >
           <Share flow={swap.flow} />
           <EmergencySave flow={swap.flow} />
           {
@@ -107,6 +169,7 @@ export default class SwapComponent extends PureComponent {
               <DeleteSwapAfterEnd swap={swap} />
             )
           }
+          <SwapController swap={swap} />
         </SwapComponent>
       </div>
     )

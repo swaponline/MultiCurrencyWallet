@@ -52,6 +52,7 @@ export default class EthTokenToUsdt extends Component {
 
   tryRefund = () => {
     this.swap.flow.tryRefund()
+    this.setState(() => ({ enabledButton: false }))
   }
 
   toggleBitcoinScript = () => {
@@ -67,7 +68,7 @@ export default class EthTokenToUsdt extends Component {
   }
 
   render() {
-    const { children } = this.props
+    const { children, disabledTimer }  = this.props
     const { currencyAddress, flow, enabledButton, isShowingBitcoinScript } = this.state
 
     return (
@@ -110,7 +111,7 @@ export default class EthTokenToUsdt extends Component {
                 !flow.isSignFetching && !flow.isMeSigned && (
                   <Fragment>
                     <br />
-                    <TimerButton brand onClick={this.signSwap}>
+                    <TimerButton disabledTimer={disabledTimer} brand onClick={this.signSwap}>
                       <FormattedMessage id="EthTokenToUsdt109" defaultMessage="Confirm" />
                     </TimerButton>
                   </Fragment>
@@ -237,7 +238,7 @@ export default class EthTokenToUsdt extends Component {
                       flow.step === 3 && (
                         <Fragment>
                           <br />
-                          <TimerButton brand onClick={this.confirmBTCScriptChecked}>
+                          <TimerButton disabledTimer={disabledTimer} brand onClick={this.confirmBTCScriptChecked}>
                             <FormattedMessage id="EthTokenToUsdt236" defaultMessage="Everything is OK. Continue" />
                           </TimerButton>
                         </Fragment>
@@ -273,7 +274,7 @@ export default class EthTokenToUsdt extends Component {
                         <span>{flow.address}</span>
                       </div>
                       <br />
-                      <TimerButton brand onClick={this.updateBalance}>
+                      <TimerButton disabledTimer={disabledTimer} brand onClick={this.updateBalance}>
                         <FormattedMessage id="EthTokenToUsdt267" defaultMessage="Continue" />
                       </TimerButton>
                     </div>

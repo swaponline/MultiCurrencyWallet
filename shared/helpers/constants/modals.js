@@ -1,5 +1,5 @@
 export default {
-  Subscribe: 'SubscribeModal',
+  SignUp: 'SignUpModal',
   Withdraw: 'WithdrawModal',
   Offer: 'OfferModal',
   PrivateKeys: 'PrivateKeysModal',

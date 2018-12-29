@@ -85,6 +85,7 @@ export default class PartialClosure extends Component {
       maxAmount: 0,
       maxBuyAmount: new BigNumber(0),
       peer: '',
+      goodRate: 0,
       filteredOrders: [],
       isNonOffers: false,
       isFetching: false,
@@ -210,8 +211,10 @@ export default class PartialClosure extends Component {
 
   setAmountOnState = (maxAmount, getAmount, buyAmount) => {
 
+    console.log('setAmountOnState')
     console.log('maxAmount', Number(maxAmount))
     console.log('getAmount', this.getFixed(getAmount))
+    console.log('buyAmount', this.getFixed(buyAmount))
 
     this.setState(() => ({
       maxAmount: Number(maxAmount),
@@ -243,7 +246,7 @@ export default class PartialClosure extends Component {
     console.log('filteredOrders', filteredOrders.length)
 
     const sortedOrders = filteredOrders
-      .sort((a, b) => Number(a.buyAmount.dividedBy(a.sellAmount)) - Number(b.buyAmount.dividedBy(b.sellAmount)))
+      .sort((a, b) => Number(b.buyAmount.dividedBy(b.sellAmount)) - Number(a.buyAmount.dividedBy(a.sellAmount)))
       .map((item, index) => {
 
         const exRate = item.buyAmount.dividedBy(item.sellAmount)
@@ -282,6 +285,9 @@ export default class PartialClosure extends Component {
     let maxAllowedGetAmount = new BigNumber(0)
     let maxAllowedBuyAmount = new BigNumber(0)
 
+    let isFounded = false
+    let newState = {}
+
     orders.forEach(item => {
       maxAllowedSellAmount = (maxAllowedSellAmount.isLessThanOrEqualTo(item.sellAmount)) ? item.sellAmount : maxAllowedSellAmount
       maxAllowedBuyAmount = (maxAllowedBuyAmount.isLessThanOrEqualTo(item.buyAmount)) ? item.buyAmount : maxAllowedBuyAmount
@@ -290,20 +296,26 @@ export default class PartialClosure extends Component {
         const haveUsd = new BigNumber(String(exHaveRate)).multipliedBy(new BigNumber(haveAmount))
         const getUsd  = new BigNumber(String(exGetRate)).multipliedBy(new BigNumber(item.getAmount))
 
-        this.setState(() => ({
+        isFounded = true
+        newState = {
           haveUsd: Number(haveUsd).toFixed(2),
           getUsd: Number(getUsd).toFixed(2),
           isNonOffers: false,
           peer: item.peer,
+          goodRate: item.exRate,
           orderId: item.orderId,
-        }))
-      } else {
-        this.setState(() => ({
-          isNonOffers: true,
-          getUsd: Number(0).toFixed(2),
-        }))
+        }
       }
     })
+
+    if (isFounded) {
+      this.setState(() => (newState))
+    } else {
+      this.setState(() => ({
+        isNonOffers: true,
+        getUsd: Number(0).toFixed(2),
+      }))
+    }
 
     const checkAmount = this.setAmountOnState(maxAllowedSellAmount, maxAllowedGetAmount, maxAllowedBuyAmount)
 
@@ -348,7 +360,6 @@ export default class PartialClosure extends Component {
   handlePush = () => {
     const { intl: { locale } } = this.props
     const { haveCurrency, getCurrency } = this.state
-    this.props.history.push(localisedUrl(locale, `/${haveCurrency} - ${getCurrency}`))
 
     const tradeTicker = `${haveCurrency}-${getCurrency}`
 
@@ -420,10 +431,10 @@ export default class PartialClosure extends Component {
     const { currencies, addSelectedItems, intl: { locale } } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching,
       isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet, getUsd, haveUsd,
-      maxBuyAmount, getAmount,
+      maxBuyAmount, getAmount, goodRate,
     } = this.state
 
-    const oneCryptoCost = maxBuyAmount.isLessThanOrEqualTo(0) ? new BigNumber(0) :  maxBuyAmount.div(maxAmount)
+    const oneCryptoCost = maxBuyAmount.isLessThanOrEqualTo(0) ? new BigNumber(0) :  goodRate
     const linked = Link.all(this, 'haveAmount', 'getAmount', 'customWallet')
 
     if (redirect) {
@@ -491,7 +502,7 @@ export default class PartialClosure extends Component {
                 </span>
               )
             }
-            { oneCryptoCost.isGreaterThan(0) && oneCryptoCost.isFinite() && (
+            { oneCryptoCost.isGreaterThan(0) && oneCryptoCost.isFinite() && !isNonOffers && (
               <div>
                 <FormattedMessage
                   id="PartialPriceSearch502"
@@ -562,6 +573,22 @@ export default class PartialClosure extends Component {
             </div>
           </div>
         </div>
+        <FormattedMessage
+          id="PartialClosure562"
+          defaultMessage="Swap.Online is the decentralized in-browser hot wallet based on the Atomic Swaps technology.
+            As in our wallet all blockchains interact decentralized and no-third-party way, we offer our users to exchange Bitcoin, Ethereum,
+            USD Tether, BCH and EOS for free in a couple of seconds. At the time, Swap.Online charges no commision for the order making and taking.
+            For example, on the vast majority of exchanges, there is a 0,3%-operational fee for the taker of liquidity and 1-5% withdrawal fee.
+            The exchange of crypto and tokens on Swap.Online is conducted in truly
+            decentralized manner as we use the Atomic Swaps technology of peer-to-peer cross-chain interaction.
+            Swap.Online uses IPFS-network for all the operational processes which results in no need for centralized server.
+            The interface of exchange seems to look like that of crypto broker, not of ordinary DEX or CEX. In a couple of clicks,
+            the user can place and take the offer, customizing the price of sent token.
+            Also, the user can exchange the given percentage of his or her amount of tokens available (e.g. ½, ¼ etc.).
+            One more advantage of the Swap.Online exchange service is the usage of one key for the full range of ERC-20 tokens.
+            By the way, if case you’re not interested in exchange of some tokens, you can hide it from the list.
+            Thus, use Swap.Online as your basic exchange for every crypto you’re holding!"
+        />
       </Fragment>
     )
   }

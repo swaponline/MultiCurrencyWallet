@@ -15,11 +15,12 @@ import Table from 'components/tables/Table/Table'
 import Title from 'components/PageHeadline/Title/Title'
 import tableStyles from 'components/tables/Table/Table.scss'
 import PageSeo from 'components/Seo/PageSeo'
+import { getSeoPage } from 'helpers/seo'
 
 import Pair from './Pair'
 import Row from './Row/Row'
 import MyOrders from './MyOrders/MyOrders'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
 
 const filterMyOrders = (orders, peer) => orders
@@ -42,6 +43,7 @@ const filterOrders = (orders, filter) => orders
   currencies,
 }))
 @withRouter
+@injectIntl
 @cssModules(styles, { allowMultiple: true })
 export default class Orders extends Component {
 
@@ -95,7 +97,7 @@ export default class Orders extends Component {
 
   render() {
     const { sellOrders, buyOrders, isVisible } = this.state
-    let { sellCurrency, buyCurrency } = this.props
+    let { sellCurrency, buyCurrency, intl } = this.props
     buyCurrency = buyCurrency.toUpperCase()
     sellCurrency = sellCurrency.toUpperCase()
 
@@ -112,24 +114,35 @@ export default class Orders extends Component {
 
     const { isOnline, isAllPeersLoaded, myOrders, orderId, invalidPair, location, currencies } = this.props
     const isIpfsLoaded = isOnline && isAllPeersLoaded
+    const seoPage = getSeoPage(location.pathname)
 
     const buyCurrencyFullName = (currencies.find(c => c.name === buyCurrency) || {}).fullTitle
     const sellCurrencyFullName = (currencies.find(c => c.name === sellCurrency) || {}).fullTitle
+    const title = defineMessages({
+      metaTitle: {
+        id: 'Orders121',
+        defaultMessage: 'Atomic Swap {buyCurrencyFullName} ({buyCurrency}) to {sellCurrencyFullName} ({sellCurrency}) Instant Exchange',
+      },
+    })
+    const description = defineMessages({
+      metaDescription: {
+        id: 'Orders127',
+        defaultMessage: `Best exchange rate for {buyCurrencyFullName} ({buyCurrency}) to {sellCurrencyFullName} ({sellCurrency}).
+         Swap.Online wallet provides instant exchange using Atomic Swap Protocol.`,
+      },
+    })
 
     return (
       <Fragment>
         <PageSeo
           location={location}
-          defaultTitle={
-            `Atomic Swap ${buyCurrencyFullName} (${buyCurrency}) to ${sellCurrencyFullName} (${sellCurrency}) Instant Exchange`}
-          defaultDescription={`Best exchange rate for ${buyCurrencyFullName} (${buyCurrency}) to ${sellCurrencyFullName} (${sellCurrency}).
-               Swap.Online wallet provides instant exchange using Atomic Swap Protocol.`
-          } />
+          defaultTitle={intl.formatMessage(title.metaTitle, { buyCurrency, sellCurrency, buyCurrencyFullName, sellCurrencyFullName })}
+          defaultDescription={intl.formatMessage(description.metaDescription, { buyCurrency, sellCurrency, buyCurrencyFullName, sellCurrencyFullName })} />
         <Title>
           <FormattedMessage
             id="orders1381"
             defaultMessage="{pair} no limit exchange with 0 fee"
-            values={{ pair: `${buyCurrency}/${sellCurrency}` }}
+            values={{ pair: `${buyCurrency}/${sellCurrency}`, buyCurrency, sellCurrency, buyCurrencyFullName, sellCurrencyFullName }}
           />
         </Title>
         { invalidPair &&
@@ -208,6 +221,7 @@ export default class Orders extends Component {
           )}
           isLoading={buyOrders.length === 0 && !isIpfsLoaded}
         />
+        {seoPage && seoPage.footer && <div>{seoPage.footer}</div>}
       </Fragment>
     )
   }

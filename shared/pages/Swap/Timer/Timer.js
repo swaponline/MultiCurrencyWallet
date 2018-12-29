@@ -61,16 +61,23 @@ export default class Timer extends React.Component {
     return (
       <div styleName="timer">
         {
-          min > 0 ? (
-            <FormattedMessage
-              id="timer67"
-              defaultMessage="{min} minute left for refund"
-              values={{ min: `${min}` }}
-            />
+          this.props.defaultMessage === false ? (
+            <span>{min}</span>
           ) : (
-            <FormattedMessage id="timer68" defaultMessage="refund ready" />
+            min > 0 ? (
+              <span>
+                <FormattedMessage
+                  id="timer671"
+                  defaultMessage="minute left for refund"
+                  values={{ min: `${min}` }}
+                />
+              </span>
+            ) : (
+              <FormattedMessage id="timer68" defaultMessage="refund ready" />
+            )
           )
         }
+
       </div>
     )
   }

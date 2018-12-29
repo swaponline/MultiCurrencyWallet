@@ -34,25 +34,14 @@ export default class EosToBtc extends Component {
     })
   }
 
-  verifyScript = () => {
-    const { flow: { scriptValues: { secretHash, recipientPublicKey, ownerPublicKey, lockTime } } } = this.state
-
-    if (secretHash && recipientPublicKey && ownerPublicKey && lockTime) {
-      this.swap.events.dispatch('verify script')
-    }
-  }
-
   tryRefund = () => {
     this.swap.flow.tryRefund()
+    this.setState(() => ({ enabledButton: false }))
   }
 
   render() {
-    const { children } = this.props
+    const { children, disabledTimer }  = this.props
     const { flow, enabledButton } = this.state
-
-    if (flow.step === 2) {
-      setTimeout(this.verifyScript, 2000)
-    }
 
     return (
       <div>
@@ -99,18 +88,19 @@ export default class EosToBtc extends Component {
               <FormattedMessage id="EosToBtc97" defaultMessage="4. Request to withdraw EOS from contract" />
             </h3>
             {
-              flow.eosWithdrawTx === null && <InlineLoader />
+              !flow.eosWithdrawTx && !flow.eosRefundTx && <InlineLoader />
             }
             {
-              !flow.btcWithdrawTx && (
+              !flow.eosWithdrawTx && !flow.eosRefundTx &&
+              (
                 <div style={{ display: 'flex', alignItems: 'center' }}>
-                  { enabledButton && !flow.eosWithdrawTx &&
+                  { enabledButton &&
                     <Button brand onClick={this.tryRefund}>
                       <FormattedMessage id="EosToBtc107" defaultMessage="TRY REFUND" />
                     </Button>
                   }
                   <Timer
-                    lockTime={flow.scriptValues.lockTime * 1000}
+                    lockTime={flow.scriptValues.lockTime / 2 * 1000}
                     enabledButton={() => this.setState({ enabledButton: true })}
                   />
                 </div>
@@ -118,6 +108,9 @@ export default class EosToBtc extends Component {
             }
             {
               flow.eosWithdrawTx !== null && <TransactionLink type="EOS" id={flow.eosWithdrawTx} />
+            }
+            {
+              flow.eosRefundTx !== null && <TransactionLink type="EOS" id={flow.eosRefundTx} />
             }
           </Fragment>
         }

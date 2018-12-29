@@ -45,7 +45,7 @@ export default class Input extends Component {
     const {
       className, inputContainerClassName, inputClassName,
       valueLink: { error }, valueLink,
-      multiline, focusOnInit, disabled, readOnly, type, ...rest
+      multiline, focusOnInit, disabled, readOnly, type, usd, ...rest
     } = this.props
 
     const inputContainerStyleName = cx('inputContainer', {
@@ -67,6 +67,9 @@ export default class Input extends Component {
               dir: 'auto',
               autoComplete: 'off',
             })
+          }
+          { usd > 0 &&
+            <p styleName="textUsd" >{`~${usd}`}$</p>
           }
         </div>
         {

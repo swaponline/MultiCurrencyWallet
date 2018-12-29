@@ -17,7 +17,7 @@ import { Button } from 'components/controls'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import PageSeo from 'components/Seo/PageSeo'
 import { getSeoPage } from 'helpers/seo'
-import { FormattedMessage, injectIntl } from 'react-intl'
+import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import ReactTooltip from 'react-tooltip'
 import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
 import { localisedUrl } from 'helpers/locale'
@@ -34,6 +34,7 @@ const titles = [
   user: { ethData, btcData, ltcData, tokensData, eosData, nimData, usdtData, telosData } }) => ({
   items: [ ethData, btcData, eosData, usdtData, ltcData, telosData, ...Object.keys(tokensData).map(k => (tokensData[k])) /* nimData */ ],
   user,
+
   hiddenCoinsList: core.hiddenCoinsList,
   txHistory: transactions,
   swapHistory,
@@ -44,45 +45,40 @@ const titles = [
 @CSSModules(styles)
 export default class CurrencyWallet extends Component {
 
-  static getDerivedStateFromProps(nextProps) {
-    let { match:{ params: { fullName } }, items } = nextProps
-    const itemCurrency = items.filter(item => item.fullName.toLowerCase() === fullName.toLowerCase())[0]
-    const {
-      currency,
-      address,
-      contractAddress,
-      decimals,
-      balance,
-    } = itemCurrency
+  static getDerivedStateFromProps({ match: { params: { fullName } }, intl: { locale }, items, history }) {
+    const item = items.map(item => item.fullName.toLowerCase())
 
-    return {
-      currency,
-      address,
-      contractAddress,
-      decimals,
-      balance,
-      isBalanceEmpty: balance === 0,
+    if (item.includes(fullName.toLowerCase())) {
+    const itemCurrency = items.filter(item => item.fullName.toLowerCase() === fullName.toLowerCase())[0]
+
+      const {
+        currency,
+        address,
+        contractAddress,
+        decimals,
+        balance,
+      } = itemCurrency
+
+      return {
+        currency,
+        address,
+        contractAddress,
+        decimals,
+        balance,
+        isBalanceEmpty: balance === 0,
+      }
     }
+
+    history.push(localisedUrl(locale, `/NotFound`))
   }
 
-  constructor({ user, match: { params: { fullName } }, items, history }) {
-    super()
-    this.state = {
+
+    state = {
       name: null,
       address: null,
       balance: null,
       isBalanceEmpty: false,
     }
-
-    const item = items.map(item => item.fullName.toLowerCase())
-
-    if (!item.includes(fullName.toLowerCase())) {
-      return  window.location.href = '/NotFound'
-    }
-  }
-
-
-
 
   handleReceive = () => {
     const { currency, address } = this.state
@@ -113,6 +109,7 @@ export default class CurrencyWallet extends Component {
       balance,
     })
   }
+
   handleGoTrade = (currency) => {
     const { intl: { locale } } = this.props
     this.props.history.push(localisedUrl(locale, `/${currency.toLowerCase()}`))
@@ -124,7 +121,7 @@ export default class CurrencyWallet extends Component {
 
   render() {
 
-    let { swapHistory, txHistory, location, match:{ params: { fullName } },  intl: { locale } } = this.props
+    let { swapHistory, txHistory, location, match:{ params: { fullName } },  intl } = this.props
     const {
       currency,
       address,
@@ -142,17 +139,26 @@ export default class CurrencyWallet extends Component {
       .filter(swap => swap.sellCurrency === currency || swap.buyCurrency === currency)
 
     const seoPage = getSeoPage(location.pathname)
-    const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true"
+    const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === 'true'
+    const title = defineMessages({
+      metaTitle: {
+        id: 'CurrencyWallet148',
+        defaultMessage: 'Swap.Online - ${fullName} (${currency}) Web Wallet with Atomic Swap.',
+      },
+    })
+    const description = defineMessages({
+      metaDescription: {
+        id: 'CurrencyWallet154',
+        defaultMessage: 'Atomic Swap Wallet allows you to manage and securely exchange ${fullName} (${currency}) with 0% fees. Based on Multi-Sig and Atomic Swap technologies.',
+      },
+    })
 
     return (
       <div className="root">
         <PageSeo
           location={location}
-          defaultTitle={
-            `Swap.Online - ${fullName} (${currency}) Web Wallet with Atomic Swap.`}
-          defaultDescription={
-            `Atomic Swap Wallet allows you to manage and securely exchange ${fullName} (${currency}) with 0% fees. Based on Multi-Sig and Atomic Swap technologies.`
-          } />
+          defaultTitle={intl.formatMessage(title.metaTitle, { fullName, currency  })}
+          defaultDescription={intl.formatMessage(description.metaDescription, { fullName, currency  })} />
         <PageHeadline
           styleName="title"
           subTitle={!!seoPage
@@ -175,7 +181,7 @@ export default class CurrencyWallet extends Component {
               br: <br />,
               fullName: `${fullName}`,
               balance: `${balance}`,
-              currency: `${currency.toUpperCase()}`,
+              currency: `${currency}`,
             }}
           />
         </h3>
@@ -206,11 +212,14 @@ export default class CurrencyWallet extends Component {
             <FormattedMessage id="CurrencyWallet104" defaultMessage="Exchange" />
           </Button>
         </div>
-        { swapHistory.length > 0 && <SwapsHistory orders={swapHistory} /> }
+        { swapHistory.length > 0 && <SwapsHistory orders={swapHistory.filter(item => item.step >= 4)} /> }
         <h2 style={{ marginTop: '20px' }} >
           <FormattedMessage id="CurrencyWallet110" defaultMessage="History your transactions" />
         </h2>
         {txHistory && (<Table titles={titles} rows={txHistory}styleName="table" rowRender={(row) => (<Row key={row.hash} {...row} />)} />)}
+        {
+          seoPage && seoPage.footer && <div>{seoPage.footer}</div>
+        }
       </div>
     )
   }

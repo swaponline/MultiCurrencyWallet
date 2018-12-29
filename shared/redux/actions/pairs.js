@@ -1,36 +1,31 @@
-import { tradeTicker } from 'helpers/constants'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
 import config from 'app-config'
+import { parsePair } from 'shared/pages/Home/Orders/Pair'
+import TRADE_TICKERS from 'helpers/constants/TRADE_TICKERS'
 
 
 const selectPair = (value) => {
   const { currencies:{ items } } = getState()
 
-  const selectedItems = items.filter(item => pairs[value].includes(item.name))
+  const selectedPairsBase = TRADE_TICKERS
+    .map(ticker => parsePair(ticker))
+    .filter(({ BASE }) => BASE.toLowerCase() === value)
+    .map(({ MAIN, BASE }) => MAIN)
+
+  const selectedPairsMain = TRADE_TICKERS
+    .map(ticker => parsePair(ticker))
+    .filter(({ MAIN }) => MAIN.toLowerCase() === value)
+    .map(({ MAIN, BASE }) => BASE)
+
+  const pairs = selectedPairsBase.concat(selectedPairsMain)
+
+  const selectedItems = items.filter(item => pairs.includes(item.name))
 
   reducers.currencies.addSelectedItems(selectedItems)
-
   return selectedItems
 
 }
-
-const erc20Tokens = Object.keys(config.erc20)
-  .map(key => key.toUpperCase())
-
-const pairs = {
-  eth: ['LTC', 'BTC'],
-  btc: [ 'EOS', 'ETH', 'LTC', ...erc20Tokens ],
-  eos: [ 'BTC'],
-  ltc: ['BTC', 'ETH'],
-  usdt: [...erc20Tokens],
-}
-
-Object.keys(config.erc20)
-  .forEach(key => {
-    pairs[key] = ['BTC', 'USDT']
-  })
-
 
 export default {
   selectPair,

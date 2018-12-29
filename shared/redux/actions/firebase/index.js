@@ -5,6 +5,9 @@ import 'firebase/database'
 import { config } from './config/firebase'
 
 import actions from 'redux/actions'
+import reducers from 'redux/core/reducers'
+import { request } from 'helpers'
+import moment from 'moment/moment'
 
 
 const authorisation = () =>
@@ -14,16 +17,15 @@ const authorisation = () =>
       .catch((error) => console.log(`Can't sign in: `, error))
   )
 
-const getIP = () =>
+const getIPInfo = () =>
   new Promise(async (resolve) => {
-    const ipRequire = await fetch('https://ipinfo.io/json', {
-      method: 'GET',
-      headers: {
-        'Content-type': 'application/json',
-      },
-    })
-    const ipResponse = await ipRequire.json()
-    resolve(ipResponse)
+    const ipResponse = await request.get('https://ipinfo.io/json')
+
+    const resultData = {
+      ip: ipResponse.ip,
+      locale: ipResponse.country === 'NO' ? 'EN' : ipResponse.country,
+    }
+    resolve(resultData)
   })
 
 const sendData = (userId, dataBasePath, data) =>
@@ -33,7 +35,10 @@ const sendData = (userId, dataBasePath, data) =>
 
     usersRef.child(userId).set(data)
       .then(() => resolve(true))
-      .catch((error) => console.log('Send error: ', error))
+      .catch((error) => {
+        console.log('Send error: ', error)
+        resolve(false)
+      })
   })
 
 const askPermission = () =>
@@ -43,13 +48,16 @@ const askPermission = () =>
     await messaging.requestPermission()
       .then(() => messaging.getToken())
       .then((token) => resolve(token))
-      .catch((error) => console.log(error))
+      .catch((error) => {
+        console.log(error)
+        resolve(false)
+      })
   })
 
 const initialize = () => {
-  if (!firebase.apps.length && 'serviceWorker' in navigator) {
-    firebase.initializeApp(config)
+  firebase.initializeApp(config)
 
+  if (isSupported()) {
     navigator.serviceWorker
       .register('firebase-messaging-sw.js', { scope: './' })
       .then((registration) => firebase.messaging().useServiceWorker(registration))
@@ -81,53 +89,71 @@ const getUserID = () =>
 const submitUserData = (dataBasePath = 'usersCommon', data = {}) =>
   new Promise(async resolve => {
     const userID = await getUserID()
-    const ipInfo = await getIP()
+    const ipInfo = await getIPInfo()
+    const date = moment().format('DD-MM-YYYY')
+    const gaTracker = actions.analytics.getTracker()
 
     if (userID) {
-      console.log('Got user ID: ', userID)
-
-      const defaultData = {
-        ip: ipInfo.ip,
-        locale: ipInfo.country === 'NO' ? 'EN' : ipInfo.country,
-      }
-
       const sendResult = await sendData(userID, dataBasePath, {
-        ...defaultData,
+        date,
+        gaID: gaTracker !== undefined ? gaTracker.get('clientId') : 'None',
+        ...ipInfo,
         ...data,
       })
       resolve(sendResult)
     }
   })
 
-const subscribe = (data = {}) =>
+const signUpWithPush = (data) =>
   new Promise(async resolve => {
-    const dataBasePath = 'usersSubscribed'
+    const dataBasePath = 'usersSubscribed/pushNotification'
     const messagingToken = await askPermission()
-    let sendResult = false
 
-    if (messagingToken) {
-      console.log('Have notifications permissions')
-      console.log('Got messaging token: ', messagingToken)
-
-      sendResult = submitUserData(dataBasePath, { messagingToken, ...data })
-      resolve(sendResult)
+    if (!messagingToken) {
+      resolve(messagingToken)
+      return
     }
+
+    const sendResult = submitUserData(dataBasePath, {
+      ...data,
+      messagingToken,
+    })
+
+    if (sendResult) {
+      reducers.signUp.setSigned()
+      actions.analytics.dataEvent('pushSubscribed')
+    }
+    resolve(sendResult)
+  })
+
+const signUpWithEmail = (data) =>
+  new Promise(async resolve => {
+    const dataBasePath = 'usersSubscribed/emailNotification'
+    const sendResult = submitUserData(dataBasePath, data)
+
+    if (sendResult) {
+      reducers.signUp.setSigned()
+      actions.analytics.dataEvent('emailSubscribed')
+    }
+    resolve(sendResult)
   })
 
 const isSupported = () => {
   const isLocalNet = process.env.LOCAL === 'local'
   const isSupportedServiceWorker = 'serviceWorker' in navigator
+  const isSafari = ('safari' in window)
   const iOSSafari = /iP(ad|od|hone)/i.test(window.navigator.userAgent)
                   && /WebKit/i.test(window.navigator.userAgent)
                   && !(/(CriOS|FxiOS|OPiOS|mercury)/i.test(window.navigator.userAgent))
-  const isSafari = ('safari' in window)
 
   return !isLocalNet && isSupportedServiceWorker && !iOSSafari && !isSafari
 }
 
 export default {
+  getIPInfo,
   initialize,
-  subscribe,
   submitUserData,
   isSupported,
+  signUpWithPush,
+  signUpWithEmail,
 }

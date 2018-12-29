@@ -52,17 +52,17 @@ const getBalance = async (currency) => {
   if (currency === undefined) {
     return
   }
-
   const { address, contractAddress, decimals, name  } = tokensData[currency.toLowerCase()]
-
   const ERC20 = new web3.eth.Contract(abi, contractAddress)
-
-  const result = await ERC20.methods.balanceOf(address).call()
-  console.log('result get balance', result)
-  let amount = new BigNumber(String(result)).dividedBy(new BigNumber(String(10)).pow(decimals)).toNumber()
-
-  reducers.user.setTokenBalance({ name, amount })
-  return amount
+  try {
+    const result = await ERC20.methods.balanceOf(address).call()
+    console.log('result get balance', result)
+    let amount = new BigNumber(String(result)).dividedBy(new BigNumber(String(10)).pow(decimals)).toNumber()
+    reducers.user.setTokenBalance({ name, amount })
+    return amount
+  } catch (e) {
+    reducers.user.setTokenBalanceError({ name })
+  }
 }
 
 
@@ -133,7 +133,7 @@ const send = (contractAddress, to, amount, decimals) => {
     const receipt = await tokenContract.methods.transfer(to, newAmount).send()
       .on('transactionHash', (hash) => {
         const txId = `${config.link.etherscan}/tx/${hash}`
-        actions.loader.show(true, true, txId)
+        actions.loader.show(true, { txId })
       })
       .on('error', (err) => {
         reject(err)
@@ -160,7 +160,7 @@ const approve = (name, amount) => {
       })
         .on('transactionHash', (hash) => {
           const txId = `${config.link.etherscan}/tx/${hash}`
-          actions.loader.show(true, true, txId)
+          actions.loader.show(true, { txId })
         })
         .on('error', err => {
           reject(err)

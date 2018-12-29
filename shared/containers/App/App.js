@@ -23,7 +23,6 @@ import ModalConductor from 'components/modal/ModalConductor/ModalConductor'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import NotificationConductor from 'components/notification/NotificationConductor/NotificationConductor'
 import Seo from 'components/Seo/Seo'
-import UserTooltip from 'components/Header/User/UserTooltip/UserTooltip'
 
 import config from 'app-config'
 
@@ -76,9 +75,7 @@ export default class App extends React.Component {
       actions.user.getDemoMoney()
     }
 
-    if (actions.firebase.isSupported()) {
-      actions.firebase.initialize()
-    }
+    actions.firebase.initialize()
   }
 
   componentDidMount() {
@@ -110,7 +107,6 @@ export default class App extends React.Component {
     const mainContent = (
       <Fragment>
         <Seo location={history.location} />
-        { isMobile && <UserTooltip /> }
         <Header />
         <WidthContainer styleName="main">
           <main>

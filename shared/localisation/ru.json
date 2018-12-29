@@ -113,7 +113,7 @@
   },
   {
     "id": "ADDoffer29",
-    "message": "Подписаться",
+    "message": "Регистрация",
     "files": [
       "shared/components/Header/User/SubscribeButton/SubscribeButton.js"
     ]
@@ -931,10 +931,7 @@
   },
   {
     "id": "BtcToEos140",
-    "message": "5. Запрос на отзыва BTC из шифра",
-    "files": [
-      "shared/pages/Swap/BtcToEos.js"
-    ]
+    "message": "5. Запрос на отзыва BTC из шифра"
   },
   {
     "id": "BtcToEos63",
@@ -2506,7 +2503,7 @@
   },
   {
     "id": "Wallet104",
-    "message": "Ваш онлайн криптовалютный кошелек",
+    "message": "Криптовалютный Кошелек. Децентрализированный Онлайн Обменник.",
     "files": [
       "shared/pages/Wallet/Wallet.js"
     ]
@@ -2585,10 +2582,7 @@
   },
   {
     "id": "transaction27",
-    "message": "Для обмена вам необходимо",
-    "files": [
-      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
-    ]
+    "message": "Для обмена вам необходимо"
   },
   {
     "id": "PrivateKeysModal106",
@@ -2998,7 +2992,6 @@
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
   },
-
   {
     "id": "Company",
     "message": "О Kомпании",
@@ -3526,38 +3519,59 @@
     ]
   },
   {
-    "id": "SubscribeModal000",
-    "message": "Спасибо! После отправки, Вы будете уведомлены",
+    "id": "SignUpModal111",
+    "message": "Что-то пошло не так{br}Попробуйте позже",
     "files": [
-      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+      "shared/components/modals/SignUpModal/SignUpModal.js"
     ]
   },
   {
-    "id": "SubscribeModal001",
-    "message": "Включите уведомления и получите 1 SWAP токен",
+    "id": "SignUpModal133",
+    "message": "Что-то пошло не так{br}Попробуйте позже",
     "files": [
-      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+      "shared/components/modals/SignUpModal/SignUpModal.js"
     ]
   },
   {
-    "id": "SubscribeModal002",
+    "id": "SignUpModal000",
+    "message": "Спасибо!{br}Вы будете получать уведомления",
+    "files": [
+      "shared/components/modals/SignUpModal/SignUpModal.js"
+    ]
+  },
+  {
+    "id": "SignUpModal001",
+    "message": "Перейти в кошелек",
+    "files": [
+      "shared/components/modals/SignUpModal/SignUpModal.js"
+    ]
+  },
+  {
+    "id": "SignUpModal002",
     "message": "Пожалуйста, подождите",
     "files": [
-      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+      "shared/components/modals/SignUpModal/SignUpModal.js"
     ]
   },
   {
-    "id": "SubscribeModal003",
-    "message": "Включить уведомления",
+    "id": "SignUpModal003",
+    "message": "Разрешить уведомления",
     "files": [
-      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+      "shared/components/modals/SignUpModal/SignUpModal.js"
     ]
   },
   {
-    "id": "SubscribeModal004",
-    "message": "Нажмите эту кнопку, чтобы разрешить push-уведомления",
+    "id": "SignUpModal004",
+    "message": "Вы будете получать уведомления об обновлениях с вашей учетной записью (ордера, транзакции) {br}и ежемесячные обновления о нашем проекте",
     "files": [
-      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+      "shared/components/modals/SignUpModal/SignUpModal.js"
+    ]
+  },
+  {
+    "id": "SignUpModal005",
+    "message": "Похоже, что пуш уведомления не работают.{br}Пожалуйста, оставьте свой email для уведомлений",
+    "files": [
+      "shared/components/modals/SignUpModal/SignUpModal.js"
     ]
   },
   {
@@ -3814,10 +3828,10 @@
     ]
   },
   {
-    "id": "Subscribe55",
-    "message": "Подписка",
+    "id": "SignUpModal55",
+    "message": "Регистрация",
     "files": [
-      "shared/components/modals/SubscribeModal/SubscribeModal.js"
+      "shared/components/modals/SignUpModal/SignUpModal.js"
     ]
   },
   {
@@ -3871,10 +3885,7 @@
   },
   {
     "id": "timer67",
-    "message": " минут(ы) до возврата средств",
-    "files": [
-      "shared/pages/Swap/Timer/Timer.js"
-    ]
+    "message": " минут(ы) до возврата средств"
   },
   {
     "id": "timer68",
@@ -3934,7 +3945,7 @@
   },
   {
     "id": "Header205",
-    "message": "Присоединяйтесь к white list - скидоки, подарки, выгодные курсы и т.д",
+    "message": "Вы будете получать уведомления об обновлениях с вашей учетной записью (ордера, транзакции) и ежемесячные обновления о нашем проекте",
     "files": [
       "shared/components/Header/Header.js"
     ]
@@ -4403,17 +4414,14 @@
   },
   {
     "id": "orders1381",
-    "message": "{pair} обмен на любую сумму с 0 комиссией",
+    "message": "Атомарный своп {buyCurrencyFullName} ({buyCurrency}) на {sellCurrencyFullName} ({sellCurrency}) - моментальный обмен",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]
   },
   {
     "id": "orders183",
-    "message": "ПРОДАТЬ {buyCurrency}",
-    "files": [
-      "shared/pages/Home/Orders/Orders.js"
-    ]
+    "message": "ПРОДАТЬ {buyCurrency}"
   },
   {
     "id": "transaction436",
@@ -4448,6 +4456,111 @@
     "message": "Вам нужно иметь {minAmount} ETH на вашем балансе",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "RowHistory77",
+    "message": "Refunded",
+    "files": [
+      "shared/pages/History/SwapsHistory/RowHistory/RowHistory.js"
+    ]
+  },
+  {
+    "id": "timer671",
+    "message": "{min} минут до возврата",
+    "files": [
+      "shared/pages/Swap/Timer/Timer.js"
+    ]
+  },
+  {
+    "id": "CurrencyWallet148",
+    "message": "Онлайн кошелек {fullName} ({currency}) с функцией Атомарного Свопа (Atomic Swap)",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "CurrencyWallet154",
+    "message": "Swap.Online - это децентрализированный онлайн веб кошелек для криптовалюты {fullName} ({currency}) без регистрации. Легкий обмен криптовалют внутри кошелька",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "Orders121",
+    "message": "Обмен {buyCurrencyFullName} ({buyCurrency}) на {sellCurrencyFullName} ({sellCurrency}) Атомарный Обмен",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "Orders127",
+    "message": "Децентрализированный обменник Swap.Online предлагает вам лучший курс обмена {buyCurrencyFullName} ({buyCurrency}) на {sellCurrencyFullName} ({sellCurrency}). Онлайн кошелек без регистрации.",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "orders182",
+    "message": "SELL {buyCurrency} HERE",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "Wallet140",
+    "message": "Криптовалютный Кошелек с Возможностью Беспроцентного Обмена",
+    "files": [
+      "shared/pages/Wallet/Wallet.js"
+    ]
+  },
+  {
+    "id": "Wallet146",
+    "message": "Swap.Online - мультивалютный онлайн кошелек на базе технологии Атомарного Свопа с возможностью хранить и обменивать криптовалюту по лучшему курсу",
+    "files": [
+      "shared/pages/Wallet/Wallet.js"
+    ]
+  },
+  {
+    "id": "Wallet156",
+    "message": "Welcome to the Swap.Online, decentralized cross-chain wallet based on the Atomic Swap technology.\n            Here you can promptly and safely store and exchange Bitcoin, Ethereum, EOS, USD Tether, BCH and numerous ERC-20 tokens.\n            Swap.Online doesn’t store your keys or your tokens. Our wallet operates directly in browser, so, no additional installations or downloads are required.\n            Swap.Online service is fully decentralized as all the operations with tokens are executed via the IPFS network.\n            It was our team that finalized first Atomic Swaps with USDT and EOS in September, 2018. Also, the Litecoin blockchain was added in October, 2018.\n            Thus, our wallet addresses real multi-chain integration with decentralized orderbook, no third party involved in the exchange, no proxy-token and no token wrapping.\n            As for now, seeking for the liquidity, we can integrate every ERC-20 token for free just in case of mutual PR-announcement with the project the token is backed by.\n            Also, we designed Swap.Button, b2b-solution to exchange all kinds of tokens on Bitcoin and Ethereum.\n            Just install this widget on your site and collect crypto investments to your project.\n            So, start using https://swap.online/ today and enjoy the power of true decentralization.",
+    "files": [
+      "shared/pages/Wallet/Wallet.js"
+    ]
+  },
+  {
+    "id": "PartialClosure562",
+    "message": "Swap.Online is the decentralized in-browser hot wallet based on the Atomic Swaps technology.\n            As in our wallet all blockchains interact decentralized and no-third-party way, we offer our users to exchange Bitcoin, Ethereum,\n            USD Tether, BCH and EOS for free in a couple of seconds. At the time, Swap.Online charges no commision for the order making and taking.\n            For example, on the vast majority of exchanges, there is a 0,3%-operational fee for the taker of liquidity and 1-5% withdrawal fee.\n            The exchange of crypto and tokens on Swap.Online is conducted in truly\n            decentralized manner as we use the Atomic Swaps technology of peer-to-peer cross-chain interaction.\n            Swap.Online uses IPFS-network for all the operational processes which results in no need for centralized server.\n            The interface of exchange seems to look like that of crypto broker, not of ordinary DEX or CEX. In a couple of clicks,\n            the user can place and take the offer, customizing the price of sent token.\n            Also, the user can exchange the given percentage of his or her amount of tokens available (e.g. ½, ¼ etc.).\n            One more advantage of the Swap.Online exchange service is the usage of one key for the full range of ERC-20 tokens.\n            By the way, if case you’re not interested in exchange of some tokens, you can hide it from the list.\n            Thus, use Swap.Online as your basic exchange for every crypto you’re holding!",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "RowWallet276",
+    "message": " нода не доступна (Вы не можете совершать транзакции). ",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowWallet282",
+    "message": "Требуется помощь?",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "BtcToEthTokenAddress348",
+    "message": "Недостаточная сумма ETH на вашем балансе, {br}для оплаты комиссии майнеров.{br}{br}Пополните баланс на 0.001 ETH {address}",
+    "files": [
+      "shared/pages/Swap/BtcToEthToken.js"
+    ]
+  },
+  {
+    "id": "BtcToEthTokenAddress307",
+    "message": "Недостаточная сумма ETH на вашем балансе, {br}для оплаты комиссии майнеров.{br}{br}Пополните баланс на 0.001 ETH {address}",
+    "files": [
+      "shared/pages/Swap/EthTokenToBtc.js"
     ]
   }
 ]

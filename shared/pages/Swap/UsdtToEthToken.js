@@ -50,6 +50,11 @@ export default class UsdtToEthToken extends Component {
     this.swap.flow.syncBalance()
   }
 
+  tryRefund = () => {
+    this.swap.flow.tryRefund()
+    this.setState(() => ({ enabledButton: false }))
+  }
+
   addGasPrice = () => {
     const gwei =  new BigNumber(String(this.swap.flow.ethTokenSwap.gasPrice)).plus(new BigNumber(1e9))
     this.swap.flow.ethTokenSwap.addGasPrice(gwei)
@@ -68,7 +73,7 @@ export default class UsdtToEthToken extends Component {
   }
 
   render() {
-    const { children } = this.props
+    const { children, disabledTimer }  = this.props
     const { currencyAddress, secret, flow, enabledButton } = this.state
 
     return (
@@ -114,7 +119,7 @@ export default class UsdtToEthToken extends Component {
                   <Fragment>
                     <input type="text" placeholder="Secret Key" defaultValue={secret} />
                     <br />
-                    <TimerButton brand onClick={this.submitSecret}>
+                    <TimerButton disabledTimer={disabledTimer} brand onClick={this.submitSecret}>
                       <FormattedMessage id="UsdrToEthToken115" defaultMessage="Confirm" />
                     </TimerButton>
                   </Fragment>
@@ -163,7 +168,7 @@ export default class UsdtToEthToken extends Component {
                       <span>{flow.address}</span>
                     </div>
                     <br />
-                    <TimerButton brand onClick={this.updateBalance}>
+                    <TimerButton disabledTimer={disabledTimer} brand onClick={this.updateBalance}>
                       <FormattedMessage id="UsdrToEthToken154" defaultMessage="Continue" />
                     </TimerButton>
                   </Fragment>

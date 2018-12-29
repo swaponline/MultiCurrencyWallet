@@ -41,7 +41,7 @@ const getBalance = () => {
       return amount
     })
     .catch((e) => {
-      console.log('Web3 doesn\'t work please again later ',  e.error)
+      reducers.user.setBalanceError({ name: 'ethData' })
     })
 }
 
@@ -90,17 +90,14 @@ const send = (from, to, amount) =>
       gas: '21000',
       value: web3.utils.toWei(String(amount)),
     }
-    let txRaw
 
-    await web3.eth.accounts.signTransaction(params, privateKey)
-      .then(result => {
-        txRaw = web3.eth.sendSignedTransaction(result.rawTransaction)
+    const result = await web3.eth.accounts.signTransaction(params, privateKey)
+    const receipt = web3.eth.sendSignedTransaction(result.rawTransaction)
+      .on('transactionHash', (hash) => {
+        const txId = `${config.link.etherscan}/tx/${hash}`
+        console.log('tx', txId)
+        actions.loader.show(true, { txId })
       })
-
-    const receipt = await txRaw.on('transactionHash', (hash) => {
-      const txId = `${config.link.etherscan}/tx/${hash}`
-      actions.loader.show(true, true, txId)
-    })
       .on('error', (err) => {
         reject(err)
       })

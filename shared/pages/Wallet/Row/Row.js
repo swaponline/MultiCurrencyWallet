@@ -139,8 +139,8 @@ export default class Row extends Component {
       },
     } = this.props
     let firstPart = address.substr(0, 6)
-    let secondPart = address.substr(address.length - 2)
-    return (window.innerWidth < 1120 || isMobile) ? `${firstPart}...${secondPart}` : address
+    let secondPart = address.substr(address.length - 4)
+    return (window.innerWidth < 1120 || isMobile || address.length > 40) ? `${firstPart}...${secondPart}` : address
   }
 
   handleTouchClear = (e) => {
@@ -245,12 +245,19 @@ export default class Row extends Component {
         fullName,
         unconfirmedBalance,
         contractAddress,
+        balanceError,
       },
       intl: { locale },
     } = this.props
 
-    const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === "true"
-    const telosAccountActivated = localStorage.getItem(constants.localStorage.telosAccountActivated) === "true"
+    const telosAccountActivated = localStorage.getItem(constants.localStorage.telosAccountActivated) === 'true'
+
+    let eosAccountActivated = false
+    let eosActivationPaymentSent = false
+    if (currency === 'EOS') {
+      eosAccountActivated = this.props.item.isAccountActivated
+      eosActivationPaymentSent = this.props.item.isActivationPaymentSent
+    }
 
     return (
       <tr
@@ -262,14 +269,27 @@ export default class Row extends Component {
         style={isTouch && this.props.index !== this.props.selectId ?  { background: '#f5f5f5' } : { background: '#fff' }}
       >
         <td>
-          <Link to={`/${locale}/${fullName}-wallet`} title={`Online ${fullName} wallet`}>
+          <Link to={localisedUrl(locale, `/${fullName}-wallet`)} title={`Online ${fullName} wallet`}>
             <Coin name={currency} />
           </Link>
         </td>
         <td>
-          <Link to={`/${locale}/${fullName}-wallet`} title={`Online ${fullName} wallet`}>
+          <Link to={localisedUrl(locale, `/${fullName}-wallet`)} title={`Online ${fullName} wallet`}>
             {fullName}
           </Link>
+          {balanceError &&
+          <div className={styles.errorMessage}>
+            {fullName}
+            <FormattedMessage
+              id="RowWallet276"
+              defaultMessage=" node is down (You can not perform transactions). " />
+            <a href="https://wiki.swap.online/faq/bitcoin-node-is-down-you-cannot-make-transactions/">
+              <FormattedMessage
+                id="RowWallet282"
+                defaultMessage="Need help?" />
+            </a>
+          </div>
+          }
         </td>
         <td styleName="table_balance-cell" data-tut="reactour__balance">
           {
@@ -278,7 +298,11 @@ export default class Row extends Component {
             ) : (
               <div styleName="no-select-inline" onClick={this.handleReloadBalance} >
                 <i className="fas fa-sync-alt" styleName="icon" />
-                <span>{String(balance).length > 4 ? balance.toFixed(4) : balance}{' '}{currency}</span>
+                <span>
+                  {
+                    balanceError ? '?' : String(balance).length > 4 ? balance.toFixed(4) : balance
+                  }{' '}{currency}
+                </span>
                 { currency === 'BTC' && unconfirmedBalance !== 0 && (
                   <Fragment>
                     <br />
@@ -330,7 +354,8 @@ export default class Row extends Component {
                       <Fragment>
                         <br />
                         <span styleName="notActiveLink">
-                          <FormattedMessage id="Row268" defaultMessage="not activated" />
+                          { eosActivationPaymentSent && <InlineLoader /> }
+                          { !eosActivationPaymentSent && <FormattedMessage id="Row268" defaultMessage="not activated" /> }
                         </span>
                       </Fragment>
                     )
