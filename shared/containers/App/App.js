@@ -75,9 +75,7 @@ export default class App extends React.Component {
       actions.user.getDemoMoney()
     }
 
-    if (actions.firebase.isSupported()) {
-      actions.firebase.initialize()
-    }
+    actions.firebase.initialize()
   }
 
   componentDidMount() {
