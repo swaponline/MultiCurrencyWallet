@@ -3519,6 +3519,20 @@
     ]
   },
   {
+    "id": "SignUpModal111",
+    "message": "Что-то пошло не так{br}Попробуйте позже",
+    "files": [
+      "shared/components/modals/SignUpModal/SignUpModal.js"
+    ]
+  },
+  {
+    "id": "SignUpModal133",
+    "message": "Что-то пошло не так{br}Попробуйте позже",
+    "files": [
+      "shared/components/modals/SignUpModal/SignUpModal.js"
+    ]
+  },
+  {
     "id": "SignUpModal000",
     "message": "Спасибо!{br}Вы будете получать уведомления",
     "files": [
@@ -3555,7 +3569,7 @@
   },
   {
     "id": "SignUpModal005",
-    "message": "Нет, спасибо",
+    "message": "Похоже, что пуш уведомления не работают.{br}Пожалуйста, оставьте свой email для уведомлений",
     "files": [
       "shared/components/modals/SignUpModal/SignUpModal.js"
     ]
