@@ -36,7 +36,6 @@ export default class EthToBtc extends Component {
 
   componentWillUnmount() {
     this.swap.off('state update', this.handleFlowStateUpdate)
-    //this.handleInitProgress()
   }
 
   handleFlowStateUpdate = (values) => {
@@ -74,9 +73,9 @@ export default class EthToBtc extends Component {
       sellAmount: this.swap.sellAmount.toNumber(),
       sellCurrency: this.swap.sellCurrency,
       buyAmount: this.swap.buyAmount.toNumber(),
-      buyCurrency: this.swap.buyCurrency
+      buyCurrency: this.swap.buyCurrency,
     }
-    actions.modals.open(constants.modals.SwapProgress, { flow: flow, name: 'ETH2BTC', stepNumbers: 9, swapInfo: swapInfo })
+    actions.modals.open(constants.modals.SwapProgress, { flowObj: flow, name: 'ETH2BTC', stepNumbers: 9, swapInfoObj: swapInfo })
   }
 
   signSwap = () => {

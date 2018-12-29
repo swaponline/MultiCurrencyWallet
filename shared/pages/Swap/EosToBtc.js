@@ -20,11 +20,6 @@ export default class EosToBtc extends Component {
     }
   }
 
-  componentDidMount() {
-    //this.initSwapProgress()
-    actions.modals.open(constants.modals.ImportKeys, {})
-  }
-
   componentWillMount() {
     this.swap.on('state update', this.handleFlowStateUpdate)
   }

@@ -14,7 +14,6 @@ import DownloadModal from './DownloadModal/DownloadModal'
 import SwapProgress from './SwapProgress/SwapProgress'
 
 
-
 export default {
   SignUpModal,
   OfferModal,
