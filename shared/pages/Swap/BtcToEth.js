@@ -15,11 +15,12 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import SwapProgress from 'components/SwapProgress/SwapProgress'
 import { TimerButton, Button } from 'components/controls'
 import { FormattedMessage } from 'react-intl'
+import DepositWindow from './DepositWindow/DepositWindow'
 
 
 export default class BtcToEth extends Component {
 
-  constructor({ swap, currencyData }) {
+  constructor({ swap, currencyData, enoughtBalance }) {
     super()
 
     this.swap = swap
@@ -29,6 +30,7 @@ export default class BtcToEth extends Component {
       flow: this.swap.flow.state,
       secret: crypto.randomBytes(32).toString('hex'),
       enabledButton: false,
+      enoughtBalance,
     }
   }
 
@@ -100,8 +102,8 @@ export default class BtcToEth extends Component {
 
 
   render() {
-    const { children } = this.props
-    const { currencyAddress, secret, flow, enabledButton } = this.state
+    const { children, currencyData, swap } = this.props
+    const { currencyAddress, secret, flow, enabledButton, enoughtBalance } = this.state
     const headingStyle = {
       color: '#5100dc',
       textTransform: 'uppercase',
@@ -122,7 +124,9 @@ export default class BtcToEth extends Component {
               </strong>
             )
           }
-          <SwapProgress data={flow} name="BTC2ETH" stepLength={8} />
+          {enoughtBalance
+            ? <DepositWindow styles={this.props.styles} currencyData={currencyData} swap={swap} flow={flow} />
+            : <SwapProgress data={flow} name="BTC2ETH" stepLength={8} />}
         </div>
         <div className={this.props.styles.logHide}>
           {

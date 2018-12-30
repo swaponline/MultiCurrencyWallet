@@ -40,6 +40,7 @@ export default class SwapComponent extends PureComponent {
     isAmountMore: null,
     ethBalance: null,
     continueSwap: false,
+    enoughtBalance: false,
   }
 
   componentWillMount() {
@@ -82,7 +83,6 @@ export default class SwapComponent extends PureComponent {
           })
       })
 
-
       window.swap = swap
 
       this.setState({
@@ -96,7 +96,6 @@ export default class SwapComponent extends PureComponent {
       actions.notifications.show(constants.notifications.ErrorNotification, { error: 'Sorry, but this order do not exsit already' })
       this.props.history.push(localisedUrl(links.exchange))
     }
-
     this.setSaveSwapId(orderId)
   }
 
@@ -111,6 +110,7 @@ export default class SwapComponent extends PureComponent {
         clearInterval(timer)
       }
     }, 5000)
+    this.checkBalance()
   }
 
 
@@ -135,6 +135,14 @@ export default class SwapComponent extends PureComponent {
     localStorage.setItem('swapId', JSON.stringify(swapsId))
   }
 
+  checkBalance = () => {
+    if (this.state.swap.sellAmount >= this.state.currencyData.balance) {
+      this.setState(() => ({
+        enoughtBalance: true,
+      }))
+    }
+  }
+
   checkEthBalance = async () => {
     const ethBalance = await actions.eth.getBalance()
     this.setState(() => ({ ethBalance }))
@@ -146,7 +154,8 @@ export default class SwapComponent extends PureComponent {
 
   render() {
     const { peer } = this.props
-    const { swap, SwapComponent, currencyData, isAmountMore, ethData, continueSwap } = this.state
+    const { swap, SwapComponent, currencyData, isAmountMore, ethData, continueSwap, enoughtBalance } = this.state
+
 
     if (!swap || !SwapComponent || !peer || !isAmountMore) {
       return null
@@ -161,6 +170,7 @@ export default class SwapComponent extends PureComponent {
           continueSwap={continueSwap}
           ethData={ethData}
           styles={styles}
+          enoughtBalance={enoughtBalance}
         >
           <Share flow={swap.flow} />
           <EmergencySave flow={swap.flow} />
