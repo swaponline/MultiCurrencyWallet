@@ -17,7 +17,7 @@ const store = createStore({
   },
   middleware: [
     middleware,
-    saver,
+    // saver,
   ].concat(process.env.NODE_ENV === 'production' ? [] : [
     createLogger(),
   ]),
