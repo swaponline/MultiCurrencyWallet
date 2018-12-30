@@ -75,7 +75,7 @@ export default class EthToBtc extends Component {
       buyAmount: this.swap.buyAmount.toNumber(),
       buyCurrency: this.swap.buyCurrency,
     }
-    actions.modals.open(constants.modals.SwapProgress, { flowObj: flow, name: 'ETH2BTC', stepNumbers: 9, swapInfoObj: swapInfo })
+    actions.modals.open(constants.modals.SwapProgress, { flow: flow, name: 'ETH2BTC', stepNumbers: 9, swapInfo: swapInfo })
   }
 
   signSwap = () => {

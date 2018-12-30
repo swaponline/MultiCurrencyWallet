@@ -117,21 +117,22 @@ export default class SwapProgress extends React.Component {
 
   render() {
     const { props: { name, intl } } = this
-    const progress = Math.floor(360 / this.props.data.stepNumbers * this.props.data.flowObj.step)
+    console.log(this)
+    const progress = Math.floor(360 / this.props.data.stepNumbers * this.props.data.flow.step)
 
     return (
       <Modal name={name} title={intl.formatMessage(title.SwapProgress)}>
         <div styleName="content">
           <div styleName="overlay">
             <div styleName="container">
-              <span styleName="steps">{this.props.data.flowObj.step} / {this.props.data.stepNumbers} steps</span>
+              <span styleName="steps">{this.props.data.flow.step} / {this.props.data.stepNumbers} steps</span>
               <div styleName="stepContainer">
                 <div>
                   <strong styleName="swapInfo">
-                    {this.props.data.swapInfoObj.sellAmount}{' '}
-                    {this.props.data.swapInfoObj.sellCurrency} &#10230;
-                    {' '}{this.props.data.swapInfoObj.buyAmount}{' '}
-                    {this.props.data.swapInfoObj.buyCurrency}
+                    {this.props.data.swapInfo.sellAmount}{' '}
+                    {this.props.data.swapInfo.sellCurrency} &#10230;
+                    {' '}{this.props.data.swapInfo.buyAmount}{' '}
+                    {this.props.data.swapInfo.buyCurrency}
                   </strong>
                 </div>
                 <div styleName={progress > 180 ? 'progress-pie-chart gt-50' : 'progress-pie-chart'}>
@@ -141,22 +142,22 @@ export default class SwapProgress extends React.Component {
                 </div>
                 <div styleName="step">
                   <div styleName="stepImg">
-                    {this.handleStepChangeImage(this.props.data.flowObj.step)}
+                    {this.handleStepChangeImage(this.props.data.flow.step)}
                   </div>
                   <div styleName="stepInfo">
                     {
-                      this.props.data.name === 'BTC2ETH' && <h1 styleName="stepHeading">{this.handleStepBtcToEth(this.props.data.flowObj.step, this.props.data.flowObj)}</h1>
+                      this.props.data.name === 'BTC2ETH' && <h1 styleName="stepHeading">{this.handleStepBtcToEth(this.props.data.flow.step, this.props.data.flow)}</h1>
                     }
                     {
-                      this.props.data.name === 'ETH2BTC' && <h1 styleName="stepHeading">{this.handleStepEthToBtc(this.props.data.flowObj.step, this.props.data.flowObj)}</h1>
+                      this.props.data.name === 'ETH2BTC' && <h1 styleName="stepHeading">{this.handleStepEthToBtc(this.props.data.flow.step, this.props.data.flow)}</h1>
                     }
                     <div styleName="transactionWrap">
                       {
-                        this.props.data.flowObj.btcScriptCreatingTransactionHash && (
+                        this.props.data.flow.btcScriptCreatingTransactionHash && (
                           <strong styleName="transaction">
                             <FormattedMessage id="SwapProgress98" defaultMessage="btcScriptCreatingTransactionHash: " />
-                            <a href={`${config.link.bitpay}/tx/${this.props.data.flowObj.btcScriptCreatingTransactionHash}`} target="_blank" rel="noopener noreferrer">
-                              {this.props.data.flowObj.btcScriptCreatingTransactionHash}
+                            <a href={`${config.link.bitpay}/tx/${this.props.data.flow.btcScriptCreatingTransactionHash}`} target="_blank" rel="noopener noreferrer">
+                              {this.props.data.flow.btcScriptCreatingTransactionHash}
                             </a>
                           </strong>
                         )
@@ -166,25 +167,25 @@ export default class SwapProgress extends React.Component {
                           <strong styleName="transaction">
                             <FormattedMessage id="SwapProgress110" defaultMessage="ethSwapCreationTransactionHash: " />
                             <a
-                              href={`${config.link.etherscan}/tx/${this.props.data.flowObj.ethSwapCreationTransactionHash}`}
+                              href={`${config.link.etherscan}/tx/${this.props.data.flow.ethSwapCreationTransactionHash}`}
                               target="_blank"
                               rel="noopener noreferrer"
                             >
-                              {this.props.data.flowObj.ethSwapCreationTransactionHash}
+                              {this.props.data.flow.ethSwapCreationTransactionHash}
                             </a>
                           </strong>
                         )
                       }
                       {
-                        this.props.data.flowObj.ethSwapWithdrawTransactionHash && (
+                        this.props.data.flow.ethSwapWithdrawTransactionHash && (
                           <strong styleName="transaction">
                             <FormattedMessage id="SwapProgress126" defaultMessage="ethSwapWithdrawTransactionHash: " />
                             <a
-                              href={`${config.link.etherscan}/tx/${this.props.data.flowObj.ethSwapWithdrawTransactionHash}`}
+                              href={`${config.link.etherscan}/tx/${this.props.data.flow.ethSwapWithdrawTransactionHash}`}
                               target="_blank"
                               rel="noreferrer noopener"
                             >
-                              {this.props.data.flowObj.ethSwapWithdrawTransactionHash}
+                              {this.props.data.flow.ethSwapWithdrawTransactionHash}
                             </a>
                           </strong>
                         )

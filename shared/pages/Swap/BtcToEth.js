@@ -84,7 +84,7 @@ export default class BtcToEth extends Component {
       buyAmount: this.swap.buyAmount.toNumber(),
       buyCurrency: this.swap.buyCurrency,
     }
-    actions.modals.open(constants.modals.SwapProgress, { flowObj: flow, name: 'BTC2ETH', stepNumbers: 8, swapInfoObj: swapInfo })
+    actions.modals.open(constants.modals.SwapProgress, { flow: flow, name: 'BTC2ETH', stepNumbers: 8, swapInfo: swapInfo })
   }
 
   // overProgress = (flow, length) => {
