@@ -3,7 +3,7 @@ import { createBrowserHistory } from 'history'
 import { createStore, combineReducers } from 'redaction'
 import { createLogger } from 'redux-logger'
 import localReducers from 'redux/reducers'
-import { signUpSaver } from 'redux/middleware'
+import { saver } from 'redux/middleware'
 
 
 export const history = createBrowserHistory()
@@ -17,7 +17,7 @@ const store = createStore({
   },
   middleware: [
     middleware,
-    signUpSaver,
+    saver,
   ].concat(process.env.NODE_ENV === 'production' ? [] : [
     createLogger(),
   ]),
