@@ -137,9 +137,8 @@ export default class BtcToEthToken extends Component {
 
   render() {
     const { children, disabledTimer, swap } = this.props
-    const { ethAddress } = this.state
 
-    const { currencyAddress, secret, flow, enabledButton, destinationAddressTimer, continuerSwap, isTextCopied, isAddressCopied } = this.state
+    const { ethAddress, currencyAddress, secret, flow, enabledButton, destinationAddressTimer, continuerSwap, isTextCopied, isAddressCopied } = this.state
 
     const linked = Link.all(this, 'destinationBuyAddress')
     linked.destinationBuyAddress.check((value) => value !== '', 'Please enter ETH address for tokens')

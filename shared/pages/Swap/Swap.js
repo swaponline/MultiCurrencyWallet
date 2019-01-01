@@ -136,10 +136,12 @@ export default class SwapComponent extends PureComponent {
   }
 
   checkEthBalance = async () => {
+    const { swap, currencyData } = this.state
     const ethBalance = await actions.eth.getBalance()
+
     this.setState(() => ({ ethBalance }))
 
-    if (this.state.ethBalance >= 0.001) {
+    if (this.state.ethBalance > swap.etheriumFee) {
       this.setState(() => ({ continueSwap: true }))
     }
   }

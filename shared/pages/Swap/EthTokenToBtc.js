@@ -86,7 +86,7 @@ export default class EthTokenToBtc extends Component {
   }
 
   render() {
-    const { children, disabledTimer }  = this.props
+    const { children, disabledTimer, swap, currencyData }  = this.props
     const { currencyAddress, flow, enabledButton, isShowingBitcoinScript, continuerSwap, isTextCopied } = this.state
 
     return (
@@ -305,7 +305,7 @@ export default class EthTokenToBtc extends Component {
                   </h3>
                 )
               }
-              {!continuerSwap &&
+              {!continuerSwap && flow.step >= 5 &&
                 <h3 style={{ color: '#E72BB3', marginTop: '10px' }}>
                   <FormattedMessage
                     id="BtcToEthTokenAddress307"
@@ -346,7 +346,7 @@ export default class EthTokenToBtc extends Component {
               }
 
               {
-                (flow.step === 6 || (continuerSwap && flow.isEthWithdrawn)) && (
+                (flow.step === 6 || flow.isEthWithdrawn) && continuerSwap && (
                   <Fragment>
                     <h3>
                       <FormattedMessage id="EthTokenBtc321" defaultMessage="5. Waiting BTC Owner adds Secret Key to ETH Contact" />
@@ -361,7 +361,7 @@ export default class EthTokenToBtc extends Component {
               }
 
               {
-                (continuerSwap && (flow.step === 7 || flow.isBtcWithdrawn)) && (
+                (flow.step === 7 || flow.isBtcWithdrawn) && continuerSwap && (
                   <h3>
                     <FormattedMessage
                       id="EthTokenBtc335"
@@ -370,7 +370,7 @@ export default class EthTokenToBtc extends Component {
                 )
               }
               {
-                flow.btcSwapWithdrawTransactionHash && continuerSwap && (
+                flow.btcSwapWithdrawTransactionHash && (
                   <div>
                     <FormattedMessage id="EthTokenBtc342" defaultMessage="Transaction: " />
                     <strong>
@@ -388,7 +388,7 @@ export default class EthTokenToBtc extends Component {
               }
 
               {
-                (continuerSwap && flow.isBtcWithdrawn) && (
+                (flow.isBtcWithdrawn) && continuerSwap && (
                   <Fragment>
                     <h2>
                       <FormattedMessage id="EthTokenBtc365" defaultMessage="Thank you for using Swap.Online!" />
