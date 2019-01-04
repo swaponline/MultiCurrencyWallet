@@ -139,7 +139,7 @@ export default class BtcToEthToken extends Component {
     const { children, disabledTimer, swap } = this.props
     const { ethAddress } = this.state
 
-    const { currencyAddress, secret, flow, enabledButton, destinationAddressTimer, continuerSwap, isTextCopied, isAddressCopied } = this.state
+    const { currencyAddress, secret, flow, enabledButton, destinationAddressTimer, isTextCopied, isAddressCopied } = this.state
 
     const linked = Link.all(this, 'destinationBuyAddress')
     linked.destinationBuyAddress.check((value) => value !== '', 'Please enter ETH address for tokens')
@@ -476,15 +476,6 @@ export default class BtcToEthToken extends Component {
                     <h3>
                       <FormattedMessage id="BtcToEthToken260" defaultMessage="5. ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait" />
                     </h3>
-                    {!continuerSwap &&
-                      <h3 style={{ color: '#E72BB3', marginTop: '10px' }}>
-                        <FormattedMessage
-                          id="BtcToEthTokenAddress348"
-                          defaultMessage="Not enough ETH on your balance for miner fee.{br}{br}Deposit 0.001 ETH to your account {address}"
-                          values={{ address: `${ethAddress}`, br: <br /> }}
-                        />
-                      </h3>
-                    }
                   </Fragment>
                 )
               }
@@ -511,7 +502,7 @@ export default class BtcToEthToken extends Component {
               }
 
               {
-                (continuerSwap && (flow.isEthWithdrawn)) && (
+                (flow.isEthWithdrawn) && (
                   <Fragment>
                     <FormattedMessage id="BtcToEthToken290" defaultMessage="Money was transferred to your wallet. Check the balance.">
                       {message => <h3>{message}</h3>}
@@ -538,7 +529,7 @@ export default class BtcToEthToken extends Component {
                 )
               }
               {
-                flow.refundTransactionHash && continuerSwap && (
+                flow.refundTransactionHash && (
                   <div>
                     <FormattedMessage id="BtcToEthToken316" defaultMessage="Transaction: " />
                     <strong>

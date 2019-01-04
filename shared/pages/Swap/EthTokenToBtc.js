@@ -305,7 +305,7 @@ export default class EthTokenToBtc extends Component {
                   </h3>
                 )
               }
-              {!continuerSwap &&
+              {!continuerSwap && flow.step >= 5 &&
                 <h3 style={{ color: '#E72BB3', marginTop: '10px' }}>
                   <FormattedMessage
                     id="BtcToEthTokenAddress307"
