@@ -138,8 +138,8 @@ export default class SwapComponent extends PureComponent {
     const ethBalance = await actions.eth.getBalance()
     if (this.props.tokenItems.map(item => item.name).includes(participantSwap._swapName.toLowerCase())
       && ethBalance >= participantSwap.gasLimit * participantSwap.gasPrice * (1e-18)) {
-        this.setState(() => ({ continueSwap: true }))
-      }
+      this.setState(() => ({ continueSwap: true }))
+    }
   }
 
   render() {

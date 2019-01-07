@@ -31,7 +31,7 @@ export default class EthTokenToBtc extends Component {
       flow: this.swap.flow.state,
       enabledButton: false,
       continuerSwap: continueSwap,
-      isTextCopied: false,
+      isAddressCopied: false,
     }
 
   }
@@ -74,7 +74,7 @@ export default class EthTokenToBtc extends Component {
     })
   }
 
-  handleCopy = async () => {
+  handleCopy = () => {
     this.setState({
       isAddressCopied: true,
     }, () => {
@@ -307,7 +307,7 @@ export default class EthTokenToBtc extends Component {
                 )
               }
               {!continuerSwap && flow.step >= 5 &&
-                <CopyToClipboard text={currencyAddress} data-tut="reactour__address" >
+                <CopyToClipboard text={currencyAddress} data-tut="reactour__address" onClick={this.handleCopy}>
                   <h3 style={{ color: '#E72BB3', marginTop: '10px', cursor: 'pointer' }} onClick={this.handleCopy}>
                     <FormattedMessage
                       id="BtcToEthTokenAddress307"
