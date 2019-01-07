@@ -200,9 +200,9 @@ export default {
     fullName: 'DOVU',
   },
   xbx: {
-    address: '0x2c745664FB4e9528fB32487D834e4aACffF1F027',
+    address: '0x57C09A8de0b0F471F8567609777aDdFfb5c46a08',
     decimals: 18,
-    fullName: 'Bitex Coin',
+    fullName: 'BitexGlobal',
   },
   lif: {
     address: '0xEB9951021698B42e4399f9cBb6267Aa35F82D59D',
