@@ -2,7 +2,7 @@ import baseConfig from './default'
 import config from './mainnet'
 
 
-const newERC20 = config.erc20
+const newERC20 = {}
 newERC20[process.argv[3]] = {
   address: process.argv[2],
   decimals: Number.parseInt(process.argv[4], 10),
