@@ -96,6 +96,10 @@ export default class PartialClosure extends Component {
     let timer
     let wallets
     let usdRates
+
+    if (config.isWidget) {
+      this.state.getCurrency = config.erc20token
+    }
   }
 
   componentDidMount() {
