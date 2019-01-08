@@ -119,7 +119,7 @@ export default class Header extends Component {
       const canShowSubscribeAndTour = (this.props.history.location.pathname === '/' || this.props.history.location.pathname === '/ru')
         && !localStorage.getItem(constants.localStorage.firstStart)
 
-      if (canShowSubscribeAndTour) {
+      if (canShowSubscribeAndTour && (config && !config.isWidget)) {
         this.openSignUpModal()
         localStorage.setItem(constants.localStorage.firstStart, true)
       }
