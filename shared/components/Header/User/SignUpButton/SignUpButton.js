@@ -39,7 +39,7 @@ const SignUpButton = ({ mobile }) => (
             </span>
           </ReactTooltip>
           <button styleName="buttonMobile" onClick={handleSignUp} /* eslint-disable-line */ >
-            <i className="fa fa-gift" aria-hidden="true" />
+            <i className="fa fa-bell" aria-hidden="true" />
           </button>
         </Fragment>
       )
