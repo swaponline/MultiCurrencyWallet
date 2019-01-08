@@ -12,7 +12,7 @@ newERC20[process.argv[3]] = {
 export default {
   env: 'development',
   entry: 'mainnet',
-  local: 'online',
+  local: 'local',
 
   base: `http://localhost:${baseConfig.http.port}/`,
   publicPath: `http://localhost:${baseConfig.http.port}${baseConfig.publicPath}`,

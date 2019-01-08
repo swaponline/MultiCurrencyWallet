@@ -13,7 +13,7 @@ newERC20[process.argv[3]] = {
 export default {
   env: 'production',
   entry: 'testnet',
-  local: 'online',
+  local: 'local',
   dir: `testnet-widget`,
 
   base: './',
