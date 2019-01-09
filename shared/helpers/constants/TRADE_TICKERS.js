@@ -18,6 +18,11 @@ Object.keys(config.erc20)
     swap.push(`${key.toUpperCase()}-USDT`)
   })
 
+if (config && config.isWidget) {
+  swap.length = 0
+  swap.push(`${config.erc20token.toUpperCase()}-BTC`)
+  swap.push(`${config.erc20token.toUpperCase()}-USDT`)
+}
 export default [
   ...swap,
 ]
