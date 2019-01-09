@@ -62,6 +62,7 @@ const messages = defineMessages({
   feeds: 'feeds.items',
   peer: 'ipfs.peer',
   isSigned: 'signUp.isSigned',
+  isInputActive: 'inputActive.isInputActive',
 })
 @CSSModules(styles, { allowMultiple: true })
 export default class Header extends Component {
@@ -168,13 +169,13 @@ export default class Header extends Component {
     if (config.isWidget) return null
 
     const { sticky, menuItems, isTourOpen, isShowingMore, path } = this.state
-    const { intl: { locale }, history, pathname, feeds, peer, isSigned } = this.props
+    const { intl: { locale }, history, pathname, feeds, peer, isSigned, isInputActive } = this.props
 
     const accentColor = '#510ed8'
 
     if (isMobile) {
       return (
-        <div>
+        <div styleName={isInputActive ? 'header-mobile header-mobile__hidden' : 'header-mobile'}>
           <UserTooltip feeds={feeds} peer={peer} />
           <NavMobile menu={menuItems} />
           {!isSigned && (<SignUpButton mobile />)}
