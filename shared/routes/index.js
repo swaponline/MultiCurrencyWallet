@@ -31,6 +31,7 @@ const routes = (
     <Route path={`${localisePrefix}${links.history}`} component={History} />
 
     <Route exact path={`${localisePrefix}${links.home}`} component={(config && config.isWidget) ? PartialClosure : Wallet} />
+    <Route path={`${localisePrefix}${links.currencyWallet}`} component={Wallet} />
     <Route path={`${localisePrefix}${links.home}:currency`} component={Currency} />
 
     <Route component={NotFound} />

@@ -31,7 +31,8 @@ if (config && config.isWidget) {
     constants.COINS[config.erc20token] = config.erc20token.toUpperCase()
   }
 }
-
+console.log(constants.COINS)
+console.log(config.erc20)
 const createSwapApp = () => {
 
   swapApp.setup({
