@@ -36,7 +36,7 @@ import config from 'app-config'
       Object.keys(tokensData).map(k => (tokensData[k].currency))
     ),
     items: ((config && config.isWidget) ?
-      [btcData, usdtData ]
+      [btcData, ethData, usdtData ]
       :
       [btcData, ethData, eosData, telosData, xlmData, ltcData, usdtData /* nimData */ ]).map((data) => (
       data.currency
