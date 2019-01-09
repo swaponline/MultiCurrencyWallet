@@ -166,12 +166,16 @@ export default class Header extends Component {
 
   render() {
 
-    if (config.isWidget) return null
-
     const { sticky, menuItems, isTourOpen, isShowingMore, path } = this.state
     const { intl: { locale }, history, pathname, feeds, peer, isSigned, isInputActive } = this.props
 
     const accentColor = '#510ed8'
+
+    if (config && config.isWidget) {
+      return (
+        <User />
+      )
+    }
 
     if (isMobile) {
       return (
