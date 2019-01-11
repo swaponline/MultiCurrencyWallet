@@ -143,7 +143,6 @@ export default class BtcToEthToken extends Component {
 
     const linked = Link.all(this, 'destinationBuyAddress')
 
-console.log('eth', swap.flow.state)
     const headingStyle = {
       color: '#5100dc',
       textTransform: 'uppercase',

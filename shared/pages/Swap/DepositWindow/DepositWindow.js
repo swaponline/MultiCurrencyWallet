@@ -71,7 +71,7 @@ export default class DepositWindow extends Component {
     const { sellAmount, scriptBalance, currency, flowBalance, unconfBalance } =  this.state
 
     const balance = await actions[currency.toLowerCase()].getBalance(currency.toLowerCase())
-    
+
     const falseBalance = scriptBalance ===  0 ? flowBalance || balance : scriptBalance
     const missingBalance = (sellAmount - falseBalance).toFixed(6)
 
