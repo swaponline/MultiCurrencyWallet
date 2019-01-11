@@ -488,7 +488,7 @@ export default class BtcToEthToken extends Component {
                 ))
               }
               {
-              continuerSwap && flow.ethSwapWithdrawTransactionHash && (
+                continuerSwap && flow.ethSwapWithdrawTransactionHash && (
                   <div>
                     <FormattedMessage id="BtcToEthToken267" defaultMessage="Transaction: " />
                     <strong>

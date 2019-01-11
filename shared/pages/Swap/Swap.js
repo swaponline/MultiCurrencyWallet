@@ -138,15 +138,12 @@ export default class SwapComponent extends PureComponent {
 
     const gasFee = participantSwap.gasLimit ? participantSwap.gasLimit * participantSwap.gasPrice : ownerSwap.gasLimit * ownerSwap.gasPrice
 
-    const currencyName = swap.sellCurrency === "ETH" || swap.buyCurrency === "ETH"
-
-    console.log('gasFee', gasFee)
-    console.log('currencyName', ethBalance >= gasFee * (1e-18))
-
 
     const ethBalance = await actions.eth.getBalance()
 
-    if ((this.props.tokenItems.map(item => item.name).includes(participantSwap._swapName.toLowerCase()) || currencyData.currency === "BTC" || currencyData.currency  === "ETH")
+    if ((this.props.tokenItems.map(item => item.name).includes(participantSwap._swapName.toLowerCase())
+      || currencyData.currency === "BTC"
+      || currencyData.currency  === "ETH")
       && ethBalance >= gasFee * (1e-18)) {
       this.setState(() => ({ continueSwap: true }))
     }
@@ -159,8 +156,6 @@ export default class SwapComponent extends PureComponent {
     if (!swap || !SwapComponent || !peer || !isAmountMore) {
       return null
     }
-
-console.log('swap', swap)
 
     return (
       <div styleName="swap">
