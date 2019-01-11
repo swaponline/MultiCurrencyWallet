@@ -402,6 +402,7 @@ console.log('eth', swap.flow.state)
           {/* { !flow.isFinished && <Button green onClick={this.addGasPrice}>Add gas price</Button> } */}
           { children }
         </div>
+
       </div>
     )
   }
