@@ -233,13 +233,12 @@ export default class BtcToEthToken extends Component {
                   flow.step === 3 && flow.isBalanceFetching && (
                     <Fragment>
                       <h3 style={headingStyle}>
-                        <FormattedMessage id="BtcToEthToken156" defaultMessage="Checking balance.." />
+                        <FormattedMessage id="BtcToEthToken156" defaultMessage="3. Checking balance.." />
                       </h3>
                       <InlineLoader />
                     </Fragment>
                   )
                 }
-
                 {((!enoughtBalance && flow.step === 4) || this.state.flow.scriptBalance < this.swap.sellAmount)
                   ? (
                     <div className="swapStep-4">

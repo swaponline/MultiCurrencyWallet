@@ -198,7 +198,6 @@ checker = () => {
             <div>
               <p styleName="qr">
                 <a
-                  href={`${config.link.bitpay}/address/${scriptAddress}`}
                   styleName="linkAddress"
                   onDoubleClick={this.onCopy}
                   onClick={this.onCopyAddress}
