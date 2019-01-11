@@ -469,6 +469,7 @@ export default class BtcToEthToken extends Component {
                   </div>
                 )
               }
+              {/* eslint-disable */}
               {!continuerSwap && flow.step >= 5
                 ? (<CopyToClipboard text={currencyAddress} data-tut="reactour__address">
                   <h3 style={{ color: '#E72BB3', marginTop: '10px', cursor: 'pointer' }} onClick={this.handleCopy}>
@@ -478,7 +479,8 @@ export default class BtcToEthToken extends Component {
                       values={{ address: `${currencyAddress}`, br: <br /> }}
                     />
                   </h3>
-                </CopyToClipboard>)
+                </CopyToClipboard>
+                )
                 : ((flow.step === 6 || flow.isEthWithdrawn) && (
                   <Fragment>
                     <h3>
@@ -503,6 +505,7 @@ export default class BtcToEthToken extends Component {
                   </div>
                 )
               }
+              {/* eslint-enable */}
               {
                 flow.step === 6 && (
                   <InlineLoader />
