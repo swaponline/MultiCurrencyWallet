@@ -70,7 +70,7 @@ export default class ConfirmOffer extends Component {
           <Button styleName="button" gray onClick={onBack}>
             <FormattedMessage id="ConfirmOffer69" defaultMessage="Back" />
           </Button>
-          <Link styleName="link" to={`${localisedUrl(locale, links.home)}${buyCurrency}-${sellCurrency}`}>
+          <Link styleName="link" to={`${localisedUrl(locale, links.home)}/${buyCurrency}-${sellCurrency}`}>
             <Button styleName="button" id="confirm" brand onClick={this.handleConfirm}>
               <FormattedMessage id="ConfirmOffer73" defaultMessage="Add" />
             </Button>

@@ -45,20 +45,25 @@
 
 .flipButton {
   transform: rotate(90deg);
-  margin-left: calc(90% - 12px);
-  margin-bottom: -20px;
   padding: 0;
+  margin: -2.5rem 0 -1.5rem calc(90% - 12px);
 }
 
 .withLoader {
   display: block;
   position: relative;
-  
+
 }
+
+.inform {
+  color: #626262;
+  margin-top: 40px;
+}
+
 .loaderHolder {
   display: inline-block;
 }
-@include media-mobile { 
+@include media-mobile {
   .loaderHolder {
     display: block;
     position: relative;

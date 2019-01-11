@@ -30,6 +30,7 @@ const minAmount = {
   noxon: 1,
   swap: 1,
   jot: 1,
+  usdt: 0,
 }
 
 @injectIntl
@@ -167,7 +168,7 @@ export default class WithdrawModal extends React.Component {
     render() {
       const { address, amount, balance, isShipped, minus, ethBalance, tokenFee, exCurrencyRate } = this.state
       const { name, data, tokenItems, items } = this.props
-      console.log('balance', balance)
+
       const linked = Link.all(this, 'address', 'amount')
 
       const min = tokenFee ? minAmount.eth : minAmount[data.currency.toLowerCase()]

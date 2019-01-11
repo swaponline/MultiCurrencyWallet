@@ -62,12 +62,10 @@ export default class KeyActionsPanel extends Component {
           <FormattedMessage id="KeyActionsPanel49" defaultMessage="Import keys" />
         </WithdrawButton>
         {
-          hiddenCoinsList.length !== 0 && (
-            <WithdrawButton onClick={this.handleShowMore}>
-              <FormattedMessage id="KeyActionsPanel53" defaultMessage="Show more coins" />
-              ({hiddenCoinsList.length})
-            </WithdrawButton>
-          )
+          <WithdrawButton onClick={this.handleShowMore}>
+            <FormattedMessage id="KeyActionsPanel54" defaultMessage="Hidden coins" />
+            ({hiddenCoinsList.length})
+          </WithdrawButton>
         }
       </div>
     )

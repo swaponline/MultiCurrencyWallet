@@ -10,6 +10,7 @@ import TimerButton from 'components/controls/TimerButton/TimerButton'
 import Button from 'components/controls/Button/Button'
 import Timer from './Timer/Timer'
 import { FormattedMessage } from 'react-intl'
+import CopyToClipboard from 'react-copy-to-clipboard'
 
 
 export default class EthTokenToBtc extends Component {
@@ -30,7 +31,7 @@ export default class EthTokenToBtc extends Component {
       flow: this.swap.flow.state,
       enabledButton: false,
       continuerSwap: continueSwap,
-      isTextCopied: false,
+      isAddressCopied: false,
     }
 
   }
@@ -73,21 +74,21 @@ export default class EthTokenToBtc extends Component {
     })
   }
 
-  handleCopyText = () => {
+  handleCopy = () => {
     this.setState({
-      isTextCopied: true,
+      isAddressCopied: true,
     }, () => {
       setTimeout(() => {
         this.setState({
-          isTextCopied: false,
+          isAddressCopied: false,
         })
-      }, 15 * 1000)
+      }, 500)
     })
   }
 
   render() {
     const { children, disabledTimer }  = this.props
-    const { currencyAddress, flow, enabledButton, isShowingBitcoinScript, continuerSwap, isTextCopied } = this.state
+    const { currencyAddress, flow, enabledButton, isShowingBitcoinScript, continuerSwap, isAddressCopied } = this.state
 
     return (
       <div>
@@ -305,6 +306,24 @@ export default class EthTokenToBtc extends Component {
                   </h3>
                 )
               }
+              {/* eslint-disable */}
+              {!continuerSwap && flow.step >= 5 &&
+                <CopyToClipboard text={currencyAddress} data-tut="reactour__address">
+                  <h3 style={{ color: '#E72BB3', marginTop: '10px', cursor: 'pointer' }} onClick={this.handleCopy}>
+                    <FormattedMessage
+                      id="BtcToEthTokenAddress307"
+                      defaultMessage="Not enough ETH on your balance for miner fee.{br}{br}Deposit 0.001 ETH to your account {address}"
+                      values={{ address: `${currencyAddress}`, br: <br /> }}
+                    />
+                  </h3>
+                </CopyToClipboard>
+              }
+              {/* eslint-enable */}
+              { isAddressCopied &&
+                <p style={{ fontSize: '14px', background: 'white', textAlign: 'center', borderRadius: '20px' }} >
+                  <FormattedMessage id="Row324" defaultMessage="Address copied to clipboard" />
+                </p>
+              }
               {
                 flow.ethSwapCreationTransactionHash && (
                   <div>
@@ -337,20 +356,11 @@ export default class EthTokenToBtc extends Component {
               }
 
               {
-                (flow.step === 6 || (!continuerSwap && flow.isEthWithdrawn)) && (
+                (flow.step === 6 || flow.isEthWithdrawn) && (
                   <Fragment>
                     <h3>
                       <FormattedMessage id="EthTokenBtc321" defaultMessage="5. Waiting BTC Owner adds Secret Key to ETH Contact" />
                     </h3>
-                    {!continuerSwap &&
-                      <h3 style={{ color: '#E72BB3', marginTop: '10px' }}>
-                        <FormattedMessage
-                          id="BtcToEthTokenAddress307"
-                          defaultMessage="Not enough ETH on your balance for miner fee.{br}{br}Deposit 0.001 ETH to your account {address}"
-                          values={{ address: `${currencyAddress}`, br: <br /> }}
-                        />
-                      </h3>
-                    }
                     {
                       !flow.isEthWithdrawn && (
                         <InlineLoader />
@@ -361,7 +371,7 @@ export default class EthTokenToBtc extends Component {
               }
 
               {
-                (continuerSwap && (flow.step === 7 || flow.isBtcWithdrawn)) && (
+                (flow.step === 7 || flow.isBtcWithdrawn) && (
                   <h3>
                     <FormattedMessage
                       id="EthTokenBtc335"
@@ -370,7 +380,7 @@ export default class EthTokenToBtc extends Component {
                 )
               }
               {
-                flow.btcSwapWithdrawTransactionHash && continuerSwap && (
+                flow.btcSwapWithdrawTransactionHash && (
                   <div>
                     <FormattedMessage id="EthTokenBtc342" defaultMessage="Transaction: " />
                     <strong>
@@ -388,7 +398,7 @@ export default class EthTokenToBtc extends Component {
               }
 
               {
-                (continuerSwap && flow.isBtcWithdrawn) && (
+                flow.isBtcWithdrawn && (
                   <Fragment>
                     <h2>
                       <FormattedMessage id="EthTokenBtc365" defaultMessage="Thank you for using Swap.Online!" />

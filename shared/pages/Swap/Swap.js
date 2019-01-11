@@ -40,6 +40,7 @@ export default class SwapComponent extends PureComponent {
     isAmountMore: null,
     ethBalance: null,
     continueSwap: false,
+    enoughtBalance: true,
   }
 
   componentWillMount() {
@@ -57,7 +58,6 @@ export default class SwapComponent extends PureComponent {
       const ethData = items.filter(item => item.currency === 'ETH')
       const currencyData = items.concat(tokenItems)
         .filter(item => item.currency === swap.sellCurrency.toUpperCase())[0]
-
       const currencies = [
         {
           currency: swap.sellCurrency,
@@ -82,7 +82,6 @@ export default class SwapComponent extends PureComponent {
           })
       })
 
-
       window.swap = swap
 
       this.setState({
@@ -96,21 +95,24 @@ export default class SwapComponent extends PureComponent {
       actions.notifications.show(constants.notifications.ErrorNotification, { error: 'Sorry, but this order do not exsit already' })
       this.props.history.push(localisedUrl(links.exchange))
     }
-
     this.setSaveSwapId(orderId)
   }
 
   componentDidMount() {
-    this.checkEthBalance()
-    let timer
+    if (this.state.swap !== null) {
+      this.checkBalance()
+      this.checkEthBalance()
 
-    timer = setInterval(() => {
-      if (this.state.continueSwap === false) {
-        this.checkEthBalance()
-      } else {
-        clearInterval(timer)
-      }
-    }, 5000)
+      let timer
+
+      timer = setInterval(() => {
+        if (this.state.continueSwap === false) {
+          this.checkEthBalance()
+        } else {
+          clearInterval(timer)
+        }
+      }, 5000)
+    }
   }
 
 
@@ -127,26 +129,37 @@ export default class SwapComponent extends PureComponent {
     if (swapsId === null || swapsId.length === 0) {
       swapsId = []
     }
-
     if (!swapsId.includes(orderId)) {
       swapsId.push(orderId)
     }
-
     localStorage.setItem('swapId', JSON.stringify(swapsId))
   }
 
-  checkEthBalance = async () => {
-    const ethBalance = await actions.eth.getBalance()
-    this.setState(() => ({ ethBalance }))
+  checkBalance = () => {
+    const sellAmountPlusFee = this.state.swap.sellAmount.toNumber() + 0.00005
 
-    if (this.state.ethBalance >= 0.001) {
+    if (sellAmountPlusFee >= this.state.currencyData.balance) {
+      this.setState(() => ({
+        enoughtBalance: false,
+      }))
+    }
+  }
+
+
+  checkEthBalance = async () => {
+
+    const { swap: { participantSwap } } = this.state
+
+    const ethBalance = await actions.eth.getBalance()
+    if (this.props.tokenItems.map(item => item.name).includes(participantSwap._swapName.toLowerCase())
+      && ethBalance >= participantSwap.gasLimit * participantSwap.gasPrice * (1e-18)) {
       this.setState(() => ({ continueSwap: true }))
     }
   }
 
   render() {
     const { peer } = this.props
-    const { swap, SwapComponent, currencyData, isAmountMore, ethData, continueSwap } = this.state
+    const { swap, SwapComponent, currencyData, isAmountMore, ethData, continueSwap, enoughtBalance } = this.state
 
     if (!swap || !SwapComponent || !peer || !isAmountMore) {
       return null
@@ -161,6 +174,7 @@ export default class SwapComponent extends PureComponent {
           continueSwap={continueSwap}
           ethData={ethData}
           styles={styles}
+          enoughtBalance={enoughtBalance}
         >
           <Share flow={swap.flow} />
           <EmergencySave flow={swap.flow} />

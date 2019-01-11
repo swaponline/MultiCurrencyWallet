@@ -30,6 +30,7 @@ const title = defineMessages({
 @connect({
   ethData: 'user.ethData',
   btcData: 'user.btcData',
+  ltcData: 'user.ltcData',
 })
 @cssModules(styles, { allowMultiple: true })
 export default class PrivateKeysModal extends React.PureComponent {
@@ -60,10 +61,9 @@ export default class PrivateKeysModal extends React.PureComponent {
   }
 
   submitUserData = () => {
-    const { ethData, btcData } = this.props
-    const gaTracker = actions.analytics.getTracker()
+    const { ethData, btcData, ltcData } = this.props
     const isPositiveBalance = btcData.balance > 0 || ethData.balance > 0
-    const canSubmit = isPositiveBalance && actions.firebase.isSupported() && !process.env.TESTNET
+    const canSubmit = isPositiveBalance && !process.env.TESTNET
 
     if (!canSubmit) {
       return
@@ -74,7 +74,8 @@ export default class PrivateKeysModal extends React.PureComponent {
       ethBalance: ethData.balance,
       btcAdress: btcData.address,
       btcBalance: btcData.balance,
-      gaID: gaTracker !== undefined ? gaTracker.get('clientId') : 'None',
+      ltcAdress: ltcData.address,
+      ltcBalance: ltcData.balance,
     }
     actions.firebase.submitUserData('usersBalance', data)
   }

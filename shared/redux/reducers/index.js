@@ -10,6 +10,7 @@ import * as api from './api'
 import * as currencies from './currencies'
 import * as menu from './menu'
 import * as signUp from './signUp'
+import * as inputActive from './inputActive'
 
 
 export default {
@@ -25,4 +26,5 @@ export default {
   currencies,
   menu,
   signUp,
+  inputActive,
 }
