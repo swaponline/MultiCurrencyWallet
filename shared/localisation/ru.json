@@ -1116,10 +1116,7 @@
   },
   {
     "id": "BtcToEthToken108",
-    "message": "Подтвердить",
-    "files": [
-      "shared/pages/Swap/BtcToEthToken.js"
-    ]
+    "message": "Подтвердить"
   },
   {
     "id": "BtcToEthToken114",
@@ -1155,10 +1152,7 @@
   },
   {
     "id": "BtcToEthToken156",
-    "message": "Проверка баланса.. ",
-    "files": [
-      "shared/pages/Swap/BtcToEthToken.js"
-    ]
+    "message": "Проверка баланса.. "
   },
   {
     "id": "BtcToEthToken167",
@@ -1166,10 +1160,7 @@
   },
   {
     "id": "BtcToEthToken172",
-    "message": "Транзакция: ",
-    "files": [
-      "shared/pages/Swap/BtcToEthToken.js"
-    ]
+    "message": "Транзакция: "
   },
   {
     "id": "BtcToEthToken200",
@@ -1181,73 +1172,43 @@
   },
   {
     "id": "BtcToEthToken230",
-    "message": "4. Владелец ETH получил Bitcoin Script и Хэш. Ожидается, создание им ETH Контракта",
-    "files": [
-      "shared/pages/Swap/BtcToEthToken.js"
-    ]
+    "message": "4. Владелец ETH получил Bitcoin Script и Хэш. Ожидается, создание им ETH Контракта"
   },
   {
     "id": "BtcToEthToken243",
-    "message": "Транзакция: ",
-    "files": [
-      "shared/pages/Swap/BtcToEthToken.js"
-    ]
+    "message": "Транзакция: "
   },
   {
     "id": "BtcToEthToken260",
-    "message": "5. Пробуем вывести ETH из контракта. Пожалуйста, подождите",
-    "files": [
-      "shared/pages/Swap/BtcToEthToken.js"
-    ]
+    "message": "5. Пробуем вывести ETH из контракта. Пожалуйста, подождите"
   },
   {
     "id": "BtcToEthToken267",
-    "message": "Транзакция: ",
-    "files": [
-      "shared/pages/Swap/BtcToEthToken.js"
-    ]
+    "message": "Транзакция: "
   },
   {
     "id": "BtcToEthToken290",
-    "message": "6. Деньги были переведены на Ваш кошелек. Проверьте баланс. ",
-    "files": [
-      "shared/pages/Swap/BtcToEthToken.js"
-    ]
+    "message": "6. Деньги были переведены на Ваш кошелек. Проверьте баланс. "
   },
   {
     "id": "BtcToEthToken293",
-    "message": "Благодарим за использование Swap.Online!! ",
-    "files": [
-      "shared/pages/Swap/BtcToEthToken.js"
-    ]
+    "message": "Благодарим за использование Swap.Online!! "
   },
   {
     "id": "BtcToEthToken303",
-    "message": "ПОПРОБУЙТЕ ВОЗВРАТ",
-    "files": [
-      "shared/pages/Swap/BtcToEthToken.js"
-    ]
+    "message": "ПОПРОБУЙТЕ ВОЗВРАТ"
   },
   {
     "id": "BtcToEthToken316",
-    "message": "Транзакция: ",
-    "files": [
-      "shared/pages/Swap/BtcToEthToken.js"
-    ]
+    "message": "Транзакция: "
   },
   {
     "id": "BtcToEthToken77",
-    "message": "Мы оживаем создавшего ордер на обмен. Если он не появится в течение 5 минут, обмен будет отменен автоматически. ",
-    "files": [
-      "shared/pages/Swap/BtcToEthToken.js"
-    ]
+    "message": "Мы оживаем создавшего ордер на обмен. Если он не появится в течение 5 минут, обмен будет отменен автоматически. "
   },
   {
     "id": "BtcToEthToken87",
-    "message": "1. Ожидание подтверждения",
-    "files": [
-      "shared/pages/Swap/BtcToEthToken.js"
-    ]
+    "message": "1. Ожидание подтверждения"
   },
   {
     "id": "EosToBtc107",
@@ -2577,17 +2538,11 @@
   },
   {
     "id": "BtcToEthTokenAddress1",
-    "message": "Подтвердите адрес получателя (по умолчанию - swap.online wallet)",
-    "files": [
-      "shared/pages/Swap/BtcToEthToken.js"
-    ]
+    "message": "Подтвердите адрес получателя (по умолчанию - swap.online wallet)"
   },
   {
     "id": "BtcToEthTokenAddress2",
-    "message": "Подтвердите адрес",
-    "files": [
-      "shared/pages/Swap/BtcToEthToken.js"
-    ]
+    "message": "Подтвердите адрес"
   },
   {
     "id": "WithdrawButton29",
@@ -4628,5 +4583,9 @@
       "shared/pages/Swap/BtcToEth.js",
       "shared/pages/Swap/BtcToEthToken.js"
     ]
+  },
+  {
+    "id": "KeyActionsPanel54",
+    "message": "Hidden coins"
   }
 ]

@@ -1116,10 +1116,7 @@
   },
   {
     "id": "BtcToEthToken108",
-    "message": "Confirm",
-    "files": [
-      "shared/pages/Swap/BtcToEthToken.js"
-    ]
+    "message": "Confirm"
   },
   {
     "id": "BtcToEthToken114",
@@ -1155,10 +1152,7 @@
   },
   {
     "id": "BtcToEthToken156",
-    "message": "Checking balance.. ",
-    "files": [
-      "shared/pages/Swap/BtcToEthToken.js"
-    ]
+    "message": "Checking balance.. "
   },
   {
     "id": "BtcToEthToken167",
@@ -1166,10 +1160,7 @@
   },
   {
     "id": "BtcToEthToken172",
-    "message": "Transaction: ",
-    "files": [
-      "shared/pages/Swap/BtcToEthToken.js"
-    ]
+    "message": "Transaction: "
   },
   {
     "id": "BtcToEthToken200",
@@ -1181,73 +1172,43 @@
   },
   {
     "id": "BtcToEthToken230",
-    "message": "4. ETH Owner received Bitcoin Script and Secret Hash. Waiting when he creates ETH Contract",
-    "files": [
-      "shared/pages/Swap/BtcToEthToken.js"
-    ]
+    "message": "4. ETH Owner received Bitcoin Script and Secret Hash. Waiting when he creates ETH Contract"
   },
   {
     "id": "BtcToEthToken243",
-    "message": "Transaction: ",
-    "files": [
-      "shared/pages/Swap/BtcToEthToken.js"
-    ]
+    "message": "Transaction: "
   },
   {
     "id": "BtcToEthToken260",
-    "message": "5. ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait",
-    "files": [
-      "shared/pages/Swap/BtcToEthToken.js"
-    ]
+    "message": "5. ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait"
   },
   {
     "id": "BtcToEthToken267",
-    "message": "Transaction: ",
-    "files": [
-      "shared/pages/Swap/BtcToEthToken.js"
-    ]
+    "message": "Transaction: "
   },
   {
     "id": "BtcToEthToken290",
-    "message": "6. Money was transferred to your wallet. Check the balance. ",
-    "files": [
-      "shared/pages/Swap/BtcToEthToken.js"
-    ]
+    "message": "6. Money was transferred to your wallet. Check the balance. "
   },
   {
     "id": "BtcToEthToken293",
-    "message": "Thank you for using Swap.Online! ",
-    "files": [
-      "shared/pages/Swap/BtcToEthToken.js"
-    ]
+    "message": "Thank you for using Swap.Online! "
   },
   {
     "id": "BtcToEthToken303",
-    "message": "TRY REFUND",
-    "files": [
-      "shared/pages/Swap/BtcToEthToken.js"
-    ]
+    "message": "TRY REFUND"
   },
   {
     "id": "BtcToEthToken316",
-    "message": "Transaction: ",
-    "files": [
-      "shared/pages/Swap/BtcToEthToken.js"
-    ]
+    "message": "Transaction: "
   },
   {
     "id": "BtcToEthToken77",
-    "message": "We are waiting for a market maker. If it does not appear within 5 minutes, the swap will be canceled automatically. ",
-    "files": [
-      "shared/pages/Swap/BtcToEthToken.js"
-    ]
+    "message": "We are waiting for a market maker. If it does not appear within 5 minutes, the swap will be canceled automatically. "
   },
   {
     "id": "BtcToEthToken87",
-    "message": "1. Waiting participant confirm this swap",
-    "files": [
-      "shared/pages/Swap/BtcToEthToken.js"
-    ]
+    "message": "1. Waiting participant confirm this swap"
   },
   {
     "id": "EosToBtc107",
@@ -2577,17 +2538,11 @@
   },
   {
     "id": "BtcToEthTokenAddress1",
-    "message": "Confirm destination address (by default - swap.online wallet)",
-    "files": [
-      "shared/pages/Swap/BtcToEthToken.js"
-    ]
+    "message": "Confirm destination address (by default - swap.online wallet)"
   },
   {
     "id": "BtcToEthTokenAddress2",
-    "message": "Confirm address",
-    "files": [
-      "shared/pages/Swap/BtcToEthToken.js"
-    ]
+    "message": "Confirm address"
   },
   {
     "id": "WithdrawButton29",
@@ -4644,5 +4599,9 @@
       "shared/pages/Swap/BtcToEthToken.js",
       "shared/pages/Swap/EthToBtc.js"
     ]
+  },
+  {
+    "id": "KeyActionsPanel54",
+    "message": "Hidden coins"
   }
 ]
