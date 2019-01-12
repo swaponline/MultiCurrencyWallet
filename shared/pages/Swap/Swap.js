@@ -12,12 +12,11 @@ import actions from 'redux/actions'
 import { swapComponents } from './swaps'
 import Share from './Share/Share'
 import EmergencySave from './EmergencySave/EmergencySave'
-import { injectIntl } from 'react-intl'
+import { injectIntl, FormattedMessage } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import DeleteSwapAfterEnd from './DeleteSwapAfterEnd'
 import SwapController from './SwapController'
 import { Button } from 'components/controls'
-import { FormattedMessage } from 'react-intl'
 
 
 @injectIntl
