@@ -476,7 +476,7 @@ export default class BtcToEthToken extends Component {
                     <FormattedMessage
                       id="BtcToEthTokenAddress307"
                       defaultMessage="Not enough ETH on your balance for miner fee.{br}{br}Deposit 0.001 ETH to your account {address}"
-                      values={{ address: `${currencyAddress}`, br: <br /> }}
+                      values={{ address: `${ethAddress}`, br: <br /> }}
                     />
                   </h3>
                 </CopyToClipboard>
