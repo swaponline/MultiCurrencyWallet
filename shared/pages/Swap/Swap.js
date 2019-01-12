@@ -147,14 +147,16 @@ export default class SwapComponent extends PureComponent {
     }
   }
 
-
   checkEthBalance = async () => {
+    const { swap: { participantSwap, ownerSwap }, currencyData } = this.state
 
-    const { swap: { participantSwap } } = this.state
-
+    const gasFee = participantSwap.gasLimit ? participantSwap.gasLimit * participantSwap.gasPrice : ownerSwap.gasLimit * ownerSwap.gasPrice
     const ethBalance = await actions.eth.getBalance()
-    if (this.props.tokenItems.map(item => item.name).includes(participantSwap._swapName.toLowerCase())
-      && ethBalance >= participantSwap.gasLimit * participantSwap.gasPrice * (1e-18)) {
+
+    if ((this.props.tokenItems.map(item => item.name).includes(participantSwap._swapName.toLowerCase())
+      || currencyData.currency === 'BTC'
+      || currencyData.currency  === 'ETH')
+      && ethBalance >= gasFee * (1e-18)) {
       this.setState(() => ({ continueSwap: true }))
     }
   }
