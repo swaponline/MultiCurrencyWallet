@@ -137,9 +137,8 @@ export default class BtcToEthToken extends Component {
 
   render() {
     const { children, disabledTimer, swap } = this.props
-    const { ethAddress } = this.state
 
-    const { currencyAddress, secret, flow, enabledButton, destinationAddressTimer, continuerSwap, isTextCopied, isAddressCopied } = this.state
+    const { ethAddress, currencyAddress, secret, flow, enabledButton, destinationAddressTimer, isTextCopied, isAddressCopied, continuerSwap } = this.state
 
     const linked = Link.all(this, 'destinationBuyAddress')
     linked.destinationBuyAddress.check((value) => value !== '', 'Please enter ETH address for tokens')
@@ -470,26 +469,28 @@ export default class BtcToEthToken extends Component {
                   </div>
                 )
               }
-              {
-                (flow.step === 6 || flow.isEthWithdrawn) && (
+              {/* eslint-disable */}
+              {!continuerSwap && flow.step >= 5
+                ? (<CopyToClipboard text={currencyAddress} data-tut="reactour__address">
+                  <h3 style={{ color: '#E72BB3', marginTop: '10px', cursor: 'pointer' }} onClick={this.handleCopy}>
+                    <FormattedMessage
+                      id="BtcToEthTokenAddress307"
+                      defaultMessage="Not enough ETH on your balance for miner fee.{br}{br}Deposit 0.001 ETH to your account {address}"
+                      values={{ address: `${ethAddress}`, br: <br /> }}
+                    />
+                  </h3>
+                </CopyToClipboard>
+                )
+                : ((flow.step === 6 || flow.isEthWithdrawn) && (
                   <Fragment>
                     <h3>
                       <FormattedMessage id="BtcToEthToken260" defaultMessage="5. ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait" />
                     </h3>
-                    {!continuerSwap &&
-                      <h3 style={{ color: '#E72BB3', marginTop: '10px' }}>
-                        <FormattedMessage
-                          id="BtcToEthTokenAddress348"
-                          defaultMessage="Not enough ETH on your balance for miner fee.{br}{br}Deposit 0.001 ETH to your account {address}"
-                          values={{ address: `${ethAddress}`, br: <br /> }}
-                        />
-                      </h3>
-                    }
                   </Fragment>
-                )
+                ))
               }
               {
-                flow.ethSwapWithdrawTransactionHash && (
+                continuerSwap && flow.ethSwapWithdrawTransactionHash && (
                   <div>
                     <FormattedMessage id="BtcToEthToken267" defaultMessage="Transaction: " />
                     <strong>
@@ -504,6 +505,7 @@ export default class BtcToEthToken extends Component {
                   </div>
                 )
               }
+              {/* eslint-enable */}
               {
                 flow.step === 6 && (
                   <InlineLoader />
@@ -511,7 +513,7 @@ export default class BtcToEthToken extends Component {
               }
 
               {
-                (continuerSwap && (flow.isEthWithdrawn)) && (
+                continuerSwap && (flow.isEthWithdrawn) && (
                   <Fragment>
                     <FormattedMessage id="BtcToEthToken290" defaultMessage="Money was transferred to your wallet. Check the balance.">
                       {message => <h3>{message}</h3>}
@@ -538,7 +540,7 @@ export default class BtcToEthToken extends Component {
                 )
               }
               {
-                flow.refundTransactionHash && continuerSwap && (
+                flow.refundTransactionHash && (
                   <div>
                     <FormattedMessage id="BtcToEthToken316" defaultMessage="Transaction: " />
                     <strong>

@@ -16,7 +16,19 @@
 
 .searchInput {
   width:75px;
+
+  & > div {
+    box-shadow: none;
+  }
+  & input {
+    border-radius: 0;
+
+    &:focus {
+      border: none;
+    }
+  }
 }
+
 .selectedItem {
   height: 60px;
   line-height: 60px;

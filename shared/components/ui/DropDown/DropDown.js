@@ -3,11 +3,13 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
 import ClickOutside from 'react-click-outside'
+import Link from 'sw-valuelink'
 
 import cssModules from 'react-css-modules'
 import styles from './DropDown.scss'
 
 import toggle from 'decorators/toggle'
+import Input from 'components/forms/Input/Input'
 
 
 @toggle()
@@ -95,19 +97,20 @@ export default class DropDown extends Component {
 
     return selectedItem.title
   }
-  handleChangee = (e) => {
-    if (e.target.value === '') {
+  handleChange = (value) => {
+    if (value === '' || value === undefined) {
       this.setState({
         itemsFiltered:this.props.items,
         searchValue:'',
       })
     } else {
       this.setState({
-        searchValue: e.target.value.toUpperCase(),
-        itemsFiltered:this.props.items.filter(item => item.name.includes(e.target.value.toUpperCase())),
+        searchValue: value.toUpperCase(),
+        itemsFiltered:this.props.items.filter(item => item.name.includes(value.toUpperCase())),
       })
     }
   }
+
   renderItem = (item) => {
     const { itemRender } = this.props
 
@@ -120,18 +123,37 @@ export default class DropDown extends Component {
 
   render() {
     const { className, items, isToggleActive } = this.props
+    const { searchValue } = this.setState
 
     const dropDownStyleName = cx('dropDown', {
       'active': isToggleActive,
     })
 
+    const linkedValue = Link.all(this, 'inputValue')
+
+    linkedValue.inputValue.check((value) => this.handleChange(value))
+
     return (
-      <ClickOutside onClickOutside={isToggleActive ? () => this.toggle() : () => {}}>
+      <ClickOutside
+        onClickOutside={isToggleActive
+          ? () => {
+            this.refs.searchInput.handleBlur()
+            linkedValue.inputValue.set('')
+            this.toggle()
+          }
+          : () => {}
+        }
+      >
         <div styleName={dropDownStyleName} className={className}>
           <div styleName="selectedItem" onClick={this.toggle}>
             <div styleName="arrow" />
             {isToggleActive ? (
-              <input styleName="searchInput" type="text" value={this.state.searchValue} autoFocus onChange={this.handleChangee} />
+              <Input
+                styleName="searchInput"
+                focusOnInit
+                valueLink={linkedValue.inputValue}
+                ref="searchInput"
+              />
             ) : (
               this.renderSelectedItem()
             )}
@@ -144,7 +166,10 @@ export default class DropDown extends Component {
                     <div
                       key={item.value}
                       styleName="option"
-                      onClick={() => this.handleOptionClick(item)}
+                      onClick={() => {
+                        linkedValue.inputValue.set('')
+                        this.handleOptionClick(item)}
+                      }
                     >
                       {this.renderItem(item)}
                     </div>
