@@ -356,7 +356,7 @@ export default class BtcToEthToken extends Component {
                 }
 
                 {
-                  (continuerSwap && (flow.isEthWithdrawn)) && (
+                  (flow.isEthWithdrawn) && (
                     <Fragment>
                       <h3 h3 style={headingStyle}>
                         <FormattedMessage id="BtcToEthToken290" defaultMessage="Money was transferred to your wallet. Check the balance." />
