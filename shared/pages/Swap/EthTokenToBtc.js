@@ -289,11 +289,10 @@ export default class EthTokenToBtc extends Component {
                 )
               }
               {
-
                 flow.step === 4 && flow.isBalanceFetching && (
                   <Fragment>
                     <div>
-                      <FormattedMessage id="EthTokenBtc267" defaultMessage="Checking balance.." />
+                      <FormattedMessage id="EthTokenBtc267" defaultMessage="3. Checking balance.." />
                     </div>
                     <InlineLoader />
                   </Fragment>
