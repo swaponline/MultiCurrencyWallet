@@ -2,8 +2,15 @@
   padding-left: 30px;
   padding-top: 60px;
   min-height: calc(100vh - 75px);
-  width: 500px;
-  margin: auto
+  width: 600px;
+  margin: -2% 20% 0;
+}
+@include media-mobile {
+  .swap {
+    display: block;
+    width: 100%;
+    font-size: 11px;
+  }
 }
 
 .swapContainer {
@@ -26,32 +33,102 @@
   margin-top: 70px;
 }
 
+.loaderHolder {
+  display: inline-block;
+}
+
+@include media-mobile {
+  .loaderHolder {
+    display: inline-block;
+  }
+}
+
 .topUpLink {
   border: 1px solid #cecece;
-  padding: 20px 15px;
-  margin-top: 10px;
   font-size: 18px;
+  margin-top: 40px;
   position: relative;
   padding: 25px 25px;
+  padding-left: 45px;
   border-radius: 20px;
   display: inline-block;
   text-align: left;
   padding-bottom: 75px;
+  background: white;
   &:hover {
     color: #ff1fc5;
   }
 }
 
+.top {
+  width: 575px;
+  display: flex;
+  justify-content: stretch;
+}
+
+@include media-mobile {
+  .topUpLink {
+    display: block;
+    width: 100%;
+    font-size: 12px;
+  }
+}
+
+.top {
+  width: 575px;
+  display: flex;
+  justify-content: stretch;
+}
+
+@include media-mobile {
+  .top {
+    display: block;
+    width: 100%;
+    justify-content: stretch;
+  }
+}
 
 .qrImg {
-  position: absolute;
-  right: 50px;
-  top: 5px;
+  position: relative;
+  padding: 0;
+}
+
+@include media-mobile {
+  .qrImg {
+    img {
+      width: 50%;
+      margin: -10% 0 0% 50%;
+    }
+  }
+}
+.message{
+  max-width: 100%;
+}
+
+.btcMessage {
+  margin-top: 0.5em;
+  max-width: 100%;
+  font-size: 29px;
+  display: block;
+}
+
+@include media-mobile {
+  .btcMessage {
+    display: block;
+    width: 70%;
+    font-size: 14px;
+    margin: 0.5em 0 -5em -2em;
+  }
+}
+
+.sendMessage{
+  font-size: 22px;
 }
 
 .infoWrapper {
   position: relative;
 }
+
 .logHide {
   display: none;
 }
@@ -75,11 +152,13 @@
   //   }
   // }
 }
-.btcMessage {
-  color: #000;
-  max-width: 480px;
-  display: block;
+
+@include media-mobile {
+  .lockTime {
+    margin: 15px;
+  }
 }
+
 .copyText {
   position: absolute;
   left: 0px;
@@ -103,7 +182,7 @@
     width: 265px;
   }
   button {
-    width: auto;
+    width: 100%;
     margin: auto;
     height: 56px;
     display: -webkit-box;
@@ -124,6 +203,21 @@
     }
   }
 }
+
+@include media-mobile {
+  .qr {
+    a {
+      font-size: 11px;
+      height: 30px;
+      margin: 0 -2% 0 -2em;
+      width: 120%;
+    }
+    button {
+      display: none;
+    }
+  }
+}
+
 .cardsContainer {
     display: flex;
     width: 185px;
@@ -171,7 +265,8 @@
 }
 
 .linkAddress {
-  cursor: text;
+  cursor: pointer;
+  width: 84%;
 }
 
 .fa-copy-in {
@@ -224,10 +319,26 @@
 .unconfBalance {
   margin-bottom: 20px;
 }
+
 .gohome-holder {
   text-align: center;
 }
 .button {
   margin-top: 20px;
   font-size: 14px;
+
+
+@include media-mobile {
+  .transaction{
+      font-size: 8.5px;
+    a {
+      font-size: 8.5px;
+    }
+  }
 }
+
+
+h3 {
+  font-size: 20px;
+}
+

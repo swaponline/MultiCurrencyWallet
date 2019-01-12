@@ -7,7 +7,6 @@ import { BigNumber } from 'bignumber.js'
 
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import TimerButton from 'components/controls/TimerButton/TimerButton'
-import SwapProgress from 'components/SwapProgress/SwapProgress'
 import Button from 'components/controls/Button/Button'
 import Timer from './Timer/Timer'
 import { FormattedMessage } from 'react-intl'
@@ -15,12 +14,13 @@ import { FormattedMessage } from 'react-intl'
 
 export default class EthToBtc extends Component {
 
-  constructor({ swap, currencyData }) {
+  constructor({ swap, currencyData, window }) {
     super()
 
     this.swap = swap
 
     this.state = {
+      window,
       currencyAddress: currencyData.address,
       flow: this.swap.flow.state,
       enabledButton: false,
@@ -102,7 +102,7 @@ export default class EthToBtc extends Component {
         <div className={this.props.styles.swapWrapper}>
           {
             this.swap.id && (
-              <strong className={this.props.styles.swapGoNumber}>
+              <strong>
                 {this.swap.sellAmount.toNumber()}
                 {this.swap.sellCurrency} &#10230;
                 {this.swap.buyAmount.toNumber()}
@@ -110,9 +110,8 @@ export default class EthToBtc extends Component {
               </strong>
             )
           }
-          <SwapProgress data={flow} name="ETH2BTC" stepLength={9} />
         </div>
-        <div className={this.props.styles.logHide}>
+        <div>
           {
             !this.swap.id && (
               this.swap.isMy ? (
@@ -122,7 +121,7 @@ export default class EthToBtc extends Component {
               ) : (
                 <Fragment>
                   <h3>
-                    <FormattedMessage id="EthToBtc104" defaultMessage="The order creator is offline. Waiting for him.." />
+                    <FormattedMessage id="EthToBtc104" defaultMessage="Waiting the order creator" />
                   </h3>
                   <InlineLoader />
                 </Fragment>
@@ -186,6 +185,7 @@ export default class EthToBtc extends Component {
               </Fragment>
             )
           }
+          {flow.step > 1 && <h3 style={headingStyle}><FormattedMessage id="BtcToEthToken157" defaultMessage="1. Confirmation" /></h3>}
           {
             flow.isMeSigned && (
               <Fragment>
@@ -209,7 +209,6 @@ export default class EthToBtc extends Component {
                         <strong>{flow.secretHash}</strong>
                       </div>
                       <div>
-                        <FormattedMessage id="EthToBtc185" defaultMessage="Script address: " />
                         <strong>
                           {
                             flow.btcScriptCreatingTransactionHash && (

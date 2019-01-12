@@ -29,6 +29,7 @@ import { localisedUrl } from 'helpers/locale'
 export default class ConfirmOffer extends Component {
 
   handleConfirm = () => {
+    const { intl: { locale }, offer: { buyCurrency, sellCurrency } } = this.props
     this.createOrder()
     actions.modals.close('OfferModal')
   }
@@ -70,11 +71,9 @@ export default class ConfirmOffer extends Component {
           <Button styleName="button" gray onClick={onBack}>
             <FormattedMessage id="ConfirmOffer69" defaultMessage="Back" />
           </Button>
-          <Link styleName="link" to={`${localisedUrl(locale, links.home)}${buyCurrency}-${sellCurrency}`}>
-            <Button styleName="button" id="confirm" brand onClick={this.handleConfirm}>
-              <FormattedMessage id="ConfirmOffer73" defaultMessage="Add" />
-            </Button>
-          </Link>
+          <Button styleName="button" id="confirm" brand onClick={this.handleConfirm}>
+            <FormattedMessage id="ConfirmOffer73" defaultMessage="Add" />
+          </Button>
         </Row>
       </Fragment>
     )
