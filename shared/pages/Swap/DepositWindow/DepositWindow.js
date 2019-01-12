@@ -155,7 +155,7 @@ checker = () => {
           rel="noopener noreferrer"
         >
           <div styleName="top">
-              {/* eslint-disable */}
+            {/* eslint-disable */}
               <span styleName="btcMessage">
                 <FormattedMessage
                   id="deposit134"
