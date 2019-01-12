@@ -41,6 +41,7 @@ export default class SwapComponent extends PureComponent {
     ethBalance: null,
     continueSwap: false,
     enoughtBalance: true,
+    window: false,
   }
 
   componentWillMount() {
@@ -99,8 +100,12 @@ export default class SwapComponent extends PureComponent {
   }
 
   componentDidMount() {
-    let timer
     if (this.state.swap !== null) {
+      this.checkBalance()
+      this.checkEthBalance()
+
+      let timer
+
       timer = setInterval(() => {
         if (this.state.continueSwap === false) {
           this.checkEthBalance()
@@ -125,20 +130,27 @@ export default class SwapComponent extends PureComponent {
     if (swapsId === null || swapsId.length === 0) {
       swapsId = []
     }
-
     if (!swapsId.includes(orderId)) {
       swapsId.push(orderId)
     }
-
     localStorage.setItem('swapId', JSON.stringify(swapsId))
+  }
+
+  checkBalance = () => {
+    const sellAmountPlusFee = this.state.swap.sellAmount.toNumber() + 0.00005
+
+    if (sellAmountPlusFee >= this.state.currencyData.balance) {
+      this.setState(() => ({
+        enoughtBalance: false,
+        window: true,
+      }))
+    }
   }
 
   checkEthBalance = async () => {
     const { swap: { participantSwap, ownerSwap }, currencyData } = this.state
 
     const gasFee = participantSwap.gasLimit ? participantSwap.gasLimit * participantSwap.gasPrice : ownerSwap.gasLimit * ownerSwap.gasPrice
-
-
     const ethBalance = await actions.eth.getBalance()
 
     if ((this.props.tokenItems.map(item => item.name).includes(participantSwap._swapName.toLowerCase())
@@ -151,7 +163,7 @@ export default class SwapComponent extends PureComponent {
 
   render() {
     const { peer } = this.props
-    const { swap, SwapComponent, currencyData, isAmountMore, ethData, continueSwap } = this.state
+    const { swap, SwapComponent, currencyData, isAmountMore, ethData, continueSwap, enoughtBalance, window } = this.state
 
     if (!swap || !SwapComponent || !peer || !isAmountMore) {
       return null
@@ -160,12 +172,14 @@ export default class SwapComponent extends PureComponent {
     return (
       <div styleName="swap">
         <SwapComponent
+          window={window}
           disabledTimer={isAmountMore === 'enable'}
           swap={swap}
           currencyData={currencyData}
           continueSwap={continueSwap}
           ethData={ethData}
           styles={styles}
+          enoughtBalance={enoughtBalance}
         >
           <Share flow={swap.flow} />
           <EmergencySave flow={swap.flow} />
