@@ -14,12 +14,13 @@ import { FormattedMessage } from 'react-intl'
 
 export default class EthToBtc extends Component {
 
-  constructor({ swap, currencyData }) {
+  constructor({ swap, currencyData, window }) {
     super()
 
     this.swap = swap
 
     this.state = {
+      window,
       currencyAddress: currencyData.address,
       flow: this.swap.flow.state,
       enabledButton: false,

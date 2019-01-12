@@ -30,12 +30,13 @@ export default class BtcToEthToken extends Component {
     }
   }
 
-  constructor({ swap, currencyData, ethData, continueSwap, enoughtBalance, styles }) {
+  constructor({ swap, currencyData, ethData, continueSwap, enoughtBalance, styles, window }) {
     super()
 
     this.swap = swap
 
     this.state = {
+      window,
       currencyAddress: currencyData.address,
       flow: this.swap.flow.state,
       secret: crypto.randomBytes(32).toString('hex'),
@@ -139,7 +140,7 @@ export default class BtcToEthToken extends Component {
 
   render() {
     const { children, disabledTimer, swap, currencyData } = this.props
-    const { currencyAddress, secret, flow, enabledButton, destinationAddressTimer, continuerSwap, isTextCopied, ethAddress, enoughtBalance } = this.state
+    const { currencyAddress, secret, flow, enabledButton, destinationAddressTimer, continuerSwap, isTextCopied, ethAddress, enoughtBalance, window } = this.state
 
     const linked = Link.all(this, 'destinationBuyAddress')
 
@@ -239,10 +240,15 @@ export default class BtcToEthToken extends Component {
                     </Fragment>
                   )
                 }
-                {((!enoughtBalance && flow.step === 4) || this.state.flow.scriptBalance < this.swap.sellAmount)
+                {window && flow.step > 4 &&
+                  <h3 style={headingStyle}>
+                    <FormattedMessage id="BtcToEthToken1245" defaultMessage="Sent funds" />
+                  </h3>
+                }
+                {(!enoughtBalance && flow.step === 4)
                   ? (
                     <div className="swapStep-4">
-                      <h3 h3 style={headingStyle}>
+                      <h3 style={headingStyle}>
                         <FormattedMessage id="BtcToEthToken256" defaultMessage="Send your funds" />
                       </h3>
                       <DepositWindow currencyData={currencyData} swap={swap} flow={swap.flow.state} />
@@ -313,7 +319,7 @@ export default class BtcToEthToken extends Component {
                   (flow.step === 6 || flow.isEthWithdrawn) && (
                     <Fragment>
                       <h3 h3 style={headingStyle}>
-                        <FormattedMessage id="BtcToEthToken260" defaultMessage="5. ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait" />
+                        <FormattedMessage id="BtcToEthToken260" defaultMessage="4. ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait" />
                       </h3>
                       {/* {!continuerSwap &&
                         <h3 style={{ color: '#E72BB3', marginTop: '10px' }}>
