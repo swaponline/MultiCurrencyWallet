@@ -3,7 +3,7 @@ import config from './testnet'
 import moment from 'moment-with-locales-es6'
 
 
-const newERC20 = {}
+const newERC20 = config.erc20
 newERC20[process.argv[3]] = {
   address: process.argv[2],
   decimals: Number.parseInt(process.argv[4], 10),
@@ -13,7 +13,7 @@ newERC20[process.argv[3]] = {
 export default {
   env: 'production',
   entry: 'testnet',
-  local: 'online',
+  local: 'local',
   dir: `testnet-widget`,
 
   base: './',
@@ -24,4 +24,5 @@ export default {
   isWidget: true,
   ...config,
   erc20: newERC20,
+  erc20token: process.argv[3],
 }

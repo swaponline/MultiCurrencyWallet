@@ -19,6 +19,8 @@ import Avatar from 'components/Avatar/Avatar'
 import { injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 
+import config from 'app-config'
+
 
 @withRouter
 @injectIntl
@@ -82,22 +84,28 @@ export default class User extends React.Component {
   render() {
     const { view } = this.state
 
+    const isWidget = (config && config.isWidget)
+
     const {
       feeds, peer, reputation, openTour, path, isSigned,
     } = this.props
 
     return (
       <div styleName="user-cont">
-        {!isSigned && (<SignUpButton />)}
-        {path && (<Question openTour={openTour} />)}
-        <UserAvatar
-          isToggle={this.handleToggleTooltip}
-          feeds={feeds}
-          declineRequest={this.declineRequest}
-          getInfoBySwapId={actions.core.getInformationAboutSwap}
-          soundClick={this.soundClick}
-          changeView={this.handleChangeView}
-        />
+        {!isSigned && !isWidget && (<SignUpButton />)}
+        {path && !isWidget && (<Question openTour={openTour} />)}
+        {
+          (!isWidget) && (
+            <UserAvatar
+              isToggle={this.handleToggleTooltip}
+              feeds={feeds}
+              declineRequest={this.declineRequest}
+              getInfoBySwapId={actions.core.getInformationAboutSwap}
+              soundClick={this.soundClick}
+              changeView={this.handleChangeView}
+            />
+          )
+        }
         {
           view && <UserTooltip
             feeds={feeds}
@@ -107,7 +115,7 @@ export default class User extends React.Component {
             declineRequest={this.declineRequest}
           />
         }
-        {!!peer && (
+        {!!peer && !isWidget && (
           <Avatar
             className={styles.avatar}
             value={peer}

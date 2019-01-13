@@ -96,6 +96,10 @@ export default class PartialClosure extends Component {
     let timer
     let wallets
     let usdRates
+
+    if (config.isWidget) {
+      this.state.getCurrency = config.erc20token
+    }
   }
 
   componentDidMount() {
@@ -437,6 +441,8 @@ export default class PartialClosure extends Component {
     const oneCryptoCost = maxBuyAmount.isLessThanOrEqualTo(0) ? new BigNumber(0) :  goodRate
     const linked = Link.all(this, 'haveAmount', 'getAmount', 'customWallet')
 
+    const isWidget = (config && config.isWidget)
+
     if (redirect) {
       return <Redirect push to={`${localisedUrl(locale, links.swap)}/${getCurrency}-${haveCurrency}/${orderId}`} />
     }
@@ -447,10 +453,14 @@ export default class PartialClosure extends Component {
 
     return (
       <Fragment>
-        <PageHeadline subTitle={suTitle} />
+        {
+          (!isWidget) && (
+            <PageHeadline subTitle={suTitle} />
+          )
+        }
         <div styleName="section">
           {
-            (config && !config.isWidget) && (
+            (!isWidget) && (
               <div styleName="blockVideo">
                 <iframe
                   title="swap online video"
@@ -573,24 +583,28 @@ export default class PartialClosure extends Component {
             </div>
           </div>
         </div>
-        <p styleName="inform">
-          <FormattedMessage
-            id="PartialClosure562"
-            defaultMessage="Swap.Online is the decentralized in-browser hot wallet based on the Atomic Swaps technology.
-              As in our wallet all blockchains interact decentralized and no-third-party way, we offer our users to exchange Bitcoin, Ethereum,
-              USD Tether, BCH and EOS for free in a couple of seconds. At the time, Swap.Online charges no commision for the order making and taking.
-              For example, on the vast majority of exchanges, there is a 0,3%-operational fee for the taker of liquidity and 1-5% withdrawal fee.
-              The exchange of crypto and tokens on Swap.Online is conducted in truly
-              decentralized manner as we use the Atomic Swaps technology of peer-to-peer cross-chain interaction.
-              Swap.Online uses IPFS-network for all the operational processes which results in no need for centralized server.
-              The interface of exchange seems to look like that of crypto broker, not of ordinary DEX or CEX. In a couple of clicks,
-              the user can place and take the offer, customizing the price of sent token.
-              Also, the user can exchange the given percentage of his or her amount of tokens available (e.g. ½, ¼ etc.).
-              One more advantage of the Swap.Online exchange service is the usage of one key for the full range of ERC-20 tokens.
-              By the way, if case you’re not interested in exchange of some tokens, you can hide it from the list.
-              Thus, use Swap.Online as your basic exchange for every crypto you’re holding!"
-          />
-        </p>
+        {
+          (!isWidget) && (
+            <p styleName="inform">
+              <FormattedMessage
+                id="PartialClosure562"
+                defaultMessage="Swap.Online is the decentralized in-browser hot wallet based on the Atomic Swaps technology.
+                  As in our wallet all blockchains interact decentralized and no-third-party way, we offer our users to exchange Bitcoin, Ethereum,
+                  USD Tether, BCH and EOS for free in a couple of seconds. At the time, Swap.Online charges no commision for the order making and taking.
+                  For example, on the vast majority of exchanges, there is a 0,3%-operational fee for the taker of liquidity and 1-5% withdrawal fee.
+                  The exchange of crypto and tokens on Swap.Online is conducted in truly
+                  decentralized manner as we use the Atomic Swaps technology of peer-to-peer cross-chain interaction.
+                  Swap.Online uses IPFS-network for all the operational processes which results in no need for centralized server.
+                  The interface of exchange seems to look like that of crypto broker, not of ordinary DEX or CEX. In a couple of clicks,
+                  the user can place and take the offer, customizing the price of sent token.
+                  Also, the user can exchange the given percentage of his or her amount of tokens available (e.g. ½, ¼ etc.).
+                  One more advantage of the Swap.Online exchange service is the usage of one key for the full range of ERC-20 tokens.
+                  By the way, if case you’re not interested in exchange of some tokens, you can hide it from the list.
+                  Thus, use Swap.Online as your basic exchange for every crypto you’re holding!"
+              />
+            </p>
+          )
+        }
       </Fragment>
     )
   }

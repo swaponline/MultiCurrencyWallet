@@ -320,6 +320,14 @@
   margin-bottom: 20px;
 }
 
+.gohome-holder {
+  text-align: center;
+}
+.button {
+  margin-top: 20px;
+  font-size: 14px;
+}
+
 @include media-mobile {
   .transaction{
       font-size: 8.5px;
@@ -333,3 +341,4 @@
 h3 {
   font-size: 20px;
 }
+

@@ -12,10 +12,11 @@ import actions from 'redux/actions'
 import { swapComponents } from './swaps'
 import Share from './Share/Share'
 import EmergencySave from './EmergencySave/EmergencySave'
-import { injectIntl } from 'react-intl'
+import { injectIntl, FormattedMessage } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import DeleteSwapAfterEnd from './DeleteSwapAfterEnd'
 import SwapController from './SwapController'
+import { Button } from 'components/controls'
 
 
 @injectIntl
@@ -161,6 +162,10 @@ export default class SwapComponent extends PureComponent {
     }
   }
 
+  handleGoHome = () => {
+    this.props.history.push(links.home)
+  }
+
   render() {
     const { peer } = this.props
     const { swap, SwapComponent, currencyData, isAmountMore, ethData, continueSwap, enoughtBalance, window } = this.state
@@ -168,6 +173,8 @@ export default class SwapComponent extends PureComponent {
     if (!swap || !SwapComponent || !peer || !isAmountMore) {
       return null
     }
+
+    const isFinished = (swap.flow.state.step >= (swap.flow.steps.length - 1))
 
     return (
       <div styleName="swap">
@@ -190,6 +197,15 @@ export default class SwapComponent extends PureComponent {
           }
           <SwapController swap={swap} />
         </SwapComponent>
+        {
+          (isFinished) && (
+            <div styleName="gohome-holder">
+              <Button styleName="button" green onClick={this.handleGoHome} >
+                <FormattedMessage id="swapFinishedGoHome" defaultMessage="Return to home page" />
+              </Button>
+            </div>
+          )
+        }
       </div>
     )
   }

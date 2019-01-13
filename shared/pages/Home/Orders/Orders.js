@@ -22,6 +22,9 @@ import Row from './Row/Row'
 import MyOrders from './MyOrders/MyOrders'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
+import config from 'app-config'
+import { links } from 'helpers'
+
 
 const filterMyOrders = (orders, peer) => orders
   .filter(order => order.owner.peer === peer)
@@ -95,6 +98,10 @@ export default class Orders extends Component {
     actions.core.updateCore()
   }
 
+  handleWalletPush = () => {
+    this.props.history.push(links.currencyWallet)
+  }
+
   render() {
     const { sellOrders, buyOrders, isVisible } = this.state
     let { sellCurrency, buyCurrency, intl } = this.props
@@ -115,6 +122,13 @@ export default class Orders extends Component {
     const { isOnline, isAllPeersLoaded, myOrders, orderId, invalidPair, location, currencies } = this.props
     const isIpfsLoaded = isOnline && isAllPeersLoaded
     const seoPage = getSeoPage(location.pathname)
+
+    const isWidget = (config && config.isWidget)
+
+    const buttonsRowStyleName = isMobile ?
+      (isWidget) ? 'buttonRow buttonRowMobile buttonRowWidget' : 'buttonRow buttonRowMobile'
+      :
+      (isWidget) ? 'buttonRow buttonRowWidget' : 'buttonRow'
 
     const buyCurrencyFullName = (currencies.find(c => c.name === buyCurrency) || {}).fullTitle
     const sellCurrencyFullName = (currencies.find(c => c.name === sellCurrency) || {}).fullTitle
@@ -150,7 +164,7 @@ export default class Orders extends Component {
             <FormattedMessage id="Orders141" defaultMessage="No such ticker. Redirecting to SWAP-BTC exchange..." />
           </p>
         }
-        <div styleName={isMobile ? 'buttonRow buttonRowMobile' : 'buttonRow'}>
+        <div styleName={buttonsRowStyleName}>
           <Button green styleName="button" disabled={myOrders.length === 0} onClick={() => this.setState(state => ({ isVisible: !state.isVisible }))}>
             {isVisible ?
               <FormattedMessage id="orders1499" defaultMessage="Hide" />
@@ -160,6 +174,13 @@ export default class Orders extends Component {
           <Button gray styleName="button" onClick={this.createOffer}>
             <FormattedMessage id="orders128" defaultMessage="Create offer" />
           </Button>
+          {
+            (isWidget) && (
+              <Button green styleName="button" onClick={this.handleWalletPush} >
+                <FormattedMessage id="OrdersWidgetModeShowWallet" defaultMessage="Wallet" />
+              </Button>
+            )
+          }
         </div>
         {
           isVisible && <MyOrders
