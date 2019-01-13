@@ -29,7 +29,9 @@ npm run start
 ```
 
 ### HTML widget
-1. npm run build:mainnet-widget 0x9E4AD79049282F942c1b4c9b418F0357A0637017 {name} {decimals} {tiker}
+1. npm run build:mainnet-widget {erc20contract} {name} {decimals} {tiker}
+
+example:
 ```
 npm run build:mainnet-widget 0x9E4AD79049282F942c1b4c9b418F0357A0637017 noxon 0 noxon
 tar czf my-widget.tar.gz build-mainnet-widget
