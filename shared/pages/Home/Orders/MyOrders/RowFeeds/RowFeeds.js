@@ -48,9 +48,9 @@ export default class RowFeeds extends Component {
     const reversPair = tradeTicker.split('-').reverse().join('-')
 
     if (constants.tradeTicker.includes(tradeTicker.toUpperCase())) {
-      return localisedUrl(locale, `${config.base}${tradeTicker}/${id}`)
+      return localisedUrl(`${config.base}${locale}/${tradeTicker}/${id}`)
     }
-    return localisedUrl(locale, `${config.base}${reversPair}/${id}`)
+    return localisedUrl(`${config.base}${locale}/${reversPair}/${id}`)
   }
 
   render() {
@@ -59,8 +59,6 @@ export default class RowFeeds extends Component {
       row: { requests, buyAmount, buyCurrency, sellAmount, sellCurrency, exchangeRate, id },
       declineRequest, acceptRequest, removeOrder, intl: { locale },
     } = this.props
-
-    const text = this.checkCopyText()
 
     return (
       <tr>
@@ -72,7 +70,7 @@ export default class RowFeeds extends Component {
         <td>{`${(exchangeRate || (buyAmount / sellAmount)).toFixed(5)} ${buyCurrency}/${sellCurrency}`}</td>
         <CopyToClipboard
           onCopy={this.handleCopyLink}
-          text={text}
+          text={this.checkCopyText()}
         >
           <td style={{ position: 'relative', cursor: 'pointer' }}>
             { isLinkCopied &&
