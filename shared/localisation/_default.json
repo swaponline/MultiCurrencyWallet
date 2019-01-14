@@ -394,10 +394,7 @@
   },
   {
     "id": "ReceiveModal",
-    "message": "This is your address for receive ",
-    "files": [
-      "shared/components/modals/ReceiveModal/ReceiveModal.js"
-    ]
+    "message": "This is your address for receive "
   },
   {
     "id": "SaveKeysModal",
@@ -4708,6 +4705,27 @@
     "message": "Address copied to clipboard",
     "files": [
       "shared/pages/Swap/EthTokenToBtc.js"
+    ]
+  },
+  {
+    "id": "ReceiveModal50",
+    "message": "This is your address for receive {currency}",
+    "files": [
+      "shared/components/modals/ReceiveModal/ReceiveModal.js"
+    ]
+  },
+  {
+    "id": "OrdersWidgetModeShowWallet",
+    "message": "Wallet",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "swapFinishedGoHome",
+    "message": "Return to home page",
+    "files": [
+      "shared/pages/Swap/Swap.js"
     ]
   }
 ]

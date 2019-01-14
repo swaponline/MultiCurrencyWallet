@@ -47,7 +47,7 @@ export default class ReceiveModal extends React.Component {
       <Modal name={name} title={intl.formatMessage(title.Receive)}>
         <div styleName="content" style={{ textAlign: "center" }}>
           <p style={{ fontSize: 25 }}>
-            <FormattedMessage id="ReceiveModal" defaultMessage="This is your address for receive" />
+            <FormattedMessage id="ReceiveModal50" defaultMessage="This is your address for receive {currency}" values={{ currency: `${currency}` }} />
           </p>
           <CopyToClipboard
             text={address}

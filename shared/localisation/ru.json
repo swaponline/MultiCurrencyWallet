@@ -401,10 +401,7 @@
   },
   {
     "id": "ReceiveModal",
-    "message": "Адрес для получения ",
-    "files": [
-      "shared/components/modals/ReceiveModal/ReceiveModal.js"
-    ]
+    "message": "Адрес для получения "
   },
   {
     "id": "SaveKeysModal",
@@ -4648,6 +4645,27 @@
     "message": "Адрес скопирован в буфер обмена",
     "files": [
       "shared/pages/Swap/EthTokenToBtc.js"
+    ]
+  },
+  {
+    "id": "ReceiveModal50",
+    "message": "Ваш адрес для пополнения {currency}",
+    "files": [
+      "shared/components/modals/ReceiveModal/ReceiveModal.js"
+    ]
+  },
+  {
+    "id": "OrdersWidgetModeShowWallet",
+    "message": "Кошелек",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "swapFinishedGoHome",
+    "message": "Домой",
+    "files": [
+      "shared/pages/Swap/Swap.js"
     ]
   }
 ]
