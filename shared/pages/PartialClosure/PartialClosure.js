@@ -404,7 +404,8 @@ export default class PartialClosure extends Component {
       return true
     }
 
-    // TODO: check for BTC address
+    if (getCurrency == 'btc') return util.typeforce.isCoinAddress.BTC(customWallet)
+
     return util.typeforce.isCoinAddress.ETH(customWallet)
   }
 
