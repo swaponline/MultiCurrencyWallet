@@ -5,6 +5,7 @@ import bitcoin from 'bitcoinjs-lib'
 import bitcoinMessage from 'bitcoinjs-message'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
+import config from 'app-config'
 import { btc, request, constants, api } from 'helpers'
 
 
@@ -89,9 +90,13 @@ const getTransaction = () =>
   })
 
 
-const send = async (from, to, amount, feeValue = 15000) => {
-  const { user: { btcData: { privateKey } } } = getState()
+const send = async (from, to, amount, feeValue) => {
+  const { user: { btcData: { privateKey, fee } } } = getState()
   const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
+
+  if (!feeValue) {
+    feeValue = fee.normal
+  }
 
   const tx            = new bitcoin.TransactionBuilder(btc.network)
   const unspents      = await fetchUnspents(from)
@@ -137,6 +142,42 @@ const signMessage = (message, encodedPrivateKey) => {
   return signature.toString('base64')
 }
 
+const getCurrentFee = async () => {
+  const link = config.fees.btc
+  const defaultFee = constants.defaultFee.btc
+
+  if (!link) {
+    return defaultFee
+  }
+
+  const resultAPI = await request.get(link)
+
+  const APIFee = {
+    slow: resultAPI.low_fee_per_kb,
+    normal: Math.ceil((resultAPI.low_fee_per_kb + resultAPI.high_fee_per_kb) / 2),
+    fast: resultAPI.high_fee_per_kb,
+  }
+
+  const currentFee = {
+    slow: APIFee.slow >= defaultFee.slow ? APIFee.slow : defaultFee.slow,
+    normal: APIFee.normal >= defaultFee.slow ? APIFee.normal : defaultFee.normal,
+    fast: APIFee.fast >= defaultFee.slow ? APIFee.fast : defaultFee.fast,
+  }
+
+  return currentFee
+}
+
+const setFee = async ({ slow, normal, fast } = { slow: 0, normal: 0, fast: 0 }) => {
+  const currentFee = await getCurrentFee()
+  const fee = {
+    slow: slow === 0 ? currentFee.slow : slow,
+    normal: normal === 0 ? currentFee.normal : normal,
+    fast: fast === 0 ? currentFee.fast : fast,
+  }
+
+  reducers.user.setFee({ name: 'btcData', fee })
+}
+
 export default {
   login,
   getBalance,
@@ -147,4 +188,6 @@ export default {
   fetchTx,
   fetchBalance,
   signMessage,
+  getCurrentFee,
+  setFee,
 }

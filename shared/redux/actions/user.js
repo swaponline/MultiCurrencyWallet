@@ -83,6 +83,13 @@ const getBalances = () => {
     })
   // actions.nimiq.getBalance()
 }
+
+const setFees = () => {
+  actions.btc.setFee()
+  actions.ltc.setFee()
+  actions.eth.setGas()
+}
+
 const getDemoMoney = process.env.MAINNET ? () => {} : () => {
   /* //googe bitcoin (or rinkeby) faucet 
   request.get('https://swap.wpmix.net/demokeys.php', {})
@@ -216,6 +223,7 @@ window.downloadPrivateKeys = downloadPrivateKeys
 export default {
   sign,
   getBalances,
+  setFees,
   getDemoMoney,
   getExchangeRate,
   setTransactions,

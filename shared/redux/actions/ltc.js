@@ -4,6 +4,7 @@ import { BigNumber } from 'bignumber.js'
 import bitcoin from 'bitcoinjs-lib'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
+import config from 'app-config'
 import { ltc, request, constants, api } from 'helpers'
 
 
@@ -102,15 +103,18 @@ const getTransaction = () =>
       })
   })
 
-const send = async (from, to, amount) => {
-  const { user: { ltcData: { privateKey } } } = getState()
+const send = async (from, to, amount, feeValue) => {
+  const { user: { ltcData: { privateKey, fee } } } = getState()
   const keyPair = bitcoin.ECPair.fromWIF(privateKey, ltc.network)
+
+  if (!feeValue) {
+    feeValue = fee.normal
+  }
 
   const tx            = new bitcoin.TransactionBuilder(ltc.network)
   const unspents      = await fetchUnspents(from)
 
   const fundValue     = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
-  const feeValue      = 100000
   const totalUnspent  = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
   const skipValue     = totalUnspent - feeValue - fundValue
 
@@ -137,6 +141,41 @@ const broadcastTx = (txRaw) =>
     },
   })
 
+const getCurrentFee = async () => {
+  const link = config.fees.ltc
+  const defaultFee = constants.defaultFee.ltc
+
+  if (!link) {
+    return defaultFee
+  }
+
+  const resultAPI = await request.get(link)
+
+  const APIFee = {
+    slow: resultAPI.low_fee_per_kb,
+    normal: Math.ceil((resultAPI.low_fee_per_kb + resultAPI.high_fee_per_kb) / 2),
+    fast: resultAPI.high_fee_per_kb,
+  }
+
+  const currentFee = {
+    slow: APIFee.slow >= defaultFee.slow ? APIFee.slow : defaultFee.slow,
+    normal: APIFee.normal >= defaultFee.slow ? APIFee.normal : defaultFee.normal,
+    fast: APIFee.fast >= defaultFee.slow ? APIFee.fast : defaultFee.fast,
+  }
+
+  return currentFee
+}
+
+const setFee = async ({ slow, normal, fast } = { slow: 0, normal: 0, fast: 0 }) => {
+  const currentFee = await getCurrentFee()
+  const fee = {
+    slow: slow === 0 ? currentFee.slow : slow,
+    normal: normal === 0 ? currentFee.normal : normal,
+    fast: fast === 0 ? currentFee.fast : fast,
+  }
+
+  reducers.user.setFee({ name: 'ltcData', fee })
+}
 
 export default {
   login,
@@ -147,4 +186,6 @@ export default {
   fetchUnspents,
   broadcastTx,
   fetchBalance,
+  getCurrentFee,
+  setFee,
 }

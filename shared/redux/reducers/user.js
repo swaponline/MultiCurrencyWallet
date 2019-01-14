@@ -149,3 +149,36 @@ export const setTokenApprove = (state, { name, approve }) => ({
     },
   },
 })
+
+export const setFee = (state, { name, fee: { slow, normal, fast } }) => ({
+  ...state,
+  tokensData: {
+    ...state.tokensData,
+  },
+  [name]: {
+    ...state[name],
+    fee: {
+      slow,
+      normal,
+      fast,
+    },
+  },
+})
+
+export const setGas = (state, { gas: { limit, price: { slow, normal, fast } } }) => ({
+  ...state,
+  tokensData: {
+    ...state.tokensData,
+  },
+  ethData: {
+    ...state.ethData,
+    gas: {
+      limit,
+      price: {
+        slow,
+        normal,
+        fast,
+      },
+    },
+  },
+})

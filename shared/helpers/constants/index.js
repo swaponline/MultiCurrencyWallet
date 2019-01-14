@@ -5,6 +5,7 @@ import modals from './modals'
 import tradeTicker from './TRADE_TICKERS'
 import tokenDecimals from './TOKEN_DECIMALS'
 import pairTypes from './PAIR_TYPES'
+import defaultFee from './DEFAULT_FEE'
 
 
 export default {
@@ -14,5 +15,6 @@ export default {
   tokenDecimals,
   notifications,
   pairTypes,
+  defaultFee,
   modals,
 }

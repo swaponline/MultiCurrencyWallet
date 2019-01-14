@@ -75,6 +75,8 @@ export default class App extends React.Component {
       actions.user.getDemoMoney()
     }
 
+    actions.user.setFees()
+
     actions.firebase.initialize()
   }
 

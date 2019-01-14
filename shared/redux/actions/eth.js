@@ -80,14 +80,22 @@ const getTransaction = () =>
       })
   })
 
-const send = (from, to, amount) =>
+const send = (from, to, amount, gasPrice, gasLimit) =>
   new Promise(async (resolve, reject) => {
-    const { user: { ethData: { privateKey } } } = getState()
+    const { user: { ethData: { privateKey, gas } } } = getState()
+
+    if (!gasPrice) {
+      gasPrice = gas.price.normal
+    }
+
+    if (!gasLimit) {
+      gasLimit = gas.limit
+    }
 
     const params = {
       to: String(to).trim(),
-      gasPrice: '20000000000',
-      gas: '21000',
+      gasPrice: gasPrice * 1000000000,
+      gas: gasLimit,
       value: web3.utils.toWei(String(amount)),
     }
 
@@ -105,6 +113,46 @@ const send = (from, to, amount) =>
     resolve(receipt)
   })
 
+const getCurrentGasPrice = async () => {
+  const link = config.fees.eth
+  const defaultPrice = constants.defaultFee.eth.price
+
+  if (!link) {
+    return defaultPrice
+  }
+
+  const resultAPI = await request.get(link)
+
+  const APIPrice = {
+    slow: resultAPI.safeLow,
+    normal: resultAPI.standard,
+    fast: resultAPI.fast,
+  }
+
+  const currentPrice = {
+    slow: APIPrice.slow >= defaultPrice.slow ? APIPrice.slow : defaultPrice.slow,
+    normal: APIPrice.normal >= defaultPrice.slow ? APIPrice.normal : defaultPrice.normal,
+    fast: APIPrice.fast >= defaultPrice.slow ? APIPrice.fast : defaultPrice.fast,
+  }
+
+  return currentPrice
+}
+
+const setGas = async (limit = 0, { slow, normal, fast } = { slow: 0, normal: 0, fast: 0 }) => {
+  const currentPrice = await getCurrentGasPrice()
+  const gas = {
+    limit: limit >= constants.defaultFee.eth.limit && limit !== 0
+      ? limit
+      : constants.defaultFee.eth.limit,
+    price: {
+      slow: slow === 0 ? currentPrice.slow : slow,
+      normal: normal === 0 ? currentPrice.normal : normal,
+      fast: fast === 0 ? currentPrice.fast : fast,
+    },
+  }
+
+  reducers.user.setGas({ name: 'ethData', gas })
+}
 
 export default {
   send,
@@ -112,4 +160,6 @@ export default {
   getBalance,
   fetchBalance,
   getTransaction,
+  getCurrentGasPrice,
+  setGas,
 }

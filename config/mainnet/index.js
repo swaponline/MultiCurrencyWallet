@@ -4,6 +4,7 @@ import ipfs from './ipfs'
 import erc20 from './erc20'
 import api from './api'
 import swapContract from './swapContract'
+import fees from './fees'
 
 
 export default {
@@ -13,4 +14,5 @@ export default {
   ipfs,
   erc20,
   swapContract,
+  fees,
 }
