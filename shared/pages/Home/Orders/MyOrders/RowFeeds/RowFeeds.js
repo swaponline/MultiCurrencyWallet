@@ -48,9 +48,9 @@ export default class RowFeeds extends Component {
     const reversPair = tradeTicker.split('-').reverse().join('-')
 
     if (constants.tradeTicker.includes(tradeTicker.toUpperCase())) {
-      return localisedUrl(`${config.base}${locale}/${tradeTicker}/${id}`)
+      return (`${config.base}${locale}/${tradeTicker}/${id}`)
     }
-    return localisedUrl(`${config.base}${locale}/${reversPair}/${id}`)
+    return (`${config.base}${locale}/${reversPair}/${id}`)
   }
 
   render() {
