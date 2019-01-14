@@ -143,8 +143,7 @@ const sendActivationPayment = async ({ from }) => {
     throw new Error('Not enough balance to activate account')
   }
 
-  const feeValue = 15000
-  const txid = await actions.btc.send(from, buyAccountPaymentRecipient, buyAccountPriceInBTC, feeValue)
+  const txid = await actions.btc.send(from, buyAccountPaymentRecipient, buyAccountPriceInBTC)
 
   return txid.getId()
 }

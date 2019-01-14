@@ -1,6 +1,6 @@
 import { request, constants, api } from 'helpers'
 import { getState } from 'redux/core'
-import  actions from 'redux/actions'
+import actions from 'redux/actions'
 import web3 from 'helpers/web3'
 import reducers from 'redux/core/reducers'
 import config from 'app-config'
@@ -80,14 +80,22 @@ const getTransaction = () =>
       })
   })
 
-const send = (from, to, amount) =>
+const send = (from, to, amount, { gasPrice, gasLimit } = {}) =>
   new Promise(async (resolve, reject) => {
-    const { user: { ethData: { privateKey } } } = getState()
+    const { user: { ethData: { privateKey, gasRate } } } = getState()
+
+    if (!gasPrice) {
+      gasPrice = gasRate.price.normal
+    }
+
+    if (!gasLimit) {
+      gasLimit = gasRate.limit
+    }
 
     const params = {
       to: String(to).trim(),
-      gasPrice: '20000000000',
-      gas: '21000',
+      gasPrice: gasPrice * 1000000000,
+      gas: gasLimit,
       value: web3.utils.toWei(String(amount)),
     }
 
@@ -105,6 +113,46 @@ const send = (from, to, amount) =>
     resolve(receipt)
   })
 
+const getGasRate = async () => {
+  const link = config.feeRates.eth
+  const defaultPrice = constants.defaultFeeRates.eth.price
+
+  if (!link) {
+    return defaultPrice
+  }
+
+  const apiResult = await request.get(link)
+
+  const apiRate = {
+    slow: apiResult.safeLow,
+    normal: apiResult.standard,
+    fast: apiResult.fast,
+  }
+
+  const currentRate = {
+    slow: apiRate.slow >= defaultPrice.slow ? apiRate.slow : defaultPrice.slow,
+    normal: apiRate.normal >= defaultPrice.slow ? apiRate.normal : defaultPrice.normal,
+    fast: apiRate.fast >= defaultPrice.slow ? apiRate.fast : defaultPrice.fast,
+  }
+
+  return currentRate
+}
+
+const setGasRate = async ({ limit, slow, normal, fast } = {}) => {
+  const currentRate = await getGasRate()
+  const gasRate = {
+    limit: Number(limit) >= constants.defaultFeeRates.eth.limit
+      ? limit
+      : constants.defaultFeeRates.eth.limit,
+    price: {
+      slow: slow ? slow : currentRate.slow,
+      normal: normal ? normal : currentRate.normal,
+      fast: fast ? fast : currentRate.fast,
+    },
+  }
+
+  reducers.user.setGasRate({ gasRate })
+}
 
 export default {
   send,
@@ -112,4 +160,6 @@ export default {
   getBalance,
   fetchBalance,
   getTransaction,
+  getGasRate,
+  setGasRate,
 }

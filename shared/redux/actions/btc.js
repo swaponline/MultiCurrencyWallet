@@ -5,6 +5,7 @@ import bitcoin from 'bitcoinjs-lib'
 import bitcoinMessage from 'bitcoinjs-message'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
+import config from 'app-config'
 import { btc, request, constants, api } from 'helpers'
 
 
@@ -89,9 +90,17 @@ const getTransaction = () =>
   })
 
 
-const send = async (from, to, amount, feeValue = 15000) => {
-  const { user: { btcData: { privateKey } } } = getState()
+const getTxFeeValue = (feeRate, txSize) => {
+  return Math.ceil(feeRate * 226 / 1024)
+}
+
+const send = async (from, to, amount, { feeValue } = {}) => {
+  const { user: { btcData: { privateKey, feeRate } } } = getState()
   const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
+
+  if (!feeValue) {
+    feeValue = getTxFeeValue(feeRate.normal)
+  }
 
   const tx            = new bitcoin.TransactionBuilder(btc.network)
   const unspents      = await fetchUnspents(from)
@@ -137,6 +146,42 @@ const signMessage = (message, encodedPrivateKey) => {
   return signature.toString('base64')
 }
 
+const getFeeRate = async () => {
+  const link = config.feeRates.btc
+  const defaultFee = constants.defaultFeeRates.btc
+
+  if (!link) {
+    return defaultFee
+  }
+
+  const apiResult = await request.get(link)
+
+  const apiRate = {
+    slow: apiResult.low_fee_per_kb,
+    normal: Math.ceil((apiResult.low_fee_per_kb + apiResult.high_fee_per_kb) / 2),
+    fast: apiResult.high_fee_per_kb,
+  }
+
+  const currentRate = {
+    slow: apiRate.slow >= defaultFee.slow ? apiRate.slow : defaultFee.slow,
+    normal: apiRate.normal >= defaultFee.slow ? apiRate.normal : defaultFee.normal,
+    fast: apiRate.fast >= defaultFee.slow ? apiRate.fast : defaultFee.fast,
+  }
+
+  return currentRate
+}
+
+const setFeeRate = async ({ slow, normal, fast } = { slow: 0, normal: 0, fast: 0 }) => {
+  const currentRate = await getFeeRate()
+  const feeRate = {
+    slow: slow === 0 ? currentRate.slow : slow,
+    normal: normal === 0 ? currentRate.normal : normal,
+    fast: fast === 0 ? currentRate.fast : fast,
+  }
+
+  reducers.user.setFeeRate({ name: 'btcData', feeRate })
+}
+
 export default {
   login,
   getBalance,
@@ -147,4 +192,6 @@ export default {
   fetchTx,
   fetchBalance,
   signMessage,
+  getFeeRate,
+  setFeeRate,
 }
