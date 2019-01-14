@@ -125,7 +125,77 @@ export default class SwapProgress extends Component {
     return (
       <div styleName="overlay">
         <div styleName="container">
-          <span styleName="steps">{this.props.data.step} / {this.props.stepLength} steps</span>
+          {/*<span styleName="steps">{this.props.data.step} / {this.props.stepLength} steps</span>*/}
+          <div styleName="stepList">
+              {
+                this.props.data.step >= 1 ? (
+                  <div styleName={this.props.data.step == 1 && this.props.data.step < 2 ? 'stepItem active' : 'stepItem active checked'}>
+                    <span styleName="stepNumber">{this.props.data.step == 1 && this.props.data.step < 2 ? '1' : <i className="fas fa-check" />}</span>
+                    <p styleName="stepText">Confirmation processing</p>
+                  </div>
+                ) : (
+                  <div styleName="stepItem">
+                    <span styleName="stepNumber">1</span>
+                    <p styleName="stepText">Confirmation processing</p>
+                  </div>
+                )
+              }
+
+              {
+                this.props.data.step >= 2 ? (
+                  <div styleName={this.props.data.step == 2 && this.props.data.step <= 3 ? 'stepItem active' : 'stepItem active checked'}>
+                    <span styleName="stepNumber">{this.props.data.step == 2 && this.props.data.step < 3 ? '2' : <i className="fas fa-check" />}</span>
+                    <p styleName="stepText">Bitcoin deposition</p>
+                  </div>
+                ) : (
+                  <div styleName="stepItem">
+                    <span styleName="stepNumber">2</span>
+                    <p styleName="stepText">Bitcoin deposition</p>
+                  </div>
+                )
+              }
+
+              {
+                this.props.data.step >= 4 ? (
+                  <div styleName={this.props.data.step == 4 && this.props.data.step < 5 ? 'stepItem active' : 'stepItem active checked'}>
+                    <span styleName="stepNumber">{this.props.data.step == 4 && this.props.data.step < 5 ? '3' : <i className="fas fa-check" />}</span>
+                    <p styleName="stepText">Swap tokens deposition</p>
+                  </div>
+                ) : (
+                  <div styleName="stepItem">
+                    <span styleName="stepNumber">3</span>
+                    <p styleName="stepText">Swap tokens deposition</p>
+                  </div>
+                )
+              }
+
+              {
+                this.props.data.step >= 5 ? (
+                <div styleName={this.props.data.step >= 5 && this.props.data.step < 6 ? 'stepItem active' : 'stepItem active checked'}>
+                  <span styleName="stepNumber">{this.props.data.step >= 5 && this.props.data.step < 6 ? '4' : <i className="fas fa-check" />}</span>
+                  <p styleName="stepText">Withdrawing swap tokens from a contract</p>
+                </div>
+                ) : (
+                  <div styleName="stepItem">
+                    <span styleName="stepNumber">4</span>
+                    <p styleName="stepText">Withdrawing swap tokens from a contract</p>
+                  </div>
+                )
+              }
+              {
+                this.props.data.step >= 6 ? (
+                  <div styleName={this.props.data.step >= 6 && this.props.data.step < 7 ? 'stepItem active' : 'stepItem active checked'}>
+                    <span styleName="stepNumber">{this.props.data.step >= 6 && this.props.data.step < 7 ? '5' : <i className="fas fa-check" />}</span>
+                    <p styleName="stepText">Finished!</p>
+                  </div>
+                ) : (
+                  <div styleName="stepItem">
+                    <span styleName="stepNumber">5</span>
+                    <p styleName="stepText">Finished!</p>
+                  </div>
+                )
+              }
+          </div>
           <div styleName="stepContainer">
             <div styleName={progress > 180 ? 'progress-pie-chart gt-50' : 'progress-pie-chart'}>
               <div styleName="ppc-progress">

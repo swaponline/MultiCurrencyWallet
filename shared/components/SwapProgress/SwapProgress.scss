@@ -1,20 +1,73 @@
 .overlay {
-  /* font-size: 10px; */
   z-index: 1000;
-  /* position: absolute; */
-  /* left: 130px; */
   width: 100%;
-  /* top: 12px; */
   margin-bottom: 20px;
 }
 .container {
   width: 100%;
   position: relative;
-  // width: 500px;
-  // position: absolute;
-  // top: 50%;
-  // left: 50%;
-  // transform: translate(-50%,-50%);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-direction: row-reverse;
+}
+
+.stepList,
+.stepItem,
+.stepNumber,
+.stepText {
+  color: #000;
+}
+
+.stepNumber {
+  border: 1px solid #ccc;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+}
+
+.stepList {
+  margin-left: 50px;
+}
+
+.stepItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 17px;
+  font-size: 14px;
+  opacity: 0.3;
+}
+
+.stepText {
+  margin: 0;
+  margin-left: 14px;
+  text-transform: uppercase;
+}
+
+.active {
+  color: #000;
+  opacity: 1;
+  .stepNumber {
+    background: #fff;
+    color: #fff;
+    border: none;
+    border: 1px solid #000;
+    color: #000;
+  }
+}
+
+.checked {
+  .stepNumber {
+    background: #5100dc;
+    color: #fff;
+    border: 1px solid #5100dc;
+  }
+  .stepText {
+    color: #5100dc;
+  }
 }
 .progress {
   // overflow: hidden;
@@ -237,10 +290,12 @@ $size: 200px;
 
 .stepContainer {
   position: relative;
+  width: 600px;
+  text-align: center;
 }
 
 .step {
-  margin-top: 50px;
+  // margin-top: 50px;
   text-align: center;
   padding: 50px;
   padding-bottom: 30px;
