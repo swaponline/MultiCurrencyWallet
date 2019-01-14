@@ -14,17 +14,19 @@ ReactDOM.render(
   document.getElementById('root')
 )
 
+{ /* eslint-disabled */ }
 {
   window.location.protocol === 'http:' &&
-  window.location.hostname !== "localhost"
-  ? (ReactDOM.render(
+  window.location.hostname !== 'localhost'
+    ? (ReactDOM.render(
       <ErrorPageNoSSL />,
       document.getElementById('root')
     ))
-  : (migrate().finally(() => setTimeout(() => {
-    ReactDOM.render(
+    : (migrate().finally(() => setTimeout(() => {
+      ReactDOM.render(
       <Root history={history} store={store} routes={routes} />,
       document.getElementById('root')
-    )
-  }, 1000)))
+      )
+    }, 1000)))
 }
+{ /* eslint-enable */ }
