@@ -12,7 +12,7 @@ const ErrorNotification = ({ data, name }) => (
       <FormattedMessage id="ErrorNotification12" defaultMessage="Oops, looks like something went wrong!" />
     </h3>
     <p>
-      <FormattedMessage id="ErrorNotification15" defaultMessage="Error: " />
+      <FormattedMessage id="ErrorNotification151" defaultMessage="Error: {error}" values={{ error: `${data.error}` }} />
     </p>
   </Notification>
 )

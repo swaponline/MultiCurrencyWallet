@@ -120,7 +120,7 @@ export default class Header extends Component {
       const canShowSubscribeAndTour = (this.props.history.location.pathname === '/' || this.props.history.location.pathname === '/ru')
         && !localStorage.getItem(constants.localStorage.firstStart)
 
-      if (canShowSubscribeAndTour) {
+      if (canShowSubscribeAndTour && (config && !config.isWidget)) {
         this.openSignUpModal()
         localStorage.setItem(constants.localStorage.firstStart, true)
       }
@@ -166,12 +166,16 @@ export default class Header extends Component {
 
   render() {
 
-    if (config.isWidget) return null
-
     const { sticky, menuItems, isTourOpen, isShowingMore, path } = this.state
     const { intl: { locale }, history, pathname, feeds, peer, isSigned, isInputActive } = this.props
 
     const accentColor = '#510ed8'
+
+    if (config && config.isWidget) {
+      return (
+        <User />
+      )
+    }
 
     if (isMobile) {
       return (

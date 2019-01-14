@@ -4,3 +4,9 @@
   text-align: center;
   font-size: 18px;
 }
+
+@include media-mobile {
+  .timer {
+    font-size: 12px;
+  }
+}

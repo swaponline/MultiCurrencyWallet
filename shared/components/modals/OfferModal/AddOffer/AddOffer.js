@@ -51,6 +51,10 @@ export default class AddOffer extends Component {
   constructor({ initialData }) {
     super()
 
+    if (config && config.isWidget) {
+      minAmount[config.erc20token] = 1
+    }
+
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency } = initialData || {}
 
     this.state = {

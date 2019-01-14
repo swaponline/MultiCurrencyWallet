@@ -1,6 +1,5 @@
 import baseConfig from './default'
-import config from './testnet'
-import moment from 'moment-with-locales-es6'
+import config from './mainnet'
 
 
 const newERC20 = config.erc20
@@ -11,14 +10,13 @@ newERC20[process.argv[3]] = {
 }
 
 export default {
-  env: 'development',
-  entry: 'testnet',
+  env: 'production',
+  entry: 'mainnet',
   local: 'local',
+  dir: 'mainnet-widget',
 
-  base: `http://localhost:${baseConfig.http.port}/`,
-  publicPath: `http://localhost:${baseConfig.http.port}${baseConfig.publicPath}`,
-
-  time: moment(Date.now()).format('LLLL'),
+  base: './',
+  publicPath: `.${baseConfig.publicPath}`,
 
   isWidget: true,
   ...config,
