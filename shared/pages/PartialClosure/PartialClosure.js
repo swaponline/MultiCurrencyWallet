@@ -404,18 +404,30 @@ export default class PartialClosure extends Component {
       return true
     }
 
-    // TODO: check for BTC address
+    if (getCurrency === 'btc') return util.typeforce.isCoinAddress.BTC(customWallet)
+
     return util.typeforce.isCoinAddress.ETH(customWallet)
   }
 
   customWalletAllowed() {
     const { haveCurrency, getCurrency } = this.state
 
-    if (haveCurrency !== 'btc') {
-      return false
+    if (haveCurrency === 'btc') {
+      // btc-token
+      if (config.erc20[getCurrency] !== undefined) return true
+      // btc-eth
+      if (getCurrency === 'eth') return true
+    }
+    if (config.erc20[haveCurrency] !== undefined) {
+      // token-btc
+      if (getCurrency === 'btc') return true
     }
 
-    return config.erc20[getCurrency] !== undefined
+    if (haveCurrency === 'eth') {
+      // eth-btc
+      if (getCurrency === 'btc') return true
+    }
+    return false
   }
 
   checkPair = (value) => {
@@ -564,7 +576,7 @@ export default class PartialClosure extends Component {
                     </Tooltip >
                   </FieldLabel>
                   <div styleName="walletInput">
-                    <Input required valueLink={linked.customWallet} pattern="0-9a-zA-Z" placeholder="Enter the address of ETH wallet" />
+                    <Input required valueLink={linked.customWallet} pattern="0-9a-zA-Z" placeholder="Enter the destination address" />
                   </div>
                   <div styleName="walletToggle">
                     <Toggle checked={customWalletUse} onChange={this.handleCustomWalletUse} />
