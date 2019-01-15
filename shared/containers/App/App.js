@@ -80,7 +80,6 @@ export default class App extends React.Component {
 
   componentDidMount() {
     window.onerror = (error) => {
-      actions.notifications.show(constants.notifications.ErrorNotification, { error })
       actions.analytics.errorEvent(error)
     }
 
