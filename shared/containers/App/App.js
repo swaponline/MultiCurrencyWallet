@@ -79,6 +79,9 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
+    window.onerror = (error) => {
+      actions.analytics.errorEvent(error)
+    }
 
     setTimeout(() => {
       actions.user.sign()
