@@ -5,6 +5,7 @@ class Keychain {
   constructor(web3) {
     const url = 'ws://localhost:16384/';
     this.ws = new WebSocket(url);
+    this.web3 = web3;
     const _parent = this;
     this.ws.onmessage = function (response) {
       try {
@@ -20,6 +21,19 @@ class Keychain {
     web3.eth.accounts.sign = this.sign.bind(this)
     web3.eth.accounts.create = this.create.bind(this)
     web3.eth.accounts.signTransaction = this.signTransaction.bind(this)
+  }
+
+  command(request, callback) {
+    this.ws.send(JSON.stringify(request));
+    this.queue.push(callback);
+  };
+
+  /** Promise implementation of the 'command' method */
+  method(request) {
+    const _parent = this;
+    return new Promise(function (resolve, reject) {
+      _parent.command(request, resolve);
+    })
   }
 
   async create() {
@@ -43,22 +57,21 @@ class Keychain {
     }
   }
 
-  command(request, callback) {
-    this.ws.send(JSON.stringify(request));
-    this.queue.push(callback);
-  };
+  async sign(data, keyname) {
+    const prefix = "\x19Ethereum Signed Message:\n" + data.length;
+    const hash = this.web3.utils.sha3(prefix + data).substr(2);
 
-  /** Promise implementation of the 'command' method */
-  method(request) {
-    const _parent = this;
-    return new Promise(function (resolve, reject) {
-      _parent.command(request, resolve);
-    })
-  }
-
-  sign(data, privateKey) {
-    const params = { keyname: privateKey, transaction: data, blockchain_type: "ethereum" };
-    return this.method({ command: 'sign_hex', params });
+    const result = await this.method({ command: 'sign_hash', params: { hash, keyname } });
+    const signature = result.result;
+    const ret = Keychain.rsv(signature, 0);
+    return {
+      message: data,
+      messageHash: '0x' + hash,
+      v: ret.v,
+      r: ret.r,
+      s: ret.s,
+      signature: '0x' + signature
+    };
   };
 
   signTransaction(tx, privateKey) {
