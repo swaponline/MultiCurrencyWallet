@@ -15,26 +15,41 @@ import Table from 'components/tables/Table/Table'
 import { WithdrawButton } from 'components/controls'
 import styles from 'components/tables/Table/Table.scss'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
+import PageSeo from 'components/Seo/PageSeo'
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import KeyActionsPanel from 'components/KeyActionsPanel/KeyActionsPanel'
 import SaveKeysModal from 'components/modals/SaveKeysModal/SaveKeysModal'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
-@withRouter
+import config from 'app-config'
+
+
 @connect(
   ({
     core: { hiddenCoinsList },
-    user: { ethData, btcData, /* bchData, */ tokensData, eosData, telosData, nimData, usdtData, ltcData },
+    user: { ethData, btcData, tokensData, eosData, xlmData, telosData, nimData, usdtData, ltcData },
     currencies: { items: currencies },
   }) => ({
-    tokens: Object.keys(tokensData).map(k => (tokensData[k].currency)),
-    items: [btcData, ethData, eosData, telosData, /* bchData, */ ltcData, usdtData /* nimData */ ].map((data) => (
+    tokens: ((config && config.isWidget) ?
+      [ config.erc20token.toUpperCase() ]
+      :
+      Object.keys(tokensData).map(k => (tokensData[k].currency))
+    ),
+    items: ((config && config.isWidget) ?
+      [btcData, ethData, usdtData ]
+      :
+      [btcData, ethData, eosData, telosData, xlmData, ltcData, usdtData /* nimData */ ]).map((data) => (
       data.currency
     )),
+    currencyBalance: [btcData, ethData, eosData, xlmData, telosData, ltcData, usdtData /* nimData */ ].map((cur) => (
+      cur.balance
+    )),
     currencies,
-    hiddenCoinsList,
+    hiddenCoinsList : (config && config.isWidget) ? [] : hiddenCoinsList,
   })
 )
+@injectIntl
+@withRouter
 @CSSModules(stylesWallet, { allowMultiple: true })
 export default class Wallet extends Component {
 
@@ -44,72 +59,121 @@ export default class Wallet extends Component {
     currencies: propTypes.array,
     hiddenCoinsList: propTypes.array,
     history: propTypes.object,
-    items: propTypes.arrayOf(propTypes.object),
-    tokens: propTypes.arrayOf(propTypes.object),
+    items: propTypes.arrayOf(propTypes.string),
+    tokens: propTypes.arrayOf(propTypes.string),
     location: propTypes.object,
+    intl: propTypes.object.isRequired,
     match: propTypes.object,
   }
 
   state = {
-    view: 'off',
-    zeroBalance: true,
+    saveKeys: false,
+    openModal: false,
   }
 
   componentWillMount() {
-    process.env.MAINNET && localStorage.setItem(constants.localStorage.testnetSkip, true)
-    if (localStorage.getItem(constants.localStorage.privateKeysSaved)) {
-      this.changeView('checkKeys')
-    } else {
-      // actions.modals.open(constants.modals.PrivateKeys, {})
-    }
-  }
-
-  componentDidMount() {
     actions.user.getBalances()
     actions.analytics.dataEvent('open-page-balances')
+
+    if (process.env.MAINNET) {
+      localStorage.setItem(constants.localStorage.testnetSkip, false)
+    } else {
+      localStorage.setItem(constants.localStorage.testnetSkip, true)
+    }
+
+    const testSkip = JSON.parse(localStorage.getItem(constants.localStorage.testnetSkip))
+    const saveKeys = JSON.parse(localStorage.getItem(constants.localStorage.privateKeysSaved))
+
+    this.setState(() => ({
+      testSkip,
+      saveKeys,
+    }))
+  }
+
+  componentWillReceiveProps() {
+    const { saveKeys, testSkip } = this.state
+
+    const openTour = JSON.parse(localStorage.getItem(constants.localStorage.openTour))
+
+    if (saveKeys || testSkip || !openTour) {
+      return
+    }
+
+    const { currencyBalance } = this.props
+
+    currencyBalance.forEach(cur => {
+      if (cur > 0) {
+        this.setState(() => ({ openModal: true }))
+      }
+    })
+  }
+
+  componentDidUpdate() {
+    const { openModal } = this.state
+
+    if (openModal) {
+      actions.modals.open(constants.modals.PrivateKeys, {})
+    }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
     const getComparableProps = (props) => ({
       items: props.items,
+      currencyBalance: props.currencyBalance,
       tokens: props.tokens,
       currencies: props.currencies,
       hiddenCoinsList: props.hiddenCoinsList,
-    });
+    })
     return JSON.stringify({
       ...getComparableProps(this.props),
       ...this.state,
     }) !== JSON.stringify({
       ...getComparableProps(nextProps),
       ...nextState,
-    });
-  }
-
-  changeView = (view) => {
-    this.setState({
-      view,
     })
   }
 
   render() {
-    const { view, zeroBalance } = this.state
-    const { items, tokens, currencies, hiddenCoinsList } = this.props
-    const titles = [ 'Coin', 'Name', 'Balance', 'Your Address', isMobile ? 'Send, receive, swap' :  'Actions' ]
-
-    const keysSaved = localStorage.getItem(constants.localStorage.privateKeysSaved)
-    const testNetSkip = localStorage.getItem(constants.localStorage.testnetSkip)
-
-    const showSaveKeysModal = !zeroBalance && !keysSaved && !testNetSkip // non-zero balance and no keys saved
+    const { items, tokens, currencies, hiddenCoinsList, intl, location } = this.props
+    const titles = [
+      <FormattedMessage id="Wallet114" defaultMessage="Coin" />,
+      <FormattedMessage id="Wallet115" defaultMessage="Name" />,
+      <FormattedMessage id="Wallet116" defaultMessage="Balance" />,
+      <FormattedMessage id="Wallet117" defaultMessage="Your Address" />,
+      isMobile ?
+        <FormattedMessage id="Wallet118" defaultMessage="Send, receive, swap" />
+        :
+        <FormattedMessage id="Wallet119" defaultMessage="Actions" />,
+    ]
+    const title = defineMessages({
+      metaTitle: {
+        id: 'Wallet140',
+        defaultMessage: 'Swap.Online - Cryptocurrency Wallet with Atomic Swap Exchange',
+      },
+    })
+    const description = defineMessages({
+      metaDescription: {
+        id: 'Wallet146',
+        defaultMessage: `Our online wallet with Atomic swap algorithms will help you store and exchange cryptocurrency instantly
+        and more secure without third-parties. Decentralized exchange.`,
+      },
+    })
 
     return (
       <section styleName={isMobile ? 'sectionWalletMobile' : 'sectionWallet'}>
-        { showSaveKeysModal && <SaveKeysModal /> }
+        <PageSeo
+          location={location}
+          defaultTitle={intl.formatMessage(title.metaTitle)}
+          defaultDescription={intl.formatMessage(description.metaDescription)} />
         <PageHeadline styleName="pageLine">
           <SubTitle>
             <FormattedMessage id="Wallet104" defaultMessage="Your online cryptocurrency wallet" />
           </SubTitle>
-          Deposit funds to addresses below
         </PageHeadline>
+        <KeyActionsPanel />
+        <div styleName="depositText">
+          <FormattedMessage id="Wallet137" defaultMessage="Deposit funds to addresses below" />
+        </div>
         <Table
           id="table-wallet"
           className={styles.wallet}
@@ -119,7 +183,25 @@ export default class Wallet extends Component {
             <Row key={row} currency={row} currencies={currencies} hiddenCoinsList={hiddenCoinsList} selectId={selectId} index={index} handleSelectId={handleSelectId} />
           )}
         />
-        <KeyActionsPanel />
+        {
+          (config && !config.isWidget) && (
+            <div styleName="inform">
+            <FormattedMessage
+              id="Wallet156"
+              defaultMessage="Welcome to the Swap.Online, decentralized cross-chain wallet based on the Atomic Swap technology.
+                Here you can promptly and safely store and exchange Bitcoin, Ethereum, EOS, USD Tether, BCH and numerous ERC-20 tokens.
+                Swap.Online doesn’t store your keys or your tokens. Our wallet operates directly in browser, so, no additional installations or downloads are required.
+                Swap.Online service is fully decentralized as all the operations with tokens are executed via the IPFS network.
+                It was our team that finalized first Atomic Swaps with USDT and EOS in September, 2018. Also, the Litecoin blockchain was added in October, 2018.
+                Thus, our wallet addresses real multi-chain integration with decentralized orderbook, no third party involved in the exchange, no proxy-token and no token wrapping.
+                As for now, seeking for the liquidity, we can integrate every ERC-20 token for free just in case of mutual PR-announcement with the project the token is backed by.
+                Also, we designed Swap.Button, b2b-solution to exchange all kinds of tokens on Bitcoin and Ethereum.
+                Just install this widget on your site and collect crypto investments to your project.
+                So, start using https://swap.online/ today and enjoy the power of true decentralization."
+            />
+            </div>
+          )
+        }
       </section>
     )
   }

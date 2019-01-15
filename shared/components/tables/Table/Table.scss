@@ -161,7 +161,7 @@
   }
 
   // Exchange and Swap history
-  .exchange, .historySwap {
+  .historySwap {
     th {
       &:first-child {
         position: absolute;
@@ -357,21 +357,20 @@ table.wallet {
 @media all and (min-width: 320px) and (max-width:1024px) {
   .table.exchange {
     min-height: 130px;
-    margin-bottom: 40px;
-    overflow-x: visible;
-    tbody {
-      display: block;
-    }
-    tr:first-child td:first-child,
-    tr td{
-      position: static;
-      display: block;
-    }
-    tr {
-      position: relative;
-      display: block;
-      height: 75px;
-    }
+    // overflow-x: visible;
+    // tbody {
+    //   display: block;
+    // }
+    // tr:first-child td:first-child,
+    // tr td{
+    //   position: static;
+    //   display: block;
+    // }
+    // tr {
+    //   position: relative;
+    //   display: block;
+    //   height: 75px;
+    // }
   }
   table {
     overflow-x: auto;
@@ -428,6 +427,14 @@ table.wallet {
         border: none;
       }
     }
+    thead {
+      display: none;
+    }
+  }
+}
+
+@media all and (min-width: 320px) and (max-width:800px) {
+  .table.exchange {
     thead {
       display: none;
     }

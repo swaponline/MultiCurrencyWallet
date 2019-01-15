@@ -28,7 +28,22 @@ npm i
 npm run start
 ```
 
+### HTML widget
+1. npm run build:mainnet-widget {erc20contract} {name} {decimals} {tiker}
+
+example:
+```
+npm run build:mainnet-widget 0x9E4AD79049282F942c1b4c9b418F0357A0637017 noxon 0 noxon
+tar czf my-widget.tar.gz build-mainnet-widget
+```
+2. upoad to your domain (https://domain.com/build-mainnet-widget)
+3. embed via iframe like 
+```
+<iframe src="build-mainnet-widget/index.html" border=0 style="botder:0;width:800px;height:700px"></iframe>
+```
  # Структура папок и файлов
+ 
+ ```
 #### github
     Шаблоны для issue, PR, и т.п.
 #### bin

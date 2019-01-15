@@ -20,7 +20,6 @@ import Toggle from 'components/controls/Toggle/Toggle'
 import Input from 'components/forms/Input/Input'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage } from 'react-intl'
-
 import { isNumberValid, isNumberStringFormatCorrect, mathConstants } from 'helpers/math.js'
 
 
@@ -32,15 +31,17 @@ const minAmount = {
   noxon: 1,
   swap: 1,
   jot: 1,
+  usdt: 0,
 }
-
 
 @connect(
   ({
     currencies,
+    addSelectedItems,
     user: { ethData, btcData, /* bchData, */ tokensData, eosData, telosData, nimData, usdtData, ltcData },
   }) => ({
     currencies: currencies.items,
+    addSelectedItems: currencies.addSelectedItems,
     items: [ ethData, btcData, eosData, telosData, /* bchData, */ ltcData, usdtData /* nimData */ ],
     tokenItems: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
   })
@@ -49,6 +50,10 @@ const minAmount = {
 export default class AddOffer extends Component {
   constructor({ initialData }) {
     super()
+
+    if (config && config.isWidget) {
+      minAmount[config.erc20token] = 1
+    }
 
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency } = initialData || {}
 
@@ -64,12 +69,15 @@ export default class AddOffer extends Component {
       isSellFieldInteger: false,
       isBuyFieldInteger: false,
       manualRate: false,
-      isPartialClosure: true,
+      isPartial: true,
     }
   }
 
   componentDidMount() {
-    const { sellCurrency, buyCurrency } = this.state
+    const { sellCurrency, buyCurrency, value } = this.state
+
+    actions.pairs.selectPair(sellCurrency)
+
     this.checkBalance(sellCurrency)
     this.updateExchangeRate(sellCurrency, buyCurrency)
   }
@@ -81,8 +89,6 @@ export default class AddOffer extends Component {
 
     const currency = items.concat(tokenItems)
       .filter(item => item.currency === sellCurrency.toUpperCase())[0]
-
-    const sleep = time => new Promise(resolve => setTimeout(resolve, time))
 
     const { balance, unconfirmedBalance } = currency
     const finalBalance = unconfirmedBalance !== undefined && unconfirmedBalance < 0
@@ -108,15 +114,11 @@ export default class AddOffer extends Component {
   handleBuyCurrencySelect = async ({ value }) => {
     let { buyCurrency, sellCurrency, buyAmount, sellAmount } = this.state
 
-    if (value === sellCurrency) {
-      sellCurrency = buyCurrency
-    }
-
-    buyCurrency = value
+    this.checkPair(this.state.sellCurrency)
 
     await this.checkBalance(sellCurrency)
 
-    await this.updateExchangeRate(sellCurrency, buyCurrency)
+    await this.updateExchangeRate(sellCurrency, value)
     const { exchangeRate } = this.state
     sellAmount = new BigNumber(String(buyAmount) || 0).multipliedBy(exchangeRate)
 
@@ -126,8 +128,7 @@ export default class AddOffer extends Component {
       buyAmount = new BigNumber(String(buyAmount) || 0).dp(0, BigNumber.ROUND_HALF_EVEN)
     }
     this.setState({
-      buyCurrency,
-      sellCurrency,
+      buyCurrency: value,
       sellAmount: Number.isNaN(sellAmount) ? '' : sellAmount,
       buyAmount: Number.isNaN(buyAmount) ? '' : buyAmount,
       isSellFieldInteger: config.erc20[sellCurrency] && config.erc20[sellCurrency].decimals === 0,
@@ -138,15 +139,11 @@ export default class AddOffer extends Component {
   handleSellCurrencySelect = async ({ value }) => {
     let { buyCurrency, sellCurrency, sellAmount, buyAmount } = this.state
 
-    if (value === buyCurrency) {
-      buyCurrency = sellCurrency
-    }
+    this.checkPair(value)
 
-    sellCurrency = value
+    await this.checkBalance(value)
 
-    await this.checkBalance(sellCurrency)
-
-    await this.updateExchangeRate(sellCurrency, buyCurrency)
+    await this.updateExchangeRate(value, buyCurrency)
     const { exchangeRate } = this.state
     buyAmount = new BigNumber(String(sellAmount) || 0).multipliedBy(exchangeRate)
 
@@ -157,8 +154,7 @@ export default class AddOffer extends Component {
     }
 
     this.setState({
-      buyCurrency,
-      sellCurrency,
+      sellCurrency: value,
       buyAmount: Number.isNaN(buyAmount) ? '' : buyAmount,
       sellAmount: Number.isNaN(sellAmount) ? '' : sellAmount,
       isSellFieldInteger,
@@ -185,9 +181,7 @@ export default class AddOffer extends Component {
     return value
   }
 
-  handleBuyAmountChange = (value, prev) => {
-    const { exchangeRate, sellAmount, manualRate } = this.state
-
+  handleBuyAmountChange = (value) => {
     if (!isNumberStringFormatCorrect(value)) {
       return undefined
     }
@@ -201,8 +195,6 @@ export default class AddOffer extends Component {
   }
 
   handleSellAmountChange = (value) => {
-    const { exchangeRate, buyAmount } = this.state
-
     if (!isNumberStringFormatCorrect(value)) {
       return undefined
     }
@@ -354,25 +346,39 @@ export default class AddOffer extends Component {
     this.setState({ manualRate: value })
   }
 
-  switching = async ({ value }) => {
-    const { sellCurrency, buyCurrency } = this.state
+  switching = async (value) => {
+    const { sellCurrency, buyCurrency, sellAmount, buyAmount } = this.state
 
     await this.checkBalance(buyCurrency)
+    await this.updateExchangeRate(buyCurrency, sellCurrency)
 
-    await this.updateExchangeRate(sellCurrency, buyCurrency)
-
-    const { exchangeRate } = this.state
-
+    if (Number(sellAmount) > 0 || Number(buyAmount) > 0) {
+      this.handleBuyAmountChange(sellAmount)
+      this.handleSellAmountChange(buyAmount)
+    }
+    actions.pairs.selectPair(buyCurrency)
     this.setState({
       sellCurrency: buyCurrency,
       buyCurrency: sellCurrency,
     })
   }
 
+  checkPair = (value) => {
+    const selected = actions.pairs.selectPair(value)
+
+    const check = selected.map(item => item.value).includes(this.state.buyCurrency)
+
+    if (!check) {
+      this.setState(() => ({
+        buyCurrency: selected[0].value,
+      }))
+    }
+  }
+
   render() {
-    const { currencies, tokenItems } = this.props
+    const { currencies, tokenItems, addSelectedItems } = this.props
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency,
-      balance, isBuyFieldInteger, isSellFieldInteger, ethBalance, manualRate, isPartialClosure } = this.state
+      balance, isBuyFieldInteger, isSellFieldInteger, ethBalance, manualRate, isPartial } = this.state
     const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
     const isDisabled = !exchangeRate || !buyAmount && !sellAmount
       || sellAmount > balance || sellAmount < minAmount[sellCurrency]
@@ -389,18 +395,22 @@ export default class AddOffer extends Component {
         <FormattedMessage id="transaction376" defaultMessage="Amount must be less than your balance " />
       </span>
     )
+
     return (
       <div styleName="wrapper addOffer">
         { this.isEthOrERC20() &&
           <span styleName="error">
-            <FormattedMessage id="transaction27" defaultMessage="For a swap, you need " />
-            {minAmount.eth}
-            <FormattedMessage id="transaction27" defaultMessage=" ETH on your balance" />
+            <FormattedMessage
+              id="transaction436"
+              defaultMessage="For a swap, you need {minAmount} ETH on your balance"
+              values={{ minAmount:`${minAmount.eth}` }}
+            />
+
           </span>
         }
         <SelectGroup
           styleName="sellGroup"
-          label="Sell"
+          label={<FormattedMessage id="addoffer381" defaultMessage="Sell" />}
           inputValueLink={linked.sellAmount.pipe(this.handleSellAmountChange)}
           selectedCurrencyValue={sellCurrency}
           onCurrencySelect={this.handleSellCurrencySelect}
@@ -416,18 +426,18 @@ export default class AddOffer extends Component {
           switching={this.switching}
         />
         <SelectGroup
-          label="Buy"
+          label={<FormattedMessage id="addoffer396" defaultMessage="Buy" />}
           inputValueLink={linked.buyAmount.pipe(this.handleBuyAmountChange)}
           selectedCurrencyValue={buyCurrency}
           onCurrencySelect={this.handleBuyCurrencySelect}
           id="buyAmount"
-          currencies={currencies}
+          currencies={addSelectedItems}
           isInteger={isBuyFieldInteger}
           placeholder="Enter buy amount"
         />
         <div styleName="exchangeRate">
           <ExchangeRateGroup
-            label="Exchange rate"
+            label={<FormattedMessage id="addoffer406" defaultMessage="Exchange rate" />}
             inputValueLink={linked.exchangeRate.pipe(this.handleExchangeRateChange)}
             currency={false}
             disabled={!manualRate}
@@ -438,14 +448,27 @@ export default class AddOffer extends Component {
           />
         </div>
         <div>
-          <Toggle checked={manualRate} onChange={this.handleManualRate} /> Custom exchange rate
-          <Tooltip text="To change the exchange rate" />
+          <Toggle checked={manualRate} onChange={this.handleManualRate} />
+          <FormattedMessage id="AddOffer418" defaultMessage="Custom exchange rate" />
+          {' '}
+          <Tooltip id="add264">
+            <FormattedMessage id="add408" defaultMessage="To change the exchange rate " />
+          </Tooltip>
         </div>
         <div>
-          <Toggle checked={isPartialClosure} onChange={() => this.setState((state) => ({ isPartialClosure: !state.isPartialClosure }))} />
-          <FormattedMessage id="AddOffer446" defaultMessage="Allow partial fulfillment" />
-          <Tooltip
-          text="Partial closure means that you will receive exchange requests <br/> or the amount less than the total amount you want sell. <br/> For example if you want to sell 1 BTC, <br/> other users can send you exchange requests for 0.1, 0.5 BTC" />
+          <Toggle checked={isPartial} onChange={() => this.setState((state) => ({ isPartial: !state.isPartial }))} />
+          <FormattedMessage id="AddOffer423" defaultMessage="Enabled to partial closure" />
+          {' '}
+          <Tooltip id="add547">
+            <div style={{ textAlign: 'center' }} >
+              <FormattedMessage
+                id="addOfferPartialTooltip"
+                defaultMessage={`You will receive exchange requests or the {p} amount less than the total amount you want {p} sell. For example you want to sell 1 BTC,
+                  other users can send you exchange requests {p}for 0.1, 0.5 BTC`}
+                values={{ p: <br /> }}
+              />
+            </div>
+          </Tooltip>
         </div>
         <Button styleName="button" fullWidth brand disabled={isDisabled} onClick={this.handleNext}>
           <FormattedMessage id="AddOffer396" defaultMessage="Next" />

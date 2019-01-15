@@ -7,9 +7,17 @@ import styles from './ReceiveModal.scss'
 import QR from 'components/QR/QR'
 import { Modal } from 'components/modal'
 import { Button } from 'components/controls'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 
 
+const title = defineMessages({
+  Receive: {
+    id: 'Receive',
+    defaultMessage: 'Receive',
+  },
+})
+
+@injectIntl
 @cssModules(styles)
 export default class ReceiveModal extends React.Component {
 
@@ -33,19 +41,19 @@ export default class ReceiveModal extends React.Component {
   }
 
   render() {
-    const { props: { name, data: { currency, address } }, state: { isAddressCopied } } = this
+    const { props: { name, intl, data: { currency, address } }, state: { isAddressCopied } } = this
 
     return (
-      <Modal name={name} title="Receive">
-        <div styleName="content" style={{ textAlign: "center" }}>
-          <FormattedMessage id="ReceiveModal" defaultMessage={`This is your address for receive ${currency}`}>
-            {message => <p style={{ fontSize: 25 }}>{message}</p>}
-          </FormattedMessage>
+      <Modal name={name} title={intl.formatMessage(title.Receive)}>
+        <div styleName="content">
+          <p style={{ fontSize: 25 }}>
+            <FormattedMessage id="ReceiveModal50" defaultMessage="This is your {currency} address" values={{ currency: `${currency}` }} />
+          </p>
           <CopyToClipboard
             text={address}
             onCopy={this.handleCopyAddress}
           >
-            <p className={styles.qr} style={{ fontSize: 35 }}>
+            <p styleName="qr">
               <QR
                 network={currency}
                 address={address}
@@ -61,7 +69,11 @@ export default class ReceiveModal extends React.Component {
                 disabled={isAddressCopied}
                 fullWidth
               >
-                { isAddressCopied ? 'Address copied to clipboard' : 'Copy to clipboard' }
+                { isAddressCopied ?
+                  <FormattedMessage id="recieved65" defaultMessage="Address copied to clipboard" />
+                  :
+                  <FormattedMessage id="recieved67" defaultMessage="Copy to clipboard" />
+                }
               </Button>
             </p>
           </CopyToClipboard>

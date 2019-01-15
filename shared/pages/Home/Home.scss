@@ -1,4 +1,14 @@
-
+.sectionContainer {
+  width: 100%;
+  position: relative;
+  margin-top: 110px;
+}
+.sectionContainerMobile {
+  width: 100%;
+  margin-top: -60px;
+  margin-bottom: 120px;
+  position: relative;
+}
 .videoContainer {
   flex-direction: column;
   width: 100%;
@@ -45,5 +55,9 @@
     iframe {
       height: 300px;
     }
+  }
+  .sectionContainerMobile {
+    margin-top: 20px;
+
   }
 }

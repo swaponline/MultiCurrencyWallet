@@ -13,6 +13,17 @@
   color: $color-f-error;
 }
 
+.notice {
+  font-size: 16px;
+  text-align: center;
+}
+
+.rednotes {
+  font-size: 16px;
+  text-align: center;
+  color: $color-f-error;
+}
+
 .buttonFull{
   margin-top: 55px;
   display: block;

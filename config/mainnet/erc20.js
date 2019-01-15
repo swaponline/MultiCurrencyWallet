@@ -99,11 +99,6 @@ export default {
     decimals: 18,
     fullName: 'Sentinel Chain',
   },
-  mth: {
-    address: '0xaf4dce16da2877f8c9e00544c93b62ac40631f16',
-    decimals: 5,
-    fullName: 'Meritage',
-  },
   star: {
     address: '0xf70a642bd387f94380ffb90451c2c81d4eb82cbc',
     decimals: 18,
@@ -205,8 +200,33 @@ export default {
     fullName: 'DOVU',
   },
   xbx: {
-    address: '0x2c745664FB4e9528fB32487D834e4aACffF1F027',
+    address: '0x57C09A8de0b0F471F8567609777aDdFfb5c46a08',
     decimals: 18,
-    fullName: 'Bitex Coin',
+    fullName: 'BitexGlobal',
+  },
+  lif: {
+    address: '0xEB9951021698B42e4399f9cBb6267Aa35F82D59D',
+    decimals: 18,
+    fullName: 'WindingTree',
+  },
+  time: {
+    address: '0x6531f133e6DeeBe7F2dcE5A0441aA7ef330B4e53',
+    decimals: 8,
+    fullName: 'ChronoBank',
+  },
+  mth: {
+    address: '0xaf4dce16da2877f8c9e00544c93b62ac40631f16',
+    decimals: 5,
+    fullName: 'Monetha',
+  },
+  zcn: {
+    address: '0xb9EF770B6A5e12E45983C5D80545258aA38F3B78',
+    decimals: 10,
+    fullName: 'Ochain',
+  },
+  cbt: {
+    address: '0x076C97e1c869072eE22f8c91978C99B4bcB02591',
+    decimals: 18,
+    fullName: 'CommerceBlock',
   },
 }

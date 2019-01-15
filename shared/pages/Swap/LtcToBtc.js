@@ -74,6 +74,7 @@ export default class LtcToBtc extends Component {
 
   tryRefund = () => {
     this.swap.flow.tryRefund()
+    this.setState(() => ({ enabledButton: false }))
   }
 
   getRefundTxHex = () => {
@@ -94,7 +95,7 @@ export default class LtcToBtc extends Component {
   }
 
   render() {
-    const { children } = this.props
+    const { children, disabledTimer }  = this.props
     const { currencyAddress, flow, enabledButton, isShowingBitcoinScript } = this.state
 
     return (
@@ -140,14 +141,14 @@ export default class LtcToBtc extends Component {
                   defaultMessage=
                     "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation." />
               </div>
-              <TimerButton timeLeft={5} brand onClick={this.signSwap}>
+              <TimerButton disabledTimer={disabledTimer} timeLeft={5} brand onClick={this.signSwap}>
                 <FormattedMessage id="Sign" defaultMessage="Sign" />
               </TimerButton>
               {
                 (flow.isSignFetching || flow.signTransactionHash) && (
                   <Fragment>
                     <h4>
-                      <FormattedMessage id="Confirmation" defaultMessage="Please wait. Confirmation processing" />
+                      <FormattedMessage id="PleaseWaitConfirmationProcessing" defaultMessage="Please wait. Confirmation processing" />
                     </h4>
                     {
                       flow.signTransactionHash && (
@@ -180,7 +181,7 @@ export default class LtcToBtc extends Component {
           flow.isMeSigned && (
             <Fragment>
               <h3>
-                <FormattedMessage id="LTCTOBTC179" defaultMessage="2. Waiting BTC Owner creates Secret Key, creates BTC Script and charges it" />
+                <FormattedMessage id="LtcToBtc.Confirm" defaultMessage="2. Waiting BTC Owner creates Secret Key, creates BTC Script and charges it" />
               </h3>
               {
                 flow.step === 2 && (
@@ -255,7 +256,7 @@ export default class LtcToBtc extends Component {
                       flow.step === 3 && (
                         <Fragment>
                           <br />
-                          <TimerButton timeLeft={5} brand onClick={this.confirmBTCScriptChecked}>
+                          <TimerButton disabledTimer={disabledTimer} timeLeft={5} brand onClick={this.confirmBTCScriptChecked}>
                             <FormattedMessage id="OK" defaultMessage="Everything is OK. Continue" />
                           </TimerButton>
                         </Fragment>
@@ -311,7 +312,7 @@ export default class LtcToBtc extends Component {
                 (flow.step >= 5 || flow.isLtcScriptFunded) && (
                   <Fragment>
                     <h3>
-                      <FormattedMessage id="BtcToLtc205" defaultMessage="4. Creating LTC Script. Please wait, it will take a while" />
+                      <FormattedMessage id="LtcToBtc205" defaultMessage="4. Creating LTC Script. Please wait, it will take a while" />
                     </h3>
                   </Fragment>
                 )

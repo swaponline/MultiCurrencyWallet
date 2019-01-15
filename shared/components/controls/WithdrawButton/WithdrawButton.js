@@ -14,23 +14,23 @@ const WithdrawButton = (props) => {
     onClick,
     children,
     disable,
-    ...rest,
+    ...rest
   } = props
 
   const styleName = cx('withdrawButton', {
-    'disable': disable
+    'disable': disable,
   })
 
   return (
-      <button onClick={!disable ? onClick : () => {}} styleName={styleName} {...rest}>
-        {children}
-      </button>
+    <button onClick={!disable ? onClick : () => {}} styleName={styleName} {...rest}>
+      {children}
+    </button>
   )
 
   WithdrawButton.propTypes = {
     onClick: PropTypes.func.isRequired,
     className: PropTypes.string,
-    disabled: PropTypes.bool
+    disabled: PropTypes.bool,
   }
 }
 export default CSSModules(WithdrawButton, styles, { allowMultiple: true })

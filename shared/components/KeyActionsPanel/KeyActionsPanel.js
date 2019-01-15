@@ -11,6 +11,8 @@ import { constants } from 'helpers'
 import { WithdrawButton } from 'components/controls'
 import { FormattedMessage } from 'react-intl'
 
+import config from 'app-config'
+
 
 @connect(({ core: { hiddenCoinsList } }) => ({ hiddenCoinsList }))
 @CSSModules(styles, { allowMultiple: true })
@@ -62,9 +64,9 @@ export default class KeyActionsPanel extends Component {
           <FormattedMessage id="KeyActionsPanel49" defaultMessage="Import keys" />
         </WithdrawButton>
         {
-          hiddenCoinsList.length !== 0 && (
+          (config && !config.isWidget) && (
             <WithdrawButton onClick={this.handleShowMore}>
-              <FormattedMessage id="KeyActionsPanel53" defaultMessage="Show more coins" />
+              <FormattedMessage id="KeyActionsPanel54" defaultMessage="Hidden coins" />
               ({hiddenCoinsList.length})
             </WithdrawButton>
           )

@@ -16,9 +16,11 @@ import Amounts from './Amounts/Amounts'
 import ExchangeRate from './ExchangeRate/ExchangeRate'
 import Fee from './Fee/Fee'
 import { connect } from 'redaction'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
+import { localisedUrl } from 'helpers/locale'
 
 
+@injectIntl
 @connect(({ currencies: { items: currencies }, user: { ethData: { address } } }) => ({
   currencies,
   address,
@@ -27,6 +29,7 @@ import { FormattedMessage } from 'react-intl'
 export default class ConfirmOffer extends Component {
 
   handleConfirm = () => {
+    const { intl: { locale }, offer: { buyCurrency, sellCurrency } } = this.props
     this.createOrder()
     actions.modals.close('OfferModal')
   }
@@ -39,7 +42,7 @@ export default class ConfirmOffer extends Component {
   }
 
   createOrder = () => {
-    const { offer: { buyAmount, sellAmount, buyCurrency, sellCurrency, exchangeRate, isPartialClosure } } = this.props
+    const { offer: { buyAmount, sellAmount, buyCurrency, sellCurrency, exchangeRate, isPartial } } = this.props
 
     const data = {
       buyCurrency: `${buyCurrency}`,
@@ -47,16 +50,16 @@ export default class ConfirmOffer extends Component {
       buyAmount: Number(buyAmount),
       sellAmount: Number(sellAmount),
       exchangeRate: Number(exchangeRate),
-      isPartialClosure,
+      isPartial,
     }
 
     actions.analytics.dataEvent('orderbook-addoffer-click-confirm-button')
-    actions.core.createOrder(data)
+    actions.core.createOrder(data, isPartial)
     actions.core.updateCore()
   }
 
   render() {
-    const { offer: { buyAmount, sellAmount, buyCurrency, sellCurrency, exchangeRate }, onBack, currencies } = this.props
+    const { offer: { buyAmount, sellAmount, buyCurrency, sellCurrency, exchangeRate }, onBack, currencies, intl: { locale } } = this.props
 
     return (
       <Fragment>
@@ -68,11 +71,9 @@ export default class ConfirmOffer extends Component {
           <Button styleName="button" gray onClick={onBack}>
             <FormattedMessage id="ConfirmOffer69" defaultMessage="Back" />
           </Button>
-          <Link styleName="link" to={`${links.home}${buyCurrency}-${sellCurrency}`}>
-            <Button styleName="button" id="confirm" brand onClick={this.handleConfirm}>
-              <FormattedMessage id="ConfirmOffer73" defaultMessage="Add" />
-            </Button>
-          </Link>
+          <Button styleName="button" id="confirm" brand onClick={this.handleConfirm}>
+            <FormattedMessage id="ConfirmOffer73" defaultMessage="Add" />
+          </Button>
         </Row>
       </Fragment>
     )

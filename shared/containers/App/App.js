@@ -23,7 +23,8 @@ import ModalConductor from 'components/modal/ModalConductor/ModalConductor'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import NotificationConductor from 'components/notification/NotificationConductor/NotificationConductor'
 import Seo from 'components/Seo/Seo'
-import UserTooltip from 'components/Header/User/UserTooltip/UserTooltip'
+
+import config from 'app-config'
 
 
 const userLanguage = (navigator.userLanguage || navigator.language || 'en-gb').split('-')[0]
@@ -70,22 +71,15 @@ export default class App extends React.Component {
       }
     })
 
-    const iOSSafari = /iP(ad|od|hone)/i.test(window.navigator.userAgent)
-                    && /WebKit/i.test(window.navigator.userAgent)
-                    && !(/(CriOS|FxiOS|OPiOS|mercury)/i.test(window.navigator.userAgent))
-
     if (!localStorage.getItem(constants.localStorage.demoMoneyReceived)) {
       actions.user.getDemoMoney()
     }
 
-    if (process.env.LOCAL !== 'local' && !iOSSafari) {
-      actions.pushNotification.initializeFirebase()
-    }
+    actions.firebase.initialize()
   }
 
   componentDidMount() {
     window.onerror = (error) => {
-      actions.notifications.show(constants.notifications.ErrorNotification, { error })
       actions.analytics.errorEvent(error)
     }
 
@@ -99,7 +93,8 @@ export default class App extends React.Component {
   render() {
     const { fetching, multiTabs, error } = this.state
     const { children, ethAddress, btcAddress, tokenAddress, history /* eosAddress */ } = this.props
-    const isFetching = !ethAddress || !btcAddress || !tokenAddress || !fetching
+    const isFetching = !ethAddress || !btcAddress || (!tokenAddress && config && !config.isWidget) || !fetching
+
     if (multiTabs) {
       return <PreventMultiTabs />
     }
@@ -111,7 +106,6 @@ export default class App extends React.Component {
     const mainContent = (
       <Fragment>
         <Seo location={history.location} />
-        { isMobile && <UserTooltip /> }
         <Header />
         <WidthContainer styleName="main">
           <main>

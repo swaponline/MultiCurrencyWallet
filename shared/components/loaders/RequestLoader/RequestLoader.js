@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { connect } from 'redaction'
-
 import Loader from '../Loader/Loader'
+import SwapProgress from 'components/SwapProgress/SwapProgress'
 
 
 const RequestLoader = ({ isVisible, data }) => {
@@ -11,9 +11,9 @@ const RequestLoader = ({ isVisible, data }) => {
     return null
   }
 
-  console.log('data', data)
-
-  return <Loader data={data} />
+  return (
+    <Loader data={data} />
+  )
 }
 
 RequestLoader.propTypes = {

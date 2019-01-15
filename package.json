@@ -4,37 +4,34 @@
   "description": "swap.online",
   "private": true,
   "main": "./bin/server",
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.js": [
-      "eslint --fix --cache ./shared --ext js",
-      "git add"
-    ]
-  },
   "scripts": {
     "test": "cypress open",
     "eslint": "eslint --fix --cache ./shared --ext js",
     "validate": "lint-diff",
     "start": "npm run dev",
     "dev": "npm run dev:testnet",
+    "dev-widget": "npm run dev:testnet-widget",
     "prod": "npm run dev:mainnet",
+    "prod-widget": "npm run dev:mainnet-widget",
     "deploy:mainnet": "sh deploy",
     "dev:testnet": "cross-env CONFIG=testnet.dev nodemon",
+    "dev:testnet-widget": "cross-env CONFIG=testnet.widget.dev nodemon",
     "dev:mainnet": "cross-env CONFIG=mainnet.dev nodemon",
+    "dev:mainnet-widget": "cross-env CONFIG=mainnet.widget.dev nodemon",
     "clean:testnet-local": "rimraf ./build-testnet-local",
     "clean:mainnet-local": "rimraf ./build-mainnet-local",
     "clean:testnet": "rimraf ./build-testnet",
+    "clean:testnet-widget": "rimraf ./build-testnet-widget",
     "clean:mainnet": "rimraf ./build-mainnet",
+    "clean:mainnet-widget": "rimraf ./build-mainnet-widget",
     "clean:chrome-extension": "rimraf ./build-chrome-extension",
     "copy:chrome-extension": "copy ./chrome-extension ./build-chrome-extension",
     "zip:chrome-extension-testnet": "bestzip ./build-chrome-extension/chrome-extension-testnet.zip ./build-chrome-extension/*",
     "zip:chrome-extension-mainnet": "bestzip ./build-chrome-extension/chrome-extension-mainnet.zip ./build-chrome-extension/*",
     "build:testnet": "npm run clean:testnet && cross-env DEBUG=app:* CONFIG=testnet.prod node ./bin/compile",
+    "build:testnet-widget": "npm run clean:testnet-widget && cross-env DEBUG=app:* CONFIG=testnet.widget.prod node ./bin/compile",
     "build:mainnet": "npm run clean:mainnet && cross-env DEBUG=app:* CONFIG=mainnet.prod node ./bin/compile",
+    "build:mainnet-widget": "npm run clean:mainnet-widget && cross-env DEBUG=app:* CONFIG=mainnet.widget.prod node ./bin/compile",
     "build:testnet-local": "npm run clean:testnet-local && cross-env DEBUG=app:* CONFIG=testnet-local.prod node ./bin/compile",
     "build:mainnet-local": "npm run clean:mainnet-local && cross-env DEBUG=app:* CONFIG=mainnet-local.prod node ./bin/compile",
     "build:chrome-extension-testnet": "npm run clean:chrome-extension && cross-env DEBUG=app:* CONFIG=chrome-extension-testnet.prod node ./bin/compile && npm run copy:chrome-extension && npm run rename-assets-manifest-file && npm run rename-assets-manifest-link && npm run zip:chrome-extension-testnet",
@@ -82,6 +79,7 @@
     "classnames": "^2.2.5",
     "clean-webpack-plugin": "^0.1.19",
     "connect-history-api-fallback": "^1.5.0",
+    "copy-webpack-plugin": "^4.6.0",
     "core-js": "^2.5.7",
     "cross-env": "^5.2.0",
     "css-loader": "^0.28.11",
@@ -144,11 +142,11 @@
     "bitcoinjs-message": "^2.0.0",
     "coininfo": "git+https://github.com/cryptocoinjs/coininfo.git",
     "copy-dir-cli": "0.0.3",
-    "copy-webpack-plugin": "^4.6.0",
     "ethereum-input-data-decoder": "0.0.12",
     "firebase": "^5.5.9",
     "ipfs": "^0.33.1",
     "ipfs-pubsub-room": "^1.4.0",
+    "json-stringify-safe": "^5.0.1",
     "node-gyp": "^3.8.0",
     "react": "^16.3.2",
     "react-click-outside": "github:tj/react-click-outside",
@@ -174,6 +172,7 @@
     "rename-files": "0.0.2",
     "replace": "^1.0.0",
     "reverse": "^4.0.0",
+    "stellar-sdk": "^0.11.0",
     "styled-components": "^4.1.2"
   }
 }

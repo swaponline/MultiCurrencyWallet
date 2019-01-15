@@ -12,9 +12,18 @@ import { constants } from 'helpers'
 import cssModules from 'react-css-modules'
 import styles from './EosRegisterModal.scss'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
 
+
+const title = defineMessages({
+  EosRegisterTitle: {
+    id: 'Eos61',
+    defaultMessage: 'EOS Login',
+  },
+})
+
+@injectIntl
 @cssModules(styles)
 export default class EosRegisterModal extends React.Component {
 
@@ -44,31 +53,37 @@ export default class EosRegisterModal extends React.Component {
 
   render() {
     const { accountName, privateKey, error } = this.state
-    const { name } = this.props
+    const { name, intl } = this.props
 
     const linked = Link.all(this, 'accountName', 'privateKey')
     const isDisabled = !accountName || !privateKey
 
     return (
-      <Modal name={name} title="EOS Login">
+      <Modal name={name} title={intl.formatMessage(title.EosRegisterTitle)}>
         <FieldLabel inRow>
-          <FormattedMessage id="EosRegAccountModal54" defaultMessage="Account name" />
-          <Tooltip text="Enter your EOS account name" />
+          <FormattedMessage id="EosRegAccountModal54" defaultMessage="Account name " />
+          {' '}
+          <Tooltip id="EoSR92">
+            <FormattedMessage id="Eos53" defaultMessage="Enter your EOS account name " />
+          </Tooltip>
         </FieldLabel>
         <Input valueLink={linked.accountName} />
         <FieldLabel inRow>
-          <FormattedMessage id="EosRegAccountModal58" defaultMessage="Active private key" />
-          <Tooltip text="Enter private key for active permission" />
+          <FormattedMessage id="EosRegAccountModal58" defaultMessage="Active private key " />
+          {' '}
+          <Tooltip id="EoSR69">
+            <FormattedMessage id="Eos57" defaultMessage="Enter private key for active permission " />
+          </Tooltip>
         </FieldLabel>
         <Input valueLink={linked.privateKey} />
         { error && (
           <div styleName="error">
-            <FormattedMessage id="EosRegAccountModal63" defaultMessage="Sorry, error occured during activation" />
+            <FormattedMessage id="EosRegAccountModal63" defaultMessage="Sorry, error occurred during activation " />
           </div>
         )
         }
         <Button styleName="button" brand fullWidth disabled={isDisabled} onClick={this.handleSubmit}>
-          <FormattedMessage id="EosRegAccountModal70" defaultMessage="Login" />
+          <FormattedMessage id="EosRegAccountModal70" defaultMessage="Login " />
         </Button>
       </Modal>
     )

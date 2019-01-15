@@ -1,12 +1,15 @@
+
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
 import ClickOutside from 'react-click-outside'
+import Link from 'sw-valuelink'
 
 import cssModules from 'react-css-modules'
 import styles from './DropDown.scss'
 
 import toggle from 'decorators/toggle'
+import Input from 'components/forms/Input/Input'
 
 
 @toggle()
@@ -39,9 +42,10 @@ export default class DropDown extends Component {
 
   constructor({ initialValue, selectedValue }) {
     super()
-
     this.state = {
       selectedValue: initialValue || selectedValue || 0,
+      itemsFiltered:[],
+      searchValue:'',
     }
   }
 
@@ -49,6 +53,9 @@ export default class DropDown extends Component {
     const { isToggleActive, toggleOpen, toggleClose } = this.props
 
     if (isToggleActive) {
+      this.setState({
+        searchValue:'',
+      })
       toggleClose()
     }
     else {
@@ -59,10 +66,14 @@ export default class DropDown extends Component {
   handleOptionClick = (item) => {
     const { toggleClose, selectedValue, onSelect } = this.props
 
+    this.setState({
+      searchValue:'',
+    })
     // if there is no passed `selectedValue` then change it
     if (typeof selectedValue === 'undefined') {
       this.setState({
         selectedValue: item.value,
+        itemsFiltered:this.props.items,
       })
     }
 
@@ -86,6 +97,19 @@ export default class DropDown extends Component {
 
     return selectedItem.title
   }
+  handleChange = (value) => {
+    if (value === '' || value === undefined) {
+      this.setState({
+        itemsFiltered:this.props.items,
+        searchValue:'',
+      })
+    } else {
+      this.setState({
+        searchValue: value.toUpperCase(),
+        itemsFiltered:this.props.items.filter(item => item.name.includes(value.toUpperCase())),
+      })
+    }
+  }
 
   renderItem = (item) => {
     const { itemRender } = this.props
@@ -99,22 +123,58 @@ export default class DropDown extends Component {
 
   render() {
     const { className, items, isToggleActive } = this.props
+    const { searchValue } = this.setState
 
     const dropDownStyleName = cx('dropDown', {
       'active': isToggleActive,
     })
 
+    const linkedValue = Link.all(this, 'inputValue')
+
+    linkedValue.inputValue.check((value) => this.handleChange(value))
+
     return (
-      <ClickOutside onClickOutside={isToggleActive ? () => this.toggle() : () => {}}>
+      <ClickOutside
+        onClickOutside={isToggleActive
+          ? () => {
+            this.refs.searchInput.handleBlur()
+            linkedValue.inputValue.set('')
+            this.toggle()
+          }
+          : () => {}
+        }
+      >
         <div styleName={dropDownStyleName} className={className}>
           <div styleName="selectedItem" onClick={this.toggle}>
             <div styleName="arrow" />
-            {this.renderSelectedItem()}
+            {isToggleActive ? (
+              <Input
+                styleName="searchInput"
+                focusOnInit
+                valueLink={linkedValue.inputValue}
+                ref="searchInput"
+              />
+            ) : (
+              this.renderSelectedItem()
+            )}
           </div>
           {
             isToggleActive && (
               <div styleName="select">
-                {
+                {isToggleActive && this.state.searchValue.length ? (
+                  this.state.itemsFiltered.map((item) => (
+                    <div
+                      key={item.value}
+                      styleName="option"
+                      onClick={() => {
+                        linkedValue.inputValue.set('')
+                        this.handleOptionClick(item)}
+                      }
+                    >
+                      {this.renderItem(item)}
+                    </div>
+                  ))
+                ) : (
                   items.map((item) => (
                     <div
                       key={item.value}
@@ -124,7 +184,7 @@ export default class DropDown extends Component {
                       {this.renderItem(item)}
                     </div>
                   ))
-                }
+                )}
               </div>
             )
           }

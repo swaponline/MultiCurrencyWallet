@@ -11,9 +11,11 @@ import CSSModules from 'react-css-modules'
 import ShareImg from './images/share-alt-solid.svg'
 
 import Coins from 'components/Coins/Coins'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
+import { localisedUrl } from 'helpers/locale'
 
 
+@injectIntl
 @CSSModules(styles, { allowMultiple: true })
 export default class RowFeedsMoble extends Component {
 
@@ -39,7 +41,7 @@ export default class RowFeedsMoble extends Component {
 
   render() {
     const { isLinkCopied } = this.state
-    const { row: { requests, buyAmount, buyCurrency, sellAmount, sellCurrency, exchangeRate, id }, declineRequest, acceptRequest, removeOrder } = this.props
+    const { row: { requests, buyAmount, buyCurrency, sellAmount, sellCurrency, exchangeRate, id }, declineRequest, acceptRequest, removeOrder, intl: { locale }  } = this.props
 
     return (
       <tr>
@@ -78,11 +80,11 @@ export default class RowFeedsMoble extends Component {
           {
             Boolean(requests && requests.length) ? (
               <div styleName="buttons">
-                <div styleName="delete" onClick={() => declineRequest(id, requests[0].peer)} >
+                <div styleName="delete" onClick={() => declineRequest(id, requests[0].participant.peer)} >
                   <FormattedMessage id="RowMFeed82" defaultMessage="Decline" />
                 </div>
-                <Link to={`${links.swap}/${sellCurrency.toLowerCase()}-${buyCurrency.toLowerCase()}/${id}`}>
-                  <div styleName="accept" onClick={() => acceptRequest(id, requests[0].peer)} >
+                <Link to={`${localisedUrl(locale, links.swap)}/${sellCurrency.toLowerCase()}-${buyCurrency.toLowerCase()}/${id}`}>
+                  <div styleName="accept" onClick={() => acceptRequest(id, requests[0].participant.peer)} >
                     <FormattedMessage id="RowMFeed85" defaultMessage="Accept" />
                   </div>
                 </Link>

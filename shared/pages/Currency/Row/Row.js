@@ -1,16 +1,23 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { links }    from 'helpers'
+
+import { links, constants }    from 'helpers'
+import actions from 'redux/actions'
 
 import cssModules from 'react-css-modules'
 import styles from './Row.scss'
+import { withRouter } from 'react-router'
 
 import Coin from 'components/Coin/Coin'
 import Flip from 'components/controls/Flip/Flip'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
+import { localisedUrl } from 'helpers/locale'
+import BtnTooltip from 'components/controls/WithdrawButton/BtnTooltip'
 
 
+@injectIntl
+@withRouter
 @cssModules(styles)
 export default class Row extends Component {
 
@@ -19,8 +26,13 @@ export default class Row extends Component {
     to: PropTypes.string.isRequired,
   }
 
+  handlePush = () => {
+    const { from, to, intl: { locale } } = this.props
+    this.props.history.push(localisedUrl(locale, `/${from.toLowerCase()}-${to.toLowerCase()}`))
+  }
+
   render() {
-    const { from, to } = this.props
+    const { from, to, intl: { locale } } = this.props
 
     return (
       <tr styleName="exchangeTr">
@@ -36,12 +48,11 @@ export default class Row extends Component {
           </span>
         </td>
         <td>
-          <Link styleName="button" to={`${links.home}${from.toLowerCase()}-${to.toLowerCase()}`}>
-            <FormattedMessage id="Row35" defaultMessage="Exchange " />
-          </Link>
+          <BtnTooltip onClick={this.handlePush} text="Exchange" >
+            <FormattedMessage id="Row35" defaultMessage="Exchange" />
+          </BtnTooltip>
         </td>
       </tr>
     )
   }
 }
-

@@ -15,32 +15,32 @@ const Loader = ({ overlayClassName, className, data, showTips }) => (
       <div styleName="loader2" />
       <div styleName="loader3" />
     </div>
-      {
-        data && data.text && (
-          <p styleName="text">
-            <FormattedMessage id="Loader21"  defaultMessage="Please wait, it takes from 3 to 5 minutes to complete the transaction." />
-          </p>
-        )
-      }
-      {
-        data && data.txId && (
-          <a
-            href={data.txId}
-            styleName="link"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {data.txId}
-          </a>
-        )
-      }
-      {
-        showTips && (
-          <div styleName="tips">
-            {tips('loader')}
-          </div>
-        )
-      }
+    {
+      data && data.txId && (
+        <p styleName="text">
+          <FormattedMessage id="Loader21"  defaultMessage="Please wait, it takes from 3 to 5 minutes to complete the transaction." />
+        </p>
+      )
+    }
+    {
+      data && data.txId && (
+        <a
+          href={data.txId}
+          styleName="link"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {data.txId}
+        </a>
+      )
+    }
+    {
+      showTips && (
+        <div styleName="tips">
+          {tips('loader')}
+        </div>
+      )
+    }
   </div>
 )
 
@@ -48,7 +48,6 @@ Loader.propTypes = {
   overlayClassName: PropTypes.string,
   className: PropTypes.string,
   data: PropTypes.shape({
-    text: PropTypes.bool,
     txId: PropTypes.string,
   }),
   showTips: PropTypes.bool,

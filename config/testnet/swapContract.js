@@ -1,6 +1,6 @@
 export default {
-  erc20: '0x2a5c40aD16ce9dD3CEE6cB4cf934aeC312e9FF2a',
-  eth: '0x4356152f044e3a1ce1a57566b2e0bee57949c1b2',
-  eos: 'swaponline43',
+  erc20: '0xd4353e62b470fd6df25fb8d3da6b04357a1afcbe',
+  eth: '0x7c8f2b4d30a98a9abcdeac3cf49d51f92a6dd81d',
+  eos: 'swaponline42',
   reputationOracle: '0x6260B5ef52d72732674fF4BDE3B37a4222dB1785',
 }

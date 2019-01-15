@@ -2,6 +2,7 @@ import React        from 'react'
 import { Route }    from 'react-router'
 import { Switch }   from 'react-router-dom'
 import { links }    from 'helpers'
+import { localisePrefix } from 'helpers/locale'
 
 import SwapComponent    from 'pages/Swap/Swap'
 import Home             from 'pages/Home/Home'
@@ -13,27 +14,29 @@ import Currency         from 'pages/Currency/Currency'
 import PartialClosure   from 'pages/PartialClosure/PartialClosure'
 import CurrencyWallet   from 'pages/CurrencyWallet/CurrencyWallet'
 
+import config from 'app-config'
+
 
 const routes = (
   <Switch>
-    <Route path={`${links.swap}/:buy-:sell/:orderId`} component={SwapComponent} />
+    <Route path={`${localisePrefix}${links.swap}/:buy-:sell/:orderId`} component={SwapComponent} />
 
-    <Route path="/:fullName-wallet" component={CurrencyWallet} />
+    <Route path={`${localisePrefix}/:fullName-wallet`} component={CurrencyWallet} />
 
-    <Route path={`${links.home}:buy-:sell/:orderId`} component={Home} />
-    <Route path={`${links.home}:buy-:sell`} component={Home} />
-    <Route path={links.exchange} component={PartialClosure} />
+    <Route path={`${localisePrefix}${links.home}:buy-:sell/:orderId`} component={Home} />
+    <Route path={`${localisePrefix}${links.home}:buy-:sell`} component={Home} />
+    <Route path={`${localisePrefix}${links.exchange}`} component={PartialClosure} />
 
-    <Route path={links.aboutus} component={About} />
-    <Route path={links.history} component={History} />
+    <Route path={`${localisePrefix}${links.aboutus}`} component={About} />
+    <Route path={`${localisePrefix}${links.history}`} component={History} />
 
-    <Route path={`${links.home}:currency`} component={Currency} />
-    <Route exact path={links.home} component={Wallet} />
-
+    <Route exact path={`${localisePrefix}${links.home}`} component={(config && config.isWidget) ? PartialClosure : Wallet} />
+    <Route path={`${localisePrefix}${links.currencyWallet}`} component={Wallet} />
+    <Route path={`${localisePrefix}${links.home}:currency`} component={Currency} />
 
     <Route component={NotFound} />
   </Switch>
-)
 
+)
 
 export default routes

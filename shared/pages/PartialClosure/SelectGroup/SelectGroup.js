@@ -9,14 +9,16 @@ import CurrencySelect from 'components/ui/CurrencySelect/CurrencySelect'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 
 // TODO to split data and view this component
-const SelectGroup = ({ selectedValue, onSelect, currencies, usd, placeholder, label, disabled, className, inputValueLink, tooltip }) => (
+const SelectGroup = ({ selectedValue, onSelect, currencies, usd, placeholder, label, disabled, className, inputValueLink, tooltip, id }) => (
   <div>
     <FieldLabel inRow>
       <strong>
         {label}
       </strong>
       &nbsp;
-      <Tooltip text={tooltip} />
+      <Tooltip id={id}>
+        {tooltip}
+      </Tooltip>
     </FieldLabel>
     <div styleName="groupField" className={className}>
       <Input

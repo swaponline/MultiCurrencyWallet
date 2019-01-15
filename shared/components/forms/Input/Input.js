@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import { Input as ValueLinkInput } from 'sw-valuelink'
 import cx from 'classnames'
 import { ignoreProps } from 'helpers'
+import reducers from 'redux/core/reducers'
+import { isMobile } from 'react-device-detect'
 
 import cssModules from 'react-css-modules'
 import styles from './Input.scss'
@@ -41,16 +43,29 @@ export default class Input extends Component {
     type: 'text',
   }
 
+  handleFocus = () => {
+    reducers.inputActive.setInputActive(true)
+  }
+
+  handleBlur = () => {
+    reducers.inputActive.setInputActive(false)
+  }
+
   render() {
     const {
       className, inputContainerClassName, inputClassName,
       valueLink: { error }, valueLink,
-      multiline, focusOnInit, disabled, readOnly, type, ...rest
+      multiline, focusOnInit, disabled, readOnly, type, usd, ...rest
     } = this.props
 
     const inputContainerStyleName = cx('inputContainer', {
       'withError': error,
     })
+
+    const focusEvent = !isMobile ? {} : {
+      onFocus: this.handleFocus,
+      onBlur: this.handleBlur,
+    }
 
     return (
       <div styleName="root" className={className}>
@@ -66,7 +81,11 @@ export default class Input extends Component {
               autoFocus: !!focusOnInit,
               dir: 'auto',
               autoComplete: 'off',
+              ...focusEvent,
             })
+          }
+          { usd > 0 &&
+            <p styleName="textUsd" >{`~${usd}`}$</p>
           }
         </div>
         {

@@ -19,12 +19,3 @@
 .icon {
   height: 16px;
 }
-
-@include media-mobile {
-  .removeButton {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-}
