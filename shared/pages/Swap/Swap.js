@@ -173,6 +173,8 @@ export default class SwapComponent extends PureComponent {
       return null
     }
 
+    console.log("propsSWAP", currencyData)
+
     const isFinished = (swap.flow.state.step >= (swap.flow.steps.length - 1))
 
     return (

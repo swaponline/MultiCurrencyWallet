@@ -1,10 +1,9 @@
-import web3 from './web3'
 import link from './link'
 import ipfs from './ipfs'
 import erc20 from './erc20'
 import api from './api'
 import swapContract from './swapContract'
-import fees from './fees'
+import feeRates from './feeRates'
 
 
 export default {
@@ -14,5 +13,5 @@ export default {
   ipfs,
   erc20,
   swapContract,
-  fees,
+  feeRates,
 }

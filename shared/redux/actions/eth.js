@@ -1,6 +1,6 @@
 import { request, constants, api } from 'helpers'
 import { getState } from 'redux/core'
-import  actions from 'redux/actions'
+import actions from 'redux/actions'
 import web3 from 'helpers/web3'
 import reducers from 'redux/core/reducers'
 import config from 'app-config'
@@ -80,16 +80,16 @@ const getTransaction = () =>
       })
   })
 
-const send = (from, to, amount, gasPrice, gasLimit) =>
+const send = (from, to, amount, { gasPrice, gasLimit } = {}) =>
   new Promise(async (resolve, reject) => {
-    const { user: { ethData: { privateKey, gas } } } = getState()
+    const { user: { ethData: { privateKey, gasRate } } } = getState()
 
     if (!gasPrice) {
-      gasPrice = gas.price.normal
+      gasPrice = gasRate.price.normal
     }
 
     if (!gasLimit) {
-      gasLimit = gas.limit
+      gasLimit = gasRate.limit
     }
 
     const params = {
@@ -113,45 +113,45 @@ const send = (from, to, amount, gasPrice, gasLimit) =>
     resolve(receipt)
   })
 
-const getCurrentGasPrice = async () => {
-  const link = config.fees.eth
-  const defaultPrice = constants.defaultFee.eth.price
+const getGasRate = async () => {
+  const link = config.feeRates.eth
+  const defaultPrice = constants.defaultFeeRates.eth.price
 
   if (!link) {
     return defaultPrice
   }
 
-  const resultAPI = await request.get(link)
+  const apiResult = await request.get(link)
 
-  const APIPrice = {
-    slow: resultAPI.safeLow,
-    normal: resultAPI.standard,
-    fast: resultAPI.fast,
+  const apiRate = {
+    slow: apiResult.safeLow,
+    normal: apiResult.standard,
+    fast: apiResult.fast,
   }
 
-  const currentPrice = {
-    slow: APIPrice.slow >= defaultPrice.slow ? APIPrice.slow : defaultPrice.slow,
-    normal: APIPrice.normal >= defaultPrice.slow ? APIPrice.normal : defaultPrice.normal,
-    fast: APIPrice.fast >= defaultPrice.slow ? APIPrice.fast : defaultPrice.fast,
+  const currentRate = {
+    slow: apiRate.slow >= defaultPrice.slow ? apiRate.slow : defaultPrice.slow,
+    normal: apiRate.normal >= defaultPrice.slow ? apiRate.normal : defaultPrice.normal,
+    fast: apiRate.fast >= defaultPrice.slow ? apiRate.fast : defaultPrice.fast,
   }
 
-  return currentPrice
+  return currentRate
 }
 
-const setGas = async (limit = 0, { slow, normal, fast } = { slow: 0, normal: 0, fast: 0 }) => {
-  const currentPrice = await getCurrentGasPrice()
-  const gas = {
-    limit: limit >= constants.defaultFee.eth.limit && limit !== 0
+const setGasRate = async ({ limit, slow, normal, fast } = {}) => {
+  const currentRate = await getGasRate()
+  const gasRate = {
+    limit: Number(limit) >= constants.defaultFeeRates.eth.limit
       ? limit
-      : constants.defaultFee.eth.limit,
+      : constants.defaultFeeRates.eth.limit,
     price: {
-      slow: slow === 0 ? currentPrice.slow : slow,
-      normal: normal === 0 ? currentPrice.normal : normal,
-      fast: fast === 0 ? currentPrice.fast : fast,
+      slow: slow ? slow : currentRate.slow,
+      normal: normal ? normal : currentRate.normal,
+      fast: fast ? fast : currentRate.fast,
     },
   }
 
-  reducers.user.setGas({ name: 'ethData', gas })
+  reducers.user.setGasRate({ gasRate })
 }
 
 export default {
@@ -160,6 +160,6 @@ export default {
   getBalance,
   fetchBalance,
   getTransaction,
-  getCurrentGasPrice,
-  setGas,
+  getGasRate,
+  setGasRate,
 }

@@ -103,12 +103,16 @@ const getTransaction = () =>
       })
   })
 
+const getTxFeeValue = (feeRate, txSize) => {
+  return Math.ceil(feeRate * 226 / 1024)
+}
+
 const send = async (from, to, amount, feeValue) => {
-  const { user: { ltcData: { privateKey, fee } } } = getState()
+  const { user: { ltcData: { privateKey, feeRate } } } = getState()
   const keyPair = bitcoin.ECPair.fromWIF(privateKey, ltc.network)
 
   if (!feeValue) {
-    feeValue = fee.normal
+    feeValue = getTxFeeValue(feeRate.normal)
   }
 
   const tx            = new bitcoin.TransactionBuilder(ltc.network)
@@ -141,40 +145,40 @@ const broadcastTx = (txRaw) =>
     },
   })
 
-const getCurrentFee = async () => {
-  const link = config.fees.ltc
-  const defaultFee = constants.defaultFee.ltc
+const getFeeRate = async () => {
+  const link = config.feeRates.ltc
+  const defaultFee = constants.defaultFeeRates.ltc
 
   if (!link) {
     return defaultFee
   }
 
-  const resultAPI = await request.get(link)
+  const apiResult = await request.get(link)
 
-  const APIFee = {
-    slow: resultAPI.low_fee_per_kb,
-    normal: Math.ceil((resultAPI.low_fee_per_kb + resultAPI.high_fee_per_kb) / 2),
-    fast: resultAPI.high_fee_per_kb,
+  const apiRate = {
+    slow: apiResult.low_fee_per_kb,
+    normal: Math.ceil((apiResult.low_fee_per_kb + apiResult.high_fee_per_kb) / 2),
+    fast: apiResult.high_fee_per_kb,
   }
 
-  const currentFee = {
-    slow: APIFee.slow >= defaultFee.slow ? APIFee.slow : defaultFee.slow,
-    normal: APIFee.normal >= defaultFee.slow ? APIFee.normal : defaultFee.normal,
-    fast: APIFee.fast >= defaultFee.slow ? APIFee.fast : defaultFee.fast,
+  const currentRate = {
+    slow: apiRate.slow >= defaultFee.slow ? apiRate.slow : defaultFee.slow,
+    normal: apiRate.normal >= defaultFee.slow ? apiRate.normal : defaultFee.normal,
+    fast: apiRate.fast >= defaultFee.slow ? apiRate.fast : defaultFee.fast,
   }
 
-  return currentFee
+  return currentRate
 }
 
-const setFee = async ({ slow, normal, fast } = { slow: 0, normal: 0, fast: 0 }) => {
-  const currentFee = await getCurrentFee()
-  const fee = {
-    slow: slow === 0 ? currentFee.slow : slow,
-    normal: normal === 0 ? currentFee.normal : normal,
-    fast: fast === 0 ? currentFee.fast : fast,
+const setFeeRate = async ({ slow, normal, fast } = {}) => {
+  const currentRate = await getFeeRate()
+  const feeRate = {
+    slow: slow ? slow : currentRate.slow,
+    normal: normal ? normal : currentRate.normal,
+    fast: fast ? fast : currentRate.fast,
   }
 
-  reducers.user.setFee({ name: 'ltcData', fee })
+  reducers.user.setFeeRate({ name: 'ltcData', feeRate })
 }
 
 export default {
@@ -186,6 +190,6 @@ export default {
   fetchUnspents,
   broadcastTx,
   fetchBalance,
-  getCurrentFee,
-  setFee,
+  getFeeRate,
+  setFeeRate,
 }

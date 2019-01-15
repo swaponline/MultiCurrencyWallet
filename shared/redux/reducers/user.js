@@ -87,7 +87,7 @@ export const setTokenAuthData = (state, { name, data }) => ({
   tokensData: {
     ...state.tokensData,
     [name]: {
-      ...state[name],
+      ...state.tokensData[name],
       ...data,
     },
   },
@@ -150,14 +150,14 @@ export const setTokenApprove = (state, { name, approve }) => ({
   },
 })
 
-export const setFee = (state, { name, fee: { slow, normal, fast } }) => ({
+export const setFeeRate = (state, { name, feeRate: { slow, normal, fast } }) => ({
   ...state,
   tokensData: {
     ...state.tokensData,
   },
   [name]: {
     ...state[name],
-    fee: {
+    feeRate: {
       slow,
       normal,
       fast,
@@ -165,19 +165,37 @@ export const setFee = (state, { name, fee: { slow, normal, fast } }) => ({
   },
 })
 
-export const setGas = (state, { gas: { limit, price: { slow, normal, fast } } }) => ({
+export const setGasRate = (state, { gasRate: { limit, price: { slow, normal, fast } } }) => ({
   ...state,
   tokensData: {
     ...state.tokensData,
   },
   ethData: {
     ...state.ethData,
-    gas: {
+    gasRate: {
       limit,
       price: {
         slow,
         normal,
         fast,
+      },
+    },
+  },
+})
+
+export const setTokenGasRate = (state, { name, gasRate: { limit, price: { slow, normal, fast } } }) => ({
+  ...state,
+  tokensData: {
+    ...state.tokensData,
+    [name]: {
+      ...state.tokensData[name],
+      gasRate: {
+        limit,
+        price: {
+          slow,
+          normal,
+          fast,
+        },
       },
     },
   },
