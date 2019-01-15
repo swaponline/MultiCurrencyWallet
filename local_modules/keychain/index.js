@@ -19,7 +19,6 @@ class Keychain {
     this.queue = [];
 
     web3.eth.accounts.sign = this.sign.bind(this)
-    web3.eth.accounts.create = this.create.bind(this)
     web3.eth.accounts.signTransaction = this.signTransaction.bind(this)
   }
 
@@ -34,27 +33,6 @@ class Keychain {
     return new Promise(function (resolve, reject) {
       _parent.command(request, resolve);
     })
-  }
-
-  async create() {
-    const result = await this.method({
-      command: 'create',
-      params: {
-        keyname: new Date(),
-        encrypted: true,
-        curve: 'secp256k1',
-        cipher: 'aes256'
-      }
-    })
-    const keyname = result.result;
-    const publicKeyResult = await this.method({ command: 'public_key', params: { keyname } })
-    const publicKey = publicKeyResult.result;
-    return {
-      address: '0x' + publicKey,
-      privateKey: keyname,
-      signTransaction: this.signTransaction,
-      sign: this.sign,
-    }
   }
 
   async sign(data, keyname) {
