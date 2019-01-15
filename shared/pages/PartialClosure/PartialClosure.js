@@ -591,7 +591,6 @@ export default class PartialClosure extends Component {
                 defaultMessage="Swap.Online is the decentralized in-browser hot wallet based on the Atomic Swaps technology.
                   As in our wallet all blockchains interact decentralized and no-third-party way, we offer our users to exchange Bitcoin, Ethereum,
                   USD Tether, BCH and EOS for free in a couple of seconds. At the time, Swap.Online charges no commision for the order making and taking.
-                  For example, on the vast majority of exchanges, there is a 0,3%-operational fee for the taker of liquidity and 1-5% withdrawal fee.
                   The exchange of crypto and tokens on Swap.Online is conducted in truly
                   decentralized manner as we use the Atomic Swaps technology of peer-to-peer cross-chain interaction.
                   Swap.Online uses IPFS-network for all the operational processes which results in no need for centralized server.
