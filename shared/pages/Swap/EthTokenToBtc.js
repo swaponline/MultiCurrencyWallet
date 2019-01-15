@@ -21,7 +21,7 @@ export default class EthTokenToBtc extends Component {
     }
   }
 
-  constructor({ swap, currencyData, ethBalance, continueSwap }) {
+  constructor({ swap, currencyData, ethBalance, continueSwap, ethData }) {
     super()
 
     this.swap = swap
@@ -32,6 +32,7 @@ export default class EthTokenToBtc extends Component {
       enabledButton: false,
       continuerSwap: continueSwap,
       isAddressCopied: false,
+      ethAddress: ethData.map(item => item.address),
     }
 
   }
@@ -88,7 +89,7 @@ export default class EthTokenToBtc extends Component {
 
   render() {
     const { children, disabledTimer }  = this.props
-    const { currencyAddress, flow, enabledButton, isShowingBitcoinScript, continuerSwap, isAddressCopied } = this.state
+    const { currencyAddress, flow, enabledButton, isShowingBitcoinScript, continuerSwap, isAddressCopied, ethAddress } = this.state
 
     return (
       <div>
@@ -307,12 +308,12 @@ export default class EthTokenToBtc extends Component {
               }
               {/* eslint-disable */}
               {!continuerSwap && flow.step >= 5 &&
-                <CopyToClipboard text={currencyAddress} data-tut="reactour__address">
+                <CopyToClipboard text={ethAddress} data-tut="reactour__address">
                   <h3 style={{ color: '#E72BB3', marginTop: '10px', cursor: 'pointer' }} onClick={this.handleCopy}>
                     <FormattedMessage
                       id="BtcToEthTokenAddress307"
                       defaultMessage="Not enough ETH on your balance for miner fee.{br}{br}Deposit 0.001 ETH to your account {address}"
-                      values={{ address: `${currencyAddress}`, br: <br /> }}
+                      values={{ address: `${ethAddress}`, br: <br /> }}
                     />
                   </h3>
                 </CopyToClipboard>

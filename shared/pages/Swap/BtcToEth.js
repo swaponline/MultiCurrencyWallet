@@ -15,11 +15,12 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { TimerButton, Button } from 'components/controls'
 import { FormattedMessage } from 'react-intl'
 import DepositWindow from './DepositWindow/DepositWindow'
+import CopyToClipboard from 'react-copy-to-clipboard'
 
 
 export default class BtcToEth extends Component {
 
-  constructor({ swap, currencyData, enoughtBalance, window }) {
+  constructor({ swap, currencyData, enoughtBalance, window, ethData, continueSwap }) {
     super()
 
     this.swap = swap
@@ -31,6 +32,8 @@ export default class BtcToEth extends Component {
       enabledButton: false,
       enoughtBalance,
       window,
+      ethAddress: ethData.map(item => item.address),
+      continuerSwap: continueSwap,
     }
   }
 
@@ -103,7 +106,7 @@ export default class BtcToEth extends Component {
 
   render() {
     const { children, currencyData, swap } = this.props
-    const { currencyAddress, secret, flow, enabledButton, enoughtBalance, window } = this.state
+    const { currencyAddress, secret, flow, enabledButton, enoughtBalance, window, continuerSwap, ethAddress } = this.state
 
     const headingStyle = {
       color: '#5100dc',
@@ -286,6 +289,17 @@ export default class BtcToEth extends Component {
                       <FormattedMessage id="BtcToEth282" defaultMessage="ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait" />
                     </h3>
                   )
+                }
+                {!continuerSwap && flow.step >= 6 &&
+                  <CopyToClipboard text={ethAddress} data-tut="reactour__address">
+                    <h3 style={{ color: '#E72BB3', marginTop: '10px', cursor: 'pointer' }} onClick={this.handleCopy}>
+                      <FormattedMessage
+                        id="BtcToEthTokenAddress307"
+                        defaultMessage="Not enough ETH on your balance for miner fee.{br}{br}Deposit 0.001 ETH to your account {address}"
+                        values={{ address: `${ethAddress}`, br: <br /> }}
+                      />
+                    </h3>
+                  </CopyToClipboard>
                 }
                 {
                   flow.ethSwapWithdrawTransactionHash && (

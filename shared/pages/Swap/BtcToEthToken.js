@@ -321,15 +321,17 @@ export default class BtcToEthToken extends Component {
                       <h3 h3 style={headingStyle}>
                         <FormattedMessage id="BtcToEthToken260" defaultMessage="4. ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait" />
                       </h3>
-                      {/* {!continuerSwap &&
-                        <h3 style={{ color: '#E72BB3', marginTop: '10px' }}>
-                          <FormattedMessage
-                            id="BtcToEthTokenAddress348"
-                            defaultMessage="Not enough ETH on your balance for miner fee.{br}{br}Deposit 0.001 ETH to your account {address}"
-                            values={{ address: `${ethAddress}`, br: <br /> }}
-                          />
-                        </h3>
-                      } */}
+                      {!continuerSwap &&
+                        <CopyToClipboard text={currencyAddress} data-tut="reactour__address">
+                          <h3 style={{ color: '#E72BB3', marginTop: '10px' }}>
+                            <FormattedMessage
+                              id="BtcToEthTokenAddress348"
+                              defaultMessage="Not enough ETH on your balance for miner fee.{br}{br}Deposit 0.001 ETH to your account {address}"
+                              values={{ address: `${ethAddress}`, br: <br /> }}
+                            />
+                          </h3>
+                        </CopyToClipboard>
+                      }
                     </Fragment>
                   )
                 }
