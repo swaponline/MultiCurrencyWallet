@@ -4665,7 +4665,7 @@
   },
   {
     "id": "ReceiveModal50",
-    "message": "This is your address for receive {currency}",
+    "message": "This is your {currency} address",
     "files": [
       "shared/components/modals/ReceiveModal/ReceiveModal.js"
     ]

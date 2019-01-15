@@ -4649,7 +4649,7 @@
   },
   {
     "id": "ReceiveModal50",
-    "message": "Ваш адрес для пополнения {currency}",
+    "message": "Ваш {currency} адрес",
     "files": [
       "shared/components/modals/ReceiveModal/ReceiveModal.js"
     ]
