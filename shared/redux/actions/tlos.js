@@ -70,7 +70,7 @@ const getBalance = async () => {
   }
 }
 
-const send = async (from, to, amount) => {
+const send = async ({ from, to, amount } = {}) => {
   const { user: { telosData: { address } } } = getState()
 
   if (typeof address !== 'string') { return }
