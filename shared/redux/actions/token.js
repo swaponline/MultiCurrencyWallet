@@ -1,5 +1,5 @@
 import abi from 'human-standard-token-abi'
-import { request } from 'helpers'
+import { request, constants } from 'helpers'
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
 import web3 from 'helpers/web3'
@@ -116,20 +116,26 @@ const getTransaction = (currency) =>
       })
   })
 
+const send = ({ name, to, amount, gasPrice, gasLimit, speed } = {}) =>
+  new Promise(async (resolve, reject) => {
+    if (!name) {
+      throw new Error('send: name is undefined')
+    }
 
-const send = (contractAddress, to, amount, decimals) => {
-  const { user: { ethData: { address } } } = getState()
+    const { user: { tokensData: { [name]: { address, contractAddress, gasRate, decimals } } } } = getState()
 
-  const options = {
-    from: address,
-    gas: 1e5,
-    gasPrice: 21e9,
-  }
+    gasPrice = gasPrice || gasRate.price[speed]
+    gasLimit = gasLimit || gasRate.limit
 
-  const tokenContract = new web3.eth.Contract(abi, contractAddress, options)
-  const newAmount = new BigNumber(String(amount)).times(new BigNumber(10).pow(decimals)).integerValue()
+    const params = {
+      from: address,
+      gas: gasLimit,
+      gasPrice,
+    }
 
-  return new Promise(async (resolve, reject) => {
+    const tokenContract = new web3.eth.Contract(abi, contractAddress, params)
+    const newAmount = new BigNumber(String(amount)).times(new BigNumber(10).pow(decimals)).integerValue()
+
     const receipt = await tokenContract.methods.transfer(to, newAmount).send()
       .on('transactionHash', (hash) => {
         const txId = `${config.link.etherscan}/tx/${hash}`
@@ -141,58 +147,52 @@ const send = (contractAddress, to, amount, decimals) => {
 
     resolve(receipt)
   })
+
+const estimateGasRate = async () => {
+  const link = config.feeRates.eth
+  const defaultPrice = constants.defaultFeeRates.ethToken.price
+
+  if (!link) {
+    return defaultPrice
+  }
+
+  const apiResult = await request.get(link)
+
+  const apiRate = {
+    slow: apiResult.safeLow * 1e9,
+    normal: apiResult.standard * 1e9,
+    fast: apiResult.fast * 1e9,
+  }
+
+  const currentRate = {
+    slow: apiRate.slow >= defaultPrice.slow ? apiRate.slow : defaultPrice.slow,
+    normal: apiRate.normal >= defaultPrice.slow ? apiRate.normal : defaultPrice.normal,
+    fast: apiRate.fast >= defaultPrice.slow ? apiRate.fast : defaultPrice.fast,
+  }
+
+  return currentRate
 }
 
-const approve = (name, amount) => {
-  const { user: { tokensData } } = getState()
-  const { address, contractAddress, decimals } = tokensData[name.toLowerCase()]
+const setGasRate = async ({ name, limit, slow, normal, fast } = {}) => {
+  if (!name) {
+    return
+  }
 
+  const currentRate = await estimateGasRate()
+  const currentLimit = constants.defaultFeeRates.ethToken.limit
+  const gasRate = {
+    limit: Number(limit) > 0 && Number(limit) !== currentLimit
+      ? limit
+      : currentLimit,
+    price: {
+      slow: slow || currentRate.slow,
+      normal: normal || currentRate.normal,
+      fast: fast || currentRate.fast,
+    },
+  }
 
-  const newAmount = new BigNumber(String(amount)).times(new BigNumber(10).pow(decimals)).integerValue()
-  const ERC20     = new web3.eth.Contract(abi, contractAddress)
-
-  return new Promise(async (resolve, reject) => {
-    try {
-      const result = await ERC20.methods.approve(config.token.contract, newAmount).send({
-        from: address,
-        gas: 1e5,
-        gasPrice: 21e9,
-      })
-        .on('transactionHash', (hash) => {
-          const txId = `${config.link.etherscan}/tx/${hash}`
-          actions.loader.show(true, { txId })
-        })
-        .on('error', err => {
-          reject(err)
-        })
-
-      resolve(result)
-    }
-    catch (err) {
-      reject(err)
-    }
-  })
-    .then(() => {
-      reducers.user.setTokenApprove({ name: name.toLowerCase(), approve: true  })
-    })
+  reducers.user.setTokenGasRate({ name, gasRate })
 }
-
-const allowance = (contractAddress, name) => {
-  const { user: { ethData: { address } } } = getState()
-  const ERC20     = new web3.eth.Contract(abi, contractAddress)
-
-  return new Promise(async (resolve, reject) => {
-    let allowance = await ERC20.methods.allowance(address, config.swapContract.erc20).call()
-
-    console.log('💸 allowance:', allowance)
-
-    reducers.user.setTokenApprove({ name, approve: allowance > 0 })
-
-    resolve(allowance)
-  })
-
-}
-
 
 export default {
   login,
@@ -200,6 +200,5 @@ export default {
   getTransaction,
   send,
   fetchBalance,
-  approve,
-  allowance,
+  setGasRate,
 }
