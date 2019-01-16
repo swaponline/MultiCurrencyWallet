@@ -55,6 +55,10 @@ export default class ImportKeys extends Component {
     }
   }
 
+  componentDidMount() {
+    this.chechAnyImport()
+  }
+
   handleEthImportKey = () => {
     let { ethKey } = this.state
 
@@ -62,7 +66,6 @@ export default class ImportKeys extends Component {
       this.setState({ isSubmittedEth: true })
       return
     }
-    this.setState({ isDisabled: false })
 
     const withOx = ethKey.substring(0, 2)
 
@@ -88,7 +91,6 @@ export default class ImportKeys extends Component {
       this.setState({ isSubmittedBtc: true })
       return
     }
-    this.setState({ isDisabled: false })
 
 
     try {
@@ -109,8 +111,6 @@ export default class ImportKeys extends Component {
       this.setState({ isSubmittedLtc: true })
       return
     }
-    this.setState({ isDisabled: false })
-
 
     try {
       actions.ltc.login(ltcKey)
@@ -130,8 +130,6 @@ export default class ImportKeys extends Component {
       this.setState({ isSubmittedXlm: true })
       return
     }
-    this.setState({ isDisabled: false })
-
 
     try {
       actions.xlm.login(xlmKey)
@@ -144,18 +142,22 @@ export default class ImportKeys extends Component {
     }
   }
 
-
   handleImportKeys = () => {
-    const { isDisabled } = this.state
-
-    if (!isDisabled) {
-      window.location.reload()
-      localStorage.setItem(constants.localStorage.testnetSkipPKCheck, 'true')
-    }
+    window.location.reload()
+    localStorage.setItem(constants.localStorage.testnetSkipPKCheck, 'true')
+    console.log("fs")
   }
 
   handleCloseModal = () => {
     actions.modals.close(this.props.name)
+  }
+
+  chechAnyImport = () =>{
+    const { isSubmittedEth, isSubmittedBtc, isSubmittedLtc, isSubmittedXlm } = this.state
+
+    if (isSubmittedEth || isSubmittedBtc || isSubmittedLtc || isSubmittedXlm) {
+      this.setState(() => ({ isDisabled: false }))
+    }
   }
 
   render() {
@@ -238,7 +240,7 @@ export default class ImportKeys extends Component {
               </span>
             )
           }
-          <Button brand disabled={isDisabled || !keySave} styleName="button" onClick={this.handleImportKeys}>
+          <Button brand disabled={isDisabled} styleName="button" onClick={this.handleImportKeys}>
             <FormattedMessage id="ImportKeys130" defaultMessage="Confirm" />
           </Button>
           <Button gray styleName="button" onClick={this.handleCloseModal}>
