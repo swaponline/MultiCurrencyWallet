@@ -37,6 +37,10 @@ const removeOrder = (orderId) => {
 const sendRequest = (orderId, { address } = {}, callback) => {
   const order = SwapApp.services.orders.getByKey(orderId)
 
+  const destination = {
+    address
+  }
+
   const getUserCurrencyData = (currency) => {
     switch (currency.toUpperCase()) {
       case 'BTC':
@@ -51,13 +55,14 @@ const sendRequest = (orderId, { address } = {}, callback) => {
   }
 
   const userCurrencyData = getUserCurrencyData(order.buyCurrency)
-  const params = {
-    reputation: userCurrencyData.reputation,
-    reputationProof: userCurrencyData.reputationProof,
-    address: address ? address : userCurrencyData.address
+
+  const participantMetadata = getUserCurrencyData(order.buyCurrency)
+
+  const requestOptions = {
+    destination, participantMetadata
   }
 
-  order.sendRequest(callback, params)
+  order.sendRequest(callback, requestOptions)
 }
 
 const sendRequestForPartial = (orderId, newValues, destination, callback) => {
