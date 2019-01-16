@@ -88,7 +88,7 @@ export default class User extends React.Component {
     const { view } = this.state
 
     const isWidget = (config && config.isWidget)
-    const reputationPlaceholder = '?'
+    const reputationPlaceholder = '0'
 
     const {
       feeds, peer, reputation, openTour, path, isSigned,
