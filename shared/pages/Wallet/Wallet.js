@@ -41,9 +41,10 @@ import config from 'app-config'
       [btcData, ethData, eosData, telosData, xlmData, ltcData, usdtData /* nimData */ ]).map((data) => (
       data.currency
     )),
-    currencyBalance: [btcData, ethData, eosData, xlmData, telosData, ltcData, usdtData /* nimData */ ].map((cur) => (
+    currencyBalance: [btcData, ethData, eosData, xlmData, telosData, ltcData, usdtData, ...Object.keys(tokensData).map(k => (tokensData[k])) /* nimData */ ].map((cur) => (
       cur.balance
     )),
+    tokenItems: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
     currencies,
     hiddenCoinsList : (config && config.isWidget) ? [] : hiddenCoinsList,
   })
@@ -75,6 +76,8 @@ export default class Wallet extends Component {
     actions.user.getBalances()
     actions.analytics.dataEvent('open-page-balances')
 
+    const tokenBalance = this.props.tokenItems.map(item => item.balance)
+
     if (process.env.MAINNET) {
       localStorage.setItem(constants.localStorage.testnetSkip, false)
     } else {
@@ -87,6 +90,7 @@ export default class Wallet extends Component {
     this.setState(() => ({
       testSkip,
       saveKeys,
+      tokenBalance,
     }))
   }
 
@@ -98,21 +102,20 @@ export default class Wallet extends Component {
     if (saveKeys || testSkip || !openTour) {
       return
     }
-
-    const { currencyBalance } = this.props
-
-    currencyBalance.forEach(cur => {
-      if (cur > 0) {
-        this.setState(() => ({ openModal: true }))
-      }
-    })
   }
 
   componentDidUpdate() {
     const { openModal } = this.state
 
-    if (openModal) {
-      actions.modals.open(constants.modals.PrivateKeys, {})
+    const { currencyBalance } = this.props
+
+    if (!localStorage.getItem(constants.localStorage.wasCautionShow) && process.env.MAINNET) {
+      currencyBalance.forEach(cur => {
+        if (cur > 0) {
+          actions.modals.open(constants.modals.PrivateKeys, {})
+          localStorage.setItem(constants.localStorage.wasCautionShow, true)
+        }
+      })
     }
   }
 
@@ -134,7 +137,8 @@ export default class Wallet extends Component {
   }
 
   render() {
-    const { items, tokens, currencies, hiddenCoinsList, intl, location } = this.props
+    const { items, tokens, currencies, hiddenCoinsList, intl, location, currencyBalance } = this.props
+
     const titles = [
       <FormattedMessage id="Wallet114" defaultMessage="Coin" />,
       <FormattedMessage id="Wallet115" defaultMessage="Name" />,
