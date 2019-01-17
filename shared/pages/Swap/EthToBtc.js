@@ -333,13 +333,13 @@ export default class EthToBtc extends Component {
                     </Fragment>
                   )
                 }
-
                 {
                   (flow.step >= 5 || flow.isEthContractFunded) && (
                     <Fragment>
                       <h3 style={headingStyle}>
                         <FormattedMessage id="EthToBtc297" defaultMessage="5. Creating Ethereum Contract. Please wait, it will take a while" />
                       </h3>
+                      {/* eslint-disable */}
                       {!continuerSwap && flow.step >= 5 &&
                         <CopyToClipboard text={currencyAddress} data-tut="reactour__address">
                           <h3 style={{ color: '#E72BB3', marginTop: '10px', cursor: 'pointer' }} onClick={this.handleCopy}>

@@ -42,7 +42,6 @@ export default class BtcToEthToken extends Component {
       isTextCopied: false,
       enabledButton: false,
       isAddressCopied: false,
-      isAddressCopied: false,
       flow: this.swap.flow.state,
       continuerSwap: continueSwap,
       destinationAddressTimer: true,

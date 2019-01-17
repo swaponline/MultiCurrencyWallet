@@ -153,8 +153,6 @@ export default class SwapComponent extends PureComponent {
 
     const ethBalance = await actions.eth.getBalance()
 
-    // const ethFee = await helpers.eth.estimateFeeValue({ speed: 'normal' })
-    // const ercFee = await helpers.ethToken.estimateFeeValue({ speed: 'normal' })   Не работает, пока в коре не запустим динамический фи
     const ethFee = (participantSwap.gasPrice * participantSwap.gasLimit * (1e-18)) || (ownerSwap.gasPrice * ownerSwap.gasLimit* (1e-18))
     const btcFee = await helpers.btc.estimateFeeValue({ speed: 'normal' })
     const ltcFee = await helpers.ltc.estimateFeeValue({ speed: 'normal' })
@@ -169,12 +167,6 @@ export default class SwapComponent extends PureComponent {
     if (currencyData.currency  === 'ETH' && ethBalance > ethFee + sellAmount.toNumber()) {
       this.setState(() => ({ continueSwap: true }))
     }
-
-  console.log('ethFee + sellAmount.toNumber()', ethFee + sellAmount.toNumber())
-
-  //   if (currencyData.currency  === 'LTC' && ethBalance > ltcFee) {
-  //     this.setState(() => ({ continueSwap: true }))
-  //   }
   }
 
   handleGoHome = () => {
