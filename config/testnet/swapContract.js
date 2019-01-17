@@ -1,5 +1,5 @@
 export default {
-  erc20: '0xd4353e62b470fd6df25fb8d3da6b04357a1afcbe',
-  eth: '0x7c8f2b4d30a98a9abcdeac3cf49d51f92a6dd81d',
+  erc20: '0x750b5275996946FBf74889E446cC8D5f4f552eF4',
+  eth: '0x5937f7cDa3670A6fA111Ae83Ab4A39Cfb5b89EC1',
   eos: 'swaponline42',
 }
