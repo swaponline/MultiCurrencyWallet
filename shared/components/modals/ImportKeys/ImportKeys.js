@@ -56,7 +56,7 @@ export default class ImportKeys extends Component {
   }
 
   componentDidMount() {
-    this.chechAnyImport()
+    this.checkAnyImport()
   }
 
   handleEthImportKey = () => {
@@ -151,7 +151,7 @@ export default class ImportKeys extends Component {
     actions.modals.close(this.props.name)
   }
 
-  chechAnyImport = () => {
+  checkAnyImport = () => {
     const { isSubmittedEth, isSubmittedBtc, isSubmittedLtc, isSubmittedXlm } = this.state
 
     if (isSubmittedEth || isSubmittedBtc || isSubmittedLtc || isSubmittedXlm) {
