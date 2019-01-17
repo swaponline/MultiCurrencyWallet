@@ -153,7 +153,7 @@ export default class SwapComponent extends PureComponent {
 
     const ethBalance = await actions.eth.getBalance()
 
-    const ethFee = (participantSwap.gasPrice * participantSwap.gasLimit * (1e-18)) || (ownerSwap.gasPrice * ownerSwap.gasLimit* (1e-18))
+    const ethFee = (participantSwap.gasPrice * participantSwap.gasLimit * (1e-18)) || (ownerSwap.gasPrice * ownerSwap.gasLimit * (1e-18))
     const btcFee = await helpers.btc.estimateFeeValue({ speed: 'normal' })
     const ltcFee = await helpers.ltc.estimateFeeValue({ speed: 'normal' })
 
