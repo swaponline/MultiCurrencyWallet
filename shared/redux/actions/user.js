@@ -63,8 +63,13 @@ const sign = async () => {
     await actions.tlos.getBalance()
   }
 
+  const getReputation = async () => {
+    await actions.user.getReputation()
+  }
+
   eosSign()
   telosSign()
+  getReputation()
 }
 
 const getReputation = async () => {
