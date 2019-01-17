@@ -51,14 +51,14 @@ const sendRequest = (orderId, { address } = {}, callback) => {
   const order = SwapApp.services.orders.getByKey(orderId)
 
   const destination = {
-    address
+    address,
   }
 
   const userCurrencyData = getUserData(order.buyCurrency)
   const participantMetadata = getUserData(order.buyCurrency)
 
   const requestOptions = {
-    destination, participantMetadata
+    destination, participantMetadata,
   }
 
   order.sendRequest(callback, requestOptions)
@@ -72,12 +72,12 @@ const sendRequestForPartial = (orderId, newValues, destination, callback) => {
 
   const requestOptions = {
     destination: {
-      address
+      address,
     },
     participantMetadata: {
-      reputation: reputation,
-      reputationProof: reputationProof
-    }
+      reputation,
+      reputationProof,
+    },
   }
 
   order.sendRequestForPartial(newValues, requestOptions,

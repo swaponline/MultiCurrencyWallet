@@ -120,16 +120,16 @@ export default class User extends React.Component {
           />
         }
         {!!peer && !isWidget && (
-        <Fragment>
-          <div styleName="avatar-container" data-tip data-for="gravatar">
-            <Avatar
-              className={styles.avatar}
-              value={peer}
-              size={40}
-            />
-            <div styleName="avatar-reputation-centered">{ Number.isInteger(reputation) ? reputation : reputationPlaceholder }</div>
-          </div>
-          <ReactTooltip id="gravatar" type="light" effect="solid">
+          <Fragment>
+            <div styleName="avatar-container" data-tip data-for="gravatar">
+              <Avatar
+                className={styles.avatar}
+                value={peer}
+                size={40}
+              />
+              <div styleName="avatar-reputation-centered">{ Number.isInteger(reputation) ? reputation : reputationPlaceholder }</div>
+            </div>
+            <ReactTooltip id="gravatar" type="light" effect="solid">
               <span>
                 <FormattedMessage
                   id="avatar24"
@@ -137,8 +137,8 @@ export default class User extends React.Component {
                   The number is your rating within the system (it grows with the number of successful swaps)"
                 />
               </span>
-          </ReactTooltip>
-        </Fragment>
+            </ReactTooltip>
+          </Fragment>
         )}
       </div>
     )
