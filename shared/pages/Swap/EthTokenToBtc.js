@@ -27,11 +27,12 @@ export default class EthTokenToBtc extends Component {
     this.swap = swap
 
     this.state = {
-      currencyAddress: currencyData.address,
-      flow: this.swap.flow.state,
       enabledButton: false,
-      continuerSwap: continueSwap,
       isAddressCopied: false,
+      flow: this.swap.flow.state,
+      continuerSwap: continueSwap,
+      currencyAddress: currencyData.address,
+
     }
 
   }

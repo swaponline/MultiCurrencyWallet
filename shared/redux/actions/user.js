@@ -96,7 +96,7 @@ const setFeeRates = () => {
 }
 
 const getDemoMoney = process.env.MAINNET ? () => {} : () => {
-  /* //googe bitcoin (or rinkeby) faucet
+  //googe bitcoin (or rinkeby) faucet
   request.get('https://swap.wpmix.net/demokeys.php', {})
     .then((r) => {
       window.localStorage.clear()
@@ -105,7 +105,7 @@ const getDemoMoney = process.env.MAINNET ? () => {} : () => {
       localStorage.setItem(constants.localStorage.demoMoneyReceived, true)
       window.location.reload()
     })
-    */
+
 }
 
 const getExchangeRate = (sellCurrency, buyCurrency) =>

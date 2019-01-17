@@ -37,18 +37,20 @@ export default class BtcToEthToken extends Component {
 
     this.state = {
       window,
-      currencyAddress: currencyData.address,
-      flow: this.swap.flow.state,
-      secret: crypto.randomBytes(32).toString('hex'),
+      enoughtBalance,
+      isPressCtrl: false,
+      isTextCopied: false,
       enabledButton: false,
       isAddressCopied: false,
-      isPressCtrl: false,
-      destinationAddressTimer: true,
-      destinationBuyAddress: (this.swap.destinationBuyAddress) ? this.swap.destinationBuyAddress : swapApp.services.auth.accounts.eth.address,
-      isTextCopied: false,
-      ethAddress: ethData.map(item => item.address),
+      isAddressCopied: false,
+      flow: this.swap.flow.state,
       continuerSwap: continueSwap,
-      enoughtBalance,
+      destinationAddressTimer: true,
+      currencyAddress: currencyData.address,
+      ethAddress: ethData.map(item => item.address),
+      secret: crypto.randomBytes(32).toString('hex'),
+      destinationBuyAddress: (this.swap.destinationBuyAddress) ? this.swap.destinationBuyAddress : swapApp.services.auth.accounts.eth.address,
+
     }
   }
 
@@ -134,13 +136,25 @@ export default class BtcToEthToken extends Component {
     })
   }
 
+  handleCopy = () => {
+    this.setState({
+      isAddressCopied: true,
+    }, () => {
+      setTimeout(() => {
+        this.setState({
+          isAddressCopied: false,
+        })
+      }, 500)
+    })
+  }
+
   handlerBuyWithCreditCard = (e) => {
     e.preventDefault()
   }
 
   render() {
     const { children, disabledTimer, swap, currencyData } = this.props
-    const { currencyAddress, secret, flow, enabledButton, destinationAddressTimer, continuerSwap, isTextCopied, ethAddress, enoughtBalance, window } = this.state
+    const { currencyAddress, secret, flow, enabledButton, destinationAddressTimer, continuerSwap, isTextCopied, ethAddress, enoughtBalance, window, isAddressCopied } = this.state
 
     const linked = Link.all(this, 'destinationBuyAddress')
 
@@ -321,15 +335,20 @@ export default class BtcToEthToken extends Component {
                       <h3 h3 style={headingStyle}>
                         <FormattedMessage id="BtcToEthToken260" defaultMessage="4. ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait" />
                       </h3>
-                      {/* {!continuerSwap &&
+                      {!continuerSwap &&
                         <h3 style={{ color: '#E72BB3', marginTop: '10px' }}>
                           <FormattedMessage
                             id="BtcToEthTokenAddress348"
                             defaultMessage="Not enough ETH on your balance for miner fee.{br}{br}Deposit 0.001 ETH to your account {address}"
-                            values={{ address: `${ethAddress}`, br: <br /> }}
+                            values={{ address: `${ethAddress.toString()}`, br: <br /> }}
                           />
                         </h3>
-                      } */}
+                      }
+                      { isAddressCopied &&
+                        <p style={{ fontSize: '14px', background: 'white', textAlign: 'center', borderRadius: '20px' }} >
+                          <FormattedMessage id="Row324" defaultMessage="Address copied to clipboard" />
+                        </p>
+                      }
                     </Fragment>
                   )
                 }

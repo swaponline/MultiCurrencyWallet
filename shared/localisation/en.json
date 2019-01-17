@@ -4537,7 +4537,7 @@
   },
   {
     "id": "BtcToEthToken222",
-    "message": "Creating Bitcoin Script. Please wait, it will take a while",
+    "message": "3. Creating Bitcoin Script. Please wait, it will take a while",
     "files": [
       "shared/pages/Swap/BtcToEthToken.js"
     ]

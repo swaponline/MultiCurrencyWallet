@@ -4,6 +4,7 @@ import actions from 'redux/actions'
 
 import config from 'app-config'
 import { BigNumber } from 'bignumber.js'
+import CopyToClipboard from 'react-copy-to-clipboard'
 
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import TimerButton from 'components/controls/TimerButton/TimerButton'
@@ -14,17 +15,19 @@ import { FormattedMessage } from 'react-intl'
 
 export default class EthToBtc extends Component {
 
-  constructor({ swap, currencyData, window }) {
+  constructor({ swap, currencyData, window, continueSwap }) {
     super()
 
     this.swap = swap
 
     this.state = {
       window,
-      currencyAddress: currencyData.address,
-      flow: this.swap.flow.state,
       enabledButton: false,
+      isAddressCopied: false,
+      flow: this.swap.flow.state,
+      continuerSwap: continueSwap,
       isShowingBitcoinScript: false,
+      currencyAddress: currencyData.address,
     }
   }
 
@@ -86,9 +89,21 @@ export default class EthToBtc extends Component {
     })
   }
 
+  handleCopy = () => {
+    this.setState({
+      isAddressCopied: true,
+    }, () => {
+      setTimeout(() => {
+        this.setState({
+          isAddressCopied: false,
+        })
+      }, 500)
+    })
+  }
+
   render() {
     const { children } = this.props
-    const { currencyAddress, flow, enabledButton, isShowingBitcoinScript } = this.state
+    const { currencyAddress, flow, enabledButton, isShowingBitcoinScript, continuerSwap, isAddressCopied } = this.state
     const headingStyle = {
       color: '#5100dc',
       textTransform: 'uppercase',
@@ -325,6 +340,23 @@ export default class EthToBtc extends Component {
                       <h3 style={headingStyle}>
                         <FormattedMessage id="EthToBtc297" defaultMessage="5. Creating Ethereum Contract. Please wait, it will take a while" />
                       </h3>
+                      {!continuerSwap && flow.step >= 5 &&
+                        <CopyToClipboard text={currencyAddress} data-tut="reactour__address">
+                          <h3 style={{ color: '#E72BB3', marginTop: '10px', cursor: 'pointer' }} onClick={this.handleCopy}>
+                            <FormattedMessage
+                              id="BtcToEthTokenAddress307"
+                              defaultMessage="Not enough ETH on your balance for miner fee.{br}{br}Deposit 0.001 ETH to your account {address}"
+                              values={{ address: `${currencyAddress}`, br: <br /> }}
+                            />
+                          </h3>
+                        </CopyToClipboard>
+                      }
+                      {/* eslint-enable */}
+                      { isAddressCopied &&
+                        <p style={{ fontSize: '14px', background: 'white', textAlign: 'center', borderRadius: '20px' }} >
+                          <FormattedMessage id="Row324" defaultMessage="Address copied to clipboard" />
+                        </p>
+                      }
                     </Fragment>
                   )
                 }

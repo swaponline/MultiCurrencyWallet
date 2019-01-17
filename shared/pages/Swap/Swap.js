@@ -6,7 +6,7 @@ import cssModules from 'react-css-modules'
 import styles from './Swap.scss'
 
 import { connect } from 'redaction'
-import { links, constants } from 'helpers'
+import helpers from 'helpers'
 import actions from 'redux/actions'
 
 import { swapComponents } from './swaps'
@@ -36,13 +36,13 @@ export default class SwapComponent extends PureComponent {
 
   state = {
     swap: null,
-    SwapComponent: null,
+    window: false,
+    ethBalance: null,
     currencyData: null,
     isAmountMore: null,
-    ethBalance: null,
+    SwapComponent: null,
     continueSwap: false,
     enoughtBalance: true,
-    window: false,
   }
 
   componentWillMount() {
@@ -149,17 +149,32 @@ export default class SwapComponent extends PureComponent {
   }
 
   checkEthBalance = async () => {
-    const { swap: { participantSwap, ownerSwap }, currencyData } = this.state
+    const { swap: { participantSwap, ownerSwap, sellAmount }, currencyData } = this.state
 
-    const gasFee = participantSwap.gasLimit ? participantSwap.gasLimit * participantSwap.gasPrice : ownerSwap.gasLimit * ownerSwap.gasPrice
     const ethBalance = await actions.eth.getBalance()
 
-    if ((this.props.tokenItems.map(item => item.name).includes(participantSwap._swapName.toLowerCase())
-      || currencyData.currency === 'BTC'
-      || currencyData.currency  === 'ETH')
-      && ethBalance >= gasFee * (1e-18)) {
+    // const ethFee = await helpers.eth.estimateFeeValue({ speed: 'normal' })
+    // const ercFee = await helpers.ethToken.estimateFeeValue({ speed: 'normal' })   Не работает, пока в коре не запустим динамический фи
+    const ethFee = (participantSwap.gasPrice * participantSwap.gasLimit * (1e-18)) || (ownerSwap.gasPrice * ownerSwap.gasLimit* (1e-18))
+    const btcFee = await helpers.btc.estimateFeeValue({ speed: 'normal' })
+    const ltcFee = await helpers.ltc.estimateFeeValue({ speed: 'normal' })
+
+    if (this.props.tokenItems.map(item => item.name).includes(participantSwap._swapName.toLowerCase()) && ethBalance > ethFee) { // ercFee
       this.setState(() => ({ continueSwap: true }))
     }
+    if (currencyData.currency  === 'BTC' && ethBalance > btcFee) {
+      this.setState(() => ({ continueSwap: true }))
+    }
+
+    if (currencyData.currency  === 'ETH' && ethBalance > ethFee + sellAmount.toNumber()) {
+      this.setState(() => ({ continueSwap: true }))
+    }
+
+  console.log('ethFee + sellAmount.toNumber()', ethFee + sellAmount.toNumber())
+
+  //   if (currencyData.currency  === 'LTC' && ethBalance > ltcFee) {
+  //     this.setState(() => ({ continueSwap: true }))
+  //   }
   }
 
   handleGoHome = () => {
@@ -169,6 +184,7 @@ export default class SwapComponent extends PureComponent {
   render() {
     const { peer } = this.props
     const { swap, SwapComponent, currencyData, isAmountMore, ethData, continueSwap, enoughtBalance, window } = this.state
+
 
     if (!swap || !SwapComponent || !peer || !isAmountMore) {
       return null
