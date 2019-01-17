@@ -4544,10 +4544,7 @@
   },
   {
     "id": "KeyActionsPanel54",
-    "message": "Hidden coins",
-    "files": [
-      "shared/components/KeyActionsPanel/KeyActionsPanel.js"
-    ]
+    "message": "Hidden coins"
   },
   {
     "id": "deposit134",
@@ -4682,6 +4679,17 @@
     "message": "Return to home page",
     "files": [
       "shared/pages/Swap/Swap.js"
+    ]
+  },
+  {
+    "id": "KeyActionsPanel64",
+    "message": "Download"
+  },
+  {
+    "id": "KeyActionsPanel73",
+    "message": "Hidden coins ({length})",
+    "files": [
+      "shared/components/KeyActionsPanel/KeyActionsPanel.js"
     ]
   }
 ]
