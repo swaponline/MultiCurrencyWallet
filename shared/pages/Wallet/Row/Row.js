@@ -140,7 +140,7 @@ export default class Row extends Component {
     } = this.props
     let firstPart = address.substr(0, 6)
     let secondPart = address.substr(address.length - 4)
-    return (window.innerWidth < 1120 || isMobile || address.length > 40) ? `${firstPart}...${secondPart}` : address
+    return (window.innerWidth < 700 || isMobile || address.length > 42) ? `${firstPart}...${secondPart}` : address
   }
 
   handleTouchClear = (e) => {
@@ -258,7 +258,6 @@ export default class Row extends Component {
       eosAccountActivated = this.props.item.isAccountActivated
       eosActivationPaymentSent = this.props.item.isActivationPaymentSent
     }
-
     return (
       <tr
         data-tut="reactour__store"

@@ -5,6 +5,7 @@ import bitcoin from 'bitcoinjs-lib'
 import bitcoinMessage from 'bitcoinjs-message'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
+import config from 'app-config'
 import { btc, request, constants, api } from 'helpers'
 
 
@@ -88,10 +89,11 @@ const getTransaction = () =>
       })
   })
 
-
-const send = async (from, to, amount, feeValue = 15000) => {
+const send = async ({ from, to, amount, feeValue, speed } = {}) => {
   const { user: { btcData: { privateKey } } } = getState()
   const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
+
+  feeValue = feeValue || await btc.estimateFeeValue({ satoshi: true, speed })
 
   const tx            = new bitcoin.TransactionBuilder(btc.network)
   const unspents      = await fetchUnspents(from)
@@ -137,6 +139,42 @@ const signMessage = (message, encodedPrivateKey) => {
   return signature.toString('base64')
 }
 
+const estimateFeeRate = async () => {
+  const link = config.feeRates.btc
+  const defaultFee = constants.defaultFeeRates.btc
+
+  if (!link) {
+    return defaultFee
+  }
+
+  const apiResult = await request.get(link)
+
+  const apiRate = {
+    slow: apiResult.low_fee_per_kb,
+    normal: Math.ceil((apiResult.low_fee_per_kb + apiResult.high_fee_per_kb) / 2),
+    fast: apiResult.high_fee_per_kb,
+  }
+
+  const currentRate = {
+    slow: apiRate.slow >= defaultFee.slow ? apiRate.slow : defaultFee.slow,
+    normal: apiRate.normal >= defaultFee.slow ? apiRate.normal : defaultFee.normal,
+    fast: apiRate.fast >= defaultFee.slow ? apiRate.fast : defaultFee.fast,
+  }
+
+  return currentRate
+}
+
+const setFeeRate = async ({ slow, normal, fast } = {}) => {
+  const currentRate = await estimateFeeRate()
+  const feeRate = {
+    slow: slow || currentRate.slow,
+    normal: normal || currentRate.normal,
+    fast: fast || currentRate.fast,
+  }
+
+  reducers.user.setFeeRate({ name: 'btcData', feeRate })
+}
+
 export default {
   login,
   getBalance,
@@ -147,4 +185,5 @@ export default {
   fetchTx,
   fetchBalance,
   signMessage,
+  setFeeRate,
 }

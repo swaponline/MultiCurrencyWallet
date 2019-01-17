@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { constants } from 'helpers'
+import helpers, { constants } from 'helpers'
 import actions from 'redux/actions'
 import Link from 'sw-valuelink'
 import { connect } from 'redaction'
@@ -110,16 +110,33 @@ export default class WithdrawModal extends React.Component {
     }))
   }
 
-
-  handleSubmit = () => {
+  handleSubmit = async () => {
     const { address: to, amount } = this.state
-    const { data: { currency, contractAddress, address, balance, decimals }, name } = this.props
+    const { data: { currency, address, balance }, name } = this.props
 
     this.setState(() => ({ isShipped: true }))
 
     this.setBalanceOnState(currency)
 
-    actions[currency.toLowerCase()].send(contractAddress || address, to, Number(amount), decimals)
+    let sendOptions = {
+      to,
+      amount: Number(amount),
+      speed: 'normal',
+    }
+
+    if (helpers.ethToken.isEthToken({ name: currency.toLowerCase() })) {
+      sendOptions = {
+        ...sendOptions,
+        name: currency.toLowerCase(),
+      }
+    } else {
+      sendOptions = {
+        ...sendOptions,
+        from: address,
+      }
+    }
+
+    await actions[currency.toLowerCase()].send(sendOptions)
       .then(() => {
         actions.loader.hide()
         actions[currency.toLowerCase()].getBalance(currency)

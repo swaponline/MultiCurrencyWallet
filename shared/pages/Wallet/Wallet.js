@@ -154,7 +154,7 @@ export default class Wallet extends Component {
     const description = defineMessages({
       metaDescription: {
         id: 'Wallet146',
-        defaultMessage: `Our online wallet with Atomic swap algorithms will help you store and exchange cryptocurrency instantly 
+        defaultMessage: `Our online wallet with Atomic swap algorithms will help you store and exchange cryptocurrency instantly
         and more secure without third-parties. Decentralized exchange.`,
       },
     })
@@ -185,6 +185,7 @@ export default class Wallet extends Component {
         />
         {
           (config && !config.isWidget) && (
+            <div styleName="inform">
             <FormattedMessage
               id="Wallet156"
               defaultMessage="Welcome to the Swap.Online, decentralized cross-chain wallet based on the Atomic Swap technology.
@@ -198,6 +199,7 @@ export default class Wallet extends Component {
                 Just install this widget on your site and collect crypto investments to your project.
                 So, start using https://swap.online/ today and enjoy the power of true decentralization."
             />
+            </div>
           )
         }
       </section>

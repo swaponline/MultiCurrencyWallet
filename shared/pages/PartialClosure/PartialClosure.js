@@ -404,18 +404,30 @@ export default class PartialClosure extends Component {
       return true
     }
 
-    // TODO: check for BTC address
+    if (getCurrency === 'btc') return util.typeforce.isCoinAddress.BTC(customWallet)
+
     return util.typeforce.isCoinAddress.ETH(customWallet)
   }
 
   customWalletAllowed() {
     const { haveCurrency, getCurrency } = this.state
 
-    if (haveCurrency !== 'btc') {
-      return false
+    if (haveCurrency === 'btc') {
+      // btc-token
+      if (config.erc20[getCurrency] !== undefined) return true
+      // btc-eth
+      if (getCurrency === 'eth') return true
+    }
+    if (config.erc20[haveCurrency] !== undefined) {
+      // token-btc
+      if (getCurrency === 'btc') return true
     }
 
-    return config.erc20[getCurrency] !== undefined
+    if (haveCurrency === 'eth') {
+      // eth-btc
+      if (getCurrency === 'btc') return true
+    }
+    return false
   }
 
   checkPair = (value) => {
@@ -564,7 +576,7 @@ export default class PartialClosure extends Component {
                     </Tooltip >
                   </FieldLabel>
                   <div styleName="walletInput">
-                    <Input required valueLink={linked.customWallet} pattern="0-9a-zA-Z" placeholder="Enter the address of ETH wallet" />
+                    <Input required valueLink={linked.customWallet} pattern="0-9a-zA-Z" placeholder="Enter the destination address" />
                   </div>
                   <div styleName="walletToggle">
                     <Toggle checked={customWalletUse} onChange={this.handleCustomWalletUse} />
@@ -591,7 +603,6 @@ export default class PartialClosure extends Component {
                 defaultMessage="Swap.Online is the decentralized in-browser hot wallet based on the Atomic Swaps technology.
                   As in our wallet all blockchains interact decentralized and no-third-party way, we offer our users to exchange Bitcoin, Ethereum,
                   USD Tether, BCH and EOS for free in a couple of seconds. At the time, Swap.Online charges no commision for the order making and taking.
-                  For example, on the vast majority of exchanges, there is a 0,3%-operational fee for the taker of liquidity and 1-5% withdrawal fee.
                   The exchange of crypto and tokens on Swap.Online is conducted in truly
                   decentralized manner as we use the Atomic Swaps technology of peer-to-peer cross-chain interaction.
                   Swap.Online uses IPFS-network for all the operational processes which results in no need for centralized server.
