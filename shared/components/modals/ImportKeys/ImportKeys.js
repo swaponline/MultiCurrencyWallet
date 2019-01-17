@@ -144,15 +144,14 @@ export default class ImportKeys extends Component {
 
   handleImportKeys = () => {
     window.location.reload()
-    localStorage.setItem(constants.localStorage.testnetSkipPKCheck, 'true')
-    console.log("fs")
+    localStorage.setItem(constants.localStorage.testnetSkipPKCheck, true)
   }
 
   handleCloseModal = () => {
     actions.modals.close(this.props.name)
   }
 
-  chechAnyImport = () =>{
+  chechAnyImport = () => {
     const { isSubmittedEth, isSubmittedBtc, isSubmittedLtc, isSubmittedXlm } = this.state
 
     if (isSubmittedEth || isSubmittedBtc || isSubmittedLtc || isSubmittedXlm) {
