@@ -133,7 +133,7 @@ export default class Wallet extends Component {
   }
 
   render() {
-    const { items, tokens, currencies, hiddenCoinsList, intl, location, currencyBalance } = this.props
+    const { items, tokens, currencies, hiddenCoinsList, intl, location } = this.props
 
     const titles = [
       <FormattedMessage id="Wallet114" defaultMessage="Coin" />,
