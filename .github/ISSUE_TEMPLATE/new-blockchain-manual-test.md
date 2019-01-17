@@ -2,7 +2,9 @@
 name: New blockchain Manual Test
 about: тесткейс который позволяет протестировать полностью работает ли обмен на новом
   блокчейне
-labels: 
+title: ''
+labels: ''
+assignees: ''
 
 ---
 
