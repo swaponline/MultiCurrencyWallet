@@ -3014,7 +3014,7 @@
   },
   {
     "id": "Terms",
-    "message": "Термины",
+    "message": "Условия использования",
     "files": [
       "shared/components/Footer/Links/Links.js"
     ]
