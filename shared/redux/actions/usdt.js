@@ -120,7 +120,7 @@ const fetchUnspents = (address) =>
   request.get(`${config.api.bitpay}/addr/${address}/utxo`)
 
 
-const send = (from, to, amount) => {
+const send = ({ from, to, amount } = {}) => {
   const { user: { usdtData: { privateKey } } } = getState()
 
   return new Promise(async (resolve) => {

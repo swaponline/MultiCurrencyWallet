@@ -87,7 +87,7 @@ export const setTokenAuthData = (state, { name, data }) => ({
   tokensData: {
     ...state.tokensData,
     [name]: {
-      ...state[name],
+      ...state.tokensData[name],
       ...data,
     },
   },
@@ -159,5 +159,56 @@ export const setReputation = (state, { name, reputation, reputationOracleSignatu
     ...state[name],
     reputation: Number(reputation),
     reputationProof: reputationOracleSignature,
+  },
+})
+
+export const setFeeRate = (state, { name, feeRate: { slow, normal, fast } }) => ({
+  ...state,
+  tokensData: {
+    ...state.tokensData,
+  },
+  [name]: {
+    ...state[name],
+    feeRate: {
+      slow,
+      normal,
+      fast,
+    },
+  },
+})
+
+export const setGasRate = (state, { gasRate: { limit, price: { slow, normal, fast } } }) => ({
+  ...state,
+  tokensData: {
+    ...state.tokensData,
+  },
+  ethData: {
+    ...state.ethData,
+    gasRate: {
+      limit,
+      price: {
+        slow,
+        normal,
+        fast,
+      },
+    },
+  },
+})
+
+export const setTokenGasRate = (state, { name, gasRate: { limit, price: { slow, normal, fast } } }) => ({
+  ...state,
+  tokensData: {
+    ...state.tokensData,
+    [name]: {
+      ...state.tokensData[name],
+      gasRate: {
+        limit,
+        price: {
+          slow,
+          normal,
+          fast,
+        },
+      },
+    },
   },
 })
