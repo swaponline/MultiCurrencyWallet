@@ -2,7 +2,9 @@
 name: Standart Task Template
 about: шаблон правильного оформления таска (за правильно оформленный таск +1 токен
   бонуса)
-labels: 
+title: ''
+labels: ''
+assignees: ''
 
 ---
 
