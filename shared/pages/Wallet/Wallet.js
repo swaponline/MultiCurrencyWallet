@@ -44,7 +44,6 @@ import config from 'app-config'
     currencyBalance: [btcData, ethData, eosData, xlmData, telosData, ltcData, usdtData, ...Object.keys(tokensData).map(k => (tokensData[k])) /* nimData */ ].map((cur) => (
       cur.balance
     )),
-    tokenItems: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
     currencies,
     hiddenCoinsList : (config && config.isWidget) ? [] : hiddenCoinsList,
   })
@@ -76,8 +75,6 @@ export default class Wallet extends Component {
     actions.user.getBalances()
     actions.analytics.dataEvent('open-page-balances')
 
-    const tokenBalance = this.props.tokenItems.map(item => item.balance)
-
     if (process.env.MAINNET) {
       localStorage.setItem(constants.localStorage.testnetSkip, false)
     } else {
@@ -90,7 +87,6 @@ export default class Wallet extends Component {
     this.setState(() => ({
       testSkip,
       saveKeys,
-      tokenBalance,
     }))
   }
 
