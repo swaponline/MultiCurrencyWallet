@@ -307,7 +307,7 @@ export default class Row extends Component {
                   <Fragment>
                     <br />
                     <span styleName="unconfirmedBalance">
-                      <FormattedMessage id="RowWallet181" defaultMessage="Unconfirmed" />
+                      <FormattedMessage id="RowWallet181" defaultMessage="Unconfirmed balance" />
                       {unconfirmedBalance} {' '}
                     </span>
                   </Fragment>
@@ -316,7 +316,7 @@ export default class Row extends Component {
                   <Fragment>
                     <br />
                     <span styleName="unconfirmedBalance">
-                      <FormattedMessage id="RowWallet189" defaultMessage="Unconfirmed" />
+                      <FormattedMessage id="RowWallet189" defaultMessage="Unconfirmed balance" />
                       {unconfirmedBalance}
                     </span>
                   </Fragment>
@@ -325,7 +325,7 @@ export default class Row extends Component {
                   <Fragment>
                     <br />
                     <span styleName="unconfirmedBalance">
-                      <FormattedMessage id="RowWallet197" defaultMessage="Unconfirmed" />
+                      <FormattedMessage id="RowWallet197" defaultMessage="Unconfirmed balance" />
                       {unconfirmedBalance}
                     </span>
                   </Fragment>
