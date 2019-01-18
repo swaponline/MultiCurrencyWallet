@@ -45,6 +45,7 @@ input, textarea {
   vertical-align: top;
   line-height: 16px;
   border-radius: 6px;
+  box-shadow: none;
   font-size: 16px;
   @include ff;
   color: $color-f-main;
