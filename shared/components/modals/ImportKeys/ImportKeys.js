@@ -2,8 +2,10 @@ import React, { Component } from 'react'
 
 import actions from 'redux/actions'
 
+import bitcoin from 'bitcoinjs-lib'
+
 import Link from 'sw-valuelink'
-import { constants } from 'helpers'
+import { btc, constants } from 'helpers'
 
 import cssModules from 'react-css-modules'
 import styles from './ImportKeys.scss'
@@ -85,7 +87,16 @@ export default class ImportKeys extends Component {
   }
 
   handleBtcImportKey = () => {
+    let btcKeyPassed = true
     const { btcKey } = this.state
+
+    try {
+      bitcoin.ECPair.fromWIF(btcKey, btc.network) // eslint-disable-line
+    } catch (error) {
+      console.error(error)
+      this.setState({ isSubmittedBtc: true })
+      return    
+    }
 
     if (!btcKey || btcKey.length < 27) {
       this.setState({ isSubmittedBtc: true })
@@ -177,6 +188,7 @@ export default class ImportKeys extends Component {
     if (isSubmittedBtc) {
       linked.btcKey.check((value) => value !== '', <FormattedMessage id="importkeys118" defaultMessage="Please enter BTC private key" />)
       linked.btcKey.check((value) => value.length > 27, <FormattedMessage id="importkeys119" defaultMessage="Please valid BTC private key" />)
+      linked.btcKey.check((value) => value.length < 27 && value === '', <FormattedMessage id="importkeys120" defaultMessage="Something went wrong. Check your private key, network of this address and etc." />)
     }
 
     if (isSubmittedLtc) {
