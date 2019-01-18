@@ -15,7 +15,7 @@ const estimateFeeValue = async ({ satoshi, speed } = {}) => {
   return Math.ceil(feeRate * 226 / 1024) * 1e-8
 }
 
-const estimateFeeRate = async ({ speed } = { speed: 'normal' }) => {
+const estimateFeeRate = async ({ speed = 'normal' } = {}) => {
   await actions.btc.setFeeRate()
 
   const { user: { btcData: { feeRate } } } = getState()

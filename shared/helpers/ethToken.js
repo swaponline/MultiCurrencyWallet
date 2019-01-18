@@ -6,7 +6,7 @@ import eth from './eth'
 
 const isEthToken = ({ name }) => Object.keys(config.erc20).includes(name)
 
-const estimateFeeValue = async ({ speed }) => {
+const estimateFeeValue = async ({ speed = 'normal' } = {}) => {
   const { user: { tokensData } } = getState()
 
   const gasRate = tokensData[Object.keys(tokensData)[0]].gasRate.limit
