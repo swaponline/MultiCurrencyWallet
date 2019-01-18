@@ -87,7 +87,6 @@ export default class ImportKeys extends Component {
   }
 
   handleBtcImportKey = () => {
-    let btcKeyPassed = true
     const { btcKey } = this.state
 
     try {
