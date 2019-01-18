@@ -91,6 +91,18 @@ export default class AddOffer extends Component {
       .filter(item => item.currency === sellCurrency.toUpperCase())[0]
 
     const { balance, unconfirmedBalance } = currency
+
+    if (sellCurrency.toLowerCase() === 'eth') {
+      const finalBalance = balance - 0.001 > 0  ? balance - 0.001 : 0
+
+      this.setState({
+        balance: finalBalance,
+        ethBalance: finalBalance,
+      })
+
+      return
+    }
+
     const finalBalance = unconfirmedBalance !== undefined && unconfirmedBalance < 0
       ? Number(balance) + Number(unconfirmedBalance)
       : balance
