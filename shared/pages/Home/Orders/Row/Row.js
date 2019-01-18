@@ -298,7 +298,7 @@ export default class Row extends Component {
                             </Fragment>
                           ) : (
                             <RequestButton
-                              styleName={this.state.enterButton ? "onHover" : "startButton"}
+                              styleName={this.state.enterButton ? 'onHover' : 'startButton'}
                               disabled={balance >= Number(buyAmount)}
                               onClick={() => this.sendRequest(id, isMy ? sellCurrency : buyCurrency)}
                               data={{ type, amount, main, total, base }}
