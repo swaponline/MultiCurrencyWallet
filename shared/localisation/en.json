@@ -2479,21 +2479,21 @@
   },
   {
     "id": "RowWallet181",
-    "message": "Unconfirmed",
+    "message": "Unconfirmed balance",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
   },
   {
     "id": "RowWallet189",
-    "message": "Unconfirmed",
+    "message": "Unconfirmed balance",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
   },
   {
     "id": "RowWallet197",
-    "message": "Unconfirmed",
+    "message": "Unconfirmed balance",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
