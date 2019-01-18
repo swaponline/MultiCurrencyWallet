@@ -4487,10 +4487,7 @@
   },
   {
     "id": "BtcToEthTokenAddress307",
-    "message": "Not enough ETH on your balance for miner fee.{br}{br}Deposit 0.001 ETH to your account {address}",
-    "files": [
-      "shared/pages/Swap/EthTokenToBtc.js"
-    ]
+    "message": "Not enough ETH on your balance for miner fee.{br}{br}Deposit 0.001 ETH to your account {address}"
   },
   {
     "id": "BtcToEthToken158",
@@ -4655,10 +4652,7 @@
   },
   {
     "id": "Row324",
-    "message": "Address copied to clipboard",
-    "files": [
-      "shared/pages/Swap/EthTokenToBtc.js"
-    ]
+    "message": "Address copied to clipboard"
   },
   {
     "id": "ReceiveModal50",
@@ -4690,6 +4684,20 @@
     "message": "Hidden coins ({length})",
     "files": [
       "shared/components/KeyActionsPanel/KeyActionsPanel.js"
+    ]
+  },
+  {
+    "id": "FeeControler34",
+    "message": "Not enough ETH on your balance for miner fee.{br}Deposit 0.001 ETH to your account  {br} {address}",
+    "files": [
+      "shared/pages/Swap/FeeControler/FeeControler.js"
+    ]
+  },
+  {
+    "id": "FeeControler42",
+    "message": "Address copied to clipboard",
+    "files": [
+      "shared/pages/Swap/FeeControler/FeeControler.js"
     ]
   }
 ]

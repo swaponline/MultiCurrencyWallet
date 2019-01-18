@@ -6,8 +6,9 @@ import cssModules from 'react-css-modules'
 import styles from './Swap.scss'
 
 import { connect } from 'redaction'
-import { links, constants } from 'helpers'
+import helpers from 'helpers'
 import actions from 'redux/actions'
+import constants from 'constants'
 
 import { swapComponents } from './swaps'
 import Share from './Share/Share'
@@ -17,7 +18,7 @@ import { localisedUrl } from 'helpers/locale'
 import DeleteSwapAfterEnd from './DeleteSwapAfterEnd'
 import SwapController from './SwapController'
 import { Button } from 'components/controls'
-
+import FeeControler from './FeeControler/FeeControler'
 
 @injectIntl
 @connect(({
@@ -36,13 +37,13 @@ export default class SwapComponent extends PureComponent {
 
   state = {
     swap: null,
-    SwapComponent: null,
+    ethBalance: null,
     currencyData: null,
     isAmountMore: null,
-    ethBalance: null,
+    SwapComponent: null,
     continueSwap: false,
     enoughtBalance: true,
-    window: false,
+    depositWindow: false,
   }
 
   componentWillMount() {
@@ -87,10 +88,12 @@ export default class SwapComponent extends PureComponent {
       window.swap = swap
 
       this.setState({
-        SwapComponent,
         swap,
-        currencyData,
         ethData,
+        SwapComponent,
+        currencyData,
+        step: swap.flow.state.step,
+        ethAddress: ethData[0].address,
       })
 
     } catch (error) {
@@ -98,6 +101,7 @@ export default class SwapComponent extends PureComponent {
       this.props.history.push(localisedUrl(links.exchange))
     }
     this.setSaveSwapId(orderId)
+    this.getFee()
   }
 
   componentDidMount() {
@@ -143,23 +147,40 @@ export default class SwapComponent extends PureComponent {
     if (sellAmountPlusFee >= this.state.currencyData.balance) {
       this.setState(() => ({
         enoughtBalance: false,
-        window: true,
+        depositWindow: true,
       }))
     }
   }
 
+  getFee = async () => {
+    const btcFee = await helpers.btc.estimateFeeValue({ speed: 'normal' })
+    const ltcFee = await helpers.ltc.estimateFeeValue({ speed: 'normal' })
+
+    this.setState(() => ({
+      btcFee,
+      ltcFee,
+    }))
+  }
+
   checkEthBalance = async () => {
-    const { swap: { participantSwap, ownerSwap }, currencyData } = this.state
+    const { swap: { participantSwap, ownerSwap, sellAmount }, currencyData, btcFee, ltcFee } = this.state
 
-    const gasFee = participantSwap.gasLimit ? participantSwap.gasLimit * participantSwap.gasPrice : ownerSwap.gasLimit * ownerSwap.gasPrice
     const ethBalance = await actions.eth.getBalance()
+    const etheriumFee = sellAmount + ethFee
 
-    if ((this.props.tokenItems.map(item => item.name).includes(participantSwap._swapName.toLowerCase())
-      || currencyData.currency === 'BTC'
-      || currencyData.currency  === 'ETH')
-      && ethBalance >= gasFee * (1e-18)) {
+    const ethFee = (participantSwap.gasPrice * participantSwap.gasLimit * (1e-18)) || (ownerSwap.gasPrice * ownerSwap.gasLimit * (1e-18))
+
+    if (this.props.tokenItems.map(item => item.name).includes(participantSwap._swapName.toLowerCase()) && ethBalance > ethFee) { // ercFee
       this.setState(() => ({ continueSwap: true }))
     }
+    if (currencyData.currency  === 'BTC' && ethBalance > btcFee) {
+      this.setState(() => ({ continueSwap: true }))
+    }
+
+    if (currencyData.currency  === 'ETH' && ethBalance > sellAmount) {
+      this.setState(() => ({ continueSwap: true }))
+    }
+
   }
 
   handleGoHome = () => {
@@ -168,7 +189,8 @@ export default class SwapComponent extends PureComponent {
 
   render() {
     const { peer } = this.props
-    const { swap, SwapComponent, currencyData, isAmountMore, ethData, continueSwap, enoughtBalance, window } = this.state
+    const { swap, SwapComponent, currencyData, isAmountMore, ethData, continueSwap, enoughtBalance, depositWindow, step, ethAddress } = this.state
+
 
     if (!swap || !SwapComponent || !peer || !isAmountMore) {
       return null
@@ -179,12 +201,10 @@ export default class SwapComponent extends PureComponent {
     return (
       <div styleName="swap">
         <SwapComponent
-          window={window}
+          depositWindow={depositWindow}
           disabledTimer={isAmountMore === 'enable'}
           swap={swap}
           currencyData={currencyData}
-          continueSwap={continueSwap}
-          ethData={ethData}
           styles={styles}
           enoughtBalance={enoughtBalance}
         >
@@ -196,6 +216,7 @@ export default class SwapComponent extends PureComponent {
             )
           }
           <SwapController swap={swap} />
+          {step >= 5 && !continueSwap && (<FeeControler ethAddress={ethAddress} />)}
         </SwapComponent>
         {
           (isFinished) && (
