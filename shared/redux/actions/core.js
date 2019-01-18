@@ -47,34 +47,37 @@ const removeOrder = (orderId) => {
   actions.feed.deleteItemToFeed(orderId)
 }
 
-const sendRequest = (orderId, { address } = {}, callback) => {
+const sendRequest = (orderId, destination = {}, callback) => {
+  const { address: destinationAddress } = destination
+
   const order = SwapApp.services.orders.getByKey(orderId)
 
-  const destination = {
-    address,
-  }
-
   const userCurrencyData = getUserData(order.buyCurrency)
-  const participantMetadata = getUserData(order.buyCurrency)
+  const { address, reputation, reputationProof } = getUserData(order.buyCurrency)
 
   const requestOptions = {
-    destination, participantMetadata,
+    address: destinationAddress,
+    participantMetadata: {
+      address,
+      reputation,
+      reputationProof,
+    },
   }
 
   order.sendRequest(callback, requestOptions)
 }
 
-const sendRequestForPartial = (orderId, newValues, destination, callback) => {
+const sendRequestForPartial = (orderId, newValues, destination = {}, callback) => {
+  const { address: destinationAddress } = destination
+
   const order = SwapApp.services.orders.getByKey(orderId)
 
-  const { address } = destination
-  const { reputation, reputationProof } = getUserData(order.buyCurrency)
+  const { address, reputation, reputationProof } = getUserData(order.buyCurrency)
 
   const requestOptions = {
-    destination: {
-      address,
-    },
+    address: destinationAddress,
     participantMetadata: {
+      address,
       reputation,
       reputationProof,
     },
