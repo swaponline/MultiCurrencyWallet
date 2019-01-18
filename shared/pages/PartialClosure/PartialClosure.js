@@ -90,7 +90,7 @@ export default class PartialClosure extends Component {
       isNonOffers: false,
       isFetching: false,
       isDeclinedOffer: false,
-      customWalletUse: false,
+      customWalletUse: true,
       customWallet: '',
     }
     let timer

@@ -3797,7 +3797,7 @@
   },
   {
     "id": "BtcToEth248",
-    "message": "Возврата транзакции: ",
+    "message": "Транзакция возврата: ",
     "files": [
       "shared/pages/Swap/BtcToEth.js"
     ]
