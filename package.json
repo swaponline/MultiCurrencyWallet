@@ -147,6 +147,8 @@
     "ipfs": "^0.33.1",
     "ipfs-pubsub-room": "^1.4.0",
     "json-stringify-safe": "^5.0.1",
+    "level-js": "github:timkuijsten/level.js#idbunwrapper",
+    "memdown": "^3.0.0",
     "node-gyp": "^3.8.0",
     "react": "^16.3.2",
     "react-click-outside": "github:tj/react-click-outside",
@@ -172,6 +174,7 @@
     "rename-files": "0.0.2",
     "replace": "^1.0.0",
     "reverse": "^4.0.0",
+    "shelving-mock-indexeddb": "^1.0.8",
     "stellar-sdk": "^0.11.0",
     "styled-components": "^4.1.2"
   }

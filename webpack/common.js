@@ -93,6 +93,9 @@ const webpackConfig = {
       false,
       /js$/
     ),
+    new webpack.NormalModuleReplacementPlugin(/^leveldown$/, (result) => {
+      result.request = result.request.replace(/(leveldown)/,  config.paths.shared('helpers/leveldown'))
+    }),
   ],
 }
 
