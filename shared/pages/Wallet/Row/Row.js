@@ -113,6 +113,7 @@ export default class Row extends Component {
       isBalanceFetching: false,
     }))
   }
+
   shouldComponentUpdate(nextProps, nextState) {
     const getComparableProps = ({ item, index, selectId }) => ({
       item,

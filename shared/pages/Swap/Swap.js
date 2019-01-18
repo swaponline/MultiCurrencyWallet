@@ -98,6 +98,7 @@ export default class SwapComponent extends PureComponent {
       this.props.history.push(localisedUrl(links.exchange))
     }
     this.setSaveSwapId(orderId)
+    this.getFee()
   }
 
   componentDidMount() {
@@ -148,14 +149,22 @@ export default class SwapComponent extends PureComponent {
     }
   }
 
+  getFee = async () => {
+    const btcFee = await helpers.btc.estimateFeeValue({ speed: 'normal' })
+    const ltcFee = await helpers.ltc.estimateFeeValue({ speed: 'normal' })
+
+    this.setState(() => ({
+      btcFee,
+      ltcFee,
+    }))
+  }
+
   checkEthBalance = async () => {
-    const { swap: { participantSwap, ownerSwap, sellAmount }, currencyData } = this.state
+    const { swap: { participantSwap, ownerSwap, sellAmount }, currencyData, btcFee, ltcFee } = this.state
 
     const ethBalance = await actions.eth.getBalance()
 
     const ethFee = (participantSwap.gasPrice * participantSwap.gasLimit * (1e-18)) || (ownerSwap.gasPrice * ownerSwap.gasLimit * (1e-18))
-    const btcFee = await helpers.btc.estimateFeeValue({ speed: 'normal' })
-    const ltcFee = await helpers.ltc.estimateFeeValue({ speed: 'normal' })
 
     if (this.props.tokenItems.map(item => item.name).includes(participantSwap._swapName.toLowerCase()) && ethBalance > ethFee) { // ercFee
       this.setState(() => ({ continueSwap: true }))
@@ -164,9 +173,10 @@ export default class SwapComponent extends PureComponent {
       this.setState(() => ({ continueSwap: true }))
     }
 
-    if (currencyData.currency  === 'ETH' && ethBalance > ethFee + sellAmount.toNumber()) {
+    if (currencyData.currency  === 'ETH' && ethBalance > ethFee) {
       this.setState(() => ({ continueSwap: true }))
     }
+
   }
 
   handleGoHome = () => {

@@ -335,29 +335,9 @@ export default class EthToBtc extends Component {
                 }
                 {
                   (flow.step >= 5 || flow.isEthContractFunded) && (
-                    <Fragment>
-                      <h3 style={headingStyle}>
-                        <FormattedMessage id="EthToBtc297" defaultMessage="5. Creating Ethereum Contract. Please wait, it will take a while" />
-                      </h3>
-                      {/* eslint-disable */}
-                      {!continuerSwap && flow.step >= 5 &&
-                        <CopyToClipboard text={currencyAddress} data-tut="reactour__address">
-                          <h3 style={{ color: '#E72BB3', marginTop: '10px', cursor: 'pointer' }} onClick={this.handleCopy}>
-                            <FormattedMessage
-                              id="BtcToEthTokenAddress307"
-                              defaultMessage="Not enough ETH on your balance for miner fee.{br}{br}Deposit 0.001 ETH to your account {address}"
-                              values={{ address: `${currencyAddress}`, br: <br /> }}
-                            />
-                          </h3>
-                        </CopyToClipboard>
-                      }
-                      {/* eslint-enable */}
-                      { isAddressCopied &&
-                        <p style={{ fontSize: '14px', background: 'white', textAlign: 'center', borderRadius: '20px' }} >
-                          <FormattedMessage id="Row324" defaultMessage="Address copied to clipboard" />
-                        </p>
-                      }
-                    </Fragment>
+                    <h3 style={headingStyle}>
+                      <FormattedMessage id="EthToBtc297" defaultMessage="5. Creating Ethereum Contract. Please wait, it will take a while" />
+                    </h3>
                   )
                 }
                 {
@@ -376,11 +356,31 @@ export default class EthToBtc extends Component {
                     </div>
                   )
                 }
+                {/* eslint-disable */}
                 {
                   flow.step === 5 && (
-                    <InlineLoader />
+                    <Fragment>
+                      {!continuerSwap
+                        ? (<CopyToClipboard text={currencyAddress} data-tut="reactour__address">
+                          <h3 style={{ color: '#E72BB3', marginTop: '10px', cursor: 'pointer' }} onClick={this.handleCopy}>
+                            <FormattedMessage
+                              id="BtcToEthTokenAddress307"
+                              defaultMessage="Not enough ETH on your balance for miner fee.{br}{br}Deposit 0.001 ETH to your account {address}"
+                              values={{ address: `${currencyAddress}`, br: <br /> }}
+                            />
+                          </h3>
+                        </CopyToClipboard>
+                        )
+                        : (<InlineLoader />)}
+                    { isAddressCopied &&
+                      <p style={{ fontSize: '14px', background: 'white', textAlign: 'center', borderRadius: '20px' }} >
+                        <FormattedMessage id="Row324" defaultMessage="Address copied to clipboard" />
+                      </p>
+                    }
+                    </Fragment>
                   )
                 }
+                {/* eslint-enable */}
                 {
                   flow.refundTransactionHash && (
                     <div>
