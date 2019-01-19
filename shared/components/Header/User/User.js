@@ -16,10 +16,9 @@ import UserTooltip from './UserTooltip/UserTooltip'
 import SignUpButton from './SignUpButton/SignUpButton'
 
 import Avatar from 'components/Avatar/Avatar'
-import { injectIntl } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import ReactTooltip from 'react-tooltip'
-import { FormattedMessage } from 'react-intl'
 
 import config from 'app-config'
 
