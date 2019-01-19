@@ -91,10 +91,9 @@ export default class ImportKeys extends Component {
 
     try {
       bitcoin.ECPair.fromWIF(btcKey, btc.network) // eslint-disable-line
-    } catch (error) {
-      console.error(error)
+    } catch (e) {
       this.setState({ isSubmittedBtc: true })
-      return
+      return false
     }
 
     if (!btcKey || btcKey.length < 27) {
@@ -187,8 +186,8 @@ export default class ImportKeys extends Component {
     if (isSubmittedBtc) {
       linked.btcKey.check((value) => value !== '', <FormattedMessage id="importkeys118" defaultMessage="Please enter BTC private key" />)
       linked.btcKey.check((value) => value.length > 27, <FormattedMessage id="importkeys119" defaultMessage="Please valid BTC private key" />)
-      linked.btcKey.check((value) =>
-        value.length < 27 && value === '', <FormattedMessage id="importkeys120" defaultMessage="Something went wrong. Check your private key, network of this address and etc." />)
+      linked.btcKey.check(() =>
+        this.handleBtcImportKey(), <FormattedMessage id="importkeys120" defaultMessage="Something went wrong. Check your private key, network of this address and etc." />)
     }
 
     if (isSubmittedLtc) {
