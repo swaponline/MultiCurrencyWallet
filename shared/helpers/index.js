@@ -4,7 +4,7 @@ import eth from './eth'
 import ethToken from './ethToken'
 import bcash from './bcash'
 import ltc from './ltc'
-import xlm from './xlm'
+// import xlm from './xlm'
 import web3 from './web3'
 import links from './links'
 import request from './request'
@@ -25,7 +25,7 @@ import { migrate } from './migrations/'
 
 export default {
   eos,
-  xlm,
+  // xlm,
   bcash,
   btc,
   eth,
@@ -35,7 +35,7 @@ export default {
 
 export {
   eos,
-  xlm,
+  // xlm,
   bcash,
   tips,
   btc,

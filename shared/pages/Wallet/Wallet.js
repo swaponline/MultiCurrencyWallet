@@ -27,7 +27,7 @@ import config from 'app-config'
 @connect(
   ({
     core: { hiddenCoinsList },
-    user: { ethData, btcData, tokensData, eosData, xlmData, telosData, nimData, usdtData, ltcData },
+    user: { ethData, btcData, tokensData, eosData, /* xlmData, */ telosData, nimData, usdtData, ltcData },
     currencies: { items: currencies },
   }) => ({
     tokens: ((config && config.isWidget) ?
@@ -38,10 +38,10 @@ import config from 'app-config'
     items: ((config && config.isWidget) ?
       [btcData, ethData, usdtData ]
       :
-      [btcData, ethData, eosData, telosData, xlmData, ltcData, usdtData /* nimData */ ]).map((data) => (
+      [btcData, ethData, eosData, telosData, /* xlmData, */ ltcData, usdtData /* nimData */ ]).map((data) => (
       data.currency
     )),
-    currencyBalance: [btcData, ethData, eosData, xlmData, telosData, ltcData, usdtData, ...Object.keys(tokensData).map(k => (tokensData[k])) /* nimData */ ].map((cur) => (
+    currencyBalance: [btcData, ethData, eosData, /* xlmData, */ telosData, ltcData, usdtData, ...Object.keys(tokensData).map(k => (tokensData[k])) /* nimData */ ].map((cur) => (
       cur.balance
     )),
     currencies,

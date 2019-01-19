@@ -14,9 +14,9 @@ const sign = async () => {
   const ltcPrivateKey = localStorage.getItem(constants.privateKeyNames.ltc)
   const ethPrivateKey = localStorage.getItem(constants.privateKeyNames.eth)
   const _ethPrivateKey = actions.eth.login(ethPrivateKey)
-  const xlmPrivateKey = localStorage.getItem(constants.privateKeyNames.xlm)
+  // const xlmPrivateKey = localStorage.getItem(constants.privateKeyNames.xlm)
 
-  actions.xlm.login(xlmPrivateKey)
+  // actions.xlm.login(xlmPrivateKey)
   actions.btc.login(btcPrivateKey)
   // actions.bch.login(bchPrivateKey)
   actions.usdt.login(btcPrivateKey)
@@ -70,7 +70,7 @@ const sign = async () => {
 const getBalances = () => {
   actions.eth.getBalance()
   actions.btc.getBalance()
-  actions.xlm.getBalance()
+  // actions.xlm.getBalance()
   // actions.bch.getBalance()
   actions.ltc.getBalance()
   actions.usdt.getBalance()
@@ -135,7 +135,7 @@ const setTransactions = () =>
     })
 
 const getText = () => {
-  const { user : { ethData, btcData, eosData, xlmData, telosData, /* bchData, */ ltcData } } = getState()
+  const { user : { ethData, btcData, eosData, /* xlmData, */ telosData, /* bchData, */ ltcData } } = getState()
 
 
   let text = `
@@ -179,13 +179,15 @@ Private key: ${ltcData.privateKey}\r\n
 3. Go to settings > addresses > import\r\n
 4. paste private key and click "Ok"\r\n
 \r\n
-
+`
+/*
 # XLM\r\n
 \r\n
 XLM Private Key: ${xlmData.keypair.secret()}\r\n
 Address name: ${xlmData.address}\r\n
 \r\n
 `
+*/
   if (eosData.activePrivateKey) {
     text = `
 ${text}
