@@ -42,7 +42,7 @@
     "id": "avatar24",
     "message": "Автоматически созданный граватар, уникальный для каждого пользователя. Число равно рейтингу в системе (увеличивается с каждым успешным свопом)",
     "files": [
-      "shared/components/Avatar/Avatar.js"
+      "shared/components/Header/User/User.js"
     ]
   },
   {
