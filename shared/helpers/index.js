@@ -10,6 +10,7 @@ import links from './links'
 import request from './request'
 import constants from './constants'
 import localStorage from './localStorage'
+import swapsExplorer from './swapsExplorer'
 import api from './api'
 import tips from './tips'
 import * as utils from './utils'
@@ -48,6 +49,7 @@ export {
   request,
   constants,
   localStorage,
+  swapsExplorer,
   api,
   migrate,
   // Methods

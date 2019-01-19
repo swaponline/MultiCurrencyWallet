@@ -175,6 +175,27 @@ const setFeeRate = async ({ slow, normal, fast } = {}) => {
   reducers.user.setFeeRate({ name: 'btcData', feeRate })
 }
 
+const getReputation = () =>
+  new Promise(async (resolve, reject) => {
+    const { user: { btcData: { address, privateKey } } } = getState()
+    const addressOwnerSignature = signMessage(address, privateKey)
+
+    request.post(`${api.getApiServer('swapsExplorer')}/reputation`, {
+      json: true,
+      body: {
+        address,
+        addressOwnerSignature,
+      },
+    }).then((response) => {
+      const { reputation, reputationOracleSignature } = response
+
+      reducers.user.setReputation({ name: 'btcData', reputation, reputationOracleSignature })
+      resolve(reputation)
+    }).catch((error) => {
+      reject(error)
+    })
+  })
+
 export default {
   login,
   getBalance,
@@ -185,5 +206,6 @@ export default {
   fetchTx,
   fetchBalance,
   signMessage,
+  getReputation,
   setFeeRate,
 }

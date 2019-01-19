@@ -2,6 +2,7 @@
 import { eos } from 'helpers/eos'
 import 'abortcontroller-polyfill/dist/abortcontroller-polyfill-only'
 import web3 from 'helpers/web3'
+import swapsExplorer from 'helpers/swapsExplorer'
 import bitcoin from 'bitcoinjs-lib'
 import coininfo from 'coininfo'
 
@@ -46,6 +47,7 @@ const createSwapApp = () => {
       Ipfs: IPFS,
       IpfsRoom: Channel,
       storage: window.localStorage,
+      swapsExplorer,
     },
 
     services: [

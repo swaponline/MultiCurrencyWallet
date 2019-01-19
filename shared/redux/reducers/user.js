@@ -150,6 +150,18 @@ export const setTokenApprove = (state, { name, approve }) => ({
   },
 })
 
+export const setReputation = (state, { name, reputation, reputationOracleSignature }) => ({
+  ...state,
+  tokensData: {
+    ...state.tokensData,
+  },
+  [name]: {
+    ...state[name],
+    reputation: Number(reputation),
+    reputationProof: reputationOracleSignature,
+  },
+})
+
 export const setFeeRate = (state, { name, feeRate: { slow, normal, fast } }) => ({
   ...state,
   tokensData: {

@@ -63,8 +63,29 @@ const sign = async () => {
     await actions.tlos.getBalance()
   }
 
+  const getReputation = async () => {
+    await actions.user.getReputation()
+  }
+
   eosSign()
   telosSign()
+  getReputation()
+}
+
+const getReputation = async () => {
+  const btcReputationPromise = actions.btc.getReputation()
+  const ethReputationPromise = actions.eth.getReputation()
+  Promise.all([btcReputationPromise, ethReputationPromise])
+    .then(([btcReputation, ethReputation]) => {
+      const totalReputation = Number(btcReputation) + Number(ethReputation)
+      if (Number.isInteger(totalReputation)) {
+        reducers.ipfs.set({ reputation: totalReputation })
+      } else {
+        reducers.ipfs.set({ reputation: null })
+      }
+    }).catch((error) => {
+      console.error(`unknown reputation`, error)
+    })
 }
 
 const getBalances = () => {
@@ -234,4 +255,5 @@ export default {
   setTransactions,
   downloadPrivateKeys,
   getText,
+  getReputation,
 }
