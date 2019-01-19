@@ -1,6 +1,3 @@
-import TagManager from 'react-gtm-module'
-
-
 const dataEvent = (eventName) => {
   window.dataLayer = window.dataLayer ? window.dataLayer : []
   window.dataLayer.push({ 'event' : eventName })
@@ -51,10 +48,6 @@ const swapEvent = (eventAction, eventLabel) => {
 const tagManagerArgs = {
   gtmId: 'GTM-WK72GSV',
   dataLayerName: 'dataLayer',
-}
-
-if (!process.env.EXTENSION) {
-  TagManager.initialize(tagManagerArgs)
 }
 
 export default {
