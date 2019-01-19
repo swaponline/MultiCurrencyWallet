@@ -23,14 +23,13 @@ import DepositWindow from './DepositWindow/DepositWindow'
 
 export default class BtcToEthToken extends Component {
 
-  static getDerivedStateFromProps({ continueSwap, enoughtBalance }) {
+  static getDerivedStateFromProps({ enoughtBalance }) {
     return {
-      continuerSwap: continueSwap,
       enoughtBalance,
     }
   }
 
-  constructor({ swap, currencyData, ethData, continueSwap, enoughtBalance, styles, depositWindow }) {
+  constructor({ swap, currencyData, ethData, enoughtBalance, styles, depositWindow }) {
     super()
 
     this.swap = swap
@@ -43,7 +42,6 @@ export default class BtcToEthToken extends Component {
       enabledButton: false,
       isAddressCopied: false,
       flow: this.swap.flow.state,
-      continuerSwap: continueSwap,
       destinationAddressTimer: true,
       currencyAddress: currencyData.address,
       ethAddress: ethData.map(item => item.address),
@@ -154,17 +152,16 @@ export default class BtcToEthToken extends Component {
   render() {
     const { children, disabledTimer, swap, currencyData } = this.props
     const {
-      currencyAddress,
-      secret,
       flow,
-      enabledButton,
-      destinationAddressTimer,
-      continuerSwap,
-      isTextCopied,
+      secret,
       ethAddress,
-      enoughtBalance,
+      isTextCopied,
+      enabledButton,
       depositWindow,
+      enoughtBalance,
+      currencyAddress,
       isAddressCopied,
+      destinationAddressTimer,
     } = this.state
 
     const linked = Link.all(this, 'destinationBuyAddress')
@@ -399,7 +396,7 @@ export default class BtcToEthToken extends Component {
                   )
                 }
                 {
-                  flow.refundTransactionHash && continuerSwap && (
+                  flow.refundTransactionHash && (
                     <div styleName="transaction">
                       <FormattedMessage id="BtcToEthToken316" defaultMessage="Transaction: " />
                       <strong>

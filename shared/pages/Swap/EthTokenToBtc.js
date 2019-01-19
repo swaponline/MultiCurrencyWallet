@@ -15,23 +15,16 @@ import CopyToClipboard from 'react-copy-to-clipboard'
 
 export default class EthTokenToBtc extends Component {
 
-  static getDerivedStateFromProps({ continueSwap }) {
-    return {
-      continuerSwap: continueSwap,
-    }
-  }
-
-  constructor({ swap, currencyData, ethBalance, continueSwap }) {
+  constructor({ swap, currencyData, ethBalance }) {
     super()
 
     this.swap = swap
 
     this.state = {
-      currencyAddress: currencyData.address,
-      flow: this.swap.flow.state,
       enabledButton: false,
-      continuerSwap: continueSwap,
       isAddressCopied: false,
+      flow: this.swap.flow.state,
+      currencyAddress: currencyData.address,
     }
 
   }
@@ -88,7 +81,7 @@ export default class EthTokenToBtc extends Component {
 
   render() {
     const { children, disabledTimer }  = this.props
-    const { currencyAddress, flow, enabledButton, isShowingBitcoinScript, continuerSwap, isAddressCopied } = this.state
+    const { currencyAddress, flow, enabledButton, isShowingBitcoinScript, isAddressCopied } = this.state
 
     return (
       <div>

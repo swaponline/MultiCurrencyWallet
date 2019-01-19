@@ -15,13 +15,13 @@ import { FormattedMessage } from 'react-intl'
 
 export default class EthToBtc extends Component {
 
-  constructor({ swap, currencyData, window, continueSwap }) {
+  constructor({ swap, currencyData, depositWindow }) {
     super()
 
     this.swap = swap
 
     this.state = {
-      window,
+      depositWindow,
       enabledButton: false,
       isAddressCopied: false,
       flow: this.swap.flow.state,
@@ -93,7 +93,7 @@ export default class EthToBtc extends Component {
 
   render() {
     const { children } = this.props
-    const { currencyAddress, flow, enabledButton, isShowingBitcoinScript, continuerSwap, isAddressCopied } = this.state
+    const { currencyAddress, flow, enabledButton, isShowingBitcoinScript, isAddressCopied } = this.state
     const headingStyle = {
       color: '#5100dc',
       textTransform: 'uppercase',
@@ -341,13 +341,11 @@ export default class EthToBtc extends Component {
                     </div>
                   )
                 }
-                {/* eslint-disable */}
                 {
                   flow.step === 5 && (
                     <InlineLoader />
                   )
                 }
-                {/* eslint-enable */}
                 {
                   flow.refundTransactionHash && (
                     <div>
