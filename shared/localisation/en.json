@@ -3768,6 +3768,13 @@
     ]
   },
   {
+    "id": "RowHistory283",
+    "message": "Self",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
     "id": "RowHistory34",
     "message": "Confirmed",
     "files": [
