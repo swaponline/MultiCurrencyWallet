@@ -450,7 +450,7 @@ export default class PartialClosure extends Component {
       maxBuyAmount, getAmount, goodRate,
     } = this.state
 
-    const oneCryptoCost = maxBuyAmount.isLessThanOrEqualTo(0) ? new BigNumber(0) :  goodRate
+    const oneCryptoCost = maxBuyAmount.isLessThanOrEqualTo(0) ? BigNumber(0) : BigNumber(goodRate)
     const linked = Link.all(this, 'haveAmount', 'getAmount', 'customWallet')
 
     const isWidget = (config && config.isWidget)
