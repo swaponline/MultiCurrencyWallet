@@ -138,17 +138,11 @@
   },
   {
     "id": "userTooltip68",
-    "message": "User with ",
-    "files": [
-      "shared/components/Header/User/UserTooltip/UserTooltip.js"
-    ]
+    "message": "User with "
   },
   {
     "id": "userTooltip72",
-    "message": " reputation wants to swap",
-    "files": [
-      "shared/components/Header/User/UserTooltip/UserTooltip.js"
-    ]
+    "message": " reputation wants to swap"
   },
   {
     "id": "transactionLink28",
@@ -4248,10 +4242,7 @@
   },
   {
     "id": "ImportKeys176",
-    "message": "Please enter xlm private key",
-    "files": [
-      "shared/components/modals/ImportKeys/ImportKeys.js"
-    ]
+    "message": "Please enter xlm private key"
   },
   {
     "id": "ImportKeys205",
@@ -4276,10 +4267,7 @@
   },
   {
     "id": "importkeys187",
-    "message": "Please enter XLM private key",
-    "files": [
-      "shared/components/modals/ImportKeys/ImportKeys.js"
-    ]
+    "message": "Please enter XLM private key"
   },
   {
     "id": "WithdrawIncorectAddress",
@@ -4349,10 +4337,7 @@
   },
   {
     "id": "transaction436",
-    "message": "For a swap, you need {minAmount} ETH on your balance",
-    "files": [
-      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
-    ]
+    "message": "For a swap, you need {minAmount} ETH on your balance"
   },
   {
     "id": "currencyIcon15",
@@ -4690,6 +4675,13 @@
     "message": "Hidden coins ({length})",
     "files": [
       "shared/components/KeyActionsPanel/KeyActionsPanel.js"
+    ]
+  },
+  {
+    "id": "userTooltip43",
+    "message": "User ({reputation}) wants to swap",
+    "files": [
+      "shared/components/Header/User/UserTooltip/UserTooltip.js"
     ]
   }
 ]

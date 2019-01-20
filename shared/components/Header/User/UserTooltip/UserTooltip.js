@@ -40,9 +40,7 @@ export default class UserTooltip extends Component {
                 <div styleName="userTooltip" >
                   <div key={peer}>
                     <div styleName="title">
-                      <FormattedMessage id="userTooltip68" defaultMessage="User(" />
-                      <b>{Number.isInteger(reputation) ? reputation : reputationPlaceholder}</b>
-                      <FormattedMessage id="userTooltip72" defaultMessage=") wants to swap" />
+                      <FormattedMessage id="userTooltip43" defaultMessage="User ({reputation}) wants to swap" values={{ reputation: <b>{Number.isInteger(reputation) ? reputation : reputationPlaceholder}</b> }} />
                     </div>
                     <div styleName="currency">
                       <span>{buyAmount.toFixed(5)} <span styleName="coin">{buyCurrency}</span></span>

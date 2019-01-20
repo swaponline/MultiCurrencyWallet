@@ -138,17 +138,11 @@
   },
   {
     "id": "userTooltip68",
-    "message": "Пользователь с ",
-    "files": [
-      "shared/components/Header/User/UserTooltip/UserTooltip.js"
-    ]
+    "message": "Пользователь с "
   },
   {
     "id": "userTooltip72",
-    "message": "репутацией предлагает обмен",
-    "files": [
-      "shared/components/Header/User/UserTooltip/UserTooltip.js"
-    ]
+    "message": "репутацией предлагает обмен"
   },
   {
     "id": "transactionLink28",
@@ -4263,10 +4257,7 @@
   },
   {
     "id": "ImportKeys176",
-    "message": "Пожалуйста введите XLM приватный ключ",
-    "files": [
-      "shared/components/modals/ImportKeys/ImportKeys.js"
-    ]
+    "message": "Пожалуйста введите XLM приватный ключ"
   },
   {
     "id": "ImportKeys205",
@@ -4291,10 +4282,7 @@
   },
   {
     "id": "importkeys187",
-    "message": "Пожалуйста введите XLM приватный ключ ",
-    "files": [
-      "shared/components/modals/ImportKeys/ImportKeys.js"
-    ]
+    "message": "Пожалуйста введите XLM приватный ключ "
   },
   {
     "id": "WithdrawIncorectAddress",
@@ -4341,10 +4329,7 @@
   },
   {
     "id": "transaction436",
-    "message": "Для обмена, вам нужно {minAmount} ETH на вашем балансе",
-    "files": [
-      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
-    ]
+    "message": "Для обмена, вам нужно {minAmount} ETH на вашем балансе"
   },
   {
     "id": "currencyIcon15",
@@ -4674,6 +4659,13 @@
     "message": "Скрытые валюты ({length})",
     "files": [
       "shared/components/KeyActionsPanel/KeyActionsPanel.js"
+    ]
+  },
+  {
+    "id": "userTooltip43",
+    "message": "Пользователь ({reputation}) предлагает обмен",
+    "files": [
+      "shared/components/Header/User/UserTooltip/UserTooltip.js"
     ]
   }
 ]
