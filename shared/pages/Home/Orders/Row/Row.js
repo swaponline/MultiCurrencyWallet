@@ -19,9 +19,11 @@ import { Button, RemoveButton } from 'components/controls'
 import Pair from '../Pair'
 import PAIR_TYPES from 'helpers/constants/PAIR_TYPES'
 import RequestButton from '../RequestButton/RequestButton'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
+import { localisedUrl } from 'helpers/locale'
 
 
+@injectIntl
 @connect({
   peer: 'ipfs.peer',
 })
@@ -103,6 +105,7 @@ export default class Row extends Component {
   renderWebContent() {
     const { balance, isFetching } = this.state
     const {
+      peer,
       orderId,
       row: {
         id,
@@ -113,19 +116,13 @@ export default class Row extends Component {
         isRequested,
         isProcessing,
         sellCurrency,
-
         owner: {  peer: ownerPeer },
       },
-      peer,
     } = this.props
 
     const pair = Pair.fromOrder(this.props.row)
 
     const { price, amount, total, main, base, type } = pair
-
-    if (this.state.redirect) {
-      return <Redirect push to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`} />
-    }
 
     return (
       <tr style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}>
@@ -177,7 +174,7 @@ export default class Row extends Component {
                       <div style={{ color: 'red' }}>
                         <FormattedMessage id="Row148" defaultMessage="REQUESTING" />
                       </div>
-                      <Link to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`}>
+                      <Link to={`${localisedUrl(locale, links.swap)}/${buyCurrency}-${sellCurrency}/${id}`}>
                         <FormattedMessage id="Row151" defaultMessage="Go to the swap" />
                       </Link>
                     </Fragment>
@@ -335,10 +332,11 @@ export default class Row extends Component {
         buyCurrency,
         sellCurrency,
       },
+      intl: { locale },
     } = this.props
 
     if (this.state.redirect) {
-      return <Redirect push to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`} />
+      return <Redirect push to={`${localisedUrl(locale, links.swap)}/${buyCurrency}-${sellCurrency}/${id}`} />
     }
     if (this.state.windowWidth < mobileBreakpoint)  {
       return this.renderMobileContent()
