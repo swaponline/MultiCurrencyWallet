@@ -187,7 +187,7 @@ export default class ImportKeys extends Component {
       linked.btcKey.check((value) => value !== '', <FormattedMessage id="importkeys118" defaultMessage="Please enter BTC private key" />)
       linked.btcKey.check((value) => value.length > 27, <FormattedMessage id="importkeys119" defaultMessage="Please valid BTC private key" />)
       linked.btcKey.check(() =>
-        this.handleBtcImportKey(), <FormattedMessage id="importkeys120" defaultMessage="Something went wrong. Check your private key, network of this address and etc." />)
+        this.handleBtcImportKey(), <FormattedMessage id="importkeys190" defaultMessage="Something went wrong. Check your private key, network of this address and etc." />)
     }
 
     if (isSubmittedLtc) {
@@ -224,7 +224,7 @@ export default class ImportKeys extends Component {
             onClick={this.handleBtcImportKey}
           />
 
-          <FormattedMessage id="ImportKeys205" defaultMessage="Please enter ltc private key in WIF format">
+          <FormattedMessage id="ImportKeys205" defaultMessage="Please enter LTC private key in WIF format">
             {message => <FieldLabel>{message}</FieldLabel>}
           </FormattedMessage>
           <Group

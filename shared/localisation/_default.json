@@ -317,7 +317,7 @@
   },
   {
     "id": "ImportKeys120",
-    "message": "Please enter btc private key in WIF format",
+    "message": "Please enter BTC private key in WIF format",
     "files": [
       "shared/components/modals/ImportKeys/ImportKeys.js"
     ]
@@ -4321,7 +4321,7 @@
   },
   {
     "id": "ImportKeys205",
-    "message": "Please enter ltc private key in WIF format",
+    "message": "Please enter LTC private key in WIF format",
     "files": [
       "shared/components/modals/ImportKeys/ImportKeys.js"
     ]
@@ -4343,6 +4343,13 @@
   {
     "id": "importkeys187",
     "message": "Please enter XLM private key",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "importkeys190",
+    "message": "Something went wrong. Check your private key, network of this address and etc.",
     "files": [
       "shared/components/modals/ImportKeys/ImportKeys.js"
     ]
