@@ -4304,6 +4304,13 @@
     ]
   },
   {
+    "id": "importkeys190",
+    "message": "Что то пошло не так. Проверьте ваш приватный ключ, сеть этого адреса и тд.",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
     "id": "WithdrawIncorectAddress",
     "message": "Некорректно указан адрес",
     "files": [
