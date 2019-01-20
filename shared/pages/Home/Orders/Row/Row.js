@@ -118,6 +118,7 @@ export default class Row extends Component {
         sellCurrency,
         owner: {  peer: ownerPeer },
       },
+      intl: { locale },
     } = this.props
 
     const pair = Pair.fromOrder(this.props.row)
