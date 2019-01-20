@@ -75,6 +75,8 @@ export default class Wallet extends Component {
     actions.user.getBalances()
     actions.analytics.dataEvent('open-page-balances')
 
+    this.checkImportKeyHash()
+
     if (process.env.MAINNET) {
       localStorage.setItem(constants.localStorage.testnetSkip, false)
     } else {
@@ -88,16 +90,6 @@ export default class Wallet extends Component {
       testSkip,
       saveKeys,
     }))
-  }
-
-  componentWillReceiveProps() {
-    const { saveKeys, testSkip } = this.state
-
-    const openTour = JSON.parse(localStorage.getItem(constants.localStorage.openTour))
-
-    if (saveKeys || testSkip || !openTour) {
-      return
-    }
   }
 
   componentDidUpdate() {
@@ -130,6 +122,23 @@ export default class Wallet extends Component {
       ...getComparableProps(nextProps),
       ...nextState,
     })
+  }
+
+  checkImportKeyHash = () => {
+    const urlHash = window.location.hash
+
+    if (!urlHash) {
+      return
+    }
+
+    if (urlHash !== '#importKeys') {
+      return
+    }
+
+    localStorage.setItem(constants.localStorage.privateKeysSaved, true)
+    localStorage.setItem(constants.localStorage.firstStart, true)
+
+    actions.modals.open(constants.modals.ImportKeys)
   }
 
   render() {
