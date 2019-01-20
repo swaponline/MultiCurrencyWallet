@@ -74,14 +74,30 @@ const getTransaction = () =>
 
     return request.get(url)
       .then((res) => {
-        const transactions = res.txs.map((item) => ({
-          type: 'btc',
-          hash: item.txid,
-          confirmations: item.confirmations,
-          value: item.vout.filter(item => item.scriptPubKey.addresses[0] === address)[0].value,
-          date: item.time * 1000,
-          direction: address === item.vout[0].scriptPubKey.addresses[0] ? 'in' : 'out',
-        }))
+        const transactions = res.txs.map((item) => {
+          const direction = item.vin[0].addr !== address ? 'in' : 'out'
+          const isSelf = direction === 'out'
+            && item.vout.filter((item) =>
+              item.scriptPubKey.addresses[0] === address
+            ).length === item.vout.length
+
+          return ({
+            type: 'btc',
+            hash: item.txid,
+            confirmations: item.confirmations,
+            value: isSelf
+              ? item.fees
+              : item.vout.filter((item) => {
+                const currentAddress = item.scriptPubKey.addresses[0]
+
+                return direction === 'in'
+                  ? (currentAddress === address)
+                  : (currentAddress !== address)
+              })[0].value,
+            date: item.time * 1000,
+            direction: isSelf ? 'self' : direction,
+          })
+        })
         resolve(transactions)
       })
       .catch(() => {

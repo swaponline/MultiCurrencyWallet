@@ -3775,6 +3775,13 @@
     ]
   },
   {
+    "id": "RowHistory283",
+    "message": "Себе",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
     "id": "RowHistory34",
     "message": "Подтверждено",
     "files": [
