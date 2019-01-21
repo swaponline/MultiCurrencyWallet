@@ -25,18 +25,6 @@ const globals = {
   __CONFIG__: JSON.stringify(config),
 }
 
-const ganalyticTemplate = `
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-116857031-2"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-
-    gtag('config', 'UA-116857031-2');
-  </script>
-`
-
 const webpackConfig = {
 
   entry: {
@@ -93,7 +81,6 @@ const webpackConfig = {
     }),
     new HtmlWebpackPlugin({
       title: 'Swap.Online - Cryptocurrency Wallet with Atomic Swap Exchange',
-      ganalytics: config.entry === 'mainnet' ? ganalyticTemplate : "",
       template: config.paths.client('index.html'),
       hash: false,
       filename: 'index.html',
