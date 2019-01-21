@@ -10,16 +10,24 @@
 
   <meta property="og:url" content="https://swap.online">
   <meta property="og:image" content="https://wiki.swap.online/assets/swap-logo.png">
-
   <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-116857031-2"></script>
   <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
+    var mainDomainRegexr = /(www.)?swap.online/;
 
-    gtag('config', 'UA-116857031-2');
+    if (mainDomainRegexr.test(window.location.hostname)) {
+      var script_1 = document.createElement('script');
+      var script_2 = document.createElement('script');
+
+      script_1.async = true;
+      script_1.src = 'https://www.googletagmanager.com/gtag/js?id=UA-116857031-2';
+
+      script_2.innerHTML = "window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'UA-116857031-2');"
+
+      document.head.appendChild(script_1);
+      document.head.appendChild(script_2);
+    }
   </script>
+
 
 </head>
 <body>

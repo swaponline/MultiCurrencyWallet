@@ -25,7 +25,6 @@ const globals = {
   __CONFIG__: JSON.stringify(config),
 }
 
-
 const webpackConfig = {
 
   entry: {
