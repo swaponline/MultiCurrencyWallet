@@ -17,6 +17,7 @@ class Row extends React.PureComponent {
     const statusStyleName = cx('status', {
       'in': direction === 'in',
       'out': direction !== 'in',
+      'self': direction === 'self',
     })
 
     return (
@@ -26,9 +27,14 @@ class Row extends React.PureComponent {
         </td>
         <td>
           <div styleName={statusStyleName}>
-            {direction === 'in' ?
-              <FormattedMessage id="RowHistory281" defaultMessage="Received" /> :
-              <FormattedMessage id="RowHistory282" defaultMessage="Sent" />
+            {
+              direction === 'in'
+                ? <FormattedMessage id="RowHistory281" defaultMessage="Received" />
+                : (
+                  direction !== 'self'
+                    ? <FormattedMessage id="RowHistory282" defaultMessage="Sent" />
+                    : <FormattedMessage id="RowHistory283" defaultMessage="Self" />
+                )
             }
           </div>
           <div styleName="date">{moment(date).format('LLLL')}</div>

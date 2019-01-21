@@ -88,7 +88,7 @@ export default class Core extends Component {
     this.setState(() => ({
       orders,
     }))
-    actions.core.updateCore(orders)
+    actions.core.updateCore()
   }
 
   createOrder = async ({ fromPeer, order, ...rest }) => {

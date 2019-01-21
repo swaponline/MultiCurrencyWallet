@@ -40,9 +40,9 @@
   },
   {
     "id": "avatar24",
-    "message": "Автоматически созданный граватар, уникальный для каждого пользователя. Ваш граватар в правом верхнем углу",
+    "message": "Автоматически созданный граватар, уникальный для каждого пользователя. Число равно рейтингу в системе (увеличивается с каждым успешным свопом)",
     "files": [
-      "shared/components/Avatar/Avatar.js"
+      "shared/components/Header/User/User.js"
     ]
   },
   {
@@ -3775,6 +3775,13 @@
     ]
   },
   {
+    "id": "RowHistory283",
+    "message": "Себе",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
     "id": "RowHistory34",
     "message": "Подтверждено",
     "files": [
@@ -3797,7 +3804,7 @@
   },
   {
     "id": "BtcToEth248",
-    "message": "Возврата транзакции: ",
+    "message": "Транзакция возврата: ",
     "files": [
       "shared/pages/Swap/BtcToEth.js"
     ]
@@ -4297,6 +4304,13 @@
     ]
   },
   {
+    "id": "importkeys190",
+    "message": "Что то пошло не так. Проверьте ваш приватный ключ, сеть этого адреса и тд.",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
     "id": "WithdrawIncorectAddress",
     "message": "Некорректно указан адрес",
     "files": [
@@ -4672,7 +4686,7 @@
   },
   {
     "id": "FeeControler34",
-    "message": "Недостаточный баланс ETH кошелька {br}, для оплаты комиссии майнеров.{br}Внесите 0.001 ETH на Ваш кошелек {br}для продолжения обмена {br} {address}",
+    "message": "Недостаточный баланс ETH кошелька, для оплаты комиссии майнеров.{br}Внесите 0.001 ETH на Ваш кошелек для продолжения обмена {br}",
     "files": [
       "shared/pages/Swap/FeeControler/FeeControler.js"
     ]

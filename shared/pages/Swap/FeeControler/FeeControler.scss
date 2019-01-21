@@ -1,8 +1,17 @@
 .main {
   color: rgb(231, 43, 179);
-  cursor: pointer;
   margin-top: -6em;
   background: white;
   position: absolute;
   font-size: 16px;
+}
+
+.button {
+  cursor: pointer;
+  width: 200px;
+  margin-left: 20%;
+}
+
+.address {
+  font-size: 26px;
 }

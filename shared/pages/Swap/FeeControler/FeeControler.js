@@ -6,6 +6,8 @@ import cssModules from 'react-css-modules'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import { FormattedMessage } from 'react-intl'
 
+import Button from 'components/controls/Button/Button'
+
 
 @cssModules(styles)
 export default class FeeControler extends Component {
@@ -31,23 +33,28 @@ export default class FeeControler extends Component {
     const { isAddressCopied } = this.state
 
     return (
-      <Fragment>
-      <img src={icon} />
+      <div>
         <CopyToClipboard text={ethAddress} data-tut="reactour__address">
-          <h3 styleName="main" onClick={this.handleCopy}>
-            <FormattedMessage
-              id="FeeControler34"
-              defaultMessage="Not enough ETH on your balance for miner fee.{br}Deposit 0.001 ETH to your account  {br} {address}"
-              values={{ address: `${ethAddress}`, br: <br /> }}
-            />
-          </h3>
+          <div styleName="main">
+            <h3>
+              <FormattedMessage
+                id="FeeControler34"
+                defaultMessage="Not enough ETH on your balance for miner fee.{br}Deposit 0.001 ETH to your account  {br}  {br} {address}"
+                values={{ br: <br /> }}
+              />
+              <p styleName="address">
+              <br />
+                {ethAddress}
+              </p>
+            </h3>
+            <Button brand styleName="button" onClick={this.handleCopy}>
+              {isAddressCopied
+              ? <FormattedMessage id="FeeControler48" defaultMessage="Copied" />
+              : <FormattedMessage id="FeeControler49" defaultMessage="Copy" />}
+            </Button>
+          </div>
         </CopyToClipboard>
-      {isAddressCopied &&
-        (<p>
-          <FormattedMessage id="FeeControler42" defaultMessage="Address copied to clipboard" />
-        </p>)
-      }
-      </Fragment>
+      </div>
     )
   }
 }

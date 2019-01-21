@@ -20,13 +20,13 @@ export const initialState = {
     currency: 'BCH',
     fullName: 'BitcoinCash',
   },
-  */
   xlmData: {
     balance: 0,
     currency: 'XLM',
     fullName: 'Stellar',
     balanceError: null,
   },
+  */
   ltcData: {
     balance: 0,
     isBalanceFetched: false,
@@ -147,6 +147,18 @@ export const setTokenApprove = (state, { name, approve }) => ({
       ...state.tokensData[name],
       approve,
     },
+  },
+})
+
+export const setReputation = (state, { name, reputation, reputationOracleSignature }) => ({
+  ...state,
+  tokensData: {
+    ...state.tokensData,
+  },
+  [name]: {
+    ...state[name],
+    reputation: Number(reputation),
+    reputationProof: reputationOracleSignature,
   },
 })
 

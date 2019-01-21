@@ -72,8 +72,9 @@ export default class PartialClosure extends Component {
     }
   }
 
-  constructor() {
+  constructor({ currenciesData }) {
     super()
+    const ethAddress = currenciesData.filter(item => item.currency === 'ETH')
 
     this.state = {
       haveCurrency: 'btc',
@@ -90,8 +91,8 @@ export default class PartialClosure extends Component {
       isNonOffers: false,
       isFetching: false,
       isDeclinedOffer: false,
-      customWalletUse: false,
-      customWallet: '',
+      customWalletUse: true,
+      customWallet: ethAddress[0].address,
     }
     let timer
     let wallets
@@ -334,7 +335,7 @@ export default class PartialClosure extends Component {
 
     this.setState({
       customWalletUse: newCustomWalletUse,
-      customWallet: (!newCustomWalletUse) ? '' : this.getSystemWallet(),
+      customWallet: (newCustomWalletUse === false) ? '' : this.getSystemWallet(),
     })
   }
 
@@ -342,6 +343,7 @@ export default class PartialClosure extends Component {
     this.checkPair(this.state.haveCurrency)
     this.setState(() => ({
       getCurrency: value,
+      customWallet: this.state.customWalletUse ? this.wallets[value.toUpperCase()] : '',
     }))
   }
 
@@ -358,6 +360,7 @@ export default class PartialClosure extends Component {
     this.setState(() => ({
       haveCurrency: this.state.getCurrency,
       getCurrency: this.state.haveCurrency,
+      customWallet: this.state.customWalletUse ? this.wallets[this.state.haveCurrency.toUpperCase()] : '',
     }))
   }
 
@@ -386,8 +389,7 @@ export default class PartialClosure extends Component {
       isNonOffers: false,
       isFetching: false,
       isDeclinedOffer: false,
-      customWalletUse: false,
-      customWallet: '',
+      customWallet: this.state.customWalletUse ? this.wallets[this.state.getCurrency.toUpperCase()] : '',
     }))
   }
 
@@ -444,13 +446,13 @@ export default class PartialClosure extends Component {
 
 
   render() {
-    const { currencies, addSelectedItems, intl: { locale } } = this.props
+    const { currencies, addSelectedItems, currenciesData, intl: { locale } } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching,
       isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet, getUsd, haveUsd,
       maxBuyAmount, getAmount, goodRate,
     } = this.state
 
-    const oneCryptoCost = maxBuyAmount.isLessThanOrEqualTo(0) ? new BigNumber(0) :  goodRate
+    const oneCryptoCost = maxBuyAmount.isLessThanOrEqualTo(0) ? BigNumber(0) : BigNumber(goodRate)
     const linked = Link.all(this, 'haveAmount', 'getAmount', 'customWallet')
 
     const isWidget = (config && config.isWidget)
@@ -576,7 +578,7 @@ export default class PartialClosure extends Component {
                     </Tooltip >
                   </FieldLabel>
                   <div styleName="walletInput">
-                    <Input required valueLink={linked.customWallet} pattern="0-9a-zA-Z" placeholder="Enter the destination address" />
+                    <Input required disabled={customWalletUse} valueLink={linked.customWallet} pattern="0-9a-zA-Z" placeholder="Enter the destination address" />
                   </div>
                   <div styleName="walletToggle">
                     <Toggle checked={customWalletUse} onChange={this.handleCustomWalletUse} />

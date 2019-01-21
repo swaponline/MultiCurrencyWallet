@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 
 import { withRouter } from 'react-router'
@@ -16,8 +16,9 @@ import UserTooltip from './UserTooltip/UserTooltip'
 import SignUpButton from './SignUpButton/SignUpButton'
 
 import Avatar from 'components/Avatar/Avatar'
-import { injectIntl } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
+import ReactTooltip from 'react-tooltip'
 
 import config from 'app-config'
 
@@ -28,6 +29,7 @@ import config from 'app-config'
   feeds: 'feeds.items',
   peer: 'ipfs.peer',
   isSigned: 'signUp.isSigned',
+  reputation: 'ipfs.reputation',
 })
 @CSSModules(styles)
 export default class User extends React.Component {
@@ -85,6 +87,7 @@ export default class User extends React.Component {
     const { view } = this.state
 
     const isWidget = (config && config.isWidget)
+    const reputationPlaceholder = '0'
 
     const {
       feeds, peer, reputation, openTour, path, isSigned,
@@ -116,11 +119,25 @@ export default class User extends React.Component {
           />
         }
         {!!peer && !isWidget && (
-          <Avatar
-            className={styles.avatar}
-            value={peer}
-            size={40}
-          />
+          <Fragment>
+            <div styleName="avatar-container" data-tip data-for="gravatar">
+              <Avatar
+                className={styles.avatar}
+                value={peer}
+                size={40}
+              />
+              <div styleName="avatar-reputation-centered">{ Number.isInteger(reputation) ? reputation : reputationPlaceholder }</div>
+            </div>
+            <ReactTooltip id="gravatar" type="light" effect="solid">
+              <span>
+                <FormattedMessage
+                  id="avatar24"
+                  defaultMessage="This is your (personal) gravatar, it is unique for each user.
+                  The number is your rating within the system (it grows with the number of successful swaps)"
+                />
+              </span>
+            </ReactTooltip>
+          </Fragment>
         )}
       </div>
     )

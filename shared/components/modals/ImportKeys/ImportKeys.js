@@ -2,8 +2,10 @@ import React, { Component } from 'react'
 
 import actions from 'redux/actions'
 
+import bitcoin from 'bitcoinjs-lib'
+
 import Link from 'sw-valuelink'
-import { constants } from 'helpers'
+import { btc, constants } from 'helpers'
 
 import cssModules from 'react-css-modules'
 import styles from './ImportKeys.scss'
@@ -31,17 +33,17 @@ export default class ImportKeys extends Component {
     ethKey: '',
     btcKey: '',
     ltcKey: '',
-    xlmKey: '',
+    // xlmKey: '',
 
     isSubmittedEth: false,
     isSubmittedBtc: false,
     isSubmittedLtc: false,
-    isSubmittedXlm: false,
+    // isSubmittedXlm: false,
 
     isImportedEth: false,
     isImportedBtc: false,
     isImportedLtc: false,
-    isImportedXlm: false,
+    // isImportedXlm: false,
 
     isDisabled: true,
     keySave: false,
@@ -87,6 +89,13 @@ export default class ImportKeys extends Component {
   handleBtcImportKey = () => {
     const { btcKey } = this.state
 
+    try {
+      bitcoin.ECPair.fromWIF(btcKey, btc.network) // eslint-disable-line
+    } catch (e) {
+      this.setState({ isSubmittedBtc: true })
+      return false
+    }
+
     if (!btcKey || btcKey.length < 27) {
       this.setState({ isSubmittedBtc: true })
       return
@@ -122,7 +131,7 @@ export default class ImportKeys extends Component {
       this.setState({ isSubmittedLtc: true })
     }
   }
-
+  /*
   handleXlmImportKey = () => {
     const { xlmKey } = this.state
 
@@ -141,7 +150,7 @@ export default class ImportKeys extends Component {
       this.setState({ isSubmittedXlm: true })
     }
   }
-
+  */
   handleImportKeys = () => {
     window.location.reload()
     localStorage.setItem(constants.localStorage.testnetSkipPKCheck, true)
@@ -152,22 +161,22 @@ export default class ImportKeys extends Component {
   }
 
   checkAnyImport = () => {
-    const { isSubmittedEth, isSubmittedBtc, isSubmittedLtc, isSubmittedXlm } = this.state
+    const { isSubmittedEth, isSubmittedBtc, isSubmittedLtc /* , isSubmittedXlm */ } = this.state
 
-    if (isSubmittedEth || isSubmittedBtc || isSubmittedLtc || isSubmittedXlm) {
+    if (isSubmittedEth || isSubmittedBtc || isSubmittedLtc /* || isSubmittedXlm */) {
       this.setState(() => ({ isDisabled: false }))
     }
   }
 
   render() {
     const {
-      isSubmittedEth, isSubmittedBtc, isSubmittedLtc, isSubmittedXlm,
-      isImportedEth, isImportedBtc, isImportedLtc, isImportedXlm, isDisabled, keySave,
+      isSubmittedEth, isSubmittedBtc, isSubmittedLtc, /* isSubmittedXlm, */
+      isImportedEth, isImportedBtc, isImportedLtc, /* isImportedXlm, */ isDisabled, keySave,
     } = this.state
 
     const { intl } = this.props
 
-    const linked = Link.all(this, 'ethKey', 'btcKey', 'ltcKey', 'xlmKey')
+    const linked = Link.all(this, 'ethKey', 'btcKey', 'ltcKey' /* , 'xlmKey' */)
 
     if (isSubmittedEth) {
       linked.ethKey.check((value) => value !== '', <FormattedMessage id="importkeys172" defaultMessage="Please enter ETH private key" />)
@@ -177,17 +186,19 @@ export default class ImportKeys extends Component {
     if (isSubmittedBtc) {
       linked.btcKey.check((value) => value !== '', <FormattedMessage id="importkeys118" defaultMessage="Please enter BTC private key" />)
       linked.btcKey.check((value) => value.length > 27, <FormattedMessage id="importkeys119" defaultMessage="Please valid BTC private key" />)
+      linked.btcKey.check(() =>
+        this.handleBtcImportKey(), <FormattedMessage id="importkeys190" defaultMessage="Something went wrong. Check your private key, network of this address and etc." />)
     }
 
     if (isSubmittedLtc) {
       linked.ltcKey.check((value) => value !== '', 'Please enter LTC private key')
       linked.ltcKey.check((value) => value.length > 27, 'Please valid LTC private key')
     }
-
+    /*
     if (isSubmittedXlm) {
       linked.btcKey.check((value) => value !== '', <FormattedMessage id="importkeys187" defaultMessage="Please enter XLM private key" />)
     }
-
+    */
     return (
       <Modal name={this.props.name} title={intl.formatMessage(title.Import)}>
         <div styleName="modal">
@@ -213,7 +224,7 @@ export default class ImportKeys extends Component {
             onClick={this.handleBtcImportKey}
           />
 
-          <FormattedMessage id="ImportKeys205" defaultMessage="Please enter ltc private key in WIF format">
+          <FormattedMessage id="ImportKeys205" defaultMessage="Please enter LTC private key in WIF format">
             {message => <FieldLabel>{message}</FieldLabel>}
           </FormattedMessage>
           <Group
@@ -222,7 +233,8 @@ export default class ImportKeys extends Component {
             disabled={isImportedLtc}
             onClick={this.handleLtcImportKey}
           />
-
+          {
+          /*
           <FormattedMessage id="ImportKeys176" defaultMessage="Please enter xlm private key">
             {message => <FieldLabel>{message}</FieldLabel>}
           </FormattedMessage>
@@ -232,6 +244,8 @@ export default class ImportKeys extends Component {
             disabled={isImportedXlm}
             onClick={this.handleXlmImportKey}
           />
+          */
+          }
           {
             !keySave && (
               <span styleName="error">

@@ -40,9 +40,9 @@
   },
   {
     "id": "avatar24",
-    "message": "Automatically created gravatar. its unique for every profile. You can see your in the upper right corner",
+    "message": "This is your (personal) gravatar, it is unique for each user. The number is your rating within the system (it grows with the number of successful swaps)",
     "files": [
-      "shared/components/Avatar/Avatar.js"
+      "shared/components/Header/User/User.js"
     ]
   },
   {
@@ -324,7 +324,7 @@
   },
   {
     "id": "ImportKeys120",
-    "message": "Please enter btc private key in WIF format",
+    "message": "Please enter BTC private key in WIF format",
     "files": [
       "shared/components/modals/ImportKeys/ImportKeys.js"
     ]
@@ -3768,6 +3768,13 @@
     ]
   },
   {
+    "id": "RowHistory283",
+    "message": "Self",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
     "id": "RowHistory34",
     "message": "Confirmed",
     "files": [
@@ -4255,7 +4262,7 @@
   },
   {
     "id": "ImportKeys205",
-    "message": "Please enter ltc private key in WIF format",
+    "message": "Please enter LTC private key in WIF format",
     "files": [
       "shared/components/modals/ImportKeys/ImportKeys.js"
     ]
@@ -4277,6 +4284,13 @@
   {
     "id": "importkeys187",
     "message": "Please enter XLM private key",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "importkeys190",
+    "message": "Something went wrong. Check your private key, network of this address and etc.",
     "files": [
       "shared/components/modals/ImportKeys/ImportKeys.js"
     ]
@@ -4688,7 +4702,7 @@
   },
   {
     "id": "FeeControler34",
-    "message": "Not enough ETH on your balance for miner fee.{br}Deposit 0.001 ETH to your account  {br} {address}",
+    "message": "Not enough ETH on your balance for miner fee.{br}Deposit 0.001 ETH to your account  {br}",
     "files": [
       "shared/pages/Swap/FeeControler/FeeControler.js"
     ]
