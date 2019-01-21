@@ -183,7 +183,7 @@ checker = () => {
               <QR
                 network={currencyFullName.toLowerCase()}
                 address={`${scriptAddress}?amount=${missingBalance}`}
-                size={170}
+                size={160}
               />
             </span>
           </div>
