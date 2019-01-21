@@ -179,7 +179,6 @@ export default class SwapComponent extends PureComponent {
     if (currencyData.currency  === 'ETH' && ethBalance > sellAmount) {
       this.setState(() => ({ continueSwap: true }))
     }
-
   }
   handleGoHome = () => {
     const { intl: { locale } } = this.props
