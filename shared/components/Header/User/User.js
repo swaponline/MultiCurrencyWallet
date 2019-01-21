@@ -79,7 +79,7 @@ export default class User extends React.Component {
       toggle()
     }
 
-    await history.replace(localisedUrl(locale, '/'))
+    await history.replace(localisedUrl(locale, link))
     await history.push(localisedUrl(locale, link))
   }
 
