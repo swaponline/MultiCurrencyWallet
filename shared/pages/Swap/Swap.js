@@ -111,7 +111,7 @@ export default class SwapComponent extends PureComponent {
       let timer
 
       timer = setInterval(() => {
-        if (this.state.continueSwap === false) {
+        if (!this.state.continueSwap) {
           this.checkEthBalance()
         } else {
           clearInterval(timer)
@@ -162,7 +162,7 @@ export default class SwapComponent extends PureComponent {
   }
 
   checkEthBalance = async () => {
-    const { swap: { participantSwap, ownerSwap, sellAmount }, currencyData, btcFee, ltcFee } = this.state
+    const { swap: { participantSwap, ownerSwap, sellAmount, flow: { state: { step, isEthWithdraw } } }, currencyData, btcFee, ltcFee } = this.state
 
     const ethBalance = await actions.eth.getBalance()
 
@@ -172,7 +172,7 @@ export default class SwapComponent extends PureComponent {
     if (this.props.tokenItems.map(item => item.name).includes(participantSwap._swapName.toLowerCase()) && ethBalance > ethFee) { // ercFee
       this.setState(() => ({ continueSwap: true }))
     }
-    if (currencyData.currency  === 'BTC' && ethBalance > btcFee) {
+    if (currencyData.currency  === 'BTC' && btcFee > 0 && ethBalance > btcFee) {
       this.setState(() => ({ continueSwap: true }))
     }
 
@@ -180,6 +180,7 @@ export default class SwapComponent extends PureComponent {
       this.setState(() => ({ continueSwap: true }))
     }
   }
+
   handleGoHome = () => {
     const { intl: { locale } } = this.props
     this.props.history.push(localisedUrl(locale, links.home))
@@ -193,7 +194,6 @@ export default class SwapComponent extends PureComponent {
     if (!swap || !SwapComponent || !peer || !isAmountMore) {
       return null
     }
-
     const isFinished = (swap.flow.state.step >= (swap.flow.steps.length - 1))
 
     return (
