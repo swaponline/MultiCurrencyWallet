@@ -68,7 +68,7 @@ export default class RowFeedsMoble extends Component {
         >
           <td style={{ cursor: 'pointer' }}>
             { isLinkCopied &&
-            <span style={{ fontSize: '12px', position: 'absolute', top: '8px', left: 'calc(20%)' }}>
+            <span style={{ fontSize: '14px', position: 'absolute', top: '-4px' }}>
               <FormattedMessage id="RowMFeed69" defaultMessage="Copied" />
               <br />
             </span>

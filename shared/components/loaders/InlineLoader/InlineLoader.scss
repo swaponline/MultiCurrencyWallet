@@ -62,11 +62,21 @@
   }
 }
 
-@include media-mobile {
-  .ellipsis {
-    position: absolute;
-    right: 10px;
-    top: 25px;
-    margin: 61% 20%;
+td {
+  @include media-tablet-landscape-and-lower {
+    .ellipsis {
+      position: relative;
+      top: 10px;
+      right: -35px;
+      margin: 10px;
+    }
+  }
+  
+  @include media-mobile {
+    .ellipsis {
+      position: relative;
+      top: 25px;
+      margin: 10px;
+    }
   }
 }

@@ -442,6 +442,19 @@ table.wallet {
 }
 
 @include media-mobile {
+  .table {
+    margin-top: 15px;
+  }
+  .table.exchange {
+    display: table;
+    width: 100%;
+    td {
+      position: relative;
+    }
+    .img {
+      position: relative;
+    }
+  }
   .wallet {
     margin-left: -20px;
   }
