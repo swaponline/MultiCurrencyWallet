@@ -167,16 +167,16 @@ export default class SwapComponent extends PureComponent {
     const ethBalance = await actions.eth.getBalance()
 
     const ethFee = (participantSwap.gasPrice * participantSwap.gasLimit * (1e-18)) || (ownerSwap.gasPrice * ownerSwap.gasLimit * (1e-18))
-    const etheriumFee = sellAmount + ethFee
+    const etheriumFee = Number(sellAmount) + Number(ethFee)
 
     if (this.props.tokenItems.map(item => item.name).includes(participantSwap._swapName.toLowerCase()) && ethBalance > ethFee) { // ercFee
       this.setState(() => ({ continueSwap: true }))
     }
-    if (currencyData.currency  === 'BTC' && btcFee > 0 && ethBalance > btcFee) {
+    if (currencyData.currency  === 'BTC' && ethBalance > ethFee) {
       this.setState(() => ({ continueSwap: true }))
     }
 
-    if (currencyData.currency  === 'ETH' && ethBalance > sellAmount) {
+    if (currencyData.currency  === 'ETH' && ethBalance > etheriumFee) {
       this.setState(() => ({ continueSwap: true }))
     }
   }
@@ -215,7 +215,7 @@ export default class SwapComponent extends PureComponent {
             )
           }
           <SwapController swap={swap} />
-          {swap.flow.state.step >= 5 && !continueSwap && (<FeeControler ethAddress={ethAddress} />)}
+          {swap.flow.state.step === 5 && !continueSwap && swap.flow.state.step <= 6 && (<FeeControler ethAddress={ethAddress} />)}
         </SwapComponent>
         {
           (isFinished) && (
