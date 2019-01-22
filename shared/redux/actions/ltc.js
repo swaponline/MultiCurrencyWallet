@@ -4,7 +4,6 @@ import { BigNumber } from 'bignumber.js'
 import bitcoin from 'bitcoinjs-lib'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
-import config from 'app-config'
 import { ltc, request, constants, api } from 'helpers'
 
 
@@ -139,42 +138,6 @@ const broadcastTx = (txRaw) =>
     },
   })
 
-const estimateFeeRate = async () => {
-  const link = config.feeRates.ltc
-  const defaultFee = constants.defaultFeeRates.ltc
-
-  if (!link) {
-    return defaultFee
-  }
-
-  const apiResult = await request.get(link)
-
-  const apiRate = {
-    slow: apiResult.low_fee_per_kb,
-    normal: Math.ceil((apiResult.low_fee_per_kb + apiResult.high_fee_per_kb) / 2),
-    fast: apiResult.high_fee_per_kb,
-  }
-
-  const currentRate = {
-    slow: apiRate.slow >= defaultFee.slow ? apiRate.slow : defaultFee.slow,
-    normal: apiRate.normal >= defaultFee.slow ? apiRate.normal : defaultFee.normal,
-    fast: apiRate.fast >= defaultFee.slow ? apiRate.fast : defaultFee.fast,
-  }
-
-  return currentRate
-}
-
-const setFeeRate = async ({ slow, normal, fast } = {}) => {
-  const currentRate = await estimateFeeRate()
-  const feeRate = {
-    slow: slow || currentRate.slow,
-    normal: normal || currentRate.normal,
-    fast: fast || currentRate.fast,
-  }
-
-  reducers.user.setFeeRate({ name: 'ltcData', feeRate })
-}
-
 export default {
   login,
   getBalance,
@@ -184,5 +147,4 @@ export default {
   fetchUnspents,
   broadcastTx,
   fetchBalance,
-  setFeeRate,
 }
