@@ -151,6 +151,10 @@ export default class AddOffer extends Component {
   handleSellCurrencySelect = async ({ value }) => {
     let { buyCurrency, sellCurrency, sellAmount, buyAmount } = this.state
 
+    this.setState(() => ({
+      sellCurrency: value,
+    }))
+
     this.checkPair(value)
 
     await this.checkBalance(value)
@@ -166,7 +170,6 @@ export default class AddOffer extends Component {
     }
 
     this.setState({
-      sellCurrency: value,
       buyAmount: Number.isNaN(buyAmount) ? '' : buyAmount,
       sellAmount: Number.isNaN(sellAmount) ? '' : sellAmount,
       isSellFieldInteger,

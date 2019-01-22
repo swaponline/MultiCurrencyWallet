@@ -26,33 +26,32 @@ import { FormattedMessage } from 'react-intl'
 
 export default class BtcToEthToken extends Component {
 
-  static getDerivedStateFromProps({ continueSwap, enoughBalance }) {
+  static getDerivedStateFromProps({ enoughBalance }) {
     return {
-      continuerSwap: continueSwap,
       enoughBalance,
     }
   }
 
-  constructor({ swap, currencyData, ethData, continueSwap, enoughBalance, styles, window }) {
+  constructor({ swap, currencyData, ethData, enoughBalance, styles, depositWindow }) {
+
     super()
 
     this.swap = swap
 
     this.state = {
-      window,
-      currencyAddress: currencyData.address,
-      flow: this.swap.flow.state,
-      secret: crypto.randomBytes(32).toString('hex'),
+      depositWindow,
+      enoughBalance,
+      isPressCtrl: false,
+      isTextCopied: false,
       enabledButton: false,
       isAddressCopied: false,
-      isPressCtrl: false,
+      flow: this.swap.flow.state,
       paddingContainerValue: 0,
       destinationAddressTimer: true,
-      destinationBuyAddress: (this.swap.destinationBuyAddress) ? this.swap.destinationBuyAddress : swapApp.services.auth.accounts.eth.address,
-      isTextCopied: false,
+      currencyAddress: currencyData.address,
       ethAddress: ethData.map(item => item.address),
-      continuerSwap: continueSwap,
-      enoughBalance,
+      secret: crypto.randomBytes(32).toString('hex'),
+      destinationBuyAddress: (this.swap.destinationBuyAddress) ? this.swap.destinationBuyAddress : swapApp.services.auth.accounts.eth.address,
     }
   }
 
@@ -188,8 +187,20 @@ export default class BtcToEthToken extends Component {
 
   render() {
     const { children, disabledTimer, swap, currencyData } = this.props
-    const { currencyAddress, secret, flow, enabledButton,
-      destinationAddressTimer, continuerSwap, isTextCopied, ethAddress, enoughBalance, window, paddingContainerValue } = this.state
+    const {
+      flow,
+      secret,
+      ethAddress,
+      isTextCopied,
+      enabledButton,
+      depositWindow,
+      enoughBalance,
+      currencyAddress,
+      isAddressCopied,
+      paddingContainerValue,
+      destinationAddressTimer,
+    } = this.state
+
 
     const linked = Link.all(this, 'destinationBuyAddress')
 
@@ -304,7 +315,7 @@ export default class BtcToEthToken extends Component {
                     </Fragment>
                   )
                 }
-                {window && flow.step > 4 &&
+                {depositWindow && flow.step > 4 &&
                   <h3 style={headingStyle}>
                     <FormattedMessage id="BtcToEthToken1245" defaultMessage="Sent funds" />
                   </h3>
@@ -385,15 +396,6 @@ export default class BtcToEthToken extends Component {
                       <h3 style={headingStyle}>
                         <FormattedMessage id="BtcToEthToken260" defaultMessage="4. ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait" />
                       </h3>
-                      {/* {!continuerSwap &&
-                        <h3 style={{ color: '#E72BB3', marginTop: '10px' }}>
-                          <FormattedMessage
-                            id="BtcToEthTokenAddress348"
-                            defaultMessage="Not enough ETH on your balance for miner fee.{br}{br}Deposit 0.001 ETH to your account {address}"
-                            values={{ address: `${ethAddress}`, br: <br /> }}
-                          />
-                        </h3>
-                      } */}
                     </Fragment>
                   )
                 }
@@ -447,7 +449,7 @@ export default class BtcToEthToken extends Component {
                   )
                 }
                 {
-                  flow.refundTransactionHash && continuerSwap && (
+                  flow.refundTransactionHash && (
                     <div styleName="transaction">
                       <FormattedMessage id="BtcToEthToken316" defaultMessage="Transaction: " />
                       <strong>

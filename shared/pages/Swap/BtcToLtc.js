@@ -20,11 +20,11 @@ export default class BtcToLtc extends Component {
     this.swap = swap
 
     this.state = {
-      currencyAddress: currencyData.address,
-      flow: this.swap.flow.state,
-      secret: crypto.randomBytes(32).toString('hex'),
       enabledButton: false,
+      flow: this.swap.flow.state,
       isShowingBitcoinScript: false,
+      currencyAddress: currencyData.address,
+      secret: crypto.randomBytes(32).toString('hex'),
     }
   }
 

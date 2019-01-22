@@ -15,23 +15,16 @@ import CopyToClipboard from 'react-copy-to-clipboard'
 
 export default class EthTokenToBtc extends Component {
 
-  static getDerivedStateFromProps({ continueSwap }) {
-    return {
-      continuerSwap: continueSwap,
-    }
-  }
-
-  constructor({ swap, currencyData, ethBalance, continueSwap }) {
+  constructor({ swap, currencyData, ethBalance }) {
     super()
 
     this.swap = swap
 
     this.state = {
-      currencyAddress: currencyData.address,
-      flow: this.swap.flow.state,
       enabledButton: false,
-      continuerSwap: continueSwap,
       isAddressCopied: false,
+      flow: this.swap.flow.state,
+      currencyAddress: currencyData.address,
     }
 
   }
@@ -88,7 +81,7 @@ export default class EthTokenToBtc extends Component {
 
   render() {
     const { children, disabledTimer }  = this.props
-    const { currencyAddress, flow, enabledButton, isShowingBitcoinScript, continuerSwap, isAddressCopied } = this.state
+    const { currencyAddress, flow, enabledButton, isShowingBitcoinScript, isAddressCopied } = this.state
 
     return (
       <div>
@@ -306,23 +299,6 @@ export default class EthTokenToBtc extends Component {
                 )
               }
               {/* eslint-disable */}
-              {!continuerSwap && flow.step >= 5 &&
-                <CopyToClipboard text={currencyAddress} data-tut="reactour__address">
-                  <h3 style={{ color: '#E72BB3', marginTop: '10px', cursor: 'pointer' }} onClick={this.handleCopy}>
-                    <FormattedMessage
-                      id="BtcToEthTokenAddress307"
-                      defaultMessage="Not enough ETH on your balance for miner fee.{br}{br}Deposit 0.001 ETH to your account {address}"
-                      values={{ address: `${currencyAddress}`, br: <br /> }}
-                    />
-                  </h3>
-                </CopyToClipboard>
-              }
-              {/* eslint-enable */}
-              { isAddressCopied &&
-                <p style={{ fontSize: '14px', background: 'white', textAlign: 'center', borderRadius: '20px' }} >
-                  <FormattedMessage id="Row324" defaultMessage="Address copied to clipboard" />
-                </p>
-              }
               {
                 flow.ethSwapCreationTransactionHash && (
                   <div>

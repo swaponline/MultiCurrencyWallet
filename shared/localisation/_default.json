@@ -4537,10 +4537,7 @@
   },
   {
     "id": "BtcToEthTokenAddress307",
-    "message": "Not enough ETH on your balance for miner fee.{br}{br}Deposit 0.001 ETH to your account {address}",
-    "files": [
-      "shared/pages/Swap/EthTokenToBtc.js"
-    ]
+    "message": "Not enough ETH on your balance for miner fee.{br}{br}Deposit 0.001 ETH to your account {address}"
   },
   {
     "id": "BtcToEthToken158",
@@ -4705,10 +4702,7 @@
   },
   {
     "id": "Row324",
-    "message": "Address copied to clipboard",
-    "files": [
-      "shared/pages/Swap/EthTokenToBtc.js"
-    ]
+    "message": "Address copied to clipboard"
   },
   {
     "id": "ReceiveModal50",
@@ -4743,6 +4737,20 @@
     ]
   },
   {
+    "id": "FeeControler34",
+    "message": "Not enough ETH on your balance for miner fee.{br}Deposit 0.002 ETH to your account  {br} {address}",
+    "files": [
+      "shared/pages/Swap/FeeControler/FeeControler.js"
+    ]
+  },
+  {
+    "id": "FeeControler42",
+    "message": "Address copied to clipboard",
+    "files": [
+      "shared/pages/Swap/FeeControler/FeeControler.js"
+     ]
+   },
+   {
     "id": "userTooltip43",
     "message": "User ({reputation}) wants to swap",
     "files": [

@@ -4,6 +4,7 @@ import actions from 'redux/actions'
 
 import config from 'app-config'
 import { BigNumber } from 'bignumber.js'
+import CopyToClipboard from 'react-copy-to-clipboard'
 
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import TimerButton from 'components/controls/TimerButton/TimerButton'
@@ -14,22 +15,24 @@ import { FormattedMessage } from 'react-intl'
 
 export default class EthToBtc extends Component {
 
-  constructor({ swap, currencyData, window }) {
+  constructor({ swap, currencyData, depositWindow }) {
     super()
 
     this.swap = swap
 
     this.state = {
-      window,
-      currencyAddress: currencyData.address,
-      flow: this.swap.flow.state,
+      depositWindow,
       enabledButton: false,
+      isAddressCopied: false,
+      flow: this.swap.flow.state,
       isShowingBitcoinScript: false,
+      currencyAddress: currencyData.address,
     }
   }
 
   componentWillMount() {
     this.swap.on('state update', this.handleFlowStateUpdate)
+
   }
 
   componentWillUnmount() {
@@ -86,9 +89,11 @@ export default class EthToBtc extends Component {
     })
   }
 
+
+
   render() {
     const { children } = this.props
-    const { currencyAddress, flow, enabledButton, isShowingBitcoinScript } = this.state
+    const { currencyAddress, flow, enabledButton, isShowingBitcoinScript, isAddressCopied } = this.state
     const headingStyle = {
       color: '#5100dc',
       textTransform: 'uppercase',
@@ -238,22 +243,17 @@ export default class EthToBtc extends Component {
       bitcoin.core.opcodes.OP_RIPEMD160,
       Buffer.from('${flow.btcScriptValues.secretHash}', 'hex'),
       bitcoin.core.opcodes.OP_EQUALVERIFY,
-
       Buffer.from('${flow.btcScriptValues.recipientPublicKey}', 'hex'),
       bitcoin.core.opcodes.OP_EQUAL,
       bitcoin.core.opcodes.OP_IF,
-
       Buffer.from('${flow.btcScriptValues.recipientPublicKey}', 'hex'),
       bitcoin.core.opcodes.OP_CHECKSIG,
-
       bitcoin.core.opcodes.OP_ELSE,
-
       bitcoin.core.script.number.encode(${flow.btcScriptValues.lockTime}),
       bitcoin.core.opcodes.OP_CHECKLOCKTIMEVERIFY,
       bitcoin.core.opcodes.OP_DROP,
       Buffer.from('${flow.btcScriptValues.ownerPublicKey}', 'hex'),
       bitcoin.core.opcodes.OP_CHECKSIG,
-
       bitcoin.core.opcodes.OP_ENDIF,
     ])
                         `}
@@ -319,7 +319,6 @@ export default class EthToBtc extends Component {
                     </Fragment>
                   )
                 }
-
                 {
                   (flow.step >= 5 || flow.isEthContractFunded) && (
                     <Fragment>

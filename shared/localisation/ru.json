@@ -4477,10 +4477,7 @@
   },
   {
     "id": "BtcToEthTokenAddress307",
-    "message": "Недостаточная сумма ETH на вашем балансе, {br}для оплаты комиссии майнеров.{br}{br}Пополните баланс на 0.001 ETH {address}",
-    "files": [
-      "shared/pages/Swap/EthTokenToBtc.js"
-    ]
+    "message": "Недостаточная сумма ETH на вашем балансе, {br}для оплаты комиссии майнеров.{br}{br}Пополните баланс на 0.001 ETH {address}"
   },
   {
     "id": "BtcToEthToken158",
@@ -4645,10 +4642,7 @@
   },
   {
     "id": "Row324",
-    "message": "Адрес скопирован в буфер обмена",
-    "files": [
-      "shared/pages/Swap/EthTokenToBtc.js"
-    ]
+    "message": "Адрес скопирован в буфер обмена"
   },
   {
     "id": "ReceiveModal50",
@@ -4683,6 +4677,20 @@
     ]
   },
   {
+    "id": "FeeControler34",
+    "message": "Недостаточный баланс ETH кошелька, для оплаты комиссии майнеров.{br}Внесите 0.002 ETH на Ваш кошелек для продолжения обмена {br}",
+    "files": [
+      "shared/pages/Swap/FeeControler/FeeControler.js"
+    ]
+  },
+  {
+    "id": "FeeControler42",
+    "message": "Адрес скопирован в буфер обмена",
+    "files": [
+      "shared/pages/Swap/FeeControler/FeeControler.js"
+     ]
+   },
+   {
     "id": "userTooltip43",
     "message": "Пользователь ({reputation}) предлагает обмен",
     "files": [

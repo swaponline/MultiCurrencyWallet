@@ -19,18 +19,17 @@ import DepositWindow from './DepositWindow/DepositWindow'
 
 export default class BtcToEth extends Component {
 
-  constructor({ swap, currencyData, enoughtBalance, window }) {
+  constructor({ swap, currencyData, enoughBalance }) {
     super()
 
     this.swap = swap
 
     this.state = {
-      currencyAddress: currencyData.address,
-      flow: this.swap.flow.state,
-      secret: crypto.randomBytes(32).toString('hex'),
+      enoughBalance,
       enabledButton: false,
-      enoughtBalance,
-      window,
+      flow: this.swap.flow.state,
+      currencyAddress: currencyData.address,
+      secret: crypto.randomBytes(32).toString('hex'),
     }
   }
 
@@ -103,7 +102,7 @@ export default class BtcToEth extends Component {
 
   render() {
     const { children, currencyData, swap } = this.props
-    const { currencyAddress, secret, flow, enabledButton, enoughtBalance, window } = this.state
+    const { currencyAddress, secret, flow, enabledButton, enoughBalance } = this.state
 
     const headingStyle = {
       color: '#5100dc',
@@ -188,7 +187,7 @@ export default class BtcToEth extends Component {
                     <FormattedMessage id="BtcToEthToken188" defaultMessage="Sent funds" />
                   </h3>
                 }
-                {(!enoughtBalance && flow.step === 4)
+                {(!enoughBalance && flow.step === 4)
                   ? (
                     <div className="swapStep-4">
                       <h3 style={headingStyle}>
