@@ -207,7 +207,7 @@ export default class BtcToLtc extends Component {
                 (flow.step === 4 || flow.btcScriptValues) && (
                   <Fragment>
                     <h3>
-                      <FormattedMessage id="BtcToLtc205" defaultMessage="3. Creating Bitcoin Script. Please wait, it will take a while" />
+                      <FormattedMessage id="BtcToLtc205" defaultMessage="3. Creating Bitcoin Script. \n Please wait, it can take a few minutes" />
                     </h3>
                     {
                       flow.btcScriptCreatingTransactionHash && (
@@ -368,7 +368,7 @@ export default class BtcToLtc extends Component {
                 flow.isLtcWithdrawn && (
                   <Fragment>
                     <h3>
-                      <FormattedMessage id="MoneyWasTransferred" defaultMessage="6. Money was transferred to your wallet. Check the balance." />
+                      <FormattedMessage id="MoneyWasTransferred" defaultMessage="6. LTC was transferred to your wallet. Check the balance." />
                     </h3>
                     <h2>
                       <FormattedMessage id="Thank" defaultMessage="Thank you for using Swap.Online!" />

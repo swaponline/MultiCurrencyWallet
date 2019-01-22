@@ -105,17 +105,6 @@ const getBalances = () => {
   // actions.nimiq.getBalance()
 }
 
-const setFeeRates = () => {
-  actions.btc.setFeeRate()
-  actions.ltc.setFeeRate()
-  actions.eth.setGasRate()
-
-  Object.keys(config.erc20)
-    .forEach(name => {
-      actions.token.setGasRate({ name })
-    })
-}
-
 const getDemoMoney = process.env.MAINNET ? () => {} : () => {
   /* //googe bitcoin (or rinkeby) faucet
   request.get('https://swap.wpmix.net/demokeys.php', {})
@@ -251,7 +240,6 @@ window.downloadPrivateKeys = downloadPrivateKeys
 export default {
   sign,
   getBalances,
-  setFeeRates,
   getDemoMoney,
   getExchangeRate,
   setTransactions,
