@@ -145,7 +145,8 @@ export default class EthToBtc extends Component {
                   <FormattedMessage
                     id="EthToBtc125"
                     defaultMessage={`
-                      "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation."
+                      "Confirmation of the transaction is necessary for crediting the reputation. 
+                      If a user does not bring the deal to the end he gets a negative credit to his reputation."
                     `}
                   />
                 </div>
@@ -190,7 +191,7 @@ export default class EthToBtc extends Component {
             flow.isMeSigned && (
               <Fragment>
                 <h3 style={headingStyle}>
-                  <FormattedMessage id="EthToBtc167" defaultMessage="2. Waiting BTC Owner creates Secret Key, creates BTC Script and charges it" />
+                  <FormattedMessage id="EthToBtc167" defaultMessage="2. Waiting for BTC Owner to create Secret Key, create BTC Script and charge it" />
                 </h3>
                 {
                   flow.step === 2 && (
@@ -202,7 +203,7 @@ export default class EthToBtc extends Component {
                   flow.secretHash && flow.btcScriptValues && (
                     <Fragment>
                       <h3 style={headingStyle}>
-                        <FormattedMessage id="EthToBtc179" defaultMessage="3. Bitcoin Script created and charged. Please check the information below" />
+                        <FormattedMessage id="EthToBtc179" defaultMessage="3. The bitcoin Script was created and charged. Please check the information below" />
                       </h3>
                       <div>
                         <FormattedMessage id="EthToBtc182" defaultMessage="Secret Hash: " />
@@ -323,7 +324,7 @@ export default class EthToBtc extends Component {
                   (flow.step >= 5 || flow.isEthContractFunded) && (
                     <Fragment>
                       <h3 style={headingStyle}>
-                        <FormattedMessage id="EthToBtc297" defaultMessage="5. Creating Ethereum Contract. Please wait, it will take a while" />
+                        <FormattedMessage id="EthToBtc297" defaultMessage="5. Creating Ethereum Contract. \n Please wait, it can take a few minutes" />
                       </h3>
                     </Fragment>
                   )
@@ -369,7 +370,7 @@ export default class EthToBtc extends Component {
                   (flow.step === 6 || flow.isEthWithdrawn) && (
                     <Fragment>
                       <h3 style={headingStyle}>
-                        <FormattedMessage id="EthToBtc343" defaultMessage="6. Waiting BTC Owner adds Secret Key to ETH Contact" />
+                        <FormattedMessage id="EthToBtc343" defaultMessage="6. Waiting for BTC Owner to add a Secret Key to ETH Contact" />
                       </h3>
                       {
                         !flow.isEthWithdrawn && (
@@ -385,7 +386,7 @@ export default class EthToBtc extends Component {
                     <h3 style={headingStyle}>
                       <FormattedMessage
                         id="EthToBtc357"
-                        defaultMessage="7. BTC Owner successfully took money from ETH Contract and left Secret Key. Requesting withdrawal from BTC Script. Please wait"
+                        defaultMessage="7. The funds from ETH contract was successfully transferred to BTC owner. BTC owner left a secret key. Requesting withdrawal from BTC script. Please wait." // eslint-disable-line
                       />
                     </h3>
                   )
@@ -416,7 +417,7 @@ export default class EthToBtc extends Component {
                   flow.isBtcWithdrawn && (
                     <Fragment>
                       <h3 style={headingStyle}>
-                        <FormattedMessage id="EthToBtc387" defaultMessage="8. Money was transferred to your wallet. Check the balance." />
+                        <FormattedMessage id="EthToBtc387" defaultMessage="8. BTC was transferred to your wallet. Check the balance." />
                       </h3>
                       <h3 style={headingStyle}>
                         <FormattedMessage id="EthToBtc390" defaultMessage="Thank you for using Swap.Online!" />
