@@ -256,7 +256,7 @@ export default class BtcToEthToken extends Component {
                   )
                   : (flow.step === 4 && flow.btcScriptValues && (
                     <div className="swapStep-4">
-                      <h3 h3 style={headingStyle}>
+                      <h3 style={headingStyle}>
                         <FormattedMessage id="BtcToEthToken222" defaultMessage="Creating Bitcoin Script. Please wait, it will take a while" />
                       </h3>
                       {
@@ -288,7 +288,7 @@ export default class BtcToEthToken extends Component {
                 {
                   (flow.step === 5 || flow.isEthContractFunded) && (
                     <Fragment>
-                      <h3 h3 style={headingStyle}>
+                      <h3 style={headingStyle}>
                         <FormattedMessage id="BtcToEthToken230" defaultMessage="ETH Owner received Bitcoin Script and Secret Hash. Waiting when he creates ETH Contract" />
                       </h3>
                       {
@@ -318,7 +318,7 @@ export default class BtcToEthToken extends Component {
                 {
                   (flow.step === 6 || flow.isEthWithdrawn) && (
                     <Fragment>
-                      <h3 h3 style={headingStyle}>
+                      <h3 style={headingStyle}>
                         <FormattedMessage id="BtcToEthToken260" defaultMessage="4. ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait" />
                       </h3>
                       {/* {!continuerSwap &&
@@ -358,7 +358,7 @@ export default class BtcToEthToken extends Component {
                 {
                   (flow.isEthWithdrawn) && (
                     <Fragment>
-                      <h3 h3 style={headingStyle}>
+                      <h3 style={headingStyle}>
                         <FormattedMessage id="BtcToEthToken290" defaultMessage="Money was transferred to your wallet. Check the balance." />
                       </h3>
                       <h2 style={headingStyle}>
