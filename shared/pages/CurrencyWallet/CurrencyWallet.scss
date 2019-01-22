@@ -62,11 +62,11 @@
   }
   .inRow {
     justify-content: center;
-    flex-wrap: wrap;
     width: auto;
     button {
       height: auto;
       margin: 5px;
+      font-size: 15px;
     }
   }
 }

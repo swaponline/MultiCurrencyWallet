@@ -68,7 +68,7 @@ export default class RowFeedsMoble extends Component {
         >
           <td style={{ cursor: 'pointer' }}>
             { isLinkCopied &&
-            <span style={{ fontSize: '14px', position: 'absolute', top: '-4px' }}>
+            <span styleName="CopiedOrders">
               <FormattedMessage id="RowMFeed69" defaultMessage="Copied" />
               <br />
             </span>
@@ -78,20 +78,21 @@ export default class RowFeedsMoble extends Component {
         </CopyToClipboard>
         <td>
           {
-            Boolean(requests && requests.length) ? (
-              <div styleName="buttons">
-                <div styleName="delete" onClick={() => declineRequest(id, requests[0].participant.peer)} >
-                  <FormattedMessage id="RowMFeed82" defaultMessage="Decline" />
-                </div>
-                <Link to={`${localisedUrl(locale, links.swap)}/${sellCurrency.toLowerCase()}-${buyCurrency.toLowerCase()}/${id}`}>
-                  <div styleName="accept" onClick={() => acceptRequest(id, requests[0].participant.peer)} >
-                    <FormattedMessage id="RowMFeed85" defaultMessage="Accept" />
-                  </div>
-                </Link>
-              </div>
-            ) : (
-              <div styleName="delete" onClick={() => removeOrder(id)} > <i className="fas fa-times-circle" /></div>
-            )
+            // Boolean(requests && requests.length) ? (
+            //   <div styleName="buttons">
+            //     <div styleName="delete" onClick={() => declineRequest(id, requests[0].participant.peer)} >
+            //       <FormattedMessage id="RowMFeed82" defaultMessage="Decline" />
+            //     </div>
+            //     <Link to={`${localisedUrl(locale, links.swap)}/${sellCurrency.toLowerCase()}-${buyCurrency.toLowerCase()}/${id}`}>
+            //       <div styleName="accept" onClick={() => acceptRequest(id, requests[0].participant.peer)} >
+            //         <FormattedMessage id="RowMFeed85" defaultMessage="Accept" />
+            //       </div>
+            //     </Link>
+            //   </div>
+            // ) : (
+            //   <div styleName="delete" onClick={() => removeOrder(id)} > <i className="fas fa-times-circle" /></div>
+            // )
+            <div styleName="delete" onClick={() => removeOrder(id)} > <i className="fas fa-times-circle" /></div>
           }
         </td>
       </tr>

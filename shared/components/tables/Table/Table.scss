@@ -450,6 +450,10 @@ table.wallet {
     width: 100%;
     td {
       position: relative;
+      padding: 0;
+      &:first-child {
+        display: table-cell;
+      }
     }
     .img {
       position: relative;

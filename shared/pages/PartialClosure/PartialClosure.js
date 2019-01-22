@@ -521,7 +521,7 @@ export default class PartialClosure extends Component {
                 <span>
                   <FormattedMessage id="PartialPriceSearch" defaultMessage="Searching orders..." />
                   <div styleName="loaderHolder">
-                    <td style={{ display: 'block' }}>
+                    <td styleName="additionalLoaderHolder">
                       <InlineLoader />
                     </td>
                   </div>
@@ -561,7 +561,7 @@ export default class PartialClosure extends Component {
                 <span>
                   <FormattedMessage id="partial291" defaultMessage="Wait participant: " />
                   <div styleName="loaderHolder">
-                    <td style={{ display: 'block' }}>
+                    <td styleName="additionalLoaderHolder">
                       <InlineLoader />
                     </td>
                   </div>

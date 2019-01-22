@@ -63,6 +63,15 @@
 .loaderHolder {
   display: inline-block;
 }
+
+.additionalLoaderHolder {
+  display: block;
+  > div {
+    top: -8px;
+    right: auto;
+  }
+}
+
 @include media-mobile {
   .loaderHolder {
     display: block;

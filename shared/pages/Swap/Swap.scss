@@ -43,6 +43,9 @@
   .loaderHolder {
     display: inline-block;
   }
+  a {
+    word-wrap: break-word;
+  }
 }
 
 .topUpLink {
