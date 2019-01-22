@@ -141,7 +141,6 @@ export default class SwapComponent extends PureComponent {
       this.setState(() => ({
         enoughBalance: false,
         depositWindow: true,
-      }))
     }
   }
 
@@ -165,7 +164,6 @@ export default class SwapComponent extends PureComponent {
     console.log('continueSwap', this.state.continueSwap)
 
   }
-
   handleGoHome = () => {
     const { intl: { locale } } = this.props
     this.props.history.push(localisedUrl(locale, links.home))
