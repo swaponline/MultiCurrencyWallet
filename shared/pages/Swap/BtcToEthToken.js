@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react'
 
 import actions from 'redux/actions'
 import { constants } from 'helpers'
+import { isMobile } from 'react-device-detect'
 
 import crypto from 'crypto'
 import config from 'app-config'
@@ -14,46 +15,49 @@ import TimerButton from 'components/controls/TimerButton/TimerButton'
 import Link from 'sw-valuelink'
 import Input from 'components/forms/Input/Input'
 import Button from 'components/controls/Button/Button'
+import DepositWindow from './DepositWindow/DepositWindow'
+import SwapProgress from 'components/SwapProgress/SwapProgress'
+import SwapList from './SwapList/SwapList'
 import QR from 'components/QR/QR'
 import swapApp from 'swap.app'
 import Timer from './Timer/Timer'
 import { FormattedMessage } from 'react-intl'
-import DepositWindow from './DepositWindow/DepositWindow'
 
 
 export default class BtcToEthToken extends Component {
 
-  static getDerivedStateFromProps({ continueSwap, enoughtBalance }) {
+  static getDerivedStateFromProps({ enoughBalance }) {
     return {
-      continuerSwap: continueSwap,
-      enoughtBalance,
+      enoughBalance,
     }
   }
 
-  constructor({ swap, currencyData, ethData, continueSwap, enoughtBalance, styles, window }) {
+  constructor({ swap, currencyData, ethData, enoughBalance, styles, depositWindow }) {
     super()
 
     this.swap = swap
 
     this.state = {
-      window,
-      currencyAddress: currencyData.address,
-      flow: this.swap.flow.state,
-      secret: crypto.randomBytes(32).toString('hex'),
+      depositWindow,
+      enoughBalance,
+      isPressCtrl: false,
+      isTextCopied: false,
       enabledButton: false,
       isAddressCopied: false,
-      isPressCtrl: false,
+      flow: this.swap.flow.state,
+      paddingContainerValue: 0,
       destinationAddressTimer: true,
-      destinationBuyAddress: (this.swap.destinationBuyAddress) ? this.swap.destinationBuyAddress : swapApp.services.auth.accounts.eth.address,
-      isTextCopied: false,
+      currencyAddress: currencyData.address,
       ethAddress: ethData.map(item => item.address),
-      continuerSwap: continueSwap,
-      enoughtBalance,
+      secret: crypto.randomBytes(32).toString('hex'),
+      destinationBuyAddress: (this.swap.destinationBuyAddress) ? this.swap.destinationBuyAddress : swapApp.services.auth.accounts.eth.address,
+      enoughBalance,
     }
   }
 
   componentDidMount() {
     this.swap.on('state update', this.handleFlowStateUpdate)
+    this.handleCheckPaddingValue()
   }
 
   componentWillUnmount() {
@@ -65,6 +69,9 @@ export default class BtcToEthToken extends Component {
     this.setState({
       flow: values,
     })
+
+    this.handleCheckPaddingValue()
+
   }
 
   tryRefund = () => {
@@ -134,15 +141,68 @@ export default class BtcToEthToken extends Component {
     })
   }
 
+  handleCheckPaddingValue = () => {
+
+    const { flow, paddingContainerValue, enoughBalance } = this.state
+
+    const value = 60
+    const padding = value * flow.step
+    const padding4 = value * (flow.step - 1)
+
+    if (flow.step === 1) {
+      this.setState(() => ({
+        paddingContainerValue: padding,
+      }))
+    }
+    if (flow.step === 2) {
+      this.setState(() => ({
+        paddingContainerValue: 120,
+      }))
+    }
+    if (!enoughBalance && flow.step === 4) {
+      this.setState(() => ({
+        paddingContainerValue: 120,
+      }))
+    }
+    if (flow.step === 5) {
+      this.setState(() => ({
+        paddingContainerValue: 180,
+      }))
+    }
+    if (flow.step === 6) {
+      this.setState(() => ({
+        paddingContainerValue: 240,
+      }))
+    }
+    if (flow.step === 7) {
+      this.setState(() => ({
+        paddingContainerValue: 300,
+      }))
+    }
+  }
+
   handlerBuyWithCreditCard = (e) => {
     e.preventDefault()
   }
 
   render() {
     const { children, disabledTimer, swap, currencyData } = this.props
-    const { currencyAddress, secret, flow, enabledButton, destinationAddressTimer, continuerSwap, isTextCopied, ethAddress, enoughtBalance, window } = this.state
+    const {
+      flow,
+      secret,
+      ethAddress,
+      isTextCopied,
+      enabledButton,
+      depositWindow,
+      enoughBalance,
+      currencyAddress,
+      isAddressCopied,
+      paddingContainerValue,
+      destinationAddressTimer,
+    } = this.state
 
     const linked = Link.all(this, 'destinationBuyAddress')
+
 
     const headingStyle = {
       color: '#5100dc',
@@ -154,27 +214,41 @@ export default class BtcToEthToken extends Component {
 
     linked.destinationBuyAddress.check((value) => value !== '', 'Please enter ETH address for tokens')
     return (
-      <div className={this.props.styles.swapContainer}>
-        {
-          this.swap.id && (
-            <strong>
-              {this.swap.sellAmount.toFixed(6)}
-              {' '}
-              {this.swap.sellCurrency} &#10230;
-              {this.swap.buyAmount.toFixed(6)}
-              {' '}
-              {this.swap.buyCurrency}
-            </strong>
+      <div className={this.props.styles.swapContainer} style={{ paddingTop: isMobile ? `${paddingContainerValue}px` : '' }}>
+        {(!enoughBalance && flow.step === 4) ?
+          (
+            <div className={this.props.styles.swapDepositWindow}>
+              <DepositWindow currencyData={currencyData} swap={swap} flow={swap.flow.state} />
+            </div>) :
+          (
+            <SwapProgress data={flow} name="BTC2ETH" stepLength={8} />
           )
         }
-        <div>
+        <SwapList data={flow} />
+
+
+        <div className={this.props.styles.swapInfo}>
+          {
+            this.swap.id && (
+              <strong>
+                {this.swap.sellAmount.toFixed(6)}
+                {' '}
+                {this.swap.sellCurrency} &#10230;
+                {this.swap.buyAmount.toFixed(6)}
+                {' '}
+                {this.swap.buyCurrency}
+              </strong>
+            )
+          }
+        </div>
+        <div className={this.props.styles.logHide}>
           {
             flow.isWaitingForOwner && (
               <Fragment>
                 <h3>
                   <FormattedMessage
                     id="BtcToEthToken77"
-                    defaultMessage="We are waiting for a market maker. If it does not appear within 5 minutes, the swap will be canceled automatically." />
+                    defaultMessage="Waiting for a market maker. If the market maker does not appear within 5 minutes, the swap will be canceled automatically." />
                 </h3>
                 <InlineLoader />
               </Fragment>
@@ -240,12 +314,12 @@ export default class BtcToEthToken extends Component {
                     </Fragment>
                   )
                 }
-                {window && flow.step > 4 &&
+                {depositWindow && flow.step > 4 &&
                   <h3 style={headingStyle}>
                     <FormattedMessage id="BtcToEthToken1245" defaultMessage="Sent funds" />
                   </h3>
                 }
-                {(!enoughtBalance && flow.step === 4)
+                {(!enoughBalance && flow.step === 4)
                   ? (
                     <div className="swapStep-4">
                       <h3 style={headingStyle}>
@@ -257,7 +331,7 @@ export default class BtcToEthToken extends Component {
                   : (flow.step === 4 && flow.btcScriptValues && (
                     <div className="swapStep-4">
                       <h3 h3 style={headingStyle}>
-                        <FormattedMessage id="BtcToEthToken222" defaultMessage="Creating Bitcoin Script. Please wait, it will take a while" />
+                        <FormattedMessage id="BtcToEthToken222" defaultMessage="Creating Bitcoin Script. \n Please wait, it can take a few minutes" />
                       </h3>
                       {
                         flow.btcScriptCreatingTransactionHash && (
@@ -321,15 +395,6 @@ export default class BtcToEthToken extends Component {
                       <h3 h3 style={headingStyle}>
                         <FormattedMessage id="BtcToEthToken260" defaultMessage="4. ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait" />
                       </h3>
-                      {/* {!continuerSwap &&
-                        <h3 style={{ color: '#E72BB3', marginTop: '10px' }}>
-                          <FormattedMessage
-                            id="BtcToEthTokenAddress348"
-                            defaultMessage="Not enough ETH on your balance for miner fee.{br}{br}Deposit 0.001 ETH to your account {address}"
-                            values={{ address: `${ethAddress}`, br: <br /> }}
-                          />
-                        </h3>
-                      } */}
                     </Fragment>
                   )
                 }
@@ -359,7 +424,7 @@ export default class BtcToEthToken extends Component {
                   (flow.isEthWithdrawn) && (
                     <Fragment>
                       <h3 h3 style={headingStyle}>
-                        <FormattedMessage id="BtcToEthToken290" defaultMessage="Money was transferred to your wallet. Check the balance." />
+                        <FormattedMessage id="BtcToEthToken290" defaultMessage="ETH was transferred to your wallet. Check the balance." />
                       </h3>
                       <h2 style={headingStyle}>
                         <FormattedMessage id="BtcToEthToken293" defaultMessage="Thank you for using Swap.Online!" />
@@ -383,7 +448,7 @@ export default class BtcToEthToken extends Component {
                   )
                 }
                 {
-                  flow.refundTransactionHash && continuerSwap && (
+                  flow.refundTransactionHash && (
                     <div styleName="transaction">
                       <FormattedMessage id="BtcToEthToken316" defaultMessage="Transaction: " />
                       <strong>
@@ -404,6 +469,8 @@ export default class BtcToEthToken extends Component {
 
           <br />
           {/* { !flow.isFinished && <Button green onClick={this.addGasPrice}>Add gas price</Button> } */}
+        </div>
+        <div className={this.props.styles.information}>
           { children }
         </div>
       </div>

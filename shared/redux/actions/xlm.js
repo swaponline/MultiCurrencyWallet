@@ -44,7 +44,7 @@ const getBalance = async () => {
   }
 
   try {
-    const balances = await xlm.server.loadAccount(address)
+    const { balances } = await xlm.server.loadAccount(address)
     const { balance } = balances[0]
     console.log('XLM balance', balance)
     reducers.user.setBalance({ name: 'xlmData', amount: balance })

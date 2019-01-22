@@ -45,6 +45,28 @@ const getBalance = () => {
     })
 }
 
+const getReputation = () =>
+  new Promise(async (resolve, reject) => {
+    const { user: { ethData: { address, privateKey } } } = getState()
+    const addressOwnerSignature = web3.eth.accounts.sign(address, privateKey)
+
+    request.post(`${api.getApiServer('swapsExplorer')}/reputation`, {
+      json: true,
+      body: {
+        address,
+        addressOwnerSignature,
+      },
+    }).then((response) => {
+      const { reputation, reputationOracleSignature } = response
+
+      reducers.user.setReputation({ name: 'ethData', reputation, reputationOracleSignature })
+      resolve(reputation)
+    }).catch((error) => {
+      reject(error)
+    })
+  })
+
+
 const fetchBalance = (address) =>
   web3.eth.getBalance(address)
     .then(result => Number(web3.utils.fromWei(result)))
@@ -82,10 +104,12 @@ const getTransaction = () =>
 
 const send = ({ to, amount, gasPrice, gasLimit, speed } = {}) =>
   new Promise(async (resolve, reject) => {
-    const { user: { ethData: { privateKey, gasRate } } } = getState()
+    const { user: { ethData: { privateKey } } } = getState()
+
+    const gasRate = constants.defaultFeeRates.eth
 
     gasPrice = gasPrice || gasRate.price[speed]
-    gasLimit = gasLimit || gasRate.limit
+    gasLimit = gasLimit || gasRate.limit.send
 
     const params = {
       to: String(to).trim(),
@@ -108,53 +132,11 @@ const send = ({ to, amount, gasPrice, gasLimit, speed } = {}) =>
     resolve(receipt)
   })
 
-const estimateGasRate = async () => {
-  const link = config.feeRates.eth
-  const defaultPrice = constants.defaultFeeRates.eth.price
-
-  if (!link) {
-    return defaultPrice
-  }
-
-  const apiResult = await request.get(link)
-
-  const apiRate = {
-    slow: apiResult.safeLow * 1e9,
-    normal: apiResult.standard * 1e9,
-    fast: apiResult.fast * 1e9,
-  }
-
-  const currentRate = {
-    slow: apiRate.slow >= defaultPrice.slow ? apiRate.slow : defaultPrice.slow,
-    normal: apiRate.normal >= defaultPrice.slow ? apiRate.normal : defaultPrice.normal,
-    fast: apiRate.fast >= defaultPrice.slow ? apiRate.fast : defaultPrice.fast,
-  }
-
-  return currentRate
-}
-
-const setGasRate = async ({ limit, slow, normal, fast } = {}) => {
-  const currentRate = await estimateGasRate()
-  const currentLimit = constants.defaultFeeRates.eth.limit
-  const gasRate = {
-    limit: Number(limit) > 0 && Number(limit) !== currentLimit
-      ? limit
-      : currentLimit,
-    price: {
-      slow: slow || currentRate.slow,
-      normal: normal || currentRate.normal,
-      fast: fast || currentRate.fast,
-    },
-  }
-
-  reducers.user.setGasRate({ gasRate })
-}
-
 export default {
   send,
   login,
   getBalance,
   fetchBalance,
   getTransaction,
-  setGasRate,
+  getReputation,
 }

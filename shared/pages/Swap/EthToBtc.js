@@ -4,6 +4,7 @@ import actions from 'redux/actions'
 
 import config from 'app-config'
 import { BigNumber } from 'bignumber.js'
+import CopyToClipboard from 'react-copy-to-clipboard'
 
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import TimerButton from 'components/controls/TimerButton/TimerButton'
@@ -14,22 +15,24 @@ import { FormattedMessage } from 'react-intl'
 
 export default class EthToBtc extends Component {
 
-  constructor({ swap, currencyData, window }) {
+  constructor({ swap, currencyData, depositWindow }) {
     super()
 
     this.swap = swap
 
     this.state = {
-      window,
-      currencyAddress: currencyData.address,
-      flow: this.swap.flow.state,
+      depositWindow,
       enabledButton: false,
+      isAddressCopied: false,
+      flow: this.swap.flow.state,
       isShowingBitcoinScript: false,
+      currencyAddress: currencyData.address,
     }
   }
 
   componentWillMount() {
     this.swap.on('state update', this.handleFlowStateUpdate)
+
   }
 
   componentWillUnmount() {
@@ -86,9 +89,11 @@ export default class EthToBtc extends Component {
     })
   }
 
+
+
   render() {
     const { children } = this.props
-    const { currencyAddress, flow, enabledButton, isShowingBitcoinScript } = this.state
+    const { currencyAddress, flow, enabledButton, isShowingBitcoinScript, isAddressCopied } = this.state
     const headingStyle = {
       color: '#5100dc',
       textTransform: 'uppercase',
@@ -145,7 +150,8 @@ export default class EthToBtc extends Component {
                   <FormattedMessage
                     id="EthToBtc125"
                     defaultMessage={`
-                      "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation."
+                      "Confirmation of the transaction is necessary for crediting the reputation. 
+                      If a user does not bring the deal to the end he gets a negative credit to his reputation."
                     `}
                   />
                 </div>
@@ -190,7 +196,7 @@ export default class EthToBtc extends Component {
             flow.isMeSigned && (
               <Fragment>
                 <h3 style={headingStyle}>
-                  <FormattedMessage id="EthToBtc167" defaultMessage="2. Waiting BTC Owner creates Secret Key, creates BTC Script and charges it" />
+                  <FormattedMessage id="EthToBtc167" defaultMessage="2. Waiting for BTC Owner to create Secret Key, create BTC Script and charge it" />
                 </h3>
                 {
                   flow.step === 2 && (
@@ -202,7 +208,7 @@ export default class EthToBtc extends Component {
                   flow.secretHash && flow.btcScriptValues && (
                     <Fragment>
                       <h3 style={headingStyle}>
-                        <FormattedMessage id="EthToBtc179" defaultMessage="3. Bitcoin Script created and charged. Please check the information below" />
+                        <FormattedMessage id="EthToBtc179" defaultMessage="3. The bitcoin Script was created and charged. Please check the information below" />
                       </h3>
                       <div>
                         <FormattedMessage id="EthToBtc182" defaultMessage="Secret Hash: " />
@@ -237,22 +243,17 @@ export default class EthToBtc extends Component {
       bitcoin.core.opcodes.OP_RIPEMD160,
       Buffer.from('${flow.btcScriptValues.secretHash}', 'hex'),
       bitcoin.core.opcodes.OP_EQUALVERIFY,
-
       Buffer.from('${flow.btcScriptValues.recipientPublicKey}', 'hex'),
       bitcoin.core.opcodes.OP_EQUAL,
       bitcoin.core.opcodes.OP_IF,
-
       Buffer.from('${flow.btcScriptValues.recipientPublicKey}', 'hex'),
       bitcoin.core.opcodes.OP_CHECKSIG,
-
       bitcoin.core.opcodes.OP_ELSE,
-
       bitcoin.core.script.number.encode(${flow.btcScriptValues.lockTime}),
       bitcoin.core.opcodes.OP_CHECKLOCKTIMEVERIFY,
       bitcoin.core.opcodes.OP_DROP,
       Buffer.from('${flow.btcScriptValues.ownerPublicKey}', 'hex'),
       bitcoin.core.opcodes.OP_CHECKSIG,
-
       bitcoin.core.opcodes.OP_ENDIF,
     ])
                         `}
@@ -318,12 +319,11 @@ export default class EthToBtc extends Component {
                     </Fragment>
                   )
                 }
-
                 {
                   (flow.step >= 5 || flow.isEthContractFunded) && (
                     <Fragment>
                       <h3 style={headingStyle}>
-                        <FormattedMessage id="EthToBtc297" defaultMessage="5. Creating Ethereum Contract. Please wait, it will take a while" />
+                        <FormattedMessage id="EthToBtc297" defaultMessage="5. Creating Ethereum Contract. \n Please wait, it can take a few minutes" />
                       </h3>
                     </Fragment>
                   )
@@ -369,7 +369,7 @@ export default class EthToBtc extends Component {
                   (flow.step === 6 || flow.isEthWithdrawn) && (
                     <Fragment>
                       <h3 style={headingStyle}>
-                        <FormattedMessage id="EthToBtc343" defaultMessage="6. Waiting BTC Owner adds Secret Key to ETH Contact" />
+                        <FormattedMessage id="EthToBtc343" defaultMessage="6. Waiting for BTC Owner to add a Secret Key to ETH Contact" />
                       </h3>
                       {
                         !flow.isEthWithdrawn && (
@@ -385,7 +385,7 @@ export default class EthToBtc extends Component {
                     <h3 style={headingStyle}>
                       <FormattedMessage
                         id="EthToBtc357"
-                        defaultMessage="7. BTC Owner successfully took money from ETH Contract and left Secret Key. Requesting withdrawal from BTC Script. Please wait"
+                        defaultMessage="7. The funds from ETH contract was successfully transferred to BTC owner. BTC owner left a secret key. Requesting withdrawal from BTC script. Please wait." // eslint-disable-line
                       />
                     </h3>
                   )
@@ -416,7 +416,7 @@ export default class EthToBtc extends Component {
                   flow.isBtcWithdrawn && (
                     <Fragment>
                       <h3 style={headingStyle}>
-                        <FormattedMessage id="EthToBtc387" defaultMessage="8. Money was transferred to your wallet. Check the balance." />
+                        <FormattedMessage id="EthToBtc387" defaultMessage="8. BTC was transferred to your wallet. Check the balance." />
                       </h3>
                       <h3 style={headingStyle}>
                         <FormattedMessage id="EthToBtc390" defaultMessage="Thank you for using Swap.Online!" />

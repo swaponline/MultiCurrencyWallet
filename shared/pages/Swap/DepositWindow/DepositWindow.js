@@ -36,14 +36,12 @@ export default class DepositWindow extends Component {
       isPressCtrl: false,
       flow: swap.flow.state,
       isAddressCopied: false,
-      flowBalance: flow.balance,
+      isBalanceFetching: false,
       address: currencyData.address,
       currency: currencyData.currency,
       scriptAddress: flow.scriptAddress,
       scriptBalance: flow.scriptBalance,
-      balance: currencyData.balance || 0,
       currencyFullName: currencyData.fullName,
-      unconfBalance: currencyData.unconfirmedBalance || 0,
       sellAmount: (this.swap.sellAmount.toNumber() + 0.00005),
       unconfContractBalance: flow.scriptUnconfirmedBalance || 0,
       falseBalance: currencyData.balanc || flow.scriptBalance || 0,
@@ -51,14 +49,12 @@ export default class DepositWindow extends Component {
   }
 
   componentDidMount() {
-    const { address, scriptAddress, balance, sellAmount, currency, scriptBalance, flow, unconfBalance } = this.state
-
-    this.deposit()
+    const { sellAmount, scriptBalance } = this.state
 
     let checker
 
     checker = setInterval(() => {
-      if (balance <= sellAmount) {
+      if (scriptBalance <= sellAmount) {
         this.updateBalance()
       } else {
         clearInterval(checker)
@@ -66,33 +62,17 @@ export default class DepositWindow extends Component {
     }, 5000)
   }
 
-  updateBalance = async () => {
+  updateBalance = () => {
     const { swap } =  this.props
     const { sellAmount, scriptBalance, currency, flowBalance, unconfBalance } =  this.state
 
-    const balance = await actions[currency.toLowerCase()].getBalance(currency.toLowerCase())
-
-    const falseBalance = scriptBalance ===  0 ? flowBalance || balance : scriptBalance
-    const missingBalance = (sellAmount - falseBalance).toFixed(6)
+    const missingBalance = (sellAmount - scriptBalance).toFixed(6)
 
     this.setState(() => ({
-      balance,
       missingBalance,
-      falseBalance,
       scriptBalance: swap.flow.state.scriptBalance,
     }))
     this.checker()
-    this.deposit()
-  }
-
-  deposit = () => {
-    const { currency, scriptAddress, address, balance, missingBalance } = this.state
-
-    const amount = balance - 0.00015
-
-    if (amount >= 0.00015) {
-      actions[currency.toLowerCase()].send(address, scriptAddress, amount)
-    }
   }
 
   onCopyAddress = (e) => {
@@ -103,17 +83,34 @@ export default class DepositWindow extends Component {
   }
 
 checker = () => {
-  if (this.state.falseBalance >= this.state.sellAmount) {
+  if (this.state.scriptBalance >= this.state.sellAmount) {
     this.setState(() => ({
       checking: true,
     }))
   }
+
   if (this.state.missingBalance <= 0) {
     this.setState(() => ({
       missingBalance: 0,
     }))
   }
 }
+
+  handleReloadBalance = async () => {
+    const { isBalanceFetching } = this.state
+
+    this.updateBalance()
+
+    this.setState({
+      isBalanceFetching: true,
+    }, () => {
+      setTimeout(() => {
+        this.setState({
+          isBalanceFetching: false,
+        })
+      }, 500)
+    })
+  }
 
   handleCopyAddress = (e) => {
     this.setState({
@@ -134,17 +131,16 @@ checker = () => {
   render() {
     const {
       flow,
-      balance,
       checking,
       sellAmount,
       isPressCtrl,
       flowBalance,
-      falseBalance,
       scriptBalance,
       scriptAddress,
       missingBalance,
       isAddressCopied,
       currencyFullName,
+      isBalanceFetching,
     } = this.state
 
     return (
@@ -171,7 +167,7 @@ checker = () => {
                         <div>
                           <FormattedMessage
                             id="deposit146"
-                            defaultMessage="You do not have enough of this amount for the exchange, the amount is specified taking into account the miner fee"
+                            defaultMessage="You do not have funds to continue the swap. Copy the address below and top it up with the recommended amount."
                           />
                           <p>
                             <FormattedMessage id="deposit142" defaultMessage="You can send BTC from a wallet of any exchange" />
@@ -187,7 +183,7 @@ checker = () => {
               <QR
                 network={currencyFullName.toLowerCase()}
                 address={`${scriptAddress}?amount=${missingBalance}`}
-                size={170}
+                size={160}
               />
             </span>
           </div>
@@ -215,25 +211,33 @@ checker = () => {
             </div>
           </CopyToClipboard>
           <div>
+            <i className="fas fa-sync-alt" styleName="icon" onClick={this.handleReloadBalance} />
             {/* eslint-disable */}
-            <FormattedMessage
-              id="deposit220"
-              defaultMessage="Received {balance} / {need} {tooltip}"
-              values={{
-                balance: <strong>{falseBalance} BTC</strong>,
-                need: <strong>{sellAmount.toFixed(6)} BTC</strong>,
-                tooltip:
-                  <Tooltip id="dep226">
-                    <FormattedMessage
-                      id="deposit1228"
-                      defaultMessage="If you replenish the contract for an amount greater than the specified amount, the balance will be written off as miner fee"
-                    />
-                  </Tooltip>
-              }}
-            />
+            {isBalanceFetching
+              ? (
+                <span styleName="loaderHolder">
+                  <InlineLoader />
+                </span>
+              ) : (
+                <FormattedMessage
+                  id="deposit220"
+                  defaultMessage="Received {balance} / {need} {tooltip}"
+                  values={{
+                    balance: <strong>{scriptBalance} BTC</strong>,
+                    need: <strong>{sellAmount.toFixed(6)} BTC</strong>,
+                    tooltip:
+                      <Tooltip id="dep226">
+                        <FormattedMessage
+                          id="deposit1228"
+                          defaultMessage="If you replenish the contract for an amount greater than the specified amount, the balance will be written off as miner fee"
+                        />
+                      </Tooltip>
+                  }}
+                />
+              )}
             <div>
               {checking
-                ? <FormattedMessage id="deposit198.1" defaultMessage="create Ethereum Contract. Please wait, it will take a while..." />
+                ? <FormattedMessage id="deposit198.1" defaultMessage="create Ethereum Contract. \n Please wait, it can take a few minutes..." />
                 : <FormattedMessage id="deposit198" defaultMessage="waiting for payment..." />
               }
               <span styleName="loaderHolder">
@@ -247,7 +251,7 @@ checker = () => {
             <i className="far fa-clock" />
             <FormattedMessage
               id="Deposit220"
-              defaultMessage="You have {timer} min for make payment"
+              defaultMessage="You have {timer} min to make payment"
               values={{ timer: <Timer lockTime={flow.btcScriptValues.lockTime * 1000} defaultMessage={false} /> }} />
           </span>}
         </a>

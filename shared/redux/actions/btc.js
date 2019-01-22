@@ -5,7 +5,6 @@ import bitcoin from 'bitcoinjs-lib'
 import bitcoinMessage from 'bitcoinjs-message'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
-import config from 'app-config'
 import { btc, request, constants, api } from 'helpers'
 
 
@@ -74,14 +73,30 @@ const getTransaction = () =>
 
     return request.get(url)
       .then((res) => {
-        const transactions = res.txs.map((item) => ({
-          type: 'btc',
-          hash: item.txid,
-          confirmations: item.confirmations,
-          value: item.vout.filter(item => item.scriptPubKey.addresses[0] === address)[0].value,
-          date: item.time * 1000,
-          direction: address === item.vout[0].scriptPubKey.addresses[0] ? 'in' : 'out',
-        }))
+        const transactions = res.txs.map((item) => {
+          const direction = item.vin[0].addr !== address ? 'in' : 'out'
+          const isSelf = direction === 'out'
+            && item.vout.filter((item) =>
+              item.scriptPubKey.addresses[0] === address
+            ).length === item.vout.length
+
+          return ({
+            type: 'btc',
+            hash: item.txid,
+            confirmations: item.confirmations,
+            value: isSelf
+              ? item.fees
+              : item.vout.filter((item) => {
+                const currentAddress = item.scriptPubKey.addresses[0]
+
+                return direction === 'in'
+                  ? (currentAddress === address)
+                  : (currentAddress !== address)
+              })[0].value,
+            date: item.time * 1000,
+            direction: isSelf ? 'self' : direction,
+          })
+        })
         resolve(transactions)
       })
       .catch(() => {
@@ -93,8 +108,8 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
   const { user: { btcData: { privateKey } } } = getState()
   const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
 
-  feeValue = feeValue || await btc.estimateFeeValue({ satoshi: true, speed })
-
+  feeValue = feeValue || await btc.estimateFeeValue({ method: 'send', satoshi: true, speed })
+  console.log(feeValue)
   const tx            = new bitcoin.TransactionBuilder(btc.network)
   const unspents      = await fetchUnspents(from)
 
@@ -139,41 +154,26 @@ const signMessage = (message, encodedPrivateKey) => {
   return signature.toString('base64')
 }
 
-const estimateFeeRate = async () => {
-  const link = config.feeRates.btc
-  const defaultFee = constants.defaultFeeRates.btc
+const getReputation = () =>
+  new Promise(async (resolve, reject) => {
+    const { user: { btcData: { address, privateKey } } } = getState()
+    const addressOwnerSignature = signMessage(address, privateKey)
 
-  if (!link) {
-    return defaultFee
-  }
+    request.post(`${api.getApiServer('swapsExplorer')}/reputation`, {
+      json: true,
+      body: {
+        address,
+        addressOwnerSignature,
+      },
+    }).then((response) => {
+      const { reputation, reputationOracleSignature } = response
 
-  const apiResult = await request.get(link)
-
-  const apiRate = {
-    slow: apiResult.low_fee_per_kb,
-    normal: Math.ceil((apiResult.low_fee_per_kb + apiResult.high_fee_per_kb) / 2),
-    fast: apiResult.high_fee_per_kb,
-  }
-
-  const currentRate = {
-    slow: apiRate.slow >= defaultFee.slow ? apiRate.slow : defaultFee.slow,
-    normal: apiRate.normal >= defaultFee.slow ? apiRate.normal : defaultFee.normal,
-    fast: apiRate.fast >= defaultFee.slow ? apiRate.fast : defaultFee.fast,
-  }
-
-  return currentRate
-}
-
-const setFeeRate = async ({ slow, normal, fast } = {}) => {
-  const currentRate = await estimateFeeRate()
-  const feeRate = {
-    slow: slow || currentRate.slow,
-    normal: normal || currentRate.normal,
-    fast: fast || currentRate.fast,
-  }
-
-  reducers.user.setFeeRate({ name: 'btcData', feeRate })
-}
+      reducers.user.setReputation({ name: 'btcData', reputation, reputationOracleSignature })
+      resolve(reputation)
+    }).catch((error) => {
+      reject(error)
+    })
+  })
 
 export default {
   login,
@@ -185,5 +185,5 @@ export default {
   fetchTx,
   fetchBalance,
   signMessage,
-  setFeeRate,
+  getReputation,
 }

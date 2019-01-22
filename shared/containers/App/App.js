@@ -27,6 +27,9 @@ import Seo from 'components/Seo/Seo'
 import config from 'app-config'
 
 
+const memdown = require('memdown')
+
+
 const userLanguage = (navigator.userLanguage || navigator.language || 'en-gb').split('-')[0]
 moment.locale(userLanguage)
 
@@ -75,14 +78,17 @@ export default class App extends React.Component {
       actions.user.getDemoMoney()
     }
 
-    actions.user.setFeeRates()
-
     actions.firebase.initialize()
   }
 
   componentDidMount() {
     window.onerror = (error) => {
       actions.analytics.errorEvent(error)
+    }
+
+    const db = indexedDB.open('test')
+    db.onerror = () => {
+      window.leveldown = memdown
     }
 
     setTimeout(() => {

@@ -20,13 +20,13 @@ export const initialState = {
     currency: 'BCH',
     fullName: 'BitcoinCash',
   },
-  */
   xlmData: {
     balance: 0,
     currency: 'XLM',
     fullName: 'Stellar',
     balanceError: null,
   },
+  */
   ltcData: {
     balance: 0,
     isBalanceFetched: false,
@@ -150,53 +150,14 @@ export const setTokenApprove = (state, { name, approve }) => ({
   },
 })
 
-export const setFeeRate = (state, { name, feeRate: { slow, normal, fast } }) => ({
+export const setReputation = (state, { name, reputation, reputationOracleSignature }) => ({
   ...state,
   tokensData: {
     ...state.tokensData,
   },
   [name]: {
     ...state[name],
-    feeRate: {
-      slow,
-      normal,
-      fast,
-    },
-  },
-})
-
-export const setGasRate = (state, { gasRate: { limit, price: { slow, normal, fast } } }) => ({
-  ...state,
-  tokensData: {
-    ...state.tokensData,
-  },
-  ethData: {
-    ...state.ethData,
-    gasRate: {
-      limit,
-      price: {
-        slow,
-        normal,
-        fast,
-      },
-    },
-  },
-})
-
-export const setTokenGasRate = (state, { name, gasRate: { limit, price: { slow, normal, fast } } }) => ({
-  ...state,
-  tokensData: {
-    ...state.tokensData,
-    [name]: {
-      ...state.tokensData[name],
-      gasRate: {
-        limit,
-        price: {
-          slow,
-          normal,
-          fast,
-        },
-      },
-    },
+    reputation: Number(reputation),
+    reputationProof: reputationOracleSignature,
   },
 })

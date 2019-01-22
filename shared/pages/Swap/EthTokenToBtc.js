@@ -15,23 +15,16 @@ import CopyToClipboard from 'react-copy-to-clipboard'
 
 export default class EthTokenToBtc extends Component {
 
-  static getDerivedStateFromProps({ continueSwap }) {
-    return {
-      continuerSwap: continueSwap,
-    }
-  }
-
-  constructor({ swap, currencyData, ethBalance, continueSwap }) {
+  constructor({ swap, currencyData, ethBalance }) {
     super()
 
     this.swap = swap
 
     this.state = {
-      currencyAddress: currencyData.address,
-      flow: this.swap.flow.state,
       enabledButton: false,
-      continuerSwap: continueSwap,
       isAddressCopied: false,
+      flow: this.swap.flow.state,
+      currencyAddress: currencyData.address,
     }
 
   }
@@ -88,7 +81,7 @@ export default class EthTokenToBtc extends Component {
 
   render() {
     const { children, disabledTimer }  = this.props
-    const { currencyAddress, flow, enabledButton, isShowingBitcoinScript, continuerSwap, isAddressCopied } = this.state
+    const { currencyAddress, flow, enabledButton, isShowingBitcoinScript, isAddressCopied } = this.state
 
     return (
       <div>
@@ -121,7 +114,7 @@ export default class EthTokenToBtc extends Component {
               <div>
                 <FormattedMessage
                   id="EthTokenBtc94"
-                  defaultMessage="Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation."
+                  defaultMessage="Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative credit to his reputation." // eslint-disable-line
                 />
               </div>
               {
@@ -168,7 +161,7 @@ export default class EthTokenToBtc extends Component {
           flow.isMeSigned && (
             <Fragment>
               <h3>
-                <FormattedMessage id="EthTokenBtc147" defaultMessage="2. Waiting BTC Owner creates Secret Key, creates BTC Script and charges it" />
+                <FormattedMessage id="EthTokenBtc147" defaultMessage="2. Waiting for BTC Owner to create Secret Key, create BTC Script and charge it" />
               </h3>
               {
                 flow.step === 2 && (
@@ -180,7 +173,7 @@ export default class EthTokenToBtc extends Component {
                 flow.secretHash && flow.btcScriptValues && (
                   <Fragment>
                     <h3>
-                      <FormattedMessage id="EthTokenBtc159" defaultMessage="3. Bitcoin Script created and charged. Please check the information below" />
+                      <FormattedMessage id="EthTokenBtc159" defaultMessage="3. The bitcoin Script was created and charged. Please check the information below" />
                     </h3>
                     <div>
                       <FormattedMessage id="EthTokenBtc162" defaultMessage="Secret Hash: " />
@@ -301,28 +294,11 @@ export default class EthTokenToBtc extends Component {
               {
                 (flow.step >= 5 || flow.isEthContractFunded) && (
                   <h3>
-                    <FormattedMessage id="EthTokenBtc276" defaultMessage="4. Creating Ethereum Contract. Please wait, it will take a while" />
+                    <FormattedMessage id="EthTokenBtc276" defaultMessage="4. Creating Ethereum Contract. \n Please wait, it can take a few minutes" />
                   </h3>
                 )
               }
               {/* eslint-disable */}
-              {!continuerSwap && flow.step >= 5 &&
-                <CopyToClipboard text={currencyAddress} data-tut="reactour__address">
-                  <h3 style={{ color: '#E72BB3', marginTop: '10px', cursor: 'pointer' }} onClick={this.handleCopy}>
-                    <FormattedMessage
-                      id="BtcToEthTokenAddress307"
-                      defaultMessage="Not enough ETH on your balance for miner fee.{br}{br}Deposit 0.001 ETH to your account {address}"
-                      values={{ address: `${currencyAddress}`, br: <br /> }}
-                    />
-                  </h3>
-                </CopyToClipboard>
-              }
-              {/* eslint-enable */}
-              { isAddressCopied &&
-                <p style={{ fontSize: '14px', background: 'white', textAlign: 'center', borderRadius: '20px' }} >
-                  <FormattedMessage id="Row324" defaultMessage="Address copied to clipboard" />
-                </p>
-              }
               {
                 flow.ethSwapCreationTransactionHash && (
                   <div>
@@ -358,7 +334,7 @@ export default class EthTokenToBtc extends Component {
                 (flow.step === 6 || flow.isEthWithdrawn) && (
                   <Fragment>
                     <h3>
-                      <FormattedMessage id="EthTokenBtc321" defaultMessage="5. Waiting BTC Owner adds Secret Key to ETH Contact" />
+                      <FormattedMessage id="EthTokenBtc321" defaultMessage="5. Waiting for BTC Owner to add a Secret Key to ETH Contact" />
                     </h3>
                     {
                       !flow.isEthWithdrawn && (
@@ -373,8 +349,8 @@ export default class EthTokenToBtc extends Component {
                 (flow.step === 7 || flow.isBtcWithdrawn) && (
                   <h3>
                     <FormattedMessage
-                      id="EthTokenBtc335"
-                      defaultMessage="6. BTC Owner successfully took money from ETH Contract and left Secret Key. Requesting withdrawal from BTC Script. Please wait" />
+                      id="EthTokenBtc335" // eslint-disable-next-line
+                      defaultMessage="6. The funds from ETH contract was successfully transferred to BTC owner. BTC owner left a secret key. Requesting withdrawal from BTC script. Please wait." />
                   </h3>
                 )
               }

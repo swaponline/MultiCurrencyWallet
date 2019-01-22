@@ -40,9 +40,9 @@
   },
   {
     "id": "avatar24",
-    "message": "Автоматически созданный граватар, уникальный для каждого пользователя. Ваш граватар в правом верхнем углу",
+    "message": "Автоматически созданный граватар, уникальный для каждого пользователя. Число равно рейтингу в системе (увеличивается с каждым успешным свопом)",
     "files": [
-      "shared/components/Avatar/Avatar.js"
+      "shared/components/Header/User/User.js"
     ]
   },
   {
@@ -138,17 +138,11 @@
   },
   {
     "id": "userTooltip68",
-    "message": "Пользователь с ",
-    "files": [
-      "shared/components/Header/User/UserTooltip/UserTooltip.js"
-    ]
+    "message": "Пользователь с "
   },
   {
     "id": "userTooltip72",
-    "message": "репутацией предлагает обмен",
-    "files": [
-      "shared/components/Header/User/UserTooltip/UserTooltip.js"
-    ]
+    "message": "репутацией предлагает обмен"
   },
   {
     "id": "transactionLink28",
@@ -1081,7 +1075,7 @@
   },
   {
     "id": "BtcToEth312",
-    "message": "6. Деньги были переведены на Ваш кошелек. Проверьте баланс. ",
+    "message": "6. ETH были переведены на Ваш кошелек. Проверьте баланс. ",
     "files": [
       "shared/pages/Swap/BtcToEth.js"
     ]
@@ -1206,7 +1200,7 @@
   },
   {
     "id": "BtcToEthToken290",
-    "message": "6. Деньги были переведены на Ваш кошелек. Проверьте баланс. ",
+    "message": "6. ETH были переведены на Ваш кошелек. Проверьте баланс. ",
     "files": [
       "shared/pages/Swap/BtcToEthToken.js"
     ]
@@ -1462,7 +1456,7 @@
   },
   {
     "id": "EthToBtc387",
-    "message": "7. Деньги были переведены на Ваш кошелек. Проверьте баланс. ",
+    "message": "7. BTC были переведены на Ваш кошелек. Проверьте баланс. ",
     "files": [
       "shared/pages/Swap/EthToBtc.js"
     ]
@@ -1833,7 +1827,7 @@
   },
   {
     "id": "EthTokenToUsdt377",
-    "message": "7. Деньги были переведены на Ваш кошелек. Проверьте баланс. ",
+    "message": "7. USDT были переведены на Ваш кошелек. Проверьте баланс. ",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
@@ -2036,7 +2030,7 @@
   },
   {
     "id": "EthToLtc386",
-    "message": "7. Деньги были переведены на Ваш кошелек. Проверьте баланс. ",
+    "message": "7. LTC были переведены на Ваш кошелек. Проверьте баланс. ",
     "files": [
       "shared/pages/Swap/EthToLtc.js"
     ]
@@ -2225,7 +2219,7 @@
   },
   {
     "id": "LtcTOeth313",
-    "message": "6. Деньги были переведены на Ваш кошелек. Проверьте баланс. ",
+    "message": "6. ETH были переведены на Ваш кошелек. Проверьте баланс. ",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
@@ -2386,7 +2380,7 @@
   },
   {
     "id": "UsdrToEthToken294",
-    "message": "6. Деньги были переведены на ваш кошелек. Проверьте баланс. ",
+    "message": "6. ETH были переведены на ваш кошелек. Проверьте баланс. ",
     "files": [
       "shared/pages/Swap/UsdtToEthToken.js"
     ]
@@ -2814,7 +2808,7 @@
   },
   {
     "id": "LTCTOBTC396",
-    "message": "7. Деньги были переведены на Ваш кошелек. Проверьте баланс. ",
+    "message": "7. BTC были переведены на Ваш кошелек. Проверьте баланс. ",
     "files": [
       "shared/pages/Swap/LtcToBtc.js"
     ]
@@ -2909,7 +2903,7 @@
   },
   {
     "id": "partial221",
-    "message": "Максимальо возможная сумма: ",
+    "message": "Максимальная сумма для обмена: ",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -2987,6 +2981,13 @@
   {
     "id": "LegalOpinion",
     "message": "Юридическая правомерность",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "Licence",
+    "message": "Лицензия",
     "files": [
       "shared/components/Footer/Links/Links.js"
     ]
@@ -3775,6 +3776,13 @@
     ]
   },
   {
+    "id": "RowHistory283",
+    "message": "Себе",
+    "files": [
+      "shared/pages/History/Row/Row.js"
+    ]
+  },
+  {
     "id": "RowHistory34",
     "message": "Подтверждено",
     "files": [
@@ -3797,7 +3805,7 @@
   },
   {
     "id": "BtcToEth248",
-    "message": "Возврата транзакции: ",
+    "message": "Транзакция возврата: ",
     "files": [
       "shared/pages/Swap/BtcToEth.js"
     ]
@@ -3910,7 +3918,7 @@
   },
   {
     "id": "PartialPriceReduceMin",
-    "message": "Максимально возможная сумма: ",
+    "message": "Максимальная сумма для обмена: ",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -3931,7 +3939,7 @@
   },
   {
     "id": "PartialYourWalletAddress",
-    "message": "Ваш адрес кошелька ",
+    "message": "Адрес кошелька получателя ",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -3977,7 +3985,7 @@
   },
   {
     "id": "partial541",
-    "message": "Обменяться",
+    "message": "Обменять",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -4206,7 +4214,7 @@
   },
   {
     "id": "PartialClosure",
-    "message": "Адрес Вашего кошелька, на который после обмена будет отправлена ​​криптовалюта",
+    "message": "Адрес кошелька, на который будет отправлена ​​криптовалюта после обмена",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -4263,10 +4271,7 @@
   },
   {
     "id": "ImportKeys176",
-    "message": "Пожалуйста введите XLM приватный ключ",
-    "files": [
-      "shared/components/modals/ImportKeys/ImportKeys.js"
-    ]
+    "message": "Пожалуйста введите XLM приватный ключ"
   },
   {
     "id": "ImportKeys205",
@@ -4291,7 +4296,11 @@
   },
   {
     "id": "importkeys187",
-    "message": "Пожалуйста введите XLM приватный ключ ",
+    "message": "Пожалуйста введите XLM приватный ключ "
+  },
+  {
+    "id": "importkeys190",
+    "message": "Что то пошло не так. Проверьте ваш приватный ключ, сеть этого адреса и тд.",
     "files": [
       "shared/components/modals/ImportKeys/ImportKeys.js"
     ]
@@ -4341,10 +4350,7 @@
   },
   {
     "id": "transaction436",
-    "message": "Для обмена, вам нужно {minAmount} ETH на вашем балансе",
-    "files": [
-      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
-    ]
+    "message": "Для обмена, вам нужно {minAmount} ETH на вашем балансе"
   },
   {
     "id": "currencyIcon15",
@@ -4439,7 +4445,7 @@
   },
   {
     "id": "Wallet156",
-    "message": "Welcome to the Swap.Online, decentralized cross-chain wallet based on the Atomic Swap technology.\n            Here you can promptly and safely store and exchange Bitcoin, Ethereum, EOS, USD Tether, BCH and numerous ERC-20 tokens.\n            Swap.Online doesn’t store your keys or your tokens. Our wallet operates directly in browser, so, no additional installations or downloads are required.\n            Swap.Online service is fully decentralized as all the operations with tokens are executed via the IPFS network.\n            It was our team that finalized first Atomic Swaps with USDT and EOS in September, 2018. Also, the Litecoin blockchain was added in October, 2018.\n            Thus, our wallet addresses real multi-chain integration with decentralized orderbook, no third party involved in the exchange, no proxy-token and no token wrapping.\n            As for now, seeking for the liquidity, we can integrate every ERC-20 token for free just in case of mutual PR-announcement with the project the token is backed by.\n            Also, we designed Swap.Button, b2b-solution to exchange all kinds of tokens on Bitcoin and Ethereum.\n            Just install this widget on your site and collect crypto investments to your project.\n            So, start using https://swap.online/ today and enjoy the power of true decentralization.",
+    "message": "Welcome to Swap.Online, a decentralized cross-chain wallet based on the Atomic Swap technology.\n             Here you can safely store and promptly exchange Bitcoin, Ethereum, EOS, USD, Tether, BCH, and numerous ERC-20 tokens.\n             Swap.Online doesn’t store your keys or tokens. Our wallet operates directly in at browser, so no additional installations or downloads are required.\n             The Swap.Online service is fully decentralized as (because)all the operations with tokens are executed via the IPFS network.\n             Our team was the first who finalized Atomic Swaps with USDT and EOS in September 2018 and Litecoin blockchain was added in October 2018.\n             Our wallet addresses a real multi-chain integration with a decentralized order book, no third party involved in the exchange, no proxy-token and no token wrapping.\n             We can integrate any ERC-20 token of a project for free just in case of mutual PR-announcement.\n             In addition, we developed Swap.Button, a b2b-solution to exchange all kinds of tokens for Bitcoin and Ethereum.\n             Install Swap.Button html widget on your site and collect crypto investments for your project.\n             Start using https://swap.online/ today and enjoy the power of true decentralization.",
     "files": [
       "shared/pages/Wallet/Wallet.js"
     ]
@@ -4471,10 +4477,7 @@
   },
   {
     "id": "BtcToEthTokenAddress307",
-    "message": "Недостаточная сумма ETH на вашем балансе, {br}для оплаты комиссии майнеров.{br}{br}Пополните баланс на 0.001 ETH {address}",
-    "files": [
-      "shared/pages/Swap/EthTokenToBtc.js"
-    ]
+    "message": "Недостаточная сумма ETH на вашем балансе, {br}для оплаты комиссии майнеров.{br}{br}Пополните баланс на 0.001 ETH {address}"
   },
   {
     "id": "BtcToEthToken158",
@@ -4639,10 +4642,7 @@
   },
   {
     "id": "Row324",
-    "message": "Адрес скопирован в буфер обмена",
-    "files": [
-      "shared/pages/Swap/EthTokenToBtc.js"
-    ]
+    "message": "Адрес скопирован в буфер обмена"
   },
   {
     "id": "ReceiveModal50",
@@ -4674,6 +4674,27 @@
     "message": "Скрытые валюты ({length})",
     "files": [
       "shared/components/KeyActionsPanel/KeyActionsPanel.js"
+    ]
+  },
+  {
+    "id": "FeeControler34",
+    "message": "Недостаточный баланс ETH кошелька, для оплаты комиссии майнеров.{br}Внесите 0.001 ETH на Ваш кошелек для продолжения обмена {br}",
+    "files": [
+      "shared/pages/Swap/FeeControler/FeeControler.js"
+    ]
+  },
+  {
+    "id": "FeeControler42",
+    "message": "Адрес скопирован в буфер обмена",
+    "files": [
+      "shared/pages/Swap/FeeControler/FeeControler.js"
+     ]
+   },
+   {
+    "id": "userTooltip43",
+    "message": "Пользователь ({reputation}) предлагает обмен",
+    "files": [
+      "shared/components/Header/User/UserTooltip/UserTooltip.js"
     ]
   }
 ]

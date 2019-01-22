@@ -18,4 +18,5 @@ export default {
     httpEndpoint: 'https://seven.swap.online/telos-endpoint',
     registerEndpoint: 'https://seven.swap.online/telos-testnet/newaccount',
   },
+  swapsExplorer: 'https://seven.swap.online/swaps-testnet/state',
 }
