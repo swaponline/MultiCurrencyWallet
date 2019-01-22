@@ -93,7 +93,7 @@ export default class AddOffer extends Component {
 
     const { balance, unconfirmedBalance } = currency
 
-    const ethFee = await helpers.eth.estimateFeeValue({ method: 'exchange', speed: 'normal' })
+    const ethFee = await helpers.eth.estimateFeeValue({ method: 'swap', speed: 'normal' })
 
     if (sellCurrency.toLowerCase() === 'eth') {
       const finalBalance = balance - ethFee > 0  ? balance - ethFee : 0
