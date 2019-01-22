@@ -40,8 +40,10 @@ const estimateFeeRate = async ({ speed = 'normal' } = {}) => {
     return defaultFee[speed]
   }
 
+  let apiResult
+
   try {
-    const apiResult = await request.get(link)
+    apiResult = await request.get(link)
   } catch (err) {
     console.error(`EstimateFeeRateError: ${err.message}`)
     return defaultFee[speed]
