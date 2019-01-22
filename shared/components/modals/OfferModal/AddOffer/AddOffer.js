@@ -91,6 +91,18 @@ export default class AddOffer extends Component {
       .filter(item => item.currency === sellCurrency.toUpperCase())[0]
 
     const { balance, unconfirmedBalance } = currency
+
+    if (sellCurrency.toLowerCase() === 'eth') {
+      const finalBalance = balance - 0.001 > 0  ? balance - 0.001 : 0
+
+      this.setState({
+        balance: finalBalance,
+        ethBalance: finalBalance,
+      })
+
+      return
+    }
+
     const finalBalance = unconfirmedBalance !== undefined && unconfirmedBalance < 0
       ? Number(balance) + Number(unconfirmedBalance)
       : balance
@@ -308,23 +320,12 @@ export default class AddOffer extends Component {
     }
   }
 
-  isEthOrERC20() {
-    const { tokenItems } = this.props
-    const { buyCurrency, sellCurrency, ethBalance } = this.state
-
-    return (
-      sellCurrency === 'eth' || buyCurrency === 'eth' || tokenItems.find(
-        (item) => item.name === sellCurrency || item.name === buyCurrency
-      ) !== undefined
-    ) ? ethBalance < minAmount.eth : false
-  }
-
   handleNext = () => {
     const { exchangeRate, buyAmount, sellAmount, balance, sellCurrency, ethBalance } = this.state
     const { onNext, tokenItems } = this.props
 
     const isDisabled = !exchangeRate || !buyAmount || !sellAmount || sellAmount > balance || sellAmount < minAmount[sellCurrency]
-      || this.isEthOrERC20()
+
 
     if (!isDisabled) {
       actions.analytics.dataEvent('orderbook-addoffer-click-next-button')
@@ -382,7 +383,6 @@ export default class AddOffer extends Component {
     const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
     const isDisabled = !exchangeRate || !buyAmount && !sellAmount
       || sellAmount > balance || sellAmount < minAmount[sellCurrency]
-      || this.isEthOrERC20()
 
     linked.sellAmount.check((value) => Number(value) > minAmount[sellCurrency],
       <span style={{ position: 'relative', marginRight: '44px' }}>
@@ -398,16 +398,6 @@ export default class AddOffer extends Component {
 
     return (
       <div styleName="wrapper addOffer">
-        { this.isEthOrERC20() &&
-          <span styleName="error">
-            <FormattedMessage
-              id="transaction436"
-              defaultMessage="For a swap, you need {minAmount} ETH on your balance"
-              values={{ minAmount:`${minAmount.eth}` }}
-            />
-
-          </span>
-        }
         <SelectGroup
           styleName="sellGroup"
           label={<FormattedMessage id="addoffer381" defaultMessage="Sell" />}

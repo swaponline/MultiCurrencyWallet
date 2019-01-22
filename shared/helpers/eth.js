@@ -12,7 +12,7 @@ const estimateFeeValue = async ({ speed }) => {
   return feeValue
 }
 
-const estimateGasPrice = async ({ speed } = { speed: 'normal' }) => {
+const estimateGasPrice = async ({ speed = 'normal' } = {}) => {
   await actions.eth.setGasRate()
 
   const { user: { ethData: { gasRate } } } = getState()

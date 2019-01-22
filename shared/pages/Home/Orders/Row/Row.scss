@@ -1,40 +1,51 @@
 .mobileRowRemove,
 .mobileRowStart {
-    .firstType,
-    .secondType {
-        color: gray;
-        display: block;
-    }
-    .tdContainer-1 {
-        font-size: 14px;
-    }
-    .tdContainer-2 {
-        font-size: 14px;
-    }
-    .tdContainer-3 {
-      position: relative;
-    }
-    .startButton {
-        position: absolute;
-        top: 48%;
-        right: 0px;
-        width: 67px;
-        height: 40px;
-        transform: translateY(-50%);
-        text-transform: uppercase;
-        font-size: 12px;
-    }
-    .bigContainer {
-        display: flex;
-        width: 265px;
-        justify-content: space-between;
-        align-items: center;
-    }
+  .firstType,
+  .secondType {
+    color: gray;
+    display: block;
+  }
+  .tdContainer-1 {
+    font-size: 14px;
+  }
+  .tdContainer-2 {
+    font-size: 14px;
+  }
+  .tdContainer-3 {
+    position: relative;
+  }
+  .startButton {
+    top: 48%;
+    right: 0px;
+    width: 72px;
+    height: 40px;
+    font-size: 12px;
+    position: absolute;
+    text-transform: uppercase;
+    transform: translateY(-50%);
+  }
+  .onHover {
+    top: 48%;
+    right: 0px;
+    width: 75px;
+    height: 40px;
+    font-size: 50%;
+    position: absolute;
+    padding: 0 1px 0 1px;
+    text-transform: uppercase;
+    transform: translateY(-50%);
+  }
+  .bigContainer {
+    width: 265px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 }
 .mobileRowStart {
   .tdContainer-3 {
-    position: relative;
     right: -65px;
+    position: relative;
   }
   .bigContainer {
     width: 210px;

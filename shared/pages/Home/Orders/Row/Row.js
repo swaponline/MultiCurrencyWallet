@@ -19,9 +19,11 @@ import { Button, RemoveButton } from 'components/controls'
 import Pair from '../Pair'
 import PAIR_TYPES from 'helpers/constants/PAIR_TYPES'
 import RequestButton from '../RequestButton/RequestButton'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
+import { localisedUrl } from 'helpers/locale'
 
 
+@injectIntl
 @connect({
   peer: 'ipfs.peer',
 })
@@ -33,10 +35,11 @@ export default class Row extends Component {
   }
 
   state = {
-    isFetching: false,
-    enterButton: false,
     balance: 0,
     windowWidth: 0,
+    isFetching: false,
+    enterButton: false,
+
   }
 
   componentDidMount() {
@@ -102,28 +105,25 @@ export default class Row extends Component {
   renderWebContent() {
     const { balance, isFetching } = this.state
     const {
+      peer,
       orderId,
       row: {
         id,
-        buyCurrency,
-        sellCurrency,
         isMy,
         buyAmount,
         sellAmount,
+        buyCurrency,
         isRequested,
         isProcessing,
+        sellCurrency,
         owner: {  peer: ownerPeer },
       },
-      peer,
+      intl: { locale },
     } = this.props
 
     const pair = Pair.fromOrder(this.props.row)
 
     const { price, amount, total, main, base, type } = pair
-
-    if (this.state.redirect) {
-      return <Redirect push to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`} />
-    }
 
     return (
       <tr style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}>
@@ -175,7 +175,7 @@ export default class Row extends Component {
                       <div style={{ color: 'red' }}>
                         <FormattedMessage id="Row148" defaultMessage="REQUESTING" />
                       </div>
-                      <Link to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`}>
+                      <Link to={`${localisedUrl(locale, links.swap)}/${buyCurrency}-${sellCurrency}/${id}`}>
                         <FormattedMessage id="Row151" defaultMessage="Go to the swap" />
                       </Link>
                     </Fragment>
@@ -201,11 +201,11 @@ export default class Row extends Component {
                         >
                           {type === PAIR_TYPES.BID ? <FormattedMessage id="Row2061" defaultMessage="SELL" /> : <FormattedMessage id="Row206" defaultMessage="BUY" />}
                           {' '}
-                          {amount.toFixed(4)}{' '}{main}
+                          {amount.toFixed(5)}{' '}{main}
                           <br />
                           <FormattedMessage id="Row210" defaultMessage="FOR" />
                           {' '}
-                          {total.toFixed(4)}{' '}{base}
+                          {total.toFixed(5)}{' '}{base}
                         </RequestButton>
                       )
                     )
@@ -296,7 +296,7 @@ export default class Row extends Component {
                             </Fragment>
                           ) : (
                             <RequestButton
-                              styleName="startButton"
+                              styleName={this.state.enterButton ? 'onHover' : 'startButton'}
                               disabled={balance >= Number(buyAmount)}
                               onClick={() => this.sendRequest(id, isMy ? sellCurrency : buyCurrency)}
                               data={{ type, amount, main, total, base }}
@@ -333,10 +333,11 @@ export default class Row extends Component {
         buyCurrency,
         sellCurrency,
       },
+      intl: { locale },
     } = this.props
 
     if (this.state.redirect) {
-      return <Redirect push to={`${links.swap}/${buyCurrency}-${sellCurrency}/${id}`} />
+      return <Redirect push to={`${localisedUrl(locale, links.swap)}/${buyCurrency}-${sellCurrency}/${id}`} />
     }
     if (this.state.windowWidth < mobileBreakpoint)  {
       return this.renderMobileContent()
