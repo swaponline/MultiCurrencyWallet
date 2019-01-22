@@ -1,17 +1,18 @@
-import { getState } from 'redux/core'
 import actions from 'redux/actions'
 import config from 'app-config'
 import eth from './eth'
+import constants from './constants'
+import BigNumber from 'bignumber.js'
 
 
 const isEthToken = ({ name }) => Object.keys(config.erc20).includes(name)
 
-const estimateFeeValue = async ({ speed = 'normal' } = {}) => {
-  const { user: { tokensData } } = getState()
-
-  const gasRate = tokensData[Object.keys(tokensData)[0]].gasRate.limit
+const estimateFeeValue = async ({ method = 'send', speed } = {}) => {
   const gasPrice = await estimateGasPrice({ speed })
-  const feeValue = gasRate * gasPrice * 1e-18
+  const feeValue = new BigNumber(constants.defaultFeeRates.ethToken.limit[method])
+    .times(gasPrice)
+    .times(1e-18)
+    .toNumber()
 
   return feeValue
 }

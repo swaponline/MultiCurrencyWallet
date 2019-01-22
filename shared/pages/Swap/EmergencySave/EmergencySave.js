@@ -30,7 +30,7 @@ export default class EmergencySave extends Component {
     return (
       <div styleName="block">
         <span styleName="button"  onClick={this.showEmergency}>
-          <FormattedMessage id="EmergencySave" defaultMessage="Information about swap" />
+          <FormattedMessage id="EmergencySave" defaultMessage="Information about the swap" />
         </span>
         {
           isShowEmergency && (

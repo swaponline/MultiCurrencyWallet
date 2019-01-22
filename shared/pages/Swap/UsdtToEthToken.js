@@ -89,7 +89,7 @@ export default class UsdtToEthToken extends Component {
               <h3>
                 <FormattedMessage
                   id="UsdrToEthToken83"
-                  defaultMessage="We are waiting for a market maker. If it does not appear within 5 minutes, the swap will be canceled automatically." />
+                  defaultMessage="Waiting for a market maker. If the market maker does not appear within 5 minutes, the swap will be canceled automatically." />
               </h3>
               <InlineLoader />
             </Fragment>
@@ -189,7 +189,7 @@ export default class UsdtToEthToken extends Component {
                 (flow.step === 4 || flow.usdtScriptValues) && (
                   <Fragment>
                     <h3>
-                      <FormattedMessage id="UsdrToEthToken174" defaultMessage="3. Creating Bitcoin Omni Script. Please wait, it will take a while" />
+                      <FormattedMessage id="UsdrToEthToken174" defaultMessage="3. Creating Bitcoin Omni Script. \n Please wait, it can take a few minutes" />
                     </h3>
                     {
                       flow.usdtFundingTransactionHash && (
@@ -290,7 +290,7 @@ export default class UsdtToEthToken extends Component {
                 flow.isEthWithdrawn && (
                   <Fragment>
                     <h3>
-                      <FormattedMessage id="UsdrToEthToken294" defaultMessage="6. Money was transferred to your wallet. Check the balance." />
+                      <FormattedMessage id="UsdrToEthToken294" defaultMessage="6. ETH was transferred to your wallet. Check the balance." />
                     </h3>
                     <h2>
                       <FormattedMessage id="UsdrToEthToken297" defaultMessage="Thank you for using Swap.Online!" />

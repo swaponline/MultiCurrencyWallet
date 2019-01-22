@@ -1,6 +1,9 @@
 export default {
   eth: {
-    limit: 21 * 1e3,
+    limit: {
+      send: 21 * 1e3,
+      swap: 300 * 1e3,
+    },
     price: {
       slow: 0.1 * 1e9,
       normal: 1 * 1e9,
@@ -8,7 +11,10 @@ export default {
     },
   },
   ethToken: {
-    limit: 100 * 1e3,
+    limit: {
+      send: 100 * 1e3,
+      swap: 300 * 1e3,
+    },
     price: {
       slow: 0.1 * 1e9,
       normal: 1 * 1e9,
@@ -16,13 +22,25 @@ export default {
     },
   },
   btc: {
-    slow: 1 * 1e3,
-    normal: 15 * 1e3,
-    fast: 30 * 1e3,
+    size: {
+      send: 226,
+      swap: 1024,
+    },
+    rate: {
+      slow: 1 * 1e3,
+      normal: 15 * 1e3,
+      fast: 30 * 1e3,
+    },
   },
   ltc: {
-    slow: 1 * 1e3,
-    normal: 50 * 1e3,
-    fast: 100 * 1e3,
+    size: {
+      send: 226,
+      swap: 1024,
+    },
+    rate: {
+      slow: 1 * 1e3,
+      normal: 50 * 1e3,
+      fast: 100 * 1e3,
+    },
   },
 }
