@@ -146,11 +146,11 @@ export default class SwapComponent extends PureComponent {
   }
 
   catchWithdrawError = async () => {
-    const { swap: { participantSwap, ownerSwap, sellAmount, flow: { state: { ethWithdrawnError } } }, currencyData: { currency } } = this.state
+    const { swap: { participantSwap, ownerSwap, sellAmount, flow: { state: { isEthContractFunded } } }, currencyData: { currency } } = this.state
 
     const ethPair = ['BTC', 'ETH', 'LTC']
 
-    if (ethWithdrawnError === true && (
+    if (isEthContractFunded === true && (
       this.props.tokenItems.map(item => item.name).includes(participantSwap._swapName.toLowerCase())
       || ethPair.includes(currency)
     )) {
