@@ -44,11 +44,11 @@ export default class SwapProgress extends Component {
         )
       case 2:
         return (
-          <FormattedMessage id="SwapProgress38" defaultMessage="Waiting BTC Owner creates Secret Key, creates BTC Script and charges it" />
+          <FormattedMessage id="SwapProgress38" defaultMessage="Waiting for BTC Owner to create Secret Key, create BTC Script and charge it" />
         )
       case 3:
         return (
-          <FormattedMessage id="SwapProgress44" defaultMessage="Bitcoin Script created and charged. Please check the information below" />
+          <FormattedMessage id="SwapProgress44" defaultMessage="The bitcoin Script was created and charged. Please check the information below" />
         )
       case 4:
         return (
@@ -56,15 +56,15 @@ export default class SwapProgress extends Component {
         )
       case 5:
         return (
-          <FormattedMessage id="SwapProgress56" defaultMessage="Creating Ethereum Contract. Please wait, it will take a while" />
+          <FormattedMessage id="SwapProgress56" defaultMessage="Creating Ethereum Contract. \n Please wait, it can take a few minutes" />
         )
       case 6:
         return (
-          <FormattedMessage id="SwapProgress62" defaultMessage="Waiting BTC Owner adds Secret Key to ETH Contact" />
+          <FormattedMessage id="SwapProgress62" defaultMessage="Waiting for BTC Owner to add a Secret Key to ETH Contact" />
         )
       case 7:
         return (
-          <FormattedMessage id="SwapProgress68" defaultMessage="Money was transferred to your wallet. Check the balance." />
+          <FormattedMessage id="SwapProgress68" defaultMessage="BTC was transferred to your wallet. Check the balance." />
         )
       case 8:
         return (
@@ -95,7 +95,7 @@ export default class SwapProgress extends Component {
         )
       case 4:
         return (
-          <FormattedMessage id="SwapProgress111" defaultMessage="Creating Bitcoin Script. Please wait, it will take a while" />
+          <FormattedMessage id="SwapProgress111" defaultMessage="Creating Bitcoin Script. \n Please wait, it can take a few minutes" />
         )
       case 5:
         return (
@@ -107,7 +107,7 @@ export default class SwapProgress extends Component {
         )
       case 7:
         return  (
-          <FormattedMessage id="SwapProgress129" defaultMessage="Money was transferred to your wallet. Check the balance." />
+          <FormattedMessage id="SwapProgress129" defaultMessage="ETH was transferred to your wallet. Check the balance." />
         )
       case 8:
         return (
