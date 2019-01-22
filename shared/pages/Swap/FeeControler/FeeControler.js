@@ -39,7 +39,7 @@ export default class FeeControler extends Component {
             <h3>
               <FormattedMessage
                 id="FeeControler34"
-                defaultMessage="Not enough ETH on your balance for miner fee.{br}Deposit 0.001 ETH to your account  {br}  {br} {address}"
+                defaultMessage="Not enough ETH on your balance for miner fee.{br}Deposit 0.002 ETH to your account  {br}  {br} {address}"
                 values={{ br: <br /> }}
               />
             </h3>
