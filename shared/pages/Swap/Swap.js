@@ -158,12 +158,6 @@ export default class SwapComponent extends PureComponent {
         continueSwap: false,
       }))
     }
-    console.log('currency', currency)
-    console.log('canCreateEthTransaction', canCreateEthTransaction)
-    console.log('ethPair.includes(currency)', ethPair.includes(currency))
-
-    console.log('continueSwap', this.state.continueSwap)
-
   }
 
   handleGoHome = () => {
