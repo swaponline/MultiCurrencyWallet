@@ -41,7 +41,7 @@ export default class SwapComponent extends PureComponent {
     currencyData: null,
     isAmountMore: null,
     SwapComponent: null,
-    continueSwap: false,
+    continueSwap: true,
     enoughtBalance: true,
     depositWindow: false,
   }
@@ -100,22 +100,16 @@ export default class SwapComponent extends PureComponent {
       this.props.history.push(localisedUrl(links.exchange))
     }
     this.setSaveSwapId(orderId)
-    this.getFee()
   }
 
   componentDidMount() {
     if (this.state.swap !== null) {
       this.checkBalance()
-      this.checkEthBalance()
 
       let timer
 
       timer = setInterval(() => {
-        if (!this.state.continueSwap) {
-          this.checkEthBalance()
-        } else {
-          clearInterval(timer)
-        }
+        this.catchWithdrawError()
       }, 5000)
     }
   }
@@ -151,32 +145,19 @@ export default class SwapComponent extends PureComponent {
     }
   }
 
-  getFee = async () => {
-    const btcFee = await helpers.btc.estimateFeeValue({ speed: 'normal' })
-    const ltcFee = await helpers.ltc.estimateFeeValue({ speed: 'normal' })
-
-    this.setState(() => ({
-      btcFee,
-      ltcFee,
-    }))
-  }
-
-  checkEthBalance = async () => {
-    const { swap: { participantSwap, ownerSwap, sellAmount, flow: { state: { step, isEthWithdraw } } }, currencyData, btcFee, ltcFee } = this.state
+  catchWithdrawError = async () => {
+    const { swap: { participantSwap, ownerSwap, sellAmount, flow: { state: { ethWithdrawnError } } }, currencyData: { currency } } = this.state
 
     const ethBalance = await actions.eth.getBalance()
-
     const ethFee = (participantSwap.gasPrice * participantSwap.gasLimit * (1e-18)) || (ownerSwap.gasPrice * ownerSwap.gasLimit * (1e-18))
-    const etheriumFee = Number(sellAmount) + Number(ethFee)
+
+    if (ethWithdrawnError === true && (currency === 'BTC' || currency === 'ETH')) {
+      this.setState(() => ({
+        continueSwap: false,
+      }))
+    }
 
     if (this.props.tokenItems.map(item => item.name).includes(participantSwap._swapName.toLowerCase()) && ethBalance > ethFee) { // ercFee
-      this.setState(() => ({ continueSwap: true }))
-    }
-    if (currencyData.currency  === 'BTC' && ethBalance > ethFee) {
-      this.setState(() => ({ continueSwap: true }))
-    }
-
-    if (currencyData.currency  === 'ETH' && ethBalance > etheriumFee) {
       this.setState(() => ({ continueSwap: true }))
     }
   }
@@ -189,7 +170,6 @@ export default class SwapComponent extends PureComponent {
   render() {
     const { peer } = this.props
     const { swap, SwapComponent, currencyData, isAmountMore, ethData, continueSwap, enoughtBalance, depositWindow, ethAddress } = this.state
-
 
     if (!swap || !SwapComponent || !peer || !isAmountMore) {
       return null
@@ -215,7 +195,7 @@ export default class SwapComponent extends PureComponent {
             )
           }
           <SwapController swap={swap} />
-          {swap.flow.state.step === 5 && !continueSwap && swap.flow.state.step <= 6 && (<FeeControler ethAddress={ethAddress} />)}
+          {swap.flow.state.step >= 5 && !continueSwap && swap.flow.state.step <= 6 && (<FeeControler ethAddress={ethAddress} />)}
         </SwapComponent>
         {
           (isFinished) && (
