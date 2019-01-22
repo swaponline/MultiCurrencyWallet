@@ -86,6 +86,10 @@ export default class EthTokenToBtc extends Component {
     })
   }
 
+  handleFinishWithdraw = () => {
+    this.swap.flow.acceptWithdrawRequest()
+  }
+
   render() {
     const { children, disabledTimer }  = this.props
     const { currencyAddress, flow, enabledButton, isShowingBitcoinScript, continuerSwap, isAddressCopied } = this.state
@@ -366,6 +370,14 @@ export default class EthTokenToBtc extends Component {
                       )
                     }
                   </Fragment>
+                )
+              }
+              {
+                (flow.withdrawRequestIncoming && !flow.withdrawRequestAccepted) && (
+                  <div>
+                    <h3>Other side requery your finish withdraw transaction</h3>
+                    <Button brand onClick={this.handleFinishWithdraw}>Finish withdraw transaction</Button>
+                  </div>
                 )
               }
 

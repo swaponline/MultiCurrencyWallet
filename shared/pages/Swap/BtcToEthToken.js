@@ -127,6 +127,10 @@ export default class BtcToEthToken extends Component {
     })
   }
 
+  onRequeryWithdraw = () => {
+    this.swap.flow.sendWithdrawRequest()
+  }
+
   onCopyAddress = (e) => {
     e.preventDefault()
     this.setState({
@@ -256,7 +260,7 @@ export default class BtcToEthToken extends Component {
                   )
                   : (flow.step === 4 && flow.btcScriptValues && (
                     <div className="swapStep-4">
-                      <h3 h3 style={headingStyle}>
+                      <h3 style={headingStyle}>
                         <FormattedMessage id="BtcToEthToken222" defaultMessage="Creating Bitcoin Script. Please wait, it will take a while" />
                       </h3>
                       {
@@ -288,7 +292,7 @@ export default class BtcToEthToken extends Component {
                 {
                   (flow.step === 5 || flow.isEthContractFunded) && (
                     <Fragment>
-                      <h3 h3 style={headingStyle}>
+                      <h3 style={headingStyle}>
                         <FormattedMessage id="BtcToEthToken230" defaultMessage="ETH Owner received Bitcoin Script and Secret Hash. Waiting when he creates ETH Contract" />
                       </h3>
                       {
@@ -315,10 +319,11 @@ export default class BtcToEthToken extends Component {
                     </div>
                   )
                 }
+                
                 {
                   (flow.step === 6 || flow.isEthWithdrawn) && (
                     <Fragment>
-                      <h3 h3 style={headingStyle}>
+                      <h3 style={headingStyle}>
                         <FormattedMessage id="BtcToEthToken260" defaultMessage="4. ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait" />
                       </h3>
                       {/* {!continuerSwap &&
@@ -354,11 +359,24 @@ export default class BtcToEthToken extends Component {
                     <InlineLoader />
                   )
                 }
-
+                {
+                  (flow.step === 6 && flow.requireWithdrawFee && !flow.requireWithdrawFeeSended) && (
+                    <Fragment>
+                      <h3 style={headingStyle}>Not enough ETH on your balance for miner fee</h3>
+                      <div>Deposit {BigNumber(flow.withdrawFee).dividedBy(1e8).toFixed(8)} ETH or</div>
+                      <Button brand onClick={this.onRequeryWithdraw}>Requery other side for withdraw</Button>
+                    </Fragment>
+                  )
+                }
+                {
+                  (flow.step === 6 && flow.requireWithdrawFeeSended) && (
+                    <h3 style={headingStyle}>Withdraw request sended</h3>
+                  )
+                }
                 {
                   (flow.isEthWithdrawn) && (
                     <Fragment>
-                      <h3 h3 style={headingStyle}>
+                      <h3 style={headingStyle}>
                         <FormattedMessage id="BtcToEthToken290" defaultMessage="Money was transferred to your wallet. Check the balance." />
                       </h3>
                       <h2 style={headingStyle}>
