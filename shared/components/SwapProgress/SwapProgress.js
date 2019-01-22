@@ -11,6 +11,7 @@ import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 import Title from 'components/PageHeadline/Title/Title'
 import Logo from 'components/Logo/Logo'
+import FeeNotify from './FeeNotify/FeeNotify'
 import { FormattedMessage } from 'react-intl'
 import { Button } from 'components/controls'
 

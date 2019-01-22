@@ -6,9 +6,8 @@ import cssModules from 'react-css-modules'
 import styles from './Swap.scss'
 
 import { connect } from 'redaction'
-import helpers from 'helpers'
+import { constants, links } from 'helpers'
 import actions from 'redux/actions'
-import constants from 'constants'
 
 import { swapComponents } from './swaps'
 import Share from './Share/Share'
@@ -146,19 +145,21 @@ export default class SwapComponent extends PureComponent {
   }
 
   catchWithdrawError = async () => {
-    const { swap: { participantSwap, ownerSwap, sellAmount, flow: { state: { isEthContractFunded } } }, currencyData: { currency } } = this.state
+    const { swap: { participantSwap, ownerSwap, sellAmount, flow: { state: { canCreateEthTransaction } } }, currencyData: { currency } } = this.state
 
     const ethPair = ['BTC', 'ETH', 'LTC']
 
-    if (isEthContractFunded === true && (
-      this.props.tokenItems.map(item => item.name).includes(participantSwap._swapName.toLowerCase())
+
+    if (this.state.swap.flow.state.canCreateEthTransaction === false && (this.props.tokenItems.map(item => item.name).includes(participantSwap._swapName.toLowerCase())
       || ethPair.includes(currency)
     )) {
       this.setState(() => ({
         continueSwap: false,
       }))
     }
+    console.log('canCreate ', this.state.swap.flow.state.canCreateEthTransaction)
   }
+
 
   handleGoHome = () => {
     const { intl: { locale } } = this.props
@@ -174,9 +175,12 @@ export default class SwapComponent extends PureComponent {
     }
     const isFinished = (swap.flow.state.step >= (swap.flow.steps.length - 1))
 
+    console.log('swap', swap)
+
     return (
       <div styleName="swap">
         <SwapComponent
+          continueSwap={continueSwap}
           depositWindow={depositWindow}
           disabledTimer={isAmountMore === 'enable'}
           swap={swap}
@@ -193,7 +197,7 @@ export default class SwapComponent extends PureComponent {
             )
           }
           <SwapController swap={swap} />
-          {swap.flow.state.step >= 5 && !continueSwap && swap.flow.state.step <= 6 && (<FeeControler ethAddress={ethAddress} />)}
+          <FeeControler ethAddress={ethAddress} />
         </SwapComponent>
         {
           (isFinished) && (

@@ -1,17 +1,45 @@
 .main {
   color: rgb(231, 43, 179);
-  margin-top: -6em;
   background: white;
-  position: absolute;
   font-size: 16px;
+  width: 600px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding-bottom: 30px;
+  height: 470px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feeHeading {
+  color: #000;
+  font-size: 23px;
+  margin-bottom: 20px;
+}
+
+.warning {
+  font-size: 120px;
+  color: #ff3b3b;
+  margin-bottom: 5px;
 }
 
 .button {
   cursor: pointer;
   width: 200px;
   margin-left: 20%;
+  background: #5100e0;
+  margin: 0;
+  &:hover {
+    background: #782cff;
+  }
 }
 
 .address {
-  font-size: 26px;
+  color: #333;
+  font-weight: bold;
+  margin-top: 30px;
+  margin-bottom: 40px;
+  font-size: 23px;
 }

@@ -18,6 +18,7 @@ import Button from 'components/controls/Button/Button'
 import DepositWindow from './DepositWindow/DepositWindow'
 import SwapProgress from 'components/SwapProgress/SwapProgress'
 import SwapList from './SwapList/SwapList'
+import FeeControler from './FeeControler/FeeControler'
 import QR from 'components/QR/QR'
 import swapApp from 'swap.app'
 import Timer from './Timer/Timer'
@@ -26,20 +27,21 @@ import { FormattedMessage } from 'react-intl'
 
 export default class BtcToEthToken extends Component {
 
-  static getDerivedStateFromProps({ enoughtBalance }) {
+  static getDerivedStateFromProps({ enoughBalance }) {
     return {
-      enoughtBalance,
+      enoughBalance,
     }
   }
 
-  constructor({ swap, currencyData, ethData, enoughtBalance, styles, depositWindow }) {
+  constructor({ swap, currencyData, ethData, enoughBalance, styles, depositWindow, continueSwap }) {
     super()
 
     this.swap = swap
 
     this.state = {
       depositWindow,
-      enoughtBalance,
+      enoughBalance,
+      continueSwap,
       isPressCtrl: false,
       isTextCopied: false,
       enabledButton: false,
@@ -51,7 +53,6 @@ export default class BtcToEthToken extends Component {
       ethAddress: ethData.map(item => item.address),
       secret: crypto.randomBytes(32).toString('hex'),
       destinationBuyAddress: (this.swap.destinationBuyAddress) ? this.swap.destinationBuyAddress : swapApp.services.auth.accounts.eth.address,
-      enoughBalance,
     }
   }
 
@@ -192,9 +193,10 @@ export default class BtcToEthToken extends Component {
       secret,
       ethAddress,
       isTextCopied,
+      continueSwap,
       enabledButton,
       depositWindow,
-      enoughtBalance,
+      enoughBalance,
       currencyAddress,
       isAddressCopied,
       paddingContainerValue,
@@ -215,15 +217,19 @@ export default class BtcToEthToken extends Component {
     linked.destinationBuyAddress.check((value) => value !== '', 'Please enter ETH address for tokens')
     return (
       <div className={this.props.styles.swapContainer} style={{ paddingTop: isMobile ? `${paddingContainerValue}px` : '' }}>
-        {(!enoughBalance && flow.step === 4) ?
-          (
+        {
+          <FeeControler ethAddress="ETH" />
+        }
+        {
+          (!enoughBalance && flow.step === 4) &&
             <div className={this.props.styles.swapDepositWindow}>
               <DepositWindow currencyData={currencyData} swap={swap} flow={swap.flow.state} />
-            </div>) :
-          (
-            <SwapProgress data={flow} name="BTC2ETH" stepLength={8} />
-          )
+            </div>
         }
+        {
+          continueSwap && enoughBalance && <SwapProgress data={flow} name="BTC2ETH" stepLength={8} />
+        }
+
         <SwapList data={flow} />
 
 
@@ -470,9 +476,7 @@ export default class BtcToEthToken extends Component {
           <br />
           {/* { !flow.isFinished && <Button green onClick={this.addGasPrice}>Add gas price</Button> } */}
         </div>
-        <div className={this.props.styles.information}>
-          { children }
-        </div>
+
       </div>
     )
   }

@@ -1,7 +1,12 @@
 import React, { Component, Fragment } from 'react'
 
-import styles from './FeeControler.scss'
+import styles from './FeeNotify.scss'
 import cssModules from 'react-css-modules'
+
+import { connect } from 'redaction'
+import actions from 'redux/actions'
+import helpers from 'helpers'
+import constants from 'constants'
 
 import CopyToClipboard from 'react-copy-to-clipboard'
 import { FormattedMessage } from 'react-intl'
@@ -9,8 +14,28 @@ import { FormattedMessage } from 'react-intl'
 import Button from 'components/controls/Button/Button'
 
 
+@connect(({
+  user: { ethData, btcData, /* bchData, */ tokensData, eosData, telosData, nimData, usdtData, ltcData },
+}) => ({
+  items: [ ethData, btcData, eosData, telosData, /* bchData, */ ltcData, usdtData /* nimData */ ],
+  tokenItems: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
+}))
+
 @cssModules(styles)
-export default class FeeControler extends Component {
+export default class FeeNotify extends Component {
+
+  static getDerivedStateFromProps({ items, tokenItems }) {
+    const ethData = items.filter(item => item.currency === 'ETH')
+
+
+    // const currencyData = items.concat(tokenItems).filter(item => item.currency === swap.sellCurrency.toUpperCase())[0]
+
+    // console.log(items)
+
+    // return {
+    //   ethAddress: ethData[0].address,
+    // }
+  }
 
   state = {
     isAddressCopied: false,
@@ -26,6 +51,7 @@ export default class FeeControler extends Component {
         })
       }, 500)
     })
+
   }
 
   render() {
@@ -33,13 +59,10 @@ export default class FeeControler extends Component {
     const { isAddressCopied } = this.state
 
     return (
-      <div styleName="main">
+      <div>
         <CopyToClipboard text={ethAddress} data-tut="reactour__address">
-          <div>
-            <div styleName="warning">
-              <i className="fas fa-exclamation-triangle" />
-            </div>
-            <h3 styleName="feeHeading">
+          <div styleName="main">
+            <h3>
               <FormattedMessage
                 id="FeeControler34"
                 defaultMessage="Not enough ETH on your balance for miner fee.{br}Deposit 0.001 ETH to your account  {br}  {br} {address}"
