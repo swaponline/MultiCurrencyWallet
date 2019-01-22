@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 
 import { connect } from 'redaction'
 import actions from 'redux/actions'
+import helpers from 'helpers'
 
 import Link from 'sw-valuelink'
 import config from 'app-config'
@@ -92,8 +93,10 @@ export default class AddOffer extends Component {
 
     const { balance, unconfirmedBalance } = currency
 
+    const ethFee = await helpers.eth.estimateFeeValue({ method: 'exchange', speed: 'normal' })
+
     if (sellCurrency.toLowerCase() === 'eth') {
-      const finalBalance = balance - 0.001 > 0  ? balance - 0.001 : 0
+      const finalBalance = balance - ethFee > 0  ? balance - ethFee : 0
 
       this.setState({
         balance: finalBalance,
@@ -377,12 +380,14 @@ export default class AddOffer extends Component {
   }
 
   render() {
+
     const { currencies, tokenItems, addSelectedItems } = this.props
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency,
       balance, isBuyFieldInteger, isSellFieldInteger, ethBalance, manualRate, isPartial } = this.state
     const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
     const isDisabled = !exchangeRate || !buyAmount && !sellAmount
       || sellAmount > balance || sellAmount < minAmount[sellCurrency]
+
 
     linked.sellAmount.check((value) => Number(value) > minAmount[sellCurrency],
       <span style={{ position: 'relative', marginRight: '44px' }}>

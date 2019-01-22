@@ -31,6 +31,7 @@ const minAmount = {
   swap: 1,
   jot: 1,
   usdt: 0,
+  erc: 1,
 }
 
 @injectIntl
@@ -80,6 +81,28 @@ export default class WithdrawModal extends React.Component {
       })
     this.usdRates = {}
     this.getUsdBalance()
+    this.actualyMinAmount()
+  }
+
+  actualyMinAmount = async () => {
+    const { data: { currency } } = this.props
+
+    const ercFee =  await helpers.ethToken.estimateFeeValue({ method: 'send', speed: 'fast' })
+    minAmount.erc = ercFee.toFixed(5)
+
+    const coinsWithDynamicFee = [
+      'eth',
+      'ltc',
+      'btc',
+      'ethToken',
+    ]
+
+    const currentCoin = currency.toLowerCase()
+
+    if (coinsWithDynamicFee.includes(currentCoin)) {
+      const currentFee = await helpers[currentCoin].estimateFeeValue({ method: 'send', speed: 'fast' })
+      minAmount[currentCoin]  = BigNumber(currentFee)
+    }
   }
 
   setBalanceOnState = async (currency) => {
@@ -153,10 +176,12 @@ export default class WithdrawModal extends React.Component {
       })
   }
 
-    sellAllBalance = () => {
+    sellAllBalance = async () => {
       const { amount, balance, currency, tokenFee } = this.state
       const { data } = this.props
+
       const minFee = tokenFee ? Number(0) : minAmount[data.currency.toLowerCase()]
+
 
       const balanceMiner = balance !== 0
         ? Number(balance) - minFee
@@ -171,7 +196,7 @@ export default class WithdrawModal extends React.Component {
       const { name, data, tokenItems }  = this.props
       const { currency, ethBalance, tokenFee } = this.state
       return (
-        (data.currency === 'eth' || tokenFee === true && ethBalance < minAmount.eth) ? ethBalance < minAmount.eth : false
+        (tokenFee === true && ethBalance < minAmount.erc) ? ethBalance < minAmount.erc : false
       )
     }
 
@@ -188,7 +213,7 @@ export default class WithdrawModal extends React.Component {
 
       const linked = Link.all(this, 'address', 'amount')
 
-      const min = tokenFee ? minAmount.eth : minAmount[data.currency.toLowerCase()]
+      const min = tokenFee ? minAmount.erc : minAmount[data.currency.toLowerCase()]
       const dataCurrency = tokenFee ? 'ETH' : data.currency.toUpperCase()
 
       const isDisabled =
