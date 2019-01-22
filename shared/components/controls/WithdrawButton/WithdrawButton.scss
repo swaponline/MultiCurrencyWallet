@@ -20,20 +20,21 @@
 
 @include media-mobile {
   .withdrawButton {
-    margin: 0 7vw;
+    margin: 0;
+    margin-left: 3.5vw;
     font-size: 12px;
   }
 }
 
 @media (max-width: 568px) and (min-width: 450px) {
   .withdrawButton {
-    margin: 0 10vw;
+    margin-left: 5vw;
   }
 }
 
 @media (max-width: 380px) {
   .withdrawButton {
-    margin: 0 3vw;
+    margin-left: 0;
   }
 }
 
