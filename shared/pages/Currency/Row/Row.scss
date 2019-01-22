@@ -63,7 +63,7 @@
 
 @include media-mobile { 
   .exchangeRow {
-    width: 140px;
+    width: 50vw;
     button {
       transform: scale(0.6);
     }
@@ -78,6 +78,9 @@
   .exchangeTr {
     position: relative;
     height: 88px;
+    td {
+      padding: 15px 2px;
+    }
   }
   .button {
     width: auto;

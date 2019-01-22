@@ -2,7 +2,7 @@
   @include inline-block;
   height: 40px;
   background: #f8f3fe;
-  padding: 0 25px;
+  padding: 0 1.6em;
   cursor: pointer;
   line-height: 40px;
   font-size: 16px;
@@ -20,7 +20,20 @@
 
 @include media-mobile {
   .withdrawButton {
-    margin-right: 10px;
+    margin: 0 7vw;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 568px) and (min-width: 450px) {
+  .withdrawButton {
+    margin: 0 10vw;
+  }
+}
+
+@media (max-width: 380px) {
+  .withdrawButton {
+    margin: 0 3vw;
   }
 }
 
