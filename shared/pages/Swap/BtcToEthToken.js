@@ -218,13 +218,14 @@ export default class BtcToEthToken extends Component {
     return (
       <div className={this.props.styles.swapContainer} style={{ paddingTop: isMobile ? `${paddingContainerValue}px` : '' }}>
         {
-          <FeeControler ethAddress="ETH" />
+          console.log('1', swap.flow.state.step >= 5 && !continueSwap && <FeeControler ethAddress="ETH" />)
+          // swap.flow.state.step >= 5 && !continueSwap && <FeeControler ethAddress="ETH" />
         }
         {
-          (!enoughBalance && flow.step === 4) &&
+          console.log((!enoughBalance && flow.step === 4) && (
             <div className={this.props.styles.swapDepositWindow}>
               <DepositWindow currencyData={currencyData} swap={swap} flow={swap.flow.state} />
-            </div>
+            </div>))
         }
         {
           continueSwap && enoughBalance && <SwapProgress data={flow} name="BTC2ETH" stepLength={8} />
@@ -476,7 +477,7 @@ export default class BtcToEthToken extends Component {
           <br />
           {/* { !flow.isFinished && <Button green onClick={this.addGasPrice}>Add gas price</Button> } */}
         </div>
-
+        { children }
       </div>
     )
   }
