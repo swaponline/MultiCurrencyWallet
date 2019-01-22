@@ -23,7 +23,14 @@ const estimateGasPrice = async ({ speed = 'normal' } = {}) => {
     return defaultPrice[speed]
   }
 
-  const apiResult = await request.get(link)
+  let apiResult
+
+  try {
+    apiResult = await request.get(link)
+  } catch (err) {
+    console.error(`EstimateFeeRateError: ${err.message}`)
+    return defaultPrice[speed]
+  }
 
   const apiRate = {
     slow: apiResult.safeLow * 1e9,

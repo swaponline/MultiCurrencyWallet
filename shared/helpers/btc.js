@@ -40,7 +40,14 @@ const estimateFeeRate = async ({ speed = 'normal' } = {}) => {
     return defaultFee[speed]
   }
 
-  const apiResult = await request.get(link)
+  let apiResult
+
+  try {
+    apiResult = await request.get(link)
+  } catch (err) {
+    console.error(`EstimateFeeRateError: ${err.message}`)
+    return defaultFee[speed]
+  }
 
   const apiRate = {
     slow: apiResult.low_fee_per_kb,
