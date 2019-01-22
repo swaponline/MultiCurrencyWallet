@@ -159,7 +159,6 @@ export default class SwapComponent extends PureComponent {
       }))
     }
   }
-
   handleGoHome = () => {
     const { intl: { locale } } = this.props
     this.props.history.push(localisedUrl(locale, links.home))

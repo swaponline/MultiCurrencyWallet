@@ -33,6 +33,7 @@ export default class BtcToEthToken extends Component {
   }
 
   constructor({ swap, currencyData, ethData, enoughBalance, styles, depositWindow }) {
+
     super()
 
     this.swap = swap
@@ -51,7 +52,6 @@ export default class BtcToEthToken extends Component {
       ethAddress: ethData.map(item => item.address),
       secret: crypto.randomBytes(32).toString('hex'),
       destinationBuyAddress: (this.swap.destinationBuyAddress) ? this.swap.destinationBuyAddress : swapApp.services.auth.accounts.eth.address,
-      enoughBalance,
     }
   }
 
@@ -200,6 +200,7 @@ export default class BtcToEthToken extends Component {
       paddingContainerValue,
       destinationAddressTimer,
     } = this.state
+
 
     const linked = Link.all(this, 'destinationBuyAddress')
 
