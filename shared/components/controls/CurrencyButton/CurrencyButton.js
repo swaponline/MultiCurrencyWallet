@@ -39,7 +39,7 @@ export default class CurrencyButton extends Component {
         {
           dataTooltip.deposit && (
             <ReactTooltip id={dataTooltip.id} type="light" effect="solid">
-              <FormattedMessage id="CurrencyButton41" defaultMessage="Deposit funds to this address of currency wallet" />
+              <FormattedMessage id="CurrencyButton41" defaultMessage="Deposit this cryptocurrency to your wallet" />
             </ReactTooltip>
           )
         }

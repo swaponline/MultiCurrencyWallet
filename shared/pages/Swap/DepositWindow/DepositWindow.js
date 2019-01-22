@@ -167,7 +167,7 @@ checker = () => {
                         <div>
                           <FormattedMessage
                             id="deposit146"
-                            defaultMessage="You do not have enough of this amount for the exchange, the amount is specified taking into account the miner fee"
+                            defaultMessage="You do not have funds to continue the swap. Copy the address below and top it up with the recommended amount."
                           />
                           <p>
                             <FormattedMessage id="deposit142" defaultMessage="You can send BTC from a wallet of any exchange" />
@@ -183,7 +183,7 @@ checker = () => {
               <QR
                 network={currencyFullName.toLowerCase()}
                 address={`${scriptAddress}?amount=${missingBalance}`}
-                size={170}
+                size={160}
               />
             </span>
           </div>
@@ -237,7 +237,7 @@ checker = () => {
               )}
             <div>
               {checking
-                ? <FormattedMessage id="deposit198.1" defaultMessage="create Ethereum Contract. Please wait, it will take a while..." />
+                ? <FormattedMessage id="deposit198.1" defaultMessage="create Ethereum Contract. \n Please wait, it can take a few minutes..." />
                 : <FormattedMessage id="deposit198" defaultMessage="waiting for payment..." />
               }
               <span styleName="loaderHolder">
@@ -251,7 +251,7 @@ checker = () => {
             <i className="far fa-clock" />
             <FormattedMessage
               id="Deposit220"
-              defaultMessage="You have {timer} min for make payment"
+              defaultMessage="You have {timer} min to make payment"
               values={{ timer: <Timer lockTime={flow.btcScriptValues.lockTime * 1000} defaultMessage={false} /> }} />
           </span>}
         </a>

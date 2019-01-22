@@ -41,7 +41,7 @@ export default class SwapComponent extends PureComponent {
     isAmountMore: null,
     ethBalance: null,
     continueSwap: false,
-    enoughtBalance: true,
+    enoughBalance: true,
     window: false,
   }
 
@@ -142,7 +142,7 @@ export default class SwapComponent extends PureComponent {
 
     if (sellAmountPlusFee >= this.state.currencyData.balance) {
       this.setState(() => ({
-        enoughtBalance: false,
+        enoughBalance: false,
         window: true,
       }))
     }
@@ -168,7 +168,7 @@ export default class SwapComponent extends PureComponent {
 
   render() {
     const { peer } = this.props
-    const { swap, SwapComponent, currencyData, isAmountMore, ethData, continueSwap, enoughtBalance, window } = this.state
+    const { swap, SwapComponent, currencyData, isAmountMore, ethData, continueSwap, enoughBalance, window } = this.state
 
     if (!swap || !SwapComponent || !peer || !isAmountMore) {
       return null
@@ -186,7 +186,7 @@ export default class SwapComponent extends PureComponent {
           continueSwap={continueSwap}
           ethData={ethData}
           styles={styles}
-          enoughtBalance={enoughtBalance}
+          enoughBalance={enoughBalance}
         >
           <Share flow={swap.flow} />
           <EmergencySave flow={swap.flow} />

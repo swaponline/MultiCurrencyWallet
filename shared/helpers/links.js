@@ -19,6 +19,8 @@ export default {
   telegram: 'https://t.me/swaponline',
   bitcointalk: 'https://bitcointalk.org/index.php?topic=4636633.0',
   discord: 'https://discordapp.com/invite/juG7UZH',
+  reddit: 'https://www.reddit.com/r/SwapOnline',
+  youtube: 'https://www.youtube.com/channel/UCCDWZob9wBsZUpScz2w9_lg',
 
   // footer links
   etherdelta: 'https://etherdelta.com/#0x14a52cf6b4f68431bd5d9524e4fcd6f41ce4ade9-ETH',
@@ -32,13 +34,14 @@ export default {
   research: 'https://docs.google.com/spreadsheets/d/1qWFLK2y8oMH5Gfam-iwqXPzLtwNabzp_EL6QFxjSBc0/edit?usp=sharing',
   reuters: 'https://www.reuters.com/brandfeatures/venture-capital/article?id=37488',
   wiki: 'https://wiki.swap.online',
-  github: 'https://github.com/swaponline/swap.core',
+  github: 'https://github.com/swaponline',
   githubButton: 'https://github.com/swaponline/swap.button',
   bitcointalkSendTx: 'https://bitcointalk.org/index.php?topic=1938621.0',
   privacyPolicy: 'https://drive.google.com/file/d/1LdsCOfX_pOJAMqlL4g6DfUpZrGF5eRe9/view?usp=sharing',
   privacyPolicyDoc: 'https://drive.google.com/file/d/0Bz2ZwZCmFtj_N29fQVk4bV9tUXRscjFEcUkxVkFXdF9tY0ow/view?usp=sharing',
   terms: 'https://drive.google.com/file/d/0Bz2ZwZCmFtj_Nm9qSm0tUm9Ia1kwVGhWRlVlVXRJTGZtYW5N/view?usp=sharing',
   legalOpinion: 'https://drive.google.com/file/d/0Bz2ZwZCmFtj_WlNkY0ZYN0ZpNUo2VFVEeW9rWEVoTlNja0VZ/view?usp=sharing',
+  licence: 'https://www.teatmik.ee/en/personlegal/14477421-Swap-Online-O%C3%9C',
   faq: [
     {
       question: 'What is the price of SWAP token?',
