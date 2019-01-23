@@ -521,9 +521,9 @@ export default class PartialClosure extends Component {
                 <span>
                   <FormattedMessage id="PartialPriceSearch" defaultMessage="Searching orders..." />
                   <div styleName="loaderHolder">
-                    <td styleName="additionalLoaderHolder">
+                    <div styleName="additionalLoaderHolder">
                       <InlineLoader />
-                    </td>
+                    </div>
                   </div>
                 </span>
               )

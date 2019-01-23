@@ -68,14 +68,6 @@
   display: block;
   position: relative;
 }
-@include media-tablet-landscape-and-lower {
-  .additionalLoaderHolder {
-    > div {
-      top: -22px;
-      right: auto;
-    }
-  }
-}
 
 @include media-mobile {
   .loaderHolder {
@@ -91,7 +83,8 @@
   }
   .additionalLoaderHolder {
     > div {
-      top: -8px;
+      left: 140px;
+      top: -5px;
     }
   }
 }
