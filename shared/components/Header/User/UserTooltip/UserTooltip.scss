@@ -95,3 +95,12 @@
   border: solid 2px #3bb33b;
 }
 
+@include media-mobile {
+  .title {
+    position: relative;
+    left: 70px;
+  }
+  .currency {
+    flex-direction: column;
+  }
+}

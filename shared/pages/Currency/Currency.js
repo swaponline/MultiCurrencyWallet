@@ -20,6 +20,7 @@ import Table from 'components/tables/Table/Table'
 
 import Row from './Row/Row'
 import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
+import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 
 @injectIntl
 @withRouter
@@ -163,6 +164,7 @@ export default class Currency extends Component {
             <Row key={index} {...row} />
           )}
         />
+        <CloseIcon styleName="closeButton" onClick={() => this.props.history.push('/')} data-testid="CloseIcon" />
       </section>
     )
   }

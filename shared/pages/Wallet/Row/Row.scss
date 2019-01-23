@@ -345,7 +345,7 @@ tr button[disabled]:hover {
     background: rgba(61, 226, 91, 0.7);
     height: 25px;
     line-height: 25px;
-    padding: 0 15px;
+    padding: 0 0.9em !important;
     margin-left: 31px;
     margin: 0;
     margin-bottom: 10px;
@@ -372,7 +372,7 @@ tr button[disabled]:hover {
   }
   tr.showButtons {
       .yourAddress {
-        display: none
+        display: none;
     }
   }
   .yourAddressWithOptions {
@@ -381,16 +381,17 @@ tr button[disabled]:hover {
     bottom: 50px;
     width: 100%!important;
     .notContractAddress {
-      display: none;
+      display: none !important;
     }
   }
   .buttonActivate {
     width: 75px;
     height: 26px!important;
-    padding: 0!important;
+    // padding: 0!important;
     position: absolute;
     left: 16px;
     top: -17px!important;
+    font-size: 10px !important;
   }
   .buttonUseAnother {
     width: 100px;

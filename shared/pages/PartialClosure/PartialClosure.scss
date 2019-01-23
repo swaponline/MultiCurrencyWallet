@@ -63,12 +63,26 @@
 .loaderHolder {
   display: inline-block;
 }
+
+.additionalLoaderHolder {
+  display: block;
+  > div {
+    top: -8px;
+    right: auto;
+  }
+}
+
 @include media-mobile {
   .loaderHolder {
     display: block;
     position: relative;
     margin-top: -42px;
     padding-bottom: 42px;
+    margin-top: -20px;
+    padding-bottom: 20px;
+  }
+  .inform {
+    margin-top: 10px;
   }
 }
 
