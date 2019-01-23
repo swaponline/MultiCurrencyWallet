@@ -66,9 +66,14 @@
 
 .additionalLoaderHolder {
   display: block;
-  > div {
-    top: -8px;
-    right: auto;
+  position: relative;
+}
+@include media-tablet-landscape-and-lower {
+  .additionalLoaderHolder {
+    > div {
+      top: -22px;
+      right: auto;
+    }
   }
 }
 
@@ -83,6 +88,11 @@
   }
   .inform {
     margin-top: 10px;
+  }
+  .additionalLoaderHolder {
+    > div {
+      top: -8px;
+    }
   }
 }
 
