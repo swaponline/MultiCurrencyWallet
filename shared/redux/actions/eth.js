@@ -35,7 +35,7 @@ const getBalance = () => {
   const { user: { ethData: { address } } } = getState()
   return web3.eth.getBalance(address)
     .then(result => {
-      const amount = Number(web3.utils.fromWei(result))
+      const amount = web3.utils.fromWei(result)
 
       reducers.user.setBalance({ name: 'ethData', amount })
       return amount
