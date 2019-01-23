@@ -4306,12 +4306,8 @@
     ]
   },
   {
-    "id": "Withdrow168",
-    "message": "Сумма должны быть меньше, чем Ваш баланс, на минимальную сумму перевода {min} {currency}"
-  },
-  {
     "id": "Withdrow170",
-    "message": "Сумма должны быть меньше, чем Ваш баланс, на комиссию майнеров {min}",
+    "message": "Сумма должны быть не больше вашего Вашего баланса",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]

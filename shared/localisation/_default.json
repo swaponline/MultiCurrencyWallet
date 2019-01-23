@@ -4355,7 +4355,7 @@
   },
   {
     "id": "Withdrow170",
-    "message": "The amount must be less than your balance on the miners fee {min}",
+    "message": "The amount must be no more than your balance",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
@@ -4403,14 +4403,6 @@
     "files": [
       "shared/components/ui/CurrencyIcon/CurrencyIcon.js"
     ]
-  },
-  {
-    "id": "Withdrow202",
-    "message": "Please note: Miners fee is {minAmount} ETH {br}Your balance must exceed this sum to perform transaction."
-  },
-  {
-    "id": "Withdrow212",
-    "message": "Please note: Miners fee is {minAmount} {data}.  {br}Your balance must exceed this sum to perform transaction."
   },
   {
     "id": "Withdrow213",

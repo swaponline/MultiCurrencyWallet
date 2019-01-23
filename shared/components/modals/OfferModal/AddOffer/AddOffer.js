@@ -29,10 +29,9 @@ const minAmount = {
   btc: 0.001,
   ltc: 0.1,
   eos: 1,
-  noxon: 1,
-  swap: 1,
   jot: 1,
   usdt: 0,
+  erc: 1,
 }
 
 @connect(
@@ -59,18 +58,19 @@ export default class AddOffer extends Component {
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency } = initialData || {}
 
     this.state = {
-      exchangeRate: exchangeRate || 1,
+      balance: null,
+      isToken: false,
+      isPartial: true,
+      isSending: false,
+      ethBalance: null,
+      manualRate: false,
+      isBuyFieldInteger: false,
+      isSellFieldInteger: false,
       buyAmount: buyAmount || '',
       sellAmount: sellAmount || '',
+      exchangeRate: exchangeRate || 1,
       buyCurrency: buyCurrency || 'btc',
       sellCurrency: sellCurrency || 'eth',
-      ethBalance: null,
-      isSending: false,
-      balance: null,
-      isSellFieldInteger: false,
-      isBuyFieldInteger: false,
-      manualRate: false,
-      isPartial: true,
     }
   }
 
@@ -88,33 +88,41 @@ export default class AddOffer extends Component {
 
     const { items, tokenItems } = this.props
 
+    const coinsWithDynamicFee = [
+      'eth',
+      'ltc',
+      'btc',
+    ]
+
     const currency = items.concat(tokenItems)
       .filter(item => item.currency === sellCurrency.toUpperCase())[0]
 
     const { balance, unconfirmedBalance } = currency
 
-    const ethFee = await helpers.eth.estimateFeeValue({ method: 'swap', speed: 'normal' })
+    if (helpers.ethToken.isEthToken({ name: sellCurrency })) {
+      this.setState(() => ({
+        isToken: true,
+      }))
+    } else {
+      this.setState(() => ({
+        isToken: false,
+      }))
+    }
 
-    if (sellCurrency.toLowerCase() === 'eth') {
-      const finalBalance = balance - ethFee > 0  ? balance - ethFee : 0
+    const currentBalance = unconfirmedBalance !== undefined && unconfirmedBalance < 0
+      ? new BigNumber(balance).plus(unconfirmedBalance)
+      : balance
+
+    if (coinsWithDynamicFee.includes(sellCurrency)) {
+      minAmount[sellCurrency] = await helpers[sellCurrency].estimateFeeValue({ method: 'swap', speed: 'normal' })
+
+      const finalBalance = BigNumber(currentBalance).minus(minAmount[sellCurrency]) > 0 ? BigNumber(currentBalance).minus(minAmount[sellCurrency]) : 0
 
       this.setState({
         balance: finalBalance,
-        ethBalance: finalBalance,
       })
-
       return
     }
-
-    const finalBalance = unconfirmedBalance !== undefined && unconfirmedBalance < 0
-      ? Number(balance) + Number(unconfirmedBalance)
-      : balance
-    const ethBalance = await actions.eth.getBalance()
-
-    this.setState({
-      balance: finalBalance,
-      ethBalance,
-    })
   }
 
   async updateExchangeRate(sellCurrency, buyCurrency) {
@@ -324,10 +332,10 @@ export default class AddOffer extends Component {
   }
 
   handleNext = () => {
-    const { exchangeRate, buyAmount, sellAmount, balance, sellCurrency, ethBalance } = this.state
+    const { exchangeRate, buyAmount, sellAmount, balance, sellCurrency, ethBalance, isToken } = this.state
     const { onNext, tokenItems } = this.props
 
-    const isDisabled = !exchangeRate || !buyAmount || !sellAmount || sellAmount > balance || sellAmount < minAmount[sellCurrency]
+    const isDisabled = !exchangeRate || !buyAmount || !sellAmount || sellAmount > balance || !isToken && sellAmount < minAmount[sellCurrency]
 
 
     if (!isDisabled) {
@@ -383,16 +391,17 @@ export default class AddOffer extends Component {
 
     const { currencies, tokenItems, addSelectedItems } = this.props
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency,
-      balance, isBuyFieldInteger, isSellFieldInteger, ethBalance, manualRate, isPartial } = this.state
+      balance, isBuyFieldInteger, isSellFieldInteger, ethBalance, manualRate, isPartial, isToken } = this.state
     const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
+    const minimalAmount = !isToken ? Math.floor(minAmount[sellCurrency] * 1e6) / 1e6 : 0
+
     const isDisabled = !exchangeRate || !buyAmount && !sellAmount
-      || sellAmount > balance || sellAmount < minAmount[sellCurrency]
+      || sellAmount > balance || !isToken && sellAmount < minimalAmount
 
-
-    linked.sellAmount.check((value) => Number(value) > minAmount[sellCurrency],
+    linked.sellAmount.check((value) => (Number(value) > minimalAmount),
       <span style={{ position: 'relative', marginRight: '44px' }}>
         <FormattedMessage id="transaction368" defaultMessage="Amount must be greater than " />
-        {minAmount[sellCurrency]}
+        {minimalAmount}
       </span>
     )
     linked.sellAmount.check((value) => Number(value) <= balance,
