@@ -38,7 +38,7 @@ import config from 'app-config'
     items: ((config && config.isWidget) ?
       [btcData, ethData, usdtData ]
       :
-      [btcData, ethData, eosData, telosData, /* xlmData, */ ltcData, usdtData /* nimData */ ]).map((data) => (
+      [btcData, ethData, eosData, telosData, /* xlmData, */ /* ltcData, */ usdtData /* nimData */ ]).map((data) => (
       data.currency
     )),
     currencyBalance: [btcData, ethData, eosData, /* xlmData, */ telosData, ltcData, usdtData, ...Object.keys(tokensData).map(k => (tokensData[k])) /* nimData */ ].map((cur) => (
