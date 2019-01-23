@@ -7,8 +7,10 @@ import Keychain from 'keychain'
 
 
 const keychain = new Keychain(web3)
-// keychain.ws.onopen = async function () {
-//   keychain.command({ command: 'version' }, (err, result) => {
+keychain.ws.onopen = async function () {
+    await keychain.selectKey();
+    console.log(keychain.selectedKey);
+//   keychain.command({ command: 'select_key' }, (err, result) => {
 //     console.log('why not ? error:', err, ' result: ', result)
 //   })
 //
@@ -39,7 +41,7 @@ const keychain = new Keychain(web3)
 //   const resSign = await web3.eth.accounts.sign('hello yo', 'test1@a163e24363c73ce3')
 //   console.log('resSign: ', resSign)
 //
-// }
+}
 
 
 export default web3
