@@ -1,23 +1,25 @@
 .swap {
-  padding-left: 30px;
-  padding-top: 60px;
-  min-height: calc(100vh - 75px);
-  width: 600px;
-  margin: -2% 20% 0;
+  padding-top: 120px;
 }
 @include media-mobile {
   .swap {
     display: block;
     width: 100%;
     font-size: 11px;
+    padding: 0;
+    margin: 0;
   }
 }
 
 .swapContainer {
   color: #000;
+  display: flex;
+  align-items: center;
+  position: relative;
+  flex-wrap: wrap;
 }
 
-.swapStep-4 {
+.swapDepositWindow {
   color: #000;
 }
 
@@ -40,13 +42,18 @@
 @include media-mobile {
   .loaderHolder {
     display: inline-block;
+    margin-left: 5px;
+    margin-top: 2px;
+  }
+  a {
+    word-wrap: break-word;
   }
 }
 
 .topUpLink {
   border: 1px solid #cecece;
   font-size: 18px;
-  margin-top: 40px;
+  margin-top: 0px;
   position: relative;
   padding: 25px 25px;
   padding-left: 45px;
@@ -55,6 +62,7 @@
   text-align: left;
   padding-bottom: 75px;
   background: white;
+  max-width: 600px;
   &:hover {
     color: #ff1fc5;
   }
@@ -85,12 +93,15 @@
     display: block;
     width: 100%;
     justify-content: stretch;
+    height: 70px;
   }
 }
 
 .qrImg {
   position: relative;
   padding: 0;
+  margin-left: 4px;
+  margin-top: 0px;
 }
 
 @include media-mobile {
@@ -108,16 +119,13 @@
 .btcMessage {
   margin-top: 0.5em;
   max-width: 100%;
-  font-size: 29px;
+  font-size: 28px;
   display: block;
 }
 
 @include media-mobile {
   .btcMessage {
-    display: block;
-    width: 70%;
-    font-size: 14px;
-    margin: 0.5em 0 -5em -2em;
+    font-size: 11.2px;;
   }
 }
 
@@ -155,7 +163,11 @@
 
 @include media-mobile {
   .lockTime {
-    margin: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    i {
+      left: -20px;
+    }
   }
 }
 
@@ -171,6 +183,14 @@
   margin-top: 10px;
   width: 185px;
   text-align: center;
+}
+
+.swapInfo {
+  position: absolute;
+  width: 600px;
+  top: -45px;
+  text-align: center;
+  font-size: 18px;
 }
 
 .qr {
@@ -197,6 +217,7 @@
     background: #eee;
     color: #000;
     margin-top: 13px;
+    align-items: center;
     margin-left: 15px;
     &:hover {
       background: #eee
@@ -207,10 +228,10 @@
 @include media-mobile {
   .qr {
     a {
-      font-size: 11px;
+      font-size: 10px;
       height: 30px;
-      margin: 0 -2% 0 -2em;
-      width: 120%;
+      width: 100%;
+      padding: 10px;
     }
     button {
       display: none;
@@ -247,7 +268,7 @@
 .buyWithCard {
   text-decoration: none;
   border-radius: 6px;
-  font-size: 21px;
+  font-size: 18px;
   align-items: center;
   height: 56px;
   display: flex;
@@ -335,12 +356,52 @@
       font-size: 8.5px;
     }
   }
+  .swap {
+    padding-top: 80px;
+  }
+  .swapInfo {
+    text-align: center;
+    font-size: 16px;
+    left: 0;
+    top: -60px;
+    font-weight: 300;
+    font-size: 15px;
+    border-radius: 6px;
+    background: #cecece3b;
+    color: #000;
+    padding: 7px 20px;
+    width: 100%;
+  }
+  .swapDepositWindow {
+    width: 100%;
+  }
+  .topUpLink {
+    padding: 15px 20px;
+    padding-bottom: 70px;
+  }
+  .qrImg {
+    position: absolute;
+    right: 10px;
+    top: 26px;
+    width: 200px;
+  }
+  .qr {
+    justify-content: end;
+    width: max-content;
+  }
+}
+
+
+.information {
+  position: relative;
+  flex-basis: 100%;
 }
 
 
 h3 {
   font-size: 20px;
 }
+
 
 .icon {
   margin-right: 1%;

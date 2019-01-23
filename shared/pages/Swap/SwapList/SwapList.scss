@@ -1,0 +1,74 @@
+.stepList,
+.stepItem,
+.stepNumber,
+.stepText {
+  color: #000;
+}
+
+.stepNumber {
+  border: 1px solid #ccc;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  min-width: 35px;
+}
+
+.stepList {
+  margin-left: 50px;
+}
+
+.stepItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 17px;
+  font-size: 14px;
+  opacity: 0.3;
+}
+
+.stepText {
+  margin: 0;
+  margin-left: 14px;
+  text-transform: uppercase;
+}
+
+.active {
+  color: #000;
+  opacity: 1;
+  .stepNumber {
+    background: #fff;
+    color: #fff;
+    border: none;
+    border: 1px solid #000;
+    color: #000;
+  }
+}
+
+.checked {
+  .stepNumber {
+    background: #5100dc;
+    color: #fff;
+    border: 1px solid #5100dc;
+    min-width: 35px;
+  }
+  .stepText {
+    color: #5100dc;
+  }
+}
+
+@include media-mobile {
+  .active {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .stepList {
+    margin-left: 0;
+    padding-top: 20px;
+  }
+  .stepText {
+    font-size: 12px;
+  }
+}

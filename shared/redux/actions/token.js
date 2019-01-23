@@ -1,5 +1,5 @@
 import abi from 'human-standard-token-abi'
-import { request, constants } from 'helpers'
+import helpers, { request, constants } from 'helpers'
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
 import web3 from 'helpers/web3'
@@ -57,7 +57,7 @@ const getBalance = async (currency) => {
   try {
     const result = await ERC20.methods.balanceOf(address).call()
     console.log('result get balance', result)
-    let amount = new BigNumber(String(result)).dividedBy(new BigNumber(String(10)).pow(decimals)).toNumber()
+    let amount = new BigNumber(String(result)).dividedBy(new BigNumber(String(10)).pow(decimals)).toString()
     reducers.user.setTokenBalance({ name, amount })
     return amount
   } catch (e) {
@@ -71,7 +71,7 @@ const fetchBalance = async (address, contractAddress, decimals) => {
   const ERC20 = new web3.eth.Contract(abi, contractAddress)
   const result = await ERC20.methods.balanceOf(address).call()
 
-  const amount = new BigNumber(String(result)).dividedBy(new BigNumber(String(10)).pow(decimals)).toNumber()
+  const amount = new BigNumber(String(result)).dividedBy(new BigNumber(String(10)).pow(decimals)).toString()
   return amount
 }
 
@@ -122,10 +122,10 @@ const send = ({ name, to, amount, gasPrice, gasLimit, speed } = {}) =>
       throw new Error('send: name is undefined')
     }
 
-    const { user: { tokensData: { [name]: { address, contractAddress, gasRate, decimals } } } } = getState()
+    const { user: { tokensData: { [name]: { address, contractAddress, decimals } } } } = getState()
 
-    gasPrice = gasPrice || gasRate.price[speed]
-    gasLimit = gasLimit || gasRate.limit
+    gasPrice = gasPrice || await helpers.eth.estimateGasPrice({ speed })
+    gasLimit = gasLimit || constants.defaultFeeRates.eth.limit.send
 
     const params = {
       from: address,
@@ -148,57 +148,10 @@ const send = ({ name, to, amount, gasPrice, gasLimit, speed } = {}) =>
     resolve(receipt)
   })
 
-const estimateGasRate = async () => {
-  const link = config.feeRates.eth
-  const defaultPrice = constants.defaultFeeRates.ethToken.price
-
-  if (!link) {
-    return defaultPrice
-  }
-
-  const apiResult = await request.get(link)
-
-  const apiRate = {
-    slow: apiResult.safeLow * 1e9,
-    normal: apiResult.standard * 1e9,
-    fast: apiResult.fast * 1e9,
-  }
-
-  const currentRate = {
-    slow: apiRate.slow >= defaultPrice.slow ? apiRate.slow : defaultPrice.slow,
-    normal: apiRate.normal >= defaultPrice.slow ? apiRate.normal : defaultPrice.normal,
-    fast: apiRate.fast >= defaultPrice.slow ? apiRate.fast : defaultPrice.fast,
-  }
-
-  return currentRate
-}
-
-const setGasRate = async ({ name, limit, slow, normal, fast } = {}) => {
-  if (!name) {
-    return
-  }
-
-  const currentRate = await estimateGasRate()
-  const currentLimit = constants.defaultFeeRates.ethToken.limit
-  const gasRate = {
-    limit: Number(limit) > 0 && Number(limit) !== currentLimit
-      ? limit
-      : currentLimit,
-    price: {
-      slow: slow || currentRate.slow,
-      normal: normal || currentRate.normal,
-      fast: fast || currentRate.fast,
-    },
-  }
-
-  reducers.user.setTokenGasRate({ name, gasRate })
-}
-
 export default {
   login,
   getBalance,
   getTransaction,
   send,
   fetchBalance,
-  setGasRate,
 }

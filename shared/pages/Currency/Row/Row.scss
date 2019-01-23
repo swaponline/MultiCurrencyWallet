@@ -63,7 +63,7 @@
 
 @include media-mobile { 
   .exchangeRow {
-    width: 180px;
+    width: 60.5vw;
     button {
       transform: scale(0.6);
     }
@@ -78,6 +78,9 @@
   .exchangeTr {
     position: relative;
     height: 88px;
+    td {
+      padding: 15px 2px;
+    }
   }
   .button {
     width: auto;
@@ -93,5 +96,17 @@
   .coin {
     width: 35px !important;
     margin-right: 5px;
+  }
+}
+
+@media (max-width: 568px) and (min-width: 450px) {
+  .exchangeRow {
+    width: 64vw;
+  }
+}
+
+@media (max-width: 380px) {
+  .exchangeRow {
+    width: 57vw;
   }
 }

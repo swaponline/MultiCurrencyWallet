@@ -15,14 +15,10 @@
     position: relative;
   }
   .startButton {
-    top: 48%;
-    right: 0px;
-    width: 72px;
-    height: 40px;
     font-size: 12px;
-    position: absolute;
-    text-transform: uppercase;
-    transform: translateY(-50%);
+    width: auto;
+    height: auto;
+    padding: 0.8em 1em;
   }
   .onHover {
     top: 48%;
@@ -36,7 +32,6 @@
     transform: translateY(-50%);
   }
   .bigContainer {
-    width: 265px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -44,10 +39,6 @@
 }
 .mobileRowStart {
   .tdContainer-3 {
-    right: -65px;
     position: relative;
-  }
-  .bigContainer {
-    width: 210px;
   }
 }

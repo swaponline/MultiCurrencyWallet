@@ -501,7 +501,7 @@ export default class PartialClosure extends Component {
               currencies={currencies}
             />
             <p>
-              <FormattedMessage id="partial221" defaultMessage="Max amount for offer: " />
+              <FormattedMessage id="partial221" defaultMessage="Max amount for exchange: " />
               {maxAmount}{' '}{getCurrency.toUpperCase()}
             </p>
             <Flip onClick={this.handleFlipCurrency} styleName="flipButton" />
@@ -511,7 +511,7 @@ export default class PartialClosure extends Component {
               onSelect={this.handleSetGetValue}
               label={<FormattedMessage id="partial255" defaultMessage="You get" />}
               id="partialClosure472"
-              tooltip={<FormattedMessage id="partial478" defaultMessage="The amount you receive after the swap" />}
+              tooltip={<FormattedMessage id="partial478" defaultMessage="The amount you receive after the exchange" />}
               disabled
               currencies={addSelectedItems}
               usd={getUsd}
@@ -521,7 +521,9 @@ export default class PartialClosure extends Component {
                 <span>
                   <FormattedMessage id="PartialPriceSearch" defaultMessage="Searching orders..." />
                   <div styleName="loaderHolder">
-                    <InlineLoader />
+                    <td styleName="additionalLoaderHolder">
+                      <InlineLoader />
+                    </td>
                   </div>
                 </span>
               )
@@ -559,7 +561,9 @@ export default class PartialClosure extends Component {
                 <span>
                   <FormattedMessage id="partial291" defaultMessage="Wait participant: " />
                   <div styleName="loaderHolder">
-                    <InlineLoader />
+                    <td styleName="additionalLoaderHolder">
+                      <InlineLoader />
+                    </td>
                   </div>
                 </span>
               )
@@ -570,11 +574,11 @@ export default class PartialClosure extends Component {
                 <Fragment>
                   <FieldLabel>
                     <strong>
-                      <FormattedMessage id="PartialYourWalletAddress" defaultMessage="Your wallet address" />
+                      <FormattedMessage id="PartialYourWalletAddress" defaultMessage="Receiving wallet address" />
                     </strong>
                     &nbsp;
                     <Tooltip id="PartialClosure">
-                      <FormattedMessage id="PartialClosure" defaultMessage="Your wallet address to where cryptocurrency will be sent after the swap" />
+                      <FormattedMessage id="PartialClosure" defaultMessage="The wallet address to where cryptocurrency will be sent after the exchange" />
                     </Tooltip >
                   </FieldLabel>
                   <div styleName="walletInput">
