@@ -11,6 +11,8 @@ const nav = [
   { links: links.telegram,    icon: 'fa-telegram-plane'  },
   { links: links.bitcointalk, icon: 'fa-btc' },
   { links: links.discord,     icon: 'fab fa-discord' },
+  { links: links.youtube,     icon: 'fab fa-youtube' },
+  { links: links.reddit,      icon: 'fab fa-reddit' },
 ]
 
 const SocialMenu = () => (

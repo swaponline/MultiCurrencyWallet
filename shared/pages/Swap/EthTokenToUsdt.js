@@ -103,7 +103,7 @@ export default class EthTokenToUsdt extends Component {
                 <FormattedMessage
                   id="EthTokenToUsdt101"
                   defaultMessage=
-                    "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation."
+                  "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative credit to his reputation." // eslint-disable-line
                 />
               </div>
 
@@ -157,7 +157,7 @@ export default class EthTokenToUsdt extends Component {
           flow.isMeSigned && (
             <Fragment>
               <h3>
-                <FormattedMessage id="EthTokenToUsdt154" defaultMessage="2. Waiting USDT Owner creates Secret Key, creates BTC Omni Script and charges it" />
+                <FormattedMessage id="EthTokenToUsdt154" defaultMessage="2. Waiting for USDT Owner to create a Secret Key, create BTC Omni Script and charge it" />
               </h3>
               {
                 flow.step === 2 && (
@@ -294,7 +294,7 @@ export default class EthTokenToUsdt extends Component {
               {
                 (flow.step >= 5 || flow.isEthContractFunded) && (
                   <h3>
-                    <FormattedMessage id="EthTokenToUsdt285" defaultMessage="4. Creating Ethereum Contract. Please wait, it will take a while" />
+                    <FormattedMessage id="EthTokenToUsdt285" defaultMessage="4. Creating Ethereum Contract. \n Please wait, it can take a few minutes" />
                   </h3>
                 )
               }
@@ -340,7 +340,7 @@ export default class EthTokenToUsdt extends Component {
                 (flow.step === 6 || flow.isEthWithdrawn) && (
                   <Fragment>
                     <h3>
-                      <FormattedMessage id="EthTokenToUsdt331" defaultMessage="5. Waiting BTC Owner adds Secret Key to ETH Contact" />
+                      <FormattedMessage id="EthTokenToUsdt331" defaultMessage="5. Waiting for BTC Owner to add a Secret Key to ETH Contact" />
                     </h3>
                     {
                       !flow.isEthWithdrawn && (
@@ -391,7 +391,7 @@ export default class EthTokenToUsdt extends Component {
                 flow.isBtcWithdrawn && (
                   <Fragment>
                     <h3>
-                      <FormattedMessage id="EthTokenToUsdt377" defaultMessage="7. Money was transferred to your wallet. Check the balance." />
+                      <FormattedMessage id="EthTokenToUsdt377" defaultMessage="7. USDT was transferred to your wallet. Check the balance." />
                     </h3>
                     <h2>
                       <FormattedMessage id="EthTokenToUsdt380" defaultMessage="Thank you for using Swap.Online!" />

@@ -19,18 +19,17 @@ import DepositWindow from './DepositWindow/DepositWindow'
 
 export default class BtcToEth extends Component {
 
-  constructor({ swap, currencyData, enoughtBalance, window }) {
+  constructor({ swap, currencyData, enoughBalance }) {
     super()
 
     this.swap = swap
 
     this.state = {
-      currencyAddress: currencyData.address,
-      flow: this.swap.flow.state,
-      secret: crypto.randomBytes(32).toString('hex'),
+      enoughBalance,
       enabledButton: false,
-      enoughtBalance,
-      window,
+      flow: this.swap.flow.state,
+      currencyAddress: currencyData.address,
+      secret: crypto.randomBytes(32).toString('hex'),
     }
   }
 
@@ -103,7 +102,7 @@ export default class BtcToEth extends Component {
 
   render() {
     const { children, currencyData, swap } = this.props
-    const { currencyAddress, secret, flow, enabledButton, enoughtBalance, window } = this.state
+    const { currencyAddress, secret, flow, enabledButton, enoughBalance } = this.state
 
     const headingStyle = {
       color: '#5100dc',
@@ -149,7 +148,7 @@ export default class BtcToEth extends Component {
                 <h3>
                   <FormattedMessage
                     id="BtcToEth116"
-                    defaultMessage="We are waiting for a market maker. If it does not appear within 5 minutes, the swap will be canceled automatically." />
+                    defaultMessage="Waiting for a market maker. If the market maker does not appear within 5 minutes, the swap will be canceled automatically." />
                 </h3>
                 <InlineLoader />
               </Fragment>
@@ -188,7 +187,7 @@ export default class BtcToEth extends Component {
                     <FormattedMessage id="BtcToEthToken188" defaultMessage="Sent funds" />
                   </h3>
                 }
-                {(!enoughtBalance && flow.step === 4)
+                {(!enoughBalance && flow.step === 4)
                   ? (
                     <div className="swapStep-4">
                       <h3 style={headingStyle}>
@@ -200,7 +199,7 @@ export default class BtcToEth extends Component {
                   : (flow.step === 4 || flow.btcScriptValues) && (
                     <Fragment>
                       <h3 style={headingStyle}>
-                        <FormattedMessage id="BtcToEth194" defaultMessage="Creating Bitcoin Script. Please wait, it will take a while" />
+                        <FormattedMessage id="BtcToEth194" defaultMessage="Creating Bitcoin Script. \n Please wait, it can take a few minutes" />
                       </h3>
                       {
                         flow.btcScriptCreatingTransactionHash && (
@@ -313,7 +312,7 @@ export default class BtcToEth extends Component {
                   flow.isEthWithdrawn && (
                     <Fragment>
                       <h3 style={headingStyle}>
-                        <FormattedMessage id="BtcToEth312" defaultMessage="Money was transferred to your wallet. Check the balance. " />
+                        <FormattedMessage id="BtcToEth312" defaultMessage="ETH was transferred to your wallet. Check the balance. " />
                       </h3>
                       <h3 style={headingStyle}>
                         <FormattedMessage id="BtcToEth315" defaultMessage="Thank you for using Swap.Online!" />

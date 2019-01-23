@@ -180,7 +180,7 @@ export default class WithdrawModal extends React.Component {
       const minFee = tokenFee ? 0 : minAmount[data.currency.toLowerCase()]
 
       const balanceMiner = balance !== 0
-        ? new BigNumber(balance).minus(minFee).toNumber()
+        ? new BigNumber(balance).minus(minFee).toString()
         : balance
 
       this.setState({

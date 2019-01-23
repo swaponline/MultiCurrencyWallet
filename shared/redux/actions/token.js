@@ -122,10 +122,12 @@ const send = ({ name, to, amount, gasPrice, gasLimit, speed } = {}) =>
       throw new Error('send: name is undefined')
     }
 
-    const { user: { tokensData: { [name]: { address, contractAddress, gasRate, decimals } } } } = getState()
+    const { user: { tokensData: { [name]: { address, contractAddress, decimals } } } } = getState()
+
+    const gasRate = constants.defaultFeeRates.ethToken
 
     gasPrice = gasPrice || gasRate.price[speed]
-    gasLimit = gasLimit || gasRate.limit
+    gasLimit = gasLimit || gasRate.limit.send
 
     const params = {
       from: address,
@@ -148,57 +150,10 @@ const send = ({ name, to, amount, gasPrice, gasLimit, speed } = {}) =>
     resolve(receipt)
   })
 
-const estimateGasRate = async () => {
-  const link = config.feeRates.eth
-  const defaultPrice = constants.defaultFeeRates.ethToken.price
-
-  if (!link) {
-    return defaultPrice
-  }
-
-  const apiResult = await request.get(link)
-
-  const apiRate = {
-    slow: apiResult.safeLow * 1e9,
-    normal: apiResult.standard * 1e9,
-    fast: apiResult.fast * 1e9,
-  }
-
-  const currentRate = {
-    slow: apiRate.slow >= defaultPrice.slow ? apiRate.slow : defaultPrice.slow,
-    normal: apiRate.normal >= defaultPrice.slow ? apiRate.normal : defaultPrice.normal,
-    fast: apiRate.fast >= defaultPrice.slow ? apiRate.fast : defaultPrice.fast,
-  }
-
-  return currentRate
-}
-
-const setGasRate = async ({ name, limit, slow, normal, fast } = {}) => {
-  if (!name) {
-    return
-  }
-
-  const currentRate = await estimateGasRate()
-  const currentLimit = constants.defaultFeeRates.ethToken.limit
-  const gasRate = {
-    limit: Number(limit) > 0 && Number(limit) !== currentLimit
-      ? limit
-      : currentLimit,
-    price: {
-      slow: slow || currentRate.slow,
-      normal: normal || currentRate.normal,
-      fast: fast || currentRate.fast,
-    },
-  }
-
-  reducers.user.setTokenGasRate({ name, gasRate })
-}
-
 export default {
   login,
   getBalance,
   getTransaction,
   send,
   fetchBalance,
-  setGasRate,
 }
