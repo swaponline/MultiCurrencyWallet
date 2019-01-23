@@ -1,4 +1,5 @@
 import EthereumTx from 'ethereumjs-tx'
+import { pubToAddress } from 'ethereumjs-util';
 
 class Keychain {
 
@@ -20,6 +21,7 @@ class Keychain {
 
     web3.eth.accounts.sign = this.sign.bind(this)
     web3.eth.accounts.signTransaction = this.signTransaction.bind(this)
+    web3.eth.accounts.privateKeyToAccount = this.privateKeyToAccount.bind(this)
   }
 
   command(request, callback) {
@@ -35,11 +37,50 @@ class Keychain {
     })
   }
 
-  async sign(data, keyname) {
+  async selectKey() {
+    const result = await this.method({ command: 'select_key' });
+    if (result.result) {
+      this.selectedKey = '0x' + result.result;
+      this.selectedAddress = pubToAddress(this.selectedKey).toString('hex')
+    }
+  }
+
+  // async create() {
+  //   const result = await this.method({
+  //     command: 'create',
+  //     params: {
+  //       keyname: new Date(),
+  //       encrypted: true,
+  //       curve: 'secp256k1',
+  //       cipher: 'aes256'
+  //     }
+  //   })
+  //   const keyname = result.result;
+  //   const publicKeyResult = await this.method({ command: 'public_key', params: { keyname } })
+  //   const publicKey = publicKeyResult.result;
+  //   return {
+  //     address: '0x' + publicKey,
+  //     privateKey: keyname,
+  //     signTransaction: this.signTransaction,
+  //     sign: this.sign,
+  //   }
+  // }
+
+  privateKeyToAccount(privateKey) {
+    return {
+      address: this.selectedAddress,
+      privateKey: this.selectedKey,
+      signTransaction: this.signTransaction,
+      sign: this.sign,
+      encrypt: this.web3.eth.accounts.create
+    }
+  }
+
+  async sign(data, public_key) {
     const prefix = "\x19Ethereum Signed Message:\n" + data.length;
     const hash = this.web3.utils.sha3(prefix + data).substr(2);
 
-    const result = await this.method({ command: 'sign_hash', params: { hash, keyname } });
+    const result = await this.method({ command: 'sign_hash', params: { hash, public_key } });
     const signature = result.result;
     const ret = Keychain.rsv(signature, 0);
     return {
@@ -52,13 +93,23 @@ class Keychain {
     };
   };
 
-  signTransaction(tx, privateKey) {
+  async signTransaction(tx, privateKey) {
+    if (!tx.chainId) {
+      tx.chainId = await this.web3.eth.net.getId();
+    }
+    if (!tx.nonce) {
+      tx.nonce = await this.web3.eth.getTransactionCount(this.selectedAddress);
+    }
+    if (!tx.gasPrice) {
+      tx.gasPrice = await this.web3.eth.getGasPrice().then(Number);
+    }
+    tx.value = Number(tx.value);
     const rsv = Keychain.rsv('', tx.chainId);
     const result = Keychain.getResult(rsv, tx);
     const rawHex = result.rawTransaction;
     const messageHashInitial = result.messageHash;
 
-    const params = { keyname: privateKey, transaction: rawHex, blockchain_type: "ethereum" };
+    const params = { public_key: privateKey, transaction: rawHex, blockchain_type: "ethereum" };
     return this.method({ command: 'sign_hex', params })
       .then(data => {
         const signature = data.result;
