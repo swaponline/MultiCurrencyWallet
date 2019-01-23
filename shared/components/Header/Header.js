@@ -131,6 +131,25 @@ export default class Header extends Component {
     window.removeEventListener('scroll', this.handleScroll)
   }
 
+  declineRequest = (orderId, participantPeer) => {
+    actions.core.declineRequest(orderId, participantPeer)
+    actions.core.updateCore()
+  }
+
+  acceptRequest = async (orderId, participantPeer, link) => {
+    const { toggle, history, intl: { locale } } = this.props
+
+    actions.core.acceptRequest(orderId, participantPeer)
+    actions.core.updateCore()
+
+    if (typeof toggle === 'function') {
+      toggle()
+    }
+
+    await history.replace(localisedUrl(locale, link))
+    await history.push(localisedUrl(locale, link))
+  }
+
   handleScroll = () =>  {
     if (this.props.history.location.pathname === '/') {
       this.setState(() => ({ sticky: false }))
@@ -180,7 +199,12 @@ export default class Header extends Component {
     if (isMobile) {
       return (
         <div styleName={isInputActive ? 'header-mobile header-mobile__hidden' : 'header-mobile'}>
-          <UserTooltip feeds={feeds} peer={peer} />
+          <UserTooltip
+            feeds={feeds} 
+            peer={peer} 
+            acceptRequest={this.acceptRequest}
+            declineRequest={this.declineRequest}
+          />
           <NavMobile menu={menuItems} />
           {!isSigned && (<SignUpButton mobile />)}
         </div>
@@ -196,7 +220,12 @@ export default class Header extends Component {
             {locale.toUpperCase() === 'EN' ? 'RU' : 'EN'}
           </SwitchLang>
           <Logo withLink mobile />
-          <User openTour={this.openTour} path={path} />
+          <User 
+            openTour={this.openTour} 
+            path={path}
+            acceptRequest={this.acceptRequest}
+            declineRequest={this.declineRequest}
+          />
           <Tour
             steps={tourSteps}
             onRequestClose={this.closeTour}
