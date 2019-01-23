@@ -1,4 +1,4 @@
-import { request, constants, api } from 'helpers'
+import helpers, { request, constants, api } from 'helpers'
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
 import web3 from 'helpers/web3'
@@ -106,10 +106,8 @@ const send = ({ to, amount, gasPrice, gasLimit, speed } = {}) =>
   new Promise(async (resolve, reject) => {
     const { user: { ethData: { privateKey } } } = getState()
 
-    const gasRate = constants.defaultFeeRates.eth
-
-    gasPrice = gasPrice || gasRate.price[speed]
-    gasLimit = gasLimit || gasRate.limit.send
+    gasPrice = gasPrice || await helpers.eth.estimateGasPrice({ speed })
+    gasLimit = gasLimit || constants.defaultFeeRates.eth.limit.send
 
     const params = {
       to: String(to).trim(),

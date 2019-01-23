@@ -1,5 +1,5 @@
 import abi from 'human-standard-token-abi'
-import { request, constants } from 'helpers'
+import helpers, { request, constants } from 'helpers'
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
 import web3 from 'helpers/web3'
@@ -124,10 +124,8 @@ const send = ({ name, to, amount, gasPrice, gasLimit, speed } = {}) =>
 
     const { user: { tokensData: { [name]: { address, contractAddress, decimals } } } } = getState()
 
-    const gasRate = constants.defaultFeeRates.ethToken
-
-    gasPrice = gasPrice || gasRate.price[speed]
-    gasLimit = gasLimit || gasRate.limit.send
+    gasPrice = gasPrice || await helpers.eth.estimateGasPrice({ speed })
+    gasLimit = gasLimit || constants.defaultFeeRates.eth.limit.send
 
     const params = {
       from: address,

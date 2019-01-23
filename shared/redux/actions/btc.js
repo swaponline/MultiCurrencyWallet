@@ -109,7 +109,7 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
   const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
 
   feeValue = feeValue || await btc.estimateFeeValue({ method: 'send', satoshi: true, speed })
-  console.log(feeValue)
+
   const tx            = new bitcoin.TransactionBuilder(btc.network)
   const unspents      = await fetchUnspents(from)
 
