@@ -200,8 +200,8 @@ export default class Header extends Component {
       return (
         <div styleName={isInputActive ? 'header-mobile header-mobile__hidden' : 'header-mobile'}>
           <UserTooltip
-            feeds={feeds} 
-            peer={peer} 
+            feeds={feeds}
+            peer={peer}
             acceptRequest={this.acceptRequest}
             declineRequest={this.declineRequest}
           />
@@ -220,8 +220,8 @@ export default class Header extends Component {
             {locale.toUpperCase() === 'EN' ? 'RU' : 'EN'}
           </SwitchLang>
           <Logo withLink mobile />
-          <User 
-            openTour={this.openTour} 
+          <User
+            openTour={this.openTour}
             path={path}
             acceptRequest={this.acceptRequest}
             declineRequest={this.declineRequest}
