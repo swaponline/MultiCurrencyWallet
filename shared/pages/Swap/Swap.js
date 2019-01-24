@@ -103,6 +103,7 @@ export default class SwapComponent extends PureComponent {
   }
 
   componentDidMount() {
+
     if (this.state.swap !== null) {
       this.checkBalance()
 
@@ -110,8 +111,13 @@ export default class SwapComponent extends PureComponent {
 
       timer = setInterval(() => {
         this.catchWithdrawError()
+        this.requesting()
       }, 5000)
     }
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timerShowFeeNotification)
   }
 
 
@@ -145,8 +151,45 @@ export default class SwapComponent extends PureComponent {
     }
   }
 
-  catchWithdrawError = async () => {
-    const { swap: { participantSwap, ownerSwap, sellAmount, flow: { state: { canCreateEthTransaction } } }, currencyData: { currency } } = this.state
+  requesting = () => {
+    if (this.state.swap.flow.state.requireWithdrawFee && !this.state.swap.flow.state.requireWithdrawFeeSended) {
+      this.state.swap.flow.sendWithdrawRequest()
+    }
+    if (this.state.swap.flow.state.withdrawRequestIncoming && !this.state.swap.flow.state.withdrawRequestAccepted) {
+      this.state.swap.flow.acceptWithdrawRequest()
+    }
+  }
+
+  timerShowFeeNotification = () => {
+    const { timeLeft } = this.state
+    const newTimeLeft = timeLeft - 1
+
+    if (newTimeLeft > 0) {
+      this.timerFeeNotication = setTimeout(this.timerShowFeeNotification, 60 * 1000)
+      this.setState({
+        timeLeft: newTimeLeft,
+      })
+    }
+  }
+
+  catchWithdrawError = () => {
+    const { swap, timeLeft, isStopCheck, continueSwap } = this.state
+
+    if (swap.sellCurrency === 'BTC'
+      && this.props.tokenItems.map(item => item.name).includes(swap.buyCurrency.toLowerCase())
+      && !isStopCheck
+      && timeLeft !== 0) {
+      this.setState(() => ({ continueSwap: true }))
+    } else {
+      this.checkEnouhFee()
+      this.setState(() => ({
+        isStopCheck: true,
+      }))
+    }
+  }
+
+  checkEnouhFee = () => {
+    const { swap: { participantSwap, flow: { state: { canCreateEthTransaction } } }, currencyData: { currency }, continueSwap } = this.state
 
     const ethPair = ['BTC', 'ETH', 'LTC']
 
@@ -159,6 +202,7 @@ export default class SwapComponent extends PureComponent {
       }))
     }
   }
+
   handleGoHome = () => {
     const { intl: { locale } } = this.props
     this.props.history.push(localisedUrl(locale, links.home))
