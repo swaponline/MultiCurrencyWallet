@@ -6,13 +6,13 @@ import actions from 'redux/actions'
 import styles from './KeyActionsPanel.scss'
 
 import CSSModules from 'react-css-modules'
+import { isMobile } from 'react-device-detect'
 
 import { constants } from 'helpers'
 import { WithdrawButton } from 'components/controls'
 import { FormattedMessage } from 'react-intl'
 
 import config from 'app-config'
-
 
 @connect(({ core: { hiddenCoinsList } }) => ({ hiddenCoinsList }))
 @CSSModules(styles, { allowMultiple: true })
@@ -47,12 +47,16 @@ export default class KeyActionsPanel extends Component {
     actions.user.getDemoMoney()
   }
 
+  handleUseKeychain = () => {    
+    actions.eth.loginWithKeychain();
+  }
+
   render() {
     const { hiddenCoinsList } = this.props
 
     return (
       <div styleName="WithdrawButtonContainer">
-        { process.env.TESTNET &&
+        { process.env.TESTNET && !isMobile &&
         <WithdrawButton onClick={this.handleClear} >
           <FormattedMessage id="KeyActionsPanel43" defaultMessage="Exit" />
         </WithdrawButton>
@@ -66,11 +70,13 @@ export default class KeyActionsPanel extends Component {
         {
           (config && !config.isWidget) && (
             <WithdrawButton onClick={this.handleShowMore}>
-              <FormattedMessage id="KeyActionsPanel54" defaultMessage="Hidden coins" />
-              ({hiddenCoinsList.length})
+              <FormattedMessage id="KeyActionsPanel73" defaultMessage="Hidden coins ({length})" values={{ length: `${hiddenCoinsList.length}` }} />
             </WithdrawButton>
           )
         }
+        <WithdrawButton onClick={this.handleUseKeychain}>
+          <FormattedMessage id="KeyActionsPanel50" defaultMessage="Use KeyChain" />
+        </WithdrawButton>
       </div>
     )
   }

@@ -45,15 +45,15 @@ export default class ReceiveModal extends React.Component {
 
     return (
       <Modal name={name} title={intl.formatMessage(title.Receive)}>
-        <div styleName="content" style={{ textAlign: "center" }}>
+        <div styleName="content">
           <p style={{ fontSize: 25 }}>
-            <FormattedMessage id="ReceiveModal" defaultMessage="This is your address for receive" />
+            <FormattedMessage id="ReceiveModal50" defaultMessage="This is your {currency} address" values={{ currency: `${currency}` }} />
           </p>
           <CopyToClipboard
             text={address}
             onCopy={this.handleCopyAddress}
           >
-            <p className={styles.qr} style={{ fontSize: 35 }}>
+            <p styleName="qr">
               <QR
                 network={currency}
                 address={address}

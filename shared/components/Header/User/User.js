@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 
 import { withRouter } from 'react-router'
@@ -16,8 +16,9 @@ import UserTooltip from './UserTooltip/UserTooltip'
 import SignUpButton from './SignUpButton/SignUpButton'
 
 import Avatar from 'components/Avatar/Avatar'
-import { injectIntl } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
+import ReactTooltip from 'react-tooltip'
 
 import config from 'app-config'
 
@@ -28,6 +29,7 @@ import config from 'app-config'
   feeds: 'feeds.items',
   peer: 'ipfs.peer',
   isSigned: 'signUp.isSigned',
+  reputation: 'ipfs.reputation',
 })
 @CSSModules(styles)
 export default class User extends React.Component {
@@ -35,6 +37,8 @@ export default class User extends React.Component {
   static propTypes = {
     feeds: PropTypes.array.isRequired,
     peer: PropTypes.string.isRequired,
+    declineRequest: PropTypes.func.isRequired,
+    acceptRequest: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -62,29 +66,11 @@ export default class User extends React.Component {
     audio.autoplay = true
   }
 
-  declineRequest = (orderId, participantPeer) => {
-    actions.core.declineRequest(orderId, participantPeer)
-    actions.core.updateCore()
-  }
-
-  acceptRequest = async (orderId, participantPeer, link) => {
-    const { toggle, history, intl: { locale } } = this.props
-
-    actions.core.acceptRequest(orderId, participantPeer)
-    actions.core.updateCore()
-
-    if (typeof toggle === 'function') {
-      toggle()
-    }
-
-    await history.replace(localisedUrl(locale, '/'))
-    await history.push(localisedUrl(locale, link))
-  }
-
   render() {
     const { view } = this.state
 
     const isWidget = (config && config.isWidget)
+    const reputationPlaceholder = '0'
 
     const {
       feeds, peer, reputation, openTour, path, isSigned,
@@ -99,7 +85,7 @@ export default class User extends React.Component {
             <UserAvatar
               isToggle={this.handleToggleTooltip}
               feeds={feeds}
-              declineRequest={this.declineRequest}
+              declineRequest={this.props.declineRequest}
               getInfoBySwapId={actions.core.getInformationAboutSwap}
               soundClick={this.soundClick}
               changeView={this.handleChangeView}
@@ -111,16 +97,30 @@ export default class User extends React.Component {
             feeds={feeds}
             peer={peer}
             toggle={this.handleToggleTooltip}
-            acceptRequest={this.acceptRequest}
-            declineRequest={this.declineRequest}
+            acceptRequest={this.props.acceptRequest}
+            declineRequest={this.props.declineRequest}
           />
         }
         {!!peer && !isWidget && (
-          <Avatar
-            className={styles.avatar}
-            value={peer}
-            size={40}
-          />
+          <Fragment>
+            <div styleName="avatar-container" data-tip data-for="gravatar">
+              <Avatar
+                className={styles.avatar}
+                value={peer}
+                size={40}
+              />
+              <div styleName="avatar-reputation-centered">{ Number.isInteger(reputation) ? reputation : reputationPlaceholder }</div>
+            </div>
+            <ReactTooltip id="gravatar" type="light" effect="solid">
+              <span>
+                <FormattedMessage
+                  id="avatar24"
+                  defaultMessage="This is your (personal) gravatar, it is unique for each user.
+                  The number is your rating within the system (it grows with the number of successful swaps)"
+                />
+              </span>
+            </ReactTooltip>
+          </Fragment>
         )}
       </div>
     )

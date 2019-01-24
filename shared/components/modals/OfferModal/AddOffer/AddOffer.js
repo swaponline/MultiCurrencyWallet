@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 
 import { connect } from 'redaction'
 import actions from 'redux/actions'
+import helpers from 'helpers'
 
 import Link from 'sw-valuelink'
 import config from 'app-config'
@@ -28,10 +29,9 @@ const minAmount = {
   btc: 0.001,
   ltc: 0.1,
   eos: 1,
-  noxon: 1,
-  swap: 1,
   jot: 1,
   usdt: 0,
+  erc: 1,
 }
 
 @connect(
@@ -58,18 +58,19 @@ export default class AddOffer extends Component {
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency } = initialData || {}
 
     this.state = {
-      exchangeRate: exchangeRate || 1,
+      balance: null,
+      isToken: false,
+      isPartial: true,
+      isSending: false,
+      ethBalance: null,
+      manualRate: false,
+      isBuyFieldInteger: false,
+      isSellFieldInteger: false,
       buyAmount: buyAmount || '',
       sellAmount: sellAmount || '',
+      exchangeRate: exchangeRate || 1,
       buyCurrency: buyCurrency || 'btc',
       sellCurrency: sellCurrency || 'eth',
-      ethBalance: null,
-      isSending: false,
-      balance: null,
-      isSellFieldInteger: false,
-      isBuyFieldInteger: false,
-      manualRate: false,
-      isPartial: true,
     }
   }
 
@@ -83,23 +84,49 @@ export default class AddOffer extends Component {
   }
 
   checkBalance = async (sellCurrency) => {
-    await actions[sellCurrency].getBalance(sellCurrency)
+    const updateBalance = await actions[sellCurrency].getBalance(sellCurrency)
+
+    this.setState({
+      balance: updateBalance,
+    })
 
     const { items, tokenItems } = this.props
+
+    const coinsWithDynamicFee = [
+      'eth',
+      'ltc',
+      'btc',
+    ]
 
     const currency = items.concat(tokenItems)
       .filter(item => item.currency === sellCurrency.toUpperCase())[0]
 
     const { balance, unconfirmedBalance } = currency
-    const finalBalance = unconfirmedBalance !== undefined && unconfirmedBalance < 0
-      ? Number(balance) + Number(unconfirmedBalance)
-      : balance
-    const ethBalance = await actions.eth.getBalance()
 
-    this.setState({
-      balance: finalBalance,
-      ethBalance,
-    })
+    if (helpers.ethToken.isEthToken({ name: sellCurrency })) {
+      this.setState(() => ({
+        isToken: true,
+      }))
+    } else {
+      this.setState(() => ({
+        isToken: false,
+      }))
+    }
+
+    const currentBalance = unconfirmedBalance !== undefined && unconfirmedBalance < 0
+      ? new BigNumber(balance).plus(unconfirmedBalance)
+      : balance
+
+    if (coinsWithDynamicFee.includes(sellCurrency)) {
+      minAmount[sellCurrency] = await helpers[sellCurrency].estimateFeeValue({ method: 'swap', speed: 'normal' })
+
+      const finalBalance = BigNumber(currentBalance).minus(minAmount[sellCurrency]) > 0 ? BigNumber(currentBalance).minus(minAmount[sellCurrency]) : 0
+
+      this.setState({
+        balance: finalBalance,
+      })
+      return
+    }
   }
 
   async updateExchangeRate(sellCurrency, buyCurrency) {
@@ -139,6 +166,10 @@ export default class AddOffer extends Component {
   handleSellCurrencySelect = async ({ value }) => {
     let { buyCurrency, sellCurrency, sellAmount, buyAmount } = this.state
 
+    this.setState(() => ({
+      sellCurrency: value,
+    }))
+
     this.checkPair(value)
 
     await this.checkBalance(value)
@@ -154,7 +185,6 @@ export default class AddOffer extends Component {
     }
 
     this.setState({
-      sellCurrency: value,
       buyAmount: Number.isNaN(buyAmount) ? '' : buyAmount,
       sellAmount: Number.isNaN(sellAmount) ? '' : sellAmount,
       isSellFieldInteger,
@@ -308,23 +338,12 @@ export default class AddOffer extends Component {
     }
   }
 
-  isEthOrERC20() {
-    const { tokenItems } = this.props
-    const { buyCurrency, sellCurrency, ethBalance } = this.state
-
-    return (
-      sellCurrency === 'eth' || buyCurrency === 'eth' || tokenItems.find(
-        (item) => item.name === sellCurrency || item.name === buyCurrency
-      ) !== undefined
-    ) ? ethBalance < minAmount.eth : false
-  }
-
   handleNext = () => {
-    const { exchangeRate, buyAmount, sellAmount, balance, sellCurrency, ethBalance } = this.state
+    const { exchangeRate, buyAmount, sellAmount, balance, sellCurrency, ethBalance, isToken } = this.state
     const { onNext, tokenItems } = this.props
 
-    const isDisabled = !exchangeRate || !buyAmount || !sellAmount || sellAmount > balance || sellAmount < minAmount[sellCurrency]
-      || this.isEthOrERC20()
+    const isDisabled = !exchangeRate || !buyAmount || !sellAmount || sellAmount > balance || !isToken && sellAmount < minAmount[sellCurrency]
+
 
     if (!isDisabled) {
       actions.analytics.dataEvent('orderbook-addoffer-click-next-button')
@@ -376,18 +395,20 @@ export default class AddOffer extends Component {
   }
 
   render() {
+
     const { currencies, tokenItems, addSelectedItems } = this.props
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency,
-      balance, isBuyFieldInteger, isSellFieldInteger, ethBalance, manualRate, isPartial } = this.state
+      balance, isBuyFieldInteger, isSellFieldInteger, ethBalance, manualRate, isPartial, isToken } = this.state
     const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
-    const isDisabled = !exchangeRate || !buyAmount && !sellAmount
-      || sellAmount > balance || sellAmount < minAmount[sellCurrency]
-      || this.isEthOrERC20()
+    const minimalAmount = !isToken ? Math.floor(minAmount[sellCurrency] * 1e6) / 1e6 : 0
 
-    linked.sellAmount.check((value) => Number(value) > minAmount[sellCurrency],
+    const isDisabled = !exchangeRate || !buyAmount && !sellAmount
+      || sellAmount > balance || !isToken && sellAmount < minimalAmount
+
+    linked.sellAmount.check((value) => (Number(value) > minimalAmount),
       <span style={{ position: 'relative', marginRight: '44px' }}>
         <FormattedMessage id="transaction368" defaultMessage="Amount must be greater than " />
-        {minAmount[sellCurrency]}
+        {minimalAmount}
       </span>
     )
     linked.sellAmount.check((value) => Number(value) <= balance,
@@ -398,16 +419,6 @@ export default class AddOffer extends Component {
 
     return (
       <div styleName="wrapper addOffer">
-        { this.isEthOrERC20() &&
-          <span styleName="error">
-            <FormattedMessage
-              id="transaction436"
-              defaultMessage="For a swap, you need {minAmount} ETH on your balance"
-              values={{ minAmount:`${minAmount.eth}` }}
-            />
-
-          </span>
-        }
         <SelectGroup
           styleName="sellGroup"
           label={<FormattedMessage id="addoffer381" defaultMessage="Sell" />}

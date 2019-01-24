@@ -29,11 +29,14 @@ input, textarea {
 }
 
 .textUsd {
-  top: 20px;
-  left: 74%;
+  position: absolute;
+  top: 13px;
+  right: 10px;
   font-size: 16px;
   color: #828795;
-  position: absolute;
+  background: white;
+  padding: 5px;
+  box-shadow: -20px 0px 20px -15px rgba(0,0,0, 0.5);
 }
 
 .input {
@@ -45,6 +48,7 @@ input, textarea {
   vertical-align: top;
   line-height: 16px;
   border-radius: 6px;
+  box-shadow: none;
   font-size: 16px;
   @include ff;
   color: $color-f-main;
@@ -89,6 +93,7 @@ textarea.input {
     font-size: 14px;
   }
   .textUsd {
-    left: 160px;
+    top: 15px;
+    font-size: 14px;
   }
 }

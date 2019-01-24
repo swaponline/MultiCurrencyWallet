@@ -32,6 +32,7 @@ export default class UserTooltip extends Component {
         { feeds.length < 3  ? (
           feeds.map(row => {
             const { request, content: { buyAmount, buyCurrency, sellAmount, sellCurrency }, id, peer: ownerPeer } = row
+            const reputationPlaceholder = '?'
 
             return (
               mePeer === ownerPeer &&
@@ -39,9 +40,11 @@ export default class UserTooltip extends Component {
                 <div styleName="userTooltip" >
                   <div key={peer}>
                     <div styleName="title">
-                      <FormattedMessage id="userTooltip68" defaultMessage="User with" />
-                      <b>{reputation}</b>
-                      <FormattedMessage id="userTooltip72" defaultMessage="reputation wants to swap" />
+                      <FormattedMessage
+                        id="userTooltip43"
+                        defaultMessage="User ({reputation}) wants to swap"
+                        values={{ reputation: <b>{Number.isInteger(reputation) ? reputation : reputationPlaceholder}</b> }}
+                      />
                     </div>
                     <div styleName="currency">
                       <span>{buyAmount.toFixed(5)} <span styleName="coin">{buyCurrency}</span></span>
@@ -51,7 +54,11 @@ export default class UserTooltip extends Component {
                   </div>
                   <span styleName="decline" onClick={() => this.props.declineRequest(id, peer)} />
                   <div styleName="checked" onClick={() => this.props.acceptRequest(id, peer, `${links.swap}/${sellCurrency}-${buyCurrency}/${id}`)} />
-                  <TimerButton isButton={false} onClick={() => this.props.acceptRequest(id, peer, `${links.swap}/${sellCurrency}-${buyCurrency}/${id}`)} />
+                  <TimerButton
+                    timeLeft={0}
+                    isButton={false}
+                    onClick={() => this.props.acceptRequest(id, peer, `${links.swap}/${sellCurrency}-${buyCurrency}/${id}`)}
+                  />
                 </div>
               ))
             )

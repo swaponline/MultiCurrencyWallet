@@ -17,11 +17,7 @@ class Keychain {
         console.log('Error: ', e);
       }
     };
-    this.queue = [];
-
-    web3.eth.accounts.sign = this.sign.bind(this)
-    web3.eth.accounts.signTransaction = this.signTransaction.bind(this)
-    web3.eth.accounts.privateKeyToAccount = this.privateKeyToAccount.bind(this)
+    this.queue = [];    
   }
 
   command(request, callback) {
@@ -66,7 +62,7 @@ class Keychain {
   //   }
   // }
 
-  privateKeyToAccount(privateKey) {
+  privateKeyToAccount() {
     return {
       address: this.selectedAddress,
       privateKey: this.selectedKey,

@@ -15,6 +15,19 @@ const getOrders = (orders) => {
 
 const getSwapById = (id) => new Swap(id)
 
+const getUserData = (currency) => {
+  switch (currency.toUpperCase()) {
+    case 'BTC':
+      return getState().user.btcData
+
+    case 'ETH':
+      return getState().user.ethData
+
+    default:
+      return {}
+  }
+}
+
 const setFilter = (filter) => {
   reducers.core.setFilter({ filter })
 }
@@ -34,20 +47,43 @@ const removeOrder = (orderId) => {
   actions.feed.deleteItemToFeed(orderId)
 }
 
-const sendRequest = (orderId, { address } = {}, callback) => {
+const sendRequest = (orderId, destination = {}, callback) => {
+  const { address: destinationAddress } = destination
+
   const order = SwapApp.services.orders.getByKey(orderId)
 
-  const destination = {
-    address,
+  const userCurrencyData = getUserData(order.buyCurrency)
+  const { address, reputation, reputationProof } = getUserData(order.buyCurrency)
+
+  const requestOptions = {
+    address: destinationAddress,
+    participantMetadata: {
+      address,
+      reputation,
+      reputationProof,
+    },
   }
 
-  order.sendRequest(callback, destination)
+  order.sendRequest(callback, requestOptions)
 }
 
-const sendRequestForPartial = (orderId, newValues, destination, callback) => {
+const sendRequestForPartial = (orderId, newValues, destination = {}, callback) => {
+  const { address: destinationAddress } = destination
+
   const order = SwapApp.services.orders.getByKey(orderId)
 
-  order.sendRequestForPartial(newValues, destination,
+  const { address, reputation, reputationProof } = getUserData(order.buyCurrency)
+
+  const requestOptions = {
+    address: destinationAddress,
+    participantMetadata: {
+      address,
+      reputation,
+      reputationProof,
+    },
+  }
+
+  order.sendRequestForPartial(newValues, requestOptions,
     (newOrder, isAccepted) => {
       console.error('newOrder', newOrder)
       console.error('newOrder', isAccepted)

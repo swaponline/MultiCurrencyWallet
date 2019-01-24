@@ -27,7 +27,7 @@ import config from 'app-config'
 @connect(
   ({
     core: { hiddenCoinsList },
-    user: { ethData, btcData, tokensData, eosData, xlmData, telosData, nimData, usdtData, ltcData },
+    user: { ethData, btcData, tokensData, eosData, /* xlmData, */ telosData, nimData, usdtData, ltcData },
     currencies: { items: currencies },
   }) => ({
     tokens: ((config && config.isWidget) ?
@@ -38,10 +38,10 @@ import config from 'app-config'
     items: ((config && config.isWidget) ?
       [btcData, ethData, usdtData ]
       :
-      [btcData, ethData, eosData, telosData, xlmData, ltcData, usdtData /* nimData */ ]).map((data) => (
+      [btcData, ethData, eosData, telosData, /* xlmData, */ /* ltcData, */ usdtData /* nimData */ ]).map((data) => (
       data.currency
     )),
-    currencyBalance: [btcData, ethData, eosData, xlmData, telosData, ltcData, usdtData /* nimData */ ].map((cur) => (
+    currencyBalance: [btcData, ethData, eosData, /* xlmData, */ telosData, ltcData, usdtData, ...Object.keys(tokensData).map(k => (tokensData[k])) /* nimData */ ].map((cur) => (
       cur.balance
     )),
     currencies,
@@ -75,6 +75,8 @@ export default class Wallet extends Component {
     actions.user.getBalances()
     actions.analytics.dataEvent('open-page-balances')
 
+    this.checkImportKeyHash()
+
     if (process.env.MAINNET) {
       localStorage.setItem(constants.localStorage.testnetSkip, false)
     } else {
@@ -90,29 +92,18 @@ export default class Wallet extends Component {
     }))
   }
 
-  componentWillReceiveProps() {
-    const { saveKeys, testSkip } = this.state
-
-    const openTour = JSON.parse(localStorage.getItem(constants.localStorage.openTour))
-
-    if (saveKeys || testSkip || !openTour) {
-      return
-    }
-
-    const { currencyBalance } = this.props
-
-    currencyBalance.forEach(cur => {
-      if (cur > 0) {
-        this.setState(() => ({ openModal: true }))
-      }
-    })
-  }
-
   componentDidUpdate() {
     const { openModal } = this.state
 
-    if (openModal) {
-      actions.modals.open(constants.modals.PrivateKeys, {})
+    const { currencyBalance } = this.props
+
+    if (!localStorage.getItem(constants.localStorage.wasCautionShow) && process.env.MAINNET) {
+      currencyBalance.forEach(cur => {
+        if (cur > 0) {
+          actions.modals.open(constants.modals.PrivateKeys, {})
+          localStorage.setItem(constants.localStorage.wasCautionShow, true)
+        }
+      })
     }
   }
 
@@ -133,8 +124,26 @@ export default class Wallet extends Component {
     })
   }
 
+  checkImportKeyHash = () => {
+    const urlHash = window.location.hash
+
+    if (!urlHash) {
+      return
+    }
+
+    if (urlHash !== '#importKeys') {
+      return
+    }
+
+    localStorage.setItem(constants.localStorage.privateKeysSaved, true)
+    localStorage.setItem(constants.localStorage.firstStart, true)
+
+    actions.modals.open(constants.modals.ImportKeys)
+  }
+
   render() {
     const { items, tokens, currencies, hiddenCoinsList, intl, location } = this.props
+
     const titles = [
       <FormattedMessage id="Wallet114" defaultMessage="Coin" />,
       <FormattedMessage id="Wallet115" defaultMessage="Name" />,
@@ -154,7 +163,7 @@ export default class Wallet extends Component {
     const description = defineMessages({
       metaDescription: {
         id: 'Wallet146',
-        defaultMessage: `Our online wallet with Atomic swap algorithms will help you store and exchange cryptocurrency instantly 
+        defaultMessage: `Our online wallet with Atomic swap algorithms will help you store and exchange cryptocurrency instantly
         and more secure without third-parties. Decentralized exchange.`,
       },
     })
@@ -185,19 +194,21 @@ export default class Wallet extends Component {
         />
         {
           (config && !config.isWidget) && (
-            <FormattedMessage
-              id="Wallet156"
-              defaultMessage="Welcome to the Swap.Online, decentralized cross-chain wallet based on the Atomic Swap technology.
-                Here you can promptly and safely store and exchange Bitcoin, Ethereum, EOS, USD Tether, BCH and numerous ERC-20 tokens.
-                Swap.Online doesn’t store your keys or your tokens. Our wallet operates directly in browser, so, no additional installations or downloads are required.
-                Swap.Online service is fully decentralized as all the operations with tokens are executed via the IPFS network.
-                It was our team that finalized first Atomic Swaps with USDT and EOS in September, 2018. Also, the Litecoin blockchain was added in October, 2018.
-                Thus, our wallet addresses real multi-chain integration with decentralized orderbook, no third party involved in the exchange, no proxy-token and no token wrapping.
-                As for now, seeking for the liquidity, we can integrate every ERC-20 token for free just in case of mutual PR-announcement with the project the token is backed by.
-                Also, we designed Swap.Button, b2b-solution to exchange all kinds of tokens on Bitcoin and Ethereum.
-                Just install this widget on your site and collect crypto investments to your project.
-                So, start using https://swap.online/ today and enjoy the power of true decentralization."
-            />
+            <div styleName="inform">
+              <FormattedMessage
+                id="Wallet156"
+                defaultMessage="Welcome to Swap.Online, a decentralized cross-chain wallet based on the Atomic Swap technology.
+                Here you can safely store and promptly exchange Bitcoin, Ethereum, EOS, USD, Tether, BCH, and numerous ERC-20 tokens.
+                Swap.Online doesn’t store your keys or tokens. Our wallet operates directly in at browser, so no additional installations or downloads are required.
+                The Swap.Online service is fully decentralized as (because)all the operations with tokens are executed via the IPFS network.
+                Our team was the first who finalized Atomic Swaps with USDT and EOS in September 2018 and Litecoin blockchain was added in October 2018.
+                Our wallet addresses a real multi-chain integration with a decentralized order book, no third party involved in the exchange, no proxy-token and no token wrapping.
+                We can integrate any ERC-20 token of a project for free just in case of mutual PR-announcement.
+                In addition, we developed Swap.Button, a b2b-solution to exchange all kinds of tokens for Bitcoin and Ethereum.
+                Install Swap.Button html widget on your site and collect crypto investments for your project.
+                Start using https://swap.online/ today and enjoy the power of true decentralization."
+              />
+            </div>
           )
         }
       </section>

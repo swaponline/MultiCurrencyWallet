@@ -72,8 +72,9 @@ export default class PartialClosure extends Component {
     }
   }
 
-  constructor() {
+  constructor({ currenciesData }) {
     super()
+    const ethAddress = currenciesData.filter(item => item.currency === 'ETH')
 
     this.state = {
       haveCurrency: 'btc',
@@ -90,8 +91,8 @@ export default class PartialClosure extends Component {
       isNonOffers: false,
       isFetching: false,
       isDeclinedOffer: false,
-      customWalletUse: false,
-      customWallet: '',
+      customWalletUse: true,
+      customWallet: ethAddress[0].address,
     }
     let timer
     let wallets
@@ -334,7 +335,7 @@ export default class PartialClosure extends Component {
 
     this.setState({
       customWalletUse: newCustomWalletUse,
-      customWallet: (!newCustomWalletUse) ? '' : this.getSystemWallet(),
+      customWallet: (newCustomWalletUse === false) ? '' : this.getSystemWallet(),
     })
   }
 
@@ -342,6 +343,7 @@ export default class PartialClosure extends Component {
     this.checkPair(this.state.haveCurrency)
     this.setState(() => ({
       getCurrency: value,
+      customWallet: this.state.customWalletUse ? this.wallets[value.toUpperCase()] : '',
     }))
   }
 
@@ -358,6 +360,7 @@ export default class PartialClosure extends Component {
     this.setState(() => ({
       haveCurrency: this.state.getCurrency,
       getCurrency: this.state.haveCurrency,
+      customWallet: this.state.customWalletUse ? this.wallets[this.state.haveCurrency.toUpperCase()] : '',
     }))
   }
 
@@ -386,8 +389,7 @@ export default class PartialClosure extends Component {
       isNonOffers: false,
       isFetching: false,
       isDeclinedOffer: false,
-      customWalletUse: false,
-      customWallet: '',
+      customWallet: this.state.customWalletUse ? this.wallets[this.state.getCurrency.toUpperCase()] : '',
     }))
   }
 
@@ -404,18 +406,30 @@ export default class PartialClosure extends Component {
       return true
     }
 
-    // TODO: check for BTC address
+    if (getCurrency === 'btc') return util.typeforce.isCoinAddress.BTC(customWallet)
+
     return util.typeforce.isCoinAddress.ETH(customWallet)
   }
 
   customWalletAllowed() {
     const { haveCurrency, getCurrency } = this.state
 
-    if (haveCurrency !== 'btc') {
-      return false
+    if (haveCurrency === 'btc') {
+      // btc-token
+      if (config.erc20[getCurrency] !== undefined) return true
+      // btc-eth
+      if (getCurrency === 'eth') return true
+    }
+    if (config.erc20[haveCurrency] !== undefined) {
+      // token-btc
+      if (getCurrency === 'btc') return true
     }
 
-    return config.erc20[getCurrency] !== undefined
+    if (haveCurrency === 'eth') {
+      // eth-btc
+      if (getCurrency === 'btc') return true
+    }
+    return false
   }
 
   checkPair = (value) => {
@@ -432,13 +446,13 @@ export default class PartialClosure extends Component {
 
 
   render() {
-    const { currencies, addSelectedItems, intl: { locale } } = this.props
+    const { currencies, addSelectedItems, currenciesData, intl: { locale } } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching,
       isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet, getUsd, haveUsd,
       maxBuyAmount, getAmount, goodRate,
     } = this.state
 
-    const oneCryptoCost = maxBuyAmount.isLessThanOrEqualTo(0) ? new BigNumber(0) :  goodRate
+    const oneCryptoCost = maxBuyAmount.isLessThanOrEqualTo(0) ? BigNumber(0) : BigNumber(goodRate)
     const linked = Link.all(this, 'haveAmount', 'getAmount', 'customWallet')
 
     const isWidget = (config && config.isWidget)
@@ -487,8 +501,8 @@ export default class PartialClosure extends Component {
               currencies={currencies}
             />
             <p>
-              <FormattedMessage id="partial221" defaultMessage="Max amount for offer: " />
-              {maxAmount}{' '}{getCurrency.toUpperCase()}
+              <FormattedMessage id="partial221" defaultMessage="Max amount for exchange: " />
+              {maxBuyAmount.toNumber()}{' '}{haveCurrency.toUpperCase()}
             </p>
             <Flip onClick={this.handleFlipCurrency} styleName="flipButton" />
             <SelectGroup
@@ -497,7 +511,7 @@ export default class PartialClosure extends Component {
               onSelect={this.handleSetGetValue}
               label={<FormattedMessage id="partial255" defaultMessage="You get" />}
               id="partialClosure472"
-              tooltip={<FormattedMessage id="partial478" defaultMessage="The amount you receive after the swap" />}
+              tooltip={<FormattedMessage id="partial478" defaultMessage="The amount you receive after the exchange" />}
               disabled
               currencies={addSelectedItems}
               usd={getUsd}
@@ -507,7 +521,9 @@ export default class PartialClosure extends Component {
                 <span>
                   <FormattedMessage id="PartialPriceSearch" defaultMessage="Searching orders..." />
                   <div styleName="loaderHolder">
-                    <InlineLoader />
+                    <div styleName="additionalLoaderHolder">
+                      <InlineLoader />
+                    </div>
                   </div>
                 </span>
               )
@@ -545,7 +561,9 @@ export default class PartialClosure extends Component {
                 <span>
                   <FormattedMessage id="partial291" defaultMessage="Wait participant: " />
                   <div styleName="loaderHolder">
-                    <InlineLoader />
+                    <td styleName="additionalLoaderHolder">
+                      <InlineLoader />
+                    </td>
                   </div>
                 </span>
               )
@@ -556,15 +574,15 @@ export default class PartialClosure extends Component {
                 <Fragment>
                   <FieldLabel>
                     <strong>
-                      <FormattedMessage id="PartialYourWalletAddress" defaultMessage="Your wallet address" />
+                      <FormattedMessage id="PartialYourWalletAddress" defaultMessage="Receiving wallet address" />
                     </strong>
                     &nbsp;
                     <Tooltip id="PartialClosure">
-                      <FormattedMessage id="PartialClosure" defaultMessage="Your wallet address to where cryptocurrency will be sent after the swap" />
+                      <FormattedMessage id="PartialClosure" defaultMessage="The wallet address to where cryptocurrency will be sent after the exchange" />
                     </Tooltip >
                   </FieldLabel>
                   <div styleName="walletInput">
-                    <Input required valueLink={linked.customWallet} pattern="0-9a-zA-Z" placeholder="Enter the address of ETH wallet" />
+                    <Input required disabled={customWalletUse} valueLink={linked.customWallet} pattern="0-9a-zA-Z" placeholder="Enter the destination address" />
                   </div>
                   <div styleName="walletToggle">
                     <Toggle checked={customWalletUse} onChange={this.handleCustomWalletUse} />
@@ -591,7 +609,6 @@ export default class PartialClosure extends Component {
                 defaultMessage="Swap.Online is the decentralized in-browser hot wallet based on the Atomic Swaps technology.
                   As in our wallet all blockchains interact decentralized and no-third-party way, we offer our users to exchange Bitcoin, Ethereum,
                   USD Tether, BCH and EOS for free in a couple of seconds. At the time, Swap.Online charges no commision for the order making and taking.
-                  For example, on the vast majority of exchanges, there is a 0,3%-operational fee for the taker of liquidity and 1-5% withdrawal fee.
                   The exchange of crypto and tokens on Swap.Online is conducted in truly
                   decentralized manner as we use the Atomic Swaps technology of peer-to-peer cross-chain interaction.
                   Swap.Online uses IPFS-network for all the operational processes which results in no need for centralized server.

@@ -9,6 +9,10 @@
 .sectionWallet {
 	margin-top: 88px;
 }
+.inform {
+  color: #626262;
+  margin-top: 40px;
+}
 
 .pageLine {
   height: 130px;
@@ -43,6 +47,9 @@
   }
   .pageLine {
     height: auto;
+  }
+  .inform {
+    margin-top: 10px;
   }
 }
 

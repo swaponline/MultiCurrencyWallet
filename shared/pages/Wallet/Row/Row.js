@@ -27,14 +27,14 @@ import { relocalisedUrl, localisedUrl } from 'helpers/locale'
 @withRouter
 @connect(
   ({
-    user: { ethData, btcData, /* bchData, */ tokensData, eosData, xlmData, telosData, nimData, usdtData, ltcData },
+    user: { ethData, btcData, /* bchData, */ tokensData, eosData, /* xlmData, */ telosData, nimData, usdtData, ltcData },
     currencies: { items: currencies },
   }, { currency }) => ({
     currencies,
     item: [
       btcData,
       ethData,
-      xlmData,
+      /* xlmData, */
       eosData,
       telosData,
       /* bchData, */
@@ -113,6 +113,7 @@ export default class Row extends Component {
       isBalanceFetching: false,
     }))
   }
+
   shouldComponentUpdate(nextProps, nextState) {
     const getComparableProps = ({ item, index, selectId }) => ({
       item,
@@ -140,7 +141,7 @@ export default class Row extends Component {
     } = this.props
     let firstPart = address.substr(0, 6)
     let secondPart = address.substr(address.length - 4)
-    return (window.innerWidth < 1120 || isMobile || address.length > 40) ? `${firstPart}...${secondPart}` : address
+    return (window.innerWidth < 700 || isMobile || address.length > 42) ? `${firstPart}...${secondPart}` : address
   }
 
   handleTouchClear = (e) => {
@@ -258,7 +259,6 @@ export default class Row extends Component {
       eosAccountActivated = this.props.item.isAccountActivated
       eosActivationPaymentSent = this.props.item.isActivationPaymentSent
     }
-
     return (
       <tr
         data-tut="reactour__store"
@@ -307,7 +307,7 @@ export default class Row extends Component {
                   <Fragment>
                     <br />
                     <span styleName="unconfirmedBalance">
-                      <FormattedMessage id="RowWallet181" defaultMessage="Unconfirmed" />
+                      <FormattedMessage id="RowWallet181" defaultMessage="Unconfirmed balance" />
                       {unconfirmedBalance} {' '}
                     </span>
                   </Fragment>
@@ -316,7 +316,7 @@ export default class Row extends Component {
                   <Fragment>
                     <br />
                     <span styleName="unconfirmedBalance">
-                      <FormattedMessage id="RowWallet189" defaultMessage="Unconfirmed" />
+                      <FormattedMessage id="RowWallet189" defaultMessage="Unconfirmed balance" />
                       {unconfirmedBalance}
                     </span>
                   </Fragment>
@@ -325,7 +325,7 @@ export default class Row extends Component {
                   <Fragment>
                     <br />
                     <span styleName="unconfirmedBalance">
-                      <FormattedMessage id="RowWallet197" defaultMessage="Unconfirmed" />
+                      <FormattedMessage id="RowWallet197" defaultMessage="Unconfirmed balance" />
                       {unconfirmedBalance}
                     </span>
                   </Fragment>

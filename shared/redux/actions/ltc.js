@@ -102,15 +102,16 @@ const getTransaction = () =>
       })
   })
 
-const send = async (from, to, amount) => {
+const send = async ({ from, to, amount, feeValue, speed } = {}) => {
   const { user: { ltcData: { privateKey } } } = getState()
   const keyPair = bitcoin.ECPair.fromWIF(privateKey, ltc.network)
+
+  feeValue = feeValue || await ltc.estimateFeeValue({ satoshi: true, speed })
 
   const tx            = new bitcoin.TransactionBuilder(ltc.network)
   const unspents      = await fetchUnspents(from)
 
   const fundValue     = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
-  const feeValue      = 100000
   const totalUnspent  = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
   const skipValue     = totalUnspent - feeValue - fundValue
 
@@ -136,7 +137,6 @@ const broadcastTx = (txRaw) =>
       rawtx: txRaw,
     },
   })
-
 
 export default {
   login,
