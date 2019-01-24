@@ -66,7 +66,7 @@ class Keychain {
   //   }
   // }
 
-  privateKeyToAccount(privateKey) {
+  privateKeyToAccount() {
     return {
       address: this.selectedAddress,
       privateKey: this.selectedKey,

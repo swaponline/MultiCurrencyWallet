@@ -4715,7 +4715,18 @@
   },
   {
     "id": "swappropgress192",
-    "message": "How to refund your money ?",
+    "message": "How to refund your money ?"
+  },
+  {
+    "id": "KeyActionsPanel50",
+    "message": "Use KeyChain",
+    "files": [
+      "shared/components/KeyActionsPanel/KeyActionsPanel.js"
+    ]
+  },
+  {
+    "id": "FeeControler34",
+    "message": "Not enough ETH on your balance for miner fee.{br}Deposit 0.002 ETH to your account  {br}",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgress.js"
     ]

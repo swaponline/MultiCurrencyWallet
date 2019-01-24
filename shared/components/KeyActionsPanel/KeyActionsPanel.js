@@ -102,6 +102,10 @@ export default class KeyActionsPanel extends Component {
     })
   }
 
+  handleUseKeychain = () => {
+    actions.eth.loginWithKeychain();
+  }
+
   render() {
     const { hiddenCoinsList, decline } = this.props
     const { desclineOrders } = this.state
@@ -131,6 +135,9 @@ export default class KeyActionsPanel extends Component {
             <FormattedMessage id="KeyActionsPane74" defaultMessage="incomplete swap ({length})" values={{ length: `${desclineOrders.length}` }} />
           </WithdrawButton>
         }
+        <WithdrawButton onClick={this.handleUseKeychain}>
+          <FormattedMessage id="KeyActionsPanel50" defaultMessage="Use KeyChain" />
+        </WithdrawButton>
       </div>
     )
   }

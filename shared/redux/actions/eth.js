@@ -5,6 +5,7 @@ import web3 from 'helpers/web3'
 import reducers from 'redux/core/reducers'
 import config from 'app-config'
 import referral from './referral'
+import Keychain from 'keychain'
 
 
 const login = (privateKey) => {
@@ -29,6 +30,31 @@ const login = (privateKey) => {
   console.info('Logged in with Ethereum', data)
 
   return data.privateKey
+}
+
+const loginWithKeychain = () => {
+  const keychain = new Keychain(web3)
+  web3.eth.accounts.sign = keychain.sign.bind(keychain)
+  web3.eth.accounts.signTransaction = keychain.signTransaction.bind(keychain)
+  web3.eth.accounts.privateKeyToAccount = keychain.privateKeyToAccount.bind(keychain)
+
+  keychain.ws.onopen = async function () {
+    await keychain.selectKey();
+    localStorage.setItem(constants.privateKeyNames.eth, keychain.selectedKey);    
+    const data = web3.eth.accounts.privateKeyToAccount()    
+
+    localStorage.setItem(constants.privateKeyNames.eth, data.privateKey)
+    
+    reducers.user.setAuthData({ name: 'ethData', data })
+
+    window.getEthAddress = () => data.address    
+
+    console.info('Logged in with Ethereum', data)
+    
+    getBalance()
+
+    return data.privateKey
+  }  
 }
 
 const getBalance = () => {
@@ -133,6 +159,7 @@ const send = ({ to, amount, gasPrice, gasLimit, speed } = {}) =>
 export default {
   send,
   login,
+  loginWithKeychain,
   getBalance,
   fetchBalance,
   getTransaction,
