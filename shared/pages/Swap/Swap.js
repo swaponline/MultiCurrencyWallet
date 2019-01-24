@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 
 import Swap from 'swap.swap'
+import SwapApp from 'swap.app'
 
 import cssModules from 'react-css-modules'
 import styles from './Swap.scss'
@@ -56,7 +57,7 @@ export default class SwapComponent extends PureComponent {
     }
 
     try {
-      const swap = new Swap(orderId)
+      const swap = new Swap(orderId, SwapApp.shared())
       const SwapComponent = swapComponents[swap.flow._flowName]
       const ethData = items.filter(item => item.currency === 'ETH')
       const currencyData = items.concat(tokenItems)

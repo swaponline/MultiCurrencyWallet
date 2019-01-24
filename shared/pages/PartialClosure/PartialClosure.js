@@ -23,7 +23,6 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 
 import config from 'app-config'
-import swapApp, { util } from 'swap.app'
 
 import constants from 'helpers/constants'
 

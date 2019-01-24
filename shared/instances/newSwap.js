@@ -16,7 +16,7 @@ import helpers, { constants as privateKeys, utils } from 'helpers'
 import actions from 'redux/actions'
 import { getState } from 'redux/core'
 
-import swapApp, { constants } from 'swap.app'
+import SwapApp, { constants } from 'swap.app'
 import SwapAuth from 'swap.auth'
 import SwapRoom from 'swap.room'
 import SwapOrders from 'swap.orders'
@@ -36,7 +36,7 @@ if (config && config.isWidget) {
 const createSwapApp = () => {
   const { user: { ethData } } = getState()
 
-  swapApp.setup({
+  SwapApp.setup({
     network: process.env.MAINNET ? 'mainnet' : 'testnet',
 
     env: {
@@ -153,7 +153,7 @@ const createSwapApp = () => {
     }),
   ) : null
 
-  window.swapApp = swapApp
+  window.SwapApp = SwapApp.shared()
 }
 
 export {
