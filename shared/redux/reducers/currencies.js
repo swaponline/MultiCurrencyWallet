@@ -40,8 +40,7 @@ const initialState = {
         fullTitle: key,
       }))),
   ],
-  addSelectedItems: ['ETH', 'EOS', 'LTC', ...(Object.keys(config.erc20)
-    .map(key => key.toUpperCase())) ],
+  addSelectedItems: [],
 }
 
 if (config.isWidget) {
