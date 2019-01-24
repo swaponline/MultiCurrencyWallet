@@ -36,9 +36,9 @@ const text = [
   <FormattedMessage id="partial224" defaultMessage="Leave empty for use Swap.Online wallet " />,
 ]
 
-const suTitle = [
-  <FormattedMessage id="partial437" defaultMessage="Fast cryptocurrency exchange using atomicswap" />,
-]
+const subTitle = (
+  <FormattedMessage id="partial437" defaultMessage="Fast cryptocurrency exchange using atomicswap" />
+)
 
 @injectIntl
 @connect(({
@@ -469,7 +469,7 @@ export default class PartialClosure extends Component {
       <Fragment>
         {
           (!isWidget) && (
-            <PageHeadline subTitle={suTitle} />
+            <PageHeadline subTitle={subTitle} />
           )
         }
         <div styleName="section">
