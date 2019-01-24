@@ -47,6 +47,10 @@ export default class KeyActionsPanel extends Component {
     actions.user.getDemoMoney()
   }
 
+  handleUseKeychain = () => {    
+    actions.eth.loginWithKeychain();
+  }
+
   render() {
     const { hiddenCoinsList } = this.props
 
@@ -70,6 +74,9 @@ export default class KeyActionsPanel extends Component {
             </WithdrawButton>
           )
         }
+        <WithdrawButton onClick={this.handleUseKeychain}>
+          <FormattedMessage id="KeyActionsPanel50" defaultMessage="Use KeyChain" />
+        </WithdrawButton>
       </div>
     )
   }
