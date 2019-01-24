@@ -44,7 +44,10 @@ export default class SwapComponent extends PureComponent {
     continueSwap: true,
     enoughBalance: true,
     depositWindow: false,
+    timeSinceSecretPublished: 5,
   }
+
+  timerFeeNotication = null
 
   componentWillMount() {
     const { items, tokenItems, intl: { locale } } = this.props
@@ -117,7 +120,7 @@ export default class SwapComponent extends PureComponent {
   }
 
   componentWillUnmount() {
-    clearTimeout(this.timerShowFeeNotification)
+    clearTimeout(this.timerFeeNotication)
   }
 
 
@@ -161,40 +164,44 @@ export default class SwapComponent extends PureComponent {
   }
 
   timerShowFeeNotification = () => {
-    const { timeLeft } = this.state
-    const newTimeLeft = timeLeft - 1
+    const { timeSinceSecretPublished } = this.state
+    const newTimeLeft = timeSinceSecretPublished - 1
 
     if (newTimeLeft > 0) {
       this.timerFeeNotication = setTimeout(this.timerShowFeeNotification, 60 * 1000)
       this.setState({
-        timeLeft: newTimeLeft,
+        timeSinceSecretPublished: newTimeLeft,
       })
     }
   }
 
+  checkIsTokenIncludes = () => {
+    this.props.tokenItems.map(item => item.name).includes(this.props.swap.participantSwap._swapName.toLowerCase())
+  }
+
   catchWithdrawError = () => {
-    const { swap, timeLeft, isStopCheck, continueSwap } = this.state
+    const { swap, timeSinceSecretPublished, isStopCheck, continueSwap } = this.state
 
     if (swap.sellCurrency === 'BTC'
-      && this.props.tokenItems.map(item => item.name).includes(swap.buyCurrency.toLowerCase())
+      && this.checkIsTokenIncludes
       && !isStopCheck
-      && timeLeft !== 0) {
+      && timeSinceSecretPublished !== 0) {
       this.setState(() => ({ continueSwap: true }))
     } else {
-      this.checkEnouhFee()
+      this.checkEnoughFee()
       this.setState(() => ({
         isStopCheck: true,
       }))
     }
   }
 
-  checkEnouhFee = () => {
+  checkEnoughFee = () => {
     const { swap: { participantSwap, flow: { state: { canCreateEthTransaction } } }, currencyData: { currency }, continueSwap } = this.state
 
     const ethPair = ['BTC', 'ETH', 'LTC']
 
     if (canCreateEthTransaction === false && (
-      this.props.tokenItems.map(item => item.name).includes(participantSwap._swapName.toLowerCase())
+      this.checkIsTokenIncludes
       || ethPair.includes(currency)
     )) {
       this.setState(() => ({
