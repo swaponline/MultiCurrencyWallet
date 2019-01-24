@@ -502,7 +502,7 @@ export default class PartialClosure extends Component {
             />
             <p>
               <FormattedMessage id="partial221" defaultMessage="Max amount for exchange: " />
-              {maxAmount}{' '}{getCurrency.toUpperCase()}
+              {maxBuyAmount.toNumber()}{' '}{haveCurrency.toUpperCase()}
             </p>
             <Flip onClick={this.handleFlipCurrency} styleName="flipButton" />
             <SelectGroup
@@ -521,9 +521,9 @@ export default class PartialClosure extends Component {
                 <span>
                   <FormattedMessage id="PartialPriceSearch" defaultMessage="Searching orders..." />
                   <div styleName="loaderHolder">
-                    <td styleName="additionalLoaderHolder">
+                    <div styleName="additionalLoaderHolder">
                       <InlineLoader />
-                    </td>
+                    </div>
                   </div>
                 </span>
               )

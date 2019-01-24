@@ -66,10 +66,7 @@
 
 .additionalLoaderHolder {
   display: block;
-  > div {
-    top: -8px;
-    right: auto;
-  }
+  position: relative;
 }
 
 @include media-mobile {
@@ -83,6 +80,12 @@
   }
   .inform {
     margin-top: 10px;
+  }
+  .additionalLoaderHolder {
+    > div {
+      left: 140px;
+      top: -5px;
+    }
   }
 }
 
