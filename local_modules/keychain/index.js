@@ -41,7 +41,7 @@ class Keychain {
     const result = await this.method({ command: 'select_key' });
     if (result.result) {
       this.selectedKey = '0x' + result.result;
-      this.selectedAddress = pubToAddress(this.selectedKey).toString('hex')
+      this.selectedAddress = '0x' + pubToAddress(this.selectedKey).toString('hex')
     }
   }
 
