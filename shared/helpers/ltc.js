@@ -35,27 +35,37 @@ const estimateFeeValue = async ({ method = 'send', satoshi = false, speed } = {}
 
 const estimateFeeRate = async ({ speed = 'normal' } = {}) => {
   const link = config.feeRates.ltc
-  const defaultFee = constants.defaultFeeRates.ltc.rate
+  const defaultRate = constants.defaultFeeRates.ltc.rate
 
   if (!link) {
-    return defaultFee[speed]
+    return defaultRate[speed]
   }
 
-  const apiResult = await request.get(link)
+  let apiResult
 
-  const apiRate = {
-    slow: apiResult.low_fee_per_kb,
-    normal: Math.ceil((apiResult.low_fee_per_kb + apiResult.high_fee_per_kb) / 2),
-    fast: apiResult.high_fee_per_kb,
+  try {
+    apiResult = await request.get(link)
+  } catch (err) {
+    console.error(`EstimateFeeRate: ${err.message}`)
+    return defaultRate[speed]
   }
 
-  const currentRate = {
-    slow: apiRate.slow >= defaultFee.slow ? apiRate.slow : defaultFee.slow,
-    normal: apiRate.normal >= defaultFee.slow ? apiRate.normal : defaultFee.normal,
-    fast: apiRate.fast >= defaultFee.slow ? apiRate.fast : defaultFee.fast,
+  apiResult.medium_fee_per_kb = new BigNumber(apiResult.low_fee_per_kb)
+    .plus(apiResult.high_fee_per_kb)
+    .div(2)
+    .toString()
+
+  const apiSpeeds = {
+    slow: 'low_fee_per_kb',
+    normal: 'medium_fee_per_kb',
+    fast: 'high_fee_per_kb',
   }
 
-  return currentRate[speed]
+  const apiSpeed = apiSpeeds[speed] || apiSpeed.normal
+
+  const apiRate = new BigNumber(apiResult[apiSpeed])
+
+  return apiRate >= defaultRate[speed] ? apiRate.toString() : defaultRate[speed]
 }
 
 export default {
