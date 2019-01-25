@@ -45,6 +45,7 @@ export default class SwapComponent extends PureComponent {
     enoughBalance: true,
     depositWindow: false,
     timeSinceSecretPublished: 5,
+    shouldStopCheckingWithdrawError: false,
   }
 
   timerFeeNotication = null
@@ -180,17 +181,17 @@ export default class SwapComponent extends PureComponent {
   }
 
   catchWithdrawError = () => {
-    const { swap, timeSinceSecretPublished, isStopCheck, continueSwap } = this.state
+    const { swap, timeSinceSecretPublished, shouldStopCheckingWithdrawError, continueSwap } = this.state
 
     if (swap.sellCurrency === 'BTC'
       && this.checkIsTokenIncludes
-      && !isStopCheck
+      && !shouldStopCheckingWithdrawError
       && timeSinceSecretPublished !== 0) {
       this.setState(() => ({ continueSwap: true }))
     } else {
       this.checkEnoughFee()
       this.setState(() => ({
-        isStopCheck: true,
+        shouldStopCheckingWithdrawError: true,
       }))
     }
   }
