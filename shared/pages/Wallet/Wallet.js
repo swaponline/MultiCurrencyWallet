@@ -97,13 +97,20 @@ export default class Wallet extends Component {
 
     const { currencyBalance } = this.props
 
+    let hasNonZeroCurrencyBalance = false
+
     if (!localStorage.getItem(constants.localStorage.wasCautionShow) && process.env.MAINNET) {
       currencyBalance.forEach(cur => {
         if (cur > 0) {
-          actions.modals.open(constants.modals.PrivateKeys, {})
-          localStorage.setItem(constants.localStorage.wasCautionShow, true)
+          hasNonZeroCurrencyBalance = true
         }
       })
+    }
+
+    if (hasNonZeroCurrencyBalance) {
+      actions.modals.open(constants.modals.PrivateKeys, {})
+      localStorage.setItem(constants.localStorage.wasCautionShow, true)
+      window && window.launchReplainBot && window.launchReplainBot()
     }
   }
 
