@@ -67,6 +67,9 @@ class Keychain {
   // }
 
   privateKeyToAccount() {
+    if (!this.selectedKey) {
+      throw new Error('Please call KeyChain.selectKey() method before calling KeyChain.privateKeyToAccount()')
+    }
     return {
       address: this.selectedAddress,
       privateKey: this.selectedKey,

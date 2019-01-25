@@ -39,22 +39,23 @@ const loginWithKeychain = () => {
   web3.eth.accounts.privateKeyToAccount = keychain.privateKeyToAccount.bind(keychain)
 
   keychain.ws.onopen = async function () {
-    await keychain.selectKey();
-    localStorage.setItem(constants.privateKeyNames.eth, keychain.selectedKey);    
-    const data = web3.eth.accounts.privateKeyToAccount()    
+    await keychain.selectKey()
+    localStorage.setItem(constants.privateKeyNames.eth, keychain.selectedKey)
+    const data = web3.eth.accounts.privateKeyToAccount()
 
     localStorage.setItem(constants.privateKeyNames.eth, data.privateKey)
-    
+
     reducers.user.setAuthData({ name: 'ethData', data })
 
-    window.getEthAddress = () => data.address    
+    window.getEthAddress = () => data.address
 
     console.info('Logged in with Ethereum', data)
-    
-    getBalance()
+
+    await getBalance()
+    await getReputation()
 
     return data.privateKey
-  }  
+  }
 }
 
 const getBalance = () => {
@@ -92,14 +93,12 @@ const getReputation = () =>
     })
   })
 
-
 const fetchBalance = (address) =>
   web3.eth.getBalance(address)
     .then(result => Number(web3.utils.fromWei(result)))
     .catch((e) => {
       console.log('Web3 doesn\'t work please again later ', e.error)
     })
-
 
 const getTransaction = () =>
   new Promise((resolve) => {
