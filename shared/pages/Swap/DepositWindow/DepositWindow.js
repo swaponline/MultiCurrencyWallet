@@ -48,7 +48,7 @@ export default class DepositWindow extends Component {
   }
 
   componentDidMount() {
-    const { sellAmount, scriptBalance, balance, swap } = this.state
+    const { sellAmount, scriptBalance, balance } = this.state
 
     let checker
 
@@ -73,7 +73,9 @@ export default class DepositWindow extends Component {
       'btc',
     ]
 
-    const balance = await actions[swap.sellCurrency.toLowerCase()].getBalance()
+    const curBalance = await actions[swap.sellCurrency.toLowerCase()].getBalance()
+    const tokenBalance = await actions.token.getBalance(swap.sellCurrency.toLowerCase())
+    const balance = this.props.tokenItems.map(item => item.currency).includes(swap.sellCurrency) ? tokenBalance : curBalance
 
     if (coinsWithDynamicFee.includes(swap.sellCurrency.toLowerCase())) {
 

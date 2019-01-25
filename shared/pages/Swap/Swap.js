@@ -146,7 +146,9 @@ export default class SwapComponent extends PureComponent {
   checkBalance = async () => {
     const { swap } = this.state
 
-    const balance = await actions[swap.sellCurrency.toLowerCase()].getBalance()
+    const curBalance = await actions[swap.sellCurrency.toLowerCase()].getBalance()
+    const tokenBalance = await actions.token.getBalance(swap.sellCurrency.toLowerCase())
+    const balance = this.props.tokenItems.map(item => item.currency).includes(swap.sellCurrency) ? tokenBalance : curBalance
 
     if (swap.sellAmount.toNumber() > balance && swap.sellCurrency === 'BTC') {
       this.setState(() => ({ enoughBalance: false }))
