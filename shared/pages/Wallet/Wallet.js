@@ -110,6 +110,7 @@ export default class Wallet extends Component {
     if (hasNonZeroCurrencyBalance) {
       actions.modals.open(constants.modals.PrivateKeys, {})
       localStorage.setItem(constants.localStorage.wasCautionShow, true)
+      // eslint-disable-next-line no-unused-expressions
       window && window.launchReplainBot && window.launchReplainBot()
     }
   }
