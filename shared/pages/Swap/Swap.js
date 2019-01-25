@@ -96,6 +96,7 @@ export default class SwapComponent extends PureComponent {
       })
 
     } catch (error) {
+      console.error(error)
       actions.notifications.show(constants.notifications.ErrorNotification, { error: 'Sorry, but this order do not exsit already' })
       this.props.history.push(localisedUrl(links.exchange))
     }
