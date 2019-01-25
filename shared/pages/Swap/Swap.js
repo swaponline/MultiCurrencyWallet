@@ -7,9 +7,8 @@ import cssModules from 'react-css-modules'
 import styles from './Swap.scss'
 
 import { connect } from 'redaction'
-import helpers from 'helpers'
+import { links, constants } from 'helpers'
 import actions from 'redux/actions'
-import constants from 'constants'
 
 import { swapComponents } from './swaps'
 import Share from './Share/Share'
