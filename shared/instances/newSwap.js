@@ -143,7 +143,7 @@ const createSwapApp = () => {
   })
 
   // eslint-disable-next-line
-  process.env.MAINNET ? swapApp._addSwap(
+  process.env.MAINNET ? SwapApp.shared()._addSwap(
     new UsdtSwap({
       assetId: 31, // USDT
       fetchBalance: (address) => actions.usdt.fetchBalance(address, 31).then(res => res.balance),
