@@ -44,7 +44,10 @@ export default class SwapComponent extends PureComponent {
     continueSwap: true,
     enoughBalance: true,
     depositWindow: false,
+    timeSinceSecretPublished: 5,
   }
+
+  timerFeeNotication = null
 
   componentWillMount() {
     const { items, tokenItems, intl: { locale } } = this.props
@@ -103,6 +106,7 @@ export default class SwapComponent extends PureComponent {
   }
 
   componentDidMount() {
+
     if (this.state.swap !== null) {
       this.checkBalance()
 
@@ -110,8 +114,13 @@ export default class SwapComponent extends PureComponent {
 
       timer = setInterval(() => {
         this.catchWithdrawError()
+        this.requesting()
       }, 5000)
     }
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timerFeeNotication)
   }
 
 
@@ -134,24 +143,68 @@ export default class SwapComponent extends PureComponent {
     localStorage.setItem('swapId', JSON.stringify(swapsId))
   }
 
-  checkBalance = () => {
-    const sellAmountPlusFee = this.state.swap.sellAmount.toNumber() + 0.00005
+  checkBalance = async () => {
+    const { swap } = this.state
 
-    if (sellAmountPlusFee >= this.state.currencyData.balance) {
+    const balance = await actions[swap.sellCurrency.toLowerCase()].getBalance()
+
+    if (swap.sellAmount.toNumber() > balance && swap.sellCurrency === 'BTC') {
+      this.setState(() => ({ enoughBalance: false }))
+    } else if (swap.sellAmount.toNumber() > balance) {
+      this.setState(() => ({ enoughBalance: false }))
+    } else {
+      this.setState(() => ({ enoughBalance: true }))
+    }
+  }
+
+  requesting = () => {
+    if (this.state.swap.flow.state.requireWithdrawFee && !this.state.swap.flow.state.requireWithdrawFeeSended) {
+      this.state.swap.flow.sendWithdrawRequest()
+    }
+    if (this.state.swap.flow.state.withdrawRequestIncoming && !this.state.swap.flow.state.withdrawRequestAccepted) {
+      this.state.swap.flow.acceptWithdrawRequest()
+    }
+  }
+
+  timerShowFeeNotification = () => {
+    const { timeSinceSecretPublished } = this.state
+    const newTimeLeft = timeSinceSecretPublished - 1
+
+    if (newTimeLeft > 0) {
+      this.timerFeeNotication = setTimeout(this.timerShowFeeNotification, 60 * 1000)
+      this.setState({
+        timeSinceSecretPublished: newTimeLeft,
+      })
+    }
+  }
+
+  checkIsTokenIncludes = () => {
+    this.props.tokenItems.map(item => item.name).includes(this.props.swap.participantSwap._swapName.toLowerCase())
+  }
+
+  catchWithdrawError = () => {
+    const { swap, timeSinceSecretPublished, isStopCheck, continueSwap } = this.state
+
+    if (swap.sellCurrency === 'BTC'
+      && this.checkIsTokenIncludes
+      && !isStopCheck
+      && timeSinceSecretPublished !== 0) {
+      this.setState(() => ({ continueSwap: true }))
+    } else {
+      this.checkEnoughFee()
       this.setState(() => ({
-        enoughBalance: false,
-        depositWindow: true,
+        isStopCheck: true,
       }))
     }
   }
 
-  catchWithdrawError = async () => {
-    const { swap: { participantSwap, ownerSwap, sellAmount, flow: { state: { canCreateEthTransaction } } }, currencyData: { currency } } = this.state
+  checkEnoughFee = () => {
+    const { swap: { participantSwap, flow: { state: { canCreateEthTransaction } } }, currencyData: { currency }, continueSwap } = this.state
 
     const ethPair = ['BTC', 'ETH', 'LTC']
 
     if (canCreateEthTransaction === false && (
-      this.props.tokenItems.map(item => item.name).includes(participantSwap._swapName.toLowerCase())
+      this.checkIsTokenIncludes
       || ethPair.includes(currency)
     )) {
       this.setState(() => ({
@@ -159,6 +212,7 @@ export default class SwapComponent extends PureComponent {
       }))
     }
   }
+
   handleGoHome = () => {
     const { intl: { locale } } = this.props
     this.props.history.push(localisedUrl(locale, links.home))
