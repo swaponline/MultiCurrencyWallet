@@ -189,11 +189,6 @@ export default {
     decimals: 5,
     fullName: 'Monetha',
   },
-  zcn: {
-    address: '0xb9EF770B6A5e12E45983C5D80545258aA38F3B78',
-    decimals: 10,
-    fullName: 'Ochain',
-  },
   cbt: {
     address: '0x076C97e1c869072eE22f8c91978C99B4bcB02591',
     decimals: 18,
