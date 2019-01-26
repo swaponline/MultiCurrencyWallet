@@ -125,7 +125,7 @@ const send = ({ name, to, amount, gasPrice, gasLimit, speed } = {}) =>
     const { user: { tokensData: { [name]: { address, contractAddress, decimals } } } } = getState()
 
     gasPrice = gasPrice || await helpers.eth.estimateGasPrice({ speed })
-    gasLimit = gasLimit || constants.defaultFeeRates.eth.limit.send
+    gasLimit = gasLimit || constants.defaultFeeRates.ethToken.limit.send
 
     const params = {
       from: address,

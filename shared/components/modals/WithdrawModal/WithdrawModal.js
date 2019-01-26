@@ -78,6 +78,31 @@ export default class WithdrawModal extends React.Component {
     this.actualyMinAmount()
   }
 
+  componentWillUpdate(nextProps, nextState) {
+    nextState.amount = this.fixDecimalCountETH(nextState.amount)
+  }
+
+  fixDecimalCountETH = (amount) => {
+    if (this.props.data.currency === 'ETH' && BigNumber(amount).dp() > 18) {
+      const amountInt = BigNumber(amount).integerValue()
+      const amountDecimal = BigNumber(amount).mod(1)
+
+      const amountIntStr = amountInt.toString()
+      const amountDecimalStr = BigNumber(BigNumber(amountDecimal).toPrecision(15)).toString().substring(1)
+      const regexr = /[e+-]/g
+
+      const result = amountIntStr + amountDecimalStr
+
+      console.warn("To avoid [ethjs-unit]error: while converting number with more then 18 decimals to wei - you can't afford yourself add more than 18 decimals") // eslint-disable-line
+      if (regexr.test(result)) {
+        console.warn('And ofcourse you can not write number which can not be saved without an exponential notation in JS')
+        return 0
+      }
+      return result
+    }
+    return amount
+  }
+
   actualyMinAmount = async () => {
     const { data: { currency } } = this.props
 
@@ -179,9 +204,11 @@ export default class WithdrawModal extends React.Component {
 
       const minFee = tokenFee ? 0 : minAmount[data.currency.toLowerCase()]
 
-      const balanceMiner = balance !== 0
-        ? new BigNumber(balance).minus(minFee).toString()
-        : balance
+      const balanceMiner = balance
+        ? balance !== 0
+          ? new BigNumber(balance).minus(minFee).toString()
+          : balance
+        : 'Wait please. Loading...'
 
       this.setState({
         amount: balanceMiner,
@@ -294,7 +321,13 @@ export default class WithdrawModal extends React.Component {
             <FormattedMessage id="Withdrow118" defaultMessage="Amount " />
           </FieldLabel>
           <div styleName="group">
-            <Input styleName="input" valueLink={linked.amount} pattern="0-9\." placeholder={`Enter the amount. You have ${NanReplacement}`} usd={getUsd.toFixed(2)} />
+            <Input
+              styleName="input"
+              valueLink={linked.amount}
+              pattern="0-9\."
+              placeholder={`Enter the amount. You have ${NanReplacement}`}
+              usd={getUsd.toFixed(2)}
+            />
             <buttton styleName="button" onClick={this.sellAllBalance} data-tip data-for="Withdrow134">
               <FormattedMessage id="Select210" defaultMessage="MAX" />
             </buttton>

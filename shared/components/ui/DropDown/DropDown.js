@@ -44,8 +44,7 @@ export default class DropDown extends Component {
     super()
     this.state = {
       selectedValue: initialValue || selectedValue || 0,
-      itemsFiltered:[],
-      searchValue:'',
+      inputValue: '',
     }
   }
 
@@ -53,9 +52,6 @@ export default class DropDown extends Component {
     const { isToggleActive, toggleOpen, toggleClose } = this.props
 
     if (isToggleActive) {
-      this.setState({
-        searchValue:'',
-      })
       toggleClose()
     }
     else {
@@ -66,14 +62,10 @@ export default class DropDown extends Component {
   handleOptionClick = (item) => {
     const { toggleClose, selectedValue, onSelect } = this.props
 
-    this.setState({
-      searchValue:'',
-    })
     // if there is no passed `selectedValue` then change it
     if (typeof selectedValue === 'undefined') {
       this.setState({
         selectedValue: item.value,
-        itemsFiltered:this.props.items,
       })
     }
 
@@ -97,19 +89,6 @@ export default class DropDown extends Component {
 
     return selectedItem.title
   }
-  handleChange = (value) => {
-    if (value === '' || value === undefined) {
-      this.setState({
-        itemsFiltered:this.props.items,
-        searchValue:'',
-      })
-    } else {
-      this.setState({
-        searchValue: value.toUpperCase(),
-        itemsFiltered:this.props.items.filter(item => item.name.includes(value.toUpperCase())),
-      })
-    }
-  }
 
   renderItem = (item) => {
     const { itemRender } = this.props
@@ -123,7 +102,7 @@ export default class DropDown extends Component {
 
   render() {
     const { className, items, isToggleActive } = this.props
-    const { searchValue } = this.setState
+    const { inputValue } = this.state
 
     const dropDownStyleName = cx('dropDown', {
       'active': isToggleActive,
@@ -131,7 +110,8 @@ export default class DropDown extends Component {
 
     const linkedValue = Link.all(this, 'inputValue')
 
-    linkedValue.inputValue.check((value) => this.handleChange(value))
+    const itemsFiltered = this.props.items
+      .filter(item => item.name.includes(inputValue.toUpperCase()))
 
     return (
       <ClickOutside
@@ -161,8 +141,8 @@ export default class DropDown extends Component {
           {
             isToggleActive && (
               <div styleName="select">
-                {isToggleActive && this.state.searchValue.length ? (
-                  this.state.itemsFiltered.map((item) => (
+                {isToggleActive && inputValue.length ? (
+                  itemsFiltered.map((item) => (
                     <div
                       key={item.value}
                       styleName="option"

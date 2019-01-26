@@ -34,8 +34,6 @@ export default class Core extends Component {
       SwapApp.services.room.connection
         .removeListener('peer joined', actions.ipfs.userJoined)
         .removeListener('peer left', actions.ipfs.userLeft)
-      SwapApp.services.room
-        .off('request partial closure', this.createOrder)
       SwapApp.services.room.connection.leave()
     }
   }
@@ -65,10 +63,6 @@ export default class Core extends Component {
         clearInterval(ipfsLoadingInterval)
         console.log('ipfs loaded')
 
-        SwapApp.services.room.off('request partial closure', this.createOrder)
-
-        SwapApp.services.room.on('request partial closure', this.createOrder)
-
         actions.ipfs.set({
           isOnline,
           peer,
@@ -89,13 +83,6 @@ export default class Core extends Component {
       orders,
     }))
     actions.core.updateCore()
-  }
-
-  createOrder = async ({ fromPeer, order, ...rest }) => {
-    console.log('rest', ...rest)
-    // TODO add check exchange rate and format order
-    const createdOrder = await actions.core.createOrder(order)
-    actions.core.requestToPeer('accept request', fromPeer, { orderId: createdOrder.id })
   }
 
   render() {

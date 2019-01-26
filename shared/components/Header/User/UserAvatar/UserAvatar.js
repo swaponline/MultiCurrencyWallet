@@ -55,7 +55,7 @@ export default class UserAvatar extends Component {
           }
 
           offer.request.forEach(request => {
-            this.props.declineRequest(id, request.peer)
+            this.props.declineRequest(id, request.participant.peer)
           })
         })
       }
@@ -90,4 +90,3 @@ export default class UserAvatar extends Component {
     )
   }
 }
-

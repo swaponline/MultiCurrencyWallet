@@ -47,6 +47,7 @@ const createSwapApp = () => {
       Ipfs: IPFS,
       IpfsRoom: Channel,
       storage: window.localStorage,
+      sessionStorage: window.sessionStorage,
       swapsExplorer,
     },
 

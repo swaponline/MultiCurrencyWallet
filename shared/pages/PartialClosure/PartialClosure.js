@@ -36,9 +36,9 @@ const text = [
   <FormattedMessage id="partial224" defaultMessage="Leave empty for use Swap.Online wallet " />,
 ]
 
-const suTitle = [
-  <FormattedMessage id="partial437" defaultMessage="Fast cryptocurrency exchange using atomicswap" />,
-]
+const subTitle = (
+  <FormattedMessage id="partial437" defaultMessage="Fast cryptocurrency exchange using atomicswap" />
+)
 
 @injectIntl
 @connect(({
@@ -469,7 +469,7 @@ export default class PartialClosure extends Component {
       <Fragment>
         {
           (!isWidget) && (
-            <PageHeadline subTitle={suTitle} />
+            <PageHeadline subTitle={subTitle} />
           )
         }
         <div styleName="section">
@@ -502,7 +502,7 @@ export default class PartialClosure extends Component {
             />
             <p>
               <FormattedMessage id="partial221" defaultMessage="Max amount for exchange: " />
-              {maxAmount}{' '}{getCurrency.toUpperCase()}
+              {maxBuyAmount.toNumber()}{' '}{haveCurrency.toUpperCase()}
             </p>
             <Flip onClick={this.handleFlipCurrency} styleName="flipButton" />
             <SelectGroup
@@ -521,9 +521,9 @@ export default class PartialClosure extends Component {
                 <span>
                   <FormattedMessage id="PartialPriceSearch" defaultMessage="Searching orders..." />
                   <div styleName="loaderHolder">
-                    <td styleName="additionalLoaderHolder">
+                    <div styleName="additionalLoaderHolder">
                       <InlineLoader />
-                    </td>
+                    </div>
                   </div>
                 </span>
               )
