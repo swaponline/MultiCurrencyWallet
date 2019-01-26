@@ -175,11 +175,19 @@ export default class SwapComponent extends PureComponent {
     }
   }
 
+  checkIsTokenIncludes = () => {
+    this.props.tokenItems.map(item => item.name).includes(this.props.swap.participantSwap._swapName.toLowerCase())
+  }
+
   catchWithdrawError = () => {
     const { swap, timeSinceSecretPublished, shouldStopCheckingWithdrawError, continueSwap } = this.state
 
     if (swap.sellCurrency === 'BTC'
+<<<<<<< HEAD
       && helpers.ethToken.isEthToken({ name: swap.buyCurrency.toLowerCase() })
+=======
+      && this.checkIsTokenIncludes
+>>>>>>> edd0850d21e3ccede0f671a9dcd2e2f797362618
       && !shouldStopCheckingWithdrawError
       && timeSinceSecretPublished !== 0) {
       this.setState(() => ({ continueSwap: true }))
@@ -197,8 +205,13 @@ export default class SwapComponent extends PureComponent {
     const currenciesInNeedETHFee = ['BTC', 'ETH', 'LTC']
 
     if (canCreateEthTransaction === false && (
+<<<<<<< HEAD
       helpers.ethToken.isEthToken({ name: currency.toLowerCase() })
       || currenciesInNeedETHFee.includes(currency)
+=======
+      this.checkIsTokenIncludes
+      || ethPair.includes(currency)
+>>>>>>> edd0850d21e3ccede0f671a9dcd2e2f797362618
     )) {
       this.setState(() => ({
         continueSwap: false,
