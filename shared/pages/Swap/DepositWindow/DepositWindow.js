@@ -48,6 +48,7 @@ export default class DepositWindow extends Component {
   }
 
   componentDidMount() {
+    const { swap } =  this.props
     const { sellAmount, scriptBalance, balance } = this.state
 
     let checker
