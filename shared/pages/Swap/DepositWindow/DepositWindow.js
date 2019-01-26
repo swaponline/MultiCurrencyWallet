@@ -65,7 +65,31 @@ export default class DepositWindow extends Component {
 
   updateBalance = async () => {
     const { swap } =  this.props
-    const { sellAmount, scriptBalance, flowBalance, unconfBalance, address, scriptAddress } =  this.state
+    const { sellAmount, scriptBalance, address, scriptAddress } =  this.state
+
+    if (helpers.ethToken.isEthToken({ name: swap.sellCurrency.toLowerCase() })) {
+      const currecnyBalance = await actions.token.getBalance(swap.sellCurrency.toLowerCase())
+      this.setState(() => ({ balance: currecnyBalance }))
+    } else {
+      const currecnyBalance = await actions[swap.sellCurrency.toLowerCase()].getBalance()
+      this.setState(() => ({ balance: currecnyBalance }))
+    }
+
+    const currencyBalance = swap.sellCurrency === 'BTC' ? Number(scriptBalance).toFixed(6) : (Number(this.state.balance).toFixed(6) || 0)
+    const remainingBalance = sellAmount - currencyBalance
+
+    this.getRequiredAmount()
+
+    this.setState(() => ({
+      remainingBalance,
+      balance: currencyBalance,
+      scriptBalance: swap.flow.state.scriptBalance,
+      address: swap.sellCurrency === 'BTC' ? scriptAddress : address,
+    }))
+  }
+
+  getRequiredAmount = async () => {
+    const { swap } =  this.props
 
     const coinsWithDynamicFee = [
       'eth',
@@ -73,31 +97,14 @@ export default class DepositWindow extends Component {
       'btc',
     ]
 
-    const curBalance = await actions[swap.sellCurrency.toLowerCase()].getBalance()
-    const tokenBalance = await actions.token.getBalance(swap.sellCurrency.toLowerCase())
-    const balance = this.props.tokenItems.map(item => item.currency).includes(swap.sellCurrency) ? tokenBalance : curBalance
-
     if (coinsWithDynamicFee.includes(swap.sellCurrency.toLowerCase())) {
-
       const minAmount = await helpers[swap.sellCurrency.toLowerCase()].estimateFeeValue({ method: 'swap', speed: 'normal' })
-
-      const requiredAmount = Number(sellAmount) + Number(minAmount) > 0 ?  Number(sellAmount) + Number(minAmount) : 0
-      console.log('minAmount', minAmount)
+      const requiredAmount = this.state.sellAmount + minAmount > 0 ?  this.state.sellAmount + minAmount : 0
 
       this.setState(() => ({
         sellAmount: requiredAmount,
       }))
     }
-    const currencyBalance = swap.sellCurrency === 'BTC' ? Number(scriptBalance).toFixed(6) : (Number(balance).toFixed(6) || 0)
-    const remainingBalance = sellAmount - currencyBalance
-
-    this.setState(() => ({
-      sellAmount,
-      remainingBalance,
-      balance: currencyBalance,
-      scriptBalance: swap.flow.state.scriptBalance,
-      address: swap.sellCurrency === 'BTC' ? scriptAddress : address,
-    }))
   }
 
   checkThePayment = () => {

@@ -150,7 +150,7 @@ export default class EthToBtc extends Component {
                   <FormattedMessage
                     id="EthToBtc125"
                     defaultMessage={`
-                      "Confirmation of the transaction is necessary for crediting the reputation. 
+                      "Confirmation of the transaction is necessary for crediting the reputation.
                       If a user does not bring the deal to the end he gets a negative credit to his reputation."
                     `}
                   />
