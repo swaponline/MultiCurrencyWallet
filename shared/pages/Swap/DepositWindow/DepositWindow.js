@@ -69,11 +69,11 @@ export default class DepositWindow extends Component {
     const { sellAmount, scriptBalance, address, scriptAddress } =  this.state
 
     if (helpers.ethToken.isEthToken({ name: swap.sellCurrency.toLowerCase() })) {
-      const currecnyBalance = await actions.token.getBalance(swap.sellCurrency.toLowerCase())
-      this.setState(() => ({ balance: currecnyBalance }))
+      const currencyBalance = await actions.token.getBalance(swap.sellCurrency.toLowerCase())
+      this.setState(() => ({ balance: currencyBalance }))
     } else {
-      const currecnyBalance = await actions[swap.sellCurrency.toLowerCase()].getBalance()
-      this.setState(() => ({ balance: currecnyBalance }))
+      const currencyBalance = await actions[swap.sellCurrency.toLowerCase()].getBalance()
+      this.setState(() => ({ balance: currencyBalance }))
     }
 
     const currencyBalance = swap.sellCurrency === 'BTC' ? Number(scriptBalance).toFixed(6) : (Number(this.state.balance).toFixed(6) || 0)

@@ -148,16 +148,16 @@ export default class SwapComponent extends PureComponent {
     const { swap } = this.state
 
     if (helpers.ethToken.isEthToken({ name: swap.sellCurrency.toLowerCase() })) {
-      const currecnyBalance = await actions.token.getBalance(swap.sellCurrency.toLowerCase())
-      this.setState(() => ({ balance: currecnyBalance }))
+      const currencyBalance = await actions.token.getBalance(swap.sellCurrency.toLowerCase())
+      this.setState(() => ({ balance: currencyBalance }))
     } else {
-      const currecnyBalance = await actions[swap.sellCurrency.toLowerCase()].getBalance()
-      this.setState(() => ({ balance: currecnyBalance }))
+      const currencyBalance = await actions[swap.sellCurrency.toLowerCase()].getBalance()
+      this.setState(() => ({ balance: currencyBalance }))
     }
-    this.isBalanceEnaugh()
+    this.isBalanceEnough()
   }
 
-  isBalanceEnaugh = () => {
+  isBalanceEnough = () => {
     const { swap, balance } = this.state
 
     if (swap.sellAmount.toNumber() > balance) {
@@ -189,15 +189,11 @@ export default class SwapComponent extends PureComponent {
     }
   }
 
-  checkIsTokenIncludes = () => {
-    this.props.tokenItems.map(item => item.name).includes(this.props.swap.participantSwap._swapName.toLowerCase())
-  }
-
   catchWithdrawError = () => {
     const { swap, timeSinceSecretPublished, isStopCheck, continueSwap } = this.state
 
     if (swap.sellCurrency === 'BTC'
-      && this.checkIsTokenIncludes
+      && helpers.ethToken.isEthToken({ name: swap.buyCurrency.toLowerCase() })
       && !isStopCheck
       && timeSinceSecretPublished !== 0) {
       this.setState(() => ({ continueSwap: true }))
@@ -213,9 +209,9 @@ export default class SwapComponent extends PureComponent {
     const { swap: { participantSwap, flow: { state: { canCreateEthTransaction } } }, currencyData: { currency }, continueSwap } = this.state
 
     const ethPair = ['BTC', 'ETH', 'LTC']
-
+    console.log('currency', currency)
     if (canCreateEthTransaction === false && (
-      this.checkIsTokenIncludes
+      helpers.ethToken.isEthToken({ name: currency.toLowerCase() })
       || ethPair.includes(currency)
     )) {
       this.setState(() => ({
