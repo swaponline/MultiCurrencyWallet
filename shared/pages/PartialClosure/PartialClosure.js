@@ -455,7 +455,7 @@ export default class PartialClosure extends Component {
     const oneCryptoCost = maxBuyAmount.isLessThanOrEqualTo(0) ? BigNumber(0) : BigNumber(goodRate)
     const linked = Link.all(this, 'haveAmount', 'getAmount', 'customWallet')
 
-    const isWidget = (config && config.isWidget) || (this.props.location.pathname === '/exchange/' && this.props.location.hash === '#widget')
+    const isWidget = (config && config.isWidget) || (this.props.location.pathname.includes('/exchange/') && this.props.location.hash === '#widget')
 
     if (redirect) {
       return <Redirect push to={`${localisedUrl(locale, links.swap)}/${getCurrency}-${haveCurrency}/${orderId}`} />

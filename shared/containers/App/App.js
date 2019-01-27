@@ -105,7 +105,7 @@ export default class App extends React.Component {
     const { children, ethAddress, btcAddress, tokenAddress, history /* eosAddress */ } = this.props
     const isFetching = !ethAddress || !btcAddress || (!tokenAddress && config && !config.isWidget) || !fetching
 
-    const isWidget = history.location.pathname === '/exchange/' && history.location.hash === '#widget'
+    const isWidget = history.location.pathname.includes('/exchange/') && history.location.hash === '#widget'
 
     if (multiTabs) {
       return <PreventMultiTabs />
