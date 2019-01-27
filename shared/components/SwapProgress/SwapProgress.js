@@ -124,7 +124,8 @@ export default class SwapProgress extends Component {
   }
 
   render() {
-    const progress = Math.floor(360 / this.props.stepLength * this.props.data.step)
+    const {swap: { flow: {steps, state} }} = this.props
+    const progress = Math.floor(360 / steps.length * state.step)
 
     return (
       <div styleName="overlay">

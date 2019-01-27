@@ -222,7 +222,7 @@ export default class BtcToEthToken extends Component {
               <DepositWindow currencyData={currencyData} swap={swap} flow={swap.flow.state} />
             </div>) :
           (
-            <SwapProgress data={flow} name="BTC2ETH" stepLength={8} />
+            <SwapProgress data={flow} swap={swap} name="BTC2ETH" stepLength={8} />
           )
         }
         <SwapList data={flow} />
