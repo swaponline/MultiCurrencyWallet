@@ -52,9 +52,9 @@ export default class DepositWindow extends Component {
     const { sellAmount, scriptBalance, balance } = this.state
 
     let checker
+    this.getRequiredAmount()
 
     const availableBalance = swap.sellCurrency === 'BTC' ? scriptBalance : balance
-
     checker = setInterval(() => {
       if (availableBalance <= sellAmount) {
         this.updateBalance()
@@ -64,28 +64,39 @@ export default class DepositWindow extends Component {
     }, 5000)
   }
 
+  componentDidUpdate(prewProps, prevState) {
+    if (this.state.balance !== prevState.balance) {
+      this.updateRemainingBalance()
+    }
+  }
+
   updateBalance = async () => {
     const { swap } =  this.props
     const { sellAmount, scriptBalance, address, scriptAddress } =  this.state
 
     if (helpers.ethToken.isEthToken({ name: swap.sellCurrency.toLowerCase() })) {
       const currencyBalance = await actions.token.getBalance(swap.sellCurrency.toLowerCase())
-      this.setState(() => ({ balance: currencyBalance }))
+      this.setState(() => ({ balance: Number(currencyBalance).toFixed(6) }))
     } else {
       const currencyBalance = await actions[swap.sellCurrency.toLowerCase()].getBalance()
-      this.setState(() => ({ balance: currencyBalance }))
+      this.setState(() => ({ balance: Number(currencyBalance).toFixed(6) }))
     }
 
     const currencyBalance = swap.sellCurrency === 'BTC' ? Number(scriptBalance).toFixed(6) : (Number(this.state.balance).toFixed(6) || 0)
-    const remainingBalance = sellAmount - currencyBalance
-
-    this.getRequiredAmount()
 
     this.setState(() => ({
-      remainingBalance,
       balance: currencyBalance,
       scriptBalance: swap.flow.state.scriptBalance,
       address: swap.sellCurrency === 'BTC' ? scriptAddress : address,
+    }))
+  }
+
+  updateRemainingBalance = () => {
+    const { sellAmount, balance } = this.state
+    const remainingBalance = BigNumber(sellAmount).minus(balance)
+
+    this.setState(() => ({
+      remainingBalance,
     }))
   }
 
@@ -100,7 +111,7 @@ export default class DepositWindow extends Component {
 
     if (coinsWithDynamicFee.includes(swap.sellCurrency.toLowerCase())) {
       const minAmount = await helpers[swap.sellCurrency.toLowerCase()].estimateFeeValue({ method: 'swap', speed: 'normal' })
-      const requiredAmount = this.state.sellAmount + minAmount > 0 ?  this.state.sellAmount + minAmount : 0
+      const requiredAmount = BigNumber(this.state.sellAmount).plus(minAmount) > 0 ?  BigNumber(this.state.sellAmount).plus(minAmount) : 0
 
       this.setState(() => ({
         sellAmount: requiredAmount,
