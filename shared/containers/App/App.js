@@ -105,6 +105,8 @@ export default class App extends React.Component {
     const { children, ethAddress, btcAddress, tokenAddress, history /* eosAddress */ } = this.props
     const isFetching = !ethAddress || !btcAddress || (!tokenAddress && config && !config.isWidget) || !fetching
 
+    const isWidget = history.location.pathname === '/exchange/' && history.location.hash === '#widget'
+
     if (multiTabs) {
       return <PreventMultiTabs />
     }
@@ -113,7 +115,9 @@ export default class App extends React.Component {
       return <Loader showTips />
     }
 
-    const mainContent = (
+    const mainContent = isWidget
+      ? (children)
+      : (
       <Fragment>
         <Seo location={history.location} />
         <Header />

@@ -455,7 +455,7 @@ export default class PartialClosure extends Component {
     const oneCryptoCost = maxBuyAmount.isLessThanOrEqualTo(0) ? BigNumber(0) : BigNumber(goodRate)
     const linked = Link.all(this, 'haveAmount', 'getAmount', 'customWallet')
 
-    const isWidget = (config && config.isWidget)
+    const isWidget = (config && config.isWidget) || (this.props.location.pathname === '/exchange/' && this.props.location.hash === '#widget')
 
     if (redirect) {
       return <Redirect push to={`${localisedUrl(locale, links.swap)}/${getCurrency}-${haveCurrency}/${orderId}`} />
@@ -472,7 +472,7 @@ export default class PartialClosure extends Component {
             <PageHeadline subTitle={subTitle} />
           )
         }
-        <div styleName="section">
+        <div styleName={isWidget ? 'widgetSection' : 'section'} className={isWidget ? 'section' : ''} >
           {
             (!isWidget) && (
               <div styleName="blockVideo">
@@ -488,7 +488,7 @@ export default class PartialClosure extends Component {
               </div>
             )
           }
-          <div styleName="block">
+          <div styleName="block" className={isWidget ? 'block' : ''} >
             <SelectGroup
               inputValueLink={linked.haveAmount.pipe(this.setAmount)}
               selectedValue={haveCurrency}
@@ -499,12 +499,13 @@ export default class PartialClosure extends Component {
               placeholder="Enter amount"
               usd={(maxAmount > 0 && isNonOffers) ? 0 : haveUsd}
               currencies={currencies}
+              className={isWidget ? 'SelGroup' : ''}
             />
-            <p>
+            <p className={isWidget ? 'advice' : ''} >
               <FormattedMessage id="partial221" defaultMessage="Max amount for exchange: " />
               {maxBuyAmount.toNumber()}{' '}{haveCurrency.toUpperCase()}
             </p>
-            <Flip onClick={this.handleFlipCurrency} styleName="flipButton" />
+            <Flip onClick={this.handleFlipCurrency} styleName="flipButton" className={isWidget ? 'flipBtn' : ''} />
             <SelectGroup
               inputValueLink={linked.getAmount}
               selectedValue={getCurrency}
@@ -515,10 +516,11 @@ export default class PartialClosure extends Component {
               disabled
               currencies={addSelectedItems}
               usd={getUsd}
+              className={isWidget ? 'SelGroup' : ''}
             />
             {
               (isSearching || (isNonOffers && maxAmount === 0)) && (
-                <span>
+                <span className={isWidget ? 'searching' : ''}>
                   <FormattedMessage id="PartialPriceSearch" defaultMessage="Searching orders..." />
                   <div styleName="loaderHolder">
                     <div styleName="additionalLoaderHolder">
@@ -529,7 +531,7 @@ export default class PartialClosure extends Component {
               )
             }
             { oneCryptoCost.isGreaterThan(0) && oneCryptoCost.isFinite() && !isNonOffers && (
-              <div>
+              <div className={isWidget ? 'priceSearch' : ''}>
                 <FormattedMessage
                   id="PartialPriceSearch502"
                   defaultMessage="Price: 1 {getCurrency} = {haveCurrency}"
@@ -542,23 +544,23 @@ export default class PartialClosure extends Component {
             )}
             {maxAmount > 0 && isNonOffers && (
               <Fragment>
-                <p styleName="error">
+                <p styleName="error" className={isWidget ? 'error' : ''} >
                   <FormattedMessage id="PartialPriceNoOrdersReduce" defaultMessage="No orders found, try to reduce the amount" />
                 </p>
-                <p styleName="error">
+                <p styleName="error" className={isWidget ? 'error' : ''} >
                   <FormattedMessage id="PartialPriceReduceMin" defaultMessage="Maximum available amount: " />
                   {maxAmount}{' '}{getCurrency.toUpperCase()}
                 </p>
               </Fragment>
             )}
             {isDeclinedOffer && (
-              <p styleName="error">
+              <p styleName="error" className={isWidget ? 'error' : ''} >
                 {`Offer is declined`}
               </p>
             )}
             {
               isFetching && (
-                <span>
+                <span className={isWidget ? 'wait' : ''}>
                   <FormattedMessage id="partial291" defaultMessage="Wait participant: " />
                   <div styleName="loaderHolder">
                     <td styleName="additionalLoaderHolder">
@@ -591,13 +593,17 @@ export default class PartialClosure extends Component {
                 </Fragment>
               )
             }
-            <div styleName="rowBtn">
+            <div styleName="rowBtn" className={isWidget ? 'rowBtn' : ''}>
               <Button styleName="button" brand onClick={this.sendRequest} disabled={!canDoOrder}>
                 <FormattedMessage id="partial541" defaultMessage="Exchange now" />
               </Button>
-              <Button styleName="button" gray onClick={this.handlePush} >
-                <FormattedMessage id="partial544" defaultMessage="Show order book" />
-              </Button>
+              {
+                !isWidget && (
+                  <Button styleName="button" gray onClick={this.handlePush} >
+                    <FormattedMessage id="partial544" defaultMessage="Show order book" />
+                  </Button>
+                )
+              }
             </div>
           </div>
         </div>
