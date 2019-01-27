@@ -47,8 +47,6 @@ export default class SwapComponent extends PureComponent {
     shouldStopCheckingWithdrawError: false,
   }
 
-  timerFeeNotication = null
-
   componentWillMount() {
     const { items, tokenItems, intl: { locale } } = this.props
     let { match : { params : { orderId } }, history } = this.props
@@ -106,11 +104,17 @@ export default class SwapComponent extends PureComponent {
   }
 
   componentDidMount() {
-
+    const { swap: { flow: { state: { canCreateEthTransaction, requireWithdrawFeeSended } } }, continueSwap } = this.state
     if (this.state.swap !== null) {
       this.checkBalance()
 
       let timer
+
+      setTimeout(() => {
+        if (!canCreateEthTransaction && continueSwap && requireWithdrawFeeSended) {
+          this.checkEnoughFee()
+        }
+      }, 300 * 1000)
 
       timer = setInterval(() => {
         this.catchWithdrawError()
@@ -118,11 +122,6 @@ export default class SwapComponent extends PureComponent {
       }, 5000)
     }
   }
-
-  componentWillUnmount() {
-    clearTimeout(this.timerFeeNotication)
-  }
-
 
   // componentWillMount() {
   //   actions.api.checkServers()
@@ -163,29 +162,16 @@ export default class SwapComponent extends PureComponent {
     }
   }
 
-  timerShowFeeNotification = () => {
-    const { timeSinceSecretPublished } = this.state
-    const newTimeLeft = timeSinceSecretPublished - 1
-
-    if (newTimeLeft > 0) {
-      this.timerFeeNotication = setTimeout(this.timerShowFeeNotification, 60 * 1000)
-      this.setState({
-        timeSinceSecretPublished: newTimeLeft,
-      })
-    }
-  }
-
   checkIsTokenIncludes = () => {
     this.props.tokenItems.map(item => item.name).includes(this.props.swap.participantSwap._swapName.toLowerCase())
   }
 
   catchWithdrawError = () => {
-    const { swap, timeSinceSecretPublished, shouldStopCheckingWithdrawError, continueSwap } = this.state
+    const { swap, shouldStopCheckingWithdrawError, continueSwap } = this.state
 
     if (swap.sellCurrency === 'BTC'
       && helpers.ethToken.isEthToken({ name: swap.buyCurrency.toLowerCase() })
-      && !shouldStopCheckingWithdrawError
-      && timeSinceSecretPublished !== 0) {
+      && !shouldStopCheckingWithdrawError) {
       this.setState(() => ({ continueSwap: true }))
     } else {
       this.checkEnoughFee()
