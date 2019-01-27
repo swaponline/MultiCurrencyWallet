@@ -6,9 +6,8 @@ import cssModules from 'react-css-modules'
 import styles from './Swap.scss'
 
 import { connect } from 'redaction'
-import helpers from 'helpers'
+import helpers, { links, constants } from 'helpers'
 import actions from 'redux/actions'
-import constants from 'constants'
 
 import { swapComponents } from './swaps'
 import Share from './Share/Share'
@@ -44,6 +43,8 @@ export default class SwapComponent extends PureComponent {
     continueSwap: true,
     enoughBalance: true,
     depositWindow: false,
+    timeSinceSecretPublished: 5,
+    shouldStopCheckingWithdrawError: false,
   }
 
   componentWillMount() {
@@ -104,17 +105,24 @@ export default class SwapComponent extends PureComponent {
   }
 
   componentDidMount() {
+    const { swap: { flow: { state: { canCreateEthTransaction, requireWithdrawFeeSended } } }, continueSwap } = this.state
     if (this.state.swap !== null) {
       this.checkBalance()
 
       let timer
 
+      setTimeout(() => {
+        if (!canCreateEthTransaction && continueSwap && requireWithdrawFeeSended) {
+          this.checkEnoughFee()
+        }
+      }, 300 * 1000)
+
       timer = setInterval(() => {
         this.catchWithdrawError()
+        this.requesting()
       }, 5000)
     }
   }
-
 
   // componentWillMount() {
   //   actions.api.checkServers()
@@ -146,20 +154,49 @@ export default class SwapComponent extends PureComponent {
     }
   }
 
-  catchWithdrawError = async () => {
-    const { swap: { participantSwap, ownerSwap, sellAmount, flow: { state: { canCreateEthTransaction } } }, currencyData: { currency } } = this.state
+  requesting = () => {
+    if (this.state.swap.flow.state.requireWithdrawFee && !this.state.swap.flow.state.requireWithdrawFeeSended) {
+      this.state.swap.flow.sendWithdrawRequest()
+    }
+    if (this.state.swap.flow.state.withdrawRequestIncoming && !this.state.swap.flow.state.withdrawRequestAccepted) {
+      this.state.swap.flow.acceptWithdrawRequest()
+    }
+  }
 
-    const ethPair = ['BTC', 'ETH', 'LTC']
+  checkIsTokenIncludes = () => {
+    this.props.tokenItems.map(item => item.name).includes(this.props.swap.participantSwap._swapName.toLowerCase())
+  }
+
+  catchWithdrawError = () => {
+    const { swap, shouldStopCheckingWithdrawError, continueSwap } = this.state
+
+    if (swap.sellCurrency === 'BTC'
+      && helpers.ethToken.isEthToken({ name: swap.buyCurrency.toLowerCase() })
+      && !shouldStopCheckingWithdrawError) {
+      this.setState(() => ({ continueSwap: true }))
+    } else {
+      this.checkEnoughFee()
+      this.setState(() => ({
+        shouldStopCheckingWithdrawError: true,
+      }))
+    }
+  }
+
+  checkEnoughFee = () => {
+    const { swap: { participantSwap, flow: { state: { canCreateEthTransaction } } }, currencyData: { currency }, continueSwap } = this.state
+
+    const currenciesInNeedETHFee = ['BTC', 'ETH', 'LTC']
 
     if (canCreateEthTransaction === false && (
-      this.props.tokenItems.map(item => item.name).includes(participantSwap._swapName.toLowerCase())
-      || ethPair.includes(currency)
+      helpers.ethToken.isEthToken({ name: currency.toLowerCase() })
+      || currenciesInNeedETHFee.includes(currency)
     )) {
       this.setState(() => ({
         continueSwap: false,
       }))
     }
   }
+
   handleGoHome = () => {
     const { intl: { locale } } = this.props
     this.props.history.push(localisedUrl(locale, links.home))
