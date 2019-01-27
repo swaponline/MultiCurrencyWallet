@@ -118,6 +118,10 @@ export default class SwapProgress extends Component {
         return (
           <FormattedMessage id="SwapProgress135" defaultMessage="Thank you for using Swap.Onlinde!" />
         )
+        case 9:
+          return (
+            <FormattedMessage id="SwapProgress135" defaultMessage="Thank you for using Swap.Onlinde!" />
+          )
       default:
         return null
     }
