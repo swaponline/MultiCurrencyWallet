@@ -150,6 +150,22 @@ export default class DepositWindow extends Component {
     })
   }
 
+  handleReloadBalance = async () => {
+    const { isBalanceFetching } = this.state
+
+    this.updateBalance()
+
+    this.setState({
+      isBalanceFetching: true,
+    }, () => {
+      setTimeout(() => {
+        this.setState({
+          isBalanceFetching: false,
+        })
+      }, 500)
+    })
+  }
+
   handleCopyAddress = (e) => {
     this.setState({
       isAddressCopied: true,
