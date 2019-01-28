@@ -113,10 +113,6 @@ export default class Wallet extends Component {
       }
     }
 
-    if (hasNonZeroCurrencyBalance) {
-      // eslint-disable-next-line no-unused-expressions
-      window && window.launchReplainBot && window.launchReplainBot()
-    }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
