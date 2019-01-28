@@ -17,6 +17,7 @@ import tableStyles from 'components/tables/Table/Table.scss'
 import PageSeo from 'components/Seo/PageSeo'
 import { getSeoPage } from 'helpers/seo'
 
+import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 import Pair from './Pair'
 import Row from './Row/Row'
 import MyOrders from './MyOrders/MyOrders'
@@ -152,13 +153,16 @@ export default class Orders extends Component {
           location={location}
           defaultTitle={intl.formatMessage(title.metaTitle, { buyCurrency, sellCurrency, buyCurrencyFullName, sellCurrencyFullName })}
           defaultDescription={intl.formatMessage(description.metaDescription, { buyCurrency, sellCurrency, buyCurrencyFullName, sellCurrencyFullName })} />
-        <Title>
-          <FormattedMessage
-            id="orders1381"
-            defaultMessage="{pair} no limit exchange with 0 fee"
-            values={{ pair: `${buyCurrency}/${sellCurrency}`, buyCurrency, sellCurrency, buyCurrencyFullName, sellCurrencyFullName }}
-          />
-        </Title>
+        <div styleName="headerContainer">
+          <Title>
+            <FormattedMessage
+              id="orders1381"
+              defaultMessage="{pair} no limit exchange with 0 fee"
+              values={{ pair: `${buyCurrency}/${sellCurrency}`, buyCurrency, sellCurrency, buyCurrencyFullName, sellCurrencyFullName }}
+            />
+          </Title>
+          <CloseIcon styleName="closeButton" onClick={() => this.props.history.push('/')} data-testid="CloseIcon" />
+        </div>
         { invalidPair &&
           <p>
             <FormattedMessage id="Orders141" defaultMessage="No such ticker. Redirecting to SWAP-BTC exchange..." />

@@ -118,7 +118,7 @@ export default class LtcToEth extends Component {
               <h3>
                 <FormattedMessage
                   id="LtcTOeth117"
-                  defaultMessage="We are waiting for a market maker. If it does not appear within 5 minutes, the swap will be canceled automatically." />
+                  defaultMessage="Waiting for a market maker. If the market maker does not appear within 5 minutes, the swap will be canceled automatically." />
               </h3>
               <InlineLoader />
             </Fragment>
@@ -205,7 +205,7 @@ export default class LtcToEth extends Component {
                 (flow.step === 4 || flow.ltcScriptValues) && (
                   <Fragment>
                     <h3>
-                      <FormattedMessage id="LtcTOeth195" defaultMessage="3. Creating Litecoin Script. Please wait, it will take a while" />
+                      <FormattedMessage id="LtcTOeth1951" defaultMessage="3. Creating Litecoin Script. {br} Please wait, it can take a few minutes" values={{ br: <br /> }} />
                       {this.swap.flow.myLtcAddress}
                     </h3>
                     {
@@ -324,7 +324,7 @@ export default class LtcToEth extends Component {
                 flow.isEthWithdrawn && (
                   <Fragment>
                     <h3>
-                      <FormattedMessage id="LtcTOeth313" defaultMessage="6. Money was transferred to your wallet. Check the balance." />
+                      <FormattedMessage id="LtcTOeth313" defaultMessage="6. ETH was transferred to your wallet. Check the balance." />
                     </h3>
                     <h2>
                       <FormattedMessage id="LtcTOeth315" defaultMessage="Thank you for using Swap.Online!" />

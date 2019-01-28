@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import { connect } from 'redaction'
 import Loader from '../Loader/Loader'
-import SwapProgress from 'components/SwapProgress/SwapProgress'
+import SwapProgress from 'pages/Swap/SwapProgress/SwapProgress'
 
 
 const RequestLoader = ({ isVisible, data }) => {

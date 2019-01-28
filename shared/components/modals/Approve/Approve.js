@@ -39,7 +39,7 @@ export default class Offer extends React.Component {
     const { amount } = this.state
     const { data: { contractAddress, name } } = this.props
     const message = `Your approve ${amount} tokens on contract address ${contractAddress}`
-    const error = `Please again later`
+    const error = `Please try again later`
 
     if (amount <= 0 || !amount) {
       this.setState({

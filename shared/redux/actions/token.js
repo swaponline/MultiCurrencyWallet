@@ -1,5 +1,5 @@
 import abi from 'human-standard-token-abi'
-import { request } from 'helpers'
+import helpers, { request, constants } from 'helpers'
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
 import web3 from 'helpers/web3'
@@ -57,7 +57,7 @@ const getBalance = async (currency) => {
   try {
     const result = await ERC20.methods.balanceOf(address).call()
     console.log('result get balance', result)
-    let amount = new BigNumber(String(result)).dividedBy(new BigNumber(String(10)).pow(decimals)).toNumber()
+    let amount = new BigNumber(String(result)).dividedBy(new BigNumber(String(10)).pow(decimals)).toString()
     reducers.user.setTokenBalance({ name, amount })
     return amount
   } catch (e) {
@@ -71,7 +71,7 @@ const fetchBalance = async (address, contractAddress, decimals) => {
   const ERC20 = new web3.eth.Contract(abi, contractAddress)
   const result = await ERC20.methods.balanceOf(address).call()
 
-  const amount = new BigNumber(String(result)).dividedBy(new BigNumber(String(10)).pow(decimals)).toNumber()
+  const amount = new BigNumber(String(result)).dividedBy(new BigNumber(String(10)).pow(decimals)).toString()
   return amount
 }
 
@@ -116,20 +116,26 @@ const getTransaction = (currency) =>
       })
   })
 
+const send = ({ name, to, amount, gasPrice, gasLimit, speed } = {}) =>
+  new Promise(async (resolve, reject) => {
+    if (!name) {
+      throw new Error('send: name is undefined')
+    }
 
-const send = (contractAddress, to, amount, decimals) => {
-  const { user: { ethData: { address } } } = getState()
+    const { user: { tokensData: { [name]: { address, contractAddress, decimals } } } } = getState()
 
-  const options = {
-    from: address,
-    gas: 1e5,
-    gasPrice: 21e9,
-  }
+    gasPrice = gasPrice || await helpers.eth.estimateGasPrice({ speed })
+    gasLimit = gasLimit || constants.defaultFeeRates.ethToken.limit.send
 
-  const tokenContract = new web3.eth.Contract(abi, contractAddress, options)
-  const newAmount = new BigNumber(String(amount)).times(new BigNumber(10).pow(decimals)).integerValue()
+    const params = {
+      from: address,
+      gas: gasLimit,
+      gasPrice,
+    }
 
-  return new Promise(async (resolve, reject) => {
+    const tokenContract = new web3.eth.Contract(abi, contractAddress, params)
+    const newAmount = new BigNumber(String(amount)).times(new BigNumber(10).pow(decimals)).integerValue()
+
     const receipt = await tokenContract.methods.transfer(to, newAmount).send()
       .on('transactionHash', (hash) => {
         const txId = `${config.link.etherscan}/tx/${hash}`
@@ -141,58 +147,6 @@ const send = (contractAddress, to, amount, decimals) => {
 
     resolve(receipt)
   })
-}
-
-const approve = (name, amount) => {
-  const { user: { tokensData } } = getState()
-  const { address, contractAddress, decimals } = tokensData[name.toLowerCase()]
-
-
-  const newAmount = new BigNumber(String(amount)).times(new BigNumber(10).pow(decimals)).integerValue()
-  const ERC20     = new web3.eth.Contract(abi, contractAddress)
-
-  return new Promise(async (resolve, reject) => {
-    try {
-      const result = await ERC20.methods.approve(config.token.contract, newAmount).send({
-        from: address,
-        gas: 1e5,
-        gasPrice: 21e9,
-      })
-        .on('transactionHash', (hash) => {
-          const txId = `${config.link.etherscan}/tx/${hash}`
-          actions.loader.show(true, { txId })
-        })
-        .on('error', err => {
-          reject(err)
-        })
-
-      resolve(result)
-    }
-    catch (err) {
-      reject(err)
-    }
-  })
-    .then(() => {
-      reducers.user.setTokenApprove({ name: name.toLowerCase(), approve: true  })
-    })
-}
-
-const allowance = (contractAddress, name) => {
-  const { user: { ethData: { address } } } = getState()
-  const ERC20     = new web3.eth.Contract(abi, contractAddress)
-
-  return new Promise(async (resolve, reject) => {
-    let allowance = await ERC20.methods.allowance(address, config.swapContract.erc20).call()
-
-    console.log('💸 allowance:', allowance)
-
-    reducers.user.setTokenApprove({ name, approve: allowance > 0 })
-
-    resolve(allowance)
-  })
-
-}
-
 
 export default {
   login,
@@ -200,6 +154,4 @@ export default {
   getTransaction,
   send,
   fetchBalance,
-  approve,
-  allowance,
 }

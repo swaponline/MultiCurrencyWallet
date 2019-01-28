@@ -1,21 +1,16 @@
 .overlay {
-  /* font-size: 10px; */
   z-index: 1000;
-  /* position: absolute; */
-  /* left: 130px; */
-  width: 100%;
-  /* top: 12px; */
   margin-bottom: 20px;
 }
 .container {
   width: 100%;
   position: relative;
-  // width: 500px;
-  // position: absolute;
-  // top: 50%;
-  // left: 50%;
-  // transform: translate(-50%,-50%);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-direction: row-reverse;
 }
+
 .progress {
   // overflow: hidden;
   // height: 18px;
@@ -236,17 +231,20 @@ $size: 200px;
 }
 
 .stepContainer {
-  position: relative;
+  width: 600px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding-bottom: 30px;
 }
 
 .step {
-  margin-top: 50px;
+  // margin-top: 50px;
   text-align: center;
   padding: 50px;
   padding-bottom: 30px;
   z-index: 1;
   border-radius: 20px;
-  border: 1px solid #ccc;
   padding-top: 70px;
 }
 
@@ -268,11 +266,75 @@ $size: 200px;
 
 .stepInfo {
   color: #fff;
+  width: 80%;
+  margin: auto;
+}
+
+.swapInfo {
+  position: absolute;
+  width: 600px;
+  top: -45px;
+  text-align: center;
+  font-size: 18px;
+}
+
+.transactionAll {
+  position: absolute;
+  width: 529px;
+  text-align: left;
+  top: 102%;
+  left: 20px;
+  strong {
+    display: block;
+    margin-bottom: 5px;
+    a {
+      // font-size: 12px;
+    }
+  }
+}
+
+.transaction {
+  position: absolute;
+  width: 529px;
+  text-align: left;
+  top: 102%;
+  left: 20px;
+}
+
+.btnRefund {
+  button {
+    display: block;
+    margin: auto;
+    margin-bottom: 30px;
+  }
+}
+
+.timerRefund {
+  span {
+    display: block;
+    margin-bottom: 20px;
+  }
+}
+
+.ShowBTCScript {
+  position: absolute;
+  bottom: -80px;
+}
+@include media-mobile {
+  .ShowBTCScript {
+    display: none;
+  }
 }
 
 .stepHeading {
   color: #000;
   font-size: 26px;
+  margin-top: -35px;
+  margin-bottom: 30px;
+}
+
+.progressContainer {
+  color: #000;
 }
 
 @keyframes blink {
@@ -299,7 +361,7 @@ $size: 200px;
 
 @include media-mobile {
   .container {
-    width: 85%;
+    width: 100%;
   }
   .info {
     margin-top: 5px;
@@ -314,5 +376,46 @@ $size: 200px;
   }
   .link {
     font-size: 13px;
+  }
+  .stepContainer {
+    width: 100%;
+    padding-bottom: 0;
+    border: none;
+  }
+  .stepList {
+    padding-top: 0;
+  }
+  .step {
+    border: none;
+    text-align: center;
+    padding: 0;
+    padding-bottom: 30px;
+    z-index: 1;
+    border-radius: 20px;
+    padding-top: 71px;
+  }
+  .stepInfo {
+    margin-top: -50px;
+  }
+  .progressContainer {
+    color: #000;
+    transform: scale(0.8);
+    margin-top: -80px;
+  }
+  .overlay {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+    margin-bottom: 0px;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+    width: 100%;
+  }
+  .stepHeading {
+    color: #000;
+    font-size: 20px;
+  }
+  .stepHeading {
+    color: #000;
+    font-size: 15px;
   }
 }

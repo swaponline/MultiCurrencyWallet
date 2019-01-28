@@ -20,6 +20,7 @@ import Table from 'components/tables/Table/Table'
 
 import Row from './Row/Row'
 import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
+import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 
 @injectIntl
 @withRouter
@@ -130,7 +131,7 @@ export default class Currency extends Component {
           </Fragment>
           <div styleName="currencyBalance">
             <FormattedMessage id="Currency101" defaultMessage="Balance: " />
-            <span styleName="currencyBalanceValue">{(String(balance).length > 5 ? balance.toFixed(5) : balance) || 0} {currency}</span>
+            <span styleName="currencyBalanceValue">{Math.floor(balance * 1e6) / 1e6} {currency.toUpperCase()}</span>
           </div>
           <div style={{ marginTop: '20px', height: '20px' }}>
             <CurrencyButton
@@ -163,6 +164,7 @@ export default class Currency extends Component {
             <Row key={index} {...row} />
           )}
         />
+        <CloseIcon styleName="closeButton" onClick={() => this.props.history.push('/')} data-testid="CloseIcon" />
       </section>
     )
   }

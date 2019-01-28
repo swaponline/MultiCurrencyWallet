@@ -128,7 +128,7 @@ export default class EthToLtc extends Component {
                 <FormattedMessage
                   id="EthToLtc125"
                   defaultMessage=
-                    "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation."
+                  "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative credit to his reputation." // eslint-disable-line
                 />
               </div>
               <TimerButton disabledTimer={disabledTimer} timeLeft={5} brand onClick={this.signSwap}>
@@ -171,7 +171,7 @@ export default class EthToLtc extends Component {
           flow.isMeSigned && (
             <Fragment>
               <h3>
-                <FormattedMessage id="EthToLtc167" defaultMessage="2. Waiting LTC Owner creates Secret Key, creates LTC Script and charges it" />
+                <FormattedMessage id="EthToLtc167" defaultMessage="2. Waiting for LTC Owner to create a Secret Key, create LTC Script and charge it" />
               </h3>
               {
                 flow.step === 2 && (
@@ -307,7 +307,7 @@ export default class EthToLtc extends Component {
                 (flow.step >= 5 || flow.isEthContractFunded) && (
                   <Fragment>
                     <h3>
-                      <FormattedMessage id="EthToLtc297" defaultMessage="4. Creating Ethereum Contract. Please wait, it will take a while" />
+                      <FormattedMessage id="EthToLtc310" defaultMessage="4. Creating Ethereum Contract. {br} Please wait, it can take a few minutes" values={{ br: <br /> }} />
                     </h3>
                   </Fragment>
                 )
@@ -395,7 +395,7 @@ export default class EthToLtc extends Component {
                 flow.isLtcWithdrawn && (
                   <Fragment>
                     <h3>
-                      <FormattedMessage id="EthToLtc386" defaultMessage="7. Money was transferred to your wallet. Check the balance." />
+                      <FormattedMessage id="EthToLtc386" defaultMessage="7. LTC was transferred to your wallet. Check the balance." />
                     </h3>
                     <h2>
                       <FormattedMessage id="EthToLtc389" defaultMessage="Thank you for using Swap.Online!" />

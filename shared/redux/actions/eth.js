@@ -1,6 +1,6 @@
-import { request, constants, api } from 'helpers'
+import helpers, { request, constants, api } from 'helpers'
 import { getState } from 'redux/core'
-import  actions from 'redux/actions'
+import actions from 'redux/actions'
 import web3 from 'helpers/web3'
 import reducers from 'redux/core/reducers'
 import config from 'app-config'
@@ -35,7 +35,7 @@ const getBalance = () => {
   const { user: { ethData: { address } } } = getState()
   return web3.eth.getBalance(address)
     .then(result => {
-      const amount = Number(web3.utils.fromWei(result))
+      const amount = web3.utils.fromWei(result)
 
       reducers.user.setBalance({ name: 'ethData', amount })
       return amount
@@ -44,6 +44,28 @@ const getBalance = () => {
       reducers.user.setBalanceError({ name: 'ethData' })
     })
 }
+
+const getReputation = () =>
+  new Promise(async (resolve, reject) => {
+    const { user: { ethData: { address, privateKey } } } = getState()
+    const addressOwnerSignature = web3.eth.accounts.sign(address, privateKey)
+
+    request.post(`${api.getApiServer('swapsExplorer')}/reputation`, {
+      json: true,
+      body: {
+        address,
+        addressOwnerSignature,
+      },
+    }).then((response) => {
+      const { reputation, reputationOracleSignature } = response
+
+      reducers.user.setReputation({ name: 'ethData', reputation, reputationOracleSignature })
+      resolve(reputation)
+    }).catch((error) => {
+      reject(error)
+    })
+  })
+
 
 const fetchBalance = (address) =>
   web3.eth.getBalance(address)
@@ -80,14 +102,17 @@ const getTransaction = () =>
       })
   })
 
-const send = (from, to, amount) =>
+const send = ({ to, amount, gasPrice, gasLimit, speed } = {}) =>
   new Promise(async (resolve, reject) => {
     const { user: { ethData: { privateKey } } } = getState()
 
+    gasPrice = gasPrice || await helpers.eth.estimateGasPrice({ speed })
+    gasLimit = gasLimit || constants.defaultFeeRates.eth.limit.send
+
     const params = {
       to: String(to).trim(),
-      gasPrice: '20000000000',
-      gas: '21000',
+      gasPrice,
+      gas: gasLimit,
       value: web3.utils.toWei(String(amount)),
     }
 
@@ -105,11 +130,11 @@ const send = (from, to, amount) =>
     resolve(receipt)
   })
 
-
 export default {
   send,
   login,
   getBalance,
   fetchBalance,
   getTransaction,
+  getReputation,
 }

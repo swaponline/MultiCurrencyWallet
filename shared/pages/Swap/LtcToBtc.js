@@ -137,9 +137,8 @@ export default class LtcToBtc extends Component {
             <Fragment>
               <div>
                 <FormattedMessage
-                  id="Confirmation"
-                  defaultMessage=
-                    "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative reputation." />
+                  id="Confirmation" // eslint-disable-next-line
+                  defaultMessage="Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative credit to his reputation." />
               </div>
               <TimerButton disabledTimer={disabledTimer} timeLeft={5} brand onClick={this.signSwap}>
                 <FormattedMessage id="Sign" defaultMessage="Sign" />
@@ -181,7 +180,7 @@ export default class LtcToBtc extends Component {
           flow.isMeSigned && (
             <Fragment>
               <h3>
-                <FormattedMessage id="LtcToBtc.Confirm" defaultMessage="2. Waiting BTC Owner creates Secret Key, creates BTC Script and charges it" />
+                <FormattedMessage id="LtcToBtc.Confirm" defaultMessage="2. Waiting for BTC Owner to create Secret Key, create BTC Script and charge it" />
               </h3>
               {
                 flow.step === 2 && (
@@ -193,7 +192,7 @@ export default class LtcToBtc extends Component {
                 flow.secretHash && flow.btcScriptValues && (
                   <Fragment>
                     <h3>
-                      <FormattedMessage id="LTCTOBTC191" defaultMessage="3. Bitcoin Script created and charged. Please check the information below" />
+                      <FormattedMessage id="LTCTOBTC191" defaultMessage="3. The bitcoin Script was created and charged. Please check the information below" />
                     </h3>
                     <div>
                       <FormattedMessage id="SecretHash" defaultMessage="Secret Hash: " />
@@ -312,7 +311,7 @@ export default class LtcToBtc extends Component {
                 (flow.step >= 5 || flow.isLtcScriptFunded) && (
                   <Fragment>
                     <h3>
-                      <FormattedMessage id="LtcToBtc205" defaultMessage="4. Creating LTC Script. Please wait, it will take a while" />
+                      <FormattedMessage id="LtcToBtc314" defaultMessage="4. Creating LTC Script. {br} Please wait, it can take a few minutes" values={{ br: <br /> }} />
                     </h3>
                   </Fragment>
                 )
@@ -358,7 +357,7 @@ export default class LtcToBtc extends Component {
                 (flow.step === 6 || flow.isLtcWithdrawn) && (
                   <Fragment>
                     <h3>
-                      <FormattedMessage id="LTCTOBTC350" defaultMessage="5. Waiting BTC Owner adds Secret Key to LTC Contact" />
+                      <FormattedMessage id="LTCTOBTC350" defaultMessage="5. Waiting for BTC Owner to add a Secret Key to LTC Contact" />
                     </h3>
                     {
                       !flow.isLtcWithdrawn && (
@@ -404,7 +403,7 @@ export default class LtcToBtc extends Component {
                 flow.isBtcWithdrawn && (
                   <Fragment>
                     <h3>
-                      <FormattedMessage id="LTCTOBTC396" defaultMessage="7. Money was transferred to your wallet. Check the balance." />
+                      <FormattedMessage id="LTCTOBTC396" defaultMessage="7. BTC was transferred to your wallet. Check the balance." />
                     </h3>
                     <h2>
                       <FormattedMessage id="Thank" defaultMessage="Thank you for using Swap.Online!" />

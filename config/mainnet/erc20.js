@@ -9,11 +9,6 @@ export default {
     decimals: 9,
     fullName: 'Leverj',
   },
-  drt: {
-    address: '0x9af4f26941677c706cfecf6d3379ff01bb85d5ab',
-    decimals: 8,
-    fullName: 'DomRaider',
-  },
   syc2: {
     address: '0x49feeF410293261c04F1d14600Ba427F8eED8723',
     decimals: 2,
@@ -74,11 +69,6 @@ export default {
     decimals: 18,
     fullName: 'Soma',
   },
-  nexo: {
-    address: '0xb62132e35a6c13ee1ee0f84dc5d40bad8d815206',
-    decimals: 18,
-    fullName: 'nexo',
-  },
   btrm: {
     address: '0xae72146eb535607ee79f5d8834303ea18751845f',
     decimals: 18,
@@ -104,16 +94,6 @@ export default {
     decimals: 18,
     fullName: 'Starbase',
   },
-  xyo: {
-    address: '0x55296f69f40ea6d20e478533c15a6b08b654e758',
-    decimals: 18,
-    fullName: 'XY Oracle',
-  },
-  xnk: {
-    address: '0xbc86727e770de68b1060c91f6bb6945c73e10388',
-    decimals: 18,
-    fullName: 'Link Protocol',
-  },
   loc: {
     address: '0x5e3346444010135322268a4630d2ed5f8d09446c',
     decimals: 18,
@@ -128,11 +108,6 @@ export default {
     address: '0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359',
     decimals: 18,
     fullName: 'Dai StableCoin',
-  },
-  tnt: {
-    address: '0x08f5a9235b08173b7569f83645d2c7fb55e8ccd8',
-    decimals: 8,
-    fullName: 'Tierion Network',
   },
   avt: {
     address: '0x0d88ed6e74bbfd96b831231638b66c05571e824f',
@@ -163,11 +138,6 @@ export default {
     address: '0x543ff227f64aa17ea132bf9886cab5db55dcaddf',
     decimals: 18,
     fullName: 'DAO Stack',
-  },
-  data: {
-    address: '0x0cf0ee63788a0849fe5297f3407f701e122cc023',
-    decimals: 18,
-    fullName: 'Streamr DATAcoin',
   },
   gai: {
     address: '0xf207ccfe6d1b90b0b7817ce2d5d262af1514e37b',
@@ -218,11 +188,6 @@ export default {
     address: '0xaf4dce16da2877f8c9e00544c93b62ac40631f16',
     decimals: 5,
     fullName: 'Monetha',
-  },
-  zcn: {
-    address: '0xb9EF770B6A5e12E45983C5D80545258aA38F3B78',
-    decimals: 10,
-    fullName: 'Ochain',
   },
   cbt: {
     address: '0x076C97e1c869072eE22f8c91978C99B4bcB02591',
