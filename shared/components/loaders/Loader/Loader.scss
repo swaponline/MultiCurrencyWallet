@@ -97,6 +97,7 @@
 .loader1, .loader2, .loader3 {
   position: absolute;
   opacity: 0;
+  will-change: transform, opacity;
 }
 
 .loader1:first-child, .loader2:first-child, .loader3:first-child {
