@@ -194,6 +194,10 @@ export default class SwapComponent extends PureComponent {
       this.setState(() => ({
         continueSwap: false,
       }))
+    } else {
+      this.setState(() => ({
+        continueSwap: true,
+      }))
     }
   }
 
