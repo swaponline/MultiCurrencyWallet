@@ -175,6 +175,24 @@
   text-align: center;
 }
 
+.Firefox {
+  .loader {
+    div {
+      opacity: 1;
+      animation: none;
+    }
+  }
+  .loader1 {
+    transform: translate3d(-15%, -50%, 0) rotateY(-37deg);
+  }
+  .loader2 {
+    transform: translate3d(-60%, -50%, 0) rotateY(-57deg);
+  }
+  .loader3 {
+    transform: translate3d(0, -50%, 0);
+  }
+}
+
 @include media-mobile { 
   .text {
      position: absolute;

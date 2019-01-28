@@ -68,6 +68,13 @@
       if (window.location.pathname.split('/')[1] === 'ru') {
         advice.innerText = 'Не забудьте сохранить свои приватные ключи от кошелька!';
       }
+
+      if (navigator.userAgent.indexOf('Firefox') !== -1) {
+        var styleKostilFirefox = document.createElement('style');
+
+        styleKostilFirefox.innerHTML = ".loader.center div{animation: none;opacity:1;}.loader1{transform:translate3d(-15%,-50%,0) rotateY(-37deg)}.loader2{transform:translate3d(-60%,-50%,0) rotateY(-57deg)}.loader3{transform:translate3d(0,-50%,0)}"
+        document.body.appendChild(styleKostilFirefox);
+      }
     </script>
   <!-- /Loader before any JS -->
   </div>
