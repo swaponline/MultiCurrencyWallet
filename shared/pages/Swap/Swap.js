@@ -52,7 +52,6 @@ export default class SwapComponent extends PureComponent {
     enoughBalance: true,
     depositWindow: false,
     paddingContainerValue: 0,
-
     timeSinceSecretPublished: 5,
     shouldStopCheckingWithdrawError: false,
   }
@@ -70,7 +69,7 @@ export default class SwapComponent extends PureComponent {
     }
 
     try {
-      const swap = new Swap(orderId)
+      const swap = new Swap(orderId, SwapApp.shared())
       const ethData = items.filter(item => item.currency === 'ETH')
       const currencyData = items.concat(tokenItems)
         .filter(item => item.currency === swap.sellCurrency.toUpperCase())[0]
@@ -335,14 +334,13 @@ export default class SwapComponent extends PureComponent {
       enoughBalance,
       paddingContainerValue,
       isShowingBitcoinScript,
-      swap: { sellAmount, sellCurrency, buyCurrency, buyAmount, id, flow: { state: { step } }  },
+      swap: { sellCurrency, buyCurrency, id, flow: { steps, state: { step } }  },
     } = this.state
 
-    if (!this.state.swap || !peer || !isAmountMore) {
+    if (!swap || !peer || !isAmountMore) {
       return null
     }
-    const isFinished = (this.state.swap.flow.state.step >= (this.state.swap.flow.steps.length - 1))
-
+    const isFinished = (step >= (steps.length - 1))
 
     return (
       <div styleName="swap">
@@ -356,7 +354,7 @@ export default class SwapComponent extends PureComponent {
             : (
               <Fragment>
                 {step >= 5 && !continueSwap
-                  ? <FeeControler ethAddress={ethAddress} swap={swap} flow={this.state.swap.flow.state} />
+                  ? <FeeControler ethAddress={ethAddress} swap={swap} flow={swap.flow.state} />
                   : <SwapProgress data={swap.flow.state} name={`${sellCurrency}2${buyCurrency}`} step={step} swap={swap} history={history} tokenItems={tokenItems} />
                 }
               </Fragment>
