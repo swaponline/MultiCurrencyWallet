@@ -7,9 +7,10 @@ import styles from './Loader.scss'
 import { tips } from 'helpers'
 import { FormattedMessage } from 'react-intl'
 
+const isFirefox = navigator.userAgent.indexOf('Firefox') !== -1
 
 const Loader = ({ overlayClassName, className, data, showTips }) => (
-  <div styleName="overlay" className={overlayClassName}>
+  <div styleName={`${isFirefox ? 'Firefox ' : ''}overlay`} className={overlayClassName}>
     <div styleName="loader center" className={className}>
       <div styleName="loader1" />
       <div styleName="loader2" />
