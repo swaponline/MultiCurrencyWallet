@@ -35,7 +35,7 @@ export default class DepositWindow extends Component {
       swap,
       remainingBalance: 0,
       flow: swap.flow.state,
-      checkingPayment: false,
+      isBalanceEnough: false,
       isAddressCopied: false,
       isBalanceFetching: false,
       address: currencyData.address,
@@ -58,6 +58,7 @@ export default class DepositWindow extends Component {
     checker = setInterval(() => {
       if (availableBalance <= sellAmount) {
         this.updateBalance()
+        this.checkThePayment()
       } else {
         clearInterval(checker)
       }
@@ -106,12 +107,11 @@ export default class DepositWindow extends Component {
     const coinsWithDynamicFee = [
       'eth',
       'ltc',
-      'btc',
     ]
 
     if (coinsWithDynamicFee.includes(swap.sellCurrency.toLowerCase())) {
-      const minAmount = await helpers[swap.sellCurrency.toLowerCase()].estimateFeeValue({ method: 'swap', speed: 'normal' })
-      const requiredAmount = BigNumber(this.state.sellAmount).plus(minAmount) > 0 ?  BigNumber(this.state.sellAmount).plus(minAmount) : 0
+      const dynamicFee = await helpers[swap.sellCurrency.toLowerCase()].estimateFeeValue({ method: 'swap', speed: 'normal' })
+      const requiredAmount = BigNumber(this.state.sellAmount).plus(dynamicFee) > 0 ?  BigNumber(this.state.sellAmount).plus(dynamicFee) : 0
 
       this.setState(() => ({
         sellAmount: requiredAmount,
@@ -122,7 +122,7 @@ export default class DepositWindow extends Component {
   checkThePayment = () => {
     if (this.state.sellAmount <= this.state.balance) {
       this.setState(() => ({
-        checkingPayment: true,
+        isBalanceEnough: true,
       }))
     }
   }
@@ -177,7 +177,7 @@ export default class DepositWindow extends Component {
       flowBalance,
       missingBalance,
       isAddressCopied,
-      checkingPayment,
+      isBalanceEnough,
       currencyFullName,
       remainingBalance,
       isBalanceFetching,
@@ -276,7 +276,7 @@ export default class DepositWindow extends Component {
                 />
               )}
               <div>
-              {checkingPayment
+              {isBalanceEnough
                 ? <FormattedMessage id="deposit198.1" defaultMessage="create Ethereum Contract. \n Please wait, it can take a few minutes..." />
                 : <FormattedMessage id="deposit198" defaultMessage="waiting for payment..." />
               }

@@ -115,7 +115,7 @@ export default class SwapComponent extends PureComponent {
       timer = setInterval(() => {
         this.catchWithdrawError()
         this.checkBalance()
-        this.requesting()
+        this.reqestingWithdrawFee()
       }, 5000)
     }
   }
@@ -167,7 +167,7 @@ export default class SwapComponent extends PureComponent {
     }
   }
 
-  requesting = () => {
+  reqestingWithdrawFee = () => {
 
     if (this.state.swap.flow.state.requireWithdrawFee && !this.state.swap.flow.state.requireWithdrawFeeSended) {
       this.state.swap.flow.sendWithdrawRequest()
@@ -208,11 +208,11 @@ export default class SwapComponent extends PureComponent {
   checkEnoughFee = () => {
     const { swap: { participantSwap, flow: { state: { canCreateEthTransaction } } }, currencyData: { currency }, continueSwap } = this.state
 
-    const ethPair = ['BTC', 'ETH', 'LTC']
-    console.log('currency', currency)
+    const coinsWithDynamicFee = ['BTC', 'ETH', 'LTC']
+
     if (canCreateEthTransaction === false && (
       helpers.ethToken.isEthToken({ name: currency.toLowerCase() })
-      || ethPair.includes(currency)
+      || coinsWithDynamicFee.includes(currency)
     )) {
       this.setState(() => ({
         continueSwap: false,
