@@ -12,16 +12,13 @@
 
 .textUsd {
   top: 22px;
-  left: 165px;
+  right: 150px;
   font-size: 15px;
   color: #828795;
   position: absolute;
 }
 
 @include media-mobile {
-  .textUsd {
-    left: 160px;
-  }
   .currencySelect {
     width: 130px;
   }
