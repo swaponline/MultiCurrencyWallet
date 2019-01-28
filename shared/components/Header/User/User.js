@@ -37,6 +37,8 @@ export default class User extends React.Component {
   static propTypes = {
     feeds: PropTypes.array.isRequired,
     peer: PropTypes.string.isRequired,
+    declineRequest: PropTypes.func.isRequired,
+    acceptRequest: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -64,25 +66,6 @@ export default class User extends React.Component {
     audio.autoplay = true
   }
 
-  declineRequest = (orderId, participantPeer) => {
-    actions.core.declineRequest(orderId, participantPeer)
-    actions.core.updateCore()
-  }
-
-  acceptRequest = async (orderId, participantPeer, link) => {
-    const { toggle, history, intl: { locale } } = this.props
-
-    actions.core.acceptRequest(orderId, participantPeer)
-    actions.core.updateCore()
-
-    if (typeof toggle === 'function') {
-      toggle()
-    }
-
-    await history.replace(localisedUrl(locale, link))
-    await history.push(localisedUrl(locale, link))
-  }
-
   render() {
     const { view } = this.state
 
@@ -102,7 +85,7 @@ export default class User extends React.Component {
             <UserAvatar
               isToggle={this.handleToggleTooltip}
               feeds={feeds}
-              declineRequest={this.declineRequest}
+              declineRequest={this.props.declineRequest}
               getInfoBySwapId={actions.core.getInformationAboutSwap}
               soundClick={this.soundClick}
               changeView={this.handleChangeView}
@@ -114,8 +97,8 @@ export default class User extends React.Component {
             feeds={feeds}
             peer={peer}
             toggle={this.handleToggleTooltip}
-            acceptRequest={this.acceptRequest}
-            declineRequest={this.declineRequest}
+            acceptRequest={this.props.acceptRequest}
+            declineRequest={this.props.declineRequest}
           />
         }
         {!!peer && !isWidget && (

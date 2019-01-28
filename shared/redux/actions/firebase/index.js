@@ -59,7 +59,7 @@ const initialize = () => {
 
   if (isSupported()) {
     navigator.serviceWorker
-      .register('firebase-messaging-sw.js', { scope: './' })
+      .register('/firebase-messaging-sw.js')
       .then((registration) => firebase.messaging().useServiceWorker(registration))
 
     const messaging = firebase.messaging()
@@ -113,6 +113,8 @@ const signUpWithPush = (data) =>
       resolve(messagingToken)
       return
     }
+
+    console.log('firebase messagingToken: ', messagingToken)
 
     const sendResult = submitUserData(dataBasePath, {
       ...data,

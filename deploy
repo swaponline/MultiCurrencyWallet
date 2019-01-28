@@ -7,7 +7,9 @@ npm run build:mainnet
 
 # git clone git@github.com:swaponline/mainnet.build.git
 cd mainnet.build
-git pull
+git checkout deploy
+git fetch origin
+git reset --hard origin/master
 
 # clean React code from repo
 rm -rf assets
@@ -25,7 +27,12 @@ cp -rf ../build-mainnet/* ./
 DATE=`date '+%Y-%m-%d %H:%M:%S'`
 git add .
 git commit -m "build $DATE"
-git push
+git push --force
 
 # return back to root
 cd ..
+
+echo "Create pull request at"
+echo
+echo "    https://github.com/swaponline/mainnet.build/compare/master...deploy"
+echo

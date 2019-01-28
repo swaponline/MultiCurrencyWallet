@@ -19,7 +19,7 @@ import DepositWindow from './DepositWindow/DepositWindow'
 import SwapProgress from 'components/SwapProgress/SwapProgress'
 import SwapList from './SwapList/SwapList'
 import QR from 'components/QR/QR'
-import swapApp from 'swap.app'
+import SwapApp from 'swap.app'
 import Timer from './Timer/Timer'
 import { FormattedMessage } from 'react-intl'
 
@@ -51,7 +51,7 @@ export default class BtcToEthToken extends Component {
       currencyAddress: currencyData.address,
       ethAddress: ethData.map(item => item.address),
       secret: crypto.randomBytes(32).toString('hex'),
-      destinationBuyAddress: (this.swap.destinationBuyAddress) ? this.swap.destinationBuyAddress : swapApp.services.auth.accounts.eth.address,
+      destinationBuyAddress: (this.swap.destinationBuyAddress) ? this.swap.destinationBuyAddress : SwapApp.shared().services.auth.accounts.eth.address,
     }
   }
 

@@ -189,14 +189,14 @@ export default {
     decimals: 5,
     fullName: 'Monetha',
   },
-  zcn: {
-    address: '0xb9EF770B6A5e12E45983C5D80545258aA38F3B78',
-    decimals: 10,
-    fullName: 'Ochain',
-  },
   cbt: {
     address: '0x076C97e1c869072eE22f8c91978C99B4bcB02591',
     decimals: 18,
     fullName: 'CommerceBlock',
+  },
+  ddm: {
+    address: '0x0e9030636b73858ad93fcbd5e1e783d5c4de1a5c',
+    decimals: 18,
+    fullName: 'Diadem',
   },
 }

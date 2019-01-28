@@ -13,7 +13,7 @@ const getOrders = (orders) => {
   reducers.core.getOrders({ orders })
 }
 
-const getSwapById = (id) => new Swap(id)
+const getSwapById = (id) => new Swap(id, SwapApp.shared())
 
 const getUserData = (currency) => {
   switch (currency.toUpperCase()) {
@@ -33,24 +33,24 @@ const setFilter = (filter) => {
 }
 
 const acceptRequest = (orderId, participantPeer) => {
-  const order = SwapApp.services.orders.getByKey(orderId)
+  const order = SwapApp.shared().services.orders.getByKey(orderId)
   order.acceptRequest(participantPeer)
 }
 
 const declineRequest = (orderId, participantPeer) => {
-  const order = SwapApp.services.orders.getByKey(orderId)
+  const order = SwapApp.shared().services.orders.getByKey(orderId)
   order.declineRequest(participantPeer)
 }
 
 const removeOrder = (orderId) => {
-  SwapApp.services.orders.remove(orderId)
+  SwapApp.shared().services.orders.remove(orderId)
   actions.feed.deleteItemToFeed(orderId)
 }
 
 const sendRequest = (orderId, destination = {}, callback) => {
   const { address: destinationAddress } = destination
 
-  const order = SwapApp.services.orders.getByKey(orderId)
+  const order = SwapApp.shared().services.orders.getByKey(orderId)
 
   const userCurrencyData = getUserData(order.buyCurrency)
   const { address, reputation, reputationProof } = getUserData(order.buyCurrency)
@@ -70,7 +70,7 @@ const sendRequest = (orderId, destination = {}, callback) => {
 const sendRequestForPartial = (orderId, newValues, destination = {}, callback) => {
   const { address: destinationAddress } = destination
 
-  const order = SwapApp.services.orders.getByKey(orderId)
+  const order = SwapApp.shared().services.orders.getByKey(orderId)
 
   const { address, reputation, reputationProof } = getUserData(order.buyCurrency)
 
@@ -103,10 +103,10 @@ const sendRequestForPartial = (orderId, newValues, destination = {}, callback) =
 
 const createOrder = (data, isPartial = false) => {
   if (!isPartial) {
-    return SwapApp.services.orders.create(data)
+    return SwapApp.shared().services.orders.create(data)
   }
 
-  const order = SwapApp.services.orders.create(data)
+  const order = SwapApp.shared().services.orders.create(data)
 
   const { price } = Pair.fromOrder(order)
 
@@ -160,11 +160,11 @@ const createOrder = (data, isPartial = false) => {
 }
 
 const requestToPeer = (event, peer, data, callback) => {
-  SwapApp.services.orders.requestToPeer(event, peer, data, callback)
+  SwapApp.shared().services.orders.requestToPeer(event, peer, data, callback)
 }
 
 const updateCore = () => {
-  const orders = SwapApp.services.orders.items
+  const orders = SwapApp.shared().services.orders.items
 
   getOrders(orders)
   actions.feed.getFeedDataFromOrder(orders)
@@ -185,8 +185,8 @@ const getSwapHistory = () => {
 const getInformationAboutSwap = (swapId) => {
   if (swapId.length > 0 && typeof swapId === 'string') {
     return {
-      ...SwapApp.env.storage.getItem(`swap.${swapId}`),
-      ...SwapApp.env.storage.getItem(`flow.${swapId}`),
+      ...SwapApp.shared().env.storage.getItem(`swap.${swapId}`),
+      ...SwapApp.shared().env.storage.getItem(`flow.${swapId}`),
     }
   }
 }

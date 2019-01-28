@@ -18,17 +18,17 @@ import { localisedUrl } from 'helpers/locale'
 export default class Logo extends Component {
 
   static propTypes = {
-    colored: PropTypes.string,
+    isColored: PropTypes.bool,
     withLink: PropTypes.bool,
     mobile: PropTypes.bool,
   }
 
   render() {
-    const { colored, withLink, mobile, intl: { locale } } = this.props
+    const { isColored, withLink, mobile, intl: { locale } } = this.props
 
     const imgNode = React.createElement('img', {
       styleName: !withLink && 'logo',
-      src: colored ? coloredLogoImage : logoImage,
+      src: isColored ? coloredLogoImage : logoImage,
       alt: 'swap.online logo',
     })
 
