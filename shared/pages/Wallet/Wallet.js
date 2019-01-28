@@ -4,6 +4,7 @@ import propTypes from 'prop-types'
 import { isMobile } from 'react-device-detect'
 import { connect } from 'redaction'
 import { constants } from 'helpers'
+import { localisedUrl } from 'helpers/locale'
 import actions from 'redux/actions'
 import { withRouter } from 'react-router'
 
@@ -136,20 +137,27 @@ export default class Wallet extends Component {
   }
 
   checkImportKeyHash = () => {
-    const urlHash = window.location.hash
+    const { history, intl: { locale } } = this.props
+
+    const urlHash = history.location.hash
+    const importKeysHash = '#importKeys'
 
     if (!urlHash) {
       return
     }
 
-    if (urlHash !== '#importKeys') {
+    if (urlHash !== importKeysHash) {
       return
     }
 
     localStorage.setItem(constants.localStorage.privateKeysSaved, true)
     localStorage.setItem(constants.localStorage.firstStart, true)
 
-    actions.modals.open(constants.modals.ImportKeys)
+    actions.modals.open(constants.modals.ImportKeys, {
+      onClose: () => {
+        history.replace((localisedUrl(locale, '/')))
+      },
+    })
   }
 
   render() {
