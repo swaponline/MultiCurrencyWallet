@@ -8,12 +8,6 @@ import Loader from 'components/loaders/Loader/Loader'
 import { migrate } from 'helpers'
 import ErrorPageNoSSL from 'components/ErrorPageNoSSL/ErrorPageNoSSL'
 
-
-ReactDOM.render(
-  <Loader showTips />,
-  document.getElementById('root')
-)
-
 {window.location.protocol === 'http:' && window.location.hostname !== 'localhost'
   ? (ReactDOM.render(
       <ErrorPageNoSSL />,
