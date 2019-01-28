@@ -1,6 +1,7 @@
 import React, { PureComponent, Fragment } from 'react'
 
 import Swap from 'swap.swap'
+import SwapApp from 'swap.app'
 
 import cssModules from 'react-css-modules'
 import styles from './Swap.scss'
@@ -276,6 +277,10 @@ export default class SwapComponent extends PureComponent {
     )) {
       this.setState(() => ({
         continueSwap: false,
+      }))
+    } else {
+      this.setState(() => ({
+        continueSwap: true,
       }))
     }
   }
