@@ -45,7 +45,7 @@ export default class SwapComponent extends PureComponent {
     continueSwap: true,
     enoughBalance: true,
     depositWindow: false,
-    timeSinceSecretPublished: 5,
+    shouldStopCheckingWithdrawError: false,
   }
 
   timerFeeNotication = null
@@ -100,6 +100,7 @@ export default class SwapComponent extends PureComponent {
       })
 
     } catch (error) {
+      console.error(error)
       actions.notifications.show(constants.notifications.ErrorNotification, { error: 'Sorry, but this order do not exsit already' })
       this.props.history.push(localisedUrl(links.exchange))
     }
@@ -108,9 +109,16 @@ export default class SwapComponent extends PureComponent {
 
   componentDidMount() {
 
+    const { swap: { flow: { state: { canCreateEthTransaction, requireWithdrawFeeSended } } }, continueSwap } = this.state
     if (this.state.swap !== null) {
 
       let timer
+
+      setTimeout(() => {
+        if (!canCreateEthTransaction && continueSwap && requireWithdrawFeeSended) {
+          this.checkEnoughFee()
+        }
+      }, 300 * 1000)
 
       timer = setInterval(() => {
         this.catchWithdrawError()
@@ -119,11 +127,6 @@ export default class SwapComponent extends PureComponent {
       }, 5000)
     }
   }
-
-  componentWillUnmount() {
-    clearTimeout(this.timerFeeNotication)
-  }
-
 
   // componentWillMount() {
   //   actions.api.checkServers()
@@ -177,30 +180,45 @@ export default class SwapComponent extends PureComponent {
     }
   }
 
-  timerShowFeeNotification = () => {
-    const { timeSinceSecretPublished } = this.state
-    const newTimeLeft = timeSinceSecretPublished - 1
-
-    if (newTimeLeft > 0) {
-      this.timerFeeNotication = setTimeout(this.timerShowFeeNotification, 60 * 1000)
-      this.setState({
-        timeSinceSecretPublished: newTimeLeft,
-      })
-    }
-  }
-
   catchWithdrawError = () => {
-    const { swap, timeSinceSecretPublished, isStopCheck, continueSwap } = this.state
+    const { swap, isStopCheck, continueSwap } = this.state
 
     if (swap.sellCurrency === 'BTC'
       && helpers.ethToken.isEthToken({ name: swap.buyCurrency.toLowerCase() })
-      && !isStopCheck
-      && timeSinceSecretPublished !== 0) {
+      && !isStopCheck) {
       this.setState(() => ({ continueSwap: true }))
     } else {
       this.checkEnoughFee()
       this.setState(() => ({
         isStopCheck: true,
+      }))
+    }
+  }
+
+  requesting = () => {
+    if (this.state.swap.flow.state.requireWithdrawFee && !this.state.swap.flow.state.requireWithdrawFeeSended) {
+      this.state.swap.flow.sendWithdrawRequest()
+    }
+    if (this.state.swap.flow.state.withdrawRequestIncoming && !this.state.swap.flow.state.withdrawRequestAccepted) {
+      this.state.swap.flow.acceptWithdrawRequest()
+    }
+  }
+
+  checkIsTokenIncludes = () => {
+    this.props.tokenItems.map(item => item.name).includes(this.props.swap.participantSwap._swapName.toLowerCase())
+  }
+
+  catchWithdrawError = () => {
+    const { swap, shouldStopCheckingWithdrawError, continueSwap } = this.state
+
+    if (swap.sellCurrency === 'BTC'
+      && helpers.ethToken.isEthToken({ name: swap.buyCurrency.toLowerCase() })
+      && !shouldStopCheckingWithdrawError) {
+      this.setState(() => ({ continueSwap: true }))
+    } else {
+      this.checkEnoughFee()
+      this.setState(() => ({
+        shouldStopCheckingWithdrawError: true,
       }))
     }
   }

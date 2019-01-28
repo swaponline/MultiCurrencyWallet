@@ -82,6 +82,8 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
+    window.actions = actions
+
     window.onerror = (error) => {
       actions.analytics.errorEvent(error)
     }

@@ -8,9 +8,9 @@ import Value from '../Value/Value'
 import { FormattedMessage } from 'react-intl'
 
 
-const title = [
-  <FormattedMessage id="amount" defaultMessage="Exchange" />,
-]
+const title = (
+  <FormattedMessage id="amount" defaultMessage="Exchange" />
+)
 
 const Amounts = ({ buyAmount, sellAmount, buyCurrency, sellCurrency }) => (
   <Row title={title}>
