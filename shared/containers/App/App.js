@@ -106,6 +106,7 @@ export default class App extends React.Component {
     const isFetching = !ethAddress || !btcAddress || (!tokenAddress && config && !config.isWidget) || !fetching
 
     const isWidget = history.location.pathname.includes('/exchange/') && history.location.hash === '#widget'
+    const isCalledFromIframe = window.location !== window.parent.location
 
     if (multiTabs) {
       return <PreventMultiTabs />
@@ -115,7 +116,7 @@ export default class App extends React.Component {
       return <Loader showTips />
     }
 
-    const mainContent = isWidget
+    const mainContent = isWidget || isCalledFromIframe
       ? (
         <Fragment>
           {children}
