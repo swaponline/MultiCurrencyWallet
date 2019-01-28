@@ -116,7 +116,12 @@ export default class App extends React.Component {
     }
 
     const mainContent = isWidget
-      ? (children)
+      ? (
+        <Fragment>
+          {children}
+          <Core />
+        </Fragment>
+      )
       : (
       <Fragment>
         <Seo location={history.location} />

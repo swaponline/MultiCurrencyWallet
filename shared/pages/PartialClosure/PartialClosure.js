@@ -364,16 +364,20 @@ export default class PartialClosure extends Component {
     }))
   }
 
-  handlePush = () => {
+  handlePush = (isWidget = false) => {
     const { intl: { locale } } = this.props
     const { haveCurrency, getCurrency } = this.state
 
     const tradeTicker = `${haveCurrency}-${getCurrency}`
+    const hostname = window.location.origin
+    const pathname = constants.tradeTicker.includes(tradeTicker.toUpperCase())
+      ? tradeTicker
+      : tradeTicker.split('-').reverse().join('-')
 
-    if (constants.tradeTicker.includes(tradeTicker.toUpperCase())) {
-      this.props.history.push(tradeTicker)
+    if (isWidget) {
+      window.parent.location.replace(`${hostname}/${pathname}`)
     } else {
-      this.props.history.push(tradeTicker.split('-').reverse().join('-'))
+      this.props.history.push(pathname)
     }
   }
 
@@ -455,7 +459,9 @@ export default class PartialClosure extends Component {
     const oneCryptoCost = maxBuyAmount.isLessThanOrEqualTo(0) ? BigNumber(0) : BigNumber(goodRate)
     const linked = Link.all(this, 'haveAmount', 'getAmount', 'customWallet')
 
-    const isWidget = this.props.location.pathname.includes('/exchange/') && this.props.location.hash === '#widget'
+    const isWidgetExtention = config && config.isWidget
+    const isWidgetLink = this.props.location.pathname.includes('/exchange/') && this.props.location.hash === '#widget'
+    const isWidget = isWidgetExtention || isWidgetLink
 
     if (redirect) {
       return <Redirect push to={`${localisedUrl(locale, links.swap)}/${getCurrency}-${haveCurrency}/${orderId}`} />
@@ -597,13 +603,9 @@ export default class PartialClosure extends Component {
               <Button styleName="button" brand onClick={this.sendRequest} disabled={!canDoOrder}>
                 <FormattedMessage id="partial541" defaultMessage="Exchange now" />
               </Button>
-              {
-                !isWidget && (
-                  <Button styleName="button" gray onClick={this.handlePush} >
-                    <FormattedMessage id="partial544" defaultMessage="Show order book" />
-                  </Button>
-                )
-              }
+              <Button styleName="button" gray onClick={() => this.handlePush(isWidgetLink)} >
+                <FormattedMessage id="partial544" defaultMessage="Show order book" />
+              </Button>
             </div>
           </div>
         </div>
