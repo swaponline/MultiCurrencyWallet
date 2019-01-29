@@ -97,6 +97,7 @@
 .loader1, .loader2, .loader3 {
   position: absolute;
   opacity: 0;
+  will-change: transform, opacity;
 }
 
 .loader1:first-child, .loader2:first-child, .loader3:first-child {
@@ -172,6 +173,24 @@
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
+}
+
+.Firefox {
+  .loader {
+    div {
+      opacity: 1;
+      animation: none;
+    }
+  }
+  .loader1 {
+    transform: translate3d(-15%, -50%, 0) rotateY(-37deg);
+  }
+  .loader2 {
+    transform: translate3d(-60%, -50%, 0) rotateY(-57deg);
+  }
+  .loader3 {
+    transform: translate3d(0, -50%, 0);
+  }
 }
 
 @include media-mobile { 

@@ -19,7 +19,7 @@
   },
   {
     "id": "menu.history",
-    "message": "History",
+    "message": "My History",
     "files": [
       "shared/components/Header/Header.js"
     ]
@@ -2849,7 +2849,7 @@
   },
   {
     "id": "Amount68",
-    "message": "History",
+    "message": "My History",
     "files": [
       "shared/pages/History/History.js"
     ]

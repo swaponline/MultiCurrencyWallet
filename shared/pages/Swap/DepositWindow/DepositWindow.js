@@ -150,22 +150,6 @@ export default class DepositWindow extends Component {
     })
   }
 
-  handleReloadBalance = async () => {
-    const { isBalanceFetching } = this.state
-
-    this.updateBalance()
-
-    this.setState({
-      isBalanceFetching: true,
-    }, () => {
-      setTimeout(() => {
-        this.setState({
-          isBalanceFetching: false,
-        })
-      }, 500)
-    })
-  }
-
   handleCopyAddress = (e) => {
     this.setState({
       isAddressCopied: true,
@@ -176,10 +160,6 @@ export default class DepositWindow extends Component {
         })
       }, 500)
     })
-  }
-
-  handlerBuyWithCreditCard = (e) => {
-    e.preventDefault()
   }
 
   render() {
@@ -198,6 +178,8 @@ export default class DepositWindow extends Component {
       remainingBalance,
       isBalanceFetching,
     } = this.state
+
+    const balanceToRender = Math.floor(balance * 1e6) / 1e6
 
     return (
       <Fragment>
@@ -279,7 +261,7 @@ export default class DepositWindow extends Component {
                   id="deposit231"
                   defaultMessage="Received {balance} / {need} {tooltip}"
                   values={{
-                    balance: <strong>{balance} {swap.sellCurrency}</strong>,
+                    balance: <strong>{balanceToRender} {swap.sellCurrency}</strong>,
                     need: <strong>{sellAmount.toFixed(6)} {swap.sellCurrency}</strong>,
                     tooltip:
                       <Tooltip id="dep226">

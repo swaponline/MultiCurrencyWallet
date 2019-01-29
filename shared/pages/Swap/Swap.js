@@ -51,13 +51,10 @@ export default class SwapComponent extends PureComponent {
     continueSwap: true,
     enoughBalance: true,
     depositWindow: false,
-    paddingContainerValue: 0,
-    timeSinceSecretPublished: 5,
-    shouldStopCheckingWithdrawError: false,
+    shouldStopCheckSendingOfRequesting: false,
   }
 
   timerFeeNotication = null
-
 
   componentWillMount() {
     const { items, tokenItems, intl: { locale } } = this.props
@@ -117,6 +114,7 @@ export default class SwapComponent extends PureComponent {
   }
 
   componentDidMount() {
+
     const { swap: { flow: { state: { canCreateEthTransaction, requireWithdrawFeeSended } } }, continueSwap } = this.state
     if (this.state.swap !== null) {
 
@@ -129,9 +127,9 @@ export default class SwapComponent extends PureComponent {
       }, 300 * 1000)
 
       timer = setInterval(() => {
-        this.checkBalance()
         this.catchWithdrawError()
-        this.requesting()
+        this.isBalanceEnough()
+        this.requestingWithdrawFee()
       }, 5000)
     }
     this.changePaddingValue()
@@ -205,36 +203,39 @@ export default class SwapComponent extends PureComponent {
     localStorage.setItem('swapId', JSON.stringify(swapsId))
   }
 
-  checkBalance = async () => {
-    const { swap: { sellCurrency, sellAmount }, currencyData, balance } = this.state
-
-    const currencyBalance = await actions[sellCurrency.toLowerCase()].getBalance()
-
-    if (helpers.ethToken.isEthToken({ name: sellCurrency.toLowerCase() })) {
-      const tokenBalance = await actions.token.getBalance(sellCurrency.toLowerCase())
-      this.setState(() => ({ balance: tokenBalance }))
-    } else {
-      this.setState(() => ({ balance: currencyBalance }))
-    }
-
-    if (sellAmount.toNumber() > balance) {
+  isBalanceEnough = () => {
+    const { swap, balance } = this.state
+    swap.flow.syncBalance()
+    if (!swap.flow.state.isBalanceEnough) {
       this.setState(() => ({ enoughBalance: false }))
     } else {
       this.setState(() => ({ enoughBalance: true }))
     }
   }
 
+  requestingWithdrawFee = () => {
+    const { swap: { flow: { acceptWithdrawRequest, sendWithdrawRequest,
+      state: { requireWithdrawFee, requireWithdrawFeeSended, withdrawRequestIncoming, withdrawRequestAccepted } } } } = this.state
+
+    if (requireWithdrawFee && !requireWithdrawFeeSended) {
+      sendWithdrawRequest()
+    }
+    if (withdrawRequestIncoming && !withdrawRequestAccepted) {
+      acceptWithdrawRequest()
+    }
+  }
+
   catchWithdrawError = () => {
-    const { swap, shouldStopCheckingWithdrawError, continueSwap } = this.state
+    const { swap, shouldStopCheckSendingOfRequesting, continueSwap } = this.state
 
     if (swap.sellCurrency === 'BTC'
       && helpers.ethToken.isEthToken({ name: swap.buyCurrency.toLowerCase() })
-      && !shouldStopCheckingWithdrawError) {
+      && !shouldStopCheckSendingOfRequesting) {
       this.setState(() => ({ continueSwap: true }))
     } else {
       this.checkEnoughFee()
       this.setState(() => ({
-        shouldStopCheckingWithdrawError: true,
+        shouldStopCheckSendingOfRequesting: true,
       }))
     }
   }
@@ -242,11 +243,11 @@ export default class SwapComponent extends PureComponent {
   checkEnoughFee = () => {
     const { swap: { participantSwap, flow: { state: { canCreateEthTransaction } } }, currencyData: { currency }, continueSwap } = this.state
 
-    const currenciesInNeedETHFee = ['BTC', 'ETH', 'LTC']
+    const coinsWithDynamicFee = ['BTC', 'ETH', 'LTC']
 
     if (canCreateEthTransaction === false && (
       helpers.ethToken.isEthToken({ name: currency.toLowerCase() })
-      || currenciesInNeedETHFee.includes(currency)
+      || coinsWithDynamicFee.includes(currency)
     )) {
       this.setState(() => ({
         continueSwap: false,
