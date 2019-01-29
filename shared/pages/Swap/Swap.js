@@ -134,7 +134,7 @@ export default class SwapComponent extends PureComponent {
         this.requesting()
       }, 5000)
     }
-    this.handleCheckPaddingValue()
+    this.changePaddingValue()
     const { flow } = this.state
   }
 
@@ -151,25 +151,12 @@ export default class SwapComponent extends PureComponent {
      }
    }
 
-   timerShowFeeNotification = () => {
-     const { timeSinceSecretPublished } = this.state
-     const newTimeLeft = timeSinceSecretPublished - 1
-
-     if (newTimeLeft > 0) {
-       this.timerFeeNotication = setTimeout(this.timerShowFeeNotification, 60 * 1000)
-       this.setState({
-         timeSinceSecretPublished: newTimeLeft,
-       })
-     }
-   }
-
    catchWithdrawError = () => {
-     const { swap, timeSinceSecretPublished, shouldStopCheckingWithdrawError, continueSwap } = this.state
+     const { swap, shouldStopCheckingWithdrawError, continueSwap } = this.state
 
      if (swap.sellCurrency === 'BTC'
        && helpers.ethToken.isEthToken({ name: swap.sellCurrency.toLowerCase() })
-       && !shouldStopCheckingWithdrawError
-       && timeSinceSecretPublished !== 0) {
+       && !shouldStopCheckingWithdrawError) {
        this.setState(() => ({ continueSwap: true }))
      } else {
        this.checkEnoughFee()
@@ -182,11 +169,11 @@ export default class SwapComponent extends PureComponent {
    checkEnoughFee = () => {
      const { swap: { participantSwap, flow: { state: { canCreateEthTransaction } } }, currencyData: { currency }, continueSwap, swap } = this.state
 
-     const ethPair = ['BTC', 'ETH', 'LTC']
+     const currenciesWithDynamicFee = ['BTC', 'ETH', 'LTC']
 
      if (canCreateEthTransaction === false && (
        helpers.ethToken.isEthToken({ name: swap.sellCurrency.toLowerCase() })
-       || ethPair.includes(currency)
+       || currenciesWithDynamicFee.includes(currency)
      )) {
        this.setState(() => ({
          continueSwap: false,
@@ -219,35 +206,22 @@ export default class SwapComponent extends PureComponent {
   }
 
   checkBalance = async () => {
-    const { swap, currencyData } = this.state
+    const { swap: { sellCurrency, sellAmount }, currencyData, balance } = this.state
 
-    const curBalance = await actions[swap.sellCurrency.toLowerCase()].getBalance()
+    const currencyBalance = await actions[sellCurrency.toLowerCase()].getBalance()
 
-    if (helpers.ethToken.isEthToken({ name: swap.sellCurrency.toLowerCase() })) {
-      const tokenBalance = await actions.token.getBalance(swap.sellCurrency.toLowerCase())
+    if (helpers.ethToken.isEthToken({ name: sellCurrency.toLowerCase() })) {
+      const tokenBalance = await actions.token.getBalance(sellCurrency.toLowerCase())
+      this.setState(() => ({ balance: tokenBalance }))
+    } else {
+      this.setState(() => ({ balance: currencyBalance }))
     }
 
-    const balance = this.props.tokenItems.map(item => item.currency).includes(swap.sellCurrency) ? tokenBalance : curBalance
-
-    if (swap.sellAmount.toNumber() > balance) {
+    if (sellAmount.toNumber() > balance) {
       this.setState(() => ({ enoughBalance: false }))
     } else {
       this.setState(() => ({ enoughBalance: true }))
     }
-  }
-
-
-  requesting = () => {
-    if (this.state.swap.flow.state.requireWithdrawFee && !this.state.swap.flow.state.requireWithdrawFeeSended) {
-      this.state.swap.flow.sendWithdrawRequest()
-    }
-    if (this.state.swap.flow.state.withdrawRequestIncoming && !this.state.swap.flow.state.withdrawRequestAccepted) {
-      this.state.swap.flow.acceptWithdrawRequest()
-    }
-  }
-
-  checkIsTokenIncludes = () => {
-    this.props.tokenItems.map(item => item.name).includes(this.props.swap.participantSwap._swapName.toLowerCase())
   }
 
   catchWithdrawError = () => {
@@ -285,7 +259,7 @@ export default class SwapComponent extends PureComponent {
   }
 
 
-  handleCheckPaddingValue = () => {
+  changePaddingValue = () => {
     const { flow } = this.state
 
     if (flow.step <= 2) {
@@ -365,7 +339,7 @@ export default class SwapComponent extends PureComponent {
         </div>
         { flow.btcScriptValues &&
           <span onClick={this.toggleBitcoinScript}>
-            <FormattedMessage id="EthToBtc204" defaultMessage="Show bitcoin script" />
+            <FormattedMessage id="swapJS341" defaultMessage="Show bitcoin script" />
           </span>
         }
         {isShowingBitcoinScript &&

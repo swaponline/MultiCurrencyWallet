@@ -43,7 +43,7 @@ export default class DepositWindow extends Component {
       scriptBalance: flow.scriptBalance,
       balance: flow.balance,
       currencyFullName: currencyData.fullName,
-      sellAmount: (this.swap.sellAmount.toNumber() + 0.00005),
+      sellAmount: this.swap.sellAmount.toNumber(),
     }
   }
 

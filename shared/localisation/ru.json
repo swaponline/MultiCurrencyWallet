@@ -516,17 +516,11 @@
   },
   {
     "id": "SwapProgress105",
-    "message": "3. Проверяется баланс.. ",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "3. Проверяется баланс.. "
   },
   {
     "id": "SwapProgress111",
-    "message": "4. Создается Bitcoin Script. Пожалуйста подождите, это займет некоторое время",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "4. Создается Bitcoin Script. Пожалуйста подождите, процесс займет некоторое время"
   },
   {
     "id": "SwapProgress117",
@@ -534,10 +528,7 @@
   },
   {
     "id": "SwapProgress123",
-    "message": "6. Пробуем вывести ETH из контракта. Пожалуйста, подождите",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "6. Пробуем вывести ETH из контракта. Пожалуйста, подождите"
   },
   {
     "id": "SwapProgress129",
@@ -545,10 +536,7 @@
   },
   {
     "id": "SwapProgress135",
-    "message": "Спасибо за использование Swap.Online! ",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "Спасибо за использование Swap.Online! "
   },
   {
     "id": "SwapProgress32",
@@ -568,7 +556,7 @@
   },
   {
     "id": "SwapProgress56",
-    "message": "5. Создается Ethereum Контракт. Пожалуйста подожди, это займет некоторое время"
+    "message": "5. Создается Ethereum Контракт. Пожалуйста подожди, процесс займет некоторое время"
   },
   {
     "id": "SwapProgress62",
@@ -580,31 +568,19 @@
   },
   {
     "id": "SwapProgress74",
-    "message": "Благодарим за использование Swap.Online! ",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "Благодарим за использование Swap.Online! "
   },
   {
     "id": "SwapProgress80",
-    "message": "Благодарим за использование Swap.Online!! ",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "Благодарим за использование Swap.Online!! "
   },
   {
     "id": "SwapProgress93",
-    "message": "1. Создавший ордер, не в сети. Ожидание.. ",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "1. Создавший ордер, не в сети. Ожидание.. "
   },
   {
     "id": "SwapProgress99",
-    "message": "2. Создается Секретный ключ",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "2. Создается Секретный ключ"
   },
   {
     "id": "Tooltip11",
@@ -1063,7 +1039,7 @@
   },
   {
     "id": "BtcToEthToken167",
-    "message": "3. Создается Bitcoin Script. Пожалуйста подождите, это займет какое то время"
+    "message": "3. Создается Bitcoin Script. Пожалуйста подождите, процесс займет какое то время"
   },
   {
     "id": "BtcToEthToken172",
@@ -1208,10 +1184,7 @@
   },
   {
     "id": "EthToBtc204",
-    "message": "Показать Вitcoin script",
-    "files": [
-      "shared/pages/Swap/Swap.js"
-    ]
+    "message": "Показать Вitcoin script"
   },
   {
     "id": "EthToBtc247",
@@ -1243,7 +1216,7 @@
   },
   {
     "id": "EthToBtc297",
-    "message": "4. Создание контракта Ethereum. Подождите, это займет некоторое время"
+    "message": "4. Создание контракта Ethereum. Подождите, процесс займет некоторое время"
   },
   {
     "id": "EthToBtc305",
@@ -1347,7 +1320,7 @@
   },
   {
     "id": "EthTokenBtc276",
-    "message": "4. Создание контракта Ethereum. Подождите, это займет некоторое время"
+    "message": "4. Создание контракта Ethereum. Подождите, процесс займет некоторое время"
   },
   {
     "id": "EthTokenBtc283",
@@ -1455,7 +1428,7 @@
   },
   {
     "id": "EthTokenToUsdt285",
-    "message": "4. Создание контракта Ethereum. Подождите, это займет некоторое время"
+    "message": "4. Создание контракта Ethereum. Подождите, процесс займет некоторое время"
   },
   {
     "id": "EthTokenToUsdt292",
@@ -1625,7 +1598,7 @@
   },
   {
     "id": "EthToLtc297",
-    "message": "4. Создание контракта Ethereum. Подождите, это займет некоторое время"
+    "message": "4. Создание контракта Ethereum. Подождите, процесс займет некоторое время"
   },
   {
     "id": "EthToLtc305",
@@ -1797,7 +1770,7 @@
   },
   {
     "id": "LtcTOeth195",
-    "message": "3. Создание LTC Omni Script. Подождите, это займет некоторое время"
+    "message": "3. Создание LTC Omni Script. Подождите, процесс займет некоторое время"
   },
   {
     "id": "LtcTOeth200",
@@ -1922,7 +1895,7 @@
   },
   {
     "id": "UsdrToEthToken174",
-    "message": "3. Создание BTC Omni Script. Подождите, это займет некоторое время"
+    "message": "3. Создание BTC Omni Script. Подождите, процесс займет некоторое время"
   },
   {
     "id": "UsdrToEthToken179",
@@ -2192,7 +2165,7 @@
   },
   {
     "id": "BtcToLtc205",
-    "message": "3. Создание BTC Script. Подождите, это займет некоторое время"
+    "message": "3. Создание BTC Script. Подождите, процесс займет некоторое время"
   },
   {
     "id": "Checkingbalance",
@@ -2369,7 +2342,7 @@
   },
   {
     "id": "LtcToBtc205",
-    "message": "4. Создание LTC Script. Подождите, это займет некоторое время"
+    "message": "4. Создание LTC Script. Подождите, процесс займет некоторое время"
   },
   {
     "id": "OK",
@@ -4058,7 +4031,7 @@
   },
   {
     "id": "BtcToEthToken222",
-    "message": "Создается Bitcoin Script. Пожалуйста подождите, это займет некоторое время"
+    "message": "Создается Bitcoin Script. Пожалуйста подождите, процесс займет некоторое время"
   },
   {
     "id": "KeyActionsPanel54",
@@ -4268,7 +4241,7 @@
   },
   {
     "id": "FeeControler68",
-    "message": "Недостаточноh ETH на вашем балансе для оплаты комисии майнеров.{br}Пополните баланс вашего аккаунта на 0.002 ETH",
+    "message": "Недостаточно ETH на вашем балансе для оплаты комисии майнеров.{br}Пополните баланс вашего аккаунта на 0.002 ETH",
     "files": [
       "shared/pages/Swap/FeeControler/FeeControler.js"
     ]
@@ -4289,17 +4262,11 @@
   },
   {
     "id": "BtcToEthToken102",
-    "message": "Отправка {Currency} из контракта",
-    "files": [
-      "shared/pages/Swap/SwapList/SwapList.js"
-    ]
+    "message": "Отправка {Currency} из контракта"
   },
   {
     "id": "BtcToEthToken111",
-    "message": "Перевод {Currency} из контракта",
-    "files": [
-      "shared/pages/Swap/SwapList/SwapList.js"
-    ]
+    "message": "Перевод {Currency} из контракта"
   },
   {
     "id": "BtcToEthToken123",
@@ -4317,17 +4284,11 @@
   },
   {
     "id": "BtcToEthToken34",
-    "message": "Процесс подтверждения",
-    "files": [
-      "shared/pages/Swap/SwapList/SwapList.js"
-    ]
+    "message": "Процесс подтверждения"
   },
   {
     "id": "BtcToEthToken43",
-    "message": "Процесс подтверждения",
-    "files": [
-      "shared/pages/Swap/SwapList/SwapList.js"
-    ]
+    "message": "Процесс подтверждения"
   },
   {
     "id": "swapList97",
@@ -4338,80 +4299,50 @@
   },
   {
     "id": "SwapProgress107",
-    "message": "{buyCurrency} Владелец пополнил Bitcoin Script и секрет. Ожидается создание ETH Contract",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "{buyCurrency} Владелец пополнил Bitcoin Script и секрет. Ожидается создание ETH Contract"
   },
   {
     "id": "SwapProgress115",
-    "message": "{buyCurrency} переведены на ваш кошелек. Проверте баланс.",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "{buyCurrency} переведены на ваш кошелек. Проверте баланс."
   },
   {
     "id": "SwapProgress132",
-    "message": "Пожалуйста подождите. Процесс подтверждения",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "Пожалуйста подождите. Процесс подтверждения"
   },
   {
     "id": "SwapProgress138",
     "message": "Ожидание...Владелец BTC создает Секретный Ключ, создается BTC Script и отправляется",
     "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
+      "shared/pages/Swap/SwapProgress/SwapComponetsTexts/BitcoinBuyText.js"
     ]
   },
   {
     "id": "SwapProgress144",
-    "message": "Bitcoin Script был создан и отправлен. Пожалуйста, проверте информацию ниже",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "Bitcoin Script был создан и отправлен. Пожалуйста, проверте информацию ниже"
   },
   {
     "id": "SwapProgress150",
-    "message": "Проверка баланса..",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "Проверка баланса.."
   },
   {
     "id": "SwapProgress154",
-    "message": "Создается Ethereum контракт. {br} Пожалуйста подождите, это может занять несколько минут",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "Создается Ethereum контракт. {br} Пожалуйста подождите, это может занять несколько минут"
   },
   {
     "id": "SwapProgress162",
-    "message": "Ожидание... Владелец BTC создает и публикует Секретный ключ в ETH контракт",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "Ожидание... Владелец BTC создает и публикует Секретный ключ в ETH контракт"
   },
   {
     "id": "SwapProgress168",
-    "message": "BTC переведенны на ваш кошелек. Проверте баланс.",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "BTC переведенны на ваш кошелек. Проверте баланс."
   },
   {
     "id": "swapprogress",
-    "message": "Транзакция возврата:",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "Транзакция возврата:"
   },
   {
     "id": "swapprogress219",
-    "message": "Попытаться вернуть монтеы",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "Попытаться вернуть монтеы"
   },
   {
     "id": "swapprogress377",
@@ -4446,6 +4377,195 @@
     "message": "Как вернуть ваши деньги ?",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgress.js"
+    ]
+  },
+  {
+    "id": "swapJS341",
+    "message": "Показать Bitcoin script",
+    "files": [
+      "shared/pages/Swap/Swap.js"
+    ]
+  },
+  {
+    "id": "BitcoinBuyText17",
+    "message": "Пожалуйста подождите... Процесс подтверждения",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapComponetsTexts/BitcoinBuyText.js"
+    ]
+  },
+  {
+    "id": "BitcoinBuyText29",
+    "message": "Bitcoin Script создан и отправлен. Пожалуйста, проверте информацию ниже",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapComponetsTexts/BitcoinBuyText.js"
+    ]
+  },
+  {
+    "id": "BitcoinBuyText33",
+    "message": "Проверка баланса...",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapComponetsTexts/BitcoinBuyText.js"
+    ]
+  },
+  {
+    "id": "BitcoinBuyText37",
+    "message": "Создается Ethereum Контракт. {br} Пожалуйста подождите, потребуется несколько минут",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapComponetsTexts/BitcoinBuyText.js"
+    ]
+  },
+  {
+    "id": "BitcoinBuyText41",
+    "message": "Ожидание... Владелец {buyCurrency} отправляет Секретный ключ в ETH Контракт",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapComponetsTexts/BitcoinBuyText.js"
+    ]
+  },
+  {
+    "id": "BitcoinBuyText45",
+    "message": "{buyCurrency} переведен. Проверте баланс.",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapComponetsTexts/BitcoinBuyText.js"
+    ]
+  },
+  {
+    "id": "BitcoinBuyText49",
+    "message": "Спасибо за использование Swap.Online",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapComponetsTexts/BitcoinBuyText.js"
+    ]
+  },
+  {
+    "id": "BitcoinBuyText53",
+    "message": "Спасибо за использование Swap.Online!",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapComponetsTexts/BitcoinBuyText.js"
+    ]
+  },
+  {
+    "id": "BitcoinSellText18",
+    "message": "Создатель предложение на обмен не в сети. Ожидание...",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapComponetsTexts/BitcoinSellText.js"
+    ]
+  },
+  {
+    "id": "BitcoinSellText22",
+    "message": "Создается Секретный ключ",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapComponetsTexts/BitcoinSellText.js"
+    ]
+  },
+  {
+    "id": "BitcoinSellText26",
+    "message": "Проверка баланса..",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapComponetsTexts/BitcoinSellText.js"
+    ]
+  },
+  {
+    "id": "BitcoinSellText30",
+    "message": "Создается Bitcoin Script. {br} Пожалуйста подождите, процесс займет несколько минут",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapComponetsTexts/BitcoinSellText.js"
+    ]
+  },
+  {
+    "id": "BitcoinSellText35",
+    "message": "Владелец {buyCurrency} получил Bitcoin Script и Secret Hash. Ожидание... Создается ETH Контракт",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapComponetsTexts/BitcoinSellText.js"
+    ]
+  },
+  {
+    "id": "BitcoinSellText42",
+    "message": "ETH Контракт создан и отправлен. Ожидается отправка {buyCurrency} из ETH Контракта. Пожалуйста подождите",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapComponetsTexts/BitcoinSellText.js"
+    ]
+  },
+  {
+    "id": "BitcoinSellText48",
+    "message": "{buyCurrency} переведен. Проверте баланс.",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapComponetsTexts/BitcoinSellText.js"
+    ]
+  },
+  {
+    "id": "BitcoinSellText52",
+    "message": "Спасибо за использование Swap.Onlinde!",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapComponetsTexts/BitcoinSellText.js"
+    ]
+  },
+  {
+    "id": "BitcoinSellText56",
+    "message": "Спасибо за использование Swap.Onlinde!",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapComponetsTexts/BitcoinSellText.js"
+    ]
+  },
+  {
+    "id": "swapprogress254",
+    "message": "Транзакция возврата:",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapProgress.js"
+    ]
+  },
+  {
+    "id": "swapprogress270",
+    "message": "Попытаться вернуть",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapProgress.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken122",
+    "message": "Отправка {Currency} из Контракта",
+    "files": [
+      "shared/pages/Swap/SwapList/SwapList.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken129",
+    "message": "Отправка {Currency} из Контракта",
+    "files": [
+      "shared/pages/Swap/SwapList/SwapList.js"
+    ]
+  },
+  {
+    "id": "swapList111",
+    "message": "Зачисление {Currency}",
+    "files": [
+      "shared/pages/Swap/SwapList/SwapList.js"
+    ]
+  },
+  {
+    "id": "swapList63",
+    "message": "Процесс подтверждения",
+    "files": [
+      "shared/pages/Swap/SwapList/SwapList.js"
+    ]
+  },
+  {
+    "id": "swapList74",
+    "message": "Процесс подтверждения",
+    "files": [
+      "shared/pages/Swap/SwapList/SwapList.js"
+    ]
+  },
+  {
+    "id": "swapList86",
+    "message": "Зачисление {Currency}",
+    "files": [
+      "shared/pages/Swap/SwapList/SwapList.js"
+    ]
+  },
+  {
+    "id": "swapList93",
+    "message": "Зачисление {Currency}",
+    "files": [
+      "shared/pages/Swap/SwapList/SwapList.js"
     ]
   }
 ]

@@ -23,6 +23,9 @@ import Input from 'components/forms/Input/Input'
 import Title from 'components/PageHeadline/Title/Title'
 import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
+import BuyBitcoin from './SwapComponetsTexts/BuyBitcoin'
+import SellBitcoin from './SwapComponetsTexts/SellBitcoin'
+
 
 @injectIntl
 @CSSModules(styles, { allowMultiple: true })
@@ -34,8 +37,12 @@ export default class SwapProgress extends Component {
     whiteLogo: false,
   }
 
-  constructor({ flow, step, swap, styles }) {
+  constructor({ flow, step, swap, styles, tokenItems }) {
     super()
+
+    const currenciesBTCTransaction = ['BTC', 'USDT']
+    const tokens = tokenItems.map(item => item.currency)
+    const currenciesETHTransaction = tokens.concat('ETH')
 
     this.swap = swap
 
@@ -43,9 +50,9 @@ export default class SwapProgress extends Component {
       step,
       swap,
       styles,
-      stepNumber: 1,
       enabledButton: false,
-      paddingContainerValue: 0,
+      currenciesBTCTransaction,
+      currenciesETHTransaction,
       flow: this.swap.flow.state,
       steps: swap.flow.state.steps,
       buyCurrency: swap.buyCurrency,
@@ -58,19 +65,20 @@ export default class SwapProgress extends Component {
 
   componentDidMount() {
     this.swap.on('state update', this.handleFlowStateUpdate)
-    const { flow, sellCurrency } = this.state
+    const { flow, sellCurrency, buyCurrency, swap, currenciesBTCTransaction, currenciesETHTransaction } = this.state
+
     let timer
     timer = setInterval(() => {
-      if (!flow.isParticipantSigned && this.state.flow.step === 1 && sellCurrency === 'BTC') {
+      if (!flow.isParticipantSigned && flow.step === swap.flow.stepNumbers.sign && currenciesBTCTransaction.includes(sellCurrency)) {
         this.confirmAddress()
       }
-      if (!flow.isSignFetching && !flow.isMeSigned && this.state.flow.step === 1 && sellCurrency !== 'BTC') {
+      if (!flow.isSignFetching && !flow.isMeSigned && flow.step === swap.flow.stepNumbers.sign && currenciesETHTransaction.includes(sellCurrency)) {
         this.signSwap()
       }
-      if (this.state.flow.step === 2 && sellCurrency === 'BTC') {
+      if (this.state.flow.step === swap.flow.stepNumbers[`submit-secret`] && currenciesBTCTransaction.includes(sellCurrency)) {
         this.submitSecret()
       }
-      if (this.state.flow.step === 3 && sellCurrency !== 'BTC') {
+      if (this.state.flow.step === swap.flow.stepNumbers[`verify-script`] && currenciesETHTransaction.includes(sellCurrency)) {
         this.confirmBTCScriptChecked()
       }
     }, 1000)
@@ -85,7 +93,6 @@ export default class SwapProgress extends Component {
     this.setState({
       flow: values,
     })
-    this.handleCheckPaddingValue()
   }
 
   tryRefund = () => {
@@ -127,110 +134,6 @@ export default class SwapProgress extends Component {
     this.props.history.push(localisedUrl(locale, links.home))
   }
 
-  handleFinishWithdraw = () => {
-    this.swap.flow.acceptWithdrawRequest()
-  }
-
-  buyBTC = (step) => {
-    const { swap: { sellCurrency, buyCurrency, flow: { stepNumbers } } } = this.props
-
-    switch (step) {
-      case stepNumbers.sign === 1:
-        return (
-          <FormattedMessage id="SwapProgress132" defaultMessage="Please wait. Confirmation processing" />
-        )
-      case stepNumbers[`wait-lock-${buyCurrency}`] === 2:
-        return (
-          <FormattedMessage
-            id="SwapProgress138"
-            defaultMessage="Waiting for {buyCurrency} Owner to create Secret Key, create BTC Script and charge it"
-            values={{ buyCurrency: `${buyCurrency}` }}
-          />
-        )
-      case stepNumbers['verify-script'] === 3:
-        return (
-          <FormattedMessage id="SwapProgress144" defaultMessage="The bitcoin Script was created and charged. Please check the information below" />
-        )
-      case stepNumbers['sync-balance'] === 4:
-        return (
-          <FormattedMessage id="SwapProgress150" defaultMessage="Checking balance.." />
-        )
-      case stepNumbers[`lock-${sellCurrency}`] === 5:
-        return (
-          <FormattedMessage id="SwapProgress154" defaultMessage="Creating Ethereum Contract. {br} Please wait, it can take a few minutes" values={{ br: <br /> }} />
-        )
-      case stepNumbers[`wait-withdraw-${sellCurrency}`] === 6:
-        return (
-          <FormattedMessage id="SwapProgress162" defaultMessage="Waiting for {buyCurrency} Owner to add a Secret Key to ETH Contact" values={{ buyCurrency: `${buyCurrency}` }} />
-        )
-      case stepNumbers[`withdraw-${buyCurrency}`] === 7:
-        return (
-          <FormattedMessage id="SwapProgress168" defaultMessage="{buyCurrency} was transferred to your wallet. Check the balance." values={{ buyCurrency: `${buyCurrency}` }} />
-        )
-      case stepNumbers.finish === 8:
-        return (
-          <FormattedMessage id="SwapProgress74" defaultMessage="Thank you for using Swap.Online" />
-        )
-      case stepNumbers.end === 9:
-        return (
-          <FormattedMessage id="SwapProgress80" defaultMessage="Thank you for using Swap.Online!" />
-        )
-      default:
-        return null
-    }
-  }
-
-  sellBTC = (step) => {
-    const { swap: { sellCurrency, buyCurrency, flow: { stepNumbers } } } = this.props
-
-    switch (step) {
-      case stepNumbers.sign === 1:
-        return (
-          <FormattedMessage id="SwapProgress93" defaultMessage="The order creator is offline. Waiting for him.." />
-        )
-      case stepNumbers['submit-secret'] === 2:
-        return (
-          <FormattedMessage id="SwapProgress99" defaultMessage="Create a secret key" />
-        )
-      case stepNumbers['sync-balance'] === 3:
-        return (
-          <FormattedMessage id="SwapProgress105" defaultMessage="Checking balance.." />
-        )
-      case stepNumbers[`lock-${sellCurrency}`] === 4:
-        return (
-          <FormattedMessage id="SwapProgress111" defaultMessage="Creating Bitcoin Script. {br} Please wait, it can take a few minutes" values={{ br: <br /> }} />
-        )
-      case stepNumbers[`wait-lock-${buyCurrency}`] === 5:
-        return (
-          <FormattedMessage
-            id="SwapProgress107"
-            defaultMessage="{buyCurrency} Owner received Bitcoin Script and Secret Hash. Waiting when he creates ETH Contract"
-            values={{ buyCurrency: `${buyCurrency}` }} />
-        )
-      case stepNumbers[`withdraw-${buyCurrency}`] === 6:
-        return (
-          <FormattedMessage
-            id="SwapProgress123"
-            defaultMessage="ETH Contract created and charged. Requesting withdrawal {buyCurrency} from ETH Contract. Please wait"
-            values={{ buyCurrency: `${buyCurrency}` }} />
-        )
-      case stepNumbers.finish === 7:
-        return  (
-          <FormattedMessage id="SwapProgress115" defaultMessage="{buyCurrency} was transferred to your wallet. Check the balance." values={{ buyCurrency: `${buyCurrency}` }} />
-        )
-      case stepNumbers.end === 8:
-        return (
-          <FormattedMessage id="SwapProgress135" defaultMessage="Thank you for using Swap.Onlinde!" />
-        )
-      case stepNumbers.end === 9:
-        return (
-          <FormattedMessage id="SwapProgress135" defaultMessage="Thank you for using Swap.Onlinde!" />
-        )
-      default:
-        return null
-    }
-  }
-
   render() {
     const {
       flow,
@@ -244,14 +147,11 @@ export default class SwapProgress extends Component {
       enabledButton,
       btcScriptValues,
       destinationBuyAddress,
-      isShowingBitcoinScript,
+      currenciesBTCTransaction,
+      currenciesETHTransaction,
     } = this.state
 
     const progress = Math.floor(360 / (this.swap.flow.steps.length - 1) * this.state.flow.step)
-
-    const currenciesBTCTransaction = ['BTC', 'USDT']
-    const tokens = this.props.tokenItems.map(item => item.currency)
-    const currenciesETHTransaction = tokens.concat('ETH')
 
     const linked = Link.all(this, 'destinationBuyAddress')
 
@@ -289,8 +189,8 @@ export default class SwapProgress extends Component {
             </div>
             <div styleName="stepInfo">
               <div styleName="stepInfo">
-                {this.props.name === `BTC2${buyCurrency}` && <h1 styleName="stepHeading">{this.sellBTC(this.props.data.step)}</h1>}
-                {this.props.name === `${sellCurrency}2BTC` && <h1 styleName="stepHeading">{this.buyBTC(this.props.data.step)}</h1>}
+                {this.props.name === `BTC2${buyCurrency}` && <BuyBitcoin swap={swap} />}
+                {this.props.name === `${sellCurrency}2BTC` && <SellBitcoin swap={swap} />}
               </div>
               {flow.step === swap.flow.stepNumbers.sign && flow.signTransactionHash && (
                 <div>
@@ -350,7 +250,7 @@ export default class SwapProgress extends Component {
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        <FormattedMessage id="swapprogress" defaultMessage="Refund transaction: " />
+                        <FormattedMessage id="swapprogress254" defaultMessage="Refund transaction: " />
                         {flow.refundTransactionHash}
                       </a>
                     </strong>
@@ -358,7 +258,7 @@ export default class SwapProgress extends Component {
                 )
               }
 
-              {flow.step === swap.flow.stepNumbers[`wait-lock-${buyCurrency.toLowerCase()}`]
+              {flow.step > swap.flow.stepNumbers[`wait-lock-${buyCurrency.toLowerCase()}`]
                 && !flow.isFinished
                 && !flow.isEthWithdrawn
                 && currenciesBTCTransaction.includes(buyCurrency) &&
@@ -366,7 +266,7 @@ export default class SwapProgress extends Component {
                   {enabledButton &&
                     <div styleName="btnRefund">
                       <Button gray onClick={this.confirmBTCScriptChecked}>
-                        <FormattedMessage id="swapprogress219" defaultMessage="Try Refaund" />
+                        <FormattedMessage id="swapprogress270" defaultMessage="Try Refaund" />
                       </Button>
                     </div>
                   }

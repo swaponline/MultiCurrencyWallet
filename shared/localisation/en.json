@@ -516,17 +516,11 @@
   },
   {
     "id": "SwapProgress105",
-    "message": "Checking balance.. ",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "Checking balance.. "
   },
   {
     "id": "SwapProgress111",
-    "message": "Creating Bitcoin Script. \n Please wait, it can take a few minutes",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "Creating Bitcoin Script. \n Please wait, it can take a few minutes"
   },
   {
     "id": "SwapProgress117",
@@ -534,10 +528,7 @@
   },
   {
     "id": "SwapProgress123",
-    "message": "ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait"
   },
   {
     "id": "SwapProgress129",
@@ -545,10 +536,7 @@
   },
   {
     "id": "SwapProgress135",
-    "message": "Thank you for using Swap.Online! ",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "Thank you for using Swap.Online! "
   },
   {
     "id": "SwapProgress157",
@@ -584,31 +572,19 @@
   },
   {
     "id": "SwapProgress74",
-    "message": "Thank you for using Swap.Online! ",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "Thank you for using Swap.Online! "
   },
   {
     "id": "SwapProgress80",
-    "message": "Thank you for using Swap.Online! ",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "Thank you for using Swap.Online! "
   },
   {
     "id": "SwapProgress93",
-    "message": "The order creator is offline. Waiting for him.. ",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "The order creator is offline. Waiting for him.. "
   },
   {
     "id": "SwapProgress99",
-    "message": "Create a secret key",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "Create a secret key"
   },
   {
     "id": "Tooltip11",
@@ -1208,10 +1184,7 @@
   },
   {
     "id": "EthToBtc204",
-    "message": "Show bitcoin script",
-    "files": [
-      "shared/pages/Swap/Swap.js"
-    ]
+    "message": "Show bitcoin script"
   },
   {
     "id": "EthToBtc247",
@@ -4301,17 +4274,11 @@
   },
   {
     "id": "BtcToEthToken102",
-    "message": "Withdrawing {Currency} from a contract",
-    "files": [
-      "shared/pages/Swap/SwapList/SwapList.js"
-    ]
+    "message": "Withdrawing {Currency} from a contract"
   },
   {
     "id": "BtcToEthToken111",
-    "message": "Withdrawing {Currency} from a contract",
-    "files": [
-      "shared/pages/Swap/SwapList/SwapList.js"
-    ]
+    "message": "Withdrawing {Currency} from a contract"
   },
   {
     "id": "BtcToEthToken123",
@@ -4329,17 +4296,11 @@
   },
   {
     "id": "BtcToEthToken34",
-    "message": "Confirmation processing",
-    "files": [
-      "shared/pages/Swap/SwapList/SwapList.js"
-    ]
+    "message": "Confirmation processing"
   },
   {
     "id": "BtcToEthToken43",
-    "message": "Confirmation processing",
-    "files": [
-      "shared/pages/Swap/SwapList/SwapList.js"
-    ]
+    "message": "Confirmation processing"
   },
   {
     "id": "swapList97",
@@ -4350,80 +4311,50 @@
   },
   {
     "id": "SwapProgress107",
-    "message": "{buyCurrency} Owner received Bitcoin Script and Secret Hash. Waiting when he creates ETH Contract",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "{buyCurrency} Owner received Bitcoin Script and Secret Hash. Waiting when he creates ETH Contract"
   },
   {
     "id": "SwapProgress115",
-    "message": "{buyCurrency} was transferred to your wallet. Check the balance.",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "{buyCurrency} was transferred to your wallet. Check the balance."
   },
   {
     "id": "SwapProgress132",
-    "message": "Please wait. Confirmation processing",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "Please wait. Confirmation processing"
   },
   {
     "id": "SwapProgress138",
     "message": "Waiting for BTC Owner to create Secret Key, create BTC Script and charge it",
     "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
+      "shared/pages/Swap/SwapProgress/SwapComponetsTexts/BitcoinBuyText.js"
     ]
   },
   {
     "id": "SwapProgress144",
-    "message": "The bitcoin Script was created and charged. Please check the information below",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "The bitcoin Script was created and charged. Please check the information below"
   },
   {
     "id": "SwapProgress150",
-    "message": "Checking balance..",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "Checking balance.."
   },
   {
     "id": "SwapProgress154",
-    "message": "Creating Ethereum Contract. {br} Please wait, it can take a few minutes",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "Creating Ethereum Contract. {br} Please wait, it can take a few minutes"
   },
   {
     "id": "SwapProgress162",
-    "message": "Waiting for BTC Owner to add a Secret Key to ETH Contact",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "Waiting for BTC Owner to add a Secret Key to ETH Contact"
   },
   {
     "id": "SwapProgress168",
-    "message": "BTC was transferred to your wallet. Check the balance.",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "BTC was transferred to your wallet. Check the balance."
   },
   {
     "id": "swapprogress",
-    "message": "Refund transaction:",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "Refund transaction:"
   },
   {
     "id": "swapprogress219",
-    "message": "Try Refaund",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "Try Refaund"
   },
   {
     "id": "swapprogress377",
@@ -4458,6 +4389,195 @@
     "message": "How refund your money ?",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgress.js"
+    ]
+  },
+  {
+    "id": "swapJS341",
+    "message": "Show bitcoin script",
+    "files": [
+      "shared/pages/Swap/Swap.js"
+    ]
+  },
+  {
+    "id": "BitcoinBuyText17",
+    "message": "Please wait. Confirmation processing",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapComponetsTexts/BitcoinBuyText.js"
+    ]
+  },
+  {
+    "id": "BitcoinBuyText29",
+    "message": "The bitcoin Script was created and charged. Please check the information below",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapComponetsTexts/BitcoinBuyText.js"
+    ]
+  },
+  {
+    "id": "BitcoinBuyText33",
+    "message": "Checking balance..",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapComponetsTexts/BitcoinBuyText.js"
+    ]
+  },
+  {
+    "id": "BitcoinBuyText37",
+    "message": "Creating Ethereum Contract. {br} Please wait, it can take a few minutes",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapComponetsTexts/BitcoinBuyText.js"
+    ]
+  },
+  {
+    "id": "BitcoinBuyText41",
+    "message": "Waiting for {buyCurrency} Owner to add a Secret Key to ETH Contact",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapComponetsTexts/BitcoinBuyText.js"
+    ]
+  },
+  {
+    "id": "BitcoinBuyText45",
+    "message": "{buyCurrency} was transferred to your wallet. Check the balance.",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapComponetsTexts/BitcoinBuyText.js"
+    ]
+  },
+  {
+    "id": "BitcoinBuyText49",
+    "message": "Thank you for using Swap.Online",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapComponetsTexts/BitcoinBuyText.js"
+    ]
+  },
+  {
+    "id": "BitcoinBuyText53",
+    "message": "Thank you for using Swap.Online!",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapComponetsTexts/BitcoinBuyText.js"
+    ]
+  },
+  {
+    "id": "BitcoinSellText18",
+    "message": "The order creator is offline. Waiting for him..",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapComponetsTexts/BitcoinSellText.js"
+    ]
+  },
+  {
+    "id": "BitcoinSellText22",
+    "message": "Create a secret key",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapComponetsTexts/BitcoinSellText.js"
+    ]
+  },
+  {
+    "id": "BitcoinSellText26",
+    "message": "Checking balance..",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapComponetsTexts/BitcoinSellText.js"
+    ]
+  },
+  {
+    "id": "BitcoinSellText30",
+    "message": "Creating Bitcoin Script. {br} Please wait, it can take a few minutes",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapComponetsTexts/BitcoinSellText.js"
+    ]
+  },
+  {
+    "id": "BitcoinSellText35",
+    "message": "{buyCurrency} Owner received Bitcoin Script and Secret Hash. Waiting when he creates ETH Contract",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapComponetsTexts/BitcoinSellText.js"
+    ]
+  },
+  {
+    "id": "BitcoinSellText42",
+    "message": "ETH Contract created and charged. Requesting withdrawal {buyCurrency} from ETH Contract. Please wait",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapComponetsTexts/BitcoinSellText.js"
+    ]
+  },
+  {
+    "id": "BitcoinSellText48",
+    "message": "{buyCurrency} was transferred to your wallet. Check the balance.",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapComponetsTexts/BitcoinSellText.js"
+    ]
+  },
+  {
+    "id": "BitcoinSellText52",
+    "message": "Thank you for using Swap.Onlinde!",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapComponetsTexts/BitcoinSellText.js"
+    ]
+  },
+  {
+    "id": "BitcoinSellText56",
+    "message": "Thank you for using Swap.Onlinde!",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapComponetsTexts/BitcoinSellText.js"
+    ]
+  },
+  {
+    "id": "swapprogress254",
+    "message": "Refund transaction:",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapProgress.js"
+    ]
+  },
+  {
+    "id": "swapprogress270",
+    "message": "Try Refaund",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapProgress.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken122",
+    "message": "Withdrawing {Currency} from a contract",
+    "files": [
+      "shared/pages/Swap/SwapList/SwapList.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken129",
+    "message": "Withdrawing {Currency} from a contract",
+    "files": [
+      "shared/pages/Swap/SwapList/SwapList.js"
+    ]
+  },
+  {
+    "id": "swapList111",
+    "message": "{Currency} deposition",
+    "files": [
+      "shared/pages/Swap/SwapList/SwapList.js"
+    ]
+  },
+  {
+    "id": "swapList63",
+    "message": "Confirmation processing",
+    "files": [
+      "shared/pages/Swap/SwapList/SwapList.js"
+    ]
+  },
+  {
+    "id": "swapList74",
+    "message": "Confirmation processing",
+    "files": [
+      "shared/pages/Swap/SwapList/SwapList.js"
+    ]
+  },
+  {
+    "id": "swapList86",
+    "message": "{Currency} deposition",
+    "files": [
+      "shared/pages/Swap/SwapList/SwapList.js"
+    ]
+  },
+  {
+    "id": "swapList93",
+    "message": "{Currency} deposition",
+    "files": [
+      "shared/pages/Swap/SwapList/SwapList.js"
     ]
   }
 ]

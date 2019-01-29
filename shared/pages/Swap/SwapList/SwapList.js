@@ -60,7 +60,7 @@ export default class SwapList extends Component {
               <span styleName="stepNumber">{this.state.flow.step === 1 ? '1' : <i className="fas fa-check" />}</span>
               <p styleName="stepText">
                 <FormattedMessage
-                  id="BtcToEthToken34"
+                  id="swapList63"
                   defaultMessage="Confirmation processing" />
               </p>
             </div>
@@ -71,7 +71,7 @@ export default class SwapList extends Component {
               </span>
               <p styleName="stepText">
                 <FormattedMessage
-                  id="BtcToEthToken43"
+                  id="swapList74"
                   defaultMessage="Confirmation processing" />
               </p>
             </div>
@@ -83,14 +83,14 @@ export default class SwapList extends Component {
             <div style={{ paddingTop: isMobile ? '50px' : '' }} styleName={this.state.flow.step >= 2 && this.state.flow.step < 5  ? 'stepItem active' : 'stepItem active checked'}>
               <span styleName="stepNumber">{this.state.flow.step >= 2 && this.state.flow.step < 5 ? '2' : <i className="fas fa-check" />}</span>
               <p styleName="stepText">
-                <FormattedMessage id="swapList97" defaultMessage="{Currency} deposition" values={{ Currency: sellCurrency === 'BTC' ? sellCurrency : buyCurrency }} />
+                <FormattedMessage id="swapList86" defaultMessage="{Currency} deposition" values={{ Currency: sellCurrency === 'BTC' ? sellCurrency : buyCurrency }} />
               </p>
             </div>
           ) : (
             <div styleName="stepItem">
               <span styleName="stepNumber">{2}</span>
               <p styleName="stepText">
-                <FormattedMessage id="swapList97" defaultMessage="{Currency} deposition" values={{ Currency: sellCurrency === 'BTC' ? sellCurrency : buyCurrency }} />
+                <FormattedMessage id="swapList93" defaultMessage="{Currency} deposition" values={{ Currency: sellCurrency === 'BTC' ? sellCurrency : buyCurrency }} />
               </p>
             </div>
           )
@@ -108,7 +108,7 @@ export default class SwapList extends Component {
             <div styleName="stepItem">
               <span styleName="stepNumber">{3}</span>
               <p styleName="stepText">
-                <FormattedMessage id="swapList97" defaultMessage="{Currency} deposition" values={{ Currency: sellCurrency === 'BTC' ? buyCurrency : sellCurrency }} />
+                <FormattedMessage id="swapList111" defaultMessage="{Currency} deposition" values={{ Currency: sellCurrency === 'BTC' ? buyCurrency : sellCurrency }} />
               </p>
             </div>
           )
@@ -119,14 +119,14 @@ export default class SwapList extends Component {
             <div style={{ paddingTop: isMobile ? '150px' : '' }} styleName={this.state.flow.step === 6 ? 'stepItem active' : 'stepItem active checked'}>
               <span styleName="stepNumber">{this.state.flow.step === 6 ? '4' : <i className="fas fa-check" />}</span>
               <p styleName="stepText">
-                <FormattedMessage id="BtcToEthToken102" defaultMessage="Withdrawing {Currency} from a contract" values={{ Currency: buyCurrency }} />
+                <FormattedMessage id="BtcToEthToken122" defaultMessage="Withdrawing {Currency} from a contract" values={{ Currency: buyCurrency }} />
               </p>
             </div>
           ) : (
             <div styleName="stepItem">
               <span styleName="stepNumber">{4}</span>
               <p styleName="stepText">
-                <FormattedMessage id="BtcToEthToken111" defaultMessage="Withdrawing {Currency} from a contract" values={{ Currency: buyCurrency }} />
+                <FormattedMessage id="BtcToEthToken129" defaultMessage="Withdrawing {Currency} from a contract" values={{ Currency: buyCurrency }} />
               </p>
             </div>
           )
