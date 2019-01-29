@@ -90,7 +90,7 @@ export default class SwapComponent extends PureComponent {
           })
       })
 
-      this.swap = swap
+      window.swap = swap
 
       this.setState({
         swap,
@@ -150,7 +150,7 @@ export default class SwapComponent extends PureComponent {
 
   isBalanceEnough = () => {
     const { swap, balance } = this.state
-    this.swap.flow.syncBalance()
+    swap.flow.syncBalance()
     if (!swap.flow.state.isBalanceEnough) {
       this.setState(() => ({ enoughBalance: false }))
     } else {
