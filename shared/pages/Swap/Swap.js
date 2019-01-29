@@ -159,11 +159,8 @@ export default class SwapComponent extends PureComponent {
   }
 
   requestingWithdrawFee = () => {
-    const { swap:
-      { flow: {acceptWithdrawRequest, sendWithdrawRequest,
-        state: { requireWithdrawFee, requireWithdrawFeeSended, withdrawRequestIncoming, withdrawRequestAccepted }
-      } } }
-    = this.state
+    const { swap: { flow: { acceptWithdrawRequest, sendWithdrawRequest,
+      state: { requireWithdrawFee, requireWithdrawFeeSended, withdrawRequestIncoming, withdrawRequestAccepted } } } } = this.state
 
     if (requireWithdrawFee && !requireWithdrawFeeSended) {
       sendWithdrawRequest()
@@ -220,9 +217,7 @@ export default class SwapComponent extends PureComponent {
       return null
     }
     const isFinished = (swap.flow.state.step >= (swap.flow.steps.length - 1))
-console.log('enoughBalance', enoughBalance)
-console.log(swap)
-console.log('swap.flow.state.isBalanceEnough', swap.flow.state.isBalanceEnough)
+
     return (
       <div styleName="swap">
         {swap.flow.state.step === 4 && !enoughBalance
