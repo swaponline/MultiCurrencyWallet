@@ -118,7 +118,7 @@ export default class AddOffer extends Component {
       : balance
 
     if (coinsWithDynamicFee.includes(sellCurrency)) {
-      minAmount[sellCurrency] = await helpers[sellCurrency].estimateFeeValue({ method: 'swap', speed: 'normal' })
+      minAmount[sellCurrency] = await helpers[sellCurrency].estimateFeeValue({ method: 'swap', speed: 'fast' })
 
       const finalBalance = BigNumber(currentBalance).minus(minAmount[sellCurrency]) > 0 ? BigNumber(currentBalance).minus(minAmount[sellCurrency]) : 0
 

@@ -10,9 +10,9 @@ const isEthToken = ({ name }) => Object.keys(config.erc20).includes(name)
 const estimateFeeValue = async ({ method = 'send', speed } = {}) => {
   const gasPrice = await estimateGasPrice({ speed })
   const feeValue = new BigNumber(constants.defaultFeeRates.ethToken.limit[method])
-    .times(gasPrice)
-    .times(1e-18)
-    .toNumber()
+    .multipliedBy(gasPrice)
+    .multipliedBy(1e-18)
+    .toString()
 
   return feeValue
 }

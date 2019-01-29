@@ -120,10 +120,10 @@ export default class WithdrawModal extends React.Component {
       }))
     }
 
-    minAmount.erc = await helpers.ethToken.estimateFeeValue({ method: 'send', speed: 'normal' })
+    minAmount.erc = await helpers.ethToken.estimateFeeValue({ method: 'send', speed: 'fast' })
 
     if (coinsWithDynamicFee.includes(currentCoin)) {
-      minAmount[currentCoin] = await helpers[currentCoin].estimateFeeValue({ method: 'send', speed: 'normal' })
+      minAmount[currentCoin] = await helpers[currentCoin].estimateFeeValue({ method: 'send', speed: 'fast' })
     }
   }
 
@@ -166,7 +166,7 @@ export default class WithdrawModal extends React.Component {
     let sendOptions = {
       to,
       amount,
-      speed: 'normal',
+      speed: 'fast',
     }
 
     if (helpers.ethToken.isEthToken({ name: currency.toLowerCase() })) {
