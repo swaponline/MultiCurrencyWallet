@@ -53,39 +53,78 @@ export default class SwapList extends Component {
   render() {
     const { data: { step }, sellCurrency, buyCurrency } = this.props
     const { flow, swap: { flow : { stepNumbers } } } = this.state
-    let stepListArray = [
+    let stepListArraySellCurrancy = [
       {
         current : 1,
-        start: 1,
-        stop: 2,
+        start: stepNumbers['sign'],
+        stop: stepNumbers[`lock-${sellCurrency.toLowerCase()}`],
         padding: 0,
-        text: 'Confirmation processing',
+        text: 'Confirmation processing Sell',
       },
       {
         current : 2,
-        start: 2,
-        stop: 5,
+        start: stepNumbers[`lock-${sellCurrency.toLowerCase()}`],
+        stop: stepNumbers[`wait-lock-${buyCurrency.toLowerCase()}`],
         padding: 50,
-        text: `${sellCurrency === 'BTC' ? sellCurrency : buyCurrency} deposition`,
+        text: `${sellCurrency} deposition`,
       },
       {
         current : 3,
-        start: 5,
-        stop: 6,
+        start: stepNumbers[`wait-lock-${buyCurrency.toLowerCase()}`],
+        stop: stepNumbers[`withdraw-${buyCurrency.toLowerCase()}`],
         padding: 100,
-        text: `${sellCurrency === 'BTC' ? buyCurrency : sellCurrency} deposition`,
+        text: `${buyCurrency} deposition`,
       },
       {
         current : 4,
-        start: 6,
-        stop: 7,
+        start: stepNumbers[`withdraw-${buyCurrency.toLowerCase()}`],
+        stop: stepNumbers['finish'],
         padding: 150,
         text: `Withdrawing ${buyCurrency} from a contract`,
       },
       {
         current : 5,
-        start: 7,
-        stop: 8,
+        start: stepNumbers['finish'],
+        stop: stepNumbers['end'],
+        padding: 200,
+        text: 'Finished!',
+      },
+    ]
+
+
+    let stepListArrayBuyCurrancy = [
+      {
+        current : 1,
+        start: stepNumbers['sign'],
+        stop: stepNumbers[`wait-lock-${buyCurrency.toLowerCase()}`],
+        padding: 0,
+        text: 'Confirmation processing Buy',
+      },
+      {
+        current : 2,
+        start: stepNumbers[`wait-lock-${buyCurrency.toLowerCase()}`],
+        stop: stepNumbers[`lock-${sellCurrency.toLowerCase()}`],
+        padding: 50,
+        text: `${sellCurrency} deposition`,
+      },
+      {
+        current : 3,
+        start: stepNumbers[`lock-${sellCurrency.toLowerCase()}`],
+        stop: stepNumbers[`wait-withdraw-${sellCurrency.toLowerCase()}`],
+        padding: 100,
+        text: `${buyCurrency} deposition`,
+      },
+      {
+        current : 4,
+        start: stepNumbers[`wait-withdraw-${sellCurrency.toLowerCase()}`],
+        stop: stepNumbers[`withdraw-${buyCurrency.toLowerCase()}`],
+        padding: 150,
+        text: `Withdrawing ${buyCurrency} from a contract`,
+      },
+      {
+        current : 5,
+        start: stepNumbers[`withdraw-${buyCurrency.toLowerCase()}`],
+        stop: stepNumbers['finish'],
         padding: 200,
         text: 'Finished!',
       },
@@ -93,7 +132,10 @@ export default class SwapList extends Component {
 
     return (
       <div styleName="stepList">
-        {stepListArray.map(item => <div key={item.current}><SwapListItem flow={flow} swap={swap} listItem={item} /></div>)}
+        {sellCurrency === 'BTC' 
+          ? stepListArraySellCurrancy.map(item => <div key={item.current}><SwapListItem flow={flow} swap={swap} listItem={item} /></div>)
+          : stepListArrayBuyCurrancy.map(item => <div key={item.current}><SwapListItem flow={flow} swap={swap} listItem={item} /></div>) 
+        }
       </div>
     )
   }
