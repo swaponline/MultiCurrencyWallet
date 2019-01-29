@@ -1,5 +1,5 @@
 import React        from 'react'
-import { Route, Redirect }    from 'react-router'
+import { Route }    from 'react-router'
 import { Switch }   from 'react-router-dom'
 import { links }    from 'helpers'
 import { localisePrefix } from 'helpers/locale'
