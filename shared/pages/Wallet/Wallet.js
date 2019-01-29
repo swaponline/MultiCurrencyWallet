@@ -118,7 +118,7 @@ export default class Wallet extends Component {
 
     const hasAtLeastTenDollarBalance = hasSignificantBalance(currencyBalance)
 
-    if (hasAtLeastTenDollarBalance) { // (process.env.MAINNET && hasAtLeastTenDollarBalance) {
+    if (process.env.MAINNET && hasAtLeastTenDollarBalance) {
       this.setState({ isShowingPromoText: true })
     }
   }
