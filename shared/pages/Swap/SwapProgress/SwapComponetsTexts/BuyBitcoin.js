@@ -59,7 +59,7 @@ export default class BuyBitcoin extends Component {
   }
 
   render() {
-    console.log(this.props.swap.flow.state.step)
+
     return (
       <h1 styleName="stepHeading">{this.buyBTC(this.props.swap.flow.state.step)}</h1>
     )
