@@ -90,7 +90,7 @@ export default class SwapComponent extends PureComponent {
           })
       })
 
-      window.swap = swap
+      this.swap = swap
 
       this.setState({
         swap,
@@ -123,7 +123,7 @@ export default class SwapComponent extends PureComponent {
 
       timer = setInterval(() => {
         this.catchWithdrawError()
-        this.checkBalance()
+        this.isBalanceEnough()
         this.requestingWithdrawFee()
       }, 5000)
     }
@@ -148,23 +148,10 @@ export default class SwapComponent extends PureComponent {
     localStorage.setItem('swapId', JSON.stringify(swapsId))
   }
 
-  checkBalance = async () => {
-    const { swap } = this.state
-
-    if (helpers.ethToken.isEthToken({ name: swap.sellCurrency.toLowerCase() })) {
-      const currencyBalance = await actions.token.getBalance(swap.sellCurrency.toLowerCase())
-      this.setState(() => ({ balance: currencyBalance }))
-    } else {
-      const currencyBalance = await actions[swap.sellCurrency.toLowerCase()].getBalance()
-      this.setState(() => ({ balance: currencyBalance }))
-    }
-    this.isBalanceEnough()
-  }
-
   isBalanceEnough = () => {
     const { swap, balance } = this.state
-    swap.flow.syncBalance()
-    if (swap.sellAmount.toNumber() > balance) {
+    this.swap.flow.syncBalance()
+    if (!swap.flow.state.isBalanceEnough) {
       this.setState(() => ({ enoughBalance: false }))
     } else {
       this.setState(() => ({ enoughBalance: true }))
