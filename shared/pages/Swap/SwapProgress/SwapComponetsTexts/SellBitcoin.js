@@ -10,48 +10,49 @@ import { FormattedMessage } from 'react-intl'
 export default class SellBitcoin extends Component {
 
   sellBTC = (step) => {
-    const { swap: { sellCurrency, buyCurrency } } = this.props
+    const { swap: { sellCurrency, buyCurrency, flow : { stepNumbers } } } = this.props
 
     switch (step) {
-      case 1:
+      case stepNumbers.sign:
         return (
           <FormattedMessage id="BitcoinSellText18" defaultMessage="The order creator is offline. Waiting for him.." />
         )
-      case 2:
+      case stepNumbers[`submit-secret`]:
         return (
           <FormattedMessage id="BitcoinSellText22" defaultMessage="Create a secret key" />
         )
-      case 3:
+      case stepNumbers[`sync-balance`]:
         return (
           <FormattedMessage id="BitcoinSellText26" defaultMessage="Checking balance.." />
         )
-      case 4:
+      case stepNumbers[`lock-${sellCurrency.toLowerCase()}`]:
         return (
-          <FormattedMessage id="BitcoinSellText30" defaultMessage="Creating Bitcoin Script. {br} Please wait, it can take a few minutes" values={{ br: <br /> }} />
+          <FormattedMessage id="BitcoinSellText30" defaultMessage="Creating Bitcoin Script. {br} Please wait, it can take a few minutes" values={{ br: <br />, sellCurrency: `${sellCurrency}` }} />
         )
-      case 5:
+      case stepNumbers[`wait-lock-${buyCurrency.toLowerCase()}`]:
         return (
           <FormattedMessage
             id="BitcoinSellText35"
             defaultMessage="{buyCurrency} Owner received Bitcoin Script and Secret Hash. Waiting when he creates ETH Contract"
             values={{ buyCurrency: `${buyCurrency}` }} />
         )
-      case 6:
+      case stepNumbers[`withdraw-${buyCurrency.toLowerCase()}`]:
         return (
           <FormattedMessage
             id="BitcoinSellText42"
             defaultMessage="ETH Contract created and charged. Requesting withdrawal {buyCurrency} from ETH Contract. Please wait"
-            values={{ buyCurrency: `${buyCurrency}` }} />
+            values={{ buyCurrency: `${buyCurrency}` }}
+          />
         )
-      case 7:
+      case stepNumbers.finish:
         return  (
           <FormattedMessage id="BitcoinSellText48" defaultMessage="{buyCurrency} was transferred to your wallet. Check the balance." values={{ buyCurrency: `${buyCurrency}` }} />
         )
-      case 8:
+      case stepNumbers.end:
         return (
           <FormattedMessage id="BitcoinSellText52" defaultMessage="Thank you for using Swap.Onlinde!" />
         )
-      case 9:
+      case stepNumbers.end:
         return (
           <FormattedMessage id="BitcoinSellText56" defaultMessage="Thank you for using Swap.Onlinde!" />
         )
@@ -61,6 +62,7 @@ export default class SellBitcoin extends Component {
   }
 
   render() {
+  
     return (
       <h1 styleName="stepHeading">{this.sellBTC(this.props.swap.flow.state.step)}</h1>
     )

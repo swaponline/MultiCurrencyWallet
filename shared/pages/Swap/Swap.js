@@ -129,7 +129,7 @@ export default class SwapComponent extends PureComponent {
       timer = setInterval(() => {
         this.catchWithdrawError()
         this.requestingWithdrawFee()
-        if (step <= 4) {
+        if (step === 3) {
           this.isBalanceEnough()
         }
       }, 5000)
@@ -311,7 +311,7 @@ export default class SwapComponent extends PureComponent {
       enoughBalance,
       paddingContainerValue,
       isShowingBitcoinScript,
-      swap: { sellCurrency, buyCurrency, id, flow: { steps, state: { step } }  },
+      swap: { sellCurrency, buyCurrency, id, flow: { steps, stepNumbers, state: { step } }  },
     } = this.state
 
     if (!swap || !peer || !isAmountMore) {
@@ -322,7 +322,7 @@ export default class SwapComponent extends PureComponent {
     return (
       <div styleName="swap">
         <div className={this.props.styles.swapContainer} style={{ paddingTop: isMobile ? `${paddingContainerValue}px` : '' }}>
-          {!enoughBalance && step === 4
+          {!enoughBalance && step === stepNumbers[`sync-balance`]
             ? (
               <div className={this.props.styles.swapDepositWindow}>
                 <DepositWindow currencyData={currencyData} swap={swap} flow={swap.flow.state} tokenItems={tokenItems} />

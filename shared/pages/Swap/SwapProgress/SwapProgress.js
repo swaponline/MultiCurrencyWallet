@@ -189,8 +189,8 @@ export default class SwapProgress extends Component {
             </div>
             <div styleName="stepInfo">
               <div styleName="stepInfo">
-                {this.props.name === `BTC2${buyCurrency}` && <BuyBitcoin swap={swap} />}
-                {this.props.name === `${sellCurrency}2BTC` && <SellBitcoin swap={swap} />}
+                {this.props.name === `BTC2${buyCurrency}` && <SellBitcoin swap={swap} />}
+                {this.props.name === `${sellCurrency}2BTC` && <BuyBitcoin swap={swap} /> }
               </div>
               {flow.step === swap.flow.stepNumbers.sign && flow.signTransactionHash && (
                 <div>
