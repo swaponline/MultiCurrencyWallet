@@ -8,6 +8,8 @@ import { isMobile } from 'react-device-detect'
 import CSSModules from 'react-css-modules'
 import styles from './SwapList.scss'
 
+import SwapListItem from './SwapListItem/SwapListItem'
+
 import { FormattedMessage } from 'react-intl'
 
 
@@ -50,104 +52,48 @@ export default class SwapList extends Component {
 
   render() {
     const { data: { step }, sellCurrency, buyCurrency } = this.props
-    const { flow, swap } = this.state
+    const { flow, swap: { flow : { stepNumbers } } } = this.state
+    let stepListArray = [
+      {
+        current : 1,
+        start: 1,
+        stop: 2,
+        padding: 0,
+        text: 'Confirmation processing',
+      },
+      {
+        current : 2,
+        start: 2,
+        stop: 5,
+        padding: 50,
+        text: `${sellCurrency === 'BTC' ? sellCurrency : buyCurrency} deposition`,
+      },
+      {
+        current : 3,
+        start: 5,
+        stop: 6,
+        padding: 100,
+        text: `${sellCurrency === 'BTC' ? buyCurrency : sellCurrency} deposition`,
+      },
+      {
+        current : 4,
+        start: 6,
+        stop: 7,
+        padding: 150,
+        text: `Withdrawing ${buyCurrency} from a contract`,
+      },
+      {
+        current : 5,
+        start: 7,
+        stop: 8,
+        padding: 200,
+        text: 'Finished!',
+      },
+    ]
 
     return (
       <div styleName="stepList">
-        {
-          this.state.flow.step >= 1 ? (
-            <div styleName={this.state.flow.step === 1 ? 'stepItem active' : 'stepItem active checked'}>
-              <span styleName="stepNumber">{this.state.flow.step === 1 ? '1' : <i className="fas fa-check" />}</span>
-              <p styleName="stepText">
-                <FormattedMessage
-                  id="swapList63"
-                  defaultMessage="Confirmation processing" />
-              </p>
-            </div>
-          ) : (
-            <div styleName="stepItem">
-              <span styleName="stepNumber">
-                {1}
-              </span>
-              <p styleName="stepText">
-                <FormattedMessage
-                  id="swapList74"
-                  defaultMessage="Confirmation processing" />
-              </p>
-            </div>
-          )
-        }
-
-        {
-          this.state.flow.step >= 2 || (this.state.flow.step > 2 && this.state.flow.step <= 8) ? (
-            <div style={{ paddingTop: isMobile ? '50px' : '' }} styleName={this.state.flow.step >= 2 && this.state.flow.step < 5  ? 'stepItem active' : 'stepItem active checked'}>
-              <span styleName="stepNumber">{this.state.flow.step >= 2 && this.state.flow.step < 5 ? '2' : <i className="fas fa-check" />}</span>
-              <p styleName="stepText">
-                <FormattedMessage id="swapList86" defaultMessage="{Currency} deposition" values={{ Currency: sellCurrency === 'BTC' ? sellCurrency : buyCurrency }} />
-              </p>
-            </div>
-          ) : (
-            <div styleName="stepItem">
-              <span styleName="stepNumber">{2}</span>
-              <p styleName="stepText">
-                <FormattedMessage id="swapList93" defaultMessage="{Currency} deposition" values={{ Currency: sellCurrency === 'BTC' ? sellCurrency : buyCurrency }} />
-              </p>
-            </div>
-          )
-        }
-
-        {
-          this.state.flow.step >= 5 ? (
-            <div style={{ paddingTop: isMobile ? '100px' : '' }} styleName={this.state.flow.step === 5 ? 'stepItem active' : 'stepItem active checked'}>
-              <span styleName="stepNumber">{this.state.flow.step === 5 ? '3' : <i className="fas fa-check" />}</span>
-              <p styleName="stepText">
-                <FormattedMessage id="swapList97" defaultMessage="{Currency} deposition" values={{ Currency: sellCurrency === 'BTC' ? buyCurrency : sellCurrency }} />
-              </p>
-            </div>
-          ) : (
-            <div styleName="stepItem">
-              <span styleName="stepNumber">{3}</span>
-              <p styleName="stepText">
-                <FormattedMessage id="swapList111" defaultMessage="{Currency} deposition" values={{ Currency: sellCurrency === 'BTC' ? buyCurrency : sellCurrency }} />
-              </p>
-            </div>
-          )
-        }
-
-        {
-          this.state.flow.step >= 6 ? (
-            <div style={{ paddingTop: isMobile ? '150px' : '' }} styleName={this.state.flow.step === 6 ? 'stepItem active' : 'stepItem active checked'}>
-              <span styleName="stepNumber">{this.state.flow.step === 6 ? '4' : <i className="fas fa-check" />}</span>
-              <p styleName="stepText">
-                <FormattedMessage id="BtcToEthToken122" defaultMessage="Withdrawing {Currency} from a contract" values={{ Currency: buyCurrency }} />
-              </p>
-            </div>
-          ) : (
-            <div styleName="stepItem">
-              <span styleName="stepNumber">{4}</span>
-              <p styleName="stepText">
-                <FormattedMessage id="BtcToEthToken129" defaultMessage="Withdrawing {Currency} from a contract" values={{ Currency: buyCurrency }} />
-              </p>
-            </div>
-          )
-        }
-        {
-          this.state.flow.step >= 7 ? (
-            <div style={{ paddingTop: isMobile ? '200px' : '' }} styleName={this.state.flow.step >= 7 ? 'stepItem active checked' : ''}>
-              <span styleName="stepNumber">{this.state.flow.step >= 7 ? <i className="fas fa-check" /> : ''}</span>
-              <p styleName="stepText">
-                <FormattedMessage id="BtcToEthToken123" defaultMessage="Finished!" />
-              </p>
-            </div>
-          ) : (
-            <div styleName="stepItem">
-              <span styleName="stepNumber">{5}</span>
-              <p styleName="stepText">
-                <FormattedMessage id="BtcToEthToken132" defaultMessage="Finished!" />
-              </p>
-            </div>
-          )
-        }
+        {stepListArray.map(item => <div key={item.current}><SwapListItem flow={flow} swap={swap} listItem={item} /></div>)}
       </div>
     )
   }
