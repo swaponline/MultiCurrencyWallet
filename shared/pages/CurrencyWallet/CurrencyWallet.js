@@ -45,6 +45,19 @@ const titles = [
 @CSSModules(styles)
 export default class CurrencyWallet extends Component {
 
+  constructor() {
+    super()
+
+    this.state = {
+      currency: null,
+      address: null,
+      contractAddress: null,
+      decimals: null,
+      balance: null,
+      isBalanceEmpty: false,
+    }
+  }
+
   static getDerivedStateFromProps({ match: { params: { fullName } }, intl: { locale }, items, history }) {
     const item = items.map(item => item.fullName.toLowerCase())
 
@@ -72,13 +85,13 @@ export default class CurrencyWallet extends Component {
     history.push(localisedUrl(locale, `/NotFound`))
   }
 
+  componentDidMount() {
+    const { currency } = this.state
 
-    state = {
-      name: null,
-      address: null,
-      balance: null,
-      isBalanceEmpty: false,
-    }
+    actions.analytics.dataEvent(`open-page-${currency.toLowerCase()}-wallet`)
+    actions.user.setTransactions()
+    actions.core.getSwapHistory()
+  }
 
   handleReceive = () => {
     const { currency, address } = this.state
