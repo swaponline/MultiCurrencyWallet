@@ -183,6 +183,8 @@ export default class DepositWindow extends Component {
       isBalanceFetching,
     } = this.state
 
+    const balanceToRender = Math.floor(balance * 1e6) / 1e6
+
     return (
       <Fragment>
         <a
@@ -263,7 +265,7 @@ export default class DepositWindow extends Component {
                   id="deposit231"
                   defaultMessage="Received {balance} / {need} {tooltip}"
                   values={{
-                    balance: <strong>{balance} {swap.sellCurrency}</strong>,
+                    balance: <strong>{balanceToRender} {swap.sellCurrency}</strong>,
                     need: <strong>{sellAmount.toFixed(6)} {swap.sellCurrency}</strong>,
                     tooltip:
                       <Tooltip id="dep226">
