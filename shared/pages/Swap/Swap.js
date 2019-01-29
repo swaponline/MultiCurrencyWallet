@@ -115,7 +115,7 @@ export default class SwapComponent extends PureComponent {
 
   componentDidMount() {
 
-    const { swap: { flow: { state: { canCreateEthTransaction, requireWithdrawFeeSended } } }, continueSwap } = this.state
+    const { swap: { flow: { state: { canCreateEthTransaction, requireWithdrawFeeSended, step } } }, continueSwap } = this.state
     if (this.state.swap !== null) {
 
       let timer
@@ -128,8 +128,10 @@ export default class SwapComponent extends PureComponent {
 
       timer = setInterval(() => {
         this.catchWithdrawError()
-        this.isBalanceEnough()
         this.requestingWithdrawFee()
+        if (step <= 4) {
+          this.isBalanceEnough()
+        }
       }, 5000)
     }
     this.changePaddingValue()
