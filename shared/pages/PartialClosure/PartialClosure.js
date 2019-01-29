@@ -72,13 +72,20 @@ export default class PartialClosure extends Component {
     }
   }
 
-  constructor({ currenciesData }) {
+  constructor({ currenciesData, match: { params: { buy, sell, locale } }, history, ...props }) {
     super()
     const ethAddress = currenciesData.filter(item => item.currency === 'ETH')
 
+    const sellToken = sell || 'eth'
+    const buyToken = buy || 'btc'
+    const localization = locale ? `/${locale}` : ''
+
+    if (!props.location.hash.includes('#widget')) {
+      history.push(`${localization}/exchange/${sellToken}-to-${buyToken}`)
+    }
     this.state = {
-      haveCurrency: 'btc',
-      getCurrency: 'eth',
+      haveCurrency: sellToken,
+      getCurrency: buyToken,
       haveAmount: 0,
       haveUsd: 0,
       getUsd: 0,
@@ -136,6 +143,15 @@ export default class PartialClosure extends Component {
       }
     }
     return true
+  }
+
+  additionalPathing = (sell, buy) => {
+    const localization = this.props.match.params.locale
+      ? `/${this.props.match.params.locale}`
+      : ''
+    if (!this.props.location.hash.includes('#widget')) {
+      this.props.history.push(`${localization}/exchange/${sell}-to-${buy}`)
+    }
   }
 
   getUsdBalance = async () => {
@@ -345,6 +361,7 @@ export default class PartialClosure extends Component {
       getCurrency: value,
       customWallet: this.state.customWalletUse ? this.wallets[value.toUpperCase()] : '',
     }))
+    this.additionalPathing(this.state.haveCurrency, value)
   }
 
   handleSetHaveValue = ({ value }) => {
@@ -352,6 +369,7 @@ export default class PartialClosure extends Component {
     this.setState(() => ({
       haveCurrency: value,
     }))
+    this.additionalPathing(value, this.state.getCurrency)
   }
 
   handleFlipCurrency = () => {
@@ -362,19 +380,18 @@ export default class PartialClosure extends Component {
       getCurrency: this.state.haveCurrency,
       customWallet: this.state.customWalletUse ? this.wallets[this.state.haveCurrency.toUpperCase()] : '',
     }))
+    this.additionalPathing(this.state.getCurrency, this.state.haveCurrency)
   }
 
   handlePush = () => {
     const { intl: { locale } } = this.props
     const { haveCurrency, getCurrency } = this.state
-
+    const localization = this.props.match.params.locale
+      ? `/${this.props.match.params.locale}`
+      : ''
     const tradeTicker = `${haveCurrency}-${getCurrency}`
 
-    if (constants.tradeTicker.includes(tradeTicker.toUpperCase())) {
-      this.props.history.push(tradeTicker)
-    } else {
-      this.props.history.push(tradeTicker.split('-').reverse().join('-'))
-    }
+    this.props.history.push(`${localization}/${tradeTicker}`)
   }
 
   setClearState = () => {

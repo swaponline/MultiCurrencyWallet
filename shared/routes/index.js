@@ -1,5 +1,5 @@
 import React        from 'react'
-import { Route }    from 'react-router'
+import { Route, Redirect }    from 'react-router'
 import { Switch }   from 'react-router-dom'
 import { links }    from 'helpers'
 import { localisePrefix } from 'helpers/locale'
@@ -25,6 +25,7 @@ const routes = (
 
     <Route path={`${localisePrefix}${links.home}:buy-:sell/:orderId`} component={Home} />
     <Route path={`${localisePrefix}${links.home}:buy-:sell`} component={Home} />
+    <Route path={`${localisePrefix}${links.exchange}/:sell-to-:buy`} component={PartialClosure} />
     <Route path={`${localisePrefix}${links.exchange}`} component={PartialClosure} />
 
     <Route path={`${localisePrefix}${links.aboutus}`} component={About} />
