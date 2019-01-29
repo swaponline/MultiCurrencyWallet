@@ -46,7 +46,7 @@ export default class SwapComponent extends PureComponent {
     continueSwap: true,
     enoughBalance: true,
     depositWindow: false,
-    shouldStopCheckingWithdrawError: false,
+    shouldStopCheckSendingOfRequesting: false,
   }
 
   timerFeeNotication = null
@@ -124,7 +124,7 @@ export default class SwapComponent extends PureComponent {
       timer = setInterval(() => {
         this.catchWithdrawError()
         this.checkBalance()
-        this.reqestingWithdrawFee()
+        this.requestingWithdrawFee()
       }, 5000)
     }
   }
@@ -163,7 +163,7 @@ export default class SwapComponent extends PureComponent {
 
   isBalanceEnough = () => {
     const { swap, balance } = this.state
-
+    swap.flow.syncBalance()
     if (swap.sellAmount.toNumber() > balance) {
       this.setState(() => ({ enoughBalance: false }))
     } else {
@@ -171,55 +171,32 @@ export default class SwapComponent extends PureComponent {
     }
   }
 
-  reqestingWithdrawFee = () => {
+  requestingWithdrawFee = () => {
+    const { swap:
+      { flow: {acceptWithdrawRequest, sendWithdrawRequest,
+        state: { requireWithdrawFee, requireWithdrawFeeSended, withdrawRequestIncoming, withdrawRequestAccepted }
+      } } }
+    = this.state
 
-    if (this.state.swap.flow.state.requireWithdrawFee && !this.state.swap.flow.state.requireWithdrawFeeSended) {
-      this.state.swap.flow.sendWithdrawRequest()
+    if (requireWithdrawFee && !requireWithdrawFeeSended) {
+      sendWithdrawRequest()
     }
-    if (this.state.swap.flow.state.withdrawRequestIncoming && !this.state.swap.flow.state.withdrawRequestAccepted) {
-      this.state.swap.flow.acceptWithdrawRequest()
+    if (withdrawRequestIncoming && !withdrawRequestAccepted) {
+      acceptWithdrawRequest()
     }
   }
 
   catchWithdrawError = () => {
-    const { swap, isStopCheck, continueSwap } = this.state
+    const { swap, shouldStopCheckSendingOfRequesting, continueSwap } = this.state
 
     if (swap.sellCurrency === 'BTC'
       && helpers.ethToken.isEthToken({ name: swap.buyCurrency.toLowerCase() })
-      && !isStopCheck) {
+      && !shouldStopCheckSendingOfRequesting) {
       this.setState(() => ({ continueSwap: true }))
     } else {
       this.checkEnoughFee()
       this.setState(() => ({
-        isStopCheck: true,
-      }))
-    }
-  }
-
-  requesting = () => {
-    if (this.state.swap.flow.state.requireWithdrawFee && !this.state.swap.flow.state.requireWithdrawFeeSended) {
-      this.state.swap.flow.sendWithdrawRequest()
-    }
-    if (this.state.swap.flow.state.withdrawRequestIncoming && !this.state.swap.flow.state.withdrawRequestAccepted) {
-      this.state.swap.flow.acceptWithdrawRequest()
-    }
-  }
-
-  checkIsTokenIncludes = () => {
-    this.props.tokenItems.map(item => item.name).includes(this.props.swap.participantSwap._swapName.toLowerCase())
-  }
-
-  catchWithdrawError = () => {
-    const { swap, shouldStopCheckingWithdrawError, continueSwap } = this.state
-
-    if (swap.sellCurrency === 'BTC'
-      && helpers.ethToken.isEthToken({ name: swap.buyCurrency.toLowerCase() })
-      && !shouldStopCheckingWithdrawError) {
-      this.setState(() => ({ continueSwap: true }))
-    } else {
-      this.checkEnoughFee()
-      this.setState(() => ({
-        shouldStopCheckingWithdrawError: true,
+        shouldStopCheckSendingOfRequesting: true,
       }))
     }
   }
@@ -256,7 +233,9 @@ export default class SwapComponent extends PureComponent {
       return null
     }
     const isFinished = (swap.flow.state.step >= (swap.flow.steps.length - 1))
-
+console.log('enoughBalance', enoughBalance)
+console.log(swap)
+console.log('swap.flow.state.isBalanceEnough', swap.flow.state.isBalanceEnough)
     return (
       <div styleName="swap">
         {swap.flow.state.step === 4 && !enoughBalance
