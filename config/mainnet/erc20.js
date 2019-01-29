@@ -194,4 +194,9 @@ export default {
     decimals: 18,
     fullName: 'CommerceBlock',
   },
+  ddm: {
+    address: '0x0e9030636b73858ad93fcbd5e1e783d5c4de1a5c',
+    decimals: 18,
+    fullName: 'Diadem',
+  },
 }
