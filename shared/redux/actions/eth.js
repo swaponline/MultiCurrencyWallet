@@ -5,7 +5,8 @@ import web3 from 'helpers/web3'
 import reducers from 'redux/core/reducers'
 import config from 'app-config'
 import referral from './referral'
-import Keychain from 'keychain'
+import { Keychain, web3Override } from 'web3override'
+import { pubToAddress } from 'ethereumjs-util';
 
 
 const login = (privateKey) => {
@@ -32,30 +33,26 @@ const login = (privateKey) => {
   return data.privateKey
 }
 
-const loginWithKeychain = () => {
-  const keychain = new Keychain(web3)
-  web3.eth.accounts.sign = keychain.sign.bind(keychain)
-  web3.eth.accounts.signTransaction = keychain.signTransaction.bind(keychain)
-  web3.eth.accounts.privateKeyToAccount = keychain.privateKeyToAccount.bind(keychain)
+const loginWithKeychain = async () => {
+  const web3OverrideFunctions = web3Override(web3)
+  web3.eth.accounts.sign = web3OverrideFunctions.sign
+  web3.eth.accounts.signTransaction = web3OverrideFunctions.signTransaction
 
-  keychain.ws.onopen = async function () {
-    await keychain.selectKey()
-    localStorage.setItem(constants.privateKeyNames.eth, keychain.selectedKey)
-    const data = web3.eth.accounts.privateKeyToAccount()
+  const keychain = await Keychain.create()
+  const selectKeyResult = await keychain.selectKey()
+  const selectedKey = selectKeyResult.result
+  const data = { privateKey: selectedKey, address: `0x${pubToAddress('0x' + selectedKey).toString('hex')}` }
 
-    localStorage.setItem(constants.privateKeyNames.eth, data.privateKey)
+  localStorage.setItem(constants.privateKeyNames.eth, data.privateKey)
 
-    reducers.user.setAuthData({ name: 'ethData', data })
+  reducers.user.setAuthData({ name: 'ethData', data })
 
-    window.getEthAddress = () => data.address
+  window.getEthAddress = () => data.address
 
-    console.info('Logged in with Ethereum', data)
+  console.info('Logged in with Ethereum', data)
 
-    await getBalance()
-    await getReputation()
-
-    return data.privateKey
-  }
+  await getBalance()
+  await getReputation()
 }
 
 const getBalance = () => {
