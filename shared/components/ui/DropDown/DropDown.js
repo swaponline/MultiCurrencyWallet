@@ -72,6 +72,9 @@ export default class DropDown extends Component {
     // for example we'd like to change `selectedValue` manually
     if (typeof onSelect === 'function') {
       onSelect(item)
+      this.setState({
+        selectedValue: item.value,
+      })
     }
 
     toggleClose()
@@ -101,7 +104,7 @@ export default class DropDown extends Component {
   }
 
   render() {
-    const { className, items, isToggleActive } = this.props
+    const { className, items, isToggleActive, selectedValue } = this.props
     const { inputValue } = this.state
 
     const dropDownStyleName = cx('dropDown', {
@@ -142,7 +145,7 @@ export default class DropDown extends Component {
             isToggleActive && (
               <div styleName="select">
                 {isToggleActive && inputValue.length ? (
-                  itemsFiltered.map((item) => (
+                  itemsFiltered.filter(item => item.value !== selectedValue).map((item) => (
                     <div
                       key={item.value}
                       styleName="option"
@@ -155,7 +158,7 @@ export default class DropDown extends Component {
                     </div>
                   ))
                 ) : (
-                  items.map((item) => (
+                  items.filter(item => item.value !== selectedValue).map((item) => (
                     <div
                       key={item.value}
                       styleName="option"
