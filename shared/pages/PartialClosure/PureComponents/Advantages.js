@@ -5,7 +5,7 @@ import CSSModules from 'react-css-modules'
 import styles from './Advantages.scss'
 
 
-const Advantages = () => (
+const Advantages = (props) => (
   <div styleName="advantages">
     <div styleName="advantages__content">
 
@@ -112,7 +112,28 @@ const Advantages = () => (
       </article> */}
 
     </div>
+
+    <div styleName="advFooter">
+      <button
+        onClick={() => window.open(props.intl.formatMessage({ id: 'advVidLink', defaultMessage: 'https://youtu.be/Jhrb7xOT_7s' }), '_blank')}
+        styleName="advFooter__btn"
+      >
+        <img src="https://exchange.swap.online/images/icons/video-play.png" alt="Play the video" />
+        <div>
+          <h4>
+            <FormattedMessage
+              id="advantagesButtonTitle"
+              defaultMessage="How it works?"
+            />
+          </h4>
+          <FormattedMessage
+            id="advantagesButtonTxt"
+            defaultMessage="(Watch the video)"
+          />
+        </div>
+      </button>
+    </div>
   </div>
 )
 
-export default injectIntl(CSSModules(Advantages, styles))
+export default injectIntl(CSSModules(Advantages, styles, { allowMultiple: true }))

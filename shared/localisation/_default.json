@@ -4800,5 +4800,17 @@
   {
     "id": "advantagesTxt6",
     "message": "No personal data is required, no tracing. Everything works on full anonymity."
+  },
+  {
+    "id": "advantagesButtonTitle",
+    "message": "How it works?"
+  },
+  {
+    "id": "advantagesButtonTxt",
+    "message": "(Watch the video)"
+  },
+  {
+    "id": "advVidLink",
+    "message": "https://youtu.be/Jhrb7xOT_7s"
   }
 ]
