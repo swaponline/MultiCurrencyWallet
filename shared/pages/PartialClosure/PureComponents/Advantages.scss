@@ -7,11 +7,6 @@
 	margin-right: 75px;
 	width: 40%;
 	text-align: center;
-	&__title {
-		margin-bottom: 25px;
-		font-size: 20px;
-		font-weight: bold;
-	}
 	&__content {
 		display: flex;
 		flex-wrap: wrap;
@@ -29,7 +24,8 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	margin: 15px;	
+	margin: 15px;
+	margin-top: 0;
 	&__title {
 		font-size: 14px;
 		text-transform: uppercase;
@@ -48,5 +44,12 @@
 	}
 	.advantage {
 		margin: 3vmin;
+	}
+}
+
+@include media-mobile {
+	.advantages {
+		width: 100%;
+		margin: auto;
 	}
 }

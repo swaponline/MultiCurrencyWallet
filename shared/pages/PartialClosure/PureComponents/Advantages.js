@@ -7,11 +7,6 @@ import styles from './Advantages.scss'
 
 const Advantages = () => (
   <div styleName="advantages">
-    <div styleName="advantages__title">
-      <h3>
-        <FormattedMessage id="advantagesTitle" defaultMessage="Why we are different from other exchanges" />
-      </h3>
-    </div>
     <div styleName="advantages__content">
 
       <article styleName="advantage">
