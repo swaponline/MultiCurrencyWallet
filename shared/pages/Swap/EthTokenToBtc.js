@@ -4,16 +4,23 @@ import config from 'app-config'
 import { BigNumber } from 'bignumber.js'
 import actions from 'redux/actions'
 import { constants } from 'helpers'
+import { isMobile } from 'react-device-detect'
 
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import TimerButton from 'components/controls/TimerButton/TimerButton'
 import Button from 'components/controls/Button/Button'
 import Timer from './Timer/Timer'
+import DepositWindow from './DepositWindow/DepositWindow'
+import SwapProgress from 'components/SwapProgress/SwapProgress'
+import SwapList from './SwapList/SwapList'
+import QR from 'components/QR/QR'
+import SwapApp from 'swap.app'
 import { FormattedMessage } from 'react-intl'
 import CopyToClipboard from 'react-copy-to-clipboard'
 
 
 export default class EthTokenToBtc extends Component {
+
 
   constructor({ swap, currencyData, ethBalance }) {
     super()
@@ -30,7 +37,14 @@ export default class EthTokenToBtc extends Component {
   }
 
   componentDidMount() {
+    const { flow, swap } = this.state
     this.swap.on('state update', this.handleFlowStateUpdate)
+    let timer
+    timer = setInterval(() => {
+      if (!flow.isSignFetching && !flow.isMeSigned) {
+        this.signSwap()
+      }
+    }, 1000)
   }
 
   componentWillUnmount() {
@@ -76,17 +90,23 @@ export default class EthTokenToBtc extends Component {
   }
 
   render() {
-    const { children, disabledTimer }  = this.props
-    const { currencyAddress, flow, enabledButton, isShowingBitcoinScript, isAddressCopied } = this.state
+    const { children, disabledTimer, currencyData }  = this.props
+    const { currencyAddress, flow, enabledButton, isShowingBitcoinScript, isAddressCopied} = this.state
 
     return (
-      <div>
-        {
-          this.swap.id && (
-            <strong>{this.swap.sellAmount.toNumber()} {this.swap.sellCurrency} &#10230; {this.swap.buyAmount.toNumber()} {this.swap.buyCurrency}</strong>
-          )
-        }
+      <div className={this.props.styles.swapContainer} style={{ paddingTop: isMobile ? `${paddingContainerValue}px` : '' }}>
+        <SwapProgress data={flow} name="ETHTOKEN2BTC" stepLength={9} />
+        <SwapList data={flow} />
 
+        <div className={this.props.styles.swapInfo}>
+          {
+            this.swap.id && (
+              <strong>{this.swap.sellAmount.toNumber()} {this.swap.sellCurrency} &#10230; {this.swap.buyAmount.toNumber()} {this.swap.buyCurrency}</strong>
+            )
+          }
+        </div>
+
+        <div className={this.props.styles.logHide}>
         {
           flow.isWaitingForOwner && (
             <Fragment>
@@ -364,8 +384,9 @@ export default class EthTokenToBtc extends Component {
         }
         <br />
         {/* { !flow.isFinished && <Button white onClick={this.addGasPrice}>Add gas price</Button> } */}
-        { children }
       </div>
+      { children }
+    </div>
     )
   }
 }

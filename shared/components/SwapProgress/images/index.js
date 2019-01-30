@@ -11,7 +11,7 @@ import icon8 from './icon8.gif'
 import icon9 from './icon9.gif'
 
 
-export default {
+export {
   icon0,
   icon1,
   icon2,

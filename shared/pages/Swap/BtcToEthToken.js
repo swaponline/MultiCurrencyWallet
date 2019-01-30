@@ -58,6 +58,16 @@ export default class BtcToEthToken extends Component {
   componentDidMount() {
     this.swap.on('state update', this.handleFlowStateUpdate)
     this.handleCheckPaddingValue()
+    const { flow, swap } = this.state
+    let timer
+    timer = setInterval(() => {
+      if (!flow.isParticipantSigned && flow.step === 1) {
+        this.confirmAddress()
+      }
+      if (this.state.flow.step === 2) {
+        this.submitSecret()
+      }
+    }, 1000)
   }
 
   componentWillUnmount() {
@@ -320,46 +330,6 @@ export default class BtcToEthToken extends Component {
                     <FormattedMessage id="BtcToEthToken1245" defaultMessage="Sent funds" />
                   </h3>
                 }
-                {(!enoughBalance && flow.step === 4)
-                  ? (
-                    <div className="swapStep-4">
-                      <h3 style={headingStyle}>
-                        <FormattedMessage id="BtcToEthToken256" defaultMessage="Send your funds" />
-                      </h3>
-                      <DepositWindow currencyData={currencyData} swap={swap} flow={swap.flow.state} />
-                    </div>
-                  )
-                  : (flow.step === 4 && flow.btcScriptValues && (
-                    <div className="swapStep-4">
-                      <h3 style={headingStyle}>
-                        <FormattedMessage id="BtcToEthToken222" defaultMessage="Creating Bitcoin Script. \n Please wait, it can take a few minutes" />
-                      </h3>
-                      {
-                        flow.btcScriptCreatingTransactionHash && (
-                          <div styleName="transaction">
-                            <FormattedMessage id="BtcToEthToken172" defaultMessage="Transaction: " />
-                            <strong>
-                              <a
-                                href={`${config.link.bitpay}/tx/${flow.btcScriptCreatingTransactionHash}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                              >
-                                {flow.btcScriptCreatingTransactionHash}
-                              </a>
-                            </strong>
-                          </div>
-                        )
-                      }
-                      {
-                        !flow.btcScriptValues && (
-                          <InlineLoader />
-                        )
-                      }
-                    </div>
-                  )
-                  )
-                }
-
                 {
                   (flow.step === 5 || flow.isEthContractFunded) && (
                     <Fragment>

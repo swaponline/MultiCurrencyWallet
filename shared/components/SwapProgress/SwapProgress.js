@@ -13,7 +13,7 @@ import Title from 'components/PageHeadline/Title/Title'
 import Logo from 'components/Logo/Logo'
 import { FormattedMessage } from 'react-intl'
 import { Button } from 'components/controls'
-import animation from './images'
+import * as animation from './images'
 
 
 @CSSModules(styles, { allowMultiple: true })
@@ -123,6 +123,49 @@ export default class SwapProgress extends Component {
     }
   }
 
+  handleStepEthTokenToBtc = (step) => {
+    switch (step) {
+      case 1:
+        return (
+          <FormattedMessage id="SwapProgress32" defaultMessage="Please wait. Confirmation processing" />
+        )
+      case 2:
+        return (
+          <FormattedMessage id="SwapProgress38" defaultMessage="Waiting for BTC Owner to create Secret Key, create BTC Script and charge it" />
+        )
+      case 3:
+        return (
+          <FormattedMessage id="SwapProgress44" defaultMessage="The bitcoin Script was created and charged. Please check the information below" />
+        )
+      case 4:
+        return (
+          <FormattedMessage id="SwapProgress50" defaultMessage="Checking balance.." />
+        )
+      case 5:
+        return (
+          <FormattedMessage id="SwapProgress56" defaultMessage="Creating Ethereum Contract. \n Please wait, it can take a few minutes" />
+        )
+      case 6:
+        return (
+          <FormattedMessage id="SwapProgress62" defaultMessage="Waiting for BTC Owner to add a Secret Key to ETH Contact" />
+        )
+      case 7:
+        return (
+          <FormattedMessage id="EthToBtc357" defaultMessage="The funds from ETH contract was successfully transferred to BTC owner. BTC owner left a secret key. Requesting withdrawal from BTC script. Please wait." />
+        )
+      case 8:
+        return (
+          <FormattedMessage id="SwapProgress74" defaultMessage="Thank you for using Swap.Online" />
+        )
+      case 9:
+        return (
+          <FormattedMessage id="SwapProgress80" defaultMessage="Thank you for using Swap.Online!" />
+        )
+      default:
+        return null
+    }
+  }
+
   render() {
     const progress = Math.floor(360 / this.props.stepLength * this.props.data.step)
 
@@ -148,6 +191,9 @@ export default class SwapProgress extends Component {
               }
               {
                 this.props.name === 'ETH2BTC' && <h1 styleName="stepHeading">{this.handleStepEthToBtc(this.props.data.step)}</h1>
+              }
+              {
+                this.props.name === 'ETHTOKEN2BTC' && <h1 styleName="stepHeading">{this.handleStepEthTokenToBtc(this.props.data.step)}</h1>
               }
             </div>
           </div>

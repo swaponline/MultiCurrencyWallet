@@ -223,26 +223,21 @@ export default class SwapComponent extends PureComponent {
 
     return (
       <div styleName="swap">
-        {swap.flow.state.step === 4 && !enoughBalance
-          ? (<DepositWindow swap={swap} flow={swap.flow.state} currencyData={currencyData} />
-          ) : (
-            <SwapComponent
-              depositWindow={depositWindow}
-              disabledTimer={isAmountMore === 'enable'}
-              swap={swap}
-              currencyData={currencyData}
-              styles={styles}
-              enoughBalance={enoughBalance}
-              ethData={ethData}
-            >
-              <Share flow={swap.flow} />
-              <EmergencySave flow={swap.flow} />
-              {peer === swap.owner.peer && (<DeleteSwapAfterEnd swap={swap} />)}
-              <SwapController swap={swap} />
-              {swap.flow.state.step >= 5 && !continueSwap && swap.flow.state.step <= 6 && (<FeeControler ethAddress={ethAddress} />)}
-            </SwapComponent>
-          )
-        }
+        <SwapComponent
+          depositWindow={depositWindow}
+          disabledTimer={isAmountMore === 'enable'}
+          swap={swap}
+          currencyData={currencyData}
+          styles={styles}
+          enoughBalance={enoughBalance}
+          ethData={ethData}
+        >
+          <Share flow={swap.flow} />
+          <EmergencySave flow={swap.flow} />
+          {peer === swap.owner.peer && (<DeleteSwapAfterEnd swap={swap} />)}
+          <SwapController swap={swap} />
+          {swap.flow.state.step >= 5 && !continueSwap && swap.flow.state.step <= 6 && (<FeeControler ethAddress={ethAddress} />)}
+        </SwapComponent>
         {(isFinished) && (
           <div styleName="gohome-holder">
             <Button styleName="button" green onClick={this.handleGoHome} >
