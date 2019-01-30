@@ -1,6 +1,9 @@
 ---
 name: Bug Template
 about: Bug Template. Every correct-formed issue gets +1 token bonus.
+title: ''
+labels: ''
+assignees: ''
 
 ---
 
