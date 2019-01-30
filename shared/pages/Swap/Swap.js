@@ -150,7 +150,10 @@ export default class SwapComponent extends PureComponent {
 
   isBalanceEnough = () => {
     const { swap, balance } = this.state
-    swap.flow.syncBalance()
+    if (swap.flow.state.step === 4 && swap.sellCurrency !== 'BTC') {
+      swap.flow.syncBalance()
+    }
+
     if (!swap.flow.state.isBalanceEnough) {
       this.setState(() => ({ enoughBalance: false }))
     } else {
