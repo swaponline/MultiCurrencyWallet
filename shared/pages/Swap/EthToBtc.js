@@ -74,10 +74,6 @@ export default class EthToBtc extends Component {
     this.swap.flow.verifyBtcScript()
   }
 
-  updateBalance = () => {
-    this.swap.flow.syncBalance()
-  }
-
   tryRefund = () => {
     this.swap.flow.tryRefund()
     this.setState(() => ({ enabledButton: false }))
@@ -150,7 +146,7 @@ export default class EthToBtc extends Component {
                   <FormattedMessage
                     id="EthToBtc125"
                     defaultMessage={`
-                      "Confirmation of the transaction is necessary for crediting the reputation. 
+                      "Confirmation of the transaction is necessary for crediting the reputation.
                       If a user does not bring the deal to the end he gets a negative credit to his reputation."
                     `}
                   />
@@ -275,37 +271,6 @@ export default class EthToBtc extends Component {
                           </Fragment>
                         )
                       }
-                    </Fragment>
-                  )
-                }
-                {
-                  flow.step === 4 && !flow.isBalanceEnough && !flow.isBalanceFetching && (
-                    <Fragment>
-                      <h3 style={headingStyle}>
-                        <FormattedMessage id="EthToBtc260" defaultMessage="Not enough money for this swap. Please fund the balance" />
-                      </h3>
-                      <div>
-                        <div>
-                          <FormattedMessage id="EthToBtc264" defaultMessage="Your balance: " />
-                          <strong>{flow.balance}</strong> {this.swap.sellCurrency}
-                        </div>
-                        <div>
-                          <FormattedMessage id="EthToBtc267" defaultMessage="Required balance: " />
-                          <strong>{this.swap.sellAmount.toNumber()}</strong> {this.swap.sellCurrency}
-                        </div>
-                        <div>
-                          <FormattedMessage id="EthToBtc270" defaultMessage="Your address: " />
-                          <a href={`${config.link.etherscan}/address/${currencyAddress}`} target="_blank" rel="noopener noreferrer">
-                            {currencyAddress}
-                          </a>
-                        </div>
-                        <hr />
-                        <span>{flow.address}</span>
-                      </div>
-                      <br />
-                      <Button brand onClick={this.updateBalance}>
-                        <FormattedMessage id="EthToBtc277" defaultMessage="Continue" />
-                      </Button>
                     </Fragment>
                   )
                 }

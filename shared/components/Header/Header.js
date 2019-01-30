@@ -7,7 +7,6 @@ import { connect } from 'redaction'
 
 import links from 'helpers/links'
 import actions from 'redux/actions'
-import SwitchLang from 'shared/components/SwitchLang/SwitchLang'
 import { constants } from 'helpers'
 import config from 'app-config'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
@@ -29,7 +28,6 @@ import { relocalisedUrl } from 'helpers/locale'
 import { localisedUrl } from '../../helpers/locale'
 import UserTooltip from 'components/Header/User/UserTooltip/UserTooltip'
 
-
 let lastScrollTop = 0
 
 const messages = defineMessages({
@@ -45,8 +43,8 @@ const messages = defineMessages({
   },
   history: {
     id: 'menu.history',
-    description: 'Menu item "History"',
-    defaultMessage: 'History',
+    description: 'Menu item "My History"',
+    defaultMessage: 'My History',
   },
   aboutus: {
     id: 'menu.aboutus',
@@ -216,9 +214,6 @@ export default class Header extends Component {
         <WidthContainer styleName="container">
           <LogoTooltip withLink />
           <Nav menu={menuItems} />
-          <SwitchLang styleName="buttonLan" href={relocalisedUrl(locale)}>
-            {locale.toUpperCase() === 'EN' ? 'RU' : 'EN'}
-          </SwitchLang>
           <Logo withLink mobile />
           <User
             openTour={this.openTour}

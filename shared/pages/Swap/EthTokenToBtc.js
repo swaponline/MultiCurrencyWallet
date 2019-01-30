@@ -51,10 +51,6 @@ export default class EthTokenToBtc extends Component {
     this.swap.flow.verifyBtcScript()
   }
 
-  updateBalance = () => {
-    this.swap.flow.syncBalance()
-  }
-
   tryRefund = () => {
     this.swap.flow.tryRefund()
     this.setState(() => ({ enabledButton: false }))
@@ -246,38 +242,6 @@ export default class EthTokenToBtc extends Component {
                         </Fragment>
                       )
                     }
-                  </Fragment>
-                )
-              }
-
-              {
-                flow.step === 4 && !flow.isBalanceEnough && !flow.isBalanceFetching && (
-                  <Fragment>
-                    <FormattedMessage id="EthTokenBtc241" defaultMessage="Not enough money for this swap. Please fund the balance" />
-                    <div>
-                      <div>
-                        <FormattedMessage id="EthTokenBtc245" defaultMessage="Your balance: " />
-                        <strong>{flow.balance}</strong>
-                        {this.swap.sellCurrency}
-                      </div>
-                      <div>
-                        <FormattedMessage id="EthTokenBtc248" defaultMessage="Required balance: " />
-                        <strong>{this.swap.sellAmount.toNumber()}</strong>
-                        {this.swap.sellCurrency}
-                      </div>
-                      <div>
-                        <FormattedMessage id="EthTokenBtc251" defaultMessage="Your address: " />
-                        <a href={`${config.link.etherscan}/address/${currencyAddress}`} target="_blank" rel="noopener noreferrer">
-                          {currencyAddress}
-                        </a>
-                      </div>
-                      <hr />
-                      <span>{flow.address}</span>
-                    </div>
-                    <br />
-                    <TimerButton disabledTimer={disabledTimer} brand onClick={this.updateBalance}>
-                      <FormattedMessage id="EthTokenBtc258" defaultMessage="Continue" />
-                    </TimerButton>
                   </Fragment>
                 )
               }
