@@ -487,7 +487,9 @@ export default class PartialClosure extends Component {
       <Fragment>
         {
           (!isWidget) && (
-            <PageHeadline subTitle={subTitle} />
+            <div styleName="TitleHolder">
+              <PageHeadline subTitle={subTitle} />
+            </div>
           )
         }
         <div styleName="section">
