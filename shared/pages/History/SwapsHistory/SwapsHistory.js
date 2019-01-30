@@ -12,7 +12,6 @@ const titles = [
   <FormattedMessage id="SwapHisrory16" defaultMessage="You buy" />,
   <FormattedMessage id="SwapHisrory17" defaultMessage="You sell" />,
   <FormattedMessage id="SwapHisrory18" defaultMessage="Exchange rate" />,
-  <FormattedMessage id="SwapHisrory19" defaultMessage="Status refund" />,
   <FormattedMessage id="SwapHisrory20" defaultMessage="Status order" />,
   <FormattedMessage id="SwapHisrory211" defaultMessage="Lock time" />,
   <FormattedMessage id="SwapHisrory22" defaultMessage="Link" />,
