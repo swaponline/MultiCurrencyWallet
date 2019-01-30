@@ -4,6 +4,7 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './Advantages.scss'
 
+
 const Advantages = () => (
   <div styleName="advantages">
     <div styleName="advantages__title">
