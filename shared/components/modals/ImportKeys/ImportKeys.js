@@ -152,12 +152,18 @@ export default class ImportKeys extends Component {
   }
   */
   handleImportKeys = () => {
-    window.location.reload()
+    this.handleCloseModal()
     localStorage.setItem(constants.localStorage.testnetSkipPKCheck, true)
+    window.location.reload()
   }
 
   handleCloseModal = () => {
-    actions.modals.close(this.props.name)
+    const { name, data } = this.props
+
+    actions.modals.close(name)
+    if (typeof data.onClose === 'function') {
+      data.onClose()
+    }
   }
 
   checkAnyImport = () => {
@@ -174,7 +180,7 @@ export default class ImportKeys extends Component {
       isImportedEth, isImportedBtc, isImportedLtc, /* isImportedXlm, */ isDisabled, keySave,
     } = this.state
 
-    const { intl } = this.props
+    const { intl, data } = this.props
 
     const linked = Link.all(this, 'ethKey', 'btcKey', 'ltcKey' /* , 'xlmKey' */)
 
@@ -200,7 +206,7 @@ export default class ImportKeys extends Component {
     }
     */
     return (
-      <Modal name={this.props.name} title={intl.formatMessage(title.Import)}>
+      <Modal name={this.props.name} title={intl.formatMessage(title.Import)} data={data}>
         <div styleName="modal">
           <p>
             <FormattedMessage id="ImportKeys107" defaultMessage="This procedure will rewrite your private key. If you are not sure about it, we recommend to press cancel" />

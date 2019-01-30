@@ -13,6 +13,7 @@ import Title from 'components/PageHeadline/Title/Title'
 import Logo from 'components/Logo/Logo'
 import { FormattedMessage } from 'react-intl'
 import { Button } from 'components/controls'
+import animation from './images'
 
 
 @CSSModules(styles, { allowMultiple: true })
@@ -28,12 +29,16 @@ export default class SwapProgress extends Component {
   }
 
 
-  // TODO add animation css
+  // TODO add animation css, if the app will have error and try to on 10s step, will show the 9th of animathin
 
   handleStepChangeImage = (step) => {
-    // eslint-disable-next-line
-    const icon = require(`./images/icon${step}.gif`)
-    return <img src={icon} alt="step" />
+    if (step < 10) {
+      return <img src={animation[`icon${step}`]} alt="step" />
+    }
+    if (step === 10) {
+      // eslint-disable-next-line
+      return <img src={animation['icon9']} alt="step" />
+    }
   }
 
   handleStepEthToBtc = (step) => {

@@ -1,14 +1,14 @@
 import React, { PureComponent } from 'react'
 
 import Swap from 'swap.swap'
+import SwapApp from 'swap.app'
 
 import cssModules from 'react-css-modules'
 import styles from './Swap.scss'
 
 import { connect } from 'redaction'
-import helpers from 'helpers'
+import helpers, { links, constants } from 'helpers'
 import actions from 'redux/actions'
-import constants from 'constants'
 
 import { swapComponents } from './swaps'
 import Share from './Share/Share'
@@ -19,6 +19,8 @@ import DeleteSwapAfterEnd from './DeleteSwapAfterEnd'
 import SwapController from './SwapController'
 import { Button } from 'components/controls'
 import FeeControler from './FeeControler/FeeControler'
+import DepositWindow from './DepositWindow/DepositWindow'
+
 
 @injectIntl
 @connect(({
@@ -44,7 +46,10 @@ export default class SwapComponent extends PureComponent {
     continueSwap: true,
     enoughBalance: true,
     depositWindow: false,
+    shouldStopCheckSendingOfRequesting: false,
   }
+
+  timerFeeNotication = null
 
   componentWillMount() {
     const { items, tokenItems, intl: { locale } } = this.props
@@ -56,7 +61,7 @@ export default class SwapComponent extends PureComponent {
     }
 
     try {
-      const swap = new Swap(orderId)
+      const swap = new Swap(orderId, SwapApp.shared())
       const SwapComponent = swapComponents[swap.flow._flowName]
       const ethData = items.filter(item => item.currency === 'ETH')
       const currencyData = items.concat(tokenItems)
@@ -104,17 +109,25 @@ export default class SwapComponent extends PureComponent {
   }
 
   componentDidMount() {
+
+    const { swap: { flow: { state: { canCreateEthTransaction, requireWithdrawFeeSended } } }, continueSwap } = this.state
     if (this.state.swap !== null) {
-      this.checkBalance()
 
       let timer
 
+      setTimeout(() => {
+        if (!canCreateEthTransaction && continueSwap && requireWithdrawFeeSended) {
+          this.checkEnoughFee()
+        }
+      }, 300 * 1000)
+
       timer = setInterval(() => {
         this.catchWithdrawError()
+        this.isBalanceEnough()
+        this.requestingWithdrawFee()
       }, 5000)
     }
   }
-
 
   // componentWillMount() {
   //   actions.api.checkServers()
@@ -135,31 +148,65 @@ export default class SwapComponent extends PureComponent {
     localStorage.setItem('swapId', JSON.stringify(swapsId))
   }
 
-  checkBalance = () => {
-    const sellAmountPlusFee = this.state.swap.sellAmount.toNumber() + 0.00005
+  isBalanceEnough = () => {
+    const { swap, balance } = this.state
+    if (swap.flow.state.step === 4 && swap.sellCurrency !== 'BTC') {
+      swap.flow.syncBalance()
+    }
 
-    if (sellAmountPlusFee >= this.state.currencyData.balance) {
+    if (!swap.flow.state.isBalanceEnough) {
+      this.setState(() => ({ enoughBalance: false }))
+    } else {
+      this.setState(() => ({ enoughBalance: true }))
+    }
+  }
+
+  requestingWithdrawFee = () => {
+    const { swap: { flow: { acceptWithdrawRequest, sendWithdrawRequest,
+      state: { requireWithdrawFee, requireWithdrawFeeSended, withdrawRequestIncoming, withdrawRequestAccepted } } } } = this.state
+
+    if (requireWithdrawFee && !requireWithdrawFeeSended) {
+      sendWithdrawRequest()
+    }
+    if (withdrawRequestIncoming && !withdrawRequestAccepted) {
+      acceptWithdrawRequest()
+    }
+  }
+
+  catchWithdrawError = () => {
+    const { swap, shouldStopCheckSendingOfRequesting, continueSwap } = this.state
+
+    if (swap.sellCurrency === 'BTC'
+      && helpers.ethToken.isEthToken({ name: swap.buyCurrency.toLowerCase() })
+      && !shouldStopCheckSendingOfRequesting) {
+      this.setState(() => ({ continueSwap: true }))
+    } else {
+      this.checkEnoughFee()
       this.setState(() => ({
-        enoughBalance: false,
-        depositWindow: true,
+        shouldStopCheckSendingOfRequesting: true,
       }))
     }
   }
 
-  catchWithdrawError = async () => {
-    const { swap: { participantSwap, ownerSwap, sellAmount, flow: { state: { canCreateEthTransaction } } }, currencyData: { currency } } = this.state
+  checkEnoughFee = () => {
+    const { swap: { participantSwap, flow: { state: { canCreateEthTransaction } } }, currencyData: { currency }, continueSwap } = this.state
 
-    const ethPair = ['BTC', 'ETH', 'LTC']
+    const coinsWithDynamicFee = ['BTC', 'ETH', 'LTC']
 
     if (canCreateEthTransaction === false && (
-      this.props.tokenItems.map(item => item.name).includes(participantSwap._swapName.toLowerCase())
-      || ethPair.includes(currency)
+      helpers.ethToken.isEthToken({ name: currency.toLowerCase() })
+      || coinsWithDynamicFee.includes(currency)
     )) {
       this.setState(() => ({
         continueSwap: false,
       }))
+    } else {
+      this.setState(() => ({
+        continueSwap: true,
+      }))
     }
   }
+
   handleGoHome = () => {
     const { intl: { locale } } = this.props
     this.props.history.push(localisedUrl(locale, links.home))
@@ -176,33 +223,32 @@ export default class SwapComponent extends PureComponent {
 
     return (
       <div styleName="swap">
-        <SwapComponent
-          depositWindow={depositWindow}
-          disabledTimer={isAmountMore === 'enable'}
-          swap={swap}
-          currencyData={currencyData}
-          styles={styles}
-          enoughBalance={enoughBalance}
-          ethData={ethData}
-        >
-          <Share flow={swap.flow} />
-          <EmergencySave flow={swap.flow} />
-          {
-            peer === swap.owner.peer && (
-              <DeleteSwapAfterEnd swap={swap} />
-            )
-          }
-          <SwapController swap={swap} />
-          {swap.flow.state.step >= 5 && !continueSwap && swap.flow.state.step <= 6 && (<FeeControler ethAddress={ethAddress} />)}
-        </SwapComponent>
-        {
-          (isFinished) && (
-            <div styleName="gohome-holder">
-              <Button styleName="button" green onClick={this.handleGoHome} >
-                <FormattedMessage id="swapFinishedGoHome" defaultMessage="Return to home page" />
-              </Button>
-            </div>
+        {swap.flow.state.step === 4 && !enoughBalance
+          ? (<DepositWindow swap={swap} flow={swap.flow.state} currencyData={currencyData} />
+          ) : (
+            <SwapComponent
+              depositWindow={depositWindow}
+              disabledTimer={isAmountMore === 'enable'}
+              swap={swap}
+              currencyData={currencyData}
+              styles={styles}
+              enoughBalance={enoughBalance}
+              ethData={ethData}
+            >
+              <Share flow={swap.flow} />
+              <EmergencySave flow={swap.flow} />
+              {peer === swap.owner.peer && (<DeleteSwapAfterEnd swap={swap} />)}
+              <SwapController swap={swap} />
+              {swap.flow.state.step >= 5 && !continueSwap && swap.flow.state.step <= 6 && (<FeeControler ethAddress={ethAddress} />)}
+            </SwapComponent>
           )
+        }
+        {(isFinished) && (
+          <div styleName="gohome-holder">
+            <Button styleName="button" green onClick={this.handleGoHome} >
+              <FormattedMessage id="swapFinishedGoHome" defaultMessage="Return to home page" />
+            </Button>
+          </div>)
         }
       </div>
     )

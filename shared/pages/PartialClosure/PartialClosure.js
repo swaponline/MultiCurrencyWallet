@@ -12,6 +12,7 @@ import { BigNumber } from 'bignumber.js'
 import { Redirect } from 'react-router-dom'
 
 import SelectGroup from './SelectGroup/SelectGroup'
+import Advantages from './PureComponents/Advantages'
 import { Button, Toggle, Flip } from 'components/controls'
 import Input from 'components/forms/Input/Input'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
@@ -23,7 +24,7 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 
 import config from 'app-config'
-import swapApp, { util } from 'swap.app'
+import { util } from 'swap.app'
 
 import constants from 'helpers/constants'
 
@@ -72,13 +73,20 @@ export default class PartialClosure extends Component {
     }
   }
 
-  constructor({ currenciesData }) {
+  constructor({ currenciesData, match: { params: { buy, sell, locale } }, history, ...props }) {
     super()
     const ethAddress = currenciesData.filter(item => item.currency === 'ETH')
 
+    const sellToken = sell || 'eth'
+    const buyToken = buy || 'btc'
+    const localization = locale ? `/${locale}` : ''
+
+    if (!props.location.hash.includes('#widget')) {
+      history.push(`${localization}/exchange/${sellToken}-to-${buyToken}`)
+    }
     this.state = {
-      haveCurrency: 'btc',
-      getCurrency: 'eth',
+      haveCurrency: sellToken,
+      getCurrency: buyToken,
       haveAmount: 0,
       haveUsd: 0,
       getUsd: 0,
@@ -136,6 +144,15 @@ export default class PartialClosure extends Component {
       }
     }
     return true
+  }
+
+  additionalPathing = (sell, buy) => {
+    const localization = this.props.match.params.locale
+      ? `/${this.props.match.params.locale}`
+      : ''
+    if (!this.props.location.hash.includes('#widget')) {
+      this.props.history.push(`${localization}/exchange/${sell}-to-${buy}`)
+    }
   }
 
   getUsdBalance = async () => {
@@ -345,6 +362,7 @@ export default class PartialClosure extends Component {
       getCurrency: value,
       customWallet: this.state.customWalletUse ? this.wallets[value.toUpperCase()] : '',
     }))
+    this.additionalPathing(this.state.haveCurrency, value)
   }
 
   handleSetHaveValue = ({ value }) => {
@@ -352,6 +370,7 @@ export default class PartialClosure extends Component {
     this.setState(() => ({
       haveCurrency: value,
     }))
+    this.additionalPathing(value, this.state.getCurrency)
   }
 
   handleFlipCurrency = () => {
@@ -362,19 +381,18 @@ export default class PartialClosure extends Component {
       getCurrency: this.state.haveCurrency,
       customWallet: this.state.customWalletUse ? this.wallets[this.state.haveCurrency.toUpperCase()] : '',
     }))
+    this.additionalPathing(this.state.getCurrency, this.state.haveCurrency)
   }
 
   handlePush = () => {
     const { intl: { locale } } = this.props
     const { haveCurrency, getCurrency } = this.state
-
+    const localization = this.props.match.params.locale
+      ? `/${this.props.match.params.locale}`
+      : ''
     const tradeTicker = `${haveCurrency}-${getCurrency}`
 
-    if (constants.tradeTicker.includes(tradeTicker.toUpperCase())) {
-      this.props.history.push(tradeTicker)
-    } else {
-      this.props.history.push(tradeTicker.split('-').reverse().join('-'))
-    }
+    this.props.history.push(`${localization}/${tradeTicker}`)
   }
 
   setClearState = () => {
@@ -475,17 +493,7 @@ export default class PartialClosure extends Component {
         <div styleName="section">
           {
             (!isWidget) && (
-              <div styleName="blockVideo">
-                <iframe
-                  title="swap online video"
-                  width="560"
-                  height="315"
-                  src="https://www.youtube-nocookie.com/embed/Jhrb7xOT_7s?controls=0"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
+              <Advantages />
             )
           }
           <div styleName="block">
@@ -502,7 +510,7 @@ export default class PartialClosure extends Component {
             />
             <p>
               <FormattedMessage id="partial221" defaultMessage="Max amount for exchange: " />
-              {maxBuyAmount.toNumber()}{' '}{haveCurrency.toUpperCase()}
+              {Math.floor(maxBuyAmount.toNumber() * 1000) / 1000}{' '}{haveCurrency.toUpperCase()}
             </p>
             <Flip onClick={this.handleFlipCurrency} styleName="flipButton" />
             <SelectGroup
