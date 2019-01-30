@@ -4748,5 +4748,57 @@
     "files": [
       "shared/components/Header/User/UserTooltip/UserTooltip.js"
     ]
+  },
+  {
+    "id": "advantagesTitle",
+    "message": "Why we are different from other exchanges"
+  },
+  {
+    "id": "advantagesTitle1",
+    "message": "0% commission"
+  },
+  {
+    "id": "advantagesTitle2",
+    "message": "No KYC"
+  },
+  {
+    "id": "advantagesTitle3",
+    "message": "No 3d party"
+  },
+  {
+    "id": "advantagesTitle4",
+    "message": "Super fast"
+  },
+  {
+    "id": "advantagesTitle5",
+    "message": "High security"
+  },
+  {
+    "id": "advantagesTitle6",
+    "message": "True anonymity"
+  },
+  {
+    "id": "advantagesTxt1",
+    "message": "The exchange is happening between you and other crypto holders (peer-2-peer). No percentage charged of the transaction."
+  },
+  {
+    "id": "advantagesTxt2",
+    "message": "We do not require any registration or personal authentication. (we don’t collect any data about the users)"
+  },
+  {
+    "id": "advantagesTxt3",
+    "message": "No-one can interfere with the exchange process."
+  },
+  {
+    "id": "advantagesTxt4",
+    "message": "You can exchange right now. The transaction is direct and within 2 minutes."
+  },
+  {
+    "id": "advantagesTxt5",
+    "message": "We don’t store your funds or keys so no-one can still your money from us."
+  },
+  {
+    "id": "advantagesTxt6",
+    "message": "No personal data is required, no tracing. Everything works on full anonymity."
   }
 ]

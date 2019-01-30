@@ -12,6 +12,7 @@ import { BigNumber } from 'bignumber.js'
 import { Redirect } from 'react-router-dom'
 
 import SelectGroup from './SelectGroup/SelectGroup'
+import Advantages from './PureComponents/Advantages'
 import { Button, Toggle, Flip } from 'components/controls'
 import Input from 'components/forms/Input/Input'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
@@ -475,17 +476,7 @@ export default class PartialClosure extends Component {
         <div styleName="section">
           {
             (!isWidget) && (
-              <div styleName="blockVideo">
-                <iframe
-                  title="swap online video"
-                  width="560"
-                  height="315"
-                  src="https://www.youtube-nocookie.com/embed/Jhrb7xOT_7s?controls=0"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
+              <Advantages />
             )
           }
           <div styleName="block">
