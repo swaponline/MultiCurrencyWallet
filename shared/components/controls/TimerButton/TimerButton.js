@@ -11,22 +11,20 @@ export default class TimerButton extends Component {
     onClick: PropTypes.func.isRequired,
     timeLeft: PropTypes.number.isRequired,
     className: PropTypes.string,
+    disabledTimer: PropTypes.bool,
   }
 
-  handleClick = () => {
-    const { onClick } = this.props
-
-    clearTimeout(this.timer)
-    onClick()
+  static defaultProps = {
+    disabledTimer: false,
   }
 
   render() {
-    const { children, timeLeft, className, ...rest } = this.props
+    const { children, disabledTimer, timeLeft, className, onClick, ...rest } = this.props
 
     return (
-      <Button onClick={this.handleClick} className={className} {...rest} >
+      <Button className={className} onClick={onClick} {...rest} >
         {children}
-        <Timer timeLeft={timeLeft} handleClick={this.handleClick} />
+        {!disabledTimer && <Timer timeLeft={timeLeft} handleClick={onClick} />}
       </Button>
     )
 

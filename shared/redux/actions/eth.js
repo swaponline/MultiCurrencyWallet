@@ -1,6 +1,6 @@
-import { request, constants, api } from 'helpers'
+import helpers, { request, constants, api } from 'helpers'
 import { getState } from 'redux/core'
-import  actions from 'redux/actions'
+import actions from 'redux/actions'
 import web3 from 'helpers/web3'
 import reducers from 'redux/core/reducers'
 import config from 'app-config'
@@ -35,15 +35,37 @@ const getBalance = () => {
   const { user: { ethData: { address } } } = getState()
   return web3.eth.getBalance(address)
     .then(result => {
-      const amount = Number(web3.utils.fromWei(result))
+      const amount = web3.utils.fromWei(result)
 
       reducers.user.setBalance({ name: 'ethData', amount })
       return amount
     })
     .catch((e) => {
-      console.log('Web3 doesn\'t work please again later ',  e.error)
+      reducers.user.setBalanceError({ name: 'ethData' })
     })
 }
+
+const getReputation = () =>
+  new Promise(async (resolve, reject) => {
+    const { user: { ethData: { address, privateKey } } } = getState()
+    const addressOwnerSignature = web3.eth.accounts.sign(address, privateKey)
+
+    request.post(`${api.getApiServer('swapsExplorer')}/reputation`, {
+      json: true,
+      body: {
+        address,
+        addressOwnerSignature,
+      },
+    }).then((response) => {
+      const { reputation, reputationOracleSignature } = response
+
+      reducers.user.setReputation({ name: 'ethData', reputation, reputationOracleSignature })
+      resolve(reputation)
+    }).catch((error) => {
+      reject(error)
+    })
+  })
+
 
 const fetchBalance = (address) =>
   web3.eth.getBalance(address)
@@ -80,27 +102,27 @@ const getTransaction = () =>
       })
   })
 
-const send = (from, to, amount) =>
+const send = ({ to, amount, gasPrice, gasLimit, speed } = {}) =>
   new Promise(async (resolve, reject) => {
     const { user: { ethData: { privateKey } } } = getState()
 
+    gasPrice = gasPrice || await helpers.eth.estimateGasPrice({ speed })
+    gasLimit = gasLimit || constants.defaultFeeRates.eth.limit.send
+
     const params = {
       to: String(to).trim(),
-      gasPrice: '20000000000',
-      gas: '21000',
+      gasPrice,
+      gas: gasLimit,
       value: web3.utils.toWei(String(amount)),
     }
-    let txRaw
 
-    await web3.eth.accounts.signTransaction(params, privateKey)
-      .then(result => {
-        txRaw = web3.eth.sendSignedTransaction(result.rawTransaction)
+    const result = await web3.eth.accounts.signTransaction(params, privateKey)
+    const receipt = web3.eth.sendSignedTransaction(result.rawTransaction)
+      .on('transactionHash', (hash) => {
+        const txId = `${config.link.etherscan}/tx/${hash}`
+        console.log('tx', txId)
+        actions.loader.show(true, { txId })
       })
-
-    const receipt = await txRaw.on('transactionHash', (hash) => {
-      const txId = `${config.link.etherscan}/tx/${hash}`
-      actions.loader.show(true, true, txId)
-    })
       .on('error', (err) => {
         reject(err)
       })
@@ -108,11 +130,11 @@ const send = (from, to, amount) =>
     resolve(receipt)
   })
 
-
 export default {
   send,
   login,
   getBalance,
   fetchBalance,
   getTransaction,
+  getReputation,
 }

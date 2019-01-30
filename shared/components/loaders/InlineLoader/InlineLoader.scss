@@ -62,10 +62,25 @@
   }
 }
 
-@include media-mobile { 
-  .ellipsis {
-    position: absolute;
-    right: 10px;
-    top: 25px;
+td {
+  @include media-tablet-landscape-and-lower {
+    .ellipsis {
+      position: absolute;
+      top: 25px;
+      margin: 10px;
+      right: 10px;
+    }
   }
+  
+  // @include media-mobile {
+  //   .ellipsis {
+  //     position: relative;
+  //     top: 25px;
+  //     margin: 10px;
+  //     position: absolute;
+  //     top: 25px;
+  //     margin: 10px;
+  //     right: 10px;
+  //   }
+  // }
 }

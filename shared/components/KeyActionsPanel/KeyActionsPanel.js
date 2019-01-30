@@ -3,13 +3,19 @@ import PropTypes from 'prop-types'
 
 import { connect } from 'redaction'
 import actions from 'redux/actions'
+import styles from './KeyActionsPanel.scss'
+
+import CSSModules from 'react-css-modules'
+import { isMobile } from 'react-device-detect'
 
 import { constants } from 'helpers'
 import { WithdrawButton } from 'components/controls'
 import { FormattedMessage } from 'react-intl'
 
+import config from 'app-config'
 
 @connect(({ core: { hiddenCoinsList } }) => ({ hiddenCoinsList }))
+@CSSModules(styles, { allowMultiple: true })
 export default class KeyActionsPanel extends Component {
 
   static propTypes = {
@@ -25,8 +31,13 @@ export default class KeyActionsPanel extends Component {
   }
 
   handleDownload = () => {
-    actions.user.downloadPrivateKeys()
+    if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+      actions.modals.open(constants.modals.DownloadModal)
+    } else {
+      actions.user.downloadPrivateKeys()
+    }
   }
+
 
   handleImportKeys = () => {
     actions.modals.open(constants.modals.ImportKeys, {})
@@ -40,23 +51,22 @@ export default class KeyActionsPanel extends Component {
     const { hiddenCoinsList } = this.props
 
     return (
-      <div>
-        { process.env.TESTNET &&
+      <div styleName="WithdrawButtonContainer">
+        { process.env.TESTNET && !isMobile &&
         <WithdrawButton onClick={this.handleClear} >
           <FormattedMessage id="KeyActionsPanel43" defaultMessage="Exit" />
         </WithdrawButton>
         }
-        <WithdrawButton onClick={this.handleDownload}>
+        <WithdrawButton data-tut="reactour__save" onClick={this.handleDownload}>
           <FormattedMessage id="KeyActionsPanel46" defaultMessage="Download keys" />
         </WithdrawButton>
         <WithdrawButton onClick={this.handleImportKeys}>
           <FormattedMessage id="KeyActionsPanel49" defaultMessage="Import keys" />
         </WithdrawButton>
         {
-          hiddenCoinsList.length !== 0 && (
+          (config && !config.isWidget) && (
             <WithdrawButton onClick={this.handleShowMore}>
-              <FormattedMessage id="KeyActionsPanel53" defaultMessage="Show more coins" />
-              ({hiddenCoinsList.length})
+              <FormattedMessage id="KeyActionsPanel73" defaultMessage="Hidden coins ({length})" values={{ length: `${hiddenCoinsList.length}` }} />
             </WithdrawButton>
           )
         }

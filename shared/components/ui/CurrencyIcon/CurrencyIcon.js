@@ -4,12 +4,16 @@ import cssModules from 'react-css-modules'
 import styles from './CurrencyIcon.scss'
 
 import icons from './images'
+import { FormattedMessage } from 'react-intl'
 
 
 export const iconNames = Object.keys(icons)
 
 
-const CurrencyIcon = ({ className, style, name }) => {
+const CurrencyIcon = ({ className, style, name, currency }) => {
+  if (typeof name === 'undefined') {
+    return <p>{<FormattedMessage id="currencyIcon15" defaultMessage="Error" />}</p>
+  }
   const isIconExist = iconNames.includes(name.toLowerCase())
 
   if (isIconExist) {

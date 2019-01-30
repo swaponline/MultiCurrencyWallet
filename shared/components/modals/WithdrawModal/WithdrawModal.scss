@@ -1,9 +1,76 @@
 .note {
-  margin-top: 6px;
   font-size: 14px;
   color: #aaa;
+  height: 0px;
+  margin-top: 2px;
+}
+
+.rednote {
+  font-size: 14px;
+  color: #aaa;
+  height: 0px;
+  margin-top: 1.5em;
+  color: $color-f-error;
+}
+
+.notice {
+  font-size: 16px;
+  text-align: center;
+}
+
+.rednotes {
+  font-size: 16px;
+  text-align: center;
+  color: $color-f-error;
+}
+
+.buttonFull{
+  margin-top: 55px;
+  display: block;
+}
+
+.cell {
+  color: #3b95ff;
+  cursor: pointer;
+  display: block;
+
+  &:hover {
+    color: darken(#3b95ff, 1)
+  }
+}
+
+.group {
+  width: 100%;
+  display: inline-flex;
+  height: 60px;
+  border-radius: 6px;
+  text-align: center;
+}
+.input {
+  width: 100%;
+  text-align: left;
+  display: block;
 }
 
 .button {
-  margin-top: 40px;
+  height: 100%;
+  width: 80px;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  vertical-align: middle;
+  color: #7c1de9;
+  background: #f8f3fe;
+  box-shadow: rgba(#000, 0.08) 0 3px 9px 0;
+  cursor: pointer;
+  line-height: 60px;
+  text-transform: uppercase;
+  text-align: center;
+  border-radius: 6px;
+  display: block;
+  font-size: 18px;
+  &:hover {
+    color: #7c1de9;
+    background: #dfc5ff;
+  }
+
 }

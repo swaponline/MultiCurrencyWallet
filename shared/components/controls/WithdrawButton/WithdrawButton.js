@@ -1,21 +1,36 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
+import config from 'app-config'
+import cx from 'classnames'
 
 import CSSModules from 'react-css-modules'
 import styles from './WithdrawButton.scss'
+import ReactTooltip from 'react-tooltip'
+import { FormattedMessage } from 'react-intl'
 
 
-const WithdrawButton = ({ onClick, children, className, datatip, disabled }) => (
-  <button styleName="withdrawButton" data-tip={datatip} className={className} onClick={onClick} disabled={disabled}>
-    {children}
-  </button>
-)
+const WithdrawButton = (props) => {
+  const {
+    onClick,
+    children,
+    disable,
+    ...rest
+  } = props
 
-WithdrawButton.propTypes = {
-  onClick: PropTypes.func.isRequired,
-  children: PropTypes.node,
-  className: PropTypes.string,
-  disabled: PropTypes.bool
+  const styleName = cx('withdrawButton', {
+    'disable': disable,
+  })
+
+  return (
+    <button onClick={!disable ? onClick : () => {}} styleName={styleName} {...rest}>
+      {children}
+    </button>
+  )
+
+  WithdrawButton.propTypes = {
+    onClick: PropTypes.func.isRequired,
+    className: PropTypes.string,
+    disabled: PropTypes.bool,
+  }
 }
-
-export default CSSModules(WithdrawButton, styles)
+export default CSSModules(WithdrawButton, styles, { allowMultiple: true })

@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 
+import { withRouter } from 'react-router'
+import actions from 'redux/actions'
 import { connect } from 'redaction'
+import { constants } from 'helpers'
 
 import styles from './User.scss'
 import CSSModules from 'react-css-modules'
@@ -10,14 +13,23 @@ import Sound from 'helpers/Sound/Sound.mp4'
 import Question from './Question/Question'
 import UserAvatar from './UserAvatar/UserAvatar'
 import UserTooltip from './UserTooltip/UserTooltip'
-import AddOfferButton from './AddOfferButton/AddOfferButton'
+import SignUpButton from './SignUpButton/SignUpButton'
 
 import Avatar from 'components/Avatar/Avatar'
+import { FormattedMessage, injectIntl } from 'react-intl'
+import { localisedUrl } from 'helpers/locale'
+import ReactTooltip from 'react-tooltip'
+
+import config from 'app-config'
 
 
+@withRouter
+@injectIntl
 @connect({
   feeds: 'feeds.items',
   peer: 'ipfs.peer',
+  isSigned: 'signUp.isSigned',
+  reputation: 'ipfs.reputation',
 })
 @CSSModules(styles)
 export default class User extends React.Component {
@@ -25,6 +37,8 @@ export default class User extends React.Component {
   static propTypes = {
     feeds: PropTypes.array.isRequired,
     peer: PropTypes.string.isRequired,
+    declineRequest: PropTypes.func.isRequired,
+    acceptRequest: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
@@ -54,29 +68,59 @@ export default class User extends React.Component {
 
   render() {
     const { view } = this.state
-    const { feeds, peer } = this.props
+
+    const isWidget = (config && config.isWidget)
+    const reputationPlaceholder = '0'
+
+    const {
+      feeds, peer, reputation, openTour, path, isSigned,
+    } = this.props
 
     return (
       <div styleName="user-cont">
-        <AddOfferButton />
-        <Question />
-        <UserAvatar
-          isToggle={this.handleToggleTooltip}
-          feeds={feeds}
-          soundClick={this.soundClick}
-          changeView={this.handleChangeView}
-        />
+        {!isSigned && !isWidget && (<SignUpButton />)}
+        {path && !isWidget && (<Question openTour={openTour} />)}
+        {
+          (!isWidget) && (
+            <UserAvatar
+              isToggle={this.handleToggleTooltip}
+              feeds={feeds}
+              declineRequest={this.props.declineRequest}
+              getInfoBySwapId={actions.core.getInformationAboutSwap}
+              soundClick={this.soundClick}
+              changeView={this.handleChangeView}
+            />
+          )
+        }
         {
           view && <UserTooltip
+            feeds={feeds}
+            peer={peer}
             toggle={this.handleToggleTooltip}
+            acceptRequest={this.props.acceptRequest}
+            declineRequest={this.props.declineRequest}
           />
         }
-        {!!peer && (
-          <Avatar
-            className={styles.avatar}
-            value={peer}
-            size={40}
-          />
+        {!!peer && !isWidget && (
+          <Fragment>
+            <div styleName="avatar-container" data-tip data-for="gravatar">
+              <Avatar
+                className={styles.avatar}
+                value={peer}
+                size={40}
+              />
+              <div styleName="avatar-reputation-centered">{ Number.isInteger(reputation) ? reputation : reputationPlaceholder }</div>
+            </div>
+            <ReactTooltip id="gravatar" type="light" effect="solid">
+              <span>
+                <FormattedMessage
+                  id="avatar24"
+                  defaultMessage="This is your (personal) gravatar, it is unique for each user.
+                  The number is your rating within the system (it grows with the number of successful swaps)"
+                />
+              </span>
+            </ReactTooltip>
+          </Fragment>
         )}
       </div>
     )

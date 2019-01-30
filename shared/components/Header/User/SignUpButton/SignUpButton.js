@@ -1,16 +1,21 @@
 import React, { Fragment } from 'react'
 
+import actions from 'redux/actions'
 import { constants, links } from 'helpers'
 
 import CSSModules from 'react-css-modules'
-import styles from './AddOfferButton.scss'
+import styles from './SignUpButton.scss'
 
 import ReactTooltip from 'react-tooltip'
 import { FormattedMessage } from 'react-intl'
 
 
-const AddOfferButton  = () => (
-  <Fragment>
+const handleSignUp = () => {
+  actions.modals.open(constants.modals.SignUp, {})
+}
+
+const SignUpButton = ({ mobile }) => (
+  <div styleName={mobile ? 'mobile' : ''}>
     {
       process.env.TESTNET ? (
         <Fragment>
@@ -25,19 +30,21 @@ const AddOfferButton  = () => (
         </Fragment>
       ) : (
         <Fragment>
-          <button styleName="button" onClick={() => pinkClick()} /* eslint-disable-line */ data-tip data-for="subscribe" >
-            <FormattedMessage id="ADDoffer29" defaultMessage="Subscribe" />
+          <button styleName="button" data-tut="reactour__sign-up" onClick={handleSignUp} /* eslint-disable-line */ data-tip data-for="sign-up" >
+            <FormattedMessage id="ADDoffer29" defaultMessage="Sign up" />
           </button>
-          <ReactTooltip id="subscribe" type="light" effect="solid">
+          <ReactTooltip id="sign-up" type="light" effect="solid">
             <span>
               <FormattedMessage id="ADDoffer33" defaultMessage="Get subscribed for the Swap.Online news" />
             </span>
           </ReactTooltip>
+          <button styleName="buttonMobile" onClick={handleSignUp} /* eslint-disable-line */ >
+            <i className="fa fa-bell" aria-hidden="true" />
+          </button>
         </Fragment>
       )
     }
-    <button styleName="buttonMobile" onClick={() => pinkClick()} /* eslint-disable-line */ />
-  </Fragment>
+  </div>
 )
 
-export default CSSModules(AddOfferButton, styles)
+export default CSSModules(SignUpButton, styles)

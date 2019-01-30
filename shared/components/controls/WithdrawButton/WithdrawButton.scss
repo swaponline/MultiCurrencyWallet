@@ -2,7 +2,7 @@
   @include inline-block;
   height: 40px;
   background: #f8f3fe;
-  padding: 0 25px;
+  padding: 0 1.6em;
   cursor: pointer;
   line-height: 40px;
   font-size: 16px;
@@ -10,6 +10,7 @@
   font-weight: 500;
   color: #7c1de9;
   border-radius: 20px;
+  margin-right: 10px;
 
   &:hover {
     color: #7c1de9;
@@ -19,7 +20,36 @@
 
 @include media-mobile {
   .withdrawButton {
-    margin-right: 10px;
-    margin-bottom: 10px;
+    margin: 0;
+    margin-left: 3.5vw;
+    font-size: 12px;
   }
+}
+
+@media (max-width: 568px) and (min-width: 450px) {
+  .withdrawButton {
+    margin-left: 5vw;
+  }
+}
+
+@media (max-width: 380px) {
+  .withdrawButton {
+    margin-left: 0;
+  }
+}
+
+.disable {
+  @include inline-block;
+  height: 40px;
+  background: #dbdbdb;
+  padding: 0 25px;
+  cursor: pointer;
+  line-height: 40px;
+  font-size: 16px;
+  border: none;
+  font-weight: 500;
+  color: #626262;
+  border-radius: 20px;
+  margin-right: 10px;
+
 }

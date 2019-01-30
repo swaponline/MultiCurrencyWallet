@@ -34,3 +34,79 @@
     background: #dfc5ff;
   }
 }
+
+.exchangeRow {
+  display: flex;
+  align-items: center;
+  width: 210px;
+  justify-content: space-between;
+  button {
+    transform: scale(0.7);
+    margin: 0;
+    position: static;
+  }
+}
+
+.exchangePrice {
+  color: #666;
+  position: absolute;
+  bottom: -38px;
+  display: none;
+  left: -43px;
+}
+
+
+.exchangeTr {
+  position: relative
+}
+
+
+@include media-mobile { 
+  .exchangeRow {
+    width: 60.5vw;
+    button {
+      transform: scale(0.6);
+    }
+  }
+  .exchangePrice {
+    color: #666;
+    position: absolute;
+    bottom: -38px;
+    display: none;
+    left: -43px;
+  }
+  .exchangeTr {
+    position: relative;
+    height: 88px;
+    td {
+      padding: 15px 2px;
+    }
+  }
+  .button {
+    width: auto;
+    font-size: 13px;
+    padding: 0 15px;
+    margin: 0;
+    height: 35px;
+    position: relative;
+    line-height: 35px;
+    margin-left: -10px;
+    margin-top: 0px;
+  }
+  .coin {
+    width: 35px !important;
+    margin-right: 5px;
+  }
+}
+
+@media (max-width: 568px) and (min-width: 450px) {
+  .exchangeRow {
+    width: 64vw;
+  }
+}
+
+@media (max-width: 380px) {
+  .exchangeRow {
+    width: 57vw;
+  }
+}

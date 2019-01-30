@@ -12,7 +12,7 @@ import styles from 'components/tables/Table/Table.scss'
 import Filter from './Filter/Filter'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import InfiniteScrollTable from 'components/tables/InfiniteScrollTable/InfiniteScrollTable'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
 
 const filterHistory = (items, filter) => {
@@ -27,6 +27,14 @@ const filterHistory = (items, filter) => {
   return items
 }
 
+const subTitle = defineMessages({
+  subTitleHistory: {
+    id: 'Amount68',
+    defaultMessage: 'My History',
+  },
+})
+
+@injectIntl
 @connect(({ history: { transactions, filter, swapHistory } }) => ({
   items: filterHistory(transactions, filter),
   swapHistory,
@@ -39,6 +47,7 @@ export default class History extends Component {
   componentDidMount() {
     actions.analytics.dataEvent('open-page-history')
     actions.user.setTransactions()
+    actions.core.getSwapHistory()
   }
 
   loadMore = () => {
@@ -57,14 +66,19 @@ export default class History extends Component {
   )
 
   render() {
-    const { items, swapHistory } = this.props
-    const titles = [ 'Coin', 'Status', 'Statement', 'Amount' ]
+    const { items, swapHistory, intl } = this.props
+    const titles = [
+      <FormattedMessage id="Coin61" defaultMessage="Coin" />,
+      <FormattedMessage id="Status61" defaultMessage="Status" />,
+      <FormattedMessage id="Statement61" defaultMessage="Statement" />,
+      <FormattedMessage id="Amount61" defaultMessage="Amount" />,
+    ]
 
     return (
       <section>
-        <PageHeadline subTitle="History" />
+        <PageHeadline subTitle={intl.formatMessage(subTitle.subTitleHistory)} />
         { swapHistory.length > 0 && <SwapsHistory orders={swapHistory.filter(item => item.step >= 4)} /> }
-        <h3 data-tip data-for="transactions" style={{ width:'200px' }}>
+        <h3 data-tip data-for="transactions" style={{ width:'210px' }}>
           <FormattedMessage id="history68" defaultMessage="All transactions" />
         </h3>
         <ReactTooltip id="transactions" type="light" effect="solid">

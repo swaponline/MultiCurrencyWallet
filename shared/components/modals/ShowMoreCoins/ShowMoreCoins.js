@@ -17,9 +17,23 @@ import Row from './Row/Row'
 import { FormattedMessage } from 'react-intl'
 
 
-@connect(({ core: { hiddenCoinsList }, user: { ethData, btcData, ltcData, bchData, tokensData, eosData, nimData, usdtData }, currencies: { items: currencies } }) => ({
+const titles = [
+  <FormattedMessage id="Coin" defaultMessage="Coin" />,
+  <FormattedMessage id="Name" defaultMessage="Name" />,
+  <FormattedMessage id="Actions" defaultMessage="Actions" />,
+]
+
+const title2 = [
+  <FormattedMessage id="ShMoreCoins" defaultMessage="Show More Coins" />,
+]
+
+@connect(({
+  core: { hiddenCoinsList },
+  user: { ethData, btcData, ltcData, telosData, /* xlmData, bchData, */ tokensData, eosData, nimData, usdtData },
+  currencies: { items: currencies },
+}) => ({
   tokens: Object.keys(tokensData).map(k => tokensData[k]),
-  items: [ethData, btcData, eosData, usdtData, bchData, ltcData /* eosData  nimData */],
+  items: [ethData, btcData, eosData, /* xlmData, */ usdtData, /* bchData, */ ltcData, telosData /* eosData  nimData */],
   currencies,
   hiddenCoinsList,
 }))
@@ -27,10 +41,9 @@ import { FormattedMessage } from 'react-intl'
 export default class ShowMoreCoins extends Component {
   render() {
     const { name, items, tokens, currencies, hiddenCoinsList } = this.props
-    const titles = ['Coin', 'Name', 'Actions']
 
     return (
-      <Modal name={name} title="Show More Coins" shouldCenterVertically={false}>
+      <Modal name={name} title={title2} shouldCenterVertically={false}>
         <div styleName="modal">
           <div styleName="modal_column">
             <SubTitle styleName="modal_column-title">

@@ -11,3 +11,10 @@
   vertical-align: middle;
   background: rgba(128,128,128,0.2);
 }
+
+
+@include media-mobile {
+  .tooltip {
+    display: none;
+  }
+}

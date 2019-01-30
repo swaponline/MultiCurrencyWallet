@@ -3,5 +3,10 @@
   cursor: pointer;
   text-align: center;
   font-size: 18px;
-  margin-left: 25px;
+}
+
+@include media-mobile {
+  .timer {
+    font-size: 12px;
+  }
 }

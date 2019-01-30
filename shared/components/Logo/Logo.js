@@ -1,48 +1,47 @@
-import React, { Fragment } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import { links } from 'helpers'
 
-import cssModules from 'react-css-modules'
+import CSSModules from 'react-css-modules'
 import styles from './Logo.scss'
 
 import logoImage from './images/logo.svg'
 import coloredLogoImage from './images/logo-colored.svg'
-import ReactTooltip from 'react-tooltip'
-import { FormattedMessage } from 'react-intl'
+import { injectIntl } from 'react-intl'
+import { localisedUrl } from 'helpers/locale'
 
 
-const Logo = ({ colored, withLink, mobile }) => {
+@injectIntl
+@CSSModules(styles, Logo)
+export default class Logo extends Component {
 
-  const imgNode = React.createElement('img', {
-    styleName: !withLink && 'logo',
-    src: colored ? coloredLogoImage : logoImage,
-    alt: 'swap.online logo',
-  })
+  static propTypes = {
+    isColored: PropTypes.bool,
+    withLink: PropTypes.bool,
+    mobile: PropTypes.bool,
+  }
 
-  if (withLink) {
+  render() {
+    const { isColored, withLink, mobile, intl: { locale } } = this.props
+
+    const imgNode = React.createElement('img', {
+      styleName: !withLink && 'logo',
+      src: isColored ? coloredLogoImage : logoImage,
+      alt: 'swap.online logo',
+    })
+
     return (
       <Fragment>
-        <Link styleName={mobile ? 'mobile' : 'logo'} data-tip data-for="logo" to={links.home}>
-          {imgNode}
-          <ReactTooltip id="logo" type="light" effect="solid">
-            <FormattedMessage id="logo29" defaultMessage="Go Home">
-              {message => <span>{message}</span>}
-            </FormattedMessage>
-          </ReactTooltip>
-        </Link>
+        {withLink ?
+          (
+            <Link styleName={mobile ? 'mobile' : 'logo'} data-tip data-for="logo" to={localisedUrl(locale, '/')}>
+              {imgNode}
+            </Link>
+          ) : (<div>{imgNode}</div>)
+        }
       </Fragment>
     )
   }
-
-  return imgNode
 }
-
-Logo.propTypes = {
-  colored: PropTypes.string,
-  withLink: PropTypes.bool,
-  mobile: PropTypes.bool,
-}
-
-export default cssModules(Logo, styles)

@@ -26,6 +26,11 @@
 }
 
 .title {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  padding: 0 64px;
+  pointer-events: none;
   min-width: 0;
   flex: auto 1 1;
   line-height: 22px;
@@ -60,4 +65,16 @@
   min-width: 300px;
   padding: 40px 0 100px;
   font-size: 16px;
+}
+
+@include media-mobile {
+  .modal {
+    padding: 15px 15px;
+  }
+  .content {
+    min-width: auto;
+  }
+  .title {
+    font-size: 18px;;
+  }
 }

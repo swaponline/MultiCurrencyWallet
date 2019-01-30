@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 
 import cssModules from 'react-css-modules'
 import styles from './Option.scss'
@@ -7,10 +7,11 @@ import CurrencyIcon from 'components/ui/CurrencyIcon/CurrencyIcon'
 
 
 const Option = ({ icon, title }) => (
-  <Fragment>
+  <div styleName="optionrow">
     <CurrencyIcon styleName="icon" name={icon} />
     {title}
-  </Fragment>
+  </div>
 )
+
 
 export default cssModules(Option, styles)

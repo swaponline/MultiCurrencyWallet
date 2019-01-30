@@ -3,6 +3,7 @@ import config from 'app-config'
 import modals from './modals'
 import loader from './loader'
 import notifications from './notifications'
+import firebase from './firebase/index'
 
 import user from './user'
 import feed from './feed'
@@ -10,7 +11,8 @@ import core from './core'
 import filter from './filter'
 
 import btc from './btc'
-import bch from './bch'
+// import xlm from './xlm'
+// import bch from './bch'
 import ltc from './ltc'
 import eth from './eth'
 import eos from './eos'
@@ -18,7 +20,7 @@ import tlos from './tlos'
 import token from './token'
 import nimiq from './nimiq'
 import api from './api'
-
+import pairs from './pairs'
 import referral from './referral'
 import analytics from './analytics'
 
@@ -41,10 +43,12 @@ export default {
   modals,
   loader,
   notifications,
+  firebase,
   user,
   core,
   ltc,
-  bch,
+  // xlm,
+  // bch,
   btc,
   usdt,
   eth,
@@ -57,4 +61,5 @@ export default {
   referral,
   ipfs,
   api,
+  pairs,
 }

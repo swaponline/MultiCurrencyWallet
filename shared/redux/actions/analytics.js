@@ -1,6 +1,3 @@
-import TagManager from 'react-gtm-module'
-
-
 const dataEvent = (eventName) => {
   window.dataLayer = window.dataLayer ? window.dataLayer : []
   window.dataLayer.push({ 'event' : eventName })
@@ -17,16 +14,29 @@ const balanceEvent = (currency, balance) => {
   })
 }
 
-const errorEvent = (eventAction) => {
+const getTracker = () => {
   if (window.ga) {
-    const tracker = window.ga.getAll()[0]
+    try {
+      return window.ga.getAll()[0]
+    } catch (error) {
+      console.log(error)
+      return undefined
+    }
+  } else {
+    return undefined
+  }
+}
+
+const errorEvent = (eventAction) => {
+  if (getTracker()) {
+    const tracker = getTracker()
     tracker.send({ hitType: 'event', eventCategory: 'fatalError', eventAction })
   }
 }
 
 const swapEvent = (eventAction, eventLabel) => {
-  if (window.ga) {
-    const tracker = window.ga.getAll()[0]
+  if (getTracker()) {
+    const tracker = getTracker()
     tracker.send({ hitType: 'event', eventCategory: 'Swap', eventAction, eventLabel })
   }
 
@@ -40,11 +50,8 @@ const tagManagerArgs = {
   dataLayerName: 'dataLayer',
 }
 
-if (!process.env.EXTENSION) {
-  TagManager.initialize(tagManagerArgs)
-}
-
 export default {
+  getTracker,
   dataEvent,
   swapEvent,
   balanceEvent,

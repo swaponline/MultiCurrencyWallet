@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { withRouter } from 'react-router'
 
 import bell from './images/avatar.svg'
 import styles from './UserAvatar.scss'
 import CSSModules from 'react-css-modules'
 
 
+@withRouter
 @CSSModules(styles, { allowMultiple: true })
 export default class UserAvatar extends Component {
 
@@ -34,7 +36,30 @@ export default class UserAvatar extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { feeds, soundClick, changeView } = this.props
+    let { feeds, soundClick, changeView, history, getInfoBySwapId } = this.props
+    const path = history.location.pathname.split('/')[1]
+
+    if (path === 'swaps') {
+      const swapId = history.location.pathname.split('/')[3]
+      const swapInfo = getInfoBySwapId(swapId)
+
+      if (!swapInfo.isFinished) {
+        soundClick = () => {}
+        feeds.forEach(offer => {
+          const { id, peer } = offer
+
+          if (id === swapId) {
+            this.props.declineRequest(id, peer)
+            changeView()
+            return
+          }
+
+          offer.request.forEach(request => {
+            this.props.declineRequest(id, request.participant.peer)
+          })
+        })
+      }
+    }
 
     if (nextProps.feeds.length > feeds.length) {
       changeView()
@@ -65,4 +90,3 @@ export default class UserAvatar extends Component {
     )
   }
 }
-

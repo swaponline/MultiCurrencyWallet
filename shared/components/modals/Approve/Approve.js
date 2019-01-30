@@ -12,9 +12,17 @@ import styles from './Approve.scss'
 import { Modal } from 'components/modal'
 import { Button } from 'components/controls'
 import { FieldLabel, Input } from 'components/forms'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
 
+const title = defineMessages({
+  approveTitle: {
+    id: 'Approve66',
+    defaultMessage: 'Approve token',
+  },
+})
+
+@injectIntl
 @cssModules(styles)
 export default class Offer extends React.Component {
 
@@ -31,7 +39,7 @@ export default class Offer extends React.Component {
     const { amount } = this.state
     const { data: { contractAddress, name } } = this.props
     const message = `Your approve ${amount} tokens on contract address ${contractAddress}`
-    const error = `Please again later`
+    const error = `Please try again later`
 
     if (amount <= 0 || !amount) {
       this.setState({
@@ -54,7 +62,7 @@ export default class Offer extends React.Component {
   }
 
   render() {
-    const { name } = this.props
+    const { name, intl } = this.props
     const { amount, isSubmitted } = this.state
     const linked = Link.all(this, 'amount')
     const isDisabled = !amount
@@ -63,15 +71,14 @@ export default class Offer extends React.Component {
       linked.amount.check((value) => value <= 0, `Amount must be greater than 1 `)
     }
 
-
     return (
-      <Modal name={name} title="Approve token">
+      <Modal name={name} title={intl.formatMessage(title.approveTitle)}>
         <div styleName="content">
-          <FormattedMessage
-            id="Approve70"
-            defaultMessage="Please set the amount limit that the swap smart contract can deduct from your account. We do not recommend setting any limits.">
-            {message => <p>{message}</p>}
-          </FormattedMessage>
+          <p>
+            <FormattedMessage
+              id="Approve70"
+              defaultMessage="Please set the amount limit that the swap smart contract can deduct from your account. We do not recommend setting any limits." />
+          </p>
           <FieldLabel inRow>
             <FormattedMessage id="Approve73" defaultMessage="Amount" />
           </FieldLabel>

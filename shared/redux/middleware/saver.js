@@ -1,9 +1,12 @@
+import stringify from 'json-stringify-safe'
+
+
 const saver = store => next => action => {
-  let result = next(action)
-  localStorage['redux-store'] = JSON.stringify(store.getState())
-  return result
+  next(action)
+
+  localStorage['redux-store'] = stringify(store.getState(), null, 2)
 }
 
-export default {
+export {
   saver,
 }

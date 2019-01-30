@@ -51,24 +51,26 @@ const login = (accountName, activePrivateKey, activePublicKey) => {
 
 const getBalance = async () => {
   const { user: { telosData: { address } } } = getState()
+  const telosAccountActivated = localStorage.getItem(constants.localStorage.telosAccountActivated) === 'true'
 
-  if (typeof address !== 'string') return
+  if (typeof address !== 'string' || !telosAccountActivated) return
 
-  const telosInstance = await telos.getInstance()
-  const balance = await telosInstance.getCurrencyBalance({
-    code: 'eosio.token',
-    symbol: 'TLOS',
-    account: address,
-  })
-
-  const amount = Number.parseFloat(balance[0]) || 0
-
-  reducers.user.setBalance({ name: 'telosData', amount })
-
-  return amount
+  try {
+    const telosInstance = await telos.getInstance()
+    const balance = await telosInstance.getCurrencyBalance({
+      code: 'eosio.token',
+      symbol: 'TLOS',
+      account: address,
+    })
+    const amount = Number.parseFloat(balance[0]) || 0
+    reducers.user.setBalance({ name: 'telosData', amount })
+    return amount
+  } catch (e) {
+    reducers.user.setBalanceError({ name: 'telosData' })
+  }
 }
 
-const send = async (from, to, amount) => {
+const send = async ({ from, to, amount } = {}) => {
   const { user: { telosData: { address } } } = getState()
 
   if (typeof address !== 'string') { return }

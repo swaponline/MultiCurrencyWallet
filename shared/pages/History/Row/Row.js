@@ -7,6 +7,7 @@ import styles from './Row.scss'
 
 import Coin from 'components/Coin/Coin'
 import LinkTransaction from '../LinkTransaction/LinkTransaction'
+import { FormattedMessage } from 'react-intl'
 
 
 class Row extends React.PureComponent {
@@ -16,6 +17,7 @@ class Row extends React.PureComponent {
     const statusStyleName = cx('status', {
       'in': direction === 'in',
       'out': direction !== 'in',
+      'self': direction === 'self',
     })
 
     return (
@@ -24,13 +26,27 @@ class Row extends React.PureComponent {
           <Coin name={type} size={40} />
         </td>
         <td>
-          <div styleName={statusStyleName}>{direction === 'in' ? 'Received ' : 'Sent '}</div>
+          <div styleName={statusStyleName}>
+            {
+              direction === 'in'
+                ? <FormattedMessage id="RowHistory281" defaultMessage="Received" />
+                : (
+                  direction !== 'self'
+                    ? <FormattedMessage id="RowHistory282" defaultMessage="Sent" />
+                    : <FormattedMessage id="RowHistory283" defaultMessage="Self" />
+                )
+            }
+          </div>
           <div styleName="date">{moment(date).format('LLLL')}</div>
           <LinkTransaction type={type} styleName="address" hash={hash} >{hash}</LinkTransaction>
         </td>
         <td>
           <div styleName={confirmations > 0 ? 'confirm cell' : 'unconfirmed cell'}>
-            {confirmations > 0 ? confirmations > 6 ? 'Confirmed' : `Confirm ${confirmations}` : 'Unconfirmed' }
+            {confirmations > 0 ? confirmations > 6 ?
+              <FormattedMessage id="RowHistory34" defaultMessage="Received" /> :
+              <a><FormattedMessage id="RowHistory341" defaultMessage="Confirm" /> {confirmations} </a> :
+              <FormattedMessage id="RowHistory342" defaultMessage="Unconfirmed" />
+            }
           </div>
         </td>
         <td>

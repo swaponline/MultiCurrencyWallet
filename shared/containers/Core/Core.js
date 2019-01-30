@@ -13,7 +13,7 @@ export default class Core extends Component {
 
   componentWillMount() {
     actions.core.getSwapHistory()
-    SwapApp.services.orders
+    SwapApp.shared().services.orders
       .on('new orders', this.updateOrders)
       .on('new order', this.updateOrders)
       .on('order update', this.updateOrders)
@@ -23,15 +23,19 @@ export default class Core extends Component {
   }
 
   componentWillUnmount() {
-    SwapApp.services.orders
+    SwapApp.shared().services.orders
       .off('new orders', this.updateOrders)
       .off('new order', this.updateOrders)
       .off('order update', this.updateOrders)
       .off('remove order', this.updateOrders)
       .off('new order request', this.updateOrders)
-    SwapApp.services.room.connection
-      .off('peer joined', actions.ipfs.userJoined)
-      .off('peer left', actions.ipfs.userLeft)
+    if (SwapApp.shared().services.room.connection) {
+      console.log('leave room')
+      SwapApp.shared().services.room.connection
+        .removeListener('peer joined', actions.ipfs.userJoined)
+        .removeListener('peer left', actions.ipfs.userLeft)
+      SwapApp.shared().services.room.connection.leave()
+    }
   }
 
   setIpfs = () => {
@@ -42,25 +46,22 @@ export default class Core extends Component {
         console.log('ipfs', ipfs)
         if (ipfs.isOnline) return
 
-        if (!SwapApp.services.room.connection) {
+        if (!SwapApp.shared().services.room.connection) {
           throw new Error(`SwapRoom not ready`)
         }
 
-        const isOnline = SwapApp.services.room.connection._ipfs.isOnline()
-        const { peer } = SwapApp.services.room
+        const isOnline = SwapApp.shared().services.room.connection._ipfs.isOnline()
+        const { peer } = SwapApp.shared().services.room
 
         this.updateOrders()
 
 
-        SwapApp.services.room.connection
+        SwapApp.shared().services.room.connection
           .on('peer joined', actions.ipfs.userJoined)
           .on('peer left', actions.ipfs.userLeft)
 
         clearInterval(ipfsLoadingInterval)
         console.log('ipfs loaded')
-
-      SwapApp.services.room
-        .on('request partial closure', this.createOrder)
 
         actions.ipfs.set({
           isOnline,
@@ -71,24 +72,17 @@ export default class Core extends Component {
       }
     }
 
-    SwapApp.services.room.on('ready', setupIPFS)
+    SwapApp.shared().services.room.on('ready', setupIPFS)
 
     const ipfsLoadingInterval = setInterval(setupIPFS, 5000)
   }
 
   updateOrders = () => {
-    const orders = SwapApp.services.orders.items
+    const orders = SwapApp.shared().services.orders.items
     this.setState(() => ({
       orders,
     }))
-    actions.core.updateCore(orders)
-  }
-
-  createOrder = async ({ fromPeer, order, ...rest }) => {
-    console.log('rest', ...rest)
-    // TODO add check exchange rate and format order
-    const createdOrder = await actions.core.createOrder(order)
-    actions.core.requestToPeer('accept request', fromPeer, { orderId: createdOrder.id })
+    actions.core.updateCore()
   }
 
   render() {

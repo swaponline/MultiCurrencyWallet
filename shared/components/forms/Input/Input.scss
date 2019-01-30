@@ -28,6 +28,17 @@ input, textarea {
   }
 }
 
+.textUsd {
+  position: absolute;
+  top: 13px;
+  right: 10px;
+  font-size: 16px;
+  color: #828795;
+  background: white;
+  padding: 5px;
+  box-shadow: -20px 0px 20px -15px rgba(0,0,0, 0.5);
+}
+
 .input {
   width: 100%;
   height: 60px;
@@ -37,6 +48,7 @@ input, textarea {
   vertical-align: top;
   line-height: 16px;
   border-radius: 6px;
+  box-shadow: none;
   font-size: 16px;
   @include ff;
   color: $color-f-main;
@@ -73,5 +85,15 @@ textarea.input {
     color: inherit !important;
     vertical-align: inherit !important;
     text-decoration: underline !important;
+  }
+}
+
+@include media-mobile {
+  .input {
+    font-size: 14px;
+  }
+  .textUsd {
+    top: 15px;
+    font-size: 14px;
   }
 }

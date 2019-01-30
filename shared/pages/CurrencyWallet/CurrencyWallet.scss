@@ -26,7 +26,25 @@
   margin-top: 20px;
   display: flex;
   width: 220px;
-  justify-content: space-between;
+  justify-content:space-between;
+}
+.inRowru {
+  margin-top: 20px;
+  display: flex;
+  width: 250px;
+  justify-content:space-between;
+}
+
+.button {
+  margin-right: 10px;
+}
+
+.actions {
+  display: flex;
+}
+
+.actions button:not(:last-child) {
+  margin-right: .5rem;
 }
 
 @include media-tablet-landscape-and-lower {
@@ -38,11 +56,17 @@
     font-size: 1rem;
   }
 }
-
-.actions {
-  display: flex;
-}
-
-.actions button:not(:last-child) {
-  margin-right: .5rem;
+@include media-mobile {
+  .subtitle {
+    word-wrap: break-word;
+  }
+  .inRow {
+    justify-content: center;
+    width: auto;
+    button {
+      height: auto;
+      margin: 5px;
+      font-size: 15px;
+    }
+  }
 }

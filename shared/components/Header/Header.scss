@@ -3,6 +3,23 @@
   align-items: center;
 }
 
+.buttonLan {
+  color: #7c1de9!important;
+
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  margin-right: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
 .header {
 	height: 88px;
 	width: 100%;
@@ -32,6 +49,15 @@
 	animation:slide-down 0.4s;
 }
 
+.header-mobile > div {
+  transform: none;
+  transition: transform 250ms ease;
+}
+
+.header-mobile__hidden > div {
+  transform:  translateY(150px);
+  transition: transform 250ms ease;
+}
 
 @keyframes slide-down {
     0% {

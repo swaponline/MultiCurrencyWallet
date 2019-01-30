@@ -7,9 +7,11 @@ import { NavLink, withRouter } from 'react-router-dom'
 import cx from 'classnames'
 import styles from './Nav.scss'
 import CSSModules from 'react-css-modules'
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
+import { localisedUrl } from 'helpers/locale'
 
 
+@injectIntl
 @withRouter
 @CSSModules(styles, { allowMultiple: true })
 export default class Nav extends Component {
@@ -32,7 +34,7 @@ export default class Nav extends Component {
   }
 
   render() {
-    const { menu } = this.props
+    const { menu, intl: { locale } } = this.props
 
     return (
       <div styleName="nav">
@@ -40,26 +42,24 @@ export default class Nav extends Component {
           {
             menu
               .filter(i => i.isDesktop !== false)
-              .map(({ title, link, exact }) => (
+              .map(({ title, link, exact, tour }) => (
                 <NavLink
                   onClick={this.handleScrollToTopClick}
                   key={title}
+                  data-tut={`${tour}`}
                   exact={exact}
                   styleName="link"
-                  to={link}
+                  to={localisedUrl(locale, link)}
                   activeClassName={styles.active}
                 >
                   {title}
                 </NavLink>
-              ))
+              )
+              )
           }
-          {
-            process.env.MAINNET && (
-              <a href={links.test} styleName="link" target="_blank" rel="noreferrer noopener">
-                <FormattedMessage id="Nav88" defaultMessage="Testnet" />
-              </a>
-            )
-          }
+          <a href={links.listing} styleName="link" target="_blank" rel="noreferrer noopener">
+            <FormattedMessage id="Nav88" defaultMessage="Listing" />
+          </a>
         </Fragment>
       </div>
     )

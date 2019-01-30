@@ -8,6 +8,8 @@ import { eos, ecc } from 'helpers/eos'
 import { Keygen } from 'eosjs-keygen'
 
 
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms))
+
 const generateAccountName = (publicKey) => {
   const account = Array.prototype.map.call(
     publicKey.substr(0, 12).toLowerCase(),
@@ -29,8 +31,10 @@ const updateActivationStatus = async () => {
 
   if (accountActivePublicKey === activePublicKey) {
     localStorage.setItem(constants.localStorage.eosAccountActivated, true)
+    reducers.user.setAuthData({ name: 'eosData', data: { isAccountActivated: true } })
   } else {
     localStorage.setItem(constants.localStorage.eosAccountActivated, false)
+    reducers.user.setAuthData({ name: 'eosData', data: { isAccountActivated: false } })
   }
 }
 
@@ -75,7 +79,26 @@ const loginWithNewAccount = async () => {
 }
 
 const login = async (accountName, activePrivateKey, activePublicKey) => {
-  reducers.user.setAuthData({ name: 'eosData', data: { activePrivateKey, activePublicKey, address: accountName } })
+  const isAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === 'true'
+  const isActivationPaymentSent = !!localStorage.getItem(constants.localStorage.eosActivationPayment)
+  reducers.user.setAuthData({ name: 'eosData', data: { activePrivateKey, activePublicKey, address: accountName, isAccountActivated, isActivationPaymentSent } })
+}
+
+const waitAccountActivation = async () => {
+  let eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === 'true'
+
+  while (!eosAccountActivated) {
+    console.log('check eos activation...')
+
+    // eslint-disable-next-line no-await-in-loop
+    await actions.eos.updateActivationStatus()
+    eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === 'true'
+
+    if (!eosAccountActivated) {
+      // eslint-disable-next-line no-await-in-loop
+      await sleep(5000)
+    }
+  }
 }
 
 const buyAccount = async () => {
@@ -93,6 +116,8 @@ const buyAccount = async () => {
   if (!paymentTx) {
     paymentTx = await sendActivationPayment({ from: btcAddress })
     localStorage.setItem(constants.localStorage.eosActivationPayment, paymentTx)
+    reducers.user.setAuthData({ name: 'eosData', data: { isActivationPaymentSent: true } })
+    actions.eos.waitAccountActivation()
   }
 
   const message = `${accountName}:${eosPublicKey}`
@@ -104,17 +129,25 @@ const buyAccount = async () => {
 
   if (activationTx) {
     console.log('eos account activated', activationTx)
-    localStorage.setItem(constants.localStorage.eosAccountActivated, true)
   } else {
-    console.log('eos account already activated')
+    console.log('eos account seems to be already activated')
   }
 }
 
 const sendActivationPayment = async ({ from }) => {
+  const { user: { btcData: { balance } } } = getState()
+
   const { buyAccountPriceInBTC, buyAccountPaymentRecipient } = config.api.eos
 
-  const feeValue = 15000
-  const txid = await actions.btc.send(from, buyAccountPaymentRecipient, buyAccountPriceInBTC, feeValue)
+  if (balance < buyAccountPriceInBTC) {
+    throw new Error('Not enough balance to activate account')
+  }
+
+  const txid = await actions.btc.send({
+    from,
+    buyAccountPaymentRecipient,
+    buyAccountPriceInBTC,
+  })
 
   return txid.getId()
 }
@@ -149,24 +182,26 @@ const activateAccount = async ({ accountName, eosPublicKey, btcAddress, signatur
 
 const getBalance = async () => {
   const { user: { eosData: { address } } } = getState()
+  const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === 'true'
 
-  if (typeof address !== 'string') return
+  if (typeof address !== 'string' || !eosAccountActivated) return
 
   const eosInstance = await eos.getInstance()
-  const balance = await eosInstance.getCurrencyBalance({
-    code: 'eosio.token',
-    symbol: 'EOS',
-    account: address,
-  })
-
-  const amount = Number.parseFloat(balance[0]) || 0
-
-  reducers.user.setBalance({ name: 'eosData', amount })
-
-  return amount
+  try {
+    const balance = await eosInstance.getCurrencyBalance({
+      code: 'eosio.token',
+      symbol: 'EOS',
+      account: address,
+    })
+    const amount = Number.parseFloat(balance[0]) || 0
+    reducers.user.setBalance({ name: 'eosData', amount })
+    return amount
+  } catch (e) {
+    reducers.user.setBalanceError({ name: 'eosData' })
+  }
 }
 
-const send = async (from, to, amount) => {
+const send = async ({ from, to, amount } = {}) => {
   const { user: { eosData: { address } } } = getState()
 
   if (typeof address !== 'string') return
@@ -196,6 +231,7 @@ export default {
   login,
   loginWithNewAccount,
   updateActivationStatus,
+  waitAccountActivation,
   register,
   getBalance,
   send,

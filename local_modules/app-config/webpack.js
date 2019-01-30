@@ -1,21 +1,26 @@
-var webpack = require('webpack');
+const webpack = require('webpack')
+
 
 function AppConfigPlugin() {}
-module.exports = AppConfigPlugin;
+module.exports = AppConfigPlugin
 
-AppConfigPlugin.prototype.apply = function(compiler) {
+AppConfigPlugin.prototype.apply = (compiler) => {
 
-  compiler.plugin('normal-module-factory', function(nmf) {
-    nmf.plugin('before-resolve', function(result, callback) {
-      if(!result) return callback();
-      if(/app-config$/.test(result.request)) {
-        compiler.apply(new webpack.DefinePlugin({
-          __CONFIG__: JSON.stringify(require(result.request))
-        }));
+  compiler.plugin('normal-module-factory', nmf => {
+    nmf.plugin('before-resolve', (result, callback) => {
 
-        result.request += '/client';
+      if (!result) {
+        return callback()
       }
-      return callback(null, result);
-    });
-  });
-};
+
+      if (/app-config$/.test(result.request)) {
+        compiler.apply(new webpack.DefinePlugin({
+          __CONFIG__: JSON.stringify(require(result.request)), // eslint-disable-line
+        }))
+
+        result.request += '/client'
+      }
+      return callback(null, result)
+    })
+  })
+}

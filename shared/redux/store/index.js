@@ -3,11 +3,12 @@ import { createBrowserHistory } from 'history'
 import { createStore, combineReducers } from 'redaction'
 import { createLogger } from 'redux-logger'
 import localReducers from 'redux/reducers'
+import { selectiveSaver } from 'redux/middleware'
 
 
 export const history = createBrowserHistory()
 const middleware = routerMiddleware(history)
-const initialState = {} // (localStorage['redux-store']) ? JSON.parse(localStorage['redux-store']) : {}
+const initialState = (localStorage['redux-store']) ? JSON.parse(localStorage['redux-store']) : {}
 
 
 const store = createStore({
@@ -16,6 +17,7 @@ const store = createStore({
   },
   middleware: [
     middleware,
+    selectiveSaver,
   ].concat(process.env.NODE_ENV === 'production' ? [] : [
     createLogger(),
   ]),

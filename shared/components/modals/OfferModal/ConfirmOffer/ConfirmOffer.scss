@@ -16,3 +16,14 @@
 .link {
   margin-left: 20px;
 }
+
+@include media-mobile {
+	.buttonsInRow {
+	  > div {
+	  	flex-direction: row
+	  }
+	}
+	.button {
+	  width: 160px;
+	}
+}

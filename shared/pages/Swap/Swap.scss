@@ -1,0 +1,410 @@
+.swap {
+  padding-top: 120px;
+}
+@include media-mobile {
+  .swap {
+    display: block;
+    width: 100%;
+    font-size: 11px;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.swapContainer {
+  color: #000;
+  display: flex;
+  align-items: center;
+  position: relative;
+  flex-wrap: wrap;
+}
+
+.swapDepositWindow {
+  color: #000;
+}
+
+.swapGoNumber {
+  display: block;
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: -35px;
+}
+
+.swapWrapper {
+  position: relative;
+  margin-top: 70px;
+}
+
+.loaderHolder {
+  display: inline-block;
+}
+
+@include media-mobile {
+  .loaderHolder {
+    display: inline-block;
+    margin-left: 5px;
+    margin-top: 2px;
+  }
+  a {
+    word-wrap: break-word;
+  }
+}
+
+.topUpLink {
+  border: 1px solid #cecece;
+  font-size: 18px;
+  margin-top: 0px;
+  position: relative;
+  padding: 25px 25px;
+  padding-left: 45px;
+  border-radius: 20px;
+  display: inline-block;
+  text-align: left;
+  padding-bottom: 75px;
+  background: white;
+  max-width: 600px;
+  &:hover {
+    color: #ff1fc5;
+  }
+}
+
+.top {
+  width: 575px;
+  display: flex;
+  justify-content: stretch;
+}
+
+@include media-mobile {
+  .topUpLink {
+    display: block;
+    width: 100%;
+    font-size: 12px;
+  }
+}
+
+.top {
+  width: 575px;
+  display: flex;
+  justify-content: stretch;
+}
+
+@include media-mobile {
+  .top {
+    display: block;
+    width: 100%;
+    justify-content: stretch;
+    height: 70px;
+  }
+}
+
+.qrImg {
+  position: relative;
+  padding: 0;
+  margin-left: 4px;
+  margin-top: 0px;
+}
+
+@include media-mobile {
+  .qrImg {
+    img {
+      width: 50%;
+      margin: -10% 0 0% 50%;
+    }
+  }
+}
+.message{
+  max-width: 100%;
+}
+
+.btcMessage {
+  margin-top: 0.5em;
+  max-width: 100%;
+  font-size: 28px;
+  display: block;
+}
+
+@include media-mobile {
+  .btcMessage {
+    font-size: 11.2px;;
+  }
+}
+
+.sendMessage{
+  font-size: 22px;
+}
+
+.infoWrapper {
+  position: relative;
+}
+
+.logHide {
+  display: none;
+}
+
+.lockTime {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  width: max-content;
+  transform: translateX(-50%);
+  i {
+    position: absolute;
+    top: 4px;
+    left: -25px;
+  }
+  // div {
+  //   span {
+  //     span {
+  //       display: none;
+  //     }
+  //   }
+  // }
+}
+
+@include media-mobile {
+  .lockTime {
+    left: 50%;
+    transform: translateX(-50%);
+    i {
+      left: -20px;
+    }
+  }
+}
+
+.copyText {
+  position: absolute;
+  left: 0px;
+  bottom: -40px;
+  color: #000;
+}
+.swapText {
+  color: #000;
+  display: block;
+  margin-top: 10px;
+  width: 185px;
+  text-align: center;
+}
+
+.swapInfo {
+  position: absolute;
+  width: 600px;
+  top: -45px;
+  text-align: center;
+  font-size: 18px;
+}
+
+.qr {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  img {
+    width: 265px;
+  }
+  button {
+    width: 100%;
+    margin: auto;
+    height: 56px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    width: 56px;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    background: #eee;
+    color: #000;
+    margin-top: 13px;
+    align-items: center;
+    margin-left: 15px;
+    &:hover {
+      background: #eee
+    }
+  }
+}
+
+@include media-mobile {
+  .qr {
+    a {
+      font-size: 10px;
+      height: 30px;
+      width: 100%;
+      padding: 10px;
+    }
+    button {
+      display: none;
+    }
+  }
+}
+
+.cardsContainer {
+    display: flex;
+    width: 185px;
+    margin-top: -35px;
+    display: flex;
+    -webkit-justify-content: space-around;
+    -ms-flex-pack: distribute;
+    justify-content: space-between;
+    margin-bottom: -20px;
+    display: none;
+  img {
+    width: 72px;
+  }
+}
+
+.pressCtrlText {
+  display: none;
+}
+
+.pressCtrlTextActive {
+  display: block;
+  margin-bottom: 20px;
+  margin-top: -5px;
+}
+
+.linkAddress,
+.buyWithCard {
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 18px;
+  align-items: center;
+  height: 56px;
+  display: flex;
+  margin-top: 13px;
+  color: #fff;
+  display: flex;
+  background: #fff;
+  padding: 10px 15px;
+  box-shadow: 1px 1px 6px #929292;
+  color: #000;
+  &:hover {
+    color: #000;
+    background: #eee;
+  }
+}
+
+.linkAddress {
+  cursor: pointer;
+  width: 84%;
+  font-size: 17px;
+}
+
+.fa-copy-in {
+  background: #000;
+  color: #fff;
+}
+
+.buyWithCard {
+  background: #eee;
+  display: -webkit-inline-box;
+  border-radius: 6px;
+  text-decoration: dashed;
+  color: #000;
+  height: 56px;
+  display: flex;
+  width: fit-content;
+  justify-content: normal;
+  align-items: center;
+  font-size: 17px;
+  margin-top: 0;
+  font-size: 13px;
+  text-align: center;
+  font-weight: 500;
+  padding: 0;
+  width: 182px;
+  justify-content: space-around;
+  text-transform: uppercase;
+  margin-top: 10px;
+  background: #dbdbdb;
+  color: #626262;
+  &:hover {
+    background: #dbdbdb;
+    color: #626262;
+  }
+}
+.comingSoon {
+  display: block;
+  position: absolute;
+  bottom: 13px;
+  font-size: 16px;
+  text-transform: initial;
+}
+.yourBalance {
+  color: #000;
+}
+.fromClient,
+.unconfBalance {
+  color: #000;
+}
+.unconfBalance {
+  margin-bottom: 20px;
+}
+
+.gohome-holder {
+  text-align: center;
+}
+.button {
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+@include media-mobile {
+  .transaction{
+      font-size: 8.5px;
+    a {
+      font-size: 8.5px;
+    }
+  }
+  .swap {
+    padding-top: 80px;
+  }
+  .swapInfo {
+    text-align: center;
+    font-size: 16px;
+    left: 0;
+    top: -60px;
+    font-weight: 300;
+    font-size: 15px;
+    border-radius: 6px;
+    background: #cecece3b;
+    color: #000;
+    padding: 7px 20px;
+    width: 100%;
+  }
+  .swapDepositWindow {
+    width: 100%;
+  }
+  .topUpLink {
+    padding: 15px 20px;
+    padding-bottom: 70px;
+  }
+  .qrImg {
+    position: absolute;
+    right: 10px;
+    top: 26px;
+    width: 200px;
+  }
+  .qr {
+    justify-content: end;
+    width: max-content;
+  }
+}
+
+
+.information {
+  position: relative;
+  flex-basis: 100%;
+}
+
+
+h3 {
+  font-size: 20px;
+}
+
+
+.icon {
+  margin-right: 1%;
+  cursor: pointer;
+}

@@ -4,31 +4,36 @@ import styles from './Links.scss'
 import CSSModules from 'react-css-modules'
 
 import links from 'helpers/links'
+import { FormattedMessage } from 'react-intl'
 
 
 const link = [
   [
-    { link: links.career, title: 'Careers', header: 'Company' },
-    { link: links.button, title: 'Use swap.button' },
-    { link: links.about, title: 'About Us' },
+    { link: links.about, title: <FormattedMessage id="AboutUS14" defaultMessage="About Us" />, header: <FormattedMessage id="Company" defaultMessage="Company" /> },
+    { link: links.career, title: <FormattedMessage id="Careers" defaultMessage="Careers" /> },
+    { link: links.contacts, title: <FormattedMessage id="Contacts" defaultMessage="Contacts" /> },
   ],
   [
-    { link: links.concept, title: 'Concept (PDF)', header: 'Documentation' },
-    { link: links.description, title: 'Technical Description' },
-    { link: links.reuters, title: 'Details of Our DEX' },
-    { link: links.research, title: 'DEX Trend Research' },
+    {
+      link: links.button, title: <FormattedMessage id="Useswapbutton" defaultMessage="Swap Button" />,
+      header: <FormattedMessage id="Documentation" defaultMessage="Products" />,
+    },
+    { link: links.reuters, title: <FormattedMessage id="DEXdetails" defaultMessage="DEX Details" /> },
+    { link: links.research, title: <FormattedMessage id="DEXTrendResearch" defaultMessage="DEX Trend Research" /> },
   ],
   [
-    { link: links.wiki, title: 'Wiki', header: 'Resources' },
-    { link: links.bitcointalkSendTx, title: 'Send Bitcoin Transacton' },
-    { link: links.github, title: 'github/swap.core' },
-    { link: links.githubButton, title: 'github/swap.button ' },
+    { link: links.wiki, title: <FormattedMessage id="Wiki" defaultMessage="Wiki" />, header: <FormattedMessage id="Resources" defaultMessage="Resources" /> },
+    { link: links.github, title: <FormattedMessage id="GitHub" defaultMessage="GitHub" /> },
+    { link: links.extension, title: <FormattedMessage id="ChromeExtension" defaultMessage="Chrome Extension" /> },
+    { link: links.concept, title: <FormattedMessage id="Concept" defaultMessage="Concept" /> },
+    { link: links.description, title: <FormattedMessage id="WhitePaperdraft" defaultMessage="White Paper" /> },
+    // { link: links.bitcointalkSendTx, title: <FormattedMessage id="SendBitcoinTransacton" defaultMessage="Send Bitcoin Transacton" /> },
   ],
   [
-    { link: links.terms, title: 'Terms', header: 'Legal' },
-    { link: links.privacyPolicy, title: 'Privacy Policy' },
-    { link: links.contacts, title: 'Contacts' },
-    { link: links.legalOpinion, title: 'Legal Opinion' },
+    { link: links.terms, title: <FormattedMessage id="Terms" defaultMessage="Terms of use" />, header: <FormattedMessage id="Legal" defaultMessage="Legal" /> },
+    { link: links.privacyPolicy, title: <FormattedMessage id="PrivacyPolicy" defaultMessage="Privacy Policy" /> },
+    { link: links.legalOpinion, title: <FormattedMessage id="LegalOpinion" defaultMessage="Legal Opinion" /> },
+    { link: links.licence, title: <FormattedMessage id="Licence" defaultMessage="Licence" /> },
   ],
 ]
 

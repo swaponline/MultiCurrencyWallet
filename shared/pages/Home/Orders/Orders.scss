@@ -12,8 +12,14 @@
 .buttonRow {
   display: flex;
   width: 300px;
-  margin-left: 65%;
+  margin-left: 60%;
+  margin-top: -30px;
   justify-content: space-around;
+}
+
+.buttonRowWidget {
+  width: 450px;
+  margin-left: 50%;
 }
 
 .button {
@@ -82,22 +88,53 @@
 .icon {
   color: #000;
 }
+.headerContainer {
+  display: flex;
+  justify-content: space-between;
+}
 
-@include media-mobile {
-  .buttonRow {
+@include media-tablet-landscape-and-lower {
+  .closeButton {
+    width: 40px;
+    height: 40px;
+    opacity: 0.7;
+    transform: scale(0.7) translate(10px, -3px);
+    div {
+      overflow: visible;
+    }
+  }
+}
+
+@media all and (min-width: 320px) and (max-width:800px) {
+  .buttonRow,
+  .buttonRowMobile {
     margin: 0;
     margin-top: 20px;
     margin-bottom: 30px;
     width: auto;
     justify-content: end;
     position: absolute;
-    bottom: -100px;
     .button:first-child {
       margin-right: 10px;
       color: #fff;
     }
-  } 
+  }
+  .buttonRowWidget {
+    .button {
+      width: 115px;
+      margin-right: 10px;
+    }
+    .button:last-child {
+      margin-right: 0px;
+    }
+  }
   table thead {
     display: none;
+  }
+  .buttonRowMobile {
+    bottom: 70px;
+  }
+  .buttonRow {
+    bottom: -85px
   }
 }

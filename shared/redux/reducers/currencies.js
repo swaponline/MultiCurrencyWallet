@@ -40,6 +40,28 @@ const initialState = {
         fullTitle: key,
       }))),
   ],
+  addSelectedItems: [],
+}
+
+if (config.isWidget) {
+  initialState.items = [
+    {
+      name: 'BTC',
+      title: 'BTC',
+      icon: 'btc',
+      value: 'btc',
+      fullTitle: 'bitcoin',
+    },
+    {
+      name: config.erc20token.toUpperCase(),
+      title: config.erc20token.toUpperCase(),
+      icon: config.erc20token,
+      value: config.erc20token,
+      fullTitle: config.erc20[config.erc20token].fullName,
+    },
+  ]
+
+  initialState.addSelectedItems = [ config.erc20token.toUpperCase() ]
 }
 
 // eslint-disable-next-line
@@ -51,7 +73,12 @@ process.env.MAINNET && initialState.items.unshift({
   fullTitle: 'USD Tether',
 })
 
+const addSelectedItems = (state, payload) => ({
+  ...state,
+  addSelectedItems: payload,
+})
 
 export {
   initialState,
+  addSelectedItems,
 }

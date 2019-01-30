@@ -1,15 +1,23 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { links }    from 'helpers'
+
+import { links, constants }    from 'helpers'
+import actions from 'redux/actions'
 
 import cssModules from 'react-css-modules'
 import styles from './Row.scss'
+import { withRouter } from 'react-router'
 
-import Coins from 'components/Coins/Coins'
-import { FormattedMessage } from 'react-intl'
+import Coin from 'components/Coin/Coin'
+import Flip from 'components/controls/Flip/Flip'
+import { FormattedMessage, injectIntl } from 'react-intl'
+import { localisedUrl } from 'helpers/locale'
+import BtnTooltip from 'components/controls/WithdrawButton/BtnTooltip'
 
 
+@injectIntl
+@withRouter
 @cssModules(styles)
 export default class Row extends Component {
 
@@ -18,24 +26,31 @@ export default class Row extends Component {
     to: PropTypes.string.isRequired,
   }
 
+  handlePush = () => {
+    const { from, to, intl: { locale } } = this.props
+    this.props.history.push(localisedUrl(locale, `/${from.toLowerCase()}-${to.toLowerCase()}`))
+  }
+
   render() {
-    const { from, to } = this.props
+    const { from, to, intl: { locale } } = this.props
 
     return (
-      <tr>
-        <td>
-          <Coins styleName="coins" names={[ from, to ]} size={40} />
-        </td>
+      <tr styleName="exchangeTr">
         <td>
           <span>
-            <FormattedMessage id="Row30" defaultMessage="Exchange " />
-            {from.toUpperCase()}/{to.toUpperCase()}
+            <div styleName="exchangeRow">
+              <Coin styleName="coin" name={from} size={40} />
+              {from.toUpperCase()}
+              <Flip />
+              <Coin styleName="coin" name={to} size={40} />
+              {to.toUpperCase()}
+            </div>
           </span>
         </td>
         <td>
-          <Link styleName="button" to={`${links.home}${from.toLowerCase()}-${to.toLowerCase()}`}>
-            <FormattedMessage id="Row35" defaultMessage="Exchange " />
-          </Link>
+          <BtnTooltip onClick={this.handlePush} text="Exchange" >
+            <FormattedMessage id="Row35" defaultMessage="Exchange" />
+          </BtnTooltip>
         </td>
       </tr>
     )

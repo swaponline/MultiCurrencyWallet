@@ -13,12 +13,13 @@ import { FormattedMessage } from 'react-intl'
 
 export default class UsdtToEthToken extends Component {
 
-  constructor({ swap }) {
+  constructor({ swap, currencyData }) {
     super()
 
     this.swap = swap
 
     this.state = {
+      currencyAddress: currencyData.address,
       flow: this.swap.flow.state,
       secret: crypto.randomBytes(32).toString('hex'),
       enabledButton: false,
@@ -49,6 +50,11 @@ export default class UsdtToEthToken extends Component {
     this.swap.flow.syncBalance()
   }
 
+  tryRefund = () => {
+    this.swap.flow.tryRefund()
+    this.setState(() => ({ enabledButton: false }))
+  }
+
   addGasPrice = () => {
     const gwei =  new BigNumber(String(this.swap.flow.ethTokenSwap.gasPrice)).plus(new BigNumber(1e9))
     this.swap.flow.ethTokenSwap.addGasPrice(gwei)
@@ -67,8 +73,8 @@ export default class UsdtToEthToken extends Component {
   }
 
   render() {
-    const { children } = this.props
-    const { secret, flow, enabledButton } = this.state
+    const { children, disabledTimer }  = this.props
+    const { currencyAddress, secret, flow, enabledButton } = this.state
 
     return (
       <div>
@@ -80,11 +86,11 @@ export default class UsdtToEthToken extends Component {
         {
           flow.isWaitingForOwner && (
             <Fragment>
-              <FormattedMessage
-                id="UsdrToEthToken83"
-                defaultMessage="We are waiting for a market maker. If it does not appear within 5 minutes, the swap will be canceled automatically.">
-                {message => <h3>{message}</h3>}
-              </FormattedMessage>
+              <h3>
+                <FormattedMessage
+                  id="UsdrToEthToken83"
+                  defaultMessage="Waiting for a market maker. If the market maker does not appear within 5 minutes, the swap will be canceled automatically." />
+              </h3>
               <InlineLoader />
             </Fragment>
           )
@@ -92,9 +98,9 @@ export default class UsdtToEthToken extends Component {
         {
           (flow.step === 1 || flow.isMeSigned) && (
             <Fragment>
-              <FormattedMessage id="UsdrToEthToken93" defaultMessage="1. Waiting participant confirm this swap">
-                {message => <h3>{message}</h3>}
-              </FormattedMessage>
+              <h3>
+                <FormattedMessage id="UsdrToEthToken93" defaultMessage="1. Waiting participant confirm this swap" />
+              </h3>
               <InlineLoader />
             </Fragment>
           )
@@ -105,16 +111,15 @@ export default class UsdtToEthToken extends Component {
         {
           flow.isParticipantSigned && (
             <Fragment>
-              <FormattedMessage id="UsdrToEthToken106" defaultMessage="2. Create a secret key">
-                {message => <h3>{message}</h3>}
-              </FormattedMessage>
-
+              <h3>
+                <FormattedMessage id="UsdrToEthToken106" defaultMessage="2. Create a secret key" />
+              </h3>
               {
                 !flow.secretHash ? (
                   <Fragment>
                     <input type="text" placeholder="Secret Key" defaultValue={secret} />
                     <br />
-                    <TimerButton brand onClick={this.submitSecret}>
+                    <TimerButton disabledTimer={disabledTimer} brand onClick={this.submitSecret}>
                       <FormattedMessage id="UsdrToEthToken115" defaultMessage="Confirm" />
                     </TimerButton>
                   </Fragment>
@@ -138,9 +143,9 @@ export default class UsdtToEthToken extends Component {
               {
                 flow.step === 3 && !flow.isBalanceEnough && !flow.isBalanceFetching && (
                   <Fragment>
-                    <FormattedMessage id="UsdrToEthToken137" defaultMessage="Not enough money for this swap. Please charge the balance">
-                      {message => <h3>{message}</h3>}
-                    </FormattedMessage>
+                    <h3>
+                      <FormattedMessage id="UsdrToEthToken137" defaultMessage="Not enough money for this swap. Please charge the balance" />
+                    </h3>
                     <div>
                       <div>
                         <FormattedMessage id="UsdrToEthToken141" defaultMessage="Your balance: " />
@@ -154,14 +159,16 @@ export default class UsdtToEthToken extends Component {
                       </div>
                       <div>
                         <FormattedMessage id="UsdrToEthToken147" defaultMessage="Your address: " />
-                        {this.swap.flow.myBtcAddress}
+                        <a href={`${config.link.etherscan}/address/${currencyAddress}`} target="_blank" el="noopener noreferrer">
+                          {currencyAddress}
+                        </a>
                       </div>
 
                       <hr />
                       <span>{flow.address}</span>
                     </div>
                     <br />
-                    <TimerButton brand onClick={this.updateBalance}>
+                    <TimerButton disabledTimer={disabledTimer} brand onClick={this.updateBalance}>
                       <FormattedMessage id="UsdrToEthToken154" defaultMessage="Continue" />
                     </TimerButton>
                   </Fragment>
@@ -170,9 +177,9 @@ export default class UsdtToEthToken extends Component {
               {
                 flow.step === 3 && flow.isBalanceFetching && (
                   <Fragment>
-                    <FormattedMessage id="UsdrToEthToken163" defaultMessage="Checking balance...">
-                      {message => <div>{message} </div>}
-                    </FormattedMessage>
+                    <div>
+                      <FormattedMessage id="UsdrToEthToken163" defaultMessage="Checking balance..." />
+                    </div>
                     <InlineLoader />
                   </Fragment>
                 )
@@ -181,9 +188,9 @@ export default class UsdtToEthToken extends Component {
               {
                 (flow.step === 4 || flow.usdtScriptValues) && (
                   <Fragment>
-                    <FormattedMessage id="UsdrToEthToken174" defaultMessage="3. Creating Bitcoin Omni Script. Please wait, it will take a while">
-                      {message => <h3>{message} </h3>}
-                    </FormattedMessage>
+                    <h3>
+                      <FormattedMessage id="UsdrToEthToken174" defaultMessage="3. Creating Bitcoin Omni Script. \n Please wait, it can take a few minutes" />
+                    </h3>
                     {
                       flow.usdtFundingTransactionHash && (
                         <div>
@@ -230,9 +237,9 @@ export default class UsdtToEthToken extends Component {
               {
                 (flow.step === 5 || flow.isEthContractFunded) && (
                   <Fragment>
-                    <FormattedMessage id="UsdrToEthToken233" defaultMessage="4. ETH Owner received Bitcoin Omni Script and Secret Hash. Waiting until he creates ETH Contract">
-                      {message => <h3>{message} </h3>}
-                    </FormattedMessage>
+                    <h3>
+                      <FormattedMessage id="UsdrToEthToken233" defaultMessage="4. ETH Owner received Bitcoin Omni Script and Secret Hash. Waiting until he creates ETH Contract" />
+                    </h3>
                     {
                       !flow.isEthContractFunded && (
                         <InlineLoader />
@@ -282,12 +289,12 @@ export default class UsdtToEthToken extends Component {
               {
                 flow.isEthWithdrawn && (
                   <Fragment>
-                    <FormattedMessage id="UsdrToEthToken294" defaultMessage="6. Money was transferred to your wallet. Check the balance.">
-                      {message => <h3>{message} </h3>}
-                    </FormattedMessage>
-                    <FormattedMessage id="UsdrToEthToken297" defaultMessage="Thank you for using Swap.Online!">
-                      {message => <h2>{message} </h2>}
-                    </FormattedMessage>
+                    <h3>
+                      <FormattedMessage id="UsdrToEthToken294" defaultMessage="6. ETH was transferred to your wallet. Check the balance." />
+                    </h3>
+                    <h2>
+                      <FormattedMessage id="UsdrToEthToken297" defaultMessage="Thank you for using Swap.Online!" />
+                    </h2>
                   </Fragment>
                 )
               }

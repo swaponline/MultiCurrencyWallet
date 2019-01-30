@@ -6,4 +6,10 @@
   .headline {
     padding: 10px 0 0;
   }
-} 
+}
+
+@include media-mobile {
+  .headline {
+    padding: 0;
+  }
+}

@@ -1,3 +1,4 @@
+import SignUpModal from './SignUpModal/SignUpModal'
 import OfferModal from './OfferModal/OfferModal'
 import WithdrawModal from './WithdrawModal/WithdrawModal'
 import PrivateKeysModal from './PrivateKeysModal/PrivateKeysModal'
@@ -9,9 +10,11 @@ import ImportKeys from './ImportKeys/ImportKeys'
 import ShowMoreCoins from './ShowMoreCoins/ShowMoreCoins'
 import EthChecker from './EthChecker/EthChecker'
 import ReceiveModal from './ReceiveModal/ReceiveModal'
+import DownloadModal from './DownloadModal/DownloadModal'
 
 
 export default {
+  SignUpModal,
   OfferModal,
   WithdrawModal,
   PrivateKeysModal,
@@ -23,4 +26,5 @@ export default {
   Approve,
   EthChecker,
   ReceiveModal,
+  DownloadModal,
 }

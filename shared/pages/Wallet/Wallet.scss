@@ -1,14 +1,60 @@
 .coinsActionsBlock {
   margin: 25px 0px;
 }
+
 .sectionWalletMobile {
 	margin-top: -88px;
 }
+
 .sectionWallet {
 	margin-top: 88px;
 }
-@include media-mobile { 
+.inform {
+  color: #626262;
+  margin-top: 40px;
+}
+
+.pageLine {
+  height: 130px;
+}
+.depositText {
+  margin-bottom: -15px;
+  display: block;
+}
+
+@media all and (min-width: 570px) and (max-width:700px) {
+	.sectionWalletMobile {
+		margin-top: -88px;
+	}
+  // .pageLine {
+  //   margin-left: 10px;
+  // }
+}
+
+@include media-tablet {
+  .depositText {
+    margin-bottom: 10px;
+  }
+}
+
+@include media-mobile {
 	.sectionWalletMobile {
 		margin-top: 0px;
+    margin-bottom: -60px;
 	}
+  .depositText {
+    margin-bottom: 0px;
+  }
+  .pageLine {
+    height: auto;
+  }
+  .inform {
+    margin-top: 10px;
+  }
+}
+
+@media all and (min-width: 320px) and (max-width:364px) {
+  .pageLine {
+    margin-bottom: 45px;
+  }
 }
