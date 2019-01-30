@@ -510,7 +510,7 @@ export default class PartialClosure extends Component {
             />
             <p>
               <FormattedMessage id="partial221" defaultMessage="Max amount for exchange: " />
-              {maxBuyAmount.toNumber()}{' '}{haveCurrency.toUpperCase()}
+              {Math.floor(maxBuyAmount.toNumber() * 1000) / 1000}{' '}{haveCurrency.toUpperCase()}
             </p>
             <Flip onClick={this.handleFlipCurrency} styleName="flipButton" />
             <SelectGroup
