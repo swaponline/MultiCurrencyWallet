@@ -48,7 +48,6 @@ export default class SwapComponent extends PureComponent {
     continueSwap: true,
     enoughBalance: true,
     depositWindow: false,
-    shouldShowErrorNotification: false,
     shouldStopCheckSendingOfRequesting: false,
   }
 
@@ -151,7 +150,10 @@ export default class SwapComponent extends PureComponent {
 
   isBalanceEnough = () => {
     const { swap, balance } = this.state
-    swap.flow.syncBalance()
+    if (swap.flow.state.step === 4 && swap.sellCurrency !== 'BTC') {
+      swap.flow.syncBalance()
+    }
+
     if (!swap.flow.state.isBalanceEnough) {
       this.setState(() => ({ enoughBalance: false }))
     } else {
@@ -223,7 +225,6 @@ export default class SwapComponent extends PureComponent {
       SwapComponent,
       enoughBalance,
       depositWindow,
-      shouldShowErrorNotification,
     } = this.state
 
     if (!swap || !SwapComponent || !peer || !isAmountMore) {
@@ -253,20 +254,24 @@ export default class SwapComponent extends PureComponent {
               {swap.flow.state.step >= 5 && !continueSwap && swap.flow.state.step <= 6 && (<FeeControler ethAddress={ethAddress} />)}
             </SwapComponent>
           )}
-        {swap.flow.state.isSwapExist && swap.flow.state.step === 1 &&
+        {swap.flow.state.isSwapExist &&
           <div>
             <h1 styleName="unfinishedHref">
               <FormattedMessage
                 id="swapJS260"
-                defaultMessage="Sorry, but you have unfinished swap with this user,{br} all information you can find in My Hisory"
-                values={{ br: <br /> }}
+                defaultMessage="Sorry, but you have unfinished swap with this user,{br} all information you can find in {quot}My History{quot}"
+                values={{
+                  br: <br />,
+                  // eslint-disable-next-line
+                  quot: '\"',
+                }}
               />
             </h1>
           </div>
         }
         {(isFinished) && (
           <div styleName="gohome-holder">
-            <Button styleName="button" green onClick={() => this.handleGoHome} >
+            <Button styleName="button" green onClick={() => this.handleGoHome()} >
               <FormattedMessage id="swapFinishedGoHome" defaultMessage="Return to home page" />
             </Button>
           </div>
