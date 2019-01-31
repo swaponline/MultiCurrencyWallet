@@ -17,6 +17,7 @@
   align-items: center;
   position: relative;
   flex-wrap: wrap;
+  padding-bottom: 35px;
 }
 
 .swapDepositWindow {
@@ -44,9 +45,6 @@
     display: inline-block;
     margin-left: 5px;
     margin-top: 2px;
-  }
-  a {
-    word-wrap: break-word;
   }
 }
 
@@ -288,6 +286,7 @@
 .linkAddress {
   cursor: pointer;
   width: 84%;
+  font-size: 17px;
 }
 
 .fa-copy-in {
@@ -348,7 +347,6 @@
   margin-top: 20px;
   font-size: 14px;
 }
-
 @include media-mobile {
   .transaction{
       font-size: 8.5px;
