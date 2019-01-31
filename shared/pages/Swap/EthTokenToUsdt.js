@@ -102,8 +102,7 @@ export default class EthTokenToUsdt extends Component {
               <div>
                 <FormattedMessage
                   id="EthTokenToUsdt101"
-                  defaultMessage=
-                  "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative credit to his reputation." // eslint-disable-line
+                  defaultMessage="Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative credit to his reputation." // eslint-disable-line
                 />
               </div>
 

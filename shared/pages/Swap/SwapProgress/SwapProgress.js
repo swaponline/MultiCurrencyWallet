@@ -61,8 +61,8 @@ export default class SwapProgress extends Component {
       enabledButton: false,
       currenciesBTCTransaction,
       currenciesETHTransaction,
-      flow: this.swap.flow.state,
-      steps: swap.flow.state.steps,
+      flow,
+      steps: flow.steps,
       buyCurrency: swap.buyCurrency,
       sellCurrency: this.swap.sellCurrency,
       btcScriptValues: this.swap.btcScriptValues,
@@ -181,7 +181,7 @@ export default class SwapProgress extends Component {
                   this.props.name === 'EthTokensToBtc' && <EthTokensToBtc step={flow.step} flow={flow} swap={swap} />
                 }
               </div>
-              {signed && (
+              {signed && flow.step < 4 && (
                 <div>
                   <strong>
                     <a href={`${config.link.etherscan}/tx/${flow.signTransactionHash}`} target="_blank" rel="noopener noreferrer">
@@ -297,7 +297,7 @@ export default class SwapProgress extends Component {
                   <FormattedMessage id="swapFinishedGoHome289" defaultMessage="Submit the Secret" />
                 </Button>
               }
-              {flow.step === 3 && swap.sellCurrency === 'ETH' &&
+              {flow.step === 3 && currenciesETHTransaction.includes(swap.sellCurrency) &&
                 <Button brand onClick={this.confirmBTCScriptChecked()} >
                   <FormattedMessage id="swapFinishedGoHome298" defaultMessage="Everything is OK. Continue" />
                 </Button>

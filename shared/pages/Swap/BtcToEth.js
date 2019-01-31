@@ -126,11 +126,6 @@ export default class BtcToEth extends Component {
     this.swap.flow.syncBalance()
   }
 
-  tryRefund = () => {
-    this.swap.flow.tryRefund()
-    this.setState(() => ({ enabledButton: false }))
-  }
-
   getRefundTxHex = () => {
     const { flow } = this.state
 
@@ -166,7 +161,7 @@ export default class BtcToEth extends Component {
               </Fragment>
             )
           }
-          <SwapList data={flow} name={swap.sellCurrency} swap={swap} />
+          <SwapList flow={flow} name={swap.sellCurrency} swap={swap} />
         </div>
         { flow.btcScriptValues &&
           <span onClick={this.toggleBitcoinScript}>
