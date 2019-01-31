@@ -36,3 +36,7 @@ echo "Create pull request at"
 echo
 echo "    https://github.com/swaponline/mainnet.build/compare/master...deploy"
 echo
+
+if [ $BOT_TOKEN ]; then
+  curl https://api.telegram.org/bot$BOT_TOKEN/sendMessage?chat_id=-329333490\&text="https://github.com/swaponline/mainnet.build/compare/master...deploy"
+fi
