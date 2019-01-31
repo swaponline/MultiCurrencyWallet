@@ -28,6 +28,9 @@ import { util } from 'swap.app'
 
 import constants from 'helpers/constants'
 
+const NO_PAIR = -1
+const EQUAL = 0
+const HAVE_PAIR = 1
 
 const filterIsPartial = (orders) => orders
   .filter(order => order.isPartial && !order.isProcessing)
@@ -365,10 +368,10 @@ export default class PartialClosure extends Component {
 
     const check = this.checkPair(value, this.state.haveCurrency)
 
-    if (check === -1) {
+    if (check === NO_PAIR) {
       const selected = actions.pairs.selectPair(value)
       newState.haveCurrency = selected[0].value
-    } else if (check === 0) {
+    } else if (check === EQUAL) {
       newState.haveCurrency = this.state.getCurrency
     }
 
@@ -383,10 +386,10 @@ export default class PartialClosure extends Component {
     }
     const check = this.checkPair(value, this.state.getCurrency)
 
-    if (check === -1) {
+    if (check === NO_PAIR) {
       const selected = actions.pairs.selectPair(value)
       newState.getCurrency = selected[0].value
-    } else if (check === 0) {
+    } else if (check === EQUAL) {
       newState.getCurrency = this.state.haveCurrency
     }
 
@@ -403,12 +406,9 @@ export default class PartialClosure extends Component {
     }
     const check = this.checkPair(this.state.haveCurrency, this.state.getCurrency)
 
-    if (check === 0) {
+    if (check === EQUAL) {
       const selected = actions.pairs.selectPair(this.state.haveCurrency)
       newState.getCurrency = selected[0].value
-
-      this.setState(() => (newState))
-      return this.additionalPathing(newState.haveCurrency, newState.getCurrency)
     }
 
     this.setState(() => (newState))
@@ -493,15 +493,15 @@ export default class PartialClosure extends Component {
     const selected = actions.pairs.selectPair(value)
 
     if (value === staticVal) {
-      return 0
+      return EQUAL
     }
 
     const check = selected.map(item => item.value).includes(staticVal)
 
     if (!check) {
-      return -1
+      return NO_PAIR
     }
-    return 1
+    return HAVE_PAIR
   }
 
 

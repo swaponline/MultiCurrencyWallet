@@ -115,6 +115,7 @@ export default class DropDown extends Component {
 
     const itemsFiltered = this.props.items
       .filter(item => item.name.includes(inputValue.toUpperCase()))
+      .filter(item => item.value !== selectedValue)
 
     return (
       <ClickOutside
@@ -145,7 +146,7 @@ export default class DropDown extends Component {
             isToggleActive && (
               <div styleName="select">
                 {isToggleActive && inputValue.length ? (
-                  itemsFiltered.filter(item => item.value !== selectedValue).map((item) => (
+                  itemsFiltered.map((item) => (
                     <div
                       key={item.value}
                       styleName="option"
@@ -158,7 +159,7 @@ export default class DropDown extends Component {
                     </div>
                   ))
                 ) : (
-                  items.filter(item => item.value !== selectedValue).map((item) => (
+                  items.map((item) => (
                     <div
                       key={item.value}
                       styleName="option"
