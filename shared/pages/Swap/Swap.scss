@@ -17,10 +17,18 @@
   align-items: center;
   position: relative;
   flex-wrap: wrap;
+  padding-bottom: 35px;
 }
 
 .swapDepositWindow {
   color: #000;
+}
+
+.unfinishedHref {
+  color: $color-f-error;
+  font-size: 40px;
+  text-align: center;
+  cursor: pointer;
 }
 
 .swapGoNumber {
@@ -44,9 +52,6 @@
     display: inline-block;
     margin-left: 5px;
     margin-top: 2px;
-  }
-  a {
-    word-wrap: break-word;
   }
 }
 
@@ -349,7 +354,6 @@
   margin-top: 20px;
   font-size: 14px;
 }
-
 @include media-mobile {
   .transaction{
       font-size: 8.5px;
