@@ -158,7 +158,7 @@ export default class BtcToEth extends Component {
               </Fragment>
             )
           }
-          <SwapList flow={flow} name={swap.sellCurrency} swap={swap} />
+          <SwapList data={flow} name={swap.sellCurrency} swap={swap} />
         </div>
         { flow.btcScriptValues &&
           <span onClick={this.toggleBitcoinScript}>

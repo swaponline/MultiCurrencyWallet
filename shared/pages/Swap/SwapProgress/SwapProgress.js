@@ -37,11 +37,11 @@ import * as animation from './images'
 export default class SwapProgress extends Component {
 
   static propTypes = {
-    data: PropTypes.object,
+    flow: PropTypes.object,
   }
 
   static defaultProps = {
-    data: {},
+    flow: {},
     whiteLogo: false,
   }
 

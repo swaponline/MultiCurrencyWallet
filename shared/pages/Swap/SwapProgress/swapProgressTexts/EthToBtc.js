@@ -37,7 +37,13 @@ export default class EthToBtc extends Component {
         )
       case 7:
         return (
-          <FormattedMessage id="ethToBtcText40" defaultMessage="The funds from ETH contract was successfully transferred to BTC owner. BTC owner left a secret key. Requesting withdrawal from BTC script. Please wait.." />
+          <FormattedMessage
+            id="ethToBtcText40"
+            // eslint-disable
+            defaultMessage="The funds from ETH contract was successfully transferred to BTC owner.
+              BTC owner left a secret key. Requesting withdrawal from BTC script. Please wait.."
+          />
+        // eslint-enable
         )
       case 8:
         return (
