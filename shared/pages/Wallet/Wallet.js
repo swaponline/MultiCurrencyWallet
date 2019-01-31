@@ -215,9 +215,10 @@ export default class Wallet extends Component {
             <FormattedMessage
               id="WalletPromoText"
               defaultMessage="
-                🎁 🎁 🎁 Thanks for trusting us with your money!
-                Tell us about your experience with Swap.online
-                and receive a $10 gift in BTC from us 🎁 🎁 🎁" />
+                🎁 🎁 🎁 Thank you for using Swap.Online!
+                Tell us about your experience with our service
+                and we will gift you $10 in BTC 🎁 🎁 🎁"
+              />
             <a href="https://docs.google.com/forms/d/e/1FAIpQLSfSxJaIKbyfqf-kn7eRt-0jDPp0Wd2wgovrzRKQibCF6gY9bQ/viewform?usp=sf_link">
               <FormattedMessage id="WalletPromoLinkText" defaultMessage="Open poll" />
             </a>
