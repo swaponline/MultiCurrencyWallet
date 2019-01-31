@@ -39,20 +39,10 @@ after_script:
 #- COVERALLS_REPO_TOKEN=$coveralls_repo_token yarn coveralls
 - tar -cvzf build-mainnet.tgz build-mainnet/
 - tar -cvzf build-testnet.tgz build-testnet/
-deploy:
-  provider: pages
-  skip-cleanup: true
-  local-dir: build-mainnet
-  repo: swaponline/mainnet.build
-  target-branch: deploy
-  verbose: true
-  github-token: $GITHUB_TOKEN  # Set in the settings page of your repository, as a secure variable
-  keep-history: true
-  on:
-    branch: master
 
 deploy:
   provider: script
+  skip-cleanup: true
   script: npm run deploy:mainnet
   on:
     branch: master
