@@ -9,6 +9,7 @@ import styles from './Swap.scss'
 import { connect } from 'redaction'
 import helpers, { links, constants } from 'helpers'
 import actions from 'redux/actions'
+import { Link } from 'react-router-dom'
 
 import { swapComponents } from './swaps'
 import Share from './Share/Share'
@@ -39,6 +40,7 @@ export default class SwapComponent extends PureComponent {
 
   state = {
     swap: null,
+    isMy: false,
     ethBalance: null,
     currencyData: null,
     isAmountMore: null,
@@ -89,7 +91,6 @@ export default class SwapComponent extends PureComponent {
             }
           })
       })
-
       window.swap = swap
 
       this.setState({
@@ -109,7 +110,6 @@ export default class SwapComponent extends PureComponent {
   }
 
   componentDidMount() {
-
     const { swap: { flow: { state: { canCreateEthTransaction, requireWithdrawFeeSended } } }, continueSwap } = this.state
     if (this.state.swap !== null) {
 
@@ -213,8 +213,19 @@ export default class SwapComponent extends PureComponent {
   }
 
   render() {
-    const { peer } = this.props
-    const { swap, SwapComponent, currencyData, isAmountMore, ethData, continueSwap, enoughBalance, depositWindow, ethAddress } = this.state
+    const { peer, intl: { locale }  } = this.props
+    const {
+      isMy,
+      swap,
+      ethData,
+      ethAddress,
+      currencyData,
+      isAmountMore,
+      continueSwap,
+      SwapComponent,
+      enoughBalance,
+      depositWindow,
+    } = this.state
 
     if (!swap || !SwapComponent || !peer || !isAmountMore) {
       return null
@@ -223,10 +234,11 @@ export default class SwapComponent extends PureComponent {
 
     return (
       <div styleName="swap">
-        {swap.flow.state.step === 4 && !enoughBalance
-          ? (<DepositWindow swap={swap} flow={swap.flow.state} currencyData={currencyData} />
+        {swap.flow.state.step === 4 && !enoughBalance ?
+          (
+            <DepositWindow swap={swap} flow={swap.flow.state} currencyData={currencyData} />
           ) : (
-            <SwapComponent
+            !swap.flow.state.isSwapExist && <SwapComponent
               depositWindow={depositWindow}
               disabledTimer={isAmountMore === 'enable'}
               swap={swap}
@@ -241,15 +253,29 @@ export default class SwapComponent extends PureComponent {
               <SwapController swap={swap} />
               {swap.flow.state.step >= 5 && !continueSwap && swap.flow.state.step <= 6 && (<FeeControler ethAddress={ethAddress} />)}
             </SwapComponent>
-          )
+          )}
+        {swap.flow.state.isSwapExist &&
+          <div>
+            <h1 styleName="unfinishedHref">
+              <FormattedMessage
+                id="swapJS260"
+                defaultMessage="Sorry, but you have unfinished swap with this user,{br} all information you can find in {quot}My History{quot}"
+                values={{
+                  br: <br />,
+                  // eslint-disable-next-line
+                  quot: '\"',
+                }}
+              />
+            </h1>
+          </div>
         }
         {(isFinished) && (
           <div styleName="gohome-holder">
-            <Button styleName="button" green onClick={this.handleGoHome} >
+            <Button styleName="button" green onClick={() => this.handleGoHome()} >
               <FormattedMessage id="swapFinishedGoHome" defaultMessage="Return to home page" />
             </Button>
-          </div>)
-        }
+          </div>
+        )}
       </div>
     )
   }
