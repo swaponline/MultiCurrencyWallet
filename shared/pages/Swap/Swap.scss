@@ -24,6 +24,13 @@
   color: #000;
 }
 
+.unfinishedHref {
+  color: $color-f-error;
+  font-size: 40px;
+  text-align: center;
+  cursor: pointer;
+}
+
 .swapGoNumber {
   display: block;
   text-align: center;
