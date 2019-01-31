@@ -75,7 +75,6 @@ export default class PartialClosure extends Component {
 
   constructor({ currenciesData, match: { params: { buy, sell, locale } }, history, ...props }) {
     super()
-    const ethAddress = currenciesData.filter(item => item.currency === 'ETH')
 
     const sellToken = sell || 'eth'
     const buyToken = buy || 'btc'
@@ -84,6 +83,9 @@ export default class PartialClosure extends Component {
     if (!props.location.hash.includes('#widget')) {
       history.push(`${localization}/exchange/${sellToken}-to-${buyToken}`)
     }
+
+    const getCurrencyAddress = currenciesData.filter(item => item.currency === buyToken.toUpperCase())
+
     this.state = {
       haveCurrency: sellToken,
       getCurrency: buyToken,
@@ -100,7 +102,7 @@ export default class PartialClosure extends Component {
       isFetching: false,
       isDeclinedOffer: false,
       customWalletUse: true,
-      customWallet: ethAddress[0].address,
+      customWallet: getCurrencyAddress[0].address,
     }
     let timer
     let wallets
