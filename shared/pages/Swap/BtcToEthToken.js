@@ -34,8 +34,6 @@ export default class BtcToEthToken extends Component {
   //   }
   // }
 
-  //Павел из-за этого медота не обновлялся flow в SwapList
-
   constructor({ swap, currencyData, ethData, enoughBalance, styles, depositWindow }) {
 
     super()
@@ -63,17 +61,6 @@ export default class BtcToEthToken extends Component {
 
   componentWillMount() {
     this.swap.on('state update', this.handleFlowStateUpdate)
-    this.handleCheckPaddingValue()
-    const { flow, swap } = this.state
-    let timer
-    timer = setInterval(() => {
-      if (!flow.isParticipantSigned && flow.step === 1) {
-        this.confirmAddress()
-      }
-      if (this.state.flow.step === 2) {
-        this.submitSecret()
-      }
-    }, 1000)
   }
 
   componentWillUnmount() {
@@ -222,7 +209,7 @@ export default class BtcToEthToken extends Component {
               </Fragment>
             )
           }
-          <SwapList flow={flow} swap={this.props.swap} />
+          <SwapList flow={this.state.swap.flow.state} swap={this.props.swap} />
         </div>
         { flow.btcScriptValues &&
           <span onClick={this.toggleBitcoinScript}>
