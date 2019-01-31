@@ -76,8 +76,10 @@ export default class PartialClosure extends Component {
   constructor({ tokensData, currenciesData, match: { params: { buy, sell, locale } }, history, ...props }) {
     super()
 
-    const sellToken = sell || 'eth'
-    const buyToken = buy || 'btc'
+    const isWidgetBuild = config && config.isWidget
+
+    const sellToken = sell || (!isWidgetBuild) ? 'eth' : 'btc'
+    const buyToken = buy || (!isWidgetBuild) ? 'btc' : config.erc20token
     const localization = locale ? `/${locale}` : ''
 
     if (!props.location.hash.includes('#widget')) {
