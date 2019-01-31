@@ -35,11 +35,11 @@ import * as animation from './images'
 export default class SwapProgress extends Component {
 
   static propTypes = {
-    data: PropTypes.object,
+    flow: PropTypes.object,
   }
 
   static defaultProps = {
-    data: {},
+    flow: {},
     whiteLogo: false,
   }
 
@@ -171,12 +171,6 @@ export default class SwapProgress extends Component {
                 }
                 {
                   this.props.name === 'EthToBtc' && <EthToBtc step={flow.step} flow={flow} swap={swap} />
-                }
-                {
-                  this.props.name === 'BtcToEthTokens' && <BtcToEthTokens step={flow.step} flow={flow} swap={swap} />
-                }
-                {
-                  this.props.name === 'EthTokensToBtc' && <EthTokensToBtc step={flow.step} flow={flow} swap={swap} />
                 }
               </div>
               <div styleName="transactionAll">
