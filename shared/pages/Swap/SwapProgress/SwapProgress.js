@@ -25,9 +25,7 @@ import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 
 import BtcToEth from './SwapProgressTexts/BtcToEth'
-import BtcToEthTokens from './SwapProgressTexts/BtcToEthTokens'
 import EthToBtc from './SwapProgressTexts/EthToBtc'
-import EthTokensToBtc from './SwapProgressTexts/EthTokensToBtc'
 
 import * as animation from './images'
 
@@ -181,16 +179,6 @@ export default class SwapProgress extends Component {
                   this.props.name === 'EthTokensToBtc' && <EthTokensToBtc step={flow.step} flow={flow} swap={swap} />
                 }
               </div>
-              {signed && (
-                <div>
-                  <strong>
-                    <a href={`${config.link.etherscan}/tx/${flow.signTransactionHash}`} target="_blank" rel="noopener noreferrer">
-                      <FormattedMessage id="swappropgress246" defaultMessage="Sign ETH transaction: " />
-                      {flow.signTransactionHash}
-                    </a>
-                  </strong>
-                </div>
-              )}
               <div styleName="transactionAll">
                 {flow.ethSwapWithdrawTransactionHash && currenciesETHTransaction.includes(buyCurrency) && (
                   <strong>
