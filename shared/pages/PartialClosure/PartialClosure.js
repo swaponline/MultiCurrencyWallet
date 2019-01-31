@@ -73,7 +73,7 @@ export default class PartialClosure extends Component {
     }
   }
 
-  constructor({ currenciesData, match: { params: { buy, sell, locale } }, history, ...props }) {
+  constructor({ tokensData, currenciesData, match: { params: { buy, sell, locale } }, history, ...props }) {
     super()
 
     const sellToken = sell || 'eth'
@@ -84,7 +84,13 @@ export default class PartialClosure extends Component {
       history.push(`${localization}/exchange/${sellToken}-to-${buyToken}`)
     }
 
-    const getCurrencyAddress = currenciesData.filter(item => item.currency === buyToken.toUpperCase())
+    this.wallets = {}
+    currenciesData.forEach(item => {
+      this.wallets[item.currency] = item.address
+    })
+    tokensData.forEach(item => {
+      this.wallets[item.currency] = item.address
+    })
 
     this.state = {
       haveCurrency: sellToken,
@@ -102,10 +108,9 @@ export default class PartialClosure extends Component {
       isFetching: false,
       isDeclinedOffer: false,
       customWalletUse: true,
-      customWallet: getCurrencyAddress[0].address,
+      customWallet: this.wallets[buyToken.toUpperCase()],
     }
     let timer
-    let wallets
     let usdRates
 
     if (config.isWidget) {
@@ -120,14 +125,6 @@ export default class PartialClosure extends Component {
 
     this.usdRates = {}
     this.getUsdBalance()
-
-    this.wallets = {}
-    this.props.currenciesData.forEach(item => {
-      this.wallets[item.currency] = item.address
-    })
-    this.props.tokensData.forEach(item => {
-      this.wallets[item.currency] = item.address
-    })
 
     this.timer = setInterval(() => {
       this.setOrders()
