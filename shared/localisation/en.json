@@ -3957,7 +3957,7 @@
   },
   {
     "id": "partial437",
-    "message": "Fast cryptocurrency exchange using atomicswap",
+    "message": "Atomic Swap Exchange",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -4791,5 +4791,17 @@
   {
     "id": "advantagesTxt6",
     "message": "No personal data is required, no tracing. Everything works on full anonymity."
+  },
+  {
+    "id": "advantagesButtonTitle",
+    "message": "How it works?"
+  },
+  {
+    "id": "advantagesButtonTxt",
+    "message": "(Watch the video)"
+  },
+  {
+    "id": "advVidLink",
+    "message": "https://youtu.be/Jhrb7xOT_7s"
   }
 ]

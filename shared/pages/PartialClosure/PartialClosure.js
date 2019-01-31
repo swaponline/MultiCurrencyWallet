@@ -43,7 +43,7 @@ const text = [
 ]
 
 const subTitle = (
-  <FormattedMessage id="partial437" defaultMessage="Fast cryptocurrency exchange using atomicswap" />
+  <FormattedMessage id="partial437" defaultMessage="Atomic Swap Exchange" />
 )
 
 @injectIntl
@@ -535,7 +535,9 @@ export default class PartialClosure extends Component {
       <Fragment>
         {
           (!isWidget) && (
-            <PageHeadline subTitle={subTitle} />
+            <div styleName="TitleHolder">
+              <PageHeadline subTitle={subTitle} />
+            </div>
           )
         }
         <div styleName={isWidget ? 'widgetSection' : 'section'} className={isWidget ? 'section' : ''} >

@@ -3964,7 +3964,7 @@
   },
   {
     "id": "partial437",
-    "message": "Быстрый обмен криптовалютой с использованием Atomic Swap",
+    "message": "Atomic Swap обменник",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -4779,5 +4779,17 @@
   {
     "id": "advantagesTxt6",
     "message": "Никаких данных заполнять не нужно, никакого трейсинга. Всё работает на предельной анонимности."
+  },
+  {
+    "id": "advantagesButtonTitle",
+    "message": "Как это работает?"
+  },
+  {
+    "id": "advantagesButtonTxt",
+    "message": "(Смотреть видео)"
+  },
+  {
+    "id": "advVidLink",
+    "message": "https://youtu.be/1G-U5Sh7pQk"
   }
 ]
