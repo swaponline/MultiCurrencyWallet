@@ -7,7 +7,9 @@ import request from './request'
 import BigNumber from 'bignumber.js'
 
 
-const network = process.env.MAINNET ? bitcoin.networks.bitcoin : bitcoin.networks.testnet
+const network = process.env.MAINNET
+  ? bitcoin.networks.bitcoin
+  : bitcoin.networks.testnet
 
 const estimateFeeValue = async ({ method = 'send', satoshi = false, speed } = {}) => {
   const { user: { btcData: { address } } } = getState()
@@ -22,17 +24,20 @@ const estimateFeeValue = async ({ method = 'send', satoshi = false, speed } = {}
   if (txIn !== 0 && method !== 'swap') {
     txSize = txIn * 146 + txOut * 33 + txIn * 16
   }
-  console.log('txSize', txSize)
-  const feeValue = new BigNumber(feeRate).times(txSize).div(1024).dp(0, BigNumber.ROUND_HALF_EVEN)
+
+  const feeValue = new BigNumber(feeRate)
+    .multipliedBy(txSize)
+    .div(1024)
+    .dp(0, BigNumber.ROUND_HALF_EVEN)
 
   if (satoshi) {
-    return feeValue.toNumber()
+    return feeValue.toString()
   }
 
-  return feeValue.times(1e-8).toNumber()
+  return feeValue.multipliedBy(1e-8).toString()
 }
 
-const estimateFeeRate = async ({ speed = 'normal' } = {}) => {
+const estimateFeeRate = async ({ speed = 'fast' } = {}) => {
   const link = config.feeRates.btc
   const defaultRate = constants.defaultFeeRates.btc.rate
 
@@ -49,11 +54,6 @@ const estimateFeeRate = async ({ speed = 'normal' } = {}) => {
     return defaultRate[speed]
   }
 
-  apiResult.medium_fee_per_kb = new BigNumber(apiResult.low_fee_per_kb)
-    .plus(apiResult.high_fee_per_kb)
-    .div(2)
-    .toString()
-
   const apiSpeeds = {
     slow: 'low_fee_per_kb',
     normal: 'medium_fee_per_kb',
@@ -64,7 +64,9 @@ const estimateFeeRate = async ({ speed = 'normal' } = {}) => {
 
   const apiRate = new BigNumber(apiResult[apiSpeed])
 
-  return apiRate >= defaultRate[speed] ? apiRate.toString() : defaultRate[speed]
+  return apiRate.isGreaterThanOrEqualTo(defaultRate[speed])
+    ? apiRate.toString()
+    : defaultRate[speed]
 }
 
 export default {

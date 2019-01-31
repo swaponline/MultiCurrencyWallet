@@ -1,6 +1,9 @@
 ---
 name: Improvement Template
 about: Improvement Template. Every correct-formed issue gets +1 token bonus.
+title: ''
+labels: ''
+assignees: ''
 
 ---
 

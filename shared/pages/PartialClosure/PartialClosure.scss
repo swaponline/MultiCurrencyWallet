@@ -17,7 +17,7 @@
   margin-top: 10px;
 }
 
-.section {
+.section, .widgetSection {
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
@@ -101,7 +101,7 @@
   }
 }
 @media all and (min-width: 320px) and (max-width: 830px) {
-  .section {
+  .section, .widgetSection {
     margin-top: 20px;
     justify-content: center;
     flex-direction: column-reverse;
@@ -114,6 +114,18 @@
   .block {
     margin-bottom: 80px;
     margin-top: 60px;
+  }
+  .widgetSection {
+    padding: 0 25px;
+    overflow: hidden;
+    .flipButton {
+      left: auto;
+      right: 40px;
+      transform: translateY(12px) rotate(90deg);
+    }
+    .selectedItem {
+      width: auto;
+    }
   }
 }
 
