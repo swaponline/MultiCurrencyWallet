@@ -31,6 +31,15 @@
   cursor: pointer;
 }
 
+.swapInfo {
+  position: absolute;
+  width: 600px;
+  top: -45px;
+  text-align: center;
+  font-size: 18px;
+  margin-left: -10%;
+}
+
 .swapGoNumber {
   display: block;
   text-align: center;

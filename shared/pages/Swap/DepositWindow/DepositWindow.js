@@ -192,6 +192,20 @@ export default class DepositWindow extends Component {
           target="_blank"
           rel="noopener noreferrer"
         >
+          <div styleName="swapInfo">
+            {this.swap.id &&
+            (
+              <strong>
+                {this.swap.sellAmount.toFixed(6)}
+                {' '}
+                {swap.sellCurrency} &#10230; {' '}
+                {this.swap.buyAmount.toFixed(6)}
+                {' '}
+                {swap.buyCurrency}
+              </strong>
+            )
+            }
+          </div>
           <div styleName="top">
             {/* eslint-disable */}
               <span styleName="btcMessage">
