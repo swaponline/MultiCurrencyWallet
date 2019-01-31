@@ -24,8 +24,8 @@ import Title from 'components/PageHeadline/Title/Title'
 import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 
-import BtcToEth from './SwapProgressTexts/BtcToEth'
-import EthToBtc from './SwapProgressTexts/EthToBtc'
+import BtcToEth from './SwapProgressText/BtcToEth'
+import EthToBtc from './SwapProgressText/EthToBtc'
 
 import * as animation from './images'
 
