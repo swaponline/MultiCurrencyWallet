@@ -63,6 +63,17 @@ export default class BtcToEthToken extends Component {
 
   componentWillMount() {
     this.swap.on('state update', this.handleFlowStateUpdate)
+    this.handleCheckPaddingValue()
+    const { flow, swap } = this.state
+    let timer
+    timer = setInterval(() => {
+      if (!flow.isParticipantSigned && flow.step === 1) {
+        this.confirmAddress()
+      }
+      if (this.state.flow.step === 2) {
+        this.submitSecret()
+      }
+    }, 1000)
   }
 
   componentWillUnmount() {

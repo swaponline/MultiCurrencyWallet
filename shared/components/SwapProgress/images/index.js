@@ -10,6 +10,10 @@ import icon7 from './icon7.gif'
 import icon8 from './icon8.gif'
 import icon9 from './icon9.gif'
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 7a18d5b2c9eb24032a8558f0fd2a4308f525b08d
 export {
   icon0,
   icon1,
