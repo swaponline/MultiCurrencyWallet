@@ -9,6 +9,7 @@ import styles from './Swap.scss'
 import { connect } from 'redaction'
 import helpers, { links, constants } from 'helpers'
 import actions from 'redux/actions'
+import { Link } from 'react-router-dom'
 
 import { swapComponents } from './swaps'
 import Share from './Share/Share'
@@ -39,6 +40,7 @@ export default class SwapComponent extends PureComponent {
 
   state = {
     swap: null,
+    isMy: false,
     ethBalance: null,
     currencyData: null,
     isAmountMore: null,
@@ -89,7 +91,6 @@ export default class SwapComponent extends PureComponent {
             }
           })
       })
-
       window.swap = swap
 
       this.setState({
@@ -109,7 +110,6 @@ export default class SwapComponent extends PureComponent {
   }
 
   componentDidMount() {
-
     const { swap: { flow: { state: { canCreateEthTransaction, requireWithdrawFeeSended } } }, continueSwap } = this.state
     if (this.state.swap !== null) {
 
@@ -211,7 +211,6 @@ export default class SwapComponent extends PureComponent {
   render() {
     const { peer, tokenItems, history } = this.props
     const { swap, SwapComponent, currencyData, isAmountMore, ethData, continueSwap, enoughBalance, depositWindow, ethAddress } = this.state
-
     if (!swap || !SwapComponent || !peer || !isAmountMore) {
       return null
     }
