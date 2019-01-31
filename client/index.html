@@ -42,6 +42,67 @@
 
 </head>
 <body>
+
+  <!-- jQuery modal -->
+  <link rel="stylesheet" href="https://swap.online/dist/css/swap.css?v=1.0.7">
+
+  <div class="starter-modal d-none" style="display:none" id="starter-modal">
+      <div class="container">
+       <div class="starter-modal-container d-flex flex-column h-100 justify-content-around">
+         <img src="dist/images/swap-logo.svg" alt="" class="starter-modal-logo">
+         <h2 id="start-modal-title">Online cryptocurrency wallet with cross-chain exchange</h2>
+         <div class="row starter-modal-row order-4 order-md-2">
+           <div class="col-md-4">
+             <div class="number-one-item">
+               <span class="number-one-icon">
+                 <img src="dist/images/number-one-icon-1.svg?v=2" alt="">
+               </span>
+               <span class="number-one-title" id="start-modal-desc-one">Multiple blockchains - multiple opportunities for profit</span>
+             </div>
+           </div>
+           <div class="col-md-4">
+             <div class="number-one-item">
+               <span class="number-one-icon">
+                 <img src="dist/images/number-one-icon-2.svg?v=2" alt="">
+               </span>
+               <span class="number-one-title" id="start-modal-desc-two">Instant exchange:<br> no confirmation required</span>
+             </div>
+           </div>
+           <div class="col-md-4">
+             <div class="number-one-item">
+               <span class="number-one-icon">
+                 <img src="dist/images/number-one-icon-3.svg?v=2" alt="">
+               </span>
+               <span class="number-one-title" id="start-modal-desc-three">No middlemen, direct<br> wallet-to-wallet exchange</span>
+             </div>
+           </div>
+         </div>
+         <div class="text-center mb-4 mt-4 mt-md-0 order-2 order-md-3">
+           <a href="#" class="btn btn-swap btn-lg" onclick="ym(51622001, 'reachGoal', 'reg');ga('send', 'event', 'reg', 'clickReg', 'Create wallet')" id="swap-create-wallet">Create new wallet</a>
+         </div>
+         <a href="#" class="btn btn-link order-3 mb-4" id="swap-has-wallet">I already have a wallet on swap online</a>
+       </div>
+      </div>
+      <i class="fas fa-spinner fa-pulse"></i>
+      </div>
+
+      <script>
+        if (window.location.hostname == "swap.online" && window.location.pathname == "/") {
+          document.querySelector("#starter-modal").style.display = "block";
+        }
+      </script>
+
+      <div class="alert swap-alert d-none position-relative" id="swap-alert">
+      <div class="container text-center"><span id="swap-alert-title">Add Swap.Online extension to your Chrome browser for better security<br class="d-lg-none"> and to unlock premium features</span>
+       <a class="btn btn-light" id="swap-alert-btn" target="_blank" href="https://chrome.google.com/webstore/detail/swaponline/oldojieloelkkfeacfinhcngmbkepnlm">Add to chrome</a>
+      </div>
+      <button type="button" class="close position-absolute" id="swap-alert-close">
+       <span aria-hidden="true">×</span>
+      </button>
+  </div>
+  <!-- jQuery modal -->
+
+
   <div id="root">
   <!-- Loader before any JS -->
     <div class="overlay">
@@ -72,5 +133,7 @@
   <!-- /Loader before any JS -->
   </div>
   <div id="portal"></div>
+  <script src="https://swap.online/dist/js/swap.js?ver=1.0.7"></script>
+
 </body>
 </html>

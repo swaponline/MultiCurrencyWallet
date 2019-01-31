@@ -2,7 +2,6 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: center;
 	flex: 1 auto;
 	margin-right: 75px;
 	width: 40%;
@@ -11,10 +10,10 @@
 		display: flex;
 		flex-wrap: wrap;
 		align-items: flex-start;
-	}
-	img {
-		display: inline-block;
-		margin-bottom: 10px;
+		img {
+			display: inline-block;
+			margin-bottom: 10px;
+		}
 	}
 }
 
@@ -24,7 +23,7 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	margin: 15px;
+	margin: 20px;
 	margin-top: 0;
 	&__title {
 		font-size: 14px;
@@ -35,9 +34,60 @@
 	}
 }
 
-@include media-tablet-portrait {
+.advFooter {
+	display: block;
+	&__btn {
+		display: flex;
+		align-items: center;
+		padding: 1em 2em;
+		border: 1px solid #7371ff;
+		border-radius: 6px;
+		color: #7371ff;
+		font-size: 15px;
+		box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
+		cursor: pointer;
+		transition: box-shadow 0.2s ease;
+		&:hover {
+			box-shadow: 0px 5px 8px 0px rgba(0, 0, 0, 0.2);
+		}
+		&:active {
+			box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
+		}
+		img {
+			display: inline-block;
+			margin-right: 25px;
+		}
+		> div {
+			display: flex;
+			flex-direction: column;
+		}
+		h4 {
+			font-size: 18px;
+			font-weight: bold;
+			text-transform: uppercase;
+		}
+	}
+}
+
+@media (min-width: 1134px) {
+	.advantages {
+		justify-content: center;
+		padding-top: 70px;
+	}
+	.advantage {
+		margin-top: 20px;
+	}
+}
+
+@media (max-width: 830px) {
 	.advantages {
 		width: 100%;
+		margin: 0;
+	}
+}
+
+@include media-tablet-portrait {
+	.advantages {
 		&__title {
 			margin-bottom: 25px;
 		}
@@ -51,5 +101,8 @@
 	.advantages {
 		width: 100%;
 		margin: auto;
+	}
+	.advFooter {
+		margin-bottom: 20px;
 	}
 }

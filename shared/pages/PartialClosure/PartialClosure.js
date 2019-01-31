@@ -28,6 +28,11 @@ import { util } from 'swap.app'
 
 import constants from 'helpers/constants'
 
+const PAIR_CHECK_RESULT = {
+  NO_PAIR: -1,
+  EQUAL: 0,
+  HAVE_PAIR: 1,
+}
 
 const filterIsPartial = (orders) => orders
   .filter(order => order.isPartial && !order.isProcessing)
@@ -38,7 +43,7 @@ const text = [
 ]
 
 const subTitle = (
-  <FormattedMessage id="partial437" defaultMessage="Fast cryptocurrency exchange using atomicswap" />
+  <FormattedMessage id="partial437" defaultMessage="Atomic Swap Exchange" />
 )
 
 @injectIntl
@@ -77,8 +82,10 @@ export default class PartialClosure extends Component {
     super()
     const ethAddress = currenciesData.filter(item => item.currency === 'ETH')
 
-    const sellToken = sell || 'eth'
-    const buyToken = buy || 'btc'
+    const isWidgetBuild = config && config.isWidget
+
+    const sellToken = sell || (!isWidgetBuild) ? 'eth' : 'btc'
+    const buyToken = buy || (!isWidgetBuild) ? 'btc' : config.erc20token
     const localization = locale ? `/${locale}` : ''
 
     if (!props.location.hash.includes('#widget')) {
@@ -357,31 +364,59 @@ export default class PartialClosure extends Component {
   }
 
   handleSetGetValue = ({ value }) => {
-    this.checkPair(this.state.haveCurrency)
-    this.setState(() => ({
+    const newState = {
       getCurrency: value,
+      haveCurrency: this.state.haveCurrency,
       customWallet: this.state.customWalletUse ? this.wallets[value.toUpperCase()] : '',
-    }))
-    this.additionalPathing(this.state.haveCurrency, value)
+    }
+
+    const check = this.checkPair(value, this.state.haveCurrency)
+
+    if (check === PAIR_CHECK_RESULT.NO_PAIR) {
+      const selected = actions.pairs.selectPair(value)
+      newState.haveCurrency = selected[0].value
+    } else if (check === PAIR_CHECK_RESULT.EQUAL) {
+      newState.haveCurrency = this.state.getCurrency
+    }
+
+    this.setState(() => (newState))
+    this.additionalPathing(newState.haveCurrency, value)
   }
 
   handleSetHaveValue = ({ value }) => {
-    this.checkPair(value)
-    this.setState(() => ({
+    const newState = {
+      getCurrency: this.state.getCurrency,
       haveCurrency: value,
-    }))
-    this.additionalPathing(value, this.state.getCurrency)
+    }
+    const check = this.checkPair(value, this.state.getCurrency)
+
+    if (check === PAIR_CHECK_RESULT.NO_PAIR) {
+      const selected = actions.pairs.selectPair(value)
+      newState.getCurrency = selected[0].value
+    } else if (check === PAIR_CHECK_RESULT.EQUAL) {
+      newState.getCurrency = this.state.haveCurrency
+    }
+
+    this.setState(() => (newState))
+    this.additionalPathing(value, newState.getCurrency)
   }
 
   handleFlipCurrency = () => {
     this.setClearState()
-    this.checkPair(this.state.getCurrency)
-    this.setState(() => ({
+    const newState = {
       haveCurrency: this.state.getCurrency,
       getCurrency: this.state.haveCurrency,
       customWallet: this.state.customWalletUse ? this.wallets[this.state.haveCurrency.toUpperCase()] : '',
-    }))
-    this.additionalPathing(this.state.getCurrency, this.state.haveCurrency)
+    }
+    const check = this.checkPair(this.state.haveCurrency, this.state.getCurrency)
+
+    if (check === PAIR_CHECK_RESULT.EQUAL) {
+      const selected = actions.pairs.selectPair(this.state.haveCurrency)
+      newState.getCurrency = selected[0].value
+    }
+
+    this.setState(() => (newState))
+    this.additionalPathing(newState.haveCurrency, newState.getCurrency)
   }
 
   handlePush = (isWidget = false) => {
@@ -458,16 +493,19 @@ export default class PartialClosure extends Component {
     return false
   }
 
-  checkPair = (value) => {
+  checkPair = (value, staticVal) => {
     const selected = actions.pairs.selectPair(value)
 
-    const check = selected.map(item => item.value).includes(this.state.getCurrency)
+    if (value === staticVal) {
+      return PAIR_CHECK_RESULT.EQUAL
+    }
+
+    const check = selected.map(item => item.value).includes(staticVal)
 
     if (!check) {
-      this.setState(() => ({
-        getCurrency: selected[0].value,
-      }))
+      return PAIR_CHECK_RESULT.NO_PAIR
     }
+    return PAIR_CHECK_RESULT.HAVE_PAIR
   }
 
 
@@ -497,7 +535,9 @@ export default class PartialClosure extends Component {
       <Fragment>
         {
           (!isWidget) && (
-            <PageHeadline subTitle={subTitle} />
+            <div styleName="TitleHolder">
+              <PageHeadline subTitle={subTitle} />
+            </div>
           )
         }
         <div styleName={isWidget ? 'widgetSection' : 'section'} className={isWidget ? 'section' : ''} >
@@ -523,7 +563,11 @@ export default class PartialClosure extends Component {
               <FormattedMessage id="partial221" defaultMessage="Max amount for exchange: " />
               {Math.floor(maxBuyAmount.toNumber() * 1000) / 1000}{' '}{haveCurrency.toUpperCase()}
             </p>
-            <Flip onClick={this.handleFlipCurrency} styleName="flipButton" className={isWidget ? 'flipBtn' : ''} />
+            {
+              this.state.haveCurrency !== this.state.getCurrency && (
+                <Flip onClick={this.handleFlipCurrency} styleName="flipButton" className={isWidget ? 'flipBtn' : ''} />
+              )
+            }
             <SelectGroup
               inputValueLink={linked.getAmount}
               selectedValue={getCurrency}
