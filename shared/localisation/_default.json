@@ -4612,7 +4612,7 @@
   },
   {
     "id": "deposit146",
-    "message": "You do not have funds to continue the swap. Copy the address below and top it up with the recommended amount.",
+    "message": "You don't have enought of {amount} {tokenName} to finish the swap.{br}This amount includes the missing amount on your balance and miners fee.{br}You can sent {tokenName} from any wallet and exchange.",
     "files": [
       "shared/pages/Swap/DepositWindow/DepositWindow.js"
     ]
