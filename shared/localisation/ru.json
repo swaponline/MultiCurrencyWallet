@@ -4552,7 +4552,42 @@
   },
   {
     "id": "deposit146",
-    "message": "Этой суммы вам не хватает для обмена, сумма указана с учетом комиссии майнеров ",
+    "message": "Этой суммы вам не хватает для обмена: {amount} {tokenName},{br}сумма указана с учетом комиссии майнеров.",
+    "files": [
+      "shared/pages/Swap/DepositWindow/DepositWindow.js"
+    ]
+  },
+  {
+    "id": "deposit165",
+    "message": "Недостаточно средств для обмена.{br}Для продолжения обмена - скопируйте указанный адрес и пополните баланс на {missingBalance}.",
+    "files": [
+      "shared/pages/Swap/DepositWindow/DepositWindow.js"
+    ]
+  },
+  {
+    "id": "deposit177",
+    "message": "Этой суммы вам не хватает для обмена: {amount} {tokenName}, сумма указана с учетом комиссии майнеров.{br}Вы можете отправить {tokenName} с любого кошелька или биржи.",
+    "files": [
+      "shared/pages/Swap/DepositWindow/DepositWindow.js"
+    ]
+  },
+  {
+    "id": "deposit231",
+    "message": "Получено {balance} / {need} {tooltip}",
+    "files": [
+      "shared/pages/Swap/DepositWindow/DepositWindow.js"
+    ]
+  },
+  {
+    "id": "deposit239",
+    "message": "Если вы пополните контракт на сумму больше указанной - остаток будет списан в качестве комиссии майнеров.",
+    "files": [
+      "shared/pages/Swap/DepositWindow/DepositWindow.js"
+    ]
+  },
+  {
+    "id": "Deposit52",
+    "message": "Осталось {timer} минут для проведения платежа.",
     "files": [
       "shared/pages/Swap/DepositWindow/DepositWindow.js"
     ]
