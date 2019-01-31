@@ -98,6 +98,7 @@ export default class App extends React.Component {
       createSwapApp()
       this.setState({ fetching: true })
     }, 1000)
+     window.prerenderReady = true
   }
 
   render() {
