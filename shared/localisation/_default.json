@@ -3980,7 +3980,7 @@
   },
   {
     "id": "partial437",
-    "message": "Fast cryptocurrency exchange using atomicswap",
+    "message": "Atomic Swap Exchange",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -4612,7 +4612,7 @@
   },
   {
     "id": "deposit146",
-    "message": "You do not have funds to continue the swap. Copy the address below and top it up with the recommended amount.",
+    "message": "You don't have enought of {amount} {tokenName} to finish the swap.{br}This amount includes the missing amount on your balance and miners fee.{br}You can sent {tokenName} from any wallet and exchange.",
     "files": [
       "shared/pages/Swap/DepositWindow/DepositWindow.js"
     ]
@@ -4800,5 +4800,17 @@
   {
     "id": "advantagesTxt6",
     "message": "No personal data is required, no tracing. Everything works on full anonymity."
+  },
+  {
+    "id": "advantagesButtonTitle",
+    "message": "How it works?"
+  },
+  {
+    "id": "advantagesButtonTxt",
+    "message": "(Watch the video)"
+  },
+  {
+    "id": "advVidLink",
+    "message": "https://youtu.be/Jhrb7xOT_7s"
   }
 ]
