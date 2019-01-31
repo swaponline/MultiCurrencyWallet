@@ -13,7 +13,7 @@ import Title from 'components/PageHeadline/Title/Title'
 import Logo from 'components/Logo/Logo'
 import { FormattedMessage } from 'react-intl'
 import { Button } from 'components/controls'
-import animation from './images'
+import * as animation from './images'
 
 
 @CSSModules(styles, { allowMultiple: true })
