@@ -61,7 +61,15 @@ if (config.isWidget) {
     },
   ]
 
-  initialState.addSelectedItems = [ config.erc20token.toUpperCase() ]
+  initialState.addSelectedItems = [
+    {
+      name: config.erc20token.toUpperCase(),
+      title: config.erc20token.toUpperCase(),
+      icon: config.erc20token,
+      value: config.erc20token,
+      fullTitle: config.erc20[config.erc20token].fullName,
+    },
+  ]
 }
 
 // eslint-disable-next-line
