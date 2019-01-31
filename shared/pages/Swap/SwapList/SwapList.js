@@ -24,6 +24,7 @@ export default class SwapList extends Component {
   }
 
   render() {
+    const { swap } = this.props
     return (
       <div styleName="stepList">
         {
@@ -79,7 +80,9 @@ export default class SwapList extends Component {
               <p styleName="stepText">
                 <FormattedMessage
                   id="BtcToEthToken80"
-                  defaultMessage="Swap tokens deposition" />
+                  defaultMessage="{name} deposition"
+                  values={{ name: this.props.name === 'BTC' ? swap.buyCurrency : this.props.name }}
+                />
               </p>
             </div>
           ) : (
@@ -88,7 +91,9 @@ export default class SwapList extends Component {
               <p styleName="stepText">
                 <FormattedMessage
                   id="BtcToEthToken89"
-                  defaultMessage="Swap tokens deposition" />
+                  defaultMessage="{name} deposition"
+                  values={{ name: this.props.name === 'BTC' ? swap.buyCurrency : this.props.name }}
+                />
               </p>
             </div>
           )
@@ -101,7 +106,9 @@ export default class SwapList extends Component {
               <p styleName="stepText">
                 <FormattedMessage
                   id="BtcToEthToken102"
-                  defaultMessage="Withdrawing swap tokens from a contract" />
+                  defaultMessage="Withdrawing {name} from a contract"
+                  values={{ name: this.props.name === 'BTC' ? swap.buyCurrency : this.props.name }}
+                />
               </p>
             </div>
           ) : (
@@ -110,7 +117,9 @@ export default class SwapList extends Component {
               <p styleName="stepText">
                 <FormattedMessage
                   id="BtcToEthToken111"
-                  defaultMessage="Withdrawing swap tokens from a contract" />
+                  defaultMessage="Withdrawing {name} from a contract"
+                  values={{ name: this.props.name === 'BTC' ? swap.buyCurrency : this.props.name }}
+                />
               </p>
             </div>
           )
