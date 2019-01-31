@@ -26,7 +26,6 @@ export default class SwapList extends Component {
   render() {
     const { swap, flow } = this.props
 
-    console.log('this.props.flow.step', this.props.flow.step)
     return (
       <div styleName="stepList">
         {
@@ -55,8 +54,8 @@ export default class SwapList extends Component {
 
         {
           flow.step >= 2 || (flow.step > 2 && flow.step <= 8) ? (
-            <div style={{ paddingTop: isMobile ? '50px' : '' }} styleName={flow.step >= 2 && flow.step < 5  ? 'stepItem active' : 'stepItem active checked'}>
-              <span styleName="stepNumber">{flow.step >= 2 && flow.step < 5 ? '2' : <i className="fas fa-check" />}</span>
+            <div style={{ paddingTop: isMobile ? '50px' : '' }} styleName={flow.step >= 2 && flow.step < 4  ? 'stepItem active' : 'stepItem active checked'}>
+              <span styleName="stepNumber">{flow.step >= 2 && flow.step < 4 ? '2' : <i className="fas fa-check" />}</span>
               <p styleName="stepText">
                 <FormattedMessage
                   id="BtcToEthToken58"
@@ -77,8 +76,8 @@ export default class SwapList extends Component {
 
         {
           this.props.flow.step >= 5 ? (
-            <div style={{ paddingTop: isMobile ? '100px' : '' }} styleName={flow.step >= 5 && flow.step < 6 ? 'stepItem active' : 'stepItem active checked'}>
-              <span styleName="stepNumber">{flow.step >= 5 && flow.step < 6 ? '3' : <i className="fas fa-check" />}</span>
+            <div style={{ paddingTop: isMobile ? '100px' : '' }} styleName={flow.step >= 4 && flow.step < 6 ? 'stepItem active' : 'stepItem active checked'}>
+              <span styleName="stepNumber">{flow.step >= 4 && flow.step < 6 ? '3' : <i className="fas fa-check" />}</span>
               <p styleName="stepText">
                 <FormattedMessage
                   id="BtcToEthToken80"

@@ -47,6 +47,7 @@ export default class BtcToEth extends Component {
     const { flow: { isSignFetching, isMeSigned, step, isParticipantSigned } } = this.state
 
     this.changePaddingValue()
+
     setInterval(() => {
       if (step === 1) {
         this.confirmAddress()
@@ -55,10 +56,6 @@ export default class BtcToEth extends Component {
         this.submitSecret()
       }
     }, 1000)
-  }
-
-  tryRefund = () => {
-    this.swap.flow.tryRefund()
   }
 
   handleFlowStateUpdate = (values) => {
@@ -139,7 +136,7 @@ export default class BtcToEth extends Component {
 
 
   render() {
-    const { continueSwap, enoughBalance, swap, history, tokenItems, ethAddress }  = this.props
+    const { children, continueSwap, enoughBalance, swap, history, tokenItems, ethAddress }  = this.props
 
     const { flow, isShowingBitcoinScript, currencyData, paddingContainerValue } = this.state
 
@@ -175,6 +172,7 @@ export default class BtcToEth extends Component {
             lockTime={flow.btcScriptValues.lockTime}
             ownerPublicKey={flow.btcScriptValues.ownerPublicKey}
           />}
+          {children}
       </div>
     )
   }

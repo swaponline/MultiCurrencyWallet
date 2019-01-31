@@ -176,6 +176,7 @@ console.log(flow.step)
             lockTime={flow.btcScriptValues.lockTime}
             ownerPublicKey={flow.btcScriptValues.ownerPublicKey}
           />}
+          {children}
       </div>
     )
   }

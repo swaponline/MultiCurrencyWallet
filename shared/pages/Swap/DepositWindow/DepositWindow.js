@@ -77,10 +77,10 @@ export default class DepositWindow extends Component {
 
     if (helpers.ethToken.isEthToken({ name: swap.sellCurrency.toLowerCase() })) {
       const currencyBalance = await actions.token.getBalance(swap.sellCurrency.toLowerCase())
-      this.setState(() => ({ balance: Number(currencyBalance).toFixed(6) }))
+      this.setState(() => ({ balance: currencyBalance }))
     } else {
       const currencyBalance = await actions[swap.sellCurrency.toLowerCase()].getBalance()
-      this.setState(() => ({ balance: Number(currencyBalance).toFixed(6) }))
+      this.setState(() => ({ balance: currencyBalance }))
     }
 
     const currencyBalance = swap.sellCurrency === 'BTC' ? Number(scriptBalance).toFixed(6) : (Number(this.state.balance).toFixed(6) || 0)
@@ -94,7 +94,7 @@ export default class DepositWindow extends Component {
 
   updateRemainingBalance = () => {
     const { sellAmount, balance } = this.state
-    const remainingBalance = BigNumber(sellAmount).minus(balance)
+    const remainingBalance = BigNumber(sellAmount).minus(balance).toString()
 
     this.setState(() => ({
       remainingBalance,
@@ -184,7 +184,7 @@ export default class DepositWindow extends Component {
     } = this.state
 
     const balanceToRender = Math.floor(balance * 1e6) / 1e6
-
+    const remainingBalanceToRender = BigNumber(remainingBalance).dp(6, BigNumber.ROUND_HALF_EVEN)
     return (
       <Fragment>
         <a
@@ -200,8 +200,8 @@ export default class DepositWindow extends Component {
                   defaultMessage="Copy this address and top up {missingBalance}"
                   values={{ missingBalance:
                     <div>
-                      {remainingBalance > 0
-                      ? <strong>{remainingBalance.toFixed(6)} {swap.sellCurrency}. </strong>
+                      {remainingBalanceToRender > 0
+                      ? <strong>{remainingBalanceToRender.toFixed(6)} {swap.sellCurrency}. </strong>
                       : <span styleName="loaderHolder">
                           <InlineLoader />
                         </span>}
