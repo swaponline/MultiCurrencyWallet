@@ -17,6 +17,7 @@
   align-items: center;
   position: relative;
   flex-wrap: wrap;
+  padding-bottom: 35px;
 }
 
 .swapDepositWindow {
@@ -51,9 +52,6 @@
     display: inline-block;
     margin-left: 5px;
     margin-top: 2px;
-  }
-  a {
-    word-wrap: break-word;
   }
 }
 
@@ -90,7 +88,7 @@
 }
 
 .top {
-  width: 575px;
+  width: auto;
   display: flex;
   justify-content: stretch;
 }
@@ -126,7 +124,7 @@
 .btcMessage {
   margin-top: 0.5em;
   max-width: 100%;
-  font-size: 28px;
+  font-size: 18px;
   display: block;
 }
 
@@ -356,7 +354,6 @@
   margin-top: 20px;
   font-size: 14px;
 }
-
 @include media-mobile {
   .transaction{
       font-size: 8.5px;
