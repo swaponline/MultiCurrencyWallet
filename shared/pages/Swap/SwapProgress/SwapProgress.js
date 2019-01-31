@@ -24,10 +24,10 @@ import Title from 'components/PageHeadline/Title/Title'
 import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 
-import BtcToEth from './SwapProgressTexts/BtcToEth'
-import BtcToEthTokens from './SwapProgressTexts/BtcToEthTokens'
-import EthToBtc from './SwapProgressTexts/EthToBtc'
-import EthTokensToBtc from './SwapProgressTexts/EthTokensToBtc'
+import BtcToEth from './SwapProgressText/BtcToEth'
+import BtcToEthTokens from './SwapProgressText/BtcToEthTokens'
+import EthToBtc from './SwapProgressText/EthToBtc'
+import EthTokensToBtc from './SwapProgressText/EthTokensToBtc'
 
 import * as animation from './images'
 
