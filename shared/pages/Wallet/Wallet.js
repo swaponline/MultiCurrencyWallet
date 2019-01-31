@@ -7,6 +7,7 @@ import { constants } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 import actions from 'redux/actions'
 import { withRouter } from 'react-router'
+import { hasSignificantBalance, hasNonZeroBalance } from 'helpers/user'
 
 import CSSModules from 'react-css-modules'
 import stylesWallet from './Wallet.scss'
@@ -42,9 +43,12 @@ import config from 'app-config'
       [btcData, ethData, eosData, telosData, /* xlmData, */ /* ltcData, */ usdtData /* nimData */ ]).map((data) => (
       data.currency
     )),
-    currencyBalance: [btcData, ethData, eosData, /* xlmData, */ telosData, ltcData, usdtData, ...Object.keys(tokensData).map(k => (tokensData[k])) /* nimData */ ].map((cur) => (
-      cur.balance
-    )),
+    currencyBalance: [
+      btcData, ethData, eosData, /* xlmData, */ telosData, ltcData, usdtData, ...Object.keys(tokensData).map(k => (tokensData[k])), /* nimData */
+    ].map(({ balance, currency }) => ({
+      balance,
+      name: currency,
+    })),
     currencies,
     hiddenCoinsList : (config && config.isWidget) ? [] : hiddenCoinsList,
   })
@@ -70,6 +74,7 @@ export default class Wallet extends Component {
   state = {
     saveKeys: false,
     openModal: false,
+    isShowingPromoText: false,
   }
 
   componentWillMount() {
@@ -98,13 +103,7 @@ export default class Wallet extends Component {
 
     const { currencyBalance } = this.props
 
-    let hasNonZeroCurrencyBalance = false
-
-    currencyBalance.forEach(cur => {
-      if (cur > 0) {
-        hasNonZeroCurrencyBalance = true
-      }
-    })
+    const hasNonZeroCurrencyBalance = hasNonZeroBalance(currencyBalance)
 
     if (!localStorage.getItem(constants.localStorage.wasCautionShow) && process.env.MAINNET) {
       if (hasNonZeroCurrencyBalance) {
@@ -112,7 +111,16 @@ export default class Wallet extends Component {
         localStorage.setItem(constants.localStorage.wasCautionShow, true)
       }
     }
+  }
 
+  componentWillReceiveProps() {
+    const { currencyBalance } = this.props
+
+    const hasAtLeastTenDollarBalance = hasSignificantBalance(currencyBalance)
+
+    if (process.env.MAINNET && hasAtLeastTenDollarBalance) {
+      this.setState({ isShowingPromoText: true })
+    }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -158,6 +166,7 @@ export default class Wallet extends Component {
 
   render() {
     const { items, tokens, currencies, hiddenCoinsList, intl, location } = this.props
+    const { isShowingPromoText } = this.state
 
     const titles = [
       <FormattedMessage id="Wallet114" defaultMessage="Coin" />,
@@ -195,9 +204,28 @@ export default class Wallet extends Component {
           </SubTitle>
         </PageHeadline>
         <KeyActionsPanel />
-        <div styleName="depositText">
-          <FormattedMessage id="Wallet137" defaultMessage="Deposit funds to addresses below" />
-        </div>
+
+        {!isShowingPromoText && (
+          <div styleName="depositText">
+            <FormattedMessage id="Wallet137" defaultMessage="Deposit funds to addresses below" />
+          </div>
+        )}
+        {isShowingPromoText && (
+          <div>
+            <FormattedMessage
+              id="WalletPromoText"
+              defaultMessage="
+                🎁 🎁 🎁 Thank you for using Swap.Online!
+                Tell us about your experience with our service
+                and we will gift you $10 in BTC 🎁 🎁 🎁"
+              />
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfSxJaIKbyfqf-kn7eRt-0jDPp0Wd2wgovrzRKQibCF6gY9bQ/viewform?usp=sf_link">
+              <FormattedMessage id="WalletPromoLinkText" defaultMessage="Open poll" />
+            </a>
+          </div>
+        )}
+
+
         <Table
           id="table-wallet"
           className={styles.wallet}

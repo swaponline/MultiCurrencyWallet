@@ -12,6 +12,7 @@ import { BigNumber } from 'bignumber.js'
 import { Redirect } from 'react-router-dom'
 
 import SelectGroup from './SelectGroup/SelectGroup'
+import Advantages from './PureComponents/Advantages'
 import { Button, Toggle, Flip } from 'components/controls'
 import Input from 'components/forms/Input/Input'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
@@ -72,13 +73,22 @@ export default class PartialClosure extends Component {
     }
   }
 
-  constructor({ currenciesData }) {
+  constructor({ currenciesData, match: { params: { buy, sell, locale } }, history, ...props }) {
     super()
     const ethAddress = currenciesData.filter(item => item.currency === 'ETH')
 
+    const isWidgetBuild = config && config.isWidget
+
+    const sellToken = sell || (!isWidgetBuild) ? 'eth' : 'btc'
+    const buyToken = buy || (!isWidgetBuild) ? 'btc' : config.erc20token
+    const localization = locale ? `/${locale}` : ''
+
+    if (!props.location.hash.includes('#widget')) {
+      history.push(`${localization}/exchange/${sellToken}-to-${buyToken}`)
+    }
     this.state = {
-      haveCurrency: 'btc',
-      getCurrency: 'eth',
+      haveCurrency: sellToken,
+      getCurrency: buyToken,
       haveAmount: 0,
       haveUsd: 0,
       getUsd: 0,
@@ -136,6 +146,15 @@ export default class PartialClosure extends Component {
       }
     }
     return true
+  }
+
+  additionalPathing = (sell, buy) => {
+    const localization = this.props.match.params.locale
+      ? `/${this.props.match.params.locale}`
+      : ''
+    if (!this.props.location.hash.includes('#widget')) {
+      this.props.history.push(`${localization}/exchange/${sell}-to-${buy}`)
+    }
   }
 
   getUsdBalance = async () => {
@@ -345,6 +364,7 @@ export default class PartialClosure extends Component {
       getCurrency: value,
       customWallet: this.state.customWalletUse ? this.wallets[value.toUpperCase()] : '',
     }))
+    this.additionalPathing(this.state.haveCurrency, value)
   }
 
   handleSetHaveValue = ({ value }) => {
@@ -352,6 +372,7 @@ export default class PartialClosure extends Component {
     this.setState(() => ({
       haveCurrency: value,
     }))
+    this.additionalPathing(value, this.state.getCurrency)
   }
 
   handleFlipCurrency = () => {
@@ -362,18 +383,25 @@ export default class PartialClosure extends Component {
       getCurrency: this.state.haveCurrency,
       customWallet: this.state.customWalletUse ? this.wallets[this.state.haveCurrency.toUpperCase()] : '',
     }))
+    this.additionalPathing(this.state.getCurrency, this.state.haveCurrency)
   }
 
-  handlePush = () => {
+  handlePush = (isWidget = false) => {
     const { intl: { locale } } = this.props
     const { haveCurrency, getCurrency } = this.state
-
+    const localization = this.props.match.params.locale
+      ? `/${this.props.match.params.locale}`
+      : ''
     const tradeTicker = `${haveCurrency}-${getCurrency}`
+    const hostname = window.location.origin
+    const pathname = constants.tradeTicker.includes(tradeTicker.toUpperCase())
+      ? tradeTicker
+      : tradeTicker.split('-').reverse().join('-')
 
-    if (constants.tradeTicker.includes(tradeTicker.toUpperCase())) {
-      this.props.history.push(tradeTicker)
+    if (isWidget) {
+      window.parent.location.replace(`${hostname}/${pathname}`)
     } else {
-      this.props.history.push(tradeTicker.split('-').reverse().join('-'))
+      this.props.history.push(`${localization}/${tradeTicker}`)
     }
   }
 
@@ -455,7 +483,9 @@ export default class PartialClosure extends Component {
     const oneCryptoCost = maxBuyAmount.isLessThanOrEqualTo(0) ? BigNumber(0) : BigNumber(goodRate)
     const linked = Link.all(this, 'haveAmount', 'getAmount', 'customWallet')
 
-    const isWidget = (config && config.isWidget)
+    const isWidgetExtention = config && config.isWidget
+    const isWidgetLink = this.props.location.pathname.includes('/exchange/') && this.props.location.hash === '#widget'
+    const isWidget = isWidgetExtention || isWidgetLink
 
     if (redirect) {
       return <Redirect push to={`${localisedUrl(locale, links.swap)}/${getCurrency}-${haveCurrency}/${orderId}`} />
@@ -472,23 +502,13 @@ export default class PartialClosure extends Component {
             <PageHeadline subTitle={subTitle} />
           )
         }
-        <div styleName="section">
+        <div styleName={isWidget ? 'widgetSection' : 'section'} className={isWidget ? 'section' : ''} >
           {
             (!isWidget) && (
-              <div styleName="blockVideo">
-                <iframe
-                  title="swap online video"
-                  width="560"
-                  height="315"
-                  src="https://www.youtube-nocookie.com/embed/Jhrb7xOT_7s?controls=0"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
+              <Advantages />
             )
           }
-          <div styleName="block">
+          <div styleName="block" className={isWidget ? 'block' : ''} >
             <SelectGroup
               inputValueLink={linked.haveAmount.pipe(this.setAmount)}
               selectedValue={haveCurrency}
@@ -499,12 +519,13 @@ export default class PartialClosure extends Component {
               placeholder="Enter amount"
               usd={(maxAmount > 0 && isNonOffers) ? 0 : haveUsd}
               currencies={currencies}
+              className={isWidget ? 'SelGroup' : ''}
             />
-            <p>
+            <p className={isWidget ? 'advice' : ''} >
               <FormattedMessage id="partial221" defaultMessage="Max amount for exchange: " />
-              {maxBuyAmount.toNumber()}{' '}{haveCurrency.toUpperCase()}
+              {Math.floor(maxBuyAmount.toNumber() * 1000) / 1000}{' '}{haveCurrency.toUpperCase()}
             </p>
-            <Flip onClick={this.handleFlipCurrency} styleName="flipButton" />
+            <Flip onClick={this.handleFlipCurrency} styleName="flipButton" className={isWidget ? 'flipBtn' : ''} />
             <SelectGroup
               inputValueLink={linked.getAmount}
               selectedValue={getCurrency}
@@ -515,10 +536,11 @@ export default class PartialClosure extends Component {
               disabled
               currencies={addSelectedItems}
               usd={getUsd}
+              className={isWidget ? 'SelGroup' : ''}
             />
             {
               (isSearching || (isNonOffers && maxAmount === 0)) && (
-                <span>
+                <span className={isWidget ? 'searching' : ''}>
                   <FormattedMessage id="PartialPriceSearch" defaultMessage="Searching orders..." />
                   <div styleName="loaderHolder">
                     <div styleName="additionalLoaderHolder">
@@ -529,7 +551,7 @@ export default class PartialClosure extends Component {
               )
             }
             { oneCryptoCost.isGreaterThan(0) && oneCryptoCost.isFinite() && !isNonOffers && (
-              <div>
+              <div className={isWidget ? 'priceSearch' : ''}>
                 <FormattedMessage
                   id="PartialPriceSearch502"
                   defaultMessage="Price: 1 {getCurrency} = {haveCurrency}"
@@ -542,23 +564,23 @@ export default class PartialClosure extends Component {
             )}
             {maxAmount > 0 && isNonOffers && (
               <Fragment>
-                <p styleName="error">
+                <p styleName="error" className={isWidget ? 'error' : ''} >
                   <FormattedMessage id="PartialPriceNoOrdersReduce" defaultMessage="No orders found, try to reduce the amount" />
                 </p>
-                <p styleName="error">
+                <p styleName="error" className={isWidget ? 'error' : ''} >
                   <FormattedMessage id="PartialPriceReduceMin" defaultMessage="Maximum available amount: " />
                   {maxAmount}{' '}{getCurrency.toUpperCase()}
                 </p>
               </Fragment>
             )}
             {isDeclinedOffer && (
-              <p styleName="error">
+              <p styleName="error" className={isWidget ? 'error' : ''} >
                 {`Offer is declined`}
               </p>
             )}
             {
               isFetching && (
-                <span>
+                <span className={isWidget ? 'wait' : ''}>
                   <FormattedMessage id="partial291" defaultMessage="Wait participant: " />
                   <div styleName="loaderHolder">
                     <td styleName="additionalLoaderHolder">
@@ -591,11 +613,11 @@ export default class PartialClosure extends Component {
                 </Fragment>
               )
             }
-            <div styleName="rowBtn">
+            <div styleName="rowBtn" className={isWidget ? 'rowBtn' : ''}>
               <Button styleName="button" brand onClick={this.sendRequest} disabled={!canDoOrder}>
                 <FormattedMessage id="partial541" defaultMessage="Exchange now" />
               </Button>
-              <Button styleName="button" gray onClick={this.handlePush} >
+              <Button styleName="button" gray onClick={() => this.handlePush(isWidgetLink)} >
                 <FormattedMessage id="partial544" defaultMessage="Show order book" />
               </Button>
             </div>

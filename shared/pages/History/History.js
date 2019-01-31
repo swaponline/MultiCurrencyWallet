@@ -30,7 +30,7 @@ const filterHistory = (items, filter) => {
 const subTitle = defineMessages({
   subTitleHistory: {
     id: 'Amount68',
-    defaultMessage: 'History',
+    defaultMessage: 'My History',
   },
 })
 

@@ -98,12 +98,16 @@ export default class App extends React.Component {
       createSwapApp()
       this.setState({ fetching: true })
     }, 1000)
+     window.prerenderReady = true
   }
 
   render() {
     const { fetching, multiTabs, error } = this.state
     const { children, ethAddress, btcAddress, tokenAddress, history /* eosAddress */ } = this.props
     const isFetching = !ethAddress || !btcAddress || (!tokenAddress && config && !config.isWidget) || !fetching
+
+    const isWidget = history.location.pathname.includes('/exchange/') && history.location.hash === '#widget'
+    const isCalledFromIframe = window.location !== window.parent.location
 
     if (multiTabs) {
       return <PreventMultiTabs />
@@ -113,7 +117,14 @@ export default class App extends React.Component {
       return <Loader showTips />
     }
 
-    const mainContent = (
+    const mainContent = isWidget || isCalledFromIframe
+      ? (
+        <Fragment>
+          {children}
+          <Core />
+        </Fragment>
+      )
+      : (
       <Fragment>
         <Seo location={history.location} />
         <Header />

@@ -19,7 +19,7 @@
   },
   {
     "id": "menu.history",
-    "message": "История",
+    "message": "Моя История",
     "files": [
       "shared/components/Header/Header.js"
     ]
@@ -3338,7 +3338,7 @@
   },
   {
     "id": "Amount68",
-    "message": "История",
+    "message": "Моя История",
     "files": [
       "shared/pages/History/History.js"
     ]
@@ -4692,5 +4692,57 @@
     "files": [
       "shared/components/Header/User/UserTooltip/UserTooltip.js"
     ]
+  },
+  {
+    "id": "advantagesTitle",
+    "message": "Чем мы отличаемся от бирж"
+  },
+  {
+    "id": "advantagesTitle1",
+    "message": "0% КОМИССИЯ"
+  },
+  {
+    "id": "advantagesTitle2",
+    "message": "БЕЗ KYC"
+  },
+  {
+    "id": "advantagesTitle3",
+    "message": "БЕЗ 3-Й СТОРОНЫ"
+  },
+  {
+    "id": "advantagesTitle4",
+    "message": "МОМЕНТАЛЬНЫЙ ОБМЕН"
+  },
+  {
+    "id": "advantagesTitle5",
+    "message": "ВЫСОКАЯ БЕЗОПАСНОСТЬ"
+  },
+  {
+    "id": "advantagesTitle6",
+    "message": "ИСТИННАЯ АНОНИМНОСТЬ"
+  },
+  {
+    "id": "advantagesTxt1",
+    "message": "Обмен происходит между Вами и другими холдерами (peer-2-peer). Процент с транзакции не взимается."
+  },
+  {
+    "id": "advantagesTxt2",
+    "message": "Мы не требуем регистрации и подтверждения личности."
+  },
+  {
+    "id": "advantagesTxt3",
+    "message": "В процесс обмена никто не может вмешаться."
+  },
+  {
+    "id": "advantagesTxt4",
+    "message": "Вы можете совершить обмен прямо сейчас. Операция происходит в течении 2-х минут."
+  },
+  {
+    "id": "advantagesTxt5",
+    "message": "Мы не храним ваши деньги или ключи. Соответственно никто их не может у нас украсть."
+  },
+  {
+    "id": "advantagesTxt6",
+    "message": "Никаких данных заполнять не нужно, никакого трейсинга. Всё работает на предельной анонимности."
   }
 ]

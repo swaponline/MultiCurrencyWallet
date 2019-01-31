@@ -5,6 +5,7 @@ import ethToken from './ethToken'
 import bcash from './bcash'
 import ltc from './ltc'
 // import xlm from './xlm'
+import user from './user'
 import web3 from './web3'
 import links from './links'
 import request from './request'
@@ -43,6 +44,7 @@ export {
   eth,
   ethToken,
   ltc,
+  user,
   web3,
   utils,
   links,
