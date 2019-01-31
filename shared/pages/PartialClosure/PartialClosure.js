@@ -28,9 +28,11 @@ import { util } from 'swap.app'
 
 import constants from 'helpers/constants'
 
-const NO_PAIR = -1
-const EQUAL = 0
-const HAVE_PAIR = 1
+const PAIR_CHECK_RESULT = {
+  NO_PAIR: -1,
+  EQUAL: 0,
+  HAVE_PAIR: 1,
+}
 
 const filterIsPartial = (orders) => orders
   .filter(order => order.isPartial && !order.isProcessing)
@@ -368,10 +370,10 @@ export default class PartialClosure extends Component {
 
     const check = this.checkPair(value, this.state.haveCurrency)
 
-    if (check === NO_PAIR) {
+    if (check === PAIR_CHECK_RESULT.NO_PAIR) {
       const selected = actions.pairs.selectPair(value)
       newState.haveCurrency = selected[0].value
-    } else if (check === EQUAL) {
+    } else if (check === PAIR_CHECK_RESULT.EQUAL) {
       newState.haveCurrency = this.state.getCurrency
     }
 
@@ -386,10 +388,10 @@ export default class PartialClosure extends Component {
     }
     const check = this.checkPair(value, this.state.getCurrency)
 
-    if (check === NO_PAIR) {
+    if (check === PAIR_CHECK_RESULT.NO_PAIR) {
       const selected = actions.pairs.selectPair(value)
       newState.getCurrency = selected[0].value
-    } else if (check === EQUAL) {
+    } else if (check === PAIR_CHECK_RESULT.EQUAL) {
       newState.getCurrency = this.state.haveCurrency
     }
 
@@ -406,7 +408,7 @@ export default class PartialClosure extends Component {
     }
     const check = this.checkPair(this.state.haveCurrency, this.state.getCurrency)
 
-    if (check === EQUAL) {
+    if (check === PAIR_CHECK_RESULT.EQUAL) {
       const selected = actions.pairs.selectPair(this.state.haveCurrency)
       newState.getCurrency = selected[0].value
     }
@@ -493,15 +495,15 @@ export default class PartialClosure extends Component {
     const selected = actions.pairs.selectPair(value)
 
     if (value === staticVal) {
-      return EQUAL
+      return PAIR_CHECK_RESULT.EQUAL
     }
 
     const check = selected.map(item => item.value).includes(staticVal)
 
     if (!check) {
-      return NO_PAIR
+      return PAIR_CHECK_RESULT.NO_PAIR
     }
-    return HAVE_PAIR
+    return PAIR_CHECK_RESULT.HAVE_PAIR
   }
 
 
