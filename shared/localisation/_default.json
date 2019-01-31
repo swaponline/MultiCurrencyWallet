@@ -3980,7 +3980,7 @@
   },
   {
     "id": "partial437",
-    "message": "Fast cryptocurrency exchange using atomicswap",
+    "message": "Atomic Swap Exchange",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]

@@ -38,7 +38,7 @@ const text = [
 ]
 
 const subTitle = (
-  <FormattedMessage id="partial437" defaultMessage="Fast cryptocurrency exchange using atomicswap" />
+  <FormattedMessage id="partial437" defaultMessage="Atomic Swap Exchange" />
 )
 
 @injectIntl
