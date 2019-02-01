@@ -11,6 +11,7 @@ export default {
   main: 'https://swap.online/',
   coins: '/coins',
   partial: '/partial',
+  notFound: '/NotFound',
 
   // social networks
   medium: 'https://medium.com/swaponline',
