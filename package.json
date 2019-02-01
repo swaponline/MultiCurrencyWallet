@@ -20,7 +20,7 @@
     "dev-widget": "npm run dev:testnet-widget",
     "prod": "npm run dev:mainnet",
     "prod-widget": "npm run dev:mainnet-widget",
-    "deploy:pages": "npm run build:pages && gh-pages -d build-mainnet",
+    "deploy:pages": "npm run build:pages && gh-pages -d build-mainnet-pages",
     "deploy:mainnet": "sh deploy",
     "dev:testnet": "cross-env CONFIG=testnet.dev nodemon",
     "dev:testnet-widget": "cross-env CONFIG=testnet.widget.dev nodemon",
