@@ -137,8 +137,8 @@ export default class SwapProgress extends Component {
     const isFinish = flow.step === swap.flow.steps.length - 1;
 
     const finishSvg = <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
-                        <circle class="path circle" fill="none" stroke="#3de25b" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1"/>
-                        <polyline class="path check" fill="none" stroke="#3de25b" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" points="100.2,40.2 51.5,88.8 29.8,67.5 "/>
+                        <circle className="path circle" fill="none" stroke="#3de25b" stroke-width="6" stroke-miterlimit="10" cx="65.1" cy="65.1" r="62.1"/>
+                        <polyline className="path check" fill="none" stroke="#3de25b" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10" points="100.2,40.2 51.5,88.8 29.8,67.5 "/>
                       </svg>
 
     return (
@@ -146,18 +146,6 @@ export default class SwapProgress extends Component {
         <div styleName="container">
           <div styleName="stepContainer">
             <div styleName="swapInfo">
-              {this.swap.id &&
-              (
-                <strong>
-                  {this.swap.sellAmount.toFixed(6)}
-                  {' '}
-                  {sellCurrency} &#10230; {' '}
-                  {this.swap.buyAmount.toFixed(6)}
-                  {' '}
-                  {buyCurrency}
-                </strong>
-              )
-              }
             </div>
             <div styleName="progressContainer">
               <div styleName={progress > 180 ? 'progress-pie-chart gt-50' : 'progress-pie-chart'}>

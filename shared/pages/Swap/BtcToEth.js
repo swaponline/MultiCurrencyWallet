@@ -151,6 +151,20 @@ export default class BtcToEth extends Component {
     return (
       <div>
         <div className={this.props.styles.swapContainer} style={{ paddingTop: isMobile ? `${paddingContainerValue}px` : '' }}>
+          <div className={this.props.styles.swapInfo}>
+            {this.swap.id &&
+              (
+                <strong>
+                  {this.swap.sellAmount.toFixed(6)}
+                  {' '}
+                  {this.swap.sellCurrency} &#10230; {' '}
+                  {this.swap.buyAmount.toFixed(6)}
+                  {' '}
+                  {this.swap.buyCurrency}
+                </strong>
+              )
+            }
+          </div>
           {!this.props.enoughBalance && flow.step === 4
             ? (
               <div className={this.props.styles.swapDepositWindow}>
@@ -166,7 +180,7 @@ export default class BtcToEth extends Component {
               </Fragment>
             )
           }
-          <SwapList data={flow} name={swap.sellCurrency} swap={swap} />
+          <SwapList flow={flow} name={swap.sellCurrency} swap={swap} />
         </div>
         { flow.btcScriptValues &&
           <span onClick={this.toggleBitcoinScript}>
