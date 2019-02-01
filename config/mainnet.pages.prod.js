@@ -8,7 +8,7 @@ export default {
   local: 'online',
   dir: 'mainnet-pages',
 
-  base: 'https://staging.swaponline.site//',
+  base: 'https://staging.swaponline.site/',
   publicPath: `https://staging.swaponline.site${baseConfig.publicPath}`,
 
   ...config,
