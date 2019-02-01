@@ -39,6 +39,23 @@ after_script:
 #- COVERALLS_REPO_TOKEN=$coveralls_repo_token yarn coveralls
 - tar -cvzf build-mainnet.tgz build-mainnet/
 - tar -cvzf build-testnet.tgz build-testnet/
+
+deploy:
+  provider: script
+  skip-cleanup: true
+  script: npm run deploy:pages
+  on:
+    branch: develop
+
+# deploy:
+#   provider: pages
+#   skip-cleanup: true
+#   keep-history: true
+#   local-dir: build-pages
+#   github-token: $GITHUB_TOKEN
+#   on:
+#     branch: develop
+
 # deploy:
 #   provider:    releases
 #   api_key:

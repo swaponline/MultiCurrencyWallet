@@ -31,6 +31,15 @@
   cursor: pointer;
 }
 
+.swapInfo {
+  position: absolute;
+  width: 600px;
+  top: -45px;
+  text-align: center;
+  font-size: 18px;
+  margin-left: -10%;
+}
+
 .swapGoNumber {
   display: block;
   text-align: center;
@@ -88,7 +97,7 @@
 }
 
 .top {
-  width: 575px;
+  width: auto;
   display: flex;
   justify-content: stretch;
 }
@@ -124,7 +133,7 @@
 .btcMessage {
   margin-top: 0.5em;
   max-width: 100%;
-  font-size: 28px;
+  font-size: 18px;
   display: block;
 }
 

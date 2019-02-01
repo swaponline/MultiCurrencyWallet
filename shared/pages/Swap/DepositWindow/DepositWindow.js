@@ -192,12 +192,26 @@ export default class DepositWindow extends Component {
           target="_blank"
           rel="noopener noreferrer"
         >
+          <div styleName="swapInfo">
+            {this.swap.id &&
+            (
+              <strong>
+                {this.swap.sellAmount.toFixed(6)}
+                {' '}
+                {swap.sellCurrency} &#10230; {' '}
+                {this.swap.buyAmount.toFixed(6)}
+                {' '}
+                {swap.buyCurrency}
+              </strong>
+            )
+            }
+          </div>
           <div styleName="top">
             {/* eslint-disable */}
               <span styleName="btcMessage">
                 <FormattedMessage
                   id="deposit165"
-                  defaultMessage="Copy this address and top up {missingBalance}"
+                  defaultMessage="You don't have enought funds to continue the swap. Copy the address below and top it up with the recommended amount of {missingBalance}."
                   values={{ missingBalance:
                     <div>
                       {remainingBalance > 0
@@ -209,14 +223,22 @@ export default class DepositWindow extends Component {
                         <div>
                           <FormattedMessage
                             id="deposit177"
-                            defaultMessage="You do not have funds to continue the swap. Copy the address below and top it up with the recommended amount."
+                            defaultMessage="You don't have enought of {amount} {tokenName} to finish the swap.{br}This amount includes the missing amount on your balance and miners fee.{br}You can sent {tokenName} from any wallet and exchange."
+                            values={{
+                              amount: remainingBalance.toFixed(6),
+                              tokenName: swap.sellCurrency,
+                              br: <br />
+                            }}
                           />
-                          <p>
+                          {/* <p>
                             <FormattedMessage id="deposit181" defaultMessage="You can send {currency} from a wallet of any exchange" values={{ currency: `${swap.buyCurrency}` }} />
-                          </p>
+                          </p> */}
                         </div>
                       </Tooltip>
                     </div>,
+                    amount: remainingBalance.toFixed(6),
+                    tokenName: swap.sellCurrency,
+                    br: <br/>,
                   }}
                 />
               </span>
@@ -271,7 +293,7 @@ export default class DepositWindow extends Component {
                       <Tooltip id="dep226">
                         <FormattedMessage
                           id="deposit239"
-                          defaultMessage="If you replenish the contract for an amount greater than the specified amount, the balance will be written off as miner fee"
+                          defaultMessage="If you replenish the contract for an amount greater than the specified amount, the balance will be written off as miner fee."
                         />
                       </Tooltip>
                   }}
@@ -279,7 +301,7 @@ export default class DepositWindow extends Component {
               )}
               <div>
               {isBalanceEnough
-                ? <FormattedMessage id="deposit198.1" defaultMessage="create Ethereum Contract. \n Please wait, it can take a few minutes..." />
+                ? <FormattedMessage id="deposit198.1" defaultMessage="create Ethereum Contract.{br}Please wait, it can take a few minutes..." values={{ br: <br /> }} />
                 : <FormattedMessage id="deposit198" defaultMessage="waiting for payment..." />
               }
               <span styleName="loaderHolder">
@@ -293,7 +315,7 @@ export default class DepositWindow extends Component {
             <i className="far fa-clock" />
             <FormattedMessage
               id="Deposit52"
-              defaultMessage="You have {timer} min to make payment"
+              defaultMessage="You have {timer} min to make the payment"
               values={{ timer: <Timer lockTime={flow.btcScriptValues.lockTime * 1000} defaultMessage={false} /> }} />
           </span>}
         </a>

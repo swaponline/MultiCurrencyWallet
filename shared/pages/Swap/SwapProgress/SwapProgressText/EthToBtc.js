@@ -29,7 +29,7 @@ export default class EthToBtc extends Component {
         )
       case 5:
         return (
-          <FormattedMessage id="ethToBtcText32" defaultMessage="Creating Ethereum Contract. {br} Please wait, it can take a few minutes" values={{ br: <br /> }} />
+          <FormattedMessage id="ethToBtcText32" defaultMessage="Creating Ethereum Contract.{br}Please wait, it can take a few minutes" values={{ br: <br /> }} />
         )
       case 6:
         return (

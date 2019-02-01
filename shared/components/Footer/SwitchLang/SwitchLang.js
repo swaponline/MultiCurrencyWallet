@@ -16,11 +16,11 @@ export default class SwitchLang extends Component {
 
     return (
       <div>
-        <a styleName="language" href={locale.toUpperCase() === 'RU' && relocalisedUrl(locale)}>
+        <a styleName="language" href={locale.toUpperCase() === 'RU' ? relocalisedUrl(locale) : undefined}>
           <FormattedMessage id="SwitchLang20" defaultMessage="EN " />
         </a>
         |
-        <a styleName="language" href={locale.toUpperCase() === 'EN' && relocalisedUrl(locale)}>
+        <a styleName="language" href={locale.toUpperCase() === 'EN' ? relocalisedUrl(locale) : undefined}>
           <FormattedMessage id="SwitchLang24" defaultMessage=" RU" />
         </a>
       </div>

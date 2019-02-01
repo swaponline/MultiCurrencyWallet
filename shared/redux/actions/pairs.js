@@ -20,7 +20,7 @@ const selectPair = (value) => {
 
   const pairs = selectedPairsBase.concat(selectedPairsMain)
 
-  const selectedItems = items.filter(item => pairs.includes(item.name))
+  const selectedItems = items.filter(item => pairs.includes(item.name)).concat(items.filter(item => item.value === value))
 
   reducers.currencies.addSelectedItems(selectedItems)
   return selectedItems

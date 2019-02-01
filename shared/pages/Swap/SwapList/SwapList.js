@@ -53,8 +53,8 @@ export default class SwapList extends Component {
 
         {
           this.props.data.step >= 2 || (this.props.data.step > 2 && this.props.data.step <= 8) ? (
-            <div style={{ paddingTop: isMobile ? '50px' : '' }} styleName={this.props.data.step >= 2 && this.props.data.step < 5  ? 'stepItem active' : 'stepItem active checked'}>
-              <span styleName="stepNumber">{this.props.data.step >= 2 && this.props.data.step < 5 ? '2' : <i className="fas fa-check" />}</span>
+            <div style={{ paddingTop: isMobile ? '50px' : '' }} styleName={this.props.data.step >= 2 && this.props.data.step < 4  ? 'stepItem active' : 'stepItem active checked'}>
+              <span styleName="stepNumber">{this.props.data.step >= 2 && this.props.data.step < 4 ? '2' : <i className="fas fa-check" />}</span>
               <p styleName="stepText">
                 <FormattedMessage
                   id="BtcToEthToken58"
@@ -74,9 +74,9 @@ export default class SwapList extends Component {
         }
 
         {
-          this.props.data.step >= 5 ? (
-            <div style={{ paddingTop: isMobile ? '100px' : '' }} styleName={this.props.data.step >= 5 && this.props.data.step < 6 ? 'stepItem active' : 'stepItem active checked'}>
-              <span styleName="stepNumber">{this.props.data.step >= 5 && this.props.data.step < 6 ? '3' : <i className="fas fa-check" />}</span>
+          this.props.data.step >= 4 ? (
+            <div style={{ paddingTop: isMobile ? '100px' : '' }} styleName={this.props.data.step >= 4 && this.props.data.step < 6 ? 'stepItem active' : 'stepItem active checked'}>
+              <span styleName="stepNumber">{this.props.data.step >= 4 && this.props.data.step < 6 ? '3' : <i className="fas fa-check" />}</span>
               <p styleName="stepText">
                 <FormattedMessage
                   id="BtcToEthToken80"
