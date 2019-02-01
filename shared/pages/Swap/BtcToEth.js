@@ -33,28 +33,34 @@ export default class BtcToEth extends Component {
       currencyAddress: currencyData.address,
       secret: crypto.randomBytes(32).toString('hex'),
     }
+
+    let timer
+
   }
 
   componentWillMount() {
     this.swap.on('state update', this.handleFlowStateUpdate)
   }
 
-  componentWillUnmount() {
-    this.swap.off('state update', this.handleFlowStateUpdate)
-  }
-
   componentDidMount() {
     const { flow: { isSignFetching, isMeSigned, step, isParticipantSigned } } = this.state
-
     this.changePaddingValue()
-    setInterval(() => {
-      if (step === 1) {
+    this.timer = setInterval(() => {
+      if (!isMeSigned) {
         this.confirmAddress()
       }
       if (step === 2 && isParticipantSigned) {
         this.submitSecret()
       }
     }, 1000)
+  }
+
+  componentWillUnmount() {
+    const { swap, flow: { isMeSigned } } = this.state
+    this.swap.off('state update', this.handleFlowStateUpdate)
+    if(isMeSigned) {
+      clearInterval(this.timer)
+    }
   }
 
   tryRefund = () => {
@@ -144,7 +150,7 @@ export default class BtcToEth extends Component {
 
 
   render() {
-    const { continueSwap, enoughBalance, swap, history, tokenItems, ethAddress }  = this.props
+    const { continueSwap, enoughBalance, swap, history, tokenItems, ethAddress, children }  = this.props
 
     const { flow, isShowingBitcoinScript, currencyData, paddingContainerValue } = this.state
 
