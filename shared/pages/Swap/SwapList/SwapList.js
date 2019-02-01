@@ -17,8 +17,6 @@ export default class SwapList extends Component {
   render() {
     const { swap, flow } = this.props
 
-    console.log(flow)
-
     return (
       <div styleName="stepList">
         <div styleName={((flow.step >= 1 && flow.step < 2) && 'stepItem active') || (flow.step < 2 && 'stepItem') || 'stepItem active checked'}>
@@ -38,7 +36,7 @@ export default class SwapList extends Component {
               defaultMessage="Bitcoin deposition" />
           </p>
         </div>
-        <div styleName={((flow.step >= 5 && flow.step < 6) && 'stepItem active') || (flow.step < 6 && 'stepItem') || 'stepItem active checked'}>
+        <div styleName={((flow.step >= 4 && flow.step < 6) && 'stepItem active') || (flow.step < 6 && 'stepItem') || 'stepItem active checked'}>
           <span styleName="stepNumber">{flow.step < 6 ? 3 : <i className="fas fa-check" />}</span>
           <p styleName="stepText">
             <FormattedMessage
