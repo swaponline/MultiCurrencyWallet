@@ -84,8 +84,7 @@ const createSwapApp = () => {
         fetchBalance: (address) => actions.btc.fetchBalance(address),
         fetchUnspents: (scriptAddress) => actions.btc.fetchUnspents(scriptAddress),
         broadcastTx: (txRaw) => actions.btc.broadcastTx(txRaw),
-        // TODO: This is hot fix. Change to real fetchTxInfo method
-        fetchTxInfo: (txid) => new Promise((resolve) => resolve({ confidence: 1 })),
+        fetchTxInfo: (txid) => actions.btc.fetchTx(txid),
         estimateFeeRate: ({ speed } = {}) => helpers.btc.estimateFeeRate({ speed }),
       }),
       new LtcSwap({
