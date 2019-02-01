@@ -8,8 +8,8 @@ export default {
   local: 'online',
   dir: 'mainnet-pages',
 
-  base: 'https://swaponline.github.io/swap.react/',
-  publicPath: `https://swaponline.github.io/swap.react${baseConfig.publicPath}`,
+  base: 'https://staging.swaponline.site//',
+  publicPath: `https://staging.swaponline.site${baseConfig.publicPath}`,
 
   ...config,
 }
