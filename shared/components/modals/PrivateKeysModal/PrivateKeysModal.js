@@ -100,6 +100,7 @@ export default class PrivateKeysModal extends React.PureComponent {
 
   handleKeysSubmit = () => {
     localStorage.setItem(constants.localStorage.privateKeysSaved, true)
+    localStorage.setItem(constants.localStorage.wasCautionPassed, true)
     window.location.reload()
   }
 
