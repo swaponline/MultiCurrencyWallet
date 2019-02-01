@@ -85,11 +85,11 @@ export default class PartialClosure extends Component {
 
     const sellToken = sell || ((!isWidgetBuild) ? 'eth' : 'btc')
     const buyToken = buy || ((!isWidgetBuild) ? 'btc' : config.erc20token)
-    const localization = locale ? `/${locale}` : ''
+    // const localization = locale ? `/${locale}` : ''
 
-    if (!props.location.hash.includes('#widget')) {
-      history.push(`${localization}/exchange/${sellToken}-to-${buyToken}`)
-    }
+    // if (!props.location.hash.includes('#widget')) {
+    //   history.push(`${localization}/exchange/${sellToken}-to-${buyToken}`)
+    // }
 
     this.wallets = {}
     currenciesData.forEach(item => {
@@ -100,8 +100,8 @@ export default class PartialClosure extends Component {
     })
 
     this.state = {
-      haveCurrency: sellToken,
-      getCurrency: buyToken,
+      haveCurrency: 'eth',
+      getCurrency: 'btc',
       haveAmount: 0,
       haveUsd: 0,
       getUsd: 0,
