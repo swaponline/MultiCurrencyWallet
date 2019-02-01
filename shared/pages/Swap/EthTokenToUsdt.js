@@ -294,7 +294,7 @@ export default class EthTokenToUsdt extends Component {
               {
                 (flow.step >= 5 || flow.isEthContractFunded) && (
                   <h3>
-                    <FormattedMessage id="EthTokenToUsdt285" defaultMessage="4. Creating Ethereum Contract. \n Please wait, it can take a few minutes" />
+                    <FormattedMessage id="EthTokenToUsdt285" defaultMessage="4. Creating Ethereum Contract.{br}Please wait, it can take a few minutes" values={{ br: <br /> }} />
                   </h3>
                 )
               }

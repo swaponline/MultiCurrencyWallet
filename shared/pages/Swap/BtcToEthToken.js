@@ -332,7 +332,7 @@ export default class BtcToEthToken extends Component {
                   : (flow.step === 4 && flow.btcScriptValues && (
                     <div className="swapStep-4">
                       <h3 style={headingStyle}>
-                        <FormattedMessage id="BtcToEthToken222" defaultMessage="Creating Bitcoin Script. \n Please wait, it can take a few minutes" />
+                        <FormattedMessage id="BtcToEthToken222" defaultMessage="Creating Bitcoin Script.{br}Please wait, it can take a few minutes" values={{ br: <br /> }} />
                       </h3>
                       {
                         flow.btcScriptCreatingTransactionHash && (

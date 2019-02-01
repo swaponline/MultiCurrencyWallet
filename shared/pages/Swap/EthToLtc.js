@@ -307,7 +307,7 @@ export default class EthToLtc extends Component {
                 (flow.step >= 5 || flow.isEthContractFunded) && (
                   <Fragment>
                     <h3>
-                      <FormattedMessage id="EthToLtc297" defaultMessage="4. Creating Ethereum Contract. \n Please wait, it can take a few minutes" />
+                      <FormattedMessage id="EthToLtc297" defaultMessage="4. Creating Ethereum Contract.{br}Please wait, it can take a few minutes" values={{ br: <br /> }} />
                     </h3>
                   </Fragment>
                 )

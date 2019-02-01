@@ -205,7 +205,7 @@ export default class LtcToEth extends Component {
                 (flow.step === 4 || flow.ltcScriptValues) && (
                   <Fragment>
                     <h3>
-                      <FormattedMessage id="LtcTOeth195" defaultMessage="3. Creating Litecoin Script. \n Please wait, it can take a few minutes" />
+                      <FormattedMessage id="LtcTOeth195" defaultMessage="3. Creating Litecoin Script.{br}Please wait, it can take a few minutes" values={{ br: <br /> }} />
                       {this.swap.flow.myLtcAddress}
                     </h3>
                     {

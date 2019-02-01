@@ -25,7 +25,7 @@ export default class BtcToEth extends Component {
         )
       case 4:
         return (
-          <FormattedMessage id="SwapProgress111" defaultMessage="Creating Bitcoin Script. {br} Please wait, it can take a few minutes" values={{ br: <br /> }} />
+          <FormattedMessage id="SwapProgress111" defaultMessage="Creating Bitcoin Script.{br}Please wait, it can take a few minutes" values={{ br: <br /> }} />
         )
       case 5:
         return (
