@@ -92,7 +92,7 @@ export default class Header extends Component {
         },
         {
           title: props.intl.formatMessage(messages.exchange),
-          link: links.exchange,
+          link: `${links.exchange}/eth-to-btc`,
           icon: 'exchange-alt',
           tour: 'reactour__exchange',
         },
