@@ -87,7 +87,7 @@ export default class PartialClosure extends Component {
     const buyToken = buy || ((!isWidgetBuild) ? 'btc' : config.erc20token)
     const localization = locale ? `/${locale}` : ''
 
-    if (!props.location.hash.includes('#widget')) {
+    if (!(buy && sell) && !props.location.hash.includes('#widget')) {
       history.push(`${localization}/exchange/${sellToken}-to-${buyToken}`)
     }
 
