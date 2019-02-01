@@ -61,7 +61,7 @@ export default class SwapProgress extends Component {
         )
       case 5:
         return (
-          <FormattedMessage id="SwapProgress56" defaultMessage="Creating Ethereum Contract. \n Please wait, it can take a few minutes" />
+          <FormattedMessage id="SwapProgress56" defaultMessage="Creating Ethereum Contract.{br}Please wait, it can take a few minutes" values={{ br: <br /> }} />
         )
       case 6:
         return (
@@ -100,7 +100,7 @@ export default class SwapProgress extends Component {
         )
       case 4:
         return (
-          <FormattedMessage id="SwapProgress111" defaultMessage="Creating Bitcoin Script. \n Please wait, it can take a few minutes" />
+          <FormattedMessage id="SwapProgress111" defaultMessage="Creating Bitcoin Script.{br}Please wait, it can take a few minutes" values={{ br: <br /> }} />
         )
       case 5:
         return (

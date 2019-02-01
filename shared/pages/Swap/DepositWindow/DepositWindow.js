@@ -301,7 +301,7 @@ export default class DepositWindow extends Component {
               )}
               <div>
               {isBalanceEnough
-                ? <FormattedMessage id="deposit198.1" defaultMessage="create Ethereum Contract. \n Please wait, it can take a few minutes..." />
+                ? <FormattedMessage id="deposit198.1" defaultMessage="create Ethereum Contract.{br}Please wait, it can take a few minutes..." values={{ br: <br /> }} />
                 : <FormattedMessage id="deposit198" defaultMessage="waiting for payment..." />
               }
               <span styleName="loaderHolder">

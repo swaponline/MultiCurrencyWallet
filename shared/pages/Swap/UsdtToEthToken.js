@@ -189,7 +189,11 @@ export default class UsdtToEthToken extends Component {
                 (flow.step === 4 || flow.usdtScriptValues) && (
                   <Fragment>
                     <h3>
-                      <FormattedMessage id="UsdrToEthToken174" defaultMessage="3. Creating Bitcoin Omni Script. \n Please wait, it can take a few minutes" />
+                      <FormattedMessage
+                        id="UsdrToEthToken174"
+                        defaultMessage="3. Creating Bitcoin Omni Script.{br}Please wait, it can take a few minutes"
+                        values={{ br: <br /> }}
+                      />
                     </h3>
                     {
                       flow.usdtFundingTransactionHash && (
