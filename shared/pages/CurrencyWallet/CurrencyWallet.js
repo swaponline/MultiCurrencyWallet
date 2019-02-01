@@ -86,7 +86,6 @@ export default class CurrencyWallet extends Component {
 
   componentDidMount() {
     const { currency } = this.state
-    const { items } = this.props
 
     if (currency) {
       actions.analytics.dataEvent(`open-page-${currency.toLowerCase()}-wallet`)
