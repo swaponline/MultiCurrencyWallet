@@ -43,9 +43,19 @@ after_script:
 deploy:
   provider: script
   skip-cleanup: true
-  script: npm run deploy:mainnet
+  script: npm run deploy:pages
   on:
-    branch: master
+    branch: develop
+
+# deploy:
+#   provider: pages
+#   skip-cleanup: true
+#   keep-history: true
+#   local-dir: build-pages
+#   github-token: $GITHUB_TOKEN
+#   on:
+#     branch: develop
+
 # deploy:
 #   provider:    releases
 #   api_key:
