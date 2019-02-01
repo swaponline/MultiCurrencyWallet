@@ -98,7 +98,7 @@ export default class App extends React.Component {
       createSwapApp()
       this.setState({ fetching: true })
     }, 1000)
-    window.prerenderReady = true
+     window.prerenderReady = true
   }
 
   render() {
@@ -125,21 +125,21 @@ export default class App extends React.Component {
         </Fragment>
       )
       : (
-        <Fragment>
-          <Seo location={history.location} />
-          <Header />
-          <WidthContainer styleName="main">
-            <main>
-              {children}
-            </main>
-          </WidthContainer>
-          <Core />
-          { !isMobile && <Footer /> }
-          <RequestLoader />
-          <ModalConductor />
-          <NotificationConductor />
-        </Fragment>
-      )
+      <Fragment>
+        <Seo location={history.location} />
+        <Header />
+        <WidthContainer styleName="main">
+          <main>
+            {children}
+          </main>
+        </WidthContainer>
+        <Core />
+        { !isMobile && <Footer /> }
+        <RequestLoader />
+        <ModalConductor />
+        <NotificationConductor />
+      </Fragment>
+    )
 
     return (
       process.env.LOCAL === 'local' ? (
