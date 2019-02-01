@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "swap.online",
   "private": true,
-  "homepage": "https://swaponline.github.io/swap.react",
+  "homepage": "https://staging.swaponline.site",
   "main": "./bin/server",
   "lint-staged": {
     "*.js": [
