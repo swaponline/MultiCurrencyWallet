@@ -10,104 +10,46 @@ import styles from './SwapList.scss'
 
 import { FormattedMessage } from 'react-intl'
 
+import FirstStep from './steps/FirstStep'
+import SecondStep from './steps/SecondStep'
+import ThirdStep from './steps/ThirdStep'
+import FourthStep from './steps/FourthStep'
+import FifthStep from './steps/FifthStep'
 
 @CSSModules(styles, { allowMultiple: true })
 export default class SwapList extends Component {
 
+  constructor({ swap: { sellCurrency, flow: { stepNumbers } } }) {
+    super()
+    const first = stepNumbers.sign
+    const second = sellCurrency === 'BTC' ? stepNumbers[`submit-secret`] : stepNumbers[`wait-lock-btc`]
+    const fourth = sellCurrency === 'BTC' ? stepNumbers[`lock-btc`] : stepNumbers[`sync-balance`]
+    const fifth = sellCurrency === 'BTC' ? stepNumbers[`wait-lock-eth`] : stepNumbers[`lock-eth`]
+    const sixth = sellCurrency === 'BTC' ? stepNumbers[`withdraw-eth`] : stepNumbers[`wait-withdraw-eth`]
+    const seventh = sellCurrency === 'BTC' ? stepNumbers.finish : stepNumbers[`withdraw-btc`]
+    const eighth = sellCurrency === 'BTC' ? stepNumbers.end : stepNumbers.finish
+
+    this.state = {
+      first,
+      second,
+      fourth,
+      fifth,
+      sixth,
+      seventh,
+      eighth,
+    }
+  }
   render() {
     const { swap, flow, enoughBalance } = this.props
+    const { first, second, fourth, fifth, sixth, seventh, eighth } = this.state
 
     return (
       <div styleName="stepList">
-        <div styleName={((flow.step >= 1 && flow.step < 2) && 'stepItem active') || (flow.step < 2 && 'stepItem') || 'stepItem active checked'}>
-          <span styleName="stepNumber">{flow.step < 2 ? 1 : <i className="fas fa-check" />}</span>
-          <p styleName="stepText">
-            <FormattedMessage
-              id="BtcToEthToken34"
-              defaultMessage="Confirmation processing" />
-          </p>
-        </div>
-        {swap.sellCurrency === 'BTC' ?
-          (
-            <div>
-              <div styleName={((flow.step >= 2 && flow.step < 5) && 'stepItem active') || (flow.step < 5 && 'stepItem') || 'stepItem active checked'}>
-                <span styleName="stepNumber">{((flow.step >= 2 && flow.step < 5) && 2) || (flow.step < 2 && 2) || <i className="fas fa-check" />}</span>
-                <p styleName="stepText">
-                  <FormattedMessage
-                    id="BtcToEthToken58"
-                    defaultMessage="Bitcoin deposition" />
-                </p>
-              </div>
-              <div styleName={((flow.step >= 5 && flow.step < 6) && 'stepItem active') || (flow.step < 6 && 'stepItem') || 'stepItem active checked'}>
-                <span styleName="stepNumber">{flow.step < 6 ? 3 : <i className="fas fa-check" />}</span>
-                <p styleName="stepText">
-                  <FormattedMessage
-                    id="BtcToEthToken80"
-                    defaultMessage="{name} deposition"
-                    values={{ name: swap.sellCurrency === 'BTC' ? swap.buyCurrency : swap.sellCurrency }}
-                  />
-                </p>
-              </div>
-              <div styleName={((flow.step >= 6 && flow.step < 7) && 'stepItem active') || (flow.step < 7 && 'stepItem') || 'stepItem active checked'}>
-                <span styleName="stepNumber">{flow.step < 7 ? 4 : <i className="fas fa-check" />}</span>
-                <p styleName="stepText">
-                  <FormattedMessage
-                    id="BtcToEthToken102"
-                    defaultMessage="Withdrawing {name} from a contract"
-                    values={{ name: swap.sellCurrency === 'BTC' ? swap.buyCurrency : swap.sellCurrency }}
-                  />
-                </p>
-              </div>
-              <div styleName={flow.step >= 7 ? 'stepItem active checked' : 'stepItem'}>
-                <span styleName="stepNumber">{flow.step >= 7 ? <i className="fas fa-check" /> : 5}</span>
-                <p styleName="stepText">
-                  <FormattedMessage
-                    id="BtcToEthToken123"
-                    defaultMessage="Finished!" />
-                </p>
-              </div>
-            </div>
-          ) : (
-            <div>
-              <div styleName={((flow.step >= 2 && flow.step < 4) && 'stepItem active') || (flow.step < 4 && 'stepItem') || 'stepItem active checked'}>
-                <span styleName="stepNumber">{((flow.step >= 2 && flow.step < 4) && 2) || (flow.step < 2 && 2) || <i className="fas fa-check" />}</span>
-                <p styleName="stepText">
-                  <FormattedMessage
-                    id="BtcToEthToken58"
-                    defaultMessage="Bitcoin deposition" />
-                </p>
-              </div>
-              <div styleName={((flow.step >= 4 && flow.step < 6) && 'stepItem active') || (flow.step < 6 && 'stepItem') || 'stepItem active checked'}>
-                <span styleName="stepNumber">{flow.step < 6 ? 3 : <i className="fas fa-check" />}</span>
-                <p styleName="stepText">
-                  <FormattedMessage
-                    id="BtcToEthToken80"
-                    defaultMessage="{name} deposition"
-                    values={{ name: swap.sellCurrency === 'BTC' ? swap.buyCurrency : swap.sellCurrency }}
-                  />
-                </p>
-              </div>
-              <div styleName={((flow.step >= 6 && flow.step < 8) && 'stepItem active') || (flow.step < 7 && 'stepItem') || 'stepItem active checked'}>
-                <span styleName="stepNumber">{flow.step < 8 ? 4 : <i className="fas fa-check" />}</span>
-                <p styleName="stepText">
-                  <FormattedMessage
-                    id="BtcToEthToken102"
-                    defaultMessage="Withdrawing {name} from a contract"
-                    values={{ name: swap.sellCurrency === 'BTC' ? swap.buyCurrency : swap.sellCurrency }}
-                  />
-                </p>
-              </div>
-              <div styleName={flow.step >= 8 ? 'stepItem active checked' : 'stepItem'}>
-                <span styleName="stepNumber">{flow.step >= 8 ? <i className="fas fa-check" /> : 5}</span>
-                <p styleName="stepText">
-                  <FormattedMessage
-                    id="BtcToEthToken123"
-                    defaultMessage="Finished!" />
-                </p>
-              </div>
-            </div>
-          )
-        }
+        <FirstStep step={flow.step} first={first} second={second} />
+        <SecondStep step={flow.step} swap={swap} second={second} fifth={fifth} fourth={fourth} />
+        <ThirdStep step={flow.step} swap={swap} fifth={fifth} fourth={fourth} sixth={sixth} />
+        <FourthStep step={flow.step} swap={swap} sixth={sixth} seventh={seventh} eighth={eighth} />
+        <FifthStep step={flow.step} swap={swap} seventh={seventh} eighth={eighth} />
       </div>
     )
   }
