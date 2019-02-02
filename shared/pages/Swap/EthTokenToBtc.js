@@ -38,6 +38,10 @@ export default class EthTokenToBtc extends Component {
       flow: this.swap.flow.state,
       currencyAddress: currencyData.address,
     }
+
+    this.signTimer = null
+    this.confirmBtcTimer = null
+
   }
 
   componentWillMount() {
@@ -53,14 +57,22 @@ export default class EthTokenToBtc extends Component {
 
     this.changePaddingValue()
 
-    setInterval(() => {
-      if (!isMeSigned && step === 1) {
+    this.signTimer = setInterval(() => {
+      if (!this.state.flow.isMeSigned) {
         this.signSwap()
+      } else {
+        clearInterval(this.signTimer)
       }
-      if (step === 3) {
+    }, 3000)
+
+    this.confirmBtcTimer = setInterval(() => {
+      if (this.state.flow.step === 3) {
         this.confirmBTCScriptChecked()
+      } else {
+        clearInterval(this.confirmBtcTimer)
       }
-    }, 1000)
+    }, 3000)
+
   }
 
   handleFlowStateUpdate = (values) => {

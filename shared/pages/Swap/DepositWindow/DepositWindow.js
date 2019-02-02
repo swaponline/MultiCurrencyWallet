@@ -197,14 +197,22 @@ export default class DepositWindow extends Component {
               <span styleName="btcMessage">
                 <FormattedMessage
                   id="deposit165"
-                  defaultMessage="You don't have enought funds to continue the swap. Copy the address below and top it up with the recommended amount of {missingBalance}."
+                  defaultMessage="You don't have enought funds to continue the swap. Copy the address below and top it up with the recommended amount of {missingBalance} "
                   values={{ missingBalance:
                     <div>
                       {remainingBalance > 0
-                      ? <strong>{remainingBalance.toFixed(6)} {swap.sellCurrency}. </strong>
+                      ? <strong>{remainingBalance.toFixed(6)} {swap.sellCurrency}</strong>
                       : <span styleName="loaderHolder">
                           <InlineLoader />
                         </span>}
+                        {swap.sellCurrency === "SWAP" && (
+                          <strong>
+                            <FormattedMessage
+                              id="deposit213"
+                              defaultMessage="and 0.002 ETH на gas fee"
+                            />
+                          </strong>)
+                        }
                       <Tooltip id="dep170">
                         <div>
                           <FormattedMessage
@@ -274,7 +282,7 @@ export default class DepositWindow extends Component {
                   defaultMessage="Received {balance} / {need} {tooltip}"
                   values={{
                     balance: <strong>{balanceToRender} {swap.sellCurrency}</strong>,
-                    need: <strong>{sellAmount.toFixed(6)} {swap.sellCurrency}</strong>,
+                    need: <strong>{swap.sellCurrency === "SWAP" ? sellAmount.toFixed(6) - 0.00005  : sellAmount.toFixed(6)} {swap.sellCurrency}</strong>,
                     tooltip:
                       <Tooltip id="dep226">
                         <FormattedMessage

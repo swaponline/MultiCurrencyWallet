@@ -3777,6 +3777,13 @@
     "message": "Создается Bitcoin Script. Пожалуйста подождите, это займет некоторое время"
   },
   {
+    "id": "deposit213",
+    "message": " и 0.002 ETH на gas fee ",
+    "files": [
+      "shared/pages/Swap/DepositWindow/DepositWindow.js"
+    ]
+  },
+  {
     "id": "deposit165",
     "message": "Недостаточно средств для обмена.{br}Для продолжения обмена - скопируйте указанный адрес и пополните баланс на {missingBalance}.",
     "files": [

@@ -34,7 +34,8 @@ export default class EthToBtc extends Component {
       currencyAddress: currencyData.address,
     }
 
-    let timer
+    this.signTimer = null
+    this.confirmBtcTimer = null
 
   }
 
@@ -47,14 +48,22 @@ export default class EthToBtc extends Component {
     const { swap, flow: { isSignFetching, isMeSigned, step } } = this.state
     this.changePaddingValue()
 
-    this.timer = setInterval(() => {
-      if (!this.state.signed && step === 1) {
+    this.signTimer = setInterval(() => {
+      if (!this.state.flow.isMeSigned) {
         this.signSwap()
-      }
-      if (step === 3) {
-        this.confirmBTCScriptChecked()
+      } else {
+        clearInterval(this.signTimer)
       }
     }, 3000)
+
+    this.confirmBtcTimer = setInterval(() => {
+      if (this.state.flow.step === 3) {
+        this.confirmBTCScriptChecked()
+      } else {
+        clearInterval(this.confirmBtcTimer)
+      }
+    }, 3000)
+
   }
 
   componentWillUnmount() {
@@ -81,9 +90,6 @@ export default class EthToBtc extends Component {
       flow: values,
     })
 
-    if(this.state.signed) {
-      clearInterval(this.timer)
-    }
   }
 
 

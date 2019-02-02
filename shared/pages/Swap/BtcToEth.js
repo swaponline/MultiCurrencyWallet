@@ -34,7 +34,7 @@ export default class BtcToEth extends Component {
       secret: crypto.randomBytes(32).toString('hex'),
     }
 
-    let timer
+    this.ParticipantTimer = null
 
   }
 
@@ -45,22 +45,20 @@ export default class BtcToEth extends Component {
   componentDidMount() {
     const { flow: { isSignFetching, isMeSigned, step, isParticipantSigned } } = this.state
     this.changePaddingValue()
-    this.timer = setInterval(() => {
-      if (!isMeSigned) {
-        this.confirmAddress()
-      }
-      if (step === 2 && isParticipantSigned) {
+    this.ParticipantTimer = setInterval(() => {
+      if (this.state.flow.isParticipantSigned && this.state.destinationBuyAddress) {
         this.submitSecret()
       }
-    }, 1000)
+      else {
+        clearInterval(this.ParticipantTimer)
+      }
+    }, 3000)
   }
 
   componentWillUnmount() {
     const { swap, flow: { isMeSigned } } = this.state
     this.swap.off('state update', this.handleFlowStateUpdate)
-    if(isMeSigned) {
-      clearInterval(this.timer)
-    }
+    clearInterval(this.timer)
   }
 
   tryRefund = () => {

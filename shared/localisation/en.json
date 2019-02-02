@@ -3773,8 +3773,15 @@
     "message": "Creating Bitcoin Script. \n Please wait, it can take a few minutes"
   },
   {
+    "id": "deposit213",
+    "message": " and 0.002 ETH gas fee ",
+    "files": [
+      "shared/pages/Swap/DepositWindow/DepositWindow.js"
+    ]
+  },
+  {
     "id": "deposit165",
-    "message": "You don't have enought funds to continue the swap. Copy the address below and top it up with the recommended amount of {missingBalance}.",
+    "message": "You don't have enought funds to continue the swap. Copy the address below and top it up with the recommended amount of {missingBalance} ",
     "files": [
       "shared/pages/Swap/DepositWindow/DepositWindow.js"
     ]

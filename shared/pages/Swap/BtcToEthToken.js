@@ -57,6 +57,10 @@ export default class BtcToEthToken extends Component {
       secret: crypto.randomBytes(32).toString('hex'),
       destinationBuyAddress: (this.swap.destinationBuyAddress) ? this.swap.destinationBuyAddress : SwapApp.shared().services.auth.accounts.eth.address,
     }
+
+    this.confirmAddressTimer = null
+    this.ParticipantTimer = null
+
   }
 
   componentWillMount() {
@@ -69,17 +73,24 @@ export default class BtcToEthToken extends Component {
 
   componentDidMount() {
     const { swap, flow: { step, isParticipantSigned } } = this.state
-
     this.changePaddingValue()
-
-    setInterval(() => {
-      if (step === 1) {
+    this.confirmAddressTimer = setInterval(() => {
+      if (this.state.flow.step === 1) {
         this.confirmAddress()
+      } else {
+        clearInterval(this.confirmAddressTimer)
       }
-      if (step === 2 && isParticipantSigned) {
+    }, 3000)
+
+    this.ParticipantTimer = setInterval(() => {
+      if (this.state.flow.isParticipantSigned && this.state.destinationBuyAddress) {
         this.submitSecret()
       }
-    }, 1000)
+      else {
+        clearInterval(this.ParticipantTimer)
+      }
+    }, 3000)
+
   }
 
   changePaddingValue = () => {
