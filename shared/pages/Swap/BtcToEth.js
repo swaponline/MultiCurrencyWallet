@@ -1,7 +1,5 @@
 import React, { Component, Fragment } from 'react'
-
 import actions from 'redux/actions'
-
 import crypto from 'crypto'
 
 import CSSModules from 'react-css-modules'
@@ -198,7 +196,7 @@ export default class BtcToEth extends Component {
             lockTime={flow.btcScriptValues.lockTime}
             ownerPublicKey={flow.btcScriptValues.ownerPublicKey}
           />}
-          {children}
+        {children}
       </div>
     )
   }

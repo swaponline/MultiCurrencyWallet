@@ -248,7 +248,7 @@ export default class BtcToEthToken extends Component {
             lockTime={flow.btcScriptValues.lockTime}
             ownerPublicKey={flow.btcScriptValues.ownerPublicKey}
           />}
-          {children}
+        {children}
       </div>
     )
   }

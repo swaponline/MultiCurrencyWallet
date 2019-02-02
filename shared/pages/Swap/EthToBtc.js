@@ -156,7 +156,7 @@ export default class EthToBtc extends Component {
                 </strong>
               )
             }
-        </div>
+          </div>
           {!this.props.enoughBalance && flow.step === 4
             ? (
               <div className={this.props.styles.swapDepositWindow}>
@@ -186,7 +186,7 @@ export default class EthToBtc extends Component {
             lockTime={flow.btcScriptValues.lockTime}
             ownerPublicKey={flow.btcScriptValues.ownerPublicKey}
           />}
-          {children}
+        {children}
       </div>
     )
   }

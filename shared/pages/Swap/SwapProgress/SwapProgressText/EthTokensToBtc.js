@@ -39,7 +39,7 @@ export default class EthTokensToBtc extends Component {
         return (
           <FormattedMessage
             id="EthTokensToBtc40"
-            defaultMessage="The funds from ETH contract was successfully transferred to BTC owner. BTC owner left a secret key. Requesting withdrawal from BTC script. Please wait.."
+            defaultMessage="The funds from ETH contract was successfully transferred to BTC owner"
           />
         )
       case 8:

@@ -33,11 +33,17 @@ export default class BtcToEthTokens extends Component {
         )
       case 6:
         return (
-          <FormattedMessage id="BitcoinBuyText41" defaultMessage="Waiting for {buyCurrency} tokens Owner to add a Secret Key to ETH Contact" values={{ buyCurrency: `${this.props.swap.buyCurrency}` }} />
+          <FormattedMessage
+            id="BitcoinBuyText41"
+            defaultMessage="Waiting for {buyCurrency} tokens Owner to add a Secret Key to ETH Contact"
+            values={{ buyCurrency: `${this.props.swap.buyCurrency}` }} />
         )
       case 7:
         return (
-          <FormattedMessage id="BitcoinBuyText45" defaultMessage="{buyCurrency} tokens was transferred to your wallet. Check the balance." values={{ buyCurrency: `${this.props.swap.buyCurrency}` }} />
+          <FormattedMessage
+            id="BitcoinBuyText45"
+            defaultMessage="{buyCurrency} tokens was transferred to your wallet. Check the balance."
+            values={{ buyCurrency: `${this.props.swap.buyCurrency}` }} />
         )
       case 8:
         return (
