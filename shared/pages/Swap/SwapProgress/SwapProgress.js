@@ -25,7 +25,9 @@ import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 
 import BtcToEth from './SwapProgressText/BtcToEth'
+import BtcToEthTokens from './SwapProgressText/BtcToEthTokens'
 import EthToBtc from './SwapProgressText/EthToBtc'
+import EthTokensToBtc from './SwapProgressText/EthTokensToBtc'
 
 import * as animation from './images'
 
@@ -59,8 +61,8 @@ export default class SwapProgress extends Component {
       enabledButton: false,
       currenciesBTCTransaction,
       currenciesETHTransaction,
-      flow: this.swap.flow.state,
-      steps: swap.flow.state.steps,
+      flow,
+      steps: flow.steps,
       buyCurrency: swap.buyCurrency,
       sellCurrency: this.swap.sellCurrency,
       btcScriptValues: this.swap.btcScriptValues,
@@ -132,25 +134,35 @@ export default class SwapProgress extends Component {
     } = this.state
 
     const progress = Math.floor(360 / (swap.flow.steps.length - 1) * this.state.flow.step)
+    const isFinish = flow.step === swap.flow.steps.length - 1
+
+    const finishSvg = (
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+        <circle
+          className="path circle"
+          fill="none"
+          stroke="#3de25b"
+          strokeWidth="6"
+          strokeMiterlimit="10"
+          cx="65.1"
+          cy="65.1"
+          r="62.1"
+        />
+        <polyline
+          className="path check"
+          fill="none"
+          stroke="#3de25b"
+          strokeWidth="6"
+          strokeLinecap="round"
+          strokeMiterlimit="10"
+          points="100.2,40.2 51.5,88.8 29.8,67.5 "
+        />
+      </svg>)
 
     return (
       <div styleName="overlay">
         <div styleName="container">
           <div styleName="stepContainer">
-            <div styleName="swapInfo">
-              {this.swap.id &&
-              (
-                <strong>
-                  {this.swap.sellAmount.toFixed(6)}
-                  {' '}
-                  {sellCurrency} &#10230; {' '}
-                  {this.swap.buyAmount.toFixed(6)}
-                  {' '}
-                  {buyCurrency}
-                </strong>
-              )
-              }
-            </div>
             <div styleName="progressContainer">
               <div styleName={progress > 180 ? 'progress-pie-chart gt-50' : 'progress-pie-chart'}>
                 <div styleName="ppc-progress">
@@ -159,7 +171,7 @@ export default class SwapProgress extends Component {
               </div>
               <div styleName="step">
                 <div styleName="stepImg">
-                  {this.handleStepChangeImage(flow.step)}
+                  {isFinish ? finishSvg : this.handleStepChangeImage(flow.step)}
                 </div>
               </div>
             </div>
@@ -172,7 +184,23 @@ export default class SwapProgress extends Component {
                 {
                   this.props.name === 'EthToBtc' && <EthToBtc step={flow.step} flow={flow} swap={swap} />
                 }
+                {
+                  this.props.name === 'BtcToEthTokens' && <BtcToEthTokens step={flow.step} flow={flow} swap={swap} />
+                }
+                {
+                  this.props.name === 'EthTokensToBtc' && <EthTokensToBtc step={flow.step} flow={flow} swap={swap} />
+                }
               </div>
+              {signed && flow.step < 4 && (
+                <div>
+                  <strong>
+                    <a href={`${config.link.etherscan}/tx/${flow.signTransactionHash}`} target="_blank" rel="noopener noreferrer">
+                      <FormattedMessage id="swappropgress246" defaultMessage="Sign ETH transaction: " />
+                      {flow.signTransactionHash}
+                    </a>
+                  </strong>
+                </div>
+              )}
               <div styleName="transactionAll">
                 {flow.ethSwapWithdrawTransactionHash && currenciesETHTransaction.includes(buyCurrency) && (
                   <strong>
@@ -279,7 +307,7 @@ export default class SwapProgress extends Component {
                   <FormattedMessage id="swapFinishedGoHome289" defaultMessage="Submit the Secret" />
                 </Button>
               }
-              {flow.step === 3 && swap.sellCurrency === 'ETH' &&
+              {flow.step === 3 && currenciesETHTransaction.includes(swap.sellCurrency) &&
                 <Button brand onClick={this.confirmBTCScriptChecked()} >
                   <FormattedMessage id="swapFinishedGoHome298" defaultMessage="Everything is OK. Continue" />
                 </Button>

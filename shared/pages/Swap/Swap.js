@@ -211,6 +211,7 @@ export default class SwapComponent extends PureComponent {
   render() {
     const { peer, tokenItems, history } = this.props
     const { swap, SwapComponent, currencyData, isAmountMore, ethData, continueSwap, enoughBalance, depositWindow, ethAddress } = this.state
+
     if (!swap || !SwapComponent || !peer || !isAmountMore) {
       return null
     }
