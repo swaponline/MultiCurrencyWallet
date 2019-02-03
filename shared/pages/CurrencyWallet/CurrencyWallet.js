@@ -81,14 +81,15 @@ export default class CurrencyWallet extends Component {
         isBalanceEmpty: balance === 0,
       }
     }
-
-    history.push(localisedUrl(locale, `/NotFound`))
+    history.push(localisedUrl(locale, `${links.notFound}`))
   }
 
   componentDidMount() {
     const { currency } = this.state
 
-    actions.analytics.dataEvent(`open-page-${currency.toLowerCase()}-wallet`)
+    if (currency) {
+      actions.analytics.dataEvent(`open-page-${currency.toLowerCase()}-wallet`)
+    }
     actions.user.setTransactions()
     actions.core.getSwapHistory()
   }

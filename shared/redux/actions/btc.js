@@ -64,6 +64,12 @@ const fetchBalance = (address) =>
 
 const fetchTx = (hash) =>
   request.get(`${api.getApiServer('bitpay')}/tx/${hash}`)
+    .then(({ fees, vin, vout, ...rest }) => ({
+      fees: BigNumber(fees).times(1e8),
+      vin,
+      vout,
+      ...rest,
+    }))
 
 const getTransaction = () =>
   new Promise((resolve) => {

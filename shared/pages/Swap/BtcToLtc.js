@@ -207,7 +207,7 @@ export default class BtcToLtc extends Component {
                 (flow.step === 4 || flow.btcScriptValues) && (
                   <Fragment>
                     <h3>
-                      <FormattedMessage id="BtcToLtc205" defaultMessage="3. Creating Bitcoin Script. \n Please wait, it can take a few minutes" />
+                      <FormattedMessage id="BtcToLtc205" defaultMessage="3. Creating Bitcoin Script.{br}Please wait, it can take a few minutes" values={{ br: <br /> }} />
                     </h3>
                     {
                       flow.btcScriptCreatingTransactionHash && (

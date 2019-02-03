@@ -37,7 +37,6 @@
   top: -45px;
   text-align: center;
   font-size: 18px;
-  margin-left: -10%;
 }
 
 .swapGoNumber {
@@ -69,8 +68,8 @@
   font-size: 18px;
   margin-top: 0px;
   position: relative;
-  padding: 25px 25px;
-  padding-left: 45px;
+  padding: 30px 25px;
+  padding-left: 35px;
   border-radius: 20px;
   display: inline-block;
   text-align: left;
@@ -97,7 +96,6 @@
 }
 
 .top {
-  width: auto;
   display: flex;
   justify-content: stretch;
 }
@@ -113,9 +111,9 @@
 
 .qrImg {
   position: relative;
-  padding: 0;
-  margin-left: 4px;
   margin-top: 0px;
+  right: 18px;
+  top: -12px;
 }
 
 @include media-mobile {

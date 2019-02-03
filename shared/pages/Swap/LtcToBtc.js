@@ -311,7 +311,7 @@ export default class LtcToBtc extends Component {
                 (flow.step >= 5 || flow.isLtcScriptFunded) && (
                   <Fragment>
                     <h3>
-                      <FormattedMessage id="LtcToBtc205" defaultMessage="4. Creating LTC Script. \n Please wait, it can take a few minutes" />
+                      <FormattedMessage id="LtcToBtc205" defaultMessage="4. Creating LTC Script.{br}Please wait, it can take a few minutes" values={{ br: <br /> }} />
                     </h3>
                   </Fragment>
                 )

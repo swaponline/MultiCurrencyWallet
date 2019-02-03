@@ -98,21 +98,6 @@ export default class Wallet extends Component {
     }))
   }
 
-  componentDidUpdate() {
-    const { openModal } = this.state
-
-    const { currencyBalance } = this.props
-
-    const hasNonZeroCurrencyBalance = hasNonZeroBalance(currencyBalance)
-
-    if (!localStorage.getItem(constants.localStorage.wasCautionShow) && process.env.MAINNET) {
-      if (hasNonZeroCurrencyBalance) {
-        actions.modals.open(constants.modals.PrivateKeys, {})
-        localStorage.setItem(constants.localStorage.wasCautionShow, true)
-      }
-    }
-  }
-
   componentWillReceiveProps() {
     const { currencyBalance } = this.props
 
@@ -138,6 +123,22 @@ export default class Wallet extends Component {
       ...getComparableProps(nextProps),
       ...nextState,
     })
+  }
+
+  forceCautionUserSaveMoney = () => {
+    const { currencyBalance } = this.props
+
+    const hasNonZeroCurrencyBalance = hasNonZeroBalance(currencyBalance)
+
+    const doesCautionPassed = localStorage.getItem(constants.localStorage.wasCautionPassed) === 'true'
+
+    if (!doesCautionPassed && process.env.MAINNET) {
+      if (hasNonZeroCurrencyBalance) {
+        localStorage.setItem(constants.localStorage.wasCautionPassed, false)
+        actions.modals.open(constants.modals.PrivateKeys, {})
+        localStorage.setItem(constants.localStorage.wasCautionShow, true)
+      }
+    }
   }
 
   checkImportKeyHash = () => {
@@ -191,6 +192,8 @@ export default class Wallet extends Component {
         and more secure without third-parties. Decentralized exchange.`,
       },
     })
+
+    this.forceCautionUserSaveMoney()
 
     return (
       <section styleName={isMobile ? 'sectionWalletMobile' : 'sectionWallet'}>
