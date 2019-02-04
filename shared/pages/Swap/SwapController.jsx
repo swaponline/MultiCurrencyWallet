@@ -1,6 +1,10 @@
-import React, { Fragment } from 'react'
+import React from 'react'
+
+import CSSModules from 'react-css-modules'
+import styles from './Swap.scss'
 
 
+@CSSModules(styles)
 class SwapController extends React.PureComponent {
 
   constructor({ swap }) {
@@ -43,15 +47,15 @@ class SwapController extends React.PureComponent {
     const { online } = this.state
 
     return (
-      <Fragment>
+      <div styleName="onlineIndicator">
         {
           online ? (
-            <p> {`online`}</p>
+            <p styleName="online"> {`Participant is Online`}</p>
           ) : (
-            <p> {`Offline`}</p>
+            <p styleName="offline"> {`Participant is Offline`}</p>
           )
         }
-      </Fragment>
+      </div>
     )
   }
 }

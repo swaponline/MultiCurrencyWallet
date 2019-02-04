@@ -279,11 +279,10 @@ $size: 200px;
 }
 
 .transactionAll {
-  position: absolute;
-  width: 529px;
+  position: relative;
+  width: 100%;
   text-align: left;
-  top: 102%;
-  left: 20px;
+  left: -15px;
   strong {
     display: block;
     margin-bottom: 5px;
