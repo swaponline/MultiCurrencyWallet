@@ -21,7 +21,10 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import ReactTooltip from 'react-tooltip'
 import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
 import { localisedUrl } from 'helpers/locale'
+import config from 'app-config'
 
+
+const isWidgetBuild = config && config.isWidget
 
 const titles = [
   <FormattedMessage id="currencyWallet27"  defaultMessage="Coin" />,
@@ -154,12 +157,21 @@ export default class CurrencyWallet extends Component {
 
     const seoPage = getSeoPage(location.pathname)
     const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === 'true'
-    const title = defineMessages({
+
+    const titleSwapOnline = defineMessages({
       metaTitle: {
         id: 'CurrencyWallet148',
         defaultMessage: 'Swap.Online - ${fullName} (${currency}) Web Wallet with Atomic Swap.',
       },
     })
+    const titleWidgetBuild = defineMessages({
+      metaTitle: {
+        id: 'CurrencyWalletWidgetBuildTitle',
+        defaultMessage: '${fullName} (${currency}) Web Wallet with Atomic Swap.',
+      },
+    })
+    const title = (isWidgetBuild) ? titleWidgetBuild : titleSwapOnline
+
     const description = defineMessages({
       metaDescription: {
         id: 'CurrencyWallet154',

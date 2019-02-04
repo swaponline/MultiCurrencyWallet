@@ -26,6 +26,8 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import config from 'app-config'
 
 
+const isWidgetBuild = config && config.isWidget
+
 @connect(
   ({
     core: { hiddenCoinsList },
@@ -179,12 +181,21 @@ export default class Wallet extends Component {
         :
         <FormattedMessage id="Wallet119" defaultMessage="Actions" />,
     ]
-    const title = defineMessages({
+
+    const titleSwapOnline = defineMessages({
       metaTitle: {
         id: 'Wallet140',
         defaultMessage: 'Swap.Online - Cryptocurrency Wallet with Atomic Swap Exchange',
       },
     })
+    const titleWidgetBuild = defineMessages({
+      metaTitle: {
+        id: 'WalletWidgetBuildTitle',
+        defaultMessage: 'Cryptocurrency Wallet with Atomic Swap Exchange',
+      },
+    })
+    const title = (isWidgetBuild) ? titleWidgetBuild : titleSwapOnline
+
     const description = defineMessages({
       metaDescription: {
         id: 'Wallet146',
