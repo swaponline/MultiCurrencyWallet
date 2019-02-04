@@ -160,7 +160,7 @@ export default class CurrencyWallet extends Component {
 
     const titleSwapOnline = defineMessages({
       metaTitle: {
-        id: 'CurrencyWallet148',
+        id: 'CurrencyWalletTitle',
         defaultMessage: 'Swap.Online - {fullName} ({currency}) Web Wallet with Atomic Swap.',
       },
     })
