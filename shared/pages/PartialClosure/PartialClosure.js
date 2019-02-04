@@ -519,7 +519,7 @@ export default class PartialClosure extends Component {
 
     const balanceMiner = balance
       ? balance !== 0
-        ? new BigNumber(balance).minus(minFee).toString()
+        ? new BigNumber(balance).minus(minFee).toFixed()
         : balance
       : 'Wait please. Loading...'
 
