@@ -46,11 +46,11 @@ deploy:
   provider: pages
   skip-cleanup: true
   keep-history: true
-  local-dir: build-pages
+  local-dir: build-mainnet-pages
   github-token: $GITHUB_TOKEN
   on:
     branch: develop
-    
+
 # deploy:
 #   provider:    releases
 #   api_key:
