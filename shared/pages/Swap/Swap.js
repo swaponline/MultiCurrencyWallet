@@ -21,6 +21,7 @@ import SwapController from './SwapController'
 import { Button } from 'components/controls'
 import FeeControler from './FeeControler/FeeControler'
 import DepositWindow from './DepositWindow/DepositWindow'
+import ShowBtcScript from './ShowBtcScript/ShowBtcScript'
 
 
 @injectIntl
@@ -48,6 +49,7 @@ export default class SwapComponent extends PureComponent {
     continueSwap: true,
     enoughBalance: true,
     depositWindow: false,
+    isShowingBitcoinScript: false,
     shouldStopCheckSendingOfRequesting: false,
   }
 
@@ -207,10 +209,15 @@ export default class SwapComponent extends PureComponent {
     }
   }
 
+  toggleBitcoinScript = () => {
+    this.setState({
+      isShowingBitcoinScript: !this.state.isShowingBitcoinScript,
+    })
+  }
 
   render() {
     const { peer, tokenItems, history } = this.props
-    const { swap, SwapComponent, currencyData, isAmountMore, ethData, continueSwap, enoughBalance, depositWindow, ethAddress } = this.state
+    const { swap, SwapComponent, currencyData, isAmountMore, ethData, continueSwap, enoughBalance, depositWindow, ethAddress, isShowingBitcoinScript } = this.state
 
     if (!swap || !SwapComponent || !peer || !isAmountMore) {
       return null
@@ -220,6 +227,7 @@ export default class SwapComponent extends PureComponent {
 
     return (
       <div styleName="swap">
+        <SwapController swap={swap} />
         <SwapComponent
           tokenItems={tokenItems}
           depositWindow={depositWindow}
@@ -235,8 +243,8 @@ export default class SwapComponent extends PureComponent {
         >
           <Share flow={swap.flow} />
           <EmergencySave flow={swap.flow} />
+          <ShowBtcScript onClick={this.toggleBitcoinScript} btcScriptValues={swap.flow.state.btcScriptValues} isShowingBitcoinScript={isShowingBitcoinScript} />
           {peer === swap.owner.peer && (<DeleteSwapAfterEnd swap={swap} />)}
-          <SwapController swap={swap} />
         </SwapComponent>
       </div>
     )

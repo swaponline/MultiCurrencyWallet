@@ -101,11 +101,6 @@ export default class SwapProgress extends Component {
     this.setState(() => ({ enabledButton: false }))
   }
 
-  handleGoHome = () => {
-    const { intl: { locale } } = this.props
-    this.props.history.push(localisedUrl(locale, links.home))
-  }
-
   submitSecret = () => {
     const { secret } = this.state
 
@@ -134,7 +129,6 @@ export default class SwapProgress extends Component {
     } = this.state
 
     const progress = Math.floor(360 / (swap.flow.steps.length - 1) * this.state.flow.step)
-    const isFinish = flow.step === swap.flow.steps.length - 1
 
     const finishSvg = (
       <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
@@ -171,7 +165,7 @@ export default class SwapProgress extends Component {
               </div>
               <div styleName="step">
                 <div styleName="stepImg">
-                  {isFinish ? finishSvg : this.handleStepChangeImage(flow.step)}
+                  {flow.isFinished ? finishSvg : this.handleStepChangeImage(flow.step)}
                 </div>
               </div>
             </div>
@@ -195,34 +189,31 @@ export default class SwapProgress extends Component {
                 <div>
                   <strong>
                     <a href={`${config.link.etherscan}/tx/${flow.signTransactionHash}`} target="_blank" rel="noopener noreferrer">
-                      <FormattedMessage id="swappropgress246" defaultMessage="Sign ETH transaction: " />
-                      {flow.signTransactionHash}
+                      <FormattedMessage id="swappropgress193" defaultMessage="Sign ETH transaction: {transaction}" values={{ transaction: flow.signTransactionHash }} />
                     </a>
                   </strong>
                 </div>
               )}
               <div styleName="transactionAll">
-                {flow.ethSwapWithdrawTransactionHash && currenciesETHTransaction.includes(buyCurrency) && (
+                {flow.ethSwapWithdrawTransactionHash && (
                   <strong>
                     <a
                       href={`${config.link.etherscan}/tx/${flow.ethSwapWithdrawTransactionHash}`}
                       target="_blank"
                       rel="noreferrer noopener"
                     >
-                      <FormattedMessage id="swappropgress233" defaultMessage="ETH transaction: " />
-                      {flow.ethSwapWithdrawTransactionHash}
+                      <FormattedMessage id="swappropgress207" defaultMessage="ETH transaction: {transaction}" values={{ transaction: flow.ethSwapWithdrawTransactionHash }} />
                     </a>
                   </strong>
                 )}
-                {flow.btcSwapWithdrawTransactionHash && currenciesBTCTransaction.includes(buyCurrency) && (
+                {flow.btcSwapWithdrawTransactionHash && (
                   <strong>
                     <a
                       href={`${config.link.bitpay}/tx/${flow.btcSwapWithdrawTransactionHash}`}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <FormattedMessage id="swappropgress258" defaultMessage="BTC transaction: " />
-                      {flow.btcSwapWithdrawTransactionHash}
+                      <FormattedMessage id="swappropgress218" defaultMessage="BTC transaction: {transaction}" values={{ transaction: flow.btcSwapWithdrawTransactionHash }} />
                     </a>
                   </strong>
                 )}
@@ -296,11 +287,6 @@ export default class SwapProgress extends Component {
                   />
                 </div>
               </Fragment>
-              }
-              {flow.isFinished &&
-                <Button green onClick={this.handleGoHome} >
-                  <FormattedMessage id="swapFinishedGoHome" defaultMessage="Return to home page" />
-                </Button>
               }
               {flow.step === 2 && swap.sellCurrency === 'BTC' &&
                 <Button brand onClick={this.submitSecret()} >

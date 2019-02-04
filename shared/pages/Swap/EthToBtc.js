@@ -4,17 +4,21 @@ import actions from 'redux/actions'
 
 import config from 'app-config'
 
-import { BigNumber } from 'bignumber.js'
+import CSSModules from 'react-css-modules'
+import styles from './Swap.scss'
+
 import { isMobile } from 'react-device-detect'
 import { FormattedMessage } from 'react-intl'
+import { BigNumber } from 'bignumber.js'
+import Link from 'sw-valuelink'
 
-import BtcScript from './BtcScript/BtcScript'
 import FeeControler from './FeeControler/FeeControler'
 import SwapProgress from './SwapProgress/SwapProgress'
 import SwapList from './SwapList/SwapList'
 import DepositWindow from './DepositWindow/DepositWindow'
 
 
+@CSSModules(styles)
 export default class EthToBtc extends Component {
   constructor({ swap, currencyData, depositWindow, enoughBalance }) {
     super()
@@ -142,8 +146,8 @@ export default class EthToBtc extends Component {
 
     return (
       <div>
-        <div className={this.props.styles.swapContainer} style={{ paddingTop: isMobile ? `${paddingContainerValue}px` : '' }}>
-          <div className={this.props.styles.swapInfo}>
+        <div styleName="swapContainer" style={{ paddingTop: isMobile ? `${paddingContainerValue}px` : '' }}>
+          <div styleName="swapInfo">
             {this.swap.id &&
               (
                 <strong>
@@ -159,7 +163,7 @@ export default class EthToBtc extends Component {
           </div>
           {!this.props.enoughBalance && flow.step === 4
             ? (
-              <div className={this.props.styles.swapDepositWindow}>
+              <div styleName="swapDepositWindow">
                 <DepositWindow currencyData={currencyData} swap={swap} flow={flow} tokenItems={tokenItems} />
               </div>
             )
@@ -174,18 +178,6 @@ export default class EthToBtc extends Component {
           }
           <SwapList flow={flow} name={swap.sellCurrency} swap={swap} />
         </div>
-        { flow.btcScriptValues &&
-          <span onClick={this.toggleBitcoinScript}>
-            <FormattedMessage id="swapJS341" defaultMessage="Show bitcoin script" />
-          </span>
-        }
-        {isShowingBitcoinScript &&
-          <BtcScript
-            secretHash={flow.btcScriptValues.secretHash}
-            recipientPublicKey={flow.btcScriptValues.recipientPublicKey}
-            lockTime={flow.btcScriptValues.lockTime}
-            ownerPublicKey={flow.btcScriptValues.ownerPublicKey}
-          />}
         {children}
       </div>
     )

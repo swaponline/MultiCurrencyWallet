@@ -1,26 +1,24 @@
 import React, { Component, Fragment } from 'react'
 
-import config from 'app-config'
-import { BigNumber } from 'bignumber.js'
 import actions from 'redux/actions'
 import { constants } from 'helpers'
+
+import CSSModules from 'react-css-modules'
+import styles from './Swap.scss'
+
+import config from 'app-config'
 import { isMobile } from 'react-device-detect'
-import FeeControler from './FeeControler/FeeControler'
+import { BigNumber } from 'bignumber.js'
+import { FormattedMessage } from 'react-intl'
+import Link from 'sw-valuelink'
 
 import SwapProgress from './SwapProgress/SwapProgress'
-
 import SwapList from './SwapList/SwapList'
-
-import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
-import TimerButton from 'components/controls/TimerButton/TimerButton'
-import Button from 'components/controls/Button/Button'
-import Timer from './Timer/Timer'
-import { FormattedMessage } from 'react-intl'
-import CopyToClipboard from 'react-copy-to-clipboard'
+import FeeControler from './FeeControler/FeeControler'
 import DepositWindow from './DepositWindow/DepositWindow'
-import BtcScript from './BtcScript/BtcScript'
 
 
+@CSSModules(styles)
 export default class EthTokenToBtc extends Component {
 
   constructor({ swap, currencyData, ethBalance, tokenItems }) {
@@ -157,8 +155,8 @@ export default class EthTokenToBtc extends Component {
 
     return (
       <div>
-        <div className={this.props.styles.swapContainer} style={{ paddingTop: isMobile ? `${paddingContainerValue}px` : '' }}>
-          <div className={this.props.styles.swapInfo}>
+        <div styleName="swapContainer" style={{ paddingTop: isMobile ? `${paddingContainerValue}px` : '' }}>
+          <div styleName="swapInfo">
             {this.swap.id &&
               (
                 <strong>
@@ -174,7 +172,7 @@ export default class EthTokenToBtc extends Component {
           </div>
           {!enoughBalance && flow.step === 4
             ? (
-              <div className={this.props.styles.swapDepositWindow}>
+              <div styleName="swapDepositWindow">
                 <DepositWindow currencyData={currencyData} swap={swap} flow={flow} tokenItems={tokenItems} />
               </div>
             )
@@ -189,18 +187,6 @@ export default class EthTokenToBtc extends Component {
           }
           <SwapList flow={flow} swap={swap} />
         </div>
-        { flow.btcScriptValues &&
-          <span onClick={this.toggleBitcoinScript}>
-            <FormattedMessage id="swapJS341" defaultMessage="Show bitcoin script" />
-          </span>
-        }
-        {isShowingBitcoinScript &&
-          <BtcScript
-            secretHash={flow.btcScriptValues.secretHash}
-            recipientPublicKey={flow.btcScriptValues.recipientPublicKey}
-            lockTime={flow.btcScriptValues.lockTime}
-            ownerPublicKey={flow.btcScriptValues.ownerPublicKey}
-          />}
         {children}
       </div>
     )
