@@ -282,7 +282,7 @@ export default class SwapProgress extends Component {
                       target="_blank"
                       rel="noreferrer noopener"
                     >
-                      <FormattedMessage id="swappropgress207" defaultMessage="ETH transaction: {transaction}" values={{ transaction: flow.ethSwapWithdrawTransactionHash }} />
+                      <FormattedMessage id="swappropgress207" defaultMessage="{transaction}" values={{ transaction: flow.ethSwapWithdrawTransactionHash }} />
                     </a>
                   </strong>
               )}
@@ -293,7 +293,7 @@ export default class SwapProgress extends Component {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <FormattedMessage id="swappropgress218" defaultMessage="BTC transaction: {transaction}" values={{ transaction: flow.btcSwapWithdrawTransactionHash }} />
+                    <FormattedMessage id="swappropgress218" defaultMessage="{transaction}" values={{ transaction: flow.btcSwapWithdrawTransactionHash }} />
                   </a>
                 </strong>
               )}

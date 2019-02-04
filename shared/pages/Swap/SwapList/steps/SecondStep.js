@@ -23,10 +23,16 @@ const SecondStep = ({ step, swap, fifth, fourth, second }) => {
       {swap.flow.state.btcScriptCreatingTransactionHash && (
         <strong styleName="transactionInStep">
           <a
+            alt={`${config.link.etherscan}/tx/${swap.flow.state.btcScriptCreatingTransactionHash}`}
+            title={`${config.link.etherscan}/tx/${swap.flow.state.btcScriptCreatingTransactionHash}`}
             href={`${config.link.etherscan}/tx/${swap.flow.state.btcScriptCreatingTransactionHash}`}
             target="_blank"
             rel="noreferrer noopener"
           >
+            <FormattedMessage
+              id="FourthStep33"
+              defaultMessage="(tx)"
+            />
             <i className="fas fa-link" />
           </a>
         </strong>

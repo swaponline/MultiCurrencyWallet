@@ -29,6 +29,10 @@ const FourthStep = ({ step, swap, sixth, seventh, eighth }) => {
             target="_blank"
             rel="noreferrer noopener"
           >
+            <FormattedMessage
+              id="FourthStep33"
+              defaultMessage="(tx)"
+            />
             <i className="fas fa-link" />
           </a>
         </strong>
