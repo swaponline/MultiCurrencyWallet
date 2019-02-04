@@ -278,26 +278,9 @@ $size: 200px;
   font-size: 18px;
 }
 
-.transactionAll {
-  position: relative;
-  width: 100%;
-  text-align: left;
-  left: -15px;
-  strong {
-    display: block;
-    margin-bottom: 5px;
-    a {
-      // font-size: 12px;
-    }
-  }
-}
-
 .transaction {
-  position: absolute;
-  width: 529px;
-  text-align: left;
-  top: 102%;
-  left: 20px;
+  top: -10px;
+  position: relative;
 }
 
 .btnRefund {

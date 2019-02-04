@@ -3,6 +3,8 @@ import React from 'react'
 import CSSModules from 'react-css-modules'
 import styles from '../SwapList.scss'
 
+import config from 'app-config'
+
 import { FormattedMessage } from 'react-intl'
 
 
@@ -20,6 +22,17 @@ const FourthStep = ({ step, swap, sixth, seventh, eighth }) => {
           values={{ name: swap.sellCurrency === 'BTC' ? swap.buyCurrency : swap.sellCurrency }}
         />
       </p>
+      {swap.flow.state.ethSwapWithdrawTransactionHash && (
+        <strong styleName="transactionInStep">
+          <a
+            href={`${config.link.etherscan}/tx/${swap.flow.state.ethSwapWithdrawTransactionHash}`}
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            <i className="fas fa-link" />
+          </a>
+        </strong>
+      )}
     </div>
   )
 }

@@ -3,6 +3,8 @@ import React from 'react'
 import CSSModules from 'react-css-modules'
 import styles from '../SwapList.scss'
 
+import config from 'app-config'
+
 import { FormattedMessage } from 'react-intl'
 
 
@@ -18,6 +20,17 @@ const SecondStep = ({ step, swap, fifth, fourth, second }) => {
           id="BtcToEthToken58"
           defaultMessage="Bitcoin is depositing to the contract" />
       </p>
+      {swap.flow.state.btcScriptCreatingTransactionHash && (
+        <strong styleName="transactionInStep">
+          <a
+            href={`${config.link.etherscan}/tx/${swap.flow.state.btcScriptCreatingTransactionHash}`}
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            <i className="fas fa-link" />
+          </a>
+        </strong>
+      )}
     </div>
   )
 }
