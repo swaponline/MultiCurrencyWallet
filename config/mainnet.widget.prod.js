@@ -1,5 +1,6 @@
 import baseConfig from './default'
 import config from './mainnet'
+import moment from 'moment-with-locales-es6'
 
 
 /*
@@ -31,6 +32,8 @@ export default {
 
   base: './',
   publicPath: `.${baseConfig.publicPath}`,
+
+  time: moment(Date.now()).format('LLLL'),
 
   isWidget: true,
   ...config,
