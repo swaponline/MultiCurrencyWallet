@@ -1,4 +1,5 @@
 import React from 'react'
+import { FormattedMessage, injectIntl } from 'react-intl'
 
 import CSSModules from 'react-css-modules'
 import styles from './SelectGroup.scss'
@@ -9,7 +10,7 @@ import CurrencySelect from 'components/ui/CurrencySelect/CurrencySelect'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 
 // TODO to split data and view this component
-const SelectGroup = ({ selectedValue, onSelect, currencies, usd, placeholder, label, disabled, className, inputValueLink, tooltip, id }) => (
+const SelectGroup = ({ selectedValue, onSelect, currencies, usd, placeholder, label, disabled, className, inputValueLink, tooltip, id, ...props }) => (
   <div>
     <FieldLabel inRow>
       <strong>
@@ -22,7 +23,7 @@ const SelectGroup = ({ selectedValue, onSelect, currencies, usd, placeholder, la
     </FieldLabel>
     <div styleName="groupField" className={className}>
       <Input
-        styleName="inputRoot"
+        styleName={props.maxBtnFunc ? 'inputRoot inputRoot__sell' : 'inputRoot'}
         inputContainerClassName="inputContainer"
         valueLink={inputValueLink}
         type="number"
@@ -32,7 +33,14 @@ const SelectGroup = ({ selectedValue, onSelect, currencies, usd, placeholder, la
       />
       {
         (selectedValue === 'eth' || selectedValue === 'btc') && usd > 0 &&
-        <p styleName="textUsd" >{`~${usd}`}$</p>
+        <p styleName={props.maxBtnFunc ? 'textUsd textUsd__sell' : 'textUsd'} >{`~${usd}`}$</p>
+      }
+      {
+        props.maxBtnFunc && (
+          <buttton styleName="maxBtn" onClick={props.maxBtnFunc} data-tip data-for="Withdrow134">
+            <FormattedMessage id="Select210" defaultMessage="MAX" />
+          </buttton>
+        )
       }
       <CurrencySelect
         styleName="currencySelect"
@@ -44,4 +52,4 @@ const SelectGroup = ({ selectedValue, onSelect, currencies, usd, placeholder, la
   </div>
 )
 
-export default CSSModules(SelectGroup, styles)
+export default injectIntl(CSSModules(SelectGroup, styles, { allowMultiple: true }))

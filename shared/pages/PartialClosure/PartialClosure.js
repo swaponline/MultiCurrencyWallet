@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react'
 
 import Link from 'sw-valuelink'
-import { links } from 'helpers'
 
 import CSSModules from 'react-css-modules'
 import styles from './PartialClosure.scss'
@@ -26,7 +25,8 @@ import { localisedUrl } from 'helpers/locale'
 import config from 'app-config'
 import { util } from 'swap.app'
 
-import constants from 'helpers/constants'
+import helpers, { constants, links } from 'helpers'
+
 
 const PAIR_CHECK_RESULT = {
   NO_PAIR: -1,
@@ -507,6 +507,26 @@ export default class PartialClosure extends Component {
     return PAIR_CHECK_RESULT.HAVE_PAIR
   }
 
+  sellAllBalance = () => {
+    const { haveCurrency } = this.state
+    const { currenciesData } = this.props
+
+    const { balance } = currenciesData.find(item => item.currency === haveCurrency.toUpperCase())
+    const tokenFee = helpers.ethToken.isEthToken({ name: haveCurrency.toLowerCase() })
+    const { minAmount } = constants
+
+    const minFee = tokenFee ? 0 : minAmount[haveCurrency.toLowerCase()]
+
+    const balanceMiner = balance
+      ? balance !== 0
+        ? new BigNumber(balance).minus(minFee).toString()
+        : balance
+      : 'Wait please. Loading...'
+
+    this.setState({
+      haveAmount: balanceMiner,
+    })
+  }
 
   render() {
     const { currencies, addSelectedItems, currenciesData, intl: { locale } } = this.props
@@ -556,6 +576,7 @@ export default class PartialClosure extends Component {
               placeholder="Enter amount"
               usd={(maxAmount > 0 && isNonOffers) ? 0 : haveUsd}
               currencies={currencies}
+              maxBtnFunc={this.sellAllBalance}
               className={isWidget ? 'SelGroup' : ''}
             />
             <p className={isWidget ? 'advice' : ''} >
