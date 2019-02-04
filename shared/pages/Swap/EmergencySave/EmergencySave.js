@@ -34,7 +34,7 @@ export default class EmergencySave extends Component {
         </span>
         {
           isShowEmergency && (
-            <pre>
+            <pre styleName="information">
               <code>
                 {
                   JSON.stringify(state, false, 4)

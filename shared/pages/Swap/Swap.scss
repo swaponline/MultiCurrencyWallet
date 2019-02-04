@@ -22,6 +22,7 @@
 
 .swapDepositWindow {
   color: #000;
+  padding-bottom: 20px;
 }
 
 .unfinishedHref {
@@ -49,6 +50,29 @@
 .swapWrapper {
   position: relative;
   margin-top: 70px;
+}
+
+.bitcoinScript {
+  font-weight: bold;
+  position: relative;
+  font-size: 20px;
+  margin: -81px 60px;
+  padding-bottom: 150px;
+  width: 20%;
+}
+
+.onlineIndicator {
+  position: relative;
+  font-size: 24px;
+  font-weight: bold;
+  left: 2%;
+}
+
+.online {
+  color: #3de25b;
+}
+.offline {
+  color: $color-f-error;
 }
 
 .loaderHolder {
@@ -357,10 +381,12 @@
 .gohome-holder {
   text-align: center;
 }
+
 .button {
   margin-top: 20px;
   font-size: 14px;
 }
+
 @include media-mobile {
   .transaction{
       font-size: 8.5px;

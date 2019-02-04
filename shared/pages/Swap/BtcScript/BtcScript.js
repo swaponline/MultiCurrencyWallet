@@ -1,5 +1,8 @@
 import React from 'react'
 
+import CSSModules from 'react-css-modules'
+import styles from '../Swap.scss'
+
 
 const BtcScript = ({ recipientPublicKey, secretHash, lockTime, ownerPublicKey }) => (
   <div>
@@ -34,5 +37,4 @@ const BtcScript = ({ recipientPublicKey, secretHash, lockTime, ownerPublicKey })
   </div>
 )
 
-
-export default BtcScript
+export default CSSModules(BtcScript, styles)
