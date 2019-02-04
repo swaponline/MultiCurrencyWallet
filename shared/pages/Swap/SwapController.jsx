@@ -50,9 +50,9 @@ class SwapController extends React.PureComponent {
       <div styleName="onlineIndicator">
         {
           online ? (
-            <p styleName="online"> {`Online`}</p>
+            <p styleName="online"> {`Participant is Online`}</p>
           ) : (
-            <p styleName="offline"> {`Offline`}</p>
+            <p styleName="offline"> {`Participant is Offline`}</p>
           )
         }
       </div>

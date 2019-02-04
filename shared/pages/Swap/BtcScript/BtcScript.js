@@ -5,7 +5,7 @@ import styles from '../Swap.scss'
 
 
 const BtcScript = ({ recipientPublicKey, secretHash, lockTime, ownerPublicKey }) => (
-  <div>
+  <div styleName="showingScript">
     <pre>
       <code>
         {`

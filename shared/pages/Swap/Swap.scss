@@ -53,19 +53,25 @@
 }
 
 .bitcoinScript {
-  font-weight: bold;
   position: relative;
-  font-size: 20px;
+  font-size: 14px;
   margin: -81px 60px;
   padding-bottom: 150px;
   width: 20%;
+  color: #A9A9A9;
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 .onlineIndicator {
-  position: relative;
-  font-size: 24px;
-  font-weight: bold;
-  left: 2%;
+  position: absolute;
+  font-size: 15px;
+  left: 1%;
+  margin: 1% 21.5%;
+}
+
+.showingScript {
+  margin-left: 30px;
 }
 
 .online {
