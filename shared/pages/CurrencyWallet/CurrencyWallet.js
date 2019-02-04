@@ -161,13 +161,13 @@ export default class CurrencyWallet extends Component {
     const titleSwapOnline = defineMessages({
       metaTitle: {
         id: 'CurrencyWallet148',
-        defaultMessage: 'Swap.Online - ${fullName} (${currency}) Web Wallet with Atomic Swap.',
+        defaultMessage: 'Swap.Online - {fullName} ({currency}) Web Wallet with Atomic Swap.',
       },
     })
     const titleWidgetBuild = defineMessages({
       metaTitle: {
         id: 'CurrencyWalletWidgetBuildTitle',
-        defaultMessage: '${fullName} (${currency}) Web Wallet with Atomic Swap.',
+        defaultMessage: '{fullName} ({currency}) Web Wallet with Atomic Swap.',
       },
     })
     const title = (isWidgetBuild) ? titleWidgetBuild : titleSwapOnline
@@ -189,14 +189,8 @@ export default class CurrencyWallet extends Component {
           styleName="title"
           subTitle={!!seoPage
             ? seoPage.h1
-            : <FormattedMessage
-              id="CurrencyWallet141"
-              defaultMessage={`Swap.Online - {fullName}({currency}) Web Wallet with Atomic Swap.`}
-              values={{
-                fullName:`${fullName}`,
-                currency: `${currency}`,
-              }}
-            />}
+            : intl.formatMessage(title.metaTitle, { fullName, currency  })
+            }
         />
         <h3 styleName="subtitle">
           <FormattedMessage
