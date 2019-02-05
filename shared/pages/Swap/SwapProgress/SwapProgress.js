@@ -276,27 +276,27 @@ export default class SwapProgress extends Component {
               }
             </div>
             {(flow.ethSwapWithdrawTransactionHash && swap.sellCurrency === 'BTC') &&  (
-                  <strong styleName="transaction">
-                    <a
-                      href={`${config.link.etherscan}/tx/${flow.ethSwapWithdrawTransactionHash}`}
-                      target="_blank"
-                      rel="noreferrer noopener"
-                    >
-                      <FormattedMessage id="swappropgress207" defaultMessage="{transaction}" values={{ transaction: flow.ethSwapWithdrawTransactionHash }} />
-                    </a>
-                  </strong>
-              )}
-              {flow.btcSwapWithdrawTransactionHash && (
-                <strong styleName="transaction">
-                  <a
-                    href={`${config.link.bitpay}/tx/${flow.btcSwapWithdrawTransactionHash}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <FormattedMessage id="swappropgress218" defaultMessage="{transaction}" values={{ transaction: flow.btcSwapWithdrawTransactionHash }} />
-                  </a>
-                </strong>
-              )}
+              <strong styleName="transaction">
+                <a
+                  href={`${config.link.etherscan}/tx/${flow.ethSwapWithdrawTransactionHash}`}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  <FormattedMessage id="swappropgress207" defaultMessage="{transaction}" values={{ transaction: flow.ethSwapWithdrawTransactionHash }} />
+                </a>
+              </strong>
+            )}
+            {flow.btcSwapWithdrawTransactionHash && (
+              <strong styleName="transaction">
+                <a
+                  href={`${config.link.bitpay}/tx/${flow.btcSwapWithdrawTransactionHash}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FormattedMessage id="swappropgress218" defaultMessage="{transaction}" values={{ transaction: flow.btcSwapWithdrawTransactionHash }} />
+                </a>
+              </strong>
+            )}
           </div>
         </div>
       </div>
