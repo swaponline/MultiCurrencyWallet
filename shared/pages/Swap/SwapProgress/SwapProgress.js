@@ -20,8 +20,10 @@ import Timer from '../Timer/Timer'
 import Logo from 'components/Logo/Logo'
 import { Button } from 'components/controls'
 import Input from 'components/forms/Input/Input'
+
 import Title from 'components/PageHeadline/Title/Title'
 import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
+import SwapController from '../SwapController'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 
 import BtcToEth from './SwapProgressText/BtcToEth'
@@ -147,6 +149,7 @@ export default class SwapProgress extends Component {
       <div styleName="overlay">
         <div styleName="container">
           <div styleName="stepContainer">
+            <SwapController swap={swap} />
             <div styleName="progressContainer">
               <div styleName={progress > 180 ? 'progress-pie-chart gt-50' : 'progress-pie-chart'}>
                 <div styleName="ppc-progress">

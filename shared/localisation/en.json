@@ -4322,14 +4322,14 @@
   },
   {
     "id": "swappropgress207",
-    "message": "ETH transaction: {transaction}",
+    "message": "{transaction}",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgress.js"
     ]
   },
   {
     "id": "swappropgress218",
-    "message": "BTC transaction: {transaction}",
+    "message": "{transaction}",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgress.js"
     ]

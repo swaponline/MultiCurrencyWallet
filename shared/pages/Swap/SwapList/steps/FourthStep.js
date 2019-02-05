@@ -4,6 +4,7 @@ import CSSModules from 'react-css-modules'
 import styles from '../SwapList.scss'
 
 import config from 'app-config'
+import { isMobile } from 'react-device-detect'
 
 import { FormattedMessage } from 'react-intl'
 
@@ -13,7 +14,9 @@ const FourthStep = ({ step, swap, sixth, seventh, eighth }) => {
   const currencyStep = swap.sellCurrency === 'BTC' ? seventh : eighth
 
   return (
-    <div styleName={((step >= sixth && step < currencyStep) && 'stepItem active') || (step < currencyStep && 'stepItem') || 'stepItem active checked'}>
+    <div
+      style={isMobile ? { paddingTop: '150px' } : {}}
+      styleName={((step >= sixth && step < currencyStep) && 'stepItem active') || (step < currencyStep && 'stepItem') || 'stepItem active checked'}>
       <span styleName="stepNumber">{step < currencyStep ? 4 : <i className="fas fa-check" />}</span>
       <p styleName="stepText">
         <FormattedMessage
