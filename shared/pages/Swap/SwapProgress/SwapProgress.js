@@ -131,17 +131,7 @@ export default class SwapProgress extends Component {
     const progress = Math.floor(360 / (swap.flow.steps.length - 1) * this.state.flow.step)
 
     const finishSvg = (
-      <svg className="swap-progress" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
-        <circle
-          className="path circle"
-          fill="none"
-          stroke="#3de25b"
-          strokeWidth="6"
-          strokeMiterlimit="10"
-          cx="65.1"
-          cy="65.1"
-          r="62.1"
-        />
+      <svg styleName="finishImg" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
         <polyline
           className="path check"
           fill="none"
