@@ -39,7 +39,7 @@ export const parseTicker = (order) => {
     }
   }
 
-  console.error(new Error(`ParseTickerError: No such tickers: ${BS},${SB}`))
+  //console.error(new Error(`ParseTickerError: No such tickers: ${BS},${SB}`))
   return { ticker: 'none', type: PAIR_BID }
 }
 
