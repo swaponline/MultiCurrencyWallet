@@ -190,9 +190,9 @@ export default class Header extends Component {
 
     if (config && config.isWidget) {
       return (
-        <User 
+        <User
           acceptRequest={this.acceptRequest}
-          declineRequest={this.declineRequest}/>
+          declineRequest={this.declineRequest} />
       )
     }
 
