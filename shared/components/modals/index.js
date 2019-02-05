@@ -4,7 +4,7 @@ import WithdrawModal from './WithdrawModal/WithdrawModal'
 import PrivateKeysModal from './PrivateKeysModal/PrivateKeysModal'
 import EosRegisterModal from './EosRegisterModal/EosRegisterModal'
 import EosBuyAccountModal from './EosBuyAccountModal/EosBuyAccountModal'
-import TelosRegisterModal from './TelosRegisterModal/TelosRegisterModal'
+import TelosChangeAccountModal from './TelosChangeAccountModal/TelosChangeAccountModal'
 import Approve from './Approve/Approve'
 import ImportKeys from './ImportKeys/ImportKeys'
 import ShowMoreCoins from './ShowMoreCoins/ShowMoreCoins'
@@ -22,7 +22,7 @@ export default {
   ShowMoreCoins,
   EosBuyAccountModal,
   EosRegisterModal,
-  TelosRegisterModal,
+  TelosChangeAccountModal,
   Approve,
   EthChecker,
   ReceiveModal,
