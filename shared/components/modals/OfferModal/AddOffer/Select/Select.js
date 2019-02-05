@@ -6,11 +6,17 @@ import { FormattedMessage } from 'react-intl'
 import Switching from 'components/controls/Switching/Switching'
 
 
-const Select = ({ balance, currency, changeBalance, switching }) => (
+const Select = ({ balance, currency, changeBalance, switching, ...props }) => (
   <Fragment>
-    <FieldLabel inRow >
-      <FormattedMessage id="Select10" defaultMessage="Available amount for sell" />
-    </FieldLabel>
+    {
+      props.noLabel
+        ? ''
+        : (
+          <FieldLabel inRow >
+            <FormattedMessage id="Select10" defaultMessage="Available amount for sell" />
+          </FieldLabel>
+        )
+    }
     <div styleName="groupField">
       <p>{currency.toUpperCase()} { balance ? parseFloat(balance).toFixed(5) : 0.00 }</p>
       <div styleName="cell" onClick={() => changeBalance(balance / 10)}>

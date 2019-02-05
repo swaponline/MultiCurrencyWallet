@@ -30,17 +30,11 @@ const SelectGroup = ({ selectedValue, onSelect, currencies, usd, placeholder, la
         placeholder={placeholder}
         pattern="0-9."
         disabled={disabled}
+        onFocus={props.onFocus ? props.onFocus : () => {}}
       />
       {
         (selectedValue === 'eth' || selectedValue === 'btc') && usd > 0 &&
         <p styleName={props.maxBtnFunc ? 'textUsd textUsd__sell' : 'textUsd'} >{`~${usd}`}$</p>
-      }
-      {
-        props.maxBtnFunc && (
-          <buttton styleName="maxBtn" onClick={props.maxBtnFunc} data-tip data-for="Withdrow134">
-            <FormattedMessage id="Select210" defaultMessage="MAX" />
-          </buttton>
-        )
       }
       <CurrencySelect
         styleName="currencySelect"
