@@ -510,6 +510,7 @@ export default class PartialClosure extends Component {
   }
 
   changeBalance = (value) => {
+    this.extendedControlsSet(false)
     this.setState({
       haveAmount: value,
     })
@@ -587,13 +588,15 @@ export default class PartialClosure extends Component {
                   {
                     extendedControls
                       ? (
-                        <Select
-                          changeBalance={this.changeBalance}
-                          balance={balance}
-                          currency={haveCurrency}
-                          switching={this.handleFlipCurrency}
-                          noLabel
-                        />
+                        <div styleName="extendedControls">
+                          <Select
+                            changeBalance={this.changeBalance}
+                            balance={balance}
+                            currency={haveCurrency}
+                            switching={this.handleFlipCurrency}
+                            noLabel
+                          />
+                        </div>
                       )
                       : (
                         <Flip onClick={this.handleFlipCurrency} styleName="flipButton" />

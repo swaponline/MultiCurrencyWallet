@@ -47,6 +47,7 @@
 }
 
 .block {
+  position: relative;
   flex-basis: 37%;
 }
 
@@ -60,9 +61,12 @@
 }
 
 .flipButton {
-  transform: rotate(90deg);
+  position: absolute;
+  z-index: 1;
+  top: 99px;
+  right: -13px;
   padding: 0;
-  margin: -2.5rem 0 -1.5rem calc(90% - 12px);
+  transform: rotate(90deg);
 }
 
 .withLoader {
@@ -83,6 +87,15 @@
 .additionalLoaderHolder {
   display: block;
   position: relative;
+}
+
+.extendedControls {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  top: 100px;
+  background: white;
+  overflow: visible;
 }
 
 @include media-mobile {
