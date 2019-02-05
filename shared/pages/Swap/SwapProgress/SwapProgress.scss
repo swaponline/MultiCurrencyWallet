@@ -108,6 +108,10 @@ $size: 200px;
 
 .finishImg {
   width: 160px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  top: 50%;
 }
 
 .bar {
@@ -410,14 +414,6 @@ $size: 200px;
 }
 
 //svg
-
-svg.swap-progress {
-  width: 200px;
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%,-50%);
-  top: 50%;
-}
 
 .path {
   stroke-dasharray: 1000;
