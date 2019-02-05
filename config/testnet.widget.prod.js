@@ -20,7 +20,7 @@ if (process.argv.length >= 5) {
   newERC20['{#WIDGETTOKENCODE#}'] = {
     address: '{#WIDGETTOKENCONTRACT#}',
     decimals: 12071998,
-    fullName: "{#WIDGETTOKENTITLE#}",
+    fullName: '{#WIDGETTOKENTITLE#}',
   }
 }
 

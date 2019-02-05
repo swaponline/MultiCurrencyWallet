@@ -46,7 +46,7 @@ const subTitle = (
   <FormattedMessage id="partial437" defaultMessage="Atomic Swap Exchange" />
 )
 
-const isWidgetBuild = (config && config.isWidget) ? true : false
+const isWidgetBuild = config && config.isWidget
 
 @injectIntl
 @connect(({

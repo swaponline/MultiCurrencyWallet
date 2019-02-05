@@ -11,7 +11,7 @@ import config from 'app-config'
 
 
 const isFirefox = navigator.userAgent.indexOf('Firefox') !== -1
-const isWidget = (config && config.isWidget) ? true : false
+const isWidget = config && config.isWidget
 
 const Loader = ({ overlayClassName, className, data, showTips }) => (
   <div styleName={`${isFirefox ? 'Firefox ' : ''}overlay`} className={overlayClassName}>

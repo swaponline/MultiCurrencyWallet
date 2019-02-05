@@ -190,7 +190,7 @@ export default class CurrencyWallet extends Component {
           subTitle={!!seoPage
             ? seoPage.h1
             : intl.formatMessage(title.metaTitle, { fullName, currency  })
-            }
+          }
         />
         <h3 styleName="subtitle">
           <FormattedMessage
