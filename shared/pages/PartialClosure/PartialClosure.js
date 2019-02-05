@@ -46,6 +46,8 @@ const subTitle = (
   <FormattedMessage id="partial437" defaultMessage="Atomic Swap Exchange" />
 )
 
+const isWidgetBuild = config && config.isWidget
+
 @injectIntl
 @connect(({
   currencies,
@@ -80,8 +82,6 @@ export default class PartialClosure extends Component {
 
   constructor({ tokensData, currenciesData, match: { params: { buy, sell, locale } }, history, ...props }) {
     super()
-
-    const isWidgetBuild = config && config.isWidget
 
     const sellToken = sell || ((!isWidgetBuild) ? 'eth' : 'btc')
     const buyToken = buy || ((!isWidgetBuild) ? 'btc' : config.erc20token)
@@ -518,9 +518,8 @@ export default class PartialClosure extends Component {
     const oneCryptoCost = maxBuyAmount.isLessThanOrEqualTo(0) ? BigNumber(0) : BigNumber(goodRate)
     const linked = Link.all(this, 'haveAmount', 'getAmount', 'customWallet')
 
-    const isWidgetExtention = config && config.isWidget
     const isWidgetLink = this.props.location.pathname.includes('/exchange/') && this.props.location.hash === '#widget'
-    const isWidget = isWidgetExtention || isWidgetLink
+    const isWidget = isWidgetBuild || isWidgetLink
 
     if (redirect) {
       return <Redirect push to={`${localisedUrl(locale, links.swap)}/${getCurrency}-${haveCurrency}/${orderId}`} />
@@ -552,7 +551,7 @@ export default class PartialClosure extends Component {
               onSelect={this.handleSetHaveValue}
               label={<FormattedMessage id="partial243" defaultMessage="You sell" />}
               id="partialClosure456"
-              tooltip={<FormattedMessage id="partial462" defaultMessage="The amount you have in your swap.online wallet or external wallet that you want to exchange" />}
+              tooltip={<FormattedMessage id="partial462" defaultMessage="The amount you have in your wallet or external wallet that you want to exchange" />}
               placeholder="Enter amount"
               usd={(maxAmount > 0 && isNonOffers) ? 0 : haveUsd}
               currencies={currencies}
@@ -649,7 +648,16 @@ export default class PartialClosure extends Component {
                   </div>
                   <div styleName="walletToggle">
                     <Toggle checked={customWalletUse} onChange={this.handleCustomWalletUse} />
-                    <FormattedMessage id="PartialUseSwapOnlineWallet" defaultMessage="Use Swap.Online wallet" />
+                    {
+                      isWidgetBuild && (
+                        <FormattedMessage id="PartialUseInternalWallet" defaultMessage="Use internal wallet" />
+                      )
+                    }
+                    {
+                      !isWidgetBuild && (
+                        <FormattedMessage id="PartialUseSwapOnlineWallet" defaultMessage="Use Swap.Online wallet" />
+                      )
+                    }
                   </div>
                 </Fragment>
               )
