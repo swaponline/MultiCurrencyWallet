@@ -334,7 +334,7 @@
   },
   {
     "id": "Select10",
-    "message": "Available amount for sell",
+    "message": "Available amount to sell",
     "files": [
       "shared/components/modals/OfferModal/AddOffer/Select/Select.js"
     ]
@@ -2255,7 +2255,7 @@
   },
   {
     "id": "AddOffer423",
-    "message": "Enabled to partial closure",
+    "message": "Enable partial fills",
     "files": [
       "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
     ]
@@ -3026,7 +3026,7 @@
   },
   {
     "id": "Add52",
-    "message": "Add offer",
+    "message": "Place an offer",
     "files": [
       "shared/components/modals/OfferModal/OfferModal.js"
     ]
