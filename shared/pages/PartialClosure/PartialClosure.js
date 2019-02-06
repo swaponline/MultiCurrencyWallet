@@ -170,9 +170,6 @@ export default class PartialClosure extends Component {
       const exGetRate = (this.usdRates[getCurrency] !== undefined) ?
         this.usdRates[getCurrency] : await actions.user.getExchangeRate(getCurrency, 'usd')
 
-      console.log('exHaveRate', exHaveRate)
-      console.log('exGetRate', exGetRate)
-
       this.usdRates[haveCurrency] = exHaveRate
       this.usdRates[getCurrency] = exGetRate
 
@@ -191,8 +188,6 @@ export default class PartialClosure extends Component {
       peer, orderId, customWalletUse, customWallet,
     } = this.state
 
-    console.log('sendRequest', getAmount, peer, orderId, haveAmount)
-
     if (!String(getAmount) || !peer || !orderId || !String(haveAmount)) {
       return
     }
@@ -205,12 +200,9 @@ export default class PartialClosure extends Component {
       address: this.customWalletAllowed() ? customWallet : null,
     }
 
-    console.log('sendRequest for partial order', newValues, destination)
-
     this.setState(() => ({ isFetching: true }))
 
     actions.core.sendRequestForPartial(orderId, newValues, destination, (newOrder, isAccepted) => {
-      console.log('sendRequest order received', newOrder, isAccepted)
       if (isAccepted) {
         this.setState(() => ({
           redirect: true,
@@ -239,11 +231,6 @@ export default class PartialClosure extends Component {
 
   setAmountOnState = (maxAmount, getAmount, buyAmount) => {
 
-    console.log('setAmountOnState')
-    console.log('maxAmount', Number(maxAmount))
-    console.log('getAmount', this.getFixed(getAmount))
-    console.log('buyAmount', this.getFixed(buyAmount))
-
     this.setState(() => ({
       maxAmount: Number(maxAmount),
       getAmount: this.getFixed(getAmount),
@@ -271,8 +258,6 @@ export default class PartialClosure extends Component {
       isSearching: true,
     }))
 
-    console.log('filteredOrders', filteredOrders.length)
-
     const sortedOrders = filteredOrders
       .sort((a, b) => Number(b.buyAmount.dividedBy(b.sellAmount)) - Number(a.buyAmount.dividedBy(a.sellAmount)))
       .map((item, index) => {
@@ -290,13 +275,9 @@ export default class PartialClosure extends Component {
         }
       })
 
-    console.log('sortedOrder', sortedOrders.length)
-
     this.getUsdBalance()
 
     const didFound = await this.setOrderOnState(sortedOrders)
-
-    console.log('didFound', didFound)
 
     if (didFound) {
       this.setState(() => ({

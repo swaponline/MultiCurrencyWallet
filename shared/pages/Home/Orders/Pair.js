@@ -3,7 +3,10 @@ import BigNumber from 'bignumber.js'
 import TOKEN_DECIMALS from 'helpers/constants/TOKEN_DECIMALS'
 import TRADE_TICKERS from 'helpers/constants/TRADE_TICKERS'
 import PAIR_TYPES from 'helpers/constants/PAIR_TYPES'
+import config from 'app-config'
 
+
+const isWidgetBuild = config && config.isWidget
 
 console.log('TOKEN_DECIMALS', TOKEN_DECIMALS)
 console.log('TRADE_TICKERS', TRADE_TICKERS)
@@ -39,7 +42,10 @@ export const parseTicker = (order) => {
     }
   }
 
-  console.error(new Error(`ParseTickerError: No such tickers: ${BS},${SB}`))
+  if (!isWidgetBuild) {
+    console.error(new Error(`ParseTickerError: No such tickers: ${BS},${SB}`))
+  }
+
   return { ticker: 'none', type: PAIR_BID }
 }
 
