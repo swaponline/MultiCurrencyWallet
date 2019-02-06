@@ -406,28 +406,28 @@
     "id": "TelosRegister55",
     "message": "Имя аккаунта",
     "files": [
-      "shared/components/modals/TelosRegisterModal/TelosRegisterModal.js"
+      "shared/components/modals/TelosChangeAccountModal/TelosChangeAccountModal.js"
     ]
   },
   {
     "id": "TelosRegister59",
     "message": "Приватный ключ",
     "files": [
-      "shared/components/modals/TelosRegisterModal/TelosRegisterModal.js"
+      "shared/components/modals/TelosChangeAccountModal/TelosChangeAccountModal.js"
     ]
   },
   {
     "id": "TelosRegister64",
     "message": "Произошла ошибка при активации",
     "files": [
-      "shared/components/modals/TelosRegisterModal/TelosRegisterModal.js"
+      "shared/components/modals/TelosChangeAccountModal/TelosChangeAccountModal.js"
     ]
   },
   {
     "id": "TelosRegister69",
     "message": "Войти",
     "files": [
-      "shared/components/modals/TelosRegisterModal/TelosRegisterModal.js"
+      "shared/components/modals/TelosChangeAccountModal/TelosChangeAccountModal.js"
     ]
   },
   {
@@ -984,10 +984,7 @@
   },
   {
     "id": "EmergencySave",
-    "message": "Информация об обмене",
-    "files": [
-      "shared/pages/Swap/EmergencySave/EmergencySave.js"
-    ]
+    "message": "Информация об обмене"
   },
   {
     "id": "EthTokenBtc102",
@@ -2915,10 +2912,7 @@
   },
   {
     "id": "Row377",
-    "message": "Не активированно",
-    "files": [
-      "shared/pages/Wallet/Row/Row.js"
-    ]
+    "message": "Не активированно"
   },
   {
     "id": "CDC52",
@@ -2980,14 +2974,14 @@
     "id": "TelosRegister46",
     "message": "Введите TELOS имя аккаунта",
     "files": [
-      "shared/components/modals/TelosRegisterModal/TelosRegisterModal.js"
+      "shared/components/modals/TelosChangeAccountModal/TelosChangeAccountModal.js"
     ]
   },
   {
     "id": "TelosRegister52",
     "message": "Введите Ваш TELOS секретный ключ",
     "files": [
-      "shared/components/modals/TelosRegisterModal/TelosRegisterModal.js"
+      "shared/components/modals/TelosChangeAccountModal/TelosChangeAccountModal.js"
     ]
   },
   {
@@ -3092,7 +3086,7 @@
     "id": "TELOSLogin",
     "message": "TELOS вход",
     "files": [
-      "shared/components/modals/TelosRegisterModal/TelosRegisterModal.js"
+      "shared/components/modals/TelosChangeAccountModal/TelosChangeAccountModal.js"
     ]
   },
   {
@@ -3868,10 +3862,7 @@
   },
   {
     "id": "swapFinishedGoHome",
-    "message": "Домой",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "Домой"
   },
   {
     "id": "KeyActionsPanel73",
@@ -3976,10 +3967,7 @@
     "id": "swapJS341",
     "message": "показать bitcoin script",
     "files": [
-      "shared/pages/Swap/BtcToEth.js",
-      "shared/pages/Swap/BtcToEthToken.js",
-      "shared/pages/Swap/EthToBtc.js",
-      "shared/pages/Swap/EthTokenToBtc.js"
+      "shared/pages/Swap/ShowBtcScript/ShowBtcScript.js"
     ]
   },
   {
@@ -4095,17 +4083,11 @@
   },
   {
     "id": "swappropgress233",
-    "message": "ETH транзакция:",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "ETH транзакция:"
   },
   {
     "id": "swappropgress258",
-    "message": "BTC транзакция:",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "BTC транзакция:"
   },
   {
     "id": "swappropgress332",
@@ -4207,10 +4189,7 @@
   },
   {
     "id": "swappropgress246",
-    "message": "Sign ETH transaction:",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "Sign ETH transaction:"
   },
   {
     "id": "BitcoinBuyText17",
@@ -4329,6 +4308,69 @@
     "message": "Thank you for using Swap.Online!",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.js"
+    ]
+  },
+  {
+    "id": "EmergencySave33",
+    "message": "Информация для разработчиков",
+    "files": [
+      "shared/pages/Swap/EmergencySave/EmergencySave.js"
+    ]
+  },
+  {
+    "id": "swappropgress193",
+    "message": "Sign ETH transaction: {transaction}",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapProgress.js"
+    ]
+  },
+  {
+    "id": "swappropgress207",
+    "message": "ETH transaction: {transaction}",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapProgress.js"
+    ]
+  },
+  {
+    "id": "swappropgress218",
+    "message": "BTC transaction: {transaction}",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapProgress.js"
+    ]
+  },
+  {
+    "id": "Row401",
+    "message": "Создать аккаунт",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row420",
+    "message": "Использовать другой",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row426",
+    "message": "Войти с вашего существующего EOS аккаунта",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row431",
+    "message": "Войти с вашего существующего TLOS аккаунта",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row440",
+    "message": "Создать Telos аккаунт в 1 клик",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
     ]
   }
 ]

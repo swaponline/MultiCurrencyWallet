@@ -46,6 +46,8 @@ const subTitle = (
   <FormattedMessage id="partial437" defaultMessage="Atomic Swap Exchange" />
 )
 
+const isWidgetBuild = config && config.isWidget
+
 @injectIntl
 @connect(({
   currencies,
@@ -80,8 +82,6 @@ export default class PartialClosure extends Component {
 
   constructor({ tokensData, currenciesData, match: { params: { buy, sell, locale } }, history, ...props }) {
     super()
-
-    const isWidgetBuild = config && config.isWidget
 
     const sellToken = sell || ((!isWidgetBuild) ? 'eth' : 'btc')
     const buyToken = buy || ((!isWidgetBuild) ? 'btc' : config.erc20token)
@@ -170,9 +170,6 @@ export default class PartialClosure extends Component {
       const exGetRate = (this.usdRates[getCurrency] !== undefined) ?
         this.usdRates[getCurrency] : await actions.user.getExchangeRate(getCurrency, 'usd')
 
-      console.log('exHaveRate', exHaveRate)
-      console.log('exGetRate', exGetRate)
-
       this.usdRates[haveCurrency] = exHaveRate
       this.usdRates[getCurrency] = exGetRate
 
@@ -191,8 +188,6 @@ export default class PartialClosure extends Component {
       peer, orderId, customWalletUse, customWallet,
     } = this.state
 
-    console.log('sendRequest', getAmount, peer, orderId, haveAmount)
-
     if (!String(getAmount) || !peer || !orderId || !String(haveAmount)) {
       return
     }
@@ -205,12 +200,9 @@ export default class PartialClosure extends Component {
       address: this.customWalletAllowed() ? customWallet : null,
     }
 
-    console.log('sendRequest for partial order', newValues, destination)
-
     this.setState(() => ({ isFetching: true }))
 
     actions.core.sendRequestForPartial(orderId, newValues, destination, (newOrder, isAccepted) => {
-      console.log('sendRequest order received', newOrder, isAccepted)
       if (isAccepted) {
         this.setState(() => ({
           redirect: true,
@@ -239,11 +231,6 @@ export default class PartialClosure extends Component {
 
   setAmountOnState = (maxAmount, getAmount, buyAmount) => {
 
-    console.log('setAmountOnState')
-    console.log('maxAmount', Number(maxAmount))
-    console.log('getAmount', this.getFixed(getAmount))
-    console.log('buyAmount', this.getFixed(buyAmount))
-
     this.setState(() => ({
       maxAmount: Number(maxAmount),
       getAmount: this.getFixed(getAmount),
@@ -271,8 +258,6 @@ export default class PartialClosure extends Component {
       isSearching: true,
     }))
 
-    console.log('filteredOrders', filteredOrders.length)
-
     const sortedOrders = filteredOrders
       .sort((a, b) => Number(b.buyAmount.dividedBy(b.sellAmount)) - Number(a.buyAmount.dividedBy(a.sellAmount)))
       .map((item, index) => {
@@ -290,13 +275,9 @@ export default class PartialClosure extends Component {
         }
       })
 
-    console.log('sortedOrder', sortedOrders.length)
-
     this.getUsdBalance()
 
     const didFound = await this.setOrderOnState(sortedOrders)
-
-    console.log('didFound', didFound)
 
     if (didFound) {
       this.setState(() => ({
@@ -518,9 +499,8 @@ export default class PartialClosure extends Component {
     const oneCryptoCost = maxBuyAmount.isLessThanOrEqualTo(0) ? BigNumber(0) : BigNumber(goodRate)
     const linked = Link.all(this, 'haveAmount', 'getAmount', 'customWallet')
 
-    const isWidgetExtention = config && config.isWidget
     const isWidgetLink = this.props.location.pathname.includes('/exchange/') && this.props.location.hash === '#widget'
-    const isWidget = isWidgetExtention || isWidgetLink
+    const isWidget = isWidgetBuild || isWidgetLink
 
     if (redirect) {
       return <Redirect push to={`${localisedUrl(locale, links.swap)}/${getCurrency}-${haveCurrency}/${orderId}`} />
@@ -552,7 +532,7 @@ export default class PartialClosure extends Component {
               onSelect={this.handleSetHaveValue}
               label={<FormattedMessage id="partial243" defaultMessage="You sell" />}
               id="partialClosure456"
-              tooltip={<FormattedMessage id="partial462" defaultMessage="The amount you have in your swap.online wallet or external wallet that you want to exchange" />}
+              tooltip={<FormattedMessage id="partial462" defaultMessage="The amount you have in your wallet or external wallet that you want to exchange" />}
               placeholder="Enter amount"
               usd={(maxAmount > 0 && isNonOffers) ? 0 : haveUsd}
               currencies={currencies}
@@ -649,7 +629,16 @@ export default class PartialClosure extends Component {
                   </div>
                   <div styleName="walletToggle">
                     <Toggle checked={customWalletUse} onChange={this.handleCustomWalletUse} />
-                    <FormattedMessage id="PartialUseSwapOnlineWallet" defaultMessage="Use Swap.Online wallet" />
+                    {
+                      isWidgetBuild && (
+                        <FormattedMessage id="PartialUseInternalWallet" defaultMessage="Use internal wallet" />
+                      )
+                    }
+                    {
+                      !isWidgetBuild && (
+                        <FormattedMessage id="PartialUseSwapOnlineWallet" defaultMessage="Use Swap.Online wallet" />
+                      )
+                    }
                   </div>
                 </Fragment>
               )

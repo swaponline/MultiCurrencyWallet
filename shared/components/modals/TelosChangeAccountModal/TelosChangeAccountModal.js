@@ -10,7 +10,7 @@ import actions from 'redux/actions'
 import { constants } from 'helpers'
 
 import cssModules from 'react-css-modules'
-import styles from './TelosRegisterModal.scss'
+import styles from './TelosChangeAccountModal.scss'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 
@@ -21,8 +21,9 @@ const title = defineMessages({
     defaultMessage: 'TELOS Login',
   },
 })
+@injectIntl
 @cssModules(styles)
-export default class TelosRegisterModal extends React.Component {
+export default class TelosChangeAccountModal extends React.Component {
 
   state = {
     accountName: '',
@@ -40,7 +41,7 @@ export default class TelosRegisterModal extends React.Component {
       await actions.tlos
         .getBalance()
 
-      actions.modals.close(constants.modals.TelosRegister)
+      actions.modals.close(constants.modals.TelosChangeAccount)
     } catch (e) {
       console.error(e)
       this.setState({ error: e.toString() })
