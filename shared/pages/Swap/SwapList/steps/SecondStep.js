@@ -12,12 +12,14 @@ import { FormattedMessage } from 'react-intl'
 const SecondStep = ({ step, swap, fifth, fourth, second }) => {
 
   const currencyStep = swap.sellCurrency === 'BTC' ? fifth : fourth
+  const stepItemActive = (step >= second && step < currencyStep)
+  const stepItemDefault = (step < currencyStep)
 
   return (
     <div
-      style={isMobile ? { paddingTop: '50px' } : {}}
-      styleName={((step >= second && step < currencyStep) && 'stepItem active') || (step < currencyStep && 'stepItem') || 'stepItem active checked'}>
-      <span styleName="stepNumber">{((step >= second && step < currencyStep) && 2) || (step < second && 2) || <i className="fas fa-check" />}</span>
+      style={(isMobile && (stepItemActive || !stepItemDefault)) ? { paddingTop: '50px' } : {}}
+      styleName={((stepItemActive) && 'stepItem active') || (stepItemDefault && 'stepItem') || 'stepItem active checked'}>
+      <span styleName="stepNumber">{((stepItemActive) && 2) || (step < second && 2) || <i className="fas fa-check" />}</span>
       <p styleName="stepText">
         <FormattedMessage
           id="BtcToEthToken58"
