@@ -3261,6 +3261,13 @@
     ]
   },
   {
+    "id": "UseAnotherWallet",
+    "message": "Specify the recipient's wallet address",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
     "id": "PartialYourWalletAddress",
     "message": "Receiving wallet address",
     "files": [
