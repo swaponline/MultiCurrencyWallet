@@ -10,12 +10,7 @@ const Select = ({ balance, currency, changeBalance, switching, ...props }) => (
   <Fragment>
     {
       props.isExchange
-        ? (
-          <FieldLabel inRow >
-            <FormattedMessage id="Partial221" defaultMessage="Max amount for exchange: " />
-            {props.maxAmountForExchange}{' '}{currency.toUpperCase()}
-          </FieldLabel>
-        )
+        ? ''
         : (
           <FieldLabel inRow >
             <FormattedMessage id="Select10" defaultMessage="Available amount to sell" />

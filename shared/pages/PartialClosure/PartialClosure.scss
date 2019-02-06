@@ -61,11 +61,9 @@
 }
 
 .flipButton {
-  position: absolute;
-  z-index: 1;
-  top: 99px;
-  right: -13px;
+  position: static;
   padding: 0;
+  margin: 0px 12px 0px auto;
   transform: rotate(90deg);
 }
 
@@ -90,15 +88,21 @@
 }
 
 .extendedControls {
-  position: absolute;
-  z-index: 1;
   width: 100%;
-  top: 100px;
   background: white;
   overflow: visible;
+  margin: 1px 0;
   > div {
     margin: 0;
   }
+}
+
+.maxAmount {
+  display: inline-block;
+  position: absolute;
+  top: 0px;
+  left: 105px;
+  margin-bottom: 0;
 }
 
 @include media-mobile {
@@ -119,6 +123,10 @@
       top: -5px;
     }
   }
+  .maxAmount {
+    top: 6px;
+    left: 90px;
+  }
 }
 
 @include media-tablet {
@@ -130,6 +138,9 @@
   }
   .button {
     font-size: 12px;
+  }
+  .maxAmount {
+    font-size: 14px;
   }
 }
 @media all and (min-width: 320px) and (max-width: 830px) {

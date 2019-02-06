@@ -19,14 +19,14 @@
   top: 14px;
   padding: 5px;
   font-size: 16px;
-  box-shadow: -20px 0px 20px -15px rgba(0,0,0, 0.5);
+  box-shadow: -20px 0px 20px -14px rgba(0,0,0, 0.5);
 }
 
 .inputRoot {
   min-width: 0;
   flex: auto 1 1;
   input {
-    padding-right: 80px;
+    padding-right: 75px;
   }
 }
 
@@ -41,23 +41,6 @@ input:disabled {
 
 .currencySelect {
   border-radius: 0 6px 6px 0 !important;
-}
-
-@include media-tablet-landscape-and-lower {
-  .inputRoot {
-    input {
-      padding-right: 16px;
-    }
-  }
-  .textUsd {
-    top: -35px;
-    left: 105px;
-    right: auto;
-    padding: 5px;
-    background: transparent;
-    box-shadow: none;
-    font-size: 16px;
-  }
 }
 
 @include media-mobile {
