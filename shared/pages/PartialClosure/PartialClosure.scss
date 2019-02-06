@@ -63,7 +63,7 @@
 .flipButton {
   position: static;
   padding: 0;
-  margin: 0px 12px 0px auto;
+  margin: 0px 12px -20px auto;
   transform: rotate(90deg);
 }
 
@@ -88,10 +88,12 @@
 }
 
 .extendedControls {
+  position: relative;
+  z-index: 1;
   width: 100%;
   background: white;
   overflow: visible;
-  margin: 1px 0;
+  margin: 1px 0 -19px;
   > div {
     margin: 0;
   }
@@ -101,7 +103,7 @@
   display: inline-block;
   position: absolute;
   top: 0px;
-  left: 105px;
+  right: 0;
   margin-bottom: 0;
 }
 
@@ -125,7 +127,6 @@
   }
   .maxAmount {
     top: 6px;
-    left: 90px;
   }
 }
 

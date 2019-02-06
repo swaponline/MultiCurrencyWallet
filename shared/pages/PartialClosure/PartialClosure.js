@@ -560,7 +560,7 @@ export default class PartialClosure extends Component {
               onBlur={() => setTimeout(() => this.extendedControlsSet(false), 200)}
             />
             {
-              (extendedControls && balance > 0) && (
+              (extendedControls) && (
                 <p className={isWidget ? 'advice' : ''} styleName="maxAmount">
                   <FormattedMessage id="partial221" defaultMessage="Max amount for exchange: " />
                   {Math.floor(maxBuyAmount.toNumber() * 1000) / 1000}{' '}{haveCurrency.toUpperCase()}
