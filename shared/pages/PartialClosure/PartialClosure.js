@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react'
 
 import Link from 'sw-valuelink'
-import { links } from 'helpers'
 
 import CSSModules from 'react-css-modules'
 import styles from './PartialClosure.scss'
@@ -12,6 +11,7 @@ import { BigNumber } from 'bignumber.js'
 import { Redirect } from 'react-router-dom'
 
 import SelectGroup from './SelectGroup/SelectGroup'
+import Select from 'components/modals/OfferModal/AddOffer/Select/Select'
 import Advantages from './PureComponents/Advantages'
 import { Button, Toggle, Flip } from 'components/controls'
 import Input from 'components/forms/Input/Input'
@@ -26,7 +26,8 @@ import { localisedUrl } from 'helpers/locale'
 import config from 'app-config'
 import { util } from 'swap.app'
 
-import constants from 'helpers/constants'
+import helpers, { constants, links } from 'helpers'
+
 
 const PAIR_CHECK_RESULT = {
   NO_PAIR: -1,
@@ -116,6 +117,7 @@ export default class PartialClosure extends Component {
       isDeclinedOffer: false,
       customWalletUse: true,
       customWallet: this.wallets[buyToken.toUpperCase()],
+      extendedControls: false,
     }
     let timer
     let usdRates
@@ -488,14 +490,31 @@ export default class PartialClosure extends Component {
     return PAIR_CHECK_RESULT.HAVE_PAIR
   }
 
+  changeBalance = (value) => {
+    this.extendedControlsSet(false)
+    this.setState({
+      haveAmount: value,
+    })
+  }
+
+  extendedControlsSet = (value) => {
+    if (typeof value !== 'boolean') {
+      return this.setState({ extendedControls: false })
+    }
+    if (this.state.extendedControls === value) {
+      return false
+    }
+    return this.setState({ extendedControls: value })
+  }
 
   render() {
     const { currencies, addSelectedItems, currenciesData, intl: { locale } } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching,
       isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet, getUsd, haveUsd,
-      maxBuyAmount, getAmount, goodRate,
+      maxBuyAmount, getAmount, goodRate, extendedControls,
     } = this.state
 
+    const { balance } = currenciesData.find(item => item.currency === haveCurrency.toUpperCase())
     const oneCryptoCost = maxBuyAmount.isLessThanOrEqualTo(0) ? BigNumber(0) : BigNumber(goodRate)
     const linked = Link.all(this, 'haveAmount', 'getAmount', 'customWallet')
 
@@ -537,14 +556,39 @@ export default class PartialClosure extends Component {
               usd={(maxAmount > 0 && isNonOffers) ? 0 : haveUsd}
               currencies={currencies}
               className={isWidget ? 'SelGroup' : ''}
+              onFocus={() => this.extendedControlsSet(true)}
+              onBlur={() => setTimeout(() => this.extendedControlsSet(false), 200)}
             />
-            <p className={isWidget ? 'advice' : ''} >
-              <FormattedMessage id="partial221" defaultMessage="Max amount for exchange: " />
-              {Math.floor(maxBuyAmount.toNumber() * 1000) / 1000}{' '}{haveCurrency.toUpperCase()}
-            </p>
+            {
+              (extendedControls) && (
+                <p className={isWidget ? 'advice' : ''} styleName="maxAmount">
+                  <FormattedMessage id="partial221" defaultMessage="Max amount for exchange: " />
+                  {Math.floor(maxBuyAmount.toNumber() * 1000) / 1000}{' '}{haveCurrency.toUpperCase()}
+                </p>
+              )
+            }
             {
               this.state.haveCurrency !== this.state.getCurrency && (
-                <Flip onClick={this.handleFlipCurrency} styleName="flipButton" className={isWidget ? 'flipBtn' : ''} />
+                <div className={isWidget ? 'flipBtn' : ''}>
+                  {
+                    (extendedControls && balance > 0)
+                      ? (
+                        <div styleName="extendedControls">
+                          <Select
+                            changeBalance={this.changeBalance}
+                            balance={balance}
+                            currency={haveCurrency}
+                            switching={this.handleFlipCurrency}
+                            isExchange
+                            maxAmountForExchange={Math.floor(maxBuyAmount.toNumber() * 1000) / 1000}
+                          />
+                        </div>
+                      )
+                      : (
+                        <Flip onClick={this.handleFlipCurrency} styleName="flipButton" />
+                      )
+                  }
+                </div>
               )
             }
             <SelectGroup

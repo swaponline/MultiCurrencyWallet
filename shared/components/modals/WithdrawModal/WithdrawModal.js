@@ -19,20 +19,8 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import ReactTooltip from 'react-tooltip'
 
 import { isCoinAddress } from 'swap.app/util/typeforce'
+import minAmount from 'helpers/constants/minAmount'
 
-
-const minAmount = {
-  eth: 0.001,
-  btc: 0.00015,
-  ltc: 0.1,
-  eos: 1,
-  tlos: 1,
-  noxon: 1,
-  swap: 1,
-  jot: 1,
-  usdt: 0,
-  erc: 1,
-}
 
 @injectIntl
 @connect(
