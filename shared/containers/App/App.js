@@ -120,6 +120,7 @@ export default class App extends React.Component {
     const mainContent = isWidget || isCalledFromIframe
       ? (
         <Fragment>
+          <Header />
           {children}
           <Core />
           <RequestLoader />

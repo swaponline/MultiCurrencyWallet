@@ -187,8 +187,11 @@ export default class Header extends Component {
     const { intl: { locale }, history, pathname, feeds, peer, isSigned, isInputActive } = this.props
 
     const accentColor = '#510ed8'
+    const isWidget = history.location.pathname.includes('/exchange/') && history.location.hash === '#widget'
+    const isCalledFromIframe = window.location !== window.parent.location
+    const isWidgetBuild = config && config.isWidget
 
-    if (config && config.isWidget) {
+    if (isWidget || isWidgetBuild || isCalledFromIframe) {
       return (
         <User
           acceptRequest={this.acceptRequest}
