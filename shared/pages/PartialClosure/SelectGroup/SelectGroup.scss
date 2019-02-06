@@ -45,7 +45,7 @@ input:disabled {
 
 @include media-tablet-landscape-and-lower {
   .inputRoot {
-    input{
+    input {
       padding-right: 16px;
     }
   }
