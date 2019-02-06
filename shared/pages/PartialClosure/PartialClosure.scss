@@ -34,11 +34,13 @@
 
 .anotherRecepient {
   max-height: 0;
-  overflow: hidden;
+  opacity: 0;
   transition: max-height 0.3s ease;
   &_active {
+    opacity: 1;
     max-height: 100vh;
-    transition: max-height 0.7s ease;
+    transition: opacity 0.3s 0.2s,
+                max-height 0.7s ease;
   }
 }
 
