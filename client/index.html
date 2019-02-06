@@ -15,7 +15,7 @@
   <script>
     var mainDomainRegexr = /(www.)?swap.online/;
 
-    if (mainDomainRegexr.test(window.location.hostname)) {
+    if (window.location.hostname == "swap.online") {
       var script_1 = document.createElement('script');
       var script_2 = document.createElement('script');
 
