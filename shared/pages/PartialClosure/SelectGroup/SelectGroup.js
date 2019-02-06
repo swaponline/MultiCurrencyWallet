@@ -23,7 +23,7 @@ const SelectGroup = ({ selectedValue, onSelect, currencies, usd, placeholder, la
     </FieldLabel>
     <div styleName="groupField" className={className}>
       <Input
-        styleName={props.maxBtnFunc ? 'inputRoot inputRoot__sell' : 'inputRoot'}
+        styleName="inputRoot"
         inputContainerClassName="inputContainer"
         valueLink={inputValueLink}
         type="number"
@@ -35,7 +35,7 @@ const SelectGroup = ({ selectedValue, onSelect, currencies, usd, placeholder, la
       />
       {
         (selectedValue === 'eth' || selectedValue === 'btc') && usd > 0 &&
-        <p styleName={props.maxBtnFunc ? 'textUsd textUsd__sell' : 'textUsd'} >{`~${usd}`}$</p>
+        <p styleName="textUsd" >{`~${usd}`}$</p>
       }
       <CurrencySelect
         styleName="currencySelect"
