@@ -45,6 +45,7 @@ export default class Input extends Component {
 
   handleFocus = () => {
     const { onFocus } = this.props
+
     if (onFocus) {
       onFocus()
     }
