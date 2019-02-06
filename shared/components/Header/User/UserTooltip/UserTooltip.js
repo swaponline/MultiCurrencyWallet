@@ -55,7 +55,7 @@ export default class UserTooltip extends Component {
                   <span styleName="decline" onClick={() => this.props.declineRequest(id, peer)} />
                   <div styleName="checked" onClick={() => this.props.acceptRequest(id, peer, `${links.swap}/${sellCurrency}-${buyCurrency}/${id}`)} />
                   <TimerButton
-                    timeLeft={0}
+                    timeLeft={3}
                     isButton={false}
                     onClick={() => this.props.acceptRequest(id, peer, `${links.swap}/${sellCurrency}-${buyCurrency}/${id}`)}
                   />

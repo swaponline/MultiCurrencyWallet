@@ -5,7 +5,7 @@ export default {
   PrivateKeys: 'PrivateKeysModal',
   EosRegister: 'EosRegisterModal',
   EosBuyAccount: 'EosBuyAccountModal',
-  TelosRegister: 'TelosRegisterModal',
+  TelosChangeAccount: 'TelosChangeAccountModal',
   Approve: 'Approve',
   ImportKeys: 'ImportKeys',
   ShowMoreCoins: 'ShowMoreCoins',

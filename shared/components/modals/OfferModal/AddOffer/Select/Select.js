@@ -13,7 +13,7 @@ const Select = ({ balance, currency, changeBalance, switching, ...props }) => (
         ? ''
         : (
           <FieldLabel inRow >
-            <FormattedMessage id="Select10" defaultMessage="Available amount for sell" />
+            <FormattedMessage id="Select10" defaultMessage="Available amount to sell" />
           </FieldLabel>
         )
     }

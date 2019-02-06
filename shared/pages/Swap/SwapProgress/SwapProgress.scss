@@ -106,6 +106,13 @@ $size: 200px;
   vertical-align: middle;
 }
 
+.finishImg {
+  width: 160px;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  top: 50%;
+}
 
 .bar {
   content: "";
@@ -278,27 +285,12 @@ $size: 200px;
   font-size: 18px;
 }
 
-.transactionAll {
-  position: absolute;
-  width: 529px;
-  text-align: left;
-  top: 102%;
-  left: 20px;
-  strong {
-    display: block;
-    margin-bottom: 5px;
-    a {
-      // font-size: 12px;
-    }
-  }
-}
-
 .transaction {
-  position: absolute;
-  width: 529px;
-  text-align: left;
-  top: 102%;
-  left: 20px;
+  top: -10px;
+  position: relative;
+  a {
+    font-size: 13px;
+  }
 }
 
 .btnRefund {
@@ -422,14 +414,6 @@ $size: 200px;
 }
 
 //svg
-
-svg {
-  width: 200px;
-  position: absolute;
-  left: 50%;
-  transform: translate(-50%,-50%);
-  top: 50%;
-}
 
 .path {
   stroke-dasharray: 1000;
