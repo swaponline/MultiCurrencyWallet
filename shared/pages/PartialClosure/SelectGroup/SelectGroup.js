@@ -31,6 +31,7 @@ const SelectGroup = ({ selectedValue, onSelect, currencies, usd, placeholder, la
         pattern="0-9."
         disabled={disabled}
         onFocus={props.onFocus ? props.onFocus : () => {}}
+        onBlur={props.onBlur ? props.onBlur : () => {}}
       />
       {
         (selectedValue === 'eth' || selectedValue === 'btc') && usd > 0 &&

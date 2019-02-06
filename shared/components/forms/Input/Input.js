@@ -53,6 +53,11 @@ export default class Input extends Component {
   }
 
   handleBlur = () => {
+    const { onBlur } = this.props
+
+    if (onBlur) {
+      onBlur()
+    }
     reducers.inputActive.setInputActive(false)
   }
 

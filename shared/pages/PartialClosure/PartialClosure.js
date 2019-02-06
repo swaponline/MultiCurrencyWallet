@@ -557,6 +557,7 @@ export default class PartialClosure extends Component {
               currencies={currencies}
               className={isWidget ? 'SelGroup' : ''}
               onFocus={() => this.extendedControlsSet(true)}
+              onBlur={() => setTimeout(() => this.extendedControlsSet(false), 200)}
             />
             <p className={isWidget ? 'advice' : ''} >
               <FormattedMessage id="partial221" defaultMessage="Max amount for exchange: " />
@@ -566,7 +567,7 @@ export default class PartialClosure extends Component {
               this.state.haveCurrency !== this.state.getCurrency && (
                 <div className={isWidget ? 'flipBtn' : ''}>
                   {
-                    extendedControls
+                    (extendedControls && balance > 0)
                       ? (
                         <div styleName="extendedControls">
                           <Select
@@ -574,7 +575,8 @@ export default class PartialClosure extends Component {
                             balance={balance}
                             currency={haveCurrency}
                             switching={this.handleFlipCurrency}
-                            noLabel
+                            isExchange
+                            maxAmountForExchange={Math.floor(maxBuyAmount.toNumber() * 1000) / 1000}
                           />
                         </div>
                       )
