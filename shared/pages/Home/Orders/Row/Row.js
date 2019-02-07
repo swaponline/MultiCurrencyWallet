@@ -321,7 +321,7 @@ export default class Row extends Component {
   }
 
   renderContent = () => {
-    let windowWidthIn = window.outerWidth
+    let windowWidthIn = window.innerWidth
     this.setState({ windowWidth: windowWidthIn })
   }
 
