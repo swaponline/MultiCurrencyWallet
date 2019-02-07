@@ -228,6 +228,7 @@ export default class Row extends Component {
     const { intl: { locale } } = this.props
     const pair = currency.toLowerCase() === 'btc' ? 'eth' : 'btc'
 
+    window.scrollTo(0, 0)
     this.props.history.push(localisedUrl(locale, `/exchange/${currency.toLowerCase()}-to-${pair}`))
   }
 
