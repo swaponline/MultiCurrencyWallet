@@ -1,58 +1,88 @@
+const getGtag = () =>  window.gtag || null
+
 const dataEvent = (eventName) => {
-  window.dataLayer = window.dataLayer ? window.dataLayer : []
-  window.dataLayer.push({ 'event' : eventName })
+  const gtag = getGtag()
+
+  if (!gtag) {
+    return
+  }
+
+  return null // TODO: add gtag for dataEvent
 }
 
-const balanceEvent = (currency, balance) => {
-  window.dataLayer = window.dataLayer ? window.dataLayer : []
-  window.dataLayer.push({
-    'event': 'autoEvent',
-    'eventCategory' : 'Balances',
-    'eventAction' : 'Top-up-balance',
-    'eventLabel' : currency,
-    'eventValue' : balance,
+const balanceEvent = ({ action, currency, balance } = {}) => {
+  const gtag = getGtag()
+
+  if (!action || !gtag) {
+    return
+  }
+
+  gtag('event', `balance-${action}`, {
+    'currency': currency,
+    'balance': balance,
   })
 }
 
-const getTracker = () => {
-  if (window.ga) {
-    try {
-      return window.ga.getAll()[0]
-    } catch (error) {
-      console.log(error)
-      return undefined
-    }
-  } else {
-    return undefined
+const signUpEvent = ({ action, type } = {}) => {
+  const gtag = getGtag()
+
+  if (!action || !gtag) {
+    return
   }
+
+  gtag('event', `signUp-${action}`, {
+    'type': type,
+  })
 }
 
 const errorEvent = (eventAction) => {
-  if (getTracker()) {
-    const tracker = getTracker()
-    tracker.send({ hitType: 'event', eventCategory: 'fatalError', eventAction })
+  const gtag = getGtag()
+
+  if (!gtag) {
+    return
   }
+
+  return null // TODO: add gtag for errorEvent
 }
 
 const swapEvent = (eventAction, eventLabel) => {
-  if (getTracker()) {
-    const tracker = getTracker()
-    tracker.send({ hitType: 'event', eventCategory: 'Swap', eventAction, eventLabel })
+  const gtag = getGtag()
+
+  if (!gtag) {
+    return
   }
 
-  if (window.yaCounter48876458) {
-    window.yaCounter48876458.reachGoal(`swap-${eventAction}`, { currency: eventLabel })
-  }
+  return null // TODO: add gtag for swapEvent
 }
 
-const tagManagerArgs = {
-  gtmId: 'GTM-WK72GSV',
-  dataLayerName: 'dataLayer',
+const getTracker = () => {
+  if (!window.ga) {
+    return
+  }
+
+  try {
+    return window.ga.getAll()[0]
+  } catch (error) {
+    console.error(error)
+  }
+  return null
 }
+
+const getClientId = () => {
+  const tracker = getTracker()
+
+  if (!tracker) {
+    return
+  }
+  return tracker.get('clientId')
+}
+
 
 export default {
   getTracker,
+  getClientId,
   dataEvent,
   swapEvent,
   balanceEvent,
+  signUpEvent,
 }
