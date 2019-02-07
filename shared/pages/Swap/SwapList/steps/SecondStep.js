@@ -18,7 +18,7 @@ const SecondStep = ({ step, swap, fifth, fourth, second }) => {
       <p styleName="stepText">
         <FormattedMessage
           id="BtcToEthToken58"
-          defaultMessage="Bitcoin is depositing to the contract" />
+          defaultMessage="Depositing Bitcoin to a smart contract" />
       </p>
       {swap.flow.state.btcScriptCreatingTransactionHash && (
         <strong styleName="transactionInStep">
