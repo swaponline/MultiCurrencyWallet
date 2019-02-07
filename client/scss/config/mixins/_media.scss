@@ -100,7 +100,11 @@ $media-tablet-portrait-and-lower-rule     : "(max-width: " + $media-tablet-portr
   }
 }
 
-@mixin media-widget {}
+@mixin media-widget {
+  @media (max-width: 99999px) {
+    @content
+  }
+}
 // retina
 
 @mixin media-retina {
