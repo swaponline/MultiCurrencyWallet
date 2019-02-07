@@ -27,6 +27,21 @@
 
 .walletToggle {
   margin-top: 10px;
+  &_site {
+    margin-bottom: 15px;
+  }
+}
+
+.anotherRecepient {
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.3s ease;
+  &_active {
+    opacity: 1;
+    max-height: 100vh;
+    transition: opacity 0.3s 0.2s,
+                max-height 0.7s ease;
+  }
 }
 
 .walletInput {

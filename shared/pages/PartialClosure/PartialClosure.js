@@ -62,7 +62,7 @@ const isWidgetBuild = config && config.isWidget
   currenciesData: [ ethData, btcData, eosData, telosData, /* bchData, */ ltcData, usdtData /* nimData */ ],
   tokensData: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
 }))
-@CSSModules(styles)
+@CSSModules(styles, { allowMultiple: true })
 export default class PartialClosure extends Component {
 
   static defaultProps = {
@@ -657,7 +657,35 @@ export default class PartialClosure extends Component {
             }
 
             {
-              this.customWalletAllowed() && (
+              (this.customWalletAllowed() && !isWidget) && (
+                <Fragment>
+                  <div styleName="walletToggle walletToggle_site">
+                    <Toggle checked={!customWalletUse} onChange={this.handleCustomWalletUse} />
+                    {
+                      !isWidget && (
+                        <FormattedMessage id="UseAnotherWallet" defaultMessage="Specify the recipient's wallet address" />
+                      )
+                    }
+                  </div>
+                  <div styleName={!customWalletUse ? 'anotherRecepient anotherRecepient_active' : 'anotherRecepient'}>
+                    <FieldLabel>
+                      <strong>
+                        <FormattedMessage id="PartialYourWalletAddress" defaultMessage="Receiving wallet address" />
+                      </strong>
+                      &nbsp;
+                      <Tooltip id="PartialClosure">
+                        <FormattedMessage id="PartialClosure" defaultMessage="The wallet address to where cryptocurrency will be sent after the exchange" />
+                      </Tooltip >
+                    </FieldLabel>
+                    <div styleName="walletInput">
+                      <Input required disabled={customWalletUse} valueLink={linked.customWallet} pattern="0-9a-zA-Z" placeholder="Enter the destination address" />
+                    </div>
+                  </div>
+                </Fragment>
+              )
+            }
+            {
+              (this.customWalletAllowed() && isWidget) && (
                 <Fragment>
                   <FieldLabel>
                     <strong>
@@ -679,7 +707,7 @@ export default class PartialClosure extends Component {
                       )
                     }
                     {
-                      !isWidgetBuild && (
+                      isWidgetLink && (
                         <FormattedMessage id="PartialUseSwapOnlineWallet" defaultMessage="Use Swap.Online wallet" />
                       )
                     }

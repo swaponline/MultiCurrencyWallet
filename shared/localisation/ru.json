@@ -3269,6 +3269,13 @@
     ]
   },
   {
+    "id": "UseAnotherWallet",
+    "message": "Указать адрес кошелька получателя",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
     "id": "PartialYourWalletAddress",
     "message": "Адрес кошелька получателя ",
     "files": [
