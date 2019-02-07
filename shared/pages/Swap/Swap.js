@@ -114,18 +114,16 @@ export default class SwapComponent extends PureComponent {
     const { swap: { flow: { state: { canCreateEthTransaction, requireWithdrawFeeSended } } }, continueSwap } = this.state
     if (this.state.swap !== null) {
 
-      let timer
-
       setTimeout(() => {
         if (!canCreateEthTransaction && continueSwap && requireWithdrawFeeSended) {
           this.checkEnoughFee()
         }
       }, 300 * 1000)
 
-      timer = setInterval(() => {
+      setInterval(() => {
         this.catchWithdrawError()
-        this.isBalanceEnough()
         this.requestingWithdrawFee()
+        this.isBalanceEnough()
       }, 5000)
     }
   }
@@ -155,7 +153,7 @@ export default class SwapComponent extends PureComponent {
       swap.flow.syncBalance()
     }
 
-    if (!swap.flow.state.isBalanceEnough) {
+    if (!swap.flow.state.isBalanceEnough && swap.flow.state.step === 4) {
       this.setState(() => ({ enoughBalance: false }))
     } else {
       this.setState(() => ({ enoughBalance: true }))
