@@ -2,6 +2,7 @@ export default {
   enter: 'enter',
   reject: 'reject',
   firstStart: 'firstStart',
+  defaultLanguage: 'defaultLanguage',
   activeTabId: 'activeTabId',
   testnetSkip: 'testnetSkip',
   storageRevision: '_revision',

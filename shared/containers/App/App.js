@@ -24,6 +24,8 @@ import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import NotificationConductor from 'components/notification/NotificationConductor/NotificationConductor'
 import Seo from 'components/Seo/Seo'
 
+import { localisedUrl } from 'helpers/locale'
+
 import config from 'app-config'
 
 
@@ -99,6 +101,33 @@ export default class App extends React.Component {
       this.setState({ fetching: true })
     }, 1000)
     window.prerenderReady = true
+
+    if (process.env.MAINNET) {
+      this.setMyLanguageIfNecesary()
+    }
+  }
+
+  setMyLanguageIfNecesary = () => {
+    const { location, match: { params: { locale } } } = this.props
+    const defaultLanguage = localStorage.getItem(constants.localStorage.defaultLanguage)
+
+    if (!defaultLanguage) {
+      const lang = userLanguage === 'ru' ? userLanguage : 'en'
+
+      localStorage.setItem(constants.localStorage.defaultLanguage, lang)
+
+      if (userLanguage === 'ru' && locale !== 'ru') {
+        window.location.replace(localisedUrl(userLanguage, location.pathname))
+      } else if (userLanguage !== 'ru' && locale === 'ru') {
+        window.location.replace(localisedUrl('en', location.pathname))
+      }
+    } else {
+      const currentLang = locale || 'en'
+      if (currentLang !== defaultLanguage) {
+        const pathname = locale === 'ru' ? location.pathname.split('/ru')[1] : location.pathname
+        window.location.replace(localisedUrl(defaultLanguage, pathname))
+      }
+    }
   }
 
   render() {
