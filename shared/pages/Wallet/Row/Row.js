@@ -90,12 +90,15 @@ export default class Row extends Component {
         }
       })
   }
+
   componentDidUpdate() {
-    const { item } = this.props
-    if (item.balance > 0) {
-      actions.analytics.balanceEvent(item.currency, item.balance)
+    const { item: { currency, balance } } = this.props
+
+    if (balance > 0) {
+      actions.analytics.balanceEvent({ action: 'have', currency, balance })
     }
   }
+
   handleReloadBalance = async () => {
     const { isBalanceFetching } = this.state
 
