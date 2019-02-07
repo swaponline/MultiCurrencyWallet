@@ -17,7 +17,6 @@ import EmergencySave from './EmergencySave/EmergencySave'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import DeleteSwapAfterEnd from './DeleteSwapAfterEnd'
-import SwapController from './SwapController'
 import { Button } from 'components/controls'
 import FeeControler from './FeeControler/FeeControler'
 import DepositWindow from './DepositWindow/DepositWindow'
@@ -227,7 +226,6 @@ export default class SwapComponent extends PureComponent {
 
     return (
       <div styleName="swap">
-        <SwapController swap={swap} />
         <SwapComponent
           tokenItems={tokenItems}
           depositWindow={depositWindow}
