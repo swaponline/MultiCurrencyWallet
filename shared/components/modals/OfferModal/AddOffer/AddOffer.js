@@ -468,7 +468,7 @@ export default class AddOffer extends Component {
         </div>
         <div>
           <Toggle checked={isPartial} onChange={() => this.setState((state) => ({ isPartial: !state.isPartial }))} />
-          <FormattedMessage id="AddOffer423" defaultMessage="Enabled to partial closure" />
+          <FormattedMessage id="AddOffer423" defaultMessage="Enable partial fills" />
           {' '}
           <Tooltip id="add547">
             <div style={{ textAlign: 'center' }} >

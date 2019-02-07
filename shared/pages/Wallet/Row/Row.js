@@ -57,6 +57,7 @@ export default class Row extends Component {
     isAddressCopied: false,
     isTouch: false,
     isBalanceEmpty: true,
+    telosRegister: false,
   }
 
   static getDerivedStateFromProps({ item: { balance } }) {
@@ -70,6 +71,7 @@ export default class Row extends Component {
     const { currency, currencies } = this.props
 
     this.state.tradeAllowed = !!currencies.find(c => c.value === currency.toLowerCase())
+
   }
 
   componentWillUnmount() {
@@ -166,8 +168,8 @@ export default class Row extends Component {
     actions.modals.open(constants.modals.EosRegister, {})
   }
 
-  handleTelosRegister = () => {
-    actions.modals.open(constants.modals.TelosRegister, {})
+  handleTelosChangeAccount = () => {
+    actions.modals.open(constants.modals.TelosChangeAccount, {})
   }
 
   handleEosBuyAccount = async () => {
@@ -228,6 +230,28 @@ export default class Row extends Component {
     actions.core.markCoinAsHidden(coin)
   }
 
+  handleTelosActivate = async () => {
+    const telosActivePrivateKey = localStorage.getItem(constants.privateKeyNames.telosPrivateKey)
+    const telosActivePublicKey = localStorage.getItem(constants.privateKeyNames.telosPublicKey)
+    const telosAccount = localStorage.getItem(constants.privateKeyNames.telosAccount)
+    const telosAccountActivated = localStorage.getItem(constants.localStorage.telosAccountActivated) === 'true'
+
+    this.setState(() => ({
+      telosAccountActivated,
+      telosActivePublicKey,
+    }))
+
+    if (!telosAccountActivated) {
+      const { accountName, activePrivateKey, activePublicKey } = await actions.tlos.loginWithNewAccount()
+      this.setState(() => ({
+        telosRegister: true,
+      }))
+    }
+    if (this.state.telosRegister) {
+      await actions.tlos.activateAccount(telosAccount, telosActivePrivateKey, telosActivePublicKey)
+    }
+  }
+
   render() {
     const {
       isBalanceFetching,
@@ -235,6 +259,9 @@ export default class Row extends Component {
       isAddressCopied,
       isTouch,
       isBalanceEmpty,
+      telosAccountActivated,
+      telosRegister,
+      telosActivePublicKey,
     } = this.state
 
     const {
@@ -250,8 +277,6 @@ export default class Row extends Component {
       },
       intl: { locale },
     } = this.props
-
-    const telosAccountActivated = localStorage.getItem(constants.localStorage.telosAccountActivated) === 'true'
 
     let eosAccountActivated = false
     let eosActivationPaymentSent = false
@@ -360,7 +385,7 @@ export default class Row extends Component {
                       </Fragment>
                     )
                     }
-                    { currency === 'TLOS' && !telosAccountActivated && (
+                    { currency === 'TLOS' && !telosAccountActivated && address && (
                       <Fragment>
                         <br />
                         <span styleName="notActiveLink">
@@ -389,15 +414,27 @@ export default class Row extends Component {
               }
               <div styleName="activeControlButtons">
                 <div styleName="actButton">
-                  {currency === 'EOS' && !eosAccountActivated &&
+                  {currency === 'EOS'  && !eosAccountActivated &&
                     <button styleName="button buttonActivate" onClick={this.handleEosBuyAccount} data-tip data-for="Activate">
                       <FormattedMessage id="Row358" defaultMessage="Activate" />
+                    </button>
+                  }
+                </div>
+                <div styleName="actButtonTelos">
+                  {currency === 'TLOS'  && !telosAccountActivated && !address &&
+                    <button styleName="button buttonActivate" onClick={this.handleTelosActivate} data-tip data-for="Create">
+                      <FormattedMessage id="Row401" defaultMessage="Create account" />
                     </button>
                   }
                 </div>
                 <ReactTooltip id="Activate" type="light" effect="solid">
                   <span>
                     <FormattedMessage id="Row256" defaultMessage="Buy this account" />
+                  </span>
+                </ReactTooltip>
+                <ReactTooltip id="Create" type="light" effect="solid">
+                  <span>
+                    <FormattedMessage id="Row440" defaultMessage="Create Telos account in 1 click" />
                   </span>
                 </ReactTooltip>
                 <div styleName="useButton">
@@ -408,9 +445,22 @@ export default class Row extends Component {
                     </button>
                   }
                 </div>
+                <div styleName={!address ? 'useButtonTelos' : 'useButtonTelos addressExist'}>
+                  {
+                    currency === 'TLOS' &&
+                    <button styleName="button buttonUseAnother" onClick={this.handleTelosChangeAccount} data-tip data-for="UseTlos ">
+                      <FormattedMessage id="Row420" defaultMessage="Use another" />
+                    </button>
+                  }
+                </div>
                 <ReactTooltip id="Use" type="light" effect="solid">
                   <span>
-                    <FormattedMessage id="Row377" defaultMessage="Login with your existing eos account" />
+                    <FormattedMessage id="Row426" defaultMessage="Login with your existing EOS account" />
+                  </span>
+                </ReactTooltip>
+                <ReactTooltip id="UseTlos" type="light" effect="solid">
+                  <span>
+                    <FormattedMessage id="Row431" defaultMessage="Login with your existing TLOS account" />
                   </span>
                 </ReactTooltip>
               </div>

@@ -9,7 +9,7 @@ import Switching from 'components/controls/Switching/Switching'
 const Select = ({ balance, currency, changeBalance, switching }) => (
   <Fragment>
     <FieldLabel inRow >
-      <FormattedMessage id="Select10" defaultMessage="Available amount for sell" />
+      <FormattedMessage id="Select10" defaultMessage="Available amount to sell" />
     </FieldLabel>
     <div styleName="groupField">
       <p>{currency.toUpperCase()} { balance ? parseFloat(balance).toFixed(5) : 0.00 }</p>
