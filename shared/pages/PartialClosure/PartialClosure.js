@@ -508,13 +508,17 @@ export default class PartialClosure extends Component {
   }
 
   render() {
-    const { currencies, addSelectedItems, currenciesData, intl: { locale } } = this.props
+    const { currencies, addSelectedItems, currenciesData, tokensData, intl: { locale } } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching,
       isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet, getUsd, haveUsd,
       maxBuyAmount, getAmount, goodRate, extendedControls,
     } = this.state
 
-    const { balance } = currenciesData.find(item => item.currency === haveCurrency.toUpperCase())
+    const haveCurrencyData = currenciesData.find(item => item.currency === haveCurrency.toUpperCase())
+    const haveTokenData = tokensData.find(item => item.currency === haveCurrency.toUpperCase())
+    const currentCurrency = haveCurrencyData || haveTokenData
+    const { balance } = currentCurrency
+
     const oneCryptoCost = maxBuyAmount.isLessThanOrEqualTo(0) ? BigNumber(0) : BigNumber(goodRate)
     const linked = Link.all(this, 'haveAmount', 'getAmount', 'customWallet')
 

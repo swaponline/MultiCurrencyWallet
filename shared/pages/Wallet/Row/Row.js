@@ -226,7 +226,10 @@ export default class Row extends Component {
 
   handleGoTrade = (currency) => {
     const { intl: { locale } } = this.props
-    this.props.history.push(localisedUrl(locale, `/${currency.toLowerCase()}`))
+    const pair = currency.toLowerCase() === 'btc' ? 'eth' : 'btc'
+
+    window.scrollTo(0, 0)
+    this.props.history.push(localisedUrl(locale, `/exchange/${currency.toLowerCase()}-to-${pair}`))
   }
 
   handleMarkCoinAsHidden = (coin) => {
