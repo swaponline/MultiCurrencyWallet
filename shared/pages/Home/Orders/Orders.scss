@@ -105,7 +105,7 @@
   }
 }
 
-@media all and (min-width: 320px) and (max-width:800px) {
+@include media-mobile {
   .buttonRow,
   .buttonRowMobile {
     margin: 0;

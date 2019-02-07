@@ -82,7 +82,25 @@ $media-tablet-portrait-and-lower-rule     : "(max-width: " + $media-tablet-portr
   }
 }
 
+@mixin media-min320-max1024 {
+  @media all and (min-width: 320px) and (max-width:1024px) {
+    @content
+  }
+}
 
+@mixin media-min570-max1024 {
+  @media all and (min-width: 570px) and (max-width:1024px) {
+    @content
+  }
+}
+
+@mixin media-min320-max570 {
+  @media all and (min-width: 320px) and (max-width: 570px) {
+    @content
+  }
+}
+
+@mixin media-widget {}
 // retina
 
 @mixin media-retina {

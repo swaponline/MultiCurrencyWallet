@@ -291,7 +291,7 @@ table.wallet {
 }
 
 
-@media all and (min-width: 570px) and (max-width:1024px) {
+@include media-min570-max1024 {
   table.wallet {
     td:nth-child(4) {
       width: 80px;
@@ -354,7 +354,7 @@ table.wallet {
 }
 
 
-@media all and (min-width: 320px) and (max-width:1024px) {
+@include media-min320-max1024 {
   .table.exchange {
     min-height: 130px;
     // overflow-x: visible;
@@ -447,7 +447,7 @@ table.wallet {
   }
   .table.exchange {
     display: table;
-    width: 100%;
+    width: 100% !important;
     td {
       position: relative;
       padding: 0;
@@ -473,15 +473,15 @@ table.wallet {
     }
 
     td:nth-child(2) {
-      width: 15%;
+      width: 15% !important;
       max-width: 60px;
     }
     td:nth-child(3) {
-      width: 54%;
+      width: 54% !important;
       max-width: 80px;
     }
     td:nth-child(5) {
-      width: 26%;
+      width: 26% !important;
       div {
         position: absolute;
         left: 0;
@@ -497,7 +497,7 @@ table.wallet {
           font-size: 13px;
         }
         button {
-          width: 33.3%;
+          width: 33.3% !important;
           flex-basis: 50%;
         }
         button:last-child {
@@ -506,7 +506,7 @@ table.wallet {
       }
     }
     tr {
-      display: block;
+      display: block !important;
     }
   }
 }

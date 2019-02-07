@@ -79,7 +79,7 @@
 	}
 }
 
-@media (max-width: 830px) {
+@include media-mobile {
 	.advantages {
 		width: 100%;
 		margin: 0;

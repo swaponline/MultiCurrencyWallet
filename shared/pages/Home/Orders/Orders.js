@@ -126,7 +126,7 @@ export default class Orders extends Component {
 
     const isWidget = (config && config.isWidget)
 
-    const buttonsRowStyleName = isMobile ?
+    const buttonsRowStyleName = (isMobile || isWidget) ?
       (isWidget) ? 'buttonRow buttonRowMobile buttonRowWidget' : 'buttonRow buttonRowMobile'
       :
       (isWidget) ? 'buttonRow buttonRowWidget' : 'buttonRow'

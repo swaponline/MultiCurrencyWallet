@@ -298,7 +298,7 @@ tr button[disabled]:hover {
   }
 }
 
-@media all and (min-width: 320px) and (max-width:1024px) {
+@include media-min320-max1024 {
   .notActiveLink {
     bottom: -10px;
   }
@@ -421,7 +421,7 @@ tr button[disabled]:hover {
   }
 }
 
-@media all and (min-width: 320px) and (max-width: 570px) {
+@include media-min320-max570 {
   .yourAddress {
     display: none;
   }

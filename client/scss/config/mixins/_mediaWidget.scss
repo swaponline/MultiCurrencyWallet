@@ -1,0 +1,117 @@
+$media-desktop-rule                       : "(max-width: 9999px)";
+$media-tablet-landscape-rule              : "(max-width: 9999px)";
+$media-tablet-rule                        : "(max-width: 9999px)";
+$media-tablet-portrait-rule               : "(max-width: 9999px)";
+$media-mobile-rule                        : "(max-width: 9000px)";
+$media-tablet-landscape-and-higher-rule   : "(max-width: 9999px)";
+$media-tablet-landscape-and-lower-rule    : "(max-width: 9999px)";
+$media-except-mobile-rule                 : "(max-width: 9999px)";
+$media-except-desktop-rule                : "(max-width: 9999px)";
+$media-tablet-portrait-and-higher-rule    : "(max-width: 9999px)";
+$media-tablet-portrait-and-lower-rule     : "(max-width: 9999px)";
+
+
+@mixin media-desktop {
+  @media #{$media-desktop-rule} {
+    @content;
+  }
+}
+
+@mixin media-tablet-landscape {
+  @media #{$media-tablet-landscape-rule} {
+    @content;
+  }
+}
+
+@mixin media-tablet {
+  @media #{$media-tablet-rule} {
+    @content;
+  }
+}
+
+@mixin media-tablet-portrait {
+  @media #{$media-tablet-portrait-rule} {
+    @content;
+  }
+}
+
+// * and higher
+
+@mixin media-tablet-landscape-and-higher {
+  @media #{$media-tablet-landscape-and-higher-rule} {
+    @content;
+  }
+}
+
+@mixin media-tablet-portrait-and-higher {
+  @media #{$media-tablet-portrait-and-higher-rule} {
+    @content;
+  }
+}
+
+@mixin media-except-mobile {
+  @media #{$media-except-mobile-rule} {
+    @content;
+  }
+}
+
+
+// * and lower
+
+@mixin media-except-desktop {
+  @media #{$media-except-desktop-rule} {
+    @content;
+  }
+}
+
+@mixin media-tablet-portrait-and-lower {
+  @media #{$media-tablet-portrait-and-lower-rule} {
+    @content;
+  }
+}
+
+@mixin media-tablet-landscape-and-lower {
+  @media #{$media-tablet-landscape-and-lower-rule} {
+    @content;
+  }
+}
+
+
+// retina
+
+@mixin media-retina {
+  $retina-variable: "only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-resolution: 144dpi)";
+  @media #{$retina-variable} { @content; }
+}
+
+@mixin media-retina-3x {
+  $retina-variable: "only screen and (-webkit-min-device-pixel-ratio: 2.5), only screen and (min-resolution: 288dpi)";
+  @media #{$retina-variable} { @content; }
+}
+
+@mixin media-mobile {
+  @media #{$media-mobile-rule} {
+    @content;
+  }
+}
+@mixin media-min320-max1024 {
+  @media #{$media-mobile-rule} {
+    @content
+  }
+}
+
+@mixin media-min570-max1024 {
+  @media (max-width: 9999px) {
+    @content
+  }
+}
+
+@mixin media-min320-max570  {
+  @media #{$media-mobile-rule} {
+    @content
+  }
+}
+
+@mixin media-widget {
+  @content
+}

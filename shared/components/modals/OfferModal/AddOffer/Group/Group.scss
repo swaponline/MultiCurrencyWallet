@@ -38,3 +38,9 @@ input:disabled {
     font-size: 14px;
   }
 }
+
+@include media-widget {
+  .groupField {
+    width: 100%;
+  }
+}
