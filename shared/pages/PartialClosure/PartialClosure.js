@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react'
 
 import Link from 'sw-valuelink'
-import { links } from 'helpers'
 
 import CSSModules from 'react-css-modules'
 import styles from './PartialClosure.scss'
@@ -12,6 +11,7 @@ import { BigNumber } from 'bignumber.js'
 import { Redirect } from 'react-router-dom'
 
 import SelectGroup from './SelectGroup/SelectGroup'
+import Select from 'components/modals/OfferModal/AddOffer/Select/Select'
 import Advantages from './PureComponents/Advantages'
 import { Button, Toggle, Flip } from 'components/controls'
 import Input from 'components/forms/Input/Input'
@@ -26,7 +26,8 @@ import { localisedUrl } from 'helpers/locale'
 import config from 'app-config'
 import { util } from 'swap.app'
 
-import constants from 'helpers/constants'
+import helpers, { constants, links } from 'helpers'
+
 
 const PAIR_CHECK_RESULT = {
   NO_PAIR: -1,
@@ -61,7 +62,7 @@ const isWidgetBuild = config && config.isWidget
   currenciesData: [ ethData, btcData, eosData, telosData, /* bchData, */ ltcData, usdtData /* nimData */ ],
   tokensData: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
 }))
-@CSSModules(styles)
+@CSSModules(styles, { allowMultiple: true })
 export default class PartialClosure extends Component {
 
   static defaultProps = {
@@ -116,6 +117,7 @@ export default class PartialClosure extends Component {
       isDeclinedOffer: false,
       customWalletUse: true,
       customWallet: this.wallets[buyToken.toUpperCase()],
+      extendedControls: false,
     }
     let timer
     let usdRates
@@ -488,18 +490,39 @@ export default class PartialClosure extends Component {
     return PAIR_CHECK_RESULT.HAVE_PAIR
   }
 
+  changeBalance = (value) => {
+    this.extendedControlsSet(false)
+    this.setState({
+      haveAmount: value,
+    })
+  }
+
+  extendedControlsSet = (value) => {
+    if (typeof value !== 'boolean') {
+      return this.setState({ extendedControls: false })
+    }
+    if (this.state.extendedControls === value) {
+      return false
+    }
+    return this.setState({ extendedControls: value })
+  }
 
   render() {
-    const { currencies, addSelectedItems, currenciesData, intl: { locale } } = this.props
+    const { currencies, addSelectedItems, currenciesData, tokensData, intl: { locale } } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching,
       isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet, getUsd, haveUsd,
-      maxBuyAmount, getAmount, goodRate,
+      maxBuyAmount, getAmount, goodRate, extendedControls,
     } = this.state
+
+    const haveCurrencyData = currenciesData.find(item => item.currency === haveCurrency.toUpperCase())
+    const haveTokenData = tokensData.find(item => item.currency === haveCurrency.toUpperCase())
+    const currentCurrency = haveCurrencyData || haveTokenData
+    const { balance } = currentCurrency
 
     const oneCryptoCost = maxBuyAmount.isLessThanOrEqualTo(0) ? BigNumber(0) : BigNumber(goodRate)
     const linked = Link.all(this, 'haveAmount', 'getAmount', 'customWallet')
 
-    const isWidgetLink = this.props.location.pathname.includes('/exchange/') && this.props.location.hash === '#widget'
+    const isWidgetLink = this.props.location.pathname.includes('/exchange') && this.props.location.hash === '#widget'
     const isWidget = isWidgetBuild || isWidgetLink
 
     if (redirect) {
@@ -537,14 +560,39 @@ export default class PartialClosure extends Component {
               usd={(maxAmount > 0 && isNonOffers) ? 0 : haveUsd}
               currencies={currencies}
               className={isWidget ? 'SelGroup' : ''}
+              onFocus={() => this.extendedControlsSet(true)}
+              onBlur={() => setTimeout(() => this.extendedControlsSet(false), 200)}
             />
-            <p className={isWidget ? 'advice' : ''} >
-              <FormattedMessage id="partial221" defaultMessage="Max amount for exchange: " />
-              {Math.floor(maxBuyAmount.toNumber() * 1000) / 1000}{' '}{haveCurrency.toUpperCase()}
-            </p>
+            {
+              (extendedControls) && (
+                <p className={isWidget ? 'advice' : ''} styleName="maxAmount">
+                  <FormattedMessage id="partial221" defaultMessage="Max amount for exchange: " />
+                  {Math.floor(maxBuyAmount.toNumber() * 1000) / 1000}{' '}{haveCurrency.toUpperCase()}
+                </p>
+              )
+            }
             {
               this.state.haveCurrency !== this.state.getCurrency && (
-                <Flip onClick={this.handleFlipCurrency} styleName="flipButton" className={isWidget ? 'flipBtn' : ''} />
+                <div className={isWidget ? 'flipBtn' : ''}>
+                  {
+                    (extendedControls && balance > 0)
+                      ? (
+                        <div styleName="extendedControls">
+                          <Select
+                            changeBalance={this.changeBalance}
+                            balance={balance}
+                            currency={haveCurrency}
+                            switching={this.handleFlipCurrency}
+                            isExchange
+                            maxAmountForExchange={Math.floor(maxBuyAmount.toNumber() * 1000) / 1000}
+                          />
+                        </div>
+                      )
+                      : (
+                        <Flip onClick={this.handleFlipCurrency} styleName="flipButton" />
+                      )
+                  }
+                </div>
               )
             }
             <SelectGroup
@@ -613,7 +661,35 @@ export default class PartialClosure extends Component {
             }
 
             {
-              this.customWalletAllowed() && (
+              (this.customWalletAllowed() && !isWidget) && (
+                <Fragment>
+                  <div styleName="walletToggle walletToggle_site">
+                    <Toggle checked={!customWalletUse} onChange={this.handleCustomWalletUse} />
+                    {
+                      !isWidget && (
+                        <FormattedMessage id="UseAnotherWallet" defaultMessage="Specify the recipient's wallet address" />
+                      )
+                    }
+                  </div>
+                  <div styleName={!customWalletUse ? 'anotherRecepient anotherRecepient_active' : 'anotherRecepient'}>
+                    <FieldLabel>
+                      <strong>
+                        <FormattedMessage id="PartialYourWalletAddress" defaultMessage="Receiving wallet address" />
+                      </strong>
+                      &nbsp;
+                      <Tooltip id="PartialClosure">
+                        <FormattedMessage id="PartialClosure" defaultMessage="The wallet address to where cryptocurrency will be sent after the exchange" />
+                      </Tooltip >
+                    </FieldLabel>
+                    <div styleName="walletInput">
+                      <Input required disabled={customWalletUse} valueLink={linked.customWallet} pattern="0-9a-zA-Z" placeholder="Enter the destination address" />
+                    </div>
+                  </div>
+                </Fragment>
+              )
+            }
+            {
+              (this.customWalletAllowed() && isWidget) && (
                 <Fragment>
                   <FieldLabel>
                     <strong>
@@ -635,7 +711,7 @@ export default class PartialClosure extends Component {
                       )
                     }
                     {
-                      !isWidgetBuild && (
+                      isWidgetLink && (
                         <FormattedMessage id="PartialUseSwapOnlineWallet" defaultMessage="Use Swap.Online wallet" />
                       )
                     }

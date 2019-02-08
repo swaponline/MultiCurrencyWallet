@@ -17,7 +17,6 @@ import EmergencySave from './EmergencySave/EmergencySave'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import DeleteSwapAfterEnd from './DeleteSwapAfterEnd'
-import SwapController from './SwapController'
 import { Button } from 'components/controls'
 import FeeControler from './FeeControler/FeeControler'
 import DepositWindow from './DepositWindow/DepositWindow'
@@ -115,18 +114,16 @@ export default class SwapComponent extends PureComponent {
     const { swap: { flow: { state: { canCreateEthTransaction, requireWithdrawFeeSended } } }, continueSwap } = this.state
     if (this.state.swap !== null) {
 
-      let timer
-
       setTimeout(() => {
         if (!canCreateEthTransaction && continueSwap && requireWithdrawFeeSended) {
           this.checkEnoughFee()
         }
       }, 300 * 1000)
 
-      timer = setInterval(() => {
+      setInterval(() => {
         this.catchWithdrawError()
-        this.isBalanceEnough()
         this.requestingWithdrawFee()
+        this.isBalanceEnough()
       }, 5000)
     }
   }
@@ -156,7 +153,7 @@ export default class SwapComponent extends PureComponent {
       swap.flow.syncBalance()
     }
 
-    if (!swap.flow.state.isBalanceEnough) {
+    if (!swap.flow.state.isBalanceEnough && swap.flow.state.step === 4) {
       this.setState(() => ({ enoughBalance: false }))
     } else {
       this.setState(() => ({ enoughBalance: true }))
@@ -227,7 +224,6 @@ export default class SwapComponent extends PureComponent {
 
     return (
       <div styleName="swap">
-        <SwapController swap={swap} />
         <SwapComponent
           tokenItems={tokenItems}
           depositWindow={depositWindow}

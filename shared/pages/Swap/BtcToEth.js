@@ -29,6 +29,7 @@ export default class BtcToEth extends Component {
       currencyData,
       enabledButton: false,
       flow: this.swap.flow.state,
+      paddingContainerValue: 0,
       currencyAddress: currencyData.address,
       secret: crypto.randomBytes(32).toString('hex'),
     }
@@ -82,6 +83,8 @@ export default class BtcToEth extends Component {
     this.setState({
       flow: values,
     })
+
+    this.changePaddingValue()
   }
 
   confirmAddress = () => {
@@ -107,9 +110,9 @@ export default class BtcToEth extends Component {
         paddingContainerValue: 60 * (flow.step - 2),
       }))
     }
-    if (flow.step >= 7) {
+    if (flow.step > 7) {
       this.setState(() => ({
-        paddingContainerValue: 300,
+        paddingContainerValue: 260,
       }))
     }
   }
