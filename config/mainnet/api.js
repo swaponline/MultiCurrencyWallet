@@ -14,8 +14,8 @@ export default {
     buyAccountPaymentRecipient: '1DVC5SrPjXkkcCUbBwQcTsrBprXJEpEneG',
   },
   telos: {
-    chainId: 'e17615decaecd202a365f4c029f206eee98511979de8a5756317e2469f2289e3',
-    httpEndpoint: 'https://api-test.telosfoundation.io:443',
+    chainId: '4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11',
+    httpEndpoint: 'https://api.telosfoundation.io:443',
     registerEndpoint: 'https://seven.swap.online/telos-testnet/newaccount',
   },
   swapsExplorer: 'https://seven.swap.online/swaps-testnet/state',
