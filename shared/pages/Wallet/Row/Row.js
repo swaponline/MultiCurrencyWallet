@@ -58,6 +58,7 @@ export default class Row extends Component {
     isTouch: false,
     isBalanceEmpty: true,
     telosRegister: false,
+    showButtons: false,
   }
 
   static getDerivedStateFromProps({ item: { balance } }) {
@@ -258,6 +259,17 @@ export default class Row extends Component {
     }
   }
 
+  showButtons = () => {
+    this.setState(() => ({
+      showButtons: true,
+    }))
+  }
+  hideButtons = () => {
+    this.setState(() => ({
+      showButtons: false,
+    }))
+  }
+
   render() {
     const {
       isBalanceFetching,
@@ -268,6 +280,7 @@ export default class Row extends Component {
       telosAccountActivated,
       telosRegister,
       telosActivePublicKey,
+      showButtons,
     } = this.state
 
     const {
@@ -298,6 +311,8 @@ export default class Row extends Component {
         onTouchEnd={this.handleTouchClear}
         onTouchMove={this.handleTouch}
         style={isTouch && this.props.index !== this.props.selectId ?  { background: '#f5f5f5' } : { background: '#fff' }}
+        onMouseEnter={this.showButtons}
+        onMouseLeave={this.hideButtons}
       >
         <td>
           <Link to={localisedUrl(locale, `/${fullName}-wallet`)} title={`Online ${fullName} wallet`}>
@@ -395,7 +410,7 @@ export default class Row extends Component {
                       <Fragment>
                         <br />
                         <span styleName="notActiveLink">
-                          <FormattedMessage id="Row277" defaultMessage="not activated" />
+                          <FormattedMessage id="Row277" defaultMessage="Not activated" />
                         </span>
                       </Fragment>
                     )
@@ -420,14 +435,14 @@ export default class Row extends Component {
               }
               <div styleName="activeControlButtons">
                 <div styleName="actButton">
-                  {currency === 'EOS'  && !eosAccountActivated &&
+                  {currency === 'EOS'  && !eosAccountActivated && (isMobile || showButtons) &&
                     <button styleName="button buttonActivate" onClick={this.handleEosBuyAccount} data-tip data-for="Activate">
                       <FormattedMessage id="Row358" defaultMessage="Activate" />
                     </button>
                   }
                 </div>
                 <div styleName="actButtonTelos">
-                  {currency === 'TLOS'  && !telosAccountActivated && !address &&
+                  {currency === 'TLOS'  && !telosAccountActivated && !address && (isMobile || showButtons) &&
                     <button styleName="button buttonActivate" onClick={this.handleTelosActivate} data-tip data-for="Create">
                       <FormattedMessage id="Row401" defaultMessage="Create account" />
                     </button>
@@ -445,7 +460,7 @@ export default class Row extends Component {
                 </ReactTooltip>
                 <div styleName="useButton">
                   {
-                    currency === 'EOS' &&
+                    currency === 'EOS' && showButtons &&
                     <button styleName="button buttonUseAnother" onClick={this.handleEosRegister} data-tip data-for="Use">
                       <FormattedMessage id="Row263" defaultMessage="Use another" />
                     </button>
@@ -453,7 +468,7 @@ export default class Row extends Component {
                 </div>
                 <div styleName={!address ? 'useButtonTelos' : 'useButtonTelos addressExist'}>
                   {
-                    currency === 'TLOS' &&
+                    currency === 'TLOS' && showButtons &&
                     <button styleName="button buttonUseAnother" onClick={this.handleTelosChangeAccount} data-tip data-for="UseTlos ">
                       <FormattedMessage id="Row420" defaultMessage="Use another" />
                     </button>

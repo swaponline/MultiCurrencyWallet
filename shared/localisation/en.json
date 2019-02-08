@@ -2273,7 +2273,7 @@
   },
   {
     "id": "Row277",
-    "message": "not activated",
+    "message": "Not activated",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
