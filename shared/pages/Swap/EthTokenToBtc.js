@@ -71,7 +71,6 @@ export default class EthTokenToBtc extends Component {
       }
     }, 3000)
 
-    this.requestMaxAllowance()
   }
 
   handleFlowStateUpdate = (values) => {
@@ -109,18 +108,6 @@ export default class EthTokenToBtc extends Component {
   toggleBitcoinScript = () => {
     this.setState({
       isShowingBitcoinScript: !this.state.isShowingBitcoinScript,
-    })
-  }
-
-  requestMaxAllowance = () => {
-    const { sellCurrency, sellAmount } = this.swap
-    const { ethTokenSwap } = this.swap.flow
-
-    actions.token.setAllowanceForToken({
-      name: sellCurrency,
-      to: ethTokenSwap.address, // swap contract address
-      targetAllowance: sellAmount,
-      speed: 'fast',
     })
   }
 

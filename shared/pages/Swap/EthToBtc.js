@@ -51,6 +51,7 @@ export default class EthToBtc extends Component {
   componentDidMount() {
     const { swap, flow: { isSignFetching, isMeSigned, step } } = this.state
     this.changePaddingValue()
+
     this.signTimer = setInterval(() => {
       if (!this.state.flow.isMeSigned) {
         this.signSwap()
@@ -93,8 +94,6 @@ export default class EthToBtc extends Component {
       flow: values,
     })
 
-    this.changePaddingValue()
-
   }
 
 
@@ -116,9 +115,9 @@ export default class EthToBtc extends Component {
         paddingContainerValue: 60 * (flow.step - 2),
       }))
     }
-    if (flow.step > 7) {
+    if (flow.step >= 7) {
       this.setState(() => ({
-        paddingContainerValue: 260,
+        paddingContainerValue: 300,
       }))
     }
   }

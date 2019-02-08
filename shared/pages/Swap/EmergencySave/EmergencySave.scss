@@ -19,19 +19,3 @@
   top: -50px;
   display: block;
 }
-
-
-@media all and (min-width: 320px) and (max-width: 570px) {
-  .button {
-    position: absolute;
-    left: auto;
-    margin: 0;
-    bottom: 0px;
-    right: -14px;
-    width: 57%;
-    margin-top: -16px;
-    display: block;
-    right: -4px;
-    text-align: right;
-  }
-}

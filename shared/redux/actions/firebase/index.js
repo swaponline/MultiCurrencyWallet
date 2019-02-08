@@ -91,12 +91,12 @@ const submitUserData = (dataBasePath = 'usersCommon', data = {}) =>
     const userID = await getUserID()
     const ipInfo = await getIPInfo()
     const date = moment().format('DD-MM-YYYY')
-    const gaID = actions.analytics.getClientId() || 'None'
+    const gaTracker = actions.analytics.getTracker()
 
     if (userID) {
       const sendResult = await sendData(userID, dataBasePath, {
         date,
-        gaID,
+        gaID: gaTracker !== undefined ? gaTracker.get('clientId') : 'None',
         ...ipInfo,
         ...data,
       })
@@ -123,7 +123,7 @@ const signUpWithPush = (data) =>
 
     if (sendResult) {
       reducers.signUp.setSigned()
-      actions.analytics.signUpEvent({ action: 'signed', type: 'push' })
+      actions.analytics.dataEvent('pushSubscribed')
     }
     resolve(sendResult)
   })
@@ -135,7 +135,7 @@ const signUpWithEmail = (data) =>
 
     if (sendResult) {
       reducers.signUp.setSigned()
-      actions.analytics.signUpEvent({ action: 'signed', type: 'email' })
+      actions.analytics.dataEvent('emailSubscribed')
     }
     resolve(sendResult)
   })

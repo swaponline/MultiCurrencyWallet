@@ -166,11 +166,6 @@ export default class PrivateKeysModal extends React.PureComponent {
                     defaultMessage=
                       "Please fill information below from instruction.txt file. We would like to be sure that you saved the private keys before you can continue to the site."
                   />
-                  <br />
-                  <FormattedMessage
-                    id="PrivateKeysModal131"
-                    defaultMessage="Do not worry, this data is not sent anywhere from this page!"
-                  />
                 </div>
                 <Field2
                   label={ethData.currency}

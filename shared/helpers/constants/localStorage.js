@@ -9,7 +9,6 @@ export default {
   wasCautionPassed: 'wasCautionPassed',
   hiddenCoinsList: 'hiddenCoinsList',
   privateKeysSaved: 'privateKeysSaved',
-  telosRegistrated: 'telosRegistrated',
   demoMoneyReceived: 'demoMoneyReceived',
   eosAccountActivated: `${process.env.ENTRY}:eos:activationFlag`,
   telosAccountActivated: `${process.env.ENTRY}:telos:activationFlag`,

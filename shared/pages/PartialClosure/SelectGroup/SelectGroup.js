@@ -1,5 +1,4 @@
 import React from 'react'
-import { FormattedMessage, injectIntl } from 'react-intl'
 
 import CSSModules from 'react-css-modules'
 import styles from './SelectGroup.scss'
@@ -10,7 +9,7 @@ import CurrencySelect from 'components/ui/CurrencySelect/CurrencySelect'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 
 // TODO to split data and view this component
-const SelectGroup = ({ selectedValue, onSelect, currencies, usd, placeholder, label, disabled, className, inputValueLink, tooltip, id, ...props }) => (
+const SelectGroup = ({ selectedValue, onSelect, currencies, usd, placeholder, label, disabled, className, inputValueLink, tooltip, id }) => (
   <div>
     <FieldLabel inRow>
       <strong>
@@ -30,8 +29,6 @@ const SelectGroup = ({ selectedValue, onSelect, currencies, usd, placeholder, la
         placeholder={placeholder}
         pattern="0-9."
         disabled={disabled}
-        onFocus={props.onFocus ? props.onFocus : () => {}}
-        onBlur={props.onBlur ? props.onBlur : () => {}}
       />
       {
         (selectedValue === 'eth' || selectedValue === 'btc') && usd > 0 &&
@@ -47,4 +44,4 @@ const SelectGroup = ({ selectedValue, onSelect, currencies, usd, placeholder, la
   </div>
 )
 
-export default injectIntl(CSSModules(SelectGroup, styles, { allowMultiple: true }))
+export default CSSModules(SelectGroup, styles)

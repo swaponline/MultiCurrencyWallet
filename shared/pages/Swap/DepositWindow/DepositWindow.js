@@ -201,7 +201,7 @@ export default class DepositWindow extends Component {
                   values={{ missingBalance:
                     <div>
                       {remainingBalance > 0
-                      ? <strong>{remainingBalance.toFixed(6)} {swap.sellCurrency}{'  '}</strong>
+                      ? <strong>{remainingBalance.toFixed(6)} {swap.sellCurrency}</strong>
                       : <span styleName="loaderHolder">
                           <InlineLoader />
                         </span>}
@@ -217,7 +217,7 @@ export default class DepositWindow extends Component {
                         <div>
                           <FormattedMessage
                             id="deposit177"
-                            defaultMessage="Do not top up the contract with the greater amount than recommended. The remaining balance will be send to the counter party. You can send {tokenName} from a wallet of any exchange"
+                            defaultMessage="You don't have enought of {amount} {tokenName} to finish the swap.{br}This amount includes the missing amount on your balance and miners fee.{br}You can sent {tokenName} from any wallet and exchange."
                             values={{
                               amount: remainingBalance.toFixed(6),
                               tokenName: swap.sellCurrency,
@@ -250,15 +250,6 @@ export default class DepositWindow extends Component {
             onCopy={this.onCopyAddress}
           >
             <div>
-              <span styleName="linkText">
-                <FormattedMessage
-                  id="deposit256"
-                  defaultMessage="The address of {tokenName} smart contract "
-                  values={{
-                    tokenName: swap.sellCurrency,
-                  }}
-                />
-              </span>
               <p styleName="qr">
                 <a
                   styleName="linkAddress"
@@ -290,17 +281,13 @@ export default class DepositWindow extends Component {
                   id="deposit231"
                   defaultMessage="Received {balance} / {need} {tooltip}"
                   values={{
-                    balance: <strong>{balanceToRender} {swap.sellCurrency}{'  '}</strong>,
+                    balance: <strong>{balanceToRender} {swap.sellCurrency}</strong>,
                     need: <strong>{swap.sellCurrency === "SWAP" ? sellAmount.toFixed(6) - 0.00005  : sellAmount.toFixed(6)} {swap.sellCurrency}</strong>,
                     tooltip:
                       <Tooltip id="dep226">
                         <FormattedMessage
                           id="deposit239"
-                          defaultMessage="Swap will continue after {tokenName} contract receives the funds. Is usually takes less than 10 min"
-                          values={{
-                            tokenName: swap.sellCurrency,
-                            br: <br />
-                          }}
+                          defaultMessage="If you replenish the contract for an amount greater than the specified amount, the balance will be written off as miner fee."
                         />
                       </Tooltip>
                   }}

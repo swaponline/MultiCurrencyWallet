@@ -44,20 +44,10 @@ export default class Input extends Component {
   }
 
   handleFocus = () => {
-    const { onFocus } = this.props
-
-    if (onFocus) {
-      onFocus()
-    }
     reducers.inputActive.setInputActive(true)
   }
 
   handleBlur = () => {
-    const { onBlur } = this.props
-
-    if (onBlur) {
-      onBlur()
-    }
     reducers.inputActive.setInputActive(false)
   }
 
