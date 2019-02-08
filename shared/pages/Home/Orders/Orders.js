@@ -6,7 +6,6 @@ import { withRouter } from 'react-router-dom'
 import { isMobile } from 'react-device-detect'
 
 import constants from 'helpers/constants'
-import { localisedUrl } from 'helpers/locale'
 
 import cssModules from 'react-css-modules'
 import styles from './Orders.scss'
@@ -162,7 +161,7 @@ export default class Orders extends Component {
               values={{ pair: `${buyCurrency}/${sellCurrency}`, buyCurrency, sellCurrency, buyCurrencyFullName, sellCurrencyFullName }}
             />
           </Title>
-          <CloseIcon styleName="closeButton" onClick={() => this.props.history.push(localisedUrl(intl.locale, '/'))} data-testid="CloseIcon" />
+          <CloseIcon styleName="closeButton" onClick={() => this.props.history.push('/')} data-testid="CloseIcon" />
         </div>
         { invalidPair &&
           <p>

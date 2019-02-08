@@ -6,7 +6,6 @@ import tradeTicker from './TRADE_TICKERS'
 import tokenDecimals from './TOKEN_DECIMALS'
 import pairTypes from './PAIR_TYPES'
 import defaultFeeRates from './DEFAULT_FEE_RATES'
-import minAmount from './minAmount'
 
 
 export default {
@@ -18,5 +17,4 @@ export default {
   pairTypes,
   defaultFeeRates,
   modals,
-  minAmount,
 }

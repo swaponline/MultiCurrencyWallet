@@ -27,24 +27,6 @@
 
 .walletToggle {
   margin-top: 10px;
-  &_site {
-    margin-bottom: 15px;
-  }
-}
-
-.anotherRecepient {
-  position: relative;
-  z-index: -1;
-  max-height: 0;
-  opacity: 0;
-  transition: max-height 0.3s ease;
-  &_active {
-    z-index: 0;
-    opacity: 1;
-    max-height: 100vh;
-    transition: opacity 0.3s 0.2s,
-                max-height 0.7s ease;
-  }
 }
 
 .walletInput {
@@ -65,7 +47,6 @@
 }
 
 .block {
-  position: relative;
   flex-basis: 37%;
 }
 
@@ -79,10 +60,9 @@
 }
 
 .flipButton {
-  position: static;
-  padding: 0;
-  margin: 0px 12px -20px auto;
   transform: rotate(90deg);
+  padding: 0;
+  margin: -2.5rem 0 -1.5rem calc(90% - 12px);
 }
 
 .withLoader {
@@ -105,26 +85,6 @@
   position: relative;
 }
 
-.extendedControls {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  background: white;
-  overflow: visible;
-  margin: 1px 0 -19px;
-  > div {
-    margin: 0;
-  }
-}
-
-.maxAmount {
-  display: inline-block;
-  position: absolute;
-  top: 0px;
-  right: 0;
-  margin-bottom: 0;
-}
-
 @include media-mobile {
   .loaderHolder {
     display: block;
@@ -143,9 +103,6 @@
       top: -5px;
     }
   }
-  .maxAmount {
-    top: 6px;
-  }
 }
 
 @include media-tablet {
@@ -157,9 +114,6 @@
   }
   .button {
     font-size: 12px;
-  }
-  .maxAmount {
-    font-size: 14px;
   }
 }
 @include media-mobile {

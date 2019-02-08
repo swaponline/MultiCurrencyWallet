@@ -68,8 +68,6 @@ export default class SignUpModal extends React.Component {
 
     this.setState(() => ({ isSubmited: true }))
 
-    actions.analytics.signUpEvent({ action: 'request' })
-
     if (!isSupportedPush) {
       const result = await actions.firebase.signUpWithEmail({
         ...data,

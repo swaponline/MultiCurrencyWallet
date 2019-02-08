@@ -20,10 +20,8 @@ import Timer from '../Timer/Timer'
 import Logo from 'components/Logo/Logo'
 import { Button } from 'components/controls'
 import Input from 'components/forms/Input/Input'
-
 import Title from 'components/PageHeadline/Title/Title'
 import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
-import SwapController from '../SwapController'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 
 import BtcToEth from './SwapProgressText/BtcToEth'
@@ -32,7 +30,6 @@ import EthToBtc from './SwapProgressText/EthToBtc'
 import EthTokensToBtc from './SwapProgressText/EthTokensToBtc'
 
 import * as animation from './images'
-import finishSvg from './images/finish.svg'
 
 
 @injectIntl
@@ -133,14 +130,23 @@ export default class SwapProgress extends Component {
 
     const progress = Math.floor(360 / (swap.flow.steps.length - 1) * this.state.flow.step)
 
-    const finishIcon = <img src={finishSvg} alt="finishIcon" />
-
+    const finishSvg = (
+      <svg styleName="finishImg" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+        <polyline
+          className="path check"
+          fill="none"
+          stroke="#3de25b"
+          strokeWidth="6"
+          strokeLinecap="round"
+          strokeMiterlimit="10"
+          points="100.2,40.2 51.5,88.8 29.8,67.5 "
+        />
+      </svg>)
 
     return (
       <div styleName="overlay">
         <div styleName="container">
           <div styleName="stepContainer">
-            <SwapController swap={swap} />
             <div styleName="progressContainer">
               <div styleName={progress > 180 ? 'progress-pie-chart gt-50' : 'progress-pie-chart'}>
                 <div styleName="ppc-progress">
@@ -149,7 +155,7 @@ export default class SwapProgress extends Component {
               </div>
               <div styleName="step">
                 <div styleName="stepImg">
-                  {flow.isFinished ? finishIcon : this.handleStepChangeImage(flow.step)}
+                  {flow.isFinished ? finishSvg : this.handleStepChangeImage(flow.step)}
                 </div>
               </div>
             </div>

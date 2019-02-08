@@ -29,7 +29,7 @@
   },
   {
     "id": "LtcToEth.orderCreatorIsOffline",
-    "message": "The order creator is offline. The request is valid for 30 min ",
+    "message": "The order creator is offline. Waiting for him.. ",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
@@ -509,7 +509,7 @@
   },
   {
     "id": "SwapProgress123",
-    "message": "ETH contract created and charged. Requesting withdrawal from ETH Contract. Please wait. It usually takes less than 10 mins",
+    "message": "ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.js"
     ]
@@ -570,14 +570,14 @@
   },
   {
     "id": "SwapProgress93",
-    "message": "The order creator is offline. The request is valid for 30 min ",
+    "message": "The order creator is offline. Waiting for him.. ",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.js"
     ]
   },
   {
     "id": "SwapProgress99",
-    "message": "Creating a secret key",
+    "message": "Create a secret key",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.js"
     ]
@@ -907,7 +907,7 @@
   },
   {
     "id": "BtcToEthToken260",
-    "message": "4. ETH contract created and charged. Requesting withdrawal from ETH Contract. Please wait. It usually takes less than 10 mins"
+    "message": "4. ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait"
   },
   {
     "id": "BtcToEthToken267",
@@ -1261,7 +1261,7 @@
   },
   {
     "id": "EthToLtc104",
-    "message": "The order creator is offline. The request is valid for 30 min ",
+    "message": "The order creator is offline. Waiting for him.. ",
     "files": [
       "shared/pages/Swap/EthToLtc.js"
     ]
@@ -1485,7 +1485,7 @@
   },
   {
     "id": "LtcTOeth127",
-    "message": "Creating a secret key",
+    "message": "2. Create a secret key",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
@@ -1604,7 +1604,7 @@
   },
   {
     "id": "LtcTOeth283",
-    "message": "5. ETH contract created and charged. Requesting withdrawal from ETH Contract. Please wait. It usually takes less than 10 mins",
+    "message": "5. ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
@@ -1646,7 +1646,7 @@
   },
   {
     "id": "UsdrToEthToken106",
-    "message": "Creating a secret key",
+    "message": "2. Create a secret key",
     "files": [
       "shared/pages/Swap/UsdtToEthToken.js"
     ]
@@ -1765,7 +1765,7 @@
   },
   {
     "id": "UsdrToEthToken264",
-    "message": "5. ETH Contract is created and charged. Requesting withdrawal from ETH Contract. Please wait. It usually takes less than 10 mins",
+    "message": "5. ETH Contract is created and charged. Requesting withdrawal from ETH Contract. Please wait",
     "files": [
       "shared/pages/Swap/UsdtToEthToken.js"
     ]
@@ -1941,13 +1941,6 @@
     ]
   },
   {
-    "id": "PrivateKeysModal131",
-    "message": "Do not worry, this data is not sent anywhere from this page!",
-    "files": [
-      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
-    ]
-  },
-  {
     "id": "PrivateKeysModal145",
     "message": "GO TO THE SITE! ",
     "files": [
@@ -1985,7 +1978,7 @@
   },
   {
     "id": "BTCTOLTC132",
-    "message": "Creating a secret key",
+    "message": "2. Create a secret key",
     "files": [
       "shared/pages/Swap/BtcToLtc.js"
     ]
@@ -2149,7 +2142,7 @@
   },
   {
     "id": "offline",
-    "message": "The order creator is offline. The request is valid for 30 min ",
+    "message": "The order creator is offline. Waiting for him.. ",
     "files": [
       "shared/pages/Swap/BtcToLtc.js",
       "shared/pages/Swap/LtcToBtc.js"
@@ -2273,7 +2266,7 @@
   },
   {
     "id": "Row277",
-    "message": "Not activated",
+    "message": "not activated",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
@@ -3253,13 +3246,6 @@
     ]
   },
   {
-    "id": "UseAnotherWallet",
-    "message": "Specify the recipient's wallet address",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
-    ]
-  },
-  {
     "id": "PartialYourWalletAddress",
     "message": "Receiving wallet address",
     "files": [
@@ -3789,14 +3775,14 @@
   },
   {
     "id": "deposit165",
-    "message": "You don't have enought funds to continue the swap. Copy this address and top it up with {missingBalance}  ",
+    "message": "You don't have enought funds to continue the swap. Copy the address below and top it up with the recommended amount of {missingBalance} ",
     "files": [
       "shared/pages/Swap/DepositWindow/DepositWindow.js"
     ]
   },
   {
     "id": "deposit177",
-    "message": "Do not top up the contract with the greater amount than recommended. {br} The remaining balance will be send to the counter party. {br} You can send {tokenName} from a wallet of any exchange",
+    "message": "You don't have enought of {amount} {tokenName} to finish the swap.{br}This amount includes the missing amount on your balance and miners fee.{br}You can sent {tokenName} from any wallet and exchange.",
     "files": [
       "shared/pages/Swap/DepositWindow/DepositWindow.js"
     ]
@@ -3810,7 +3796,7 @@
   },
   {
     "id": "deposit239",
-    "message": "Swap will continue after {tokenName} contract receives the funds. {br} Is usually takes less than 10 min",
+    "message": "If you replenish the contract for an amount greater than the specified amount, the balance will be written off as miner fee.",
     "files": [
       "shared/pages/Swap/DepositWindow/DepositWindow.js"
     ]
@@ -3838,7 +3824,7 @@
   },
   {
     "id": "BtcToEthToken201",
-    "message": "Creating a secret key"
+    "message": "2. Create a secret key"
   },
   {
     "id": "BtcToEthToken213",
@@ -4040,14 +4026,14 @@
   },
   {
     "id": "BtcToEthToken58",
-    "message": "Depositing Bitcoin to a smart contract",
+    "message": "Bitcoin is depositing to the contract",
     "files": [
       "shared/pages/Swap/SwapList/steps/SecondStep.js"
     ]
   },
   {
     "id": "BtcToEthToken80",
-    "message": "Depositing {name} to a smart contract",
+    "message": "{name} is depositing to the contract",
     "files": [
       "shared/pages/Swap/SwapList/steps/ThirdStep.js"
     ]
@@ -4209,36 +4195,29 @@
     ]
   },
   {
-    "id": "BtcToEthToken20",
-    "message": "Creating a secret key",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
-    ]
-  },
-  {
     "id": "BitcoinBuyText29",
-    "message": "Checking balance..",
+    "message": "The bitcoin Script was created and charged. Please check the information below",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
     ]
   },
   {
     "id": "BitcoinBuyText33",
-    "message": "Creating Bitcoin Script. \n Please wait, it can take a few minutes",
+    "message": "Checking balance..",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
     ]
   },
   {
     "id": "BitcoinBuyText37",
-    "message": "{buyCurrency} Owner received Bitcoin Script and Secret Hash. Creating {buyCurrency} contract",
+    "message": "Creating Ethereum Contract. {br} Please wait, it can take a few minutes",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
     ]
   },
   {
     "id": "BitcoinBuyText41",
-    "message": "{buyCurrency} contract created and charged. Requesting withdrawal from {buyCurrency} Contract. Please wait. It usually takes less than 10 mins",
+    "message": "Waiting for {buyCurrency} tokens Owner to add a Secret Key to ETH Contact",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
     ]
@@ -4343,14 +4322,14 @@
   },
   {
     "id": "swappropgress207",
-    "message": "{transaction}",
+    "message": "ETH transaction: {transaction}",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgress.js"
     ]
   },
   {
     "id": "swappropgress218",
-    "message": "{transaction}",
+    "message": "BTC transaction: {transaction}",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgress.js"
     ]
