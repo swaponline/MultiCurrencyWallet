@@ -1,4 +1,4 @@
-import abi from 'human-standard-token-abi'
+import ERC20_ABI from 'human-standard-token-abi'
 import helpers, { request, constants } from 'helpers'
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
@@ -7,8 +7,6 @@ import reducers from 'redux/core/reducers'
 import config from 'app-config'
 import { BigNumber } from 'bignumber.js'
 
-
-BigNumber.config({ RANGE: [-1e+9, 1e+9], POW_PRECISION: 0  })
 
 const login = (privateKey, contractAddress, nameContract, decimals, fullName) => {
   let data
@@ -53,7 +51,7 @@ const getBalance = async (currency) => {
     return
   }
   const { address, contractAddress, decimals, name  } = tokensData[currency.toLowerCase()]
-  const ERC20 = new web3.eth.Contract(abi, contractAddress)
+  const ERC20 = new web3.eth.Contract(ERC20_ABI, contractAddress)
   try {
     const result = await ERC20.methods.balanceOf(address).call()
     console.log('result get balance', result)
@@ -68,7 +66,7 @@ const getBalance = async (currency) => {
 
 const fetchBalance = async (address, contractAddress, decimals) => {
 
-  const ERC20 = new web3.eth.Contract(abi, contractAddress)
+  const ERC20 = new web3.eth.Contract(ERC20_ABI, contractAddress)
   const result = await ERC20.methods.balanceOf(address).call()
 
   const amount = new BigNumber(String(result)).dividedBy(new BigNumber(String(10)).pow(decimals)).toString()
@@ -116,27 +114,65 @@ const getTransaction = (currency) =>
       })
   })
 
-const send = ({ name, to, amount, gasPrice, gasLimit, speed } = {}) =>
+const withToken = (name) => {
+  if (!name) {
+    throw new Error('send: name is undefined')
+  }
+
+  name = name.toLowerCase()
+
+  const { user: { tokensData: { [name]: { address } } } } = getState()
+  const { [name]: { address: contractAddress, decimals } } = config.erc20
+
+  const tokenContract = new web3.eth.Contract(ERC20_ABI, contractAddress, { from: address })
+
+  const toWei = amount => BigNumber(amount).times(BigNumber(10).pow(decimals)).integerValue()
+  const fromWei = wei => BigNumber(wei).div(BigNumber(10).pow(decimals))
+
+  return { tokenContract, decimals, toWei, fromWei }
+}
+
+const fetchFees = async ({ gasPrice, gasLimit, speed } = {}) => {
+  gasPrice = gasPrice || await helpers.eth.estimateGasPrice({ speed })
+  gasLimit = gasLimit || constants.defaultFeeRates.ethToken.limit.send
+
+  return {
+    gas: gasLimit,
+    gasPrice,
+  }
+}
+
+const sendTransaction = ({ contract, method }, { args, params = {} } = {}, callback) =>
   new Promise(async (resolve, reject) => {
-    if (!name) {
-      throw new Error('send: name is undefined')
-    }
+    const receipt = await contract.methods[method](...args).send(params)
+      .on('transactionHash', (hash) => {
+        // eslint-disable-next-line
+        callback && callback(hash)
+      })
+      .on('error', (err) => {
+        reject(err)
+      })
 
-    const { user: { tokensData: { [name]: { address, contractAddress, decimals } } } } = getState()
+    resolve(receipt)
+  })
 
-    gasPrice = gasPrice || await helpers.eth.estimateGasPrice({ speed })
-    gasLimit = gasLimit || constants.defaultFeeRates.ethToken.limit.send
+const send = async ({ name, to, amount, ...feeConfig } = {}) => {
+  const { tokenContract, toWei } = withToken(name)
+  const params = await fetchFees({ ...feeConfig })
 
-    const params = {
-      from: address,
-      gas: gasLimit,
-      gasPrice,
-    }
+  const newAmount = toWei(amount)
+  const callMethod = { contract: tokenContract, method: 'transfer' }
 
-    const tokenContract = new web3.eth.Contract(abi, contractAddress, params)
-    const newAmount = new BigNumber(String(amount)).times(new BigNumber(10).pow(decimals)).integerValue()
+  // return sendTransaction(
+  //   { contract: tokenContract, method: 'transfer' },
+  //   { args: [ to, newAmount ], params },
+  //   (hash) => {
+  //     const txId = `${config.link.etherscan}/tx/${hash}`
+  //     actions.loader.show(true, { txId })
+  //   })
 
-    const receipt = await tokenContract.methods.transfer(to, newAmount).send()
+  return new Promise(async (resolve, reject) => {
+    const receipt = await tokenContract.methods.transfer(to, newAmount).send(params)
       .on('transactionHash', (hash) => {
         const txId = `${config.link.etherscan}/tx/${hash}`
         actions.loader.show(true, { txId })
@@ -147,11 +183,42 @@ const send = ({ name, to, amount, gasPrice, gasLimit, speed } = {}) =>
 
     resolve(receipt)
   })
+}
+
+const approve = async ({ name, to, amount, ...feeConfig } = {}) => {
+  const { tokenContract, toWei } = withToken(name)
+  const params = await fetchFees({ ...feeConfig })
+
+  const newAmount = toWei(amount)
+
+  return sendTransaction(
+    { contract: tokenContract, method: 'approve' },
+    { args: [ to, newAmount ], params })
+}
+
+const setAllowanceForToken = async ({ name, to, targetAllowance, ...config }) => {
+  const { tokenContract, toWei } = withToken(name)
+  const { user: { tokensData: { [name]: { address } } } } = getState()
+
+  const allowance = await tokenContract.methods.allowance(address, to).call()
+
+  // if there is already enough allowance, skip
+  if (toWei(targetAllowance).isLessThenOrEqualTo(allowance)) {
+    return Promise.resolve()
+  }
+  // but if not, set allowance to 1 billion (or requested target allowance, if it's bigger than 1 billion)
+
+  const newTargetAllowance = BigNumber.max(1e9, targetAllowance)
+
+  return approve({ name, to, amount: newTargetAllowance, ...config })
+}
 
 export default {
   login,
   getBalance,
   getTransaction,
   send,
+  approve,
+  setAllowanceForToken,
   fetchBalance,
 }
