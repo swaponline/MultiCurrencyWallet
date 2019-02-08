@@ -407,7 +407,7 @@ export default class Row extends Component {
                       <Fragment>
                         <br />
                         <span styleName="notActiveLink">
-                          <FormattedMessage id="Row277" defaultMessage="not activated" />
+                          <FormattedMessage id="Row277" defaultMessage="Not activated" />
                         </span>
                       </Fragment>
                     )
@@ -432,14 +432,14 @@ export default class Row extends Component {
               }
               <div styleName="activeControlButtons">
                 <div styleName="actButton">
-                  {currency === 'EOS'  && !eosAccountActivated && showButtons &&
+                  {currency === 'EOS'  && !eosAccountActivated && (isMobile || showButtons) &&
                     <button styleName="button buttonActivate" onClick={this.handleEosBuyAccount} data-tip data-for="Activate">
                       <FormattedMessage id="Row358" defaultMessage="Activate" />
                     </button>
                   }
                 </div>
                 <div styleName="actButtonTelos">
-                  {currency === 'TLOS'  && !telosAccountActivated && !address && showButtons &&
+                  {currency === 'TLOS'  && !telosAccountActivated && !address && (isMobile || showButtons) &&
                     <button styleName="button buttonActivate" onClick={this.handleTelosActivate} data-tip data-for="Create">
                       <FormattedMessage id="Row401" defaultMessage="Create account" />
                     </button>
@@ -486,7 +486,7 @@ export default class Row extends Component {
           </CopyToClipboard>
         </Fragment>
         <td>
-          <div styleName={currency === 'EOS' && !eosAccountActivated ? 'notActivated' : 'buttonsGroup'}>
+          <div styleName={currency === 'EOS' && !eosAccountActivated ? 'notActivated' : ''}>
             <CurrencyButton
               onClick={this.handleReceive}
               dataTooltip={{
