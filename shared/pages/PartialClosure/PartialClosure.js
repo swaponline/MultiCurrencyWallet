@@ -62,7 +62,7 @@ const isWidgetBuild = config && config.isWidget
   currenciesData: [ ethData, btcData, eosData, telosData, /* bchData, */ ltcData, usdtData /* nimData */ ],
   tokensData: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
 }))
-@CSSModules(styles)
+@CSSModules(styles, { allowMultiple: true })
 export default class PartialClosure extends Component {
 
   static defaultProps = {
@@ -508,17 +508,21 @@ export default class PartialClosure extends Component {
   }
 
   render() {
-    const { currencies, addSelectedItems, currenciesData, intl: { locale } } = this.props
+    const { currencies, addSelectedItems, currenciesData, tokensData, intl: { locale } } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching,
       isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet, getUsd, haveUsd,
       maxBuyAmount, getAmount, goodRate, extendedControls,
     } = this.state
 
-    const { balance } = currenciesData.find(item => item.currency === haveCurrency.toUpperCase())
+    const haveCurrencyData = currenciesData.find(item => item.currency === haveCurrency.toUpperCase())
+    const haveTokenData = tokensData.find(item => item.currency === haveCurrency.toUpperCase())
+    const currentCurrency = haveCurrencyData || haveTokenData
+    const { balance } = currentCurrency
+
     const oneCryptoCost = maxBuyAmount.isLessThanOrEqualTo(0) ? BigNumber(0) : BigNumber(goodRate)
     const linked = Link.all(this, 'haveAmount', 'getAmount', 'customWallet')
 
-    const isWidgetLink = this.props.location.pathname.includes('/exchange/') && this.props.location.hash === '#widget'
+    const isWidgetLink = this.props.location.pathname.includes('/exchange') && this.props.location.hash === '#widget'
     const isWidget = isWidgetBuild || isWidgetLink
 
     if (redirect) {
@@ -657,7 +661,35 @@ export default class PartialClosure extends Component {
             }
 
             {
-              this.customWalletAllowed() && (
+              (this.customWalletAllowed() && !isWidget) && (
+                <Fragment>
+                  <div styleName="walletToggle walletToggle_site">
+                    <Toggle checked={!customWalletUse} onChange={this.handleCustomWalletUse} />
+                    {
+                      !isWidget && (
+                        <FormattedMessage id="UseAnotherWallet" defaultMessage="Specify the recipient's wallet address" />
+                      )
+                    }
+                  </div>
+                  <div styleName={!customWalletUse ? 'anotherRecepient anotherRecepient_active' : 'anotherRecepient'}>
+                    <FieldLabel>
+                      <strong>
+                        <FormattedMessage id="PartialYourWalletAddress" defaultMessage="Receiving wallet address" />
+                      </strong>
+                      &nbsp;
+                      <Tooltip id="PartialClosure">
+                        <FormattedMessage id="PartialClosure" defaultMessage="The wallet address to where cryptocurrency will be sent after the exchange" />
+                      </Tooltip >
+                    </FieldLabel>
+                    <div styleName="walletInput">
+                      <Input required disabled={customWalletUse} valueLink={linked.customWallet} pattern="0-9a-zA-Z" placeholder="Enter the destination address" />
+                    </div>
+                  </div>
+                </Fragment>
+              )
+            }
+            {
+              (this.customWalletAllowed() && isWidget) && (
                 <Fragment>
                   <FieldLabel>
                     <strong>
@@ -679,7 +711,7 @@ export default class PartialClosure extends Component {
                       )
                     }
                     {
-                      !isWidgetBuild && (
+                      isWidgetLink && (
                         <FormattedMessage id="PartialUseSwapOnlineWallet" defaultMessage="Use Swap.Online wallet" />
                       )
                     }

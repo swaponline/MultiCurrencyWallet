@@ -1941,6 +1941,13 @@
     ]
   },
   {
+    "id": "PrivateKeysModal131",
+    "message": "Do not worry, this data is not sent anywhere from this page!",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
     "id": "PrivateKeysModal145",
     "message": "GO TO THE SITE! ",
     "files": [
@@ -2266,7 +2273,7 @@
   },
   {
     "id": "Row277",
-    "message": "not activated",
+    "message": "Not activated",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
@@ -3241,6 +3248,13 @@
   {
     "id": "PartialUseSwapOnlineWallet",
     "message": "Use Swap.Online wallet",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "UseAnotherWallet",
+    "message": "Specify the recipient's wallet address",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]

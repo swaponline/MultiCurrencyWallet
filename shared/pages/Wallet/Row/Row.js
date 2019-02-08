@@ -58,6 +58,7 @@ export default class Row extends Component {
     isTouch: false,
     isBalanceEmpty: true,
     telosRegister: false,
+    showButtons: false,
   }
 
   static getDerivedStateFromProps({ item: { balance } }) {
@@ -91,12 +92,15 @@ export default class Row extends Component {
         }
       })
   }
+
   componentDidUpdate() {
-    const { item } = this.props
-    if (item.balance > 0) {
-      actions.analytics.balanceEvent(item.currency, item.balance)
+    const { item: { currency, balance } } = this.props
+
+    if (balance > 0) {
+      actions.analytics.balanceEvent({ action: 'have', currency, balance })
     }
   }
+
   handleReloadBalance = async () => {
     const { isBalanceFetching } = this.state
 
@@ -224,7 +228,10 @@ export default class Row extends Component {
 
   handleGoTrade = (currency) => {
     const { intl: { locale } } = this.props
-    this.props.history.push(localisedUrl(locale, `/${currency.toLowerCase()}`))
+    const pair = currency.toLowerCase() === 'btc' ? 'eth' : 'btc'
+
+    window.scrollTo(0, 0)
+    this.props.history.push(localisedUrl(locale, `/exchange/${currency.toLowerCase()}-to-${pair}`))
   }
 
   handleMarkCoinAsHidden = (coin) => {
@@ -253,6 +260,17 @@ export default class Row extends Component {
     }
   }
 
+  showButtons = () => {
+    this.setState(() => ({
+      showButtons: true,
+    }))
+  }
+  hideButtons = () => {
+    this.setState(() => ({
+      showButtons: false,
+    }))
+  }
+
   render() {
     const {
       isBalanceFetching,
@@ -262,6 +280,7 @@ export default class Row extends Component {
       isBalanceEmpty,
       telosAccountActivated,
       telosActivePublicKey,
+      showButtons,
     } = this.state
 
     const {
@@ -292,6 +311,8 @@ export default class Row extends Component {
         onTouchEnd={this.handleTouchClear}
         onTouchMove={this.handleTouch}
         style={isTouch && this.props.index !== this.props.selectId ?  { background: '#f5f5f5' } : { background: '#fff' }}
+        onMouseEnter={this.showButtons}
+        onMouseLeave={this.hideButtons}
       >
         <td>
           <Link to={localisedUrl(locale, `/${fullName}-wallet`)} title={`Online ${fullName} wallet`}>
@@ -389,7 +410,7 @@ export default class Row extends Component {
                       <Fragment>
                         <br />
                         <span styleName="notActiveLink">
-                          <FormattedMessage id="Row277" defaultMessage="not activated" />
+                          <FormattedMessage id="Row277" defaultMessage="Not activated" />
                         </span>
                       </Fragment>
                     )
@@ -414,7 +435,7 @@ export default class Row extends Component {
               }
               <div styleName="activeControlButtons">
                 <div styleName="actButton">
-                  {currency === 'EOS'  && !eosAccountActivated &&
+                  {currency === 'EOS'  && !eosAccountActivated && (isMobile || showButtons) &&
                     <button styleName="button buttonActivate" onClick={this.handleEosBuyAccount} data-tip data-for="Activate">
                       <FormattedMessage id="Row358" defaultMessage="Activate" />
                     </button>
@@ -439,7 +460,7 @@ export default class Row extends Component {
                 </ReactTooltip>
                 <div styleName="useButton">
                   {
-                    currency === 'EOS' &&
+                    currency === 'EOS' && showButtons &&
                     <button styleName="button buttonUseAnother" onClick={this.handleEosRegister} data-tip data-for="Use">
                       <FormattedMessage id="Row263" defaultMessage="Use another" />
                     </button>
