@@ -928,10 +928,7 @@
   },
   {
     "id": "BtcToEthToken87",
-    "message": "1. Waiting participant confirm this swap",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
-    ]
+    "message": "1. Waiting participant confirm this swap"
   },
   {
     "id": "EosToBtc107",
@@ -2295,10 +2292,7 @@
   },
   {
     "id": "Row277",
-    "message": "not activated",
-    "files": [
-      "shared/pages/Wallet/Row/Row.js"
-    ]
+    "message": "not activated"
   },
   {
     "id": "partial221",
@@ -3479,10 +3473,7 @@
   },
   {
     "id": "CurrencyWallet141",
-    "message": "Swap.Online - {fullName}({currency}) Web Wallet with Atomic Swap.",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "Swap.Online - {fullName}({currency}) Web Wallet with Atomic Swap."
   },
   {
     "id": "orders189",
@@ -3577,10 +3568,7 @@
   },
   {
     "id": "Withdraw18333",
-    "message": "Withdraw {data$}",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "Withdraw {data$}"
   },
   {
     "id": "ImportKeys205",
@@ -3689,10 +3677,7 @@
   },
   {
     "id": "CurrencyWallet148",
-    "message": "Swap.Online - ${fullName} (${currency}) Web Wallet with Atomic Swap.",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "Swap.Online - ${fullName} (${currency}) Web Wallet with Atomic Swap."
   },
   {
     "id": "CurrencyWallet154",
@@ -4342,17 +4327,11 @@
   },
   {
     "id": "Row401",
-    "message": "Create account",
-    "files": [
-      "shared/pages/Wallet/Row/Row.js"
-    ]
+    "message": "Create account"
   },
   {
     "id": "Row420",
-    "message": "Use another",
-    "files": [
-      "shared/pages/Wallet/Row/Row.js"
-    ]
+    "message": "Use another"
   },
   {
     "id": "Row426",
@@ -4373,6 +4352,71 @@
     "message": "Create Telos account in 1 click",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "withdrowTitle271",
+    "message": "Withdraw",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "PreventMultiTabsWidgetBuild",
+    "message": "Atomic Swap Widget supports only one active tab. Please reload this page to continue using this tab or close it",
+    "files": [
+      "shared/components/PreventMultiTabs/PreventMultiTabs.js"
+    ]
+  },
+  {
+    "id": "CurrencyWalletTitle",
+    "message": "Swap.Online - {fullName} ({currency}) Web Wallet with Atomic Swap.",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "CurrencyWalletWidgetBuildTitle",
+    "message": "{fullName} ({currency}) Web Wallet with Atomic Swap.",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "PartialUseInternalWallet",
+    "message": "Use internal wallet",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "deposit256",
+    "message": "The address of {tokenName} smart contract",
+    "files": [
+      "shared/pages/Swap/DepositWindow/DepositWindow.js"
+    ]
+  },
+  {
+    "id": "FourthStep33",
+    "message": "(tx)",
+    "files": [
+      "shared/pages/Swap/SwapList/steps/FourthStep.js",
+      "shared/pages/Swap/SwapList/steps/SecondStep.js",
+      "shared/pages/Swap/SwapList/steps/ThirdStep.js"
+    ]
+  },
+  {
+    "id": "WalletWidgetBuildTitle",
+    "message": "Cryptocurrency Wallet with Atomic Swap Exchange",
+    "files": [
+      "shared/pages/Wallet/Wallet.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken20",
+    "message": "Create a secret key",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
     ]
   }
 ]
