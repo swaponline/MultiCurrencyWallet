@@ -81,6 +81,7 @@ export default class Row extends Component {
   componentDidMount() {
     const { hiddenCoinsList } = this.props
 
+    this.handleTelosActivate()
     window.addEventListener('resize', this.handleSliceAddress)
 
     Object.keys(config.erc20)
@@ -235,19 +236,19 @@ export default class Row extends Component {
     const telosActivePublicKey = localStorage.getItem(constants.privateKeyNames.telosPublicKey)
     const telosAccount = localStorage.getItem(constants.privateKeyNames.telosAccount)
     const telosAccountActivated = localStorage.getItem(constants.localStorage.telosAccountActivated) === 'true'
+    const telosRegistrated = localStorage.getItem(constants.localStorage.telosRegistrated) === 'true'
 
     this.setState(() => ({
       telosAccountActivated,
       telosActivePublicKey,
+      telosRegistrated,
     }))
 
-    if (!telosAccountActivated) {
+    if (!telosAccountActivated && !telosRegistrated) {
       const { accountName, activePrivateKey, activePublicKey } = await actions.tlos.loginWithNewAccount()
-      this.setState(() => ({
-        telosRegister: true,
-      }))
+      localStorage.setItem(constants.localStorage.telosRegistrated, true)
     }
-    if (this.state.telosRegister) {
+    if (telosRegistrated) {
       await actions.tlos.activateAccount(telosAccount, telosActivePrivateKey, telosActivePublicKey)
     }
   }
@@ -260,7 +261,6 @@ export default class Row extends Component {
       isTouch,
       isBalanceEmpty,
       telosAccountActivated,
-      telosRegister,
       telosActivePublicKey,
     } = this.state
 
@@ -385,7 +385,7 @@ export default class Row extends Component {
                       </Fragment>
                     )
                     }
-                    { currency === 'TLOS' && !telosAccountActivated && address && (
+                    {/* currency === 'TLOS' && !telosAccountActivated && address && (
                       <Fragment>
                         <br />
                         <span styleName="notActiveLink">
@@ -393,7 +393,7 @@ export default class Row extends Component {
                         </span>
                       </Fragment>
                     )
-                    }
+                    */}
                   </div>
                 ) : (
                   <Fragment>
@@ -420,13 +420,13 @@ export default class Row extends Component {
                     </button>
                   }
                 </div>
-                <div styleName="actButtonTelos">
+                {/* <div styleName="actButtonTelos">
                   {currency === 'TLOS'  && !telosAccountActivated && !address &&
                     <button styleName="button buttonActivate" onClick={this.handleTelosActivate} data-tip data-for="Create">
                       <FormattedMessage id="Row401" defaultMessage="Create account" />
                     </button>
                   }
-                </div>
+                </div> */}
                 <ReactTooltip id="Activate" type="light" effect="solid">
                   <span>
                     <FormattedMessage id="Row256" defaultMessage="Buy this account" />
@@ -446,12 +446,12 @@ export default class Row extends Component {
                   }
                 </div>
                 <div styleName={!address ? 'useButtonTelos' : 'useButtonTelos addressExist'}>
-                  {
+                  {/*
                     currency === 'TLOS' &&
                     <button styleName="button buttonUseAnother" onClick={this.handleTelosChangeAccount} data-tip data-for="UseTlos ">
                       <FormattedMessage id="Row420" defaultMessage="Use another" />
                     </button>
-                  }
+                  */}
                 </div>
                 <ReactTooltip id="Use" type="light" effect="solid">
                   <span>
