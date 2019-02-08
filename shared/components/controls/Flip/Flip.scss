@@ -19,3 +19,8 @@
     margin-top: -29px;
   }
 }
+@include media-widget {
+  .trade-panel__change {
+    position: static;
+  }
+}

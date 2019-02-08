@@ -7,3 +7,9 @@
 		min-width: auto;
 	}
 }
+@include media-widget {
+  .content {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+}

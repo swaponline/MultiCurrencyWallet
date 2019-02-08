@@ -41,3 +41,9 @@ input:disabled {
 .currencySelect {
   border-radius: 0 6px 6px 0 !important;
 }
+
+@include media-widget {
+  .currencySelect {
+    width: 160px;
+  }
+}
