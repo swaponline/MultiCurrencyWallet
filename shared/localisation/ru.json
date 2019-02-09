@@ -935,10 +935,7 @@
   },
   {
     "id": "BtcToEthToken87",
-    "message": "1. Ожидание подтверждения",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
-    ]
+    "message": "1. Ожидание подтверждения"
   },
   {
     "id": "EosToBtc107",
@@ -2284,10 +2281,7 @@
   },
   {
     "id": "Row277",
-    "message": "не активирован ",
-    "files": [
-      "shared/pages/Wallet/Row/Row.js"
-    ]
+    "message": "не активирован "
   },
   {
     "id": "partial221",
@@ -3487,10 +3481,7 @@
   },
   {
     "id": "CurrencyWallet141",
-    "message": "Swap.Online - {fullName}({currency}) онлайн кошелек, работащюий на технологии Atomic Swap.",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "Swap.Online - {fullName}({currency}) онлайн кошелек, работащюий на технологии Atomic Swap."
   },
   {
     "id": "CurrencyWallet167",
@@ -3589,10 +3580,7 @@
   },
   {
     "id": "Withdraw18333",
-    "message": "ПЕРЕВОД {data}",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "ПЕРЕВОД {data}"
   },
   {
     "id": "ImportKeys205",
@@ -3701,10 +3689,7 @@
   },
   {
     "id": "CurrencyWallet148",
-    "message": "Онлайн кошелек {fullName} ({currency}) с функцией Атомарного Свопа (Atomic Swap)",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "Онлайн кошелек {fullName} ({currency}) с функцией Атомарного Свопа (Atomic Swap)"
   },
   {
     "id": "CurrencyWallet154",
@@ -4214,10 +4199,7 @@
   },
   {
     "id": "BitcoinBuyText20",
-    "message": "Создается Секретный ключ",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
-    ]
+    "message": "Создается Секретный ключ"
   },
   {
     "id": "BitcoinBuyText29",
@@ -4361,17 +4343,11 @@
   },
   {
     "id": "Row401",
-    "message": "Создать аккаунт",
-    "files": [
-      "shared/pages/Wallet/Row/Row.js"
-    ]
+    "message": "Создать аккаунт"
   },
   {
     "id": "Row420",
-    "message": "Использовать другой",
-    "files": [
-      "shared/pages/Wallet/Row/Row.js"
-    ]
+    "message": "Использовать другой"
   },
   {
     "id": "Row426",
@@ -4392,6 +4368,71 @@
     "message": "Создать Telos аккаунт в 1 клик",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "withdrowTitle271",
+    "message": "Отправка ",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "PreventMultiTabsWidgetBuild",
+    "message": "Atomic Swap Widget supports only one active tab. Please reload this page to continue using this tab or close it",
+    "files": [
+      "shared/components/PreventMultiTabs/PreventMultiTabs.js"
+    ]
+  },
+  {
+    "id": "CurrencyWalletTitle",
+    "message": "Swap.Online - {fullName} ({currency}) Web Wallet with Atomic Swap.",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "CurrencyWalletWidgetBuildTitle",
+    "message": "{fullName} ({currency}) Web Wallet with Atomic Swap.",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "PartialUseInternalWallet",
+    "message": "Use internal wallet",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "deposit256",
+    "message": "The address of {tokenName} smart contract",
+    "files": [
+      "shared/pages/Swap/DepositWindow/DepositWindow.js"
+    ]
+  },
+  {
+    "id": "FourthStep33",
+    "message": "(tx)",
+    "files": [
+      "shared/pages/Swap/SwapList/steps/FourthStep.js",
+      "shared/pages/Swap/SwapList/steps/SecondStep.js",
+      "shared/pages/Swap/SwapList/steps/ThirdStep.js"
+    ]
+  },
+  {
+    "id": "WalletWidgetBuildTitle",
+    "message": "Cryptocurrency Wallet with Atomic Swap Exchange",
+    "files": [
+      "shared/pages/Wallet/Wallet.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken20",
+    "message": "Create a secret key",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
     ]
   }
 ]

@@ -255,9 +255,9 @@ export default class Row extends Component {
       const { accountName, activePrivateKey, activePublicKey } = await actions.tlos.loginWithNewAccount()
       localStorage.setItem(constants.localStorage.telosRegistrated, true)
     }
-    if (telosRegistrated) {
-      await actions.tlos.activateAccount(telosAccount, telosActivePrivateKey, telosActivePublicKey)
-    }
+    // if (telosRegistrated) {
+    //   await actions.tlos.activateAccount(telosAccount, telosActivePrivateKey, telosActivePublicKey)
+    // } на время проблем с работой сервера
   }
 
   showButtons = () => {

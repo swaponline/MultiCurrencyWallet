@@ -25,7 +25,7 @@ export default class BtcToEthTokens extends Component {
         )
       case 4:
         return (
-          <FormattedMessage id="BitcoinBuyText33" defaultMessage="Creating Bitcoin Script. \n Please wait, it can take a few minutes" />
+          <FormattedMessage id="BitcoinBuyText33" defaultMessage="Creating Bitcoin Script.{br}Please wait, it can take a few minutes" values={{ br: <br /> }} />
         )
       case 5:
         return (
