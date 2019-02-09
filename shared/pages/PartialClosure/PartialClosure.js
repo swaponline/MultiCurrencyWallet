@@ -631,7 +631,7 @@ export default class PartialClosure extends Component {
             { !oneCryptoCost.isFinite() && !isNonOffers && (
               <FormattedMessage id="PartialPriceCalc" defaultMessage="Calc price" />
             )}
-            {maxAmount > 0 && isNonOffers && (
+            {maxAmount > 0 && isNonOffers && linked.haveAmount.value > 0 && (
               <Fragment>
                 <p styleName="error" className={isWidget ? 'error' : ''} >
                   <FormattedMessage id="PartialPriceNoOrdersReduce" defaultMessage="No orders found, try to reduce the amount" />
