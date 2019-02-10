@@ -427,7 +427,7 @@ export default class AddOffer extends Component {
         {minimalAmount}
       </span>
     )
-    linked.sellAmount.check((value) => new BigNumber(balance).isGreaterThan(value),
+    linked.sellAmount.check((value) => new BigNumber(balance).isGreaterThanOrEqualTo(value),
       <span style={{ position: 'relative', marginRight: '44px' }}>
         <FormattedMessage id="transaction376" defaultMessage="Amount must be less than your balance " />
       </span>
