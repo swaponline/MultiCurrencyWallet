@@ -23,6 +23,12 @@ import Tooltip from 'components/ui/Tooltip/Tooltip'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 
 
+const coinsWithDynamicFee = [
+  'eth',
+  'ltc',
+  'btc',
+]
+
 @CSSModules(styles)
 export default class DepositWindow extends Component {
 
@@ -43,7 +49,7 @@ export default class DepositWindow extends Component {
       scriptBalance: flow.scriptBalance,
       balance: flow.balance,
       currencyFullName: currencyData.fullName,
-      sellAmount: (this.swap.sellAmount.toNumber() + 0.00005),
+      sellAmount: this.swap.sellAmount.toNumber(),
     }
   }
 
@@ -92,25 +98,26 @@ export default class DepositWindow extends Component {
     }))
   }
 
-  updateRemainingBalance = () => {
+  updateRemainingBalance = async () => {
     const { sellAmount, balance } = this.state
-    const remainingBalance = BigNumber(sellAmount).minus(balance)
+    if (coinsWithDynamicFee.includes(swap.sellCurrency.toLowerCase())) {
+      const dynamicFee = await helpers[swap.sellCurrency.toLowerCase()].estimateFeeValue({ method: 'swap' })
+      const wantedBalanceWithoutFee = BigNumber(sellAmount).minus(balance)
+      const remainingBalance = (swap.sellCurrency === 'BTC' || swap.sellCurrency === 'ETH')
+        ? BigNumber(wantedBalanceWithoutFee).plus(dynamicFee)
+        : wantedBalanceWithoutFee
 
-    this.setState(() => ({
-      remainingBalance,
-    }))
+      this.setState(() => ({
+        remainingBalance,
+      }))
+    }
   }
 
   getRequiredAmount = async () => {
     const { swap } =  this.props
 
-    const coinsWithDynamicFee = [
-      'eth',
-      'ltc',
-    ]
-
     if (coinsWithDynamicFee.includes(swap.sellCurrency.toLowerCase())) {
-      const dynamicFee = await helpers[swap.sellCurrency.toLowerCase()].estimateFeeValue({ method: 'swap', speed: 'normal' })
+      const dynamicFee = await helpers[swap.sellCurrency.toLowerCase()].estimateFeeValue({ method: 'swap' })
       const requiredAmount = BigNumber(this.state.sellAmount).plus(dynamicFee) > 0 ?  BigNumber(this.state.sellAmount).plus(dynamicFee) : 0
 
       this.setState(() => ({
@@ -291,7 +298,7 @@ export default class DepositWindow extends Component {
                   defaultMessage="Received {balance} / {need} {tooltip}"
                   values={{
                     balance: <strong>{balanceToRender} {swap.sellCurrency}{'  '}</strong>,
-                    need: <strong>{swap.sellCurrency === "SWAP" ? sellAmount.toFixed(6) - 0.00005  : sellAmount.toFixed(6)} {swap.sellCurrency}</strong>,
+                    need: <strong>{sellAmount.toFixed(6)} {swap.sellCurrency}</strong>,
                     tooltip:
                       <Tooltip id="dep226">
                         <FormattedMessage
