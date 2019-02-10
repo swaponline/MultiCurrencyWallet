@@ -3299,7 +3299,7 @@
   },
   {
     "id": "partial437",
-    "message": "Atomic Swap обменник",
+    "message": "Обмен {sellCase} на Альткоины всего за 60 секунд с помощью AtomicSwap",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]

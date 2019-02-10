@@ -43,8 +43,8 @@ const text = [
   <FormattedMessage id="partial224" defaultMessage="Leave empty for use Swap.Online wallet " />,
 ]
 
-const subTitle = (
-  <FormattedMessage id="partial437" defaultMessage="Atomic Swap Exchange" />
+const subTitle = (sell, buy) => (
+  <FormattedMessage id="partial437" defaultMessage="Exchange {sellCase} and Altcoins in 60 seconds with AtomicSwap" values={{ sellCase: sell, buyCase: buy }} />
 )
 
 const isWidgetBuild = config && config.isWidget
@@ -538,7 +538,7 @@ export default class PartialClosure extends Component {
         {
           (!isWidget) && (
             <div styleName="TitleHolder">
-              <PageHeadline subTitle={subTitle} />
+              <PageHeadline subTitle={subTitle(haveCurrency.toUpperCase(), getCurrency.toUpperCase())} />
             </div>
           )
         }
