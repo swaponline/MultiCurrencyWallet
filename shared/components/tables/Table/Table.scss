@@ -447,10 +447,9 @@ table.wallet {
   }
   .table.exchange {
     display: table;
-    width: 100%;
+    width: 280px;
     td {
       position: relative;
-      padding: 0;
       &:first-child {
         display: table-cell;
       }

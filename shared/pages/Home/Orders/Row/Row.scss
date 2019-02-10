@@ -42,3 +42,10 @@
     position: relative;
   }
 }
+
+
+@media all and (min-width: 320px) and (max-width: 800px) {
+  .bigContainer {
+    width: 280px;
+  }
+}

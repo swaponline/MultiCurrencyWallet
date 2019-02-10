@@ -296,13 +296,10 @@ export default class Row extends Component {
                             </Fragment>
                           ) : (
                             <RequestButton
-                              styleName={this.state.enterButton ? 'onHover' : 'startButton'}
+                              styleName="startButton"
                               disabled={balance >= Number(buyAmount)}
                               onClick={() => this.sendRequest(id, isMy ? sellCurrency : buyCurrency)}
                               data={{ type, amount, main, total, base }}
-                              onMouseEnter={() => this.setState(() => ({ enterButton: true }))}
-                              onMouseLeave={() => this.setState(() => ({ enterButton: false }))}
-                              move={this.state.enterButton}
                             >
                               <FormattedMessage id="RowM166" defaultMessage="Start" />
                             </RequestButton>
@@ -321,7 +318,7 @@ export default class Row extends Component {
   }
 
   renderContent = () => {
-    let windowWidthIn = window.outerWidth
+    let windowWidthIn = window.innerWidth
     this.setState({ windowWidth: windowWidthIn })
   }
 
