@@ -93,7 +93,7 @@
   justify-content: space-between;
 }
 
-@media all and (min-width: 320px) and (max-width:800px) {
+@include media-min320-max800 {
   .closeButton {
     width: 40px;
     height: 40px;
@@ -108,7 +108,7 @@
   }
 }
 
-@media all and (min-width: 320px) and (max-width:800px) {
+@include media-min320-max800 {
   .buttonRow,
   .buttonRowMobile {
     margin: 0;
