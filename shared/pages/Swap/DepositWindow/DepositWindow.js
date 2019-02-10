@@ -187,14 +187,14 @@ export default class DepositWindow extends Component {
 
     return (
       <Fragment>
-        <a
+        <div
           styleName="topUpLink"
           target="_blank"
           rel="noopener noreferrer"
         >
           <div styleName="top">
             {/* eslint-disable */}
-              <span styleName="btcMessage">
+              <div styleName="btcMessage">
                 <FormattedMessage
                   id="deposit165"
                   defaultMessage="You don't have enought funds to continue the swap. Copy the address below and top it up with the recommended amount of {missingBalance} "
@@ -202,9 +202,9 @@ export default class DepositWindow extends Component {
                     <div>
                       {remainingBalance > 0
                       ? <strong>{remainingBalance.toFixed(6)} {swap.sellCurrency}{'  '}</strong>
-                      : <span styleName="loaderHolder">
+                      : <a styleName="loaderHolder">
                           <InlineLoader />
-                        </span>}
+                        </a>}
                         {swap.sellCurrency === "SWAP" && (
                           <strong>
                             <FormattedMessage
@@ -235,22 +235,22 @@ export default class DepositWindow extends Component {
                     br: <br/>,
                   }}
                 />
-              </span>
+              </div>
               {/* eslint-enable */}
-            <span styleName="qrImg">
+            <div styleName="qrImg">
               <QR
                 network={currencyFullName.toLowerCase()}
                 address={`${address}?amount=${remainingBalance}`}
                 size={160}
               />
-            </span>
+            </div>
           </div>
           <CopyToClipboard
             text={address}
             onCopy={this.onCopyAddress}
           >
             <div>
-              <span styleName="linkText">
+              <a styleName="linkText">
                 <FormattedMessage
                   id="deposit256"
                   defaultMessage="The address of {tokenName} smart contract "
@@ -258,7 +258,7 @@ export default class DepositWindow extends Component {
                     tokenName: swap.sellCurrency,
                   }}
                 />
-              </span>
+              </a>
               <p styleName="qr">
                 <a
                   styleName="linkAddress"
@@ -282,9 +282,9 @@ export default class DepositWindow extends Component {
             {/* eslint-disable */}
             {isBalanceFetching
               ? (
-                <span styleName="loaderHolder">
+                <a styleName="loaderHolder">
                   <InlineLoader />
-                </span>
+                </a>
               ) : (
                 <FormattedMessage
                   id="deposit231"
@@ -311,21 +311,21 @@ export default class DepositWindow extends Component {
                 ? <FormattedMessage id="deposit198.1" defaultMessage="create Ethereum Contract.{br}Please wait, it can take a few minutes..." values={{ br: <br /> }} />
                 : <FormattedMessage id="deposit198" defaultMessage="waiting for payment..." />
               }
-              <span styleName="loaderHolder">
+              <a styleName="loaderHolder">
                 <InlineLoader />
-              </span>
+              </a>
             </div>
             {/* eslint-enable */}
           </div>
           {flow.btcScriptValues !== null &&
-          <span styleName="lockTime">
+          <div styleName="lockTime">
             <i className="far fa-clock" />
             <FormattedMessage
               id="Deposit52"
               defaultMessage="You have {timer} min to make the payment"
               values={{ timer: <Timer lockTime={flow.btcScriptValues.lockTime * 1000} defaultMessage={false} /> }} />
-          </span>}
-        </a>
+          </div>}
+        </div>
       </Fragment>
     )
   }

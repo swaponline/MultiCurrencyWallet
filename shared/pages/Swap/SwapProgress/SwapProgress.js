@@ -104,6 +104,10 @@ export default class SwapProgress extends Component {
     this.setState(() => ({ enabledButton: false }))
   }
 
+  willEnable = () => {
+    this.setState(() => ({ enabledButton: true }))
+  }
+
   submitSecret = () => {
     const { secret } = this.state
 
@@ -223,7 +227,7 @@ export default class SwapProgress extends Component {
                 <div styleName="timerRefund">
                   <Timer
                     lockTime={flow.btcScriptValues.lockTime * 1000}
-                    enabledButton={() => this.setState({ enabledButton: true })}
+                    enabledButton={this.willEnable}
                   />
                 </div>
               </Fragment>
@@ -243,7 +247,7 @@ export default class SwapProgress extends Component {
                 <div styleName="timerRefund">
                   <Timer
                     lockTime={flow.btcScriptValues.lockTime * 1000}
-                    enabledButton={() => this.setState({ enabledButton: true })}
+                    enabledButton={this.willEnable}
                   />
                 </div>
               </Fragment>
