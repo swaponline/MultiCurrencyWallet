@@ -118,11 +118,13 @@ export default class AddOffer extends Component {
 
   correctMinAmountSell = async (sellCurrency) => {
     if (coinsWithDynamicFee.includes(sellCurrency)) {
-      const currencyFee = await helpers[sellCurrency].estimateFeeValue({ method: 'swap', speed: 'fast' })
-      const balanceWithFeeValue = currentBalance.minus(currencyFee)
-      const finalBalance = balanceWithFeeValue.isGreaterThan(0) ? balanceWithFeeValue : 0
+      const minimalestAmountForSell = await helpers[sellCurrency].estimateFeeValue({ method: 'swap', speed: 'fast' })
+      this.setState({
+        minimalestAmountForSell,
+      })
     }
   }
+
   correctMinAmountBuy = async (buyCurrency) => {
     if (coinsWithDynamicFee.includes(buyCurrency)) {
       const minimalestAmountForBuy = await helpers[buyCurrency].estimateFeeValue({ method: 'swap', speed: 'fast' })
@@ -347,18 +349,8 @@ export default class AddOffer extends Component {
 
   handleNext = () => {
     const { onNext } = this.props
-
-    const isDisabled = !exchangeRate
-      || !buyAmount
-      || !sellAmount
-      || new BigNumber(sellAmount).isGreaterThan(balance)
-      || !isToken && new BigNumber(sellAmount).isLessThan(minAmountOffer[sellCurrency])
-
-
-    if (!isDisabled) {
-      actions.analytics.dataEvent('orderbook-addoffer-click-next-button')
-      onNext(this.state)
-    }
+    actions.analytics.dataEvent('orderbook-addoffer-click-next-button')
+    onNext(this.state)
   }
 
   changeBalance = (value) => {
@@ -411,9 +403,11 @@ export default class AddOffer extends Component {
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency, minimalestAmountForSell, minimalestAmountForBuy,
       balance, isBuyFieldInteger, isSellFieldInteger, ethBalance, manualRate, isPartial, isToken } = this.state
     const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
-    const minimalAmount = !isToken
-      ? new BigNumber(minAmountOffer[sellCurrency]).dp(6, BigNumber.ROUND_DOWN).toString()
-      : 0
+    const minAmountSell = coinsWithDynamicFee.includes(sellCurrency) ? minimalestAmountForSell : minAmount[sellCurrency]
+    const minAmountBuy = coinsWithDynamicFee.includes(buyCurrency) ? minimalestAmountForBuy : minAmount[buyCurrency]
+
+    const minimalAmountSell = !isToken ? Math.floor(minAmountSell * 1e6) / 1e6 : 0
+    const minimalAmountBuy = !isToken ? Math.floor(minAmountBuy * 1e6) / 1e6 : 0
 
     const isDisabled = !exchangeRate
       || !buyAmount && !sellAmount
