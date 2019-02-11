@@ -114,7 +114,7 @@ export default class Currency extends Component {
     let { match:{ params: { currency } }, items } = this.props
     const itemCurrency = items.filter(item => item.currency.toLowerCase() === currency)[0]
 
-    actions.analytics.dataEvent(`balances-withdraw-${currency.toLowerCase()}`)
+    // actions.analytics.dataEvent(`balances-withdraw-${currency.toLowerCase()}`)
     actions.modals.open(constants.modals.Withdraw, {
       ...itemCurrency,
     })

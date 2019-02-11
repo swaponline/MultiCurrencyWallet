@@ -349,7 +349,8 @@ export default class AddOffer extends Component {
 
   handleNext = () => {
     const { onNext } = this.props
-    actions.analytics.dataEvent('orderbook-addoffer-click-next-button')
+
+    // actions.analytics.dataEvent('orderbook-addoffer-click-next-button')
     onNext(this.state)
   }
 
