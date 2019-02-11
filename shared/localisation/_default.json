@@ -3297,6 +3297,13 @@
     ]
   },
   {
+    "id": "PartialClosureTitleAdvice1",
+    "message": "Atomic swap is a smart contract technology that enables exchange of one cryptocurrency for another without using centralized intermediaries, such as exchanges.",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
     "id": "partial462",
     "message": "The amount you have in your swap.online wallet or external wallet that you want to exchange",
     "files": [

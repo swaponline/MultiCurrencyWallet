@@ -44,7 +44,16 @@ const text = [
 ]
 
 const subTitle = (buy) => (
-  <FormattedMessage id="partial437" defaultMessage="Exchange {buyCase} and Altcoins in 60 seconds with AtomicSwap" values={{ buyCase: buy }} />
+  <Fragment>
+    <FormattedMessage id="partial437" defaultMessage="Exchange {buyCase} and Altcoins in 60 seconds with AtomicSwap" values={{ buyCase: buy }} />
+    &nbsp;
+    <Tooltip id="PartialClosureTitleAdvice1">
+      <FormattedMessage
+        id="PartialClosureTitleAdvice1" // eslint-disable-next-line
+        defaultMessage="Atomic swap is a smart contract technology that enables exchange of one cryptocurrency for another without using centralized intermediaries, such as exchanges."
+      />
+    </Tooltip>
+  </Fragment>
 )
 
 const isWidgetBuild = config && config.isWidget

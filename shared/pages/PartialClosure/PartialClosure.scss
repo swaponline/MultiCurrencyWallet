@@ -17,6 +17,19 @@
   }
 }
 
+.TitleHolder {
+  div[data-id="tooltip"] {
+    max-width: 568px;
+    padding: 5px;
+    border-radius: 5px;
+  }
+  div[data-id="tooltip"], div[data-id="tooltip"] * {
+    font-family: 'CerebriSans';
+    font-size: 14px !important;
+    font-weight: 400;
+  }
+}
+
 .button {
   margin-top: 20px;
   width: 45%;
