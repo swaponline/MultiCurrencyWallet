@@ -40,18 +40,21 @@ export default class ConfirmOffer extends Component {
 
   isActualFee = async () => {
     const { offer: { sellCurrency } } = this.props
+    const { feeValue } = this.state
 
     if (helpers.ethToken.isEthToken({ name: sellCurrency.toLowerCase() })) {
+      const feeValueDynamic = await helpers.ethToken.estimateFeeValue({ method: 'send' })
       this.setState(() => ({
         tokenFee: true,
+        feeValue: feeValueDynamic,
+      }))
+    } else {
+      const feeValueDynamic = await helpers[sellCurrency].estimateFeeValue({ method: 'swap', speed: 'fast' })
+      const feeValue = coinsWithDynamicFee.includes(sellCurrency) ? feeValueDynamic : minAmountOffer[sellCurrency]
+      this.setState(() => ({
+        feeValue,
       }))
     }
-    const feeValueDynamic = await helpers[sellCurrency].estimateFeeValue({ method: 'swap', speed: 'fast' })
-    const feeValue = coinsWithDynamicFee.includes(sellCurrency) ? feeValueDynamic : minAmountOffer[sellCurrency]
-
-    this.setState({
-      feeValue,
-    })
   }
 
   handleConfirm = () => {
@@ -92,7 +95,7 @@ export default class ConfirmOffer extends Component {
         <Coins styleName="coins" names={[ buyCurrency, sellCurrency ]} size={100} />
         <Amounts {...{ buyAmount, sellAmount, buyCurrency, sellCurrency }} />
         <ExchangeRate {...{ value: exchangeRate, buyCurrency, sellCurrency }} />
-        <Fee amount={!tokenFee ? feeValue : '~0.002'} currency={!tokenFee ? sellCurrency : 'ETH'} />
+        <Fee amount={feeValue} currency={!tokenFee ? sellCurrency : 'ETH'} />
         <Row styleName="buttonsInRow">
           <Button styleName="button" gray onClick={onBack}>
             <FormattedMessage id="ConfirmOffer69" defaultMessage="Back" />
