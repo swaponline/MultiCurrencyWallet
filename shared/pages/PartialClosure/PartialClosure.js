@@ -671,7 +671,7 @@ export default class PartialClosure extends Component {
                     <Toggle checked={!customWalletUse} onChange={this.handleCustomWalletUse} />
                     {
                       !isWidget && (
-                        <FormattedMessage id="UseAnotherWallet" defaultMessage="Specify the recipient's wallet address" />
+                        <FormattedMessage id="UseAnotherWallet" defaultMessage="Specify your receiving wallet address" />
                       )
                     }
                   </div>
