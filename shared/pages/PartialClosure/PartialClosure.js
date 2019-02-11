@@ -43,8 +43,8 @@ const text = [
   <FormattedMessage id="partial224" defaultMessage="Leave empty for use Swap.Online wallet " />,
 ]
 
-const subTitle = (
-  <FormattedMessage id="partial437" defaultMessage="Atomic Swap Exchange" />
+const subTitle = (buy) => (
+  <FormattedMessage id="partial437" defaultMessage="Exchange {buyCase} and Altcoins in 60 seconds with AtomicSwap" values={{ buyCase: buy }} />
 )
 
 const isWidgetBuild = config && config.isWidget
@@ -533,12 +533,16 @@ export default class PartialClosure extends Component {
     if (!(Number(getAmount) > 0)) canDoOrder = false
     if (this.customWalletAllowed() && !this.customWalletValid()) canDoOrder = false
 
+    const buyTokenFullName = currenciesData.find(item => item.currency === getCurrency.toUpperCase())
+      ? currenciesData.find(item => item.currency === getCurrency.toUpperCase()).fullName
+      : getCurrency.toUpperCase()
+
     return (
       <Fragment>
         {
           (!isWidget) && (
             <div styleName="TitleHolder">
-              <PageHeadline subTitle={subTitle} />
+              <PageHeadline subTitle={subTitle(buyTokenFullName)} />
             </div>
           )
         }
