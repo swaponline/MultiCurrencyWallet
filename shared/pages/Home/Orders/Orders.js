@@ -80,7 +80,7 @@ export default class Orders extends Component {
       buyCurrency,
       sellCurrency,
     })
-    actions.analytics.dataEvent('orderbook-click-createoffer-button')
+    // actions.analytics.dataEvent('orderbook-click-createoffer-button')
   }
 
   removeOrder = (orderId) => {

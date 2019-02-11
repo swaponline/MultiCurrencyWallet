@@ -82,6 +82,7 @@ export default {
   getTracker,
   getClientId,
   dataEvent,
+  errorEvent,
   swapEvent,
   balanceEvent,
   signUpEvent,

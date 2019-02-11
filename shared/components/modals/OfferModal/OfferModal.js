@@ -40,7 +40,7 @@ export default class Offer extends React.Component {
   }
 
   handleMoveToOfferEditing = () => {
-    actions.analytics.dataEvent('orderbook-addoffer-click-confirm-button')
+    // actions.analytics.dataEvent('orderbook-addoffer-click-confirm-button')
     this.setState({
       view: 'editOffer',
     })

@@ -78,7 +78,7 @@ export default class BtcToEth extends Component {
       8: 'end',
     }
 
-    actions.analytics.swapEvent(stepNumbers[values.step], 'BTC2ETH')
+    // actions.analytics.swapEvent(stepNumbers[values.step], 'BTC2ETH')
 
     this.setState({
       flow: values,

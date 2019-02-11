@@ -91,7 +91,7 @@ export default class CurrencyWallet extends Component {
     const { currency } = this.state
 
     if (currency) {
-      actions.analytics.dataEvent(`open-page-${currency.toLowerCase()}-wallet`)
+      // actions.analytics.dataEvent(`open-page-${currency.toLowerCase()}-wallet`)
     }
     actions.user.setTransactions()
     actions.core.getSwapHistory()
@@ -117,7 +117,7 @@ export default class CurrencyWallet extends Component {
       isBalanceEmpty,
     } = this.state
 
-    actions.analytics.dataEvent(`balances-withdraw-${currency.toLowerCase()}`)
+    // actions.analytics.dataEvent(`balances-withdraw-${currency.toLowerCase()}`)
     actions.modals.open(constants.modals.Withdraw, {
       currency,
       address,
