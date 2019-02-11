@@ -401,26 +401,6 @@ export default class PartialClosure extends Component {
     this.additionalPathing(newState.haveCurrency, newState.getCurrency)
   }
 
-  trueWay = () => {
-    const { haveCurrency, getCurrency } = this.state
-    const currency = haveCurrency.toLowerCase()
-
-    return constants.tradeTicker
-      .filter(ticker => {
-        ticker = ticker.split('-')
-        return currency === ticker[0].toLowerCase()
-          ? ticker[0].toLowerCase() === currency
-          : ticker[1].toLowerCase() === currency
-      })
-      .map(pair => {
-        pair = pair.split('-')
-        return {
-          from: pair[0],
-          to: pair[1],
-        }
-      })
-  }
-
   handlePush = (isWidget = false) => {
     const { intl: { locale } } = this.props
     const { haveCurrency, getCurrency } = this.state
