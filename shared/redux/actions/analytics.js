@@ -1,13 +1,15 @@
 const getGtag = () =>  window.gtag || null
 
-const dataEvent = (eventName) => {
+const dataEvent = ({ action, label } = {}) => {
   const gtag = getGtag()
 
-  if (!gtag) {
+  if (!action || !gtag) {
     return
   }
 
-  return null // TODO: add gtag for dataEvent
+  gtag('event', action, {
+    'label': label,
+  })
 }
 
 const balanceEvent = ({ action, currency, balance } = {}) => {
