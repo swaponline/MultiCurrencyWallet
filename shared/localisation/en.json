@@ -3280,7 +3280,7 @@
   },
   {
     "id": "partial437",
-    "message": "Exchange {sellCase} and Altcoins in 60 seconds with AtomicSwap",
+    "message": "Exchange {buyCase} and Altcoins in 60 seconds with AtomicSwap",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]

@@ -44,7 +44,7 @@ const text = [
 ]
 
 const subTitle = (sell, buy) => (
-  <FormattedMessage id="partial437" defaultMessage="Exchange {sellCase} and Altcoins in 60 seconds with AtomicSwap" values={{ sellCase: sell, buyCase: buy }} />
+  <FormattedMessage id="partial437" defaultMessage="Exchange {buyCase} and Altcoins in 60 seconds with AtomicSwap" values={{ sellCase: sell, buyCase: buy }} />
 )
 
 const isWidgetBuild = config && config.isWidget
