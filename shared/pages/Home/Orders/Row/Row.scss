@@ -44,7 +44,7 @@
 }
 
 
-@media all and (min-width: 320px) and (max-width: 800px) {
+@include media-min320-max800 {
   .bigContainer {
     width: 280px;
   }
