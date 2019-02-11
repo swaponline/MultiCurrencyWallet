@@ -3263,7 +3263,7 @@
   },
   {
     "id": "UseAnotherWallet",
-    "message": "Specify the recipient's wallet address",
+    "message": "Specify your receiving wallet address",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
