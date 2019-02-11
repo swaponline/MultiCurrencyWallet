@@ -34,6 +34,12 @@ const minAmount = {
   erc: 1,
 }
 
+const coinsWithDynamicFee = [
+  'eth',
+  'ltc',
+  'btc',
+]
+
 @connect(
   ({
     currencies,
@@ -70,6 +76,8 @@ export default class AddOffer extends Component {
       exchangeRate: exchangeRate || 1,
       buyCurrency: buyCurrency || 'btc',
       sellCurrency: sellCurrency || 'eth',
+      minimalestAmountForBuy: minAmount[buyCurrency] || minAmount.btc,
+      minimalestAmountForSell: minAmount[sellCurrency] || minAmount.eth,
     }
   }
 
@@ -77,12 +85,13 @@ export default class AddOffer extends Component {
     const { sellCurrency, buyCurrency, value } = this.state
 
     actions.pairs.selectPair(sellCurrency)
-
-    this.checkBalance(sellCurrency)
+    this.checkBalance(sellCurrency, buyCurrency)
+    this.correctMinAmountSell(sellCurrency)
+    this.correctMinAmountBuy(buyCurrency)
     this.updateExchangeRate(sellCurrency, buyCurrency)
   }
 
-  checkBalance = async (sellCurrency) => {
+  checkBalance = async (sellCurrency, buyCurrency) => {
     const updateBalance = await actions[sellCurrency].getBalance(sellCurrency)
 
     this.setState({
@@ -90,12 +99,6 @@ export default class AddOffer extends Component {
     })
 
     const { items, tokenItems } = this.props
-
-    const coinsWithDynamicFee = [
-      'eth',
-      'ltc',
-      'btc',
-    ]
 
     const currency = items.concat(tokenItems)
       .filter(item => item.currency === sellCurrency.toUpperCase())[0]
@@ -119,15 +122,29 @@ export default class AddOffer extends Component {
       ? balance.plus(unconfirmedBalance)
       : balance
 
-    if (coinsWithDynamicFee.includes(sellCurrency)) {
-      minAmount[sellCurrency] = await helpers[sellCurrency].estimateFeeValue({ method: 'swap', speed: 'fast' })
-      const balanceWithFeeValue = currentBalance.minus(minAmount[sellCurrency])
-      const finalBalance = balanceWithFeeValue.isGreaterThan(0) ? balanceWithFeeValue : 0
+    const balanceWithoutFee = currentBalance.minus(this.state.minimalestAmountForSell)
+    const finalBalance = balanceWithoutFee.isGreaterThan(0) ? balanceWithoutFee : 0
 
+    this.setState({
+      balance: finalBalance,
+    })
+  }
+
+  correctMinAmountSell = async (sellCurrency) => {
+    if (coinsWithDynamicFee.includes(sellCurrency)) {
+      const minimalestAmountForSell = await helpers[sellCurrency].estimateFeeValue({ method: 'swap', speed: 'fast' })
       this.setState({
-        balance: finalBalance.toString(),
+        minimalestAmountForSell,
       })
-      return
+    }
+  }
+
+  correctMinAmountBuy = async (buyCurrency) => {
+    if (coinsWithDynamicFee.includes(buyCurrency)) {
+      const minimalestAmountForBuy = await helpers[buyCurrency].estimateFeeValue({ method: 'swap', speed: 'fast' })
+      this.setState({
+        minimalestAmountForBuy,
+      })
     }
   }
 
@@ -346,20 +363,10 @@ export default class AddOffer extends Component {
   }
 
   handleNext = () => {
-    const { exchangeRate, buyAmount, sellAmount, balance, sellCurrency, isToken } = this.state
-    const { onNext, tokenItems } = this.props
+    const { onNext } = this.props
 
-    const isDisabled = !exchangeRate
-      || !buyAmount
-      || !sellAmount
-      || new BigNumber(sellAmount).isGreaterThan(balance)
-      || !isToken && new BigNumber(sellAmount).isLessThan(minAmount[sellCurrency])
-
-
-    if (!isDisabled) {
-      actions.analytics.dataEvent('orderbook-addoffer-click-next-button')
-      onNext(this.state)
-    }
+    actions.analytics.dataEvent('orderbook-addoffer-click-next-button')
+    onNext(this.state)
   }
 
   changeBalance = (value) => {
@@ -409,29 +416,46 @@ export default class AddOffer extends Component {
 
   render() {
     const { currencies, tokenItems, addSelectedItems } = this.props
-    const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency,
-      balance, isBuyFieldInteger, isSellFieldInteger, manualRate, isPartial, isToken } = this.state
+    const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency, minimalestAmountForSell, minimalestAmountForBuy,
+      balance, isBuyFieldInteger, isSellFieldInteger, ethBalance, manualRate, isPartial, isToken } = this.state
     const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
-    const minimalAmount = !isToken
-      ? new BigNumber(minAmount[sellCurrency]).dp(6, BigNumber.ROUND_DOWN).toString()
-      : 0
+
+    const minAmountSell = coinsWithDynamicFee.includes(sellCurrency) ? minimalestAmountForSell : minAmount[sellCurrency]
+    const minAmountBuy = coinsWithDynamicFee.includes(buyCurrency) ? minimalestAmountForBuy : minAmount[buyCurrency]
+
+    const minimalAmountSell = !isToken ? Math.floor(minAmountSell * 1e6) / 1e6 : 0
+    const minimalAmountBuy = !isToken ? Math.floor(minAmountBuy * 1e6) / 1e6 : 0
 
     const isDisabled = !exchangeRate
       || !buyAmount && !sellAmount
-      || new BigNumber(balance).isLessThanOrEqualTo(sellAmount)
-      || !isToken && new BigNumber(minimalAmount).isGreaterThanOrEqualTo(sellAmount)
+      || sellAmount > balance
+      || !isToken && sellAmount < minimalAmountSell
+      || buyAmount < minimalAmountBuy
 
-    linked.sellAmount.check((value) => new BigNumber(minimalAmount).isLessThanOrEqualTo(value),
-      <span style={{ position: 'relative', marginRight: '44px' }}>
-        <FormattedMessage id="transaction368" defaultMessage="Amount must be greater than " />
-        {minimalAmount}
-      </span>
-    )
-    linked.sellAmount.check((value) => new BigNumber(balance).isGreaterThan(value),
+    if (linked.sellAmount.value !== '') {
+      linked.sellAmount.check((value) => (BigNumber(value).isGreaterThan(minimalAmountSell)),
+        <span style={{ position: 'relative', marginRight: '44px' }}>
+          <FormattedMessage id="transaction444" defaultMessage="Sell amount must be greater than " />
+          {minimalAmountSell}
+        </span>
+      )
+    }
+    if (linked.buyAmount.value !== '') {
+      linked.buyAmount.check((value) => (BigNumber(value).isGreaterThan(minimalAmountBuy)),
+        <span style={{ position: 'relative', marginRight: '44px' }}>
+          <FormattedMessage id="transaction450" defaultMessage="Buy amount must be greater than " />
+          {minimalAmountBuy}
+        </span>
+      )
+    }
+
+    if (linked.buyAmount.value !== '') {
+      linked.sellAmount.check((value) => (BigNumber(balance).isGreaterThanOrEqualTo(value)),
       <span style={{ position: 'relative', marginRight: '44px' }}>
         <FormattedMessage id="transaction376" defaultMessage="Amount must be less than your balance " />
       </span>
-    )
+      )
+    }
 
     return (
       <div styleName="wrapper addOffer">
