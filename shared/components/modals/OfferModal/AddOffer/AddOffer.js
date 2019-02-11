@@ -22,23 +22,9 @@ import Input from 'components/forms/Input/Input'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage } from 'react-intl'
 import { isNumberValid, isNumberStringFormatCorrect, mathConstants } from 'helpers/math.js'
+import minAmountOffer from 'helpers/constants/minAmountOffer'
+import coinsWithDynamicFee from 'helpers/constants/coinsWithDynamicFee'
 
-
-const minAmount = {
-  eth: 0.005,
-  btc: 0.001,
-  ltc: 0.1,
-  eos: 1,
-  jot: 1,
-  usdt: 0,
-  erc: 1,
-}
-
-const coinsWithDynamicFee = [
-  'eth',
-  'ltc',
-  'btc',
-]
 
 @connect(
   ({
@@ -58,7 +44,7 @@ export default class AddOffer extends Component {
     super()
 
     if (config && config.isWidget) {
-      minAmount[config.erc20token] = 1
+      minAmountOffer[config.erc20token] = 1
     }
 
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency } = initialData || {}
@@ -76,8 +62,8 @@ export default class AddOffer extends Component {
       exchangeRate: exchangeRate || 1,
       buyCurrency: buyCurrency || 'btc',
       sellCurrency: sellCurrency || 'eth',
-      minimalestAmountForBuy: minAmount[buyCurrency] || minAmount.btc,
-      minimalestAmountForSell: minAmount[sellCurrency] || minAmount.eth,
+      minimalestAmountForBuy: minAmountOffer[buyCurrency] || minAmountOffer.btc,
+      minimalestAmountForSell: minAmountOffer[sellCurrency] || minAmountOffer.eth,
     }
   }
 
@@ -148,9 +134,8 @@ export default class AddOffer extends Component {
     }
   }
 
-  async updateExchangeRate(sellCurrency, buyCurrency) {
+  updateExchangeRate = async (sellCurrency, buyCurrency) => {
     const exchangeRate = await actions.user.getExchangeRate(sellCurrency, buyCurrency)
-
 
     return new Promise((resolve, reject) => {
       this.setState({ exchangeRate }, () => resolve())
@@ -419,9 +404,8 @@ export default class AddOffer extends Component {
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency, minimalestAmountForSell, minimalestAmountForBuy,
       balance, isBuyFieldInteger, isSellFieldInteger, ethBalance, manualRate, isPartial, isToken } = this.state
     const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
-
-    const minAmountSell = coinsWithDynamicFee.includes(sellCurrency) ? minimalestAmountForSell : minAmount[sellCurrency]
-    const minAmountBuy = coinsWithDynamicFee.includes(buyCurrency) ? minimalestAmountForBuy : minAmount[buyCurrency]
+    const minAmountSell = coinsWithDynamicFee.includes(sellCurrency) ? minimalestAmountForSell : minAmountOffer[sellCurrency]
+    const minAmountBuy = coinsWithDynamicFee.includes(buyCurrency) ? minimalestAmountForBuy : minAmountOffer[buyCurrency]
 
     const minimalAmountSell = !isToken ? Math.floor(minAmountSell * 1e6) / 1e6 : 0
     const minimalAmountBuy = !isToken ? Math.floor(minAmountBuy * 1e6) / 1e6 : 0
