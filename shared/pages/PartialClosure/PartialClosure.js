@@ -542,7 +542,7 @@ export default class PartialClosure extends Component {
             </div>
           )
         }
-        <div styleName={isWidget ? 'widgetSection' : 'section'} className={isWidget ? 'section' : ''} >
+        <div styleName={isWidgetLink ? 'widgetSection' : 'section'} className={isWidgetLink ? 'section' : ''} >
           {
             (!isWidget) && (
               <Advantages />
