@@ -22,17 +22,9 @@ import Input from 'components/forms/Input/Input'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage } from 'react-intl'
 import { isNumberValid, isNumberStringFormatCorrect, mathConstants } from 'helpers/math.js'
+import minAmountOffer from 'helpers/constants/minAmountOffer'
+import coinsWithDynamicFee from 'helpers/constants/coinsWithDynamicFee'
 
-
-const minAmount = {
-  eth: 0.005,
-  btc: 0.001,
-  ltc: 0.1,
-  eos: 1,
-  jot: 1,
-  usdt: 0,
-  erc: 1,
-}
 
 @connect(
   ({
@@ -52,7 +44,7 @@ export default class AddOffer extends Component {
     super()
 
     if (config && config.isWidget) {
-      minAmount[config.erc20token] = 1
+      minAmountOffer[config.erc20token] = 1
     }
 
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency } = initialData || {}
@@ -91,12 +83,6 @@ export default class AddOffer extends Component {
 
     const { items, tokenItems } = this.props
 
-    const coinsWithDynamicFee = [
-      'eth',
-      'ltc',
-      'btc',
-    ]
-
     const currency = items.concat(tokenItems)
       .filter(item => item.currency === sellCurrency.toUpperCase())[0]
 
@@ -120,8 +106,8 @@ export default class AddOffer extends Component {
       : balance
 
     if (coinsWithDynamicFee.includes(sellCurrency)) {
-      minAmount[sellCurrency] = await helpers[sellCurrency].estimateFeeValue({ method: 'swap', speed: 'fast' })
-      const balanceWithFeeValue = currentBalance.minus(minAmount[sellCurrency])
+      minAmountOffer[sellCurrency] = await helpers[sellCurrency].estimateFeeValue({ method: 'swap', speed: 'fast' })
+      const balanceWithFeeValue = currentBalance.minus(minAmountOffer[sellCurrency])
       const finalBalance = balanceWithFeeValue.isGreaterThan(0) ? balanceWithFeeValue : 0
 
       this.setState({
@@ -353,7 +339,7 @@ export default class AddOffer extends Component {
       || !buyAmount
       || !sellAmount
       || new BigNumber(sellAmount).isGreaterThan(balance)
-      || !isToken && new BigNumber(sellAmount).isLessThan(minAmount[sellCurrency])
+      || !isToken && new BigNumber(sellAmount).isLessThan(minAmountOffer[sellCurrency])
 
 
     if (!isDisabled) {
@@ -413,7 +399,7 @@ export default class AddOffer extends Component {
       balance, isBuyFieldInteger, isSellFieldInteger, manualRate, isPartial, isToken } = this.state
     const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
     const minimalAmount = !isToken
-      ? new BigNumber(minAmount[sellCurrency]).dp(6, BigNumber.ROUND_DOWN).toString()
+      ? new BigNumber(minAmountOffer[sellCurrency]).dp(6, BigNumber.ROUND_DOWN).toString()
       : 0
 
     const isDisabled = !exchangeRate
