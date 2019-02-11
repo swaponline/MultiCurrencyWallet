@@ -28,9 +28,9 @@ const SecondStep = ({ step, swap, fifth, fourth, second }) => {
       {swap.flow.state.btcScriptCreatingTransactionHash && (
         <strong styleName="transactionInStep">
           <a
-            alt={`${config.link.etherscan}/tx/${swap.flow.state.btcScriptCreatingTransactionHash}`}
-            title={`${config.link.etherscan}/tx/${swap.flow.state.btcScriptCreatingTransactionHash}`}
-            href={`${config.link.etherscan}/tx/${swap.flow.state.btcScriptCreatingTransactionHash}`}
+            alt={`${config.link.bitpay}/tx/${swap.flow.state.btcScriptCreatingTransactionHash}`}
+            title={`${config.link.bitpay}/tx/${swap.flow.state.btcScriptCreatingTransactionHash}`}
+            href={`${config.link.bitpay}/tx/${swap.flow.state.btcScriptCreatingTransactionHash}`}
             target="_blank"
             rel="noreferrer noopener"
           >
