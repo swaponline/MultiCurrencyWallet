@@ -274,7 +274,7 @@ export default class AddOffer extends Component {
           })
         } else {
           const newBuyAmount = newSellAmount.multipliedBy(exchangeRate || 0)
-            .dp(constants.tokenDecimals[buyCurrency.toUpperCase()], BigNumber.ROUND_DOWN)
+            .dp(constants.tokenDecimals[buyCurrency.toLowerCase()], BigNumber.ROUND_DOWN)
 
           this.setState({
             sellAmount: newSellAmount.toString(),
@@ -301,7 +301,7 @@ export default class AddOffer extends Component {
           })
         } else {
           const newSellAmount = newBuyAmount.dividedBy(exchangeRate || 0)
-            .dp(constants.tokenDecimals[sellCurrency.toUpperCase()], BigNumber.ROUND_DOWN)
+            .dp(constants.tokenDecimals[sellCurrency.toLowerCase()], BigNumber.ROUND_DOWN)
 
           this.setState({
             sellAmount: newSellAmount.toString(),
