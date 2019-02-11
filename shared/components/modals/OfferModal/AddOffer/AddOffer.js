@@ -122,7 +122,9 @@ export default class AddOffer extends Component {
       ? balance.plus(unconfirmedBalance)
       : balance
 
-    const finalBalance = BigNumber(currentBalance).minus(this.state.minimalestAmountForSell) > 0 ? BigNumber(currentBalance).minus(this.state.minimalestAmountForSell) : 0
+    const balanceWithoutFee = currentBalance.minus(this.state.minimalestAmountForSell)
+    const finalBalance = balanceWithoutFee.isGreaterThan(0) ? balanceWithoutFee : 0
+
     this.setState({
       balance: finalBalance,
     })
@@ -143,7 +145,6 @@ export default class AddOffer extends Component {
       this.setState({
         minimalestAmountForBuy,
       })
-      return
     }
   }
 
@@ -362,34 +363,10 @@ export default class AddOffer extends Component {
   }
 
   handleNext = () => {
-    const {
-      exchangeRate,
-      buyAmount,
-      sellAmount,
-      balance,
-      sellCurrency,
-      ethBalance,
-      isToken,
-      buyCurrency,
-      minimalestAmountForSell,
-      minimalestAmountForBuy,
-    } = this.state
+    const { onNext } = this.props
 
-    const { onNext, tokenItems } = this.props
-
-    if (!coinsWithDynamicFee.includes(sellCurrency || buyCurrency)) {
-      this.setState(() => ({
-        minimalestAmountForBuy: minAmount[buyCurrency],
-        minimalestAmountForSell: minAmount[sellCurrency],
-      }))
-    }
-    const isDisabled = !exchangeRate || !buyAmount || !sellAmount || sellAmount > balance
-      || !isToken && sellAmount < minimalestAmountForSell || buyAmount < minimalestAmountForBuy
-
-    if (!isDisabled) {
-      actions.analytics.dataEvent('orderbook-addoffer-click-next-button')
-      onNext(this.state)
-    }
+    actions.analytics.dataEvent('orderbook-addoffer-click-next-button')
+    onNext(this.state)
   }
 
   changeBalance = (value) => {
@@ -449,20 +426,22 @@ export default class AddOffer extends Component {
     const minimalAmountSell = !isToken ? Math.floor(minAmountSell * 1e6) / 1e6 : 0
     const minimalAmountBuy = !isToken ? Math.floor(minAmountBuy * 1e6) / 1e6 : 0
 
-    const isDisabled = !exchangeRate || !buyAmount && !sellAmount
-      || sellAmount > balance || !isToken && sellAmount < minimalAmountSell || buyAmount < minimalAmountBuy
-
+    const isDisabled = !exchangeRate
+      || !buyAmount && !sellAmount
+      || sellAmount > balance
+      || !isToken && sellAmount < minimalAmountSell
+      || buyAmount < minimalAmountBuy
 
     if (linked.sellAmount.value !== '') {
-      linked.sellAmount.check((value) => (Number(value) > minimalAmountSell),
+      linked.sellAmount.check((value) => (BigNumber(value).isGreaterThan(minimalAmountSell)),
         <span style={{ position: 'relative', marginRight: '44px' }}>
           <FormattedMessage id="transaction444" defaultMessage="Sell amount must be greater than " />
           {minimalAmountSell}
         </span>
       )
     }
-    if (linked.sellAmount.value !== '') {
-      linked.buyAmount.check((value) => (Number(value) > minimalAmountBuy),
+    if (linked.buyAmount.value !== '') {
+      linked.buyAmount.check((value) => (BigNumber(value).isGreaterThan(minimalAmountBuy)),
         <span style={{ position: 'relative', marginRight: '44px' }}>
           <FormattedMessage id="transaction450" defaultMessage="Buy amount must be greater than " />
           {minimalAmountBuy}
@@ -470,11 +449,13 @@ export default class AddOffer extends Component {
       )
     }
 
-    linked.sellAmount.check((value) => Number(value) <= balance,
+    if (linked.buyAmount.value !== '') {
+      linked.sellAmount.check((value) => (BigNumber(balance).isGreaterThanOrEqualTo(value)),
       <span style={{ position: 'relative', marginRight: '44px' }}>
         <FormattedMessage id="transaction376" defaultMessage="Amount must be less than your balance " />
       </span>
-    )
+      )
+    }
 
     return (
       <div styleName="wrapper addOffer">
