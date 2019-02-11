@@ -62,8 +62,8 @@ export default class AddOffer extends Component {
       exchangeRate: exchangeRate || 1,
       buyCurrency: buyCurrency || 'btc',
       sellCurrency: sellCurrency || 'eth',
-      minimalestAmountForBuy: minAmount[buyCurrency] || minAmount.btc,
-      minimalestAmountForSell: minAmount[sellCurrency] || minAmount.eth,
+      minimalestAmountForBuy: minAmountOffer[buyCurrency] || minAmountOffer.btc,
+      minimalestAmountForSell: minAmountOffer[sellCurrency] || minAmountOffer.eth,
     }
   }
 
