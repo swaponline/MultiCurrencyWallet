@@ -62,6 +62,10 @@
 }
 
 .overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   background-color: rgba(255, 255, 255, 1);
   position: fixed;
   top: 0;
@@ -76,21 +80,13 @@
   height: 100px;
   perspective: 60px;
   perspective-origin: 7% 57%;
-
+  margin: auto;
+  
   &.small {
     width: 50px;
     height: 50px;
     -webkit-perspective: 30px;
     perspective: 30px;
-  }
-
-  &.center {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
   }
 }
 
@@ -149,17 +145,19 @@
 }
 
 .text {
-   position: absolute;
-   font-size: 16px;
-   left: calc(50% - 245.5px);
-   top: 65%;
+  margin-top: 20px;
+  font-size: 16px;
+  top: 65%;
+  text-align: center;
+  padding: 0 5px;
  }
 
 .link {
-  position: absolute;
+  margin-top: 10px;
   font-size: 16px;
-  left: calc(50% - 408.5px);
   top: 70%;
+  text-align: center;
+  padding: 0 5px;
 }
 
 .over {
@@ -167,12 +165,10 @@
 }
 
 .tips {
+  margin-top: 25px;
   font-size: 16px;
-  position: absolute;
-  top: 60%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   text-align: center;
+  padding: 0 5px;
 }
 
 .Firefox {
@@ -191,20 +187,4 @@
   .loader3 {
     transform: translate3d(0, -50%, 0);
   }
-}
-
-@include media-mobile { 
-  .text {
-     position: absolute;
-     top: 65%;
-     transform: translateY(-50%);
-     padding: 0 35px;
-     text-align: center;
-   }
-   .loader {
-     transform: translateY(-50%);
-   }
-   .tips {
-     top: 64%;
-   }
 }

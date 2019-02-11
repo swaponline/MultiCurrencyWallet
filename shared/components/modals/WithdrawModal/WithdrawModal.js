@@ -220,7 +220,7 @@ export default class WithdrawModal extends React.Component {
 
     render() {
       const { address, amount, balance, isShipped, minus, ethBalance, tokenFee, exCurrencyRate } = this.state
-      const { name, data, tokenItems, items } = this.props
+      const { name, data, tokenItems, items, intl } = this.props
 
       const linked = Link.all(this, 'address', 'amount')
 
@@ -266,12 +266,15 @@ export default class WithdrawModal extends React.Component {
         })
       }
 
-      const title = [
-        <FormattedMessage id="Withdraw18333" defaultMessage={`Withdraw {data}`} values={{ data: `${data.currency.toUpperCase()}` }} />,
-      ]
+      const title = defineMessages({
+        withdrowModal: {
+          id: 'withdrowTitle271',
+          defaultMessage: `Withdraw`,
+        },
+      })
 
       return (
-        <Modal name={name} title={title}>
+        <Modal name={name} title={`${intl.formatMessage(title.withdrowModal)}${' '}${data.currency.toUpperCase()}`}>
           <p styleName={tokenFee ? 'rednotes' : 'notice'}>
             <FormattedMessage
               id="Withdrow213"
@@ -316,9 +319,9 @@ export default class WithdrawModal extends React.Component {
               placeholder={`Enter the amount. You have ${NanReplacement}`}
               usd={getUsd.toFixed(2)}
             />
-            <buttton styleName="button" onClick={this.sellAllBalance} data-tip data-for="Withdrow134">
+            <button styleName="button" onClick={this.sellAllBalance} data-tip data-for="Withdrow134">
               <FormattedMessage id="Select210" defaultMessage="MAX" />
-            </buttton>
+            </button>
             <ReactTooltip id="Withdrow134" type="light" effect="solid">
               <FormattedMessage
                 id="WithdrawButton32"
