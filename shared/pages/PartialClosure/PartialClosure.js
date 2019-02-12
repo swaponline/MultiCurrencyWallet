@@ -83,9 +83,8 @@ export default class PartialClosure extends Component {
     const buyToken = buy || ((!isWidgetBuild) ? 'btc' : config.erc20token)
 
     if (!(buy && sell) && !props.location.hash.includes('#widget')) {
-      this.props.history.push(localisedUrl(locale, `/exchange/${sellToken}-to-${buyToken}`))
+      history.push(localisedUrl(locale, `/exchange/${sellToken}-to-${buyToken}`))
     }
-
     this.wallets = {}
     currenciesData.forEach(item => {
       this.wallets[item.currency] = item.address
