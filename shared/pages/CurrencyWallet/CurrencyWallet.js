@@ -36,6 +36,7 @@ const titles = [
 @connect(({ core, user,  history: { transactions, swapHistory },
   user: { ethData, btcData, ltcData, tokensData, eosData, nimData, usdtData, telosData } }) => ({
   items: [ ethData, btcData, eosData, usdtData, ltcData, telosData, ...Object.keys(tokensData).map(k => (tokensData[k])) /* nimData */ ],
+  tokens: [...Object.keys(tokensData).map(k => (tokensData[k]))],
   user,
 
   hiddenCoinsList: core.hiddenCoinsList,
@@ -61,8 +62,9 @@ export default class CurrencyWallet extends Component {
     }
   }
 
-  static getDerivedStateFromProps({ match: { params: { fullName } }, intl: { locale }, items, history }) {
+  static getDerivedStateFromProps({ match: { params: { fullName } }, intl: { locale }, items, history, tokens }) {
     const item = items.map(item => item.fullName.toLowerCase())
+    const token = tokens.map(item => item.fullName).includes(fullName.toUpperCase())
 
     if (item.includes(fullName.toLowerCase())) {
     const itemCurrency = items.filter(item => item.fullName.toLowerCase() === fullName.toLowerCase())[0]
@@ -76,6 +78,7 @@ export default class CurrencyWallet extends Component {
       } = itemCurrency
 
       return {
+        token,
         currency,
         address,
         contractAddress,
@@ -88,11 +91,15 @@ export default class CurrencyWallet extends Component {
   }
 
   componentDidMount() {
-    const { currency } = this.state
+    const { currency, token } = this.state
 
     if (currency) {
-      actions.analytics.dataEvent(`open-page-${currency.toLowerCase()}-wallet`)
+      // actions.analytics.dataEvent(`open-page-${currency.toLowerCase()}-wallet`)
     }
+    if (token) {
+      actions.token.getBalance(currency.toLowerCase())
+    }
+
     actions.user.setTransactions()
     actions.core.getSwapHistory()
   }
@@ -117,7 +124,7 @@ export default class CurrencyWallet extends Component {
       isBalanceEmpty,
     } = this.state
 
-    actions.analytics.dataEvent(`balances-withdraw-${currency.toLowerCase()}`)
+    // actions.analytics.dataEvent(`balances-withdraw-${currency.toLowerCase()}`)
     actions.modals.open(constants.modals.Withdraw, {
       currency,
       address,

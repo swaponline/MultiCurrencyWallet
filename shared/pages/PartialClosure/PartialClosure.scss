@@ -208,3 +208,9 @@
     font-size: 9px;
   }
 }
+
+@include media-widget {
+  .block {
+    margin: 0 auto;
+  }
+}

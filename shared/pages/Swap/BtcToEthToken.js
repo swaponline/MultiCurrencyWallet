@@ -131,7 +131,7 @@ export default class BtcToEthToken extends Component {
       'end': 8,
     }
 
-    actions.analytics.swapEvent(stepNumbers[values.step], 'BTC2ETHTOKEN')
+    // actions.analytics.swapEvent(stepNumbers[values.step], 'BTC2ETHTOKEN')
 
     this.setState({
       flow: values,

@@ -104,7 +104,5 @@ $media-tablet-portrait-and-lower-rule     : "(max-width: " + $media-tablet-portr
 
 // widget
 @mixin media-widget {
-  @media (max-width: 99999px) {
-    @content
-  }
+  @content
 }

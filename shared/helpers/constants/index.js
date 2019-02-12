@@ -7,6 +7,8 @@ import tokenDecimals from './TOKEN_DECIMALS'
 import pairTypes from './PAIR_TYPES'
 import defaultFeeRates from './DEFAULT_FEE_RATES'
 import minAmount from './minAmount'
+import minAmountOffer from './minAmountOffer'
+import coinsWithDynamicFee from './coinsWithDynamicFee'
 
 
 export default {
@@ -19,4 +21,6 @@ export default {
   defaultFeeRates,
   modals,
   minAmount,
+  minAmountOffer,
+  coinsWithDynamicFee,
 }

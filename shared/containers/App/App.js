@@ -85,7 +85,7 @@ export default class App extends React.Component {
     window.actions = actions
 
     window.onerror = (error) => {
-      actions.analytics.errorEvent(error)
+      // actions.analytics.errorEvent(error)
     }
 
     const db = indexedDB.open('test')
@@ -108,6 +108,7 @@ export default class App extends React.Component {
 
     const isWidget = history.location.pathname.includes('/exchange') && history.location.hash === '#widget'
     const isCalledFromIframe = window.location !== window.parent.location
+    const isWidgetBuild = config && config.isWidget
 
     if (multiTabs) {
       return <PreventMultiTabs />
@@ -117,7 +118,7 @@ export default class App extends React.Component {
       return <Loader showTips />
     }
 
-    const mainContent = isWidget || isCalledFromIframe
+    const mainContent = (isWidget || isCalledFromIframe) && !isWidgetBuild
       ? (
         <Fragment>
           {children}

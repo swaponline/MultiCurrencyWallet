@@ -81,7 +81,7 @@ export default class Wallet extends Component {
 
   componentWillMount() {
     actions.user.getBalances()
-    actions.analytics.dataEvent('open-page-balances')
+    // actions.analytics.dataEvent('open-page-balances')
 
     this.checkImportKeyHash()
 
