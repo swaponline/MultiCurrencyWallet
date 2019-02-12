@@ -49,7 +49,7 @@ export default class Modal extends Component {
     const { name, data, onClose, disableClose } = this.props
 
     if (name === 'OfferModal') {
-      actions.analytics.dataEvent('orderbook-addoffer-click-exit-button')
+      // actions.analytics.dataEvent('orderbook-addoffer-click-exit-button')
     }
 
     if (!disableClose) {

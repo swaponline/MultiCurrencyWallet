@@ -54,7 +54,7 @@ export default class CurrencyDirectionChooser extends Component {
       sellCurrency,
     })
 
-    actions.analytics.dataEvent('orderbook-click-createoffer-button')
+    // actions.analytics.dataEvent('orderbook-click-createoffer-button')
   }
 
   chooseProps = () => {

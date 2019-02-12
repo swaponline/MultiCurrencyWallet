@@ -43,8 +43,8 @@ const text = [
   <FormattedMessage id="partial224" defaultMessage="Leave empty for use Swap.Online wallet " />,
 ]
 
-const subTitle = (
-  <FormattedMessage id="partial437" defaultMessage="Atomic Swap Exchange" />
+const subTitle = (buy) => (
+  <FormattedMessage id="partial437" defaultMessage="Exchange {buyCase} and Altcoins in 60 seconds with AtomicSwap" values={{ buyCase: buy }} />
 )
 
 const isWidgetBuild = config && config.isWidget
@@ -232,17 +232,19 @@ export default class PartialClosure extends Component {
   }
 
   setAmountOnState = (maxAmount, getAmount, buyAmount) => {
+    const { getCurrency } = this.state
+    const decimalPlaces = constants.tokenDecimals[getCurrency.toLowerCase()]
+
+    console.log('getAmount', BigNumber(getAmount).dp(decimalPlaces).toString())
 
     this.setState(() => ({
       maxAmount: Number(maxAmount),
-      getAmount: this.getFixed(getAmount),
+      getAmount: BigNumber(getAmount).dp(decimalPlaces).toString(),
       maxBuyAmount: buyAmount,
     }))
 
-    return getAmount.isLessThanOrEqualTo(maxAmount)
+    return BigNumber(getAmount).isLessThanOrEqualTo(maxAmount)
   }
-
-  getFixed = (value) => Number(value).toFixed(5)
 
   setAmount = (value) => {
     this.setState(() => ({ haveAmount: value, maxAmount: 0 }))
@@ -265,7 +267,7 @@ export default class PartialClosure extends Component {
       .map((item, index) => {
 
         const exRate = item.buyAmount.dividedBy(item.sellAmount)
-        const getAmount = new BigNumber(String(haveAmount)).dividedBy(exRate)
+        const getAmount = BigNumber(haveAmount).dividedBy(exRate).toString()
 
         return {
           sellAmount: item.sellAmount,
@@ -289,37 +291,40 @@ export default class PartialClosure extends Component {
   }
 
   setOrderOnState = (orders) => {
-    const { exHaveRate, exGetRate } = this.state
-    const haveAmount = new BigNumber(this.state.haveAmount)
+    const { exHaveRate, exGetRate, haveAmount } = this.state
 
-    let maxAllowedSellAmount = new BigNumber(0)
-    let maxAllowedGetAmount = new BigNumber(0)
-    let maxAllowedBuyAmount = new BigNumber(0)
+    let maxAllowedSellAmount = BigNumber(0)
+    let maxAllowedGetAmount = BigNumber(0)
+    let maxAllowedBuyAmount = BigNumber(0)
 
-    let isFounded = false
+    let isFound = false
     let newState = {}
 
     orders.forEach(item => {
       maxAllowedSellAmount = (maxAllowedSellAmount.isLessThanOrEqualTo(item.sellAmount)) ? item.sellAmount : maxAllowedSellAmount
       maxAllowedBuyAmount = (maxAllowedBuyAmount.isLessThanOrEqualTo(item.buyAmount)) ? item.buyAmount : maxAllowedBuyAmount
-      if (haveAmount.isLessThanOrEqualTo(item.buyAmount)) {
-        maxAllowedGetAmount = (maxAllowedGetAmount.isLessThanOrEqualTo(item.getAmount)) ? item.getAmount : maxAllowedGetAmount
-        const haveUsd = new BigNumber(String(exHaveRate)).multipliedBy(new BigNumber(haveAmount))
-        const getUsd  = new BigNumber(String(exGetRate)).multipliedBy(new BigNumber(item.getAmount))
 
-        isFounded = true
+      if (BigNumber(haveAmount).isLessThanOrEqualTo(item.buyAmount)) {
+
+        maxAllowedGetAmount = (maxAllowedGetAmount.isLessThanOrEqualTo(item.getAmount)) ? BigNumber(item.getAmount) : maxAllowedGetAmount
+
+        const haveUsd = BigNumber(exHaveRate).times(haveAmount)
+        const getUsd  = BigNumber(exGetRate).times(item.getAmount)
+
+        isFound = true
+
         newState = {
           haveUsd: Number(haveUsd).toFixed(2),
           getUsd: Number(getUsd).toFixed(2),
           isNonOffers: false,
-          peer: item.peer,
           goodRate: item.exRate,
+          peer: item.peer,
           orderId: item.orderId,
         }
       }
     })
 
-    if (isFounded) {
+    if (isFound) {
       this.setState(() => (newState))
     } else {
       this.setState(() => ({
@@ -337,7 +342,9 @@ export default class PartialClosure extends Component {
   }
 
   handleCustomWalletUse = () => {
-    const newCustomWalletUse = !this.state.customWalletUse
+    const { customWalletUse } = this.state
+
+    const newCustomWalletUse = !customWalletUse
 
     this.setState({
       customWalletUse: newCustomWalletUse,
@@ -346,68 +353,107 @@ export default class PartialClosure extends Component {
   }
 
   handleSetGetValue = ({ value }) => {
+    const { haveCurrency, getCurrency, customWalletUse } = this.state
+
     const newState = {
       getCurrency: value,
-      haveCurrency: this.state.haveCurrency,
-      customWallet: this.state.customWalletUse ? this.wallets[value.toUpperCase()] : '',
+      haveCurrency,
+      customWallet: customWalletUse ? this.wallets[value.toUpperCase()] : '',
     }
 
-    const check = this.checkPair(value, this.state.haveCurrency)
+    const check = this.checkPair(value, haveCurrency)
 
     if (check === PAIR_CHECK_RESULT.NO_PAIR) {
       const selected = actions.pairs.selectPair(value)
       newState.haveCurrency = selected[0].value
     } else if (check === PAIR_CHECK_RESULT.EQUAL) {
-      newState.haveCurrency = this.state.getCurrency
+      newState.haveCurrency = getCurrency
     }
 
     this.setState(() => (newState))
     this.additionalPathing(newState.haveCurrency, value)
+
+    actions.analytics.dataEvent({
+      action: 'exchange-click-selector',
+      label: `${newState.haveCurrency}-to-${newState.getCurrency}`,
+    })
   }
 
   handleSetHaveValue = ({ value }) => {
+    const { haveCurrency, getCurrency } = this.state
+
     const newState = {
-      getCurrency: this.state.getCurrency,
+      getCurrency,
       haveCurrency: value,
     }
-    const check = this.checkPair(value, this.state.getCurrency)
+    const check = this.checkPair(value, getCurrency)
 
     if (check === PAIR_CHECK_RESULT.NO_PAIR) {
       const selected = actions.pairs.selectPair(value)
       newState.getCurrency = selected[0].value
     } else if (check === PAIR_CHECK_RESULT.EQUAL) {
-      newState.getCurrency = this.state.haveCurrency
+      newState.getCurrency = haveCurrency
     }
 
     this.setState(() => (newState))
     this.additionalPathing(value, newState.getCurrency)
+
+    actions.analytics.dataEvent({
+      action: 'exchange-click-selector',
+      label: `${newState.haveCurrency}-to-${newState.getCurrency}`,
+    })
   }
 
   handleFlipCurrency = () => {
+    const { haveCurrency, getCurrency, customWalletUse } = this.state
+
     this.setClearState()
     const newState = {
-      haveCurrency: this.state.getCurrency,
-      getCurrency: this.state.haveCurrency,
-      customWallet: this.state.customWalletUse ? this.wallets[this.state.haveCurrency.toUpperCase()] : '',
+      haveCurrency: getCurrency,
+      getCurrency: haveCurrency,
+      customWallet: customWalletUse ? this.wallets[haveCurrency.toUpperCase()] : '',
     }
-    const check = this.checkPair(this.state.haveCurrency, this.state.getCurrency)
+    const check = this.checkPair(haveCurrency, getCurrency)
 
     if (check === PAIR_CHECK_RESULT.EQUAL) {
-      const selected = actions.pairs.selectPair(this.state.haveCurrency)
+      const selected = actions.pairs.selectPair(haveCurrency)
       newState.getCurrency = selected[0].value
     }
 
     this.setState(() => (newState))
     this.additionalPathing(newState.haveCurrency, newState.getCurrency)
+
+    actions.analytics.dataEvent({
+      action: 'exchange-click-selector',
+      label: `${newState.haveCurrency}-to-${newState.getCurrency}`,
+    })
   }
 
   handlePush = (isWidget = false) => {
     const { intl: { locale } } = this.props
     const { haveCurrency, getCurrency } = this.state
-    const localization = this.props.match.params.locale
-      ? `/${this.props.match.params.locale}`
-      : ''
-    const tradeTicker = `${haveCurrency}-${getCurrency}`
+
+    const currency = haveCurrency.toLowerCase()
+
+    const pair = constants.tradeTicker
+      .filter(ticker => {
+        ticker = ticker.split('-')
+        return currency === ticker[0].toLowerCase()
+          ? ticker[0].toLowerCase() === currency
+          : ticker[1].toLowerCase() === currency
+      })
+      .map(pair => {
+        pair = pair.split('-')
+        return {
+          from: pair[0],
+          to: pair[1],
+        }
+      })
+
+    const sendLink = pair.filter(item => item.from === haveCurrency.toUpperCase() || item.from === getCurrency.toUpperCase())
+
+    const tradeTicker = `${sendLink[0].from.toLowerCase()}-${sendLink[0].to.toLowerCase()}`
+
     const hostname = window.location.origin
     const pathname = constants.tradeTicker.includes(tradeTicker.toUpperCase())
       ? tradeTicker
@@ -416,23 +462,25 @@ export default class PartialClosure extends Component {
     if (isWidget) {
       window.parent.location.replace(`${hostname}/${pathname}`)
     } else {
-      this.props.history.push(`${localization}/${tradeTicker}`)
+      this.props.history.push(localisedUrl(locale, `/${tradeTicker}`))
     }
   }
 
   setClearState = () => {
+    const { getCurrency, customWalletUse } = this.state
+
     this.setState(() => ({
       haveAmount: 0,
       haveUsd: 0,
       getUsd: 0,
       getAmount: '',
       maxAmount: 0,
-      maxBuyAmount: new BigNumber(0),
+      maxBuyAmount: BigNumber(0),
       peer: '',
       isNonOffers: false,
       isFetching: false,
       isDeclinedOffer: false,
-      customWallet: this.state.customWalletUse ? this.wallets[this.state.getCurrency.toUpperCase()] : '',
+      customWallet: customWalletUse ? this.wallets[getCurrency.toUpperCase()] : '',
     }))
   }
 
@@ -498,10 +546,12 @@ export default class PartialClosure extends Component {
   }
 
   extendedControlsSet = (value) => {
+    const { extendedControls } = this.state
+
     if (typeof value !== 'boolean') {
       return this.setState({ extendedControls: false })
     }
-    if (this.state.extendedControls === value) {
+    if (extendedControls === value) {
       return false
     }
     return this.setState({ extendedControls: value })
@@ -529,20 +579,24 @@ export default class PartialClosure extends Component {
       return <Redirect push to={`${localisedUrl(locale, links.swap)}/${getCurrency}-${haveCurrency}/${orderId}`} />
     }
 
-    let canDoOrder = !isNonOffers
-    if (!(Number(getAmount) > 0)) canDoOrder = false
-    if (this.customWalletAllowed() && !this.customWalletValid()) canDoOrder = false
+    const canDoOrder = !isNonOffers
+      && BigNumber(getAmount).isGreaterThan(0)
+      && this.customWalletValid()
+
+    const buyTokenFullName = currenciesData.find(item => item.currency === getCurrency.toUpperCase())
+      ? currenciesData.find(item => item.currency === getCurrency.toUpperCase()).fullName
+      : getCurrency.toUpperCase()
 
     return (
       <Fragment>
         {
           (!isWidget) && (
             <div styleName="TitleHolder">
-              <PageHeadline subTitle={subTitle} />
+              <PageHeadline subTitle={subTitle(buyTokenFullName)} />
             </div>
           )
         }
-        <div styleName={isWidget ? 'widgetSection' : 'section'} className={isWidget ? 'section' : ''} >
+        <div styleName={isWidgetLink ? 'widgetSection' : 'section'} className={isWidgetLink ? 'section' : ''} >
           {
             (!isWidget) && (
               <Advantages />
@@ -572,7 +626,7 @@ export default class PartialClosure extends Component {
               )
             }
             {
-              this.state.haveCurrency !== this.state.getCurrency && (
+              haveCurrency !== getCurrency && (
                 <div className={isWidget ? 'flipBtn' : ''}>
                   {
                     (extendedControls && balance > 0)
@@ -667,7 +721,7 @@ export default class PartialClosure extends Component {
                     <Toggle checked={!customWalletUse} onChange={this.handleCustomWalletUse} />
                     {
                       !isWidget && (
-                        <FormattedMessage id="UseAnotherWallet" defaultMessage="Specify the recipient's wallet address" />
+                        <FormattedMessage id="UseAnotherWallet" defaultMessage="Specify your receiving wallet address" />
                       )
                     }
                   </div>
