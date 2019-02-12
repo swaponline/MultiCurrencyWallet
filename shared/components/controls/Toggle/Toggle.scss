@@ -24,7 +24,6 @@ label.Switch > span:before {
 	left: 0;
 	position: absolute;
 	margin-top: -3px;
-	//top: .3em;
 	transition: border-color .2s, background-color .2s;
 	width: 2.55em;
 }
@@ -38,7 +37,6 @@ label.Switch > span:after {
 	left: 0;
 	position: absolute;
 	margin-top: -3px;
-	//top: .3em;
 	transition: transform .2s, border-color .2s;
 	width: 1.2em;
 }

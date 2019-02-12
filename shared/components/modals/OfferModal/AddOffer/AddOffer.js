@@ -206,10 +206,6 @@ export default class AddOffer extends Component {
       return undefined
     }
 
-    // if (areFloatsEqual(value, 0) || !value) {
-    //   return undefined
-    // }
-
     this.handleAnyChange({
       type: 'rate',
       value,

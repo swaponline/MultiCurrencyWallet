@@ -132,12 +132,6 @@ export default class PartialClosure extends Component {
     }, 2000)
   }
 
-  // componentDidUpdate(prevState, prevProps) {
-  //   if (prevState.haveCurrency !== this.state.haveCurrency || prevState.getCurrency !== this.state.getCurrency) {
-  //
-  //     }
-  // }
-
   componentWillUnmount() {
     clearInterval(this.timer)
   }
