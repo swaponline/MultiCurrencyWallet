@@ -6,6 +6,7 @@ import styles from './ExchangeRate.scss'
 import Row from '../Row/Row'
 import Value from '../Value/Value'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
+import BigNumber from 'bignumber.js'
 
 
 const title = defineMessages({
@@ -22,7 +23,7 @@ export default class ExchangeRate extends PureComponent {
     const { value, buyCurrency, sellCurrency, intl } = this.props
     return (
       <Row title={intl.formatMessage(title.ExchangeRate)}>
-        <Value value={1 / Number(value)} currency={sellCurrency} />
+        <Value value={BigNumber(1).div(value).toString()} currency={sellCurrency} />
         {' '}
         <div styleName="equal">
           <FormattedMessage id="ExchangeRate14" defaultMessage="=" />
