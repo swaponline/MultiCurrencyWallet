@@ -2853,10 +2853,7 @@
   },
   {
     "id": "transaction368",
-    "message": "Сумма должна быть больше ",
-    "files": [
-      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
-    ]
+    "message": "Сумма должна быть больше "
   },
   {
     "id": "transaction376",
@@ -3271,7 +3268,7 @@
   },
   {
     "id": "UseAnotherWallet",
-    "message": "Указать адрес кошелька получателя",
+    "message": "Указать адрес кошелька для получения",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -3299,7 +3296,7 @@
   },
   {
     "id": "partial437",
-    "message": "Atomic Swap обменник",
+    "message": "Обмен {buyCase} на Альткоины всего за 60 секунд с помощью AtomicSwap",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -3792,10 +3789,7 @@
   },
   {
     "id": "deposit231",
-    "message": "Получено {balance} / {need} {tooltip}",
-    "files": [
-      "shared/pages/Swap/DepositWindow/DepositWindow.js"
-    ]
+    "message": "Получено {balance} / {need} {tooltip}"
   },
   {
     "id": "deposit239",
@@ -3879,45 +3873,27 @@
   },
   {
     "id": "advantagesTitle1",
-    "message": "0% КОМИССИЯ",
-    "files": [
-      "shared/pages/PartialClosure/PureComponents/Advantages.js"
-    ]
+    "message": "0% КОМИССИЯ"
   },
   {
     "id": "advantagesTitle3",
-    "message": "БЕЗ 3-Й СТОРОНЫ",
-    "files": [
-      "shared/pages/PartialClosure/PureComponents/Advantages.js"
-    ]
+    "message": "БЕЗ 3-Й СТОРОНЫ"
   },
   {
     "id": "advantagesTitle4",
-    "message": "МОМЕНТАЛЬНЫЙ ОБМЕН",
-    "files": [
-      "shared/pages/PartialClosure/PureComponents/Advantages.js"
-    ]
+    "message": "МОМЕНТАЛЬНЫЙ ОБМЕН"
   },
   {
     "id": "advantagesTxt1",
-    "message": "Обмен происходит между Вами и другими холдерами (peer-2-peer). Процент с транзакции не взимается.",
-    "files": [
-      "shared/pages/PartialClosure/PureComponents/Advantages.js"
-    ]
+    "message": "Обмен происходит между Вами и другими холдерами (peer-2-peer). Процент с транзакции не взимается."
   },
   {
     "id": "advantagesTxt3",
-    "message": "В процесс обмена никто не может вмешаться.",
-    "files": [
-      "shared/pages/PartialClosure/PureComponents/Advantages.js"
-    ]
+    "message": "В процесс обмена никто не может вмешаться."
   },
   {
     "id": "advantagesTxt4",
-    "message": "Вы можете совершить обмен прямо сейчас. Операция происходит в течении 2-х минут.",
-    "files": [
-      "shared/pages/PartialClosure/PureComponents/Advantages.js"
-    ]
+    "message": "Вы можете совершить обмен прямо сейчас. Операция происходит в течении 2-х минут."
   },
   {
     "id": "advantagesTxt6",
@@ -4433,6 +4409,34 @@
     "message": "Create a secret key",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
+    ]
+  },
+  {
+    "id": "transaction444",
+    "message": "Сумма продажи должна быть больше чем",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "transaction450",
+    "message": "Сумма покупки должна быть больше чем",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "deposit300",
+    "message": "Получено {balance} / {need} {dynamicFee}{tooltip}",
+    "files": [
+      "shared/pages/Swap/DepositWindow/DepositWindow.js"
+    ]
+  },
+  {
+    "id": "deposit307",
+    "message": "(Включено {mineerFee} {sellCurrency} комиссии майнеров)",
+    "files": [
+      "shared/pages/Swap/DepositWindow/DepositWindow.js"
     ]
   }
 ]

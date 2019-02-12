@@ -7,7 +7,7 @@ import styles from './Advantages.scss'
 
 const Advantages = (props) => (
   <div styleName="advantages">
-    <div styleName="advantages__content">
+    {/* <div styleName="advantages__content">
 
       <article styleName="advantage">
         <img src="https://exchange.swap.online/images/advantages/1.png" alt="0% commission" />
@@ -26,7 +26,7 @@ const Advantages = (props) => (
         </div>
       </article>
 
-      {/* <article styleName="advantage">
+      <article styleName="advantage">
         <img src="https://exchange.swap.online/images/advantages/2.png" alt="No KYC" />
         <div styleName="advantage__title">
           <h5>
@@ -41,7 +41,7 @@ const Advantages = (props) => (
             />
           </p>
         </div>
-      </article> */}
+      </article>
 
       <article styleName="advantage">
         <img src="https://exchange.swap.online/images/advantages/3.png" alt="No 3d party" />
@@ -77,7 +77,7 @@ const Advantages = (props) => (
         </div>
       </article>
 
-      {/* <article styleName="advantage">
+      <article styleName="advantage">
         <img src="https://exchange.swap.online/images/advantages/5.png" alt="High security" />
         <div styleName="advantage__title">
           <h5>
@@ -92,9 +92,9 @@ const Advantages = (props) => (
             />
           </p>
         </div>
-      </article> */}
+      </article>
 
-      {/* <article styleName="advantage">
+      <article styleName="advantage">
         <img src="https://exchange.swap.online/images/advantages/6.png" alt="True anonymity" />
         <div styleName="advantage__title">
           <h5>
@@ -109,9 +109,9 @@ const Advantages = (props) => (
             />
           </p>
         </div>
-      </article> */}
+      </article>
 
-    </div>
+    </div> */}
 
     <div styleName="advFooter">
       <button

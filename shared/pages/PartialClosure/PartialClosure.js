@@ -43,8 +43,8 @@ const text = [
   <FormattedMessage id="partial224" defaultMessage="Leave empty for use Swap.Online wallet " />,
 ]
 
-const subTitle = (
-  <FormattedMessage id="partial437" defaultMessage="Atomic Swap Exchange" />
+const subTitle = (buy) => (
+  <FormattedMessage id="partial437" defaultMessage="Exchange {buyCase} and Altcoins in 60 seconds with AtomicSwap" values={{ buyCase: buy }} />
 )
 
 const isWidgetBuild = config && config.isWidget
@@ -289,8 +289,7 @@ export default class PartialClosure extends Component {
   }
 
   setOrderOnState = (orders) => {
-    const { exHaveRate, exGetRate } = this.state
-    const haveAmount = new BigNumber(this.state.haveAmount)
+    const { exHaveRate, exGetRate, haveAmount } = this.state
 
     let maxAllowedSellAmount = new BigNumber(0)
     let maxAllowedGetAmount = new BigNumber(0)
@@ -302,10 +301,10 @@ export default class PartialClosure extends Component {
     orders.forEach(item => {
       maxAllowedSellAmount = (maxAllowedSellAmount.isLessThanOrEqualTo(item.sellAmount)) ? item.sellAmount : maxAllowedSellAmount
       maxAllowedBuyAmount = (maxAllowedBuyAmount.isLessThanOrEqualTo(item.buyAmount)) ? item.buyAmount : maxAllowedBuyAmount
-      if (haveAmount.isLessThanOrEqualTo(item.buyAmount)) {
+      if (new BigNumber(haveAmount).isLessThanOrEqualTo(item.buyAmount)) {
         maxAllowedGetAmount = (maxAllowedGetAmount.isLessThanOrEqualTo(item.getAmount)) ? item.getAmount : maxAllowedGetAmount
-        const haveUsd = new BigNumber(String(exHaveRate)).multipliedBy(new BigNumber(haveAmount))
-        const getUsd  = new BigNumber(String(exGetRate)).multipliedBy(new BigNumber(item.getAmount))
+        const haveUsd = new BigNumber(exHaveRate).multipliedBy(haveAmount)
+        const getUsd  = new BigNumber(exGetRate).multipliedBy(item.getAmount)
 
         isFounded = true
         newState = {
@@ -337,7 +336,9 @@ export default class PartialClosure extends Component {
   }
 
   handleCustomWalletUse = () => {
-    const newCustomWalletUse = !this.state.customWalletUse
+    const { customWalletUse } = this.state
+
+    const newCustomWalletUse = !customWalletUse
 
     this.setState({
       customWalletUse: newCustomWalletUse,
@@ -346,59 +347,80 @@ export default class PartialClosure extends Component {
   }
 
   handleSetGetValue = ({ value }) => {
+    const { haveCurrency, getCurrency, customWalletUse } = this.state
+
     const newState = {
       getCurrency: value,
-      haveCurrency: this.state.haveCurrency,
-      customWallet: this.state.customWalletUse ? this.wallets[value.toUpperCase()] : '',
+      haveCurrency,
+      customWallet: customWalletUse ? this.wallets[value.toUpperCase()] : '',
     }
 
-    const check = this.checkPair(value, this.state.haveCurrency)
+    const check = this.checkPair(value, haveCurrency)
 
     if (check === PAIR_CHECK_RESULT.NO_PAIR) {
       const selected = actions.pairs.selectPair(value)
       newState.haveCurrency = selected[0].value
     } else if (check === PAIR_CHECK_RESULT.EQUAL) {
-      newState.haveCurrency = this.state.getCurrency
+      newState.haveCurrency = getCurrency
     }
 
     this.setState(() => (newState))
     this.additionalPathing(newState.haveCurrency, value)
+
+    actions.analytics.dataEvent({
+      action: 'exchange-click-selector',
+      label: `${newState.haveCurrency}-to-${newState.getCurrency}`,
+    })
   }
 
   handleSetHaveValue = ({ value }) => {
+    const { haveCurrency, getCurrency } = this.state
+
     const newState = {
-      getCurrency: this.state.getCurrency,
+      getCurrency,
       haveCurrency: value,
     }
-    const check = this.checkPair(value, this.state.getCurrency)
+    const check = this.checkPair(value, getCurrency)
 
     if (check === PAIR_CHECK_RESULT.NO_PAIR) {
       const selected = actions.pairs.selectPair(value)
       newState.getCurrency = selected[0].value
     } else if (check === PAIR_CHECK_RESULT.EQUAL) {
-      newState.getCurrency = this.state.haveCurrency
+      newState.getCurrency = haveCurrency
     }
 
     this.setState(() => (newState))
     this.additionalPathing(value, newState.getCurrency)
+
+    actions.analytics.dataEvent({
+      action: 'exchange-click-selector',
+      label: `${newState.haveCurrency}-to-${newState.getCurrency}`,
+    })
   }
 
   handleFlipCurrency = () => {
+    const { haveCurrency, getCurrency, customWalletUse } = this.state
+
     this.setClearState()
     const newState = {
-      haveCurrency: this.state.getCurrency,
-      getCurrency: this.state.haveCurrency,
-      customWallet: this.state.customWalletUse ? this.wallets[this.state.haveCurrency.toUpperCase()] : '',
+      haveCurrency: getCurrency,
+      getCurrency: haveCurrency,
+      customWallet: customWalletUse ? this.wallets[haveCurrency.toUpperCase()] : '',
     }
-    const check = this.checkPair(this.state.haveCurrency, this.state.getCurrency)
+    const check = this.checkPair(haveCurrency, getCurrency)
 
     if (check === PAIR_CHECK_RESULT.EQUAL) {
-      const selected = actions.pairs.selectPair(this.state.haveCurrency)
+      const selected = actions.pairs.selectPair(haveCurrency)
       newState.getCurrency = selected[0].value
     }
 
     this.setState(() => (newState))
     this.additionalPathing(newState.haveCurrency, newState.getCurrency)
+
+    actions.analytics.dataEvent({
+      action: 'exchange-click-selector',
+      label: `${newState.haveCurrency}-to-${newState.getCurrency}`,
+    })
   }
 
   handlePush = (isWidget = false) => {
@@ -421,6 +443,8 @@ export default class PartialClosure extends Component {
   }
 
   setClearState = () => {
+    const { getCurrency, customWalletUse } = this.state
+
     this.setState(() => ({
       haveAmount: 0,
       haveUsd: 0,
@@ -432,7 +456,7 @@ export default class PartialClosure extends Component {
       isNonOffers: false,
       isFetching: false,
       isDeclinedOffer: false,
-      customWallet: this.state.customWalletUse ? this.wallets[this.state.getCurrency.toUpperCase()] : '',
+      customWallet: customWalletUse ? this.wallets[getCurrency.toUpperCase()] : '',
     }))
   }
 
@@ -498,10 +522,12 @@ export default class PartialClosure extends Component {
   }
 
   extendedControlsSet = (value) => {
+    const { extendedControls } = this.state
+
     if (typeof value !== 'boolean') {
       return this.setState({ extendedControls: false })
     }
-    if (this.state.extendedControls === value) {
+    if (extendedControls === value) {
       return false
     }
     return this.setState({ extendedControls: value })
@@ -533,16 +559,20 @@ export default class PartialClosure extends Component {
     if (!(Number(getAmount) > 0)) canDoOrder = false
     if (this.customWalletAllowed() && !this.customWalletValid()) canDoOrder = false
 
+    const buyTokenFullName = currenciesData.find(item => item.currency === getCurrency.toUpperCase())
+      ? currenciesData.find(item => item.currency === getCurrency.toUpperCase()).fullName
+      : getCurrency.toUpperCase()
+
     return (
       <Fragment>
         {
           (!isWidget) && (
             <div styleName="TitleHolder">
-              <PageHeadline subTitle={subTitle} />
+              <PageHeadline subTitle={subTitle(buyTokenFullName)} />
             </div>
           )
         }
-        <div styleName={isWidget ? 'widgetSection' : 'section'} className={isWidget ? 'section' : ''} >
+        <div styleName={isWidgetLink ? 'widgetSection' : 'section'} className={isWidgetLink ? 'section' : ''} >
           {
             (!isWidget) && (
               <Advantages />
@@ -572,7 +602,7 @@ export default class PartialClosure extends Component {
               )
             }
             {
-              this.state.haveCurrency !== this.state.getCurrency && (
+              haveCurrency !== getCurrency && (
                 <div className={isWidget ? 'flipBtn' : ''}>
                   {
                     (extendedControls && balance > 0)
@@ -667,7 +697,7 @@ export default class PartialClosure extends Component {
                     <Toggle checked={!customWalletUse} onChange={this.handleCustomWalletUse} />
                     {
                       !isWidget && (
-                        <FormattedMessage id="UseAnotherWallet" defaultMessage="Specify the recipient's wallet address" />
+                        <FormattedMessage id="UseAnotherWallet" defaultMessage="Specify your receiving wallet address" />
                       )
                     }
                   </div>

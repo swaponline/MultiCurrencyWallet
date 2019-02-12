@@ -23,8 +23,8 @@ const Select = ({ balance, currency, changeBalance, switching, ...props }) => (
         <FormattedMessage id="Select15" defaultMessage="Sell " />
         1/10
       </div>
-      <div styleName="cell" onClick={() => changeBalance(balance / 4)}>1/4</div>
-      <div styleName="cell" onClick={() => changeBalance(balance / 2)}>1/2</div>
+      <div styleName="cell" onClick={() => changeBalance(balance / 4)}><FormattedMessage id="Select26" defaultMessage="1/4" /></div>
+      <div styleName="cell" onClick={() => changeBalance(balance / 2)}><FormattedMessage id="Select27" defaultMessage="1/2" /></div>
       <div styleName="cell" onClick={() => changeBalance(balance)}>
         <FormattedMessage id="Select24" defaultMessage="ALL" />
       </div>
