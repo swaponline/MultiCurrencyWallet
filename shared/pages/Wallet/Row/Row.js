@@ -435,7 +435,7 @@ export default class Row extends Component {
               }
               <div styleName="activeControlButtons">
                 <div styleName="actButton">
-                  {/*currency === 'EOS'  && !eosAccountActivated && (isMobile || showButtons) &&
+                  {/* currency === 'EOS'  && !eosAccountActivated && (isMobile || showButtons) &&
                     <button styleName="button buttonActivate" onClick={this.handleEosBuyAccount} data-tip data-for="Activate">
                       <FormattedMessage id="Row358" defaultMessage="Activate" />
                     </button>
