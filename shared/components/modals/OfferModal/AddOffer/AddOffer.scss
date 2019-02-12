@@ -8,6 +8,10 @@
   margin: 0 auto;
 }
 
+.exchangeRate {
+  margin: 20px 0;
+}
+
 @include media-tablet-landscape-and-lower  {
   .wrapper {
     width: 320px;
@@ -33,7 +37,7 @@
 }
 
 
-@include media-mobile { 
+@include media-mobile {
   .addOffer {
     width: 100%;
     .sellGroup {
@@ -48,8 +52,7 @@
       }
     }
     .exchangeRate {
-      margin: 25px 0;
+      margin: 40px 0;
     }
   }
 }
-

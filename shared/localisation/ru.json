@@ -3271,7 +3271,7 @@
   },
   {
     "id": "UseAnotherWallet",
-    "message": "Указать адрес кошелька получателя",
+    "message": "Указать адрес кошелька для получения",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -3299,7 +3299,7 @@
   },
   {
     "id": "partial437",
-    "message": "Atomic Swap обменник",
+    "message": "Обмен {buyCase} на Альткоины всего за 60 секунд с помощью AtomicSwap",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]

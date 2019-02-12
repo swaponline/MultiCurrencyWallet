@@ -68,8 +68,12 @@ export default class User extends React.Component {
 
   render() {
     const { view } = this.state
+    const { history } = this.props
 
-    const isWidget = (config && config.isWidget)
+    const isWidgetHash = history.location.pathname.includes('/exchange/') && history.location.hash === '#widget'
+    const isWidgetBuild = config && config.isWidget
+    const isWidget = (isWidgetBuild || isWidgetHash)
+
     const reputationPlaceholder = '0'
 
     const {

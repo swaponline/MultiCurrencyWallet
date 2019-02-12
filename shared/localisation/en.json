@@ -3248,7 +3248,7 @@
   },
   {
     "id": "UseAnotherWallet",
-    "message": "Specify the recipient's wallet address",
+    "message": "Specify your receiving wallet address",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -3280,7 +3280,7 @@
   },
   {
     "id": "partial437",
-    "message": "Atomic Swap Exchange",
+    "message": "Exchange {buyCase} and Altcoins in 60 seconds with AtomicSwap",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]

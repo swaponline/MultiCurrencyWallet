@@ -2,9 +2,9 @@ import config from 'app-config'
 
 
 const decimals = {
-  BTC: 8,
-  ETH: 18,
-  LTC: 8,
+  btc: 8,
+  eth: 18,
+  ltc: 8,
 
 }
 
@@ -16,4 +16,3 @@ Object.keys(config.erc20)
 export default {
   ...decimals,
 }
-
