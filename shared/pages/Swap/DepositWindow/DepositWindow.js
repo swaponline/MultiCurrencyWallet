@@ -215,7 +215,7 @@ export default class DepositWindow extends Component {
                       ? <strong>{`${remainingBalance}`} {swap.sellCurrency}{'  '}</strong>
                       : <span styleName="loaderHolder">
                           <InlineLoader />
-                        </a>}
+                        </span>}
                         {swap.sellCurrency === "SWAP" && (
                           <strong>
                             <FormattedMessage
