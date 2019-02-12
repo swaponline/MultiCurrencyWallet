@@ -587,10 +587,6 @@ export default class PartialClosure extends Component {
       ? currenciesData.find(item => item.currency === getCurrency.toUpperCase()).fullName
       : getCurrency.toUpperCase()
 
-    const buyTokenFullName = currenciesData.find(item => item.currency === getCurrency.toUpperCase())
-      ? currenciesData.find(item => item.currency === getCurrency.toUpperCase()).fullName
-      : getCurrency.toUpperCase()
-
     return (
       <Fragment>
         {
