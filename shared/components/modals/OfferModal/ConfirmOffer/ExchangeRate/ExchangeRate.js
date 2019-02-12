@@ -6,6 +6,7 @@ import styles from './ExchangeRate.scss'
 import Row from '../Row/Row'
 import Value from '../Value/Value'
 import { FormattedMessage } from 'react-intl'
+import BigNumber from 'bignumber.js'
 
 
 const title = [
@@ -14,7 +15,7 @@ const title = [
 
 const ExchangeRate = ({ value, buyCurrency, sellCurrency }) => (
   <Row title={title}>
-    <Value value={1 / Number(value)} currency={sellCurrency} />
+    <Value value={BigNumber(1).div(value).toString()} currency={sellCurrency} />
     {' '}
     <div styleName="equal">
       <FormattedMessage id="ExchangeRate14" defaultMessage="=" />
