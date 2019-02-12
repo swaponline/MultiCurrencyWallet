@@ -232,17 +232,19 @@ export default class PartialClosure extends Component {
   }
 
   setAmountOnState = (maxAmount, getAmount, buyAmount) => {
+    const { getCurrency } = this.state
+    const decimalPlaces = constants.tokenDecimals[getCurrency.toLowerCase()]
+
+    console.log('getAmount', BigNumber(getAmount).dp(decimalPlaces).toString())
 
     this.setState(() => ({
       maxAmount: Number(maxAmount),
-      getAmount: this.getFixed(getAmount),
+      getAmount: BigNumber(getAmount).dp(decimalPlaces).toString(),
       maxBuyAmount: buyAmount,
     }))
 
-    return getAmount.isLessThanOrEqualTo(maxAmount)
+    return BigNumber(getAmount).isLessThanOrEqualTo(maxAmount)
   }
-
-  getFixed = (value) => Number(value).toFixed(5)
 
   setAmount = (value) => {
     this.setState(() => ({ haveAmount: value, maxAmount: 0 }))
@@ -265,7 +267,7 @@ export default class PartialClosure extends Component {
       .map((item, index) => {
 
         const exRate = item.buyAmount.dividedBy(item.sellAmount)
-        const getAmount = new BigNumber(String(haveAmount)).dividedBy(exRate)
+        const getAmount = BigNumber(haveAmount).dividedBy(exRate).toString()
 
         return {
           sellAmount: item.sellAmount,
@@ -291,34 +293,38 @@ export default class PartialClosure extends Component {
   setOrderOnState = (orders) => {
     const { exHaveRate, exGetRate, haveAmount } = this.state
 
-    let maxAllowedSellAmount = new BigNumber(0)
-    let maxAllowedGetAmount = new BigNumber(0)
-    let maxAllowedBuyAmount = new BigNumber(0)
+    let maxAllowedSellAmount = BigNumber(0)
+    let maxAllowedGetAmount = BigNumber(0)
+    let maxAllowedBuyAmount = BigNumber(0)
 
-    let isFounded = false
+    let isFound = false
     let newState = {}
 
     orders.forEach(item => {
       maxAllowedSellAmount = (maxAllowedSellAmount.isLessThanOrEqualTo(item.sellAmount)) ? item.sellAmount : maxAllowedSellAmount
       maxAllowedBuyAmount = (maxAllowedBuyAmount.isLessThanOrEqualTo(item.buyAmount)) ? item.buyAmount : maxAllowedBuyAmount
-      if (new BigNumber(haveAmount).isLessThanOrEqualTo(item.buyAmount)) {
-        maxAllowedGetAmount = (maxAllowedGetAmount.isLessThanOrEqualTo(item.getAmount)) ? item.getAmount : maxAllowedGetAmount
-        const haveUsd = new BigNumber(exHaveRate).multipliedBy(haveAmount)
-        const getUsd  = new BigNumber(exGetRate).multipliedBy(item.getAmount)
 
-        isFounded = true
+      if (BigNumber(haveAmount).isLessThanOrEqualTo(item.buyAmount)) {
+
+        maxAllowedGetAmount = (maxAllowedGetAmount.isLessThanOrEqualTo(item.getAmount)) ? BigNumber(item.getAmount) : maxAllowedGetAmount
+
+        const haveUsd = BigNumber(exHaveRate).times(haveAmount)
+        const getUsd  = BigNumber(exGetRate).times(item.getAmount)
+
+        isFound = true
+
         newState = {
           haveUsd: Number(haveUsd).toFixed(2),
           getUsd: Number(getUsd).toFixed(2),
           isNonOffers: false,
-          peer: item.peer,
           goodRate: item.exRate,
+          peer: item.peer,
           orderId: item.orderId,
         }
       }
     })
 
-    if (isFounded) {
+    if (isFound) {
       this.setState(() => (newState))
     } else {
       this.setState(() => ({
@@ -426,10 +432,28 @@ export default class PartialClosure extends Component {
   handlePush = (isWidget = false) => {
     const { intl: { locale } } = this.props
     const { haveCurrency, getCurrency } = this.state
-    const localization = this.props.match.params.locale
-      ? `/${this.props.match.params.locale}`
-      : ''
-    const tradeTicker = `${haveCurrency}-${getCurrency}`
+
+    const currency = haveCurrency.toLowerCase()
+
+    const pair = constants.tradeTicker
+      .filter(ticker => {
+        ticker = ticker.split('-')
+        return currency === ticker[0].toLowerCase()
+          ? ticker[0].toLowerCase() === currency
+          : ticker[1].toLowerCase() === currency
+      })
+      .map(pair => {
+        pair = pair.split('-')
+        return {
+          from: pair[0],
+          to: pair[1],
+        }
+      })
+
+    const sendLink = pair.filter(item => item.from === haveCurrency.toUpperCase() || item.from === getCurrency.toUpperCase())
+
+    const tradeTicker = `${sendLink[0].from.toLowerCase()}-${sendLink[0].to.toLowerCase()}`
+
     const hostname = window.location.origin
     const pathname = constants.tradeTicker.includes(tradeTicker.toUpperCase())
       ? tradeTicker
@@ -438,7 +462,7 @@ export default class PartialClosure extends Component {
     if (isWidget) {
       window.parent.location.replace(`${hostname}/${pathname}`)
     } else {
-      this.props.history.push(`${localization}/${tradeTicker}`)
+      this.props.history.push(localisedUrl(locale, `/${tradeTicker}`))
     }
   }
 
@@ -451,7 +475,7 @@ export default class PartialClosure extends Component {
       getUsd: 0,
       getAmount: '',
       maxAmount: 0,
-      maxBuyAmount: new BigNumber(0),
+      maxBuyAmount: BigNumber(0),
       peer: '',
       isNonOffers: false,
       isFetching: false,
@@ -555,9 +579,13 @@ export default class PartialClosure extends Component {
       return <Redirect push to={`${localisedUrl(locale, links.swap)}/${getCurrency}-${haveCurrency}/${orderId}`} />
     }
 
-    let canDoOrder = !isNonOffers
-    if (!(Number(getAmount) > 0)) canDoOrder = false
-    if (this.customWalletAllowed() && !this.customWalletValid()) canDoOrder = false
+    const canDoOrder = !isNonOffers
+      && BigNumber(getAmount).isGreaterThan(0)
+      && this.customWalletValid()
+
+    const buyTokenFullName = currenciesData.find(item => item.currency === getCurrency.toUpperCase())
+      ? currenciesData.find(item => item.currency === getCurrency.toUpperCase()).fullName
+      : getCurrency.toUpperCase()
 
     const buyTokenFullName = currenciesData.find(item => item.currency === getCurrency.toUpperCase())
       ? currenciesData.find(item => item.currency === getCurrency.toUpperCase()).fullName

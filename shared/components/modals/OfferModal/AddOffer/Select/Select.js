@@ -4,6 +4,7 @@ import cssModules from 'react-css-modules'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import { FormattedMessage } from 'react-intl'
 import Switching from 'components/controls/Switching/Switching'
+import BigNumber from 'bignumber.js'
 
 
 const Select = ({ balance, currency, changeBalance, switching, ...props }) => (
@@ -19,13 +20,13 @@ const Select = ({ balance, currency, changeBalance, switching, ...props }) => (
     }
     <div styleName="groupField">
       <p>{currency.toUpperCase()} { balance ? parseFloat(balance).toFixed(5) : 0.00 }</p>
-      <div styleName="cell" onClick={() => changeBalance(balance / 10)}>
+      <div styleName="cell" onClick={() => changeBalance(BigNumber(balance).div(10))}>
         <FormattedMessage id="Select15" defaultMessage="Sell " />
         1/10
       </div>
-      <div styleName="cell" onClick={() => changeBalance(balance / 4)}><FormattedMessage id="Select26" defaultMessage="1/4" /></div>
-      <div styleName="cell" onClick={() => changeBalance(balance / 2)}><FormattedMessage id="Select27" defaultMessage="1/2" /></div>
-      <div styleName="cell" onClick={() => changeBalance(balance)}>
+      <div styleName="cell" onClick={() => changeBalance(BigNumber(balance).div(4))}><FormattedMessage id="Select26" defaultMessage="1/4" /></div>
+      <div styleName="cell" onClick={() => changeBalance(BigNumber(balance).div(2))}><FormattedMessage id="Select27" defaultMessage="1/2" /></div>
+      <div styleName="cell" onClick={() => changeBalance(BigNumber(balance))}>
         <FormattedMessage id="Select24" defaultMessage="ALL" />
       </div>
       <Switching onClick={switching} />

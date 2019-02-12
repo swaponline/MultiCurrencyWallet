@@ -204,4 +204,9 @@ export default {
     decimals: 8,
     fullName: 'WrappedBTC',
   },
+  abyss: {
+    address: '0x0E8d6b471e332F140e7d9dbB99E5E3822F728DA6',
+    decimals: 18,
+    fullName: 'ABYSS',
+  },
 }

@@ -109,7 +109,8 @@ export default class AddOffer extends Component {
       : balance
 
     const balanceWithoutFee = currentBalance.minus(this.state.minimalestAmountForSell)
-    const finalBalance = balanceWithoutFee.isGreaterThan(0) ? balanceWithoutFee : 0
+
+    const finalBalance = balanceWithoutFee.isGreaterThan(0) ? balanceWithoutFee : BigNumber(0)
 
     this.setState({
       balance: finalBalance,
@@ -315,7 +316,7 @@ export default class AddOffer extends Component {
       }
 
       case 'rate': {
-        if (sellAmount > mathConstants.high_precision) {
+        if (BigNumber(sellAmount).isGreaterThan(mathConstants.high_precision)) {
           // If user has set sell value change buy value
           /*
             XR++ -> S -> B--
@@ -356,8 +357,9 @@ export default class AddOffer extends Component {
 
   changeBalance = (value) => {
     this.setState(() => ({
-      sellAmount: value,
+      sellAmount: BigNumber(value).toString(),
     }))
+
     this.handleSellAmountChange(value)
   }
 
