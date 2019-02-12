@@ -29,12 +29,6 @@ import { util } from 'swap.app'
 import helpers, { constants, links } from 'helpers'
 
 
-const PAIR_CHECK_RESULT = {
-  NO_PAIR: -1,
-  EQUAL: 0,
-  HAVE_PAIR: 1,
-}
-
 const filterIsPartial = (orders) => orders
   .filter(order => order.isPartial && !order.isProcessing)
 
@@ -69,7 +63,8 @@ export default class PartialClosure extends Component {
     orders: [],
   }
 
-  static getDerivedStateFromProps({ orders }, { haveCurrency, getCurrency }) {
+  static getDerivedStateFromProps({ orders, history, match: { params: { buy, sell, locale } } }, { haveCurrency, getCurrency }) {
+
     if (!Array.isArray(orders)) { return }
 
     const filteredOrders = orders.filter(order => !order.isMy
@@ -81,17 +76,15 @@ export default class PartialClosure extends Component {
     }
   }
 
-  constructor({ tokensData, currenciesData, match: { params: { buy, sell, locale } }, history, ...props }) {
+  constructor({ tokensData, currenciesData, match: { params: { buy, sell } }, intl: { locale }, history, ...props }) {
     super()
 
     const sellToken = sell || ((!isWidgetBuild) ? 'eth' : 'btc')
     const buyToken = buy || ((!isWidgetBuild) ? 'btc' : config.erc20token)
-    const localization = locale ? `/${locale}` : ''
 
     if (!(buy && sell) && !props.location.hash.includes('#widget')) {
-      history.push(`${localization}/exchange/${sellToken}-to-${buyToken}`)
+      history.push(localisedUrl(locale, `/exchange/${sellToken}-to-${buyToken}`))
     }
-
     this.wallets = {}
     currenciesData.forEach(item => {
       this.wallets[item.currency] = item.address
@@ -129,8 +122,7 @@ export default class PartialClosure extends Component {
 
   componentDidMount() {
     const { haveCurrency } = this.state
-
-    actions.pairs.selectPair(haveCurrency)
+    this.checkPair(haveCurrency)
 
     this.usdRates = {}
     this.getUsdBalance()
@@ -139,6 +131,12 @@ export default class PartialClosure extends Component {
       this.setOrders()
     }, 2000)
   }
+
+  // componentDidUpdate(prevState, prevProps) {
+  //   if (prevState.haveCurrency !== this.state.haveCurrency || prevState.getCurrency !== this.state.getCurrency) {
+  //
+  //     }
+  // }
 
   componentWillUnmount() {
     clearInterval(this.timer)
@@ -155,11 +153,10 @@ export default class PartialClosure extends Component {
   }
 
   additionalPathing = (sell, buy) => {
-    const localization = this.props.match.params.locale
-      ? `/${this.props.match.params.locale}`
-      : ''
+    const { intl: { locale } } = this.props
+
     if (!this.props.location.hash.includes('#widget')) {
-      this.props.history.push(`${localization}/exchange/${sell}-to-${buy}`)
+      this.props.history.push(localisedUrl(locale, `/exchange/${sell}-to-${buy}`))
     }
   }
 
@@ -355,77 +352,58 @@ export default class PartialClosure extends Component {
   handleSetGetValue = ({ value }) => {
     const { haveCurrency, getCurrency, customWalletUse } = this.state
 
-    const newState = {
-      getCurrency: value,
-      haveCurrency,
-      customWallet: customWalletUse ? this.wallets[value.toUpperCase()] : '',
+    if (value === haveCurrency) {
+      this.handleFlipCurrency()
+    } else {
+      this.setState(() => ({
+        getCurrency: value,
+        haveCurrency,
+        customWallet: customWalletUse ? this.wallets[value.toUpperCase()] : '',
+      }))
+      this.additionalPathing(haveCurrency, value)
+      actions.analytics.dataEvent({
+        action: 'exchange-click-selector',
+        label: `${haveCurrency}-to-${getCurrency}`,
+      })
     }
-
-    const check = this.checkPair(value, haveCurrency)
-
-    if (check === PAIR_CHECK_RESULT.NO_PAIR) {
-      const selected = actions.pairs.selectPair(value)
-      newState.haveCurrency = selected[0].value
-    } else if (check === PAIR_CHECK_RESULT.EQUAL) {
-      newState.haveCurrency = getCurrency
-    }
-
-    this.setState(() => (newState))
-    this.additionalPathing(newState.haveCurrency, value)
-
-    actions.analytics.dataEvent({
-      action: 'exchange-click-selector',
-      label: `${newState.haveCurrency}-to-${newState.getCurrency}`,
-    })
   }
 
   handleSetHaveValue = ({ value }) => {
-    const { haveCurrency, getCurrency } = this.state
+    const { haveCurrency, getCurrency, customWalletUse } = this.state
 
-    const newState = {
-      getCurrency,
-      haveCurrency: value,
+    if (value === getCurrency) {
+      this.handleFlipCurrency()
+    } else {
+      this.setState(() => ({
+        haveCurrency: value,
+        getCurrency,
+        customWallet: customWalletUse ? this.wallets[value.toUpperCase()] : '',
+      }))
+      this.additionalPathing(value, getCurrency)
+      actions.analytics.dataEvent({
+        action: 'exchange-click-selector',
+        label: `${haveCurrency}-to-${getCurrency}`,
+      })
+      this.checkPair(value)
     }
-    const check = this.checkPair(value, getCurrency)
-
-    if (check === PAIR_CHECK_RESULT.NO_PAIR) {
-      const selected = actions.pairs.selectPair(value)
-      newState.getCurrency = selected[0].value
-    } else if (check === PAIR_CHECK_RESULT.EQUAL) {
-      newState.getCurrency = haveCurrency
-    }
-
-    this.setState(() => (newState))
-    this.additionalPathing(value, newState.getCurrency)
-
-    actions.analytics.dataEvent({
-      action: 'exchange-click-selector',
-      label: `${newState.haveCurrency}-to-${newState.getCurrency}`,
-    })
   }
 
   handleFlipCurrency = () => {
     const { haveCurrency, getCurrency, customWalletUse } = this.state
 
     this.setClearState()
-    const newState = {
+
+    this.checkPair(getCurrency)
+    this.additionalPathing(getCurrency, haveCurrency)
+    this.setState(() => ({
       haveCurrency: getCurrency,
       getCurrency: haveCurrency,
       customWallet: customWalletUse ? this.wallets[haveCurrency.toUpperCase()] : '',
-    }
-    const check = this.checkPair(haveCurrency, getCurrency)
-
-    if (check === PAIR_CHECK_RESULT.EQUAL) {
-      const selected = actions.pairs.selectPair(haveCurrency)
-      newState.getCurrency = selected[0].value
-    }
-
-    this.setState(() => (newState))
-    this.additionalPathing(newState.haveCurrency, newState.getCurrency)
+    }))
 
     actions.analytics.dataEvent({
       action: 'exchange-click-selector',
-      label: `${newState.haveCurrency}-to-${newState.getCurrency}`,
+      label: `${haveCurrency}-to-${getCurrency}`,
     })
   }
 
@@ -450,9 +428,10 @@ export default class PartialClosure extends Component {
         }
       })
 
-    const sendLink = pair.filter(item => item.from === haveCurrency.toUpperCase() || item.from === getCurrency.toUpperCase())
+    const sendLinkFrom = pair.filter(item => item.from === haveCurrency.toUpperCase() || item.from === getCurrency.toUpperCase())
+    const sendLinkTo = pair.filter(item => item.to === haveCurrency.toUpperCase() || item.to === getCurrency.toUpperCase())
 
-    const tradeTicker = `${sendLink[0].from.toLowerCase()}-${sendLink[0].to.toLowerCase()}`
+    const tradeTicker = `${sendLinkFrom[0].from.toLowerCase()}-${sendLinkTo[0].to.toLowerCase()}`
 
     const hostname = window.location.origin
     const pathname = constants.tradeTicker.includes(tradeTicker.toUpperCase())
@@ -523,19 +502,19 @@ export default class PartialClosure extends Component {
     return false
   }
 
-  checkPair = (value, staticVal) => {
+  checkPair = (value) => {
     const selected = actions.pairs.selectPair(value)
 
-    if (value === staticVal) {
-      return PAIR_CHECK_RESULT.EQUAL
-    }
-
-    const check = selected.map(item => item.value).includes(staticVal)
-
+    const check = selected.map(item => item.value).includes(this.state.getCurrency)
     if (!check) {
-      return PAIR_CHECK_RESULT.NO_PAIR
+      this.setState(() => ({
+        getCurrency: selected[0].value,
+      }))
+    } else if (this.state.getCurrency === value) {
+      this.setState(() => ({
+        getCurrency: selected[0].value,
+      }))
     }
-    return PAIR_CHECK_RESULT.HAVE_PAIR
   }
 
   changeBalance = (value) => {

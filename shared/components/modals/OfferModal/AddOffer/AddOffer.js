@@ -109,6 +109,7 @@ export default class AddOffer extends Component {
       : balance
 
     const balanceWithoutFee = currentBalance.minus(this.state.minimalestAmountForSell)
+
     const finalBalance = balanceWithoutFee.isGreaterThan(0) ? balanceWithoutFee : BigNumber(0)
 
     this.setState({

@@ -4121,10 +4121,7 @@
   },
   {
     "id": "deposit231",
-    "message": "Received {balance} / {need} {tooltip}",
-    "files": [
-      "shared/pages/Swap/DepositWindow/DepositWindow.js"
-    ]
+    "message": "Received {balance} / {need} {tooltip}"
   },
   {
     "id": "deposit239",
@@ -4404,6 +4401,20 @@
     "message": "Buy amount must be greater than",
     "files": [
       "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "deposit300",
+    "message": "Received {balance} / {need} {dynamicFee}{tooltip}",
+    "files": [
+      "shared/pages/Swap/DepositWindow/DepositWindow.js"
+    ]
+  },
+  {
+    "id": "deposit307",
+    "message": "(included {mineerFee} {sellCurrency} miners fee)",
+    "files": [
+      "shared/pages/Swap/DepositWindow/DepositWindow.js"
     ]
   }
 ]
