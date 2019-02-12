@@ -20,6 +20,8 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import minAmountOffer from 'helpers/constants/minAmountOffer'
 import coinsWithDynamicFee from 'helpers/constants/coinsWithDynamicFee'
+import BigNumber from 'bignumber.js'
+
 
 @injectIntl
 @connect(({ currencies: { items: currencies }, user: { ethData: { address } } }) => ({
@@ -63,27 +65,11 @@ export default class ConfirmOffer extends Component {
     actions.modals.close('OfferModal')
   }
 
-  getUniqId = () => {
-    const { address } = this.props
-    let id = Date.now()
-
-    return `${address}-${++id}`
-  }
-
   createOrder = () => {
-    const { offer: { buyAmount, sellAmount, buyCurrency, sellCurrency, exchangeRate, isPartial } } = this.props
-
-    const data = {
-      buyCurrency: `${buyCurrency}`,
-      sellCurrency: `${sellCurrency}`,
-      buyAmount: Number(buyAmount),
-      sellAmount: Number(sellAmount),
-      exchangeRate: Number(exchangeRate),
-      isPartial,
-    }
+    const { offer } = this.props
 
     // actions.analytics.dataEvent('orderbook-addoffer-click-confirm-button')
-    actions.core.createOrder(data, isPartial)
+    actions.core.createOrder(offer, offer.isPartial)
     actions.core.updateCore()
   }
 
