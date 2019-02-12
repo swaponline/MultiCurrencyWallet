@@ -66,19 +66,10 @@ export default class ConfirmOffer extends Component {
   }
 
   createOrder = () => {
-    const { offer: { buyAmount, sellAmount, buyCurrency, sellCurrency, exchangeRate, isPartial } } = this.props
-
-    const data = {
-      buyCurrency,
-      sellCurrency,
-      buyAmount,
-      sellAmount,
-      exchangeRate,
-      isPartial,
-    }
+    const { offer } = this.props
 
     // actions.analytics.dataEvent('orderbook-addoffer-click-confirm-button')
-    actions.core.createOrder(data, isPartial)
+    actions.core.createOrder(offer, offer.isPartial)
     actions.core.updateCore()
   }
 
