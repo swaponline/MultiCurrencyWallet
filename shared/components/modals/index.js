@@ -9,6 +9,7 @@ import Approve from './Approve/Approve'
 import ImportKeys from './ImportKeys/ImportKeys'
 import ShowMoreCoins from './ShowMoreCoins/ShowMoreCoins'
 import EthChecker from './EthChecker/EthChecker'
+import Keychain from './Keychain/Keychain'
 import ReceiveModal from './ReceiveModal/ReceiveModal'
 import DownloadModal from './DownloadModal/DownloadModal'
 
@@ -25,6 +26,7 @@ export default {
   TelosRegisterModal,
   Approve,
   EthChecker,
+  Keychain,
   ReceiveModal,
   DownloadModal,
 }

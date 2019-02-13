@@ -303,6 +303,13 @@
     ]
   },
   {
+    "id": "Keychain23",
+    "message": "Обновить KeyChain",
+    "files": [
+      "shared/components/modals/Keychain/Keychain.js"
+    ]
+  },
+  {
     "id": "ImportKeys107",
     "message": "Эта процедура перепишет Ваш общедоступный ключ. Если Вы не уверены, Мы рекомендуем Вам отказаться",
     "files": [

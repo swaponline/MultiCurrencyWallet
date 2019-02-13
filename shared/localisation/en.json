@@ -303,6 +303,13 @@
     ]
   },
   {
+    "id": "Keychain23",
+    "message": "Update KeyChain",
+    "files": [
+      "shared/components/modals/Keychain/Keychain.js"
+    ]
+  },
+  {
     "id": "ImportKeys107",
     "message": "This procedure will rewrite your private key. If you are not sure about it, we recommend to press cancel",
     "files": [
