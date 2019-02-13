@@ -32,7 +32,6 @@ export default class UserTooltip extends Component {
         { feeds.length < 3  ? (
           feeds.map(row => {
             const { request, content: { buyAmount, buyCurrency, sellAmount, sellCurrency }, id, peer: ownerPeer } = row
-            const reputationPlaceholder = '?'
 
             return (
               mePeer === ownerPeer &&
@@ -43,7 +42,7 @@ export default class UserTooltip extends Component {
                       <FormattedMessage
                         id="userTooltip43"
                         defaultMessage="User ({reputation}) wants to swap"
-                        values={{ reputation: <b>{Number.isInteger(reputation) ? reputation : reputationPlaceholder}</b> }}
+                        values={{ reputation: <b>{Number.isInteger(reputation) ? reputation : '?'}</b> }}
                       />
                     </div>
                     <div styleName="currency">

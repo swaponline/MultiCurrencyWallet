@@ -1832,10 +1832,7 @@
   },
   {
     "id": "Row263",
-    "message": "Use another",
-    "files": [
-      "shared/pages/Wallet/Row/Row.js"
-    ]
+    "message": "Use another"
   },
   {
     "id": "Row268",
@@ -2906,10 +2903,7 @@
   },
   {
     "id": "Row358",
-    "message": "Activate",
-    "files": [
-      "shared/pages/Wallet/Row/Row.js"
-    ]
+    "message": "Activate"
   },
   {
     "id": "Row377",
