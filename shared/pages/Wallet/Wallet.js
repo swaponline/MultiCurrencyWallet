@@ -204,10 +204,12 @@ export default class Wallet extends Component {
       },
     })
 
+    const sectionWalletStyleName = isMobile ? 'sectionWalletMobile' : 'sectionWallet'
+
     this.forceCautionUserSaveMoney()
 
     return (
-      <section styleName={isMobile ? 'sectionWalletMobile' : 'sectionWallet'}>
+      <section styleName={isWidgetBuild ? `${sectionWalletStyleName} ${sectionWalletStyleName}_widget` : sectionWalletStyleName}>
         <PageSeo
           location={location}
           defaultTitle={intl.formatMessage(title.metaTitle)}
