@@ -78,11 +78,7 @@ export default class AddOffer extends Component {
   }
 
   checkBalance = async (sellCurrency, buyCurrency) => {
-    const updateBalance = await actions[sellCurrency].getBalance(sellCurrency)
-
-    this.setState({
-      balance: updateBalance,
-    })
+    await actions[sellCurrency].getBalance(sellCurrency)
 
     const { items, tokenItems } = this.props
 
@@ -113,7 +109,7 @@ export default class AddOffer extends Component {
     const finalBalance = balanceWithoutFee.isGreaterThan(0) ? balanceWithoutFee : BigNumber(0)
 
     this.setState({
-      balance: finalBalance,
+      balance: finalBalance.toString(),
     })
   }
 
@@ -162,8 +158,8 @@ export default class AddOffer extends Component {
     }
     this.setState({
       buyCurrency: value,
-      sellAmount: Number.isNaN(sellAmount) ? '' : sellAmount,
-      buyAmount: Number.isNaN(buyAmount) ? '' : buyAmount,
+      buyAmount: buyAmount.isGreaterThan(0) ? buyAmount.toString() : '',
+      sellAmount: sellAmount.isGreaterThan(0) ? sellAmount.toString() : '',
       isSellFieldInteger: config.erc20[sellCurrency] && config.erc20[sellCurrency].decimals === 0,
       isBuyFieldInteger,
     })
@@ -192,8 +188,9 @@ export default class AddOffer extends Component {
     }
 
     this.setState({
-      buyAmount: Number.isNaN(buyAmount) ? '' : buyAmount,
-      sellAmount: Number.isNaN(sellAmount) ? '' : sellAmount,
+      sellCurrency: value,
+      buyAmount: buyAmount.isGreaterThan(0) ? buyAmount.toString() : '',
+      sellAmount: sellAmount.isGreaterThan(0) ? sellAmount.toString() : '',
       isSellFieldInteger,
       isBuyFieldInteger: config.erc20[buyCurrency] && config.erc20[buyCurrency].decimals === 0,
     })
@@ -410,9 +407,9 @@ export default class AddOffer extends Component {
 
     const isDisabled = !exchangeRate
       || !buyAmount && !sellAmount
-      || sellAmount > balance
-      || !isToken && sellAmount < minimalAmountSell
-      || buyAmount < minimalAmountBuy
+      || BigNumber(sellAmount).isGreaterThan(balance)
+      || !isToken && BigNumber(sellAmount).isLessThan(minimalAmountSell)
+      || BigNumber(buyAmount).isLessThan(minimalAmountBuy)
 
     if (linked.sellAmount.value !== '') {
       linked.sellAmount.check((value) => (BigNumber(value).isGreaterThan(minimalAmountSell)),
