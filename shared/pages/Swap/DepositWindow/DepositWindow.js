@@ -113,7 +113,7 @@ export default class DepositWindow extends Component {
     if (coinsWithDynamicFee.includes(swap.sellCurrency.toLowerCase())) {
       const dynamicFee = await helpers[swap.sellCurrency.toLowerCase()].estimateFeeValue({ method: 'swap' })
 
-      const newSellAmount = new BigNumber(sellAmount).plus(dynamicFee)
+      const newSellAmount = BigNumber(sellAmount).plus(dynamicFee)
 
       const requiredAmount = dynamicFee > 0 ? newSellAmount : sellAmount
 
@@ -295,22 +295,11 @@ export default class DepositWindow extends Component {
               ) : (
                 <FormattedMessage
                   id="deposit300"
-                  defaultMessage="Received {balance} / {need} {dynamicFee}{tooltip}"
+                  defaultMessage="Received {balance} / {need} {tooltip}"
                   values={{
                     br: <br />,
                     balance: <strong>{balanceToRender} {swap.sellCurrency}{'  '}</strong>,
                     need: <strong>{`${sellAmount}`} {swap.sellCurrency}</strong>,
-                    dynamicFee: dynamicFee > 0 &&
-                    <a>
-                      <FormattedMessage
-                        id="deposit307"
-                        defaultMessage="(included {mineerFee} {sellCurrency} miners fee) "
-                        values={{
-                          mineerFee: dynamicFee,
-                          sellCurrency: swap.sellCurrency,
-                        }}
-                      />
-                      </a>,
                     tooltip:
                       <Tooltip id="dep226">
                         <FormattedMessage
@@ -325,7 +314,6 @@ export default class DepositWindow extends Component {
                   }}
                 />
               )}
-              <div>
               {isBalanceEnough
                 ? <FormattedMessage id="deposit198.1" defaultMessage="create Ethereum Contract.{br}Please wait, it can take a few minutes..." values={{ br: <br /> }} />
                 : <FormattedMessage id="deposit198" defaultMessage="waiting for payment..." />
@@ -333,6 +321,18 @@ export default class DepositWindow extends Component {
               <a styleName="loaderHolder">
                 <InlineLoader />
               </a>
+              {dynamicFee > 0 &&
+              <a styleName="included">
+                <FormattedMessage
+                  id="deposit320"
+                  defaultMessage="(included {mineerFee} {sellCurrency} miners fee) "
+                  values={{
+                    mineerFee: dynamicFee,
+                    sellCurrency: swap.sellCurrency,
+                  }}
+                />
+              </a>}
+              <div>
             </div>
             {/* eslint-enable */}
           </div>
