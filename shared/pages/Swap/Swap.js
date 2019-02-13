@@ -128,13 +128,6 @@ export default class SwapComponent extends PureComponent {
     }
   }
 
-  // componentWillMount() {
-  //   actions.api.checkServers()
-  //     .then(() => {
-  //
-  //     })
-  // }
-
   setSaveSwapId = (orderId) => {
     let swapsId = JSON.parse(localStorage.getItem('swapId'))
 

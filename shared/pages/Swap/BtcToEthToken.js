@@ -28,12 +28,6 @@ import FeeControler from './FeeControler/FeeControler'
 @CSSModules(styles)
 export default class BtcToEthToken extends Component {
 
-  // static getDerivedStateFromProps({ enoughBalance }) {
-  //   return {
-  //     enoughBalance,
-  //   }
-  // }
-
   constructor({ swap, currencyData, ethData, enoughBalance, styles, depositWindow }) {
 
     super()

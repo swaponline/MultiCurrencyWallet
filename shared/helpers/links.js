@@ -31,7 +31,7 @@ export default {
   career: 'https://wiki.swap.online/careers-swap-online/',
   contacts: 'https://wiki.swap.online/contacts-swap-online/',
   concept: 'https://wiki.swap.online/en.pdf',
-  description: 'https://docs.google.com/document/d/1XNLzmNXkFeJWveJp62vFPQdjH8xabpeSm6ifbgj4MeM/edit?usp=sharing',
+  description: 'https://docs.google.com/document/d/1MWrDR5pc3FB7AiWBO0GyBWBSci3VuDKNvknkPHtTzl8/edit#heading=h.tml4qc7dhie9',
   research: 'https://docs.google.com/spreadsheets/d/1qWFLK2y8oMH5Gfam-iwqXPzLtwNabzp_EL6QFxjSBc0/edit?usp=sharing',
   reuters: 'https://www.reuters.com/brandfeatures/venture-capital/article?id=37488',
   wiki: 'https://wiki.swap.online',

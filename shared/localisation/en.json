@@ -1839,10 +1839,7 @@
   },
   {
     "id": "Row263",
-    "message": "Use another",
-    "files": [
-      "shared/pages/Wallet/Row/Row.js"
-    ]
+    "message": "Use another"
   },
   {
     "id": "Row268",
@@ -2834,10 +2831,7 @@
   },
   {
     "id": "transaction368",
-    "message": "Amount must be greater than ",
-    "files": [
-      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
-    ]
+    "message": "Amount must be greater than "
   },
   {
     "id": "transaction376",
@@ -2883,10 +2877,7 @@
   },
   {
     "id": "Row358",
-    "message": "Activate",
-    "files": [
-      "shared/pages/Wallet/Row/Row.js"
-    ]
+    "message": "Activate"
   },
   {
     "id": "Row377",
@@ -3788,10 +3779,7 @@
   },
   {
     "id": "deposit231",
-    "message": "Received {balance} / {need} {tooltip}",
-    "files": [
-      "shared/pages/Swap/DepositWindow/DepositWindow.js"
-    ]
+    "message": "Received {balance} / {need} {tooltip}"
   },
   {
     "id": "deposit239",
@@ -3879,31 +3867,19 @@
   },
   {
     "id": "advantagesTitle1",
-    "message": "0% commission",
-    "files": [
-      "shared/pages/PartialClosure/PureComponents/Advantages.js"
-    ]
+    "message": "0% commission"
   },
   {
     "id": "advantagesTitle3",
-    "message": "No 3d party",
-    "files": [
-      "shared/pages/PartialClosure/PureComponents/Advantages.js"
-    ]
+    "message": "No 3d party"
   },
   {
     "id": "advantagesTitle4",
-    "message": "Super fast",
-    "files": [
-      "shared/pages/PartialClosure/PureComponents/Advantages.js"
-    ]
+    "message": "Super fast"
   },
   {
     "id": "advantagesTxt1",
-    "message": "The exchange is happening between you and other crypto holders (peer-2-peer). No percentage charged of the transaction.",
-    "files": [
-      "shared/pages/PartialClosure/PureComponents/Advantages.js"
-    ]
+    "message": "The exchange is happening between you and other crypto holders (peer-2-peer). No percentage charged of the transaction."
   },
   {
     "id": "advantagesTxt2",
@@ -3911,17 +3887,11 @@
   },
   {
     "id": "advantagesTxt3",
-    "message": "No-one can interfere with the exchange process.",
-    "files": [
-      "shared/pages/PartialClosure/PureComponents/Advantages.js"
-    ]
+    "message": "No-one can interfere with the exchange process."
   },
   {
     "id": "advantagesTxt4",
-    "message": "You can exchange right now. The transaction is direct and within 2 minutes.",
-    "files": [
-      "shared/pages/PartialClosure/PureComponents/Advantages.js"
-    ]
+    "message": "You can exchange right now. The transaction is direct and within 2 minutes."
   },
   {
     "id": "advantagesButtonTitle",
@@ -4425,6 +4395,52 @@
     "message": "Cryptocurrency Wallet with Atomic Swap Exchange",
     "files": [
       "shared/pages/Wallet/Wallet.js"
+    ]
+  },
+  {
+    "id": "transaction444",
+    "message": "Sell amount must be greater than",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "transaction450",
+    "message": "Buy amount must be greater than",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "deposit300",
+    "message": "Received {balance} / {need} {dynamicFee}{tooltip}",
+    "files": [
+      "shared/pages/Swap/DepositWindow/DepositWindow.js"
+    ]
+  },
+  {
+    "id": "deposit307",
+    "message": "(included {mineerFee} {sellCurrency} miners fee)"
+  },
+  {
+    "id": "Select26",
+    "message": "1/4",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/Select/Select.js"
+    ]
+  },
+  {
+    "id": "Select27",
+    "message": "1/2",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/Select/Select.js"
+    ]
+  },
+  {
+    "id": "deposit320",
+    "message": "(included {mineerFee} {sellCurrency} miners fee)",
+    "files": [
+      "shared/pages/Swap/DepositWindow/DepositWindow.js"
     ]
   }
 ]

@@ -435,11 +435,11 @@ export default class Row extends Component {
               }
               <div styleName="activeControlButtons">
                 <div styleName="actButton">
-                  {currency === 'EOS'  && !eosAccountActivated && (isMobile || showButtons) &&
+                  {/* currency === 'EOS'  && !eosAccountActivated && (isMobile || showButtons) &&
                     <button styleName="button buttonActivate" onClick={this.handleEosBuyAccount} data-tip data-for="Activate">
                       <FormattedMessage id="Row358" defaultMessage="Activate" />
                     </button>
-                  }
+                  */}
                 </div>
                 {/* <div styleName="actButtonTelos">
                   {currency === 'TLOS'  && !telosAccountActivated && !address &&
@@ -459,12 +459,12 @@ export default class Row extends Component {
                   </span>
                 </ReactTooltip>
                 <div styleName="useButton">
-                  {
+                  {/*
                     currency === 'EOS' && showButtons &&
                     <button styleName="button buttonUseAnother" onClick={this.handleEosRegister} data-tip data-for="Use">
                       <FormattedMessage id="Row263" defaultMessage="Use another" />
                     </button>
-                  }
+                  */}
                 </div>
                 <div styleName={!address ? 'useButtonTelos' : 'useButtonTelos addressExist'}>
                   {/*
