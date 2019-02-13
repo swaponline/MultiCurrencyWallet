@@ -55,8 +55,6 @@ export default class AddOffer extends Component {
       isPartial: true,
       isSending: false,
       manualRate: false,
-      isBuyFieldInteger: false,
-      isSellFieldInteger: false,
       buyAmount: buyAmount || '',
       sellAmount: sellAmount || '',
       exchangeRate: exchangeRate || 1,
@@ -144,59 +142,49 @@ export default class AddOffer extends Component {
   }
 
   handleBuyCurrencySelect = async ({ value }) => {
-    let { buyCurrency, sellCurrency, buyAmount, sellAmount } = this.state
+    const { buyCurrency, sellCurrency, buyAmount, sellAmount } = this.state
 
-    this.checkPair(this.state.sellCurrency)
+    if (sellCurrency === value) {
+      await this.switching()
+    } else {
 
-    await this.checkBalance(sellCurrency)
-    await this.updateExchangeRate(sellCurrency, value)
+      this.checkPair(sellCurrency)
 
-    const { exchangeRate } = this.state
+      await this.checkBalance(sellCurrency)
+      await this.updateExchangeRate(sellCurrency, value)
 
-    sellAmount = new BigNumber(buyAmount || 0).multipliedBy(exchangeRate)
+      this.setState(() => ({
+        buyCurrency: value,
+      }))
 
-    const isBuyFieldInteger = config.erc20[buyCurrency] && config.erc20[buyCurrency].decimals === 0
-
-    if (isBuyFieldInteger) {
-      buyAmount = new BigNumber(buyAmount || 0).dp(0, BigNumber.ROUND_HALF_EVEN)
+      if (sellAmount > 0 || buyAmount > 0) {
+        this.handleBuyAmountChange(buyAmount)
+        this.handleSellAmountChange(sellAmount)
+      }
     }
-    this.setState({
-      buyCurrency: value,
-      sellAmount: Number.isNaN(sellAmount) ? '' : sellAmount,
-      buyAmount: Number.isNaN(buyAmount) ? '' : buyAmount,
-      isSellFieldInteger: config.erc20[sellCurrency] && config.erc20[sellCurrency].decimals === 0,
-      isBuyFieldInteger,
-    })
   }
 
   handleSellCurrencySelect = async ({ value }) => {
-    let { buyCurrency, sellCurrency, sellAmount, buyAmount } = this.state
+    const { buyCurrency, sellCurrency, sellAmount, buyAmount } = this.state
 
-    this.setState(() => ({
-      sellCurrency: value,
-    }))
+    if (buyCurrency === value) {
+      await this.switching()
+    } else {
 
-    this.checkPair(value)
+      this.checkPair(value)
 
-    await this.checkBalance(value)
-    await this.updateExchangeRate(value, buyCurrency)
+      await this.checkBalance(value)
+      await this.updateExchangeRate(value, buyCurrency)
 
-    const { exchangeRate } = this.state
+      this.setState(() => ({
+        sellCurrency: value,
+      }))
 
-    buyAmount = new BigNumber(sellAmount || 0).multipliedBy(exchangeRate)
-
-    const isSellFieldInteger = config.erc20[sellCurrency] && config.erc20[sellCurrency].decimals === 0
-
-    if (isSellFieldInteger) {
-      sellAmount = new BigNumber(sellAmount || 0).dp(0, BigNumber.ROUND_HALF_EVEN)
+      if (sellAmount > 0 || buyAmount > 0) {
+        this.handleBuyAmountChange(buyAmount)
+        this.handleSellAmountChange(sellAmount)
+      }
     }
-
-    this.setState({
-      buyAmount: Number.isNaN(buyAmount) ? '' : buyAmount,
-      sellAmount: Number.isNaN(sellAmount) ? '' : sellAmount,
-      isSellFieldInteger,
-      isBuyFieldInteger: config.erc20[buyCurrency] && config.erc20[buyCurrency].decimals === 0,
-    })
   }
 
   handleExchangeRateChange = (value) => {
@@ -367,7 +355,7 @@ export default class AddOffer extends Component {
     this.setState(() => ({ manualRate: value }))
   }
 
-  switching = async (value) => {
+  switching = async () => {
     const { sellCurrency, buyCurrency, sellAmount, buyAmount } = this.state
 
     await this.checkBalance(buyCurrency)
@@ -400,7 +388,7 @@ export default class AddOffer extends Component {
   render() {
     const { currencies, tokenItems, addSelectedItems } = this.props
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency, minimalestAmountForSell, minimalestAmountForBuy,
-      balance, isBuyFieldInteger, isSellFieldInteger, ethBalance, manualRate, isPartial, isToken } = this.state
+      balance, ethBalance, manualRate, isPartial, isToken } = this.state
     const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
     const minAmountSell = coinsWithDynamicFee.includes(sellCurrency) ? minimalestAmountForSell : minAmountOffer[sellCurrency]
     const minAmountBuy = coinsWithDynamicFee.includes(buyCurrency) ? minimalestAmountForBuy : minAmountOffer[buyCurrency]
@@ -449,7 +437,6 @@ export default class AddOffer extends Component {
           onCurrencySelect={this.handleSellCurrencySelect}
           id="sellAmount"
           currencies={currencies}
-          isInteger={isSellFieldInteger}
           placeholder="Enter sell amount"
         />
         <Select
@@ -465,7 +452,6 @@ export default class AddOffer extends Component {
           onCurrencySelect={this.handleBuyCurrencySelect}
           id="buyAmount"
           currencies={addSelectedItems}
-          isInteger={isBuyFieldInteger}
           placeholder="Enter buy amount"
         />
         <div styleName="exchangeRate">
