@@ -103,7 +103,7 @@ export default class KeyActionsPanel extends Component {
   }
 
   handleUseKeychain = () => {
-    actions.eth.loginWithKeychain();
+    actions.modals.open(constants.modals.Keychain)
   }
 
   render() {
