@@ -76,11 +76,7 @@ export default class AddOffer extends Component {
   }
 
   checkBalance = async (sellCurrency, buyCurrency) => {
-    const updateBalance = await actions[sellCurrency].getBalance(sellCurrency)
-
-    this.setState({
-      balance: updateBalance,
-    })
+    await actions[sellCurrency].getBalance(sellCurrency)
 
     const { items, tokenItems } = this.props
 
@@ -111,7 +107,7 @@ export default class AddOffer extends Component {
     const finalBalance = balanceWithoutFee.isGreaterThan(0) ? balanceWithoutFee : BigNumber(0)
 
     this.setState({
-      balance: finalBalance,
+      balance: finalBalance.toString(),
     })
   }
 
@@ -398,9 +394,9 @@ export default class AddOffer extends Component {
 
     const isDisabled = !exchangeRate
       || !buyAmount && !sellAmount
-      || sellAmount > balance
-      || !isToken && sellAmount < minimalAmountSell
-      || buyAmount < minimalAmountBuy
+      || BigNumber(sellAmount).isGreaterThan(balance)
+      || !isToken && BigNumber(sellAmount).isLessThan(minimalAmountSell)
+      || BigNumber(buyAmount).isLessThan(minimalAmountBuy)
 
     if (linked.sellAmount.value !== '') {
       linked.sellAmount.check((value) => (BigNumber(value).isGreaterThan(minimalAmountSell)),

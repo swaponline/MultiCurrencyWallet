@@ -4355,35 +4355,35 @@
   },
   {
     "id": "PreventMultiTabsWidgetBuild",
-    "message": "Atomic Swap Widget supports only one active tab. Please reload this page to continue using this tab or close it",
+    "message": "Atomic Swap Widget поддерживает только одну активную вкладку. Пожалуйста, перезагрузите эту страницу, чтобы продолжить использовать эту вкладку или закройте ее",
     "files": [
       "shared/components/PreventMultiTabs/PreventMultiTabs.js"
     ]
   },
   {
     "id": "CurrencyWalletTitle",
-    "message": "Swap.Online - {fullName} ({currency}) Web Wallet with Atomic Swap.",
+    "message": "Swap.Online - {fullName} ({currency}) нлайн кошелек, работащюий на технологии Atomic Swap",
     "files": [
       "shared/pages/CurrencyWallet/CurrencyWallet.js"
     ]
   },
   {
     "id": "CurrencyWalletWidgetBuildTitle",
-    "message": "{fullName} ({currency}) Web Wallet with Atomic Swap.",
+    "message": "{fullName} ({currency}) онлайн кошелек, работащюий на технологии Atomic Swap.",
     "files": [
       "shared/pages/CurrencyWallet/CurrencyWallet.js"
     ]
   },
   {
     "id": "PartialUseInternalWallet",
-    "message": "Use internal wallet",
+    "message": "Используйте внутренний кошелек",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
   },
   {
     "id": "deposit256",
-    "message": "The address of {tokenName} smart contract",
+    "message": "Адрес {tokenName} смарт контракта",
     "files": [
       "shared/pages/Swap/DepositWindow/DepositWindow.js"
     ]
@@ -4399,14 +4399,14 @@
   },
   {
     "id": "WalletWidgetBuildTitle",
-    "message": "Cryptocurrency Wallet with Atomic Swap Exchange",
+    "message": "Криптовалютный кошелек, работащюий на технологии Atomic Swap.",
     "files": [
       "shared/pages/Wallet/Wallet.js"
     ]
   },
   {
     "id": "BtcToEthToken20",
-    "message": "Create a secret key",
+    "message": "Создвется секретный ключ",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
     ]

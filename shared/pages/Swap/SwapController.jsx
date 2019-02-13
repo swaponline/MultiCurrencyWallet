@@ -15,12 +15,11 @@ class SwapController extends React.PureComponent {
     this.state = {
       online: true,
     }
-
-    this.swap.events.subscribe('check status', this.checkStatusUser)
-    this.dispatchEvent('check status')
   }
 
   componentDidMount() {
+    this.swap.events.subscribe('check status', this.checkStatusUser)
+    this.dispatchEvent('check status')
     setInterval(() => {
       this.checkStatusUser()
     }, 5000)
@@ -36,6 +35,7 @@ class SwapController extends React.PureComponent {
   }
 
   checkStatusUser = () => {
+    const { online } = this.state
     const status = this.swap.room.getOnlineParticipant()
 
     this.setState(() => ({
