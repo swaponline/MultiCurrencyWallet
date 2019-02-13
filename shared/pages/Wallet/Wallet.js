@@ -214,7 +214,7 @@ export default class Wallet extends Component {
           location={location}
           defaultTitle={intl.formatMessage(title.metaTitle)}
           defaultDescription={intl.formatMessage(description.metaDescription)} />
-        <PageHeadline styleName="pageLine">
+        <PageHeadline styleName={isWidgetBuild ? 'pageLine pageLine_widget' : 'pageLine'}>
           <SubTitle>
             <FormattedMessage id="Wallet104" defaultMessage="Your online cryptocurrency wallet" />
           </SubTitle>

@@ -22,6 +22,9 @@
 
 .pageLine {
   height: 130px;
+  &_widget {
+    padding-top: 0;
+  }
 }
 .depositText {
   margin-bottom: -15px;
