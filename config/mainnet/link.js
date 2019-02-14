@@ -2,7 +2,6 @@ export default {
   xlm: 'http://stellarchain.io',
   bitpay: 'https://insight.bitpay.com',
   etherscan: 'https://etherscan.io',
-  etherscanAPI: 'https://api.etherscan.io/api?module=account&action=tokentx',
   eos: 'https://eospark.com/MainNet',
   tlos: 'http://testnet.telosfoundation.io',
   omniexplorer: 'https://www.omniexplorer.info',
