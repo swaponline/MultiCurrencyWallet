@@ -68,7 +68,7 @@ export default class DepositWindow extends Component {
     }, 5000)
   }
 
-  componentDidUpdate(prewProps, prevState) {
+  componentDidUpdate(prevProps, prevState) {
     if (this.state.balance !== prevState.balance) {
       this.updateRemainingBalance()
     }
