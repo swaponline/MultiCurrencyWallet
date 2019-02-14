@@ -679,9 +679,9 @@ export default class PartialClosure extends Component {
                 <span className={isWidget ? 'wait' : ''}>
                   <FormattedMessage id="partial291" defaultMessage="Wait participant: " />
                   <div styleName="loaderHolder">
-                    <td styleName="additionalLoaderHolder">
+                    <div styleName="additionalLoaderHolder">
                       <InlineLoader />
-                    </td>
+                    </div>
                   </div>
                 </span>
               )
