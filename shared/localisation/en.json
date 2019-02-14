@@ -289,7 +289,7 @@
   },
   {
     "id": "Keychain23",
-    "message": "Update KeyChain",
+    "message": "Download",
     "files": [
       "shared/components/modals/Keychain/Keychain.js"
     ]
