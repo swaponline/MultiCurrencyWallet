@@ -24,71 +24,78 @@ export default class Keychain extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      error: null,
+      otherError: null,
+      webSocketError: null,
       downloadUrl: '',
       tagName: '',
-      keychainVersion: ''
+      keychainVersion: '',
+      isLoading: false,
     };
   }
 
   componentDidMount() {
+    this.setState({ isLoading: true });
     let keychain;
     web3override.Keychain.create()
-      .then(data => {  keychain = data } )
+      .then(data => { keychain = data } )
       .then(() => keychain.method({command: 'version'}))
       .then(data => { this.setState({keychainVersion: data.result }) } )
+      .catch(webSocketError => this.setState({ webSocketError }))
       .then(() => fetch('https://api.github.com/repos/arrayio/array-io-keychain/tags'))
       .then(res => res.json())
-      .then(result => this.setState({tagName: result[0].name})) // todo handle error
+      .then(result => this.setState({tagName: result[0].name}))
       .then(() => fetch(`https://api.github.com/repos/arrayio/array-io-keychain/releases/tags/${this.state.tagName}`))
       .then(res => res.json())
-      .then(
-        (result) => {
-          this.setState({
-            downloadUrl: result.assets[0].browser_download_url
-          })
-        },
-        (error) => {
-          this.setState({
-            error
-          })
-        }
-      )
+      .then(result => this.setState({ downloadUrl: result.assets[0].browser_download_url }))
+      .catch(otherError => this.setState( { otherError } ))
+      .then( () => this.setState( {isLoading: false} ))
   }
 
-  needUpdate(tagName, keychainVersion) {
-    const keychainVersionSplit = keychainVersion.split('.');
-    const tagNameSplit = tagName.split('.');
-    return tagNameSplit[0] !== keychainVersionSplit[0] || tagNameSplit[1] !== keychainVersionSplit[1]
-  }
+  // needUpdate(tagName, keychainVersion) {
+  //   if (!keychainVersion) { // KeyChain websocket is not running
+  //     return true;
+  //   }
+  //   const keychainVersionSplit = keychainVersion.split('.');
+  //   const tagNameSplit = tagName.split('.');
+  //   return tagNameSplit[0] !== keychainVersionSplit[0] || tagNameSplit[1] !== keychainVersionSplit[1]
+  // }
 
   render() {
 
     const {name, intl: {locale}, intl} = this.props
-    const {error, downloadUrl, keychainVersion, tagName} = this.state
+    const {webSocketError, otherError, downloadUrl, keychainVersion, tagName, isLoading} = this.state
 
-    if (error) {
-      return <div>Error: {error.message}</div>
-    } else {
-      return (
-        <Modal name={name} title={intl.formatMessage(title.Keychain)}>
-          <div styleName="content">
-            <p>
-              <FormattedMessage id="Keychain19" defaultMessage="Congratulations! Your keys will be protected with KeyChain. Confirm activation to continue." />
-            </p>
-            {this.needUpdate(tagName, keychainVersion) &&
-              <a href={downloadUrl}>
-                <Button styleName="button" brand fullWidth onClick={() => actions.modals.close(name)}>
-                  <FormattedMessage id="Keychain23" defaultMessage="Update KeyChain"/>
-                </Button>
-              </a>
+    if (otherError) {
+      return <div>Error: {otherError.message}</div>
+    }
+    if (isLoading) {
+      return <Modal name={name} title={intl.formatMessage(title.Keychain)}></Modal>
+    }
+    return (
+      <Modal name={name} title={intl.formatMessage(title.Keychain)}>
+        <div styleName="content">
+          <p>
+            {webSocketError ?
+              <FormattedMessage id="Keychain19" defaultMessage="You need to install KeyChain to proceed" />
+              :
+              <FormattedMessage id="Keychain19" defaultMessage="Would you like to protect your keys with KeyChain? Note that your address will be changed" />
             }
+          </p>
+          { webSocketError ?
+            <a href={downloadUrl}>
+              <Button styleName="button" brand fullWidth onClick={() => actions.modals.close(name)}>
+                <FormattedMessage id="Keychain23" defaultMessage="Download"/>
+              </Button>
+            </a> :
             <Button styleName="button" brand fullWidth onClick={() => { actions.eth.loginWithKeychain().then( () => {actions.modals.close(name)}) }}>
               <FormattedMessage id="Keychain24" defaultMessage="Confirm"/>
             </Button>
-          </div>
-        </Modal>
-      )
-    }
+          }
+          <Button styleName="button" brand fullWidth onClick={() => { actions.modals.close(name) }}>
+            <FormattedMessage id="Keychain25" defaultMessage="Back"/>
+          </Button>
+        </div>
+      </Modal>
+    )
   }
 }
