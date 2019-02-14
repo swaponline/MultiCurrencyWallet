@@ -40,3 +40,8 @@ echo
 if [ $BOT_TOKEN ]; then
   curl https://api.telegram.org/bot$BOT_TOKEN/sendMessage?chat_id=-329333490\&text="https://github.com/swaponline/mainnet.build/compare/master...deploy"
 fi
+
+if [ $GITHUB_TOKEN ]; then
+  curl -u caffeinum:$TOKEN -X POST https://api.github.com/repos/swaponline/mainnet.build/pulls -d '{"title":"build","head":"deploy","base":"master"}'
+fi
+
