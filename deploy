@@ -42,6 +42,5 @@ if [ $BOT_TOKEN ]; then
 fi
 
 if [ $GITHUB_TOKEN ]; then
-  curl -u caffeinum:$TOKEN -X POST https://api.github.com/repos/swaponline/mainnet.build/pulls -d '{"title":"build","head":"deploy","base":"master"}'
+  curl -u caffeinum:$GITHUB_TOKEN -X POST https://api.github.com/repos/swaponline/mainnet.build/pulls -d '{"title":"build","head":"deploy","base":"master"}'
 fi
-
