@@ -3282,7 +3282,7 @@
   },
   {
     "id": "partial437",
-    "message": "Exchange {buyCase} and Altcoins in 60 seconds with AtomicSwap",
+    "message": "Exchange {sellCase} and {buyCase} in 60 seconds with AtomicSwap",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -4412,6 +4412,24 @@
   },
   {
     "id": "deposit307",
+    "message": "(included {mineerFee} {sellCurrency} miners fee)"
+  },
+  {
+    "id": "Select26",
+    "message": "1/4",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/Select/Select.js"
+    ]
+  },
+  {
+    "id": "Select27",
+    "message": "1/2",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/Select/Select.js"
+    ]
+  },
+  {
+    "id": "deposit320",
     "message": "(included {mineerFee} {sellCurrency} miners fee)",
     "files": [
       "shared/pages/Swap/DepositWindow/DepositWindow.js"

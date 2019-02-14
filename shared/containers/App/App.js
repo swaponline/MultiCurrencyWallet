@@ -40,7 +40,7 @@ moment.locale(userLanguage)
   btcAddress: 'user.btcData.address',
   tokenAddress: 'user.tokensData.swap.address',
 })
-@CSSModules(styles)
+@CSSModules(styles, { allowMultiple: true })
 export default class App extends React.Component {
 
   static propTypes = {
@@ -132,7 +132,7 @@ export default class App extends React.Component {
         <Fragment>
           <Seo location={history.location} />
           <Header />
-          <WidthContainer styleName="main">
+          <WidthContainer styleName={isWidgetBuild ? 'main main_widget' : 'main'}>
             <main>
               {children}
             </main>

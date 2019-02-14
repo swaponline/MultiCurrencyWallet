@@ -1839,10 +1839,7 @@
   },
   {
     "id": "Row263",
-    "message": "Войти",
-    "files": [
-      "shared/pages/Wallet/Row/Row.js"
-    ]
+    "message": "Войти"
   },
   {
     "id": "Row268",
@@ -2889,7 +2886,7 @@
   },
   {
     "id": "partial291",
-    "message": "Ожидать Участиника обмена: ",
+    "message": "Ожидание второго участника: ",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -2903,10 +2900,7 @@
   },
   {
     "id": "Row358",
-    "message": "Активировать",
-    "files": [
-      "shared/pages/Wallet/Row/Row.js"
-    ]
+    "message": "Активировать"
   },
   {
     "id": "Row377",
@@ -3296,7 +3290,7 @@
   },
   {
     "id": "partial437",
-    "message": "Обмен {buyCase} на Альткоины всего за 60 секунд с помощью AtomicSwap",
+    "message": "Обмен {sellCase} на {buyCase} всего за 60 секунд с помощью AtomicSwap",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -4433,7 +4427,21 @@
     ]
   },
   {
-    "id": "deposit307",
+    "id": "Select26",
+    "message": "1/4",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/Select/Select.js"
+    ]
+  },
+  {
+    "id": "Select27",
+    "message": "1/2",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/Select/Select.js"
+    ]
+  },
+  {
+    "id": "deposit320",
     "message": "(Включено {mineerFee} {sellCurrency} комиссии майнеров)",
     "files": [
       "shared/pages/Swap/DepositWindow/DepositWindow.js"

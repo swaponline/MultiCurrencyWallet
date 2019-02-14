@@ -101,11 +101,19 @@
 
 .loaderHolder {
   display: inline-block;
+  position: relative;
+  top: 2px;
 }
 
 .additionalLoaderHolder {
   display: block;
   position: relative;
+  > * {
+    display: block;
+    position: static !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
 }
 
 .extendedControls {
@@ -129,22 +137,8 @@
 }
 
 @include media-mobile {
-  .loaderHolder {
-    display: block;
-    position: relative;
-    margin-top: -42px;
-    padding-bottom: 42px;
-    margin-top: -20px;
-    padding-bottom: 20px;
-  }
   .inform {
     margin-top: 10px;
-  }
-  .additionalLoaderHolder {
-    > div {
-      left: 140px;
-      top: -5px;
-    }
   }
   .maxAmount {
     top: 6px;
