@@ -14,7 +14,7 @@ import * as web3override from 'web3override'
 const title = defineMessages({
   Keychain: {
     id: 'Keychain',
-    defaultMessage: 'Keychain activation',
+    defaultMessage: 'KeyChain Activation',
   },
 })
 
@@ -66,45 +66,29 @@ export default class Keychain extends Component {
 
     const {name, intl: {locale}, intl} = this.props
     const {error, downloadUrl, keychainVersion, tagName} = this.state
-    let message = `KeyChain is activated. Version: ${keychainVersion}.`;
 
     if (error) {
       return <div>Error: {error.message}</div>
     } else {
-      if (this.needUpdate(tagName, keychainVersion)) {
-        message += " Update keychain";
-        return (
-          <Modal name={name} title={intl.formatMessage(title.Keychain)}>
-            <div styleName="content">
-              <p>
-                <FormattedMessage id="Keychain19" defaultMessage={message} />
-              </p>
+      return (
+        <Modal name={name} title={intl.formatMessage(title.Keychain)}>
+          <div styleName="content">
+            <p>
+              <FormattedMessage id="Keychain19" defaultMessage="Congratulations! Your keys will be protected with KeyChain. Confirm activation to continue." />
+            </p>
+            {this.needUpdate(tagName, keychainVersion) &&
               <a href={downloadUrl}>
                 <Button styleName="button" brand fullWidth onClick={() => actions.modals.close(name)}>
                   <FormattedMessage id="Keychain23" defaultMessage="Update KeyChain"/>
                 </Button>
               </a>
-              <Button styleName="button" brand fullWidth onClick={() => { actions.eth.loginWithKeychain().then( () => {actions.modals.close(name)}) }}>
-                <FormattedMessage id="Keychain24" defaultMessage="OK"/>
-              </Button>
-            </div>
-          </Modal>
-        )
-      } else {
-        return (
-          <Modal name={name} title={intl.formatMessage(title.Keychain)}>
-            <div styleName="content">
-              <p>
-                <FormattedMessage id="Keychain19" defaultMessage={message} />
-              </p>
-              <Button styleName="button" brand fullWidth onClick={() => { actions.eth.loginWithKeychain().then( () => {actions.modals.close(name)}) } }>
-                <FormattedMessage id="Keychain24" defaultMessage="OK"/>
-              </Button>
-            </div>
-          </Modal>
-        )
-      }
-
+            }
+            <Button styleName="button" brand fullWidth onClick={() => { actions.eth.loginWithKeychain().then( () => {actions.modals.close(name)}) }}>
+              <FormattedMessage id="Keychain24" defaultMessage="Confirm"/>
+            </Button>
+          </div>
+        </Modal>
+      )
     }
   }
 }
