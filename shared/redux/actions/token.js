@@ -84,9 +84,9 @@ const getTransaction = (currency) =>
     const { address, contractAddress } = tokensData[currency.toLowerCase()]
 
     console.log('currency', address, contractAddress)
-
+    
     const url = [
-      `https://api-rinkeby.etherscan.io/api?module=account&action=tokentx`,
+      `${config.link.etherscanAPI}`,
       `&contractaddress=${contractAddress}`,
       `&address=${address}`,
       `&startblock=0&endblock=99999999`,
