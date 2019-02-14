@@ -26,9 +26,6 @@ const Select = ({ balance, currency, changeBalance, switching, ...props }) => (
       </div>
       <div styleName="cell" onClick={() => changeBalance(BigNumber(balance).div(4))}><FormattedMessage id="Select26" defaultMessage="1/4" /></div>
       <div styleName="cell" onClick={() => changeBalance(BigNumber(balance).div(2))}><FormattedMessage id="Select27" defaultMessage="1/2" /></div>
-      <div styleName="cell" onClick={() => changeBalance(BigNumber(balance))}>
-        <FormattedMessage id="Select24" defaultMessage="ALL" />
-      </div>
       <Switching onClick={switching} />
     </div>
   </Fragment>
