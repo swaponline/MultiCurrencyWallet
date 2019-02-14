@@ -86,7 +86,7 @@ const getTransaction = (currency) =>
     console.log('currency', address, contractAddress)
 
     const url = [
-      `https://api-rinkeby.etherscan.io/api?module=account&action=tokentx`,
+      `${config.api.etherscan}?module=account&action=tokentx`,
       `&contractaddress=${contractAddress}`,
       `&address=${address}`,
       `&startblock=0&endblock=99999999`,
