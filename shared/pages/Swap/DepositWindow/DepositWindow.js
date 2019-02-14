@@ -114,8 +114,8 @@ export default class DepositWindow extends Component {
     const { sellAmount } = this.state
 
     if (this.isDepositToContractDirectly()) {
-      this.setState(() => ({
-        dynamicFee: BigNumber(0)
+      this.setState({
+        dynamicFee: BigNumber(0),
       })
     } else if (coinsWithDynamicFee.includes(swap.sellCurrency.toLowerCase())) {
       const dynamicFee = await helpers[swap.sellCurrency.toLowerCase()].estimateFeeValue({ method: 'swap' })
@@ -127,6 +127,7 @@ export default class DepositWindow extends Component {
         sellAmount: requiredAmount,
       }))
     }
+
     this.updateRemainingBalance()
   }
 
