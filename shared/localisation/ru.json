@@ -2886,7 +2886,7 @@
   },
   {
     "id": "partial291",
-    "message": "Ожидать Участиника обмена: ",
+    "message": "Ожидание второго участника: ",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -3290,7 +3290,7 @@
   },
   {
     "id": "partial437",
-    "message": "Обмен {buyCase} на Альткоины всего за 60 секунд с помощью AtomicSwap",
+    "message": "Обмен {sellCase} на {buyCase} всего за 60 секунд с помощью AtomicSwap",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
