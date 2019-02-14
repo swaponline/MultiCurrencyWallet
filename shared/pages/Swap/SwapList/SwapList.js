@@ -14,7 +14,6 @@ import FirstStep from './steps/FirstStep'
 import SecondStep from './steps/SecondStep'
 import ThirdStep from './steps/ThirdStep'
 import FourthStep from './steps/FourthStep'
-import FifthStep from './steps/FifthStep'
 
 @CSSModules(styles, { allowMultiple: true })
 export default class SwapList extends Component {
@@ -46,10 +45,9 @@ export default class SwapList extends Component {
     return (
       <div styleName="stepList">
         <FirstStep step={flow.step} first={first} second={second} />
-        <SecondStep step={flow.step} swap={swap} second={second} fifth={fifth} fourth={fourth} />
-        <ThirdStep step={flow.step} swap={swap} fifth={fifth} fourth={fourth} sixth={sixth} />
-        <FourthStep step={flow.step} swap={swap} sixth={sixth} seventh={seventh} eighth={eighth} />
-        <FifthStep step={flow.step} swap={swap} seventh={seventh} eighth={eighth} />
+        <SecondStep step={flow.step} swap={swap} second={second} fifth={fifth} fourth={fourth} sixth={sixth} />
+        <ThirdStep step={flow.step} swap={swap} sixth={sixth} seventh={seventh} eighth={eighth} />
+        <FourthStep step={flow.step} swap={swap} seventh={seventh} eighth={eighth} />
       </div>
     )
   }
