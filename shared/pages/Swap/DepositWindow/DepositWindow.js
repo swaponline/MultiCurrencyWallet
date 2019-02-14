@@ -42,8 +42,8 @@ export default class DepositWindow extends Component {
       isBalanceFetching: false,
       scriptAddress: flow.scriptAddress,
       scriptBalance: flow.scriptBalance,
-      balance: swap.sellCurrency === 'BTC' ? flow.scriptBalance : flow.balance,
-      address: swap.sellCurrency === 'BTC' ? flow.scriptAddress : currencyData.address,
+      balance: this.isDepositToContractDirectly() ? flow.scriptBalance : flow.balance,
+      address: this.isDepositToContractDirectly() ? flow.scriptAddress : currencyData.address,
       currencyFullName: currencyData.fullName,
       sellAmount: this.swap.sellAmount,
     }
@@ -56,9 +56,10 @@ export default class DepositWindow extends Component {
     let checker
     this.getRequiredAmount()
 
-    const availableBalance = swap.sellCurrency === 'BTC' ? scriptBalance : balance
+    const availableBalance = this.isDepositToContractDirectly() ? scriptBalance : balance
+
     checker = setInterval(() => {
-      if (availableBalance <= sellAmount) {
+      if (BigNumber(availableBalance).isLessThanOrEqualTo(sellAmount)) {
         this.updateBalance()
         this.checkThePayment()
       } else {
@@ -73,6 +74,8 @@ export default class DepositWindow extends Component {
     }
   }
 
+  isDepositToContractDirectly = () => this.swap.sellCurrency === 'BTC'
+
   updateBalance = async () => {
     const { swap } =  this.props
     const { sellAmount, scriptBalance, address, scriptAddress } =  this.state
@@ -85,12 +88,12 @@ export default class DepositWindow extends Component {
       this.setState(() => ({ currencyBalance }))
     }
 
-    const actualBalance = swap.sellCurrency === 'BTC' ? scriptBalance : (this.state.currencyBalance || 0)
+    const actualBalance = this.isDepositToContractDirectly() ? scriptBalance : (this.state.currencyBalance || 0)
 
     this.setState(() => ({
       balance: actualBalance,
       scriptBalance: swap.flow.state.scriptBalance,
-      address: swap.sellCurrency === 'BTC' ? scriptAddress : address,
+      address: this.isDepositToContractDirectly() ? scriptAddress : address,
     }))
   }
 
@@ -110,12 +113,14 @@ export default class DepositWindow extends Component {
     const { swap } =  this.props
     const { sellAmount } = this.state
 
-    if (coinsWithDynamicFee.includes(swap.sellCurrency.toLowerCase())) {
+    if (this.isDepositToContractDirectly()) {
+      this.setState(() => ({
+        dynamicFee: BigNumber(0)
+      })
+    } else if (coinsWithDynamicFee.includes(swap.sellCurrency.toLowerCase())) {
       const dynamicFee = await helpers[swap.sellCurrency.toLowerCase()].estimateFeeValue({ method: 'swap' })
 
-      const newSellAmount = BigNumber(sellAmount).plus(dynamicFee)
-
-      const requiredAmount = dynamicFee > 0 ? newSellAmount : sellAmount
+      const requiredAmount = BigNumber(sellAmount).plus(dynamicFee)
 
       this.setState(() => ({
         dynamicFee,
@@ -226,7 +231,7 @@ export default class DepositWindow extends Component {
                             id="deposit177"
                             defaultMessage="Do not top up the contract with the greater amount than recommended. The remaining balance will be send to the counter party. You can send {tokenName} from a wallet of any exchange"
                             values={{
-                              amount: `${remainingBalance}`,
+                              amount: `${swap.sellAmount}`,
                               tokenName: swap.sellCurrency,
                               br: <br />
                             }}
@@ -237,7 +242,7 @@ export default class DepositWindow extends Component {
                         </div>
                       </Tooltip>
                     </div>,
-                    amount: `${remainingBalance}`,
+                    amount: `${swap.sellAmount}`,
                     tokenName: swap.sellCurrency,
                     br: <br/>,
                   }}
