@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 
 import actions from 'redux/actions'
-
+import helpers from 'helpers'
 import config from 'app-config'
 
 import CSSModules from 'react-css-modules'
@@ -16,7 +16,7 @@ import FeeControler from './FeeControler/FeeControler'
 import SwapProgress from './SwapProgress/SwapProgress'
 import SwapList from './SwapList/SwapList'
 import DepositWindow from './DepositWindow/DepositWindow'
-
+import paddingForSwapList from 'shared/helpers/paddingForSwapList.js'
 
 @CSSModules(styles)
 export default class EthToBtc extends Component {
@@ -31,6 +31,7 @@ export default class EthToBtc extends Component {
       enoughBalance,
       signed: false,
       depositWindow,
+      paddingContainerValue: 0,
       enabledButton: false,
       isAddressCopied: false,
       flow: this.swap.flow.state,
@@ -73,6 +74,19 @@ export default class EthToBtc extends Component {
     this.swap.off('state update', this.handleFlowStateUpdate)
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.flow !== this.state.flow) {
+      this.changePaddingValue()
+    }
+  }
+
+  changePaddingValue = () => {
+    const { flow: { step } } = this.state
+    this.setState(() => ({
+      paddingContainerValue: paddingForSwapList({ step }),
+    }))
+  }
+
   handleFlowStateUpdate = (values) => {
     const { swap, flow: { isMeSigned } } = this.state
     const stepNumbers = {
@@ -97,27 +111,6 @@ export default class EthToBtc extends Component {
 
   }
 
-
-  changePaddingValue = () => {
-    const { flow } = this.state
-
-    if (flow.step <= 2) {
-      this.setState(() => ({
-        paddingContainerValue: 60 * flow.step,
-      }))
-    }
-    if (flow.step > 5 && flow.step < 7) {
-      this.setState(() => ({
-        paddingContainerValue: 180,
-      }))
-    }
-    if (flow.step > 7) {
-      this.setState(() => ({
-        paddingContainerValue: 210,
-      }))
-    }
-  }
-
   signSwap = () => {
     this.swap.flow.sign()
     this.setState(() => ({
@@ -138,7 +131,7 @@ export default class EthToBtc extends Component {
   render() {
     const { tokenItems, continueSwap, enoughBalance, history, ethAddress, children  } = this.props
     const { currencyAddress, flow, isShowingBitcoinScript, swap, currencyData, signed, paddingContainerValue, buyCurrency, sellCurrency } = this.state
-
+    const stepse = flow.step
 
     return (
       <div>
