@@ -368,7 +368,7 @@ export default class AddOffer extends Component {
       sellAmount: '',
       buyAmount: '',
     }))
-    await this.checkBalance(sellCurrency)
+    await this.checkBalance(buyCurrency)
     await this.updateExchangeRate(buyCurrency, sellCurrency)
 
     actions.pairs.selectPair(buyCurrency)
