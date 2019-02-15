@@ -4421,7 +4421,7 @@
   },
   {
     "id": "deposit300",
-    "message": "Получено {balance} / {need} {dynamicFee}{tooltip}",
+    "message": "Получено {balance} / {need} {tooltip}",
     "files": [
       "shared/pages/Swap/DepositWindow/DepositWindow.js"
     ]
