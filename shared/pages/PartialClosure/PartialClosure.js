@@ -367,18 +367,19 @@ export default class PartialClosure extends Component {
     if (value === getCurrency) {
       this.handleFlipCurrency()
     } else {
-      await this.setState(() => ({
+      this.setState({
         haveCurrency: value,
         getCurrency,
         customWallet: customWalletUse ? this.wallets[value.toUpperCase()] : '',
-      }))
-      this.additionalPathing(value, getCurrency)
-      actions.analytics.dataEvent({
-        action: 'exchange-click-selector',
-        label: `${haveCurrency}-to-${getCurrency}`,
+      }, () => {
+        this.additionalPathing(value, getCurrency)
+        actions.analytics.dataEvent({
+          action: 'exchange-click-selector',
+          label: `${haveCurrency}-to-${getCurrency}`,
+        })
+        this.checkPair(value)
+        this.updateAllowedBalance()
       })
-      this.checkPair(value)
-      this.updateAllowedBalance()
     }
   }
 
@@ -389,16 +390,17 @@ export default class PartialClosure extends Component {
 
     this.checkPair(getCurrency)
     this.additionalPathing(getCurrency, haveCurrency)
-    await this.setState(() => ({
+    await this.setState({
       haveCurrency: getCurrency,
       getCurrency: haveCurrency,
       customWallet: customWalletUse ? this.wallets[haveCurrency.toUpperCase()] : '',
-    }))
-    this.updateAllowedBalance()
+    }, () => {
+      this.updateAllowedBalance()
 
-    actions.analytics.dataEvent({
-      action: 'exchange-click-selector',
-      label: `${haveCurrency}-to-${getCurrency}`,
+      actions.analytics.dataEvent({
+        action: 'exchange-click-selector',
+        label: `${haveCurrency}-to-${getCurrency}`,
+      })
     })
   }
 

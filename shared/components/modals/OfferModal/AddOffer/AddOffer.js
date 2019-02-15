@@ -125,7 +125,7 @@ export default class AddOffer extends Component {
   correctMinAmountSell = async (sellCurrency) => {
     if (coinsWithDynamicFee.includes(sellCurrency) && !helpers.ethToken.isEthToken({ name: sellCurrency })) {
       const minimalestAmountForSell = await helpers[sellCurrency].estimateFeeValue({ method: 'swap', speed: 'fast' })
-      await this.setState({
+      this.setState({
         minimalestAmountForSell,
       })
     }
@@ -366,19 +366,20 @@ export default class AddOffer extends Component {
   switching = async () => {
     const { sellCurrency, buyCurrency, sellAmount, buyAmount } = this.state
 
-    await this.setState(() => ({
+    this.setState({
       sellAmount: '',
       buyAmount: '',
       sellCurrency: buyCurrency,
       buyCurrency: sellCurrency,
-    }))
-    await this.checkBalance(buyCurrency)
-    await this.updateExchangeRate(buyCurrency, sellCurrency)
+    }, async () => {
+      await this.checkBalance(buyCurrency)
+      await this.updateExchangeRate(buyCurrency, sellCurrency)
 
-    actions.pairs.selectPair(buyCurrency)
+      actions.pairs.selectPair(buyCurrency)
 
-    this.isEthToken(this.state.sellCurrency, this.state.buyCurrency)
-    this.getFee(this.state.sellCurrency, this.state.buyCurrency)
+      this.isEthToken(this.state.sellCurrency, this.state.buyCurrency)
+      this.getFee(this.state.sellCurrency, this.state.buyCurrency)
+    })
   }
 
   checkPair = (value) => {
