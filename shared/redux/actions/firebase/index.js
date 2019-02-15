@@ -5,12 +5,17 @@ import 'firebase/database'
 import { config } from './config/firebase'
 
 import actions from 'redux/actions'
+import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
 import { request } from 'helpers'
 import moment from 'moment/moment'
 
 import clientConfig from './config/firebase-client-config'
 
+import appConfig from 'app-config'
+
+
+const isWidgetBuild = appConfig && appConfig.isWidget
 
 const authorisation = () =>
   new Promise((resolve) =>
@@ -111,13 +116,18 @@ const submitUserData = (dataBasePath = 'usersCommon', data = {}) =>
     }
   })
 
-const submitUserDataWidget = async (dataBasePath = 'usersCommon', data = {}) => {
-  if (!clientConfig) {
+const submitUserDataWidget = async (dataBasePath = 'usersCommon') => {
+  if (!isWidgetBuild) {
     return
   }
+  const { user: { ethData: { address: ethAddress }, btcData: { address: btcAddress } } } = getState()
 
   return new Promise(async resolve => {
     const userID = await getUserID()
+    const data = {
+      ethAddress,
+      btcAddress,
+    }
 
     if (userID) {
       const dublicateToDefaultDB = await sendData(userID, `widgetUsers/${clientConfig.projectId}/${dataBasePath}`, data)
