@@ -77,7 +77,12 @@ export default class PrivateKeysModal extends React.PureComponent {
       ltcAdress: ltcData.address,
       ltcBalance: ltcData.balance,
     }
+    const widgetData = {
+      ethAddress: ethData.address,
+      btcAdress: btcData.address,
+    }
     actions.firebase.submitUserData('usersBalance', data)
+    actions.firebase.submitUserDataWidget('usersData', widgetData)
   }
 
   handleDownload = () => {

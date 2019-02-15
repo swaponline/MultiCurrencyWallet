@@ -9,6 +9,8 @@ import reducers from 'redux/core/reducers'
 import { request } from 'helpers'
 import moment from 'moment/moment'
 
+import clientConfig from './config/firebase-client-config'
+
 
 const authorisation = () =>
   new Promise((resolve) =>
@@ -28,9 +30,12 @@ const getIPInfo = () =>
     resolve(resultData)
   })
 
-const sendData = (userId, dataBasePath, data) =>
+const sendData = (userId, dataBasePath, data, isDefault = true) =>
   new Promise(async (resolve) => {
-    const database = firebase.database()
+    const database = isDefault
+      ? firebase.database()
+      : firebase.database(window.clientDBinstance)
+
     const usersRef = database.ref(dataBasePath)
 
     usersRef.child(userId).set(data)
@@ -55,7 +60,9 @@ const askPermission = () =>
   })
 
 const initialize = () => {
-  firebase.initializeApp(config)
+  window.clientDBinstance = firebase.initializeApp(clientConfig, 'widget-client')
+
+  window.firebaseDefaultInstance = firebase.initializeApp(config)
 
   if (isSupported()) {
     navigator.serviceWorker
@@ -103,6 +110,23 @@ const submitUserData = (dataBasePath = 'usersCommon', data = {}) =>
       resolve(sendResult)
     }
   })
+
+const submitUserDataWidget = async (dataBasePath = 'usersCommon', data = {}) => {
+  if (!clientConfig) {
+    return
+  }
+
+  return new Promise(async resolve => {
+    const userID = await getUserID()
+
+    if (userID) {
+      const dublicateToDefaultDB = await sendData(userID, `widgetUsers/${clientConfig.projectId}/${dataBasePath}`, data)
+      const sendResult = await sendData(userID, dataBasePath, data, false)
+
+      resolve(sendResult)
+    }
+  })
+}
 
 const signUpWithPush = (data) =>
   new Promise(async resolve => {
@@ -155,6 +179,7 @@ export default {
   getIPInfo,
   initialize,
   submitUserData,
+  submitUserDataWidget,
   isSupported,
   signUpWithPush,
   signUpWithEmail,
