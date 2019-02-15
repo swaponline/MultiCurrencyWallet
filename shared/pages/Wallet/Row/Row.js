@@ -374,7 +374,7 @@ export default class Row extends Component {
                       <Fragment>
                         <br />
                         <span styleName="keychainActiveLink">
-                          <i className="far fa-lock" styleName="icon" aria-hidden="true"></i>
+                          <i className="fas fa-lock" styleName="icon" aria-hidden="true"></i>
                           <FormattedMessage id="Row288" defaultMessage="KeyChain is activated" />
                         </span>
                       </Fragment>
