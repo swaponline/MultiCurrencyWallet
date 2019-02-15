@@ -2920,6 +2920,13 @@
     ]
   },
   {
+    "id": "Row288",
+    "message": "KeyChain is activated",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
     "id": "partial221",
     "message": "Max amount for exchange:",
     "files": [

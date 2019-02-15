@@ -2909,6 +2909,13 @@
     ]
   },
   {
+    "id": "Row288",
+    "message": "KeyChain активирован",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
     "id": "partial221",
     "message": "Максимальная сумма для обмена: ",
     "files": [

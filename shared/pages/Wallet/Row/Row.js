@@ -252,6 +252,7 @@ export default class Row extends Component {
     } = this.props
 
     const telosAccountActivated = localStorage.getItem(constants.localStorage.telosAccountActivated) === 'true'
+    const keychanActivated = localStorage.getItem(constants.localStorage.keychainActivated) === 'true'
 
     let eosAccountActivated = false
     let eosActivationPaymentSent = false
@@ -365,6 +366,15 @@ export default class Row extends Component {
                         <br />
                         <span styleName="notActiveLink">
                           <FormattedMessage id="Row277" defaultMessage="not activated" />
+                        </span>
+                      </Fragment>
+                    )
+                    }
+                    { currency === 'ETH' && keychanActivated && (
+                      <Fragment>
+                        <br />
+                        <span styleName="keychainActiveLink">
+                          <FormattedMessage id="Row288" defaultMessage="KeyChain is activated" />
                         </span>
                       </Fragment>
                     )
