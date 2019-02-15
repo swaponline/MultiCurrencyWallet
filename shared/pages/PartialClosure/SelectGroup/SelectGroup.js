@@ -9,6 +9,8 @@ import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import CurrencySelect from 'components/ui/CurrencySelect/CurrencySelect'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 
+import { inputReplaceCommaWithDot } from 'helpers/domUtils'
+
 // TODO to split data and view this component
 const SelectGroup = ({ selectedValue, onSelect, currencies, usd, placeholder, label, disabled, className, inputValueLink, tooltip, id, ...props }) => (
   <div>
@@ -28,10 +30,11 @@ const SelectGroup = ({ selectedValue, onSelect, currencies, usd, placeholder, la
         valueLink={inputValueLink}
         type="number"
         placeholder={placeholder}
-        pattern="0-9."
+        pattern="0-9\."
         disabled={disabled}
         onFocus={props.onFocus ? props.onFocus : () => {}}
         onBlur={props.onBlur ? props.onBlur : () => {}}
+        onKeyDown={inputReplaceCommaWithDot}
       />
       {
         (selectedValue === 'eth' || selectedValue === 'btc') && usd > 0 &&
