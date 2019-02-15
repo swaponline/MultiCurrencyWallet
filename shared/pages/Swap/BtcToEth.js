@@ -173,7 +173,7 @@ export default class BtcToEth extends Component {
             )
             : (
               <Fragment>
-                {flow.step >= 5 && !continueSwap
+                {!continueSwap
                   ? <FeeControler ethAddress={ethAddress} />
                   : <SwapProgress flow={flow} name="BtcToEth" swap={swap} history={history} tokenItems={tokenItems} />
                 }
