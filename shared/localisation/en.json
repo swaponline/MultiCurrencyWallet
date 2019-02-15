@@ -4413,7 +4413,7 @@
   },
   {
     "id": "deposit300",
-    "message": "Received {balance} / {need} {dynamicFee}{tooltip}",
+    "message": "Received {balance} / {need} {tooltip}",
     "files": [
       "shared/pages/Swap/DepositWindow/DepositWindow.js"
     ]
