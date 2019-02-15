@@ -369,6 +369,8 @@ export default class AddOffer extends Component {
     await this.setState(() => ({
       sellAmount: '',
       buyAmount: '',
+      sellCurrency: buyCurrency,
+      buyCurrency: sellCurrency,
     }))
     await this.checkBalance(buyCurrency)
     await this.updateExchangeRate(buyCurrency, sellCurrency)
