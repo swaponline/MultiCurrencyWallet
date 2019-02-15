@@ -390,7 +390,7 @@ export default class PartialClosure extends Component {
 
     this.checkPair(getCurrency)
     this.additionalPathing(getCurrency, haveCurrency)
-    await this.setState({
+    this.setState({
       haveCurrency: getCurrency,
       getCurrency: haveCurrency,
       customWallet: customWalletUse ? this.wallets[haveCurrency.toUpperCase()] : '',
