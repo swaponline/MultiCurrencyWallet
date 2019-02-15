@@ -148,7 +148,7 @@ export default class AddOffer extends Component {
     })
   }
 
-  handleBuyCurrencySelect = ({ value }) => {
+  handleBuyCurrencySelect = async ({ value }) => {
     const { buyCurrency, sellCurrency, buyAmount, sellAmount } = this.state
 
     if (sellCurrency === value) {
@@ -172,7 +172,7 @@ export default class AddOffer extends Component {
     }
   }
 
-  handleSellCurrencySelect = ({ value }) => {
+  handleSellCurrencySelect = async ({ value }) => {
     const { buyCurrency, sellCurrency, sellAmount, buyAmount } = this.state
     if (buyCurrency === value) {
       this.switching()
