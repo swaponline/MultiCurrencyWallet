@@ -41,7 +41,7 @@ import coinsWithDynamicFee from 'helpers/constants/coinsWithDynamicFee'
 @cssModules(styles, { allowMultiple: true })
 export default class AddOffer extends Component {
 
-  constructor({ initialData }) {
+  constructor({ items, tokenItems, initialData }) {
     super()
 
     if (config && config.isWidget) {
@@ -101,7 +101,9 @@ export default class AddOffer extends Component {
       ? balance.plus(unconfirmedBalance)
       : balance
 
-    const balanceWithoutFee = currentBalance.minus(this.state.minimalestAmountForSell)
+    const balanceWithoutFee = (helpers.ethToken.isEthToken({ name: this.state.sellCurrency }))
+      ? currentBalance
+      : currentBalance.minus(this.state.minimalestAmountForSell)
 
     const finalBalance = balanceWithoutFee.isGreaterThan(0) ? balanceWithoutFee : BigNumber(0)
 
@@ -121,7 +123,7 @@ export default class AddOffer extends Component {
   }
 
   correctMinAmountSell = async (sellCurrency) => {
-    if (coinsWithDynamicFee.includes(sellCurrency)) {
+    if (coinsWithDynamicFee.includes(sellCurrency) && !helpers.ethToken.isEthToken({ name: sellCurrency })) {
       const minimalestAmountForSell = await helpers[sellCurrency].estimateFeeValue({ method: 'swap', speed: 'fast' })
       this.setState({
         minimalestAmountForSell,
@@ -364,22 +366,20 @@ export default class AddOffer extends Component {
   switching = async () => {
     const { sellCurrency, buyCurrency, sellAmount, buyAmount } = this.state
 
-    this.setState(() => ({
+    this.setState({
       sellAmount: '',
       buyAmount: '',
-    }))
-    await this.checkBalance(sellCurrency)
-    await this.updateExchangeRate(buyCurrency, sellCurrency)
-
-    actions.pairs.selectPair(buyCurrency)
-
-    this.setState(() => ({
       sellCurrency: buyCurrency,
       buyCurrency: sellCurrency,
-    }))
+    }, async () => {
+      await this.checkBalance(buyCurrency)
+      await this.updateExchangeRate(buyCurrency, sellCurrency)
 
-    this.isEthToken(buyCurrency, sellCurrency)
-    this.getFee(sellCurrency, buyCurrency)
+      actions.pairs.selectPair(buyCurrency)
+
+      this.isEthToken(this.state.sellCurrency, this.state.buyCurrency)
+      this.getFee(this.state.sellCurrency, this.state.buyCurrency)
+    })
   }
 
   checkPair = (value) => {

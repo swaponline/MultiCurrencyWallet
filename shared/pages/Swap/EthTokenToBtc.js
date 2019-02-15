@@ -132,19 +132,14 @@ export default class EthTokenToBtc extends Component {
         paddingContainerValue: 60 * flow.step,
       }))
     }
-    if (flow.step === 3) {
+    if (flow.step > 5 && flow.step < 7) {
       this.setState(() => ({
-        paddingContainerValue: 120,
+        paddingContainerValue: 180,
       }))
     }
-    if (flow.step > 3 && flow.step < 7) {
+    if (flow.step > 7) {
       this.setState(() => ({
-        paddingContainerValue: 60 * (flow.step - 2),
-      }))
-    }
-    if (flow.step >= 7) {
-      this.setState(() => ({
-        paddingContainerValue: 300,
+        paddingContainerValue: 210,
       }))
     }
   }
@@ -191,7 +186,7 @@ export default class EthTokenToBtc extends Component {
             )
             : (
               <Fragment>
-                {flow.step >= 5 && !continueSwap
+                {!continueSwap
                   ? <FeeControler ethAddress={ethAddress} />
                   : <SwapProgress flow={flow} name="EthTokensToBtc" swap={swap} tokenItems={tokenItems} history={history} signed={signed} />
                 }

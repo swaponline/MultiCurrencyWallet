@@ -52,6 +52,7 @@ input, textarea {
   font-size: 16px;
   @include ff;
   color: $color-f-main;
+  appearance: textfield;
 
   &:focus {
     border: 1px solid #3b95ff;

@@ -55,6 +55,7 @@ export default class DepositWindow extends Component {
 
     let checker
     this.getRequiredAmount()
+    this.updateRemainingBalance()
 
     const availableBalance = this.isDepositToContractDirectly() ? scriptBalance : balance
 
@@ -101,7 +102,7 @@ export default class DepositWindow extends Component {
     const { swap } = this.props
     const { sellAmount, balance, dynamicFee } = this.state
 
-    const remainingBalance = new BigNumber(sellAmount).minus(balance)
+    const remainingBalance = new BigNumber(sellAmount).minus(balance).plus(dynamicFee)
 
     this.setState(() => ({
       remainingBalance,
@@ -116,6 +117,7 @@ export default class DepositWindow extends Component {
     if (this.isDepositToContractDirectly()) {
       this.setState({
         dynamicFee: BigNumber(0),
+        requiredAmount: sellAmount,
       })
     } else if (coinsWithDynamicFee.includes(swap.sellCurrency.toLowerCase())) {
       const dynamicFee = await helpers[swap.sellCurrency.toLowerCase()].estimateFeeValue({ method: 'swap' })
@@ -124,7 +126,7 @@ export default class DepositWindow extends Component {
 
       this.setState(() => ({
         dynamicFee,
-        sellAmount: requiredAmount,
+        requiredAmount,
       }))
     }
 
@@ -188,6 +190,7 @@ export default class DepositWindow extends Component {
       sellAmount,
       isPressCtrl,
       flowBalance,
+      requiredAmount,
       missingBalance,
       isAddressCopied,
       isBalanceEnough,
@@ -305,7 +308,7 @@ export default class DepositWindow extends Component {
                   values={{
                     br: <br />,
                     balance: <strong>{balanceToRender} {swap.sellCurrency}{'  '}</strong>,
-                    need: <strong>{`${sellAmount}`} {swap.sellCurrency}</strong>,
+                    need: <strong>{`${requiredAmount}`} {swap.sellCurrency}</strong>,
                     tooltip:
                       <Tooltip id="dep226">
                         <FormattedMessage
