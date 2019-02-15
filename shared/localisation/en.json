@@ -2965,6 +2965,17 @@
     ]
   },
   {
+    "id": "Row288",
+    "message": "KeyChain is activated",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "partial221",
+    "message": "Max amount for exchange: ",
+  },
+  {
     "id": "Eos75",
     "message": "Private key for active and owner permissions",
     "files": [

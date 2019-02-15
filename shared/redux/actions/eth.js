@@ -44,6 +44,7 @@ const loginWithKeychain = async () => {
   const data = { privateKey: selectedKey, address: `0x${pubToAddress('0x' + selectedKey).toString('hex')}` }
 
   localStorage.setItem(constants.privateKeyNames.eth, data.privateKey)
+  localStorage.setItem(constants.localStorage.keychainActivated, true)
 
   reducers.user.setAuthData({ name: 'ethData', data })
 

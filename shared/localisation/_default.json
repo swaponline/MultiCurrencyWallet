@@ -2833,6 +2833,17 @@
     ]
   },
   {
+    "id": "Row288",
+    "message": "KeyChain is activated",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "partial221",
+    "message": "Max amount for exchange:"
+  },
+  {
     "id": "Wallet137",
     "message": "Deposit funds to addresses below",
     "files": [
