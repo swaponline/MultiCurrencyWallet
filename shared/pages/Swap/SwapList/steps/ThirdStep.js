@@ -9,34 +9,31 @@ import { isMobile } from 'react-device-detect'
 import { FormattedMessage } from 'react-intl'
 
 
-const ThirdStep = ({ step, swap, fifth, fourth, sixth }) => {
+const ThirdStep = ({ step, swap, sixth, seventh, eighth }) => {
 
-  const currencyStep = swap.sellCurrency === 'BTC' ? fifth : fourth
-  const stepItemActive = (step >= currencyStep && step < sixth)
-  const stepItemDefault = (step < sixth)
+  const currencyStep = swap.sellCurrency === 'BTC' ? seventh : eighth
+  const stepItemActive = (step >= sixth && step < currencyStep)
+  const stepItemDefault = (step < currencyStep)
 
   return (
     <div
       style={(isMobile && (stepItemActive || !stepItemDefault)) ? { paddingTop: '100px' } : {}}
       styleName={((stepItemActive) && 'stepItem active') || (stepItemDefault && 'stepItem') || 'stepItem active checked'}>
-      <span styleName="stepNumber">{stepItemDefault ? 3 : <i className="fas fa-check" />}</span>
+      <span styleName="stepNumber">{step < currencyStep ? 3 : <i className="fas fa-check" />}</span>
       <p styleName="stepText">
-        <FormattedMessage
-          id="BtcToEthToken80"
-          defaultMessage="{name} is depositing to the contract"
-          values={{ name: swap.sellCurrency === 'BTC' ? swap.buyCurrency : swap.sellCurrency }}
-        />
+        <FormattedMessage id="thirdStep24" defaultMessage="WITHDRAW" />
       </p>
-      {swap.flow.state.ethSwapCreationTransactionHash && (
+      {swap.flow.state.ethSwapWithdrawTransactionHash && (
         <strong styleName="transactionInStep">
           <a
-            href={`${config.link.etherscan}/tx/${swap.flow.state.ethSwapCreationTransactionHash}`}
+            href={`${config.link.etherscan}/tx/${swap.flow.state.ethSwapWithdrawTransactionHash}`}
             target="_blank"
             rel="noreferrer noopener"
           >
             <FormattedMessage
-              id="FourthStep33"
-              defaultMessage="(tx)"
+              id="FourthStep34"
+              defaultMessage="({sell} tx)"
+              values={{ sell: swap.sellCurrency.toLowerCase() }}
             />
             <i className="fas fa-link" />
           </a>

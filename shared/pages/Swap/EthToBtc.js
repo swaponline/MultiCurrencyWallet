@@ -106,19 +106,14 @@ export default class EthToBtc extends Component {
         paddingContainerValue: 60 * flow.step,
       }))
     }
-    if (flow.step === 3) {
+    if (flow.step > 5 && flow.step < 7) {
       this.setState(() => ({
-        paddingContainerValue: 120,
-      }))
-    }
-    if (flow.step > 3 && flow.step < 7) {
-      this.setState(() => ({
-        paddingContainerValue: 60 * (flow.step - 2),
+        paddingContainerValue: 180,
       }))
     }
     if (flow.step > 7) {
       this.setState(() => ({
-        paddingContainerValue: 260,
+        paddingContainerValue: 210,
       }))
     }
   }

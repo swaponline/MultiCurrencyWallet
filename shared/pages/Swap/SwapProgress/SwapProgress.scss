@@ -1,6 +1,8 @@
 .overlay {
   z-index: 1000;
   margin-bottom: 20px;
+  min-height: 490px;
+  max-height: 490px;
 }
 .container {
   width: 100%;

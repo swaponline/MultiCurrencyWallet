@@ -348,10 +348,7 @@
   },
   {
     "id": "Select24",
-    "message": "ALL",
-    "files": [
-      "shared/components/modals/OfferModal/AddOffer/Select/Select.js"
-    ]
+    "message": "ALL"
   },
   {
     "id": "ConfirmOffer69",
@@ -662,10 +659,7 @@
   },
   {
     "id": "RowHistory95",
-    "message": "Link to the swap",
-    "files": [
-      "shared/pages/History/SwapsHistory/RowHistory/RowHistory.js"
-    ]
+    "message": "Link to the swap"
   },
   {
     "id": "SwapHisrory21",
@@ -3962,10 +3956,7 @@
   },
   {
     "id": "BtcToEthToken102",
-    "message": "Withdrawing {name} from the contract",
-    "files": [
-      "shared/pages/Swap/SwapList/steps/FourthStep.js"
-    ]
+    "message": "Swapping"
   },
   {
     "id": "BtcToEthToken111",
@@ -3975,7 +3966,7 @@
     "id": "BtcToEthToken123",
     "message": "The swap is finish!!",
     "files": [
-      "shared/pages/Swap/SwapList/steps/FifthStep.js"
+      "shared/pages/Swap/SwapList/steps/FourthStep.js"
     ]
   },
   {
@@ -3995,17 +3986,11 @@
   },
   {
     "id": "BtcToEthToken58",
-    "message": "Depositing Bitcoin to a smart contract",
-    "files": [
-      "shared/pages/Swap/SwapList/steps/SecondStep.js"
-    ]
+    "message": "Depositing Bitcoin to a smart contract"
   },
   {
     "id": "BtcToEthToken80",
-    "message": "Depositing {name} to a smart contract",
-    "files": [
-      "shared/pages/Swap/SwapList/steps/ThirdStep.js"
-    ]
+    "message": "Depositing {name} to a smart contract"
   },
   {
     "id": "BtcToEthToken89",
@@ -4383,12 +4368,7 @@
   },
   {
     "id": "FourthStep33",
-    "message": "(tx)",
-    "files": [
-      "shared/pages/Swap/SwapList/steps/FourthStep.js",
-      "shared/pages/Swap/SwapList/steps/SecondStep.js",
-      "shared/pages/Swap/SwapList/steps/ThirdStep.js"
-    ]
+    "message": "(tx)"
   },
   {
     "id": "WalletWidgetBuildTitle",
@@ -4441,6 +4421,65 @@
     "message": "(included {mineerFee} {sellCurrency} miners fee)",
     "files": [
       "shared/pages/Swap/DepositWindow/DepositWindow.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken25",
+    "message": "Depositing Bitcoin {fromWhom} to the contract"
+  },
+  {
+    "id": "FourthStep28",
+    "message": "from you"
+  },
+  {
+    "id": "FourthStep29",
+    "message": "from seller"
+  },
+  {
+    "id": "ThirdStep25",
+    "message": "Depositing {name} {fromWhom} to the contract"
+  },
+  {
+    "id": "ThirdStep30",
+    "message": "from seller"
+  },
+  {
+    "id": "ThirdStep31",
+    "message": "from you"
+  },
+  {
+    "id": "BtcToEthToken24",
+    "message": "Deposit",
+    "files": [
+      "shared/pages/Swap/SwapList/steps/SecondStep.js"
+    ]
+  },
+  {
+    "id": "FourthStep36",
+    "message": "({btcTx} tx)",
+    "files": [
+      "shared/pages/Swap/SwapList/steps/SecondStep.js"
+    ]
+  },
+  {
+    "id": "FourthStep52",
+    "message": "({otherCurrency} tx)",
+    "files": [
+      "shared/pages/Swap/SwapList/steps/SecondStep.js"
+    ]
+  },
+  {
+    "id": "FourthStep34",
+    "message": "({sell} tx)",
+    "files": [
+      "shared/pages/Swap/SwapList/steps/ThirdStep.js"
+    ]
+  },
+  {
+    "id": "thirdStep24",
+    "message": "WITHDRAW",
+    "files": [
+      "shared/pages/Swap/SwapList/steps/ThirdStep.js"
     ]
   }
 ]
