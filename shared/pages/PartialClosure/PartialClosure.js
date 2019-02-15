@@ -123,6 +123,7 @@ export default class PartialClosure extends Component {
   componentDidMount() {
     const { haveCurrency } = this.state
     this.checkPair(haveCurrency)
+    this.updateAllowedBalance()
 
     this.usdRates = {}
     this.getUsdBalance()
@@ -225,8 +226,6 @@ export default class PartialClosure extends Component {
   setAmountOnState = (maxAmount, getAmount, buyAmount) => {
     const { getCurrency } = this.state
     const decimalPlaces = constants.tokenDecimals[getCurrency.toLowerCase()]
-
-    console.log('getAmount', BigNumber(getAmount).dp(decimalPlaces).toString())
 
     this.setState(() => ({
       maxAmount: Number(maxAmount),
@@ -362,42 +361,46 @@ export default class PartialClosure extends Component {
     }
   }
 
-  handleSetHaveValue = ({ value }) => {
+  handleSetHaveValue = async ({ value }) => {
     const { haveCurrency, getCurrency, customWalletUse } = this.state
 
     if (value === getCurrency) {
       this.handleFlipCurrency()
     } else {
-      this.setState(() => ({
+      this.setState({
         haveCurrency: value,
         getCurrency,
         customWallet: customWalletUse ? this.wallets[value.toUpperCase()] : '',
-      }))
-      this.additionalPathing(value, getCurrency)
-      actions.analytics.dataEvent({
-        action: 'exchange-click-selector',
-        label: `${haveCurrency}-to-${getCurrency}`,
+      }, () => {
+        this.additionalPathing(value, getCurrency)
+        actions.analytics.dataEvent({
+          action: 'exchange-click-selector',
+          label: `${haveCurrency}-to-${getCurrency}`,
+        })
+        this.checkPair(value)
+        this.updateAllowedBalance()
       })
-      this.checkPair(value)
     }
   }
 
-  handleFlipCurrency = () => {
+  handleFlipCurrency = async () => {
     const { haveCurrency, getCurrency, customWalletUse } = this.state
 
     this.setClearState()
 
     this.checkPair(getCurrency)
     this.additionalPathing(getCurrency, haveCurrency)
-    this.setState(() => ({
+    this.setState({
       haveCurrency: getCurrency,
       getCurrency: haveCurrency,
       customWallet: customWalletUse ? this.wallets[haveCurrency.toUpperCase()] : '',
-    }))
+    }, () => {
+      this.updateAllowedBalance()
 
-    actions.analytics.dataEvent({
-      action: 'exchange-click-selector',
-      label: `${haveCurrency}-to-${getCurrency}`,
+      actions.analytics.dataEvent({
+        action: 'exchange-click-selector',
+        label: `${haveCurrency}-to-${getCurrency}`,
+      })
     })
   }
 
@@ -509,6 +512,10 @@ export default class PartialClosure extends Component {
         getCurrency: selected[0].value,
       }))
     }
+  }
+
+  updateAllowedBalance = async () => {
+    await actions[this.state.haveCurrency].getBalance(this.state.haveCurrency)
   }
 
   changeBalance = (value) => {
