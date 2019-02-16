@@ -3242,7 +3242,7 @@
   },
   {
     "id": "PartialOfferCantProceed1",
-    "message": "Запрос отклонен, у вас есть незавершенные сделки {br}{link}",
+    "message": "Запрос отклонен, возможно у вас есть незавершенные сделки {br}{link}",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]

@@ -3234,7 +3234,7 @@
   },
   {
     "id": "PartialOfferCantProceed1",
-    "message": "Request rejected, you have not completed swap {br}{link}",
+    "message": "Request rejected, possibly you have not complete another swap {br}{link}",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
