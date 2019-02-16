@@ -38,6 +38,7 @@ export default class FeeControler extends Component {
     const { ethAddress, requestToFaucetSended } = this.props
     const { isAddressCopied } = this.state
 
+    /*
     if (requestToFaucetSended) {
       return (
         <div styleName="main">
@@ -50,6 +51,7 @@ export default class FeeControler extends Component {
         </div>
       )
     }
+    */
     return (
       <div styleName="main">
         <CopyToClipboard text={ethAddress} data-tut="reactour__address">
