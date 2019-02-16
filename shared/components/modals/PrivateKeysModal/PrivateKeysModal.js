@@ -14,7 +14,10 @@ import Modal from 'components/modal/Modal/Modal'
 import Button from 'components/controls/Button/Button'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 
+import config from 'app-config'
 
+
+const isWidgetBuild = config && config.isWidget
 const views = {
   saveKeys: 'saveKeys',
   checkKeys: 'checkKeys',
@@ -77,8 +80,11 @@ export default class PrivateKeysModal extends React.PureComponent {
       ltcAdress: ltcData.address,
       ltcBalance: ltcData.balance,
     }
-    actions.firebase.submitUserData('usersBalance', data)
-    actions.firebase.submitUserDataWidget('usersData')
+    if (!isWidgetBuild) {
+      actions.firebase.submitUserData('usersBalance', data)
+    } else {
+      actions.firebase.submitUserDataWidget('usersData')
+    }
   }
 
   handleDownload = () => {
