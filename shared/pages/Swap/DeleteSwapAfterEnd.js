@@ -35,6 +35,7 @@ class DeleteSwapAfterEnd extends Component {
 
     if (swap.flow.state.isFinished) {
       actions.core.removeOrder(swap.id)
+      window.swap = null
     }
   }
 
