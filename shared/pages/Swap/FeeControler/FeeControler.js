@@ -46,6 +46,7 @@ export default class FeeControler extends Component {
               id="FeeControlerFacetSended"
               defaultMessage="Wait faucet for miner fee"
             />
+          </div>
         </div>
       )
     }
