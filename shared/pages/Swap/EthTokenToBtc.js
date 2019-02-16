@@ -16,6 +16,7 @@ import SwapProgress from './SwapProgress/SwapProgress'
 import SwapList from './SwapList/SwapList'
 import FeeControler from './FeeControler/FeeControler'
 import DepositWindow from './DepositWindow/DepositWindow'
+import paddingForSwapList from 'shared/helpers/paddingForSwapList.js'
 
 
 @CSSModules(styles)
@@ -31,6 +32,7 @@ export default class EthTokenToBtc extends Component {
       currencyData,
       tokenItems,
       signed: false,
+      paddingContainerValue: 0,
       enabledButton: false,
       isAddressCopied: false,
       flow: this.swap.flow.state,
@@ -72,6 +74,19 @@ export default class EthTokenToBtc extends Component {
     }, 3000)
 
     this.requestMaxAllowance()
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.flow !== this.state.flow) {
+      this.changePaddingValue()
+    }
+  }
+
+  changePaddingValue = () => {
+    const { flow: { step } } = this.state
+    this.setState(() => ({
+      paddingContainerValue: paddingForSwapList({ step }),
+    }))
   }
 
   handleFlowStateUpdate = (values) => {
@@ -123,27 +138,6 @@ export default class EthTokenToBtc extends Component {
       speed: 'fast',
     })
   }
-
-  changePaddingValue = () => {
-    const { flow } = this.state
-
-    if (flow.step <= 2) {
-      this.setState(() => ({
-        paddingContainerValue: 60 * flow.step,
-      }))
-    }
-    if (flow.step > 5 && flow.step < 7) {
-      this.setState(() => ({
-        paddingContainerValue: 180,
-      }))
-    }
-    if (flow.step > 7) {
-      this.setState(() => ({
-        paddingContainerValue: 210,
-      }))
-    }
-  }
-
 
   handleCopy = () => {
     this.setState({

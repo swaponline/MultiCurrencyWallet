@@ -127,7 +127,7 @@ export default class PrivateKeysModal extends React.PureComponent {
                 <div styleName="title">
                   <FormattedMessage
                     id="PrivateKeysModal991"
-                    defaultMessage="Before you continue be sure to save your private keys!"
+                    defaultMessage="Before you continue be sure to save your private keys! Security of private keys is only in your hands. "
                   />
                   <FormattedMessage id="PrivateKeysModal99" defaultMessage="It`s very important" />
                 </div>

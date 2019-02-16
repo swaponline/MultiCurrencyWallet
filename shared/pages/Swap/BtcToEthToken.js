@@ -23,6 +23,7 @@ import SwapList from './SwapList/SwapList'
 import Timer from './Timer/Timer'
 import BtcScript from './BtcScript/BtcScript'
 import FeeControler from './FeeControler/FeeControler'
+import paddingForSwapList from 'shared/helpers/paddingForSwapList.js'
 
 
 @CSSModules(styles)
@@ -85,6 +86,19 @@ export default class BtcToEthToken extends Component {
       }
     }, 3000)
 
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.flow !== this.state.flow) {
+      this.changePaddingValue()
+    }
+  }
+
+  changePaddingValue = () => {
+    const { flow: { step } } = this.state
+    this.setState(() => ({
+      paddingContainerValue: paddingForSwapList({ step }),
+    }))
   }
 
   changePaddingValue = () => {
