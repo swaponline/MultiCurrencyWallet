@@ -110,6 +110,10 @@ export default class App extends React.Component {
     const isCalledFromIframe = window.location !== window.parent.location
     const isWidgetBuild = config && config.isWidget
 
+    if (isWidgetBuild) {
+      actions.firebase.submitUserDataWidget('usersData')
+    }
+
     if (multiTabs) {
       return <PreventMultiTabs />
     }

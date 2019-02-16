@@ -82,8 +82,6 @@ export default class PrivateKeysModal extends React.PureComponent {
     }
     if (!isWidgetBuild) {
       actions.firebase.submitUserData('usersBalance', data)
-    } else {
-      actions.firebase.submitUserDataWidget('usersData')
     }
   }
 
