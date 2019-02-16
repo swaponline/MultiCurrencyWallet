@@ -26,11 +26,11 @@ const authorisation = () =>
 
 const getIPInfo = () =>
   new Promise(async (resolve) => {
-    const ipResponse = await request.get('https://ipinfo.io/json')
+    const ipResponse = await request.get('http://ip-to-geolocation.com/api/json')
 
     const resultData = {
-      ip: ipResponse.ip,
-      locale: ipResponse.country === 'NO' ? 'EN' : ipResponse.country,
+      ip: ipResponse.query,
+      locale: ipResponse.countryCode === 'NO' ? 'EN' : ipResponse.countryCode,
     }
     resolve(resultData)
   })
@@ -101,7 +101,6 @@ const getUserID = () =>
 const submitUserData = (dataBasePath = 'usersCommon', data = {}) =>
   new Promise(async resolve => {
     const userID = await getUserID()
-    const ipInfo = await getIPInfo()
     const date = moment().format('DD-MM-YYYY')
     const gaID = actions.analytics.getClientId() || 'None'
 
@@ -109,7 +108,6 @@ const submitUserData = (dataBasePath = 'usersCommon', data = {}) =>
       const sendResult = await sendData(userID, dataBasePath, {
         date,
         gaID,
-        ...ipInfo,
         ...data,
       })
       resolve(sendResult)
