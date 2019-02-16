@@ -196,7 +196,7 @@ export default class SwapComponent extends PureComponent {
 
     request.post(`${config.api.faucet}`, {
       body: {
-        eth: SwapApp.services.auth.accounts.eth.address,
+        eth: this.state.ethAddress,
         buyCurrency,
         buyAmount: buyAmount.toString(),
         sellCurrency,
