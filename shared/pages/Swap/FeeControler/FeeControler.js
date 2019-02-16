@@ -10,6 +10,10 @@ import { BigNumber } from 'bignumber.js'
 import Button from 'components/controls/Button/Button'
 import Timer from 'components/Timer/Timer'
 
+import config from 'app-config'
+
+
+const isWidgetBuild = config && config.isWidget
 
 @cssModules(styles)
 export default class FeeControler extends Component {
@@ -31,9 +35,16 @@ export default class FeeControler extends Component {
   }
 
   render() {
-    const { ethAddress } = this.props
+    const { ethAddress, requestToFaucetSended } = this.props
     const { isAddressCopied } = this.state
 
+    if (requestToFaucetSended && isWidgetBuild) {
+      return (
+        <div styleName="main">
+          <div>Wait faucet for miner fee</div>
+        </div>
+      )
+    }
     return (
       <div styleName="main">
         <CopyToClipboard text={ethAddress} data-tut="reactour__address">

@@ -19,4 +19,5 @@ export default {
     registerEndpoint: 'https://seven.swap.online/telos-testnet/newaccount',
   },
   swapsExplorer: 'https://seven.swap.online/swaps-testnet/state',
+  faucet: 'http://localhost:30010/mainnet/faucet/',
 }
