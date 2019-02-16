@@ -187,7 +187,6 @@ export default class SwapComponent extends PureComponent {
   sendRequestToFaucet = () => {
     const { owner, buyCurrency, buyAmount, sellCurrency, sellAmount } = this.state.swap
 
-    if (!isWidgetBuild) return
     if (this.state.requestToFaucetSended) return
     if (this.state.requestToFaucetError) return
 

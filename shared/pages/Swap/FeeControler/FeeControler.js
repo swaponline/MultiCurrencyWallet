@@ -38,7 +38,7 @@ export default class FeeControler extends Component {
     const { ethAddress, requestToFaucetSended } = this.props
     const { isAddressCopied } = this.state
 
-    if (requestToFaucetSended && isWidgetBuild) {
+    if (requestToFaucetSended) {
       return (
         <div styleName="main">
           <div>Wait faucet for miner fee</div>
