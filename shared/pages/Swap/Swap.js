@@ -191,25 +191,23 @@ export default class SwapComponent extends PureComponent {
     if (this.state.requestToFaucetError) return
 
     this.setState({
-      requestToFaucetSended: true
+      requestToFaucetSended: true,
     })
 
     request.post(`${config.api.faucet}`, {
       body: {
         eth: owner.eth.address,
         buyCurrency: buyCurrency,
-        buyAmount: buyAmount.toFixed(),
+        buyAmount: buyAmount.toString(),
         sellCurrency: sellCurrency,
-        sellAmount: sellAmount.toFixed(),
+        sellAmount: sellAmount.toString(),
       },
-    })
-    .then((rv) => {
-      console.log('faucet answered',rv)
+    }).then((rv) => {
+      console.log('faucet answered', rv)
       this.setState({
         requestToFaucetTxID: rv.txid,
       })
-    })
-    .catch((error) => {
+    }).catch((error) => {
       console.log('faucet error')
       this.setState({
         requestToFaucetSended: false,
@@ -248,7 +246,7 @@ export default class SwapComponent extends PureComponent {
     const { peer, tokenItems, history } = this.props
     const { 
       swap, SwapComponent, currencyData, isAmountMore, ethData, continueSwap, enoughBalance,
-      depositWindow, ethAddress, isShowingBitcoinScript, requestToFaucetSended
+      depositWindow, ethAddress, isShowingBitcoinScript, requestToFaucetSended,
     } = this.state
 
     if (!swap || !SwapComponent || !peer || !isAmountMore) {
