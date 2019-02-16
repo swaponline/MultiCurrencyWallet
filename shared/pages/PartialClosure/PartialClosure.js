@@ -681,7 +681,17 @@ export default class PartialClosure extends Component {
             )}
             {isDeclinedOffer && (
               <p styleName="error" className={isWidget ? 'error' : ''} >
-                {`Offer is declined`}
+                <FormattedMessage
+                  id="PartialOfferCantProceed1"
+                  defaultMessage="Request rejected, possibly you have not complete another swap {br}{link}"
+                  values={{
+                    link:
+                      <a className="errorLink" role="button" onClick={() => this.props.history.push(localisedUrl(locale, `/${sellTokenFullName}-wallet`))}> {/* eslint-disable-line */}
+                        <FormattedMessage id="PartialOfferCantProceed1_1" defaultMessage="Check here" />
+                      </a>,
+                    br: <br />,
+                  }}
+                />
               </p>
             )}
             {
