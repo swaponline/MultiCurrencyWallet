@@ -197,9 +197,9 @@ export default class SwapComponent extends PureComponent {
     request.post(`${config.api.faucet}`, {
       body: {
         eth: owner.eth.address,
-        buyCurrency: buyCurrency,
+        buyCurrency,
         buyAmount: buyAmount.toString(),
-        sellCurrency: sellCurrency,
+        sellCurrency,
         sellAmount: sellAmount.toString(),
       },
     }).then((rv) => {
@@ -244,7 +244,7 @@ export default class SwapComponent extends PureComponent {
 
   render() {
     const { peer, tokenItems, history } = this.props
-    const { 
+    const {
       swap, SwapComponent, currencyData, isAmountMore, ethData, continueSwap, enoughBalance,
       depositWindow, ethAddress, isShowingBitcoinScript, requestToFaucetSended,
     } = this.state
