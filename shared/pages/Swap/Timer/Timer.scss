@@ -1,9 +1,11 @@
 .timer {
   @include inline-block;
+  display: inline-block;
+  vertical-align: bottom;
+  zoom: 1;
   cursor: pointer;
-  text-align: center;
   font-size: 18px;
-  margin-bottom: -20px;
+  margin-bottom: -100px;
 }
 
 @include media-mobile {

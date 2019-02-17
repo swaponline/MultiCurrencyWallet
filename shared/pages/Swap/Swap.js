@@ -48,6 +48,7 @@ export default class SwapComponent extends PureComponent {
     continueSwap: true,
     enoughBalance: true,
     depositWindow: false,
+    isShowEmergency: false,
     isShowingBitcoinScript: false,
     shouldStopCheckSendingOfRequesting: false,
   }
@@ -158,10 +159,10 @@ export default class SwapComponent extends PureComponent {
       state: { requireWithdrawFee, requireWithdrawFeeSended, withdrawRequestIncoming, withdrawRequestAccepted } } } } = this.state
 
     if (requireWithdrawFee && !requireWithdrawFeeSended) {
-      sendWithdrawRequest()
+      swap.flow.sendWithdrawRequest()
     }
     if (withdrawRequestIncoming && !withdrawRequestAccepted) {
-      acceptWithdrawRequest()
+      swap.flow.acceptWithdrawRequest()
     }
   }
 
@@ -205,14 +206,21 @@ export default class SwapComponent extends PureComponent {
     })
   }
 
+  showEmergency = () => {
+    this.setState({
+      isShowEmergency: !this.state.isShowEmergency,
+    })
+  }
+
   render() {
     const { peer, tokenItems, history } = this.props
-    const { swap, SwapComponent, currencyData, isAmountMore, ethData, continueSwap, enoughBalance, depositWindow, ethAddress, isShowingBitcoinScript } = this.state
+    const { swap, SwapComponent, currencyData, isAmountMore, ethData,
+      continueSwap, enoughBalance, depositWindow, ethAddress, isShowingBitcoinScript, isShowEmergency } = this.state
 
     if (!swap || !SwapComponent || !peer || !isAmountMore) {
       return null
     }
-
+console.log('state', this.state.swap.flow.state)
     const isFinished = (swap.flow.state.step >= (swap.flow.steps.length - 1))
 
     return (
@@ -231,8 +239,8 @@ export default class SwapComponent extends PureComponent {
           continueSwap={continueSwap}
         >
           <Share flow={swap.flow} />
-          <EmergencySave flow={swap.flow} />
-          <ShowBtcScript onClick={this.toggleBitcoinScript} btcScriptValues={swap.flow.state.btcScriptValues} isShowingBitcoinScript={isShowingBitcoinScript} />
+          {!isShowingBitcoinScript && <EmergencySave onClick={this.showEmergency} flow={swap.flow} isShowEmergency={isShowEmergency} />}
+          {!isShowEmergency && <ShowBtcScript onClick={this.toggleBitcoinScript} btcScriptValues={swap.flow.state.btcScriptValues} isShowingBitcoinScript={isShowingBitcoinScript} />}
           {peer === swap.owner.peer && (<DeleteSwapAfterEnd swap={swap} />)}
         </SwapComponent>
       </div>

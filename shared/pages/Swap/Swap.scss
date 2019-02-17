@@ -59,12 +59,17 @@
 .bitcoinScript {
   position: relative;
   font-size: 14px;
-  margin: -81px 60px;
+  margin: -13px 60px;
   padding-bottom: 150px;
   width: 20%;
   color: #A9A9A9;
   cursor: pointer;
   text-decoration: underline;
+  display: block;
+}
+
+.unClicked {
+  margin: -83px 60px;
 }
 
 .onlineIndicator {
@@ -76,7 +81,10 @@
 }
 
 .showingScript {
-  margin-left: 30px;
+  margin-left: 40px;
+  position: relative;
+  top: -89px;
+  display: block;
 }
 
 .online {

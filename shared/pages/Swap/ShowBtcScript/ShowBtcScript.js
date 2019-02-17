@@ -8,14 +8,14 @@ import { FormattedMessage } from 'react-intl'
 import BtcScript from '../BtcScript/BtcScript'
 
 
-@CSSModules(styles)
+@CSSModules(styles, { allowMultiple: true })
 export default class ShowBtcScript extends Component {
   render() {
     const { btcScriptValues, isShowingBitcoinScript, onClick } = this.props
     return (
       <div>
         { btcScriptValues &&
-          <div styleName="bitcoinScript">
+          <div styleName={isShowingBitcoinScript ? "bitcoinScript" : "bitcoinScript unClicked"}>
             <span onClick={onClick}>
               <FormattedMessage id="swapJS341" defaultMessage="Show bitcoin script" />
             </span>
