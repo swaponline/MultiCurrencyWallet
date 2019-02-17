@@ -709,7 +709,10 @@ export default class PartialClosure extends Component {
                 />
               </p>
             )}
-            {(this.doesComissionPreventThisOrder() && BigNumber(getAmount).isGreaterThan(0)) && (
+            {(this.doesComissionPreventThisOrder()
+              && BigNumber(getAmount).isGreaterThan(0)
+              && (this.state.haveAmount && this.state.getAmount)
+            ) && (
               <p styleName="error" className={isWidget ? 'error' : ''} >
                 <FormattedMessage
                   id="ErrorBtcLowAmount"
