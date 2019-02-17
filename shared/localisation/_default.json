@@ -3248,7 +3248,7 @@
   },
   {
     "id": "ErrorBtcLowAmount",
-    "message": "{btcAmount} - This amount is too low",
+    "message": "{btcAmount} BTC - This amount is too low",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]

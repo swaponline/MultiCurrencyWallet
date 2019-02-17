@@ -713,7 +713,7 @@ export default class PartialClosure extends Component {
               <p styleName="error" className={isWidget ? 'error' : ''} >
                 <FormattedMessage
                   id="ErrorBtcLowAmount"
-                  defaultMessage="{btcAmount} - This amount is too low"
+                  defaultMessage="{btcAmount} BTC - This amount is too low"
                   values={{
                     btcAmount: this.state.haveCurrency === 'btc' ? this.state.haveAmount : this.state.getAmount,
                   }}
