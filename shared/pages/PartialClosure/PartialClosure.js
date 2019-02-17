@@ -537,6 +537,20 @@ export default class PartialClosure extends Component {
     return this.setState({ extendedControls: value })
   }
 
+  doesComissionPreventThisOrder = () => {
+    const { haveAmount, getAmount, haveCurrency, getCurrency } = this.state
+    const isBtcHere = (haveCurrency === 'btc' || getCurrency === 'btc')
+
+    if (!isBtcHere) {
+      return false
+    }
+    const btcAmount = haveCurrency === 'btc' ? BigNumber(haveAmount) : BigNumber(getAmount)
+    if (btcAmount.isGreaterThan(0.0001)) {
+      return false
+    }
+    return true
+  }
+
   render() {
     const { currencies, addSelectedItems, currenciesData, tokensData, intl: { locale } } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching,
@@ -562,6 +576,7 @@ export default class PartialClosure extends Component {
     const canDoOrder = !isNonOffers
       && BigNumber(getAmount).isGreaterThan(0)
       && this.customWalletValid()
+      && !this.doesComissionPreventThisOrder()
 
     const sellTokenFullName = currenciesData.find(item => item.currency === haveCurrency.toUpperCase())
       ? currenciesData.find(item => item.currency === haveCurrency.toUpperCase()).fullName
@@ -690,6 +705,20 @@ export default class PartialClosure extends Component {
                         <FormattedMessage id="PartialOfferCantProceed1_1" defaultMessage="Check here" />
                       </a>,
                     br: <br />,
+                  }}
+                />
+              </p>
+            )}
+            {(this.doesComissionPreventThisOrder()
+              && BigNumber(getAmount).isGreaterThan(0)
+              && (this.state.haveAmount && this.state.getAmount)
+            ) && (
+              <p styleName="error" className={isWidget ? 'error' : ''} >
+                <FormattedMessage
+                  id="ErrorBtcLowAmount"
+                  defaultMessage="{btcAmount} BTC - This amount is too low"
+                  values={{
+                    btcAmount: this.state.haveCurrency === 'btc' ? this.state.haveAmount : this.state.getAmount,
                   }}
                 />
               </p>
