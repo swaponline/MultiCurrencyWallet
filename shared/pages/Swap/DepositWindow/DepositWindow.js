@@ -201,6 +201,42 @@ export default class DepositWindow extends Component {
 
     const balanceToRender = Math.floor(balance * 1e6) / 1e6
 
+    const isWidgetBuild = config && config.isWidget
+
+    const DontHaveEnoughtFoundsValues = {
+      missingBalance:
+  <div>
+    {remainingBalance > 0 ?
+      <strong>{`${remainingBalance}`} {swap.sellCurrency}{'  '}</strong>
+      :
+      <span styleName="loaderHolder">
+        <InlineLoader />
+      </span>
+    }
+    <Tooltip id="dep170">
+      <div>
+        {/* eslint-disable */}
+        <FormattedMessage
+          id="deposit177"
+          defaultMessage="Do not top up the contract with the greater amount than recommended. The remaining balance will be send to the counter party. You can send {tokenName} from a wallet of any exchange"
+          values={{
+            amount: `${swap.sellAmount}`,
+            tokenName: swap.sellCurrency,
+            br: <br />,
+          }}
+        />
+        {/* eslint-enable */}
+        {/* <p>
+          <FormattedMessage id="deposit181" defaultMessage="You can send {currency} from a wallet of any exchange" values={{ currency: `${swap.buyCurrency}` }} />
+        </p> */}
+      </div>
+    </Tooltip>
+  </div>,
+      amount: `${swap.sellAmount}`,
+      tokenName: swap.sellCurrency,
+      br: <br />,
+    }
+
     return (
       <Fragment>
         <div
@@ -209,42 +245,23 @@ export default class DepositWindow extends Component {
           rel="noopener noreferrer"
         >
           <div styleName="top">
-            {/* eslint-disable */}
-              <div styleName="btcMessage">
+            <div styleName="btcMessage">
+              {/* eslint-disable */}
+              {isWidgetBuild ? (
+                <FormattedMessage
+                  id="deposit165widget"
+                  defaultMessage="Copy the address below and top it up with the recommended amount of {missingBalance} "
+                  values={DontHaveEnoughtFoundsValues}
+                />
+              ) : (
                 <FormattedMessage
                   id="deposit165"
                   defaultMessage="You don't have enought funds to continue the swap. Copy the address below and top it up with the recommended amount of {missingBalance} "
-                  values={{ missingBalance:
-                    <div>
-                      {remainingBalance > 0
-                      ? <strong>{`${remainingBalance}`} {swap.sellCurrency}{'  '}</strong>
-                      : <span styleName="loaderHolder">
-                          <InlineLoader />
-                        </span>}
-                      <Tooltip id="dep170">
-                        <div>
-                          <FormattedMessage
-                            id="deposit177"
-                            defaultMessage="Do not top up the contract with the greater amount than recommended. The remaining balance will be send to the counter party. You can send {tokenName} from a wallet of any exchange"
-                            values={{
-                              amount: `${swap.sellAmount}`,
-                              tokenName: swap.sellCurrency,
-                              br: <br />
-                            }}
-                          />
-                          {/* <p>
-                            <FormattedMessage id="deposit181" defaultMessage="You can send {currency} from a wallet of any exchange" values={{ currency: `${swap.buyCurrency}` }} />
-                          </p> */}
-                        </div>
-                      </Tooltip>
-                    </div>,
-                    amount: `${swap.sellAmount}`,
-                    tokenName: swap.sellCurrency,
-                    br: <br/>,
-                  }}
+                  values={DontHaveEnoughtFoundsValues}
                 />
-              </div>
+              )}
               {/* eslint-enable */}
+            </div>
             <div styleName="qrImg">
               <QR
                 network={currencyFullName.toLowerCase()}
