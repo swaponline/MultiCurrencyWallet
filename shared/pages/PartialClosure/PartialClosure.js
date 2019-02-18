@@ -351,7 +351,7 @@ export default class PartialClosure extends Component {
       this.setState(() => ({
         getCurrency: value,
         haveCurrency,
-        customWallet: customWalletUse ? this.wallets[value.toUpperCase()] : '',
+        customWallet: customWalletUse ? this.getSystemWallet() : '',
       }))
       this.additionalPathing(haveCurrency, value)
       actions.analytics.dataEvent({
@@ -370,7 +370,7 @@ export default class PartialClosure extends Component {
       this.setState({
         haveCurrency: value,
         getCurrency,
-        customWallet: customWalletUse ? this.wallets[value.toUpperCase()] : '',
+        customWallet: customWalletUse ? this.getSystemWallet() : '',
       }, () => {
         this.additionalPathing(value, getCurrency)
         actions.analytics.dataEvent({
@@ -387,13 +387,12 @@ export default class PartialClosure extends Component {
     const { haveCurrency, getCurrency, customWalletUse } = this.state
 
     this.setClearState()
-
     this.checkPair(getCurrency)
     this.additionalPathing(getCurrency, haveCurrency)
     this.setState({
       haveCurrency: getCurrency,
       getCurrency: haveCurrency,
-      customWallet: customWalletUse ? this.wallets[haveCurrency.toUpperCase()] : '',
+      customWallet: customWalletUse ? this.getSystemWallet() : '',
     }, () => {
       this.updateAllowedBalance()
 
@@ -476,6 +475,7 @@ export default class PartialClosure extends Component {
     if (getCurrency === 'btc') return util.typeforce.isCoinAddress.BTC(customWallet)
 
     return util.typeforce.isCoinAddress.ETH(customWallet)
+
   }
 
   customWalletAllowed() {
