@@ -152,7 +152,7 @@ export default class EthTokenToBtc extends Component {
   }
 
   render() {
-    const { children, disabledTimer, continueSwap, enoughBalance, history, ethAddress }  = this.props
+    const { children, disabledTimer, continueSwap, enoughBalance, history, ethAddress, requestToFaucetSended }  = this.props
     const { currencyAddress, flow, enabledButton, isShowingBitcoinScript, isAddressCopied, currencyData, tokenItems, signed, paddingContainerValue, swap } = this.state
 
     return (
@@ -181,7 +181,7 @@ export default class EthTokenToBtc extends Component {
             : (
               <Fragment>
                 {!continueSwap
-                  ? <FeeControler ethAddress={ethAddress} />
+                  ? <FeeControler ethAddress={ethAddress} requestToFaucetSended={requestToFaucetSended} />
                   : <SwapProgress flow={flow} name="EthTokensToBtc" swap={swap} tokenItems={tokenItems} history={history} signed={signed} />
                 }
               </Fragment>

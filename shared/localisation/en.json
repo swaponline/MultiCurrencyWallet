@@ -3218,6 +3218,27 @@
     ]
   },
   {
+    "id": "PartialOfferCantProceed1",
+    "message": "Request rejected, possibly you have not complete another swap {br}{link}",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "PartialOfferCantProceed1_1",
+    "message": "Check here",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "ErrorBtcLowAmount",
+    "message": "{btcAmount} BTC - This amount is too low",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
     "id": "PartialPriceSearch",
     "message": "Searching orders...",
     "files": [

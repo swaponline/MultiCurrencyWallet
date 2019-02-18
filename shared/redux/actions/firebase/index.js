@@ -5,10 +5,17 @@ import 'firebase/database'
 import { config } from './config/firebase'
 
 import actions from 'redux/actions'
+import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
 import { request } from 'helpers'
 import moment from 'moment/moment'
 
+import clientConfig from './config/firebase-client-config'
+
+import appConfig from 'app-config'
+
+
+const isWidgetBuild = appConfig && appConfig.isWidget
 
 const authorisation = () =>
   new Promise((resolve) =>
@@ -19,18 +26,21 @@ const authorisation = () =>
 
 const getIPInfo = () =>
   new Promise(async (resolve) => {
-    const ipResponse = await request.get('https://ipinfo.io/json')
+    const ipResponse = await request.get('http://ip-to-geolocation.com/api/json')
 
     const resultData = {
-      ip: ipResponse.ip,
-      locale: ipResponse.country === 'NO' ? 'EN' : ipResponse.country,
+      ip: ipResponse.query,
+      locale: ipResponse.countryCode === 'NO' ? 'EN' : ipResponse.countryCode,
     }
     resolve(resultData)
   })
 
-const sendData = (userId, dataBasePath, data) =>
+const sendData = (userId, dataBasePath, data, isDefault = true) =>
   new Promise(async (resolve) => {
-    const database = firebase.database()
+    const database = isDefault
+      ? firebase.database()
+      : firebase.database(window.clientDBinstance)
+
     const usersRef = database.ref(dataBasePath)
 
     usersRef.child(userId).set(data)
@@ -55,7 +65,9 @@ const askPermission = () =>
   })
 
 const initialize = () => {
-  firebase.initializeApp(config)
+  window.clientDBinstance = firebase.initializeApp(clientConfig, 'widget-client')
+
+  window.firebaseDefaultInstance = firebase.initializeApp(config)
 
   if (isSupported()) {
     navigator.serviceWorker
@@ -89,7 +101,6 @@ const getUserID = () =>
 const submitUserData = (dataBasePath = 'usersCommon', data = {}) =>
   new Promise(async resolve => {
     const userID = await getUserID()
-    const ipInfo = await getIPInfo()
     const date = moment().format('DD-MM-YYYY')
     const gaID = actions.analytics.getClientId() || 'None'
 
@@ -97,12 +108,33 @@ const submitUserData = (dataBasePath = 'usersCommon', data = {}) =>
       const sendResult = await sendData(userID, dataBasePath, {
         date,
         gaID,
-        ...ipInfo,
         ...data,
       })
       resolve(sendResult)
     }
   })
+
+const submitUserDataWidget = async (dataBasePath = 'usersCommon') => {
+  if (!isWidgetBuild) {
+    return
+  }
+  const { user: { ethData: { address: ethAddress }, btcData: { address: btcAddress } } } = getState()
+
+  return new Promise(async resolve => {
+    const userID = await getUserID()
+    const data = {
+      ethAddress,
+      btcAddress,
+    }
+
+    if (userID) {
+      const dublicateToDefaultDB = await sendData(userID, `widgetUsers/${clientConfig.projectId}/${dataBasePath}`, data)
+      const sendResult = await sendData(userID, dataBasePath, data, false)
+
+      resolve(sendResult)
+    }
+  })
+}
 
 const signUpWithPush = (data) =>
   new Promise(async resolve => {
@@ -155,6 +187,7 @@ export default {
   getIPInfo,
   initialize,
   submitUserData,
+  submitUserDataWidget,
   isSupported,
   signUpWithPush,
   signUpWithEmail,
