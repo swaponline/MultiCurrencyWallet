@@ -24,7 +24,7 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 
 import config from 'app-config'
-import { util } from 'swap.app'
+import SwapApp, { util } from 'swap.app'
 
 import helpers, { constants, links } from 'helpers'
 
@@ -204,10 +204,32 @@ export default class PartialClosure extends Component {
           orderId: newOrder.id,
         }))
       } else {
+        this.getLinkTodeclineSwap(peer)
         this.setDeclinedOffer()
       }
     })
   }
+
+  getLinkTodeclineSwap = () => {
+    const orders = SwapApp.shared().services.orders.items
+    const unfinishedOrder = orders
+      .filter(item => item.isProcessing === true)
+      .filter(item => item.isProcessing === true)
+      .filter(item => item.participant)
+      .filter(item => item.participant.peer === this.state.peer)
+      .filter(item => item.sellCurrency === this.state.getCurrency.toUpperCase())[0]
+
+    this.setState(() => ({
+      wayToDeclinedOrder: `swaps/${unfinishedOrder.sellCurrency}-${unfinishedOrder.sellCurrency}/${unfinishedOrder.id}`,
+    }))
+  }
+
+  goTodeclineSwap = () => {
+    const { intl: { locale } } = this.props
+    const { wayToDeclinedOrder } = this.state
+    this.props.history.push(localisedUrl(locale, `/${wayToDeclinedOrder}`))
+  }
+
 
   setDeclinedOffer = () => {
     this.setState(() => ({ haveAmount: '', isFetching: false, isDeclinedOffer: true }))
@@ -701,7 +723,7 @@ export default class PartialClosure extends Component {
                   defaultMessage="Request rejected, possibly you have not complete another swap {br}{link}"
                   values={{
                     link:
-                      <a className="errorLink" role="button" onClick={() => this.props.history.push(localisedUrl(locale, `/${sellTokenFullName}-wallet`))}> {/* eslint-disable-line */}
+                      <a className="errorLink" role="button" onClick={() => this.goTodeclineSwap()}> {/* eslint-disable-line */}
                         <FormattedMessage id="PartialOfferCantProceed1_1" defaultMessage="Check here" />
                       </a>,
                     br: <br />,
