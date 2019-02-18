@@ -214,7 +214,6 @@ export default class PartialClosure extends Component {
     const orders = SwapApp.shared().services.orders.items
     const unfinishedOrder = orders
       .filter(item => item.isProcessing === true)
-      .filter(item => item.isProcessing === true)
       .filter(item => item.participant)
       .filter(item => item.participant.peer === this.state.peer)
       .filter(item => item.sellCurrency === this.state.getCurrency.toUpperCase())[0]
