@@ -3241,6 +3241,27 @@
     ]
   },
   {
+    "id": "PartialOfferCantProceed1",
+    "message": "Запрос отклонен, возможно у вас есть незавершенные сделки {br}{link}",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "PartialOfferCantProceed1_1",
+    "message": "Смотреть сделки",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "ErrorBtcLowAmount",
+    "message": "{btcAmount} BTC - Слишком маленькая сумма",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
     "id": "PartialPriceSearch",
     "message": "поиск предложений...",
     "files": [

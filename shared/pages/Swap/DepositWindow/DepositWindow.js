@@ -102,7 +102,7 @@ export default class DepositWindow extends Component {
     const { swap } = this.props
     const { sellAmount, balance, dynamicFee } = this.state
 
-    const remainingBalance = new BigNumber(sellAmount).minus(balance).plus(dynamicFee)
+    const remainingBalance = new BigNumber(sellAmount).minus(balance).plus(dynamicFee).dp(6, BigNumber.ROUND_HALF_CEIL)
 
     this.setState(() => ({
       remainingBalance,
@@ -114,15 +114,15 @@ export default class DepositWindow extends Component {
     const { swap } =  this.props
     const { sellAmount } = this.state
 
-    if (this.isDepositToContractDirectly()) {
+    if (!coinsWithDynamicFee.includes(swap.sellCurrency.toLowerCase()) || this.isDepositToContractDirectly()) {
       this.setState({
         dynamicFee: BigNumber(0),
-        requiredAmount: sellAmount,
+        requiredAmount: BigNumber(sellAmount).dp(6, BigNumber.ROUND_HALF_CEIL),
       })
-    } else if (coinsWithDynamicFee.includes(swap.sellCurrency.toLowerCase())) {
+    } else {
       const dynamicFee = await helpers[swap.sellCurrency.toLowerCase()].estimateFeeValue({ method: 'swap' })
 
-      const requiredAmount = BigNumber(sellAmount).plus(dynamicFee)
+      const requiredAmount = BigNumber(sellAmount).plus(dynamicFee).dp(6, BigNumber.ROUND_HALF_CEIL)
 
       this.setState(() => ({
         dynamicFee,
@@ -199,8 +199,6 @@ export default class DepositWindow extends Component {
       isBalanceFetching,
     } = this.state
 
-    const balanceToRender = Math.floor(balance * 1e6) / 1e6
-
     const isWidgetBuild = config && config.isWidget
 
     const DontHaveEnoughtFoundsValues = {
@@ -236,6 +234,8 @@ export default class DepositWindow extends Component {
       tokenName: swap.sellCurrency,
       br: <br />,
     }
+
+    const balanceToRender = BigNumber(balance).dp(6, BigNumber.ROUND_HALF_CEIL)
 
     return (
       <Fragment>
@@ -316,7 +316,7 @@ export default class DepositWindow extends Component {
                   defaultMessage="Received {balance} / {need} {tooltip}"
                   values={{
                     br: <br />,
-                    balance: <strong>{balanceToRender} {swap.sellCurrency}{'  '}</strong>,
+                    balance: <strong>{`${balanceToRender}`} {swap.sellCurrency}{'  '}</strong>,
                     need: <strong>{`${requiredAmount}`} {swap.sellCurrency}</strong>,
                     tooltip:
                       <Tooltip id="dep226">
