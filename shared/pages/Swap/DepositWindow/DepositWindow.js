@@ -221,14 +221,6 @@ export default class DepositWindow extends Component {
                       : <span styleName="loaderHolder">
                           <InlineLoader />
                         </span>}
-                        {swap.sellCurrency === "SWAP" && (
-                          <strong>
-                            <FormattedMessage
-                              id="deposit213"
-                              defaultMessage="and 0.002 ETH на gas fee"
-                            />
-                          </strong>)
-                        }
                       <Tooltip id="dep170">
                         <div>
                           <FormattedMessage
