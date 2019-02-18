@@ -20,6 +20,7 @@ import ReactTooltip from 'react-tooltip'
 
 import { isCoinAddress } from 'swap.app/util/typeforce'
 import minAmount from 'helpers/constants/minAmount'
+import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 
 
 @injectIntl
@@ -330,6 +331,7 @@ export default class WithdrawModal extends React.Component {
               pattern="0-9\."
               placeholder={`Enter the amount. You have ${Number(NanReplacement).toFixed(5)}`}
               usd={getUsd.toFixed(2)}
+              onKeyDown={inputReplaceCommaWithDot}
             />
             <button styleName="button" onClick={this.sellAllBalance} data-tip data-for="Withdrow134">
               <FormattedMessage id="Select210" defaultMessage="MAX" />

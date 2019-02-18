@@ -348,10 +348,7 @@
   },
   {
     "id": "Select24",
-    "message": "ВСЕ! ",
-    "files": [
-      "shared/components/modals/OfferModal/AddOffer/Select/Select.js"
-    ]
+    "message": "ВСЕ! "
   },
   {
     "id": "ConfirmOffer69",
@@ -662,10 +659,7 @@
   },
   {
     "id": "RowHistory95",
-    "message": "Ссылка на обмен",
-    "files": [
-      "shared/pages/History/SwapsHistory/RowHistory/RowHistory.js"
-    ]
+    "message": "Ссылка на обмен"
   },
   {
     "id": "SwapHisrory21",
@@ -3247,6 +3241,27 @@
     ]
   },
   {
+    "id": "PartialOfferCantProceed1",
+    "message": "Запрос отклонен, возможно у вас есть незавершенные сделки {br}{link}",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "PartialOfferCantProceed1_1",
+    "message": "Смотреть сделки",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "ErrorBtcLowAmount",
+    "message": "{btcAmount} BTC - Слишком маленькая сумма",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
     "id": "PartialPriceSearch",
     "message": "поиск предложений...",
     "files": [
@@ -3962,10 +3977,7 @@
   },
   {
     "id": "BtcToEthToken102",
-    "message": "Отправка {name} из контракта",
-    "files": [
-      "shared/pages/Swap/SwapList/steps/FourthStep.js"
-    ]
+    "message": "Отправка"
   },
   {
     "id": "BtcToEthToken111",
@@ -3975,7 +3987,7 @@
     "id": "BtcToEthToken123",
     "message": "Свап завершен!",
     "files": [
-      "shared/pages/Swap/SwapList/steps/FifthStep.js"
+      "shared/pages/Swap/SwapList/steps/FourthStep.js"
     ]
   },
   {
@@ -3995,10 +4007,7 @@
   },
   {
     "id": "BtcToEthToken58",
-    "message": "Bitcoin зачисление",
-    "files": [
-      "shared/pages/Swap/SwapList/steps/SecondStep.js"
-    ]
+    "message": "Bitcoin зачисление"
   },
   {
     "id": "BtcToEthToken67",
@@ -4006,10 +4015,7 @@
   },
   {
     "id": "BtcToEthToken80",
-    "message": "{name} зачисление",
-    "files": [
-      "shared/pages/Swap/SwapList/steps/ThirdStep.js"
-    ]
+    "message": "{name} зачисление"
   },
   {
     "id": "BtcToEthToken89",
@@ -4384,12 +4390,7 @@
   },
   {
     "id": "FourthStep33",
-    "message": "(tx)",
-    "files": [
-      "shared/pages/Swap/SwapList/steps/FourthStep.js",
-      "shared/pages/Swap/SwapList/steps/SecondStep.js",
-      "shared/pages/Swap/SwapList/steps/ThirdStep.js"
-    ]
+    "message": "(tx)"
   },
   {
     "id": "WalletWidgetBuildTitle",
@@ -4421,7 +4422,7 @@
   },
   {
     "id": "deposit300",
-    "message": "Получено {balance} / {need} {dynamicFee}{tooltip}",
+    "message": "Получено {balance} / {need} {tooltip}",
     "files": [
       "shared/pages/Swap/DepositWindow/DepositWindow.js"
     ]
@@ -4445,6 +4446,65 @@
     "message": "(Включено {mineerFee} {sellCurrency} комиссии майнеров)",
     "files": [
       "shared/pages/Swap/DepositWindow/DepositWindow.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken25",
+    "message": "Зачисление Bitcoin {fromWhom} в контракт"
+  },
+  {
+    "id": "FourthStep28",
+    "message": "вами"
+  },
+  {
+    "id": "FourthStep29",
+    "message": "продавцом"
+  },
+  {
+    "id": "ThirdStep25",
+    "message": "Зачисление {name} {fromWhom} в контракт"
+  },
+  {
+    "id": "ThirdStep30",
+    "message": "продавцом"
+  },
+  {
+    "id": "ThirdStep31",
+    "message": "вами"
+  },
+  {
+    "id": "BtcToEthToken24",
+    "message": "Зачисление",
+    "files": [
+      "shared/pages/Swap/SwapList/steps/SecondStep.js"
+    ]
+  },
+  {
+    "id": "FourthStep36",
+    "message": "({btcTx} tx)",
+    "files": [
+      "shared/pages/Swap/SwapList/steps/SecondStep.js"
+    ]
+  },
+  {
+    "id": "FourthStep52",
+    "message": "({otherCurrency} tx)",
+    "files": [
+      "shared/pages/Swap/SwapList/steps/SecondStep.js"
+    ]
+  },
+  {
+    "id": "FourthStep34",
+    "message": "({sell} tx)",
+    "files": [
+      "shared/pages/Swap/SwapList/steps/ThirdStep.js"
+    ]
+  },
+  {
+    "id": "thirdStep24",
+    "message": "Отправка",
+    "files": [
+      "shared/pages/Swap/SwapList/steps/ThirdStep.js"
     ]
   }
 ]

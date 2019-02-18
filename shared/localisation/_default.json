@@ -341,10 +341,7 @@
   },
   {
     "id": "Select24",
-    "message": "ALL",
-    "files": [
-      "shared/components/modals/OfferModal/AddOffer/Select/Select.js"
-    ]
+    "message": "ALL"
   },
   {
     "id": "ConfirmOffer69",
@@ -659,10 +656,7 @@
   },
   {
     "id": "RowHistory95",
-    "message": "Link to the swap",
-    "files": [
-      "shared/pages/History/SwapsHistory/RowHistory/RowHistory.js"
-    ]
+    "message": "Link to the swap"
   },
   {
     "id": "SwapHisrory21",
@@ -1954,7 +1948,7 @@
   },
   {
     "id": "PrivateKeysModal991",
-    "message": "Before you continue be sure to save your private keys!{br}{br}there is a big chance you will loose your money.",
+    "message": "Before you continue be sure to save your private keys! Security of private keys is only in your hands. ",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
@@ -3239,6 +3233,27 @@
     ]
   },
   {
+    "id": "PartialOfferCantProceed1",
+    "message": "Request rejected, possibly you have not complete another swap {br}{link}",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "PartialOfferCantProceed1_1",
+    "message": "Check here",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "ErrorBtcLowAmount",
+    "message": "{btcAmount} BTC - This amount is too low",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
     "id": "PartialPriceSearch",
     "message": "Searching orders...",
     "files": [
@@ -3911,10 +3926,7 @@
   },
   {
     "id": "BtcToEthToken102",
-    "message": "Withdrawing {name} from a contract",
-    "files": [
-      "shared/pages/Swap/SwapList/steps/FourthStep.js"
-    ]
+    "message": "Withdrawing {name} from a contract"
   },
   {
     "id": "BtcToEthToken111",
@@ -3924,7 +3936,7 @@
     "id": "BtcToEthToken123",
     "message": "Finished!",
     "files": [
-      "shared/pages/Swap/SwapList/steps/FifthStep.js"
+      "shared/pages/Swap/SwapList/steps/FourthStep.js"
     ]
   },
   {
@@ -3944,10 +3956,7 @@
   },
   {
     "id": "BtcToEthToken58",
-    "message": "Bitcoin deposition",
-    "files": [
-      "shared/pages/Swap/SwapList/steps/SecondStep.js"
-    ]
+    "message": "Bitcoin deposition"
   },
   {
     "id": "BtcToEthToken67",
@@ -3955,10 +3964,7 @@
   },
   {
     "id": "BtcToEthToken80",
-    "message": "{name} deposition",
-    "files": [
-      "shared/pages/Swap/SwapList/steps/ThirdStep.js"
-    ]
+    "message": "{name} deposition"
   },
   {
     "id": "BtcToEthToken89",
@@ -4368,12 +4374,7 @@
   },
   {
     "id": "FourthStep33",
-    "message": "(tx)",
-    "files": [
-      "shared/pages/Swap/SwapList/steps/FourthStep.js",
-      "shared/pages/Swap/SwapList/steps/SecondStep.js",
-      "shared/pages/Swap/SwapList/steps/ThirdStep.js"
-    ]
+    "message": "(tx)"
   },
   {
     "id": "WalletWidgetBuildTitle",
@@ -4433,6 +4434,65 @@
     "message": "(included {mineerFee} {sellCurrency} miners fee)",
     "files": [
       "shared/pages/Swap/DepositWindow/DepositWindow.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken25",
+    "message": "Depositing Bitcoin {fromWhom} to the smart contract"
+  },
+  {
+    "id": "FourthStep28",
+    "message": "from you"
+  },
+  {
+    "id": "FourthStep29",
+    "message": "from seller"
+  },
+  {
+    "id": "ThirdStep25",
+    "message": "{name} is depositing {fromWhom} to the contract"
+  },
+  {
+    "id": "ThirdStep30",
+    "message": "from you"
+  },
+  {
+    "id": "ThirdStep31",
+    "message": "from seller"
+  },
+  {
+    "id": "BtcToEthToken24",
+    "message": "Deposit",
+    "files": [
+      "shared/pages/Swap/SwapList/steps/SecondStep.js"
+    ]
+  },
+  {
+    "id": "FourthStep36",
+    "message": "({btcTx} tx)",
+    "files": [
+      "shared/pages/Swap/SwapList/steps/SecondStep.js"
+    ]
+  },
+  {
+    "id": "FourthStep52",
+    "message": "({otherCurrency} tx)",
+    "files": [
+      "shared/pages/Swap/SwapList/steps/SecondStep.js"
+    ]
+  },
+  {
+    "id": "FourthStep34",
+    "message": "({sell} tx)",
+    "files": [
+      "shared/pages/Swap/SwapList/steps/ThirdStep.js"
+    ]
+  },
+  {
+    "id": "thirdStep24",
+    "message": "WITHDRAW",
+    "files": [
+      "shared/pages/Swap/SwapList/steps/ThirdStep.js"
     ]
   }
 ]

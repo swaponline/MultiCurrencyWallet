@@ -55,6 +55,7 @@ export default class DepositWindow extends Component {
 
     let checker
     this.getRequiredAmount()
+    this.updateRemainingBalance()
 
     const availableBalance = this.isDepositToContractDirectly() ? scriptBalance : balance
 
@@ -68,7 +69,7 @@ export default class DepositWindow extends Component {
     }, 5000)
   }
 
-  componentDidUpdate(prewProps, prevState) {
+  componentDidUpdate(prevProps, prevState) {
     if (this.state.balance !== prevState.balance) {
       this.updateRemainingBalance()
     }
@@ -101,7 +102,7 @@ export default class DepositWindow extends Component {
     const { swap } = this.props
     const { sellAmount, balance, dynamicFee } = this.state
 
-    const remainingBalance = new BigNumber(sellAmount).minus(balance)
+    const remainingBalance = new BigNumber(sellAmount).minus(balance).plus(dynamicFee).dp(6, BigNumber.ROUND_HALF_CEIL)
 
     this.setState(() => ({
       remainingBalance,
@@ -113,18 +114,19 @@ export default class DepositWindow extends Component {
     const { swap } =  this.props
     const { sellAmount } = this.state
 
-    if (this.isDepositToContractDirectly()) {
+    if (!coinsWithDynamicFee.includes(swap.sellCurrency.toLowerCase()) || this.isDepositToContractDirectly()) {
       this.setState({
         dynamicFee: BigNumber(0),
+        requiredAmount: BigNumber(sellAmount).dp(6, BigNumber.ROUND_HALF_CEIL),
       })
-    } else if (coinsWithDynamicFee.includes(swap.sellCurrency.toLowerCase())) {
+    } else {
       const dynamicFee = await helpers[swap.sellCurrency.toLowerCase()].estimateFeeValue({ method: 'swap' })
 
-      const requiredAmount = BigNumber(sellAmount).plus(dynamicFee)
+      const requiredAmount = BigNumber(sellAmount).plus(dynamicFee).dp(6, BigNumber.ROUND_HALF_CEIL)
 
       this.setState(() => ({
         dynamicFee,
-        sellAmount: requiredAmount,
+        requiredAmount,
       }))
     }
 
@@ -188,6 +190,7 @@ export default class DepositWindow extends Component {
       sellAmount,
       isPressCtrl,
       flowBalance,
+      requiredAmount,
       missingBalance,
       isAddressCopied,
       isBalanceEnough,
@@ -196,7 +199,43 @@ export default class DepositWindow extends Component {
       isBalanceFetching,
     } = this.state
 
-    const balanceToRender = Math.floor(balance * 1e6) / 1e6
+    const isWidgetBuild = config && config.isWidget
+
+    const DontHaveEnoughtFoundsValues = {
+      missingBalance:
+  <div>
+    {remainingBalance > 0 ?
+      <strong>{`${remainingBalance}`} {swap.sellCurrency}{'  '}</strong>
+      :
+      <span styleName="loaderHolder">
+        <InlineLoader />
+      </span>
+    }
+    <Tooltip id="dep170">
+      <div>
+        {/* eslint-disable */}
+        <FormattedMessage
+          id="deposit177"
+          defaultMessage="Do not top up the contract with the greater amount than recommended. The remaining balance will be send to the counter party. You can send {tokenName} from a wallet of any exchange"
+          values={{
+            amount: `${swap.sellAmount}`,
+            tokenName: swap.sellCurrency,
+            br: <br />,
+          }}
+        />
+        {/* eslint-enable */}
+        {/* <p>
+          <FormattedMessage id="deposit181" defaultMessage="You can send {currency} from a wallet of any exchange" values={{ currency: `${swap.buyCurrency}` }} />
+        </p> */}
+      </div>
+    </Tooltip>
+  </div>,
+      amount: `${swap.sellAmount}`,
+      tokenName: swap.sellCurrency,
+      br: <br />,
+    }
+
+    const balanceToRender = BigNumber(balance).dp(6, BigNumber.ROUND_HALF_CEIL)
 
     return (
       <Fragment>
@@ -206,50 +245,23 @@ export default class DepositWindow extends Component {
           rel="noopener noreferrer"
         >
           <div styleName="top">
-            {/* eslint-disable */}
-              <div styleName="btcMessage">
+            <div styleName="btcMessage">
+              {/* eslint-disable */}
+              {isWidgetBuild ? (
+                <FormattedMessage
+                  id="deposit165widget"
+                  defaultMessage="Copy the address below and top it up with the recommended amount of {missingBalance} "
+                  values={DontHaveEnoughtFoundsValues}
+                />
+              ) : (
                 <FormattedMessage
                   id="deposit165"
                   defaultMessage="You don't have enought funds to continue the swap. Copy the address below and top it up with the recommended amount of {missingBalance} "
-                  values={{ missingBalance:
-                    <div>
-                      {remainingBalance > 0
-                      ? <strong>{`${remainingBalance}`} {swap.sellCurrency}{'  '}</strong>
-                      : <span styleName="loaderHolder">
-                          <InlineLoader />
-                        </span>}
-                        {swap.sellCurrency === "SWAP" && (
-                          <strong>
-                            <FormattedMessage
-                              id="deposit213"
-                              defaultMessage="and 0.002 ETH на gas fee"
-                            />
-                          </strong>)
-                        }
-                      <Tooltip id="dep170">
-                        <div>
-                          <FormattedMessage
-                            id="deposit177"
-                            defaultMessage="Do not top up the contract with the greater amount than recommended. The remaining balance will be send to the counter party. You can send {tokenName} from a wallet of any exchange"
-                            values={{
-                              amount: `${swap.sellAmount}`,
-                              tokenName: swap.sellCurrency,
-                              br: <br />
-                            }}
-                          />
-                          {/* <p>
-                            <FormattedMessage id="deposit181" defaultMessage="You can send {currency} from a wallet of any exchange" values={{ currency: `${swap.buyCurrency}` }} />
-                          </p> */}
-                        </div>
-                      </Tooltip>
-                    </div>,
-                    amount: `${swap.sellAmount}`,
-                    tokenName: swap.sellCurrency,
-                    br: <br/>,
-                  }}
+                  values={DontHaveEnoughtFoundsValues}
                 />
-              </div>
+              )}
               {/* eslint-enable */}
+            </div>
             <div styleName="qrImg">
               <QR
                 network={currencyFullName.toLowerCase()}
@@ -304,8 +316,8 @@ export default class DepositWindow extends Component {
                   defaultMessage="Received {balance} / {need} {tooltip}"
                   values={{
                     br: <br />,
-                    balance: <strong>{balanceToRender} {swap.sellCurrency}{'  '}</strong>,
-                    need: <strong>{`${sellAmount}`} {swap.sellCurrency}</strong>,
+                    balance: <strong>{`${balanceToRender}`} {swap.sellCurrency}{'  '}</strong>,
+                    need: <strong>{`${requiredAmount}`} {swap.sellCurrency}</strong>,
                     tooltip:
                       <Tooltip id="dep226">
                         <FormattedMessage

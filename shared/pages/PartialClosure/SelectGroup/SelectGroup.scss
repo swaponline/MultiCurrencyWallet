@@ -50,4 +50,15 @@ input:disabled {
   .textUsd {
     font-size: 14px;
   }
+  .inputRoot {
+    input {
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+  }
+  .textUsd {
+    top: 0px;
+    font-size: 12px;
+    right: 135px;
+  }
 }
