@@ -87,7 +87,7 @@ export default class App extends React.Component {
     window.onerror = (error) => {
       actions.analytics.errorEvent(error)
     }
-
+    
     const db = indexedDB.open('test')
     db.onerror = () => {
       window.leveldown = memdown
