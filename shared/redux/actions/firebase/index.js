@@ -65,7 +65,7 @@ const askPermission = () =>
   })
 
 const initialize = () => {
-  window.clientDBinstance = firebase.initializeApp(clientConfig, 'widget-client')
+  // window.clientDBinstance = firebase.initializeApp(clientConfig, 'widget-client')
 
   window.firebaseDefaultInstance = firebase.initializeApp(config)
 
@@ -128,10 +128,10 @@ const submitUserDataWidget = async (dataBasePath = 'usersCommon') => {
     }
 
     if (userID) {
-      const dublicateToDefaultDB = await sendData(userID, `widgetUsers/${clientConfig.projectId}/${dataBasePath}`, data)
-      const sendResult = await sendData(userID, dataBasePath, data, false)
+      const sendWidgetResultToDefaultDB = await sendData(userID, `widgetUsers/${window.location.host}/${dataBasePath}`, data)
+      // const sendResult = await sendData(userID, dataBasePath, data, false) // send to client's firebase
 
-      resolve(sendResult)
+      resolve(sendWidgetResultToDefaultDB)
     }
   })
 }
