@@ -128,7 +128,7 @@ const submitUserDataWidget = async (dataBasePath = 'usersCommon') => {
     }
 
     if (userID) {
-      const sendWidgetResultToDefaultDB = await sendData(userID, `widgetUsers/${window.location.host}/${dataBasePath}`, data)
+      const sendWidgetResultToDefaultDB = await sendData(userID, `widgetUsers/${window.top.location.host}/${dataBasePath}`, data)
       // const sendResult = await sendData(userID, dataBasePath, data, false) // send to client's firebase
 
       resolve(sendWidgetResultToDefaultDB)
