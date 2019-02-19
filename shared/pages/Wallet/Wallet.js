@@ -257,15 +257,31 @@ export default class Wallet extends Component {
               <FormattedMessage
                 id="Wallet156"
                 defaultMessage="Welcome to Swap.Online, a decentralized cross-chain wallet based on the Atomic Swap technology.
+
                 Here you can safely store and promptly exchange Bitcoin, Ethereum, EOS, USD, Tether, BCH, and numerous ERC-20 tokens.
+
+
                 Swap.Online doesn’t store your keys or tokens. Our wallet operates directly in at browser, so no additional installations or downloads are required.
+
                 The Swap.Online service is fully decentralized as (because)all the operations with tokens are executed via the IPFS network.
+
+
                 Our team was the first who finalized Atomic Swaps with USDT and EOS in September 2018 and Litecoin blockchain was added in October 2018.
+
                 Our wallet addresses a real multi-chain integration with a decentralized order book, no third party involved in the exchange, no proxy-token and no token wrapping.
+
                 We can integrate any ERC-20 token of a project for free just in case of mutual PR-announcement.
+
+
                 In addition, we developed Swap.Button, a b2b-solution to exchange all kinds of tokens for Bitcoin and Ethereum.
+
                 Install Swap.Button html widget on your site and collect crypto investments for your project.
+
+
                 Start using https://swap.online/ today and enjoy the power of true decentralization."
+                values={{
+                  br: <br />,
+                }}
               />
             </div>
           )
