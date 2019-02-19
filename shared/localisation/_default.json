@@ -327,7 +327,7 @@
   },
   {
     "id": "Select10",
-    "message": "Available amount for sell",
+    "message": "Available amount to sell",
     "files": [
       "shared/components/modals/OfferModal/AddOffer/Select/Select.js"
     ]
@@ -341,10 +341,7 @@
   },
   {
     "id": "Select24",
-    "message": "ALL",
-    "files": [
-      "shared/components/modals/OfferModal/AddOffer/Select/Select.js"
-    ]
+    "message": "ALL"
   },
   {
     "id": "ConfirmOffer69",
@@ -403,28 +400,28 @@
     "id": "TelosRegister55",
     "message": "Account name",
     "files": [
-      "shared/components/modals/TelosRegisterModal/TelosRegisterModal.js"
+      "shared/components/modals/TelosChangeAccountModal/TelosChangeAccountModal.js"
     ]
   },
   {
     "id": "TelosRegister59",
     "message": "Private key",
     "files": [
-      "shared/components/modals/TelosRegisterModal/TelosRegisterModal.js"
+      "shared/components/modals/TelosChangeAccountModal/TelosChangeAccountModal.js"
     ]
   },
   {
     "id": "TelosRegister64",
     "message": "Sorry, error occurred during activation",
     "files": [
-      "shared/components/modals/TelosRegisterModal/TelosRegisterModal.js"
+      "shared/components/modals/TelosChangeAccountModal/TelosChangeAccountModal.js"
     ]
   },
   {
     "id": "TelosRegister69",
     "message": "Login",
     "files": [
-      "shared/components/modals/TelosRegisterModal/TelosRegisterModal.js"
+      "shared/components/modals/TelosChangeAccountModal/TelosChangeAccountModal.js"
     ]
   },
   {
@@ -659,10 +656,7 @@
   },
   {
     "id": "RowHistory95",
-    "message": "Link to the swap",
-    "files": [
-      "shared/pages/History/SwapsHistory/RowHistory/RowHistory.js"
-    ]
+    "message": "Link to the swap"
   },
   {
     "id": "SwapHisrory21",
@@ -928,10 +922,7 @@
   },
   {
     "id": "BtcToEthToken87",
-    "message": "1. Waiting participant confirm this swap",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
-    ]
+    "message": "1. Waiting participant confirm this swap"
   },
   {
     "id": "EosToBtc107",
@@ -977,10 +968,7 @@
   },
   {
     "id": "EmergencySave",
-    "message": "Information about the swap",
-    "files": [
-      "shared/pages/Swap/EmergencySave/EmergencySave.js"
-    ]
+    "message": "Information about the swap"
   },
   {
     "id": "EthTokenBtc102",
@@ -1838,10 +1826,7 @@
   },
   {
     "id": "Row263",
-    "message": "Use another",
-    "files": [
-      "shared/pages/Wallet/Row/Row.js"
-    ]
+    "message": "Use another"
   },
   {
     "id": "Row268",
@@ -1941,6 +1926,13 @@
     ]
   },
   {
+    "id": "PrivateKeysModal131",
+    "message": "Do not worry, this data is not sent anywhere from this page!",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
     "id": "PrivateKeysModal145",
     "message": "GO TO THE SITE!",
     "files": [
@@ -1956,7 +1948,7 @@
   },
   {
     "id": "PrivateKeysModal991",
-    "message": "Before you continue be sure to save your private keys!{br}{br}there is a big chance you will loose your money.",
+    "message": "Before you continue be sure to save your private keys! Security of private keys is only in your hands. ",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
@@ -2284,17 +2276,14 @@
   },
   {
     "id": "AddOffer423",
-    "message": "Enabled to partial closure",
+    "message": "Enable partial fills",
     "files": [
       "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
     ]
   },
   {
     "id": "Row277",
-    "message": "not activated",
-    "files": [
-      "shared/pages/Wallet/Row/Row.js"
-    ]
+    "message": "not activated"
   },
   {
     "id": "partial221",
@@ -2862,10 +2851,7 @@
   },
   {
     "id": "transaction368",
-    "message": "Amount must be greater than",
-    "files": [
-      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
-    ]
+    "message": "Amount must be greater than"
   },
   {
     "id": "transaction376",
@@ -2911,17 +2897,11 @@
   },
   {
     "id": "Row358",
-    "message": "Activate",
-    "files": [
-      "shared/pages/Wallet/Row/Row.js"
-    ]
+    "message": "Activate"
   },
   {
     "id": "Row377",
-    "message": "Not activated",
-    "files": [
-      "shared/pages/Wallet/Row/Row.js"
-    ]
+    "message": "Not activated"
   },
   {
     "id": "CDC52",
@@ -2983,14 +2963,14 @@
     "id": "TelosRegister46",
     "message": "Enter TELOS account name",
     "files": [
-      "shared/components/modals/TelosRegisterModal/TelosRegisterModal.js"
+      "shared/components/modals/TelosChangeAccountModal/TelosChangeAccountModal.js"
     ]
   },
   {
     "id": "TelosRegister52",
     "message": "Enter your TELOS secret key",
     "files": [
-      "shared/components/modals/TelosRegisterModal/TelosRegisterModal.js"
+      "shared/components/modals/TelosChangeAccountModal/TelosChangeAccountModal.js"
     ]
   },
   {
@@ -3058,7 +3038,7 @@
   },
   {
     "id": "Add52",
-    "message": "Add offer",
+    "message": "Place an offer",
     "files": [
       "shared/components/modals/OfferModal/OfferModal.js"
     ]
@@ -3095,7 +3075,7 @@
     "id": "TELOSLogin",
     "message": "TELOS Login",
     "files": [
-      "shared/components/modals/TelosRegisterModal/TelosRegisterModal.js"
+      "shared/components/modals/TelosChangeAccountModal/TelosChangeAccountModal.js"
     ]
   },
   {
@@ -3253,6 +3233,27 @@
     ]
   },
   {
+    "id": "PartialOfferCantProceed1",
+    "message": "Request rejected, possibly you have not complete another swap {br}{link}",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "PartialOfferCantProceed1_1",
+    "message": "Check here",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "ErrorBtcLowAmount",
+    "message": "{btcAmount} BTC - This amount is too low",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
     "id": "PartialPriceSearch",
     "message": "Searching orders...",
     "files": [
@@ -3262,6 +3263,13 @@
   {
     "id": "PartialUseSwapOnlineWallet",
     "message": "Use Swap.Online wallet",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "UseAnotherWallet",
+    "message": "Specify your receiving wallet address",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -3289,7 +3297,7 @@
   },
   {
     "id": "partial437",
-    "message": "Atomic Swap Exchange",
+    "message": "Exchange {sellCase} and {buyCase} in 60 seconds with AtomicSwap",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -3471,10 +3479,7 @@
   },
   {
     "id": "CurrencyWallet141",
-    "message": "Swap.Online - {fullName}({currency}) Web Wallet with Atomic Swap.",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "Swap.Online - {fullName}({currency}) Web Wallet with Atomic Swap."
   },
   {
     "id": "orders189",
@@ -3569,10 +3574,7 @@
   },
   {
     "id": "Withdraw18333",
-    "message": "Withdraw {data$}",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "Withdraw {data$}"
   },
   {
     "id": "ImportKeys205",
@@ -3681,10 +3683,7 @@
   },
   {
     "id": "CurrencyWallet148",
-    "message": "Swap.Online - ${fullName} (${currency}) Web Wallet with Atomic Swap.",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "Swap.Online - ${fullName} (${currency}) Web Wallet with Atomic Swap."
   },
   {
     "id": "CurrencyWallet154",
@@ -3818,10 +3817,7 @@
   },
   {
     "id": "swapFinishedGoHome",
-    "message": "Return to home page",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "Return to home page"
   },
   {
     "id": "KeyActionsPanel73",
@@ -3839,45 +3835,27 @@
   },
   {
     "id": "advantagesTitle1",
-    "message": "0% commission",
-    "files": [
-      "shared/pages/PartialClosure/PureComponents/Advantages.js"
-    ]
+    "message": "0% commission"
   },
   {
     "id": "advantagesTitle3",
-    "message": "No 3d party",
-    "files": [
-      "shared/pages/PartialClosure/PureComponents/Advantages.js"
-    ]
+    "message": "No 3d party"
   },
   {
     "id": "advantagesTitle4",
-    "message": "Super fast",
-    "files": [
-      "shared/pages/PartialClosure/PureComponents/Advantages.js"
-    ]
+    "message": "Super fast"
   },
   {
     "id": "advantagesTxt1",
-    "message": "The exchange is happening between you and other crypto holders (peer-2-peer). No percentage charged of the transaction.",
-    "files": [
-      "shared/pages/PartialClosure/PureComponents/Advantages.js"
-    ]
+    "message": "The exchange is happening between you and other crypto holders (peer-2-peer). No percentage charged of the transaction."
   },
   {
     "id": "advantagesTxt3",
-    "message": "No-one can interfere with the exchange process.",
-    "files": [
-      "shared/pages/PartialClosure/PureComponents/Advantages.js"
-    ]
+    "message": "No-one can interfere with the exchange process."
   },
   {
     "id": "advantagesTxt4",
-    "message": "You can exchange right now. The transaction is direct and within 2 minutes.",
-    "files": [
-      "shared/pages/PartialClosure/PureComponents/Advantages.js"
-    ]
+    "message": "You can exchange right now. The transaction is direct and within 2 minutes."
   },
   {
     "id": "advantagesButtonTitle",
@@ -3922,10 +3900,7 @@
     "id": "swapJS341",
     "message": "Show bitcoin script",
     "files": [
-      "shared/pages/Swap/BtcToEth.js",
-      "shared/pages/Swap/BtcToEthToken.js",
-      "shared/pages/Swap/EthToBtc.js",
-      "shared/pages/Swap/EthTokenToBtc.js"
+      "shared/pages/Swap/ShowBtcScript/ShowBtcScript.js"
     ]
   },
   {
@@ -3951,10 +3926,7 @@
   },
   {
     "id": "BtcToEthToken102",
-    "message": "Withdrawing {name} from a contract",
-    "files": [
-      "shared/pages/Swap/SwapList/steps/FourthStep.js"
-    ]
+    "message": "Withdrawing {name} from a contract"
   },
   {
     "id": "BtcToEthToken111",
@@ -3964,7 +3936,7 @@
     "id": "BtcToEthToken123",
     "message": "Finished!",
     "files": [
-      "shared/pages/Swap/SwapList/steps/FifthStep.js"
+      "shared/pages/Swap/SwapList/steps/FourthStep.js"
     ]
   },
   {
@@ -3984,10 +3956,7 @@
   },
   {
     "id": "BtcToEthToken58",
-    "message": "Bitcoin deposition",
-    "files": [
-      "shared/pages/Swap/SwapList/steps/SecondStep.js"
-    ]
+    "message": "Bitcoin deposition"
   },
   {
     "id": "BtcToEthToken67",
@@ -3995,10 +3964,7 @@
   },
   {
     "id": "BtcToEthToken80",
-    "message": "{name} deposition",
-    "files": [
-      "shared/pages/Swap/SwapList/steps/ThirdStep.js"
-    ]
+    "message": "{name} deposition"
   },
   {
     "id": "BtcToEthToken89",
@@ -4041,17 +4007,11 @@
   },
   {
     "id": "swappropgress233",
-    "message": "ETH transaction:",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "ETH transaction:"
   },
   {
     "id": "swappropgress258",
-    "message": "BTC transaction:",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "BTC transaction:"
   },
   {
     "id": "swappropgress332",
@@ -4167,10 +4127,7 @@
   },
   {
     "id": "deposit231",
-    "message": "Received {balance} / {need} {tooltip}",
-    "files": [
-      "shared/pages/Swap/DepositWindow/DepositWindow.js"
-    ]
+    "message": "Received {balance} / {need} {tooltip}"
   },
   {
     "id": "deposit239",
@@ -4188,10 +4145,7 @@
   },
   {
     "id": "swappropgress246",
-    "message": "Sign ETH transaction:",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "Sign ETH transaction:"
   },
   {
     "id": "BitcoinBuyText17",
@@ -4310,6 +4264,235 @@
     "message": "Thank you for using Swap.Online!",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.js"
+    ]
+  },
+  {
+    "id": "deposit213",
+    "message": "and 0.002 ETH на gas fee",
+    "files": [
+      "shared/pages/Swap/DepositWindow/DepositWindow.js"
+    ]
+  },
+  {
+    "id": "EmergencySave33",
+    "message": "Developer information",
+    "files": [
+      "shared/pages/Swap/EmergencySave/EmergencySave.js"
+    ]
+  },
+  {
+    "id": "swappropgress193",
+    "message": "Sign ETH transaction: {transaction}",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapProgress.js"
+    ]
+  },
+  {
+    "id": "swappropgress207",
+    "message": "ETH transaction: {transaction}",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapProgress.js"
+    ]
+  },
+  {
+    "id": "swappropgress218",
+    "message": "BTC transaction: {transaction}",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapProgress.js"
+    ]
+  },
+  {
+    "id": "Row401",
+    "message": "Create account"
+  },
+  {
+    "id": "Row420",
+    "message": "Use another"
+  },
+  {
+    "id": "Row426",
+    "message": "Login with your existing EOS account",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row431",
+    "message": "Login with your existing TLOS account",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row440",
+    "message": "Create Telos account in 1 click",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "withdrowTitle271",
+    "message": "Withdraw",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "PreventMultiTabsWidgetBuild",
+    "message": "Atomic Swap Widget supports only one active tab. Please reload this page to continue using this tab or close it",
+    "files": [
+      "shared/components/PreventMultiTabs/PreventMultiTabs.js"
+    ]
+  },
+  {
+    "id": "CurrencyWalletTitle",
+    "message": "Swap.Online - {fullName} ({currency}) Web Wallet with Atomic Swap.",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "CurrencyWalletWidgetBuildTitle",
+    "message": "{fullName} ({currency}) Web Wallet with Atomic Swap.",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "PartialUseInternalWallet",
+    "message": "Use internal wallet",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "deposit256",
+    "message": "The address of {tokenName} smart contract",
+    "files": [
+      "shared/pages/Swap/DepositWindow/DepositWindow.js"
+    ]
+  },
+  {
+    "id": "FourthStep33",
+    "message": "(tx)"
+  },
+  {
+    "id": "WalletWidgetBuildTitle",
+    "message": "Cryptocurrency Wallet with Atomic Swap Exchange",
+    "files": [
+      "shared/pages/Wallet/Wallet.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken20",
+    "message": "Create a secret key",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
+    ]
+  },
+  {
+    "id": "transaction444",
+    "message": "Sell amount must be greater than",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "transaction450",
+    "message": "Buy amount must be greater than",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "deposit300",
+    "message": "Received {balance} / {need} {dynamicFee}{tooltip}",
+    "files": [
+      "shared/pages/Swap/DepositWindow/DepositWindow.js"
+    ]
+  },
+  {
+    "id": "deposit307",
+    "message": "(included {mineerFee} {sellCurrency} miners fee)"
+  },
+  {
+    "id": "Select26",
+    "message": "1/4",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/Select/Select.js"
+    ]
+  },
+  {
+    "id": "Select27",
+    "message": "1/2",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/Select/Select.js"
+    ]
+  },
+  {
+    "id": "deposit320",
+    "message": "(included {mineerFee} {sellCurrency} miners fee)",
+    "files": [
+      "shared/pages/Swap/DepositWindow/DepositWindow.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken25",
+    "message": "Depositing Bitcoin {fromWhom} to the smart contract"
+  },
+  {
+    "id": "FourthStep28",
+    "message": "from you"
+  },
+  {
+    "id": "FourthStep29",
+    "message": "from seller"
+  },
+  {
+    "id": "ThirdStep25",
+    "message": "{name} is depositing {fromWhom} to the contract"
+  },
+  {
+    "id": "ThirdStep30",
+    "message": "from you"
+  },
+  {
+    "id": "ThirdStep31",
+    "message": "from seller"
+  },
+  {
+    "id": "BtcToEthToken24",
+    "message": "Deposit",
+    "files": [
+      "shared/pages/Swap/SwapList/steps/SecondStep.js"
+    ]
+  },
+  {
+    "id": "FourthStep36",
+    "message": "({btcTx} tx)",
+    "files": [
+      "shared/pages/Swap/SwapList/steps/SecondStep.js"
+    ]
+  },
+  {
+    "id": "FourthStep52",
+    "message": "({otherCurrency} tx)",
+    "files": [
+      "shared/pages/Swap/SwapList/steps/SecondStep.js"
+    ]
+  },
+  {
+    "id": "FourthStep34",
+    "message": "({sell} tx)",
+    "files": [
+      "shared/pages/Swap/SwapList/steps/ThirdStep.js"
+    ]
+  },
+  {
+    "id": "thirdStep24",
+    "message": "WITHDRAW",
+    "files": [
+      "shared/pages/Swap/SwapList/steps/ThirdStep.js"
     ]
   }
 ]

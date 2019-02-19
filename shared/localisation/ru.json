@@ -348,10 +348,7 @@
   },
   {
     "id": "Select24",
-    "message": "ВСЕ! ",
-    "files": [
-      "shared/components/modals/OfferModal/AddOffer/Select/Select.js"
-    ]
+    "message": "ВСЕ! "
   },
   {
     "id": "ConfirmOffer69",
@@ -406,28 +403,28 @@
     "id": "TelosRegister55",
     "message": "Имя аккаунта",
     "files": [
-      "shared/components/modals/TelosRegisterModal/TelosRegisterModal.js"
+      "shared/components/modals/TelosChangeAccountModal/TelosChangeAccountModal.js"
     ]
   },
   {
     "id": "TelosRegister59",
     "message": "Приватный ключ",
     "files": [
-      "shared/components/modals/TelosRegisterModal/TelosRegisterModal.js"
+      "shared/components/modals/TelosChangeAccountModal/TelosChangeAccountModal.js"
     ]
   },
   {
     "id": "TelosRegister64",
     "message": "Произошла ошибка при активации",
     "files": [
-      "shared/components/modals/TelosRegisterModal/TelosRegisterModal.js"
+      "shared/components/modals/TelosChangeAccountModal/TelosChangeAccountModal.js"
     ]
   },
   {
     "id": "TelosRegister69",
     "message": "Войти",
     "files": [
-      "shared/components/modals/TelosRegisterModal/TelosRegisterModal.js"
+      "shared/components/modals/TelosChangeAccountModal/TelosChangeAccountModal.js"
     ]
   },
   {
@@ -662,10 +659,7 @@
   },
   {
     "id": "RowHistory95",
-    "message": "Ссылка на обмен",
-    "files": [
-      "shared/pages/History/SwapsHistory/RowHistory/RowHistory.js"
-    ]
+    "message": "Ссылка на обмен"
   },
   {
     "id": "SwapHisrory21",
@@ -935,10 +929,7 @@
   },
   {
     "id": "BtcToEthToken87",
-    "message": "1. Ожидание подтверждения",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
-    ]
+    "message": "1. Ожидание подтверждения"
   },
   {
     "id": "EosToBtc107",
@@ -984,10 +975,7 @@
   },
   {
     "id": "EmergencySave",
-    "message": "Информация об обмене",
-    "files": [
-      "shared/pages/Swap/EmergencySave/EmergencySave.js"
-    ]
+    "message": "Информация об обмене"
   },
   {
     "id": "EthTokenBtc102",
@@ -1845,10 +1833,7 @@
   },
   {
     "id": "Row263",
-    "message": "Войти",
-    "files": [
-      "shared/pages/Wallet/Row/Row.js"
-    ]
+    "message": "Войти"
   },
   {
     "id": "Row268",
@@ -1939,6 +1924,13 @@
   {
     "id": "PrivateKeysModal130",
     "message": "Пожалуйста, заполните приведенную ниже информацию из файла instruction.txt. Мы хотели бы быть уверены, что Вы сохранили приватные ключи, прежде чем сможете продолжить работу с сайтом. ",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal131",
+    "message": "Не беспокойтесь, эти данные никуда не отправляются!",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
@@ -2280,10 +2272,7 @@
   },
   {
     "id": "Row277",
-    "message": "не активирован ",
-    "files": [
-      "shared/pages/Wallet/Row/Row.js"
-    ]
+    "message": "не активирован "
   },
   {
     "id": "partial221",
@@ -2855,10 +2844,7 @@
   },
   {
     "id": "transaction368",
-    "message": "Сумма должна быть больше ",
-    "files": [
-      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
-    ]
+    "message": "Сумма должна быть больше "
   },
   {
     "id": "transaction376",
@@ -2894,7 +2880,7 @@
   },
   {
     "id": "partial291",
-    "message": "Ожидать Участиника обмена: ",
+    "message": "Ожидание второго участника: ",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -2908,17 +2894,11 @@
   },
   {
     "id": "Row358",
-    "message": "Активировать",
-    "files": [
-      "shared/pages/Wallet/Row/Row.js"
-    ]
+    "message": "Активировать"
   },
   {
     "id": "Row377",
-    "message": "Не активированно",
-    "files": [
-      "shared/pages/Wallet/Row/Row.js"
-    ]
+    "message": "Не активированно"
   },
   {
     "id": "CDC52",
@@ -2980,14 +2960,14 @@
     "id": "TelosRegister46",
     "message": "Введите TELOS имя аккаунта",
     "files": [
-      "shared/components/modals/TelosRegisterModal/TelosRegisterModal.js"
+      "shared/components/modals/TelosChangeAccountModal/TelosChangeAccountModal.js"
     ]
   },
   {
     "id": "TelosRegister52",
     "message": "Введите Ваш TELOS секретный ключ",
     "files": [
-      "shared/components/modals/TelosRegisterModal/TelosRegisterModal.js"
+      "shared/components/modals/TelosChangeAccountModal/TelosChangeAccountModal.js"
     ]
   },
   {
@@ -3092,7 +3072,7 @@
     "id": "TELOSLogin",
     "message": "TELOS вход",
     "files": [
-      "shared/components/modals/TelosRegisterModal/TelosRegisterModal.js"
+      "shared/components/modals/TelosChangeAccountModal/TelosChangeAccountModal.js"
     ]
   },
   {
@@ -3261,6 +3241,27 @@
     ]
   },
   {
+    "id": "PartialOfferCantProceed1",
+    "message": "Запрос отклонен, возможно у вас есть незавершенные сделки {br}{link}",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "PartialOfferCantProceed1_1",
+    "message": "Смотреть сделки",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "ErrorBtcLowAmount",
+    "message": "{btcAmount} BTC - Слишком маленькая сумма",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
     "id": "PartialPriceSearch",
     "message": "поиск предложений...",
     "files": [
@@ -3270,6 +3271,13 @@
   {
     "id": "PartialUseSwapOnlineWallet",
     "message": "Используйте Swap.Online кошелек",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "UseAnotherWallet",
+    "message": "Указать адрес кошелька для получения",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -3297,7 +3305,7 @@
   },
   {
     "id": "partial437",
-    "message": "Atomic Swap обменник",
+    "message": "Обмен {sellCase} на {buyCase} всего за 60 секунд с помощью AtomicSwap",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -3479,10 +3487,7 @@
   },
   {
     "id": "CurrencyWallet141",
-    "message": "Swap.Online - {fullName}({currency}) онлайн кошелек, работащюий на технологии Atomic Swap.",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "Swap.Online - {fullName}({currency}) онлайн кошелек, работащюий на технологии Atomic Swap."
   },
   {
     "id": "CurrencyWallet167",
@@ -3581,10 +3586,7 @@
   },
   {
     "id": "Withdraw18333",
-    "message": "ПЕРЕВОД {data}",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "ПЕРЕВОД {data}"
   },
   {
     "id": "ImportKeys205",
@@ -3693,10 +3695,7 @@
   },
   {
     "id": "CurrencyWallet148",
-    "message": "Онлайн кошелек {fullName} ({currency}) с функцией Атомарного Свопа (Atomic Swap)",
-    "files": [
-      "shared/pages/CurrencyWallet/CurrencyWallet.js"
-    ]
+    "message": "Онлайн кошелек {fullName} ({currency}) с функцией Атомарного Свопа (Atomic Swap)"
   },
   {
     "id": "CurrencyWallet154",
@@ -3799,10 +3798,7 @@
   },
   {
     "id": "deposit231",
-    "message": "Получено {balance} / {need} {tooltip}",
-    "files": [
-      "shared/pages/Swap/DepositWindow/DepositWindow.js"
-    ]
+    "message": "Получено {balance} / {need} {tooltip}"
   },
   {
     "id": "deposit239",
@@ -3868,10 +3864,7 @@
   },
   {
     "id": "swapFinishedGoHome",
-    "message": "Домой",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "Домой"
   },
   {
     "id": "KeyActionsPanel73",
@@ -3889,45 +3882,27 @@
   },
   {
     "id": "advantagesTitle1",
-    "message": "0% КОМИССИЯ",
-    "files": [
-      "shared/pages/PartialClosure/PureComponents/Advantages.js"
-    ]
+    "message": "0% КОМИССИЯ"
   },
   {
     "id": "advantagesTitle3",
-    "message": "БЕЗ 3-Й СТОРОНЫ",
-    "files": [
-      "shared/pages/PartialClosure/PureComponents/Advantages.js"
-    ]
+    "message": "БЕЗ 3-Й СТОРОНЫ"
   },
   {
     "id": "advantagesTitle4",
-    "message": "МОМЕНТАЛЬНЫЙ ОБМЕН",
-    "files": [
-      "shared/pages/PartialClosure/PureComponents/Advantages.js"
-    ]
+    "message": "МОМЕНТАЛЬНЫЙ ОБМЕН"
   },
   {
     "id": "advantagesTxt1",
-    "message": "Обмен происходит между Вами и другими холдерами (peer-2-peer). Процент с транзакции не взимается.",
-    "files": [
-      "shared/pages/PartialClosure/PureComponents/Advantages.js"
-    ]
+    "message": "Обмен происходит между Вами и другими холдерами (peer-2-peer). Процент с транзакции не взимается."
   },
   {
     "id": "advantagesTxt3",
-    "message": "В процесс обмена никто не может вмешаться.",
-    "files": [
-      "shared/pages/PartialClosure/PureComponents/Advantages.js"
-    ]
+    "message": "В процесс обмена никто не может вмешаться."
   },
   {
     "id": "advantagesTxt4",
-    "message": "Вы можете совершить обмен прямо сейчас. Операция происходит в течении 2-х минут.",
-    "files": [
-      "shared/pages/PartialClosure/PureComponents/Advantages.js"
-    ]
+    "message": "Вы можете совершить обмен прямо сейчас. Операция происходит в течении 2-х минут."
   },
   {
     "id": "advantagesTxt6",
@@ -3976,10 +3951,7 @@
     "id": "swapJS341",
     "message": "показать bitcoin script",
     "files": [
-      "shared/pages/Swap/BtcToEth.js",
-      "shared/pages/Swap/BtcToEthToken.js",
-      "shared/pages/Swap/EthToBtc.js",
-      "shared/pages/Swap/EthTokenToBtc.js"
+      "shared/pages/Swap/ShowBtcScript/ShowBtcScript.js"
     ]
   },
   {
@@ -4005,10 +3977,7 @@
   },
   {
     "id": "BtcToEthToken102",
-    "message": "Отправка {name} из контракта",
-    "files": [
-      "shared/pages/Swap/SwapList/steps/FourthStep.js"
-    ]
+    "message": "Отправка"
   },
   {
     "id": "BtcToEthToken111",
@@ -4018,7 +3987,7 @@
     "id": "BtcToEthToken123",
     "message": "Свап завершен!",
     "files": [
-      "shared/pages/Swap/SwapList/steps/FifthStep.js"
+      "shared/pages/Swap/SwapList/steps/FourthStep.js"
     ]
   },
   {
@@ -4038,10 +4007,7 @@
   },
   {
     "id": "BtcToEthToken58",
-    "message": "Bitcoin зачисление",
-    "files": [
-      "shared/pages/Swap/SwapList/steps/SecondStep.js"
-    ]
+    "message": "Bitcoin зачисление"
   },
   {
     "id": "BtcToEthToken67",
@@ -4049,10 +4015,7 @@
   },
   {
     "id": "BtcToEthToken80",
-    "message": "{name} зачисление",
-    "files": [
-      "shared/pages/Swap/SwapList/steps/ThirdStep.js"
-    ]
+    "message": "{name} зачисление"
   },
   {
     "id": "BtcToEthToken89",
@@ -4095,17 +4058,11 @@
   },
   {
     "id": "swappropgress233",
-    "message": "ETH транзакция:",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "ETH транзакция:"
   },
   {
     "id": "swappropgress258",
-    "message": "BTC транзакция:",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "BTC транзакция:"
   },
   {
     "id": "swappropgress332",
@@ -4207,63 +4164,64 @@
   },
   {
     "id": "swappropgress246",
-    "message": "Sign ETH transaction:",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "Sign ETH transaction:"
   },
   {
     "id": "BitcoinBuyText17",
-    "message": "Please wait. Confirmation processing",
+    "message": "Пожалуйста, подождите. Обработка подтверждения",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
     ]
   },
   {
+    "id": "BitcoinBuyText20",
+    "message": "Создается Секретный ключ"
+  },
+  {
     "id": "BitcoinBuyText29",
-    "message": "The bitcoin Script was created and charged. Please check the information below",
+    "message": "Проверка баланса..",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
     ]
   },
   {
     "id": "BitcoinBuyText33",
-    "message": "Checking balance..",
+    "message": "Создается Bitcoin Script. Пожалуйста подождите, это займет какое то время",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
     ]
   },
   {
     "id": "BitcoinBuyText37",
-    "message": "Creating Ethereum Contract. {br} Please wait, it can take a few minutes",
+    "message": "Владелец {buyCurrency} получил Bitcoin Script и Хэш. Ожидается, создание им {buyCurrency} Контракта",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
     ]
   },
   {
     "id": "BitcoinBuyText41",
-    "message": "Waiting for {buyCurrency} tokens Owner to add a Secret Key to ETH Contact",
+    "message": "Пробуем вывести {buyCurrency} из контракта. Пожалуйста, подождите",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
     ]
   },
   {
     "id": "BitcoinBuyText45",
-    "message": "{buyCurrency} tokens was transferred to your wallet. Check the balance.",
+    "message": "{buyCurrency} токены перечислены на Ваш кошелек. Проверте баланс.",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
     ]
   },
   {
     "id": "BitcoinBuyText49",
-    "message": "Thank you for using Swap.Online",
+    "message": "Спасибо за использование Swap.Online!",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
     ]
   },
   {
     "id": "BitcoinBuyText53",
-    "message": "Thank you for using Swap.Online!",
+    "message": "Спасибо за использование Swap.Online!",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
     ]
@@ -4329,6 +4287,224 @@
     "message": "Thank you for using Swap.Online!",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.js"
+    ]
+  },
+  {
+    "id": "EmergencySave33",
+    "message": "Информация для разработчиков",
+    "files": [
+      "shared/pages/Swap/EmergencySave/EmergencySave.js"
+    ]
+  },
+  {
+    "id": "swappropgress193",
+    "message": "Sign ETH transaction: {transaction}",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapProgress.js"
+    ]
+  },
+  {
+    "id": "swappropgress207",
+    "message": "ETH transaction: {transaction}",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapProgress.js"
+    ]
+  },
+  {
+    "id": "swappropgress218",
+    "message": "BTC transaction: {transaction}",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapProgress.js"
+    ]
+  },
+  {
+    "id": "Row401",
+    "message": "Создать аккаунт"
+  },
+  {
+    "id": "Row420",
+    "message": "Использовать другой"
+  },
+  {
+    "id": "Row426",
+    "message": "Войти с вашего существующего EOS аккаунта",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row431",
+    "message": "Войти с вашего существующего TLOS аккаунта",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row440",
+    "message": "Создать Telos аккаунт в 1 клик",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "withdrowTitle271",
+    "message": "Отправка ",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "PreventMultiTabsWidgetBuild",
+    "message": "Atomic Swap Widget поддерживает только одну активную вкладку. Пожалуйста, перезагрузите эту страницу, чтобы продолжить использовать эту вкладку или закройте ее",
+    "files": [
+      "shared/components/PreventMultiTabs/PreventMultiTabs.js"
+    ]
+  },
+  {
+    "id": "CurrencyWalletTitle",
+    "message": "Swap.Online - {fullName} ({currency}) нлайн кошелек, работащюий на технологии Atomic Swap",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "CurrencyWalletWidgetBuildTitle",
+    "message": "{fullName} ({currency}) онлайн кошелек, работащюий на технологии Atomic Swap.",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "PartialUseInternalWallet",
+    "message": "Используйте внутренний кошелек",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "deposit256",
+    "message": "Адрес {tokenName} смарт контракта",
+    "files": [
+      "shared/pages/Swap/DepositWindow/DepositWindow.js"
+    ]
+  },
+  {
+    "id": "FourthStep33",
+    "message": "(tx)"
+  },
+  {
+    "id": "WalletWidgetBuildTitle",
+    "message": "Криптовалютный кошелек, работащюий на технологии Atomic Swap.",
+    "files": [
+      "shared/pages/Wallet/Wallet.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken20",
+    "message": "Создвется секретный ключ",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
+    ]
+  },
+  {
+    "id": "transaction444",
+    "message": "Сумма продажи должна быть больше чем",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "transaction450",
+    "message": "Сумма покупки должна быть больше чем",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
+    ]
+  },
+  {
+    "id": "deposit300",
+    "message": "Получено {balance} / {need} {tooltip}",
+    "files": [
+      "shared/pages/Swap/DepositWindow/DepositWindow.js"
+    ]
+  },
+  {
+    "id": "Select26",
+    "message": "1/4",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/Select/Select.js"
+    ]
+  },
+  {
+    "id": "Select27",
+    "message": "1/2",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/Select/Select.js"
+    ]
+  },
+  {
+    "id": "deposit320",
+    "message": "(Включено {mineerFee} {sellCurrency} комиссии майнеров)",
+    "files": [
+      "shared/pages/Swap/DepositWindow/DepositWindow.js"
+    ]
+  },
+  {
+    "id": "BtcToEthToken25",
+    "message": "Зачисление Bitcoin {fromWhom} в контракт"
+  },
+  {
+    "id": "FourthStep28",
+    "message": "вами"
+  },
+  {
+    "id": "FourthStep29",
+    "message": "продавцом"
+  },
+  {
+    "id": "ThirdStep25",
+    "message": "Зачисление {name} {fromWhom} в контракт"
+  },
+  {
+    "id": "ThirdStep30",
+    "message": "продавцом"
+  },
+  {
+    "id": "ThirdStep31",
+    "message": "вами"
+  },
+  {
+    "id": "BtcToEthToken24",
+    "message": "Зачисление",
+    "files": [
+      "shared/pages/Swap/SwapList/steps/SecondStep.js"
+    ]
+  },
+  {
+    "id": "FourthStep36",
+    "message": "({btcTx} tx)",
+    "files": [
+      "shared/pages/Swap/SwapList/steps/SecondStep.js"
+    ]
+  },
+  {
+    "id": "FourthStep52",
+    "message": "({otherCurrency} tx)",
+    "files": [
+      "shared/pages/Swap/SwapList/steps/SecondStep.js"
+    ]
+  },
+  {
+    "id": "FourthStep34",
+    "message": "({sell} tx)",
+    "files": [
+      "shared/pages/Swap/SwapList/steps/ThirdStep.js"
+    ]
+  },
+  {
+    "id": "thirdStep24",
+    "message": "Отправка",
+    "files": [
+      "shared/pages/Swap/SwapList/steps/ThirdStep.js"
     ]
   }
 ]

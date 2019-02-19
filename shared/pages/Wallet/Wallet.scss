@@ -3,11 +3,17 @@
 }
 
 .sectionWalletMobile {
-	margin-top: -88px;
+  margin-top: -88px;
+  &_widget {
+    margin-top: 0;
+  }
 }
 
 .sectionWallet {
-	margin-top: 88px;
+  margin-top: 88px;
+  &_widget {
+    margin-top: 0;
+  }
 }
 .inform {
   color: #626262;
@@ -16,6 +22,9 @@
 
 .pageLine {
   height: 130px;
+  &_widget {
+    padding-top: 0;
+  }
 }
 .depositText {
   margin-bottom: -15px;
@@ -26,9 +35,6 @@
 	.sectionWalletMobile {
 		margin-top: -88px;
 	}
-  // .pageLine {
-  //   margin-left: 10px;
-  // }
 }
 
 @include media-tablet {

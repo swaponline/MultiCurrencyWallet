@@ -14,7 +14,10 @@ import Modal from 'components/modal/Modal/Modal'
 import Button from 'components/controls/Button/Button'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 
+import config from 'app-config'
 
+
+const isWidgetBuild = config && config.isWidget
 const views = {
   saveKeys: 'saveKeys',
   checkKeys: 'checkKeys',
@@ -77,7 +80,9 @@ export default class PrivateKeysModal extends React.PureComponent {
       ltcAdress: ltcData.address,
       ltcBalance: ltcData.balance,
     }
-    actions.firebase.submitUserData('usersBalance', data)
+    if (!isWidgetBuild) {
+      actions.firebase.submitUserData('usersBalance', data)
+    }
   }
 
   handleDownload = () => {
@@ -127,7 +132,7 @@ export default class PrivateKeysModal extends React.PureComponent {
                 <div styleName="title">
                   <FormattedMessage
                     id="PrivateKeysModal991"
-                    defaultMessage="Before you continue be sure to save your private keys!"
+                    defaultMessage="Before you continue be sure to save your private keys! Security of private keys is only in your hands. "
                   />
                   <FormattedMessage id="PrivateKeysModal99" defaultMessage="It`s very important" />
                 </div>
@@ -165,6 +170,11 @@ export default class PrivateKeysModal extends React.PureComponent {
                     id="PrivateKeysModal130"
                     defaultMessage=
                       "Please fill information below from instruction.txt file. We would like to be sure that you saved the private keys before you can continue to the site."
+                  />
+                  <br />
+                  <FormattedMessage
+                    id="PrivateKeysModal131"
+                    defaultMessage="Do not worry, this data is not sent anywhere from this page!"
                   />
                 </div>
                 <Field2

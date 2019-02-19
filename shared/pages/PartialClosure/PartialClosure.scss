@@ -1,8 +1,11 @@
-@media (min-width: 1134px) {
+@media (min-width: 831px) {
   .TitleHolder {
-    width: 40%;
     position: absolute;
-    top: 67px;
+    width: 50%;
+    top: 87px;
+    h1, span {
+      font-size: 45px;
+    }
     * {
       margin: 0;
       padding: 0;
@@ -27,6 +30,24 @@
 
 .walletToggle {
   margin-top: 10px;
+  &_site {
+    margin-bottom: 15px;
+  }
+}
+
+.anotherRecepient {
+  position: relative;
+  z-index: -1;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.3s ease;
+  &_active {
+    z-index: 0;
+    opacity: 1;
+    max-height: 100vh;
+    transition: opacity 0.3s 0.2s,
+                max-height 0.7s ease;
+  }
 }
 
 .walletInput {
@@ -47,11 +68,25 @@
 }
 
 .block {
+  position: relative;
   flex-basis: 37%;
 }
 
 .error {
   color: red;
+  a {
+    position: relative;
+    cursor: pointer;
+    &::after {
+      display: block;
+      position: absolute;
+      content: '';
+      bottom: -1px;
+      width: 100%;
+      height: 1px;
+      background: red;
+    }
+  }
 }
 
 .row {
@@ -60,9 +95,10 @@
 }
 
 .flipButton {
-  transform: rotate(90deg);
+  position: static;
   padding: 0;
-  margin: -2.5rem 0 -1.5rem calc(90% - 12px);
+  margin: 0px 12px -20px auto;
+  transform: rotate(90deg);
 }
 
 .withLoader {
@@ -78,30 +114,47 @@
 
 .loaderHolder {
   display: inline-block;
+  position: relative;
+  top: 2px;
 }
 
 .additionalLoaderHolder {
   display: block;
   position: relative;
+  > * {
+    display: block;
+    position: static !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+}
+
+.extendedControls {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  background: white;
+  overflow: visible;
+  margin: 1px 0 -19px;
+  > div {
+    margin: 0;
+  }
+}
+
+.maxAmount {
+  display: inline-block;
+  position: absolute;
+  top: 0px;
+  right: 0;
+  margin-bottom: 0;
 }
 
 @include media-mobile {
-  .loaderHolder {
-    display: block;
-    position: relative;
-    margin-top: -42px;
-    padding-bottom: 42px;
-    margin-top: -20px;
-    padding-bottom: 20px;
-  }
   .inform {
     margin-top: 10px;
   }
-  .additionalLoaderHolder {
-    > div {
-      left: 140px;
-      top: -5px;
-    }
+  .maxAmount {
+    top: 6px;
   }
 }
 
@@ -114,6 +167,15 @@
   }
   .button {
     font-size: 12px;
+  }
+  .maxAmount {
+    font-size: 14px;
+  }
+  .TitleHolder {
+    width: 45%;
+    h1, span {
+      font-size: 35px;
+    }
   }
 }
 @media all and (min-width: 320px) and (max-width: 830px) {
@@ -143,10 +205,19 @@
       width: auto;
     }
   }
+  .TitleHolder {
+    width: 100%;
+  }
 }
 
 @media all and (min-width: 320px) and (max-width: 400px) {
   .button {
     font-size: 9px;
+  }
+}
+
+@include media-widget {
+  .block {
+    margin: 0 auto;
   }
 }

@@ -2,23 +2,24 @@ import React from 'react'
 
 import CSSModules from 'react-css-modules'
 import styles from '../SwapList.scss'
+import { isMobile } from 'react-device-detect'
 
 import { FormattedMessage } from 'react-intl'
 
 
-const FourthStep = ({ step, swap, sixth, seventh, eighth }) => {
+const FourthStep = ({ step, swap, seventh, eighth }) => {
 
   const currencyStep = swap.sellCurrency === 'BTC' ? seventh : eighth
 
   return (
-    <div styleName={((step >= sixth && step < currencyStep) && 'stepItem active') || (step < currencyStep && 'stepItem') || 'stepItem active checked'}>
-      <span styleName="stepNumber">{step < currencyStep ? 4 : <i className="fas fa-check" />}</span>
+    <div
+      style={(isMobile && (step >= currencyStep)) ? { paddingTop: '150px' } : {}}
+      styleName={step >= currencyStep ? 'stepItem active checked' : 'stepItem'}>
+      <span styleName="stepNumber">{step >= currencyStep ? <i className="fas fa-check" /> : 4}</span>
       <p styleName="stepText">
         <FormattedMessage
-          id="BtcToEthToken102"
-          defaultMessage="Withdrawing {name} from the contract"
-          values={{ name: swap.sellCurrency === 'BTC' ? swap.buyCurrency : swap.sellCurrency }}
-        />
+          id="BtcToEthToken123"
+          defaultMessage="The swap is finish!" />
       </p>
     </div>
   )

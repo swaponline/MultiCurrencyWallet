@@ -17,7 +17,7 @@ const Filter = ({ filter }) => {
 
   const handleChangeFilter = (filter) => {
     actions.filter.setFilter(filter)
-    actions.analytics.dataEvent(`history-click-${filter}`)
+    // actions.analytics.dataEvent(`history-click-${filter}`)
   }
 
   return (

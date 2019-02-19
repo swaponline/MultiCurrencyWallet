@@ -53,15 +53,15 @@ export default class ReceiveModal extends React.Component {
             text={address}
             onCopy={this.handleCopyAddress}
           >
-            <p styleName="qr">
+            <div styleName="qr">
               <QR
                 network={currency}
                 address={address}
                 size={500}
               />
-              <div>
+              <p>
                 {address}
-              </div>
+              </p>
               <Button
                 styleName="button"
                 brand
@@ -75,7 +75,7 @@ export default class ReceiveModal extends React.Component {
                   <FormattedMessage id="recieved67" defaultMessage="Copy to clipboard" />
                 }
               </Button>
-            </p>
+            </div>
           </CopyToClipboard>
         </div>
       </Modal>

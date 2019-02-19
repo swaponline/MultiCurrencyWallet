@@ -58,6 +58,30 @@
   }
 }
 
+.transactionInStep {
+  font-size: 20px;
+  margin-left: 10px;
+  a {
+    font-size: 14px;
+    margin-top: -12px;
+    display: block;
+    margin-right: 4px;
+    display: flex;
+    border-bottom: 1px solid;
+    padding-bottom: 3px;
+    &:hover {
+      border-bottom: none;
+      color: #007bff;
+    }
+  }
+  i {
+    font-size: 19px;
+    color: #007bff;
+    display: none;
+    margin-left: 4px;
+  }
+}
+
 @include media-mobile {
   .active {
     position: absolute;

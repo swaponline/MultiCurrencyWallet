@@ -114,14 +114,14 @@ export default class Currency extends Component {
     let { match:{ params: { currency } }, items } = this.props
     const itemCurrency = items.filter(item => item.currency.toLowerCase() === currency)[0]
 
-    actions.analytics.dataEvent(`balances-withdraw-${currency.toLowerCase()}`)
+    // actions.analytics.dataEvent(`balances-withdraw-${currency.toLowerCase()}`)
     actions.modals.open(constants.modals.Withdraw, {
       ...itemCurrency,
     })
   }
 
   render() {
-    const { match: { params: { currency } }, items } = this.props
+    const { match: { params: { currency } }, items, intl: { locale } } = this.props
     const { isBalanceEmpty, balance } = this.state
     return (
       <section styleName={isMobile ? 'currencyMobileSection' : 'currencyMediaSection'}>
@@ -164,7 +164,7 @@ export default class Currency extends Component {
             <Row key={index} {...row} />
           )}
         />
-        <CloseIcon styleName="closeButton" onClick={() => this.props.history.push('/')} data-testid="CloseIcon" />
+        <CloseIcon styleName="closeButton" onClick={() => this.props.history.push(localisedUrl(locale, '/'))} data-testid="CloseIcon" />
       </section>
     )
   }

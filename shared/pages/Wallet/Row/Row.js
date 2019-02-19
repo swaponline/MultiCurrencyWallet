@@ -57,6 +57,8 @@ export default class Row extends Component {
     isAddressCopied: false,
     isTouch: false,
     isBalanceEmpty: true,
+    telosRegister: false,
+    showButtons: false,
   }
 
   static getDerivedStateFromProps({ item: { balance } }) {
@@ -70,6 +72,7 @@ export default class Row extends Component {
     const { currency, currencies } = this.props
 
     this.state.tradeAllowed = !!currencies.find(c => c.value === currency.toLowerCase())
+
   }
 
   componentWillUnmount() {
@@ -79,6 +82,7 @@ export default class Row extends Component {
   componentDidMount() {
     const { hiddenCoinsList } = this.props
 
+    this.handleTelosActivate()
     window.addEventListener('resize', this.handleSliceAddress)
 
     Object.keys(config.erc20)
@@ -88,12 +92,15 @@ export default class Row extends Component {
         }
       })
   }
+
   componentDidUpdate() {
-    const { item } = this.props
-    if (item.balance > 0) {
-      actions.analytics.balanceEvent(item.currency, item.balance)
+    const { item: { currency, balance } } = this.props
+
+    if (balance > 0) {
+      actions.analytics.balanceEvent({ action: 'have', currency, balance })
     }
   }
+
   handleReloadBalance = async () => {
     const { isBalanceFetching } = this.state
 
@@ -166,8 +173,8 @@ export default class Row extends Component {
     actions.modals.open(constants.modals.EosRegister, {})
   }
 
-  handleTelosRegister = () => {
-    actions.modals.open(constants.modals.TelosRegister, {})
+  handleTelosChangeAccount = () => {
+    actions.modals.open(constants.modals.TelosChangeAccount, {})
   }
 
   handleEosBuyAccount = async () => {
@@ -187,7 +194,7 @@ export default class Row extends Component {
       },
     } = this.props
 
-    actions.analytics.dataEvent(`balances-withdraw-${currency.toLowerCase()}`)
+    // actions.analytics.dataEvent(`balances-withdraw-${currency.toLowerCase()}`)
     actions.modals.open(constants.modals.Withdraw, {
       currency,
       address,
@@ -221,11 +228,47 @@ export default class Row extends Component {
 
   handleGoTrade = (currency) => {
     const { intl: { locale } } = this.props
-    this.props.history.push(localisedUrl(locale, `/${currency.toLowerCase()}`))
+    const pair = currency.toLowerCase() === 'btc' ? 'eth' : 'btc'
+
+    window.scrollTo(0, 0)
+    this.props.history.push(localisedUrl(locale, `/exchange/${currency.toLowerCase()}-to-${pair}`))
   }
 
   handleMarkCoinAsHidden = (coin) => {
     actions.core.markCoinAsHidden(coin)
+  }
+
+  handleTelosActivate = async () => {
+    const telosActivePrivateKey = localStorage.getItem(constants.privateKeyNames.telosPrivateKey)
+    const telosActivePublicKey = localStorage.getItem(constants.privateKeyNames.telosPublicKey)
+    const telosAccount = localStorage.getItem(constants.privateKeyNames.telosAccount)
+    const telosAccountActivated = localStorage.getItem(constants.localStorage.telosAccountActivated) === 'true'
+    const telosRegistrated = localStorage.getItem(constants.localStorage.telosRegistrated) === 'true'
+
+    this.setState(() => ({
+      telosAccountActivated,
+      telosActivePublicKey,
+      telosRegistrated,
+    }))
+
+    if (!telosAccountActivated && !telosRegistrated) {
+      const { accountName, activePrivateKey, activePublicKey } = await actions.tlos.loginWithNewAccount()
+      localStorage.setItem(constants.localStorage.telosRegistrated, true)
+    }
+    // if (telosRegistrated) {
+    //   await actions.tlos.activateAccount(telosAccount, telosActivePrivateKey, telosActivePublicKey)
+    // } на время проблем с работой сервера
+  }
+
+  showButtons = () => {
+    this.setState(() => ({
+      showButtons: true,
+    }))
+  }
+  hideButtons = () => {
+    this.setState(() => ({
+      showButtons: false,
+    }))
   }
 
   render() {
@@ -235,6 +278,9 @@ export default class Row extends Component {
       isAddressCopied,
       isTouch,
       isBalanceEmpty,
+      telosAccountActivated,
+      telosActivePublicKey,
+      showButtons,
     } = this.state
 
     const {
@@ -251,8 +297,6 @@ export default class Row extends Component {
       intl: { locale },
     } = this.props
 
-    const telosAccountActivated = localStorage.getItem(constants.localStorage.telosAccountActivated) === 'true'
-
     let eosAccountActivated = false
     let eosActivationPaymentSent = false
     if (currency === 'EOS') {
@@ -267,6 +311,8 @@ export default class Row extends Component {
         onTouchEnd={this.handleTouchClear}
         onTouchMove={this.handleTouch}
         style={isTouch && this.props.index !== this.props.selectId ?  { background: '#f5f5f5' } : { background: '#fff' }}
+        onMouseEnter={this.showButtons}
+        onMouseLeave={this.hideButtons}
       >
         <td>
           <Link to={localisedUrl(locale, `/${fullName}-wallet`)} title={`Online ${fullName} wallet`}>
@@ -360,15 +406,15 @@ export default class Row extends Component {
                       </Fragment>
                     )
                     }
-                    { currency === 'TLOS' && !telosAccountActivated && (
+                    {/* currency === 'TLOS' && !telosAccountActivated && address && (
                       <Fragment>
                         <br />
                         <span styleName="notActiveLink">
-                          <FormattedMessage id="Row277" defaultMessage="not activated" />
+                          <FormattedMessage id="Row277" defaultMessage="Not activated" />
                         </span>
                       </Fragment>
                     )
-                    }
+                    */}
                   </div>
                 ) : (
                   <Fragment>
@@ -389,28 +435,53 @@ export default class Row extends Component {
               }
               <div styleName="activeControlButtons">
                 <div styleName="actButton">
-                  {currency === 'EOS' && !eosAccountActivated &&
+                  {/* currency === 'EOS'  && !eosAccountActivated && (isMobile || showButtons) &&
                     <button styleName="button buttonActivate" onClick={this.handleEosBuyAccount} data-tip data-for="Activate">
                       <FormattedMessage id="Row358" defaultMessage="Activate" />
                     </button>
-                  }
+                  */}
                 </div>
+                {/* <div styleName="actButtonTelos">
+                  {currency === 'TLOS'  && !telosAccountActivated && !address &&
+                    <button styleName="button buttonActivate" onClick={this.handleTelosActivate} data-tip data-for="Create">
+                      <FormattedMessage id="Row401" defaultMessage="Create account" />
+                    </button>
+                  }
+                </div> */}
                 <ReactTooltip id="Activate" type="light" effect="solid">
                   <span>
                     <FormattedMessage id="Row256" defaultMessage="Buy this account" />
                   </span>
                 </ReactTooltip>
+                <ReactTooltip id="Create" type="light" effect="solid">
+                  <span>
+                    <FormattedMessage id="Row440" defaultMessage="Create Telos account in 1 click" />
+                  </span>
+                </ReactTooltip>
                 <div styleName="useButton">
-                  {
-                    currency === 'EOS' &&
+                  {/*
+                    currency === 'EOS' && showButtons &&
                     <button styleName="button buttonUseAnother" onClick={this.handleEosRegister} data-tip data-for="Use">
                       <FormattedMessage id="Row263" defaultMessage="Use another" />
                     </button>
-                  }
+                  */}
+                </div>
+                <div styleName={!address ? 'useButtonTelos' : 'useButtonTelos addressExist'}>
+                  {/*
+                    currency === 'TLOS' &&
+                    <button styleName="button buttonUseAnother" onClick={this.handleTelosChangeAccount} data-tip data-for="UseTlos ">
+                      <FormattedMessage id="Row420" defaultMessage="Use another" />
+                    </button>
+                  */}
                 </div>
                 <ReactTooltip id="Use" type="light" effect="solid">
                   <span>
-                    <FormattedMessage id="Row377" defaultMessage="Login with your existing eos account" />
+                    <FormattedMessage id="Row426" defaultMessage="Login with your existing EOS account" />
+                  </span>
+                </ReactTooltip>
+                <ReactTooltip id="UseTlos" type="light" effect="solid">
+                  <span>
+                    <FormattedMessage id="Row431" defaultMessage="Login with your existing TLOS account" />
                   </span>
                 </ReactTooltip>
               </div>

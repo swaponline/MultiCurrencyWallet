@@ -7,7 +7,7 @@ import cssModules from 'react-css-modules'
 import styles from './Swap.scss'
 
 import { connect } from 'redaction'
-import helpers, { links, constants } from 'helpers'
+import helpers, { links, constants, request } from 'helpers'
 import actions from 'redux/actions'
 import { Link } from 'react-router-dom'
 
@@ -17,11 +17,15 @@ import EmergencySave from './EmergencySave/EmergencySave'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import DeleteSwapAfterEnd from './DeleteSwapAfterEnd'
-import SwapController from './SwapController'
 import { Button } from 'components/controls'
 import FeeControler from './FeeControler/FeeControler'
 import DepositWindow from './DepositWindow/DepositWindow'
+import ShowBtcScript from './ShowBtcScript/ShowBtcScript'
 
+import config from 'app-config'
+
+
+const isWidgetBuild = config && config.isWidget
 
 @injectIntl
 @connect(({
@@ -48,6 +52,7 @@ export default class SwapComponent extends PureComponent {
     continueSwap: true,
     enoughBalance: true,
     depositWindow: false,
+    isShowingBitcoinScript: false,
     shouldStopCheckSendingOfRequesting: false,
   }
 
@@ -113,28 +118,19 @@ export default class SwapComponent extends PureComponent {
     const { swap: { flow: { state: { canCreateEthTransaction, requireWithdrawFeeSended } } }, continueSwap } = this.state
     if (this.state.swap !== null) {
 
-      let timer
-
       setTimeout(() => {
         if (!canCreateEthTransaction && continueSwap && requireWithdrawFeeSended) {
           this.checkEnoughFee()
         }
       }, 300 * 1000)
 
-      timer = setInterval(() => {
+      setInterval(() => {
         this.catchWithdrawError()
-        this.isBalanceEnough()
         this.requestingWithdrawFee()
+        this.isBalanceEnough()
       }, 5000)
     }
   }
-
-  // componentWillMount() {
-  //   actions.api.checkServers()
-  //     .then(() => {
-  //
-  //     })
-  // }
 
   setSaveSwapId = (orderId) => {
     let swapsId = JSON.parse(localStorage.getItem('swapId'))
@@ -154,7 +150,7 @@ export default class SwapComponent extends PureComponent {
       swap.flow.syncBalance()
     }
 
-    if (!swap.flow.state.isBalanceEnough) {
+    if (!swap.flow.state.isBalanceEnough && swap.flow.state.step === 4) {
       this.setState(() => ({ enoughBalance: false }))
     } else {
       this.setState(() => ({ enoughBalance: true }))
@@ -188,6 +184,38 @@ export default class SwapComponent extends PureComponent {
     }
   }
 
+  sendRequestToFaucet = () => {
+    const { owner, buyCurrency, buyAmount, sellCurrency, sellAmount } = this.state.swap
+
+    if (this.state.requestToFaucetSended) return
+    if (this.state.requestToFaucetError) return
+
+    this.setState({
+      requestToFaucetSended: true,
+    })
+
+    request.post(`${config.api.faucet}`, {
+      body: {
+        eth: this.state.ethAddress,
+        buyCurrency,
+        buyAmount: buyAmount.toString(),
+        sellCurrency,
+        sellAmount: sellAmount.toString(),
+      },
+    }).then((rv) => {
+      console.log('faucet answered', rv)
+      this.setState({
+        requestToFaucetTxID: rv.txid,
+      })
+    }).catch((error) => {
+      console.log('faucet error')
+      this.setState({
+        requestToFaucetSended: false,
+        requestToFaucetError: true,
+      })
+    })
+  }
+
   checkEnoughFee = () => {
     const { swap: { participantSwap, flow: { state: { canCreateEthTransaction } } }, currencyData: { currency }, continueSwap } = this.state
 
@@ -200,6 +228,7 @@ export default class SwapComponent extends PureComponent {
       this.setState(() => ({
         continueSwap: false,
       }))
+      this.sendRequestToFaucet()
     } else {
       this.setState(() => ({
         continueSwap: true,
@@ -207,10 +236,18 @@ export default class SwapComponent extends PureComponent {
     }
   }
 
+  toggleBitcoinScript = () => {
+    this.setState({
+      isShowingBitcoinScript: !this.state.isShowingBitcoinScript,
+    })
+  }
 
   render() {
     const { peer, tokenItems, history } = this.props
-    const { swap, SwapComponent, currencyData, isAmountMore, ethData, continueSwap, enoughBalance, depositWindow, ethAddress } = this.state
+    const {
+      swap, SwapComponent, currencyData, isAmountMore, ethData, continueSwap, enoughBalance,
+      depositWindow, ethAddress, isShowingBitcoinScript, requestToFaucetSended,
+    } = this.state
 
     if (!swap || !SwapComponent || !peer || !isAmountMore) {
       return null
@@ -232,11 +269,12 @@ export default class SwapComponent extends PureComponent {
           enoughBalance={enoughBalance}
           ethData={ethData}
           continueSwap={continueSwap}
+          requestToFaucetSended={requestToFaucetSended}
         >
           <Share flow={swap.flow} />
           <EmergencySave flow={swap.flow} />
+          <ShowBtcScript onClick={this.toggleBitcoinScript} btcScriptValues={swap.flow.state.btcScriptValues} isShowingBitcoinScript={isShowingBitcoinScript} />
           {peer === swap.owner.peer && (<DeleteSwapAfterEnd swap={swap} />)}
-          <SwapController swap={swap} />
         </SwapComponent>
       </div>
     )

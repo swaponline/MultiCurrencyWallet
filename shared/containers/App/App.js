@@ -40,7 +40,7 @@ moment.locale(userLanguage)
   btcAddress: 'user.btcData.address',
   tokenAddress: 'user.tokensData.swap.address',
 })
-@CSSModules(styles)
+@CSSModules(styles, { allowMultiple: true })
 export default class App extends React.Component {
 
   static propTypes = {
@@ -85,7 +85,7 @@ export default class App extends React.Component {
     window.actions = actions
 
     window.onerror = (error) => {
-      actions.analytics.errorEvent(error)
+      // actions.analytics.errorEvent(error)
     }
 
     const db = indexedDB.open('test')
@@ -106,8 +106,14 @@ export default class App extends React.Component {
     const { children, ethAddress, btcAddress, tokenAddress, history /* eosAddress */ } = this.props
     const isFetching = !ethAddress || !btcAddress || (!tokenAddress && config && !config.isWidget) || !fetching
 
-    const isWidget = history.location.pathname.includes('/exchange/') && history.location.hash === '#widget'
+    const isWidget = history.location.pathname.includes('/exchange') && history.location.hash === '#widget'
     const isCalledFromIframe = window.location !== window.parent.location
+    const isWidgetBuild = config && config.isWidget
+
+    if (isWidgetBuild && localStorage.getItem(constants.localStorage.isWidgetDataSend) !== 'true') {
+      actions.firebase.submitUserDataWidget('usersData')
+      localStorage.setItem(constants.localStorage.isWidgetDataSend, true)
+    }
 
     if (multiTabs) {
       return <PreventMultiTabs />
@@ -117,18 +123,21 @@ export default class App extends React.Component {
       return <Loader showTips />
     }
 
-    const mainContent = isWidget || isCalledFromIframe
+    const mainContent = (isWidget || isCalledFromIframe) && !isWidgetBuild
       ? (
         <Fragment>
           {children}
           <Core />
+          <RequestLoader />
+          <ModalConductor />
+          <NotificationConductor />
         </Fragment>
       )
       : (
         <Fragment>
           <Seo location={history.location} />
           <Header />
-          <WidthContainer styleName="main">
+          <WidthContainer styleName={isWidgetBuild ? 'main main_widget' : 'main'}>
             <main>
               {children}
             </main>

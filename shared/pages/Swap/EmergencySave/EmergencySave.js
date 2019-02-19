@@ -30,11 +30,11 @@ export default class EmergencySave extends Component {
     return (
       <div styleName="block">
         <span styleName="button"  onClick={this.showEmergency}>
-          <FormattedMessage id="EmergencySave" defaultMessage="Information about the swap" />
+          <FormattedMessage id="EmergencySave33" defaultMessage="Developer information" />
         </span>
         {
           isShowEmergency && (
-            <pre>
+            <pre styleName="information">
               <code>
                 {
                   JSON.stringify(state, false, 4)

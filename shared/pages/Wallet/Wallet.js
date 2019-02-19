@@ -26,6 +26,8 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import config from 'app-config'
 
 
+const isWidgetBuild = config && config.isWidget
+
 @connect(
   ({
     core: { hiddenCoinsList },
@@ -79,7 +81,7 @@ export default class Wallet extends Component {
 
   componentWillMount() {
     actions.user.getBalances()
-    actions.analytics.dataEvent('open-page-balances')
+    // actions.analytics.dataEvent('open-page-balances')
 
     this.checkImportKeyHash()
 
@@ -179,12 +181,21 @@ export default class Wallet extends Component {
         :
         <FormattedMessage id="Wallet119" defaultMessage="Actions" />,
     ]
-    const title = defineMessages({
+
+    const titleSwapOnline = defineMessages({
       metaTitle: {
         id: 'Wallet140',
         defaultMessage: 'Swap.Online - Cryptocurrency Wallet with Atomic Swap Exchange',
       },
     })
+    const titleWidgetBuild = defineMessages({
+      metaTitle: {
+        id: 'WalletWidgetBuildTitle',
+        defaultMessage: 'Cryptocurrency Wallet with Atomic Swap Exchange',
+      },
+    })
+    const title = (isWidgetBuild) ? titleWidgetBuild : titleSwapOnline
+
     const description = defineMessages({
       metaDescription: {
         id: 'Wallet146',
@@ -193,15 +204,17 @@ export default class Wallet extends Component {
       },
     })
 
+    const sectionWalletStyleName = isMobile ? 'sectionWalletMobile' : 'sectionWallet'
+
     this.forceCautionUserSaveMoney()
 
     return (
-      <section styleName={isMobile ? 'sectionWalletMobile' : 'sectionWallet'}>
+      <section styleName={isWidgetBuild ? `${sectionWalletStyleName} ${sectionWalletStyleName}_widget` : sectionWalletStyleName}>
         <PageSeo
           location={location}
           defaultTitle={intl.formatMessage(title.metaTitle)}
           defaultDescription={intl.formatMessage(description.metaDescription)} />
-        <PageHeadline styleName="pageLine">
+        <PageHeadline styleName={isWidgetBuild ? 'pageLine pageLine_widget' : 'pageLine'}>
           <SubTitle>
             <FormattedMessage id="Wallet104" defaultMessage="Your online cryptocurrency wallet" />
           </SubTitle>

@@ -32,7 +32,6 @@ export default class UserTooltip extends Component {
         { feeds.length < 3  ? (
           feeds.map(row => {
             const { request, content: { buyAmount, buyCurrency, sellAmount, sellCurrency }, id, peer: ownerPeer } = row
-            const reputationPlaceholder = '?'
 
             return (
               mePeer === ownerPeer &&
@@ -43,7 +42,7 @@ export default class UserTooltip extends Component {
                       <FormattedMessage
                         id="userTooltip43"
                         defaultMessage="User ({reputation}) wants to swap"
-                        values={{ reputation: <b>{Number.isInteger(reputation) ? reputation : reputationPlaceholder}</b> }}
+                        values={{ reputation: <b>{Number.isInteger(reputation) ? reputation : '?'}</b> }}
                       />
                     </div>
                     <div styleName="currency">
@@ -55,7 +54,7 @@ export default class UserTooltip extends Component {
                   <span styleName="decline" onClick={() => this.props.declineRequest(id, peer)} />
                   <div styleName="checked" onClick={() => this.props.acceptRequest(id, peer, `${links.swap}/${sellCurrency}-${buyCurrency}/${id}`)} />
                   <TimerButton
-                    timeLeft={0}
+                    timeLeft={3}
                     isButton={false}
                     onClick={() => this.props.acceptRequest(id, peer, `${links.swap}/${sellCurrency}-${buyCurrency}/${id}`)}
                   />
