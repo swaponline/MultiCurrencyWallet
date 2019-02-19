@@ -30,7 +30,7 @@ import helpers, { constants, links } from 'helpers'
 
 
 const filterIsPartial = (orders) => orders
-  .filter(order => order.isPartial && !order.isProcessing)
+  .filter(order => order.isPartial && !order.isProcessing && !order.isHidden)
 
 const text = [
   <FormattedMessage id="partial223" defaultMessage="To change default wallet for buy currency. " />,

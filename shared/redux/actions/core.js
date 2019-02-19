@@ -47,6 +47,19 @@ const removeOrder = (orderId) => {
   actions.feed.deleteItemToFeed(orderId)
 }
 
+const showMyOrders = () => {
+  console.log('showMyOrders')
+  SwapApp.shared().services.orders.showMyOrders()
+}
+
+const hideMyOrders = () => {
+  SwapApp.shared().services.orders.hideMyOrders()
+}
+
+const hasHiddenOrders = () => {
+  return SwapApp.shared().services.orders.hasHiddenOrders()
+}
+
 const sendRequest = (orderId, destination = {}, callback) => {
   const { address: destinationAddress } = destination
 
@@ -220,4 +233,7 @@ export default {
   markCoinAsVisible,
   requestToPeer,
   getInformationAboutSwap,
+  hideMyOrders,
+  showMyOrders,
+  hasHiddenOrders,
 }
