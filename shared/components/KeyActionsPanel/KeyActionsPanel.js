@@ -53,6 +53,7 @@ export default class KeyActionsPanel extends Component {
 
   render() {
     const { hiddenCoinsList } = this.props
+    const isMac = navigator.platform.indexOf('Mac') > -1
 
     return (
       <div styleName="WithdrawButtonContainer">
@@ -74,9 +75,12 @@ export default class KeyActionsPanel extends Component {
             </WithdrawButton>
           )
         }
-        <WithdrawButton onClick={this.handleUseKeychain}>
-          <FormattedMessage id="KeyActionsPanel50" defaultMessage="Use KeyChain" />
-        </WithdrawButton>
+        {
+          isMac &&
+          <WithdrawButton onClick={this.handleUseKeychain}>
+            <FormattedMessage id="KeyActionsPanel50" defaultMessage="Use KeyChain"/>
+          </WithdrawButton>
+        }
       </div>
     )
   }
