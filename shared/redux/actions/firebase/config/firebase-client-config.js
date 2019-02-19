@@ -1,10 +1,9 @@
 const clientConfig = {
-  apiKey: 'AIzaSyD-k8E9opfx9kgEa8XK8f19GmrVG5ozl60',
-  authDomain: 'ninth-archway-195817.firebaseapp.com',
-  databaseURL: 'https://ninth-archway-195817.firebaseio.com',
-  projectId: 'ninth-archway-195817',
-  storageBucket: '',
-  messagingSenderId: '1083972351463',
+  apiKey: 'AIzaSyD4FGG6iRecLpbof1ZDwrAevDHrLt3SHEE',
+  authDomain: 'swap-saturn.firebaseapp.com',
+  databaseURL: 'https://swap-saturn.firebaseio.com',
+  projectId: 'swap-saturn',
+  storageBucket: 'swap-saturn.appspot.com',
+  messagingSenderId: '985486720906',
 }
-// now it's me
 export default clientConfig
