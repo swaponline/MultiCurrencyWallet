@@ -265,9 +265,6 @@ export default class SwapComponent extends PureComponent {
 
     const isFinished = (swap.flow.state.step >= (swap.flow.steps.length - 1))
 
-    console.log('dev', isShowDevInformation)
-    console.log('script', isShowingBitcoinScript)
-
     return (
       <div styleName="swap">
         <SwapComponent
