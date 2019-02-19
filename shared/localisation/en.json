@@ -3286,7 +3286,7 @@
   },
   {
     "id": "partial437",
-    "message": "Exchange {sellCase} and {buyCase} in 60 seconds with AtomicSwap",
+    "message": "Atomic Swap {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}) Instant Exchange",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -3614,6 +3614,20 @@
   {
     "id": "PartialPriceSearch502",
     "message": "Price: 1 {getCurrency} = {haveCurrency}",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "PartialClosureTitleTag",
+    "message": "Atomic Swap {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}) Instant Exchange",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "PartialClosureMetaDescrTag",
+    "message": "Best exchange rate for {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}). Swap.Online wallet provides instant exchange using Atomic Swap Protocol.",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]

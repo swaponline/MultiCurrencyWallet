@@ -3305,7 +3305,7 @@
   },
   {
     "id": "partial437",
-    "message": "Обмен {sellCase} на {buyCase} всего за 60 секунд с помощью AtomicSwap",
+    "message": "Обмен {full_name1} ({ticker_name1}) на {full_name2} ({ticker_name2}) за 60 секунд",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -3633,6 +3633,20 @@
   {
     "id": "PartialPriceSearch502",
     "message": "Цена: 1 {getCurrency} = {haveCurrency}",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "PartialClosureTitleTag",
+    "message": "Обмен {full_name1} ({ticker_name1}) на {full_name2} ({ticker_name2}) Атомарный Обмен за 60 секунд",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "PartialClosureMetaDescrTag",
+    "message": "Децентрализированный обменник Swap.Online предлагает вам лучший курс обмена {full_name1} ({ticker_name1}) на {full_name2} ({ticker_name2}). Онлайн кошелек без регистрации.",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]

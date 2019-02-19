@@ -9,6 +9,7 @@ import { connect } from 'redaction'
 import actions from 'redux/actions'
 import { BigNumber } from 'bignumber.js'
 import { Redirect } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 
 import SelectGroup from './SelectGroup/SelectGroup'
 import Select from 'components/modals/OfferModal/AddOffer/Select/Select'
@@ -37,8 +38,12 @@ const text = [
   <FormattedMessage id="partial224" defaultMessage="Leave empty for use Swap.Online wallet " />,
 ]
 
-const subTitle = (sell, buy) => (
-  <FormattedMessage id="partial437" defaultMessage="Exchange {sellCase} and {buyCase} in 60 seconds with AtomicSwap" values={{ sellCase: sell, buyCase: buy }} />
+const subTitle = (sell, sellTicker, buy, buyTicker) => (
+  <FormattedMessage
+    id="partial437"
+    defaultMessage="Atomic Swap {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}) Instant Exchange"
+    values={{ full_name1: sell, ticker_name1: sellTicker, full_name2: buy, ticker_name2: buyTicker }}
+  />
 )
 
 const isWidgetBuild = config && config.isWidget
@@ -577,7 +582,7 @@ export default class PartialClosure extends Component {
   }
 
   render() {
-    const { currencies, addSelectedItems, currenciesData, tokensData, intl: { locale } } = this.props
+    const { currencies, addSelectedItems, currenciesData, tokensData, intl: { locale, formatMessage } } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching,
       isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet, getUsd, haveUsd,
       maxBuyAmount, getAmount, goodRate, extendedControls,
@@ -610,12 +615,34 @@ export default class PartialClosure extends Component {
       ? currenciesData.find(item => item.currency === getCurrency.toUpperCase()).fullName
       : getCurrency.toUpperCase()
 
+    const SeoValues = {
+      full_name1: sellTokenFullName,
+      ticker_name1: haveCurrency.toUpperCase(),
+      full_name2: buyTokenFullName,
+      ticker_name2: getCurrency.toUpperCase(),
+    }
+    const TitleTagString = formatMessage({
+      id: 'PartialClosureTitleTag',
+      defaultMessage: 'Atomic Swap {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}) Instant Exchange',
+    }, SeoValues)
+    const MetaDescriptionString = formatMessage({
+      id: 'PartialClosureMetaDescrTag',
+      defaultMessage: 'Best exchange rate for {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}). Swap.Online wallet provides instant exchange using Atomic Swap Protocol.', // eslint-disable-line
+    }, SeoValues)
+
     return (
       <Fragment>
+        <Helmet>
+          <title>{TitleTagString}</title>
+          <meta
+            name="description"
+            content={MetaDescriptionString}
+          />
+        </Helmet>
         {
           (!isWidget) && (
             <div styleName="TitleHolder">
-              <PageHeadline subTitle={subTitle(sellTokenFullName, buyTokenFullName)} />
+              <PageHeadline subTitle={subTitle(sellTokenFullName, haveCurrency.toUpperCase(), buyTokenFullName, getCurrency.toUpperCase())} />
             </div>
           )
         }
