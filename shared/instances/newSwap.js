@@ -31,6 +31,7 @@ if (config && config.isWidget) {
   // Auto hot plug not exist token to core
   if (!constants.COINS[config.erc20token]) {
     constants.COINS[config.erc20token] = config.erc20token.toUpperCase()
+    constants.COINS_PRECISION[config.erc20token] = config.erc20.decimals
   }
 }
 const createSwapApp = () => {
