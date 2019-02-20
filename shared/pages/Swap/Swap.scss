@@ -23,6 +23,15 @@
   cursor: pointer;
 }
 
+.swapContainerInfo {
+  position: relative;
+  display: flex;
+  width: 600px;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
 .linkText {
   text-align: left;
   margin-bottom: -3px;
@@ -57,14 +66,12 @@
 }
 
 .bitcoinScript {
-  position: relative;
-  font-size: 14px;
-  margin: -81px 60px;
-  padding-bottom: 150px;
-  width: 20%;
   color: #A9A9A9;
   cursor: pointer;
   text-decoration: underline;
+  position: absolute;
+  right: 50px;
+  top: -30px;
 }
 
 .onlineIndicator {
@@ -76,7 +83,8 @@
 }
 
 .showingScript {
-  margin-left: 30px;
+  position: relative;
+  left: 130px;
 }
 
 .online {
@@ -120,6 +128,9 @@
 }
 
 @include media-mobile {
+  .bitcoinScript {
+    right: 40px;
+  }
   .topUpLink {
     display: block;
     width: 100%;
@@ -138,13 +149,6 @@
     width: 100%;
     justify-content: stretch;
     height: 70px;
-  }
-  .bitcoinScript {
-    width: 100%;
-    position: absolute;
-    left: 20px;
-    margin: 0;
-    bottom: -139px;
   }
   .onlineIndicator {
     position: relative;
@@ -409,7 +413,29 @@
   font-size: 14px;
 }
 
+@include media-tablet {
+  .swapContainer {
+    flex-direction: column-reverse;
+  }
+  .swapContainerInfo {
+    margin: auto;
+    margin-top: 20px;
+  }
+  .showingScript {
+    left: -30px;
+    font-size: 13px;
+  }
+}
+
 @include media-mobile {
+  .showingScript {
+    font-size: 9px;
+    left: 15px;
+  }
+  .swapContainerInfo {
+    width: 100vw;
+    margin-top: 115px;
+  }
   .transaction{
       font-size: 8.5px;
     a {
@@ -471,6 +497,10 @@
 
 h3 {
   font-size: 20px;
+}
+
+.swapInfoOpen {
+  padding-bottom: 700px;
 }
 
 

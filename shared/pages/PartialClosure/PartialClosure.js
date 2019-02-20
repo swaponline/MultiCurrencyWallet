@@ -9,6 +9,7 @@ import { connect } from 'redaction'
 import actions from 'redux/actions'
 import { BigNumber } from 'bignumber.js'
 import { Redirect } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 
 import SelectGroup from './SelectGroup/SelectGroup'
 import Select from 'components/modals/OfferModal/AddOffer/Select/Select'
@@ -37,8 +38,12 @@ const text = [
   <FormattedMessage id="partial224" defaultMessage="Leave empty for use Swap.Online wallet " />,
 ]
 
-const subTitle = (sell, buy) => (
-  <FormattedMessage id="partial437" defaultMessage="Exchange {sellCase} and {buyCase} in 60 seconds with AtomicSwap" values={{ sellCase: sell, buyCase: buy }} />
+const subTitle = (sell, sellTicker, buy, buyTicker) => (
+  <FormattedMessage
+    id="partial437"
+    defaultMessage="Atomic Swap {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}) Instant Exchange"
+    values={{ full_name1: sell, ticker_name1: sellTicker, full_name2: buy, ticker_name2: buyTicker }}
+  />
 )
 
 const isWidgetBuild = config && config.isWidget
@@ -577,7 +582,7 @@ export default class PartialClosure extends Component {
   }
 
   render() {
-    const { currencies, addSelectedItems, currenciesData, tokensData, intl: { locale } } = this.props
+    const { currencies, addSelectedItems, currenciesData, tokensData, intl: { locale, formatMessage } } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching,
       isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet, getUsd, haveUsd,
       maxBuyAmount, getAmount, goodRate, extendedControls,
@@ -610,12 +615,34 @@ export default class PartialClosure extends Component {
       ? currenciesData.find(item => item.currency === getCurrency.toUpperCase()).fullName
       : getCurrency.toUpperCase()
 
+    const SeoValues = {
+      full_name1: sellTokenFullName,
+      ticker_name1: haveCurrency.toUpperCase(),
+      full_name2: buyTokenFullName,
+      ticker_name2: getCurrency.toUpperCase(),
+    }
+    const TitleTagString = formatMessage({
+      id: 'PartialClosureTitleTag',
+      defaultMessage: 'Atomic Swap {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}) Instant Exchange',
+    }, SeoValues)
+    const MetaDescriptionString = formatMessage({
+      id: 'PartialClosureMetaDescrTag',
+      defaultMessage: 'Best exchange rate for {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}). Swap.Online wallet provides instant exchange using Atomic Swap Protocol.', // eslint-disable-line
+    }, SeoValues)
+
     return (
       <Fragment>
+        <Helmet>
+          <title>{TitleTagString}</title>
+          <meta
+            name="description"
+            content={MetaDescriptionString}
+          />
+        </Helmet>
         {
           (!isWidget) && (
             <div styleName="TitleHolder">
-              <PageHeadline subTitle={subTitle(sellTokenFullName, buyTokenFullName)} />
+              <PageHeadline subTitle={subTitle(sellTokenFullName, haveCurrency.toUpperCase(), buyTokenFullName, getCurrency.toUpperCase())} />
             </div>
           )
         }
@@ -836,17 +863,34 @@ export default class PartialClosure extends Component {
               <FormattedMessage
                 id="PartialClosure562"
                 defaultMessage="Swap.Online is the decentralized in-browser hot wallet based on the Atomic Swaps technology.
-                  As in our wallet all blockchains interact decentralized and no-third-party way, we offer our users to exchange Bitcoin, Ethereum,
-                  USD Tether, BCH and EOS for free in a couple of seconds. At the time, Swap.Online charges no commision for the order making and taking.
-                  The exchange of crypto and tokens on Swap.Online is conducted in truly
-                  decentralized manner as we use the Atomic Swaps technology of peer-to-peer cross-chain interaction.
-                  Swap.Online uses IPFS-network for all the operational processes which results in no need for centralized server.
-                  The interface of exchange seems to look like that of crypto broker, not of ordinary DEX or CEX. In a couple of clicks,
-                  the user can place and take the offer, customizing the price of sent token.
-                  Also, the user can exchange the given percentage of his or her amount of tokens available (e.g. ½, ¼ etc.).
-                  One more advantage of the Swap.Online exchange service is the usage of one key for the full range of ERC-20 tokens.
-                  By the way, if case you’re not interested in exchange of some tokens, you can hide it from the list.
-                  Thus, use Swap.Online as your basic exchange for every crypto you’re holding!"
+
+                As in our wallet all blockchains interact decentralized and no-third-party way, we offer our users to exchange Bitcoin, Ethereum,
+                USD Tether, BCH and EOS for free in a couple of seconds.
+
+
+                At the time, Swap.Online charges no commision for the order making and taking.
+
+                The exchange of crypto and tokens on Swap.Online is conducted in truly decentralized manner as we use the
+                Atomic Swaps technology of peer-to-peer cross-chain interaction.
+
+
+                Swap.Online uses IPFS-network for all the operational processes which results in no need for centralized server.
+
+                The interface of exchange seems to look like that of crypto broker, not of ordinary DEX or CEX. In a couple of clicks, the user can place and take the offer,
+                customizing the price of sent token.
+
+
+                Also, the user can exchange the given percentage of his or her amount of tokens available (e.g. ½, ¼ etc.).
+
+
+                One more advantage of the Swap.Online exchange service is the usage of one key for the full range of ERC-20 tokens.
+
+                By the way, if case you’re not interested in exchange of some tokens, you can hide it from the list.
+
+                Thus, use Swap.Online as your basic exchange for every crypto you’re holding!"
+                values={{
+                  br: <br />,
+                }}
               />
             </p>
           )
