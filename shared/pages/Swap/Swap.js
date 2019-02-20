@@ -257,7 +257,9 @@ export default class SwapComponent extends PureComponent {
       depositWindow,
       ethAddress,
       isShowingBitcoinScript,
-      isShowDevInformation } = this.state
+      isShowDevInformation,
+      requestToFaucetSended,
+    } = this.state
 
     if (!swap || !SwapComponent || !peer || !isAmountMore) {
       return null
