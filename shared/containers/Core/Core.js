@@ -55,6 +55,8 @@ export default class Core extends Component {
 
         this.updateOrders()
 
+        actions.core.initPartialOrders()
+
         if (actions.core.hasHiddenOrders()) {
           actions.core.showMyOrders()
         }

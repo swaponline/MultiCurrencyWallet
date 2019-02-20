@@ -123,7 +123,9 @@ const createOrder = (data, isPartial = false) => {
 }
 
 const setupPartialOrder = (order) => {
-  const { price } = Pair.fromOrder(order)
+  const pairData = Pair.fromOrder(order)
+  if (!pairData || !pairData.price) return
+  const price = pairData.price
 
   order.setRequestHandlerForPartial('sellAmount', ({ sellAmount }, oldOrder) => {
     const oldPair = Pair.fromOrder(oldOrder)
@@ -173,9 +175,11 @@ const setupPartialOrder = (order) => {
 }
 
 const initPartialOrders = () => {
-  /*
-    myOrders.forEach => actions.core.setupPartialOrder
-  */
+  SwapApp.shared().services.orders.items.forEach((order) => {
+    if (order && order.isMy && order.isPartial) {
+      actions.core.setupPartialOrder(order)
+    }
+  })
 }
 
 const requestToPeer = (event, peer, data, callback) => {
