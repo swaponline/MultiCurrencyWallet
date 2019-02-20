@@ -125,7 +125,7 @@ const createOrder = (data, isPartial = false) => {
 const setupPartialOrder = (order) => {
   const pairData = Pair.fromOrder(order)
   if (!pairData || !pairData.price) return
-  const price = pairData.price
+  const { price } = pairData
 
   order.setRequestHandlerForPartial('sellAmount', ({ sellAmount }, oldOrder) => {
     const oldPair = Pair.fromOrder(oldOrder)
