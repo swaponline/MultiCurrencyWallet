@@ -197,7 +197,7 @@ export default class SwapProgress extends Component {
               )}
               {
                 flow.refundTransactionHash && (
-                  <div>
+                  <div styleName="refundTransaction">
                     <strong>
                       <a
                         href={`${config.link.etherscan}/tx/${flow.refundTransactionHash}`}
@@ -205,7 +205,7 @@ export default class SwapProgress extends Component {
                         rel="noopener noreferrer"
                       >
                         <FormattedMessage id="swapprogress254" defaultMessage="Refund transaction: " />
-                        {flow.refundTransactionHash}
+                        <span styleName="refundTransactionHash">{flow.refundTransactionHash}</span>
                       </a>
                     </strong>
                   </div>

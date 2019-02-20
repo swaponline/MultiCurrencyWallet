@@ -191,7 +191,7 @@ export default class EthTokenToBtc extends Component {
           }
           <SwapList flow={flow} swap={swap} />
         </div>
-        {children}
+        <div styleName="swapContainerInfo">{children}</div>
       </div>
     )
   }
