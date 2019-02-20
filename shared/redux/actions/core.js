@@ -114,7 +114,7 @@ const sendRequestForPartial = (orderId, newValues, destination = {}, callback) =
 const createOrder = (data, isPartial = false) => {
   const order = SwapApp.shared().services.orders.create(data)
   if (!isPartial) {
-    return return order
+    return order
   }
 
   actions.core.setupPartialOrder(order)
