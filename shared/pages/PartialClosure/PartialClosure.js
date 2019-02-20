@@ -419,7 +419,7 @@ export default class PartialClosure extends Component {
     this.setState({
       haveCurrency: getCurrency,
       getCurrency: haveCurrency,
-      customWallet: customWalletUse ? this.getSystemWallet() : '',
+      customWallet: customWalletUse ? this.getSystemWallet(haveCurrency) : '',
     }, () => {
       this.updateAllowedBalance()
 
@@ -486,10 +486,10 @@ export default class PartialClosure extends Component {
     }))
   }
 
-  getSystemWallet = () => {
+  getSystemWallet = (walletCurrency) => {
     const { getCurrency } = this.state
 
-    return this.wallets[getCurrency.toUpperCase()]
+    return this.wallets[(walletCurrency) ? walletCurrency.toUpperCase() : getCurrency.toUpperCase()]
   }
 
   customWalletValid() {
