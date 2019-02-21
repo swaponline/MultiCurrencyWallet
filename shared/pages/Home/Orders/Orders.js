@@ -33,6 +33,7 @@ const filterMyOrders = (orders, peer) => orders
 
 const filterOrders = (orders, filter) => orders
   .filter(order => order.isProcessing !== true)
+  .filter(order => order.isHidden !== true)
   .filter(order => Pair.check(order, filter))
   .sort((a, b) => Pair.compareOrders(b, a))
 
