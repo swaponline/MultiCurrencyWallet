@@ -110,9 +110,9 @@ export default class App extends React.Component {
     const isCalledFromIframe = window.location !== window.parent.location
     const isWidgetBuild = config && config.isWidget
 
-    if (isWidgetBuild && localStorage.getItem(constants.localStorage.isWidgetDataSend) !== 'true') {
+    if (isWidgetBuild && localStorage.getItem(constants.localStorage.didWidgetDataSend) !== 'true') {
       actions.firebase.submitUserDataWidget('usersData')
-      localStorage.setItem(constants.localStorage.isWidgetDataSend, true)
+      localStorage.setItem(constants.localStorage.didWidgetDataSend, true)
     }
 
     if (multiTabs) {
