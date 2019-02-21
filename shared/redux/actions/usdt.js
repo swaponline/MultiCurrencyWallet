@@ -4,7 +4,7 @@ import config from 'app-config'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
 import bitcoin from 'bitcoinjs-lib'
-import { btc, request, constants } from 'helpers'
+import { btc, request, constants, api } from 'helpers'
 
 
 const login = (privateKey) => {
@@ -177,9 +177,9 @@ const createOmniScript = (amount) => {
 
 
 const broadcastTx = (txRaw) =>
-  request.post(`${config.api.usdt}v1/transaction/pushtx/`, {
+  request.post(`${api.getApiServer('bitpay')}/tx/send`, {
     body: {
-      signedTransaction: txRaw,
+      rawtx: txRaw,
     },
   })
 
