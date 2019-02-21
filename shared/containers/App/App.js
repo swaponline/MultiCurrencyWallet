@@ -6,6 +6,7 @@ import { connect } from 'redaction'
 import moment from 'moment-with-locales-es6'
 import { constants, localStorage } from 'helpers'
 import { isMobile } from 'react-device-detect'
+import { injectIntl } from 'react-intl'
 
 import CSSModules from 'react-css-modules'
 import styles from './App.scss'
@@ -33,6 +34,7 @@ const memdown = require('memdown')
 const userLanguage = (navigator.userLanguage || navigator.language || 'en-gb').split('-')[0]
 moment.locale(userLanguage)
 
+@injectIntl
 @withRouter
 @connect({
   isVisible: 'loader.isVisible',
@@ -88,9 +90,13 @@ export default class App extends React.Component {
       // actions.analytics.errorEvent(error)
     }
 
-    const db = indexedDB.open('test')
-    db.onerror = () => {
-      window.leveldown = memdown
+    try {
+      const db = indexedDB.open('test')
+      db.onerror = () => {
+        window.leveldown = memdown
+      }
+    } catch (e) {
+      document.write(this.props.intl.formatMessage({ id: 'App99' }))
     }
 
     setTimeout(() => {

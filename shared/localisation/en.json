@@ -3620,17 +3620,11 @@
   },
   {
     "id": "PartialClosureTitleTag",
-    "message": "Atomic Swap {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}) Instant Exchange",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
-    ]
+    "message": "Atomic Swap {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}) Instant Exchange"
   },
   {
     "id": "PartialClosureMetaDescrTag",
-    "message": "Best exchange rate for {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}). Swap.Online wallet provides instant exchange using Atomic Swap Protocol.",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
-    ]
+    "message": "Best exchange rate for {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}). Swap.Online wallet provides instant exchange using Atomic Swap Protocol."
   },
   {
     "id": "Continue",
@@ -3787,10 +3781,7 @@
   },
   {
     "id": "deposit213",
-    "message": " and 0.002 ETH gas fee ",
-    "files": [
-      "shared/pages/Swap/DepositWindow/DepositWindow.js"
-    ]
+    "message": " and 0.002 ETH gas fee "
   },
   {
     "id": "deposit165",
@@ -4516,5 +4507,16 @@
     "files": [
       "shared/pages/Swap/SwapList/steps/ThirdStep.js"
     ]
+  },
+  {
+    "id": "deposit165widget",
+    "message": "Copy the address below and top it up with the recommended amount of {missingBalance}",
+    "files": [
+      "shared/pages/Swap/DepositWindow/DepositWindow.js"
+    ]
+  },
+  {
+    "id": "App99",
+    "message": "Sorry, we do not support Safari, ask administrator to use same domain to host JS"
   }
 ]

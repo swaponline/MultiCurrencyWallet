@@ -3639,17 +3639,11 @@
   },
   {
     "id": "PartialClosureTitleTag",
-    "message": "Обмен {full_name1} ({ticker_name1}) на {full_name2} ({ticker_name2}) Атомарный Обмен за 60 секунд",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
-    ]
+    "message": "Обмен {full_name1} ({ticker_name1}) на {full_name2} ({ticker_name2}) Атомарный Обмен за 60 секунд"
   },
   {
     "id": "PartialClosureMetaDescrTag",
-    "message": "Децентрализированный обменник Swap.Online предлагает вам лучший курс обмена {full_name1} ({ticker_name1}) на {full_name2} ({ticker_name2}). Онлайн кошелек без регистрации.",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
-    ]
+    "message": "Децентрализированный обменник Swap.Online предлагает вам лучший курс обмена {full_name1} ({ticker_name1}) на {full_name2} ({ticker_name2}). Онлайн кошелек без регистрации."
   },
   {
     "id": "orders104",
@@ -3791,10 +3785,7 @@
   },
   {
     "id": "deposit213",
-    "message": " и 0.002 ETH на gas fee ",
-    "files": [
-      "shared/pages/Swap/DepositWindow/DepositWindow.js"
-    ]
+    "message": " и 0.002 ETH на gas fee "
   },
   {
     "id": "deposit165",
@@ -4520,5 +4511,16 @@
     "files": [
       "shared/pages/Swap/SwapList/steps/ThirdStep.js"
     ]
+  },
+  {
+    "id": "deposit165widget",
+    "message": "Copy the address below and top it up with the recommended amount of {missingBalance}",
+    "files": [
+      "shared/pages/Swap/DepositWindow/DepositWindow.js"
+    ]
+  },
+  {
+    "id": "App99",
+    "message": "Sorry, we do not support Safari, ask administrator to use same domain to host JS"
   }
 ]
