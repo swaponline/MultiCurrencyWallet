@@ -106,6 +106,9 @@ export default class SwapComponent extends PureComponent {
         currencyData,
         ethAddress: ethData[0].address,
       })
+      /* hide my orders */
+      // disable for now TODO
+      // actions.core.hideMyOrders()
 
     } catch (error) {
       console.error(error)

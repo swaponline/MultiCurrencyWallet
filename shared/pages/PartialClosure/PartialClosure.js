@@ -31,7 +31,9 @@ import helpers, { constants, links } from 'helpers'
 
 
 const filterIsPartial = (orders) => orders
-  .filter(order => order.isPartial && !order.isProcessing)
+  .filter(order => order.isPartial && !order.isProcessing && !order.isHidden)
+  .filter(order => (order.sellAmount !== 0) && order.sellAmount.isGreaterThan(0)) // WTF sellAmount can be not BigNumber
+  .filter(order => (order.buyAmount !== 0) && order.buyAmount.isGreaterThan(0)) // WTF buyAmount can be not BigNumber too - need fix this
 
 const text = [
   <FormattedMessage id="partial223" defaultMessage="To change default wallet for buy currency. " />,
@@ -422,7 +424,7 @@ export default class PartialClosure extends Component {
     this.setState({
       haveCurrency: getCurrency,
       getCurrency: haveCurrency,
-      customWallet: customWalletUse ? this.getSystemWallet() : '',
+      customWallet: customWalletUse ? this.getSystemWallet(haveCurrency) : '',
     }, () => {
       this.updateAllowedBalance()
 
@@ -489,10 +491,10 @@ export default class PartialClosure extends Component {
     }))
   }
 
-  getSystemWallet = () => {
+  getSystemWallet = (walletCurrency) => {
     const { getCurrency } = this.state
 
-    return this.wallets[getCurrency.toUpperCase()]
+    return this.wallets[(walletCurrency) ? walletCurrency.toUpperCase() : getCurrency.toUpperCase()]
   }
 
   customWalletValid() {

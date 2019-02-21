@@ -55,6 +55,11 @@ export default class Core extends Component {
 
         this.updateOrders()
 
+        actions.core.initPartialOrders()
+
+        if (actions.core.hasHiddenOrders()) {
+          actions.core.showMyOrders()
+        }
 
         SwapApp.shared().services.room.connection
           .on('peer joined', actions.ipfs.userJoined)
