@@ -198,12 +198,15 @@ const approve = async ({ name, to, amount, ...feeConfig } = {}) => {
 
 const setAllowanceForToken = async ({ name, to, targetAllowance, ...config }) => {
   const { tokenContract, toWei } = withToken(name)
+
+  name = name.toLowerCase()
+
   const { user: { tokensData: { [name]: { address } } } } = getState()
 
   const allowance = await tokenContract.methods.allowance(address, to).call()
 
   // if there is already enough allowance, skip
-  if (toWei(targetAllowance).isLessThenOrEqualTo(allowance)) {
+  if (toWei(targetAllowance).isLessThanOrEqualTo(allowance)) {
     return Promise.resolve()
   }
   // but if not, set allowance to 1 billion (or requested target allowance, if it's bigger than 1 billion)
