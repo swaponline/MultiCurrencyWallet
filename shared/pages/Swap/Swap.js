@@ -55,6 +55,7 @@ export default class SwapComponent extends PureComponent {
     isShowingBitcoinScript: false,
     isShowDevInformation: false,
     shouldStopCheckSendingOfRequesting: false,
+    waitWithdrawOther: false,
   }
 
   timerFeeNotication = null
@@ -162,14 +163,37 @@ export default class SwapComponent extends PureComponent {
   }
 
   requestingWithdrawFee = () => {
-    const { swap: { flow: { acceptWithdrawRequest, sendWithdrawRequest,
-      state: { requireWithdrawFee, requireWithdrawFeeSended, withdrawRequestIncoming, withdrawRequestAccepted } } } } = this.state
+    const {
+      swap: {
+        flow: {
+          state: {
+            requireWithdrawFee,
+            requireWithdrawFeeSended,
+            withdrawRequestIncoming,
+            withdrawRequestAccepted,
+          },
+        },
+      },
+    } = this.state
 
     if (requireWithdrawFee && !requireWithdrawFeeSended) {
-      sendWithdrawRequest()
+      if (this.state.swap && this.state.swap.flow) {
+        this.state.swap.flow.sendWithdrawRequest()
+        this.setState({
+          waitWithdrawOther: true,
+        })
+        window.setTimeout(() => {
+          this.setState({
+            waitWithdrawOther: false,
+          })
+        }, 1000 * 60 * 2)
+      }
     }
+
     if (withdrawRequestIncoming && !withdrawRequestAccepted) {
-      acceptWithdrawRequest()
+      if (this.state.swap && this.state.swap.flow) {
+        this.state.swap.flow.acceptWithdrawRequest()
+      }
     }
   }
 
@@ -221,7 +245,21 @@ export default class SwapComponent extends PureComponent {
   }
 
   checkEnoughFee = () => {
-    const { swap: { participantSwap, flow: { state: { canCreateEthTransaction } } }, currencyData: { currency }, continueSwap } = this.state
+    const {
+      swap: {
+        participantSwap,
+        flow: {
+          state: {
+            canCreateEthTransaction,
+            requireWithdrawFee,
+          },
+        },
+      },
+      currencyData: {
+        currency,
+      },
+      continueSwap,
+    } = this.state
 
     const coinsWithDynamicFee = ['BTC', 'ETH', 'LTC']
 
@@ -262,6 +300,7 @@ export default class SwapComponent extends PureComponent {
       isShowingBitcoinScript,
       isShowDevInformation,
       requestToFaucetSended,
+      waitWithdrawOther,
     } = this.state
 
     if (!swap || !SwapComponent || !peer || !isAmountMore) {
@@ -285,6 +324,7 @@ export default class SwapComponent extends PureComponent {
           ethData={ethData}
           continueSwap={continueSwap}
           requestToFaucetSended={requestToFaucetSended}
+          waitWithdrawOther={waitWithdrawOther}
         >
           <Share flow={swap.flow} />
           <EmergencySave flow={swap.flow} onClick={() => this.toggleInfo(isShowDevInformation, true)} isShowDevInformation={isShowDevInformation} />
