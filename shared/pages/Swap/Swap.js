@@ -170,9 +170,9 @@ export default class SwapComponent extends PureComponent {
             requireWithdrawFeeSended,
             withdrawRequestIncoming,
             withdrawRequestAccepted,
-          }
-        }
-      } 
+          },
+        },
+      },
     } = this.state
 
     if (requireWithdrawFee && !requireWithdrawFeeSended) {
