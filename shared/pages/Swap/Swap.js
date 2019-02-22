@@ -162,14 +162,29 @@ export default class SwapComponent extends PureComponent {
   }
 
   requestingWithdrawFee = () => {
-    const { swap: { flow: { acceptWithdrawRequest, sendWithdrawRequest,
-      state: { requireWithdrawFee, requireWithdrawFeeSended, withdrawRequestIncoming, withdrawRequestAccepted } } } } = this.state
+    const {
+      swap: {
+        flow: {
+          state: {
+            requireWithdrawFee,
+            requireWithdrawFeeSended,
+            withdrawRequestIncoming,
+            withdrawRequestAccepted,
+          }
+        }
+      } 
+    } = this.state
 
     if (requireWithdrawFee && !requireWithdrawFeeSended) {
-      sendWithdrawRequest()
+      if (this.state.swap && this.state.swap.flow) {
+        this.state.swap.flow.sendWithdrawRequest()
+      }
     }
+
     if (withdrawRequestIncoming && !withdrawRequestAccepted) {
-      acceptWithdrawRequest()
+      if (this.state.swap && this.state.swap.flow) {
+        this.state.swap.flow.acceptWithdrawRequest()
+      }
     }
   }
 
