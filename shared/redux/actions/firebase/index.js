@@ -173,15 +173,28 @@ const signUpWithEmail = (data) =>
     resolve(sendResult)
   })
 
+const checkIframe = () => {
+  let currentWindow
+
+  try {
+    currentWindow = window.self !== window.top
+  } catch (error) {
+    currentWindow = true
+  }
+
+  return currentWindow
+}
+
 const isSupported = () => {
   const isLocalNet = process.env.LOCAL === 'local'
   const isSupportedServiceWorker = 'serviceWorker' in navigator
   const isSafari = ('safari' in window)
+  const isIframe = checkIframe()
   const iOSSafari = /iP(ad|od|hone)/i.test(window.navigator.userAgent)
                   && /WebKit/i.test(window.navigator.userAgent)
                   && !(/(CriOS|FxiOS|OPiOS|mercury)/i.test(window.navigator.userAgent))
 
-  return !isLocalNet && isSupportedServiceWorker && !iOSSafari && !isSafari
+  return !isIframe && !isLocalNet && isSupportedServiceWorker && !iOSSafari && !isSafari
 }
 
 export default {
