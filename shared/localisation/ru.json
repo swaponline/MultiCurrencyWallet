@@ -4428,7 +4428,7 @@
   },
   {
     "id": "CurrencyWalletTitle",
-    "message": "Swap.Online - {fullName} ({currency}) нлайн кошелек, работащюий на технологии Atomic Swap",
+    "message": "Swap.Online - {fullName} ({currency}) онлайн кошелек, работащюий на технологии Atomic Swap",
     "files": [
       "shared/pages/CurrencyWallet/CurrencyWallet.js"
     ]

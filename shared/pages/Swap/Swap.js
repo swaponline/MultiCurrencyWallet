@@ -330,7 +330,7 @@ export default class SwapComponent extends PureComponent {
           <EmergencySave flow={swap.flow} onClick={() => this.toggleInfo(isShowDevInformation, true)} isShowDevInformation={isShowDevInformation} />
           <ShowBtcScript
             btcScriptValues={swap.flow.state.btcScriptValues}
-            onClick={() => this.toggleInfo(!false, isShowingBitcoinScript)}
+            onClick={() => this.toggleInfo(true, isShowingBitcoinScript)}
             isShowingBitcoinScript={isShowingBitcoinScript} />
           {peer === swap.owner.peer && (<DeleteSwapAfterEnd swap={swap} />)}
         </SwapComponent>
