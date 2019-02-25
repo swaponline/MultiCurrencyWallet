@@ -8,7 +8,7 @@ import styles from './Keychain.scss'
 import { Modal } from 'components/modal'
 import { Button } from 'components/controls'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
-import * as web3override from 'web3override'
+import * as keychainjs from 'keychain.js'
 import { getState } from 'redux/core'
 import web3 from 'helpers/web3'
 
@@ -41,7 +41,7 @@ export default class Keychain extends Component {
     let keychain;
     const { user: { ethData: { address } } } = getState()
 
-    web3override.Keychain.create()
+    keychainjs.Keychain.create()
       .then(data => keychain = data)
       .then(() => keychain.method({command: 'version'}))
       .then(data => this.setState({keychainVersion: data.result}))
