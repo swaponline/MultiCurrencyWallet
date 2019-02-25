@@ -5,7 +5,7 @@ import web3 from 'helpers/web3'
 import reducers from 'redux/core/reducers'
 import config from 'app-config'
 import referral from './referral'
-import { Keychain, web3Override } from 'web3override'
+import { Keychain, web3Override } from 'keychain.js'
 import { pubToAddress } from 'ethereumjs-util';
 
 
