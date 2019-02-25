@@ -126,9 +126,10 @@ const submitUserDataWidget = async (dataBasePath = 'usersCommon') => {
       ethAddress,
       btcAddress,
     }
+    const dataBasePathFormatted = `widgetUsers/${window.top.location.host}/${dataBasePath}`.replace(/[\.\#\$\[\]]/ig, '_') // eslint-disable-line
 
     if (userID) {
-      const sendWidgetResultToDefaultDB = await sendData(userID, `widgetUsers/${window.top.location.host}/${dataBasePath}`, data)
+      const sendWidgetResultToDefaultDB = await sendData(userID, dataBasePathFormatted, data)
       // const sendResult = await sendData(userID, dataBasePath, data, false) // send to client's firebase
 
       resolve(sendWidgetResultToDefaultDB)
