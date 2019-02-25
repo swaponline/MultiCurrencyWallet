@@ -9,6 +9,8 @@ import { Modal } from 'components/modal'
 import { Button } from 'components/controls'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import * as web3override from 'web3override'
+import { getState } from 'redux/core'
+import web3 from 'helpers/web3'
 
 
 const title = defineMessages({
@@ -30,25 +32,31 @@ export default class Keychain extends Component {
       tagName: '',
       keychainVersion: '',
       isLoading: false,
+      positiveBalanceError: false
     };
   }
 
   componentDidMount() {
     this.setState({ isLoading: true });
     let keychain;
+    const { user: { ethData: { address } } } = getState()
+
     web3override.Keychain.create()
-      .then(data => { keychain = data } )
+      .then(data => keychain = data)
       .then(() => keychain.method({command: 'version'}))
-      .then(data => { this.setState({keychainVersion: data.result }) } )
-      .catch(webSocketError => this.setState({ webSocketError }))
+      .then(data => this.setState({keychainVersion: data.result}))
+      .catch(webSocketError => this.setState({webSocketError}))
       .then(() => fetch('https://api.github.com/repos/arrayio/array-io-keychain/tags'))
       .then(res => res.json())
       .then(result => this.setState({tagName: result[0].name}))
       .then(() => fetch(`https://api.github.com/repos/arrayio/array-io-keychain/releases/tags/${this.state.tagName}`))
       .then(res => res.json())
-      .then(result => this.setState({ downloadUrl: result.assets[0].browser_download_url }))
-      .catch(otherError => this.setState( { otherError } ))
-      .then( () => this.setState( {isLoading: false} ))
+      .then(result => this.setState({downloadUrl: result.assets[0].browser_download_url}))
+      .catch(otherError => this.setState({otherError}))
+      .then(() => web3.eth.getBalance(address))
+      .then(result => web3.utils.fromWei(result))
+      .then(result => this.setState({positiveBalanceError: result > 0}))
+      .then(() => this.setState({isLoading: false}))
   }
 
   // needUpdate(tagName, keychainVersion) {
@@ -63,7 +71,7 @@ export default class Keychain extends Component {
   render() {
 
     const {name, intl: {locale}, intl} = this.props
-    const {webSocketError, otherError, downloadUrl, keychainVersion, tagName, isLoading} = this.state
+    const {webSocketError, otherError, downloadUrl, keychainVersion, tagName, positiveBalanceError, isLoading} = this.state
 
     if (otherError) {
       return <div>Error: {otherError.message}</div>
@@ -71,6 +79,18 @@ export default class Keychain extends Component {
     if (isLoading) {
       return <Modal name={name} title={intl.formatMessage(title.Keychain)}></Modal>
     }
+
+    if (positiveBalanceError) {
+      return <Modal name={name} title={intl.formatMessage(title.Keychain)}>
+          <div styleName="content">
+            <p><FormattedMessage id="Keychain26" defaultMessage="Positive balance error"/></p>
+          </div>
+          <Button styleName="button" brand fullWidth onClick={() => { actions.modals.close(name) }}>
+            <FormattedMessage id="Keychain25" defaultMessage="Back"/>
+          </Button>
+        </Modal>
+    }
+
     return (
       <Modal name={name} title={intl.formatMessage(title.Keychain)}>
         <div styleName="content">
