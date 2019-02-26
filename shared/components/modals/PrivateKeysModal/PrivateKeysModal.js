@@ -109,6 +109,12 @@ export default class PrivateKeysModal extends React.PureComponent {
     window.location.reload()
   }
 
+  handleCloseModal = () => {
+    const { name } = this.props
+
+    actions.modals.close(name)
+  }
+
   render() {
     const { view } = this.state
     const { name, ethData, btcData, intl } = this.props
@@ -202,6 +208,23 @@ export default class PrivateKeysModal extends React.PureComponent {
               </Fragment>
             )
           }
+          <br />
+          <br />
+          <br />
+          <div styleName="skipField">
+            <FormattedMessage id="PrivateKeysModal663" defaultMessage="SKIP AND GO TO THE SITE!" />
+            <nav styleName="tryToSkip">
+              <FormattedMessage id="PrivateKeysModal664" defaultMessage="We can NOT restore your private keys if you lost them or clear browser storage. " />
+              <FormattedMessage id="PrivateKeysModal665" defaultMessage="We strongly recommend you to save your keys first." />
+              <br />
+              <br />
+              <br />
+
+              <Button white styleName="button" onClick={this.handleCloseModal}>
+                <FormattedMessage id="PrivateKeysModal666" defaultMessage="Got it! Skip!" />
+              </Button>
+            </nav>
+          </div>
         </div>
       </Modal>
     )

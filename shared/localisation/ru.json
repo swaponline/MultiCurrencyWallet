@@ -1943,6 +1943,34 @@
     ]
   },
   {
+    "id": "PrivateKeysModal663",
+    "message": "Пропустить это и перейти на сайт! ",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal664",
+    "message": "Мы не сможем восстановить ваши ключи, они могут потеряться если вы очистите хранилище браузера. ",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal665",
+    "message": "Настоятельно рекомендуем сохранить ключи.",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal666",
+    "message": "Хорошо, пропустить!",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
     "id": "PrivateKeysModal99",
     "message": "Это очень важно, потому что, если Вы не ",
     "files": [

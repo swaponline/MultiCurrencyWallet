@@ -1940,6 +1940,34 @@
     ]
   },
   {
+    "id": "PrivateKeysModal663",
+    "message": "SKIP AND GO TO THE SITE!",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal664",
+    "message": "We can NOT restore your private keys if you lost them or clear browser storage. ",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal665",
+    "message": "We strongly recommend you to save your keys first.",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal666",
+    "message": "Got it! Skip!",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
     "id": "PrivateKeysModal99",
     "message": "It`s very important because If you don`t",
     "files": [
