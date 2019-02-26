@@ -1943,6 +1943,13 @@
     ]
   },
   {
+    "id": "PrivateKeysModal662",
+    "message": "Важно!",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
     "id": "PrivateKeysModal663",
     "message": "Пропустить это и перейти на сайт! ",
     "files": [
@@ -1958,14 +1965,14 @@
   },
   {
     "id": "PrivateKeysModal665",
-    "message": "Настоятельно рекомендуем сохранить ключи.",
+    "message": "Я понимаю и принимаю риски.",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
   },
   {
     "id": "PrivateKeysModal666",
-    "message": "Хорошо, пропустить!",
+    "message": "Пропустить сохранение",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]

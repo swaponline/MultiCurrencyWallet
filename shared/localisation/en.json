@@ -1943,6 +1943,13 @@
     ]
   },
   {
+    "id": "PrivateKeysModal662",
+    "message": "Attention!",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
     "id": "PrivateKeysModal663",
     "message": "SKIP AND GO TO THE SITE!",
     "files": [
@@ -1951,21 +1958,21 @@
   },
   {
     "id": "PrivateKeysModal664",
-    "message": "We can NOT restore your private keys if you lost them or clear browser storage. ",
+    "message": "Please save your private keys! We do not store your private keys and will not be able to restore your wallets.",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
   },
   {
     "id": "PrivateKeysModal665",
-    "message": "We strongly recommend you to save your keys first.",
+    "message": " I understand and except the risks of not saving my private keys",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
   },
   {
     "id": "PrivateKeysModal666",
-    "message": "Got it! Skip!",
+    "message": "Skip this step",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
