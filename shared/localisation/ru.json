@@ -594,6 +594,27 @@
     ]
   },
   {
+    "id": "CurrencyTitleSeo1",
+    "message": "{fullName} ({tickerName}) Price, Description & Exchange Rates. Store & Exchange {fullName} ({tickerName}) Anonymously on Swap.Online.",
+    "files": [
+      "shared/pages/Currency/Currency.js"
+    ]
+  },
+  {
+    "id": "CurrencyMetaDescrTag1",
+    "message": "Find out actual price of {fullName}, its ticker name is ({tickerName}). Swap.Online is the best way to safely store your cryptocurrecy.",
+    "files": [
+      "shared/pages/Currency/Currency.js"
+    ]
+  },
+  {
+    "id": "CurrencyH1Seo1",
+    "message": "{fullName} ({tickerName}) Price & Exchange Rates.",
+    "files": [
+      "shared/pages/Currency/Currency.js"
+    ]
+  },
+  {
     "id": "CurrencyWallet100",
     "message": "Отправить",
     "files": [

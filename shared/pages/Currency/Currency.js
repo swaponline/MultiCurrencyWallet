@@ -5,6 +5,7 @@ import { constants } from 'helpers'
 import { isMobile } from 'react-device-detect'
 import { withRouter } from 'react-router'
 import actions from 'redux/actions'
+import { Helmet } from 'react-helmet'
 
 import { Link, Redirect } from 'react-router-dom'
 import { FormattedMessage, injectIntl } from 'react-intl'
@@ -121,13 +122,41 @@ export default class Currency extends Component {
   }
 
   render() {
-    const { match: { params: { currency } }, items, intl: { locale } } = this.props
+    const { match: { params: { currency } }, items, intl: { locale, formatMessage } } = this.props
     const { isBalanceEmpty, balance } = this.state
+    const currencyFullName = items.find(item => item.currency === currency.toUpperCase()).fullName
+
+    const SeoValues = {
+      fullName: currencyFullName,
+      tickerName: currency.toUpperCase(),
+    }
+    const MetaDescriptionString = formatMessage({
+      id: 'CurrencyMetaDescrTag1',
+      defaultMessage: 'Find out actual price of {fullName}, its ticker name is ({tickerName}). Swap.Online is the best way to safely store your cryptocurrecy.', // eslint-disable-line
+    }, SeoValues)
+    const TitleTagString = formatMessage({
+      id: 'CurrencyTitleSeo1',
+      defaultMessage: '{fullName} ({tickerName}) Price, Description & Exchange Rates. Store & Exchange {fullName} ({tickerName}) Anonymously on Swap.Online.',
+    }, SeoValues)
+
     return (
       <section styleName={isMobile ? 'currencyMobileSection' : 'currencyMediaSection'}>
+        <Helmet>
+          <title>{TitleTagString}</title>
+          <meta
+            name="description"
+            content={MetaDescriptionString}
+          />
+        </Helmet>
         <PageHeadline>
           <Fragment>
-            <SubTitle>{currency.toUpperCase()} Trade</SubTitle>
+            <SubTitle>
+              <FormattedMessage
+                id="CurrencyH1Seo1"
+                defaultMessage="{fullName} ({tickerName}) Price & Exchange Rates."
+                values={SeoValues}
+              />
+            </SubTitle>
           </Fragment>
           <div styleName="currencyBalance">
             <FormattedMessage id="Currency101" defaultMessage="Balance: " />
