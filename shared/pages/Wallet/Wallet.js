@@ -132,13 +132,12 @@ export default class Wallet extends Component {
 
     const hasNonZeroCurrencyBalance = hasNonZeroBalance(currencyBalance)
 
-    const doesCautionPassed = localStorage.getItem(constants.localStorage.wasCautionPassed) === 'true'
+    const doesCautionPassed = localStorage.getItem(constants.localStorage.wasCautionPassed)
 
     if (!doesCautionPassed && process.env.MAINNET) {
       if (hasNonZeroCurrencyBalance) {
-        localStorage.setItem(constants.localStorage.wasCautionPassed, false)
         actions.modals.open(constants.modals.PrivateKeys, {})
-        localStorage.setItem(constants.localStorage.wasCautionShow, true)
+        localStorage.setItem(constants.localStorage.wasCautionShown, true)
       }
     }
   }

@@ -102,6 +102,10 @@
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    button {
+      flex: 1;
+      margin: 0 20px 30px;
+    }
   }
 }
 
@@ -110,19 +114,18 @@
     &__content {
       max-width: 90%;
     }
+    &__btnContainer {
+      flex-direction: column;
+      button {
+        flex: 0 1 auto;
+      }
+    }
   }
 }
 @media (max-width: 830px) {
   .tryToSkip {
     &__content {
       width: 90%;
-    }
-  }
-}
-@media (max-width: 568px) {
-  .tryToSkip {
-    &__btnContainer {
-      flex-direction: column;
     }
   }
 }

@@ -37,12 +37,11 @@ export default class KeyActionsPanel extends Component {
       actions.user.downloadPrivateKeys()
     }
 
-    const doesCautionPassed = localStorage.getItem(constants.localStorage.wasCautionPassed) === 'true'
+    const doesCautionPassed = localStorage.getItem(constants.localStorage.wasCautionPassed)
 
-    if (!doesCautionPassed) {
-      localStorage.setItem(constants.localStorage.wasCautionPassed, false)
+    if (!doesCautionPassed/* && process.env.MAINNET */) {
       actions.modals.open(constants.modals.PrivateKeys, {})
-      localStorage.setItem(constants.localStorage.wasCautionShow, true)
+      localStorage.setItem(constants.localStorage.wasCautionShown, true)
     }
   }
 
