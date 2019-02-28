@@ -9,7 +9,6 @@ import CSSModules from 'react-css-modules'
 import { isMobile } from 'react-device-detect'
 
 import { constants } from 'helpers'
-import { hasNonZeroBalance } from 'helpers/user'
 import { WithdrawButton } from 'components/controls'
 import { FormattedMessage } from 'react-intl'
 
