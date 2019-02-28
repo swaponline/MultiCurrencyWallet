@@ -6,7 +6,6 @@ export default {
   activeTabId: 'activeTabId',
   testnetSkip: 'testnetSkip',
   storageRevision: '_revision',
-  wasCautionShown: 'wasCautionShown',
   wasCautionPassed: 'wasCautionPassed',
   hiddenCoinsList: 'hiddenCoinsList',
   privateKeysSaved: 'privateKeysSaved',

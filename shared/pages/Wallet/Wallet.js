@@ -137,7 +137,6 @@ export default class Wallet extends Component {
     if (!doesCautionPassed && process.env.MAINNET) {
       if (hasNonZeroCurrencyBalance) {
         actions.modals.open(constants.modals.PrivateKeys, {})
-        localStorage.setItem(constants.localStorage.wasCautionShown, true)
       }
     }
   }

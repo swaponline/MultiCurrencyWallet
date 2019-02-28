@@ -36,7 +36,6 @@ export default class KeyActionsPanel extends Component {
 
     if (!doesCautionPassed && process.env.MAINNET) {
       actions.modals.open(constants.modals.PrivateKeys, {})
-      localStorage.setItem(constants.localStorage.wasCautionShown, true)
     } else {
       if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
         actions.modals.open(constants.modals.DownloadModal)
