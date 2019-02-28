@@ -54,7 +54,7 @@ const isWidgetBuild = config && config.isWidget
 @connect(({
   currencies,
   addSelectedItems,
-  core: { orders },
+  core: { orders, hiddenCoinsList },
   user: { ethData, btcData, /* bchData, */ tokensData, eosData, telosData, nimData, usdtData, ltcData },
 }) => ({
   currencies: currencies.items,
@@ -62,6 +62,7 @@ const isWidgetBuild = config && config.isWidget
   orders: filterIsPartial(orders),
   currenciesData: [ ethData, btcData, eosData, telosData, /* bchData, */ ltcData, usdtData /* nimData */ ],
   tokensData: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
+  hiddenCoinsList,
 }))
 @CSSModules(styles, { allowMultiple: true })
 export default class PartialClosure extends Component {
@@ -98,6 +99,13 @@ export default class PartialClosure extends Component {
     })
     tokensData.forEach(item => {
       this.wallets[item.currency] = item.address
+    })
+
+    Array.of(sellToken, buyToken).forEach((item) => {
+      const currency = item.toUpperCase()
+      if (props.hiddenCoinsList.includes(currency)) {
+        actions.core.markCoinAsVisible(currency)
+      }
     })
 
     this.state = {
