@@ -1,9 +1,10 @@
-const tokensWithNoLogo = ['DEB', 'GUSD', 'JOT', 'NOXON', 'MBRS', 'TLOS', 'SCT', 'BTRM', 'BNTY', 'PBL', 'SENC', 'STAR', 'LOC', 'KEY', 'DAI', 'AVT', 'HBT', 'VIEW', 'CS', 'PIX', 'GEN', 'GAI', 'EMTV', 'CGC', 'VITE', 'MOT', 'DOV', 'XBX', 'LIF', 'TIME', 'MTH', 'CBT', 'DDM', 'WBTC', 'ABYSS'] // eslint-disable-line
+import config from 'app-config'
+
 
 export const initialState = {
   orders: [],
   filter: 'btc-swap',
-  hiddenCoinsList: JSON.parse(localStorage.getItem('hiddenCoinsList')) || tokensWithNoLogo,
+  hiddenCoinsList: JSON.parse(localStorage.getItem('hiddenCoinsList')) || config.hiddenCoins,
 }
 
 export const getOrders = (state, {  orders }) => ({
