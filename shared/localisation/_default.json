@@ -1947,8 +1947,15 @@
     ]
   },
   {
+    "id": "PrivateKeysModal623",
+    "message": "skip it and go to the site.",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
     "id": "PrivateKeysModal663",
-    "message": "SKIP AND GO TO THE SITE!",
+    "message": "Or you can {skipBtn}",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
@@ -1969,7 +1976,7 @@
   },
   {
     "id": "PrivateKeysModal666",
-    "message": "Skip this step",
+    "message": "Continue",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
@@ -3546,7 +3553,7 @@
   },
   {
     "id": "PrivateKeysModal122",
-    "message": "Continuing you agree with our",
+    "message": "Continuing you agree with our ",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]

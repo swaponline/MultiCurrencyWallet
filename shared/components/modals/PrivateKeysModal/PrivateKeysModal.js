@@ -150,7 +150,19 @@ export default class PrivateKeysModal extends React.PureComponent {
                     id="PrivateKeysModal991"
                     defaultMessage="Before you continue be sure to save your private keys! Security of private keys is only in your hands. "
                   />
-                  <FormattedMessage id="PrivateKeysModal99" defaultMessage="It`s very important" />
+                  <span styleName="skipField">
+                    <FormattedMessage
+                      id="PrivateKeysModal663"
+                      defaultMessage="Or you can {skipBtn}"
+                      values={{
+                        skipBtn: (
+                          <button onClick={() => this.setState({ skipAlertShown: true })}>
+                            <FormattedMessage id="PrivateKeysModal623" defaultMessage="skip it and go to the site." />
+                          </button>
+                        ),
+                      }}
+                    />
+                  </span>
                 </div>
                 <div styleName="subTitle">
                   <FormattedMessage id="PrivateKeysModal106" defaultMessage="We do not store your private keys and will not be able to restore them!" />
@@ -174,7 +186,7 @@ export default class PrivateKeysModal extends React.PureComponent {
                   </div>
                 </div>
                 <FormattedMessage id="PrivateKeysModal122" defaultMessage="Continuing you agree with our " />
-                <a href="https://drive.google.com/file/d/1LdsCOfX_pOJAMqlL4g6DfUpZrGF5eRe9/view">
+                <a styleName="fontSizeFixA" href="https://drive.google.com/file/d/1LdsCOfX_pOJAMqlL4g6DfUpZrGF5eRe9/view">
                   <FormattedMessage id="PrivateKeysModal123" defaultMessage="privacy policy" />
                 </a>
                 {/* <Button brand styleName="button" onClick={this.handleSendByEmail}>Send by email</Button> */}
@@ -221,11 +233,7 @@ export default class PrivateKeysModal extends React.PureComponent {
           <br />
           <br />
           <br />
-          <div styleName="skipField">
-            <Button white styleName="button" onClick={() => this.setState({ skipAlertShown: true })}>
-              <FormattedMessage id="PrivateKeysModal663" defaultMessage="SKIP AND GO TO THE SITE!" />
-            </Button>
-          </div>
+
           <div
             styleName={`tryToSkip${skipAlertShown ? ' tryToSkip_active' : ''}`}
             ref={ref => this.skipAlert = ref}
@@ -252,7 +260,7 @@ export default class PrivateKeysModal extends React.PureComponent {
               <br />
 
               <div styleName="tryToSkip__btnContainer">
-                <Button white styleName="button" onClick={() => this.setState({ skipAlertShown: false })}>
+                <Button brand styleName="button" onClick={() => this.setState({ skipAlertShown: false })}>
                   <FormattedMessage id="PrivateKeysModal144" defaultMessage="Back" />
                 </Button>
                 <Button white styleName="button" disabled={!skipBtnShown} onClick={this.handleCloseModal}>

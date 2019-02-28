@@ -50,6 +50,13 @@
 
 .skipField {
   display: inline-block;
+  button {
+    padding: 0;
+    margin: 0;
+    outline: none;
+    color: #282644;
+    cursor: pointer;
+  }
 }
 
 .tryToSkip {
@@ -107,6 +114,10 @@
       margin: 0 20px 30px;
     }
   }
+}
+
+.fontSizeFixA {
+  font-size: 16px;
 }
 
 @media (max-width: 1024px) {

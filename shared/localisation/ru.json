@@ -1950,8 +1950,15 @@
     ]
   },
   {
+    "id": "PrivateKeysModal623",
+    "message": "пропустить это и перейти на сайт.",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
     "id": "PrivateKeysModal663",
-    "message": "Пропустить это и перейти на сайт! ",
+    "message": "Или вы можете {skipBtn}",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
@@ -1972,7 +1979,7 @@
   },
   {
     "id": "PrivateKeysModal666",
-    "message": "Пропустить сохранение",
+    "message": "Продолжить",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
@@ -3558,14 +3565,14 @@
   },
   {
     "id": "PrivateKeysModal122",
-    "message": "Продолжив Вы соглашаетесь",
+    "message": "Продолжив Вы соглашаетесь с нашей ",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
   },
   {
     "id": "PrivateKeysModal123",
-    "message": "политика конфиденциальности",
+    "message": "политикой конфиденциальности",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
