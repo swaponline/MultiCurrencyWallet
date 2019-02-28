@@ -594,6 +594,27 @@
     ]
   },
   {
+    "id": "CurrencyTitleSeo1",
+    "message": "Цена {fullName} ({tickerName}) и Актуальный Курс Обмена.",
+    "files": [
+      "shared/pages/Currency/Currency.js"
+    ]
+  },
+  {
+    "id": "CurrencyMetaDescrTag1",
+    "message": "Узнать цену {fullName} ({tickerName}) на сегодня. Храните и Обменивайте Криптовалюту {fullName} ({tickerName}) Анонимно на Swap.Online.",
+    "files": [
+      "shared/pages/Currency/Currency.js"
+    ]
+  },
+  {
+    "id": "CurrencyH1Seo1",
+    "message": "Цена {fullName} ({tickerName}) и Актуальный Курс Обмена.",
+    "files": [
+      "shared/pages/Currency/Currency.js"
+    ]
+  },
+  {
     "id": "CurrencyWallet100",
     "message": "Отправить",
     "files": [

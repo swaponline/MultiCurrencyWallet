@@ -200,7 +200,10 @@ export default class SwapProgress extends Component {
                   <div styleName="refundTransaction">
                     <strong>
                       <a
-                        href={`${config.link.etherscan}/tx/${flow.refundTransactionHash}`}
+                        href={swap.sellCurrency === 'BTC'
+                          ? `${config.link.bitpay}/tx/${flow.refundTransactionHash}`
+                          : `${config.link.etherscan}/tx/${flow.refundTransactionHash}`
+                        }
                         target="_blank"
                         rel="noopener noreferrer"
                       >

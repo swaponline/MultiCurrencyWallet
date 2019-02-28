@@ -2,7 +2,7 @@ export default {
   enter: 'enter',
   reject: 'reject',
   firstStart: 'firstStart',
-  didWidgetDataSend: 'didWidgetDataSend',
+  didWidgetsDataSend: 'didWidgetsDataSend',
   activeTabId: 'activeTabId',
   testnetSkip: 'testnetSkip',
   storageRevision: '_revision',
