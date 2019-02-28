@@ -26,6 +26,7 @@ label.Switch > span:before {
 	margin-top: -3px;
 	transition: border-color .2s, background-color .2s;
 	width: 2.55em;
+	cursor: pointer;
 }
 
 label.Switch > span:after {
@@ -39,6 +40,7 @@ label.Switch > span:after {
 	margin-top: -3px;
 	transition: transform .2s, border-color .2s;
 	width: 1.2em;
+	cursor: pointer;
 }
 
 label.Switch > input:checked + span:before {

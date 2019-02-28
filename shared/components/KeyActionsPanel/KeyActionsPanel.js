@@ -15,18 +15,7 @@ import { FormattedMessage } from 'react-intl'
 
 import config from 'app-config'
 
-@connect(({
-  core: { hiddenCoinsList },
-  user: { ethData, btcData, tokensData, eosData, /* xlmData, */ telosData, nimData, usdtData, ltcData },
-}) => ({
-  hiddenCoinsList,
-  currencyBalance: [
-    btcData, ethData, eosData, /* xlmData, */ telosData, ltcData, usdtData, ...Object.keys(tokensData).map(k => (tokensData[k])), /* nimData */
-  ].map(({ balance, currency }) => ({
-    balance,
-    name: currency,
-  })),
-}))
+@connect(({ core: { hiddenCoinsList } }) => ({ hiddenCoinsList }))
 @CSSModules(styles, { allowMultiple: true })
 export default class KeyActionsPanel extends Component {
 
@@ -43,11 +32,9 @@ export default class KeyActionsPanel extends Component {
   }
 
   handleDownload = () => {
-    const { currencyBalance } = this.props
     const doesCautionPassed = localStorage.getItem(constants.localStorage.wasCautionPassed)
-    const hasNonZeroCurrencyBalance = hasNonZeroBalance(currencyBalance)
 
-    if (!doesCautionPassed && hasNonZeroCurrencyBalance/* && process.env.MAINNET */) {
+    if (!doesCautionPassed && process.env.MAINNET) {
       actions.modals.open(constants.modals.PrivateKeys, {})
       localStorage.setItem(constants.localStorage.wasCautionShown, true)
     } else {
