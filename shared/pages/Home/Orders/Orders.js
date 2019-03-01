@@ -85,10 +85,21 @@ export default class Orders extends Component {
   }
 
   removeOrder = (orderId) => {
+    actions.modals.open(constants.modals.Confirm, {
+      onAccept: () => {
+        actions.core.removeOrder(orderId)
+        actions.core.updateCore()
+      },
+      message: 'Are your sure?',
+      labelOk: 'Yes, remove order',
+      labelCancel: 'No, dont do it',
+    })
+    /*
     if (confirm('Are your sure ?')) {
       actions.core.removeOrder(orderId)
       actions.core.updateCore()
     }
+    */
   }
 
   acceptRequest = (orderId, peer) => {

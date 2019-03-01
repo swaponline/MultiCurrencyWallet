@@ -1,0 +1,17 @@
+.button {
+  margin-top: 40px;
+  width: auto;
+  display: inline-block;
+}
+
+.content {
+  text-align: center;
+}
+
+.content .button:first-child {
+  margin-right: 20px;
+}
+
+.content .button:last-child {
+  margin-left: 20px;
+}
