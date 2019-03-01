@@ -39,10 +39,6 @@ const defaultLanguage = defineMessages({
 export default class Confirm extends React.Component {
 
   static propTypes = {
-    title: PropTypes.string,
-    message: PropTypes.string,
-    labelOk: PropTypes.string,
-    labelCancel: PropTypes.string,
     onAccept: PropTypes.func,
   }
 
@@ -83,14 +79,14 @@ export default class Confirm extends React.Component {
         message,
         labelOk,
         labelCancel,
-      }
+      },
     } = this.props
 
     const labels = {
-      title: (title) ? title : intl.formatMessage(defaultLanguage.title),
-      message: (message) ? message: intl.formatMessage(defaultLanguage.message),
-      ok: (labelOk) ? labelOk : intl.formatMessage(defaultLanguage.ok),
-      cancel: (labelCancel) ? labelCancel : intl.formatMessage(defaultLanguage.cancel),
+      title: title || intl.formatMessage(defaultLanguage.title),
+      message: message || intl.formatMessage(defaultLanguage.message),
+      ok: labelOk || intl.formatMessage(defaultLanguage.ok),
+      cancel: labelCancel || intl.formatMessage(defaultLanguage.cancel),
     }
 
     return (
