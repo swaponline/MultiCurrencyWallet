@@ -1961,6 +1961,55 @@
     ]
   },
   {
+    "id": "PrivateKeysModal662",
+    "message": "Attention!",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal623",
+    "message": "{skipIt} and go to the site.",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal624",
+    "message": "skip it",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal663",
+    "message": "Or you can {skipBtn}",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal664",
+    "message": "Please save your private keys! We do not store your private keys and will not be able to restore your wallets.",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal665",
+    "message": " I understand and except the risks of not saving my private keys",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal666",
+    "message": "Continue",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
     "id": "PrivateKeysModal99",
     "message": "It`s very important because If you don`t",
     "files": [
@@ -3532,7 +3581,7 @@
   },
   {
     "id": "PrivateKeysModal122",
-    "message": "Continuing you agree with our",
+    "message": "Continuing you agree with our ",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
