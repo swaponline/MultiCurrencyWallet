@@ -1951,7 +1951,14 @@
   },
   {
     "id": "PrivateKeysModal623",
-    "message": "пропустить это и перейти на сайт.",
+    "message": "{skipIt} и перейти на сайт.",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal624",
+    "message": "пропустить это",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]

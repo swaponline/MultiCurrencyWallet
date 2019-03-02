@@ -157,7 +157,20 @@ export default class PrivateKeysModal extends React.PureComponent {
                       values={{
                         skipBtn: (
                           <button onClick={() => this.setState({ skipAlertShown: true })}>
-                            <FormattedMessage id="PrivateKeysModal623" defaultMessage="skip it and go to the site." />
+                            <FormattedMessage
+                              id="PrivateKeysModal623"
+                              defaultMessage="{skipIt} and go to the site."
+                              values={{
+                                skipIt: (
+                                  <span style={{ color: '#007bff' }}>
+                                    <FormattedMessage
+                                      id="PrivateKeysModal624"
+                                      defaultMessage="skip it"
+                                    />
+                                  </span>
+                                ),
+                              }}
+                            />
                           </button>
                         ),
                       }}
