@@ -1,0 +1,98 @@
+.button {
+  margin-top: 104px;
+  width: 184px;
+  height: 60px;
+  font-size: 24px;
+  display: inline-block;
+}
+
+.content {
+  text-align: center;
+}
+
+.content .button:first-child {
+  margin-right: 20px;
+}
+
+.content .button:last-child {
+  margin-left: 14px;
+}
+.notification{
+  position: relative;
+  margin: 10px 0px -90px;
+  font-size: 35px;
+  padding: 10px;
+  color: #272626;
+}
+
+.overlay {
+  margin-top: 20px;
+  width: 933px;
+  height: 335px;
+  display: block;
+  background: #fff;
+  position: fixed;
+  top: 0;
+  left: 34%;
+  z-index: 500;
+  border: 2px double #7c1de9;
+}
+
+.header {
+  height: 88px;
+  border-bottom: 1px solid #ddd;
+}
+
+.headerContent {
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.title {
+  position: relative;
+  width: 100%;
+  left: 0;
+  padding: 0 64px;
+  flex: auto 1 1;
+  line-height: 22px;
+  font-size: 40px;
+  text-align: center;
+
+  &.uppercase {
+    text-transform: uppercase;
+  }
+}
+
+
+@include media-mobile {
+  .overlay {
+    width: 100%;
+    height: 100%;
+    left: 0;
+    margin: 0;
+  }
+
+  .notification{
+    font-size: 25px;
+    margin-top: 100px;
+  }
+
+  .button{
+    width: 75px;
+    height: 48px;
+    position: relative;
+  }
+
+  .modal {
+    padding: 15px 15px;
+  }
+  .content {
+    min-width: auto;
+  }
+  .title {
+    font-size: 18px;;
+  }
+}

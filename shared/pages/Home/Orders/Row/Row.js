@@ -21,6 +21,7 @@ import PAIR_TYPES from 'helpers/constants/PAIR_TYPES'
 import RequestButton from '../RequestButton/RequestButton'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
+import { BigNumber } from 'bignumber.js'
 
 
 @injectIntl
@@ -80,26 +81,46 @@ export default class Row extends Component {
     }
   }
 
-  sendRequest = async (orderId, currency) => {
-    const check = await this.handleGoTrade(currency)
+  sendRequest = (orderId, currency) => {
+    const { row: { buyAmount, sellAmount, buyCurrency, sellCurrency } } = this.props
 
-    this.setState({ isFetching: true })
+    const pair = Pair.fromOrder(this.props.row)
+    const { price, amount, total, main, base, type } = pair
 
-    setTimeout(() => {
-      this.setState(() => ({ isFetching: false }))
-    }, 15 * 1000)
+    const sell = new BigNumber(sellAmount).dp(6, BigNumber.ROUND_HALF_CEIL)
+    const buy = new BigNumber(buyAmount).dp(6, BigNumber.ROUND_HALF_CEIL)
+    const exchangeRates = new BigNumber(price).dp(6, BigNumber.ROUND_HALF_CEIL)
 
-    actions.core.sendRequest(orderId, {}, (isAccepted) => {
-      console.log(`user has ${isAccepted ? 'accepted' : 'declined'} your request`)
+    actions.modals.open(constants.modals.Confirm, {
+      onAccept: async () => {
+        const check = await this.handleGoTrade(currency)
 
-      if (isAccepted) {
-        this.setState({ redirect: true, isFetching: false })
-      }
-      else {
-        this.setState({ isFetching: false })
-      }
+        this.setState({ isFetching: true })
+
+        setTimeout(() => {
+          this.setState(() => ({ isFetching: false }))
+        }, 15 * 1000)
+
+        actions.core.sendRequest(orderId, {}, (isAccepted) => {
+          console.log(`user has ${isAccepted ? 'accepted' : 'declined'} your request`)
+
+          if (isAccepted) {
+            this.setState({ redirect: true, isFetching: false })
+          }
+          else {
+            this.setState({ isFetching: false })
+          }
+        })
+        actions.core.updateCore()
+      },
+      message: `Do you want to
+        ${type === PAIR_TYPES.BID ? 'sell' : 'buy'}
+        ${amount.toFixed(5)} ${main} for ${total.toFixed(5)}
+        ${base} at price ${exchangeRates}
+        ${sellCurrency}/${buyCurrency} ?`,
+      labelOk: 'Yes',
+      labelCancel: 'No',
     })
-    actions.core.updateCore()
   }
 
   renderWebContent() {
