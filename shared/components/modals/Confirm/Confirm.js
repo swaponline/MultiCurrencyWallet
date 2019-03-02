@@ -13,6 +13,7 @@ import { Modal } from 'components/modal'
 import { Button } from 'components/controls'
 import { FieldLabel, Input } from 'components/forms'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
+import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 
 
 const defaultLanguage = defineMessages({
@@ -90,13 +91,18 @@ export default class Confirm extends React.Component {
     }
 
     return (
-      <Modal name={name} title={labels.title}>
-        <div styleName="content">
-          <p>{labels.message}</p>
-          <Button styleName="button" brand onClick={this.handleConfirm}>{labels.ok}</Button>
-          <Button styleName="button" brand onClick={this.handleClose}>{labels.cancel}</Button>
+      <div styleName="overlay" >
+        <div styleName="header">
+          <WidthContainer styleName="headerContent">
+            <div styleName="title">{labels.title}</div>
+          </WidthContainer>
         </div>
-      </Modal>
+        <div styleName="content">
+          <p styleName="notification">{labels.message}</p>
+          <Button styleName="button" brand onClick={this.handleConfirm}>{labels.ok}</Button>
+          <Button styleName="button" gray onClick={this.handleClose}>{labels.cancel}</Button>
+        </div>
+      </div>
     )
   }
 }

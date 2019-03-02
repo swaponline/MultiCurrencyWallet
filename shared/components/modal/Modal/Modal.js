@@ -67,14 +67,14 @@ export default class Modal extends Component {
 
   render() {
     const { className, whiteLogo, showLogo, title, showCloseButton, disableClose, children,
-      titleUppercase, name, shouldCenterHorizontally, shouldCenterVertically } = this.props
+      titleUppercase, name, shouldCenterHorizontally, shouldCenterVertically, styleName } = this.props
 
     const titleStyleName = cx('title', {
       'uppercase': titleUppercase,
     })
 
     return (
-      <Overlay>
+      <Overlay styleName={styleName}>
         <div styleName="modal" className={className}>
           {
             Boolean(title || showCloseButton) && (
