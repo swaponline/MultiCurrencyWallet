@@ -1,46 +1,5 @@
-.button {
-  margin-top: 104px;
-  width: 184px;
-  height: 60px;
-  font-size: 24px;
-  display: inline-block;
-}
-
-.content {
-  text-align: center;
-}
-
-.content .button:first-child {
-  margin-right: 20px;
-}
-
-.content .button:last-child {
-  margin-left: 14px;
-}
-.notification{
-  position: relative;
-  margin: 10px 0px -90px;
-  font-size: 35px;
-  padding: 10px;
-  color: #272626;
-}
-
-.overlay {
-  margin-top: 20px;
-  width: 933px;
-  height: 335px;
-  display: block;
-  background: #fff;
-  position: fixed;
-  top: 0;
-  left: 34%;
-  z-index: 500;
-  border: 2px double #7c1de9;
-}
-
 .header {
-  height: 88px;
-  border-bottom: 1px solid #ddd;
+  padding: 16px 0;
 }
 
 .headerContent {
@@ -52,13 +11,11 @@
 }
 
 .title {
-  position: relative;
   width: 100%;
-  left: 0;
   padding: 0 64px;
-  flex: auto 1 1;
-  line-height: 22px;
-  font-size: 40px;
+  line-height: 18px;
+  font-size: 20px;
+  font-weight: 700;
   text-align: center;
 
   &.uppercase {
@@ -66,33 +23,87 @@
   }
 }
 
+.closeButton {
+  width: 20px;
+  height: 20px;
+  opacity: 0.5;
+  transition: opacity .33s $ease-out-quadratic;
+
+  &:hover {
+    opacity: 1;
+    transition: none;
+  }
+}
+
+.modal-overlay {
+  position: sticky;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, .3);
+  opacity: 1;
+}
+
+.modal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  padding: 32px;
+  width: 100%;
+  max-width: 640px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, .4);
+}
+
+.button {
+  width: 45%;
+  max-width: 240px;
+}
+
+.content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.notification-overlay {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  padding: 32px 0;
+}
+
+.notification {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  font-size: 16px;
+}
+
+.button-overlay {
+  display: flex;
+  justify-content: space-around;
+}
 
 @include media-mobile {
-  .overlay {
-    width: 100%;
-    height: 100%;
-    left: 0;
-    margin: 0;
-  }
-
-  .notification{
-    font-size: 25px;
-    margin-top: 100px;
-  }
-
-  .button{
-    width: 75px;
-    height: 48px;
-    position: relative;
-  }
-
   .modal {
-    padding: 15px 15px;
-  }
-  .content {
-    min-width: auto;
+    height: 100%;
+    padding: 16px;
+    border-radius: 0;
+    box-shadow: none;
   }
   .title {
     font-size: 18px;;
+  }
+  .notification-overlay {
+    height: 100%;
+  }
+  .button-overlay {
+    justify-content: space-between;
   }
 }

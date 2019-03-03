@@ -90,16 +90,10 @@ export default class Orders extends Component {
         actions.core.removeOrder(orderId)
         actions.core.updateCore()
       },
-      message: 'Are your sure?',
-      labelOk: 'Yes, remove order',
-      labelCancel: 'No, dont do it',
+      message: (
+        <FormattedMessage id="orders94s" defaultMessage="Are you sure you want to delete the order?" />
+      ),
     })
-    /*
-    if (confirm('Are your sure ?')) {
-      actions.core.removeOrder(orderId)
-      actions.core.updateCore()
-    }
-    */
   }
 
   acceptRequest = (orderId, peer) => {
@@ -229,6 +223,7 @@ export default class Orders extends Component {
               key={row.id}
               orderId={orderId}
               row={row}
+              removeOrder={this.removeOrder}
             />
           )}
           isLoading={sellOrders.length === 0 && !isIpfsLoaded}
@@ -255,6 +250,7 @@ export default class Orders extends Component {
               key={row.id}
               orderId={orderId}
               row={row}
+              removeOrder={this.removeOrder}
             />
           )}
           isLoading={buyOrders.length === 0 && !isIpfsLoaded}

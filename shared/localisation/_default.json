@@ -592,17 +592,11 @@
   },
   {
     "id": "CurrencyTitleSeo1",
-    "message": "{fullName} ({tickerName}) Price, Description & Exchange Rates. Store & Exchange {fullName} ({tickerName}) Anonymously on Swap.Online.",
-    "files": [
-      "shared/pages/Currency/Currency.js"
-    ]
+    "message": "{fullName} ({tickerName}) Price, Description & Exchange Rates. Store & Exchange {fullName} ({tickerName}) Anonymously on Swap.Online."
   },
   {
     "id": "CurrencyMetaDescrTag1",
-    "message": "Find out actual price of {fullName}, its ticker name is ({tickerName}). Swap.Online is the best way to safely store your cryptocurrecy.",
-    "files": [
-      "shared/pages/Currency/Currency.js"
-    ]
+    "message": "Find out actual price of {fullName}, its ticker name is ({tickerName}). Swap.Online is the best way to safely store your cryptocurrecy."
   },
   {
     "id": "CurrencyH1Seo1",
@@ -2011,10 +2005,7 @@
   },
   {
     "id": "PrivateKeysModal99",
-    "message": "It`s very important because If you don`t",
-    "files": [
-      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
-    ]
+    "message": "It`s very important because If you don`t"
   },
   {
     "id": "PrivateKeysModal991",
@@ -3697,17 +3688,11 @@
   },
   {
     "id": "PartialClosureTitleTag",
-    "message": "Atomic Swap {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}) Instant Exchange",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
-    ]
+    "message": "Atomic Swap {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}) Instant Exchange"
   },
   {
     "id": "PartialClosureMetaDescrTag",
-    "message": "Best exchange rate for {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}). Swap.Online wallet provides instant exchange using Atomic Swap Protocol.",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
-    ]
+    "message": "Best exchange rate for {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}). Swap.Online wallet provides instant exchange using Atomic Swap Protocol."
   },
   {
     "id": "orders104",
@@ -4352,10 +4337,7 @@
   },
   {
     "id": "deposit213",
-    "message": "and 0.002 ETH на gas fee",
-    "files": [
-      "shared/pages/Swap/DepositWindow/DepositWindow.js"
-    ]
+    "message": "and 0.002 ETH на gas fee"
   },
   {
     "id": "EmergencySave33",
@@ -4577,6 +4559,69 @@
     "message": "WITHDRAW",
     "files": [
       "shared/pages/Swap/SwapList/steps/ThirdStep.js"
+    ]
+  },
+  {
+    "id": "confirmDialogDefaultMessage",
+    "message": "Confirm action on this site?",
+    "files": [
+      "shared/components/modals/Confirm/Confirm.js"
+    ]
+  },
+  {
+    "id": "confirmDialogDefaultNo",
+    "message": "No",
+    "files": [
+      "shared/components/modals/Confirm/Confirm.js"
+    ]
+  },
+  {
+    "id": "confirmDialogDefaultTitle",
+    "message": "Confirm action",
+    "files": [
+      "shared/components/modals/Confirm/Confirm.js"
+    ]
+  },
+  {
+    "id": "confirmDialogDefaultYes",
+    "message": "Yes",
+    "files": [
+      "shared/components/modals/Confirm/Confirm.js"
+    ]
+  },
+  {
+    "id": "orders94s",
+    "message": "Are you sure you want to delete the order?",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "ordersRow101",
+    "message": "buy",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "ordersRow134",
+    "message": "Do you want to {action} {amount} {main} for {total} {base} at price {price} {main}/{base}?",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "ordersRow97",
+    "message": "sell",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "deposit165widget",
+    "message": "Copy the address below and top it up with the recommended amount of {missingBalance}",
+    "files": [
+      "shared/pages/Swap/DepositWindow/DepositWindow.js"
     ]
   }
 ]
