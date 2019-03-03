@@ -16,7 +16,7 @@ const getOrders = (orders) => {
 
 const addCurrencyFromOrders = (orders) => {
   const allCurrencyies = getState().currencies.items // все валюты достпуные в клиенте
-  const partialCurrency = getState().currencies.partialItems //получаем все премиальные валюты
+  const partialCurrency = getState().currencies.partialItems // получаем все премиальные валюты
   const partialArray = partialCurrency.map(item => item.name) // получаем их имена
 
   const sellOrderArray = orders.map(item => item.sellCurrency) // получаем из ордерова валюты на продажу
@@ -28,7 +28,7 @@ const addCurrencyFromOrders = (orders) => {
     for (let j = 0; j <= buyOrderArray.length - i; j++) {
       if (sellOrderArray[i] !== buyOrderArray[j]) {
         if (!sellOrderArray.includes(buyOrderArray[i])) {
-          if(allCurrencyies.includes(buyOrderArray[i])) { // не пускаю валюты не существующие в клиенте
+          if (allCurrencyies.includes(buyOrderArray[i])) { // не пускаю валюты не существующие в клиенте
             sortedArray.push(buyOrderArray[i])
           }
         }

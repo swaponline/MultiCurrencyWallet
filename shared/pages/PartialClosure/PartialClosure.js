@@ -255,7 +255,7 @@ export default class PartialClosure extends Component {
 
     currenciesOfUrl.push(sellToken, buyToken)
 
-    if(allCurrencyies.includes(sellToken.toUpperCase() || buyToken.toUpperCase())) {
+    if (allCurrencyies.includes(sellToken.toUpperCase() || buyToken.toUpperCase())) {
       currenciesOfUrl.forEach(item => {
         if (!partialCurrency.includes(item.toUpperCase())) {
           getState().currencies.partialItems.push(
