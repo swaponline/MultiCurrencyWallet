@@ -11,9 +11,11 @@ const debug = (...args) => console.log(...args)
 
 const getOrders = (orders) => {
   reducers.core.getOrders({ orders })
+  actions.core.addCurrencyFromOrders(orders)
+}
 
+const addCurrencyFromOrders = (orders) => {
   const partialCurrency = getState().currencies.partialItems
-
   const partialArray = partialCurrency.map(item => item.name)
   const sellOrderArray = orders.map(item => item.sellCurrency)
   const buyOrderArray = orders.map(item => item.buyCurrency)
@@ -47,7 +49,6 @@ const getOrders = (orders) => {
       )
     }
   })
-
   reducers.currencies.updatePartialItems(partialCurrency)
 }
 
@@ -307,4 +308,5 @@ export default {
   setupPartialOrder,
   initPartialOrders,
   deletedPartialCurrency,
+  addCurrencyFromOrders,
 }

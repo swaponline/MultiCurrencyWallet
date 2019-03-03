@@ -154,6 +154,8 @@ export default class PartialClosure extends Component {
     this.timer = setInterval(() => {
       this.setOrders()
     }, 2000)
+    
+    SwapApp.shared().services.room.on('new orders', () => this.checkPair(haveCurrency))
   }
 
   componentWillUnmount() {
