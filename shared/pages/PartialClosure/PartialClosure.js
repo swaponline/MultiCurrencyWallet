@@ -106,7 +106,6 @@ export default class PartialClosure extends Component {
     })
 
     this.returnNeedCurrency(sellToken, buyToken)
-
     Array.of(sellToken, buyToken).forEach((item) => {
       const currency = item.toUpperCase()
       if (props.hiddenCoinsList.includes(currency)) {
