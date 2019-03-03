@@ -105,7 +105,8 @@ export default class PartialClosure extends Component {
       this.wallets[item.currency] = item.address
     })
 
-    this.returnNeedCurrency(sellToken, buyToken)
+    this.returnNeedCurrency(sellToken, buyToken, history, locale)
+
     Array.of(sellToken, buyToken).forEach((item) => {
       const currency = item.toUpperCase()
       if (props.hiddenCoinsList.includes(currency)) {
@@ -153,7 +154,7 @@ export default class PartialClosure extends Component {
     this.timer = setInterval(() => {
       this.setOrders()
     }, 2000)
-    
+
     SwapApp.shared().services.room.on('new orders', () => this.checkPair(haveCurrency))
   }
 
@@ -247,24 +248,30 @@ export default class PartialClosure extends Component {
     this.props.history.push(localisedUrl(locale, `/${wayToDeclinedOrder}`))
   }
 
-  returnNeedCurrency = (sellToken, buyToken) => {
+  returnNeedCurrency = (sellToken, buyToken, history, locale) => {
     const partialCurrency = getState().currencies.partialItems.map(item => item.name)
+    const allCurrencyies = getState().currencies.items.map(item => item.name)
     let currenciesOfUrl = []
 
     currenciesOfUrl.push(sellToken, buyToken)
 
-    currenciesOfUrl.forEach(item => {
-      if (!partialCurrency.includes(item.toUpperCase())) {
-        getState().currencies.partialItems.push(
-          {
-            name: item.toUpperCase(),
-            title: item.toUpperCase(),
-            icon: item.toLowerCase(),
-            value: item.toLowerCase(),
-          }
-        )
-      }
-    })
+    if(allCurrencyies.includes(sellToken.toUpperCase() || buyToken.toUpperCase())) {
+      currenciesOfUrl.forEach(item => {
+        if (!partialCurrency.includes(item.toUpperCase())) {
+          getState().currencies.partialItems.push(
+            {
+              name: item.toUpperCase(),
+              title: item.toUpperCase(),
+              icon: item.toLowerCase(),
+              value: item.toLowerCase(),
+            }
+          )
+        }
+      })
+    } else {
+      history.push(localisedUrl(locale, `/exchange/swap-to-btc`))
+      return
+    }
     reducers.currencies.updatePartialItems(getState().currencies.partialItems)
   }
 

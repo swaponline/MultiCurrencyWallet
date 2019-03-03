@@ -15,29 +15,32 @@ const getOrders = (orders) => {
 }
 
 const addCurrencyFromOrders = (orders) => {
-  const partialCurrency = getState().currencies.partialItems
-  const partialArray = partialCurrency.map(item => item.name)
-  const sellOrderArray = orders.map(item => item.sellCurrency)
-  const buyOrderArray = orders.map(item => item.buyCurrency)
-  let sortedArray = [...sellOrderArray]
+  const allCurrencyies = getState().currencies.items // все валюты достпуные в клиенте
+  const partialCurrency = getState().currencies.partialItems //получаем все премиальные валюты
+  const partialArray = partialCurrency.map(item => item.name) // получаем их имена
+
+  const sellOrderArray = orders.map(item => item.sellCurrency) // получаем из ордерова валюты на продажу
+  const buyOrderArray = orders.map(item => item.buyCurrency) // получаем из ордерова валюты на покупку
+
+  let sortedArray = [...sellOrderArray] // записываем sellOrderArray в массив
 
   for (let i = 0; i <= sellOrderArray.length - 1; i++) {
     for (let j = 0; j <= buyOrderArray.length - i; j++) {
       if (sellOrderArray[i] !== buyOrderArray[j]) {
-        if (!sellOrderArray.includes(sellOrderArray[i])) {
-          sortedArray.push(buyOrderArray[i])
-        } else if (!sellOrderArray.includes(buyOrderArray[i])) {
-          sortedArray.push(buyOrderArray[i])
+        if (!sellOrderArray.includes(buyOrderArray[i])) {
+          if(allCurrencyies.includes(buyOrderArray[i])) { // не пускаю валюты не существующие в клиенте
+            sortedArray.push(buyOrderArray[i])
+          }
         }
       }
     }
   }
 
   sortedArray = sortedArray.filter((item, pos) => { // eslint-disable-line
-    return sortedArray.indexOf(item) === pos
+    return sortedArray.indexOf(item) === pos // недопускаем андефайнд в дроп
   }).filter(item => item !== undefined)
 
-  sortedArray.forEach(item => {
+  sortedArray.forEach(item => { // добавляем объект в дроп, еще раз проверяя, на совпадения
     if (!partialArray.includes(item)) {
       partialCurrency.push(
         {
