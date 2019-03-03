@@ -13,6 +13,7 @@ import { links, constants } from 'helpers'
 import { Link, Redirect } from 'react-router-dom'
 
 import Avatar from 'components/Avatar/Avatar'
+import ConfirmPopup from '../ConfirmPopup/ConfirmPopup'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { Button, RemoveButton } from 'components/controls'
 
@@ -40,7 +41,7 @@ export default class Row extends Component {
     windowWidth: 0,
     isFetching: false,
     enterButton: false,
-
+    callConfirm: false,
   }
 
   componentDidMount() {
@@ -81,7 +82,7 @@ export default class Row extends Component {
     }
   }
 
-  sendRequest = (orderId, currency) => {
+  sendRequest = async (orderId, currency) => {
     const { row: { buyAmount, sellAmount, buyCurrency, sellCurrency } } = this.props
 
     const pair = Pair.fromOrder(this.props.row)
@@ -91,36 +92,25 @@ export default class Row extends Component {
     const buy = new BigNumber(buyAmount).dp(6, BigNumber.ROUND_HALF_CEIL)
     const exchangeRates = new BigNumber(price).dp(6, BigNumber.ROUND_HALF_CEIL)
 
-    actions.modals.open(constants.modals.Confirm, {
-      onAccept: async () => {
-        const check = await this.handleGoTrade(currency)
+    const check = await this.handleGoTrade(currency)
 
-        this.setState({ isFetching: true })
+    this.setState({ isFetching: true })
 
-        setTimeout(() => {
-          this.setState(() => ({ isFetching: false }))
-        }, 15 * 1000)
+    setTimeout(() => {
+      this.setState(() => ({ isFetching: false }))
+    }, 15 * 1000)
 
-        actions.core.sendRequest(orderId, {}, (isAccepted) => {
-          console.log(`user has ${isAccepted ? 'accepted' : 'declined'} your request`)
+    actions.core.sendRequest(orderId, {}, (isAccepted) => {
+      console.log(`user has ${isAccepted ? 'accepted' : 'declined'} your request`)
 
-          if (isAccepted) {
-            this.setState({ redirect: true, isFetching: false })
-          }
-          else {
-            this.setState({ isFetching: false })
-          }
-        })
-        actions.core.updateCore()
-      },
-      message: `Do you want to
-        ${type === PAIR_TYPES.BID ? 'sell' : 'buy'}
-        ${amount.toFixed(5)} ${main} for ${total.toFixed(5)}
-        ${base} at price ${exchangeRates}
-        ${sellCurrency}/${buyCurrency} ?`,
-      labelOk: 'Yes',
-      labelCancel: 'No',
+      if (isAccepted) {
+        this.setState({ redirect: true, isFetching: false })
+      }
+      else {
+        this.setState({ isFetching: false })
+      }
     })
+    actions.core.updateCore()
   }
 
   renderWebContent() {
@@ -145,6 +135,8 @@ export default class Row extends Component {
     const pair = Pair.fromOrder(this.props.row)
 
     const { price, amount, total, main, base, type } = pair
+
+    const exchangeRates = new BigNumber(price).dp(6, BigNumber.ROUND_HALF_CEIL)
 
     return (
       <tr style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}>
@@ -217,7 +209,7 @@ export default class Row extends Component {
                       ) : (
                         <RequestButton
                           disabled={balance >= Number(buyAmount)}
-                          onClick={() => this.sendRequest(id, isMy ? sellCurrency : buyCurrency)}
+                          onClick={() => this.setState({ callConfirm: true })}
                           data={{ type, amount, main, total, base }}
                         >
                           {type === PAIR_TYPES.BID ? <FormattedMessage id="Row2061" defaultMessage="SELL" /> : <FormattedMessage id="Row206" defaultMessage="BUY" />}
@@ -235,6 +227,13 @@ export default class Row extends Component {
               </Fragment>
             )
           }
+          <ConfirmPopup
+            active={this.state.callConfirm}
+            close={() => this.setState({ callConfirm: false })}
+            confirm={() => this.sendRequest(id, isMy ? sellCurrency : buyCurrency)}
+            pair={pair}
+            exchangeRates={exchangeRates}
+          />
         </td>
       </tr>
     )
@@ -260,6 +259,8 @@ export default class Row extends Component {
     const pair = Pair.fromOrder(this.props.row)
 
     const { price, amount, total, main, base, type } = pair
+
+    const exchangeRates = new BigNumber(price).dp(6, BigNumber.ROUND_HALF_CEIL)
 
     return (
       <tr
@@ -319,7 +320,7 @@ export default class Row extends Component {
                             <RequestButton
                               styleName="startButton"
                               disabled={balance >= Number(buyAmount)}
-                              onClick={() => this.sendRequest(id, isMy ? sellCurrency : buyCurrency)}
+                              onClick={() => this.setState({ callConfirm: true })}
                               data={{ type, amount, main, total, base }}
                             >
                               <FormattedMessage id="RowM166" defaultMessage="Start" />
@@ -331,6 +332,13 @@ export default class Row extends Component {
                   </Fragment>
                 )
               }
+              <ConfirmPopup
+                active={this.state.callConfirm}
+                close={() => this.setState({ callConfirm: false })}
+                confirm={() => this.sendRequest(id, isMy ? sellCurrency : buyCurrency)}
+                pair={pair}
+                exchangeRates={exchangeRates}
+              />
             </div>
           </div>
         </td>

@@ -778,6 +778,48 @@
     ]
   },
   {
+    "id": "ConfirmPopupTitle",
+    "message": "Внимание",
+    "files": [
+      "shared/pages/Home/Orders/ConfirmPopup/ConfirmPopup.js"
+    ]
+  },
+  {
+    "id": "ConfirmPopupMessage1",
+    "message": "Вы хотите {action} {amount} {main} за {total} {base} по цене {exchangeRates} {main}/{base} ?",
+    "files": [
+      "shared/pages/Home/Orders/ConfirmPopup/ConfirmPopup.js"
+    ]
+  },
+  {
+    "id": "ConfirmPopupAction1",
+    "message": "продать",
+    "files": [
+      "shared/pages/Home/Orders/ConfirmPopup/ConfirmPopup.js"
+    ]
+  },
+  {
+    "id": "ConfirmPopupAction2",
+    "message": "купить",
+    "files": [
+      "shared/pages/Home/Orders/ConfirmPopup/ConfirmPopup.js"
+    ]
+  },
+  {
+    "id": "ConfirmPopupNo",
+    "message": "Нет",
+    "files": [
+      "shared/pages/Home/Orders/ConfirmPopup/ConfirmPopup.js"
+    ]
+  },
+  {
+    "id": "ConfirmPopupYes",
+    "message": "Да",
+    "files": [
+      "shared/pages/Home/Orders/ConfirmPopup/ConfirmPopup.js"
+    ]
+  },
+  {
     "id": "Row151",
     "message": "Перейти к обмену",
     "files": [

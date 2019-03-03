@@ -1,0 +1,73 @@
+.Popup {
+  visibility: hidden;
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  opacity: 0;
+  z-index: -10000000;
+  &:before {
+    visibility: hidden;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: '';
+    z-index: -10000000;
+    background: black;
+    width: 100%;
+    height: 100%;
+    opacity: 0.3;
+  }
+  &_active {
+    visibility: visible;
+    opacity: 1;
+    z-index: 2;
+    transition: opacity 0.3s ease;
+    &:before {
+      visibility: visible;
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      content: '';
+      z-index: 1;
+      background: black;
+      width: 100%;
+      height: 100%;
+      opacity: 0.3;
+    }
+  }
+
+  &__content {
+    z-index: 3;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 80%;
+    display: flex;
+    flex-direction: column;
+    padding: 50px 40px 10px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0,0,0, 0.4);
+  }
+}
+
+@media (max-width: 1024px) {
+  .Popup {
+    &__content {
+      max-width: 90%;
+    }
+  }
+}
+@media (max-width: 830px) {
+  .Popup {
+    &__content {
+      width: 90%;
+    }
+  }
+}

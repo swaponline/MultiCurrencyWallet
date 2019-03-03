@@ -1,0 +1,30 @@
+.Popup {
+  &__title {
+    font-weight: bold;
+    text-align: center;
+  }
+  &__btnContainer {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-evenly;
+    button {
+      flex: 1;
+      margin: 0 20px 30px;
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .Popup {
+    &__text {
+        margin: 0 20px;
+        white-space: initial;
+    }
+    &__btnContainer {
+      flex-direction: column;
+      button {
+        flex: 0 1 auto;
+      }
+    }
+  }
+}

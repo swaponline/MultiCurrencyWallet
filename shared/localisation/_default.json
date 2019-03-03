@@ -771,6 +771,48 @@
     ]
   },
   {
+    "id": "ConfirmPopupTitle",
+    "message": "Confirm action",
+    "files": [
+      "shared/pages/Home/Orders/ConfirmPopup/ConfirmPopup.js"
+    ]
+  },
+  {
+    "id": "ConfirmPopupMessage1",
+    "message": "Do you want to {action} {amount} {main} for {total} {base} at price {exchangeRates} {main}/{base} ?",
+    "files": [
+      "shared/pages/Home/Orders/ConfirmPopup/ConfirmPopup.js"
+    ]
+  },
+  {
+    "id": "ConfirmPopupAction1",
+    "message": "sell",
+    "files": [
+      "shared/pages/Home/Orders/ConfirmPopup/ConfirmPopup.js"
+    ]
+  },
+  {
+    "id": "ConfirmPopupAction2",
+    "message": "buy",
+    "files": [
+      "shared/pages/Home/Orders/ConfirmPopup/ConfirmPopup.js"
+    ]
+  },
+  {
+    "id": "ConfirmPopupNo",
+    "message": "No",
+    "files": [
+      "shared/pages/Home/Orders/ConfirmPopup/ConfirmPopup.js"
+    ]
+  },
+  {
+    "id": "ConfirmPopupYes",
+    "message": "Yes",
+    "files": [
+      "shared/pages/Home/Orders/ConfirmPopup/ConfirmPopup.js"
+    ]
+  },
+  {
     "id": "Row151",
     "message": "Go to the swap",
     "files": [

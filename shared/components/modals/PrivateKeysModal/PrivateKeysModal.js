@@ -11,6 +11,7 @@ import styles from './PrivateKeysModal.scss'
 
 import Field2 from './Field2/Field2'
 import Modal from 'components/modal/Modal/Modal'
+import Popup from 'components/Popup/Popup'
 import { Button, Toggle } from 'components/controls'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 
@@ -247,41 +248,38 @@ export default class PrivateKeysModal extends React.PureComponent {
           <br />
           <br />
 
-          <div
-            styleName={`tryToSkip${skipAlertShown ? ' tryToSkip_active' : ''}`}
-            ref={ref => this.skipAlert = ref}
-            onClick={(e) => this.handleCloseSkipAlert(e)} // eslint-disable-line
+          <Popup
+            active={skipAlertShown}
+            onClickOverlay={() => this.setState({ skipAlertShown: false })}
           >
-            <div styleName="tryToSkip__content">
-              <h3 styleName="tryToSkip__title">
-                <FormattedMessage
-                  id="PrivateKeysModal662"
-                  defaultMessage="Attention!"
-                />
-              </h3>
-              <br />
+            <h3 styleName="Popup__title">
               <FormattedMessage
-                id="PrivateKeysModal664"
-                defaultMessage="Please save your private keys! We do not store your private keys and will not be able to restore your wallets."
+                id="PrivateKeysModal662"
+                defaultMessage="Attention!"
               />
-              <br />
-              <label>
-                <Toggle checked={skipBtnShown} onChange={() => this.setState({ skipBtnShown: !skipBtnShown })} />
-                <FormattedMessage id="PrivateKeysModal665" defaultMessage=" I understand and except the risks of not saving my private keys" />
-              </label>
-              <br />
-              <br />
+            </h3>
+            <br />
+            <FormattedMessage
+              id="PrivateKeysModal664"
+              defaultMessage="Please save your private keys! We do not store your private keys and will not be able to restore your wallets."
+            />
+            <br />
+            <label>
+              <Toggle checked={skipBtnShown} onChange={() => this.setState({ skipBtnShown: !skipBtnShown })} />
+              <FormattedMessage id="PrivateKeysModal665" defaultMessage=" I understand and except the risks of not saving my private keys" />
+            </label>
+            <br />
+            <br />
 
-              <div styleName="tryToSkip__btnContainer">
-                <Button brand styleName="button" onClick={() => this.setState({ skipAlertShown: false })}>
-                  <FormattedMessage id="PrivateKeysModal144" defaultMessage="Back" />
-                </Button>
-                <Button white styleName="button" disabled={!skipBtnShown} onClick={this.handleCloseModal}>
-                  <FormattedMessage id="PrivateKeysModal666" defaultMessage="Skip this step" />
-                </Button>
-              </div>
+            <div styleName="Popup__btnContainer">
+              <Button brand styleName="button" onClick={() => this.setState({ skipAlertShown: false })}>
+                <FormattedMessage id="PrivateKeysModal144" defaultMessage="Back" />
+              </Button>
+              <Button white styleName="button" disabled={!skipBtnShown} onClick={this.handleCloseModal}>
+                <FormattedMessage id="PrivateKeysModal666" defaultMessage="Skip this step" />
+              </Button>
             </div>
-          </div>
+          </Popup>
         </div>
       </Modal>
     )
