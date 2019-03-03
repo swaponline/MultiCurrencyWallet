@@ -1,43 +1,3 @@
-.button {
-  margin-top: 104px;
-  width: 184px;
-  height: 60px;
-  font-size: 24px;
-  display: inline-block;
-}
-
-.content {
-  text-align: center;
-}
-
-.content .button:first-child {
-  margin-right: 20px;
-}
-
-.content .button:last-child {
-  margin-left: 14px;
-}
-.notification{
-  position: relative;
-  margin: 10px 0px -90px;
-  font-size: 35px;
-  padding: 10px;
-  color: #272626;
-}
-
-.overlay {
-  margin-top: 20px;
-  width: 933px;
-  height: 335px;
-  display: block;
-  background: #fff;
-  position: fixed;
-  top: 0;
-  left: 34%;
-  z-index: 500;
-  border: 2px double #7c1de9;
-}
-
 .header {
   height: 88px;
   border-bottom: 1px solid #ddd;
@@ -52,13 +12,15 @@
 }
 
 .title {
-  position: relative;
+  position: absolute;
   width: 100%;
   left: 0;
   padding: 0 64px;
+  pointer-events: none;
+  min-width: 0;
   flex: auto 1 1;
   line-height: 22px;
-  font-size: 40px;
+  font-size: 35px;
   text-align: center;
 
   &.uppercase {
@@ -66,33 +28,83 @@
   }
 }
 
+.closeButton {
+  width: 20px;
+  height: 20px;
+  opacity: 0.5;
+  transition: opacity .33s $ease-out-quadratic;
+
+  &:hover {
+    opacity: 1;
+    transition: none;
+  }
+}
+
+.modal-overlay {
+  position: sticky;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 500;
+}
+
+.modal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  padding: 15px 25px;
+  max-width: 600px;
+  height: auto;
+  /* border-color: black; */
+  border: 2px double #7c1de9;
+  border-width: solid;
+}
+
+.button {
+  width: 150px;
+}
+
+.content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.notification-overlay {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  padding: 32px 0;
+}
+
+.notification {
+  text-align: center;
+  font-size: 24px;
+}
+
+.button-overlay {
+  display: flex;
+  justify-content: space-around;
+  padding-bottom: 24px;
+}
 
 @include media-mobile {
-  .overlay {
-    width: 100%;
-    height: 100%;
-    left: 0;
-    margin: 0;
-  }
-
-  .notification{
-    font-size: 25px;
-    margin-top: 100px;
-  }
-
-  .button{
-    width: 75px;
-    height: 48px;
-    position: relative;
-  }
-
   .modal {
-    padding: 15px 15px;
-  }
-  .content {
-    min-width: auto;
+    height: 100%;
+    padding: 15px;
   }
   .title {
     font-size: 18px;;
+  }
+  .button-overlay {
+    padding-bottom: 35px;
+    justify-content: space-between;
+  }
+  .notification-overlay {
+    height: 100%;
   }
 }

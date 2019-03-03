@@ -93,16 +93,22 @@ export default class Confirm extends React.Component {
     }
 
     return (
-      <div styleName="overlay" >
-        <div styleName="header">
-          <WidthContainer styleName="headerContent">
-            <div styleName="title">{labels.title}</div>
-          </WidthContainer>
-        </div>
-        <div styleName="content">
-          <p styleName="notification">{labels.message}</p>
-          <Button styleName="button" brand onClick={this.handleConfirm}>{labels.ok}</Button>
-          <Button styleName="button" gray onClick={this.handleClose}>{labels.cancel}</Button>
+      <div styleName="modal-overlay" >
+        <div styleName="modal">
+          <div styleName="header">
+            <WidthContainer styleName="headerContent">
+              <div styleName="title">{labels.title}</div>
+            </WidthContainer>
+          </div>
+          <div styleName="content">
+            <div styleName="notification-overlay">
+              <p styleName="notification">{labels.message}</p>
+            </div>
+            <div styleName="button-overlay">
+              <Button styleName="button" brand onClick={this.handleConfirm}>{labels.ok}</Button>
+              <Button styleName="button" gray onClick={this.handleClose}>{labels.cancel}</Button>
+            </div>
+          </div>
         </div>
       </div>
     )
