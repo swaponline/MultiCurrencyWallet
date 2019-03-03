@@ -11,6 +11,44 @@ const debug = (...args) => console.log(...args)
 
 const getOrders = (orders) => {
   reducers.core.getOrders({ orders })
+
+  const partialCurrency = getState().currencies.partialItems
+
+  const partialArray = partialCurrency.map(item => item.name)
+  const sellOrderArray = orders.map(item => item.sellCurrency)
+  const buyOrderArray = orders.map(item => item.buyCurrency)
+  let sortedArray = [...sellOrderArray]
+
+  for (let i = 0; i <= sellOrderArray.length - 1; i++) {
+    for (let j = 0; j <= buyOrderArray.length - i; j++) {
+      if (sellOrderArray[i] !== buyOrderArray[j]) {
+        if (!sellOrderArray.includes(sellOrderArray[i])) {
+          sortedArray.push(buyOrderArray[i])
+        } else if (!sellOrderArray.includes(buyOrderArray[i])) {
+          sortedArray.push(buyOrderArray[i])
+        }
+      }
+    }
+  }
+
+  sortedArray = sortedArray.filter((item, pos) => { // eslint-disable-line
+    return sortedArray.indexOf(item) === pos
+  }).filter(item => item !== undefined)
+
+  sortedArray.forEach(item => {
+    if (!partialArray.includes(item)) {
+      partialCurrency.push(
+        {
+          name: item.toUpperCase(),
+          title: item.toUpperCase(),
+          icon: item.toLowerCase(),
+          value: item.toLowerCase(),
+        }
+      )
+    }
+  })
+
+  reducers.currencies.updatePartialItems(partialCurrency)
 }
 
 const getSwapById = (id) => new Swap(id, SwapApp.shared())
@@ -43,8 +81,10 @@ const declineRequest = (orderId, participantPeer) => {
 }
 
 const removeOrder = (orderId) => {
+  actions.core.deletedPartialCurrency(orderId)
   SwapApp.shared().services.orders.remove(orderId)
   actions.feed.deleteItemToFeed(orderId)
+  actions.core.updateCore()
 }
 
 const showMyOrders = () => {
@@ -53,6 +93,23 @@ const showMyOrders = () => {
 
 const hideMyOrders = () => {
   SwapApp.shared().services.orders.hideMyOrders()
+}
+
+const deletedPartialCurrency = (orderId) => {
+  const deletedOrderSellCurrency = SwapApp.shared().services.orders.getByKey(orderId).sellCurrency
+  const deletedOrderBuyCurrency = SwapApp.shared().services.orders.getByKey(orderId).buyCurrency
+  const orders = SwapApp.shared().services.orders.items
+
+  const deletedOrderSell = orders.filter(item => item.sellCurrency.toUpperCase() === deletedOrderSellCurrency)
+  const deletedOrderBuy = orders.filter(item => item.buyCurrency.toUpperCase() === deletedOrderBuyCurrency)
+
+  const premiumCurrencies = ['BTC', 'ETH'] // валюты, которые всегда должны быть в дропе
+
+  if (deletedOrderSell.length === 1 && !premiumCurrencies.includes(deletedOrderSellCurrency)) {
+    reducers.currencies.deletedPartialCurrency(deletedOrderSellCurrency)
+  } else if (deletedOrderBuy.length === 1 && !premiumCurrencies.includes(deletedOrderBuyCurrency)) {
+    reducers.currencies.deletedPartialCurrency(deletedOrderBuyCurrency)
+  }
 }
 
 const hasHiddenOrders = () => SwapApp.shared().services.orders.hasHiddenOrders()
@@ -190,6 +247,7 @@ const updateCore = () => {
   const orders = SwapApp.shared().services.orders.items
 
   getOrders(orders)
+
   actions.feed.getFeedDataFromOrder(orders)
 }
 
@@ -248,4 +306,5 @@ export default {
   hasHiddenOrders,
   setupPartialOrder,
   initPartialOrders,
+  deletedPartialCurrency,
 }
