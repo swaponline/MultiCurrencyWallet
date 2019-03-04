@@ -15,8 +15,9 @@ const getOrders = (orders) => {
 }
 
 const addCurrencyFromOrders = (orders) => {
-  const allCurrencyies = getState().currencies.items.map(item => item.name) // все валюты достпуные в клиенте
-  const partialCurrency = Object.assign(getState().currencies.partialItems) // получаем все премиальные валюты
+  const currenciesGetState = getState().currencies
+  const allCurrencyies = currenciesGetState.items.map(item => item.name) // все валюты достпуные в клиенте
+  const partialCurrency = Object.assign(currenciesGetState.partialItems) // получаем все премиальные валюты
 
   const sellOrderArray = orders.map(item => item.sellCurrency) // получаем из ордерова валюты на продажу
   const buyOrderArray = orders.map(item => item.buyCurrency) // получаем из ордерова валюты на покупку
