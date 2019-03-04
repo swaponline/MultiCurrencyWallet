@@ -23,8 +23,9 @@ const addCurrencyFromOrders = (orders) => {
 
   let sortedArray = [...sellOrderArray] // записываем sellOrderArray в массив
 
-  for (const sellCurrency of sellOrderArray) {
-    for (const buyCurrency of buyOrderArray) {
+  // terators/generators require regenerator-runtime
+  for (const sellCurrency of sellOrderArray) { // eslint-disable-line
+    for (const buyCurrency of buyOrderArray) { // eslint-disable-line
       if (sellCurrency !== buyCurrency) {
         if (!sellOrderArray.includes(sellCurrency)) {
           if (allCurrencyies.includes(sellCurrency)) { // не пускаю валюты не существующие в клиенте

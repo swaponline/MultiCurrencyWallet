@@ -91,12 +91,15 @@ export default class PartialClosure extends Component {
   constructor({ tokensData, allCurrencyies, currenciesData, match: { params: { buy, sell } }, intl: { locale }, history, ...props }) {
     super()
 
+    if (!allCurrencyies.map(item => item.name).includes(sell.toUpperCase())
+      || !allCurrencyies.map(item => item.name).includes(buy.toUpperCase())) {
+      history.push(localisedUrl(locale, `/exchange/swap-to-btc`))
+    }
+
     const sellToken = sell || ((!isWidgetBuild) ? 'eth' : 'btc')
     const buyToken = buy || ((!isWidgetBuild) ? 'btc' : config.erc20token)
 
-    if (!allCurrencyies.map(item => item.name).includes(sellToken.toUpperCase() || buyToken.toUpperCase())) {
-      history.push(localisedUrl(locale, `/exchange/swap-to-btc`))
-    }
+    this.returnNeedCurrency(sellToken, buyToken)
 
     if (!(buy && sell) && !props.location.hash.includes('#widget')) {
       history.push(localisedUrl(locale, `/exchange/${sellToken}-to-${buyToken}`))
@@ -109,8 +112,6 @@ export default class PartialClosure extends Component {
     tokensData.forEach(item => {
       this.wallets[item.currency] = item.address
     })
-
-    this.returnNeedCurrency(sellToken, buyToken, history, locale)
 
     Array.of(sellToken, buyToken).forEach((item) => {
       const currency = item.toUpperCase()
@@ -149,6 +150,7 @@ export default class PartialClosure extends Component {
   componentDidMount() {
     const { haveCurrency, getCurrency } = this.state
     actions.core.updateCore()
+    this.returnNeedCurrency(haveCurrency, getCurrency)
     this.checkPair(haveCurrency)
 
     this.updateAllowedBalance()
@@ -253,8 +255,8 @@ export default class PartialClosure extends Component {
     this.props.history.push(localisedUrl(locale, `/${wayToDeclinedOrder}`))
   }
 
-  returnNeedCurrency = (sellToken, buyToken, history, locale) => {
-    const partialItems = getState().currencies.partialItems // eslint-disable-line
+  returnNeedCurrency = (sellToken, buyToken) => {
+    const partialItems = Object.assign(getState().currencies.partialItems) // eslint-disable-line
 
     const partialCurrency = getState().currencies.partialItems.map(item => item.name)
     const allCurrencyies = getState().currencies.items.map(item => item.name)
@@ -263,18 +265,25 @@ export default class PartialClosure extends Component {
     currenciesOfUrl.push(sellToken, buyToken)
 
     currenciesOfUrl.forEach(item => {
-      if (!partialCurrency.includes(item.toUpperCase())) {
-        partialItems.push(
-          {
-            name: item.toUpperCase(),
-            title: item.toUpperCase(),
-            icon: item.toLowerCase(),
-            value: item.toLowerCase(),
-          }
-        )
+      if (allCurrencyies.includes(item.toUpperCase())) {
+        if (!partialCurrency.includes(item.toUpperCase())) {
+          partialItems.push(
+            {
+              name: item.toUpperCase(),
+              title: item.toUpperCase(),
+              icon: item.toLowerCase(),
+              value: item.toLowerCase(),
+            }
+          )
+
+          reducers.currencies.updatePartialItems(partialItems)
+        }
+      } else {
+        this.setState(() => ({
+          haveCurrency: 'swap',
+        }))
       }
     })
-    reducers.currencies.updatePartialItems(partialItems)
   }
 
 
@@ -569,14 +578,17 @@ export default class PartialClosure extends Component {
   }
 
   checkPair = (value) => {
-    const selected = actions.pairs.selectPairPartial(value)
+    const checkingValue = this.props.allCurrencyies.map(item => item.name).includes(value.toUpperCase())
+      ? value : 'swap'
 
+    const selected = actions.pairs.selectPairPartial(checkingValue)
     const check = selected.map(item => item.value).includes(this.state.getCurrency)
+
     if (!check) {
       this.setState(() => ({
         getCurrency: selected[0].value,
       }))
-    } else if (this.state.getCurrency === value) {
+    } else if (this.state.getCurrency === checkingValue) {
       this.setState(() => ({
         getCurrency: selected[0].value,
       }))
