@@ -11,6 +11,7 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import * as keychainjs from 'keychain.js'
 import { getState } from 'redux/core'
 import web3 from 'helpers/web3'
+import { constants } from 'helpers'
 
 
 const title = defineMessages({
@@ -72,7 +73,7 @@ export default class Keychain extends Component {
 
     const {name, intl: {locale}, intl} = this.props
     const {keychainInstalled, otherError, downloadUrl, keychainVersion, tagName, positiveBalanceError, isLoading} = this.state
-    const keychanActivated = localStorage.getItem(constants.localStorage.keychainActivated) === 'true'
+    const keychainActivated = localStorage.getItem(constants.localStorage.keychainActivated) === 'true'
 
     if (otherError) {
       return <div>Error: {otherError.message}</div>
@@ -85,7 +86,7 @@ export default class Keychain extends Component {
       <Modal name={name} title={intl.formatMessage(title.Keychain)}>
         <div styleName="content">
           <p>
-            {!keychainInstalled && !keychanActivated &&
+            {!keychainInstalled && !keychainActivated &&
               <div>
                 <FormattedMessage id="Keychain19" defaultMessage="You need to install KeyChain to proceed" />
                 <a href={downloadUrl}>
@@ -95,7 +96,7 @@ export default class Keychain extends Component {
                 </a>
               </div>
             }
-            {keychainInstalled && !keychanActivated &&
+            {keychainInstalled && !keychainActivated &&
               <div>
                 <FormattedMessage id="Keychain19" defaultMessage="Would you like to protect your keys with KeyChain? Note that your address will be changed" />
                 {positiveBalanceError ?
@@ -107,7 +108,7 @@ export default class Keychain extends Component {
                 }
               </div>
             }
-            {keychainInstalled && keychanActivated &&
+            {keychainInstalled && keychainActivated &&
               <div>
                 <FormattedMessage id="Keychain19" defaultMessage="KeyChain is activated. If you want to deactivate KeyChain, the KeyChain key will be replaced with a new one" />
                 <Button styleName="button" brand fullWidth onClick={() => {actions.eth.login(); actions.eth.getBalance().then(() => actions.modals.close(name))}}>
@@ -115,7 +116,7 @@ export default class Keychain extends Component {
                 </Button>
               </div>
             }
-            {!keychainInstalled && keychanActivated &&
+            {!keychainInstalled && keychainActivated &&
               <div>
                 <FormattedMessage id="Keychain19" defaultMessage="KeyChain is not installed but activated" />
                 <Button styleName="button" brand fullWidth onClick={() => {actions.eth.login(); actions.eth.getBalance().then(() => actions.modals.close(name))}}>

@@ -1,5 +1,5 @@
 export default {
-  eth: `${process.env.ENTRY}:eth:privateKey`,
+  eth: `${process.env.ENTRY}:eth:key`,
   btc: `${process.env.ENTRY}:btc:privateKey`,
   // xlm: `${process.env.ENTRY}:xlm:privateKey`,
   // bch: `${process.env.ENTRY}:bch:privateKey`,
