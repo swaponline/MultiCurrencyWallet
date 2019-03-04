@@ -21,6 +21,7 @@ const login = (privateKey) => {
   }
 
   localStorage.setItem(constants.privateKeyNames.eth, data.privateKey)
+  localStorage.setItem(constants.localStorage.keychainActivated, false)
 
   web3.eth.accounts.wallet.add(data.privateKey)
   reducers.user.setAuthData({ name: 'ethData', data })
