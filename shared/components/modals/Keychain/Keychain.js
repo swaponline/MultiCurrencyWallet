@@ -27,7 +27,7 @@ export default class Keychain extends Component {
     super(props);
     this.state = {
       otherError: null,
-      webSocketError: null,
+      keychainInstalled: true,
       downloadUrl: '',
       tagName: '',
       keychainVersion: '',
@@ -45,7 +45,7 @@ export default class Keychain extends Component {
       .then(data => keychain = data)
       .then(() => keychain.method({command: 'version'}))
       .then(data => this.setState({keychainVersion: data.result}))
-      .catch(webSocketError => this.setState({webSocketError}))
+      .catch(() => this.setState({keychainInstalled: false}))
       .then(() => fetch('https://api.github.com/repos/arrayio/array-io-keychain/tags'))
       .then(res => res.json())
       .then(result => this.setState({tagName: result[0].name}))
@@ -71,7 +71,8 @@ export default class Keychain extends Component {
   render() {
 
     const {name, intl: {locale}, intl} = this.props
-    const {webSocketError, otherError, downloadUrl, keychainVersion, tagName, positiveBalanceError, isLoading} = this.state
+    const {keychainInstalled, otherError, downloadUrl, keychainVersion, tagName, positiveBalanceError, isLoading} = this.state
+    const keychanActivated = localStorage.getItem(constants.localStorage.keychainActivated) === 'true'
 
     if (otherError) {
       return <div>Error: {otherError.message}</div>
@@ -80,37 +81,54 @@ export default class Keychain extends Component {
       return <Modal name={name} title={intl.formatMessage(title.Keychain)}></Modal>
     }
 
-    if (positiveBalanceError) {
-      return <Modal name={name} title={intl.formatMessage(title.Keychain)}>
-          <div styleName="content">
-            <p><FormattedMessage id="Keychain26" defaultMessage="Positive balance error"/></p>
-          </div>
-          <Button styleName="button" brand fullWidth onClick={() => { actions.modals.close(name) }}>
-            <FormattedMessage id="Keychain25" defaultMessage="Back"/>
-          </Button>
-        </Modal>
-    }
-
     return (
       <Modal name={name} title={intl.formatMessage(title.Keychain)}>
         <div styleName="content">
           <p>
-            {webSocketError ?
-              <FormattedMessage id="Keychain19" defaultMessage="You need to install KeyChain to proceed" />
-              :
-              <FormattedMessage id="Keychain19" defaultMessage="Would you like to protect your keys with KeyChain? Note that your address will be changed" />
+            {!keychainInstalled && !keychanActivated &&
+              <div>
+                <FormattedMessage id="Keychain19" defaultMessage="You need to install KeyChain to proceed" />
+                <a href={downloadUrl}>
+                  <Button styleName="button" brand fullWidth onClick={() => actions.modals.close(name)}>
+                    <FormattedMessage id="Keychain23" defaultMessage="Download"/>
+                  </Button>
+                </a>
+              </div>
+            }
+            {keychainInstalled && !keychanActivated &&
+              <div>
+                <FormattedMessage id="Keychain19" defaultMessage="Would you like to protect your keys with KeyChain? Note that your address will be changed" />
+                {positiveBalanceError ?
+                  <FormattedMessage id="Keychain26" defaultMessage="Positive balance error"/>
+                  :
+                  <Button styleName="button" brand fullWidth onClick={() => {actions.eth.loginWithKeychain().then( () => {actions.modals.close(name)})}}>
+                    <FormattedMessage id="Keychain24" defaultMessage="Confirm"/>
+                  </Button>
+                }
+              </div>
+            }
+            {keychainInstalled && keychanActivated &&
+              <div>
+                <FormattedMessage id="Keychain19" defaultMessage="KeyChain is activated. If you want to deactivate KeyChain, the KeyChain key will be replaced with a new one" />
+                <Button styleName="button" brand fullWidth onClick={() => {actions.eth.login(); actions.eth.getBalance().then(() => actions.modals.close(name))}}>
+                  <FormattedMessage id="Keychain24" defaultMessage="Deactivate"/>
+                </Button>
+              </div>
+            }
+            {!keychainInstalled && keychanActivated &&
+              <div>
+                <FormattedMessage id="Keychain19" defaultMessage="KeyChain is not installed but activated" />
+                <Button styleName="button" brand fullWidth onClick={() => {actions.eth.login(); actions.eth.getBalance().then(() => actions.modals.close(name))}}>
+                  <FormattedMessage id="Keychain24" defaultMessage="Deactivate"/>
+                </Button>
+                <a href={downloadUrl}>
+                  <Button styleName="button" brand fullWidth onClick={() => actions.modals.close(name)}>
+                    <FormattedMessage id="Keychain23" defaultMessage="Download"/>
+                  </Button>
+                </a>
+              </div>
             }
           </p>
-          { webSocketError ?
-            <a href={downloadUrl}>
-              <Button styleName="button" brand fullWidth onClick={() => actions.modals.close(name)}>
-                <FormattedMessage id="Keychain23" defaultMessage="Download"/>
-              </Button>
-            </a> :
-            <Button styleName="button" brand fullWidth onClick={() => { actions.eth.loginWithKeychain().then( () => {actions.modals.close(name)}) }}>
-              <FormattedMessage id="Keychain24" defaultMessage="Confirm"/>
-            </Button>
-          }
           <Button styleName="button" brand fullWidth onClick={() => { actions.modals.close(name) }}>
             <FormattedMessage id="Keychain25" defaultMessage="Back"/>
           </Button>
