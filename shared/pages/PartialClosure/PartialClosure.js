@@ -249,7 +249,8 @@ export default class PartialClosure extends Component {
   }
 
   returnNeedCurrency = (sellToken, buyToken, history, locale) => {
-    const partialItems = getState().currencies.partialItems
+    const partialItems = getState().currencies.partialItems // eslint-disable-line
+
     const partialCurrency = getState().currencies.partialItems.map(item => item.name)
     const allCurrencyies = getState().currencies.items.map(item => item.name)
     let currenciesOfUrl = []
@@ -271,7 +272,6 @@ export default class PartialClosure extends Component {
       })
     } else {
       history.push(localisedUrl(locale, `/exchange/swap-to-btc`))
-      return
     }
   }
 
