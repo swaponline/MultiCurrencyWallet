@@ -40,7 +40,31 @@ const initialState = {
         fullTitle: key,
       }))),
   ],
+  partialItems: [
+    {
+      name: 'ETH',
+      title: 'ETH',
+      icon: 'eth',
+      value: 'eth',
+      fullTitle: 'ethereum',
+    },
+    {
+      name: 'BTC',
+      title: 'BTC',
+      icon: 'btc',
+      value: 'btc',
+      fullTitle: 'bitcoin',
+    },
+    // {
+    //   name: 'SWAP',
+    //   title: 'SWAP',
+    //   icon: 'swap',
+    //   value: 'swap',
+    //   fullTitle: 'swap',
+    // },
+  ],
   addSelectedItems: [],
+  addPartialItems: [],
 }
 
 if (config.isWidget) {
@@ -86,7 +110,25 @@ const addSelectedItems = (state, payload) => ({
   addSelectedItems: payload,
 })
 
+const addPartialItems = (state, payload) => ({
+  ...state,
+  addPartialItems: payload,
+})
+
+const updatePartialItems = (state, payload) => ({
+  ...state,
+  partialItems: payload,
+})
+
+const deletedPartialCurrency = (state, payload) => ({
+  ...state,
+  partialItems: state.partialItems.filter(item => item.name !== payload),
+})
+
 export {
   initialState,
   addSelectedItems,
+  addPartialItems,
+  updatePartialItems,
+  deletedPartialCurrency,
 }
