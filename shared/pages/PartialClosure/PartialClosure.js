@@ -249,6 +249,7 @@ export default class PartialClosure extends Component {
   }
 
   returnNeedCurrency = (sellToken, buyToken, history, locale) => {
+    const partialItems = getState().currencies.partialItems
     const partialCurrency = getState().currencies.partialItems.map(item => item.name)
     const allCurrencyies = getState().currencies.items.map(item => item.name)
     let currenciesOfUrl = []
@@ -258,7 +259,7 @@ export default class PartialClosure extends Component {
     if (allCurrencyies.includes(sellToken.toUpperCase() || buyToken.toUpperCase())) {
       currenciesOfUrl.forEach(item => {
         if (!partialCurrency.includes(item.toUpperCase())) {
-          getState().currencies.partialItems.push(
+          partialItems.push(
             {
               name: item.toUpperCase(),
               title: item.toUpperCase(),
@@ -272,7 +273,6 @@ export default class PartialClosure extends Component {
       history.push(localisedUrl(locale, `/exchange/swap-to-btc`))
       return
     }
-    reducers.currencies.updatePartialItems(getState().currencies.partialItems)
   }
 
 

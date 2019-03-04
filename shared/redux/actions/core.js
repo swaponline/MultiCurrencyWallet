@@ -27,10 +27,10 @@ const addCurrencyFromOrders = (orders) => {
   for (let i = 0; i <= sellOrderArray.length - 1; i++) {
     for (let j = 0; j <= buyOrderArray.length - i; j++) {
       if (sellOrderArray[i] !== buyOrderArray[j]) {
-        if (!sellOrderArray.includes(buyOrderArray[i])) {
-          if (allCurrencyies.includes(buyOrderArray[i])) { // не пускаю валюты не существующие в клиенте
-            sortedArray.push(buyOrderArray[i])
-          }
+        if (!sellOrderArray.includes(sellOrderArray[i])) {
+          sortedArray.push(buyOrderArray[i])
+        } else if (!sellOrderArray.includes(buyOrderArray[i])) {
+          sortedArray.push(buyOrderArray[i])
         }
       }
     }
@@ -52,7 +52,6 @@ const addCurrencyFromOrders = (orders) => {
       )
     }
   })
-  reducers.currencies.updatePartialItems(partialCurrency)
 }
 
 const getSwapById = (id) => new Swap(id, SwapApp.shared())
