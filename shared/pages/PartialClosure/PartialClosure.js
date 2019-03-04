@@ -91,7 +91,7 @@ export default class PartialClosure extends Component {
   constructor({ tokensData, allCurrencyies, currenciesData, match: { params: { buy, sell } }, intl: { locale }, history, ...props }) {
     super()
 
-    if(sell && buy) {
+    if (sell && buy) {
       if (!allCurrencyies.map(item => item.name).includes(sell.toUpperCase())
         || !allCurrencyies.map(item => item.name).includes(buy.toUpperCase())) {
         history.push(localisedUrl(locale, `/exchange/swap-to-btc`))
