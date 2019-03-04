@@ -1980,7 +1980,7 @@
   },
   {
     "id": "PrivateKeysModal663",
-    "message": "Or you can {skipBtn}",
+    "message": "We don't recommend, but you can {skipBtn}",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]

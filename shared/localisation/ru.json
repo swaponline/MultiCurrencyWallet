@@ -1966,7 +1966,7 @@
   },
   {
     "id": "PrivateKeysModal623",
-    "message": "{skipIt} и перейти на сайт.",
+    "message": "{skipIt} и продолжить пользоваться сайтом.",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
@@ -1980,7 +1980,7 @@
   },
   {
     "id": "PrivateKeysModal663",
-    "message": "Или вы можете {skipBtn}",
+    "message": "Вы так же можете {skipBtn}",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
