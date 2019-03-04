@@ -273,6 +273,7 @@ export default class PartialClosure extends Component {
     } else {
       history.push(localisedUrl(locale, `/exchange/swap-to-btc`))
     }
+    reducers.currencies.updatePartialItems(partialItems)
   }
 
 

@@ -15,33 +15,32 @@ const getOrders = (orders) => {
 }
 
 const addCurrencyFromOrders = (orders) => {
-  const allCurrencyies = getState().currencies.items // все валюты достпуные в клиенте
+  const allCurrencyies = getState().currencies.items.map(item => item.name) // все валюты достпуные в клиенте
   const partialCurrency = getState().currencies.partialItems // получаем все премиальные валюты
-  const partialArray = partialCurrency.map(item => item.name) // получаем их имена
 
   const sellOrderArray = orders.map(item => item.sellCurrency) // получаем из ордерова валюты на продажу
   const buyOrderArray = orders.map(item => item.buyCurrency) // получаем из ордерова валюты на покупку
 
   let sortedArray = [...sellOrderArray] // записываем sellOrderArray в массив
 
-  for (let i = 0; i <= sellOrderArray.length - 1; i++) {
-    for (let j = 0; j <= buyOrderArray.length - i; j++) {
-      if (sellOrderArray[i] !== buyOrderArray[j]) {
-        if (!sellOrderArray.includes(sellOrderArray[i])) {
-          sortedArray.push(buyOrderArray[i])
-        } else if (!sellOrderArray.includes(buyOrderArray[i])) {
-          sortedArray.push(buyOrderArray[i])
+  for (const sellCurrency of sellOrderArray) {
+    for (const buyCurrency of buyOrderArray) {
+      if (sellCurrency !== buyCurrency) {
+        if (!sellOrderArray.includes(sellCurrency)) {
+          if (allCurrencyies.includes(sellCurrency)) { // не пускаю валюты не существующие в клиенте
+            sortedArray.push(sellCurrency)
+          }
+        }  else if (!sellOrderArray.includes(buyCurrency)) {
+          if (allCurrencyies.includes(buyCurrency)) { // не пускаю валюты не существующие в клиенте
+            sortedArray.push(buyCurrency)
+          }
         }
       }
     }
   }
 
-  sortedArray = sortedArray.filter((item, pos) => { // eslint-disable-line
-    return sortedArray.indexOf(item) === pos // недопускаем андефайнд в дроп
-  }).filter(item => item !== undefined)
-
   sortedArray.forEach(item => { // добавляем объект в дроп, еще раз проверяя, на совпадения
-    if (!partialArray.includes(item)) {
+    if (!partialCurrency.map(item => item.name).includes(item)) {
       partialCurrency.push(
         {
           name: item.toUpperCase(),
@@ -52,6 +51,7 @@ const addCurrencyFromOrders = (orders) => {
       )
     }
   })
+  reducers.currencies.updatePartialItems(partialCurrency)
 }
 
 const getSwapById = (id) => new Swap(id, SwapApp.shared())
