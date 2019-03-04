@@ -1050,7 +1050,7 @@
   },
   {
     "id": "EthTokenBtc335",
-    "message": "6. The funds from ETH contract was successfully transferred to BTC owner. BTC owner left a secret key. Requesting withdrawal from BTC script. Please wait."
+    "message": "ETH was successfully transferred. Withdrawing BTC. Please wait"
   },
   {
     "id": "EthTokenBtc342",
@@ -4184,7 +4184,7 @@
   },
   {
     "id": "ethToBtcText40",
-    "message": "The funds from ETH contract was successfully transferred to BTC owner.\n              BTC owner left a secret key. Requesting withdrawal from BTC script. Please wait..",
+    "message": "ETH was successfully transferred. Withdrawing BTC. Please wait",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthToBtc.js"
     ]
@@ -4335,7 +4335,7 @@
   },
   {
     "id": "EthTokensToBtc40",
-    "message": "The funds from ETH contract was successfully transferred to BTC owner. BTC owner left a secret key. Requesting withdrawal from BTC script. Please wait..",
+    "message": "ETH was successfully transferred. Withdrawing BTC. Please wait",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.js"
     ]
