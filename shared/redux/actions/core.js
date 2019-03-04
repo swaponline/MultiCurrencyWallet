@@ -100,8 +100,9 @@ const hideMyOrders = () => {
 }
 
 const deletedPartialCurrency = (orderId) => {
-  const deletedOrderSellCurrency = SwapApp.shared().services.orders.getByKey(orderId).sellCurrency
-  const deletedOrderBuyCurrency = SwapApp.shared().services.orders.getByKey(orderId).buyCurrency
+  const deletedOrder = SwapApp.shared().services.orders.getByKey(orderId)
+  const deletedOrderSellCurrency = deletedOrder.sellCurrency
+  const deletedOrderBuyCurrency = deletedOrder.buyCurrency
   const orders = SwapApp.shared().services.orders.items
 
   const deletedOrderSell = orders.filter(item => item.sellCurrency.toUpperCase() === deletedOrderSellCurrency)
