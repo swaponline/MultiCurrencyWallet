@@ -91,9 +91,11 @@ export default class PartialClosure extends Component {
   constructor({ tokensData, allCurrencyies, currenciesData, match: { params: { buy, sell } }, intl: { locale }, history, ...props }) {
     super()
 
-    if (!allCurrencyies.map(item => item.name).includes(sell.toUpperCase())
-      || !allCurrencyies.map(item => item.name).includes(buy.toUpperCase())) {
-      history.push(localisedUrl(locale, `/exchange/swap-to-btc`))
+    if(sell && buy) {
+      if (!allCurrencyies.map(item => item.name).includes(sell.toUpperCase())
+        || !allCurrencyies.map(item => item.name).includes(buy.toUpperCase())) {
+        history.push(localisedUrl(locale, `/exchange/swap-to-btc`))
+      }
     }
 
     const sellToken = sell || ((!isWidgetBuild) ? 'eth' : 'btc')
@@ -260,14 +262,14 @@ export default class PartialClosure extends Component {
 
     const partialCurrency = getState().currencies.partialItems.map(item => item.name)
     const allCurrencyies = getState().currencies.items.map(item => item.name)
+    let partialItemsArray = [...partialItems]
     let currenciesOfUrl = []
-
     currenciesOfUrl.push(sellToken, buyToken)
 
     currenciesOfUrl.forEach(item => {
       if (allCurrencyies.includes(item.toUpperCase())) {
         if (!partialCurrency.includes(item.toUpperCase())) {
-          partialItems.push(
+          partialItemsArray.push(
             {
               name: item.toUpperCase(),
               title: item.toUpperCase(),
@@ -275,8 +277,7 @@ export default class PartialClosure extends Component {
               value: item.toLowerCase(),
             }
           )
-
-          reducers.currencies.updatePartialItems(partialItems)
+          reducers.currencies.updatePartialItems(partialItemsArray)
         }
       } else {
         this.setState(() => ({
