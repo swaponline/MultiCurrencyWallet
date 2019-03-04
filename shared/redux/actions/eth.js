@@ -18,10 +18,10 @@ const login = (privateKey) => {
   else {
     console.info('Created account Ethereum ...')
     data = web3.eth.accounts.create()
+    localStorage.setItem(constants.localStorage.keychainActivated, false) // for deactivation of KeyChain
   }
 
   localStorage.setItem(constants.privateKeyNames.eth, data.privateKey)
-  localStorage.setItem(constants.localStorage.keychainActivated, false)
 
   web3.eth.accounts.wallet.add(data.privateKey)
   reducers.user.setAuthData({ name: 'ethData', data })
