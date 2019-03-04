@@ -60,6 +60,7 @@ const isWidgetBuild = config && config.isWidget
   user: { ethData, btcData, /* bchData, */ tokensData, eosData, telosData, nimData, usdtData, ltcData },
 }) => ({
   currencies: currencies.partialItems,
+  allCurrencyies: currencies.items,
   addSelectedItems: currencies.addPartialItems,
   orders: filterIsPartial(orders),
   allOrders: orders,
@@ -87,11 +88,15 @@ export default class PartialClosure extends Component {
     }
   }
 
-  constructor({ tokensData, currenciesData, match: { params: { buy, sell } }, intl: { locale }, history, ...props }) {
+  constructor({ tokensData, allCurrencyies, currenciesData, match: { params: { buy, sell } }, intl: { locale }, history, ...props }) {
     super()
 
     const sellToken = sell || ((!isWidgetBuild) ? 'eth' : 'btc')
     const buyToken = buy || ((!isWidgetBuild) ? 'btc' : config.erc20token)
+
+    if (!allCurrencyies.map(item => item.name).includes(sellToken.toUpperCase() || buyToken.toUpperCase())) {
+      history.push(localisedUrl(locale, `/exchange/swap-to-btc`))
+    }
 
     if (!(buy && sell) && !props.location.hash.includes('#widget')) {
       history.push(localisedUrl(locale, `/exchange/${sellToken}-to-${buyToken}`))
@@ -257,22 +262,18 @@ export default class PartialClosure extends Component {
 
     currenciesOfUrl.push(sellToken, buyToken)
 
-    if (allCurrencyies.includes(sellToken.toUpperCase() || buyToken.toUpperCase())) {
-      currenciesOfUrl.forEach(item => {
-        if (!partialCurrency.includes(item.toUpperCase())) {
-          partialItems.push(
-            {
-              name: item.toUpperCase(),
-              title: item.toUpperCase(),
-              icon: item.toLowerCase(),
-              value: item.toLowerCase(),
-            }
-          )
-        }
-      })
-    } else {
-      history.push(localisedUrl(locale, `/exchange/swap-to-btc`))
-    }
+    currenciesOfUrl.forEach(item => {
+      if (!partialCurrency.includes(item.toUpperCase())) {
+        partialItems.push(
+          {
+            name: item.toUpperCase(),
+            title: item.toUpperCase(),
+            icon: item.toLowerCase(),
+            value: item.toLowerCase(),
+          }
+        )
+      }
+    })
     reducers.currencies.updatePartialItems(partialItems)
   }
 
@@ -629,7 +630,7 @@ export default class PartialClosure extends Component {
     const haveCurrencyData = currenciesData.find(item => item.currency === haveCurrency.toUpperCase())
     const haveTokenData = tokensData.find(item => item.currency === haveCurrency.toUpperCase())
     const currentCurrency = haveCurrencyData || haveTokenData
-    const { balance } = currentCurrency
+    const { balance } = currentCurrency || 0
 
     const oneCryptoCost = maxBuyAmount.isLessThanOrEqualTo(0) ? BigNumber(0) : BigNumber(goodRate)
     const linked = Link.all(this, 'haveAmount', 'getAmount', 'customWallet')
