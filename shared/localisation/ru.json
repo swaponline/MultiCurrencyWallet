@@ -595,17 +595,11 @@
   },
   {
     "id": "CurrencyTitleSeo1",
-    "message": "Цена {fullName} ({tickerName}) и Актуальный Курс Обмена.",
-    "files": [
-      "shared/pages/Currency/Currency.js"
-    ]
+    "message": "Цена {fullName} ({tickerName}) и Актуальный Курс Обмена."
   },
   {
     "id": "CurrencyMetaDescrTag1",
-    "message": "Узнать цену {fullName} ({tickerName}) на сегодня. Храните и Обменивайте Криптовалюту {fullName} ({tickerName}) Анонимно на Swap.Online.",
-    "files": [
-      "shared/pages/Currency/Currency.js"
-    ]
+    "message": "Узнать цену {fullName} ({tickerName}) на сегодня. Храните и Обменивайте Криптовалюту {fullName} ({tickerName}) Анонимно на Swap.Online."
   },
   {
     "id": "CurrencyH1Seo1",
@@ -2014,10 +2008,7 @@
   },
   {
     "id": "PrivateKeysModal99",
-    "message": "Это очень важно, потому что, если Вы не ",
-    "files": [
-      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
-    ]
+    "message": "Это очень важно, потому что, если Вы не "
   },
   {
     "id": "PrivateKeysModal991",
@@ -3709,17 +3700,11 @@
   },
   {
     "id": "PartialClosureTitleTag",
-    "message": "Обмен {full_name1} ({ticker_name1}) на {full_name2} ({ticker_name2}) Атомарный Обмен за 60 секунд",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
-    ]
+    "message": "Обмен {full_name1} ({ticker_name1}) на {full_name2} ({ticker_name2}) Атомарный Обмен за 60 секунд"
   },
   {
     "id": "PartialClosureMetaDescrTag",
-    "message": "Децентрализированный обменник Swap.Online предлагает вам лучший курс обмена {full_name1} ({ticker_name1}) на {full_name2} ({ticker_name2}). Онлайн кошелек без регистрации.",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
-    ]
+    "message": "Децентрализированный обменник Swap.Online предлагает вам лучший курс обмена {full_name1} ({ticker_name1}) на {full_name2} ({ticker_name2}). Онлайн кошелек без регистрации."
   },
   {
     "id": "orders104",
@@ -3861,10 +3846,7 @@
   },
   {
     "id": "deposit213",
-    "message": " и 0.002 ETH на gas fee ",
-    "files": [
-      "shared/pages/Swap/DepositWindow/DepositWindow.js"
-    ]
+    "message": " и 0.002 ETH на gas fee "
   },
   {
     "id": "deposit165",
@@ -4589,6 +4571,69 @@
     "message": "Отправка",
     "files": [
       "shared/pages/Swap/SwapList/steps/ThirdStep.js"
+    ]
+  },
+  {
+    "id": "confirmDialogDefaultMessage",
+    "message": "Подтвердить действия на этом сайте?",
+    "files": [
+      "shared/components/modals/Confirm/Confirm.js"
+    ]
+  },
+  {
+    "id": "confirmDialogDefaultNo",
+    "message": "Нет",
+    "files": [
+      "shared/components/modals/Confirm/Confirm.js"
+    ]
+  },
+  {
+    "id": "confirmDialogDefaultTitle",
+    "message": "Подтверждение действия",
+    "files": [
+      "shared/components/modals/Confirm/Confirm.js"
+    ]
+  },
+  {
+    "id": "confirmDialogDefaultYes",
+    "message": "Да",
+    "files": [
+      "shared/components/modals/Confirm/Confirm.js"
+    ]
+  },
+  {
+    "id": "orders94s",
+    "message": "Вы уверены, что хотите удалить ордер?",
+    "files": [
+      "shared/pages/Home/Orders/Orders.js"
+    ]
+  },
+  {
+    "id": "ordersRow101",
+    "message": "купить",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "ordersRow134",
+    "message": "Вы хотите {action} {amount} {main} за {total} {base} по цене {price} {main}/{base}?",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "ordersRow97",
+    "message": "продать",
+    "files": [
+      "shared/pages/Home/Orders/Row/Row.js"
+    ]
+  },
+  {
+    "id": "deposit165widget",
+    "message": "Скопируйте адрес ниже и пополните его рекомендуемым количеством {missingBalance}",
+    "files": [
+      "shared/pages/Swap/DepositWindow/DepositWindow.js"
     ]
   }
 ]

@@ -19,7 +19,7 @@ import { Button, RemoveButton } from 'components/controls'
 import Pair from '../Pair'
 import PAIR_TYPES from 'helpers/constants/PAIR_TYPES'
 import RequestButton from '../RequestButton/RequestButton'
-import { FormattedMessage, injectIntl } from 'react-intl'
+import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import { BigNumber } from 'bignumber.js'
 
@@ -50,6 +50,7 @@ export default class Row extends Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.renderContent)
+    actions.modals.close(constants.modals.Confirm)
   }
 
   componentWillMount() {
@@ -74,15 +75,8 @@ export default class Row extends Component {
     return (balance >= 0.005 || currency.toLowerCase() === 'eos')
   }
 
-  removeOrder = (orderId) => {
-    if (confirm('Are your sure ?')) {
-      actions.core.removeOrder(orderId)
-      actions.core.updateCore()
-    }
-  }
-
   sendRequest = (orderId, currency) => {
-    const { row: { buyAmount, sellAmount, buyCurrency, sellCurrency } } = this.props
+    const { row: { buyAmount, sellAmount, buyCurrency, sellCurrency }, intl } = this.props
 
     const pair = Pair.fromOrder(this.props.row)
     const { price, amount, total, main, base, type } = pair
@@ -90,6 +84,17 @@ export default class Row extends Component {
     const sell = new BigNumber(sellAmount).dp(6, BigNumber.ROUND_HALF_CEIL)
     const buy = new BigNumber(buyAmount).dp(6, BigNumber.ROUND_HALF_CEIL)
     const exchangeRates = new BigNumber(price).dp(6, BigNumber.ROUND_HALF_CEIL)
+
+    const messages = defineMessages({
+      sell: {
+        id: 'ordersRow97',
+        defaultMessage: 'sell',
+      },
+      buy: {
+        id: 'ordersRow101',
+        defaultMessage: 'buy',
+      },
+    })
 
     actions.modals.open(constants.modals.Confirm, {
       onAccept: async () => {
@@ -113,13 +118,23 @@ export default class Row extends Component {
         })
         actions.core.updateCore()
       },
-      message: `Do you want to
-        ${type === PAIR_TYPES.BID ? 'sell' : 'buy'}
-        ${amount.toFixed(5)} ${main} for ${total.toFixed(5)}
-        ${base} at price ${exchangeRates}
-        ${sellCurrency}/${buyCurrency} ?`,
-      labelOk: 'Yes',
-      labelCancel: 'No',
+      message: (
+        <FormattedMessage
+          id="ordersRow134"
+          defaultMessage="Do you want to {action} {amount} {main} for {total} {base} at price {price} {main}/{base}?"
+          values={{
+            action: `${type === PAIR_TYPES.BID
+              ? intl.formatMessage(messages.sell)
+              : intl.formatMessage(messages.buy)
+            }`,
+            amount: `${amount.toFixed(5)}`,
+            main: `${main}`,
+            total: `${total.toFixed(5)}`,
+            base: `${base}`,
+            price: `${exchangeRates}`,
+          }}
+        />
+      ),
     })
   }
 
@@ -139,11 +154,11 @@ export default class Row extends Component {
         sellCurrency,
         owner: {  peer: ownerPeer },
       },
+      removeOrder,
       intl: { locale },
     } = this.props
 
     const pair = Pair.fromOrder(this.props.row)
-
     const { price, amount, total, main, base, type } = pair
 
     return (
@@ -187,7 +202,7 @@ export default class Row extends Component {
         <td>
           {
             peer === ownerPeer ? (
-              <RemoveButton onClick={() => this.removeOrder(id)} />
+              <RemoveButton onClick={() => removeOrder(id)} />
             ) : (
               <Fragment>
                 {
@@ -254,6 +269,7 @@ export default class Row extends Component {
         isProcessing,
         owner: {  peer: ownerPeer },
       },
+      removeOrder,
       peer,
     } = this.props
 
@@ -288,7 +304,7 @@ export default class Row extends Component {
             <div styleName="tdContainer-3">
               {
                 peer === ownerPeer ? (
-                  <RemoveButton onClick={() => this.removeOrder(id)} />
+                  <RemoveButton onClick={() => removeOrder(id)} />
                 ) : (
                   <Fragment>
                     {
