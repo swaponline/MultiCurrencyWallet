@@ -175,12 +175,13 @@ export default class PartialClosure extends Component {
 
   setEstimatedFeeValues = async () => {
     const { estimatedFeeValues } = this.state
+    let newEstimatedFeeValues = estimatedFeeValues
 
     for await (let item of constants.coinsWithDynamicFee) { // eslint-disable-line
       try {
         const newValue = await helpers[item].estimateFeeValue({ method: 'swap', speed: 'fast' })
         if (newValue) {
-          estimatedFeeValues[item] = newValue
+          newEstimatedFeeValues[item] = newValue
         }
       } catch (error) {
         console.error('Set Estimated Fee Values in for error: ', error)
@@ -188,7 +189,7 @@ export default class PartialClosure extends Component {
     }
 
     return this.setState({
-      estimatedFeeValues,
+      newEstimatedFeeValues,
     })
   }
 
@@ -427,8 +428,8 @@ export default class PartialClosure extends Component {
       }))
     }
 
-    if (constants.coinsWithDynamicFee.includes(getCurrency) && BigNumber(maxAllowedGetAmount).isGreaterThan(0)) {
-      maxAllowedGetAmount = BigNumber(maxAllowedGetAmount).minus(estimatedFeeValues[getCurrency])
+    if (constants.coinsWithDynamicFee.includes(getCurrency) && maxAllowedGetAmount.isGreaterThan(0)) {
+      maxAllowedGetAmount = maxAllowedGetAmount.minus(estimatedFeeValues[getCurrency])
     }
 
     const checkAmount = this.setAmountOnState(maxAllowedSellAmount, maxAllowedGetAmount, maxAllowedBuyAmount)
