@@ -140,12 +140,11 @@ export default class PartialClosure extends Component {
       customWalletUse: true,
       customWallet: this.wallets[buyToken.toUpperCase()],
       extendedControls: false,
-      estimateFeeValues: {
-        btc: 0.0002,
-        eth: 0,
-        ltc: 0,
-      },
+      estimateFeeValues: { /* ... */ },
     }
+    constants.coinsWithDynamicFee
+      .forEach(item => this.state.estimateFeeValues[item] = constants.minAmountOffer[item])
+
     let timer
     let usdRates
 
