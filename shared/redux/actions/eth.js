@@ -55,6 +55,7 @@ const loginWithKeychain = async () => {
 
   await getBalance()
   await getReputation()
+  return selectedKey;
 }
 
 const getBalance = () => {
