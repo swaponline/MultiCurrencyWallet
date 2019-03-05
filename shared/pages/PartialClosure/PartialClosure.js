@@ -655,7 +655,7 @@ export default class PartialClosure extends Component {
     if (!isBtcHere) {
       return false
     }
-     const btcAmount = BigNumber(haveCurrency === 'btc' ? haveAmount : getAmount)
+    const btcAmount = BigNumber(haveCurrency === 'btc' ? haveAmount : getAmount)
     if (btcAmount.isGreaterThan(estimateFeeValues.btc)) {
       return false
     }
