@@ -270,7 +270,7 @@ export default class SwapComponent extends PureComponent {
       this.setState(() => ({
         continueSwap: false,
       }))
-      //this.sendRequestToFaucet()
+      // this.sendRequestToFaucet()
     } else {
       this.setState(() => ({
         continueSwap: true,
