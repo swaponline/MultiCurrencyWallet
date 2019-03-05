@@ -175,7 +175,7 @@ export default class PartialClosure extends Component {
 
   setEstimatedFeeValues = async () => {
     const { estimatedFeeValues } = this.state
-    let newEstimatedFeeValues = estimatedFeeValues
+    let newEstimatedFeeValues = { ...estimatedFeeValues }
 
     for await (let item of constants.coinsWithDynamicFee) { // eslint-disable-line
       try {
@@ -189,7 +189,7 @@ export default class PartialClosure extends Component {
     }
 
     return this.setState({
-      newEstimatedFeeValues,
+      estimatedFeeValues: newEstimatedFeeValues,
     })
   }
 
