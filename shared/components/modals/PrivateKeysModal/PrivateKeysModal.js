@@ -153,7 +153,7 @@ export default class PrivateKeysModal extends React.PureComponent {
                   <span styleName="skipField">
                     <FormattedMessage
                       id="PrivateKeysModal663"
-                      defaultMessage="Or you can {skipBtn}"
+                      defaultMessage="We don't recommend, but you can {skipBtn}"
                       values={{
                         skipBtn: (
                           <button onClick={() => this.setState({ skipAlertShown: true })}>
