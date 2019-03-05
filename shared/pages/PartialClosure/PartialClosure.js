@@ -175,22 +175,20 @@ export default class PartialClosure extends Component {
   }
 
   setEstimateFeeValues = async () => {
-    let btcFee = this.state.estimateFeeValues.btc
-    let ethFee = this.state.estimateFeeValues.eth
-    let ltcFee = this.state.estimateFeeValues.ltc
-    try {
-      btcFee = await helpers.btc.estimateFeeValue({ method: 'swap', speed: 'fast' })
-      ethFee = await await helpers.eth.estimateFeeValue({ method: 'swap', speed: 'fast' })
-      ltcFee = await helpers.ltc.estimateFeeValue({ method: 'swap', speed: 'fast' })
-    } catch (error) {
-      console.error('SetEstimateFeeValues error: ', error)
+    const { estimateFeeValues: { btc, eth, ltc } } = this.state
+    let fees = { btc, eth, ltc }
+
+    for await (let item of Object.keys(fees)) { // eslint-disable-line
+      try {
+        const newValue = await helpers[item].estimateFeeValue({ method: 'swap', speed: 'fast' })
+        fees[item] = newValue || fees[item]
+      } catch (error) {
+        console.error('SetEstimateFeeValues in for error: ', error)
+      }
     }
+
     return this.setState({
-      estimateFeeValues: {
-        btc: btcFee,
-        eth: ethFee,
-        ltc: ltcFee,
-      },
+      estimateFeeValues: fees,
     })
   }
 
@@ -429,7 +427,7 @@ export default class PartialClosure extends Component {
       }))
     }
 
-    if (['btc', 'eth', 'ltc'].includes(getCurrency) && BigNumber(maxAllowedGetAmount).isGreaterThan(0)) {
+    if (constants.coinsWithDynamicFee.includes(getCurrency) && BigNumber(maxAllowedGetAmount).isGreaterThan(0)) {
       maxAllowedGetAmount = BigNumber(maxAllowedGetAmount).minus(estimateFeeValues[getCurrency])
     }
 
