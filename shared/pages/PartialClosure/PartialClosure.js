@@ -140,10 +140,10 @@ export default class PartialClosure extends Component {
       customWalletUse: true,
       customWallet: this.wallets[buyToken.toUpperCase()],
       extendedControls: false,
-      estimateFeeValues: { /* ... */ },
+      estimatedFeeValues: {},
     }
     constants.coinsWithDynamicFee
-      .forEach(item => this.state.estimateFeeValues[item] = constants.minAmountOffer[item])
+      .forEach(item => this.state.estimatedFeeValues[item] = constants.minAmountOffer[item])
 
     let timer
     let usdRates
@@ -170,24 +170,25 @@ export default class PartialClosure extends Component {
 
     SwapApp.shared().services.room.on('new orders', () => this.checkPair(haveCurrency))
 
-    this.setEstimateFeeValues()
+    this.setEstimatedFeeValues()
   }
 
-  setEstimateFeeValues = async () => {
-    const { estimateFeeValues: { btc, eth, ltc } } = this.state
-    let fees = { btc, eth, ltc }
+  setEstimatedFeeValues = async () => {
+    const { estimatedFeeValues } = this.state
 
-    for await (let item of Object.keys(fees)) { // eslint-disable-line
+    for await (let item of constants.coinsWithDynamicFee) { // eslint-disable-line
       try {
         const newValue = await helpers[item].estimateFeeValue({ method: 'swap', speed: 'fast' })
-        fees[item] = newValue || fees[item]
+        if (newValue) {
+          estimatedFeeValues[item] = newValue
+        }
       } catch (error) {
-        console.error('SetEstimateFeeValues in for error: ', error)
+        console.error('Set Estimated Fee Values in for error: ', error)
       }
     }
 
     return this.setState({
-      estimateFeeValues: fees,
+      estimatedFeeValues,
     })
   }
 
@@ -384,7 +385,7 @@ export default class PartialClosure extends Component {
   }
 
   setOrderOnState = (orders) => {
-    const { exHaveRate, exGetRate, haveAmount, getCurrency, estimateFeeValues } = this.state
+    const { exHaveRate, exGetRate, haveAmount, getCurrency, estimatedFeeValues } = this.state
 
     let maxAllowedSellAmount = BigNumber(0)
     let maxAllowedGetAmount = BigNumber(0)
@@ -427,7 +428,7 @@ export default class PartialClosure extends Component {
     }
 
     if (constants.coinsWithDynamicFee.includes(getCurrency) && BigNumber(maxAllowedGetAmount).isGreaterThan(0)) {
-      maxAllowedGetAmount = BigNumber(maxAllowedGetAmount).minus(estimateFeeValues[getCurrency])
+      maxAllowedGetAmount = BigNumber(maxAllowedGetAmount).minus(estimatedFeeValues[getCurrency])
     }
 
     const checkAmount = this.setAmountOnState(maxAllowedSellAmount, maxAllowedGetAmount, maxAllowedBuyAmount)
@@ -648,14 +649,14 @@ export default class PartialClosure extends Component {
   }
 
   doesComissionPreventThisOrder = () => {
-    const { haveAmount, getAmount, haveCurrency, getCurrency, estimateFeeValues } = this.state
+    const { haveAmount, getAmount, haveCurrency, getCurrency, estimatedFeeValues } = this.state
     const isBtcHere = (haveCurrency === 'btc' || getCurrency === 'btc')
 
     if (!isBtcHere) {
       return false
     }
     const btcAmount = BigNumber(haveCurrency === 'btc' ? haveAmount : getAmount)
-    if (btcAmount.isGreaterThan(estimateFeeValues.btc)) {
+    if (btcAmount.isGreaterThan(estimatedFeeValues.btc)) {
       return false
     }
     return true
