@@ -87,6 +87,7 @@ export default class Orders extends Component {
   removeOrder = (orderId) => {
     actions.modals.open(constants.modals.Confirm, {
       onAccept: () => {
+        actions.core.deletedPartialCurrency(orderId)
         actions.core.removeOrder(orderId)
         actions.core.updateCore()
       },

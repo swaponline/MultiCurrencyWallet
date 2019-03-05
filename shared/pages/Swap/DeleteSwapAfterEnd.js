@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import actions from 'redux/actions'
+import SwapApp from 'swap.app'
 
 
 class DeleteSwapAfterEnd extends Component {
@@ -34,6 +35,11 @@ class DeleteSwapAfterEnd extends Component {
     const { swap } = this.props
 
     if (swap.flow.state.isFinished) {
+      const deletedOrder = SwapApp.shared().services.orders.getByKey(swap.id)
+      if (deletedOrder !== undefined) {
+        actions.core.deletedPartialCurrency(swap.id)
+      }
+      console.log('deletedOrder', deletedOrder)
       actions.core.removeOrder(swap.id)
       actions.core.showMyOrders()
     }
