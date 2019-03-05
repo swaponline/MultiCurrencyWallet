@@ -7,7 +7,7 @@ import { constants } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 import actions from 'redux/actions'
 import { withRouter } from 'react-router'
-import { hasSignificantBalance, hasNonZeroBalance } from 'helpers/user'
+import { hasSignificantBalance, hasNonZeroBalance, notTestUnit } from 'helpers/user'
 
 import CSSModules from 'react-css-modules'
 import stylesWallet from './Wallet.scss'
@@ -131,15 +131,11 @@ export default class Wallet extends Component {
     const { currencyBalance } = this.props
 
     const hasNonZeroCurrencyBalance = hasNonZeroBalance(currencyBalance)
+    const isNotTestUser = notTestUnit(currencyBalance)
+    const doesCautionPassed = localStorage.getItem(constants.localStorage.wasCautionPassed)
 
-    const doesCautionPassed = localStorage.getItem(constants.localStorage.wasCautionPassed) === 'true'
-
-    if (!doesCautionPassed && process.env.MAINNET) {
-      if (hasNonZeroCurrencyBalance) {
-        localStorage.setItem(constants.localStorage.wasCautionPassed, false)
-        actions.modals.open(constants.modals.PrivateKeys, {})
-        localStorage.setItem(constants.localStorage.wasCautionShow, true)
-      }
+    if (!doesCautionPassed && hasNonZeroCurrencyBalance && isNotTestUser && process.env.MAINNET) {
+      actions.modals.open(constants.modals.PrivateKeys, {})
     }
   }
 
