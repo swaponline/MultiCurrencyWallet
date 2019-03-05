@@ -140,6 +140,11 @@ export default class PartialClosure extends Component {
       customWalletUse: true,
       customWallet: this.wallets[buyToken.toUpperCase()],
       extendedControls: false,
+      estimateFeeValues: {
+        btc: 0.0002,
+        eth: 0,
+        ltc: 0,
+      },
     }
     let timer
     let usdRates
@@ -165,6 +170,28 @@ export default class PartialClosure extends Component {
     }, 2000)
 
     SwapApp.shared().services.room.on('new orders', () => this.checkPair(haveCurrency))
+
+    this.setEstimateFeeValues()
+  }
+
+  setEstimateFeeValues = async () => {
+    let btcFee = this.state.estimateFeeValues.btc
+    let ethFee = this.state.estimateFeeValues.eth
+    let ltcFee = this.state.estimateFeeValues.ltc
+    try {
+      btcFee = await helpers.btc.estimateFeeValue({ method: 'swap', speed: 'fast' })
+      ethFee = await await helpers.eth.estimateFeeValue({ method: 'swap', speed: 'fast' })
+      ltcFee = await helpers.ltc.estimateFeeValue({ method: 'swap', speed: 'fast' })
+    } catch (error) {
+      console.error('SetEstimateFeeValues error: ', error)
+    }
+    return this.setState({
+      estimateFeeValues: {
+        btc: btcFee,
+        eth: ethFee,
+        ltc: ltcFee,
+      },
+    })
   }
 
   componentWillUnmount() {
@@ -360,7 +387,7 @@ export default class PartialClosure extends Component {
   }
 
   setOrderOnState = (orders) => {
-    const { exHaveRate, exGetRate, haveAmount } = this.state
+    const { exHaveRate, exGetRate, haveAmount, getCurrency, estimateFeeValues } = this.state
 
     let maxAllowedSellAmount = BigNumber(0)
     let maxAllowedGetAmount = BigNumber(0)
@@ -400,6 +427,10 @@ export default class PartialClosure extends Component {
         isNonOffers: true,
         getUsd: Number(0).toFixed(2),
       }))
+    }
+
+    if (['btc', 'eth', 'ltc'].includes(getCurrency) && BigNumber(maxAllowedGetAmount).isGreaterThan(0)) {
+      maxAllowedGetAmount = BigNumber(maxAllowedGetAmount).minus(estimateFeeValues[getCurrency])
     }
 
     const checkAmount = this.setAmountOnState(maxAllowedSellAmount, maxAllowedGetAmount, maxAllowedBuyAmount)
@@ -620,14 +651,14 @@ export default class PartialClosure extends Component {
   }
 
   doesComissionPreventThisOrder = () => {
-    const { haveAmount, getAmount, haveCurrency, getCurrency } = this.state
+    const { haveAmount, getAmount, haveCurrency, getCurrency, estimateFeeValues } = this.state
     const isBtcHere = (haveCurrency === 'btc' || getCurrency === 'btc')
 
     if (!isBtcHere) {
       return false
     }
     const btcAmount = haveCurrency === 'btc' ? BigNumber(haveAmount) : BigNumber(getAmount)
-    if (btcAmount.isGreaterThan(0.0002)) {
+    if (btcAmount.isGreaterThan(estimateFeeValues.btc)) {
       return false
     }
     return true
