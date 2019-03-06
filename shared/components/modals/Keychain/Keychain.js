@@ -98,19 +98,21 @@ export default class Keychain extends Component {
             }
             {keychainInstalled && !keychainActivated &&
               <div>
-                <FormattedMessage id="Keychain19" defaultMessage="Would you like to protect your keys with KeyChain? Note that your address will be changed" />
                 {positiveBalanceError ?
                   <FormattedMessage id="Keychain26" defaultMessage="Positive balance error"/>
                   :
-                  <Button styleName="button" brand fullWidth onClick={() => {actions.eth.loginWithKeychain().then( () => {actions.modals.close(name)})}}>
-                    <FormattedMessage id="Keychain24" defaultMessage="Confirm"/>
-                  </Button>
+                  <div>
+                    <FormattedMessage id="Keychain19" defaultMessage="Would you like to protect your keys with KeyChain? Note that your address will be changed" />
+                    <Button styleName="button" brand fullWidth onClick={() => {actions.eth.loginWithKeychain().then( () => {actions.modals.close(name)})}}>
+                      <FormattedMessage id="Keychain24" defaultMessage="Confirm"/>
+                    </Button>
+                  </div>
                 }
               </div>
             }
             {keychainInstalled && keychainActivated &&
               <div>
-                <FormattedMessage id="Keychain19" defaultMessage="KeyChain is activated. If you want to deactivate KeyChain, the KeyChain key will be replaced with a new one" />
+                <FormattedMessage id="Keychain19" defaultMessage="KeyChain is activated. If you wish to deactivate KeyChain, note that your key will be replaced with a new one." />
                 <Button styleName="button" brand fullWidth onClick={() => {actions.eth.login(); actions.eth.getBalance().then(() => actions.modals.close(name))}}>
                   <FormattedMessage id="Keychain24" defaultMessage="Deactivate"/>
                 </Button>
