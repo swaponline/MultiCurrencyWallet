@@ -506,7 +506,7 @@
   },
   {
     "id": "SwapProgress123",
-    "message": "ETH contract created and charged. Requesting withdrawal from ETH Contract. Please wait. It usually takes less than 10 mins",
+    "message": "ETH contract was created and charged. Withdrwaing ETH. Please wait.",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.js"
     ]
@@ -916,7 +916,7 @@
   },
   {
     "id": "BtcToEthToken260",
-    "message": "4. ETH contract created and charged. Requesting withdrawal from ETH Contract. Please wait. It usually takes less than 10 mins"
+    "message": "ETH contract was created and charged. Withdrwaing ETH. Please wait "
   },
   {
     "id": "BtcToEthToken267",
@@ -945,6 +945,14 @@
   {
     "id": "BtcToEthToken87",
     "message": "1. Waiting participant confirm this swap"
+  },
+  {
+    "id": "SwapController54",
+    "message": "Another participant is online"
+  },
+  {
+    "id": "SwapController60",
+    "message": "Another participant is offline"
   },
   {
     "id": "EosToBtc107",
@@ -1610,7 +1618,7 @@
   },
   {
     "id": "LtcTOeth283",
-    "message": "5. ETH contract created and charged. Requesting withdrawal from ETH Contract. Please wait. It usually takes less than 10 mins",
+    "message": "ETH contract was created and charged. Withdrwaing ETH. Please wait.",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
@@ -3846,7 +3854,14 @@
   },
   {
     "id": "deposit165",
-    "message": "You don't have enought funds to continue the swap. Copy this address and top it up with {missingBalance}  ",
+    "message": "To continue the swap copy this address and top it up with {missingBalance}  ",
+    "files": [
+      "shared/pages/Swap/DepositWindow/DepositWindow.js"
+    ]
+  },
+  {
+    "id": "deposit297",
+    "message": "link to explorer",
     "files": [
       "shared/pages/Swap/DepositWindow/DepositWindow.js"
     ]
@@ -4126,6 +4141,7 @@
     "id": "swappropgress258",
     "message": "BTC transaction:"
   },
+
   {
     "id": "swappropgress332",
     "message": "How refund your money ?",
@@ -4265,7 +4281,7 @@
   },
   {
     "id": "BitcoinBuyText41",
-    "message": "{buyCurrency} contract created and charged. Requesting withdrawal from {buyCurrency} Contract. Please wait. It usually takes less than 10 mins",
+    "message": "{buyCurrency}  contract was created and charged. Withdrwaing {buyCurrency}. Please wait...",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
     ]
