@@ -10,6 +10,8 @@ import actions from 'redux/actions'
 import { BigNumber } from 'bignumber.js'
 import { Redirect } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
+import { getState } from 'redux/core'
+import reducers from 'redux/core/reducers'
 
 import SelectGroup from './SelectGroup/SelectGroup'
 import Select from 'components/modals/OfferModal/AddOffer/Select/Select'
@@ -53,15 +55,18 @@ const isWidgetBuild = config && config.isWidget
 @injectIntl
 @connect(({
   currencies,
-  addSelectedItems,
-  core: { orders },
+  addPartialItems,
+  core: { orders, hiddenCoinsList },
   user: { ethData, btcData, /* bchData, */ tokensData, eosData, telosData, nimData, usdtData, ltcData },
 }) => ({
-  currencies: currencies.items,
-  addSelectedItems: currencies.addSelectedItems,
+  currencies: currencies.partialItems,
+  allCurrencyies: currencies.items,
+  addSelectedItems: currencies.addPartialItems,
   orders: filterIsPartial(orders),
+  allOrders: orders,
   currenciesData: [ ethData, btcData, eosData, telosData, /* bchData, */ ltcData, usdtData /* nimData */ ],
   tokensData: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
+  hiddenCoinsList,
 }))
 @CSSModules(styles, { allowMultiple: true })
 export default class PartialClosure extends Component {
@@ -70,7 +75,7 @@ export default class PartialClosure extends Component {
     orders: [],
   }
 
-  static getDerivedStateFromProps({ orders, history, match: { params: { buy, sell, locale } } }, { haveCurrency, getCurrency }) {
+  static getDerivedStateFromProps({ allOrders, orders, history, match: { params: { buy, sell, locale } } }, { haveCurrency, getCurrency }) {
 
     if (!Array.isArray(orders)) { return }
 
@@ -83,21 +88,38 @@ export default class PartialClosure extends Component {
     }
   }
 
-  constructor({ tokensData, currenciesData, match: { params: { buy, sell } }, intl: { locale }, history, ...props }) {
+  constructor({ tokensData, allCurrencyies, currenciesData, match: { params: { buy, sell } }, intl: { locale }, history, ...props }) {
     super()
+
+    if (sell && buy) {
+      if (!allCurrencyies.map(item => item.name).includes(sell.toUpperCase())
+        || !allCurrencyies.map(item => item.name).includes(buy.toUpperCase())) {
+        history.push(localisedUrl(locale, `/exchange/swap-to-btc`))
+      }
+    }
 
     const sellToken = sell || ((!isWidgetBuild) ? 'eth' : 'btc')
     const buyToken = buy || ((!isWidgetBuild) ? 'btc' : config.erc20token)
 
+    this.returnNeedCurrency(sellToken, buyToken)
+
     if (!(buy && sell) && !props.location.hash.includes('#widget')) {
       history.push(localisedUrl(locale, `/exchange/${sellToken}-to-${buyToken}`))
     }
+
     this.wallets = {}
     currenciesData.forEach(item => {
       this.wallets[item.currency] = item.address
     })
     tokensData.forEach(item => {
       this.wallets[item.currency] = item.address
+    })
+
+    Array.of(sellToken, buyToken).forEach((item) => {
+      const currency = item.toUpperCase()
+      if (props.hiddenCoinsList.includes(currency)) {
+        actions.core.markCoinAsVisible(currency)
+      }
     })
 
     this.state = {
@@ -118,7 +140,11 @@ export default class PartialClosure extends Component {
       customWalletUse: true,
       customWallet: this.wallets[buyToken.toUpperCase()],
       extendedControls: false,
+      estimatedFeeValues: {},
     }
+    constants.coinsWithDynamicFee
+      .forEach(item => this.state.estimatedFeeValues[item] = constants.minAmountOffer[item])
+
     let timer
     let usdRates
 
@@ -128,8 +154,11 @@ export default class PartialClosure extends Component {
   }
 
   componentDidMount() {
-    const { haveCurrency } = this.state
+    const { haveCurrency, getCurrency } = this.state
+    actions.core.updateCore()
+    this.returnNeedCurrency(haveCurrency, getCurrency)
     this.checkPair(haveCurrency)
+
     this.updateAllowedBalance()
 
     this.usdRates = {}
@@ -138,20 +167,34 @@ export default class PartialClosure extends Component {
     this.timer = setInterval(() => {
       this.setOrders()
     }, 2000)
+
+    SwapApp.shared().services.room.on('new orders', () => this.checkPair(haveCurrency))
+
+    this.setEstimatedFeeValues()
+  }
+
+  setEstimatedFeeValues = async () => {
+    const { estimatedFeeValues } = this.state
+    let newEstimatedFeeValues = { ...estimatedFeeValues }
+
+    for await (let item of constants.coinsWithDynamicFee) { // eslint-disable-line
+      try {
+        const newValue = await helpers[item].estimateFeeValue({ method: 'swap', speed: 'fast' })
+        if (newValue) {
+          newEstimatedFeeValues[item] = newValue
+        }
+      } catch (error) {
+        console.error('Set Estimated Fee Values in for error: ', error)
+      }
+    }
+
+    return this.setState({
+      estimatedFeeValues: newEstimatedFeeValues,
+    })
   }
 
   componentWillUnmount() {
     clearInterval(this.timer)
-  }
-
-  shouldComponentUpdate(nextPros) {
-
-    if (nextPros.orders && this.props.orders && nextPros.orders > 0) {
-      if (nextPros.orders.length === this.props.orders.length) {
-        return false
-      }
-    }
-    return true
   }
 
   additionalPathing = (sell, buy) => {
@@ -240,6 +283,36 @@ export default class PartialClosure extends Component {
     this.props.history.push(localisedUrl(locale, `/${wayToDeclinedOrder}`))
   }
 
+  returnNeedCurrency = (sellToken, buyToken) => {
+    const partialItems = Object.assign(getState().currencies.partialItems) // eslint-disable-line
+
+    const partialCurrency = getState().currencies.partialItems.map(item => item.name)
+    const allCurrencyies = getState().currencies.items.map(item => item.name)
+    let partialItemsArray = [...partialItems]
+    let currenciesOfUrl = []
+    currenciesOfUrl.push(sellToken, buyToken)
+
+    currenciesOfUrl.forEach(item => {
+      if (allCurrencyies.includes(item.toUpperCase())) {
+        if (!partialCurrency.includes(item.toUpperCase())) {
+          partialItemsArray.push(
+            {
+              name: item.toUpperCase(),
+              title: item.toUpperCase(),
+              icon: item.toLowerCase(),
+              value: item.toLowerCase(),
+            }
+          )
+          reducers.currencies.updatePartialItems(partialItemsArray)
+        }
+      } else {
+        this.setState(() => ({
+          haveCurrency: 'swap',
+        }))
+      }
+    })
+  }
+
 
   setDeclinedOffer = () => {
     this.setState(() => ({ haveAmount: '', isFetching: false, isDeclinedOffer: true }))
@@ -313,7 +386,7 @@ export default class PartialClosure extends Component {
   }
 
   setOrderOnState = (orders) => {
-    const { exHaveRate, exGetRate, haveAmount } = this.state
+    const { exHaveRate, exGetRate, haveAmount, getCurrency, estimatedFeeValues } = this.state
 
     let maxAllowedSellAmount = BigNumber(0)
     let maxAllowedGetAmount = BigNumber(0)
@@ -353,6 +426,10 @@ export default class PartialClosure extends Component {
         isNonOffers: true,
         getUsd: Number(0).toFixed(2),
       }))
+    }
+
+    if (constants.coinsWithDynamicFee.includes(getCurrency) && maxAllowedGetAmount.isGreaterThan(0)) {
+      maxAllowedGetAmount = maxAllowedGetAmount.minus(estimatedFeeValues[getCurrency])
     }
 
     const checkAmount = this.setAmountOnState(maxAllowedSellAmount, maxAllowedGetAmount, maxAllowedBuyAmount)
@@ -532,14 +609,17 @@ export default class PartialClosure extends Component {
   }
 
   checkPair = (value) => {
-    const selected = actions.pairs.selectPair(value)
+    const checkingValue = this.props.allCurrencyies.map(item => item.name).includes(value.toUpperCase())
+      ? value : 'swap'
 
+    const selected = actions.pairs.selectPairPartial(checkingValue)
     const check = selected.map(item => item.value).includes(this.state.getCurrency)
+
     if (!check) {
       this.setState(() => ({
         getCurrency: selected[0].value,
       }))
-    } else if (this.state.getCurrency === value) {
+    } else if (this.state.getCurrency === checkingValue) {
       this.setState(() => ({
         getCurrency: selected[0].value,
       }))
@@ -570,14 +650,14 @@ export default class PartialClosure extends Component {
   }
 
   doesComissionPreventThisOrder = () => {
-    const { haveAmount, getAmount, haveCurrency, getCurrency } = this.state
+    const { haveAmount, getAmount, haveCurrency, getCurrency, estimatedFeeValues } = this.state
     const isBtcHere = (haveCurrency === 'btc' || getCurrency === 'btc')
 
     if (!isBtcHere) {
       return false
     }
-    const btcAmount = haveCurrency === 'btc' ? BigNumber(haveAmount) : BigNumber(getAmount)
-    if (btcAmount.isGreaterThan(0.0001)) {
+    const btcAmount = BigNumber(haveCurrency === 'btc' ? haveAmount : getAmount)
+    if (btcAmount.isGreaterThan(estimatedFeeValues.btc)) {
       return false
     }
     return true
@@ -593,7 +673,7 @@ export default class PartialClosure extends Component {
     const haveCurrencyData = currenciesData.find(item => item.currency === haveCurrency.toUpperCase())
     const haveTokenData = tokensData.find(item => item.currency === haveCurrency.toUpperCase())
     const currentCurrency = haveCurrencyData || haveTokenData
-    const { balance } = currentCurrency
+    const { balance } = currentCurrency || 0
 
     const oneCryptoCost = maxBuyAmount.isLessThanOrEqualTo(0) ? BigNumber(0) : BigNumber(goodRate)
     const linked = Link.all(this, 'haveAmount', 'getAmount', 'customWallet')

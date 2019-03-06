@@ -31,10 +31,16 @@ export default class KeyActionsPanel extends Component {
   }
 
   handleDownload = () => {
-    if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
-      actions.modals.open(constants.modals.DownloadModal)
+    const doesCautionPassed = localStorage.getItem(constants.localStorage.wasCautionPassed)
+
+    if (!doesCautionPassed) {
+      actions.modals.open(constants.modals.PrivateKeys, {})
     } else {
-      actions.user.downloadPrivateKeys()
+      if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+        actions.modals.open(constants.modals.DownloadModal)
+      } else {
+        actions.user.downloadPrivateKeys()
+      }
     }
   }
 

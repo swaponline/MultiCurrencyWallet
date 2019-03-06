@@ -12,4 +12,5 @@ export default {
   EthChecker: 'EthChecker',
   ReceiveModal: 'ReceiveModal',
   DownloadModal: 'DownloadModal',
+  Confirm: 'Confirm',
 }

@@ -19,8 +19,9 @@ import { Button, RemoveButton } from 'components/controls'
 import Pair from '../Pair'
 import PAIR_TYPES from 'helpers/constants/PAIR_TYPES'
 import RequestButton from '../RequestButton/RequestButton'
-import { FormattedMessage, injectIntl } from 'react-intl'
+import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
+import { BigNumber } from 'bignumber.js'
 
 
 @injectIntl
@@ -49,6 +50,7 @@ export default class Row extends Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.renderContent)
+    actions.modals.close(constants.modals.Confirm)
   }
 
   componentWillMount() {
@@ -73,33 +75,67 @@ export default class Row extends Component {
     return (balance >= 0.005 || currency.toLowerCase() === 'eos')
   }
 
-  removeOrder = (orderId) => {
-    if (confirm('Are your sure ?')) {
-      actions.core.removeOrder(orderId)
-      actions.core.updateCore()
-    }
-  }
+  sendRequest = (orderId, currency) => {
+    const { row: { buyAmount, sellAmount, buyCurrency, sellCurrency }, intl } = this.props
 
-  sendRequest = async (orderId, currency) => {
-    const check = await this.handleGoTrade(currency)
+    const pair = Pair.fromOrder(this.props.row)
+    const { price, amount, total, main, base, type } = pair
 
-    this.setState({ isFetching: true })
+    const sell = new BigNumber(sellAmount).dp(6, BigNumber.ROUND_HALF_CEIL)
+    const buy = new BigNumber(buyAmount).dp(6, BigNumber.ROUND_HALF_CEIL)
+    const exchangeRates = new BigNumber(price).dp(6, BigNumber.ROUND_HALF_CEIL)
 
-    setTimeout(() => {
-      this.setState(() => ({ isFetching: false }))
-    }, 15 * 1000)
-
-    actions.core.sendRequest(orderId, {}, (isAccepted) => {
-      console.log(`user has ${isAccepted ? 'accepted' : 'declined'} your request`)
-
-      if (isAccepted) {
-        this.setState({ redirect: true, isFetching: false })
-      }
-      else {
-        this.setState({ isFetching: false })
-      }
+    const messages = defineMessages({
+      sell: {
+        id: 'ordersRow97',
+        defaultMessage: 'sell',
+      },
+      buy: {
+        id: 'ordersRow101',
+        defaultMessage: 'buy',
+      },
     })
-    actions.core.updateCore()
+
+    actions.modals.open(constants.modals.Confirm, {
+      onAccept: async () => {
+        const check = await this.handleGoTrade(currency)
+
+        this.setState({ isFetching: true })
+
+        setTimeout(() => {
+          this.setState(() => ({ isFetching: false }))
+        }, 15 * 1000)
+
+        actions.core.sendRequest(orderId, {}, (isAccepted) => {
+          console.log(`user has ${isAccepted ? 'accepted' : 'declined'} your request`)
+
+          if (isAccepted) {
+            this.setState({ redirect: true, isFetching: false })
+          }
+          else {
+            this.setState({ isFetching: false })
+          }
+        })
+        actions.core.updateCore()
+      },
+      message: (
+        <FormattedMessage
+          id="ordersRow134"
+          defaultMessage="Do you want to {action} {amount} {main} for {total} {base} at price {price} {main}/{base}?"
+          values={{
+            action: `${type === PAIR_TYPES.BID
+              ? intl.formatMessage(messages.sell)
+              : intl.formatMessage(messages.buy)
+            }`,
+            amount: `${amount.toFixed(5)}`,
+            main: `${main}`,
+            total: `${total.toFixed(5)}`,
+            base: `${base}`,
+            price: `${exchangeRates}`,
+          }}
+        />
+      ),
+    })
   }
 
   renderWebContent() {
@@ -118,11 +154,11 @@ export default class Row extends Component {
         sellCurrency,
         owner: {  peer: ownerPeer },
       },
+      removeOrder,
       intl: { locale },
     } = this.props
 
     const pair = Pair.fromOrder(this.props.row)
-
     const { price, amount, total, main, base, type } = pair
 
     return (
@@ -166,7 +202,7 @@ export default class Row extends Component {
         <td>
           {
             peer === ownerPeer ? (
-              <RemoveButton onClick={() => this.removeOrder(id)} />
+              <RemoveButton onClick={() => removeOrder(id)} />
             ) : (
               <Fragment>
                 {
@@ -233,6 +269,7 @@ export default class Row extends Component {
         isProcessing,
         owner: {  peer: ownerPeer },
       },
+      removeOrder,
       peer,
     } = this.props
 
@@ -267,7 +304,7 @@ export default class Row extends Component {
             <div styleName="tdContainer-3">
               {
                 peer === ownerPeer ? (
-                  <RemoveButton onClick={() => this.removeOrder(id)} />
+                  <RemoveButton onClick={() => removeOrder(id)} />
                 ) : (
                   <Fragment>
                     {
