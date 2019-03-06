@@ -1,0 +1,119 @@
+.groupField {
+  position: absolute;
+  width: 380px;
+  height: 68px;
+  left: 40px;
+  top: 85px;
+  border: 1px solid #1E2A4B;
+  box-sizing: border-box;
+  border-radius: 6px;
+}
+
+.input {
+  position: absolute;
+  width: 124px;
+  height: 24px;
+  left: 21px;
+  top: 23px;
+  font-family: SF Mono;
+  line-height: normal;
+  font-size: 20px;
+  color: #000000;
+  opacity: 0.2;
+}
+
+.currency {
+  position: absolute;
+  width: 61px;
+  height: 24px;
+  left: 227px;
+  top: 7px;
+  font-family: Inter UI;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  font-size: 20px;
+  text-align: right;
+  color: #000000;
+}
+
+.sell {
+  position: absolute;
+  width: 54px;
+  text-align: center;
+  background-color: white;
+  height: 20px;
+  left: 20px;
+  top: -18px;
+  font-family: Inter UI;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  font-size: 16px;
+  color: #000000;
+}
+
+.groupField {
+  width: 100%;
+  display: inline-flex;
+  height: 60px;
+  margin-bottom: 10px;
+  vertical-align: center;
+  box-shadow: rgba(#000, 0.08) 0 3px 9px 0;
+  border-radius: 6px;
+  text-align: center;
+  position: relative;
+}
+
+.textUsd {
+  top: 22px;
+  right: 150px;
+  font-size: 15px;
+  color: #828795;
+  position: absolute;
+  top: 14px;
+  padding: 5px;
+  font-size: 16px;
+  // box-shadow: -20px 0px 20px -14px rgba(0,0,0, 0.5);
+}
+
+.inputRoot {
+  min-width: 0;
+  flex: auto 1 1;
+  input {
+    padding-right: 75px;
+  }
+}
+
+.inputContainer {
+  border-radius: 6px 0 0 6px !important;
+  box-shadow: none !important;
+}
+
+input:disabled {
+  background-color:#eee;
+}
+
+.currencySelect {
+  border-radius: 0 6px 6px 0 !important;
+}
+
+@include media-mobile {
+  .currencySelect {
+    width: 130px;
+  }
+  .textUsd {
+    font-size: 14px;
+  }
+  .inputRoot {
+    input {
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+  }
+  .textUsd {
+    top: 0px;
+    font-size: 12px;
+    right: 135px;
+  }
+}
