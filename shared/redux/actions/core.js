@@ -86,9 +86,8 @@ const declineRequest = (orderId, participantPeer) => {
 }
 
 const removeOrder = (orderId) => {
-  actions.core.deletedPartialCurrency(orderId)
-  SwapApp.shared().services.orders.remove(orderId)
   actions.feed.deleteItemToFeed(orderId)
+  SwapApp.shared().services.orders.remove(orderId)
   actions.core.updateCore()
 }
 
@@ -109,7 +108,7 @@ const deletedPartialCurrency = (orderId) => {
   const deletedOrderSell = orders.filter(item => item.sellCurrency.toUpperCase() === deletedOrderSellCurrency)
   const deletedOrderBuy = orders.filter(item => item.buyCurrency.toUpperCase() === deletedOrderBuyCurrency)
 
-  const premiumCurrencies = ['BTC', 'ETH'] // валюты, которые всегда должны быть в дропе
+  const premiumCurrencies = ['BTC', 'ETH', 'SWAP'] // валюты, которые всегда должны быть в дропе
 
   if (deletedOrderSell.length === 1 && !premiumCurrencies.includes(deletedOrderSellCurrency)) {
     reducers.currencies.deletedPartialCurrency(deletedOrderSellCurrency)
