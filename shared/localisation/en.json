@@ -506,7 +506,7 @@
   },
   {
     "id": "SwapProgress123",
-    "message": "ETH contract was created and charged. Withdrwaing ETH. Please wait.",
+    "message": "ETH contract was created and charged. Withdrawing ETH. Please wait.",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.js"
     ]
@@ -916,7 +916,7 @@
   },
   {
     "id": "BtcToEthToken260",
-    "message": "ETH contract was created and charged. Withdrwaing ETH. Please wait "
+    "message": "ETH contract was created and charged. Withdrawing ETH. Please wait "
   },
   {
     "id": "BtcToEthToken267",
@@ -1618,7 +1618,7 @@
   },
   {
     "id": "LtcTOeth283",
-    "message": "ETH contract was created and charged. Withdrwaing ETH. Please wait.",
+    "message": "ETH contract was created and charged. Withdrawing ETH. Please wait.",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
@@ -4281,7 +4281,7 @@
   },
   {
     "id": "BitcoinBuyText41",
-    "message": "{buyCurrency}  contract was created and charged. Withdrwaing {buyCurrency}. Please wait...",
+    "message": "{buyCurrency}  contract was created and charged. Withdrawing {buyCurrency}. Please wait...",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
     ]
