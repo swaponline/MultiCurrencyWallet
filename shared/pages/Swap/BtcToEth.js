@@ -111,6 +111,11 @@ export default class BtcToEth extends Component {
     this.setState({ destinationAddressTimer : false })
   }
 
+  submitSecret = () => {
+    const { secret } = this.state
+    this.swap.flow.submitSecret(secret)
+  }
+
   updateBalance = () => {
     this.swap.flow.syncBalance()
   }

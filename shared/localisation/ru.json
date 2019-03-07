@@ -1997,6 +1997,27 @@
     ]
   },
   {
+    "id": "PrivateKeysModal663",
+    "message": "Вы так же можете {skipBtn}",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal664",
+    "message": "Мы не сможем восстановить ваши ключи, они могут потеряться если вы очистите хранилище браузера, а так же есть вероятность произвольного очищения. ",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal665",
+    "message": "Я понимаю и принимаю риски.",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
     "id": "PrivateKeysModal666",
     "message": "Продолжить",
     "files": [
@@ -4048,7 +4069,10 @@
   },
   {
     "id": "BtcToEthToken123",
-    "message": "Свап завершен!"
+    "message": "Свап завершен!",
+    "files": [
+      "shared/pages/Swap/SwapList/steps/FourthStep.js"
+    ]
   },
   {
     "id": "BtcToEthToken132",

@@ -606,6 +606,21 @@
     ]
   },
   {
+    "id": "CurrencyTitleSeo1",
+    "message": "{fullName} ({tickerName}) Price, Description & Exchange Rates. Store & Exchange {fullName} ({tickerName}) Anonymously on Swap.Online."
+  },
+  {
+    "id": "CurrencyMetaDescrTag1",
+    "message": "Find out actual price of {fullName}, its ticker name is ({tickerName}). Swap.Online is the best way to safely store your cryptocurrecy."
+  },
+  {
+    "id": "CurrencyH1Seo1",
+    "message": "{fullName} ({tickerName}) Price & Exchange Rates.",
+    "files": [
+      "shared/pages/Currency/Currency.js"
+    ]
+  },
+  {
     "id": "CurrencyWallet100",
     "message": "Send",
     "files": [
@@ -1964,6 +1979,52 @@
   {
     "id": "PrivateKeysModal623",
     "message": "{skipIt} and go to the site.",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal624",
+    "message": "skip it",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal663",
+    "message": "We don't recommend, but you can {skipBtn}",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal664",
+    "message": "Please save your private keys! We do not store your private keys and will not be able to restore your wallets.",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal665",
+    "message": " I understand and except the risks of not saving my private keys",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal666",
+    "message": "Continue",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal99",
+    "message": "It`s very important because If you don`t"
+  },
+  {
+    "id": "PrivateKeysModal991",
+    "message": "Before you continue be sure to save your private keys! Security of private keys is only in your hands. ",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
@@ -3685,21 +3746,6 @@
     "message": "Best exchange rate for {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}). Swap.Online wallet provides instant exchange using Atomic Swap Protocol."
   },
   {
-    "id": "Continue",
-    "message": "Continue",
-    "files": [
-      "shared/pages/Swap/BtcToLtc.js",
-      "shared/pages/Swap/LtcToBtc.js"
-    ]
-  },
-  {
-    "id": "Sign",
-    "message": "Sign",
-    "files": [
-      "shared/pages/Swap/LtcToBtc.js"
-    ]
-  },
-  {
     "id": "orders104",
     "message": "PRICE FOR 1 {buyCurrency}",
     "files": [
@@ -4040,7 +4086,7 @@
   },
   {
     "id": "BtcToEthToken102",
-    "message": "Swapping"
+    "message": "Withdrawing {name} from a contract"
   },
   {
     "id": "BtcToEthToken111",
@@ -4048,7 +4094,10 @@
   },
   {
     "id": "BtcToEthToken123",
-    "message": "The swap is finish!!"
+    "message": "Finished!",
+    "files": [
+      "shared/pages/Swap/SwapList/steps/FourthStep.js"
+    ]
   },
   {
     "id": "BtcToEthToken132",
@@ -4064,11 +4113,15 @@
   },
   {
     "id": "BtcToEthToken58",
-    "message": "Depositing Bitcoin to a smart contract"
+    "message": "Bitcoin deposition"
+  },
+  {
+    "id": "BtcToEthToken67",
+    "message": "Bitcoin deposition"
   },
   {
     "id": "BtcToEthToken80",
-    "message": "Depositing {name} to a smart contract"
+    "message": "{name} deposition"
   },
   {
     "id": "BtcToEthToken89",
@@ -4343,6 +4396,10 @@
     ]
   },
   {
+    "id": "deposit213",
+    "message": "and 0.002 ETH на gas fee"
+  },
+  {
     "id": "EmergencySave33",
     "message": "Developer information",
     "files": [
@@ -4500,7 +4557,7 @@
   },
   {
     "id": "BtcToEthToken25",
-    "message": "Depositing Bitcoin {fromWhom} to the contract"
+    "message": "Depositing Bitcoin {fromWhom} to the smart contract"
   },
   {
     "id": "FourthStep28",
@@ -4512,15 +4569,15 @@
   },
   {
     "id": "ThirdStep25",
-    "message": "Depositing {name} {fromWhom} to the contract"
+    "message": "{name} is depositing {fromWhom} to the contract"
   },
   {
     "id": "ThirdStep30",
-    "message": "from seller"
+    "message": "from you"
   },
   {
     "id": "ThirdStep31",
-    "message": "from you"
+    "message": "from seller"
   },
   {
     "id": "BtcToEthToken24",

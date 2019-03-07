@@ -92,6 +92,7 @@ export default class PartialClosure extends Component {
   }
 
   constructor({ tokensData, allCurrencyies, currenciesData, match: { params: { buy, sell } }, intl: { locale }, history, decline, ...props }) {
+
     super()
 
     if (sell && buy) {
@@ -271,6 +272,7 @@ export default class PartialClosure extends Component {
     }
 
     this.setState(() => ({ isFetching: true }))
+
     actions.core.sendRequestForPartial(orderId, newValues, destination, (newOrder, isAccepted) => {
       if (isAccepted) {
         this.setState(() => ({
@@ -290,6 +292,7 @@ export default class PartialClosure extends Component {
 
     const unfinishedOrder = orders
       .filter(item => item.isProcessing === true)
+      .filter(item => item.participant)
       .filter(item => item.participant.peer === this.state.peer)
       .filter(item => item.sellCurrency === this.state.getCurrency.toUpperCase())[0]
 

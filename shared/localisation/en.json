@@ -2004,6 +2004,13 @@
     ]
   },
   {
+    "id": "PrivateKeysModal666",
+    "message": "Continue",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
     "id": "PrivateKeysModal99",
     "message": "It`s very important because If you don`t"
   },
@@ -4048,7 +4055,10 @@
   },
   {
     "id": "BtcToEthToken123",
-    "message": "The swap is finish!!"
+    "message": "The swap is finish!!",
+    "files": [
+      "shared/pages/Swap/SwapList/steps/FourthStep.js"
+    ]
   },
   {
     "id": "BtcToEthToken132",

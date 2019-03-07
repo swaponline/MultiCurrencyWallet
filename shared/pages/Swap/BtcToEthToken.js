@@ -105,6 +105,19 @@ export default class BtcToEthToken extends Component {
     }))
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.flow !== this.state.flow) {
+      this.changePaddingValue()
+    }
+  }
+
+  changePaddingValue = () => {
+    const { flow: { step } } = this.state
+    this.setState(() => ({
+      paddingContainerValue: paddingForSwapList({ step }),
+    }))
+  }
+
   changePaddingValue = () => {
     const { flow } = this.state
 
