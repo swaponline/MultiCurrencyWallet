@@ -16,6 +16,15 @@
   min-width: 35px;
 }
 
+.cancelSwap {
+  color: red;
+  text-decoration: underline;
+  position: relative;
+  font-size: 17px;
+  cursor: pointer;
+  margin-left: 50px;
+}
+
 .stepList {
   margin-left: 50px;
 }
@@ -61,6 +70,8 @@
 .transactionInStep {
   font-size: 20px;
   margin-left: 10px;
+  position: relative;
+  z-index: 11111;
   a {
     font-size: 14px;
     margin-top: -12px;
@@ -81,6 +92,15 @@
     margin-left: 4px;
   }
 }
+
+@include media-tablet {
+  .stepList {
+    margin-left: 0px;
+    margin-top: 10px;
+    margin-bottom: 25px;
+  }
+}
+
 
 @include media-mobile {
   .active {

@@ -40,7 +40,8 @@ import coinsWithDynamicFee from 'helpers/constants/coinsWithDynamicFee'
 )
 @cssModules(styles, { allowMultiple: true })
 export default class AddOffer extends Component {
-  constructor({ initialData }) {
+
+  constructor({ items, tokenItems, initialData }) {
     super()
 
     if (config && config.isWidget) {
@@ -51,7 +52,8 @@ export default class AddOffer extends Component {
 
     this.state = {
       balance: null,
-      isToken: false,
+      isTokenSell: false,
+      isTokenBuy: false,
       isPartial: true,
       isSending: false,
       manualRate: false,
@@ -69,10 +71,17 @@ export default class AddOffer extends Component {
     const { sellCurrency, buyCurrency, value } = this.state
 
     actions.pairs.selectPair(sellCurrency)
-    this.checkBalance(sellCurrency, buyCurrency)
+    this.checkBalance(sellCurrency)
+    this.updateExchangeRate(sellCurrency, buyCurrency)
+    this.isEthToken(sellCurrency, buyCurrency)
+    this.getFee(sellCurrency, buyCurrency)
+  }
+
+  getFee = () => {
+    const { sellCurrency, buyCurrency } = this.state
+
     this.correctMinAmountSell(sellCurrency)
     this.correctMinAmountBuy(buyCurrency)
-    this.updateExchangeRate(sellCurrency, buyCurrency)
   }
 
   checkBalance = async (sellCurrency, buyCurrency) => {
@@ -88,21 +97,13 @@ export default class AddOffer extends Component {
     balance = new BigNumber(balance)
     unconfirmedBalance = new BigNumber(unconfirmedBalance)
 
-    if (helpers.ethToken.isEthToken({ name: sellCurrency })) {
-      this.setState(() => ({
-        isToken: true,
-      }))
-    } else {
-      this.setState(() => ({
-        isToken: false,
-      }))
-    }
-
     const currentBalance = unconfirmedBalance.isNaN() && unconfirmedBalance.isLessThan(0)
       ? balance.plus(unconfirmedBalance)
       : balance
 
-    const balanceWithoutFee = currentBalance.minus(this.state.minimalestAmountForSell)
+    const balanceWithoutFee = (helpers.ethToken.isEthToken({ name: this.state.sellCurrency }))
+      ? currentBalance
+      : currentBalance.minus(this.state.minimalestAmountForSell)
 
     const finalBalance = balanceWithoutFee.isGreaterThan(0) ? balanceWithoutFee : BigNumber(0)
 
@@ -111,8 +112,18 @@ export default class AddOffer extends Component {
     })
   }
 
+  isEthToken = (sellCurrency, buyCurrency) => {
+    const isTokenSell = helpers.ethToken.isEthToken({ name: sellCurrency })
+    const isTokenBuy = helpers.ethToken.isEthToken({ name: buyCurrency })
+
+    this.setState(() => ({
+      isTokenBuy,
+      isTokenSell,
+    }))
+  }
+
   correctMinAmountSell = async (sellCurrency) => {
-    if (coinsWithDynamicFee.includes(sellCurrency)) {
+    if (coinsWithDynamicFee.includes(sellCurrency) && !helpers.ethToken.isEthToken({ name: sellCurrency })) {
       const minimalestAmountForSell = await helpers[sellCurrency].estimateFeeValue({ method: 'swap', speed: 'fast' })
       this.setState({
         minimalestAmountForSell,
@@ -141,9 +152,8 @@ export default class AddOffer extends Component {
     const { buyCurrency, sellCurrency, buyAmount, sellAmount } = this.state
 
     if (sellCurrency === value) {
-      await this.switching()
+      this.switching()
     } else {
-
       this.checkPair(sellCurrency)
 
       await this.checkBalance(sellCurrency)
@@ -157,16 +167,16 @@ export default class AddOffer extends Component {
         this.handleBuyAmountChange(buyAmount)
         this.handleSellAmountChange(sellAmount)
       }
+      this.isEthToken(sellCurrency, value)
+      this.getFee()
     }
   }
 
   handleSellCurrencySelect = async ({ value }) => {
     const { buyCurrency, sellCurrency, sellAmount, buyAmount } = this.state
-
     if (buyCurrency === value) {
-      await this.switching()
+      this.switching()
     } else {
-
       this.checkPair(value)
 
       await this.checkBalance(value)
@@ -180,6 +190,8 @@ export default class AddOffer extends Component {
         this.handleBuyAmountChange(buyAmount)
         this.handleSellAmountChange(sellAmount)
       }
+      this.isEthToken(value, buyCurrency)
+      this.getFee()
     }
   }
 
@@ -354,20 +366,20 @@ export default class AddOffer extends Component {
   switching = async () => {
     const { sellCurrency, buyCurrency, sellAmount, buyAmount } = this.state
 
-    await this.checkBalance(buyCurrency)
-    await this.updateExchangeRate(buyCurrency, sellCurrency)
-
-    actions.pairs.selectPair(buyCurrency)
-
-    this.setState(() => ({
+    this.setState({
+      sellAmount: '',
+      buyAmount: '',
       sellCurrency: buyCurrency,
       buyCurrency: sellCurrency,
-    }))
+    }, async () => {
+      await this.checkBalance(buyCurrency)
+      await this.updateExchangeRate(buyCurrency, sellCurrency)
 
-    if (sellAmount > 0 || buyAmount > 0) {
-      this.handleBuyAmountChange(sellAmount)
-      this.handleSellAmountChange(buyAmount)
-    }
+      actions.pairs.selectPair(buyCurrency)
+
+      this.isEthToken(this.state.sellCurrency, this.state.buyCurrency)
+      this.getFee(this.state.sellCurrency, this.state.buyCurrency)
+    })
   }
 
   checkPair = (value) => {
@@ -384,32 +396,38 @@ export default class AddOffer extends Component {
   render() {
     const { currencies, tokenItems, addSelectedItems } = this.props
     const { exchangeRate, buyAmount, sellAmount, buyCurrency, sellCurrency, minimalestAmountForSell, minimalestAmountForBuy,
-      balance, ethBalance, manualRate, isPartial, isToken } = this.state
-    const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
-    const minAmountSell = coinsWithDynamicFee.includes(sellCurrency) ? minimalestAmountForSell : minAmountOffer[sellCurrency]
-    const minAmountBuy = coinsWithDynamicFee.includes(buyCurrency) ? minimalestAmountForBuy : minAmountOffer[buyCurrency]
+      balance, ethBalance, manualRate, isPartial, isTokenSell, isTokenBuy } = this.state
 
-    const minimalAmountSell = !isToken ? Math.floor(minAmountSell * 1e6) / 1e6 : 0
-    const minimalAmountBuy = !isToken ? Math.floor(minAmountBuy * 1e6) / 1e6 : 0
+    const linked = Link.all(this, 'exchangeRate', 'buyAmount', 'sellAmount')
+
+    const minimalAmountSell = !isTokenSell
+      ? coinsWithDynamicFee.includes(sellCurrency) ? minimalestAmountForSell : minAmountOffer[buyCurrency]
+      : 0.001
+
+    const minimalAmountBuy = !isTokenBuy
+      ? coinsWithDynamicFee.includes(buyCurrency) ? minimalestAmountForBuy : minAmountOffer[buyCurrency]
+      : 0.001
 
     const isDisabled = !exchangeRate
       || !buyAmount && !sellAmount
       || BigNumber(sellAmount).isGreaterThan(balance)
-      || !isToken && BigNumber(sellAmount).isLessThan(minimalAmountSell)
+      || BigNumber(sellAmount).isLessThan(minimalAmountSell)
       || BigNumber(buyAmount).isLessThan(minimalAmountBuy)
 
-    if (linked.sellAmount.value !== '') {
+    if (linked.sellAmount.value !== '' && linked.sellAmount.value > 0) {
       linked.sellAmount.check((value) => (BigNumber(value).isGreaterThan(minimalAmountSell)),
         <span style={{ position: 'relative', marginRight: '44px' }}>
           <FormattedMessage id="transaction444" defaultMessage="Sell amount must be greater than " />
+          {' '}
           {minimalAmountSell}
         </span>
       )
     }
-    if (linked.buyAmount.value !== '') {
+    if (linked.buyAmount.value !== '' && linked.sellAmount.value > 0) {
       linked.buyAmount.check((value) => (BigNumber(value).isGreaterThan(minimalAmountBuy)),
         <span style={{ position: 'relative', marginRight: '44px' }}>
           <FormattedMessage id="transaction450" defaultMessage="Buy amount must be greater than " />
+          {' '}
           {minimalAmountBuy}
         </span>
       )

@@ -33,10 +33,12 @@ const filterMyOrders = (orders, peer) => orders
 
 const filterOrders = (orders, filter) => orders
   .filter(order => order.isProcessing !== true)
+  .filter(order => order.isHidden !== true)
   .filter(order => Pair.check(order, filter))
   .sort((a, b) => Pair.compareOrders(b, a))
 
 @connect(({
+  rememberedOrders,
   core: { orders, filter },
   ipfs: { isOnline, isAllPeersLoaded, peer },
   currencies: { items: currencies },
@@ -46,6 +48,7 @@ const filterOrders = (orders, filter) => orders
   isOnline,
   isAllPeersLoaded,
   currencies,
+  decline: rememberedOrders.savedOrders,
 }))
 @withRouter
 @injectIntl
@@ -84,10 +87,16 @@ export default class Orders extends Component {
   }
 
   removeOrder = (orderId) => {
-    if (confirm('Are your sure ?')) {
-      actions.core.removeOrder(orderId)
-      actions.core.updateCore()
-    }
+    actions.modals.open(constants.modals.Confirm, {
+      onAccept: () => {
+        actions.core.deletedPartialCurrency(orderId)
+        actions.core.removeOrder(orderId)
+        actions.core.updateCore()
+      },
+      message: (
+        <FormattedMessage id="orders94s" defaultMessage="Are you sure you want to delete the order?" />
+      ),
+    })
   }
 
   acceptRequest = (orderId, peer) => {
@@ -106,7 +115,7 @@ export default class Orders extends Component {
 
   render() {
     const { sellOrders, buyOrders, isVisible } = this.state
-    let { sellCurrency, buyCurrency, intl } = this.props
+    let { sellCurrency, buyCurrency, intl, decline } = this.props
     buyCurrency = buyCurrency.toUpperCase()
     sellCurrency = sellCurrency.toUpperCase()
 
@@ -217,6 +226,8 @@ export default class Orders extends Component {
               key={row.id}
               orderId={orderId}
               row={row}
+              decline={decline}
+              removeOrder={this.removeOrder}
             />
           )}
           isLoading={sellOrders.length === 0 && !isIpfsLoaded}
@@ -243,6 +254,8 @@ export default class Orders extends Component {
               key={row.id}
               orderId={orderId}
               row={row}
+              decline={decline}
+              removeOrder={this.removeOrder}
             />
           )}
           isLoading={buyOrders.length === 0 && !isIpfsLoaded}

@@ -13,27 +13,17 @@ export default class EmergencySave extends Component {
     flow: PropTypes.object,
   }
 
-  state = {
-    isShowEmergency: false,
-  }
-
-  showEmergency = () => {
-    this.setState({
-      isShowEmergency: !this.state.isShowEmergency,
-    })
-  }
 
   render() {
-    const { isShowEmergency } = this.state
-    const { flow: { state } } = this.props
+    const { flow: { state }, onClick, isShowDevInformation } = this.props
 
     return (
       <div styleName="block">
-        <span styleName="button"  onClick={this.showEmergency}>
+        <span styleName="button"  onClick={onClick}>
           <FormattedMessage id="EmergencySave33" defaultMessage="Developer information" />
         </span>
         {
-          isShowEmergency && (
+          isShowDevInformation && (
             <pre styleName="information">
               <code>
                 {

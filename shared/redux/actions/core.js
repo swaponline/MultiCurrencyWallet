@@ -11,6 +11,49 @@ const debug = (...args) => console.log(...args)
 
 const getOrders = (orders) => {
   reducers.core.getOrders({ orders })
+  actions.core.addCurrencyFromOrders(orders)
+}
+
+const addCurrencyFromOrders = (orders) => {
+  const currenciesGetState = getState().currencies
+  const allCurrencyies = currenciesGetState.items.map(item => item.name) // все валюты достпуные в клиенте
+  const partialCurrency = currenciesGetState.partialItems // получаем все премиальные валюты
+
+  const sellOrderArray = orders.map(item => item.sellCurrency) // получаем из ордерова валюты на продажу
+  const buyOrderArray = orders.map(item => item.buyCurrency) // получаем из ордерова валюты на покупку
+
+  let sortedArray = [...sellOrderArray] // записываем sellOrderArray в массив
+
+  // terators/generators require regenerator-runtime
+  for (const sellCurrency of sellOrderArray) { // eslint-disable-line
+    for (const buyCurrency of buyOrderArray) { // eslint-disable-line
+      if (sellCurrency !== buyCurrency) {
+        if (!sellOrderArray.includes(sellCurrency)) {
+          if (allCurrencyies.includes(sellCurrency)) { // не пускаю валюты не существующие в клиенте
+            sortedArray.push(sellCurrency)
+          }
+        }  else if (!sellOrderArray.includes(buyCurrency)) {
+          if (allCurrencyies.includes(buyCurrency)) { // не пускаю валюты не существующие в клиенте
+            sortedArray.push(buyCurrency)
+          }
+        }
+      }
+    }
+  }
+
+  sortedArray.forEach(item => { // добавляем объект в дроп, еще раз проверяя, на совпадения
+    if (!partialCurrency.map(item => item.name).includes(item)) {
+      partialCurrency.push(
+        {
+          name: item.toUpperCase(),
+          title: item.toUpperCase(),
+          icon: item.toLowerCase(),
+          value: item.toLowerCase(),
+        }
+      )
+    }
+  })
+  reducers.currencies.updatePartialItems(partialCurrency)
 }
 
 const getSwapById = (id) => new Swap(id, SwapApp.shared())
@@ -42,10 +85,55 @@ const declineRequest = (orderId, participantPeer) => {
   order.declineRequest(participantPeer)
 }
 
-const removeOrder = (orderId) => {
-  SwapApp.shared().services.orders.remove(orderId)
-  actions.feed.deleteItemToFeed(orderId)
+const rememberOrder = (orderId) => {
+  console.log('??????????????')
+  reducers.rememberedOrders.savedOrders(orderId)
+  localStorage.setItem(constants.localStorage.savedOrders, JSON.stringify(getState().rememberedOrders.savedOrders))
 }
+const saveDeletedOrder = (orderId) => {
+  reducers.rememberedOrders.deletedOrders(orderId)
+  localStorage.setItem(constants.localStorage.deletedOrders, JSON.stringify(getState().rememberedOrders.deletedOrders))
+}
+
+const forgetOrders = (orderId) => {
+  reducers.rememberedOrders.forgetOrders(orderId)
+  localStorage.setItem(constants.localStorage.savedOrders, JSON.stringify(getState().rememberedOrders.savedOrders))
+}
+
+
+const removeOrder = (orderId) => {
+  actions.feed.deleteItemToFeed(orderId)
+  SwapApp.shared().services.orders.remove(orderId)
+  actions.core.updateCore()
+}
+
+const showMyOrders = () => {
+  SwapApp.shared().services.orders.showMyOrders()
+}
+
+const hideMyOrders = () => {
+  SwapApp.shared().services.orders.hideMyOrders()
+}
+
+const deletedPartialCurrency = (orderId) => {
+  const deletedOrder = SwapApp.shared().services.orders.getByKey(orderId)
+  const deletedOrderSellCurrency = deletedOrder.sellCurrency
+  const deletedOrderBuyCurrency = deletedOrder.buyCurrency
+  const orders = SwapApp.shared().services.orders.items
+
+  const deletedOrderSell = orders.filter(item => item.sellCurrency.toUpperCase() === deletedOrderSellCurrency)
+  const deletedOrderBuy = orders.filter(item => item.buyCurrency.toUpperCase() === deletedOrderBuyCurrency)
+
+  const premiumCurrencies = ['BTC', 'ETH', 'SWAP'] // валюты, которые всегда должны быть в дропе
+
+  if (deletedOrderSell.length === 1 && !premiumCurrencies.includes(deletedOrderSellCurrency)) {
+    reducers.currencies.deletedPartialCurrency(deletedOrderSellCurrency)
+  } else if (deletedOrderBuy.length === 1 && !premiumCurrencies.includes(deletedOrderBuyCurrency)) {
+    reducers.currencies.deletedPartialCurrency(deletedOrderBuyCurrency)
+  }
+}
+
+const hasHiddenOrders = () => SwapApp.shared().services.orders.hasHiddenOrders()
 
 const sendRequest = (orderId, destination = {}, callback) => {
   const { address: destinationAddress } = destination
@@ -102,13 +190,19 @@ const sendRequestForPartial = (orderId, newValues, destination = {}, callback) =
 }
 
 const createOrder = (data, isPartial = false) => {
+  const order = SwapApp.shared().services.orders.create(data)
   if (!isPartial) {
-    return SwapApp.shared().services.orders.create(data)
+    return order
   }
 
-  const order = SwapApp.shared().services.orders.create(data)
+  actions.core.setupPartialOrder(order)
+  return order
+}
 
-  const { price } = Pair.fromOrder(order)
+const setupPartialOrder = (order) => {
+  const pairData = Pair.fromOrder(order)
+  if (!pairData || !pairData.price) return
+  const { price } = pairData
 
   order.setRequestHandlerForPartial('sellAmount', ({ sellAmount }, oldOrder) => {
     const oldPair = Pair.fromOrder(oldOrder)
@@ -155,8 +249,14 @@ const createOrder = (data, isPartial = false) => {
 
     return newOrder
   })
+}
 
-  return order
+const initPartialOrders = () => {
+  SwapApp.shared().services.orders.items.forEach((order) => {
+    if (order && order.isMy && order.isPartial) {
+      actions.core.setupPartialOrder(order)
+    }
+  })
 }
 
 const requestToPeer = (event, peer, data, callback) => {
@@ -167,6 +267,7 @@ const updateCore = () => {
   const orders = SwapApp.shared().services.orders.items
 
   getOrders(orders)
+
   actions.feed.getFeedDataFromOrder(orders)
 }
 
@@ -205,6 +306,8 @@ const markCoinAsVisible = (coin) => {
 }
 
 export default {
+  rememberOrder,
+  forgetOrders,
   getSwapById,
   getOrders,
   setFilter,
@@ -220,4 +323,12 @@ export default {
   markCoinAsVisible,
   requestToPeer,
   getInformationAboutSwap,
+  saveDeletedOrder,
+  hideMyOrders,
+  showMyOrders,
+  hasHiddenOrders,
+  setupPartialOrder,
+  initPartialOrders,
+  deletedPartialCurrency,
+  addCurrencyFromOrders,
 }

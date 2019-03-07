@@ -9,6 +9,9 @@ import { connect } from 'redaction'
 import actions from 'redux/actions'
 import { BigNumber } from 'bignumber.js'
 import { Redirect } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
+import { getState } from 'redux/core'
+import reducers from 'redux/core/reducers'
 
 import SelectGroup from './SelectGroup/SelectGroup'
 import Select from 'components/modals/OfferModal/AddOffer/Select/Select'
@@ -24,21 +27,27 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 
 import config from 'app-config'
-import { util } from 'swap.app'
+import SwapApp, { util } from 'swap.app'
 
 import helpers, { constants, links } from 'helpers'
 
 
 const filterIsPartial = (orders) => orders
-  .filter(order => order.isPartial && !order.isProcessing)
+  .filter(order => order.isPartial && !order.isProcessing && !order.isHidden)
+  .filter(order => (order.sellAmount !== 0) && order.sellAmount.isGreaterThan(0)) // WTF sellAmount can be not BigNumber
+  .filter(order => (order.buyAmount !== 0) && order.buyAmount.isGreaterThan(0)) // WTF buyAmount can be not BigNumber too - need fix this
 
 const text = [
   <FormattedMessage id="partial223" defaultMessage="To change default wallet for buy currency. " />,
   <FormattedMessage id="partial224" defaultMessage="Leave empty for use Swap.Online wallet " />,
 ]
 
-const subTitle = (sell, buy) => (
-  <FormattedMessage id="partial437" defaultMessage="Exchange {sellCase} and {buyCase} in 60 seconds with AtomicSwap" values={{ sellCase: sell, buyCase: buy }} />
+const subTitle = (sell, sellTicker, buy, buyTicker) => (
+  <FormattedMessage
+    id="partial437"
+    defaultMessage="Atomic Swap {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}) Instant Exchange"
+    values={{ full_name1: sell, ticker_name1: sellTicker, full_name2: buy, ticker_name2: buyTicker }}
+  />
 )
 
 const isWidgetBuild = config && config.isWidget
@@ -47,14 +56,20 @@ const isWidgetBuild = config && config.isWidget
 @connect(({
   currencies,
   addSelectedItems,
-  core: { orders },
+  rememberedOrders,
+  addPartialItems,
+  core: { orders, hiddenCoinsList },
   user: { ethData, btcData, /* bchData, */ tokensData, eosData, telosData, nimData, usdtData, ltcData },
 }) => ({
-  currencies: currencies.items,
-  addSelectedItems: currencies.addSelectedItems,
+  currencies: currencies.partialItems,
+  allCurrencyies: currencies.items,
+  addSelectedItems: currencies.addPartialItems,
   orders: filterIsPartial(orders),
+  allOrders: orders,
   currenciesData: [ ethData, btcData, eosData, telosData, /* bchData, */ ltcData, usdtData /* nimData */ ],
   tokensData: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
+  decline: rememberedOrders.savedOrders,
+  hiddenCoinsList,
 }))
 @CSSModules(styles, { allowMultiple: true })
 export default class PartialClosure extends Component {
@@ -63,7 +78,7 @@ export default class PartialClosure extends Component {
     orders: [],
   }
 
-  static getDerivedStateFromProps({ orders, history, match: { params: { buy, sell, locale } } }, { haveCurrency, getCurrency }) {
+  static getDerivedStateFromProps({ allOrders, orders, history, match: { params: { buy, sell, locale } } }, { haveCurrency, getCurrency }) {
 
     if (!Array.isArray(orders)) { return }
 
@@ -76,21 +91,38 @@ export default class PartialClosure extends Component {
     }
   }
 
-  constructor({ tokensData, currenciesData, match: { params: { buy, sell } }, intl: { locale }, history, ...props }) {
+  constructor({ tokensData, allCurrencyies, currenciesData, match: { params: { buy, sell } }, intl: { locale }, history, decline, ...props }) {
     super()
+
+    if (sell && buy) {
+      if (!allCurrencyies.map(item => item.name).includes(sell.toUpperCase())
+        || !allCurrencyies.map(item => item.name).includes(buy.toUpperCase())) {
+        history.push(localisedUrl(locale, `/exchange/swap-to-btc`))
+      }
+    }
 
     const sellToken = sell || ((!isWidgetBuild) ? 'eth' : 'btc')
     const buyToken = buy || ((!isWidgetBuild) ? 'btc' : config.erc20token)
 
+    this.returnNeedCurrency(sellToken, buyToken)
+
     if (!(buy && sell) && !props.location.hash.includes('#widget')) {
       history.push(localisedUrl(locale, `/exchange/${sellToken}-to-${buyToken}`))
     }
+
     this.wallets = {}
     currenciesData.forEach(item => {
       this.wallets[item.currency] = item.address
     })
     tokensData.forEach(item => {
       this.wallets[item.currency] = item.address
+    })
+
+    Array.of(sellToken, buyToken).forEach((item) => {
+      const currency = item.toUpperCase()
+      if (props.hiddenCoinsList.includes(currency)) {
+        actions.core.markCoinAsVisible(currency)
+      }
     })
 
     this.state = {
@@ -111,7 +143,11 @@ export default class PartialClosure extends Component {
       customWalletUse: true,
       customWallet: this.wallets[buyToken.toUpperCase()],
       extendedControls: false,
+      estimatedFeeValues: {},
     }
+    constants.coinsWithDynamicFee
+      .forEach(item => this.state.estimatedFeeValues[item] = constants.minAmountOffer[item])
+
     let timer
     let usdRates
 
@@ -121,8 +157,12 @@ export default class PartialClosure extends Component {
   }
 
   componentDidMount() {
-    const { haveCurrency } = this.state
+    const { haveCurrency, getCurrency } = this.state
+    actions.core.updateCore()
+    this.returnNeedCurrency(haveCurrency, getCurrency)
     this.checkPair(haveCurrency)
+
+    this.updateAllowedBalance()
 
     this.usdRates = {}
     this.getUsdBalance()
@@ -130,20 +170,34 @@ export default class PartialClosure extends Component {
     this.timer = setInterval(() => {
       this.setOrders()
     }, 2000)
+
+    SwapApp.shared().services.room.on('new orders', () => this.checkPair(haveCurrency))
+
+    this.setEstimatedFeeValues()
+  }
+
+  setEstimatedFeeValues = async () => {
+    const { estimatedFeeValues } = this.state
+    let newEstimatedFeeValues = { ...estimatedFeeValues }
+
+    for await (let item of constants.coinsWithDynamicFee) { // eslint-disable-line
+      try {
+        const newValue = await helpers[item].estimateFeeValue({ method: 'swap', speed: 'fast' })
+        if (newValue) {
+          newEstimatedFeeValues[item] = newValue
+        }
+      } catch (error) {
+        console.error('Set Estimated Fee Values in for error: ', error)
+      }
+    }
+
+    return this.setState({
+      estimatedFeeValues: newEstimatedFeeValues,
+    })
   }
 
   componentWillUnmount() {
     clearInterval(this.timer)
-  }
-
-  shouldComponentUpdate(nextPros) {
-
-    if (nextPros.orders && this.props.orders && nextPros.orders > 0) {
-      if (nextPros.orders.length === this.props.orders.length) {
-        return false
-      }
-    }
-    return true
   }
 
   additionalPathing = (sell, buy) => {
@@ -175,11 +229,34 @@ export default class PartialClosure extends Component {
     }
   }
 
+  handleGoTrade = () => {
+    const { intl: { locale }, decline } = this.props
+    const { haveCurrency } = this.state
+
+    if (decline === undefined || decline.length === 0) {
+      this.sendRequest()
+    }
+
+    if (helpers.handleGoTrade.isSwapExist({ haveCurrency, decline }) !== false) {
+      this.handleDeclineOrdersModalOpen(helpers.handleGoTrade.isSwapExist({ haveCurrency, decline }))
+    } else {
+      this.sendRequest()
+    }
+  }
+
+  handleDeclineOrdersModalOpen = (i) => {
+    const orders = SwapApp.shared().services.orders.items
+    const declineSwap = actions.core.getSwapById(this.props.decline[i])
+
+    if (declineSwap !== undefined) {
+      actions.modals.open(constants.modals.DeclineOrdersModal, {
+        declineSwap,
+      })
+    }
+  }
+
   sendRequest = () => {
-    const {
-      getAmount, haveAmount, haveCurrency, getCurrency,
-      peer, orderId, customWalletUse, customWallet,
-    } = this.state
+    const { getAmount, haveAmount, peer, orderId, customWallet } = this.state
 
     if (!String(getAmount) || !peer || !orderId || !String(haveAmount)) {
       return
@@ -194,7 +271,6 @@ export default class PartialClosure extends Component {
     }
 
     this.setState(() => ({ isFetching: true }))
-
     actions.core.sendRequestForPartial(orderId, newValues, destination, (newOrder, isAccepted) => {
       if (isAccepted) {
         this.setState(() => ({
@@ -203,10 +279,63 @@ export default class PartialClosure extends Component {
           orderId: newOrder.id,
         }))
       } else {
+        this.getLinkTodeclineSwap(peer)
         this.setDeclinedOffer()
       }
     })
   }
+
+  getLinkTodeclineSwap = () => {
+    const orders = SwapApp.shared().services.orders.items
+
+    const unfinishedOrder = orders
+      .filter(item => item.isProcessing === true)
+      .filter(item => item.participant.peer === this.state.peer)
+      .filter(item => item.sellCurrency === this.state.getCurrency.toUpperCase())[0]
+
+    if (!unfinishedOrder) return
+
+    this.setState(() => ({
+      wayToDeclinedOrder: `swaps/${unfinishedOrder.sellCurrency}-${unfinishedOrder.sellCurrency}/${unfinishedOrder.id}`,
+    }))
+  }
+
+  goTodeclineSwap = () => {
+    const { intl: { locale } } = this.props
+    const { wayToDeclinedOrder } = this.state
+    this.props.history.push(localisedUrl(locale, `/${wayToDeclinedOrder}`))
+  }
+
+  returnNeedCurrency = (sellToken, buyToken) => {
+    const partialItems = Object.assign(getState().currencies.partialItems) // eslint-disable-line
+
+    const partialCurrency = getState().currencies.partialItems.map(item => item.name)
+    const allCurrencyies = getState().currencies.items.map(item => item.name)
+    let partialItemsArray = [...partialItems]
+    let currenciesOfUrl = []
+    currenciesOfUrl.push(sellToken, buyToken)
+
+    currenciesOfUrl.forEach(item => {
+      if (allCurrencyies.includes(item.toUpperCase())) {
+        if (!partialCurrency.includes(item.toUpperCase())) {
+          partialItemsArray.push(
+            {
+              name: item.toUpperCase(),
+              title: item.toUpperCase(),
+              icon: item.toLowerCase(),
+              value: item.toLowerCase(),
+            }
+          )
+          reducers.currencies.updatePartialItems(partialItemsArray)
+        }
+      } else {
+        this.setState(() => ({
+          haveCurrency: 'swap',
+        }))
+      }
+    })
+  }
+
 
   setDeclinedOffer = () => {
     this.setState(() => ({ haveAmount: '', isFetching: false, isDeclinedOffer: true }))
@@ -225,8 +354,6 @@ export default class PartialClosure extends Component {
   setAmountOnState = (maxAmount, getAmount, buyAmount) => {
     const { getCurrency } = this.state
     const decimalPlaces = constants.tokenDecimals[getCurrency.toLowerCase()]
-
-    console.log('getAmount', BigNumber(getAmount).dp(decimalPlaces).toString())
 
     this.setState(() => ({
       maxAmount: Number(maxAmount),
@@ -282,7 +409,7 @@ export default class PartialClosure extends Component {
   }
 
   setOrderOnState = (orders) => {
-    const { exHaveRate, exGetRate, haveAmount } = this.state
+    const { exHaveRate, exGetRate, haveAmount, getCurrency, estimatedFeeValues } = this.state
 
     let maxAllowedSellAmount = BigNumber(0)
     let maxAllowedGetAmount = BigNumber(0)
@@ -324,6 +451,10 @@ export default class PartialClosure extends Component {
       }))
     }
 
+    if (constants.coinsWithDynamicFee.includes(getCurrency) && maxAllowedGetAmount.isGreaterThan(0)) {
+      maxAllowedGetAmount = maxAllowedGetAmount.minus(estimatedFeeValues[getCurrency])
+    }
+
     const checkAmount = this.setAmountOnState(maxAllowedSellAmount, maxAllowedGetAmount, maxAllowedBuyAmount)
 
     if (!checkAmount) {
@@ -352,7 +483,7 @@ export default class PartialClosure extends Component {
       this.setState(() => ({
         getCurrency: value,
         haveCurrency,
-        customWallet: customWalletUse ? this.wallets[value.toUpperCase()] : '',
+        customWallet: customWalletUse ? this.getSystemWallet() : '',
       }))
       this.additionalPathing(haveCurrency, value)
       actions.analytics.dataEvent({
@@ -362,42 +493,45 @@ export default class PartialClosure extends Component {
     }
   }
 
-  handleSetHaveValue = ({ value }) => {
+  handleSetHaveValue = async ({ value }) => {
     const { haveCurrency, getCurrency, customWalletUse } = this.state
 
     if (value === getCurrency) {
       this.handleFlipCurrency()
     } else {
-      this.setState(() => ({
+      this.setState({
         haveCurrency: value,
         getCurrency,
-        customWallet: customWalletUse ? this.wallets[value.toUpperCase()] : '',
-      }))
-      this.additionalPathing(value, getCurrency)
+        customWallet: customWalletUse ? this.getSystemWallet() : '',
+      }, () => {
+        this.additionalPathing(value, getCurrency)
+        actions.analytics.dataEvent({
+          action: 'exchange-click-selector',
+          label: `${haveCurrency}-to-${getCurrency}`,
+        })
+        this.checkPair(value)
+        this.updateAllowedBalance()
+      })
+    }
+  }
+
+  handleFlipCurrency = async () => {
+    const { haveCurrency, getCurrency, customWalletUse } = this.state
+
+    this.setClearState()
+    this.checkPair(getCurrency)
+    this.additionalPathing(getCurrency, haveCurrency)
+    this.setState({
+      haveCurrency: getCurrency,
+      getCurrency: haveCurrency,
+      customWallet: customWalletUse ? this.getSystemWallet(haveCurrency) : '',
+    }, () => {
+      this.updateAllowedBalance()
+
       actions.analytics.dataEvent({
         action: 'exchange-click-selector',
         label: `${haveCurrency}-to-${getCurrency}`,
       })
-      this.checkPair(value)
-    }
-  }
-
-  handleFlipCurrency = () => {
-    const { haveCurrency, getCurrency, customWalletUse } = this.state
-
-    this.setClearState()
-
-    this.checkPair(getCurrency)
-    this.additionalPathing(getCurrency, haveCurrency)
-    this.setState(() => ({
-      haveCurrency: getCurrency,
-      getCurrency: haveCurrency,
-      customWallet: customWalletUse ? this.wallets[haveCurrency.toUpperCase()] : '',
-    }))
-
-    actions.analytics.dataEvent({
-      action: 'exchange-click-selector',
-      label: `${haveCurrency}-to-${getCurrency}`,
     })
   }
 
@@ -457,10 +591,10 @@ export default class PartialClosure extends Component {
     }))
   }
 
-  getSystemWallet = () => {
+  getSystemWallet = (walletCurrency) => {
     const { getCurrency } = this.state
 
-    return this.wallets[getCurrency.toUpperCase()]
+    return this.wallets[(walletCurrency) ? walletCurrency.toUpperCase() : getCurrency.toUpperCase()]
   }
 
   customWalletValid() {
@@ -473,6 +607,7 @@ export default class PartialClosure extends Component {
     if (getCurrency === 'btc') return util.typeforce.isCoinAddress.BTC(customWallet)
 
     return util.typeforce.isCoinAddress.ETH(customWallet)
+
   }
 
   customWalletAllowed() {
@@ -497,18 +632,25 @@ export default class PartialClosure extends Component {
   }
 
   checkPair = (value) => {
-    const selected = actions.pairs.selectPair(value)
+    const checkingValue = this.props.allCurrencyies.map(item => item.name).includes(value.toUpperCase())
+      ? value : 'swap'
 
+    const selected = actions.pairs.selectPairPartial(checkingValue)
     const check = selected.map(item => item.value).includes(this.state.getCurrency)
+
     if (!check) {
       this.setState(() => ({
         getCurrency: selected[0].value,
       }))
-    } else if (this.state.getCurrency === value) {
+    } else if (this.state.getCurrency === checkingValue) {
       this.setState(() => ({
         getCurrency: selected[0].value,
       }))
     }
+  }
+
+  updateAllowedBalance = async () => {
+    await actions[this.state.haveCurrency].getBalance(this.state.haveCurrency)
   }
 
   changeBalance = (value) => {
@@ -530,8 +672,22 @@ export default class PartialClosure extends Component {
     return this.setState({ extendedControls: value })
   }
 
+  doesComissionPreventThisOrder = () => {
+    const { haveAmount, getAmount, haveCurrency, getCurrency, estimatedFeeValues } = this.state
+    const isBtcHere = (haveCurrency === 'btc' || getCurrency === 'btc')
+
+    if (!isBtcHere) {
+      return false
+    }
+    const btcAmount = BigNumber(haveCurrency === 'btc' ? haveAmount : getAmount)
+    if (btcAmount.isGreaterThan(estimatedFeeValues.btc)) {
+      return false
+    }
+    return true
+  }
+
   render() {
-    const { currencies, addSelectedItems, currenciesData, tokensData, intl: { locale } } = this.props
+    const { currencies, addSelectedItems, currenciesData, tokensData, intl: { locale, formatMessage } } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching,
       isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet, getUsd, haveUsd,
       maxBuyAmount, getAmount, goodRate, extendedControls,
@@ -540,7 +696,7 @@ export default class PartialClosure extends Component {
     const haveCurrencyData = currenciesData.find(item => item.currency === haveCurrency.toUpperCase())
     const haveTokenData = tokensData.find(item => item.currency === haveCurrency.toUpperCase())
     const currentCurrency = haveCurrencyData || haveTokenData
-    const { balance } = currentCurrency
+    const { balance } = currentCurrency || 0
 
     const oneCryptoCost = maxBuyAmount.isLessThanOrEqualTo(0) ? BigNumber(0) : BigNumber(goodRate)
     const linked = Link.all(this, 'haveAmount', 'getAmount', 'customWallet')
@@ -555,6 +711,7 @@ export default class PartialClosure extends Component {
     const canDoOrder = !isNonOffers
       && BigNumber(getAmount).isGreaterThan(0)
       && this.customWalletValid()
+      && !this.doesComissionPreventThisOrder()
 
     const sellTokenFullName = currenciesData.find(item => item.currency === haveCurrency.toUpperCase())
       ? currenciesData.find(item => item.currency === haveCurrency.toUpperCase()).fullName
@@ -563,12 +720,34 @@ export default class PartialClosure extends Component {
       ? currenciesData.find(item => item.currency === getCurrency.toUpperCase()).fullName
       : getCurrency.toUpperCase()
 
+    const SeoValues = {
+      full_name1: sellTokenFullName,
+      ticker_name1: haveCurrency.toUpperCase(),
+      full_name2: buyTokenFullName,
+      ticker_name2: getCurrency.toUpperCase(),
+    }
+    const TitleTagString = formatMessage({
+      id: 'PartialClosureTitleTag',
+      defaultMessage: 'Atomic Swap {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}) Instant Exchange',
+    }, SeoValues)
+    const MetaDescriptionString = formatMessage({
+      id: 'PartialClosureMetaDescrTag',
+      defaultMessage: 'Best exchange rate for {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}). Swap.Online wallet provides instant exchange using Atomic Swap Protocol.', // eslint-disable-line
+    }, SeoValues)
+
     return (
       <Fragment>
+        <Helmet>
+          <title>{TitleTagString}</title>
+          <meta
+            name="description"
+            content={MetaDescriptionString}
+          />
+        </Helmet>
         {
           (!isWidget) && (
             <div styleName="TitleHolder">
-              <PageHeadline subTitle={subTitle(sellTokenFullName, buyTokenFullName)} />
+              <PageHeadline subTitle={subTitle(sellTokenFullName, haveCurrency.toUpperCase(), buyTokenFullName, getCurrency.toUpperCase())} />
             </div>
           )
         }
@@ -674,7 +853,31 @@ export default class PartialClosure extends Component {
             )}
             {isDeclinedOffer && (
               <p styleName="error" className={isWidget ? 'error' : ''} >
-                {`Offer is declined`}
+                <FormattedMessage
+                  id="PartialOfferCantProceed1"
+                  defaultMessage="Request rejected, possibly you have not complete another swap {br}{link}"
+                  values={{
+                    link:
+                      <a className="errorLink" role="button" onClick={() => this.goTodeclineSwap()}> {/* eslint-disable-line */}
+                        <FormattedMessage id="PartialOfferCantProceed1_1" defaultMessage="Check here" />
+                      </a>,
+                    br: <br />,
+                  }}
+                />
+              </p>
+            )}
+            {(this.doesComissionPreventThisOrder()
+              && BigNumber(getAmount).isGreaterThan(0)
+              && (this.state.haveAmount && this.state.getAmount)
+            ) && (
+              <p styleName="error" className={isWidget ? 'error' : ''} >
+                <FormattedMessage
+                  id="ErrorBtcLowAmount"
+                  defaultMessage="{btcAmount} BTC - This amount is too low"
+                  values={{
+                    btcAmount: this.state.haveCurrency === 'btc' ? this.state.haveAmount : this.state.getAmount,
+                  }}
+                />
               </p>
             )}
             {
@@ -750,7 +953,7 @@ export default class PartialClosure extends Component {
               )
             }
             <div styleName="rowBtn" className={isWidget ? 'rowBtn' : ''}>
-              <Button styleName="button" brand onClick={this.sendRequest} disabled={!canDoOrder}>
+              <Button styleName="button" brand onClick={this.handleGoTrade} disabled={!canDoOrder}>
                 <FormattedMessage id="partial541" defaultMessage="Exchange now" />
               </Button>
               <Button styleName="button" gray onClick={() => this.handlePush(isWidgetLink)} >
@@ -765,17 +968,34 @@ export default class PartialClosure extends Component {
               <FormattedMessage
                 id="PartialClosure562"
                 defaultMessage="Swap.Online is the decentralized in-browser hot wallet based on the Atomic Swaps technology.
-                  As in our wallet all blockchains interact decentralized and no-third-party way, we offer our users to exchange Bitcoin, Ethereum,
-                  USD Tether, BCH and EOS for free in a couple of seconds. At the time, Swap.Online charges no commision for the order making and taking.
-                  The exchange of crypto and tokens on Swap.Online is conducted in truly
-                  decentralized manner as we use the Atomic Swaps technology of peer-to-peer cross-chain interaction.
-                  Swap.Online uses IPFS-network for all the operational processes which results in no need for centralized server.
-                  The interface of exchange seems to look like that of crypto broker, not of ordinary DEX or CEX. In a couple of clicks,
-                  the user can place and take the offer, customizing the price of sent token.
-                  Also, the user can exchange the given percentage of his or her amount of tokens available (e.g. ½, ¼ etc.).
-                  One more advantage of the Swap.Online exchange service is the usage of one key for the full range of ERC-20 tokens.
-                  By the way, if case you’re not interested in exchange of some tokens, you can hide it from the list.
-                  Thus, use Swap.Online as your basic exchange for every crypto you’re holding!"
+
+                As in our wallet all blockchains interact decentralized and no-third-party way, we offer our users to exchange Bitcoin, Ethereum,
+                USD Tether, BCH and EOS for free in a couple of seconds.
+
+
+                At the time, Swap.Online charges no commision for the order making and taking.
+
+                The exchange of crypto and tokens on Swap.Online is conducted in truly decentralized manner as we use the
+                Atomic Swaps technology of peer-to-peer cross-chain interaction.
+
+
+                Swap.Online uses IPFS-network for all the operational processes which results in no need for centralized server.
+
+                The interface of exchange seems to look like that of crypto broker, not of ordinary DEX or CEX. In a couple of clicks, the user can place and take the offer,
+                customizing the price of sent token.
+
+
+                Also, the user can exchange the given percentage of his or her amount of tokens available (e.g. ½, ¼ etc.).
+
+
+                One more advantage of the Swap.Online exchange service is the usage of one key for the full range of ERC-20 tokens.
+
+                By the way, if case you’re not interested in exchange of some tokens, you can hide it from the list.
+
+                Thus, use Swap.Online as your basic exchange for every crypto you’re holding!"
+                values={{
+                  br: <br />,
+                }}
               />
             </p>
           )

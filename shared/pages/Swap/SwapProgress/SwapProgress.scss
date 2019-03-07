@@ -1,6 +1,5 @@
 .overlay {
   z-index: 1000;
-  margin-bottom: 20px;
 }
 .container {
   width: 100%;
@@ -54,14 +53,14 @@ $size: 200px;
     @include circle($size);
     clip: rect(0, #{$size/2}, $size, 0);
     background: #5100dc;
-    transition: 0.3s all ease;
+    transition: 0.3s transform ease;
     transform: rotate(200deg);
   }
   .gt-50 & {
     clip: rect(0, #{$size/2}, $size, 0);
     .ppc-progress-fill {
       clip: rect(0, $size, $size, #{$size/2});
-      transition: 0.3s all ease;
+      transition: 0.3s transform ease;
       background: #E5E5E5;
     }
   }
@@ -287,13 +286,27 @@ $size: 200px;
   color: #000;
 }
 
+.refundTransaction,
+.refundTransactionHash {
+  display: block;
+  position: relative;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
 @include media-tablet {
   .container {
-    width: 63%;
+    width: 600px;
   }
   .steps {
     top: -30px;
     right: 0;
+  }
+}
+
+@media all and (min-width: 570px) and (max-width: 670px) {
+  .container {
+    width: 540px;
   }
 }
 
@@ -368,5 +381,4 @@ $size: 200px;
       display: block;
     }
   }
-
 }

@@ -1,0 +1,22 @@
+.modal {
+  display: flex;
+  flex-direction: row;
+
+  &_column {
+    width: 100%;
+
+    &-title {
+      margin-top: 80px;
+    }
+  }
+
+  @include media-tablet-portrait-and-lower {
+    flex-direction: column;
+
+    width: 100%;
+
+    &_column {
+      width: 100%;
+    }
+  }
+}

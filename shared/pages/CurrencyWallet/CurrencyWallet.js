@@ -136,7 +136,11 @@ export default class CurrencyWallet extends Component {
 
   handleGoTrade = (currency) => {
     const { intl: { locale } } = this.props
-    this.props.history.push(localisedUrl(locale, `/${currency.toLowerCase()}`))
+    const whatDoUserProbablyWantToBuy = currency.toLowerCase() === 'btc'
+      ? 'eth'
+      : 'btc'
+
+    this.props.history.push(localisedUrl(locale, `/exchange/${currency.toLowerCase()}-to-${whatDoUserProbablyWantToBuy}`))
   }
 
   handleEosBuyAccount = async () => {
@@ -145,7 +149,7 @@ export default class CurrencyWallet extends Component {
 
   render() {
 
-    let { swapHistory, txHistory, location, match:{ params: { fullName } },  intl } = this.props
+    let { swapHistory, txHistory, location, match:{ params: { fullName } },  intl, hiddenCoinsList } = this.props
     const {
       currency,
       address,
@@ -185,6 +189,10 @@ export default class CurrencyWallet extends Component {
         defaultMessage: 'Atomic Swap Wallet allows you to manage and securely exchange ${fullName} (${currency}) with 0% fees. Based on Multi-Sig and Atomic Swap technologies.',
       },
     })
+
+    if (hiddenCoinsList.includes(currency)) {
+      actions.core.markCoinAsVisible(currency)
+    }
 
     return (
       <div className="root">

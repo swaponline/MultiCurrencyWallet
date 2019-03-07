@@ -15,13 +15,13 @@ import swapsExplorer from './swapsExplorer'
 import api from './api'
 import tips from './tips'
 import * as utils from './utils'
-
 // Methods
 import ignoreProps from './ignoreProps'
-
+import handleGoTrade from './handleGoTrade'
 // Getters
 import getPageOffset from './getPageOffset'
 import getScrollBarWidth from './getScrollBarWidth'
+import paddingForSwapList from './paddingForSwapList'
 
 import { migrate } from './migrations/'
 
@@ -33,6 +33,7 @@ export default {
   eth,
   ethToken,
   ltc,
+  handleGoTrade,
 }
 
 export {
@@ -56,8 +57,10 @@ export {
   migrate,
   // Methods
   ignoreProps,
+  handleGoTrade,
 
   // Getters
   getPageOffset,
   getScrollBarWidth,
+  paddingForSwapList,
 }

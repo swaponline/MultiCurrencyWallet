@@ -11,9 +11,14 @@ import ShowMoreCoins from './ShowMoreCoins/ShowMoreCoins'
 import EthChecker from './EthChecker/EthChecker'
 import ReceiveModal from './ReceiveModal/ReceiveModal'
 import DownloadModal from './DownloadModal/DownloadModal'
+import DeclineOrdersModal from './DeclineOrdersModal/DeclineOrdersModal'
+import IncompletedSwaps from './IncompletedSwaps/IncompletedSwaps'
+
+import Confirm from './Confirm/Confirm'
 
 
 export default {
+  DeclineOrdersModal,
   SignUpModal,
   OfferModal,
   WithdrawModal,
@@ -27,4 +32,6 @@ export default {
   EthChecker,
   ReceiveModal,
   DownloadModal,
+  IncompletedSwaps,
+  Confirm,
 }

@@ -88,8 +88,12 @@ export default class App extends React.Component {
       // actions.analytics.errorEvent(error)
     }
 
-    const db = indexedDB.open('test')
-    db.onerror = () => {
+    try {
+      const db = indexedDB.open('test')
+      db.onerror = () => {
+        window.leveldown = memdown
+      }
+    } catch (e) {
       window.leveldown = memdown
     }
 
@@ -109,6 +113,11 @@ export default class App extends React.Component {
     const isWidget = history.location.pathname.includes('/exchange') && history.location.hash === '#widget'
     const isCalledFromIframe = window.location !== window.parent.location
     const isWidgetBuild = config && config.isWidget
+
+    if (isWidgetBuild && localStorage.getItem(constants.localStorage.didWidgetsDataSend) !== 'true') {
+      actions.firebase.submitUserDataWidget('usersData')
+      localStorage.setItem(constants.localStorage.didWidgetsDataSend, true)
+    }
 
     if (multiTabs) {
       return <PreventMultiTabs />

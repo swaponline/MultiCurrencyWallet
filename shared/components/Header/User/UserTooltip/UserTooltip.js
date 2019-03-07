@@ -13,6 +13,8 @@ import ArrowRightSvg from './images/arrow-right.svg'
 import { TimerButton } from 'components/controls'
 import { FormattedMessage } from 'react-intl'
 
+import config from 'app-config'
+
 
 @CSSModules(styles)
 export default class UserTooltip extends Component {
@@ -27,6 +29,7 @@ export default class UserTooltip extends Component {
   render() {
     const { feeds, peer: mePeer } = this.props
 
+    const autoAcceptTimeout = (config && config.isWidgetBuild) ? 30 : 3
     return !!feeds.length && (
       <div styleName="column" >
         { feeds.length < 3  ? (
@@ -54,7 +57,7 @@ export default class UserTooltip extends Component {
                   <span styleName="decline" onClick={() => this.props.declineRequest(id, peer)} />
                   <div styleName="checked" onClick={() => this.props.acceptRequest(id, peer, `${links.swap}/${sellCurrency}-${buyCurrency}/${id}`)} />
                   <TimerButton
-                    timeLeft={3}
+                    timeLeft={autoAcceptTimeout}
                     isButton={false}
                     onClick={() => this.props.acceptRequest(id, peer, `${links.swap}/${sellCurrency}-${buyCurrency}/${id}`)}
                   />
@@ -65,7 +68,7 @@ export default class UserTooltip extends Component {
         ) : (
           <div styleName="feed" >
             <Link to={links.feed} >
-              <FormattedMessage id="QUESTION15" defaultMessage="Go to the feed page" />
+              <FormattedMessage id="userTooltip71" defaultMessage="Go to the feed page" />
             </Link>
           </div>
         )
