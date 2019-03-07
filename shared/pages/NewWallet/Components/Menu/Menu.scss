@@ -10,11 +10,11 @@
 .menuItem {
   margin-right: 40px;
 }
-
 .menuLink {
-  font-family: Inter UI;
   font-style: normal;
   font-weight: 500;
+  cursor: pointer;
   line-height: normal;
   font-size: 16px;
+  color: rgba(0, 0, 0, 0.6);
 }

@@ -3,9 +3,6 @@ import React, { Component } from 'react'
 import styles from './Menu.scss'
 import cssModules from 'react-css-modules'
 
-import CurrencySlider from '../Components/CurrencySlider/CurrencySlider'
-
-
 @cssModules(styles)
 export default class Menu extends Component {
   render() {
