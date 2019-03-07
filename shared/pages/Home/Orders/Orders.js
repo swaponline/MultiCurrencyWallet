@@ -38,6 +38,7 @@ const filterOrders = (orders, filter) => orders
   .sort((a, b) => Pair.compareOrders(b, a))
 
 @connect(({
+  rememberedOrders,
   core: { orders, filter },
   ipfs: { isOnline, isAllPeersLoaded, peer },
   currencies: { items: currencies },
@@ -47,6 +48,7 @@ const filterOrders = (orders, filter) => orders
   isOnline,
   isAllPeersLoaded,
   currencies,
+  decline: rememberedOrders.savedOrders,
 }))
 @withRouter
 @injectIntl
@@ -113,7 +115,7 @@ export default class Orders extends Component {
 
   render() {
     const { sellOrders, buyOrders, isVisible } = this.state
-    let { sellCurrency, buyCurrency, intl } = this.props
+    let { sellCurrency, buyCurrency, intl, decline } = this.props
     buyCurrency = buyCurrency.toUpperCase()
     sellCurrency = sellCurrency.toUpperCase()
 
@@ -224,6 +226,7 @@ export default class Orders extends Component {
               key={row.id}
               orderId={orderId}
               row={row}
+              decline={decline}
               removeOrder={this.removeOrder}
             />
           )}
@@ -251,6 +254,7 @@ export default class Orders extends Component {
               key={row.id}
               orderId={orderId}
               row={row}
+              decline={decline}
               removeOrder={this.removeOrder}
             />
           )}

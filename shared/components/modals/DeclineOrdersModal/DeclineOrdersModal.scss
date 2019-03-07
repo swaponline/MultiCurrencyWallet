@@ -1,0 +1,23 @@
+@include media-mobile {
+  .subTitle {
+    text-align: center;
+    width: 100%;
+    font-size: 14px;
+    margin-bottom: 15px
+  }
+}
+
+.subTitle {
+  text-align: center;
+  width: 100%;
+  font-size: 22px;
+  margin-bottom: 15px;
+  font-weight: 900;
+}
+
+.link{
+  font-size: 17px;
+  text-align: center;
+  text-decoration: underline;
+  font-weight: bold;
+}

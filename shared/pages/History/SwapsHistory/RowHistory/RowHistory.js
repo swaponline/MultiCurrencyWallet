@@ -73,6 +73,10 @@ export default class RowHistory extends Component {
     this.tryRefund(timeLeft)
   }
 
+  closeIncompleted = () => {
+    actions.modals.close('IncompletedSwaps')
+  }
+
 
   render() {
 
@@ -157,7 +161,7 @@ export default class RowHistory extends Component {
           { lockDateAndTime.split(' ').map((item, key) => <Fragment key={key}>{item}<br /></Fragment>) }
         </td>
         <td>
-          <Link to={`${linkToTheSwap}`}>
+          <Link to={`${linkToTheSwap}`} onClick={this.closeIncompleted}>
             <FormattedMessage id="RowHistory91" defaultMessage="Link to the swap" />
           </Link>
         </td>

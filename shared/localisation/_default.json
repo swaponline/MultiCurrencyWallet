@@ -1,5 +1,12 @@
 [
   {
+    "id": "menu.aboutus",
+    "message": "About Us",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
     "id": "menu.exchange",
     "message": "Exchange",
     "files": [
@@ -22,7 +29,7 @@
   },
   {
     "id": "LtcToEth.orderCreatorIsOffline",
-    "message": "The order creator is offline. Waiting for him..",
+    "message": "The order creator is offline. The request is valid for 30 min ",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
@@ -120,14 +127,11 @@
   },
   {
     "id": "QUESTION15",
-    "message": "Go to the feed page",
-    "files": [
-      "shared/components/Header/User/UserTooltip/UserTooltip.js"
-    ]
+    "message": "Go to the feed page"
   },
   {
     "id": "transactionLink28",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/components/Href/TransactionLink.js"
     ]
@@ -159,7 +163,7 @@
   },
   {
     "id": "Loader21",
-    "message": "Please wait, it takes from 3 to 5 minutes to complete the transaction.",
+    "message": "Please wait, it takes from 3 to 5 minutes to complete the transaction. ",
     "files": [
       "shared/components/loaders/Loader/Loader.js"
     ]
@@ -173,35 +177,35 @@
   },
   {
     "id": "EosRegAccountModal54",
-    "message": "Account name",
+    "message": "Account name ",
     "files": [
       "shared/components/modals/EosRegisterModal/EosRegisterModal.js"
     ]
   },
   {
     "id": "EosRegAccountModal58",
-    "message": "Active private key",
+    "message": "Active private key ",
     "files": [
       "shared/components/modals/EosRegisterModal/EosRegisterModal.js"
     ]
   },
   {
     "id": "EosRegAccountModal63",
-    "message": "Sorry, error occurred during activation",
+    "message": "Sorry, error occurred during activation ",
     "files": [
       "shared/components/modals/EosRegisterModal/EosRegisterModal.js"
     ]
   },
   {
     "id": "EosRegAccountModal70",
-    "message": "Login",
+    "message": "Login ",
     "files": [
       "shared/components/modals/EosRegisterModal/EosRegisterModal.js"
     ]
   },
   {
     "id": "Approve70",
-    "message": "Please set the amount limit that the swap smart contract can deduct from your account. We do not recommend setting any limits.",
+    "message": "Please set the amount limit that the swap smart contract can deduct from your account. We do not recommend setting any limits. ",
     "files": [
       "shared/components/modals/Approve/Approve.js"
     ]
@@ -229,7 +233,7 @@
   },
   {
     "id": "EosBuyAccountModal109",
-    "message": "Payment transaction:",
+    "message": "Payment transaction: ",
     "files": [
       "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
     ]
@@ -250,7 +254,7 @@
   },
   {
     "id": "EosBuyAccountModal78",
-    "message": "APrivate key",
+    "message": "Private key",
     "files": [
       "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
     ]
@@ -366,14 +370,10 @@
   },
   {
     "id": "Feld82",
-    "message": "INVALID PRIVATE KEY! You should pass correct value! Try again!",
+    "message": "INVALID PRIVATE KEY! You should pass correct value! Try again! ",
     "files": [
       "shared/components/modals/PrivateKeysModal/Field2/Field2.js"
     ]
-  },
-  {
-    "id": "ReceiveModal",
-    "message": "This is your address for receive "
   },
   {
     "id": "SaveKeysModal",
@@ -426,21 +426,21 @@
   },
   {
     "id": "ErrorNotification12",
-    "message": "Oops, looks like something went wrong!",
+    "message": "Oops, looks like something went wrong! ",
     "files": [
       "shared/components/notifications/ErrorNotification/ErrorNotification.js"
     ]
   },
   {
     "id": "WithdrawModal111",
-    "message": "Transfer",
+    "message": "Withdraw ",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
   },
   {
     "id": "Withdrow113",
-    "message": "Your balance:",
+    "message": "Your balance: ",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
@@ -482,42 +482,42 @@
   },
   {
     "id": "SwapProgress105",
-    "message": "3. Checking balance..",
+    "message": "Checking balance.. ",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.js"
     ]
   },
   {
     "id": "SwapProgress111",
-    "message": "4. Creating Bitcoin Script. \n Please wait, it can take a few minutes",
+    "message": "Creating Bitcoin Script. \n Please wait, it can take a few minutes",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.js"
     ]
   },
   {
     "id": "SwapProgress117",
-    "message": "5. ETH Owner received Bitcoin Script and Secret Hash. Waiting when he creates ETH Contract",
+    "message": "ETH Owner received Bitcoin Script and Secret Hash. Waiting when he creates ETH Contract",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.js"
     ]
   },
   {
     "id": "SwapProgress123",
-    "message": "6. ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait",
+    "message": "ETH contract created and charged. Requesting withdrawal from ETH Contract. Please wait. It usually takes less than 10 mins",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.js"
     ]
   },
   {
     "id": "SwapProgress129",
-    "message": "7. ETH was transferred to your wallet. Check the balance.",
+    "message": "ETH was transferred to your wallet. Check the balance. ",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.js"
     ]
   },
   {
     "id": "SwapProgress135",
-    "message": "Thank you for using Swap.Online!",
+    "message": "Thank you for using Swap.Online! ",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.js"
     ]
@@ -528,64 +528,64 @@
   },
   {
     "id": "SwapProgress32",
-    "message": "1. Please wait. Confirmation processing"
+    "message": "Please wait. Confirmation processing"
   },
   {
     "id": "SwapProgress38",
-    "message": "2. Waiting for BTC Owner to create Secret Key, create BTC Script and charge it"
+    "message": "Waiting for BTC Owner to create Secret Key, create BTC Script and charge it"
   },
   {
     "id": "SwapProgress44",
-    "message": "3. The bitcoin Script was created and charged. Please check the information below"
+    "message": "The bitcoin Script was created and charged. Please check the information below"
   },
   {
     "id": "SwapProgress50",
-    "message": "4. Checking balance.."
+    "message": "Checking balance.. "
   },
   {
     "id": "SwapProgress56",
-    "message": "5. Creating Ethereum Contract. \n Please wait, it can take a few minutes"
+    "message": "Creating Ethereum Contract. \n Please wait, it can take a few minutes"
   },
   {
     "id": "SwapProgress62",
-    "message": "6. Waiting for BTC Owner to add a Secret Key to ETH Contact"
+    "message": "Waiting for BTC Owner to add a Secret Key to ETH Contact"
   },
   {
     "id": "SwapProgress68",
-    "message": "7. BTC was transferred to your wallet. Check the balance."
+    "message": "BTC was transferred to your wallet. Check the balance. "
   },
   {
     "id": "SwapProgress74",
-    "message": "Thank you for using Swap.Online!"
+    "message": "Thank you for using Swap.Online! "
   },
   {
     "id": "SwapProgress80",
-    "message": "Thank you for using Swap.Online!"
+    "message": "Thank you for using Swap.Online! "
   },
   {
     "id": "SwapProgress93",
-    "message": "1. The order creator is offline. Waiting for him..",
+    "message": "The order creator is offline. The request is valid for 30 min ",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.js"
     ]
   },
   {
     "id": "SwapProgress99",
-    "message": "2. Create a secret key",
+    "message": "Creating a secret key",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.js"
     ]
   },
   {
     "id": "Tooltip11",
-    "message": "?",
+    "message": "? ",
     "files": [
       "shared/components/ui/Tooltip/Tooltip.js"
     ]
   },
   {
     "id": "Currency101",
-    "message": "Balance:",
+    "message": "Balance: ",
     "files": [
       "shared/pages/Currency/Currency.js"
     ]
@@ -629,7 +629,7 @@
   },
   {
     "id": "CurrencyWallet110",
-    "message": "History your transactions",
+    "message": " History your transactions",
     "files": [
       "shared/pages/CurrencyWallet/CurrencyWallet.js"
     ]
@@ -745,14 +745,14 @@
   },
   {
     "id": "Home153",
-    "message": "What is atomic swap?",
+    "message": "What is atomic swap? ",
     "files": [
       "shared/pages/Home/Home.js"
     ]
   },
   {
     "id": "orders150",
-    "message": "sell",
+    "message": " sell ",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]
@@ -822,7 +822,7 @@
   },
   {
     "id": "NotFound8",
-    "message": "Page not found!",
+    "message": "Page not found! ",
     "files": [
       "shared/pages/NotFound/NotFound.js"
     ]
@@ -868,14 +868,14 @@
   },
   {
     "id": "BtcToEos74",
-    "message": "Secret:",
+    "message": "Secret: ",
     "files": [
       "shared/pages/Swap/BtcToEos.js"
     ]
   },
   {
     "id": "BtcToEos77",
-    "message": "Hash:",
+    "message": "Hash: ",
     "files": [
       "shared/pages/Swap/BtcToEos.js"
     ]
@@ -893,35 +893,39 @@
   },
   {
     "id": "BtcToEthToken156",
-    "message": "Checking balance.."
+    "message": "3. Checking balance.. "
+  },
+  {
+    "id": "BtcToEthToken167",
+    "message": "3. Creating Bitcoin Script. \n Please wait, it can take a few minutes"
   },
   {
     "id": "BtcToEthToken172",
-    "message": "Transaction:"
+    "message": "Transaction: "
   },
   {
     "id": "BtcToEthToken230",
-    "message": "4. ETH Owner received Bitcoin Script and Secret Hash. Waiting when he creates ETH Contract"
+    "message": "3. ETH Owner received Bitcoin Script and Secret Hash. Waiting when he creates ETH Contract"
   },
   {
     "id": "BtcToEthToken243",
-    "message": "Transaction:"
+    "message": "Transaction: "
   },
   {
     "id": "BtcToEthToken260",
-    "message": "5. ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait"
+    "message": "4. ETH contract created and charged. Requesting withdrawal from ETH Contract. Please wait. It usually takes less than 10 mins"
   },
   {
     "id": "BtcToEthToken267",
-    "message": "Transaction:"
+    "message": "Transaction: "
   },
   {
     "id": "BtcToEthToken290",
-    "message": "6. ETH was transferred to your wallet. Check the balance."
+    "message": "6. ETH was transferred to your wallet. Check the balance. "
   },
   {
     "id": "BtcToEthToken293",
-    "message": "Thank you for using Swap.Online!"
+    "message": "Thank you for using Swap.Online! "
   },
   {
     "id": "BtcToEthToken303",
@@ -929,11 +933,11 @@
   },
   {
     "id": "BtcToEthToken316",
-    "message": "Transaction:"
+    "message": "Transaction: "
   },
   {
     "id": "BtcToEthToken77",
-    "message": "Waiting for a market maker. If the market maker does not appear within 5 minutes, the swap will be canceled automatically."
+    "message": "Waiting for a market maker. If the market maker does not appear within 5 minutes, the swap will be canceled automatically. "
   },
   {
     "id": "BtcToEthToken87",
@@ -995,7 +999,7 @@
   },
   {
     "id": "EthTokenBtc116",
-    "message": "Transaction:"
+    "message": "Transaction: "
   },
   {
     "id": "EthTokenBtc147",
@@ -1007,11 +1011,11 @@
   },
   {
     "id": "EthTokenBtc162",
-    "message": "Secret Hash:"
+    "message": "Secret Hash: "
   },
   {
     "id": "EthTokenBtc165",
-    "message": "Script address:"
+    "message": "Script address: "
   },
   {
     "id": "EthTokenBtc184",
@@ -1019,11 +1023,11 @@
   },
   {
     "id": "EthTokenBtc228",
-    "message": "Everything is OK. Continue"
+    "message": "Everything is OK. continue "
   },
   {
     "id": "EthTokenBtc267",
-    "message": "Checking balance.."
+    "message": "Checking balance.. "
   },
   {
     "id": "EthTokenBtc276",
@@ -1031,11 +1035,11 @@
   },
   {
     "id": "EthTokenBtc283",
-    "message": "Transaction:"
+    "message": "Transaction: "
   },
   {
     "id": "EthTokenBtc303",
-    "message": "Transaction:"
+    "message": "Transaction: "
   },
   {
     "id": "EthTokenBtc321",
@@ -1047,11 +1051,11 @@
   },
   {
     "id": "EthTokenBtc342",
-    "message": "Transaction:"
+    "message": "Transaction: "
   },
   {
     "id": "EthTokenBtc365",
-    "message": "Thank you for using Swap.Online!"
+    "message": "Thank you for using Swap.Online! "
   },
   {
     "id": "EthTokenBtc375",
@@ -1067,11 +1071,11 @@
   },
   {
     "id": "EthTokenBtc94",
-    "message": "Confirmation of the transaction is necessary for crediting the reputation.If a user does not bring the deal to the end he gets a negative credit to his reputation."
+    "message": "Confirmation of the transaction is necessary for crediting the reputation.If a user does not bring the deal to the end he gets a negative credit to his reputation. "
   },
   {
     "id": "EthTokenToUsdt101",
-    "message": "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative credit to his reputation.",
+    "message": "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative credit to his reputation. ",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
@@ -1092,7 +1096,7 @@
   },
   {
     "id": "EthTokenToUsdt123",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
@@ -1113,14 +1117,14 @@
   },
   {
     "id": "EthTokenToUsdt169",
-    "message": "Secret Hash:",
+    "message": "Secret Hash: ",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
   },
   {
     "id": "EthTokenToUsdt172",
-    "message": "Script address:",
+    "message": "Script address: ",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
@@ -1134,7 +1138,7 @@
   },
   {
     "id": "EthTokenToUsdt236",
-    "message": "Everything is OK. Continue",
+    "message": "Everything is OK. continue ",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
@@ -1148,35 +1152,35 @@
   },
   {
     "id": "EthTokenToUsdt253",
-    "message": "Your balance:",
+    "message": "Your balance: ",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
   },
   {
     "id": "EthTokenToUsdt257",
-    "message": "Required balance:",
+    "message": "Required balance: ",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
   },
   {
     "id": "EthTokenToUsdt260",
-    "message": "Your address:",
+    "message": "Your address: ",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
   },
   {
     "id": "EthTokenToUsdt267",
-    "message": "Continue",
+    "message": "continue ",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
   },
   {
     "id": "EthTokenToUsdt276",
-    "message": "Checking balance..",
+    "message": "Checking balance.. ",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
@@ -1190,14 +1194,14 @@
   },
   {
     "id": "EthTokenToUsdt292",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
   },
   {
     "id": "EthTokenToUsdt313",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
@@ -1218,21 +1222,21 @@
   },
   {
     "id": "EthTokenToUsdt352",
-    "message": "USDT withdrawal transaction:",
+    "message": "USDT withdrawal transaction: ",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
   },
   {
     "id": "EthTokenToUsdt377",
-    "message": "7. USDT was transferred to your wallet. Check the balance.",
+    "message": "7. USDT was transferred to your wallet. Check the balance. ",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
   },
   {
     "id": "EthTokenToUsdt380",
-    "message": "Thank you for using Swap.Online!",
+    "message": "Thank you for using Swap.Online! ",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
@@ -1260,7 +1264,7 @@
   },
   {
     "id": "EthToLtc104",
-    "message": "The order creator is offline. Waiting for him..",
+    "message": "The order creator is offline. The request is valid for 30 min ",
     "files": [
       "shared/pages/Swap/EthToLtc.js"
     ]
@@ -1274,14 +1278,14 @@
   },
   {
     "id": "EthToLtc125",
-    "message": "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative credit to his reputation.",
+    "message": "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative credit to his reputation. ",
     "files": [
       "shared/pages/Swap/EthToLtc.js"
     ]
   },
   {
     "id": "EthToLtc128",
-    "message": "Sign",
+    "message": "sign ",
     "files": [
       "shared/pages/Swap/EthToLtc.js"
     ]
@@ -1295,7 +1299,7 @@
   },
   {
     "id": "EthToLtc139",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/EthToLtc.js"
     ]
@@ -1316,14 +1320,14 @@
   },
   {
     "id": "EthToLtc182",
-    "message": "Secret Hash:",
+    "message": "Secret Hash: ",
     "files": [
       "shared/pages/Swap/EthToLtc.js"
     ]
   },
   {
     "id": "EthToLtc185",
-    "message": "Script address:",
+    "message": "Script address: ",
     "files": [
       "shared/pages/Swap/EthToLtc.js"
     ]
@@ -1337,7 +1341,7 @@
   },
   {
     "id": "EthToLtc247",
-    "message": "Everything is OK. Continue",
+    "message": "Everything is OK. continue ",
     "files": [
       "shared/pages/Swap/EthToLtc.js"
     ]
@@ -1351,35 +1355,35 @@
   },
   {
     "id": "EthToLtc264",
-    "message": "Your balance:",
+    "message": "Your balance: ",
     "files": [
       "shared/pages/Swap/EthToLtc.js"
     ]
   },
   {
     "id": "EthToLtc267",
-    "message": "Required balance:",
+    "message": "Required balance: ",
     "files": [
       "shared/pages/Swap/EthToLtc.js"
     ]
   },
   {
     "id": "EthToLtc270",
-    "message": "Your address:",
+    "message": "Your address: ",
     "files": [
       "shared/pages/Swap/EthToLtc.js"
     ]
   },
   {
     "id": "EthToLtc277",
-    "message": "Continue",
+    "message": "continue ",
     "files": [
       "shared/pages/Swap/EthToLtc.js"
     ]
   },
   {
     "id": "EthToLtc286",
-    "message": "Checking balance..",
+    "message": "Checking balance.. ",
     "files": [
       "shared/pages/Swap/EthToLtc.js"
     ]
@@ -1393,14 +1397,14 @@
   },
   {
     "id": "EthToLtc305",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/EthToLtc.js"
     ]
   },
   {
     "id": "EthToLtc326",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/EthToLtc.js"
     ]
@@ -1421,21 +1425,21 @@
   },
   {
     "id": "EthToLtc364",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/EthToLtc.js"
     ]
   },
   {
     "id": "EthToLtc386",
-    "message": "7. LTC was transferred to your wallet. Check the balance.",
+    "message": "7. LTC was transferred to your wallet. Check the balance. ",
     "files": [
       "shared/pages/Swap/EthToLtc.js"
     ]
   },
   {
     "id": "EthToLtc389",
-    "message": "Thank you for using Swap.Online!",
+    "message": "Thank you for using Swap.Online! ",
     "files": [
       "shared/pages/Swap/EthToLtc.js"
     ]
@@ -1449,7 +1453,7 @@
   },
   {
     "id": "EthToLtc412",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/EthToLtc.js"
     ]
@@ -1477,14 +1481,14 @@
   },
   {
     "id": "LtcTOeth117",
-    "message": "Waiting for a market maker. If the market maker does not appear within 5 minutes, the swap will be canceled automatically.",
+    "message": "Waiting for a market maker. If the market maker does not appear within 5 minutes, the swap will be canceled automatically. ",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
   },
   {
     "id": "LtcTOeth127",
-    "message": "2. Create a secret key",
+    "message": "Creating a secret key",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
@@ -1498,21 +1502,21 @@
   },
   {
     "id": "LtcTOeth142",
-    "message": "Save the secret key! Otherwise there will be a chance you loose your money!",
+    "message": "Save the secret key! Otherwise there will be a chance you loose your money! ",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
   },
   {
     "id": "LtcTOeth145",
-    "message": "Secret Key:",
+    "message": "Secret Key: ",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
   },
   {
     "id": "LtcTOeth148",
-    "message": "Secret Hash:",
+    "message": "Secret Hash: ",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
@@ -1526,35 +1530,35 @@
   },
   {
     "id": "LtcTOeth162",
-    "message": "Your balance:",
+    "message": "Your balance: ",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
   },
   {
     "id": "LtcTOeth165",
-    "message": "Required balance:",
+    "message": "Required balance: ",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
   },
   {
     "id": "LtcTOeth168",
-    "message": "Your address:",
+    "message": "Your address: ",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
   },
   {
     "id": "LtcTOeth175",
-    "message": "Continue",
+    "message": "continue ",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
   },
   {
     "id": "LtcTOeth184",
-    "message": "Checking balance..",
+    "message": "Checking balance.. ",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
@@ -1568,7 +1572,7 @@
   },
   {
     "id": "LtcTOeth200",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
@@ -1582,7 +1586,7 @@
   },
   {
     "id": "LtcTOeth234",
-    "message": "How refund your money ?",
+    "message": "How refund your money ? ",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
@@ -1596,35 +1600,35 @@
   },
   {
     "id": "LtcTOeth267",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
   },
   {
     "id": "LtcTOeth283",
-    "message": "5. ETH Contract created and charged. Requesting withdrawal from ETH Contract. Please wait",
+    "message": "5. ETH contract created and charged. Requesting withdrawal from ETH Contract. Please wait. It usually takes less than 10 mins",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
   },
   {
     "id": "LtcTOeth290",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
   },
   {
     "id": "LtcTOeth313",
-    "message": "6. ETH was transferred to your wallet. Check the balance.",
+    "message": "6. ETH was transferred to your wallet. Check the balance. ",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
   },
   {
     "id": "LtcTOeth315",
-    "message": "Thank you for using Swap.Online!",
+    "message": "Thank you for using Swap.Online! ",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
@@ -1638,14 +1642,14 @@
   },
   {
     "id": "LtcTOeth338",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
   },
   {
     "id": "UsdrToEthToken106",
-    "message": "2. Create a secret key",
+    "message": "Creating a secret key",
     "files": [
       "shared/pages/Swap/UsdtToEthToken.js"
     ]
@@ -1659,21 +1663,21 @@
   },
   {
     "id": "UsdrToEthToken121",
-    "message": "Save the secret key! Otherwise there will be a chance that you'll lose your money!",
+    "message": "Save the secret key! Otherwise there will be a chance that you'll lose your money! ",
     "files": [
       "shared/pages/Swap/UsdtToEthToken.js"
     ]
   },
   {
     "id": "UsdrToEthToken124",
-    "message": "Secret Key:",
+    "message": "Secret Key: ",
     "files": [
       "shared/pages/Swap/UsdtToEthToken.js"
     ]
   },
   {
     "id": "UsdrToEthToken127",
-    "message": "Secret Hash:",
+    "message": "Secret Hash: ",
     "files": [
       "shared/pages/Swap/UsdtToEthToken.js"
     ]
@@ -1687,35 +1691,35 @@
   },
   {
     "id": "UsdrToEthToken141",
-    "message": "Your balance:",
+    "message": "Your balance: ",
     "files": [
       "shared/pages/Swap/UsdtToEthToken.js"
     ]
   },
   {
     "id": "UsdrToEthToken144",
-    "message": "Required balance:",
+    "message": "Required balance: ",
     "files": [
       "shared/pages/Swap/UsdtToEthToken.js"
     ]
   },
   {
     "id": "UsdrToEthToken147",
-    "message": "Your address:",
+    "message": "Your address: ",
     "files": [
       "shared/pages/Swap/UsdtToEthToken.js"
     ]
   },
   {
     "id": "UsdrToEthToken154",
-    "message": "Continue",
+    "message": "continue ",
     "files": [
       "shared/pages/Swap/UsdtToEthToken.js"
     ]
   },
   {
     "id": "UsdrToEthToken163",
-    "message": "Checking balance...",
+    "message": "Checking balance... ",
     "files": [
       "shared/pages/Swap/UsdtToEthToken.js"
     ]
@@ -1729,7 +1733,7 @@
   },
   {
     "id": "UsdrToEthToken179",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/UsdtToEthToken.js"
     ]
@@ -1743,7 +1747,7 @@
   },
   {
     "id": "UsdrToEthToken213",
-    "message": "How to refund your money?",
+    "message": "How to refund your money? ",
     "files": [
       "shared/pages/Swap/UsdtToEthToken.js"
     ]
@@ -1757,35 +1761,35 @@
   },
   {
     "id": "UsdrToEthToken246",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/UsdtToEthToken.js"
     ]
   },
   {
     "id": "UsdrToEthToken264",
-    "message": "5. ETH Contract is created and charged. Requesting withdrawal from ETH Contract. Please wait",
+    "message": "5. ETH Contract is created and charged. Requesting withdrawal from ETH Contract. Please wait. It usually takes less than 10 mins",
     "files": [
       "shared/pages/Swap/UsdtToEthToken.js"
     ]
   },
   {
     "id": "UsdrToEthToken271",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/UsdtToEthToken.js"
     ]
   },
   {
     "id": "UsdrToEthToken294",
-    "message": "6. ETH was transferred to your wallet. Check the balance.",
+    "message": "6. ETH was transferred to your wallet. Check the balance. ",
     "files": [
       "shared/pages/Swap/UsdtToEthToken.js"
     ]
   },
   {
     "id": "UsdrToEthToken297",
-    "message": "Thank you for using Swap.Online!",
+    "message": "Thank you for using Swap.Online! ",
     "files": [
       "shared/pages/Swap/UsdtToEthToken.js"
     ]
@@ -1799,14 +1803,14 @@
   },
   {
     "id": "UsdrToEthToken320",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/UsdtToEthToken.js"
     ]
   },
   {
     "id": "UsdrToEthToken83",
-    "message": "Waiting for a market maker. If the market maker does not appear within 5 minutes, the swap will be canceled automatically.",
+    "message": "Waiting for a market maker. If the market maker does not appear within 5 minutes, the swap will be canceled automatically. ",
     "files": [
       "shared/pages/Swap/UsdtToEthToken.js"
     ]
@@ -1868,21 +1872,21 @@
   },
   {
     "id": "RowWallet181",
-    "message": "Unconfirmed",
+    "message": "Unconfirmed balance",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
   },
   {
     "id": "RowWallet189",
-    "message": "Unconfirmed",
+    "message": "Unconfirmed balance",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
   },
   {
     "id": "RowWallet197",
-    "message": "Unconfirmed",
+    "message": "Unconfirmed balance",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
@@ -1895,12 +1899,8 @@
     ]
   },
   {
-    "id": "transaction27",
-    "message": "For a swap, you need"
-  },
-  {
     "id": "PrivateKeysModal106",
-    "message": "We do not store your private keys and will not be able to restore them!",
+    "message": "We do not store your private keys and will not be able to restore them! ",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
@@ -1935,7 +1935,7 @@
   },
   {
     "id": "PrivateKeysModal130",
-    "message": "Please fill information below from instruction.txt file. We`d like to be sure that you saved the private keys before you can continue to the site.",
+    "message": "Please fill information below from instruction.txt file. We`d like to be sure that you saved the private keys before you can continue  to the site. ",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
@@ -1949,7 +1949,7 @@
   },
   {
     "id": "PrivateKeysModal145",
-    "message": "GO TO THE SITE!",
+    "message": "GO TO THE SITE! ",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
@@ -2015,13 +2015,6 @@
     ]
   },
   {
-    "id": "menu.aboutus",
-    "message": "About Us",
-    "files": [
-      "shared/components/Header/Header.js"
-    ]
-  },
-  {
     "id": "BtcToEthTokenAddress1",
     "message": "Confirm destination address (by default - swap.online wallet)"
   },
@@ -2031,14 +2024,14 @@
   },
   {
     "id": "WithdrawButton32",
-    "message": "You can not send and exchange this asset, because you have a zero balance.",
+    "message": "when you click this button, in the field, an amount equal to your balance minus the miners commission will appear. ",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
   },
   {
     "id": "BTCTOLTC132",
-    "message": "2. Create a secret key",
+    "message": "Creating a secret key",
     "files": [
       "shared/pages/Swap/BtcToLtc.js"
     ]
@@ -2052,7 +2045,7 @@
   },
   {
     "id": "BTCtoLTC246",
-    "message": "How refund your money ?",
+    "message": "How refund your money ? ",
     "files": [
       "shared/pages/Swap/BtcToLtc.js"
     ]
@@ -2094,15 +2087,7 @@
   },
   {
     "id": "Checkingbalance",
-    "message": "Checking balance..",
-    "files": [
-      "shared/pages/Swap/BtcToLtc.js",
-      "shared/pages/Swap/LtcToBtc.js"
-    ]
-  },
-  {
-    "id": "Continue",
-    "message": "Continue",
+    "message": "Checking balance.. ",
     "files": [
       "shared/pages/Swap/BtcToLtc.js",
       "shared/pages/Swap/LtcToBtc.js"
@@ -2110,21 +2095,21 @@
   },
   {
     "id": "LTCTOBTC147",
-    "message": "Save the secret key! Otherwise there will be a chance you loose your money!",
+    "message": "Save the secret key! Otherwise there will be a chance you loose your money! ",
     "files": [
       "shared/pages/Swap/BtcToLtc.js"
     ]
   },
   {
     "id": "LTCTOBTC150",
-    "message": "Secret Key:",
+    "message": "Secret Key: ",
     "files": [
       "shared/pages/Swap/BtcToLtc.js"
     ]
   },
   {
     "id": "MoneyWasTransferred",
-    "message": "6. LTC was transferred to your wallet. Check the balance.",
+    "message": "6. LTC was transferred to your wallet. Check the balance. ",
     "files": [
       "shared/pages/Swap/BtcToLtc.js"
     ]
@@ -2147,22 +2132,15 @@
   },
   {
     "id": "Required",
-    "message": "Required balance:",
+    "message": "Required balance: ",
     "files": [
       "shared/pages/Swap/BtcToLtc.js",
       "shared/pages/Swap/LtcToBtc.js"
     ]
   },
   {
-    "id": "Scriptaddress:",
-    "message": "Script address:",
-    "files": [
-      "shared/pages/Swap/BtcToLtc.js"
-    ]
-  },
-  {
     "id": "SecretHash",
-    "message": "Secret Hash:",
+    "message": "Secret Hash: ",
     "files": [
       "shared/pages/Swap/BtcToLtc.js",
       "shared/pages/Swap/LtcToBtc.js"
@@ -2170,7 +2148,7 @@
   },
   {
     "id": "Thank",
-    "message": "Thank you for using Swap.Online!",
+    "message": "Thank you for using Swap.Online! ",
     "files": [
       "shared/pages/Swap/BtcToLtc.js",
       "shared/pages/Swap/LtcToBtc.js"
@@ -2178,7 +2156,7 @@
   },
   {
     "id": "Transaction",
-    "message": "Transaction:",
+    "message": "Transaction: ",
     "files": [
       "shared/pages/Swap/BtcToLtc.js",
       "shared/pages/Swap/LtcToBtc.js"
@@ -2194,7 +2172,7 @@
   },
   {
     "id": "address",
-    "message": "Your address:",
+    "message": "Your address: ",
     "files": [
       "shared/pages/Swap/BtcToLtc.js",
       "shared/pages/Swap/LtcToBtc.js"
@@ -2202,7 +2180,7 @@
   },
   {
     "id": "balance",
-    "message": "Your balance:",
+    "message": "Your balance: ",
     "files": [
       "shared/pages/Swap/BtcToLtc.js",
       "shared/pages/Swap/LtcToBtc.js"
@@ -2217,7 +2195,7 @@
   },
   {
     "id": "offline",
-    "message": "The order creator is offline. Waiting for him..",
+    "message": "The order creator is offline. The request is valid for 30 min ",
     "files": [
       "shared/pages/Swap/BtcToLtc.js",
       "shared/pages/Swap/LtcToBtc.js"
@@ -2225,7 +2203,7 @@
   },
   {
     "id": "Confirmation",
-    "message": "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative credit to his reputation.",
+    "message": "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative credit to his reputation. ",
     "files": [
       "shared/pages/Swap/LtcToBtc.js"
     ]
@@ -2260,7 +2238,7 @@
   },
   {
     "id": "LTCTOBTC396",
-    "message": "7. BTC was transferred to your wallet. Check the balance.",
+    "message": "7. BTC was transferred to your wallet. Check the balance. ",
     "files": [
       "shared/pages/Swap/LtcToBtc.js"
     ]
@@ -2281,7 +2259,7 @@
   },
   {
     "id": "OK",
-    "message": "Everything is OK. Continue",
+    "message": "Everything is OK. continue ",
     "files": [
       "shared/pages/Swap/LtcToBtc.js"
     ]
@@ -2295,14 +2273,7 @@
   },
   {
     "id": "Scriptaddress",
-    "message": "Script address:",
-    "files": [
-      "shared/pages/Swap/LtcToBtc.js"
-    ]
-  },
-  {
-    "id": "Sign",
-    "message": "Sign",
+    "message": "Script address: ",
     "files": [
       "shared/pages/Swap/LtcToBtc.js"
     ]
@@ -2323,7 +2294,7 @@
   },
   {
     "id": "Row334",
-    "message": "Send",
+    "message": "Exchange",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
@@ -2343,12 +2314,16 @@
     ]
   },
   {
+    "id": "BtcToEthToken236",
+    "message": "Top up BTC Script"
+  },
+  {
     "id": "Row277",
-    "message": "not activated"
+    "message": "Not activated"
   },
   {
     "id": "partial221",
-    "message": "Max amount for exchange:",
+    "message": "Max amount for exchange: ",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -2564,10 +2539,6 @@
     ]
   },
   {
-    "id": "SwapHisrory19",
-    "message": "Status refund"
-  },
-  {
     "id": "SwapHisrory20",
     "message": "Status order",
     "files": [
@@ -2646,14 +2617,14 @@
   },
   {
     "id": "Wallet116",
-    "message": "Balance",
+    "message": "Balance ",
     "files": [
       "shared/pages/Wallet/Wallet.js"
     ]
   },
   {
     "id": "Wallet117",
-    "message": "Your Address",
+    "message": "Your Address ",
     "files": [
       "shared/pages/Wallet/Wallet.js"
     ]
@@ -2674,7 +2645,7 @@
   },
   {
     "id": "Orders141",
-    "message": "No such ticker. Redirecting to SWAP-BTC exchange...",
+    "message": "No such ticker. Redirecting to SWAP-BTC exchange... ",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]
@@ -2758,7 +2729,7 @@
   },
   {
     "id": "Table96",
-    "message": "Loading...",
+    "message": "Loading... ",
     "files": [
       "shared/components/tables/Table/Table.js"
     ]
@@ -2912,7 +2883,7 @@
   },
   {
     "id": "transaction368",
-    "message": "Amount must be greater than"
+    "message": "Amount must be greater than "
   },
   {
     "id": "transaction376",
@@ -2937,14 +2908,14 @@
   },
   {
     "id": "Withdrow159",
-    "message": "Amount must be greater than",
+    "message": "Amount must be greater than ",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
   },
   {
     "id": "partial291",
-    "message": "Wait participant:",
+    "message": "Wait participant: ",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -2973,49 +2944,49 @@
   },
   {
     "id": "Eos71",
-    "message": "This account will be registered in EOS blockchain ",
+    "message": "This account will be registered in EOS blockchain",
     "files": [
       "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
     ]
   },
   {
     "id": "Eos75",
-    "message": "Private key for active and owner permissions ",
+    "message": "Private key for active and owner permissions",
     "files": [
       "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
     ]
   },
   {
     "id": "Eos79",
-    "message": "Public key associated with account ",
+    "message": "Public key associated with account",
     "files": [
       "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
     ]
   },
   {
     "id": "Eos83",
-    "message": "This amount will be withdrawn from your BTC wallet ",
+    "message": "This amount will be withdrawn from your BTC wallet",
     "files": [
       "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
     ]
   },
   {
     "id": "Eos53",
-    "message": "Enter your EOS account name ",
+    "message": "Enter your EOS account name",
     "files": [
       "shared/components/modals/EosRegisterModal/EosRegisterModal.js"
     ]
   },
   {
     "id": "Eos57",
-    "message": "Enter private key for active permission ",
+    "message": "Enter private key for active permission",
     "files": [
       "shared/components/modals/EosRegisterModal/EosRegisterModal.js"
     ]
   },
   {
     "id": "add408",
-    "message": "To change the exchange rate ",
+    "message": "To change the exchange rate",
     "files": [
       "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
     ]
@@ -3036,7 +3007,7 @@
   },
   {
     "id": "partial223",
-    "message": "To change default wallet for buy currency.",
+    "message": "To change default wallet for buy currency. ",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -3147,6 +3118,13 @@
     ]
   },
   {
+    "id": "Scriptaddress:",
+    "message": "Script address:",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js"
+    ]
+  },
+  {
     "id": "RowHistory281",
     "message": "Received",
     "files": [
@@ -3194,6 +3172,10 @@
     "files": [
       "shared/pages/Swap/Timer/Timer.js"
     ]
+  },
+  {
+    "id": "BtcToEthToken275",
+    "message": "Refund hex transaction:"
   },
   {
     "id": "Header184",
@@ -3357,6 +3339,10 @@
     ]
   },
   {
+    "id": "PartialPriceSearch483",
+    "message": "Price: 1"
+  },
+  {
     "id": "partial437",
     "message": "Atomic Swap {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}) Instant Exchange",
     "files": [
@@ -3470,7 +3456,7 @@
   },
   {
     "id": "PreventMultiTabs12",
-    "message": "Swap.Online supports only one active tab.\n    Please reload this page to continue using this tab or close it",
+    "message": "Swap.Online supports only one active tab.\n    Please reload this page to continue  using this tab or close it",
     "files": [
       "shared/components/PreventMultiTabs/PreventMultiTabs.js"
     ]
@@ -3635,7 +3621,7 @@
   },
   {
     "id": "Withdraw18333",
-    "message": "Withdraw {data$}"
+    "message": "Withdraw {data}"
   },
   {
     "id": "ImportKeys205",
@@ -3671,6 +3657,10 @@
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
+  },
+  {
+    "id": "Withdrow168",
+    "message": "The amount must be less than your balance by the minimum amount for the transaction {min} {currency}"
   },
   {
     "id": "Withdrow170",
@@ -3795,21 +3785,21 @@
   },
   {
     "id": "Wallet156",
-    "message": "Welcome to Swap.Online, a decentralized cross-chain wallet based on the Atomic Swap technology.\n             Here you can safely store and promptly exchange Bitcoin, Ethereum, EOS, USD, Tether, BCH, and numerous ERC-20 tokens.\n             Swap.Online doesn’t store your keys or tokens. Our wallet operates directly in at browser, so no additional installations or downloads are required.\n             The Swap.Online service is fully decentralized as (because)all the operations with tokens are executed via the IPFS network.\n             Our team was the first who finalized Atomic Swaps with USDT and EOS in September 2018 and Litecoin blockchain was added in October 2018.\n             Our wallet addresses a real multi-chain integration with a decentralized order book, no third party involved in the exchange, no proxy-token and no token wrapping.\n             We can integrate any ERC-20 token of a project for free just in case of mutual PR-announcement.\n             In addition, we developed Swap.Button, a b2b-solution to exchange all kinds of tokens for Bitcoin and Ethereum.\n             Install Swap.Button html widget on your site and collect crypto investments for your project.\n             Start using https://swap.online/ today and enjoy the power of true decentralization.",
+    "message": "Welcome to Swap.Online, a decentralized cross-chain wallet based on the Atomic Swap technology. {br}Here you can safely store and promptly exchange Bitcoin, Ethereum, EOS, USD, Tether, BCH, and numerous ERC-20 tokens. {br}{br}Swap.Online doesn’t store your keys or tokens. Our wallet operates directly in at browser, so no additional installations or downloads are required. {br}The Swap.Online service is fully decentralized as (because)all the operations with tokens are executed via the IPFS network. {br}{br}Our team was the first who finalized Atomic Swaps with USDT and EOS in September 2018 and Litecoin blockchain was added in October 2018. {br}Our wallet addresses a real multi-chain integration with a decentralized order book, no third party involved in the exchange, no proxy-token and no token wrapping. {br}We can integrate any ERC-20 token of a project for free just in case of mutual PR-announcement. {br}{br}In addition, we developed Swap.Button, a b2b-solution to exchange all kinds of tokens for Bitcoin and Ethereum. {br}Install Swap.Button html widget on your site and collect crypto investments for your project. {br}{br}Start using https: //swap.online/ today and enjoy the power of true decentralization.",
     "files": [
       "shared/pages/Wallet/Wallet.js"
     ]
   },
   {
     "id": "PartialClosure562",
-    "message": "Swap.Online is the decentralized in-browser hot wallet based on the Atomic Swaps technology.\n            As in our wallet all blockchains interact decentralized and no-third-party way, we offer our users to exchange Bitcoin, Ethereum,\n            USD Tether, BCH and EOS for free in a couple of seconds. At the time, Swap.Online charges no commision for the order making and taking.\n            For example, on the vast majority of exchanges, there is a 0,3%-operational fee for the taker of liquidity and 1-5% withdrawal fee.\n            The exchange of crypto and tokens on Swap.Online is conducted in truly\n            decentralized manner as we use the Atomic Swaps technology of peer-to-peer cross-chain interaction.\n            Swap.Online uses IPFS-network for all the operational processes which results in no need for centralized server.\n            The interface of exchange seems to look like that of crypto broker, not of ordinary DEX or CEX. In a couple of clicks,\n            the user can place and take the offer, customizing the price of sent token.\n            Also, the user can exchange the given percentage of his or her amount of tokens available (e.g. ½, ¼ etc.).\n            One more advantage of the Swap.Online exchange service is the usage of one key for the full range of ERC-20 tokens.\n            By the way, if case you’re not interested in exchange of some tokens, you can hide it from the list.\n            Thus, use Swap.Online as your basic exchange for every crypto you’re holding!",
+    "message": "Swap.Online is the decentralized in-browser hot wallet based on the Atomic Swaps technology. {br}As in our wallet all blockchains interact decentralized and no-third-party way, we offer our users to exchange Bitcoin, Ethereum, USD Tether, BCH and EOS for free in a couple of seconds. {br}{br}At the time, Swap.Online charges no commision for the order making and taking. {br}The exchange of crypto and tokens on Swap.Online is conducted in truly decentralized manner as we use the Atomic Swaps technology of peer-to-peer cross-chain interaction. {br}{br}Swap.Online uses IPFS-network for all the operational processes which results in no need for centralized server. {br}The interface of exchange seems to look like that of crypto broker, not of ordinary DEX or CEX. In a couple of clicks, the user can place and take the offer, customizing the price of sent token. {br}{br}Also, the user can exchange the given percentage of his or her amount of tokens available (e.g. ½, ¼ etc.). {br}{br}One more advantage of the Swap.Online exchange service is the usage of one key for the full range of ERC-20 tokens. {br}By the way, if case you’re not interested in exchange of some tokens, you can hide it from the list. {br}Thus, use Swap.Online as your basic exchange for every crypto you’re holding!",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
   },
   {
     "id": "RowWallet276",
-    "message": "node is down (You can not perform transactions).",
+    "message": " node is down (You can not perform transactions). ",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
@@ -3822,10 +3812,6 @@
     ]
   },
   {
-    "id": "BtcToEthToken161",
-    "message": "You can deposit found to contract balance, if you have more than 0.00015 BTC"
-  },
-  {
     "id": "ErrorNotification151",
     "message": "Error: {error}",
     "files": [
@@ -3835,6 +3821,42 @@
   {
     "id": "BtcToEthToken222",
     "message": "Creating Bitcoin Script. \n Please wait, it can take a few minutes"
+  },
+  {
+    "id": "deposit213",
+    "message": "and 0.002 ETH на gas fee"
+  },
+  {
+    "id": "deposit165",
+    "message": "You don't have enought funds to continue the swap. Copy this address and top it up with {missingBalance}  ",
+    "files": [
+      "shared/pages/Swap/DepositWindow/DepositWindow.js"
+    ]
+  },
+  {
+    "id": "deposit177",
+    "message": "Do not top up the contract with the greater amount than recommended. {br} The remaining balance will be send to the counter party. {br} You can send {tokenName} from a wallet of any exchange",
+    "files": [
+      "shared/pages/Swap/DepositWindow/DepositWindow.js"
+    ]
+  },
+  {
+    "id": "deposit231",
+    "message": "Received {balance} / {need} {tooltip}"
+  },
+  {
+    "id": "deposit239",
+    "message": "Swap will continue after {tokenName} contract receives the funds. {br} Is usually takes less than 10 min",
+    "files": [
+      "shared/pages/Swap/DepositWindow/DepositWindow.js"
+    ]
+  },
+  {
+    "id": "Deposit52",
+    "message": "You have {timer} min to make the payment",
+    "files": [
+      "shared/pages/Swap/DepositWindow/DepositWindow.js"
+    ]
   },
   {
     "id": "deposit198",
@@ -3852,7 +3874,7 @@
   },
   {
     "id": "BtcToEthToken201",
-    "message": "Create a secret key"
+    "message": "Creating a secret key"
   },
   {
     "id": "BtcToEthToken213",
@@ -3903,6 +3925,10 @@
     ]
   },
   {
+    "id": "advantagesTitle",
+    "message": "Why we are different from other exchanges"
+  },
+  {
     "id": "advantagesTitle1",
     "message": "0% commission"
   },
@@ -3917,6 +3943,10 @@
   {
     "id": "advantagesTxt1",
     "message": "The exchange is happening between you and other crypto holders (peer-2-peer). No percentage charged of the transaction."
+  },
+  {
+    "id": "advantagesTxt2",
+    "message": "We do not require any registration or personal authentication. (we don’t collect any data about the users)"
   },
   {
     "id": "advantagesTxt3",
@@ -4014,10 +4044,7 @@
   },
   {
     "id": "BtcToEthToken34",
-    "message": "Confirmation processing",
-    "files": [
-      "shared/pages/Swap/SwapList/steps/FirstStep.js"
-    ]
+    "message": "Confirmation process"
   },
   {
     "id": "BtcToEthToken43",
@@ -4084,10 +4111,7 @@
   },
   {
     "id": "swappropgress332",
-    "message": "How refund your money ?",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
+    "message": "How refund your money ?"
   },
   {
     "id": "swappropgress333",
@@ -4174,38 +4198,6 @@
     ]
   },
   {
-    "id": "Deposit52",
-    "message": "You have {timer} min to make the payment",
-    "files": [
-      "shared/pages/Swap/DepositWindow/DepositWindow.js"
-    ]
-  },
-  {
-    "id": "deposit165",
-    "message": "You don't have enought funds to continue the swap. Copy the address below and top it up with the recommended amount of {missingBalance}.",
-    "files": [
-      "shared/pages/Swap/DepositWindow/DepositWindow.js"
-    ]
-  },
-  {
-    "id": "deposit177",
-    "message": "You don't have enought of {amount} {tokenName} to finish the swap.{br}This amount includes the missing amount on your balance and miners fee.{br}You can sent {tokenName} from any wallet and exchange.",
-    "files": [
-      "shared/pages/Swap/DepositWindow/DepositWindow.js"
-    ]
-  },
-  {
-    "id": "deposit231",
-    "message": "Received {balance} / {need} {tooltip}"
-  },
-  {
-    "id": "deposit239",
-    "message": "If you replenish the contract for an amount greater than the specified amount, the balance will be written off as miner fee.",
-    "files": [
-      "shared/pages/Swap/DepositWindow/DepositWindow.js"
-    ]
-  },
-  {
     "id": "orders224",
     "message": "SELL {buyCurrency} HERE",
     "files": [
@@ -4224,29 +4216,36 @@
     ]
   },
   {
-    "id": "BitcoinBuyText29",
-    "message": "The bitcoin Script was created and charged. Please check the information below",
+    "id": "BtcToEthToken20",
+    "message": "Creating a secret key",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
     ]
   },
   {
-    "id": "BitcoinBuyText33",
+    "id": "BitcoinBuyText29",
     "message": "Checking balance..",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
     ]
   },
   {
+    "id": "BitcoinBuyText33",
+    "message": "Creating Bitcoin Script. \n Please wait, it can take a few minutes",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
+    ]
+  },
+  {
     "id": "BitcoinBuyText37",
-    "message": "Creating Ethereum Contract. {br} Please wait, it can take a few minutes",
+    "message": "{buyCurrency} Owner received Bitcoin Script and Secret Hash. Creating {buyCurrency} contract",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
     ]
   },
   {
     "id": "BitcoinBuyText41",
-    "message": "Waiting for {buyCurrency} tokens Owner to add a Secret Key to ETH Contact",
+    "message": "{buyCurrency} contract created and charged. Requesting withdrawal from {buyCurrency} Contract. Please wait. It usually takes less than 10 mins",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
     ]
@@ -4336,10 +4335,6 @@
     ]
   },
   {
-    "id": "deposit213",
-    "message": "and 0.002 ETH на gas fee"
-  },
-  {
     "id": "EmergencySave33",
     "message": "Developer information",
     "files": [
@@ -4355,14 +4350,14 @@
   },
   {
     "id": "swappropgress207",
-    "message": "ETH transaction: {transaction}",
+    "message": "{transaction}",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgress.js"
     ]
   },
   {
     "id": "swappropgress218",
-    "message": "BTC transaction: {transaction}",
+    "message": "{transaction}",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgress.js"
     ]
@@ -4450,13 +4445,6 @@
     ]
   },
   {
-    "id": "BtcToEthToken20",
-    "message": "Create a secret key",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
-    ]
-  },
-  {
     "id": "transaction444",
     "message": "Sell amount must be greater than",
     "files": [
@@ -4472,7 +4460,7 @@
   },
   {
     "id": "deposit300",
-    "message": "Received {balance} / {need} {dynamicFee}{tooltip}",
+    "message": "Received {balance} / {need} {tooltip}",
     "files": [
       "shared/pages/Swap/DepositWindow/DepositWindow.js"
     ]
@@ -4622,6 +4610,116 @@
     "message": "Copy the address below and top it up with the recommended amount of {missingBalance}",
     "files": [
       "shared/pages/Swap/DepositWindow/DepositWindow.js"
+    ]
+  },
+  {
+    "id": "userTooltip71",
+    "message": "Go to the feed page",
+    "files": [
+      "shared/components/Header/User/UserTooltip/UserTooltip.js"
+    ]
+  },
+  {
+    "id": "KeyActionsPane74",
+    "message": "incomplete swap ({length})",
+    "files": [
+      "shared/components/KeyActionsPanel/KeyActionsPanel.js"
+    ]
+  },
+  {
+    "id": "decline21",
+    "message": "Declined orders!",
+    "files": [
+      "shared/components/modals/DeclineOrdersModal/DeclineOrdersModal.js"
+    ]
+  },
+  {
+    "id": "decline43",
+    "message": "Sorry, but you have cannot start until you complete the swaps started earlier",
+    "files": [
+      "shared/components/modals/DeclineOrdersModal/DeclineOrdersModal.js"
+    ]
+  },
+  {
+    "id": "decline49",
+    "message": "See your incomplete swap",
+    "files": [
+      "shared/components/modals/DeclineOrdersModal/DeclineOrdersModal.js"
+    ]
+  },
+  {
+    "id": "Incompleted21",
+    "message": "Incompleted Swaps",
+    "files": [
+      "shared/components/modals/IncompletedSwaps/IncompletedSwaps.js"
+    ]
+  },
+  {
+    "id": "IncompletedSwaps49",
+    "message": "Swaps needing to complete",
+    "files": [
+      "shared/components/modals/IncompletedSwaps/IncompletedSwaps.js"
+    ]
+  },
+  {
+    "id": "swappropgress327",
+    "message": "this Swap is canceled",
+    "files": [
+      "shared/pages/Swap/Swap.js"
+    ]
+  },
+  {
+    "id": "swappropgress400",
+    "message": "Refund is taking automatically",
+    "files": [
+      "shared/pages/Swap/Swap.js"
+    ]
+  },
+  {
+    "id": "Confirmation14",
+    "message": "Confirmation",
+    "files": [
+      "shared/pages/Swap/SwapList/steps/FirstStep.js"
+    ]
+  },
+  {
+    "id": "completed21",
+    "message": "is completed!"
+  },
+  {
+    "id": "swappropgress192",
+    "message": "How to refund your money ?",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapProgress.js"
+    ]
+  },
+  {
+    "id": "swapjs290",
+    "message": "Cancel swap",
+    "files": [
+      "shared/pages/Swap/SwapList/SwapList.js"
+    ]
+  },
+  {
+    "id": "IncompletedSwaps55",
+    "message": "Data processed, try to reload the page",
+    "files": [
+      "shared/components/modals/IncompletedSwaps/IncompletedSwaps.js"
+    ]
+  },
+  {
+    "id": "Continue",
+    "message": "Continue",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js",
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "Sign",
+    "message": "Sign",
+    "files": [
+      "shared/pages/Swap/LtcToBtc.js"
     ]
   }
 ]

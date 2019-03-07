@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import actions from 'redux/actions'
 import { connect } from 'redaction'
-import { constants, links } from 'helpers'
+import helpers, { constants, links } from 'helpers'
 import config from 'app-config'
 import { isMobile } from 'react-device-detect'
 
@@ -21,12 +21,13 @@ import ReactTooltip from 'react-tooltip'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
 import { relocalisedUrl, localisedUrl } from 'helpers/locale'
-
+import SwapApp from 'swap.app'
 
 @injectIntl
 @withRouter
 @connect(
   ({
+    rememberedOrders,
     user: { ethData, btcData, /* bchData, */ tokensData, eosData, /* xlmData, */ telosData, nimData, usdtData, ltcData },
     currencies: { items: currencies },
   }, { currency }) => ({
@@ -44,6 +45,7 @@ import { relocalisedUrl, localisedUrl } from 'helpers/locale'
     ].map(({ account, keyPair, ...data }) => ({
       ...data,
     })).find((item) => item.currency === currency),
+    decline: rememberedOrders.savedOrders,
   })
 )
 
@@ -59,6 +61,7 @@ export default class Row extends Component {
     isBalanceEmpty: true,
     telosRegister: false,
     showButtons: false,
+    existUnfinished: false,
   }
 
   static getDerivedStateFromProps({ item: { balance } }) {
@@ -227,11 +230,32 @@ export default class Row extends Component {
   }
 
   handleGoTrade = (currency) => {
-    const { intl: { locale } } = this.props
-    const pair = currency.toLowerCase() === 'btc' ? 'eth' : 'btc'
+    const { intl: { locale }, decline } = this.props
 
-    window.scrollTo(0, 0)
-    this.props.history.push(localisedUrl(locale, `/exchange/${currency.toLowerCase()}-to-${pair}`))
+    const pair = currency.toUpperCase() === 'btc' ? 'eth' : 'btc'
+
+    if (decline === undefined || decline.length === 0) {
+      window.scrollTo(0, 0)
+      this.props.history.push(localisedUrl(locale, `/exchange/${currency.toLowerCase()}-to-${pair}`))
+    }
+
+    if (helpers.handleGoTrade.isSwapExist({ currency, decline }) !== false) {
+      this.handleDeclineOrdersModalOpen(helpers.handleGoTrade.isSwapExist({ currency, decline }))
+    } else {
+      window.scrollTo(0, 0)
+      this.props.history.push(localisedUrl(locale, `/exchange/${currency.toLowerCase()}-to-${pair}`))
+    }
+  }
+
+  handleDeclineOrdersModalOpen = (i) => {
+    const orders = SwapApp.shared().services.orders.items
+    const declineSwap = actions.core.getSwapById(this.props.decline[i])
+
+    if (declineSwap !== undefined) {
+      actions.modals.open(constants.modals.DeclineOrdersModal, {
+        declineSwap,
+      })
+    }
   }
 
   handleMarkCoinAsHidden = (coin) => {
@@ -269,6 +293,10 @@ export default class Row extends Component {
     this.setState(() => ({
       showButtons: false,
     }))
+  }
+
+  deleteThisSwap = () => {
+    actions.core.forgetOrders(this.props.decline[0])
   }
 
   render() {
