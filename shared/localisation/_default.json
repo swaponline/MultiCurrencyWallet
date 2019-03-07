@@ -606,21 +606,6 @@
     ]
   },
   {
-    "id": "CurrencyTitleSeo1",
-    "message": "{fullName} ({tickerName}) Price, Description & Exchange Rates. Store & Exchange {fullName} ({tickerName}) Anonymously on Swap.Online."
-  },
-  {
-    "id": "CurrencyMetaDescrTag1",
-    "message": "Find out actual price of {fullName}, its ticker name is ({tickerName}). Swap.Online is the best way to safely store your cryptocurrecy."
-  },
-  {
-    "id": "CurrencyH1Seo1",
-    "message": "{fullName} ({tickerName}) Price & Exchange Rates.",
-    "files": [
-      "shared/pages/Currency/Currency.js"
-    ]
-  },
-  {
     "id": "CurrencyWallet100",
     "message": "Send",
     "files": [
@@ -1979,52 +1964,6 @@
   {
     "id": "PrivateKeysModal623",
     "message": "{skipIt} and go to the site.",
-    "files": [
-      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
-    ]
-  },
-  {
-    "id": "PrivateKeysModal624",
-    "message": "skip it",
-    "files": [
-      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
-    ]
-  },
-  {
-    "id": "PrivateKeysModal663",
-    "message": "We don't recommend, but you can {skipBtn}",
-    "files": [
-      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
-    ]
-  },
-  {
-    "id": "PrivateKeysModal664",
-    "message": "Please save your private keys! We do not store your private keys and will not be able to restore your wallets.",
-    "files": [
-      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
-    ]
-  },
-  {
-    "id": "PrivateKeysModal665",
-    "message": " I understand and except the risks of not saving my private keys",
-    "files": [
-      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
-    ]
-  },
-  {
-    "id": "PrivateKeysModal666",
-    "message": "Continue",
-    "files": [
-      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
-    ]
-  },
-  {
-    "id": "PrivateKeysModal99",
-    "message": "It`s very important because If you don`t"
-  },
-  {
-    "id": "PrivateKeysModal991",
-    "message": "Before you continue be sure to save your private keys! Security of private keys is only in your hands. ",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
@@ -3885,7 +3824,7 @@
   },
   {
     "id": "deposit213",
-    "message": " and 0.002 ETH gas fee "
+    "message": "and 0.002 ETH на gas fee"
   },
   {
     "id": "deposit165",
@@ -4396,10 +4335,6 @@
     ]
   },
   {
-    "id": "deposit213",
-    "message": "and 0.002 ETH на gas fee"
-  },
-  {
     "id": "EmergencySave33",
     "message": "Developer information",
     "files": [
@@ -4749,10 +4684,7 @@
   },
   {
     "id": "completed21",
-    "message": "is completed!",
-    "files": [
-      "shared/pages/Swap/SwapList/steps/FourthStep.js"
-    ]
+    "message": "is completed!"
   },
   {
     "id": "swappropgress192",
@@ -4766,6 +4698,28 @@
     "message": "Cancel swap",
     "files": [
       "shared/pages/Swap/SwapList/SwapList.js"
+    ]
+  },
+  {
+    "id": "IncompletedSwaps55",
+    "message": "Data processed, try to reload the page",
+    "files": [
+      "shared/components/modals/IncompletedSwaps/IncompletedSwaps.js"
+    ]
+  },
+  {
+    "id": "Continue",
+    "message": "Continue",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js",
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "Sign",
+    "message": "Sign",
+    "files": [
+      "shared/pages/Swap/LtcToBtc.js"
     ]
   }
 ]

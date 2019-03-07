@@ -2004,13 +2004,6 @@
     ]
   },
   {
-    "id": "PrivateKeysModal666",
-    "message": "Continue",
-    "files": [
-      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
-    ]
-  },
-  {
     "id": "PrivateKeysModal99",
     "message": "It`s very important because If you don`t"
   },
@@ -4702,10 +4695,7 @@
   },
   {
     "id": "completed21",
-    "message": "is completed!",
-    "files": [
-      "shared/pages/Swap/SwapList/steps/FourthStep.js"
-    ]
+    "message": "is completed!"
   },
   {
     "id": "swappropgress192",
@@ -4719,6 +4709,13 @@
     "message": "Cancel swap",
     "files": [
       "shared/pages/Swap/SwapList/SwapList.js"
+    ]
+  },
+  {
+    "id": "IncompletedSwaps55",
+    "message": "Data processed, try to reload the page",
+    "files": [
+      "shared/components/modals/IncompletedSwaps/IncompletedSwaps.js"
     ]
   }
 ]

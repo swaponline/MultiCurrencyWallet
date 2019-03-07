@@ -1997,27 +1997,6 @@
     ]
   },
   {
-    "id": "PrivateKeysModal663",
-    "message": "Вы так же можете {skipBtn}",
-    "files": [
-      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
-    ]
-  },
-  {
-    "id": "PrivateKeysModal664",
-    "message": "Мы не сможем восстановить ваши ключи, они могут потеряться если вы очистите хранилище браузера, а так же есть вероятность произвольного очищения. ",
-    "files": [
-      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
-    ]
-  },
-  {
-    "id": "PrivateKeysModal665",
-    "message": "Я понимаю и принимаю риски.",
-    "files": [
-      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
-    ]
-  },
-  {
     "id": "PrivateKeysModal666",
     "message": "Продолжить",
     "files": [
@@ -4657,86 +4636,90 @@
   },
   {
     "id": "KeyActionsPane74",
-    "message": "incomplete swap ({length})",
+    "message": "Незавершенные обмены ({length})",
     "files": [
       "shared/components/KeyActionsPanel/KeyActionsPanel.js"
     ]
   },
   {
     "id": "decline21",
-    "message": "Declined orders!",
+    "message": "Отклоненные ордера!",
     "files": [
       "shared/components/modals/DeclineOrdersModal/DeclineOrdersModal.js"
     ]
   },
   {
     "id": "decline43",
-    "message": "Sorry, but you have cannot start until you complete the swaps started earlier",
+    "message": "Извините, но вы не можете начать, пока не завершите начатые ранее свопы",
     "files": [
       "shared/components/modals/DeclineOrdersModal/DeclineOrdersModal.js"
     ]
   },
   {
     "id": "decline49",
-    "message": "See your incomplete swap",
+    "message": "Показать ваши незавершенные свопы",
     "files": [
       "shared/components/modals/DeclineOrdersModal/DeclineOrdersModal.js"
     ]
   },
   {
     "id": "Incompleted21",
-    "message": "Incompleted Swaps",
+    "message": "Незавершенные обмены",
     "files": [
       "shared/components/modals/IncompletedSwaps/IncompletedSwaps.js"
     ]
   },
   {
     "id": "IncompletedSwaps49",
-    "message": "Swaps needing to complete",
+    "message": "Свопы нуждающиеся в завершении",
     "files": [
       "shared/components/modals/IncompletedSwaps/IncompletedSwaps.js"
     ]
   },
   {
     "id": "swappropgress327",
-    "message": "this Swap is canceled",
+    "message": "Этот Своп отменен",
     "files": [
       "shared/pages/Swap/Swap.js"
     ]
   },
   {
     "id": "swappropgress400",
-    "message": "Refund is taking automatically",
+    "message": "Возврат средств осуществляется автоматически",
     "files": [
       "shared/pages/Swap/Swap.js"
     ]
   },
   {
     "id": "Confirmation14",
-    "message": "Confirmation",
+    "message": "Подтверждение",
     "files": [
       "shared/pages/Swap/SwapList/steps/FirstStep.js"
     ]
   },
   {
     "id": "completed21",
-    "message": "is completed!",
-    "files": [
-      "shared/pages/Swap/SwapList/steps/FourthStep.js"
-    ]
+    "message": "Готово!"
   },
   {
     "id": "swappropgress192",
-    "message": "How to refund your money ?",
+    "message": "Как вернуть ваши деньги ?",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgress.js"
     ]
   },
   {
     "id": "swapjs290",
-    "message": "Cancel swap",
+    "message": "Прервать своп",
     "files": [
       "shared/pages/Swap/SwapList/SwapList.js"
+    ]
+  },
+  {
+    "id": "IncompletedSwaps55",
+    "message": "Данные загружаются, попробуйте перезагрузить страницу",
+    "files": [
+      "shared/components/modals/IncompletedSwaps/IncompletedSwaps.js"
     ]
   }
 ]
