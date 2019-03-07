@@ -6,6 +6,7 @@ import bitcoinMessage from 'bitcoinjs-message'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
 import { btc, request, constants, api } from 'helpers'
+import { Keychain } from 'keychain.js'
 
 
 const login = (privateKey) => {
@@ -135,15 +136,31 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
     tx.addOutput(from, skipValue)
   }
 
-  tx.inputs.forEach((input, index) => {
-    tx.sign(index, keyPair)
-  })
-
-  const txRaw = tx.buildIncomplete()
+  const keychainActivated = localStorage.getItem(constants.localStorage.keychainActivated) === 'true'
+  const txRaw = keychainActivated ? await signAndBuildKeychain(tx, unspents) : signAndBuild(tx, keyPair)
 
   broadcastTx(txRaw.toHex())
 
   return txRaw
+}
+
+const signAndBuild = (transactionBuilder, keyPair) => {
+  transactionBuilder.inputs.forEach((input, index) => {
+    transactionBuilder.sign(index, keyPair)
+  })
+  return transactionBuilder.buildIncomplete()
+}
+
+const signAndBuildKeychain = async (transactionBuilder, unspents) => {
+  const txRaw = transactionBuilder.buildIncomplete()
+  unspents.forEach(({ scriptPubKey }, index) => txRaw.ins[index].script = Buffer.from(scriptPubKey, 'hex'))
+  const keychain = await Keychain.create()
+  const rawHex = await keychain.signHex(
+    txRaw.toHex(),
+    '08d6770d8219923fe25a4d6aeb2c171253d5de3bc225f09dbfb2cb93ed837be1a80fdd3af5046b8f1f5412e5b321dcc3c25be9f4dd285250421ea55071794277',
+    'bitcoin'
+  )
+  return { ...txRaw, toHex: () => rawHex.result }
 }
 
 const fetchUnspents = (address) =>
