@@ -9,8 +9,9 @@ import { isMobile } from 'react-device-detect'
 import cssModules from 'react-css-modules'
 import styles from './Row.scss'
 
-import { links, constants } from 'helpers'
+import helpers, { links, constants } from 'helpers'
 import { Link, Redirect } from 'react-router-dom'
+import SwapApp from 'swap.app'
 
 import Avatar from 'components/Avatar/Avatar'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
@@ -68,6 +69,31 @@ export default class Row extends Component {
     this.setState({
       balance,
     })
+  }
+
+  сheckDeclineOrders = (orderId, currency, checkCurrency) => {
+    const { intl: { locale }, decline } = this.props
+
+    if (decline === undefined || decline.length === 0) {
+      this.sendRequest(orderId, currency)
+    }
+
+    if (helpers.handleGoTrade.isSwapExist({ currency, decline }) !== false) {
+      this.handleDeclineOrdersModalOpen(helpers.handleGoTrade.isSwapExist({ currency, decline }))
+    } else {
+      this.sendRequest(orderId, currency)
+    }
+  }
+
+  handleDeclineOrdersModalOpen = (i) => {
+    const orders = SwapApp.shared().services.orders.items
+    const declineSwap = actions.core.getSwapById(this.props.decline[i])
+
+    if (declineSwap !== undefined) {
+      actions.modals.open(constants.modals.DeclineOrdersModal, {
+        declineSwap,
+      })
+    }
   }
 
   handleGoTrade = async (currency) => {
@@ -232,7 +258,7 @@ export default class Row extends Component {
                       ) : (
                         <RequestButton
                           disabled={balance >= Number(buyAmount)}
-                          onClick={() => this.sendRequest(id, isMy ? sellCurrency : buyCurrency)}
+                          onClick={() => this.сheckDeclineOrders(id, isMy ? sellCurrency : buyCurrency)}
                           data={{ type, amount, main, total, base }}
                         >
                           {type === PAIR_TYPES.BID ? <FormattedMessage id="Row2061" defaultMessage="SELL" /> : <FormattedMessage id="Row206" defaultMessage="BUY" />}

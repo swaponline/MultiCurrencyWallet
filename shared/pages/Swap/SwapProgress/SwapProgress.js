@@ -173,9 +173,7 @@ export default class SwapProgress extends Component {
     } = this.state
 
     const progress = Math.floor(90 * stepValue)
-
     const finishIcon = <img src={finishSvg} alt="finishIcon" />
-
 
     return (
       <div styleName="overlay">
@@ -226,7 +224,7 @@ export default class SwapProgress extends Component {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <FormattedMessage id="swappropgress332" defaultMessage="How refund your money ?" />
+                    <FormattedMessage id="swappropgress192" defaultMessage="How to refund your money ?" />
                   </a>
                   <FormattedMessage id="swappropgress333" defaultMessage="Refund hex transaction: " />
                   <code> {flow.refundTxHex} </code>
@@ -267,7 +265,7 @@ export default class SwapProgress extends Component {
                 <div styleName="timerRefund">
                   <Timer
                     lockTime={flow.btcScriptValues.lockTime * 1000}
-                    enabledButton={this.willEnable}
+                    enabledButton={() => this.setState(() => ({ enabledButton: true }))}
                   />
                 </div>
               </Fragment>
@@ -287,7 +285,7 @@ export default class SwapProgress extends Component {
                 <div styleName="timerRefund">
                   <Timer
                     lockTime={flow.btcScriptValues.lockTime * 1000}
-                    enabledButton={this.willEnable}
+                    enabledButton={() => this.setState(() => ({ enabledButton: true }))}
                   />
                 </div>
               </Fragment>

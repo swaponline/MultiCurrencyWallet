@@ -55,6 +55,8 @@ const isWidgetBuild = config && config.isWidget
 @injectIntl
 @connect(({
   currencies,
+  addSelectedItems,
+  rememberedOrders,
   addPartialItems,
   core: { orders, hiddenCoinsList },
   user: { ethData, btcData, /* bchData, */ tokensData, eosData, telosData, nimData, usdtData, ltcData },
@@ -66,6 +68,7 @@ const isWidgetBuild = config && config.isWidget
   allOrders: orders,
   currenciesData: [ ethData, btcData, eosData, telosData, /* bchData, */ ltcData, usdtData /* nimData */ ],
   tokensData: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
+  decline: rememberedOrders.savedOrders,
   hiddenCoinsList,
 }))
 @CSSModules(styles, { allowMultiple: true })
@@ -88,7 +91,8 @@ export default class PartialClosure extends Component {
     }
   }
 
-  constructor({ tokensData, allCurrencyies, currenciesData, match: { params: { buy, sell } }, intl: { locale }, history, ...props }) {
+  constructor({ tokensData, allCurrencyies, currenciesData, match: { params: { buy, sell } }, intl: { locale }, history, decline, ...props }) {
+
     super()
 
     if (sell && buy) {
@@ -226,11 +230,34 @@ export default class PartialClosure extends Component {
     }
   }
 
+  handleGoTrade = () => {
+    const { intl: { locale }, decline } = this.props
+    const { haveCurrency } = this.state
+
+    if (decline === undefined || decline.length === 0) {
+      this.sendRequest()
+    }
+
+    if (helpers.handleGoTrade.isSwapExist({ haveCurrency, decline }) !== false) {
+      this.handleDeclineOrdersModalOpen(helpers.handleGoTrade.isSwapExist({ haveCurrency, decline }))
+    } else {
+      this.sendRequest()
+    }
+  }
+
+  handleDeclineOrdersModalOpen = (i) => {
+    const orders = SwapApp.shared().services.orders.items
+    const declineSwap = actions.core.getSwapById(this.props.decline[i])
+
+    if (declineSwap !== undefined) {
+      actions.modals.open(constants.modals.DeclineOrdersModal, {
+        declineSwap,
+      })
+    }
+  }
+
   sendRequest = () => {
-    const {
-      getAmount, haveAmount, haveCurrency, getCurrency,
-      peer, orderId, customWalletUse, customWallet,
-    } = this.state
+    const { getAmount, haveAmount, peer, orderId, customWallet } = this.state
 
     if (!String(getAmount) || !peer || !orderId || !String(haveAmount)) {
       return
@@ -246,7 +273,6 @@ export default class PartialClosure extends Component {
 
     this.setState(() => ({ isFetching: true }))
 
-    console.log(orderId)
     actions.core.sendRequestForPartial(orderId, newValues, destination, (newOrder, isAccepted) => {
       if (isAccepted) {
         this.setState(() => ({
@@ -930,7 +956,7 @@ export default class PartialClosure extends Component {
               )
             }
             <div styleName="rowBtn" className={isWidget ? 'rowBtn' : ''}>
-              <Button styleName="button" brand onClick={this.sendRequest} disabled={!canDoOrder}>
+              <Button styleName="button" brand onClick={this.handleGoTrade} disabled={!canDoOrder}>
                 <FormattedMessage id="partial541" defaultMessage="Exchange now" />
               </Button>
               <Button styleName="button" gray onClick={() => this.handlePush(isWidgetLink)} >

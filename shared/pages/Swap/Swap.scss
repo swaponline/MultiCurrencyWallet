@@ -39,6 +39,20 @@
   font-weight: bold;
 }
 
+.canceled {
+  color: #e32950;
+  font-size: 24px;
+  text-align: center;
+  text-transform: uppercase;
+  padding: 78px;
+  position: relative;
+  cursor: pointer;
+}
+
+.refHex {
+  text-align: center;
+}
+
 .included {
   margin-left: 5%;
   top: -4px;
@@ -92,10 +106,6 @@
 }
 .offline {
   color: $color-f-error;
-}
-
-.loaderHolder {
-  display: inline-block;
 }
 
 @include media-mobile {

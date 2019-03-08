@@ -39,7 +39,7 @@ export default class SwapList extends Component {
     }
   }
   render() {
-    const { swap, flow, enoughBalance } = this.props
+    const { swap, flow, enoughBalance, onClickCancelSwap } = this.props
     const { first, second, fourth, fifth, sixth, seventh, eighth } = this.state
 
     return (
@@ -48,6 +48,11 @@ export default class SwapList extends Component {
         <SecondStep step={flow.step} swap={swap} second={second} fifth={fifth} fourth={fourth} sixth={sixth} />
         <ThirdStep step={flow.step} swap={swap} sixth={sixth} seventh={seventh} eighth={eighth} />
         <FourthStep step={flow.step} swap={swap} seventh={seventh} eighth={eighth} />
+        {!this.props.enoughBalance && flow.step === 4 &&
+          <h1 /* eslint-disable-line */ onClick={onClickCancelSwap} styleName="cancelSwap">
+            <FormattedMessage id="swapjs290" defaultMessage="Cancel swap" />
+          </h1>
+        }
       </div>
     )
   }

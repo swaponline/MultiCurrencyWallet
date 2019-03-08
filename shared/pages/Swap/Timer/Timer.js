@@ -44,7 +44,7 @@ export default class Timer extends React.Component {
     const newTimeLeft = timeLeft - 1000
 
     if (newTimeLeft <= 0) {
-      this.props.enabledButton()
+      this.props.enabledButton // eslint-disable-line
     }
     else {
       this.timer = setTimeout(this.tick, 1000)
