@@ -70,22 +70,58 @@ export default class SwapProgress extends Component {
       sellCurrency: this.swap.sellCurrency,
       btcScriptValues: this.swap.btcScriptValues,
       secret: crypto.randomBytes(32).toString('hex'),
+      stepValue: 0,
     }
   }
 
   componentDidMount() {
     this.swap.on('state update', this.handleFlowStateUpdate)
+    this.handleBarProgress()
   }
 
   componentWillUnmount() {
     this.swap.off('state update', this.handleFlowStateUpdate)
   }
 
+
+  handleBarProgress = () => {
+    const { swap: { sellCurrency, flow: { stepNumbers, state: { step } } } } = this.state
+    const first = stepNumbers.sign
+    const sixth = sellCurrency === 'BTC' ? stepNumbers[`withdraw-eth`] : stepNumbers[`wait-withdraw-eth`]
+    const seventh = sellCurrency === 'BTC' ? stepNumbers.finish : stepNumbers[`withdraw-btc`]
+    const eighth = sellCurrency === 'BTC' ? stepNumbers.end : stepNumbers.finish
+
+    if (step === first) {
+      this.setState({
+        stepValue: 1,
+      })
+    }
+    if (step === sixth) {
+      this.setState({
+        stepValue: 2,
+      })
+    }
+    if (step === seventh) {
+      this.setState({
+        stepValue: 3,
+      })
+    }
+    if (step >= eighth) {
+      this.setState({
+        stepValue: 4,
+      })
+    }
+  }
+
   handleFlowStateUpdate = (values) => {
     this.setState({
       flow: values,
     })
+
+    this.handleBarProgress()
+
   }
+
 
   // TODO add animation css, if the app will have error and try to on 10s step, will show the 9th of animathin
 
@@ -133,9 +169,10 @@ export default class SwapProgress extends Component {
       btcScriptValues,
       currenciesBTCTransaction,
       currenciesETHTransaction,
+      stepValue,
     } = this.state
 
-    const progress = Math.floor(360 / (swap.flow.steps.length - 1) * this.state.flow.step)
+    const progress = Math.floor(90 * stepValue)
     const finishIcon = <img src={finishSvg} alt="finishIcon" />
 
     return (

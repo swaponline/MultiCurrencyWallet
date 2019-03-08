@@ -35,7 +35,7 @@
 .linkText {
   text-align: left;
   margin-bottom: -3px;
-  display: block;
+  display: inline-block;
   font-weight: bold;
 }
 
@@ -131,12 +131,6 @@
   max-width: 600px;
 }
 
-.top {
-  width: 575px;
-  display: flex;
-  justify-content: stretch;
-}
-
 @include media-mobile {
   .bitcoinScript {
     right: 40px;
@@ -149,8 +143,9 @@
 }
 
 .top {
+  width: 575px;
   display: flex;
-  justify-content: stretch;
+  justify-content: space-between;
 }
 
 @include media-mobile {
@@ -171,9 +166,8 @@
 
 .qrImg {
   position: relative;
-  margin-top: 0px;
-  right: 18px;
-  top: -12px;
+  right: 15px;
+  top: -15px;
 }
 
 @include media-mobile {
@@ -191,8 +185,36 @@
 .btcMessage {
   margin-top: 0.5em;
   max-width: 100%;
-  font-size: 18px;
+  font-size: 21px;
   display: block;
+  margin-right: 5px;
+}
+
+.qr span {
+  position: absolute;
+  font-size: 9px;
+  bottom: -14px;
+}
+
+.qr i {
+  position: absolute;
+  top: 23px;
+}
+
+.linkTransactions {
+  display: inline-block;
+  margin-left: 5px;
+  a {
+    text-decoration: underline;
+    &:hover {
+      text-decoration: none;
+      color: #007bff;
+    }
+  }
+}
+
+.btcMessage span > div {
+  display: inline-block;
 }
 
 @include media-mobile {

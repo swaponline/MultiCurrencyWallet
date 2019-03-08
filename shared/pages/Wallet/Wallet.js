@@ -250,6 +250,7 @@ export default class Wallet extends Component {
         {
           (config && !config.isWidget) && (
             <div styleName="inform">
+              <h2 styleName="informHeading">Wallet based on the Atomic Swap technology</h2>
               <FormattedMessage
                 id="Wallet156"
                 defaultMessage="Welcome to Swap.Online, a decentralized cross-chain wallet based on the Atomic Swap technology.

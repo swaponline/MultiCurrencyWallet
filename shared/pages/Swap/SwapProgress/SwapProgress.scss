@@ -203,6 +203,7 @@ $size: 200px;
   border: 1px solid #ccc;
   border-radius: 20px;
   padding-bottom: 30px;
+  // min-height: 525px;
 }
 
 .step {
@@ -246,8 +247,9 @@ $size: 200px;
 }
 
 .transaction {
-  top: -10px;
-  position: relative;
+  // position: absolute;
+  // bottom: 35px;
+  // transform: translateX(-50%);
   a {
     font-size: 13px;
   }
@@ -280,6 +282,7 @@ $size: 200px;
   font-size: 26px;
   margin-top: -35px;
   margin-bottom: 30px;
+  height: 110px;
 }
 
 .progressContainer {
