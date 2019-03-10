@@ -11,10 +11,20 @@ import { isMobile } from 'react-device-detect'
 import { constants } from 'helpers'
 import { WithdrawButton } from 'components/controls'
 import { FormattedMessage } from 'react-intl'
+import SwapApp from 'swap.app'
 
 import config from 'app-config'
 
-@connect(({ core: { hiddenCoinsList } }) => ({ hiddenCoinsList }))
+
+@connect(({
+  rememberedOrders,
+  core: { hiddenCoinsList },
+  history: { swapHistory },
+}) => ({
+  hiddenCoinsList,
+  decline: rememberedOrders.savedOrders,
+  swapHistory,
+}))
 @CSSModules(styles, { allowMultiple: true })
 export default class KeyActionsPanel extends Component {
 
@@ -24,6 +34,38 @@ export default class KeyActionsPanel extends Component {
 
   static defaultProps = {
     hiddenCoinsList: [],
+  }
+
+  state = {
+    desclineOrders: [],
+  }
+
+  componentDidMount() {
+    let timer
+    this.timer = setInterval(() => {
+      this.getCorrectDecline()
+    }, 3000)
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timer)
+  }
+
+  getCorrectDecline = () => {
+    const { decline, swapHistory } = this.props
+    if (localStorage.savedOrders.length > 0) {
+      const desclineOrders = []
+
+      decline.forEach(item => {
+        const order = actions.core.getSwapById(item)
+        if (!order.flow.state.isSwapExist && !order.isMy) {
+          desclineOrders.push(order)
+        }
+      })
+      this.setState(() => ({
+        desclineOrders,
+      }))
+    }
   }
 
   handleShowMore = () => {
@@ -53,8 +95,16 @@ export default class KeyActionsPanel extends Component {
     actions.user.getDemoMoney()
   }
 
+  handleShowIncomplete = (decline) => {
+    const { desclineOrders } = this.state
+    actions.modals.open(constants.modals.IncompletedSwaps, {
+      desclineOrders,
+    })
+  }
+
   render() {
-    const { hiddenCoinsList } = this.props
+    const { hiddenCoinsList, decline } = this.props
+    const { desclineOrders } = this.state
 
     return (
       <div styleName="WithdrawButtonContainer">
@@ -75,6 +125,11 @@ export default class KeyActionsPanel extends Component {
               <FormattedMessage id="KeyActionsPanel73" defaultMessage="Hidden coins ({length})" values={{ length: `${hiddenCoinsList.length}` }} />
             </WithdrawButton>
           )
+        }
+        {desclineOrders.length > 0 &&
+          <WithdrawButton onClick={() => this.handleShowIncomplete(decline)}>
+            <FormattedMessage id="KeyActionsPane74" defaultMessage="incomplete swap ({length})" values={{ length: `${desclineOrders.length}` }} />
+          </WithdrawButton>
         }
       </div>
     )

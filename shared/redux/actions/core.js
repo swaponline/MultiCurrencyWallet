@@ -17,7 +17,7 @@ const getOrders = (orders) => {
 const addCurrencyFromOrders = (orders) => {
   const currenciesGetState = getState().currencies
   const allCurrencyies = currenciesGetState.items.map(item => item.name) // все валюты достпуные в клиенте
-  const partialCurrency = Object.assign(currenciesGetState.partialItems) // получаем все премиальные валюты
+  const partialCurrency = currenciesGetState.partialItems // получаем все премиальные валюты
 
   const sellOrderArray = orders.map(item => item.sellCurrency) // получаем из ордерова валюты на продажу
   const buyOrderArray = orders.map(item => item.buyCurrency) // получаем из ордерова валюты на покупку
@@ -85,10 +85,25 @@ const declineRequest = (orderId, participantPeer) => {
   order.declineRequest(participantPeer)
 }
 
+const rememberOrder = (orderId) => {
+  console.log('??????????????')
+  reducers.rememberedOrders.savedOrders(orderId)
+  localStorage.setItem(constants.localStorage.savedOrders, JSON.stringify(getState().rememberedOrders.savedOrders))
+}
+const saveDeletedOrder = (orderId) => {
+  reducers.rememberedOrders.deletedOrders(orderId)
+  localStorage.setItem(constants.localStorage.deletedOrders, JSON.stringify(getState().rememberedOrders.deletedOrders))
+}
+
+const forgetOrders = (orderId) => {
+  reducers.rememberedOrders.forgetOrders(orderId)
+  localStorage.setItem(constants.localStorage.savedOrders, JSON.stringify(getState().rememberedOrders.savedOrders))
+}
+
+
 const removeOrder = (orderId) => {
-  actions.core.deletedPartialCurrency(orderId)
-  SwapApp.shared().services.orders.remove(orderId)
   actions.feed.deleteItemToFeed(orderId)
+  SwapApp.shared().services.orders.remove(orderId)
   actions.core.updateCore()
 }
 
@@ -109,7 +124,7 @@ const deletedPartialCurrency = (orderId) => {
   const deletedOrderSell = orders.filter(item => item.sellCurrency.toUpperCase() === deletedOrderSellCurrency)
   const deletedOrderBuy = orders.filter(item => item.buyCurrency.toUpperCase() === deletedOrderBuyCurrency)
 
-  const premiumCurrencies = ['BTC', 'ETH'] // валюты, которые всегда должны быть в дропе
+  const premiumCurrencies = ['BTC', 'ETH', 'SWAP'] // валюты, которые всегда должны быть в дропе
 
   if (deletedOrderSell.length === 1 && !premiumCurrencies.includes(deletedOrderSellCurrency)) {
     reducers.currencies.deletedPartialCurrency(deletedOrderSellCurrency)
@@ -181,7 +196,6 @@ const createOrder = (data, isPartial = false) => {
   }
 
   actions.core.setupPartialOrder(order)
-
   return order
 }
 
@@ -292,6 +306,8 @@ const markCoinAsVisible = (coin) => {
 }
 
 export default {
+  rememberOrder,
+  forgetOrders,
   getSwapById,
   getOrders,
   setFilter,
@@ -307,6 +323,7 @@ export default {
   markCoinAsVisible,
   requestToPeer,
   getInformationAboutSwap,
+  saveDeletedOrder,
   hideMyOrders,
   showMyOrders,
   hasHiddenOrders,

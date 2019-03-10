@@ -13,4 +13,6 @@ export default {
   ReceiveModal: 'ReceiveModal',
   DownloadModal: 'DownloadModal',
   Confirm: 'Confirm',
+  DeclineOrdersModal: 'DeclineOrdersModal',
+  IncompletedSwaps: 'IncompletedSwaps',
 }

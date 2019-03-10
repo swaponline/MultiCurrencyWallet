@@ -16,6 +16,15 @@
   min-width: 35px;
 }
 
+.cancelSwap {
+  color: red;
+  text-decoration: underline;
+  position: relative;
+  font-size: 17px;
+  cursor: pointer;
+  margin-left: 50px;
+}
+
 .stepList {
   margin-left: 50px;
 }

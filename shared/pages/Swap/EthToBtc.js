@@ -67,7 +67,6 @@ export default class EthToBtc extends Component {
         clearInterval(this.confirmBtcTimer)
       }
     }, 3000)
-
   }
 
   componentWillUnmount() {
@@ -85,6 +84,10 @@ export default class EthToBtc extends Component {
     this.setState(() => ({
       paddingContainerValue: paddingForSwapList({ step }),
     }))
+  }
+
+  confirmBTCScriptChecked = () => {
+    this.swap.flow.verifyBtcScript()
   }
 
   handleFlowStateUpdate = (values) => {
@@ -118,10 +121,6 @@ export default class EthToBtc extends Component {
     }))
   }
 
-  confirmBTCScriptChecked = () => {
-    this.swap.flow.verifyBtcScript()
-  }
-
   toggleBitcoinScript = () => {
     this.setState({
       isShowingBitcoinScript: !this.state.isShowingBitcoinScript,
@@ -129,7 +128,7 @@ export default class EthToBtc extends Component {
   }
 
   render() {
-    const { tokenItems, continueSwap, enoughBalance, history, ethAddress, children, requestToFaucetSended } = this.props
+    const { tokenItems, continueSwap, enoughBalance, history, ethAddress, children, requestToFaucetSended, onClickCancelSwap } = this.props
     const { currencyAddress, flow, isShowingBitcoinScript, swap, currencyData, signed, paddingContainerValue, buyCurrency, sellCurrency } = this.state
     const stepse = flow.step
 
@@ -165,7 +164,7 @@ export default class EthToBtc extends Component {
               </Fragment>
             )
           }
-          <SwapList flow={flow} name={swap.sellCurrency} swap={swap} />
+          <SwapList enoughBalance={enoughBalance} flow={flow} name={swap.sellCurrency} onClickCancelSwap={onClickCancelSwap} swap={swap} />
         </div>
         <div styleName="swapContainerInfo">{children}</div>
       </div>

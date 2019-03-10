@@ -2,6 +2,8 @@ export default {
   enter: 'enter',
   reject: 'reject',
   firstStart: 'firstStart',
+  savedOrders: 'savedOrders',
+  deletedOrders: 'deletedOrders',
   didWidgetsDataSend: 'didWidgetsDataSend',
   activeTabId: 'activeTabId',
   testnetSkip: 'testnetSkip',

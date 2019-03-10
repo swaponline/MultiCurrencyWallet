@@ -68,7 +68,7 @@ export default class UserTooltip extends Component {
         ) : (
           <div styleName="feed" >
             <Link to={links.feed} >
-              <FormattedMessage id="QUESTION15" defaultMessage="Go to the feed page" />
+              <FormattedMessage id="userTooltip71" defaultMessage="Go to the feed page" />
             </Link>
           </div>
         )

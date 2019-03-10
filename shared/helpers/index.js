@@ -17,7 +17,7 @@ import tips from './tips'
 import * as utils from './utils'
 // Methods
 import ignoreProps from './ignoreProps'
-
+import handleGoTrade from './handleGoTrade'
 // Getters
 import getPageOffset from './getPageOffset'
 import getScrollBarWidth from './getScrollBarWidth'
@@ -33,6 +33,7 @@ export default {
   eth,
   ethToken,
   ltc,
+  handleGoTrade,
 }
 
 export {
@@ -56,6 +57,7 @@ export {
   migrate,
   // Methods
   ignoreProps,
+  handleGoTrade,
 
   // Getters
   getPageOffset,

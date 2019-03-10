@@ -85,7 +85,24 @@ export default class BtcToEthToken extends Component {
         clearInterval(this.ParticipantTimer)
       }
     }, 3000)
+  }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.flow !== this.state.flow) {
+      this.changePaddingValue()
+    }
+  }
+
+  submitSecret = () => {
+    const { secret } = this.state
+    this.swap.flow.submitSecret(secret)
+  }
+
+  changePaddingValue = () => {
+    const { flow: { step } } = this.state
+    this.setState(() => ({
+      paddingContainerValue: paddingForSwapList({ step }),
+    }))
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -139,11 +156,6 @@ export default class BtcToEthToken extends Component {
     this.setState({
       flow: values,
     })
-  }
-
-  submitSecret = () => {
-    const { secret } = this.state
-    this.swap.flow.submitSecret(secret)
   }
 
   confirmAddress = () => {
@@ -201,7 +213,9 @@ export default class BtcToEthToken extends Component {
       history,
       tokenItems,
       waitWithdrawOther,
+      onClickCancelSwap,
     } = this.props
+
     const {
       swap,
       flow,
@@ -250,7 +264,7 @@ export default class BtcToEthToken extends Component {
               </Fragment>
             )
           }
-          <SwapList flow={this.state.swap.flow.state} enoughBalance={enoughBalance} swap={this.props.swap} />
+          <SwapList flow={this.state.swap.flow.state} enoughBalance={enoughBalance} swap={this.props.swap} onClickCancelSwap={onClickCancelSwap} />
         </div>
         {children}
       </div>
