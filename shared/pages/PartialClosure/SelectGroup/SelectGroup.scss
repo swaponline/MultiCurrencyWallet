@@ -35,12 +35,20 @@
   box-shadow: none !important;
 }
 
+.textForNull {
+  font-size: 10px;
+  width: 400px;
+  position: absolute;
+  left: -1px;
+  margin-top: 70px;
+}
+
 .balance {
   position: absolute;
   left: -1px;
   margin-top: 70px;
   text-align: left;
-  font-size: 12px;
+  font-size: 16px;
 }
 
 input:disabled {

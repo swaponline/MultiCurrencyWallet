@@ -47,7 +47,13 @@ const SelectGroup = ({ extendedControls, selectedValue, onSelect, currencies, us
         currencies={currencies}
       />
     </div>
-    {label.props.defaultMessage === 'You sell' && !extendedControls && <span styleName="balance">{`Balance ${balance} ${selectedValue.toUpperCase()}`}</span>}
+    {label.props.defaultMessage === 'You sell' && !extendedControls &&
+      (balance > 0 ?
+      <span styleName="balance">{`Balance ${balance} ${selectedValue.toUpperCase()}`}</span> :
+      <span styleName="textForNull">
+        <FormattedMessage id="selected53" defaultMessage="You can use an external wallet to perform a swap, directly during the exchange" />
+      </span>
+    )}
   </div>
 )
 
