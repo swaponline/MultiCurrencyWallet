@@ -391,7 +391,7 @@
   },
   {
     "id": "ShowMoreCoins48",
-    "message": "Скрытые Валюты",
+    "message": "Все валюты",
     "files": [
       "shared/components/modals/ShowMoreCoins/ShowMoreCoins.js"
     ]
@@ -3938,7 +3938,7 @@
   },
   {
     "id": "KeyActionsPanel73",
-    "message": "Скрытые валюты ({length})",
+    "message": "Все валюты ({length})",
     "files": [
       "shared/components/KeyActionsPanel/KeyActionsPanel.js"
     ]
