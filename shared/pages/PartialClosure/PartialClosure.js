@@ -762,6 +762,8 @@ export default class PartialClosure extends Component {
           }
           <div styleName="block" className={isWidget ? 'block' : ''} >
             <SelectGroup
+              balance={balance}
+              extendedControls={extendedControls}
               inputValueLink={linked.haveAmount.pipe(this.setAmount)}
               selectedValue={haveCurrency}
               onSelect={this.handleSetHaveValue}

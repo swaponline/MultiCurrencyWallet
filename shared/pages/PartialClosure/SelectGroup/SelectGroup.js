@@ -12,7 +12,7 @@ import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 
 // TODO to split data and view this component
-const SelectGroup = ({ selectedValue, onSelect, currencies, usd, placeholder, label, disabled, className, inputValueLink, tooltip, id, ...props }) => (
+const SelectGroup = ({ extendedControls, selectedValue, onSelect, currencies, usd, placeholder, label, disabled, className, inputValueLink, tooltip, balance, id, ...props }) => (
   <div>
     <FieldLabel inRow>
       <strong>
@@ -47,6 +47,7 @@ const SelectGroup = ({ selectedValue, onSelect, currencies, usd, placeholder, la
         currencies={currencies}
       />
     </div>
+    {label.props.defaultMessage === 'You sell' && !extendedControls && <span styleName="balance">{`Balance ${balance} ${selectedValue.toUpperCase()}`}</span>}
   </div>
 )
 
