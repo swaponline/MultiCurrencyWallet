@@ -3433,21 +3433,21 @@
   },
   {
     "id": "Row206",
-    "message": "КУПИТЬ",
+    "message": "Купить",
     "files": [
       "shared/pages/Home/Orders/Row/Row.js"
     ]
   },
   {
     "id": "Row2061",
-    "message": "ПРОДАТЬ",
+    "message": "Продать",
     "files": [
       "shared/pages/Home/Orders/Row/Row.js"
     ]
   },
   {
     "id": "Row210",
-    "message": "ЗА",
+    "message": "за",
     "files": [
       "shared/pages/Home/Orders/Row/Row.js"
     ]
