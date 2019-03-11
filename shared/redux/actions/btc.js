@@ -64,10 +64,15 @@ const fetchBalance = (address) =>
 
 const fetchTx = (hash) =>
   request.get(`${api.getApiServer('bitpay')}/tx/${hash}`)
-    .then(({ fees, vin, vout, ...rest }) => ({
-      fees: BigNumber(fees).times(1e8),
-      vin,
-      vout,
+    .then(({ fees, ...rest }) => ({
+      fees: BigNumber(fees).multipliedBy(1e8),
+      ...rest,
+    }))
+
+const fetchTxInfo = (hash) =>
+  fetchTx(hash)
+    .then(({ vin, ...rest }) => ({
+      senderAddress: vin ? vin[0].addr : null,
       ...rest,
     }))
 
@@ -114,7 +119,7 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
   const { user: { btcData: { privateKey } } } = getState()
   const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
 
-  feeValue = feeValue || await btc.estimateFeeValue({ method: 'send', satoshi: true, speed })
+  feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed })
 
   const tx            = new bitcoin.TransactionBuilder(btc.network)
   const unspents      = await fetchUnspents(from)
@@ -189,6 +194,7 @@ export default {
   fetchUnspents,
   broadcastTx,
   fetchTx,
+  fetchTxInfo,
   fetchBalance,
   signMessage,
   getReputation,
