@@ -2660,7 +2660,7 @@
   },
   {
     "id": "Orders151",
-    "message": "my Orders",
+    "message": "My orders",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]
@@ -3422,21 +3422,21 @@
   },
   {
     "id": "Row206",
-    "message": "BUY",
+    "message": "Buy",
     "files": [
       "shared/pages/Home/Orders/Row/Row.js"
     ]
   },
   {
     "id": "Row2061",
-    "message": "SELL",
+    "message": "Sell",
     "files": [
       "shared/pages/Home/Orders/Row/Row.js"
     ]
   },
   {
     "id": "Row210",
-    "message": "FOR",
+    "message": "for",
     "files": [
       "shared/pages/Home/Orders/Row/Row.js"
     ]
