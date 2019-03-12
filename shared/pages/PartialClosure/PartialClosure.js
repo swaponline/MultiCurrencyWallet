@@ -127,6 +127,8 @@ export default class PartialClosure extends Component {
     })
 
     this.state = {
+      isToken: false,
+      dynamicFee: 0,
       haveCurrency: sellToken,
       getCurrency: buyToken,
       haveAmount: 0,
@@ -170,6 +172,7 @@ export default class PartialClosure extends Component {
 
     this.timer = setInterval(() => {
       this.setOrders()
+      this.showTheFee(haveCurrency)
     }, 2000)
 
     SwapApp.shared().services.room.on('new orders', () => this.checkPair(haveCurrency))
@@ -207,6 +210,24 @@ export default class PartialClosure extends Component {
     if (!this.props.location.hash.includes('#widget')) {
       this.props.history.push(localisedUrl(locale, `/exchange/${sell}-to-${buy}`))
     }
+  }
+
+  showTheFee = async () => {
+    const { haveCurrency } = this.state
+    const isToken = await helpers.ethToken.isEthToken({ name: haveCurrency.toLowerCase() })
+
+    if (isToken) {
+      this.setState(() => ({
+        isToken,
+      }))
+    } else {
+      const dynamicFee = await helpers[haveCurrency.toLowerCase()].estimateFeeValue({ method: 'swap' })
+      this.setState(() => ({
+        dynamicFee,
+        isToken,
+      }))
+    }
+
   }
 
   getUsdBalance = async () => {
@@ -693,7 +714,7 @@ export default class PartialClosure extends Component {
     const { currencies, addSelectedItems, currenciesData, tokensData, intl: { locale, formatMessage } } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching,
       isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet, getUsd, haveUsd,
-      maxBuyAmount, getAmount, goodRate, extendedControls,
+      maxBuyAmount, isToken, getAmount, goodRate, extendedControls, dynamicFee,
     } = this.state
 
     const haveCurrencyData = currenciesData.find(item => item.currency === haveCurrency.toUpperCase())
@@ -776,6 +797,8 @@ export default class PartialClosure extends Component {
               className={isWidget ? 'SelGroup' : ''}
               onFocus={() => this.extendedControlsSet(true)}
               onBlur={() => setTimeout(() => this.extendedControlsSet(false), 200)}
+              dynamicFee={dynamicFee}
+              isToken={isToken}
             />
             {
               (extendedControls) && (

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { FormattedMessage, injectIntl } from 'react-intl'
 
 import CSSModules from 'react-css-modules'
@@ -8,11 +8,30 @@ import Input from 'components/forms/Input/Input'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import CurrencySelect from 'components/ui/CurrencySelect/CurrencySelect'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
+import { BigNumber } from 'bignumber.js'
 
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 
 // TODO to split data and view this component
-const SelectGroup = ({ extendedControls, selectedValue, onSelect, currencies, usd, placeholder, label, disabled, className, inputValueLink, tooltip, balance, id, ...props }) => (
+
+const SelectGroup = ({
+  dynamicFee,
+  isToken,
+  extendedControls,
+  selectedValue,
+  onSelect,
+  currencies,
+  usd,
+  placeholder,
+  label,
+  disabled,
+  className,
+  inputValueLink,
+  tooltip,
+  balance,
+  id,
+  ...props
+}) => (
   <div>
     <FieldLabel inRow>
       <strong>
@@ -49,7 +68,10 @@ const SelectGroup = ({ extendedControls, selectedValue, onSelect, currencies, us
     </div>
     {label.props.defaultMessage === 'You sell' && !extendedControls &&
       (balance > 0 ?
-        <span styleName="balance">{`Balance ${balance} ${selectedValue.toUpperCase()}`}</span> :
+        <Fragment>
+          <span styleName="balance">{`Balance ${BigNumber(balance).dp(6, BigNumber.ROUND_HALF_CEIL)} ${selectedValue.toUpperCase()}`}</span>
+          {!isToken && <span styleName="minersFee"> {`Miners Fee ${BigNumber(dynamicFee).dp(6, BigNumber.ROUND_HALF_CEIL)}`}</span>}
+        </Fragment> :
         <span styleName="textForNull">
           <FormattedMessage id="selected53" defaultMessage="You can use an external wallet to perform a swap, directly during the exchange" />
         </span>
@@ -57,5 +79,6 @@ const SelectGroup = ({ extendedControls, selectedValue, onSelect, currencies, us
     }
   </div>
 )
+
 
 export default injectIntl(CSSModules(SelectGroup, styles, { allowMultiple: true }))
