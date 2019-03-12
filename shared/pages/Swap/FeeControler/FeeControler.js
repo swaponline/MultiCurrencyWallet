@@ -35,28 +35,39 @@ export default class FeeControler extends Component {
   }
 
   render() {
-    const { ethAddress } = this.props
+    const { address, currency, btcDynamicFee } = this.props
     const { isAddressCopied } = this.state
-
     return (
       <div styleName="main">
-        <CopyToClipboard text={ethAddress} data-tut="reactour__address">
+        <CopyToClipboard text={address} data-tut="reactour__address">
           <div>
             <div styleName="warning">
               <i className="fas fa-exclamation-triangle" />
             </div>
             <Fragment>
-              <h3 styleName="feeHeading">
-                <FormattedMessage
-                  id="FeeControler68"
-                  defaultMessage="Not enough ETH on your balance for miner fee.{br}Deposit 0.002 ETH to your account"
-                  values={{
-                    br: <br />,
-                  }}
-                />
-              </h3>
+              {currency === 'BTC' ?
+                <h3 styleName="feeHeading">
+                  <FormattedMessage
+                    id="FeeControler52"
+                    defaultMessage="Not enough BTC on your balance for miner fee.{br}Deposit {btcDynamicFee} BTC to your account"
+                    values={{
+                      br: <br />,
+                      btcDynamicFee,
+                    }}
+                  />
+                </h3> :
+                <h3 styleName="feeHeading">
+                  <FormattedMessage
+                    id="FeeControler68"
+                    defaultMessage="Not enough ETH on your balance for miner fee.{br}Deposit 0.002 ETH to your account"
+                    values={{
+                      br: <br />,
+                    }}
+                  />
+                </h3>
+              }
               <p styleName="address">
-                {ethAddress}
+                {address}
               </p>
               <Button brand styleName="button" onClick={this.handleCopy}>
                 {isAddressCopied

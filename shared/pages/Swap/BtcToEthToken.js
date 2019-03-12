@@ -214,6 +214,9 @@ export default class BtcToEthToken extends Component {
       tokenItems,
       waitWithdrawOther,
       onClickCancelSwap,
+      btcDynamicFee,
+      btcData,
+      showFeeControler,
     } = this.props
 
     const {
@@ -229,8 +232,9 @@ export default class BtcToEthToken extends Component {
 
     linked.destinationBuyAddress.check((value) => value !== '', 'Please enter ETH address for tokens')
 
-    const feeControllerView = <FeeControler ethAddress={ethAddress} />
+    const feeControllerView = <FeeControler currency={swap.sellCurrency} ethAddress={ethAddress} />
     const swapProgressView = <SwapProgress flow={flow} name="BtcToEthTokens" swap={this.props.swap} history={history} tokenItems={tokenItems} />
+    const feeControllerViewBtc = <FeeControler btcDynamicFee={btcDynamicFee} currency={swap.sellCurrency} address={btcData.address} />
 
     return (
       <div>
@@ -259,7 +263,14 @@ export default class BtcToEthToken extends Component {
               <Fragment>
                 {!continueSwap
                   ? ((!waitWithdrawOther) ? feeControllerView : swapProgressView)
-                  : swapProgressView
+                  : (
+                    <Fragment>
+                      {showFeeControler ?
+                        feeControllerViewBtc :
+                        swapProgressView
+                      }
+                    </Fragment>
+                  )
                 }
               </Fragment>
             )

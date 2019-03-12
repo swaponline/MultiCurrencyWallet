@@ -4321,7 +4321,6 @@
   {
     "id": "EthTokensToBtc32",
     "message": "Создается Ethereum Контракт. Пожалуйста подождите, потребуется несколько минут",
-
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.js"
     ]
@@ -4556,7 +4555,8 @@
     "id": "FourthStep36",
     "message": "({btcTx} tx)",
     "files": [
-      "shared/pages/Swap/SwapList/steps/SecondStep.js"
+      "shared/pages/Swap/SwapList/steps/SecondStep.js",
+      "shared/pages/Swap/SwapList/steps/ThirdStep.js"
     ]
   },
   {
@@ -4736,6 +4736,13 @@
     "message": "Данные загружаются, попробуйте перезагрузить страницу",
     "files": [
       "shared/components/modals/IncompletedSwaps/IncompletedSwaps.js"
+    ]
+  },
+  {
+    "id": "FeeControler52",
+    "message": "Недостаточно BTC на вашем балансе для оплаты комиссии майнеров.{br}Зачислите {btcDynamicFee} BTC на ваш счет",
+    "files": [
+      "shared/pages/Swap/FeeControler/FeeControler.js"
     ]
   }
 ]

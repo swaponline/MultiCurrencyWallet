@@ -4525,7 +4525,8 @@
     "id": "FourthStep36",
     "message": "({btcTx} tx)",
     "files": [
-      "shared/pages/Swap/SwapList/steps/SecondStep.js"
+      "shared/pages/Swap/SwapList/steps/SecondStep.js",
+      "shared/pages/Swap/SwapList/steps/ThirdStep.js"
     ]
   },
   {
@@ -4720,6 +4721,20 @@
     "message": "Sign",
     "files": [
       "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "deposit297",
+    "message": "link to explorer",
+    "files": [
+      "shared/pages/Swap/DepositWindow/DepositWindow.js"
+    ]
+  },
+  {
+    "id": "FeeControler52",
+    "message": "Not enough BTC on your balance for miner fee.{br}Deposit {btcDynamicFee} BTC to your account",
+    "files": [
+      "shared/pages/Swap/FeeControler/FeeControler.js"
     ]
   }
 ]

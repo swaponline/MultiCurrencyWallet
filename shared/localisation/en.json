@@ -4135,7 +4135,6 @@
     "id": "swappropgress258",
     "message": "BTC transaction:"
   },
-
   {
     "id": "swappropgress332",
     "message": "How refund your money ?"
@@ -4552,7 +4551,8 @@
     "id": "FourthStep36",
     "message": "({btcTx} tx)",
     "files": [
-      "shared/pages/Swap/SwapList/steps/SecondStep.js"
+      "shared/pages/Swap/SwapList/steps/SecondStep.js",
+      "shared/pages/Swap/SwapList/steps/ThirdStep.js"
     ]
   },
   {
@@ -4732,6 +4732,13 @@
     "message": "Data processed, try to reload the page",
     "files": [
       "shared/components/modals/IncompletedSwaps/IncompletedSwaps.js"
+    ]
+  },
+  {
+    "id": "FeeControler52",
+    "message": "Not enough BTC on your balance for miner fee.{br}Deposit {btcDynamicFee} BTC to your account",
+    "files": [
+      "shared/pages/Swap/FeeControler/FeeControler.js"
     ]
   }
 ]

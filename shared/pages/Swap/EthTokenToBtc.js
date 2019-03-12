@@ -183,7 +183,7 @@ export default class EthTokenToBtc extends Component {
             : (
               <Fragment>
                 {!continueSwap
-                  ? ((!requestToFaucetSended) ? <FeeControler ethAddress={ethAddress} /> : SwapProgressView)
+                  ? ((!requestToFaucetSended) ? <FeeControler currency={swap.sellCurrency} ethAddress={ethAddress} /> : SwapProgressView)
                   : SwapProgressView
                 }
               </Fragment>

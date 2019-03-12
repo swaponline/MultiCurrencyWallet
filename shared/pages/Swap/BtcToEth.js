@@ -138,7 +138,7 @@ export default class BtcToEth extends Component {
 
 
   render() {
-    const { continueSwap, enoughBalance, swap, history, tokenItems, ethAddress, children, onClickCancelSwap }  = this.props
+    const { continueSwap, enoughBalance, swap, history, tokenItems, btcData, ethAddress, children, onClickCancelSwap, showFeeControler, btcDynamicFee }  = this.props
 
     const { flow, isShowingBitcoinScript, currencyData, paddingContainerValue } = this.state
 
@@ -167,9 +167,14 @@ export default class BtcToEth extends Component {
             )
             : (
               <Fragment>
-                {!continueSwap
-                  ? <FeeControler ethAddress={ethAddress} />
-                  : <SwapProgress flow={flow} name="BtcToEth" swap={swap} history={history} tokenItems={tokenItems} />
+                {!continueSwap ?
+                  <FeeControler currency={swap.sellCurrency} address={ethAddress} /> :
+                  <Fragment>
+                    {showFeeControler ?
+                      <FeeControler btcDynamicFee={btcDynamicFee} currency={swap.sellCurrency} address={btcData.address} /> :
+                      <SwapProgress flow={flow} name="BtcToEth" swap={swap} history={history} tokenItems={tokenItems} />
+                    }
+                  </Fragment>
                 }
               </Fragment>
             )

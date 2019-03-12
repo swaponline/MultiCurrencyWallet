@@ -10,6 +10,7 @@ import { connect } from 'redaction'
 import helpers, { links, constants, request } from 'helpers'
 import actions from 'redux/actions'
 import { Link } from 'react-router-dom'
+import { BigNumber } from 'bignumber.js'
 
 import { swapComponents } from './swaps'
 import Share from './Share/Share'
@@ -47,6 +48,8 @@ const isWidgetBuild = config && config.isWidget
 export default class SwapComponent extends PureComponent {
 
   state = {
+    btcDynamicFee: 0,
+    showFeeControler: false,
     isAddressCopied: false,
     stepToHide: 0,
     swap: null,
@@ -161,6 +164,7 @@ export default class SwapComponent extends PureComponent {
 
       setInterval(() => {
         this.catchWithdrawError()
+        this.catchBtcNotEnouhtFee()
         this.requestingWithdrawFee()
         this.isBalanceEnough()
       }, 5000)
@@ -256,6 +260,22 @@ export default class SwapComponent extends PureComponent {
       if (this.state.swap && this.state.swap.flow) {
         this.state.swap.flow.acceptWithdrawRequest()
       }
+    }
+  }
+
+  catchBtcNotEnouhtFee = async () => {
+    const { swap, shouldStopCheckSendingOfRequesting, showFeeControler } = this.state
+
+    const btcData = this.props.items.filter(item => item.currency === 'BTC')[0]
+    const btcDynamicFee = await helpers.btc.estimateFeeValue({ method: 'swap' })
+    const allExpenses = BigNumber(swap.sellAmount).plus(btcDynamicFee)
+
+    if (swap.sellCurrency === 'BTC' && BigNumber(allExpenses).isGreaterThan(btcData.balance)) {
+      this.setState(() => ({
+        showFeeControler: true,
+        btcDynamicFee,
+        btcData,
+      }))
     }
   }
 
@@ -383,6 +403,9 @@ export default class SwapComponent extends PureComponent {
       stepToHide,
       isAddressCopied,
       waitWithdrawOther,
+      showFeeControler,
+      btcDynamicFee,
+      btcData,
     } = this.state
 
     if (!swap || !SwapComponent || !peer || !isAmountMore) {
@@ -408,6 +431,9 @@ export default class SwapComponent extends PureComponent {
           </div> :
           <div styleName="swap">
             <SwapComponent
+              btcData={btcData}
+              btcDynamicFee={btcDynamicFee}
+              showFeeControler={showFeeControler}
               tokenItems={tokenItems}
               depositWindow={depositWindow}
               disabledTimer={isAmountMore === 'enable'}
