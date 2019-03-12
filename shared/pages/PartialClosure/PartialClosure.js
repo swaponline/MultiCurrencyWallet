@@ -245,9 +245,9 @@ export default class PartialClosure extends Component {
     }
   }
 
-  handleDeclineOrdersModalOpen = (i) => {
+  handleDeclineOrdersModalOpen = (indexOfDecline) => {
     const orders = SwapApp.shared().services.orders.items
-    const declineSwap = actions.core.getSwapById(this.props.decline[i])
+    const declineSwap = actions.core.getSwapById(this.props.decline[indexOfDecline])
 
     if (declineSwap !== undefined) {
       actions.modals.open(constants.modals.DeclineOrdersModal, {
