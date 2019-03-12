@@ -74,12 +74,14 @@ export default class Row extends Component {
   сheckDeclineOrders = (orderId, currency, checkCurrency) => {
     const { intl: { locale }, decline } = this.props
 
+    const getDeclinedExistedSwapIndex = helpers.handleGoTrade.getDeclinedExistedSwapIndex({ currency, decline })
+
     if (decline === undefined || decline.length === 0) {
       this.sendRequest(orderId, currency)
     }
 
-    if (helpers.handleGoTrade.getDeclinedExistedSwapIndex({ currency, decline }) !== false) {
-      this.handleDeclineOrdersModalOpen(helpers.handleGoTrade.getDeclinedExistedSwapIndex({ currency, decline }))
+    if (getDeclinedExistedSwapIndex !== false) {
+      this.handleDeclineOrdersModalOpen(getDeclinedExistedSwapIndex)
     } else {
       this.sendRequest(orderId, currency)
     }

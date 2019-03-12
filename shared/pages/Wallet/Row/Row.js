@@ -233,14 +233,15 @@ export default class Row extends Component {
     const { intl: { locale }, decline } = this.props
 
     const pair = currency.toUpperCase() === 'btc' ? 'eth' : 'btc'
+    const getDeclinedExistedSwapIndex = helpers.handleGoTrade.getDeclinedExistedSwapIndex({ currency, decline })
 
     if (decline === undefined || decline.length === 0) {
       window.scrollTo(0, 0)
       this.props.history.push(localisedUrl(locale, `/exchange/${currency.toLowerCase()}-to-${pair}`))
     }
 
-    if (helpers.handleGoTrade.getDeclinedExistedSwapIndex({ currency, decline }) !== false) {
-      this.handleDeclineOrdersModalOpen(helpers.handleGoTrade.getDeclinedExistedSwapIndex({ currency, decline }))
+    if (getDeclinedExistedSwapIndex !== false) {
+      this.handleDeclineOrdersModalOpen(getDeclinedExistedSwapIndex)
     } else {
       window.scrollTo(0, 0)
       this.props.history.push(localisedUrl(locale, `/exchange/${currency.toLowerCase()}-to-${pair}`))
