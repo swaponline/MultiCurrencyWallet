@@ -1,27 +1,38 @@
+.subTitle {
+  margin-bottom: 30px
+}
+
+.indent {
+  margin-top: 20px;
+}
+
+.button {
+  display: block;
+  padding: 0 20px;
+  margin: 0 auto;
+}
+
+a {
+  font-size: 16px;
+}
+p {
+  font-size: 14px;
+  margin-bottom: 7px;
+}
+
 @include media-mobile {
   .subTitle {
     text-align: center;
     width: 100%;
     font-size: 14px;
-    margin-bottom: 15px
-  }
-
-  .indent {
-    margin-top: 20px;
   }
 
   .button {
     width: 100%;
-    display: block;
     padding: 0;
   }
 
-  a {
-    font-size: 16px;
-  }
   p {
     font-size: 9.5px;
-    margin-bottom: 5px;
-
   }
 }

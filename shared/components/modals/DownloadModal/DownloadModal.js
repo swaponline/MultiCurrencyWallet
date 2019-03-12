@@ -19,7 +19,7 @@ import { withRouter } from 'react-router'
 const title = defineMessages({
   downloadModal: {
     id: 'down97',
-    defaultMessage: 'We don`t store your private keys and will not be able to restore them!',
+    defaultMessage: 'Your private keys!',
   },
 })
 
@@ -99,7 +99,7 @@ export default class DownloadModal extends React.Component {
     return (
       <Modal name={name} title={intl.formatMessage(title.downloadModal)}>
         <div styleName="subTitle">
-          <FormattedMessage  id="down57" defaultMessage="It seems like you're using an IPhone or an IPad. Just copy this keys and paste into notepad textarea." />
+          <FormattedMessage id="down57" defaultMessage="It seems like you're trying to save your private keys. Just copy this keys and paste into notepad textarea." />
         </div>
         <CopyToClipboard text={textToCopy} onCopy={this.handleCopyText}>
           <Button styleName="button" brand disabled={isTextCopied}>

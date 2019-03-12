@@ -87,11 +87,8 @@ export default class PrivateKeysModal extends React.PureComponent {
     }
   }
 
-  handleDownload = () => {
-    actions.user.downloadPrivateKeys()
-    actions.notifications.show(constants.notifications.Message, {
-      message: 'Check your browser downloads',
-    })
+  handleShowKeys = () => {
+    actions.modals.open(constants.modals.DownloadModal)
   }
 
   handleNext = () => {
@@ -183,18 +180,20 @@ export default class PrivateKeysModal extends React.PureComponent {
                 <div styleName="buttonContainer">
                   <div styleName="buttonSubContainer">
                     <span styleName="text">
-                      <FormattedMessage id="PrivateKeysModal110" defaultMessage="Click here" />
+                      <FormattedMessage id="PrivateKeysModal110" defaultMessage="1. Click here to save your private keys" />
                     </span>
-                    <Button brand styleName="button" onClick={this.handleDownload}>
-                      <FormattedMessage id="PrivateKeysModal113" defaultMessage="Download keys" />
+                    <br />
+                    <Button brand styleName="button" onClick={this.handleShowKeys}>
+                      <FormattedMessage id="PrivateKeysModal113" defaultMessage="Show keys" />
                     </Button>
                   </div>
                   <div styleName="buttonSubContainer">
                     <span styleName="text">
-                      <FormattedMessage id="PrivateKeysModal118" defaultMessage="Then click here" />
+                      <FormattedMessage id="PrivateKeysModal118" defaultMessage="2. Then click here if you have saved your private keys in a secure place (or two)" />
                     </span>
+                    <br />
                     <Button brand styleName="button" onClick={this.handleNext} >
-                      <FormattedMessage id="PrivateKeysModal121" defaultMessage="Next step" />
+                      <FormattedMessage id="PrivateKeysModal121" defaultMessage="I saved my keys!" />
                     </Button>
                   </div>
                 </div>
