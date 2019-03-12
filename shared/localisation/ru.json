@@ -1991,7 +1991,7 @@
   },
   {
     "id": "PrivateKeysModal665",
-    "message": "Я понимаю и принимаю риски.",
+    "message": "Я понимаю и принимаю риски. {learnMore}",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
@@ -1999,6 +1999,13 @@
   {
     "id": "PrivateKeysModal666",
     "message": "Продолжить",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal667",
+    "message": "Узнать больше",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
