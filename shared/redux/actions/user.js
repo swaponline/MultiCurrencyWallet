@@ -13,7 +13,7 @@ const sign = async () => {
   // const bchPrivateKey = localStorage.getItem(constants.privateKeyNames.bch)
   const ltcPrivateKey = localStorage.getItem(constants.privateKeyNames.ltc)
   const ethPrivateKey = localStorage.getItem(constants.privateKeyNames.eth)
-  const keychainActivated = !!localStorage.getItem(constants.privateKeyNames.keychain.publicKey)
+  const keychainActivated = !!localStorage.getItem(constants.privateKeyNames.keychainPublicKey)
   const _ethPrivateKey = keychainActivated ? await actions.eth.loginWithKeychain() : actions.eth.login(ethPrivateKey)
   // const xlmPrivateKey = localStorage.getItem(constants.privateKeyNames.xlm)
 

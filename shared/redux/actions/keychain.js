@@ -3,17 +3,17 @@ import { Keychain } from 'keychain.js'
 
 
 const login = async () => {
-  let keychainKey = localStorage.getItem(constants.privateKeyNames.keychain.publicKey)
+  let keychainKey = localStorage.getItem(constants.privateKeyNames.keychainPublicKey)
   if (!keychainKey) {
     const keychain = await Keychain.create()
     const selectKeyResult = await keychain.selectKey()
     const selectedKey = selectKeyResult.result
-    localStorage.setItem(constants.privateKeyNames.keychain.publicKey, selectedKey)
+    localStorage.setItem(constants.privateKeyNames.keychainPublicKey, selectedKey)
   }
 }
 
 const deactivate = async () => {
-  localStorage.removeItem(constants.privateKeyNames.keychain.publicKey)
+  localStorage.removeItem(constants.privateKeyNames.keychainPublicKey)
 }
 
 export default {

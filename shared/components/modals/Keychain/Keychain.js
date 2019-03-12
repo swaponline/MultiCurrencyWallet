@@ -78,7 +78,7 @@ export default class Keychain extends Component {
 
     const {name, intl: {locale}, intl} = this.props
     const {keychainInstalled, otherError, downloadUrl, keychainVersion, tagName, positiveBalanceError, isLoading} = this.state
-    const keychainActivated = !!localStorage.getItem(constants.privateKeyNames.keychain.publicKey)
+    const keychainActivated = !!localStorage.getItem(constants.privateKeyNames.keychainPublicKey)
 
     if (otherError) {
       return <div>Error: {otherError.message}</div>

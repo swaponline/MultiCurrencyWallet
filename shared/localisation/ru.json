@@ -2887,6 +2887,13 @@
     ]
   },
   {
+    "id": "Row289",
+    "message": "KeyChain не активирован",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
     "id": "partial221",
     "message": "Максимальная сумма для обмена: "
   },
@@ -3851,6 +3858,20 @@
   {
     "id": "RowWallet282",
     "message": "Требуется помощь?",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowWallet283",
+    "message": "Активировать",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowWallet284",
+    "message": "Деактивировать",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]

@@ -2979,6 +2979,13 @@
     ]
   },
   {
+    "id": "Row289",
+    "message": "KeyChain is not activated",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
     "id": "partial221",
     "message": "Max amount for exchange: "
   },
@@ -3855,6 +3862,20 @@
   {
     "id": "RowWallet282",
     "message": "Need help?",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowWallet283",
+    "message": "Activate",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowWallet284",
+    "message": "Deactivate",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]

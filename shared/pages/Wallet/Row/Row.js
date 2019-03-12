@@ -172,6 +172,14 @@ export default class Row extends Component {
     })
   }
 
+  handleActivateKeychain = address => {
+    console.log('activate address: ', address)
+  }
+
+  handleDeactivateKeychain = address => {
+    console.log('deactivate address: ', address)
+  }
+
   handleEosRegister = () => {
     actions.modals.open(constants.modals.EosRegister, {})
   }
@@ -326,7 +334,7 @@ export default class Row extends Component {
     } = this.props
 
 
-    const keychainActivated = !!localStorage.getItem(constants.privateKeyNames.keychain.publicKey)
+    const keychainActivated = !!localStorage.getItem(constants.privateKeyNames.keychainPublicKey)
 
     let eosAccountActivated = false
     let eosActivationPaymentSent = false
@@ -447,13 +455,26 @@ export default class Row extends Component {
                     )
                     */}
 
-                    { currency === 'ETH' && keychainActivated && (
+                    { currency === 'ETH' && (
                       <Fragment>
                         <br />
-                        <span styleName="keychainActiveLink">
-                          <i className="fas fa-lock" styleName="icon" aria-hidden="true"></i>
-                          <FormattedMessage id="Row288" defaultMessage="KeyChain is activated" />
-                        </span>
+                        { keychainActivated ?
+                          <span styleName="keychainActiveLink">
+                            <i className="fas fa-lock" styleName="icon" aria-hidden="true" />
+                            <FormattedMessage id="Row288" defaultMessage="KeyChain is activated"/>&nbsp;
+                            <a href="#" onClick={(e) => {e.preventDefault(); e.stopPropagation(); this.handleDeactivateKeychain(address)}}>
+                              <FormattedMessage id="RowWallet284" defaultMessage="Deactivate" />
+                            </a>
+                          </span>
+                          :
+                          <span styleName="keychainActiveLink">
+                            <i className="fas fa-lock" styleName="icon" aria-hidden="true" />
+                            <FormattedMessage id="Row289" defaultMessage="KeyChain is not activated"/>&nbsp;
+                            <a href="#" onClick={(e) => {e.preventDefault(); e.stopPropagation(); this.handleActivateKeychain(address)}}>
+                              <FormattedMessage id="RowWallet283" defaultMessage="Activate" />
+                            </a>
+                          </span>
+                        }
                       </Fragment>
                     )
                     }
