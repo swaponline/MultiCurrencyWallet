@@ -120,7 +120,7 @@ export default class DepositWindow extends Component {
         requiredAmount: BigNumber(sellAmount).dp(6, BigNumber.ROUND_HALF_CEIL),
       })
     } else {
-      const dynamicFee = await helpers[swap.sellCurrency.toLowerCase()].estimateFeeValue({ method: 'swap' })
+      const dynamicFee = await helpers[swap.sellCurrency.toLowerCase()].estimateFeeValue({ method: 'swap', fixed: true })
 
       const requiredAmount = BigNumber(sellAmount).plus(dynamicFee).dp(6, BigNumber.ROUND_HALF_CEIL)
 
