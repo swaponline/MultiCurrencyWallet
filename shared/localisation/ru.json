@@ -4356,7 +4356,7 @@
   },
   {
     "id": "EmergencySave33",
-    "message": "Информация для разработчиков",
+    "message": "Отладка",
     "files": [
       "shared/pages/Swap/EmergencySave/EmergencySave.js"
     ]
