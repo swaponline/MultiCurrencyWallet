@@ -68,10 +68,10 @@
 @include media-mobile {
   .notification {
     width: 80%;
-    max-width: 80%;
     left: 15px;
   }
   .content {
     font-size: 12px;
+    word-break: break-word;
   }
 }
