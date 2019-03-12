@@ -11,7 +11,6 @@ import styles from './Promo.scss'
 
 const Promo = ({ className }) => (
   <div styleName="promo">
-    <NewHeader />
     <div styleName="promoWrap">
       <PromoText />
       <CurrencySlider />

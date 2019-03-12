@@ -784,26 +784,7 @@ export default class PartialClosure extends Component {
 
     return (
       <Fragment>
-        <Helmet>
-          <title>{TitleTagString}</title>
-          <meta
-            name="description"
-            content={MetaDescriptionString}
-          />
-        </Helmet>
-        {
-          (!isWidget) && (
-            <div styleName="TitleHolder">
-              <PageHeadline subTitle={subTitle(sellTokenFullName, haveCurrency.toUpperCase(), buyTokenFullName, getCurrency.toUpperCase())} />
-            </div>
-          )
-        }
         <div styleName={isWidgetLink ? 'widgetSection' : 'section'} className={isWidgetLink ? 'section' : ''} >
-          {
-            (!isWidget) && (
-              <Advantages />
-            )
-          }
           <div styleName="block" className={isWidget ? 'block' : ''} >
             <SelectGroup
               dataTut="have"
@@ -1042,39 +1023,6 @@ export default class PartialClosure extends Component {
             }
           </div>
         </div>
-        {
-          (!isWidget) && (
-            <p styleName="inform">
-              <Referral address={this.props.userEthAddress} />
-              <FormattedMessage
-                id="PartialClosure562"
-                defaultMessage="Swap.online is a decentralized hot wallet powered by Atomic swap technology.
-                Exchange Bitcoin, USD Tether, BCH, EOS within seconds.
-
-                No commission for exchange (only miners fee).
-
-
-                Swap.Online uses IPFS-network for all the operational processes which results in no need for centralized server.
-
-                The interface of exchange seems to look like that of crypto broker, not of ordinary DEX or CEX. In a couple of clicks, the user can place and take the offer,
-                customizing the price of sent token.
-
-
-                Also, the user can exchange the given percentage of his or her amount of tokens available (e.g. ½, ¼ etc.).
-
-
-                One more advantage of the Swap.Online exchange service is the usage of one key for the full range of ERC-20 tokens.
-
-                By the way, if case you’re not interested in exchange of some tokens, you can hide it from the list.
-
-                Thus, use Swap.Online as your basic exchange for every crypto you’re holding!"
-                values={{
-                  br: <br />,
-                }}
-              />
-            </p>
-          )
-        }
       </Fragment>
     )
   }
