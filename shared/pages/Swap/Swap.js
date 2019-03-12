@@ -270,11 +270,15 @@ export default class SwapComponent extends PureComponent {
     const btcDynamicFee = await helpers.btc.estimateFeeValue({ method: 'swap' })
     const allExpenses = BigNumber(swap.sellAmount).plus(btcDynamicFee)
 
-    if (swap.sellCurrency === 'BTC' && BigNumber(allExpenses).isGreaterThan(btcData.balance)) {
+    if (swap.sellCurrency === 'BTC' && BigNumber(allExpenses).isGreaterThan(btcData.balance) && !swap.flow.state.isBtcScriptFunded) {
       this.setState(() => ({
         showFeeControler: true,
         btcDynamicFee,
         btcData,
+      }))
+    } else {
+      this.setState(() => ({
+        showFeeControler: false,
       }))
     }
   }
