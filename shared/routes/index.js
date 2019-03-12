@@ -34,7 +34,6 @@ const routes = (
 
     <Route exact path={`${localisePrefix}${links.notFound}`} component={NotFound} />
     <Route exact path={`${localisePrefix}${links.home}`} component={(config && config.isWidget) ? PartialClosure : Wallet} />
-    <Route exact path={`${localisePrefix}${links.newPage}`} component={NewWallet} />
 
     <Route path={`${localisePrefix}${links.currencyWallet}`} component={Wallet} />
     <Route path={`${localisePrefix}${links.home}:currency`} component={Currency} />

@@ -20,6 +20,7 @@ import Advantages from './PureComponents/Advantages'
 import { Button, Toggle, Flip } from 'components/controls'
 import Input from 'components/forms/Input/Input'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
+import Promo from './Promo/Promo'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import Referral from 'components/Footer/Referral/Referral'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
@@ -864,69 +865,95 @@ export default class PartialClosure extends Component {
                       <InlineLoader />
                     </div>
                   </div>
-                </span>
-              )
-            }
-            { oneCryptoCost.isGreaterThan(0) && oneCryptoCost.isFinite() && !isNonOffers && (
-              <div className={isWidget ? 'priceSearch' : ''}>
-                <FormattedMessage
-                  id="PartialPriceSearch502"
-                  defaultMessage="Price: 1 {getCurrency} = {haveCurrency}"
-                  values={{ getCurrency: `${getCurrency.toUpperCase()}`, haveCurrency: `${oneCryptoCost.toFixed(5)} ${haveCurrency.toUpperCase()}` }}
+                )
+              }
+              <div styleName="selectWrap">
+                <SelectGroup
+                  inputValueLink={linked.getAmount}
+                  selectedValue={getCurrency}
+                  onSelect={this.handleSetGetValue}
+                  label={<FormattedMessage id="partial255" defaultMessage="You get" />}
+                  id="partialClosure472"
+                  tooltip={<FormattedMessage id="partial478" defaultMessage="The amount you receive after the exchange" />}
+                  currencies={addSelectedItems}
+                  usd={getUsd}
+                  className={isWidget ? 'SelGroup' : ''}
                 />
+                { oneCryptoCost.isGreaterThan(0) && oneCryptoCost.isFinite() && !isNonOffers && (
+                  <div styleName={isWidget ? 'priceSearch' : 'price'}>
+                    <FormattedMessage
+                      id="PartialPriceSearch502"
+                      defaultMessage="1 {getCurrency} = {haveCurrency}"
+                      values={{ getCurrency: `${getCurrency.toUpperCase()}`, haveCurrency: `${oneCryptoCost.toFixed(5)} ${haveCurrency.toUpperCase()}` }}
+                    />
+                  </div>
+                )}
               </div>
-            )}
-            { !oneCryptoCost.isFinite() && !isNonOffers && (
-              <FormattedMessage id="PartialPriceCalc" defaultMessage="Calc price" />
-            )}
-            {maxAmount > 0 && isNonOffers && linked.haveAmount.value > 0 && (
-              <Fragment>
-                <p styleName="error" className={isWidget ? 'error' : ''} >
-                  <FormattedMessage id="PartialPriceNoOrdersReduce" defaultMessage="No orders found, try to reduce the amount" />
-                </p>
-                <p styleName="error" className={isWidget ? 'error' : ''} >
-                  <FormattedMessage id="PartialPriceReduceMin" defaultMessage="Maximum available amount: " />
-                  {maxAmount}{' '}{getCurrency.toUpperCase()}
-                </p>
-              </Fragment>
-            )}
-            {isDeclinedOffer && (
-              <p styleName="error" className={isWidget ? 'error' : ''} >
-                <FormattedMessage
-                  id="PartialOfferCantProceed1"
-                  defaultMessage="Request is declined. {link}"
-                  values={{
-                    link: (
-                      <a href="https://wiki.swap.online/faq/#swap-faq-5738" target="_blank" rel="noopener noreferrer">
-                        <FormattedMessage id="PartialOfferCantProceed1_1" defaultMessage="Why?" />
-                      </a>
-                    ),
-                  }}
-                />
-              </p>
-            )}
-            {(this.doesComissionPreventThisOrder()
-              && BigNumber(getAmount).isGreaterThan(0)
-              && (this.state.haveAmount && this.state.getAmount)
-            ) && (
-              <p styleName="error" className={isWidget ? 'error' : ''} >
-                <FormattedMessage
-                  id="ErrorBtcLowAmount"
-                  defaultMessage="{btcAmount} BTC - This amount is too low"
-                  values={{
-                    btcAmount: this.state.haveCurrency === 'btc' ? this.state.haveAmount : this.state.getAmount,
-                  }}
-                />
-              </p>
-            )}
-            {
-              isFetching && (
-                <span className={isWidget ? 'wait' : ''}>
-                  <FormattedMessage id="partial291" defaultMessage="Wait participant: " />
-                  <div styleName="loaderHolder">
-                    <div styleName="additionalLoaderHolder">
-                      <InlineLoader />
+              {
+                (isSearching || (isNonOffers && maxAmount === 0)) && (
+                  <span className={isWidget ? 'searching' : ''}>
+                    <FormattedMessage id="PartialPriceSearch" defaultMessage="Searching orders..." />
+                    <div styleName="loaderHolder">
+                      <div styleName="additionalLoaderHolder">
+                        <InlineLoader />
+                      </div>
                     </div>
+                  </span>
+                )
+              }
+              { !oneCryptoCost.isFinite() && !isNonOffers && (
+                <FormattedMessage id="PartialPriceCalc" defaultMessage="Calc price" />
+              )}
+              {maxAmount > 0 && isNonOffers && linked.haveAmount.value > 0 && (
+                <Fragment>
+                  <p styleName="error" className={isWidget ? 'error' : ''} >
+                    <FormattedMessage id="PartialPriceNoOrdersReduce" defaultMessage="No orders found, try to reduce the amount" />
+                  </p>
+                  <p styleName="error" className={isWidget ? 'error' : ''} >
+                    <FormattedMessage id="PartialPriceReduceMin" defaultMessage="Maximum available amount: " />
+                    {maxAmount}{' '}{getCurrency.toUpperCase()}
+                  </p>
+                </Fragment>
+              )}
+              {isDeclinedOffer && (
+                <p styleName="error" className={isWidget ? 'error' : ''} >
+                  <FormattedMessage
+                    id="PartialOfferCantProceed1"
+                    defaultMessage="Request rejected, possibly you have not complete another swap {br}{link}"
+                    values={{
+                      link:
+                        <a className="errorLink" role="button" onClick={() => this.goTodeclineSwap()}> {/* eslint-disable-line */}
+                          <FormattedMessage id="PartialOfferCantProceed1_1" defaultMessage="Check here" />
+                        </a>,
+                      br: <br />,
+                    }}
+                  />
+                </p>
+              )}
+              {(this.doesComissionPreventThisOrder()
+                && BigNumber(getAmount).isGreaterThan(0)
+                && (this.state.haveAmount && this.state.getAmount)
+              ) && (
+                <p styleName="error" className={isWidget ? 'error' : ''} >
+                  <FormattedMessage
+                    id="ErrorBtcLowAmount"
+                    defaultMessage="{btcAmount} BTC - This amount is too low"
+                    values={{
+                      btcAmount: this.state.haveCurrency === 'btc' ? this.state.haveAmount : this.state.getAmount,
+                    }}
+                  />
+                </p>
+              )}
+              {
+                isFetching && (
+                  <span className={isWidget ? 'wait' : ''}>
+                    <FormattedMessage id="partial291" defaultMessage="Wait participant: " />
+                    <div styleName="loaderHolder">
+                      <div styleName="additionalLoaderHolder">
+                        <InlineLoader />
+                      </div>
+                    </div>
+<<<<<<< b600c55e51242c203b27c1e7e8b30d05c1dde4c0
                   </div>
                 </span>
               )
@@ -944,6 +971,47 @@ export default class PartialClosure extends Component {
                     }
                   </div>
                   <div styleName={!customWalletUse ? 'anotherRecepient anotherRecepient_active' : 'anotherRecepient'}>
+=======
+                  </span>
+                )
+              }
+
+              {
+                (this.customWalletAllowed() && !isWidget) && (
+                  <Fragment>
+                    <div styleName="walletToggle walletToggle_site">
+                      <div styleName="walletOpenSide">
+                        <Toggle checked={!customWalletUse} onChange={this.handleCustomWalletUse} />
+                        {
+                          !isWidget && (
+                            <span styleName="specify">
+                              <FormattedMessage id="UseAnotherWallet" defaultMessage="Specify your receiving wallet address" />
+                            </span>
+                          )
+                        }
+                      </div>
+                        <div styleName={!customWalletUse ? 'anotherRecepient anotherRecepient_active' : 'anotherRecepient'}>
+                        <FieldLabel>
+                          <strong>
+                            <FormattedMessage id="PartialYourWalletAddress" defaultMessage="Receiving wallet address" />
+                          </strong>
+                          &nbsp;
+                          <Tooltip id="PartialClosure">
+                            <FormattedMessage id="PartialClosure" defaultMessage="The wallet address to where cryptocurrency will be sent after the exchange" />
+                          </Tooltip >
+                        </FieldLabel>
+                        <div styleName="walletInput">
+                          <Input required disabled={customWalletUse} valueLink={linked.customWallet} pattern="0-9a-zA-Z" placeholder="Enter the destination address" />
+                        </div>
+                      </div>
+                    </div>
+                  </Fragment>
+                )
+              }
+              {
+                (this.customWalletAllowed() && isWidget) && (
+                  <Fragment>
+>>>>>>> изменение формы #1
                     <FieldLabel>
                       <strong>
                         <FormattedMessage id="PartialYourWalletAddress" defaultMessage="Receiving wallet address" />
@@ -963,6 +1031,7 @@ export default class PartialClosure extends Component {
                         </div>
                       )}
                     </div>
+<<<<<<< b600c55e51242c203b27c1e7e8b30d05c1dde4c0
                   </div>
                 </Fragment>
               )
@@ -1005,6 +1074,29 @@ export default class PartialClosure extends Component {
               <Button styleName="button" gray dataTut="Orderbook" onClick={() => this.handlePush(isWidgetLink)} >
                 <FormattedMessage id="partial544" defaultMessage="Orderbook" />
               </Button>
+=======
+                    <div styleName="walletToggle">
+                      <Toggle checked={customWalletUse} onChange={this.handleCustomWalletUse} />
+                      {
+                        isWidgetBuild && (
+                          <FormattedMessage id="PartialUseInternalWallet" defaultMessage="Use internal wallet" />
+                        )
+                      }
+                      {
+                        isWidgetLink && (
+                          <FormattedMessage id="PartialUseSwapOnlineWallet" defaultMessage="Use Swap.Online wallet" />
+                        )
+                      }
+                    </div>
+                  </Fragment>
+                )
+              }
+              <div styleName="rowBtn" className={isWidget ? 'rowBtn' : ''}>
+                <Button styleName="button" brand onClick={this.handleGoTrade} disabled={!canDoOrder}>
+                  <FormattedMessage id="partial541" defaultMessage="Exchange now" />
+                </Button>
+              </div>
+>>>>>>> изменение формы #1
             </div>
             <br />
             {

@@ -17,10 +17,24 @@
   }
 }
 
+
+.container {
+  display: flex;
+}
+
+
 .button {
   margin-top: 20px;
   width: 45%;
   font-size: 16px;
+}
+
+.walletOpenSide {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: space-between;
+  height: 73px;
 }
 
 .rowBtn {
@@ -28,8 +42,20 @@
   justify-content: space-around;
 }
 
+.specify {
+  width: 200px;
+  font-weight: 600;
+  line-height: 21px;
+  font-size: 16px;
+}
+
 .walletToggle {
-  margin-top: 10px;
+  margin-bottom: 15px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+  min-height: 73px;
+  margin-bottom: 15px;
+  padding: 0 20px;
   &_site {
     margin-bottom: 15px;
   }
@@ -58,10 +84,13 @@
   margin-top: 10px;
 }
 
-.section, .widgetSection {
+.widgetSection {
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
+}
+.section {
+  padding-top: 100px;
 }
 .blockVideo {
   flex-basis: 58%;
@@ -71,9 +100,13 @@
   }
 }
 
-.block {
+.formExchange {
   position: relative;
-  flex-basis: 37%;
+  padding: 50px 40px;
+  width: 460px;
+  background: #FFFFFF;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
 }
 
 .error {
@@ -125,13 +158,36 @@
   }
 }
 
+.price {
+  position: absolute;
+  bottom: 12px;
+  right: 10px;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.3);
+  font-size: 13px;
+  text-align: right;
+  padding: 10px 10px;
+}
+
+.selectWrap {
+  position: relative;
+}
+
 .extendedControls {
   position: relative;
   z-index: 1;
   width: 100%;
+  margin: -16px 0 26px;
   background: white;
   overflow: visible;
-  margin: 1px 0 -19px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
   > div {
     margin: 0;
   }

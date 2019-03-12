@@ -4,7 +4,12 @@
 
 .inRow {
   margin-top: 20px;
-
+  background: #fff;
+  position: absolute;
+  top: -10px;
+  z-index: 111111;
+  left: 11px;
+  padding: 0 10px;
   &:first-child {
     margin-top: 0;
   }

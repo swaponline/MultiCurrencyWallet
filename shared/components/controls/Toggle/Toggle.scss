@@ -5,10 +5,7 @@ label.Switch > span {
 }
 
 label.Switch {
-  margin-bottom:2px !important;
-	margin-top: -4px;
-  line-height: 1em;
-  box-sizing: border-box;
+	margin-top: 13px;
 }
 
 label.Switch > input[type='checkbox'] {
@@ -16,38 +13,46 @@ label.Switch > input[type='checkbox'] {
 }
 
 label.Switch > span:before {
-	background-color: rgb(200,200,200);
-	border-radius: 1.2em;
-	border: .1em solid transparent;
-	content: '';
-	height: 1.2em;
-	left: 0;
-	position: absolute;
-	margin-top: -3px;
-	transition: border-color .2s, background-color .2s;
-	width: 2.55em;
-	cursor: pointer;
+	background-color: #ffffff;
+    border-radius: 1.2em;
+    border: .1em solid transparent;
+    content: '';
+    height: 1.2em;
+    left: 0;
+    position: absolute;
+    margin-top: -3px;
+    -webkit-transition: border-color .2s, background-color .2s;
+    transition: border-color .2s, background-color .2s;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    border-radius: 12px;
+    width: 56px;
+    height: 24px;
+    cursor: pointer;
 }
 
 label.Switch > span:after {
-	background-color: rgb(240,240,240);
+	background-color: #000000;
 	border-radius: 50%;
-	border: .1em solid rgb(220,220,220);
 	content: '';
-	height: 1.2em;
-	left: 0;
+	width: 16px;
+	height: 16px;
+	left: 5px;
+	top: 0;
 	position: absolute;
-	margin-top: -3px;
+	-webkit-transition: border-color .2s, -webkit-transform .2s;
+	transition: border-color .2s, -webkit-transform .2s;
 	transition: transform .2s, border-color .2s;
-	width: 1.2em;
+	transition: transform .2s, border-color .2s, -webkit-transform .2s;
 	cursor: pointer;
 }
 
 label.Switch > input:checked + span:before {
-	background-color: rgb(81, 14, 216);
+	background-color: #000;
 }
 
 label.Switch > input:checked + span:after {
-	border-color: rgb(81, 14, 216);
-	transform: translateX(100%);
+	background-color: #fff;
+	right: 0px;
+	left: auto;
 }
