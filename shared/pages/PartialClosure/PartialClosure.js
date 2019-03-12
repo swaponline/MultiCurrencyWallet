@@ -960,7 +960,7 @@ export default class PartialClosure extends Component {
                 <FormattedMessage id="partial541" defaultMessage="Exchange now" />
               </Button>
               <Button styleName="button" gray onClick={() => this.handlePush(isWidgetLink)} >
-                <FormattedMessage id="partial544" defaultMessage="Show order book" />
+                <FormattedMessage id="partial544" defaultMessage="Orderbook" />
               </Button>
             </div>
           </div>
