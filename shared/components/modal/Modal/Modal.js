@@ -67,7 +67,9 @@ export default class Modal extends Component {
 
   render() {
     const { className, whiteLogo, showLogo, title, showCloseButton, disableClose, children,
-      titleUppercase, name, shouldCenterHorizontally, shouldCenterVertically, styleName } = this.props
+      titleUppercase, name, shouldCenterHorizontally, shouldCenterVertically, styleName, data } = this.props
+
+    window.addEventListener('popstate', function (e) { actions.modals.close(name) }) // eslint-disable-line
 
     const titleStyleName = cx('title', {
       'uppercase': titleUppercase,

@@ -15,7 +15,7 @@ export default {
   },
   telos: {
     chainId: 'e17615decaecd202a365f4c029f206eee98511979de8a5756317e2469f2289e3',
-    httpEndpoint: 'https://api-test.telosfoundation.io:443',
+    httpEndpoint: 'https://testnet.eos.miami',
     registerEndpoint: 'https://seven.swap.online/telos-testnet/newaccount',
   },
   swapsExplorer: 'https://seven.swap.online/swaps-testnet/state',

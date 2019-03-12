@@ -17,6 +17,7 @@ import Button from 'components/controls/Button/Button'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import ReactTooltip from 'react-tooltip'
+import { isMobile } from 'react-device-detect'
 
 import { isCoinAddress } from 'swap.app/util/typeforce'
 import minAmount from 'helpers/constants/minAmount'
@@ -172,6 +173,8 @@ export default class WithdrawModal extends React.Component {
       speed: 'fast',
     }
 
+    actions.modals.close(name)
+
     if (helpers.ethToken.isEthToken({ name: currency.toLowerCase() })) {
       sendOptions = {
         ...sendOptions,
@@ -197,7 +200,6 @@ export default class WithdrawModal extends React.Component {
         })
 
         this.setState(() => ({ isShipped: false }))
-        actions.modals.close(name)
       })
   }
 
@@ -336,11 +338,13 @@ export default class WithdrawModal extends React.Component {
             <button styleName="button" onClick={this.sellAllBalance} data-tip data-for="Withdrow134">
               <FormattedMessage id="Select210" defaultMessage="MAX" />
             </button>
-            <ReactTooltip id="Withdrow134" type="light" effect="solid">
-              <FormattedMessage
-                id="WithdrawButton32"
-                defaultMessage="when you click this button, in the field, an amount equal to your balance minus the miners commission will appear" />
-            </ReactTooltip>
+            {!isMobile &&
+              <ReactTooltip id="Withdrow134" type="light" effect="solid">
+                <FormattedMessage
+                  id="WithdrawButton32"
+                  defaultMessage="when you click this button, in the field, an amount equal to your balance minus the miners commission will appear" />
+              </ReactTooltip>
+            }
           </div>
           {
             !linked.amount.error && (

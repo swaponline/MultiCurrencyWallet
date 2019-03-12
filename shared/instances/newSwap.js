@@ -86,8 +86,8 @@ const createSwapApp = () => {
         fetchBalance: (address) => actions.btc.fetchBalance(address),
         fetchUnspents: (scriptAddress) => actions.btc.fetchUnspents(scriptAddress),
         broadcastTx: (txRaw) => actions.btc.broadcastTx(txRaw),
-        fetchTxInfo: (txid) => actions.btc.fetchTx(txid),
-        estimateFeeRate: ({ speed } = {}) => helpers.btc.estimateFeeRate({ speed }),
+        fetchTxInfo: (txid) => actions.btc.fetchTxInfo(txid),
+        estimateFeeValue: ({ inSatoshis, speed, address, txSize } = {}) =>  helpers.btc.estimateFeeValue({ inSatoshis, speed, address, txSize }),
       }),
       new LtcSwap({
         fetchBalance: (address) => actions.ltc.fetchBalance(address),

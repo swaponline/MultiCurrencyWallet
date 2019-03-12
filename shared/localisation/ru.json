@@ -391,7 +391,7 @@
   },
   {
     "id": "ShowMoreCoins48",
-    "message": "Скрытые Валюты",
+    "message": "Все валюты",
     "files": [
       "shared/components/modals/ShowMoreCoins/ShowMoreCoins.js"
     ]
@@ -3433,21 +3433,21 @@
   },
   {
     "id": "Row206",
-    "message": "КУПИТЬ",
+    "message": "Купить",
     "files": [
       "shared/pages/Home/Orders/Row/Row.js"
     ]
   },
   {
     "id": "Row2061",
-    "message": "ПРОДАТЬ",
+    "message": "Продать",
     "files": [
       "shared/pages/Home/Orders/Row/Row.js"
     ]
   },
   {
     "id": "Row210",
-    "message": "ЗА",
+    "message": "за",
     "files": [
       "shared/pages/Home/Orders/Row/Row.js"
     ]
@@ -3938,7 +3938,7 @@
   },
   {
     "id": "KeyActionsPanel73",
-    "message": "Скрытые валюты ({length})",
+    "message": "Все валюты ({length})",
     "files": [
       "shared/components/KeyActionsPanel/KeyActionsPanel.js"
     ]
@@ -4356,7 +4356,7 @@
   },
   {
     "id": "EmergencySave33",
-    "message": "Информация для разработчиков",
+    "message": "Отладка",
     "files": [
       "shared/pages/Swap/EmergencySave/EmergencySave.js"
     ]
