@@ -13,7 +13,6 @@ export default {
   privateKeysSaved: 'privateKeysSaved',
   telosRegistrated: 'telosRegistrated',
   demoMoneyReceived: 'demoMoneyReceived',
-  keychainActivated: 'keychainActivated',
   eosAccountActivated: `${process.env.ENTRY}:eos:activationFlag`,
   telosAccountActivated: `${process.env.ENTRY}:telos:activationFlag`,
   eosActivationPayment: `${process.env.ENTRY}:eos:activationPayment`,

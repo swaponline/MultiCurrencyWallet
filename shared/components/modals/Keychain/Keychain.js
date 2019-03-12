@@ -68,12 +68,17 @@ export default class Keychain extends Component {
   //   const tagNameSplit = tagName.split('.');
   //   return tagNameSplit[0] !== keychainVersionSplit[0] || tagNameSplit[1] !== keychainVersionSplit[1]
   // }
+  deactivate() {
+    actions.keychain.deactivate();
+    actions.eth.login();
+    return actions.eth.getBalance()
+  }
 
   render() {
 
     const {name, intl: {locale}, intl} = this.props
     const {keychainInstalled, otherError, downloadUrl, keychainVersion, tagName, positiveBalanceError, isLoading} = this.state
-    const keychainActivated = localStorage.getItem(constants.localStorage.keychainActivated) === 'true'
+    const keychainActivated = !!localStorage.getItem(constants.privateKeyNames.keychain.publicKey)
 
     if (otherError) {
       return <div>Error: {otherError.message}</div>
@@ -85,53 +90,51 @@ export default class Keychain extends Component {
     return (
       <Modal name={name} title={intl.formatMessage(title.Keychain)}>
         <div styleName="content">
-          <p>
-            {!keychainInstalled && !keychainActivated &&
-              <div>
-                <FormattedMessage id="Keychain19" defaultMessage="You need to install KeyChain to proceed" />
-                <a href={downloadUrl}>
-                  <Button styleName="button" brand fullWidth onClick={() => actions.modals.close(name)}>
-                    <FormattedMessage id="Keychain23" defaultMessage="Download"/>
-                  </Button>
-                </a>
-              </div>
-            }
-            {keychainInstalled && !keychainActivated &&
-              <div>
-                {positiveBalanceError ?
-                  <FormattedMessage id="Keychain26" defaultMessage="Positive balance error"/>
-                  :
-                  <div>
-                    <FormattedMessage id="Keychain19" defaultMessage="Would you like to protect your keys with KeyChain? Note that your address will be changed" />
-                    <Button styleName="button" brand fullWidth onClick={() => {actions.eth.loginWithKeychain().then( () => {actions.modals.close(name)})}}>
-                      <FormattedMessage id="Keychain24" defaultMessage="Confirm"/>
-                    </Button>
-                  </div>
-                }
-              </div>
-            }
-            {keychainInstalled && keychainActivated &&
-              <div>
-                <FormattedMessage id="Keychain19" defaultMessage="KeyChain is activated. If you wish to deactivate KeyChain, note that your key will be replaced with a new one." />
-                <Button styleName="button" brand fullWidth onClick={() => {actions.eth.login(); actions.eth.getBalance().then(() => actions.modals.close(name))}}>
-                  <FormattedMessage id="Keychain24" defaultMessage="Deactivate"/>
+          {!keychainInstalled && !keychainActivated &&
+            <div>
+              <FormattedMessage id="Keychain19" defaultMessage="You need to install KeyChain to proceed" />
+              <a href={downloadUrl}>
+                <Button styleName="button" brand fullWidth onClick={() => actions.modals.close(name)}>
+                  <FormattedMessage id="Keychain23" defaultMessage="Download"/>
                 </Button>
-              </div>
-            }
-            {!keychainInstalled && keychainActivated &&
-              <div>
-                <FormattedMessage id="Keychain19" defaultMessage="KeyChain is not installed but activated" />
-                <Button styleName="button" brand fullWidth onClick={() => {actions.eth.login(); actions.eth.getBalance().then(() => actions.modals.close(name))}}>
-                  <FormattedMessage id="Keychain24" defaultMessage="Deactivate"/>
-                </Button>
-                <a href={downloadUrl}>
-                  <Button styleName="button" brand fullWidth onClick={() => actions.modals.close(name)}>
-                    <FormattedMessage id="Keychain23" defaultMessage="Download"/>
+              </a>
+            </div>
+          }
+          {keychainInstalled && !keychainActivated &&
+            <div>
+              {positiveBalanceError ?
+                <FormattedMessage id="Keychain26" defaultMessage="Positive balance error"/>
+                :
+                <div>
+                  <FormattedMessage id="Keychain19" defaultMessage="Would you like to protect your keys with KeyChain? Note that your address will be changed" />
+                  <Button styleName="button" brand fullWidth onClick={() => {actions.eth.loginWithKeychain().then( () => {actions.modals.close(name)})}}>
+                    <FormattedMessage id="Keychain24" defaultMessage="Confirm"/>
                   </Button>
-                </a>
-              </div>
-            }
-          </p>
+                </div>
+              }
+            </div>
+          }
+          {keychainInstalled && keychainActivated &&
+            <div>
+              <FormattedMessage id="Keychain19" defaultMessage="KeyChain is activated. If you wish to deactivate KeyChain, note that your key will be replaced with a new one." />
+              <Button styleName="button" brand fullWidth onClick={() => {this.deactivate().then(() => actions.modals.close(name))}}>
+                <FormattedMessage id="Keychain24" defaultMessage="Deactivate"/>
+              </Button>
+            </div>
+          }
+          {!keychainInstalled && keychainActivated &&
+            <div>
+              <FormattedMessage id="Keychain19" defaultMessage="KeyChain is not installed but activated" />
+              <Button styleName="button" brand fullWidth onClick={() => {this.deactivate().then(() => actions.modals.close(name))}}>
+                <FormattedMessage id="Keychain24" defaultMessage="Deactivate"/>
+              </Button>
+              <a href={downloadUrl}>
+                <Button styleName="button" brand fullWidth onClick={() => actions.modals.close(name)}>
+                  <FormattedMessage id="Keychain23" defaultMessage="Download"/>
+                </Button>
+              </a>
+            </div>
+          }
           <Button styleName="button" brand fullWidth onClick={() => { actions.modals.close(name) }}>
             <FormattedMessage id="Keychain25" defaultMessage="Back"/>
           </Button>

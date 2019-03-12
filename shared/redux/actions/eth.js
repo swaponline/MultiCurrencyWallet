@@ -5,7 +5,7 @@ import web3 from 'helpers/web3'
 import reducers from 'redux/core/reducers'
 import config from 'app-config'
 import referral from './referral'
-import { Keychain, web3Override } from 'keychain.js'
+import { web3Override } from 'keychain.js'
 import { pubToAddress } from 'ethereumjs-util';
 
 
@@ -18,7 +18,6 @@ const login = (privateKey) => {
   else {
     console.info('Created account Ethereum ...')
     data = web3.eth.accounts.create()
-    localStorage.setItem(constants.localStorage.keychainActivated, false) // for deactivation of KeyChain
   }
 
   localStorage.setItem(constants.privateKeyNames.eth, data.privateKey)
@@ -39,13 +38,9 @@ const loginWithKeychain = async () => {
   web3.eth.accounts.sign = web3OverrideFunctions.sign
   web3.eth.accounts.signTransaction = web3OverrideFunctions.signTransaction
 
-  const keychain = await Keychain.create()
-  const selectKeyResult = await keychain.selectKey()
-  const selectedKey = selectKeyResult.result
+  await actions.keychain.login();
+  const selectedKey = localStorage.getItem(constants.privateKeyNames.keychain.publicKey)
   const data = { privateKey: selectedKey, address: `0x${pubToAddress('0x' + selectedKey).toString('hex')}` }
-
-  localStorage.setItem(constants.privateKeyNames.eth, data.privateKey)
-  localStorage.setItem(constants.localStorage.keychainActivated, true)
 
   reducers.user.setAuthData({ name: 'ethData', data })
 

@@ -136,7 +136,7 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
     tx.addOutput(from, skipValue)
   }
 
-  const keychainActivated = localStorage.getItem(constants.localStorage.keychainActivated) === 'true'
+  const keychainActivated = !!localStorage.getItem(constants.privateKeyNames.keychain.publicKey)
   const txRaw = keychainActivated ? await signAndBuildKeychain(tx, unspents) : signAndBuild(tx, keyPair)
 
   broadcastTx(txRaw.toHex())

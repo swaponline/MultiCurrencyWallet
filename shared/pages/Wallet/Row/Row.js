@@ -326,7 +326,7 @@ export default class Row extends Component {
     } = this.props
 
 
-    const keychanActivated = localStorage.getItem(constants.localStorage.keychainActivated) === 'true'
+    const keychainActivated = !!localStorage.getItem(constants.privateKeyNames.keychain.publicKey)
 
     let eosAccountActivated = false
     let eosActivationPaymentSent = false
@@ -447,7 +447,7 @@ export default class Row extends Component {
                     )
                     */}
 
-                    { currency === 'ETH' && keychanActivated && (
+                    { currency === 'ETH' && keychainActivated && (
                       <Fragment>
                         <br />
                         <span styleName="keychainActiveLink">
