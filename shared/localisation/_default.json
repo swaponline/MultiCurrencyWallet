@@ -4734,7 +4734,11 @@
   },
   {
     "id": "Continue",
-    "message": "Continue"
+    "message": "Continue",
+    "files": [
+      "shared/pages/Swap/BtcToLtc.js",
+      "shared/pages/Swap/LtcToBtc.js"
+    ]
   },
   {
     "id": "KeyActionsPanel50",
@@ -4746,10 +4750,6 @@
   {
     "id": "FeeControler34",
     "message": "Not enough ETH on your balance for miner fee.{br}Deposit 0.002 ETH to your account  {br} {address}",
-    "files": [
-      "shared/pages/Swap/BtcToLtc.js",
-      "shared/pages/Swap/LtcToBtc.js"
-    ]
   },
   {
     "id": "Sign",

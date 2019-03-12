@@ -4751,7 +4751,10 @@
   },
   {
     "id": "swapjs290",
-    "message": "Прервать своп"
+    "message": "Прервать своп",
+    "files": [
+      "shared/pages/Swap/SwapList/SwapList.js"
+    ]
   },
   {
     "id": "KeyActionsPanel50",
@@ -4762,10 +4765,7 @@
   },
   {
     "id": "FeeControler34",
-    "message": "Недостаточный баланс ETH кошелька, для оплаты комиссии майнеров.{br}Внесите 0.002 ETH на Ваш кошелек для продолжения обмена {br}",
-    "files": [
-      "shared/pages/Swap/SwapList/SwapList.js"
-    ]
+    "message": "Недостаточный баланс ETH кошелька, для оплаты комиссии майнеров.{br}Внесите 0.002 ETH на Ваш кошелек для продолжения обмена {br}"
   },
   {
     "id": "IncompletedSwaps55",
