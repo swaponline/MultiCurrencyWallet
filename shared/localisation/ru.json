@@ -4721,5 +4721,26 @@
     "files": [
       "shared/components/modals/IncompletedSwaps/IncompletedSwaps.js"
     ]
+  },
+  {
+    "id": "partial795",
+    "message": "Доступный баланс - ваш баланс за вычетом комиссии майнеров.",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "select75",
+    "message": "Доступный баланс: {availableBalance} {tooltip}",
+    "files": [
+      "shared/pages/PartialClosure/SelectGroup/SelectGroup.js"
+    ]
+  },
+  {
+    "id": "selected53",
+    "message": "Вы можете использовать внешний кошелек для проведения обмена",
+    "files": [
+      "shared/pages/PartialClosure/SelectGroup/SelectGroup.js"
+    ]
   }
 ]

@@ -791,6 +791,8 @@ export default class PartialClosure extends Component {
               label={<FormattedMessage id="partial243" defaultMessage="You sell" />}
               id="partialClosure456"
               tooltip={<FormattedMessage id="partial462" defaultMessage="The amount you have in your wallet or external wallet that you want to exchange" />}
+              idFee="partialClosure794"
+              tooltipAboutFee={<FormattedMessage id="partial795" defaultMessage="Available balance is your balance minus the miners commission will appear" />}
               placeholder="Enter amount"
               usd={(maxAmount > 0 && isNonOffers) ? 0 : haveUsd}
               currencies={currencies}

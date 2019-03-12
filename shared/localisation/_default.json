@@ -4721,5 +4721,26 @@
     "files": [
       "shared/pages/Swap/LtcToBtc.js"
     ]
+  },
+  {
+    "id": "partial795",
+    "message": "Available balance is your balance minus the miners commission will appear",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "select75",
+    "message": "Available for exchange: {availableBalance} {tooltip}",
+    "files": [
+      "shared/pages/PartialClosure/SelectGroup/SelectGroup.js"
+    ]
+  },
+  {
+    "id": "selected53",
+    "message": "You can use an external wallet to perform a swap, directly during the exchange",
+    "files": [
+      "shared/pages/PartialClosure/SelectGroup/SelectGroup.js"
+    ]
   }
 ]

@@ -30,6 +30,8 @@ const SelectGroup = ({
   tooltip,
   balance,
   id,
+  idFee,
+  tooltipAboutFee,
   ...props
 }) => (
   <div>
@@ -68,10 +70,18 @@ const SelectGroup = ({
     </div>
     {label.props.defaultMessage === 'You sell' && !extendedControls &&
       (balance > 0 ?
-        <Fragment>
-          <span styleName="balance">{`Balance ${BigNumber(balance).dp(6, BigNumber.ROUND_HALF_CEIL)} ${selectedValue.toUpperCase()}`}</span>
-          {!isToken && <span styleName="minersFee"> {`Miners Fee ${BigNumber(dynamicFee).dp(6, BigNumber.ROUND_HALF_CEIL)}`}</span>}
-        </Fragment> :
+        !isToken &&
+          <span
+            styleName="balance">
+            {<FormattedMessage
+              id="select75"
+              defaultMessage="Available for exchange: {availableBalance} {tooltip}"
+              values={{
+                availableBalance: `${BigNumber(balance).minus(dynamicFee).dp(6, BigNumber.ROUND_HALF_CEIL)} ${selectedValue.toUpperCase()}`,
+                tooltip: <Tooltip id={idFee}> {tooltipAboutFee}</Tooltip>,
+              }} />
+            }
+          </span> :
         <span styleName="textForNull">
           <FormattedMessage id="selected53" defaultMessage="You can use an external wallet to perform a swap, directly during the exchange" />
         </span>
