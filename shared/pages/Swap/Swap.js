@@ -17,6 +17,7 @@ import EmergencySave from './EmergencySave/EmergencySave'
 import { injectIntl, FormattedMessage } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import DeleteSwapAfterEnd from './DeleteSwapAfterEnd'
+import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { Button } from 'components/controls'
 import FeeControler from './FeeControler/FeeControler'
 import DepositWindow from './DepositWindow/DepositWindow'
@@ -407,6 +408,22 @@ export default class SwapComponent extends PureComponent {
             </div>
           </div> :
           <div styleName="swap">
+            {
+              !isFinished && (
+                <div styleName="dontLeave">
+                  <FormattedMessage id="swapprogressDONTLEAVE" defaultMessage="Please do not leave this page " />
+                  <Tooltip
+                    id="swapjsdontleave"
+                    dontHideMobile
+                    place="bottom"
+                  >
+                    <FormattedMessage
+                      id="swapjsdontleave"
+                      defaultMessage="The exchange requires signing with private keys that only your browser knows." />
+                  </Tooltip>
+                </div>
+              )
+            }
             <SwapComponent
               tokenItems={tokenItems}
               depositWindow={depositWindow}

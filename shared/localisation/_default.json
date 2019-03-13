@@ -4684,6 +4684,20 @@
     ]
   },
   {
+    "id": "swapprogressDONTLEAVE",
+    "message": "Please do not leave this page ",
+    "files": [
+      "shared/pages/Swap/Swap.js"
+    ]
+  },
+  {
+    "id": "swapjsdontleave",
+    "message": "The exchange requires signing with private keys that only your browser knows.",
+    "files": [
+      "shared/pages/Swap/Swap.js"
+    ]
+  },
+  {
     "id": "Confirmation14",
     "message": "Confirmation",
     "files": [

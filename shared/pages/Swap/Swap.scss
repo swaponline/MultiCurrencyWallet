@@ -445,6 +445,16 @@
   font-size: 14px;
 }
 
+.dontLeave {
+  position: absolute;
+  width: 90%;
+  top: 15px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  font-size: 1.5em;
+  text-align: center;
+}
+
 @include media-tablet {
   .swapContainer {
     flex-direction: column-reverse;
@@ -460,6 +470,11 @@
 }
 
 @include media-mobile {
+  .dontLeave {
+    top: 10px;
+    left: auto;
+    transform: none;
+  }
   .showingScript {
     font-size: 9px;
     left: 15px;
@@ -513,7 +528,7 @@
     font-size: 11px;
     padding: 0;
     margin: 0;
-    margin-top: 80px;
+    margin-top: 130px;
   }
   .swapContainer {
     margin-bottom: -100px;

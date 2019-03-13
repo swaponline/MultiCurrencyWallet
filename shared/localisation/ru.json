@@ -4714,6 +4714,20 @@
     ]
   },
   {
+    "id": "swapprogressDONTLEAVE",
+    "message": "Пожалуйста, не уходите с этой страницы ",
+    "files": [
+      "shared/pages/Swap/Swap.js"
+    ]
+  },
+  {
+    "id": "swapjsdontleave",
+    "message": "В каждом шаге при обмене требуется подпись приватными ключами, которые знает только ваш браузер.",
+    "files": [
+      "shared/pages/Swap/Swap.js"
+    ]
+  },
+  {
     "id": "Confirmation14",
     "message": "Подтверждение",
     "files": [
