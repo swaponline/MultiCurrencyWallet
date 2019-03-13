@@ -4743,5 +4743,12 @@
     "files": [
       "shared/pages/Swap/DepositWindow/DepositWindow.js"
     ]
+  },
+  {
+    "id": "Select28",
+    "message": "ALL",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/Select/Select.js"
+    ]
   }
 ]

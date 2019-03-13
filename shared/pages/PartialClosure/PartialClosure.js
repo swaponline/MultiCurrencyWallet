@@ -793,6 +793,8 @@ export default class PartialClosure extends Component {
                       ? (
                         <div styleName="extendedControls">
                           <Select
+                            all
+                            estimatedFeeValues={estimatedFeeValues[haveCurrency.toLowerCase()]}
                             changeBalance={this.changeBalance}
                             balance={balance}
                             currency={haveCurrency}
@@ -886,7 +888,7 @@ export default class PartialClosure extends Component {
               </p>
             )}
             {(linked.haveAmount.value <= balance
-              && BigNumber(balance).isLessThanOrEqualTo(availableAmount)
+              && BigNumber(balance).isLessThan(availableAmount)
               && (
                 <p styleName="error" className={isWidget ? 'error' : ''} >
                   <FormattedMessage

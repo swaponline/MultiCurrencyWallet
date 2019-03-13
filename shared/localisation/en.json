@@ -4747,5 +4747,12 @@
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
+  },
+  {
+    "id": "Select28",
+    "message": "ALL",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/Select/Select.js"
+    ]
   }
 ]
