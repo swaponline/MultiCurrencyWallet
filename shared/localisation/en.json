@@ -4142,7 +4142,6 @@
     "id": "swappropgress258",
     "message": "BTC transaction:"
   },
-
   {
     "id": "swappropgress332",
     "message": "How refund your money ?"
@@ -4559,7 +4558,8 @@
     "id": "FourthStep36",
     "message": "({btcTx} tx)",
     "files": [
-      "shared/pages/Swap/SwapList/steps/SecondStep.js"
+      "shared/pages/Swap/SwapList/steps/SecondStep.js",
+      "shared/pages/Swap/SwapList/steps/ThirdStep.js"
     ]
   },
   {
@@ -4739,6 +4739,13 @@
     "message": "Data processed, try to reload the page",
     "files": [
       "shared/components/modals/IncompletedSwaps/IncompletedSwaps.js"
+    ]
+  },
+  {
+    "id": "ErrorNotAvailable",
+    "message": "Available balance to swap is {available}",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
     ]
   }
 ]

@@ -4532,7 +4532,8 @@
     "id": "FourthStep36",
     "message": "({btcTx} tx)",
     "files": [
-      "shared/pages/Swap/SwapList/steps/SecondStep.js"
+      "shared/pages/Swap/SwapList/steps/SecondStep.js",
+      "shared/pages/Swap/SwapList/steps/ThirdStep.js"
     ]
   },
   {
@@ -4727,6 +4728,20 @@
     "message": "Sign",
     "files": [
       "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "ErrorNotAvailable",
+    "message": "Available balance to swap is {available}",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "deposit297",
+    "message": "link to explorer",
+    "files": [
+      "shared/pages/Swap/DepositWindow/DepositWindow.js"
     ]
   }
 ]
