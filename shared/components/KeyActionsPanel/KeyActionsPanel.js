@@ -53,7 +53,7 @@ export default class KeyActionsPanel extends Component {
 
   getCorrectDecline = () => {
     const { decline, swapHistory } = this.props
-    if (localStorage.savedOrders.length > 0) {
+    if (localStorage.savedOrders !== undefined && localStorage.savedOrders.length > 0) {
       const desclineOrders = []
 
       decline.forEach(item => {

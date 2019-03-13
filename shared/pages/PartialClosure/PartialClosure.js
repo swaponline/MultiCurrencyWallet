@@ -234,20 +234,21 @@ export default class PartialClosure extends Component {
     const { intl: { locale }, decline } = this.props
     const { haveCurrency } = this.state
 
-    if (decline === undefined || decline.length === 0) {
+    if (decline.length === 0) {
       this.sendRequest()
-    }
-
-    if (helpers.handleGoTrade.isSwapExist({ haveCurrency, decline }) !== false) {
-      this.handleDeclineOrdersModalOpen(helpers.handleGoTrade.isSwapExist({ haveCurrency, decline }))
     } else {
-      this.sendRequest()
+      const getDeclinedExistedSwapIndex = helpers.handleGoTrade.getDeclinedExistedSwapIndex({ currency: haveCurrency, decline })
+      if (getDeclinedExistedSwapIndex !== false) {
+        this.handleDeclineOrdersModalOpen(getDeclinedExistedSwapIndex)
+      } else {
+        this.sendRequest()
+      }
     }
   }
 
-  handleDeclineOrdersModalOpen = (i) => {
+  handleDeclineOrdersModalOpen = (indexOfDecline) => {
     const orders = SwapApp.shared().services.orders.items
-    const declineSwap = actions.core.getSwapById(this.props.decline[i])
+    const declineSwap = actions.core.getSwapById(this.props.decline[indexOfDecline])
 
     if (declineSwap !== undefined) {
       actions.modals.open(constants.modals.DeclineOrdersModal, {
@@ -889,6 +890,7 @@ export default class PartialClosure extends Component {
             )}
             {(linked.haveAmount.value <= balance
               && BigNumber(balance).isLessThan(availableAmount)
+              && linked.haveAmount.value > 0
               && (
                 <p styleName="error" className={isWidget ? 'error' : ''} >
                   <FormattedMessage

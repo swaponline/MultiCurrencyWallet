@@ -74,20 +74,21 @@ export default class Row extends Component {
   сheckDeclineOrders = (orderId, currency, checkCurrency) => {
     const { intl: { locale }, decline } = this.props
 
-    if (decline === undefined || decline.length === 0) {
+    if (decline.length === 0) {
       this.sendRequest(orderId, currency)
-    }
-
-    if (helpers.handleGoTrade.isSwapExist({ currency, decline }) !== false) {
-      this.handleDeclineOrdersModalOpen(helpers.handleGoTrade.isSwapExist({ currency, decline }))
     } else {
-      this.sendRequest(orderId, currency)
+      const getDeclinedExistedSwapIndex = helpers.handleGoTrade.getDeclinedExistedSwapIndex({ currency, decline })
+      if (getDeclinedExistedSwapIndex !== false) {
+        this.handleDeclineOrdersModalOpen(getDeclinedExistedSwapIndex)
+      } else {
+        this.sendRequest(orderId, currency)
+      }
     }
   }
 
-  handleDeclineOrdersModalOpen = (i) => {
+  handleDeclineOrdersModalOpen = (indexOfDecline) => {
     const orders = SwapApp.shared().services.orders.items
-    const declineSwap = actions.core.getSwapById(this.props.decline[i])
+    const declineSwap = actions.core.getSwapById(this.props.decline[indexOfDecline])
 
     if (declineSwap !== undefined) {
       actions.modals.open(constants.modals.DeclineOrdersModal, {
