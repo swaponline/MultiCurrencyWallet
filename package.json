@@ -159,7 +159,7 @@
     "ipfs": "^0.33.1",
     "ipfs-pubsub-room": "^1.4.0",
     "json-stringify-safe": "^5.0.1",
-    "keychain.js": "0.0.2",
+    "keychain.js": "0.0.3",
     "level-js": "github:timkuijsten/level.js#idbunwrapper",
     "memdown": "^3.0.0",
     "node-gyp": "^3.8.0",
