@@ -76,7 +76,7 @@ export default class Keychain extends Component {
 
   render() {
 
-    const {name, intl: {locale}, intl} = this.props
+    const {name, intl: {locale}, intl, data} = this.props
     const {keychainInstalled, otherError, downloadUrl, keychainVersion, tagName, positiveBalanceError, isLoading} = this.state
     const keychainActivated = !!localStorage.getItem(constants.privateKeyNames.keychainPublicKey)
 
@@ -90,6 +90,7 @@ export default class Keychain extends Component {
     return (
       <Modal name={name} title={intl.formatMessage(title.Keychain)}>
         <div styleName="content">
+          <div>Currency: {data.currency}</div>
           {!keychainInstalled && !keychainActivated &&
             <div>
               <FormattedMessage id="Keychain19" defaultMessage="You need to install KeyChain to proceed" />
@@ -107,7 +108,13 @@ export default class Keychain extends Component {
                 :
                 <div>
                   <FormattedMessage id="Keychain19" defaultMessage="Would you like to protect your keys with KeyChain? Note that your address will be changed" />
-                  <Button styleName="button" brand fullWidth onClick={() => {actions.eth.loginWithKeychain().then( () => {actions.modals.close(name)})}}>
+                  <Button styleName="button" brand fullWidth onClick={() => {
+                    data.currency === 'ETH' ?
+                      actions.eth.loginWithKeychain().then( () => {actions.modals.close(name)})
+                      :
+                      actions.btc.loginWithKeychain().then( () => {actions.modals.close(name)})
+                  }
+                  }>
                     <FormattedMessage id="Keychain24" defaultMessage="Confirm"/>
                   </Button>
                 </div>

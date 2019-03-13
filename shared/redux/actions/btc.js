@@ -7,6 +7,7 @@ import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
 import { btc, request, constants, api } from 'helpers'
 import { Keychain } from 'keychain.js'
+import actions from 'redux/actions'
 
 
 const login = (privateKey) => {
@@ -36,6 +37,23 @@ const login = (privateKey) => {
     address,
     privateKey,
     publicKey,
+  }
+
+  window.getBtcAddress = () => data.address
+
+  console.info('Logged in with Bitcoin', data)
+  reducers.user.setAuthData({ name: 'btcData', data })
+}
+
+const loginWithKeychain = async () => {
+  await actions.keychain.login()
+  const selectedKey = localStorage.getItem(constants.privateKeyNames.keychainPublicKey)
+
+  const address   = 'asdvsdvsadsdvsdsdv'
+
+  const data = {
+    address,
+    publicKey: selectedKey,
   }
 
   window.getBtcAddress = () => data.address
@@ -205,6 +223,7 @@ const getReputation = () =>
 
 export default {
   login,
+  loginWithKeychain,
   getBalance,
   getTransaction,
   send,

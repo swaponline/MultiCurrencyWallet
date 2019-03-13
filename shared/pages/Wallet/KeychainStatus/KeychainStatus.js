@@ -1,18 +1,20 @@
 import React, { Fragment } from 'react'
 import { FormattedMessage } from 'react-intl'
+import actions from 'redux/actions'
+import { constants } from 'helpers'
 import styles from './KeychainStatus.scss'
 
 
 const handleActivateKeychain = (event, currency) => {
   event.preventDefault()
   event.stopPropagation()
-  console.log('activate currency: ', currency)
+  actions.modals.open(constants.modals.Keychain, { currency })
 }
 
 const handleDeactivateKeychain = (event, currency) => {
   event.preventDefault()
   event.stopPropagation()
-  console.log('deactivate currency: ', currency)
+  actions.modals.open(constants.modals.Keychain, { currency })
 }
 
 const KeychainStatus = ({ keychainActivated, currency }) => {console.log('keychainActivated, currency: ', keychainActivated, currency); return (
