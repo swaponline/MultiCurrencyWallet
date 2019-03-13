@@ -4328,7 +4328,6 @@
   {
     "id": "EthTokensToBtc32",
     "message": "Создается Ethereum Контракт. Пожалуйста подождите, потребуется несколько минут",
-
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.js"
     ]
@@ -4563,7 +4562,8 @@
     "id": "FourthStep36",
     "message": "({btcTx} tx)",
     "files": [
-      "shared/pages/Swap/SwapList/steps/SecondStep.js"
+      "shared/pages/Swap/SwapList/steps/SecondStep.js",
+      "shared/pages/Swap/SwapList/steps/ThirdStep.js"
     ]
   },
   {
@@ -4743,6 +4743,20 @@
     "message": "Данные загружаются, попробуйте перезагрузить страницу",
     "files": [
       "shared/components/modals/IncompletedSwaps/IncompletedSwaps.js"
+    ]
+  },
+  {
+    "id": "ErrorNotAvailable",
+    "message": "Доступный баланс для обмена {available}",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "Select28",
+    "message": "ВСЁ",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/Select/Select.js"
     ]
   }
 ]
