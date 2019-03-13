@@ -109,7 +109,6 @@ export default class KeyActionsPanel extends Component {
   render() {
     const { hiddenCoinsList, decline } = this.props
     const { desclineOrders } = this.state
-    const isMac = navigator.platform.indexOf('Mac') > -1
 
     return (
       <div styleName="WithdrawButtonContainer">
@@ -134,12 +133,6 @@ export default class KeyActionsPanel extends Component {
         {desclineOrders.length > 0 &&
           <WithdrawButton onClick={() => this.handleShowIncomplete(decline)}>
           <FormattedMessage id="KeyActionsPane74" defaultMessage="incomplete swap ({length})" values={{ length: `${desclineOrders.length}` }} />
-          </WithdrawButton>
-        }
-        {
-          isMac &&
-          <WithdrawButton onClick={this.handleUseKeychain}>
-            <FormattedMessage id="KeyActionsPanel50" defaultMessage="Use KeyChain"/>
           </WithdrawButton>
         }
       </div>

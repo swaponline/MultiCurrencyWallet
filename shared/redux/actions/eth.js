@@ -38,8 +38,11 @@ const loginWithKeychain = async () => {
   web3.eth.accounts.sign = web3OverrideFunctions.sign
   web3.eth.accounts.signTransaction = web3OverrideFunctions.signTransaction
 
-  await actions.keychain.login('ETH');
+  await actions.keychain.login('ETH')
   const selectedKey = localStorage.getItem(constants.privateKeyNames.ethKeychainPublicKey)
+  if (!selectedKey) { // user cancelled key selection or other error
+    return null
+  }
   const data = { privateKey: selectedKey, address: `0x${pubToAddress('0x' + selectedKey).toString('hex')}` }
 
   reducers.user.setAuthData({ name: 'ethData', data })

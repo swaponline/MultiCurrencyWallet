@@ -18,6 +18,10 @@ const handleDeactivateKeychain = (event, currency) => {
 }
 
 const KeychainStatus = ({ currency }) => {
+  const isMac = navigator.platform.indexOf('Mac') > -1
+  if (!isMac) {
+    return null
+  }
   const keychainActivated = currency === 'ETH' ?
     !!localStorage.getItem(constants.privateKeyNames.ethKeychainPublicKey) :
     !!localStorage.getItem(constants.privateKeyNames.btcKeychainPublicKey)

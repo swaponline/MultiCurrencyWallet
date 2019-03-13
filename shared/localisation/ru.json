@@ -4778,13 +4778,6 @@
     ]
   },
   {
-    "id": "KeyActionsPanel50",
-    "message": "Использовать KeyChain",
-    "files": [
-      "shared/components/KeyActionsPanel/KeyActionsPanel.js"
-    ]
-  },
-  {
     "id": "FeeControler34",
     "message": "Недостаточный баланс ETH кошелька, для оплаты комиссии майнеров.{br}Внесите 0.002 ETH на Ваш кошелек для продолжения обмена {br}"
   },
