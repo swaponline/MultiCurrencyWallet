@@ -16,6 +16,7 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import BtnTooltip from 'components/controls/WithdrawButton/BtnTooltip'
 
 import LinkAccount from '../LinkAccount/LinkAcount'
+import KeychainStatus from '../KeychainStatus/KeychainStatus'
 import { withRouter } from 'react-router'
 import ReactTooltip from 'react-tooltip'
 import { FormattedMessage, injectIntl } from 'react-intl'
@@ -170,14 +171,6 @@ export default class Row extends Component {
         })
       }, 500)
     })
-  }
-
-  handleActivateKeychain = address => {
-    console.log('activate address: ', address)
-  }
-
-  handleDeactivateKeychain = address => {
-    console.log('deactivate address: ', address)
   }
 
   handleEosRegister = () => {
@@ -454,28 +447,8 @@ export default class Row extends Component {
                       </Fragment>
                     )
                     */}
-
-                    { currency === 'ETH' && (
-                      <Fragment>
-                        <br />
-                        { keychainActivated ?
-                          <span styleName="keychainActiveLink">
-                            <i className="fas fa-lock" styleName="icon" aria-hidden="true" />
-                            <FormattedMessage id="Row288" defaultMessage="KeyChain is activated"/>&nbsp;
-                            <a href="#" onClick={(e) => {e.preventDefault(); e.stopPropagation(); this.handleDeactivateKeychain(address)}}>
-                              <FormattedMessage id="RowWallet284" defaultMessage="Deactivate" />
-                            </a>
-                          </span>
-                          :
-                          <span styleName="keychainActiveLink">
-                            <i className="fas fa-lock" styleName="icon" aria-hidden="true" />
-                            <FormattedMessage id="Row289" defaultMessage="KeyChain is not activated"/>&nbsp;
-                            <a href="#" onClick={(e) => {e.preventDefault(); e.stopPropagation(); this.handleActivateKeychain(address)}}>
-                              <FormattedMessage id="RowWallet283" defaultMessage="Activate" />
-                            </a>
-                          </span>
-                        }
-                      </Fragment>
+                    { (currency === 'BTC' || currency === 'ETH') && (
+                      <KeychainStatus keychainActivated={keychainActivated} currency={currency}/>
                     )
                     }
                   </div>

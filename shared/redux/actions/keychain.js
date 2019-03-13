@@ -8,7 +8,9 @@ const login = async () => {
     const keychain = await Keychain.create()
     const selectKeyResult = await keychain.selectKey()
     const selectedKey = selectKeyResult.result
-    localStorage.setItem(constants.privateKeyNames.keychainPublicKey, selectedKey)
+    if (selectedKey) {
+      localStorage.setItem(constants.privateKeyNames.keychainPublicKey, selectedKey)
+    }
   }
 }
 
