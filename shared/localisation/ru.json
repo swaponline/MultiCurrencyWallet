@@ -3404,6 +3404,13 @@
     ]
   },
   {
+    "id": "PartialFeeValueWarn",
+    "message": "Обратите внимание: из этой суммы так же вычтется комиссия майнеров до {estimatedFeeValue} {haveCurrency}",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
     "id": "down57",
     "message": "Похоже, что Вы используете IPhone или IPad. Скопируйте приватные ключи и адреса в надеждное место.",
     "files": [
