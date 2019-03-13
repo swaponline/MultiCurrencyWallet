@@ -1991,7 +1991,7 @@
   },
   {
     "id": "PrivateKeysModal665",
-    "message": " I understand and except the risks of not saving my private keys",
+    "message": " I understand and except the risks of not saving my private keys. {learnMore}",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
@@ -1999,6 +1999,13 @@
   {
     "id": "PrivateKeysModal666",
     "message": "Continue",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal667",
+    "message": "Learn more",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
@@ -3372,7 +3379,7 @@
   },
   {
     "id": "partial544",
-    "message": "Show order book",
+    "message": "Orderbook",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -4336,7 +4343,7 @@
   },
   {
     "id": "EmergencySave33",
-    "message": "Developer information",
+    "message": "Debug",
     "files": [
       "shared/pages/Swap/EmergencySave/EmergencySave.js"
     ]
@@ -4525,7 +4532,8 @@
     "id": "FourthStep36",
     "message": "({btcTx} tx)",
     "files": [
-      "shared/pages/Swap/SwapList/steps/SecondStep.js"
+      "shared/pages/Swap/SwapList/steps/SecondStep.js",
+      "shared/pages/Swap/SwapList/steps/ThirdStep.js"
     ]
   },
   {
@@ -4730,6 +4738,13 @@
     ]
   },
   {
+    "id": "ErrorNotAvailable",
+    "message": "Available balance to swap is {available}",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
     "id": "select75",
     "message": "Available for exchange: {availableBalance} {tooltip}",
     "files": [
@@ -4741,6 +4756,20 @@
     "message": "You can use an external wallet to perform a swap, directly during the exchange",
     "files": [
       "shared/pages/PartialClosure/SelectGroup/SelectGroup.js"
+    ]
+  },
+  {
+    "id": "deposit297",
+    "message": "link to explorer",
+    "files": [
+      "shared/pages/Swap/DepositWindow/DepositWindow.js"
+    ]
+  },
+  {
+    "id": "Select28",
+    "message": "ALL",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/Select/Select.js"
     ]
   }
 ]

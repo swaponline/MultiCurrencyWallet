@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { FormattedMessage } from 'react-intl'
+
 import CSSModules from 'react-css-modules'
 import styles from './Swap.scss'
 
@@ -50,9 +52,13 @@ class SwapController extends React.PureComponent {
       <div styleName="onlineIndicator">
         {
           online ? (
-            <p styleName="online"> {`Participant is Online`}</p>
+            <p styleName="online">
+              <FormattedMessage id="SwapController54" defaultMessage="Another participant is online" />
+            </p>
           ) : (
-            <p styleName="offline"> {`Participant is Offline`}</p>
+            <p styleName="offline">
+              <FormattedMessage id="SwapController60" defaultMessage="Another participant is offline" />
+            </p>
           )
         }
       </div>

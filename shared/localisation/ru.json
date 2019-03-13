@@ -391,7 +391,7 @@
   },
   {
     "id": "ShowMoreCoins48",
-    "message": "Скрытые Валюты",
+    "message": "Все валюты",
     "files": [
       "shared/components/modals/ShowMoreCoins/ShowMoreCoins.js"
     ]
@@ -486,35 +486,35 @@
   },
   {
     "id": "SwapProgress105",
-    "message": "3. Проверяется баланс.. ",
+    "message": "Проверяется баланс.. ",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.js"
     ]
   },
   {
     "id": "SwapProgress111",
-    "message": "4. Создается Bitcoin Script. Пожалуйста подождите, это займет некоторое время",
+    "message": "Создается Bitcoin Script. Пожалуйста подождите, это займет некоторое время",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.js"
     ]
   },
   {
     "id": "SwapProgress117",
-    "message": "5. ETH Владелец получил Bitcoin Script и Хэш. Ожидание, создания ETH контракта ",
+    "message": "ETH Владелец получил Bitcoin Script и Хэш. Создания ETH контракта...",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.js"
     ]
   },
   {
     "id": "SwapProgress123",
-    "message": "6. Пробуем вывести ETH из контракта. Пожалуйста, подождите",
+    "message": "Пробуем вывести ETH из контракта. Пожалуйста, подождите",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.js"
     ]
   },
   {
     "id": "SwapProgress129",
-    "message": "7. Средства перечислены на Ваш кошелек. Проверте баланс. ",
+    "message": "Средства перечислены на Ваш кошелек. Проверте баланс. ",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.js"
     ]
@@ -528,31 +528,31 @@
   },
   {
     "id": "SwapProgress32",
-    "message": "1. Пожалуйста, подождите. Обработка подтверждения"
+    "message": "Пожалуйста, подождите. Обработка подтверждения"
   },
   {
     "id": "SwapProgress38",
-    "message": "2. Ожидание, Владелец BTC создает секретный ключ, создает BTC Script и пополняет его"
+    "message": "Ожидание, Владелец BTC создает секретный ключ, создает BTC Script и пополняет его"
   },
   {
     "id": "SwapProgress44",
-    "message": "3. Bitcoin Script создан и загружен. Пожалуйста, проверьте информацию ниже"
+    "message": "Bitcoin Script создан и загружен. Пожалуйста, проверьте информацию ниже"
   },
   {
     "id": "SwapProgress50",
-    "message": "4. Проверка баланса.. "
+    "message": "Проверка баланса.. "
   },
   {
     "id": "SwapProgress56",
-    "message": "5. Создается Ethereum Контракт. Пожалуйста подожди, это займет некоторое время"
+    "message": "Создается Ethereum Контракт. Пожалуйста подожди, это займет некоторое время"
   },
   {
     "id": "SwapProgress62",
-    "message": "6. Ожидание, пока Владелец BTC добавит Секретный ключ в ETH Контракт"
+    "message": "Ожидание, пока Владелец BTC добавит Секретный ключ в ETH Контракт"
   },
   {
     "id": "SwapProgress68",
-    "message": "7. Средства перечислены на Ваш кошелек. Проверте баланс. "
+    "message": "Средства перечислены на Ваш кошелек. Проверте баланс. "
   },
   {
     "id": "SwapProgress74",
@@ -564,14 +564,14 @@
   },
   {
     "id": "SwapProgress93",
-    "message": "1. Создавший ордер, не в сети. Ожидание.. ",
+    "message": "Создавший ордер, не в сети. Ожидание.. ",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.js"
     ]
   },
   {
     "id": "SwapProgress99",
-    "message": "2. Создается Секретный ключ",
+    "message": "Создается Секретный ключ",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.js"
     ]
@@ -840,7 +840,7 @@
   },
   {
     "id": "BtcToEos115",
-    "message": "4. Изъятие из EOS Контракта",
+    "message": "Изъятие из EOS Контракта",
     "files": [
       "shared/pages/Swap/BtcToEos.js"
     ]
@@ -882,7 +882,7 @@
   },
   {
     "id": "BtcToEos87",
-    "message": "2. Fund BTC script",
+    "message": "Fund BTC script",
     "files": [
       "shared/pages/Swap/BtcToEos.js"
     ]
@@ -893,11 +893,11 @@
   },
   {
     "id": "BtcToEthToken156",
-    "message": "3. Проверка баланса.. "
+    "message": "Проверка баланса.. "
   },
   {
     "id": "BtcToEthToken167",
-    "message": "3. Создается Bitcoin Script. Пожалуйста подождите, это займет какое то время"
+    "message": "Создается Bitcoin Script. Пожалуйста подождите, это займет какое то время"
   },
   {
     "id": "BtcToEthToken172",
@@ -905,7 +905,7 @@
   },
   {
     "id": "BtcToEthToken230",
-    "message": "4. Владелец ETH получил Bitcoin Script и Хэш. Ожидается, создание им ETH Контракта"
+    "message": "Владелец ETH получил Bitcoin Script и Хэш. Создание им ETH Контракта..."
   },
   {
     "id": "BtcToEthToken243",
@@ -913,7 +913,7 @@
   },
   {
     "id": "BtcToEthToken260",
-    "message": "5. Пробуем вывести ETH из контракта. Пожалуйста, подождите"
+    "message": "Пробуем вывести ETH из контракта. Пожалуйста, подождите"
   },
   {
     "id": "BtcToEthToken267",
@@ -921,7 +921,7 @@
   },
   {
     "id": "BtcToEthToken290",
-    "message": "6. ETH были переведены на Ваш кошелек. Проверьте баланс. "
+    "message": "ETH были переведены на Ваш кошелек. Проверьте баланс. "
   },
   {
     "id": "BtcToEthToken293",
@@ -952,35 +952,35 @@
   },
   {
     "id": "EosToBtc127",
-    "message": "5. Withdraw BTC from script",
+    "message": "Withdraw BTC from script",
     "files": [
       "shared/pages/Swap/EosToBtc.js"
     ]
   },
   {
     "id": "EosToBtc59",
-    "message": "1. Request to fund BTC script",
+    "message": "Request to fund BTC script",
     "files": [
       "shared/pages/Swap/EosToBtc.js"
     ]
   },
   {
     "id": "EosToBtc73",
-    "message": "2. Проверить BTC script",
+    "message": "Проверить BTC script",
     "files": [
       "shared/pages/Swap/EosToBtc.js"
     ]
   },
   {
     "id": "EosToBtc82",
-    "message": "3. Открыть EOS Контракт",
+    "message": "Открыть EOS Контракт",
     "files": [
       "shared/pages/Swap/EosToBtc.js"
     ]
   },
   {
     "id": "EosToBtc97",
-    "message": "4. Запрос на снятие EOS с контракта",
+    "message": "Запрос на снятие EOS с контракта",
     "files": [
       "shared/pages/Swap/EosToBtc.js"
     ]
@@ -1003,11 +1003,11 @@
   },
   {
     "id": "EthTokenBtc147",
-    "message": "2. Ожидание, Владелец BTC создает Cекретный ключ, BTC Script и пополняет его. "
+    "message": "Ожидание, Владелец BTC создает Cекретный ключ, BTC Script и пополняет его. "
   },
   {
     "id": "EthTokenBtc159",
-    "message": "3. Bitcoin Script создан и загружен. Пожалуйста, проверте информацию ниже"
+    "message": "Bitcoin Script создан и загружен. Пожалуйста, проверте информацию ниже"
   },
   {
     "id": "EthTokenBtc162",
@@ -1031,7 +1031,7 @@
   },
   {
     "id": "EthTokenBtc276",
-    "message": "4. Создание контракта Ethereum. Подождите, это займет некоторое время"
+    "message": "Создание контракта Ethereum. Подождите, это займет некоторое время"
   },
   {
     "id": "EthTokenBtc283",
@@ -1043,11 +1043,11 @@
   },
   {
     "id": "EthTokenBtc321",
-    "message": "5. Ожидание, Владелец BTC добавляет Секретный ключ в ETH Контракт"
+    "message": "Ожидание, Владелец BTC добавляет Секретный ключ в ETH Контракт"
   },
   {
     "id": "EthTokenBtc335",
-    "message": "6. Владелец BTC успешно получил средства из ETH Контракта и отправил Секретный ключ. Запрос о снятии с BTC Script. Пожалуйста, подождите"
+    "message": "Владелец BTC успешно получил средства из ETH Контракта и отправил Секретный ключ. Запрос о снятии с BTC Script. Пожалуйста, подождите"
   },
   {
     "id": "EthTokenBtc342",
@@ -1067,7 +1067,7 @@
   },
   {
     "id": "EthTokenBtc86",
-    "message": "1. Подтвердите свое участие, для начала сделки"
+    "message": "Подтвердите свое участие, для начала сделки"
   },
   {
     "id": "EthTokenBtc94",
@@ -1103,14 +1103,14 @@
   },
   {
     "id": "EthTokenToUsdt154",
-    "message": "2. Ожидание, Владелец USDT создает Секретный ключ, создает BTC Omni Script и пополняет его",
+    "message": "Ожидание, Владелец USDT создает Секретный ключ, создает BTC Omni Script и пополняет его",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
   },
   {
     "id": "EthTokenToUsdt166",
-    "message": "3. Bitcoin Omni Script создан и загружен. Пожалуйста, проверте информацию ниже",
+    "message": "Bitcoin Omni Script создан и загружен. Пожалуйста, проверте информацию ниже",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
@@ -1187,7 +1187,7 @@
   },
   {
     "id": "EthTokenToUsdt285",
-    "message": "4. Создание контракта Ethereum. Подождите, это займет некоторое время",
+    "message": "Создание контракта Ethereum. Подождите, это займет некоторое время",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
@@ -1208,14 +1208,14 @@
   },
   {
     "id": "EthTokenToUsdt331",
-    "message": "5. Ожидание, Владелец BTC жобавляет Секретный ключь в ETH Контракт",
+    "message": "Ожидание, Владелец BTC жобавляет Секретный ключь в ETH Контракт",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
   },
   {
     "id": "EthTokenToUsdt345",
-    "message": "6. Владелец USDT успешно получил средства из ETH Контракта и отправил Секретный ключ. Запрос о снятии с BTC Script. Пожалуйста, подождите",
+    "message": "Владелец USDT успешно получил средства из ETH Контракта и отправил Секретный ключ. Запрос о снятии с BTC Script. Пожалуйста, подождите",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
@@ -1229,7 +1229,7 @@
   },
   {
     "id": "EthTokenToUsdt377",
-    "message": "7. USDT были переведены на Ваш кошелек. Проверьте баланс. ",
+    "message": "USDT были переведены на Ваш кошелек. Проверьте баланс. ",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
@@ -1257,7 +1257,7 @@
   },
   {
     "id": "EthTokenToUsdt93",
-    "message": "1. Пожалуйста, подтвердите свое участие, для начала сделки",
+    "message": "Пожалуйста, подтвердите свое участие, для начала сделки",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
@@ -1991,7 +1991,7 @@
   },
   {
     "id": "PrivateKeysModal665",
-    "message": "Я понимаю и принимаю риски.",
+    "message": "Я понимаю и принимаю риски. {learnMore}",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
@@ -1999,6 +1999,13 @@
   {
     "id": "PrivateKeysModal666",
     "message": "Продолжить",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal667",
+    "message": "Узнать больше",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
@@ -3363,7 +3370,7 @@
   },
   {
     "id": "partial437",
-    "message": "Обмен {full_name1} ({ticker_name1}) на {full_name2} ({ticker_name2}) за 60 секунд",
+    "message": "Atomic Swap {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}) Instant Exchange",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -3433,21 +3440,21 @@
   },
   {
     "id": "Row206",
-    "message": "КУПИТЬ",
+    "message": "Купить",
     "files": [
       "shared/pages/Home/Orders/Row/Row.js"
     ]
   },
   {
     "id": "Row2061",
-    "message": "ПРОДАТЬ",
+    "message": "Продать",
     "files": [
       "shared/pages/Home/Orders/Row/Row.js"
     ]
   },
   {
     "id": "Row210",
-    "message": "ЗА",
+    "message": "за",
     "files": [
       "shared/pages/Home/Orders/Row/Row.js"
     ]
@@ -3811,7 +3818,7 @@
   },
   {
     "id": "PartialClosure562",
-    "message": "Swap.Online - это децентрализованный и быстрый кошелек работающий в браузере, основанный на технологии Atomic Swaps. {br}В нашем кошельке все блокчейны взаимодействуют без участия 3 стороны, и мы предлагаем всем нашим пользователям бесплатно обменять Биткойны, Ethereum, USD Tether, BCH и EOS за пару секунд. {br}{br}В настоящее время Swap.Online не взимает комиссию за оформление и получение заказа. {br}Обмен крипто-токенами в Swap.Online проводится по-настоящему децентрализованно, так как мы используем технологию атомных свопов однорангового взаимодействия между цепями. {br}{br}Swap.Online использует IPFS-сеть для всех рабочих процессов, а значит централизованного сервера просто нет. {br}Интерфейс обмена выглядит как крипто-брокер, а не как обычный DEX или CEX. За пару кликов пользователь может разместить и принять предложение, настроив цену отправляемого токена. {br}{br}Кроме того, пользователь может обменять заданный процент от своего количества доступных токенов (например, ½, ¼ и т. д.). {br}{br}Еще одним преимуществом службы обмена Swap.Online является использование одного ключа для всего диапазона токенов ERC-20. {br}Кстати, если вы не заинтересованы в обмене некоторыми токенами, вы можете скрыть их из списка. {br}Используйте Swap.Online в качестве основного обмена для каждого криптовалюты, которую вы держите и экономьте ваше время уже сегодня!",
+    "message": "Swap.online - это децентрализованный криптовалютный кошелек, работающий по технологии Atomic swap. Обмен Bitcoin, USD Tether, BCH, EOS в течение нескольких секунд. Без комиссии (только комиссия майнеров).{br}Обмен крипто-токенами в Swap.Online проводится по-настоящему децентрализованно, так как мы используем технологию атомных свопов однорангового взаимодействия между цепями. {br}{br}Swap.Online использует IPFS-сеть для всех рабочих процессов, а значит централизованного сервера просто нет. {br}Интерфейс обмена выглядит как крипто-брокер, а не как обычный DEX или CEX. За пару кликов пользователь может разместить и принять предложение, настроив цену отправляемого токена. {br}{br}Кроме того, пользователь может обменять заданный процент от своего количества доступных токенов (например, ½, ¼ и т. д.). {br}{br}Еще одним преимуществом службы обмена Swap.Online является использование одного ключа для всего диапазона токенов ERC-20. {br}Кстати, если вы не заинтересованы в обмене некоторыми токенами, вы можете скрыть их из списка. {br}Используйте Swap.Online в качестве основного обмена для каждого криптовалюты, которую вы держите и экономьте ваше время уже сегодня!",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -3847,7 +3854,14 @@
   },
   {
     "id": "deposit165",
-    "message": "Недостаточно средств для обмена.{br}Для продолжения обмена - скопируйте указанный адрес и пополните баланс на {missingBalance}.",
+    "message": "Для продолжения обмена - скопируйте указанный адрес и пополните баланс на {missingBalance}.",
+    "files": [
+      "shared/pages/Swap/DepositWindow/DepositWindow.js"
+    ]
+  },
+  {
+    "id": "deposit297",
+    "message": "открыть в эксплоурер",
     "files": [
       "shared/pages/Swap/DepositWindow/DepositWindow.js"
     ]
@@ -3931,7 +3945,7 @@
   },
   {
     "id": "KeyActionsPanel73",
-    "message": "Скрытые валюты ({length})",
+    "message": "Все валюты ({length})",
     "files": [
       "shared/components/KeyActionsPanel/KeyActionsPanel.js"
     ]
@@ -4012,7 +4026,7 @@
   },
   {
     "id": "swapJS341",
-    "message": "показать bitcoin script",
+    "message": "Показать bitcoin script",
     "files": [
       "shared/pages/Swap/ShowBtcScript/ShowBtcScript.js"
     ]
@@ -4040,11 +4054,11 @@
   },
   {
     "id": "BtcToEthToken102",
-    "message": "Отправка"
+    "message": "Вывод из контракта"
   },
   {
     "id": "BtcToEthToken111",
-    "message": "Отправка {name} из контракта"
+    "message": "Вывод из контракта"
   },
   {
     "id": "BtcToEthToken123",
@@ -4179,7 +4193,7 @@
   },
   {
     "id": "ethToBtcText40",
-    "message": "Средства из контракта ETH были успешно переведены владельцу BTC.\n              Владелец BTC отправил секретный ключ. Запрос на вывод из BTC script. Пожалуйста, подождите..",
+    "message": "Средства из контракта ETH были успешно переведены владельцу BTC.",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthToBtc.js"
     ]
@@ -4285,70 +4299,70 @@
   },
   {
     "id": "EthTokensToBtc16",
-    "message": "Please wait. Confirmation processing",
+    "message": "Пожалуйста подождите. Процесс подтверждения",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.js"
     ]
   },
   {
     "id": "EthTokensToBtc20",
-    "message": "Waiting for BTC Owner to create Secret Key, create BTC Script and charge it",
+    "message": "Ожидание, Владелец BTC создает Cекретный ключ, BTC Script и пополняет его",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.js"
     ]
   },
   {
     "id": "EthTokensToBtc24",
-    "message": "The bitcoin Script was created and charged. Please check the information below",
+    "message": "Bitcoin Script создан и загружен. Пожалуйста, проверте информацию ниже",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.js"
     ]
   },
   {
     "id": "EthTokensToBtc28",
-    "message": "Checking balance..",
+    "message": "Проверка баланса..",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.js"
     ]
   },
   {
     "id": "EthTokensToBtc32",
-    "message": "Creating Ethereum Contract. {br} Please wait, it can take a few minutes",
+    "message": "Создается Ethereum Контракт. Пожалуйста подождите, потребуется несколько минут",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.js"
     ]
   },
   {
     "id": "EthTokensToBtc36",
-    "message": "Waiting for BTC Owner to add a Secret Key to ETH Contact",
+    "message": "Ожидание... Владелец BTC отправляет Секретный ключ в ETH Контракт",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.js"
     ]
   },
   {
     "id": "EthTokensToBtc40",
-    "message": "The funds from ETH contract was successfully transferred to BTC owner. BTC owner left a secret key. Requesting withdrawal from BTC script. Please wait..",
+    "message": "Средства из контракта ETH были успешно переведены владельцу BTC.",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.js"
     ]
   },
   {
     "id": "EthTokensToBtc44",
-    "message": "Thank you for using Swap.Online",
+    "message": "Спасибо за использование Swap.Online! ",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.js"
     ]
   },
   {
     "id": "EthTokensToBtc48",
-    "message": "Thank you for using Swap.Online!",
+    "message": "Спасибо за использование Swap.Online! ",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.js"
     ]
   },
   {
     "id": "EmergencySave33",
-    "message": "Информация для разработчиков",
+    "message": "Отладка",
     "files": [
       "shared/pages/Swap/EmergencySave/EmergencySave.js"
     ]
@@ -4362,14 +4376,14 @@
   },
   {
     "id": "swappropgress207",
-    "message": "ETH transaction: {transaction}",
+    "message": "{transaction}",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgress.js"
     ]
   },
   {
     "id": "swappropgress218",
-    "message": "BTC transaction: {transaction}",
+    "message": "{transaction}",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgress.js"
     ]
@@ -4404,6 +4418,14 @@
     ]
   },
   {
+    "id": "SwapController54",
+    "message": "Другой участник онлайн"
+  },
+  {
+    "id": "SwapController60",
+    "message": "Другой участник оффлайн"
+  },
+  {
     "id": "withdrowTitle271",
     "message": "Отправка ",
     "files": [
@@ -4419,7 +4441,7 @@
   },
   {
     "id": "CurrencyWalletTitle",
-    "message": "Swap.Online - {fullName} ({currency}) нлайн кошелек, работащюий на технологии Atomic Swap",
+    "message": "Swap.Online - {fullName} ({currency}) онлайн кошелек, работащюий на технологии Atomic Swap",
     "files": [
       "shared/pages/CurrencyWallet/CurrencyWallet.js"
     ]
@@ -4540,7 +4562,8 @@
     "id": "FourthStep36",
     "message": "({btcTx} tx)",
     "files": [
-      "shared/pages/Swap/SwapList/steps/SecondStep.js"
+      "shared/pages/Swap/SwapList/steps/SecondStep.js",
+      "shared/pages/Swap/SwapList/steps/ThirdStep.js"
     ]
   },
   {
@@ -4559,7 +4582,7 @@
   },
   {
     "id": "thirdStep24",
-    "message": "Отправка",
+    "message": "Вывод из контракта",
     "files": [
       "shared/pages/Swap/SwapList/steps/ThirdStep.js"
     ]
@@ -4730,6 +4753,13 @@
     ]
   },
   {
+    "id": "ErrorNotAvailable",
+    "message": "Доступный баланс для обмена {available}",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
     "id": "select75",
     "message": "Доступный баланс: {availableBalance} {tooltip}",
     "files": [
@@ -4741,6 +4771,13 @@
     "message": "Вы можете использовать внешний кошелек для проведения обмена",
     "files": [
       "shared/pages/PartialClosure/SelectGroup/SelectGroup.js"
+    ]
+  },
+  {
+    "id": "Select28",
+    "message": "ВСЁ",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/Select/Select.js"
     ]
   }
 ]

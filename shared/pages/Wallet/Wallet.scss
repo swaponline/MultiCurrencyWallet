@@ -20,8 +20,12 @@
   margin-top: 40px;
 }
 
+.informHeading {
+  margin-bottom: 30px;
+}
+
 .pageLine {
-  height: 130px;
+  padding-bottom: 25px;
   &_widget {
     padding-top: 0;
   }
@@ -53,14 +57,9 @@
   }
   .pageLine {
     height: auto;
+    padding-bottom: 0;
   }
   .inform {
     margin-top: 10px;
-  }
-}
-
-@media all and (min-width: 320px) and (max-width:364px) {
-  .pageLine {
-    margin-bottom: 45px;
   }
 }

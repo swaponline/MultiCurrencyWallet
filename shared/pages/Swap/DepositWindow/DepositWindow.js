@@ -120,7 +120,7 @@ export default class DepositWindow extends Component {
         requiredAmount: BigNumber(sellAmount).dp(6, BigNumber.ROUND_HALF_CEIL),
       })
     } else {
-      const dynamicFee = await helpers[swap.sellCurrency.toLowerCase()].estimateFeeValue({ method: 'swap' })
+      const dynamicFee = await helpers[swap.sellCurrency.toLowerCase()].estimateFeeValue({ method: 'swap', fixed: true })
 
       const requiredAmount = BigNumber(sellAmount).plus(dynamicFee).dp(6, BigNumber.ROUND_HALF_CEIL)
 
@@ -284,6 +284,20 @@ export default class DepositWindow extends Component {
                   }}
                 />
               </a>
+              <div styleName="linkTransactions">
+                <strong>
+                  <a
+                    href={swap.sellCurrency === 'BTC'
+                      ? `${config.link.bitpay}/address/${address}`
+                      : `${config.link.etherscan}/address/${address}`
+                    }
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <FormattedMessage id="deposit297" defaultMessage="link to explorer" />
+                  </a>
+                </strong>
+              </div>
               <p styleName="qr">
                 <a
                   styleName="linkAddress"
@@ -297,6 +311,7 @@ export default class DepositWindow extends Component {
                   disabled={isAddressCopied}
                   fullWidth
                 >
+                  <span className="copyText">copy</span>
                   {isAddressCopied ? <i className="fas fa-copy fa-copy-in" /> : <i className="fas fa-copy" />}
                 </Button>
               </p>

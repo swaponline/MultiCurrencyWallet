@@ -503,7 +503,7 @@
   },
   {
     "id": "SwapProgress123",
-    "message": "ETH contract created and charged. Requesting withdrawal from ETH Contract. Please wait. It usually takes less than 10 mins",
+    "message": "ETH contract was created and charged. Withdrawing ETH. Please wait.",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.js"
     ]
@@ -913,7 +913,7 @@
   },
   {
     "id": "BtcToEthToken260",
-    "message": "4. ETH contract created and charged. Requesting withdrawal from ETH Contract. Please wait. It usually takes less than 10 mins"
+    "message": "ETH contract was created and charged. Withdrawing ETH. Please wait "
   },
   {
     "id": "BtcToEthToken267",
@@ -942,6 +942,14 @@
   {
     "id": "BtcToEthToken87",
     "message": "1. Waiting participant confirm this swap"
+  },
+  {
+    "id": "SwapController54",
+    "message": "Another participant is online"
+  },
+  {
+    "id": "SwapController60",
+    "message": "Another participant is offline"
   },
   {
     "id": "EosToBtc107",
@@ -1047,7 +1055,7 @@
   },
   {
     "id": "EthTokenBtc335",
-    "message": "6. The funds from ETH contract was successfully transferred to BTC owner. BTC owner left a secret key. Requesting withdrawal from BTC script. Please wait."
+    "message": "ETH was successfully transferred. Withdrawing BTC. Please wait"
   },
   {
     "id": "EthTokenBtc342",
@@ -1607,7 +1615,7 @@
   },
   {
     "id": "LtcTOeth283",
-    "message": "5. ETH contract created and charged. Requesting withdrawal from ETH Contract. Please wait. It usually takes less than 10 mins",
+    "message": "ETH contract was created and charged. Withdrawing ETH. Please wait.",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
@@ -1991,7 +1999,7 @@
   },
   {
     "id": "PrivateKeysModal665",
-    "message": " I understand and except the risks of not saving my private keys",
+    "message": " I understand and except the risks of not saving my private keys. {learnMore}",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
@@ -1999,6 +2007,13 @@
   {
     "id": "PrivateKeysModal666",
     "message": "Continue",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal667",
+    "message": "Learn more",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
@@ -2652,7 +2667,7 @@
   },
   {
     "id": "Orders151",
-    "message": "my Orders",
+    "message": "My orders",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]
@@ -3372,7 +3387,7 @@
   },
   {
     "id": "partial544",
-    "message": "Show order book",
+    "message": "Orderbook",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -3414,21 +3429,21 @@
   },
   {
     "id": "Row206",
-    "message": "BUY",
+    "message": "Buy",
     "files": [
       "shared/pages/Home/Orders/Row/Row.js"
     ]
   },
   {
     "id": "Row2061",
-    "message": "SELL",
+    "message": "Sell",
     "files": [
       "shared/pages/Home/Orders/Row/Row.js"
     ]
   },
   {
     "id": "Row210",
-    "message": "FOR",
+    "message": "for",
     "files": [
       "shared/pages/Home/Orders/Row/Row.js"
     ]
@@ -3807,7 +3822,7 @@
   },
   {
     "id": "PartialClosure562",
-    "message": "Swap.Online is the decentralized in-browser hot wallet based on the Atomic Swaps technology. {br}As in our wallet all blockchains interact decentralized and no-third-party way, we offer our users to exchange Bitcoin, Ethereum, USD Tether, BCH and EOS for free in a couple of seconds. {br}{br}At the time, Swap.Online charges no commision for the order making and taking. {br}The exchange of crypto and tokens on Swap.Online is conducted in truly decentralized manner as we use the Atomic Swaps technology of peer-to-peer cross-chain interaction. {br}{br}Swap.Online uses IPFS-network for all the operational processes which results in no need for centralized server. {br}The interface of exchange seems to look like that of crypto broker, not of ordinary DEX or CEX. In a couple of clicks, the user can place and take the offer, customizing the price of sent token. {br}{br}Also, the user can exchange the given percentage of his or her amount of tokens available (e.g. ½, ¼ etc.). {br}{br}One more advantage of the Swap.Online exchange service is the usage of one key for the full range of ERC-20 tokens. {br}By the way, if case you’re not interested in exchange of some tokens, you can hide it from the list. {br}Thus, use Swap.Online as your basic exchange for every crypto you’re holding!",
+    "message": "Swap.online is a decentralized hot wallet powered by Atomic swap technology. Exchange Bitcoin, USD Tether, BCH, EOS within seconds. No commission for exchange (only miners fee). {br}{br}Swap.Online uses IPFS-network for all the operational processes which results in no need for centralized server. {br}The interface of exchange seems to look like that of crypto broker, not of ordinary DEX or CEX. In a couple of clicks, the user can place and take the offer, customizing the price of sent token. {br}{br}Also, the user can exchange the given percentage of his or her amount of tokens available (e.g. ½, ¼ etc.). {br}{br}One more advantage of the Swap.Online exchange service is the usage of one key for the full range of ERC-20 tokens. {br}By the way, if case you’re not interested in exchange of some tokens, you can hide it from the list. {br}Thus, use Swap.Online as your basic exchange for every crypto you’re holding!",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -3843,7 +3858,14 @@
   },
   {
     "id": "deposit165",
-    "message": "You don't have enought funds to continue the swap. Copy this address and top it up with {missingBalance}  ",
+    "message": "To continue the swap copy this address and top it up with {missingBalance}  ",
+    "files": [
+      "shared/pages/Swap/DepositWindow/DepositWindow.js"
+    ]
+  },
+  {
+    "id": "deposit297",
+    "message": "link to explorer",
     "files": [
       "shared/pages/Swap/DepositWindow/DepositWindow.js"
     ]
@@ -4175,7 +4197,7 @@
   },
   {
     "id": "ethToBtcText40",
-    "message": "The funds from ETH contract was successfully transferred to BTC owner.\n              BTC owner left a secret key. Requesting withdrawal from BTC script. Please wait..",
+    "message": "ETH was successfully transferred. Withdrawing BTC. Please wait",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthToBtc.js"
     ]
@@ -4256,7 +4278,7 @@
   },
   {
     "id": "BitcoinBuyText41",
-    "message": "{buyCurrency} contract created and charged. Requesting withdrawal from {buyCurrency} Contract. Please wait. It usually takes less than 10 mins",
+    "message": "{buyCurrency}  contract was created and charged. Withdrawing {buyCurrency}. Please wait...",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
     ]
@@ -4326,7 +4348,7 @@
   },
   {
     "id": "EthTokensToBtc40",
-    "message": "The funds from ETH contract was successfully transferred to BTC owner. BTC owner left a secret key. Requesting withdrawal from BTC script. Please wait..",
+    "message": "ETH was successfully transferred. Withdrawing BTC. Please wait",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.js"
     ]
@@ -4347,7 +4369,7 @@
   },
   {
     "id": "EmergencySave33",
-    "message": "Developer information",
+    "message": "Debug",
     "files": [
       "shared/pages/Swap/EmergencySave/EmergencySave.js"
     ]
@@ -4536,7 +4558,8 @@
     "id": "FourthStep36",
     "message": "({btcTx} tx)",
     "files": [
-      "shared/pages/Swap/SwapList/steps/SecondStep.js"
+      "shared/pages/Swap/SwapList/steps/SecondStep.js",
+      "shared/pages/Swap/SwapList/steps/ThirdStep.js"
     ]
   },
   {
@@ -4726,6 +4749,13 @@
     ]
   },
   {
+    "id": "ErrorNotAvailable",
+    "message": "Available balance to swap is {available}",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
     "id": "select75",
     "message": "Available for exchange: {availableBalance} {tooltip}",
     "files": [
@@ -4737,6 +4767,13 @@
     "message": "You can use an external wallet to perform a swap, directly during the exchange",
     "files": [
       "shared/pages/PartialClosure/SelectGroup/SelectGroup.js"
+    ]
+  },
+  {
+    "id": "Select28",
+    "message": "ALL",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/Select/Select.js"
     ]
   }
 ]

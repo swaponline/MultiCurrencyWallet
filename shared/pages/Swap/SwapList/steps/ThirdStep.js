@@ -39,6 +39,22 @@ const ThirdStep = ({ step, swap, sixth, seventh, eighth }) => {
           </a>
         </strong>
       )}
+      {swap.flow.state.btcSwapWithdrawTransactionHash && (
+        <strong styleName="transactionInStep">
+          <a
+            href={`${config.link.bitpay}/tx/${swap.flow.state.btcSwapWithdrawTransactionHash}`}
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            <FormattedMessage
+              id="FourthStep36"
+              defaultMessage="({btcTx} tx)"
+              values={{ btcTx: 'btc' }}
+            />
+            <i className="fas fa-link" />
+          </a>
+        </strong>
+      )}
     </div>
   )
 }

@@ -261,11 +261,11 @@ export default class Row extends Component {
                           onClick={() => this.сheckDeclineOrders(id, isMy ? sellCurrency : buyCurrency)}
                           data={{ type, amount, main, total, base }}
                         >
-                          {type === PAIR_TYPES.BID ? <FormattedMessage id="Row2061" defaultMessage="SELL" /> : <FormattedMessage id="Row206" defaultMessage="BUY" />}
+                          {type === PAIR_TYPES.BID ? <FormattedMessage id="Row2061" defaultMessage="Sell" /> : <FormattedMessage id="Row206" defaultMessage="Buy" />}
                           {' '}
                           {amount.toFixed(5)}{' '}{main}
                           <br />
-                          <FormattedMessage id="Row210" defaultMessage="FOR" />
+                          <FormattedMessage id="Row210" defaultMessage="for" />
                           {' '}
                           {total.toFixed(5)}{' '}{base}
                         </RequestButton>

@@ -714,7 +714,7 @@ export default class PartialClosure extends Component {
     const { currencies, addSelectedItems, currenciesData, tokensData, intl: { locale, formatMessage } } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching,
       isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet, getUsd, haveUsd,
-      maxBuyAmount, isToken, getAmount, goodRate, extendedControls, dynamicFee,
+      maxBuyAmount, getAmount, goodRate, extendedControls, estimatedFeeValues, isToken, dynamicFee,
     } = this.state
 
     const haveCurrencyData = currenciesData.find(item => item.currency === haveCurrency.toUpperCase())
@@ -727,6 +727,7 @@ export default class PartialClosure extends Component {
 
     const isWidgetLink = this.props.location.pathname.includes('/exchange') && this.props.location.hash === '#widget'
     const isWidget = isWidgetBuild || isWidgetLink
+    const availableAmount = BigNumber(linked.haveAmount.value).plus(estimatedFeeValues[haveCurrency.toLowerCase()])
 
     if (redirect) {
       return <Redirect push to={`${localisedUrl(locale, links.swap)}/${getCurrency}-${haveCurrency}/${orderId}`} />
@@ -736,6 +737,7 @@ export default class PartialClosure extends Component {
       && BigNumber(getAmount).isGreaterThan(0)
       && this.customWalletValid()
       && !this.doesComissionPreventThisOrder()
+      && (linked.haveAmount.value > balance || BigNumber(balance).isGreaterThanOrEqualTo(availableAmount))
 
     const sellTokenFullName = currenciesData.find(item => item.currency === haveCurrency.toUpperCase())
       ? currenciesData.find(item => item.currency === haveCurrency.toUpperCase()).fullName
@@ -818,6 +820,8 @@ export default class PartialClosure extends Component {
                       ? (
                         <div styleName="extendedControls">
                           <Select
+                            all
+                            estimatedFeeValues={estimatedFeeValues[haveCurrency.toLowerCase()]}
                             changeBalance={this.changeBalance}
                             balance={balance}
                             currency={haveCurrency}
@@ -910,6 +914,20 @@ export default class PartialClosure extends Component {
                 />
               </p>
             )}
+            {(linked.haveAmount.value <= balance
+              && BigNumber(balance).isLessThan(availableAmount)
+              && (
+                <p styleName="error" className={isWidget ? 'error' : ''} >
+                  <FormattedMessage
+                    id="ErrorNotAvailable"
+                    defaultMessage="Available balance to swap is {available}"
+                    values={{
+                      available: BigNumber(balance).minus((estimatedFeeValues[haveCurrency.toLowerCase()])),
+                    }}
+                  />
+                </p>
+              )
+            )}
             {
               isFetching && (
                 <span className={isWidget ? 'wait' : ''}>
@@ -987,7 +1005,7 @@ export default class PartialClosure extends Component {
                 <FormattedMessage id="partial541" defaultMessage="Exchange now" />
               </Button>
               <Button styleName="button" gray onClick={() => this.handlePush(isWidgetLink)} >
-                <FormattedMessage id="partial544" defaultMessage="Show order book" />
+                <FormattedMessage id="partial544" defaultMessage="Orderbook" />
               </Button>
             </div>
           </div>
@@ -997,16 +1015,10 @@ export default class PartialClosure extends Component {
             <p styleName="inform">
               <FormattedMessage
                 id="PartialClosure562"
-                defaultMessage="Swap.Online is the decentralized in-browser hot wallet based on the Atomic Swaps technology.
+                defaultMessage="Swap.online is a decentralized hot wallet powered by Atomic swap technology.
+                Exchange Bitcoin, USD Tether, BCH, EOS within seconds.
 
-                As in our wallet all blockchains interact decentralized and no-third-party way, we offer our users to exchange Bitcoin, Ethereum,
-                USD Tether, BCH and EOS for free in a couple of seconds.
-
-
-                At the time, Swap.Online charges no commision for the order making and taking.
-
-                The exchange of crypto and tokens on Swap.Online is conducted in truly decentralized manner as we use the
-                Atomic Swaps technology of peer-to-peer cross-chain interaction.
+                No commission for exchange (only miners fee).
 
 
                 Swap.Online uses IPFS-network for all the operational processes which results in no need for centralized server.
