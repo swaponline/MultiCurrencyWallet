@@ -265,9 +265,23 @@ export default class PrivateKeysModal extends React.PureComponent {
                 defaultMessage="Please save your private keys! We do not store your private keys and will not be able to restore your wallets."
               />
               <br />
-              <label>
+              <label styleName="containerWithWrongLinkFZ">
                 <Toggle checked={skipBtnShown} onChange={() => this.setState({ skipBtnShown: !skipBtnShown })} />
-                <FormattedMessage id="PrivateKeysModal665" defaultMessage=" I understand and except the risks of not saving my private keys" />
+                <FormattedMessage
+                  id="PrivateKeysModal665"
+                  defaultMessage=" I understand and except the risks of not saving my private keys {learnMore}"
+                  values={{
+                    learnMore: (
+                      <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href="https://medium.com/ecomi/keep-your-private-keys-safe-why-its-so-important-to-store-them-offline-8a85d946a3b2"
+                      >
+                        <FormattedMessage id="PrivateKeysModal667" defaultMessage="Learn more" />
+                      </a>
+                    ),
+                  }}
+                />
               </label>
               <br />
               <br />
