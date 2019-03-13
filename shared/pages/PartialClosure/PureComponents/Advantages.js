@@ -128,7 +128,7 @@ const Advantages = (props) => (
           </h4>
           <FormattedMessage
             id="advantagesButtonTxt"
-            defaultMessage="(Watch the video)"
+            defaultMessage="(Watch a video)"
           />
         </div>
       </button>
