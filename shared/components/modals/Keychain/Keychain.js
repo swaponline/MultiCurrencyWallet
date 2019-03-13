@@ -68,23 +68,36 @@ export default class Keychain extends Component {
   //   const tagNameSplit = tagName.split('.');
   //   return tagNameSplit[0] !== keychainVersionSplit[0] || tagNameSplit[1] !== keychainVersionSplit[1]
   // }
-  deactivate() {
-    actions.keychain.deactivate();
-    actions.eth.login();
-    return actions.eth.getBalance()
+  deactivate(currency) {
+    actions.keychain.deactivate(currency);
+    if (currency === 'ETH') {
+      actions.eth.login();
+      return actions.eth.getBalance()
+    } else {
+      actions.btc.login();
+      return actions.btc.getBalance()
+    }
   }
 
   render() {
 
     const {name, intl: {locale}, intl, data} = this.props
-    const {keychainInstalled, otherError, downloadUrl, keychainVersion, tagName, positiveBalanceError, isLoading} = this.state
-    const keychainActivated = !!localStorage.getItem(constants.privateKeyNames.keychainPublicKey)
+    const {keychainInstalled, downloadUrl, keychainVersion, tagName, positiveBalanceError, isLoading} = this.state
+    let {otherError} = this.state;
+    let keychainActivated;
+    if (data.currency === 'ETH') {
+      keychainActivated = !!localStorage.getItem(constants.privateKeyNames.ethKeychainPublicKey)
+    } else if (data.currency === 'BTC') {
+      keychainActivated = !!localStorage.getItem(constants.privateKeyNames.btcKeychainPublicKey)
+    } else {
+      otherError = { message: `Unknown currency "${data.currency}" passed. Supported currencies are BTC or ETH`}
+    }
 
     if (otherError) {
       return <div>Error: {otherError.message}</div>
     }
     if (isLoading) {
-      return <Modal name={name} title={intl.formatMessage(title.Keychain)}></Modal>
+      return <Modal name={name} title={intl.formatMessage(title.Keychain)} />
     }
 
     return (
@@ -124,7 +137,7 @@ export default class Keychain extends Component {
           {keychainInstalled && keychainActivated &&
             <div>
               <FormattedMessage id="Keychain19" defaultMessage="KeyChain is activated. If you wish to deactivate KeyChain, note that your key will be replaced with a new one." />
-              <Button styleName="button" brand fullWidth onClick={() => {this.deactivate().then(() => actions.modals.close(name))}}>
+              <Button styleName="button" brand fullWidth onClick={() => {this.deactivate(data.currency).then(() => actions.modals.close(name))}}>
                 <FormattedMessage id="Keychain24" defaultMessage="Deactivate"/>
               </Button>
             </div>
@@ -132,7 +145,7 @@ export default class Keychain extends Component {
           {!keychainInstalled && keychainActivated &&
             <div>
               <FormattedMessage id="Keychain19" defaultMessage="KeyChain is not installed but activated" />
-              <Button styleName="button" brand fullWidth onClick={() => {this.deactivate().then(() => actions.modals.close(name))}}>
+              <Button styleName="button" brand fullWidth onClick={() => {this.deactivate(data.currency).then(() => actions.modals.close(name))}}>
                 <FormattedMessage id="Keychain24" defaultMessage="Deactivate"/>
               </Button>
               <a href={downloadUrl}>

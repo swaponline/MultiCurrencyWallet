@@ -46,8 +46,8 @@ const login = (privateKey) => {
 }
 
 const loginWithKeychain = async () => {
-  await actions.keychain.login()
-  const selectedKey = localStorage.getItem(constants.privateKeyNames.keychainPublicKey)
+  await actions.keychain.login('BTC')
+  const selectedKey = localStorage.getItem(constants.privateKeyNames.btcKeychainPublicKey)
 
   const address   = 'asdvsdvsadsdvsdsdv'
 
@@ -154,7 +154,7 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
     tx.addOutput(from, skipValue)
   }
 
-  const keychainActivated = !!localStorage.getItem(constants.privateKeyNames.keychainPublicKey)
+  const keychainActivated = !!localStorage.getItem(constants.privateKeyNames.btcKeychainPublicKey)
   const txRaw = keychainActivated ? await signAndBuildKeychain(tx, unspents) : signAndBuild(tx, keyPair)
 
   broadcastTx(txRaw.toHex())

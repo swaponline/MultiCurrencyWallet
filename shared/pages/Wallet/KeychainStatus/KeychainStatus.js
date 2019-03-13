@@ -17,29 +17,33 @@ const handleDeactivateKeychain = (event, currency) => {
   actions.modals.open(constants.modals.Keychain, { currency })
 }
 
-const KeychainStatus = ({ keychainActivated, currency }) => {console.log('keychainActivated, currency: ', keychainActivated, currency); return (
-  <Fragment>
-    <br />
-    <span className={`${styles.link} ${keychainActivated ? styles.active : styles.inactive}`}>
-      <i className={`fas fa-lock ${styles.icon}`} aria-hidden="true" />
-      { keychainActivated ?
-        <FormattedMessage id="Row288" defaultMessage="KeyChain is activated" />
-        :
-        <FormattedMessage id="Row289" defaultMessage="KeyChain is not activated" />
-      }
-      &nbsp;
-      { keychainActivated ?
-        <a href="#" onClick={(e) => { handleDeactivateKeychain(e, currency) }}>
-          <FormattedMessage id="RowWallet284" defaultMessage="Deactivate" />
-        </a>
-        :
-        <a href="#" onClick={(e) => { handleActivateKeychain(e, currency) }}>
-          <FormattedMessage id="RowWallet283" defaultMessage="Activate" />
-        </a>
-      }
-    </span>
-  </Fragment>
-)}
+const KeychainStatus = ({ currency }) => {
+  const keychainActivated = currency === 'ETH' ?
+    !!localStorage.getItem(constants.privateKeyNames.ethKeychainPublicKey) :
+    !!localStorage.getItem(constants.privateKeyNames.btcKeychainPublicKey)
+  return (
+    <Fragment>
+      <br />
+      <span className={`${styles.link} ${keychainActivated ? styles.active : styles.inactive}`}>
+        <i className={`fas fa-lock ${styles.icon}`} aria-hidden="true" />
+        { keychainActivated ?
+          <FormattedMessage id="Row288" defaultMessage="KeyChain is activated" />
+          :
+          <FormattedMessage id="Row289" defaultMessage="KeyChain is not activated" />
+        }
+        &nbsp;
+        { keychainActivated ?
+          <a href="#" onClick={(e) => { handleDeactivateKeychain(e, currency) }}>
+            <FormattedMessage id="RowWallet284" defaultMessage="Deactivate" />
+          </a>
+          :
+          <a href="#" onClick={(e) => { handleActivateKeychain(e, currency) }}>
+            <FormattedMessage id="RowWallet283" defaultMessage="Activate" />
+          </a>
+        }
+      </span>
+    </Fragment>
+  )}
 
 
 export default KeychainStatus

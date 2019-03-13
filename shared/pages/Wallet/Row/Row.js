@@ -326,9 +326,6 @@ export default class Row extends Component {
       intl: { locale },
     } = this.props
 
-
-    const keychainActivated = !!localStorage.getItem(constants.privateKeyNames.keychainPublicKey)
-
     let eosAccountActivated = false
     let eosActivationPaymentSent = false
     if (currency === 'EOS') {
@@ -448,7 +445,7 @@ export default class Row extends Component {
                     )
                     */}
                     { (currency === 'BTC' || currency === 'ETH') && (
-                      <KeychainStatus keychainActivated={keychainActivated} currency={currency}/>
+                      <KeychainStatus currency={currency}/>
                     )
                     }
                   </div>
