@@ -18,7 +18,7 @@ const handleDeactivateKeychain = (event, currency) => {
 const KeychainStatus = ({ keychainActivated, currency }) => {console.log('keychainActivated, currency: ', keychainActivated, currency); return (
   <Fragment>
     <br />
-    <span className={styles.keychainActiveLink}>
+    <span className={`${styles.link} ${keychainActivated ? styles.active : styles.inactive}`}>
       <i className={`fas fa-lock ${styles.icon}`} aria-hidden="true" />
       { keychainActivated ?
         <FormattedMessage id="Row288" defaultMessage="KeyChain is activated" />
