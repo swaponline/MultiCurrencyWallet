@@ -3387,7 +3387,7 @@
   },
   {
     "id": "partial544",
-    "message": "Show order book",
+    "message": "Orderbook",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
