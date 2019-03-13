@@ -53,21 +53,25 @@ export default class KeyActionsPanel extends Component {
 
   getCorrectDecline = () => {
     const { decline, swapHistory } = this.props
-    if (localStorage.savedOrders !== undefined) {
-      if (localStorage.savedOrders.length > 0) {
-        const desclineOrders = []
 
-        decline.forEach(item => {
-          const order = actions.core.getSwapById(item)
-          if (!order.flow.state.isSwapExist && !order.isMy) {
-            desclineOrders.push(order)
-          }
-        })
-        this.setState(() => ({
-          desclineOrders,
-        }))
-      }
+    if (!localStorage.savedOrders) {
+      return
     }
+
+    if (localStorage.savedOrders.length > 0) {
+      const desclineOrders = []
+
+      decline.forEach(item => {
+        const order = actions.core.getSwapById(item)
+        if (!order.flow.state.isSwapExist && !order.isMy) {
+          desclineOrders.push(order)
+        }
+      })
+      this.setState(() => ({
+        desclineOrders,
+      }))
+    }
+
   }
 
   handleShowMore = () => {
