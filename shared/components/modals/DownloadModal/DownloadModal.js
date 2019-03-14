@@ -56,6 +56,10 @@ export default class DownloadModal extends React.Component {
     })
   }
 
+  handleDownloadTxt = () => {
+    actions.user.downloadPrivateKeys()
+  }
+
   checkLang = () => {
     const { match:{ params:{ locale } } } = this.props
     if (locale === 'ru') {
@@ -91,7 +95,13 @@ export default class DownloadModal extends React.Component {
             {' '}
           </a>
 
-          <p>{item.privateKey}</p>
+          <p>
+            {
+              `${item.currency}` === 'EOS' || `${item.currency}` === 'TLOS'
+                ? item.activePrivateKey
+                : item.privateKey
+            }
+          </p>
         </Fragment>
       ))
     )
@@ -99,16 +109,30 @@ export default class DownloadModal extends React.Component {
     return (
       <Modal name={name} title={intl.formatMessage(title.downloadModal)}>
         <div styleName="subTitle">
-          <FormattedMessage id="down57" defaultMessage="It seems like you're trying to save your private keys. Just copy this keys and paste into notepad textarea." />
+          <FormattedMessage
+            id="down57"
+            defaultMessage="It seems like you're trying to save your private keys. Just copy this keys and paste into notepad textarea. Also you can download it as a .txt file."
+          />
         </div>
-        <CopyToClipboard text={textToCopy} onCopy={this.handleCopyText}>
-          <Button styleName="button" brand disabled={isTextCopied}>
-            { isTextCopied ?
-              <FormattedMessage id="down64" defaultMessage="Address copied to clipboard" /> :
-              <FormattedMessage id="down65" defaultMessage="Copy to clipboard" />
-            }
-          </Button>
-        </CopyToClipboard>
+        <div styleName="buttonsContainer">
+          <CopyToClipboard text={textToCopy} onCopy={this.handleCopyText}>
+            <Button styleName="button" brand disabled={isTextCopied}>
+              { isTextCopied ?
+                <FormattedMessage id="down64" defaultMessage="Address copied to clipboard" /> :
+                <FormattedMessage id="down65" defaultMessage="Copy to clipboard" />
+              }
+            </Button>
+          </CopyToClipboard>
+          {
+            !(/iPad|iPhone|iPod/.test(navigator.userAgent)) && (
+              <Fragment>
+                <Button onClick={this.handleDownloadTxt} styleName="button" brand >
+                  <FormattedMessage id="downFile2" defaultMessage="Download txt file" />
+                </Button>
+              </Fragment>
+            )
+          }
+        </div>
         <div styleName="indent">
           <Account />
         </div>

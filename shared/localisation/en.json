@@ -1943,7 +1943,7 @@
   },
   {
     "id": "PrivateKeysModal130",
-    "message": "Please fill information below from instruction.txt file. We`d like to be sure that you saved the private keys before you can continue  to the site. ",
+    "message": "Please fill information below. We`d like to be sure that you saved the private keys before you can continue  to the site. ",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
@@ -3387,7 +3387,7 @@
   },
   {
     "id": "down57",
-    "message": "It seems like you're trying to save your private keys. Just copy this keys and paste into notepad textarea.",
+    "message": "It seems like you're trying to save your private keys. Just copy this keys and paste into notepad textarea. Also you can download it as a .txt file.",
     "files": [
       "shared/components/modals/DownloadModal/DownloadModal.js"
     ]
@@ -3402,6 +3402,13 @@
   {
     "id": "down65",
     "message": "Copy to clipboard",
+    "files": [
+      "shared/components/modals/DownloadModal/DownloadModal.js"
+    ]
+  },
+  {
+    "id": "downFile2",
+    "message": "Download txt file",
     "files": [
       "shared/components/modals/DownloadModal/DownloadModal.js"
     ]

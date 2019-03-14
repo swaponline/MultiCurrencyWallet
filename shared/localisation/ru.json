@@ -1935,7 +1935,7 @@
   },
   {
     "id": "PrivateKeysModal130",
-    "message": "Пожалуйста, заполните приведенную ниже информацию из файла instruction.txt. Мы хотели бы быть уверены, что Вы сохранили приватные ключи, прежде чем сможете продолжить работу с сайтом. ",
+    "message": "Пожалуйста, заполните приведенную ниже информацию. Мы хотели бы быть уверены, что Вы сохранили приватные ключи, прежде чем сможете продолжить работу с сайтом. ",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
@@ -3398,7 +3398,7 @@
   },
   {
     "id": "down57",
-    "message": "Похоже, что Вы пытаетесь сохранить свои приватные ключи. Скопируйте их в надеждное место!",
+    "message": "Похоже, что Вы пытаетесь сохранить свои приватные ключи. Скопируйте их в надеждное место! Так же вы можете скачать их как документ .txt формата.",
     "files": [
       "shared/components/modals/DownloadModal/DownloadModal.js"
     ]
@@ -3413,6 +3413,13 @@
   {
     "id": "down65",
     "message": "Скопировать",
+    "files": [
+      "shared/components/modals/DownloadModal/DownloadModal.js"
+    ]
+  },
+  {
+    "id": "downFile2",
+    "message": "Скачать txt файл",
     "files": [
       "shared/components/modals/DownloadModal/DownloadModal.js"
     ]

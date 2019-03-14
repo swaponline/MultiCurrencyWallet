@@ -9,7 +9,12 @@
 .button {
   display: block;
   padding: 0 20px;
-  margin: 0 auto;
+  margin: 0px auto;
+}
+
+.buttonsContainer {
+  display: flex;
+  flex-flow: row wrap;
 }
 
 a {
@@ -30,6 +35,7 @@ p {
   .button {
     width: 100%;
     padding: 0;
+    margin: 7px auto;
   }
 
   p {
