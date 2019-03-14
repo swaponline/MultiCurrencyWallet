@@ -493,7 +493,7 @@
   },
   {
     "id": "SwapProgress111",
-    "message": "Создается Bitcoin Script. Пожалуйста подождите, это займет некоторое время",
+    "message": "Создается Bitcoin Script. Это займет некоторое время",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.js"
     ]
@@ -507,7 +507,7 @@
   },
   {
     "id": "SwapProgress123",
-    "message": "Пробуем вывести ETH из контракта. Пожалуйста, подождите",
+    "message": "Выводим ETH из готового контракта. Пожалуйста, подождите",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.js"
     ]
@@ -4158,14 +4158,14 @@
   },
   {
     "id": "ethToBtcText25",
-    "message": "Вitcoin Script был создан и отправлен. Пожалуйста, проверьте информацию ниже",
+    "message": "Вitcoin Script был создан и отправлен. Проверьте информацию ниже",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthToBtc.js"
     ]
   },
   {
     "id": "ethToBtcText26",
-    "message": "Пожалуйста подождите. Процесс подтверждения",
+    "message": "Инициируем процесс подтверждения...",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthToBtc.js"
     ]
@@ -4179,7 +4179,7 @@
   },
   {
     "id": "ethToBtcText32",
-    "message": "Создается Ethereum Контракт.{br}Пожалуйста подождите, потребуется несколько минут",
+    "message": "Создается Ethereum Контракт.{br}Потребуется несколько минут",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthToBtc.js"
     ]
@@ -4239,7 +4239,7 @@
   },
   {
     "id": "BitcoinBuyText17",
-    "message": "Пожалуйста, подождите. Обработка подтверждения",
+    "message": "Обработка подтверждения",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
     ]
@@ -4257,7 +4257,7 @@
   },
   {
     "id": "BitcoinBuyText33",
-    "message": "Создается Bitcoin Script. Пожалуйста подождите, это займет какое то время",
+    "message": "Создается Bitcoin Script. Это займет какое то время",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
     ]
@@ -4271,7 +4271,7 @@
   },
   {
     "id": "BitcoinBuyText41",
-    "message": "Пробуем вывести {buyCurrency} из контракта. Пожалуйста, подождите",
+    "message": "Пробуем вывести {buyCurrency} из контракта.",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
     ]
@@ -4299,7 +4299,7 @@
   },
   {
     "id": "EthTokensToBtc16",
-    "message": "Пожалуйста подождите. Процесс подтверждения",
+    "message": "Процесс подтверждения.",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.js"
     ]
@@ -4313,7 +4313,7 @@
   },
   {
     "id": "EthTokensToBtc24",
-    "message": "Bitcoin Script создан и загружен. Пожалуйста, проверте информацию ниже",
+    "message": "Bitcoin Script создан и загружен. Проверте информацию ниже",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.js"
     ]
@@ -4327,7 +4327,7 @@
   },
   {
     "id": "EthTokensToBtc32",
-    "message": "Создается Ethereum Контракт. Пожалуйста подождите, потребуется несколько минут",
+    "message": "Создается Ethereum Контракт. Потребуется несколько минут",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.js"
     ]

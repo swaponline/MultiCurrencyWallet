@@ -282,7 +282,11 @@ $size: 200px;
   font-size: 26px;
   margin-top: -35px;
   margin-bottom: 30px;
-  height: 110px;
+}
+
+.stepHeading__inner {
+  display: inline-block;
+  margin-top: 15px;
 }
 
 .progressContainer {
