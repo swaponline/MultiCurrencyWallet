@@ -15,5 +15,11 @@
 @include media-mobile {
   .tooltip {
     display: none;
+    &_truesight {
+      display: inline-block;
+    }
+  }
+  .r-tooltip {
+    max-width: 80%;
   }
 }

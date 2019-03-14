@@ -25,6 +25,7 @@ import Title from 'components/PageHeadline/Title/Title'
 import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 import SwapController from '../SwapController'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
+import PleaseDontLeaveWrapper from './SwapProgressText/PleaseDontLeaveWrapper'
 
 import BtcToEth from './SwapProgressText/BtcToEth'
 import BtcToEthTokens from './SwapProgressText/BtcToEthTokens'
@@ -175,6 +176,23 @@ export default class SwapProgress extends Component {
     const progress = Math.floor(90 * stepValue)
     const finishIcon = <img src={finishSvg} alt="finishIcon" />
 
+    const swapTexts = (
+      <Fragment>
+        {
+          this.props.name === 'BtcToEth' && <BtcToEth step={flow.step} flow={flow} swap={swap} />
+        }
+        {
+          this.props.name === 'EthToBtc' && <EthToBtc step={flow.step} flow={flow} swap={swap} />
+        }
+        {
+          this.props.name === 'BtcToEthTokens' && <BtcToEthTokens step={flow.step} flow={flow} swap={swap} />
+        }
+        {
+          this.props.name === 'EthTokensToBtc' && <EthTokensToBtc step={flow.step} flow={flow} swap={swap} />
+        }
+      </Fragment>
+    )
+
     return (
       <div styleName="overlay">
         <div styleName="container">
@@ -194,19 +212,17 @@ export default class SwapProgress extends Component {
             </div>
             <div styleName="stepInfo">
               <div styleName="stepInfo">
-
-                {
-                  this.props.name === 'BtcToEth' && <BtcToEth step={flow.step} flow={flow} swap={swap} />
-                }
-                {
-                  this.props.name === 'EthToBtc' && <EthToBtc step={flow.step} flow={flow} swap={swap} />
-                }
-                {
-                  this.props.name === 'BtcToEthTokens' && <BtcToEthTokens step={flow.step} flow={flow} swap={swap} />
-                }
-                {
-                  this.props.name === 'EthTokensToBtc' && <EthTokensToBtc step={flow.step} flow={flow} swap={swap} />
-                }
+                <h1 styleName="stepHeading">
+                  {
+                    stepValue < 4
+                      ? (
+                        <PleaseDontLeaveWrapper>
+                          {swapTexts}
+                        </PleaseDontLeaveWrapper>
+                      )
+                      : swapTexts
+                  }
+                </h1>
               </div>
               {signed && flow.step < 4 && (
                 <div>
