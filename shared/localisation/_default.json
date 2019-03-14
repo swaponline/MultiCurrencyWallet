@@ -4760,7 +4760,7 @@
   },
   {
     "id": "selected53",
-    "message": "You can use an external wallet to perform a swap, directly during the exchange",
+    "message": "You can use an external wallet to perform a swap",
     "files": [
       "shared/pages/PartialClosure/SelectGroup/SelectGroup.js"
     ]

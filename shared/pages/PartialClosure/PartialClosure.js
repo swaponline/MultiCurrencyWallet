@@ -993,11 +993,13 @@ export default class PartialClosure extends Component {
             </div>
             <br />
             {
-              BigNumber(estimatedFeeValues[haveCurrency]).isGreaterThan(0) && (
+              BigNumber(estimatedFeeValues[haveCurrency]).isGreaterThan(0)
+              && BigNumber(haveAmount).isLessThanOrEqualTo(balance)
+              && (
                 <div className={isWidget ? 'feeValue' : ''}>
                   <FormattedMessage
                     id="PartialFeeValueWarn"
-                    defaultMessage="Warning: you will have to pay an additional miner fee up to {estimatedFeeValue} {haveCurrency}"
+                    defaultMessage="You will have to pay an additional miner fee up to {estimatedFeeValue} {haveCurrency}"
                     values={{ haveCurrency: haveCurrency.toUpperCase(), estimatedFeeValue: estimatedFeeValues[haveCurrency] }}
                   />
                 </div>
