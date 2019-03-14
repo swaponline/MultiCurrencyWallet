@@ -475,10 +475,6 @@ export default class PartialClosure extends Component {
       }))
     }
 
-    if (constants.coinsWithDynamicFee.includes(getCurrency) && maxAllowedGetAmount.isGreaterThan(0)) {
-      maxAllowedGetAmount = maxAllowedGetAmount.minus(estimatedFeeValues[getCurrency])
-    }
-
     const checkAmount = this.setAmountOnState(maxAllowedSellAmount, maxAllowedGetAmount, maxAllowedBuyAmount)
 
     if (!checkAmount) {
@@ -1008,6 +1004,18 @@ export default class PartialClosure extends Component {
                 <FormattedMessage id="partial544" defaultMessage="Orderbook" />
               </Button>
             </div>
+            <br />
+            {
+              BigNumber(estimatedFeeValues[haveCurrency]).isGreaterThan(0) && (
+                <div className={isWidget ? 'feeValue' : ''}>
+                  <FormattedMessage
+                    id="PartialFeeValueWarn"
+                    defaultMessage="Warning: you will have to pay an additional miner fee up to {estimatedFeeValue} {haveCurrency}"
+                    values={{ haveCurrency: haveCurrency.toUpperCase(), estimatedFeeValue: estimatedFeeValues[haveCurrency] }}
+                  />
+                </div>
+              )
+            }
           </div>
         </div>
         {

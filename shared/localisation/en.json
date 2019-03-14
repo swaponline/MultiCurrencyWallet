@@ -3393,6 +3393,13 @@
     ]
   },
   {
+    "id": "PartialFeeValueWarn",
+    "message": "Warning: you will have to pay an additional miner fee up to {estimatedFeeValue} {haveCurrency}",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
     "id": "down57",
     "message": "It seems like you're using an IPhone or an IPad. Just copy this keys and paste into notepad textarea.",
     "files": [
