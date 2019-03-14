@@ -35,6 +35,22 @@
   box-shadow: none !important;
 }
 
+.textForNull {
+  font-size: 10px;
+  position: absolute;
+  left: -1px;
+  margin-top: 70px;
+  width: 350px;
+}
+
+.balance {
+  position: absolute;
+  left: -1px;
+  margin-top: 70px;
+  text-align: left;
+  font-size: 14px;
+}
+
 input:disabled {
   background-color:#eee;
 }
