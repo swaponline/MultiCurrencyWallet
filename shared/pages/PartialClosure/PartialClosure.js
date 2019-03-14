@@ -173,7 +173,7 @@ export default class PartialClosure extends Component {
     }, 2000)
 
     SwapApp.shared().services.room.on('new orders', () => this.checkPair(haveCurrency))
-
+    this.customWalletAllowed()
     this.setEstimatedFeeValues()
   }
 
@@ -604,9 +604,7 @@ export default class PartialClosure extends Component {
   customWalletValid() {
     const { haveCurrency, getCurrency, customWallet } = this.state
 
-    if (!this.customWalletAllowed()) {
-      return true
-    }
+    if (!this.customWalletAllowed()) return true
 
     if (getCurrency === 'btc') return util.typeforce.isCoinAddress.BTC(customWallet)
 
@@ -632,6 +630,7 @@ export default class PartialClosure extends Component {
       // eth-btc
       if (getCurrency === 'btc') return true
     }
+
     return false
   }
 
@@ -694,7 +693,7 @@ export default class PartialClosure extends Component {
     const { currencies, addSelectedItems, currenciesData, tokensData, intl: { locale, formatMessage } } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching,
       isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet, getUsd, haveUsd,
-      maxBuyAmount, getAmount, goodRate, extendedControls, estimatedFeeValues,
+      maxBuyAmount, getAmount, goodRate, extendedControls, estimatedFeeValues, haveAmount,
     } = this.state
 
     const haveCurrencyData = currenciesData.find(item => item.currency === haveCurrency.toUpperCase())
@@ -707,7 +706,7 @@ export default class PartialClosure extends Component {
 
     const isWidgetLink = this.props.location.pathname.includes('/exchange') && this.props.location.hash === '#widget'
     const isWidget = isWidgetBuild || isWidgetLink
-    const availableAmount = BigNumber(linked.haveAmount.value).plus(estimatedFeeValues[haveCurrency.toLowerCase()])
+    const availableAmount = BigNumber(haveAmount).plus(estimatedFeeValues[haveCurrency.toLowerCase()])
 
     if (redirect) {
       return <Redirect push to={`${localisedUrl(locale, links.swap)}/${getCurrency}-${haveCurrency}/${orderId}`} />
@@ -717,7 +716,7 @@ export default class PartialClosure extends Component {
       && BigNumber(getAmount).isGreaterThan(0)
       && this.customWalletValid()
       && !this.doesComissionPreventThisOrder()
-      && (linked.haveAmount.value > balance || BigNumber(balance).isGreaterThanOrEqualTo(availableAmount))
+      && (BigNumber(haveAmount).isGreaterThan(balance) || BigNumber(balance).isGreaterThanOrEqualTo(availableAmount))
 
     const sellTokenFullName = currenciesData.find(item => item.currency === haveCurrency.toUpperCase())
       ? currenciesData.find(item => item.currency === haveCurrency.toUpperCase()).fullName
@@ -888,9 +887,9 @@ export default class PartialClosure extends Component {
                 />
               </p>
             )}
-            {(linked.haveAmount.value <= balance
+            {(BigNumber(haveAmount).isLessThanOrEqualTo(balance)
               && BigNumber(balance).isLessThan(availableAmount)
-              && linked.haveAmount.value > 0
+              && BigNumber(haveAmount).isGreaterThan(0)
               && (
                 <p styleName="error" className={isWidget ? 'error' : ''} >
                   <FormattedMessage
