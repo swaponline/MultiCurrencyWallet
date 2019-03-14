@@ -3,7 +3,6 @@
 
 Atomic swap cryptocurrency protocol. Live version here: https://swap.online. Atomic swap library at http://github.com/swaponline/swap.core.
 
-![](https://graphs.waffle.io/swaponline/swap.react/throughput.svg)
 
 ## Swap  React
 
