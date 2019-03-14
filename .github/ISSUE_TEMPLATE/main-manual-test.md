@@ -1,3 +1,12 @@
+---
+name: Main manual test
+about: Main manual test. Need test before build mainnet
+title: ''
+labels: ''
+assignees: ''
+
+---
+
 **Send all coins with wallet**
 - [ ] 1. ethToken
 - [ ] 2. eth
