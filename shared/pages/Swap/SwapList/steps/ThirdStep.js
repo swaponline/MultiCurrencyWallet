@@ -17,7 +17,6 @@ const ThirdStep = ({ step, swap, sixth, seventh, eighth }) => {
 
   return (
     <div
-      style={(isMobile && (stepItemActive || !stepItemDefault)) ? { paddingTop: '100px' } : {}}
       styleName={((stepItemActive) && 'stepItem active') || (stepItemDefault && 'stepItem') || 'stepItem active checked'}>
       <span styleName="stepNumber">{step < currencyStep ? 3 : <i className="fas fa-check" />}</span>
       <p styleName="stepText">

@@ -17,7 +17,6 @@ const SecondStep = ({ step, swap, fifth, fourth, second, sixth }) => {
 
   return (
     <div
-      style={(isMobile && (stepItemActive || !stepItemDefault)) ? { paddingTop: '50px' } : {}}
       styleName={((stepItemActive) && 'stepItem active') || (stepItemDefault && 'stepItem') || 'stepItem active checked'}>
       <span styleName="stepNumber">{stepItemDefault ? 2 : <i className="fas fa-check" />}</span>
       <p styleName="stepText">

@@ -13,7 +13,6 @@ const FourthStep = ({ step, swap, seventh, eighth }) => {
 
   return (
     <div
-      style={(isMobile && (step >= currencyStep)) ? { paddingTop: '150px' } : {}}
       styleName={step >= currencyStep ? 'stepItem active checked' : 'stepItem'}>
       <span styleName="stepNumber">{step >= currencyStep ? <i className="fas fa-check" /> : 4}</span>
       <p styleName="stepText">
