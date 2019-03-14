@@ -114,19 +114,33 @@ export default class Header extends Component {
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll)
 
-    if (process.env.MAINNET) {
-      const canShowSubscribeAndTour = (this.props.history.location.pathname === '/' || this.props.history.location.pathname === '/ru')
-        && !localStorage.getItem(constants.localStorage.firstStart)
-
-      if (canShowSubscribeAndTour && (config && !config.isWidget)) {
-        this.openSignUpModal()
-        localStorage.setItem(constants.localStorage.firstStart, true)
-      }
-    }
+    this.startTourAndSignInModal()
   }
 
   componentWillUnmount() {
     window.removeEventListener('scroll', this.handleScroll)
+  }
+
+  startTourAndSignInModal = () => {
+    if (!process.env.MAINNET || config.isWidget) {
+      return
+    }
+
+    const currentUrlPathName = this.props.history.location.pathname
+    const isStartPage = currentUrlPathName === '/' || currentUrlPathName === '/ru'
+    const canShowSubscribeAndTour = !localStorage.getItem(constants.localStorage.firstStart)
+    let optionsForOenSignUpModal = {}
+
+    if (!canShowSubscribeAndTour) {
+      return
+    }
+
+    if (isStartPage) {
+      optionsForOenSignUpModal = { onClose: this.openTour }
+    }
+
+    this.openSignUpModal(optionsForOenSignUpModal)
+    localStorage.setItem(constants.localStorage.firstStart, true)
   }
 
   declineRequest = (orderId, participantPeer) => {
@@ -173,8 +187,8 @@ export default class Header extends Component {
     this.setState({ isTourOpen: false })
   }
 
-  openSignUpModal = () => {
-    actions.modals.open(constants.modals.SignUp, { onClose: this.openTour })
+  openSignUpModal = (options) => {
+    actions.modals.open(constants.modals.SignUp, options)
   }
 
   openTour = () => {

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import actions from 'redux/actions'
 import { connect } from 'redaction'
 import moment from 'moment-with-locales-es6'
-import { constants, localStorage } from 'helpers'
+import { constants, localStorage, firebase } from 'helpers'
 import { isMobile } from 'react-device-detect'
 
 import CSSModules from 'react-css-modules'
@@ -78,7 +78,7 @@ export default class App extends React.Component {
       actions.user.getDemoMoney()
     }
 
-    actions.firebase.initialize()
+    firebase.initialize()
   }
 
   componentDidMount() {
@@ -115,7 +115,7 @@ export default class App extends React.Component {
     const isWidgetBuild = config && config.isWidget
 
     if (isWidgetBuild && localStorage.getItem(constants.localStorage.didWidgetsDataSend) !== 'true') {
-      actions.firebase.submitUserDataWidget('usersData')
+      firebase.submitUserDataWidget('usersData')
       localStorage.setItem(constants.localStorage.didWidgetsDataSend, true)
     }
 
