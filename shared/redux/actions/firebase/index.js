@@ -26,7 +26,15 @@ const authorisation = () =>
 
 const getIPInfo = () =>
   new Promise(async (resolve) => {
-    const ipResponse = await request.get('http://ip-to-geolocation.com/api/json')
+    let ipResponse = {
+      query: null,
+      countryCode: null,
+    }
+    try {
+      ipResponse = await request.get('http://ip-to-geolocation.com/api/json')
+    } catch (error) {
+      console.error('IpInfo error ', error)
+    }
 
     const resultData = {
       ip: ipResponse.query,
