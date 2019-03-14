@@ -58,7 +58,7 @@ const SelectGroup = ({ dynamicFee, isToken, extendedControls, selectedValue, onS
           <span
             styleName={
               (BigNumber(haveAmount).isLessThanOrEqualTo(balance)
-                && BigNumber(balance).isLessThanOrEqualTo(BigNumber(haveAmount).plus(dynamicFee))
+                && BigNumber(balance).isLessThan(BigNumber(haveAmount).plus(dynamicFee))
                 && BigNumber(haveAmount).isGreaterThan(0))
                 ? 'red'
                 : 'balance'
@@ -68,13 +68,13 @@ const SelectGroup = ({ dynamicFee, isToken, extendedControls, selectedValue, onS
               id="select75"
               defaultMessage="Available for exchange: {availableBalance} {tooltip}"
               values={{
-                availableBalance: `${BigNumber(balance).minus(dynamicFee).dp(6, BigNumber.ROUND_HALF_CEIL)} ${selectedValue.toUpperCase()}`,
+                availableBalance: `${BigNumber(balance).minus(dynamicFee)} ${selectedValue.toUpperCase()}`,
                 tooltip: <Tooltip id={idFee}> {tooltipAboutFee}</Tooltip>,
               }} />
             }
           </span> :
         <span styleName="textForNull">
-          <FormattedMessage id="selected53" defaultMessage="You can use an external wallet to perform a swap, directly during the exchange" />
+          <FormattedMessage id="selected53" defaultMessage="You can use an external wallet to perform a swap" />
         </span>
       )
     }
