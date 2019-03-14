@@ -994,6 +994,7 @@ export default class PartialClosure extends Component {
             <br />
             {
               BigNumber(estimatedFeeValues[haveCurrency]).isGreaterThan(0)
+              && BigNumber(haveAmount).isGreaterThan(0)
               && BigNumber(haveAmount).isLessThanOrEqualTo(balance)
               && (
                 <div className={isWidget ? 'feeValue' : ''}>
