@@ -343,7 +343,7 @@ export default class WithdrawModal extends React.Component {
               <FormattedMessage id="Select210" defaultMessage="MAX" />
             </button>
             {!isMobile &&
-              <ReactTooltip id="Withdrow134" type="light" effect="solid">
+              <ReactTooltip id="Withdrow134" type="light" effect="solid" styleName="r-tooltip">
                 <FormattedMessage
                   id="WithdrawButton32"
                   defaultMessage="when you click this button, in the field, an amount equal to your balance minus the miners commission will appear" />
