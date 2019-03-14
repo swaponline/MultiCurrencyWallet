@@ -145,7 +145,7 @@
   },
   {
     "id": "KeyActionsPanel46",
-    "message": "Скачать ключи",
+    "message": "Показать ключи",
     "files": [
       "shared/components/KeyActionsPanel/KeyActionsPanel.js"
     ]
@@ -1907,35 +1907,35 @@
   },
   {
     "id": "PrivateKeysModal110",
-    "message": "Нажмите сюда",
+    "message": "1. Нажмите сюда чтобы сохранить ваши приватные ключи",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
   },
   {
     "id": "PrivateKeysModal113",
-    "message": "1. СКАЧАТЬ КЛЮЧИ И ИНСТРУКЦИЮ",
+    "message": "Показать ключи",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
   },
   {
     "id": "PrivateKeysModal118",
-    "message": "Затем нажмите сюда",
+    "message": "2. Затем нажмите сюда, когда будете уверены, что сохранили свои приватные ключи в надежное место",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
   },
   {
     "id": "PrivateKeysModal121",
-    "message": "2. Слудующий шаг",
+    "message": "Я сохранил ключи!",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
   },
   {
     "id": "PrivateKeysModal130",
-    "message": "Пожалуйста, заполните приведенную ниже информацию из файла instruction.txt. Мы хотели бы быть уверены, что Вы сохранили приватные ключи, прежде чем сможете продолжить работу с сайтом. ",
+    "message": "Пожалуйста, заполните приведенную ниже информацию. Мы хотели бы быть уверены, что Вы сохранили приватные ключи, прежде чем сможете продолжить работу с сайтом. ",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
@@ -3412,7 +3412,7 @@
   },
   {
     "id": "down57",
-    "message": "Похоже, что Вы используете IPhone или IPad. Скопируйте приватные ключи и адреса в надеждное место.",
+    "message": "Похоже, что Вы пытаетесь сохранить свои приватные ключи. Скопируйте их в надеждное место! Так же вы можете скачать их как документ .txt формата.",
     "files": [
       "shared/components/modals/DownloadModal/DownloadModal.js"
     ]
@@ -3426,14 +3426,21 @@
   },
   {
     "id": "down65",
-    "message": "Скопировтаь",
+    "message": "Скопировать",
+    "files": [
+      "shared/components/modals/DownloadModal/DownloadModal.js"
+    ]
+  },
+  {
+    "id": "downFile2",
+    "message": "Скачать txt файл",
     "files": [
       "shared/components/modals/DownloadModal/DownloadModal.js"
     ]
   },
   {
     "id": "down97",
-    "message": "Мы не храним Ваши ключи или адреса! И не сможем их востановить!",
+    "message": "Ваши приватные ключи!",
     "files": [
       "shared/components/modals/DownloadModal/DownloadModal.js"
     ]

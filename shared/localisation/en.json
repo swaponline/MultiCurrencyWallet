@@ -145,7 +145,7 @@
   },
   {
     "id": "KeyActionsPanel46",
-    "message": "Download keys",
+    "message": "Show my keys",
     "files": [
       "shared/components/KeyActionsPanel/KeyActionsPanel.js"
     ]
@@ -1915,35 +1915,35 @@
   },
   {
     "id": "PrivateKeysModal110",
-    "message": "Click here",
+    "message": "1. Click here to save your private keys",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
   },
   {
     "id": "PrivateKeysModal113",
-    "message": "1. DOWNLOAD KEYS & INSTRUCTION",
+    "message": "Show keys",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
   },
   {
     "id": "PrivateKeysModal118",
-    "message": "Then click here",
+    "message": "2. Then click here if you have saved your private keys in a secure place (or two)",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
   },
   {
     "id": "PrivateKeysModal121",
-    "message": "2. NEXT STEP",
+    "message": "I saved my keys!",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
   },
   {
     "id": "PrivateKeysModal130",
-    "message": "Please fill information below from instruction.txt file. We`d like to be sure that you saved the private keys before you can continue  to the site. ",
+    "message": "Please fill information below. We`d like to be sure that you saved the private keys before you can continue  to the site. ",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
@@ -3401,7 +3401,7 @@
   },
   {
     "id": "down57",
-    "message": "It seems like you're using an IPhone or an IPad. Just copy this keys and paste into notepad textarea.",
+    "message": "It seems like you're trying to save your private keys. Just copy this keys and paste into notepad textarea. Also you can download it as a .txt file.",
     "files": [
       "shared/components/modals/DownloadModal/DownloadModal.js"
     ]
@@ -3421,8 +3421,15 @@
     ]
   },
   {
+    "id": "downFile2",
+    "message": "Download txt file",
+    "files": [
+      "shared/components/modals/DownloadModal/DownloadModal.js"
+    ]
+  },
+  {
     "id": "down97",
-    "message": "We don`t store your private keys and will not be able to restore them!",
+    "message": "Your private keys!",
     "files": [
       "shared/components/modals/DownloadModal/DownloadModal.js"
     ]

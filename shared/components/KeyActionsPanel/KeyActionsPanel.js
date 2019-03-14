@@ -78,17 +78,13 @@ export default class KeyActionsPanel extends Component {
     actions.modals.open(constants.modals.ShowMoreCoins, {})
   }
 
-  handleDownload = () => {
+  handleShowKeys = () => {
     const doesCautionPassed = localStorage.getItem(constants.localStorage.wasCautionPassed)
 
     if (!doesCautionPassed) {
       actions.modals.open(constants.modals.PrivateKeys, {})
     } else {
-      if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
-        actions.modals.open(constants.modals.DownloadModal)
-      } else {
-        actions.user.downloadPrivateKeys()
-      }
+      actions.modals.open(constants.modals.DownloadModal)
     }
   }
 
@@ -119,8 +115,8 @@ export default class KeyActionsPanel extends Component {
           <FormattedMessage id="KeyActionsPanel43" defaultMessage="Exit" />
         </WithdrawButton>
         }
-        <WithdrawButton data-tut="reactour__save" onClick={this.handleDownload}>
-          <FormattedMessage id="KeyActionsPanel46" defaultMessage="Download keys" />
+        <WithdrawButton data-tut="reactour__save" onClick={this.handleShowKeys}>
+          <FormattedMessage id="KeyActionsPanel46" defaultMessage="Show my keys" />
         </WithdrawButton>
         <WithdrawButton onClick={this.handleImportKeys}>
           <FormattedMessage id="KeyActionsPanel49" defaultMessage="Import keys" />
