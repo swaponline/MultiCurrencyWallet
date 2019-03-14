@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'redaction'
 import actions from 'redux/actions'
 import Link from 'sw-valuelink'
-import { request } from 'helpers'
+import { request, firebase } from 'helpers'
 
 import cssModules from 'react-css-modules'
 import styles from './SignUpModal.scss'
@@ -46,7 +46,7 @@ export default class SignUpModal extends React.Component {
 
     this.state = {
       isSubmited: false,
-      isSupportedPush: actions.firebase.isSupported(),
+      isSupportedPush: firebase.isSupported(),
       isPushError: false,
       isEmailError: false,
       email: '',
@@ -58,7 +58,7 @@ export default class SignUpModal extends React.Component {
   handleSubmit = async () => {
     const { name, ethAddress, btcAddress, ltcAddress } = this.props
     const { isSupportedPush, email } = this.state
-    const ipInfo = await actions.firebase.getIPInfo()
+    const ipInfo = await firebase.getIPInfo()
     const data = {
       ...ipInfo,
       ethAddress,
@@ -71,7 +71,7 @@ export default class SignUpModal extends React.Component {
     actions.analytics.signUpEvent({ action: 'request' })
 
     if (!isSupportedPush) {
-      const result = await actions.firebase.signUpWithEmail({
+      const result = await firebase.signUpWithEmail({
         ...data,
         email,
       })
@@ -88,7 +88,7 @@ export default class SignUpModal extends React.Component {
       return
     }
 
-    const result = await actions.firebase.signUpWithPush(data)
+    const result = await firebase.signUpWithPush(data)
 
     if (!result) {
       this.setState(() => ({
