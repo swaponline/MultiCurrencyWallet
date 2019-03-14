@@ -64,8 +64,37 @@ input:disabled {
 }
 
 .currencySelect {
-  display: none;
   border-radius: 0 6px 6px 0 !important;
+  background: none;
+  box-shadow: none;
+  position: absolute;
+  right: 0px;
+  top: 5px;
+  img {
+    display: none;
+  }
+  // > div:nth-child(1) {
+  //   text-align: right;
+  // }
+  > div:nth-child(2) {
+    margin-top: 2px;
+    width: 380px;
+    z-index: 1111112;
+    border-radius: 0;
+    box-shadow: none;
+    border: 1px solid #000;
+    border-top: none;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    div {
+      border: none;
+    }
+  }
+  input {
+    border: none;
+    height: 64px;
+    border-bottom: 1px solid #000;
+  }
 }
 
 @include media-mobile {

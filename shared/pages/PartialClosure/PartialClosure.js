@@ -891,7 +891,7 @@ export default class PartialClosure extends Component {
               </div>
               {
                 (isSearching || (isNonOffers && maxAmount === 0)) && (
-                  <span className={isWidget ? 'searching' : ''}>
+                  <span className={isWidget ? 'searching' : ''} styleName="IsSearching">
                     <FormattedMessage id="PartialPriceSearch" defaultMessage="Searching orders..." />
                     <div styleName="loaderHolder">
                       <div styleName="additionalLoaderHolder">
@@ -991,15 +991,6 @@ export default class PartialClosure extends Component {
                         }
                       </div>
                         <div styleName={!customWalletUse ? 'anotherRecepient anotherRecepient_active' : 'anotherRecepient'}>
-                        <FieldLabel>
-                          <strong>
-                            <FormattedMessage id="PartialYourWalletAddress" defaultMessage="Receiving wallet address" />
-                          </strong>
-                          &nbsp;
-                          <Tooltip id="PartialClosure">
-                            <FormattedMessage id="PartialClosure" defaultMessage="The wallet address to where cryptocurrency will be sent after the exchange" />
-                          </Tooltip >
-                        </FieldLabel>
                         <div styleName="walletInput">
                           <Input required disabled={customWalletUse} valueLink={linked.customWallet} pattern="0-9a-zA-Z" placeholder="Enter the destination address" />
                         </div>
