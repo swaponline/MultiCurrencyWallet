@@ -1,9 +1,9 @@
 import { constants } from 'helpers'
 import { Keychain } from 'keychain.js'
 
-const getLocalStorageName = (currency) => {
-  return currency === 'ETH' ? constants.privateKeyNames.ethKeychainPublicKey : constants.privateKeyNames.btcKeychainPublicKey
-}
+
+const getLocalStorageName = (currency) =>
+  currency === 'ETH' ? constants.privateKeyNames.ethKeychainPublicKey : constants.privateKeyNames.btcKeychainPublicKey
 
 const login = async (currency) => {
   const localStorageName = getLocalStorageName(currency)
@@ -11,10 +11,7 @@ const login = async (currency) => {
   if (!keychainKey) {
     const keychain = await Keychain.create()
     const selectKeyResult = await keychain.selectKey()
-    const selectedKey = selectKeyResult.result
-    if (selectedKey) {
-      localStorage.setItem(localStorageName, selectedKey)
-    }
+    return selectKeyResult.result
   }
 }
 

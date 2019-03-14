@@ -46,10 +46,11 @@ const login = (privateKey) => {
 }
 
 const loginWithKeychain = async () => {
-  await actions.keychain.login('BTC')
-  const selectedKey = localStorage.getItem(constants.privateKeyNames.btcKeychainPublicKey)
+  const selectedKey = await actions.keychain.login('BTC')
 
-  const address   = 'asdvsdvsadsdvsdsdv'
+  const pubkey = Buffer.from(`04${selectedKey}`, 'hex')
+  const keyPair = bitcoin.ECPair.fromPublicKeyBuffer(pubkey, btc.network)
+  const address = keyPair.getAddress()
 
   const data = {
     address,
@@ -60,6 +61,9 @@ const loginWithKeychain = async () => {
 
   console.info('Logged in with Bitcoin', data)
   reducers.user.setAuthData({ name: 'btcData', data })
+  localStorage.setItem(constants.privateKeyNames.btcKeychainPublicKey, selectedKey)
+  localStorage.removeItem(constants.privateKeyNames.btc)
+  await getBalance()
 }
 
 const getBalance = () => {
@@ -173,9 +177,9 @@ const signAndBuildKeychain = async (transactionBuilder, unspents) => {
   const txRaw = transactionBuilder.buildIncomplete()
   unspents.forEach(({ scriptPubKey }, index) => txRaw.ins[index].script = Buffer.from(scriptPubKey, 'hex'))
   const keychain = await Keychain.create()
-  const rawHex = await keychain.signHex(
+  const rawHex = await keychain.signTrx(
     txRaw.toHex(),
-    '08d6770d8219923fe25a4d6aeb2c171253d5de3bc225f09dbfb2cb93ed837be1a80fdd3af5046b8f1f5412e5b321dcc3c25be9f4dd285250421ea55071794277',
+    localStorage.getItem(constants.privateKeyNames.btcKeychainPublicKey),
     'bitcoin'
   )
   return { ...txRaw, toHex: () => rawHex.result }

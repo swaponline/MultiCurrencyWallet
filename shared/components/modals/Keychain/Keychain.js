@@ -10,8 +10,7 @@ import { Button } from 'components/controls'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import * as keychainjs from 'keychain.js'
 import { getState } from 'redux/core'
-import web3 from 'helpers/web3'
-import { constants } from 'helpers'
+import { constants, web3, api, request } from 'helpers'
 
 
 const title = defineMessages({
@@ -37,10 +36,22 @@ export default class Keychain extends Component {
     };
   }
 
+  getBalance() {
+    const currency = this.props.data.currency
+    if (currency === 'ETH') {
+      const address = getState().user.ethData.address
+      return web3.eth.getBalance(address)
+        .then(result => web3.utils.fromWei(result))
+    } else {
+      const address = getState().user.btcData.address
+      return request.get(`${api.getApiServer('bitpay')}/addr/${address}`)
+        .then(({ balance }) => balance)
+    }
+  }
+
   componentDidMount() {
     this.setState({ isLoading: true });
     let keychain;
-    const { user: { ethData: { address } } } = getState()
 
     keychainjs.Keychain.create()
       .then(data => keychain = data)
@@ -54,8 +65,7 @@ export default class Keychain extends Component {
       .then(res => res.json())
       .then(result => this.setState({downloadUrl: result.assets[0].browser_download_url}))
       .catch(otherError => this.setState({otherError}))
-      .then(() => web3.eth.getBalance(address))
-      .then(result => web3.utils.fromWei(result))
+      .then(() => this.getBalance())
       .then(result => this.setState({positiveBalanceError: result > 0}))
       .then(() => this.setState({isLoading: false}))
   }
