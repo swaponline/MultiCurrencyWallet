@@ -24,15 +24,20 @@ const authorisation = () =>
   )
 
 const getIPInfo = () =>
-  new Promise(async (resolve) => {
-    const ipInfo = await request.get('https://json.geoiplookup.io')
+  request
+    .get('https://json.geoiplookup.io')
+    .then(({ ip, country_code }) => ({
+      ip,
+      locale: country_code,
+    }))
+    .catch((error) => {
+      console.error('getIPInfo:', error)
 
-    const resultData = {
-      ip: ipInfo.ip,
-      locale: ipInfo.country_code === 'NO' ? 'EN' : ipInfo.country_code,
-    }
-    resolve(resultData)
-  })
+      return {
+        ip: 'None',
+        locale: 'EN'
+      }
+    })
 
 const sendData = (userId, dataBasePath, data, isDefault = true) =>
   new Promise(async (resolve) => {
