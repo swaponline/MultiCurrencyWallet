@@ -46,17 +46,21 @@ export default class WithdrawModal extends React.Component {
   constructor(data) {
     super()
 
-    const { data: { currency } } = data
+    const { data: { currency }, items, tokenItems } = data
+
+    const currentDecimals = constants.tokenDecimals[currency.toLowerCase()]
+    const allCurrencyies = items.concat(tokenItems)
+    const selectedItem = allCurrencyies.filter(item => item.currency === currency)[0]
 
     this.state = {
       isShipped: false,
       address: '',
       amount: '',
       minus: '',
-      balance: null,
+      balance: selectedItem.balance || 0,
       ethBalance: null,
       isEthToken: helpers.ethToken.isEthToken({ name: currency.toLowerCase() }),
-      currentDecimals: constants.tokenDecimals[currency.toLowerCase()],
+      currentDecimals,
       getUsd: 0,
     }
   }
