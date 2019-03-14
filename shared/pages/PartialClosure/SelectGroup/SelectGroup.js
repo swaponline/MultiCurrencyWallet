@@ -14,25 +14,9 @@ import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 
 // TODO to split data and view this component
 
-const SelectGroup = ({
-  dynamicFee,
-  isToken,
-  extendedControls,
-  selectedValue,
-  onSelect,
-  currencies,
-  usd,
-  placeholder,
-  label,
-  disabled,
-  className,
-  inputValueLink,
-  tooltip,
-  balance,
-  id,
-  idFee,
-  tooltipAboutFee,
-  ...props
+const SelectGroup = ({ dynamicFee, isToken, extendedControls, selectedValue, onSelect,
+  currencies, usd, placeholder, label, disabled, className, inputValueLink, tooltip, balance,
+  id, idFee, tooltipAboutFee, haveAmount, ...props
 }) => (
   <div>
     <FieldLabel inRow>
@@ -72,7 +56,14 @@ const SelectGroup = ({
       (balance > 0 ?
         !isToken &&
           <span
-            styleName="balance">
+            styleName={
+              (BigNumber(haveAmount).isLessThanOrEqualTo(balance)
+                && BigNumber(balance).isLessThanOrEqualTo(BigNumber(haveAmount).plus(dynamicFee))
+                && BigNumber(haveAmount).isGreaterThan(0))
+                ? 'red'
+                : 'balance'
+            }
+          >
             {<FormattedMessage
               id="select75"
               defaultMessage="Available for exchange: {availableBalance} {tooltip}"

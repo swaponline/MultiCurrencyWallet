@@ -803,6 +803,7 @@ export default class PartialClosure extends Component {
               onBlur={() => setTimeout(() => this.extendedControlsSet(false), 200)}
               dynamicFee={dynamicFee}
               isToken={isToken}
+              haveAmount={haveAmount}
             />
             {
               (extendedControls) && (
@@ -913,21 +914,6 @@ export default class PartialClosure extends Component {
                   }}
                 />
               </p>
-            )}
-            {(BigNumber(haveAmount).isLessThanOrEqualTo(balance)
-              && BigNumber(balance).isLessThan(availableAmount)
-              && BigNumber(haveAmount).isGreaterThan(0)
-              && (
-                <p styleName="error" className={isWidget ? 'error' : ''} >
-                  <FormattedMessage
-                    id="ErrorNotAvailable"
-                    defaultMessage="Available balance to swap is {available}"
-                    values={{
-                      available: BigNumber(balance).minus((estimatedFeeValues[haveCurrency.toLowerCase()])),
-                    }}
-                  />
-                </p>
-              )
             )}
             {
               isFetching && (
