@@ -234,22 +234,23 @@ export default class Row extends Component {
 
     const pair = currency.toUpperCase() === 'btc' ? 'eth' : 'btc'
 
-    if (decline === undefined || decline.length === 0) {
+    if (decline.length === 0) {
       window.scrollTo(0, 0)
       this.props.history.push(localisedUrl(locale, `/exchange/${currency.toLowerCase()}-to-${pair}`))
-    }
-
-    if (helpers.handleGoTrade.isSwapExist({ currency, decline }) !== false) {
-      this.handleDeclineOrdersModalOpen(helpers.handleGoTrade.isSwapExist({ currency, decline }))
     } else {
-      window.scrollTo(0, 0)
-      this.props.history.push(localisedUrl(locale, `/exchange/${currency.toLowerCase()}-to-${pair}`))
+      const getDeclinedExistedSwapIndex = helpers.handleGoTrade.getDeclinedExistedSwapIndex({ currency, decline })
+      if (getDeclinedExistedSwapIndex !== false) {
+        this.handleDeclineOrdersModalOpen(getDeclinedExistedSwapIndex)
+      } else {
+        window.scrollTo(0, 0)
+        this.props.history.push(localisedUrl(locale, `/exchange/${currency.toLowerCase()}-to-${pair}`))
+      }
     }
   }
 
-  handleDeclineOrdersModalOpen = (i) => {
+  handleDeclineOrdersModalOpen = (indexOfDecline) => {
     const orders = SwapApp.shared().services.orders.items
-    const declineSwap = actions.core.getSwapById(this.props.decline[i])
+    const declineSwap = actions.core.getSwapById(this.props.decline[indexOfDecline])
 
     if (declineSwap !== undefined) {
       actions.modals.open(constants.modals.DeclineOrdersModal, {

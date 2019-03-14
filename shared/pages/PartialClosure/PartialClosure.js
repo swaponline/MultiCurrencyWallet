@@ -176,7 +176,7 @@ export default class PartialClosure extends Component {
     }, 2000)
 
     SwapApp.shared().services.room.on('new orders', () => this.checkPair(haveCurrency))
-
+    this.customWalletAllowed()
     this.setEstimatedFeeValues()
   }
 
@@ -255,20 +255,21 @@ export default class PartialClosure extends Component {
     const { intl: { locale }, decline } = this.props
     const { haveCurrency } = this.state
 
-    if (decline === undefined || decline.length === 0) {
+    if (decline.length === 0) {
       this.sendRequest()
-    }
-
-    if (helpers.handleGoTrade.isSwapExist({ haveCurrency, decline }) !== false) {
-      this.handleDeclineOrdersModalOpen(helpers.handleGoTrade.isSwapExist({ haveCurrency, decline }))
     } else {
-      this.sendRequest()
+      const getDeclinedExistedSwapIndex = helpers.handleGoTrade.getDeclinedExistedSwapIndex({ currency: haveCurrency, decline })
+      if (getDeclinedExistedSwapIndex !== false) {
+        this.handleDeclineOrdersModalOpen(getDeclinedExistedSwapIndex)
+      } else {
+        this.sendRequest()
+      }
     }
   }
 
-  handleDeclineOrdersModalOpen = (i) => {
+  handleDeclineOrdersModalOpen = (indexOfDecline) => {
     const orders = SwapApp.shared().services.orders.items
-    const declineSwap = actions.core.getSwapById(this.props.decline[i])
+    const declineSwap = actions.core.getSwapById(this.props.decline[indexOfDecline])
 
     if (declineSwap !== undefined) {
       actions.modals.open(constants.modals.DeclineOrdersModal, {
@@ -620,9 +621,7 @@ export default class PartialClosure extends Component {
   customWalletValid() {
     const { haveCurrency, getCurrency, customWallet } = this.state
 
-    if (!this.customWalletAllowed()) {
-      return true
-    }
+    if (!this.customWalletAllowed()) return true
 
     if (getCurrency === 'btc') return util.typeforce.isCoinAddress.BTC(customWallet)
 
@@ -648,6 +647,7 @@ export default class PartialClosure extends Component {
       // eth-btc
       if (getCurrency === 'btc') return true
     }
+
     return false
   }
 
@@ -710,7 +710,7 @@ export default class PartialClosure extends Component {
     const { currencies, addSelectedItems, currenciesData, tokensData, intl: { locale, formatMessage } } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching,
       isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet, getUsd, haveUsd,
-      maxBuyAmount, getAmount, goodRate, extendedControls, estimatedFeeValues, isToken, dynamicFee,
+      maxBuyAmount, getAmount, goodRate, extendedControls, estimatedFeeValues, isToken, dynamicFee, haveAmount,
     } = this.state
 
     const haveCurrencyData = currenciesData.find(item => item.currency === haveCurrency.toUpperCase())
@@ -723,7 +723,7 @@ export default class PartialClosure extends Component {
 
     const isWidgetLink = this.props.location.pathname.includes('/exchange') && this.props.location.hash === '#widget'
     const isWidget = isWidgetBuild || isWidgetLink
-    const availableAmount = BigNumber(linked.haveAmount.value).plus(estimatedFeeValues[haveCurrency.toLowerCase()])
+    const availableAmount = BigNumber(haveAmount).plus(estimatedFeeValues[haveCurrency.toLowerCase()])
 
     if (redirect) {
       return <Redirect push to={`${localisedUrl(locale, links.swap)}/${getCurrency}-${haveCurrency}/${orderId}`} />
@@ -733,7 +733,7 @@ export default class PartialClosure extends Component {
       && BigNumber(getAmount).isGreaterThan(0)
       && this.customWalletValid()
       && !this.doesComissionPreventThisOrder()
-      && (linked.haveAmount.value > balance || BigNumber(balance).isGreaterThanOrEqualTo(availableAmount))
+      && (BigNumber(haveAmount).isGreaterThan(balance) || BigNumber(balance).isGreaterThanOrEqualTo(availableAmount))
 
     const sellTokenFullName = currenciesData.find(item => item.currency === haveCurrency.toUpperCase())
       ? currenciesData.find(item => item.currency === haveCurrency.toUpperCase()).fullName
@@ -799,6 +799,7 @@ export default class PartialClosure extends Component {
               onBlur={() => setTimeout(() => this.extendedControlsSet(false), 200)}
               dynamicFee={dynamicFee}
               isToken={isToken}
+              haveAmount={haveAmount}
             />
             {
               (extendedControls) && (
@@ -909,20 +910,6 @@ export default class PartialClosure extends Component {
                   }}
                 />
               </p>
-            )}
-            {(linked.haveAmount.value <= balance
-              && BigNumber(balance).isLessThan(availableAmount)
-              && (
-                <p styleName="error" className={isWidget ? 'error' : ''} >
-                  <FormattedMessage
-                    id="ErrorNotAvailable"
-                    defaultMessage="Available balance to swap is {available}"
-                    values={{
-                      available: BigNumber(balance).minus((estimatedFeeValues[haveCurrency.toLowerCase()])),
-                    }}
-                  />
-                </p>
-              )
             )}
             {
               isFetching && (

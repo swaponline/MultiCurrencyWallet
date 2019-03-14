@@ -53,6 +53,11 @@ export default class KeyActionsPanel extends Component {
 
   getCorrectDecline = () => {
     const { decline, swapHistory } = this.props
+
+    if (!localStorage.savedOrders) {
+      return
+    }
+
     if (localStorage.savedOrders.length > 0) {
       const desclineOrders = []
 
@@ -66,6 +71,7 @@ export default class KeyActionsPanel extends Component {
         desclineOrders,
       }))
     }
+
   }
 
   handleShowMore = () => {
