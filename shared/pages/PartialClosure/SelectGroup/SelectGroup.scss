@@ -11,15 +11,15 @@
 }
 
 .textUsd {
-  top: 22px;
-  right: 150px;
-  font-size: 15px;
   color: #828795;
   position: absolute;
-  top: 14px;
-  padding: 5px;
-  font-size: 16px;
-  // box-shadow: -20px 0px 20px -14px rgba(0,0,0, 0.5);
+  left: 10px;
+  bottom: -14px;
+  top: auto;
+  background: #fff;
+  right: auto;
+  padding: 0 10px;
+  font-size: 13px;
 }
 
 .inputRoot {
@@ -28,6 +28,10 @@
   input {
     padding-right: 75px;
   }
+}
+
+.textForNull {
+  display: none;
 }
 
 .inputContainer {
@@ -73,19 +77,16 @@ input:disabled {
   img {
     display: none;
   }
-  // > div:nth-child(1) {
-  //   text-align: right;
-  // }
   > div:nth-child(2) {
     margin-top: 2px;
-    width: 380px;
+    display: block;
+    position: absolute;
+    top: 75px;
+    border: none;
+    width: auto;
     z-index: 1111112;
     border-radius: 0;
     box-shadow: none;
-    border: 1px solid #000;
-    border-top: none;
-    border-bottom-left-radius: 3px;
-    border-bottom-right-radius: 3px;
     div {
       border: none;
     }
@@ -95,6 +96,16 @@ input:disabled {
     height: 64px;
     border-bottom: 1px solid #000;
   }
+}
+
+.currencySelect.dropDown {
+  width: 100%;
+  border: 1px solid #000;
+  top: 0px;
+  z-index: 1;
+  background: #fff;
+  height: 375px;
+  border-radius: 3px;
 }
 
 @include media-mobile {

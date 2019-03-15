@@ -104,7 +104,7 @@ export default class DropDown extends Component {
   }
 
   render() {
-    const { className, items, isToggleActive, selectedValue } = this.props
+    const { className, items, isToggleActive, selectedValue, name } = this.props
     const { inputValue } = this.state
 
     const dropDownStyleName = cx('dropDown', {
@@ -145,6 +145,7 @@ export default class DropDown extends Component {
           {
             isToggleActive && (
               <div styleName="select">
+                <span styleName="listName">{name}</span>
                 {isToggleActive && inputValue.length ? (
                   itemsFiltered.map((item) => (
                     <div

@@ -43,9 +43,10 @@ const SelectGroup = ({ dynamicFee, isToken, extendedControls, selectedValue, onS
       />
       {
         (selectedValue === 'eth' || selectedValue === 'btc') && usd > 0 &&
-        <p styleName="textUsd" >{`~${usd}`}$</p>
+        <p styleName="textUsd" >{`~${usd}`} USD</p>
       }
       <CurrencySelect
+        name="All"
         styleName="currencySelect"
         selectedValue={selectedValue}
         onSelect={onSelect}
