@@ -31,6 +31,7 @@ const getDeclinedExistedSwapIndex = ({ currency, decline }) => {
       return false
     }
   }
+  return false
 }
 
 export default {
