@@ -659,14 +659,18 @@ export default class PartialClosure extends Component {
     const check = selected.map(item => item.value).includes(this.state.getCurrency)
 
     if (!check) {
-      this.setState(() => ({
-        getCurrency: selected[0].value,
-      }))
+      this.chooseCurrencyToRender(selected)
     } else if (this.state.getCurrency === checkingValue) {
-      this.setState(() => ({
-        getCurrency: selected[0].value,
-      }))
+      this.chooseCurrencyToRender(selected)
     }
+  }
+
+  chooseCurrencyToRender = (selected) => {
+    this.setState(() => ({
+      getCurrency: selected[0].value !== this.state.haveCurrency ?
+        selected[0].value :
+        selected[1].value,
+    }))
   }
 
   updateAllowedBalance = async () => {
