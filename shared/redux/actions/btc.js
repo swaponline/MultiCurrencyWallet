@@ -48,7 +48,7 @@ const login = (privateKey) => {
 const loginWithKeychain = async () => {
   const selectedKey = await actions.keychain.login('BTC')
 
-  const pubkey = Buffer.from(`04${selectedKey}`, 'hex')
+  const pubkey = Buffer.from(`03${selectedKey.substr(0, 64)}`, 'hex')
   const keyPair = bitcoin.ECPair.fromPublicKeyBuffer(pubkey, btc.network)
   const address = keyPair.getAddress()
 
