@@ -64,7 +64,6 @@ export default class SwapComponent extends PureComponent {
     isShowDevInformation: false,
     shouldStopCheckSendingOfRequesting: false,
     waitWithdrawOther: false,
-    isSwapWasDeleted: false,
   }
 
   timerFeeNotication = null
@@ -138,7 +137,9 @@ export default class SwapComponent extends PureComponent {
   }
 
   componentDidMount() {
-    const { swap: { id, flow: { state: { canCreateEthTransaction, requireWithdrawFeeSended, isFinished, step } } }, continueSwap, deletedOrders, isSwapWasDeleted } = this.state
+    const { swap: { id, flow: { state: { canCreateEthTransaction, requireWithdrawFeeSended, isFinished, step } } }, continueSwap, deletedOrders } = this.state
+
+    let timer
 
     if (localStorage.getItem('deletedOrders') !== null) {
 
@@ -164,8 +165,12 @@ export default class SwapComponent extends PureComponent {
         this.catchWithdrawError()
         this.requestingWithdrawFee()
         this.isBalanceEnough()
-        if (step > 7 && !isSwapWasDeleted) {
+      }, 5000)
+
+      timer = setInterval(() => {
+        if (step > 7) {
           this.deleteThisSwapFromStorage(id)
+          clearInterval(timer)
         }
       }, 5000)
     }
@@ -177,9 +182,6 @@ export default class SwapComponent extends PureComponent {
 
   deleteThisSwapFromStorage = (orderId) => {
     actions.core.forgetOrders(orderId)
-    this.setState(() => ({
-      isSwapWasDeleted: true,
-    }))
   }
 
   deleteThisSwap = (orderId) => {
