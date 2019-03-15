@@ -87,11 +87,8 @@ export default class PrivateKeysModal extends React.PureComponent {
     }
   }
 
-  handleDownload = () => {
-    actions.user.downloadPrivateKeys()
-    actions.notifications.show(constants.notifications.Message, {
-      message: 'Check your browser downloads',
-    })
+  handleShowKeys = () => {
+    actions.modals.open(constants.modals.DownloadModal)
   }
 
   handleNext = () => {
@@ -183,18 +180,20 @@ export default class PrivateKeysModal extends React.PureComponent {
                 <div styleName="buttonContainer">
                   <div styleName="buttonSubContainer">
                     <span styleName="text">
-                      <FormattedMessage id="PrivateKeysModal110" defaultMessage="Click here" />
+                      <FormattedMessage id="PrivateKeysModal110" defaultMessage="1. Click here to save your private keys" />
                     </span>
-                    <Button brand styleName="button" onClick={this.handleDownload}>
-                      <FormattedMessage id="PrivateKeysModal113" defaultMessage="Download keys" />
+                    <br />
+                    <Button brand styleName="button" onClick={this.handleShowKeys}>
+                      <FormattedMessage id="PrivateKeysModal113" defaultMessage="Show keys" />
                     </Button>
                   </div>
                   <div styleName="buttonSubContainer">
                     <span styleName="text">
-                      <FormattedMessage id="PrivateKeysModal118" defaultMessage="Then click here" />
+                      <FormattedMessage id="PrivateKeysModal118" defaultMessage="2. Then click here if you have saved your private keys in a secure place (or two)" />
                     </span>
+                    <br />
                     <Button brand styleName="button" onClick={this.handleNext} >
-                      <FormattedMessage id="PrivateKeysModal121" defaultMessage="Next step" />
+                      <FormattedMessage id="PrivateKeysModal121" defaultMessage="I saved my keys!" />
                     </Button>
                   </div>
                 </div>
@@ -210,7 +209,7 @@ export default class PrivateKeysModal extends React.PureComponent {
                   <FormattedMessage
                     id="PrivateKeysModal130"
                     defaultMessage=
-                      "Please fill information below from instruction.txt file. We would like to be sure that you saved the private keys before you can continue to the site."
+                      "Please fill information below. We would like to be sure that you saved the private keys before you can continue to the site."
                   />
                   <br />
                   <FormattedMessage
@@ -265,9 +264,23 @@ export default class PrivateKeysModal extends React.PureComponent {
                 defaultMessage="Please save your private keys! We do not store your private keys and will not be able to restore your wallets."
               />
               <br />
-              <label>
+              <label styleName="containerWithWrongLinkFZ">
                 <Toggle checked={skipBtnShown} onChange={() => this.setState({ skipBtnShown: !skipBtnShown })} />
-                <FormattedMessage id="PrivateKeysModal665" defaultMessage=" I understand and except the risks of not saving my private keys" />
+                <FormattedMessage
+                  id="PrivateKeysModal665"
+                  defaultMessage=" I understand and except the risks of not saving my private keys {learnMore}"
+                  values={{
+                    learnMore: (
+                      <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        href="https://medium.com/ecomi/keep-your-private-keys-safe-why-its-so-important-to-store-them-offline-8a85d946a3b2"
+                      >
+                        <FormattedMessage id="PrivateKeysModal667" defaultMessage="Learn more" />
+                      </a>
+                    ),
+                  }}
+                />
               </label>
               <br />
               <br />

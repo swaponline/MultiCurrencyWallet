@@ -14,7 +14,7 @@ const isFirefox = navigator.userAgent.indexOf('Firefox') !== -1
 const isWidget = config && config.isWidget
 
 const Loader = ({ overlayClassName, className, data, showTips }) => (
-  <div styleName={`${isFirefox ? 'Firefox ' : ''}overlay`} className={overlayClassName}>
+  <div styleName="Firefox overlay" className={overlayClassName}>
     <div>
       <div styleName="loader" className={className}>
         <div styleName="loader1" />

@@ -145,7 +145,7 @@
   },
   {
     "id": "KeyActionsPanel46",
-    "message": "Download keys",
+    "message": "Show my keys",
     "files": [
       "shared/components/KeyActionsPanel/KeyActionsPanel.js"
     ]
@@ -489,7 +489,7 @@
   },
   {
     "id": "SwapProgress111",
-    "message": "Creating Bitcoin Script. \n Please wait, it can take a few minutes",
+    "message": "Creating Bitcoin Script. \n It can take a few minutes",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.js"
     ]
@@ -503,7 +503,7 @@
   },
   {
     "id": "SwapProgress123",
-    "message": "ETH contract created and charged. Requesting withdrawal from ETH Contract. Please wait. It usually takes less than 10 mins",
+    "message": "ETH contract created and charged. Requesting withdrawal from ETH Contract. It usually takes less than 10 mins",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.js"
     ]
@@ -1907,35 +1907,35 @@
   },
   {
     "id": "PrivateKeysModal110",
-    "message": "Click here",
+    "message": "1. Click here to save your private keys",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
   },
   {
     "id": "PrivateKeysModal113",
-    "message": "1. DOWNLOAD KEYS & INSTRUCTION",
+    "message": "Show keys",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
   },
   {
     "id": "PrivateKeysModal118",
-    "message": "Then click here",
+    "message": "2. Then click here if you have saved your private keys in a secure place (or two)",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
   },
   {
     "id": "PrivateKeysModal121",
-    "message": "2. NEXT STEP",
+    "message": "I saved my keys!",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
   },
   {
     "id": "PrivateKeysModal130",
-    "message": "Please fill information below from instruction.txt file. We`d like to be sure that you saved the private keys before you can continue  to the site. ",
+    "message": "Please fill information below. We`d like to be sure that you saved the private keys before you can continue  to the site. ",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
@@ -1991,7 +1991,7 @@
   },
   {
     "id": "PrivateKeysModal665",
-    "message": " I understand and except the risks of not saving my private keys",
+    "message": " I understand and except the risks of not saving my private keys. {learnMore}",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
@@ -1999,6 +1999,13 @@
   {
     "id": "PrivateKeysModal666",
     "message": "Continue",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal667",
+    "message": "Learn more",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
@@ -3372,14 +3379,21 @@
   },
   {
     "id": "partial544",
-    "message": "Show order book",
+    "message": "Orderbook",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "PartialFeeValueWarn",
+    "message": "Warning: you will have to pay an additional miner fee up to {estimatedFeeValue} {haveCurrency}",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
   },
   {
     "id": "down57",
-    "message": "It seems like you're using an IPhone or an IPad. Just copy this keys and paste into notepad textarea.",
+    "message": "It seems like you're trying to save your private keys. Just copy this keys and paste into notepad textarea. Also you can download it as a .txt file.",
     "files": [
       "shared/components/modals/DownloadModal/DownloadModal.js"
     ]
@@ -3399,8 +3413,15 @@
     ]
   },
   {
+    "id": "downFile2",
+    "message": "Download txt file",
+    "files": [
+      "shared/components/modals/DownloadModal/DownloadModal.js"
+    ]
+  },
+  {
     "id": "down97",
-    "message": "We don`t store your private keys and will not be able to restore them!",
+    "message": "Your private keys!",
     "files": [
       "shared/components/modals/DownloadModal/DownloadModal.js"
     ]
@@ -4129,14 +4150,14 @@
   },
   {
     "id": "ethToBtcText25",
-    "message": "The bitcoin Script was created and charged. Please check the information below",
+    "message": "The bitcoin Script was created and charged. Check the information below",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthToBtc.js"
     ]
   },
   {
     "id": "ethToBtcText26",
-    "message": "Please wait. Confirmation processing",
+    "message": "Confirmation processing",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthToBtc.js"
     ]
@@ -4150,7 +4171,7 @@
   },
   {
     "id": "ethToBtcText32",
-    "message": "Creating Ethereum Contract.{br}Please wait, it can take a few minutes",
+    "message": "Creating Ethereum Contract.{br}It can take a few minutes",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthToBtc.js"
     ]
@@ -4164,7 +4185,7 @@
   },
   {
     "id": "ethToBtcText40",
-    "message": "The funds from ETH contract was successfully transferred to BTC owner.\n              BTC owner left a secret key. Requesting withdrawal from BTC script. Please wait..",
+    "message": "The funds from ETH contract was successfully transferred to BTC owner.\n BTC owner left a secret key. Requesting withdrawal from BTC script.",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthToBtc.js"
     ]
@@ -4210,7 +4231,7 @@
   },
   {
     "id": "BitcoinBuyText17",
-    "message": "Please wait. Confirmation processing",
+    "message": "Confirmation processing",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
     ]
@@ -4231,7 +4252,7 @@
   },
   {
     "id": "BitcoinBuyText33",
-    "message": "Creating Bitcoin Script. \n Please wait, it can take a few minutes",
+    "message": "Creating Bitcoin Script. \n It can take a few minutes",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
     ]
@@ -4245,7 +4266,7 @@
   },
   {
     "id": "BitcoinBuyText41",
-    "message": "{buyCurrency} contract created and charged. Requesting withdrawal from {buyCurrency} Contract. Please wait. It usually takes less than 10 mins",
+    "message": "{buyCurrency} contract created and charged. Requesting withdrawal from {buyCurrency} Contract. It usually takes less than 10 mins",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
     ]
@@ -4273,7 +4294,7 @@
   },
   {
     "id": "EthTokensToBtc16",
-    "message": "Please wait. Confirmation processing",
+    "message": "Confirmation processing.",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.js"
     ]
@@ -4287,7 +4308,7 @@
   },
   {
     "id": "EthTokensToBtc24",
-    "message": "The bitcoin Script was created and charged. Please check the information below",
+    "message": "The bitcoin Script was created and charged. Check the information below",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.js"
     ]
@@ -4301,7 +4322,7 @@
   },
   {
     "id": "EthTokensToBtc32",
-    "message": "Creating Ethereum Contract. {br} Please wait, it can take a few minutes",
+    "message": "Creating Ethereum Contract. {br} It can take a few minutes",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.js"
     ]
@@ -4315,7 +4336,7 @@
   },
   {
     "id": "EthTokensToBtc40",
-    "message": "The funds from ETH contract was successfully transferred to BTC owner. BTC owner left a secret key. Requesting withdrawal from BTC script. Please wait..",
+    "message": "The funds from ETH contract was successfully transferred to BTC owner. BTC owner left a secret key. Requesting withdrawal from BTC script.",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.js"
     ]
@@ -4525,7 +4546,8 @@
     "id": "FourthStep36",
     "message": "({btcTx} tx)",
     "files": [
-      "shared/pages/Swap/SwapList/steps/SecondStep.js"
+      "shared/pages/Swap/SwapList/steps/SecondStep.js",
+      "shared/pages/Swap/SwapList/steps/ThirdStep.js"
     ]
   },
   {
@@ -4676,6 +4698,20 @@
     ]
   },
   {
+    "id": "swapprogressDONTLEAVE",
+    "message": "Please do not leave this page ",
+    "files": [
+      "shared/pages/Swap/Swap.js"
+    ]
+  },
+  {
+    "id": "swapjsdontleave",
+    "message": "The exchange requires signing with private keys that only your browser knows.",
+    "files": [
+      "shared/pages/Swap/Swap.js"
+    ]
+  },
+  {
     "id": "Confirmation14",
     "message": "Confirmation",
     "files": [
@@ -4720,6 +4756,48 @@
     "message": "Sign",
     "files": [
       "shared/pages/Swap/LtcToBtc.js"
+    ]
+  },
+  {
+    "id": "partial795",
+    "message": "Available balance is your balance minus the miners commission will appear",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "ErrorNotAvailable",
+    "message": "Available balance to swap is {available}",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "select75",
+    "message": "Available for exchange: {availableBalance} {tooltip}",
+    "files": [
+      "shared/pages/PartialClosure/SelectGroup/SelectGroup.js"
+    ]
+  },
+  {
+    "id": "selected53",
+    "message": "You can use an external wallet to perform a swap",
+    "files": [
+      "shared/pages/PartialClosure/SelectGroup/SelectGroup.js"
+    ]
+  },
+  {
+    "id": "deposit297",
+    "message": "link to explorer",
+    "files": [
+      "shared/pages/Swap/DepositWindow/DepositWindow.js"
+    ]
+  },
+  {
+    "id": "Select28",
+    "message": "ALL",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/Select/Select.js"
     ]
   }
 ]

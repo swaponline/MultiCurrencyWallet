@@ -108,6 +108,12 @@
   color: $color-f-error;
 }
 
+@include media-tablet {
+  .swap {
+    padding-top: 0;
+  }
+}
+
 @include media-mobile {
   .loaderHolder {
     display: inline-block;

@@ -6,7 +6,6 @@ import { config } from './config/firebase'
 
 import actions from 'redux/actions'
 import { getState } from 'redux/core'
-import reducers from 'redux/core/reducers'
 import { request } from 'helpers'
 import moment from 'moment/moment'
 
@@ -25,15 +24,20 @@ const authorisation = () =>
   )
 
 const getIPInfo = () =>
-  new Promise(async (resolve) => {
-    const ipResponse = await request.get('http://ip-to-geolocation.com/api/json')
+  request
+    .get('https://json.geoiplookup.io')
+    .then(({ ip, country_code }) => ({
+      ip,
+      locale: country_code,
+    }))
+    .catch((error) => {
+      console.error('getIPInfo:', error)
 
-    const resultData = {
-      ip: ipResponse.query,
-      locale: ipResponse.countryCode === 'NO' ? 'EN' : ipResponse.countryCode,
-    }
-    resolve(resultData)
-  })
+      return {
+        ip: 'None',
+        locale: 'EN'
+      }
+    })
 
 const sendData = (userId, dataBasePath, data, isDefault = true) =>
   new Promise(async (resolve) => {
@@ -155,7 +159,7 @@ const signUpWithPush = (data) =>
     })
 
     if (sendResult) {
-      reducers.signUp.setSigned()
+      actions.firebase.setSigned()
       actions.analytics.signUpEvent({ action: 'signed', type: 'push' })
     }
     resolve(sendResult)
@@ -167,7 +171,7 @@ const signUpWithEmail = (data) =>
     const sendResult = submitUserData(dataBasePath, data)
 
     if (sendResult) {
-      reducers.signUp.setSigned()
+      actions.firebase.setSigned()
       actions.analytics.signUpEvent({ action: 'signed', type: 'email' })
     }
     resolve(sendResult)

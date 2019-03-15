@@ -33,12 +33,12 @@ const titles = [
   <FormattedMessage id="currencyWallet30"  defaultMessage="Amount" />,
 ]
 
-@connect(({ core, user,  history: { transactions, swapHistory },
+@connect(({ core, user,  history: { transactions, swapHistory }, history,
   user: { ethData, btcData, ltcData, tokensData, eosData, nimData, usdtData, telosData } }) => ({
   items: [ ethData, btcData, eosData, usdtData, ltcData, telosData, ...Object.keys(tokensData).map(k => (tokensData[k])) /* nimData */ ],
   tokens: [...Object.keys(tokensData).map(k => (tokensData[k]))],
   user,
-
+  historyTx: history,
   hiddenCoinsList: core.hiddenCoinsList,
   txHistory: transactions,
   swapHistory,
@@ -147,6 +147,10 @@ export default class CurrencyWallet extends Component {
     actions.modals.open(constants.modals.EosBuyAccount)
   }
 
+  rowRender = (row) => (
+    <Row key={row.hash} {...row} />
+  )
+
   render() {
 
     let { swapHistory, txHistory, location, match:{ params: { fullName } },  intl, hiddenCoinsList } = this.props
@@ -160,7 +164,7 @@ export default class CurrencyWallet extends Component {
     } = this.state
 
     txHistory = txHistory
-      .filter(tx => tx.type === currency.toLowerCase())
+      .filter(tx => tx.type.toLowerCase() === currency.toLowerCase())
 
     swapHistory = Object.keys(swapHistory)
       .map(key => swapHistory[key])
@@ -251,7 +255,7 @@ export default class CurrencyWallet extends Component {
         <h2 style={{ marginTop: '20px' }} >
           <FormattedMessage id="CurrencyWallet110" defaultMessage="History your transactions" />
         </h2>
-        {txHistory && (<Table titles={titles} rows={txHistory}styleName="table" rowRender={(row) => (<Row key={row.hash} {...row} />)} />)}
+        {txHistory && (<Table titles={titles} rows={txHistory} styleName="table" rowRender={this.rowRender} />)}
         {
           seoPage && seoPage.footer && <div>{seoPage.footer}</div>
         }

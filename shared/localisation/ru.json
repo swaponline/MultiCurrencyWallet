@@ -145,7 +145,7 @@
   },
   {
     "id": "KeyActionsPanel46",
-    "message": "Скачать ключи",
+    "message": "Показать ключи",
     "files": [
       "shared/components/KeyActionsPanel/KeyActionsPanel.js"
     ]
@@ -493,7 +493,7 @@
   },
   {
     "id": "SwapProgress111",
-    "message": "Создается Bitcoin Script. Пожалуйста подождите, это займет некоторое время",
+    "message": "Создается Bitcoin Script. Это займет некоторое время",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.js"
     ]
@@ -507,7 +507,7 @@
   },
   {
     "id": "SwapProgress123",
-    "message": "Пробуем вывести ETH из контракта. Пожалуйста, подождите",
+    "message": "Выводим ETH из готового контракта. Пожалуйста, подождите",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.js"
     ]
@@ -1907,35 +1907,35 @@
   },
   {
     "id": "PrivateKeysModal110",
-    "message": "Нажмите сюда",
+    "message": "1. Нажмите сюда чтобы сохранить ваши приватные ключи",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
   },
   {
     "id": "PrivateKeysModal113",
-    "message": "1. СКАЧАТЬ КЛЮЧИ И ИНСТРУКЦИЮ",
+    "message": "Показать ключи",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
   },
   {
     "id": "PrivateKeysModal118",
-    "message": "Затем нажмите сюда",
+    "message": "2. Затем нажмите сюда, когда будете уверены, что сохранили свои приватные ключи в надежное место",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
   },
   {
     "id": "PrivateKeysModal121",
-    "message": "2. Слудующий шаг",
+    "message": "Я сохранил ключи!",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
   },
   {
     "id": "PrivateKeysModal130",
-    "message": "Пожалуйста, заполните приведенную ниже информацию из файла instruction.txt. Мы хотели бы быть уверены, что Вы сохранили приватные ключи, прежде чем сможете продолжить работу с сайтом. ",
+    "message": "Пожалуйста, заполните приведенную ниже информацию. Мы хотели бы быть уверены, что Вы сохранили приватные ключи, прежде чем сможете продолжить работу с сайтом. ",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
@@ -1991,7 +1991,7 @@
   },
   {
     "id": "PrivateKeysModal665",
-    "message": "Я понимаю и принимаю риски.",
+    "message": "Я понимаю и принимаю риски. {learnMore}",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
@@ -1999,6 +1999,13 @@
   {
     "id": "PrivateKeysModal666",
     "message": "Продолжить",
+    "files": [
+      "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
+    ]
+  },
+  {
+    "id": "PrivateKeysModal667",
+    "message": "Узнать больше",
     "files": [
       "shared/components/modals/PrivateKeysModal/PrivateKeysModal.js"
     ]
@@ -3363,7 +3370,7 @@
   },
   {
     "id": "partial437",
-    "message": "Обмен {full_name1} ({ticker_name1}) на {full_name2} ({ticker_name2}) за 60 секунд",
+    "message": "Atomic Swap {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}) Instant Exchange",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -3397,8 +3404,15 @@
     ]
   },
   {
+    "id": "PartialFeeValueWarn",
+    "message": "Обратите внимание: из этой суммы так же вычтется комиссия майнеров до {estimatedFeeValue} {haveCurrency}",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
     "id": "down57",
-    "message": "Похоже, что Вы используете IPhone или IPad. Скопируйте приватные ключи и адреса в надеждное место.",
+    "message": "Похоже, что Вы пытаетесь сохранить свои приватные ключи. Скопируйте их в надеждное место! Так же вы можете скачать их как документ .txt формата.",
     "files": [
       "shared/components/modals/DownloadModal/DownloadModal.js"
     ]
@@ -3412,14 +3426,21 @@
   },
   {
     "id": "down65",
-    "message": "Скопировтаь",
+    "message": "Скопировать",
+    "files": [
+      "shared/components/modals/DownloadModal/DownloadModal.js"
+    ]
+  },
+  {
+    "id": "downFile2",
+    "message": "Скачать txt файл",
     "files": [
       "shared/components/modals/DownloadModal/DownloadModal.js"
     ]
   },
   {
     "id": "down97",
-    "message": "Мы не храним Ваши ключи или адреса! И не сможем их востановить!",
+    "message": "Ваши приватные ключи!",
     "files": [
       "shared/components/modals/DownloadModal/DownloadModal.js"
     ]
@@ -3811,7 +3832,7 @@
   },
   {
     "id": "PartialClosure562",
-    "message": "Swap.Online - это децентрализованный и быстрый кошелек работающий в браузере, основанный на технологии Atomic Swaps. {br}В нашем кошельке все блокчейны взаимодействуют без участия 3 стороны, и мы предлагаем всем нашим пользователям бесплатно обменять Биткойны, Ethereum, USD Tether, BCH и EOS за пару секунд. {br}{br}В настоящее время Swap.Online не взимает комиссию за оформление и получение заказа. {br}Обмен крипто-токенами в Swap.Online проводится по-настоящему децентрализованно, так как мы используем технологию атомных свопов однорангового взаимодействия между цепями. {br}{br}Swap.Online использует IPFS-сеть для всех рабочих процессов, а значит централизованного сервера просто нет. {br}Интерфейс обмена выглядит как крипто-брокер, а не как обычный DEX или CEX. За пару кликов пользователь может разместить и принять предложение, настроив цену отправляемого токена. {br}{br}Кроме того, пользователь может обменять заданный процент от своего количества доступных токенов (например, ½, ¼ и т. д.). {br}{br}Еще одним преимуществом службы обмена Swap.Online является использование одного ключа для всего диапазона токенов ERC-20. {br}Кстати, если вы не заинтересованы в обмене некоторыми токенами, вы можете скрыть их из списка. {br}Используйте Swap.Online в качестве основного обмена для каждого криптовалюты, которую вы держите и экономьте ваше время уже сегодня!",
+    "message": "Swap.online - это децентрализованный криптовалютный кошелек, работающий по технологии Atomic swap. Обмен Bitcoin, USD Tether, BCH, EOS в течение нескольких секунд. Без комиссии (только комиссия майнеров).{br}Обмен крипто-токенами в Swap.Online проводится по-настоящему децентрализованно, так как мы используем технологию атомных свопов однорангового взаимодействия между цепями. {br}{br}Swap.Online использует IPFS-сеть для всех рабочих процессов, а значит централизованного сервера просто нет. {br}Интерфейс обмена выглядит как крипто-брокер, а не как обычный DEX или CEX. За пару кликов пользователь может разместить и принять предложение, настроив цену отправляемого токена. {br}{br}Кроме того, пользователь может обменять заданный процент от своего количества доступных токенов (например, ½, ¼ и т. д.). {br}{br}Еще одним преимуществом службы обмена Swap.Online является использование одного ключа для всего диапазона токенов ERC-20. {br}Кстати, если вы не заинтересованы в обмене некоторыми токенами, вы можете скрыть их из списка. {br}Используйте Swap.Online в качестве основного обмена для каждого криптовалюты, которую вы держите и экономьте ваше время уже сегодня!",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -4151,14 +4172,14 @@
   },
   {
     "id": "ethToBtcText25",
-    "message": "Вitcoin Script был создан и отправлен. Пожалуйста, проверьте информацию ниже",
+    "message": "Вitcoin Script был создан и отправлен. Проверьте информацию ниже",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthToBtc.js"
     ]
   },
   {
     "id": "ethToBtcText26",
-    "message": "Пожалуйста подождите. Процесс подтверждения",
+    "message": "Инициируем процесс подтверждения...",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthToBtc.js"
     ]
@@ -4172,7 +4193,7 @@
   },
   {
     "id": "ethToBtcText32",
-    "message": "Создается Ethereum Контракт.{br}Пожалуйста подождите, потребуется несколько минут",
+    "message": "Создается Ethereum Контракт.{br}Потребуется несколько минут",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthToBtc.js"
     ]
@@ -4232,7 +4253,7 @@
   },
   {
     "id": "BitcoinBuyText17",
-    "message": "Пожалуйста, подождите. Обработка подтверждения",
+    "message": "Обработка подтверждения",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
     ]
@@ -4250,7 +4271,7 @@
   },
   {
     "id": "BitcoinBuyText33",
-    "message": "Создается Bitcoin Script. Пожалуйста подождите, это займет какое то время",
+    "message": "Создается Bitcoin Script. Это займет какое то время",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
     ]
@@ -4264,7 +4285,7 @@
   },
   {
     "id": "BitcoinBuyText41",
-    "message": "Пробуем вывести {buyCurrency} из контракта. Пожалуйста, подождите",
+    "message": "Пробуем вывести {buyCurrency} из контракта.",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
     ]
@@ -4292,7 +4313,7 @@
   },
   {
     "id": "EthTokensToBtc16",
-    "message": "Пожалуйста подождите. Процесс подтверждения",
+    "message": "Процесс подтверждения.",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.js"
     ]
@@ -4306,7 +4327,7 @@
   },
   {
     "id": "EthTokensToBtc24",
-    "message": "Bitcoin Script создан и загружен. Пожалуйста, проверте информацию ниже",
+    "message": "Bitcoin Script создан и загружен. Проверте информацию ниже",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.js"
     ]
@@ -4320,8 +4341,7 @@
   },
   {
     "id": "EthTokensToBtc32",
-    "message": "Создается Ethereum Контракт. Пожалуйста подождите, потребуется несколько минут",
-
+    "message": "Создается Ethereum Контракт. Потребуется несколько минут",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.js"
     ]
@@ -4556,7 +4576,8 @@
     "id": "FourthStep36",
     "message": "({btcTx} tx)",
     "files": [
-      "shared/pages/Swap/SwapList/steps/SecondStep.js"
+      "shared/pages/Swap/SwapList/steps/SecondStep.js",
+      "shared/pages/Swap/SwapList/steps/ThirdStep.js"
     ]
   },
   {
@@ -4707,6 +4728,20 @@
     ]
   },
   {
+    "id": "swapprogressDONTLEAVE",
+    "message": "Пожалуйста, не уходите с этой страницы ",
+    "files": [
+      "shared/pages/Swap/Swap.js"
+    ]
+  },
+  {
+    "id": "swapjsdontleave",
+    "message": "В каждом шаге при обмене требуется подпись приватными ключами, которые знает только ваш браузер.",
+    "files": [
+      "shared/pages/Swap/Swap.js"
+    ]
+  },
+  {
     "id": "Confirmation14",
     "message": "Подтверждение",
     "files": [
@@ -4736,6 +4771,41 @@
     "message": "Данные загружаются, попробуйте перезагрузить страницу",
     "files": [
       "shared/components/modals/IncompletedSwaps/IncompletedSwaps.js"
+    ]
+  },
+  {
+    "id": "partial795",
+    "message": "Доступный баланс - ваш баланс за вычетом комиссии майнеров.",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "ErrorNotAvailable",
+    "message": "Доступный баланс для обмена {available}",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "select75",
+    "message": "Доступный баланс: {availableBalance} {tooltip}",
+    "files": [
+      "shared/pages/PartialClosure/SelectGroup/SelectGroup.js"
+    ]
+  },
+  {
+    "id": "selected53",
+    "message": "Вы можете использовать внешний кошелек для проведения обмена",
+    "files": [
+      "shared/pages/PartialClosure/SelectGroup/SelectGroup.js"
+    ]
+  },
+  {
+    "id": "Select28",
+    "message": "ВСЁ",
+    "files": [
+      "shared/components/modals/OfferModal/AddOffer/Select/Select.js"
     ]
   }
 ]

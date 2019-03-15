@@ -18,6 +18,7 @@ import * as utils from './utils'
 // Methods
 import ignoreProps from './ignoreProps'
 import handleGoTrade from './handleGoTrade'
+import firebase from './firebase'
 // Getters
 import getPageOffset from './getPageOffset'
 import getScrollBarWidth from './getScrollBarWidth'
@@ -58,6 +59,7 @@ export {
   // Methods
   ignoreProps,
   handleGoTrade,
+  firebase,
 
   // Getters
   getPageOffset,

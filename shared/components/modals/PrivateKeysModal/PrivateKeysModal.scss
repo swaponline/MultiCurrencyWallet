@@ -120,6 +120,12 @@
   font-size: 16px;
 }
 
+.containerWithWrongLinkFZ {
+  a {
+    font-size: 16px;
+  }
+}
+
 @media (max-width: 1024px) {
   .tryToSkip {
     &__content {

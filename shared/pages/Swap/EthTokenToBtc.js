@@ -159,7 +159,7 @@ export default class EthTokenToBtc extends Component {
 
     return (
       <div>
-        <div styleName="swapContainer" style={{ paddingTop: isMobile ? `${paddingContainerValue}px` : '' }}>
+        <div styleName="swapContainer">
           <div styleName="swapInfo">
             {this.swap.id &&
               (

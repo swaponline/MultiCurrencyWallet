@@ -127,6 +127,8 @@ export default class PartialClosure extends Component {
     })
 
     this.state = {
+      isToken: false,
+      dynamicFee: 0,
       haveCurrency: sellToken,
       getCurrency: buyToken,
       haveAmount: 0,
@@ -170,10 +172,11 @@ export default class PartialClosure extends Component {
 
     this.timer = setInterval(() => {
       this.setOrders()
+      this.showTheFee(haveCurrency)
     }, 2000)
 
     SwapApp.shared().services.room.on('new orders', () => this.checkPair(haveCurrency))
-
+    this.customWalletAllowed()
     this.setEstimatedFeeValues()
   }
 
@@ -209,6 +212,24 @@ export default class PartialClosure extends Component {
     }
   }
 
+  showTheFee = async () => {
+    const { haveCurrency } = this.state
+    const isToken = await helpers.ethToken.isEthToken({ name: haveCurrency.toLowerCase() })
+
+    if (isToken) {
+      this.setState(() => ({
+        isToken,
+      }))
+    } else {
+      const dynamicFee = await helpers[haveCurrency.toLowerCase()].estimateFeeValue({ method: 'swap' })
+      this.setState(() => ({
+        dynamicFee,
+        isToken,
+      }))
+    }
+
+  }
+
   getUsdBalance = async () => {
     const { haveCurrency, getCurrency } = this.state
 
@@ -234,20 +255,21 @@ export default class PartialClosure extends Component {
     const { intl: { locale }, decline } = this.props
     const { haveCurrency } = this.state
 
-    if (decline === undefined || decline.length === 0) {
+    if (decline.length === 0) {
       this.sendRequest()
-    }
-
-    if (helpers.handleGoTrade.isSwapExist({ haveCurrency, decline }) !== false) {
-      this.handleDeclineOrdersModalOpen(helpers.handleGoTrade.isSwapExist({ haveCurrency, decline }))
     } else {
-      this.sendRequest()
+      const getDeclinedExistedSwapIndex = helpers.handleGoTrade.getDeclinedExistedSwapIndex({ currency: haveCurrency, decline })
+      if (getDeclinedExistedSwapIndex !== false) {
+        this.handleDeclineOrdersModalOpen(getDeclinedExistedSwapIndex)
+      } else {
+        this.sendRequest()
+      }
     }
   }
 
-  handleDeclineOrdersModalOpen = (i) => {
+  handleDeclineOrdersModalOpen = (indexOfDecline) => {
     const orders = SwapApp.shared().services.orders.items
-    const declineSwap = actions.core.getSwapById(this.props.decline[i])
+    const declineSwap = actions.core.getSwapById(this.props.decline[indexOfDecline])
 
     if (declineSwap !== undefined) {
       actions.modals.open(constants.modals.DeclineOrdersModal, {
@@ -454,10 +476,6 @@ export default class PartialClosure extends Component {
       }))
     }
 
-    if (constants.coinsWithDynamicFee.includes(getCurrency) && maxAllowedGetAmount.isGreaterThan(0)) {
-      maxAllowedGetAmount = maxAllowedGetAmount.minus(estimatedFeeValues[getCurrency])
-    }
-
     const checkAmount = this.setAmountOnState(maxAllowedSellAmount, maxAllowedGetAmount, maxAllowedBuyAmount)
 
     if (!checkAmount) {
@@ -603,9 +621,7 @@ export default class PartialClosure extends Component {
   customWalletValid() {
     const { haveCurrency, getCurrency, customWallet } = this.state
 
-    if (!this.customWalletAllowed()) {
-      return true
-    }
+    if (!this.customWalletAllowed()) return true
 
     if (getCurrency === 'btc') return util.typeforce.isCoinAddress.BTC(customWallet)
 
@@ -631,6 +647,7 @@ export default class PartialClosure extends Component {
       // eth-btc
       if (getCurrency === 'btc') return true
     }
+
     return false
   }
 
@@ -693,7 +710,7 @@ export default class PartialClosure extends Component {
     const { currencies, addSelectedItems, currenciesData, tokensData, intl: { locale, formatMessage } } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching,
       isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet, getUsd, haveUsd,
-      maxBuyAmount, getAmount, goodRate, extendedControls,
+      maxBuyAmount, getAmount, goodRate, extendedControls, estimatedFeeValues, isToken, dynamicFee, haveAmount,
     } = this.state
 
     const haveCurrencyData = currenciesData.find(item => item.currency === haveCurrency.toUpperCase())
@@ -706,6 +723,7 @@ export default class PartialClosure extends Component {
 
     const isWidgetLink = this.props.location.pathname.includes('/exchange') && this.props.location.hash === '#widget'
     const isWidget = isWidgetBuild || isWidgetLink
+    const availableAmount = estimatedFeeValues[haveCurrency.toLowerCase()] > 0 ? BigNumber(haveAmount).plus(estimatedFeeValues[haveCurrency.toLowerCase()]) : 0
 
     if (redirect) {
       return <Redirect push to={`${localisedUrl(locale, links.swap)}/${getCurrency}-${haveCurrency}/${orderId}`} />
@@ -715,6 +733,7 @@ export default class PartialClosure extends Component {
       && BigNumber(getAmount).isGreaterThan(0)
       && this.customWalletValid()
       && !this.doesComissionPreventThisOrder()
+      && (BigNumber(haveAmount).isGreaterThan(balance) || BigNumber(balance).isGreaterThanOrEqualTo(availableAmount))
 
     const sellTokenFullName = currenciesData.find(item => item.currency === haveCurrency.toUpperCase())
       ? currenciesData.find(item => item.currency === haveCurrency.toUpperCase()).fullName
@@ -762,18 +781,25 @@ export default class PartialClosure extends Component {
           }
           <div styleName="block" className={isWidget ? 'block' : ''} >
             <SelectGroup
+              balance={balance}
+              extendedControls={extendedControls}
               inputValueLink={linked.haveAmount.pipe(this.setAmount)}
               selectedValue={haveCurrency}
               onSelect={this.handleSetHaveValue}
               label={<FormattedMessage id="partial243" defaultMessage="You sell" />}
               id="partialClosure456"
               tooltip={<FormattedMessage id="partial462" defaultMessage="The amount you have in your wallet or external wallet that you want to exchange" />}
+              idFee="partialClosure794"
+              tooltipAboutFee={<FormattedMessage id="partial795" defaultMessage="Available balance is your balance minus the miners commission will appear" />}
               placeholder="Enter amount"
               usd={(maxAmount > 0 && isNonOffers) ? 0 : haveUsd}
               currencies={currencies}
               className={isWidget ? 'SelGroup' : ''}
               onFocus={() => this.extendedControlsSet(true)}
               onBlur={() => setTimeout(() => this.extendedControlsSet(false), 200)}
+              dynamicFee={dynamicFee}
+              isToken={isToken}
+              haveAmount={haveAmount}
             />
             {
               (extendedControls) && (
@@ -791,6 +817,8 @@ export default class PartialClosure extends Component {
                       ? (
                         <div styleName="extendedControls">
                           <Select
+                            all
+                            estimatedFeeValues={estimatedFeeValues[haveCurrency.toLowerCase()]}
                             changeBalance={this.changeBalance}
                             balance={balance}
                             currency={haveCurrency}
@@ -960,9 +988,24 @@ export default class PartialClosure extends Component {
                 <FormattedMessage id="partial541" defaultMessage="Exchange now" />
               </Button>
               <Button styleName="button" gray onClick={() => this.handlePush(isWidgetLink)} >
-                <FormattedMessage id="partial544" defaultMessage="Show order book" />
+                <FormattedMessage id="partial544" defaultMessage="Orderbook" />
               </Button>
             </div>
+            <br />
+            {
+              BigNumber(estimatedFeeValues[haveCurrency]).isGreaterThan(0)
+              && BigNumber(haveAmount).isGreaterThan(0)
+              && BigNumber(haveAmount).isLessThanOrEqualTo(balance)
+              && (
+                <div className={isWidget ? 'feeValue' : ''}>
+                  <FormattedMessage
+                    id="PartialFeeValueWarn"
+                    defaultMessage="You will have to pay an additional miner fee up to {estimatedFeeValue} {haveCurrency}"
+                    values={{ haveCurrency: haveCurrency.toUpperCase(), estimatedFeeValue: estimatedFeeValues[haveCurrency] }}
+                  />
+                </div>
+              )
+            }
           </div>
         </div>
         {
@@ -970,16 +1013,10 @@ export default class PartialClosure extends Component {
             <p styleName="inform">
               <FormattedMessage
                 id="PartialClosure562"
-                defaultMessage="Swap.Online is the decentralized in-browser hot wallet based on the Atomic Swaps technology.
+                defaultMessage="Swap.online is a decentralized hot wallet powered by Atomic swap technology.
+                Exchange Bitcoin, USD Tether, BCH, EOS within seconds.
 
-                As in our wallet all blockchains interact decentralized and no-third-party way, we offer our users to exchange Bitcoin, Ethereum,
-                USD Tether, BCH and EOS for free in a couple of seconds.
-
-
-                At the time, Swap.Online charges no commision for the order making and taking.
-
-                The exchange of crypto and tokens on Swap.Online is conducted in truly decentralized manner as we use the
-                Atomic Swaps technology of peer-to-peer cross-chain interaction.
+                No commission for exchange (only miners fee).
 
 
                 Swap.Online uses IPFS-network for all the operational processes which results in no need for centralized server.

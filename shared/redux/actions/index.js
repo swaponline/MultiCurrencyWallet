@@ -3,7 +3,7 @@ import config from 'app-config'
 import modals from './modals'
 import loader from './loader'
 import notifications from './notifications'
-import firebase from './firebase/index'
+import firebase from './firebase'
 
 import user from './user'
 import feed from './feed'

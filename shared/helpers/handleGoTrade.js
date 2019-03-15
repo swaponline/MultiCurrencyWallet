@@ -2,7 +2,7 @@ import SwapApp, { util } from 'swap.app'
 import actions from 'redux/actions'
 
 
-const isSwapExist = ({ currency, decline }) => {
+const getDeclinedExistedSwapIndex = ({ currency, decline }) => {
 
   const length = decline.length - 1
   const declineSwap = actions.core.getSwapById(decline[length])
@@ -21,5 +21,5 @@ const isSwapExist = ({ currency, decline }) => {
 }
 
 export default {
-  isSwapExist,
+  getDeclinedExistedSwapIndex,
 }
