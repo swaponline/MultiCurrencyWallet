@@ -331,7 +331,7 @@ export default class DepositWindow extends Component {
                   defaultMessage="Received {balance} / {need} {tooltip}"
                   values={{
                     br: <br />,
-                    balance: <strong>{`${balanceToRender}`} {swap.sellCurrency}{'  '}</strong>,
+                    balance: <strong>{balanceToRender === undefined ? 0 : `${balanceToRender}`} {swap.sellCurrency}{'  '}</strong>,
                     need: <strong>{`${requiredAmount}`} {swap.sellCurrency}</strong>,
                     tooltip:
                       <Tooltip id="dep226">
