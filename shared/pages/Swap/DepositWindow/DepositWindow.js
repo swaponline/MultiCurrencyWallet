@@ -235,8 +235,6 @@ export default class DepositWindow extends Component {
       br: <br />,
     }
 
-    const balanceToRender = BigNumber(balance).dp(6, BigNumber.ROUND_HALF_CEIL)
-
     return (
       <Fragment>
         <div
@@ -331,7 +329,7 @@ export default class DepositWindow extends Component {
                   defaultMessage="Received {balance} / {need} {tooltip}"
                   values={{
                     br: <br />,
-                    balance: <strong>{balanceToRender === undefined ? 0 : `${balanceToRender}`} {swap.sellCurrency}{'  '}</strong>,
+                    balance: <strong>{balance === undefined ? this.updateBalance : `${BigNumber(balance).dp(6, BigNumber.ROUND_HALF_CEIL)}`} {swap.sellCurrency}{'  '}</strong>,
                     need: <strong>{`${requiredAmount}`} {swap.sellCurrency}</strong>,
                     tooltip:
                       <Tooltip id="dep226">
