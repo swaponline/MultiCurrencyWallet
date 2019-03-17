@@ -4,6 +4,10 @@ import actions from 'redux/actions'
 
 const getDeclinedExistedSwapIndex = ({ currency, decline }) => {
 
+  if(decline.length === 0) {
+    return false
+  }
+
   const length = decline.length - 1
   const declineSwap = actions.core.getSwapById(decline[length])
 
