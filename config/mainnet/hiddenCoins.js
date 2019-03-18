@@ -34,4 +34,5 @@ export default [
   'DDM',
   'WBTC',
   'ABYSS',
+  'XSAT',
 ]
