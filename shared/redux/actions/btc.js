@@ -139,9 +139,6 @@ const getTransaction = () =>
   })
 
 const send = async ({ from, to, amount, feeValue, speed } = {}) => {
-  const { user: { btcData: { privateKey } } } = getState()
-  const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
-
   feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed })
 
   const tx            = new bitcoin.TransactionBuilder(btc.network)
@@ -159,14 +156,17 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
   }
 
   const keychainActivated = !!localStorage.getItem(constants.privateKeyNames.btcKeychainPublicKey)
-  const txRaw = keychainActivated ? await signAndBuildKeychain(tx, unspents) : signAndBuild(tx, keyPair)
+  const txRaw = keychainActivated ? await signAndBuildKeychain(tx, unspents) : signAndBuild(tx)
 
   broadcastTx(txRaw.toHex())
 
   return txRaw
 }
 
-const signAndBuild = (transactionBuilder, keyPair) => {
+const signAndBuild = (transactionBuilder) => {
+  const { user: { btcData: { privateKey } } } = getState()
+  const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
+
   transactionBuilder.inputs.forEach((input, index) => {
     transactionBuilder.sign(index, keyPair)
   })

@@ -49,35 +49,21 @@ export default class Keychain extends Component {
     }
   }
 
-  componentDidMount() {
-    this.setState({ isLoading: true });
-    let keychain;
-
-    keychainjs.Keychain.create()
-      .then(data => keychain = data)
-      .then(() => keychain.method({command: 'version'}))
-      .then(data => this.setState({keychainVersion: data.result}))
-      .catch(() => this.setState({keychainInstalled: false}))
-      .then(() => fetch('https://api.github.com/repos/arrayio/array-io-keychain/tags'))
-      .then(res => res.json())
-      .then(result => this.setState({tagName: result[0].name}))
-      .then(() => fetch(`https://api.github.com/repos/arrayio/array-io-keychain/releases/tags/${this.state.tagName}`))
-      .then(res => res.json())
-      .then(result => this.setState({downloadUrl: result.assets[0].browser_download_url}))
-      .catch(otherError => this.setState({otherError}))
-      .then(() => this.getBalance())
-      .then(result => this.setState({positiveBalanceError: result > 0}))
-      .then(() => this.setState({isLoading: false}))
+  async componentDidMount() {
+    this.setState({ isLoading: true })
+    const keychain = await keychainjs.Keychain.create()
+    let keychainInstalled = true
+    try {
+      await keychain.method({ command: 'version' })
+    } catch (e) {
+      keychainInstalled = false
+    }
+    this.setState({ keychainInstalled })
+    const balance = await this.getBalance()
+    this.setState({ positiveBalanceError: balance > 0 })
+    this.setState({ isLoading: false })
   }
 
-  // needUpdate(tagName, keychainVersion) {
-  //   if (!keychainVersion) { // KeyChain websocket is not running
-  //     return true;
-  //   }
-  //   const keychainVersionSplit = keychainVersion.split('.');
-  //   const tagNameSplit = tagName.split('.');
-  //   return tagNameSplit[0] !== keychainVersionSplit[0] || tagNameSplit[1] !== keychainVersionSplit[1]
-  // }
   deactivate(currency) {
     actions.keychain.deactivate(currency);
     if (currency === 'ETH') {
@@ -92,7 +78,7 @@ export default class Keychain extends Component {
   render() {
 
     const {name, intl: {locale}, intl, data} = this.props
-    const {keychainInstalled, downloadUrl, keychainVersion, tagName, positiveBalanceError, isLoading} = this.state
+    const {keychainInstalled, downloadUrl, positiveBalanceError, isLoading} = this.state
     let {otherError} = this.state;
     let keychainActivated;
     if (data.currency === 'ETH') {
