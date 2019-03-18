@@ -444,9 +444,7 @@ export default class Row extends Component {
                       </Fragment>
                     )
                     */}
-                    { (currency === 'BTC' || currency === 'ETH') && (
-                      <KeychainStatus currency={currency}/>
-                      )
+                    { (currency === 'BTC' || currency === 'ETH') && ( <KeychainStatus currency={currency}/> )
                     }
                   </div>
                 ) : (
