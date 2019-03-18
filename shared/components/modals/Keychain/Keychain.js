@@ -53,14 +53,25 @@ export default class Keychain extends Component {
 
   async componentDidMount() {
     this.setState({ isLoading: true })
-    const keychain = await keychainjs.Keychain.create()
     let keychainInstalled = true
     try {
-      await keychain.method({ command: 'version' })
+      await keychainjs.Keychain.create()
     } catch (e) {
       keychainInstalled = false
     }
     this.setState({ keychainInstalled })
+    if (!keychainInstalled) {
+      try {
+        const fetchTagResult = await fetch('https://api.github.com/repos/arrayio/array-io-keychain/tags')
+        const fetchTagResultJson = await fetchTagResult.json();
+        this.setState({ tagName: fetchTagResultJson[0].name })
+        const fetchReleaseResult = await fetch(`https://api.github.com/repos/arrayio/array-io-keychain/releases/tags/${this.state.tagName}`)
+        const fetchReleaseResultJson = await fetchReleaseResult.json()
+        this.setState({ downloadUrl: fetchReleaseResultJson.assets[0].browser_download_url })
+      } catch(e) {
+        this.setState({ otherError: e })
+      }
+    }
     const balance = await this.getBalance()
     this.setState({ positiveBalanceError: balance > 0 })
     setTimeout(() => this.setState({ keychainIsLoadingLong: true }), 2000)
