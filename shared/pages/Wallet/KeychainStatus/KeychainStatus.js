@@ -47,7 +47,7 @@ const KeychainStatus = ({ currency }) => {
         }
       </span>
     </Fragment>
-  )}
+  ) }
 
 
 export default KeychainStatus

@@ -446,7 +446,7 @@ export default class Row extends Component {
                     */}
                     { (currency === 'BTC' || currency === 'ETH') && (
                       <KeychainStatus currency={currency}/>
-                    )
+                      )
                     }
                   </div>
                 ) : (

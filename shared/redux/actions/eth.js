@@ -6,7 +6,7 @@ import reducers from 'redux/core/reducers'
 import config from 'app-config'
 import referral from './referral'
 import { web3Override } from 'keychain.js'
-import { pubToAddress } from 'ethereumjs-util';
+import { pubToAddress } from 'ethereumjs-util'
 
 
 const login = (privateKey) => {
@@ -42,7 +42,7 @@ const loginWithKeychain = async () => {
   if (!selectedKey) { // user cancelled key selection or other error
     return null
   }
-  const data = { privateKey: selectedKey, address: `0x${pubToAddress('0x' + selectedKey).toString('hex')}` }
+  const data = { privateKey: selectedKey, address: `0x${pubToAddress(`0x${selectedKey}`).toString('hex')}` }
 
   reducers.user.setAuthData({ name: 'ethData', data })
   localStorage.setItem(constants.privateKeyNames.ethKeychainPublicKey, selectedKey)
@@ -54,7 +54,7 @@ const loginWithKeychain = async () => {
 
   await getBalance()
   await getReputation()
-  return selectedKey;
+  return selectedKey
 }
 
 const getBalance = () => {
