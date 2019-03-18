@@ -44,25 +44,15 @@ export default class UserTooltip extends Component {
       allCurrencyies,
       estimatedFeeValues,
     }
-    this.setEstimatedFeeValues()
+    this.setEstimatedFeeValues(estimatedFeeValues)
   }
 
-  setEstimatedFeeValues = async () => {
-    const { estimatedFeeValues } = this.state
-    let newEstimatedFeeValues = { ...estimatedFeeValues }
+  setEstimatedFeeValues = async (estimatedFeeValues) => {
 
-    for await (let item of constants.coinsWithDynamicFee) { // eslint-disable-line
-      try {
-        const newValue = await helpers[item].estimateFeeValue({ method: 'swap', speed: 'fast' })
-        if (newValue) {
-          newEstimatedFeeValues[item] = newValue
-        }
-      } catch (error) {
-        console.error('Set Estimated Fee Values in for error: ', error)
-      }
-    }
+    const fee = await helpers.estimateFeeValue.setEstimatedFeeValues({ estimatedFeeValues })
+
     return this.setState({
-      estimatedFeeValues: newEstimatedFeeValues,
+      estimatedFeeValues: fee,
     })
   }
 
@@ -76,10 +66,10 @@ export default class UserTooltip extends Component {
         { feeds.length < 3  ? (
           feeds.map(row => {
             const { request, content: { buyAmount, buyCurrency, sellAmount, sellCurrency }, id, peer: ownerPeer } = row
-            const currencyBalance = this.state.allCurrencyies.filter(item => item.currency === sellCurrency)
-            const sellAmounPlusFee = BigNumber(this.state.estimatedFeeValues[sellCurrency.toLowerCase()]).plus(sellAmount)
+            const currencyBalance = this.state.allCurrencyies.find(item => item.currency === sellCurrency)
+            const sellAmountPlusFee = BigNumber(this.state.estimatedFeeValues[sellCurrency.toLowerCase()]).plus(sellAmount)
 
-            if (BigNumber(sellAmounPlusFee).isGreaterThan(currencyBalance[0].balance)) {
+            if (BigNumber(sellAmountPlusFee).isGreaterThan(currencyBalance.balance)) {
               this.props.declineRequest(id, request[0].participant.peer)
               return console.error('Not enought money for the swap')
             }
