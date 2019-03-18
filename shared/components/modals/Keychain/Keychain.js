@@ -7,6 +7,7 @@ import styles from './Keychain.scss'
 
 import { Modal } from 'components/modal'
 import { Button } from 'components/controls'
+import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import * as keychainjs from 'keychain.js'
 import { getState } from 'redux/core'
@@ -32,7 +33,8 @@ export default class Keychain extends Component {
       tagName: '',
       keychainVersion: '',
       isLoading: false,
-      positiveBalanceError: false
+      positiveBalanceError: false,
+      keychainIsLoadingLong: false,
     };
   }
 
@@ -61,6 +63,7 @@ export default class Keychain extends Component {
     this.setState({ keychainInstalled })
     const balance = await this.getBalance()
     this.setState({ positiveBalanceError: balance > 0 })
+    setTimeout(() => this.setState({ keychainIsLoadingLong: true }), 2000)
     this.setState({ isLoading: false })
   }
 
@@ -78,7 +81,7 @@ export default class Keychain extends Component {
   render() {
 
     const {name, intl: {locale}, intl, data} = this.props
-    const {keychainInstalled, downloadUrl, positiveBalanceError, isLoading} = this.state
+    const {keychainInstalled, downloadUrl, positiveBalanceError, isLoading, keychainIsLoadingLong} = this.state
     let {otherError} = this.state;
     let keychainActivated;
     if (data.currency === 'ETH') {
@@ -93,7 +96,21 @@ export default class Keychain extends Component {
       return <div>Error: {otherError.message}</div>
     }
     if (isLoading) {
-      return <Modal name={name} title={intl.formatMessage(title.Keychain)} />
+      return <Modal name={name} title={intl.formatMessage(title.Keychain)} >
+        {keychainIsLoadingLong &&
+          <div styleName="content">
+            <div>
+              <InlineLoader/>
+            </div>
+            <FormattedMessage id="Keychain27" defaultMessage="KeyChain is loading. Please wait."/>
+            <Button styleName="button" brand fullWidth onClick={() => {
+              actions.modals.close(name)
+            }}>
+              <FormattedMessage id="Keychain25" defaultMessage="Back"/>
+            </Button>
+          </div>
+        }
+      </Modal>
     }
 
     return (
