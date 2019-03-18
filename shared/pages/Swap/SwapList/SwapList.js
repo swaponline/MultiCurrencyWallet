@@ -43,7 +43,7 @@ export default class SwapList extends Component {
     const { first, second, fourth, fifth, sixth, seventh, eighth } = this.state
 
     return (
-      <div styleName="stepList">
+      <div styleName={isMobile ? 'stepList isMobile' : 'stepList'}>
         <FirstStep step={flow.step} first={first} second={second} />
         <SecondStep step={flow.step} swap={swap} second={second} fifth={fifth} fourth={fourth} sixth={sixth} />
         <ThirdStep step={flow.step} swap={swap} sixth={sixth} seventh={seventh} eighth={eighth} />
