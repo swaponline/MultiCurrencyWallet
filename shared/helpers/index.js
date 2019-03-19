@@ -23,6 +23,7 @@ import firebase from './firebase'
 import getPageOffset from './getPageOffset'
 import getScrollBarWidth from './getScrollBarWidth'
 import paddingForSwapList from './paddingForSwapList'
+import estimateFeeValue from './estimateFeeValue'
 
 import { migrate } from './migrations/'
 
@@ -35,6 +36,7 @@ export default {
   ethToken,
   ltc,
   handleGoTrade,
+  estimateFeeValue,
 }
 
 export {
