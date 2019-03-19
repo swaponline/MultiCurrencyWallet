@@ -74,9 +74,6 @@ input:disabled {
   position: absolute;
   right: 0px;
   top: 5px;
-  img {
-    display: none;
-  }
   > div:nth-child(2) {
     margin-top: 2px;
     display: block;
@@ -88,6 +85,9 @@ input:disabled {
     border-radius: 0;
     box-shadow: none;
     div {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: flex-end;
       border: none;
     }
   }

@@ -3,16 +3,11 @@ import React, { Component, Fragment } from 'react'
 import styles from './CurrencySlider.scss'
 import cssModules from 'react-css-modules'
 
-import usdt from './images/usdt.svg'
-import trx from './images/trx.svg'
-import btc from './images/btc.svg'
-import ltc from './images/ltc.svg'
-import dash from './images/dash.svg'
-import xrp from './images/xrp.svg'
-import fire from './images/fire.svg'
+import Coin from 'components/Coin/Coin'
+import CurrencyIcon, { iconNames } from 'components/ui/CurrencyIcon/CurrencyIcon'
 
 
-@cssModules(styles)
+@cssModules(styles, { allowMultiple: true })
 export default class CurrencySlider extends Component {
   render() {
     return (
@@ -23,27 +18,11 @@ export default class CurrencySlider extends Component {
           </h3>
           <div styleName="currencyListWrap">
             <ul styleName="currencyList">
-              <li styleName="currencyListItem">
-                <img src={usdt} alt="" />
-              </li>
-              <li styleName="currencyListItem">
-                <img src={trx} alt="" />
-              </li>
-              <li styleName="currencyListItem">
-                <img src={btc} alt="" />
-              </li>
-              <li styleName="currencyListItem">
-                <span styleName="fireItem">
-                  <img src={fire} alt="" />
-                </span>
-                <img src={ltc} alt="" />
-              </li>
-              <li styleName="currencyListItem">
-                <img src={dash} alt="" />
-              </li>
-              <li styleName="currencyListItem">
-                <img src={xrp} alt="" />
-              </li>
+              <li styleName="currencyListItem"><CurrencyIcon name="btc" /></li>
+              <li styleName="currencyListItem currencyListItemEth"><CurrencyIcon name="eth" /></li>
+              <li styleName="currencyListItem"><CurrencyIcon name="usdt" /></li>
+              <li styleName="currencyListItem"><CurrencyIcon name="ltc" /></li>
+              <li styleName="currencyListItem currencyListItemEos"><CurrencyIcon name="eos" /></li>
             </ul>
             <a href="#" styleName="currencyAdd">
               +

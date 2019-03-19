@@ -2,9 +2,10 @@
   white-space: nowrap;
 }
 .icon {
-  margin-right: 14px;
-  font-size: 20px;
-  filter: invert(1);
-  width: 25px;
-  height: 25px;
+  -webkit-filter: invert(1);
+  width: 18px;
+  left: 22px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
 }

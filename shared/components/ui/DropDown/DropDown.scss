@@ -39,9 +39,42 @@
   position: relative;
   text-align: left;
   display: block;
-  margin-left: 17px;
+  margin-left: 22px;
   margin-top: 5px;
   margin-bottom: 10px;
+}
+
+.fullTitle {
+  text-transform: capitalize;
+  font-weight: 600;
+  font-size: 18px;
+  color: #000000;
+  margin-right: 9px;
+  margin-top: -1px;
+}
+
+.range {
+  position: absolute;
+  font-size: 18px;
+  right: 15px;
+}
+
+.rangeUp {
+  color: #53AE94;
+}
+
+.currencyLogo {
+  width: 20px;
+  position: absolute;
+  left: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.shortTitle {
+  color: rgba(0, 0, 0, 0.4);
+  font-size: 18px;
+  text-transform: uppercase;
 }
 
 .searchInput {
@@ -69,6 +102,9 @@
   font-size: 20px;
   white-space: nowrap;
   @include no-user-select;
+  img {
+    display: none;
+  }
 }
 
 .arrow {
@@ -101,7 +137,8 @@
   padding: 0 16px;
   cursor: pointer;
   text-align: left;
-
+  position: relative;
+  padding-left: 60px;
   &:first-child {
     border-top: 0;
   }

@@ -117,6 +117,7 @@ export default class DropDown extends Component {
       .filter(item => item.name.includes(inputValue.toUpperCase()))
       .filter(item => item.value !== selectedValue)
 
+
     return (
       <ClickOutside
         onClickOutside={isToggleActive
@@ -146,6 +147,7 @@ export default class DropDown extends Component {
             isToggleActive && (
               <div styleName="select">
                 <span styleName="listName">{name}</span>
+
                 {isToggleActive && inputValue.length ? (
                   itemsFiltered.map((item) => (
                     <div
@@ -153,10 +155,13 @@ export default class DropDown extends Component {
                       styleName="option"
                       onClick={() => {
                         linkedValue.inputValue.set('')
-                        this.handleOptionClick(item)}
+                        this.handleOptionClick(item)
+                      }
                       }
                     >
-                      {this.renderItem(item)}
+                      <span styleName="fullTitle">{item.fullTitle}</span>
+                      <span styleName="shortTitle">{this.renderItem(item)}</span>
+                      <span styleName="range rangeUp">+5.26%</span>
                     </div>
                   ))
                 ) : (
@@ -166,7 +171,9 @@ export default class DropDown extends Component {
                       styleName="option"
                       onClick={() => this.handleOptionClick(item)}
                     >
-                      {this.renderItem(item)}
+                      <span styleName="shortTitle">{this.renderItem(item)}</span>
+                      <span styleName="fullTitle">{item.fullTitle}</span>
+                      <span styleName="range rangeUp">+5.26%</span>
                     </div>
                   ))
                 )}
