@@ -12,7 +12,7 @@ const getDeclinedExistedSwapIndex = ({ currency, decline }) => {
 
   const itemState = declineSwap.flow.state
 
-  const values = itemState[`${currency.toLowerCase()}ScriptValues`] || itemState.scriptValues
+  const values = itemState.btcScriptValues || itemState.ltcScriptValues || itemState.usdtScriptValues || itemState.scriptValues
 
   const lockTime = moment.unix(values.lockTime || date)._i / 1000
   const timeSinceLock = date - lockTime
