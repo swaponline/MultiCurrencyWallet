@@ -102,7 +102,7 @@ export default class DepositWindow extends Component {
     const { swap } = this.props
     const { sellAmount, balance, dynamicFee } = this.state
 
-    const remainingBalance = new BigNumber(sellAmount).minus(balance).plus(dynamicFee).dp(6, BigNumber.ROUND_HALF_CEIL)
+    const remainingBalance = new BigNumber(sellAmount).minus(balance).plus(dynamicFee).dp(6, BigNumber.ROUND_CEIL)
 
     this.setState(() => ({
       remainingBalance,
@@ -117,12 +117,12 @@ export default class DepositWindow extends Component {
     if (!coinsWithDynamicFee.includes(swap.sellCurrency.toLowerCase()) || this.isDepositToContractDirectly()) {
       this.setState({
         dynamicFee: BigNumber(0),
-        requiredAmount: BigNumber(sellAmount).dp(6, BigNumber.ROUND_HALF_CEIL),
+        requiredAmount: BigNumber(sellAmount).dp(6, BigNumber.ROUND_CEIL),
       })
     } else {
       const dynamicFee = await helpers[swap.sellCurrency.toLowerCase()].estimateFeeValue({ method: 'swap', fixed: true })
 
-      const requiredAmount = BigNumber(sellAmount).plus(dynamicFee).dp(6, BigNumber.ROUND_HALF_CEIL)
+      const requiredAmount = BigNumber(sellAmount).plus(dynamicFee).dp(6, BigNumber.ROUND_CEIL)
 
       this.setState(() => ({
         dynamicFee,

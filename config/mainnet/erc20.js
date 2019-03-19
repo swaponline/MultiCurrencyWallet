@@ -209,4 +209,9 @@ export default {
     decimals: 18,
     fullName: 'ABYSS',
   },
+  xsat: {
+    address: '0x0d9e614937a308438337a2999acf64fc86bf098a',
+    decimals: 18,
+    fullName: 'XSAT',
+  },
 }

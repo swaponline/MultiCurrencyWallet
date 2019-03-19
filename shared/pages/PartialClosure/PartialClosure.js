@@ -160,7 +160,7 @@ export default class PartialClosure extends Component {
   }
 
   componentDidMount() {
-    const { haveCurrency, getCurrency } = this.state
+    const { haveCurrency, getCurrency, estimatedFeeValues } = this.state
     actions.core.updateCore()
     this.returnNeedCurrency(haveCurrency, getCurrency)
     this.checkPair(haveCurrency)
@@ -177,26 +177,15 @@ export default class PartialClosure extends Component {
 
     SwapApp.shared().services.room.on('new orders', () => this.checkPair(haveCurrency))
     this.customWalletAllowed()
-    this.setEstimatedFeeValues()
+    this.setEstimatedFeeValues(estimatedFeeValues)
   }
 
-  setEstimatedFeeValues = async () => {
-    const { estimatedFeeValues } = this.state
-    let newEstimatedFeeValues = { ...estimatedFeeValues }
+  setEstimatedFeeValues = async (estimatedFeeValues) => {
 
-    for await (let item of constants.coinsWithDynamicFee) { // eslint-disable-line
-      try {
-        const newValue = await helpers[item].estimateFeeValue({ method: 'swap', speed: 'fast' })
-        if (newValue) {
-          newEstimatedFeeValues[item] = newValue
-        }
-      } catch (error) {
-        console.error('Set Estimated Fee Values in for error: ', error)
-      }
-    }
+    const fee = await helpers.estimateFeeValue.setEstimatedFeeValues({ estimatedFeeValues })
 
     return this.setState({
-      estimatedFeeValues: newEstimatedFeeValues,
+      estimatedFeeValues: fee,
     })
   }
 

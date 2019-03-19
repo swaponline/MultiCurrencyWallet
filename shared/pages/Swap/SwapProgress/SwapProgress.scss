@@ -202,8 +202,8 @@ $size: 200px;
   text-align: center;
   border: 1px solid #ccc;
   border-radius: 20px;
-  padding-bottom: 30px;
-  // min-height: 525px;
+  padding-bottom: 60px;
+  height: 510px;
 }
 
 .step {
@@ -281,12 +281,23 @@ $size: 200px;
   color: #000;
   font-size: 26px;
   margin-top: -35px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 .stepHeading__inner {
-  display: inline-block;
-  margin-top: 15px;
+  margin-top: 0px;
+  bottom: 20px;
+  position: absolute;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  color: #cccccc;
+  font-size: 15px;
+  span {
+    span {
+      color: #000
+    }
+  }
 }
 
 .progressContainer {
@@ -340,8 +351,9 @@ $size: 200px;
   }
   .stepContainer {
     width: 100%;
-    padding-bottom: 0;
     border: none;
+    padding-bottom: 40px;
+    height: auto;
   }
   .stepList {
     padding-top: 0;
@@ -383,5 +395,10 @@ $size: 200px;
       width: 100%;
       display: block;
     }
+  }
+  .stepHeading__inner {
+    font-size: 11px;
+    width: 100%;
+    bottom: 0;
   }
 }

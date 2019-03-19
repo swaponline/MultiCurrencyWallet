@@ -14,9 +14,11 @@ const ThirdStep = ({ step, swap, sixth, seventh, eighth }) => {
   const currencyStep = swap.sellCurrency === 'BTC' ? seventh : eighth
   const stepItemActive = (step >= sixth && step < currencyStep)
   const stepItemDefault = (step < currencyStep)
+  const thirdStepPadding = (stepItemActive && isMobile) || (!stepItemDefault && !stepItemActive && isMobile) ? 100 : 0
 
   return (
     <div
+      style={{ paddingTop: thirdStepPadding }}
       styleName={((stepItemActive) && 'stepItem active') || (stepItemDefault && 'stepItem') || 'stepItem active checked'}>
       <span styleName="stepNumber">{step < currencyStep ? 3 : <i className="fas fa-check" />}</span>
       <p styleName="stepText">
