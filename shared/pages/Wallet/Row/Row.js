@@ -28,10 +28,10 @@ import SwapApp from 'swap.app'
 @withRouter
 @connect(
   ({
-  rememberedOrders,
+    rememberedOrders,
     user: { ethData, btcData, /* bchData, */ tokensData, eosData, /* xlmData, */ telosData, nimData, usdtData, ltcData },
     currencies: { items: currencies },
-    }, { currency }) => ({
+  }, { currency }) => ({
     currencies,
     item: [
       btcData,
