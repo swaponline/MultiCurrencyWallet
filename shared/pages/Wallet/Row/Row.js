@@ -31,23 +31,23 @@ import SwapApp from 'swap.app'
     rememberedOrders,
     user: { ethData, btcData, /* bchData, */ tokensData, eosData, /* xlmData, */ telosData, nimData, usdtData, ltcData },
     currencies: { items: currencies },
-  }, { currency }) => ({
+    }, { currency }) => ({
     currencies,
     item: [
-      btcData,
-      ethData,
-      /* xlmData, */
-      eosData,
-      telosData,
-      /* bchData, */
-      ltcData,
-      usdtData,
-      ...Object.keys(tokensData).map(k => (tokensData[k])),
+    btcData,
+    ethData,
+    /* xlmData, */
+    eosData,
+    telosData,
+    /* bchData, */
+    ltcData,
+    usdtData,
+    ...Object.keys(tokensData).map(k => (tokensData[k])),
     ].map(({ account, keyPair, ...data }) => ({
       ...data,
-    })).find((item) => item.currency === currency),
+      })).find((item) => item.currency === currency),
     decline: rememberedOrders.savedOrders,
-  })
+    })
 )
 
 @cssModules(styles, { allowMultiple: true })
@@ -444,7 +444,7 @@ export default class Row extends Component {
                       </Fragment>
                     )
                     */}
-                    { (currency === 'BTC' || currency === 'ETH') && ( <KeychainStatus currency={currency}/> )
+                    { (currency === 'BTC' || currency === 'ETH') && (<KeychainStatus currency={currency} />)
                     }
                   </div>
                 ) : (
