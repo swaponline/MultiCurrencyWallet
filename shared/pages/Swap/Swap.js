@@ -215,7 +215,7 @@ export default class SwapComponent extends PureComponent {
 
   setSaveSwapId = (orderId) => {
     let swapsId = JSON.parse(localStorage.getItem('swapId'))
-    console.log('dsdsds')
+
     if (swapsId === null || swapsId.length === 0) {
       swapsId = []
     }
