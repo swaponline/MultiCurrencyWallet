@@ -39,7 +39,7 @@ export default class IncompletedSwaps extends Component {
         <div styleName="modal">
           <div styleName="modal_column">
             <SubTitle styleName="modal_column-title">
-              <FormattedMessage id="IncompletedSwaps49" defaultMessage="Swaps needing to complete" />
+              <FormattedMessage id="IncompletedSwaps49" defaultMessage="Swaps that needs to complete" />
             </SubTitle>
             { swapHistory.length > 0 ?
               <SwapsHistory
@@ -48,6 +48,7 @@ export default class IncompletedSwaps extends Component {
                   .filter(item => item.isSwapExist === false)
                   .filter(item => item.isMy === false)
                   .filter(item => decline.includes(item.id))
+                  .filter(item => item.step >= 4)
                 }
               /> :
               <h1>

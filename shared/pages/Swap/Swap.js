@@ -132,18 +132,21 @@ export default class SwapComponent extends PureComponent {
 
     if (!this.props.decline.includes(orderId)) {
       this.setSaveSwapId(orderId)
-      this.saveThisSwap(orderId)
     }
   }
 
   componentDidMount() {
-    const { swap: { id, flow: { state: { canCreateEthTransaction, requireWithdrawFeeSended } } }, continueSwap, deletedOrders } = this.state
-
+    const { swap: { id, flow: { state: { canCreateEthTransaction, requireWithdrawFeeSended, step } } }, continueSwap, deletedOrders } = this.state
+    let { match : { params : { orderId } } } = this.props
     if (localStorage.getItem('deletedOrders') !== null) {
 
       if (localStorage.getItem('deletedOrders').includes(id)) {
         this.props.history.push(localisedUrl(links.exchange))
       }
+    }
+
+    if (step >= 4 && !this.props.decline.includes(orderId)) {
+      console.log('sdl;mfjsidkbnfisdljmocksdnvijksldknzmcilksnmadjivkcnfsjkcnsdjkv,ncm')
     }
 
     if (this.state.swap !== null) {
