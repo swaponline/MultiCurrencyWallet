@@ -146,7 +146,7 @@ export default class SwapComponent extends PureComponent {
     }
 
     if (step >= 4 && !this.props.decline.includes(orderId)) {
-      console.log('sdl;mfjsidkbnfisdljmocksdnvijksldknzmcilksnmadjivkcnfsjkcnsdjkv,ncm')
+      this.saveThisSwap(orderId)
     }
 
     if (this.state.swap !== null) {
