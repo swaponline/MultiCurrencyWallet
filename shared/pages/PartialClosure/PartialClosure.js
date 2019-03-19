@@ -163,8 +163,8 @@ export default class PartialClosure extends Component {
     const { haveCurrency, getCurrency } = this.state
     actions.core.updateCore()
     this.returnNeedCurrency(haveCurrency, getCurrency)
-    this.checkPair(haveCurrency)
 
+    this.checkPair()
     this.updateAllowedBalance()
 
     this.usdRates = {}
@@ -175,7 +175,7 @@ export default class PartialClosure extends Component {
       this.showTheFee(haveCurrency)
     }, 2000)
 
-    SwapApp.shared().services.room.on('new orders', () => this.checkPair(haveCurrency))
+    SwapApp.shared().services.room.on('new orders', () => this.checkPair())
     this.customWalletAllowed()
     this.setEstimatedFeeValues()
   }
@@ -530,7 +530,8 @@ export default class PartialClosure extends Component {
           action: 'exchange-click-selector',
           label: `${haveCurrency}-to-${getCurrency}`,
         })
-        this.checkPair(value)
+
+        this.checkPair()
         this.updateAllowedBalance()
       })
     }
@@ -540,19 +541,18 @@ export default class PartialClosure extends Component {
     const { haveCurrency, getCurrency, customWalletUse } = this.state
 
     this.setClearState()
-    this.checkPair(getCurrency)
     this.additionalPathing(getCurrency, haveCurrency)
     this.setState({
       haveCurrency: getCurrency,
       getCurrency: haveCurrency,
       customWallet: customWalletUse ? this.getSystemWallet(haveCurrency) : '',
     }, () => {
-      this.updateAllowedBalance()
-
       actions.analytics.dataEvent({
         action: 'exchange-click-selector',
         label: `${haveCurrency}-to-${getCurrency}`,
       })
+      this.checkPair()
+      this.updateAllowedBalance()
     })
   }
 
@@ -651,27 +651,25 @@ export default class PartialClosure extends Component {
     return false
   }
 
-  checkPair = (value) => {
-    const checkingValue = this.props.allCurrencyies.map(item => item.name).includes(value.toUpperCase())
-      ? value : 'swap'
+  checkPair = () => {
+    const { getCurrency, haveCurrency } = this.state
+
+    const checkingValue = this.props.allCurrencyies.map(item => item.name).includes(haveCurrency.toUpperCase())
+      ? haveCurrency : 'swap'
 
     const selected = actions.pairs.selectPairPartial(checkingValue)
-    console.log('selected', selected)
-    const check = selected.map(item => item.value).includes(this.state.getCurrency)
-    console.log('check', check)
+    const check = selected.map(item => item.value).includes(getCurrency)
 
     if (!check) {
       this.chooseCurrencyToRender(selected)
-    } else if (this.state.getCurrency === checkingValue) {
+    } else if (getCurrency === checkingValue) {
       this.chooseCurrencyToRender(selected)
     }
   }
 
   chooseCurrencyToRender = (selected) => {
     this.setState(() => ({
-      getCurrency: selected[0].value !== this.state.haveCurrency ?
-        selected[0].value :
-        selected[1].value,
+      getCurrency: selected[0].value,
     }))
   }
 
