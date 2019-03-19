@@ -656,7 +656,9 @@ export default class PartialClosure extends Component {
       ? value : 'swap'
 
     const selected = actions.pairs.selectPairPartial(checkingValue)
+    console.log('selected', selected)
     const check = selected.map(item => item.value).includes(this.state.getCurrency)
+    console.log('check', check)
 
     if (!check) {
       this.chooseCurrencyToRender(selected)
