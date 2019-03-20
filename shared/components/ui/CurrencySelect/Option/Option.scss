@@ -2,10 +2,18 @@
   white-space: nowrap;
 }
 .icon {
-  -webkit-filter: invert(1);
-  width: 18px;
-  left: 22px;
+  width: 12px;
+}
+.circle {
+  width: 32px;
+  height: 32px;
+  background: #000;
+  border-radius: 50%;
   position: absolute;
-  top: 50%;
+  left: 15px;
+  top: 47%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transform: translateY(-50%);
 }

@@ -10,6 +10,9 @@
   z-index: 111111;
   left: 11px;
   padding: 0 10px;
+  strong {
+    font-weight: 500;
+  }
   &:first-child {
     margin-top: 0;
   }

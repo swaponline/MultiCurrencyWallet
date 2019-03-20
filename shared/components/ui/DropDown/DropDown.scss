@@ -46,17 +46,18 @@
 
 .fullTitle {
   text-transform: capitalize;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 18px;
   color: #000000;
   margin-right: 9px;
-  margin-top: -1px;
+  margin-top: 0px;
 }
 
 .range {
   position: absolute;
   font-size: 18px;
   right: 15px;
+  font-weight: 500;
 }
 
 .rangeUp {
@@ -74,6 +75,7 @@
 .shortTitle {
   color: rgba(0, 0, 0, 0.4);
   font-size: 18px;
+  font-weight: 500;
   text-transform: uppercase;
 }
 
@@ -101,6 +103,8 @@
   text-align: left;
   font-size: 20px;
   white-space: nowrap;
+  text-transform: capitalize;
+  font-weight: 500;
   @include no-user-select;
   img {
     display: none;

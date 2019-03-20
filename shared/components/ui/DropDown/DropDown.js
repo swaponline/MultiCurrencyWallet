@@ -87,10 +87,10 @@ export default class DropDown extends Component {
     const selectedItem = items.find(({ value }) => value === selectedValue)
 
     if (typeof selectedItemRender === 'function') {
-      return selectedItemRender(selectedItem)
+      if (selectedItem !== undefined) {
+        return selectedItem.fullTitle
+      }
     }
-
-    return selectedItem.title
   }
 
   renderItem = (item) => {

@@ -8,7 +8,9 @@ import CurrencyIcon from 'components/ui/CurrencyIcon/CurrencyIcon'
 
 const Option = ({ icon, title }) => (
   <div styleName="optionrow">
-    <CurrencyIcon styleName="icon" name={icon} />
+    <span styleName="circle">
+      <CurrencyIcon styleName="icon" name={icon} />
+    </span>
     {title}
   </div>
 )

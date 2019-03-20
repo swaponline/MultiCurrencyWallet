@@ -1,23 +1,7 @@
 @font-face {
   font-family: 'CerebriSans';
-  src: url('../fonts/CerebriSans-Regular.woff2') format('woff2'),
-  url('../fonts/CerebriSans-Regular.woff') format('woff');
+  src: url('../../fonts/Celebri/CerebriSans-Regular.woff') format('woff'),
+  url('../../fonts/Celebri/CerebriSans-Regular.woff') format('woff');
   font-weight: 400;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'CerebriSans SemiBold';
-  src: url('../fonts/CerebriSans-SemiBold.woff2') format('woff2'),
-  url('../fonts/CerebriSans-SemiBold.woff') format('woff');
-  font-weight: 500;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'CerebriSans Bold';
-  src: url('../fonts/CerebriSans-Bold.woff2') format('woff2'),
-  url('../fonts/CerebriSans-Bold.woff') format('woff');
-  font-weight: 600;
   font-style: normal;
 }
