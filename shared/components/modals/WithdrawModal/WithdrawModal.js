@@ -177,8 +177,6 @@ export default class WithdrawModal extends React.Component {
       speed: 'fast',
     }
 
-    actions.modals.close(name)
-
     if (helpers.ethToken.isEthToken({ name: currency.toLowerCase() })) {
       sendOptions = {
         ...sendOptions,
@@ -204,6 +202,19 @@ export default class WithdrawModal extends React.Component {
         })
 
         this.setState(() => ({ isShipped: false }))
+      })
+      .then(() => {
+
+        actions.modals.close(name)
+
+      })
+      .catch(error => {
+
+        console.error(`Withdrawal error ${currency.toUpperCase()}: `, error)
+        actions.notifications.show(constants.notifications.ErrorNotification, {
+          error: error.message,
+        })
+
       })
   }
 
