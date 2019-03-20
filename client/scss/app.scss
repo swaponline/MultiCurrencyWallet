@@ -1,10 +1,14 @@
 @import "~sanitize.scss/_sanitize.scss";
 @import "fonts/index";
 
+
 body {
-  font-family: 'CerebriSans', sans-serif;
-  //font-family: 'Inter', sans-serif;
+  //font-family: 'CerebriSans', sans-serif;
+  font-family: 'Inter-Regular', sans-serif;
+  //font-family: 'Inter-SemiBold', sans-serif;
   //font-family: 'SFMono';
+  //font-family: 'Roboto Mono', monospace;
+  //font-family: 'Inter-Bold';
   font-size: 16px;
 }
 

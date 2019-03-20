@@ -7,7 +7,7 @@ import styles from './PromoText.scss'
 
 const PromoText = ({ className }) => (
   <h3 styleName="promoText">
-    <span styleName="promoTextColored">Swap.Online</span>
+    <span styleName="promoTextColored">Swap.online</span>
     <br />Your online cryptocurrency wallet
   </h3>
 )
