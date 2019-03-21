@@ -28,26 +28,30 @@ export default class RowHistory extends Component {
   tryRefund = (timeLeft) => {
     const { row: { id } } = this.props
 
-    if (timeLeft < 0) {
+    if (timeLeft > 0) {
       return
     }
 
     try {
-    const { flow } = actions.core.getSwapById(id)
+      const { flow } = actions.core.getSwapById(id)
 
-    const { state: {
-      isFinished, isRefunded,
-    } } = flow
+      const {
+        state: { isFinished, isRefunded, step, scriptBalance },
+        swap: { sellCurrency },
+      } = flow
 
-    if (isFinished || isRefunded) {
-      return
-    }
+      const isPayed = sellCurrency === 'BTC' ? 4 : 5
 
-    flow.tryRefund()
-      .then((result) => {
-        console.log('refunded', result)
-        localStorage.setItem(`swap:flow.${id}`, flow.state)
-      })
+      if (isFinished || isRefunded || (step === isPayed && scriptBalance === 0)) {
+        console.error(`Refund of swap ${id} is not available`)
+        return
+      }
+
+      flow.tryRefund()
+        .then((result) => {
+          console.log('refunded', result)
+          localStorage.setItem(`swap:flow.${id}`, flow.state)
+        })
     } catch (err) {
       console.error(`RefundError`, err)
     }
