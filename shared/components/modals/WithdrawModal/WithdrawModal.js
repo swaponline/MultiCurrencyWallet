@@ -62,6 +62,7 @@ export default class WithdrawModal extends React.Component {
       isEthToken: helpers.ethToken.isEthToken({ name: currency.toLowerCase() }),
       currentDecimals,
       getUsd: 0,
+      error: false,
     }
   }
 
@@ -201,7 +202,7 @@ export default class WithdrawModal extends React.Component {
           address: to,
         })
 
-        this.setState(() => ({ isShipped: false }))
+        this.setState(() => ({ isShipped: false, error: false }))
       })
       .then(() => {
 
@@ -211,9 +212,10 @@ export default class WithdrawModal extends React.Component {
       .catch(error => {
 
         console.error(`Withdrawal error ${currency.toUpperCase()}: `, error)
-        actions.notifications.show(constants.notifications.ErrorNotification, {
-          error: error.message,
-        })
+        this.setState(() => ({
+          error,
+          isShipped: false,
+        }))
 
       })
   }
@@ -380,6 +382,17 @@ export default class WithdrawModal extends React.Component {
             {' '}
             {currency.toUpperCase()}
           </Button>
+          {
+            this.state.error && (
+              <div styleName="rednote">
+                <FormattedMessage
+                  id="WithdrawModalErrorSend"
+                  defaultMessage="{error}"
+                  values={{ error: `${this.state.error.name}: ${this.state.error.message}` }}
+                />
+              </div>
+            )
+          }
         </Modal>
       )
     }
