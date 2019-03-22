@@ -822,7 +822,7 @@ export default class PartialClosure extends Component {
                 haveCurrency !== getCurrency && (
                   <div className={isWidget ? 'flipBtn' : ''}>
                     {
-                      (!extendedControls && balance > 0)
+                      (extendedControls && balance > 0)
                         && (
                           <div styleName="extendedControls">
                             <Select

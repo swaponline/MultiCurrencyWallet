@@ -2,6 +2,8 @@ label.Switch > span {
 	position: relative;
 	padding-left: 3.2em;
 	user-select: none;
+	height: 20px;
+	display: block;
 }
 
 label.Switch {
@@ -35,10 +37,11 @@ label.Switch > span:after {
 	background-color: #000000;
 	border-radius: 50%;
 	content: '';
-	width: 16px;
-	height: 16px;
+	width: 15px;
+	height: 15px;
 	left: 5px;
-	top: 0;
+	top: 50%;
+	transform: translateY(-50%);
 	position: absolute;
 	-webkit-transition: border-color .2s, -webkit-transform .2s;
 	transition: border-color .2s, -webkit-transform .2s;

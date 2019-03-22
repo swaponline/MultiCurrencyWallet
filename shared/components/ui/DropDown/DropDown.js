@@ -162,8 +162,8 @@ export default class DropDown extends Component {
                       }
                       }
                     >
-                      <span styleName="fullTitle">{item.fullTitle}</span>
                       <span styleName="shortTitle">{this.renderItem(item)}</span>
+                      <span styleName="fullTitle">{item.fullTitle}</span>
                       <span styleName="range rangeUp">+5.26%</span>
                     </div>
                   ))
