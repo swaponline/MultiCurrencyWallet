@@ -177,9 +177,9 @@ export default class SwapComponent extends PureComponent {
   }
 
   checkIsFinished = () => {
-    const { swap: { id, flow: { state: { isFinished, step } } } } = this.state
+    const { swap: { id, flow: { state: { isFinished, step, isRefunded } } } } = this.state
 
-    if (isFinished || step > 7) {
+    if (isFinished || step > 7 || isRefunded) {
       this.deleteThisSwapFromStorage(id)
       return true
     }
