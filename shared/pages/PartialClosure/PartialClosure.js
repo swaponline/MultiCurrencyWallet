@@ -822,7 +822,7 @@ export default class PartialClosure extends Component {
                 haveCurrency !== getCurrency && (
                   <div className={isWidget ? 'flipBtn' : ''}>
                     {
-                      (extendedControls && balance > 0)
+                      (!extendedControls && balance > 0)
                         && (
                           <div styleName="extendedControls">
                             <Select
@@ -993,6 +993,9 @@ export default class PartialClosure extends Component {
               <div styleName="rowBtn" className={isWidget ? 'rowBtn' : ''}>
                 <Button styleName="button" brand onClick={this.handleGoTrade} disabled={!canDoOrder}>
                   <FormattedMessage id="partial541" defaultMessage="Exchange now" />
+                </Button>
+                <Button styleName="button buttonOrders" gray onClick={() => this.handlePush(isWidgetLink)} >
+                  <FormattedMessage id="partial544" defaultMessage="Show order book" />
                 </Button>
               </div>
             </div>

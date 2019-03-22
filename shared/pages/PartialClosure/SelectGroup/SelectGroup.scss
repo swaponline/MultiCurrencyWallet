@@ -10,10 +10,24 @@
   position: relative;
 }
 
+.smallTooltip {
+  > span {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    display: flex;
+    justify-content: center;
+    span {
+      font-size: 10px;
+    }
+  }
+}
+
 .textUsd {
   color: #828795;
   position: absolute;
   left: 10px;
+  font-family: 'Roboto Mono', monospace;
   bottom: -14px;
   top: auto;
   background: #fff;
@@ -95,6 +109,7 @@ input:disabled {
     border: none;
     height: 64px;
     border-bottom: 1px solid #000;
+    font-size: 16px;
   }
 }
 

@@ -30,10 +30,11 @@
 .button {
   margin-top: 0;
   width: 100%;
-  font-size: 16px;
   background: #000;
   border-radius: 3px;
   height: 68px;
+  font-size: 18px;
+  flex-basis: 47%;
   box-shadow: none;
 }
 
@@ -47,6 +48,7 @@
   height: 30px;
   padding: 0;
   margin-bottom: 20px;
+  font-size: 16px;
   &:focus {
     border: none;
   }
@@ -62,7 +64,16 @@
 
 .rowBtn {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+}
+
+.buttonOrders {
+  border: 1px solid #000;
+  background: #fff;
+  &:hover {
+    border: 1px solid #000;
+    background: #fff;
+  }
 }
 
 .specify {
@@ -197,6 +208,7 @@
   right: 10px;
   background: #fff;
   color: rgba(0, 0, 0, 0.3);
+  font-family: 'Roboto Mono', monospace;
   font-size: 13px;
   text-align: right;
   padding: 10px 10px;
@@ -233,6 +245,7 @@
   background: #fff;
   font-size: 13px;
   right: 50px;
+  font-family: 'Roboto Mono', monospace;
   padding: 0 10px;
   color: #b5b5b5;
   margin-bottom: 0;

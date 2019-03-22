@@ -11,6 +11,8 @@ import styles from './DropDown.scss'
 import toggle from 'decorators/toggle'
 import Input from 'components/forms/Input/Input'
 
+import closeBtn from './images/close.svg'
+
 
 @toggle()
 @cssModules(styles, { allowMultiple: true })
@@ -104,7 +106,7 @@ export default class DropDown extends Component {
   }
 
   render() {
-    const { className, items, isToggleActive, selectedValue, name } = this.props
+    const { className, items, isToggleActive, selectedValue, name, placeholder } = this.props
     const { inputValue } = this.state
 
     const dropDownStyleName = cx('dropDown', {
@@ -135,6 +137,7 @@ export default class DropDown extends Component {
             {isToggleActive ? (
               <Input
                 styleName="searchInput"
+                placeholder={placeholder}
                 focusOnInit
                 valueLink={linkedValue.inputValue}
                 ref="searchInput"
@@ -180,6 +183,7 @@ export default class DropDown extends Component {
               </div>
             )
           }
+          <button styleName="closeBtn"><img src={closeBtn} alt="" /></button>
         </div>
       </ClickOutside>
     )

@@ -24,9 +24,11 @@ const SelectGroup = ({ dynamicFee, isToken, extendedControls, selectedValue, onS
         {label}
       </strong>
       &nbsp;
-      <Tooltip id={id}>
-        {tooltip}
-      </Tooltip>
+      <div styleName="smallTooltip">
+        <Tooltip id={id}>
+          {tooltip}
+        </Tooltip>
+      </div>
     </FieldLabel>
     <div styleName="groupField" className={className}>
       <Input
@@ -48,6 +50,7 @@ const SelectGroup = ({ dynamicFee, isToken, extendedControls, selectedValue, onS
       <CurrencySelect
         name="All"
         styleName="currencySelect"
+        placeholder="Enter the name of token"
         selectedValue={selectedValue}
         onSelect={onSelect}
         currencies={currencies}
