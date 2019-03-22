@@ -233,10 +233,14 @@ export default class WithdrawModal extends React.Component {
     }
 
     addressIsCorrect() {
-      const { data } = this.props
-      const { address } = this.state
+      const { data: { currency } } = this.props
+      const { address, isEthToken } = this.state
 
-      return isCoinAddress[data.currency.toUpperCase()](address)
+      if (isEthToken) {
+        return isCoinAddress.ETH(address)
+      }
+
+      return isCoinAddress[currency.toUpperCase()](address)
     }
 
     render() {
