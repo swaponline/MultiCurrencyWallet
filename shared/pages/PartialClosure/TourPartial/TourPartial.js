@@ -39,12 +39,8 @@ export default class TourPartial extends Component {
 }
 const tourSteps = [
   {
-    selector: '[data-tut="partal"]', //have currency
-    content: <FormattedMessage id="tourPartial62" defaultMessage="This page is designed for easier and faster search for offers for exchange. Here you can choose a currency receipt purse, start an exchange with partial closure or go to the page with all available offers." />,
-  },
-  {
     selector: '[data-tut="have"]', //have currency
-    content: <FormattedMessage id="tourPartial94" defaultMessage="In this field you enter the amount you want to sell and select the currency to sell." />,
+    content: <FormattedMessage id="tourPartial94" defaultMessage="In this field you enter the amount you want to sell and select the currency to sell. You can sell currency from an external wallet." />,
   },
   {
     selector: '[data-tut="get"]',

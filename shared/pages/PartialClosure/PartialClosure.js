@@ -758,7 +758,7 @@ export default class PartialClosure extends Component {
     }, SeoValues)
 
     return (
-      <div data-tut="partal">
+      <Fragment>
         <Helmet>
           <title>{TitleTagString}</title>
           <meta
@@ -1043,7 +1043,7 @@ export default class PartialClosure extends Component {
             </p>
           )
         }
-      </div>
+      </Fragment>
     )
   }
 }
