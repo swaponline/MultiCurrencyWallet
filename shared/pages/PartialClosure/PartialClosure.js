@@ -344,7 +344,7 @@ export default class PartialClosure extends Component {
         }
       } else {
         this.setState(() => ({
-          haveCurrency: 'swap',
+          haveCurrency: (config && config.isWidget) ? config.erc20token : 'swap',
         }))
       }
     })
@@ -643,8 +643,10 @@ export default class PartialClosure extends Component {
   checkPair = () => {
     const { getCurrency, haveCurrency } = this.state
 
+    const noPairToken = (config && config.isWidget) ? config.erc20token : 'swap'
+
     const checkingValue = this.props.allCurrencyies.map(item => item.name).includes(haveCurrency.toUpperCase())
-      ? haveCurrency : 'swap'
+      ? haveCurrency : noPairToken
 
     const selected = actions.pairs.selectPairPartial(checkingValue)
     const check = selected.map(item => item.value).includes(getCurrency)
