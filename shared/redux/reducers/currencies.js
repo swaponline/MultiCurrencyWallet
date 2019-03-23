@@ -83,6 +83,13 @@ if (config.isWidget) {
       value: config.erc20token,
       fullTitle: config.erc20[config.erc20token].fullName,
     },
+    {
+      name: 'ETH',
+      title: 'ETH',
+      icon: 'eth',
+      value: 'eth',
+      fullTitle: 'ethereum',
+    },
   ]
 
   initialState.addSelectedItems = [
