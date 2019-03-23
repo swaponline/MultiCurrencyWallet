@@ -3307,14 +3307,14 @@
   },
   {
     "id": "PartialOfferCantProceed1",
-    "message": "Запрос отклонен, возможно у вас есть незавершенные сделки {br}{link}",
+    "message": "Запрос отклонен. {link}",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
   },
   {
     "id": "PartialOfferCantProceed1_1",
-    "message": "Смотреть сделки",
+    "message": "Почему?",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]

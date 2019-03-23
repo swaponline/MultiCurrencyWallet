@@ -314,12 +314,6 @@ export default class PartialClosure extends Component {
     }))
   }
 
-  goTodeclineSwap = () => {
-    const { intl: { locale } } = this.props
-    const { wayToDeclinedOrder } = this.state
-    this.props.history.push(localisedUrl(locale, `/${wayToDeclinedOrder}`))
-  }
-
   returnNeedCurrency = (sellToken, buyToken) => {
     const partialItems = Object.assign(getState().currencies.partialItems) // eslint-disable-line
 
@@ -358,7 +352,7 @@ export default class PartialClosure extends Component {
       this.setState(() => ({
         isDeclinedOffer: false,
       }))
-    }, 5000)
+    }, 7 * 1000)
   }
 
   setNoOfferState = () => {
@@ -879,13 +873,13 @@ export default class PartialClosure extends Component {
               <p styleName="error" className={isWidget ? 'error' : ''} >
                 <FormattedMessage
                   id="PartialOfferCantProceed1"
-                  defaultMessage="Request rejected, possibly you have not complete another swap {br}{link}"
+                  defaultMessage="Request is declined. {link}"
                   values={{
-                    link:
-                      <a className="errorLink" role="button" onClick={() => this.goTodeclineSwap()}> {/* eslint-disable-line */}
-                        <FormattedMessage id="PartialOfferCantProceed1_1" defaultMessage="Check here" />
-                      </a>,
-                    br: <br />,
+                    link: (
+                      <a href="https://wiki.swap.online/faq/#swap-faq-5738" target="_blank" rel="noopener noreferrer">
+                        <FormattedMessage id="PartialOfferCantProceed1_1" defaultMessage="Why?" />
+                      </a>
+                    ),
                   }}
                 />
               </p>
