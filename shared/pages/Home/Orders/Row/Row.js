@@ -108,9 +108,9 @@ export default class Row extends Component {
     const pair = Pair.fromOrder(this.props.row)
     const { price, amount, total, main, base, type } = pair
 
-    const sell = new BigNumber(sellAmount).dp(6, BigNumber.ROUND_HALF_CEIL)
-    const buy = new BigNumber(buyAmount).dp(6, BigNumber.ROUND_HALF_CEIL)
-    const exchangeRates = new BigNumber(price).dp(6, BigNumber.ROUND_HALF_CEIL)
+    const sell = new BigNumber(sellAmount).dp(6, BigNumber.ROUND_CEIL)
+    const buy = new BigNumber(buyAmount).dp(6, BigNumber.ROUND_CEIL)
+    const exchangeRates = new BigNumber(price).dp(6, BigNumber.ROUND_CEIL)
 
     const messages = defineMessages({
       sell: {

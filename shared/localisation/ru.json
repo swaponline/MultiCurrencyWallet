@@ -3767,6 +3767,13 @@
     ]
   },
   {
+    "id": "WithdrawModalErrorSend",
+    "message": "{error}",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
     "id": "RowHistory77",
     "message": "Refunded",
     "files": [

@@ -132,13 +132,12 @@ export default class SwapComponent extends PureComponent {
 
     if (!this.props.decline.includes(orderId)) {
       this.setSaveSwapId(orderId)
-      this.saveThisSwap(orderId)
     }
   }
 
   componentDidMount() {
-    const { swap: { id, flow: { state: { canCreateEthTransaction, requireWithdrawFeeSended, isFinished } } }, continueSwap, deletedOrders } = this.state
-
+    const { swap: { id, flow: { state: { canCreateEthTransaction, requireWithdrawFeeSended, step } } }, continueSwap, deletedOrders } = this.state
+    let { match : { params : { orderId } } } = this.props
     if (localStorage.getItem('deletedOrders') !== null) {
 
       if (localStorage.getItem('deletedOrders').includes(id)) {
@@ -146,6 +145,9 @@ export default class SwapComponent extends PureComponent {
       }
     }
 
+    if (step >= 4 && !this.props.decline.includes(orderId)) {
+      this.saveThisSwap(orderId)
+    }
 
     if (this.state.swap !== null) {
       this.state.swap.room.once('swap was canceled', () => {
@@ -159,15 +161,30 @@ export default class SwapComponent extends PureComponent {
         }
       }, 300 * 1000)
 
-      setInterval(() => {
+      const checkingCycle = setInterval(() => {
+        const isFinallyFinished = this.checkIsFinished()
+
+        if (isFinallyFinished) {
+          clearInterval(checkingCycle)
+          return
+        }
+
         this.catchWithdrawError()
         this.requestingWithdrawFee()
         this.isBalanceEnough()
       }, 5000)
     }
-    if (isFinished) {
+  }
+
+  checkIsFinished = () => {
+    const { swap: { id, flow: { state: { isFinished, step, isRefunded } } } } = this.state
+
+    if (isFinished || step > 7 || isRefunded) {
       this.deleteThisSwapFromStorage(id)
+      return true
     }
+
+    return false
   }
 
   saveThisSwap = (orderId) => {
@@ -201,7 +218,7 @@ export default class SwapComponent extends PureComponent {
 
   setSaveSwapId = (orderId) => {
     let swapsId = JSON.parse(localStorage.getItem('swapId'))
-    console.log('dsdsds')
+
     if (swapsId === null || swapsId.length === 0) {
       swapsId = []
     }

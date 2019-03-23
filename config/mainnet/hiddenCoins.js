@@ -35,4 +35,5 @@ export default [
   'WBTC',
   'ABYSS',
   'XSAT',
+  'HDP',
 ]

@@ -160,11 +160,11 @@ export default class PartialClosure extends Component {
   }
 
   componentDidMount() {
-    const { haveCurrency, getCurrency } = this.state
+    const { haveCurrency, getCurrency, estimatedFeeValues } = this.state
     actions.core.updateCore()
     this.returnNeedCurrency(haveCurrency, getCurrency)
-    this.checkPair(haveCurrency)
 
+    this.checkPair()
     this.updateAllowedBalance()
 
     this.usdRates = {}
@@ -175,28 +175,17 @@ export default class PartialClosure extends Component {
       this.showTheFee(haveCurrency)
     }, 2000)
 
-    SwapApp.shared().services.room.on('new orders', () => this.checkPair(haveCurrency))
+    SwapApp.shared().services.room.on('new orders', () => this.checkPair())
     this.customWalletAllowed()
-    this.setEstimatedFeeValues()
+    this.setEstimatedFeeValues(estimatedFeeValues)
   }
 
-  setEstimatedFeeValues = async () => {
-    const { estimatedFeeValues } = this.state
-    let newEstimatedFeeValues = { ...estimatedFeeValues }
+  setEstimatedFeeValues = async (estimatedFeeValues) => {
 
-    for await (let item of constants.coinsWithDynamicFee) { // eslint-disable-line
-      try {
-        const newValue = await helpers[item].estimateFeeValue({ method: 'swap', speed: 'fast' })
-        if (newValue) {
-          newEstimatedFeeValues[item] = newValue
-        }
-      } catch (error) {
-        console.error('Set Estimated Fee Values in for error: ', error)
-      }
-    }
+    const fee = await helpers.estimateFeeValue.setEstimatedFeeValues({ estimatedFeeValues })
 
     return this.setState({
-      estimatedFeeValues: newEstimatedFeeValues,
+      estimatedFeeValues: fee,
     })
   }
 
@@ -530,7 +519,8 @@ export default class PartialClosure extends Component {
           action: 'exchange-click-selector',
           label: `${haveCurrency}-to-${getCurrency}`,
         })
-        this.checkPair(value)
+
+        this.checkPair()
         this.updateAllowedBalance()
       })
     }
@@ -540,19 +530,18 @@ export default class PartialClosure extends Component {
     const { haveCurrency, getCurrency, customWalletUse } = this.state
 
     this.setClearState()
-    this.checkPair(getCurrency)
     this.additionalPathing(getCurrency, haveCurrency)
     this.setState({
       haveCurrency: getCurrency,
       getCurrency: haveCurrency,
       customWallet: customWalletUse ? this.getSystemWallet(haveCurrency) : '',
     }, () => {
-      this.updateAllowedBalance()
-
       actions.analytics.dataEvent({
         action: 'exchange-click-selector',
         label: `${haveCurrency}-to-${getCurrency}`,
       })
+      this.checkPair()
+      this.updateAllowedBalance()
     })
   }
 
@@ -651,22 +640,26 @@ export default class PartialClosure extends Component {
     return false
   }
 
-  checkPair = (value) => {
-    const checkingValue = this.props.allCurrencyies.map(item => item.name).includes(value.toUpperCase())
-      ? value : 'swap'
+  checkPair = () => {
+    const { getCurrency, haveCurrency } = this.state
+
+    const checkingValue = this.props.allCurrencyies.map(item => item.name).includes(haveCurrency.toUpperCase())
+      ? haveCurrency : 'swap'
 
     const selected = actions.pairs.selectPairPartial(checkingValue)
-    const check = selected.map(item => item.value).includes(this.state.getCurrency)
+    const check = selected.map(item => item.value).includes(getCurrency)
 
     if (!check) {
-      this.setState(() => ({
-        getCurrency: selected[0].value,
-      }))
-    } else if (this.state.getCurrency === checkingValue) {
-      this.setState(() => ({
-        getCurrency: selected[0].value,
-      }))
+      this.chooseCurrencyToRender(selected)
+    } else if (getCurrency === checkingValue) {
+      this.chooseCurrencyToRender(selected)
     }
+  }
+
+  chooseCurrencyToRender = (selected) => {
+    this.setState(() => ({
+      getCurrency: selected[0].value,
+    }))
   }
 
   updateAllowedBalance = async () => {

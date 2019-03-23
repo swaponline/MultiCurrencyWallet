@@ -93,6 +93,15 @@
   }
 }
 
+.stepList.isMobile {
+  color: #000;
+  .active {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
+
 @include media-tablet {
   .stepList {
     margin-left: 0px;
@@ -101,13 +110,7 @@
   }
 }
 
-
 @include media-mobile {
-  .active {
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
   .stepList {
     margin-left: 0;
     padding-top: 20px;

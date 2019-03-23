@@ -62,6 +62,7 @@ export default class WithdrawModal extends React.Component {
       isEthToken: helpers.ethToken.isEthToken({ name: currency.toLowerCase() }),
       currentDecimals,
       getUsd: 0,
+      error: false,
     }
   }
 
@@ -177,8 +178,6 @@ export default class WithdrawModal extends React.Component {
       speed: 'fast',
     }
 
-    actions.modals.close(name)
-
     if (helpers.ethToken.isEthToken({ name: currency.toLowerCase() })) {
       sendOptions = {
         ...sendOptions,
@@ -203,7 +202,21 @@ export default class WithdrawModal extends React.Component {
           address: to,
         })
 
-        this.setState(() => ({ isShipped: false }))
+        this.setState(() => ({ isShipped: false, error: false }))
+      })
+      .then(() => {
+
+        actions.modals.close(name)
+
+      })
+      .catch(error => {
+
+        console.error(`Withdrawal error ${currency.toUpperCase()}: `, error)
+        this.setState(() => ({
+          error,
+          isShipped: false,
+        }))
+
       })
   }
 
@@ -233,10 +246,14 @@ export default class WithdrawModal extends React.Component {
     }
 
     addressIsCorrect() {
-      const { data } = this.props
-      const { address } = this.state
+      const { data: { currency } } = this.props
+      const { address, isEthToken } = this.state
 
-      return isCoinAddress[data.currency.toUpperCase()](address)
+      if (isEthToken) {
+        return isCoinAddress.ETH(address)
+      }
+
+      return isCoinAddress[currency.toUpperCase()](address)
     }
 
     render() {
@@ -369,6 +386,17 @@ export default class WithdrawModal extends React.Component {
             {' '}
             {currency.toUpperCase()}
           </Button>
+          {
+            this.state.error && (
+              <div styleName="rednote">
+                <FormattedMessage
+                  id="WithdrawModalErrorSend"
+                  defaultMessage="{error}"
+                  values={{ error: `${this.state.error.name}: ${this.state.error.message}` }}
+                />
+              </div>
+            )
+          }
         </Modal>
       )
     }

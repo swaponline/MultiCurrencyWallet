@@ -75,16 +75,6 @@ export default class SwapProgress extends Component {
     }
   }
 
-  componentDidMount() {
-    this.swap.on('state update', this.handleFlowStateUpdate)
-    this.handleBarProgress()
-  }
-
-  componentWillUnmount() {
-    this.swap.off('state update', this.handleFlowStateUpdate)
-  }
-
-
   handleBarProgress = () => {
     const { swap: { sellCurrency, flow: { stepNumbers, state: { step } } } } = this.state
     const first = stepNumbers.sign
@@ -92,7 +82,7 @@ export default class SwapProgress extends Component {
     const seventh = sellCurrency === 'BTC' ? stepNumbers.finish : stepNumbers[`withdraw-btc`]
     const eighth = sellCurrency === 'BTC' ? stepNumbers.end : stepNumbers.finish
 
-    if (step === first) {
+    if (step >= first && step < sixth) {
       this.setState({
         stepValue: 1,
       })
@@ -112,6 +102,15 @@ export default class SwapProgress extends Component {
         stepValue: 4,
       })
     }
+  }
+
+  componentDidMount() {
+    this.swap.on('state update', this.handleFlowStateUpdate)
+    this.handleBarProgress()
+  }
+
+  componentWillUnmount() {
+    this.swap.off('state update', this.handleFlowStateUpdate)
   }
 
   handleFlowStateUpdate = (values) => {

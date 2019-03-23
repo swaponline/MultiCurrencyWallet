@@ -214,4 +214,9 @@ export default {
     decimals: 18,
     fullName: 'XSAT',
   },
+  hdp: {
+    address: '0xc4d5545392f5fc57eba3af8981815669bb7e2a48',
+    decimals: 4,
+    fullName: 'HDP',
+  },
 }

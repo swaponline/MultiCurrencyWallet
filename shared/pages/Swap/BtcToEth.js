@@ -141,10 +141,9 @@ export default class BtcToEth extends Component {
     const { continueSwap, enoughBalance, swap, history, tokenItems, ethAddress, children, onClickCancelSwap }  = this.props
 
     const { flow, isShowingBitcoinScript, currencyData, paddingContainerValue } = this.state
-
     return (
       <div>
-        <div styleName="swapContainer">
+        <div styleName="swapContainer" style={isMobile ? { paddingTop: paddingContainerValue } : { paddingTop: 0 }}>
           <div styleName="swapInfo">
             {this.swap.id &&
               (
