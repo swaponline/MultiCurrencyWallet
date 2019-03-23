@@ -4738,14 +4738,14 @@
     "id": "swapprogressDONTLEAVE",
     "message": "Пожалуйста, не уходите с этой страницы ",
     "files": [
-      "shared/pages/Swap/Swap.js"
+      "shared/pages/Swap/SwapProgress/SwapProgressText/PleaseDontLeaveWrapper.js"
     ]
   },
   {
     "id": "swapjsdontleave",
     "message": "В каждом шаге при обмене требуется подпись приватными ключами, которые знает только ваш браузер.",
     "files": [
-      "shared/pages/Swap/Swap.js"
+      "shared/pages/Swap/SwapProgress/SwapProgressText/PleaseDontLeaveWrapper.js"
     ]
   },
   {
@@ -4789,10 +4789,7 @@
   },
   {
     "id": "ErrorNotAvailable",
-    "message": "Доступный баланс для обмена {available}",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
-    ]
+    "message": "Доступный баланс для обмена {available}"
   },
   {
     "id": "select75",
@@ -4813,6 +4810,62 @@
     "message": "ВСЁ",
     "files": [
       "shared/components/modals/OfferModal/AddOffer/Select/Select.js"
+    ]
+  },
+  {
+    "id": "tourPartial103",
+    "message": "Здесь, вы можете увидеть статус поиска, во время поиска вы увидите напись `поиск предложений...`, когда предложение будет найдено, в этом месте появится курс обмена",
+    "files": [
+      "shared/pages/PartialClosure/TourPartial/TourPartial.js"
+    ]
+  },
+  {
+    "id": "tourPartial107",
+    "message": "С помощью этого переключателя вы можете выбрать ,на какой кошелек будет осущевствлено получение средств после обмена, на внутренний кошелек swap.online или на другой кошелек.",
+    "files": [
+      "shared/pages/PartialClosure/TourPartial/TourPartial.js"
+    ]
+  },
+  {
+    "id": "tourPartial111",
+    "message": "Эта сумма, доступная для продажи из вашего внутреннего кошелька swap.online, за вычетом комиссии майнеров. Продавая эту сумму, вы можете не беспокоиться о дополнительных платежах.",
+    "files": [
+      "shared/pages/PartialClosure/TourPartial/TourPartial.js"
+    ]
+  },
+  {
+    "id": "tourPartial116",
+    "message": "Нажав на эту кнопку, вы можете перейти напрямую в обмен с этой страницы. Это будет возможно, если кнопка изменит свой цвет на розовый.",
+    "files": [
+      "shared/pages/PartialClosure/TourPartial/TourPartial.js"
+    ]
+  },
+  {
+    "id": "tourPartial128",
+    "message": "Нажав на эту кнопку, вы попадете на страницу с предложениями для обмена, предложения будут представлены в зависимости от выбранных валют. Также, на данной странице вы можете создать собственное предложение.",
+    "files": [
+      "shared/pages/PartialClosure/TourPartial/TourPartial.js"
+    ]
+  },
+  {
+    "id": "tourPartial62",
+    "message": "Эта страница предназначена для более простого и быстрого поиска предложений на обмен. Здесь вы можете выбрать кошелек для получения валюты, начать обмен с частичным закрытием или перейти на страницу со всеми доступными предложениями.",
+    "files": [
+      "shared/pages/PartialClosure/TourPartial/TourPartial.js"
+    ]
+  },
+  {
+    "id": "tourPartial94",
+    "message": "В этом поле вы можете выбрать валюту и ввести сумму для продажи.",
+    "files": [
+      "shared/pages/PartialClosure/TourPartial/TourPartial.js"
+    ]
+  },
+  {
+    "id": "tourPartial99",
+    "message": "В этом поле вы можете выбрать валюту и ввести сумму для покупки.",
+    "files": [
+      "shared/pages/PartialClosure/TourPartial/TourPartial.js"
     ]
   }
 ]
