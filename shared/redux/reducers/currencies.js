@@ -91,6 +91,29 @@ if (config.isWidget) {
       fullTitle: 'ethereum',
     },
   ]
+  initialState.partialItems = [
+    {
+      name: 'ETH',
+      title: 'ETH',
+      icon: 'eth',
+      value: 'eth',
+      fullTitle: 'ethereum',
+    },
+    {
+      name: 'BTC',
+      title: 'BTC',
+      icon: 'btc',
+      value: 'btc',
+      fullTitle: 'bitcoin',
+    },
+    {
+      name: config.erc20token.toUpperCase(),
+      title: config.erc20token.toUpperCase(),
+      icon: config.erc20token,
+      value: config.erc20token,
+      fullTitle: config.erc20[config.erc20token].fullName,
+    },
+  ]
 
   initialState.addSelectedItems = [
     {
