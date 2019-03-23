@@ -37,6 +37,7 @@ export default class TourPartial extends Component {
     )
   }
 }
+/* eslint-disable */
 const tourSteps = [
   {
     selector: '[data-tut="have"]', //have currency
@@ -73,3 +74,5 @@ const tourSteps = [
       defaultMessage="By clicking on this button takes you to the page with offers for exchange, offers will be presented depending on the selected currencies. Also on the offer page you can create your own offer." />,
   },
 ]
+
+/* eslint-enable */
