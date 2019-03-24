@@ -126,8 +126,17 @@ export default class Header extends Component {
       return
     }
 
-    const currentUrlPathName = this.props.history.location.pathname
-    const isStartPage = currentUrlPathName === '/' || currentUrlPathName === '/ru'
+    const currentUrl = this.props.history.location
+    const isGuestLink = !(!currentUrl.hash
+      || currentUrl.hash.slice(1) !== 'guest')
+
+    if (isGuestLink) {
+      localStorage.setItem(constants.localStorage.firstStart, true)
+
+      return
+    }
+
+    const isStartPage = currentUrl.pathname === '/' || currentUrl.pathname === '/ru'
     const canShowSubscribeAndTour = !localStorage.getItem(constants.localStorage.firstStart)
     let optionsForOenSignUpModal = {}
 
