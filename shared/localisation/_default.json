@@ -3284,14 +3284,14 @@
   },
   {
     "id": "PartialOfferCantProceed1",
-    "message": "Request rejected, possibly you have not complete another swap {br}{link}",
+    "message": "Request is declined. {link}",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
   },
   {
     "id": "PartialOfferCantProceed1_1",
-    "message": "Check here",
+    "message": "Why?",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
