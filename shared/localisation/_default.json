@@ -453,6 +453,20 @@
     ]
   },
   {
+    "id": "Withdraw218",
+    "message": "Withdrawal error",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Withdraw232",
+    "message": "There is not enough confirmation of the last transaction. Try later.",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
     "id": "PreventMultiTabs",
     "message": "Such error, many tabs",
     "files": [
@@ -3346,6 +3360,20 @@
     ]
   },
   {
+    "id": "importkeys200",
+    "message": "Please enter LTC private key",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "importkeys201",
+    "message": "Please valid LTC private key",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
     "id": "PartialPriceSearch483",
     "message": "Price: 1"
   },
@@ -3749,7 +3777,7 @@
   },
   {
     "id": "WithdrawModalErrorSend",
-    "message": "{error}",
+    "message": "{errorName} {currency}:{br}{errorMessage}",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]

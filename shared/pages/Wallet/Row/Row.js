@@ -138,11 +138,13 @@ export default class Row extends Component {
       ...this.state,
     })
   }
+
   handleTouch = (e) => {
     this.setState({
       isTouch: true,
     })
   }
+
   handleSliceAddress = () => {
     const {
       item: {
@@ -290,6 +292,7 @@ export default class Row extends Component {
       showButtons: true,
     }))
   }
+
   hideButtons = () => {
     this.setState(() => ({
       showButtons: false,

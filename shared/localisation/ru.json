@@ -457,6 +457,20 @@
     ]
   },
   {
+    "id": "Withdraw218",
+    "message": "Ошибка перевода",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Withdraw232",
+    "message": "Недостаточно подтверждений сети последней транзакции. Попробуйте позже.",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
     "id": "PreventMultiTabs",
     "message": "Слишком много вкладок",
     "files": [
@@ -3369,6 +3383,20 @@
     ]
   },
   {
+    "id": "importkeys200",
+    "message": "Пожалуйста введите LTC секретный ключ",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "importkeys201",
+    "message": "Недействительный LTC секретный ключ",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
     "id": "partial437",
     "message": "Atomic Swap {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}) Instant Exchange",
     "files": [
@@ -3768,7 +3796,7 @@
   },
   {
     "id": "WithdrawModalErrorSend",
-    "message": "{error}",
+    "message": "{errorName} {currency}:{br}{errorMessage}",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
