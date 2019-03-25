@@ -141,7 +141,7 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
 
   const txRaw = tx.buildIncomplete()
 
-  broadcastTx(txRaw.toHex())
+  await broadcastTx(txRaw.toHex())
 
   return txRaw
 }
