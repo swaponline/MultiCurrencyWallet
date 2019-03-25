@@ -9,6 +9,7 @@ import cssModules from 'react-css-modules'
 import styles from './DropDown.scss'
 
 import toggle from 'decorators/toggle'
+import Tooltip from 'components/ui/Tooltip/Tooltip'
 import Input from 'components/forms/Input/Input'
 
 import closeBtn from './images/close.svg'
@@ -89,9 +90,9 @@ export default class DropDown extends Component {
     const selectedItem = items.find(({ value }) => value === selectedValue)
 
     if (typeof selectedItemRender === 'function') {
-      if (selectedItem !== undefined) {
-        return selectedItem.fullTitle
-      }
+      if (selectedItem === undefined) {
+        // return selectedItem.fullTitle
+        this.renderSelectedItem()
     }
   }
 
@@ -106,7 +107,7 @@ export default class DropDown extends Component {
   }
 
   render() {
-    const { className, items, isToggleActive, selectedValue, name, placeholder } = this.props
+    const { className, items, isToggleActive, selectedValue, name, placeholder, label } = this.props
     const { inputValue } = this.state
 
     const dropDownStyleName = cx('dropDown', {
@@ -184,6 +185,17 @@ export default class DropDown extends Component {
             )
           }
           <button styleName="closeBtn"><img src={closeBtn} alt="" /></button>
+          <FieldLabel inRow>
+            <strong>
+              {label}
+            </strong>
+            &nbsp;
+            <div styleName="smallTooltip">
+              <Tooltip id={id}>
+                {tooltip}
+              </Tooltip>
+            </div>
+          </FieldLabel>
         </div>
       </ClickOutside>
     )

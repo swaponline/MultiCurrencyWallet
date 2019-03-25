@@ -24,6 +24,10 @@
       top: 17px;
       right: 17px;
     }
+    .activeLabel {
+      display: block;
+      position: absolute;
+    }
     .searchInput  {
       width: 100%;
       input {
@@ -38,7 +42,8 @@
   }
 }
 
-.closeBtn {
+.closeBtn,
+.activeLabel {
   display: none;
 }
 

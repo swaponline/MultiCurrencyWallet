@@ -7,7 +7,7 @@ import Option from './Option/Option'
 import DropDown from 'components/ui/DropDown/DropDown'
 
 
-const CurrencySelect = ({ className, selectedValue, onSelect, currencies, name, placeholder }) => {
+const CurrencySelect = ({ className, selectedValue, onSelect, currencies, name, placeholder, label }) => {
   // remove null values in object map
   const nonNullCurrencies = currencies.filter(currency => !!currency !== false)
   // TODO: Add debug logger message to see if some currency have been dropped
@@ -20,6 +20,7 @@ const CurrencySelect = ({ className, selectedValue, onSelect, currencies, name, 
       selectedItemRender={(item) => <Option {...item} />}
       itemRender={(item) => <Option {...item} />}
       onSelect={onSelect}
+      label={label}
       name={name}
     />
   )

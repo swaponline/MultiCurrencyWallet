@@ -214,6 +214,13 @@ export default class PartialClosure extends Component {
     clearInterval(this.timer)
   }
 
+  // componentDidUpdate(prevProps) {
+  // // Typical usage (don't forget to compare props):
+  //   if (this.props.userID !== prevProps.userID) {
+  //     this.fetchData(this.props.userID);
+  //   }
+  // }
+
   additionalPathing = (sell, buy) => {
     const { intl: { locale } } = this.props
 
@@ -687,11 +694,12 @@ export default class PartialClosure extends Component {
     await actions[this.state.haveCurrency].getBalance(this.state.haveCurrency)
   }
 
-  // checkoutLowAmount = () => {
-  //   this.setState({
-  //     isLowAmount: true
-  //   })
-  // }
+  checkoutLowAmount() {
+    return this.doesComissionPreventThisOrder()
+      && BigNumber(this.state.getAmount).isGreaterThan(0)
+      && (this.state.haveAmount
+      && this.state.getAmount)
+  }
 
   changeBalance = (value) => {
     this.extendedControlsSet(false)
@@ -762,6 +770,8 @@ export default class PartialClosure extends Component {
       return <Redirect push to={`${localisedUrl(locale, links.swap)}/${getCurrency}-${haveCurrency}/${orderId}`} />
     }
 
+    const isLowAmount = this.checkoutLowAmount()
+
     const canDoOrder = !isNonOffers
       && BigNumber(getAmount).isGreaterThan(0)
       && this.customWalletValid()
@@ -789,6 +799,7 @@ export default class PartialClosure extends Component {
       id: 'PartialClosureMetaDescrTag',
       defaultMessage: 'Best exchange rate for {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}). Swap.Online wallet provides instant exchange using Atomic Swap Protocol.', // eslint-disable-line
     }, SeoValues)
+
 
     return (
       <Fragment>
@@ -849,6 +860,7 @@ export default class PartialClosure extends Component {
                   tooltip={<FormattedMessage id="partial478" defaultMessage="The amount you receive after the exchange" />}
                   currencies={addSelectedItems}
                   usd={getUsd}
+                  error={isLowAmount}
                   className={isWidget ? 'SelGroup' : ''}
                 />
                 { oneCryptoCost.isGreaterThan(0) && oneCryptoCost.isFinite() && !isNonOffers && (
