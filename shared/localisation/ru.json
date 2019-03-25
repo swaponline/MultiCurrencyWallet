@@ -288,6 +288,27 @@
     ]
   },
   {
+    "id": "Keychain23",
+    "message": "Скачать",
+    "files": [
+      "shared/components/modals/Keychain/Keychain.js"
+    ]
+  },
+  {
+    "id": "Keychain26",
+    "message": "При активации KeyChain Ваш адрес будет изменен для большей безопасности. Будьте внимательны и переведите средства с Вашего адреса на другой, чтобы Ваш баланс не обнулился.",
+    "files": [
+      "shared/components/modals/Keychain/Keychain.js"
+    ]
+  },
+  {
+    "id": "Keychain26",
+    "message": "KeyChain загружается. Пожалуйста, подождите.",
+    "files": [
+      "shared/components/modals/Keychain/Keychain.js"
+    ]
+  },
+  {
     "id": "ImportKeys107",
     "message": "Эта процедура перепишет Ваш общедоступный ключ. Если Вы не уверены, Мы рекомендуем Вам отказаться",
     "files": [
@@ -2887,6 +2908,24 @@
     ]
   },
   {
+    "id": "Row288",
+    "message": "KeyChain активирован",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row289",
+    "message": "KeyChain не активирован",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "partial221",
+    "message": "Максимальная сумма для обмена: "
+  },
+  {
     "id": "SignUpModal001",
     "message": "Перейти в кошелек",
     "files": [
@@ -3887,6 +3926,20 @@
     ]
   },
   {
+    "id": "RowWallet283",
+    "message": "Активировать",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowWallet284",
+    "message": "Деактивировать",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
     "id": "ErrorNotification151",
     "message": "Ошибка: {error}",
     "files": [
@@ -4800,6 +4853,10 @@
     "files": [
       "shared/pages/Swap/SwapList/SwapList.js"
     ]
+  },
+  {
+    "id": "FeeControler34",
+    "message": "Недостаточный баланс ETH кошелька, для оплаты комиссии майнеров.{br}Внесите 0.002 ETH на Ваш кошелек для продолжения обмена {br}"
   },
   {
     "id": "IncompletedSwaps55",

@@ -16,6 +16,7 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import BtnTooltip from 'components/controls/WithdrawButton/BtnTooltip'
 
 import LinkAccount from '../LinkAccount/LinkAcount'
+import KeychainStatus from '../KeychainStatus/KeychainStatus'
 import { withRouter } from 'react-router'
 import ReactTooltip from 'react-tooltip'
 import { FormattedMessage, injectIntl } from 'react-intl'
@@ -447,6 +448,8 @@ export default class Row extends Component {
                       </Fragment>
                     )
                     */}
+                    { (currency === 'BTC' || currency === 'ETH') && (<KeychainStatus currency={currency} />)
+                    }
                   </div>
                 ) : (
                   <Fragment>

@@ -105,6 +105,10 @@ export default class KeyActionsPanel extends Component {
     })
   }
 
+  handleUseKeychain = () => {
+    actions.modals.open(constants.modals.Keychain)
+  }
+
   render() {
     const { hiddenCoinsList, decline } = this.props
     const { desclineOrders } = this.state
@@ -131,7 +135,7 @@ export default class KeyActionsPanel extends Component {
         }
         {desclineOrders.length > 0 &&
           <WithdrawButton onClick={() => this.handleShowIncomplete(decline)}>
-            <FormattedMessage id="KeyActionsPane74" defaultMessage="incomplete swap ({length})" values={{ length: `${desclineOrders.length}` }} />
+          <FormattedMessage id="KeyActionsPane74" defaultMessage="incomplete swap ({length})" values={{ length: `${desclineOrders.length}` }} />
           </WithdrawButton>
         }
       </div>

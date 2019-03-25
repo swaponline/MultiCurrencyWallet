@@ -6,6 +6,8 @@ import bitcoinMessage from 'bitcoinjs-message'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
 import { btc, request, constants, api } from 'helpers'
+import { Keychain } from 'keychain.js'
+import actions from 'redux/actions'
 
 
 const login = (privateKey) => {
@@ -41,6 +43,27 @@ const login = (privateKey) => {
 
   console.info('Logged in with Bitcoin', data)
   reducers.user.setAuthData({ name: 'btcData', data })
+}
+
+const loginWithKeychain = async () => {
+  const selectedKey = await actions.keychain.login('BTC')
+
+  const pubkey = Buffer.from(`03${selectedKey.substr(0, 64)}`, 'hex')
+  const keyPair = bitcoin.ECPair.fromPublicKeyBuffer(pubkey, btc.network)
+  const address = keyPair.getAddress()
+
+  const data = {
+    address,
+    publicKey: selectedKey,
+  }
+
+  window.getBtcAddress = () => data.address
+
+  console.info('Logged in with Bitcoin', data)
+  reducers.user.setAuthData({ name: 'btcData', data })
+  localStorage.setItem(constants.privateKeyNames.btcKeychainPublicKey, selectedKey)
+  localStorage.removeItem(constants.privateKeyNames.btc)
+  await getBalance()
 }
 
 const getBalance = () => {
@@ -116,9 +139,6 @@ const getTransaction = () =>
   })
 
 const send = async ({ from, to, amount, feeValue, speed } = {}) => {
-  const { user: { btcData: { privateKey } } } = getState()
-  const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
-
   feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed })
 
   const tx            = new bitcoin.TransactionBuilder(btc.network)
@@ -135,15 +155,34 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
     tx.addOutput(from, skipValue)
   }
 
-  tx.inputs.forEach((input, index) => {
-    tx.sign(index, keyPair)
-  })
-
-  const txRaw = tx.buildIncomplete()
+  const keychainActivated = !!localStorage.getItem(constants.privateKeyNames.btcKeychainPublicKey)
+  const txRaw = keychainActivated ? await signAndBuildKeychain(tx, unspents) : signAndBuild(tx)
 
   await broadcastTx(txRaw.toHex())
 
   return txRaw
+}
+
+const signAndBuild = (transactionBuilder) => {
+  const { user: { btcData: { privateKey } } } = getState()
+  const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
+
+  transactionBuilder.inputs.forEach((input, index) => {
+    transactionBuilder.sign(index, keyPair)
+  })
+  return transactionBuilder.buildIncomplete()
+}
+
+const signAndBuildKeychain = async (transactionBuilder, unspents) => {
+  const txRaw = transactionBuilder.buildIncomplete()
+  unspents.forEach(({ scriptPubKey }, index) => txRaw.ins[index].script = Buffer.from(scriptPubKey, 'hex'))
+  const keychain = await Keychain.create()
+  const rawHex = await keychain.signTrx(
+    txRaw.toHex(),
+    localStorage.getItem(constants.privateKeyNames.btcKeychainPublicKey),
+    'bitcoin'
+  )
+  return { ...txRaw, toHex: () => rawHex.result }
 }
 
 const fetchUnspents = (address) =>
@@ -188,6 +227,7 @@ const getReputation = () =>
 
 export default {
   login,
+  loginWithKeychain,
   getBalance,
   getTransaction,
   send,

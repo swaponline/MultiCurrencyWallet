@@ -13,19 +13,29 @@ const sign = async () => {
   // const bchPrivateKey = localStorage.getItem(constants.privateKeyNames.bch)
   const ltcPrivateKey = localStorage.getItem(constants.privateKeyNames.ltc)
   const ethPrivateKey = localStorage.getItem(constants.privateKeyNames.eth)
-  const _ethPrivateKey = actions.eth.login(ethPrivateKey)
+  const ethKeychainActivated = !!localStorage.getItem(constants.privateKeyNames.ethKeychainPublicKey)
+  const _ethPrivateKey = ethKeychainActivated ? await actions.eth.loginWithKeychain() : actions.eth.login(ethPrivateKey)
   // const xlmPrivateKey = localStorage.getItem(constants.privateKeyNames.xlm)
 
   // actions.xlm.login(xlmPrivateKey)
-  actions.btc.login(btcPrivateKey)
+  const btcKeychainActivated = !!localStorage.getItem(constants.privateKeyNames.btcKeychainPublicKey)
+  if (btcKeychainActivated) {
+    await actions.btc.loginWithKeychain()
+  } else {
+    actions.btc.login(btcPrivateKey)
+  }
   // actions.bch.login(bchPrivateKey)
   actions.usdt.login(btcPrivateKey)
   actions.ltc.login(ltcPrivateKey)
 
-  Object.keys(config.erc20)
-    .forEach(name => {
-      actions.token.login(_ethPrivateKey, config.erc20[name].address, name, config.erc20[name].decimals, config.erc20[name].fullName)
-    })
+  // if inside actions.token.login to call web3.eth.accounts.privateKeyToAccount passing public key instead of private key
+  // there will not be an error, but the address returned will be wrong
+  if (!ethKeychainActivated) {
+    Object.keys(config.erc20)
+      .forEach(name => {
+        actions.token.login(_ethPrivateKey, config.erc20[name].address, name, config.erc20[name].decimals, config.erc20[name].fullName)
+      })
+  }
   // await actions.nimiq.login(_ethPrivateKey)
 
   const eosSign = async () => {
