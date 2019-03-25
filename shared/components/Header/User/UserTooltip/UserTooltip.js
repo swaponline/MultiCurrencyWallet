@@ -44,11 +44,13 @@ export default class UserTooltip extends Component {
       allCurrencyies,
       estimatedFeeValues,
     }
-    this.setEstimatedFeeValues(estimatedFeeValues)
+  }
+
+  componentDidMount() {
+    this.setEstimatedFeeValues(this.state.estimatedFeeValues)
   }
 
   setEstimatedFeeValues = async (estimatedFeeValues) => {
-
     const fee = await helpers.estimateFeeValue.setEstimatedFeeValues({ estimatedFeeValues })
 
     return this.setState({
@@ -68,13 +70,6 @@ export default class UserTooltip extends Component {
             const { request, content: { buyAmount, buyCurrency, sellAmount, sellCurrency }, id, peer: ownerPeer } = row
             const currencyBalance = this.state.allCurrencyies.find(item => item.currency === sellCurrency).balance
             const sellAmountPlusFee = BigNumber(this.state.estimatedFeeValues[sellCurrency.toLowerCase()]).plus(sellAmount)
-
-            console.log('currencyBalance', currencyBalance)
-            console.log('sellAmountPlusFee', sellAmountPlusFee)
-            console.log('this.state.allCurrencyies', this.state.allCurrencyies)
-            console.log('sellCurrency', sellCurrency)
-            console.log('sellAmount', sellAmount)
-            console.log('BigNumber(sellAmountPlusFee).isGreaterThan(currencyBalance.balance)', BigNumber(sellAmountPlusFee).isGreaterThan(currencyBalance))
 
             if (BigNumber(sellAmountPlusFee).isGreaterThan(currencyBalance)) {
               this.props.declineRequest(id, request[0].participant.peer)
