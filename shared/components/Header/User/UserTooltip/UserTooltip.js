@@ -66,10 +66,17 @@ export default class UserTooltip extends Component {
         { feeds.length < 3  ? (
           feeds.map(row => {
             const { request, content: { buyAmount, buyCurrency, sellAmount, sellCurrency }, id, peer: ownerPeer } = row
-            const currencyBalance = this.state.allCurrencyies.find(item => item.currency === sellCurrency)
+            const currencyBalance = this.state.allCurrencyies.find(item => item.currency === sellCurrency).balance
             const sellAmountPlusFee = BigNumber(this.state.estimatedFeeValues[sellCurrency.toLowerCase()]).plus(sellAmount)
 
-            if (BigNumber(sellAmountPlusFee).isGreaterThan(currencyBalance.balance)) {
+            console.log('currencyBalance', currencyBalance)
+            console.log('sellAmountPlusFee', sellAmountPlusFee)
+            console.log('this.state.allCurrencyies', this.state.allCurrencyies)
+            console.log('sellCurrency', sellCurrency)
+            console.log('sellAmount', sellAmount)
+            console.log('BigNumber(sellAmountPlusFee).isGreaterThan(currencyBalance.balance)', BigNumber(sellAmountPlusFee).isGreaterThan(currencyBalance))
+
+            if (BigNumber(sellAmountPlusFee).isGreaterThan(currencyBalance)) {
               this.props.declineRequest(id, request[0].participant.peer)
               return console.error('Not enought money for the swap')
             }
