@@ -5,6 +5,7 @@ import { connect } from 'redaction'
 
 import helpers, { constants, links } from 'helpers'
 import { Link } from 'react-router-dom'
+import actions from 'redux/actions'
 
 import styles from './UserTooltip.scss'
 import CSSModules from 'react-css-modules'
@@ -50,16 +51,6 @@ export default class UserTooltip extends Component {
     this.setEstimatedFeeValues(this.state.estimatedFeeValues)
   }
 
-  componentDidUpdate(prevProps) {
-    const { feeds } = this.props
-
-    if (feeds !== prevProps.feeds) {
-      if (!!feeds.length && feeds.length < 3) {
-        this.removeOrder(feeds)
-      }
-    }
-  }
-
   setEstimatedFeeValues = async (estimatedFeeValues) => {
     const fee = await helpers.estimateFeeValue.setEstimatedFeeValues({ estimatedFeeValues })
 
@@ -68,11 +59,10 @@ export default class UserTooltip extends Component {
     })
   }
 
-  removeOrder = (feeds) => {
-    const orderId = feeds.map(item => item.id)
-
-    actions.core.deletedPartialCurrency(orderId)
-    actions.core.removeOrder(orderId)
+  removeOrder = (id, peer) => {
+    this.props.declineRequest(id, peer)
+    actions.core.deletedPartialCurrency(id)
+    actions.core.removeOrder(id)
     actions.core.updateCore()
   }
 
@@ -90,8 +80,8 @@ export default class UserTooltip extends Component {
             const sellAmountPlusFee = BigNumber(this.state.estimatedFeeValues[sellCurrency.toLowerCase()]).plus(sellAmount)
 
             if (BigNumber(sellAmountPlusFee).isGreaterThan(currencyBalance)) {
-              this.props.declineRequest(id, request[0].participant.peer)
-              return console.error('Not enought money for the swap')
+              this.removeOrder(id, request[0].participant.peer)
+              return console.warn('Not enought money for the swap, order № ${id} was deleted')
             }
 
             return (
