@@ -50,12 +50,30 @@ export default class UserTooltip extends Component {
     this.setEstimatedFeeValues(this.state.estimatedFeeValues)
   }
 
+  componentDidUpdate(prevProps) {
+    const { feeds } = this.props
+
+    if (feeds !== prevProps.feeds) {
+      if (!!feeds.length && feeds.length < 3) {
+        this.removeOrder(feeds)
+      }
+    }
+  }
+
   setEstimatedFeeValues = async (estimatedFeeValues) => {
     const fee = await helpers.estimateFeeValue.setEstimatedFeeValues({ estimatedFeeValues })
 
     return this.setState({
       estimatedFeeValues: fee,
     })
+  }
+
+  removeOrder = (feeds) => {
+    const orderId = feeds.map(item => item.id)
+
+    actions.core.deletedPartialCurrency(orderId)
+    actions.core.removeOrder(orderId)
+    actions.core.updateCore()
   }
 
 
