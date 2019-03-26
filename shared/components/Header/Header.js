@@ -7,7 +7,7 @@ import { connect } from 'redaction'
 
 import links from 'helpers/links'
 import actions from 'redux/actions'
-import { constants } from 'helpers'
+import { constants, firebase } from 'helpers'
 import config from 'app-config'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 import Tour from 'reactour'
@@ -121,12 +121,22 @@ export default class Header extends Component {
     window.removeEventListener('scroll', this.handleScroll)
   }
 
-  startTourAndSignInModal = () => {
+  startTourAndSignInModal = async () => {
     if (!process.env.MAINNET || config.isWidget) {
       return
     }
 
     const currentUrl = this.props.history.location
+    const isRefLink = (currentUrl.search
+      && currentUrl.search.includes('?promo=')
+      && !localStorage.getItem(constants.localStorage.firstStart))
+
+    if (isRefLink) {
+      const refEthAddress = currentUrl.search.split('?promo=')[1].split('&')[0]
+
+      await firebase.submitUserData('usersBalance', { Referrer: refEthAddress })
+    }
+
     const isGuestLink = !(!currentUrl.hash
       || currentUrl.hash.slice(1) !== 'guest')
 

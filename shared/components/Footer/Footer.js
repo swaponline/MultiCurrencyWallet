@@ -7,6 +7,7 @@ import { connect } from 'redaction'
 import styles from './Footer.scss'
 import CSSModules from 'react-css-modules'
 
+import Referral from './Referral/Referral'
 import Info from './Info/Info'
 import Links from './Links/Links'
 import SocialMenu from './SocialMenu/SocialMenu'
@@ -17,6 +18,7 @@ import SwitchLang from './SwitchLang/SwitchLang'
 const Footer = (props) => (
   <div styleName="footer">
     <WidthContainer styleName="container">
+      {!config.isWidget && (<Referral address={props.userEthAddress} />)}
       {!config.isWidget && (<Links />)}
       {!config.isWidget && (<SwitchLang />)}
       {!config.isWidget && (<SocialMenu />)}
@@ -31,6 +33,7 @@ Footer.propTypes = {
     serverAddress: PropTypes.string.isRequired,
     isOnline: PropTypes.bool.isRequired,
     onlineUsers: PropTypes.number,
+    userEthAddress: PropTypes.string.isRequired,
   }),
 }
 
@@ -38,4 +41,5 @@ export default connect({
   'serverAddress': 'ipfs.server',
   'isOnline': 'ipfs.isOnline',
   'onlineUsers': 'ipfs.onlineUsers',
+  'userEthAddress': 'user.ethData.address',
 })(CSSModules(Footer, styles, { allowMultiple: true }))
