@@ -60,6 +60,13 @@
   align-items: center;
   justify-content: space-between;
   height: 73px;
+  margin-bottom: -10px;
+}
+
+.alignCenter {
+  height: calc(100vh - 88px);
+  display: flex;
+  align-items: center;
 }
 
 .rowBtn {
@@ -136,6 +143,7 @@
 
 .formExchange {
   position: relative;
+  margin-top: -100px;
   padding: 50px 40px;
   width: 460px;
   background: #FFFFFF;

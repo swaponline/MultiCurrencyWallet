@@ -89,7 +89,7 @@ input:disabled {
   right: 0px;
   top: 5px;
   > div:nth-child(2) {
-    margin-top: 2px;
+    margin-top: 10px;
     display: block;
     position: absolute;
     top: 75px;
@@ -107,9 +107,10 @@ input:disabled {
   }
   input {
     border: none;
-    height: 64px;
+    height: 69px;
     border-bottom: 1px solid #000;
     font-size: 16px;
+    padding-left: 2px;
   }
 }
 

@@ -803,7 +803,7 @@ export default class PartialClosure extends Component {
 
     return (
       <Fragment>
-        <div styleName="container">
+        <div styleName="container alignCenter">
           <Promo />
           <div styleName={isWidgetLink ? 'widgetSection' : 'section'} className={isWidgetLink ? 'section' : ''} >
             <div styleName="formExchange" className={isWidget ? 'formExchange' : ''} >

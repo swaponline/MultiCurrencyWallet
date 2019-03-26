@@ -11,23 +11,28 @@
   display: flex;
   align-items: center;
   margin-top: 40px;
-  width: 250px;
+  width: 290px;
   justify-content: space-between;
 }
 .currencyListItem {
   img {
     filter: invert(0.5);
-    width: 30px;
+    width: 40px;
   }
 }
 .currencyListItemEth {
   img {
-    width: 21px;
+    width: 27px;
+  }
+}
+.currencyListItemBtc {
+  img {
+    width: 37px;
   }
 }
 .currencyListItemEos {
   img {
-    width: 22px;
+    width: 27px;
   }
 }
 
@@ -63,6 +68,6 @@
   justify-content: center;
   font-size: 35px;
   position: absolute;
-  right: 0px;
-  top: -7px;
+  right: -50px;
+  top: -2px;
 }

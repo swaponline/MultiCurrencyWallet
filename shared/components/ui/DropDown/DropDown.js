@@ -138,7 +138,7 @@ export default class DropDown extends Component {
       >
         <div styleName={dropDownStyleName} className={className}>
           <div styleName="selectedItem" onClick={this.toggle}>
-            <div styleName="arrow" />
+            <div styleName="arrow arrowDropDown" />
             {isToggleActive ? (
               <Input
                 styleName="searchInput"

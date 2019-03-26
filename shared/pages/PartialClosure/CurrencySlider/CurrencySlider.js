@@ -18,7 +18,7 @@ export default class CurrencySlider extends Component {
           </h3>
           <div styleName="currencyListWrap">
             <ul styleName="currencyList">
-              <li styleName="currencyListItem"><CurrencyIcon name="btc" /></li>
+              <li styleName="currencyListItem currencyListItemBtc"><CurrencyIcon name="btc" /></li>
               <li styleName="currencyListItem currencyListItemEth"><CurrencyIcon name="eth" /></li>
               <li styleName="currencyListItem"><CurrencyIcon name="usdt" /></li>
               <li styleName="currencyListItem"><CurrencyIcon name="ltc" /></li>
