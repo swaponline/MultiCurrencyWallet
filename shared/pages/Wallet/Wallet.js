@@ -42,7 +42,7 @@ const isWidgetBuild = config && config.isWidget
     items: ((config && config.isWidget) ?
       [btcData, ethData, usdtData ]
       :
-      [btcData, ethData, eosData, telosData, /* xlmData, */ /* ltcData, */ usdtData /* nimData */ ]).map((data) => (
+      [btcData, ethData, eosData, telosData, /* xlmData, */ ltcData, usdtData /* nimData */ ]).map((data) => (
       data.currency
     )),
     currencyBalance: [

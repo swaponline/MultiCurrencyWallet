@@ -5,7 +5,7 @@ import actions from 'redux/actions'
 import bitcoin from 'bitcoinjs-lib'
 
 import Link from 'sw-valuelink'
-import { btc, constants } from 'helpers'
+import { btc, ltc, constants } from 'helpers'
 
 import cssModules from 'react-css-modules'
 import styles from './ImportKeys.scss'
@@ -101,7 +101,6 @@ export default class ImportKeys extends Component {
       return
     }
 
-
     try {
       actions.btc.login(btcKey)
       this.setState({
@@ -115,6 +114,13 @@ export default class ImportKeys extends Component {
 
   handleLtcImportKey = () => {
     const { ltcKey } = this.state
+
+    try {
+      bitcoin.ECPair.fromWIF(ltcKey, ltc.network) // eslint-disable-line
+    } catch (e) {
+      this.setState({ isSubmittedLtc: true })
+      return false
+    }
 
     if (!ltcKey || ltcKey.length < 27) {
       this.setState({ isSubmittedLtc: true })
@@ -197,8 +203,10 @@ export default class ImportKeys extends Component {
     }
 
     if (isSubmittedLtc) {
-      linked.ltcKey.check((value) => value !== '', 'Please enter LTC private key')
-      linked.ltcKey.check((value) => value.length > 27, 'Please valid LTC private key')
+      linked.ltcKey.check((value) => value !== '', <FormattedMessage id="importkeys200" defaultMessage="Please enter LTC private key" />)
+      linked.ltcKey.check((value) => value.length > 27,  <FormattedMessage id="importkeys201" defaultMessage="Please valid LTC private key" />)
+      linked.ltcKey.check(() =>
+        this.handleLtcImportKey(), <FormattedMessage id="importkeys190" defaultMessage="Something went wrong. Check your private key, network of this address and etc." />)
     }
     /*
     if (isSubmittedXlm) {
@@ -229,7 +237,6 @@ export default class ImportKeys extends Component {
             disabled={isImportedBtc}
             onClick={this.handleBtcImportKey}
           />
-
           <FormattedMessage id="ImportKeys205" defaultMessage="Please enter LTC private key in WIF format">
             {message => <FieldLabel>{message}</FieldLabel>}
           </FormattedMessage>

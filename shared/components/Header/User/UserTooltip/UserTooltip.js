@@ -5,6 +5,7 @@ import { connect } from 'redaction'
 
 import helpers, { constants, links } from 'helpers'
 import { Link } from 'react-router-dom'
+import actions from 'redux/actions'
 
 import styles from './UserTooltip.scss'
 import CSSModules from 'react-css-modules'
@@ -44,16 +45,25 @@ export default class UserTooltip extends Component {
       allCurrencyies,
       estimatedFeeValues,
     }
-    this.setEstimatedFeeValues(estimatedFeeValues)
+  }
+
+  componentDidMount() {
+    this.setEstimatedFeeValues(this.state.estimatedFeeValues)
   }
 
   setEstimatedFeeValues = async (estimatedFeeValues) => {
-
     const fee = await helpers.estimateFeeValue.setEstimatedFeeValues({ estimatedFeeValues })
 
     return this.setState({
       estimatedFeeValues: fee,
     })
+  }
+
+  removeOrder = (id, peer) => {
+    this.props.declineRequest(id, peer)
+    actions.core.deletedPartialCurrency(id)
+    actions.core.removeOrder(id)
+    actions.core.updateCore()
   }
 
 
@@ -66,12 +76,12 @@ export default class UserTooltip extends Component {
         { feeds.length < 3  ? (
           feeds.map(row => {
             const { request, content: { buyAmount, buyCurrency, sellAmount, sellCurrency }, id, peer: ownerPeer } = row
-            const currencyBalance = this.state.allCurrencyies.find(item => item.currency === sellCurrency)
+            const currencyBalance = this.state.allCurrencyies.find(item => item.currency === sellCurrency).balance
             const sellAmountPlusFee = BigNumber(this.state.estimatedFeeValues[sellCurrency.toLowerCase()]).plus(sellAmount)
 
-            if (BigNumber(sellAmountPlusFee).isGreaterThan(currencyBalance.balance)) {
-              this.props.declineRequest(id, request[0].participant.peer)
-              return console.error('Not enought money for the swap')
+            if (BigNumber(sellAmountPlusFee).isGreaterThan(currencyBalance)) {
+              this.removeOrder(id, request[0].participant.peer)
+              return console.warn('Not enought money for the swap, order № ${id} was deleted')
             }
 
             return (

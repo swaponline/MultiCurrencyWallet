@@ -5,6 +5,7 @@ import SwapApp from 'swap.app'
 import Swap from 'swap.swap'
 import { constants } from 'helpers'
 import Pair from 'pages/Home/Orders/Pair'
+import config from 'app-config'
 
 
 const debug = (...args) => console.log(...args)
@@ -15,6 +16,8 @@ const getOrders = (orders) => {
 }
 
 const addCurrencyFromOrders = (orders) => {
+  if (config && config.isWidget) return // НЕ добавляем валюты из ордеров в режиме виджета
+
   const currenciesGetState = getState().currencies
   const allCurrencyies = currenciesGetState.items.map(item => item.name) // все валюты достпуные в клиенте
   const partialCurrency = currenciesGetState.partialItems // получаем все премиальные валюты

@@ -191,7 +191,7 @@ export default class WithdrawModal extends React.Component {
     }
 
     await actions[currency.toLowerCase()].send(sendOptions)
-      .then(() => {
+      .then((txRaw) => {
         actions.loader.hide()
         actions[currency.toLowerCase()].getBalance(currency)
         this.setBalanceOnState(currency)
@@ -205,18 +205,30 @@ export default class WithdrawModal extends React.Component {
         this.setState(() => ({ isShipped: false, error: false }))
       })
       .then(() => {
-
         actions.modals.close(name)
-
       })
-      .catch(error => {
+      .catch((e) => {
+        const error = {
+          name: defineMessages({
+            id: 'Withdraw218',
+            defaultMessage: 'Withdrawal error',
+          }),
+          message: '',
+        }
 
-        console.error(`Withdrawal error ${currency.toUpperCase()}: `, error)
+        if (/insufficient priority/.test(e.res.text)) {
+          error.message = defineMessages({
+            id: 'Withdraw232',
+            defaultMessage: 'There is not enough confirmation of the last transaction. Try later.',
+          })
+        }
+
+        console.error(error.name, ':', e)
+
         this.setState(() => ({
           error,
           isShipped: false,
         }))
-
       })
   }
 
@@ -257,7 +269,8 @@ export default class WithdrawModal extends React.Component {
     }
 
     render() {
-      const { address, amount, balance, isShipped, minus, ethBalance, isEthToken, exCurrencyRate, currentDecimals } = this.state
+      const { address, amount, balance, isShipped, minus, ethBalance,
+        isEthToken, exCurrencyRate, currentDecimals, error } = this.state
       const { name, data: { currency }, tokenItems, items, intl } = this.props
 
       const linked = Link.all(this, 'address', 'amount')
@@ -268,8 +281,8 @@ export default class WithdrawModal extends React.Component {
       const isDisabled =
         !address || !amount || isShipped || new BigNumber(amount).isLessThanOrEqualTo(min)
         || !this.addressIsCorrect()
-        || new BigNumber(amount).isGreaterThan(balance)
-        || new BigNumber(amount).dp() > currentDecimals
+        || BigNumber(amount).isGreaterThan(balance)
+        || BigNumber(amount).dp() > currentDecimals
         || this.isEthOrERC20()
       const NanReplacement = balance || '...'
       const getUsd = amount * exCurrencyRate
@@ -387,12 +400,17 @@ export default class WithdrawModal extends React.Component {
             {currency.toUpperCase()}
           </Button>
           {
-            this.state.error && (
+            error && (
               <div styleName="rednote">
                 <FormattedMessage
                   id="WithdrawModalErrorSend"
-                  defaultMessage="{error}"
-                  values={{ error: `${this.state.error.name}: ${this.state.error.message}` }}
+                  defaultMessage="{errorName} {currency}:{br}{errorMessage}"
+                  values={{
+                    errorName: intl.formatMessage(error.name),
+                    errorMessage: intl.formatMessage(error.message),
+                    br: <br />,
+                    currency: `${currency}`,
+                  }}
                 />
               </div>
             )

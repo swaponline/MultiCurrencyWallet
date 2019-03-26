@@ -288,6 +288,27 @@
     ]
   },
   {
+    "id": "Keychain23",
+    "message": "Download",
+    "files": [
+      "shared/components/modals/Keychain/Keychain.js"
+    ]
+  },
+  {
+    "id": "Keychain26",
+    "message": "KeyChain changes your address for security reasons. Note that you need to transfer your funds to another address before activating KeyChain. Keep in mind that automatic change of address will reset your balance.",
+    "files": [
+      "shared/components/modals/Keychain/Keychain.js"
+    ]
+  },
+  {
+    "id": "Keychain27",
+    "message": "KeyChain is loading. Please wait.",
+    "files": [
+      "shared/components/modals/Keychain/Keychain.js"
+    ]
+  },
+  {
     "id": "ImportKeys107",
     "message": "This procedure will rewrite your private key. If you are not sure about it, we recommend to press cancel",
     "files": [
@@ -448,6 +469,20 @@
   {
     "id": "Withdrow118",
     "message": "Amount",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Withdraw218",
+    "message": "Withdrawal error",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Withdraw232",
+    "message": "There is not enough confirmation of the last transaction. Try later.",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
@@ -2965,6 +3000,24 @@
     ]
   },
   {
+    "id": "Row288",
+    "message": "KeyChain is activated",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row289",
+    "message": "KeyChain is not activated",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "partial221",
+    "message": "Max amount for exchange: "
+  },
+  {
     "id": "Eos75",
     "message": "Private key for active and owner permissions",
     "files": [
@@ -3292,14 +3345,14 @@
   },
   {
     "id": "PartialOfferCantProceed1",
-    "message": "Request rejected, possibly you have not complete another swap {br}{link}",
+    "message": "Request is declined. {link}",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
   },
   {
     "id": "PartialOfferCantProceed1_1",
-    "message": "Check here",
+    "message": "Why?",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -3349,6 +3402,20 @@
   {
     "id": "importkeys119",
     "message": "Please valid BTC private key",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "importkeys200",
+    "message": "Please enter LTC private key",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "importkeys201",
+    "message": "Please valid LTC private key",
     "files": [
       "shared/components/modals/ImportKeys/ImportKeys.js"
     ]
@@ -3772,7 +3839,7 @@
   },
   {
     "id": "WithdrawModalErrorSend",
-    "message": "{error}",
+    "message": "{errorName} {currency}:{br}{errorMessage}",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
@@ -3858,6 +3925,20 @@
   {
     "id": "RowWallet282",
     "message": "Need help?",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowWallet283",
+    "message": "Activate",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowWallet284",
+    "message": "Deactivate",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
@@ -4761,6 +4842,10 @@
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgress.js"
     ]
+  },
+  {
+    "id": "FeeControler34",
+    "message": "Not enough ETH on your balance for miner fee.{br}Deposit 0.002 ETH to your account  {br}"
   },
   {
     "id": "swapjs290",

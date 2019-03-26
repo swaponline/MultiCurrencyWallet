@@ -288,6 +288,27 @@
     ]
   },
   {
+    "id": "Keychain23",
+    "message": "Скачать",
+    "files": [
+      "shared/components/modals/Keychain/Keychain.js"
+    ]
+  },
+  {
+    "id": "Keychain26",
+    "message": "При активации KeyChain Ваш адрес будет изменен для большей безопасности. Будьте внимательны и переведите средства с Вашего адреса на другой, чтобы Ваш баланс не обнулился.",
+    "files": [
+      "shared/components/modals/Keychain/Keychain.js"
+    ]
+  },
+  {
+    "id": "Keychain26",
+    "message": "KeyChain загружается. Пожалуйста, подождите.",
+    "files": [
+      "shared/components/modals/Keychain/Keychain.js"
+    ]
+  },
+  {
     "id": "ImportKeys107",
     "message": "Эта процедура перепишет Ваш общедоступный ключ. Если Вы не уверены, Мы рекомендуем Вам отказаться",
     "files": [
@@ -452,6 +473,20 @@
   {
     "id": "Withdrow118",
     "message": "Сумма",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Withdraw218",
+    "message": "Ошибка перевода",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
+    "id": "Withdraw232",
+    "message": "Недостаточно подтверждений сети последней транзакции. Попробуйте позже.",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
@@ -2873,6 +2908,24 @@
     ]
   },
   {
+    "id": "Row288",
+    "message": "KeyChain активирован",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "Row289",
+    "message": "KeyChain не активирован",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "partial221",
+    "message": "Максимальная сумма для обмена: "
+  },
+  {
     "id": "SignUpModal001",
     "message": "Перейти в кошелек",
     "files": [
@@ -3307,14 +3360,14 @@
   },
   {
     "id": "PartialOfferCantProceed1",
-    "message": "Запрос отклонен, возможно у вас есть незавершенные сделки {br}{link}",
+    "message": "Запрос отклонен. {link}",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
   },
   {
     "id": "PartialOfferCantProceed1_1",
-    "message": "Смотреть сделки",
+    "message": "Почему?",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -3364,6 +3417,20 @@
   {
     "id": "importkeys119",
     "message": "Недействительный BTC секретный ключ",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "importkeys200",
+    "message": "Пожалуйста введите LTC секретный ключ",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
+    "id": "importkeys201",
+    "message": "Недействительный LTC секретный ключ",
     "files": [
       "shared/components/modals/ImportKeys/ImportKeys.js"
     ]
@@ -3768,7 +3835,7 @@
   },
   {
     "id": "WithdrawModalErrorSend",
-    "message": "{error}",
+    "message": "{errorName} {currency}:{br}{errorMessage}",
     "files": [
       "shared/components/modals/WithdrawModal/WithdrawModal.js"
     ]
@@ -3854,6 +3921,20 @@
   {
     "id": "RowWallet282",
     "message": "Требуется помощь?",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowWallet283",
+    "message": "Активировать",
+    "files": [
+      "shared/pages/Wallet/Row/Row.js"
+    ]
+  },
+  {
+    "id": "RowWallet284",
+    "message": "Деактивировать",
     "files": [
       "shared/pages/Wallet/Row/Row.js"
     ]
@@ -4772,6 +4853,10 @@
     "files": [
       "shared/pages/Swap/SwapList/SwapList.js"
     ]
+  },
+  {
+    "id": "FeeControler34",
+    "message": "Недостаточный баланс ETH кошелька, для оплаты комиссии майнеров.{br}Внесите 0.002 ETH на Ваш кошелек для продолжения обмена {br}"
   },
   {
     "id": "IncompletedSwaps55",

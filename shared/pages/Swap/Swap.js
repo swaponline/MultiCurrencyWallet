@@ -340,11 +340,9 @@ export default class SwapComponent extends PureComponent {
       continueSwap,
     } = this.state
 
-    const coinsWithDynamicFee = ['BTC', 'ETH', 'LTC']
-
     if (canCreateEthTransaction === false && (
       helpers.ethToken.isEthToken({ name: currency.toLowerCase() })
-      || coinsWithDynamicFee.includes(currency)
+      || constants.coinsWithDynamicFee.includes(currency.toLowerCase())
     )) {
       this.setState(() => ({
         continueSwap: false,
@@ -407,6 +405,7 @@ export default class SwapComponent extends PureComponent {
     }
 
     const isFinished = (swap.flow.state.step >= (swap.flow.steps.length - 1))
+
     return (
       <Fragment>
         {hideAll ?

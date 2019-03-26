@@ -73,19 +73,11 @@
 }
 
 .error {
-  color: red;
+  color: var(--orange);
   a {
-    position: relative;
-    cursor: pointer;
-    &::after {
-      display: block;
-      position: absolute;
-      content: '';
-      bottom: -1px;
-      width: 100%;
-      height: 1px;
-      background: red;
-    }
+    color: inherit;
+    font-size: inherit;
+    text-decoration: underline;
   }
 }
 
