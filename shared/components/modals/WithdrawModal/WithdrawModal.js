@@ -395,9 +395,20 @@ export default class WithdrawModal extends React.Component {
             )
           }
           <Button styleName="buttonFull" brand fullWidth disabled={isDisabled} onClick={this.handleSubmit}>
-            <FormattedMessage id="WithdrawModal111" defaultMessage="Withdraw" />
-            {' '}
-            {currency.toUpperCase()}
+            { isShipped
+              ? (
+                <Fragment>
+                  <FormattedMessage id="WithdrawModal11212" defaultMessage="Processing ..." />
+                </Fragment>
+              )
+              : (
+                <Fragment>
+                  <FormattedMessage id="WithdrawModal111" defaultMessage="Withdraw" />
+                  {' '}
+                  {`${currency.toUpperCase()}`}
+                </Fragment>
+              )
+            }
           </Button>
           {
             error && (

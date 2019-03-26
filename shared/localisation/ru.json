@@ -460,6 +460,13 @@
     ]
   },
   {
+    "id": "WithdrawModal11212",
+    "message": "Переводим ...",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
     "id": "Withdrow108",
     "message": "Сумма должна быть меньше вашего баланса на комиссию манеров "
   },

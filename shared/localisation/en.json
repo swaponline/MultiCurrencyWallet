@@ -460,6 +460,13 @@
     ]
   },
   {
+    "id": "WithdrawModal11212",
+    "message": "Processing ...",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
     "id": "Withdrow113",
     "message": "Your balance: ",
     "files": [
