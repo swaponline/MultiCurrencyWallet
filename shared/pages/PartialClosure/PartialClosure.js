@@ -154,6 +154,7 @@ export default class PartialClosure extends Component {
       haveUsd: 0,
       getUsd: 0,
       getAmount: '',
+      isShowBalance: true,
       isLowAmount: false,
       maxAmount: 0,
       maxBuyAmount: new BigNumber(0),
@@ -214,12 +215,11 @@ export default class PartialClosure extends Component {
     clearInterval(this.timer)
   }
 
-  // componentDidUpdate(prevProps) {
-  // // Typical usage (don't forget to compare props):
-  //   if (this.props.userID !== prevProps.userID) {
-  //     this.fetchData(this.props.userID);
-  //   }
-  // }
+  switchBalance = () => {
+    this.setState({
+      isShowBalance: !this.state.isShowBalance,
+    })
+  }
 
   additionalPathing = (sell, buy) => {
     const { intl: { locale } } = this.props
@@ -747,8 +747,8 @@ export default class PartialClosure extends Component {
   render() {
     const { currencies, addSelectedItems, currenciesData, tokensData, intl: { locale, formatMessage } } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching,
-      isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet, exHaveRate, exGetRate,
-      maxBuyAmount, getAmount, goodRate, extendedControls, estimatedFeeValues, isToken, dynamicFee, haveAmount,
+      isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet, getUsd, haveUsd,
+      maxBuyAmount, getAmount, goodRate, isShowBalance, extendedControls, estimatedFeeValues, isToken, dynamicFee, haveAmount,
     } = this.state
 
     const haveUsd = BigNumber(exHaveRate).times(haveAmount).dp(2, BigNumber.ROUND_CEIL)
@@ -809,6 +809,7 @@ export default class PartialClosure extends Component {
             <div styleName="formExchange" className={isWidget ? 'formExchange' : ''} >
               <div styleName="selectWrap">
                 <SelectGroup
+                  switchBalanceFunc={this.switchBalance}
                   inputValueLink={linked.haveAmount.pipe(this.setAmount)}
                   selectedValue={haveCurrency}
                   onSelect={this.handleSetHaveValue}
@@ -823,12 +824,15 @@ export default class PartialClosure extends Component {
                   onBlur={() => setTimeout(() => this.extendedControlsSet(false), 200)}
                 />
               </div>
-              <p className={isWidget ? 'advice' : ''} styleName="maxAmount">
-                {/*<FormattedMessage id="partial221" defaultMessage="Balance: " />*/}
-                {/*Math.floor(maxBuyAmount.toNumber() * 1000) / 1000}{' '}{haveCurrency.toUpperCase()*/}
-                <FormattedMessage id="partial767" defaultMessage="Balance: " />
-                {balance.toFixed(4)}{'  '}{haveCurrency.toUpperCase()}
-              </p>
+              {
+                isShowBalance &&
+                  <p className={isWidget ? 'advice' : ''} styleName="maxAmount">
+                  {/*<FormattedMessage id="partial221" defaultMessage="Balance: " />*/}
+                  {/*Math.floor(maxBuyAmount.toNumber() * 1000) / 1000}{' '}{haveCurrency.toUpperCase()*/}
+                  <FormattedMessage id="partial767" defaultMessage="Balance: " />
+                  {balance.toFixed(4)}{'  '}{haveCurrency.toUpperCase()}
+                  </p>
+              }
               {
                 haveCurrency !== getCurrency && (
                   <div className={isWidget ? 'flipBtn' : ''}>
@@ -852,6 +856,7 @@ export default class PartialClosure extends Component {
               }
               <div styleName="selectWrap">
                 <SelectGroup
+                  switchBalanceFunc={this.switchBalance}
                   inputValueLink={linked.getAmount}
                   selectedValue={getCurrency}
                   onSelect={this.handleSetGetValue}

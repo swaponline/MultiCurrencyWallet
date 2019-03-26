@@ -8,10 +8,10 @@
   &.active {
     width: 100%;
     border: 1px solid #000;
-    top: -10px;
+    top: 0px;
     z-index: 1111111;
     background: #fff;
-    height: 304px;
+    height: 315px;
     border-radius: 3px!important;
     .arrow {
       display: none;
@@ -23,6 +23,9 @@
       right: 0;
       top: 17px;
       right: 17px;
+    }
+    .dropDownLabel {
+      display: block;
     }
     .activeLabel {
       display: block;
@@ -42,9 +45,28 @@
   }
 }
 
+.smallTooltip,
+.dropDownLabel {
+  color: #000;
+}
+
 .closeBtn,
-.activeLabel {
+.activeLabel,
+.dropDownLabel {
   display: none;
+}
+
+.smallTooltip {
+  > span {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    span {
+      font-size: 10px;
+    }
+  }
 }
 
 

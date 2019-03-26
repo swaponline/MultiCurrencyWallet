@@ -15,7 +15,7 @@ import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 // TODO to split data and view this component
 
 const SelectGroup = ({ dynamicFee, isToken, extendedControls, selectedValue, onSelect,
-  currencies, usd, placeholder, label, disabled, className, inputValueLink, tooltip, balance, error,
+  currencies, usd, placeholder, label, disabled, className, switchBalanceFunc, inputValueLink, tooltip, balance, error,
   id, idFee, tooltipAboutFee, haveAmount, ...props
 }) => (
   <div data-tut={dataTut}>
@@ -51,6 +51,9 @@ const SelectGroup = ({ dynamicFee, isToken, extendedControls, selectedValue, onS
       <CurrencySelect
         name="All"
         label={label}
+        tooltip={tooltip}
+        switchBalanceFunc={switchBalanceFunc}
+        id={id}
         styleName="currencySelect"
         placeholder="Enter the name of token"
         selectedValue={selectedValue}

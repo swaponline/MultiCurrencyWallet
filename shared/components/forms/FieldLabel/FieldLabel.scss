@@ -20,6 +20,14 @@
   }
 }
 
+.inDropDown {
+  display: flex;
+  padding: 0 10px;
+  margin-left: -1px;
+  top: -13px;
+  padding-right: 25px;
+}
+
 @include media-tablet-landscape-and-lower  {
   .inRow {
     margin-top: 30px;

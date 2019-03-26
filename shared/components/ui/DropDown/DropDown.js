@@ -9,6 +9,7 @@ import cssModules from 'react-css-modules'
 import styles from './DropDown.scss'
 
 import toggle from 'decorators/toggle'
+import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import Input from 'components/forms/Input/Input'
 
@@ -54,6 +55,8 @@ export default class DropDown extends Component {
   toggle = () => {
     const { isToggleActive, toggleOpen, toggleClose } = this.props
 
+    this.props.switchBalanceFunc()
+
     if (isToggleActive) {
       toggleClose()
     }
@@ -80,6 +83,7 @@ export default class DropDown extends Component {
       })
     }
 
+    this.props.switchBalanceFunc()
     toggleClose()
   }
 
@@ -90,9 +94,9 @@ export default class DropDown extends Component {
     const selectedItem = items.find(({ value }) => value === selectedValue)
 
     if (typeof selectedItemRender === 'function') {
-      if (selectedItem === undefined) {
-        // return selectedItem.fullTitle
-        this.renderSelectedItem()
+      if (selectedItem !== undefined) {
+        return selectedItem.fullTitle
+      }
     }
   }
 
@@ -107,7 +111,7 @@ export default class DropDown extends Component {
   }
 
   render() {
-    const { className, items, isToggleActive, selectedValue, name, placeholder, label } = this.props
+    const { className, items, isToggleActive, selectedValue, name, placeholder, label, tooltip, id, switchBalanceFunc } = this.props
     const { inputValue } = this.state
 
     const dropDownStyleName = cx('dropDown', {
@@ -184,18 +188,20 @@ export default class DropDown extends Component {
               </div>
             )
           }
-          <button styleName="closeBtn"><img src={closeBtn} alt="" /></button>
-          <FieldLabel inRow>
-            <strong>
-              {label}
-            </strong>
-            &nbsp;
-            <div styleName="smallTooltip">
-              <Tooltip id={id}>
-                {tooltip}
-              </Tooltip>
-            </div>
-          </FieldLabel>
+          <button styleName="closeBtn" onClick={this.toggle}><img src={closeBtn} alt="" /></button>
+          <div styleName="dropDownLabel">
+            <FieldLabel inRow inDropDown>
+              <strong>
+                {label}
+              </strong>
+              &nbsp;
+              <div styleName="smallTooltip">
+                <Tooltip id={id}>
+                  {tooltip}
+                </Tooltip>
+              </div>
+            </FieldLabel>
+          </div>
         </div>
       </ClickOutside>
     )
