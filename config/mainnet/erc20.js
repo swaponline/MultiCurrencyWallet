@@ -219,4 +219,9 @@ export default {
     decimals: 4,
     fullName: 'HDP',
   },
+  satx: {
+    address: '0xe96f2c381e267a96c29bbb8ab05ab7d3527b45ab',
+    decimals: 8,
+    fullName: 'SATX',
+  },
 }
