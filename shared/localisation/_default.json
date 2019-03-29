@@ -2936,7 +2936,7 @@
   },
   {
     "id": "SignUpModal004",
-    "message": "You will receive notifications regarding updates with your account (orders, transactions){br}and monthly updates about our project",
+    "message": "You will receive notifications regarding updates with your account (orders, transactions){br}and monthly updates about our project{br}{br}Sign up and get your free cryptocurrency for test. Exchange it on real Bitcoin from very begining!",
     "files": [
       "shared/components/modals/SignUpModal/SignUpModal.js"
     ]
