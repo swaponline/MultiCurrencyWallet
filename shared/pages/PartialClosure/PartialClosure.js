@@ -20,6 +20,7 @@ import { Button, Toggle, Flip } from 'components/controls'
 import Input from 'components/forms/Input/Input'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
+import Referral from 'components/Footer/Referral/Referral'
 
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
@@ -70,6 +71,7 @@ const isWidgetBuild = config && config.isWidget
   tokensData: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
   decline: rememberedOrders.savedOrders,
   hiddenCoinsList,
+  userEthAddress: ethData.address,
 }))
 @CSSModules(styles, { allowMultiple: true })
 export default class PartialClosure extends Component {
@@ -1000,6 +1002,7 @@ export default class PartialClosure extends Component {
         {
           (!isWidget) && (
             <p styleName="inform">
+              <Referral address={this.props.userEthAddress} />
               <FormattedMessage
                 id="PartialClosure562"
                 defaultMessage="Swap.online is a decentralized hot wallet powered by Atomic swap technology.

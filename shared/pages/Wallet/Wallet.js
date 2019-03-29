@@ -22,6 +22,7 @@ import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import KeyActionsPanel from 'components/KeyActionsPanel/KeyActionsPanel'
 import SaveKeysModal from 'components/modals/SaveKeysModal/SaveKeysModal'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
+import Referral from 'components/Footer/Referral/Referral'
 
 import config from 'app-config'
 
@@ -53,6 +54,7 @@ const isWidgetBuild = config && config.isWidget
     })),
     currencies,
     hiddenCoinsList : (config && config.isWidget) ? [] : hiddenCoinsList,
+    userEthAddress: ethData.address,
   })
 )
 @injectIntl
@@ -250,6 +252,8 @@ export default class Wallet extends Component {
         {
           (config && !config.isWidget) && (
             <div styleName="inform">
+              <Referral address={this.props.userEthAddress} />
+
               <h2 styleName="informHeading">Wallet based on the Atomic Swap technology</h2>
               <FormattedMessage
                 id="Wallet156"
