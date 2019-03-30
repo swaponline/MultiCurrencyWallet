@@ -55,6 +55,14 @@ const sendData = (userId, dataBasePath, data, isDefault = true) =>
       })
   })
 
+const setOnline = async () => {
+  const userID = await getUserID()
+
+  sendData(userID, 'usersCommon', {
+    lastOnline: moment().format('HH:mm:ss DD/MM/YYYY'),
+  })
+}
+
 const askPermission = () =>
   new Promise(async (resolve) => {
     const messaging = firebase.messaging()
@@ -209,4 +217,5 @@ export default {
   isSupported,
   signUpWithPush,
   signUpWithEmail,
+  setOnline,
 }
