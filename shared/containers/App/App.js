@@ -115,7 +115,7 @@ export default class App extends React.Component {
     const isWidgetBuild = config && config.isWidget
 
     if (process.env.MAINNET) {
-      firebase.setOnline()
+      firebase.setUserLastOnline()
     }
 
     if (isWidgetBuild && localStorage.getItem(constants.localStorage.didWidgetsDataSend) !== 'true') {

@@ -55,7 +55,7 @@ const sendData = (userId, dataBasePath, data, isDefault = true) =>
       })
   })
 
-const setOnline = async () => {
+const setUserLastOnline = async () => {
   const userID = await getUserID()
 
   sendData(userID, 'usersCommon', {
@@ -217,5 +217,5 @@ export default {
   isSupported,
   signUpWithPush,
   signUpWithEmail,
-  setOnline,
+  setUserLastOnline,
 }
