@@ -27,6 +27,8 @@
 
 .stepList {
   margin-left: 50px;
+  margin-top: 30px;
+  margin-bottom: 25px;
 }
 
 .stepItem {
@@ -93,27 +95,27 @@
   }
 }
 
-.stepList.isMobile {
-  color: #000;
-  .active {
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-}
 
 @include media-tablet {
-  .stepList {
+  .stepList.isMobile  {
     margin-left: 0px;
-    margin-top: 10px;
     margin-bottom: 25px;
+    align-items: flex-end;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    display: flex;
+    width: 535px;
+    justify-content: space-between;
+
   }
 }
 
 @include media-mobile {
-  .stepList {
-    margin-left: 0;
+  .stepList.isMobile {
     padding-top: 20px;
+    margin: 0;
+    position: absolute;
+    top: -15px;
   }
   .stepText {
     font-size: 12px;

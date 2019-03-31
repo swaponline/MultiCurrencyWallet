@@ -9,18 +9,17 @@ import { isMobile } from 'react-device-detect'
 import { FormattedMessage } from 'react-intl'
 
 
-const ThirdStep = ({ step, swap, sixth, seventh, eighth }) => {
+const ThirdStep = ({ step, swap, sixth, seventh, eighth, windowWidth }) => {
 
   const currencyStep = swap.sellCurrency === 'BTC' ? seventh : eighth
   const stepItemActive = (step >= sixth && step < currencyStep)
   const stepItemDefault = (step < currencyStep)
-  const thirdStepPadding = (stepItemActive && isMobile) || (!stepItemDefault && !stepItemActive && isMobile) ? 100 : 0
+  const thirdStepPadding = (stepItemActive && isMobile && windowWidth < 569) || (!stepItemDefault && !stepItemActive && isMobile && windowWidth < 569) ? 50 : 0
 
   return (
     <div
-      style={{ paddingTop: thirdStepPadding }}
       styleName={((stepItemActive) && 'stepItem active') || (stepItemDefault && 'stepItem') || 'stepItem active checked'}>
-      <span styleName="stepNumber">{step < currencyStep ? 3 : <i className="fas fa-check" />}</span>
+      <span styleName="stepNumber">{!isMobile ? (step < currencyStep ? 3 : <i className="fas fa-check" />) : (step < currencyStep ? 2 : <i className="fas fa-check" />)}</span>
       <p styleName="stepText">
         <FormattedMessage id="thirdStep24" defaultMessage="WITHDRAW" />
       </p>

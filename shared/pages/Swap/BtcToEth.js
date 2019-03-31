@@ -45,6 +45,8 @@ export default class BtcToEth extends Component {
 
   componentDidMount() {
     const { flow: { isSignFetching, isMeSigned, step, isParticipantSigned } } = this.state
+    window.addEventListener('resize', this.updateWindowDimensions)
+    this.updateWindowDimensions()
     this.changePaddingValue()
     this.ParticipantTimer = setInterval(() => {
       if (this.state.flow.isParticipantSigned && this.state.destinationBuyAddress) {
@@ -58,8 +60,13 @@ export default class BtcToEth extends Component {
 
   componentWillUnmount() {
     const { swap, flow: { isMeSigned } } = this.state
+    window.removeEventListener('resize', this.updateWindowDimensions)
     this.swap.off('state update', this.handleFlowStateUpdate)
     clearInterval(this.timer)
+  }
+
+  updateWindowDimensions() {
+    this.setState({ windowWidth: window.innerWidth })
   }
 
   submitSecret = () => {
@@ -140,10 +147,10 @@ export default class BtcToEth extends Component {
   render() {
     const { continueSwap, enoughBalance, swap, history, tokenItems, ethAddress, children, onClickCancelSwap }  = this.props
 
-    const { flow, isShowingBitcoinScript, currencyData, paddingContainerValue } = this.state
+    const { flow, isShowingBitcoinScript, currencyData, paddingContainerValue, windowWidth } = this.state
     return (
       <div>
-        <div styleName="swapContainer" style={isMobile ? { paddingTop: paddingContainerValue } : { paddingTop: 0 }}>
+        <div styleName="swapContainer" style={(isMobile && (windowWidth < 569)) ? { paddingTop: paddingContainerValue } : { paddingTop: 0 }}>
           <div styleName="swapInfo">
             {this.swap.id &&
               (
@@ -173,7 +180,7 @@ export default class BtcToEth extends Component {
               </Fragment>
             )
           }
-          <SwapList enoughBalance={enoughBalance} flow={flow} onClickCancelSwap={onClickCancelSwap} name={swap.sellCurrency} swap={swap} />
+          <SwapList enoughBalance={enoughBalance} flow={flow} onClickCancelSwap={onClickCancelSwap} windowWidth={windowWidth} name={swap.sellCurrency} swap={swap} />
         </div>
         <div styleName="swapContainerInfo">{children}</div>
       </div>
