@@ -63,7 +63,6 @@ const SelectGroup = ({ dynamicFee, isToken, extendedControls, selectedValue, onS
                 ? 'red'
                 : 'balance'
             }
-            data-tut="available"
           >
             {<FormattedMessage
               id="select75"

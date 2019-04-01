@@ -41,37 +41,33 @@ export default class TourPartial extends Component {
 const tourSteps = [
   {
     selector: '[data-tut="have"]', //have currency
-    content: <FormattedMessage id="tourPartial94" defaultMessage="In this field you enter the amount you want to sell and select the currency to sell. You can sell currency from an external wallet." />,
+    content: <FormattedMessage id="tourPartial94" defaultMessage="Please enter the amount you would like to sell and select the currency to sell. You can also sell currency from an external wallet." />,
   },
   {
     selector: '[data-tut="get"]',
-    content: <FormattedMessage id="tourPartial99" defaultMessage="In this field you enter the amount you want to buy and select the currency to buy." />,
-  },
-  {
-    selector: '[data-tut="available"]',
-    content: <FormattedMessage id="tourPartial111" defaultMessage="This amount is the amount available for sale from your internal wallet swap.online, minus the miners' fee. By selling this amount, you can not worry about additional payments." />,
+    content: <FormattedMessage id="tourPartial99" defaultMessage="Please enter the amount you would like to buy and select the currency to buy." />,
   },
   {
     selector: '[data-tut="status"]',
     content: <FormattedMessage
       id="tourPartial103"
-      defaultMessage="In this place you can see the status of the search for exchange offers,  during loading there will be an inscription “Searching orders...” at this place, when the order is found in this place, the exchange rate will be written" />,
+      defaultMessage="Here you can see the status of the search for exchange offers. When loading there will be `Searching orders...` shown. When the order is found, check the exchange rate here" />,
   },
   {
     selector: '[data-tut="togle"]',
-    content: <FormattedMessage id="tourPartial107" defaultMessage="With this switch, you can choose to receive funds after exchanging for an internal wallet swap.online or for another wallet" />,
+    content: <FormattedMessage id="tourPartial107" defaultMessage="Switch this button to receive funds after exchanging to the internal wallet on Swap.online or to another wallet" />,
   },
   {
     selector: '[data-tut="Exchange"]',
     content: <FormattedMessage
       id="tourPartial116"
-      defaultMessage="By clicking on this button you can link to the exchange from this page. This will be possible if the button changes its color to pink." />,
+      defaultMessage="Switch this button to see the direct URL of the exchange operation. This is possible when the button is pink." />,
   },
   {
     selector: '[data-tut="Orderbook"]',
     content: <FormattedMessage
       id="tourPartial128"
-      defaultMessage="By clicking on this button takes you to the page with offers for exchange, offers will be presented depending on the selected currencies. Also on the offer page you can create your own offer." />,
+      defaultMessage="Click on this button to see the page with offers for exchange. Offers will be presented for the particular currencies. Also you can create your own offer on the offer page." />,
   },
 ]
 

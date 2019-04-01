@@ -4820,10 +4820,7 @@
   },
   {
     "id": "tourPartial111",
-    "message": "This amount is the amount available for sale from your internal wallet swap.online, minus the miners' fee. By selling this amount, you can not worry about additional payments.",
-    "files": [
-      "shared/pages/PartialClosure/TourPartial/TourPartial.js"
-    ]
+    "message": "This amount is the amount available for sale from your internal wallet swap.online, minus the miners' fee. By selling this amount, you can not worry about additional payments."
   },
   {
     "id": "tourPartial116",
@@ -4841,10 +4838,7 @@
   },
   {
     "id": "tourPartial62",
-    "message": "This page is designed for easier and faster search for offers for exchange. Here you can choose a currency receipt purse, start an exchange with partial closure or go to the page with all available offers.",
-    "files": [
-      "shared/pages/PartialClosure/TourPartial/TourPartial.js"
-    ]
+    "message": "This page is designed for easier and faster search for offers for exchange. Here you can choose a currency receipt purse, start an exchange with partial closure or go to the page with all available offers."
   },
   {
     "id": "tourPartial94",
