@@ -21,7 +21,6 @@ import { Button, Toggle, Flip } from 'components/controls'
 import Input from 'components/forms/Input/Input'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
-import TourPartial from './TourPartial/TourPartial'
 import Referral from 'components/Footer/Referral/Referral'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
@@ -130,7 +129,6 @@ export default class PartialClosure extends Component {
     })
 
     this.state = {
-      isTourOpen: false,
       isToken: false,
       dynamicFee: 0,
       haveCurrency: sellToken,
@@ -151,11 +149,6 @@ export default class PartialClosure extends Component {
       customWallet: this.wallets[buyToken.toUpperCase()],
       extendedControls: false,
       estimatedFeeValues: {},
-    }
-
-    if (!localStorage.getItem(constants.localStorage.wasOnExchange)) {
-      localStorage.setItem(constants.localStorage.wasOnExchange, true)
-      this.state.isTourOpen = true
     }
 
     constants.coinsWithDynamicFee
@@ -706,7 +699,7 @@ export default class PartialClosure extends Component {
 
   render() {
     const { currencies, addSelectedItems, currenciesData, tokensData, intl: { locale, formatMessage } } = this.props
-    const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching, isTourOpen,
+    const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching,
       isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet, getUsd, haveUsd,
       maxBuyAmount, getAmount, goodRate, extendedControls, estimatedFeeValues, isToken, dynamicFee, haveAmount,
     } = this.state
@@ -767,7 +760,6 @@ export default class PartialClosure extends Component {
         {
           (!isWidget) && (
             <div styleName="TitleHolder">
-              {!isMobile && <TourPartial isTourOpen={isTourOpen} />}
               <PageHeadline subTitle={subTitle(sellTokenFullName, haveCurrency.toUpperCase(), buyTokenFullName, getCurrency.toUpperCase())} />
             </div>
           )

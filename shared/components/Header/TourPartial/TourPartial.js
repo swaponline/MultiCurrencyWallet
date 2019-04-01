@@ -1,20 +1,26 @@
 import React, { Component } from 'react'
 
-import styles from '../PartialClosure.scss'
-import CSSModules from 'react-css-modules'
-
 import { FormattedMessage } from 'react-intl'
 import Tour from 'reactour'
 
 
-@CSSModules(styles)
 export default class TourPartial extends Component {
 
-  constructor({ isTourOpen }) {
-    super()
-    this.state = {
-      shouldTourOpen: isTourOpen,
+  state = {
+    shouldTourOpen: false,
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.isTourOpen !== prevProps.isTourOpen) {
+      this.isShouldTourOpen()
     }
+  }
+
+  isShouldTourOpen = () => {
+
+    this.setState(() => ({
+      shouldTourOpen: true,
+    }))
   }
 
   closeTour = () => {
@@ -22,14 +28,13 @@ export default class TourPartial extends Component {
   }
 
   render() {
-    const { shouldTourOpen } = this.state
     const accentColor = '#510ed8'
 
     return (
       <Tour
         steps={tourSteps}
         onRequestClose={this.closeTour}
-        isOpen={shouldTourOpen}
+        isOpen={this.state.shouldTourOpen}
         maskClassName="mask"
         className="helper"
         accentColor={accentColor}

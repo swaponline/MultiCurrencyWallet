@@ -22,6 +22,7 @@ import NavMobile from './NavMobile/NavMobile'
 
 import LogoTooltip from 'components/Logo/LogoTooltip'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
+import TourPartial from './TourPartial/TourPartial'
 
 import Logo from 'components/Logo/Logo'
 import { relocalisedUrl } from 'helpers/locale'
@@ -79,6 +80,7 @@ export default class Header extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      isPartialTourOpen: false,
       path: false,
       isTourOpen: false,
       isShowingMore: false,
@@ -114,7 +116,13 @@ export default class Header extends Component {
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll)
 
-    this.startTourAndSignInModal()
+    const checker = setInterval(() => {
+      if (!localStorage.getItem(constants.localStorage.wasOnExchange) || !localStorage.getItem(constants.localStorage.firstStart)) {
+        this.startTourAndSignInModal()
+      } else {
+        clearInterval(checker)
+      }
+    }, 3000)
   }
 
   componentWillUnmount() {
@@ -122,6 +130,7 @@ export default class Header extends Component {
   }
 
   startTourAndSignInModal = async () => {
+
     if (!process.env.MAINNET || config.isWidget) {
       return
     }
@@ -142,16 +151,19 @@ export default class Header extends Component {
 
     if (isGuestLink) {
       localStorage.setItem(constants.localStorage.firstStart, true)
-
       return
     }
 
+
     const isStartPage = currentUrl.pathname === '/' || currentUrl.pathname === '/ru'
-    const canShowSubscribeAndTour = !localStorage.getItem(constants.localStorage.firstStart)
+    const isPartialPage = currentUrl.pathname.includes('/exchange/')
     let optionsForOenSignUpModal = {}
 
-    if (!canShowSubscribeAndTour) {
-      return
+    if (isPartialPage) {
+      localStorage.setItem(constants.localStorage.wasOnExchange, true)
+      this.setState(() => ({
+        isPartialTourOpen: true,
+      }))
     }
 
     if (isStartPage) {
@@ -216,7 +228,7 @@ export default class Header extends Component {
 
   render() {
 
-    const { sticky, menuItems, isTourOpen, isShowingMore, path } = this.state
+    const { sticky, menuItems, isTourOpen, isShowingMore, path, isPartialTourOpen } = this.state
     const { intl: { locale }, history, pathname, feeds, peer, isSigned, isInputActive } = this.props
 
     const accentColor = '#510ed8'
@@ -250,6 +262,7 @@ export default class Header extends Component {
           <LogoTooltip withLink />
           <Nav menu={menuItems} />
           <Logo withLink mobile />
+          <TourPartial isTourOpen={this.state.isPartialTourOpen} />
           <User
             openTour={this.openTour}
             path={path}
