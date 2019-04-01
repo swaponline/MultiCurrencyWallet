@@ -27,6 +27,7 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 
+import { isCoinAddress } from 'swap.app/util/typeforce'
 import config from 'app-config'
 import SwapApp, { util } from 'swap.app'
 
@@ -697,6 +698,16 @@ export default class PartialClosure extends Component {
     return true
   }
 
+  addressIsCorrect() {
+    const { customWallet, isToken, getCurrency } = this.state
+
+    if (isToken) {
+      return isCoinAddress.ETH(customWallet)
+    }
+
+    return isCoinAddress[getCurrency.toUpperCase()](customWallet)
+  }
+
   render() {
     const { currencies, addSelectedItems, currenciesData, tokensData, intl: { locale, formatMessage } } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching,
@@ -938,6 +949,13 @@ export default class PartialClosure extends Component {
                     </FieldLabel>
                     <div styleName="walletInput">
                       <Input required disabled={customWalletUse} valueLink={linked.customWallet} pattern="0-9a-zA-Z" placeholder="Enter the destination address" />
+                      {customWallet.length !== 0 && !this.addressIsCorrect() && (
+                        <div styleName="notCorrect">
+                          <FormattedMessage
+                            id="Partial955"
+                            defaultMessage="Address not correct" />
+                        </div>
+                      )}
                     </div>
                   </div>
                 </Fragment>

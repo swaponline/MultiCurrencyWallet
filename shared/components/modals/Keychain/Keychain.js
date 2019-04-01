@@ -111,9 +111,9 @@ export default class Keychain extends Component {
               <div>
                 <InlineLoader />
               </div>
-              <FormattedMessage id="Keychain27" defaultMessage="KeyChain is loading. Please wait." />
+              <FormattedMessage id="Keychain114" defaultMessage="KeyChain is loading. Please wait." />
               <Button styleName="button" brand fullWidth onClick={() => { actions.modals.close(name) }}>
-                <FormattedMessage id="Keychain25" defaultMessage="Back" />
+                <FormattedMessage id="Keychain116" defaultMessage="Back" />
               </Button>
             </div>
           )
@@ -127,10 +127,10 @@ export default class Keychain extends Component {
           <div>{`Currency: ${data.currency}`}</div>
           { !keychainInstalled && !keychainActivated &&
             <div>
-              <FormattedMessage id="Keychain19" defaultMessage="You need to install KeyChain to proceed" />
+              <FormattedMessage id="Keychain130" defaultMessage="You need to install KeyChain to proceed" />
               <a href={downloadUrl}>
                 <Button styleName="button" brand fullWidth onClick={() => actions.modals.close(name)}>
-                  <FormattedMessage id="Keychain23" defaultMessage="Download" />
+                  <FormattedMessage id="Keychain133" defaultMessage="Download" />
                 </Button>
               </a>
             </div>
@@ -138,10 +138,10 @@ export default class Keychain extends Component {
           { keychainInstalled && !keychainActivated &&
             <div>
               { positiveBalanceError ?
-                <FormattedMessage id="Keychain26" defaultMessage="Positive balance error" />
+                <FormattedMessage id="Keychain141" defaultMessage="Positive balance error" />
                 :
                 <div>
-                  <FormattedMessage id="Keychain19" defaultMessage="Would you like to protect your keys with KeyChain? Note that your address will be changed" />
+                  <FormattedMessage id="Keychain144" defaultMessage="Would you like to protect your keys with KeyChain? Note that your address will be changed" />
                   <Button
                     styleName="button"
                     brand
@@ -154,7 +154,7 @@ export default class Keychain extends Component {
                       }
                     }
                     }>
-                    <FormattedMessage id="Keychain24" defaultMessage="Confirm" />
+                    <FormattedMessage id="Keychain157" defaultMessage="Confirm" />
                   </Button>
                 </div>
               }
@@ -162,27 +162,27 @@ export default class Keychain extends Component {
           }
           { keychainInstalled && keychainActivated &&
             <div>
-              <FormattedMessage id="Keychain19" defaultMessage="KeyChain is activated. If you wish to deactivate KeyChain, note that your key will be replaced with a new one." />
+              <FormattedMessage id="Keychain1165" defaultMessage="KeyChain is activated. If you wish to deactivate KeyChain, note that your key will be replaced with a new one." />
               <Button styleName="button" brand fullWidth onClick={() => { this.deactivate(data.currency).then(() => actions.modals.close(name)) }}>
-                <FormattedMessage id="Keychain24" defaultMessage="Deactivate" />
+                <FormattedMessage id="Keychain167" defaultMessage="Deactivate" />
               </Button>
             </div>
           }
           { !keychainInstalled && keychainActivated &&
             <div>
-              <FormattedMessage id="Keychain19" defaultMessage="KeyChain is not installed but activated" />
+              <FormattedMessage id="Keychain173" defaultMessage="KeyChain is not installed but activated" />
               <Button styleName="button" brand fullWidth onClick={() => { this.deactivate(data.currency).then(() => actions.modals.close(name)) }}>
-                <FormattedMessage id="Keychain24" defaultMessage="Deactivate" />
+                <FormattedMessage id="Keychain175" defaultMessage="Deactivate" />
               </Button>
               <a href={downloadUrl}>
                 <Button styleName="button" brand fullWidth onClick={() => actions.modals.close(name)}>
-                  <FormattedMessage id="Keychain23" defaultMessage="Download" />
+                  <FormattedMessage id="Keychain179" defaultMessage="Download" />
                 </Button>
               </a>
             </div>
           }
           <Button styleName="button" brand fullWidth onClick={() => { actions.modals.close(name) }}>
-            <FormattedMessage id="Keychain25" defaultMessage="Back" />
+            <FormattedMessage id="Keychain185" defaultMessage="Back" />
           </Button>
         </div>
       </Modal>
