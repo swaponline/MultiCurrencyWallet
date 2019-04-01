@@ -22,6 +22,7 @@ import Input from 'components/forms/Input/Input'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import TourPartial from './TourPartial/TourPartial'
+import Referral from 'components/Footer/Referral/Referral'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { FormattedMessage, injectIntl } from 'react-intl'
@@ -71,6 +72,7 @@ const isWidgetBuild = config && config.isWidget
   tokensData: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
   decline: rememberedOrders.savedOrders,
   hiddenCoinsList,
+  userEthAddress: ethData.address,
 }))
 @CSSModules(styles, { allowMultiple: true })
 export default class PartialClosure extends Component {
@@ -321,12 +323,6 @@ export default class PartialClosure extends Component {
     }))
   }
 
-  goTodeclineSwap = () => {
-    const { intl: { locale } } = this.props
-    const { wayToDeclinedOrder } = this.state
-    this.props.history.push(localisedUrl(locale, `/${wayToDeclinedOrder}`))
-  }
-
   returnNeedCurrency = (sellToken, buyToken) => {
     const partialItems = Object.assign(getState().currencies.partialItems) // eslint-disable-line
 
@@ -351,7 +347,7 @@ export default class PartialClosure extends Component {
         }
       } else {
         this.setState(() => ({
-          haveCurrency: 'swap',
+          haveCurrency: (config && config.isWidget) ? config.erc20token : 'swap',
         }))
       }
     })
@@ -365,7 +361,7 @@ export default class PartialClosure extends Component {
       this.setState(() => ({
         isDeclinedOffer: false,
       }))
-    }, 5000)
+    }, 7 * 1000)
   }
 
   setNoOfferState = () => {
@@ -650,8 +646,10 @@ export default class PartialClosure extends Component {
   checkPair = () => {
     const { getCurrency, haveCurrency } = this.state
 
+    const noPairToken = (config && config.isWidget) ? config.erc20token : 'swap'
+
     const checkingValue = this.props.allCurrencyies.map(item => item.name).includes(haveCurrency.toUpperCase())
-      ? haveCurrency : 'swap'
+      ? haveCurrency : noPairToken
 
     const selected = actions.pairs.selectPairPartial(checkingValue)
     const check = selected.map(item => item.value).includes(getCurrency)
@@ -889,13 +887,13 @@ export default class PartialClosure extends Component {
               <p styleName="error" className={isWidget ? 'error' : ''} >
                 <FormattedMessage
                   id="PartialOfferCantProceed1"
-                  defaultMessage="Request rejected, possibly you have not complete another swap {br}{link}"
+                  defaultMessage="Request is declined. {link}"
                   values={{
-                    link:
-                      <a className="errorLink" role="button" onClick={() => this.goTodeclineSwap()}> {/* eslint-disable-line */}
-                        <FormattedMessage id="PartialOfferCantProceed1_1" defaultMessage="Check here" />
-                      </a>,
-                    br: <br />,
+                    link: (
+                      <a href="https://wiki.swap.online/faq/#swap-faq-5738" target="_blank" rel="noopener noreferrer">
+                        <FormattedMessage id="PartialOfferCantProceed1_1" defaultMessage="Why?" />
+                      </a>
+                    ),
                   }}
                 />
               </p>
@@ -1014,6 +1012,7 @@ export default class PartialClosure extends Component {
         {
           (!isWidget) && (
             <p styleName="inform">
+              <Referral address={this.props.userEthAddress} />
               <FormattedMessage
                 id="PartialClosure562"
                 defaultMessage="Swap.online is a decentralized hot wallet powered by Atomic swap technology.

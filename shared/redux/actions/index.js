@@ -15,6 +15,7 @@ import btc from './btc'
 // import bch from './bch'
 import ltc from './ltc'
 import eth from './eth'
+import keychain from './keychain'
 import eos from './eos'
 import tlos from './tlos'
 import token from './token'
@@ -52,6 +53,7 @@ export default {
   btc,
   usdt,
   eth,
+  keychain,
   token,
   nimiq,
   eos,

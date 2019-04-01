@@ -5,6 +5,8 @@ import web3 from 'helpers/web3'
 import reducers from 'redux/core/reducers'
 import config from 'app-config'
 import referral from './referral'
+import { web3Override } from 'keychain.js'
+import { pubToAddress } from 'ethereumjs-util'
 
 
 const login = (privateKey) => {
@@ -29,6 +31,30 @@ const login = (privateKey) => {
   console.info('Logged in with Ethereum', data)
 
   return data.privateKey
+}
+
+const loginWithKeychain = async () => {
+  const web3OverrideFunctions = web3Override(web3)
+  web3.eth.accounts.sign = web3OverrideFunctions.sign
+  web3.eth.accounts.signTransaction = web3OverrideFunctions.signTransaction
+
+  const selectedKey = await actions.keychain.login('ETH')
+  if (!selectedKey) { // user cancelled key selection or other error
+    return null
+  }
+  const data = { privateKey: selectedKey, address: `0x${pubToAddress(`0x${selectedKey}`).toString('hex')}` }
+
+  reducers.user.setAuthData({ name: 'ethData', data })
+  localStorage.setItem(constants.privateKeyNames.ethKeychainPublicKey, selectedKey)
+  localStorage.removeItem(constants.privateKeyNames.eth)
+
+  window.getEthAddress = () => data.address
+
+  console.info('Logged in with Ethereum', data)
+
+  await getBalance()
+  await getReputation()
+  return selectedKey
 }
 
 const getBalance = () => {
@@ -66,14 +92,12 @@ const getReputation = () =>
     })
   })
 
-
 const fetchBalance = (address) =>
   web3.eth.getBalance(address)
     .then(result => Number(web3.utils.fromWei(result)))
     .catch((e) => {
       console.log('Web3 doesn\'t work please again later ', e.error)
     })
-
 
 const getTransaction = () =>
   new Promise((resolve) => {
@@ -133,6 +157,7 @@ const send = ({ to, amount, gasPrice, gasLimit, speed } = {}) =>
 export default {
   send,
   login,
+  loginWithKeychain,
   getBalance,
   fetchBalance,
   getTransaction,

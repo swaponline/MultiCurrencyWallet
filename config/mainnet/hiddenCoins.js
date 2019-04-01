@@ -36,4 +36,5 @@ export default [
   'ABYSS',
   'XSAT',
   'HDP',
+  'SATX',
 ]

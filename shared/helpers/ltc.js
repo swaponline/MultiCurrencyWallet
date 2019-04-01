@@ -12,30 +12,45 @@ const networkCoininfo = process.env.MAINNET
   : coininfo.litecoin.test
 const network = networkCoininfo.toBitcoinJS()
 
-const estimateFeeValue = async ({ method = 'send', satoshi = false, speed } = {}) => {
-  const { user: { ltcData: { address } } } = getState()
+const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = 'send', fixed } = {}) => {
+  const defaultTxSize = constants.defaultFeeRates.ltc.size[method]
 
-  const feeRate = await estimateFeeRate({ speed })
-  const unspents = await actions.ltc.fetchUnspents(address)
-  const txIn = Number(unspents.length)
-  const txOut = 2
-
-  let txSize = constants.defaultFeeRates.ltc.size[method]
-
-  if (txIn !== 0 && method !== 'swap') {
-    txSize = txIn * 146 + txOut * 33 + txIn * 16
+  if (fixed) {
+    return defaultTxSize
   }
 
-  const feeValue = new BigNumber(feeRate)
-    .multipliedBy(txSize)
-    .div(1024)
-    .dp(0, BigNumber.ROUND_HALF_EVEN)
+  unspents = unspents || await actions.ltc.fetchUnspents(address)
 
-  if (satoshi) {
-    return feeValue.toString()
-  }
+  const txIn = unspents.length
 
-  return feeValue.multipliedBy(1e-8).toString()
+  const txSize = txIn > 0
+    ? txIn * 146 + txOut * 33 + (15 + txIn - txOut)
+    : defaultTxSize
+
+  return txSize
+}
+
+const estimateFeeValue = async ({ feeRate, inSatoshis, speed, address, txSize, fixed, method } = {}) => {
+  const DUST = 546
+  const { user: { ltcData } } = getState()
+
+  address = address || ltcData.address
+  txSize = txSize || await calculateTxSize({ address, speed, fixed, method })
+  feeRate = feeRate || await estimateFeeRate({ speed })
+
+  const calculatedFeeValue = BigNumber.maximum(
+    DUST,
+    BigNumber(feeRate)
+      .multipliedBy(txSize)
+      .div(1024)
+      .dp(0, BigNumber.ROUND_HALF_EVEN),
+  )
+
+  const finalFeeValue = inSatoshis
+    ? calculatedFeeValue.toString()
+    : calculatedFeeValue.multipliedBy(1e-8).toString()
+
+  return finalFeeValue
 }
 
 const estimateFeeRate = async ({ speed = 'fast' } = {}) => {
@@ -63,14 +78,15 @@ const estimateFeeRate = async ({ speed = 'fast' } = {}) => {
 
   const apiSpeed = apiSpeeds[speed] || apiSpeed.normal
 
-  const apiRate = new BigNumber(apiResult[apiSpeed])
+  const apiRate = BigNumber(apiResult[apiSpeed])
 
-  return apiRate.isGreaterThanOrEqualTo(defaultRate[speed])
+  return apiRate.isGreaterThanOrEqualTo(defaultRate.slow)
     ? apiRate.toString()
     : defaultRate[speed]
 }
 
 export default {
+  calculateTxSize,
   estimateFeeValue,
   estimateFeeRate,
   network,
