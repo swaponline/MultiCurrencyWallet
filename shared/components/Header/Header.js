@@ -80,6 +80,7 @@ export default class Header extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      optionsForOenSignUpModal: {},
       isPartialTourOpen: false,
       path: false,
       isTourOpen: false,
@@ -117,61 +118,75 @@ export default class Header extends Component {
     window.addEventListener('scroll', this.handleScroll)
 
     const checker = setInterval(() => {
-      if (!localStorage.getItem(constants.localStorage.wasOnExchange) || !localStorage.getItem(constants.localStorage.firstStart)) {
-        this.startTourAndSignInModal()
-      } else {
-        clearInterval(checker)
+      switch (true) {
+        case !localStorage.getItem(constants.localStorage.wasOnExchange):
+        case !localStorage.getItem(constants.localStorage.wasOnWallet):
+          this.startTourAndSignInModal()
+          break
+        default:
+          clearInterval(checker)
       }
     }, 3000)
   }
 
   componentWillUnmount() {
     window.removeEventListener('scroll', this.handleScroll)
+    this.startTourAndSignInModal()
+
   }
 
-  startTourAndSignInModal = async () => {
-
-    if (!process.env.MAINNET || config.isWidget) {
-      return
-    }
+  startTourAndSignInModal = () => {
+    // if (!process.env.MAINNET || config.isWidget) {
+    //   return
+    // }
 
     const currentUrl = this.props.history.location
-    const isRefLink = (currentUrl.search
-      && currentUrl.search.includes('?promo=')
-      && !localStorage.getItem(constants.localStorage.firstStart))
-
-    if (isRefLink) {
-      const refEthAddress = currentUrl.search.split('?promo=')[1].split('&')[0]
-
-      await firebase.submitUserData('usersBalance', { Referrer: refEthAddress })
-    }
-
     const isGuestLink = !(!currentUrl.hash
       || currentUrl.hash.slice(1) !== 'guest')
 
     if (isGuestLink) {
-      localStorage.setItem(constants.localStorage.firstStart, true)
+      localStorage.setItem(constants.localStorage.wasOnWallet, true)
+      localStorage.setItem(constants.localStorage.wasOnExchange, true)
+
       return
     }
 
-
     const isStartPage = currentUrl.pathname === '/' || currentUrl.pathname === '/ru'
     const isPartialPage = currentUrl.pathname.includes('/exchange/')
-    let optionsForOenSignUpModal = {}
+    const didOpenSignUpModal = localStorage.getItem(constants.localStorage.didOpenSignUpModal)
+    const wasOnWallet = localStorage.getItem(constants.localStorage.wasOnWallet)
+    const wasOnExchange = localStorage.getItem(constants.localStorage.wasOnExchange)
 
-    if (isPartialPage) {
-      localStorage.setItem(constants.localStorage.wasOnExchange, true)
-      this.setState(() => ({
-        isPartialTourOpen: true,
-      }))
+    switch (true) {
+      case isStartPage && !wasOnWallet:
+        this.startTourInNeed(didOpenSignUpModal, this.openWalletTour)
+        localStorage.setItem(constants.localStorage.wasOnWallet, true)
+        break
+      case isPartialPage && !wasOnExchange:
+        this.startTourInNeed(didOpenSignUpModal, this.openExchangeTour)
+        localStorage.setItem(constants.localStorage.wasOnExchange, true)
+        break
+      default: return
     }
 
-    if (isStartPage) {
-      optionsForOenSignUpModal = { onClose: this.openTour }
+    if (!didOpenSignUpModal) {
+      this.openSignUpModal(this.state.optionsForOenSignUpModal)
     }
+  }
 
-    this.openSignUpModal(optionsForOenSignUpModal)
-    localStorage.setItem(constants.localStorage.firstStart, true)
+  startTourInNeed = (didOpenSignUpModal, inNeedTourStarter) => {
+    console.warn(inNeedTourStarter)
+    if (!didOpenSignUpModal) {
+      this.optionsForOenSignUpModal(inNeedTourStarter)
+    } else {
+      inNeedTourStarter()
+    }
+  }
+
+  optionsForOenSignUpModal(inNeedTourStarter) {
+    this.setState(() => ({
+      optionsForOenSignUpModal: { onClose: inNeedTourStarter },
+    }))
   }
 
   declineRequest = (orderId, participantPeer) => {
@@ -219,11 +234,18 @@ export default class Header extends Component {
   }
 
   openSignUpModal = (options) => {
+    localStorage.setItem(constants.localStorage.didOpenSignUpModal, true)
     actions.modals.open(constants.modals.SignUp, options)
   }
 
-  openTour = () => {
+  openWalletTour = () => {
     this.setState({ isTourOpen: true })
+    console.warn('work!')
+
+  }
+
+  openExchangeTour = () => {
+    this.setState({ isPartialTourOpen: true })
   }
 
   render() {
@@ -264,7 +286,7 @@ export default class Header extends Component {
           <Logo withLink mobile />
           <TourPartial isTourOpen={this.state.isPartialTourOpen} />
           <User
-            openTour={this.openTour}
+            openTour={this.openWalletTour}
             path={path}
             acceptRequest={this.acceptRequest}
             declineRequest={this.declineRequest}
