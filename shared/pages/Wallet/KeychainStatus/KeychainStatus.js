@@ -18,6 +18,9 @@ const handleDeactivateKeychain = (event, currency) => {
 }
 
 const KeychainStatus = ({ currency }) => {
+  if (true) {
+    return null
+  }
   const isMac = navigator.platform.indexOf('Mac') > -1
   if (!isMac) {
     return null

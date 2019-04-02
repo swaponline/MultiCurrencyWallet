@@ -15,10 +15,10 @@ import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 // TODO to split data and view this component
 
 const SelectGroup = ({ dynamicFee, isToken, extendedControls, selectedValue, onSelect,
-  currencies, usd, placeholder, label, disabled, className, inputValueLink, tooltip, balance,
+  currencies, usd, placeholder, label, disabled, className, inputValueLink, tooltip, balance, dataTut,
   id, idFee, tooltipAboutFee, haveAmount, ...props
 }) => (
-  <div>
+  <div data-tut={dataTut}>
     <FieldLabel inRow>
       <strong>
         {label}

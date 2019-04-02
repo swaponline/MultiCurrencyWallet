@@ -460,6 +460,13 @@
     ]
   },
   {
+    "id": "WithdrawModal11212",
+    "message": "Переводим ...",
+    "files": [
+      "shared/components/modals/WithdrawModal/WithdrawModal.js"
+    ]
+  },
+  {
     "id": "Withdrow108",
     "message": "Сумма должна быть меньше вашего баланса на комиссию манеров "
   },
@@ -2948,7 +2955,7 @@
   },
   {
     "id": "SignUpModal004",
-    "message": "Вы будете получать уведомления об обновлениях с вашей учетной записью (ордера, транзакции){br}и ежемесячные обновления о нашем проекте",
+    "message": "Вы будете получать уведомления об обновлениях с вашей учетной записью (ордера, транзакции){br}и ежемесячные обновления о нашем проекте{br}{br}Подписка активирует подарок для теста (вы получите криптовалюту которую сразу можно поменять на биткоин)",
     "files": [
       "shared/components/modals/SignUpModal/SignUpModal.js"
     ]
@@ -4127,6 +4134,13 @@
     ]
   },
   {
+    "id": "ReferralLinks1",
+    "message": "Отправьте или расшарьте ссылку на эту страницу, каждый пользователь который придет по вашей ссылке получит для теста от 0 до 10 SWAP токенов. А вы будете получать бонус в SWAP токенах за его каждый успешный свап (в т.ч. за продажу бонусных токенов)",
+    "files": [
+      "shared/components/Footer/Referral/Referral.js"
+    ]
+  },
+  {
     "id": "swapJS341",
     "message": "Показать bitcoin script",
     "files": [
@@ -4819,14 +4833,14 @@
     "id": "swapprogressDONTLEAVE",
     "message": "Пожалуйста, не уходите с этой страницы ",
     "files": [
-      "shared/pages/Swap/Swap.js"
+      "shared/pages/Swap/SwapProgress/SwapProgressText/PleaseDontLeaveWrapper.js"
     ]
   },
   {
     "id": "swapjsdontleave",
     "message": "В каждом шаге при обмене требуется подпись приватными ключами, которые знает только ваш браузер.",
     "files": [
-      "shared/pages/Swap/Swap.js"
+      "shared/pages/Swap/SwapProgress/SwapProgressText/PleaseDontLeaveWrapper.js"
     ]
   },
   {
@@ -4874,10 +4888,7 @@
   },
   {
     "id": "ErrorNotAvailable",
-    "message": "Доступный баланс для обмена {available}",
-    "files": [
-      "shared/pages/PartialClosure/PartialClosure.js"
-    ]
+    "message": "Доступный баланс для обмена {available}"
   },
   {
     "id": "select75",
@@ -4898,6 +4909,52 @@
     "message": "ВСЁ",
     "files": [
       "shared/components/modals/OfferModal/AddOffer/Select/Select.js"
+    ]
+  },
+  {
+    "id": "tourPartial103",
+    "message": "Здесь вы можете увидеть статус поиска предложений по обмену. При загрузке будет отображаться «Поиск предложений ...». Когда ордер найден, отобразится курс обмена",
+    "files": [
+      "shared/pages/PartialClosure/TourPartial/TourPartial.js"
+    ]
+  },
+  {
+    "id": "tourPartial107",
+    "message": "Переключите этот ползунок, чтобы выбрать получить средства после обмена на внутренний кошелек Swap.online или на другой кошелек",
+    "files": [
+      "shared/pages/PartialClosure/TourPartial/TourPartial.js"
+    ]
+  },
+  {
+    "id": "tourPartial116",
+    "message": "Нажмите эту кнопку, чтобы увидеть прямой URL операции обмена. Это возможно, когда кнопка розовая.",
+    "files": [
+      "shared/pages/PartialClosure/TourPartial/TourPartial.js"
+    ]
+  },
+  {
+    "id": "tourPartial128",
+    "message": "Нажмите на эту кнопку, чтобы увидеть страницу с предложениями для обмена. Предложения будут представлены для выбранных валют. Также вы можете создать собственное предложение на странице предложений.",
+    "files": [
+      "shared/pages/PartialClosure/TourPartial/TourPartial.js"
+    ]
+  },
+  {
+    "id": "tourPartial62",
+    "message": "Эта страница предназначена для более простого и быстрого поиска предложений на обмен. Здесь вы можете выбрать кошелек для получения валюты, начать обмен с частичным закрытием или перейти на страницу со всеми доступными предложениями."
+  },
+  {
+    "id": "tourPartial94",
+    "message": "Пожалуйста, введите сумму, которую вы хотите продать, и выберите валюту для продажи. Вы также можете продать валюту с внешнего кошелька.",
+    "files": [
+      "shared/pages/PartialClosure/TourPartial/TourPartial.js"
+    ]
+  },
+  {
+    "id": "tourPartial99",
+    "message": "Пожалуйста, введите сумму, которую вы хотели бы купить, и выберите валюту для покупки.",
+    "files": [
+      "shared/pages/PartialClosure/TourPartial/TourPartial.js"
     ]
   }
 ]

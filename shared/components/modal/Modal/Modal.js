@@ -67,7 +67,7 @@ export default class Modal extends Component {
 
   render() {
     const { className, whiteLogo, showLogo, title, showCloseButton, disableClose, children,
-      titleUppercase, name, shouldCenterHorizontally, shouldCenterVertically, styleName, data } = this.props
+      titleUppercase, name, shouldCenterHorizontally, shouldCenterVertically, styleName, delayClose, data } = this.props
 
     window.addEventListener('popstate', function (e) { actions.modals.close(name) }) // eslint-disable-line
 
@@ -88,7 +88,7 @@ export default class Modal extends Component {
                   <div styleName={titleStyleName} role="title">{title}</div>
                   {
                     showCloseButton && !disableClose && (
-                      <CloseIcon styleName="closeButton" onClick={this.close} data-testid="modalCloseIcon" />
+                      <CloseIcon styleName={`closeButton${delayClose ? ' delayClose' : ''}`} onClick={this.close} data-testid="modalCloseIcon" />
                     )
                   }
                 </WidthContainer>

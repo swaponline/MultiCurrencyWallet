@@ -5,8 +5,8 @@ import CSSModules from 'react-css-modules'
 import styles from './Toggle.scss'
 
 
-const Toggle = ({ checked, onChange }) => (
-  <label styleName="Switch">
+const Toggle = ({ checked, onChange, dataTut }) => (
+  <label styleName="Switch" data-tut={dataTut} >
     <input type="checkbox" onClick={({ target }) => onChange(target.checked)} defaultChecked={checked} />
     <span /> {/* need for button */}
   </label>

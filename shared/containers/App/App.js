@@ -114,6 +114,10 @@ export default class App extends React.Component {
     const isCalledFromIframe = window.location !== window.parent.location
     const isWidgetBuild = config && config.isWidget
 
+    if (process.env.MAINNET) {
+      firebase.setUserLastOnline()
+    }
+
     if (isWidgetBuild && localStorage.getItem(constants.localStorage.didWidgetsDataSend) !== 'true') {
       firebase.submitUserDataWidget('usersData')
       localStorage.setItem(constants.localStorage.didWidgetsDataSend, true)

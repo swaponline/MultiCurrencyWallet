@@ -119,7 +119,7 @@ export default class SignUpModal extends React.Component {
     const linked = Link.all(this, 'email')
 
     return (
-      <Modal name={name} title={intl.formatMessage(title.signUpModal)} data={data}>
+      <Modal name={name} title={intl.formatMessage(title.signUpModal)} data={data} delayClose>
         {
           isSigned || isEmailError ? (
             <Fragment>
