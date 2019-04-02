@@ -61,7 +61,7 @@ const ThirdStep = ({ step, swap, sixth, seventh, eighth }) => {
         <Tooltip id="thirdStep">
           <FormattedMessage
             id="thirdStep"
-            defaultMessage="The funds from the contract will go to {br}your wallet and the wallet of the second participant {br}in the transaction" 
+            defaultMessage="Оn this step crypto is transferred from {br}the contract to your wallet and to the wallet {br} of your counterparty {br}" 
             values={{
               br: <br />
             }}

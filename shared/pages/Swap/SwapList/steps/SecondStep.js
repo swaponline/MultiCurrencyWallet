@@ -62,7 +62,7 @@ const SecondStep = ({ step, swap, fifth, fourth, second, sixth }) => {
         <Tooltip id="SecondStep">
           <FormattedMessage
             id="SecondStep"
-            defaultMessage="These transactions were not sent to your wallet {br}address but to the swap contract script"
+            defaultMessage="On this step, the crypto goes not to your wallet {br}or to the wallet of your counterparty but directly to the swap contract"
             values={{
               br: <br />
             }}
