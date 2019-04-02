@@ -175,7 +175,6 @@ export default class Header extends Component {
   }
 
   startTourInNeed = (didOpenSignUpModal, inNeedTourStarter) => {
-    console.warn(inNeedTourStarter)
     if (!didOpenSignUpModal) {
       this.optionsForOenSignUpModal(inNeedTourStarter)
     } else {
