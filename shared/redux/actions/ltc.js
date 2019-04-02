@@ -82,6 +82,21 @@ const getTransaction = () =>
 
     const url = `${api.getApiServer('ltc')}/txs/?address=${address}`
 
+    function getValue(item) {
+      if (item.vin.filter(item => item.addr === address).length
+          === item.vin.length
+          && item.vout.filter(item => item.scriptPubKey.addresses[0] === address).length
+          === item.vout.length) {
+        return (parseFloat(item.valueIn) - parseFloat(item.valueOut)).toFixed(8)  // eslint-disable-next-line
+      } else {
+        return item.vin.filter(item => item.addr === address).length > 0
+          ? item.vout.filter(item => item.scriptPubKey.addresses[0] !== address)
+            .reduce((sum, current) =>  sum + parseFloat(current.value), 0)
+          : item.vout.filter(item => item.scriptPubKey.addresses[0] === address)
+            .reduce((sum, current) =>  sum + parseFloat(current.value), 0)
+      }
+    }
+
     return request.get(url)
       .then((res) => {
         const transactions = res.txs.map((item) => {

@@ -12,6 +12,7 @@ import { Redirect } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
+import { isMobile } from 'react-device-detect'
 
 import SelectGroup from './SelectGroup/SelectGroup'
 import Select from 'components/modals/OfferModal/AddOffer/Select/Select'
@@ -21,7 +22,6 @@ import Input from 'components/forms/Input/Input'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import Referral from 'components/Footer/Referral/Referral'
-
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { FormattedMessage, injectIntl } from 'react-intl'
@@ -151,6 +151,7 @@ export default class PartialClosure extends Component {
       extendedControls: false,
       estimatedFeeValues: {},
     }
+
     constants.coinsWithDynamicFee
       .forEach(item => this.state.estimatedFeeValues[item] = constants.minAmountOffer[item])
 
@@ -219,7 +220,6 @@ export default class PartialClosure extends Component {
         isToken,
       }))
     }
-
   }
 
   getUsdBalance = async () => {
@@ -783,6 +783,7 @@ export default class PartialClosure extends Component {
           }
           <div styleName="block" className={isWidget ? 'block' : ''} >
             <SelectGroup
+              dataTut="have"
               balance={balance}
               extendedControls={extendedControls}
               inputValueLink={linked.haveAmount.pipe(this.setAmount)}
@@ -838,6 +839,7 @@ export default class PartialClosure extends Component {
               )
             }
             <SelectGroup
+              dataTut="get"
               inputValueLink={linked.getAmount}
               selectedValue={getCurrency}
               onSelect={this.handleSetGetValue}
@@ -851,7 +853,7 @@ export default class PartialClosure extends Component {
             />
             {
               (isSearching || (isNonOffers && maxAmount === 0)) && (
-                <span className={isWidget ? 'searching' : ''}>
+                <span className={isWidget ? 'searching' : ''} data-tut="status">
                   <FormattedMessage id="PartialPriceSearch" defaultMessage="Searching orders..." />
                   <div styleName="loaderHolder">
                     <div styleName="additionalLoaderHolder">
@@ -929,7 +931,7 @@ export default class PartialClosure extends Component {
             {
               (this.customWalletAllowed() && !isWidget) && (
                 <Fragment>
-                  <div styleName="walletToggle walletToggle_site">
+                  <div styleName="walletToggle walletToggle_site" data-tut="togle">
                     <Toggle checked={!customWalletUse} onChange={this.handleCustomWalletUse} />
                     {
                       !isWidget && (
@@ -977,7 +979,7 @@ export default class PartialClosure extends Component {
                     <Input required disabled={customWalletUse} valueLink={linked.customWallet} pattern="0-9a-zA-Z" placeholder="Enter the destination address" />
                   </div>
                   <div styleName="walletToggle">
-                    <Toggle checked={customWalletUse} onChange={this.handleCustomWalletUse} />
+                    <Toggle dataTut="togle" checked={customWalletUse} onChange={this.handleCustomWalletUse} />
                     {
                       isWidgetBuild && (
                         <FormattedMessage id="PartialUseInternalWallet" defaultMessage="Use internal wallet" />
@@ -993,10 +995,10 @@ export default class PartialClosure extends Component {
               )
             }
             <div styleName="rowBtn" className={isWidget ? 'rowBtn' : ''}>
-              <Button styleName="button" brand onClick={this.handleGoTrade} disabled={!canDoOrder}>
+              <Button styleName="button" brand onClick={this.handleGoTrade} dataTut="Exchange" disabled={!canDoOrder}>
                 <FormattedMessage id="partial541" defaultMessage="Exchange now" />
               </Button>
-              <Button styleName="button" gray onClick={() => this.handlePush(isWidgetLink)} >
+              <Button styleName="button" gray dataTut="Orderbook" onClick={() => this.handlePush(isWidgetLink)} >
                 <FormattedMessage id="partial544" defaultMessage="Orderbook" />
               </Button>
             </div>
