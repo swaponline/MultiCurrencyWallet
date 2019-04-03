@@ -63,7 +63,7 @@ const estimateFeeRate = async ({ speed = 'fast' } = {}) => {
   let apiResult
 
   try {
-    apiResult = await request.get(link)
+    apiResult = await request.get(link, { cacheResponse: 60000 })
   } catch (err) {
     console.error(`EstimateFeeRate: ${err.message}`)
     return defaultRate[speed]

@@ -25,7 +25,7 @@ const estimateGasPrice = async ({ speed = 'fast' } = {}) => {
   let apiResult
 
   try {
-    apiResult = await request.get(link)
+    apiResult = await request.get(link, { cacheResponse: 60000 })
   } catch (err) {
     console.error(`EstimateGasPrice: ${err.message}`)
     return defaultPrice[speed]
