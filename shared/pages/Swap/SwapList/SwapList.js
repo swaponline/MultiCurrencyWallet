@@ -49,9 +49,9 @@ export default class SwapList extends Component {
         <ThirdStep step={flow.step} windowWidth={windowWidth} swap={swap} sixth={sixth} seventh={seventh} eighth={eighth} />
         {!isMobile && <FourthStep step={flow.step} swap={swap} seventh={seventh} eighth={eighth} />}
         {!this.props.enoughBalance && flow.step === 4 &&
-          <h1 /* eslint-disable-line */ onClick={onClickCancelSwap} styleName="cancelSwap">
+          <button /* eslint-disable-line */ onClick={onClickCancelSwap} styleName="cancelSwap">
             <FormattedMessage id="swapjs290" defaultMessage="Cancel swap" />
-          </h1>
+          </button>
         }
       </div>
     )

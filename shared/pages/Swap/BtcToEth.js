@@ -65,7 +65,7 @@ export default class BtcToEth extends Component {
     clearInterval(this.timer)
   }
 
-  updateWindowDimensions() {
+  updateWindowDimensions = () => {
     this.setState({ windowWidth: window.innerWidth })
   }
 
@@ -181,8 +181,8 @@ export default class BtcToEth extends Component {
             )
           }
           <SwapList enoughBalance={enoughBalance} flow={flow} onClickCancelSwap={onClickCancelSwap} windowWidth={windowWidth} name={swap.sellCurrency} swap={swap} />
+          <div styleName="swapContainerInfo">{children}</div>
         </div>
-        <div styleName="swapContainerInfo">{children}</div>
       </div>
     )
   }

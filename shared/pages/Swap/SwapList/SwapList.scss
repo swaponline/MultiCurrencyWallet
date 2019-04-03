@@ -17,12 +17,19 @@
 }
 
 .cancelSwap {
-  color: red;
-  text-decoration: underline;
   position: relative;
   font-size: 17px;
   cursor: pointer;
-  margin-left: 50px;
+  color: #FD6B65;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 20px;
+  padding: 0 1.6em;
+  text-align: center;
+  display: inline-block;
+  text-decoration: underline;
+  padding: 0;
+  margin-top: 20px;
 }
 
 .stepList {
@@ -97,25 +104,48 @@
 
 
 @include media-tablet {
+  .stepList {
+    margin-left: 0;
+    order: 4;
+  }
   .stepList.isMobile  {
     margin-left: 0px;
     margin-bottom: 25px;
-    align-items: flex-end;
-    margin-top: 10px;
+    align-items: baseline;
     margin-bottom: 5px;
+    margin-top: -20px;
     display: flex;
-    width: 535px;
+    width: 100%;
+    max-width: 600px;
+    order: 1;
     justify-content: space-between;
-
   }
 }
 
 @include media-mobile {
+  .stepList {
+    margin-left: 0;
+    order: 4;
+  }
   .stepList.isMobile {
     padding-top: 20px;
     margin: 0;
     position: absolute;
     top: -15px;
+    width: 100%;
+    order: 1;
+    .cancelSwap {
+      font-size: 15px;
+      height: 30px;
+      line-height: 30px;
+      border-bottom: 1px solid;
+      position: absolute;
+      right: 0;
+      padding-bottom: 3px;
+      top: -5px;
+      text-decoration: none;
+      border-radius: 0;
+    }
   }
   .stepText {
     font-size: 12px;

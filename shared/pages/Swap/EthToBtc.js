@@ -174,8 +174,8 @@ export default class EthToBtc extends Component {
             )
           }
           <SwapList enoughBalance={enoughBalance} flow={flow} name={swap.sellCurrency} windowWidth={windowWidth} onClickCancelSwap={onClickCancelSwap} swap={swap} />
+          <div styleName="swapContainerInfo">{children}</div>
         </div>
-        <div styleName="swapContainerInfo">{children}</div>
       </div>
     )
   }

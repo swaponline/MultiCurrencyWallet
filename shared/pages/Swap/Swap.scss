@@ -16,7 +16,6 @@
 
 .swapDepositWindow {
   color: #000;
-  padding-bottom: 20px;
 }
 
 .unfinishedHref {
@@ -32,7 +31,7 @@
   width: 600px;
   align-items: center;
   justify-content: space-around;
-  margin-top: 20px;
+  margin-top: 60px;
 }
 
 .linkText {
@@ -114,17 +113,15 @@
   color: $color-f-error;
 }
 
-@include media-tablet {
-  .swap {
-    padding-top: 0;
-  }
-}
-
 @include media-mobile {
   .loaderHolder {
     display: inline-block;
     margin-left: 5px;
     margin-top: 2px;
+  }
+  .included {
+    margin-left: 0;
+    font-size: 11px;
   }
 }
 
@@ -232,6 +229,7 @@
 @include media-mobile {
   .btcMessage {
     font-size: 11.2px;;
+    width: 60%;
   }
 }
 
@@ -334,10 +332,12 @@
 @include media-mobile {
   .qr {
     a {
-      font-size: 10px;
+      font-size: 9px;
       height: 30px;
       width: 100%;
+      display: block;
       padding: 10px;
+      position: static;
     }
     button {
       display: none;
@@ -457,13 +457,33 @@
   font-size: 14px;
 }
 
-@include media-tablet {
-  .swapContainer {
-    flex-direction: column-reverse;
+@media screen and (max-width: 690px) {
+  .topUpLink {
+    width: 100%;
+    .top {
+      width: 100%;
+    }
   }
   .swapContainerInfo {
-    margin: auto;
-    margin-top: 20px;
+    width: 100%;
+  }
+  .swapDepositWindow {
+    width: 100%;
+  }
+  .linkAddress {
+    font-size: 14px;
+  }
+  .qrImg {
+    right: -23px;
+  }
+}
+
+@include media-tablet {
+  .swapDepositWindow {
+    order: 2;
+  }
+  .swapContainerInfo {
+    order: 3;
   }
   .showingScript {
     left: -30px;
@@ -482,6 +502,11 @@
     width: 100%;
     max-width: 300px;
     margin: auto;
+    order: 1;
+  }
+  .swapContainer {
+    flex-direction: column;
+    align-items: baseline;
   }
 }
 
@@ -490,14 +515,26 @@
     font-size: 9px;
     left: 15px;
   }
+  .swapInfo {
+    order: 1;
+  }
+  .swapDepositWindow {
+    order: 2;
+  }
   .swapContainerInfo {
-    width: 100vw;
-    margin-top: 115px;
+    order: 3;
   }
   .transaction{
       font-size: 8.5px;
     a {
       font-size: 8.5px;
+    }
+  }
+  .linkTransactions {
+    display: block;
+    margin-left: 0px;
+    a {
+      font-size: 11px;
     }
   }
   .swap {
@@ -523,6 +560,10 @@
     padding: 7px 20px;
     width: 100%;
   }
+  .linkText {
+    font-size: 11px;
+    margin-top: 20px;
+  }
   .qrImg {
     position: absolute;
     right: 10px;
@@ -537,13 +578,15 @@
     display: block;
     width: 100%;
     font-size: 11px;
-    padding: 0;
     margin: 0;
     margin-top: 80px;
   }
   .swapContainer {
     margin-bottom: -100px;
     align-items: baseline;
+  }
+  .swapMobile {
+    margin-top: 0;
   }
 }
 
