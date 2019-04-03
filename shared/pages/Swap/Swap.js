@@ -8,6 +8,7 @@ import styles from './Swap.scss'
 
 import { connect } from 'redaction'
 import helpers, { links, constants, request } from 'helpers'
+import { isMobile } from 'react-device-detect'
 import actions from 'redux/actions'
 import { Link } from 'react-router-dom'
 
@@ -422,7 +423,7 @@ export default class SwapComponent extends PureComponent {
               </h3>
             </div>
           </div> :
-          <div styleName="swap">
+          <div styleName={isMobile ? 'swap swapMobile' : 'swap'}>
             <SwapComponent
               tokenItems={tokenItems}
               depositWindow={depositWindow}

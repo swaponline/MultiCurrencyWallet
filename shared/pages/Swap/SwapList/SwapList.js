@@ -39,19 +39,19 @@ export default class SwapList extends Component {
     }
   }
   render() {
-    const { swap, flow, enoughBalance, onClickCancelSwap } = this.props
+    const { swap, flow, enoughBalance, onClickCancelSwap, windowWidth } = this.props
     const { first, second, fourth, fifth, sixth, seventh, eighth } = this.state
 
     return (
       <div styleName={isMobile ? 'stepList isMobile' : 'stepList'}>
-        <FirstStep step={flow.step} first={first} second={second} />
-        <SecondStep step={flow.step} swap={swap} second={second} fifth={fifth} fourth={fourth} sixth={sixth} />
-        <ThirdStep step={flow.step} swap={swap} sixth={sixth} seventh={seventh} eighth={eighth} />
-        <FourthStep step={flow.step} swap={swap} seventh={seventh} eighth={eighth} />
+        {!isMobile && <FirstStep step={flow.step} first={first} second={second} />}
+        <SecondStep step={flow.step} swap={swap} second={second} windowWidth={windowWidth} fifth={fifth} fourth={fourth} sixth={sixth} />
+        <ThirdStep step={flow.step} windowWidth={windowWidth} swap={swap} sixth={sixth} seventh={seventh} eighth={eighth} />
+        {!isMobile && <FourthStep step={flow.step} swap={swap} seventh={seventh} eighth={eighth} />}
         {!this.props.enoughBalance && flow.step === 4 &&
-          <h1 /* eslint-disable-line */ onClick={onClickCancelSwap} styleName="cancelSwap">
+          <button /* eslint-disable-line */ onClick={onClickCancelSwap} styleName="cancelSwap">
             <FormattedMessage id="swapjs290" defaultMessage="Cancel swap" />
-          </h1>
+          </button>
         }
       </div>
     )

@@ -1,6 +1,6 @@
 const getPaddingValue = ({ step }) => {
   if (step <= 2) {
-    const getPaddingValue = 60 * step
+    const getPaddingValue = 120
     return getPaddingValue
   }
   if (step > 2 && step <= 5) {
@@ -8,11 +8,11 @@ const getPaddingValue = ({ step }) => {
     return getPaddingValue
   }
   if (step >= 6 && step < 7) {
-    const getPaddingValue = 180
+    const getPaddingValue = 120
     return getPaddingValue
   }
   if (step >= 7) {
-    const getPaddingValue = 210
+    const getPaddingValue = 120
     return getPaddingValue
   }
 }
