@@ -64,7 +64,7 @@ const SecondStep = ({ step, swap, fifth, fourth, second, sixth }) => {
             id="SecondStep"
             defaultMessage="On this step, the crypto goes not to your wallet {br}or to the wallet of your counterparty but directly to the swap contract"
             values={{
-              br: <br />
+              br: <br />,
             }}
           />
         </Tooltip >
