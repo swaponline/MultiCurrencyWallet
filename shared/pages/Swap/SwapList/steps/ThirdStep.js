@@ -5,6 +5,7 @@ import styles from '../SwapList.scss'
 
 import config from 'app-config'
 import { isMobile } from 'react-device-detect'
+import Tooltip from 'components/ui/Tooltip/Tooltip'
 
 import { FormattedMessage } from 'react-intl'
 
@@ -56,6 +57,17 @@ const ThirdStep = ({ step, swap, sixth, seventh, eighth }) => {
           </a>
         </strong>
       )}
+      <div styleName="tooltip">
+        <Tooltip id="thirdStep">
+          <FormattedMessage
+            id="thirdStep"
+            defaultMessage="Оn this step crypto is transferred from {br}the contract to your wallet and to the wallet {br} of your counterparty {br}"
+            values={{
+              br: <br />,
+            }}
+          />
+        </Tooltip >
+      </div>
     </div>
   )
 }
