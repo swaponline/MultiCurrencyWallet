@@ -53,6 +53,7 @@ const subTitle = (sell, sellTicker, buy, buyTicker) => (
 )
 
 const isWidgetBuild = config && config.isWidget
+const bannedPeers = {} // Пиры, которые отклонили запрос на свап, они будут понижены в выдаче
 
 @injectIntl
 @connect(({
@@ -79,6 +80,20 @@ export default class PartialClosure extends Component {
 
   static defaultProps = {
     orders: [],
+  }
+
+  isPeerBanned(peerID) {
+    if (bannedPeers[peerID]
+      && (bannedPeers[peerID] > Math.floor(new Date().getTime() / 1000))
+    ) {
+      return true
+    }
+    return false
+  }
+
+  banPeer(peerID) {
+    const bannedPeersTimeout = 180 // В секундах - три минуты
+    bannedPeers[peerID] = Math.floor(new Date().getTime() / 1000) + bannedPeersTimeout
   }
 
   static getDerivedStateFromProps({ allOrders, orders, history, match: { params: { buy, sell, locale } } }, { haveCurrency, getCurrency }) {
@@ -295,6 +310,7 @@ export default class PartialClosure extends Component {
           orderId: newOrder.id,
         }))
       } else {
+        this.banPeer(peer)
         this.getLinkTodeclineSwap(peer)
         this.setDeclinedOffer()
       }
@@ -429,29 +445,38 @@ export default class PartialClosure extends Component {
     let isFound = false
     let newState = {}
 
-    orders.forEach(item => {
-      maxAllowedSellAmount = (maxAllowedSellAmount.isLessThanOrEqualTo(item.sellAmount)) ? item.sellAmount : maxAllowedSellAmount
-      maxAllowedBuyAmount = (maxAllowedBuyAmount.isLessThanOrEqualTo(item.buyAmount)) ? item.buyAmount : maxAllowedBuyAmount
+    const findGoodOrder = (inOrders) => {
+      inOrders.forEach(item => {
+        maxAllowedSellAmount = (maxAllowedSellAmount.isLessThanOrEqualTo(item.sellAmount)) ? item.sellAmount : maxAllowedSellAmount
+        maxAllowedBuyAmount = (maxAllowedBuyAmount.isLessThanOrEqualTo(item.buyAmount)) ? item.buyAmount : maxAllowedBuyAmount
 
-      if (BigNumber(haveAmount).isLessThanOrEqualTo(item.buyAmount)) {
+        if (BigNumber(haveAmount).isLessThanOrEqualTo(item.buyAmount)) {
 
-        maxAllowedGetAmount = (maxAllowedGetAmount.isLessThanOrEqualTo(item.getAmount)) ? BigNumber(item.getAmount) : maxAllowedGetAmount
+          maxAllowedGetAmount = (maxAllowedGetAmount.isLessThanOrEqualTo(item.getAmount)) ? BigNumber(item.getAmount) : maxAllowedGetAmount
 
-        const haveUsd = BigNumber(exHaveRate).times(haveAmount)
-        const getUsd  = BigNumber(exGetRate).times(item.getAmount)
+          const haveUsd = BigNumber(exHaveRate).times(haveAmount)
+          const getUsd  = BigNumber(exGetRate).times(item.getAmount)
 
-        isFound = true
+          isFound = true
 
-        newState = {
-          haveUsd: Number(haveUsd).toFixed(2),
-          getUsd: Number(getUsd).toFixed(2),
-          isNonOffers: false,
-          goodRate: item.exRate,
-          peer: item.peer,
-          orderId: item.orderId,
+          newState = {
+            haveUsd: Number(haveUsd).toFixed(2),
+            getUsd: Number(getUsd).toFixed(2),
+            isNonOffers: false,
+            goodRate: item.exRate,
+            peer: item.peer,
+            orderId: item.orderId,
+          }
         }
-      }
-    })
+      })
+    }
+
+    findGoodOrder(orders.filter(order => !this.isPeerBanned(order.peer)))
+
+    // Если не нашли предложечение, проверим забаненые пиры
+    if (!isFound) {
+      findGoodOrder(orders.filter(order => this.isPeerBanned(order.peer)))
+    }
 
     if (isFound) {
       this.setState(() => (newState))
