@@ -186,7 +186,7 @@ const signAndBuildKeychain = async (transactionBuilder, unspents) => {
 }
 
 const fetchUnspents = (address) =>
-  request.get(`${api.getApiServer('bitpay')}/addr/${address}/utxo`)
+  request.get(`${api.getApiServer('bitpay')}/addr/${address}/utxo`, { cacheResponse: 5000 })
 
 const broadcastTx = (txRaw) =>
   request.post(`${api.getApiServer('bitpay')}/tx/send`, {

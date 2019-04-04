@@ -5,22 +5,19 @@ import styles from '../SwapList.scss'
 
 import config from 'app-config'
 import { isMobile } from 'react-device-detect'
-
+import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage } from 'react-intl'
 
 
-const SecondStep = ({ step, swap, fifth, fourth, second, sixth }) => {
+const SecondStep = ({ step, swap, fifth, fourth, second, sixth, windowWidth }) => {
 
   const currencyStep = swap.sellCurrency === 'BTC' ? fifth : fourth
   const stepItemActive = (step >= second && step < sixth)
   const stepItemDefault = (step < sixth)
-  const secondStepPadding = (stepItemActive && isMobile) || (!stepItemDefault && !stepItemActive && isMobile) ? 50 : 0
-
   return (
     <div
-      style={{ paddingTop: secondStepPadding }}
       styleName={((stepItemActive) && 'stepItem active') || (stepItemDefault && 'stepItem') || 'stepItem active checked'}>
-      <span styleName="stepNumber">{stepItemDefault ? 2 : <i className="fas fa-check" />}</span>
+      <span styleName="stepNumber">{!isMobile ? (stepItemDefault ? 2 : <i className="fas fa-check" />) : (stepItemDefault ? 1 : <i className="fas fa-check" />) }</span>
       <p styleName="stepText">
         <FormattedMessage id="BtcToEthToken24" defaultMessage="Deposit" />
       </p>
@@ -58,6 +55,17 @@ const SecondStep = ({ step, swap, fifth, fourth, second, sixth }) => {
           </a>
         </strong>
       )}
+      <div styleName="tooltip">
+        <Tooltip id="SecondStep">
+          <FormattedMessage
+            id="SecondStep"
+            defaultMessage="On this step, the crypto goes not to your wallet {br}or to the wallet of your counterparty but directly to the swap contract"
+            values={{
+              br: <br />,
+            }}
+          />
+        </Tooltip >
+      </div>
     </div>
   )
 }
