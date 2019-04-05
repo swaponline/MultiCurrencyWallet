@@ -4,29 +4,32 @@
   flex: auto 1 1;
   display: flex;
   align-items: center;
-  padding-left: 50px;
 }
 
 .link {
   margin-left: 25px;
   cursor: pointer;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 16px;
   text-decoration: none;
-  color: #dccef7;
+  color: #000;
+  opacity: 0.6;
+  border-bottom: 2px solid transparent;
 
   &:first-child {
     margin-left: 0;
   }
 
   &:hover {
-    color: #fff;
+    opacity: 0.6;
+    color: #000;
+    border-bottom: 2px solid #000;
   }
 
   &.active {
-    border-bottom: 2px solid #fff;
-    font-weight: 700;
-    color: #fff;
+    border-bottom: 2px solid #000;
+    opacity: 0.6;
+    color: #000;
   }
 }
 

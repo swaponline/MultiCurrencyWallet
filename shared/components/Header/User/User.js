@@ -115,7 +115,7 @@ export default class User extends React.Component {
               />
               <div styleName="avatar-reputation-centered">{ Number.isInteger(reputation) ? reputation : reputationPlaceholder }</div>
             </div>
-            <ReactTooltip id="gravatar" type="light" effect="solid">
+            <ReactTooltip id="gravatar" effect="solid">
               <span>
                 <FormattedMessage
                   id="avatar24"

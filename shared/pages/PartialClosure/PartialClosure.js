@@ -21,6 +21,7 @@ import { Button, Toggle, Flip } from 'components/controls'
 import Input from 'components/forms/Input/Input'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Promo from './Promo/Promo'
+import HowItWorks from './HowItWorks/HowItWorks'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import Referral from 'components/Footer/Referral/Referral'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
@@ -1033,6 +1034,7 @@ export default class PartialClosure extends Component {
             }
           </div>
         </div>
+        <HowItWorks />
       </Fragment>
     )
   }
