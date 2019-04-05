@@ -289,24 +289,15 @@
   },
   {
     "id": "Keychain23",
-    "message": "Download",
-    "files": [
-      "shared/components/modals/Keychain/Keychain.js"
-    ]
+    "message": "Download"
   },
   {
     "id": "Keychain26",
-    "message": "KeyChain changes your address for security reasons. Note that you need to transfer your funds to another address before activating KeyChain. Keep in mind that automatic change of address will reset your balance.",
-    "files": [
-      "shared/components/modals/Keychain/Keychain.js"
-    ]
+    "message": "KeyChain changes your address for security reasons. Note that you need to transfer your funds to another address before activating KeyChain. Keep in mind that automatic change of address will reset your balance."
   },
   {
     "id": "Keychain27",
-    "message": "KeyChain is loading. Please wait.",
-    "files": [
-      "shared/components/modals/Keychain/Keychain.js"
-    ]
+    "message": "KeyChain is loading. Please wait."
   },
   {
     "id": "ImportKeys107",
@@ -454,45 +445,27 @@
   },
   {
     "id": "WithdrawModal111",
-    "message": "Withdraw ",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "Withdraw "
   },
   {
     "id": "WithdrawModal11212",
-    "message": "Processing ...",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "Processing ..."
   },
   {
     "id": "Withdrow113",
-    "message": "Your balance: ",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "Your balance: "
   },
   {
     "id": "Withdrow118",
-    "message": "Amount",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "Amount"
   },
   {
     "id": "Withdraw218",
-    "message": "Withdrawal error",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "Withdrawal error"
   },
   {
     "id": "Withdraw232",
-    "message": "There is not enough confirmation of the last transaction. Try later.",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "There is not enough confirmation of the last transaction. Try later."
   },
   {
     "id": "PreventMultiTabs",
@@ -2081,10 +2054,7 @@
   },
   {
     "id": "WithdrawButton32",
-    "message": "when you click this button, in the field, an amount equal to your balance minus the miners commission will appear. ",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "when you click this button, in the field, an amount equal to your balance minus the miners commission will appear. "
   },
   {
     "id": "BTCTOLTC132",
@@ -2387,129 +2357,75 @@
   },
   {
     "id": "Company",
-    "message": "Company",
-    "files": [
-      "shared/components/Footer/Links/Links.js"
-    ]
+    "message": "Company"
   },
   {
     "id": "AboutUS14",
-    "message": "About Us",
-    "files": [
-      "shared/components/Footer/Links/Links.js"
-    ]
+    "message": "About Us"
   },
   {
     "id": "Careers",
-    "message": "Careers",
-    "files": [
-      "shared/components/Footer/Links/Links.js"
-    ]
+    "message": "Careers"
   },
   {
     "id": "ChromeExtension",
-    "message": "Chrome Extension",
-    "files": [
-      "shared/components/Footer/Links/Links.js"
-    ]
+    "message": "Chrome Extension"
   },
   {
     "id": "Concept",
-    "message": "Concept (PDF)",
-    "files": [
-      "shared/components/Footer/Links/Links.js"
-    ]
+    "message": "Concept (PDF)"
   },
   {
     "id": "Contacts",
-    "message": "Contacts",
-    "files": [
-      "shared/components/Footer/Links/Links.js"
-    ]
+    "message": "Contacts"
   },
   {
     "id": "DEXTrendResearch",
-    "message": "DEX Trend Research",
-    "files": [
-      "shared/components/Footer/Links/Links.js"
-    ]
+    "message": "DEX Trend Research"
   },
   {
     "id": "DEXdetails",
-    "message": "DEX Details",
-    "files": [
-      "shared/components/Footer/Links/Links.js"
-    ]
+    "message": "DEX Details"
   },
   {
     "id": "Documentation",
-    "message": "Documentation",
-    "files": [
-      "shared/components/Footer/Links/Links.js"
-    ]
+    "message": "Documentation"
   },
   {
     "id": "Legal",
-    "message": "Legal",
-    "files": [
-      "shared/components/Footer/Links/Links.js"
-    ]
+    "message": "Legal"
   },
   {
     "id": "LegalOpinion",
-    "message": "Legal Opinion",
-    "files": [
-      "shared/components/Footer/Links/Links.js"
-    ]
+    "message": "Legal Opinion"
   },
   {
     "id": "Licence",
-    "message": "Licence",
-    "files": [
-      "shared/components/Footer/Links/Links.js"
-    ]
+    "message": "Licence"
   },
   {
     "id": "PrivacyPolicy",
-    "message": "Privacy Policy",
-    "files": [
-      "shared/components/Footer/Links/Links.js"
-    ]
+    "message": "Privacy Policy"
   },
   {
     "id": "Resources",
-    "message": "Resources",
-    "files": [
-      "shared/components/Footer/Links/Links.js"
-    ]
+    "message": "Resources"
   },
   {
     "id": "Terms",
-    "message": "Terms of use",
-    "files": [
-      "shared/components/Footer/Links/Links.js"
-    ]
+    "message": "Terms of use"
   },
   {
     "id": "Useswapbutton",
-    "message": "Swap Button",
-    "files": [
-      "shared/components/Footer/Links/Links.js"
-    ]
+    "message": "Swap Button"
   },
   {
     "id": "WhitePaperdraft",
-    "message": "White Paper (draft)",
-    "files": [
-      "shared/components/Footer/Links/Links.js"
-    ]
+    "message": "White Paper (draft)"
   },
   {
     "id": "Wiki",
-    "message": "Wiki",
-    "files": [
-      "shared/components/Footer/Links/Links.js"
-    ]
+    "message": "Wiki"
   },
   {
     "id": "Actions",
@@ -2951,24 +2867,15 @@
   },
   {
     "id": "Select210",
-    "message": "MAX",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "MAX"
   },
   {
     "id": "Withdrow1194",
-    "message": "Address",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "Address"
   },
   {
     "id": "Withdrow159",
-    "message": "Amount must be greater than ",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "Amount must be greater than "
   },
   {
     "id": "partial291",
@@ -3010,19 +2917,15 @@
     "id": "Row288",
     "message": "KeyChain is activated",
     "files": [
-      "shared/pages/Wallet/Row/Row.js"
+      "shared/pages/Wallet/KeychainStatus/KeychainStatus.js"
     ]
   },
   {
     "id": "Row289",
     "message": "KeyChain is not activated",
     "files": [
-      "shared/pages/Wallet/Row/Row.js"
+      "shared/pages/Wallet/KeychainStatus/KeychainStatus.js"
     ]
-  },
-  {
-    "id": "partial221",
-    "message": "Max amount for exchange: "
   },
   {
     "id": "Eos75",
@@ -3580,10 +3483,7 @@
   },
   {
     "id": "WTH275",
-    "message": "Make sure the wallet you {br}are sending the funds to supports",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "Make sure the wallet you {br}are sending the funds to supports"
   },
   {
     "id": "SaveKeys235",
@@ -3756,10 +3656,7 @@
   },
   {
     "id": "WithdrawIncorectAddress",
-    "message": "Your address not correct",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "Your address not correct"
   },
   {
     "id": "Withdrow168",
@@ -3767,10 +3664,7 @@
   },
   {
     "id": "Withdrow170",
-    "message": "The amount must be no more than your balance",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "The amount must be no more than your balance"
   },
   {
     "id": "PartialPriceSearch502",
@@ -3825,31 +3719,19 @@
   },
   {
     "id": "Withdrow213",
-    "message": "Please note: Miners fee is {minAmount} {data}.{br}Your balance must exceed this sum to perform transaction.",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "Please note: Miners fee is {minAmount} {data}.{br}Your balance must exceed this sum to perform transaction."
   },
   {
     "id": "WithdrawModal256",
-    "message": "No less than {minAmount}",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "No less than {minAmount}"
   },
   {
     "id": "WithdrawModal263",
-    "message": "You need {minAmount} ETH on your balance",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "You need {minAmount} ETH on your balance"
   },
   {
     "id": "WithdrawModalErrorSend",
-    "message": "{errorName} {currency}:{br}{errorMessage}",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "{errorName} {currency}:{br}{errorMessage}"
   },
   {
     "id": "RowHistory77",
@@ -3940,14 +3822,14 @@
     "id": "RowWallet283",
     "message": "Activate",
     "files": [
-      "shared/pages/Wallet/Row/Row.js"
+      "shared/pages/Wallet/KeychainStatus/KeychainStatus.js"
     ]
   },
   {
     "id": "RowWallet284",
     "message": "Deactivate",
     "files": [
-      "shared/pages/Wallet/Row/Row.js"
+      "shared/pages/Wallet/KeychainStatus/KeychainStatus.js"
     ]
   },
   {
@@ -4122,10 +4004,7 @@
   },
   {
     "id": "GitHub",
-    "message": "GitHub",
-    "files": [
-      "shared/components/Footer/Links/Links.js"
-    ]
+    "message": "GitHub"
   },
   {
     "id": "SwitchLang20",
@@ -4542,10 +4421,7 @@
   },
   {
     "id": "withdrowTitle271",
-    "message": "Withdraw",
-    "files": [
-      "shared/components/modals/WithdrawModal/WithdrawModal.js"
-    ]
+    "message": "Withdraw"
   },
   {
     "id": "PreventMultiTabsWidgetBuild",
@@ -4911,28 +4787,28 @@
     "id": "tourPartial103",
     "message": "In this place you can see the status of the search for exchange offers,  during loading there will be an inscription “Search for orders” at this place, when the order is found in this place, the exchange rate will be written",
     "files": [
-      "shared/pages/PartialClosure/TourPartial/TourPartial.js"
+      "shared/components/Header/TourPartial/TourPartial.js"
     ]
   },
   {
     "id": "tourPartial107",
     "message": "With this switch, you can choose to receive funds after exchanging for an internal wallet swap.online or for another wallet",
     "files": [
-      "shared/pages/PartialClosure/TourPartial/TourPartial.js"
+      "shared/components/Header/TourPartial/TourPartial.js"
     ]
   },
   {
     "id": "tourPartial116",
     "message": "By clicking on this button you can link to the exchange from this page. This will be possible if the button changes its color to pink.",
     "files": [
-      "shared/pages/PartialClosure/TourPartial/TourPartial.js"
+      "shared/components/Header/TourPartial/TourPartial.js"
     ]
   },
   {
     "id": "tourPartial128",
     "message": "By clicking on this button takes you to the page with offers for exchange, offers will be presented depending on the selected currencies. Also on the offer page you can create your own offer.",
     "files": [
-      "shared/pages/PartialClosure/TourPartial/TourPartial.js"
+      "shared/components/Header/TourPartial/TourPartial.js"
     ]
   },
   {
@@ -4943,14 +4819,280 @@
     "id": "tourPartial94",
     "message": "In this field you enter the amount you want to sell and select the currency to sell.",
     "files": [
-      "shared/pages/PartialClosure/TourPartial/TourPartial.js"
+      "shared/components/Header/TourPartial/TourPartial.js"
     ]
   },
   {
     "id": "tourPartial99",
     "message": "In this field you enter the amount you want to buy and select the currency to buy.",
     "files": [
-      "shared/pages/PartialClosure/TourPartial/TourPartial.js"
+      "shared/components/Header/TourPartial/TourPartial.js"
+    ]
+  },
+  {
+    "id": "FooterAboutAgreements",
+    "message": "Agreements",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "FooterAboutCompany",
+    "message": "About company",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "FooterAboutContacts",
+    "message": "Contacts",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "FooterAboutHeader",
+    "message": "About company",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "FooterAboutLegal",
+    "message": "Legal",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "FooterAboutPrivacyPolicy",
+    "message": "Privacy policy",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "FooterOurProductsChromeExtantion",
+    "message": "Chrome extantion",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "FooterOurProductsExchange",
+    "message": "Exchange",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "FooterOurProductsHeader",
+    "message": "Our products",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "FooterOurProductsWallet",
+    "message": "Wallet",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "FooterOurProductsWidget",
+    "message": "Widget",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "FooterPartnershipForBlockchains",
+    "message": "For Blockchains",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "FooterPartnershipForDEXes",
+    "message": "For DEXes",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "FooterPartnershipForERC20",
+    "message": "For ERC20 tokens",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "FooterPartnershipForNewsWebsites",
+    "message": "For news websites",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "FooterPartnershipForstablecoin",
+    "message": "For stablecoins",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "FooterPartnershipHeader",
+    "message": "Partnership",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "FooterTechnologyGithub",
+    "message": "GitHub",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "FooterTechnologyHeader",
+    "message": "Technology",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "FooterTechnologyWhitepaper",
+    "message": "Whitepaper",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "FooterTechnologyWiki",
+    "message": "Wiki",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "Keychain",
+    "message": "KeyChain Activation",
+    "files": [
+      "shared/components/modals/Keychain/Keychain.js"
+    ]
+  },
+  {
+    "id": "Keychain114",
+    "message": "KeyChain is loading. Please wait.",
+    "files": [
+      "shared/components/modals/Keychain/Keychain.js"
+    ]
+  },
+  {
+    "id": "Keychain116",
+    "message": "Back",
+    "files": [
+      "shared/components/modals/Keychain/Keychain.js"
+    ]
+  },
+  {
+    "id": "Keychain1165",
+    "message": "KeyChain is activated. If you wish to deactivate KeyChain, note that your key will be replaced with a new one.",
+    "files": [
+      "shared/components/modals/Keychain/Keychain.js"
+    ]
+  },
+  {
+    "id": "Keychain130",
+    "message": "You need to install KeyChain to proceed",
+    "files": [
+      "shared/components/modals/Keychain/Keychain.js"
+    ]
+  },
+  {
+    "id": "Keychain133",
+    "message": "Download",
+    "files": [
+      "shared/components/modals/Keychain/Keychain.js"
+    ]
+  },
+  {
+    "id": "Keychain141",
+    "message": "Positive balance error",
+    "files": [
+      "shared/components/modals/Keychain/Keychain.js"
+    ]
+  },
+  {
+    "id": "Keychain144",
+    "message": "Would you like to protect your keys with KeyChain? Note that your address will be changed",
+    "files": [
+      "shared/components/modals/Keychain/Keychain.js"
+    ]
+  },
+  {
+    "id": "Keychain157",
+    "message": "Confirm",
+    "files": [
+      "shared/components/modals/Keychain/Keychain.js"
+    ]
+  },
+  {
+    "id": "Keychain167",
+    "message": "Deactivate",
+    "files": [
+      "shared/components/modals/Keychain/Keychain.js"
+    ]
+  },
+  {
+    "id": "Keychain173",
+    "message": "KeyChain is not installed but activated",
+    "files": [
+      "shared/components/modals/Keychain/Keychain.js"
+    ]
+  },
+  {
+    "id": "Keychain175",
+    "message": "Deactivate",
+    "files": [
+      "shared/components/modals/Keychain/Keychain.js"
+    ]
+  },
+  {
+    "id": "Keychain179",
+    "message": "Download",
+    "files": [
+      "shared/components/modals/Keychain/Keychain.js"
+    ]
+  },
+  {
+    "id": "Keychain185",
+    "message": "Back",
+    "files": [
+      "shared/components/modals/Keychain/Keychain.js"
+    ]
+  },
+  {
+    "id": "SecondStep",
+    "message": "On this step, the crypto goes not to your wallet {br}or to the wallet of your counterparty but directly to the swap contract",
+    "files": [
+      "shared/pages/Swap/SwapList/steps/SecondStep.js"
+    ]
+  },
+  {
+    "id": "thirdStep",
+    "message": "Оn this step crypto is transferred from {br}the contract to your wallet and to the wallet {br} of your counterparty {br}",
+    "files": [
+      "shared/pages/Swap/SwapList/steps/ThirdStep.js"
+    ]
+  },
+  {
+    "id": "Partial955",
+    "message": "Address not correct",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
     ]
   }
 ]
