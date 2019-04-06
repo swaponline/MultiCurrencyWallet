@@ -130,19 +130,16 @@ const updateUserData = (userData) =>
     try {
 
       const userID = await fbHelper.getUserID()
-      const date = moment().format('HH:mm:ss DD/MM/YYYY')
-      const unixDate = moment().unix()
       const gaID = actions.analytics.getClientId() || 'None'
 
+      const data = {
+        ...userData,
+        id: userID,
+        gaID,
+      }
+
       if (userID) {
-        const data = {
-          ...userData,
-          id: userID,
-          date,
-          unixDate,
-          gaID,
-        }
-        const addUser = await updateData('users', userID, data)
+        await updateData('users', userID, data)
       }
 
     } catch (error) {

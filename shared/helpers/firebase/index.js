@@ -10,6 +10,8 @@ import { getState } from 'redux/core'
 import { request } from 'helpers'
 import moment from 'moment/moment'
 
+import firestoreInstance from './firestore'
+
 import clientConfig from './config/firebase-client-config'
 
 import appConfig from 'app-config'
@@ -59,10 +61,13 @@ const sendData = (userId, dataBasePath, data, isDefault = true) =>
 
 const setUserLastOnline = async () => {
   const userID = await getUserID()
-
-  sendData(userID, 'usersCommon', {
+  const data = {
     lastOnline: moment().format('HH:mm:ss DD/MM/YYYY'),
-  })
+    unixLastOnline: moment().unix(),
+  }
+
+  sendData(userID, 'usersCommon', data)
+  firestoreInstance.updateUserData(data)
 }
 
 const askPermission = () =>
