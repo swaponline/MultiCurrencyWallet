@@ -69,12 +69,14 @@ const addUser = (userData) =>
 
       const userID = await fbHelper.getUserID()
       const date = moment().format('HH:mm:ss DD/MM/YYYY')
+      const unixDate = moment().unix()
       const gaID = actions.analytics.getClientId() || 'None'
 
       const data = {
         ...userData,
         id: userID,
         date,
+        unixDate,
         gaID,
       }
 
@@ -100,12 +102,14 @@ const submitCustomUserData = (collection, userData) => {
 
       const userID = await fbHelper.getUserID()
       const date = moment().format('HH:mm:ss DD/MM/YYYY')
+      const unixDate = moment().unix()
       const gaID = actions.analytics.getClientId() || 'None'
 
       const data = {
         ...userData,
         id: userID,
         date,
+        unixDate,
         gaID,
       }
 
@@ -127,6 +131,7 @@ const updateUserData = (userData) =>
 
       const userID = await fbHelper.getUserID()
       const date = moment().format('HH:mm:ss DD/MM/YYYY')
+      const unixDate = moment().unix()
       const gaID = actions.analytics.getClientId() || 'None'
 
       if (userID) {
@@ -134,6 +139,7 @@ const updateUserData = (userData) =>
           ...userData,
           id: userID,
           date,
+          unixDate,
           gaID,
         }
         const addUser = await updateData('users', userID, data)
