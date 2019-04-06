@@ -34,7 +34,17 @@ if (config && config.isWidget) {
     constants.COINS[config.erc20token] = config.erc20token.toUpperCase()
     constants.COINS_PRECISION[config.erc20token.toUpperCase()] = config.erc20[config.erc20token].decimals
   }
+} else {
+  // Add to swap.core not exists tokens
+  Object.keys(config.erc20).forEach((tokenCode) => {
+    if (!constants.COINS[tokenCode]) {
+      console.info('Add token to swap.core', tokenCode, config.erc20[tokenCode].address, config.erc20[tokenCode].decimals, config.erc20[tokenCode].fullName)
+      constants.COINS[tokenCode] = tokenCode.toUpperCase()
+      constants.COINS_PRECISION[tokenCode.toUpperCase()] = config.erc20[tokenCode].decimals
+    }
+  })
 }
+
 const createSwapApp = () => {
   const { user: { ethData } } = getState()
 
