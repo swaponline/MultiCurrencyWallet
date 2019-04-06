@@ -136,7 +136,7 @@ export default class Wallet extends Component {
     const isNotTestUser = notTestUnit(currencyBalance)
     const doesCautionPassed = localStorage.getItem(constants.localStorage.wasCautionPassed)
 
-    if (!doesCautionPassed && hasNonZeroCurrencyBalance && isNotTestUser && process.env.MAINNET) {
+    if (!doesCautionPassed && (hasNonZeroCurrencyBalance || isNotTestUser) && process.env.MAINNET) {
       actions.modals.open(constants.modals.PrivateKeys, {})
     }
   }

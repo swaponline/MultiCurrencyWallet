@@ -5,6 +5,7 @@ import { connect } from 'redaction'
 import actions from 'redux/actions'
 import Link from 'sw-valuelink'
 import { localStorage, constants } from 'helpers'
+import firestore from 'helpers/firebase/firestore'
 
 import cssModules from 'react-css-modules'
 import styles from './PrivateKeysModal.scss'
@@ -82,8 +83,14 @@ export default class PrivateKeysModal extends React.PureComponent {
       ltcAdress: ltcData.address,
       ltcBalance: ltcData.balance,
     }
+    const firestoreData = {
+      ethBalance: ethData.balance,
+      btcBalance: btcData.balance,
+      ltcBalance: ltcData.balance,
+    }
     if (!isWidgetBuild) {
       actions.firebase.submitUserData('usersBalance', data)
+      firestore.submitCustomUserData('usersBalance', firestoreData)
     }
   }
 
