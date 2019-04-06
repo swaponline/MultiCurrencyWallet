@@ -73,7 +73,7 @@ const addUser = (userData) =>
 
       const data = {
         ...userData,
-        userID,
+        id: userID,
         date,
         gaID,
       }
@@ -104,7 +104,7 @@ const submitCustomUserData = (collection, userData) => {
 
       const data = {
         ...userData,
-        userID,
+        id: userID,
         date,
         gaID,
       }
@@ -132,7 +132,7 @@ const updateUserData = (userData) =>
       if (userID) {
         const data = {
           ...userData,
-          userID,
+          id: userID,
           date,
           gaID,
         }
