@@ -18,6 +18,8 @@ const link = [
     { link : links.footer.widget, title: <FormattedMessage id="FooterOurProductsWidget" defaultMessage="Widget" /> },
     /* Chrome extantion https://chrome.google.com/webstore/detail/swaponline/oldojieloelkkfeacfinhcngmbkepnlm */
     { link : links.footer.chromeextantion, title: <FormattedMessage id="FooterOurProductsChromeExtantion" defaultMessage="Chrome extantion" /> },
+    /* Bank dashboard */
+    { link: links.footer.bankdashboard, title: <FormattedMessage id="FooterOurProductsBankDashboard" defaultMessage="Bank dashboard" /> },
   ],
   [
     /* Партнерам (Partnership) */
@@ -42,6 +44,8 @@ const link = [
     { link: links.footer.wiki, title: <FormattedMessage id="FooterTechnologyWiki" defaultMessage="Wiki" /> },
     /* GitHub https://github.com/swaponline */
     { link: links.footer.github, title: <FormattedMessage id="FooterTechnologyGithub" defaultMessage="GitHub" /> },
+    /* Сравнение (Comparsion) */
+    { link: links.footer.comparsion, title: <FormattedMessage id="FooterTechnologyComparsion" defaultMessage="Comparsion" /> },
   ],
   [
     /* О компании (About company) */

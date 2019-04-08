@@ -116,5 +116,7 @@ export default {
     privacypolicy: 'https://drive.google.com/file/d/1LdsCOfX_pOJAMqlL4g6DfUpZrGF5eRe9/view?usp=sharing',
     legal: 'https://drive.google.com/file/d/0Bz2ZwZCmFtj_WlNkY0ZYN0ZpNUo2VFVEeW9rWEVoTlNja0VZ/view?usp=sharing',
     contacts: 'https://wiki.swap.online/contacts-swap-online/',
+    comparsion: 'https://docs.google.com/spreadsheets/d/1HVWjTKexfPjan_LFnCwMazEZTvcVtYl_3NWFKQ0L3ZM/edit?usp=drive_web&ouid=100012339553469619949',
+    bankdashboard: 'https://wiki.swap.online/crypto_banking/',
   },
 }
