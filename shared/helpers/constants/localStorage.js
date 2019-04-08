@@ -18,4 +18,5 @@ export default {
   eosAccountActivated: `${process.env.ENTRY}:eos:activationFlag`,
   telosAccountActivated: `${process.env.ENTRY}:telos:activationFlag`,
   eosActivationPayment: `${process.env.ENTRY}:eos:activationPayment`,
+  lastCheckBalance: 'lastCheckBalance',
 }

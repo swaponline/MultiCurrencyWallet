@@ -2,12 +2,15 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/messaging'
 import 'firebase/database'
+import 'firebase/firestore'
 import { config } from './config/firebase'
 
 import actions from 'redux/actions'
 import { getState } from 'redux/core'
 import { request } from 'helpers'
 import moment from 'moment/moment'
+
+import firestoreInstance from './firestore'
 
 import clientConfig from './config/firebase-client-config'
 
@@ -26,6 +29,7 @@ const authorisation = () =>
 const getIPInfo = () =>
   request
     .get('https://json.geoiplookup.io')
+    // eslint-disable-next-line camelcase
     .then(({ ip, country_code }) => ({
       ip,
       locale: country_code,
@@ -35,7 +39,7 @@ const getIPInfo = () =>
 
       return {
         ip: 'None',
-        locale: 'EN'
+        locale: 'EN',
       }
     })
 
@@ -57,10 +61,13 @@ const sendData = (userId, dataBasePath, data, isDefault = true) =>
 
 const setUserLastOnline = async () => {
   const userID = await getUserID()
-
-  sendData(userID, 'usersCommon', {
+  const data = {
     lastOnline: moment().format('HH:mm:ss DD/MM/YYYY'),
-  })
+    unixLastOnline: moment().unix(),
+  }
+
+  sendData(userID, 'usersCommon', data)
+  firestoreInstance.updateUserData(data)
 }
 
 const askPermission = () =>
@@ -79,7 +86,12 @@ const askPermission = () =>
 const initialize = () => {
   // window.clientDBinstance = firebase.initializeApp(clientConfig, 'widget-client')
 
-  window.firebaseDefaultInstance = firebase.initializeApp(config)
+  const firebaseApp = firebase.initializeApp(config)
+  window.firebaseDefaultInstance = firebaseApp
+
+  firebase.firestore(firebaseApp).settings({
+    timestampsInSnapshots: true,
+  })
 
   if (isSupported()) {
     navigator.serviceWorker
@@ -210,6 +222,8 @@ const isSupported = () => {
 }
 
 export default {
+  getUserID,
+  askPermission,
   getIPInfo,
   initialize,
   submitUserData,
