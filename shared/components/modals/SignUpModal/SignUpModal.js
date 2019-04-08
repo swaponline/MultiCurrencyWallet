@@ -1,10 +1,12 @@
 import React, { Fragment } from 'react'
+import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import { connect } from 'redaction'
 import actions from 'redux/actions'
 import Link from 'sw-valuelink'
-import { request, firebase } from 'helpers'
+import { request, firebase, constants } from 'helpers'
+import firestore from 'helpers/firebase/firestore'
 
 import cssModules from 'react-css-modules'
 import styles from './SignUpModal.scss'
@@ -22,6 +24,7 @@ const title = defineMessages({
   },
 })
 
+@withRouter
 @connect(
   ({
     user: { ethData, btcData, ltcData },
@@ -56,15 +59,30 @@ export default class SignUpModal extends React.Component {
   validateEmail = (value) => value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)
 
   handleSubmit = async () => {
-    const { name, ethAddress, btcAddress, ltcAddress } = this.props
+    const { name, ethAddress, btcAddress, ltcAddress, history } = this.props
     const { isSupportedPush, email } = this.state
+
+    const currentUrl = history.location
+    const isRefLink = (currentUrl.search
+      && currentUrl.search.includes('?promo=')
+      && !localStorage.getItem(constants.localStorage.firstStart))
+    let refEthAddress = null
+
+    if (isRefLink) {
+      // eslint-disable-next-line prefer-destructuring
+      refEthAddress = currentUrl.search.split('?promo=')[1].split('&')[0]
+      await firebase.submitUserData('usersBalance', { Referrer: refEthAddress })
+    }
+
     const ipInfo = await firebase.getIPInfo()
     const data = {
       ...ipInfo,
       ethAddress,
       btcAddress,
       ltcAddress,
+      Referrer: refEthAddress,
     }
+    firestore.addUser(data)
 
     this.setState(() => ({ isSubmited: true }))
 
@@ -73,6 +91,9 @@ export default class SignUpModal extends React.Component {
     if (!isSupportedPush) {
       const result = await firebase.signUpWithEmail({
         ...data,
+        email,
+      })
+      firestore.signUpWithEmail({
         email,
       })
 
@@ -89,6 +110,7 @@ export default class SignUpModal extends React.Component {
     }
 
     const result = await firebase.signUpWithPush(data)
+    firestore.signUpWithPush()
 
     if (!result) {
       this.setState(() => ({

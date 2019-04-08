@@ -5,9 +5,11 @@ import { isMobile } from 'react-device-detect'
 import { connect } from 'redaction'
 import { constants } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
+import firestore from 'helpers/firebase/firestore'
 import actions from 'redux/actions'
 import { withRouter } from 'react-router'
 import { hasSignificantBalance, hasNonZeroBalance, notTestUnit } from 'helpers/user'
+import moment from 'moment'
 
 import CSSModules from 'react-css-modules'
 import stylesWallet from './Wallet.scss'
@@ -55,6 +57,7 @@ const isWidgetBuild = config && config.isWidget
     currencies,
     hiddenCoinsList : (config && config.isWidget) ? [] : hiddenCoinsList,
     userEthAddress: ethData.address,
+    tokensData: { ethData, btcData, ltcData, eosData, telosData, usdtData },
   })
 )
 @injectIntl
@@ -136,7 +139,7 @@ export default class Wallet extends Component {
     const isNotTestUser = notTestUnit(currencyBalance)
     const doesCautionPassed = localStorage.getItem(constants.localStorage.wasCautionPassed)
 
-    if (!doesCautionPassed && hasNonZeroCurrencyBalance && isNotTestUser && process.env.MAINNET) {
+    if (!doesCautionPassed && (hasNonZeroCurrencyBalance || isNotTestUser) && process.env.MAINNET) {
       actions.modals.open(constants.modals.PrivateKeys, {})
     }
   }
@@ -165,10 +168,36 @@ export default class Wallet extends Component {
     })
   }
 
+  checkBalance = () => {
+    const now = moment().format('HH:mm:ss DD/MM/YYYY')
+    const lastCheck = localStorage.getItem(constants.localStorage.lastCheckBalance) || now
+    const lastCheckMoment = moment(lastCheck, 'HH:mm:ss DD/MM/YYYY')
+
+    const isFirstCheck = moment(now, 'HH:mm:ss DD/MM/YYYY').isSame(lastCheckMoment)
+    const isOneHourAfter = moment(now, 'HH:mm:ss DD/MM/YYYY').isAfter(lastCheckMoment.add(1, 'hours'))
+
+    const { ethData, btcData, ltcData } = this.props.tokensData
+
+    const balancesData = {
+      ethBalance: ethData.balance,
+      btcBalance: btcData.balance,
+      ltcBalance: ltcData.balance,
+      ethAddress: ethData.address,
+      btcAddress: btcData.address,
+      ltcAddress: ltcData.address,
+    }
+
+    if (isOneHourAfter || isFirstCheck) {
+      localStorage.setItem(constants.localStorage.lastCheckBalance, now)
+      firestore.updateUserData(balancesData)
+    }
+  }
+
   render() {
     const { items, tokens, currencies, hiddenCoinsList, intl, location } = this.props
     const { isShowingPromoText } = this.state
 
+    this.checkBalance()
     const titles = [
       <FormattedMessage id="Wallet114" defaultMessage="Coin" />,
       <FormattedMessage id="Wallet115" defaultMessage="Name" />,
