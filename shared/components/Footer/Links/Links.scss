@@ -18,6 +18,22 @@
     margin-bottom: 10px;
   }
 
+  div {
+    line-height: 14pt;
+    vertical-align: middle;
+  }
+
+  div img {
+    display: block;
+    float: left;
+    height: 1rem;
+  }
+
+  div::after {
+    content: '';
+    clear: both;
+  }
+
   a {
     font-size: 14px;
     color: #000000;

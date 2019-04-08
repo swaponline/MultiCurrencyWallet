@@ -118,5 +118,6 @@ export default {
     contacts: 'https://wiki.swap.online/contacts-swap-online/',
     comparsion: 'https://docs.google.com/spreadsheets/d/1HVWjTKexfPjan_LFnCwMazEZTvcVtYl_3NWFKQ0L3ZM/edit?usp=drive_web&ouid=100012339553469619949',
     bankdashboard: 'https://wiki.swap.online/crypto_banking/',
+    lnresearch: 'https://wiki.swap.online/lightninghack-berlin-june2018/',
   },
 }
