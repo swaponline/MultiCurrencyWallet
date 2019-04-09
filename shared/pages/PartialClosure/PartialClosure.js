@@ -805,7 +805,7 @@ export default class PartialClosure extends Component {
     return (
       <Fragment>
         <div styleName="container alignCenter">
-          <Promo />
+          <Promo subTitle={subTitle(sellTokenFullName, haveCurrency.toUpperCase(), buyTokenFullName, getCurrency.toUpperCase())}/>
           <div styleName={isWidgetLink ? 'widgetSection' : 'section'} className={isWidgetLink ? 'section' : ''} >
             <div styleName="formExchange" className={isWidget ? 'formExchange' : ''} >
               <div styleName="selectWrap">

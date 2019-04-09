@@ -12,8 +12,8 @@
   font-weight: 500;
   font-size: 16px;
   text-decoration: none;
-  color: #000;
-  opacity: 0.6;
+  color: rgba(0, 0, 0, 0.6);
+  position: relative;
   border-bottom: 2px solid transparent;
 
   &:first-child {

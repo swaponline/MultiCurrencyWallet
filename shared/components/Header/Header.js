@@ -31,29 +31,71 @@ import UserTooltip from 'components/Header/User/UserTooltip/UserTooltip'
 
 let lastScrollTop = 0
 
+// const messages = defineMessages({
+//   wallet: {
+//     id: 'menu.wallet',
+//     description: 'Menu item "Wallet"',
+//     defaultMessage: 'Wallet',
+//   },
+//   exchange: {
+//     id: 'menu.exchange',
+//     description: 'Menu item "Exchange"',
+//     defaultMessage: 'Exchange',
+//   },
+//   history: {
+//     id: 'menu.history',
+//     description: 'Menu item "My History"',
+//     defaultMessage: 'My History',
+//   },
+//   aboutus: {
+//     id: 'menu.aboutus',
+//     description: 'Menu item "About Us"',
+//     defaultMessage: 'About Us',
+//   },
+// })
+
+// menuItems: [
+//   {
+//     title: props.intl.formatMessage(messages.wallet),
+//     link: links.home,
+//     exact: true,
+//     icon: 'wallet',
+//   },
+//   {
+//     title: props.intl.formatMessage(messages.exchange),
+//     link: links.exchange,
+//     icon: 'exchange-alt',
+//     tour: 'reactour__exchange',
+//   },
+//   {
+//     title: props.intl.formatMessage(messages.history),
+//     link: links.history,
+//     icon: 'history',
+//   },
+//   {
+//     title: props.intl.formatMessage(messages.aboutus),
+//     link: links.aboutus,
+//     isMobile: false,
+//   },
+// ],
+
 const messages = defineMessages({
-  wallet: {
-    id: 'menu.wallet',
+  projects: {
+    id: 'menu.projects',
     description: 'Menu item "Wallet"',
-    defaultMessage: 'Wallet',
+    defaultMessage: 'Our projects',
   },
-  exchange: {
-    id: 'menu.exchange',
+  vision: {
+    id: 'menu.vision',
     description: 'Menu item "Exchange"',
-    defaultMessage: 'Exchange',
+    defaultMessage: 'Our vision',
   },
-  history: {
-    id: 'menu.history',
+  invest: {
+    id: 'menu.invest',
     description: 'Menu item "My History"',
-    defaultMessage: 'My History',
-  },
-  aboutus: {
-    id: 'menu.aboutus',
-    description: 'Menu item "About Us"',
-    defaultMessage: 'About Us',
+    defaultMessage: 'How to invest?',
   },
 })
-
 
 @injectIntl
 @withRouter
@@ -88,26 +130,24 @@ export default class Header extends Component {
       sticky: false,
       menuItems: [
         {
-          title: props.intl.formatMessage(messages.wallet),
+          title: props.intl.formatMessage(messages.projects),
           link: links.home,
           exact: true,
-          icon: 'wallet',
+          haveSubmenu: true,
+          icon: 'projects',
         },
         {
-          title: props.intl.formatMessage(messages.exchange),
+          title: props.intl.formatMessage(messages.vision),
           link: links.exchange,
           icon: 'exchange-alt',
           tour: 'reactour__exchange',
+          haveSubmenu: false,
         },
         {
-          title: props.intl.formatMessage(messages.history),
+          title: props.intl.formatMessage(messages.invest),
           link: links.history,
           icon: 'history',
-        },
-        {
-          title: props.intl.formatMessage(messages.aboutus),
-          link: links.aboutus,
-          isMobile: false,
+          haveSubmenu: false,
         },
       ],
     }
@@ -115,7 +155,7 @@ export default class Header extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener('scroll', this.handleScroll)
+    //window.addEventListener('scroll', this.handleScroll)
 
     const checker = setInterval(() => {
       switch (true) {
@@ -130,7 +170,7 @@ export default class Header extends Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll)
+//window.removeEventListener('scroll', this.handleScroll)
     this.startTourAndSignInModal()
 
   }

@@ -17,6 +17,14 @@
 	}
 }
 
+@media screen and (max-width: 1390px){
+  .logo {
+    position: relative;
+    left: auto;
+    margin-right: 85px;
+  }
+}
+
 @media screen and (max-width: 860px){
   .logo {
     display: none;

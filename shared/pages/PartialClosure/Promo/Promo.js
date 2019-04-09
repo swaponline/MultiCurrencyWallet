@@ -8,10 +8,10 @@ import CSSModules from 'react-css-modules'
 import styles from './Promo.scss'
 
 
-const Promo = ({ className }) => (
+const Promo = ({ className, subTitle }) => (
   <div styleName="promo">
     <div styleName="promoWrap">
-      <PromoText />
+      <PromoText subTitle={subTitle} />
       <CurrencySlider />
     </div>
   </div>

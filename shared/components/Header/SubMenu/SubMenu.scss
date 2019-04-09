@@ -1,0 +1,20 @@
+.submenu {
+  padding: 0;
+  list-style: none;
+  position: absolute;
+  background: #fff;
+  padding: 15px 30px 20px;
+  top: 55px;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
+.submenu-item {
+  margin-bottom: 5px;
+  a {
+    font-size: 14px;
+    color: #000!important;
+  }
+}
