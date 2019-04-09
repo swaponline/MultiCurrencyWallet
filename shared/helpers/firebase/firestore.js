@@ -31,6 +31,7 @@ const addData = (collection, doc, data) => {
         .then((docRef) => {
           resolve(docRef)
         })
+        .catch((e) => console.error('Promise add data error: ', e))
 
     } catch (error) {
       console.error('Add data to firestore error: ', error)
@@ -55,6 +56,14 @@ const updateData = (collection, doc, data) => {
       db.collection(collection).doc(doc).update(data)
         .then((docRef) => {
           resolve(docRef)
+        })
+        .catch((e) => {
+          if (e.message.includes('No document to update')) {
+            console.warn('Promise update data error. Trying to add new document.', e)
+            addData(collection, doc, data)
+            return
+          }
+          console.error('Promise update data error: ', e)
         })
 
     } catch (error) {
