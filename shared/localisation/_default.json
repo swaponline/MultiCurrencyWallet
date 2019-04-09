@@ -5094,5 +5094,26 @@
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
+  },
+  {
+    "id": "FooterOurProductsBankDashboard",
+    "message": "Bank dashboard",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "FooterTechnologyComparsion",
+    "message": "Comparsion",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
+  },
+  {
+    "id": "FooterTechnologyLNResearch",
+    "message": "LN",
+    "files": [
+      "shared/components/Footer/Links/Links.js"
+    ]
   }
 ]
