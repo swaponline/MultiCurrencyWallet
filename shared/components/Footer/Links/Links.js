@@ -47,7 +47,7 @@ const link = [
     /* Сравнение (Comparsion) */
     { link: links.footer.comparsion, title: <FormattedMessage id="FooterTechnologyComparsion" defaultMessage="Comparsion" /> },
     /* LN research */
-    { link: links.footer.lnresearch, title: <FormattedMessage id="FooterTechnologyLNResearch" defaultMessage="LN research" />, icon: 'lightling' },
+    { link: links.footer.lnresearch, title: <FormattedMessage id="FooterTechnologyLNResearch" defaultMessage="LN" />, icon: 'lightling' },
   ],
   [
     /* О компании (About company) */

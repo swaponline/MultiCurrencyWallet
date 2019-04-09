@@ -5111,7 +5111,7 @@
   },
   {
     "id": "FooterTechnologyLNResearch",
-    "message": "LN research",
+    "message": "LN",
     "files": [
       "shared/components/Footer/Links/Links.js"
     ]
