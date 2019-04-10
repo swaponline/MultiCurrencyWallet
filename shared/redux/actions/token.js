@@ -1,5 +1,5 @@
 import ERC20_ABI from 'human-standard-token-abi'
-import helpers, { request, constants } from 'helpers'
+import helpers, { request, constants, cacheStorageGet, cacheStorageSet } from 'helpers'
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
 import web3 from 'helpers/web3'
@@ -50,6 +50,10 @@ const getBalance = async (currency) => {
   if (currency === undefined) {
     return
   }
+
+  const balanceInCache = cacheStorageGet('currencyBalances', `token_${currency}`)
+  if (balanceInCache !== false) return balanceInCache
+
   const { address, contractAddress, decimals, name  } = tokensData[currency.toLowerCase()]
   const ERC20 = new web3.eth.Contract(ERC20_ABI, contractAddress)
   try {
@@ -57,6 +61,7 @@ const getBalance = async (currency) => {
     console.log('result get balance', result)
     let amount = new BigNumber(String(result)).dividedBy(new BigNumber(String(10)).pow(decimals)).toString()
     reducers.user.setTokenBalance({ name, amount })
+    cacheStorageSet('currencyBalances', `token_${currency}`, amount, 60)
     return amount
   } catch (e) {
     reducers.user.setTokenBalanceError({ name })
