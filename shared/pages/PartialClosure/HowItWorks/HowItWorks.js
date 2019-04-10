@@ -8,7 +8,7 @@ import styles from './HowItWorks.scss'
 
 
 const HowItWorks = ({ className }) => (
-  <div>
+  <div styleName="HowItWorksContainer">
     <h3 styleName="HowItWorksTitle">
       <FormattedMessage id="HowItWorks10" defaultMessage="How it works?" />
     </h3>

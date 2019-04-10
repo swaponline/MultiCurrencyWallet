@@ -26,12 +26,16 @@
 	top: 0;
 	left: 0;
 	right: 0;
-  z-index: 2;
+  z-index: 1;
   background: #F5F5F5;
   transition: position 0.3s ease;
   position: absolute;
 }
 
+.container {
+  width: 1200px;
+  margin: auto;
+}
 @include media-mobile {
   .header {
 	  display: flex;

@@ -17,9 +17,27 @@
   }
 }
 
-
+.promoContainer {
+  background: #f5f5f5;
+  margin-bottom: 100px;
+}
+.exchangeWrap {
+  color: #000;
+  &:before {
+    position: absolute;
+    content: '';
+    background: #6144E5;
+    right: 0;
+    width: 32%;
+    z-index: 11111;
+    height: calc(100vh + 24px);
+    top: -88px;
+  }
+}
 .container {
   display: flex;
+  width: 1200px;
+  margin: auto;
 }
 
 .IsSearching {
@@ -146,6 +164,7 @@
   margin-top: -100px;
   padding: 50px 40px;
   width: 460px;
+  z-index: 11111;
   background: #FFFFFF;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;

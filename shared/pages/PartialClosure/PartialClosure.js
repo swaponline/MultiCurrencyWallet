@@ -748,7 +748,7 @@ export default class PartialClosure extends Component {
   render() {
     const { currencies, addSelectedItems, currenciesData, tokensData, intl: { locale, formatMessage } } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching,
-      isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet, getUsd, haveUsd,
+      isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet, exHaveRate, exGetRate,
       maxBuyAmount, getAmount, goodRate, isShowBalance, extendedControls, estimatedFeeValues, isToken, dynamicFee, haveAmount,
     } = this.state
 
@@ -803,239 +803,244 @@ export default class PartialClosure extends Component {
 
 
     return (
-      <Fragment>
-        <div styleName="container alignCenter">
-          <Promo subTitle={subTitle(sellTokenFullName, haveCurrency.toUpperCase(), buyTokenFullName, getCurrency.toUpperCase())}/>
-          <div styleName={isWidgetLink ? 'widgetSection' : 'section'} className={isWidgetLink ? 'section' : ''} >
-            <div styleName="formExchange" className={isWidget ? 'formExchange' : ''} >
-              <div styleName="selectWrap">
-                <SelectGroup
-                  switchBalanceFunc={this.switchBalance}
-                  inputValueLink={linked.haveAmount.pipe(this.setAmount)}
-                  selectedValue={haveCurrency}
-                  onSelect={this.handleSetHaveValue}
-                  label={<FormattedMessage id="partial243" defaultMessage="You sell" />}
-                  id="partialClosure456"
-                  tooltip={<FormattedMessage id="partial462" defaultMessage="The amount you have in your wallet or external wallet that you want to exchange" />}
-                  placeholder="0.00000000"
-                  usd={(maxAmount > 0 && isNonOffers) ? 0 : haveUsd}
-                  currencies={currencies}
-                  className={isWidget ? 'SelGroup' : ''}
-                  onFocus={() => this.extendedControlsSet(true)}
-                  onBlur={() => setTimeout(() => this.extendedControlsSet(false), 200)}
-                />
-              </div>
-              {
-                isShowBalance &&
-                  <p className={isWidget ? 'advice' : ''} styleName="maxAmount">
-                  {/*<FormattedMessage id="partial221" defaultMessage="Balance: " />*/}
-                  {/*Math.floor(maxBuyAmount.toNumber() * 1000) / 1000}{' '}{haveCurrency.toUpperCase()*/}
-                  <FormattedMessage id="partial767" defaultMessage="Balance: " />
-                  {balance.toFixed(4)}{'  '}{haveCurrency.toUpperCase()}
-                  </p>
-              }
-              {
-                haveCurrency !== getCurrency && (
-                  <div className={isWidget ? 'flipBtn' : ''}>
-                    {
-                      (extendedControls && balance > 0)
-                        && (
-                          <div styleName="extendedControls">
-                            <Select
-                              changeBalance={this.changeBalance}
-                              balance={balance}
-                              currency={haveCurrency}
-                              switching={this.handleFlipCurrency}
-                              isExchange
-                              maxAmountForExchange={Math.floor(maxBuyAmount.toNumber() * 1000) / 1000}
-                            />
-                          </div>
-                        )
-                    }
-                  </div>
-                )
-              }
-              <div styleName="selectWrap">
-                <SelectGroup
-                  switchBalanceFunc={this.switchBalance}
-                  inputValueLink={linked.getAmount}
-                  selectedValue={getCurrency}
-                  onSelect={this.handleSetGetValue}
-                  label={<FormattedMessage id="partial255" defaultMessage="You get" />}
-                  id="partialClosure472"
-                  tooltip={<FormattedMessage id="partial478" defaultMessage="The amount you receive after the exchange" />}
-                  currencies={addSelectedItems}
-                  usd={getUsd}
-                  error={isLowAmount}
-                  className={isWidget ? 'SelGroup' : ''}
-                />
-                { oneCryptoCost.isGreaterThan(0) && oneCryptoCost.isFinite() && !isNonOffers && (
-                  <div styleName={isWidget ? 'priceSearch' : 'price'}>
-                    <FormattedMessage
-                      id="PartialPriceSearch502"
-                      defaultMessage="1 {getCurrency} = {haveCurrency}"
-                      values={{ getCurrency: `${getCurrency.toUpperCase()}`, haveCurrency: `${oneCryptoCost.toFixed(5)} ${haveCurrency.toUpperCase()}` }}
+      <div styleName="exchangeWrap">
+        <div styleName="promoContainer">
+    `      <Fragment>
+            <div styleName="container alignCenter">
+              <Promo subTitle={subTitle(sellTokenFullName, haveCurrency.toUpperCase(), buyTokenFullName, getCurrency.toUpperCase())}/>
+              <div styleName={isWidgetLink ? 'widgetSection' : 'section'} className={isWidgetLink ? 'section' : ''} >
+                <div styleName="formExchange" className={isWidget ? 'formExchange' : ''} >
+                  <div styleName="selectWrap">
+                    <SelectGroup
+                      switchBalanceFunc={this.switchBalance}
+                      inputValueLink={linked.haveAmount.pipe(this.setAmount)}
+                      selectedValue={haveCurrency}
+                      onSelect={this.handleSetHaveValue}
+                      label={<FormattedMessage id="partial243" defaultMessage="You sell" />}
+                      id="partialClosure456"
+                      tooltip={<FormattedMessage id="partial462" defaultMessage="The amount you have in your wallet or external wallet that you want to exchange" />}
+                      placeholder="0.00000000"
+                      usd={(maxAmount > 0 && isNonOffers) ? 0 : haveUsd}
+                      currencies={currencies}
+                      className={isWidget ? 'SelGroup' : ''}
+                      onFocus={() => this.extendedControlsSet(true)}
+                      onBlur={() => setTimeout(() => this.extendedControlsSet(false), 200)}
                     />
                   </div>
-                )}
-              </div>
-              {
-                (isSearching || (isNonOffers && maxAmount === 0)) && (
-                  <span className={isWidget ? 'searching' : ''} styleName="IsSearching">
-                    <FormattedMessage id="PartialPriceSearch" defaultMessage="Searching orders..." />
-                    <div styleName="loaderHolder">
-                      <div styleName="additionalLoaderHolder">
-                        <InlineLoader />
-                      </div>
-                    </div>
-                  </span>
-                )
-              }
-              { !oneCryptoCost.isFinite() && !isNonOffers && (
-                <FormattedMessage id="PartialPriceCalc" defaultMessage="Calc price" />
-              )}
-              {maxAmount > 0 && isNonOffers && linked.haveAmount.value > 0 && (
-                <Fragment>
-                  <p styleName="error" className={isWidget ? 'error' : ''} >
-                    <FormattedMessage id="PartialPriceNoOrdersReduce" defaultMessage="No orders found, try to reduce the amount" />
-                  </p>
-                  <p styleName="error" className={isWidget ? 'error' : ''} >
-                    <FormattedMessage id="PartialPriceReduceMin" defaultMessage="Maximum available amount: " />
-                    {maxAmount}{' '}{getCurrency.toUpperCase()}
-                  </p>
-                </Fragment>
-              )}
-              {isDeclinedOffer && (
-                <p styleName="error" className={isWidget ? 'error' : ''} >
-                  <FormattedMessage
-                    id="PartialOfferCantProceed1"
-                    defaultMessage="Request rejected, possibly you have not complete another swap {br}{link}"
-                    values={{
-                      link:
-                        <a className="errorLink" role="button" onClick={() => this.goTodeclineSwap()}> {/* eslint-disable-line */}
-                          <FormattedMessage id="PartialOfferCantProceed1_1" defaultMessage="Check here" />
-                        </a>,
-                      br: <br />,
-                    }}
-                  />
-                </p>
-              )}
-              {(this.doesComissionPreventThisOrder()
-                && BigNumber(getAmount).isGreaterThan(0)
-                && (this.state.haveAmount && this.state.getAmount)
-              ) && (
-                <p styleName="error" className={isWidget ? 'error' : ''} >
-                  <FormattedMessage
-                    id="ErrorBtcLowAmount879"
-                    defaultMessage="This amount is too low"
-                    values={{
-                      btcAmount: this.state.haveCurrency === 'btc' ? this.state.haveAmount : this.state.getAmount,
-                    }}
-                  />
-                </p>
-              )}
-              {
-                isFetching && (
-                  <span className={isWidget ? 'wait' : ''}>
-                    <FormattedMessage id="partial291" defaultMessage="Wait participant: " />
-                    <div styleName="loaderHolder">
-                      <div styleName="additionalLoaderHolder">
-                        <InlineLoader />
-                      </div>
-                    </div>
-                  </span>
-                )
-              }
-
-              {
-                (this.customWalletAllowed() && !isWidget) && (
-                  <Fragment>
-                    <div styleName="walletToggle walletToggle_site">
-                      <div styleName="walletOpenSide">
-                        <Toggle checked={!customWalletUse} onChange={this.handleCustomWalletUse} />
+                  {
+                    isShowBalance &&
+                      <p className={isWidget ? 'advice' : ''} styleName="maxAmount">
+                      {/*<FormattedMessage id="partial221" defaultMessage="Balance: " />*/}
+                      {/*Math.floor(maxBuyAmount.toNumber() * 1000) / 1000}{' '}{haveCurrency.toUpperCase()*/}
+                      <FormattedMessage id="partial767" defaultMessage="Balance: " />
+                      {balance.toFixed(4)}{'  '}{haveCurrency.toUpperCase()}
+                      </p>
+                  }
+                  {
+                    haveCurrency !== getCurrency && (
+                      <div className={isWidget ? 'flipBtn' : ''}>
                         {
-                          !isWidget && (
-                            <span styleName="specify">
-                              <FormattedMessage id="UseAnotherWallet" defaultMessage="Specify your receiving wallet address" />
-                            </span>
-                          )
+                          (extendedControls && balance > 0)
+                            && (
+                              <div styleName="extendedControls">
+                                <Select
+                                  changeBalance={this.changeBalance}
+                                  balance={balance}
+                                  currency={haveCurrency}
+                                  switching={this.handleFlipCurrency}
+                                  isExchange
+                                  maxAmountForExchange={Math.floor(maxBuyAmount.toNumber() * 1000) / 1000}
+                                />
+                              </div>
+                            )
                         }
                       </div>
-                        <div styleName={!customWalletUse ? 'anotherRecepient anotherRecepient_active' : 'anotherRecepient'}>
+                    )
+                  }
+                  <div styleName="selectWrap">
+                    <SelectGroup
+                      switchBalanceFunc={this.switchBalance}
+                      inputValueLink={linked.getAmount}
+                      selectedValue={getCurrency}
+                      onSelect={this.handleSetGetValue}
+                      label={<FormattedMessage id="partial255" defaultMessage="You get" />}
+                      id="partialClosure472"
+                      tooltip={<FormattedMessage id="partial478" defaultMessage="The amount you receive after the exchange" />}
+                      currencies={addSelectedItems}
+                      usd={getUsd}
+                      error={isLowAmount}
+                      className={isWidget ? 'SelGroup' : ''}
+                    />
+                    { oneCryptoCost.isGreaterThan(0) && oneCryptoCost.isFinite() && !isNonOffers && (
+                      <div styleName={isWidget ? 'priceSearch' : 'price'}>
+                        <FormattedMessage
+                          id="PartialPriceSearch502"
+                          defaultMessage="1 {getCurrency} = {haveCurrency}"
+                          values={{ getCurrency: `${getCurrency.toUpperCase()}`, haveCurrency: `${oneCryptoCost.toFixed(5)} ${haveCurrency.toUpperCase()}` }}
+                        />
+                      </div>
+                    )}
+                  </div>
+                  {
+                    (isSearching || (isNonOffers && maxAmount === 0)) && (
+                      <span className={isWidget ? 'searching' : ''} styleName="IsSearching">
+                        <FormattedMessage id="PartialPriceSearch" defaultMessage="Searching orders..." />
+                        <div styleName="loaderHolder">
+                          <div styleName="additionalLoaderHolder">
+                            <InlineLoader />
+                          </div>
+                        </div>
+                      </span>
+                    )
+                  }
+                  { !oneCryptoCost.isFinite() && !isNonOffers && (
+                    <FormattedMessage id="PartialPriceCalc" defaultMessage="Calc price" />
+                  )}
+                  {maxAmount > 0 && isNonOffers && linked.haveAmount.value > 0 && (
+                    <Fragment>
+                      <p styleName="error" className={isWidget ? 'error' : ''} >
+                        <FormattedMessage id="PartialPriceNoOrdersReduce" defaultMessage="No orders found, try to reduce the amount" />
+                      </p>
+                      <p styleName="error" className={isWidget ? 'error' : ''} >
+                        <FormattedMessage id="PartialPriceReduceMin" defaultMessage="Maximum available amount: " />
+                        {maxAmount}{' '}{getCurrency.toUpperCase()}
+                      </p>
+                    </Fragment>
+                  )}
+                  {isDeclinedOffer && (
+                    <p styleName="error" className={isWidget ? 'error' : ''} >
+                      <FormattedMessage
+                        id="PartialOfferCantProceed1"
+                        defaultMessage="Request rejected, possibly you have not complete another swap {br}{link}"
+                        values={{
+                          link:
+                            <a className="errorLink" role="button" onClick={() => this.goTodeclineSwap()}> {/* eslint-disable-line */}
+                              <FormattedMessage id="PartialOfferCantProceed1_1" defaultMessage="Check here" />
+                            </a>,
+                          br: <br />,
+                        }}
+                      />
+                    </p>
+                  )}
+                  {(this.doesComissionPreventThisOrder()
+                    && BigNumber(getAmount).isGreaterThan(0)
+                    && (this.state.haveAmount && this.state.getAmount)
+                  ) && (
+                    <p styleName="error" className={isWidget ? 'error' : ''} >
+                      <FormattedMessage
+                        id="ErrorBtcLowAmount879"
+                        defaultMessage="This amount is too low"
+                        values={{
+                          btcAmount: this.state.haveCurrency === 'btc' ? this.state.haveAmount : this.state.getAmount,
+                        }}
+                      />
+                    </p>
+                  )}
+                  {
+                    isFetching && (
+                      <span className={isWidget ? 'wait' : ''}>
+                        <FormattedMessage id="partial291" defaultMessage="Wait participant: " />
+                        <div styleName="loaderHolder">
+                          <div styleName="additionalLoaderHolder">
+                            <InlineLoader />
+                          </div>
+                        </div>
+                      </span>
+                    )
+                  }
+
+                  {
+                    (this.customWalletAllowed() && !isWidget) && (
+                      <Fragment>
+                        <div styleName="walletToggle walletToggle_site">
+                          <div styleName="walletOpenSide">
+                            <Toggle checked={!customWalletUse} onChange={this.handleCustomWalletUse} />
+                            {
+                              !isWidget && (
+                                <span styleName="specify">
+                                  <FormattedMessage id="UseAnotherWallet" defaultMessage="Specify your receiving wallet address" />
+                                </span>
+                              )
+                            }
+                          </div>
+                            <div styleName={!customWalletUse ? 'anotherRecepient anotherRecepient_active' : 'anotherRecepient'}>
+                            <div styleName="walletInput">
+                              <Input required disabled={customWalletUse} valueLink={linked.customWallet} pattern="0-9a-zA-Z" placeholder="Enter the destination address" />
+                            </div>
+                          </div>
+                        </div>
+                      </Fragment>
+                    )
+                  }
+                  {
+                    (this.customWalletAllowed() && isWidget) && (
+                      <Fragment>
+                        <FieldLabel>
+                          <strong>
+                            <FormattedMessage id="PartialYourWalletAddress" defaultMessage="Receiving wallet address" />
+                          </strong>
+                          &nbsp;
+                          <Tooltip id="PartialClosure">
+                            <FormattedMessage id="PartialClosure" defaultMessage="The wallet address to where cryptocurrency will be sent after the exchange" />
+                          </Tooltip >
+                        </FieldLabel>
                         <div styleName="walletInput">
                           <Input required disabled={customWalletUse} valueLink={linked.customWallet} pattern="0-9a-zA-Z" placeholder="Enter the destination address" />
+                          {customWallet.length !== 0 && !this.addressIsCorrect() && (
+                            <div styleName="notCorrect">
+                              <FormattedMessage
+                                id="Partial955"
+                                defaultMessage="Address not correct" />
+                            </div>
+                          )}
                         </div>
-                      </div>
-                    </div>
-                  </Fragment>
-                )
-              }
-              {
-                (this.customWalletAllowed() && isWidget) && (
-                  <Fragment>
-                    <FieldLabel>
-                      <strong>
-                        <FormattedMessage id="PartialYourWalletAddress" defaultMessage="Receiving wallet address" />
-                      </strong>
-                      &nbsp;
-                      <Tooltip id="PartialClosure">
-                        <FormattedMessage id="PartialClosure" defaultMessage="The wallet address to where cryptocurrency will be sent after the exchange" />
-                      </Tooltip >
-                    </FieldLabel>
-                    <div styleName="walletInput">
-                      <Input required disabled={customWalletUse} valueLink={linked.customWallet} pattern="0-9a-zA-Z" placeholder="Enter the destination address" />
-                      {customWallet.length !== 0 && !this.addressIsCorrect() && (
-                        <div styleName="notCorrect">
-                          <FormattedMessage
-                            id="Partial955"
-                            defaultMessage="Address not correct" />
+                        <div styleName="walletToggle">
+                          <Toggle checked={customWalletUse} onChange={this.handleCustomWalletUse} />
+                          {
+                            isWidgetBuild && (
+                              <FormattedMessage id="PartialUseInternalWallet" defaultMessage="Use internal wallet" />
+                            )
+                          }
+                          {
+                            isWidgetLink && (
+                              <FormattedMessage id="PartialUseSwapOnlineWallet" defaultMessage="Use Swap.Online wallet" />
+                            )
+                          }
                         </div>
-                      )}
+                      </Fragment>
+                    )
+                  }
+                  <div styleName="rowBtn" className={isWidget ? 'rowBtn' : ''}>
+                    <Button styleName="button" brand onClick={this.handleGoTrade} disabled={!canDoOrder}>
+                      <FormattedMessage id="partial541" defaultMessage="Exchange now" />
+                    </Button>
+                    <Button styleName="button buttonOrders" gray onClick={() => this.handlePush(isWidgetLink)} >
+                      <FormattedMessage id="partial544" defaultMessage="Show order book" />
+                    </Button>
+                  </div>
+                </div>
+                <br />
+                {
+                  BigNumber(estimatedFeeValues[haveCurrency]).isGreaterThan(0)
+                  && BigNumber(haveAmount).isGreaterThan(0)
+                  && BigNumber(haveAmount).isLessThanOrEqualTo(balance)
+                  && (
+                    <div className={isWidget ? 'feeValue' : ''}>
+                      <FormattedMessage
+                        id="PartialFeeValueWarn"
+                        defaultMessage="You will have to pay an additional miner fee up to {estimatedFeeValue} {haveCurrency}"
+                        values={{ haveCurrency: haveCurrency.toUpperCase(), estimatedFeeValue: estimatedFeeValues[haveCurrency] }}
+                      />
                     </div>
-                    <div styleName="walletToggle">
-                      <Toggle checked={customWalletUse} onChange={this.handleCustomWalletUse} />
-                      {
-                        isWidgetBuild && (
-                          <FormattedMessage id="PartialUseInternalWallet" defaultMessage="Use internal wallet" />
-                        )
-                      }
-                      {
-                        isWidgetLink && (
-                          <FormattedMessage id="PartialUseSwapOnlineWallet" defaultMessage="Use Swap.Online wallet" />
-                        )
-                      }
-                    </div>
-                  </Fragment>
-                )
-              }
-              <div styleName="rowBtn" className={isWidget ? 'rowBtn' : ''}>
-                <Button styleName="button" brand onClick={this.handleGoTrade} disabled={!canDoOrder}>
-                  <FormattedMessage id="partial541" defaultMessage="Exchange now" />
-                </Button>
-                <Button styleName="button buttonOrders" gray onClick={() => this.handlePush(isWidgetLink)} >
-                  <FormattedMessage id="partial544" defaultMessage="Show order book" />
-                </Button>
+                  )
+                }
               </div>
             </div>
-            <br />
-            {
-              BigNumber(estimatedFeeValues[haveCurrency]).isGreaterThan(0)
-              && BigNumber(haveAmount).isGreaterThan(0)
-              && BigNumber(haveAmount).isLessThanOrEqualTo(balance)
-              && (
-                <div className={isWidget ? 'feeValue' : ''}>
-                  <FormattedMessage
-                    id="PartialFeeValueWarn"
-                    defaultMessage="You will have to pay an additional miner fee up to {estimatedFeeValue} {haveCurrency}"
-                    values={{ haveCurrency: haveCurrency.toUpperCase(), estimatedFeeValue: estimatedFeeValues[haveCurrency] }}
-                  />
-                </div>
-              )
-            }
-          </div>
+
+          </Fragment>
         </div>
         <HowItWorks />
-      </Fragment>
+      </div>
     )
   }
 }

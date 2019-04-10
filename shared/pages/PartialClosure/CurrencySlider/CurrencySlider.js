@@ -5,8 +5,10 @@ import cssModules from 'react-css-modules'
 
 import { FormattedMessage } from 'react-intl'
 
-import Coin from 'components/Coin/Coin'
-import CurrencyIcon, { iconNames } from 'components/ui/CurrencyIcon/CurrencyIcon'
+import btc from './images/btc.svg'
+import eth from './images/eth.svg'
+import usdt from './images/usdt.svg'
+import ltc from './images/ltc.svg'
 
 
 @cssModules(styles, { allowMultiple: true })
@@ -20,11 +22,10 @@ export default class CurrencySlider extends Component {
           </h3>
           <div styleName="currencyListWrap">
             <ul styleName="currencyList">
-              <li styleName="currencyListItem currencyListItemBtc"><CurrencyIcon name="btc" /></li>
-              <li styleName="currencyListItem currencyListItemEth"><CurrencyIcon name="eth" /></li>
-              <li styleName="currencyListItem"><CurrencyIcon name="usdt" /></li>
-              <li styleName="currencyListItem"><CurrencyIcon name="ltc" /></li>
-              <li styleName="currencyListItem currencyListItemEos"><CurrencyIcon name="eos" /></li>
+              <li styleName="currencyListItem currencyListItemBtc"><img src={btc} alt="" /></li>
+              <li styleName="currencyListItem currencyListItemEth"><img src={eth} alt="" /></li>
+              <li styleName="currencyListItem"><img src={usdt} alt="" /></li>
+              <li styleName="currencyListItem"><img src={ltc} alt="" /></li>
             </ul>
             <a href="#" styleName="currencyAdd">
               +
