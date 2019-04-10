@@ -18,6 +18,8 @@ const link = [
     { link : links.footer.widget, title: <FormattedMessage id="FooterOurProductsWidget" defaultMessage="Widget" /> },
     /* Chrome extantion https://chrome.google.com/webstore/detail/swaponline/oldojieloelkkfeacfinhcngmbkepnlm */
     { link : links.footer.chromeextantion, title: <FormattedMessage id="FooterOurProductsChromeExtantion" defaultMessage="Chrome extantion" /> },
+    /* Bank dashboard */
+    { link: links.footer.bankdashboard, title: <FormattedMessage id="FooterOurProductsBankDashboard" defaultMessage="Bank dashboard" /> },
   ],
   [
     /* Партнерам (Partnership) */
@@ -42,6 +44,10 @@ const link = [
     { link: links.footer.wiki, title: <FormattedMessage id="FooterTechnologyWiki" defaultMessage="Wiki" /> },
     /* GitHub https://github.com/swaponline */
     { link: links.footer.github, title: <FormattedMessage id="FooterTechnologyGithub" defaultMessage="GitHub" /> },
+    /* Сравнение (Comparsion) */
+    { link: links.footer.comparsion, title: <FormattedMessage id="FooterTechnologyComparsion" defaultMessage="Comparsion" /> },
+    /* LN research */
+    { link: links.footer.lnresearch, title: <FormattedMessage id="FooterTechnologyLNResearch" defaultMessage="LN" />, icon: 'lightling' },
   ],
   [
     /* О компании (About company) */
@@ -59,10 +65,26 @@ const link = [
   ],
 ]
 
+const getIcon = (icon) => {
+  switch (icon) {
+    case 'lightling':
+      return <img alt="Lightling" src="https://s.w.org/images/core/emoji/11/svg/26a1.svg" />
+    default:
+      return null
+  }
+}
 const Rows = items => items.map((item, index) => (
   <Fragment key={index}>
     { item.header && <h4>{item.header}</h4> }
-    <a href={item.link} target="_blank" rel="noopener noreferrer">{item.title}</a>
+    { item.icon && (
+      <div>
+        { getIcon(item.icon) }
+        <a href={item.link} target="_blank" rel="noopener noreferrer">{item.title}</a>
+      </div>
+    )}
+    { !item.icon && (
+      <a href={item.link} target="_blank" rel="noopener noreferrer">{item.title}</a>
+    )}
   </Fragment>
 ))
 
