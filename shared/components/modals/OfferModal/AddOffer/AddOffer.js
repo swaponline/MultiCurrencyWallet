@@ -141,7 +141,12 @@ export default class AddOffer extends Component {
   }
 
   updateExchangeRate = async (sellCurrency, buyCurrency) => {
-    const exchangeRate = await actions.user.getExchangeRate(sellCurrency, buyCurrency)
+    const exchangeRateSell = await actions.user.getExchangeRate(sellCurrency, 'usd')
+    const exchangeRateBuy = await actions.user.getExchangeRate(buyCurrency, 'usd')
+
+    const exchangeRate = sellCurrency === 'swap' || buyCurrency === 'swap'
+      ? await actions.user.getExchangeRate(sellCurrency, buyCurrency)
+      : BigNumber(exchangeRateSell).div(exchangeRateBuy).dp(4, BigNumber.ROUND_CEIL)
 
     return new Promise((resolve, reject) => {
       this.setState({ exchangeRate }, () => resolve())
