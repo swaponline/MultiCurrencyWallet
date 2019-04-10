@@ -27,6 +27,10 @@ import estimateFeeValue from './estimateFeeValue'
 
 import { migrate } from './migrations/'
 
+import getUnixTimeStamp from './getUnixTimeStamp'
+import { cacheStorageGet, cacheStorageSet } from './cache'
+
+
 export default {
   eos,
   // xlm,
@@ -67,4 +71,8 @@ export {
   getPageOffset,
   getScrollBarWidth,
   paddingForSwapList,
+
+  getUnixTimeStamp,
+  cacheStorageGet,
+  cacheStorageSet,
 }
