@@ -127,7 +127,11 @@ const getExchangeRate = (sellCurrency, buyCurrency) =>
       resolve(exchangeRate)
     })
       .catch(() => {
-        resolve(1)
+        if (constants.customEcxchangeRate[sellCurrency.toLowerCase()] !== undefined) {
+          resolve(constants.customEcxchangeRate[sellCurrency])
+        } else {
+          resolve(1)
+        }
       })
   })
 
