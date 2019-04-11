@@ -12,7 +12,7 @@ const names = [
   'eth',
   'btc',
   'ltc',
-  'usdt'б
+  'usdt',
 ]
 
 @cssModules(styles, { allowMultiple: true })
