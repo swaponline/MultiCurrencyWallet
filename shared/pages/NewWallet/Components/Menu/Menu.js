@@ -3,26 +3,25 @@ import React, { Component } from 'react'
 import styles from './Menu.scss'
 import cssModules from 'react-css-modules'
 
+
+const titles = [
+  'Our projects',
+  'Our vision',
+  'How to invest'
+]
+
 @cssModules(styles)
 export default class Menu extends Component {
   render() {
     return (
       <ul styleName="menu">
+      {titles.map((items, index) => (
         <li styleName="menuItem">
           <a styleName="menuLink">
-            Our projects
+            {items}
           </a>
         </li>
-        <li styleName="menuItem">
-          <a styleName="menuLink">
-            Our vision
-          </a>
-        </li>
-        <li styleName="menuItem">
-          <a styleName="menuLink">
-            How to invest
-          </a>
-        </li>
+        ))}
       </ul>
     )
   }

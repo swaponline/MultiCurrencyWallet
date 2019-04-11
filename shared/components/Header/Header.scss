@@ -27,9 +27,9 @@
 	left: 0;
 	right: 0;
   z-index: 1;
-  background: #F5F5F5;
   transition: position 0.3s ease;
   position: absolute;
+  background: #F5F5F5;
 }
 
 .container {
@@ -46,6 +46,10 @@
 	position: fixed;
   height: 88px;
 	animation:slide-down 0.4s;
+}
+
+.header-wallet {
+  background: #fff;
 }
 
 .header-mobile > div {

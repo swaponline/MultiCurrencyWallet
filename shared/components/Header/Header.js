@@ -128,6 +128,7 @@ export default class Header extends Component {
       isTourOpen: false,
       isShowingMore: false,
       sticky: false,
+      isWallet: false,
       menuItems: [
         {
           title: props.intl.formatMessage(messages.projects),
@@ -155,7 +156,7 @@ export default class Header extends Component {
   }
 
   componentDidMount() {
-    //window.addEventListener('scroll', this.handleScroll)
+    // window.addEventListener('scroll', this.handleScroll)
 
     const checker = setInterval(() => {
       switch (true) {
@@ -170,7 +171,7 @@ export default class Header extends Component {
   }
 
   componentWillUnmount() {
-//window.removeEventListener('scroll', this.handleScroll)
+    // window.removeEventListener('scroll', this.handleScroll)
     this.startTourAndSignInModal()
 
   }
@@ -249,7 +250,9 @@ export default class Header extends Component {
 
   handleScroll = () =>  {
     if (this.props.history.location.pathname === '/') {
-      this.setState(() => ({ sticky: false }))
+      this.setState(() => ({
+        sticky: false,
+      }))
       return
     }
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop
@@ -288,11 +291,12 @@ export default class Header extends Component {
   }
 
   render() {
-
-    const { sticky, menuItems, isTourOpen, isShowingMore, path, isPartialTourOpen } = this.state
+    const { sticky, menuItems, isTourOpen, isShowingMore, path, isPartialTourOpen, isWallet } = this.state
     const { intl: { locale }, history, pathname, feeds, peer, isSigned, isInputActive } = this.props
 
     const accentColor = '#510ed8'
+
+    const way = history.location.pathname === '/'
 
     if (config && config.isWidget) {
       return (
@@ -318,7 +322,7 @@ export default class Header extends Component {
     }
 
     return (
-      <div styleName={sticky ? 'header header-fixed' : 'header'}>
+      <div styleName={sticky ? 'header header-fixed' : way ? 'header header-wallet' : 'header'}>
         <WidthContainer styleName="container">
           <LogoTooltip withLink />
           <Nav menu={menuItems} />

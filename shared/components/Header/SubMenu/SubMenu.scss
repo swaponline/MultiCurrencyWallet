@@ -9,6 +9,13 @@
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
+  visibility: hidden;
+  transition: 0.2s 1s;
+}
+
+div > div > div > div > div:hover .submenu {
+  visibility: visible;
+  transition-delay: 0s;
 }
 
 .submenu-item {

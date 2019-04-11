@@ -36,15 +36,15 @@ export default class Nav extends Component {
   }
 
   render() {
-    const { menu, intl: { locale } } = this.props
+    const { menu, intl: { locale }, history } = this.props
 
     return (
       <div styleName="nav">
         <Fragment>
-          {
-            menu
-              .filter(i => i.isDesktop !== false)
-              .map(({ title, link, exact, tour, haveSubmenu }) => (
+          {menu
+            .filter(i => i.isDesktop !== false)
+            .map(({ title, link, exact, tour, haveSubmenu }) => (
+              <div styleName="mainMenu">
                 <NavLink
                   onClick={this.handleScrollToTopClick}
                   key={title}
@@ -54,11 +54,13 @@ export default class Nav extends Component {
                   to={localisedUrl(locale, link)}
                   activeClassName={styles.active}
                 >
-                  {haveSubmenu && <SubMenu />}
                   {title}
                 </NavLink>
-              )
-              )
+                <div>
+                  {haveSubmenu && <SubMenu history={history} locale={locale} />}
+                </div>
+              </div>
+            ))
           }
         </Fragment>
       </div>

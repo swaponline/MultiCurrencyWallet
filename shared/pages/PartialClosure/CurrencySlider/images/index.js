@@ -10,14 +10,9 @@ import usdt from './usdt.svg'
 import xrp from './xrp.svg'
 
 
-export {
+export default {
   btc,
-  dash,
   eth,
-  fire,
   ltc,
-  swap,
-  trx,
   usdt,
-  xrp,
 }

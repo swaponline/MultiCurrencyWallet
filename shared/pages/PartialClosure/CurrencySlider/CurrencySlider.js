@@ -5,11 +5,15 @@ import cssModules from 'react-css-modules'
 
 import { FormattedMessage } from 'react-intl'
 
-import btc from './images/btc.svg'
-import eth from './images/eth.svg'
-import usdt from './images/usdt.svg'
-import ltc from './images/ltc.svg'
+import images from './images'
 
+
+const names = [
+  'eth',
+  'btc',
+  'ltc',
+  'usdt'б
+]
 
 @cssModules(styles, { allowMultiple: true })
 export default class CurrencySlider extends Component {
@@ -22,10 +26,17 @@ export default class CurrencySlider extends Component {
           </h3>
           <div styleName="currencyListWrap">
             <ul styleName="currencyList">
-              <li styleName="currencyListItem currencyListItemBtc"><img src={btc} alt="" /></li>
-              <li styleName="currencyListItem currencyListItemEth"><img src={eth} alt="" /></li>
-              <li styleName="currencyListItem"><img src={usdt} alt="" /></li>
-              <li styleName="currencyListItem"><img src={ltc} alt="" /></li>
+              {names.map((item, index) => {
+                return"t(
+                <li
+                  styleName={item !== "teth"t || item !== "tbtc"t ?
+                    "currencyListItem" :
+                    `currencyListItem currencyListItem${item.toUpperCase()}`}
+                  key={index}
+                >
+                  <img src={images[item]} alt="" />
+                </li>
+              )})}
             </ul>
             <a href="#" styleName="currencyAdd">
               +
