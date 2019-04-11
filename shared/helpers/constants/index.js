@@ -9,6 +9,7 @@ import defaultFeeRates from './DEFAULT_FEE_RATES'
 import minAmount from './minAmount'
 import minAmountOffer from './minAmountOffer'
 import coinsWithDynamicFee from './coinsWithDynamicFee'
+import customEcxchangeRate from './customEcxchangeRate'
 
 
 export default {
@@ -23,4 +24,5 @@ export default {
   minAmount,
   minAmountOffer,
   coinsWithDynamicFee,
+  customEcxchangeRate,
 }

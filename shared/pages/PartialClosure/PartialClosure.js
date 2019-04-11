@@ -254,7 +254,7 @@ export default class PartialClosure extends Component {
         exGetRate,
       }))
     } catch (e) {
-      console.log('Cryptonator offline')
+      console.warn('Cryptonator offline')
     }
   }
 
@@ -424,7 +424,6 @@ export default class PartialClosure extends Component {
         }
       })
 
-    this.getUsdBalance()
 
     const didFound = await this.setOrderOnState(sortedOrders)
 
@@ -436,7 +435,7 @@ export default class PartialClosure extends Component {
   }
 
   setOrderOnState = (orders) => {
-    const { exHaveRate, exGetRate, haveAmount, getCurrency, estimatedFeeValues } = this.state
+    const { haveAmount, getCurrency, estimatedFeeValues } = this.state
 
     let maxAllowedSellAmount = BigNumber(0)
     let maxAllowedGetAmount = BigNumber(0)
@@ -454,14 +453,9 @@ export default class PartialClosure extends Component {
 
           maxAllowedGetAmount = (maxAllowedGetAmount.isLessThanOrEqualTo(item.getAmount)) ? BigNumber(item.getAmount) : maxAllowedGetAmount
 
-          const haveUsd = BigNumber(exHaveRate).times(haveAmount)
-          const getUsd  = BigNumber(exGetRate).times(item.getAmount)
-
           isFound = true
 
           newState = {
-            haveUsd: Number(haveUsd).toFixed(2),
-            getUsd: Number(getUsd).toFixed(2),
             isNonOffers: false,
             goodRate: item.exRate,
             peer: item.peer,
@@ -664,6 +658,7 @@ export default class PartialClosure extends Component {
 
   checkPair = () => {
     const { getCurrency, haveCurrency } = this.state
+    this.getUsdBalance()
 
     const noPairToken = (config && config.isWidget) ? config.erc20token : 'swap'
 
@@ -736,9 +731,12 @@ export default class PartialClosure extends Component {
   render() {
     const { currencies, addSelectedItems, currenciesData, tokensData, intl: { locale, formatMessage } } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching,
-      isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet, getUsd, haveUsd,
+      isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet, exHaveRate, exGetRate,
       maxBuyAmount, getAmount, goodRate, extendedControls, estimatedFeeValues, isToken, dynamicFee, haveAmount,
     } = this.state
+
+    const haveUsd = BigNumber(exHaveRate).times(haveAmount).dp(2, BigNumber.ROUND_CEIL)
+    const getUsd  = BigNumber(exGetRate).times(getAmount).dp(2, BigNumber.ROUND_CEIL)
 
     const haveCurrencyData = currenciesData.find(item => item.currency === haveCurrency.toUpperCase())
     const haveTokenData = tokensData.find(item => item.currency === haveCurrency.toUpperCase())

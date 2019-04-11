@@ -1,4 +1,4 @@
-import helpers, { request, constants, api } from 'helpers'
+import helpers, { request, constants, api, cacheStorageGet, cacheStorageSet } from 'helpers'
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
 import web3 from 'helpers/web3'
@@ -59,10 +59,15 @@ const loginWithKeychain = async () => {
 
 const getBalance = () => {
   const { user: { ethData: { address } } } = getState()
+
+  const balanceInCache = cacheStorageGet('currencyBalances', `eth_${address}`)
+  if (balanceInCache !== false) return balanceInCache
+
   return web3.eth.getBalance(address)
     .then(result => {
       const amount = web3.utils.fromWei(result)
 
+      cacheStorageSet('currencyBalances', `eth_${address}`, amount, 30)
       reducers.user.setBalance({ name: 'ethData', amount })
       return amount
     })
