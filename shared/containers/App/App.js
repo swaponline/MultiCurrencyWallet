@@ -159,7 +159,7 @@ export default class App extends React.Component {
         </Fragment>
       )
 
-      const newMain = {
+      const newMain = (
         <Fragment>
         <Seo location={history.location} />
         { /*<Header /> */ }
@@ -171,7 +171,7 @@ export default class App extends React.Component {
         <RequestLoader />
         <ModalConductor />
         <NotificationConductor />
-      </Fragment>}
+      </Fragment>)
 
     return (
       !isNew ? (
