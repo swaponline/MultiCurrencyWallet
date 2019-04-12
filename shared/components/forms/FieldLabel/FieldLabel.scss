@@ -4,28 +4,10 @@
 
 .inRow {
   margin-top: 20px;
-  background: #fff;
-  position: absolute;
-  top: -12px;
-  font-family: 'Inter-SemiBold', sans-serif;
-  z-index: 111111;
-  left: 11px;
-  padding: 0 10px;
-  padding-right: 25px;
-  strong {
-    font-weight: 500;
-  }
+
   &:first-child {
     margin-top: 0;
   }
-}
-
-.inDropDown {
-  display: flex;
-  padding: 0 10px;
-  margin-left: -1px;
-  top: -13px;
-  padding-right: 25px;
 }
 
 @include media-tablet-landscape-and-lower  {

@@ -3668,7 +3668,7 @@
   },
   {
     "id": "PartialPriceSearch502",
-    "message": "1 {getCurrency} = {haveCurrency}",
+    "message": "Price: 1 {getCurrency} = {haveCurrency}",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]

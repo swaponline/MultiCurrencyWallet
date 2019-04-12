@@ -12,6 +12,7 @@ input, textarea {
 .inputContainer {
   position: relative;
   background-color: #fff;
+  box-shadow: rgba(#000, 0.08) 0 3px 9px 0;
   border-radius: 6px;
 
   &.disabled {
@@ -27,7 +28,6 @@ input, textarea {
   }
 }
 
-
 .textUsd {
   position: absolute;
   top: 13px;
@@ -41,30 +41,21 @@ input, textarea {
 
 .input {
   width: 100%;
-  height: 56px;
+  height: 60px;
   padding: 0 16px;
-  border-radius: 3px;
   // TODO placeholder doesn't change. Check on Messages page in New Message textarea
   //+input-placeholder()
   vertical-align: top;
-  line-height: 14px;
+  line-height: 16px;
+  border-radius: 6px;
   box-shadow: none;
-  font-size: 14px;
-  font-family: 'Roboto Mono', monospace;
-  padding-left: 20px;
+  font-size: 16px;
+  @include ff;
   color: $color-f-main;
   appearance: textfield;
 
   &:focus {
-    border: 1px solid #1E2A4B;
-    outline: none;
-  }
-}
-
-.inputError {
-  border: 1px solid red;
-  &:focus {
-    border: 1px solid red;
+    border: 1px solid #3b95ff;
   }
 }
 

@@ -1,7 +1,8 @@
 .main {
   position: relative;
+  z-index: 1;
   padding-bottom: 55px;
-
+  min-height: calc(100vh - 125px);
   main {
     margin-top: 88px;
   }
