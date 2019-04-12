@@ -10,18 +10,21 @@ import BigNumber from 'bignumber.js'
 const Select = ({ balance, currency, changeBalance, switching, all, estimatedFeeValues, ...props }) => {
   const balanceToRender = BigNumber(balance).dp(6, BigNumber.ROUND_CEIL)
   return (
-  <Fragment>
-    <div styleName="groupField">
-      <div styleName="balance">{`${balanceToRender} ${currency.toUpperCase()}`}</div>
-      <div styleName="group">
-        <span styleName="cell" onClick={() => changeBalance(BigNumber(balance).div(4))}><FormattedMessage id="Select23" defaultMessage="25%" /></span>
-        <span styleName="cell" onClick={() => changeBalance(BigNumber(balance).div(4))}><FormattedMessage id="Select25" defaultMessage="50%" /></span>
-        <span styleName="cell" onClick={() => changeBalance(BigNumber(balance).div(2))}><FormattedMessage id="Select30" defaultMessage="75%" /></span>
-        <span styleName="cell" onClick={() => changeBalance(BigNumber(balance).div(2))}><FormattedMessage id="Select40" defaultMessage="100%" /></span>
+    <Fragment>
+      <div styleName="groupField">
+        <div styleName="balance">
+          {`${balanceToRender} ${currency.toUpperCase()}`}
+        </div>
+        <div styleName="group">
+          <span styleName="cell" onClick={() => changeBalance(BigNumber(balance).div(4))}><FormattedMessage id="Select23" defaultMessage="25%" /></span>
+          <span styleName="cell" onClick={() => changeBalance(BigNumber(balance).div(4))}><FormattedMessage id="Select25" defaultMessage="50%" /></span>
+          <span styleName="cell" onClick={() => changeBalance(BigNumber(balance).div(2))}><FormattedMessage id="Select30" defaultMessage="75%" /></span>
+          <span styleName="cell" onClick={() => changeBalance(BigNumber(balance).div(2))}><FormattedMessage id="Select40" defaultMessage="100%" /></span>
+        </div>
+        <Switching onClick={switching} />
       </div>
-      <Switching onClick={switching} />
-    </div>
-  </Fragment>
-)}
+    </Fragment>
+  )
+}
 
 export default cssModules(Select, styles)
