@@ -1,6 +1,6 @@
 .widthContainer {
-  max-width: 1200px;
-  margin: 0 auto;
+  // max-width: 1200px;
+  // margin: 0 auto;
 }
 
 .widthContainerIn {
@@ -46,15 +46,15 @@
 @include media-tablet {
 
   .widthContainer {
-    padding-right: 40px;
-    padding-left: 40px;
+    // padding-right: 40px;
+    // padding-left: 40px;
   }
 }
 
 @include media-desktop {
 
   .widthContainer {
-    padding-right: 2%;
-    padding-left: 2%;
+    // padding-right: 2%;
+    // padding-left: 2%;
   }
 }

@@ -4,29 +4,33 @@
   flex: auto 1 1;
   display: flex;
   align-items: center;
-  padding-left: 50px;
+}
+
+.mainMenu {
+  margin-left: 25px;
 }
 
 .link {
-  margin-left: 25px;
   cursor: pointer;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 16px;
   text-decoration: none;
-  color: #dccef7;
+  color: rgba(0, 0, 0, 0.6);
+  position: relative;
+  border-bottom: 2px solid transparent;
 
   &:first-child {
     margin-left: 0;
   }
 
   &:hover {
-    color: #fff;
+    color: rgba(0, 0, 0, 0.6);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.6);
   }
 
   &.active {
-    border-bottom: 2px solid #fff;
-    font-weight: 700;
-    color: #fff;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.6);
+    color: rgba(0, 0, 0, 0.6);
   }
 }
 

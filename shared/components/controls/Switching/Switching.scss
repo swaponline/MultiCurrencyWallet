@@ -1,9 +1,9 @@
 .Switching {
   display: flex;
-  background: url('./images/Switching.svg') 50% 50% no-repeat;
-  height: 58px;
-  width: 32px;
+  background: url('./images/swapIcon.svg') 50% 50% no-repeat;
+  height: 44px;
+  position: relative;
   cursor: pointer;
-  border: none;
-  transform: rotate(90deg);
+  width: 30px;
+  border-radius: 3px;
 }
