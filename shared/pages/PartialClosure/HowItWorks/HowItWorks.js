@@ -44,7 +44,7 @@ const HowItWorks = ({ className }) => (
         <span styleName="HowItWorksInfo">
           <FormattedMessage
             id="HowItWorks45"
-            defaultMessage="Usually, the exchange takes about a minute. At the end of the procedure, you will see the txid and will be able to check the completion of the transfer." />
+            defaultMessage="Usually, the exchange takes about a minute. At the end of the procedure, you will see the txid and will be able to check the completion of the transfer." /> {/* eslint-disable-line */}
         </span>
       </div>
     </div>

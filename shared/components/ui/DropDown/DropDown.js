@@ -49,7 +49,13 @@ export default class DropDown extends Component {
     this.state = {
       selectedValue: initialValue || selectedValue || 0,
       inputValue: '',
+      infoAboutCurrency: ' ',
+      error: false,
     }
+  }
+
+  componentDidMount() {
+    this.showPercentChange1H()
   }
 
   toggle = () => {
@@ -110,9 +116,40 @@ export default class DropDown extends Component {
     return item.title
   }
 
+  showPercentChange1H = () => {
+    const { items } = this.props
+
+    let infoAboutCurrency = []
+
+    fetch('https://noxon.io/cursAll.php')
+      .then(res => res.json())
+      .then(
+        (result) => {
+          result.map(res =>
+            items.map(item => { // eslint-disable-line
+              if (item.name === res.symbol) {
+                infoAboutCurrency.push({
+                  name: res.symbol,
+                  change: res.percent_change_1h,
+                })
+              }
+            })
+          )
+          this.setState({
+            infoAboutCurrency,
+          })
+        },
+        (error) => {
+          this.setState({
+            error,
+          })
+        }
+      )
+  }
+
   render() {
     const { className, items, isToggleActive, selectedValue, name, placeholder, label, tooltip, id, switchBalanceFunc } = this.props
-    const { inputValue } = this.state
+    const { inputValue, infoAboutCurrency, error } = this.state
 
     const dropDownStyleName = cx('dropDown', {
       'active': isToggleActive,
@@ -123,7 +160,6 @@ export default class DropDown extends Component {
     const itemsFiltered = this.props.items
       .filter(item => item.name.includes(inputValue.toUpperCase()))
       .filter(item => item.value !== selectedValue)
-
 
     return (
       <ClickOutside
@@ -169,7 +205,9 @@ export default class DropDown extends Component {
                     >
                       <span styleName="shortTitle">{this.renderItem(item)}</span>
                       <span styleName="fullTitle">{item.fullTitle}</span>
-                      <span styleName="range rangeUp">+5.26%</span>
+                      {infoAboutCurrency.map(item => (
+                        !error && <span styleName="range rangeUp">{item.change}</span>
+                      ))}
                     </div>
                   ))
                 ) : (
@@ -181,7 +219,12 @@ export default class DropDown extends Component {
                     >
                       <span styleName="shortTitle">{this.renderItem(item)}</span>
                       <span styleName="fullTitle">{item.fullTitle}</span>
-                      <span styleName="range rangeUp">+5.26%</span>
+                      {!error && infoAboutCurrency.map((currency, index) => (
+                        item.name === currency.name &&
+                          <span key={index} styleName={currency.change < 0 ? 'range rangeDown' : 'range rangeUp'}>
+                            {currency.change} %
+                          </span>
+                      ))}
                     </div>
                   ))
                 )}

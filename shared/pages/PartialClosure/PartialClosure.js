@@ -805,9 +805,9 @@ export default class PartialClosure extends Component {
     return (
       <div styleName="exchangeWrap">
         <div styleName="promoContainer">
-    `      <Fragment>
+          <Fragment>
             <div styleName="container alignCenter">
-              <Promo subTitle={subTitle(sellTokenFullName, haveCurrency.toUpperCase(), buyTokenFullName, getCurrency.toUpperCase())}/>
+              <Promo subTitle={subTitle(sellTokenFullName, haveCurrency.toUpperCase(), buyTokenFullName, getCurrency.toUpperCase())} />
               <div styleName={isWidgetLink ? 'widgetSection' : 'section'} className={isWidgetLink ? 'section' : ''} >
                 <div styleName="formExchange" className={isWidget ? 'formExchange' : ''} >
                   <div styleName="selectWrap">
@@ -827,14 +827,13 @@ export default class PartialClosure extends Component {
                       onBlur={() => setTimeout(() => this.extendedControlsSet(false), 200)}
                     />
                   </div>
-                  {
-                    isShowBalance &&
-                      <p className={isWidget ? 'advice' : ''} styleName="maxAmount">
-                      {/*<FormattedMessage id="partial221" defaultMessage="Balance: " />*/}
-                      {/*Math.floor(maxBuyAmount.toNumber() * 1000) / 1000}{' '}{haveCurrency.toUpperCase()*/}
+                  {isShowBalance &&
+                    <p className={isWidget ? 'advice' : ''} styleName="maxAmount">
+                      {/* <FormattedMessage id="partial221" defaultMessage="Balance: " /> */}
+                      {/* Math.floor(maxBuyAmount.toNumber() * 1000) / 1000}{' '}{haveCurrency.toUpperCase() */}
                       <FormattedMessage id="partial767" defaultMessage="Balance: " />
                       {balance.toFixed(4)}{'  '}{haveCurrency.toUpperCase()}
-                      </p>
+                    </p>
                   }
                   {
                     haveCurrency !== getCurrency && (
@@ -963,7 +962,7 @@ export default class PartialClosure extends Component {
                               )
                             }
                           </div>
-                            <div styleName={!customWalletUse ? 'anotherRecepient anotherRecepient_active' : 'anotherRecepient'}>
+                          <div styleName={!customWalletUse ? 'anotherRecepient anotherRecepient_active' : 'anotherRecepient'}>
                             <div styleName="walletInput">
                               <Input required disabled={customWalletUse} valueLink={linked.customWallet} pattern="0-9a-zA-Z" placeholder="Enter the destination address" />
                             </div>

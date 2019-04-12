@@ -13,7 +13,6 @@ import About            from 'pages/About/About'
 import Currency         from 'pages/Currency/Currency'
 import PartialClosure   from 'pages/PartialClosure/PartialClosure'
 import CurrencyWallet   from 'pages/CurrencyWallet/CurrencyWallet'
-import NewWallet        from 'pages/NewWallet/NewWallet'
 
 import config from 'app-config'
 

@@ -159,38 +159,25 @@ export default class App extends React.Component {
         </Fragment>
       )
 
-      const newMain = (
-        <Fragment>
+    const newMain = (
+      <Fragment>
         <Seo location={history.location} />
-        { /*<Header /> */ }
-          <main>
-            {children}
-          </main>
+        { /* <Header /> */ }
+        <main>
+          {children}
+        </main>
         <Core />
         { /* !isMobile && <Footer /> */ }
         <RequestLoader />
         <ModalConductor />
         <NotificationConductor />
-      </Fragment>)
+      </Fragment>
+    )
 
     return (
-      !isNew ? (
-        process.env.LOCAL === 'local' ? (
-          <HashRouter>
-            {mainContent}
-          </HashRouter>
-        ) : (
-          mainContent
-        )
-      ) : (
-        process.env.LOCAL === 'local' ? (
-          <HashRouter>
-            (newMain)
-          </HashRouter>
-        ) : (
-          newMain
-        )
-      )
+      process.env.LOCAL === 'local'
+        ? (<HashRouter>{!isNew ? mainContent : newMain}</HashRouter>)
+        : !isNew ? mainContent : newMain
     )
   }
 }

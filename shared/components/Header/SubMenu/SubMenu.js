@@ -10,8 +10,8 @@ import { localisedUrl } from 'helpers/locale'
 
 
 const subMenuItems = [
-  { link: "/exchange",                  title: <FormattedMessage id="FooterOurProductsExchange" defaultMessage="Exchange" /> },
-  { link: "/",                          title: <FormattedMessage id="FooterOurProductsWallet" defaultMessage="Wallet" /> },
+  { link: '/exchange',                  title: <FormattedMessage id="FooterOurProductsExchange" defaultMessage="Exchange" /> },
+  { link: '/',                          title: <FormattedMessage id="FooterOurProductsWallet" defaultMessage="Wallet" /> },
   { link: links.footer.widget,          title: <FormattedMessage id="FooterOurProductsWidget" defaultMessage="Widget" /> },
   { link: links.footer.chromeextantion, title: <FormattedMessage id="FooterOurProductsChromeExtantion" defaultMessage="Chrome extantion" /> },
   { link: links.footer.bankdashboard,   title: <FormattedMessage id="FooterOurProductsBankDashboard" defaultMessage="Bank dashboard" /> },

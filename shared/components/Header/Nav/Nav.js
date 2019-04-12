@@ -43,11 +43,11 @@ export default class Nav extends Component {
         <Fragment>
           {menu
             .filter(i => i.isDesktop !== false)
-            .map(({ title, link, exact, tour, haveSubmenu }) => (
+            .map(({ title, link, exact, tour, haveSubmenu, index }) => (
               <div styleName="mainMenu">
                 <NavLink
                   onClick={this.handleScrollToTopClick}
-                  key={title}
+                  key={index}
                   data-tut={`${tour}`}
                   exact={exact}
                   styleName="link"
@@ -57,7 +57,7 @@ export default class Nav extends Component {
                   {title}
                 </NavLink>
                 <div>
-                  {haveSubmenu && <SubMenu history={history} locale={locale} />}
+                  {haveSubmenu && <SubMenu history={history} locale={locale} key={index} />}
                 </div>
               </div>
             ))
