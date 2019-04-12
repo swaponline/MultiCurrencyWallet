@@ -3,8 +3,8 @@
   display: inline-flex;
   height: 60px;
   margin-bottom: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
   box-shadow: rgba(#000, 0.08) 0 3px 9px 0;
-  border-radius: 6px;
   text-align: center;
 }
 
@@ -22,7 +22,7 @@ input:disabled {
   background-color:#eee;
 }
 
-@include media-mobile { 
+@include media-mobile {
   .groupField {
     width: calc(100vw - 35px);
     display: flex;

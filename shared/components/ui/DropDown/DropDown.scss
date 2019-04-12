@@ -143,17 +143,19 @@
 }
 
 .selectedItem {
-  height: 60px;
+  height: 57px;
   line-height: 60px;
   padding-right: 46px;
   padding-left: 16px;
+  min-width: 135px;
   cursor: pointer;
   text-align: left;
-  font-size: 20px;
+  font-size: 16px;
   font-family: 'Inter-SemiBold', sans-serif;
   white-space: nowrap;
   text-transform: capitalize;
   font-weight: 500;
+  border-color: grey;
   @include no-user-select;
   img {
     display: none;

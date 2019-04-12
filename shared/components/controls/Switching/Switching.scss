@@ -2,9 +2,8 @@
   display: flex;
   background: url('./images/swapIcon.svg') 50% 50% no-repeat;
   height: 44px;
-  width: 32px;
+  position: relative;
   cursor: pointer;
-  width: 91px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  width: 30px;
   border-radius: 3px;
 }

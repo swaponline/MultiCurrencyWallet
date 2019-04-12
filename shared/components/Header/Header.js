@@ -296,7 +296,7 @@ export default class Header extends Component {
 
     const accentColor = '#510ed8'
 
-    const way = history.location.pathname === '/'
+    const way = history.location.pathname.includes('/exchange')
 
     if (config && config.isWidget) {
       return (
@@ -322,7 +322,7 @@ export default class Header extends Component {
     }
 
     return (
-      <div styleName={sticky ? 'header header-fixed' : way ? 'header header-wallet' : 'header'}>
+      <div styleName={sticky ? 'header header-fixed' : way ? 'header header-promo' : 'header'}>
         <WidthContainer styleName="container">
           <LogoTooltip withLink />
           <Nav menu={menuItems} />

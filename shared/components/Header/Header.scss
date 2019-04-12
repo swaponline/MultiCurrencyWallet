@@ -29,7 +29,7 @@
   z-index: 1;
   transition: position 0.3s ease;
   position: absolute;
-  background: #F5F5F5;
+  background: #fff;
 }
 
 .container {
@@ -48,8 +48,8 @@
 	animation:slide-down 0.4s;
 }
 
-.header-wallet {
-  background: #fff;
+.header-promo {
+  background: #F5F5F5;
 }
 
 .header-mobile > div {

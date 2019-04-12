@@ -9,7 +9,17 @@
 }
 
 .exchangeRate {
-  margin: 20px 0;
+  margin: 10px 0;
+}
+
+.togleText {
+  position: relative;
+  top: -35px;
+  left: 65px;
+}
+
+.togles {
+  height: 40px;
 }
 
 @include media-tablet-landscape-and-lower  {
@@ -19,8 +29,14 @@
   }
 }
 
+
+
 .button {
   margin-top: 50px;
+}
+
+.togleGroup {
+  display: inline-block;
 }
 
 .error {
