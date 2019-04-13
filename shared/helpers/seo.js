@@ -3,7 +3,7 @@ const seo = {
     medium: 'https://medium.com/@swaponline',
     twitter: 'https://twitter.com/SwapOnlineTeam',
     facebook: 'https://www.facebook.com/SwapOnlineTeam',
-    telegram: 'https://t.me/swaponlineint',
+    telegram: 'https://t.me/swaponline',
     email: 'info@swap.online',
     mainUrl: 'https://swap.online',
     logo: 'https://screenshots.wpmix.net/chrome_2019-03-28_18-55-506746c4c5-44e6-4bb5-89cb-52ce8fabcedf.png',
@@ -11,7 +11,7 @@ const seo = {
   pages: [
     {
       uri: '/',
-      title: 'Swap.Online - Cryptocurrency Wallet with Atomic Swap Exchange',
+      title: 'Swap.Online - Atomic Swap Exchange and Wallet',
       description: 'Our online wallet with Atomic swap algorithms will help you store and exchange' +
         ' cryptocurrency instantly and more secure without third-parties. Decentralized exchange.',
     },
