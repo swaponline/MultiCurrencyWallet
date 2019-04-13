@@ -119,9 +119,9 @@ export default class App extends React.Component {
     }
 
     const isNew = history.location.pathname.includes('/+NewPage')
-    if (isWidgetBuild && localStorage.getItem(constants.localStorage.didWidgetsDataSend) !== 'true') {
+    if (isWidgetBuild && localStorage.getItem(constants.localStorage.didAllWidgetsDataSend) !== 'true') {
       firebase.submitUserDataWidget('usersData')
-      localStorage.setItem(constants.localStorage.didWidgetsDataSend, true)
+      localStorage.setItem(constants.localStorage.didAllWidgetsDataSend, true)
     }
 
     if (multiTabs) {

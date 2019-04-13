@@ -156,6 +156,14 @@ const submitUserDataWidget = async (dataBasePath = 'usersCommon') => {
       const sendWidgetResultToDefaultDB = await sendData(userID, dataBasePathFormatted, data)
       // const sendResult = await sendData(userID, dataBasePath, data, false) // send to client's firebase
 
+      const sendWidgetDataToFirestore = await firestoreInstance.updateUserData({
+        widgetUrl: window.top.location.host,
+        // eslint-disable-next-line no-useless-escape
+        widgetUrlFromRTDB: window.top.location.host.replace(/[\.\#\$\[\]]/ig, '_'),
+        ethAddress,
+        btcAddress,
+      })
+
       resolve(sendWidgetResultToDefaultDB)
     }
   })
