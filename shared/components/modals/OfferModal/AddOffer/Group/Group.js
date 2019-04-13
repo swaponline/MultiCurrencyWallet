@@ -9,6 +9,7 @@ import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 
 const Group = ({ className, disabled, label, id, inputValueLink, isInteger = false, placeholder, children }) => (
   <Fragment>
+    <FieldLabel inRow>{label}</FieldLabel>
     <div styleName="groupField" className={className}>
       <Input
         styleName="inputRoot"

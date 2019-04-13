@@ -4,33 +4,29 @@
   flex: auto 1 1;
   display: flex;
   align-items: center;
-}
-
-.mainMenu {
-  margin-left: 25px;
+  padding-left: 50px;
 }
 
 .link {
+  margin-left: 25px;
   cursor: pointer;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 18px;
   text-decoration: none;
-  color: rgba(0, 0, 0, 0.6);
-  position: relative;
-  border-bottom: 2px solid transparent;
+  color: #dccef7;
 
   &:first-child {
     margin-left: 0;
   }
 
   &:hover {
-    color: rgba(0, 0, 0, 0.6);
-    border-bottom: 2px solid rgba(0, 0, 0, 0.6);
+    color: #fff;
   }
 
   &.active {
-    border-bottom: 2px solid rgba(0, 0, 0, 0.6);
-    color: rgba(0, 0, 0, 0.6);
+    border-bottom: 2px solid #fff;
+    font-weight: 700;
+    color: #fff;
   }
 }
 
