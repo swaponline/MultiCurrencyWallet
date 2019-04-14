@@ -23,19 +23,20 @@
 .header {
 	height: 88px;
 	width: 100%;
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#510ed8+0,510ed8+70,8821ee+100 */
+	background: #510ed8; /* Old browsers */
+	background: -moz-linear-gradient(left, #510ed8 0%, #510ed8 70%, #8821ee 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(left, #510ed8 0%,#510ed8 70%,#8821ee 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to right, #510ed8 0%,#510ed8 70%,#8821ee 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#510ed8', endColorstr='#8821ee',GradientType=1 ); /* IE6-9 */
 	top: 0;
 	left: 0;
 	right: 0;
-  z-index: 1;
+  z-index: 2;
   transition: position 0.3s ease;
   position: absolute;
-  background: #fff;
 }
 
-.container {
-  width: 1200px;
-  margin: auto;
-}
 @include media-mobile {
   .header {
 	  display: flex;
@@ -46,10 +47,6 @@
 	position: fixed;
   height: 88px;
 	animation:slide-down 0.4s;
-}
-
-.header-promo {
-  background: #F5F5F5;
 }
 
 .header-mobile > div {

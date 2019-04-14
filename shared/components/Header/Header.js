@@ -31,71 +31,29 @@ import UserTooltip from 'components/Header/User/UserTooltip/UserTooltip'
 
 let lastScrollTop = 0
 
-// const messages = defineMessages({
-//   wallet: {
-//     id: 'menu.wallet',
-//     description: 'Menu item "Wallet"',
-//     defaultMessage: 'Wallet',
-//   },
-//   exchange: {
-//     id: 'menu.exchange',
-//     description: 'Menu item "Exchange"',
-//     defaultMessage: 'Exchange',
-//   },
-//   history: {
-//     id: 'menu.history',
-//     description: 'Menu item "My History"',
-//     defaultMessage: 'My History',
-//   },
-//   aboutus: {
-//     id: 'menu.aboutus',
-//     description: 'Menu item "About Us"',
-//     defaultMessage: 'About Us',
-//   },
-// })
-
-// menuItems: [
-//   {
-//     title: props.intl.formatMessage(messages.wallet),
-//     link: links.home,
-//     exact: true,
-//     icon: 'wallet',
-//   },
-//   {
-//     title: props.intl.formatMessage(messages.exchange),
-//     link: links.exchange,
-//     icon: 'exchange-alt',
-//     tour: 'reactour__exchange',
-//   },
-//   {
-//     title: props.intl.formatMessage(messages.history),
-//     link: links.history,
-//     icon: 'history',
-//   },
-//   {
-//     title: props.intl.formatMessage(messages.aboutus),
-//     link: links.aboutus,
-//     isMobile: false,
-//   },
-// ],
-
 const messages = defineMessages({
-  projects: {
-    id: 'menu.projects',
+  wallet: {
+    id: 'menu.wallet',
     description: 'Menu item "Wallet"',
-    defaultMessage: 'Our projects',
+    defaultMessage: 'Wallet',
   },
-  vision: {
-    id: 'menu.vision',
+  exchange: {
+    id: 'menu.exchange',
     description: 'Menu item "Exchange"',
-    defaultMessage: 'Our vision',
+    defaultMessage: 'Exchange',
   },
-  invest: {
-    id: 'menu.invest',
+  history: {
+    id: 'menu.history',
     description: 'Menu item "My History"',
-    defaultMessage: 'How to invest?',
+    defaultMessage: 'My History',
+  },
+  aboutus: {
+    id: 'menu.aboutus',
+    description: 'Menu item "About Us"',
+    defaultMessage: 'About Us',
   },
 })
+
 
 @injectIntl
 @withRouter
@@ -128,27 +86,28 @@ export default class Header extends Component {
       isTourOpen: false,
       isShowingMore: false,
       sticky: false,
-      isWallet: false,
       menuItems: [
         {
-          title: props.intl.formatMessage(messages.projects),
+          title: props.intl.formatMessage(messages.wallet),
           link: links.home,
           exact: true,
-          haveSubmenu: true,
-          icon: 'projects',
+          icon: 'wallet',
         },
         {
-          title: props.intl.formatMessage(messages.vision),
+          title: props.intl.formatMessage(messages.exchange),
           link: links.exchange,
           icon: 'exchange-alt',
           tour: 'reactour__exchange',
-          haveSubmenu: false,
         },
         {
-          title: props.intl.formatMessage(messages.invest),
+          title: props.intl.formatMessage(messages.history),
           link: links.history,
           icon: 'history',
-          haveSubmenu: false,
+        },
+        {
+          title: props.intl.formatMessage(messages.aboutus),
+          link: links.aboutus,
+          isMobile: false,
         },
       ],
     }
@@ -156,7 +115,7 @@ export default class Header extends Component {
   }
 
   componentDidMount() {
-    // window.addEventListener('scroll', this.handleScroll)
+    window.addEventListener('scroll', this.handleScroll)
 
     const checker = setInterval(() => {
       switch (true) {
@@ -171,7 +130,7 @@ export default class Header extends Component {
   }
 
   componentWillUnmount() {
-    // window.removeEventListener('scroll', this.handleScroll)
+    window.removeEventListener('scroll', this.handleScroll)
     this.startTourAndSignInModal()
 
   }
@@ -250,9 +209,7 @@ export default class Header extends Component {
 
   handleScroll = () =>  {
     if (this.props.history.location.pathname === '/') {
-      this.setState(() => ({
-        sticky: false,
-      }))
+      this.setState(() => ({ sticky: false }))
       return
     }
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop
@@ -291,12 +248,11 @@ export default class Header extends Component {
   }
 
   render() {
-    const { sticky, menuItems, isTourOpen, isShowingMore, path, isPartialTourOpen, isWallet } = this.state
+
+    const { sticky, menuItems, isTourOpen, isShowingMore, path, isPartialTourOpen } = this.state
     const { intl: { locale }, history, pathname, feeds, peer, isSigned, isInputActive } = this.props
 
     const accentColor = '#510ed8'
-
-    const way = history.location.pathname.includes('/exchange')
 
     if (config && config.isWidget) {
       return (
@@ -322,7 +278,7 @@ export default class Header extends Component {
     }
 
     return (
-      <div styleName={sticky ? 'header header-fixed' : way ? 'header header-promo' : 'header'}>
+      <div styleName={sticky ? 'header header-fixed' : 'header'}>
         <WidthContainer styleName="container">
           <LogoTooltip withLink />
           <Nav menu={menuItems} />

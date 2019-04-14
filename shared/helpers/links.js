@@ -12,7 +12,6 @@ export default {
   coins: '/coins',
   partial: '/partial',
   notFound: '/NotFound',
-  newPage: '/+NewPage',
 
   // social networks
   medium: 'https://medium.com/swaponline',

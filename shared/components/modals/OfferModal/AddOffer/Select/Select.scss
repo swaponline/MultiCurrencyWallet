@@ -1,39 +1,22 @@
 .groupField {
-  width: 320;
+  width: 100%;
   display: flex;
+  box-shadow: rgba(#000, 0.08) 0 3px 9px 0;
   border-radius: 6px;
-  height: 44px;
+  height: 56px;
   margin-bottom: 10px;
   align-items: center;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 0px;
-  padding: 0 20px;
-  font-family: 'Roboto Mono', monospace;
   justify-content: space-around;
   & p {
     margin: 0;
   }
 }
 
-.balance {
-  font-size: 14px;
-  right: 10px;
-  position: relative;
-  width: 151px;
-}
-
-.group {
-  position: relative;
-  width: 80%;
-}
-
 .cell {
-  color: #000;
-  padding-right: 10px;
-  display: inline-block;
-  font-size: 14px;
+  color: #3b95ff;
   cursor: pointer;
-  // &:hover {
-  //   color: darken(#3b95ff, 1)
-  // }
+
+  &:hover {
+    color: darken(#3b95ff, 1)
+  }
 }
