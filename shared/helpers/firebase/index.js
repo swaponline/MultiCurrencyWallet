@@ -62,7 +62,7 @@ const sendData = (userId, dataBasePath, data, isDefault = true) =>
 const setUserLastOnline = async () => {
   const userID = await getUserID()
   const data = {
-    lastOnline: moment().format('HH:mm:ss DD/MM/YYYY'),
+    lastOnline: moment().format('HH:mm:ss DD/MM/YYYY ZZ'),
     unixLastOnline: moment().unix(),
   }
 
