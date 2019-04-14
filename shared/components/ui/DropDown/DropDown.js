@@ -152,7 +152,7 @@ export default class DropDown extends Component {
                       styleName="option"
                       onClick={() => {
                         linkedValue.inputValue.set('')
-                        this.handleOptionClick(item)}
+                        this.handleOptionClick(item) }
                       }
                     >
                       {this.renderItem(item)}
