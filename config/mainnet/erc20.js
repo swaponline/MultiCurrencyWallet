@@ -229,5 +229,10 @@ export default {
     decimals: 18,
     fullName: 'BNB',
   },
+  bnb: {
+    address: '0x0a133dfA1f65Ff6f834205ED43D66344306Fa02C',
+    decimals: 18,
+    fullName: 'SCRO',
+  },
 
 }
