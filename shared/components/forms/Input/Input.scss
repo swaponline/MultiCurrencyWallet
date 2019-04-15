@@ -49,6 +49,8 @@ input, textarea {
   line-height: 16px;
   border-radius: 6px;
   box-shadow: none;
+  font-size: 16px;
+  @include ff;
   font-size: 20px;
   font-family: 'Roboto Mono', monospace;
   padding-left: 20px;

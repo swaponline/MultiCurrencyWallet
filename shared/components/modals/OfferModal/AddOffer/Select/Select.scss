@@ -5,7 +5,6 @@
   border-radius: 6px;
   height: 56px;
   margin-bottom: 10px;
-  align-items: center;
   border-radius: 0px;
   font-family: 'Roboto Mono', monospace;
   justify-content: space-between;
@@ -36,7 +35,7 @@
   color: #000;
   padding-right: 10px;
   display: inline-block;
-
+  font-size: 16px;
   cursor: pointer;
 
   &:hover {

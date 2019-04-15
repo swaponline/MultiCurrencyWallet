@@ -36,5 +36,4 @@ const Select = ({ balance, currency, changeBalance, switching, all, estimatedFee
     </Fragment>
   )
 }
-
 export default cssModules(Select, styles)
