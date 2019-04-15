@@ -41,7 +41,11 @@ input, textarea {
 
 .input {
   width: 100%;
+<<<<<<< 8d17c1127d4f6155d3988cb050bca1b7ea9e4bb5
   height: 60px;
+=======
+  height: 68px;
+>>>>>>> cherry-pick #1
   padding: 0 16px;
   // TODO placeholder doesn't change. Check on Messages page in New Message textarea
   //+input-placeholder()
@@ -49,10 +53,13 @@ input, textarea {
   line-height: 16px;
   border-radius: 6px;
   box-shadow: none;
-  font-size: 16px;
-  @include ff;
+  font-size: 20px;
+  font-family: 'Roboto Mono', monospace;
+  padding-left: 20px;
   color: $color-f-main;
   appearance: textfield;
+  border: 1px solid rgba(0,0,0,0.2);
+  outline: none;
 
   &:focus {
     border: 1px solid #3b95ff;
