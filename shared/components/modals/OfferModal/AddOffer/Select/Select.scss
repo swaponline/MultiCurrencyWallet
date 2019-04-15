@@ -6,22 +6,14 @@
   height: 56px;
   margin-bottom: 10px;
   align-items: center;
-<<<<<<< 8d17c1127d4f6155d3988cb050bca1b7ea9e4bb5
-  justify-content: space-around;
-=======
   border-radius: 0px;
   font-family: 'Roboto Mono', monospace;
   justify-content: space-between;
->>>>>>> create new branch, fix - (menu bugs, form bugs)
   & p {
     margin: 0;
   }
 }
 
-<<<<<<< 8d17c1127d4f6155d3988cb050bca1b7ea9e4bb5
-.cell {
-  color: #3b95ff;
-=======
 .balance {
   font-size: 14px;
   right: 10px;
@@ -44,8 +36,7 @@
   color: #000;
   padding-right: 10px;
   display: inline-block;
-  font-size: 16px;
->>>>>>> create new branch, fix - (menu bugs, form bugs)
+
   cursor: pointer;
 
   &:hover {
