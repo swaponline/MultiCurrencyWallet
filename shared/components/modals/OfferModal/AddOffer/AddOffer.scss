@@ -9,7 +9,23 @@
 }
 
 .exchangeRate {
-  margin: 20px 0;
+  margin: 10px 0;
+  input {
+    border: none;
+    border-radius: 0;
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+    height: 66px;
+  }
+}
+
+.togleText {
+  position: relative;
+  top: -35px;
+  left: 65px;
+}
+
+.togles {
+  height: 40px;
 }
 
 @include media-tablet-landscape-and-lower  {
