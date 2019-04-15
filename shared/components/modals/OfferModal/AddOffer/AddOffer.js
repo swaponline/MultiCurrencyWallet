@@ -449,14 +449,15 @@ export default class AddOffer extends Component {
     return (
       <div styleName="wrapper addOffer">
         <SelectGroup
+          switchBalanceFunc={this.switching}
           styleName="sellGroup"
           label={<FormattedMessage id="addoffer381" defaultMessage="Sell" />}
           inputValueLink={linked.sellAmount.pipe(this.handleSellAmountChange)}
-          selectedCurrencyValue={sellCurrency}
-          onCurrencySelect={this.handleSellCurrencySelect}
+          selectedValue={sellCurrency}
+          onSelect={this.handleSellCurrencySelect}
           id="sellAmount"
           currencies={currencies}
-          placeholder="Enter sell amount"
+          placeholder="0.00000000"
         />
         <Select
           changeBalance={this.changeBalance}
@@ -465,13 +466,14 @@ export default class AddOffer extends Component {
           switching={this.switching}
         />
         <SelectGroup
+          switchBalanceFunc={this.switching}
           label={<FormattedMessage id="addoffer396" defaultMessage="Buy" />}
           inputValueLink={linked.buyAmount.pipe(this.handleBuyAmountChange)}
-          selectedCurrencyValue={buyCurrency}
-          onCurrencySelect={this.handleBuyCurrencySelect}
+          selectedValue={buyCurrency}
+          onSelect={this.handleBuyCurrencySelect}
           id="buyAmount"
           currencies={addSelectedItems}
-          placeholder="Enter buy amount"
+          placeholder="0.00000000"
         />
         <div styleName="exchangeRate">
           <ExchangeRateGroup
