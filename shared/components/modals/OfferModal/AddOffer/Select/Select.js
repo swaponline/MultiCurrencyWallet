@@ -12,9 +12,6 @@ const Select = ({ balance, currency, changeBalance, switching, all, estimatedFee
   return (
     <Fragment>
       <div styleName="groupField">
-        <div styleName="balance">
-          {`${balanceToRender} ${currency.toUpperCase()}`}
-        </div>
         <div styleName="group">
           <span styleName="cell" onClick={() => changeBalance(BigNumber(balance).div(4))}><FormattedMessage id="Select23" defaultMessage="25%" /></span>
           <span styleName="cell" onClick={() => changeBalance(BigNumber(balance).div(4))}><FormattedMessage id="Select25" defaultMessage="50%" /></span>
