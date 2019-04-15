@@ -252,14 +252,7 @@
   margin: -16px 0 26px;
   background: white;
   overflow: visible;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
+  margin: 1px 0 -19px;
   > div {
     margin: 0;
   }

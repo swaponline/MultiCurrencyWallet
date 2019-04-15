@@ -41,7 +41,7 @@ input, textarea {
 
 .input {
   width: 100%;
-  height: 56px;
+  height: 68px;
   padding: 0 16px;
   border-radius: 3px;
   // TODO placeholder doesn't change. Check on Messages page in New Message textarea
@@ -49,11 +49,13 @@ input, textarea {
   vertical-align: top;
   line-height: 14px;
   box-shadow: none;
-  font-size: 14px;
+  font-size: 20px;
   font-family: 'Roboto Mono', monospace;
   padding-left: 20px;
   color: $color-f-main;
   appearance: textfield;
+  border: 1px solid rgba(0,0,0,0.2);
+  outline: none;
 
   &:focus {
     border: 1px solid #1E2A4B;

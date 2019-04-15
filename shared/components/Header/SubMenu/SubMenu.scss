@@ -4,18 +4,17 @@
   position: absolute;
   background: #fff;
   padding: 10px 0;
-  top: 55px;
+  top: 70px;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
   visibility: hidden;
-  transition: 0.2s 1s;
+  transition: 0.2s;
 }
 
 div > div > div > div > div:hover .submenu {
   visibility: visible;
-  transition-delay: 0s;
 }
 
 .submenu-item {
@@ -25,6 +24,8 @@ div > div > div > div > div:hover .submenu {
   }
   a {
     font-size: 14px;
+    cursor: pointer;
+    display: block;
     color: #000!important;
   }
 }
