@@ -6,14 +6,46 @@
   height: 56px;
   margin-bottom: 10px;
   align-items: center;
+<<<<<<< 8d17c1127d4f6155d3988cb050bca1b7ea9e4bb5
   justify-content: space-around;
+=======
+  border-radius: 0px;
+  font-family: 'Roboto Mono', monospace;
+  justify-content: space-between;
+>>>>>>> create new branch, fix - (menu bugs, form bugs)
   & p {
     margin: 0;
   }
 }
 
+<<<<<<< 8d17c1127d4f6155d3988cb050bca1b7ea9e4bb5
 .cell {
   color: #3b95ff;
+=======
+.balance {
+  font-size: 14px;
+  right: 10px;
+  position: relative;
+  width: 151px;
+}
+
+.group {
+  position: relative;
+  width: 72%;
+  display: flex;
+  height: 44px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.cell {
+  color: #000;
+  padding-right: 10px;
+  display: inline-block;
+  font-size: 16px;
+>>>>>>> create new branch, fix - (menu bugs, form bugs)
   cursor: pointer;
 
   &:hover {

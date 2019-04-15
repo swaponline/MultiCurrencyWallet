@@ -13,7 +13,10 @@
   font-weight: 500;
   font-size: 18px;
   text-decoration: none;
-  color: #dccef7;
+  color: rgba(0, 0, 0, 0.6);
+  position: relative;
+  border-bottom: 2px solid transparent;
+  padding-bottom: 5px;
 
   &:first-child {
     margin-left: 0;
