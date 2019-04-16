@@ -20,6 +20,7 @@ import { WithdrawButton } from 'components/controls'
 import styles from 'components/tables/Table/Table.scss'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import PageSeo from 'components/Seo/PageSeo'
+import PartialClosure   from 'pages/PartialClosure/PartialClosure'
 import SubTitle from 'components/PageHeadline/SubTitle/SubTitle'
 import KeyActionsPanel from 'components/KeyActionsPanel/KeyActionsPanel'
 import SaveKeysModal from 'components/modals/SaveKeysModal/SaveKeysModal'
@@ -169,12 +170,12 @@ export default class Wallet extends Component {
   }
 
   checkBalance = () => {
-    const now = moment().format('HH:mm:ss DD/MM/YYYY ZZ')
+    const now = moment().format('HH:mm:ss DD/MM/YYYY')
     const lastCheck = localStorage.getItem(constants.localStorage.lastCheckBalance) || now
-    const lastCheckMoment = moment(lastCheck, 'HH:mm:ss DD/MM/YYYY ZZ')
+    const lastCheckMoment = moment(lastCheck, 'HH:mm:ss DD/MM/YYYY')
 
-    const isFirstCheck = moment(now, 'HH:mm:ss DD/MM/YYYY ZZ').isSame(lastCheckMoment)
-    const isOneHourAfter = moment(now, 'HH:mm:ss DD/MM/YYYY ZZ').isAfter(lastCheckMoment.add(1, 'hours'))
+    const isFirstCheck = moment(now, 'HH:mm:ss DD/MM/YYYY').isSame(lastCheckMoment)
+    const isOneHourAfter = moment(now, 'HH:mm:ss DD/MM/YYYY').isAfter(lastCheckMoment.add(1, 'hours'))
 
     const { ethData, btcData, ltcData } = this.props.tokensData
 

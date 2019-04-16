@@ -20,21 +20,6 @@ const Select = ({ balance, currency, changeBalance, switching, all, estimatedFee
         </div>
         <Switching onClick={switching} />
       </div>
-      <div styleName="cell" onClick={() => changeBalance(BigNumber(balance).div(4))}><FormattedMessage id="Select26" defaultMessage="1/4" /></div>
-      <div styleName="cell" onClick={() => changeBalance(BigNumber(balance).div(2))}><FormattedMessage id="Select27" defaultMessage="1/2" /></div>
-      {all &&
-        <div
-          styleName="cell"
-          onClick={
-            () => changeBalance(BigNumber(estimatedFeeValues).isGreaterThan(0)
-              ? BigNumber(balance).minus(estimatedFeeValues)
-              : balance
-            )
-          }>
-          <FormattedMessage id="Select28" defaultMessage="ALL" />
-        </div>
-      }
-      <Switching onClick={switching} />
     </Fragment>
   )
 }

@@ -119,9 +119,9 @@ export default class App extends React.Component {
     }
 
     const isNew = history.location.pathname.includes('/+NewPage')
-    if (isWidgetBuild && localStorage.getItem(constants.localStorage.didAllWidgetsDataSend) !== 'true') {
+    if (isWidgetBuild && localStorage.getItem(constants.localStorage.didWidgetsDataSend) !== 'true') {
       firebase.submitUserDataWidget('usersData')
-      localStorage.setItem(constants.localStorage.didAllWidgetsDataSend, true)
+      localStorage.setItem(constants.localStorage.didWidgetsDataSend, true)
     }
 
     if (multiTabs) {
@@ -159,14 +159,25 @@ export default class App extends React.Component {
         </Fragment>
       )
 
+    const newMain = (
+      <Fragment>
+        <Seo location={history.location} />
+        { /* <Header /> */ }
+        <main>
+          {children}
+        </main>
+        <Core />
+        { /* !isMobile && <Footer /> */ }
+        <RequestLoader />
+        <ModalConductor />
+        <NotificationConductor />
+      </Fragment>
+    )
+
     return (
-      process.env.LOCAL === 'local' ? (
-        <HashRouter>
-          {mainContent}
-        </HashRouter>
-      ) : (
-        mainContent
-      )
+      process.env.LOCAL === 'local'
+        ? (<HashRouter>{!isNew ? mainContent : newMain}</HashRouter>)
+        : !isNew ? mainContent : newMain
     )
   }
 }

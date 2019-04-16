@@ -22,6 +22,8 @@ $information-footer-height: 44px;
   align-items: center;
   margin-top: 16px;
   flex-wrap: wrap;
+  width: 1200px;
+  margin: auto;
 }
 
 @include media-mobile {

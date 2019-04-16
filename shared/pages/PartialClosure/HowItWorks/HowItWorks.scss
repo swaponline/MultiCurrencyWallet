@@ -1,0 +1,40 @@
+.HowItWorksTitle {
+  font-family: 'Inter-Bold', sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 48px;
+  line-height: normal;
+  margin-bottom: 85px;
+  text-align: center;
+  color: #000;
+}
+
+.HowItWorksList {
+  display: flex;
+  justify-content: space-between;
+}
+
+.HowItWorksItem {
+  width: 250px;
+}
+
+.HowItWorksStep {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  margin-bottom: 15px;
+  display: block;
+  font-family: 'Inter-Bold', sans-serif;
+  line-height: 32px;
+}
+.HowItWorksInfo {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 23px;
+  opacity: 0.6;
+}
+.HowItWorksContainer {
+  width: 1200px;
+  margin: auto;
+}
