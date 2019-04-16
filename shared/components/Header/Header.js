@@ -93,7 +93,7 @@ const messages = defineMessages({
   invest: {
     id: 'menu.invest',
     description: 'Menu item "My History"',
-    defaultMessage: 'How to invest?&#133',
+    defaultMessage: 'How to invest?',
   },
 })
 

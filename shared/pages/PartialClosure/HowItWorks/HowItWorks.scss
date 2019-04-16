@@ -38,3 +38,19 @@
   width: 1200px;
   margin: auto;
 }
+
+@include media-mobile {
+  .HowItWorksList {
+    flex-direction: column;
+  }
+  .HowItWorksContainer {
+    width: 100%;
+  }
+  .HowItWorksTitle {
+    font-size: 36px;
+  }
+  .HowItWorksItem {
+    width: 100%;
+    padding: 20px;
+  }
+}

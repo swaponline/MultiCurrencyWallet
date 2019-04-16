@@ -25,13 +25,11 @@
   }
 
   &:hover {
-    color: rgba(0, 0, 0, 0.6);
-    border-bottom: 2px solid rgba(0, 0, 0, 0.6);
+    color: #512ed0;
   }
 
   &.active {
-    border-bottom: 2px solid rgba(0, 0, 0, 0.6);
-    color: rgba(0, 0, 0, 0.6);
+    color: #512ed0;
   }
 }
 
@@ -46,7 +44,6 @@
 }
 
 .active {
-  border-bottom: 2px solid #fff;
   font-weight: 700;
   color: #fff;
 }

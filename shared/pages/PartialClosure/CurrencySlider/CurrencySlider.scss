@@ -18,23 +18,12 @@
   img {
     width: 40px;
   }
-}
-.currencyListItemETH {
-  img {
-    width: 27px;
+  &:first-child {
+    img {
+      width: 30px;
+    }
   }
 }
-.currencyListItemBTC {
-  img {
-    width: 37px;
-  }
-}
-.currencyListItemEOS {
-  img {
-    width: 27px;
-  }
-}
-
 .currencyListWrap {
   position: relative;
   width: 335px;
@@ -69,4 +58,30 @@
   position: absolute;
   right: -50px;
   top: -2px;
+}
+
+@include media-mobile {
+  .availableCurrencies {
+    font-size: 15px;
+  }
+  .currencyListWrap {
+    width: 100%;
+  }
+  .currencyList {
+    width: 215px;
+  }
+  .currencyListItem {
+    img {
+      width: 30px;
+    }
+    &:first-child {
+      img {
+        width: 25px;
+      }
+    }
+  }
+  .currencyAdd {
+    right: -10px;
+    top: -10px;
+  }
 }

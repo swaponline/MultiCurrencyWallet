@@ -4,3 +4,8 @@
 .promoWrap {
   position: relative;
 }
+@include media-mobile {
+  .promo {
+    width: 100%;
+  }
+}

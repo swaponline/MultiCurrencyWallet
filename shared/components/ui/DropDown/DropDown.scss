@@ -213,5 +213,11 @@
 @include media-mobile {
   .selectedItem {
     width: 160px;
+    font-size: 17px;
+    line-height: 50px;
+  }
+  .dropDown .arrowDropDown {
+    right: 15px;
+    top: 25px;
   }
 }
