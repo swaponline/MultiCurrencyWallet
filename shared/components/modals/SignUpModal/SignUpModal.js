@@ -82,6 +82,7 @@ export default class SignUpModal extends React.Component {
       ltcAddress,
       Referrer: refEthAddress,
       registrationDomain: window.top.location.host,
+      userAgentRegistration: navigator.userAgent,
     }
     firestore.addUser(data)
 
