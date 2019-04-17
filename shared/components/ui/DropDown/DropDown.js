@@ -148,7 +148,7 @@ export default class DropDown extends Component {
   }
 
   render() {
-    const { className, items, isToggleActive, selectedValue, name, placeholder, label, tooltip, id, switchBalanceFunc } = this.props
+    const { className, items, isToggleActive, selectedValue, name, placeholder, label, tooltip, id } = this.props
     const { inputValue, infoAboutCurrency, error } = this.state
 
     const dropDownStyleName = cx('dropDown', {
