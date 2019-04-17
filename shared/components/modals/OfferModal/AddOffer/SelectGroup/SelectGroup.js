@@ -48,7 +48,6 @@ const SelectGroup = ({ dynamicFee, isToken, extendedControls, selectedValue, onS
         (selectedValue === 'eth' || selectedValue === 'btc') && usd > 0 &&
         <p styleName="textUsd" >{`~${usd}`} USD</p>
       }
-      {/* switchBalanceFunc={switchBalanceFunc} */ }
       <CurrencySelect
         name="All"
         label={label}

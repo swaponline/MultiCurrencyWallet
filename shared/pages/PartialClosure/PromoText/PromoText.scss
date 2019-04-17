@@ -12,3 +12,13 @@
 .promoTextColored {
   color: #6144E5;
 }
+
+@include media-mobile {
+  .promoText {
+    width: 100%;
+    font-size: 22px;
+    line-height: 1.4;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+  }
+}
