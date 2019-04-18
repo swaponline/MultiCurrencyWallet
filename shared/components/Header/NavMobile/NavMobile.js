@@ -25,7 +25,7 @@ export default class NavMobile extends Component {
         {
           menu
             .filter(i => i.isMobile !== false)
-            .map(({ title, link, exact, icon }) => (
+            .map(({ title, link, exact, icon, isBold }) => (
               <NavLink
                 key={title}
                 exact={exact}
@@ -33,7 +33,7 @@ export default class NavMobile extends Component {
                 activeClassName={styles.active}
               >
                 <i className={`fas fa-${icon}`} aria-hidden="true" />
-                <span>{title}</span>
+                <span className={isBold && styles.bold}>{title}</span>
               </NavLink>
             ))
         }

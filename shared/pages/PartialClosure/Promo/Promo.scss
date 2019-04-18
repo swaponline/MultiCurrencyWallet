@@ -4,6 +4,13 @@
 .promoWrap {
   position: relative;
 }
+
+@include media-tablet {
+  .promo {
+    padding: 90px 0;
+  }
+}
+
 @include media-mobile {
   .promo {
     width: 100%;

@@ -13,6 +13,14 @@
   color: #6144E5;
 }
 
+@include media-tablet {
+  .promoText {
+    width: auto;
+    text-align: center;
+    font-size: 30px;
+  }
+}
+
 @include media-mobile {
   .promoText {
     width: 100%;

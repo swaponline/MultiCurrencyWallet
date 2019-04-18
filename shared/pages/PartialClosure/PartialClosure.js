@@ -956,6 +956,20 @@ export default class PartialClosure extends Component {
                     </p>
                   )}
                   {
+                    BigNumber(estimatedFeeValues[haveCurrency]).isGreaterThan(0)
+                    && BigNumber(haveAmount).isGreaterThan(0)
+                    && BigNumber(haveAmount).isLessThanOrEqualTo(balance)
+                    && (
+                      <div styleName="notifyThat" className={isWidget ? 'feeValue' : ''}>
+                        <FormattedMessage
+                          id="PartialFeeValueWarn"
+                          defaultMessage="You will have to pay an additional miner fee up to {estimatedFeeValue} {haveCurrency}"
+                          values={{ haveCurrency: haveCurrency.toUpperCase(), estimatedFeeValue: estimatedFeeValues[haveCurrency] }}
+                        />
+                      </div>
+                    )
+                  }
+                  {
                     isFetching && (
                       <span className={isWidget ? 'wait' : ''}>
                         <FormattedMessage id="partial291" defaultMessage="Wait participant: " />
@@ -1038,21 +1052,6 @@ export default class PartialClosure extends Component {
                     </Button>
                   </div>
                 </div>
-                <br />
-                {
-                  BigNumber(estimatedFeeValues[haveCurrency]).isGreaterThan(0)
-                  && BigNumber(haveAmount).isGreaterThan(0)
-                  && BigNumber(haveAmount).isLessThanOrEqualTo(balance)
-                  && (
-                    <div className={isWidget ? 'feeValue' : ''}>
-                      <FormattedMessage
-                        id="PartialFeeValueWarn"
-                        defaultMessage="You will have to pay an additional miner fee up to {estimatedFeeValue} {haveCurrency}"
-                        values={{ haveCurrency: haveCurrency.toUpperCase(), estimatedFeeValue: estimatedFeeValues[haveCurrency] }}
-                      />
-                    </div>
-                  )
-                }
               </div>
             </div>
 

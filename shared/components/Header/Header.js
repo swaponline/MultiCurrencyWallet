@@ -103,7 +103,7 @@ export default class Header extends Component {
         },
         {
           title: props.intl.formatMessage(messages.invest),
-          link: 'exchange/swap-to-btc',
+          link: 'exchange/btc-to-swap',
           icon: 'invest',
           haveSubmenu: false,
         },
@@ -122,13 +122,14 @@ export default class Header extends Component {
           haveSubmenu: true,
           icon: 'products',
         },
-        {
-          title: props.intl.formatMessage(messages.exchange),
-          link: links.exchange,
-          icon: 'exchange-alt',
-          tour: 'reactour__exchange',
-          haveSubmenu: false,
-        },
+        // {
+        //   title: props.intl.formatMessage(messages.exchange),
+        //   link: links.exchange,
+        //   icon: 'exchange-alt',
+        //   tour: 'reactour__exchange',
+        //   haveSubmenu: false,
+        //   isBold: true,
+        // },
         {
           title: props.intl.formatMessage(messages.history),
           link: links.history,
@@ -137,7 +138,7 @@ export default class Header extends Component {
         },
         {
           title: props.intl.formatMessage(messages.invest),
-          link: 'exchange/swap-to-btc',
+          link: 'exchange/btc-to-swap',
           icon: 'invest',
           haveSubmenu: false,
         },
@@ -150,13 +151,14 @@ export default class Header extends Component {
           haveSubmenu: true,
           icon: 'products',
         },
-        {
-          title: props.intl.formatMessage(messages.wallet),
-          link: links.home,
-          icon: 'wallet-alt',
-          tour: 'wallet',
-          haveSubmenu: false,
-        },
+        // {
+        //   title: props.intl.formatMessage(messages.wallet),
+        //   link: links.home,
+        //   icon: 'wallet-alt',
+        //   tour: 'wallet',
+        //   haveSubmenu: false,
+        //   isBold: true,
+        // },
         {
           title: props.intl.formatMessage(messages.history),
           link: links.history,
@@ -165,7 +167,7 @@ export default class Header extends Component {
         },
         {
           title: props.intl.formatMessage(messages.invest),
-          link: 'exchange/swap-to-btc',
+          link: 'exchange/btc-to-swap',
           icon: 'invest',
           haveSubmenu: false,
         },
@@ -344,7 +346,7 @@ export default class Header extends Component {
       <div styleName={sticky ? 'header header-fixed' : way ? 'header header-promo' : 'header'}>
         <WidthContainer styleName="container">
           <LogoTooltip withLink />
-          <Nav menu={way ? menuItemsPartial : menuItemsWallet} />
+          <Nav menu={!way ? menuItemsPartial : menuItemsWallet} />
           <Logo withLink mobile />
           <TourPartial isTourOpen={this.state.isPartialTourOpen} />
           <User

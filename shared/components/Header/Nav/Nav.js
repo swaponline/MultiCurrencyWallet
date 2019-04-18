@@ -42,13 +42,13 @@ export default class Nav extends Component {
       <div styleName="nav">
         <Fragment>
           <div styleName="container">
-           <div styleName="humburger"></div>
-           <div styleName="humburger"></div>
-           <div styleName="humburger"></div>
-         </div>
+            <div styleName="humburger" />
+            <div styleName="humburger" />
+            <div styleName="humburger" />
+          </div>
           {menu
             .filter(i => i.isDesktop !== false)
-            .map(({ title, link, exact, tour, haveSubmenu, index }) => (
+            .map(({ title, link, exact, tour, haveSubmenu, index, isBold }) => (
               <div styleName="mainMenu">
                 <NavLink
                   onClick={this.handleScrollToTopClick}
@@ -58,7 +58,7 @@ export default class Nav extends Component {
                   styleName="link"
                   to={localisedUrl(locale, link)}
                 >
-                  {title}
+                  <span className={isBold && styles.bold}>{title}</span>
                 </NavLink>
                 <div>
                   {haveSubmenu && <SubMenu history={history} locale={locale} key={index} />}

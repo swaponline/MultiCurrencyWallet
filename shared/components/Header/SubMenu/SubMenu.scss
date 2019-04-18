@@ -20,7 +20,9 @@ div > div > div > div > div:hover .submenu {
 }
 
 .submenu-item {
-  padding: 5px 25px;
+  display: flex;
+  padding: 10px 25px;
+  color: black;
   &:hover {
     background: #f5f5f5;
   }
@@ -31,4 +33,15 @@ div > div > div > div > div:hover .submenu {
     display: block;
     color: #000!important;
   }
+  p {
+    margin: 0;
+  }
+  img {
+    display: inline-block;
+    object-fit: contain;
+  }
+}
+
+.text-container-submenu {
+  margin-left: 20px;
 }

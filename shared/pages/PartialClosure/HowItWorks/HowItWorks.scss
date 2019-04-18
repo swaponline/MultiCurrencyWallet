@@ -12,6 +12,7 @@
 .HowItWorksList {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .HowItWorksItem {
@@ -35,8 +36,18 @@
   opacity: 0.6;
 }
 .HowItWorksContainer {
-  width: 1200px;
+  max-width: 1200px;
   margin: auto;
+}
+
+@include media-tablet-landscape-and-lower {
+  .HowItWorksList {
+    justify-content: center;
+  }
+  .HowItWorksItem {
+    margin: 20px 60px;
+    text-align: center;
+  }
 }
 
 @include media-mobile {
@@ -52,5 +63,6 @@
   .HowItWorksItem {
     width: 100%;
     padding: 20px;
+    margin: 20px 0;
   }
 }

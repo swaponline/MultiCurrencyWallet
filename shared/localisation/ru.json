@@ -4957,7 +4957,7 @@
   },
   {
     "id": "FooterOurProductsChromeExtantion",
-    "message": "Chrome extantion",
+    "message": "Chrome extension",
     "files": [
       "shared/components/Footer/Links/Links.js"
     ]
