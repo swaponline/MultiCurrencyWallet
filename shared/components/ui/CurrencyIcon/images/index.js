@@ -19,9 +19,12 @@ import lev from './lev.svg'
 import ltc from './ltc.svg'
 import bxb from './bxb.svg'
 import dcn from './dcn.svg'
-
+import bnb from './bnb.svg'
+import scro from './scro.svg'
 
 export default {
+  bnb,
+  scro,
   btc,
   dcn,
   bxb,
