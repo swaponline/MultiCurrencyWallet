@@ -9,7 +9,7 @@ export default {
   dir: 'mainnet',
 
   base: 'https://swap.online/',
-  publicPath: `https://swap.online${baseConfig.publicPath}`,
+  publicPath: `https://justescrow.io${baseConfig.publicPath}`,
 
   ...config,
 }
