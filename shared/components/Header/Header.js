@@ -31,64 +31,26 @@ import UserTooltip from 'components/Header/User/UserTooltip/UserTooltip'
 
 let lastScrollTop = 0
 
-// const messages = defineMessages({
-//   wallet: {
-//     id: 'menu.wallet',
-//     description: 'Menu item "Wallet"',
-//     defaultMessage: 'Wallet',
-//   },
-//   exchange: {
-//     id: 'menu.exchange',
-//     description: 'Menu item "Exchange"',
-//     defaultMessage: 'Exchange',
-//   },
-//   history: {
-//     id: 'menu.history',
-//     description: 'Menu item "My History"',
-//     defaultMessage: 'My History',
-//   },
-//   aboutus: {
-//     id: 'menu.aboutus',
-//     description: 'Menu item "About Us"',
-//     defaultMessage: 'About Us',
-//   },
-// })
-
-// menuItems: [
-//   {
-//     title: props.intl.formatMessage(messages.wallet),
-//     link: links.home,
-//     exact: true,
-//     icon: 'wallet',
-//   },
-//   {
-//     title: props.intl.formatMessage(messages.exchange),
-//     link: links.exchange,
-//     icon: 'exchange-alt',
-//     tour: 'reactour__exchange',
-//   },
-//   {
-//     title: props.intl.formatMessage(messages.history),
-//     link: links.history,
-//     icon: 'history',
-//   },
-//   {
-//     title: props.intl.formatMessage(messages.aboutus),
-//     link: links.aboutus,
-//     isMobile: false,
-//   },
-// ],
-
 const messages = defineMessages({
-  projects: {
-    id: 'menu.projects',
+  products: {
+    id: 'menu.products',
     description: 'Menu item "Wallet"',
-    defaultMessage: 'Our projects',
+    defaultMessage: 'Our products',
   },
-  vision: {
-    id: 'menu.vision',
+  wallet: {
+    id: 'menu.wallet',
+    description: 'Menu item "Wallet"',
+    defaultMessage: 'Wallet',
+  },
+  exchange: {
+    id: 'menu.exchange',
     description: 'Menu item "Exchange"',
-    defaultMessage: 'Our vision',
+    defaultMessage: 'Exchange',
+  },
+  history: {
+    id: 'menu.history',
+    description: 'Menu item "History"',
+    defaultMessage: 'My history',
   },
   invest: {
     id: 'menu.invest',
@@ -129,28 +91,62 @@ export default class Header extends Component {
       isShowingMore: false,
       sticky: false,
       isWallet: false,
-      menuItems: [
+      menuItemsWallet: [
         {
-          title: props.intl.formatMessage(messages.projects),
+          title: props.intl.formatMessage(messages.products),
           link: links.home,
           exact: true,
           haveSubmenu: true,
-          icon: 'projects',
+          icon: 'products',
         },
         {
-          title: props.intl.formatMessage(messages.vision),
+          title: props.intl.formatMessage(messages.exchange),
           link: links.exchange,
           icon: 'exchange-alt',
           tour: 'reactour__exchange',
           haveSubmenu: false,
         },
         {
-          title: props.intl.formatMessage(messages.invest),
+          title: props.intl.formatMessage(messages.history),
           link: links.history,
           icon: 'history',
           haveSubmenu: false,
         },
+        {
+          title: props.intl.formatMessage(messages.invest),
+          link: 'exchange/swap-to-btc',
+          icon: 'invest',
+          haveSubmenu: false,
+        },
       ],
+      menuItemsPartial: [
+        {
+          title: props.intl.formatMessage(messages.products),
+          link: links.home,
+          exact: true,
+          haveSubmenu: true,
+          icon: 'products',
+        },
+        {
+          title: props.intl.formatMessage(messages.wallet),
+          link: links.home,
+          icon: 'wallet-alt',
+          tour: 'wallet',
+          haveSubmenu: false,
+        },
+        {
+          title: props.intl.formatMessage(messages.history),
+          link: links.history,
+          icon: 'history',
+          haveSubmenu: false,
+        },
+        {
+          title: props.intl.formatMessage(messages.invest),
+          link: 'exchange/swap-to-btc',
+          icon: 'invest',
+          haveSubmenu: false,
+        },
+      ]
     }
     this.lastScrollTop = 0
   }
@@ -291,7 +287,7 @@ export default class Header extends Component {
   }
 
   render() {
-    const { sticky, menuItems, isTourOpen, isShowingMore, path, isPartialTourOpen, isWallet } = this.state
+    const { sticky, menuItemsPartial, menuItemsWallet, isTourOpen, isShowingMore, path, isPartialTourOpen, isWallet } = this.state
     const { intl: { locale }, history, pathname, feeds, peer, isSigned, isInputActive } = this.props
 
     const accentColor = '#510ed8'
@@ -325,7 +321,7 @@ export default class Header extends Component {
       <div styleName={sticky ? 'header header-fixed' : way ? 'header header-promo' : 'header'}>
         <WidthContainer styleName="container">
           <LogoTooltip withLink />
-          <Nav menu={menuItems} />
+          <Nav menu={way ? menuItemsPartial: menuItemsWallet } />
           <Logo withLink mobile />
           <TourPartial isTourOpen={this.state.isPartialTourOpen} />
           <User

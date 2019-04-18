@@ -186,7 +186,6 @@ export default class PartialClosure extends Component {
     const { haveCurrency, getCurrency, estimatedFeeValues } = this.state
     actions.core.updateCore()
     this.returnNeedCurrency(haveCurrency, getCurrency)
-
     this.checkPair()
     this.updateAllowedBalance()
 
@@ -196,6 +195,7 @@ export default class PartialClosure extends Component {
     this.timer = setInterval(() => {
       this.setOrders()
       this.showTheFee(haveCurrency)
+      this.checkUrl()
     }, 2000)
 
     SwapApp.shared().services.room.on('new orders', () => this.checkPair())
@@ -214,6 +214,26 @@ export default class PartialClosure extends Component {
 
   componentWillUnmount() {
     clearInterval(this.timer)
+  }
+
+  checkUrl = () => {
+    const { match: { params }  } = this.props
+    const { getCurrency, haveCurrency } = this.state
+    console.log(params)
+    
+    if(haveCurrency !== undefined) {
+      if (params.sell !== haveCurrency) {
+        const value = params.sell
+        this.handleSetHaveValue({value})
+      }
+    }
+
+    if(getCurrency !== undefined) {
+      if (params.buy !== getCurrency) {
+        const value = params.buy
+        this.handleSetGetValue({value})
+      }
+    }
   }
 
   switchBalance = () => {
@@ -531,7 +551,7 @@ export default class PartialClosure extends Component {
 
   handleSetHaveValue = async ({ value }) => {
     const { haveCurrency, getCurrency, customWalletUse } = this.state
-
+    console.warn(value)
     if (value === getCurrency) {
       this.handleFlipCurrency()
     } else {

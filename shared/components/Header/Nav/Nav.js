@@ -41,6 +41,11 @@ export default class Nav extends Component {
     return (
       <div styleName="nav">
         <Fragment>
+          <div styleName="container">
+           <div styleName="humburger"></div>
+           <div styleName="humburger"></div>
+           <div styleName="humburger"></div>
+         </div>
           {menu
             .filter(i => i.isDesktop !== false)
             .map(({ title, link, exact, tour, haveSubmenu, index }) => (
@@ -52,7 +57,6 @@ export default class Nav extends Component {
                   exact={exact}
                   styleName="link"
                   to={localisedUrl(locale, link)}
-                  activeClassName={styles.active}
                 >
                   {title}
                 </NavLink>
