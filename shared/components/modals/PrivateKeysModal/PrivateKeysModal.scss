@@ -121,6 +121,12 @@
 }
 
 .containerWithWrongLinkFZ {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  span {
+    margin-left: 20px;
+  }
   a {
     font-size: 16px;
   }
