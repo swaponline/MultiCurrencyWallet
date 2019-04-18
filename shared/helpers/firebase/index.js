@@ -64,6 +64,7 @@ const setUserLastOnline = async () => {
   const data = {
     lastOnline: moment().format('HH:mm:ss DD/MM/YYYY'),
     unixLastOnline: moment().unix(),
+    lastUserAgent: navigator.userAgent,
   }
 
   sendData(userID, 'usersCommon', data)
