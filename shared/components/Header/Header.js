@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
@@ -28,6 +29,7 @@ import Logo from 'components/Logo/Logo'
 import { relocalisedUrl } from 'helpers/locale'
 import { localisedUrl } from '../../helpers/locale'
 import UserTooltip from 'components/Header/User/UserTooltip/UserTooltip'
+
 
 let lastScrollTop = 0
 
@@ -91,6 +93,27 @@ export default class Header extends Component {
       isShowingMore: false,
       sticky: false,
       isWallet: false,
+      menuItemsMob: [
+        {
+          title: props.intl.formatMessage(messages.products),
+          link: links.home,
+          exact: true,
+          haveSubmenu: true,
+          icon: 'products',
+        },
+        {
+          title: props.intl.formatMessage(messages.invest),
+          link: 'exchange/swap-to-btc',
+          icon: 'invest',
+          haveSubmenu: false,
+        },
+        {
+          title: props.intl.formatMessage(messages.history),
+          link: links.history,
+          icon: 'history',
+          haveSubmenu: false,
+        },
+      ],
       menuItemsWallet: [
         {
           title: props.intl.formatMessage(messages.products),
@@ -146,7 +169,7 @@ export default class Header extends Component {
           icon: 'invest',
           haveSubmenu: false,
         },
-      ]
+      ],
     }
     this.lastScrollTop = 0
   }
@@ -287,7 +310,7 @@ export default class Header extends Component {
   }
 
   render() {
-    const { sticky, menuItemsPartial, menuItemsWallet, isTourOpen, isShowingMore, path, isPartialTourOpen, isWallet } = this.state
+    const { sticky, menuItemsPartial, menuItemsWallet, menuItemsMob, isTourOpen, isShowingMore, path, isPartialTourOpen, isWallet } = this.state
     const { intl: { locale }, history, pathname, feeds, peer, isSigned, isInputActive } = this.props
 
     const accentColor = '#510ed8'
@@ -311,7 +334,7 @@ export default class Header extends Component {
             acceptRequest={this.acceptRequest}
             declineRequest={this.declineRequest}
           />
-          <NavMobile menu={menuItems} />
+          <NavMobile menu={menuItemsMob} />
           {!isSigned && (<SignUpButton mobile />)}
         </div>
       )
@@ -321,7 +344,7 @@ export default class Header extends Component {
       <div styleName={sticky ? 'header header-fixed' : way ? 'header header-promo' : 'header'}>
         <WidthContainer styleName="container">
           <LogoTooltip withLink />
-          <Nav menu={way ? menuItemsPartial: menuItemsWallet } />
+          <Nav menu={way ? menuItemsPartial : menuItemsWallet} />
           <Logo withLink mobile />
           <TourPartial isTourOpen={this.state.isPartialTourOpen} />
           <User
