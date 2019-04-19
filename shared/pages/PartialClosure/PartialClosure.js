@@ -34,6 +34,7 @@ import config from 'app-config'
 import SwapApp, { util } from 'swap.app'
 
 import helpers, { constants, links } from 'helpers'
+import { animate } from 'helpers/domUtils'
 
 
 const filterIsPartial = (orders) => orders
@@ -824,7 +825,13 @@ export default class PartialClosure extends Component {
 
     return (
       <div styleName="exchangeWrap">
-        <div styleName="promoContainer">
+        <div styleName="promoContainer" ref={ref => this.promoContainer = ref}>
+          <span
+            styleName="scrollTrigger"
+            onClick={() => animate((timePassed) => {
+              window.scrollTo(0, (this.promoContainer.clientHeight * (timePassed / 100)))
+            }, 100)}
+          />
           <Fragment>
             <div styleName="container alignCenter">
               <Promo subTitle={subTitle(sellTokenFullName, haveCurrency.toUpperCase(), buyTokenFullName, getCurrency.toUpperCase())} />

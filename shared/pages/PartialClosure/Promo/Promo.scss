@@ -14,5 +14,7 @@
 @include media-mobile {
   .promo {
     width: 100%;
+    max-width: 370px;
+    margin: auto;
   }
 }
