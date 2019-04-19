@@ -5,7 +5,8 @@
   position: absolute;
   background: #fff;
   padding: 10px 0;
-  top: 70px;
+  top: 55px;
+  left: -40px;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
   width: 300px;
   // width: -webkit-max-content;
@@ -23,6 +24,7 @@ div > div > div > div > div:hover .submenu {
   display: flex;
   padding: 10px 25px;
   color: black;
+  cursor: pointer;
   &:hover {
     background: #f5f5f5;
   }
@@ -44,4 +46,9 @@ div > div > div > div > div:hover .submenu {
 
 .text-container-submenu {
   margin-left: 20px;
+  span {
+    span {
+      font-weight: bold;
+    }
+  }
 }

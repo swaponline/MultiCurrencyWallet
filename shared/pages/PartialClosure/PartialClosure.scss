@@ -40,7 +40,7 @@
   position: relative;
   background: #f5f5f5;
   margin-bottom: 100px;
-  
+
   &:before {
     position: absolute;
     content: '';
@@ -89,7 +89,7 @@
   background: #000;
   border-radius: 3px;
   height: 68px;
-  font-size: 18px;
+  font-size: 16px;
   flex-basis: 47%;
   box-shadow: none;
 }
@@ -308,7 +308,6 @@
   margin: -16px 0 26px;
   background: white;
   overflow: visible;
-  margin: 1px 0 -19px;
   > div {
     margin: 0;
   }
@@ -404,7 +403,8 @@
 
 @media all and (min-width: 320px) and (max-width: 400px) {
   .button {
-    font-size: 9px;
+    font-size: 12px;
+    height: 48px;
   }
 }
 
@@ -418,8 +418,13 @@
   .inform {
     margin-top: 10px;
   }
+  .IsSearching {
+    font-size: 12px;
+  }
   .maxAmount {
-    top: 6px;
+    top: 43px;
+    right: 20px;
+    font-size: 10px;
   }
   .exchangeWrap {
     margin: 0 -20px;
@@ -430,11 +435,12 @@
     height: auto;
     align-items: normal;
     padding-top: 0;
+    padding: 0;
   }
   .promoContainer {
     background: #f5f5f5;
     margin-bottom: 100px;
-    padding: 115px 4%;
+    padding: 80px 0;
     &::before {
       display: none;
     }
@@ -442,6 +448,8 @@
   .formExchange {
     width: 100%;
     padding: 50px 15px;
+    border-radius: 0;
+    box-shadow: none;
   }
   .section {
     margin: 0;

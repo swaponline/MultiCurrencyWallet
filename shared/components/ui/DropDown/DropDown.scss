@@ -212,9 +212,20 @@
 
 @include media-mobile {
   .selectedItem {
-    width: 160px;
+    width: 100%;
     font-size: 17px;
     line-height: 50px;
+  }
+  .range {
+    font-size: 15px;
+    margin-top: 1px;
+  }
+  .shortTitle {
+    font-size: 15px;
+    margin-top: 1px;
+  }
+  .fullTitle {
+    font-size: 14px;
   }
   .dropDown .arrowDropDown {
     right: 15px;

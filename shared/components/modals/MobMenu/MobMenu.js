@@ -6,6 +6,7 @@ import actions from 'redux/actions'
 
 import cssModules from 'react-css-modules'
 import links from 'helpers/links'
+import Modal from 'components/modal/Modal/Modal'
 import { localisedUrl } from 'helpers/locale'
 
 import styles from './MobMenu.scss'
@@ -67,8 +68,8 @@ class MobMenu extends React.Component {
     } = this.props
 
     return (
-      <div styleName="modal-overlay" onClick={this.handleClose}>
-        <div styleName="modal">
+      <Modal name="MobMenu">
+        <div styleName="content">
           <ul styleName="submenu">
             {this.subMenuItems.map((item, index) => (
               <li key={index}>
@@ -96,7 +97,8 @@ class MobMenu extends React.Component {
             ))}
           </ul>
         </div>
-      </div>
+      </Modal>
+
     )
   }
 }

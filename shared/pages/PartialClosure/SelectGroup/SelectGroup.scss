@@ -127,6 +127,9 @@ input:disabled {
 @include media-mobile {
   .currencySelect {
     width: 130px;
+    input {
+      font-size: 13px;
+    }
   }
   .textUsd {
     font-size: 14px;
@@ -138,8 +141,8 @@ input:disabled {
     }
   }
   .textUsd {
-    top: 0px;
-    font-size: 12px;
-    right: 135px;
+    font-size: 9px;
+    left: 10px;
+    bottom: -4px;
   }
 }
