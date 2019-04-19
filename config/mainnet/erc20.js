@@ -234,5 +234,10 @@ export default {
     decimals: 18,
     fullName: 'SCRO',
   },
+  xeur: {
+    address: '0xC31C61cf55fB5E646684AD8E8517793ec9A22c5e',
+    decimals: 0,
+    fullName: 'XEUR',
+  },
 
 }
