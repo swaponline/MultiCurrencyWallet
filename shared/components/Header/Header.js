@@ -96,7 +96,7 @@ export default class Header extends Component {
       menuItemsMob: [
         {
           title: props.intl.formatMessage(messages.products),
-          link: links.home,
+          link: 'openMySesamPlease',
           exact: true,
           haveSubmenu: true,
           icon: 'products',
