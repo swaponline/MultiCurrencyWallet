@@ -93,13 +93,14 @@ export default class Header extends Component {
       isShowingMore: false,
       sticky: false,
       isWallet: false,
-      menuItemsMob: [
+      menuItemsFill: [
         {
           title: props.intl.formatMessage(messages.products),
           link: 'openMySesamPlease',
           exact: true,
           haveSubmenu: true,
           icon: 'products',
+          currentPageFlag: true,
         },
         {
           title: props.intl.formatMessage(messages.invest),
@@ -116,20 +117,13 @@ export default class Header extends Component {
       ],
       menuItemsWallet: [
         {
-          title: props.intl.formatMessage(messages.products),
+          title: props.intl.formatMessage(messages.wallet),
           link: links.home,
           exact: true,
           haveSubmenu: true,
           icon: 'products',
+          currentPageFlag: true,
         },
-        // {
-        //   title: props.intl.formatMessage(messages.exchange),
-        //   link: links.exchange,
-        //   icon: 'exchange-alt',
-        //   tour: 'reactour__exchange',
-        //   haveSubmenu: false,
-        //   isBold: true,
-        // },
         {
           title: props.intl.formatMessage(messages.history),
           link: links.history,
@@ -145,20 +139,13 @@ export default class Header extends Component {
       ],
       menuItemsPartial: [
         {
-          title: props.intl.formatMessage(messages.products),
+          title: props.intl.formatMessage(messages.exchange),
           link: links.home,
           exact: true,
           haveSubmenu: true,
           icon: 'products',
+          currentPageFlag: true,
         },
-        // {
-        //   title: props.intl.formatMessage(messages.wallet),
-        //   link: links.home,
-        //   icon: 'wallet-alt',
-        //   tour: 'wallet',
-        //   haveSubmenu: false,
-        //   isBold: true,
-        // },
         {
           title: props.intl.formatMessage(messages.history),
           link: links.history,
@@ -312,12 +299,13 @@ export default class Header extends Component {
   }
 
   render() {
-    const { sticky, menuItemsPartial, menuItemsWallet, menuItemsMob, isTourOpen, isShowingMore, path, isPartialTourOpen, isWallet } = this.state
+    const { sticky, menuItemsPartial, menuItemsWallet, menuItemsFill, isTourOpen, isShowingMore, path, isPartialTourOpen, isWallet } = this.state
     const { intl: { locale }, history, pathname, feeds, peer, isSigned, isInputActive } = this.props
 
     const accentColor = '#510ed8'
 
-    const way = history.location.pathname.includes('/exchange')
+    const isExchange = history.location.pathname.includes('/exchange')
+    const isWalletPath = history.location.pathname === '/'
 
     if (config && config.isWidget) {
       return (
@@ -336,17 +324,27 @@ export default class Header extends Component {
             acceptRequest={this.acceptRequest}
             declineRequest={this.declineRequest}
           />
-          <NavMobile menu={menuItemsMob} />
+          <NavMobile menu={isExchange
+            ? menuItemsPartial
+            : isWalletPath
+              ? menuItemsWallet
+              : menuItemsFill
+          } />
           {!isSigned && (<SignUpButton mobile />)}
         </div>
       )
     }
 
     return (
-      <div styleName={sticky ? 'header header-fixed' : way ? 'header header-promo' : 'header'}>
+      <div styleName={sticky ? 'header header-fixed' : isExchange ? 'header header-promo' : 'header'}>
         <WidthContainer styleName="container">
           <LogoTooltip withLink />
-          <Nav menu={!way ? menuItemsPartial : menuItemsWallet} />
+          <Nav menu={isExchange
+            ? menuItemsPartial
+            : isWalletPath
+              ? menuItemsWallet
+              : menuItemsFill
+          } />
           <Logo withLink mobile />
           <TourPartial isTourOpen={this.state.isPartialTourOpen} />
           <User

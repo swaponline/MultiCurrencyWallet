@@ -27,8 +27,8 @@ export default class NavMobile extends Component {
         {
           menu
             .filter(i => i.isMobile !== false)
-            .map(({ title, link, exact, icon, isBold }) => (
-              link === 'openMySesamPlease'
+            .map(({ title, link, exact, icon, isBold, currentPageFlag }) => (
+              currentPageFlag
                 ? (
                   <a
                     key={title}

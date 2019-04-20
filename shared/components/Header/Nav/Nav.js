@@ -50,18 +50,18 @@ export default class Nav extends Component {
           </div>
           {menu
             .filter(i => i.isDesktop !== false)
-            .map(({ title, link, exact, tour, haveSubmenu, index, isBold }) => (
+            .map(({ title, link, exact, tour, haveSubmenu, index, isBold, ...rest }) => (
               <div styleName="mainMenu">
                 <NavLink
                   onClick={this.handleScrollToTopClick}
                   key={index}
                   data-tut={`${tour}`}
                   exact={exact}
-                  styleName="link"
+                  className={`${styles.link} ${rest.currentPageFlag && styles['fixed-width']}`}
                   to={localisedUrl(locale, link)}
                 >
                   <span className={isBold && styles.bold}>{title}</span>
-                  { title === 'Our products' && (
+                  { rest.currentPageFlag && (
                     <img src={ArrowDown} className={styles.arrowSub} alt="Open submenu" />
                   ) }
                 </NavLink>
