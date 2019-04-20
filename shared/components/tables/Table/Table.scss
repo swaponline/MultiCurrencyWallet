@@ -56,16 +56,7 @@ $borderPadding: 24px;
   td {
     padding: 15px 10px;
   }
-}
 
-.color {
-  color: #626262;
-}
-
-.wallet {
-  padding-top: 41px;
-  position: relative;
-  display: inline-block;
   th:last-child {
     padding-left: 30px;
   }
@@ -102,6 +93,16 @@ $borderPadding: 24px;
       padding-left: 15px;
     }
   }
+}
+
+.color {
+  color: #626262;
+}
+
+.wallet {
+  padding-top: 41px;
+  position: relative;
+  display: inline-block;
 }
 
 @include media-tablet-landscape-and-lower {
