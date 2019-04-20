@@ -21,6 +21,7 @@ import PreventMultiTabs from 'components/PreventMultiTabs/PreventMultiTabs'
 import RequestLoader from 'components/loaders/RequestLoader/RequestLoader'
 import ModalConductor from 'components/modal/ModalConductor/ModalConductor'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
+import Wrapper from 'components/layout/Wrapper/Wrapper'
 import NotificationConductor from 'components/notification/NotificationConductor/NotificationConductor'
 import Seo from 'components/Seo/Seo'
 
@@ -146,11 +147,13 @@ export default class App extends React.Component {
         <Fragment>
           <Seo location={history.location} />
           <Header />
-          <WidthContainer styleName={isWidgetBuild ? 'main main_widget' : 'main'}>
-            <main>
-              {children}
-            </main>
-          </WidthContainer>
+          <Wrapper>
+            <WidthContainer styleName={isWidgetBuild ? 'main main_widget' : 'main'}>
+              <main>
+                {children}
+              </main>
+            </WidthContainer>
+          </Wrapper>
           <Core />
           { !isMobile && <Footer /> }
           <RequestLoader />
