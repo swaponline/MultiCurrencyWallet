@@ -12,6 +12,8 @@ import CSSModules from 'react-css-modules'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 
+import ArrowDown from './images/ArrowDown.svg'
+
 
 @injectIntl
 @withRouter
@@ -59,6 +61,9 @@ export default class Nav extends Component {
                   to={localisedUrl(locale, link)}
                 >
                   <span className={isBold && styles.bold}>{title}</span>
+                  { title === 'Our products' && (
+                    <img src={ArrowDown} className={styles.arrowSub} alt="Open submenu" />
+                  ) }
                 </NavLink>
                 <div>
                   {haveSubmenu && <SubMenu history={history} locale={locale} key={index} />}
