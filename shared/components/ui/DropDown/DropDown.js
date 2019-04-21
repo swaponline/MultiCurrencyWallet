@@ -61,8 +61,6 @@ export default class DropDown extends Component {
   toggle = () => {
     const { isToggleActive, toggleOpen, toggleClose } = this.props
 
-    this.props.switchBalanceFunc()
-
     if (isToggleActive) {
       toggleClose()
     }
@@ -89,7 +87,6 @@ export default class DropDown extends Component {
       })
     }
 
-    this.props.switchBalanceFunc()
     toggleClose()
   }
 

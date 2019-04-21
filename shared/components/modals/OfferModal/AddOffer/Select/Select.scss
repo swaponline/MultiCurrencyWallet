@@ -20,8 +20,9 @@
 
 .group {
   position: relative;
-  margin-right: 5px;
-  width: 78%;
+  margin-left: 2px;
+  margin-right: 12px;
+  width: 76%;
   display: flex;
   height: 44px;
   border: 1px solid rgba(0, 0, 0, 0.2);
@@ -38,4 +39,10 @@
   // &:hover {
   //   color: darken(#3b95ff, 1)
   // }
+}
+
+@include media-mobile {
+  .groupField {
+    margin-bottom: 25px;
+  }
 }

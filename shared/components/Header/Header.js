@@ -59,6 +59,11 @@ const messages = defineMessages({
     description: 'Menu item "My History"',
     defaultMessage: 'How to invest?',
   },
+  investMobile: {
+    id: 'menu.invest',
+    description: 'Menu item "My History"',
+    defaultMessage: 'Invest',
+  },
 })
 
 @injectIntl
@@ -140,6 +145,30 @@ export default class Header extends Component {
         },
         {
           title: props.intl.formatMessage(messages.invest),
+          link: 'exchange/btc-to-swap',
+          icon: 'invest',
+          haveSubmenu: false,
+        },
+      ],
+      menuItemsMobile: [
+        {
+          title: props.intl.formatMessage(messages.wallet),
+          link: links.home,
+          exact: true,
+          haveSubmenu: true,
+          icon: 'products',
+          currentPageFlag: true,
+        },
+        {
+          title: props.intl.formatMessage(messages.exchange),
+          link: links.exchange,
+          exact: true,
+          haveSubmenu: true,
+          icon: 'products',
+          currentPageFlag: true,
+        },
+        {
+          title: props.intl.formatMessage(messages.investMobile),
           link: 'exchange/btc-to-swap',
           icon: 'invest',
           haveSubmenu: false,
@@ -285,7 +314,7 @@ export default class Header extends Component {
   }
 
   render() {
-    const { sticky, menuItemsFill, isTourOpen, isShowingMore, path, isPartialTourOpen, isWallet, menuItems } = this.state
+    const { sticky, menuItemsFill, isTourOpen, isShowingMore, path, isPartialTourOpen, isWallet, menuItems, menuItemsMobile } = this.state
     const { intl: { locale }, history, pathname, feeds, peer, isSigned, isInputActive } = this.props
 
     const accentColor = '#510ed8'
@@ -310,12 +339,7 @@ export default class Header extends Component {
             acceptRequest={this.acceptRequest}
             declineRequest={this.declineRequest}
           />
-          <NavMobile menu={isExchange
-            ? menuItemsPartial
-            : isWalletPath
-              ? menuItemsWallet
-              : menuItemsFill
-          } />
+          <NavMobile menu={menuItemsMobile} />
           {!isSigned && (<SignUpButton mobile />)}
         </div>
       )

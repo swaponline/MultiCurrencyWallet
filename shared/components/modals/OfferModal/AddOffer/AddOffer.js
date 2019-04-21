@@ -456,6 +456,7 @@ export default class AddOffer extends Component {
           selectedValue={sellCurrency}
           onSelect={this.handleSellCurrencySelect}
           id="sellAmount"
+          balance={balance}
           currencies={currencies}
           placeholder="0.00000000"
         />

@@ -23,6 +23,18 @@
   }
 }
 
+.balance {
+  position: absolute;
+  z-index: 1;
+  color: #828795;
+  background-color: white;
+  right: 20px;
+  font-size: 14px;
+  top: -9px;
+  font-weight: bold;
+  font-family: 'Roboto Mono', monospace;
+}
+
 .textUsd {
   color: #828795;
   position: absolute;

@@ -62,9 +62,6 @@
 @include media-mobile {
   .addOffer {
     width: 100%;
-    .sellGroup {
-      margin-bottom: 75px;
-    }
     .error {
       span:nth-child(1) {
         margin-right: 5px;
@@ -74,7 +71,7 @@
       }
     }
     .exchangeRate {
-      margin: 40px 0;
+      margin: 15px 0;
     }
   }
 }
