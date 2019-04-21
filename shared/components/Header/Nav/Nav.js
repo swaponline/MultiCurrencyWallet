@@ -43,11 +43,6 @@ export default class Nav extends Component {
     return (
       <div styleName="nav">
         <Fragment>
-          <div styleName="container">
-            <div styleName="humburger" />
-            <div styleName="humburger" />
-            <div styleName="humburger" />
-          </div>
           {menu
             .filter(i => i.isDesktop !== false)
             .map(({ title, link, exact, tour, haveSubmenu, index, isBold, ...rest }) => (
@@ -57,16 +52,18 @@ export default class Nav extends Component {
                   key={index}
                   data-tut={`${tour}`}
                   exact={exact}
-                  className={`${styles.link} ${rest.currentPageFlag && styles['fixed-width']}`}
+                  className={`${styles.link} ${rest.currentPageFlag }`}
                   to={localisedUrl(locale, link)}
                 >
-                  <span className={isBold && styles.bold}>{title}</span>
-                  { rest.currentPageFlag && (
-                    <img src={ArrowDown} className={styles.arrowSub} alt="Open submenu" />
-                  ) }
+                  <div>
+                    {/* rest.currentPageFlag && (
+                      <img src={ArrowDown} className={styles.arrowSub} alt="Open submenu" />
+                    ) */}
+                    {title}
+                  </div>
                 </NavLink>
                 <div>
-                  {haveSubmenu && <SubMenu history={history} locale={locale} key={index} />}
+                  {/* haveSubmenu && <SubMenu history={history} locale={locale} key={index} /> */}
                 </div>
               </div>
             ))

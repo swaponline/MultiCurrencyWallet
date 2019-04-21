@@ -115,7 +115,7 @@ export default class Header extends Component {
           haveSubmenu: false,
         },
       ],
-      menuItemsWallet: [
+      menuItems: [
         {
           title: props.intl.formatMessage(messages.wallet),
           link: links.home,
@@ -125,22 +125,8 @@ export default class Header extends Component {
           currentPageFlag: true,
         },
         {
-          title: props.intl.formatMessage(messages.history),
-          link: links.history,
-          icon: 'history',
-          haveSubmenu: false,
-        },
-        {
-          title: props.intl.formatMessage(messages.invest),
-          link: 'exchange/btc-to-swap',
-          icon: 'invest',
-          haveSubmenu: false,
-        },
-      ],
-      menuItemsPartial: [
-        {
           title: props.intl.formatMessage(messages.exchange),
-          link: links.home,
+          link: links.exchange,
           exact: true,
           haveSubmenu: true,
           icon: 'products',
@@ -299,7 +285,7 @@ export default class Header extends Component {
   }
 
   render() {
-    const { sticky, menuItemsPartial, menuItemsWallet, menuItemsFill, isTourOpen, isShowingMore, path, isPartialTourOpen, isWallet } = this.state
+    const { sticky, menuItemsFill, isTourOpen, isShowingMore, path, isPartialTourOpen, isWallet, menuItems } = this.state
     const { intl: { locale }, history, pathname, feeds, peer, isSigned, isInputActive } = this.props
 
     const accentColor = '#510ed8'
@@ -339,12 +325,7 @@ export default class Header extends Component {
       <div styleName={sticky ? 'header header-fixed' : isExchange ? 'header header-promo' : 'header'}>
         <WidthContainer styleName="container">
           <LogoTooltip withLink />
-          <Nav menu={isExchange
-            ? menuItemsPartial
-            : isWalletPath
-              ? menuItemsWallet
-              : menuItemsFill
-          } />
+          <Nav menu={menuItems} />
           <Logo withLink mobile />
           <TourPartial isTourOpen={this.state.isPartialTourOpen} />
           <User

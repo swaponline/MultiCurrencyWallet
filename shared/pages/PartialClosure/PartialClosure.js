@@ -220,19 +220,24 @@ export default class PartialClosure extends Component {
   checkUrl = () => {
     const { match: { params }  } = this.props
     const { getCurrency, haveCurrency } = this.state
-    console.log(params)
+
+
 
     if (haveCurrency !== undefined) {
       if (params.sell !== haveCurrency) {
         const value = params.sell
-        this.handleSetHaveValue({ value })
+        if (value) {
+          this.handleSetHaveValue({ value })
+        }
       }
     }
 
     if (getCurrency !== undefined) {
       if (params.buy !== getCurrency) {
         const value = params.buy
-        this.handleSetGetValue({ value })
+        if(value) {
+          this.handleSetGetValue({ value })
+        }
       }
     }
   }
@@ -552,7 +557,7 @@ export default class PartialClosure extends Component {
 
   handleSetHaveValue = async ({ value }) => {
     const { haveCurrency, getCurrency, customWalletUse } = this.state
-    console.warn(value)
+
     if (value === getCurrency) {
       this.handleFlipCurrency()
     } else {
