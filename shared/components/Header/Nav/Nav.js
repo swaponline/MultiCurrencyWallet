@@ -52,7 +52,7 @@ export default class Nav extends Component {
                   key={index}
                   data-tut={`${tour}`}
                   exact={exact}
-                  className={`${styles.link} ${rest.currentPageFlag }`}
+                  className={`${styles.link} ${rest.currentPageFlag}`}
                   to={localisedUrl(locale, link)}
                 >
                   <div>

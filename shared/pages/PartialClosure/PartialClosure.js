@@ -222,7 +222,6 @@ export default class PartialClosure extends Component {
     const { getCurrency, haveCurrency } = this.state
 
 
-
     if (haveCurrency !== undefined) {
       if (params.sell !== haveCurrency) {
         const value = params.sell
@@ -235,7 +234,7 @@ export default class PartialClosure extends Component {
     if (getCurrency !== undefined) {
       if (params.buy !== getCurrency) {
         const value = params.buy
-        if(value) {
+        if (value) {
           this.handleSetGetValue({ value })
         }
       }
