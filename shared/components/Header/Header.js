@@ -143,12 +143,6 @@ export default class Header extends Component {
           icon: 'history',
           haveSubmenu: false,
         },
-        {
-          title: props.intl.formatMessage(messages.invest),
-          link: 'exchange/btc-to-swap',
-          icon: 'invest',
-          haveSubmenu: false,
-        },
       ],
       menuItemsMobile: [
         {
@@ -157,7 +151,6 @@ export default class Header extends Component {
           exact: true,
           haveSubmenu: true,
           icon: 'products',
-          currentPageFlag: true,
         },
         {
           title: props.intl.formatMessage(messages.exchange),
@@ -165,12 +158,11 @@ export default class Header extends Component {
           exact: true,
           haveSubmenu: true,
           icon: 'products',
-          currentPageFlag: true,
         },
         {
-          title: props.intl.formatMessage(messages.investMobile),
-          link: 'exchange/btc-to-swap',
-          icon: 'invest',
+          title: props.intl.formatMessage(messages.history),
+          link: links.history,
+          icon: 'history',
           haveSubmenu: false,
         },
       ],
