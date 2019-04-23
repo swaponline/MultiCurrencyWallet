@@ -90,6 +90,11 @@ export default class Header extends Component {
 
   constructor(props) {
     super(props)
+
+    const dinamicPath = props.location.pathname.includes('/exchange/')
+      ? `${props.location.pathname}`
+      : `${links.exchange}`
+
     this.state = {
       optionsForOenSignUpModal: {},
       isPartialTourOpen: false,
@@ -131,7 +136,7 @@ export default class Header extends Component {
         },
         {
           title: props.intl.formatMessage(messages.exchange),
-          link: links.exchange,
+          link: dinamicPath,
           exact: true,
           haveSubmenu: true,
           icon: 'products',
@@ -154,7 +159,7 @@ export default class Header extends Component {
         },
         {
           title: props.intl.formatMessage(messages.exchange),
-          link: links.exchange,
+          link: dinamicPath,
           exact: true,
           haveSubmenu: true,
           icon: 'products',

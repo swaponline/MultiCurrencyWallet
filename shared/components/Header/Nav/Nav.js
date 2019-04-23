@@ -40,6 +40,8 @@ export default class Nav extends Component {
   render() {
     const { menu, intl: { locale }, history } = this.props
 
+    const isExchange = history.location.pathname.includes('/exchange')
+
     return (
       <div styleName="nav">
         <Fragment>
@@ -54,6 +56,7 @@ export default class Nav extends Component {
                   exact={exact}
                   className={`${styles.link} ${rest.currentPageFlag}`}
                   to={localisedUrl(locale, link)}
+                  activeClassName={styles.active}
                 >
                   <div>
                     {/* rest.currentPageFlag && (

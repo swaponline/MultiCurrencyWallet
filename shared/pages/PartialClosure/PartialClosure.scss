@@ -79,8 +79,8 @@
 }
 
 .IsSearching {
-  margin-bottom: 10px;
   display: block;
+  position: absolute;
 }
 
 .button {
@@ -158,7 +158,9 @@
   margin-bottom: 15px;
   padding: 0 20px;
   &_site {
-    margin-bottom: 25px;
+    margin-bottom: 45px;
+    top: 35px;
+    position: relative;
   }
 }
 
