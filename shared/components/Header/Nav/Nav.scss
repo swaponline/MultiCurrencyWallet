@@ -1,3 +1,5 @@
+$textColor: #dccef7;
+
 .nav {
   height: 100%;
   min-width: 0;
@@ -24,7 +26,7 @@
   font-weight: 500;
   font-size: 16px;
   text-decoration: none;
-  color: rgba(0, 0, 0, 0.6);
+  color: rgba($textColor, 1);
   cursor: pointer;
   transition: color 0.1s ease;
 
@@ -34,11 +36,23 @@
   }
 
   &:hover {
-    color: #512ed0;
+    color: white;
     img {
       filter: none;
       transform: rotate(180deg);
     }
+  }
+
+  &.active {
+    color: white;
+  }
+}
+
+.exchangeMenuLink {
+  color: rgba(0, 0, 0, 0.6);
+
+  &:hover {
+    color: #512ed0;
   }
 
   &.active {

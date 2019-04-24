@@ -14,7 +14,7 @@ import { localisedUrl } from 'helpers/locale'
 
 
 @injectIntl
-@CSSModules(styles, Logo)
+@CSSModules(styles, { allowMultiple: true })
 export default class Logo extends Component {
 
   static propTypes = {
@@ -24,7 +24,7 @@ export default class Logo extends Component {
   }
 
   render() {
-    const { isColored, withLink, mobile, intl: { locale } } = this.props
+    const { isColored, withLink, mobile, intl: { locale }, isExchange } = this.props
 
     const imgNode = React.createElement('img', {
       styleName: !withLink && 'logo',
@@ -36,10 +36,10 @@ export default class Logo extends Component {
       <Fragment>
         {withLink ?
           (
-            <Link styleName={mobile ? 'mobile' : 'logo'} data-tip data-for="logo" to={localisedUrl(locale, '/')}>
+            <Link styleName={`${mobile ? 'mobile' : 'logo'} ${!isExchange ? 'whiteFill' : ''}`} data-tip data-for="logo" to={localisedUrl(locale, '/')}>
               {imgNode}
             </Link>
-          ) : (<div>{imgNode}</div>)
+          ) : (<div styleName={`${!isExchange && 'whiteFill'}`} >{imgNode}</div>)
         }
       </Fragment>
     )

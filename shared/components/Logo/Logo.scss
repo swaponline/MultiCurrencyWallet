@@ -7,6 +7,14 @@
 
   img {
     display: block;
+    will-change: filter;
+    transition: filter 0.1s ease;
+  }
+}
+
+.whiteFill {
+  img {
+    filter: brightness(0) invert(1);
   }
 }
 
