@@ -23,6 +23,8 @@ import SwapOrders from 'swap.orders'
 import { ETH2BTC, BTC2ETH, LTC2BTC, BTC2LTC, ETH2LTC, LTC2ETH, ETHTOKEN2BTC, BTC2ETHTOKEN, EOS2BTC, BTC2EOS, USDT2ETHTOKEN, ETHTOKEN2USDT } from 'swap.flows'
 import { EthSwap, EthTokenSwap, BtcSwap, LtcSwap, EosSwap, UsdtSwap } from 'swap.swaps'
 
+import { erc20 } from 'swap.app/util'
+
 
 const repo = utils.createRepo()
 utils.exitListener()
@@ -31,16 +33,14 @@ if (config && config.isWidget) {
   // Auto hot plug not exist token to core
   if (!constants.COINS[config.erc20token]) {
     console.log('init token', config.erc20token, config.erc20)
-    constants.COINS[config.erc20token] = config.erc20token.toUpperCase()
-    constants.COINS_PRECISION[config.erc20token.toUpperCase()] = config.erc20[config.erc20token].decimals
+    erc20.register(config.erc20token, config.erc20[config.erc20token].decimals)
   }
 } else {
   // Add to swap.core not exists tokens
   Object.keys(config.erc20).forEach((tokenCode) => {
     if (!constants.COINS[tokenCode]) {
       console.info('Add token to swap.core', tokenCode, config.erc20[tokenCode].address, config.erc20[tokenCode].decimals, config.erc20[tokenCode].fullName)
-      constants.COINS[tokenCode] = tokenCode.toUpperCase()
-      constants.COINS_PRECISION[tokenCode.toUpperCase()] = config.erc20[tokenCode].decimals
+      erc20.register(tokenCode, config.erc20[tokenCode].decimals)
     }
   })
 }
