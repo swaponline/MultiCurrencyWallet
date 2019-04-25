@@ -623,16 +623,6 @@ export default class PartialClosure extends Component {
     return this.wallets[(walletCurrency) ? walletCurrency.toUpperCase() : getCurrency.toUpperCase()]
   }
 
-  customWalletValid() {
-    const { haveCurrency, getCurrency, customWallet } = this.state
-
-    if (!this.customWalletAllowed()) return true
-
-    if (getCurrency === 'btc') return util.typeforce.isCoinAddress.BTC(customWallet)
-
-    return util.typeforce.isCoinAddress.ETH(customWallet)
-
-  }
 
   customWalletAllowed() {
     const { haveCurrency, getCurrency } = this.state
@@ -721,11 +711,13 @@ export default class PartialClosure extends Component {
   addressIsCorrect() {
     const { customWallet, isToken, getCurrency } = this.state
 
-    if (isToken) {
-      return isCoinAddress.ETH(customWallet)
-    }
+    const staticCurrencies = ['eos', 'eth', 'btc', 'ltc', 'usdt']
 
-    return isCoinAddress[getCurrency.toUpperCase()](customWallet)
+    if (staticCurrencies.includes(getCurrency.toLowerCase)) {
+      isCoinAddress[getCurrency.toUpperCase()](customWallet)
+    }
+    return isCoinAddress.ETH(customWallet)
+
   }
 
   render() {
@@ -756,7 +748,7 @@ export default class PartialClosure extends Component {
 
     const canDoOrder = !isNonOffers
       && BigNumber(getAmount).isGreaterThan(0)
-      && this.customWalletValid()
+      && this.addressIsCorrect()
       && !this.doesComissionPreventThisOrder()
       && (BigNumber(haveAmount).isGreaterThan(balance) || BigNumber(balance).isGreaterThanOrEqualTo(availableAmount))
 
