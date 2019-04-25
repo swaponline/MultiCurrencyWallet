@@ -8,14 +8,20 @@ $borderPadding: 24px;
   margin-bottom: 20px;
 
   thead {
-    box-shadow: rgba(#000 ,0.03) 0 3px 3px 0;
+    height: 41px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+    border-bottom: 0.5px solid rgba(#000 ,0.03);
     background: #fff;
     border-radius: $borderRadius $borderRadius 0 0;
     padding: 0 $borderPadding;
   }
+
   tbody {
     border-radius: 0 0 $borderRadius $borderRadius;
-    
+
     tr {
       border-top: 1px solid #f5f5f5;
 
@@ -75,13 +81,7 @@ $borderPadding: 24px;
       border-bottom-right-radius: $borderRadius;
     }
   }
-  thead {
-    height: 41px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    width: 100%;
-  }
+
   thead tr th {
     &:first-child {
       border-top-left-radius: $borderRadius;

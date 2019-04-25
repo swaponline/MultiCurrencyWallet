@@ -24,7 +24,12 @@ const SelectGroup = ({ dynamicFee, isToken, extendedControls, selectedValue, onS
         <span styleName="label">
           {label}
         </span>
-        <span styleName="balance">{balance}</span>
+        <div styleName="tooltip">
+          <Tooltip id={id}>
+            {tooltip}
+          </Tooltip>
+        </div>
+        <span styleName="balance">{balance && `Balance: ${balance}`}</span>
         &nbsp;
         <div styleName="smallTooltip">
           <Tooltip id={id}>

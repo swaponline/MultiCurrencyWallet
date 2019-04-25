@@ -26,13 +26,15 @@
 .balance {
   position: absolute;
   z-index: 1;
-  color: #828795;
   background-color: white;
-  right: 20px;
-  font-size: 14px;
   top: -9px;
   font-weight: bold;
+  background: #fff;
+  font-size: 13px;
+  right: 20px;
   font-family: 'Roboto Mono', monospace;
+  padding: 0 10px;
+  color: #b5b5b5;
 }
 
 .textUsd {
@@ -73,6 +75,13 @@
   width: 350px;
 }
 
+.tooltip {
+  position: absolute;
+  z-index: 1111111;
+  bottom: 3.3em;
+  left: 4em;
+}
+
 .label {
   position: absolute;
   z-index: 1;
@@ -80,7 +89,11 @@
   left: 20px;
   top: -9px;
   font-weight: bold;
-  font-family: 'Roboto Mono', monospace;
+  background: #fff;
+  font-family: 'Inter-SemiBold', sans-serif;
+  z-index: 1;
+  padding: 0 10px;
+  padding-right: 30px;
 }
 
 .red {
