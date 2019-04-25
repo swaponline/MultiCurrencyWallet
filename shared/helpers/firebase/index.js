@@ -92,9 +92,7 @@ const initialize = () => {
   const firebaseApp = firebase.initializeApp(config)
   window.firebaseDefaultInstance = firebaseApp
 
-  firebase.firestore(firebaseApp).settings({
-    timestampsInSnapshots: true,
-  })
+  firebase.firestore(firebaseApp)
 
   if (isSupported()) {
     navigator.serviceWorker
