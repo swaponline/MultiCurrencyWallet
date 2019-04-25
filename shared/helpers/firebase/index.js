@@ -5,9 +5,10 @@ import 'firebase/database'
 import 'firebase/firestore'
 import { config } from './config/firebase'
 
+import axios from 'axios'
+
 import actions from 'redux/actions'
 import { getState } from 'redux/core'
-import { request } from 'helpers'
 import moment from 'moment/moment'
 
 import firestoreInstance from './firestore'
@@ -27,13 +28,16 @@ const authorisation = () =>
   )
 
 const getIPInfo = () =>
-  request
+  axios
     .get('https://json.geoiplookup.io')
-    // eslint-disable-next-line camelcase
-    .then(({ ip, country_code }) => ({
-      ip,
-      locale: country_code,
-    }))
+    .then((result) => {
+      // eslint-disable-next-line camelcase
+      const { ip, country_code } = result.data
+      return ({
+        ip,
+        locale: country_code,
+      })
+    })
     .catch((error) => {
       console.error('getIPInfo:', error)
 

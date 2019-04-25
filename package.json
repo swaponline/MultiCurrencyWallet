@@ -150,6 +150,7 @@
     "webpack-dev-middleware": "^2.0.6"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "bestzip": "^2.1.2",
     "bitcoinjs-message": "^2.0.0",
     "coininfo": "git+https://github.com/cryptocoinjs/coininfo.git",
