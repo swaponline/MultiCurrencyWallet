@@ -169,12 +169,12 @@ export default class Wallet extends Component {
   }
 
   checkBalance = () => {
-    const now = moment().format('HH:mm:ss DD/MM/YYYY')
+    const now = moment().format('HH:mm:ss DD/MM/YYYY ZZ')
     const lastCheck = localStorage.getItem(constants.localStorage.lastCheckBalance) || now
-    const lastCheckMoment = moment(lastCheck, 'HH:mm:ss DD/MM/YYYY')
+    const lastCheckMoment = moment(lastCheck, 'HH:mm:ss DD/MM/YYYY ZZ')
 
-    const isFirstCheck = moment(now, 'HH:mm:ss DD/MM/YYYY').isSame(lastCheckMoment)
-    const isOneHourAfter = moment(now, 'HH:mm:ss DD/MM/YYYY').isAfter(lastCheckMoment.add(1, 'hours'))
+    const isFirstCheck = moment(now, 'HH:mm:ss DD/MM/YYYY ZZ').isSame(lastCheckMoment)
+    const isOneHourAfter = moment(now, 'HH:mm:ss DD/MM/YYYY ZZ').isAfter(lastCheckMoment.add(1, 'hours'))
 
     const { ethData, btcData, ltcData } = this.props.tokensData
 

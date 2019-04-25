@@ -224,4 +224,20 @@ export default {
     decimals: 8,
     fullName: 'SATX',
   },
+  bnb: {
+    address: '0xB8c77482e45F1F44dE1745F52C74426C631bDD52',
+    decimals: 18,
+    fullName: 'BNB',
+  },
+  scro: {
+    address: '0x0a133dfA1f65Ff6f834205ED43D66344306Fa02C',
+    decimals: 18,
+    fullName: 'SCRO',
+  },
+  xeur: {
+    address: '0xC31C61cf55fB5E646684AD8E8517793ec9A22c5e',
+    decimals: 0,
+    fullName: 'XEUR',
+  },
+
 }

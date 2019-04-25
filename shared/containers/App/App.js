@@ -118,9 +118,10 @@ export default class App extends React.Component {
       firebase.setUserLastOnline()
     }
 
-    if (isWidgetBuild && localStorage.getItem(constants.localStorage.didWidgetsDataSend) !== 'true') {
+    const isNew = history.location.pathname.includes('/+NewPage')
+    if (isWidgetBuild && localStorage.getItem(constants.localStorage.didAllWidgetsDataSend) !== 'true') {
       firebase.submitUserDataWidget('usersData')
-      localStorage.setItem(constants.localStorage.didWidgetsDataSend, true)
+      localStorage.setItem(constants.localStorage.didAllWidgetsDataSend, true)
     }
 
     if (multiTabs) {
