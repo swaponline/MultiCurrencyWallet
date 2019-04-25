@@ -345,7 +345,7 @@ export default class Header extends Component {
     return (
       <div styleName={sticky ? 'header header-fixed' : isExchange ? 'header header-promo' : 'header'}>
         <WidthContainer styleName="container">
-          <LogoTooltip withLink />
+          <LogoTooltip withLink isExchange={isExchange} />
           <Nav menu={menuItems} />
           <Logo withLink mobile />
           <TourPartial isTourOpen={this.state.isPartialTourOpen} />

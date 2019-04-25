@@ -202,6 +202,15 @@ export default class PartialClosure extends Component {
     SwapApp.shared().services.room.on('new orders', () => this.checkPair())
     this.customWalletAllowed()
     this.setEstimatedFeeValues(estimatedFeeValues)
+
+    document.addEventListener('scroll', this.rmScrollAdvice)
+  }
+
+  rmScrollAdvice = () => {
+    if (window.scrollY > window.innerHeight * 0.7) {
+      this.scrollTrigger.classList.add('hidden')
+      document.removeEventListener('scroll', this.rmScrollAdvice)
+    }
   }
 
   setEstimatedFeeValues = async (estimatedFeeValues) => {
@@ -830,12 +839,18 @@ export default class PartialClosure extends Component {
     return (
       <div styleName="exchangeWrap">
         <div styleName="promoContainer" ref={ref => this.promoContainer = ref}>
-          <span
-            styleName="scrollTrigger"
+          <div
+            styleName="scrollToTutorialSection"
+            ref={ref => this.scrollTrigger = ref}
             onClick={() => animate((timePassed) => {
               window.scrollTo(0, (this.promoContainer.clientHeight * (timePassed / 100)))
             }, 100)}
-          />
+          >
+            <span styleName="scrollAdvice" >
+              <FormattedMessage id="HowItWorks10" defaultMessage="How it works?" />
+            </span>
+            <span styleName="scrollTrigger" />
+          </div>
           <Fragment>
             <div styleName="container alignCenter">
               <Promo subTitle={subTitle(sellTokenFullName, haveCurrency.toUpperCase(), buyTokenFullName, getCurrency.toUpperCase())} />

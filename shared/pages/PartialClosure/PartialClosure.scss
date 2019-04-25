@@ -52,17 +52,34 @@
     top: 0;
   }
 }
-.scrollTrigger {
+.scrollToTutorialSection {
+  display: flex;
+  justify-content: space-between;
   position: absolute;
+  bottom: 56px;
+  right: 50%;
+  color: gray;
+  cursor: pointer;
+  transition: opacity 0.3s ease,
+    visibility 0.1s 0.3s;
+  &:global(.hidden) {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+.scrollTrigger {
   content: '';
   background: black;
-  bottom: 56px;
-  left: 50%;
-  transform: translateX(-50%);
   width: 8px;
   height: 8px;
   border-radius: 50%;
   animation: scrollAnimation 5s linear infinite;
+}
+.scrollAdvice {
+  display: inline-block;
+  margin-right: 15px;
+  font-size: 10px;
+  line-height: 1.1em;
 }
 .exchangeWrap {
   color: #000;
