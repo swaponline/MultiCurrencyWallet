@@ -719,7 +719,9 @@ export default class PartialClosure extends Component {
   }
 
   addressIsCorrect() {
-    const { customWallet, isToken, getCurrency } = this.state
+    const { customWallet, getCurrency } = this.state
+
+    const isToken = helpers.ethToken.isEthToken({ name: getCurrency.toLowerCase() })
 
     if (isToken) {
       return isCoinAddress.ETH(customWallet)
