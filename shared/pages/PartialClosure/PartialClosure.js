@@ -924,6 +924,13 @@ export default class PartialClosure extends Component {
                 />
               </p>
             )}
+            {(!customWalletUse && customWallet.length > 0) && !this.addressIsCorrect() && (
+              <p styleName="error notCorrect">
+                <FormattedMessage
+                  id="Partial955"
+                  defaultMessage="Address not correct" />
+              </p>
+            )}
             {(this.doesComissionPreventThisOrder()
               && BigNumber(getAmount).isGreaterThan(0)
               && (this.state.haveAmount && this.state.getAmount)
@@ -974,13 +981,6 @@ export default class PartialClosure extends Component {
                     </FieldLabel>
                     <div styleName="walletInput">
                       <Input required disabled={customWalletUse} valueLink={linked.customWallet} pattern="0-9a-zA-Z" placeholder="Enter the destination address" />
-                      {customWallet.length !== 0 && !this.addressIsCorrect() && (
-                        <div styleName="notCorrect">
-                          <FormattedMessage
-                            id="Partial955"
-                            defaultMessage="Address not correct" />
-                        </div>
-                      )}
                     </div>
                   </div>
                 </Fragment>
