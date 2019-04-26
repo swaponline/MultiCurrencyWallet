@@ -2,7 +2,7 @@ export default {
   swap: {
     address: '0xbaa3fa2ed111f3e8488c21861ea7b7dbb5a7b121',
     decimals: 18,
-    fullName: 'SWAP'
+    fullName: 'SWAP',
   },
   msk: {
     address: '0xf7ccd7d329aa5b399806bf5351daca18437e0391',
@@ -23,5 +23,10 @@ export default {
     address: '0x670D78b5D88cfd902A91763E49E7e2D7e8819B20',
     decimals: 2,
     fullName: 'UsdSwift',
+  },
+  hdp: {
+    address: '0xc4d5545392f5fc57eba3af8981815669bb7e2a48',
+    decimals: 4,
+    fullName: 'HDP',
   },
 }
