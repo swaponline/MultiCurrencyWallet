@@ -79,7 +79,7 @@ const askPermission = () =>
   new Promise(async (resolve) => {
     const messaging = firebase.messaging()
 
-    messaging.usePublicVapidKey('BLiLhKj7Re98YaB0IwfcUpwuYHqosbgjD0OGQojFW2rP5Vj_ncoAwa4NqQ1GQsVJ5EF53hL4u9D5ND_jRzRxhzI')
+    await messaging.usePublicVapidKey('BLiLhKj7Re98YaB0IwfcUpwuYHqosbgjD0OGQojFW2rP5Vj_ncoAwa4NqQ1GQsVJ5EF53hL4u9D5ND_jRzRxhzI')
 
     await messaging.requestPermission()
       .then(() => messaging.getToken())
