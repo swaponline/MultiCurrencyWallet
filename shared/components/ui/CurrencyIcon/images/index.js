@@ -20,6 +20,21 @@ import ltc from './ltc.svg'
 import bxb from './bxb.svg'
 import dcn from './dcn.svg'
 
+import mkr from './mkr.svg'
+import rep from './rep.svg'
+import zrx from './zrx.svg'
+import zil from './zil.svg'
+import golem from './golem.svg'
+
+import bat from './bat.png'
+import omisego from './omisego.png'
+import hot from './hot.png'
+import link from './link.png'
+import orox from './orox.png'
+import usdc from './usdc.png'
+import tusd from './tusd.png'
+import dai from './dai.svg'
+
 
 export default {
   btc,
@@ -43,4 +58,19 @@ export default {
   eos,
   yup,
   nim,
+
+  mkr,
+  bat,
+  rep,
+  omisego,
+  hot,
+  link,
+  zrx,
+  zil,
+  golem,
+  orox,
+
+  usdc,
+  tusd,
+  dai,
 }
