@@ -25,7 +25,7 @@ export default {
     fullName: 'UsdSwift',
   },
   hdp: {
-    address: '0xc4d5545392f5fc57eba3af8981815669bb7e2a48',
+    address: '0xecff5c9d6d6ef48fcbb7f75eb4fa5d5aefd8a9e1',
     decimals: 4,
     fullName: 'HDP',
   },
