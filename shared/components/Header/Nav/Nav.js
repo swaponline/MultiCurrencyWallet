@@ -48,7 +48,7 @@ export default class Nav extends Component {
           {menu
             .filter(i => i.isDesktop !== false)
             .map(({ title, link, exact, tour, haveSubmenu, index, isBold, ...rest }) => (
-              <div styleName="mainMenu">
+              <div styleName="mainMenu" key={`${title} ${link}`}>
                 <NavLink
                   onClick={this.handleScrollToTopClick}
                   key={index}
