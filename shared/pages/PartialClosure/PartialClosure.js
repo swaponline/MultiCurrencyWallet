@@ -877,7 +877,7 @@ export default class PartialClosure extends Component {
                     <p className={isWidget ? 'advice' : ''} styleName="maxAmount">
                       {/* <FormattedMessage id="partial221" defaultMessage="Balance: " /> */}
                       {/* Math.floor(maxBuyAmount.toNumber() * 1000) / 1000}{' '}{haveCurrency.toUpperCase() */}
-                      <FormattedMessage id="partial767" defaultMessage="Balance: " />
+                      <FormattedMessage id="partial767" defaultMessage="Your balance: " />
                       {balance.toFixed(4)}{'  '}{haveCurrency.toUpperCase()}
                     </p>
                   }
