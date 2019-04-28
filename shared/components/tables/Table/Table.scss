@@ -9,14 +9,12 @@ $walletPaddingTop: 41px;
   margin-bottom: 20px;
 
   thead {
-    display: block;
     position: sticky;
     top: 0;
     width: 100%;
     height: 41px;
     border-bottom: 0.5px solid rgba(#000 ,0.03);
     border-radius: $borderRadius $borderRadius 0 0;
-    box-shadow: 0 3px 3px 0 rgba(0,0,0,.03);
     background: #fff;
     z-index: 100;
   }
@@ -105,6 +103,10 @@ $walletPaddingTop: 41px;
   padding-top: $walletPaddingTop;
   position: relative;
   display: inline-block;
+  thead {
+    display: block;
+    box-shadow: 0 3px 3px 0 rgba(0,0,0,.03);
+  }
 }
 
 @include media-tablet-landscape-and-lower {
