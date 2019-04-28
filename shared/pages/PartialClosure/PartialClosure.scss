@@ -107,6 +107,7 @@
   left: 50%;
   margin-left: -50vw;
 }
+
 .container {
   display: flex;
   max-width: 1200px;
@@ -248,6 +249,10 @@
   background: #FFFFFF;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
+}
+
+.widgetFormExchange {
+  position: relative;
 }
 
 .error {
@@ -509,4 +514,11 @@
   .formExchange {
     width: 400px;
   }
+}
+
+
+.widgetExchangeWrap {
+  width: 100vw;
+  left: auto;
+  margin: 0;
 }

@@ -837,7 +837,7 @@ export default class PartialClosure extends Component {
 
 
     return (
-      <div styleName="exchangeWrap">
+      <div styleName={`exchangeWrap ${isWidget ? 'widgetExchangeWrap' : ''}`}>
         <div styleName="promoContainer" ref={ref => this.promoContainer = ref}>
           <div
             styleName="scrollToTutorialSection"
@@ -855,7 +855,7 @@ export default class PartialClosure extends Component {
             <div styleName="container alignCenter">
               <Promo subTitle={subTitle(sellTokenFullName, haveCurrency.toUpperCase(), buyTokenFullName, getCurrency.toUpperCase())} />
               <div styleName="section" className={isWidgetLink ? 'section' : ''} >
-                <div styleName="formExchange" className={isWidget ? 'formExchange' : ''} >
+                <div styleName={`formExchange ${isWidget ? 'widgetFormExchange' : ''}`} className={isWidget ? 'formExchange' : ''} >
                   <div styleName="selectWrap">
                     <SelectGroup
                       switchBalanceFunc={this.switchBalance}
