@@ -854,7 +854,7 @@ export default class PartialClosure extends Component {
           <Fragment>
             <div styleName="container alignCenter">
               <Promo subTitle={subTitle(sellTokenFullName, haveCurrency.toUpperCase(), buyTokenFullName, getCurrency.toUpperCase())} />
-              <div styleName={isWidgetLink ? 'widgetSection' : 'section'} className={isWidgetLink ? 'section' : ''} >
+              <div styleName="section" className={isWidgetLink ? 'section' : ''} >
                 <div styleName="formExchange" className={isWidget ? 'formExchange' : ''} >
                   <div styleName="selectWrap">
                     <SelectGroup
@@ -917,7 +917,7 @@ export default class PartialClosure extends Component {
                       className={isWidget ? 'SelGroup' : ''}
                     />
                     { oneCryptoCost.isGreaterThan(0) && oneCryptoCost.isFinite() && !isNonOffers && (
-                      <div styleName={isWidget ? 'priceSearch' : 'price'}>
+                      <div styleName="price">
                         <FormattedMessage
                           id="PartialPriceSearch502"
                           defaultMessage="1 {getCurrency} = {haveCurrency}"
@@ -1009,62 +1009,20 @@ export default class PartialClosure extends Component {
                   }
 
                   {
-                    (this.customWalletAllowed() && !isWidget) && (
+                    (this.customWalletAllowed()) && (
                       <Fragment>
                         <div styleName="walletToggle walletToggle_site">
                           <div styleName="walletOpenSide">
                             <Toggle checked={!customWalletUse} onChange={this.handleCustomWalletUse} />
-                            {
-                              !isWidget && (
-                                <span styleName="specify">
-                                  <FormattedMessage id="UseAnotherWallet" defaultMessage="Specify your receiving wallet address" />
-                                </span>
-                              )
-                            }
+                            <span styleName="specify">
+                              <FormattedMessage id="UseAnotherWallet" defaultMessage="Specify your receiving wallet address" />
+                            </span>
                           </div>
                           <div styleName={!customWalletUse ? 'anotherRecepient anotherRecepient_active' : 'anotherRecepient'}>
                             <div styleName="walletInput">
                               <Input required disabled={customWalletUse} valueLink={linked.customWallet} pattern="0-9a-zA-Z" placeholder="Enter the destination address" />
                             </div>
                           </div>
-                        </div>
-                      </Fragment>
-                    )
-                  }
-                  {
-                    (this.customWalletAllowed() && isWidget) && (
-                      <Fragment>
-                        <FieldLabel>
-                          <strong>
-                            <FormattedMessage id="PartialYourWalletAddress" defaultMessage="Receiving wallet address" />
-                          </strong>
-                          &nbsp;
-                          <Tooltip id="PartialClosure">
-                            <FormattedMessage id="PartialClosure" defaultMessage="The wallet address to where cryptocurrency will be sent after the exchange" />
-                          </Tooltip >
-                        </FieldLabel>
-                        <div styleName="walletInput">
-                          <Input required disabled={customWalletUse} valueLink={linked.customWallet} pattern="0-9a-zA-Z" placeholder="Enter the destination address" />
-                          {customWallet.length !== 0 && !this.addressIsCorrect() && (
-                            <div styleName="notCorrect">
-                              <FormattedMessage
-                                id="Partial955"
-                                defaultMessage="Address not correct" />
-                            </div>
-                          )}
-                        </div>
-                        <div styleName="walletToggle">
-                          <Toggle checked={customWalletUse} onChange={this.handleCustomWalletUse} />
-                          {
-                            isWidgetBuild && (
-                              <FormattedMessage id="PartialUseInternalWallet" defaultMessage="Use internal wallet" />
-                            )
-                          }
-                          {
-                            isWidgetLink && (
-                              <FormattedMessage id="PartialUseSwapOnlineWallet" defaultMessage="Use Swap.Online wallet" />
-                            )
-                          }
                         </div>
                       </Fragment>
                     )

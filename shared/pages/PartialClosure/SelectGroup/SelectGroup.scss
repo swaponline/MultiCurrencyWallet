@@ -129,6 +129,7 @@ input:disabled {
 @include media-mobile {
   .currencySelect {
     width: 130px;
+    height: 48px;
     input {
       font-size: 13px;
     }
@@ -136,10 +137,13 @@ input:disabled {
   .textUsd {
     font-size: 14px;
   }
+  .groupField {
+    height: 60px;
+  }
   .inputRoot {
     input {
       padding-left: 10px;
-      padding-right: 8px;
+      padding-right: 120px;
     }
   }
   .textUsd {
