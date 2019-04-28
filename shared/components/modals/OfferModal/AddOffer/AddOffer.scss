@@ -1,3 +1,23 @@
+
+@keyframes errorAppend{
+  0% {
+    max-height: 0;
+    opacity: 0;
+  }
+  20% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    max-height: 300px;
+  }
+}
+
+@mixin errAppend {
+  animation: errorAppend 0.7s linear 1;
+  will-change: max-height, opacity;
+}
+
 .sellGroup {
   position: relative;
   z-index: 10;
@@ -28,6 +48,10 @@
   height: 40px;
 }
 
+.controlsToggles {
+  margin-bottom: 9px;
+}
+
 @include media-tablet-landscape-and-lower  {
   .wrapper {
     width: 320px;
@@ -35,10 +59,19 @@
   }
 }
 
-
-
 .button {
-  margin-top: 50px;
+  margin-top: 15px;
+  width: 100%;
+  background: #000;
+  border-radius: 3px;
+  height: 68px;
+  font-size: 16px;
+  flex-basis: 47%;
+  box-shadow: none;
+}
+
+.button:disabled {
+  background: #F5F5F5;
 }
 
 .togleGroup {
@@ -55,6 +88,24 @@
     color: inherit !important;
     vertical-align: inherit !important;
     text-decoration: underline !important;
+  }
+}
+
+.Error {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  padding: 0.3em 10px;
+  margin-top: -5px;
+  font-size: 13px;
+  background: #FD6B65;
+  border-radius: 3px;
+  margin-bottom: 15px;
+  @include errAppend();
+  a {
+    color: inherit;
+    font-size: inherit;
+    text-decoration: underline;
   }
 }
 

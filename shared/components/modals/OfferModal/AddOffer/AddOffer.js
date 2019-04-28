@@ -421,7 +421,7 @@ export default class AddOffer extends Component {
 
     if (linked.sellAmount.value !== '' && linked.sellAmount.value > 0) {
       linked.sellAmount.check((value) => (BigNumber(value).isGreaterThan(minimalAmountSell)),
-        <span style={{ position: 'relative', marginRight: '44px' }}>
+        <span>
           <FormattedMessage id="transaction444" defaultMessage="Sell amount must be greater than " />
           {' '}
           {minimalAmountSell}
@@ -430,7 +430,7 @@ export default class AddOffer extends Component {
     }
     if (linked.buyAmount.value !== '' && linked.sellAmount.value > 0) {
       linked.buyAmount.check((value) => (BigNumber(value).isGreaterThan(minimalAmountBuy)),
-        <span style={{ position: 'relative', marginRight: '44px' }}>
+        <span>
           <FormattedMessage id="transaction450" defaultMessage="Buy amount must be greater than " />
           {' '}
           {minimalAmountBuy}
@@ -440,11 +440,12 @@ export default class AddOffer extends Component {
 
     if (linked.buyAmount.value !== '') {
       linked.sellAmount.check((value) => (BigNumber(balance).isGreaterThanOrEqualTo(value)),
-      <span style={{ position: 'relative', marginRight: '44px' }}>
-        <FormattedMessage id="transaction376" defaultMessage="Amount must be less than your balance " />
-      </span>
+        <span>
+          <FormattedMessage id="transaction376" defaultMessage="Amount must be less than your balance " />
+        </span>
       )
     }
+    console.log(linked)
 
     return (
       <div styleName="wrapper addOffer">
@@ -452,7 +453,9 @@ export default class AddOffer extends Component {
           switchBalanceFunc={this.switching}
           styleName="sellGroup"
           label={<FormattedMessage id="addoffer381" defaultMessage="Sell" />}
+          tooltip={<FormattedMessage id="partial462" defaultMessage="The amount you have in your wallet or external wallet that you want to exchange" />}
           inputValueLink={linked.sellAmount.pipe(this.handleSellAmountChange)}
+          dontDisplayError
           selectedValue={sellCurrency}
           onSelect={this.handleSellCurrencySelect}
           id="sellAmount"
@@ -469,7 +472,9 @@ export default class AddOffer extends Component {
         <SelectGroup
           switchBalanceFunc={this.switching}
           label={<FormattedMessage id="addoffer396" defaultMessage="Buy" />}
+          tooltip={<FormattedMessage id="partial478" defaultMessage="The amount you receive after the exchange" />}
           inputValueLink={linked.buyAmount.pipe(this.handleBuyAmountChange)}
+          dontDisplayError
           selectedValue={buyCurrency}
           onSelect={this.handleBuyCurrencySelect}
           id="buyAmount"
@@ -480,6 +485,7 @@ export default class AddOffer extends Component {
           <ExchangeRateGroup
             label={<FormattedMessage id="addoffer406" defaultMessage="Exchange rate" />}
             inputValueLink={linked.exchangeRate.pipe(this.handleExchangeRateChange)}
+            dontDisplayError
             currency={false}
             disabled={!manualRate}
             id="exchangeRate"
@@ -488,33 +494,43 @@ export default class AddOffer extends Component {
             sellCurrency={sellCurrency}
           />
         </div>
-        <div styleName="togles">
-          <Toggle checked={manualRate} onChange={this.handleManualRate} />
-          <div styleName="togleText">
-            <FormattedMessage id="AddOffer418" defaultMessage="Custom exchange rate" />
-            {' '}
-            <Tooltip id="add264">
-              <FormattedMessage id="add408" defaultMessage="To change the exchange rate " />
-            </Tooltip>
+        <div styleName="controlsToggles">
+          <div styleName="togles">
+            <Toggle checked={manualRate} onChange={this.handleManualRate} />
+            <div styleName="togleText">
+              <FormattedMessage id="AddOffer418" defaultMessage="Custom exchange rate" />
+              {' '}
+              <Tooltip id="add264">
+                <FormattedMessage id="add408" defaultMessage="To change the exchange rate " />
+              </Tooltip>
+            </div>
+          </div>
+          <div styleName="togles">
+            <Toggle checked={isPartial} onChange={() => this.setState((state) => ({ isPartial: !state.isPartial }))} />
+            <div styleName="togleText">
+              <FormattedMessage id="AddOffer423" defaultMessage="Enable partial fills" />
+              {' '}
+              <Tooltip id="add547">
+                <div style={{ textAlign: 'center' }} >
+                  <FormattedMessage
+                    id="addOfferPartialTooltip"
+                    defaultMessage={`You will receive exchange requests or the {p} amount less than the total amount you want {p} sell. For example you want to sell 1 BTC,
+                      other users can send you exchange requests {p}for 0.1, 0.5 BTC`}
+                    values={{ p: <br /> }}
+                  />
+                </div>
+              </Tooltip>
+            </div>
           </div>
         </div>
-        <div styleName="togles">
-          <Toggle checked={isPartial} onChange={() => this.setState((state) => ({ isPartial: !state.isPartial }))} />
-          <div styleName="togleText">
-            <FormattedMessage id="AddOffer423" defaultMessage="Enable partial fills" />
-            {' '}
-            <Tooltip id="add547">
-              <div style={{ textAlign: 'center' }} >
-                <FormattedMessage
-                  id="addOfferPartialTooltip"
-                  defaultMessage={`You will receive exchange requests or the {p} amount less than the total amount you want {p} sell. For example you want to sell 1 BTC,
-                    other users can send you exchange requests {p}for 0.1, 0.5 BTC`}
-                  values={{ p: <br /> }}
-                />
-              </div>
-            </Tooltip>
-          </div>
-        </div>
+
+        {
+          Object.values(linked).map((item, index) => Boolean(item.error)
+            ? <div key={index} styleName="Error">{item.error}</div>
+            : ''
+          )
+        }
+
         <Button styleName="button" fullWidth brand disabled={isDisabled} onClick={this.handleNext}>
           <FormattedMessage id="AddOffer396" defaultMessage="Next" />
         </Button>

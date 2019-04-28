@@ -16,7 +16,7 @@ import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 
 const SelectGroup = ({ dynamicFee, isToken, extendedControls, selectedValue, onSelect, dataTut,
   currencies, usd, placeholder, label, disabled, className, inputValueLink, tooltip, balance, error,
-  id, type, idFee, tooltipAboutFee, haveAmount, ...props
+  id, type, idFee, tooltipAboutFee, haveAmount, dontDisplayError, ...props
 }) => (
   <div>
     <div styleName="groupField" className={className}>
@@ -45,6 +45,7 @@ const SelectGroup = ({ dynamicFee, isToken, extendedControls, selectedValue, onS
         placeholder={placeholder}
         pattern="0-9\."
         errorStyle={error}
+        dontDisplayError
         disabled={disabled}
         onFocus={props.onFocus ? props.onFocus : () => {}}
         onBlur={props.onBlur ? props.onBlur : () => {}}

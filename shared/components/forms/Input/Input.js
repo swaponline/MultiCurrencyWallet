@@ -64,7 +64,7 @@ export default class Input extends Component {
   render() {
     const {
       className, inputContainerClassName, inputClassName, errorStyle,
-      valueLink: { error }, valueLink,
+      valueLink: { error }, valueLink, dontDisplayError,
       multiline, focusOnInit, disabled, readOnly, type, usd, ...rest
     } = this.props
 
@@ -99,7 +99,7 @@ export default class Input extends Component {
           }
         </div>
         {
-          Boolean(error) && (
+          Boolean(error && !dontDisplayError) && (
             <div styleName="error">
               {error}
             </div>

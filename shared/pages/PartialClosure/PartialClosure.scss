@@ -196,8 +196,6 @@
   margin-bottom: 15px;
   padding: 0 20px;
   &_site {
-    margin-bottom: 45px;
-    top: 35px;
     position: relative;
   }
 }
@@ -261,7 +259,7 @@
   font-size: 13px;
   background: #FD6B65;
   border-radius: 3px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   @include errAppend();
   a {
     color: inherit;
@@ -278,7 +276,7 @@
   font-size: 13px;
   background: #ffb200;
   border-radius: 3px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   @include errAppend();
   a {
     color: inherit;
