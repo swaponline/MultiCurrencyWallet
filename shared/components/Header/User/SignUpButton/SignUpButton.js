@@ -35,7 +35,7 @@ const SignUpButton = ({ mobile }) => (
           </button>
           <ReactTooltip id="sign-up" type="light" effect="solid">
             <span>
-              <FormattedMessage id="ADDoffer33" defaultMessage="Get subscribed for the Swap.Online news" />
+              <FormattedMessage id="ADDoffer33" defaultMessage="Get subscribed for the Atomicswapwallet.io news" />
             </span>
           </ReactTooltip>
           <button styleName="buttonMobile" onClick={handleSignUp} /* eslint-disable-line */ >

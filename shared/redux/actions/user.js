@@ -155,7 +155,7 @@ const getText = () => {
 
   let text = `
   You will need this instruction only in case of emergency (if you lost your keys) \r\n
-  please do NOT waste your time and go back to swap.online\r\n
+  please do NOT waste your time and go back to Atomicswapwallet.io\r\n
   \r\n
   \r\n
   \r\n

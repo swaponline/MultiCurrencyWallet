@@ -41,7 +41,7 @@ const filterIsPartial = (orders) => orders
 
 const text = [
   <FormattedMessage id="partial223" defaultMessage="To change default wallet for buy currency. " />,
-  <FormattedMessage id="partial224" defaultMessage="Leave empty for use Swap.Online wallet " />,
+  <FormattedMessage id="partial224" defaultMessage="Leave empty for use Atomicswapwallet.io wallet " />,
 ]
 
 const subTitle = (sell, sellTicker, buy, buyTicker) => (
@@ -779,7 +779,7 @@ export default class PartialClosure extends Component {
     }, SeoValues)
     const MetaDescriptionString = formatMessage({
       id: 'PartialClosureMetaDescrTag',
-      defaultMessage: 'Best exchange rate for {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}). Swap.Online wallet provides instant exchange using Atomic Swap Protocol.', // eslint-disable-line
+      defaultMessage: 'Best exchange rate for {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}). Atomicswapwallet.io wallet provides instant exchange using Atomic Swap Protocol.', // eslint-disable-line
     }, SeoValues)
 
     return (
@@ -1010,7 +1010,7 @@ export default class PartialClosure extends Component {
                     }
                     {
                       isWidgetLink && (
-                        <FormattedMessage id="PartialUseSwapOnlineWallet" defaultMessage="Use Swap.Online wallet" />
+                        <FormattedMessage id="PartialUseSwapOnlineWallet" defaultMessage="Use Atomicswapwallet.io wallet" />
                       )
                     }
                   </div>
@@ -1048,13 +1048,13 @@ export default class PartialClosure extends Component {
               <Referral address={this.props.userEthAddress} />
               <FormattedMessage
                 id="PartialClosure562"
-                defaultMessage="Swap.online is a decentralized hot wallet powered by Atomic swap technology.
+                defaultMessage="Atomicswapwallet.io is a decentralized hot wallet powered by Atomic swap technology.
                 Exchange Bitcoin, USD Tether, BCH, EOS within seconds.
 
                 No commission for exchange (only miners fee).
 
 
-                Swap.Online uses IPFS-network for all the operational processes which results in no need for centralized server.
+                Atomicswapwallet.io uses IPFS-network for all the operational processes which results in no need for centralized server.
 
                 The interface of exchange seems to look like that of crypto broker, not of ordinary DEX or CEX. In a couple of clicks, the user can place and take the offer,
                 customizing the price of sent token.
@@ -1063,11 +1063,11 @@ export default class PartialClosure extends Component {
                 Also, the user can exchange the given percentage of his or her amount of tokens available (e.g. ½, ¼ etc.).
 
 
-                One more advantage of the Swap.Online exchange service is the usage of one key for the full range of ERC-20 tokens.
+                One more advantage of the Atomicswapwallet.io exchange service is the usage of one key for the full range of ERC-20 tokens.
 
                 By the way, if case you’re not interested in exchange of some tokens, you can hide it from the list.
 
-                Thus, use Swap.Online as your basic exchange for every crypto you’re holding!"
+                Thus, use Atomicswapwallet.io as your basic exchange for every crypto you’re holding!"
                 values={{
                   br: <br />,
                 }}

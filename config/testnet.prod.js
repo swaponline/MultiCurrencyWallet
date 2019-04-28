@@ -9,8 +9,8 @@ export default {
   local: 'online',
   dir: 'testnet',
 
-  base: 'https://testnet.swap.online/',
-  publicPath: `https://testnet.swap.online${baseConfig.publicPath}`,
+  base: 'https://testnet.Atomicswapwallet.io/',
+  publicPath: `https://testnet.Atomicswapwallet.io${baseConfig.publicPath}`,
 
   time: moment(Date.now()).format('LLLL'),
 

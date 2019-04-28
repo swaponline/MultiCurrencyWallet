@@ -297,7 +297,7 @@ export default class UsdtToEthToken extends Component {
                       <FormattedMessage id="UsdrToEthToken294" defaultMessage="6. ETH was transferred to your wallet. Check the balance." />
                     </h3>
                     <h2>
-                      <FormattedMessage id="UsdrToEthToken297" defaultMessage="Thank you for using Swap.Online!" />
+                      <FormattedMessage id="UsdrToEthToken297" defaultMessage="Thank you for using Atomicswapwallet.io!" />
                     </h2>
                   </Fragment>
                 )

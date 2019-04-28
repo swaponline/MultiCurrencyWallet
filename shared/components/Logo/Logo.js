@@ -29,7 +29,7 @@ export default class Logo extends Component {
     const imgNode = React.createElement('img', {
       styleName: !withLink && 'logo',
       src: isColored ? coloredLogoImage : logoImage,
-      alt: 'swap.online logo',
+      alt: 'Atomicswapwallet.io logo',
     })
 
     return (

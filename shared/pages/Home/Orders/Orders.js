@@ -153,7 +153,7 @@ export default class Orders extends Component {
       metaDescription: {
         id: 'Orders127',
         defaultMessage: `Best exchange rate for {buyCurrencyFullName} ({buyCurrency}) to {sellCurrencyFullName} ({sellCurrency}).
-         Swap.Online wallet provides instant exchange using Atomic Swap Protocol.`,
+         Atomicswapwallet.io wallet provides instant exchange using Atomic Swap Protocol.`,
       },
     })
 

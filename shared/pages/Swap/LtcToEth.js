@@ -327,7 +327,7 @@ export default class LtcToEth extends Component {
                       <FormattedMessage id="LtcTOeth313" defaultMessage="6. ETH was transferred to your wallet. Check the balance." />
                     </h3>
                     <h2>
-                      <FormattedMessage id="LtcTOeth315" defaultMessage="Thank you for using Swap.Online!" />
+                      <FormattedMessage id="LtcTOeth315" defaultMessage="Thank you for using Atomicswapwallet.io!" />
                     </h2>
                   </Fragment>
                 )

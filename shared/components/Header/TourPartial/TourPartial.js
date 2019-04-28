@@ -60,7 +60,7 @@ const tourSteps = [
   },
   {
     selector: '[data-tut="togle"]',
-    content: <FormattedMessage id="tourPartial107" defaultMessage="Switch this button to receive funds after exchanging to the internal wallet on Swap.online or to another wallet" />,
+    content: <FormattedMessage id="tourPartial107" defaultMessage="Switch this button to receive funds after exchanging to the internal wallet on Atomicswapwallet.io or to another wallet" />,
   },
   {
     selector: '[data-tut="Exchange"]',

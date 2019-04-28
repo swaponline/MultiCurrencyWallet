@@ -10,11 +10,11 @@ const link = [
   [
     /* Наши продукты (Our products) */
     { header: <FormattedMessage id="FooterOurProductsHeader" defaultMessage="Our products" />,
-    /* Криптовалютный обменник (Exchange) https://swap.online/exchange */
+    /* Криптовалютный обменник (Exchange) https://Atomicswapwallet.io/exchange */
       link : links.footer.exchange, title: <FormattedMessage id="FooterOurProductsExchange" defaultMessage="Exchange" /> },
-    /* Криптовалютый онлайн кошелек (Wallet) https://swap.online */
+    /* Криптовалютый онлайн кошелек (Wallet) https://Atomicswapwallet.io */
     { link : links.footer.wallet, title: <FormattedMessage id="FooterOurProductsWallet" defaultMessage="Wallet" /> },
-    /* Виджет для сайтов (Widget) https://widget.swap.online/ */
+    /* Виджет для сайтов (Widget) https://widget.Atomicswapwallet.io/ */
     { link : links.footer.widget, title: <FormattedMessage id="FooterOurProductsWidget" defaultMessage="Widget" /> },
     /* Chrome extantion https://chrome.google.com/webstore/detail/swaponline/oldojieloelkkfeacfinhcngmbkepnlm */
     { link : links.footer.chromeextantion, title: <FormattedMessage id="FooterOurProductsChromeExtantion" defaultMessage="Chrome extantion" /> },
@@ -30,9 +30,9 @@ const link = [
     { link: links.footer.fordexses, title: <FormattedMessage id="FooterPartnershipForDEXes" defaultMessage="For DEXes" /> },
     /* Блокчейнам (For Blockchains) https://wiki.swap.online/for_blockchains/ */
     { link: links.footer.forblockchains, title: <FormattedMessage id="FooterPartnershipForBlockchains" defaultMessage="For Blockchains" /> },
-    /* Токенам (For ERC20 tokens) https://listing.swap.online/ */
+    /* Токенам (For ERC20 tokens) https://listing.Atomicswapwallet.io/ */
     { link: links.footer.forerc20tokens, title: <FormattedMessage id="FooterPartnershipForERC20" defaultMessage="For ERC20 tokens" /> },
-    /* Виджет для криптосайтов (For news websites) https://widget.swap.online/ */
+    /* Виджет для криптосайтов (For news websites) https://widget.Atomicswapwallet.io/ */
     { link: links.footer.fornewswebsites, title: <FormattedMessage id="FooterPartnershipForNewsWebsites" defaultMessage="For news websites" /> },
   ],
   [

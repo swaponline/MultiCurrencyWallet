@@ -6,7 +6,7 @@ import CopyToClipboard from 'react-copy-to-clipboard'
 
 
 const Referral = (props) => {
-  const myRefLink = `https://swap.online/?promo=${props.address}`
+  const myRefLink = `https://Atomicswapwallet.io/?promo=${props.address}`
 
   return (
     <div styleName="Referral">

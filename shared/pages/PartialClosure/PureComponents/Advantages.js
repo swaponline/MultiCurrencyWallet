@@ -10,7 +10,7 @@ const Advantages = (props) => (
     {/* <div styleName="advantages__content">
 
       <article styleName="advantage">
-        <img src="https://exchange.swap.online/images/advantages/1.png" alt="0% commission" />
+        <img src="https://exchange.Atomicswapwallet.io/images/advantages/1.png" alt="0% commission" />
         <div styleName="advantage__title">
           <h5>
             <FormattedMessage id="advantagesTitle1" defaultMessage="0% commission" />
@@ -27,7 +27,7 @@ const Advantages = (props) => (
       </article>
 
       <article styleName="advantage">
-        <img src="https://exchange.swap.online/images/advantages/2.png" alt="No KYC" />
+        <img src="https://exchange.Atomicswapwallet.io/images/advantages/2.png" alt="No KYC" />
         <div styleName="advantage__title">
           <h5>
             <FormattedMessage id="advantagesTitle2" defaultMessage="No KYC" />
@@ -44,7 +44,7 @@ const Advantages = (props) => (
       </article>
 
       <article styleName="advantage">
-        <img src="https://exchange.swap.online/images/advantages/3.png" alt="No 3d party" />
+        <img src="https://exchange.Atomicswapwallet.io/images/advantages/3.png" alt="No 3d party" />
         <div styleName="advantage__title">
           <h5>
             <FormattedMessage id="advantagesTitle3" defaultMessage="No 3d party" />
@@ -61,7 +61,7 @@ const Advantages = (props) => (
       </article>
 
       <article styleName="advantage">
-        <img src="https://exchange.swap.online/images/advantages/4.png" alt="Super fast" />
+        <img src="https://exchange.Atomicswapwallet.io/images/advantages/4.png" alt="Super fast" />
         <div styleName="advantage__title">
           <h5>
             <FormattedMessage id="advantagesTitle4" defaultMessage="Super fast" />
@@ -78,7 +78,7 @@ const Advantages = (props) => (
       </article>
 
       <article styleName="advantage">
-        <img src="https://exchange.swap.online/images/advantages/5.png" alt="High security" />
+        <img src="https://exchange.Atomicswapwallet.io/images/advantages/5.png" alt="High security" />
         <div styleName="advantage__title">
           <h5>
             <FormattedMessage id="advantagesTitle5" defaultMessage="High security" />
@@ -95,7 +95,7 @@ const Advantages = (props) => (
       </article>
 
       <article styleName="advantage">
-        <img src="https://exchange.swap.online/images/advantages/6.png" alt="True anonymity" />
+        <img src="https://exchange.Atomicswapwallet.io/images/advantages/6.png" alt="True anonymity" />
         <div styleName="advantage__title">
           <h5>
             <FormattedMessage id="advantagesTitle6" defaultMessage="True anonymity" />
@@ -118,7 +118,7 @@ const Advantages = (props) => (
         onClick={() => window.open(props.intl.formatMessage({ id: 'advVidLink', defaultMessage: 'https://youtu.be/Jhrb7xOT_7s' }), '_blank')}
         styleName="advFooter__btn"
       >
-        <img src="https://exchange.swap.online/images/icons/video-play.png" alt="Play the video" />
+        <img src="https://exchange.Atomicswapwallet.io/images/icons/video-play.png" alt="Play the video" />
         <div>
           <h4>
             <FormattedMessage

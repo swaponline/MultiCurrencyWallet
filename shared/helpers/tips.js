@@ -2,7 +2,7 @@ const tips = {
   loader: [
     'Do not forget to save your private keys!',
     '"Wow, this is awesome!" – @dexx7y Maintainer of Omni Core about our USDT swaps',
-    '"That is great news" – Roger Ver, CEO of bitcoin.com, about connecting Bitcoin Cash to swap.online',
+    '"That is great news" – Roger Ver, CEO of bitcoin.com, about connecting Bitcoin Cash to Atomicswapwallet.io',
   ],
 }
 

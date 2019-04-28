@@ -212,7 +212,7 @@ export default class Wallet extends Component {
     const titleSwapOnline = defineMessages({
       metaTitle: {
         id: 'Wallet140',
-        defaultMessage: 'Swap.Online - Cryptocurrency Wallet with Atomic Swap Exchange',
+        defaultMessage: 'Atomicswapwallet.io - Cryptocurrency Wallet with Atomic Swap Exchange',
       },
     })
     const titleWidgetBuild = defineMessages({
@@ -258,7 +258,7 @@ export default class Wallet extends Component {
             <FormattedMessage
               id="WalletPromoText"
               defaultMessage="
-                🎁 🎁 🎁 Thank you for using Swap.Online!
+                🎁 🎁 🎁 Thank you for using Atomicswapwallet.io!
                 Tell us about your experience with our service
                 and we will gift you $10 in BTC 🎁 🎁 🎁"
             />
@@ -286,14 +286,14 @@ export default class Wallet extends Component {
               <h2 styleName="informHeading">Wallet based on the Atomic Swap technology</h2>
               <FormattedMessage
                 id="Wallet156"
-                defaultMessage="Welcome to Swap.Online, a decentralized cross-chain wallet based on the Atomic Swap technology.
+                defaultMessage="Welcome to Atomicswapwallet.io, a decentralized cross-chain wallet based on the Atomic Swap technology.
 
                 Here you can safely store and promptly exchange Bitcoin, Ethereum, EOS, USD, Tether, BCH, and numerous ERC-20 tokens.
 
 
-                Swap.Online doesn’t store your keys or tokens. Our wallet operates directly in at browser, so no additional installations or downloads are required.
+                Atomicswapwallet.io doesn’t store your keys or tokens. Our wallet operates directly in at browser, so no additional installations or downloads are required.
 
-                The Swap.Online service is fully decentralized as (because)all the operations with tokens are executed via the IPFS network.
+                The Atomicswapwallet.io service is fully decentralized as (because)all the operations with tokens are executed via the IPFS network.
 
 
                 Our team was the first who finalized Atomic Swaps with USDT and EOS in September 2018 and Litecoin blockchain was added in October 2018.
@@ -308,7 +308,7 @@ export default class Wallet extends Component {
                 Install Swap.Button html widget on your site and collect crypto investments for your project.
 
 
-                Start using https://swap.online/ today and enjoy the power of true decentralization."
+                Start using https://Atomicswapwallet.io/ today and enjoy the power of true decentralization."
                 values={{
                   br: <br />,
                 }}

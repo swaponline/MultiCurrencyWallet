@@ -113,7 +113,7 @@
   },
   {
     "id": "ADDoffer33",
-    "message": "Get subscribed for the Swap.Online news",
+    "message": "Get subscribed for the Atomicswapwallet.io news",
     "files": [
       "shared/components/Header/User/SignUpButton/SignUpButton.js"
     ]
@@ -532,7 +532,7 @@
   },
   {
     "id": "SwapProgress135",
-    "message": "Thank you for using Swap.Online! ",
+    "message": "Thank you for using Atomicswapwallet.io! ",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.js"
     ]
@@ -571,11 +571,11 @@
   },
   {
     "id": "SwapProgress74",
-    "message": "Thank you for using Swap.Online! "
+    "message": "Thank you for using Atomicswapwallet.io! "
   },
   {
     "id": "SwapProgress80",
-    "message": "Thank you for using Swap.Online! "
+    "message": "Thank you for using Atomicswapwallet.io! "
   },
   {
     "id": "SwapProgress93",
@@ -607,11 +607,11 @@
   },
   {
     "id": "CurrencyTitleSeo1",
-    "message": "{fullName} ({tickerName}) Price, Description & Exchange Rates. Store & Exchange {fullName} ({tickerName}) Anonymously on Swap.Online."
+    "message": "{fullName} ({tickerName}) Price, Description & Exchange Rates. Store & Exchange {fullName} ({tickerName}) Anonymously on Atomicswapwallet.io."
   },
   {
     "id": "CurrencyMetaDescrTag1",
-    "message": "Find out actual price of {fullName}, its ticker name is ({tickerName}). Swap.Online is the best way to safely store your cryptocurrecy."
+    "message": "Find out actual price of {fullName}, its ticker name is ({tickerName}). Atomicswapwallet.io is the best way to safely store your cryptocurrecy."
   },
   {
     "id": "CurrencyH1Seo1",
@@ -940,7 +940,7 @@
   },
   {
     "id": "BtcToEthToken293",
-    "message": "Thank you for using Swap.Online! "
+    "message": "Thank you for using Atomicswapwallet.io! "
   },
   {
     "id": "BtcToEthToken303",
@@ -1078,7 +1078,7 @@
   },
   {
     "id": "EthTokenBtc365",
-    "message": "Thank you for using Swap.Online! "
+    "message": "Thank you for using Atomicswapwallet.io! "
   },
   {
     "id": "EthTokenBtc375",
@@ -1259,7 +1259,7 @@
   },
   {
     "id": "EthTokenToUsdt380",
-    "message": "Thank you for using Swap.Online! ",
+    "message": "Thank you for using Atomicswapwallet.io! ",
     "files": [
       "shared/pages/Swap/EthTokenToUsdt.js"
     ]
@@ -1462,7 +1462,7 @@
   },
   {
     "id": "EthToLtc389",
-    "message": "Thank you for using Swap.Online! ",
+    "message": "Thank you for using Atomicswapwallet.io! ",
     "files": [
       "shared/pages/Swap/EthToLtc.js"
     ]
@@ -1651,7 +1651,7 @@
   },
   {
     "id": "LtcTOeth315",
-    "message": "Thank you for using Swap.Online! ",
+    "message": "Thank you for using Atomicswapwallet.io! ",
     "files": [
       "shared/pages/Swap/LtcToEth.js"
     ]
@@ -1812,7 +1812,7 @@
   },
   {
     "id": "UsdrToEthToken297",
-    "message": "Thank you for using Swap.Online! ",
+    "message": "Thank you for using Atomicswapwallet.io! ",
     "files": [
       "shared/pages/Swap/UsdtToEthToken.js"
     ]
@@ -2046,7 +2046,7 @@
   },
   {
     "id": "BtcToEthTokenAddress1",
-    "message": "Confirm destination address (by default - swap.online wallet)"
+    "message": "Confirm destination address (by default - Atomicswapwallet.io wallet)"
   },
   {
     "id": "BtcToEthTokenAddress2",
@@ -2175,7 +2175,7 @@
   },
   {
     "id": "Thank",
-    "message": "Thank you for using Swap.Online! ",
+    "message": "Thank you for using Atomicswapwallet.io! ",
     "files": [
       "shared/pages/Swap/BtcToLtc.js",
       "shared/pages/Swap/LtcToBtc.js"
@@ -2992,7 +2992,7 @@
   },
   {
     "id": "partial224",
-    "message": "Leave empty for use Swap.Online wallet",
+    "message": "Leave empty for use Atomicswapwallet.io wallet",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -3283,7 +3283,7 @@
   },
   {
     "id": "PartialUseSwapOnlineWallet",
-    "message": "Use Swap.Online wallet",
+    "message": "Use Atomicswapwallet.io wallet",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -3343,7 +3343,7 @@
   },
   {
     "id": "partial462",
-    "message": "The amount you have in your swap.online wallet or external wallet that you want to exchange",
+    "message": "The amount you have in your Atomicswapwallet.io wallet or external wallet that you want to exchange",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -3462,7 +3462,7 @@
   },
   {
     "id": "PreventMultiTabs12",
-    "message": "Swap.Online supports only one active tab.\n    Please reload this page to continue  using this tab or close it",
+    "message": "Atomicswapwallet.io supports only one active tab.\n    Please reload this page to continue  using this tab or close it",
     "files": [
       "shared/components/PreventMultiTabs/PreventMultiTabs.js"
     ]
@@ -3529,7 +3529,7 @@
   },
   {
     "id": "CurrencyWallet141",
-    "message": "Swap.Online - {fullName}({currency}) Web Wallet with Atomic Swap."
+    "message": "Atomicswapwallet.io - {fullName}({currency}) Web Wallet with Atomic Swap."
   },
   {
     "id": "orders189",
@@ -3679,7 +3679,7 @@
   },
   {
     "id": "PartialClosureMetaDescrTag",
-    "message": "Best exchange rate for {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}). Swap.Online wallet provides instant exchange using Atomic Swap Protocol."
+    "message": "Best exchange rate for {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}). Atomicswapwallet.io wallet provides instant exchange using Atomic Swap Protocol."
   },
   {
     "id": "Continue",
@@ -3749,7 +3749,7 @@
   },
   {
     "id": "CurrencyWallet148",
-    "message": "Swap.Online - ${fullName} (${currency}) Web Wallet with Atomic Swap."
+    "message": "Atomicswapwallet.io - ${fullName} (${currency}) Web Wallet with Atomic Swap."
   },
   {
     "id": "CurrencyWallet154",
@@ -3767,7 +3767,7 @@
   },
   {
     "id": "Orders127",
-    "message": "Best exchange rate for {buyCurrencyFullName} ({buyCurrency}) to {sellCurrencyFullName} ({sellCurrency}). Swap.Online wallet provides instant exchange using Atomic Swap Protocol.",
+    "message": "Best exchange rate for {buyCurrencyFullName} ({buyCurrency}) to {sellCurrencyFullName} ({sellCurrency}). Atomicswapwallet.io wallet provides instant exchange using Atomic Swap Protocol.",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]
@@ -3778,7 +3778,7 @@
   },
   {
     "id": "Wallet140",
-    "message": "Swap.Online - Cryptocurrency Wallet with Atomic Swap Exchange",
+    "message": "Atomicswapwallet.io - Cryptocurrency Wallet with Atomic Swap Exchange",
     "files": [
       "shared/pages/Wallet/Wallet.js"
     ]
@@ -3792,14 +3792,14 @@
   },
   {
     "id": "Wallet156",
-    "message": "Welcome to Swap.Online, a decentralized cross-chain wallet based on the Atomic Swap technology. {br}Here you can safely store and promptly exchange Bitcoin, Ethereum, EOS, USD, Tether, BCH, and numerous ERC-20 tokens. {br}{br}Swap.Online doesn’t store your keys or tokens. Our wallet operates directly in at browser, so no additional installations or downloads are required. {br}The Swap.Online service is fully decentralized as (because)all the operations with tokens are executed via the IPFS network. {br}{br}Our team was the first who finalized Atomic Swaps with USDT and EOS in September 2018 and Litecoin blockchain was added in October 2018. {br}Our wallet addresses a real multi-chain integration with a decentralized order book, no third party involved in the exchange, no proxy-token and no token wrapping. {br}We can integrate any ERC-20 token of a project for free just in case of mutual PR-announcement. {br}{br}In addition, we developed Swap.Button, a b2b-solution to exchange all kinds of tokens for Bitcoin and Ethereum. {br}Install Swap.Button html widget on your site and collect crypto investments for your project. {br}{br}Start using https: //swap.online/ today and enjoy the power of true decentralization.",
+    "message": "Welcome to Atomicswapwallet.io, a decentralized cross-chain wallet based on the Atomic Swap technology. {br}Here you can safely store and promptly exchange Bitcoin, Ethereum, EOS, USD, Tether, BCH, and numerous ERC-20 tokens. {br}{br}Atomicswapwallet.io doesn’t store your keys or tokens. Our wallet operates directly in at browser, so no additional installations or downloads are required. {br}The Atomicswapwallet.io service is fully decentralized as (because)all the operations with tokens are executed via the IPFS network. {br}{br}Our team was the first who finalized Atomic Swaps with USDT and EOS in September 2018 and Litecoin blockchain was added in October 2018. {br}Our wallet addresses a real multi-chain integration with a decentralized order book, no third party involved in the exchange, no proxy-token and no token wrapping. {br}We can integrate any ERC-20 token of a project for free just in case of mutual PR-announcement. {br}{br}In addition, we developed Swap.Button, a b2b-solution to exchange all kinds of tokens for Bitcoin and Ethereum. {br}Install Swap.Button html widget on your site and collect crypto investments for your project. {br}{br}Start using https: //Atomicswapwallet.io/ today and enjoy the power of true decentralization.",
     "files": [
       "shared/pages/Wallet/Wallet.js"
     ]
   },
   {
     "id": "PartialClosure562",
-    "message": "Swap.online is a decentralized hot wallet powered by Atomic swap technology. Exchange Bitcoin, USD Tether, BCH, EOS within seconds. No commission for exchange (only miners fee). {br}{br}Swap.Online uses IPFS-network for all the operational processes which results in no need for centralized server. {br}The interface of exchange seems to look like that of crypto broker, not of ordinary DEX or CEX. In a couple of clicks, the user can place and take the offer, customizing the price of sent token. {br}{br}Also, the user can exchange the given percentage of his or her amount of tokens available (e.g. ½, ¼ etc.). {br}{br}One more advantage of the Swap.Online exchange service is the usage of one key for the full range of ERC-20 tokens. {br}By the way, if case you’re not interested in exchange of some tokens, you can hide it from the list. {br}Thus, use Swap.Online as your basic exchange for every crypto you’re holding!",
+    "message": "Atomicswapwallet.io is a decentralized hot wallet powered by Atomic swap technology. Exchange Bitcoin, USD Tether, BCH, EOS within seconds. No commission for exchange (only miners fee). {br}{br}Atomicswapwallet.io uses IPFS-network for all the operational processes which results in no need for centralized server. {br}The interface of exchange seems to look like that of crypto broker, not of ordinary DEX or CEX. In a couple of clicks, the user can place and take the offer, customizing the price of sent token. {br}{br}Also, the user can exchange the given percentage of his or her amount of tokens available (e.g. ½, ¼ etc.). {br}{br}One more advantage of the Atomicswapwallet.io exchange service is the usage of one key for the full range of ERC-20 tokens. {br}By the way, if case you’re not interested in exchange of some tokens, you can hide it from the list. {br}Thus, use Atomicswapwallet.io as your basic exchange for every crypto you’re holding!",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -4199,14 +4199,14 @@
   },
   {
     "id": "ethToBtcText44",
-    "message": "Thank you for using Swap.Online",
+    "message": "Thank you for using Atomicswapwallet.io",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthToBtc.js"
     ]
   },
   {
     "id": "ethToBtcText48",
-    "message": "Thank you for using Swap.Online!",
+    "message": "Thank you for using Atomicswapwallet.io!",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthToBtc.js"
     ]
@@ -4220,7 +4220,7 @@
   },
   {
     "id": "WalletPromoText",
-    "message": "🎁 🎁 🎁 Thank you for using Swap.Online!\n                Tell us about your experience with our service\n                and we will gift you $10 in BTC 🎁 🎁 🎁",
+    "message": "🎁 🎁 🎁 Thank you for using Atomicswapwallet.io!\n                Tell us about your experience with our service\n                and we will gift you $10 in BTC 🎁 🎁 🎁",
     "files": [
       "shared/pages/Wallet/Wallet.js"
     ]
@@ -4287,14 +4287,14 @@
   },
   {
     "id": "BitcoinBuyText49",
-    "message": "Thank you for using Swap.Online",
+    "message": "Thank you for using Atomicswapwallet.io",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
     ]
   },
   {
     "id": "BitcoinBuyText53",
-    "message": "Thank you for using Swap.Online!",
+    "message": "Thank you for using Atomicswapwallet.io!",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEthTokens.js"
     ]
@@ -4350,14 +4350,14 @@
   },
   {
     "id": "EthTokensToBtc44",
-    "message": "Thank you for using Swap.Online",
+    "message": "Thank you for using Atomicswapwallet.io",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.js"
     ]
   },
   {
     "id": "EthTokensToBtc48",
-    "message": "Thank you for using Swap.Online!",
+    "message": "Thank you for using Atomicswapwallet.io!",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.js"
     ]
@@ -4432,7 +4432,7 @@
   },
   {
     "id": "CurrencyWalletTitle",
-    "message": "Swap.Online - {fullName} ({currency}) Web Wallet with Atomic Swap.",
+    "message": "Atomicswapwallet.io - {fullName} ({currency}) Web Wallet with Atomic Swap.",
     "files": [
       "shared/pages/CurrencyWallet/CurrencyWallet.js"
     ]
@@ -4792,7 +4792,7 @@
   },
   {
     "id": "tourPartial107",
-    "message": "With this switch, you can choose to receive funds after exchanging for an internal wallet swap.online or for another wallet",
+    "message": "With this switch, you can choose to receive funds after exchanging for an internal wallet Atomicswapwallet.io or for another wallet",
     "files": [
       "shared/components/Header/TourPartial/TourPartial.js"
     ]

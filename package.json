@@ -1,7 +1,7 @@
 {
-  "name": "swap.online",
+  "name": "Atomicswapwallet.io",
   "version": "1.0.0",
-  "description": "swap.online",
+  "description": "Atomicswapwallet.io",
   "private": true,
   "homepage": "https://staging.swaponline.site",
   "main": "./bin/server",
