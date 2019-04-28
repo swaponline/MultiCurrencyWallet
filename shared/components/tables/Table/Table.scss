@@ -1,5 +1,6 @@
 $borderRadius: 3px;
 $borderPadding: 24px;
+$walletPaddingTop: 41px;
 
 .table {
   border-collapse: collapse;
@@ -17,6 +18,16 @@ $borderPadding: 24px;
     background: #fff;
     border-radius: $borderRadius $borderRadius 0 0;
     padding: 0 $borderPadding;
+    &::before {
+      display: block;
+      position: absolute;
+      content: '';
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 41px + $walletPaddingTop;      
+      box-shadow: 0 6px 3px -3px rgba(0, 0, 0, 0.03);
+    }
   }
 
   tbody {
@@ -100,7 +111,7 @@ $borderPadding: 24px;
 }
 
 .wallet {
-  padding-top: 41px;
+  padding-top: $walletPaddingTop;
   position: relative;
   display: inline-block;
 }
