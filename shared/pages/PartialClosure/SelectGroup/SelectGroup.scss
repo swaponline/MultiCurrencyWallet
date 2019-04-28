@@ -40,7 +40,7 @@
   min-width: 0;
   flex: auto 1 1;
   input {
-    padding-right: 75px;
+    padding-right: 144px;
   }
 }
 
@@ -86,8 +86,10 @@ input:disabled {
   background: none;
   box-shadow: none;
   position: absolute;
-  right: 0px;
-  top: 5px;
+  right: 1px;
+  top: 6px;
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.3) 0%, white 6%);
+
   > div:nth-child(2) {
     margin-top: 10px;
     display: block;
