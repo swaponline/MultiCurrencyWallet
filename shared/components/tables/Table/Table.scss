@@ -9,25 +9,16 @@ $walletPaddingTop: 41px;
   margin-bottom: 20px;
 
   thead {
-    height: 41px;
+    display: block;
     position: sticky;
     top: 0;
-    z-index: 100;
     width: 100%;
+    height: 41px;
     border-bottom: 0.5px solid rgba(#000 ,0.03);
-    background: #fff;
     border-radius: $borderRadius $borderRadius 0 0;
-    padding: 0 $borderPadding;
-    &::before {
-      display: block;
-      position: absolute;
-      content: '';
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 41px + $walletPaddingTop;      
-      box-shadow: 0 6px 3px -3px rgba(0, 0, 0, 0.03);
-    }
+    box-shadow: 0 3px 3px 0 rgba(0,0,0,.03);
+    background: #fff;
+    z-index: 100;
   }
 
   tbody {
