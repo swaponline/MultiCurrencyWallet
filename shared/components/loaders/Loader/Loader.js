@@ -9,17 +9,22 @@ import { FormattedMessage } from 'react-intl'
 
 import config from 'app-config'
 
+import logoPath from './images/logoAtomic.png'
+
 
 const isFirefox = navigator.userAgent.indexOf('Firefox') !== -1
 const isWidget = config && config.isWidget
+
+const imgNode = React.createElement('img', {
+  src: logoPath,
+  alt: 'Atomicswapwallet.io logo',
+})
 
 const Loader = ({ overlayClassName, className, data, showTips }) => (
   <div styleName="Firefox overlay" className={overlayClassName}>
     <div>
       <div styleName="loader" className={className}>
-        <div styleName="loader1" />
-        <div styleName="loader2" />
-        <div styleName="loader3" />
+        {imgNode}
       </div>
       {
         data && data.txId && (
