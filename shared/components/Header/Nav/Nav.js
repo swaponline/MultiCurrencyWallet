@@ -56,7 +56,7 @@ export default class Nav extends Component {
                   exact={exact}
                   className={`${styles.link} ${rest.currentPageFlag} ${isExchange && styles.exchangeMenuLink}`}
                   to={localisedUrl(locale, link)}
-                  activeClassName={styles.active}
+                  activeClassName={`${styles.active}${isExchange ? ` ${styles.active_exchange}` : ''}`}
                 >
                   <div>
                     {/* rest.currentPageFlag && (

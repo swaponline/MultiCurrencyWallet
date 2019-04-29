@@ -1,4 +1,5 @@
 $textColor: #dccef7;
+$exchangeBorder: #512ed0;
 
 .nav {
   height: 100%;
@@ -45,6 +46,10 @@ $textColor: #dccef7;
 
   &.active {
     color: white;
+    border-bottom: 2px solid white;
+    &_exchange {
+      border-color: $exchangeBorder;
+    }
   }
 }
 
