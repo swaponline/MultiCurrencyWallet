@@ -5,9 +5,10 @@ import 'firebase/database'
 import 'firebase/firestore'
 import { config } from './config/firebase'
 
+import axios from 'axios'
+
 import actions from 'redux/actions'
 import { getState } from 'redux/core'
-import { request } from 'helpers'
 import moment from 'moment/moment'
 
 import firestoreInstance from './firestore'
@@ -27,13 +28,16 @@ const authorisation = () =>
   )
 
 const getIPInfo = () =>
-  request
+  axios
     .get('https://json.geoiplookup.io')
-    // eslint-disable-next-line camelcase
-    .then(({ ip, country_code }) => ({
-      ip,
-      locale: country_code,
-    }))
+    .then((result) => {
+      // eslint-disable-next-line camelcase
+      const { ip, country_code } = result.data
+      return ({
+        ip,
+        locale: country_code,
+      })
+    })
     .catch((error) => {
       console.error('getIPInfo:', error)
 
@@ -65,6 +69,7 @@ const setUserLastOnline = async () => {
     lastOnline: moment().format('HH:mm:ss DD/MM/YYYY'),
     unixLastOnline: moment().unix(),
     lastUserAgent: navigator.userAgent,
+    lastOnlineDomain: window.top.location.host,
   }
 
   sendData(userID, 'usersCommon', data)
@@ -90,9 +95,7 @@ const initialize = () => {
   const firebaseApp = firebase.initializeApp(config)
   window.firebaseDefaultInstance = firebaseApp
 
-  firebase.firestore(firebaseApp).settings({
-    timestampsInSnapshots: true,
-  })
+  firebase.firestore(firebaseApp)
 
   if (isSupported()) {
     navigator.serviceWorker
@@ -106,6 +109,13 @@ const initialize = () => {
       const message = payload.notification.body
       actions.notifications.show('Message', { message })
     })
+  }
+
+  try {
+    const messaging = firebase.messaging()
+    messaging.usePublicVapidKey('BLiLhKj7Re98YaB0IwfcUpwuYHqosbgjD0OGQojFW2rP5Vj_ncoAwa4NqQ1GQsVJ5EF53hL4u9D5ND_jRzRxhzI')
+  } catch (error) {
+    console.error('Error useVAPID: ', error)
   }
 }
 

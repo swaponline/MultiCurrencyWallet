@@ -150,12 +150,13 @@
     "webpack-dev-middleware": "^2.0.6"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "bestzip": "^2.1.2",
     "bitcoinjs-message": "^2.0.0",
     "coininfo": "git+https://github.com/cryptocoinjs/coininfo.git",
     "copy-dir-cli": "0.0.3",
     "ethereum-input-data-decoder": "0.0.12",
-    "firebase": "^5.5.9",
+    "firebase": "^5.10.0",
     "ipfs": "^0.33.1",
     "ipfs-pubsub-room": "^1.4.0",
     "json-stringify-safe": "^5.0.1",

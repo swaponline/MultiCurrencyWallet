@@ -210,14 +210,39 @@ export default class PrivateKeysModal extends React.PureComponent {
                 <div styleName="title">
                   <FormattedMessage
                     id="PrivateKeysModal130"
-                    defaultMessage=
-                      "Please fill information below. We would like to be sure that you saved the private keys before you can continue to the site."
+                    defaultMessage="Please fill information below. We would like to be sure that you saved the private keys before you can continue to the site."
                   />
                   <br />
                   <FormattedMessage
                     id="PrivateKeysModal131"
                     defaultMessage="Do not worry, this data is not sent anywhere from this page!"
                   />
+                  <span styleName="skipField">
+                    <FormattedMessage
+                      id="PrivateKeysModal663"
+                      defaultMessage="We don't recommend, but you can {skipBtn}"
+                      values={{
+                        skipBtn: (
+                          <button onClick={() => this.setState({ skipAlertShown: true })}>
+                            <FormattedMessage
+                              id="PrivateKeysModal623"
+                              defaultMessage="{skipIt} and go to the site."
+                              values={{
+                                skipIt: (
+                                  <span style={{ color: '#007bff' }}>
+                                    <FormattedMessage
+                                      id="PrivateKeysModal624"
+                                      defaultMessage="skip it"
+                                    />
+                                  </span>
+                                ),
+                              }}
+                            />
+                          </button>
+                        ),
+                      }}
+                    />
+                  </span>
                 </div>
                 <Field2
                   label={ethData.currency}
@@ -253,48 +278,55 @@ export default class PrivateKeysModal extends React.PureComponent {
             ref={ref => this.skipAlert = ref}
             onClick={(e) => this.handleCloseSkipAlert(e)} // eslint-disable-line
           >
-            <div styleName="tryToSkip__content">
-              <h3 styleName="tryToSkip__title">
-                <FormattedMessage
-                  id="PrivateKeysModal662"
-                  defaultMessage="Attention!"
-                />
-              </h3>
-              <br />
-              <FormattedMessage
-                id="PrivateKeysModal664"
-                defaultMessage="Please save your private keys! We do not store your private keys and will not be able to restore your wallets."
-              />
-              <br />
-              <label styleName="containerWithWrongLinkFZ">
-                <Toggle checked={skipBtnShown} onChange={() => this.setState({ skipBtnShown: !skipBtnShown })} />
-                <FormattedMessage
-                  id="PrivateKeysModal665"
-                  defaultMessage=" I understand and except the risks of not saving my private keys {learnMore}"
-                  values={{
-                    learnMore: (
-                      <a
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        href="https://medium.com/ecomi/keep-your-private-keys-safe-why-its-so-important-to-store-them-offline-8a85d946a3b2"
-                      >
-                        <FormattedMessage id="PrivateKeysModal667" defaultMessage="Learn more" />
-                      </a>
-                    ),
-                  }}
-                />
-              </label>
-              <br />
-              <br />
+            <div styleName="tryToSkip__wrapper">
 
-              <div styleName="tryToSkip__btnContainer">
-                <Button brand styleName="button" onClick={() => this.setState({ skipAlertShown: false })}>
-                  <FormattedMessage id="PrivateKeysModal144" defaultMessage="Back" />
-                </Button>
-                <Button white styleName="button" disabled={!skipBtnShown} onClick={this.handleCloseModal}>
-                  <FormattedMessage id="PrivateKeysModal666" defaultMessage="Skip this step" />
-                </Button>
+              <div styleName="tryToSkip__content">
+
+                <h3 styleName="tryToSkip__title">
+                  <FormattedMessage
+                    id="PrivateKeysModal662"
+                    defaultMessage="Attention!"
+                  />
+                </h3>
+                <br />
+                <FormattedMessage
+                  id="PrivateKeysModal664"
+                  defaultMessage="Please save your private keys! We do not store your private keys and will not be able to restore your wallets."
+                />
+                <br />
+                <label styleName="containerWithWrongLinkFZ">
+                  <Toggle checked={skipBtnShown} onChange={() => this.setState({ skipBtnShown: !skipBtnShown })} />
+                  <FormattedMessage
+                    id="PrivateKeysModal665"
+                    defaultMessage=" I understand and except the risks of not saving my private keys {learnMore}"
+                    values={{
+                      learnMore: (
+                        <a
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href="https://medium.com/ecomi/keep-your-private-keys-safe-why-its-so-important-to-store-them-offline-8a85d946a3b2"
+                        >
+                          <FormattedMessage id="PrivateKeysModal667" defaultMessage="Learn more" />
+                        </a>
+                      ),
+                    }}
+                  />
+                </label>
+                <br />
+                <br />
+
+                <div styleName="tryToSkip__btnContainer">
+                  <Button brand styleName="button" onClick={() => this.setState({ skipAlertShown: false })}>
+                    <FormattedMessage id="PrivateKeysModal144" defaultMessage="Back" />
+                  </Button>
+                  <Button white styleName="button" disabled={!skipBtnShown} onClick={this.handleCloseModal}>
+                    <FormattedMessage id="PrivateKeysModal666" defaultMessage="Skip this step" />
+                  </Button>
+                </div>
+
               </div>
+
+
             </div>
           </div>
         </div>

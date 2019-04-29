@@ -201,10 +201,6 @@
   }
 }
 
-.notCorrect {
-  color: red;
-}
-
 .anotherRecepient {
   position: relative;
   z-index: -1;
@@ -288,6 +284,11 @@
     font-size: inherit;
     text-decoration: underline;
   }
+}
+
+
+.notCorrect {
+  color: red;
 }
 
 .row {
