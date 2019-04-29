@@ -9,7 +9,7 @@ export default {
   dir: 'mainnet',
 
   base: 'https://atomicswapwallet.io/',
-  publicPath: `https://atomicswapwallet.io${baseConfig.publicPath}`,
+  publicPath: `https://atomicswapwallet.io/wallet${baseConfig.publicPath}`,
 
   ...config,
 }
