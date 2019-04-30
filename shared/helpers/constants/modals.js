@@ -16,4 +16,5 @@ export default {
   Confirm: 'Confirm',
   DeclineOrdersModal: 'DeclineOrdersModal',
   IncompletedSwaps: 'IncompletedSwaps',
+  MobMenu: 'MobMenu',
 }

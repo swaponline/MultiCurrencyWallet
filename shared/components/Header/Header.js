@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
@@ -29,9 +30,15 @@ import { relocalisedUrl } from 'helpers/locale'
 import { localisedUrl } from '../../helpers/locale'
 import UserTooltip from 'components/Header/User/UserTooltip/UserTooltip'
 
+
 let lastScrollTop = 0
 
 const messages = defineMessages({
+  products: {
+    id: 'menu.products',
+    description: 'Menu item "Wallet"',
+    defaultMessage: 'Our products',
+  },
   wallet: {
     id: 'menu.wallet',
     description: 'Menu item "Wallet"',
@@ -44,16 +51,20 @@ const messages = defineMessages({
   },
   history: {
     id: 'menu.history',
-    description: 'Menu item "My History"',
-    defaultMessage: 'My History',
+    description: 'Menu item "History"',
+    defaultMessage: 'My history',
   },
-  aboutus: {
-    id: 'menu.aboutus',
-    description: 'Menu item "About Us"',
-    defaultMessage: 'About Us',
+  invest: {
+    id: 'menu.invest',
+    description: 'Menu item "My History"',
+    defaultMessage: 'How to invest?',
+  },
+  investMobile: {
+    id: 'menu.invest',
+    description: 'Menu item "My History"',
+    defaultMessage: 'Invest',
   },
 })
-
 
 @injectIntl
 @withRouter
@@ -79,6 +90,11 @@ export default class Header extends Component {
 
   constructor(props) {
     super(props)
+
+    const dinamicPath = props.location.pathname.includes('/exchange/')
+      ? `${props.location.pathname}`
+      : `${links.exchange}`
+
     this.state = {
       optionsForOenSignUpModal: {},
       isPartialTourOpen: false,
@@ -86,28 +102,73 @@ export default class Header extends Component {
       isTourOpen: false,
       isShowingMore: false,
       sticky: false,
-      menuItems: [
+      isWallet: false,
+      menuItemsFill: [
         {
-          title: props.intl.formatMessage(messages.wallet),
-          link: links.home,
+          title: props.intl.formatMessage(messages.products),
+          link: 'openMySesamPlease',
           exact: true,
-          icon: 'wallet',
+          haveSubmenu: true,
+          icon: 'products',
+          currentPageFlag: true,
         },
         {
-          title: props.intl.formatMessage(messages.exchange),
-          link: links.exchange,
-          icon: 'exchange-alt',
-          tour: 'reactour__exchange',
+          title: props.intl.formatMessage(messages.invest),
+          link: 'exchange/btc-to-swap',
+          icon: 'invest',
+          haveSubmenu: false,
         },
         {
           title: props.intl.formatMessage(messages.history),
           link: links.history,
           icon: 'history',
+          haveSubmenu: false,
+        },
+      ],
+      menuItems: [
+        {
+          title: props.intl.formatMessage(messages.wallet),
+          link: links.home,
+          exact: true,
+          haveSubmenu: true,
+          icon: 'products',
+          currentPageFlag: true,
         },
         {
-          title: props.intl.formatMessage(messages.aboutus),
-          link: links.aboutus,
-          isMobile: false,
+          title: props.intl.formatMessage(messages.exchange),
+          link: dinamicPath,
+          exact: true,
+          haveSubmenu: true,
+          icon: 'products',
+          currentPageFlag: true,
+        },
+        {
+          title: props.intl.formatMessage(messages.history),
+          link: links.history,
+          icon: 'history',
+          haveSubmenu: false,
+        },
+      ],
+      menuItemsMobile: [
+        {
+          title: props.intl.formatMessage(messages.wallet),
+          link: links.home,
+          exact: true,
+          haveSubmenu: true,
+          icon: 'products',
+        },
+        {
+          title: props.intl.formatMessage(messages.exchange),
+          link: dinamicPath,
+          exact: true,
+          haveSubmenu: true,
+          icon: 'products',
+        },
+        {
+          title: props.intl.formatMessage(messages.history),
+          link: links.history,
+          icon: 'history',
+          haveSubmenu: false,
         },
       ],
     }
@@ -115,7 +176,7 @@ export default class Header extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener('scroll', this.handleScroll)
+    // window.addEventListener('scroll', this.handleScroll)
 
     const checker = setInterval(() => {
       switch (true) {
@@ -130,7 +191,7 @@ export default class Header extends Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll)
+    // window.removeEventListener('scroll', this.handleScroll)
     this.startTourAndSignInModal()
 
   }
@@ -209,7 +270,9 @@ export default class Header extends Component {
 
   handleScroll = () =>  {
     if (this.props.history.location.pathname === '/') {
-      this.setState(() => ({ sticky: false }))
+      this.setState(() => ({
+        sticky: false,
+      }))
       return
     }
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop
@@ -248,11 +311,13 @@ export default class Header extends Component {
   }
 
   render() {
-
-    const { sticky, menuItems, isTourOpen, isShowingMore, path, isPartialTourOpen } = this.state
+    const { sticky, menuItemsFill, isTourOpen, isShowingMore, path, isPartialTourOpen, isWallet, menuItems, menuItemsMobile } = this.state
     const { intl: { locale }, history, pathname, feeds, peer, isSigned, isInputActive } = this.props
 
     const accentColor = '#510ed8'
+
+    const isExchange = history.location.pathname.includes('/exchange')
+    const isWalletPath = history.location.pathname === '/'
 
     if (config && config.isWidget) {
       return (
@@ -271,16 +336,16 @@ export default class Header extends Component {
             acceptRequest={this.acceptRequest}
             declineRequest={this.declineRequest}
           />
-          <NavMobile menu={menuItems} />
+          <NavMobile menu={menuItemsMobile} />
           {!isSigned && (<SignUpButton mobile />)}
         </div>
       )
     }
 
     return (
-      <div styleName={sticky ? 'header header-fixed' : 'header'}>
+      <div styleName={sticky ? 'header header-fixed' : isExchange ? 'header header-promo' : 'header'}>
         <WidthContainer styleName="container">
-          <LogoTooltip withLink />
+          <LogoTooltip withLink isExchange={isExchange} />
           <Nav menu={menuItems} />
           <Logo withLink mobile />
           <TourPartial isTourOpen={this.state.isPartialTourOpen} />

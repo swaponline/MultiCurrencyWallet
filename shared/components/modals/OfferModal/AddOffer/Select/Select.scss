@@ -1,22 +1,49 @@
 .groupField {
   width: 100%;
+  position: relative;
+  left: 3px;
   display: flex;
-  box-shadow: rgba(#000, 0.08) 0 3px 9px 0;
   border-radius: 6px;
-  height: 56px;
-  margin-bottom: 10px;
+  height: 44px;
+  margin-bottom: 22px;
   align-items: center;
-  justify-content: space-around;
+  border-radius: 0px;
+  font-family: 'Roboto Mono', monospace;
   & p {
     margin: 0;
   }
 }
 
-.cell {
-  color: #3b95ff;
-  cursor: pointer;
+.balance {
+  text-align: left;
+  font-size: 15px;
+}
 
-  &:hover {
-    color: darken(#3b95ff, 1)
+.group {
+  position: relative;
+  margin-left: 2px;
+  margin-right: 12px;
+  width: 76%;
+  display: flex;
+  height: 44px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.cell {
+  color: #000;
+  display: inline-block;
+  font-size: 15px;
+  cursor: pointer;
+  // &:hover {
+  //   color: darken(#3b95ff, 1)
+  // }
+}
+
+@include media-mobile {
+  .groupField {
+    margin-bottom: 25px;
   }
 }

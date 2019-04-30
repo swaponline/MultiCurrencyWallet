@@ -3370,6 +3370,13 @@
     ]
   },
   {
+    "id": "partial767",
+    "message": "Your balance: ",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
     "id": "PartialFeeValueWarn",
     "message": "You will have to pay an additional miner fee up to {estimatedFeeValue} {haveCurrency}",
     "files": [
@@ -3668,7 +3675,7 @@
   },
   {
     "id": "PartialPriceSearch502",
-    "message": "Price: 1 {getCurrency} = {haveCurrency}",
+    "message": "1 {getCurrency} = {haveCurrency}",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -4873,7 +4880,7 @@
   },
   {
     "id": "FooterOurProductsChromeExtantion",
-    "message": "Chrome extantion",
+    "message": "Chrome extension",
     "files": [
       "shared/components/Footer/Links/Links.js"
     ]

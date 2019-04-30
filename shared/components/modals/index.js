@@ -14,6 +14,7 @@ import ReceiveModal from './ReceiveModal/ReceiveModal'
 import DownloadModal from './DownloadModal/DownloadModal'
 import DeclineOrdersModal from './DeclineOrdersModal/DeclineOrdersModal'
 import IncompletedSwaps from './IncompletedSwaps/IncompletedSwaps'
+import MobMenu from './MobMenu/MobMenu'
 
 import Confirm from './Confirm/Confirm'
 
@@ -36,4 +37,5 @@ export default {
   DownloadModal,
   IncompletedSwaps,
   Confirm,
+  MobMenu,
 }

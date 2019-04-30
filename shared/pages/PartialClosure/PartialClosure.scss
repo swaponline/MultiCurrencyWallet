@@ -1,3 +1,40 @@
+@keyframes scrollAnimation {
+  0% {
+    transform: translate(-50%, 0)
+  }
+  13% {
+    transform: translate(-50%, -3px)
+  }
+  26% {
+    transform: translate(-50%, 3px)
+  }
+  40% {
+    transform: translate(-50%, 0)
+  }
+  100% {
+    transform: translate(-50%, 0)
+  }
+}
+
+@keyframes errorAppend{
+  0% {
+    max-height: 0;
+    opacity: 0;
+  }
+  20% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    max-height: 300px;
+  }
+}
+
+@mixin errAppend {
+  animation: errorAppend 0.7s linear 1;
+  will-change: max-height, opacity;
+}
+
 @media (min-width: 831px) {
   .TitleHolder {
     position: absolute;
@@ -17,21 +54,150 @@
   }
 }
 
+.promoContainer {
+  min-height: 100vh;
+  position: relative;
+  background: #f5f5f5;
+  margin-bottom: 100px;
+
+  &:before {
+    position: absolute;
+    content: '';
+    background: #6144E5;
+    right: 0;
+    width: 32%;
+    z-index: 100;
+    height: 100%;
+    top: 0;
+  }
+}
+.scrollToTutorialSection {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  bottom: 56px;
+  right: 50%;
+  color: gray;
+  cursor: pointer;
+  transition: opacity 0.3s ease,
+    visibility 0.1s 0.3s;
+  &:global(.hidden) {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+.scrollTrigger {
+  content: '';
+  background: black;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  animation: scrollAnimation 5s linear infinite;
+}
+.scrollAdvice {
+  display: inline-block;
+  margin-right: 15px;
+  font-size: 10px;
+  line-height: 1.1em;
+}
+.exchangeWrap {
+  color: #000;
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  margin-left: -50vw;
+}
+
+.container {
+  display: flex;
+  max-width: 1200px;
+  margin: auto;
+  padding: 20vmin 2% 10vmin;
+}
+
+.IsSearching {
+  display: block;
+  position: relative;
+  margin-bottom: 10px;
+  @include errAppend();
+}
+
 .button {
-  margin-top: 20px;
-  width: 45%;
+  margin-top: 0;
+  width: 100%;
+  background: #000;
+  border-radius: 3px;
+  height: 68px;
   font-size: 16px;
+  flex-basis: 47%;
+  box-shadow: none;
+}
+
+.button.disabled {
+  background: #F5F5F5;
+}
+
+.walletInput input {
+  border: none;
+  margin: 0;
+  height: 30px;
+  padding: 0;
+  margin-bottom: 20px;
+  font-size: 16px;
+  &:focus {
+    border: none;
+  }
+}
+
+.walletOpenSide {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: space-between;
+  height: 73px;
+  margin-bottom: -10px;
+}
+
+.alignCenter {
+  display: flex;
+  align-items: center;
+  margin-top: -88px;
 }
 
 .rowBtn {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+}
+
+.buttonOrders {
+  border: 1px solid #000;
+  background: #fff;
+  transition: background-color 0.2s ease,
+    color 0.1s ease,
+    border-color 0.2s ease;
+  &:hover {
+    background: black;
+    color: white;
+    border-color: white;
+  }
+}
+
+.specify {
+  width: 200px;
+  font-weight: 500;
+  line-height: 21px;
+  font-size: 16px;
 }
 
 .walletToggle {
-  margin-top: 10px;
+  margin-bottom: 15px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+  min-height: 73px;
+  margin-bottom: 15px;
+  padding: 0 20px;
   &_site {
-    margin-bottom: 15px;
+    position: relative;
   }
 }
 
@@ -54,10 +220,13 @@
   margin-top: 10px;
 }
 
-.section, .widgetSection {
+.widgetSection {
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
+}
+.section {
+  padding-top: 100px;
 }
 .blockVideo {
   flex-basis: 58%;
@@ -67,13 +236,49 @@
   }
 }
 
-.block {
+.formExchange {
   position: relative;
-  flex-basis: 37%;
+  margin-top: -100px;
+  padding: 50px 40px;
+  width: 460px;
+  z-index: 100;
+  background: #FFFFFF;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.widgetFormExchange {
+  position: relative;
 }
 
 .error {
-  color: var(--orange);
+  display: flex;
+  align-items: center;
+  color: #fff;
+  padding: 0.3em 10px;
+  margin-top: -5px;
+  font-size: 13px;
+  background: #FD6B65;
+  border-radius: 3px;
+  margin-bottom: 15px;
+  @include errAppend();
+  a {
+    color: inherit;
+    font-size: inherit;
+    text-decoration: underline;
+  }
+}
+.notifyThat {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  padding: 0.3em 10px;
+  margin-top: -5px;
+  font-size: 13px;
+  background: #ffb200;
+  border-radius: 3px;
+  margin-bottom: 15px;
+  @include errAppend();
   a {
     color: inherit;
     font-size: inherit;
@@ -126,13 +331,29 @@
   }
 }
 
+.price {
+  position: absolute;
+  bottom: 12px;
+  right: 10px;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.3);
+  font-family: 'Roboto Mono', monospace;
+  font-size: 13px;
+  text-align: right;
+  padding: 10px 10px;
+}
+
+.selectWrap {
+  position: relative;
+}
+
 .extendedControls {
   position: relative;
   z-index: 1;
   width: 100%;
+  margin: -16px 0 26px;
   background: white;
   overflow: visible;
-  margin: 1px 0 -19px;
   > div {
     margin: 0;
   }
@@ -141,17 +362,21 @@
 .maxAmount {
   display: inline-block;
   position: absolute;
-  top: 0px;
-  right: 0;
+  top: 40px;
+  background: #fff;
+  font-size: 13px;
+  right: 50px;
+  font-family: 'Roboto Mono', monospace;
+  padding: 0 10px;
+  color: #b5b5b5;
   margin-bottom: 0;
 }
 
-@include media-mobile {
-  .inform {
-    margin-top: 10px;
-  }
-  .maxAmount {
-    top: 6px;
+@media (max-width: 1200px) {
+  .exchangeWrap {
+    width: auto;
+    left: 0;
+    margin: 0 -2%;
   }
 }
 
@@ -174,13 +399,28 @@
       font-size: 35px;
     }
   }
+  .promoContainer {
+    &::before {
+      display: none;
+    }
+  }
+  .exchangeWrap {
+    margin: 0 -40px;
+  }
+  .container {
+    flex-direction: column;
+  }
+  .alignCenter {
+    height: auto;
+    padding: 40px 0;
+  }
 }
 @media all and (min-width: 320px) and (max-width: 830px) {
   .section, .widgetSection {
     margin-top: 20px;
     justify-content: center;
     flex-direction: column-reverse;
-    max-width: 400px;
+    max-width: 830px;
     margin: auto;
   }
   .button {
@@ -209,7 +449,8 @@
 
 @media all and (min-width: 320px) and (max-width: 400px) {
   .button {
-    font-size: 9px;
+    font-size: 12px;
+    height: 48px;
   }
 }
 
@@ -217,4 +458,68 @@
   .block {
     margin: 0 auto;
   }
+}
+
+@include media-mobile {
+  .inform {
+    margin-top: 10px;
+  }
+  .IsSearching {
+    font-size: 12px;
+  }
+  .maxAmount {
+    top: 43px;
+    right: 20px;
+    font-size: 10px;
+  }
+  .exchangeWrap {
+    margin: 0 -20px;
+  }
+  .container {
+    flex-direction: column-reverse;
+    width: 100%;
+    height: auto;
+    align-items: normal;
+    padding-top: 0;
+    padding: 0;
+  }
+  .promoContainer {
+    background: #f5f5f5;
+    margin-bottom: 100px;
+    padding: 80px 0;
+    &::before {
+      display: none;
+    }
+  }
+  .formExchange {
+    width: 100%;
+    padding: 50px 15px;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .section {
+    margin: 0;
+  }
+  .specify {
+    width: 170px;
+    font-weight: 500;
+    line-height: 19px;
+    font-size: 13px;
+  }
+}
+
+@media all and (min-width: 450px) and (max-width: 568px) {
+  .section {
+    margin: auto;
+  }
+  .formExchange {
+    width: 400px;
+  }
+}
+
+
+.widgetExchangeWrap {
+  width: 100vw;
+  left: auto;
+  margin: 0;
 }

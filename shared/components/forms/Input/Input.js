@@ -63,8 +63,8 @@ export default class Input extends Component {
 
   render() {
     const {
-      className, inputContainerClassName, inputClassName,
-      valueLink: { error }, valueLink,
+      className, inputContainerClassName, inputClassName, errorStyle,
+      valueLink: { error }, valueLink, dontDisplayError,
       multiline, focusOnInit, disabled, readOnly, type, usd, ...rest
     } = this.props
 
@@ -83,7 +83,7 @@ export default class Input extends Component {
           {
             React.createElement(multiline ? TextArea : ValueLinkInput, {
               ...ignoreProps(rest, 'styles'),
-              styleName: 'input',
+              styleName: errorStyle ? 'input inputError' : 'input',
               className: inputClassName,
               valueLink,
               type,
@@ -99,7 +99,7 @@ export default class Input extends Component {
           }
         </div>
         {
-          Boolean(error) && (
+          Boolean(error && !dontDisplayError) && (
             <div styleName="error">
               {error}
             </div>

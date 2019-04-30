@@ -9,7 +9,11 @@ import cssModules from 'react-css-modules'
 import styles from './DropDown.scss'
 
 import toggle from 'decorators/toggle'
+import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
+import Tooltip from 'components/ui/Tooltip/Tooltip'
 import Input from 'components/forms/Input/Input'
+
+import closeBtn from './images/close.svg'
 
 
 @toggle()
@@ -45,7 +49,13 @@ export default class DropDown extends Component {
     this.state = {
       selectedValue: initialValue || selectedValue || 0,
       inputValue: '',
+      infoAboutCurrency: ' ',
+      error: false,
     }
+  }
+
+  componentDidMount() {
+    this.showPercentChange1H()
   }
 
   toggle = () => {
@@ -87,10 +97,10 @@ export default class DropDown extends Component {
     const selectedItem = items.find(({ value }) => value === selectedValue)
 
     if (typeof selectedItemRender === 'function') {
-      return selectedItemRender(selectedItem)
+      if (selectedItem !== undefined) {
+        return selectedItem.fullTitle
+      }
     }
-
-    return selectedItem.title
   }
 
   renderItem = (item) => {
@@ -103,9 +113,40 @@ export default class DropDown extends Component {
     return item.title
   }
 
+  showPercentChange1H = () => {
+    const { items } = this.props
+
+    let infoAboutCurrency = []
+
+    fetch('https://noxon.io/cursAll.php')
+      .then(res => res.json())
+      .then(
+        (result) => {
+          result.map(res =>
+            items.map(item => { // eslint-disable-line
+              if (item.name === res.symbol) {
+                infoAboutCurrency.push({
+                  name: res.symbol,
+                  change: res.percent_change_1h,
+                })
+              }
+            })
+          )
+          this.setState({
+            infoAboutCurrency,
+          })
+        },
+        (error) => {
+          this.setState({
+            error,
+          })
+        }
+      )
+  }
+
   render() {
-    const { className, items, isToggleActive, selectedValue } = this.props
-    const { inputValue } = this.state
+    const { className, items, isToggleActive, selectedValue, name, placeholder, label, tooltip, id } = this.props
+    const { inputValue, infoAboutCurrency, error } = this.state
 
     const dropDownStyleName = cx('dropDown', {
       'active': isToggleActive,
@@ -130,10 +171,11 @@ export default class DropDown extends Component {
       >
         <div styleName={dropDownStyleName} className={className}>
           <div styleName="selectedItem" onClick={this.toggle}>
-            <div styleName="arrow" />
+            <div styleName="arrow arrowDropDown" />
             {isToggleActive ? (
               <Input
                 styleName="searchInput"
+                placeholder={placeholder}
                 focusOnInit
                 valueLink={linkedValue.inputValue}
                 ref="searchInput"
@@ -145,6 +187,8 @@ export default class DropDown extends Component {
           {
             isToggleActive && (
               <div styleName="select">
+                <span styleName="listName">{name}</span>
+
                 {isToggleActive && inputValue.length ? (
                   itemsFiltered.map((item) => (
                     <div
@@ -152,10 +196,15 @@ export default class DropDown extends Component {
                       styleName="option"
                       onClick={() => {
                         linkedValue.inputValue.set('')
-                        this.handleOptionClick(item) }
+                        this.handleOptionClick(item)
+                      }
                       }
                     >
-                      {this.renderItem(item)}
+                      <span styleName="shortTitle">{this.renderItem(item)}</span>
+                      <span styleName="fullTitle">{item.fullTitle}</span>
+                      {infoAboutCurrency.map(item => (
+                        !error && <span styleName="range rangeUp">{item.change}</span>
+                      ))}
                     </div>
                   ))
                 ) : (
@@ -165,13 +214,34 @@ export default class DropDown extends Component {
                       styleName="option"
                       onClick={() => this.handleOptionClick(item)}
                     >
-                      {this.renderItem(item)}
+                      <span styleName="shortTitle">{this.renderItem(item)}</span>
+                      <span styleName="fullTitle">{item.fullTitle}</span>
+                      {!error && infoAboutCurrency.map((currency, index) => (
+                        item.name === currency.name &&
+                          <span key={index} styleName={currency.change < 0 ? 'range rangeDown' : 'range rangeUp'}>
+                            {currency.change} %
+                          </span>
+                      ))}
                     </div>
                   ))
                 )}
               </div>
             )
           }
+          <button styleName="closeBtn" onClick={this.toggle}><img src={closeBtn} alt="" /></button>
+          <div styleName="dropDownLabel">
+            <FieldLabel inRow inDropDown>
+              <strong>
+                {label}
+              </strong>
+              &nbsp;
+              <div styleName="smallTooltip">
+                <Tooltip id={id}>
+                  {tooltip}
+                </Tooltip>
+              </div>
+            </FieldLabel>
+          </div>
         </div>
       </ClickOutside>
     )

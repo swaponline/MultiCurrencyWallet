@@ -4,7 +4,7 @@ export default {
   wasOnWallet: 'wasOnWallet',
   savedOrders: 'savedOrders',
   deletedOrders: 'deletedOrders',
-  didAllWidgetsDataSend: 'didAllWidgetsDataSend',
+  didWidgetsDataSend: 'didWidgetsDataSend',
   activeTabId: 'activeTabId',
   testnetSkip: 'testnetSkip',
   storageRevision: '_revision',

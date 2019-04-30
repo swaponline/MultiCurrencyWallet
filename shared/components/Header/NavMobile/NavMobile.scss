@@ -19,7 +19,7 @@
     display: block;
     font-size: 17px;
     flex: 1;
-    padding: 14px 16px;
+    padding: 14px 7px;
     text-align: center;
     color: #dccef7;
     text-decoration: none;
@@ -40,6 +40,10 @@
 .active {
   font-weight: 700;
   color: #fff;
+}
+
+.bold {
+  font-weight: bold;
 }
 
 @media all and (min-width: 320px) and (max-width: 570px) {

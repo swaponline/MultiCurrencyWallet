@@ -211,7 +211,6 @@ export default class BtcToEthToken extends Component {
       continueSwap,
       enoughBalance,
       history,
-      locale,
       tokenItems,
       waitWithdrawOther,
       onClickCancelSwap,
@@ -231,9 +230,7 @@ export default class BtcToEthToken extends Component {
     linked.destinationBuyAddress.check((value) => value !== '', 'Please enter ETH address for tokens')
 
     const feeControllerView = <FeeControler ethAddress={ethAddress} />
-
-    // eslint-disable-next-line
-    const swapProgressView = <SwapProgress flow={flow} name="BtcToEthTokens" swap={this.props.swap} history={history} locale={locale} tokenItems={tokenItems} wallets={this.props.wallets} />
+    const swapProgressView = <SwapProgress flow={flow} name="BtcToEthTokens" swap={this.props.swap} history={history} tokenItems={tokenItems} />
 
     return (
       <div>

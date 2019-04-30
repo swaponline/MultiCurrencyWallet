@@ -14,8 +14,8 @@ import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 
 // TODO to split data and view this component
 
-const SelectGroup = ({ dynamicFee, isToken, extendedControls, selectedValue, onSelect,
-  currencies, usd, placeholder, label, disabled, className, inputValueLink, tooltip, balance, dataTut,
+const SelectGroup = ({ dynamicFee, isToken, extendedControls, selectedValue, onSelect, dataTut,
+  currencies, usd, placeholder, label, disabled, className, switchBalanceFunc, inputValueLink, tooltip, balance, error,
   id, idFee, tooltipAboutFee, haveAmount, ...props
 }) => (
   <div data-tut={dataTut}>
@@ -24,9 +24,11 @@ const SelectGroup = ({ dynamicFee, isToken, extendedControls, selectedValue, onS
         {label}
       </strong>
       &nbsp;
-      <Tooltip id={id}>
-        {tooltip}
-      </Tooltip>
+      <div styleName="smallTooltip">
+        <Tooltip id={id}>
+          {tooltip}
+        </Tooltip>
+      </div>
     </FieldLabel>
     <div styleName="groupField" className={className}>
       <Input
@@ -36,6 +38,7 @@ const SelectGroup = ({ dynamicFee, isToken, extendedControls, selectedValue, onS
         type="number"
         placeholder={placeholder}
         pattern="0-9\."
+        errorStyle={error}
         disabled={disabled}
         onFocus={props.onFocus ? props.onFocus : () => {}}
         onBlur={props.onBlur ? props.onBlur : () => {}}
@@ -43,10 +46,16 @@ const SelectGroup = ({ dynamicFee, isToken, extendedControls, selectedValue, onS
       />
       {
         (selectedValue === 'eth' || selectedValue === 'btc') && usd > 0 &&
-        <p styleName="textUsd" >{`~${usd}`}$</p>
+        <p styleName="textUsd" >{`~${usd}`} USD</p>
       }
       <CurrencySelect
+        name="All"
+        label={label}
+        tooltip={tooltip}
+        switchBalanceFunc={switchBalanceFunc}
+        id={id}
         styleName="currencySelect"
+        placeholder="Enter the name of token"
         selectedValue={selectedValue}
         onSelect={onSelect}
         currencies={currencies}
