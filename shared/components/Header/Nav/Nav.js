@@ -54,9 +54,14 @@ export default class Nav extends Component {
                   key={index}
                   data-tut={`${tour}`}
                   exact={exact}
-                  className={`${styles.link} ${rest.currentPageFlag} ${isExchange && styles.exchangeMenuLink}`}
+                  className={`
+                      ${styles.link} 
+                      ${rest.currentPageFlag} 
+                      ${isExchange && styles.exchangeMenuLink}
+                      ${isExchange ? ` ${styles.active_exchange}` : ''}
+                    `}
                   to={localisedUrl(locale, link)}
-                  activeClassName={`${styles.active}${isExchange ? ` ${styles.active_exchange}` : ''}`}
+                  activeClassName={styles.active}
                 >
                   <div>
                     {/* rest.currentPageFlag && (
