@@ -354,6 +354,8 @@
   margin: -16px 0 26px;
   background: white;
   overflow: visible;
+  @include errAppend();
+
   > div {
     margin: 0;
   }

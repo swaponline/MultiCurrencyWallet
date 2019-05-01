@@ -38,9 +38,9 @@ export default class Nav extends Component {
   }
 
   render() {
-    const { menu, intl: { locale }, history } = this.props
+    const { menu, intl: { locale }, location } = this.props
 
-    const isExchange = history.location.pathname.includes('/exchange')
+    const isExchange = location.pathname.includes('/exchange')
 
     return (
       <div styleName="nav">
@@ -54,9 +54,24 @@ export default class Nav extends Component {
                   key={index}
                   data-tut={`${tour}`}
                   exact={exact}
-                  className={`${styles.link} ${rest.currentPageFlag} ${isExchange && styles.exchangeMenuLink}`}
+                  /* eslint-disable indent */
+                  className={`
+                      ${styles.link} 
+                      ${rest.currentPageFlag} 
+                      ${isExchange && styles.exchangeMenuLink}
+                      ${isExchange ? ` ${styles.active_exchange}` : ''}
+                      ${link === '/'
+                        ? location.pathname === link
+                          ? ` ${styles.active}`
+                          : ''
+                        : (location.pathname.includes(link))
+                          ? ` ${styles.active}`
+                          : ''}
+                    `}
+                  /* eslint-enable indent */
                   to={localisedUrl(locale, link)}
-                  activeClassName={`${styles.active}${isExchange ? ` ${styles.active_exchange}` : ''}`}
+                  activeClassName={styles.active} // it does not work in all cases, so it duplicates in className for some cases
+                  // im hurry, so fix it, if you are here
                 >
                   <div>
                     {/* rest.currentPageFlag && (
