@@ -115,10 +115,10 @@ const Advantages = (props) => (
 
     <div styleName="advFooter">
       <button
-        onClick={() => window.open(props.intl.formatMessage({ id: 'advVidLink', defaultMessage: 'https://youtu.be/Jhrb7xOT_7s' }), '_blank')}
+        onClick={() => window.open(props.intl.formatMessage({ id: 'advVidLink', defaultMessage: 'https://atomicswapwallet.io/guide' }), '_blank')}
         styleName="advFooter__btn"
       >
-        <img src="https://exchange.Atomicswapwallet.io/images/icons/video-play.png" alt="Play the video" />
+        <img src="https://exchange.swap.online/images/icons/video-play.png" alt="Play the video" />
         <div>
           <h4>
             <FormattedMessage
