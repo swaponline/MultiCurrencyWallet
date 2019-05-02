@@ -126,6 +126,13 @@
     ]
   },
   {
+    "id": "question1581",
+    "message": "Обучающий курс по сайту",
+    "files": [
+      "shared/components/Header/User/Question/Question.js"
+    ]
+  },
+  {
     "id": "QUESTION15",
     "message": "Служба поддержки"
   },
@@ -3179,7 +3186,7 @@
   },
   {
     "id": "Header188",
-    "message": "Swap Online НЕ ХРАНИТ Ваши приватные ключи, пожалуйста, скачайте их и храните в безопасном месте.",
+    "message": "AtomicSwapWallet.io НЕ ХРАНИТ Ваши приватные ключи, пожалуйста, скачайте их и храните в безопасном месте.",
     "files": [
       "shared/components/Header/Header.js"
     ]

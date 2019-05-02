@@ -126,6 +126,13 @@
     ]
   },
   {
+    "id": "question1581",
+    "message": "Tutorial",
+    "files": [
+      "shared/components/Header/User/Question/Question.js"
+    ]
+  },
+  {
     "id": "QUESTION15",
     "message": "Go to the feed page"
   },
@@ -3160,7 +3167,7 @@
   },
   {
     "id": "Header188",
-    "message": "Swap Online does NOT store your private keys, please download and keep them in a secured place",
+    "message": "AtomicSwapWallet.io does NOT store your private keys, please download and keep them in a secured place",
     "files": [
       "shared/components/Header/Header.js"
     ]

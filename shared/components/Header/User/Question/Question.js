@@ -12,7 +12,7 @@ const Question = ({ openTour }) => (
     <span onClick={openTour} styleName="question" data-tip data-for="Knowmore"><FormattedMessage id="question12" defaultMessage="?" /></span>
     <ReactTooltip id="Knowmore" type="light" effect="solid">
       <span>
-        <FormattedMessage id="question15" defaultMessage="Know more about us" />
+        <FormattedMessage id="question1581" defaultMessage="Tutorial" />
       </span>
     </ReactTooltip>
   </Fragment>

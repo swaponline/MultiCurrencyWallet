@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
@@ -312,7 +313,7 @@ const tourSteps = [
   },
   {
     selector: '[data-tut="reactour__save"]',
-    content: <FormattedMessage id="Header188" defaultMessage="Swap Online does NOT store your private keys, please download and keep them in a secured place" />,
+    content: <FormattedMessage id="Header188" defaultMessage="AtomicSwapWallet.io does NOT store your private keys, please download and keep them in a secured place" />,
   },
   {
     selector: '[data-tut="reactour__balance"]',
