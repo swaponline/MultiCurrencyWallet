@@ -3,6 +3,9 @@
 
     &__container {
         display: block;
+        input {
+            min-width: 210px;
+        }
     }
 }
 
