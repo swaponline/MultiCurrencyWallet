@@ -14,6 +14,7 @@ import CopyToClipboard from 'react-copy-to-clipboard'
 import Coin from 'components/Coin/Coin'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import BtnTooltip from 'components/controls/WithdrawButton/BtnTooltip'
+import { Button } from 'components/controls'
 
 import LinkAccount from '../LinkAccount/LinkAcount'
 import KeychainStatus from '../KeychainStatus/KeychainStatus'
@@ -525,15 +526,24 @@ export default class Row extends Component {
         </Fragment>
         <td>
           <div styleName={currency === 'EOS' && !eosAccountActivated ? 'notActivated' : ''}>
-            <CurrencyButton
-              onClick={this.handleReceive}
-              dataTooltip={{
-                id: `deposit${currency}`,
-                deposit: true,
-              }}
-              wallet="true">
-              <FormattedMessage id="Row313" defaultMessage="Deposit" />
-            </CurrencyButton>
+            {(currency === 'EOS'  && !eosAccountActivated)
+              ? (
+                <Button onClick={this.handleEosBuyAccount} gray styleName="buttonCur walletCur">
+                  <FormattedMessage id="Row358-1" defaultMessage="Import" />
+                </Button>
+              )
+              : (
+                <CurrencyButton
+                  onClick={this.handleReceive}
+                  dataTooltip={{
+                    id: `deposit${currency}`,
+                    deposit: true,
+                  }}
+                  wallet="true">
+                  <FormattedMessage id="Row313" defaultMessage="Deposit" />
+                </CurrencyButton>
+              )
+            }
             <BtnTooltip onClick={this.handleWithdraw} disable={isBalanceEmpty} id={`row${currency}`}>
               <i className="fas fa-arrow-alt-circle-right" />
               <FormattedMessage id="Row328" defaultMessage="Send" />
