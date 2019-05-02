@@ -330,70 +330,81 @@ export default class WithdrawModal extends React.Component {
               defaultMessage="Please note: Miners fee is {minAmount} {currency}.{br}Represented balance is your balance minus the miners commission will appear. "
               values={{ minAmount: `${isEthToken ? minAmount.eth : min}`, br: <br />, data: `${dataCurrency}` }} />
           </p>
-          <FieldLabel inRow>
-            <FormattedMessage id="Withdrow1194" defaultMessage="Address " />
-            {' '}
-            <Tooltip id="WtH203" >
-              <div style={{ textAlign: 'center' }}>
+          <div styleName="highLevel">
+            <FieldLabel inRow>
+              <span style={{ fontSize: '16px' }}>
+                <FormattedMessage id="Withdrow1194" defaultMessage="Address " />
+              </span>
+              {' '}
+              <Tooltip id="WtH203" >
+                <div style={{ textAlign: 'center' }}>
+                  <FormattedMessage
+                    id="WTH275"
+                    defaultMessage="Make sure the wallet you{br}are sending the funds to supports {currency}"
+                    values={{ br: <br />, currency: `${currency.toUpperCase()}` }}
+                  />
+                </div>
+              </Tooltip>
+            </FieldLabel>
+            <Input valueLink={linked.address} focusOnInit pattern="0-9a-zA-Z" placeholder={`Enter ${currency.toUpperCase()} address to transfer`} />
+            {address && !this.addressIsCorrect() && (
+              <div styleName="rednote">
                 <FormattedMessage
-                  id="WTH275"
-                  defaultMessage="Make sure the wallet you{br}are sending the funds to supports {currency}"
-                  values={{ br: <br />, currency: `${currency.toUpperCase()}` }}
-                />
+                  id="WithdrawIncorectAddress"
+                  defaultMessage="Your address not correct" />
               </div>
-            </Tooltip>
-          </FieldLabel>
-          <Input valueLink={linked.address} focusOnInit pattern="0-9a-zA-Z" placeholder={`Enter ${currency.toUpperCase()} address to transfer the funds`} />
-          {address && !this.addressIsCorrect() && (
-            <div styleName="rednote">
-              <FormattedMessage
-                id="WithdrawIncorectAddress"
-                defaultMessage="Your address not correct" />
+            )}
+          </div>
+          <div styleName="lowLevel">
+            <div styleName="groupField">
+              <p styleName="balance">
+                {balance}
+                {' '}
+                {currency.toUpperCase()}
+              </p>
+              <div styleName="downLabel">
+                <FieldLabel inRow>
+                  <span styleName="mobileFont">
+                    <FormattedMessage id="Withdrow118" defaultMessage="Amount " />
+                  </span>
+                </FieldLabel>
+              </div>
             </div>
-          )}
-          <p style={{ marginTop: '20px' }}>
-            <FormattedMessage id="Withdrow113" defaultMessage="Your balance: " />
-            {balance}
-            {' '}
-            {currency.toUpperCase()}
-          </p>
-          <FieldLabel inRow>
-            <FormattedMessage id="Withdrow118" defaultMessage="Amount " />
-          </FieldLabel>
-          <div styleName="group">
-            <Input
-              styleName="input"
-              valueLink={linked.amount}
-              pattern="0-9\."
-              placeholder={`Enter the amount. You have ${Number(NanReplacement).toFixed(5)}`}
-              usd={getUsd.toFixed(2)}
-              onKeyDown={inputReplaceCommaWithDot}
-            />
-            <button styleName="button" onClick={this.sellAllBalance} data-tip data-for="Withdrow134">
-              <FormattedMessage id="Select210" defaultMessage="MAX" />
-            </button>
-            {!isMobile &&
-              <ReactTooltip id="Withdrow134" type="light" effect="solid" styleName="r-tooltip">
-                <FormattedMessage
-                  id="WithdrawButton32"
-                  defaultMessage="when you click this button, in the field, an amount equal to your balance minus the miners commission will appear" />
-              </ReactTooltip>
+            <div styleName="group">
+              <Input
+                styleName="input"
+                valueLink={linked.amount}
+                pattern="0-9\."
+                placeholder="Enter the amount"
+                usd={getUsd.toFixed(2)}
+                onKeyDown={inputReplaceCommaWithDot}
+              />
+              <button styleName="button" onClick={this.sellAllBalance} data-tip data-for="Withdrow134">
+                <FormattedMessage id="Select210" defaultMessage="MAX" />
+              </button>
+              {!isMobile &&
+                <ReactTooltip id="Withdrow134" type="light" effect="solid" styleName="r-tooltip">
+                  <FormattedMessage
+                    id="WithdrawButton32"
+                    defaultMessage="when you click this button, in the field, an amount equal to your balance minus the miners commission will appear" />
+                </ReactTooltip>
+              }
+            </div>
+            {
+              !linked.amount.error && (
+                <div styleName={minus ? 'rednote' : 'note'}>
+                  <FormattedMessage id="WithdrawModal256" defaultMessage="No less than {minAmount}" values={{ minAmount: `${min}` }} />
+                </div>
+              )
+            }
+            {
+              this.isEthOrERC20() && (
+                <div styleName="rednote">
+                  <FormattedMessage id="WithdrawModal263" defaultMessage="You need {minAmount} ETH on your balance" values={{ minAmount: `${minAmount.eth}` }} />
+                </div>
+              )
             }
           </div>
-          {
-            !linked.amount.error && (
-              <div styleName={minus ? 'rednote' : 'note'}>
-                <FormattedMessage id="WithdrawModal256" defaultMessage="No less than {minAmount}" values={{ minAmount: `${min}` }} />
-              </div>
-            )
-          }
-          {
-            this.isEthOrERC20() && (
-              <div styleName="rednote">
-                <FormattedMessage id="WithdrawModal263" defaultMessage="You need {minAmount} ETH on your balance" values={{ minAmount: `${minAmount.eth}` }} />
-              </div>
-            )
-          }
           <Button styleName="buttonFull" brand fullWidth disabled={isDisabled} onClick={this.handleSubmit}>
             { isShipped
               ? (
