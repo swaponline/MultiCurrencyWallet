@@ -54,6 +54,11 @@ const messages = defineMessages({
     description: 'Menu item "History"',
     defaultMessage: 'My history',
   },
+  IEO: {
+    id: 'menu.IEO',
+    description: 'Menu item "IEO"',
+    defaultMessage: 'IEO',
+  },
   invest: {
     id: 'menu.invest',
     description: 'Menu item "My History"',
@@ -146,6 +151,12 @@ export default class Header extends Component {
           title: props.intl.formatMessage(messages.history),
           link: links.history,
           icon: 'history',
+          haveSubmenu: false,
+        },
+        {
+          title: props.intl.formatMessage(messages.IEO),
+          link: links.ieo,
+          icon: 'IEO',
           haveSubmenu: false,
         },
       ],
