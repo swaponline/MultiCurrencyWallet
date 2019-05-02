@@ -5206,5 +5206,68 @@
     "files": [
       "shared/components/Footer/Links/Links.js"
     ]
+  },
+  {
+    "id": "IEO_title_1",
+    "message": "Вы зарегистрировались для IEO, выполните следующие действия",
+    "files": [
+      "shared/pages/IEO/IEO.js"
+    ]
+  },
+  {
+    "id": "IEO_titles_1",
+    "message": "Шаг",
+    "files": [
+      "shared/pages/IEO/IEO.js"
+    ]
+  },
+  {
+    "id": "IEO_titles_2",
+    "message": "Действие",
+    "files": [
+      "shared/pages/IEO/IEO.js"
+    ]
+  },
+  {
+    "id": "IEO_titles_3",
+    "message": "Ваши данные",
+    "files": [
+      "shared/pages/IEO/IEO.js"
+    ]
+  },
+  {
+    "id": "IEO_btn_1",
+    "message": "Зарегистрироваться",
+    "files": [
+      "shared/pages/IEO/IEO.js"
+    ]
+  },
+  {
+    "id": "IEO_btn_2",
+    "message": "Вы зарегистрированы",
+    "files": [
+      "shared/pages/IEO/IEO.js"
+    ]
+  },
+  {
+    "id": "IEO_row_1",
+    "message": "Подписаться на твиттер https://twitter.com/SwapOnlineTeam, введите свой твиттер: ",
+    "files": [
+      "shared/pages/IEO/IEO.js"
+    ]
+  },
+  {
+    "id": "IEO_row_2",
+    "message": "Подписаться на фейсбук https://www.facebook.com/SwapOnlineTeam, введите свой фейсбук: ",
+    "files": [
+      "shared/pages/IEO/IEO.js"
+    ]
+  },
+  {
+    "id": "IEO_row_3",
+    "message": "Подписаться на реддит https://www.reddit.com/r/SwapOnline, введите свой реддит: ",
+    "files": [
+      "shared/pages/IEO/IEO.js"
+    ]
   }
 ]
