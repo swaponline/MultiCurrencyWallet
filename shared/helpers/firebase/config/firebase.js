@@ -5,4 +5,5 @@ export const config = {
   projectId: 'swap155-212716',
   storageBucket: 'swap155-212716.appspot.com',
   messagingSenderId: '681929431956',
+  appId: '1:681929431956:web:e0a287270620750f',
 }
