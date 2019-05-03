@@ -4035,6 +4035,13 @@
     ]
   },
   {
+    "id": "ReferralLinks2",
+    "message": "Limits and conditions",
+    "files": [
+      "shared/components/Footer/Referral/Referral.js"
+    ]
+  },
+  {
     "id": "swapJS341",
     "message": "Show bitcoin script",
     "files": [
