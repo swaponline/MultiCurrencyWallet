@@ -32,7 +32,7 @@ export default class CurrencySlider extends Component {
                 </li>
               ))}
             </ul>
-            <a href="#" styleName="currencyAdd">
+            <a href="http://listing.swap.online" styleName="currencyAdd">
               <FormattedMessage id="CurrencySlider36" defaultMessage="+" />
             </a>
           </div>
