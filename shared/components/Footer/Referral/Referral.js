@@ -20,7 +20,17 @@ const Referral = (props) => {
       <FormattedMessage
         id="ReferralLinks1" // eslint-disable-next-line
         defaultMessage="Share or send link on this page: every user who comes via your referral link gets up to 10 SWAP tokens. Moreover, you will earn SWAP tokens for every his or her succesful swap (including operations with bonus tokens!)"
-      />
+      />{` `}
+      <a
+        href="https://wiki.swap.online/affiliate-limits/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <FormattedMessage
+          id="ReferralLinks2" // eslint-disable-next-line
+          defaultMessage="Limits and conditions"
+        />
+      </a>
     </div>
   )
 }

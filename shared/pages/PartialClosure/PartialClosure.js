@@ -835,7 +835,7 @@ export default class PartialClosure extends Component {
     const Form = (
       <div styleName={`${isWidgetBuild ? '' : 'section'}`} className={isWidgetLink ? 'section' : ''} >
         <div styleName={isWidgetBuild ? 'formExchange_widgetBuild' : `formExchange ${isWidget ? 'widgetFormExchange' : ''}`} className={isWidget ? 'formExchange' : ''} >
-          <div styleName="selectWrap">
+          <div data-tut="have" styleName="selectWrap">
             <SelectGroup
               switchBalanceFunc={this.switchBalance}
               inputValueLink={linked.haveAmount.pipe(this.setAmount)}
@@ -881,8 +881,9 @@ export default class PartialClosure extends Component {
               </div>
             )
           }
-          <div styleName="selectWrap">
+          <div data-tut="get" styleName="selectWrap">
             <SelectGroup
+              dataTut="get"
               switchBalanceFunc={this.switchBalance}
               inputValueLink={linked.getAmount}
               selectedValue={getCurrency}
@@ -905,18 +906,20 @@ export default class PartialClosure extends Component {
               </div>
             )}
           </div>
-          {
-            (isSearching || (isNonOffers && maxAmount === 0)) && (
-              <span className={isWidget ? 'searching' : ''} styleName="IsSearching">
-                <FormattedMessage id="PartialPriceSearch" defaultMessage="Searching orders..." />
-                <div styleName="loaderHolder">
-                  <div styleName="additionalLoaderHolder">
-                    <InlineLoader />
+          <div data-tut="status">
+            {
+              (isSearching || (isNonOffers && maxAmount === 0)) && (
+                <span className={isWidget ? 'searching' : ''} styleName="IsSearching">
+                  <FormattedMessage id="PartialPriceSearch" defaultMessage="Searching orders..." />
+                  <div styleName="loaderHolder">
+                    <div styleName="additionalLoaderHolder">
+                      <InlineLoader />
+                    </div>
                   </div>
-                </div>
-              </span>
-            )
-          }
+                </span>
+              )
+            }
+          </div>
           {!oneCryptoCost.isFinite() && !isNonOffers && (
             <FormattedMessage id="PartialPriceCalc" defaultMessage="Calc price" />
           )}
@@ -992,7 +995,7 @@ export default class PartialClosure extends Component {
               <Fragment>
                 <div styleName="walletToggle walletToggle_site">
                   <div styleName="walletOpenSide">
-                    <Toggle checked={!customWalletUse} onChange={this.handleCustomWalletUse} />
+                    <Toggle dataTut="togle" checked={!customWalletUse} onChange={this.handleCustomWalletUse} />
                     <span styleName="specify">
                       <FormattedMessage id="UseAnotherWallet" defaultMessage="Specify your receiving wallet address" />
                     </span>
@@ -1007,10 +1010,10 @@ export default class PartialClosure extends Component {
             )
           }
           <div styleName="rowBtn" className={isWidget ? 'rowBtn' : ''}>
-            <Button styleName="button" brand onClick={this.handleGoTrade} disabled={!canDoOrder}>
+            <Button dataTut="Exchange" styleName="button" brand onClick={this.handleGoTrade} disabled={!canDoOrder}>
               <FormattedMessage id="partial541" defaultMessage="Exchange now" />
             </Button>
-            <Button styleName="button buttonOrders" gray onClick={() => this.handlePush(isWidgetLink)} >
+            <Button dataTut="Orderbook" styleName="button buttonOrders" gray onClick={() => this.handlePush(isWidgetLink)} >
               <FormattedMessage id="partial544" defaultMessage="Show order book" />
             </Button>
           </div>
