@@ -52,12 +52,12 @@ export default class Nav extends Component {
                 <NavLink
                   onClick={this.handleScrollToTopClick}
                   key={index}
-                  data-tut={`${tour}`}
+                  data-tut={title === 'Exchange' ? 'reactour__exchange' : ''}
                   exact={exact}
                   /* eslint-disable indent */
                   className={`
-                      ${styles.link} 
-                      ${rest.currentPageFlag} 
+                      ${styles.link}
+                      ${rest.currentPageFlag}
                       ${isExchange && styles.exchangeMenuLink}
                       ${isExchange ? ` ${styles.active_exchange}` : ''}
                       ${link === '/'
