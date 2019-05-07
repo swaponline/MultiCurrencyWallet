@@ -4107,6 +4107,13 @@
     ]
   },
   {
+    "id": "ReferralLinks2",
+    "message": "Условия и правила",
+    "files": [
+      "shared/components/Footer/Referral/Referral.js"
+    ]
+  },
+  {
     "id": "swapJS341",
     "message": "Показать bitcoin script",
     "files": [
