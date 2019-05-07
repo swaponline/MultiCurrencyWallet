@@ -68,6 +68,7 @@ export default class CurrencySlider extends Component {
                   </li>
                 </ul>
               ))}
+            </ItemsCarousel>
           </div>
         </div>
       </Fragment>
