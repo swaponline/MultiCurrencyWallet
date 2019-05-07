@@ -12,7 +12,11 @@ import xrp from './xrp.svg'
 
 export default {
   btc,
+  dash,
   eth,
   ltc,
+  swap,
+  trx,
   usdt,
+  xrp,
 }

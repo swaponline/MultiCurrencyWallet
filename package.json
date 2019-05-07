@@ -175,6 +175,7 @@
     "react-gtm-module": "^2.0.2",
     "react-input-mask": "^2.0.1",
     "react-intl": "^2.7.1",
+    "react-items-carousel": "^2.3.6",
     "react-paginate": "^5.2.3",
     "react-redux": "^5.0.7",
     "react-router": "^4.2.0",

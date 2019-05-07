@@ -7,12 +7,18 @@
 
 .currencyList {
   list-style: none;
-  padding: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
   align-items: center;
-  margin-top: 40px;
-  width: 290px;
-  justify-content: space-between;
+  margin-top: 20px;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
 }
 .currencyListItem {
   img {
