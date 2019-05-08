@@ -384,6 +384,14 @@
   margin-bottom: 0;
 }
 
+.widgetLink {
+  position: relative;
+  left: 14em;
+  color: black;
+  bottom: -6em;
+  font-family: 'Roboto Mono', monospace;
+}
+
 @media (max-width: 1200px) {
   .exchangeWrap {
     width: auto;
@@ -396,6 +404,11 @@
   .blockVideo {
     flex-basis: 50%;
   }
+
+  .widgetLink {
+    bottom: -5em;
+  }
+
   .block {
     flex-basis: 45%;
   }
@@ -528,7 +541,6 @@
     width: 400px;
   }
 }
-
 
 .widgetExchangeWrap {
   width: 100vw;

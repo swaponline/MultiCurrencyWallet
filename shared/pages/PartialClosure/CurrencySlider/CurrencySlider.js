@@ -19,6 +19,7 @@ const symbol = (data) => (
   </a>
 )
 
+const names = ['btc', 'usdt', 'ltc', 'eth', 'swap']
 
 @connect(
   ({ currencies: { items: currencies } }) => ({
@@ -45,35 +46,16 @@ export default class CurrencySlider extends Component {
             <FormattedMessage id="CurrencySlider19" defaultMessage="Already available for exchange" />
           </h3>
           <div styleName="currencyListWrap">
-            <ItemsCarousel
-              gutter={12}
-              activePosition="center"
-              chevronWidth={10}
-              numberOfCards={3}
-              slidesToScroll={2}
-              outsideChevron
-              showSlither={false}
-              firstAndLastGutter={false}
-              activeItemIndex={activeItemIndex}
-              requestToChangeActive={value => this.setState({ activeItemIndex: value })}
-              rightChevron={symbol('+')}
-              leftChevron={symbol('-')}
-            >
-              {Object.values(images).map((item, index) => (
-                <div>
-                  <ul styleName="currencyList">
-                    <li styleName={item !== 'eth' || item !== 'btc' ? 'currencyListItem' : `currencyListItem currencyListItem${item.toUpperCase()}`} key={index}>
-                      <img key={index} src={item} alt="" />
-                    </li>
-                  </ul>
-                  {Object.values(images).length === index + 1 &&
-                    <a href="http://listing.swap.online" styleName="listing">
-                      <FormattedMessage id="CurrencySlider71" defaultMessage="Add your currency" />
-                    </a>
-                  }
-                </div>
+            <ul styleName="currencyList">
+              {names.map((item, index) => (
+                <li styleName={item !== 'eth' || item !== 'btc' ? 'currencyListItem' : `currencyListItem currencyListItem${item.toUpperCase()}`} key={index}>
+                  <img src={images[item]} alt="" />
+                </li>
               ))}
-            </ItemsCarousel>
+            </ul>
+            <a href="http://listing.swap.online" styleName="currencyAdd">
+              <FormattedMessage id="CurrencySlider36" defaultMessage="+" />
+            </a>
           </div>
         </div>
       </Fragment>

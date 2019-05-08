@@ -12,10 +12,12 @@
   display: flex;
   -webkit-box-align: center;
   align-items: center;
-  margin-top: 20px;
   -webkit-box-pack: justify;
   left: 26px;
   position: relative;
+  margin-top: 40px;
+  width: 290px;
+  justify-content: space-between;
 }
 .currencyListItem {
   img {
