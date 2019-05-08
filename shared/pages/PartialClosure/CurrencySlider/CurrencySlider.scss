@@ -2,27 +2,24 @@
   font-style: normal;
   font-weight: 600;
   font-size: 20px;
+  left: 55px;
+  position: relative;
   color: #000000;
 }
 
 .currencyList {
   list-style: none;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
   align-items: center;
   margin-top: 20px;
   -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
+  left: 26px;
+  position: relative;
 }
 .currencyListItem {
   img {
-    width: 40px;
+    width: 20px;
   }
   &:first-child {
     img {
@@ -32,7 +29,7 @@
 }
 .currencyListWrap {
   position: relative;
-  width: 335px;
+  width: 350px;
 }
 
 .fireItem {
@@ -66,15 +63,42 @@
   top: -2px;
 }
 
+.block {
+  margin-left: 5%;
+  width: 100%;
+  position: relative;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media all and (min-width: 750px) and (max-width: 1040px) {
+  .block {
+    left: 10%;
+    position: relative;
+  }
+}
+
+.listing{
+  left: 211%;
+  color: black;
+  cursor: pointer;
+  font-size: 20px;
+  width: 100%;
+  position: absolute;
+  top: 3em;
+}
+
 @include media-mobile {
+
   .availableCurrencies {
     font-size: 15px;
   }
   .currencyListWrap {
     width: 100%;
   }
-  .currencyList {
-    width: 215px;
+  .block {
+    display: none;
   }
   .currencyListItem {
     img {
