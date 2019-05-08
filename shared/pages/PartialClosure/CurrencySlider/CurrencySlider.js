@@ -19,6 +19,7 @@ const symbol = (data) => (
   </a>
 )
 
+
 @connect(
   ({ currencies: { items: currencies } }) => ({
     currencies,
@@ -36,13 +37,10 @@ export default class CurrencySlider extends Component {
     const { activeItemIndex, children } = this.state
     const { currencies } = this.props
     const curr = Object.values(currencies).map(item => item.name.toLowerCase())
-    console.warn(Object.values(images))
-
-    console.warn(Object.values(images))
 
     return (
       <Fragment>
-        <div>
+        <div styleName="block">
           <h3 styleName="availableCurrencies">
             <FormattedMessage id="CurrencySlider19" defaultMessage="Already available for exchange" />
           </h3>
@@ -50,9 +48,9 @@ export default class CurrencySlider extends Component {
             <ItemsCarousel
               gutter={12}
               activePosition="center"
-              chevronWidth={60}
+              chevronWidth={10}
               numberOfCards={3}
-              slidesToScroll={3}
+              slidesToScroll={2}
               outsideChevron
               showSlither={false}
               firstAndLastGutter={false}
@@ -62,11 +60,18 @@ export default class CurrencySlider extends Component {
               leftChevron={symbol('-')}
             >
               {Object.values(images).map((item, index) => (
-                <ul styleName="currencyList">
-                  <li styleName={item !== 'eth' || item !== 'btc' ? 'currencyListItem' : `currencyListItem currencyListItem${item.toUpperCase()}`} key={index}>
-                    <img key={index} src={item} alt="" />
-                  </li>
-                </ul>
+                <div>
+                  <ul styleName="currencyList">
+                    <li styleName={item !== 'eth' || item !== 'btc' ? 'currencyListItem' : `currencyListItem currencyListItem${item.toUpperCase()}`} key={index}>
+                      <img key={index} src={item} alt="" />
+                    </li>
+                  </ul>
+                  {Object.values(images).length === index + 1 &&
+                    <a href="http://listing.swap.online" styleName="listing">
+                      <FormattedMessage id="CurrencySlider71" defaultMessage="Add your currency" />
+                    </a>
+                  }
+                </div>
               ))}
             </ItemsCarousel>
           </div>

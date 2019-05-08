@@ -254,21 +254,6 @@ export default class Wallet extends Component {
             <FormattedMessage id="Wallet137" defaultMessage="Deposit funds to addresses below" />
           </div>
         )}
-        {isShowingPromoText && (
-          <div>
-            <FormattedMessage
-              id="WalletPromoText"
-              defaultMessage="
-                🎁 🎁 🎁 Thank you for using Swap.Online!
-                Tell us about your experience with our service
-                and we will gift you $10 in BTC 🎁 🎁 🎁"
-            />
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfSxJaIKbyfqf-kn7eRt-0jDPp0Wd2wgovrzRKQibCF6gY9bQ/viewform?usp=sf_link">
-              <FormattedMessage id="WalletPromoLinkText" defaultMessage="Open poll" />
-            </a>
-          </div>
-        )}
-
 
         <Table
           id="table-wallet"
