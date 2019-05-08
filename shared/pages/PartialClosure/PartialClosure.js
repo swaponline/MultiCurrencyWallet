@@ -36,6 +36,8 @@ import SwapApp, { util } from 'swap.app'
 import helpers, { constants, links } from 'helpers'
 import { animate } from 'helpers/domUtils'
 
+import IframeWidget from './IframeWidget'
+
 
 const filterIsPartial = (orders) => orders
   .filter(order => order.isPartial && !order.isProcessing && !order.isHidden)
@@ -148,6 +150,7 @@ export default class PartialClosure extends Component {
     })
 
     this.state = {
+      isIframeWidgetShow: false,
       isToken: false,
       dynamicFee: 0,
       haveCurrency: sellToken,
@@ -775,10 +778,16 @@ export default class PartialClosure extends Component {
     return isCoinAddress[getCurrency.toUpperCase()](customWallet)
   }
 
+  frameTogle= () => {
+    const { isIframeWidgetShow } = this.state
+
+    this.setState(() => ({ isIframeWidgetShow: !isIframeWidgetShow }))
+  }
+
   render() {
     const { currencies, addSelectedItems, currenciesData, tokensData, intl: { locale, formatMessage } } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching,
-      isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet, exHaveRate, exGetRate,
+      isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet, exHaveRate, exGetRate, isIframeWidgetShow,
       maxBuyAmount, getAmount, goodRate, isShowBalance, extendedControls, estimatedFeeValues, isToken, dynamicFee, haveAmount,
     } = this.state
 
@@ -1017,9 +1026,9 @@ export default class PartialClosure extends Component {
               <FormattedMessage id="partial544" defaultMessage="Show order book" />
             </Button>
           </div>
-          <a styleName="widgetLink" href="https://widget.swap.online">
+          <span onClick={this.frameTogle} styleName="widgetLink">
             <FormattedMessage id="partial1021" defaultMessage="Embed on website" />
-          </a>
+          </span>
         </div>
       </div>
     )
@@ -1029,6 +1038,9 @@ export default class PartialClosure extends Component {
       ? Form
       : (
         <div styleName={`exchangeWrap ${isWidget ? 'widgetExchangeWrap' : ''}`}>
+          {isIframeWidgetShow &&
+            <IframeWidget onClick={this.frameTogle} />
+          }
           <div styleName="promoContainer" ref={ref => this.promoContainer = ref}>
             <div
               styleName="scrollToTutorialSection"
@@ -1046,10 +1058,8 @@ export default class PartialClosure extends Component {
             <Fragment>
               <div styleName="container alignCenter">
                 <Promo subTitle={subTitle(sellTokenFullName, haveCurrency.toUpperCase(), buyTokenFullName, getCurrency.toUpperCase())} />
-
                 {Form}
               </div>
-
             </Fragment>
           </div>
           <HowItWorks />
