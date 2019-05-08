@@ -411,8 +411,15 @@
   }
 
   .widgetLink {
-    bottom: -5em;
     left: 13.5em;
+    color: #297df1;
+
+    font-family: 'Roboto Mono', monospace;
+
+    &:hover {
+      color: #297df1;
+      text-decoration: underline;
+    }
   }
 
   .block {

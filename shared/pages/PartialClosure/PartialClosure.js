@@ -1018,7 +1018,7 @@ export default class PartialClosure extends Component {
             </Button>
           </div>
           <a styleName="widgetLink" href="https://widget.swap.online">
-            <FormattedMessage id="partial1021" defaultMessage="embed on your website" />
+            <FormattedMessage id="partial1021" defaultMessage="Embed on website" />
           </a>
         </div>
       </div>
