@@ -386,10 +386,15 @@
 
 .widgetLink {
   position: relative;
-  left: 14em;
+  left: 13.8em;
   color: black;
-  bottom: -6em;
+  bottom: -5em;
   font-family: 'Roboto Mono', monospace;
+
+  &:hover {
+    color: black;
+    text-decoration: underline;
+  }
 }
 
 @media (max-width: 1200px) {
@@ -407,6 +412,7 @@
 
   .widgetLink {
     bottom: -5em;
+    left: 13.5em;
   }
 
   .block {
