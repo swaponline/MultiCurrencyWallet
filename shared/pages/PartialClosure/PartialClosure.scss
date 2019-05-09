@@ -503,6 +503,11 @@
   .inform {
     margin-top: 10px;
   }
+
+  .widgetLink {
+    left: 11.8em;
+  }
+
   .IsSearching {
     font-size: 12px;
   }
@@ -553,6 +558,17 @@
   }
   .formExchange {
     width: 400px;
+  }
+
+  .widgetLink {
+    left: 14.5em;
+    color: #297df1;
+    text-decoration: underline;
+
+    &:hover {
+      color: #297df1;
+      text-decoration: underline;
+    }
   }
 }
 
