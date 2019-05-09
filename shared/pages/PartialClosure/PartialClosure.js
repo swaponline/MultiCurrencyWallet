@@ -36,8 +36,6 @@ import SwapApp, { util } from 'swap.app'
 import helpers, { constants, links } from 'helpers'
 import { animate } from 'helpers/domUtils'
 
-import IframeWidget from './IframeWidget'
-
 
 const filterIsPartial = (orders) => orders
   .filter(order => order.isPartial && !order.isProcessing && !order.isHidden)
@@ -150,7 +148,6 @@ export default class PartialClosure extends Component {
     })
 
     this.state = {
-      isIframeWidgetShow: false,
       isToken: false,
       dynamicFee: 0,
       haveCurrency: sellToken,
@@ -778,16 +775,10 @@ export default class PartialClosure extends Component {
     return isCoinAddress[getCurrency.toUpperCase()](customWallet)
   }
 
-  frameTogle= () => {
-    const { isIframeWidgetShow } = this.state
-
-    this.setState(() => ({ isIframeWidgetShow: !isIframeWidgetShow }))
-  }
-
   render() {
     const { currencies, addSelectedItems, currenciesData, tokensData, intl: { locale, formatMessage } } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching,
-      isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet, exHaveRate, exGetRate, isIframeWidgetShow,
+      isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet, exHaveRate, exGetRate,
       maxBuyAmount, getAmount, goodRate, isShowBalance, extendedControls, estimatedFeeValues, isToken, dynamicFee, haveAmount,
     } = this.state
 
@@ -1026,9 +1017,9 @@ export default class PartialClosure extends Component {
               <FormattedMessage id="partial544" defaultMessage="Show order book" />
             </Button>
           </div>
-          <span onClick={this.frameTogle} styleName="widgetLink">
+          <a href="http://Widget.swap.online" target="_blank"  rel="noopener noreferrer" styleName="widgetLink">
             <FormattedMessage id="partial1021" defaultMessage="Embed on website" />
-          </span>
+          </a>
         </div>
       </div>
     )
@@ -1038,9 +1029,6 @@ export default class PartialClosure extends Component {
       ? Form
       : (
         <div styleName={`exchangeWrap ${isWidget ? 'widgetExchangeWrap' : ''}`}>
-          {isIframeWidgetShow &&
-            <IframeWidget onClick={this.frameTogle} />
-          }
           <div styleName="promoContainer" ref={ref => this.promoContainer = ref}>
             <div
               styleName="scrollToTutorialSection"
