@@ -387,13 +387,13 @@
 .widgetLink {
   position: relative;
   left: 16.8em;
-  color: black;
+  color: white;
   bottom: -5em;
   font-family: 'Roboto Mono', monospace;
   text-decoration: underline;
 
   &:hover {
-    color: black;
+    color: white;
     text-decoration: underline;
   }
 }
