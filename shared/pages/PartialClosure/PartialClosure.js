@@ -35,6 +35,7 @@ import SwapApp, { util } from 'swap.app'
 
 import helpers, { constants, links } from 'helpers'
 import { animate } from 'helpers/domUtils'
+import Switching from 'components/controls/Switching/Switching'
 
 
 const filterIsPartial = (orders) => orders
@@ -407,7 +408,6 @@ export default class PartialClosure extends Component {
     })
   }
 
-
   setDeclinedOffer = () => {
     this.setState(() => ({ haveAmount: '', isFetching: false, isDeclinedOffer: true }))
 
@@ -467,7 +467,6 @@ export default class PartialClosure extends Component {
           peer: item.owner.peer,
         }
       })
-
 
     const didFound = await this.setOrderOnState(sortedOrders)
 
@@ -881,6 +880,9 @@ export default class PartialClosure extends Component {
               </div>
             )
           }
+          <div styleName="switchButton">
+            <Switching noneBorder onClick={this.handleFlipCurrency} />
+          </div>
           <div data-tut="get" styleName="selectWrap">
             <SelectGroup
               dataTut="get"
