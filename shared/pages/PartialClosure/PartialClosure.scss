@@ -384,6 +384,20 @@
   margin-bottom: 0;
 }
 
+.widgetLink {
+  position: relative;
+  left: 16.8em;
+  color: white;
+  bottom: -5em;
+  font-family: 'Roboto Mono', monospace;
+  text-decoration: underline;
+
+  &:hover {
+    color: white;
+    text-decoration: underline;
+  }
+}
+
 @media (max-width: 1200px) {
   .exchangeWrap {
     width: auto;
@@ -396,6 +410,19 @@
   .blockVideo {
     flex-basis: 50%;
   }
+
+  .widgetLink {
+    left: 16.5em;
+    color: #297df1;
+    text-decoration: underline;
+    font-family: 'Roboto Mono', monospace;
+
+    &:hover {
+      color: #297df1;
+      text-decoration: underline;
+    }
+  }
+
   .block {
     flex-basis: 45%;
   }
@@ -476,6 +503,11 @@
   .inform {
     margin-top: 10px;
   }
+
+  .widgetLink {
+    left: 11.8em;
+  }
+
   .IsSearching {
     font-size: 12px;
   }
@@ -527,8 +559,18 @@
   .formExchange {
     width: 400px;
   }
-}
 
+  .widgetLink {
+    left: 14.5em;
+    color: #297df1;
+    text-decoration: underline;
+
+    &:hover {
+      color: #297df1;
+      text-decoration: underline;
+    }
+  }
+}
 
 .widgetExchangeWrap {
   width: 100vw;

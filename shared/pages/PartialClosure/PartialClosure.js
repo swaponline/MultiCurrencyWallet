@@ -1017,6 +1017,9 @@ export default class PartialClosure extends Component {
               <FormattedMessage id="partial544" defaultMessage="Show order book" />
             </Button>
           </div>
+          <a href="http://Widget.swap.online" target="_blank"  rel="noopener noreferrer" styleName="widgetLink">
+            <FormattedMessage id="partial1021" defaultMessage="Embed on website" />
+          </a>
         </div>
       </div>
     )
@@ -1043,10 +1046,8 @@ export default class PartialClosure extends Component {
             <Fragment>
               <div styleName="container alignCenter">
                 <Promo subTitle={subTitle(sellTokenFullName, haveCurrency.toUpperCase(), buyTokenFullName, getCurrency.toUpperCase())} />
-
                 {Form}
               </div>
-
             </Fragment>
           </div>
           <HowItWorks />
