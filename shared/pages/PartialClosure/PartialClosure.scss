@@ -86,6 +86,16 @@
     visibility: hidden;
   }
 }
+
+.switchButton {
+  left: 22em;
+  top: 7em;
+  display: flex;
+  width: 100%;
+  align-items: right;
+  position: absolute;
+}
+
 .scrollTrigger {
   content: '';
   background: black;
@@ -504,6 +514,11 @@
     margin-top: 10px;
   }
 
+  .switchButton {
+    left: 80%;
+    top: 6.5em;
+  }
+
   .widgetLink {
     left: 11.8em;
   }
@@ -569,6 +584,11 @@
       color: #297df1;
       text-decoration: underline;
     }
+  }
+
+  .switchButton {
+    left: 20.5em;
+    top: 6.5em;
   }
 }
 
