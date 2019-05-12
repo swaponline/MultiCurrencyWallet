@@ -859,27 +859,6 @@ export default class PartialClosure extends Component {
               {balance.toFixed(4)}{'  '}{haveCurrency.toUpperCase()}
             </p>
           }
-          {
-            haveCurrency !== getCurrency && (
-              <div className={isWidget ? 'flipBtn' : ''}>
-                {
-                  (extendedControls && balance > 0)
-                  && (
-                    <div styleName="extendedControls">
-                      <Select
-                        changeBalance={this.changeBalance}
-                        balance={balance}
-                        currency={haveCurrency}
-                        switching={this.handleFlipCurrency}
-                        isExchange
-                        maxAmountForExchange={Math.floor(maxBuyAmount.toNumber() * 1000) / 1000}
-                      />
-                    </div>
-                  )
-                }
-              </div>
-            )
-          }
           <div styleName="switchButton">
             <Switching noneBorder onClick={this.handleFlipCurrency} />
           </div>
