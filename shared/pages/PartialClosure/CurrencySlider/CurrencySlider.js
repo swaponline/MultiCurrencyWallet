@@ -48,7 +48,7 @@ export default class CurrencySlider extends Component {
           <div styleName="currencyListWrap">
             <ul styleName="currencyList">
               {names.map((item, index) => (
-                <li styleName={item !== 'eth' || item !== 'btc' ? 'currencyListItem' : `currencyListItem currencyListItem${item.toUpperCase()}`} key={index}>
+                <li styleName={item !== 'eth' ? 'currencyListItem' : 'currencyListItemEth'} key={index}>
                   <img src={images[item]} alt="" />
                 </li>
               ))}
