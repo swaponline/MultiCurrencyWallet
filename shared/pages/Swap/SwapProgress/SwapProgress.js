@@ -82,7 +82,7 @@ export default class SwapProgress extends Component {
   onPushGoToWallet = () => {
     const { buyCurrency } = this.state
 
-     switch (buyCurrency) {
+    switch (buyCurrency) {
       case 'BTC':
         this.history.push(localisedUrl(this.locale, '/Bitcoin-wallet'))
         break
@@ -94,13 +94,13 @@ export default class SwapProgress extends Component {
     }
   }
 
-   onPushGoToTxPage = () => {
+  onPushGoToTxPage = () => {
     const {
       flow,
       swap,
     } = this.state
 
-     if (flow.ethSwapWithdrawTransactionHash && swap.sellCurrency === 'BTC') {
+    if (flow.ethSwapWithdrawTransactionHash && swap.sellCurrency === 'BTC') {
       window.open(`${config.link.etherscan}/tx/${flow.ethSwapWithdrawTransactionHash}`, '_blank')
     }
     if (flow.btcSwapWithdrawTransactionHash) {

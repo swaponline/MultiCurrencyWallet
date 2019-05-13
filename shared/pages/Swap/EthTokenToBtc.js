@@ -167,6 +167,7 @@ export default class EthTokenToBtc extends Component {
 
     const { currencyAddress, flow, enabledButton, isShowingBitcoinScript, isAddressCopied, currencyData, tokenItems, signed, paddingContainerValue, swap } = this.state
 
+    /* eslint-disable-line */ // Line exceeds the maximum line length of 180  max-len
     const SwapProgressView = <SwapProgress flow={flow} name="EthTokensToBtc" swap={swap} tokenItems={tokenItems} history={history} locale={locale} wallets={wallets} signed={signed} />
 
     return (

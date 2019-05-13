@@ -155,7 +155,7 @@ export default class BtcToEth extends Component {
       children,
       onClickCancelSwap,
       locale,
-      wallets
+      wallets,
     }  = this.props
 
     const { flow, isShowingBitcoinScript, currencyData, paddingContainerValue, windowWidth } = this.state
