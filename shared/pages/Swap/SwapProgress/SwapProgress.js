@@ -49,7 +49,7 @@ export default class SwapProgress extends Component {
     whiteLogo: false,
   }
 
-  constructor({ flow, step, swap, styles, tokenItems, signed }) {
+  constructor({ flow, step, swap, styles, tokenItems, signed, wallets, history, locale }) {
     super()
 
     const currenciesBTCTransaction = ['BTC', 'USDT']
@@ -57,6 +57,10 @@ export default class SwapProgress extends Component {
     const currenciesETHTransaction = tokens.concat('ETH')
 
     this.swap = swap
+
+    this.wallets = wallets
+    this.history = history
+    this.locale = locale
 
     this.state = {
       step,
@@ -72,6 +76,35 @@ export default class SwapProgress extends Component {
       btcScriptValues: this.swap.btcScriptValues,
       secret: crypto.randomBytes(32).toString('hex'),
       stepValue: 0,
+    }
+  }
+
+  onPushGoToWallet = () => {
+    const { buyCurrency } = this.state
+
+    switch (buyCurrency) {
+      case 'BTC':
+        this.history.push(localisedUrl(this.locale, '/Bitcoin-wallet'))
+        break
+      case 'ETH':
+        this.history.push(localisedUrl(this.locale, '/Ethereum-wallet'))
+        break
+      default:
+        this.history.push(localisedUrl(this.locale, `/${buyCurrency.toLowerCase()}-wallet`))
+    }
+  }
+
+  onPushGoToTxPage = () => {
+    const {
+      flow,
+      swap,
+    } = this.state
+
+    if (flow.ethSwapWithdrawTransactionHash && swap.sellCurrency === 'BTC') {
+      window.open(`${config.link.etherscan}/tx/${flow.ethSwapWithdrawTransactionHash}`, '_blank')
+    }
+    if (flow.btcSwapWithdrawTransactionHash) {
+      window.open(`${config.link.bitpay}/tx/${flow.btcSwapWithdrawTransactionHash}`, '_blank')
     }
   }
 
@@ -174,6 +207,7 @@ export default class SwapProgress extends Component {
 
     const progress = Math.floor(90 * stepValue)
     const finishIcon = <img src={finishSvg} alt="finishIcon" />
+    const showWalletButton = (!this.swap.destinationBuyAddress) || (this.swap.destinationBuyAddress === this.wallets[buyCurrency.toUpperCase()])
 
     const swapTexts = (
       <Fragment>
@@ -337,6 +371,18 @@ export default class SwapProgress extends Component {
                   <FormattedMessage id="swappropgress218" defaultMessage="{transaction}" values={{ transaction: flow.btcSwapWithdrawTransactionHash }} />
                 </a>
               </strong>
+            )}
+            {flow.isFinished && (
+              <div styleName="finishButtonsHolder">
+                {showWalletButton && (
+                  <Button brand onClick={this.onPushGoToWallet}>
+                    <FormattedMessage id="swapProgressGoToWallet" defaultMessage="Check balance" />
+                  </Button>
+                )}
+                <Button gray onClick={this.onPushGoToTxPage}>
+                  <FormattedMessage id="swapProgressGoToTxPage" defaultMessage="View TX in explorer" />
+                </Button>
+              </div>
             )}
           </div>
         </div>

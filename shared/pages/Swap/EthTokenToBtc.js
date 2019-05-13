@@ -152,10 +152,23 @@ export default class EthTokenToBtc extends Component {
   }
 
   render() {
-    const { children, disabledTimer, continueSwap, enoughBalance, history, ethAddress, requestToFaucetSended, onClickCancelSwap }  = this.props
+    const {
+      children,
+      disabledTimer,
+      continueSwap,
+      enoughBalance,
+      history,
+      ethAddress,
+      requestToFaucetSended,
+      onClickCancelSwap,
+      locale,
+      wallets,
+    }  = this.props
+
     const { currencyAddress, flow, enabledButton, isShowingBitcoinScript, isAddressCopied, currencyData, tokenItems, signed, paddingContainerValue, swap } = this.state
 
-    const SwapProgressView = <SwapProgress flow={flow} name="EthTokensToBtc" swap={swap} tokenItems={tokenItems} history={history} signed={signed} />
+    /* eslint-disable-line */ // Line exceeds the maximum line length of 180  max-len
+    const SwapProgressView = <SwapProgress flow={flow} name="EthTokensToBtc" swap={swap} tokenItems={tokenItems} history={history} locale={locale} wallets={wallets} signed={signed} />
 
     return (
       <div>
