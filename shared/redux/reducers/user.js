@@ -13,13 +13,13 @@ export const initialState = {
     fullName: 'Bitcoin',
     balanceError: null,
   },
-  /*
   bchData: {
     balance: 0,
     isBalanceFetched: false,
     currency: 'BCH',
     fullName: 'BitcoinCash',
   },
+  /*
   xlmData: {
     balance: 0,
     currency: 'XLM',

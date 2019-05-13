@@ -4,7 +4,7 @@ export default {
   bitpay: 'https://insight.bitpay.com/api',
   etherscan: 'https://api.etherscan.io/api',
   usdt: 'https://api.omniexplorer.info/',
-  // bch: 'https://bch-insight.bitpay.com/api',
+  bch: 'https://bitcoincash.blockexplorer.com/api',
   ltc: 'https://insight.litecore.io/api',
   eos: {
     chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
