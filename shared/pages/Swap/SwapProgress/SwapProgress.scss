@@ -276,6 +276,17 @@ $size: 200px;
   bottom: -80px;
 }
 
+.finishButtonsHolder {
+  line-height: 56px;
+  margin-top: 1rem;
+  text-align: center;
+  vertical-align: middle;
+}
+.finishButtonsHolder button {
+  width: 40%;
+  margin-left: 20px;
+  margin-right: 20px;
+}
 
 .stepHeading {
   color: #000;
@@ -400,5 +411,10 @@ $size: 200px;
     font-size: 11px;
     width: 100%;
     bottom: 0;
+  }
+  .finishButtonsHolder button {
+    width: 90%;
+    margin-left: 0px;
+    margin-right: 0px;
   }
 }
