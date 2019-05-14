@@ -12,7 +12,7 @@ import filter from './filter'
 
 import btc from './btc'
 // import xlm from './xlm'
-import bch from './bch'
+// import bch from './bch'
 import ltc from './ltc'
 import eth from './eth'
 import keychain from './keychain'
@@ -49,7 +49,7 @@ export default {
   core,
   ltc,
   // xlm,
-  bch,
+  // bch,
   btc,
   usdt,
   eth,

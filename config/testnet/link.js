@@ -5,7 +5,7 @@ export default {
   etherscan: 'https://rinkeby.etherscan.io',
   eos: 'https://eospark.com/Jungle',
   tlos: 'http://testnet.telosfoundation.io',
-  bch: 'https://explorer.bitcoin.com/tbch',
+  // bch: 'https://www.blocktrail.com/tBCC',
   ltc: 'https://testnet.litecore.io',
   usdt: 'https://omniexplorer.info/',
 }

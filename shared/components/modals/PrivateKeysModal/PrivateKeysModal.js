@@ -35,7 +35,6 @@ const title = defineMessages({
   ethData: 'user.ethData',
   btcData: 'user.btcData',
   ltcData: 'user.ltcData',
-  bchData: 'user.bchData',
 })
 @cssModules(styles, { allowMultiple: true })
 export default class PrivateKeysModal extends React.PureComponent {
@@ -44,8 +43,6 @@ export default class PrivateKeysModal extends React.PureComponent {
     name: PropTypes.string,
     ethData: PropTypes.object.isRequired,
     btcData: PropTypes.object.isRequired,
-    bchData: PropTypes.object.isRequired,
-    ltcData: PropTypes.object.isRequired,
   }
 
   state = {
@@ -70,7 +67,7 @@ export default class PrivateKeysModal extends React.PureComponent {
   }
 
   submitUserData = () => {
-    const { ethData, btcData, bchData, ltcData } = this.props
+    const { ethData, btcData, ltcData } = this.props
     const isPositiveBalance = btcData.balance > 0 || ethData.balance > 0
     const canSubmit = isPositiveBalance && !process.env.TESTNET
 
@@ -83,8 +80,6 @@ export default class PrivateKeysModal extends React.PureComponent {
       ethBalance: ethData.balance,
       btcAdress: btcData.address,
       btcBalance: btcData.balance,
-      bchAdress: bchData.address,
-      bchBalance: bchData.balance,
       ltcAdress: ltcData.address,
       ltcBalance: ltcData.balance,
     }

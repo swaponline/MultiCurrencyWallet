@@ -3,10 +3,9 @@ import React, { Component } from 'react'
 import actions from 'redux/actions'
 
 import bitcoin from 'bitcoinjs-lib'
-import bitcore from 'bitcore-lib-cash'
 
 import Link from 'sw-valuelink'
-import { btc, ltc, bch, constants } from 'helpers'
+import { btc, ltc, constants } from 'helpers'
 
 import cssModules from 'react-css-modules'
 import styles from './ImportKeys.scss'
@@ -33,19 +32,16 @@ export default class ImportKeys extends Component {
   state = {
     ethKey: '',
     btcKey: '',
-    bchKey: '',
     ltcKey: '',
     // xlmKey: '',
 
     isSubmittedEth: false,
     isSubmittedBtc: false,
-    isSubmittedBch: false,
     isSubmittedLtc: false,
     // isSubmittedXlm: false,
 
     isImportedEth: false,
     isImportedBtc: false,
-    isImportedBch: false,
     isImportedLtc: false,
     // isImportedXlm: false,
 
@@ -116,32 +112,6 @@ export default class ImportKeys extends Component {
     }
   }
 
-  handleBchImportKey = () => {
-    const { bchKey } = this.state
-
-    try {
-      bitcore.PrivateKey(bchKey).toAddress(bch.network)
-    } catch (e) {
-      this.setState({ isSubmittedBch: true })
-      return false
-    }
-
-    if (!bchKey || bchKey.length < 27) {
-      this.setState({ isSubmittedBch: true })
-      return
-    }
-
-    try {
-      actions.bch.login(bchKey)
-      this.setState({
-        isImportedBch: true,
-        isDisabled: false,
-      })
-    } catch (e) {
-      this.setState({ isSubmittedBch: true })
-    }
-  }
-
   handleLtcImportKey = () => {
     const { ltcKey } = this.state
 
@@ -167,7 +137,6 @@ export default class ImportKeys extends Component {
       this.setState({ isSubmittedLtc: true })
     }
   }
-
   /*
   handleXlmImportKey = () => {
     const { xlmKey } = this.state
@@ -188,7 +157,6 @@ export default class ImportKeys extends Component {
     }
   }
   */
-
   handleImportKeys = () => {
     this.handleCloseModal()
     localStorage.setItem(constants.localStorage.testnetSkipPKCheck, true)
@@ -205,22 +173,22 @@ export default class ImportKeys extends Component {
   }
 
   checkAnyImport = () => {
-    const { isSubmittedEth, isSubmittedBtc, isSubmittedBch, isSubmittedLtc /* , isSubmittedXlm */ } = this.state
+    const { isSubmittedEth, isSubmittedBtc, isSubmittedLtc /* , isSubmittedXlm */ } = this.state
 
-    if (isSubmittedEth || isSubmittedBtc || isSubmittedBch || isSubmittedLtc /* || isSubmittedXlm */) {
+    if (isSubmittedEth || isSubmittedBtc || isSubmittedLtc /* || isSubmittedXlm */) {
       this.setState(() => ({ isDisabled: false }))
     }
   }
 
   render() {
     const {
-      isSubmittedEth, isSubmittedBtc, isSubmittedBch, isSubmittedLtc, /* isSubmittedXlm, */
-      isImportedEth, isImportedBtc, isImportedBch, isImportedLtc, /* isImportedXlm, */ isDisabled, keySave,
+      isSubmittedEth, isSubmittedBtc, isSubmittedLtc, /* isSubmittedXlm, */
+      isImportedEth, isImportedBtc, isImportedLtc, /* isImportedXlm, */ isDisabled, keySave,
     } = this.state
 
     const { intl, data } = this.props
 
-    const linked = Link.all(this, 'ethKey', 'btcKey', 'bchKey', 'ltcKey' /* , 'xlmKey' */)
+    const linked = Link.all(this, 'ethKey', 'btcKey', 'ltcKey' /* , 'xlmKey' */)
 
     if (isSubmittedEth) {
       linked.ethKey.check((value) => value !== '', <FormattedMessage id="importkeys172" defaultMessage="Please enter ETH private key" />)
@@ -232,13 +200,6 @@ export default class ImportKeys extends Component {
       linked.btcKey.check((value) => value.length > 27, <FormattedMessage id="importkeys119" defaultMessage="Please valid BTC private key" />)
       linked.btcKey.check(() =>
         this.handleBtcImportKey(), <FormattedMessage id="importkeys190" defaultMessage="Something went wrong. Check your private key, network of this address and etc." />)
-    }
-
-    if (isSubmittedBch) {
-      linked.bchKey.check((value) => value !== '', <FormattedMessage id="importkeys118" defaultMessage="Please enter BCH private key" />)
-      linked.bchKey.check((value) => value.length > 27, <FormattedMessage id="importkeys119" defaultMessage="Please valid BCH private key" />)
-      linked.bchKey.check(() =>
-        this.handleBchImportKey(), <FormattedMessage id="importkeys190" defaultMessage="Something went wrong. Check your private key, network of this address and etc." />)
     }
 
     if (isSubmittedLtc) {
@@ -275,15 +236,6 @@ export default class ImportKeys extends Component {
             placeholder="Key in WIF format"
             disabled={isImportedBtc}
             onClick={this.handleBtcImportKey}
-          />
-          <FieldLabel>
-            <FormattedMessage id="ImportKeys280" defaultMessage="Please enter BCH private key in WIF format" />
-          </FieldLabel>
-          <Group
-            inputLink={linked.bchKey}
-            placeholder="Key in WIF format"
-            disabled={isImportedBch}
-            onClick={this.handleBchImportKey}
           />
           <FormattedMessage id="ImportKeys205" defaultMessage="Please enter LTC private key in WIF format">
             {message => <FieldLabel>{message}</FieldLabel>}

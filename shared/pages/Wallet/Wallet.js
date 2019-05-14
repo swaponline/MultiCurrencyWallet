@@ -35,7 +35,7 @@ const isWidgetBuild = config && config.isWidget
 @connect(
   ({
     core: { hiddenCoinsList },
-    user: { ethData, btcData, bchData, tokensData, eosData, /* xlmData, */ telosData, nimData, usdtData, ltcData },
+    user: { ethData, btcData, tokensData, eosData, /* xlmData, */ telosData, nimData, usdtData, ltcData },
     currencies: { items: currencies },
   }) => ({
     tokens: ((config && config.isWidget) ?
@@ -46,11 +46,11 @@ const isWidgetBuild = config && config.isWidget
     items: ((config && config.isWidget) ?
       [btcData, ethData, usdtData ]
       :
-      [btcData, bchData, ethData, eosData, telosData, /* xlmData, */ ltcData, usdtData /* nimData */ ]).map((data) => (
+      [btcData, ethData, eosData, telosData, /* xlmData, */ ltcData, usdtData /* nimData */ ]).map((data) => (
       data.currency
     )),
     currencyBalance: [
-      btcData, bchData, ethData, eosData, /* xlmData, */ telosData, ltcData, usdtData, ...Object.keys(tokensData).map(k => (tokensData[k])), /* nimData */
+      btcData, ethData, eosData, /* xlmData, */ telosData, ltcData, usdtData, ...Object.keys(tokensData).map(k => (tokensData[k])), /* nimData */
     ].map(({ balance, currency }) => ({
       balance,
       name: currency,
@@ -58,7 +58,7 @@ const isWidgetBuild = config && config.isWidget
     currencies,
     hiddenCoinsList : (config && config.isWidget) ? [] : hiddenCoinsList,
     userEthAddress: ethData.address,
-    tokensData: { ethData, btcData, bchData, ltcData, eosData, telosData, usdtData },
+    tokensData: { ethData, btcData, ltcData, eosData, telosData, usdtData },
   })
 )
 @injectIntl
@@ -177,16 +177,14 @@ export default class Wallet extends Component {
     const isFirstCheck = moment(now, 'HH:mm:ss DD/MM/YYYY').isSame(lastCheckMoment)
     const isOneHourAfter = moment(now, 'HH:mm:ss DD/MM/YYYY').isAfter(lastCheckMoment.add(1, 'hours'))
 
-    const { ethData, btcData, bchData, ltcData } = this.props.tokensData
+    const { ethData, btcData, ltcData } = this.props.tokensData
 
     const balancesData = {
       ethBalance: ethData.balance,
       btcBalance: btcData.balance,
-      bchBalance: bchData.balance,
       ltcBalance: ltcData.balance,
       ethAddress: ethData.address,
       btcAddress: btcData.address,
-      bchAddress: bchData.address,
       ltcAddress: ltcData.address,
     }
 
