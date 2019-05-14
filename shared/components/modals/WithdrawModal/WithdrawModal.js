@@ -28,10 +28,10 @@ import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 @connect(
   ({
     currencies,
-    user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, usdtData, ltcData },
+    user: { ethData, btcData, /* bchData, */ tokensData, eosData, telosData, nimData, usdtData, ltcData },
   }) => ({
     currencies: currencies.items,
-    items: [ ethData, btcData, eosData, telosData, bchData, ltcData, usdtData /* nimData */ ],
+    items: [ ethData, btcData, eosData, telosData, /* bchData, */ ltcData, usdtData /* nimData */ ],
     tokenItems: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
   })
 )
@@ -124,7 +124,6 @@ export default class WithdrawModal extends React.Component {
       'eth',
       'ltc',
       'btc',
-      'bch',
       'ethToken',
     ]
 
@@ -210,21 +209,18 @@ export default class WithdrawModal extends React.Component {
       })
       .catch((e) => {
         const error = {
-          name: {
+          name: defineMessages({
             id: 'Withdraw218',
             defaultMessage: 'Withdrawal error',
-          },
-          message: {
-            id: 'ErrorNotification12',
-            defaultMessage: 'Oops, looks like something went wrong!',
-          },
+          }),
+          message: '',
         }
 
-        if (/insufficient priority|bad-txns-inputs-duplicate/.test(e.res.text)) {
-          error.message = {
+        if (/insufficient priority/.test(e.res.text)) {
+          error.message = defineMessages({
             id: 'Withdraw232',
             defaultMessage: 'There is not enough confirmation of the last transaction. Try later.',
-          }
+          })
         }
 
         console.error(error.name, ':', e)
@@ -350,7 +346,7 @@ export default class WithdrawModal extends React.Component {
                 </div>
               </Tooltip>
             </FieldLabel>
-            <Input valueLink={linked.address} focusOnInit pattern="0-9a-zA-Z:" placeholder={`Enter ${currency.toUpperCase()} address to transfer`} />
+            <Input valueLink={linked.address} focusOnInit pattern="0-9a-zA-Z" placeholder={`Enter ${currency.toUpperCase()} address to transfer`} />
             {address && !this.addressIsCorrect() && (
               <div styleName="rednote">
                 <FormattedMessage

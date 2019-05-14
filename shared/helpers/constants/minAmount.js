@@ -1,7 +1,6 @@
 const minAmount = {
   eth: 0.001,
   btc: 0.00015,
-  btc: 0.001,
   ltc: 0.1,
   eos: 1,
   tlos: 1,
