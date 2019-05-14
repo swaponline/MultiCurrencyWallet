@@ -4192,7 +4192,7 @@
   },
   {
     "id": "ethToBtcText32",
-    "message": "Creating Ethereum Contract.{br}It can take a few minutes",
+    "message": "Creating Ethereum Contract.{br}It can take a few minutes. (It may require 1 confirmation from bitcoin network)",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthToBtc.js"
     ]
@@ -4343,7 +4343,7 @@
   },
   {
     "id": "EthTokensToBtc32",
-    "message": "Creating Ethereum Contract. {br} It can take a few minutes",
+    "message": "Creating Ethereum Contract. {br} It can take a few minutes (It may require 1 confirmation from bitcoin network)",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.js"
     ]
