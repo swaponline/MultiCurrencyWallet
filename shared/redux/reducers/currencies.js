@@ -49,6 +49,13 @@ const initialState = {
       fullTitle: 'ethereum',
     },
     {
+      name: 'LTC',
+      title: 'LTC',
+      icon: 'ltc',
+      value: 'ltc',
+      fullTitle: 'litecoin',
+    },
+    {
       name: 'BTC',
       title: 'BTC',
       icon: 'btc',

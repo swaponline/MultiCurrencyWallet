@@ -17,7 +17,7 @@ const LinkAccount = ({ type, children, address, contractAddress }) => (
     { erc20LinkAcount(type, children, address, contractAddress) }
     { type.toLowerCase() === 'eos' && <Href tab={`${config.link.eos}/account/${address}`} >{children}</Href> }
     { type.toLowerCase() === 'tlos' && <Href tab={`${config.link.tlos}/account/${address}`} >{children}</Href> }
-    { /* type.toLowerCase() === 'bch' && <Href tab={`${config.link.bch}/address/${address}`} >{children}</Href> */ }
+    { type.toLowerCase() === 'bch' && <Href tab={`${config.link.bch}/address/${address}`} >{children}</Href> }
     { type.toLowerCase() === 'ltc' && <Href tab={`${config.link.ltc}/address/${address}`} >{children}</Href> }
     { /* type.toLowerCase() === 'xlm' && <Href tab={`${config.link.xlm}/address/${address}`}>{children}</Href> */ }
   </Fragment>
