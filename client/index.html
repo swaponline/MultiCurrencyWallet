@@ -80,11 +80,11 @@
       var information = document.getElementById('usersInform');
 
       if (window.location.pathname.split('/')[1] === 'ru' && localStorage.length === 0) {
-        information.innerText = 'Мы создаем мультивалютный кошелек прямо сейчас, \n то может занять одну минуту';
+        information.innerText = 'Генерация приватных ключей для вашего мультивалютного кошелька прямо сейчас, \n то может занять одну минуту';
       }
 
       if(localStorage.length === 0) {
-        information.innerText = 'We are creating a multi currency wallet right now, \n it may take one minute';
+        information.innerText = 'Generating private keys for your multicurrency wallet right now,\n it may take one minute...';
 
       }
 
