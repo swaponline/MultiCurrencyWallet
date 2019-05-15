@@ -29,7 +29,7 @@ export default class BtcToEth extends Component {
         )
       case 5:
         return (
-          <FormattedMessage id="SwapProgress117" defaultMessage="ETH Owner received Bitcoin Script and Secret Hash. Waiting when he creates ETH Contract" />
+          <FormattedMessage id="SwapProgress117" defaultMessage="ETH Owner received Bitcoin Script and Secret Hash. Waiting when he creates ETH Contract.(It may require 1 confirmation from bitcoin network)" />
         )
       case 6:
         return (
