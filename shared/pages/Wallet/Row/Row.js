@@ -29,7 +29,7 @@ import SwapApp from 'swap.app'
 @connect(
   ({
     rememberedOrders,
-    user: { ethData, btcData, /* bchData, */ tokensData, eosData, /* xlmData, */ telosData, nimData, usdtData, ltcData },
+    user: { ethData, btcData, bchData, tokensData, eosData, /* xlmData, */ telosData, nimData, usdtData, ltcData },
     currencies: { items: currencies },
   }, { currency }) => ({
     currencies,
@@ -39,7 +39,7 @@ import SwapApp from 'swap.app'
       /* xlmData, */
       eosData,
       telosData,
-      /* bchData, */
+      bchData,
       ltcData,
       usdtData,
       ...Object.keys(tokensData).map(k => (tokensData[k])),
@@ -383,6 +383,15 @@ export default class Row extends Component {
                   }{' '}{currency}
                 </span>
                 { currency === 'BTC' && unconfirmedBalance !== 0 && (
+                  <Fragment>
+                    <br />
+                    <span styleName="unconfirmedBalance">
+                      <FormattedMessage id="RowWallet181" defaultMessage="Unconfirmed balance" />
+                      {unconfirmedBalance} {' '}
+                    </span>
+                  </Fragment>
+                ) }
+                { currency === 'BCH' && unconfirmedBalance !== 0 && (
                   <Fragment>
                     <br />
                     <span styleName="unconfirmedBalance">

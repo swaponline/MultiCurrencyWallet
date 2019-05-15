@@ -321,6 +321,13 @@
     ]
   },
   {
+    "id": "ImportKeys280",
+    "message": "Please enter BCH private key in WIF format",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
     "id": "ImportKeys130",
     "message": "Confirm",
     "files": [
