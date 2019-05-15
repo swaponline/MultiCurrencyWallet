@@ -120,7 +120,7 @@ export default class PartialClosure extends Component {
     if (sell && buy) {
       if (!allCurrencyies.map(item => item.name).includes(sell.toUpperCase())
         || !allCurrencyies.map(item => item.name).includes(buy.toUpperCase())) {
-        history.push(localisedUrl(locale, `/exchange/swap-to-btc`))
+        history.push(localisedUrl(locale, `${links.exchange}/swap-to-btc`))
       }
     }
 
@@ -130,7 +130,7 @@ export default class PartialClosure extends Component {
     this.returnNeedCurrency(sellToken, buyToken)
 
     if (!(buy && sell) && !props.location.hash.includes('#widget')) {
-      history.push(localisedUrl(locale, `/exchange/${sellToken}-to-${buyToken}`))
+      history.push(localisedUrl(locale, `${links.exchange}/${sellToken}-to-${buyToken}`))
     }
 
     this.wallets = {}
@@ -261,7 +261,7 @@ export default class PartialClosure extends Component {
     const { intl: { locale } } = this.props
 
     if (!this.props.location.hash.includes('#widget')) {
-      this.props.history.push(localisedUrl(locale, `/exchange/${sell}-to-${buy}`))
+      this.props.history.push(localisedUrl(locale, `${links.exchange}/${sell}-to-${buy}`))
     }
   }
 

@@ -140,7 +140,7 @@ export default class CurrencyWallet extends Component {
       ? 'eth'
       : 'btc'
 
-    this.props.history.push(localisedUrl(locale, `/exchange/${currency.toLowerCase()}-to-${whatDoUserProbablyWantToBuy}`))
+    this.props.history.push(localisedUrl(locale, `${links.exchange}/${currency.toLowerCase()}-to-${whatDoUserProbablyWantToBuy}`))
   }
 
   handleEosBuyAccount = async () => {
