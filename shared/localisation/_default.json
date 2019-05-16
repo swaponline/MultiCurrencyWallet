@@ -3274,6 +3274,13 @@
     ]
   },
   {
+    "id": "LessThanIHavePartial",
+    "message": "You have not so much money on your balance",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
     "id": "PartialPriceSearch",
     "message": "Searching orders...",
     "files": [
@@ -3378,6 +3385,27 @@
   {
     "id": "PartialFeeValueWarn",
     "message": "Warning: you will have to pay an additional miner fee up to {estimatedFeeValue} {haveCurrency}",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "PartialFeeValueWarn1",
+    "message": "+ {estimatedFeeValue} {getCurrency}",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "PartialFeeValueWarn2",
+    "message": "= {estimatedFeeValue}$",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "PartialFeeValueWarnInfo",
+    "message": "[Know more about comissions]",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
