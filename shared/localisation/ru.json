@@ -2940,7 +2940,14 @@
   },
   {
     "id": "SignUpModal002",
-    "message": "Пожалуйста, подождите",
+    "message": "Зарегистрироваться",
+    "files": [
+      "shared/components/modals/SignUpModal/SignUpModal.js"
+    ]
+  },
+  {
+    "id": "SignUpModal002-1",
+    "message": "Осталось немного",
     "files": [
       "shared/components/modals/SignUpModal/SignUpModal.js"
     ]
