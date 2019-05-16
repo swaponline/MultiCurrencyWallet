@@ -84,6 +84,7 @@
     "babel-register": "^6.26.0",
     "bigi": "^1.4.2",
     "bignumber.js": "^7.2.1",
+    "bchaddrjs": "^0.3.2",
     "bitcore-lib-cash": "^0.18.0",
     "bitcoinjs-lib": "^3.3.2",
     "body-parser": "^1.18.3",

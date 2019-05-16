@@ -27,9 +27,9 @@ export default {
       swap: 1024,
     },
     rate: {
-      slow: 5 * 1e3,
-      normal: 15 * 1e3,
-      fast: 30 * 1e3,
+      slow: 10 * 1e3,
+      normal: 50 * 1e3,
+      fast: 100 * 1e3,
     },
   },
   btc: {

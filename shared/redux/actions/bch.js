@@ -1,5 +1,6 @@
 import { BigNumber } from 'bignumber.js'
-import bitcore from 'bitcore-lib-cash'
+import bitcoincash from 'bitcore-lib-cash'
+import bchaddr from 'bchaddrjs'
 import bitcoinMessage from 'bitcoinjs-message'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
@@ -9,8 +10,8 @@ import actions from 'redux/actions'
 
 const login = (importedPrivateKey) => {
   const account = importedPrivateKey
-    ? bitcore.PrivateKey.fromWIF(importedPrivateKey)
-    : new bitcore.PrivateKey(null, bch.network)
+    ? bitcoincash.PrivateKey.fromWIF(importedPrivateKey, bch.network)
+    : new bitcoincash.PrivateKey(null, bch.network)
 
   const privateKey = account.toWIF()
   const publicKey = account.toPublicKey().toBuffer().toString('hex')
@@ -19,6 +20,8 @@ const login = (importedPrivateKey) => {
   const data = {
     account,
     address,
+    currency: 'BCH',
+    fullName: 'BitcoinCash',
     privateKey,
     publicKey,
   }
@@ -68,25 +71,30 @@ const fetchTxInfo = (hash) =>
 const getTransaction = () =>
   new Promise((resolve) => {
     const { user: { bchData: { address } } } = getState()
-
+    const cashAddress = address
+    const cashAddressShort = address.split(':').slice(-1)[0]
+    const legacyAddress = bchaddr.toLegacyAddress(address)
+    const checkAddress = (addr) => addr === cashAddress
+      || addr === cashAddressShort
+      || addr === legacyAddress
     const url = `${api.getApiServer('bch')}/txs/?address=${address}`
 
     return request.get(url)
       .then((res) => {
         const transactions = res.txs.map((item) => {
-          const direction = item.vin[0].addr !== address ? 'in' : 'out'
+          const direction = item.vin.filter((element) => checkAddress(element.addr)).length ? 'out' : 'in'
           const isSelf = direction === 'out'
             && item.vout.filter((item) =>
-              item.scriptPubKey.addresses[0] === address
+              checkAddress(item.scriptPubKey.addresses[0])
             ).length === item.vout.length
           const value = isSelf
             ? item.fees
             : item.vout.filter((item) => {
               const txAddress = item.scriptPubKey.addresses[0]
-              const currentAddress = address.split(':')[1]
+              const currentAddress = address.replace(':').slice(-1)[0]
               return direction === 'in'
-                ? (txAddress === currentAddress)
-                : (txAddress !== currentAddress)
+                ? checkAddress(txAddress)
+                : !checkAddress(txAddress)
             })[0].value
 
           return ({
@@ -111,7 +119,9 @@ const getTransaction = () =>
 const send = async ({ from, to, amount, feeValue, speed } = {}) => {
   const { user: { bchData: { privateKey } } } = getState()
 
-  const tx = new bitcore.Transaction()
+  const toInlegacyAddress = bchaddr.toLegacyAddress(to)
+  const minFees = 546
+  const tx = new bitcoincash.Transaction()
   const unspents = await fetchUnspents(from)
 
   const fees = Number(feeValue || await bch.estimateFeeValue({ inSatoshis: true, speed }))
@@ -119,13 +129,17 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
   const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
   const skipValue = totalUnspent - fundValue - fees
 
-  if (skipValue <= 546) {
-    return null
+  if (fees < minFees) {
+    throw new Error(`Not enough fees: ${fees} less than ${minFees}`)
   }
 
-  unspents.forEach((utxo) => tx.from(utxo))
+  if (skipValue < 0) {
+    throw new Error(`Not enough balance: ${skipValue}`)
+  }
 
-  tx.to(to, fundValue)
+  unspents.forEach(({ address, ...data }) => tx.from(data)) // Don't put address. You get error if it has legacy format
+
+  tx.to(toInlegacyAddress, fundValue)
     .fee(fees)
     .change(from)
     .sign(privateKey)

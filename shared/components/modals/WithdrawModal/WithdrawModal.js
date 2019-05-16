@@ -209,6 +209,7 @@ export default class WithdrawModal extends React.Component {
         actions.modals.close(name)
       })
       .catch((e) => {
+        const errorText = e.res ? e.res.text : ''
         const error = {
           name: {
             id: 'Withdraw218',
@@ -220,14 +221,14 @@ export default class WithdrawModal extends React.Component {
           },
         }
 
-        if (/insufficient priority|bad-txns-inputs-duplicate/.test(e.res.text)) {
+        if (/insufficient priority|bad-txns-inputs-duplicate/.test(errorText)) {
           error.message = {
             id: 'Withdraw232',
             defaultMessage: 'There is not enough confirmation of the last transaction. Try later.',
           }
         }
 
-        console.error(error.name, ':', e)
+        console.error(error.name.defaultMessage, ':', e)
 
         this.setState(() => ({
           error,

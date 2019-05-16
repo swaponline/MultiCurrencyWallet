@@ -37,6 +37,8 @@ const isWidgetBuild = config && config.isWidget
 }) => ({
   items: [ ethData, btcData, eosData, telosData, /* bchData, */ ltcData, usdtData /* nimData */ ],
   tokenItems: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
+  currenciesData: [ ethData, btcData, eosData, telosData, /* bchData, */ ltcData, usdtData /* nimData */ ],
+  tokensData: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
   errors: 'api.errors',
   checked: 'api.checked',
   decline: rememberedOrders.savedOrders,
@@ -70,7 +72,7 @@ export default class SwapComponent extends PureComponent {
   timerFeeNotication = null
 
   componentWillMount() {
-    const { items, tokenItems, intl: { locale }, deletedOrders } = this.props
+    const { items, tokenItems, currenciesData, tokensData, intl: { locale }, deletedOrders } = this.props
     let { match : { params : { orderId } }, history, location: { pathname } } = this.props
 
     if (!!window.performance && window.performance.navigation.type === 2) {
@@ -81,6 +83,14 @@ export default class SwapComponent extends PureComponent {
       history.push(localisedUrl(links.exchange))
       return
     }
+
+    this.wallets = {}
+    currenciesData.forEach(item => {
+      this.wallets[item.currency] = item.address
+    })
+    tokensData.forEach(item => {
+      this.wallets[item.currency] = item.address
+    })
 
     try {
       const swap = new Swap(orderId, SwapApp.shared())
@@ -439,6 +449,8 @@ export default class SwapComponent extends PureComponent {
               requestToFaucetSended={requestToFaucetSended}
               waitWithdrawOther={waitWithdrawOther}
               onClickCancelSwap={this.cancelSwap}
+              locale={locale}
+              wallets={this.wallets}
             >
               <Share flow={swap.flow} />
               <EmergencySave flow={swap.flow} onClick={() => this.toggleInfo(isShowDevInformation, true)} isShowDevInformation={isShowDevInformation} />
