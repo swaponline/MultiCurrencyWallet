@@ -25,6 +25,7 @@ class IEO extends React.Component {
       isSaved: localStorage.getItem(constants.localStorage.IEO_signed) !== null,
       twitter: '',
       facebook: '',
+      github: '',
       reddit: '',
     }
   }
@@ -33,22 +34,37 @@ class IEO extends React.Component {
     const {
       twitter,
       facebook,
+      github,
       reddit,
     } = this.state
+
+    const twitterRegex = /https:\/\/twitter.com\/(?<id>.+(\b))\/?/
+    const twitterId = twitter.match(twitterRegex) !== null ? twitter.match(twitterRegex).groups.id : twitter
+
+    const facebookRegex = /https:\/\/www.facebook.com\/profile.php\?id=(?<id>.+(\b))\/?/
+    const facebookId = facebook.match(facebookRegex) !== null ? facebook.match(facebookRegex).groups.id : facebook
+
+    const redditRegex = /https:\/\/www.reddit.com\/user\/(?<id>.+(\b))\/?/
+    const redditId = reddit.match(redditRegex) !== null ? reddit.match(redditRegex).groups.id : reddit
+
+    const githubRegex = /https:\/\/github.com\/(?<id>.+(\b))\/?/
+    const githubId = reddit.match(githubRegex) !== null ? reddit.match(githubRegex).groups.id : github
+
 
     localStorage.setItem(constants.localStorage.IEO_signed, true)
     this.setState({ isSaved: true })
 
     firestore.updateUserData({
-      facebook,
-      twitter,
-      reddit,
+      facebook: facebookId,
+      twitter: twitterId,
+      reddit: redditId,
+      github: githubId,
     })
   }
 
   render() {
-    const { isSaved, twitter, reddit, facebook } = this.state
-    const linked = Link.all(this, 'twitter', 'facebook', 'reddit')
+    const { isSaved, twitter, reddit, facebook, github } = this.state
+    const linked = Link.all(this, 'twitter', 'facebook', 'reddit', 'github')
     const titles = [
       (<FormattedMessage
         id="IEO_titles_1"
@@ -88,6 +104,14 @@ class IEO extends React.Component {
         placeholder: 'Reddit',
         link: linked.reddit,
       },
+      {
+        action: <FormattedMessage
+          id="IEO_row_4"
+          defaultMessage="Subscribe to our github https://github.com/swaponline, enter your github: "
+        />,
+        placeholder: 'Github',
+        link: linked.github,
+      },
     ]
 
 
@@ -108,7 +132,7 @@ class IEO extends React.Component {
             rows={rows}
             rowRender={(row, index, selectId, handleSelectId) => (
               <Row
-                key={row}
+                key={`${row} ${index}`}
                 currency={row}
                 selectId={selectId}
                 index={index}
@@ -123,9 +147,10 @@ class IEO extends React.Component {
             onClick={this.handleSignUp}
             disabled={
               isSaved
-              || twitter.length === 0
-              || reddit.length === 0
-              || facebook.length === 0
+              || (twitter.length < 2
+                && reddit.length < 2
+                && github.length < 1
+                && facebook.length < 3)
             }
           >
             {
@@ -139,7 +164,7 @@ class IEO extends React.Component {
                 : (
                   <FormattedMessage
                     id="IEO_btn_1"
-                    defaultMessage="Register"
+                    defaultMessage="Save"
                   />
                 )
             }

@@ -5153,7 +5153,7 @@
   },
   {
     "id": "IEO_btn_1",
-    "message": "Register",
+    "message": "Save",
     "files": [
       "shared/pages/IEO/IEO.js"
     ]
@@ -5182,6 +5182,13 @@
   {
     "id": "IEO_row_3",
     "message": "Subscribe to our reddit https://www.reddit.com/r/SwapOnline, enter your reddit: ",
+    "files": [
+      "shared/pages/IEO/IEO.js"
+    ]
+  },
+  {
+    "id": "IEO_row_4",
+    "message": "Subscribe to our github https://github.com/swaponline, enter your github: ",
     "files": [
       "shared/pages/IEO/IEO.js"
     ]

@@ -5269,5 +5269,12 @@
     "files": [
       "shared/pages/IEO/IEO.js"
     ]
+  },
+  {
+    "id": "IEO_row_4",
+    "message": "Подписаться на гитхаб https://github.com/swaponline, введите свой гитхаб: ",
+    "files": [
+      "shared/pages/IEO/IEO.js"
+    ]
   }
 ]
