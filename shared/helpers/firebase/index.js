@@ -190,7 +190,6 @@ const signUpWithPush = (data) =>
     })
 
     if (sendResult) {
-      actions.firebase.setSigned()
       actions.analytics.signUpEvent({ action: 'signed', type: 'push' })
     }
     resolve(sendResult)

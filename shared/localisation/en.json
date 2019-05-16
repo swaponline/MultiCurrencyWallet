@@ -2835,7 +2835,14 @@
   },
   {
     "id": "SignUpModal002",
-    "message": "Wait please",
+    "message": "Sign up",
+    "files": [
+      "shared/components/modals/SignUpModal/SignUpModal.js"
+    ]
+  },
+  {
+    "id": "SignUpModal002-1",
+    "message": "One more step",
     "files": [
       "shared/components/modals/SignUpModal/SignUpModal.js"
     ]
