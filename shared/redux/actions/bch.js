@@ -20,6 +20,8 @@ const login = (importedPrivateKey) => {
   const data = {
     account,
     address,
+    currency: 'BCH',
+    fullName: 'BitcoinCash',
     privateKey,
     publicKey,
   }
