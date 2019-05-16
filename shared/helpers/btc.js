@@ -45,6 +45,9 @@ const estimateFeeValue = async ({ feeRate, inSatoshis, speed, address, txSize, f
       .dp(0, BigNumber.ROUND_HALF_EVEN),
   )
 
+  // Используем комиссию больше рекомендованной на 5 сатоши
+  calculatedFeeValue.plus(5)
+
   const finalFeeValue = inSatoshis
     ? calculatedFeeValue.toString()
     : calculatedFeeValue.multipliedBy(1e-8).toString()
