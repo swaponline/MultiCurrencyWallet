@@ -3504,7 +3504,7 @@
   },
   {
     "id": "PartialFeeValueWarn2",
-    "message": "= {estimatedFeeValue}$",
+    "message": "~ {estimatedFeeValue}$",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]

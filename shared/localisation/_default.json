@@ -3405,14 +3405,14 @@
   },
   {
     "id": "PartialFeeValueWarn2",
-    "message": "= {estimatedFeeValue}$",
+    "message": "~ {estimatedFeeValue}$",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
   },
   {
     "id": "PartialFeeValueWarnInfo",
-    "message": "[Know more about comissions]",
+    "message": "[About fees]",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]

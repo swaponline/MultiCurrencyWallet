@@ -996,7 +996,7 @@ export default class PartialClosure extends Component {
                           {` `}
                           <FormattedMessage
                             id="PartialFeeValueWarn2"
-                            defaultMessage="= {estimatedFeeValue}$"
+                            defaultMessage="~ {estimatedFeeValue}$"
                             values={{
                               estimatedFeeValue: BigNumber(exHaveRate).times(estimatedFeeValues[haveCurrency])
                                 .dp(2, BigNumber.ROUND_CEIL)
@@ -1010,7 +1010,7 @@ export default class PartialClosure extends Component {
                   <a style={{ whiteSpace: 'nowrap' }} href="https://wiki.swap.online/faq/is-there-fee-for-trade/">
                     <FormattedMessage
                       id="PartialFeeValueWarnInfo"
-                      defaultMessage="[Know more about comissions]"
+                      defaultMessage="[About fees]"
                     />
                   </a>
                 </div>
