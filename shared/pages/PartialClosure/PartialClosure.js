@@ -949,15 +949,6 @@ export default class PartialClosure extends Component {
               />
             </p>
           )}
-          {!BigNumber(haveAmount).isLessThanOrEqualTo(balance)
-            && BigNumber(haveAmount).isGreaterThan(0) && (
-            <p styleName="error" className={isWidget ? 'error' : ''} >
-              <FormattedMessage
-                id="LessThanIHavePartial"
-                defaultMessage="You have not so much money on your balance"
-              />
-            </p>
-          )}
           {
             BigNumber(estimatedFeeValues[haveCurrency]).isGreaterThan(0)
             && BigNumber(haveAmount).isGreaterThan(0)
