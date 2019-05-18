@@ -171,7 +171,7 @@ export default class Orders extends Component {
               values={{ pair: `${buyCurrency}/${sellCurrency}`, buyCurrency, sellCurrency, buyCurrencyFullName, sellCurrencyFullName }}
             />
           </Title>
-          <CloseIcon styleName="closeButton" onClick={() => this.props.history.push(localisedUrl(intl.locale, '/'))} data-testid="CloseIcon" />
+          <CloseIcon styleName="closeButton" onClick={() => this.props.history.push(localisedUrl(intl.locale, links.home))} data-testid="CloseIcon" />
         </div>
         { invalidPair &&
           <p>
