@@ -91,7 +91,6 @@ const getTransaction = () =>
             ? item.fees
             : item.vout.filter((item) => {
               const txAddress = item.scriptPubKey.addresses[0]
-              const currentAddress = address.replace(':').slice(-1)[0]
               return direction === 'in'
                 ? checkAddress(txAddress)
                 : !checkAddress(txAddress)
