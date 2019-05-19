@@ -112,12 +112,16 @@
 }
 
 @include media-mobile {
-
+  .currencyList {
+    width: 70%;
+    padding-right: 10px;
+  }
   .availableCurrencies {
     font-size: 15px;
   }
   .currencyListWrap {
-    width: 130%;
+    width: 100%;
+    left: -80px;
   }
 
   .currencyListItem {
