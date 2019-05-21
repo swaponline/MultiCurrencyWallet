@@ -75,7 +75,11 @@ export default class Row extends Component {
     super(props)
     const { currency, currencies } = this.props
 
-    this.state.tradeAllowed = !!currencies.find(c => c.value === currency.toLowerCase())
+
+    const isBlockedCoin = config.noExchangeCoins
+      .map(item => item.toLowerCase())
+      .includes(currency.toLowerCase())
+    this.state.tradeAllowed = !!currencies.find(c => c.value === currency.toLowerCase()) && !isBlockedCoin
 
   }
 

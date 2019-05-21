@@ -198,6 +198,10 @@ export default class CurrencyWallet extends Component {
       actions.core.markCoinAsVisible(currency)
     }
 
+    const isBlockedCoin = config.noExchangeCoins
+      .map(item => item.toLowerCase())
+      .includes(currency.toLowerCase())
+
     return (
       <div className="root">
         <PageSeo
@@ -247,9 +251,13 @@ export default class CurrencyWallet extends Component {
           >
             <FormattedMessage id="CurrencyWallet100" defaultMessage="Send" />
           </CurrencyButton>
-          <Button gray onClick={() => this.handleGoTrade(currency)}>
-            <FormattedMessage id="CurrencyWallet104" defaultMessage="Exchange" />
-          </Button>
+          {
+            !isBlockedCoin && (
+              <Button gray onClick={() => this.handleGoTrade(currency)}>
+                <FormattedMessage id="CurrencyWallet104" defaultMessage="Exchange" />
+              </Button>
+            )
+          }
         </div>
         { swapHistory.length > 0 && <SwapsHistory orders={swapHistory.filter(item => item.step >= 4)} /> }
         <h2 style={{ marginTop: '20px' }} >
