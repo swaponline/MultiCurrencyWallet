@@ -38,6 +38,22 @@ import { animate } from 'helpers/domUtils'
 import Switching from 'components/controls/Switching/Switching'
 
 
+const allowedCoins = ['BTC', 'ETH']
+
+const isExchangeAllowed = (currencies) => {
+  return currencies.filter(c => {
+    const isErc = Object.keys(config.erc20)
+      .map(i => i.toLowerCase())
+      .includes(c.value.toLowerCase())
+
+    const isAllowedCoin = allowedCoins
+      .map(i => i.toLowerCase())
+      .includes(c.value.toLowerCase())
+
+    return isAllowedCoin || isErc
+  })
+}
+
 const filterIsPartial = (orders) => orders
   .filter(order => order.isPartial && !order.isProcessing && !order.isHidden)
   .filter(order => (order.sellAmount !== 0) && order.sellAmount.isGreaterThan(0)) // WTF sellAmount can be not BigNumber
@@ -68,9 +84,9 @@ const bannedPeers = {} // Пиры, которые отклонили запро
   core: { orders, hiddenCoinsList },
   user: { ethData, btcData, /* bchData, */ tokensData, eosData, telosData, nimData, usdtData, ltcData },
 }) => ({
-  currencies: currencies.partialItems,
+  currencies: isExchangeAllowed(currencies.partialItems),
   allCurrencyies: currencies.items,
-  addSelectedItems: currencies.addPartialItems,
+  addSelectedItems: isExchangeAllowed(currencies.addPartialItems),
   orders: filterIsPartial(orders),
   allOrders: orders,
   currenciesData: [ ethData, btcData, eosData, telosData, /* bchData, */ ltcData, usdtData /* nimData */ ],
