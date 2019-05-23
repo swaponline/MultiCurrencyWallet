@@ -11,7 +11,11 @@ const getDeclinedExistedSwapIndex = ({ currency, decline }) => {
   const declineSwap = actions.core.getSwapById(decline[indexOfDecline])
 
   const itemState = declineSwap.flow.state
-  const values = itemState.btcScriptValues || itemState.ltcScriptValues || itemState.usdtScriptValues || itemState.scriptValues
+  const values = itemState.btcScriptValues
+    || itemState.bchScriptValues
+    || itemState.ltcScriptValues
+    || itemState.usdtScriptValues
+    || itemState.scriptValues
 
   if (values === undefined) {
     return false

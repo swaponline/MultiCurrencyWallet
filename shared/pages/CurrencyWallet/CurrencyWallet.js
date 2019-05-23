@@ -136,9 +136,7 @@ export default class CurrencyWallet extends Component {
 
   handleGoTrade = (currency) => {
     const { intl: { locale } } = this.props
-    const whatDoUserProbablyWantToBuy = currency.toLowerCase() === 'btc'
-      ? 'eth'
-      : 'btc'
+    const whatDoUserProbablyWantToBuy = currency.toLowerCase()
 
     this.props.history.push(localisedUrl(locale, `${links.exchange}/${currency.toLowerCase()}-to-${whatDoUserProbablyWantToBuy}`))
   }

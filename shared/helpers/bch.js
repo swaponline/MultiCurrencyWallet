@@ -1,4 +1,4 @@
-import bitcoincash from 'bitcore-lib-cash'
+import coininfo from 'coininfo'
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
 import config from 'app-config'
@@ -7,10 +7,10 @@ import request from './request'
 import BigNumber from 'bignumber.js'
 
 
-const network = process.env.MAINNET
-  ? bitcoincash.Networks.livenet
-  : bitcoincash.Networks.testnet
-
+const networkCoininfo = process.env.MAINNET
+  ? coininfo.bitcoincash.main
+  : coininfo.bitcoincash.test
+const network = networkCoininfo.toBitcoinJS()
 
 const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = 'send', fixed } = {}) => {
   const defaultTxSize = constants.defaultFeeRates.bch.size[method]
