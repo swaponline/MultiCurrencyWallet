@@ -44,7 +44,7 @@ const ThirdStep = ({ step, sixth, seventh, eighth, windowWidth, swap: { sellCurr
       {btcSwapWithdrawTransactionHash && (
         <strong styleName="transactionInStep">
           <a
-            href={`${config.link.bitpay}/tx/${btcSwapWithdrawTransactionHash}`}
+            href={`${config.link.blockcypher}/btc/tx/${btcSwapWithdrawTransactionHash}`}
             target="_blank"
             rel="noreferrer noopener"
           >

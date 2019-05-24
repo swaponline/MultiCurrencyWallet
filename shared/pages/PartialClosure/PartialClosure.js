@@ -38,6 +38,22 @@ import { animate } from 'helpers/domUtils'
 import Switching from 'components/controls/Switching/Switching'
 
 
+const allowedCoins = ['BTC', 'ETH']
+
+const isExchangeAllowed = (currencies) => {
+  return currencies.filter(c => {
+    const isErc = Object.keys(config.erc20)
+      .map(i => i.toLowerCase())
+      .includes(c.value.toLowerCase())
+
+    const isAllowedCoin = allowedCoins
+      .map(i => i.toLowerCase())
+      .includes(c.value.toLowerCase())
+
+    return isAllowedCoin || isErc
+  })
+}
+
 const filterIsPartial = (orders) => orders
   .filter(order => order.isPartial && !order.isProcessing && !order.isHidden)
   .filter(order => (order.sellAmount !== 0) && order.sellAmount.isGreaterThan(0)) // WTF sellAmount can be not BigNumber
@@ -68,9 +84,9 @@ const bannedPeers = {} // Пиры, которые отклонили запро
   core: { orders, hiddenCoinsList },
   user: { ethData, btcData, /* bchData, */ tokensData, eosData, telosData, nimData, usdtData, ltcData },
 }) => ({
-  currencies: currencies.partialItems,
+  currencies: isExchangeAllowed(currencies.partialItems),
   allCurrencyies: currencies.items,
-  addSelectedItems: currencies.addPartialItems,
+  addSelectedItems: isExchangeAllowed(currencies.addPartialItems),
   orders: filterIsPartial(orders),
   allOrders: orders,
   currenciesData: [ ethData, btcData, eosData, telosData, /* bchData, */ ltcData, usdtData /* nimData */ ],
@@ -789,6 +805,11 @@ export default class PartialClosure extends Component {
     const currentCurrency = haveCurrencyData || haveTokenData
     const { balance } = currentCurrency || 0
 
+    const getCurrencyData = currenciesData.find(item => item.currency === getCurrency.toUpperCase())
+    const getTokenData = tokensData.find(item => item.currency === getCurrency.toUpperCase())
+    const currentCurrencyGet = getCurrencyData || getTokenData
+    const { balanceGet } = currentCurrencyGet || 0
+
     const oneCryptoCost = maxBuyAmount.isLessThanOrEqualTo(0) ? BigNumber(0) : BigNumber(goodRate)
     const linked = Link.all(this, 'haveAmount', 'getAmount', 'customWallet')
 
@@ -936,7 +957,7 @@ export default class PartialClosure extends Component {
           ) && (
             <p styleName="error" className={isWidget ? 'error' : ''} >
               <FormattedMessage
-                id="ErrorBtcLowAmount879"
+                id="ErrorBtcLowAmount"
                 defaultMessage="This amount is too low"
                 values={{
                   btcAmount: this.state.haveCurrency === 'btc' ? this.state.haveAmount : this.state.getAmount,
@@ -950,11 +971,65 @@ export default class PartialClosure extends Component {
             && BigNumber(haveAmount).isLessThanOrEqualTo(balance)
             && (
               <div styleName="notifyThat" className={isWidget ? 'feeValue' : ''}>
-                <FormattedMessage
-                  id="PartialFeeValueWarn"
-                  defaultMessage="You will have to pay an additional miner fee up to {estimatedFeeValue} {haveCurrency}"
-                  values={{ haveCurrency: haveCurrency.toUpperCase(), estimatedFeeValue: estimatedFeeValues[haveCurrency] }}
-                />
+                <div>
+                  <FormattedMessage
+                    id="PartialFeeValueWarn"
+                    defaultMessage="You will have to pay an additional miner fee up to {estimatedFeeValue} {haveCurrency}"
+                    values={{
+                      haveCurrency: haveCurrency.toUpperCase(),
+                      estimatedFeeValue: estimatedFeeValues[haveCurrency],
+                    }}
+                  />
+                  {
+                    BigNumber(estimatedFeeValues[getCurrency]).isGreaterThan(0)
+                  && BigNumber(getAmount).isGreaterThan(0)
+                      ? (
+                        <Fragment>
+                          {` `}
+                          <FormattedMessage
+                            id="PartialFeeValueWarn1"
+                            defaultMessage="+ {estimatedFeeValueGet} {getCurrency}"
+                            values={{
+                              getCurrency: getCurrency.toUpperCase(),
+                              estimatedFeeValue: estimatedFeeValues[getCurrency],
+                            }}
+                          />
+                          {` `}
+                          <FormattedMessage
+                            id="PartialFeeValueWarn2"
+                            defaultMessage="= {estimatedFeeValue}$"
+                            values={{
+                              estimatedFeeValue: BigNumber(exHaveRate).times(estimatedFeeValues[haveCurrency])
+                                .plus(BigNumber(exGetRate).times(estimatedFeeValues[getCurrency]))
+                                .dp(2, BigNumber.ROUND_CEIL)
+                                .toString(),
+                            }}
+                          />
+                        </Fragment>
+                      )
+                      : (
+                        <Fragment>
+                          {` `}
+                          <FormattedMessage
+                            id="PartialFeeValueWarn2"
+                            defaultMessage="~ {estimatedFeeValue}$"
+                            values={{
+                              estimatedFeeValue: BigNumber(exHaveRate).times(estimatedFeeValues[haveCurrency])
+                                .dp(2, BigNumber.ROUND_CEIL)
+                                .toString(),
+                            }}
+                          />
+                        </Fragment>
+                      )
+                  }
+                  {` `}
+                  <a style={{ whiteSpace: 'nowrap' }} href="https://wiki.swap.online/faq/is-there-fee-for-trade/">
+                    <FormattedMessage
+                      id="PartialFeeValueWarnInfo"
+                      defaultMessage="[About fees]"
+                    />
+                  </a>
+                </div>
               </div>
             )
           }

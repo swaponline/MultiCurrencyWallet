@@ -2835,7 +2835,14 @@
   },
   {
     "id": "SignUpModal002",
-    "message": "Wait please",
+    "message": "Sign up",
+    "files": [
+      "shared/components/modals/SignUpModal/SignUpModal.js"
+    ]
+  },
+  {
+    "id": "SignUpModal002-1",
+    "message": "One more step",
     "files": [
       "shared/components/modals/SignUpModal/SignUpModal.js"
     ]
@@ -3282,6 +3289,13 @@
     ]
   },
   {
+    "id": "LessThanIHavePartial",
+    "message": "You have not so much money on your balance",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
     "id": "PartialPriceSearch",
     "message": "Searching orders...",
     "files": [
@@ -3386,6 +3400,27 @@
   {
     "id": "PartialFeeValueWarn",
     "message": "You will have to pay an additional miner fee up to {estimatedFeeValue} {haveCurrency}",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "PartialFeeValueWarn1",
+    "message": "+ {estimatedFeeValue} {getCurrency}",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "PartialFeeValueWarn2",
+    "message": "~ {estimatedFeeValue}$",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "PartialFeeValueWarnInfo",
+    "message": "[About fees]",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
