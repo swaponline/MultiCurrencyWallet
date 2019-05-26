@@ -81,7 +81,7 @@ export default class UserTooltip extends Component {
 
             if (BigNumber(sellAmountPlusFee).isGreaterThan(currencyBalance)) {
               this.removeOrder(id, request[0].participant.peer)
-              return console.warn('Not enought money for the swap, order № ${id} was deleted')
+              return console.warn(`Not enought money for the swap, order № ${id} was deleted`)
             }
 
             return (
