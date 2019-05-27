@@ -230,7 +230,7 @@ export default class Header extends Component {
       default: return
     }
 
-    if (!didOpenSignUpModal) {
+    if (!didOpenSignUpModal && !isPartialPage) {
       this.openSignUpModal(this.state.optionsForOenSignUpModal)
     }
   }
