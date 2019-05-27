@@ -8,6 +8,7 @@ const swap = (config && config.isWidget) ?
     'ETH-BTC',
     'ETH-LTC',
     'LTC-BTC',
+    'ETH-BCH',
     'EOS-BTC',
   ]
 

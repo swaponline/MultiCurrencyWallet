@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 import actions from 'redux/actions'
 
 import bitcoin from 'bitcoinjs-lib'
-import bitcore from 'bitcore-lib-cash'
 
 import Link from 'sw-valuelink'
 import { btc, ltc, bch, constants } from 'helpers'
@@ -120,8 +119,9 @@ export default class ImportKeys extends Component {
     const { bchKey } = this.state
 
     try {
-      bitcore.PrivateKey(bchKey).toAddress(bch.network)
+      bitcoin.ECPair.fromWIF(bchKey, bch.network) // eslint-disable-line
     } catch (e) {
+      console.error(e)
       this.setState({ isSubmittedBch: true })
       return false
     }
@@ -138,6 +138,7 @@ export default class ImportKeys extends Component {
         isDisabled: false,
       })
     } catch (e) {
+      console.error(e)
       this.setState({ isSubmittedBch: true })
     }
   }

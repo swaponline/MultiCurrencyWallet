@@ -63,6 +63,13 @@ const initialState = {
       fullTitle: 'bitcoin',
     },
     {
+      name: 'BCH',
+      title: 'BCH',
+      icon: 'bch',
+      value: 'bch',
+      fullTitle: 'bitcoin cash',
+    },
+    {
       name: 'SWAP',
       title: 'SWAP',
       icon: 'swap',
@@ -140,6 +147,14 @@ process.env.MAINNET && initialState.items.unshift({
   icon: 'usdt',
   value: 'usdt',
   fullTitle: 'USD Tether',
+})
+
+process.env.TESTNET && initialState.items.unshift({
+  name: 'BCH',
+  title: 'BCH',
+  icon: 'bch',
+  value: 'bch',
+  fullTitle: 'bitcoin cash',
 })
 
 const addSelectedItems = (state, payload) => ({

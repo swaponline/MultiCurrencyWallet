@@ -1,24 +1,40 @@
+import BigInteger from 'bigi'
+
 import { BigNumber } from 'bignumber.js'
-import bitcoincash from 'bitcore-lib-cash'
-import bchaddr from 'bchaddrjs'
 import bitcoinMessage from 'bitcoinjs-message'
+import bitcoincash from 'bitcoincashjs-lib'
+import bchaddr from 'bchaddrjs'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
 import { bch, request, constants, api } from 'helpers'
+import { Keychain } from 'keychain.js'
 import actions from 'redux/actions'
 
 
-const login = (importedPrivateKey) => {
-  const account = importedPrivateKey
-    ? bitcoincash.PrivateKey.fromWIF(importedPrivateKey, bch.network)
-    : new bitcoincash.PrivateKey(null, bch.network)
+const login = (privateKey) => {
+  let keyPair
 
-  const privateKey = account.toWIF()
-  const publicKey = account.toPublicKey().toBuffer().toString('hex')
-  const address = account.toAddress(bch.network).toCashAddress()
+  if (privateKey) {
+    const hash  = bitcoincash.crypto.sha256(privateKey)
+    const d     = BigInteger.fromBuffer(hash)
+
+    keyPair     = new bitcoincash.ECPair(d, null, { network: bch.network })
+  }
+  else {
+    console.info('Created account Bitcoin Cash ...')
+    keyPair     = bitcoincash.ECPair.makeRandom({ network:bch.network })
+    privateKey  = keyPair.toWIF()
+  }
+
+  localStorage.setItem(constants.privateKeyNames.bch, privateKey)
+
+  const account     = new bitcoincash.ECPair.fromWIF(privateKey, bch.network) // eslint-disable-line
+  const address     = bchaddr.toCashAddress(account.getAddress())
+  const publicKey   = account.getPublicKeyBuffer().toString('hex')
 
   const data = {
     account,
+    keyPair,
     address,
     currency: 'BCH',
     fullName: 'BitcoinCash',
@@ -26,19 +42,16 @@ const login = (importedPrivateKey) => {
     publicKey,
   }
 
-  localStorage.setItem(constants.privateKeyNames.bch, privateKey)
-
   window.getBchAddress = () => data.address
 
-  console.info('Logged in with BitcoinCash', data)
-
+  console.info('Logged in with Bitcoin Cash', data)
   reducers.user.setAuthData({ name: 'bchData', data })
 }
 
 const getBalance = () => {
   const { user: { bchData: { address } } } = getState()
 
-  return request.get(`${api.getApiServer('bch')}/addr/${address}`)
+  return request.get(`${api.getApiServer('bch')}/address/details/${address}`)
     .then(({ balance, unconfirmedBalance }) => {
       console.log('BCH Balance: ', balance)
       console.log('BCH unconfirmedBalance Balance: ', unconfirmedBalance)
@@ -51,11 +64,11 @@ const getBalance = () => {
 }
 
 const fetchBalance = (address) =>
-  request.get(`${api.getApiServer('bch')}/addr/${address}`)
+  request.get(`${api.getApiServer('bch')}/address/details/${address}`)
     .then(({ balance }) => balance)
 
 const fetchTx = (hash) =>
-  request.get(`${api.getApiServer('bch')}/tx/${hash}`)
+  request.get(`${api.getApiServer('bch')}/transaction/details/${hash}`)
     .then(({ fees, ...rest }) => ({
       fees: BigNumber(fees).multipliedBy(1e8),
       ...rest,
@@ -71,106 +84,106 @@ const fetchTxInfo = (hash) =>
 const getTransaction = () =>
   new Promise((resolve) => {
     const { user: { bchData: { address } } } = getState()
-    const cashAddress = address
-    const cashAddressShort = address.split(':').slice(-1)[0]
+
+    const url = `${api.getApiServer('bch')}/address/transactions/${address}`
     const legacyAddress = bchaddr.toLegacyAddress(address)
-    const checkAddress = (addr) => addr === cashAddress
-      || addr === cashAddressShort
-      || addr === legacyAddress
-    const url = `${api.getApiServer('bch')}/txs/?address=${address}`
 
     return request.get(url)
       .then((res) => {
         const transactions = res.txs.map((item) => {
-          const direction = item.vin.filter((element) => checkAddress(element.addr)).length ? 'out' : 'in'
+          console.warn('item', item)
+          const direction = item.vin[0].addr !== legacyAddress ? 'in' : 'out'
           const isSelf = direction === 'out'
             && item.vout.filter((item) =>
-              checkAddress(item.scriptPubKey.addresses[0])
+              item.scriptPubKey.addresses[0] === legacyAddress
             ).length === item.vout.length
           const value = isSelf
             ? item.fees
             : item.vout.filter((item) => {
-              const txAddress = item.scriptPubKey.addresses[0]
+              const currentAddress = item.scriptPubKey.addresses[0]
+
               return direction === 'in'
-                ? checkAddress(txAddress)
-                : !checkAddress(txAddress)
+                ? (currentAddress === legacyAddress)
+                : (currentAddress !== legacyAddress)
             })[0].value
+
+          console.warn('direction', direction)
+          console.warn('isSelf', isSelf)
+          console.warn('value', value)
 
           return ({
             type: 'bch',
-            hbchash: item.txid,
+            hash: item.txid,
             confirmations: item.confirmations,
             value,
             date: item.time * 1000,
             direction: isSelf ? 'self' : direction,
           })
         })
-
         resolve(transactions)
       })
-      .catch((error) => {
-        console.error('getTransaction error:', error)
-
+      .catch(() => {
         resolve([])
       })
   })
 
 const send = async ({ from, to, amount, feeValue, speed } = {}) => {
-  const { user: { bchData: { privateKey } } } = getState()
+  feeValue = feeValue || await bch.estimateFeeValue({ inSatoshis: true, speed })
 
-  const toInlegacyAddress = bchaddr.toLegacyAddress(to)
-  const minFees = 546
-  const tx = new bitcoincash.Transaction()
-  const unspents = await fetchUnspents(from)
+  const tx            = new bitcoincash.TransactionBuilder(bch.network)
+  const unspents      = await fetchUnspents(from)
 
-  const fees = Number(feeValue || await bch.estimateFeeValue({ inSatoshis: true, speed }))
-  const fundValue = BigNumber(amount).multipliedBy(1e8).integerValue().toNumber()
-  const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
-  const skipValue = totalUnspent - fundValue - fees
+  const fundValue     = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
+  const totalUnspent  = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
+  const skipValue     = totalUnspent - fundValue - feeValue
 
-  if (fees < minFees) {
-    throw new Error(`Not enough fees: ${fees} less than ${minFees}`)
+  unspents.forEach(({ txid, vout }) => tx.addInput(txid, vout, 0xffffffff))
+  tx.addOutput(bchaddr.toLegacyAddress(to), fundValue)
+
+  if (skipValue > 546) {
+    tx.addOutput(bchaddr.toLegacyAddress(from), skipValue)
   }
 
-  if (skipValue < 0) {
-    throw new Error(`Not enough balance: ${skipValue}`)
-  }
+  const txRaw = signAndBuild(tx, unspents)
 
-  unspents.forEach(({ address, ...data }) => tx.from(data)) // Don't put address. You get error if it has legacy format
-
-  tx.to(toInlegacyAddress, fundValue)
-    .fee(fees)
-    .change(from)
-    .sign(privateKey)
-
-  const txRaw = tx.toString(16)
-
-  await broadcastTx(txRaw)
+  await broadcastTx(txRaw.toHex())
 
   return txRaw
 }
 
-const signAndBuild = (transactionBuilder) => {
-  const keyPair = bitcoin.ECPair.fromWIF(privateKey, bch.network)
+const signAndBuild = (transactionBuilder, unspents) => {
+  const { user: { bchData: { privateKey } } } = getState()
+  const keyPair = bitcoincash.ECPair.fromWIF(privateKey, bch.network)
 
   transactionBuilder.inputs.forEach((input, index) => {
-    transactionBuilder.sign(index, keyPair)
+    const amount = unspents[index].satoshis
+
+    transactionBuilder.sign(
+      index,
+      keyPair,
+      null,
+      bitcoincash.Transaction.SIGHASH_ALL,
+      amount,
+    )
   })
-  return transactionBuilder.buildIncomplete()
+  return transactionBuilder.build()
 }
 
 const fetchUnspents = (address) =>
-  request.get(`${api.getApiServer('bch')}/addr/${address}/utxo`, { cacheResponse: 5000 })
+  request.get(`${api.getApiServer('bch')}/address/utxo/${address}`, { cacheResponse: 5000 })
+    .then(({ utxos }) => utxos)
 
 const broadcastTx = (txRaw) =>
-  request.post(`${api.getApiServer('bch')}/tx/send`, {
+  request.post(`${api.getApiServer('bch')}/rawtransactions/sendRawTransaction`, {
     body: {
-      rawtx: txRaw,
+      hexes: [
+        txRaw,
+      ],
     },
   })
 
 const signMessage = (message, encodedPrivateKey) => {
-  const keyPair = bitcoin.ECPair.fromWIF(encodedPrivateKey, [bitcoin.networks.bitcoin, bitcoin.networks.testnet])
+  const keyPair = bitcoincash.ECPair.fromWIF(encodedPrivateKey, bch.network)
   const privateKey = keyPair.d.toBuffer(32)
 
   const signature = bitcoinMessage.sign(message, privateKey, keyPair.compressed)
