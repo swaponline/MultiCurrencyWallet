@@ -3719,6 +3719,10 @@
     "message": "Atomic Swap {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}) Instant Exchange"
   },
   {
+    "id": "PartialClosureTitleTag1",
+    "message": "Fastest cross-chain exchange powered by Atomic Swap"
+  },
+  {
     "id": "PartialClosureMetaDescrTag",
     "message": "Best exchange rate for {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}). Swap.Online wallet provides instant exchange using Atomic Swap Protocol."
   },

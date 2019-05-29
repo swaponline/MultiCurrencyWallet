@@ -3818,6 +3818,10 @@
     "message": "Обмен {full_name1} ({ticker_name1}) на {full_name2} ({ticker_name2}) Атомарный Обмен за 60 секунд"
   },
   {
+    "id": "PartialClosureTitleTag1",
+    "message": "Самый быстрый обменник на основе Atomic Swap"
+  },
+  {
     "id": "PartialClosureMetaDescrTag",
     "message": "Децентрализированный обменник Swap.Online предлагает вам лучший курс обмена {full_name1} ({ticker_name1}) на {full_name2} ({ticker_name2}). Онлайн кошелек без регистрации."
   },
