@@ -22,6 +22,7 @@ import Input from 'components/forms/Input/Input'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Promo from './Promo/Promo'
 import HowItWorks from './HowItWorks/HowItWorks'
+import VideoAndFeatures from './VideoAndFeatures/VideoAndFeatures'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import Referral from 'components/Footer/Referral/Referral'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
@@ -66,8 +67,8 @@ const text = [
 
 const subTitle = (sell, sellTicker, buy, buyTicker) => (
   <FormattedMessage
-    id="partial437"
-    defaultMessage="Atomic Swap {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}) Instant Exchange"
+    id="PartialClosureTitleTag1"
+    defaultMessage="Fastest cross-chain exchange powered by Atomic Swap"
     values={{ full_name1: sell, ticker_name1: sellTicker, full_name2: buy, ticker_name2: buyTicker }}
   />
 )
@@ -1107,6 +1108,7 @@ export default class PartialClosure extends Component {
             </Fragment>
           </div>
           <HowItWorks />
+          <VideoAndFeatures />
         </div >
       )
   }
