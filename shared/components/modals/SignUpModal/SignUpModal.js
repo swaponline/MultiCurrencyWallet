@@ -91,8 +91,6 @@ export default class SignUpModal extends React.Component {
       firestore.addUser(data)
     }
 
-    this.setState(() => ({ [whatToSubmit]: true }))
-
     actions.analytics.signUpEvent({ action: 'request' })
 
     if (!isSupportedPush || isSubmitedPush) {
@@ -118,6 +116,8 @@ export default class SignUpModal extends React.Component {
 
     const result = await firebase.signUpWithPush(data)
     const resultFirestore = await firestore.signUpWithPush()
+
+    this.setState(() => ({ [whatToSubmit]: true }))
 
     if (!result) {
       this.setState(() => ({
