@@ -3390,6 +3390,48 @@
     ]
   },
   {
+    "id": "partialVideoAndFeaturesTitle",
+    "message": "The {purplefastest} cross-chain Atomic Swap exchange",
+    "files": [
+      "shared/pages/PartialClosure/VideoAndFeatures/VideoAndFeatures.js"
+    ]
+  },
+  {
+    "id": "partialVideoAndFeaturesTitlePur",
+    "message": "fastest",
+    "files": [
+      "shared/pages/PartialClosure/VideoAndFeatures/VideoAndFeatures.js"
+    ]
+  },
+  {
+    "id": "partialVideoAndFeatures0",
+    "message": "Based on Atomic Swap technology",
+    "files": [
+      "shared/pages/PartialClosure/VideoAndFeatures/VideoAndFeatures.js"
+    ]
+  },
+  {
+    "id": "partialVideoAndFeatures1",
+    "message": "Takes 2 minutes to exchange",
+    "files": [
+      "shared/pages/PartialClosure/VideoAndFeatures/VideoAndFeatures.js"
+    ]
+  },
+  {
+    "id": "partialVideoAndFeatures2",
+    "message": "Supports LTC, BTC, BCH, ETH, USDT, ERC-20 tokens",
+    "files": [
+      "shared/pages/PartialClosure/VideoAndFeatures/VideoAndFeatures.js"
+    ]
+  },
+  {
+    "id": "partialVideoAndFeatures3",
+    "message": "Can be deployed on any website as an exchange service",
+    "files": [
+      "shared/pages/PartialClosure/VideoAndFeatures/VideoAndFeatures.js"
+    ]
+  },
+  {
     "id": "PartialFeeValueWarn",
     "message": "Warning: you will have to pay an additional miner fee up to {estimatedFeeValue} {haveCurrency}",
     "files": [
@@ -4024,6 +4066,10 @@
   {
     "id": "advVidLink",
     "message": "https://youtu.be/Jhrb7xOT_7s"
+  },
+  {
+    "id": "VidLinkFrame",
+    "message": "https://www.youtube.com/embed/euT8rScwfEk"
   },
   {
     "id": "GitHub",
