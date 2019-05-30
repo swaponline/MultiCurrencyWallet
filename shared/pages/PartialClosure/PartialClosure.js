@@ -39,7 +39,7 @@ import { animate } from 'helpers/domUtils'
 import Switching from 'components/controls/Switching/Switching'
 
 
-const allowedCoins = ['BTC', 'ETH']
+const allowedCoins = ['BTC', 'ETH', 'BCH']
 
 const isExchangeAllowed = (currencies) => {
   return currencies.filter(c => {
