@@ -36,7 +36,7 @@ export default class Logo extends Component {
       <Fragment>
         {withLink ?
           (
-            <Link styleName={`${mobile ? 'mobile' : 'logo'} ${!isExchange ? 'whiteFill' : ''}`} data-tip data-for="logo" to={localisedUrl(locale, '/')}>
+            <Link styleName={`${mobile ? 'mobile' : 'logo'} ${!isExchange ? 'whiteFill' : ''}`} data-tip data-for="logo" to={localisedUrl(locale, links.home)}>
               {imgNode}
             </Link>
           ) : (<div styleName={`${!isExchange && 'whiteFill'}`} >{imgNode}</div>)

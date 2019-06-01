@@ -22,7 +22,14 @@
   },
   {
     "id": "menu.wallet",
-    "message": "Кошелек",
+    "message": "Кошелёк",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
+    "id": "menu.CreateWallet",
+    "message": "Создать кошелёк",
     "files": [
       "shared/components/Header/Header.js"
     ]
@@ -4176,6 +4183,14 @@
   {
     "id": "GitHub",
     "message": "GitHub"
+  },
+  {
+    "id": "menu.products",
+    "message": "Наши предложения"
+  },
+  {
+    "id": "menu.invest",
+    "message": "Как инвестировать?"
   },
   {
     "id": "SwitchLang20",
