@@ -35,6 +35,13 @@
     ]
   },
   {
+    "id": "createWalletLoaderTip",
+    "message": "Создаем кошелёк... Пожалуйста подождите.",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
     "id": "LtcToEth.orderCreatorIsOffline",
     "message": "Автор ушел",
     "files": [

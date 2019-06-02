@@ -26,6 +26,7 @@ import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import TourPartial from './TourPartial/TourPartial'
 
 import Logo from 'components/Logo/Logo'
+import Loader from 'components/loaders/Loader/Loader'
 import { relocalisedUrl } from 'helpers/locale'
 import { localisedUrl, unlocalisedUrl } from '../../helpers/locale'
 import UserTooltip from 'components/Header/User/UserTooltip/UserTooltip'
@@ -100,7 +101,10 @@ export default class Header extends Component {
       ? `${unlocalisedUrl(props.intl.locale, props.location.pathname)}`
       : `${links.home}`
 
-    const didWalletCreated = localStorage.getItem(constants.localStorage.wasOnWallet)
+    const didWalletCreated = localStorage.getItem(constants.localStorage.didWalletCreated)
+
+    const isWalletPage = props.location.pathname === links.currencyWallet
+      || props.location.pathname === `/ru${links.currencyWallet}`
 
     this.state = {
       optionsForOenSignUpModal: {},
@@ -134,6 +138,7 @@ export default class Header extends Component {
       ],
       menuItems: this.getMenuItems(props, didWalletCreated, dinamicPath),
       menuItemsMobile: this.getMenuItemsMobile(props, didWalletCreated, dinamicPath),
+      createdWalletLoader: isWalletPage && !didWalletCreated,
     }
     this.lastScrollTop = 0
   }
@@ -154,26 +159,13 @@ export default class Header extends Component {
   }
 
   componentDidUpdate() {
-    const dinamicPath = this.props.location.pathname.includes(links.exchange)
-      ? `${unlocalisedUrl(this.props.intl.locale, this.props.location.pathname)}`
-      : `${links.home}`
-    let didWalletCreated = localStorage.getItem(constants.localStorage.wasOnWallet)
-    const { location } = this.props
-
-    if (location.pathname === links.currencyWallet && !didWalletCreated) {
-      localStorage.setItem(constants.localStorage.wasOnWallet, true)
-      didWalletCreated = true
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({
-        menuItems: this.getMenuItems(this.props, didWalletCreated, dinamicPath),
-        menuItemsMobile: this.getMenuItemsMobile(this.props, didWalletCreated, dinamicPath),
-      })
-    }
+    this.tapCreateWalletButton()
   }
 
   componentWillUnmount() {
     // window.removeEventListener('scroll', this.handleScroll)
     this.startTourAndSignInModal()
+    clearTimeout(this.timeoutLoader)
   }
 
   getMenuItems = (props, didWalletCreated, dinamicPath) => ([
@@ -226,6 +218,27 @@ export default class Header extends Component {
     },
   ])
 
+  tapCreateWalletButton = () => {
+    const { location, intl } = this.props
+    const dinamicPath = location.pathname.includes(links.exchange)
+      ? `${unlocalisedUrl(intl.locale, location.pathname)}`
+      : `${links.home}`
+    let didWalletCreated = localStorage.getItem(constants.localStorage.didWalletCreated)
+    const isWalletPage = location.pathname === links.currencyWallet
+      || location.pathname === `/ru${links.currencyWallet}`
+
+    if (isWalletPage && !didWalletCreated) {
+      localStorage.setItem(constants.localStorage.didWalletCreated, true)
+      didWalletCreated = true
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState({
+        menuItems: this.getMenuItems(this.props, didWalletCreated, dinamicPath),
+        menuItemsMobile: this.getMenuItemsMobile(this.props, didWalletCreated, dinamicPath),
+        createdWalletLoader: true,
+      })
+    }
+  }
+
   startTourAndSignInModal = () => {
     // if (!process.env.MAINNET || config.isWidget) {
     //   return
@@ -243,6 +256,7 @@ export default class Header extends Component {
     }
 
     const isWalletPage = currentUrl.pathname === links.currencyWallet
+      || currentUrl.pathname === `/ru${links.currencyWallet}`
     const isPartialPage = currentUrl.pathname.includes(links.exchange)
       || currentUrl.pathname === '/'
       || currentUrl.pathname === '/ru'
@@ -343,8 +357,14 @@ export default class Header extends Component {
   }
 
   render() {
-    const { sticky, menuItemsFill, isTourOpen, isShowingMore, path, isPartialTourOpen, isWallet, menuItems, menuItemsMobile } = this.state
-    const { intl: { locale }, history, pathname, feeds, peer, isSigned, isInputActive } = this.props
+    const { sticky, menuItemsFill, isTourOpen, isShowingMore, path, isPartialTourOpen, isWallet, menuItems, menuItemsMobile, createdWalletLoader } = this.state
+    const { intl: { locale, formatMessage }, history, pathname, feeds, peer, isSigned, isInputActive } = this.props
+
+    if (createdWalletLoader) {
+      this.timeoutLoader = setTimeout(() => {
+        this.setState({ createdWalletLoader: false })
+      }, 4000)
+    }
 
     const accentColor = '#510ed8'
 
@@ -363,6 +383,13 @@ export default class Header extends Component {
     if (isMobile) {
       return (
         <div styleName={isInputActive ? 'header-mobile header-mobile__hidden' : 'header-mobile'}>
+          {
+            createdWalletLoader && (
+              <div styleName="loaderCreateWallet">
+                <Loader showMyOwnTip={formatMessage({ id: 'createWalletLoaderTip', defaultMessage: 'Creating wallet... Please wait.' })} />
+              </div>
+            )
+          }
           <UserTooltip
             feeds={feeds}
             peer={peer}
@@ -377,6 +404,13 @@ export default class Header extends Component {
 
     return (
       <div styleName={sticky ? 'header header-fixed' : isExchange ? 'header header-promo' : 'header'}>
+        {
+          createdWalletLoader && (
+            <div styleName="loaderCreateWallet">
+              <Loader showMyOwnTip={formatMessage({ id: 'createWalletLoaderTip', defaultMessage: 'Creating wallet... Please wait.' })} />
+            </div>
+          )
+        }
         <WidthContainer styleName="container">
           <LogoTooltip withLink isExchange={isExchange} />
           <Nav menu={menuItems} />
