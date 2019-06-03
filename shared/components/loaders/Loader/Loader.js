@@ -13,7 +13,7 @@ import config from 'app-config'
 const isFirefox = navigator.userAgent.indexOf('Firefox') !== -1
 const isWidget = config && config.isWidget
 
-const Loader = ({ overlayClassName, className, data, showTips }) => (
+const Loader = ({ overlayClassName, className, data, showTips, showMyOwnTip }) => (
   <div styleName="Firefox overlay" className={overlayClassName}>
     <div>
       <div styleName="loader" className={className}>
@@ -41,9 +41,16 @@ const Loader = ({ overlayClassName, className, data, showTips }) => (
         )
       }
       {
-        (showTips && !isWidget) && (
+        (showTips && !isWidget && !Boolean(showMyOwnTip)) && (
           <div styleName="tips">
             {tips('loader')}
+          </div>
+        )
+      }
+      {
+        (!isWidget && Boolean(showMyOwnTip)) && (
+          <div styleName="tips">
+            {showMyOwnTip}
           </div>
         )
       }

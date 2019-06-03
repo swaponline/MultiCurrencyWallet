@@ -2,6 +2,7 @@ export default {
   enter: 'enter',
   reject: 'reject',
   wasOnWallet: 'wasOnWallet',
+  didWalletCreated: 'didWalletCreated',
   savedOrders: 'savedOrders',
   deletedOrders: 'deletedOrders',
   didWidgetsDataSend: 'didWidgetsDataSend',

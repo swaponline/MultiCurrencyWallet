@@ -84,8 +84,10 @@
       }
 
       if(localStorage.length === 0) {
-        information.innerText = 'Generating private keys for your multicurrency wallet right now,\n it may take one minute...';
-
+        console.log(window.location.pathname.split('/')[1] === 'ru')
+        information.innerText = window.location.pathname.split('/')[1] !== 'ru'
+          ? 'Please wait while the application is loading,\n it may take one minute...'
+          : 'Пожалуйста подождите пока приложение запускается,\n это не займет больше минуты...';
       }
 
 

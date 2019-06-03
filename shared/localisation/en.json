@@ -28,6 +28,20 @@
     ]
   },
   {
+    "id": "menu.CreateWallet",
+    "message": "Create wallet",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
+    "id": "createWalletLoaderTip",
+    "message": "Creating wallet... Please wait.",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
     "id": "LtcToEth.orderCreatorIsOffline",
     "message": "The order creator is offline. The request is valid for 30 min ",
     "files": [

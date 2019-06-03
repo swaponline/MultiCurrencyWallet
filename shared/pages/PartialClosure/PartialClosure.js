@@ -41,19 +41,17 @@ import Switching from 'components/controls/Switching/Switching'
 
 const allowedCoins = ['BTC', 'ETH', 'BCH']
 
-const isExchangeAllowed = (currencies) => {
-  return currencies.filter(c => {
-    const isErc = Object.keys(config.erc20)
-      .map(i => i.toLowerCase())
-      .includes(c.value.toLowerCase())
+const isExchangeAllowed = (currencies) => currencies.filter(c => {
+  const isErc = Object.keys(config.erc20)
+    .map(i => i.toLowerCase())
+    .includes(c.value.toLowerCase())
 
-    const isAllowedCoin = allowedCoins
-      .map(i => i.toLowerCase())
-      .includes(c.value.toLowerCase())
+  const isAllowedCoin = allowedCoins
+    .map(i => i.toLowerCase())
+    .includes(c.value.toLowerCase())
 
-    return isAllowedCoin || isErc
-  })
-}
+  return isAllowedCoin || isErc
+})
 
 const filterIsPartial = (orders) => orders
   .filter(order => order.isPartial && !order.isProcessing && !order.isHidden)
@@ -134,19 +132,21 @@ export default class PartialClosure extends Component {
 
     super()
 
-    if (sell && buy) {
+    const isRootPage = history.location.pathname === '/' || history.location.pathname === '/ru'
+
+    if (sell && buy && !isRootPage) {
       if (!allCurrencyies.map(item => item.name).includes(sell.toUpperCase())
         || !allCurrencyies.map(item => item.name).includes(buy.toUpperCase())) {
         history.push(localisedUrl(locale, `${links.exchange}/swap-to-btc`))
       }
     }
 
-    const sellToken = sell || ((!isWidgetBuild) ? 'eth' : 'btc')
-    const buyToken = buy || ((!isWidgetBuild) ? 'btc' : config.erc20token)
+    const sellToken = sell || ((!isWidgetBuild) ? 'btc' : 'btc')
+    const buyToken = buy || ((!isWidgetBuild) ? 'eth' : config.erc20token)
 
     this.returnNeedCurrency(sellToken, buyToken)
 
-    if (!(buy && sell) && !props.location.hash.includes('#widget')) {
+    if (!(buy && sell) && !props.location.hash.includes('#widget') && !isRootPage) {
       history.push(localisedUrl(locale, `${links.exchange}/${sellToken}-to-${buyToken}`))
     }
 
@@ -225,7 +225,7 @@ export default class PartialClosure extends Component {
   }
 
   rmScrollAdvice = () => {
-    if (window.scrollY > window.innerHeight * 0.7) {
+    if (window.scrollY > window.innerHeight * 0.7 && this.scrollTrigger !== null) {
       this.scrollTrigger.classList.add('hidden')
       document.removeEventListener('scroll', this.rmScrollAdvice)
     }
