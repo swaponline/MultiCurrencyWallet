@@ -97,6 +97,10 @@ export default class Header extends Component {
   constructor(props) {
     super(props)
 
+    if (localStorage.getItem(constants.localStorage.lastCheckBalance) || localStorage.getItem(constants.localStorage.wasCautionPassed)) {
+      localStorage.setItem(constants.localStorage.didWalletCreated, true)
+    }
+
     const dinamicPath = props.location.pathname.includes(links.exchange)
       ? `${unlocalisedUrl(props.intl.locale, props.location.pathname)}`
       : `${links.home}`
