@@ -62,11 +62,13 @@ export default class KeyActionsPanel extends Component {
       const desclineOrders = []
 
       decline.forEach(item => {
-        const order = actions.core.getSwapById(item)
+        try {
+          const order = actions.core.getSwapById(item)
 
-        if (!order.flow.state.isSwapExist && !order.isMy && order.flow.state.step >= 4) {
-          desclineOrders.push(order)
-        }
+          if (!order.flow.state.isSwapExist && !order.isMy && order.flow.state.step >= 4) {
+            desclineOrders.push(order)
+          }
+        } catch (noFlowError) {}
       })
       this.setState(() => ({
         desclineOrders,
