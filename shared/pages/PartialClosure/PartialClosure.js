@@ -602,6 +602,13 @@ export default class PartialClosure extends Component {
     }
   }
 
+  handleGoDeclimeFaq = () => {
+    const faqLink = links.getFaqLink('requestDeclimed')
+    if (faqLink) {
+      window.location.href = faqLink
+    }
+  }
+
   handleFlipCurrency = async () => {
     const { haveCurrency, getCurrency, customWalletUse } = this.state
 
@@ -938,13 +945,13 @@ export default class PartialClosure extends Component {
             </Fragment>
           )}
           {isDeclinedOffer && (
-            <p styleName="error" className={isWidget ? 'error' : ''} >
+            <p styleName="error link" className={isWidget ? 'error' : ''} onClick={() => this.handleGoDeclimeFaq()} >
               <FormattedMessage
                 id="PartialOfferCantProceed1"
                 defaultMessage="Request rejected, possibly you have not complete another swap {br}{link}"
                 values={{
                   link:
-                    <a className="errorLink" role="button" onClick={() => this.goTodeclineSwap()}> {/* eslint-disable-line */}
+                    <a className="errorLink" role="button" onClick={() => this.handleGoDeclimeFaq()}> {/* eslint-disable-line */}
                       <FormattedMessage id="PartialOfferCantProceed1_1" defaultMessage="Check here" />
                     </a>,
                   br: <br />,
