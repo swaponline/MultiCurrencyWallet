@@ -1,4 +1,4 @@
-export default {
+const linksManager = {
   home: '/',
   exchange: '/exchange',
   history: '/history',
@@ -98,6 +98,11 @@ export default {
       question: 'Advantages of using the exchanger based on Swap.Online DEP',
       link: 'https://wiki.swap.online/faq/#swap-faq-13',
     },
+    {
+      question: 'Request is declined. Why?',
+      link: 'https://swap.online/getting-started/#faq-item-5738',
+      id: 'requestDeclimed',
+    },
   ],
   // footer new links
   footer: {
@@ -123,3 +128,16 @@ export default {
     lnresearch: 'https://wiki.swap.online/lightninghack-berlin-june2018/',
   },
 }
+
+linksManager.getFaqLink = (faqID) => {
+  for (var i = 0; i < linksManager.faq.length; i++) {
+    if (linksManager.faq[i].id
+      && (linksManager.faq[i].id == faqID)
+    ) {
+      return linksManager.faq[i].link
+    }
+  }
+  return false
+}
+
+export default linksManager
