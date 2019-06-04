@@ -3,12 +3,22 @@ import actions from 'redux/actions'
 import moment from 'moment/moment'
 
 
+const getSwapByIdSafe = (swapID) => {
+  try {
+    const returnedSwap = actions.core.getSwapById(swapID)
+    return returnedSwap
+  } catch (noFlowError) {
+    return false
+  }
+}
 const getDeclinedExistedSwapIndex = ({ currency, decline }) => {
 
   const date = Date.now() / 1000
 
   const indexOfDecline = decline.length - 1
-  const declineSwap = actions.core.getSwapById(decline[indexOfDecline])
+  const declineSwap = getSwapByIdSafe(decline[indexOfDecline])
+
+  if (!declineSwap) return false
 
   const itemState = declineSwap.flow.state
   const values = itemState.btcScriptValues
