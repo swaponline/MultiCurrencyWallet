@@ -27,7 +27,7 @@ export default class NavMobile extends Component {
         {
           menu
             .filter(i => i.isMobile !== false)
-            .map(({ title, link, exact, icon, isBold, currentPageFlag }) => (
+            .map(({ title, link, exact, icon, isBold, currentPageFlag, ...rest }) => !rest.displayNone && (
               currentPageFlag
                 ? (
                   <a

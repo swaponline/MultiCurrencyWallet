@@ -19,9 +19,9 @@ import config from 'app-config'
 
 
 @connect(({
-  user: { ethData, btcData, /* bchData, */ tokensData, eosData, telosData, nimData, usdtData, ltcData },
+  user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, usdtData, ltcData },
 }) => ({
-  currenciesData: [ ethData, btcData, eosData, telosData, /* bchData, */ ltcData, usdtData /* nimData */ ],
+  currenciesData: [ ethData, btcData, eosData, telosData, bchData, ltcData, usdtData /* nimData */ ],
   tokensData: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
 }))
 @CSSModules(styles)
@@ -81,7 +81,7 @@ export default class UserTooltip extends Component {
 
             if (BigNumber(sellAmountPlusFee).isGreaterThan(currencyBalance)) {
               this.removeOrder(id, request[0].participant.peer)
-              return console.warn('Not enought money for the swap, order № ${id} was deleted')
+              return console.warn(`Not enought money for the swap, order № ${id} was deleted`)
             }
 
             return (

@@ -59,11 +59,12 @@ export default class RowHistory extends Component {
 
   componentDidMount() {
     const {
-      btcScriptValues, ltcScriptValues,
+      btcScriptValues, ltcScriptValues, bchScriptValues,
       usdtScriptValues, scriptValues,
     } = this.props.row
 
     const values  = btcScriptValues
+      || bchScriptValues
       || ltcScriptValues
       || usdtScriptValues
       || scriptValues
@@ -92,11 +93,15 @@ export default class RowHistory extends Component {
 
     let {
       buyAmount, buyCurrency, sellAmount, btcScriptValues, balance,
-      ltcScriptValues, usdtScriptValues, isRefunded, isMy, sellCurrency,
+      ltcScriptValues, bchScriptValues, usdtScriptValues, isRefunded, isMy, sellCurrency,
       isFinished, id, scriptValues,
     } = row
 
-    const values = btcScriptValues || ltcScriptValues || usdtScriptValues || scriptValues
+    const values = btcScriptValues
+      || bchScriptValues
+      || ltcScriptValues
+      || usdtScriptValues
+      || scriptValues
     const date = Date.now() / 1000
 
     if (!values) {

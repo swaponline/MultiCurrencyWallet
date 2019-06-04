@@ -63,6 +63,14 @@ $purple: #510ed8;
   transition: transform 250ms ease;
 }
 
+.loaderCreateWallet {
+  display: block;
+  position: fixed;
+  z-index: 9999999999999999;
+  width: 100vw;
+  height: 100vh;
+}
+
 @keyframes slide-down {
     0% {
         opacity: 0;

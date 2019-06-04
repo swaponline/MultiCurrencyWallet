@@ -22,7 +22,21 @@
   },
   {
     "id": "menu.wallet",
-    "message": "Кошелек",
+    "message": "Кошелёк",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
+    "id": "menu.CreateWallet",
+    "message": "Создать кошелёк",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
+    "id": "createWalletLoaderTip",
+    "message": "Создаем кошелёк... Пожалуйста подождите.",
     "files": [
       "shared/components/Header/Header.js"
     ]
@@ -3489,6 +3503,48 @@
     ]
   },
   {
+    "id": "partialVideoAndFeaturesTitle",
+    "message": "{purplefastest} сервис атомарного обмена",
+    "files": [
+      "shared/pages/PartialClosure/VideoAndFeatures/VideoAndFeatures.js"
+    ]
+  },
+  {
+    "id": "partialVideoAndFeaturesTitlePur",
+    "message": "Самый быстрый",
+    "files": [
+      "shared/pages/PartialClosure/VideoAndFeatures/VideoAndFeatures.js"
+    ]
+  },
+  {
+    "id": "partialVideoAndFeatures0",
+    "message": "На основе технологии Atomic Swap",
+    "files": [
+      "shared/pages/PartialClosure/VideoAndFeatures/VideoAndFeatures.js"
+    ]
+  },
+  {
+    "id": "partialVideoAndFeatures1",
+    "message": "Обмен занимает всего 2 минуты",
+    "files": [
+      "shared/pages/PartialClosure/VideoAndFeatures/VideoAndFeatures.js"
+    ]
+  },
+  {
+    "id": "partialVideoAndFeatures2",
+    "message": "Поддерживает: LTC, BTC, BCH, ETH, USDT, ERC-20 токены",
+    "files": [
+      "shared/pages/PartialClosure/VideoAndFeatures/VideoAndFeatures.js"
+    ]
+  },
+  {
+    "id": "partialVideoAndFeatures3",
+    "message": "Может быть расположен на любом сайте в качестве обменного сервиса",
+    "files": [
+      "shared/pages/PartialClosure/VideoAndFeatures/VideoAndFeatures.js"
+    ]
+  },
+  {
     "id": "PartialFeeValueWarn",
     "message": "Обратите внимание: из этой суммы так же вычтется комиссия майнеров до {estimatedFeeValue} {haveCurrency}",
     "files": [
@@ -3818,6 +3874,10 @@
     "message": "Обмен {full_name1} ({ticker_name1}) на {full_name2} ({ticker_name2}) Атомарный Обмен за 60 секунд"
   },
   {
+    "id": "PartialClosureTitleTag1",
+    "message": "Самый быстрый обменник на основе Atomic Swap"
+  },
+  {
     "id": "PartialClosureMetaDescrTag",
     "message": "Децентрализированный обменник Swap.Online предлагает вам лучший курс обмена {full_name1} ({ticker_name1}) на {full_name2} ({ticker_name2}). Онлайн кошелек без регистрации."
   },
@@ -4124,8 +4184,20 @@
     "message": "https://youtu.be/1G-U5Sh7pQk"
   },
   {
+    "id": "VidLinkFrame",
+    "message": "https://www.youtube.com/embed/euT8rScwfEk"
+  },
+  {
     "id": "GitHub",
     "message": "GitHub"
+  },
+  {
+    "id": "menu.products",
+    "message": "Наши предложения"
+  },
+  {
+    "id": "menu.invest",
+    "message": "Как инвестировать?"
   },
   {
     "id": "SwitchLang20",

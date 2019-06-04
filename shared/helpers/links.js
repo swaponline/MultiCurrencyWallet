@@ -2,6 +2,7 @@ export default {
   home: '/',
   exchange: '/exchange',
   history: '/history',
+  wallets: '/wallets',
   currencyWallet: '/wallet',
   swap: '/swaps',
   feed: '/feed',
