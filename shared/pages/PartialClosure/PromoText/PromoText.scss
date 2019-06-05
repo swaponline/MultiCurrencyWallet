@@ -23,6 +23,7 @@
 
 @include media-mobile {
   .promoText {
+    display: none;
     width: 100%;
     font-size: 22px;
     line-height: 1.4;

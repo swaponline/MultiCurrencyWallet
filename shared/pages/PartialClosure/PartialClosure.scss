@@ -91,7 +91,7 @@
   left: 22em;
   top: 7em;
   display: flex;
-  width: 100%;
+  width: 60px;
   align-items: right;
   position: absolute;
 }
@@ -407,6 +407,13 @@
     text-decoration: underline;
   }
 }
+.mobileDubleHeader {
+  display: none;
+}
+
+.tooltipHeader {
+  line-height: 1.2em;
+}
 
 @media (max-width: 1200px) {
   .exchangeWrap {
@@ -510,6 +517,23 @@
 }
 
 @include media-mobile {
+  .mobileDubleHeader {
+    display: block;
+    h3 {
+      display: block;
+      margin: auto;
+      margin-top: -85px;
+      margin-bottom: 100px;
+      padding: 0;
+      padding-bottom: 10px;
+      div {
+        display: block;
+        margin: auto;
+        width: 90%;
+      }
+    }
+  }
+
   .inform {
     margin-top: 10px;
   }
@@ -566,30 +590,30 @@
   }
 }
 
-@media all and (min-width: 450px) and (max-width: 568px) {
-  .section {
-    margin: auto;
-  }
-  .formExchange {
-    width: 400px;
-  }
+// @media all and (min-width: 450px) and (max-width: 568px) {
+//   .section {
+//     margin: auto;
+//   }
+//   .formExchange {
+//     width: 400px;
+//   }
 
-  .widgetLink {
-    left: 14.5em;
-    color: #297df1;
-    text-decoration: underline;
+//   .widgetLink {
+//     left: 14.5em;
+//     color: #297df1;
+//     text-decoration: underline;
 
-    &:hover {
-      color: #297df1;
-      text-decoration: underline;
-    }
-  }
+//     &:hover {
+//       color: #297df1;
+//       text-decoration: underline;
+//     }
+//   }
 
-  .switchButton {
-    left: 20.5em;
-    top: 6.5em;
-  }
-}
+//   .switchButton {
+//     left: 20.5em;
+//     top: 6.5em;
+//   }
+// }
 
 .widgetExchangeWrap {
   width: 100vw;
