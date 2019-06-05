@@ -71,17 +71,17 @@ const subTitle = (sell, sellTicker, buy, buyTicker) => (
       defaultMessage="Fastest cross-chain exchange powered by Atomic Swap"
       values={{ full_name1: sell, ticker_name1: sellTicker, full_name2: buy, ticker_name2: buyTicker }}
     />
-    <Tooltip
-      id="partialAtomicSwapWhatIsIt1"
-      dontHideMobile
-    >
-      <span styleName="tooltipHeader">
+    <span styleName="tooltipHeader">
+      <Tooltip
+        id="partialAtomicSwapWhatIsIt1"
+        dontHideMobile
+      >
         <FormattedMessage
           id="partialAtomicSwapWhatIsIt"
           defaultMessage="Atomic swap is a smart contract technology that enables exchange."
         />
-      </span>
-    </Tooltip>
+      </Tooltip>
+    </span>
   </div>
 )
 

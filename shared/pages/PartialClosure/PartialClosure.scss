@@ -413,6 +413,7 @@
 
 .tooltipHeader {
   line-height: 1.2em;
+  font-size: 38px;
 }
 
 @media (max-width: 1200px) {
@@ -517,6 +518,10 @@
 }
 
 @include media-mobile {
+  .tooltipHeader {
+    font-size: 16px;
+  }
+
   .mobileDubleHeader {
     display: block;
     h3 {

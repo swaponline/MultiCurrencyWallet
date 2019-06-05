@@ -88,7 +88,7 @@ export default class Header extends Component {
   }
 
   static getDerivedStateFromProps({ history: { location: { pathname } } }) {
-    if  (pathname === '/ru' || pathname === '/') {
+    if  (pathname === '/ru' || pathname === '/' || pathname === links.currencyWallet) {
       return { path: true }
     }
     return { path: false }
@@ -421,7 +421,7 @@ export default class Header extends Component {
           <Logo withLink mobile />
           <TourPartial isTourOpen={this.state.isPartialTourOpen} />
           <User
-            openTour={this.openWalletTour}
+            openTour={isExchange ? this.openExchangeTour : this.openWalletTour}
             path={path}
             acceptRequest={this.acceptRequest}
             declineRequest={this.declineRequest}
