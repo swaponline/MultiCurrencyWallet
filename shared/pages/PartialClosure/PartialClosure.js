@@ -21,6 +21,7 @@ import { Button, Toggle, Flip } from 'components/controls'
 import Input from 'components/forms/Input/Input'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Promo from './Promo/Promo'
+import PromoText from './PromoText/PromoText'
 import HowItWorks from './HowItWorks/HowItWorks'
 import VideoAndFeatures from './VideoAndFeatures/VideoAndFeatures'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
@@ -64,11 +65,24 @@ const text = [
 ]
 
 const subTitle = (sell, sellTicker, buy, buyTicker) => (
-  <FormattedMessage
-    id="PartialClosureTitleTag1"
-    defaultMessage="Fastest cross-chain exchange powered by Atomic Swap"
-    values={{ full_name1: sell, ticker_name1: sellTicker, full_name2: buy, ticker_name2: buyTicker }}
-  />
+  <div>
+    <FormattedMessage
+      id="PartialClosureTitleTag1"
+      defaultMessage="Fastest cross-chain exchange powered by Atomic Swap"
+      values={{ full_name1: sell, ticker_name1: sellTicker, full_name2: buy, ticker_name2: buyTicker }}
+    />
+    <span styleName="tooltipHeader">
+      <Tooltip
+        id="partialAtomicSwapWhatIsIt1"
+        dontHideMobile
+      >
+        <FormattedMessage
+          id="partialAtomicSwapWhatIsIt"
+          defaultMessage="Atomic swap is a smart contract technology that enables exchange."
+        />
+      </Tooltip>
+    </span>
+  </div>
 )
 
 const isWidgetBuild = config && config.isWidget
@@ -855,6 +869,9 @@ export default class PartialClosure extends Component {
 
     const Form = (
       <div styleName={`${isWidgetBuild ? '' : 'section'}`} className={isWidgetLink ? 'section' : ''} >
+        <div styleName="mobileDubleHeader">
+          <PromoText subTitle={subTitle(sellTokenFullName, haveCurrency.toUpperCase(), buyTokenFullName, getCurrency.toUpperCase())} />
+        </div>
         <div styleName={isWidgetBuild ? 'formExchange_widgetBuild' : `formExchange ${isWidget ? 'widgetFormExchange' : ''}`} className={isWidget ? 'formExchange' : ''} >
           <div data-tut="have" styleName="selectWrap">
             <SelectGroup
