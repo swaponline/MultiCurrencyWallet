@@ -288,6 +288,9 @@
     text-decoration: underline;
   }
 }
+.error.link {
+  cursor: pointer;
+}
 .notifyThat {
   display: flex;
   align-items: center;
