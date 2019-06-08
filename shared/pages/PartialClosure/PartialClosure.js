@@ -1095,7 +1095,7 @@ export default class PartialClosure extends Component {
               <FormattedMessage id="partial541" defaultMessage="Exchange now" />
             </Button>
             <Button dataTut="Orderbook" styleName="button buttonOrders" gray onClick={() => this.handlePush(isWidgetLink)} >
-              <FormattedMessage id="partial544" defaultMessage="Show order book" />
+              <FormattedMessage id="partial544" defaultMessage="Order book" />
             </Button>
           </div>
           <a href="http://Widget.swap.online" target="_blank"  rel="noopener noreferrer" styleName="widgetLink">

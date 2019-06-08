@@ -3399,7 +3399,7 @@
   },
   {
     "id": "partial544",
-    "message": "Orderbook",
+    "message": "Order book",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -3441,7 +3441,7 @@
   },
   {
     "id": "partialVideoAndFeatures1",
-    "message": "Takes 2 minutes to exchange",
+    "message": "Exchange only takes 2 minutes",
     "files": [
       "shared/pages/PartialClosure/VideoAndFeatures/VideoAndFeatures.js"
     ]
