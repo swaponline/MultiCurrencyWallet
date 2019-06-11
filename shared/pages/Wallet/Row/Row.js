@@ -23,6 +23,8 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
 import { relocalisedUrl, localisedUrl } from 'helpers/locale'
 import SwapApp from 'swap.app'
+import { BigNumber } from 'bignumber.js'
+
 
 @injectIntl
 @withRouter
@@ -383,7 +385,7 @@ export default class Row extends Component {
                 <i className="fas fa-sync-alt" styleName="icon" />
                 <span>
                   {
-                    balanceError ? '?' : String(balance).length > 4 ? balance.toFixed(4) : balance
+                    balanceError ? '?' : BigNumber(balance).dp(5, BigNumber.ROUND_CEIL).toString()
                   }{' '}{currency}
                 </span>
                 { currency === 'BTC' && unconfirmedBalance !== 0 && (
