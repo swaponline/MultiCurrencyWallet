@@ -309,7 +309,7 @@ export default class DepositWindow extends Component {
                   disabled={isAddressCopied}
                   fullWidth
                 >
-                  <span className="copyText">copy</span>
+                  <span className="copyText"><FormattedMessage id="deposit312" defaultMessage="copy" /></span>
                   {isAddressCopied ? <i className="fas fa-copy fa-copy-in" /> : <i className="fas fa-copy" />}
                 </Button>
               </p>
