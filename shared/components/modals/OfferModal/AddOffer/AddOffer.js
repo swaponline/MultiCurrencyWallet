@@ -415,7 +415,9 @@ export default class AddOffer extends Component {
 
     const isDisabled = !exchangeRate
       || !buyAmount && !sellAmount
-      || BigNumber(sellAmount).isGreaterThan(balance)
+      /* This allows creating order greater than balance
+        || BigNumber(sellAmount).isGreaterThan(balance)
+      */
       || BigNumber(sellAmount).isLessThan(minimalAmountSell)
       || BigNumber(buyAmount).isLessThan(minimalAmountBuy)
 
@@ -438,14 +440,15 @@ export default class AddOffer extends Component {
       )
     }
 
-    if (linked.buyAmount.value !== '') {
-      linked.sellAmount.check((value) => (BigNumber(balance).isGreaterThanOrEqualTo(value)),
-        <span>
-          <FormattedMessage id="transaction376" defaultMessage="Amount must be less than your balance " />
-        </span>
-      )
-    }
-    console.log(linked)
+    /* This allows creating order greater than balance
+      if (linked.buyAmount.value !== '') {
+        linked.sellAmount.check((value) => (BigNumber(balance).isGreaterThanOrEqualTo(value)),
+          <span>
+            <FormattedMessage id="transaction376" defaultMessage="Amount must be less than your balance " />
+          </span>
+        )
+      }
+    */
 
     return (
       <div styleName="wrapper addOffer">
