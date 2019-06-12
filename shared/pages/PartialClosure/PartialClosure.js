@@ -902,7 +902,7 @@ export default class PartialClosure extends Component {
               {/* <FormattedMessage id="partial221" defaultMessage="Balance: " /> */}
               {/* Math.floor(maxBuyAmount.toNumber() * 1000) / 1000}{' '}{haveCurrency.toUpperCase() */}
               <FormattedMessage id="partial767" defaultMessage="Your balance: " />
-              {BigNumber(balance).dp(5, BigNumber.ROUND_CEIL).toString()}{'  '}{haveCurrency.toUpperCase()}
+              {BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString()}{'  '}{haveCurrency.toUpperCase()}
             </p>
           }
           <div styleName="switchButton">
