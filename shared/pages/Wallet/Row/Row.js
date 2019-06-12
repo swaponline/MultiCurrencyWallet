@@ -385,7 +385,7 @@ export default class Row extends Component {
                 <i className="fas fa-sync-alt" styleName="icon" />
                 <span>
                   {
-                    balanceError ? '?' : BigNumber(balance).dp(5, BigNumber.ROUND_CEIL).toString()
+                    balanceError ? '?' : BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString()
                   }{' '}{currency}
                 </span>
                 { currency === 'BTC' && unconfirmedBalance !== 0 && (
