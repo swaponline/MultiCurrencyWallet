@@ -3462,7 +3462,7 @@
   },
   {
     "id": "PartialFeeValueWarn",
-    "message": "You will have to pay an additional miner fee up to {estimatedFeeValue} {haveCurrency}",
+    "message": "The maximum amount you can sell is {maximumAmount}. Since will have to pay an additional miner fee up to {estimatedFeeValue} {haveCurrency}",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]

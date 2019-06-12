@@ -902,7 +902,7 @@ export default class PartialClosure extends Component {
               {/* <FormattedMessage id="partial221" defaultMessage="Balance: " /> */}
               {/* Math.floor(maxBuyAmount.toNumber() * 1000) / 1000}{' '}{haveCurrency.toUpperCase() */}
               <FormattedMessage id="partial767" defaultMessage="Your balance: " />
-              {balance.toFixed(4)}{'  '}{haveCurrency.toUpperCase()}
+              {BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString()}{'  '}{haveCurrency.toUpperCase()}
             </p>
           }
           <div styleName="switchButton">
@@ -999,10 +999,11 @@ export default class PartialClosure extends Component {
                 <div>
                   <FormattedMessage
                     id="PartialFeeValueWarn"
-                    defaultMessage="You will have to pay an additional miner fee up to {estimatedFeeValue} {haveCurrency}"
+                    defaultMessage="The maximum amount you can sell is {maximumAmount}. Since will have to pay an additional miner fee up to {estimatedFeeValue} {haveCurrency}"
                     values={{
                       haveCurrency: haveCurrency.toUpperCase(),
                       estimatedFeeValue: estimatedFeeValues[haveCurrency],
+                      maximumAmount: BigNumber(balance).minus(estimatedFeeValues[haveCurrency]).toString(),
                     }}
                   />
                   {
