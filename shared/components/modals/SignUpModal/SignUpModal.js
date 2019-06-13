@@ -88,7 +88,7 @@ export default class SignUpModal extends React.Component {
       userAgentRegistration: navigator.userAgent,
     }
     if (whatToSubmit === 'isSubmitedPush' || !isSupportedPush) {
-      firestore.addUser(data)
+      await firestore.addUser(data)
     }
 
     actions.analytics.signUpEvent({ action: 'request' })
@@ -119,11 +119,11 @@ export default class SignUpModal extends React.Component {
 
     this.setState(() => ({ [whatToSubmit]: true }))
 
-    if (!result) {
+    if (!result && !resultFirestore) {
       this.setState(() => ({
         isPushError: !result,
         isSupportedPush: result,
-        [whatToSubmit]: Boolean(result && resultFirestore),
+        [whatToSubmit]: false,
       }))
       return
     }
