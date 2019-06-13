@@ -79,10 +79,10 @@ export default class UserTooltip extends Component {
             const currencyBalance = this.state.allCurrencyies.find(item => item.currency === sellCurrency).balance
             const sellAmountPlusFee = BigNumber(this.state.estimatedFeeValues[sellCurrency.toLowerCase()]).plus(sellAmount)
 
-            if (BigNumber(sellAmountPlusFee).isGreaterThan(currencyBalance)) {
-              this.removeOrder(id, request[0].participant.peer)
-              return console.warn(`Not enought money for the swap, order № ${id} was deleted`)
-            }
+            // if (BigNumber(sellAmountPlusFee).isGreaterThan(currencyBalance)) {
+            //   this.removeOrder(id, request[0].participant.peer)
+            //   return console.warn(`Not enought money for the swap, order № ${id} was deleted`)
+            // }
 
             return (
               mePeer === ownerPeer &&
