@@ -3503,6 +3503,13 @@
     ]
   },
   {
+    "id": "partialAtomicSwapWhatIsIt",
+    "message": "Atomic swap - это технология, которая позволяет обменять одну криптовалюту на другую без использования централизованных посредников.",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
     "id": "partialVideoAndFeaturesTitle",
     "message": "{purplefastest} сервис атомарного обмена",
     "files": [
@@ -3546,7 +3553,7 @@
   },
   {
     "id": "PartialFeeValueWarn",
-    "message": "Обратите внимание: из этой суммы так же вычтется комиссия майнеров до {estimatedFeeValue} {haveCurrency}",
+    "message": "Максимальная сумма доступная для продажи {maximumAmount}. Так как из суммы, которую вы имеете на балансе, вычтется комиссия майнеров до {estimatedFeeValue} {haveCurrency}",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]

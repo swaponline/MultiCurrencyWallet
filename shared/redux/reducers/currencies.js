@@ -69,13 +69,14 @@ const initialState = {
       value: 'bch',
       fullTitle: 'bitcoin cash',
     },
-    {
-      name: 'SWAP',
-      title: 'SWAP',
-      icon: 'swap',
-      value: 'swap',
-      fullTitle: 'swap',
-    },
+    ...(Object.keys(config.erc20)
+      .map(key => ({
+        name: key.toUpperCase(),
+        title: key.toUpperCase(),
+        icon: key,
+        value: key,
+        fullTitle: key,
+      }))),
   ],
   addSelectedItems: [],
   addPartialItems: [],

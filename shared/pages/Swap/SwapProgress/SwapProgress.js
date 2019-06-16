@@ -361,7 +361,7 @@ export default class SwapProgress extends Component {
                 </a>
               </strong>
             )}
-            {flow.btcSwapWithdrawTransactionHash && (
+            {flow.btcSwapWithdrawTransactionHash && swap.buyCurrency === 'BTC' && (
               <strong styleName="transaction">
                 <a
                   href={`${config.link.bitpay}/tx/${flow.btcSwapWithdrawTransactionHash}`}
