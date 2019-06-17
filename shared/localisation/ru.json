@@ -4263,6 +4263,13 @@
     ]
   },
   {
+    "id": "FailControler68",
+    "message": "Ошибка в выполнении контракта токена!{br}{br}Возможно, есть дополнительная комиссия на стороне контракта или ошибка произошла по другой причине",
+    "files": [
+      "shared/pages/Swap/FailControler/FailControler.js"
+    ]
+  },
+  {
     "id": "BtcToEthToken102",
     "message": "Вывод из контракта"
   },
