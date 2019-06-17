@@ -183,6 +183,7 @@ export default class SwapComponent extends PureComponent {
         this.catchWithdrawError()
         this.requestingWithdrawFee()
         this.isBalanceEnough()
+        this.checkFailSwap()
       }, 5000)
     }
   }
@@ -334,6 +335,29 @@ export default class SwapComponent extends PureComponent {
     })
   }
 
+  checkFailSwap = () => {
+    const {
+      swap: {
+        flow: {
+          state: {
+            isFailedTransaction,
+          },
+        },
+      },
+      continueSwap,
+    } = this.state
+
+    if (isFailedTransaction) {
+      this.setState(() => ({
+        continueSwap: false,
+      }))
+    } else {
+      this.setState(() => ({
+        continueSwap: true,
+      }))
+    }
+  }
+
   checkEnoughFee = () => {
     const {
       swap: {
@@ -341,7 +365,6 @@ export default class SwapComponent extends PureComponent {
         flow: {
           state: {
             canCreateEthTransaction,
-            requireWithdrawFee,
           },
         },
       },
