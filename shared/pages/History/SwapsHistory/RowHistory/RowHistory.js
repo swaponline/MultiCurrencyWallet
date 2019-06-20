@@ -41,8 +41,9 @@ export default class RowHistory extends Component {
       } = flow
 
       const isPayed = sellCurrency === 'BTC' ? 4 : 5
+      const isEmptyBalance = sellCurrency === 'BTC' ? scriptBalance === 0 : !isEthContractFunded
 
-      if (isFinished || isRefunded || (step === isPayed && scriptBalance === 0)) {
+      if (isFinished || isRefunded || (step === isPayed && isEmptyBalance)) {
         console.error(`Refund of swap ${id} is not available`)
         return
       }
@@ -57,31 +58,9 @@ export default class RowHistory extends Component {
     }
   }
 
-  componentDidMount() {
-    const {
-      btcScriptValues, ltcScriptValues, bchScriptValues,
-      usdtScriptValues, scriptValues,
-    } = this.props.row
-
-    const values  = btcScriptValues
-      || bchScriptValues
-      || ltcScriptValues
-      || usdtScriptValues
-      || scriptValues
-
-    if (!values) return
-
-    const lockTime = values.lockTime * 1000
-
-    const timeLeft = lockTime - Date.now()
-
-    this.tryRefund(timeLeft)
-  }
-
   closeIncompleted = () => {
     actions.modals.close('IncompletedSwaps')
   }
-
 
   render() {
 
