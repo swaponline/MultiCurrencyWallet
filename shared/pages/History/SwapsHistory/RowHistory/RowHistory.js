@@ -81,6 +81,9 @@ export default class RowHistory extends Component {
       || ltcScriptValues
       || usdtScriptValues
       || scriptValues
+
+    const canBeRefunded = values && balance > 0
+
     const date = Date.now() / 1000
 
     if (!values) {
@@ -130,18 +133,33 @@ export default class RowHistory extends Component {
           { (sellAmount / buyAmount).toFixed(5) }{ ` ${sellCurrency}/${buyCurrency}`}
         </td>
         <td>
-          { isFinished ?
-            <FormattedMessage id="RowHistory94" defaultMessage="Finished" />
-            :
-            (isRefunded && <FormattedMessage id="RowHistory77" defaultMessage="Refunded" /> ||
-              values && !isRefunded && !isFinished && balance > 0 ? (
-                <Timer
-                  lockTime={values.lockTime * 1000}
-                  enabledButton={this.tryRefund}
-                />
-              ) : (
-                !isRefunded && <FormattedMessage id="RowHistory76" defaultMessage="Refund not available" />
-              )
+          { isFinished
+            ? (
+              <FormattedMessage id="RowHistory94" defaultMessage="Finished" />
+            )
+            : (
+              <Fragment>
+                { isRefunded
+                    ? (
+                      <FormattedMessage id="RowHistory77" defaultMessage="Refunded" />
+                    )
+                    : (
+                      <Fragment>
+                        { canBeRefunded
+                            ? (
+                              <Timer
+                                lockTime={values.lockTime * 1000}
+                                enabledButton={this.tryRefund}
+                              />
+                            )
+                            : (
+                              <FormattedMessage id="RowHistory76" defaultMessage="Refund not available" />
+                            )
+                        }
+                      </Fragment>
+                    )
+                }
+              </Fragment>
             )
           }
         </td>
