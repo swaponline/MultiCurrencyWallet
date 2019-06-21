@@ -41,8 +41,9 @@ export default class RowHistory extends Component {
       } = flow
 
       const isPayed = sellCurrency === 'BTC' ? 4 : 5
+      const isEmptyBalance = sellCurrency === 'BTC' ? scriptBalance === 0 : !isEthContractFunded
 
-      if (isFinished || isRefunded || (step === isPayed && scriptBalance === 0)) {
+      if (isFinished || isRefunded || (step === isPayed && isEmptyBalance)) {
         console.error(`Refund of swap ${id} is not available`)
         return
       }
@@ -57,31 +58,9 @@ export default class RowHistory extends Component {
     }
   }
 
-  componentDidMount() {
-    const {
-      btcScriptValues, ltcScriptValues, bchScriptValues,
-      usdtScriptValues, scriptValues,
-    } = this.props.row
-
-    const values  = btcScriptValues
-      || bchScriptValues
-      || ltcScriptValues
-      || usdtScriptValues
-      || scriptValues
-
-    if (!values) return
-
-    const lockTime = values.lockTime * 1000
-
-    const timeLeft = lockTime - Date.now()
-
-    this.tryRefund(timeLeft)
-  }
-
   closeIncompleted = () => {
     actions.modals.close('IncompletedSwaps')
   }
-
 
   render() {
 
@@ -102,6 +81,9 @@ export default class RowHistory extends Component {
       || ltcScriptValues
       || usdtScriptValues
       || scriptValues
+
+    const canBeRefunded = values && balance > 0
+
     const date = Date.now() / 1000
 
     if (!values) {
@@ -151,18 +133,33 @@ export default class RowHistory extends Component {
           { (sellAmount / buyAmount).toFixed(5) }{ ` ${sellCurrency}/${buyCurrency}`}
         </td>
         <td>
-          { isFinished ?
-            <FormattedMessage id="RowHistory94" defaultMessage="Finished" />
-            :
-            (isRefunded && <FormattedMessage id="RowHistory77" defaultMessage="Refunded" /> ||
-              values && !isRefunded && !isFinished && balance > 0 ? (
-                <Timer
-                  lockTime={values.lockTime * 1000}
-                  enabledButton={this.tryRefund}
-                />
-              ) : (
-                !isRefunded && <FormattedMessage id="RowHistory76" defaultMessage="Refund not available" />
-              )
+          { isFinished
+            ? (
+              <FormattedMessage id="RowHistory94" defaultMessage="Finished" />
+            )
+            : (
+              <Fragment>
+                { isRefunded
+                    ? (
+                      <FormattedMessage id="RowHistory77" defaultMessage="Refunded" />
+                    )
+                    : (
+                      <Fragment>
+                        { canBeRefunded
+                            ? (
+                              <Timer
+                                lockTime={values.lockTime * 1000}
+                                enabledButton={this.tryRefund}
+                              />
+                            )
+                            : (
+                              <FormattedMessage id="RowHistory76" defaultMessage="Refund not available" />
+                            )
+                        }
+                      </Fragment>
+                    )
+                }
+              </Fragment>
             )
           }
         </td>

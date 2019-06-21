@@ -17,6 +17,7 @@ import IncompletedSwaps from './IncompletedSwaps/IncompletedSwaps'
 import MobMenu from './MobMenu/MobMenu'
 
 import Confirm from './Confirm/Confirm'
+import ConfirmBeginSwap from './ConfirmBeginSwap/ConfirmBeginSwap'
 
 
 export default {
@@ -38,4 +39,5 @@ export default {
   IncompletedSwaps,
   Confirm,
   MobMenu,
+  ConfirmBeginSwap,
 }

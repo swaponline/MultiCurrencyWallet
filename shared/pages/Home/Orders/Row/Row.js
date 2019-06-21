@@ -123,8 +123,9 @@ export default class Row extends Component {
       },
     })
 
-    actions.modals.open(constants.modals.Confirm, {
-      onAccept: async () => {
+    actions.modals.open(constants.modals.ConfirmBeginSwap, {
+      order: this.props.row,
+      onAccept: async (customWallet) => {
         const check = await this.handleGoTrade(currency)
 
         this.setState({ isFetching: true })
@@ -133,7 +134,12 @@ export default class Row extends Component {
           this.setState(() => ({ isFetching: false }))
         }, 15 * 1000)
 
-        actions.core.sendRequest(orderId, {}, (isAccepted) => {
+        const destination = {}
+        if (customWallet !== null) {
+          destination.address = customWallet
+        }
+
+        actions.core.sendRequest(orderId, destination, (isAccepted) => {
           console.log(`user has ${isAccepted ? 'accepted' : 'declined'} your request`)
 
           if (isAccepted) {

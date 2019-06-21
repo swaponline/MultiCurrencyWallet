@@ -4183,6 +4183,13 @@
     ]
   },
   {
+    "id": "FailControler68",
+    "message": "Error in the execution of the token contract!{br}{br}Perhaps there is an additional commission on the contract side or the error occured for another reason",
+    "files": [
+      "shared/pages/Swap/FailControler/FailControler.js"
+    ]
+  },
+  {
     "id": "BtcToEthToken102",
     "message": "Swapping"
   },
