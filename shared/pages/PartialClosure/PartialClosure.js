@@ -362,14 +362,14 @@ export default class PartialClosure extends Component {
   }
 
   sendRequest = () => {
-    const { getAmount, haveAmount, peer, orderId, customWallet } = this.state
+    const { getAmount, haveAmount, peer, orderId, customWallet, maxAmount, maxBuyAmount } = this.state
 
     if (!String(getAmount) || !peer || !orderId || !String(haveAmount)) {
       return
     }
 
     const newValues = {
-      sellAmount: getAmount,
+      sellAmount: (maxBuyAmount.isEqualTo(haveAmount)) ? maxAmount : getAmount,
     }
 
     const destination = {
@@ -454,7 +454,7 @@ export default class PartialClosure extends Component {
   }
 
   setAmountOnState = (maxAmount, getAmount, buyAmount) => {
-    const { getCurrency } = this.state
+    const { getCurrency, haveAmount } = this.state
     const decimalPlaces = constants.tokenDecimals[getCurrency.toLowerCase()]
 
     this.setState(() => ({
@@ -463,7 +463,7 @@ export default class PartialClosure extends Component {
       maxBuyAmount: buyAmount,
     }))
 
-    return BigNumber(getAmount).isLessThanOrEqualTo(maxAmount)
+    return BigNumber(getAmount).isLessThanOrEqualTo(maxAmount) || BigNumber(haveAmount).isEqualTo(buyAmount)
   }
 
   setAmount = (value) => {
@@ -474,7 +474,12 @@ export default class PartialClosure extends Component {
     const { filteredOrders, haveAmount, exHaveRate, exGetRate } = this.state
 
     if (filteredOrders.length === 0) {
-      this.setNoOfferState()
+      this.setState(() => ({
+        isNonOffers: true,
+        maxAmount: 0,
+        getAmount: 0,
+        maxBuyAmount: BigNumber(0),
+      }))
       return
     }
 
@@ -560,6 +565,7 @@ export default class PartialClosure extends Component {
     if (!checkAmount) {
       this.setNoOfferState()
     }
+
     return true
   }
 
@@ -956,8 +962,12 @@ export default class PartialClosure extends Component {
                 <FormattedMessage id="PartialPriceNoOrdersReduce" defaultMessage="No orders found, try to reduce the amount" />
               </p>
               <p styleName="error" className={isWidget ? 'error' : ''} >
-                <FormattedMessage id="PartialPriceReduceMin" defaultMessage="Maximum available amount: " />
+                <FormattedMessage id="PartialPriceReduceMin" defaultMessage="Maximum available amount for buy: " />
                 {maxAmount}{' '}{getCurrency.toUpperCase()}
+              </p>
+              <p styleName="error" className={isWidget ? 'error' : ''} >
+                <FormattedMessage id="PartialPriceSellMax" defaultMessage="Maximum available amount for sell: " />
+                {maxBuyAmount.toNumber()}{' '}{haveCurrency.toUpperCase()}
               </p>
             </Fragment>
           )}
