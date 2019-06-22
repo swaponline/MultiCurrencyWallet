@@ -148,15 +148,15 @@ export default class SwapComponent extends PureComponent {
 
   componentDidMount() {
     const { swap: { id, flow: { state: { canCreateEthTransaction, requireWithdrawFeeSended, step } } }, continueSwap, deletedOrders } = this.state
-    let { match : { params : { orderId } } } = this.props
+    let { decline, history, match : { params : { orderId } } } = this.props
     if (localStorage.getItem('deletedOrders') !== null) {
 
       if (localStorage.getItem('deletedOrders').includes(id)) {
-        this.props.history.push(localisedUrl(links.exchange))
+        history.push(localisedUrl(links.exchange))
       }
     }
 
-    if (step >= 4 && !this.props.decline.includes(orderId)) {
+    if (step >= 4 && !decline.includes(orderId)) {
       this.saveThisSwap(orderId)
     }
 
@@ -242,11 +242,16 @@ export default class SwapComponent extends PureComponent {
 
   isBalanceEnough = () => {
     const { swap, balance } = this.state
-    if (swap.flow.state.step === 4 && swap.sellCurrency !== 'BTC') {
+    const { isBalanceEnough, step } = swap.flow.state
+    if (step === 4 && swap.sellCurrency !== 'BTC') {
       swap.flow.syncBalance()
     }
 
-    if (!swap.flow.state.isBalanceEnough && swap.flow.state.step === 4) {
+    if(!isBalanceEnough && step === 3 && swap.sellCurrency === 'BTC') {
+      this.setState(() => ({ enoughBalance: false }))
+    }
+
+    if (!isBalanceEnough && step === 4) {
       this.setState(() => ({ enoughBalance: false }))
     } else {
       this.setState(() => ({ enoughBalance: true }))
