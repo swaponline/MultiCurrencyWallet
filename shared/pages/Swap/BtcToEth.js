@@ -176,7 +176,7 @@ export default class BtcToEth extends Component {
               )
             }
           </div>
-          {!enoughBalance && flow.step === 4
+          {!enoughBalance && flow.step === 3
             ? (
               <div styleName="swapDepositWindow">
                 <DepositWindow currencyData={currencyData} swap={swap} flow={flow} tokenItems={tokenItems} />

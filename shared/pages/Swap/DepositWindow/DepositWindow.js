@@ -32,6 +32,9 @@ export default class DepositWindow extends Component {
 
     this.swap = swap
 
+    this.isDepositToContractDirectly =
+      !helpers.ethToken.isEthOrEthToken({ name: swap.sellCurrency.toLowerCase() })
+
     this.state = {
       swap,
       dynamicFee: 0,
@@ -40,33 +43,54 @@ export default class DepositWindow extends Component {
       isBalanceEnough: false,
       isAddressCopied: false,
       isBalanceFetching: false,
-      scriptAddress: flow.scriptAddress,
-      scriptBalance: flow.scriptBalance,
-      balance: this.isDepositToContractDirectly() ? flow.scriptBalance : flow.balance,
-      address: this.isDepositToContractDirectly() ? flow.scriptAddress : currencyData.address,
+      balance: this.isDepositToContractDirectly
+        ? flow.scriptBalance
+        : currencyData.balance,
+      address: this.isDepositToContractDirectly
+        ? flow.scriptAddress
+        : currencyData.address,
       currencyFullName: currencyData.fullName,
       sellAmount: this.swap.sellAmount,
     }
   }
 
   componentDidMount() {
-    const { swap } =  this.props
-    const { sellAmount, scriptBalance, balance } = this.state
+    const { sellAmount, balance } = this.state
 
     let checker
     this.getRequiredAmount()
     this.updateRemainingBalance()
 
-    const availableBalance = this.isDepositToContractDirectly() ? scriptBalance : balance
+    const balanceCheckHandler = () => {
+      const { swap: { flow } } =  this.props
+      const { btcScriptValues } = flow.state
+      const { isBalanceEnough } = this.state
+
+      const utcNow = Math.floor(Date.now() / 1000)
+      const timeLeft = Math.ceil((btcScriptValues.lockTime - utcNow) / 60)
+
+      if (timeLeft <= 0) {
+        flow.stopSwapProcess()
+
+        return true
+      }
+
+      if (isBalanceEnough) {
+        return true
+      }
+
+      this.updateBalance()
+      this.checkThePayment()
+
+      return false
+    }
 
     checker = setInterval(() => {
-      if (BigNumber(availableBalance).isLessThanOrEqualTo(sellAmount)) {
-        this.updateBalance()
-        this.checkThePayment()
-      } else {
+      const needStop = balanceCheckHandler()
+      if (needStop) {
         clearInterval(checker)
       }
-    }, 5000)
+    }, 10000)
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -75,26 +99,22 @@ export default class DepositWindow extends Component {
     }
   }
 
-  isDepositToContractDirectly = () => this.swap.sellCurrency === 'BTC'
-
   updateBalance = async () => {
     const { swap } =  this.props
-    const { sellAmount, scriptBalance, address, scriptAddress } =  this.state
+    const { sellAmount, address } =  this.state
 
-    if (helpers.ethToken.isEthToken({ name: swap.sellCurrency.toLowerCase() })) {
-      const currencyBalance = await actions.token.getBalance(swap.sellCurrency.toLowerCase())
-      this.setState(() => ({ currencyBalance }))
+    const isSellCurrencyEthToken = helpers.ethToken.isEthToken({ name: swap.sellCurrency })
+
+    let actualBalance
+
+    if (isSellCurrencyEthToken) {
+      actualBalance = await actions.token.getBalance(swap.sellCurrency.toLowerCase())
     } else {
-      const currencyBalance = await actions[swap.sellCurrency.toLowerCase()].getBalance()
-      this.setState(() => ({ currencyBalance }))
+      actualBalance = await actions[swap.sellCurrency.toLowerCase()].fetchBalance(address)
     }
-
-    const actualBalance = this.isDepositToContractDirectly() ? scriptBalance : (this.state.currencyBalance || 0)
 
     this.setState(() => ({
       balance: actualBalance,
-      scriptBalance: swap.flow.state.scriptBalance,
-      address: this.isDepositToContractDirectly() ? scriptAddress : address,
     }))
   }
 
@@ -114,7 +134,7 @@ export default class DepositWindow extends Component {
     const { swap } =  this.props
     const { sellAmount } = this.state
 
-    if (!coinsWithDynamicFee.includes(swap.sellCurrency.toLowerCase()) || this.isDepositToContractDirectly()) {
+    if (!coinsWithDynamicFee.includes(swap.sellCurrency.toLowerCase()) || this.isDepositToContractDirectly) {
       this.setState({
         dynamicFee: BigNumber(0),
         requiredAmount: BigNumber(sellAmount).dp(6, BigNumber.ROUND_CEIL),
@@ -134,10 +154,18 @@ export default class DepositWindow extends Component {
   }
 
   checkThePayment = () => {
-    if (this.state.sellAmount <= this.state.balance) {
+    const { swap, sellAmount, balance } = this.state
+
+    if (balance >= sellAmount) {
       this.setState(() => ({
         isBalanceEnough: true,
       }))
+
+      if (this.isDepositToContractDirectly) {
+        swap.flow.skipSyncBalance()
+      } else {
+        swap.flow.syncBalance()
+      }
     }
   }
 

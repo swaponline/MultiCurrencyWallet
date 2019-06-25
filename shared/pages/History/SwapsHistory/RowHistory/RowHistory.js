@@ -36,7 +36,7 @@ export default class RowHistory extends Component {
       const { flow } = actions.core.getSwapById(id)
 
       const {
-        state: { isFinished, isRefunded, step, scriptBalance },
+        state: { isFinished, isRefunded, step, scriptBalance, isEthContractFunded },
         swap: { sellCurrency },
       } = flow
 
@@ -51,7 +51,6 @@ export default class RowHistory extends Component {
       flow.tryRefund()
         .then((result) => {
           console.log('refunded', result)
-          localStorage.setItem(`swap:flow.${id}`, flow.state)
         })
     } catch (err) {
       console.error(`RefundError`, err)
@@ -71,9 +70,9 @@ export default class RowHistory extends Component {
     }
 
     let {
-      buyAmount, buyCurrency, sellAmount, btcScriptValues, balance,
+      buyAmount, buyCurrency, sellAmount, btcScriptValues, scriptBalance,
       ltcScriptValues, bchScriptValues, usdtScriptValues, isRefunded, isMy, sellCurrency,
-      isFinished, id, scriptValues,
+      isFinished, id, scriptValues, isStoppedSwap,
     } = row
 
     const values = btcScriptValues
@@ -82,7 +81,8 @@ export default class RowHistory extends Component {
       || usdtScriptValues
       || scriptValues
 
-    const canBeRefunded = values && balance > 0
+    const canBeRefunded = values && scriptBalance > 0
+    const isDeletedSwap = isFinished || isRefunded || isStoppedSwap
 
     const date = Date.now() / 1000
 
@@ -133,33 +133,19 @@ export default class RowHistory extends Component {
           { (sellAmount / buyAmount).toFixed(5) }{ ` ${sellCurrency}/${buyCurrency}`}
         </td>
         <td>
-          { isFinished
-            ? (
-              <FormattedMessage id="RowHistory94" defaultMessage="Finished" />
-            )
-            : (
-              <Fragment>
-                { isRefunded
-                    ? (
-                      <FormattedMessage id="RowHistory77" defaultMessage="Refunded" />
-                    )
-                    : (
-                      <Fragment>
-                        { canBeRefunded
-                            ? (
-                              <Timer
-                                lockTime={values.lockTime * 1000}
-                                enabledButton={this.tryRefund}
-                              />
-                            )
-                            : (
-                              <FormattedMessage id="RowHistory76" defaultMessage="Refund not available" />
-                            )
-                        }
-                      </Fragment>
-                    )
-                }
-              </Fragment>
+          { isFinished && (<FormattedMessage id="RowHistory94" defaultMessage="Finished" />) }
+          { isRefunded && (<FormattedMessage id="RowHistory77" defaultMessage="Refunded" />) }
+          { isStoppedSwap && (<FormattedMessage id="RowHistory139" defaultMessage="Stopped" />) }
+          { !isDeletedSwap && (canBeRefunded
+              ? (
+                <Timer
+                  lockTime={values.lockTime * 1000}
+                  enabledButton={this.tryRefund}
+                />
+              )
+              : (
+                <FormattedMessage id="RowHistory76" defaultMessage="Refund not available" />
+              )
             )
           }
         </td>
@@ -167,9 +153,16 @@ export default class RowHistory extends Component {
           { lockDateAndTime.split(' ').map((item, key) => <Fragment key={key}>{item}<br /></Fragment>) }
         </td>
         <td>
-          <Link to={`${linkToTheSwap}`} onClick={this.closeIncompleted}>
-            <FormattedMessage id="RowHistory91" defaultMessage="Link to the swap" />
-          </Link>
+          { !isDeletedSwap
+              ? (
+                <Link to={`${linkToTheSwap}`} onClick={this.closeIncompleted}>
+                  <FormattedMessage id="RowHistory91" defaultMessage="Link to the swap" />
+                </Link>
+              )
+              : (
+                <FormattedMessage id="RowHistory164" defaultMessage="Deleted" />
+              )
+          }
         </td>
       </tr>
     )

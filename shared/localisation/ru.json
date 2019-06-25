@@ -702,6 +702,13 @@
     ]
   },
   {
+    "id": "RowHistory164",
+    "message": "Удалено",
+    "files": [
+      "shared/pages/History/SwapsHistory/RowHistory/RowHistory.js"
+    ]
+  },
+  {
     "id": "RowHistory95",
     "message": "Ссылка на обмен"
   },
@@ -2875,6 +2882,13 @@
     ]
   },
   {
+    "id": "RowHistory139",
+    "message": "Остановлено",
+    "files": [
+      "shared/pages/History/SwapsHistory/RowHistory/RowHistory.js"
+    ]
+  },
+  {
     "id": "RowHistory96",
     "message": "Выполняется"
   },
@@ -4335,13 +4349,6 @@
   },
   {
     "id": "swapprogress270",
-    "message": "Попытаться вернуть",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
-  },
-  {
-    "id": "swapprogress377",
     "message": "Попытаться вернуть",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgress.js"
