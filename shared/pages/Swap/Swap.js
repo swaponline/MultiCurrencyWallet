@@ -155,7 +155,7 @@ export default class SwapComponent extends PureComponent {
     if (localStorage.getItem('deletedOrders') !== null) {
 
       if (localStorage.getItem('deletedOrders').includes(id)) {
-        history.push(localisedUrl(links.exchange))
+        this.props.history.push(localisedUrl(links.exchange))
       }
     }
 
