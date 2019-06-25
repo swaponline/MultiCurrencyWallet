@@ -40,7 +40,7 @@ export default class Offer extends React.Component {
   }
 
   handleMoveToOfferEditing = () => {
-    actions.analytics.dataEvent('orderbook-addoffer-click-confirm-button')
+    // actions.analytics.dataEvent('orderbook-addoffer-click-confirm-button')
     this.setState({
       view: 'editOffer',
     })
@@ -51,7 +51,7 @@ export default class Offer extends React.Component {
     const { name } = this.props
 
     const title = view === 'editOffer'
-      ? <FormattedMessage id="Add52" defaultMessage="Add offer" />
+      ? <FormattedMessage id="Add52" defaultMessage="Place an offer" />
       : <FormattedMessage id="Confirm52" defaultMessage="Confirm Offer" />
 
     return (

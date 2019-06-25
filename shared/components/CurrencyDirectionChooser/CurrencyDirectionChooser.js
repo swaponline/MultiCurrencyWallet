@@ -20,11 +20,11 @@ import { FormattedMessage } from 'react-intl'
   ({
     currencies,
     addSelectedItems,
-    user: { ethData, btcData, /* bchData, */ tokensData, eosData, telosData, nimData, usdtData, ltcData },
+    user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, usdtData, ltcData },
   }) => ({
     currencies: currencies.items,
     addSelectedItems: currencies.addSelectedItems[0],
-    items: [ ethData, btcData, eosData, telosData, /* bchData, */ ltcData, usdtData /* nimData */ ],
+    items: [ ethData, btcData, eosData, telosData, bchData, ltcData, usdtData /* nimData */ ],
     tokenItems: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
   })
 )
@@ -54,7 +54,7 @@ export default class CurrencyDirectionChooser extends Component {
       sellCurrency,
     })
 
-    actions.analytics.dataEvent('orderbook-click-createoffer-button')
+    // actions.analytics.dataEvent('orderbook-click-createoffer-button')
   }
 
   chooseProps = () => {

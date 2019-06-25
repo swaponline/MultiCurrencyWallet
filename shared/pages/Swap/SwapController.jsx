@@ -1,6 +1,12 @@
-import React, { Fragment } from 'react'
+import React from 'react'
+
+import { FormattedMessage } from 'react-intl'
+
+import CSSModules from 'react-css-modules'
+import styles from './Swap.scss'
 
 
+@CSSModules(styles)
 class SwapController extends React.PureComponent {
 
   constructor({ swap }) {
@@ -11,12 +17,11 @@ class SwapController extends React.PureComponent {
     this.state = {
       online: true,
     }
-
-    this.swap.events.subscribe('check status', this.checkStatusUser)
-    this.dispatchEvent('check status')
   }
 
   componentDidMount() {
+    this.swap.events.subscribe('check status', this.checkStatusUser)
+    this.dispatchEvent('check status')
     setInterval(() => {
       this.checkStatusUser()
     }, 5000)
@@ -32,6 +37,7 @@ class SwapController extends React.PureComponent {
   }
 
   checkStatusUser = () => {
+    const { online } = this.state
     const status = this.swap.room.getOnlineParticipant()
 
     this.setState(() => ({
@@ -43,15 +49,19 @@ class SwapController extends React.PureComponent {
     const { online } = this.state
 
     return (
-      <Fragment>
+      <div styleName="onlineIndicator">
         {
           online ? (
-            <p> {`online`}</p>
+            <p styleName="online">
+              <FormattedMessage id="SwapController54" defaultMessage="Another participant is online" />
+            </p>
           ) : (
-            <p> {`Offline`}</p>
+            <p styleName="offline">
+              <FormattedMessage id="SwapController60" defaultMessage="Another participant is offline" />
+            </p>
           )
         }
-      </Fragment>
+      </div>
     )
   }
 }

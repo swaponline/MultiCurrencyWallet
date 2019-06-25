@@ -2,6 +2,7 @@ import stringify from 'json-stringify-safe'
 
 
 const toSaveStates = [
+  'rememberedSwaps',
   'user',
   'signUp',
 ]

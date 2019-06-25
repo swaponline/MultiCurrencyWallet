@@ -1,0 +1,21 @@
+.promo {
+  width: 67.3%;
+}
+.promoWrap {
+  position: relative;
+}
+
+@include media-tablet {
+  .promo {
+    // padding: 90px 0;
+  }
+}
+
+@include media-mobile {
+  .promo {
+    width: 100%;
+    max-width: 370px;
+    margin: auto;
+    padding: 0 20px;
+  }
+}

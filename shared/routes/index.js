@@ -16,29 +16,33 @@ import CurrencyWallet   from 'pages/CurrencyWallet/CurrencyWallet'
 
 import config from 'app-config'
 
+import ScrollToTop from '../components/layout/ScrollToTop/ScrollToTop'
+
 
 const routes = (
-  <Switch>
-    <Route path={`${localisePrefix}${links.swap}/:buy-:sell/:orderId`} component={SwapComponent} />
+  <ScrollToTop>
+    <Switch>
+      <Route path={`${localisePrefix}${links.swap}/:buy-:sell/:orderId`} component={SwapComponent} />
 
-    <Route path={`${localisePrefix}/:fullName-wallet`} component={CurrencyWallet} />
+      <Route path={`${localisePrefix}/:fullName-wallet`} component={CurrencyWallet} />
 
-    <Route path={`${localisePrefix}${links.home}:buy-:sell/:orderId`} component={Home} />
-    <Route path={`${localisePrefix}${links.home}:buy-:sell`} component={Home} />
-    <Route path={`${localisePrefix}${links.exchange}/:sell-to-:buy`} component={PartialClosure} />
-    <Route path={`${localisePrefix}${links.exchange}`} component={PartialClosure} />
+      <Route path={`${localisePrefix}${links.home}:buy-:sell/:orderId`} component={Home} />
+      <Route path={`${localisePrefix}${links.home}:buy-:sell`} component={Home} />
+      <Route path={`${localisePrefix}${links.exchange}/:sell-to-:buy`} component={PartialClosure} />
+      <Route path={`${localisePrefix}${links.exchange}`} component={PartialClosure} />
 
-    <Route path={`${localisePrefix}${links.aboutus}`} component={About} />
-    <Route path={`${localisePrefix}${links.history}`} component={History} />
+      <Route path={`${localisePrefix}${links.aboutus}`} component={About} />
+      <Route path={`${localisePrefix}${links.history}`} component={History} />
 
-    <Route exact path={`${localisePrefix}${links.notFound}`} component={NotFound} />
-    <Route exact path={`${localisePrefix}${links.home}`} component={(config && config.isWidget) ? PartialClosure : Wallet} />
-    <Route path={`${localisePrefix}${links.currencyWallet}`} component={Wallet} />
-    <Route path={`${localisePrefix}${links.home}:currency`} component={Currency} />
+      <Route exact path={`${localisePrefix}${links.notFound}`} component={NotFound} />
+      <Route exact path={`${localisePrefix}${links.home}`} component={PartialClosure} />
 
-    <Route component={NotFound} />
-  </Switch>
+      <Route path={`${localisePrefix}${links.currencyWallet}`} component={Wallet} />
+      <Route path={`${localisePrefix}${links.home}:currency`} component={Currency} />
 
+      <Route component={NotFound} />
+    </Switch>
+  </ScrollToTop>
 )
 
 export default routes

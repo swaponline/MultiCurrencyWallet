@@ -1,9 +1,32 @@
 .block {
-  margin-top: 40px;
   cursor: pointer;
 }
 
 .button {
-  padding: 10px 20px;
-  color: #ff1fc5;
+  color: #A9A9A9;
+  text-decoration: underline;
+  position: absolute;
+  left: 50px;
+  top: -29.5px;
+}
+
+.information {
+  position: relative;
+  display: block;
+  top: 20px;
+  left: 260px;
+}
+
+@include media-tablet {
+  .information {
+    left: 25px;
+    font-size: 12px;
+  }
+}
+
+@include media-mobile {
+  .information {
+    left: 30px;
+    font-size: 6px;
+  }
 }
