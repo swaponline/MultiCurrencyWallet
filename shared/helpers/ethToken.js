@@ -5,7 +5,8 @@ import constants from './constants'
 import BigNumber from 'bignumber.js'
 
 
-const isEthToken = ({ name }) => Object.keys(config.erc20).includes(name)
+const isEthToken = ({ name }) => Object.keys(config.erc20).includes(name.toLowerCase())
+const isEthOrEthToken = ({ name }) => Object.keys(config.erc20).concat('eth').includes(name.toLowerCase())
 
 const estimateFeeValue = async ({ method = 'send', speed } = {}) => {
   const gasPrice = await estimateGasPrice({ speed })
@@ -23,4 +24,5 @@ export default {
   estimateFeeValue,
   estimateGasPrice,
   isEthToken,
+  isEthOrEthToken,
 }

@@ -170,7 +170,7 @@ export default class EthToBtc extends Component {
               )
             }
           </div>
-          {!this.props.enoughBalance && flow.step === 4
+          {!enoughBalance && flow.step === 4
             ? (
               <div styleName="swapDepositWindow">
                 <DepositWindow currencyData={currencyData} swap={swap} flow={flow} tokenItems={tokenItems} />

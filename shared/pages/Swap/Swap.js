@@ -53,7 +53,6 @@ export default class SwapComponent extends PureComponent {
     isAddressCopied: false,
     stepToHide: 0,
     swap: null,
-    receiveMessage: false,
     isMy: false,
     hideAll: false,
     ethBalance: null,
@@ -147,8 +146,12 @@ export default class SwapComponent extends PureComponent {
   }
 
   componentDidMount() {
-    const { swap: { id, flow: { state: { canCreateEthTransaction, requireWithdrawFeeSended, step } } }, continueSwap, deletedOrders } = this.state
-    let { match : { params : { orderId } } } = this.props
+    const { swap, continueSwap, deletedOrders } = this.state
+    const { id, flow } = swap
+    const { canCreateEthTransaction, requireWithdrawFeeSended, step } = flow.state
+
+    const { match: { params: { orderId } }, decline } = this.props
+
     if (localStorage.getItem('deletedOrders') !== null) {
 
       if (localStorage.getItem('deletedOrders').includes(id)) {
@@ -156,16 +159,11 @@ export default class SwapComponent extends PureComponent {
       }
     }
 
-    if (step >= 4 && !this.props.decline.includes(orderId)) {
+    if (step >= 4 && !decline.includes(orderId)) {
       this.saveThisSwap(orderId)
     }
 
-    if (this.state.swap !== null) {
-      this.state.swap.room.once('swap was canceled', () => {
-        console.warn(`The Swap ${id} was stopped by the participants`)
-        this.receiveMessage(id)
-      })
-
+    if (swap !== null) {
       setTimeout(() => {
         if (!canCreateEthTransaction && continueSwap && requireWithdrawFeeSended) {
           this.checkEnoughFee()
@@ -174,8 +172,9 @@ export default class SwapComponent extends PureComponent {
 
       const checkingCycle = setInterval(() => {
         const isFinallyFinished = this.checkIsFinished()
+        const isStoppedSwap = this.checkStoppedSwap()
 
-        if (isFinallyFinished) {
+        if (isFinallyFinished || isStoppedSwap) {
           clearInterval(checkingCycle)
           return
         }
@@ -188,11 +187,27 @@ export default class SwapComponent extends PureComponent {
     }
   }
 
+  checkStoppedSwap = () => {
+    const { swap: { id, flow: { state: { isStoppedSwap } } } } = this.state
+
+    if (!isStoppedSwap) {
+      return false
+    }
+
+    this.deleteThisSwap(id)
+
+    this.setState(() => ({
+      hideAll: true,
+    }))
+
+    return true
+  }
+
   checkIsFinished = () => {
     const { swap: { id, flow: { state: { isFinished, step, isRefunded } } } } = this.state
 
     if (isFinished || step > 7 || isRefunded) {
-      this.deleteThisSwapFromStorage(id)
+      this.deleteThisSwap(id)
       return true
     }
 
@@ -203,29 +218,14 @@ export default class SwapComponent extends PureComponent {
     actions.core.rememberOrder(orderId)
   }
 
-  deleteThisSwapFromStorage = (orderId) => {
-    actions.core.forgetOrders(orderId)
-  }
-
   deleteThisSwap = (orderId) => {
     actions.core.saveDeletedOrder(orderId)
     actions.core.forgetOrders(orderId)
+    window.swap = null
   }
 
   cancelSwap = () => {
-    let { match : { params : { orderId } }, history, location: { pathname }, intl: { locale } } = this.props
-    const { swap: { flow: { state: { step } }, sellCurrency }, swap } = this.state
-
     this.state.swap.flow.stopSwapProcess()
-    this.receiveMessage(orderId)
-  }
-
-  receiveMessage = (orderId) => {
-    this.state.swap.flow.tryRefund()
-    this.deleteThisSwap(orderId)
-    this.setState(() => ({
-      hideAll: true,
-    }))
   }
 
   setSaveSwapId = (orderId) => {
@@ -241,12 +241,16 @@ export default class SwapComponent extends PureComponent {
   }
 
   isBalanceEnough = () => {
-    const { swap, balance } = this.state
-    if (swap.flow.state.step === 4 && swap.sellCurrency !== 'BTC') {
-      swap.flow.syncBalance()
-    }
+    const { swap  } = this.state
+    const { flow, sellCurrency } = swap
+    const { step, balance, isBalanceEnough } = flow.state
 
-    if (!swap.flow.state.isBalanceEnough && swap.flow.state.step === 4) {
+    const isSellCurrencyEthOrEthToken = helpers.ethToken.isEthOrEthToken({ name: sellCurrency })
+    const stepForCheckBalance = isSellCurrencyEthOrEthToken
+      ? 4
+      : 3
+
+    if (!isBalanceEnough && step === stepForCheckBalance) {
       this.setState(() => ({ enoughBalance: false }))
     } else {
       this.setState(() => ({ enoughBalance: true }))
@@ -292,7 +296,7 @@ export default class SwapComponent extends PureComponent {
     const { swap, shouldStopCheckSendingOfRequesting, continueSwap } = this.state
 
     if (swap.sellCurrency === 'BTC'
-      && helpers.ethToken.isEthToken({ name: swap.buyCurrency.toLowerCase() })
+      && helpers.ethToken.isEthOrEthToken({ name: swap.buyCurrency.toLowerCase() })
       && !shouldStopCheckSendingOfRequesting) {
       this.setState(() => ({ continueSwap: true }))
     } else {
@@ -306,12 +310,15 @@ export default class SwapComponent extends PureComponent {
   sendRequestToFaucet = () => {
     const { owner, buyCurrency, buyAmount, sellCurrency, sellAmount } = this.state.swap
 
-    if (this.state.requestToFaucetSended) return
-    if (this.state.requestToFaucetError) return
+    const { requestToFaucetSended, requestToFaucetError } = this.state
 
-    this.setState({
+    if (requestToFaucetSended || requestToFaucetError) {
+      return
+    }
+
+    this.setState(() => ({
       requestToFaucetSended: true,
-    })
+    }))
 
     request.post(`${config.api.faucet}`, {
       body: {
@@ -323,15 +330,15 @@ export default class SwapComponent extends PureComponent {
       },
     }).then((rv) => {
       console.log('faucet answered', rv)
-      this.setState({
+      this.setState(() => ({
         requestToFaucetTxID: rv.txid,
-      })
+      }))
     }).catch((error) => {
-      console.log('faucet error')
-      this.setState({
+      console.warn('faucet error:', error)
+      this.setState(() => ({
         requestToFaucetSended: false,
         requestToFaucetError: true,
-      })
+      }))
     })
   }
 
