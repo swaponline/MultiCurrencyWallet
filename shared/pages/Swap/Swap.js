@@ -224,10 +224,6 @@ export default class SwapComponent extends PureComponent {
     window.swap = null
   }
 
-  cancelSwap = () => {
-    this.state.swap.flow.stopSwapProcess()
-  }
-
   setSaveSwapId = (orderId) => {
     let swapsId = JSON.parse(localStorage.getItem('swapId'))
 
@@ -478,7 +474,6 @@ export default class SwapComponent extends PureComponent {
               continueSwap={continueSwap}
               requestToFaucetSended={requestToFaucetSended}
               waitWithdrawOther={waitWithdrawOther}
-              onClickCancelSwap={this.cancelSwap}
               locale={locale}
               wallets={this.wallets}
             >

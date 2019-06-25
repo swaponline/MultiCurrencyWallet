@@ -3979,7 +3979,7 @@
   },
   {
     "id": "deposit165",
-    "message": "To continue the swap copy this address and top it up with {missingBalance}  ",
+    "message": "To continue the swap copy this address and top it up with {missingBalance}",
     "files": [
       "shared/pages/Swap/DepositWindow/DepositWindow.js"
     ]

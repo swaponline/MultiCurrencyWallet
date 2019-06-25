@@ -43,12 +43,8 @@ export default class DepositWindow extends Component {
       isBalanceEnough: false,
       isAddressCopied: false,
       isBalanceFetching: false,
-      balance: this.isDepositToContractDirectly
-        ? flow.scriptBalance
-        : currencyData.balance,
-      address: this.isDepositToContractDirectly
-        ? flow.scriptAddress
-        : currencyData.address,
+      balance: currencyData.balance - (currencyData.unconfirmedBalance || 0),
+      address: currencyData.address,
       currencyFullName: currencyData.fullName,
       sellAmount: this.swap.sellAmount,
     }
@@ -85,12 +81,14 @@ export default class DepositWindow extends Component {
       return false
     }
 
+    balanceCheckHandler()
+
     checker = setInterval(() => {
       const needStop = balanceCheckHandler()
       if (needStop) {
         clearInterval(checker)
       }
-    }, 10000)
+    }, 5000)
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -110,7 +108,9 @@ export default class DepositWindow extends Component {
     if (isSellCurrencyEthToken) {
       actualBalance = await actions.token.getBalance(swap.sellCurrency.toLowerCase())
     } else {
-      actualBalance = await actions[swap.sellCurrency.toLowerCase()].fetchBalance(address)
+      const unspents = await actions[swap.sellCurrency.toLowerCase()].fetchUnspents(address)
+      const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
+      actualBalance = BigNumber(totalUnspent).dividedBy(1e8)
     }
 
     this.setState(() => ({
@@ -122,11 +122,10 @@ export default class DepositWindow extends Component {
     const { swap } = this.props
     const { sellAmount, balance, dynamicFee } = this.state
 
-    const remainingBalance = new BigNumber(sellAmount).minus(balance).plus(dynamicFee).dp(6, BigNumber.ROUND_CEIL)
+    const remainingBalance = new BigNumber(sellAmount).minus(balance).plus(dynamicFee).dp(6, BigNumber.ROUND_UP)
 
     this.setState(() => ({
       remainingBalance,
-      dynamicFee,
     }))
   }
 
@@ -134,43 +133,47 @@ export default class DepositWindow extends Component {
     const { swap } =  this.props
     const { sellAmount } = this.state
 
-    if (!coinsWithDynamicFee.includes(swap.sellCurrency.toLowerCase()) || this.isDepositToContractDirectly) {
-      this.setState({
-        dynamicFee: BigNumber(0),
-        requiredAmount: BigNumber(sellAmount).dp(6, BigNumber.ROUND_CEIL),
-      })
-    } else {
-      const dynamicFee = await helpers[swap.sellCurrency.toLowerCase()].estimateFeeValue({ method: 'swap', fixed: true })
+    const isSellCurrencyEthToken = helpers.ethToken.isEthToken({ name: swap.sellCurrency })
+    const currency = this.isDepositToContractDirectly
+      ? swap.sellCurrency.toLowerCase()
+      : 'eth'
 
-      const requiredAmount = BigNumber(sellAmount).plus(dynamicFee).dp(6, BigNumber.ROUND_CEIL)
+    let dynamicFee
+
+    if (coinsWithDynamicFee.includes(currency)) {
+      if (isSellCurrencyEthToken) {
+        dynamicFee = await helpers.ethToken.estimateFeeValue({ method: 'swap', fixed: true })
+      } else {
+        dynamicFee = await helpers[currency].estimateFeeValue({ method: 'swap', fixed: true })
+      }
 
       this.setState(() => ({
         dynamicFee,
-        requiredAmount,
       }))
     }
+
+    const requiredAmount = BigNumber(sellAmount).plus(dynamicFee).dp(6, BigNumber.ROUND_CEIL)
+
+    this.setState(() => ({
+      requiredAmount,
+    }))
 
     this.updateRemainingBalance()
   }
 
   checkThePayment = () => {
-    const { swap, sellAmount, balance } = this.state
+    const { swap, dynamicFee, sellAmount, balance } = this.state
 
-    if (balance >= sellAmount) {
+    if (sellAmount.plus(dynamicFee).isLessThanOrEqualTo(balance)) {
       this.setState(() => ({
         isBalanceEnough: true,
       }))
 
-      if (this.isDepositToContractDirectly) {
-        swap.flow.skipSyncBalance()
-      } else {
-        swap.flow.syncBalance()
-      }
+      swap.flow.syncBalance()
     }
   }
 
   onCopyAddress = (e) => {
-    // e.preventDefault()
     this.setState({
       isPressCtrl: true,
     })
@@ -230,34 +233,35 @@ export default class DepositWindow extends Component {
     const isWidgetBuild = config && config.isWidget
 
     const DontHaveEnoughtFoundsValues = {
-      missingBalance:
-  <div>
-    {remainingBalance > 0 ?
-      <strong>{`${remainingBalance}`} {swap.sellCurrency}{'  '}</strong>
-      :
-      <span styleName="loaderHolder">
-        <InlineLoader />
-      </span>
-    }
-    <Tooltip id="dep170">
-      <div>
-        {/* eslint-disable */}
-        <FormattedMessage
-          id="deposit177"
-          defaultMessage="Do not top up the contract with the greater amount than recommended. The remaining balance will be send to the counter party. You can send {tokenName} from a wallet of any exchange"
-          values={{
-            amount: `${swap.sellAmount}`,
-            tokenName: swap.sellCurrency,
-            br: <br />,
-          }}
-        />
-        {/* eslint-enable */}
-        {/* <p>
-          <FormattedMessage id="deposit181" defaultMessage="You can send {currency} from a wallet of any exchange" values={{ currency: `${swap.buyCurrency}` }} />
-        </p> */}
-      </div>
-    </Tooltip>
-  </div>,
+      missingBalance: (
+        <div>
+          {remainingBalance > 0 ?
+            <strong>{`${remainingBalance}`} {swap.sellCurrency}{'  '}</strong>
+            :
+            <span styleName="loaderHolder">
+              <InlineLoader />
+            </span>
+          }
+          <Tooltip id="dep170">
+            <div>
+              {/* eslint-disable */}
+              <FormattedMessage
+                id="deposit177"
+                defaultMessage="Do not top up the contract with the greater amount than recommended. The remaining balance will be send to the counter party. You can send {tokenName} from a wallet of any exchange"
+                values={{
+                  amount: `${swap.sellAmount}`,
+                  tokenName: swap.sellCurrency,
+                  br: <br />,
+                }}
+              />
+              {/* eslint-enable */}
+              {/* <p>
+                <FormattedMessage id="deposit181" defaultMessage="You can send {currency} from a wallet of any exchange" values={{ currency: `${swap.buyCurrency}` }} />
+              </p> */}
+            </div>
+          </Tooltip>
+        </div>
+      ),
       amount: `${swap.sellAmount}`,
       tokenName: swap.sellCurrency,
       br: <br />,
@@ -282,7 +286,7 @@ export default class DepositWindow extends Component {
               ) : (
                 <FormattedMessage
                   id="deposit165"
-                  defaultMessage="You don't have enought funds to continue the swap. Copy the address below and top it up with the recommended amount of {missingBalance} "
+                  defaultMessage="To continue the swap copy this address and top it up with {missingBalance}"
                   values={DontHaveEnoughtFoundsValues}
                 />
               )}

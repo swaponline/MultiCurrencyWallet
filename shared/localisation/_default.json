@@ -3956,7 +3956,7 @@
   },
   {
     "id": "deposit165",
-    "message": "You don't have enought funds to continue the swap. Copy this address and top it up with {missingBalance}  ",
+    "message": "To continue the swap copy this address and top it up with {missingBalance}",
     "files": [
       "shared/pages/Swap/DepositWindow/DepositWindow.js"
     ]
