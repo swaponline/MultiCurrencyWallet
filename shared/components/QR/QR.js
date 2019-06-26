@@ -19,12 +19,9 @@ export default class QR extends PureComponent {
   render() {
     const { network, address, size } = this.props
 
-    const addressHasNetwork = /:/.test(address)
-    const networkValue = addressHasNetwork ? '' : `${network}:`
-
     return (
       <img
-        src={`https://chart.googleapis.com/chart?chs=${size}x${size}&cht=qr&chl=${networkValue}${address}`}
+        src={`https://chart.googleapis.com/chart?chs=${size}x${size}&cht=qr&chl=${network}:${address}`}
         alt={`${network}: ${address}`}
       />
     )

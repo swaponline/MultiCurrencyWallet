@@ -19,7 +19,7 @@ import { withRouter } from 'react-router'
 const title = defineMessages({
   downloadModal: {
     id: 'down97',
-    defaultMessage: 'Your private keys!',
+    defaultMessage: 'We don`t store your private keys and will not be able to restore them!',
   },
 })
 
@@ -27,9 +27,9 @@ const title = defineMessages({
 @withRouter
 @connect(
   ({
-    user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, usdtData, ltcData },
+    user: { ethData, btcData, /* bchData, */ tokensData, eosData, telosData, nimData, usdtData, ltcData },
   }) => ({
-    items: [ ethData, btcData, eosData, telosData, bchData, ltcData, usdtData /* nimData */ ],
+    items: [ ethData, btcData, eosData, telosData, /* bchData, */ ltcData, usdtData /* nimData */ ],
   })
 )
 @cssModules(styles)
@@ -54,10 +54,6 @@ export default class DownloadModal extends React.Component {
         })
       }, 15 * 1000)
     })
-  }
-
-  handleDownloadTxt = () => {
-    actions.user.downloadPrivateKeys()
   }
 
   checkLang = () => {
@@ -95,13 +91,7 @@ export default class DownloadModal extends React.Component {
             {' '}
           </a>
 
-          <p>
-            {
-              `${item.currency}` === 'EOS' || `${item.currency}` === 'TLOS'
-                ? item.activePrivateKey
-                : item.privateKey
-            }
-          </p>
+          <p>{item.privateKey}</p>
         </Fragment>
       ))
     )
@@ -109,30 +99,16 @@ export default class DownloadModal extends React.Component {
     return (
       <Modal name={name} title={intl.formatMessage(title.downloadModal)}>
         <div styleName="subTitle">
-          <FormattedMessage
-            id="down57"
-            defaultMessage="It seems like you're trying to save your private keys. Just copy this keys and paste into notepad textarea. Also you can download it as a .txt file."
-          />
+          <FormattedMessage  id="down57" defaultMessage="It seems like you're using an IPhone or an IPad. Just copy this keys and paste into notepad textarea." />
         </div>
-        <div styleName="buttonsContainer">
-          <CopyToClipboard text={textToCopy} onCopy={this.handleCopyText}>
-            <Button styleName="button" brand disabled={isTextCopied}>
-              { isTextCopied ?
-                <FormattedMessage id="down64" defaultMessage="Address copied to clipboard" /> :
-                <FormattedMessage id="down65" defaultMessage="Copy to clipboard" />
-              }
-            </Button>
-          </CopyToClipboard>
-          {
-            !(/iPad|iPhone|iPod/.test(navigator.userAgent)) && (
-              <Fragment>
-                <Button onClick={this.handleDownloadTxt} styleName="button" brand >
-                  <FormattedMessage id="downFile2" defaultMessage="Download txt file" />
-                </Button>
-              </Fragment>
-            )
-          }
-        </div>
+        <CopyToClipboard text={textToCopy} onCopy={this.handleCopyText}>
+          <Button styleName="button" brand disabled={isTextCopied}>
+            { isTextCopied ?
+              <FormattedMessage id="down64" defaultMessage="Address copied to clipboard" /> :
+              <FormattedMessage id="down65" defaultMessage="Copy to clipboard" />
+            }
+          </Button>
+        </CopyToClipboard>
         <div styleName="indent">
           <Account />
         </div>

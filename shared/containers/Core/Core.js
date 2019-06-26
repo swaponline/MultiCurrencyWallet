@@ -43,6 +43,7 @@ export default class Core extends Component {
       try {
         const { ipfs } = this.props
 
+        console.log('ipfs', ipfs)
         if (ipfs.isOnline) return
 
         if (!SwapApp.shared().services.room.connection) {
@@ -54,24 +55,20 @@ export default class Core extends Component {
 
         this.updateOrders()
 
-        actions.core.initPartialOrders()
-
-        if (actions.core.hasHiddenOrders()) {
-          actions.core.showMyOrders()
-        }
 
         SwapApp.shared().services.room.connection
           .on('peer joined', actions.ipfs.userJoined)
           .on('peer left', actions.ipfs.userLeft)
 
         clearInterval(ipfsLoadingInterval)
+        console.log('ipfs loaded')
 
         actions.ipfs.set({
           isOnline,
           peer,
         })
-      } catch (error) {
-        console.warn('IPFS setup:', error)
+      } catch (err) {
+        console.error('IPFS setup error', err)
       }
     }
 

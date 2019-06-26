@@ -13,7 +13,6 @@ import ShareImg from './images/share-alt-solid.svg'
 import Coins from 'components/Coins/Coins'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl, locale } from 'helpers/locale'
-import BigNumber from 'bignumber.js'
 
 
 @withRouter
@@ -61,8 +60,6 @@ export default class RowFeeds extends Component {
       declineRequest, acceptRequest, removeOrder, intl: { locale },
     } = this.props
 
-    const rate = exchangeRate ? BigNumber(exchangeRate) : BigNumber(buyAmount).div(sellAmount)
-
     return (
       <tr>
         <td>
@@ -70,8 +67,7 @@ export default class RowFeeds extends Component {
         </td>
         <td>{`${buyAmount.toFixed(5)} ${buyCurrency}`}</td>
         <td>{`${sellAmount.toFixed(5)} ${sellCurrency}`}</td>
-        <td>{`${rate.toFixed(5)} ${buyCurrency}/${sellCurrency}`}</td>
-
+        <td>{`${(exchangeRate || (buyAmount / sellAmount)).toFixed(5)} ${buyCurrency}/${sellCurrency}`}</td>
         <CopyToClipboard
           onCopy={this.handleCopyLink}
           text={this.checkCopyText()}

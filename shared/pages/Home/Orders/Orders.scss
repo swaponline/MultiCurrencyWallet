@@ -15,9 +15,6 @@
   margin-left: 60%;
   margin-top: -30px;
   justify-content: space-around;
-  button {
-    font-size: 14px;
-  }
 }
 
 .buttonRowWidget {
@@ -27,7 +24,7 @@
 
 .button {
   font-size: 14px;
-  width: 135px;
+  width: 140px;
   line-height: 28px;
   height: 100%;
   padding: 5px 5px;
@@ -43,7 +40,15 @@
   height: 120px;
   position: relative;
 }
-
+// .for {
+//   position: absolute;
+//   text-transform: uppercase;
+//   left: 15px;
+//   bottom: 21px;
+//   text-transform: uppercase;
+//   font-weight: bold;
+//   font-size: 13px;
+// }
 .price {
   position: absolute;
   right: 10px;
@@ -51,11 +56,17 @@
   text-transform: uppercase;
   font-size: 13px;
 }
-
+// .sell {
+//   position: absolute;
+//   bottom: 33px;
+//   left: 15px;
+//   text-transform: uppercase;
+//   font-weight: bold;
+//   font-size: 13px;
+// }
 .have, .haveValue, .get, .getValue {
   color: #000;
 }
-
 .btn {
   position: absolute;
   background: #8400f0;
@@ -82,22 +93,19 @@
   justify-content: space-between;
 }
 
-@include media-min320-max800 {
+@include media-tablet-landscape-and-lower {
   .closeButton {
     width: 40px;
     height: 40px;
     opacity: 0.7;
-    transform: scale(0.6) translate(10px, -3px);
-    margin-top: -7px;
-    margin-right: 0px;
-    margin-left: 6px;
+    transform: scale(0.7) translate(10px, -3px);
     div {
       overflow: visible;
     }
   }
 }
 
-@include media-min320-max800 {
+@media all and (min-width: 320px) and (max-width:800px) {
   .buttonRow,
   .buttonRowMobile {
     margin: 0;

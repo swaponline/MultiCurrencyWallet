@@ -7,54 +7,41 @@ import styles from './Loader.scss'
 import { tips } from 'helpers'
 import { FormattedMessage } from 'react-intl'
 
-import config from 'app-config'
-
-
 const isFirefox = navigator.userAgent.indexOf('Firefox') !== -1
-const isWidget = config && config.isWidget
 
-const Loader = ({ overlayClassName, className, data, showTips, showMyOwnTip }) => (
-  <div styleName="Firefox overlay" className={overlayClassName}>
-    <div>
-      <div styleName="loader" className={className}>
-        <div styleName="loader1" />
-        <div styleName="loader2" />
-        <div styleName="loader3" />
-      </div>
-      {
-        data && data.txId && (
-          <p styleName="text">
-            <FormattedMessage id="Loader21" defaultMessage="Please wait, it takes from 3 to 5 minutes to complete the transaction." />
-          </p>
-        )
-      }
-      {
-        data && data.txId && (
-          <a
-            href={data.txId}
-            styleName="link"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {data.txId}
-          </a>
-        )
-      }
-      {
-        (showTips && !isWidget && !Boolean(showMyOwnTip)) && (
-          <div styleName="tips">
-            {tips('loader')}
-          </div>
-        )
-      }
-      {
-        (!isWidget && Boolean(showMyOwnTip)) && (
-          <div styleName="tips">
-            {showMyOwnTip}
-          </div>
-        )
-      }
+const Loader = ({ overlayClassName, className, data, showTips }) => (
+  <div styleName={`${isFirefox ? 'Firefox ' : ''}overlay`} className={overlayClassName}>
+    <div styleName="loader center" className={className}>
+      <div styleName="loader1" />
+      <div styleName="loader2" />
+      <div styleName="loader3" />
     </div>
+    {
+      data && data.txId && (
+        <p styleName="text">
+          <FormattedMessage id="Loader21"  defaultMessage="Please wait, it takes from 3 to 5 minutes to complete the transaction." />
+        </p>
+      )
+    }
+    {
+      data && data.txId && (
+        <a
+          href={data.txId}
+          styleName="link"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {data.txId}
+        </a>
+      )
+    }
+    {
+      showTips && (
+        <div styleName="tips">
+          {tips('loader')}
+        </div>
+      )
+    }
   </div>
 )
 

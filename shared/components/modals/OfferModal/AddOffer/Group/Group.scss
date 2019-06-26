@@ -1,11 +1,11 @@
 .groupField {
   width: 100%;
   display: inline-flex;
-  height: 68px;
+  height: 60px;
   margin-bottom: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  box-shadow: rgba(#000, 0.08) 0 3px 9px 0;
+  border-radius: 6px;
   text-align: center;
-  border-radius: 3px;
 }
 
 .inputRoot {
@@ -22,14 +22,14 @@ input:disabled {
   background-color:#eee;
 }
 
-@include media-mobile {
+@include media-mobile { 
   .groupField {
     width: calc(100vw - 35px);
     display: flex;
     justify-content: space-between;
   }
   .groupField:first-child {
-    margin-bottom: 50px;
+    margin-bottom: 75px;
   }
   .inputRoot {
     text-align: left;

@@ -21,10 +21,7 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import ReactTooltip from 'react-tooltip'
 import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
 import { localisedUrl } from 'helpers/locale'
-import config from 'app-config'
 
-
-const isWidgetBuild = config && config.isWidget
 
 const titles = [
   <FormattedMessage id="currencyWallet27"  defaultMessage="Coin" />,
@@ -33,12 +30,11 @@ const titles = [
   <FormattedMessage id="currencyWallet30"  defaultMessage="Amount" />,
 ]
 
-@connect(({ core, user,  history: { transactions, swapHistory }, history,
-  user: { ethData, btcData, bchData, ltcData, tokensData, eosData, nimData, usdtData, telosData } }) => ({
-  items: [ ethData, btcData, bchData, eosData, usdtData, ltcData, telosData, ...Object.keys(tokensData).map(k => (tokensData[k])) /* nimData */ ],
-  tokens: [...Object.keys(tokensData).map(k => (tokensData[k]))],
+@connect(({ core, user,  history: { transactions, swapHistory },
+  user: { ethData, btcData, ltcData, tokensData, eosData, nimData, usdtData, telosData } }) => ({
+  items: [ ethData, btcData, eosData, usdtData, ltcData, telosData, ...Object.keys(tokensData).map(k => (tokensData[k])) /* nimData */ ],
   user,
-  historyTx: history,
+
   hiddenCoinsList: core.hiddenCoinsList,
   txHistory: transactions,
   swapHistory,
@@ -62,9 +58,8 @@ export default class CurrencyWallet extends Component {
     }
   }
 
-  static getDerivedStateFromProps({ match: { params: { fullName } }, intl: { locale }, items, history, tokens }) {
+  static getDerivedStateFromProps({ match: { params: { fullName } }, intl: { locale }, items, history }) {
     const item = items.map(item => item.fullName.toLowerCase())
-    const token = tokens.map(item => item.fullName).includes(fullName.toUpperCase())
 
     if (item.includes(fullName.toLowerCase())) {
     const itemCurrency = items.filter(item => item.fullName.toLowerCase() === fullName.toLowerCase())[0]
@@ -78,7 +73,6 @@ export default class CurrencyWallet extends Component {
       } = itemCurrency
 
       return {
-        token,
         currency,
         address,
         contractAddress,
@@ -91,15 +85,11 @@ export default class CurrencyWallet extends Component {
   }
 
   componentDidMount() {
-    const { currency, token } = this.state
+    const { currency } = this.state
 
     if (currency) {
-      // actions.analytics.dataEvent(`open-page-${currency.toLowerCase()}-wallet`)
+      actions.analytics.dataEvent(`open-page-${currency.toLowerCase()}-wallet`)
     }
-    if (token) {
-      actions.token.getBalance(currency.toLowerCase())
-    }
-
     actions.user.setTransactions()
     actions.core.getSwapHistory()
   }
@@ -124,7 +114,7 @@ export default class CurrencyWallet extends Component {
       isBalanceEmpty,
     } = this.state
 
-    // actions.analytics.dataEvent(`balances-withdraw-${currency.toLowerCase()}`)
+    actions.analytics.dataEvent(`balances-withdraw-${currency.toLowerCase()}`)
     actions.modals.open(constants.modals.Withdraw, {
       currency,
       address,
@@ -136,22 +126,16 @@ export default class CurrencyWallet extends Component {
 
   handleGoTrade = (currency) => {
     const { intl: { locale } } = this.props
-    const whatDoUserProbablyWantToBuy = currency.toLowerCase()
-
-    this.props.history.push(localisedUrl(locale, `${links.exchange}/${currency.toLowerCase()}-to-${whatDoUserProbablyWantToBuy}`))
+    this.props.history.push(localisedUrl(locale, `/${currency.toLowerCase()}`))
   }
 
   handleEosBuyAccount = async () => {
     actions.modals.open(constants.modals.EosBuyAccount)
   }
 
-  rowRender = (row) => (
-    <Row key={row.hash} {...row} />
-  )
-
   render() {
 
-    let { swapHistory, txHistory, location, match:{ params: { fullName } },  intl, hiddenCoinsList } = this.props
+    let { swapHistory, txHistory, location, match:{ params: { fullName } },  intl } = this.props
     const {
       currency,
       address,
@@ -162,7 +146,7 @@ export default class CurrencyWallet extends Component {
     } = this.state
 
     txHistory = txHistory
-      .filter(tx => tx.type.toLowerCase() === currency.toLowerCase())
+      .filter(tx => tx.type === currency.toLowerCase())
 
     swapHistory = Object.keys(swapHistory)
       .map(key => swapHistory[key])
@@ -170,35 +154,18 @@ export default class CurrencyWallet extends Component {
 
     const seoPage = getSeoPage(location.pathname)
     const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === 'true'
-
-    const titleSwapOnline = defineMessages({
+    const title = defineMessages({
       metaTitle: {
-        id: 'CurrencyWalletTitle',
-        defaultMessage: 'Swap.Online - {fullName} ({currency}) Web Wallet with Atomic Swap.',
+        id: 'CurrencyWallet148',
+        defaultMessage: 'Swap.Online - ${fullName} (${currency}) Web Wallet with Atomic Swap.',
       },
     })
-    const titleWidgetBuild = defineMessages({
-      metaTitle: {
-        id: 'CurrencyWalletWidgetBuildTitle',
-        defaultMessage: '{fullName} ({currency}) Web Wallet with Atomic Swap.',
-      },
-    })
-    const title = (isWidgetBuild) ? titleWidgetBuild : titleSwapOnline
-
     const description = defineMessages({
       metaDescription: {
         id: 'CurrencyWallet154',
         defaultMessage: 'Atomic Swap Wallet allows you to manage and securely exchange ${fullName} (${currency}) with 0% fees. Based on Multi-Sig and Atomic Swap technologies.',
       },
     })
-
-    if (hiddenCoinsList.includes(currency)) {
-      actions.core.markCoinAsVisible(currency)
-    }
-
-    const isBlockedCoin = config.noExchangeCoins
-      .map(item => item.toLowerCase())
-      .includes(currency.toLowerCase())
 
     return (
       <div className="root">
@@ -210,8 +177,14 @@ export default class CurrencyWallet extends Component {
           styleName="title"
           subTitle={!!seoPage
             ? seoPage.h1
-            : intl.formatMessage(title.metaTitle, { fullName, currency  })
-          }
+            : <FormattedMessage
+              id="CurrencyWallet141"
+              defaultMessage={`Swap.Online - {fullName}({currency}) Web Wallet with Atomic Swap.`}
+              values={{
+                fullName:`${fullName}`,
+                currency: `${currency}`,
+              }}
+            />}
         />
         <h3 styleName="subtitle">
           <FormattedMessage
@@ -249,19 +222,15 @@ export default class CurrencyWallet extends Component {
           >
             <FormattedMessage id="CurrencyWallet100" defaultMessage="Send" />
           </CurrencyButton>
-          {
-            !isBlockedCoin && (
-              <Button gray onClick={() => this.handleGoTrade(currency)}>
-                <FormattedMessage id="CurrencyWallet104" defaultMessage="Exchange" />
-              </Button>
-            )
-          }
+          <Button gray onClick={() => this.handleGoTrade(currency)}>
+            <FormattedMessage id="CurrencyWallet104" defaultMessage="Exchange" />
+          </Button>
         </div>
         { swapHistory.length > 0 && <SwapsHistory orders={swapHistory.filter(item => item.step >= 4)} /> }
         <h2 style={{ marginTop: '20px' }} >
           <FormattedMessage id="CurrencyWallet110" defaultMessage="History your transactions" />
         </h2>
-        {txHistory && (<Table titles={titles} rows={txHistory} styleName="table" rowRender={this.rowRender} />)}
+        {txHistory && (<Table titles={titles} rows={txHistory}styleName="table" rowRender={(row) => (<Row key={row.hash} {...row} />)} />)}
         {
           seoPage && seoPage.footer && <div>{seoPage.footer}</div>
         }

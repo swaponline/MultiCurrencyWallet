@@ -49,7 +49,7 @@ export default class LtcToBtc extends Component {
       9: 'end',
     }
 
-    // actions.analytics.swapEvent(stepNumbers[values.step], 'LTC-BTC')
+    actions.analytics.swapEvent(stepNumbers[values.step], 'LTC-BTC')
 
     this.setState({
       flow: values,

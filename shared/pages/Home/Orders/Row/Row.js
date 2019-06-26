@@ -9,9 +9,8 @@ import { isMobile } from 'react-device-detect'
 import cssModules from 'react-css-modules'
 import styles from './Row.scss'
 
-import helpers, { links, constants } from 'helpers'
+import { links, constants } from 'helpers'
 import { Link, Redirect } from 'react-router-dom'
-import SwapApp from 'swap.app'
 
 import Avatar from 'components/Avatar/Avatar'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
@@ -20,9 +19,8 @@ import { Button, RemoveButton } from 'components/controls'
 import Pair from '../Pair'
 import PAIR_TYPES from 'helpers/constants/PAIR_TYPES'
 import RequestButton from '../RequestButton/RequestButton'
-import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
-import { BigNumber } from 'bignumber.js'
 
 
 @injectIntl
@@ -51,7 +49,6 @@ export default class Row extends Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.renderContent)
-    actions.modals.close(constants.modals.Confirm)
   }
 
   componentWillMount() {
@@ -71,104 +68,38 @@ export default class Row extends Component {
     })
   }
 
-  сheckDeclineOrders = (orderId, currency, checkCurrency) => {
-    const { intl: { locale }, decline } = this.props
-
-    if (decline.length === 0) {
-      this.sendRequest(orderId, currency)
-    } else {
-      const getDeclinedExistedSwapIndex = helpers.handleGoTrade.getDeclinedExistedSwapIndex({ currency, decline })
-      if (getDeclinedExistedSwapIndex !== false) {
-        this.handleDeclineOrdersModalOpen(getDeclinedExistedSwapIndex)
-      } else {
-        this.sendRequest(orderId, currency)
-      }
-    }
-  }
-
-  handleDeclineOrdersModalOpen = (indexOfDecline) => {
-    const orders = SwapApp.shared().services.orders.items
-    const declineSwap = actions.core.getSwapById(this.props.decline[indexOfDecline])
-
-    if (declineSwap !== undefined) {
-      actions.modals.open(constants.modals.DeclineOrdersModal, {
-        declineSwap,
-      })
-    }
-  }
-
   handleGoTrade = async (currency) => {
     const balance = await actions.eth.getBalance()
     return (balance >= 0.005 || currency.toLowerCase() === 'eos')
   }
 
-  sendRequest = (orderId, currency) => {
-    const { row: { buyAmount, sellAmount, buyCurrency, sellCurrency }, intl } = this.props
+  removeOrder = (orderId) => {
+    if (confirm('Are your sure ?')) {
+      actions.core.removeOrder(orderId)
+      actions.core.updateCore()
+    }
+  }
 
-    const pair = Pair.fromOrder(this.props.row)
-    const { price, amount, total, main, base, type } = pair
+  sendRequest = async (orderId, currency) => {
+    const check = await this.handleGoTrade(currency)
 
-    const sell = new BigNumber(sellAmount).dp(6, BigNumber.ROUND_CEIL)
-    const buy = new BigNumber(buyAmount).dp(6, BigNumber.ROUND_CEIL)
-    const exchangeRates = new BigNumber(price).dp(6, BigNumber.ROUND_CEIL)
+    this.setState({ isFetching: true })
 
-    const messages = defineMessages({
-      sell: {
-        id: 'ordersRow97',
-        defaultMessage: 'sell',
-      },
-      buy: {
-        id: 'ordersRow101',
-        defaultMessage: 'buy',
-      },
+    setTimeout(() => {
+      this.setState(() => ({ isFetching: false }))
+    }, 15 * 1000)
+
+    actions.core.sendRequest(orderId, {}, (isAccepted) => {
+      console.log(`user has ${isAccepted ? 'accepted' : 'declined'} your request`)
+
+      if (isAccepted) {
+        this.setState({ redirect: true, isFetching: false })
+      }
+      else {
+        this.setState({ isFetching: false })
+      }
     })
-
-    actions.modals.open(constants.modals.ConfirmBeginSwap, {
-      order: this.props.row,
-      onAccept: async (customWallet) => {
-        const check = await this.handleGoTrade(currency)
-
-        this.setState({ isFetching: true })
-
-        setTimeout(() => {
-          this.setState(() => ({ isFetching: false }))
-        }, 15 * 1000)
-
-        const destination = {}
-        if (customWallet !== null) {
-          destination.address = customWallet
-        }
-
-        actions.core.sendRequest(orderId, destination, (isAccepted) => {
-          console.log(`user has ${isAccepted ? 'accepted' : 'declined'} your request`)
-
-          if (isAccepted) {
-            this.setState({ redirect: true, isFetching: false })
-          }
-          else {
-            this.setState({ isFetching: false })
-          }
-        })
-        actions.core.updateCore()
-      },
-      message: (
-        <FormattedMessage
-          id="ordersRow134"
-          defaultMessage="Do you want to {action} {amount} {main} for {total} {base} at price {price} {main}/{base}?"
-          values={{
-            action: `${type === PAIR_TYPES.BID
-              ? intl.formatMessage(messages.sell)
-              : intl.formatMessage(messages.buy)
-            }`,
-            amount: `${amount.toFixed(5)}`,
-            main: `${main}`,
-            total: `${total.toFixed(5)}`,
-            base: `${base}`,
-            price: `${exchangeRates}`,
-          }}
-        />
-      ),
-    })
+    actions.core.updateCore()
   }
 
   renderWebContent() {
@@ -187,11 +118,11 @@ export default class Row extends Component {
         sellCurrency,
         owner: {  peer: ownerPeer },
       },
-      removeOrder,
       intl: { locale },
     } = this.props
 
     const pair = Pair.fromOrder(this.props.row)
+
     const { price, amount, total, main, base, type } = pair
 
     return (
@@ -235,7 +166,7 @@ export default class Row extends Component {
         <td>
           {
             peer === ownerPeer ? (
-              <RemoveButton onClick={() => removeOrder(id)} />
+              <RemoveButton onClick={() => this.removeOrder(id)} />
             ) : (
               <Fragment>
                 {
@@ -265,14 +196,14 @@ export default class Row extends Component {
                       ) : (
                         <RequestButton
                           disabled={balance >= Number(buyAmount)}
-                          onClick={() => this.сheckDeclineOrders(id, isMy ? sellCurrency : buyCurrency)}
+                          onClick={() => this.sendRequest(id, isMy ? sellCurrency : buyCurrency)}
                           data={{ type, amount, main, total, base }}
                         >
-                          {type === PAIR_TYPES.BID ? <FormattedMessage id="Row2061" defaultMessage="Sell" /> : <FormattedMessage id="Row206" defaultMessage="Buy" />}
+                          {type === PAIR_TYPES.BID ? <FormattedMessage id="Row2061" defaultMessage="SELL" /> : <FormattedMessage id="Row206" defaultMessage="BUY" />}
                           {' '}
                           {amount.toFixed(5)}{' '}{main}
                           <br />
-                          <FormattedMessage id="Row210" defaultMessage="for" />
+                          <FormattedMessage id="Row210" defaultMessage="FOR" />
                           {' '}
                           {total.toFixed(5)}{' '}{base}
                         </RequestButton>
@@ -302,7 +233,6 @@ export default class Row extends Component {
         isProcessing,
         owner: {  peer: ownerPeer },
       },
-      removeOrder,
       peer,
     } = this.props
 
@@ -337,7 +267,7 @@ export default class Row extends Component {
             <div styleName="tdContainer-3">
               {
                 peer === ownerPeer ? (
-                  <RemoveButton onClick={() => removeOrder(id)} />
+                  <RemoveButton onClick={() => this.removeOrder(id)} />
                 ) : (
                   <Fragment>
                     {
@@ -366,10 +296,13 @@ export default class Row extends Component {
                             </Fragment>
                           ) : (
                             <RequestButton
-                              styleName="startButton"
+                              styleName={this.state.enterButton ? 'onHover' : 'startButton'}
                               disabled={balance >= Number(buyAmount)}
                               onClick={() => this.sendRequest(id, isMy ? sellCurrency : buyCurrency)}
                               data={{ type, amount, main, total, base }}
+                              onMouseEnter={() => this.setState(() => ({ enterButton: true }))}
+                              onMouseLeave={() => this.setState(() => ({ enterButton: false }))}
+                              move={this.state.enterButton}
                             >
                               <FormattedMessage id="RowM166" defaultMessage="Start" />
                             </RequestButton>
@@ -388,7 +321,7 @@ export default class Row extends Component {
   }
 
   renderContent = () => {
-    let windowWidthIn = window.innerWidth
+    let windowWidthIn = window.outerWidth
     this.setState({ windowWidth: windowWidthIn })
   }
 

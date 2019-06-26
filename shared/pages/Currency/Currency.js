@@ -1,11 +1,10 @@
 import React, { Component, Fragment } from 'react'
 
 import { connect } from 'redaction'
-import { constants, links } from 'helpers'
+import { constants } from 'helpers'
 import { isMobile } from 'react-device-detect'
 import { withRouter } from 'react-router'
 import actions from 'redux/actions'
-import { Helmet } from 'react-helmet'
 
 import { Link, Redirect } from 'react-router-dom'
 import { FormattedMessage, injectIntl } from 'react-intl'
@@ -115,49 +114,20 @@ export default class Currency extends Component {
     let { match:{ params: { currency } }, items } = this.props
     const itemCurrency = items.filter(item => item.currency.toLowerCase() === currency)[0]
 
-    // actions.analytics.dataEvent(`balances-withdraw-${currency.toLowerCase()}`)
+    actions.analytics.dataEvent(`balances-withdraw-${currency.toLowerCase()}`)
     actions.modals.open(constants.modals.Withdraw, {
       ...itemCurrency,
     })
   }
 
   render() {
-    const { match: { params: { currency } }, items, intl: { locale, formatMessage } } = this.props
+    const { match: { params: { currency } }, items } = this.props
     const { isBalanceEmpty, balance } = this.state
-    const myCurrency = items.find(item => item.currency === currency.toUpperCase())
-    const currencyFullName = myCurrency ? myCurrency.fullName : 'Chosen currency'
-
-    const SeoValues = {
-      fullName: currencyFullName,
-      tickerName: currency.toUpperCase(),
-    }
-    const MetaDescriptionString = formatMessage({
-      id: 'CurrencyMetaDescrTag1',
-      defaultMessage: 'Find out actual price of {fullName}, its ticker name is ({tickerName}). Swap.Online is the best way to safely store your cryptocurrecy.', // eslint-disable-line
-    }, SeoValues)
-    const TitleTagString = formatMessage({
-      id: 'CurrencyTitleSeo1',
-      defaultMessage: '{fullName} ({tickerName}) Price, Description & Exchange Rates. Store & Exchange {fullName} ({tickerName}) Anonymously on Swap.Online.',
-    }, SeoValues)
-
     return (
       <section styleName={isMobile ? 'currencyMobileSection' : 'currencyMediaSection'}>
-        <Helmet>
-          <title>{TitleTagString}</title>
-          <meta
-            name="description"
-            content={MetaDescriptionString}
-          />
-        </Helmet>
         <PageHeadline>
           <Fragment>
-            <SubTitle>
-              <FormattedMessage
-                id="CurrencyH1Seo1"
-                defaultMessage="{fullName} ({tickerName}) Price & Exchange Rates."
-                values={SeoValues}
-              />
-            </SubTitle>
+            <SubTitle>{currency.toUpperCase()} Trade</SubTitle>
           </Fragment>
           <div styleName="currencyBalance">
             <FormattedMessage id="Currency101" defaultMessage="Balance: " />
@@ -194,7 +164,7 @@ export default class Currency extends Component {
             <Row key={index} {...row} />
           )}
         />
-        <CloseIcon styleName="closeButton" onClick={() => this.props.history.push(localisedUrl(locale, links.home))} data-testid="CloseIcon" />
+        <CloseIcon styleName="closeButton" onClick={() => this.props.history.push('/')} data-testid="CloseIcon" />
       </section>
     )
   }

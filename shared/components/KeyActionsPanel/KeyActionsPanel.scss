@@ -1,5 +1,6 @@
 .WithdrawButtonContainer {
   display: flex;
+  width: 700;
   margin-right: 15px;
   margin-top: -25px;
   margin-bottom: 15px;
@@ -8,6 +9,7 @@
 @include media-tablet {
 	.WithdrawButtonContainer {
     margin-left: 0;
+    margin-top: -50px;
     margin-bottom: 15px;
 	}
 }
@@ -15,8 +17,8 @@
 @include media-mobile {
 	.WithdrawButtonContainer {
 		flex-direction: row;
-    margin: 0 -6px;
-    margin-bottom: 15px;
+    margin: 0 -6%;
+    margin-bottom: 5px;
     button {
       min-width: 32%;
       max-width: 32%;
@@ -29,4 +31,10 @@
       margin-right: 0;
     }
   }
+}
+
+@media all and (min-width: 320px) and (max-width: 364px) {
+  .WithdrawButtonContainer {
+    margin-top: -30px;
+	}
 }

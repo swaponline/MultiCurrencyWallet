@@ -7,8 +7,6 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import CSSModules from 'react-css-modules'
 import styles from './NavMobile.scss'
 import { localisedUrl } from 'helpers/locale'
-import actions from 'redux/actions'
-import constants from 'helpers/constants'
 
 
 @injectIntl
@@ -27,27 +25,16 @@ export default class NavMobile extends Component {
         {
           menu
             .filter(i => i.isMobile !== false)
-            .map(({ title, link, exact, icon, isBold, currentPageFlag, ...rest }) => !rest.displayNone && (
-              currentPageFlag
-                ? (
-                  <a
-                    key={title}
-                    onClick={() => actions.modals.open(constants.modals.MobMenu, {})}
-                    tabIndex="-1"
-                  >
-                    <span className={isBold && styles.bold}>{title}</span>
-                  </a>
-                )
-                : (
-                  <NavLink
-                    key={title}
-                    exact={exact}
-                    to={localisedUrl(locale, link)}
-                    activeClassName={styles.active}
-                  >
-                    <span className={isBold && styles.bold}>{title}</span>
-                  </NavLink>
-                )
+            .map(({ title, link, exact, icon }) => (
+              <NavLink
+                key={title}
+                exact={exact}
+                to={localisedUrl(locale, link)}
+                activeClassName={styles.active}
+              >
+                <i className={`fas fa-${icon}`} aria-hidden="true" />
+                <span>{title}</span>
+              </NavLink>
             ))
         }
       </div>

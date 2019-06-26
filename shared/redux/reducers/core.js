@@ -1,11 +1,9 @@
-import config from 'app-config'
-
-
 export const initialState = {
   orders: [],
   filter: 'btc-swap',
-  hiddenCoinsList: JSON.parse(localStorage.getItem('hiddenCoinsList')) || config.hiddenCoins,
+  hiddenCoinsList: JSON.parse(localStorage.getItem('hiddenCoinsList')) || [],
 }
+
 
 export const getOrders = (state, {  orders }) => ({
   ...state,

@@ -85,7 +85,7 @@ export default class EosBuyAccountModal extends React.Component {
                 <FormattedMessage id="Eos71" defaultMessage="This account will be registered in EOS blockchain" />
               </Tooltip>
             </FieldLabel>
-            <Input readOnly valueLink={linked.accountName} styleName="input" />
+            <Input readOnly="true" valueLink={linked.accountName} styleName="input" />
           </div>
           <div styleName="margin">
             <FieldLabel inRow>
@@ -95,7 +95,7 @@ export default class EosBuyAccountModal extends React.Component {
                 <FormattedMessage id="Eos75" defaultMessage="Private key for active and owner permissions" />
               </Tooltip>
             </FieldLabel>
-            <Input readOnly valueLink={linked.activePrivateKey} />
+            <Input readOnly="true" valueLink={linked.activePrivateKey} />
           </div>
           <div styleName="margin">
             <FieldLabel inRow>
@@ -105,7 +105,7 @@ export default class EosBuyAccountModal extends React.Component {
                 <FormattedMessage id="Eos79" defaultMessage="Public key associated with account" />
               </Tooltip>
             </FieldLabel>
-            <Input readOnly valueLink={linked.activePublicKey} />
+            <Input readOnly="true" valueLink={linked.activePublicKey} />
           </div>
           <div styleName="margin">
             <FieldLabel inRow>
@@ -115,7 +115,7 @@ export default class EosBuyAccountModal extends React.Component {
                 <FormattedMessage id="Eos83" defaultMessage="This amount will be withdrawn from your BTC wallet" />
               </Tooltip>
             </FieldLabel>
-            <Input readOnly valueLink={linked.price} />
+            <Input readOnly="true" valueLink={linked.price} />
           </div>
           { error && (
             <div styleName="error">

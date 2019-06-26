@@ -10,32 +10,22 @@ import reducers from 'redux/core/reducers'
 
 const sign = async () => {
   const btcPrivateKey = localStorage.getItem(constants.privateKeyNames.btc)
-  const bchPrivateKey = localStorage.getItem(constants.privateKeyNames.bch)
+  // const bchPrivateKey = localStorage.getItem(constants.privateKeyNames.bch)
   const ltcPrivateKey = localStorage.getItem(constants.privateKeyNames.ltc)
   const ethPrivateKey = localStorage.getItem(constants.privateKeyNames.eth)
-  const ethKeychainActivated = !!localStorage.getItem(constants.privateKeyNames.ethKeychainPublicKey)
-  const _ethPrivateKey = ethKeychainActivated ? await actions.eth.loginWithKeychain() : actions.eth.login(ethPrivateKey)
+  const _ethPrivateKey = actions.eth.login(ethPrivateKey)
   // const xlmPrivateKey = localStorage.getItem(constants.privateKeyNames.xlm)
 
   // actions.xlm.login(xlmPrivateKey)
-  const btcKeychainActivated = !!localStorage.getItem(constants.privateKeyNames.btcKeychainPublicKey)
-  if (btcKeychainActivated) {
-    await actions.btc.loginWithKeychain()
-  } else {
-    actions.btc.login(btcPrivateKey)
-  }
-  actions.bch.login(bchPrivateKey)
+  actions.btc.login(btcPrivateKey)
+  // actions.bch.login(bchPrivateKey)
   actions.usdt.login(btcPrivateKey)
   actions.ltc.login(ltcPrivateKey)
 
-  // if inside actions.token.login to call web3.eth.accounts.privateKeyToAccount passing public key instead of private key
-  // there will not be an error, but the address returned will be wrong
-  if (!ethKeychainActivated) {
-    Object.keys(config.erc20)
-      .forEach(name => {
-        actions.token.login(_ethPrivateKey, config.erc20[name].address, name, config.erc20[name].decimals, config.erc20[name].fullName)
-      })
-  }
+  Object.keys(config.erc20)
+    .forEach(name => {
+      actions.token.login(_ethPrivateKey, config.erc20[name].address, name, config.erc20[name].decimals, config.erc20[name].fullName)
+    })
   // await actions.nimiq.login(_ethPrivateKey)
 
   const eosSign = async () => {
@@ -57,10 +47,19 @@ const sign = async () => {
     const telosActivePrivateKey = localStorage.getItem(constants.privateKeyNames.telosPrivateKey)
     const telosActivePublicKey = localStorage.getItem(constants.privateKeyNames.telosPublicKey)
     const telosAccount = localStorage.getItem(constants.privateKeyNames.telosAccount)
+    const telosAccountActivated = localStorage.getItem(constants.localStorage.telosAccountActivated) === 'true'
 
     if (telosActivePrivateKey && telosActivePublicKey && telosAccount) {
       actions.tlos.login(telosAccount, telosActivePrivateKey, telosActivePublicKey)
+
+      if (!telosAccountActivated) {
+        await actions.tlos.activateAccount(telosAccount, telosActivePrivateKey, telosActivePublicKey)
+      }
+    } else {
+      const { accountName, activePrivateKey, activePublicKey } = await actions.tlos.loginWithNewAccount()
+      await actions.tlos.activateAccount(accountName, activePrivateKey, activePublicKey)
     }
+
     await actions.tlos.getBalance()
   }
 
@@ -93,7 +92,7 @@ const getBalances = () => {
   actions.eth.getBalance()
   actions.btc.getBalance()
   // actions.xlm.getBalance()
-  actions.bch.getBalance()
+  // actions.bch.getBalance()
   actions.ltc.getBalance()
   actions.usdt.getBalance()
   actions.eos.getBalance()
@@ -107,7 +106,7 @@ const getBalances = () => {
 }
 
 const getDemoMoney = process.env.MAINNET ? () => {} : () => {
-   //googe bitcoin (or rinkeby) faucet
+  /* //googe bitcoin (or rinkeby) faucet
   request.get('https://swap.wpmix.net/demokeys.php', {})
     .then((r) => {
       window.localStorage.clear()
@@ -116,7 +115,7 @@ const getDemoMoney = process.env.MAINNET ? () => {} : () => {
       localStorage.setItem(constants.localStorage.demoMoneyReceived, true)
       window.location.reload()
     })
-
+    */
 }
 
 const getExchangeRate = (sellCurrency, buyCurrency) =>
@@ -127,18 +126,13 @@ const getExchangeRate = (sellCurrency, buyCurrency) =>
       resolve(exchangeRate)
     })
       .catch(() => {
-        if (constants.customEcxchangeRate[sellCurrency.toLowerCase()] !== undefined) {
-          resolve(constants.customEcxchangeRate[sellCurrency])
-        } else {
-          resolve(1)
-        }
+        resolve(1)
       })
   })
 
 const setTransactions = () =>
   Promise.all([
     actions.btc.getTransaction(),
-    actions.bch.getTransaction(),
     actions.usdt.getTransaction(),
     actions.eth.getTransaction(),
     actions.ltc.getTransaction(),
@@ -151,7 +145,7 @@ const setTransactions = () =>
     })
 
 const getText = () => {
-  const { user : { ethData, btcData, eosData, /* xlmData, */ telosData, bchData, ltcData } } = getState()
+  const { user : { ethData, btcData, eosData, /* xlmData, */ telosData, /* bchData, */ ltcData } } = getState()
 
 
   let text = `
@@ -195,15 +189,6 @@ Private key: ${ltcData.privateKey}\r\n
 3. Go to settings > addresses > import\r\n
 4. paste private key and click "Ok"\r\n
 \r\n
-# BITCOINCACHE\r\n
-\r\n
-BitcoinCache address: ${bchData.address}\r\n
-Private key: ${bchData.privateKey}\r\n
-\r\n
-1. Go to blockchain.info\r\n
-2. login\r\n
-3. Go to settings > addresses > import\r\n
-4. paste private key and click "Ok"\r\n
 `
 /*
 # XLM\r\n

@@ -13,32 +13,29 @@ export default class BtcToEthTokens extends Component {
     switch (step) {
       case 1:
         return (
-          <FormattedMessage id="BitcoinBuyText17" defaultMessage="Confirmation processing" />
+          <FormattedMessage id="BitcoinBuyText17" defaultMessage="Please wait. Confirmation processing" />
         )
       case 2:
         return (
-          <FormattedMessage id="BtcToEthToken20" defaultMessage="Create a secret key" />
+          <FormattedMessage id="BtcToEthToken87" defaultMessage="Waiting participant confirm this swap" />
         )
       case 3:
         return (
-          <FormattedMessage id="BitcoinBuyText29" defaultMessage="Checking balance.." />
+          <FormattedMessage id="BitcoinBuyText29" defaultMessage="The bitcoin Script was created and charged. Please check the information below" />
         )
       case 4:
         return (
-          <FormattedMessage id="BitcoinBuyText33" defaultMessage="Creating Bitcoin Script.{br}It can take a few minutes" values={{ br: <br /> }} />
+          <FormattedMessage id="BitcoinBuyText33" defaultMessage="Checking balance.." />
         )
       case 5:
         return (
-          <FormattedMessage
-            id="BitcoinBuyText37"
-            defaultMessage="{buyCurrency} Owner received Bitcoin Script and Secret Hash. Waiting when he creates {buyCurrency} Contract"
-            values={{ buyCurrency: `${this.props.swap.buyCurrency}` }} />
+          <FormattedMessage id="BitcoinBuyText37" defaultMessage="Creating Ethereum Contract. {br} Please wait, it can take a few minutes" values={{ br: <br /> }} />
         )
       case 6:
         return (
           <FormattedMessage
             id="BitcoinBuyText41"
-            defaultMessage="{buyCurrency} Contract created and charged. Requesting withdrawal from {buyCurrency} Contract."
+            defaultMessage="Waiting for {buyCurrency} tokens Owner to add a Secret Key to ETH Contact"
             values={{ buyCurrency: `${this.props.swap.buyCurrency}` }} />
         )
       case 7:
@@ -63,6 +60,8 @@ export default class BtcToEthTokens extends Component {
 
   render() {
 
-    return this.BtcToEthTokens(this.props.step)
+    return (
+      <h1 styleName="stepHeading">{this.BtcToEthTokens(this.props.step)}</h1>
+    )
   }
 }

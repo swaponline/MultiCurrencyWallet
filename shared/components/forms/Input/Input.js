@@ -44,27 +44,17 @@ export default class Input extends Component {
   }
 
   handleFocus = () => {
-    const { onFocus } = this.props
-
-    if (onFocus) {
-      onFocus()
-    }
     reducers.inputActive.setInputActive(true)
   }
 
   handleBlur = () => {
-    const { onBlur } = this.props
-
-    if (onBlur) {
-      onBlur()
-    }
     reducers.inputActive.setInputActive(false)
   }
 
   render() {
     const {
-      className, inputContainerClassName, inputClassName, errorStyle,
-      valueLink: { error }, valueLink, dontDisplayError,
+      className, inputContainerClassName, inputClassName,
+      valueLink: { error }, valueLink,
       multiline, focusOnInit, disabled, readOnly, type, usd, ...rest
     } = this.props
 
@@ -83,7 +73,7 @@ export default class Input extends Component {
           {
             React.createElement(multiline ? TextArea : ValueLinkInput, {
               ...ignoreProps(rest, 'styles'),
-              styleName: errorStyle ? 'input inputError' : 'input',
+              styleName: 'input',
               className: inputClassName,
               valueLink,
               type,
@@ -99,7 +89,7 @@ export default class Input extends Component {
           }
         </div>
         {
-          Boolean(error && !dontDisplayError) && (
+          Boolean(error) && (
             <div styleName="error">
               {error}
             </div>

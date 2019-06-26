@@ -13,7 +13,7 @@ export default class EthToBtc extends Component {
     switch (step) {
       case 1:
         return (
-          <FormattedMessage id="ethToBtcText26" defaultMessage="Confirmation processing" />
+          <FormattedMessage id="ethToBtcText26" defaultMessage="Please wait. Confirmation processing" />
         )
       case 2:
         return (
@@ -21,7 +21,7 @@ export default class EthToBtc extends Component {
         )
       case 3:
         return (
-          <FormattedMessage id="ethToBtcText25" defaultMessage="The bitcoin Script was created and charged. Check the information below" />
+          <FormattedMessage id="ethToBtcText25" defaultMessage="The bitcoin Script was created and charged. Please check the information below" />
         )
       case 4:
         return (
@@ -29,7 +29,7 @@ export default class EthToBtc extends Component {
         )
       case 5:
         return (
-          <FormattedMessage id="ethToBtcText32" defaultMessage="Creating Ethereum Contract.{br}It can take a few minutes" values={{ br: <br /> }} />
+          <FormattedMessage id="ethToBtcText32" defaultMessage="Creating Ethereum Contract.{br}Please wait, it can take a few minutes" values={{ br: <br /> }} />
         )
       case 6:
         return (
@@ -41,7 +41,7 @@ export default class EthToBtc extends Component {
             id="ethToBtcText40"
             // eslint-disable
             defaultMessage="The funds from ETH contract was successfully transferred to BTC owner.
-              BTC owner left a secret key. Requesting withdrawal from BTC script."
+              BTC owner left a secret key. Requesting withdrawal from BTC script. Please wait.."
           />
         // eslint-enable
         )
@@ -60,6 +60,8 @@ export default class EthToBtc extends Component {
 
   render() {
 
-    return this.EthToBtc(this.props.step)
+    return (
+      <h1 styleName="stepHeading">{this.EthToBtc(this.props.step)}</h1>
+    )
   }
 }

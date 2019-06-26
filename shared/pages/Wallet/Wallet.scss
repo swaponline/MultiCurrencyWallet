@@ -3,32 +3,19 @@
 }
 
 .sectionWalletMobile {
-  margin-top: -88px;
-  &_widget {
-    margin-top: 0;
-  }
+	margin-top: -88px;
 }
 
 .sectionWallet {
-  margin-top: 88px;
-  &_widget {
-    margin-top: 0;
-  }
+	margin-top: 88px;
 }
 .inform {
   color: #626262;
   margin-top: 40px;
 }
 
-.informHeading {
-  margin-bottom: 30px;
-}
-
 .pageLine {
-  padding-bottom: 25px;
-  &_widget {
-    padding-top: 0;
-  }
+  height: 130px;
 }
 .depositText {
   margin-bottom: -15px;
@@ -39,6 +26,9 @@
 	.sectionWalletMobile {
 		margin-top: -88px;
 	}
+  // .pageLine {
+  //   margin-left: 10px;
+  // }
 }
 
 @include media-tablet {
@@ -57,9 +47,14 @@
   }
   .pageLine {
     height: auto;
-    padding-bottom: 0;
   }
   .inform {
     margin-top: 10px;
+  }
+}
+
+@media all and (min-width: 320px) and (max-width:364px) {
+  .pageLine {
+    margin-bottom: 45px;
   }
 }
