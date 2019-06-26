@@ -14,9 +14,9 @@ const title = (
 
 const Amounts = ({ buyAmount, sellAmount, buyCurrency, sellCurrency }) => (
   <Row title={title}>
-    <Value value={sellAmount} currency={sellCurrency} />
+    <Value value={Number(sellAmount)} currency={sellCurrency} />
     <div styleName="arrow" />
-    <Value value={buyAmount} currency={buyCurrency} />
+    <Value value={Number(buyAmount)} currency={buyCurrency} />
   </Row>
 )
 

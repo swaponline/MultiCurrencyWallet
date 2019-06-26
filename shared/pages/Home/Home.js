@@ -20,8 +20,6 @@ import { localisedUrl } from 'helpers/locale'
 
 import Orders from './Orders/Orders'
 
-import config from 'app-config'
-
 @injectIntl
 @connect(({
   core: { filter },
@@ -142,11 +140,8 @@ export default class Home extends Component {
     const { match: { params: { orderId } }, history: { location: { pathname } }, currencies, history, filter, intl: { locale } } = this.props
     const { buyCurrency, sellCurrency, invalidPair, isShow, exchange } = this.state
 
-    const sectionContainerStyleName = isMobile ? 'sectionContainerMobile' : 'sectionContainer'
-    const isWidgetBuild = config && config.isWidget
-
     return (
-      <section styleName={isWidgetBuild ? `${sectionContainerStyleName} ${sectionContainerStyleName}_widget` : sectionContainerStyleName}>
+      <section styleName={isMobile ? 'sectionContainerMobile' : 'sectionContainer'}>
         <PageHeadline>
           {
             pathname === exchange ? (

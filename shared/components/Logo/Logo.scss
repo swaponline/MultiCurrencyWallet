@@ -2,19 +2,9 @@
   width: 32px;
   height: 30px;
   display: block;
-  position: absolute;
-  left: 50px;
 
   img {
     display: block;
-    will-change: filter;
-    transition: filter 0.1s ease;
-  }
-}
-
-.whiteFill {
-  img {
-    filter: brightness(0) invert(1);
   }
 }
 
@@ -23,15 +13,7 @@
 	.logo {
 		display: none;
 	}
-}
-
-@media screen and (max-width: 1390px){
-  .logo {
-    position: relative;
-    left: auto;
-    margin-right: 85px;
-  }
-}
+} 
 
 @media screen and (max-width: 860px){
   .logo {
@@ -54,3 +36,4 @@
     display: none;
   }
 }
+

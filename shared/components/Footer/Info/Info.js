@@ -37,15 +37,13 @@ class Info extends React.Component {
     const { isOnline, serverAddress, onlineUsers } = this.props
     const { isVisibleProgressBar } = this.state
 
-    const onlinePeersHack = onlineUsers >= 0 ? onlineUsers : 1
-
     return (
       <div styleName="title">
         <span>
           <span styleName={isOnline ? 'connect' : 'disconnect'}>
             {isOnline ? 'Connected ' : 'Connecting '}
           </span>
-          to IPFS signal {serverAddress} / peers online: {onlinePeersHack}
+          to IPFS signal {serverAddress} / peers online: {onlineUsers}
         </span>
         { isVisibleProgressBar && <ProgressBar handleClick={this.hideProgressBar} /> }
       </div>

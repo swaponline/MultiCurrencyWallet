@@ -33,8 +33,6 @@ script:
 - yarn build:mainnet
 - echo "________Build testnet___________"
 - yarn build:testnet
-- echo "________Build Github Pages___________"
-- yarn build:pages
 - ls
 after_script:
 #Uncomment this when enable covaralls
@@ -43,13 +41,20 @@ after_script:
 - tar -cvzf build-testnet.tgz build-testnet/
 
 deploy:
-  provider: pages
+  provider: script
   skip-cleanup: true
-  keep-history: true
-  local-dir: build-mainnet-pages
-  github-token: $GITHUB_TOKEN
+  script: npm run deploy:pages
   on:
     branch: develop
+
+# deploy:
+#   provider: pages
+#   skip-cleanup: true
+#   keep-history: true
+#   local-dir: build-pages
+#   github-token: $GITHUB_TOKEN
+#   on:
+#     branch: develop
 
 # deploy:
 #   provider:    releases

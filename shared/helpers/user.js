@@ -23,10 +23,3 @@ export const hasSignificantBalance = (currencies) =>
 
       return false
     }, false)
-
-export const notTestUnit = (currencies) =>
-  currencies
-    .filter(
-      ({ name, balance }) =>
-        (name === 'ETH' && balance > 0.001) || (name === 'SWAP' && balance > 5))
-    .length === 2

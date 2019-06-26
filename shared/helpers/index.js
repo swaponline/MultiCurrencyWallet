@@ -2,7 +2,7 @@ import eos from './eos'
 import btc from './btc'
 import eth from './eth'
 import ethToken from './ethToken'
-import bch from './bch'
+import bcash from './bcash'
 import ltc from './ltc'
 // import xlm from './xlm'
 import user from './user'
@@ -15,38 +15,30 @@ import swapsExplorer from './swapsExplorer'
 import api from './api'
 import tips from './tips'
 import * as utils from './utils'
+
 // Methods
 import ignoreProps from './ignoreProps'
-import handleGoTrade from './handleGoTrade'
-import firebase from './firebase'
+
 // Getters
 import getPageOffset from './getPageOffset'
 import getScrollBarWidth from './getScrollBarWidth'
-import paddingForSwapList from './paddingForSwapList'
-import estimateFeeValue from './estimateFeeValue'
 
 import { migrate } from './migrations/'
-
-import getUnixTimeStamp from './getUnixTimeStamp'
-import { cacheStorageGet, cacheStorageSet } from './cache'
-
 
 export default {
   eos,
   // xlm,
-  bch,
+  bcash,
   btc,
   eth,
   ethToken,
   ltc,
-  handleGoTrade,
-  estimateFeeValue,
 }
 
 export {
   eos,
   // xlm,
-  bch,
+  bcash,
   tips,
   btc,
   eth,
@@ -64,15 +56,8 @@ export {
   migrate,
   // Methods
   ignoreProps,
-  handleGoTrade,
-  firebase,
 
   // Getters
   getPageOffset,
   getScrollBarWidth,
-  paddingForSwapList,
-
-  getUnixTimeStamp,
-  cacheStorageGet,
-  cacheStorageSet,
 }

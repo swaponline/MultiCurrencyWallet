@@ -98,3 +98,7 @@ Table.defaultProps = {
   textIfEmpty: <FormattedMessage id="Table95" defaultMessage="The table is empty" />,
   loadingText: <FormattedMessage id="Table96" defaultMessage="Loading..." />,
 }
+
+// export default connect(() => {}, (dispatch) => ({
+//   setIsDisplayingTable: payload => dispatch(setIsDisplayingTable(payload)),
+// }))

@@ -4,24 +4,16 @@ import WithdrawModal from './WithdrawModal/WithdrawModal'
 import PrivateKeysModal from './PrivateKeysModal/PrivateKeysModal'
 import EosRegisterModal from './EosRegisterModal/EosRegisterModal'
 import EosBuyAccountModal from './EosBuyAccountModal/EosBuyAccountModal'
-import TelosChangeAccountModal from './TelosChangeAccountModal/TelosChangeAccountModal'
+import TelosRegisterModal from './TelosRegisterModal/TelosRegisterModal'
 import Approve from './Approve/Approve'
 import ImportKeys from './ImportKeys/ImportKeys'
 import ShowMoreCoins from './ShowMoreCoins/ShowMoreCoins'
 import EthChecker from './EthChecker/EthChecker'
-import Keychain from './Keychain/Keychain'
 import ReceiveModal from './ReceiveModal/ReceiveModal'
 import DownloadModal from './DownloadModal/DownloadModal'
-import DeclineOrdersModal from './DeclineOrdersModal/DeclineOrdersModal'
-import IncompletedSwaps from './IncompletedSwaps/IncompletedSwaps'
-import MobMenu from './MobMenu/MobMenu'
-
-import Confirm from './Confirm/Confirm'
-import ConfirmBeginSwap from './ConfirmBeginSwap/ConfirmBeginSwap'
 
 
 export default {
-  DeclineOrdersModal,
   SignUpModal,
   OfferModal,
   WithdrawModal,
@@ -30,14 +22,9 @@ export default {
   ShowMoreCoins,
   EosBuyAccountModal,
   EosRegisterModal,
-  TelosChangeAccountModal,
+  TelosRegisterModal,
   Approve,
   EthChecker,
-  Keychain,
   ReceiveModal,
   DownloadModal,
-  IncompletedSwaps,
-  Confirm,
-  MobMenu,
-  ConfirmBeginSwap,
 }

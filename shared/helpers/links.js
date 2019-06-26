@@ -1,8 +1,7 @@
-const linksManager = {
+export default {
   home: '/',
   exchange: '/exchange',
   history: '/history',
-  wallets: '/wallets',
   currencyWallet: '/wallet',
   swap: '/swaps',
   feed: '/feed',
@@ -13,7 +12,6 @@ const linksManager = {
   coins: '/coins',
   partial: '/partial',
   notFound: '/NotFound',
-  newPage: '/+NewPage',
 
   // social networks
   medium: 'https://medium.com/swaponline',
@@ -33,7 +31,7 @@ const linksManager = {
   career: 'https://wiki.swap.online/careers-swap-online/',
   contacts: 'https://wiki.swap.online/contacts-swap-online/',
   concept: 'https://wiki.swap.online/en.pdf',
-  description: 'https://docs.google.com/document/d/1MWrDR5pc3FB7AiWBO0GyBWBSci3VuDKNvknkPHtTzl8/edit#heading=h.tml4qc7dhie9',
+  description: 'https://docs.google.com/document/d/1XNLzmNXkFeJWveJp62vFPQdjH8xabpeSm6ifbgj4MeM/edit?usp=sharing',
   research: 'https://docs.google.com/spreadsheets/d/1qWFLK2y8oMH5Gfam-iwqXPzLtwNabzp_EL6QFxjSBc0/edit?usp=sharing',
   reuters: 'https://www.reuters.com/brandfeatures/venture-capital/article?id=37488',
   wiki: 'https://wiki.swap.online',
@@ -98,46 +96,5 @@ const linksManager = {
       question: 'Advantages of using the exchanger based on Swap.Online DEP',
       link: 'https://wiki.swap.online/faq/#swap-faq-13',
     },
-    {
-      question: 'Request is declined. Why?',
-      link: 'https://swap.online/getting-started/#faq-item-5738',
-      id: 'requestDeclimed',
-    },
   ],
-  // footer new links
-  footer: {
-    exchange : 'https://swap.online/exchange',
-    wallet: 'https://swap.online',
-    widget: 'https://widget.swap.online/',
-    chromeextantion: 'https://chrome.google.com/webstore/detail/swaponline/oldojieloelkkfeacfinhcngmbkepnlm',
-    forstablecoin: 'https://wiki.swap.online/for_stablecoins/',
-    fordexses: 'https://wiki.swap.online/for_dexs/',
-    forblockchains: 'https://wiki.swap.online/for_blockchains/',
-    forerc20tokens: 'https://listing.swap.online/',
-    fornewswebsites: 'https://widget.swap.online/',
-    whitepaper: 'https://wiki.swap.online/en.pdf',
-    wiki: 'https://wiki.swap.online/',
-    github: 'https://github.com/swaponline',
-    about: 'https://wiki.swap.online/about-swap-online/',
-    agreements: 'https://drive.google.com/file/d/0Bz2ZwZCmFtj_Nm9qSm0tUm9Ia1kwVGhWRlVlVXRJTGZtYW5N/view?usp=sharing',
-    privacypolicy: 'https://drive.google.com/file/d/1LdsCOfX_pOJAMqlL4g6DfUpZrGF5eRe9/view?usp=sharing',
-    legal: 'https://drive.google.com/file/d/0Bz2ZwZCmFtj_WlNkY0ZYN0ZpNUo2VFVEeW9rWEVoTlNja0VZ/view?usp=sharing',
-    contacts: 'https://wiki.swap.online/contacts-swap-online/',
-    comparsion: 'https://docs.google.com/spreadsheets/d/1HVWjTKexfPjan_LFnCwMazEZTvcVtYl_3NWFKQ0L3ZM/edit?usp=drive_web&ouid=100012339553469619949',
-    bankdashboard: 'https://wiki.swap.online/crypto_banking/',
-    lnresearch: 'https://wiki.swap.online/lightninghack-berlin-june2018/',
-  },
 }
-
-linksManager.getFaqLink = (faqID) => {
-  for (var i = 0; i < linksManager.faq.length; i++) {
-    if (linksManager.faq[i].id
-      && (linksManager.faq[i].id == faqID)
-    ) {
-      return linksManager.faq[i].link
-    }
-  }
-  return false
-}
-
-export default linksManager

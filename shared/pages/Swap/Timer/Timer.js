@@ -41,11 +41,10 @@ export default class Timer extends React.Component {
 
   tick = () => {
     const { timeLeft } = this.state
-    const { enabledButton } = this.props
     const newTimeLeft = timeLeft - 1000
 
-    if (newTimeLeft <= 0 && typeof enabledButton === 'function') {
-      enabledButton()
+    if (newTimeLeft <= 0) {
+      this.props.enabledButton()
     }
     else {
       this.timer = setTimeout(this.tick, 1000)

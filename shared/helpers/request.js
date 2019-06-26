@@ -1,48 +1,9 @@
 import request from 'superagent'
 
-const responseCacheStorage = {}
-
-const responseCacheGetKey = (req, opts) => `${opts.method}-${opts.endpoint}`
-
-const responseCacheGet = (req, opts) => {
-  const cacheKey =  responseCacheGetKey(req, opts)
-
-  if (opts
-    && opts.cacheResponse
-    && responseCacheStorage[cacheKey]
-    && ((responseCacheStorage[cacheKey].cacheResponseCreateTime + responseCacheStorage[cacheKey].cacheResponse) >= new Date().getTime())
-  ) {
-    return responseCacheStorage[cacheKey]
-  } return false
-}
-
-const responseCacheAdd = (req, opts, resData, res) => {
-  const cacheKey = responseCacheGetKey(req, opts)
-  const cacheResponse = { opts }
-  const cacheResponseCreateTime = new Date().getTime()
-
-  responseCacheStorage[cacheKey] = {
-    cacheResponse,
-    cacheResponseCreateTime,
-    resData,
-    res,
-  }
-}
 
 const createResponseHandler = (req, opts) => {
   const debug = `${opts.method.toUpperCase()} ${opts.endpoint}`
 
-  // cached answer
-  const cachedAnswer = responseCacheGet(req, opts)
-
-  if (cachedAnswer) {
-    return new Promise((fulfill, reject) => {
-      fulfill(cachedAnswer.resData, cachedAnswer.res)
-      opts.onComplete()
-    })
-  }
-
-  // no cache - do request
   return new Promise((fulfill, reject) => req.end((err, res) => {
     let serverError
 
@@ -78,11 +39,6 @@ const createResponseHandler = (req, opts) => {
     }
 
     const resData = opts.modifyResult(body)
-
-    // Cache result if needs
-    if (opts.cacheResponse) {
-      responseCacheAdd(req, opts, resData, res)
-    }
 
     // Resolve
 

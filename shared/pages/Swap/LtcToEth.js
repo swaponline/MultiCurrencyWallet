@@ -47,7 +47,7 @@ export default class LtcToEth extends Component {
       8: 'end',
     }
 
-    // actions.analytics.swapEvent(stepNumbers[values.step], 'LTC2ETH')
+    actions.analytics.swapEvent(stepNumbers[values.step], 'LTC2ETH')
 
     this.setState({
       flow: values,

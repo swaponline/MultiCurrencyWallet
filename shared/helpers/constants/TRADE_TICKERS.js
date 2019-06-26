@@ -8,7 +8,6 @@ const swap = (config && config.isWidget) ?
     'ETH-BTC',
     'ETH-LTC',
     'LTC-BTC',
-    'ETH-BCH',
     'EOS-BTC',
   ]
 
@@ -23,7 +22,6 @@ if (config && config.isWidget) {
   swap.length = 0
   swap.push(`${config.erc20token.toUpperCase()}-BTC`)
   swap.push(`${config.erc20token.toUpperCase()}-USDT`)
-  swap.push('ETH-BTC')
 }
 export default [
   ...swap,

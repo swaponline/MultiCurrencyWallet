@@ -49,7 +49,7 @@ export default class Modal extends Component {
     const { name, data, onClose, disableClose } = this.props
 
     if (name === 'OfferModal') {
-      // actions.analytics.dataEvent('orderbook-addoffer-click-exit-button')
+      actions.analytics.dataEvent('orderbook-addoffer-click-exit-button')
     }
 
     if (!disableClose) {
@@ -67,16 +67,14 @@ export default class Modal extends Component {
 
   render() {
     const { className, whiteLogo, showLogo, title, showCloseButton, disableClose, children,
-      titleUppercase, name, shouldCenterHorizontally, shouldCenterVertically, styleName, delayClose, data } = this.props
-
-    window.addEventListener('popstate', function (e) { actions.modals.close(name) }) // eslint-disable-line
+      titleUppercase, name, shouldCenterHorizontally, shouldCenterVertically } = this.props
 
     const titleStyleName = cx('title', {
       'uppercase': titleUppercase,
     })
 
     return (
-      <Overlay styleName={styleName}>
+      <Overlay>
         <div styleName="modal" className={className}>
           {
             Boolean(title || showCloseButton) && (
@@ -88,7 +86,7 @@ export default class Modal extends Component {
                   <div styleName={titleStyleName} role="title">{title}</div>
                   {
                     showCloseButton && !disableClose && (
-                      <CloseIcon styleName={`closeButton${delayClose ? ' delayClose' : ''}`} onClick={this.close} data-testid="modalCloseIcon" />
+                      <CloseIcon styleName="closeButton" onClick={this.close} data-testid="modalCloseIcon" />
                     )
                   }
                 </WidthContainer>

@@ -13,7 +13,7 @@ export default class EthTokensToBtc extends Component {
     switch (step) {
       case 1:
         return (
-          <FormattedMessage id="EthTokensToBtc16" defaultMessage="Confirmation processing" />
+          <FormattedMessage id="EthTokensToBtc16" defaultMessage="Please wait. Confirmation processing" />
         )
       case 2:
         return (
@@ -21,7 +21,7 @@ export default class EthTokensToBtc extends Component {
         )
       case 3:
         return (
-          <FormattedMessage id="EthTokensToBtc24" defaultMessage="The bitcoin Script was created and charged. Check the information below" />
+          <FormattedMessage id="EthTokensToBtc24" defaultMessage="The bitcoin Script was created and charged. Please check the information below" />
         )
       case 4:
         return (
@@ -29,7 +29,7 @@ export default class EthTokensToBtc extends Component {
         )
       case 5:
         return (
-          <FormattedMessage id="EthTokensToBtc32" defaultMessage="Creating Ethereum Contract. {br} It can take a few minutes" values={{ br: <br /> }} />
+          <FormattedMessage id="EthTokensToBtc32" defaultMessage="Creating Ethereum Contract. {br} Please wait, it can take a few minutes" values={{ br: <br /> }} />
         )
       case 6:
         return (
@@ -57,6 +57,8 @@ export default class EthTokensToBtc extends Component {
 
   render() {
 
-    return this.EthTokensToBtc(this.props.step)
+    return (
+      <h1 styleName="stepHeading">{this.EthTokensToBtc(this.props.step)}</h1>
+    )
   }
 }

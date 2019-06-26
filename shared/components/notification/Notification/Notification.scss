@@ -64,14 +64,3 @@
   padding: 15px 25px;
   font-size: 18px;
 }
-
-@include media-mobile {
-  .notification {
-    width: 80%;
-    left: 15px;
-  }
-  .content {
-    font-size: 12px;
-    word-break: break-word;
-  }
-}

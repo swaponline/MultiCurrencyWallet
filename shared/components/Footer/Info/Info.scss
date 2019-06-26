@@ -7,7 +7,7 @@
   bottom: 2%;
   left: 1%;
   z-index: 1049;
-  padding-bottom: 25px;
+  padding-bottom: 10px;
 
   & span {
     font-weight: bold;
@@ -16,8 +16,6 @@
 
   & svg {
     display: block;
-    position: relative;
-    top: 2px;
     height: 3px;
   }
 }
