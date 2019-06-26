@@ -17,31 +17,21 @@ import Button from 'components/controls/Button/Button'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import ReactTooltip from 'react-tooltip'
+import { isMobile } from 'react-device-detect'
 
 import { isCoinAddress } from 'swap.app/util/typeforce'
+import minAmount from 'helpers/constants/minAmount'
+import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 
-
-const minAmount = {
-  eth: 0.001,
-  btc: 0.00015,
-  ltc: 0.1,
-  eos: 1,
-  tlos: 1,
-  noxon: 1,
-  swap: 1,
-  jot: 1,
-  usdt: 0,
-  erc: 1,
-}
 
 @injectIntl
 @connect(
   ({
     currencies,
-    user: { ethData, btcData, /* bchData, */ tokensData, eosData, telosData, nimData, usdtData, ltcData },
+    user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, usdtData, ltcData },
   }) => ({
     currencies: currencies.items,
-    items: [ ethData, btcData, eosData, telosData, /* bchData, */ ltcData, usdtData /* nimData */ ],
+    items: [ ethData, btcData, eosData, telosData, bchData, ltcData, usdtData /* nimData */ ],
     tokenItems: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
   })
 )
@@ -56,14 +46,23 @@ export default class WithdrawModal extends React.Component {
   constructor(data) {
     super()
 
+    const { data: { currency }, items, tokenItems } = data
+
+    const currentDecimals = constants.tokenDecimals[currency.toLowerCase()]
+    const allCurrencyies = items.concat(tokenItems)
+    const selectedItem = allCurrencyies.filter(item => item.currency === currency)[0]
+
     this.state = {
       isShipped: false,
       address: '',
       amount: '',
       minus: '',
+      balance: selectedItem.balance || 0,
       ethBalance: null,
-      tokenFee: false,
+      isEthToken: helpers.ethToken.isEthToken({ name: currency.toLowerCase() }),
+      currentDecimals,
       getUsd: 0,
+      error: false,
     }
   }
 
@@ -103,24 +102,35 @@ export default class WithdrawModal extends React.Component {
     return amount
   }
 
+  getMinAmountForEthToken = () => {
+    const { data: { currency } } = this.props
+    const { currentDecimals } = this.state
+
+    let ethTokenMinAmount = '0.'
+
+    for (let a = 0; a < currentDecimals - 1; a++) {
+      ethTokenMinAmount += '0'
+    }
+
+    return ethTokenMinAmount += '1'
+  }
+
   actualyMinAmount = async () => {
     const { data: { currency } } = this.props
+    const { isEthToken } = this.state
 
     const currentCoin = currency.toLowerCase()
     const coinsWithDynamicFee = [
       'eth',
       'ltc',
       'btc',
+      'bch',
       'ethToken',
     ]
 
-    if (helpers.ethToken.isEthToken({ name: currency.toLowerCase() })) {
-      this.setState(() => ({
-        tokenFee: true,
-      }))
+    if (isEthToken) {
+      minAmount[currentCoin] = this.getMinAmountForEthToken()
     }
-
-    minAmount.erc = await helpers.ethToken.estimateFeeValue({ method: 'send', speed: 'fast' })
 
     if (coinsWithDynamicFee.includes(currentCoin)) {
       minAmount[currentCoin] = await helpers[currentCoin].estimateFeeValue({ method: 'send', speed: 'fast' })
@@ -133,7 +143,7 @@ export default class WithdrawModal extends React.Component {
     const balance = await actions[currency.toLowerCase()].getBalance(currency.toLowerCase())
 
     const finalBalance = unconfirmedBalance !== undefined && unconfirmedBalance < 0
-      ? new BigNumber(balance).plus(unconfirmedBalance)
+      ? new BigNumber(balance).plus(unconfirmedBalance).toString()
       : balance
     const ethBalance = await actions.eth.getBalance()
 
@@ -182,7 +192,7 @@ export default class WithdrawModal extends React.Component {
     }
 
     await actions[currency.toLowerCase()].send(sendOptions)
-      .then(() => {
+      .then((txRaw) => {
         actions.loader.hide()
         actions[currency.toLowerCase()].getBalance(currency)
         this.setBalanceOnState(currency)
@@ -193,16 +203,45 @@ export default class WithdrawModal extends React.Component {
           address: to,
         })
 
-        this.setState(() => ({ isShipped: false }))
+        this.setState(() => ({ isShipped: false, error: false }))
+      })
+      .then(() => {
         actions.modals.close(name)
+      })
+      .catch((e) => {
+        const errorText = e.res ? e.res.text : ''
+        const error = {
+          name: {
+            id: 'Withdraw218',
+            defaultMessage: 'Withdrawal error',
+          },
+          message: {
+            id: 'ErrorNotification12',
+            defaultMessage: 'Oops, looks like something went wrong!',
+          },
+        }
+
+        if (/insufficient priority|bad-txns-inputs-duplicate/.test(errorText)) {
+          error.message = {
+            id: 'Withdraw232',
+            defaultMessage: 'There is not enough confirmation of the last transaction. Try later.',
+          }
+        }
+
+        console.error(error.name.defaultMessage, ':', e)
+
+        this.setState(() => ({
+          error,
+          isShipped: false,
+        }))
       })
   }
 
     sellAllBalance = async () => {
-      const { amount, balance, currency, tokenFee } = this.state
+      const { amount, balance, currency, isEthToken } = this.state
       const { data } = this.props
 
-      const minFee = tokenFee ? 0 : minAmount[data.currency.toLowerCase()]
+      const minFee = isEthToken ? 0 : minAmount[data.currency.toLowerCase()]
 
       const balanceMiner = balance
         ? balance !== 0
@@ -217,58 +256,55 @@ export default class WithdrawModal extends React.Component {
 
     isEthOrERC20() {
       const { name, data, tokenItems }  = this.props
-      const { currency, ethBalance, tokenFee } = this.state
+      const { currency, ethBalance, isEthToken } = this.state
       return (
-        (tokenFee === true && ethBalance < minAmount.erc) ? ethBalance < minAmount.erc : false
+        (isEthToken === true && ethBalance < minAmount.eth) ? ethBalance < minAmount.eth : false
       )
     }
 
     addressIsCorrect() {
-      const { data } = this.props
-      const { address } = this.state
+      const { data: { currency } } = this.props
+      const { address, isEthToken } = this.state
 
-      return isCoinAddress[data.currency.toUpperCase()](address)
+      if (isEthToken) {
+        return isCoinAddress.ETH(address)
+      }
+
+      return isCoinAddress[currency.toUpperCase()](address)
     }
 
     render() {
-      const { address, amount, balance, isShipped, minus, ethBalance, tokenFee, exCurrencyRate } = this.state
-      const { name, data, tokenItems, items } = this.props
+      const { address, amount, balance, isShipped, minus, ethBalance,
+        isEthToken, exCurrencyRate, currentDecimals, error } = this.state
+      const { name, data: { currency }, tokenItems, items, intl } = this.props
 
       const linked = Link.all(this, 'address', 'amount')
 
-      const min = tokenFee ? Math.floor(minAmount.erc * 1e6) / 1e6 : Math.floor(minAmount[data.currency.toLowerCase()] * 1e6) / 1e6
-      const dataCurrency = tokenFee ? 'ETH' : data.currency.toUpperCase()
+      const min = minAmount[currency.toLowerCase()]
+      const dataCurrency = isEthToken ? 'ETH' : currency.toUpperCase()
 
       const isDisabled =
-        !address || !amount || isShipped || Number(amount) <= min
+        !address || !amount || isShipped
         || !this.addressIsCorrect()
-        || (Number(amount) > balance)
+        || BigNumber(amount).isGreaterThan(balance)
+        || BigNumber(amount).dp() > currentDecimals
         || this.isEthOrERC20()
-      const NanReplacement = balance === undefined ? '...' : Number(balance).toFixed(5)
+      const NanReplacement = balance || '...'
       const getUsd = amount * exCurrencyRate
 
-      if (Number(amount) !== 0) {
-        linked.amount.check((value) => Number(value) <= balance,
+      if (new BigNumber(amount).isGreaterThan(0)) {
+        linked.amount.check((value) => new BigNumber(value).isLessThanOrEqualTo(balance), (
           <div style={{ width: '340px', fontSize: '12px' }}>
             <FormattedMessage
               id="Withdrow170"
               defaultMessage="The amount must be no more than your balance"
               values={{
-                min: `${min.toFixed(6)}`,
-                currency: `${data.currency}`,
+                min,
+                currency: `${currency}`,
               }}
             />
           </div>
-        )
-        linked.amount.check((value) => Number(value) > min,
-          !tokenFee &&
-          (
-            <div style={{ width: '340px', fontSize: '12px' }}>
-              <FormattedMessage id="Withdrow159" defaultMessage="Amount must be greater than  " />
-              {min}
-            </div>
-          )
-        )
+        ))
       }
 
       if (this.state.amount < 0) {
@@ -278,84 +314,128 @@ export default class WithdrawModal extends React.Component {
         })
       }
 
-      const title = [
-        <FormattedMessage id="Withdraw18333" defaultMessage={`Withdraw {data}`} values={{ data: `${data.currency.toUpperCase()}` }} />,
-      ]
+      const title = defineMessages({
+        withdrowModal: {
+          id: 'withdrowTitle271',
+          defaultMessage: `Withdraw`,
+        },
+      })
 
       return (
-        <Modal name={name} title={title}>
-          <p styleName={tokenFee ? 'rednotes' : 'notice'}>
+        <Modal name={name} title={`${intl.formatMessage(title.withdrowModal)}${' '}${currency.toUpperCase()}`}>
+          <p styleName={isEthToken ? 'rednotes' : 'notice'}>
             <FormattedMessage
               id="Withdrow213"
-              defaultMessage="Please note: Miners fee is {minAmount} {data}.{br}Represented balance is your balance minus the miners commission will appear. "
-              values={{ minAmount: `${min}`, br: <br />, data: `${dataCurrency}` }} />
+              defaultMessage="Please note: Miners fee is {minAmount} {currency}.{br}Represented balance is your balance minus the miners commission will appear. "
+              values={{ minAmount: `${isEthToken ? minAmount.eth : min}`, br: <br />, data: `${dataCurrency}` }} />
           </p>
-          <FieldLabel inRow>
-            <FormattedMessage id="Withdrow1194" defaultMessage="Address " />
-            {' '}
-            <Tooltip id="WtH203" >
-              <div style={{ textAlign: 'center' }}>
+          <div styleName="highLevel">
+            <FieldLabel inRow>
+              <span style={{ fontSize: '16px' }}>
+                <FormattedMessage id="Withdrow1194" defaultMessage="Address " />
+              </span>
+              {' '}
+              <Tooltip id="WtH203" >
+                <div style={{ textAlign: 'center' }}>
+                  <FormattedMessage
+                    id="WTH275"
+                    defaultMessage="Make sure the wallet you{br}are sending the funds to supports {currency}"
+                    values={{ br: <br />, currency: `${currency.toUpperCase()}` }}
+                  />
+                </div>
+              </Tooltip>
+            </FieldLabel>
+            <Input valueLink={linked.address} focusOnInit pattern="0-9a-zA-Z:" placeholder={`Enter ${currency.toUpperCase()} address to transfer`} />
+            {address && !this.addressIsCorrect() && (
+              <div styleName="rednote">
                 <FormattedMessage
-                  id="WTH275"
-                  defaultMessage="Make sure the wallet you{br}are sending the funds to supports {currency}"
-                  values={{ br: <br />, currency: `${data.currency.toUpperCase()}` }}
+                  id="WithdrawIncorectAddress"
+                  defaultMessage="Your address not correct" />
+              </div>
+            )}
+          </div>
+          <div styleName="lowLevel">
+            <div styleName="groupField">
+              <p styleName="balance">
+                {balance}
+                {' '}
+                {currency.toUpperCase()}
+              </p>
+              <div styleName="downLabel">
+                <FieldLabel inRow>
+                  <span styleName="mobileFont">
+                    <FormattedMessage id="Withdrow118" defaultMessage="Amount " />
+                  </span>
+                </FieldLabel>
+              </div>
+            </div>
+            <div styleName="group">
+              <Input
+                styleName="input"
+                valueLink={linked.amount}
+                pattern="0-9\."
+                placeholder="Enter the amount"
+                usd={getUsd.toFixed(2)}
+                onKeyDown={inputReplaceCommaWithDot}
+              />
+              <button styleName="button" onClick={this.sellAllBalance} data-tip data-for="Withdrow134">
+                <FormattedMessage id="Select210" defaultMessage="MAX" />
+              </button>
+              {!isMobile &&
+                <ReactTooltip id="Withdrow134" type="light" effect="solid" styleName="r-tooltip">
+                  <FormattedMessage
+                    id="WithdrawButton32"
+                    defaultMessage="when you click this button, in the field, an amount equal to your balance minus the miners commission will appear" />
+                </ReactTooltip>
+              }
+            </div>
+            {
+              !linked.amount.error && (
+                <div styleName={minus ? 'rednote' : 'note'}>
+                  <FormattedMessage id="WithdrawModal256" defaultMessage="No less than {minAmount}" values={{ minAmount: `${min}` }} />
+                </div>
+              )
+            }
+            {
+              this.isEthOrERC20() && (
+                <div styleName="rednote">
+                  <FormattedMessage id="WithdrawModal263" defaultMessage="You need {minAmount} ETH on your balance" values={{ minAmount: `${minAmount.eth}` }} />
+                </div>
+              )
+            }
+          </div>
+          <Button styleName="buttonFull" brand fullWidth disabled={isDisabled} onClick={this.handleSubmit}>
+            { isShipped
+              ? (
+                <Fragment>
+                  <FormattedMessage id="WithdrawModal11212" defaultMessage="Processing ..." />
+                </Fragment>
+              )
+              : (
+                <Fragment>
+                  <FormattedMessage id="WithdrawModal111" defaultMessage="Withdraw" />
+                  {' '}
+                  {`${currency.toUpperCase()}`}
+                </Fragment>
+              )
+            }
+          </Button>
+          {
+            error && (
+              <div styleName="rednote">
+                <FormattedMessage
+                  id="WithdrawModalErrorSend"
+                  defaultMessage="{errorName} {currency}:{br}{errorMessage}"
+                  values={{
+                    errorName: intl.formatMessage(error.name),
+                    errorMessage: intl.formatMessage(error.message),
+                    br: <br />,
+                    currency: `${currency}`,
+                  }}
                 />
               </div>
-            </Tooltip>
-          </FieldLabel>
-          <Input valueLink={linked.address} focusOnInit pattern="0-9a-zA-Z" placeholder={`Enter ${data.currency.toUpperCase()} address to transfer the funds`} />
-          {address && !this.addressIsCorrect() && (
-            <div styleName="rednote">
-              <FormattedMessage
-                id="WithdrawIncorectAddress"
-                defaultMessage="Your address not correct" />
-            </div>
-          )}
-          <p style={{ marginTop: '20px' }}>
-            <FormattedMessage id="Withdrow113" defaultMessage="Your balance: " />
-            {Number(balance).toFixed(5)}
-            {' '}
-            {data.currency.toUpperCase()}
-          </p>
-          <FieldLabel inRow>
-            <FormattedMessage id="Withdrow118" defaultMessage="Amount " />
-          </FieldLabel>
-          <div styleName="group">
-            <Input
-              styleName="input"
-              valueLink={linked.amount}
-              pattern="0-9\."
-              placeholder={`Enter the amount. You have ${NanReplacement}`}
-              usd={getUsd.toFixed(2)}
-            />
-            <buttton styleName="button" onClick={this.sellAllBalance} data-tip data-for="Withdrow134">
-              <FormattedMessage id="Select210" defaultMessage="MAX" />
-            </buttton>
-            <ReactTooltip id="Withdrow134" type="light" effect="solid">
-              <FormattedMessage
-                id="WithdrawButton32"
-                defaultMessage="when you click this button, in the field, an amount equal to your balance minus the miners commission will appear" />
-            </ReactTooltip>
-          </div>
-          {
-            !linked.amount.error && !this.isEthOrERC20() && !tokenFee && (
-              <div styleName={minus ? 'rednote' : 'note'}>
-                <FormattedMessage id="WithdrawModal256" defaultMessage="No less than {minAmount}" values={{ minAmount: `${min}` }} />
-              </div>
             )
           }
-          {
-            this.isEthOrERC20() && (
-              <div styleName="rednote">
-                <FormattedMessage id="WithdrawModal263" defaultMessage="You need {minAmount} ETH on your balance" values={{ minAmount: `${min}` }} />
-              </div>
-            )
-          }
-          <Button styleName="buttonFull" brand fullWidth disabled={isDisabled} onClick={this.handleSubmit}>
-            <FormattedMessage id="WithdrawModal111" defaultMessage="Withdraw" />
-            {' '}
-            {data.currency.toUpperCase()}
-          </Button>
         </Modal>
       )
     }

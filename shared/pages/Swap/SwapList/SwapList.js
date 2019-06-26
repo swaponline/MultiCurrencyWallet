@@ -14,13 +14,13 @@ import FirstStep from './steps/FirstStep'
 import SecondStep from './steps/SecondStep'
 import ThirdStep from './steps/ThirdStep'
 import FourthStep from './steps/FourthStep'
-import FifthStep from './steps/FifthStep'
 
 @CSSModules(styles, { allowMultiple: true })
 export default class SwapList extends Component {
 
   constructor({ swap: { sellCurrency, flow: { stepNumbers } } }) {
     super()
+
     const first = stepNumbers.sign
     const second = sellCurrency === 'BTC' ? stepNumbers[`submit-secret`] : stepNumbers[`wait-lock-btc`]
     const fourth = sellCurrency === 'BTC' ? stepNumbers[`lock-btc`] : stepNumbers[`sync-balance`]
@@ -40,16 +40,16 @@ export default class SwapList extends Component {
     }
   }
   render() {
-    const { swap, flow, enoughBalance } = this.props
+    const { swap, flow, enoughBalance, windowWidth } = this.props
     const { first, second, fourth, fifth, sixth, seventh, eighth } = this.state
+    const { ethSwapCreationTransactionHash, btcScriptCreatingTransactionHash } = swap.flow.state
 
     return (
-      <div styleName="stepList">
-        <FirstStep step={flow.step} first={first} second={second} />
-        <SecondStep step={flow.step} swap={swap} second={second} fifth={fifth} fourth={fourth} />
-        <ThirdStep step={flow.step} swap={swap} fifth={fifth} fourth={fourth} sixth={sixth} />
-        <FourthStep step={flow.step} swap={swap} sixth={sixth} seventh={seventh} eighth={eighth} />
-        <FifthStep step={flow.step} swap={swap} seventh={seventh} eighth={eighth} />
+      <div styleName={isMobile ? 'stepList isMobile' : 'stepList'}>
+        {!isMobile && <FirstStep step={flow.step} first={first} second={second} />}
+        <SecondStep step={flow.step} swap={swap} second={second} windowWidth={windowWidth} fifth={fifth} fourth={fourth} sixth={sixth} />
+        <ThirdStep step={flow.step} windowWidth={windowWidth} swap={swap} sixth={sixth} seventh={seventh} eighth={eighth} />
+        {!isMobile && <FourthStep step={flow.step} swap={swap} seventh={seventh} eighth={eighth} />}
       </div>
     )
   }

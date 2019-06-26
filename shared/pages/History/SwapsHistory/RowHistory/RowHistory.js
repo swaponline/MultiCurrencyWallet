@@ -14,6 +14,7 @@ import Timer from 'pages/Swap/Timer/Timer'
 import Avatar from 'components/Avatar/Avatar'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
+import BigNumber from 'bignumber.js'
 
 
 @injectIntl
@@ -24,49 +25,41 @@ export default class RowHistory extends Component {
     row: PropTypes.object,
   }
 
-  handleGetFlow = (timeLeft) => {
-    let { row: { id } } = this.props
+  tryRefund = (timeLeft) => {
+    const { row: { id } } = this.props
 
-    if (timeLeft < 0) {
+    if (timeLeft > 0) {
       return
     }
 
-    const { flow } = actions.core.getSwapById(id)
+    try {
+      const { flow } = actions.core.getSwapById(id)
 
-    const { state: {
-      isFinished, isRefunded,
-    } } = flow
+      const {
+        state: { isFinished, isRefunded, step, scriptBalance, isEthContractFunded },
+        swap: { sellCurrency },
+      } = flow
 
-    if (isFinished || isRefunded) {
-      return
+      const isPayed = sellCurrency === 'BTC' ? 4 : 5
+      const isEmptyBalance = sellCurrency === 'BTC' ? scriptBalance === 0 : !isEthContractFunded
+
+      if (isFinished || isRefunded || (step === isPayed && isEmptyBalance)) {
+        console.error(`Refund of swap ${id} is not available`)
+        return
+      }
+
+      flow.tryRefund()
+        .then((result) => {
+          console.log('refunded', result)
+        })
+    } catch (err) {
+      console.error(`RefundError`, err)
     }
-
-    flow.tryRefund()
-      .then((result) => {
-        console.log('refunded', result)
-        localStorage.setItem(`swap:flow.${id}`, flow.state)
-      })
   }
 
-  componentDidMount() {
-    const {
-      btcScriptValues, ltcScriptValues,
-      usdtScriptValues, scriptValues,
-    } = this.props.row
-
-    const values  = btcScriptValues
-      || ltcScriptValues
-      || usdtScriptValues
-      || scriptValues
-
-    const lockTime = values.lockTime * 1000
-
-    const dateNow = new Date().getTime()
-    const timeLeft = lockTime - dateNow
-
-    this.handleGetFlow(timeLeft)
+  closeIncompleted = () => {
+    actions.modals.close('IncompletedSwaps')
   }
-
 
   render() {
 
@@ -77,22 +70,34 @@ export default class RowHistory extends Component {
     }
 
     let {
-      buyAmount, buyCurrency, sellAmount, btcScriptValues, balance,
-      ltcScriptValues, usdtScriptValues, isRefunded, isMy, sellCurrency,
-      isFinished, id, scriptValues,
+      buyAmount, buyCurrency, sellAmount, btcScriptValues, scriptBalance,
+      ltcScriptValues, bchScriptValues, usdtScriptValues, isRefunded, isMy, sellCurrency,
+      isFinished, id, scriptValues, isStoppedSwap,
     } = row
 
-    const values  = btcScriptValues || ltcScriptValues || usdtScriptValues || scriptValues
-    const data = Date.now() / 1000
+    const values = btcScriptValues
+      || bchScriptValues
+      || ltcScriptValues
+      || usdtScriptValues
+      || scriptValues
+
+    const canBeRefunded = values && scriptBalance > 0
+    const isDeletedSwap = isFinished || isRefunded || isStoppedSwap
+
+    const date = Date.now() / 1000
 
     if (!values) {
       return
     }
 
-    const lockDateAndTime = moment.unix(values.lockTime || data).format('HH:mm:ss DD/MM/YYYY')
+    const lockDateAndTime = moment.unix(values.lockTime || date).format('HH:mm:ss DD/MM/YYYY')
 
-    buyAmount   = Number(buyAmount)
-    sellAmount  = Number(sellAmount)
+    const linkToTheSwap = isMy
+      ? `${localisedUrl(locale, links.swap)}/${sellCurrency}-${buyCurrency}/${id}`
+      : `${localisedUrl(locale, links.swap)}/${buyCurrency}-${sellCurrency}/${id}`
+
+    buyAmount   = BigNumber(buyAmount)
+    sellAmount  = BigNumber(sellAmount)
 
     return (
       <tr>
@@ -102,7 +107,9 @@ export default class RowHistory extends Component {
           />
         </td>
         <td>
-          <Coins names={[buyCurrency, sellCurrency]}  />
+          <Link to={`${linkToTheSwap}`}>
+            <Coins names={[buyCurrency, sellCurrency]}  />
+          </Link>
         </td>
         <td>
           {
@@ -126,17 +133,18 @@ export default class RowHistory extends Component {
           { (sellAmount / buyAmount).toFixed(5) }{ ` ${sellCurrency}/${buyCurrency}`}
         </td>
         <td>
-          { isFinished ?
-            <FormattedMessage id="RowHistory94" defaultMessage="Finished" />
-            :
-            (isRefunded && <FormattedMessage id="RowHistory77" defaultMessage="Refunded" /> ||
-              values && !isRefunded && !isFinished && balance > 0 ? (
+          { isFinished && (<FormattedMessage id="RowHistory94" defaultMessage="Finished" />) }
+          { isRefunded && (<FormattedMessage id="RowHistory77" defaultMessage="Refunded" />) }
+          { isStoppedSwap && (<FormattedMessage id="RowHistory139" defaultMessage="Stopped" />) }
+          { !isDeletedSwap && (canBeRefunded
+              ? (
                 <Timer
                   lockTime={values.lockTime * 1000}
-                  enabledButton={this.handleGetFlow}
+                  enabledButton={this.tryRefund}
                 />
-              ) : (
-                !isRefunded && <FormattedMessage id="RowHistory76" defaultMessage="Refund not available" />
+              )
+              : (
+                <FormattedMessage id="RowHistory76" defaultMessage="Refund not available" />
               )
             )
           }
@@ -145,16 +153,15 @@ export default class RowHistory extends Component {
           { lockDateAndTime.split(' ').map((item, key) => <Fragment key={key}>{item}<br /></Fragment>) }
         </td>
         <td>
-          {
-            isMy ? (
-              <Link to={`${localisedUrl(locale, links.swap)}/${sellCurrency}-${buyCurrency}/${id}`}>
-                <FormattedMessage id="RowHistory91" defaultMessage="Link to the swap" />
-              </Link>
-            ) : (
-              <Link to={`${localisedUrl(locale, links.swap)}/${buyCurrency}-${sellCurrency}/${id}`}>
-                <FormattedMessage id="RowHistory95" defaultMessage="Link to the swap" />
-              </Link>
-            )
+          { !isDeletedSwap
+              ? (
+                <Link to={`${linkToTheSwap}`} onClick={this.closeIncompleted}>
+                  <FormattedMessage id="RowHistory91" defaultMessage="Link to the swap" />
+                </Link>
+              )
+              : (
+                <FormattedMessage id="RowHistory164" defaultMessage="Deleted" />
+              )
           }
         </td>
       </tr>

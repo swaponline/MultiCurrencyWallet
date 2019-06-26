@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import actions from 'redux/actions'
 import { connect } from 'redaction'
 import moment from 'moment-with-locales-es6'
-import { constants, localStorage } from 'helpers'
+import { constants, localStorage, firebase } from 'helpers'
 import { isMobile } from 'react-device-detect'
 
 import CSSModules from 'react-css-modules'
@@ -21,6 +21,7 @@ import PreventMultiTabs from 'components/PreventMultiTabs/PreventMultiTabs'
 import RequestLoader from 'components/loaders/RequestLoader/RequestLoader'
 import ModalConductor from 'components/modal/ModalConductor/ModalConductor'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
+import Wrapper from 'components/layout/Wrapper/Wrapper'
 import NotificationConductor from 'components/notification/NotificationConductor/NotificationConductor'
 import Seo from 'components/Seo/Seo'
 
@@ -40,7 +41,7 @@ moment.locale(userLanguage)
   btcAddress: 'user.btcData.address',
   tokenAddress: 'user.tokensData.swap.address',
 })
-@CSSModules(styles)
+@CSSModules(styles, { allowMultiple: true })
 export default class App extends React.Component {
 
   static propTypes = {
@@ -78,26 +79,29 @@ export default class App extends React.Component {
       actions.user.getDemoMoney()
     }
 
-    actions.firebase.initialize()
+    firebase.initialize()
   }
 
   componentDidMount() {
     window.actions = actions
 
     window.onerror = (error) => {
-      actions.analytics.errorEvent(error)
+      // actions.analytics.errorEvent(error)
     }
 
-    const db = indexedDB.open('test')
-    db.onerror = () => {
+    try {
+      const db = indexedDB.open('test')
+      db.onerror = () => {
+        window.leveldown = memdown
+      }
+    } catch (e) {
       window.leveldown = memdown
     }
 
-    setTimeout(() => {
-      actions.user.sign()
-      createSwapApp()
-      this.setState({ fetching: true })
-    }, 1000)
+    actions.user.sign()
+    createSwapApp()
+    this.setState(() => ({ fetching: true }))
+
     window.prerenderReady = true
   }
 
@@ -106,8 +110,19 @@ export default class App extends React.Component {
     const { children, ethAddress, btcAddress, tokenAddress, history /* eosAddress */ } = this.props
     const isFetching = !ethAddress || !btcAddress || (!tokenAddress && config && !config.isWidget) || !fetching
 
-    const isWidget = history.location.pathname.includes('/exchange/') && history.location.hash === '#widget'
+    const isWidget = history.location.pathname.includes('/exchange') && history.location.hash === '#widget'
     const isCalledFromIframe = window.location !== window.parent.location
+    const isWidgetBuild = config && config.isWidget
+
+    if (process.env.MAINNET) {
+      firebase.setUserLastOnline()
+    }
+
+    const isNew = history.location.pathname.includes('/+NewPage')
+    if (isWidgetBuild && localStorage.getItem(constants.localStorage.didWidgetsDataSend) !== 'true') {
+      firebase.submitUserDataWidget('usersData')
+      localStorage.setItem(constants.localStorage.didWidgetsDataSend, true)
+    }
 
     if (multiTabs) {
       return <PreventMultiTabs />
@@ -117,22 +132,27 @@ export default class App extends React.Component {
       return <Loader showTips />
     }
 
-    const mainContent = isWidget || isCalledFromIframe
+    const mainContent = (isWidget || isCalledFromIframe) && !isWidgetBuild
       ? (
         <Fragment>
           {children}
           <Core />
+          <RequestLoader />
+          <ModalConductor />
+          <NotificationConductor />
         </Fragment>
       )
       : (
         <Fragment>
           <Seo location={history.location} />
           <Header />
-          <WidthContainer styleName="main">
-            <main>
-              {children}
-            </main>
-          </WidthContainer>
+          <Wrapper>
+            <WidthContainer styleName={isWidgetBuild ? 'main main_widget' : 'main'}>
+              <main>
+                {children}
+              </main>
+            </WidthContainer>
+          </Wrapper>
           <Core />
           { !isMobile && <Footer /> }
           <RequestLoader />
@@ -141,14 +161,25 @@ export default class App extends React.Component {
         </Fragment>
       )
 
+    const newMain = (
+      <Fragment>
+        <Seo location={history.location} />
+        { /* <Header /> */ }
+        <main>
+          {children}
+        </main>
+        <Core />
+        { /* !isMobile && <Footer /> */ }
+        <RequestLoader />
+        <ModalConductor />
+        <NotificationConductor />
+      </Fragment>
+    )
+
     return (
-      process.env.LOCAL === 'local' ? (
-        <HashRouter>
-          {mainContent}
-        </HashRouter>
-      ) : (
-        mainContent
-      )
+      process.env.LOCAL === 'local'
+        ? (<HashRouter>{!isNew ? mainContent : newMain}</HashRouter>)
+        : !isNew ? mainContent : newMain
     )
   }
 }

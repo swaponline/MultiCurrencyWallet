@@ -69,13 +69,15 @@
 	}
 }
 
-@media (min-width: 1134px) {
+@media (min-width: 831px) {
 	.advantages {
-		justify-content: center;
-		padding-top: 70px;
+		padding-top: 233px;
 	}
 	.advantage {
 		margin-top: 20px;
+	}
+	.advFooter {
+		align-self: flex-start;
 	}
 }
 
@@ -83,6 +85,7 @@
 	.advantages {
 		width: 100%;
 		margin: 0;
+		padding-top: 40px;
 	}
 }
 

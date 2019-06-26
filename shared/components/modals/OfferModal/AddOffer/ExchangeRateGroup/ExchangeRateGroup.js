@@ -8,6 +8,7 @@ import Group from '../Group/Group'
 
 const ExchangeRateGroup = ({ className, disabled, label, id, inputValueLink, placeholder, buyCurrency, sellCurrency }) => (
   <Group
+    styleName="exRate"
     className={className}
     label={label}
     id={id}

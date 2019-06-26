@@ -3,7 +3,7 @@ import config from 'app-config'
 import modals from './modals'
 import loader from './loader'
 import notifications from './notifications'
-import firebase from './firebase/index'
+import firebase from './firebase'
 
 import user from './user'
 import feed from './feed'
@@ -12,9 +12,10 @@ import filter from './filter'
 
 import btc from './btc'
 // import xlm from './xlm'
-// import bch from './bch'
+import bch from './bch'
 import ltc from './ltc'
 import eth from './eth'
+import keychain from './keychain'
 import eos from './eos'
 import tlos from './tlos'
 import token from './token'
@@ -48,10 +49,11 @@ export default {
   core,
   ltc,
   // xlm,
-  // bch,
+  bch,
   btc,
   usdt,
   eth,
+  keychain,
   token,
   nimiq,
   eos,

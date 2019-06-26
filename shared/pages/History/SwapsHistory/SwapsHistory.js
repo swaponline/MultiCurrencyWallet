@@ -20,7 +20,7 @@ const titles = [
 export default class SwapsHistory extends PureComponent {
 
   render() {
-    let { orders } = this.props
+    let { orders, showSubtitle } = this.props
 
     if (orders === null || orders.length === 0) {
       return null
@@ -28,14 +28,16 @@ export default class SwapsHistory extends PureComponent {
 
     return (
       <div style={{ marginBottom: '50px' }}>
-        <h3>
-          <FormattedMessage id="SwapHisrory21" defaultMessage="Swaps history" />
-        </h3>
+        {showSubtitle &&
+          <h3>
+            <FormattedMessage id="SwapHisrory21" defaultMessage="Swaps history" />
+          </h3>
+        }
         <Table
           id="table-history"
           className={styles.historySwap}
           titles={titles}
-          rows={orders.reverse()}
+          rows={orders}
           rowRender={(row, index) => (
             <RowHistory
               key={index}

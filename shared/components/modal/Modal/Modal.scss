@@ -29,7 +29,6 @@
   position: absolute;
   width: 100%;
   left: 0;
-  padding: 0 64px;
   pointer-events: none;
   min-width: 0;
   flex: auto 1 1;
@@ -52,6 +51,20 @@
     opacity: 1;
     transition: none;
   }
+}
+@keyframes delayClose{
+  0% {
+    opacity: 0;
+  }
+  95% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.delayClose {
+  animation: delayClose 4.8s ease 1 forwards;
 }
 
 .contentContainer {

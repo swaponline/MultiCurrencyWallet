@@ -204,4 +204,40 @@ export default {
     decimals: 8,
     fullName: 'WrappedBTC',
   },
+  abyss: {
+    address: '0x0E8d6b471e332F140e7d9dbB99E5E3822F728DA6',
+    decimals: 18,
+    fullName: 'ABYSS',
+  },
+  xsat: {
+    address: '0x0d9e614937a308438337a2999acf64fc86bf098a',
+    decimals: 18,
+    fullName: 'XSAT',
+  },
+  hdp: {
+    address: '0xc4d5545392f5fc57eba3af8981815669bb7e2a48',
+    decimals: 4,
+    fullName: 'HDP',
+  },
+  satx: {
+    address: '0xe96f2c381e267a96c29bbb8ab05ab7d3527b45ab',
+    decimals: 8,
+    fullName: 'SATX',
+  },
+  scro: {
+    address: '0x0a133dfA1f65Ff6f834205ED43D66344306Fa02C',
+    decimals: 18,
+    fullName: 'SCRO',
+  },
+  xeur: {
+    address: '0xC31C61cf55fB5E646684AD8E8517793ec9A22c5e',
+    decimals: 0,
+    fullName: 'XEUR',
+  },
+  eurs: {
+    address: '0xdb25f211ab05b1c97d595516f45794528a807ad8',
+    decimals: 2,
+    fullName: 'EURS',
+  },
+
 }

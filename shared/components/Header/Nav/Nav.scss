@@ -1,37 +1,88 @@
+$textColor: #dccef7;
+$exchangeBorder: #512ed0;
+
 .nav {
   height: 100%;
   min-width: 0;
   flex: auto 1 1;
   display: flex;
   align-items: center;
-  padding-left: 50px;
+}
+
+.mainMenu {
+  margin-right: 25px;
+  position: relative;
+}
+
+.fixed-width {
+  width: 145px;
+  padding: 0 5px;
 }
 
 .link {
-  margin-left: 25px;
-  cursor: pointer;
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 16px;
   text-decoration: none;
-  color: #dccef7;
+  color: rgba($textColor, 1);
+  cursor: pointer;
+  transition: color 0.1s ease;
 
   &:first-child {
-    margin-left: 0;
+    margin-left: 0px;
+    z-index: 1;
   }
 
   &:hover {
-    color: #fff;
+    color: white;
+    img {
+      filter: none;
+      transform: rotate(180deg);
+    }
   }
 
   &.active {
-    border-bottom: 2px solid #fff;
-    font-weight: 700;
-    color: #fff;
+    color: white;
+    border-bottom: 2px solid white;
+    &_exchange {
+      border-color: $exchangeBorder;
+    }
   }
 }
 
+.exchangeMenuLink {
+  color: rgba(0, 0, 0, 0.6);
+
+  &:hover {
+    color: #512ed0;
+  }
+
+  &.active {
+    color: #512ed0;
+  }
+}
+
+.container {
+  cursor: pointer;
+}
+
+.humburger {
+  position: relative;
+  width: 10px;
+  height: 1px;
+  background-color: #000;
+  margin: 2px 4px 0;
+  bottom: 2px;
+  z-index: 0;
+}
 
 @media screen and (max-width: 860px){
+  .humburger {
+    display: none;
+  }
   .link {
     display: none;
   }
@@ -41,7 +92,17 @@
 }
 
 .active {
-  border-bottom: 2px solid #fff;
   font-weight: 700;
-  color: #fff;
+  color: #512ed0;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.arrowSub {
+  display: inline-block;
+  filter: opacity(0.7) brightness(0);
+  transition: transform 0.2s ease,
+    filter 0.2s ease;
 }

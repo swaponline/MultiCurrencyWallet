@@ -2,9 +2,23 @@
   white-space: nowrap;
 }
 .icon {
-  margin-right: 14px;
-  font-size: 20px;
-  filter: invert(1);
-  width: 25px;
-  height: 25px;
+  width: 12px;
+  &[role="letter"] {
+    color: white;
+    width: 100%;
+    text-align: center;
+  }
+}
+.circle {
+  width: 32px;
+  height: 32px;
+  background: #000;
+  border-radius: 50%;
+  position: absolute;
+  left: 15px;
+  top: 47%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-50%);
 }

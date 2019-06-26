@@ -11,8 +11,8 @@ const FirstStep = ({ step, first, second }) => (
     <span styleName="stepNumber">{step < second ? 1 : <i className="fas fa-check" />}</span>
     <p styleName="stepText">
       <FormattedMessage
-        id="BtcToEthToken34"
-        defaultMessage="Confirmation process" />
+        id="Confirmation14"
+        defaultMessage="Confirmation" />
     </p>
   </div>
 )

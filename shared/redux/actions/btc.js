@@ -6,6 +6,8 @@ import bitcoinMessage from 'bitcoinjs-message'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
 import { btc, request, constants, api } from 'helpers'
+import { Keychain } from 'keychain.js'
+import actions from 'redux/actions'
 
 
 const login = (privateKey) => {
@@ -43,6 +45,27 @@ const login = (privateKey) => {
   reducers.user.setAuthData({ name: 'btcData', data })
 }
 
+const loginWithKeychain = async () => {
+  const selectedKey = await actions.keychain.login('BTC')
+
+  const pubkey = Buffer.from(`03${selectedKey.substr(0, 64)}`, 'hex')
+  const keyPair = bitcoin.ECPair.fromPublicKeyBuffer(pubkey, btc.network)
+  const address = keyPair.getAddress()
+
+  const data = {
+    address,
+    publicKey: selectedKey,
+  }
+
+  window.getBtcAddress = () => data.address
+
+  console.info('Logged in with Bitcoin', data)
+  reducers.user.setAuthData({ name: 'btcData', data })
+  localStorage.setItem(constants.privateKeyNames.btcKeychainPublicKey, selectedKey)
+  localStorage.removeItem(constants.privateKeyNames.btc)
+  await getBalance()
+}
+
 const getBalance = () => {
   const { user: { btcData: { address } } } = getState()
 
@@ -64,10 +87,15 @@ const fetchBalance = (address) =>
 
 const fetchTx = (hash) =>
   request.get(`${api.getApiServer('bitpay')}/tx/${hash}`)
-    .then(({ fees, vin, vout, ...rest }) => ({
-      fees: BigNumber(fees).times(1e8),
-      vin,
-      vout,
+    .then(({ fees, ...rest }) => ({
+      fees: BigNumber(fees).multipliedBy(1e8),
+      ...rest,
+    }))
+
+const fetchTxInfo = (hash) =>
+  fetchTx(hash)
+    .then(({ vin, ...rest }) => ({
+      senderAddress: vin ? vin[0].addr : null,
       ...rest,
     }))
 
@@ -111,10 +139,7 @@ const getTransaction = () =>
   })
 
 const send = async ({ from, to, amount, feeValue, speed } = {}) => {
-  const { user: { btcData: { privateKey } } } = getState()
-  const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
-
-  feeValue = feeValue || await btc.estimateFeeValue({ method: 'send', satoshi: true, speed })
+  feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed })
 
   const tx            = new bitcoin.TransactionBuilder(btc.network)
   const unspents      = await fetchUnspents(from)
@@ -130,19 +155,38 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
     tx.addOutput(from, skipValue)
   }
 
-  tx.inputs.forEach((input, index) => {
-    tx.sign(index, keyPair)
-  })
+  const keychainActivated = !!localStorage.getItem(constants.privateKeyNames.btcKeychainPublicKey)
+  const txRaw = keychainActivated ? await signAndBuildKeychain(tx, unspents) : signAndBuild(tx)
 
-  const txRaw = tx.buildIncomplete()
-
-  broadcastTx(txRaw.toHex())
+  await broadcastTx(txRaw.toHex())
 
   return txRaw
 }
 
+const signAndBuild = (transactionBuilder) => {
+  const { user: { btcData: { privateKey } } } = getState()
+  const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
+
+  transactionBuilder.inputs.forEach((input, index) => {
+    transactionBuilder.sign(index, keyPair)
+  })
+  return transactionBuilder.buildIncomplete()
+}
+
+const signAndBuildKeychain = async (transactionBuilder, unspents) => {
+  const txRaw = transactionBuilder.buildIncomplete()
+  unspents.forEach(({ scriptPubKey }, index) => txRaw.ins[index].script = Buffer.from(scriptPubKey, 'hex'))
+  const keychain = await Keychain.create()
+  const rawHex = await keychain.signTrx(
+    txRaw.toHex(),
+    localStorage.getItem(constants.privateKeyNames.btcKeychainPublicKey),
+    'bitcoin'
+  )
+  return { ...txRaw, toHex: () => rawHex.result }
+}
+
 const fetchUnspents = (address) =>
-  request.get(`${api.getApiServer('bitpay')}/addr/${address}/utxo`)
+  request.get(`${api.getApiServer('bitpay')}/addr/${address}/utxo`, { cacheResponse: 5000 })
 
 const broadcastTx = (txRaw) =>
   request.post(`${api.getApiServer('bitpay')}/tx/send`, {
@@ -183,12 +227,14 @@ const getReputation = () =>
 
 export default {
   login,
+  loginWithKeychain,
   getBalance,
   getTransaction,
   send,
   fetchUnspents,
   broadcastTx,
   fetchTx,
+  fetchTxInfo,
   fetchBalance,
   signMessage,
   getReputation,
