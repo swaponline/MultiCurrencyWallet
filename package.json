@@ -84,7 +84,6 @@
     "babel-register": "^6.26.0",
     "bigi": "^1.4.2",
     "bignumber.js": "^7.2.1",
-    "bitcoinjs-lib": "^3.3.2",
     "body-parser": "^1.18.3",
     "chalk": "^2.4.1",
     "classnames": "^2.2.5",
@@ -128,6 +127,7 @@
     "prop-types": "^15.6.1",
     "raw-loader": "^0.5.1",
     "rc-progress": "^2.2.5",
+    "react-helmet": "^5.2.0",
     "react-hot-loader": "^4.1.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
@@ -149,15 +149,20 @@
     "webpack-dev-middleware": "^2.0.6"
   },
   "dependencies": {
+    "axios": "^0.18.0",
+    "bchaddrjs": "^0.3.2",
     "bestzip": "^2.1.2",
+    "bitcoincashjs-lib": "^3.3.3",
+    "bitcoinjs-lib": "^3.3.2",
     "bitcoinjs-message": "^2.0.0",
     "coininfo": "git+https://github.com/cryptocoinjs/coininfo.git",
     "copy-dir-cli": "0.0.3",
     "ethereum-input-data-decoder": "0.0.12",
-    "firebase": "^5.5.9",
+    "firebase": "^5.10.0",
     "ipfs": "^0.33.1",
     "ipfs-pubsub-room": "^1.4.0",
     "json-stringify-safe": "^5.0.1",
+    "keychain.js": "0.0.3",
     "level-js": "github:timkuijsten/level.js#idbunwrapper",
     "memdown": "^3.0.0",
     "node-gyp": "^3.8.0",
@@ -172,6 +177,7 @@
     "react-gtm-module": "^2.0.2",
     "react-input-mask": "^2.0.1",
     "react-intl": "^2.7.1",
+    "react-items-carousel": "^2.3.6",
     "react-paginate": "^5.2.3",
     "react-redux": "^5.0.7",
     "react-router": "^4.2.0",
@@ -186,6 +192,7 @@
     "replace": "^1.0.0",
     "reverse": "^4.0.0",
     "stellar-sdk": "^0.11.0",
-    "styled-components": "^4.1.2"
+    "styled-components": "^4.1.2",
+    "mortice": "1.2.1"
   }
 }

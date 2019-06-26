@@ -5,40 +5,50 @@
   <title><%= htmlWebpackPlugin.options.title %></title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <meta property="og:image" content="https://screenshots.wpmix.net/chrome_2019-03-28_18-55-506746c4c5-44e6-4bb5-89cb-52ce8fabcedf.png">
+  <link rel="stylesheet" href="https://swap.online/dist/css/bootstrap.min.css" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 
   <meta property="og:url" content="https://swap.online">
-  <meta property="og:image" content="https://wiki.swap.online/assets/swap-logo.png">
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <!-- Yandex.Metrika counter -->
+
+  <!-- Google Analytics -->
   <script>
-    var mainDomainRegexr = /(www.)?swap.online/;
+    const isMainDomain = window.location.hostname === 'swap.online';
+    const isExtension = window.location.hostname === 'jbhhiineefefhcaoocmnkbmgfjbhninc';
 
-    if (window.location.hostname == "swap.online") {
-      var script_1 = document.createElement('script');
-      var script_2 = document.createElement('script');
+    if (isMainDomain || isExtension) {
+      const gtagScript = document.createElement('script');
+      var gtagId;
 
-      script_1.async = true;
-      script_1.src = 'https://www.googletagmanager.com/gtag/js?id=UA-116857031-2';
+      if (isMainDomain) {
+        gtagId = 'GTM-WK72GSV';
+      }
 
-      script_2.innerHTML = "window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'UA-116857031-2');"
+      if (isExtension) {
+        gtagId = 'GTM-PJH52QL';
+      }
+
+      gtagScript.async = true;
+      gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=' + gtagId;
+
+      document.head.appendChild(gtagScript);
+
+      window.dataLayer = window.dataLayer || [];
+
+      window.gtag = function() {
+        window.dataLayer.push(arguments);
+      }
+
+      gtag('js', new Date());
+      gtag('config', gtagId);
 
 
-      var ymScript = document.createElement('script');
-      var additionalElementForYM = document.createElement('noscript');
-
-      ymScript.innerHTML = '(function (m, e, t, r, i, k, a) {m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments) };m[i].l = 1 * new Date(); k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)})(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");ym(51622001, "init", {id: 51622001,clickmap: true,trackLinks: true,accurateTrackBounce: true,webvisor: true});';
-      additionalElementForYM.innerHTML = '<div><img src="https://mc.yandex.ru/watch/51622001" style="position:absolute; left:-9999px;" alt="" /></div>';
-
-      document.head.appendChild(script_1);
-      document.head.appendChild(script_2);
-      document.head.appendChild(ymScript);
-      document.head.appendChild(additionalElementForYM);
     }
+
   </script>
-  <!-- /Yandex.Metrika counter -->
-  <style>@keyframes loader1{0%{opacity:0;transform:translate3d(25%,-50%,0) rotateY(-77deg)}30%{opacity:1}60%{opacity:1;transform:translate3d(-15%,-50%,0) rotateY(-37deg)}75%{opacity:0}100%{opacity:0;transform:translate3d(-15%,-50%,0) rotateY(-37deg)}}@keyframes loader2{0%{opacity:0;transform:translate3d(20%,-50%,0) rotateY(-107deg)}30%{opacity:1}60%{opacity:1;transform:translate3d(-60%,-50%,0) rotateY(-57deg)}75%{opacity:0}100%{opacity:0;transform:translate3d(-60%,-50%,0) rotateY(-57deg)}}@keyframes loader3{0%{opacity:0;transform:translate3d(50%,-50%,0)}30%{opacity:1}60%{opacity:1;transform:translate3d(0,-50%,0)}75%{opacity:0}100%{opacity:0;transform:translate3d(0,-50%,0)}}.overlay{background-color:white;position:fixed;top:0;left:0;right:0;bottom:0;z-index:1000}.loader{width:100px;height:100px;perspective:60px;perspective-origin:7% 57%}.loader.small{width:50px;height:50px;-webkit-perspective:30px;perspective:30px}.loader.center{position:absolute;top:0;left:0;right:0;bottom:0;margin:auto}.loader1,.loader2,.loader3{position:absolute;opacity:0;will-change:transform,opacity}.loader1:first-child,.loader2:first-child,.loader3:first-child{margin-left:0}.loader1{width:28%;height:80%;background:linear-gradient(#6829df,#5124d5);left:0;top:50%;transform:translate3d(25%,-50%,0) rotateY(-77deg);animation:loader1 1.6s infinite}.loader2{width:20%;height:63%;background:linear-gradient(#702be1,#623ad9);left:48%;top:50%;transform:translate3d(20%,-50%,0) rotateY(-107deg);animation:loader2 1.6s infinite;animation-delay:0.2s}.loader3{width:28%;height:33%;right:0;top:47%;overflow:hidden;transform:translate3d(50%,-50%,0);animation:loader3 1.6s infinite;animation-delay:0.4s}.loader3::after{content:"";display:block;width:100%;height:140%;background:linear-gradient(155deg,#802cf6,#5023d5);position:absolute;top:0;left:0;transform:translate3d(-37%,-37%,0) rotate(40deg)}.text{position:absolute;font-size:16px;left:calc(50% - 245.5px);top:65%}.link{position:absolute;font-size:16px;left:calc(50% - 408.5px);top:70%}.over{text-transform:uppercase}.tips{font-size:16px;position:absolute;top:60%;left:50%;transform:translate(-50%,-50%);text-align:center}@media (max-width:568px){.text{position:absolute;top:65%;transform:translateY(-50%);padding:0 35px;text-align:center}.loader{transform:translateY(-50%)}.tips{top:64%}}</style>
+  <!-- /Google Analytics -->
+
+  <style>@keyframes loader1{0%{opacity:0;transform:translate3d(25%,-50%,0) rotateY(-77deg)}30%{opacity:1}60%{opacity:1;transform:translate3d(-15%,-50%,0) rotateY(-37deg)}75%{opacity:0}100%{opacity:0;transform:translate3d(-15%,-50%,0) rotateY(-37deg)}}@keyframes loader2{0%{opacity:0;transform:translate3d(20%,-50%,0) rotateY(-107deg)}30%{opacity:1}60%{opacity:1;transform:translate3d(-60%,-50%,0) rotateY(-57deg)}75%{opacity:0}100%{opacity:0;transform:translate3d(-60%,-50%,0) rotateY(-57deg)}}@keyframes loader3{0%{opacity:0;transform:translate3d(50%,-50%,0)}30%{opacity:1}60%{opacity:1;transform:translate3d(0,-50%,0)}75%{opacity:0}100%{opacity:0;transform:translate3d(0,-50%,0)}}.overlay{display:flex;justify-content:center;align-items:center;flex-direction:column;background-color:white;position:fixed;top:0;left:0;right:0;bottom:0;z-index:1000}.loader{width:100px;height:100px;perspective:60px;perspective-origin:7% 57%;margin:auto}.loader.small{width:50px;height:50px;-webkit-perspective:30px;perspective:30px}.loader1,.loader2,.loader3{position:absolute;opacity:0;will-change:transform,opacity}.loader1:first-child,.loader2:first-child,.loader3:first-child{margin-left:0}.loader1{width:28%;height:80%;background:linear-gradient(#6829df,#5124d5);left:0;top:50%;transform:translate3d(25%,-50%,0) rotateY(-77deg);animation:loader1 1.6s infinite}.loader2{width:20%;height:63%;background:linear-gradient(#702be1,#623ad9);left:48%;top:50%;transform:translate3d(20%,-50%,0) rotateY(-107deg);animation:loader2 1.6s infinite;animation-delay:0.2s}.loader3{width:28%;height:33%;right:0;top:47%;overflow:hidden;transform:translate3d(50%,-50%,0);animation:loader3 1.6s infinite;animation-delay:0.4s}.loader3::after{content:"";display:block;width:100%;height:140%;background:linear-gradient(155deg,#802cf6,#5023d5);position:absolute;top:0;left:0;transform:translate3d(-37%,-37%,0) rotate(40deg)}.text{margin-top:20px;font-size:16px;top:65%;text-align:center}.link{margin-top:10px;font-size:16px;top:70%;text-align:center}.over{text-transform:uppercase}.tips{margin-top:25px;font-size:16px;text-align:center;padding:0 5px}.usersInform{text-align:center;position:relative;top:100px;}.Firefox .loader div{opacity:1;animation:none}.Firefox .loader1{transform:translate3d(-15%,-50%,0) rotateY(-37deg)}.Firefox .loader2{transform:translate3d(-60%,-50%,0) rotateY(-57deg)}.Firefox .loader3{transform:translate3d(0,-50%,0)}</style>
 
 </head>
 <body>
@@ -46,13 +56,18 @@
   <div id="root">
   <!-- Loader before any JS -->
     <div class="overlay">
-      <div class="loader center">
-        <div class="loader1"></div>
-        <div class="loader2"></div>
-        <div class="loader3"></div>
+      <div class="center">
+        <div class="loader">
+          <div class="loader1"></div>
+          <div class="loader2"></div>
+          <div class="loader3"></div>
+        </div>
+        <div id="beforeJSTip" class="tips">
+          Do not forget to save your private keys!
+        </div>
       </div>
-      <div id="beforeJSTip" class="tips">
-        Do not forget to save your private keys!
+      <div id="usersInform" class="usersInform">
+
       </div>
     </div>
     <script>
@@ -62,12 +77,25 @@
         advice.innerText = 'Не забудьте сохранить свои приватные ключи от кошелька!';
       }
 
-      if (navigator.userAgent.indexOf('Firefox') !== -1) {
-        var styleKostilFirefox = document.createElement('style');
+      var information = document.getElementById('usersInform');
 
-        styleKostilFirefox.innerHTML = ".loader.center div{animation: none;opacity:1;}.loader1{transform:translate3d(-15%,-50%,0) rotateY(-37deg)}.loader2{transform:translate3d(-60%,-50%,0) rotateY(-57deg)}.loader3{transform:translate3d(0,-50%,0)}"
-        document.body.appendChild(styleKostilFirefox);
+      if (window.location.pathname.split('/')[1] === 'ru' && localStorage.length === 0) {
+        information.innerText = 'Генерация приватных ключей для вашего мультивалютного кошелька прямо сейчас, \n то может занять одну минуту';
       }
+
+      if(localStorage.length === 0) {
+        console.log(window.location.pathname.split('/')[1] === 'ru')
+        information.innerText = window.location.pathname.split('/')[1] !== 'ru'
+          ? 'Please wait while the application is loading,\n it may take one minute...'
+          : 'Пожалуйста подождите пока приложение запускается,\n это не займет больше минуты...';
+      }
+
+
+      var styleKostilFirefox = document.createElement('style');
+
+      styleKostilFirefox.innerHTML = ".loader div{animation: none;opacity:1;}.loader1{transform:translate3d(-15%,-50%,0) rotateY(-37deg)}.loader2{transform:translate3d(-60%,-50%,0) rotateY(-57deg)}.loader3{transform:translate3d(0,-50%,0)}"
+      document.body.appendChild(styleKostilFirefox);
+
     </script>
     <script>window.prerenderReady = false;</script>
   <!-- /Loader before any JS -->

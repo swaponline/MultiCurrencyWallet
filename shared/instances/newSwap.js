@@ -4,7 +4,9 @@ import 'abortcontroller-polyfill/dist/abortcontroller-polyfill-only'
 import web3 from 'helpers/web3'
 import swapsExplorer from 'helpers/swapsExplorer'
 import bitcoin from 'bitcoinjs-lib'
+import bitcoincash from 'bitcoincashjs-lib'
 import coininfo from 'coininfo'
+import bchaddr from 'bchaddrjs'
 
 import abi from 'human-standard-token-abi'
 
@@ -20,8 +22,10 @@ import SwapApp, { constants } from 'swap.app'
 import SwapAuth from 'swap.auth'
 import SwapRoom from 'swap.room'
 import SwapOrders from 'swap.orders'
-import { ETH2BTC, BTC2ETH, LTC2BTC, BTC2LTC, ETH2LTC, LTC2ETH, ETHTOKEN2BTC, BTC2ETHTOKEN, EOS2BTC, BTC2EOS, USDT2ETHTOKEN, ETHTOKEN2USDT } from 'swap.flows'
-import { EthSwap, EthTokenSwap, BtcSwap, LtcSwap, EosSwap, UsdtSwap } from 'swap.swaps'
+import { ETH2BTC, BTC2ETH, BCH2ETH, ETH2BCH, LTC2BTC, BTC2LTC, ETH2LTC, LTC2ETH, ETHTOKEN2BTC, BTC2ETHTOKEN, EOS2BTC, BTC2EOS, USDT2ETHTOKEN, ETHTOKEN2USDT } from 'swap.flows'
+import { EthSwap, EthTokenSwap, BtcSwap, BchSwap, LtcSwap, EosSwap, UsdtSwap } from 'swap.swaps'
+
+import { erc20 } from 'swap.app/util'
 
 
 const repo = utils.createRepo()
@@ -30,9 +34,19 @@ utils.exitListener()
 if (config && config.isWidget) {
   // Auto hot plug not exist token to core
   if (!constants.COINS[config.erc20token]) {
-    constants.COINS[config.erc20token] = config.erc20token.toUpperCase()
+    console.log('init token', config.erc20token, config.erc20)
+    erc20.register(config.erc20token, config.erc20[config.erc20token].decimals)
   }
+} else {
+  // Add to swap.core not exists tokens
+  Object.keys(config.erc20).forEach((tokenCode) => {
+    if (!constants.COINS[tokenCode]) {
+      console.info('Add token to swap.core', tokenCode, config.erc20[tokenCode].address, config.erc20[tokenCode].decimals, config.erc20[tokenCode].fullName)
+      erc20.register(tokenCode, config.erc20[tokenCode].decimals)
+    }
+  })
 }
+
 const createSwapApp = () => {
   const { user: { ethData } } = getState()
 
@@ -43,7 +57,9 @@ const createSwapApp = () => {
       eos,
       web3,
       bitcoin,
+      bitcoincash,
       coininfo,
+      bchaddr,
       Ipfs: IPFS,
       IpfsRoom: Channel,
       storage: window.localStorage,
@@ -56,6 +72,7 @@ const createSwapApp = () => {
         // TODO need init swapApp only after private keys created!!!!!!!!!!!!!!!!!!!
         eth: localStorage.getItem(privateKeys.privateKeyNames.eth),
         btc: localStorage.getItem(privateKeys.privateKeyNames.btc),
+        bch: localStorage.getItem(privateKeys.privateKeyNames.bch),
         ltc: localStorage.getItem(privateKeys.privateKeyNames.ltc),
         eos: privateKeys.privateKeyNames.eosAccount,
       }),
@@ -84,8 +101,15 @@ const createSwapApp = () => {
         fetchBalance: (address) => actions.btc.fetchBalance(address),
         fetchUnspents: (scriptAddress) => actions.btc.fetchUnspents(scriptAddress),
         broadcastTx: (txRaw) => actions.btc.broadcastTx(txRaw),
-        fetchTxInfo: (txid) => actions.btc.fetchTx(txid),
-        estimateFeeRate: ({ speed } = {}) => helpers.btc.estimateFeeRate({ speed }),
+        fetchTxInfo: (txid) => actions.btc.fetchTxInfo(txid),
+        estimateFeeValue: ({ inSatoshis, speed, address, txSize } = {}) =>  helpers.btc.estimateFeeValue({ inSatoshis, speed, address, txSize }),
+      }),
+      new BchSwap({
+        fetchBalance: (address) => actions.bch.fetchBalance(address),
+        fetchUnspents: (scriptAddress) => actions.bch.fetchUnspents(scriptAddress),
+        broadcastTx: (txRaw) => actions.bch.broadcastTx(txRaw),
+        fetchTxInfo: (txid) => actions.bch.fetchTxInfo(txid),
+        estimateFeeValue: ({ inSatoshis, speed, address, txSize } = {}) =>  helpers.bch.estimateFeeValue({ inSatoshis, speed, address, txSize }),
       }),
       new LtcSwap({
         fetchBalance: (address) => actions.ltc.fetchBalance(address),
@@ -123,6 +147,9 @@ const createSwapApp = () => {
 
       LTC2BTC,
       BTC2LTC,
+
+      BCH2ETH,
+      ETH2BCH,
 
       EOS2BTC,
       BTC2EOS,

@@ -4,7 +4,7 @@ export default {
   bitpay: 'https://insight.bitpay.com/api',
   etherscan: 'https://api.etherscan.io/api',
   usdt: 'https://api.omniexplorer.info/',
-  // bch: 'https://bch-insight.bitpay.com/api',
+  bch: 'https://rest.bitcoin.com/v2',
   ltc: 'https://insight.litecore.io/api',
   eos: {
     chainId: 'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
@@ -14,9 +14,10 @@ export default {
     buyAccountPaymentRecipient: '1DVC5SrPjXkkcCUbBwQcTsrBprXJEpEneG',
   },
   telos: {
-    chainId: '6c8aacc339bf1567743eb9c8ab4d933173aa6dca4ae6b6180a849c422f5bb207',
-    httpEndpoint: 'https://seven.swap.online/telos-endpoint',
+    chainId: '4667b205c6838ef70ff7988f6e8257e8be0e1284a2f59699054a018f743b1d11',
+    httpEndpoint: 'https://api.eos.miami',
     registerEndpoint: 'https://seven.swap.online/telos-testnet/newaccount',
   },
   swapsExplorer: 'https://seven.swap.online/swaps-testnet/state',
+  faucet: 'https://seven.swap.online/faucet/mainnet/faucet/',
 }

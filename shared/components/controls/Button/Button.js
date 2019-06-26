@@ -10,7 +10,7 @@ const Button = (props) => {
   const {
     children, className,
     fullWidth, brand, green, white, gray, disabled,
-    onClick, id = '',
+    onClick, id = '', dataTut,
   } = props
 
   const styleName = cx('button', {
@@ -24,6 +24,7 @@ const Button = (props) => {
 
   return (
     <button
+      data-tut={dataTut}
       styleName={styleName}
       className={className}
       onClick={onClick}

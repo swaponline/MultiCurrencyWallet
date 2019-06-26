@@ -40,11 +40,80 @@ const initialState = {
         fullTitle: key,
       }))),
   ],
+  partialItems: [
+    {
+      name: 'ETH',
+      title: 'ETH',
+      icon: 'eth',
+      value: 'eth',
+      fullTitle: 'ethereum',
+    },
+    {
+      name: 'LTC',
+      title: 'LTC',
+      icon: 'ltc',
+      value: 'ltc',
+      fullTitle: 'litecoin',
+    },
+    {
+      name: 'BTC',
+      title: 'BTC',
+      icon: 'btc',
+      value: 'btc',
+      fullTitle: 'bitcoin',
+    },
+    {
+      name: 'BCH',
+      title: 'BCH',
+      icon: 'bch',
+      value: 'bch',
+      fullTitle: 'bitcoin cash',
+    },
+    ...(Object.keys(config.erc20)
+      .map(key => ({
+        name: key.toUpperCase(),
+        title: key.toUpperCase(),
+        icon: key,
+        value: key,
+        fullTitle: key,
+      }))),
+  ],
   addSelectedItems: [],
+  addPartialItems: [],
 }
 
 if (config.isWidget) {
   initialState.items = [
+    {
+      name: 'BTC',
+      title: 'BTC',
+      icon: 'btc',
+      value: 'btc',
+      fullTitle: 'bitcoin',
+    },
+    {
+      name: config.erc20token.toUpperCase(),
+      title: config.erc20token.toUpperCase(),
+      icon: config.erc20token,
+      value: config.erc20token,
+      fullTitle: config.erc20[config.erc20token].fullName,
+    },
+    {
+      name: 'ETH',
+      title: 'ETH',
+      icon: 'eth',
+      value: 'eth',
+      fullTitle: 'ethereum',
+    },
+  ]
+  initialState.partialItems = [
+    {
+      name: 'ETH',
+      title: 'ETH',
+      icon: 'eth',
+      value: 'eth',
+      fullTitle: 'ethereum',
+    },
     {
       name: 'BTC',
       title: 'BTC',
@@ -81,12 +150,38 @@ process.env.MAINNET && initialState.items.unshift({
   fullTitle: 'USD Tether',
 })
 
+process.env.TESTNET && initialState.items.unshift({
+  name: 'BCH',
+  title: 'BCH',
+  icon: 'bch',
+  value: 'bch',
+  fullTitle: 'bitcoin cash',
+})
+
 const addSelectedItems = (state, payload) => ({
   ...state,
   addSelectedItems: payload,
 })
 
+const addPartialItems = (state, payload) => ({
+  ...state,
+  addPartialItems: payload,
+})
+
+const updatePartialItems = (state, payload) => ({
+  ...state,
+  partialItems: payload,
+})
+
+const deletedPartialCurrency = (state, payload) => ({
+  ...state,
+  partialItems: state.partialItems.filter(item => item.name !== payload),
+})
+
 export {
   initialState,
   addSelectedItems,
+  addPartialItems,
+  updatePartialItems,
+  deletedPartialCurrency,
 }

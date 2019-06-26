@@ -5,6 +5,8 @@ import erc20 from './erc20'
 import api from './api'
 import swapContract from './swapContract'
 import feeRates from './feeRates'
+import hiddenCoins from './hiddenCoins'
+import noExchangeCoins from './noExchangeCoins'
 
 
 export default {
@@ -15,4 +17,6 @@ export default {
   erc20,
   swapContract,
   feeRates,
+  hiddenCoins,
+  noExchangeCoins,
 }
