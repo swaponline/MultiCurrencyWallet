@@ -229,17 +229,47 @@ $size: 200px;
   }
 }
 
+.saveSecretWarning,
 .alertSaveSecret {
-  color: #d00b0b;
-  font-weight: bold;
+  position: relative;
   font-size: 1rem;
-  padding: 0.5rem;
-  text-align: center;
-  input {
-    width: 100%;
-    padding: 0.3rem;
-    font-size: 0.8rem;
-    text-align: center
+  p {
+    color: #d00b0b;
+    font-weight: bold;
+  }
+  div {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  a {
+    display: flex;
+    font-weight: bold;
+    padding: 13px 19px;
+    border-radius: 5px;
+    font-size: 19px;
+    color: #373737 !important;
+    box-shadow: 1px 1px 6px #929292;
+    margin-bottom: 35px;
+    overflow: hidden;
+    margin-right: 70px;
+    height: 56px;
+  }
+  button {
+    margin: auto;
+    width: 56px;
+    height: 56px;
+    display: block;
+    float: right;
+    justify-content: center;
+    background: #eee;
+    color: #000;
+    align-items: center;
+    margin-left: 15px;
+    margin-bottom: 10px;
+    &:hover {
+      background: #eee
+    }
   }
 }
 

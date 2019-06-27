@@ -34,6 +34,7 @@ import EthTokensToBtc from './SwapProgressText/EthTokensToBtc'
 
 import * as animation from './images'
 import finishSvg from './images/finish.svg'
+import CopyToClipboard from 'react-copy-to-clipboard'
 
 
 @injectIntl
@@ -69,6 +70,7 @@ export default class SwapProgress extends Component {
       sellCurrency: this.swap.sellCurrency,
       secret: crypto.randomBytes(32).toString('hex'),
       stepValue: 0,
+      isSecretCopied: false,
     }
   }
 
@@ -223,6 +225,18 @@ export default class SwapProgress extends Component {
     this.swap.flow.submitSecret(secret)
   }
 
+  onCopySecret = () => {
+    this.setState({
+      isSecretCopied: true,
+    }, () => {
+      setTimeout(() => {
+        this.setState({
+          isSecretCopied: false,
+        })
+      }, 500)
+    })
+  }
+
   confirmBTCScriptChecked = () => {
     this.swap.flow.verifyBtcScript()
   }
@@ -240,6 +254,7 @@ export default class SwapProgress extends Component {
       sellCurrency,
       enabledButton,
       stepValue,
+      isSecretCopied,
     } = this.state
 
     const progress = Math.floor(90 * stepValue)
@@ -306,6 +321,28 @@ export default class SwapProgress extends Component {
                     </a>
                   </strong>
                 </div>
+              )}
+              {(!isSellCurrencyEthOrEthToken && flow.secret) && (
+                <CopyToClipboard text={flow.secret} onCopy={this.onCopySecret} styleName="saveSecretWarning">
+                  <div>
+                    <p>
+                      <FormattedMessage id="copySecretTitle" defaultMessage="Save this secret!"/>
+                    </p>
+                    <Button
+                      brand
+                      onClick={() => {}}
+                      disabled={isSecretCopied}
+                      fullWidth
+                    >
+                      {isSecretCopied ? <i className="fas fa-copy fa-copy-in" /> : <i className="fas fa-copy" />}
+                    </Button>
+                    <a>
+                      {flow.secret}
+                    </a>
+                    <p><FormattedMessage id="swapProgressSaveBTCSecretAlertLine2" defaultMessage="In case you wouldn't, you may probably lose your funds" /></p>
+                    <p><FormattedMessage id="swapProgressSaveBTCSecretAlertLine3" defaultMessage="Please, save this information" /></p>
+                  </div>
+                </CopyToClipboard>
               )}
               {(flow.btcScriptValues && !flow.isFinished && !flow.isEthWithdrawn) && flow.refundTxHex && (
                 <div>
@@ -409,14 +446,6 @@ export default class SwapProgress extends Component {
             )}
           </div>
         </div>
-        {(!isSellCurrencyEthOrEthToken && flow.secret) && (
-          <div styleName="alertSaveSecret">
-            <p><FormattedMessage id="swapProgressSaveBTCSecretAlertLine1" defaultMessage="Save this secret!" /></p>
-            <input value={flow.secret} onFocus={this.handleFocusSecretInput} />
-            <p><FormattedMessage id="swapProgressSaveBTCSecretAlertLine2" defaultMessage="In case you wouldn't, you may probably lose your funds" /></p>
-            <p><FormattedMessage id="swapProgressSaveBTCSecretAlertLine3" defaultMessage="Please, save this information" /></p>
-          </div>
-        )}
       </div>
     )
   }
