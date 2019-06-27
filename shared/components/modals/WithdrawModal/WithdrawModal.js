@@ -284,7 +284,7 @@ export default class WithdrawModal extends React.Component {
       const dataCurrency = isEthToken ? 'ETH' : currency.toUpperCase()
 
       const isDisabled =
-        !address || !amount || isShipped || new BigNumber(amount).isLessThanOrEqualTo(min)
+        !address || !amount || isShipped
         || !this.addressIsCorrect()
         || BigNumber(amount).isGreaterThan(balance)
         || BigNumber(amount).dp() > currentDecimals
@@ -303,12 +303,6 @@ export default class WithdrawModal extends React.Component {
                 currency: `${currency}`,
               }}
             />
-          </div>
-        ))
-        linked.amount.check((value) => new BigNumber(value).isGreaterThanOrEqualTo(min), (
-          <div style={{ width: '340px', fontSize: '12px' }}>
-            <FormattedMessage id="Withdrow159" defaultMessage="Amount must be greater than  " />
-            {min}
           </div>
         ))
       }

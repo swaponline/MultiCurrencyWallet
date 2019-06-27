@@ -33,6 +33,13 @@ const getIPInfo = () =>
     .then((result) => {
       // eslint-disable-next-line camelcase
       const { ip, country_code } = result.data
+      // eslint-disable-next-line camelcase
+      if (!ip || !country_code) {
+        return ({
+          ip: 'json.geoiplookup.io didn\'t respond with a result, so setting locale EN by default',
+          locale: 'EN',
+        })
+      }
       return ({
         ip,
         locale: country_code,

@@ -1,6 +1,3 @@
-.overlay {
-  z-index: 1000;
-}
 .container {
   width: 100%;
   position: relative;
@@ -203,7 +200,7 @@ $size: 200px;
   border: 1px solid #ccc;
   border-radius: 20px;
   padding-bottom: 60px;
-  height: 510px;
+  height: auto;
 }
 
 .step {
@@ -259,7 +256,6 @@ $size: 200px;
   button {
     display: block;
     margin: auto;
-    margin-bottom: 30px;
   }
 }
 

@@ -98,11 +98,10 @@ export default class App extends React.Component {
       window.leveldown = memdown
     }
 
-    setTimeout(() => {
-      actions.user.sign()
-      createSwapApp()
-      this.setState({ fetching: true })
-    }, 1000)
+    actions.user.sign()
+    createSwapApp()
+    this.setState(() => ({ fetching: true }))
+
     window.prerenderReady = true
   }
 

@@ -154,8 +154,8 @@ const sendTransaction = ({ contract, method }, { args, params = {} } = {}, callb
         // eslint-disable-next-line
         callback && callback(hash)
       })
-      .on('error', (err) => {
-        reject(err)
+      .catch((error) => {
+        reject(error)
       })
 
     resolve(receipt)

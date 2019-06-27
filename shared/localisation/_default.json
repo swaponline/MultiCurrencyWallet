@@ -706,6 +706,13 @@
     ]
   },
   {
+    "id": "RowHistory164",
+    "message": "Deleted",
+    "files": [
+      "shared/pages/History/SwapsHistory/RowHistory/RowHistory.js"
+    ]
+  },
+  {
     "id": "RowHistory95",
     "message": "Link to the swap"
   },
@@ -2784,6 +2791,13 @@
     ]
   },
   {
+    "id": "RowHistory139",
+    "message": "Stopped",
+    "files": [
+      "shared/pages/History/SwapsHistory/RowHistory/RowHistory.js"
+    ]
+  },
+  {
     "id": "RowMobileFirstTypeYouGet",
     "message": "You get",
     "files": [
@@ -3942,7 +3956,7 @@
   },
   {
     "id": "deposit165",
-    "message": "You don't have enought funds to continue the swap. Copy this address and top it up with {missingBalance}  ",
+    "message": "To continue the swap copy this address and top it up with {missingBalance}",
     "files": [
       "shared/pages/Swap/DepositWindow/DepositWindow.js"
     ]
@@ -4225,13 +4239,6 @@
   },
   {
     "id": "swapprogress270",
-    "message": "Try Refaund",
-    "files": [
-      "shared/pages/Swap/SwapProgress/SwapProgress.js"
-    ]
-  },
-  {
-    "id": "swapprogress377",
     "message": "Try refund",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgress.js"
