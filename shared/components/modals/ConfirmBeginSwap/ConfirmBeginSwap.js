@@ -196,7 +196,7 @@ export default class ConfirmBeginSwap extends React.Component {
                   {
                     (!this.customWalletIsValid()) && (
                       <div styleName="error">
-                        You specify not valid wallet address
+                        <FormattedMessage id="CustomWalletIsNotCorrect" defaultMessage="Wallet address is incorrect" />
                       </div>
                     )
                   }
