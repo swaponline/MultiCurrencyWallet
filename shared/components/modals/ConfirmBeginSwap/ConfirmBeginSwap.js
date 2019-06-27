@@ -17,6 +17,7 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import Logo from 'components/Logo/Logo'
 import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
+import { isCoinAddress } from 'swap.app/util/typeforce'
 
 import config from 'app-config'
 
@@ -70,32 +71,45 @@ export default class ConfirmBeginSwap extends React.Component {
     }
   }
 
+  customWalletIsValid() {
+    const { customWallet, customWalletUse } = this.state
+    const { sellCurrency } = this.props.data.order
+
+    if (customWalletUse) {
+      if (!isCoinAddress[sellCurrency]) {
+        console.warn(`Swap.Core unkrown isCoinAddress check for ${sellCurrency}`)
+        return true
+      }
+      return isCoinAddress[sellCurrency](customWallet)
+    } else return true
+  }
+
   customWalletAllowed() {
     const { buyCurrency, sellCurrency } = this.props.data.order
 
-    if (sellCurrency === 'BTC') {
+    if (buyCurrency === 'BTC') {
       // btc-token
-      if (config.erc20[buyCurrency.toLowerCase()] !== undefined) return true
+      if (config.erc20[sellCurrency.toLowerCase()] !== undefined) return true
       // btc-eth
-      if (buyCurrency === 'ETH') return true
+      if (sellCurrency === 'ETH') return true
     }
-    if (config.erc20[sellCurrency.toLowerCase()] !== undefined) {
+    if (config.erc20[buyCurrency.toLowerCase()] !== undefined) {
       // token-btc
-      if (buyCurrency === 'BTC') return true
+      if (sellCurrency === 'BTC') return true
     }
 
-    if (sellCurrency === 'ETH') {
+    if (buyCurrency === 'ETH') {
       // eth-btc
-      if (buyCurrency === 'BTC') return true
+      if (sellCurrency === 'BTC') return true
     }
 
     return false
   }
 
   getSystemWallet = (walletCurrency) => {
-    const { buyCurrency } = this.props.data.order
+    const { sellCurrency } = this.props.data.order
 
-    return this.wallets[(walletCurrency) ? walletCurrency.toUpperCase() : buyCurrency]
+    return this.wallets[(walletCurrency) ? walletCurrency.toUpperCase() : sellCurrency]
   }
 
   handleCustomWalletUse = () => {
@@ -126,6 +140,8 @@ export default class ConfirmBeginSwap extends React.Component {
   handleConfirm = () => {
     const { name, data, onAccept } = this.props
     const { customWalletUse, customWallet } = this.state
+
+    if (!this.customWalletIsValid()) return
 
     actions.modals.close(name)
 
@@ -158,6 +174,7 @@ export default class ConfirmBeginSwap extends React.Component {
     }
 
     const { customWalletUse, customWallet } = this.state
+    const okStyle = (this.customWalletIsValid()) ? 'brand' : 'gray'
 
     const linked = Link.all(this, 'customWallet')
 
@@ -176,6 +193,13 @@ export default class ConfirmBeginSwap extends React.Component {
             {
               (this.customWalletAllowed()) && (
                 <Fragment>
+                  {
+                    (!this.customWalletIsValid()) && (
+                      <div styleName="error">
+                        You specify not valid wallet address
+                      </div>
+                    )
+                  }
                   <div styleName="walletToggle walletToggle_site">
                     <div styleName="walletOpenSide">
                       <Toggle dataTut="togle" checked={customWalletUse} onChange={this.handleCustomWalletUse} />
@@ -193,7 +217,12 @@ export default class ConfirmBeginSwap extends React.Component {
               )
             }
             <div styleName="button-overlay">
-              <Button styleName="button" brand onClick={this.handleConfirm}>{labels.yes}</Button>
+              {(this.customWalletIsValid()) && (
+                <Button styleName="button" brand onClick={this.handleConfirm}>{labels.yes}</Button>
+              )}
+              {(!this.customWalletIsValid()) && (
+                <Button styleName="button" gray>{labels.yes}</Button>
+              )}
               <Button styleName="button" gray onClick={this.handleClose}>{labels.no}</Button>
             </div>
           </div>
