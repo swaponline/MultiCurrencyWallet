@@ -229,6 +229,20 @@ $size: 200px;
   }
 }
 
+.alertSaveSecret {
+  color: #d00b0b;
+  font-weight: bold;
+  font-size: 1rem;
+  padding: 0.5rem;
+  text-align: center;
+  input {
+    width: 100%;
+    padding: 0.3rem;
+    font-size: 0.8rem;
+    text-align: center
+  }
+}
+
 .stepInfo {
   color: #fff;
   width: 84%;

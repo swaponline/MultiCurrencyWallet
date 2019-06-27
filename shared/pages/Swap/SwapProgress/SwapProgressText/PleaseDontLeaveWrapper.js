@@ -7,7 +7,7 @@ import styles from '../SwapProgress.scss'
 
 
 const PleaseDontLeaveWrapper = (props) => {
-  const { children } = props
+  const { children, isBTC } = props
   return (
     <div>
       {children}
@@ -17,9 +17,18 @@ const PleaseDontLeaveWrapper = (props) => {
           id="swapjsdontleave"
           dontHideMobile
         >
-          <FormattedMessage
-            id="swapjsdontleave"
-            defaultMessage="The exchange requires signing with private keys that only your browser knows." />
+          <p>
+            <FormattedMessage
+              id="swapjsdontleave"
+              defaultMessage="The exchange requires signing with private keys that only your browser knows." />
+          </p>
+          {(isBTC) && (
+            <p>
+              <FormattedMessage
+                id="swapjsdontleavesavesecret"
+                defaultMessage="If you want to leave this page please save the secret." />
+            </p>
+          )}
         </Tooltip>
       </span>
     </div>
