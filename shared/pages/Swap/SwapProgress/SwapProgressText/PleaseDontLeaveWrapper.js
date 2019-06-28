@@ -30,6 +30,12 @@ const PleaseDontLeaveWrapper = (props) => {
             </p>
           )}
         </Tooltip>
+        {(isBTC) && (
+          <strong styleName="saveSecretKey">
+            <FormattedMessage id="swapprogressDONTLEAVEBTC" defaultMessage="Or save this information before you leave:" />
+            <em>{isBTC}</em>
+          </strong>
+        )}
       </span>
     </div>
   )
