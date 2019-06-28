@@ -53,7 +53,9 @@ export default class PrivateKeysModal extends React.PureComponent {
     ethValidated: false,
     btcValidated: false,
     skipAlertShown: false,
-    skipBtnShown: false,
+    skipBtnShownToggleOne: false,
+    skipBtnShownToggleTwo: false,
+    skipBtnShownToggleThree: false,
   }
 
   changeView = (view) => {
@@ -130,7 +132,7 @@ export default class PrivateKeysModal extends React.PureComponent {
   }
 
   render() {
-    const { view, skipAlertShown, skipBtnShown } = this.state
+    const { view, skipAlertShown, skipBtnShownToggleOne, skipBtnShownToggleTwo, skipBtnShownToggleThree } = this.state
     const { name, ethData, btcData, intl } = this.props
 
     const ethValidated = Link.state(this, 'ethValidated')
@@ -300,7 +302,7 @@ export default class PrivateKeysModal extends React.PureComponent {
                 />
                 <br />
                 <label styleName="containerWithWrongLinkFZ">
-                  <Toggle checked={skipBtnShown} onChange={() => this.setState({ skipBtnShown: !skipBtnShown })} />
+                  <Toggle checked={skipBtnShownToggleOne} onChange={() => this.setState({ skipBtnShownToggleOne: !skipBtnShownToggleOne })} />
                   <FormattedMessage
                     id="PrivateKeysModal665"
                     defaultMessage=" I understand and except the risks of not saving my private keys {learnMore}"
@@ -318,13 +320,29 @@ export default class PrivateKeysModal extends React.PureComponent {
                   />
                 </label>
                 <br />
+                <label styleName="containerWithWrongLinkFZ">
+                  <Toggle checked={skipBtnShownToggleTwo} onChange={() => this.setState({ skipBtnShownToggleTwo: !skipBtnShownToggleTwo })} />
+                  <FormattedMessage
+                    id="PrivateKeysModalToggleTwo"
+                    defaultMessage=" I do not use incognito or guest mode in my browser"
+                  />
+                </label>
+                <br />
+                <label styleName="containerWithWrongLinkFZ">
+                  <Toggle checked={skipBtnShownToggleThree} onChange={() => this.setState({ skipBtnShownToggleThree: !skipBtnShownToggleThree })} />
+                  <FormattedMessage
+                    id="PrivateKeysModalToggleTree"
+                    defaultMessage=" I do not use TOR browser"
+                  />
+                </label>
+                <br />
                 <br />
 
                 <div styleName="tryToSkip__btnContainer">
                   <Button brand styleName="button" onClick={() => this.setState({ skipAlertShown: false })}>
                     <FormattedMessage id="PrivateKeysModal144" defaultMessage="Back" />
                   </Button>
-                  <Button white styleName="button" disabled={!skipBtnShown} onClick={this.handleCloseModal}>
+                  <Button white styleName="button" disabled={!(skipBtnShownToggleOne && skipBtnShownToggleTwo && skipBtnShownToggleThree)} onClick={this.handleCloseModal}>
                     <FormattedMessage id="PrivateKeysModal666" defaultMessage="Skip this step" />
                   </Button>
                 </div>
