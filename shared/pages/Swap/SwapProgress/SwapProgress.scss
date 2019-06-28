@@ -150,6 +150,16 @@ $size: 200px;
   border-bottom: 1px solid #ddd;
 }
 
+.saveSecretKey {
+  display: block;
+  color: #d66f6f;
+  em {
+    display: block;
+    font-size: 0.8rem;
+    font-style: normal;
+  }
+}
+
 .animated-dots {
   display: inline-block;
   height: 12px;
