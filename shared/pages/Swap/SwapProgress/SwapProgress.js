@@ -200,6 +200,8 @@ export default class SwapProgress extends Component {
     }
   }
 
+  handleFocusSecretInput = (event) => event.target.select();
+
   tryRefund = async () => {
     const { flow } = this.swap
 
@@ -238,6 +240,7 @@ export default class SwapProgress extends Component {
       sellCurrency,
       enabledButton,
       stepValue,
+      isSecretCopied,
     } = this.state
 
     const progress = Math.floor(90 * stepValue)
@@ -288,7 +291,7 @@ export default class SwapProgress extends Component {
                   {
                     stepValue < 4
                       ? (
-                        <PleaseDontLeaveWrapper>
+                        <PleaseDontLeaveWrapper isBTC={(!isSellCurrencyEthOrEthToken && flow.secret) ? flow.secret : false}>
                           {swapTexts}
                         </PleaseDontLeaveWrapper>
                       )
