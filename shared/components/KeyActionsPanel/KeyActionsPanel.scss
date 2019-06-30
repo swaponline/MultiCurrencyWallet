@@ -9,6 +9,10 @@
 	.WithdrawButtonContainer {
     margin-left: 0;
     margin-bottom: 15px;
+
+    button {
+      white-space: nowrap;
+    }
 	}
 }
 
@@ -17,7 +21,9 @@
 		flex-direction: row;
     margin: 0 -6px;
     margin-bottom: 15px;
+
     button {
+      white-space: nowrap;
       min-width: 32%;
       max-width: 32%;
       text-align: center;
@@ -25,6 +31,7 @@
       margin: 0 0.5% 2%;
       padding: 0px 8px;
     }
+    
     button:nth-child(4) {
       margin-right: 0;
     }

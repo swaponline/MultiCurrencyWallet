@@ -4146,7 +4146,7 @@
   },
   {
     "id": "KeyActionsPanel73",
-    "message": "Все валюты ({length})",
+    "message": "Скрыть / Добавить валюты",
     "files": [
       "shared/components/KeyActionsPanel/KeyActionsPanel.js"
     ]

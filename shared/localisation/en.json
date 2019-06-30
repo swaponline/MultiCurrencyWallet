@@ -4070,7 +4070,7 @@
   },
   {
     "id": "KeyActionsPanel73",
-    "message": "Hidden coins ({length})",
+    "message": "Hide / Add Coins",
     "files": [
       "shared/components/KeyActionsPanel/KeyActionsPanel.js"
     ]
