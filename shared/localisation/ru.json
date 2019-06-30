@@ -120,7 +120,7 @@
   },
   {
     "id": "ADDoffer29",
-    "message": "Регистрация",
+    "message": "Регистрация (получите до 10$ в подарок)",
     "files": [
       "shared/components/Header/User/SignUpButton/SignUpButton.js"
     ]

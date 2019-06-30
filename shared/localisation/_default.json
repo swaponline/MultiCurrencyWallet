@@ -120,7 +120,7 @@
   },
   {
     "id": "ADDoffer29",
-    "message": "Sign up",
+    "message": "Sign up (get up to 10$ bonus)",
     "files": [
       "shared/components/Header/User/SignUpButton/SignUpButton.js"
     ]
