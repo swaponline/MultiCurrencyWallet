@@ -15,6 +15,8 @@ import UserAvatar from './UserAvatar/UserAvatar'
 import UserTooltip from './UserTooltip/UserTooltip'
 import SignUpButton from './SignUpButton/SignUpButton'
 
+import links from 'helpers/links'
+
 import Avatar from 'components/Avatar/Avatar'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
@@ -31,7 +33,7 @@ import config from 'app-config'
   isSigned: 'signUp.isSigned',
   reputation: 'ipfs.reputation',
 })
-@CSSModules(styles)
+@CSSModules(styles, { allowMultiple: true })
 export default class User extends React.Component {
 
   static propTypes = {
@@ -107,13 +109,31 @@ export default class User extends React.Component {
         }
         {!!peer && !isWidget && (
           <Fragment>
-            <div styleName="avatar-container" data-tip data-for="gravatar">
+            <div
+              styleName="avatar-container"
+              {...Number.isInteger(reputation)
+                ? {
+                  'data-tip': true,
+                  'data-for': 'gravatar',
+                }
+                : {}
+              }
+            >
               <Avatar
                 className={styles.avatar}
                 value={peer}
                 size={40}
               />
-              <div styleName="avatar-reputation-centered">{ Number.isInteger(reputation) ? reputation : reputationPlaceholder }</div>
+              <div styleName={`avatar-reputation-centered${!Number.isInteger(reputation) ? ' noBg' : ''}`}>
+                { Number.isInteger(reputation)
+                  ? reputation
+                  : (
+                    <a href={links.telegram} target="_blank" rel="noopener noreferrer">
+                      <i styleName="icon" className="fab fa-telegram-plane" />
+                    </a>
+                  )
+                }
+              </div>
             </div>
             <ReactTooltip id="gravatar" effect="solid">
               <span>
