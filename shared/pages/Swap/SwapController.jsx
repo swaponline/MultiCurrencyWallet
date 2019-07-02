@@ -14,6 +14,8 @@ class SwapController extends React.PureComponent {
 
     this.swap = swap
 
+    this.mount = true
+
     this.state = {
       online: true,
     }
@@ -22,7 +24,13 @@ class SwapController extends React.PureComponent {
   componentDidMount() {
     this.swap.events.subscribe('check status', this.checkStatusUser)
     this.dispatchEvent('check status')
-    setInterval(() => {
+
+    const checkStatusUserTimer = setInterval(() => {
+      if (!this.mount) {
+        clearInterval(checkStatusUserTimer)
+        return
+      }
+
       this.checkStatusUser()
     }, 5000)
   }
@@ -30,6 +38,7 @@ class SwapController extends React.PureComponent {
   componentWillUnmount() {
     this.dispatchEvent('check status')
     this.swap.events.unsubscribe('check status', this.checkStatusUser)
+    this.mount = false
   }
 
   dispatchEvent = (event) => {
