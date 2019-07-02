@@ -33,7 +33,9 @@ export default class DepositWindow extends Component {
     this.swap = swap
 
     this.isDepositToContractDirectly =
-      !helpers.ethToken.isEthOrEthToken({ name: swap.sellCurrency.toLowerCase() })
+      !helpers.ethToken.isEthOrEthToken({ name: swap.sellCurrency })
+
+    this.isSellCurrencyEthToken = helpers.ethToken.isEthToken({ name: swap.sellCurrency })
 
     this.state = {
       swap,
@@ -101,11 +103,9 @@ export default class DepositWindow extends Component {
     const { swap } =  this.props
     const { sellAmount, address } =  this.state
 
-    const isSellCurrencyEthToken = helpers.ethToken.isEthToken({ name: swap.sellCurrency })
-
     let actualBalance
 
-    if (isSellCurrencyEthToken) {
+    if (this.isSellCurrencyEthToken) {
       actualBalance = await actions.token.getBalance(swap.sellCurrency.toLowerCase())
     } else {
       const unspents = await actions[swap.sellCurrency.toLowerCase()].fetchUnspents(address)
@@ -122,10 +122,14 @@ export default class DepositWindow extends Component {
     const { swap } = this.props
     const { sellAmount, balance, dynamicFee } = this.state
 
-    const remainingBalance = new BigNumber(sellAmount).minus(balance).plus(dynamicFee).dp(6, BigNumber.ROUND_UP)
+    let remainingBalance = new BigNumber(sellAmount).minus(balance)
+
+    if (!this.isSellCurrencyEthToken) {
+      remainingBalance = remainingBalance.plus(dynamicFee)
+    }
 
     this.setState(() => ({
-      remainingBalance,
+      remainingBalance: remainingBalance.dp(6, BigNumber.ROUND_UP),
     }))
   }
 
@@ -133,7 +137,6 @@ export default class DepositWindow extends Component {
     const { swap } =  this.props
     const { sellAmount } = this.state
 
-    const isSellCurrencyEthToken = helpers.ethToken.isEthToken({ name: swap.sellCurrency })
     const currency = this.isDepositToContractDirectly
       ? swap.sellCurrency.toLowerCase()
       : 'eth'
@@ -141,8 +144,8 @@ export default class DepositWindow extends Component {
     let dynamicFee
 
     if (coinsWithDynamicFee.includes(currency)) {
-      if (isSellCurrencyEthToken) {
-        dynamicFee = await helpers.ethToken.estimateFeeValue({ method: 'swap', fixed: true })
+      if (this.isSellCurrencyEthToken) {
+        dynamicFee = 0
       } else {
         dynamicFee = await helpers[currency].estimateFeeValue({ method: 'swap', fixed: true })
       }
