@@ -35,7 +35,7 @@ export default class FeeControler extends Component {
   }
 
   render() {
-    const { ethAddress } = this.props
+    const { ethAddress, gasAmountNeeded } = this.props
     const { isAddressCopied } = this.state
 
     return (
@@ -49,9 +49,10 @@ export default class FeeControler extends Component {
               <h3 styleName="feeHeading">
                 <FormattedMessage
                   id="FeeControler68"
-                  defaultMessage="Not enough ETH on your balance for miner fee.{br}Deposit 0.002 ETH to your account"
+                  defaultMessage="Not enough ETH on your balance for miner fee.{br}Deposit {gasAmountNeeded} ETH to your account"
                   values={{
                     br: <br />,
+                    gasAmountNeeded,
                   }}
                 />
               </h3>
