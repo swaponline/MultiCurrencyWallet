@@ -251,7 +251,7 @@ export default class BtcToEthToken extends Component {
               )
             }
           </div>
-          {!this.props.enoughBalance && this.state.swap.flow.state.step === 4
+          {!enoughBalance && flow.step === 3
             ? (
               <div styleName="swapDepositWindow">
                 <DepositWindow currencyData={currencyData} swap={swap} flow={flow} tokenItems={tokenItems} />
