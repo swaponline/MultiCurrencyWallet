@@ -111,7 +111,7 @@ export default class User extends React.Component {
           <Fragment>
             <div
               styleName="avatar-container"
-              {...Number.isInteger(reputation)
+              {...Number.isInteger(reputation) && reputation !== 0
                 ? {
                   'data-tip': true,
                   'data-for': 'gravatar',
@@ -124,8 +124,8 @@ export default class User extends React.Component {
                 value={peer}
                 size={40}
               />
-              <div styleName={`avatar-reputation-centered${!Number.isInteger(reputation) ? ' noBg' : ''}`}>
-                { Number.isInteger(reputation)
+              <div styleName={`avatar-reputation-centered${!Number.isInteger(reputation) || reputation === 0 ? ' noBg' : ''}`}>
+                { Number.isInteger(reputation) && reputation !== 0
                   ? reputation
                   : (
                     <a href={links.telegram} target="_blank" rel="noopener noreferrer">
