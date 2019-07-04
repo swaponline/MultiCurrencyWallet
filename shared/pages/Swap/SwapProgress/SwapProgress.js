@@ -286,19 +286,11 @@ export default class SwapProgress extends Component {
               </div>
             </div>
             <div styleName="stepInfo">
-              <div styleName="stepInfo">
-                <h1 styleName="stepHeading">
-                  {
-                    stepValue < 4
-                      ? (
-                        <PleaseDontLeaveWrapper isBTC={(!isSellCurrencyEthOrEthToken && flow.secret) ? flow.secret : false}>
-                          {swapTexts}
-                        </PleaseDontLeaveWrapper>
-                      )
-                      : swapTexts
-                  }
-                </h1>
-              </div>
+
+              <span styleName="stepHeading">
+                {swapTexts}
+              </span>
+
               {signed && flow.step < 4 && (
                 <div>
                   <strong>
@@ -308,6 +300,7 @@ export default class SwapProgress extends Component {
                   </strong>
                 </div>
               )}
+
               {(flow.btcScriptValues && !flow.isFinished && !flow.isEthWithdrawn) && flow.refundTxHex && (
                 <div>
                   <a
@@ -321,6 +314,7 @@ export default class SwapProgress extends Component {
                   <code> {flow.refundTxHex} </code>
                 </div>
               )}
+
               {
                 flow.refundTransactionHash && (
                   <div styleName="refundTransaction">
@@ -373,7 +367,12 @@ export default class SwapProgress extends Component {
                   <FormattedMessage id="swapFinishedGoHome298" defaultMessage="Everything is OK. Continue" />
                 </Button>
               }
+
+              {stepValue < 4 &&
+                <PleaseDontLeaveWrapper isBTC={(!isSellCurrencyEthOrEthToken && flow.secret) ? flow.secret : false} />
+              }
             </div>
+
             {(flow.ethSwapWithdrawTransactionHash && swap.sellCurrency === 'BTC') &&  (
               <strong styleName="transaction">
                 <a
