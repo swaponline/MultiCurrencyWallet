@@ -121,7 +121,7 @@ export default class FAQ extends Component {
 
     var hash = window.location.hash;
     if (!this.state.dataHere) {
-      $.getJSON("https://wiki.swap.online/wp-json/swap/faq/", function (data) {
+      $.getJSON("https://wiki.swap.online/wp-json/swap/faq/mainpage", function (data) {
         var items = [];
         var accordionHtmlOne = $('<div class="faq-list faq-list-one"></div>');
         var accordionHtmlTwo = $('<div class="faq-list faq-list-two"></div>');
