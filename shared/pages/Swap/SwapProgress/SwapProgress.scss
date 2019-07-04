@@ -264,6 +264,13 @@ $size: 200px;
   }
 }
 
+.tryAgain {
+  font-size: 12px;
+  color: #d66f6f;
+  margin-top: 10px;
+  font-weight: 600;
+}
+
 .timerRefund {
   color: #000;
   span {
@@ -316,6 +323,7 @@ $size: 200px;
   display: block;
   position: relative;
   font-size: 13px;
+  word-wrap: break-word
 }
 
 @include media-tablet {

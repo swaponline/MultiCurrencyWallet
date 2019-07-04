@@ -63,6 +63,7 @@ export default class SwapProgress extends Component {
       swap,
       signed,
       enabledButton: false,
+      refundError: false,
       flow,
       steps: flow.steps,
       buyCurrency: swap.buyCurrency,
@@ -170,13 +171,7 @@ export default class SwapProgress extends Component {
       && !state.isFinished
       && !state.isRefunded
       && !state[`is${finalBuyCurrency}Withdrawn`]
-/*
-    console.warn('finalBuyCurrency', finalBuyCurrency)
-    console.warn('finalSellCurrency', finalSellCurrency)
-    console.warn('isStartStepForRefund', isStartStepForRefund)
-    console.warn('isEndStepForRefund', isEndStepForRefund)
-    console.warn('canRefund', canRefund)
-*/
+
     return canRefund
   }
 
@@ -207,10 +202,14 @@ export default class SwapProgress extends Component {
 
     await flow.tryRefund()
       .then((result) => {
-        console.warn('refundResult', result)
-      })
+        if (!result) {
+          this.setState(() => ({ refundError: true }))
+          setTimeout(() => this.setState(() => ({ refundError: false })), 5000)
+          return
+        }
 
-    this.setState(() => ({ enabledButton: false }))
+        this.setState(() => ({ enabledButton: false }))
+      })
   }
 
   willEnable = () => {
@@ -239,6 +238,7 @@ export default class SwapProgress extends Component {
       buyCurrency,
       sellCurrency,
       enabledButton,
+      refundError,
       stepValue,
       isSecretCopied,
     } = this.state
@@ -339,11 +339,18 @@ export default class SwapProgress extends Component {
               <Fragment>
                 { enabledButton
                     ? (
-                        <div styleName="btnRefund">
-                          <Button gray onClick={this.tryRefund}>
-                            <FormattedMessage id="swapprogress270" defaultMessage="Try refund" />
-                          </Button>
-                        </div>
+                        <Fragment>
+                          <div styleName="btnRefund">
+                            <Button gray onClick={this.tryRefund}>
+                              <FormattedMessage id="swapprogress270" defaultMessage="Try refund" />
+                            </Button>
+                          </div>
+                          { refundError &&
+                            <span styleName="tryAgain">
+                              <FormattedMessage id="swapprogress271" defaultMessage="Try again in a few minutes" />
+                            </span>
+                          }
+                        </Fragment>
                       )
                     : (
                         <div styleName="timerRefund">
