@@ -4245,6 +4245,13 @@
     ]
   },
   {
+    "id": "swapprogress271",
+    "message": "Try again in a few minutes",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapProgress.js"
+    ]
+  },
+  {
     "id": "swappropgress233",
     "message": "ETH transaction:"
   },

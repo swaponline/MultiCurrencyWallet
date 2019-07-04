@@ -4355,6 +4355,13 @@
     ]
   },
   {
+    "id": "swapprogress271",
+    "message": "Попробуйте еще раз через несколько минут",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapProgress.js"
+    ]
+  },
+  {
     "id": "swappropgress233",
     "message": "ETH транзакция:"
   },
