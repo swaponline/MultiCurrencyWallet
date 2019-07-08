@@ -26,9 +26,14 @@ import { BigNumber } from 'bignumber.js'
 
 
 @injectIntl
-@connect({
-  peer: 'ipfs.peer',
-})
+@connect(({
+  ipfs: { peer },
+  user,
+}) => ({
+  currenciesData: user,
+  peer,
+}))
+
 @cssModules(styles)
 export default class Row extends Component {
 
@@ -36,12 +41,15 @@ export default class Row extends Component {
     row: PropTypes.object,
   }
 
-  state = {
-    balance: 0,
-    windowWidth: 0,
-    isFetching: false,
-    enterButton: false,
+  constructor(props) {
+    super(props)
 
+    this.state = {
+      balance: 0,
+      windowWidth: 0,
+      isFetching: false,
+      enterButton: false,
+    }
   }
 
   componentDidMount() {
@@ -64,14 +72,33 @@ export default class Row extends Component {
   }
 
   checkBalance = async (currency) => {
-    const balance = await actions[currency.toLowerCase()].getBalance(currency)
+    currency = currency.toLowerCase()
+
+    let balance
+
+    const isCurrencyEthOrEthToken = helpers.ethToken.isEthOrEthToken({ name: currency })
+    const isCurrencyEthToken = helpers.ethToken.isEthToken({ name: currency })
+
+    if (isCurrencyEthOrEthToken) {
+      if (isCurrencyEthToken) {
+        balance = await actions.token.getBalance(currency)
+      } else {
+        balance = await actions.eth.getBalance(currency)
+      }
+    } else {
+      const { currenciesData } = this.props
+
+      const unspents = await actions[currency].fetchUnspents(currenciesData[`${currency}Data`].address)
+      const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
+      balance = BigNumber(totalUnspent).dividedBy(1e8)
+    }
 
     this.setState({
       balance,
     })
   }
 
-  сheckDeclineOrders = (orderId, currency, checkCurrency) => {
+  checkDeclineOrders = (orderId, currency, checkCurrency) => {
     const { intl: { locale }, decline } = this.props
 
     if (decline.length === 0) {
@@ -265,7 +292,7 @@ export default class Row extends Component {
                       ) : (
                         <RequestButton
                           disabled={balance >= Number(buyAmount)}
-                          onClick={() => this.сheckDeclineOrders(id, isMy ? sellCurrency : buyCurrency)}
+                          onClick={() => this.checkDeclineOrders(id, isMy ? sellCurrency : buyCurrency)}
                           data={{ type, amount, main, total, base }}
                         >
                           {type === PAIR_TYPES.BID ? <FormattedMessage id="Row2061" defaultMessage="Sell" /> : <FormattedMessage id="Row206" defaultMessage="Buy" />}

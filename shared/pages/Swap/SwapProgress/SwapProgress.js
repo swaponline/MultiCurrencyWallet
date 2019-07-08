@@ -58,6 +58,8 @@ export default class SwapProgress extends Component {
     this.history = history
     this.locale = locale
 
+    this.isSellCurrencyEthOrEthToken = ethToken.isEthOrEthToken({ name: swap.sellCurrency })
+
     this.state = {
       step,
       swap,
@@ -67,7 +69,7 @@ export default class SwapProgress extends Component {
       flow,
       steps: flow.steps,
       buyCurrency: swap.buyCurrency,
-      sellCurrency: this.swap.sellCurrency,
+      sellCurrency: swap.sellCurrency,
       secret: crypto.randomBytes(32).toString('hex'),
       stepValue: 0,
     }
@@ -163,14 +165,24 @@ export default class SwapProgress extends Component {
     const finalSellCurrency = getFinalCurrency(sellCurrency)
 
     const isStartStepForRefund = state.step >= stepNumbers[`lock-${finalSellCurrency.toLowerCase()}`]
-    const isEndStepForRefund = state.step <= stepNumbers[`withdraw-${finalBuyCurrency.toLowerCase()}`]
+    const isEndStepForRefund = state.step < stepNumbers[`withdraw-${finalBuyCurrency.toLowerCase()}`]
 
-    const canRefund = isStartStepForRefund
-      && isEndStepForRefund
-      && state.btcScriptValues
-      && !state.isFinished
-      && !state.isRefunded
-      && !state[`is${finalBuyCurrency}Withdrawn`]
+    const isStepForRefund = isStartStepForRefund && isEndStepForRefund
+
+    const isNotFinished = !state.isFinished && !state.isRefunded
+
+    const isCurrencyFunded = this.isSellCurrencyEthOrEthToken
+      ? state.ethSwapCreationTransactionHash
+      : state.btcScriptCreatingTransactionHash
+
+    const isCurrencyWithdrawn = this.isSellCurrencyEthOrEthToken
+      ? state.btcSwapWithdrawTransactionHash
+      : state.ethSwapWithdrawTransactionHash
+
+    const canRefund = isStepForRefund
+      && isCurrencyFunded
+      && isNotFinished
+      && !isCurrencyWithdrawn
 
     return canRefund
   }
@@ -248,7 +260,6 @@ export default class SwapProgress extends Component {
     const showWalletButton = (!this.swap.destinationBuyAddress)
       || (this.swap.destinationBuyAddress === this.wallets[buyCurrency.toUpperCase()])
 
-    const isSellCurrencyEthOrEthToken = ethToken.isEthOrEthToken({ name: sellCurrency })
     const canRefund = this.checkCanRefund()
 
     const swapTexts = (
@@ -336,51 +347,51 @@ export default class SwapProgress extends Component {
               }
 
               { canRefund &&
-              <Fragment>
-                { enabledButton
-                    ? (
-                        <Fragment>
-                          <div styleName="btnRefund">
-                            <Button gray onClick={this.tryRefund}>
-                              <FormattedMessage id="swapprogress270" defaultMessage="Try refund" />
-                            </Button>
+                <Fragment>
+                  { enabledButton
+                      ? (
+                          <Fragment>
+                            <div styleName="btnRefund">
+                              <Button gray onClick={this.tryRefund}>
+                                <FormattedMessage id="swapprogress270" defaultMessage="Try refund" />
+                              </Button>
+                            </div>
+                            { refundError &&
+                              <span styleName="tryAgain">
+                                <FormattedMessage id="swapprogress271" defaultMessage="Try again in a few minutes" />
+                              </span>
+                            }
+                          </Fragment>
+                        )
+                      : (
+                          <div styleName="timerRefund">
+                            <Timer
+                              lockTime={flow.btcScriptValues.lockTime * 1000}
+                              enabledButton={() => this.setState(() => ({ enabledButton: true }))}
+                            />
                           </div>
-                          { refundError &&
-                            <span styleName="tryAgain">
-                              <FormattedMessage id="swapprogress271" defaultMessage="Try again in a few minutes" />
-                            </span>
-                          }
-                        </Fragment>
-                      )
-                    : (
-                        <div styleName="timerRefund">
-                          <Timer
-                            lockTime={flow.btcScriptValues.lockTime * 1000}
-                            enabledButton={() => this.setState(() => ({ enabledButton: true }))}
-                          />
-                        </div>
-                      )
-                }
-              </Fragment>
+                        )
+                  }
+                </Fragment>
               }
 
-              {flow.step === 2 && !isSellCurrencyEthOrEthToken &&
+              {flow.step === 2 && !this.isSellCurrencyEthOrEthToken &&
                 <Button brand onClick={this.submitSecret()} >
                   <FormattedMessage id="swapFinishedGoHome289" defaultMessage="Submit the Secret" />
                 </Button>
               }
-              {flow.step === 3 && isSellCurrencyEthOrEthToken &&
+              {flow.step === 3 && this.isSellCurrencyEthOrEthToken &&
                 <Button brand onClick={this.confirmBTCScriptChecked()} >
                   <FormattedMessage id="swapFinishedGoHome298" defaultMessage="Everything is OK. Continue" />
                 </Button>
               }
 
-              {stepValue < 4 &&
-                <PleaseDontLeaveWrapper isBTC={(!isSellCurrencyEthOrEthToken && flow.secret) ? flow.secret : false} />
+              {flow.step > 3 && flow.step < 6 && !this.isSellCurrencyEthOrEthToken &&
+                <PleaseDontLeaveWrapper isBTC={flow.secret ? flow.secret : false} />
               }
             </div>
 
-            {(flow.ethSwapWithdrawTransactionHash && swap.sellCurrency === 'BTC') &&  (
+            {flow.ethSwapWithdrawTransactionHash && !this.isSellCurrencyEthOrEthToken &&  (
               <strong styleName="transaction">
                 <a
                   href={`${config.link.etherscan}/tx/${flow.ethSwapWithdrawTransactionHash}`}
@@ -391,7 +402,7 @@ export default class SwapProgress extends Component {
                 </a>
               </strong>
             )}
-            {flow.btcSwapWithdrawTransactionHash && swap.buyCurrency === 'BTC' && (
+            {flow.btcSwapWithdrawTransactionHash && this.isSellCurrencyEthOrEthToken && (
               <strong styleName="transaction">
                 <a
                   href={`${config.link.bitpay}/tx/${flow.btcSwapWithdrawTransactionHash}`}
