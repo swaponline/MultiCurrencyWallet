@@ -16,7 +16,7 @@ export default class SwitchLang extends Component {
     const { intl: { locale }, className } = this.props
 
     return (
-      <div>
+      <div styleName="langSwitcher">
         <a
           href={locale.toUpperCase() === 'RU' ? relocalisedUrl(locale) : undefined}
           styleName="language"

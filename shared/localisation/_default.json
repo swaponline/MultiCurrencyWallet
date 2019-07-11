@@ -120,7 +120,7 @@
   },
   {
     "id": "ADDoffer29",
-    "message": "Sign up",
+    "message": "Sign up (get up to 10$ bonus)",
     "files": [
       "shared/components/Header/User/SignUpButton/SignUpButton.js"
     ]
@@ -4040,7 +4040,7 @@
   },
   {
     "id": "KeyActionsPanel73",
-    "message": "Hidden coins ({length})",
+    "message": "Hide / Add Coins",
     "files": [
       "shared/components/KeyActionsPanel/KeyActionsPanel.js"
     ]
@@ -4161,7 +4161,7 @@
   },
   {
     "id": "FeeControler68",
-    "message": "Not enough ETH on your balance for miner fee.{br}Deposit 0.002 ETH to your account",
+    "message": "Not enough ETH on your balance for miner fee.{br}Deposit {gasAmountNeeded} ETH to your account",
     "files": [
       "shared/pages/Swap/FeeControler/FeeControler.js"
     ]
@@ -4240,6 +4240,13 @@
   {
     "id": "swapprogress270",
     "message": "Try refund",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapProgress.js"
+    ]
+  },
+  {
+    "id": "swapprogress271",
+    "message": "Try again in a few minutes",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgress.js"
     ]

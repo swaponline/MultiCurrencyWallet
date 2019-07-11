@@ -179,10 +179,7 @@ export default class EthTokenToBtc extends Component {
       swap
     } = this.state
 
-    const { canCreateEthTransaction, isFailedTransaction } = flow
-
-    /* eslint-disable-line */ // Line exceeds the maximum line length of 180  max-len
-    const SwapProgressView = <SwapProgress flow={flow} name="EthTokensToBtc" swap={swap} tokenItems={tokenItems} history={history} locale={locale} wallets={wallets} signed={signed} />
+    const { canCreateEthTransaction, isFailedTransaction, gasAmountNeeded } = flow
 
     return (
       <div>
@@ -214,7 +211,7 @@ export default class EthTokenToBtc extends Component {
                     <Fragment>
                       {
                         !canCreateEthTransaction && (
-                          <FeeControler ethAddress={ethAddress} />
+                          <FeeControler ethAddress={ethAddress} gasAmountNeeded={gasAmountNeeded} />
                         )
                       }
                       {
@@ -224,7 +221,18 @@ export default class EthTokenToBtc extends Component {
                       }
                     </Fragment>
                   )
-                  : SwapProgressView
+                  : (
+                    <SwapProgress
+                      flow={flow}
+                      name="EthTokensToBtc"
+                      swap={swap}
+                      tokenItems={tokenItems}
+                      history={history}
+                      locale={locale}
+                      wallets={wallets}
+                      signed={signed}
+                    />
+                  )
                 }
               </Fragment>
             )

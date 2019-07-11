@@ -120,7 +120,7 @@
   },
   {
     "id": "ADDoffer29",
-    "message": "Регистрация",
+    "message": "Регистрация (получите до 10$ в подарок)",
     "files": [
       "shared/components/Header/User/SignUpButton/SignUpButton.js"
     ]
@@ -4146,7 +4146,7 @@
   },
   {
     "id": "KeyActionsPanel73",
-    "message": "Все валюты ({length})",
+    "message": "Скрыть / Добавить валюты",
     "files": [
       "shared/components/KeyActionsPanel/KeyActionsPanel.js"
     ]
@@ -4271,7 +4271,7 @@
   },
   {
     "id": "FeeControler68",
-    "message": "Недостаточно ETH на вашем балансе для оплаты комиссии майнеров.{br}Пополните ваш кошелек на 0.002 ETH",
+    "message": "Недостаточно ETH на вашем балансе для оплаты комиссии майнеров.{br}Пополните ваш кошелек на {gasAmountNeeded} ETH",
     "files": [
       "shared/pages/Swap/FeeControler/FeeControler.js"
     ]
@@ -4350,6 +4350,13 @@
   {
     "id": "swapprogress270",
     "message": "Попытаться вернуть",
+    "files": [
+      "shared/pages/Swap/SwapProgress/SwapProgress.js"
+    ]
+  },
+  {
+    "id": "swapprogress271",
+    "message": "Попробуйте еще раз через несколько минут",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgress.js"
     ]
