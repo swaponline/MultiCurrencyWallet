@@ -151,14 +151,14 @@ export default class SwapComponent extends PureComponent {
   componentDidMount() {
     const { swap, deletedOrders } = this.state
     const { id, flow } = swap
-    const { canCreateEthTransaction, requireWithdrawFeeSended, step } = flow.state
+    const { canCreateEthTransaction, requireWithdrawFeeSended, step, isRefunded } = flow.state
 
     const { match: { params: { orderId } }, decline } = this.props
 
     if (localStorage.getItem('deletedOrders') !== null) {
 
       if (localStorage.getItem('deletedOrders').includes(id)) {
-        if (!flow.state.isRefunded) {
+        if (!isRefunded) {
           this.props.history.push(localisedUrl(links.exchange))
         }
       }
