@@ -160,7 +160,6 @@ export default class SwapComponent extends PureComponent {
       if (localStorage.getItem('deletedOrders').includes(id) && !isRefunded) {
         this.props.history.push(localisedUrl(links.exchange))
       }
-        if (!isRefunded) {
           this.props.history.push(localisedUrl(links.exchange))
         }
       }
