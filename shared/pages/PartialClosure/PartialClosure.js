@@ -279,10 +279,10 @@ export default class PartialClosure extends Component {
 
   checkValidUrl = (sellValue, buyValue) => {
     const avaliablesBuyCurrency = actions.pairs.selectPairPartial(sellValue).map(el => el.value)
-    if(avaliablesBuyCurrency.includes(buyValue)) return this.handleSetGetValue({ value: buyValue })
-    if(avaliablesBuyCurrency.includes(sellValue)) {
+    if (avaliablesBuyCurrency.includes(buyValue)) return this.handleSetGetValue({ value: buyValue })
+    if (avaliablesBuyCurrency.includes(sellValue)) {
       const filterSameVale = avaliablesBuyCurrency.filter(el => el !== sellValue)
-      if(filterSameVale.includes("btc")) {
+      if (filterSameVale.includes("btc")) {
         this.handleSetGetValue({ value: "btc" })
       } else {
         this.handleSetGetValue({ value: filterSameVale[0] })
