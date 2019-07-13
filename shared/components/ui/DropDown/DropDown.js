@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
@@ -50,14 +49,19 @@ export default class DropDown extends Component {
 
   componentDidUpdate(prevProps) {
     const { isToggleActive } = this.props
-    if (prevProps.isToggleActive !== isToggleActive && isToggleActive) this.showPercentChange1H()
+    if (prevProps.isToggleActive !== isToggleActive && isToggleActive) {
+      this.showPercentChange1H()
+    }
   }
 
   toggle = () => {
     const { isToggleActive, toggleOpen, toggleClose } = this.props
 
-    if (isToggleActive) toggleClose()
-    else toggleOpen()
+    if (isToggleActive) {
+      toggleClose()
+    } else {
+      toggleOpen()
+    }
   }
 
   handleOptionClick = (item) => {
@@ -92,7 +96,9 @@ export default class DropDown extends Component {
   renderItem = (item) => {
     const { itemRender } = this.props
 
-    if (typeof itemRender === 'function') return itemRender(item)
+    if (typeof itemRender === 'function') {
+      return itemRender(item)
+    }
     return item.title
   }
 
@@ -106,10 +112,12 @@ export default class DropDown extends Component {
         (result) => {
           const itemsName = items.map(el => el.name)
           result.map(res => {
-            if(itemsName.includes(res.symbol)) infoAboutCurrency.push({
-              name: res.symbol,
-              change: res.percent_change_1h,
-            })
+            if (itemsName.includes(res.symbol)) {
+              infoAboutCurrency.push({
+                name: res.symbol,
+                change: res.percent_change_1h,
+              })
+            }
           })
           this.setState({
             infoAboutCurrency,
@@ -129,7 +137,7 @@ export default class DropDown extends Component {
     const linkedValue = Link.all(this, 'inputValue')
 
     let itemsFiltered = items
-    if(inputValue) {
+    if (inputValue) {
       itemsFiltered = items
         .filter(item => item.name.includes(inputValue.toUpperCase()))
         .filter(item => item.value !== selectedValue)
