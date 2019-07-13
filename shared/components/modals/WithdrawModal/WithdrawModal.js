@@ -120,19 +120,13 @@ export default class WithdrawModal extends React.Component {
     const { isEthToken } = this.state
 
     const currentCoin = currency.toLowerCase()
-    const coinsWithDynamicFee = [
-      'eth',
-      'ltc',
-      'btc',
-      'bch',
-      'ethToken',
-    ]
 
     if (isEthToken) {
       minAmount[currentCoin] = this.getMinAmountForEthToken()
+      minAmount.eth = await helpers.eth.estimateFeeValue({ method: 'send', speed: 'fast' })
     }
 
-    if (coinsWithDynamicFee.includes(currentCoin)) {
+    if (constants.coinsWithDynamicFee.includes(currentCoin)) {
       minAmount[currentCoin] = await helpers[currentCoin].estimateFeeValue({ method: 'send', speed: 'fast' })
     }
   }
@@ -326,7 +320,7 @@ export default class WithdrawModal extends React.Component {
           <p styleName={isEthToken ? 'rednotes' : 'notice'}>
             <FormattedMessage
               id="Withdrow213"
-              defaultMessage="Please note: Miners fee is {minAmount} {currency}.{br}Represented balance is your balance minus the miners commission will appear. "
+              defaultMessage="Please note: Miners fee is {minAmount} {data}.{br}Your balance must exceed this sum to perform transaction"
               values={{ minAmount: `${isEthToken ? minAmount.eth : min}`, br: <br />, data: `${dataCurrency}` }} />
           </p>
           <div styleName="highLevel">
