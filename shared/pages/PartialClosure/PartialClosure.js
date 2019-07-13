@@ -1155,13 +1155,10 @@ export default class PartialClosure extends Component {
           </div>
           <HowItWorks />
           <VideoAndFeatures />
-<<<<<<< HEAD
           <FAQ />
-=======
           <div styleName="referralText">
             <Referral address={userEthAddress}/>
           </div>
->>>>>>> develop
         </div >
       )
   }
