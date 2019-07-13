@@ -32,8 +32,10 @@ export default class DepositWindow extends Component {
 
     this.swap = swap
 
-    this.isDepositToContractDirectly =
-      !helpers.ethToken.isEthOrEthToken({ name: swap.sellCurrency.toLowerCase() })
+    this.currency = swap.sellCurrency.toLowerCase()
+
+    this.isSellCurrencyEthOrEthToken = helpers.ethToken.isEthOrEthToken({ name: swap.sellCurrency })
+    this.isSellCurrencyEthToken = helpers.ethToken.isEthToken({ name: swap.sellCurrency })
 
     this.state = {
       swap,
@@ -50,65 +52,20 @@ export default class DepositWindow extends Component {
     }
   }
 
-  componentDidMount() {
-    const { sellAmount, balance } = this.state
-
-    let checker
-    this.getRequiredAmount()
-    this.updateRemainingBalance()
-
-    const balanceCheckHandler = () => {
-      const { swap: { flow } } =  this.props
-      const { btcScriptValues } = flow.state
-      const { isBalanceEnough } = this.state
-
-      const utcNow = Math.floor(Date.now() / 1000)
-      const timeLeft = Math.ceil((btcScriptValues.lockTime - utcNow) / 60)
-
-      if (timeLeft <= 0) {
-        flow.stopSwapProcess()
-
-        return true
-      }
-
-      if (isBalanceEnough) {
-        return true
-      }
-
-      this.updateBalance()
-      this.checkThePayment()
-
-      return false
-    }
-
-    balanceCheckHandler()
-
-    checker = setInterval(() => {
-      const needStop = balanceCheckHandler()
-      if (needStop) {
-        clearInterval(checker)
-      }
-    }, 5000)
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.balance !== prevState.balance) {
-      this.updateRemainingBalance()
-    }
-  }
-
   updateBalance = async () => {
     const { swap } =  this.props
     const { sellAmount, address } =  this.state
 
-    const isSellCurrencyEthToken = helpers.ethToken.isEthToken({ name: swap.sellCurrency })
-
     let actualBalance
 
-    if (isSellCurrencyEthToken) {
-      actualBalance = await actions.token.getBalance(swap.sellCurrency.toLowerCase())
+    if (this.isSellCurrencyEthOrEthToken) {
+      if (this.isSellCurrencyEthToken) {
+        actualBalance = await actions.token.getBalance(this.currency)
+      } else {
+        actualBalance = await actions.eth.getBalance(this.currency)
+      }
     } else {
-      const unspents = await actions[swap.sellCurrency.toLowerCase()].fetchUnspents(address)
+      const unspents = await actions[this.currency].fetchUnspents(address)
       const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
       actualBalance = BigNumber(totalUnspent).dividedBy(1e8)
     }
@@ -122,10 +79,14 @@ export default class DepositWindow extends Component {
     const { swap } = this.props
     const { sellAmount, balance, dynamicFee } = this.state
 
-    const remainingBalance = new BigNumber(sellAmount).minus(balance).plus(dynamicFee).dp(6, BigNumber.ROUND_UP)
+    let remainingBalance = new BigNumber(sellAmount).minus(balance)
+
+    if (!this.isSellCurrencyEthToken) {
+      remainingBalance = remainingBalance.plus(dynamicFee)
+    }
 
     this.setState(() => ({
-      remainingBalance,
+      remainingBalance: remainingBalance.dp(6, BigNumber.ROUND_UP),
     }))
   }
 
@@ -133,19 +94,10 @@ export default class DepositWindow extends Component {
     const { swap } =  this.props
     const { sellAmount } = this.state
 
-    const isSellCurrencyEthToken = helpers.ethToken.isEthToken({ name: swap.sellCurrency })
-    const currency = this.isDepositToContractDirectly
-      ? swap.sellCurrency.toLowerCase()
-      : 'eth'
+    let dynamicFee = 0
 
-    let dynamicFee
-
-    if (coinsWithDynamicFee.includes(currency)) {
-      if (isSellCurrencyEthToken) {
-        dynamicFee = await helpers.ethToken.estimateFeeValue({ method: 'swap', fixed: true })
-      } else {
-        dynamicFee = await helpers[currency].estimateFeeValue({ method: 'swap', fixed: true })
-      }
+    if (coinsWithDynamicFee.includes(this.currency)) {
+      dynamicFee = await helpers[this.currency].estimateFeeValue({ method: 'swap', fixed: true })
 
       this.setState(() => ({
         dynamicFee,
@@ -171,6 +123,48 @@ export default class DepositWindow extends Component {
 
       swap.flow.syncBalance()
     }
+  }
+
+  createCycleUpdatingBalance = async () => {
+    const { sellAmount, balance } = this.state
+
+    let checker
+    await this.getRequiredAmount()
+    await this.updateRemainingBalance()
+
+    const balanceCheckHandler = async () => {
+      const { swap: { flow } } =  this.props
+      const { btcScriptValues } = flow.state
+      const { isBalanceEnough } = this.state
+
+      const utcNow = Math.floor(Date.now() / 1000)
+      const timeLeft = Math.ceil((btcScriptValues.lockTime - utcNow) / 60)
+
+      if (timeLeft <= 0) {
+        flow.stopSwapProcess()
+
+        return true
+      }
+
+      if (isBalanceEnough) {
+        return true
+      }
+
+      await this.updateBalance()
+      this.checkThePayment()
+
+      return false
+    }
+
+    await balanceCheckHandler()
+
+    checker = setInterval(async () => {
+      const needStop = await balanceCheckHandler()
+
+      if (needStop) {
+        clearInterval(checker)
+      }
+    }, 5000)
   }
 
   onCopyAddress = (e) => {
@@ -209,6 +203,16 @@ export default class DepositWindow extends Component {
 
   handlerBuyWithCreditCard = (e) => {
     e.preventDefault()
+  }
+
+  componentDidMount() {
+    this.createCycleUpdatingBalance()
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.balance !== prevState.balance) {
+      this.updateRemainingBalance()
+    }
   }
 
   render() {

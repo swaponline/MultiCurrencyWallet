@@ -157,7 +157,7 @@ export default class KeyActionsPanel extends Component {
         {
           (config && !config.isWidget) && (
             <WithdrawButton onClick={this.handleShowMore}>
-              <FormattedMessage id="KeyActionsPanel73" defaultMessage="Hidden coins ({length})" values={{ length: `${hiddenCoinsList.length}` }} />
+              <FormattedMessage id="KeyActionsPanel73" defaultMessage="Hide / Add Coins" values={{ length: `${hiddenCoinsList.length}` }} />
             </WithdrawButton>
           )
         }

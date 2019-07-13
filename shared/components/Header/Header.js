@@ -352,8 +352,6 @@ export default class Header extends Component {
 
   openWalletTour = () => {
     this.setState({ isTourOpen: true })
-    console.warn('work!')
-
   }
 
   openExchangeTour = () => {

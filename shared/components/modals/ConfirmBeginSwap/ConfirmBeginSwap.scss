@@ -23,6 +23,18 @@
   }
 }
 
+.error {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  padding: 0.3em 10px;
+  margin-top: -5px;
+  font-size: 13px;
+  background: #FD6B65;
+  border-radius: 3px;
+  margin-bottom: 15px;
+}
+
 .closeButton {
   width: 20px;
   height: 20px;

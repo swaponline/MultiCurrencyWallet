@@ -419,11 +419,20 @@
   font-size: 38px;
 }
 
+.referralText {
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
 @media (max-width: 1200px) {
   .exchangeWrap {
     width: auto;
     left: 0;
     margin: 0 -2%;
+  }
+
+  .referralText {
+    padding: 0 2em;
   }
 }
 
@@ -523,6 +532,13 @@
 @include media-mobile {
   .tooltipHeader {
     font-size: 16px;
+  }
+
+  .referralText {
+    overflow: hidden;
+    width: 90%;
+    position: relative;
+    bottom: 7em;
   }
 
   .mobileDubleHeader {

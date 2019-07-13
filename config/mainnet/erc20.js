@@ -2,7 +2,7 @@ export default {
   swap: {
     address: '0x14a52cf6B4F68431bd5D9524E4fcD6F41ce4ADe9',
     decimals: 18,
-    fullName: 'swap',
+    fullName: 'SWAP',
   },
   lev: {
     address: '0x0f4ca92660efad97a9a70cb0fe969c755439772c',
