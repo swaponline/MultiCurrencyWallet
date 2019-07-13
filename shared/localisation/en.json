@@ -532,7 +532,7 @@
   },
   {
     "id": "SwapProgress117",
-    "message": "ETH Owner received Bitcoin Script and Secret Hash. Waiting when he creates ETH Contract.(It may require 1 confirmation from bitcoin network)",
+    "message": "Your BTC are now depositing. It may require one confirmation from Bitcoin Network. Waiting for other participant to deposit ETH.(It may require 1 confirmation from bitcoin network)",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.js"
     ]
@@ -948,7 +948,7 @@
   },
   {
     "id": "BtcToEthToken230",
-    "message": "3. ETH Owner received Bitcoin Script and Secret Hash. Waiting when he creates ETH Contract.(It may require 1 confirmation from bitcoin network)"
+    "message": "3. Your BTC are now depositing. It may require one confirmation from Bitcoin Network. Waiting for other participant to deposit ETH.(It may require 1 confirmation from bitcoin network)"
   },
   {
     "id": "BtcToEthToken243",
