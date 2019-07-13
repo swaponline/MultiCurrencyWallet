@@ -45,8 +45,12 @@ export default class DepositWindow extends Component {
       isBalanceEnough: false,
       isAddressCopied: false,
       isBalanceFetching: false,
-      balance: currencyData.balance - (currencyData.unconfirmedBalance || 0),
-      address: currencyData.address,
+      balance: this.isSellCurrencyEthOrEthToken
+        ? currencyData.balance - (currencyData.unconfirmedBalance || 0)
+        : flow.scriptBalance,
+      address: this.isSellCurrencyEthOrEthToken
+        ? currencyData.address
+        : flow.scriptAddress,
       currencyFullName: currencyData.fullName,
       sellAmount: this.swap.sellAmount,
     }
@@ -121,7 +125,11 @@ export default class DepositWindow extends Component {
         isBalanceEnough: true,
       }))
 
-      swap.flow.syncBalance()
+      if (!this.isSellCurrencyEthOrEthToken) {
+        swap.flow.skipSyncBalance()
+      } else {
+        swap.flow.syncBalance()
+      }
     }
   }
 
