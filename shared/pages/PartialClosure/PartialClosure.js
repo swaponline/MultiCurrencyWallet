@@ -261,22 +261,31 @@ export default class PartialClosure extends Component {
     const { match: { params }  } = this.props
     const { getCurrency, haveCurrency } = this.state
 
+    const buyValue = params.buy
+    const sellValue = params.sell
 
-    if (haveCurrency !== undefined) {
-      if (params.sell !== haveCurrency) {
-        const value = params.sell
-        if (value) {
-          this.handleSetHaveValue({ value })
-        }
+    if (haveCurrency && params.sell !== haveCurrency) {
+      if (sellValue) {
+        this.handleSetHaveValue({ value: sellValue })
       }
     }
 
-    if (getCurrency !== undefined) {
-      if (params.buy !== getCurrency) {
-        const value = params.buy
-        if (value) {
-          this.handleSetGetValue({ value })
-        }
+    if (getCurrency && params.buy !== getCurrency) {
+      if (buyValue) {
+        this.checkValidUrl(sellValue, buyValue)
+      }
+    }
+  }
+
+  checkValidUrl = (sellValue, buyValue) => {
+    const avaliablesBuyCurrency = actions.pairs.selectPairPartial(sellValue).map(el => el.value)
+    if(avaliablesBuyCurrency.includes(buyValue)) return this.handleSetGetValue({ value: buyValue })
+    if(avaliablesBuyCurrency.includes(sellValue)) {
+      const filterSameVale = avaliablesBuyCurrency.filter(el => el !== sellValue)
+      if(filterSameVale.includes("btc")) {
+        this.handleSetGetValue({ value: "btc" })
+      } else {
+        this.handleSetGetValue({ value: filterSameVale[0] })
       }
     }
   }
