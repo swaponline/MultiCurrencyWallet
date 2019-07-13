@@ -21,6 +21,7 @@ import { Button, Toggle, Flip } from 'components/controls'
 import Input from 'components/forms/Input/Input'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Promo from './Promo/Promo'
+import FAQ from './FAQ/FAQ'
 import PromoText from './PromoText/PromoText'
 import HowItWorks from './HowItWorks/HowItWorks'
 import VideoAndFeatures from './VideoAndFeatures/VideoAndFeatures'
@@ -1143,9 +1144,13 @@ export default class PartialClosure extends Component {
           </div>
           <HowItWorks />
           <VideoAndFeatures />
+<<<<<<< HEAD
+          <FAQ />
+=======
           <div styleName="referralText">
             <Referral address={userEthAddress}/>
           </div>
+>>>>>>> develop
         </div >
       )
   }

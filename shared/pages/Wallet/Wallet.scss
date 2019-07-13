@@ -10,7 +10,8 @@
 }
 
 .sectionWallet {
-  margin-top: 88px;
+  margin-top: -88px;
+  padding-top: 88px;
   &_widget {
     margin-top: 0;
   }
