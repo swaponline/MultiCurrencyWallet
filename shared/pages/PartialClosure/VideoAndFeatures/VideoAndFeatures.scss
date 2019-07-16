@@ -27,6 +27,7 @@ $pinsColor: #6144E5;
         align-items: center;
         max-width: 1200px;
         margin: 0 auto;
+        padding: 0 2%;
     }
 
     &__item {
@@ -86,6 +87,7 @@ $pinsColor: #6144E5;
 
         &__container {
             flex-direction: column-reverse;
+            padding: 0 5%;
         }
 
         &__item {

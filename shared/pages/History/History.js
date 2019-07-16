@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import CSSModules from 'react-css-modules'
 
 import { connect } from 'redaction'
 import actions from 'redux/actions'
@@ -9,6 +10,7 @@ import ReactTooltip from 'react-tooltip'
 
 
 import styles from 'components/tables/Table/Table.scss'
+import stylesHere from './History.scss'
 import Filter from './Filter/Filter'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import InfiniteScrollTable from 'components/tables/InfiniteScrollTable/InfiniteScrollTable'
@@ -39,6 +41,7 @@ const subTitle = defineMessages({
   items: filterHistory(transactions, filter),
   swapHistory,
 }))
+@CSSModules(stylesHere, { allowMultiple: true })
 export default class History extends Component {
   state = {
     renderedItems: 10,
@@ -75,7 +78,7 @@ export default class History extends Component {
     ]
 
     return (
-      <section>
+      <section styleName="history">
         <PageHeadline subTitle={intl.formatMessage(subTitle.subTitleHistory)} />
         { swapHistory.length > 0 && <SwapsHistory showSubtitle="true" orders={swapHistory.filter(item => item.step >= 4)} /> }
         <h3 data-tip data-for="transactions" style={{ width:'210px' }}>
