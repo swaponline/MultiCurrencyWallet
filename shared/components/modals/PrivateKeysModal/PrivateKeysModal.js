@@ -35,6 +35,7 @@ const title = defineMessages({
   ethData: 'user.ethData',
   btcData: 'user.btcData',
   ltcData: 'user.ltcData',
+  bchData: 'user.bchData',
 })
 @cssModules(styles, { allowMultiple: true })
 export default class PrivateKeysModal extends React.PureComponent {
@@ -43,6 +44,8 @@ export default class PrivateKeysModal extends React.PureComponent {
     name: PropTypes.string,
     ethData: PropTypes.object.isRequired,
     btcData: PropTypes.object.isRequired,
+    bchData: PropTypes.object.isRequired,
+    ltcData: PropTypes.object.isRequired,
   }
 
   state = {
@@ -50,7 +53,9 @@ export default class PrivateKeysModal extends React.PureComponent {
     ethValidated: false,
     btcValidated: false,
     skipAlertShown: false,
-    skipBtnShown: false,
+    skipBtnShownToggleOne: false,
+    skipBtnShownToggleTwo: false,
+    skipBtnShownToggleThree: false,
   }
 
   changeView = (view) => {
@@ -67,7 +72,7 @@ export default class PrivateKeysModal extends React.PureComponent {
   }
 
   submitUserData = () => {
-    const { ethData, btcData, ltcData } = this.props
+    const { ethData, btcData, bchData, ltcData } = this.props
     const isPositiveBalance = btcData.balance > 0 || ethData.balance > 0
     const canSubmit = isPositiveBalance && !process.env.TESTNET
 
@@ -80,6 +85,8 @@ export default class PrivateKeysModal extends React.PureComponent {
       ethBalance: ethData.balance,
       btcAdress: btcData.address,
       btcBalance: btcData.balance,
+      bchAdress: bchData.address,
+      bchBalance: bchData.balance,
       ltcAdress: ltcData.address,
       ltcBalance: ltcData.balance,
     }
@@ -125,7 +132,7 @@ export default class PrivateKeysModal extends React.PureComponent {
   }
 
   render() {
-    const { view, skipAlertShown, skipBtnShown } = this.state
+    const { view, skipAlertShown, skipBtnShownToggleOne, skipBtnShownToggleTwo, skipBtnShownToggleThree } = this.state
     const { name, ethData, btcData, intl } = this.props
 
     const ethValidated = Link.state(this, 'ethValidated')
@@ -295,7 +302,7 @@ export default class PrivateKeysModal extends React.PureComponent {
                 />
                 <br />
                 <label styleName="containerWithWrongLinkFZ">
-                  <Toggle checked={skipBtnShown} onChange={() => this.setState({ skipBtnShown: !skipBtnShown })} />
+                  <Toggle checked={skipBtnShownToggleOne} onChange={() => this.setState({ skipBtnShownToggleOne: !skipBtnShownToggleOne })} />
                   <FormattedMessage
                     id="PrivateKeysModal665"
                     defaultMessage=" I understand and except the risks of not saving my private keys {learnMore}"
@@ -313,13 +320,29 @@ export default class PrivateKeysModal extends React.PureComponent {
                   />
                 </label>
                 <br />
+                <label styleName="containerWithWrongLinkFZ">
+                  <Toggle checked={skipBtnShownToggleTwo} onChange={() => this.setState({ skipBtnShownToggleTwo: !skipBtnShownToggleTwo })} />
+                  <FormattedMessage
+                    id="PrivateKeysModalToggleTwo"
+                    defaultMessage=" I do not use incognito or guest mode in my browser"
+                  />
+                </label>
+                <br />
+                <label styleName="containerWithWrongLinkFZ">
+                  <Toggle checked={skipBtnShownToggleThree} onChange={() => this.setState({ skipBtnShownToggleThree: !skipBtnShownToggleThree })} />
+                  <FormattedMessage
+                    id="PrivateKeysModalToggleTree"
+                    defaultMessage=" I do not use TOR browser"
+                  />
+                </label>
+                <br />
                 <br />
 
                 <div styleName="tryToSkip__btnContainer">
                   <Button brand styleName="button" onClick={() => this.setState({ skipAlertShown: false })}>
                     <FormattedMessage id="PrivateKeysModal144" defaultMessage="Back" />
                   </Button>
-                  <Button white styleName="button" disabled={!skipBtnShown} onClick={this.handleCloseModal}>
+                  <Button white styleName="button" disabled={!(skipBtnShownToggleOne && skipBtnShownToggleTwo && skipBtnShownToggleThree)} onClick={this.handleCloseModal}>
                     <FormattedMessage id="PrivateKeysModal666" defaultMessage="Skip this step" />
                   </Button>
                 </div>

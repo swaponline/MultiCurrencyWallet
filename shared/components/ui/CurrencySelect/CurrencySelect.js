@@ -15,7 +15,7 @@ const CurrencySelect = ({ className, selectedValue, onSelect, currencies, name, 
     <DropDown
       className={className}
       placeholder={placeholder}
-      items={nonNullCurrencies}
+      items={currencies}
       switchBalanceFunc={switchBalanceFunc}
       selectedValue={selectedValue}
       selectedItemRender={(item) => <Option {...item} />}

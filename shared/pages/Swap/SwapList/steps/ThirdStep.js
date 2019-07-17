@@ -10,9 +10,10 @@ import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage } from 'react-intl'
 
 
-const ThirdStep = ({ step, swap, sixth, seventh, eighth, windowWidth }) => {
+const ThirdStep = ({ step, sixth, seventh, eighth, windowWidth, swap: { sellCurrency, buyCurrency,
+  flow: { state: { ethSwapWithdrawTransactionHash, btcSwapWithdrawTransactionHash } } } }) => {
 
-  const currencyStep = swap.sellCurrency === 'BTC' ? seventh : eighth
+  const currencyStep = sellCurrency === 'BTC' ? seventh : eighth
   const stepItemActive = (step >= sixth && step < currencyStep)
   const stepItemDefault = (step < currencyStep)
   const thirdStepPadding = (stepItemActive && isMobile && windowWidth < 569) || (!stepItemDefault && !stepItemActive && isMobile && windowWidth < 569) ? 50 : 0
@@ -24,34 +25,30 @@ const ThirdStep = ({ step, swap, sixth, seventh, eighth, windowWidth }) => {
       <p styleName="stepText">
         <FormattedMessage id="thirdStep24" defaultMessage="WITHDRAW" />
       </p>
-      {swap.flow.state.ethSwapWithdrawTransactionHash && (
+      {ethSwapWithdrawTransactionHash && (
         <strong styleName="transactionInStep">
           <a
-            href={`${config.link.etherscan}/tx/${swap.flow.state.ethSwapWithdrawTransactionHash}`}
+            href={`${config.link.etherscan}/tx/${ethSwapWithdrawTransactionHash}`}
             target="_blank"
             rel="noreferrer noopener"
           >
             <FormattedMessage
               id="FourthStep34"
               defaultMessage="({sell} tx)"
-              values={{ sell: swap.sellCurrency.toLowerCase() }}
+              values={{ sell: sellCurrency === 'BTC' ? buyCurrency.toLowerCase() : sellCurrency.toLowerCase()  }}
             />
             <i className="fas fa-link" />
           </a>
         </strong>
       )}
-      {swap.flow.state.btcSwapWithdrawTransactionHash && (
+      {btcSwapWithdrawTransactionHash && (
         <strong styleName="transactionInStep">
           <a
-            href={`${config.link.bitpay}/tx/${swap.flow.state.btcSwapWithdrawTransactionHash}`}
+            href={`${config.link.bitpay}/tx/${btcSwapWithdrawTransactionHash}`}
             target="_blank"
             rel="noreferrer noopener"
           >
-            <FormattedMessage
-              id="FourthStep36"
-              defaultMessage="({btcTx} tx)"
-              values={{ btcTx: 'btc' }}
-            />
+            <FormattedMessage id="FourthStep36" defaultMessage="({btcTx} tx)" values={{ btcTx: 'btc' }} />
             <i className="fas fa-link" />
           </a>
         </strong>
@@ -61,9 +58,7 @@ const ThirdStep = ({ step, swap, sixth, seventh, eighth, windowWidth }) => {
           <FormattedMessage
             id="thirdStep"
             defaultMessage="Оn this step crypto is transferred from {br}the contract to your wallet and to the wallet {br} of your counterparty {br}"
-            values={{
-              br: <br />,
-            }}
+            values={{ br: <br /> }}
           />
         </Tooltip >
       </div>

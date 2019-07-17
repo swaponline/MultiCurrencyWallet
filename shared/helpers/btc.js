@@ -11,6 +11,8 @@ const network = process.env.MAINNET
   ? bitcoin.networks.bitcoin
   : bitcoin.networks.testnet
 
+const DUST = 546
+
 const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = 'send', fixed } = {}) => {
   const defaultTxSize = constants.defaultFeeRates.btc.size[method]
 
@@ -30,7 +32,6 @@ const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = '
 }
 
 const estimateFeeValue = async ({ feeRate, inSatoshis, speed, address, txSize, fixed, method } = {}) => {
-  const DUST = 546
   const { user: { btcData } } = getState()
 
   address = address || btcData.address
@@ -44,6 +45,9 @@ const estimateFeeValue = async ({ feeRate, inSatoshis, speed, address, txSize, f
       .div(1024)
       .dp(0, BigNumber.ROUND_HALF_EVEN),
   )
+
+  // Используем комиссию больше рекомендованной на 5 сатоши
+  calculatedFeeValue.plus(5)
 
   const finalFeeValue = inSatoshis
     ? calculatedFeeValue.toString()
@@ -79,7 +83,7 @@ const estimateFeeRate = async ({ speed = 'fast' } = {}) => {
 
   const apiRate = BigNumber(apiResult[apiSpeed])
 
-  return apiRate.isGreaterThanOrEqualTo(defaultRate.slow)
+  return apiRate.isGreaterThanOrEqualTo(DUST)
     ? apiRate.toString()
     : defaultRate[speed]
 }

@@ -12,9 +12,10 @@ const setEstimatedFeeValues = async ({ estimatedFeeValues }) => {
         newEstimatedFeeValues[item] = newValue
       }
     } catch (error) {
-      console.error('Set Estimated Fee Values in for error: ', error)
+      console.warn('Set Estimated Fee Values in for error: ', error)
     }
   }
+
   return newEstimatedFeeValues
 }
 

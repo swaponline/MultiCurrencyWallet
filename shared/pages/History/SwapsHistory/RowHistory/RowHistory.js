@@ -36,13 +36,14 @@ export default class RowHistory extends Component {
       const { flow } = actions.core.getSwapById(id)
 
       const {
-        state: { isFinished, isRefunded, step, scriptBalance },
+        state: { isFinished, isRefunded, step, scriptBalance, isEthContractFunded },
         swap: { sellCurrency },
       } = flow
 
       const isPayed = sellCurrency === 'BTC' ? 4 : 5
+      const isEmptyBalance = sellCurrency === 'BTC' ? scriptBalance === 0 : !isEthContractFunded
 
-      if (isFinished || isRefunded || (step === isPayed && scriptBalance === 0)) {
+      if (isFinished || isRefunded || (step === isPayed && isEmptyBalance)) {
         console.error(`Refund of swap ${id} is not available`)
         return
       }
@@ -50,37 +51,15 @@ export default class RowHistory extends Component {
       flow.tryRefund()
         .then((result) => {
           console.log('refunded', result)
-          localStorage.setItem(`swap:flow.${id}`, flow.state)
         })
     } catch (err) {
       console.error(`RefundError`, err)
     }
   }
 
-  componentDidMount() {
-    const {
-      btcScriptValues, ltcScriptValues,
-      usdtScriptValues, scriptValues,
-    } = this.props.row
-
-    const values  = btcScriptValues
-      || ltcScriptValues
-      || usdtScriptValues
-      || scriptValues
-
-    if (!values) return
-
-    const lockTime = values.lockTime * 1000
-
-    const timeLeft = lockTime - Date.now()
-
-    this.tryRefund(timeLeft)
-  }
-
   closeIncompleted = () => {
     actions.modals.close('IncompletedSwaps')
   }
-
 
   render() {
 
@@ -91,12 +70,20 @@ export default class RowHistory extends Component {
     }
 
     let {
-      buyAmount, buyCurrency, sellAmount, btcScriptValues, balance,
-      ltcScriptValues, usdtScriptValues, isRefunded, isMy, sellCurrency,
-      isFinished, id, scriptValues,
+      buyAmount, buyCurrency, sellAmount, btcScriptValues, scriptBalance,
+      ltcScriptValues, bchScriptValues, usdtScriptValues, isRefunded, isMy, sellCurrency,
+      isFinished, id, scriptValues, isStoppedSwap,
     } = row
 
-    const values = btcScriptValues || ltcScriptValues || usdtScriptValues || scriptValues
+    const values = btcScriptValues
+      || bchScriptValues
+      || ltcScriptValues
+      || usdtScriptValues
+      || scriptValues
+
+    const canBeRefunded = values && scriptBalance > 0
+    const isDeletedSwap = isFinished || isRefunded || isStoppedSwap
+
     const date = Date.now() / 1000
 
     if (!values) {
@@ -105,9 +92,7 @@ export default class RowHistory extends Component {
 
     const lockDateAndTime = moment.unix(values.lockTime || date).format('HH:mm:ss DD/MM/YYYY')
 
-    const linkToTheSwap = isMy
-      ? `${localisedUrl(locale, links.swap)}/${sellCurrency}-${buyCurrency}/${id}`
-      : `${localisedUrl(locale, links.swap)}/${buyCurrency}-${sellCurrency}/${id}`
+    const linkToTheSwap = `${localisedUrl(locale, links.swap)}/${sellCurrency}-${buyCurrency}/${id}`
 
     buyAmount   = BigNumber(buyAmount)
     sellAmount  = BigNumber(sellAmount)
@@ -146,17 +131,18 @@ export default class RowHistory extends Component {
           { (sellAmount / buyAmount).toFixed(5) }{ ` ${sellCurrency}/${buyCurrency}`}
         </td>
         <td>
-          { isFinished ?
-            <FormattedMessage id="RowHistory94" defaultMessage="Finished" />
-            :
-            (isRefunded && <FormattedMessage id="RowHistory77" defaultMessage="Refunded" /> ||
-              values && !isRefunded && !isFinished && balance > 0 ? (
+          { isFinished && (<FormattedMessage id="RowHistory94" defaultMessage="Finished" />) }
+          { isRefunded && (<FormattedMessage id="RowHistory77" defaultMessage="Refunded" />) }
+          { isStoppedSwap && (<FormattedMessage id="RowHistory139" defaultMessage="Stopped" />) }
+          { !isDeletedSwap && (canBeRefunded
+              ? (
                 <Timer
                   lockTime={values.lockTime * 1000}
                   enabledButton={this.tryRefund}
                 />
-              ) : (
-                !isRefunded && <FormattedMessage id="RowHistory76" defaultMessage="Refund not available" />
+              )
+              : (
+                <FormattedMessage id="RowHistory76" defaultMessage="Refund not available" />
               )
             )
           }
@@ -165,9 +151,16 @@ export default class RowHistory extends Component {
           { lockDateAndTime.split(' ').map((item, key) => <Fragment key={key}>{item}<br /></Fragment>) }
         </td>
         <td>
-          <Link to={`${linkToTheSwap}`} onClick={this.closeIncompleted}>
-            <FormattedMessage id="RowHistory91" defaultMessage="Link to the swap" />
-          </Link>
+          { !isDeletedSwap
+              ? (
+                <Link to={`${linkToTheSwap}`} onClick={this.closeIncompleted}>
+                  <FormattedMessage id="RowHistory91" defaultMessage="Link to the swap" />
+                </Link>
+              )
+              : (
+                <FormattedMessage id="RowHistory164" defaultMessage="Deleted" />
+              )
+          }
         </td>
       </tr>
     )

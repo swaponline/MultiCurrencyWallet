@@ -14,11 +14,11 @@ import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 
 // TODO to split data and view this component
 
-const SelectGroup = ({ dynamicFee, isToken, extendedControls, selectedValue, onSelect, dataTut,
+const SelectGroup = ({ dynamicFee, isToken, extendedControls, selectedValue, onSelect,
   currencies, usd, placeholder, label, disabled, className, switchBalanceFunc, inputValueLink, tooltip, balance, error,
   id, idFee, tooltipAboutFee, haveAmount, ...props
 }) => (
-  <div data-tut={dataTut}>
+  <div>
     <FieldLabel inRow>
       <strong>
         {label}
@@ -45,7 +45,7 @@ const SelectGroup = ({ dynamicFee, isToken, extendedControls, selectedValue, onS
         onKeyDown={inputReplaceCommaWithDot}
       />
       {
-        (selectedValue === 'eth' || selectedValue === 'btc') && usd > 0 &&
+        (selectedValue === 'eth' || selectedValue === 'btc' || selectedValue === 'bch') && usd > 0 &&
         <p styleName="textUsd" >{`~${usd}`} USD</p>
       }
       <CurrencySelect

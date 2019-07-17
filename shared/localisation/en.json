@@ -28,6 +28,20 @@
     ]
   },
   {
+    "id": "menu.CreateWallet",
+    "message": "Create wallet",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
+    "id": "createWalletLoaderTip",
+    "message": "Creating wallet... Please wait.",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
     "id": "LtcToEth.orderCreatorIsOffline",
     "message": "The order creator is offline. The request is valid for 30 min ",
     "files": [
@@ -106,7 +120,7 @@
   },
   {
     "id": "ADDoffer29",
-    "message": "Sign up",
+    "message": "Sign up (get up to 10$ bonus)",
     "files": [
       "shared/components/Header/User/SignUpButton/SignUpButton.js"
     ]
@@ -321,6 +335,13 @@
     ]
   },
   {
+    "id": "ImportKeys280",
+    "message": "Please enter BCH private key in WIF format",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
     "id": "ImportKeys130",
     "message": "Confirm",
     "files": [
@@ -511,7 +532,7 @@
   },
   {
     "id": "SwapProgress117",
-    "message": "ETH Owner received Bitcoin Script and Secret Hash. Waiting when he creates ETH Contract",
+    "message": "Your BTC are now depositing. It may require one confirmation from Bitcoin Network. Waiting for other participant to deposit ETH.(It may require 1 confirmation from bitcoin network)",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.js"
     ]
@@ -680,6 +701,13 @@
   {
     "id": "RowHistory91",
     "message": "Link to the swap",
+    "files": [
+      "shared/pages/History/SwapsHistory/RowHistory/RowHistory.js"
+    ]
+  },
+  {
+    "id": "RowHistory164",
+    "message": "Deleted",
     "files": [
       "shared/pages/History/SwapsHistory/RowHistory/RowHistory.js"
     ]
@@ -920,7 +948,7 @@
   },
   {
     "id": "BtcToEthToken230",
-    "message": "3. ETH Owner received Bitcoin Script and Secret Hash. Waiting when he creates ETH Contract"
+    "message": "3. Your BTC are now depositing. It may require one confirmation from Bitcoin Network. Waiting for other participant to deposit ETH.(It may require 1 confirmation from bitcoin network)"
   },
   {
     "id": "BtcToEthToken243",
@@ -2771,6 +2799,13 @@
     ]
   },
   {
+    "id": "RowHistory139",
+    "message": "Stopped",
+    "files": [
+      "shared/pages/History/SwapsHistory/RowHistory/RowHistory.js"
+    ]
+  },
+  {
     "id": "RowMobileFirstTypeYouGet",
     "message": "You get",
     "files": [
@@ -2828,7 +2863,14 @@
   },
   {
     "id": "SignUpModal002",
-    "message": "Wait please",
+    "message": "Sign up",
+    "files": [
+      "shared/components/modals/SignUpModal/SignUpModal.js"
+    ]
+  },
+  {
+    "id": "SignUpModal002-1",
+    "message": "One more step",
     "files": [
       "shared/components/modals/SignUpModal/SignUpModal.js"
     ]
@@ -3275,6 +3317,13 @@
     ]
   },
   {
+    "id": "LessThanIHavePartial",
+    "message": "You have not so much money on your balance",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
     "id": "PartialPriceSearch",
     "message": "Searching orders...",
     "files": [
@@ -3364,7 +3413,7 @@
   },
   {
     "id": "partial544",
-    "message": "Orderbook",
+    "message": "Order book",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -3377,8 +3426,78 @@
     ]
   },
   {
+    "id": "partialAtomicSwapWhatIsIt",
+    "message": "Atomic swap is a smart contract technology that enables exchange of one cryptocurrency for another without using centralized intermediaries, such as exchanges.",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partialVideoAndFeaturesTitle",
+    "message": "The {purplefastest} cross-chain Atomic Swap exchange",
+    "files": [
+      "shared/pages/PartialClosure/VideoAndFeatures/VideoAndFeatures.js"
+    ]
+  },
+  {
+    "id": "partialVideoAndFeaturesTitlePur",
+    "message": "fastest",
+    "files": [
+      "shared/pages/PartialClosure/VideoAndFeatures/VideoAndFeatures.js"
+    ]
+  },
+  {
+    "id": "partialVideoAndFeatures0",
+    "message": "Based on Atomic Swap technology",
+    "files": [
+      "shared/pages/PartialClosure/VideoAndFeatures/VideoAndFeatures.js"
+    ]
+  },
+  {
+    "id": "partialVideoAndFeatures1",
+    "message": "Exchange only takes 2 minutes",
+    "files": [
+      "shared/pages/PartialClosure/VideoAndFeatures/VideoAndFeatures.js"
+    ]
+  },
+  {
+    "id": "partialVideoAndFeatures2",
+    "message": "Supports LTC, BTC, BCH, ETH, USDT, ERC-20 tokens",
+    "files": [
+      "shared/pages/PartialClosure/VideoAndFeatures/VideoAndFeatures.js"
+    ]
+  },
+  {
+    "id": "partialVideoAndFeatures3",
+    "message": "Can be deployed on any website as an exchange service",
+    "files": [
+      "shared/pages/PartialClosure/VideoAndFeatures/VideoAndFeatures.js"
+    ]
+  },
+  {
     "id": "PartialFeeValueWarn",
-    "message": "You will have to pay an additional miner fee up to {estimatedFeeValue} {haveCurrency}",
+    "message": "The maximum amount you can sell is {maximumAmount}. Since will have to pay an additional miner fee up to {estimatedFeeValue} {haveCurrency}",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "PartialFeeValueWarn1",
+    "message": "+ {estimatedFeeValue} {getCurrency}",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "PartialFeeValueWarn2",
+    "message": "~ {estimatedFeeValue}$",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "PartialFeeValueWarnInfo",
+    "message": "[About fees]",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -3685,6 +3804,10 @@
     "message": "Atomic Swap {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}) Instant Exchange"
   },
   {
+    "id": "PartialClosureTitleTag1",
+    "message": "Fastest cross-chain exchange powered by Atomic Swap"
+  },
+  {
     "id": "PartialClosureMetaDescrTag",
     "message": "Best exchange rate for {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}). Swap.Online wallet provides instant exchange using Atomic Swap Protocol."
   },
@@ -3856,7 +3979,7 @@
   },
   {
     "id": "deposit165",
-    "message": "To continue the swap copy this address and top it up with {missingBalance}  ",
+    "message": "To continue the swap copy this address and top it up with {missingBalance}",
     "files": [
       "shared/pages/Swap/DepositWindow/DepositWindow.js"
     ]
@@ -3947,7 +4070,7 @@
   },
   {
     "id": "KeyActionsPanel73",
-    "message": "Hidden coins ({length})",
+    "message": "Hide / Add Coins",
     "files": [
       "shared/components/KeyActionsPanel/KeyActionsPanel.js"
     ]
@@ -4010,6 +4133,10 @@
     "message": "https://youtu.be/Jhrb7xOT_7s"
   },
   {
+    "id": "VidLinkFrame",
+    "message": "https://www.youtube.com/embed/euT8rScwfEk"
+  },
+  {
     "id": "GitHub",
     "message": "GitHub"
   },
@@ -4030,6 +4157,13 @@
   {
     "id": "ReferralLinks1",
     "message": "Share or send link on this page: every user who comes via your referral link gets up to 10 SWAP tokens. Moreover, you will earn SWAP tokens for every his or her succesful swap (including operations with bonus tokens!)",
+    "files": [
+      "shared/components/Footer/Referral/Referral.js"
+    ]
+  },
+  {
+    "id": "ReferralLinks2",
+    "message": "Limits and conditions",
     "files": [
       "shared/components/Footer/Referral/Referral.js"
     ]
@@ -4057,9 +4191,16 @@
   },
   {
     "id": "FeeControler68",
-    "message": "Not enough ETH on your balance for miner fee.{br}Deposit 0.002 ETH to your account",
+    "message": "Not enough ETH on your balance for miner fee.{br}Deposit {gasAmountNeeded} ETH to your account",
     "files": [
       "shared/pages/Swap/FeeControler/FeeControler.js"
+    ]
+  },
+  {
+    "id": "FailControler68",
+    "message": "Error in the execution of the token contract!{br}{br}Perhaps there is an additional commission on the contract side or the error occured for another reason",
+    "files": [
+      "shared/pages/Swap/FailControler/FailControler.js"
     ]
   },
   {
@@ -4124,14 +4265,14 @@
   },
   {
     "id": "swapprogress270",
-    "message": "Try Refaund",
+    "message": "Try refund",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgress.js"
     ]
   },
   {
-    "id": "swapprogress377",
-    "message": "Try refund",
+    "id": "swapprogress271",
+    "message": "Try again in a few minutes",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgress.js"
     ]
@@ -4185,7 +4326,7 @@
   },
   {
     "id": "ethToBtcText32",
-    "message": "Creating Ethereum Contract.{br}It can take a few minutes",
+    "message": "Creating Ethereum Contract.{br}It can take a few minutes. (It may require 1 confirmation from bitcoin network)",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthToBtc.js"
     ]
@@ -4336,7 +4477,7 @@
   },
   {
     "id": "EthTokensToBtc32",
-    "message": "Creating Ethereum Contract. {br} It can take a few minutes",
+    "message": "Creating Ethereum Contract. {br} It can take a few minutes (It may require 1 confirmation from bitcoin network)",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/EthTokensToBtc.js"
     ]

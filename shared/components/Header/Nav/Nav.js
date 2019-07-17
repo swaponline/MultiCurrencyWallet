@@ -15,6 +15,13 @@ import { localisedUrl } from 'helpers/locale'
 import ArrowDown from './images/ArrowDown.svg'
 
 
+const checkOnExchange = (pathname) => {
+  if (pathname.includes(links.exchange) || pathname === '/' || pathname === '/ru') {
+    return true
+  }
+  return false
+}
+
 @injectIntl
 @withRouter
 @CSSModules(styles, { allowMultiple: true })
@@ -40,33 +47,34 @@ export default class Nav extends Component {
   render() {
     const { menu, intl: { locale }, location } = this.props
 
-    const isExchange = location.pathname.includes('/exchange')
+    const isExchange = location.pathname.includes(links.exchange)
+      || location.pathname === '/'
+      || location.pathname === '/ru'
+
 
     return (
       <div styleName="nav">
         <Fragment>
           {menu
             .filter(i => i.isDesktop !== false)
-            .map(({ title, link, exact, tour, haveSubmenu, index, isBold, ...rest }) => (
+            .map(({ title, link, exact, tour, haveSubmenu, index, isBold, ...rest }) => !rest.displayNone && (
               <div styleName="mainMenu" key={`${title} ${link}`}>
                 <NavLink
                   onClick={this.handleScrollToTopClick}
                   key={index}
-                  data-tut={`${tour}`}
+                  data-tut={title === 'Exchange' ? 'reactour__exchange' : ''}
                   exact={exact}
                   /* eslint-disable indent */
                   className={`
-                      ${styles.link} 
-                      ${rest.currentPageFlag} 
+                      ${styles.link}
+                      ${rest.currentPageFlag}
                       ${isExchange && styles.exchangeMenuLink}
                       ${isExchange ? ` ${styles.active_exchange}` : ''}
-                      ${link === '/'
-                        ? location.pathname === link
+                      ${
+                        checkOnExchange(link) && isExchange
                           ? ` ${styles.active}`
                           : ''
-                        : (location.pathname.includes(link))
-                          ? ` ${styles.active}`
-                          : ''}
+                      }
                     `}
                   /* eslint-enable indent */
                   to={localisedUrl(locale, link)}

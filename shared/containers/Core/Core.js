@@ -43,7 +43,6 @@ export default class Core extends Component {
       try {
         const { ipfs } = this.props
 
-        console.log('ipfs', ipfs)
         if (ipfs.isOnline) return
 
         if (!SwapApp.shared().services.room.connection) {
@@ -66,14 +65,13 @@ export default class Core extends Component {
           .on('peer left', actions.ipfs.userLeft)
 
         clearInterval(ipfsLoadingInterval)
-        console.log('ipfs loaded')
 
         actions.ipfs.set({
           isOnline,
           peer,
         })
-      } catch (err) {
-        console.error('IPFS setup error', err)
+      } catch (error) {
+        console.warn('IPFS setup:', error)
       }
     }
 

@@ -4,7 +4,11 @@
   height: 44px;
   position: relative;
   cursor: pointer;
-  width: 20%;
+  width: 100%;
   border-radius: 3px;
   border: 1px solid rgba(0,0,0,0.2);
+}
+
+.noneBorder {
+  border: none;
 }

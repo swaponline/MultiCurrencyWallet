@@ -22,7 +22,21 @@
   },
   {
     "id": "menu.wallet",
-    "message": "Кошелек",
+    "message": "Кошелёк",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
+    "id": "menu.CreateWallet",
+    "message": "Создать кошелёк",
+    "files": [
+      "shared/components/Header/Header.js"
+    ]
+  },
+  {
+    "id": "createWalletLoaderTip",
+    "message": "Создаем кошелёк... Пожалуйста подождите.",
     "files": [
       "shared/components/Header/Header.js"
     ]
@@ -106,7 +120,7 @@
   },
   {
     "id": "ADDoffer29",
-    "message": "Регистрация",
+    "message": "Регистрация (получите до 10$ в подарок)",
     "files": [
       "shared/components/Header/User/SignUpButton/SignUpButton.js"
     ]
@@ -317,6 +331,13 @@
     ]
   },
   {
+    "id": "ImportKeys280",
+    "message": "Введите Ваш BCH приватный ключ в WIF формате",
+    "files": [
+      "shared/components/modals/ImportKeys/ImportKeys.js"
+    ]
+  },
+  {
     "id": "ImportKeys130",
     "message": "Подтвердить",
     "files": [
@@ -511,7 +532,7 @@
   },
   {
     "id": "SwapProgress117",
-    "message": "ETH Владелец получил Bitcoin Script и Хэш. Создания ETH контракта...",
+    "message": "ETH Владелец получил Bitcoin Script и Хэш. Создания ETH контракта... Может потребоваться 1 подтверждение от сети Bitcoin",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgressText/BtcToEth.js"
     ]
@@ -676,6 +697,13 @@
   {
     "id": "RowHistory91",
     "message": "Ссылка на обмен",
+    "files": [
+      "shared/pages/History/SwapsHistory/RowHistory/RowHistory.js"
+    ]
+  },
+  {
+    "id": "RowHistory164",
+    "message": "Удалено",
     "files": [
       "shared/pages/History/SwapsHistory/RowHistory/RowHistory.js"
     ]
@@ -2854,6 +2882,13 @@
     ]
   },
   {
+    "id": "RowHistory139",
+    "message": "Остановлено",
+    "files": [
+      "shared/pages/History/SwapsHistory/RowHistory/RowHistory.js"
+    ]
+  },
+  {
     "id": "RowHistory96",
     "message": "Выполняется"
   },
@@ -2933,7 +2968,14 @@
   },
   {
     "id": "SignUpModal002",
-    "message": "Пожалуйста, подождите",
+    "message": "Зарегистрироваться",
+    "files": [
+      "shared/components/modals/SignUpModal/SignUpModal.js"
+    ]
+  },
+  {
+    "id": "SignUpModal002-1",
+    "message": "Осталось немного",
     "files": [
       "shared/components/modals/SignUpModal/SignUpModal.js"
     ]
@@ -3370,6 +3412,13 @@
     ]
   },
   {
+    "id": "LessThanIHavePartial",
+    "message": "У вас недостаточно средств",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
     "id": "PartialPriceSearch",
     "message": "поиск предложений...",
     "files": [
@@ -3468,8 +3517,78 @@
     ]
   },
   {
+    "id": "partialAtomicSwapWhatIsIt",
+    "message": "Atomic swap - это технология, которая позволяет обменять одну криптовалюту на другую без использования централизованных посредников.",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "partialVideoAndFeaturesTitle",
+    "message": "{purplefastest} сервис атомарного обмена",
+    "files": [
+      "shared/pages/PartialClosure/VideoAndFeatures/VideoAndFeatures.js"
+    ]
+  },
+  {
+    "id": "partialVideoAndFeaturesTitlePur",
+    "message": "Самый быстрый",
+    "files": [
+      "shared/pages/PartialClosure/VideoAndFeatures/VideoAndFeatures.js"
+    ]
+  },
+  {
+    "id": "partialVideoAndFeatures0",
+    "message": "На основе технологии Atomic Swap",
+    "files": [
+      "shared/pages/PartialClosure/VideoAndFeatures/VideoAndFeatures.js"
+    ]
+  },
+  {
+    "id": "partialVideoAndFeatures1",
+    "message": "Обмен занимает всего 2 минуты",
+    "files": [
+      "shared/pages/PartialClosure/VideoAndFeatures/VideoAndFeatures.js"
+    ]
+  },
+  {
+    "id": "partialVideoAndFeatures2",
+    "message": "Поддерживает: LTC, BTC, BCH, ETH, USDT, ERC-20 токены",
+    "files": [
+      "shared/pages/PartialClosure/VideoAndFeatures/VideoAndFeatures.js"
+    ]
+  },
+  {
+    "id": "partialVideoAndFeatures3",
+    "message": "Может быть расположен на любом сайте в качестве обменного сервиса",
+    "files": [
+      "shared/pages/PartialClosure/VideoAndFeatures/VideoAndFeatures.js"
+    ]
+  },
+  {
     "id": "PartialFeeValueWarn",
-    "message": "Обратите внимание: из этой суммы так же вычтется комиссия майнеров до {estimatedFeeValue} {haveCurrency}",
+    "message": "Максимальная сумма доступная для продажи {maximumAmount}. Так как из суммы, которую вы имеете на балансе, вычтется комиссия майнеров до {estimatedFeeValue} {haveCurrency}",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "PartialFeeValueWarn1",
+    "message": "+ {estimatedFeeValue} {getCurrency}",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "PartialFeeValueWarn2",
+    "message": "~ {estimatedFeeValue}$",
+    "files": [
+      "shared/pages/PartialClosure/PartialClosure.js"
+    ]
+  },
+  {
+    "id": "PartialFeeValueWarnInfo",
+    "message": "[Подробнее о комиссиях]",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -3776,6 +3895,10 @@
     "message": "Обмен {full_name1} ({ticker_name1}) на {full_name2} ({ticker_name2}) Атомарный Обмен за 60 секунд"
   },
   {
+    "id": "PartialClosureTitleTag1",
+    "message": "Самый быстрый обменник на основе Atomic Swap"
+  },
+  {
     "id": "PartialClosureMetaDescrTag",
     "message": "Децентрализированный обменник Swap.Online предлагает вам лучший курс обмена {full_name1} ({ticker_name1}) на {full_name2} ({ticker_name2}). Онлайн кошелек без регистрации."
   },
@@ -3802,7 +3925,7 @@
   },
   {
     "id": "Withdrow213",
-    "message": "Пожалуйста, обратите внимание: комиссия майнеров {minAmount} {data}.  {br}Ваш баланс должен превышать эту сумму для совершения транзакции.."
+    "message": "Пожалуйста, обратите внимание: комиссия майнеров {minAmount} {data}.{br}Ваш баланс должен превышать эту сумму для совершения транзакции."
   },
   {
     "id": "WithdrawModal256",
@@ -4023,7 +4146,7 @@
   },
   {
     "id": "KeyActionsPanel73",
-    "message": "Все валюты ({length})",
+    "message": "Скрыть / Добавить валюты",
     "files": [
       "shared/components/KeyActionsPanel/KeyActionsPanel.js"
     ]
@@ -4082,8 +4205,20 @@
     "message": "https://youtu.be/1G-U5Sh7pQk"
   },
   {
+    "id": "VidLinkFrame",
+    "message": "https://www.youtube.com/embed/euT8rScwfEk"
+  },
+  {
     "id": "GitHub",
     "message": "GitHub"
+  },
+  {
+    "id": "menu.products",
+    "message": "Наши предложения"
+  },
+  {
+    "id": "menu.invest",
+    "message": "Как инвестировать?"
   },
   {
     "id": "SwitchLang20",
@@ -4102,6 +4237,13 @@
   {
     "id": "ReferralLinks1",
     "message": "Отправьте или расшарьте ссылку на эту страницу, каждый пользователь который придет по вашей ссылке получит для теста от 0 до 10 SWAP токенов. А вы будете получать бонус в SWAP токенах за его каждый успешный свап (в т.ч. за продажу бонусных токенов)",
+    "files": [
+      "shared/components/Footer/Referral/Referral.js"
+    ]
+  },
+  {
+    "id": "ReferralLinks2",
+    "message": "Условия и правила",
     "files": [
       "shared/components/Footer/Referral/Referral.js"
     ]
@@ -4129,9 +4271,16 @@
   },
   {
     "id": "FeeControler68",
-    "message": "Недостаточно ETH на вашем балансе для оплаты комиссии майнеров.{br}Пополните ваш кошелек на 0.002 ETH",
+    "message": "Недостаточно ETH на вашем балансе для оплаты комиссии майнеров.{br}Пополните ваш кошелек на {gasAmountNeeded} ETH",
     "files": [
       "shared/pages/Swap/FeeControler/FeeControler.js"
+    ]
+  },
+  {
+    "id": "FailControler68",
+    "message": "Ошибка в выполнении контракта токена!{br}{br}Возможно, есть дополнительная комиссия на стороне контракта или ошибка произошла по другой причине",
+    "files": [
+      "shared/pages/Swap/FailControler/FailControler.js"
     ]
   },
   {
@@ -4206,8 +4355,8 @@
     ]
   },
   {
-    "id": "swapprogress377",
-    "message": "Попытаться вернуть",
+    "id": "swapprogress271",
+    "message": "Попробуйте еще раз через несколько минут",
     "files": [
       "shared/pages/Swap/SwapProgress/SwapProgress.js"
     ]

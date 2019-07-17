@@ -27,11 +27,12 @@ const title = defineMessages({
 @withRouter
 @connect(
   ({
-    user: { ethData, btcData, ltcData },
+    user: { ethData, btcData, bchData, ltcData },
     signUp: { isSigned },
   }) => ({
     ethAddress: ethData.address,
     btcAddress: btcData.address,
+    bchAddress: bchData.address,
     ltcAddress: ltcData.address,
     isSigned,
   })
@@ -48,7 +49,8 @@ export default class SignUpModal extends React.Component {
     super()
 
     this.state = {
-      isSubmited: false,
+      isSubmitedPush: false,
+      isSubmitedEmail: false,
       isSupportedPush: firebase.isSupported(),
       isPushError: false,
       isEmailError: false,
@@ -58,9 +60,9 @@ export default class SignUpModal extends React.Component {
 
   validateEmail = (value) => value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)
 
-  handleSubmit = async () => {
-    const { name, ethAddress, btcAddress, ltcAddress, history } = this.props
-    const { isSupportedPush, email } = this.state
+  handleSubmit = async (whatToSubmit) => {
+    const { name, ethAddress, btcAddress, bchAddress, ltcAddress, history } = this.props
+    const { isSupportedPush, email, isSubmitedPush } = this.state
 
     const currentUrl = history.location
     const isRefLink = (currentUrl.search
@@ -79,51 +81,54 @@ export default class SignUpModal extends React.Component {
       ...ipInfo,
       ethAddress,
       btcAddress,
+      bchAddress,
       ltcAddress,
       Referrer: refEthAddress,
       registrationDomain: window.top.location.host,
       userAgentRegistration: navigator.userAgent,
     }
-    firestore.addUser(data)
-
-    this.setState(() => ({ isSubmited: true }))
+    if (whatToSubmit === 'isSubmitedPush' || !isSupportedPush) {
+      await firestore.addUser(data)
+    }
 
     actions.analytics.signUpEvent({ action: 'request' })
 
-    if (!isSupportedPush) {
+    if (!isSupportedPush || isSubmitedPush) {
       const result = await firebase.signUpWithEmail({
         ...data,
         email,
       })
-      firestore.signUpWithEmail({
+      const resultFirestore = firestore.signUpWithEmail({
         email,
       })
 
       if (!result) {
         this.setState(() => ({
           isEmailError: true,
-          isSubmited: result,
+          [whatToSubmit]: Boolean(result && resultFirestore),
         }))
         return
       }
 
-      this.setState(() => ({ isSubmited: result }))
+      this.setState(() => ({ [whatToSubmit]: Boolean(result && resultFirestore) }))
       return
     }
 
     const result = await firebase.signUpWithPush(data)
-    firestore.signUpWithPush()
+    const resultFirestore = await firestore.signUpWithPush()
 
-    if (!result) {
+    this.setState(() => ({ [whatToSubmit]: true }))
+
+    if (!result && !resultFirestore) {
       this.setState(() => ({
         isPushError: !result,
         isSupportedPush: result,
-        isSubmited: result,
+        [whatToSubmit]: false,
       }))
       return
     }
 
-    this.setState(() => ({ isSubmited: result }))
+    this.setState(() => ({ [whatToSubmit]: Boolean(result && resultFirestore) }))
   }
 
   close = () => {
@@ -136,9 +141,13 @@ export default class SignUpModal extends React.Component {
   }
 
   render() {
-    const { isSubmited, isSupportedPush, isPushError, isEmailError, email } = this.state
+    const { isSubmitedEmail, isSubmitedPush, isSupportedPush, isPushError, isEmailError, email } = this.state
     const { name, intl, data, isSigned } = this.props
-    const isDisabled = isSupportedPush ? isSubmited : isSubmited || !this.validateEmail(email)
+    const isDisabled = isSupportedPush
+      ? isSubmitedPush
+        ? !isSubmitedEmail && !this.validateEmail(email)
+        : false
+      : isSubmitedEmail || !this.validateEmail(email)
 
     const linked = Link.all(this, 'email')
 
@@ -168,23 +177,36 @@ export default class SignUpModal extends React.Component {
           ) : (
             <Fragment>
               {
-                !isSubmited && (
-                  <div styleName="input-wrapper">
-                    {
-                      (!isSupportedPush || isPushError) && (
-                        <Input styleName="input" valueLink={linked.email} focusOnInit type="email" placeholder="E-mail" />
-                      )
-                    }
-                  </div>
-                )
+                <div styleName="input-wrapper">
+                  {
+                    (!isSupportedPush || isPushError || isSubmitedPush) && (
+                      <Input styleName="input" valueLink={linked.email} focusOnInit type="email" placeholder="E-mail" />
+                    )
+                  }
+                </div>
               }
-              <Button styleName="button" brand fullWidth disabled={isDisabled} onClick={this.handleSubmit}>
+              <Button
+                styleName="button"
+                brand
+                fullWidth
+                disabled={isDisabled}
+                onClick={() => this.handleSubmit(!isSubmitedPush
+                  ? 'isSubmitedPush'
+                  : 'isSubmitedEmail'
+                )}
+              >
                 {
-                  isSubmited ? (
-                    <FormattedMessage id="SignUpModal002" defaultMessage="Wait please" />
-                  ) : (
-                    <FormattedMessage id="SignUpModal003" defaultMessage="Allow notifications" />
-                  )
+                  isSubmitedPush
+                    ? isDisabled
+                      ? (
+                        <FormattedMessage id="SignUpModal002-1" defaultMessage="One more step" />
+                      )
+                      : (
+                        <FormattedMessage id="SignUpModal002" defaultMessage="Sign up" />
+                      )
+                    : (
+                      <FormattedMessage id="SignUpModal003" defaultMessage="Allow notifications" />
+                    )
                 }
               </Button>
               {

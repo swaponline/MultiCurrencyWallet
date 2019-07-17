@@ -30,11 +30,11 @@ import coinsWithDynamicFee from 'helpers/constants/coinsWithDynamicFee'
   ({
     currencies,
     addSelectedItems,
-    user: { ethData, btcData, /* bchData, */ tokensData, eosData, telosData, nimData, usdtData, ltcData },
+    user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, usdtData, ltcData },
   }) => ({
     currencies: currencies.items,
     addSelectedItems: currencies.addSelectedItems,
-    items: [ ethData, btcData, eosData, telosData, /* bchData, */ ltcData, usdtData /* nimData */ ],
+    items: [ ethData, btcData, eosData, telosData, bchData, ltcData, usdtData /* nimData */ ],
     tokenItems: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
   })
 )
@@ -415,7 +415,9 @@ export default class AddOffer extends Component {
 
     const isDisabled = !exchangeRate
       || !buyAmount && !sellAmount
-      || BigNumber(sellAmount).isGreaterThan(balance)
+      /* This allows creating order greater than balance
+        || BigNumber(sellAmount).isGreaterThan(balance)
+      */
       || BigNumber(sellAmount).isLessThan(minimalAmountSell)
       || BigNumber(buyAmount).isLessThan(minimalAmountBuy)
 
@@ -438,14 +440,15 @@ export default class AddOffer extends Component {
       )
     }
 
-    if (linked.buyAmount.value !== '') {
-      linked.sellAmount.check((value) => (BigNumber(balance).isGreaterThanOrEqualTo(value)),
-        <span>
-          <FormattedMessage id="transaction376" defaultMessage="Amount must be less than your balance " />
-        </span>
-      )
-    }
-    console.log(linked)
+    /* This allows creating order greater than balance
+      if (linked.buyAmount.value !== '') {
+        linked.sellAmount.check((value) => (BigNumber(balance).isGreaterThanOrEqualTo(value)),
+          <span>
+            <FormattedMessage id="transaction376" defaultMessage="Amount must be less than your balance " />
+          </span>
+        )
+      }
+    */
 
     return (
       <div styleName="wrapper addOffer">

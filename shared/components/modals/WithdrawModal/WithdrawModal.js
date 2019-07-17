@@ -28,10 +28,10 @@ import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 @connect(
   ({
     currencies,
-    user: { ethData, btcData, /* bchData, */ tokensData, eosData, telosData, nimData, usdtData, ltcData },
+    user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, usdtData, ltcData },
   }) => ({
     currencies: currencies.items,
-    items: [ ethData, btcData, eosData, telosData, /* bchData, */ ltcData, usdtData /* nimData */ ],
+    items: [ ethData, btcData, eosData, telosData, bchData, ltcData, usdtData /* nimData */ ],
     tokenItems: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
   })
 )
@@ -120,18 +120,13 @@ export default class WithdrawModal extends React.Component {
     const { isEthToken } = this.state
 
     const currentCoin = currency.toLowerCase()
-    const coinsWithDynamicFee = [
-      'eth',
-      'ltc',
-      'btc',
-      'ethToken',
-    ]
 
     if (isEthToken) {
       minAmount[currentCoin] = this.getMinAmountForEthToken()
+      minAmount.eth = await helpers.eth.estimateFeeValue({ method: 'send', speed: 'fast' })
     }
 
-    if (coinsWithDynamicFee.includes(currentCoin)) {
+    if (constants.coinsWithDynamicFee.includes(currentCoin)) {
       minAmount[currentCoin] = await helpers[currentCoin].estimateFeeValue({ method: 'send', speed: 'fast' })
     }
   }
@@ -208,22 +203,26 @@ export default class WithdrawModal extends React.Component {
         actions.modals.close(name)
       })
       .catch((e) => {
+        const errorText = e.res ? e.res.text : ''
         const error = {
-          name: defineMessages({
+          name: {
             id: 'Withdraw218',
             defaultMessage: 'Withdrawal error',
-          }),
-          message: '',
+          },
+          message: {
+            id: 'ErrorNotification12',
+            defaultMessage: 'Oops, looks like something went wrong!',
+          },
         }
 
-        if (/insufficient priority/.test(e.res.text)) {
-          error.message = defineMessages({
+        if (/insufficient priority|bad-txns-inputs-duplicate/.test(errorText)) {
+          error.message = {
             id: 'Withdraw232',
             defaultMessage: 'There is not enough confirmation of the last transaction. Try later.',
-          })
+          }
         }
 
-        console.error(error.name, ':', e)
+        console.error(error.name.defaultMessage, ':', e)
 
         this.setState(() => ({
           error,
@@ -279,7 +278,7 @@ export default class WithdrawModal extends React.Component {
       const dataCurrency = isEthToken ? 'ETH' : currency.toUpperCase()
 
       const isDisabled =
-        !address || !amount || isShipped || new BigNumber(amount).isLessThanOrEqualTo(min)
+        !address || !amount || isShipped
         || !this.addressIsCorrect()
         || BigNumber(amount).isGreaterThan(balance)
         || BigNumber(amount).dp() > currentDecimals
@@ -298,12 +297,6 @@ export default class WithdrawModal extends React.Component {
                 currency: `${currency}`,
               }}
             />
-          </div>
-        ))
-        linked.amount.check((value) => new BigNumber(value).isGreaterThanOrEqualTo(min), (
-          <div style={{ width: '340px', fontSize: '12px' }}>
-            <FormattedMessage id="Withdrow159" defaultMessage="Amount must be greater than  " />
-            {min}
           </div>
         ))
       }
@@ -327,7 +320,7 @@ export default class WithdrawModal extends React.Component {
           <p styleName={isEthToken ? 'rednotes' : 'notice'}>
             <FormattedMessage
               id="Withdrow213"
-              defaultMessage="Please note: Miners fee is {minAmount} {currency}.{br}Represented balance is your balance minus the miners commission will appear. "
+              defaultMessage="Please note: Miners fee is {minAmount} {data}.{br}Your balance must exceed this sum to perform transaction"
               values={{ minAmount: `${isEthToken ? minAmount.eth : min}`, br: <br />, data: `${dataCurrency}` }} />
           </p>
           <div styleName="highLevel">
@@ -346,7 +339,7 @@ export default class WithdrawModal extends React.Component {
                 </div>
               </Tooltip>
             </FieldLabel>
-            <Input valueLink={linked.address} focusOnInit pattern="0-9a-zA-Z" placeholder={`Enter ${currency.toUpperCase()} address to transfer`} />
+            <Input valueLink={linked.address} focusOnInit pattern="0-9a-zA-Z:" placeholder={`Enter ${currency.toUpperCase()} address to transfer`} />
             {address && !this.addressIsCorrect() && (
               <div styleName="rednote">
                 <FormattedMessage

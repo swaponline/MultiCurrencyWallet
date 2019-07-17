@@ -200,9 +200,8 @@
 }
 
 .qr span {
-  position: absolute;
   font-size: 9px;
-  bottom: -14px;
+  margin-top: 13px;
 }
 
 .qr i {
@@ -256,13 +255,6 @@
     top: 4px;
     left: -25px;
   }
-  // div {
-  //   span {
-  //     span {
-  //       display: none;
-  //     }
-  //   }
-  // }
 }
 
 @include media-mobile {
@@ -393,7 +385,6 @@
 
 .linkAddress {
   cursor: pointer;
-  width: 84%;
   font-size: 17px;
 }
 
@@ -580,10 +571,6 @@
     font-size: 11px;
     margin: 0;
     margin-top: 80px;
-  }
-  .swapContainer {
-    margin-bottom: -100px;
-    align-items: baseline;
   }
   .swapMobile {
     margin-top: 0;

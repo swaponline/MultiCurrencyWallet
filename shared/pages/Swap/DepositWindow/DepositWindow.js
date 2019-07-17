@@ -32,6 +32,11 @@ export default class DepositWindow extends Component {
 
     this.swap = swap
 
+    this.currency = swap.sellCurrency.toLowerCase()
+
+    this.isSellCurrencyEthOrEthToken = helpers.ethToken.isEthOrEthToken({ name: swap.sellCurrency })
+    this.isSellCurrencyEthToken = helpers.ethToken.isEthToken({ name: swap.sellCurrency })
+
     this.state = {
       swap,
       dynamicFee: 0,
@@ -40,61 +45,37 @@ export default class DepositWindow extends Component {
       isBalanceEnough: false,
       isAddressCopied: false,
       isBalanceFetching: false,
-      scriptAddress: flow.scriptAddress,
-      scriptBalance: flow.scriptBalance,
-      balance: this.isDepositToContractDirectly() ? flow.scriptBalance : flow.balance,
-      address: this.isDepositToContractDirectly() ? flow.scriptAddress : currencyData.address,
+      balance: this.isSellCurrencyEthOrEthToken
+        ? currencyData.balance - (currencyData.unconfirmedBalance || 0)
+        : flow.scriptBalance,
+      address: this.isSellCurrencyEthOrEthToken
+        ? currencyData.address
+        : flow.scriptAddress,
       currencyFullName: currencyData.fullName,
       sellAmount: this.swap.sellAmount,
     }
   }
 
-  componentDidMount() {
-    const { swap } =  this.props
-    const { sellAmount, scriptBalance, balance } = this.state
-
-    let checker
-    this.getRequiredAmount()
-    this.updateRemainingBalance()
-
-    const availableBalance = this.isDepositToContractDirectly() ? scriptBalance : balance
-
-    checker = setInterval(() => {
-      if (BigNumber(availableBalance).isLessThanOrEqualTo(sellAmount)) {
-        this.updateBalance()
-        this.checkThePayment()
-      } else {
-        clearInterval(checker)
-      }
-    }, 5000)
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.balance !== prevState.balance) {
-      this.updateRemainingBalance()
-    }
-  }
-
-  isDepositToContractDirectly = () => this.swap.sellCurrency === 'BTC'
-
   updateBalance = async () => {
     const { swap } =  this.props
-    const { sellAmount, scriptBalance, address, scriptAddress } =  this.state
+    const { sellAmount, address } =  this.state
 
-    if (helpers.ethToken.isEthToken({ name: swap.sellCurrency.toLowerCase() })) {
-      const currencyBalance = await actions.token.getBalance(swap.sellCurrency.toLowerCase())
-      this.setState(() => ({ currencyBalance }))
+    let actualBalance
+
+    if (this.isSellCurrencyEthOrEthToken) {
+      if (this.isSellCurrencyEthToken) {
+        actualBalance = await actions.token.getBalance(this.currency)
+      } else {
+        actualBalance = await actions.eth.getBalance(this.currency)
+      }
     } else {
-      const currencyBalance = await actions[swap.sellCurrency.toLowerCase()].getBalance()
-      this.setState(() => ({ currencyBalance }))
+      const unspents = await actions[this.currency].fetchUnspents(address)
+      const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
+      actualBalance = BigNumber(totalUnspent).dividedBy(1e8)
     }
-
-    const actualBalance = this.isDepositToContractDirectly() ? scriptBalance : (this.state.currencyBalance || 0)
 
     this.setState(() => ({
       balance: actualBalance,
-      scriptBalance: swap.flow.state.scriptBalance,
-      address: this.isDepositToContractDirectly() ? scriptAddress : address,
     }))
   }
 
@@ -102,11 +83,14 @@ export default class DepositWindow extends Component {
     const { swap } = this.props
     const { sellAmount, balance, dynamicFee } = this.state
 
-    const remainingBalance = new BigNumber(sellAmount).minus(balance).plus(dynamicFee).dp(6, BigNumber.ROUND_CEIL)
+    let remainingBalance = new BigNumber(sellAmount).minus(balance)
+
+    if (!this.isSellCurrencyEthToken) {
+      remainingBalance = remainingBalance.plus(dynamicFee)
+    }
 
     this.setState(() => ({
-      remainingBalance,
-      dynamicFee,
+      remainingBalance: remainingBalance.dp(6, BigNumber.ROUND_UP),
     }))
   }
 
@@ -114,35 +98,84 @@ export default class DepositWindow extends Component {
     const { swap } =  this.props
     const { sellAmount } = this.state
 
-    if (!coinsWithDynamicFee.includes(swap.sellCurrency.toLowerCase()) || this.isDepositToContractDirectly()) {
-      this.setState({
-        dynamicFee: BigNumber(0),
-        requiredAmount: BigNumber(sellAmount).dp(6, BigNumber.ROUND_CEIL),
-      })
-    } else {
-      const dynamicFee = await helpers[swap.sellCurrency.toLowerCase()].estimateFeeValue({ method: 'swap', fixed: true })
+    let dynamicFee = 0
 
-      const requiredAmount = BigNumber(sellAmount).plus(dynamicFee).dp(6, BigNumber.ROUND_CEIL)
+    if (coinsWithDynamicFee.includes(this.currency)) {
+      dynamicFee = await helpers[this.currency].estimateFeeValue({ method: 'swap', fixed: true })
 
       this.setState(() => ({
         dynamicFee,
-        requiredAmount,
       }))
     }
+
+    const requiredAmount = BigNumber(sellAmount).plus(dynamicFee).dp(6, BigNumber.ROUND_CEIL)
+
+    this.setState(() => ({
+      requiredAmount,
+    }))
 
     this.updateRemainingBalance()
   }
 
   checkThePayment = () => {
-    if (this.state.sellAmount <= this.state.balance) {
+    const { swap, dynamicFee, sellAmount, balance } = this.state
+
+    if (sellAmount.plus(dynamicFee).isLessThanOrEqualTo(balance)) {
       this.setState(() => ({
         isBalanceEnough: true,
       }))
+
+      if (!this.isSellCurrencyEthOrEthToken) {
+        swap.flow.skipSyncBalance()
+      } else {
+        swap.flow.syncBalance()
+      }
     }
   }
 
+  createCycleUpdatingBalance = async () => {
+    const { sellAmount, balance } = this.state
+
+    let checker
+    await this.getRequiredAmount()
+    await this.updateRemainingBalance()
+
+    const balanceCheckHandler = async () => {
+      const { swap: { flow } } =  this.props
+      const { btcScriptValues } = flow.state
+      const { isBalanceEnough } = this.state
+
+      const utcNow = Math.floor(Date.now() / 1000)
+      const timeLeft = Math.ceil((btcScriptValues.lockTime - utcNow) / 60)
+
+      if (timeLeft <= 0) {
+        flow.stopSwapProcess()
+
+        return true
+      }
+
+      if (isBalanceEnough) {
+        return true
+      }
+
+      await this.updateBalance()
+      this.checkThePayment()
+
+      return false
+    }
+
+    await balanceCheckHandler()
+
+    checker = setInterval(async () => {
+      const needStop = await balanceCheckHandler()
+
+      if (needStop) {
+        clearInterval(checker)
+      }
+    }, 5000)
+  }
+
   onCopyAddress = (e) => {
-    // e.preventDefault()
     this.setState({
       isPressCtrl: true,
     })
@@ -180,6 +213,16 @@ export default class DepositWindow extends Component {
     e.preventDefault()
   }
 
+  componentDidMount() {
+    this.createCycleUpdatingBalance()
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.balance !== prevState.balance) {
+      this.updateRemainingBalance()
+    }
+  }
+
   render() {
     const {
       swap,
@@ -202,34 +245,35 @@ export default class DepositWindow extends Component {
     const isWidgetBuild = config && config.isWidget
 
     const DontHaveEnoughtFoundsValues = {
-      missingBalance:
-  <div>
-    {remainingBalance > 0 ?
-      <strong>{`${remainingBalance}`} {swap.sellCurrency}{'  '}</strong>
-      :
-      <span styleName="loaderHolder">
-        <InlineLoader />
-      </span>
-    }
-    <Tooltip id="dep170">
-      <div>
-        {/* eslint-disable */}
-        <FormattedMessage
-          id="deposit177"
-          defaultMessage="Do not top up the contract with the greater amount than recommended. The remaining balance will be send to the counter party. You can send {tokenName} from a wallet of any exchange"
-          values={{
-            amount: `${swap.sellAmount}`,
-            tokenName: swap.sellCurrency,
-            br: <br />,
-          }}
-        />
-        {/* eslint-enable */}
-        {/* <p>
-          <FormattedMessage id="deposit181" defaultMessage="You can send {currency} from a wallet of any exchange" values={{ currency: `${swap.buyCurrency}` }} />
-        </p> */}
-      </div>
-    </Tooltip>
-  </div>,
+      missingBalance: (
+        <div>
+          {remainingBalance > 0 ?
+            <strong>{`${remainingBalance}`} {swap.sellCurrency}{'  '}</strong>
+            :
+            <span styleName="loaderHolder">
+              <InlineLoader />
+            </span>
+          }
+          <Tooltip id="dep170">
+            <div>
+              {/* eslint-disable */}
+              <FormattedMessage
+                id="deposit177"
+                defaultMessage="Do not top up the contract with the greater amount than recommended. The remaining balance will be send to the counter party. You can send {tokenName} from a wallet of any exchange"
+                values={{
+                  amount: `${swap.sellAmount}`,
+                  tokenName: swap.sellCurrency,
+                  br: <br />,
+                }}
+              />
+              {/* eslint-enable */}
+              {/* <p>
+                <FormattedMessage id="deposit181" defaultMessage="You can send {currency} from a wallet of any exchange" values={{ currency: `${swap.buyCurrency}` }} />
+              </p> */}
+            </div>
+          </Tooltip>
+        </div>
+      ),
       amount: `${swap.sellAmount}`,
       tokenName: swap.sellCurrency,
       br: <br />,
@@ -254,7 +298,7 @@ export default class DepositWindow extends Component {
               ) : (
                 <FormattedMessage
                   id="deposit165"
-                  defaultMessage="You don't have enought funds to continue the swap. Copy the address below and top it up with the recommended amount of {missingBalance} "
+                  defaultMessage="To continue the swap copy this address and top it up with {missingBalance}"
                   values={DontHaveEnoughtFoundsValues}
                 />
               )}
@@ -309,7 +353,7 @@ export default class DepositWindow extends Component {
                   disabled={isAddressCopied}
                   fullWidth
                 >
-                  <span className="copyText">copy</span>
+                  <span className="copyText"><FormattedMessage id="deposit312" defaultMessage="copy" /></span>
                   {isAddressCopied ? <i className="fas fa-copy fa-copy-in" /> : <i className="fas fa-copy" />}
                 </Button>
               </p>

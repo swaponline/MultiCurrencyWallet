@@ -34,8 +34,8 @@ const titles = [
 ]
 
 @connect(({ core, user,  history: { transactions, swapHistory }, history,
-  user: { ethData, btcData, ltcData, tokensData, eosData, nimData, usdtData, telosData } }) => ({
-  items: [ ethData, btcData, eosData, usdtData, ltcData, telosData, ...Object.keys(tokensData).map(k => (tokensData[k])) /* nimData */ ],
+  user: { ethData, btcData, bchData, ltcData, tokensData, eosData, nimData, usdtData, telosData } }) => ({
+  items: [ ethData, btcData, bchData, eosData, usdtData, ltcData, telosData, ...Object.keys(tokensData).map(k => (tokensData[k])) /* nimData */ ],
   tokens: [...Object.keys(tokensData).map(k => (tokensData[k]))],
   user,
   historyTx: history,
@@ -136,11 +136,9 @@ export default class CurrencyWallet extends Component {
 
   handleGoTrade = (currency) => {
     const { intl: { locale } } = this.props
-    const whatDoUserProbablyWantToBuy = currency.toLowerCase() === 'btc'
-      ? 'eth'
-      : 'btc'
+    const whatDoUserProbablyWantToBuy = currency.toLowerCase()
 
-    this.props.history.push(localisedUrl(locale, `/exchange/${currency.toLowerCase()}-to-${whatDoUserProbablyWantToBuy}`))
+    this.props.history.push(localisedUrl(locale, `${links.exchange}/${currency.toLowerCase()}-to-${whatDoUserProbablyWantToBuy}`))
   }
 
   handleEosBuyAccount = async () => {
@@ -198,6 +196,10 @@ export default class CurrencyWallet extends Component {
       actions.core.markCoinAsVisible(currency)
     }
 
+    const isBlockedCoin = config.noExchangeCoins
+      .map(item => item.toLowerCase())
+      .includes(currency.toLowerCase())
+
     return (
       <div className="root">
         <PageSeo
@@ -247,9 +249,13 @@ export default class CurrencyWallet extends Component {
           >
             <FormattedMessage id="CurrencyWallet100" defaultMessage="Send" />
           </CurrencyButton>
-          <Button gray onClick={() => this.handleGoTrade(currency)}>
-            <FormattedMessage id="CurrencyWallet104" defaultMessage="Exchange" />
-          </Button>
+          {
+            !isBlockedCoin && (
+              <Button gray onClick={() => this.handleGoTrade(currency)}>
+                <FormattedMessage id="CurrencyWallet104" defaultMessage="Exchange" />
+              </Button>
+            )
+          }
         </div>
         { swapHistory.length > 0 && <SwapsHistory orders={swapHistory.filter(item => item.step >= 4)} /> }
         <h2 style={{ marginTop: '20px' }} >

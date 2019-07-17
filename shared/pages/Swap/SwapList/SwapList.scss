@@ -84,7 +84,6 @@
   font-size: 20px;
   margin-left: 10px;
   position: relative;
-  z-index: 11111;
   a {
     font-size: 14px;
     margin-top: -12px;
@@ -137,12 +136,8 @@
       margin-top: 0;
     }
   }
-    
+
   .stepList.isMobile {
-    padding-top: 20px;
-    margin: 0;
-    position: absolute;
-    top: -15px;
     width: 100%;
     order: 1;
     .cancelSwap {

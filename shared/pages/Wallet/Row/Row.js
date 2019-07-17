@@ -23,13 +23,15 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
 import { relocalisedUrl, localisedUrl } from 'helpers/locale'
 import SwapApp from 'swap.app'
+import { BigNumber } from 'bignumber.js'
+
 
 @injectIntl
 @withRouter
 @connect(
   ({
     rememberedOrders,
-    user: { ethData, btcData, /* bchData, */ tokensData, eosData, /* xlmData, */ telosData, nimData, usdtData, ltcData },
+    user: { ethData, btcData, bchData, tokensData, eosData, /* xlmData, */ telosData, nimData, usdtData, ltcData },
     currencies: { items: currencies },
   }, { currency }) => ({
     currencies,
@@ -39,7 +41,7 @@ import SwapApp from 'swap.app'
       /* xlmData, */
       eosData,
       telosData,
-      /* bchData, */
+      bchData,
       ltcData,
       usdtData,
       ...Object.keys(tokensData).map(k => (tokensData[k])),
@@ -75,7 +77,11 @@ export default class Row extends Component {
     super(props)
     const { currency, currencies } = this.props
 
-    this.state.tradeAllowed = !!currencies.find(c => c.value === currency.toLowerCase())
+
+    const isBlockedCoin = config.noExchangeCoins
+      .map(item => item.toLowerCase())
+      .includes(currency.toLowerCase())
+    this.state.tradeAllowed = !!currencies.find(c => c.value === currency.toLowerCase()) && !isBlockedCoin
 
   }
 
@@ -239,14 +245,14 @@ export default class Row extends Component {
 
     if (decline.length === 0) {
       window.scrollTo(0, 0)
-      this.props.history.push(localisedUrl(locale, `/exchange/${currency.toLowerCase()}-to-${pair}`))
+      this.props.history.push(localisedUrl(locale, `${links.exchange}/${currency.toLowerCase()}-to-${pair}`))
     } else {
       const getDeclinedExistedSwapIndex = helpers.handleGoTrade.getDeclinedExistedSwapIndex({ currency, decline })
       if (getDeclinedExistedSwapIndex !== false) {
         this.handleDeclineOrdersModalOpen(getDeclinedExistedSwapIndex)
       } else {
         window.scrollTo(0, 0)
-        this.props.history.push(localisedUrl(locale, `/exchange/${currency.toLowerCase()}-to-${pair}`))
+        this.props.history.push(localisedUrl(locale, `${links.exchange}/${currency.toLowerCase()}-to-${pair}`))
       }
     }
   }
@@ -379,10 +385,19 @@ export default class Row extends Component {
                 <i className="fas fa-sync-alt" styleName="icon" />
                 <span>
                   {
-                    balanceError ? '?' : String(balance).length > 4 ? balance.toFixed(4) : balance
+                    balanceError ? '?' : BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString()
                   }{' '}{currency}
                 </span>
                 { currency === 'BTC' && unconfirmedBalance !== 0 && (
+                  <Fragment>
+                    <br />
+                    <span styleName="unconfirmedBalance">
+                      <FormattedMessage id="RowWallet181" defaultMessage="Unconfirmed balance" />
+                      {unconfirmedBalance} {' '}
+                    </span>
+                  </Fragment>
+                ) }
+                { currency === 'BCH' && unconfirmedBalance !== 0 && (
                   <Fragment>
                     <br />
                     <span styleName="unconfirmedBalance">

@@ -15,6 +15,7 @@ import Link from 'sw-valuelink'
 import SwapProgress from './SwapProgress/SwapProgress'
 import SwapList from './SwapList/SwapList'
 import FeeControler from './FeeControler/FeeControler'
+import FailControler from './FailControler/FailControler'
 import DepositWindow from './DepositWindow/DepositWindow'
 import paddingForSwapList from 'shared/helpers/paddingForSwapList.js'
 
@@ -152,10 +153,33 @@ export default class EthTokenToBtc extends Component {
   }
 
   render() {
-    const { children, disabledTimer, continueSwap, enoughBalance, history, ethAddress, requestToFaucetSended, onClickCancelSwap }  = this.props
-    const { currencyAddress, flow, enabledButton, isShowingBitcoinScript, isAddressCopied, currencyData, tokenItems, signed, paddingContainerValue, swap } = this.state
+    const {
+      children,
+      disabledTimer,
+      continueSwap,
+      enoughBalance,
+      history,
+      ethAddress,
+      requestToFaucetSended,
+      onClickCancelSwap,
+      locale,
+      wallets,
+    }  = this.props
 
-    const SwapProgressView = <SwapProgress flow={flow} name="EthTokensToBtc" swap={swap} tokenItems={tokenItems} history={history} signed={signed} />
+    const {
+      currencyAddress,
+      flow,
+      enabledButton,
+      isShowingBitcoinScript,
+      isAddressCopied,
+      currencyData,
+      tokenItems,
+      signed,
+      paddingContainerValue,
+      swap
+    } = this.state
+
+    const { canCreateEthTransaction, isFailedTransaction, gasAmountNeeded } = flow
 
     return (
       <div>
@@ -183,8 +207,32 @@ export default class EthTokenToBtc extends Component {
             : (
               <Fragment>
                 {!continueSwap
-                  ? ((!requestToFaucetSended) ? <FeeControler ethAddress={ethAddress} /> : SwapProgressView)
-                  : SwapProgressView
+                  ? (
+                    <Fragment>
+                      {
+                        !canCreateEthTransaction && (
+                          <FeeControler ethAddress={ethAddress} gasAmountNeeded={gasAmountNeeded} />
+                        )
+                      }
+                      {
+                        isFailedTransaction && (
+                          <FailControler ethAddress={ethAddress} />
+                        )
+                      }
+                    </Fragment>
+                  )
+                  : (
+                    <SwapProgress
+                      flow={flow}
+                      name="EthTokensToBtc"
+                      swap={swap}
+                      tokenItems={tokenItems}
+                      history={history}
+                      locale={locale}
+                      wallets={wallets}
+                      signed={signed}
+                    />
+                  )
                 }
               </Fragment>
             )

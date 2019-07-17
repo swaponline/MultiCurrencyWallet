@@ -49,6 +49,13 @@ const initialState = {
       fullTitle: 'ethereum',
     },
     {
+      name: 'LTC',
+      title: 'LTC',
+      icon: 'ltc',
+      value: 'ltc',
+      fullTitle: 'litecoin',
+    },
+    {
       name: 'BTC',
       title: 'BTC',
       icon: 'btc',
@@ -56,12 +63,20 @@ const initialState = {
       fullTitle: 'bitcoin',
     },
     {
-      name: 'SWAP',
-      title: 'SWAP',
-      icon: 'swap',
-      value: 'swap',
-      fullTitle: 'swap',
+      name: 'BCH',
+      title: 'BCH',
+      icon: 'bch',
+      value: 'bch',
+      fullTitle: 'bitcoin cash',
     },
+    ...(Object.keys(config.erc20)
+      .map(key => ({
+        name: key.toUpperCase(),
+        title: key.toUpperCase(),
+        icon: key,
+        value: key,
+        fullTitle: key,
+      }))),
   ],
   addSelectedItems: [],
   addPartialItems: [],
@@ -133,6 +148,14 @@ process.env.MAINNET && initialState.items.unshift({
   icon: 'usdt',
   value: 'usdt',
   fullTitle: 'USD Tether',
+})
+
+process.env.TESTNET && initialState.items.unshift({
+  name: 'BCH',
+  title: 'BCH',
+  icon: 'bch',
+  value: 'bch',
+  fullTitle: 'bitcoin cash',
 })
 
 const addSelectedItems = (state, payload) => ({

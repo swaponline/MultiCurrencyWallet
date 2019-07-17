@@ -8,7 +8,7 @@ import styles from './KeyActionsPanel.scss'
 import CSSModules from 'react-css-modules'
 import { isMobile } from 'react-device-detect'
 
-import { constants } from 'helpers'
+import { constants, ethToken } from 'helpers'
 import { WithdrawButton } from 'components/controls'
 import { FormattedMessage } from 'react-intl'
 import SwapApp from 'swap.app'
@@ -41,38 +41,66 @@ export default class KeyActionsPanel extends Component {
   }
 
   componentDidMount() {
-    let timer
-    this.timer = setInterval(() => {
-      this.getCorrectDecline()
-    }, 3000)
+    this.getCorrectDecline()
   }
 
-  componentWillUnmount() {
-    clearInterval(this.timer)
-  }
+  getFlowById = (swapId) => JSON.parse(localStorage.getItem(`swap:flow.${swapId}`) || 0)
+  getSwapById = (swapId) => JSON.parse(localStorage.getItem(`swap:swap.${swapId}`) || 0)
 
   getCorrectDecline = () => {
     const { decline, swapHistory } = this.props
 
-    if (!localStorage.savedOrders) {
+    const localSavedOrdersString = localStorage.getItem('savedOrders')
+
+    if (!localSavedOrdersString) {
       return
     }
 
-    if (localStorage.savedOrders.length > 0) {
-      const desclineOrders = []
+    const localSavedOrders = JSON.parse(localSavedOrdersString)
 
-      decline.forEach(item => {
-        const order = actions.core.getSwapById(item)
-
-        if (!order.flow.state.isSwapExist && !order.isMy && order.flow.state.step >= 4) {
-          desclineOrders.push(order)
-        }
-      })
-      this.setState(() => ({
-        desclineOrders,
-      }))
+    if (localSavedOrders.length !== decline.length) {
+      return
     }
 
+    const desclineOrders = []
+
+    decline.forEach(swapId => {
+      try {
+        const flow = this.getFlowById(swapId)
+        const swap = this.getSwapById(swapId)
+
+        if (!flow || !swap) {
+          throw new Error(`getCorrectDecline: swap is not saved ${swapId}`)
+        }
+
+        const {
+          step,
+          isRefunded,
+          isFinished,
+          isStoppedSwap,
+          btcScriptCreatingTransactionHash,
+          ethSwapCreationTransactionHash,
+        } = flow
+
+        const { sellCurrency } = swap
+
+        const isCurrencyEthOrEthToken = ethToken.isEthOrEthToken({ name: sellCurrency })
+
+        const isIncompleteSwap = !(isRefunded || isFinished || isStoppedSwap)
+        const isStartedSwap = isCurrencyEthOrEthToken
+          ? step >= 4 && btcScriptCreatingTransactionHash
+          : step >= 5 && ethSwapCreationTransactionHash
+
+        if (isIncompleteSwap && isIncompleteSwap) {
+          desclineOrders.push(actions.core.getSwapById(swapId))
+        }
+      } catch (error) {
+        console.error('getCorrectDecline:', error)
+      }
+    })
+    this.setState(() => ({
+      desclineOrders,
+    }))
   }
 
   handleShowMore = () => {
@@ -129,7 +157,7 @@ export default class KeyActionsPanel extends Component {
         {
           (config && !config.isWidget) && (
             <WithdrawButton onClick={this.handleShowMore}>
-              <FormattedMessage id="KeyActionsPanel73" defaultMessage="Hidden coins ({length})" values={{ length: `${hiddenCoinsList.length}` }} />
+              <FormattedMessage id="KeyActionsPanel73" defaultMessage="Hide / Add Coins" values={{ length: `${hiddenCoinsList.length}` }} />
             </WithdrawButton>
           )
         }
