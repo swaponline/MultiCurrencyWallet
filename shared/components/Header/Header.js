@@ -63,7 +63,7 @@ const messages = defineMessages({
   IEO: {
     id: 'menu.IEO',
     description: 'Menu item "IEO"',
-    defaultMessage: 'IEO',
+    defaultMessage: 'Earn',
   },
   invest: {
     id: 'menu.invest',
@@ -84,6 +84,7 @@ const messages = defineMessages({
   peer: 'ipfs.peer',
   isSigned: 'signUp.isSigned',
   isInputActive: 'inputActive.isInputActive',
+  reputation: 'ipfs.reputation',
 })
 @CSSModules(styles, { allowMultiple: true })
 export default class Header extends Component {
@@ -177,37 +178,66 @@ export default class Header extends Component {
     clearTimeout(this.timeoutLoader)
   }
 
-  getMenuItems = (props, didWalletCreated, dinamicPath) => ([
-    {
-      title: props.intl.formatMessage(didWalletCreated ? messages.wallet : messages.createWallet),
-      link: links.currencyWallet,
-      exact: true,
-      haveSubmenu: true,
-      icon: 'products',
-      currentPageFlag: true,
-    },
-    {
-      title: props.intl.formatMessage(messages.exchange),
-      link: dinamicPath,
-      exact: true,
-      haveSubmenu: true,
-      icon: 'products',
-      currentPageFlag: true,
-    },
-    {
-      title: props.intl.formatMessage(messages.history),
-      link: links.history,
-      icon: 'history',
-      haveSubmenu: false,
-      displayNone: !didWalletCreated,
-    },
-    {
-      title: props.intl.formatMessage(messages.IEO),
-      link: links.ieo,
-      icon: 'IEO',
-      haveSubmenu: false,
-    },
-  ])
+  getMenuItems = (props, didWalletCreated, dinamicPath) =>
+    (Number.isInteger(this.props.reputation) && this.props.reputation !== 0)
+    || this.props.isSigned
+    || window.localStorage.getItem('didOpenSignUpModal') === 'true'
+      ? ([
+        {
+          title: props.intl.formatMessage(didWalletCreated ? messages.wallet : messages.createWallet),
+          link: links.currencyWallet,
+          exact: true,
+          haveSubmenu: true,
+          icon: 'products',
+          currentPageFlag: true,
+        },
+        {
+          title: props.intl.formatMessage(messages.exchange),
+          link: dinamicPath,
+          exact: true,
+          haveSubmenu: true,
+          icon: 'products',
+          currentPageFlag: true,
+        },
+        {
+          title: props.intl.formatMessage(messages.history),
+          link: links.history,
+          icon: 'history',
+          haveSubmenu: false,
+          displayNone: !didWalletCreated,
+        },
+        {
+          title: props.intl.formatMessage(messages.IEO),
+          link: links.ieo,
+          icon: 'IEO',
+          haveSubmenu: false,
+        },
+      ])
+      : ([
+        {
+          title: props.intl.formatMessage(didWalletCreated ? messages.wallet : messages.createWallet),
+          link: links.currencyWallet,
+          exact: true,
+          haveSubmenu: true,
+          icon: 'products',
+          currentPageFlag: true,
+        },
+        {
+          title: props.intl.formatMessage(messages.exchange),
+          link: dinamicPath,
+          exact: true,
+          haveSubmenu: true,
+          icon: 'products',
+          currentPageFlag: true,
+        },
+        {
+          title: props.intl.formatMessage(messages.history),
+          link: links.history,
+          icon: 'history',
+          haveSubmenu: false,
+          displayNone: !didWalletCreated,
+        },
+      ])
 
   getMenuItemsMobile = (props, didWalletCreated, dinamicPath) => ([
     {
