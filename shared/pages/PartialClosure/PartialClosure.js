@@ -389,7 +389,14 @@ export default class PartialClosure extends Component {
 
     this.setState(() => ({ isFetching: true }))
 
+    const requestTimeout = setTimeout(() => {
+      this.banPeer(peer)
+      this.getLinkTodeclineSwap(peer)
+      this.setDeclinedOffer()
+    }, 30*1000 ) // 30 seconds wait until not skip and ban peer
+
     actions.core.sendRequestForPartial(orderId, newValues, destination, (newOrder, isAccepted) => {
+      clearTimeout(requestTimeout)
       if (isAccepted) {
         this.setState(() => ({
           redirect: true,
