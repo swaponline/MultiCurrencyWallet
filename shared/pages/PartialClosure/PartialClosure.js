@@ -146,6 +146,8 @@ export default class PartialClosure extends Component {
 
     super()
 
+    this.onRequestAnswer = (newOrder, isAccepted) => {}
+
     const isRootPage = history.location.pathname === '/' || history.location.pathname === '/ru'
 
     if (sell && buy && !isRootPage) {
@@ -395,7 +397,7 @@ export default class PartialClosure extends Component {
       this.setDeclinedOffer()
     }, 30*1000 ) // 30 seconds wait until not skip and ban peer
 
-    actions.core.sendRequestForPartial(orderId, newValues, destination, (newOrder, isAccepted) => {
+    this.onRequestAnswer = (newOrder, isAccepted) => {
       clearTimeout(requestTimeout)
       if (isAccepted) {
         this.setState(() => ({
@@ -408,7 +410,9 @@ export default class PartialClosure extends Component {
         this.getLinkTodeclineSwap(peer)
         this.setDeclinedOffer()
       }
-    })
+    }
+
+    actions.core.sendRequestForPartial(orderId, newValues, destination, this.onRequestAnswer)
   }
 
   getLinkTodeclineSwap = () => {
