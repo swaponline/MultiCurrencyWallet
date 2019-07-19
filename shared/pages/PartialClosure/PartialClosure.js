@@ -391,11 +391,13 @@ export default class PartialClosure extends Component {
 
     this.setState(() => ({ isFetching: true }))
 
+    const requestTimeoutLenght = (config && config.isWidgetBuild) ? 60 : 30
+
     const requestTimeout = setTimeout(() => {
       this.banPeer(peer)
       this.getLinkTodeclineSwap(peer)
       this.setDeclinedOffer()
-    }, 30*1000 ) // 30 seconds wait until not skip and ban peer
+    }, requestTimeoutLenght*1000 ) // 45 seconds wait until not skip and ban peer
 
     this.onRequestAnswer = (newOrder, isAccepted) => {
       clearTimeout(requestTimeout)
