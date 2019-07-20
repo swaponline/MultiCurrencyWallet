@@ -1,6 +1,8 @@
 const mainPagePaths = [
-  '/',
+  '/', // - /exchange
+  '/wallet',
   '/ru',
+  '/ru/wallet',
 ]
 
 export const isMainOrPartialPages = (pathname) =>
