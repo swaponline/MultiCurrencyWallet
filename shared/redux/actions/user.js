@@ -107,7 +107,7 @@ const getBalances = () => {
 }
 
 const getDemoMoney = process.env.MAINNET ? () => {} : () => {
-   //googe bitcoin (or rinkeby) faucet
+  // googe bitcoin (or rinkeby) faucet
   request.get('https://swap.wpmix.net/demokeys.php', {})
     .then((r) => {
       window.localStorage.clear()
@@ -135,20 +135,40 @@ const getExchangeRate = (sellCurrency, buyCurrency) =>
       })
   })
 
-const setTransactions = () =>
-  Promise.all([
-    actions.btc.getTransaction(),
-    actions.bch.getTransaction(),
-    actions.usdt.getTransaction(),
-    actions.eth.getTransaction(),
-    actions.ltc.getTransaction(),
-    ...Object.keys(config.erc20)
-      .map(name => actions[name].getTransaction(name)),
-  ])
-    .then(transactions => {
-      let data = [].concat([], ...transactions).sort((a, b) => b.date - a.date)
-      reducers.history.setTransactions(data)
+
+const pullTransactions = transactions => {
+  let data = [].concat([], ...transactions).sort((a, b) => b.date - a.date)
+  reducers.history.setTransactions(data)
+}
+
+const delay = (ms) => new Promise(resolve => setTimeout(() => resolve(true), ms))
+
+const setTransactions = async () => {
+  try {
+    const mainTokens = await Promise.all([
+      actions.btc.getTransaction(),
+      actions.bch.getTransaction(),
+      actions.usdt.getTransaction(),
+      actions.eth.getTransaction(),
+      actions.ltc.getTransaction(),
+    ])
+
+    await new Promise(async resolve => {
+      const ercArray = await Promise.all(Object.keys(config.erc20)
+        .map(async (name, index) => {
+          await delay(650 * index)
+          const res = await actions[name].getTransaction(name)
+          // console.log('name - ', name, '\n', '\n', res)
+          return res
+        }))
+      return resolve(ercArray)
+    }).then((ercTokens) => {
+      pullTransactions([...mainTokens, ...ercTokens])
     })
+  } catch (error) {
+    console.error('getTransError: ', error)
+  }
+}
 
 const getText = () => {
   const { user : { ethData, btcData, eosData, /* xlmData, */ telosData, bchData, ltcData } } = getState()
