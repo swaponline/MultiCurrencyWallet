@@ -13,6 +13,7 @@ import About            from 'pages/About/About'
 import Currency         from 'pages/Currency/Currency'
 import PartialClosure   from 'pages/PartialClosure/PartialClosure'
 import CurrencyWallet   from 'pages/CurrencyWallet/CurrencyWallet'
+import IEO   from 'pages/IEO/IEO'
 
 import config from 'app-config'
 
@@ -34,11 +35,13 @@ const routes = (
       <Route path={`${localisePrefix}${links.aboutus}`} component={About} />
       <Route path={`${localisePrefix}${links.history}`} component={History} />
 
+      <Route path={`${localisePrefix}${links.ieo}`} component={IEO} />
       <Route exact path={`${localisePrefix}${links.notFound}`} component={NotFound} />
       <Route exact path={`${localisePrefix}${links.home}`} component={PartialClosure} />
 
       <Route path={`${localisePrefix}${links.currencyWallet}`} component={Wallet} />
       <Route path={`${localisePrefix}${links.home}:currency`} component={Currency} />
+
 
       <Route component={NotFound} />
     </Switch>
