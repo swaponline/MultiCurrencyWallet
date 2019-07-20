@@ -2257,6 +2257,13 @@
     ]
   },
   {
+    "id": "HowItWorks10",
+    "message": "How it works",
+    "files": [
+      "shared/pages/PartialClosure/HowItWorks/HowItWorks.js"
+    ]
+  },
+  {
     "id": "Confirmation",
     "message": "Confirmation of the transaction is necessary for crediting the reputation. If a user does not bring the deal to the end he gets a negative credit to his reputation. ",
     "files": [

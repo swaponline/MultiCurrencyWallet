@@ -2384,7 +2384,7 @@
   },
   {
     "id": "HowItWorks10",
-    "message": "Как это работает? ",
+    "message": "Как это работает ",
     "files": [
       "shared/pages/PartialClosure/HowItWorks/HowItWorks.js"
     ]
