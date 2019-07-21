@@ -13,9 +13,34 @@ export default class FAQ extends Component {
     }
   }
 
-  componentDidMount() {
-    /* eslint-disable */
+  /* eslint-disable */
 
+  onDone = () => {
+    /* Open accordion if hash */
+    if (hash) {
+      $(hash).collapse('show');
+      setTimeout(function () {
+        $('html, body').stop().animate({
+          scrollTop: $(hash).offset().top - 165
+        }, 800, 'swing');
+      }, 300);
+    }
+
+    /* Go to anchor */
+    $('.goto-anchor').on('click', function (e) {
+      e.preventDefault();
+      // $('.navbar-collapse').collapse('hide');
+      hash = $(this).attr('href');
+      $(hash).collapse('show');
+      setTimeout(function () {
+        $('html, body').stop().animate({
+          scrollTop: $(hash).offset().top - 165
+        }, 800, 'swing');
+      }, 300);
+    });
+  }
+
+  componentDidMount() {
 
     function _autop_newline_preservation_helper(matches) {
       return matches[0].replace("\n", "<WPPreserveNewline />");
@@ -160,30 +185,6 @@ export default class FAQ extends Component {
 
   }
 
-  onDone = () => {
-    /* Open accordion if hash */
-    if (hash) {
-      $(hash).collapse('show');
-      setTimeout(function () {
-        $('html, body').stop().animate({
-          scrollTop: $(hash).offset().top - 165
-        }, 800, 'swing');
-      }, 300);
-    }
-
-    /* Go to anchor */
-    $('.goto-anchor').on('click', function (e) {
-      e.preventDefault();
-      // $('.navbar-collapse').collapse('hide');
-      hash = $(this).attr('href');
-      $(hash).collapse('show');
-      setTimeout(function () {
-        $('html, body').stop().animate({
-          scrollTop: $(hash).offset().top - 165
-        }, 800, 'swing');
-      }, 300);
-    });
-  }
   /* eslint-enable */
 
   render() {
