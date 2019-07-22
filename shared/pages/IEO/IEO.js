@@ -30,37 +30,37 @@ class IEO extends React.Component {
     }
   }
 
-  handleSignUp = () => {
-    const {
-      twitter,
-      facebook,
-      github,
-      reddit,
-    } = this.state
-
-    const twitterRegex = /https:\/\/twitter.com\/(?<id>.+(\b))\/?/
-    const twitterId = twitter.match(twitterRegex) !== null ? twitter.match(twitterRegex).groups.id : twitter
-
-    const facebookRegex = /https:\/\/www.facebook.com\/profile.php\?id=(?<id>.+(\b))\/?/
-    const facebookId = facebook.match(facebookRegex) !== null ? facebook.match(facebookRegex).groups.id : facebook
-
-    const redditRegex = /https:\/\/www.reddit.com\/user\/(?<id>.+(\b))\/?/
-    const redditId = reddit.match(redditRegex) !== null ? reddit.match(redditRegex).groups.id : reddit
-
-    const githubRegex = /https:\/\/github.com\/(?<id>.+(\b))\/?/
-    const githubId = reddit.match(githubRegex) !== null ? reddit.match(githubRegex).groups.id : github
-
-
-    localStorage.setItem(constants.localStorage.IEO_signed, true)
-    this.setState({ isSaved: true })
-
-    firestore.updateUserData({
-      facebook: facebookId,
-      twitter: twitterId,
-      reddit: redditId,
-      github: githubId,
-    })
-  }
+  // handleSignUp = () => {
+  //   const {
+  //     twitter,
+  //     facebook,
+  //     github,
+  //     reddit,
+  //   } = this.state
+  //
+  //   const twitterRegex = /https:\/\/twitter.com\/(?<id>.+(\b))\/?/
+  //   const twitterId = twitter.match(twitterRegex) !== null ? twitter.match(twitterRegex).groups.id : twitter
+  //
+  //   const facebookRegex = /https:\/\/www.facebook.com\/profile.php\?id=(?<id>.+(\b))\/?/
+  //   const facebookId = facebook.match(facebookRegex) !== null ? facebook.match(facebookRegex).groups.id : facebook
+  //
+  //   const redditRegex = /https:\/\/www.reddit.com\/user\/(?<id>.+(\b))\/?/
+  //   const redditId = reddit.match(redditRegex) !== null ? reddit.match(redditRegex).groups.id : reddit
+  //
+  //   const githubRegex = /https:\/\/github.com\/(?<id>.+(\b))\/?/
+  //   const githubId = reddit.match(githubRegex) !== null ? reddit.match(githubRegex).groups.id : github
+  //
+  //
+  //   localStorage.setItem(constants.localStorage.IEO_signed, true)
+  //   this.setState({ isSaved: true })
+  //
+  //   firestore.updateUserData({
+  //     facebook: facebookId,
+  //     twitter: twitterId,
+  //     reddit: redditId,
+  //     github: githubId,
+  //   })
+  // }
 
   render() {
     const { isSaved, twitter, reddit, facebook, github } = this.state

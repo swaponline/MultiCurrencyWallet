@@ -1,0 +1,134 @@
+.container {
+  padding-top: 130px;
+  position: relative;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.text {
+  width: 70%;
+
+  h2 {
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 32px;
+    color: #fff;
+    margin-bottom: 110px;
+    line-height: 1.5;
+  }
+}
+
+.title {
+  color: #7777FF;
+  font-weight: bold;
+  display: block;
+}
+
+.btnGroup {
+  display: block;
+  position: relative;
+  margin-bottom: 110px;
+  text-align: center;
+  width: 30%;
+
+  div {
+    position: relative;
+    width: 100%;
+    padding-left: 15px;
+    padding-top: 20px;
+  }
+}
+
+.button {
+  margin: 8px;
+  min-width: 290px;
+  font-family: Inter;
+  border-radius: 30px;
+  font-weight: normal;
+  font-size: 16px;
+  padding: 16px 40px;
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  user-select: none;
+  background-color: transparent;
+  border: 1px solid #7777FF;
+  line-height: 1.5;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.dark {
+  color: white;
+  background-color: #7777FF;
+}
+
+.light {
+  border-color: #a8a8f9;
+  color: #7777FF;
+}
+
+.light:hover {
+  background-color: #6263d95e;
+  border: 1px solid #a8a8f9;
+
+  a {
+    color: #a8a8f9;
+  }
+}
+
+.dark:hover {
+  background-color: #9c9cf8;
+  border: 1px solid #9c9cf8;
+}
+
+@media screen and (max-width: 1019px) {
+  .container {
+    display: block;
+  }
+
+  .text {
+    width: 100%;
+    text-align: center;
+
+    h2 {
+      margin-bottom: 30px;
+    }
+  }
+
+  .btnGroup {
+    display: flex;
+    width: 100%
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .container {
+    padding-top: 30px;
+  }
+
+  .text {
+    text-align: left;
+  }
+
+  .button {
+    font-size: 14px;
+    min-width: 220px;
+  }
+
+  .text {
+    h2 {
+      font-size: 24px
+    }
+  }
+
+  .btnGroup {
+    margin-bottom: 20px;
+    text-align: center;
+    width: 100%;
+    div {
+      padding-left: 0;
+    }
+  }
+}

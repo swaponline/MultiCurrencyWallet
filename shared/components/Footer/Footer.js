@@ -14,12 +14,14 @@ import Links from './Links/Links'
 import SocialMenu from './SocialMenu/SocialMenu'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import SwitchLang from './SwitchLang/SwitchLang'
+import GetIeo from './GetIeo/GetIeo'
 import { isMainOrPartialPages } from 'helpers/locationPaths'
 
 
 const Footer = (props) => (
   <div styleName="footer">
     <WidthContainer styleName="container">
+      <GetIeo />
       {(!config.isWidget && !isMainOrPartialPages(props.location.pathname)) && (<Referral address={props.userEthAddress} />)}
       {!config.isWidget && (<Links />)}
       {!config.isWidget && (<SwitchLang />)}
