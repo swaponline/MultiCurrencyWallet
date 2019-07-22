@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
+import { isMobile } from 'react-device-detect'
 
 import config from 'app-config'
 import { connect } from 'redaction'
@@ -26,8 +27,8 @@ const Footer = (props) => (
       {!config.isWidget && (<Links />)}
       {!config.isWidget && (<SwitchLang />)}
       {!config.isWidget && (<SocialMenu />)}
-      <Info {...props} />
-      <span style={{ color: '#ffffff', fontSize: '12px' }}>{config.time}</span>
+      {!isMobile && <Info {...props} />}
+      <span style={{ color: '#ffffff', fontSize: '12px', marginTop: '20px' }}>{config.time}</span>
     </WidthContainer>
   </div>
 )

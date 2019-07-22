@@ -5,6 +5,9 @@ import CSSModules from 'react-css-modules'
 
 import links from 'helpers/links'
 import { FormattedMessage } from 'react-intl'
+import LogoTooltip from 'components/Logo/LogoTooltip'
+import Logo from 'components/Logo/Logo'
+import logoImage from 'components/Logo/images/logo.svg'
 
 
 const link = [
@@ -75,7 +78,7 @@ const getIcon = (icon) => {
   }
 }
 const Rows = items => items.map((item, index) => (
-  <Fragment key={index}>
+  <li key={index}>
     { item.header && <h4>{item.header}</h4> }
     { item.icon && (
       <div>
@@ -86,22 +89,28 @@ const Rows = items => items.map((item, index) => (
     { !item.icon && (
       <a href={item.link} target="_blank" rel="noopener noreferrer">{item.title}</a>
     )}
-  </Fragment>
+  </li>
 ))
 
 
-const Links = () => (
-  <div styleName="links">
-    {
-      link.map((items, index) => (
-        <div styleName="column" key={index}>
-          {
-            Rows(items)
-          }
-        </div>
-      ))
-    }
-  </div>
-)
+const Links = () => {
+  const { pathname } = window.location
+  const isExchange = pathname.includes('/exchange') || pathname === '/' || pathname === '/ru'
 
-export default CSSModules(styles)(Links)
+  return (
+    <div  styleName="links">
+      <div styleName="logoPosition logo whiteFill">
+        <img src={logoImage} alt="swap.online logo" />
+      </div>
+      <div styleName="linkPosition">
+        {link.map((items, index) => (
+          <ul styleName="column" key={index}>
+            {Rows(items)}
+          </ul>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+export default CSSModules(styles, { allowMultiple: true })(Links)

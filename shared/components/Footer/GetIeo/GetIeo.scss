@@ -1,9 +1,20 @@
 .container {
-  padding-top: 130px;
+  padding: 120px 20px 0 20px;
   position: relative;
   display: flex;
   width: 100%;
   justify-content: space-between;
+}
+
+.container:after {
+    content: '';
+    display: block;
+    left: 15px;
+    right: 15px;
+    bottom: 0;
+    position: absolute;
+    background-color: rgba( 255, 255, 255, .2);
+    height: 1px;
 }
 
 .text {
@@ -90,7 +101,9 @@
 
   .text {
     width: 100%;
-    text-align: center;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
 
     h2 {
       margin-bottom: 30px;
@@ -100,6 +113,12 @@
   .btnGroup {
     display: flex;
     width: 100%
+  }
+}
+
+@media screen and (max-width: 730px) {
+  .btnGroup {
+    margin-bottom: 50px;
   }
 }
 
