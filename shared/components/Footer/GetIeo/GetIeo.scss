@@ -1,5 +1,5 @@
 .container {
-  padding: 120px 20px 0 20px;
+  padding: 110px 20px 0 20px;
   position: relative;
   display: flex;
   width: 100%;
@@ -7,14 +7,14 @@
 }
 
 .container:after {
-    content: '';
-    display: block;
-    left: 15px;
-    right: 15px;
-    bottom: 0;
-    position: absolute;
-    background-color: rgba( 255, 255, 255, .2);
-    height: 1px;
+  content: "";
+  display: block;
+  left: 15px;
+  right: 15px;
+  bottom: 0;
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.2);
+  height: 1px;
 }
 
 .text {
@@ -31,7 +31,7 @@
 }
 
 .title {
-  color: #7777FF;
+  color: #7777ff;
   font-weight: bold;
   display: block;
 }
@@ -65,19 +65,20 @@
   vertical-align: middle;
   user-select: none;
   background-color: transparent;
-  border: 1px solid #7777FF;
+  border: 1px solid #7777ff;
   line-height: 1.5;
-  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
 .dark {
   color: white;
-  background-color: #7777FF;
+  background-color: #7777ff;
 }
 
 .light {
   border-color: #a8a8f9;
-  color: #7777FF;
+  color: #7777ff;
 }
 
 .light:hover {
@@ -96,6 +97,7 @@
 
 @media screen and (max-width: 1019px) {
   .container {
+    padding: 90px 20px 0 20px;
     display: block;
   }
 
@@ -112,13 +114,7 @@
 
   .btnGroup {
     display: flex;
-    width: 100%
-  }
-}
-
-@media screen and (max-width: 730px) {
-  .btnGroup {
-    margin-bottom: 50px;
+    width: 100%;
   }
 }
 
@@ -138,7 +134,7 @@
 
   .text {
     h2 {
-      font-size: 24px
+      font-size: 24px;
     }
   }
 

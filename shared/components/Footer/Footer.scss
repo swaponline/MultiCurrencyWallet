@@ -3,7 +3,6 @@ $information-footer-height: 44px;
 .footer {
   background-color: #151b57;
   width: 100%;
-  margin-top: 44px;
   padding-bottom: 35px;
 }
 
@@ -15,6 +14,10 @@ $information-footer-height: 44px;
 
 .text {
   font-size: 14px;
+}
+
+.shareText {
+  margin: 60px auto;
 }
 
 .container {
@@ -62,9 +65,6 @@ $information-footer-height: 44px;
 }
 
 @include media-desktop {
-  .footer {
-    margin-bottom: $information-footer-height;
-  }
 
   .information-footer {
     position: fixed;
