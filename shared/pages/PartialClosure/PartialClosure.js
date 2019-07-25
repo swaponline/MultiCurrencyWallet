@@ -21,6 +21,7 @@ import { Button, Toggle, Flip } from 'components/controls'
 import Input from 'components/forms/Input/Input'
 import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Promo from './Promo/Promo'
+import FAQ from './FAQ/FAQ'
 import PromoText from './PromoText/PromoText'
 import HowItWorks from './HowItWorks/HowItWorks'
 import VideoAndFeatures from './VideoAndFeatures/VideoAndFeatures'
@@ -30,7 +31,6 @@ import PageHeadline from 'components/PageHeadline/PageHeadline'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
-
 import { isCoinAddress } from 'swap.app/util/typeforce'
 import config from 'app-config'
 import SwapApp, { util } from 'swap.app'
@@ -145,6 +145,8 @@ export default class PartialClosure extends Component {
   constructor({ tokensData, allCurrencyies, currenciesData, match: { params: { buy, sell } }, intl: { locale }, history, decline, ...props }) {
 
     super()
+
+    this.onRequestAnswer = (newOrder, isAccepted) => {}
 
     const isRootPage = history.location.pathname === '/' || history.location.pathname === '/ru'
 
@@ -262,22 +264,33 @@ export default class PartialClosure extends Component {
     const { match: { params }  } = this.props
     const { getCurrency, haveCurrency } = this.state
 
+    const buyValue = params.buy
+    const sellValue = params.sell
 
-    if (haveCurrency !== undefined) {
-      if (params.sell !== haveCurrency) {
-        const value = params.sell
-        if (value) {
-          this.handleSetHaveValue({ value })
-        }
+    if (haveCurrency && params.sell !== haveCurrency) {
+      if (sellValue) {
+        this.handleSetHaveValue({ value: sellValue })
       }
     }
 
-    if (getCurrency !== undefined) {
-      if (params.buy !== getCurrency) {
-        const value = params.buy
-        if (value) {
-          this.handleSetGetValue({ value })
-        }
+    if (getCurrency && params.buy !== getCurrency) {
+      if (buyValue) {
+        this.checkValidUrl(sellValue, buyValue)
+      }
+    }
+  }
+
+  checkValidUrl = (sellValue, buyValue) => {
+    const avaliablesBuyCurrency = actions.pairs.selectPairPartial(sellValue).map(el => el.value)
+    if (avaliablesBuyCurrency.includes(buyValue)) {
+      return this.handleSetGetValue({ value: buyValue })
+    }
+    if (avaliablesBuyCurrency.includes(sellValue)) {
+      const filterSameVale = avaliablesBuyCurrency.filter(el => el !== sellValue)
+      if (filterSameVale.includes("btc")) {
+        this.handleSetGetValue({ value: "btc" })
+      } else {
+        this.handleSetGetValue({ value: filterSameVale[0] })
       }
     }
   }
@@ -378,7 +391,16 @@ export default class PartialClosure extends Component {
 
     this.setState(() => ({ isFetching: true }))
 
-    actions.core.sendRequestForPartial(orderId, newValues, destination, (newOrder, isAccepted) => {
+    const requestTimeoutLenght = (config && config.isWidgetBuild) ? 60 : 30
+
+    const requestTimeout = setTimeout(() => {
+      this.banPeer(peer)
+      this.getLinkTodeclineSwap(peer)
+      this.setDeclinedOffer()
+    }, requestTimeoutLenght*1000 ) // 45 seconds wait until not skip and ban peer
+
+    this.onRequestAnswer = (newOrder, isAccepted) => {
+      clearTimeout(requestTimeout)
       if (isAccepted) {
         this.setState(() => ({
           redirect: true,
@@ -390,7 +412,9 @@ export default class PartialClosure extends Component {
         this.getLinkTodeclineSwap(peer)
         this.setDeclinedOffer()
       }
-    })
+    }
+
+    actions.core.sendRequestForPartial(orderId, newValues, destination, this.onRequestAnswer)
   }
 
   getLinkTodeclineSwap = () => {
@@ -819,7 +843,7 @@ export default class PartialClosure extends Component {
   }
 
   render() {
-    const { currencies, addSelectedItems, currenciesData, tokensData, intl: { locale, formatMessage } } = this.props
+    const { currencies, addSelectedItems, currenciesData, tokensData, intl: { locale, formatMessage }, userEthAddress } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching,
       isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet, exHaveRate, exGetRate,
       maxBuyAmount, getAmount, goodRate, isShowBalance, extendedControls, estimatedFeeValues, isToken, dynamicFee, haveAmount,
@@ -1109,7 +1133,7 @@ export default class PartialClosure extends Component {
               <FormattedMessage id="partial544" defaultMessage="Order book" />
             </Button>
           </div>
-          <a href="http://Widget.swap.online" target="_blank"  rel="noopener noreferrer" styleName="widgetLink">
+          <a href="https://seven.swap.online/widget-service/generator/" target="_blank"  rel="noopener noreferrer" styleName="widgetLink">
             <FormattedMessage id="partial1021" defaultMessage="Embed on website" />
           </a>
         </div>
@@ -1144,6 +1168,10 @@ export default class PartialClosure extends Component {
           </div>
           <HowItWorks />
           <VideoAndFeatures />
+          <FAQ />
+          <div styleName="referralText">
+            <Referral address={userEthAddress}/>
+          </div>
         </div >
       )
   }

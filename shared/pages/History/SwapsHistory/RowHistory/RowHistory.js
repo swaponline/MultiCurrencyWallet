@@ -92,9 +92,7 @@ export default class RowHistory extends Component {
 
     const lockDateAndTime = moment.unix(values.lockTime || date).format('HH:mm:ss DD/MM/YYYY')
 
-    const linkToTheSwap = isMy
-      ? `${localisedUrl(locale, links.swap)}/${sellCurrency}-${buyCurrency}/${id}`
-      : `${localisedUrl(locale, links.swap)}/${buyCurrency}-${sellCurrency}/${id}`
+    const linkToTheSwap = `${localisedUrl(locale, links.swap)}/${sellCurrency}-${buyCurrency}/${id}`
 
     buyAmount   = BigNumber(buyAmount)
     sellAmount  = BigNumber(sellAmount)

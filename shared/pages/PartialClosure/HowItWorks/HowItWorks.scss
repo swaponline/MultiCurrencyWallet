@@ -13,7 +13,6 @@
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  padding-bottom: 30px;
 }
 
 .HowItWorksItem {
@@ -39,6 +38,7 @@
 .HowItWorksContainer {
   max-width: 1200px;
   margin: auto;
+  padding: 0 2%;
 }
 
 @include media-tablet-landscape-and-lower {
@@ -47,6 +47,11 @@
   }
   .HowItWorksItem {
     margin: 20px 60px;
+  }
+  .HowItWorksContainer {
+    max-width: 1200px;
+    margin: auto;
+    padding: 0;
   }
 }
 

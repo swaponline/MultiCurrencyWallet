@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { FormattedMessage } from 'react-intl'
 import CSSModules from 'react-css-modules'
 
@@ -9,9 +9,9 @@ import styles from '../SwapProgress.scss'
 const PleaseDontLeaveWrapper = (props) => {
   const { children, isBTC } = props
   return (
-    <div>
+    <Fragment>
       {children}
-      <span styleName="stepHeading__inner">
+      <span styleName="dontLeave">
         <FormattedMessage id="swapprogressDONTLEAVE" defaultMessage="Please do not leave this page " />
         <Tooltip
           id="swapjsdontleave"
@@ -37,7 +37,7 @@ const PleaseDontLeaveWrapper = (props) => {
           </strong>
         )}
       </span>
-    </div>
+    </Fragment>
   )
 }
 

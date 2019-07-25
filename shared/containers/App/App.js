@@ -105,6 +105,12 @@ export default class App extends React.Component {
     window.prerenderReady = true
   }
 
+  componentWillUnmount() {
+    if (process.env.MAINNET) {
+      firebase.setUserLastOnline()
+    }
+  }
+
   render() {
     const { fetching, multiTabs, error } = this.state
     const { children, ethAddress, btcAddress, tokenAddress, history /* eosAddress */ } = this.props
@@ -113,10 +119,6 @@ export default class App extends React.Component {
     const isWidget = history.location.pathname.includes('/exchange') && history.location.hash === '#widget'
     const isCalledFromIframe = window.location !== window.parent.location
     const isWidgetBuild = config && config.isWidget
-
-    if (process.env.MAINNET) {
-      firebase.setUserLastOnline()
-    }
 
     const isNew = history.location.pathname.includes('/+NewPage')
     if (isWidgetBuild && localStorage.getItem(constants.localStorage.didWidgetsDataSend) !== 'true') {
@@ -154,7 +156,7 @@ export default class App extends React.Component {
             </WidthContainer>
           </Wrapper>
           <Core />
-          { !isMobile && <Footer /> }
+          <Footer />
           <RequestLoader />
           <ModalConductor />
           <NotificationConductor />

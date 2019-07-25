@@ -5,16 +5,20 @@
 }
 
 .avatar-reputation-centered {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  background: white;
-  margin-left: 5px;
-  border-radius: 50%;
-  font-size: 10px;
-  padding: 3px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    background: white;
+    margin-left: 5px;
+    border-radius: 50%;
+    font-size: 10px;
+    padding: 3px;
+}
+
+.noBg {
+    background: none;
 }
 
 .user-cont {
@@ -26,7 +30,7 @@
     position: relative;
 }
 
-.hidden{
+.hidden {
     opacity: 0;
     visibility: hidden;
 }
@@ -37,6 +41,26 @@
     padding: 5px;
     border-radius: 50%;
     box-sizing: content-box;
+}
+
+.icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    padding-right: 4px;
+    background: rgba(white, 0.85);
+    border-radius: 50%;
+    color: #7371ff;
+    font-size: 24px;
+    text-align: center;
+    cursor: pointer;
+    transition: color 300ms ease;
+
+    &:hover {
+        color: #e91db4;
+    }
 }
 
 @include media-mobile {

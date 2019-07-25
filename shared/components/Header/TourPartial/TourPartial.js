@@ -5,22 +5,12 @@ import Tour from 'reactour'
 
 
 export default class TourPartial extends Component {
+  constructor(props) {
+    super(props)
 
-  state = {
-    shouldTourOpen: false,
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.props.isTourOpen !== prevProps.isTourOpen) {
-      this.isShouldTourOpen()
-    }
-  }
-
-  isShouldTourOpen = () => {
-
-    this.setState(() => ({
+    this.state = {
       shouldTourOpen: true,
-    }))
+    }
   }
 
   closeTour = () => {
@@ -28,13 +18,15 @@ export default class TourPartial extends Component {
   }
 
   render() {
+    const { shouldTourOpen } = this.state
+
     const accentColor = '#510ed8'
 
     return (
       <Tour
         steps={tourSteps}
         onRequestClose={this.closeTour}
-        isOpen={this.state.shouldTourOpen}
+        isOpen={shouldTourOpen}
         maskClassName="mask"
         className="helper"
         accentColor={accentColor}

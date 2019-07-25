@@ -31,7 +31,7 @@ const SignUpButton = ({ mobile }) => (
       ) : (
         <Fragment>
           <button styleName="button" data-tut="reactour__sign-up" onClick={handleSignUp} /* eslint-disable-line */ data-tip data-for="sign-up" >
-            <FormattedMessage id="ADDoffer29" defaultMessage="Sign up" />
+            <FormattedMessage id="ADDoffer29" defaultMessage="Sign up (get up to 10$ bonus)" />
           </button>
           <ReactTooltip id="sign-up" type="light" effect="solid">
             <span>

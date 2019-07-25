@@ -60,6 +60,11 @@ const messages = defineMessages({
     description: 'Menu item "History"',
     defaultMessage: 'My history',
   },
+  IEO: {
+    id: 'menu.IEO',
+    description: 'Menu item "IEO"',
+    defaultMessage: 'Earn',
+  },
   invest: {
     id: 'menu.invest',
     description: 'Menu item "My History"',
@@ -79,6 +84,7 @@ const messages = defineMessages({
   peer: 'ipfs.peer',
   isSigned: 'signUp.isSigned',
   isInputActive: 'inputActive.isInputActive',
+  reputation: 'ipfs.reputation',
 })
 @CSSModules(styles, { allowMultiple: true })
 export default class Header extends Component {
@@ -111,7 +117,6 @@ export default class Header extends Component {
       || props.location.pathname === `/ru${links.currencyWallet}`
 
     this.state = {
-      optionsForOenSignUpModal: {},
       isPartialTourOpen: false,
       path: false,
       isTourOpen: false,
@@ -148,55 +153,83 @@ export default class Header extends Component {
   }
 
   componentDidMount() {
-    // window.addEventListener('scroll', this.handleScroll)
-
-    const checker = setInterval(() => {
-      switch (true) {
-        case !localStorage.getItem(constants.localStorage.wasOnExchange):
-        case !localStorage.getItem(constants.localStorage.wasOnWallet):
-          this.startTourAndSignInModal()
-          break
-        default:
-          clearInterval(checker)
-      }
-    }, 3000)
+    this.handlerAsync()
   }
 
-  componentDidUpdate() {
-    this.tapCreateWalletButton()
-  }
+  handlerAsync = async () => {
+    const { history } = this.props
 
-  componentWillUnmount() {
-    // window.removeEventListener('scroll', this.handleScroll)
+    await this.tapCreateWalletButton()
+
     this.startTourAndSignInModal()
-    clearTimeout(this.timeoutLoader)
+
+    history.listen(async (location) => {
+      await this.tapCreateWalletButton({ location })
+
+      this.startTourAndSignInModal({ location })
+    })
   }
 
-  getMenuItems = (props, didWalletCreated, dinamicPath) => ([
-    {
-      title: props.intl.formatMessage(didWalletCreated ? messages.wallet : messages.createWallet),
-      link: links.currencyWallet,
-      exact: true,
-      haveSubmenu: true,
-      icon: 'products',
-      currentPageFlag: true,
-    },
-    {
-      title: props.intl.formatMessage(messages.exchange),
-      link: dinamicPath,
-      exact: true,
-      haveSubmenu: true,
-      icon: 'products',
-      currentPageFlag: true,
-    },
-    {
-      title: props.intl.formatMessage(messages.history),
-      link: links.history,
-      icon: 'history',
-      haveSubmenu: false,
-      displayNone: !didWalletCreated,
-    },
-  ])
+  getMenuItems = (props, didWalletCreated, dinamicPath) =>
+    (Number.isInteger(this.props.reputation) && this.props.reputation !== 0)
+    || this.props.isSigned
+    || window.localStorage.getItem('didOpenSignUpModal') === 'true'
+      ? ([
+        {
+          title: props.intl.formatMessage(didWalletCreated ? messages.wallet : messages.createWallet),
+          link: links.currencyWallet,
+          exact: true,
+          haveSubmenu: true,
+          icon: 'products',
+          currentPageFlag: true,
+        },
+        {
+          title: props.intl.formatMessage(messages.exchange),
+          link: dinamicPath,
+          exact: true,
+          haveSubmenu: true,
+          icon: 'products',
+          currentPageFlag: true,
+        },
+        {
+          title: props.intl.formatMessage(messages.history),
+          link: links.history,
+          icon: 'history',
+          haveSubmenu: false,
+          displayNone: !didWalletCreated,
+        },
+        {
+          title: props.intl.formatMessage(messages.IEO),
+          link: links.ieo,
+          icon: 'IEO',
+          haveSubmenu: false,
+        },
+      ])
+      : ([
+        {
+          title: props.intl.formatMessage(didWalletCreated ? messages.wallet : messages.createWallet),
+          link: links.currencyWallet,
+          exact: true,
+          haveSubmenu: true,
+          icon: 'products',
+          currentPageFlag: true,
+        },
+        {
+          title: props.intl.formatMessage(messages.exchange),
+          link: dinamicPath,
+          exact: true,
+          haveSubmenu: true,
+          icon: 'products',
+          currentPageFlag: true,
+        },
+        {
+          title: props.intl.formatMessage(messages.history),
+          link: links.history,
+          icon: 'history',
+          haveSubmenu: false,
+          displayNone: !didWalletCreated,
+        },
+      ])
 
   getMenuItemsMobile = (props, didWalletCreated, dinamicPath) => ([
     {
@@ -222,35 +255,47 @@ export default class Header extends Component {
     },
   ])
 
-  tapCreateWalletButton = () => {
-    const { location, intl } = this.props
+  tapCreateWalletButton = (customProps) => new Promise((resolve) => {
+    const finishProps = { ...this.props, ...customProps }
+
+    const { location, intl } = finishProps
+
     const dinamicPath = location.pathname.includes(links.exchange)
       ? `${unlocalisedUrl(intl.locale, location.pathname)}`
       : `${links.home}`
+
     let didWalletCreated = localStorage.getItem(constants.localStorage.didWalletCreated)
+
     const isWalletPage = location.pathname === links.currencyWallet
       || location.pathname === `/ru${links.currencyWallet}`
 
     if (isWalletPage && !didWalletCreated) {
       localStorage.setItem(constants.localStorage.didWalletCreated, true)
       didWalletCreated = true
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState({
+
+      this.setState(() => ({
         menuItems: this.getMenuItems(this.props, didWalletCreated, dinamicPath),
         menuItemsMobile: this.getMenuItemsMobile(this.props, didWalletCreated, dinamicPath),
         createdWalletLoader: true,
+      }), () => {
+        setTimeout(() => {
+          this.setState(() => ({ createdWalletLoader: false }))
+
+          resolve()
+        }, 4000)
       })
+    } else {
+      resolve()
     }
-  }
+  })
 
-  startTourAndSignInModal = () => {
-    // if (!process.env.MAINNET || config.isWidget) {
-    //   return
-    // }
+  startTourAndSignInModal = (customProps) => {
+    const finishProps = { ...this.props, ...customProps }
 
-    const currentUrl = this.props.history.location
-    const isGuestLink = !(!currentUrl.hash
-      || currentUrl.hash.slice(1) !== 'guest')
+    const { location, intl } = finishProps
+
+    const isGuestLink = !(!location.hash
+      || location.hash.slice(1) !== 'guest')
 
     if (isGuestLink) {
       localStorage.setItem(constants.localStorage.wasOnWallet, true)
@@ -259,44 +304,38 @@ export default class Header extends Component {
       return
     }
 
-    const isWalletPage = currentUrl.pathname === links.currencyWallet
-      || currentUrl.pathname === `/ru${links.currencyWallet}`
-    const isPartialPage = currentUrl.pathname.includes(links.exchange)
-      || currentUrl.pathname === '/'
-      || currentUrl.pathname === '/ru'
+    const isWalletPage = location.pathname === links.currencyWallet
+      || location.pathname === `/ru${links.currencyWallet}`
+
+    const isPartialPage = location.pathname.includes(links.exchange)
+      || location.pathname === '/'
+      || location.pathname === '/ru'
+
     const didOpenSignUpModal = localStorage.getItem(constants.localStorage.didOpenSignUpModal)
+
     const wasOnWallet = localStorage.getItem(constants.localStorage.wasOnWallet)
     const wasOnExchange = localStorage.getItem(constants.localStorage.wasOnExchange)
 
+    let tourEvent = () => {}
+
     switch (true) {
       case isWalletPage && !wasOnWallet:
-        this.startTourInNeed(didOpenSignUpModal, this.openWalletTour)
+        tourEvent = this.openWalletTour
         localStorage.setItem(constants.localStorage.wasOnWallet, true)
         break
       case isPartialPage && !wasOnExchange:
-        this.startTourInNeed(didOpenSignUpModal, this.openExchangeTour)
+        tourEvent = this.openExchangeTour
         localStorage.setItem(constants.localStorage.wasOnExchange, true)
         break
       default: return
     }
 
-    if (!didOpenSignUpModal && !isPartialPage) {
-      this.openSignUpModal(this.state.optionsForOenSignUpModal)
+    if (!didOpenSignUpModal && isWalletPage) {
+      this.openSignUpModal({ onClose: tourEvent })
+      return
     }
-  }
 
-  startTourInNeed = (didOpenSignUpModal, inNeedTourStarter) => {
-    if (!didOpenSignUpModal) {
-      this.optionsForOenSignUpModal(inNeedTourStarter)
-    } else {
-      inNeedTourStarter()
-    }
-  }
-
-  optionsForOenSignUpModal(inNeedTourStarter) {
-    this.setState(() => ({
-      optionsForOenSignUpModal: { onClose: inNeedTourStarter },
-    }))
+    tourEvent()
   }
 
   declineRequest = (orderId, participantPeer) => {
@@ -342,7 +381,7 @@ export default class Header extends Component {
   }
 
   closeTour = () => {
-    this.setState({ isTourOpen: false })
+    this.setState(() => ({ isTourOpen: false }))
   }
 
   openSignUpModal = (options) => {
@@ -351,24 +390,16 @@ export default class Header extends Component {
   }
 
   openWalletTour = () => {
-    this.setState({ isTourOpen: true })
-    console.warn('work!')
-
+    this.setState(() => ({ isTourOpen: true }))
   }
 
   openExchangeTour = () => {
-    this.setState({ isPartialTourOpen: true })
+    this.setState(() => ({ isPartialTourOpen: true }))
   }
 
   render() {
     const { sticky, menuItemsFill, isTourOpen, isShowingMore, path, isPartialTourOpen, isWallet, menuItems, menuItemsMobile, createdWalletLoader } = this.state
     const { intl: { locale, formatMessage }, history, pathname, feeds, peer, isSigned, isInputActive } = this.props
-
-    if (createdWalletLoader) {
-      this.timeoutLoader = setTimeout(() => {
-        this.setState({ createdWalletLoader: false })
-      }, 4000)
-    }
 
     const accentColor = '#510ed8'
 
@@ -380,7 +411,8 @@ export default class Header extends Component {
       return (
         <User
           acceptRequest={this.acceptRequest}
-          declineRequest={this.declineRequest} />
+          declineRequest={this.declineRequest}
+        />
       )
     }
 
@@ -419,26 +451,29 @@ export default class Header extends Component {
           <LogoTooltip withLink isExchange={isExchange} />
           <Nav menu={menuItems} />
           <Logo withLink mobile />
-          <TourPartial isTourOpen={this.state.isPartialTourOpen} />
+          {isPartialTourOpen && <TourPartial isTourOpen={isPartialTourOpen} />}
           <User
             openTour={isExchange ? this.openExchangeTour : this.openWalletTour}
             path={path}
             acceptRequest={this.acceptRequest}
             declineRequest={this.declineRequest}
           />
-          <Tour
-            steps={tourSteps}
-            onRequestClose={this.closeTour}
-            isOpen={isTourOpen}
-            maskClassName="mask"
-            className="helper"
-            accentColor={accentColor}
-          />
+          {isTourOpen &&
+            <Tour
+              steps={tourSteps}
+              onRequestClose={this.closeTour}
+              isOpen={isTourOpen}
+              maskClassName="mask"
+              className="helper"
+              accentColor={accentColor}
+            />
+          }
         </WidthContainer>
       </div>
     )
   }
 }
+
 const tourSteps = [
   {
     selector: '[data-tut="reactour__address"]',

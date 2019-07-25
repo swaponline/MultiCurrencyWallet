@@ -5,7 +5,7 @@ $pinsColor: #6144E5;
 .VidNdFeatures {
     // background: $bgColor;
     padding-top: 100px;
-    padding-bottom: 100px;
+    padding-bottom: 70px;
 
     &__title {
         max-width: 45%;
@@ -27,6 +27,7 @@ $pinsColor: #6144E5;
         align-items: center;
         max-width: 1200px;
         margin: 0 auto;
+        padding: 0 2%;
     }
 
     &__item {
@@ -78,18 +79,29 @@ $pinsColor: #6144E5;
     }
 }
 
+@media screen and (max-width: 760px) {
+  .VidNdFeatures {
+    // background: $bgColor;
+    padding-top: 30px;
+  }
+}
+
 @include media-tablet-portrait-and-lower {
     .VidNdFeatures {
+      padding-top: 10px;
+
         &__title {
             max-width: 75%;
         }
 
         &__container {
             flex-direction: column-reverse;
+            padding: 0 5%;
         }
 
         &__item {
             margin: 30px auto;
+            margin-bottom: 0;
         }
     }
 }
