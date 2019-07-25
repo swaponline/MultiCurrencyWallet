@@ -17,6 +17,16 @@ const href =
     <FormattedMessage id="getIeo17" defaultMessage="Exchange SWAP token to BTC through our service" />
   </a>)// eslint-disable-line
 
+const quotes =
+/* eslint-disable */
+  (<span style={{ cursor: "pointer" }} onClick={handleSignUp}>
+    &#34;
+    <FormattedMessage id="getIeo40" defaultMessage="Get started" />
+    &#34;
+  </span>)
+/* eslint-enable */
+
+
 const GetIeo = () => (
   <div styleName="container">
     <div styleName="text">
@@ -32,10 +42,10 @@ const GetIeo = () => (
         <span styleName="steps">
           <FormattedMessage
             id="getIeo29"
-            defaultMessage="1. Click {bold}; 2. Allow push notifications{br} 3. Wait 5-10 min; 4. {href}"
+            defaultMessage="1. Click {quotes}; 2. Allow push notifications{br} 3. Wait 5-10 min; 4. {href}"
             values={{
               br: <br />,
-              bold: <b onClick={handleSignUp}>Get started </b>,
+              quotes,
               href,
             }}
           />
