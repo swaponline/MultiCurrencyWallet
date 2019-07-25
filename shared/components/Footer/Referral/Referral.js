@@ -9,7 +9,7 @@ const Referral = (props) => {
   const myRefLink = `https://swap.online/?promo=${props.address}`
 
   return (
-    <div styleName="Referral">
+    <div>
       <span styleName="myLink">{`${myRefLink}`}</span>
       &nbsp;&nbsp;
       <CopyToClipboard text={myRefLink} data-tut="reactour__eth_promo_address">

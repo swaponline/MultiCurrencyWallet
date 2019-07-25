@@ -5,7 +5,7 @@ $pinsColor: #6144E5;
 .VidNdFeatures {
     // background: $bgColor;
     padding-top: 100px;
-    padding-bottom: 100px;
+    padding-bottom: 70px;
 
     &__title {
         max-width: 45%;
@@ -79,8 +79,17 @@ $pinsColor: #6144E5;
     }
 }
 
+@media screen and (max-width: 760px) {
+  .VidNdFeatures {
+    // background: $bgColor;
+    padding-top: 30px;
+  }
+}
+
 @include media-tablet-portrait-and-lower {
     .VidNdFeatures {
+      padding-top: 10px;
+
         &__title {
             max-width: 75%;
         }
@@ -92,6 +101,7 @@ $pinsColor: #6144E5;
 
         &__item {
             margin: 30px auto;
+            margin-bottom: 0;
         }
     }
 }

@@ -9,6 +9,14 @@
     }
 }
 
+.href {
+  margin-bottom: 10px;
+
+  a {
+    text-decoration: underline;
+  }
+}
+
 .button {
     display: block;
     margin: 0 auto;
@@ -27,4 +35,11 @@
         background-color: white;
         color: black;
     }
+}
+
+@media screen and (max-width: 568px) {
+  .IEO {
+    top: 30px;
+    position: relative;
+  }
 }

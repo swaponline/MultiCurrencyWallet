@@ -156,7 +156,7 @@ export default class App extends React.Component {
             </WidthContainer>
           </Wrapper>
           <Core />
-          { !isMobile && <Footer /> }
+          <Footer />
           <RequestLoader />
           <ModalConductor />
           <NotificationConductor />
