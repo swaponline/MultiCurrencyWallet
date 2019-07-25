@@ -12,15 +12,34 @@ const handleSignUp = () => {
   actions.modals.open(constants.modals.SignUp, {})
 }
 
+const href =
+  (<a href="https://swap.online/exchange/swap-to-btc" target="_blank" rel="noopener noreferrer">
+    <FormattedMessage id="getIeo17" defaultMessage="Exchange SWAP token to BTC through our service" />
+  </a>)// eslint-disable-line
+
 const GetIeo = () => (
   <div styleName="container">
     <div styleName="text">
       <h2>
-        <span styleName="title"><FormattedMessage id="getIeo13" defaultMessage="Why Swap.Online?" /></span>
+        <span styleName="title"><FormattedMessage id="getIeo13" defaultMessage="Be one of the first users." /></span>
         <FormattedMessage
-          id="getIeo13"
-          defaultMessage="Create accaunt for get advantage{br} at the start + free SWAP token{br} for test our product (can be exchanged to bitcoin)"
-          values={{ br: <br /> }} />
+          id="getIeo21"
+          defaultMessage="We will reward all users with our native {br}SWAP tokens that can be exchanged to BTC on our platform.{br} "
+          values={{
+            br: <br />,
+          }}
+        />
+        <span styleName="steps">
+          <FormattedMessage
+            id="getIeo29"
+            defaultMessage="1. Click {bold}; 2. Allow push notifications{br} 3. Wait 5-10 min; 4. {href}"
+            values={{
+              br: <br />,
+              bold: <b onClick={handleSignUp}>Get started </b>,
+              href,
+            }}
+          />
+        </span>
       </h2>
     </div>
     <div styleName="btnGroup">

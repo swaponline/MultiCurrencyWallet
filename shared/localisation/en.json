@@ -5273,7 +5273,7 @@
   },
   {
     "id": "IEO_title_1",
-    "message": "You have registered for IEO, follow these steps",
+    "message": "Get up to 5 SWAP for each action:",
     "files": [
       "shared/pages/IEO/IEO.js"
     ]

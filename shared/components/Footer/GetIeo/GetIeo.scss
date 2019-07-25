@@ -23,17 +23,33 @@
   h2 {
     font-family: Inter;
     font-weight: 500;
-    font-size: 32px;
+    font-size: 24px;
     color: #fff;
     margin-bottom: 110px;
     line-height: 1.5;
   }
+  b {
+    cursor: pointer;
+  }
+
+  a {
+    font-size: 21px;
+    text-decoration: underline;
+  }
 }
+
+.steps {
+  font-size: 21px;
+  position: relative;
+  top: 10px;
+}
+
 
 .title {
   color: #7777ff;
   font-weight: bold;
   display: block;
+  font-size: 32px;
 }
 
 .btnGroup {

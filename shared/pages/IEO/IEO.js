@@ -121,10 +121,14 @@ class IEO extends React.Component {
           <SubTitle>
             <FormattedMessage
               id="IEO_title_1"
-              defaultMessage="You have registered for IEO, follow these steps"
+              defaultMessage="Get up to 5 SWAP for each action:"
             />
           </SubTitle>
-
+          <div styleName="href">
+            <a href="https://swap.online/exchange/swap-to-btc" target="_blank" rel="noopener noreferrer">
+              <FormattedMessage id="IEOHref" defaultMessage="You can change SWAP to BTC here" />
+            </a>
+          </div>
           <Table
             id="table-wallet"
             className={styles.wallet}
