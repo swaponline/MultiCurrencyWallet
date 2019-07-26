@@ -10,6 +10,7 @@ const linksManager = {
   listing: 'https://listing.swap.online/',
   test: 'https://testnet.swap.online',
   main: 'https://swap.online/',
+  ieo: '/IEO',
   coins: '/coins',
   partial: '/partial',
   notFound: '/NotFound',

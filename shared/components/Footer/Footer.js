@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
+import { isMobile } from 'react-device-detect'
 
 import config from 'app-config'
 import { connect } from 'redaction'
@@ -14,20 +15,28 @@ import Links from './Links/Links'
 import SocialMenu from './SocialMenu/SocialMenu'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import SwitchLang from './SwitchLang/SwitchLang'
+import GetIeo from './GetIeo/GetIeo'
 import { isMainOrPartialPages } from 'helpers/locationPaths'
 
 
 const Footer = (props) => (
-  <div styleName="footer">
-    <WidthContainer styleName="container">
-      {(!config.isWidget && !isMainOrPartialPages(props.location.pathname)) && (<Referral address={props.userEthAddress} />)}
-      {!config.isWidget && (<Links />)}
-      {!config.isWidget && (<SwitchLang />)}
-      {!config.isWidget && (<SocialMenu />)}
-      <Info {...props} />
-      <span style={{ color: '#ffffff', fontSize: '12px' }}>{config.time}</span>
-    </WidthContainer>
-  </div>
+  <Fragment>
+    {(!config.isWidget && !isMainOrPartialPages(props.location.pathname)) && (
+      <WidthContainer styleName="shareText">
+        <Referral address={props.userEthAddress} />
+      </WidthContainer>
+    )}
+    <div styleName="footer">
+      <WidthContainer styleName="container">
+        <GetIeo />
+        {!config.isWidget && (<Links />)}
+        {!config.isWidget && (<SwitchLang />)}
+        {!config.isWidget && (<SocialMenu />)}
+        {!isMobile && <Info {...props} />}
+        <span style={{ color: '#ffffff', fontSize: '12px', marginTop: '20px' }}>{config.time}</span>
+      </WidthContainer>
+    </div>
+  </Fragment>
 )
 
 Footer.propTypes = {

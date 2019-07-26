@@ -6,7 +6,7 @@ cache:
   yarn:        true
 language:      node_js
 node_js:
-- 'stable'
+- '10'
 before_script:
 - git submodule update --init --recursive
 #Uncomment this when enable covaralls
