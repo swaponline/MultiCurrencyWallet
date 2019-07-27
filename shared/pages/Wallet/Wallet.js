@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import propTypes from 'prop-types'
+import PropTypes from 'prop-types'
 
 import { isMobile } from 'react-device-detect'
 import { connect } from 'redaction'
@@ -100,13 +100,13 @@ const isWidgetBuild = config && config.isWidget
 @CSSModules(stylesWallet, { allowMultiple: true })
 export default class Wallet extends Component {
   static propTypes = {
-    currencies: propTypes.array,
-    hiddenCoinsList: propTypes.array,
-    history: propTypes.object,
-    items: propTypes.arrayOf(propTypes.string),
-    tokens: propTypes.arrayOf(propTypes.string),
-    location: propTypes.object,
-    intl: propTypes.object.isRequired,
+    currencies: PropTypes.array,
+    hiddenCoinsList: PropTypes.array,
+    history: PropTypes.object,
+    items: PropTypes.arrayOf(PropTypes.string),
+    tokens: PropTypes.arrayOf(PropTypes.string),
+    location: PropTypes.object,
+    intl: PropTypes.object.isRequired,
   };
 
   state = {
