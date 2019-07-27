@@ -977,7 +977,7 @@ export default class PartialClosure extends Component {
           <PromoText subTitle={subTitle(sellTokenFullName, haveCurrency.toUpperCase(), buyTokenFullName, getCurrency.toUpperCase())} />
         </div>
         <div styleName={isWidgetBuild ? 'formExchange_widgetBuild' : `formExchange ${isWidget ? 'widgetFormExchange' : ''}`} className={isWidget ? 'formExchange' : ''} >
-        {desclineOrders.length ? <h5 onClick={this.handleShowIncomplete}><FormattedMessage id="continueDeclined977" defaultMessage="Click here to continue swaps" /></h5>: <span />}
+        {desclineOrders.length ? <h5 onClick={this.handleShowIncomplete}><FormattedMessage id="continueDeclined977" defaultMessage="Click here to continue your swaps" /></h5>: <span />}
           <div data-tut="have" styleName="selectWrap">
             <SelectGroup
               switchBalanceFunc={this.switchBalance}
