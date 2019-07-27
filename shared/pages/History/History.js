@@ -8,7 +8,6 @@ import Row from './Row/Row'
 import SwapsHistory from './SwapsHistory/SwapsHistory'
 import ReactTooltip from 'react-tooltip'
 
-
 import styles from 'components/tables/Table/Table.scss'
 import stylesHere from './History.scss'
 import Filter from './Filter/Filter'
