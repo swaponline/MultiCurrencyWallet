@@ -129,7 +129,6 @@ export default class SwapProgress extends Component {
   componentDidMount() {
     this.swap.on('state update', this.handleFlowStateUpdate)
     this.handleBarProgress()
-    console.warn("sttttaaaart")
     localStorage.setItem(constants.localStorage.startSwap, Date.now())
     this.timer =  setInterval(() => {
 
