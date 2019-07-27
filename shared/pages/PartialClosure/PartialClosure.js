@@ -35,7 +35,7 @@ import { isCoinAddress } from 'swap.app/util/typeforce'
 import config from 'app-config'
 import SwapApp, { util } from 'swap.app'
 
-import helpers, { constants, links } from 'helpers'
+import helpers, { constants, links, ethToken } from 'helpers'
 import { animate } from 'helpers/domUtils'
 import Switching from 'components/controls/Switching/Switching'
 
@@ -88,12 +88,15 @@ const subTitle = (sell, sellTicker, buy, buyTicker) => (
 const isWidgetBuild = config && config.isWidget
 const bannedPeers = {} // Пиры, которые отклонили запрос на свап, они будут понижены в выдаче
 
+
+
 @injectIntl
 @connect(({
   currencies,
   addSelectedItems,
   rememberedOrders,
   addPartialItems,
+  history: { swapHistory },
   core: { orders, hiddenCoinsList },
   user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, usdtData, ltcData },
 }) => ({
@@ -107,6 +110,7 @@ const bannedPeers = {} // Пиры, которые отклонили запро
   decline: rememberedOrders.savedOrders,
   hiddenCoinsList,
   userEthAddress: ethData.address,
+  swapHistory,
 }))
 @CSSModules(styles, { allowMultiple: true })
 export default class PartialClosure extends Component {
@@ -204,6 +208,7 @@ export default class PartialClosure extends Component {
       customWallet: this.wallets[buyToken.toUpperCase()],
       extendedControls: false,
       estimatedFeeValues: {},
+      desclineOrders: [],
     }
 
     constants.coinsWithDynamicFee
@@ -230,7 +235,8 @@ export default class PartialClosure extends Component {
     this.timer = setInterval(() => {
       this.setOrders()
       this.showTheFee(haveCurrency)
-      this.checkUrl()
+      this.checkUrl(),
+      this.getCorrectDecline()
     }, 2000)
 
     SwapApp.shared().services.room.on('new orders', () => this.checkPair())
@@ -842,9 +848,71 @@ export default class PartialClosure extends Component {
     return isCoinAddress[getCurrency.toUpperCase()](customWallet)
   }
 
+  getFlowById = (swapId) => JSON.parse(localStorage.getItem(`swap:flow.${swapId}`) || 0)
+  getSwapById = (swapId) => JSON.parse(localStorage.getItem(`swap:swap.${swapId}`) || 0)
+
+  getCorrectDecline = () => {
+    const { decline, swapHistory } = this.props
+
+    const localSavedOrdersString = localStorage.getItem('savedOrders')
+
+    if (!localSavedOrdersString) return
+    const localSavedOrders = JSON.parse(localSavedOrdersString)
+
+    if (localSavedOrders.length !== decline.length) {
+      return
+    }
+
+    const desclineOrders = []
+
+    decline.forEach(swapId => {
+      try {
+        const flow = this.getFlowById(swapId)
+        const swap = this.getSwapById(swapId)
+
+        if (!flow || !swap) {
+          throw new Error(`getCorrectDecline: swap is not saved ${swapId}`)
+        }
+
+        const {
+          step,
+          isRefunded,
+          isFinished,
+          isStoppedSwap,
+          btcScriptCreatingTransactionHash,
+          ethSwapCreationTransactionHash,
+        } = flow
+
+        const { sellCurrency } = swap
+
+        const isCurrencyEthOrEthToken = ethToken.isEthOrEthToken({ name: sellCurrency })
+
+        const isIncompleteSwap = !(isRefunded || isFinished || isStoppedSwap)
+        const isStartedSwap = isCurrencyEthOrEthToken
+          ? step >= 4 && btcScriptCreatingTransactionHash
+          : step >= 5 && ethSwapCreationTransactionHash
+
+        if (isIncompleteSwap && isIncompleteSwap) {
+          desclineOrders.push(actions.core.getSwapById(swapId))
+        }
+      } catch (error) {
+        console.error('getCorrectDecline:', error)
+      }
+    })
+    this.setState(() => ({ desclineOrders }))
+  }
+
+
+  handleShowIncomplete = () => {
+    const { desclineOrders } = this.state
+    actions.modals.open(constants.modals.IncompletedSwaps, {
+      desclineOrders
+    })
+  }
+
   render() {
     const { currencies, addSelectedItems, currenciesData, tokensData, intl: { locale, formatMessage }, userEthAddress } = this.props
-    const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching,
+    const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching, desclineOrders,
       isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet, exHaveRate, exGetRate,
       maxBuyAmount, getAmount, goodRate, isShowBalance, extendedControls, estimatedFeeValues, isToken, dynamicFee, haveAmount,
     } = this.state
@@ -903,13 +971,13 @@ export default class PartialClosure extends Component {
       defaultMessage: 'Best exchange rate for {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}). Swap.Online wallet provides instant exchange using Atomic Swap Protocol.', // eslint-disable-line
     }, SeoValues)
 
-
     const Form = (
       <div styleName={`${isWidgetBuild ? '' : 'section'}`} className={isWidgetLink ? 'section' : ''} >
         <div styleName="mobileDubleHeader">
           <PromoText subTitle={subTitle(sellTokenFullName, haveCurrency.toUpperCase(), buyTokenFullName, getCurrency.toUpperCase())} />
         </div>
         <div styleName={isWidgetBuild ? 'formExchange_widgetBuild' : `formExchange ${isWidget ? 'widgetFormExchange' : ''}`} className={isWidget ? 'formExchange' : ''} >
+        {desclineOrders.length ? <h5 onClick={this.handleShowIncomplete}><FormattedMessage id="continueDeclined977" defaultMessage="Click here to continue swaps" /></h5>: <span />}
           <div data-tut="have" styleName="selectWrap">
             <SelectGroup
               switchBalanceFunc={this.switchBalance}
