@@ -848,9 +848,6 @@ export default class PartialClosure extends Component {
     return isCoinAddress[getCurrency.toUpperCase()](customWallet)
   }
 
-  getFlowById = (swapId) => JSON.parse(localStorage.getItem(`swap:flow.${swapId}`) || 0)
-  getSwapById = (swapId) => JSON.parse(localStorage.getItem(`swap:swap.${swapId}`) || 0)
-
   getCorrectDecline = () => {
     const { decline, swapHistory } = this.props
 
@@ -863,42 +860,11 @@ export default class PartialClosure extends Component {
       return
     }
 
-    const desclineOrders = []
-
-    decline.forEach(swapId => {
-      try {
-        const flow = this.getFlowById(swapId)
-        const swap = this.getSwapById(swapId)
-
-        if (!flow || !swap) {
-          throw new Error(`getCorrectDecline: swap is not saved ${swapId}`)
-        }
-
-        const {
-          step,
-          isRefunded,
-          isFinished,
-          isStoppedSwap,
-          btcScriptCreatingTransactionHash,
-          ethSwapCreationTransactionHash,
-        } = flow
-
-        const { sellCurrency } = swap
-
-        const isCurrencyEthOrEthToken = ethToken.isEthOrEthToken({ name: sellCurrency })
-
-        const isIncompleteSwap = !(isRefunded || isFinished || isStoppedSwap)
-        const isStartedSwap = isCurrencyEthOrEthToken
-          ? step >= 4 && btcScriptCreatingTransactionHash
-          : step >= 5 && ethSwapCreationTransactionHash
-
-        if (isIncompleteSwap && isIncompleteSwap) {
-          desclineOrders.push(actions.core.getSwapById(swapId))
-        }
-      } catch (error) {
-        console.error('getCorrectDecline:', error)
-      }
+    const desclineOrders = decline.map(swapId => actions.core.getSwapById(swapId)).filter(el => {
+      const { isFinished, isRefunded, isStoppedSwap } = el
+      return isFinished || isRefunded || isStoppedSwap
     })
+
     this.setState(() => ({ desclineOrders }))
   }
 
@@ -978,7 +944,7 @@ export default class PartialClosure extends Component {
         </div>
         <div styleName={isWidgetBuild ? 'formExchange_widgetBuild' : `formExchange ${isWidget ? 'widgetFormExchange' : ''}`} className={isWidget ? 'formExchange' : ''} >
           {desclineOrders.length ?
-            <h5 role="presentation" onClick={this.handleShowIncomplete}><FormattedMessage id="continueDeclined977" defaultMessage="Click here to continue your swaps" /></h5>
+            <h5 role="presentation" styleName="informAbt" onClick={this.handleShowIncomplete}><FormattedMessage id="continueDeclined977" defaultMessage="Click here to continue your swaps" /></h5>
             : <span />
           }
           <div data-tut="have" styleName="selectWrap">
