@@ -89,6 +89,7 @@ $pinsColor: #6144E5;
 @include media-tablet-portrait-and-lower {
     .VidNdFeatures {
       padding-top: 10px;
+      padding-bottom: 45px;
 
         &__title {
             max-width: 75%;
