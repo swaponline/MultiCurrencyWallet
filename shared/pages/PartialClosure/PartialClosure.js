@@ -944,7 +944,9 @@ export default class PartialClosure extends Component {
         </div>
         <div styleName={isWidgetBuild ? 'formExchange_widgetBuild' : `formExchange ${isWidget ? 'widgetFormExchange' : ''}`} className={isWidget ? 'formExchange' : ''} >
           {desclineOrders.length ?
-            <h5 role="presentation" styleName="informAbt" onClick={this.handleShowIncomplete}><FormattedMessage id="continueDeclined977" defaultMessage="Click here to continue your swaps" /></h5>
+            <h5 role="presentation" styleName="informAbt" onClick={this.handleShowIncomplete}>
+              <FormattedMessage id="continueDeclined977" defaultMessage="Click here to continue your swaps" />
+            </h5>
             : <span />
           }
           <div data-tut="have" styleName="selectWrap">
