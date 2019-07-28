@@ -35,7 +35,7 @@ import { isCoinAddress } from 'swap.app/util/typeforce'
 import config from 'app-config'
 import SwapApp, { util } from 'swap.app'
 
-import helpers, { constants, links } from 'helpers'
+import helpers, { constants, links, ethToken } from 'helpers'
 import { animate } from 'helpers/domUtils'
 import Switching from 'components/controls/Switching/Switching'
 
@@ -88,12 +88,15 @@ const subTitle = (sell, sellTicker, buy, buyTicker) => (
 const isWidgetBuild = config && config.isWidget
 const bannedPeers = {} // Пиры, которые отклонили запрос на свап, они будут понижены в выдаче
 
+
+
 @injectIntl
 @connect(({
   currencies,
   addSelectedItems,
   rememberedOrders,
   addPartialItems,
+  history: { swapHistory },
   core: { orders, hiddenCoinsList },
   user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, usdtData, ltcData },
 }) => ({
@@ -107,6 +110,7 @@ const bannedPeers = {} // Пиры, которые отклонили запро
   decline: rememberedOrders.savedOrders,
   hiddenCoinsList,
   userEthAddress: ethData.address,
+  swapHistory,
 }))
 @CSSModules(styles, { allowMultiple: true })
 export default class PartialClosure extends Component {
@@ -204,6 +208,7 @@ export default class PartialClosure extends Component {
       customWallet: this.wallets[buyToken.toUpperCase()],
       extendedControls: false,
       estimatedFeeValues: {},
+      desclineOrders: [],
     }
 
     constants.coinsWithDynamicFee
@@ -231,6 +236,7 @@ export default class PartialClosure extends Component {
       this.setOrders()
       this.showTheFee(haveCurrency)
       this.checkUrl()
+      this.getCorrectDecline()
     }, 2000)
 
     SwapApp.shared().services.room.on('new orders', () => this.checkPair())
@@ -842,9 +848,37 @@ export default class PartialClosure extends Component {
     return isCoinAddress[getCurrency.toUpperCase()](customWallet)
   }
 
+  getCorrectDecline = () => {
+    const { decline, swapHistory } = this.props
+
+    const localSavedOrdersString = localStorage.getItem('savedOrders')
+
+    if (!localSavedOrdersString) return
+    const localSavedOrders = JSON.parse(localSavedOrdersString)
+
+    if (localSavedOrders.length !== decline.length) {
+      return
+    }
+
+    const desclineOrders = decline.map(swapId => actions.core.getSwapById(swapId)).filter(el => {
+      const { isFinished, isRefunded, isStoppedSwap } = el
+      return isFinished || isRefunded || isStoppedSwap
+    })
+
+    this.setState(() => ({ desclineOrders }))
+  }
+
+
+  handleShowIncomplete = () => {
+    const { desclineOrders } = this.state
+    actions.modals.open(constants.modals.IncompletedSwaps, {
+      desclineOrders,
+    })
+  }
+
   render() {
     const { currencies, addSelectedItems, currenciesData, tokensData, intl: { locale, formatMessage }, userEthAddress } = this.props
-    const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching,
+    const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching, desclineOrders,
       isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet, exHaveRate, exGetRate,
       maxBuyAmount, getAmount, goodRate, isShowBalance, extendedControls, estimatedFeeValues, isToken, dynamicFee, haveAmount,
     } = this.state
@@ -903,13 +937,18 @@ export default class PartialClosure extends Component {
       defaultMessage: 'Best exchange rate for {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}). Swap.Online wallet provides instant exchange using Atomic Swap Protocol.', // eslint-disable-line
     }, SeoValues)
 
-
     const Form = (
       <div styleName={`${isWidgetBuild ? '' : 'section'}`} className={isWidgetLink ? 'section' : ''} >
         <div styleName="mobileDubleHeader">
           <PromoText subTitle={subTitle(sellTokenFullName, haveCurrency.toUpperCase(), buyTokenFullName, getCurrency.toUpperCase())} />
         </div>
         <div styleName={isWidgetBuild ? 'formExchange_widgetBuild' : `formExchange ${isWidget ? 'widgetFormExchange' : ''}`} className={isWidget ? 'formExchange' : ''} >
+          {desclineOrders.length ?
+            <h5 role="presentation" styleName="informAbt" onClick={this.handleShowIncomplete}>
+              <FormattedMessage id="continueDeclined977" defaultMessage="Click here to continue your swaps" />
+            </h5>
+            : <span />
+          }
           <div data-tut="have" styleName="selectWrap">
             <SelectGroup
               switchBalanceFunc={this.switchBalance}
