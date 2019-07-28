@@ -1135,7 +1135,7 @@ export default class PartialClosure extends Component {
           {
             isFetching && (
               <span className={isWidget ? 'wait' : ''}>
-                <FormattedMessage id="partial291" defaultMessage="Wait participant: " />
+                <FormattedMessage id="partial291" defaultMessage="Waiting for another participant (30 sec): " />
                 <div styleName="loaderHolder">
                   <div styleName="additionalLoaderHolder">
                     <InlineLoader />
