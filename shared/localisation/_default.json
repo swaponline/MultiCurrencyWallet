@@ -2927,7 +2927,7 @@
   },
   {
     "id": "partial291",
-    "message": "Wait participant: ",
+    "message": "Waiting for another participant (30 sec): ",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
