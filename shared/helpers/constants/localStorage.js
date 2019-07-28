@@ -21,5 +21,5 @@ export default {
   eosActivationPayment: `${process.env.ENTRY}:eos:activationPayment`,
   lastCheckBalance: 'lastCheckBalance',
   IEO_signed: 'IEO_signed',
-  startSwap: 'startSwap'
+  startSwap: 'startSwap',
 }
