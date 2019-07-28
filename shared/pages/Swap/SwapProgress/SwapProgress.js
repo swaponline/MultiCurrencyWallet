@@ -131,11 +131,10 @@ export default class SwapProgress extends Component {
     this.handleBarProgress()
     localStorage.setItem(constants.localStorage.startSwap, Date.now())
     this.timer =  setInterval(() => {
-
-    const startSwapTime =  localStorage.getItem(constants.localStorage.startSwap)
+      const startSwapTime = localStorage.getItem(constants.localStorage.startSwap)
 
       if ((Date.now() - startSwapTime) > 180 * 1000) {
-        console.warn("UPS!!! SWAP IS FROZEM - RELOAD")
+        console.warn('UPS!!! SWAP IS FROZEM - RELOAD')
         localStorage.removeItem(constants.localStorage.startSwap)
         window.location.reload()
       }
