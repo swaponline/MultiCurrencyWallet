@@ -30,12 +30,6 @@ const PleaseDontLeaveWrapper = (props) => {
             </p>
           )}
         </Tooltip>
-        <p>
-          <FormattedMessage
-            id="swapprogressDONTLEAVE22"
-            defaultMessage="The swap was stuck? Try to reload page"
-          />
-        </p>
         {(isBTC) && (
           <strong styleName="saveSecretKey">
             <FormattedMessage id="swapprogressDONTLEAVEBTC" defaultMessage="Or save this information before you leave:" />
