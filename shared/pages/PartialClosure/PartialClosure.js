@@ -957,7 +957,8 @@ export default class PartialClosure extends Component {
               onSelect={this.handleSetHaveValue}
               label={<FormattedMessage id="partial243" defaultMessage="You sell" />}
               id="partialClosure456"
-              tooltip={<FormattedMessage id="partial462" defaultMessage="The amount you have in your wallet or external wallet that you want to exchange" />}
+              tooltip={<FormattedMessage id="partial462" defaultMessage="The amount you have on swap.online or an external wallet that you want to exchange
+" />}
               placeholder="0.00000000"
               usd={(maxAmount > 0 && isNonOffers) ? 0 : haveUsd}
               currencies={currencies}
@@ -986,7 +987,7 @@ export default class PartialClosure extends Component {
               onSelect={this.handleSetGetValue}
               label={<FormattedMessage id="partial255" defaultMessage="You get" />}
               id="partialClosure472"
-              tooltip={<FormattedMessage id="partial478" defaultMessage="The amount you receive after the exchange" />}
+              tooltip={<FormattedMessage id="partial478" defaultMessage="The amount you will receive after the exchange" />}
               currencies={addSelectedItems}
               usd={getUsd}
               error={isLowAmount}
@@ -1152,12 +1153,12 @@ export default class PartialClosure extends Component {
                   <div styleName="walletOpenSide">
                     <Toggle dataTut="togle" checked={!customWalletUse} onChange={this.handleCustomWalletUse} />
                     <span styleName="specify">
-                      <FormattedMessage id="UseAnotherWallet" defaultMessage="Specify your receiving wallet address" />
+                      <FormattedMessage id="UseAnotherWallet" defaultMessage="Specify the receiving wallet address" />
                     </span>
                   </div>
                   <div styleName={!customWalletUse ? 'anotherRecepient anotherRecepient_active' : 'anotherRecepient'}>
                     <div styleName="walletInput">
-                      <Input required disabled={customWalletUse} valueLink={linked.customWallet} pattern="0-9a-zA-Z" placeholder="Enter the destination address" />
+                      <Input required disabled={customWalletUse} valueLink={linked.customWallet} pattern="0-9a-zA-Z" placeholder="Enter the receiving wallet address" />
                     </div>
                   </div>
                 </div>
