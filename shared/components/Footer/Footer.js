@@ -19,25 +19,29 @@ import GetIeo from './GetIeo/GetIeo'
 import { isMainOrPartialPages } from 'helpers/locationPaths'
 
 
-const Footer = (props) => (
-  <Fragment>
-    {(!config.isWidget && !isMainOrPartialPages(props.location.pathname)) && (
-      <WidthContainer styleName="shareText">
-        <Referral address={props.userEthAddress} />
-      </WidthContainer>
-    )}
-    <div styleName="footer">
-      <WidthContainer styleName="container">
-        <GetIeo />
-        {!config.isWidget && (<Links />)}
-        {!config.isWidget && (<SwitchLang />)}
-        {!config.isWidget && (<SocialMenu />)}
-        {!isMobile && <Info {...props} />}
-        <span style={{ color: '#ffffff', fontSize: '12px', marginTop: '20px' }}>{config.time}</span>
-      </WidthContainer>
-    </div>
-  </Fragment>
-)
+const Footer = (props) => {
+  const { location, userEthAddress, isOnline } = props
+
+  return (
+    <Fragment>
+      {(!config.isWidget && !isMainOrPartialPages(props.location.pathname)) && (
+        <WidthContainer styleName="shareText">
+          <Referral address={props.userEthAddress} />
+        </WidthContainer>
+      )}
+      <div styleName="footer">
+        <WidthContainer styleName="container">
+          <GetIeo />
+          {!config.isWidget && (<Links />)}
+          {!config.isWidget && (<SwitchLang />)}
+          {!config.isWidget && (<SocialMenu />)}
+          {!isMobile || !isOnline && <Info {...props} />}
+          <span style={{ color: '#ffffff', fontSize: '12px', marginTop: '20px' }}>{config.time}</span>
+        </WidthContainer>
+      </div>
+    </Fragment>
+  )
+}
 
 Footer.propTypes = {
   props: PropTypes.shape({
