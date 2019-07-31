@@ -35,7 +35,7 @@ const Footer = (props) => {
           {!config.isWidget && (<Links />)}
           {!config.isWidget && (<SwitchLang />)}
           {!config.isWidget && (<SocialMenu />)}
-          {!isMobile || !isOnline && <Info {...props} />}
+          {(!isMobile || !isOnline) && <Info {...props} />}
           <span style={{ color: '#ffffff', fontSize: '12px', marginTop: '20px' }}>{config.time}</span>
         </WidthContainer>
       </div>
