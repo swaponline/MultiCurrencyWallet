@@ -456,8 +456,7 @@ export default class AddOffer extends Component {
           switchBalanceFunc={this.switching}
           styleName="sellGroup"
           label={<FormattedMessage id="addoffer381" defaultMessage="Sell" />}
-          tooltip={<FormattedMessage id="partial462" defaultMessage="The amount you have on swap.online or an external wallet that you want to exchange
-" />}
+          tooltip={<FormattedMessage id="partial462" defaultMessage="The amount you have on swap.online or an external wallet that you want to exchange" />}
           inputValueLink={linked.sellAmount.pipe(this.handleSellAmountChange)}
           dontDisplayError
           selectedValue={sellCurrency}

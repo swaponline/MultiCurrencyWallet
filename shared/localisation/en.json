@@ -4940,7 +4940,7 @@
   },
   {
     "id": "tourPartial103",
-    "message": "Here you can see the searching status of the offers for exchange matching your request. While loading you will see the "Search for orders" field. The exchange rate will be shown when the matching order is found.",
+    "message": "In this place you can see the status of the search for exchange offers,  during loading there will be an inscription “Search for orders” at this place, when the order is found in this place, the exchange rate will be written",
     "files": [
       "shared/components/Header/TourPartial/TourPartial.js"
     ]
@@ -4972,9 +4972,7 @@
   },
   {
     "id": "tourPartial94",
-    "message": "Select the currency and enter the amount you want to sell.
-
-",
+    "message": "Select the currency and enter the amount you want to sell.",
     "files": [
       "shared/components/Header/TourPartial/TourPartial.js"
     ]
