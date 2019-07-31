@@ -155,13 +155,6 @@ export default class SwapComponent extends PureComponent {
 
     const { match: { params: { orderId } }, decline } = this.props
 
-    if (localStorage.getItem('deletedOrders') !== null) {
-
-      if (localStorage.getItem('deletedOrders').includes(id) && !isRefunded) {
-        this.props.history.push(localisedUrl(links.exchange))
-      }
-    }
-
     if (step >= 4 && !decline.includes(orderId)) {
       this.saveThisSwap(orderId)
     }

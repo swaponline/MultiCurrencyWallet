@@ -130,19 +130,22 @@ export default class SwapProgress extends Component {
     this.swap.on('state update', this.handleFlowStateUpdate)
     this.handleBarProgress()
     localStorage.setItem(constants.localStorage.startSwap, Date.now())
+    this.reloadPage()
+  }
+
+  componentWillUnmount() {
+    this.swap.off('state update', this.handleFlowStateUpdate)
+  }
+
+  reloadPage = () => {
     this.timer =  setInterval(() => {
       const startSwapTime = localStorage.getItem(constants.localStorage.startSwap)
-
       if ((Date.now() - startSwapTime) > 180 * 1000) {
         console.warn('UPS!!! SWAP IS FROZEM - RELOAD')
         localStorage.removeItem(constants.localStorage.startSwap)
         window.location.reload()
       }
     }, 1000)
-  }
-
-  componentWillUnmount() {
-    this.swap.off('state update', this.handleFlowStateUpdate)
   }
 
   checkCanRefund = () => {
