@@ -25,6 +25,15 @@
   cursor: pointer;
 }
 
+.reloadText {
+  position: relative;
+  width: 100%;
+  text-align: center;
+  bottom: 50px;
+  color: #acacac;
+  cursor: pointer;
+}
+
 .swapContainerInfo {
   position: relative;
   display: flex;
@@ -90,7 +99,7 @@
   text-decoration: underline;
   position: absolute;
   right: 50px;
-  top: -30px;
+  top: -20px;
 }
 
 .onlineIndicator {

@@ -155,13 +155,6 @@ export default class SwapComponent extends PureComponent {
 
     const { match: { params: { orderId } }, decline } = this.props
 
-    if (localStorage.getItem('deletedOrders') !== null) {
-
-      if (localStorage.getItem('deletedOrders').includes(id) && !isRefunded) {
-        this.props.history.push(localisedUrl(links.exchange))
-      }
-    }
-
     if (step >= 4 && !decline.includes(orderId)) {
       this.saveThisSwap(orderId)
     }
@@ -459,6 +452,12 @@ export default class SwapComponent extends PureComponent {
               locale={locale}
               wallets={this.wallets}
             >
+              <p styleName="reloadText" title="reload the page" role="presentation" onClick={() => window.location.reload()}>
+                <FormattedMessage
+                  id="swapprogressDONTLEAVE22"
+                  defaultMessage="The swap was stuck? Try to reload page"
+                />
+              </p>
               <Share flow={swap.flow} />
               <EmergencySave flow={swap.flow} onClick={() => this.toggleInfo(isShowDevInformation, true)} isShowDevInformation={isShowDevInformation} />
               <ShowBtcScript

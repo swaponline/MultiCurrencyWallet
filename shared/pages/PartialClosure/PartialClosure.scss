@@ -54,6 +54,11 @@
   }
 }
 
+.informAbt {
+  position: absolute;
+  top: 15px;
+}
+
 .promoContainer {
   min-height: 100vh;
   position: relative;
@@ -481,7 +486,7 @@
   }
   .alignCenter {
     height: auto;
-    padding: 40px 0;
+    padding: 15px 0 90px;
   }
 }
 @media all and (min-width: 320px) and (max-width: 830px) {
@@ -491,6 +496,9 @@
     flex-direction: column-reverse;
     max-width: 830px;
     margin: auto;
+  }
+  .section {
+    padding-top: 120px;
   }
   .button {
     font-size: 12px;
@@ -534,6 +542,12 @@
     font-size: 16px;
   }
 
+  .scrollToTutorialSection {
+    bottom: 70px;
+    right: 40%;
+    z-index: 101;
+  }
+
   .referralText {
     overflow: hidden;
     width: 90%;
@@ -569,7 +583,8 @@
   }
 
   .widgetLink {
-    left: 11.8em;
+    left: 51%;
+    color: #297df1;
   }
 
   .IsSearching {
@@ -593,7 +608,7 @@
   }
   .promoContainer {
     background: #f5f5f5;
-    padding: 80px 0;
+    padding: 60px 0;
     &::before {
       display: none;
     }
