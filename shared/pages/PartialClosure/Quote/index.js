@@ -8,7 +8,7 @@ import styles from './styles.scss'
 const Quote = ({}) => {
   const href = "https://blog.qtum.org/atomic-cross-chain-swap-on-qtum-7e756a890ed7"
   return (
-  <div className="container" style={{ paddingBottom: "60px" }}>
+  <div styleName="container">
     <div styleName="header">
       &#34;
       <FormattedMessage
@@ -17,12 +17,12 @@ const Quote = ({}) => {
       />
       &#34;
     </div>
-    <b>
-      <a href={href} title={href} target="_blank" rel="noopener noreferrer" styleName="href">
+    <a href={href} title={href} target="_blank" rel="noopener noreferrer" styleName="href">
+      <b>
         — QTUM official Atomic Swap research
-        <span styleName="orange">https://blog.qtum.org/atomic-cross-chain-swap-on-qtum-7e756a890ed7</span>
-      </a>
-    </b>
+        <span> https://blog.qtum.org/atomic-cross-chain-swap-on-qtum-7e756a890ed7</span>
+      </b>
+    </a>
   </div>
 )}
 /* eslint-enable */

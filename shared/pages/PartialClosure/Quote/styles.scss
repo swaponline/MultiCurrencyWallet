@@ -1,3 +1,10 @@
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 2%;
+  padding-bottom: 60px
+}
+
 .header {
   font-size: 36px;
   text-align: center;
@@ -11,8 +18,26 @@
 .href {
   text-align: center;
   color: black;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  span {
+    color: orange;
+  }
 }
 
-.orange {
-  color: orange;
+@media screen and (max-width: 480px) {
+  .container {
+
+  }
+
+  .header {
+    font-size: 24px;
+    padding: 15px 0 30px;
+  }
+
+  .href {
+    font-size: 12px;
+    margin: auto;
+  }
 }
