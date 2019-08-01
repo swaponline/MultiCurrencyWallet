@@ -174,7 +174,19 @@ export default class SwapComponent extends PureComponent {
         this.isBalanceEnough()
         this.checkFailSwap()
       }, 5000)
+
+      const checkingConfirmSuccess = setTimeout(() => {
+        if (!this.checkIsConfirmed()) window.location.reload()
+      }, 30000)
+
+      this.checkingConfirmSuccessTimer = checkingConfirmSuccess
+      this.checkingCycleTimer = checkingCycle
     }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.checkingCycleTimer)
+    clearTimeout(this.checkingConfirmSuccessTimer)
   }
 
   checkStoppedSwap = () => {
@@ -191,6 +203,11 @@ export default class SwapComponent extends PureComponent {
     }))
 
     return true
+  }
+
+  checkIsConfirmed = () => {
+    const { swap: { flow: { state: { step } } } } = this.state
+    return !(step === 1)
   }
 
   checkIsFinished = () => {
