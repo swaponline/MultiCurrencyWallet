@@ -43,10 +43,10 @@ class Info extends React.Component {
       <div styleName="title">
         ibp2p network status:
         <span>
-          <span styleName={isOnline ? "connect" : "disconnect"}>
+          <span styleName={isOnline ? 'connect' : 'disconnect'}>
             {isOnline
-              ? " Connected "
-              : " Disconnected. you cannot make exchanges until you are disconnected. Turn off VPN or try another network or browser"}
+              ? 'Connected'
+              : 'Disconnected. You cannot make exchanges until you are disconnected. Turn off VPN or try another network or browser'}
           </span>
           {isOnline && `/ peers online: ${onlinePeersHack}`}
         </span>
