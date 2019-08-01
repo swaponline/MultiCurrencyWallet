@@ -26,7 +26,6 @@ const quotes =
   </span>)
 /* eslint-enable */
 
-
 const GetIeo = () => (
   <div styleName="container">
     <div styleName="text">
@@ -42,7 +41,7 @@ const GetIeo = () => (
         <span styleName="steps">
           <FormattedMessage
             id="getIeo29"
-            defaultMessage="1. Click {quotes}; 2. Allow push notifications{br} 3. Wait 5-10 min; 4. {href}"
+            defaultMessage="1. Click {quotes};{br} 2. Allow push notifications{br} 3. Wait for notification (we send gift manually);{br} 4. {href}"
             values={{
               br: <br />,
               quotes,
