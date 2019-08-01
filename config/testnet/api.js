@@ -4,7 +4,7 @@ export default {
   bitpay: 'https://test-insight.swap.online/insight-api',
   // bitpay: 'https://test-insight.bitpay.com/api',
   etherscan: 'https://rinkeby.etherscan.io/api',
-  usdt: 'https://api.omniexplorer.info/',
+  USDTomni: 'https://api.omniexplorer.info/',
   bch: 'https://trest.bitcoin.com/v2',
   ltc: 'https://testnet.litecore.io/api',
   eos: {

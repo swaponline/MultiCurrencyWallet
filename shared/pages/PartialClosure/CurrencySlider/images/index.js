@@ -7,7 +7,7 @@ import fire from './fire.svg'
 import ltc from './ltc.svg'
 import swap from './swap.svg'
 import trx from './trx.svg'
-import usdt from './usdt.svg'
+import USDTomni from './USDTomni.svg'
 import xrp from './xrp.svg'
 
 
@@ -19,6 +19,6 @@ export default {
   ltc,
   swap,
   trx,
-  usdt,
+  USDTomni,
   xrp,
 }

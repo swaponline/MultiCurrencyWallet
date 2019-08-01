@@ -8,7 +8,7 @@ import bch from './bch.svg'
 import nim from './nim.svg'
 import eos from './eos.svg'
 import swap from './swap.svg'
-import usdt from './usdt.svg'
+import USDTomni from './USDTomni.svg'
 import syc2 from './syc2.svg'
 import drt from './drt.svg'
 import omg from './omg.svg'
@@ -36,7 +36,7 @@ export default {
   eth,
   syc2,
   icx,
-  usdt,
+  USDTomni,
   swap,
   waves,
   xrp,

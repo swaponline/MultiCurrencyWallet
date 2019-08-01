@@ -11,7 +11,7 @@ import Timer from './Timer/Timer'
 import { FormattedMessage } from 'react-intl'
 
 
-export default class UsdtToEthToken extends Component {
+export default class USDTomniToEthToken extends Component {
 
   constructor({ swap, currencyData }) {
     super()
@@ -67,7 +67,7 @@ export default class UsdtToEthToken extends Component {
     if (flow.refundTxHex) {
       return flow.refundTxHex
     }
-    else if (flow.usdtScriptValues) {
+    else if (flow.USDTomniScriptValues) {
       this.swap.flow.getRefundTxHex()
     }
   }
@@ -186,7 +186,7 @@ export default class UsdtToEthToken extends Component {
               }
 
               {
-                (flow.step === 4 || flow.usdtScriptValues) && (
+                (flow.step === 4 || flow.USDTomniScriptValues) && (
                   <Fragment>
                     <h3>
                       <FormattedMessage
@@ -196,19 +196,19 @@ export default class UsdtToEthToken extends Component {
                       />
                     </h3>
                     {
-                      flow.usdtFundingTransactionHash && (
+                      flow.USDTomniFundingTransactionHash && (
                         <div>
                           <FormattedMessage id="UsdrToEthToken179" defaultMessage="Transaction: " />
                           <strong>
-                            <a href={`${config.link.bitpay}/tx/${flow.usdtFundingTransactionHash}`} target="_blank" rel="noopener noreferrer">
-                              {flow.usdtFundingTransactionHash}
+                            <a href={`${config.link.bitpay}/tx/${flow.USDTomniFundingTransactionHash}`} target="_blank" rel="noopener noreferrer">
+                              {flow.USDTomniFundingTransactionHash}
                             </a>
                           </strong>
                         </div>
                       )
                     }
                     {
-                      !flow.usdtScriptValues && (
+                      !flow.USDTomniScriptValues && (
                         <InlineLoader />
                       )
                     }
@@ -216,7 +216,7 @@ export default class UsdtToEthToken extends Component {
                 )
               }
               {
-                flow.usdtScriptValues && !flow.isFinished && !flow.isEthWithdrawn && (
+                flow.USDTomniScriptValues && !flow.isFinished && !flow.isEthWithdrawn && (
                   <Fragment>
                     <br />
                     { !flow.refundTxHex &&
@@ -311,7 +311,7 @@ export default class UsdtToEthToken extends Component {
                       </Button>
                     }
                     <Timer
-                      lockTime={flow.usdtScriptValues.lockTime * 1000}
+                      lockTime={flow.USDTomniScriptValues.lockTime * 1000}
                       enabledButton={() => this.setState({ enabledButton: true })}
                     />
                   </div>

@@ -150,7 +150,7 @@ const seo = {
         Swap.Online team finalized first direct EOS-to-Bitcoin Atomic Swap in September, 2018 and now it allows users to exchange their crypto with no third party involved.
         EOS itself is one of the world leading dApp-hosting platforms and very promising blockchain widely called ‘Ethereum-killer’ for the high scalability and developability.
         So, Swap.Online provides users with the possibility to invest in the rising and prospective project using familiar Bitcoin and Ethereum coins.
-        Moreover, even USDT is accepted on our platform which makes the EOS purchasing easier than ever.`,
+        Moreover, even USDTomni is accepted on our platform which makes the EOS purchasing easier than ever.`,
     },
     {
       uri: '/btc-eos',
@@ -174,12 +174,12 @@ const seo = {
         Secondly, please, download your private and public key-pair for the Bitcoin network and save it somewhere in the reliable place.
         In case of your failure to access your Bitcoin account, no one will be able to help you to restore your funds.
         With the key downloaded and saved, you can start to store, send, receive and exchange Bitcoin.
-        Nowadays, the trades with USDT, EOS, ETH, BCH, GUSD and multiple amazing ERC-20 tokens are available.
+        Nowadays, the trades with USDTomni, EOS, ETH, BCH, GUSD and multiple amazing ERC-20 tokens are available.
         Taking the fact into account, you can build your own investment strategy, starting with the Bitcoin  - the most popular blockchain in the world.
         Mass-adopted in early 2010s it became a first expression of decentralized ‘electronic cash’ system based on Smart Contracts.
         Swap.Online compares favourably with the rest of Bitcoin wallets since it uses the Atomic Swaps technology allowing
         the direct interaction between blockchains with nok third party involved. Thus, Swap.Online is not pegged to single blockchain,
-        it allows to store, send, receive and exchange Bitcoin, Ethereum, USDT, BCH and the number of ERC-20 tokens.`,
+        it allows to store, send, receive and exchange Bitcoin, Ethereum, USDTomni, BCH and the number of ERC-20 tokens.`,
     },
     {
       uri: '/Eos-wallet',
@@ -200,10 +200,10 @@ const seo = {
       h1: 'Your online Litecoin (LTC) web wallet with Atomic Swap.',
     },
     {
-      uri: '/USDT-wallet',
-      title: 'Swap.Online - Tether (USDT) Web Wallet with Atomic Swap.',
-      description: 'Atomic Swap web wallet allows you to store and exchange USDT to Bitcoin. Multi-currency wallet with a decentralized exchange (based on Atomic Swap technology)',
-      h1: 'Your online Tether (USDT) wallet with Atomic Swap.',
+      uri: '/USDTomni-wallet',
+      title: 'Swap.Online - Tether (USDTomni) Web Wallet with Atomic Swap.',
+      description: 'Atomic Swap web wallet allows you to store and exchange USDTomni to Bitcoin. Multi-currency wallet with a decentralized exchange (based on Atomic Swap technology)',
+      h1: 'Your online Tether (USDTomni) wallet with Atomic Swap.',
     },
   ],
 }

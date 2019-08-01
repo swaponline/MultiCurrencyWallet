@@ -34,25 +34,25 @@ const login = (privateKey) => {
     publicKey,
   }
 
-  console.info('Logged in with USDT', data)
-  reducers.user.setAuthData({ name: 'usdtData', data })
+  console.info('Logged in with USDTomni', data)
+  reducers.user.setAuthData({ name: 'USDTomniData', data })
 }
 
 const getBalance = async () => {
-  const { user: { usdtData: { address } } } = getState()
+  const { user: { USDTomniData: { address } } } = getState()
   try {
     const result = await fetchBalance(address)
     console.log('result', result)
     const { balance, unconfirmed } = result
-    reducers.user.setBalance({ name: 'usdtData', amount: balance, unconfirmedBalance: unconfirmed || 0 })
+    reducers.user.setBalance({ name: 'USDTomniData', amount: balance, unconfirmedBalance: unconfirmed || 0 })
     return balance
   } catch (e) {
-    reducers.user.setBalanceError({ name: 'usdtData' })
+    reducers.user.setBalanceError({ name: 'USDTomniData' })
   }
 }
 
 const fetchBalance = (address, assetId = 31) =>
-  request.post(`${config.api.usdt}v1/address/addr/`, {
+  request.post(`${config.api.USDTomni}v1/address/addr/`, {
     body: `addr=${address}`,
   })
     .then(response => {
@@ -75,11 +75,11 @@ const fetchBalance = (address, assetId = 31) =>
       console.log('Omni Balance pending:', findById[0].pendingneg)
 
       const usdsatoshis = BigNumber(findById[0].value)
-      const usdtUnconfirmed = BigNumber(findById[0].pendingneg)
+      const USDTomniUnconfirmed = BigNumber(findById[0].pendingneg)
 
       if (usdsatoshis) {
         return {
-          unconfirmed: usdtUnconfirmed.dividedBy(1e8).toNumber(),
+          unconfirmed: USDTomniUnconfirmed.dividedBy(1e8).toNumber(),
           balance: usdsatoshis.dividedBy(1e8).toNumber(),
         }
       }
@@ -92,16 +92,16 @@ const fetchBalance = (address, assetId = 31) =>
 
 
 const getTransaction = () => {
-  const { user: { usdtData: { address } } } = getState()
+  const { user: { USDTomniData: { address } } } = getState()
 
   return new Promise((resolve) => {
-    request.post(`${config.api.usdt}v1/address/addr/details/`, {
+    request.post(`${config.api.USDTomni}v1/address/addr/details/`, {
       body: `addr=${address}`,
     })
       .then((res) => {
         console.log('res', res)
         const transactions = res.transactions.map((item) => ({
-          type: 'usdt',
+          type: 'USDTomni',
           hash: item.txid,
           confirmations: item.confirmations,
           value: item.amount,
@@ -121,7 +121,7 @@ const fetchUnspents = (address) =>
 
 
 const send = ({ from, to, amount } = {}) => {
-  const { user: { usdtData: { privateKey } } } = getState()
+  const { user: { USDTomniData: { privateKey } } } = getState()
 
   return new Promise(async (resolve) => {
     const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)

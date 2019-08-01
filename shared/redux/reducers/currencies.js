@@ -143,10 +143,10 @@ if (config.isWidget) {
 
 // eslint-disable-next-line
 process.env.MAINNET && initialState.items.unshift({
-  name: 'USDT',
-  title: 'USDT',
-  icon: 'usdt',
-  value: 'usdt',
+  name: 'USDTomni',
+  title: 'USDTomni',
+  icon: 'USDTomni',
+  value: 'USDTomni',
   fullTitle: 'USD Tether',
 })
 

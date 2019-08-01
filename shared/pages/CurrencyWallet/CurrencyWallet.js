@@ -34,8 +34,8 @@ const titles = [
 ]
 
 @connect(({ core, user,  history: { transactions, swapHistory }, history,
-  user: { ethData, btcData, bchData, ltcData, tokensData, eosData, nimData, usdtData, telosData } }) => ({
-  items: [ ethData, btcData, bchData, eosData, usdtData, ltcData, telosData, ...Object.keys(tokensData).map(k => (tokensData[k])) /* nimData */ ],
+  user: { ethData, btcData, bchData, ltcData, tokensData, eosData, nimData, USDTomniData, telosData } }) => ({
+  items: [ ethData, btcData, bchData, eosData, USDTomniData, ltcData, telosData, ...Object.keys(tokensData).map(k => (tokensData[k])) /* nimData */ ],
   tokens: [...Object.keys(tokensData).map(k => (tokensData[k]))],
   user,
   historyTx: history,

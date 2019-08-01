@@ -35,13 +35,13 @@ export const initialState = {
     fullName: 'Litecoin',
     balanceError: null,
   },
-  usdtData: {
+  USDTomniData: {
     address: '0x0',
     publicKey: '0x0',
     balance: 0,
     isBalanceFetched: false,
-    currency: 'USDT',
-    fullName: 'USDT',
+    currency: 'USDTomni',
+    fullName: 'USDTomni',
     balanceError: null,
   },
   nimData: {

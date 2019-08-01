@@ -19,7 +19,7 @@ const symbol = (data) => (
   </a>
 )
 
-const names = ['btc', 'bch', 'usdt', 'ltc', 'eth', 'swap']
+const names = ['btc', 'bch', 'USDTomni', 'ltc', 'eth', 'swap']
 
 @connect(
   ({ currencies: { items: currencies } }) => ({

@@ -22,8 +22,8 @@ import SwapApp, { constants } from 'swap.app'
 import SwapAuth from 'swap.auth'
 import SwapRoom from 'swap.room'
 import SwapOrders from 'swap.orders'
-import { ETH2BTC, BTC2ETH, BCH2ETH, ETH2BCH, LTC2BTC, BTC2LTC, ETH2LTC, LTC2ETH, ETHTOKEN2BTC, BTC2ETHTOKEN, EOS2BTC, BTC2EOS, USDT2ETHTOKEN, ETHTOKEN2USDT } from 'swap.flows'
-import { EthSwap, EthTokenSwap, BtcSwap, BchSwap, LtcSwap, EosSwap, UsdtSwap } from 'swap.swaps'
+import { ETH2BTC, BTC2ETH, BCH2ETH, ETH2BCH, LTC2BTC, BTC2LTC, ETH2LTC, LTC2ETH, ETHTOKEN2BTC, BTC2ETHTOKEN, EOS2BTC, BTC2EOS, USDTomni2ETHTOKEN, ETHTOKEN2USDTomni } from 'swap.flows'
+import { EthSwap, EthTokenSwap, BtcSwap, BchSwap, LtcSwap, EosSwap, USDTomniSwap } from 'swap.swaps'
 
 import { erc20 } from 'swap.app/util'
 
@@ -161,18 +161,18 @@ const createSwapApp = () => {
         .map(key => BTC2ETHTOKEN(key)),
 
       ...(Object.keys(config.erc20))
-        .map(key => ETHTOKEN2USDT(key)),
+        .map(key => ETHTOKEN2USDTomni(key)),
 
       ...(Object.keys(config.erc20))
-        .map(key => USDT2ETHTOKEN(key)),
+        .map(key => USDTomni2ETHTOKEN(key)),
     ],
   })
 
   // eslint-disable-next-line
   process.env.MAINNET ? SwapApp.shared()._addSwap(
-    new UsdtSwap({
-      assetId: 31, // USDT
-      fetchBalance: (address) => actions.usdt.fetchBalance(address, 31).then(res => res.balance),
+    new USDTomniSwap({
+      assetId: 31, // USDTomni
+      fetchBalance: (address) => actions.USDTomni.fetchBalance(address, 31).then(res => res.balance),
       fetchUnspents: (scriptAddress) => actions.btc.fetchUnspents(scriptAddress),
       broadcastTx: (txRaw) => actions.btc.broadcastTx(txRaw),
       fetchTx: (hash) => actions.btc.fetchTx(hash),

@@ -18,8 +18,8 @@ import EosToBtc from '../EosToBtc'
 import EthTokenToBtc from '../EthTokenToBtc'
 import BtcToEthToken from '../BtcToEthToken'
 
-import EthTokenToUsdt from '../EthTokenToUsdt'
-import UsdtToEthToken from '../UsdtToEthToken'
+import EthTokenToUSDTomni from '../EthTokenToUSDTomni'
+import USDTomniToEthToken from '../USDTomniToEthToken'
 
 
 const swapComponents = {
@@ -41,8 +41,8 @@ const swapComponents = {
   'SWAP2BTC': EthTokenToBtc,
   'BTC2SWAP': BtcToEthToken,
 
-  'SWAP2USDT': EthTokenToUsdt,
-  'USDT2SWAP': UsdtToEthToken,
+  'SWAP2USDTomni': EthTokenToUSDTomni,
+  'USDTomni2SWAP': USDTomniToEthToken,
 }
 
 
@@ -51,8 +51,8 @@ Object.keys(config.erc20)
     swapComponents[`${key.toUpperCase()}2BTC`] = EthTokenToBtc
     swapComponents[`BTC2${key.toUpperCase()}`] = BtcToEthToken
 
-    swapComponents[`${key.toUpperCase()}2USDT`] = EthTokenToUsdt
-    swapComponents[`USDT2${key.toUpperCase()}`] = UsdtToEthToken
+    swapComponents[`${key.toUpperCase()}2USDTomni`] = EthTokenToUSDTomni
+    swapComponents[`USDTomni2${key.toUpperCase()}`] = USDTomniToEthToken
   })
 
 export {

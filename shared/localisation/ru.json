@@ -1113,192 +1113,192 @@
     "message": "Подтверждение сделки необходимо для формирования репутации. Если пользователь не доводит дело до конца, он получает отрицательную репутацию"
   },
   {
-    "id": "EthTokenToUsdt101",
+    "id": "EthTokenToUSDTomni101",
     "message": "Подтверждение сделки необходимо для формирования репутации. Если пользователь не доводит дело до конца, он получает отрицательную репутацию. ",
     "files": [
-      "shared/pages/Swap/EthTokenToUsdt.js"
+      "shared/pages/Swap/EthTokenToUSDTomni.js"
     ]
   },
   {
-    "id": "EthTokenToUsdt109",
+    "id": "EthTokenToUSDTomni109",
     "message": "Подтвердить",
     "files": [
-      "shared/pages/Swap/EthTokenToUsdt.js"
+      "shared/pages/Swap/EthTokenToUSDTomni.js"
     ]
   },
   {
-    "id": "EthTokenToUsdt118",
+    "id": "EthTokenToUSDTomni118",
     "message": "Пожалуйста, подождите. Обработка подтверждения",
     "files": [
-      "shared/pages/Swap/EthTokenToUsdt.js"
+      "shared/pages/Swap/EthTokenToUSDTomni.js"
     ]
   },
   {
-    "id": "EthTokenToUsdt123",
+    "id": "EthTokenToUSDTomni123",
     "message": "Транзакция: ",
     "files": [
-      "shared/pages/Swap/EthTokenToUsdt.js"
+      "shared/pages/Swap/EthTokenToUSDTomni.js"
     ]
   },
   {
-    "id": "EthTokenToUsdt154",
-    "message": "Ожидание, Владелец USDT создает Секретный ключ, создает BTC Omni Script и пополняет его",
+    "id": "EthTokenToUSDTomni154",
+    "message": "Ожидание, Владелец USDTomni создает Секретный ключ, создает BTC Omni Script и пополняет его",
     "files": [
-      "shared/pages/Swap/EthTokenToUsdt.js"
+      "shared/pages/Swap/EthTokenToUSDTomni.js"
     ]
   },
   {
-    "id": "EthTokenToUsdt166",
+    "id": "EthTokenToUSDTomni166",
     "message": "Bitcoin Omni Script создан и загружен. Пожалуйста, проверте информацию ниже",
     "files": [
-      "shared/pages/Swap/EthTokenToUsdt.js"
+      "shared/pages/Swap/EthTokenToUSDTomni.js"
     ]
   },
   {
-    "id": "EthTokenToUsdt169",
+    "id": "EthTokenToUSDTomni169",
     "message": "Хэш: ",
     "files": [
-      "shared/pages/Swap/EthTokenToUsdt.js"
+      "shared/pages/Swap/EthTokenToUSDTomni.js"
     ]
   },
   {
-    "id": "EthTokenToUsdt172",
+    "id": "EthTokenToUSDTomni172",
     "message": "Script адрес: ",
     "files": [
-      "shared/pages/Swap/EthTokenToUsdt.js"
+      "shared/pages/Swap/EthTokenToUSDTomni.js"
     ]
   },
   {
-    "id": "EthTokenToUsdt192",
+    "id": "EthTokenToUSDTomni192",
     "message": "Показать BTC script",
     "files": [
-      "shared/pages/Swap/EthTokenToUsdt.js"
+      "shared/pages/Swap/EthTokenToUSDTomni.js"
     ]
   },
   {
-    "id": "EthTokenToUsdt236",
+    "id": "EthTokenToUSDTomni236",
     "message": "Все отлично. Продолжить",
     "files": [
-      "shared/pages/Swap/EthTokenToUsdt.js"
+      "shared/pages/Swap/EthTokenToUSDTomni.js"
     ]
   },
   {
-    "id": "EthTokenToUsdt249",
+    "id": "EthTokenToUSDTomni249",
     "message": "Недостаточно средств для данной операции. Пожалуйста пополните баланс",
     "files": [
-      "shared/pages/Swap/EthTokenToUsdt.js"
+      "shared/pages/Swap/EthTokenToUSDTomni.js"
     ]
   },
   {
-    "id": "EthTokenToUsdt253",
+    "id": "EthTokenToUSDTomni253",
     "message": "Ваш баланс: ",
     "files": [
-      "shared/pages/Swap/EthTokenToUsdt.js"
+      "shared/pages/Swap/EthTokenToUSDTomni.js"
     ]
   },
   {
-    "id": "EthTokenToUsdt257",
+    "id": "EthTokenToUSDTomni257",
     "message": "Необходимый баланс: ",
     "files": [
-      "shared/pages/Swap/EthTokenToUsdt.js"
+      "shared/pages/Swap/EthTokenToUSDTomni.js"
     ]
   },
   {
-    "id": "EthTokenToUsdt260",
+    "id": "EthTokenToUSDTomni260",
     "message": "Ваш адрес: ",
     "files": [
-      "shared/pages/Swap/EthTokenToUsdt.js"
+      "shared/pages/Swap/EthTokenToUSDTomni.js"
     ]
   },
   {
-    "id": "EthTokenToUsdt267",
+    "id": "EthTokenToUSDTomni267",
     "message": "Продолжить",
     "files": [
-      "shared/pages/Swap/EthTokenToUsdt.js"
+      "shared/pages/Swap/EthTokenToUSDTomni.js"
     ]
   },
   {
-    "id": "EthTokenToUsdt276",
+    "id": "EthTokenToUSDTomni276",
     "message": "Проверка баланса.. ",
     "files": [
-      "shared/pages/Swap/EthTokenToUsdt.js"
+      "shared/pages/Swap/EthTokenToUSDTomni.js"
     ]
   },
   {
-    "id": "EthTokenToUsdt285",
+    "id": "EthTokenToUSDTomni285",
     "message": "Создание контракта Ethereum. Подождите, это займет некоторое время",
     "files": [
-      "shared/pages/Swap/EthTokenToUsdt.js"
+      "shared/pages/Swap/EthTokenToUSDTomni.js"
     ]
   },
   {
-    "id": "EthTokenToUsdt292",
+    "id": "EthTokenToUSDTomni292",
     "message": "Транзакция: ",
     "files": [
-      "shared/pages/Swap/EthTokenToUsdt.js"
+      "shared/pages/Swap/EthTokenToUSDTomni.js"
     ]
   },
   {
-    "id": "EthTokenToUsdt313",
+    "id": "EthTokenToUSDTomni313",
     "message": "Транзакция: ",
     "files": [
-      "shared/pages/Swap/EthTokenToUsdt.js"
+      "shared/pages/Swap/EthTokenToUSDTomni.js"
     ]
   },
   {
-    "id": "EthTokenToUsdt331",
+    "id": "EthTokenToUSDTomni331",
     "message": "Ожидание, Владелец BTC жобавляет Секретный ключь в ETH Контракт",
     "files": [
-      "shared/pages/Swap/EthTokenToUsdt.js"
+      "shared/pages/Swap/EthTokenToUSDTomni.js"
     ]
   },
   {
-    "id": "EthTokenToUsdt345",
-    "message": "Владелец USDT успешно получил средства из ETH Контракта и отправил Секретный ключ. Запрос о снятии с BTC Script. Пожалуйста, подождите",
+    "id": "EthTokenToUSDTomni345",
+    "message": "Владелец USDTomni успешно получил средства из ETH Контракта и отправил Секретный ключ. Запрос о снятии с BTC Script. Пожалуйста, подождите",
     "files": [
-      "shared/pages/Swap/EthTokenToUsdt.js"
+      "shared/pages/Swap/EthTokenToUSDTomni.js"
     ]
   },
   {
-    "id": "EthTokenToUsdt352",
-    "message": "USDT транзакция вывода: ",
+    "id": "EthTokenToUSDTomni352",
+    "message": "USDTomni транзакция вывода: ",
     "files": [
-      "shared/pages/Swap/EthTokenToUsdt.js"
+      "shared/pages/Swap/EthTokenToUSDTomni.js"
     ]
   },
   {
-    "id": "EthTokenToUsdt377",
-    "message": "USDT были переведены на Ваш кошелек. Проверьте баланс. ",
+    "id": "EthTokenToUSDTomni377",
+    "message": "USDTomni были переведены на Ваш кошелек. Проверьте баланс. ",
     "files": [
-      "shared/pages/Swap/EthTokenToUsdt.js"
+      "shared/pages/Swap/EthTokenToUSDTomni.js"
     ]
   },
   {
-    "id": "EthTokenToUsdt380",
+    "id": "EthTokenToUSDTomni380",
     "message": "Благодарим за использование Swap.Online!! ",
     "files": [
-      "shared/pages/Swap/EthTokenToUsdt.js"
+      "shared/pages/Swap/EthTokenToUSDTomni.js"
     ]
   },
   {
-    "id": "EthTokenToUsdt390",
+    "id": "EthTokenToUSDTomni390",
     "message": "ПОПРОБУЙТЕ ВОЗВРАТ",
     "files": [
-      "shared/pages/Swap/EthTokenToUsdt.js"
+      "shared/pages/Swap/EthTokenToUSDTomni.js"
     ]
   },
   {
-    "id": "EthTokenToUsdt84",
+    "id": "EthTokenToUSDTomni84",
     "message": "Ожидание другого пользователя",
     "files": [
-      "shared/pages/Swap/EthTokenToUsdt.js"
+      "shared/pages/Swap/EthTokenToUSDTomni.js"
     ]
   },
   {
-    "id": "EthTokenToUsdt93",
+    "id": "EthTokenToUSDTomni93",
     "message": "Пожалуйста, подтвердите свое участие, для начала сделки",
     "files": [
-      "shared/pages/Swap/EthTokenToUsdt.js"
+      "shared/pages/Swap/EthTokenToUSDTomni.js"
     ]
   },
   {
@@ -1690,175 +1690,175 @@
     "id": "UsdrToEthToken106",
     "message": "2. Создается Секретный ключ",
     "files": [
-      "shared/pages/Swap/UsdtToEthToken.js"
+      "shared/pages/Swap/USDTomniToEthToken.js"
     ]
   },
   {
     "id": "UsdrToEthToken115",
     "message": "Подтвердить",
     "files": [
-      "shared/pages/Swap/UsdtToEthToken.js"
+      "shared/pages/Swap/USDTomniToEthToken.js"
     ]
   },
   {
     "id": "UsdrToEthToken121",
     "message": "Сохраните секретный ключ! В противном случае у вас будет шанс, что Вы потеряете свои деньги! ",
     "files": [
-      "shared/pages/Swap/UsdtToEthToken.js"
+      "shared/pages/Swap/USDTomniToEthToken.js"
     ]
   },
   {
     "id": "UsdrToEthToken124",
     "message": "Секретный ключ: ",
     "files": [
-      "shared/pages/Swap/UsdtToEthToken.js"
+      "shared/pages/Swap/USDTomniToEthToken.js"
     ]
   },
   {
     "id": "UsdrToEthToken127",
     "message": "Хэш: ",
     "files": [
-      "shared/pages/Swap/UsdtToEthToken.js"
+      "shared/pages/Swap/USDTomniToEthToken.js"
     ]
   },
   {
     "id": "UsdrToEthToken137",
     "message": "Недостаточно средств для этого обмена. Пожалуйста, пополните баланс",
     "files": [
-      "shared/pages/Swap/UsdtToEthToken.js"
+      "shared/pages/Swap/USDTomniToEthToken.js"
     ]
   },
   {
     "id": "UsdrToEthToken141",
     "message": "Ваш баланс: ",
     "files": [
-      "shared/pages/Swap/UsdtToEthToken.js"
+      "shared/pages/Swap/USDTomniToEthToken.js"
     ]
   },
   {
     "id": "UsdrToEthToken144",
     "message": "Требуемый баланс: ",
     "files": [
-      "shared/pages/Swap/UsdtToEthToken.js"
+      "shared/pages/Swap/USDTomniToEthToken.js"
     ]
   },
   {
     "id": "UsdrToEthToken147",
     "message": "Ваш адрес: ",
     "files": [
-      "shared/pages/Swap/UsdtToEthToken.js"
+      "shared/pages/Swap/USDTomniToEthToken.js"
     ]
   },
   {
     "id": "UsdrToEthToken154",
     "message": "Продолжить",
     "files": [
-      "shared/pages/Swap/UsdtToEthToken.js"
+      "shared/pages/Swap/USDTomniToEthToken.js"
     ]
   },
   {
     "id": "UsdrToEthToken163",
     "message": "Проверка баланса... ",
     "files": [
-      "shared/pages/Swap/UsdtToEthToken.js"
+      "shared/pages/Swap/USDTomniToEthToken.js"
     ]
   },
   {
     "id": "UsdrToEthToken174",
     "message": "3. Создание BTC Omni Script. Подождите, это займет некоторое время",
     "files": [
-      "shared/pages/Swap/UsdtToEthToken.js"
+      "shared/pages/Swap/USDTomniToEthToken.js"
     ]
   },
   {
     "id": "UsdrToEthToken179",
     "message": "Транзакция: ",
     "files": [
-      "shared/pages/Swap/UsdtToEthToken.js"
+      "shared/pages/Swap/USDTomniToEthToken.js"
     ]
   },
   {
     "id": "UsdrToEthToken206",
     "message": "Создание транзакции на возврат средств",
     "files": [
-      "shared/pages/Swap/UsdtToEthToken.js"
+      "shared/pages/Swap/USDTomniToEthToken.js"
     ]
   },
   {
     "id": "UsdrToEthToken213",
     "message": "Как вернуть деньги? ",
     "files": [
-      "shared/pages/Swap/UsdtToEthToken.js"
+      "shared/pages/Swap/USDTomniToEthToken.js"
     ]
   },
   {
     "id": "UsdrToEthToken233",
     "message": "4. Владелец ETH получил Btc Omni Script и Хэш. Ожидается, создание Контракта ETH",
     "files": [
-      "shared/pages/Swap/UsdtToEthToken.js"
+      "shared/pages/Swap/USDTomniToEthToken.js"
     ]
   },
   {
     "id": "UsdrToEthToken246",
     "message": "Транзакция: ",
     "files": [
-      "shared/pages/Swap/UsdtToEthToken.js"
+      "shared/pages/Swap/USDTomniToEthToken.js"
     ]
   },
   {
     "id": "UsdrToEthToken264",
     "message": "5. Пробуем вывести ETH из контракта. Пожалуйста, подождите",
     "files": [
-      "shared/pages/Swap/UsdtToEthToken.js"
+      "shared/pages/Swap/USDTomniToEthToken.js"
     ]
   },
   {
     "id": "UsdrToEthToken271",
     "message": "Транзакция: ",
     "files": [
-      "shared/pages/Swap/UsdtToEthToken.js"
+      "shared/pages/Swap/USDTomniToEthToken.js"
     ]
   },
   {
     "id": "UsdrToEthToken294",
     "message": "6. ETH были переведены на ваш кошелек. Проверьте баланс. ",
     "files": [
-      "shared/pages/Swap/UsdtToEthToken.js"
+      "shared/pages/Swap/USDTomniToEthToken.js"
     ]
   },
   {
     "id": "UsdrToEthToken297",
     "message": "Благодарим за использование Swap.Online!! ",
     "files": [
-      "shared/pages/Swap/UsdtToEthToken.js"
+      "shared/pages/Swap/USDTomniToEthToken.js"
     ]
   },
   {
     "id": "UsdrToEthToken307",
     "message": "ПОПРОБУЙТЕ ВОЗВРАТ",
     "files": [
-      "shared/pages/Swap/UsdtToEthToken.js"
+      "shared/pages/Swap/USDTomniToEthToken.js"
     ]
   },
   {
     "id": "UsdrToEthToken320",
     "message": "Транзакция: ",
     "files": [
-      "shared/pages/Swap/UsdtToEthToken.js"
+      "shared/pages/Swap/USDTomniToEthToken.js"
     ]
   },
   {
     "id": "UsdrToEthToken83",
     "message": "Мы оживаем создавшего ордер на обмен. Если он не появится в течение 5 минут, обмен будет отменен автоматически. ",
     "files": [
-      "shared/pages/Swap/UsdtToEthToken.js"
+      "shared/pages/Swap/USDTomniToEthToken.js"
     ]
   },
   {
     "id": "UsdrToEthToken93",
     "message": "1. Ожидание подтверждения",
     "files": [
-      "shared/pages/Swap/UsdtToEthToken.js"
+      "shared/pages/Swap/USDTomniToEthToken.js"
     ]
   },
   {
@@ -3553,7 +3553,7 @@
   },
   {
     "id": "partialVideoAndFeatures2",
-    "message": "Поддерживает: LTC, BTC, BCH, ETH, USDT, ERC-20 токены",
+    "message": "Поддерживает: LTC, BTC, BCH, ETH, USDTomni, ERC-20 токены",
     "files": [
       "shared/pages/PartialClosure/VideoAndFeatures/VideoAndFeatures.js"
     ]
@@ -3685,10 +3685,10 @@
     ]
   },
   {
-    "id": "EthTokenToUsdt375",
-    "message": "Обратите внимание, что снятие USDT может занять некоторое время для майнинга и распространения сети.\n                    Due to Omni Protocol properties, the transaction may show up at the OmniExplorer in up to 20 minutes.",
+    "id": "EthTokenToUSDTomni375",
+    "message": "Обратите внимание, что снятие USDTomni может занять некоторое время для майнинга и распространения сети.\n                    Due to Omni Protocol properties, the transaction may show up at the OmniExplorer in up to 20 minutes.",
     "files": [
-      "shared/pages/Swap/EthTokenToUsdt.js"
+      "shared/pages/Swap/EthTokenToUSDTomni.js"
     ]
   },
   {
@@ -3998,7 +3998,7 @@
   },
   {
     "id": "Wallet156",
-    "message": "Добро пожаловать в Swap.Online, децентрализованный кошелек с cross-chain, основанный на технологии Atomic Swap. {br}Здесь вы можете безопасно хранить и быстро обменивать Биткойны, Ethereum, EOS, USD, Tether, BCH и многочисленные токены ERC-20. {br}{br}Swap.Online не хранит ваши ключи или токены. Наш кошелек работает непосредственно в браузере, поэтому никаких дополнительных установок или загрузок не требуется. {br}Сервис Swap.Online полностью децентрализован, поскольку все операции с токенами выполняются через сеть IPFS. {br}{br}Наша команда была первой, кто завершил атомные свопы с USDT и EOS в сентябре 2018 года, а блокчейн Litecoin был добавлен в октябре 2018 года. {br}Наш кошелек предназначен для реальной multi-chain интеграции с децентрализованной книгой заказов, без участия третьих лиц в обмене, без использования прокси-токена и без добавления токена. {br}Мы можем бесплатно интегрировать любой токен проекта ERC-20 на случай взаимного PR-объявления. {br}{br}Кроме того, мы разработали Swap.Button, b2b-решение для обмена всех видов токенов на Биткойны и Эфириум. {br}Установите HTML-виджет Swap.Button на свой сайт и собирайте крипто-инвестиции для вашего проекта. {br}{br}Начните использовать https://swap.online/ сегодня и наслаждайтесь силой настоящей децентрализации.",
+    "message": "Добро пожаловать в Swap.Online, децентрализованный кошелек с cross-chain, основанный на технологии Atomic Swap. {br}Здесь вы можете безопасно хранить и быстро обменивать Биткойны, Ethereum, EOS, USD, Tether, BCH и многочисленные токены ERC-20. {br}{br}Swap.Online не хранит ваши ключи или токены. Наш кошелек работает непосредственно в браузере, поэтому никаких дополнительных установок или загрузок не требуется. {br}Сервис Swap.Online полностью децентрализован, поскольку все операции с токенами выполняются через сеть IPFS. {br}{br}Наша команда была первой, кто завершил атомные свопы с USDTomni и EOS в сентябре 2018 года, а блокчейн Litecoin был добавлен в октябре 2018 года. {br}Наш кошелек предназначен для реальной multi-chain интеграции с децентрализованной книгой заказов, без участия третьих лиц в обмене, без использования прокси-токена и без добавления токена. {br}Мы можем бесплатно интегрировать любой токен проекта ERC-20 на случай взаимного PR-объявления. {br}{br}Кроме того, мы разработали Swap.Button, b2b-решение для обмена всех видов токенов на Биткойны и Эфириум. {br}Установите HTML-виджет Swap.Button на свой сайт и собирайте крипто-инвестиции для вашего проекта. {br}{br}Начните использовать https://swap.online/ сегодня и наслаждайтесь силой настоящей децентрализации.",
     "files": [
       "shared/pages/Wallet/Wallet.js"
     ]

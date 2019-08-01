@@ -25,7 +25,7 @@ const sign = async () => {
     actions.btc.login(btcPrivateKey)
   }
   actions.bch.login(bchPrivateKey)
-  actions.usdt.login(btcPrivateKey)
+  actions.USDTomni.login(btcPrivateKey)
   actions.ltc.login(ltcPrivateKey)
 
   // if inside actions.token.login to call web3.eth.accounts.privateKeyToAccount passing public key instead of private key
@@ -95,7 +95,7 @@ const getBalances = () => {
   // actions.xlm.getBalance()
   actions.bch.getBalance()
   actions.ltc.getBalance()
-  actions.usdt.getBalance()
+  actions.USDTomni.getBalance()
   actions.eos.getBalance()
   actions.tlos.getBalance()
 
@@ -148,7 +148,7 @@ const setTransactions = async () => {
     const mainTokens = await Promise.all([
       actions.btc.getTransaction(),
       actions.bch.getTransaction(),
-      actions.usdt.getTransaction(),
+      actions.USDTomni.getTransaction(),
       actions.eth.getTransaction(),
       actions.ltc.getTransaction(),
     ])

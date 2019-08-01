@@ -8,5 +8,5 @@ export default {
   omniexplorer: 'https://www.omniexplorer.info',
   bch: 'https://explorer.bitcoin.com/bch',
   ltc: 'https://insight.litecore.io',
-  usdt: 'https://omniexplorer.info/',
+  USDTomni: 'https://omniexplorer.info/',
 }

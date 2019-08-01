@@ -24,7 +24,7 @@ const getDeclinedExistedSwapIndex = ({ currency, decline }) => {
   const values = itemState.btcScriptValues
     || itemState.bchScriptValues
     || itemState.ltcScriptValues
-    || itemState.usdtScriptValues
+    || itemState.USDTomniScriptValues
     || itemState.scriptValues
 
   if (values === undefined) {

@@ -5,7 +5,7 @@ const minAmountOffer = {
   ltc: 0.1,
   eos: 1,
   jot: 1,
-  usdt: 0,
+  USDTomni: 0,
   erc: 1,
 }
 
