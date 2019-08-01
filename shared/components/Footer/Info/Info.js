@@ -41,15 +41,14 @@ class Info extends React.Component {
 
     return (
       <div styleName="title">
+        ibp2p network status:
         <span>
-          ibp2p network status:
-          <span styleName={isOnline ? 'connect' : 'disconnect'}>
-            {isOnline ? ' Connected ' : ' Disconnected '}
+          <span styleName={isOnline ? "connect" : "disconnect"}>
+            {isOnline
+              ? " Connected "
+              : " Disconnected. you cannot make exchanges until you are disconnected. Turn off VPN or try another network or browser"}
           </span>
-          {isOnline
-            ? `to IPFS signal ${serverAddress} / peers online: ${onlinePeersHack}`
-            : 'you cannot make exchanges until you are disconnected. Turn off VPN or try another network or browser'
-          }
+          {isOnline && `/ peers online: ${onlinePeersHack}`}
         </span>
         { isVisibleProgressBar && <ProgressBar handleClick={this.hideProgressBar} /> }
       </div>
