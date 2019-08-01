@@ -29,7 +29,7 @@ const Footer = (props) => (
     <div styleName="footer">
       <WidthContainer styleName="container">
         <GetIeo />
-        {!config.isWidget && (<Links />)}
+        {!config.isWidget && !isMobile && (<Links />)}
         {!config.isWidget && (<SwitchLang />)}
         {!config.isWidget && (<SocialMenu />)}
         {!isMobile && <Info {...props} />}
