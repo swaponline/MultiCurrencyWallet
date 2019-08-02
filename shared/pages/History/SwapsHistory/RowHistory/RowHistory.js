@@ -71,14 +71,14 @@ export default class RowHistory extends Component {
 
     let {
       buyAmount, buyCurrency, sellAmount, btcScriptValues, scriptBalance,
-      ltcScriptValues, bchScriptValues, usdtScriptValues, isRefunded, isMy, sellCurrency,
-      isFinished, id, scriptValues, isStoppedSwap,
+      ltcScriptValues, bchScriptValues, isRefunded, isMy, sellCurrency,
+      isFinished, id, scriptValues, isStoppedSwap, /* usdtOmniScriptValues */
     } = row
 
     const values = btcScriptValues
       || bchScriptValues
       || ltcScriptValues
-      || usdtScriptValues
+      // || usdtOmniScriptValues
       || scriptValues
 
     const canBeRefunded = values && scriptBalance > 0

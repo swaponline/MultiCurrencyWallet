@@ -31,19 +31,18 @@ import { BigNumber } from 'bignumber.js'
 @connect(
   ({
     rememberedOrders,
-    user: { ethData, btcData, bchData, tokensData, eosData, /* xlmData, */ telosData, nimData, usdtData, ltcData },
+    user: { ethData, btcData, bchData, tokensData, eosData, /* xlmData, usdtOmniData*/ telosData, nimData, ltcData },
     currencies: { items: currencies },
   }, { currency }) => ({
     currencies,
     item: [
       btcData,
       ethData,
-      /* xlmData, */
+      /* xlmData, usdtOmniData*/
       eosData,
       telosData,
       bchData,
       ltcData,
-      usdtData,
       ...Object.keys(tokensData).map(k => (tokensData[k])),
     ].map(({ account, keyPair, ...data }) => ({
       ...data,
@@ -415,7 +414,7 @@ export default class Row extends Component {
                     </span>
                   </Fragment>
                 ) }
-                { currency === 'USDT' && unconfirmedBalance !== 0 && (
+                {/* currency === 'USDT' && unconfirmedBalance !== 0 && (
                   <Fragment>
                     <br />
                     <span styleName="unconfirmedBalance">
@@ -423,7 +422,7 @@ export default class Row extends Component {
                       {unconfirmedBalance}
                     </span>
                   </Fragment>
-                ) }
+                ) */}
               </div>
             )
           }
