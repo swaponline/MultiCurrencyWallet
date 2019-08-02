@@ -150,7 +150,7 @@ const seo = {
         Swap.Online team finalized first direct EOS-to-Bitcoin Atomic Swap in September, 2018 and now it allows users to exchange their crypto with no third party involved.
         EOS itself is one of the world leading dApp-hosting platforms and very promising blockchain widely called ‘Ethereum-killer’ for the high scalability and developability.
         So, Swap.Online provides users with the possibility to invest in the rising and prospective project using familiar Bitcoin and Ethereum coins.
-        Moreover, even USDT is accepted on our platform which makes the EOS purchasing easier than ever.`,
+        Moreover, even USDTomni is accepted on our platform which makes the EOS purchasing easier than ever.`,
     },
     {
       uri: '/btc-eos',
