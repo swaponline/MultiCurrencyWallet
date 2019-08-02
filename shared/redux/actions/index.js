@@ -28,7 +28,7 @@ import analytics from './analytics'
 import ipfs from './ipfs'
 
 
-import usdt from './usdt'
+// import usdt from './usdt'
 
 
 const tokens = {}
@@ -51,7 +51,7 @@ export default {
   // xlm,
   bch,
   btc,
-  usdt,
+  // usdt,
   eth,
   keychain,
   token,

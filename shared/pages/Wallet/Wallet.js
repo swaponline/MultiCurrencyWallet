@@ -45,9 +45,8 @@ const isWidgetBuild = config && config.isWidget
       bchData,
       tokensData,
       eosData,
-      /* xlmData, */ telosData,
+      /* xlmData, usdtOmniData */ telosData,
       nimData,
-      usdtData,
       ltcData,
     },
     currencies: { items: currencies },
@@ -57,7 +56,7 @@ const isWidgetBuild = config && config.isWidget
         ? [config.erc20token.toUpperCase()]
         : Object.keys(tokensData).map(k => tokensData[k].currency),
     items: (config && config.isWidget
-      ? [btcData, ethData, usdtData]
+      ? [btcData, ethData /* usdtOmniData */]
       : [
         btcData,
         bchData,
@@ -65,7 +64,7 @@ const isWidgetBuild = config && config.isWidget
         eosData,
         telosData,
         ltcData,
-        usdtData, /* nimData xlmData, */
+        /* usdtOmniData nimData xlmData, */
       ]
     ).map(data => data.currency),
     currencyBalance: [
@@ -73,9 +72,8 @@ const isWidgetBuild = config && config.isWidget
       bchData,
       ethData,
       eosData,
-      /* xlmData, */ telosData,
+      /* xlmData, usdtOmniData */ telosData,
       ltcData,
-      usdtData,
       ...Object.keys(tokensData).map(k => tokensData[k]), /* nimData */
     ].map(({ balance, currency }) => ({
       balance,
@@ -91,7 +89,7 @@ const isWidgetBuild = config && config.isWidget
       ltcData,
       eosData,
       telosData,
-      usdtData,
+      /* usdtOmniData */
     },
   })
 )

@@ -140,16 +140,15 @@ if (config.isWidget) {
     },
   ]
 }
-
 // eslint-disable-next-line
-process.env.MAINNET && initialState.items.unshift({
-  name: 'USDT',
-  title: 'USDT',
-  icon: 'usdt',
-  value: 'usdt',
-  fullTitle: 'USD Tether',
-})
-
+// process.env.MAINNET && initialState.items.unshift({
+//   name: 'USDT',
+//   title: 'USDT',
+//   icon: 'usdt',
+//   value: 'usdt',
+//   fullTitle: 'USD Tether',
+// })
+// eslint-disable-next-line
 process.env.TESTNET && initialState.items.unshift({
   name: 'BCH',
   title: 'BCH',

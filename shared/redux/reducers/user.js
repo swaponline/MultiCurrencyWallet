@@ -35,6 +35,7 @@ export const initialState = {
     fullName: 'Litecoin',
     balanceError: null,
   },
+  /*
   usdtData: {
     address: '0x0',
     publicKey: '0x0',
@@ -44,6 +45,7 @@ export const initialState = {
     fullName: 'USDT',
     balanceError: null,
   },
+  */
   nimData: {
     balance: 0,
     isBalanceFetched: false,
