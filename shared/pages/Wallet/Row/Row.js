@@ -31,14 +31,14 @@ import { BigNumber } from 'bignumber.js'
 @connect(
   ({
     rememberedOrders,
-    user: { ethData, btcData, bchData, tokensData, eosData, /* xlmData, usdtOmniData*/ telosData, nimData, ltcData },
+    user: { ethData, btcData, bchData, tokensData, eosData, /* xlmData, usdtOmniData */ telosData, nimData, ltcData },
     currencies: { items: currencies },
   }, { currency }) => ({
     currencies,
     item: [
       btcData,
       ethData,
-      /* xlmData, usdtOmniData*/
+      /* xlmData, usdtOmniData */
       eosData,
       telosData,
       bchData,
