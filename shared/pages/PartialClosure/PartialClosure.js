@@ -890,7 +890,9 @@ export default class PartialClosure extends Component {
     const haveCurrencyData = currenciesData.find(item => item.currency === haveCurrency.toUpperCase())
     const haveTokenData = tokensData.find(item => item.currency === haveCurrency.toUpperCase())
     const currentCurrency = haveCurrencyData || haveTokenData
-    const { balance } = currentCurrency || 0
+    const balance = haveCurrency.toLowerCase() === 'btc'
+      ? BigNumber(currentCurrency.balance).minus(0.00000600).toNumber() || 0
+      : currentCurrency.balance || 0
 
     const getCurrencyData = currenciesData.find(item => item.currency === getCurrency.toUpperCase())
     const getTokenData = tokensData.find(item => item.currency === getCurrency.toUpperCase())
