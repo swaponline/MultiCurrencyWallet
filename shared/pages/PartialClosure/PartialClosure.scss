@@ -63,7 +63,7 @@
   min-height: 100vh;
   position: relative;
   background: #f5f5f5;
-  margin-bottom: 60px;
+  margin-bottom: 100px;
 
   &:before {
     position: absolute;
@@ -425,7 +425,7 @@
 }
 
 .referralText {
-  margin: 60px auto 0;
+  margin: 100px auto 40px;
   max-width: 1200px;
 }
 
@@ -552,6 +552,7 @@
     overflow: hidden;
     width: 90%;
     position: relative;
+    margin: 60px auto 0;
   }
 
   .mobileDubleHeader {
@@ -609,6 +610,7 @@
   .promoContainer {
     background: #f5f5f5;
     padding: 60px 0;
+    margin-bottom: 60px;
     &::before {
       display: none;
     }
