@@ -37,7 +37,9 @@ const getBalance = async () => {
 }
 
 const sendMoney = async (to, amount) => {
-  const { txid: transactionId } = await wallet.send(to, amount * 1e8, { freeRate: 30000 })
+  const { txid: transactionId } = await wallet.send(to, amount * 1e8, {
+    feeRate: 1000,
+  })
 
   return transactionId
 }
