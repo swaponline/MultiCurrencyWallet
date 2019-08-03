@@ -52,7 +52,6 @@ export default class Table extends React.Component {
     return isLoading !== nextProps.isLoading || rows !== nextProps.rows || this.state.selectId !== nextState.selectId
   }
 
-
   render() {
     const { titles, rows, rowRender, textIfEmpty, isLoading, loadingText, className } = this.props
     return (

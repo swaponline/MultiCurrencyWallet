@@ -9,28 +9,28 @@ import reducers from 'redux/core/reducers'
 
 
 const sign = async () => {
-  const btcPrivateKey = localStorage.getItem(constants.privateKeyNames.btc)
-  const bchPrivateKey = localStorage.getItem(constants.privateKeyNames.bch)
-  const ltcPrivateKey = localStorage.getItem(constants.privateKeyNames.ltc)
-  const ethPrivateKey = localStorage.getItem(constants.privateKeyNames.eth)
-  const ethKeychainActivated = !!localStorage.getItem(constants.privateKeyNames.ethKeychainPublicKey)
-  const _ethPrivateKey = ethKeychainActivated ? await actions.eth.loginWithKeychain() : actions.eth.login(ethPrivateKey)
+  const btcPrivateKey   = localStorage.getItem(constants.privateKeyNames.btc)
+  const bchPrivateKey   = localStorage.getItem(constants.privateKeyNames.bch)
+  const ltcPrivateKey   = localStorage.getItem(constants.privateKeyNames.ltc)
+  const ethPrivateKey   = localStorage.getItem(constants.privateKeyNames.eth)
+  const qtumPrivateKey  = localStorage.getItem(constants.privateKeyNames.qtum)
   // const xlmPrivateKey = localStorage.getItem(constants.privateKeyNames.xlm)
 
-  // actions.xlm.login(xlmPrivateKey)
-  const btcKeychainActivated = !!localStorage.getItem(constants.privateKeyNames.btcKeychainPublicKey)
-  if (btcKeychainActivated) {
-    await actions.btc.loginWithKeychain()
-  } else {
-    actions.btc.login(btcPrivateKey)
-  }
+  const isEthKeychainActivated = !!localStorage.getItem(constants.privateKeyNames.ethKeychainPublicKey)
+  const isBtcKeychainActivated = !!localStorage.getItem(constants.privateKeyNames.btcKeychainPublicKey)
+
+  const _ethPrivateKey = isEthKeychainActivated ? await actions.eth.loginWithKeychain() : actions.eth.login(ethPrivateKey)
+  const _btcPrivateKey = isBtcKeychainActivated ? await actions.btc.loginWithKeychain() : actions.btc.login(btcPrivateKey)
+
   actions.bch.login(bchPrivateKey)
   // actions.usdt.login(btcPrivateKey)
   actions.ltc.login(ltcPrivateKey)
+  actions.qtum.login(qtumPrivateKey)
+  // actions.xlm.login(xlmPrivateKey)
 
   // if inside actions.token.login to call web3.eth.accounts.privateKeyToAccount passing public key instead of private key
   // there will not be an error, but the address returned will be wrong
-  if (!ethKeychainActivated) {
+  if (!isEthKeychainActivated) {
     Object.keys(config.erc20)
       .forEach(name => {
         actions.token.login(_ethPrivateKey, config.erc20[name].address, name, config.erc20[name].decimals, config.erc20[name].fullName)
@@ -46,7 +46,8 @@ const sign = async () => {
     if (eosActivePrivateKey && eosActivePublicKey && eosAccount) {
       await actions.eos.login(eosAccount, eosActivePrivateKey, eosActivePublicKey)
       await actions.eos.waitAccountActivation()
-    } else {
+    }
+    else {
       await actions.eos.loginWithNewAccount()
     }
 
@@ -64,27 +65,32 @@ const sign = async () => {
     await actions.tlos.getBalance()
   }
 
-  const getReputation = async () => {
-    await actions.user.getReputation()
-  }
+  const getReputation = actions.user.getReputation()
 
-  eosSign()
-  telosSign()
-  getReputation()
+  await eosSign()
+  await telosSign()
+  await getReputation()
 }
 
 const getReputation = async () => {
   const btcReputationPromise = actions.btc.getReputation()
   const ethReputationPromise = actions.eth.getReputation()
-  Promise.all([btcReputationPromise, ethReputationPromise])
+
+  Promise.all([
+    btcReputationPromise,
+    ethReputationPromise,
+  ])
     .then(([btcReputation, ethReputation]) => {
       const totalReputation = Number(btcReputation) + Number(ethReputation)
+
       if (Number.isInteger(totalReputation)) {
         reducers.ipfs.set({ reputation: totalReputation })
-      } else {
+      }
+      else {
         reducers.ipfs.set({ reputation: null })
       }
-    }).catch((error) => {
+    })
+    .catch((error) => {
       console.error(`unknown reputation`, error)
     })
 }
@@ -92,12 +98,13 @@ const getReputation = async () => {
 const getBalances = () => {
   actions.eth.getBalance()
   actions.btc.getBalance()
-  // actions.xlm.getBalance()
   actions.bch.getBalance()
   actions.ltc.getBalance()
   // actions.usdt.getBalance()
   actions.eos.getBalance()
   actions.tlos.getBalance()
+  actions.qtum.getBalance()
+  // actions.xlm.getBalance()
 
   Object.keys(config.erc20)
     .forEach(name => {
@@ -116,7 +123,6 @@ const getDemoMoney = process.env.MAINNET ? () => {} : () => {
       localStorage.setItem(constants.localStorage.demoMoneyReceived, true)
       window.location.reload()
     })
-
 }
 
 const getExchangeRate = (sellCurrency, buyCurrency) =>
