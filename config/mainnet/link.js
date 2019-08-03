@@ -9,4 +9,5 @@ export default {
   bch: 'https://explorer.bitcoin.com/bch',
   ltc: 'https://insight.litecore.io',
   // usdtOmni: 'https://omniexplorer.info/',
+  qtum: 'https://explorer.qtum.org/',
 }

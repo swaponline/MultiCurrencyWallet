@@ -31,6 +31,13 @@ const initialState = {
       value: 'btc',
       fullTitle: 'bitcoin',
     },
+    {
+      name: 'QTUM',
+      title: 'QTUM',
+      icon: 'qtum',
+      value: 'qtum',
+      fullTitle: 'qtum',
+    },
     ...(Object.keys(config.erc20)
       .map(key => ({
         name: key.toUpperCase(),
@@ -61,6 +68,13 @@ const initialState = {
       icon: 'btc',
       value: 'btc',
       fullTitle: 'bitcoin',
+    },
+    {
+      name: 'QTUM',
+      title: 'QTUM',
+      icon: 'qtum',
+      value: 'qtum',
+      fullTitle: 'qtum',
     },
     {
       name: 'BCH',
