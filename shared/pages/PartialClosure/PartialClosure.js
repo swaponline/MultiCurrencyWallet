@@ -890,9 +890,7 @@ export default class PartialClosure extends Component {
     const haveCurrencyData = currenciesData.find(item => item.currency === haveCurrency.toUpperCase())
     const haveTokenData = tokensData.find(item => item.currency === haveCurrency.toUpperCase())
     const currentCurrency = haveCurrencyData || haveTokenData
-    const balance = haveCurrency.toLowerCase() === 'btc'
-      ? BigNumber(currentCurrency.balance).minus(0.00000600).toNumber() || 0
-      : currentCurrency.balance || 0
+    const balance = currentCurrency.balance || 0
 
     const getCurrencyData = currenciesData.find(item => item.currency === getCurrency.toUpperCase())
     const getTokenData = tokensData.find(item => item.currency === getCurrency.toUpperCase())
@@ -905,6 +903,8 @@ export default class PartialClosure extends Component {
     const isWidgetLink = this.props.location.pathname.includes('/exchange') && this.props.location.hash === '#widget'
     const isWidget = isWidgetBuild || isWidgetLink
     const availableAmount = estimatedFeeValues[haveCurrency.toLowerCase()] > 0 ? BigNumber(haveAmount).plus(estimatedFeeValues[haveCurrency.toLowerCase()]) : 0
+
+    console.log(balance, estimatedFeeValues, 0.00000600)
 
     if (redirect) {
       return <Redirect push to={`${localisedUrl(locale, links.swap)}/${getCurrency}-${haveCurrency}/${orderId}`} />
@@ -1038,7 +1038,7 @@ export default class PartialClosure extends Component {
             </Fragment>
           )}
           {isDeclinedOffer && (
-            <p styleName="error link" className={isWidget ? 'error' : ''} onClick={() => this.handleGoDeclimeFaq()} >
+            <p styleName="error link" className={isWidget ? 'error' : ''} onClick={() => this.handleGoDeclimeFaq()} > {/* eslint-disable-line */}
               <FormattedMessage
                 id="PartialOfferCantProceed1"
                 defaultMessage="Request rejected, possibly you have not complete another swap {br}{link}"
@@ -1079,7 +1079,7 @@ export default class PartialClosure extends Component {
                     values={{
                       haveCurrency: haveCurrency.toUpperCase(),
                       estimatedFeeValue: estimatedFeeValues[haveCurrency],
-                      maximumAmount: BigNumber(balance).minus(estimatedFeeValues[haveCurrency]).toString(),
+                      maximumAmount: BigNumber(balance).minus(estimatedFeeValues[haveCurrency]).minus(0.00000600).toString(),
                     }}
                   />
                   {
