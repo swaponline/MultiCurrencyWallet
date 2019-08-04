@@ -6,10 +6,10 @@ import localReducers from 'redux/reducers'
 import { selectiveSaver } from 'redux/middleware'
 
 
-export const history = createBrowserHistory()
-const middleware = routerMiddleware(history)
-const initialState = (localStorage['redux-store']) ? JSON.parse(localStorage['redux-store']) : {}
-
+const history = createBrowserHistory()
+const middleware    = routerMiddleware(history)
+const initialState  = (localStorage['redux-store']) ? JSON.parse(localStorage['redux-store']) : {}
+const devTools      = window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (v) => v
 
 const store = createStore({
   reducers: {
@@ -21,7 +21,15 @@ const store = createStore({
   ].concat(process.env.NODE_ENV === 'production' ? [] : [
     createLogger(),
   ]),
+  enhancers: [
+    devTools,
+  ],
   initialState,
 })
 
+
 export default store
+
+export {
+  history,
+}

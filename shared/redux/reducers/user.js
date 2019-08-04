@@ -71,6 +71,13 @@ export const initialState = {
     fullName: 'Telos',
     balanceError: null,
   },
+  qtumData: {
+    balance: 0,
+    isBalanceFetched: false,
+    currency: 'QTUM',
+    fullName: 'Qtum',
+    balanceError: null,
+  },
   tokensData: {},
 }
 

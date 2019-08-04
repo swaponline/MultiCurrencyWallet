@@ -16,7 +16,6 @@ import IPFS from 'ipfs'
 import config from 'app-config'
 import helpers, { constants as privateKeys, utils } from 'helpers'
 import actions from 'redux/actions'
-import { getState } from 'redux/core'
 
 import SwapApp, { constants } from 'swap.app'
 import SwapAuth from 'swap.auth'
@@ -48,8 +47,6 @@ if (config && config.isWidget) {
 }
 
 const createSwapApp = () => {
-  const { user: { ethData } } = getState()
-
   SwapApp.setup({
     network: process.env.MAINNET ? 'mainnet' : 'testnet',
 
@@ -74,7 +71,8 @@ const createSwapApp = () => {
         btc: localStorage.getItem(privateKeys.privateKeyNames.btc),
         bch: localStorage.getItem(privateKeys.privateKeyNames.bch),
         ltc: localStorage.getItem(privateKeys.privateKeyNames.ltc),
-        eos: privateKeys.privateKeyNames.eosAccount,
+        eos: privateKeys.privateKeyNames.eosAccount, // TODO localStorage ?
+        // qtum: localStorage.getItem(privateKeys.privateKeyNames.qtum),
       }),
       new SwapRoom({
         repo,

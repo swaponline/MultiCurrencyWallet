@@ -67,8 +67,8 @@ a:hover {
 
 /* Sections */
 .section {
-    padding-top: 60px;
-    padding-bottom: 60px;
+    padding-top: 100px;
+    padding-bottom: 100px;
 }
 
 .section-title {
@@ -852,7 +852,7 @@ a:hover {
     line-height: 1;
     color: #151B57;
     max-width: 740px;
-    margin: 0 auto 60px;
+    margin: 0 auto 65px;
 }
 
 .why-diagram {
