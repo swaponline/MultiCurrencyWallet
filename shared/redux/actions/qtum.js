@@ -17,6 +17,11 @@ const login = (privateKey) => {
   }
 
   localStorage.setItem(constants.privateKeyNames.qtum, data.privateKey)
+
+  // on old reducer store, not saved this, fix store data
+  data.currency = "QTUM"
+  data.fullName = "Qtum"
+
   reducers.user.setAuthData({ name: 'qtumData', data })
 
   window.getQtumAddress = () => data.address
