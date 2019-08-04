@@ -14,6 +14,7 @@ import Filter from './Filter/Filter'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import InfiniteScrollTable from 'components/tables/InfiniteScrollTable/InfiniteScrollTable'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
+import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 
 
 const filterHistory = (items, filter) => {
@@ -103,7 +104,10 @@ export default class History extends Component {
             rowRender={this.rowRender}
           />
         </section> :
-        <FormattedMessage id="history107" defaultMessage="Loading..." />
+        <div>
+          <FormattedMessage id="history107" defaultMessage="Loading" />
+          <InlineLoader />
+        </div>
     )
   }
 }
