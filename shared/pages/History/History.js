@@ -76,29 +76,34 @@ export default class History extends Component {
       <FormattedMessage id="Amount61" defaultMessage="Amount" />,
     ]
 
+    console.warn('swapHistory', swapHistory)
+    console.warn('items', items)
+
     return (
-      <section styleName="history">
-        <PageHeadline subTitle={intl.formatMessage(subTitle.subTitleHistory)} />
-        { swapHistory.length > 0 && <SwapsHistory showSubtitle="true" orders={swapHistory.filter(item => item.step >= 4)} /> }
-        <h3 data-tip data-for="transactions" style={{ width:'210px' }}>
-          <FormattedMessage id="history68" defaultMessage="All transactions" />
-        </h3>
-        <ReactTooltip id="transactions" type="light" effect="solid">
-          <span>
-            <FormattedMessage id="history72" defaultMessage="All transactions sent and received" />
-          </span>
-        </ReactTooltip>
-        <Filter />
-        <InfiniteScrollTable
-          className={styles.history}
-          titles={titles}
-          bottomOffset={400}
-          getMore={this.loadMore}
-          itemsCount={items.length}
-          items={items.slice(0, this.state.renderedItems)}
-          rowRender={this.rowRender}
-        />
-      </section>
+      items.length ?
+        <section styleName="history">
+          <PageHeadline subTitle={intl.formatMessage(subTitle.subTitleHistory)} />
+          { swapHistory.length > 0 && <SwapsHistory showSubtitle="true" orders={swapHistory.filter(item => item.step >= 4)} /> }
+          <h3 data-tip data-for="transactions" style={{ width:'210px' }}>
+            <FormattedMessage id="history68" defaultMessage="All transactions" />
+          </h3>
+          <ReactTooltip id="transactions" type="light" effect="solid">
+            <span>
+              <FormattedMessage id="history72" defaultMessage="All transactions sent and received" />
+            </span>
+          </ReactTooltip>
+          <Filter />
+          <InfiniteScrollTable
+            className={styles.history}
+            titles={titles}
+            bottomOffset={400}
+            getMore={this.loadMore}
+            itemsCount={items.length}
+            items={items.slice(0, this.state.renderedItems)}
+            rowRender={this.rowRender}
+          />
+        </section> :
+        <FormattedMessage id="history107" defaultMessage="Loading..." />
     )
   }
 }
