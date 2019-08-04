@@ -141,8 +141,12 @@ export default class SwapProgress extends Component {
     this.timer =  setInterval(() => {
       const startSwapTime = localStorage.getItem(constants.localStorage.startSwap)
 
+      if(this.swap.flow.isFinished) {
+        clearInterval(this.timer)
+      }
+
       const isSwapPage = window.location.pathname.includes("swaps")
-      if ((Date.now() - startSwapTime) > 300 * 1000 && isSwapPage) {
+      if ((Date.now() - startSwapTime) > 600 * 1000 && isSwapPage) {
         console.warn('UPS!!! SWAP IS FROZEM - RELOAD')
         localStorage.removeItem(constants.localStorage.startSwap)
         clearInterval(this.timer)

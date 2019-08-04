@@ -12,20 +12,6 @@ const handleSignUp = () => {
   actions.modals.open(constants.modals.SignUp, {})
 }
 
-const href =
-  (<a href="https://swap.online/exchange/swap-to-btc" target="_blank" rel="noopener noreferrer">
-    <FormattedMessage id="getIeo17" defaultMessage="Exchange SWAP token to BTC through our service" />
-  </a>)// eslint-disable-line
-
-const quotes =
-/* eslint-disable */
-  (<span style={{ cursor: "pointer" }} onClick={handleSignUp}>
-    &#34;
-    <FormattedMessage id="getIeo40" defaultMessage="Get started" />
-    &#34;
-  </span>)
-/* eslint-enable */
-
 const GetIeo = () => (
   <div styleName="container">
     <div styleName="text">
@@ -38,17 +24,6 @@ const GetIeo = () => (
             br: <br />,
           }}
         />
-        <span styleName="steps">
-          <FormattedMessage
-            id="getIeo29"
-            defaultMessage="1. Click {quotes};{br} 2. Allow push notifications{br} 3. Wait for notification (we send gift manually);{br} 4. {href}"
-            values={{
-              br: <br />,
-              quotes,
-              href,
-            }}
-          />
-        </span>
       </h2>
     </div>
     <div styleName="btnGroup">
