@@ -39,7 +39,6 @@ class DeleteSwapAfterEnd extends Component {
       if (deletedOrder !== undefined) {
         actions.core.deletedPartialCurrency(swap.id)
       }
-      console.log('deletedOrder', deletedOrder)
       actions.core.removeOrder(swap.id)
       actions.core.showMyOrders()
     }
