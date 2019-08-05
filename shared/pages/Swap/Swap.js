@@ -434,9 +434,8 @@ export default class SwapComponent extends PureComponent {
     }
 
     const isFinished = (swap.flow.state.step >= (swap.flow.steps.length - 1))
-
     return (
-      <div>
+      <Fragment>
         {!hideAll ?
           <div styleName={isMobile ? 'swap swapMobile' : 'swap'}>
             <SwapComponent
@@ -485,7 +484,7 @@ export default class SwapComponent extends PureComponent {
             </div>
           </div>
         }
-      </div>
+      </Fragment>
     )
   }
 }
