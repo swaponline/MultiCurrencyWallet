@@ -147,7 +147,7 @@ export default class SwapProgress extends Component {
 
       const isSwapPage = window.location.pathname.includes("swaps")
       if ((Date.now() - startSwapTime) > 600 * 1000 && isSwapPage) {
-        console.warn('UPS!!! SWAP IS FROZEM - RELOAD')
+        console.warn('UPS!!! SWAP IS FROZEN - RELOAD')
         localStorage.removeItem(constants.localStorage.startSwap)
         clearInterval(this.timer)
         window.location.reload()
