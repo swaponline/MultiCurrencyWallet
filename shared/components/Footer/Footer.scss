@@ -3,7 +3,7 @@ $information-footer-height: 44px;
 .footer {
   background-color: #151b57;
   width: 100%;
-  padding-bottom: 35px;
+  padding-bottom: 50px;
 }
 
 .information-footer {
@@ -44,6 +44,12 @@ $information-footer-height: 44px;
     &--copyright {
       flex-direction: column-reverse;
     }
+  }
+}
+
+@include media-tablet-landscape-and-lower {
+  .footer {
+    padding-bottom: 70px;
   }
 }
 

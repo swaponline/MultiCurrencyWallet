@@ -16,14 +16,13 @@ import IPFS from 'ipfs'
 import config from 'app-config'
 import helpers, { constants as privateKeys, utils } from 'helpers'
 import actions from 'redux/actions'
-import { getState } from 'redux/core'
 
 import SwapApp, { constants } from 'swap.app'
 import SwapAuth from 'swap.auth'
 import SwapRoom from 'swap.room'
 import SwapOrders from 'swap.orders'
-import { ETH2BTC, BTC2ETH, BCH2ETH, ETH2BCH, LTC2BTC, BTC2LTC, ETH2LTC, LTC2ETH, ETHTOKEN2BTC, BTC2ETHTOKEN, EOS2BTC, BTC2EOS, USDT2ETHTOKEN, ETHTOKEN2USDT } from 'swap.flows'
-import { EthSwap, EthTokenSwap, BtcSwap, BchSwap, LtcSwap, EosSwap, UsdtSwap } from 'swap.swaps'
+import { ETH2BTC, BTC2ETH, BCH2ETH, ETH2BCH, LTC2BTC, BTC2LTC, ETH2LTC, LTC2ETH, ETHTOKEN2BTC, BTC2ETHTOKEN, EOS2BTC, BTC2EOS/* USDTOMNI2ETHTOKEN */, ETHTOKEN2USDT } from 'swap.flows'
+import { EthSwap, EthTokenSwap, BtcSwap, BchSwap, LtcSwap, EosSwap /* UsdtOmniSwap */ } from 'swap.swaps'
 
 import { erc20 } from 'swap.app/util'
 
@@ -48,8 +47,6 @@ if (config && config.isWidget) {
 }
 
 const createSwapApp = () => {
-  const { user: { ethData } } = getState()
-
   SwapApp.setup({
     network: process.env.MAINNET ? 'mainnet' : 'testnet',
 
@@ -74,7 +71,8 @@ const createSwapApp = () => {
         btc: localStorage.getItem(privateKeys.privateKeyNames.btc),
         bch: localStorage.getItem(privateKeys.privateKeyNames.bch),
         ltc: localStorage.getItem(privateKeys.privateKeyNames.ltc),
-        eos: privateKeys.privateKeyNames.eosAccount,
+        eos: privateKeys.privateKeyNames.eosAccount, // TODO localStorage ?
+        // qtum: localStorage.getItem(privateKeys.privateKeyNames.qtum),
       }),
       new SwapRoom({
         repo,
@@ -160,24 +158,24 @@ const createSwapApp = () => {
       ...(Object.keys(config.erc20))
         .map(key => BTC2ETHTOKEN(key)),
 
-      ...(Object.keys(config.erc20))
-        .map(key => ETHTOKEN2USDT(key)),
-
-      ...(Object.keys(config.erc20))
-        .map(key => USDT2ETHTOKEN(key)),
+      // ...(Object.keys(config.erc20))
+      //   .map(key => ETHTOKEN2USDT(key)),
+      //
+      // ...(Object.keys(config.erc20))
+      //   .map(key => USDT2ETHTOKEN(key)),
     ],
   })
 
   // eslint-disable-next-line
-  process.env.MAINNET ? SwapApp.shared()._addSwap(
-    new UsdtSwap({
-      assetId: 31, // USDT
-      fetchBalance: (address) => actions.usdt.fetchBalance(address, 31).then(res => res.balance),
-      fetchUnspents: (scriptAddress) => actions.btc.fetchUnspents(scriptAddress),
-      broadcastTx: (txRaw) => actions.btc.broadcastTx(txRaw),
-      fetchTx: (hash) => actions.btc.fetchTx(hash),
-    }),
-  ) : null
+  // process.env.MAINNET ? SwapApp.shared()._addSwap(
+  //   new UsdtSwap({
+  //     assetId: 31, // USDT
+  //     fetchBalance: (address) => actions.usdt.fetchBalance(address, 31).then(res => res.balance),
+  //     fetchUnspents: (scriptAddress) => actions.btc.fetchUnspents(scriptAddress),
+  //     broadcastTx: (txRaw) => actions.btc.broadcastTx(txRaw),
+  //     fetchTx: (hash) => actions.btc.fetchTx(hash),
+  //   }),
+  // ) : null
 
   window.SwapApp = SwapApp.shared()
 }

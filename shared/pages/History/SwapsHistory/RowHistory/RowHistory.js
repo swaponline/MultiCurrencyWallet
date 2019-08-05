@@ -71,14 +71,14 @@ export default class RowHistory extends Component {
 
     let {
       buyAmount, buyCurrency, sellAmount, btcScriptValues, scriptBalance,
-      ltcScriptValues, bchScriptValues, usdtScriptValues, isRefunded, isMy, sellCurrency,
-      isFinished, id, scriptValues, isStoppedSwap,
+      ltcScriptValues, bchScriptValues, isRefunded, isMy, sellCurrency,
+      isFinished, id, scriptValues, isStoppedSwap, /* usdtOmniScriptValues */
     } = row
 
     const values = btcScriptValues
       || bchScriptValues
       || ltcScriptValues
-      || usdtScriptValues
+      // || usdtOmniScriptValues
       || scriptValues
 
     const canBeRefunded = values && scriptBalance > 0
@@ -151,16 +151,9 @@ export default class RowHistory extends Component {
           { lockDateAndTime.split(' ').map((item, key) => <Fragment key={key}>{item}<br /></Fragment>) }
         </td>
         <td>
-          { !isDeletedSwap
-              ? (
-                <Link to={`${linkToTheSwap}`} onClick={this.closeIncompleted}>
-                  <FormattedMessage id="RowHistory91" defaultMessage="Link to the swap" />
-                </Link>
-              )
-              : (
-                <FormattedMessage id="RowHistory164" defaultMessage="Deleted" />
-              )
-          }
+          <Link to={`${linkToTheSwap}`} onClick={this.closeIncompleted}>
+            <FormattedMessage id="RowHistory91" defaultMessage="Link to the swap" />
+          </Link>
         </td>
       </tr>
     )

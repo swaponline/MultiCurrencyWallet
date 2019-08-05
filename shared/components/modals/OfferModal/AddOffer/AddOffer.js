@@ -30,11 +30,11 @@ import coinsWithDynamicFee from 'helpers/constants/coinsWithDynamicFee'
   ({
     currencies,
     addSelectedItems,
-    user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, usdtData, ltcData },
+    user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, ltcData /* usdtOmniData, nimData */ },
   }) => ({
     currencies: currencies.items,
     addSelectedItems: currencies.addSelectedItems,
-    items: [ ethData, btcData, eosData, telosData, bchData, ltcData, usdtData /* nimData */ ],
+    items: [ ethData, btcData, eosData, telosData, bchData, ltcData /* usdtOmniData, nimData */ ],
     tokenItems: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
   })
 )
@@ -456,7 +456,7 @@ export default class AddOffer extends Component {
           switchBalanceFunc={this.switching}
           styleName="sellGroup"
           label={<FormattedMessage id="addoffer381" defaultMessage="Sell" />}
-          tooltip={<FormattedMessage id="partial462" defaultMessage="The amount you have in your wallet or external wallet that you want to exchange" />}
+          tooltip={<FormattedMessage id="partial462" defaultMessage="The amount you have on swap.online or an external wallet that you want to exchange" />}
           inputValueLink={linked.sellAmount.pipe(this.handleSellAmountChange)}
           dontDisplayError
           selectedValue={sellCurrency}
@@ -475,7 +475,7 @@ export default class AddOffer extends Component {
         <SelectGroup
           switchBalanceFunc={this.switching}
           label={<FormattedMessage id="addoffer396" defaultMessage="Buy" />}
-          tooltip={<FormattedMessage id="partial478" defaultMessage="The amount you receive after the exchange" />}
+          tooltip={<FormattedMessage id="partial478" defaultMessage="The amount you will receive after the exchange" />}
           inputValueLink={linked.buyAmount.pipe(this.handleBuyAmountChange)}
           dontDisplayError
           selectedValue={buyCurrency}

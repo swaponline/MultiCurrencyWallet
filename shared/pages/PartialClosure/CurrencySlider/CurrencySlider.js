@@ -18,8 +18,8 @@ const symbol = (data) => (
     <FormattedMessage id="CurrencySlider36" defaultMessage={data} />
   </a>
 )
-
-const names = ['btc', 'bch', 'usdt', 'ltc', 'eth', 'swap']
+// 'usdtOmni' to arr
+const names = ['btc', 'bch', 'ltc', 'eth', 'swap']
 
 @connect(
   ({ currencies: { items: currencies } }) => ({

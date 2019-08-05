@@ -26,16 +26,18 @@ const Footer = (props) => (
         <Referral address={props.userEthAddress} />
       </WidthContainer>
     )}
-    <div styleName="footer">
-      <WidthContainer styleName="container">
-        <GetIeo />
-        {!config.isWidget && (<Links />)}
-        {!config.isWidget && (<SwitchLang />)}
-        {!config.isWidget && (<SocialMenu />)}
-        {!isMobile && <Info {...props} />}
-        <span style={{ color: '#ffffff', fontSize: '12px', marginTop: '20px' }}>{config.time}</span>
-      </WidthContainer>
-    </div>
+    {!config.isWidget && (
+      <div styleName="footer">
+        <WidthContainer styleName="container">
+          <GetIeo />
+          {!isMobile && (<Links />)}
+          <SwitchLang />
+          <SocialMenu />
+          {!isMobile && <Info {...props} />}
+          <span style={{ color: '#ffffff', fontSize: '12px', marginTop: '20px' }}>{config.time}</span>
+        </WidthContainer>
+      </div>
+    )}
   </Fragment>
 )
 

@@ -7,5 +7,6 @@ export default {
   tlos: 'http://testnet.telosfoundation.io',
   bch: 'https://explorer.bitcoin.com/tbch',
   ltc: 'https://testnet.litecore.io',
-  usdt: 'https://omniexplorer.info/',
+  qtum: 'https://explorer.qtum.org/',
+  // usdtOmni: 'https://omniexplorer.info/',
 }

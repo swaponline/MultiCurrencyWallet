@@ -28,30 +28,42 @@ import { BigNumber } from 'bignumber.js'
 
 @injectIntl
 @withRouter
-@connect(
-  ({
-    rememberedOrders,
-    user: { ethData, btcData, bchData, tokensData, eosData, /* xlmData, */ telosData, nimData, usdtData, ltcData },
-    currencies: { items: currencies },
-  }, { currency }) => ({
-    currencies,
-    item: [
-      btcData,
-      ethData,
-      /* xlmData, */
-      eosData,
-      telosData,
-      bchData,
-      ltcData,
-      usdtData,
-      ...Object.keys(tokensData).map(k => (tokensData[k])),
-    ].map(({ account, keyPair, ...data }) => ({
+@connect(({
+  rememberedOrders,
+  user: {
+    ethData,
+    btcData,
+    bchData,
+    eosData,
+    telosData,
+    nimData,
+    qtumData,
+    ltcData,
+    // xlmData,
+    // usdtOmniData,
+    tokensData,
+  },
+  currencies: { items: currencies },
+}, { currency }) => ({
+  currencies,
+  item: [
+    btcData,
+    ethData,
+    eosData,
+    telosData,
+    bchData,
+    ltcData,
+    qtumData,
+    // xlmData,
+    // usdtOmniData,
+    ...Object.keys(tokensData).map(k => (tokensData[k])),
+  ]
+    .map(({ account, keyPair, ...data }) => ({
       ...data,
-    })).find((item) => item.currency === currency),
-    decline: rememberedOrders.savedOrders,
-  })
-)
-
+    }))
+    .find((item) => item.currency === currency),
+  decline: rememberedOrders.savedOrders,
+}))
 @cssModules(styles, { allowMultiple: true })
 export default class Row extends Component {
 
@@ -75,12 +87,13 @@ export default class Row extends Component {
 
   constructor(props) {
     super(props)
-    const { currency, currencies } = this.props
 
+    const { currency, currencies } = props
 
     const isBlockedCoin = config.noExchangeCoins
       .map(item => item.toLowerCase())
       .includes(currency.toLowerCase())
+
     this.state.tradeAllowed = !!currencies.find(c => c.value === currency.toLowerCase()) && !isBlockedCoin
 
   }
@@ -153,13 +166,11 @@ export default class Row extends Component {
   }
 
   handleSliceAddress = () => {
-    const {
-      item: {
-        address,
-      },
-    } = this.props
-    let firstPart = address.substr(0, 6)
-    let secondPart = address.substr(address.length - 4)
+    const { item: { address } } = this.props
+
+    const firstPart = address.substr(0, 6)
+    const secondPart = address.substr(address.length - 4)
+
     return (window.innerWidth < 700 || isMobile || address.length > 42) ? `${firstPart}...${secondPart}` : address
   }
 
@@ -342,6 +353,7 @@ export default class Row extends Component {
       eosAccountActivated = this.props.item.isAccountActivated
       eosActivationPaymentSent = this.props.item.isActivationPaymentSent
     }
+
     return (
       <tr
         data-tut="reactour__store"
@@ -415,7 +427,7 @@ export default class Row extends Component {
                     </span>
                   </Fragment>
                 ) }
-                { currency === 'USDT' && unconfirmedBalance !== 0 && (
+                {/* currency === 'USDT' && unconfirmedBalance !== 0 && (
                   <Fragment>
                     <br />
                     <span styleName="unconfirmedBalance">
@@ -423,7 +435,7 @@ export default class Row extends Component {
                       {unconfirmedBalance}
                     </span>
                   </Fragment>
-                ) }
+                ) */}
               </div>
             )
           }

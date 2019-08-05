@@ -43,9 +43,9 @@ const defaultLanguage = defineMessages({
 
 @injectIntl
 @connect(({
-  user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, usdtData, ltcData },
+  user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, ltcData /* usdtOmniData */ },
 }) => ({
-  currenciesData: [ ethData, btcData, eosData, telosData, bchData, ltcData, usdtData /* nimData */ ],
+  currenciesData: [ ethData, btcData, eosData, telosData, bchData, ltcData /* usdtOmniData, nimData */],
   tokensData: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
 }))
 @CSSModules(styles, { allowMultiple: true })
@@ -204,12 +204,12 @@ export default class ConfirmBeginSwap extends React.Component {
                     <div styleName="walletOpenSide">
                       <Toggle dataTut="togle" checked={customWalletUse} onChange={this.handleCustomWalletUse} />
                       <span styleName="specify">
-                        <FormattedMessage id="UseAnotherWallet" defaultMessage="Specify your receiving wallet address" />
+                        <FormattedMessage id="UseAnotherWallet" defaultMessage="Specify the receiving wallet address" />
                       </span>
                     </div>
                     <div styleName={customWalletUse ? 'anotherRecepient anotherRecepient_active' : 'anotherRecepient'}>
                       <div styleName="walletInput">
-                        <Input required valueLink={linked.customWallet} pattern="0-9a-zA-Z" placeholder="Enter the destination address" />
+                        <Input required valueLink={linked.customWallet} pattern="0-9a-zA-Z" placeholder="Enter the receiving wallet address" />
                       </div>
                     </div>
                   </div>

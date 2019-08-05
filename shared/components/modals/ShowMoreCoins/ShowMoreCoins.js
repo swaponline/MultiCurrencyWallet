@@ -29,11 +29,11 @@ const title2 = [
 
 @connect(({
   core: { hiddenCoinsList },
-  user: { ethData, btcData, ltcData, telosData, /* xlmData, */ bchData, tokensData, eosData, nimData, usdtData },
+  user: { ethData, btcData, ltcData, telosData, /* xlmData, */ bchData, tokensData, eosData, nimData /* usdtOmniData */ },
   currencies: { items: currencies },
 }) => ({
   tokens: Object.keys(tokensData).map(k => tokensData[k]),
-  items: [ethData, btcData, eosData, /* xlmData, */ usdtData, bchData, ltcData, telosData /* eosData  nimData */],
+  items: [ethData, btcData, eosData, /* xlmData, */ bchData, ltcData, telosData /* eosData, usdtOmniData, nimData */],
   currencies,
   hiddenCoinsList,
 }))

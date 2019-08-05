@@ -29,13 +29,13 @@ const isWidgetBuild = config && config.isWidget
 
 @injectIntl
 @connect(({
-  user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, usdtData, ltcData },
+  user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, ltcData /* usdtOmniData */},
   ipfs: { peer },
   rememberedOrders,
 }) => ({
-  items: [ ethData, btcData, eosData, telosData, bchData, ltcData, usdtData /* nimData */ ],
+  items: [ ethData, btcData, eosData, telosData, bchData, ltcData /* nimData, usdtOmniData */ ],
   tokenItems: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
-  currenciesData: [ ethData, btcData, eosData, telosData, bchData, ltcData, usdtData /* nimData */ ],
+  currenciesData: [ ethData, btcData, eosData, telosData, bchData, ltcData /* nimData, usdtOmniData */ ],
   tokensData: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
   errors: 'api.errors',
   checked: 'api.checked',
@@ -155,13 +155,6 @@ export default class SwapComponent extends PureComponent {
 
     const { match: { params: { orderId } }, decline } = this.props
 
-    if (localStorage.getItem('deletedOrders') !== null) {
-
-      if (localStorage.getItem('deletedOrders').includes(id) && !isRefunded) {
-        this.props.history.push(localisedUrl(links.exchange))
-      }
-    }
-
     if (step >= 4 && !decline.includes(orderId)) {
       this.saveThisSwap(orderId)
     }
@@ -181,7 +174,19 @@ export default class SwapComponent extends PureComponent {
         this.isBalanceEnough()
         this.checkFailSwap()
       }, 5000)
+
+      const checkingConfirmSuccess = setTimeout(() => {
+        if (!this.checkIsConfirmed()) window.location.reload()
+      }, 30000)
+
+      this.checkingConfirmSuccessTimer = checkingConfirmSuccess
+      this.checkingCycleTimer = checkingCycle
     }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.checkingCycleTimer)
+    clearTimeout(this.checkingConfirmSuccessTimer)
   }
 
   checkStoppedSwap = () => {
@@ -198,6 +203,11 @@ export default class SwapComponent extends PureComponent {
     }))
 
     return true
+  }
+
+  checkIsConfirmed = () => {
+    const { swap: { flow: { state: { step } } } } = this.state
+    return !(step === 1)
   }
 
   checkIsFinished = () => {
@@ -459,6 +469,12 @@ export default class SwapComponent extends PureComponent {
               locale={locale}
               wallets={this.wallets}
             >
+              <p styleName="reloadText" title="reload the page" role="presentation" onClick={() => window.location.reload()}>
+                <FormattedMessage
+                  id="swapprogressDONTLEAVE22"
+                  defaultMessage="The swap was stuck? Try to reload page"
+                />
+              </p>
               <Share flow={swap.flow} />
               <EmergencySave flow={swap.flow} onClick={() => this.toggleInfo(isShowDevInformation, true)} isShowDevInformation={isShowDevInformation} />
               <ShowBtcScript

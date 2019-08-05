@@ -14,6 +14,8 @@ import { constants, links, ethToken } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
 
 import Link from 'sw-valuelink'
+import { Link as LinkTo } from 'react-router-dom'
+
 import { injectIntl, FormattedMessage } from 'react-intl'
 
 import Timer from '../Timer/Timer'
@@ -78,16 +80,7 @@ export default class SwapProgress extends Component {
   onPushGoToWallet = () => {
     const { buyCurrency } = this.state
 
-    switch (buyCurrency) {
-      case 'BTC':
-        this.history.push(localisedUrl(this.locale, '/Bitcoin-wallet'))
-        break
-      case 'ETH':
-        this.history.push(localisedUrl(this.locale, '/Ethereum-wallet'))
-        break
-      default:
-        this.history.push(localisedUrl(this.locale, `/${buyCurrency.toLowerCase()}-wallet`))
-    }
+    this.history.push(localisedUrl(this.locale, '/wallet'))
   }
 
   onPushGoToTxPage = () => {
@@ -136,10 +129,30 @@ export default class SwapProgress extends Component {
   componentDidMount() {
     this.swap.on('state update', this.handleFlowStateUpdate)
     this.handleBarProgress()
+    localStorage.setItem(constants.localStorage.startSwap, Date.now())
+    this.reloadPage()
   }
 
   componentWillUnmount() {
     this.swap.off('state update', this.handleFlowStateUpdate)
+  }
+
+  reloadPage = () => {
+    this.timer =  setInterval(() => {
+      const startSwapTime = localStorage.getItem(constants.localStorage.startSwap)
+
+      if(this.swap.flow.isFinished) {
+        clearInterval(this.timer)
+      }
+
+      const isSwapPage = window.location.pathname.includes("swaps")
+      if ((Date.now() - startSwapTime) > 600 * 1000 && isSwapPage) {
+        console.warn('UPS!!! SWAP IS FROZEN - RELOAD')
+        localStorage.removeItem(constants.localStorage.startSwap)
+        clearInterval(this.timer)
+        window.location.reload()
+      }
+    }, 1000)
   }
 
   checkCanRefund = () => {
@@ -416,9 +429,11 @@ export default class SwapProgress extends Component {
             {flow.isFinished && (
               <div styleName="finishButtonsHolder">
                 {showWalletButton && (
-                  <Button brand onClick={this.onPushGoToWallet}>
-                    <FormattedMessage id="swapProgressGoToWallet" defaultMessage="Check balance" />
-                  </Button>
+                  <LinkTo to="/wallet">
+                    <Button brand onClick={this.onPushGoToWallet}>
+                      <FormattedMessage id="swapProgressGoToWallet" defaultMessage="Check balance" />
+                    </Button>
+                  </LinkTo>
                 )}
                 <Button gray onClick={this.onPushGoToTxPage}>
                   <FormattedMessage id="swapProgressGoToTxPage" defaultMessage="View TX in explorer" />

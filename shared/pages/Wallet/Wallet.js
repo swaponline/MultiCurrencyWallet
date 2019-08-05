@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import propTypes from 'prop-types'
+import PropTypes from 'prop-types'
 
 import { isMobile } from 'react-device-detect'
 import { connect } from 'redaction'
@@ -36,51 +36,71 @@ import config from 'app-config'
 
 const isWidgetBuild = config && config.isWidget
 
-@connect(
-  ({
-    core: { hiddenCoinsList },
-    user: {
-      ethData,
+@connect(({
+  core: { hiddenCoinsList },
+  user: {
+    ethData,
+    btcData,
+    bchData,
+    tokensData,
+    eosData,
+    telosData,
+    ltcData,
+    qtumData,
+    // usdtOmniData,
+    // nimData,
+    // xlmData,
+  },
+  currencies: { items: currencies },
+}) => {
+  const tokens = (
+    config && config.isWidget
+      ? [ config.erc20token.toUpperCase() ]
+      : Object.keys(tokensData).map(k => tokensData[k].currency)
+  )
+
+  const items = (
+    config && config.isWidget ? [
       btcData,
-      bchData,
-      tokensData,
-      eosData,
-      /* xlmData, */ telosData,
-      nimData,
-      usdtData,
-      ltcData,
-    },
-    currencies: { items: currencies },
-  }) => ({
-    tokens:
-      config && config.isWidget
-        ? [config.erc20token.toUpperCase()]
-        : Object.keys(tokensData).map(k => tokensData[k].currency),
-    items: (config && config.isWidget
-      ? [btcData, ethData, usdtData]
-      : [
-        btcData,
-        bchData,
-        ethData,
-        eosData,
-        telosData,
-        ltcData,
-        usdtData, /* nimData xlmData, */
-      ]
-    ).map(data => data.currency),
-    currencyBalance: [
+      ethData,
+      // usdtOmniData,
+    ] : [
       btcData,
       bchData,
       ethData,
       eosData,
-      /* xlmData, */ telosData,
+      telosData,
       ltcData,
-      usdtData,
-      ...Object.keys(tokensData).map(k => tokensData[k]), /* nimData */
-    ].map(({ balance, currency }) => ({
+      qtumData,
+      // usdtOmniData,
+      // nimData,
+      // xlmData,
+    ]
+  )
+    .map(data => data.currency)
+
+  const currencyBalance = [
+    btcData,
+    bchData,
+    ethData,
+    eosData,
+    telosData,
+    ltcData,
+    qtumData,
+    // usdtOmniData,
+    // nimData,
+    // xlmData,
+    ...Object.keys(tokensData).map(k => tokensData[k]),
+  ]
+    .map(({ balance, currency }) => ({
       balance,
       name: currency,
-    })),
+    }))
+
+  return {
+    tokens,
+    items,
+    currencyBalance,
     currencies,
     hiddenCoinsList: config && config.isWidget ? [] : hiddenCoinsList,
     userEthAddress: ethData.address,
@@ -91,22 +111,24 @@ const isWidgetBuild = config && config.isWidget
       ltcData,
       eosData,
       telosData,
-      usdtData,
+      qtumData,
+      // usdtOmniData,
     },
-  })
-)
+  }
+})
 @injectIntl
 @withRouter
 @CSSModules(stylesWallet, { allowMultiple: true })
 export default class Wallet extends Component {
+
   static propTypes = {
-    currencies: propTypes.array,
-    hiddenCoinsList: propTypes.array,
-    history: propTypes.object,
-    items: propTypes.arrayOf(propTypes.string),
-    tokens: propTypes.arrayOf(propTypes.string),
-    location: propTypes.object,
-    intl: propTypes.object.isRequired,
+    currencies: PropTypes.array,
+    hiddenCoinsList: PropTypes.array,
+    history: PropTypes.object,
+    items: PropTypes.arrayOf(PropTypes.string),
+    tokens: PropTypes.arrayOf(PropTypes.string),
+    location: PropTypes.object,
+    intl: PropTypes.object.isRequired,
   };
 
   state = {
@@ -300,6 +322,8 @@ export default class Wallet extends Component {
 
     this.forceCautionUserSaveMoney()
 
+    const tableRows = [ ...items, ...tokens ].filter(currency => !hiddenCoinsList.includes(currency))
+
     return (
       <section
         styleName={
@@ -338,17 +362,15 @@ export default class Wallet extends Component {
           id="table-wallet"
           className={styles.wallet}
           titles={titles}
-          rows={[...items, ...tokens].filter(
-            currency => !hiddenCoinsList.includes(currency)
-          )}
+          rows={tableRows}
           rowRender={(row, index, selectId, handleSelectId) => (
             <Row
               key={row}
+              index={index}
               currency={row}
               currencies={currencies}
               hiddenCoinsList={hiddenCoinsList}
               selectId={selectId}
-              index={index}
               handleSelectId={handleSelectId}
             />
           )}
@@ -356,7 +378,6 @@ export default class Wallet extends Component {
         {config && !config.isWidget && (
           <div styleName="inform">
             <Referral address={this.props.userEthAddress} />
-
             <h2 styleName="informHeading">
               <FormattedMessage
                 id="Wallet364"

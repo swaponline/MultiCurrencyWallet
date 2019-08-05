@@ -31,6 +31,13 @@ const initialState = {
       value: 'btc',
       fullTitle: 'bitcoin',
     },
+    {
+      name: 'QTUM',
+      title: 'QTUM',
+      icon: 'qtum',
+      value: 'qtum',
+      fullTitle: 'qtum',
+    },
     ...(Object.keys(config.erc20)
       .map(key => ({
         name: key.toUpperCase(),
@@ -61,6 +68,13 @@ const initialState = {
       icon: 'btc',
       value: 'btc',
       fullTitle: 'bitcoin',
+    },
+    {
+      name: 'QTUM',
+      title: 'QTUM',
+      icon: 'qtum',
+      value: 'qtum',
+      fullTitle: 'qtum',
     },
     {
       name: 'BCH',
@@ -140,16 +154,15 @@ if (config.isWidget) {
     },
   ]
 }
-
 // eslint-disable-next-line
-process.env.MAINNET && initialState.items.unshift({
-  name: 'USDT',
-  title: 'USDT',
-  icon: 'usdt',
-  value: 'usdt',
-  fullTitle: 'USD Tether',
-})
-
+// process.env.MAINNET && initialState.items.unshift({
+//   name: 'USDT',
+//   title: 'USDT',
+//   icon: 'usdt',
+//   value: 'usdt',
+//   fullTitle: 'USD Tether',
+// })
+// eslint-disable-next-line
 process.env.TESTNET && initialState.items.unshift({
   name: 'BCH',
   title: 'BCH',

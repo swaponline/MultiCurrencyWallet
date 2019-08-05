@@ -12,4 +12,5 @@ export default {
   telosPrivateKey: `${process.env.ENTRY}:telos:privateKey`,
   telosPublicKey: `${process.env.ENTRY}:telos:publicKey`,
   telosAccount: `${process.env.ENTRY}:telos:account`,
+  qtum: `${process.env.ENTRY}:qtum:privateKey`,
 }

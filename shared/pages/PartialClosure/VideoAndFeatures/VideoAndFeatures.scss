@@ -5,7 +5,7 @@ $pinsColor: #6144E5;
 .VidNdFeatures {
     // background: $bgColor;
     padding-top: 100px;
-    padding-bottom: 70px;
+    padding-bottom: 50px;
 
     &__title {
         max-width: 45%;
@@ -89,6 +89,7 @@ $pinsColor: #6144E5;
 @include media-tablet-portrait-and-lower {
     .VidNdFeatures {
       padding-top: 10px;
+      padding-bottom: 45px;
 
         &__title {
             max-width: 75%;

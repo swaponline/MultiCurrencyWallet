@@ -11,7 +11,6 @@ import core from './core'
 import filter from './filter'
 
 import btc from './btc'
-// import xlm from './xlm'
 import bch from './bch'
 import ltc from './ltc'
 import eth from './eth'
@@ -20,15 +19,16 @@ import eos from './eos'
 import tlos from './tlos'
 import token from './token'
 import nimiq from './nimiq'
+import qtum from './qtum'
+// import xlm from './xlm'
+// import usdt from './usdt'
+
 import api from './api'
 import pairs from './pairs'
 import referral from './referral'
 import analytics from './analytics'
 
 import ipfs from './ipfs'
-
-
-import usdt from './usdt'
 
 
 const tokens = {}
@@ -47,17 +47,20 @@ export default {
   firebase,
   user,
   core,
+
   ltc,
-  // xlm,
   bch,
   btc,
-  usdt,
   eth,
+  tlos,
+  eos,
+  nimiq,
+  qtum,
+  // xlm,
+  // usdt,
+
   keychain,
   token,
-  nimiq,
-  eos,
-  tlos,
   feed,
   analytics,
   referral,

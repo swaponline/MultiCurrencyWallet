@@ -2928,7 +2928,7 @@
   },
   {
     "id": "partial291",
-    "message": "Wait participant: ",
+    "message": "Waiting for another participant (30 sec): ",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -3346,7 +3346,7 @@
   },
   {
     "id": "UseAnotherWallet",
-    "message": "Specify your receiving wallet address",
+    "message": "Specify the receiving wallet address",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -3406,7 +3406,7 @@
   },
   {
     "id": "partial478",
-    "message": "The amount you receive after the exchange",
+    "message": "The amount you will receive after the exchange",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -4947,21 +4947,21 @@
   },
   {
     "id": "tourPartial107",
-    "message": "With this switch, you can choose to receive funds after exchanging for an internal wallet swap.online or for another wallet",
+    "message": "With this switch, you can choose to receive funds on your swap.online or external wallet",
     "files": [
       "shared/components/Header/TourPartial/TourPartial.js"
     ]
   },
   {
     "id": "tourPartial116",
-    "message": "By clicking on this button you can link to the exchange from this page. This will be possible if the button changes its color to pink.",
+    "message": "Click this button once it turns pink and it will link you to the exchange",
     "files": [
       "shared/components/Header/TourPartial/TourPartial.js"
     ]
   },
   {
     "id": "tourPartial128",
-    "message": "By clicking on this button takes you to the page with offers for exchange, offers will be presented depending on the selected currencies. Also on the offer page you can create your own offer.",
+    "message": "By clicking on this button you will go to the page with offers for an exchange. Offers will be presented depending on the selected currencies. Also on the offer page, you can create your own offer.",
     "files": [
       "shared/components/Header/TourPartial/TourPartial.js"
     ]
@@ -4972,14 +4972,14 @@
   },
   {
     "id": "tourPartial94",
-    "message": "In this field you enter the amount you want to sell and select the currency to sell.",
+    "message": "Select the currency and enter the amount you want to sell.",
     "files": [
       "shared/components/Header/TourPartial/TourPartial.js"
     ]
   },
   {
     "id": "tourPartial99",
-    "message": "In this field you enter the amount you want to buy and select the currency to buy.",
+    "message": "Select the currency and enter the amount you want to buy",
     "files": [
       "shared/components/Header/TourPartial/TourPartial.js"
     ]

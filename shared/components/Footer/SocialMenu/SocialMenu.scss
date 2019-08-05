@@ -26,3 +26,14 @@
     color: #e91db4;
   }
 }
+
+@include media-mobile {
+  .social-menu {
+    flex-wrap: wrap;
+    justify-content: center;
+
+    li {
+      margin-right: 10px;
+    }
+  }
+}
