@@ -104,7 +104,7 @@ export default class History extends Component {
             rowRender={this.rowRender}
           />
         </section> :
-        <div>
+        <div styleName="loader">
           <FormattedMessage id="history107" defaultMessage="Loading" />
           <InlineLoader />
         </div>
