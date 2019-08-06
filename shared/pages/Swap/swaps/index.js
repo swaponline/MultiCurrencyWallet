@@ -18,6 +18,9 @@ import EosToBtc from '../EosToBtc'
 import EthTokenToBtc from '../EthTokenToBtc'
 import BtcToEthToken from '../BtcToEthToken'
 
+import QtumToBtc from '../QtumToBtc'
+import BtcToQtum from '../BtcToQtum'
+
 // import EthTokenToUsdt from '../EthTokenToUsdt'
 // import UsdtToEthToken from '../UsdtToEthToken'
 
@@ -40,6 +43,9 @@ const swapComponents = {
 
   'SWAP2BTC': EthTokenToBtc,
   'BTC2SWAP': BtcToEthToken,
+
+  'QTUM2BTC': QtumToBtc,
+  'BTC2QTUM': BtcToQtum,
 
   // 'SWAP2USDT': EthTokenToUsdt,
   // 'USDT2SWAP': UsdtToEthToken,

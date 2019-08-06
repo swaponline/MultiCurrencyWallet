@@ -40,21 +40,21 @@ const login = (privateKey) => {
   window.getLtcAddress = () => data.address
 
   console.info('Logged in with Litecoin', data)
-  reducers.user.setAuthData({ name: 'ltcData', data })
+  reducers.user.setAuthData({ name: 'ltcData, qtumData', data })
 }
 
 const getBalance = () => {
-  const { user: { ltcData: { address } } } = getState()
+  const { user: { ltcData, qtumData: { address } } } = getState()
 
   return request.get(`${api.getApiServer('ltc')}/addr/${address}`)
     .then(({ balance, unconfirmedBalance }) => {
       console.log('LTC Balance: ', balance)
       console.log('LTC unconfirmedBalance Balance: ', unconfirmedBalance)
-      reducers.user.setBalance({ name: 'ltcData', amount: balance, unconfirmedBalance })
+      reducers.user.setBalance({ name: 'ltcData, qtumData', amount: balance, unconfirmedBalance })
       return balance
     })
     .catch((e) => {
-      reducers.user.setBalanceError({ name: 'ltcData' })
+      reducers.user.setBalanceError({ name: 'ltcData, qtumData' })
     })
 }
 
@@ -78,7 +78,7 @@ const fetchTxInfo = (hash) =>
 
 const getTransaction = () =>
   new Promise((resolve) => {
-    const { user: { ltcData: { address } } } = getState()
+    const { user: { ltcData, qtumData: { address } } } = getState()
 
     const url = `${api.getApiServer('ltc')}/txs/?address=${address}`
 
@@ -131,7 +131,7 @@ const getTransaction = () =>
   })
 
 const send = async ({ from, to, amount, feeValue, speed } = {}) => {
-  const { user: { ltcData: { privateKey } } } = getState()
+  const { user: { ltcData, qtumData: { privateKey } } } = getState()
   const keyPair = bitcoin.ECPair.fromWIF(privateKey, ltc.network)
 
   feeValue = feeValue || await ltc.estimateFeeValue({ inSatoshis: true, speed })
@@ -182,7 +182,7 @@ const signMessage = (message, encodedPrivateKey) => {
 
 const getReputation = () =>
   new Promise(async (resolve, reject) => {
-    const { user: { ltcData: { address, privateKey } } } = getState()
+    const { user: { ltcData, qtumData: { address, privateKey } } } = getState()
     const addressOwnerSignature = signMessage(address, privateKey)
 
     request.post(`${api.getApiServer('swapsExplorer')}/reputation`, {
@@ -194,7 +194,7 @@ const getReputation = () =>
     }).then((response) => {
       const { reputation, reputationOracleSignature } = response
 
-      reducers.user.setReputation({ name: 'ltcData', reputation, reputationOracleSignature })
+      reducers.user.setReputation({ name: 'ltcData, qtumData', reputation, reputationOracleSignature })
       resolve(reputation)
     }).catch((error) => {
       reject(error)

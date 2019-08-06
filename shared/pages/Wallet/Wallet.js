@@ -70,7 +70,7 @@ const isWidgetBuild = config && config.isWidget
       ethData,
       eosData,
       telosData,
-      ltcData,
+      ltcData, qtumData,
       qtumData,
       // usdtOmniData,
       // nimData,
@@ -85,7 +85,7 @@ const isWidgetBuild = config && config.isWidget
     ethData,
     eosData,
     telosData,
-    ltcData,
+    ltcData, qtumData,
     qtumData,
     // usdtOmniData,
     // nimData,
@@ -108,7 +108,7 @@ const isWidgetBuild = config && config.isWidget
       ethData,
       btcData,
       bchData,
-      ltcData,
+      ltcData, qtumData,
       eosData,
       telosData,
       qtumData,
@@ -250,17 +250,19 @@ export default class Wallet extends Component {
       lastCheckMoment.add(1, 'hours')
     )
 
-    const { ethData, btcData, bchData, ltcData } = this.props.tokensData
+    const { ethData, btcData, bchData, ltcData, qtumData } = this.props.tokensData
 
     const balancesData = {
       ethBalance: ethData.balance,
       btcBalance: btcData.balance,
       bchBalance: bchData.balance,
+      qtumDataBalance: qtumData.balance,
       ltcBalance: ltcData.balance,
       ethAddress: ethData.address,
       btcAddress: btcData.address,
       bchAddress: bchData.address,
       ltcAddress: ltcData.address,
+      qtumDataAddress: qtumData.address,
     }
 
     if (isOneHourAfter || isFirstCheck) {

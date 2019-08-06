@@ -29,13 +29,13 @@ const isWidgetBuild = config && config.isWidget
 
 @injectIntl
 @connect(({
-  user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, ltcData /* usdtOmniData */},
+  user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, ltcData, qtumData /* usdtOmniData */},
   ipfs: { peer },
   rememberedOrders,
 }) => ({
-  items: [ ethData, btcData, eosData, telosData, bchData, ltcData /* nimData, usdtOmniData */ ],
+  items: [ ethData, btcData, eosData, telosData, bchData, ltcData, qtumData /* nimData, usdtOmniData */ ],
   tokenItems: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
-  currenciesData: [ ethData, btcData, eosData, telosData, bchData, ltcData /* nimData, usdtOmniData */ ],
+  currenciesData: [ ethData, btcData, eosData, telosData, bchData, ltcData, qtumData /* nimData, usdtOmniData */ ],
   tokensData: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
   errors: 'api.errors',
   checked: 'api.checked',
@@ -91,6 +91,8 @@ export default class SwapComponent extends PureComponent {
     tokensData.forEach(item => {
       this.wallets[item.currency] = item.address
     })
+
+    console.warn('swapComponents', swapComponents)
 
     try {
       const swap = new Swap(orderId, SwapApp.shared())

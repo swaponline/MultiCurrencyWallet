@@ -27,9 +27,9 @@ const title = defineMessages({
 @withRouter
 @connect(
   ({
-    user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, ltcData /* usdtOmniData */},
+    user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, ltcData, qtumData /* usdtOmniData */},
   }) => ({
-    items: [ ethData, btcData, eosData, telosData, bchData, ltcData /* usdtOmniData, nimData */ ],
+    items: [ ethData, btcData, eosData, telosData, bchData, ltcData, qtumData /* usdtOmniData, nimData */ ],
   })
 )
 @cssModules(styles)

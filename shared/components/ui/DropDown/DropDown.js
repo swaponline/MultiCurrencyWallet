@@ -134,6 +134,7 @@ export default class DropDown extends Component {
     const linkedValue = Link.all(this, 'inputValue')
 
     let itemsFiltered = items
+
     if (inputValue) {
       itemsFiltered = items
         .filter(item => item.name.includes(inputValue.toUpperCase()))

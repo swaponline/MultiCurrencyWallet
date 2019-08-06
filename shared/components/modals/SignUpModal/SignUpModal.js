@@ -27,7 +27,7 @@ const title = defineMessages({
 @withRouter
 @connect(
   ({
-    user: { ethData, btcData, bchData, ltcData },
+    user: { ethData, btcData, bchData, ltcData, qtumData },
     signUp: { isSigned },
   }) => ({
     ethAddress: ethData.address,

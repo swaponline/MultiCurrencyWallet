@@ -52,7 +52,7 @@ import { BigNumber } from 'bignumber.js'
     eosData,
     telosData,
     bchData,
-    ltcData,
+    ltcData, qtumData,
     qtumData,
     // xlmData,
     // usdtOmniData,

@@ -79,6 +79,11 @@ export default class Row extends Component {
     const isCurrencyEthOrEthToken = helpers.ethToken.isEthOrEthToken({ name: currency })
     const isCurrencyEthToken = helpers.ethToken.isEthToken({ name: currency })
 
+    if(currency === "qtum") {
+      this.setState(() => ({ balance: actions.qtum.getBalance() }))
+      return
+    }
+    
     if (isCurrencyEthOrEthToken) {
       if (isCurrencyEthToken) {
         balance = await actions.token.getBalance(currency)
@@ -88,6 +93,7 @@ export default class Row extends Component {
     } else {
       const { currenciesData } = this.props
 
+      console.warn("currency", currency)
       const unspents = await actions[currency].fetchUnspents(currenciesData[`${currency}Data`].address)
       const totalUnspent = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
       balance = BigNumber(totalUnspent).dividedBy(1e8)

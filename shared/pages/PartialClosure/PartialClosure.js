@@ -41,7 +41,7 @@ import { animate } from 'helpers/domUtils'
 import Switching from 'components/controls/Switching/Switching'
 
 
-const allowedCoins = ['BTC', 'ETH', 'BCH']
+const allowedCoins = ['BTC', 'ETH', 'BCH', 'QTUM']
 
 const isExchangeAllowed = (currencies) => currencies.filter(c => {
   const isErc = Object.keys(config.erc20)
@@ -99,14 +99,14 @@ const bannedPeers = {} // Пиры, которые отклонили запро
   addPartialItems,
   history: { swapHistory },
   core: { orders, hiddenCoinsList },
-  user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, ltcData /* usdtOmniData */},
+  user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, ltcData, qtumData /* usdtOmniData */},
 }) => ({
   currencies: isExchangeAllowed(currencies.partialItems),
   allCurrencyies: currencies.items,
   addSelectedItems: isExchangeAllowed(currencies.addPartialItems),
   orders: filterIsPartial(orders),
   allOrders: orders,
-  currenciesData: [ ethData, btcData, eosData, telosData, bchData, ltcData /* nimData, usdtOmniData */ ],
+  currenciesData: [ ethData, btcData, eosData, telosData, bchData, ltcData, qtumData, qtumData /* nimData, usdtOmniData */ ],
   tokensData: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
   decline: rememberedOrders.savedOrders,
   hiddenCoinsList,

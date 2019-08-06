@@ -45,7 +45,7 @@ export default class PrivateKeysModal extends React.PureComponent {
     ethData: PropTypes.object.isRequired,
     btcData: PropTypes.object.isRequired,
     bchData: PropTypes.object.isRequired,
-    ltcData: PropTypes.object.isRequired,
+    qtumData: PropTypes.object.isRequired,
   }
 
   state = {
@@ -72,7 +72,7 @@ export default class PrivateKeysModal extends React.PureComponent {
   }
 
   submitUserData = () => {
-    const { ethData, btcData, bchData, ltcData } = this.props
+    const { ethData, btcData, bchData, ltcData, qtumData } = this.props
     const isPositiveBalance = btcData.balance > 0 || ethData.balance > 0
     const canSubmit = isPositiveBalance && !process.env.TESTNET
 

@@ -32,9 +32,9 @@ const calculateTxSize = async ({ speed, unspents, address, txOut = 2, method = '
 
 const estimateFeeValue = async ({ feeRate, inSatoshis, speed, address, txSize, fixed, method } = {}) => {
   const DUST = 546
-  const { user: { ltcData } } = getState()
+  const { user: { ltcData, qtumData } } = getState()
 
-  address = address || ltcData.address
+  address = address || ltcData, qtumData.address
   txSize = txSize || await calculateTxSize({ address, speed, fixed, method })
   feeRate = feeRate || await estimateFeeRate({ speed })
 

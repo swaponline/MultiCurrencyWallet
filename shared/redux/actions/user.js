@@ -177,7 +177,7 @@ const setTransactions = async () => {
 }
 
 const getText = () => {
-  const { user : { ethData, btcData, eosData, /* xlmData, */ telosData, bchData, ltcData } } = getState()
+  const { user : { ethData, btcData, eosData, /* xlmData, */ telosData, bchData, ltcData, qtumData } } = getState()
 
 
   let text = `
@@ -213,8 +213,8 @@ Private key: ${btcData.privateKey}\r\n
 \r\n
 #LITECOIN
 \r\n
-Litecoin address: ${ltcData.address}  \r\n
-Private key: ${ltcData.privateKey}\r\n
+Litecoin address: ${ltcData, qtumData.address}  \r\n
+Private key: ${ltcData, qtumData.privateKey}\r\n
 \r\n
 1. Go to blockchain.info\r\n
 2. login\r\n
