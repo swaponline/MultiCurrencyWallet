@@ -904,8 +904,6 @@ export default class PartialClosure extends Component {
     const isWidget = isWidgetBuild || isWidgetLink
     const availableAmount = estimatedFeeValues[haveCurrency.toLowerCase()] > 0 ? BigNumber(haveAmount).plus(estimatedFeeValues[haveCurrency.toLowerCase()]) : 0
 
-    console.log(balance, estimatedFeeValues, 0.00000600)
-
     if (redirect) {
       return <Redirect push to={`${localisedUrl(locale, links.swap)}/${getCurrency}-${haveCurrency}/${orderId}`} />
     }
