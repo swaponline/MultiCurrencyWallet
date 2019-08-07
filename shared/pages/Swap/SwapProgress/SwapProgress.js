@@ -33,6 +33,8 @@ import BtcToEth from './SwapProgressText/BtcToEth'
 import BtcToEthTokens from './SwapProgressText/BtcToEthTokens'
 import EthToBtc from './SwapProgressText/EthToBtc'
 import EthTokensToBtc from './SwapProgressText/EthTokensToBtc'
+import BtcToQtum from './SwapProgressText/BtcToQtum'
+import QtumToBtc from './SwapProgressText/QtumToBtc'
 
 import * as animation from './images'
 import finishSvg from './images/finish.svg'
@@ -60,7 +62,7 @@ export default class SwapProgress extends Component {
     this.history = history
     this.locale = locale
 
-    this.isSellCurrencyEthOrEthToken = ethToken.isEthOrEthToken({ name: swap.sellCurrency })
+    this.isSellCurrencyEthOrEthToken = ethToken.isEthOrEthToken({ name: swap.sellCurrency }) || swap.sellCurrency.toLowerCase() === "qtum"
 
     this.state = {
       step,
@@ -269,6 +271,7 @@ export default class SwapProgress extends Component {
       isSecretCopied,
     } = this.state
 
+    console.warn("flow", flow)
     const progress = Math.floor(90 * stepValue)
     const finishIcon = <img src={finishSvg} alt="finishIcon" />
     const showWalletButton = (!this.swap.destinationBuyAddress)
@@ -289,6 +292,12 @@ export default class SwapProgress extends Component {
         }
         {
           this.props.name === 'EthTokensToBtc' && <EthTokensToBtc step={flow.step} flow={flow} swap={swap} />
+        }
+        {
+          this.props.name === 'BtcToQtum' && <BtcToQtum step={flow.step} flow={flow} swap={swap} />
+        }
+        {
+          this.props.name === 'QtumToBtc' && <QtumToBtc step={flow.step} flow={flow} swap={swap} />
         }
       </Fragment>
     )

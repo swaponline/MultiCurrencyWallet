@@ -19,7 +19,7 @@ import paddingForSwapList from 'shared/helpers/paddingForSwapList.js'
 
 
 @CSSModules(styles)
-export default class BtcToQtum extends Component {
+export default class BtcToEth extends Component {
 
   constructor({ swap, currencyData }) {
     super()
@@ -48,14 +48,8 @@ export default class BtcToQtum extends Component {
     window.addEventListener('resize', this.updateWindowDimensions)
     this.updateWindowDimensions()
     this.changePaddingValue()
-    this.ParticipantTimer = setInterval(() => {
-      if (this.state.flow.isParticipantSigned && this.state.destinationBuyAddress) {
-        this.submitSecret()
-      }
-      else {
-        clearInterval(this.ParticipantTimer)
-      }
-    }, 3000)
+    this.submitSecret()
+
   }
 
   componentWillUnmount() {
@@ -72,6 +66,7 @@ export default class BtcToQtum extends Component {
   submitSecret = () => {
     const { secret } = this.state
     this.swap.flow.submitSecret(secret)
+    clearInterval(this.ParticipantTimer)
   }
 
   tryRefund = () => {
@@ -182,29 +177,15 @@ export default class BtcToQtum extends Component {
               )
             }
           </div>
-          {!enoughBalance && flow.step === 3
-            ? (
-              <div styleName="swapDepositWindow">
-                <DepositWindow currencyData={currencyData} swap={swap} flow={flow} tokenItems={tokenItems} />
-              </div>
-            )
-            : (
-              <Fragment>
-                {!continueSwap
-                  ? <FeeControler ethAddress={ethAddress} />
-                  : <SwapProgress
-                    flow={flow}
-                    name="BtcToEth"
-                    swap={swap}
-                    history={history}
-                    locale={locale}
-                    wallets={wallets}
-                    tokenItems={tokenItems}
-                  />
-                }
-              </Fragment>
-            )
-          }
+          <SwapProgress
+            flow={flow}
+            name="BtcToQtum"
+            swap={swap}
+            history={history}
+            locale={locale}
+            wallets={wallets}
+            tokenItems={tokenItems}
+          />
           <SwapList
             enoughBalance={enoughBalance}
             flow={flow}

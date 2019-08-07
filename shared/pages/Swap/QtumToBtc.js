@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react'
 
 import actions from 'redux/actions'
-import crypto from 'crypto'
+import helpers from 'helpers'
+import config from 'app-config'
 
 import CSSModules from 'react-css-modules'
 import styles from './Swap.scss'
@@ -11,77 +12,78 @@ import { FormattedMessage } from 'react-intl'
 import { BigNumber } from 'bignumber.js'
 import Link from 'sw-valuelink'
 
-import SwapProgress from './SwapProgress/SwapProgress'
-import DepositWindow from './DepositWindow/DepositWindow'
 import FeeControler from './FeeControler/FeeControler'
+import SwapProgress from './SwapProgress/SwapProgress'
 import SwapList from './SwapList/SwapList'
+import DepositWindow from './DepositWindow/DepositWindow'
 import paddingForSwapList from 'shared/helpers/paddingForSwapList.js'
 
-
 @CSSModules(styles)
-export default class QtumToBtc extends Component {
-
-  constructor({ swap, currencyData }) {
+export default class EthToBtc extends Component {
+  constructor({ swap, currencyData, depositWindow, enoughBalance }) {
     super()
 
     this.swap = swap
 
     this.state = {
+      swap,
       currencyData,
+      enoughBalance,
+      signed: false,
+      depositWindow,
+      paddingContainerValue: 0,
       enabledButton: false,
+      isAddressCopied: false,
       flow: this.swap.flow.state,
-      paddingContainerValue: 60,
+      isShowingBitcoinScript: false,
       currencyAddress: currencyData.address,
-      secret: crypto.randomBytes(32).toString('hex'),
     }
 
-    this.ParticipantTimer = null
+    this.signTimer = null
+    this.confirmBtcTimer = null
 
   }
 
   componentWillMount() {
     this.swap.on('state update', this.handleFlowStateUpdate)
+
   }
 
   componentDidMount() {
-    const { flow: { isSignFetching, isMeSigned, step, isParticipantSigned } } = this.state
+    const { swap, flow: { isSignFetching, isMeSigned, step } } = this.state
+    this.changePaddingValue()
     window.addEventListener('resize', this.updateWindowDimensions)
     this.updateWindowDimensions()
-    this.changePaddingValue()
-    this.ParticipantTimer = setInterval(() => {
-      if (this.state.flow.isParticipantSigned && this.state.destinationBuyAddress) {
-        this.submitSecret()
+    this.signTimer = setInterval(() => {
+      if (!this.state.flow.isMeSigned) {
+        this.signSwap()
+      } else {
+        clearInterval(this.signTimer)
       }
-      else {
-        clearInterval(this.ParticipantTimer)
+    }, 3000)
+
+    this.confirmBtcTimer = setInterval(() => {
+      if (this.state.flow.step === 3) {
+        this.confirmBTCScriptChecked()
+      } else {
+        clearInterval(this.confirmBtcTimer)
       }
     }, 3000)
   }
 
   componentWillUnmount() {
-    const { swap, flow: { isMeSigned } } = this.state
-    window.removeEventListener('resize', this.updateWindowDimensions)
     this.swap.off('state update', this.handleFlowStateUpdate)
-    clearInterval(this.timer)
-  }
-
-  updateWindowDimensions = () => {
-    this.setState({ windowWidth: window.innerWidth })
-  }
-
-  submitSecret = () => {
-    const { secret } = this.state
-    this.swap.flow.submitSecret(secret)
-  }
-
-  tryRefund = () => {
-    this.swap.flow.tryRefund()
+    window.removeEventListener('resize', this.updateWindowDimensions)
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.flow !== this.state.flow) {
       this.changePaddingValue()
     }
+  }
+
+  updateWindowDimensions = () => {
+    this.setState({ windowWidth: window.innerWidth })
   }
 
   changePaddingValue = () => {
@@ -91,83 +93,69 @@ export default class QtumToBtc extends Component {
     }))
   }
 
-  handleFlowStateUpdate = (values) => {
+  confirmBTCScriptChecked = () => {
+    this.swap.flow.verifyBtcScript()
+  }
 
+  handleFlowStateUpdate = (values) => {
+    const { swap, flow: { isMeSigned } } = this.state
     const stepNumbers = {
       1: 'sign',
-      2: 'submit-secret',
-      3: 'sync-balance',
-      4: 'lock-btc',
-      5: 'wait-lock-eth',
-      6: 'withdraw-eth',
-      7: 'finish',
-      8: 'end',
+      2: 'wait-lock-btc',
+      3: 'verify-script',
+      4: 'sync-balance',
+      5: 'lock-eth',
+      6: 'wait-withdraw-eth',
+      7: 'withdraw-btc',
+      8: 'finish',
+      9: 'end',
     }
 
-    // actions.analytics.swapEvent(stepNumbers[values.step], 'BTC2ETH')
+    // actions.analytics.swapEvent(stepNumbers[values.step], 'ETH-BTC')
 
     this.setState({
       flow: values,
     })
 
     this.changePaddingValue()
+
   }
 
-  confirmAddress = () => {
-    this.swap.setDestinationBuyAddress(this.state.destinationBuyAddress)
-    this.setState({ destinationAddressTimer : false })
+  signSwap = () => {
+    this.swap.flow.sign()
+    this.setState(() => ({
+      signed: true,
+    }))
   }
 
-  submitSecret = () => {
-    const { secret } = this.state
-    this.swap.flow.submitSecret(secret)
+  toggleBitcoinScript = () => {
+    this.setState({
+      isShowingBitcoinScript: !this.state.isShowingBitcoinScript,
+    })
   }
 
-  updateBalance = () => {
-    this.swap.flow.syncBalance()
-  }
-
-  tryRefund = () => {
-    this.swap.flow.tryRefund()
-    this.setState(() => ({ enabledButton: false }))
-  }
-
-  getRefundTxHex = () => {
-    const { flow } = this.state
-
-    if (flow.refundTxHex) {
-      return flow.refundTxHex
-    }
-    else if (flow.btcScriptValues) {
-      this.swap.flow.getRefundTxHex()
-    }
-  }
 
 
   render() {
     const {
+      tokenItems,
       continueSwap,
       enoughBalance,
-      swap,
       history,
-      tokenItems,
       ethAddress,
       children,
+      requestToFaucetSended,
       onClickCancelSwap,
       locale,
       wallets,
-    }  = this.props
+    } = this.props
 
-    const { flow, isShowingBitcoinScript, currencyData, paddingContainerValue, windowWidth } = this.state
+    const { currencyAddress, flow, isShowingBitcoinScript, swap, currencyData, signed, paddingContainerValue, buyCurrency, sellCurrency, windowWidth } = this.state
+    const stepse = flow.step
 
     return (
       <div>
-        <div
-          styleName="swapContainer"
-          style={(isMobile && (windowWidth < 569))
-            ? { paddingTop: paddingContainerValue }
-            : { paddingTop: 0 }
-          }>
+        <div styleName="swapContainer" style={(isMobile && (windowWidth < 569)) ? { paddingTop: paddingContainerValue } : { paddingTop: 0 }}>
           <div styleName="swapInfo">
             {this.swap.id &&
               (
@@ -182,37 +170,8 @@ export default class QtumToBtc extends Component {
               )
             }
           </div>
-          {!enoughBalance && flow.step === 3
-            ? (
-              <div styleName="swapDepositWindow">
-                <DepositWindow currencyData={currencyData} swap={swap} flow={flow} tokenItems={tokenItems} />
-              </div>
-            )
-            : (
-              <Fragment>
-                {!continueSwap
-                  ? <FeeControler ethAddress={ethAddress} />
-                  : <SwapProgress
-                    flow={flow}
-                    name="BtcToEth"
-                    swap={swap}
-                    history={history}
-                    locale={locale}
-                    wallets={wallets}
-                    tokenItems={tokenItems}
-                  />
-                }
-              </Fragment>
-            )
-          }
-          <SwapList
-            enoughBalance={enoughBalance}
-            flow={flow}
-            onClickCancelSwap={onClickCancelSwap}
-            windowWidth={windowWidth}
-            name={swap.sellCurrency}
-            swap={swap}
-          />
+          <SwapProgress flow={flow} name="QtumToBtc" swap={swap}  history={history} signed={signed} locale={locale} wallets={wallets} tokenItems={tokenItems} />
+          <SwapList enoughBalance={enoughBalance} flow={flow} name={swap.sellCurrency} windowWidth={windowWidth} onClickCancelSwap={onClickCancelSwap} swap={swap} />
           <div styleName="swapContainerInfo">{children}</div>
         </div>
       </div>
