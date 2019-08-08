@@ -6,9 +6,8 @@ import CSSModules from 'react-css-modules'
 import { FormattedMessage } from 'react-intl'
 
 
-@CSSModules(styles)
-export default class QtumToBtc extends Component {
-  QtumToBtc = (step) => {
+const QtumToBtc = (props) => {
+  const qtumToBtc = (step) => {
 
     switch (step) {
       case 1:
@@ -29,7 +28,7 @@ export default class QtumToBtc extends Component {
         )
       case 5:
         return (
-          <FormattedMessage id="QtumToBtcText32" defaultMessage="Creating Qtumereum Contract.{br}It can take a few minutes" values={{ br: <br /> }} />
+          <FormattedMessage id="QtumToBtcText32" defaultMessage="Creating QTUM Contract.{br}It can take a few minutes" values={{ br: <br /> }} />
         )
       case 6:
         return (
@@ -58,8 +57,8 @@ export default class QtumToBtc extends Component {
     }
   }
 
-  render() {
 
-    return this.QtumToBtc(this.props.step)
-  }
+  return qtumToBtc(props.step)
 }
+
+export default CSSModules(QtumToBtc, styles, { allowMultiple: true })

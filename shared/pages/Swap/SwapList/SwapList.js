@@ -20,12 +20,12 @@ export default class SwapList extends Component {
 
   constructor({ swap: { sellCurrency, flow: { stepNumbers } } }) {
     super()
-
+    console.warn("stepNumbers")
     const first = stepNumbers.sign
     const second = sellCurrency === 'BTC' ? stepNumbers[`submit-secret`] : stepNumbers[`wait-lock-btc`]
     const fourth = sellCurrency === 'BTC' ? stepNumbers[`lock-btc`] : stepNumbers[`sync-balance`]
-    const fifth = sellCurrency === 'BTC' ? stepNumbers[`wait-lock-eth`] : stepNumbers[`lock-eth`]
-    const sixth = sellCurrency === 'BTC' ? stepNumbers[`withdraw-eth`] : stepNumbers[`wait-withdraw-eth`]
+    const fifth = sellCurrency === 'BTC' ? stepNumbers[`wait-lock-${sellCurrency.toLowerCase()}`] : stepNumbers[`lock-${sellCurrency.toLowerCase()}`]
+    const sixth = sellCurrency === 'BTC' ? stepNumbers[`withdraw-${sellCurrency.toLowerCase()}`] : stepNumbers[`wait-withdraw-${sellCurrency.toLowerCase()}`]
     const seventh = sellCurrency === 'BTC' ? stepNumbers.finish : stepNumbers[`withdraw-btc`]
     const eighth = sellCurrency === 'BTC' ? stepNumbers.end : stepNumbers.finish
 

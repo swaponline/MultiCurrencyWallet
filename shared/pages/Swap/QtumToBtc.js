@@ -134,8 +134,6 @@ export default class EthToBtc extends Component {
     })
   }
 
-
-
   render() {
     const {
       tokenItems,
@@ -171,7 +169,7 @@ export default class EthToBtc extends Component {
             }
           </div>
           <SwapProgress flow={flow} name="QtumToBtc" swap={swap}  history={history} signed={signed} locale={locale} wallets={wallets} tokenItems={tokenItems} />
-          <SwapList enoughBalance={enoughBalance} flow={flow} name={swap.sellCurrency} windowWidth={windowWidth} onClickCancelSwap={onClickCancelSwap} swap={swap} />
+          <SwapList flow={flow} name={swap.sellCurrency} windowWidth={windowWidth} onClickCancelSwap={onClickCancelSwap} swap={swap} />
           <div styleName="swapContainerInfo">{children}</div>
         </div>
       </div>

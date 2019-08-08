@@ -19,7 +19,7 @@ import paddingForSwapList from 'shared/helpers/paddingForSwapList.js'
 
 
 @CSSModules(styles)
-export default class BtcToEth extends Component {
+export default class BtcToQtum extends Component {
 
   constructor({ swap, currencyData }) {
     super()
@@ -48,8 +48,14 @@ export default class BtcToEth extends Component {
     window.addEventListener('resize', this.updateWindowDimensions)
     this.updateWindowDimensions()
     this.changePaddingValue()
-    this.submitSecret()
-
+    this.ParticipantTimer = setInterval(() => {
+      if (this.state.flow.isParticipantSigned && this.state.destinationBuyAddress) {
+        this.submitSecret()
+      }
+      else {
+        clearInterval(this.ParticipantTimer)
+      }
+    }, 3000)
   }
 
   componentWillUnmount() {
@@ -66,11 +72,6 @@ export default class BtcToEth extends Component {
   submitSecret = () => {
     const { secret } = this.state
     this.swap.flow.submitSecret(secret)
-    clearInterval(this.ParticipantTimer)
-  }
-
-  tryRefund = () => {
-    this.swap.flow.tryRefund()
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -93,13 +94,12 @@ export default class BtcToEth extends Component {
       2: 'submit-secret',
       3: 'sync-balance',
       4: 'lock-btc',
-      5: 'wait-lock-eth',
-      6: 'withdraw-eth',
+      5: 'wait-lock-qtum',
+      6: 'withdraw-qtum',
       7: 'finish',
       8: 'end',
     }
 
-    // actions.analytics.swapEvent(stepNumbers[values.step], 'BTC2ETH')
 
     this.setState({
       flow: values,
@@ -122,27 +122,9 @@ export default class BtcToEth extends Component {
     this.swap.flow.syncBalance()
   }
 
-  tryRefund = () => {
-    this.swap.flow.tryRefund()
-    this.setState(() => ({ enabledButton: false }))
-  }
-
-  getRefundTxHex = () => {
-    const { flow } = this.state
-
-    if (flow.refundTxHex) {
-      return flow.refundTxHex
-    }
-    else if (flow.btcScriptValues) {
-      this.swap.flow.getRefundTxHex()
-    }
-  }
-
 
   render() {
     const {
-      continueSwap,
-      enoughBalance,
       swap,
       history,
       tokenItems,
@@ -187,7 +169,6 @@ export default class BtcToEth extends Component {
             tokenItems={tokenItems}
           />
           <SwapList
-            enoughBalance={enoughBalance}
             flow={flow}
             onClickCancelSwap={onClickCancelSwap}
             windowWidth={windowWidth}

@@ -72,7 +72,7 @@ const createSwapApp = () => {
         bch: localStorage.getItem(privateKeys.privateKeyNames.bch),
         ltc: localStorage.getItem(privateKeys.privateKeyNames.ltc),
         eos: privateKeys.privateKeyNames.eosAccount, // TODO localStorage ?
-        // qtum: localStorage.getItem(privateKeys.privateKeyNames.qtum),
+        qtum: localStorage.getItem(privateKeys.privateKeyNames.qtum),
       }),
       new SwapRoom({
         repo,
