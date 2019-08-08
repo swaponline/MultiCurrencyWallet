@@ -159,9 +159,15 @@ export default class BtcToEth extends Component {
     }  = this.props
 
     const { flow, isShowingBitcoinScript, currencyData, paddingContainerValue, windowWidth } = this.state
+
     return (
       <div>
-        <div styleName="swapContainer" style={(isMobile && (windowWidth < 569)) ? { paddingTop: paddingContainerValue } : { paddingTop: 0 }}>
+        <div
+          styleName="swapContainer"
+          style={(isMobile && (windowWidth < 569))
+            ? { paddingTop: paddingContainerValue }
+            : { paddingTop: 0 }
+          }>
           <div styleName="swapInfo">
             {this.swap.id &&
               (
@@ -186,12 +192,27 @@ export default class BtcToEth extends Component {
               <Fragment>
                 {!continueSwap
                   ? <FeeControler ethAddress={ethAddress} />
-                  : <SwapProgress flow={flow} name="BtcToEth" swap={swap} history={history} locale={locale} wallets={wallets} tokenItems={tokenItems} />
+                  : <SwapProgress
+                    flow={flow}
+                    name="BtcToEth"
+                    swap={swap}
+                    history={history}
+                    locale={locale}
+                    wallets={wallets}
+                    tokenItems={tokenItems}
+                  />
                 }
               </Fragment>
             )
           }
-          <SwapList enoughBalance={enoughBalance} flow={flow} onClickCancelSwap={onClickCancelSwap} windowWidth={windowWidth} name={swap.sellCurrency} swap={swap} />
+          <SwapList
+            enoughBalance={enoughBalance}
+            flow={flow}
+            onClickCancelSwap={onClickCancelSwap}
+            windowWidth={windowWidth}
+            name={swap.sellCurrency}
+            swap={swap}
+          />
           <div styleName="swapContainerInfo">{children}</div>
         </div>
       </div>

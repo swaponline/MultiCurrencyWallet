@@ -302,7 +302,7 @@ export default class SwapComponent extends PureComponent {
         buyCurrency,
         buyAmount,
         sellCurrency,
-        sellAmount
+        sellAmount,
       },
       isFaucetRequested,
       continueSwap,
@@ -434,23 +434,9 @@ export default class SwapComponent extends PureComponent {
     }
 
     const isFinished = (swap.flow.state.step >= (swap.flow.steps.length - 1))
-
     return (
       <Fragment>
-        {hideAll ?
-          <div>
-            <h3 styleName="canceled" /* eslint-disable-line */ onClick={this.goWallet}>
-              <FormattedMessage id="swappropgress327" defaultMessage="this Swap is canceled" />
-            </h3>
-            <div>
-              <h3 styleName="refHex">
-                <FormattedMessage
-                  id="swappropgress400"
-                  defaultMessage="Refund is taking automatically"
-                />
-              </h3>
-            </div>
-          </div> :
+        {!hideAll ?
           <div styleName={isMobile ? 'swap swapMobile' : 'swap'}>
             <SwapComponent
               tokenItems={tokenItems}
@@ -483,6 +469,19 @@ export default class SwapComponent extends PureComponent {
                 isShowingBitcoinScript={isShowingBitcoinScript} />
               {peer === swap.owner.peer && (<DeleteSwapAfterEnd swap={swap} />)}
             </SwapComponent>
+          </div> :
+          <div>
+            <h3 styleName="canceled" /* eslint-disable-line */ onClick={this.goWallet}>
+              <FormattedMessage id="swappropgress327" defaultMessage="this Swap is canceled" />
+            </h3>
+            <div>
+              <h3 styleName="refHex">
+                <FormattedMessage
+                  id="swappropgress400"
+                  defaultMessage="Refund is taking automatically"
+                />
+              </h3>
+            </div>
           </div>
         }
       </Fragment>

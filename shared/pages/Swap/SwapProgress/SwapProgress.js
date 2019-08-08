@@ -135,17 +135,22 @@ export default class SwapProgress extends Component {
 
   componentWillUnmount() {
     this.swap.off('state update', this.handleFlowStateUpdate)
+    clearTimeout(this.timer)
   }
 
   reloadPage = () => {
-    this.timer =  setInterval(() => {
+    this.timer =  setTimeout(() => {
       const startSwapTime = localStorage.getItem(constants.localStorage.startSwap)
 
+      if(this.swap.flow.isFinished) {
+        clearTimeout(this.timer)
+      }
+
       const isSwapPage = window.location.pathname.includes("swaps")
-      if ((Date.now() - startSwapTime) > 300 * 1000 && isSwapPage) {
-        console.warn('UPS!!! SWAP IS FROZEM - RELOAD')
+      if (((Date.now() - startSwapTime) > 600 * 1000) && isSwapPage) {
+        console.warn('UPS!!! SWAP IS FROZEN - RELOAD')
         localStorage.removeItem(constants.localStorage.startSwap)
-        clearInterval(this.timer)
+        clearTimeout(this.timer)
         window.location.reload()
       }
     }, 1000)
