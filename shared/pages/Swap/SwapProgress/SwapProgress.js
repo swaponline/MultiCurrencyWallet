@@ -399,7 +399,6 @@ export default class SwapProgress extends Component {
                         )
                       : (
                           <div styleName="timerRefund">
-                          
                           </div>
                         )
                   }
