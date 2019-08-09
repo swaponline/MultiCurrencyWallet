@@ -99,14 +99,14 @@ export default class Row extends Component {
   }
 
   componentWillUnmount() {
-    // window.removeEventListener('resize', this.handleSliceAddress)
+    window.removeEventListener('resize', this.handleSliceAddress)
   }
 
   componentDidMount() {
     const { hiddenCoinsList } = this.props
 
     this.handleTelosActivate()
-    // window.addEventListener('resize', this.handleSliceAddress)
+    window.addEventListener('resize', this.handleSliceAddress)
 
     Object.keys(config.erc20)
       .forEach(name => {
@@ -165,14 +165,15 @@ export default class Row extends Component {
     })
   }
 
-  // handleSliceAddress = () => {
-  //   const { item: { address } } = this.props
-  //   if(!address.substr(0, 6))  return null
-  //   const firstPart = address.substr(0, 6)
-  //   const secondPart = address.substr(address.length - 4)
-  //
-  //   return (window.innerWidth < 700 || isMobile || address.length > 42) ? `${firstPart}...${secondPart}` : address
-  // }
+  handleSliceAddress = () => {
+    const { item: { address } } = this.props
+    if(!address) return true
+    if(!address.substr(0, 6)) null
+    const firstPart = address.substr(0, 6)
+    const secondPart = address.substr(address.length - 4)
+
+    return (window.innerWidth < 700 || isMobile || address.length > 42) ? `${firstPart}...${secondPart}` : address
+  }
 
   handleTouchClear = (e) => {
     this.setState({
@@ -450,7 +451,7 @@ export default class Row extends Component {
                     {
                       address !== '' && <i className="far fa-copy" styleName="icon" data-tip data-for="Copy" style={{ width: '14px' }} />
                     }
-                    <LinkAccount type={currency} address={address}>{}</LinkAccount>
+                    <LinkAccount type={currency} address={address} onClick={this.handleSliceAddress()}>{address}</LinkAccount>
                     <ReactTooltip id="Copy" type="light" effect="solid">
                       <span>
                         <FormattedMessage id="Row235" defaultMessage="Copy" />
@@ -481,7 +482,7 @@ export default class Row extends Component {
                 ) : (
                   <Fragment>
                     <i className="far fa-copy" styleName="icon" data-tip data-for="Copy" style={{ width: '14px' }} />
-                    <LinkAccount type={currency} contractAddress={contractAddress} address={address} >{}</LinkAccount>
+                    <LinkAccount type={currency} contractAddress={contractAddress} address={address} onClick={this.handleSliceAddress()} >{}</LinkAccount>
                   </Fragment>
                 )
               }

@@ -92,8 +92,6 @@ export default class SwapComponent extends PureComponent {
       this.wallets[item.currency] = item.address
     })
 
-    console.warn('swapComponents', swapComponents)
-
     try {
       const swap = new Swap(orderId, SwapApp.shared())
 
