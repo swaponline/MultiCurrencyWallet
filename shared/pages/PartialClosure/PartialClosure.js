@@ -106,7 +106,7 @@ const bannedPeers = {} // Пиры, которые отклонили запро
   addSelectedItems: isExchangeAllowed(currencies.addPartialItems),
   orders: filterIsPartial(orders),
   allOrders: orders,
-  currenciesData: [ ethData, btcData, eosData, telosData, bchData, ltcData, qtumData, qtumData /* nimData, usdtOmniData */ ],
+  currenciesData: [ ethData, btcData, eosData, telosData, bchData, ltcData, qtumData /* nimData, usdtOmniData */ ],
   tokensData: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
   decline: rememberedOrders.savedOrders,
   hiddenCoinsList,

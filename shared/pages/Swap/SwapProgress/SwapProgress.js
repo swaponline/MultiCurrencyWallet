@@ -74,8 +74,8 @@ export default class SwapProgress extends Component {
       refundError: false,
       flow,
       steps: flow.steps,
-      buyCurrency: buyCurrency,
-      sellCurrency: sellCurrency,
+      buyCurrency,
+      sellCurrency,
       secret: crypto.randomBytes(32).toString('hex'),
       stepValue: 0,
     }
@@ -338,7 +338,7 @@ export default class SwapProgress extends Component {
                         defaultMessage="Sign {curr} transaction: {transaction}"
                         values={{
                           transaction: flow.signTransactionHash,
-                          curr:  sellCurrency === 'BTC' ? buyCurrency.toUpperCase() : sellCurrency.toUpperCase()
+                          curr:  sellCurrency === 'BTC' ? buyCurrency.toUpperCase() : sellCurrency.toUpperCase(),
                         }}
                       />
                     </a>

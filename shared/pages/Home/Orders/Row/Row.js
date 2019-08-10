@@ -79,7 +79,7 @@ export default class Row extends Component {
     const isCurrencyEthOrEthToken = helpers.ethToken.isEthOrEthToken({ name: currency })
     const isCurrencyEthToken = helpers.ethToken.isEthToken({ name: currency })
 
-    if(currency === "qtum") {
+    if (currency === 'qtum') {
       this.setState(() => ({ balance: actions.qtum.getBalance() }))
       return
     }

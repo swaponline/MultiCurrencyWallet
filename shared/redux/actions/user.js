@@ -213,8 +213,12 @@ Private key: ${btcData.privateKey}\r\n
 \r\n
 #LITECOIN
 \r\n
-Litecoin address: ${ltcData, qtumData.address}  \r\n
-Private key: ${ltcData, qtumData.privateKey}\r\n
+Litecoin address: ${ltcData.address}  \r\n
+Private key: ${ltcData.privateKey}\r\n
+\r\n
+\r\n
+Litecoin address: ${qtumData.address}  \r\n
+Private key: ${qtumData.privateKey}\r\n
 \r\n
 1. Go to blockchain.info\r\n
 2. login\r\n
