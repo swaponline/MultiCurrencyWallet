@@ -102,8 +102,12 @@ textarea.input {
 
 @include media-mobile {
   .input {
-    font-size: 14px;
+    font-size: 14px !important;;
     height: 60px;
+  }
+
+  .root {
+    width: 95%;
   }
   .textUsd {
     top: 15px;

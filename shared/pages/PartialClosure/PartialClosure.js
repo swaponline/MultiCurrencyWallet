@@ -1187,7 +1187,7 @@ export default class PartialClosure extends Component {
                   </div>
                   <div styleName={!customWalletUse ? 'anotherRecepient anotherRecepient_active' : 'anotherRecepient'}>
                     <div styleName="walletInput">
-                      <Input required disabled={customWalletUse} valueLink={linked.customWallet} pattern="0-9a-zA-Z" placeholder="Enter the receiving wallet address" />
+                      <Input inputCustomStyle={{ fontSize: "15px" }} required disabled={customWalletUse} valueLink={linked.customWallet} pattern="0-9a-zA-Z" placeholder="Enter the receiving wallet address" />
                       <i styleName="qrCode" className="fas fa-qrcode" onClick={this.openScan} />
                     </div>
                   </div>
