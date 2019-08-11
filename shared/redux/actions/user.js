@@ -217,7 +217,7 @@ Litecoin address: ${ltcData.address}  \r\n
 Private key: ${ltcData.privateKey}\r\n
 \r\n
 \r\n
-Litecoin address: ${qtumData.address}  \r\n
+Qtum address: ${qtumData.address}  \r\n
 Private key: ${qtumData.privateKey}\r\n
 \r\n
 1. Go to blockchain.info\r\n
