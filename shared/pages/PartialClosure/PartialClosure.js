@@ -210,7 +210,7 @@ export default class PartialClosure extends Component {
       extendedControls: false,
       estimatedFeeValues: {},
       desclineOrders: [],
-      openScanCam: false
+      openScanCam: false,
     }
 
     constants.coinsWithDynamicFee
@@ -887,10 +887,10 @@ export default class PartialClosure extends Component {
 
   openScan = () => {
     const { openScanCam } = this.state
+
     this.setState(() => ({
       openScanCam: !openScanCam,
-   }))
-
+    }))
   }
 
   handleError = err => {
@@ -900,9 +900,9 @@ export default class PartialClosure extends Component {
   handleScan = data => {
     if (data) {
       this.setState(() => ({
-        customWallet: data.split(":")[1],
-     }))
-     this.openScan()
+        customWallet: data.split(':')[1],
+      }))
+      this.openScan()
     }
   }
 
@@ -1210,6 +1210,7 @@ export default class PartialClosure extends Component {
       </div>
     )
 
+    // eslint-disable
 
     return isWidgetBuild
       ? Form
@@ -1228,9 +1229,12 @@ export default class PartialClosure extends Component {
               </span>
               <span styleName="scrollTrigger" />
             </div>
+
             {openScanCam &&
               <div styleName="scan">
-                <span styleName="close" onClick={this.openScan}>&times;</span>
+                <span styleName="close" onClick={this.openScan}>
+                  &times;
+                </span>
                 <QrReader
                   delay={300}
                   onError={this.handleError}
@@ -1257,3 +1261,4 @@ export default class PartialClosure extends Component {
       )
   }
 }
+// eslint-enable
