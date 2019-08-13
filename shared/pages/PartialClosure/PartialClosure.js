@@ -350,6 +350,12 @@ export default class PartialClosure extends Component {
         exGetRate,
       }))
     } catch (e) {
+      const exHaveRate = (this.usdRates[haveCurrency] !== undefined) ? this.usdRates[haveCurrency] : 0
+      const exGetRate = (this.usdRates[getCurrency] !== undefined) ? this.usdRates[getCurrency] : 0
+      this.setState(() => ({
+        exHaveRate,
+        exGetRate,
+      }))
       console.warn('Cryptonator offline')
     }
   }
@@ -776,7 +782,6 @@ export default class PartialClosure extends Component {
 
   checkPair = () => {
     const { getCurrency, haveCurrency } = this.state
-    this.getUsdBalance()
 
     const noPairToken = (config && config.isWidget) ? config.erc20token : 'swap'
 
@@ -796,7 +801,9 @@ export default class PartialClosure extends Component {
   chooseCurrencyToRender = (selected) => {
     this.setState(() => ({
       getCurrency: selected[0].value,
-    }))
+    }), () => {
+      this.getUsdBalance()
+    })
   }
 
   updateAllowedBalance = async () => {
