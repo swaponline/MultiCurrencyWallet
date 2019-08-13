@@ -900,7 +900,7 @@ export default class PartialClosure extends Component {
   handleScan = data => {
     if (data) {
       this.setState(() => ({
-        customWallet: data.split(':')[1],
+        customWallet: data.includes(':') ? data.split(':')[1] : data,
       }))
       this.openScan()
     }
@@ -1188,10 +1188,11 @@ export default class PartialClosure extends Component {
                   <div styleName={!customWalletUse ? 'anotherRecepient anotherRecepient_active' : 'anotherRecepient'}>
                     <div styleName="walletInput">
                       <Input
-                        inputCustomStyle={{ fontSize: "15px" }}
-                        required disabled={customWalletUse}
+                        inputCustomStyle={{ fontSize: '15px' }}
+                        required
+                        disabled={customWalletUse}
                         valueLink={linked.customWallet}
-                        pattern="0-9a-zA-Z"
+                        pattern='0-9a-zA-Z'
                         placeholder='Enter the receiving wallet address'
                       />
                       <i styleName="qrCode" className="fas fa-qrcode" onClick={this.openScan} />
@@ -1237,7 +1238,7 @@ export default class PartialClosure extends Component {
             {openScanCam &&
               <div styleName="scan">
                 <span styleName="close" onClick={this.openScan}>
-                  &times; {/* eslint-disable-line */}
+                  <FormattedMessage id="closeIcon1241" defaultMessage="x" />
                 </span>
                 <QrReader
                   delay={300}
