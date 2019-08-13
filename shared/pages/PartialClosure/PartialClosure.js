@@ -1244,7 +1244,7 @@ export default class PartialClosure extends Component {
                   delay={300}
                   onError={this.handleError}
                   onScan={this.handleScan}
-                  style={{ width: '100%', padding: '20px 0' }}
+                  style={{ width: '100%' }}
                 />
               </div>
             }
