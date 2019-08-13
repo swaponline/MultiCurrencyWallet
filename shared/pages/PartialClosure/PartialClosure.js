@@ -1187,7 +1187,13 @@ export default class PartialClosure extends Component {
                   </div>
                   <div styleName={!customWalletUse ? 'anotherRecepient anotherRecepient_active' : 'anotherRecepient'}>
                     <div styleName="walletInput">
-                      <Input inputCustomStyle={{ fontSize: "15px" }} required disabled={customWalletUse} valueLink={linked.customWallet} pattern="0-9a-zA-Z" placeholder="Enter the receiving wallet address" />
+                      <Input
+                        inputCustomStyle={{ fontSize: "15px" }}
+                        required disabled={customWalletUse}
+                        valueLink={linked.customWallet}
+                        pattern="0-9a-zA-Z"
+                        placeholder='Enter the receiving wallet address'
+                      />
                       <i styleName="qrCode" className="fas fa-qrcode" onClick={this.openScan} />
                     </div>
                   </div>
@@ -1210,8 +1216,6 @@ export default class PartialClosure extends Component {
       </div>
     )
 
-    // eslint-disable
-
     return isWidgetBuild
       ? Form
       : (
@@ -1233,7 +1237,7 @@ export default class PartialClosure extends Component {
             {openScanCam &&
               <div styleName="scan">
                 <span styleName="close" onClick={this.openScan}>
-                  &times;
+                  &times; {/* eslint-disable-line */}
                 </span>
                 <QrReader
                   delay={300}
@@ -1261,4 +1265,3 @@ export default class PartialClosure extends Component {
       )
   }
 }
-// eslint-enable
