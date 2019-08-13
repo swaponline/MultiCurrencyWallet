@@ -35,11 +35,11 @@ import { localisedUrl } from 'helpers/locale'
 import { isCoinAddress } from 'swap.app/util/typeforce'
 import config from 'app-config'
 import SwapApp, { util } from 'swap.app'
+import QrReader from 'react-qr-scanner'
 
 import helpers, { constants, links, ethToken } from 'helpers'
 import { animate } from 'helpers/domUtils'
 import Switching from 'components/controls/Switching/Switching'
-
 
 const allowedCoins = ['BTC', 'ETH', 'BCH']
 
@@ -210,6 +210,7 @@ export default class PartialClosure extends Component {
       extendedControls: false,
       estimatedFeeValues: {},
       desclineOrders: [],
+      openScanCam: false,
     }
 
     constants.coinsWithDynamicFee
@@ -884,9 +885,30 @@ export default class PartialClosure extends Component {
     })
   }
 
+  openScan = () => {
+    const { openScanCam } = this.state
+
+    this.setState(() => ({
+      openScanCam: !openScanCam,
+    }))
+  }
+
+  handleError = err => {
+    console.error(err)
+  }
+
+  handleScan = data => {
+    if (data) {
+      this.setState(() => ({
+        customWallet: data.includes(':') ? data.split(':')[1] : data,
+      }))
+      this.openScan()
+    }
+  }
+
   render() {
     const { currencies, addSelectedItems, currenciesData, tokensData, intl: { locale, formatMessage }, userEthAddress } = this.props
-    const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching, desclineOrders,
+    const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching, desclineOrders, openScanCam,
       isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet, exHaveRate, exGetRate,
       maxBuyAmount, getAmount, goodRate, isShowBalance, extendedControls, estimatedFeeValues, isToken, dynamicFee, haveAmount,
     } = this.state
@@ -1165,7 +1187,15 @@ export default class PartialClosure extends Component {
                   </div>
                   <div styleName={!customWalletUse ? 'anotherRecepient anotherRecepient_active' : 'anotherRecepient'}>
                     <div styleName="walletInput">
-                      <Input required disabled={customWalletUse} valueLink={linked.customWallet} pattern="0-9a-zA-Z" placeholder="Enter the receiving wallet address" />
+                      <Input
+                        inputCustomStyle={{ fontSize: '15px' }}
+                        required
+                        disabled={customWalletUse}
+                        valueLink={linked.customWallet}
+                        pattern='0-9a-zA-Z'
+                        placeholder='Enter the receiving wallet address'
+                      />
+                      <i styleName="qrCode" className="fas fa-qrcode" onClick={this.openScan} />
                     </div>
                   </div>
                 </div>
@@ -1187,7 +1217,6 @@ export default class PartialClosure extends Component {
       </div>
     )
 
-
     return isWidgetBuild
       ? Form
       : (
@@ -1206,6 +1235,19 @@ export default class PartialClosure extends Component {
               <span styleName="scrollTrigger" />
             </div>
 
+            {openScanCam &&
+              <div styleName="scan">
+                <span styleName="close" onClick={this.openScan}>
+                  <FormattedMessage id="closeIcon1241" defaultMessage="x" />
+                </span>
+                <QrReader
+                  delay={300}
+                  onError={this.handleError}
+                  onScan={this.handleScan}
+                  style={{ width: '100%' }}
+                />
+              </div>
+            }
             <Fragment>
               <div styleName="container alignCenter">
                 <Promo subTitle={subTitle(sellTokenFullName, haveCurrency.toUpperCase(), buyTokenFullName, getCurrency.toUpperCase())} />
