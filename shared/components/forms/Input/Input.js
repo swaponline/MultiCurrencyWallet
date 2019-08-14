@@ -64,7 +64,7 @@ export default class Input extends Component {
   render() {
     const {
       className, inputContainerClassName, inputClassName, errorStyle,
-      valueLink: { error }, valueLink, dontDisplayError,
+      valueLink: { error }, valueLink, dontDisplayError, inputCustomStyle,
       multiline, focusOnInit, disabled, readOnly, type, usd, ...rest
     } = this.props
 
@@ -85,6 +85,7 @@ export default class Input extends Component {
               ...ignoreProps(rest, 'styles'),
               styleName: errorStyle ? 'input inputError' : 'input',
               className: inputClassName,
+              style: inputCustomStyle,
               valueLink,
               type,
               disabled: disabled || readOnly,
