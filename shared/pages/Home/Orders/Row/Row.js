@@ -49,7 +49,7 @@ export default class Row extends Component {
       windowWidth: 0,
       isFetching: false,
       enterButton: false,
-      estimatedFeeValues: {}
+      estimatedFeeValues: {},
     }
 
     constants.coinsWithDynamicFee
@@ -77,7 +77,7 @@ export default class Row extends Component {
     }
   }
 
-  getEstimateFee = async(estimatedFeeValues) => {
+  getEstimateFee = async (estimatedFeeValues) => {
     const fee = await helpers.estimateFeeValue.setEstimatedFeeValues({ estimatedFeeValues })
     this.setState(() => ({ estimatedFeeValues: fee }))
   }
