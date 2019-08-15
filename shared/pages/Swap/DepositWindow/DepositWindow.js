@@ -336,7 +336,7 @@ export default class DepositWindow extends Component {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <FormattedMessage id="deposit297" defaultMessage="link to explorer" />
+                    <FormattedMessage id="deposit297" defaultMessage="view in explorer" />
                   </a>
                 </strong>
               </div>

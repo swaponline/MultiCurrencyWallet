@@ -182,37 +182,41 @@ export default class BtcToEth extends Component {
               )
             }
           </div>
-          {!enoughBalance && flow.step === 3
-            ? (
-              <div styleName="swapDepositWindow">
-                <DepositWindow currencyData={currencyData} swap={swap} flow={flow} tokenItems={tokenItems} />
-              </div>
-            )
-            : (
-              <Fragment>
-                {!continueSwap
-                  ? <FeeControler ethAddress={ethAddress} />
-                  : <SwapProgress
-                    flow={flow}
-                    name="BtcToEth"
-                    swap={swap}
-                    history={history}
-                    locale={locale}
-                    wallets={wallets}
-                    tokenItems={tokenItems}
-                  />
-                }
-              </Fragment>
-            )
-          }
-          <SwapList
-            enoughBalance={enoughBalance}
-            flow={flow}
-            onClickCancelSwap={onClickCancelSwap}
-            windowWidth={windowWidth}
-            name={swap.sellCurrency}
-            swap={swap}
-          />
+          <div>
+            {!enoughBalance && flow.step === 3
+              ? (
+                <div styleName="swapDepositWindow">
+                  <DepositWindow currencyData={currencyData} swap={swap} flow={flow} tokenItems={tokenItems} />
+                </div>
+              )
+              : (
+                <Fragment>
+                  {!continueSwap
+                    ? <FeeControler ethAddress={ethAddress} />
+                    : <SwapProgress
+                      flow={flow}
+                      name="BtcToEth"
+                      swap={swap}
+                      history={history}
+                      locale={locale}
+                      wallets={wallets}
+                      tokenItems={tokenItems}
+                    />
+                  }
+                </Fragment>
+              )
+            }
+          </div>
+          <div>
+            <SwapList
+              enoughBalance={enoughBalance}
+              flow={flow}
+              onClickCancelSwap={onClickCancelSwap}
+              windowWidth={windowWidth}
+              name={swap.sellCurrency}
+              swap={swap}
+            />
+          </div>
           <div styleName="swapContainerInfo">{children}</div>
         </div>
       </div>
