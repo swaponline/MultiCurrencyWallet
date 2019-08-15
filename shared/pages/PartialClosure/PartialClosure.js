@@ -552,7 +552,7 @@ export default class PartialClosure extends Component {
   }
 
   setOrderOnState = (orders) => {
-    const { haveAmount, getCurrency, estimatedFeeValues } = this.state
+    const { haveAmount, getCurrency } = this.state
 
     let maxAllowedSellAmount = BigNumber(0)
     let maxAllowedGetAmount = BigNumber(0)
