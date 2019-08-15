@@ -4915,7 +4915,7 @@
   },
   {
     "id": "deposit297",
-    "message": "link to explorer",
+    "message": "view in explorer",
     "files": [
       "shared/pages/Swap/DepositWindow/DepositWindow.js"
     ]
