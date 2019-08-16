@@ -8,7 +8,7 @@
 .swapContainer {
   color: #000;
   display: flex;
-  align-items: center;
+  justify-content: space-between;
   position: relative;
   flex-wrap: wrap;
   padding-bottom: 35px;
@@ -94,7 +94,7 @@
 }
 
 .bitcoinScript {
-  color: #A9A9A9;
+  color: #a9a9a9;
   cursor: pointer;
   text-decoration: underline;
   position: absolute;
@@ -196,7 +196,7 @@
     }
   }
 }
-.message{
+.message {
   max-width: 100%;
 }
 
@@ -236,12 +236,12 @@
 
 @include media-mobile {
   .btcMessage {
-    font-size: 11.2px;;
+    font-size: 11.2px;
     width: 60%;
   }
 }
 
-.sendMessage{
+.sendMessage {
   font-size: 22px;
 }
 
@@ -325,7 +325,7 @@
     align-items: center;
     margin-left: 15px;
     &:hover {
-      background: #eee
+      background: #eee;
     }
   }
 }
@@ -347,15 +347,15 @@
 }
 
 .cardsContainer {
-    display: flex;
-    width: 185px;
-    margin-top: -35px;
-    display: flex;
-    -webkit-justify-content: space-around;
-    -ms-flex-pack: distribute;
-    justify-content: space-between;
-    margin-bottom: -20px;
-    display: none;
+  display: flex;
+  width: 185px;
+  margin-top: -35px;
+  display: flex;
+  -webkit-justify-content: space-around;
+  -ms-flex-pack: distribute;
+  justify-content: space-between;
+  margin-bottom: -20px;
+  display: none;
   img {
     width: 72px;
   }
@@ -500,7 +500,7 @@
     color: #000;
     padding: 7px 20px;
     width: 100%;
-    max-width: 300px;
+    max-width: 600px;
     margin: auto;
     order: 1;
   }
@@ -524,8 +524,8 @@
   .swapContainerInfo {
     order: 3;
   }
-  .transaction{
-      font-size: 8.5px;
+  .transaction {
+    font-size: 8.5px;
     a {
       font-size: 8.5px;
     }
@@ -586,12 +586,10 @@
   }
 }
 
-
 .information {
   position: relative;
   flex-basis: 100%;
 }
-
 
 h3 {
   font-size: 20px;
@@ -601,8 +599,20 @@ h3 {
   padding-bottom: 700px;
 }
 
-
 .icon {
   margin-right: 1%;
   cursor: pointer;
+}
+@media all and (min-width: 320px) and (max-width: 480px) {
+  .swapContainer {
+    display: block;
+    padding-top: 20px !important;
+  }
+}
+
+@media all and (min-width: 570px) and (max-width: 670px) {
+  .swapInfo {
+    max-width: 540px;
+    width: 540px;
+  }
 }
