@@ -105,7 +105,7 @@ export default class App extends React.Component {
     window.prerenderReady = true
   }
 
-  componentWillUnmount() {
+  componentDidUpdate() {
     if (process.env.MAINNET) {
       firebase.setUserLastOnline()
     }
