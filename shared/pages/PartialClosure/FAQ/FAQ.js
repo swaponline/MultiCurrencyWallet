@@ -15,7 +15,7 @@ export default class FAQ extends Component {
 
   /* eslint-disable */
 
-  onDone = () => {
+  onDone = (hash) => {
     /* Open accordion if hash */
     if (hash) {
       $(hash).collapse('show');
@@ -175,12 +175,11 @@ export default class FAQ extends Component {
         $('.swap-faq-col-1').html(accordionHtmlOne);
         $('.swap-faq-col-2').html(accordionHtmlTwo);
 
-      }).done(function (data) {
-
-        this.onDone()
+      }).done((data) => {
+        this.onDone(hash)
       });
     } else {
-      this.onDone()
+      this.onDone(hash)
     }
 
   }
