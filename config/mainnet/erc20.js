@@ -44,4 +44,9 @@ export default {
     decimals: 6,
     fullName: 'usdt',
   },
+  snm: {
+    address: '0x983f6d60db79ea8ca4eb9968c6aff8cfa04b3c63',
+    decimals: 18,
+    fullName: 'snm',
+  },
 }
