@@ -8,11 +8,11 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 
 @cssModules(styles)
 export default class ErrorPageNoSSL extends Component {
-  render () {
+  render() {
     return (
       <div styleName="page">
         <h3 styleName="header">
-          "Error: This page does not support secure connection (https)"
+          Error: This page should be opened in a secure connection (with &#34;https&#34; in the beginning)
         </h3>
       </div>
     )

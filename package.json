@@ -143,8 +143,8 @@
     "webpack-dev-middleware": "^2.0.6"
   },
   "dependencies": {
-    "axios": "^0.18.0",
     "autosize": "^4.0.2",
+    "axios": "^0.18.0",
     "bchaddrjs": "^0.3.2",
     "bestzip": "^2.1.2",
     "bitcoincashjs-lib": "^3.3.3",
@@ -167,6 +167,8 @@
     "moment-with-locales-es6": "^1.0.1",
     "mortice": "1.2.1",
     "node-gyp": "^3.8.0",
+    "qtumjs-ethjs-abi": "^1.0.3",
+    "qtumjs-wallet": "^0.2.1",
     "react": "^16.3.2",
     "react-click-outside": "github:tj/react-click-outside",
     "react-cookie": "^2.2.0",
@@ -180,6 +182,8 @@
     "react-intl": "^2.7.1",
     "react-items-carousel": "^2.3.6",
     "react-paginate": "^5.2.3",
+    "react-qr-reader": "^2.2.1",
+    "react-qr-scanner": "0.0.8",
     "react-redux": "^5.0.7",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
@@ -195,7 +199,6 @@
     "stellar-sdk": "^0.11.0",
     "styled-components": "^4.1.2",
     "valuelink": "^1.5.5",
-    "web3": "1.0.0-beta.34",
-    "qtumjs-wallet": "^0.2.1"
+    "web3": "1.0.0-beta.34"
   }
 }

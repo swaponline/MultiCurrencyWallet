@@ -35,11 +35,11 @@ import { localisedUrl } from 'helpers/locale'
 import { isCoinAddress } from 'swap.app/util/typeforce'
 import config from 'app-config'
 import SwapApp, { util } from 'swap.app'
+import QrReader from 'react-qr-scanner'
 
 import helpers, { constants, links, ethToken } from 'helpers'
 import { animate } from 'helpers/domUtils'
 import Switching from 'components/controls/Switching/Switching'
-
 
 const allowedCoins = ['BTC', 'ETH', 'BCH']
 
@@ -210,6 +210,7 @@ export default class PartialClosure extends Component {
       extendedControls: false,
       estimatedFeeValues: {},
       desclineOrders: [],
+      openScanCam: false,
     }
 
     constants.coinsWithDynamicFee
@@ -350,6 +351,12 @@ export default class PartialClosure extends Component {
         exGetRate,
       }))
     } catch (e) {
+      const exHaveRate = (this.usdRates[haveCurrency] !== undefined) ? this.usdRates[haveCurrency] : 0
+      const exGetRate = (this.usdRates[getCurrency] !== undefined) ? this.usdRates[getCurrency] : 0
+      this.setState(() => ({
+        exHaveRate,
+        exGetRate,
+      }))
       console.warn('Cryptonator offline')
     }
   }
@@ -545,7 +552,7 @@ export default class PartialClosure extends Component {
   }
 
   setOrderOnState = (orders) => {
-    const { haveAmount, getCurrency, estimatedFeeValues } = this.state
+    const { haveAmount, getCurrency } = this.state
 
     let maxAllowedSellAmount = BigNumber(0)
     let maxAllowedGetAmount = BigNumber(0)
@@ -776,7 +783,6 @@ export default class PartialClosure extends Component {
 
   checkPair = () => {
     const { getCurrency, haveCurrency } = this.state
-    this.getUsdBalance()
 
     const noPairToken = (config && config.isWidget) ? config.erc20token : 'swap'
 
@@ -785,6 +791,7 @@ export default class PartialClosure extends Component {
 
     const selected = actions.pairs.selectPairPartial(checkingValue)
     const check = selected.map(item => item.value).includes(getCurrency)
+    this.getUsdBalance()
 
     if (!check) {
       this.chooseCurrencyToRender(selected)
@@ -796,7 +803,9 @@ export default class PartialClosure extends Component {
   chooseCurrencyToRender = (selected) => {
     this.setState(() => ({
       getCurrency: selected[0].value,
-    }))
+    }), () => {
+      this.getUsdBalance()
+    })
   }
 
   updateAllowedBalance = async () => {
@@ -877,9 +886,30 @@ export default class PartialClosure extends Component {
     })
   }
 
+  openScan = () => {
+    const { openScanCam } = this.state
+
+    this.setState(() => ({
+      openScanCam: !openScanCam,
+    }))
+  }
+
+  handleError = err => {
+    console.error(err)
+  }
+
+  handleScan = data => {
+    if (data) {
+      this.setState(() => ({
+        customWallet: data.includes(':') ? data.split(':')[1] : data,
+      }))
+      this.openScan()
+    }
+  }
+
   render() {
     const { currencies, addSelectedItems, currenciesData, tokensData, intl: { locale, formatMessage }, userEthAddress } = this.props
-    const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching, desclineOrders,
+    const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching, desclineOrders, openScanCam,
       isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet, exHaveRate, exGetRate,
       maxBuyAmount, getAmount, goodRate, isShowBalance, extendedControls, estimatedFeeValues, isToken, dynamicFee, haveAmount,
     } = this.state
@@ -903,8 +933,6 @@ export default class PartialClosure extends Component {
     const isWidgetLink = this.props.location.pathname.includes('/exchange') && this.props.location.hash === '#widget'
     const isWidget = isWidgetBuild || isWidgetLink
     const availableAmount = estimatedFeeValues[haveCurrency.toLowerCase()] > 0 ? BigNumber(haveAmount).plus(estimatedFeeValues[haveCurrency.toLowerCase()]) : 0
-
-    console.log(balance, estimatedFeeValues, 0.00000600)
 
     if (redirect) {
       return <Redirect push to={`${localisedUrl(locale, links.swap)}/${getCurrency}-${haveCurrency}/${orderId}`} />
@@ -1160,7 +1188,15 @@ export default class PartialClosure extends Component {
                   </div>
                   <div styleName={!customWalletUse ? 'anotherRecepient anotherRecepient_active' : 'anotherRecepient'}>
                     <div styleName="walletInput">
-                      <Input required disabled={customWalletUse} valueLink={linked.customWallet} pattern="0-9a-zA-Z" placeholder="Enter the receiving wallet address" />
+                      <Input
+                        inputCustomStyle={{ fontSize: '15px' }}
+                        required
+                        disabled={customWalletUse}
+                        valueLink={linked.customWallet}
+                        pattern='0-9a-zA-Z'
+                        placeholder='Enter the receiving wallet address'
+                      />
+                      <i styleName="qrCode" className="fas fa-qrcode" onClick={this.openScan} />
                     </div>
                   </div>
                 </div>
@@ -1182,7 +1218,6 @@ export default class PartialClosure extends Component {
       </div>
     )
 
-
     return isWidgetBuild
       ? Form
       : (
@@ -1201,6 +1236,19 @@ export default class PartialClosure extends Component {
               <span styleName="scrollTrigger" />
             </div>
 
+            {openScanCam &&
+              <div styleName="scan">
+                <span styleName="close" onClick={this.openScan}>
+                  <FormattedMessage id="closeIcon1241" defaultMessage="x" />
+                </span>
+                <QrReader
+                  delay={300}
+                  onError={this.handleError}
+                  onScan={this.handleScan}
+                  style={{ width: '100%' }}
+                />
+              </div>
+            }
             <Fragment>
               <div styleName="container alignCenter">
                 <Promo subTitle={subTitle(sellTokenFullName, haveCurrency.toUpperCase(), buyTokenFullName, getCurrency.toUpperCase())} />

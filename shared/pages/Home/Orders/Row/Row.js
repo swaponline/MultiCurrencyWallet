@@ -49,12 +49,18 @@ export default class Row extends Component {
       windowWidth: 0,
       isFetching: false,
       enterButton: false,
+      estimatedFeeValues: {},
     }
+
+    constants.coinsWithDynamicFee
+      .forEach(item => this.state.estimatedFeeValues[item] = constants.minAmountOffer[item])
   }
 
   componentDidMount() {
+    const { estimatedFeeValues } = this.state
     window.addEventListener('resize', this.renderContent)
     this.renderContent()
+    this.getEstimateFee(estimatedFeeValues)
   }
 
   componentWillUnmount() {
@@ -69,6 +75,11 @@ export default class Row extends Component {
     } else {
       this.checkBalance(buyCurrency)
     }
+  }
+
+  getEstimateFee = async (estimatedFeeValues) => {
+    const fee = await helpers.estimateFeeValue.setEstimatedFeeValues({ estimatedFeeValues })
+    this.setState(() => ({ estimatedFeeValues: fee }))
   }
 
   checkBalance = async (currency) => {
@@ -199,7 +210,7 @@ export default class Row extends Component {
   }
 
   renderWebContent() {
-    const { balance, isFetching } = this.state
+    const { balance, isFetching, estimatedFeeValues } = this.state
     const {
       peer,
       orderId,
@@ -220,6 +231,10 @@ export default class Row extends Component {
 
     const pair = Pair.fromOrder(this.props.row)
     const { price, amount, total, main, base, type } = pair
+
+    const amountOnWatch = BigNumber(estimatedFeeValues[buyCurrency.toLowerCase()]).isGreaterThan(0) ?
+      BigNumber(balance).minus(estimatedFeeValues[buyCurrency.toLowerCase()]).minus(0.00000600).toString()
+      : balance
 
     return (
       <tr style={orderId === id ? { background: 'rgba(0, 236, 0, 0.1)' } : {}}>
@@ -291,7 +306,7 @@ export default class Row extends Component {
                         </Fragment>
                       ) : (
                         <RequestButton
-                          disabled={balance >= Number(buyAmount)}
+                          disabled={BigNumber(amountOnWatch).isGreaterThanOrEqualTo(buyAmount)}
                           onClick={() => this.checkDeclineOrders(id, isMy ? sellCurrency : buyCurrency)}
                           data={{ type, amount, main, total, base }}
                         >

@@ -448,7 +448,7 @@ export default class Row extends Component {
                 !contractAddress ? (
                   <div styleName="notContractAddress">
                     {
-                      address !== '' && <i className="far fa-copy" styleName="icon" data-tip data-for="Copy" style={{ width: '14px' }} />
+                      address !== '' && <i className="far fa-copy" styleName="icon" data-tip data-for="Copy" />
                     }
                     <LinkAccount type={currency} address={address}>{this.handleSliceAddress()}</LinkAccount>
                     <ReactTooltip id="Copy" type="light" effect="solid">
