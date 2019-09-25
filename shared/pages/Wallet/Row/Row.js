@@ -14,6 +14,7 @@ import CopyToClipboard from 'react-copy-to-clipboard'
 import Coin from 'components/Coin/Coin'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import BtnTooltip from 'components/controls/WithdrawButton/BtnTooltip'
+import WithdrawButton from 'components/controls/WithdrawButton/WithdrawButton'
 
 import LinkAccount from '../LinkAccount/LinkAcount'
 import KeychainStatus from '../KeychainStatus/KeychainStatus'
@@ -204,7 +205,7 @@ export default class Row extends Component {
     actions.modals.open(constants.modals.EosBuyAccount)
   }
 
-  handleWithdraw = () => {
+  handleWithdraw = (specificator = undefined) => {
     const {
       item: {
         decimals,
@@ -218,15 +219,20 @@ export default class Row extends Component {
     } = this.props
 
     // actions.analytics.dataEvent(`balances-withdraw-${currency.toLowerCase()}`)
-    actions.modals.open(constants.modals.Withdraw, {
-      currency,
-      address,
-      contractAddress,
-      decimals,
-      token,
-      balance,
-      unconfirmedBalance,
-    })
+    actions.modals.open(
+      specificator === 'bitcoinMultisig'
+        ? constants.modals.WithdrawMultisig
+        : constants.modals.Withdraw,
+      {
+        currency,
+        address,
+        contractAddress,
+        decimals,
+        token,
+        balance,
+        unconfirmedBalance,
+      }
+    )
   }
 
   handleReceive = () => {
@@ -561,10 +567,22 @@ export default class Row extends Component {
               wallet="true">
               <FormattedMessage id="Row313" defaultMessage="Deposit" />
             </CurrencyButton>
-            <BtnTooltip onClick={this.handleWithdraw} disable={isBalanceEmpty} id={`row${currency}`}>
-              <i className="fas fa-arrow-alt-circle-right" />
-              <FormattedMessage id="Row328" defaultMessage="Send" />
-            </BtnTooltip>
+            <span styleName="withdrawBtn">
+              <BtnTooltip onClick={this.handleWithdraw} disable={isBalanceEmpty} id={`row${currency}`}>
+                <i className="fas fa-arrow-alt-circle-right" />
+                <FormattedMessage id="Row328" defaultMessage="Send" />
+              </BtnTooltip>
+              {
+                currency === 'BTC' &&
+                (
+                  <div styleName="additionalWithdrawing">
+                    <WithdrawButton onClick={() => this.handleWithdraw('bitcoinMultisig')} disable={isBalanceEmpty} >
+                      <FormattedMessage id="Row3281" defaultMessage="Multisig sending" />
+                    </WithdrawButton>
+                  </div>
+                )
+              }
+            </span>
             {
               tradeAllowed && (
                 <BtnTooltip onClick={() => this.handleGoTrade(currency)} styleName={isBalanceEmpty && 'disableWth'}>

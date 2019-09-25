@@ -1,6 +1,7 @@
 export default {
   SignUp: 'SignUpModal',
   Withdraw: 'WithdrawModal',
+  WithdrawMultisig: 'WithdrawModalMultisig',
   Offer: 'OfferModal',
   PrivateKeys: 'PrivateKeysModal',
   EosRegister: 'EosRegisterModal',
