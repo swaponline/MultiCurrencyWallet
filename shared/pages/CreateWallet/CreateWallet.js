@@ -1,23 +1,46 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
+
 import CSSModules from 'react-css-modules'
+import styles from './CreateWallet.scss'
 
 import { connect } from 'redaction'
 
-import ReactTooltip from 'react-tooltip'
+import { FormattedMessage, injectIntl } from 'react-intl'
+import { withRouter } from 'react-router-dom'
+import links from 'helpers/links'
+import { localisedUrl } from 'helpers/locale'
 
-import styles from './CreateWallet.scss'
-import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
-// import  from 'components/ui/CurrencyIcon/images'
+import check from './colorsIcons/check'
+import FirstStep from './Steps/FirstStep'
+import SecondStep from './Steps/SecondStep'
+import ThirdStep from './Steps/ThirdStep'
 
 
+const color = (step, el) => {
+  if (step === el) {
+    return 'purple'
+  } else if (step > el) {
+    return 'green'
+  }
+  return ''
+}
 const CreateWallet = (props) => {
-  const coins = [
-    { name: 'btc', capture: 'Bitcoin' },
-    { name: 'eth', capture: 'Ethereum' },
-    { name: 'usdt', capture: 'Stablecoin' },
-    { name: 'eurs', capture: 'Stablecoin' },
-    { name: 'swap', capture: 'Swap' },
-  ]
+  const [step, setStep] = useState(1)
+  const steps = [1, 2, 3]
+  const { history, intl: { locale }, createWallet } = props
+
+
+  const handleClick = () => {
+    if (step !== 3) {
+      // if(step === 2) {
+      //   //!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+      //
+      // }
+      return setStep(step + 1)
+    }
+    history.push(localisedUrl(locale, '/'))
+  }
+
   return (
     <div styleName="wrapper">
       <div styleName="formBody">
@@ -25,42 +48,27 @@ const CreateWallet = (props) => {
           <FormattedMessage id="createWalletHeader1" defaultMessage="Create the wallet by 3 simple steps?" />
         </h2>
         <div styleName="inLine">
-          <div styleName="stepNumber">1</div>
-          <div styleName="stepNumber">2</div>
-          <div styleName="stepNumber">3</div>
+          {steps.map(el => (
+            <div styleName={`stepNumber ${color(step, el)}`}>
+              {step > el ? check() : el}
+            </div>
+          ))}
         </div>
         <div>
-          <div styleName="subHeader">
-            <h5>
-              <FormattedMessage
-                id="createWalletSubHeader1"
-                defaultMessage="Choose the wallets currency"
-              />
-            </h5>
-            <p styleName="capture">
-              <FormattedMessage
-                id="createWalletCapture1"
-                defaultMessage="To choose Bitcoin, Ethereum, USDT, EUROS, Swap  or all at once"
-              />
-            </p>
-          </div>
-          {coins.map(el => {
-            const { name, capture } = el
-            return (
-              <div styleName="card">
-                <div style={{ display: "block" }}>
-                  <FormattedMessage id="createWalletCapture1" defaultMessage="to btc" />
-                  {capture}
-                </div>
-              </div>
-            )
-          })}
-          <button styleName="continue">
-            <FormattedMessage id="createWalletButton1" defaultMessage="Continue" />
+          {step === 1 && <FirstStep />}
+          {step === 2 && <SecondStep />}
+          {step === 3 && <ThirdStep />}
+          <button styleName="continue" onClick={handleClick}>
+            {step === 3 ?
+              <FormattedMessage id="createWalletButton3" defaultMessage="Create Wallet" /> :
+              <FormattedMessage id="createWalletButton1" defaultMessage="Continue" />
+            }
           </button>
         </div>
       </div>
     </div>
   )
 }
-export default CSSModules(CreateWallet, styles, { allowMultiple: true })
+export default connect({
+  createWallet: 'createWallet',
+})(injectIntl(withRouter(CSSModules(CreateWallet, styles, { allowMultiple: true }))))

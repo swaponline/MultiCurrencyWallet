@@ -1,8 +1,8 @@
 .wrapper {
-  width: 375px;
-  height: 819px;
-  margin: 10% auto;
-  border: 1px solid black;
+  min-width: 375px;
+  max-width: 375px;
+  min-height: 600px;
+  margin: 40px auto;
 }
 
 .formBody {
@@ -34,10 +34,27 @@
   font-weight: bold;
 }
 
+.purple {
+  background-color: #6144E5;
+  color: #f0eefd
+}
+
+.purpleBorder {
+  border-color: #6144E5 !important;
+}
+.green {
+  background-color: #0ccf14;
+}
+
 .subHeader {
   width: 320px;
   height: 61px;
   margin-bottom: 25px;
+}
+
+.third {
+  height: 59px;
+  margin-bottom: 0px;
 }
 
 .subHeader h5 {
@@ -80,6 +97,10 @@
   background: #f0eefd;
 }
 
+.listGroup {
+  margin: auto 10px;
+}
+
 .card {
   background: #FFFFFF;
   border: 1px solid rgba(142, 154, 163, 0.16);
@@ -88,4 +109,126 @@
   border-radius: 4px;
   margin-bottom: 8px;
   padding: 10px;
+  height: 53px;
+  list-style: none;
+  display: flex;
+
+  b {
+    font-weight: bolder;
+    font-size: 16px;
+    color: #1F2D48;
+  }
+
+  li {
+    font-weight: 100;
+    color: #8E9AA3;
+    font-size: 11px;
+    font-family: Inter;
+    line-height: 15px;
+  }
+}
+
+.thirdCard {
+  height: 65px;
+}
+
+.inputWrapper {
+  display: block;
+}
+
+.currencyChooserWrapper{
+  overflow-y: auto;
+}
+
+.inputWrapper,
+.currencyChooserWrapper{
+  height: 265px;
+}
+
+.secondStepInput {
+  height: 50px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.logo {
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  padding: 7px;
+  margin: auto 0;
+}
+.btc {
+  background: orange;
+}
+
+.eth {
+  background: black;
+}
+
+.usdt {
+  background: #0ccf14;
+}
+
+.swap {
+  background: #775cf1;
+}
+
+.thirdPageIcons {
+  background: #f0eefd;
+}
+
+@media screen and (max-width: 568px){
+  .wrapper {
+    margin: 125px auto;
+  }
+}
+
+@media screen and (max-width: 480px){
+  .wrapper {
+    min-width: 0;
+    max-width: 100%;
+    max-height: 90vh;
+    margin: 0
+  }
+
+  .wrapper h2 {
+    width: 100%;
+    height: 45px;
+    font-size: 23px;
+  }
+
+  .subHeader {
+    width: 100%;
+    margin: 0;
+  }
+  .subHeader h5 {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+  .capture {
+    font-size: 11px;
+    line-height: 14px;
+  }
+
+  .inputWrapper,
+  .currencyChooserWrapper {
+    height: 240px;
+  }
+
+  .card li {
+    font-size: 9px;
+  }
+
+  .secureChooserWrapper {
+    height: 240px;
+    overflow-y: auto;
+  }
+
+  .continue {
+    margin-top: 30px;
+  }
+
 }
