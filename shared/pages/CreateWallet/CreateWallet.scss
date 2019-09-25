@@ -1,0 +1,91 @@
+.wrapper {
+  width: 375px;
+  height: 819px;
+  margin: 10% auto;
+  border: 1px solid black;
+}
+
+.formBody {
+  margin: 0 16px;
+}
+
+.wrapper h2 {
+  width: 320px;
+  height: 68px;
+  right: 39px;
+  top: 93px;
+  margin-bottom: 40px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 28px;
+  line-height: 120%;
+}
+
+.stepNumber {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  line-height: 2.5;
+  text-align: center;
+  background-color: #f0eefd;
+  color: #6144E5;
+  border: 1px solid #f0eefd;
+  font-weight: bold;
+}
+
+.subHeader {
+  width: 320px;
+  height: 61px;
+  margin-bottom: 25px;
+}
+
+.subHeader h5 {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.capture {
+  font-weight: 800;
+  font-size: 13px;
+  line-height: 18px;
+  color: #8E9AA3;
+}
+
+.inLine {
+  display: flex;
+  width: 135px;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.continue {
+  border-radius: 2px;
+  text-align: center;
+  font-weight: 800;
+  font-size: 15px;
+  line-height: 150%;
+  background: #6144E5;
+  color: white;
+  width: 100%;
+  height: 45px;
+  margin-top: 40px;
+}
+
+.continue:disabled{
+  color: #6144E5;
+  background: #f0eefd;
+}
+
+.card {
+  background: #FFFFFF;
+  border: 1px solid rgba(142, 154, 163, 0.16);
+  box-sizing: border-box;
+  box-shadow: 0px 2px 12px rgba(142, 154, 163, 0.08);
+  border-radius: 4px;
+  margin-bottom: 8px;
+  padding: 10px;
+}
