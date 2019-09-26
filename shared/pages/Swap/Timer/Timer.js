@@ -74,7 +74,7 @@ export default class Timer extends React.Component {
             <div styleName="timer">
               <FormattedMessage
                 id="timerTimeToCancel"
-                defaultMessage="You have {min} min for make a payment"
+                defaultMessage="You have {min} min to make a payment"
                 values={{ min: `${minToCancel}` }}
               />
             </div>
