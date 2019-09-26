@@ -9,7 +9,6 @@ import reducers from 'redux/core/reducers'
 import ReactTooltip from 'react-tooltip'
 import { FormattedMessage, injectIntl } from 'react-intl'
 
-import Check from '../colorsIcons/check'
 import Explanation from '../Explanation'
 import icons from '../images'
 

@@ -10,7 +10,7 @@ import { withRouter } from 'react-router-dom'
 import links from 'helpers/links'
 import { localisedUrl } from 'helpers/locale'
 
-import check from './colorsIcons/check'
+import check from './images/check'
 import FirstStep from './Steps/FirstStep'
 import SecondStep from './Steps/SecondStep'
 import ThirdStep from './Steps/ThirdStep'

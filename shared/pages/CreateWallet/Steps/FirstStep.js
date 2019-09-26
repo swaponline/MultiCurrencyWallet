@@ -8,7 +8,6 @@ import reducers from 'redux/core/reducers'
 import ReactTooltip from 'react-tooltip'
 import { FormattedMessage } from 'react-intl'
 
-import Check from '../colorsIcons/check'
 import Explanation from '../Explanation'
 import icons from '../images'
 
@@ -19,6 +18,16 @@ const subHeaderText = () => (
     defaultMessage="Choose the wallets currency"
   />
 )
+
+/* eslint-disable */
+const cupture = () => (
+  <FormattedMessage
+    id="createWalletCapture1"
+    defaultMessage="To choose Bitcoin, Ethereum, USDT, EUROS, Swap  or all at once"
+  />
+)
+/* eslint-enable */
+
 
 const CreateWallet = (props) => {
 
@@ -45,10 +54,7 @@ const CreateWallet = (props) => {
   return (
     <div>
       <Explanation subHeaderText={subHeaderText()}>
-        <FormattedMessage
-          id="createWalletCapture1"
-          defaultMessage="To choose Bitcoin, Ethereum, USDT, EUROS, Swap  or all at once"
-        />
+        {cupture()}
       </Explanation>
       <div styleName="currencyChooserWrapper">
         {coins.map(el => {
@@ -61,7 +67,7 @@ const CreateWallet = (props) => {
                 alt={`${name} icon`}
                 role="image"
               />
-              <div styleName='listGroup'>
+              <div styleName="listGroup">
                 <li><b>{name.toUpperCase()}</b></li>
                 <li>{capture}</li>
               </div>
