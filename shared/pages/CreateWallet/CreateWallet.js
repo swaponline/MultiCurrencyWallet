@@ -47,7 +47,7 @@ const CreateWallet = (props) => {
     if (step !== 3) {
       return setStep(step + 1)
     }
-    history.push(localisedUrl(locale, '/'))
+    history.push(localisedUrl(locale, '/wallet'))
   }
 
   const validate = () => {
@@ -57,7 +57,7 @@ const CreateWallet = (props) => {
       return
     }
 
-    if (step === 2) {
+    if (step === 2 && eMail.length) {
       if (!/.+@.+\.[A-Za-z]+$/.test(eMail)) {
         setError('Invalid e-mail')
         return
