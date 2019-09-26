@@ -64,13 +64,14 @@ export default class Timer extends React.Component {
 
   render() {
     const { timeLeft, cancelTimeLeft, cancelTime } = this.state
+    const { isRefund } = this.props
     const min = Math.ceil(timeLeft / 1000 / 60)
     const minToCancel = Math.ceil(cancelTimeLeft / 1000 / 60)
 
     return (
       <Fragment>
         {
-          (cancelTime && (minToCancel > 0)) ? (
+          (cancelTime && (minToCancel > 0) && !isRefund) ? (
             <div styleName="timer">
               <FormattedMessage
                 id="timerTimeToCancel"
