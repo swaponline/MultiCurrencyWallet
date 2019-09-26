@@ -29,7 +29,7 @@ const cupture = () => (
 /* eslint-enable */
 
 
-const CreateWallet = (props) => {
+const CreateWallet = ({ onClick, error, setError }) => {
 
   const [border, setBorder] = useState({
     btc: false,
@@ -49,32 +49,38 @@ const CreateWallet = (props) => {
     const dataToReturn = { ...border, [name]: !border[name]  }
     setBorder(dataToReturn)
     reducers.createWallet.newWalletData({ type: 'currencies', data: dataToReturn })
+    setError(null)
   }
 
   return (
     <div>
-      <Explanation subHeaderText={subHeaderText()}>
-        {cupture()}
-      </Explanation>
-      <div styleName="currencyChooserWrapper">
-        {coins.map(el => {
-          const { name, capture } = el
-          return (
-            <div styleName={`card ${border[name] ? 'purpleBorder' : ''}`} onClick={() => handleClick(name)}>
-              <img
-                styleName={`logo ${name}`}
-                src={icons[name]}
-                alt={`${name} icon`}
-                role="image"
-              />
-              <div styleName="listGroup">
-                <li><b>{name.toUpperCase()}</b></li>
-                <li>{capture}</li>
+      <div>
+        <Explanation subHeaderText={subHeaderText()}>
+          {cupture()}
+        </Explanation>
+        <div styleName="currencyChooserWrapper">
+          {coins.map(el => {
+            const { name, capture } = el
+            return (
+              <div styleName={`card ${border[name] ? 'purpleBorder' : ''}`} onClick={() => handleClick(name)}>
+                <img
+                  styleName={`logo ${name}`}
+                  src={icons[name]}
+                  alt={`${name} icon`}
+                  role="image"
+                />
+                <div styleName="listGroup">
+                  <li><b>{name.toUpperCase()}</b></li>
+                  <li>{capture}</li>
+                </div>
               </div>
-            </div>
-          )
-        })}
+            )
+          })}
+        </div>
       </div>
+      <button styleName="continue" onClick={onClick} disabled={error}>
+        <FormattedMessage id="createWalletButton1" defaultMessage="Continue" />
+      </button>
     </div>
   )
 }

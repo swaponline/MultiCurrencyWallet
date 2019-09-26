@@ -92,10 +92,11 @@
   margin-top: 40px;
 }
 
-.continue:disabled{
+.continue:disabled {
+  background-color: #f0eefd;
   color: #6144E5;
-  background: #f0eefd;
 }
+
 
 .listGroup {
   margin: auto 10px;
@@ -178,6 +179,13 @@
 
 .thirdPageIcons {
   background: #f0eefd;
+}
+
+.error {
+  color: red;
+  position: relative;
+  bottom: 20px;
+  font-size: 12px;
 }
 
 @media screen and (max-width: 568px){

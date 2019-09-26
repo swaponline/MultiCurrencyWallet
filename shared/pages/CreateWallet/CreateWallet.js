@@ -24,21 +24,51 @@ const color = (step, el) => {
   }
   return ''
 }
+
+const styleBtn = { backgroundColor: '#f0eefd', color: '#6144E5' }
+const defaultColors = { backgroundColor: '#6144E5' }
+
 const CreateWallet = (props) => {
+  const { history, intl: { locale }, createWallet: { usersData: { eMail }, currencies, secure } } = props
+
   const [step, setStep] = useState(1)
+  const [error, setError] = useState('Choose something')
+
   const steps = [1, 2, 3]
-  const { history, intl: { locale }, createWallet } = props
 
 
   const handleClick = () => {
+    setError(null)
+
+    if (step === 2) {
+      setError('Choose something')
+    }
+
     if (step !== 3) {
-      // if(step === 2) {
-      //   //!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-      //
-      // }
       return setStep(step + 1)
     }
     history.push(localisedUrl(locale, '/'))
+  }
+
+  const validate = () => {
+    setError(null)
+    if (!Object.values(currencies).includes(true) && step === 1) {
+      setError('Choose something')
+      return
+    }
+
+    if (step === 2) {
+      if (!eMail.includes('@.')) {
+        setError('Invalid e-mail')
+        return
+      }
+    }
+
+    if (!secure.length && step === 3) {
+      setError('Choose something')
+      return
+    }
+    handleClick()
   }
 
   return (
@@ -55,15 +85,9 @@ const CreateWallet = (props) => {
           ))}
         </div>
         <div>
-          {step === 1 && <FirstStep />}
-          {step === 2 && <SecondStep />}
-          {step === 3 && <ThirdStep />}
-          <button styleName="continue" onClick={handleClick}>
-            {step === 3 ?
-              <FormattedMessage id="createWalletButton3" defaultMessage="Create Wallet" /> :
-              <FormattedMessage id="createWalletButton1" defaultMessage="Continue" />
-            }
-          </button>
+          {step === 1 && <FirstStep error={error} onClick={validate} setError={setError} />}
+          {step === 2 && <SecondStep error={error} onClick={validate} setError={setError} />}
+          {step === 3 && <ThirdStep error={error} onClick={validate} setError={setError} />}
         </div>
       </div>
     </div>

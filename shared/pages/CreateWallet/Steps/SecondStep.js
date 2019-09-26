@@ -19,7 +19,7 @@ const subHeaderText = () => (
 )
 
 const CreateWallet = (props) => {
-  const { intl: { locale } } = props
+  const { intl: { locale }, onClick, error, setError } = props
   const [inputValue, setInputValue] = useState({
     userName: '',
     eMail: '',
@@ -32,27 +32,33 @@ const CreateWallet = (props) => {
   const onChange = e => {
     const { target: { value, name } } = e
     const dataToReturn = { ...inputValue, [name]: value }
-
+    setError(null)
     setInputValue(dataToReturn)
     reducers.createWallet.newWalletData({ type: 'usersData', data: dataToReturn })
   }
 
   return (
     <div>
-      <Explanation subHeaderText={subHeaderText()}>
-        <FormattedMessage
-          id="createWalletCapture2"
-          defaultMessage="You will receive notifications of completed transactions from your wallet"
-        />
-      </Explanation>
-      <div styleName="inputWrapper">
-        {inputs.map(el => {
-          const { name, placeHolder } = el
-          return (
-            <input name={name} onChange={onChange} styleName="secondStepInput" placeHolder={placeHolder} type="text" />
-          )
-        })}
+      <div>
+        <Explanation subHeaderText={subHeaderText()}>
+          <FormattedMessage
+            id="createWalletCapture2"
+            defaultMessage="You will receive notifications of completed transactions from your wallet"
+          />
+        </Explanation>
+        <div styleName="inputWrapper">
+          {inputs.map(el => {
+            const { name, placeHolder } = el
+            return (
+              <input name={name} onChange={onChange} styleName="secondStepInput" placeholder={placeHolder} type="email" />
+            )
+          })}
+          {error && <b styleName="error">{error}</b>}
+        </div>
       </div>
+      <button styleName="continue" onClick={onClick} disabled={error}>
+        <FormattedMessage id="createWalletButton1" defaultMessage="Continue" />
+      </button>
     </div>
   )
 }

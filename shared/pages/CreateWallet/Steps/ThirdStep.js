@@ -21,7 +21,7 @@ const subHeaderText = () => (
 )
 
 const CreateWallet = (props) => {
-  const { intl: { locale } } = props
+  const { intl: { locale }, onClick, error, setError } = props
 
   const [border, setBorder] = useState({
     color: {
@@ -46,6 +46,7 @@ const CreateWallet = (props) => {
     })
     setBorder({ color: colors, selected: name })
     reducers.createWallet.newWalletData({ type: 'secure', data: name })
+    setError(null)
   }
 
   const coins = [
@@ -69,32 +70,36 @@ const CreateWallet = (props) => {
 
   return (
     <div>
-      <Explanation subHeaderText={subHeaderText()} step="3">
-        <FormattedMessage
-          id="createWalletCapture3"
-          defaultMessage="No protection, sms, google auth, multisig"
-        />
-      </Explanation>
-      <div styleName="secureChooserWrapper">
-        {coins.map(el => {
-          const { name, capture, text } = el
-          return (
-            <div styleName={`card thirdCard ${border.color[name] ? 'purpleBorder' : ''}`} onClick={() => handleClick(name)}>
-              <img
-                styleName="logo thirdPageIcons"
-                src={icons[name]}
-                alt={`${name} icon`}
-                role="image"
-              />
-              <div styleName="listGroup">
-                <li><b>{text}</b></li>
-                <li>{capture}</li>
+      <div>
+        <Explanation subHeaderText={subHeaderText()} step="3">
+          <FormattedMessage
+            id="createWalletCapture3"
+            defaultMessage="No protection, sms, google auth, multisig"
+          />
+        </Explanation>
+        <div styleName="secureChooserWrapper">
+          {coins.map(el => {
+            const { name, capture, text } = el
+            return (
+              <div styleName={`card thirdCard ${border.color[name] ? 'purpleBorder' : ''}`} onClick={() => handleClick(name)}>
+                <img
+                  styleName="logo thirdPageIcons"
+                  src={icons[name]}
+                  alt={`${name} icon`}
+                  role="image"
+                />
+                <div styleName="listGroup">
+                  <li><b>{text}</b></li>
+                  <li>{capture}</li>
+                </div>
               </div>
-            </div>
-          )
-        })}
+            )
+          })}
+        </div>
       </div>
-
+      <button styleName="continue" onClick={onClick} disabled={error}>
+        <FormattedMessage id="createWalletButton3" defaultMessage="Create Wallet" />
+      </button>
     </div>
   )
 }
