@@ -58,7 +58,7 @@ const CreateWallet = (props) => {
     }
 
     if (step === 2) {
-      if (!eMail.includes('@.')) {
+      if (!/.+@.+\.[A-Za-z]+$/.test(eMail)) {
         setError('Invalid e-mail')
         return
       }
