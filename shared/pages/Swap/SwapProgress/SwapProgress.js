@@ -380,7 +380,7 @@ export default class SwapProgress extends Component {
                       : (
                           <div styleName="timerRefund">
                             <Timer
-                              isRefund={true}
+                              isRefund
                               lockTime={flow.btcScriptValues.lockTime * 1000}
                               cancelTime={(flow.btcScriptValues.lockTime - 7200) * 1000}
                               enabledButton={() => this.setState(() => ({ enabledButton: true }))}
