@@ -10,6 +10,10 @@ const BtcScript = ({ recipientPublicKey, secretHash, lockTime, ownerPublicKey })
       <code>
         {`
           bitcoinjs.script.compile([
+          bitcoin.core.opcodes.opcodes.OP_SIZE,
+          Buffer.from('20' ,'hex'),
+          bitcoin.core.opcodes.OP_EQUALVERIFY,
+
           bitcoin.core.opcodes.OP_RIPEMD160,
           Buffer.from('${secretHash}', 'hex'),
           bitcoin.core.opcodes.OP_EQUALVERIFY,
