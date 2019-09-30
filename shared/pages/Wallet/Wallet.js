@@ -41,6 +41,7 @@ const isWidgetBuild = config && config.isWidget
   user: {
     ethData,
     btcData,
+    btcMultisigData,
     bchData,
     tokensData,
     eosData,
@@ -66,6 +67,7 @@ const isWidgetBuild = config && config.isWidget
       // usdtOmniData,
     ] : [
       btcData,
+      btcMultisigData,
       bchData,
       ethData,
       eosData,
@@ -81,6 +83,7 @@ const isWidgetBuild = config && config.isWidget
 
   const currencyBalance = [
     btcData,
+    btcMultisigData,
     bchData,
     ethData,
     eosData,

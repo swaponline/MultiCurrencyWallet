@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import actions from 'redux/actions'
 
-import bitcoin from 'bitcoinjs-lib'
+import * as bitcoin from 'bitcoinjs-lib'
 
 import Link from 'sw-valuelink'
 import { btc, ltc, bch, constants } from 'helpers'

@@ -1,5 +1,5 @@
 import crypto from 'crypto'
-import bitcoin from 'bitcoinjs-lib'
+import * as bitcoin from 'bitcoinjs-lib'
 import React, { Component, Fragment } from 'react'
 
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'

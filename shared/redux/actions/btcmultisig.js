@@ -5,7 +5,9 @@ import * as bitcoin from 'bitcoinjs-lib'
 import bitcoinMessage from 'bitcoinjs-message'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
-import { ltc, request, constants, api } from 'helpers'
+import { btc, request, constants, api } from 'helpers'
+import { Keychain } from 'keychain.js'
+import actions from 'redux/actions'
 
 
 const login = (privateKey) => {
@@ -14,59 +16,79 @@ const login = (privateKey) => {
   if (privateKey) {
     const hash  = bitcoin.crypto.sha256(privateKey)
     const d     = BigInteger.fromBuffer(hash)
-    
-    keyPair     = bitcoin.ECPair.fromWIF(privateKey, ltc.network)
+
+    keyPair     = bitcoin.ECPair.fromWIF(privateKey, btc.network)
   }
   else {
-    console.info('Created account Litecoin ...')
-    keyPair     = bitcoin.ECPair.makeRandom({ network: ltc.network })
+    console.info('Created account BitcoinMultisig ...')
+    keyPair     = bitcoin.ECPair.makeRandom({ network: btc.network })
     privateKey  = keyPair.toWIF()
   }
 
-  localStorage.setItem(constants.privateKeyNames.ltc, privateKey)
+  localStorage.setItem(constants.privateKeyNames.btcMultisig, privateKey)
 
-  const account       = bitcoin.ECPair.fromWIF(privateKey, ltc.network) // eslint-disable-line
+  const account       = bitcoin.ECPair.fromWIF(privateKey, btc.network) // eslint-disable-line
+  const { address }   = bitcoin.payments.p2wpkh({ pubkey: account.publicKey })
   const { publicKey } = account
-  const { address }   = bitcoin.payments.p2pkh({
-    pubkey: account.publicKey,
-    network: ltc.network,
-  })
 
   const data = {
     account,
     keyPair,
     address,
+    currency: 'BTC (Multisig)',
+    fullName: 'Bitcoin (Multisig)',
     privateKey,
     publicKey,
   }
 
-  window.getLtcAddress = () => data.address
+  window.getBtcMultisigAddress = () => data.address
 
-  console.info('Logged in with Litecoin', data)
-  reducers.user.setAuthData({ name: 'ltcData', data })
+  console.info('Logged in with BitcoinMultisig', data)
+  reducers.user.setAuthData({ name: 'btcMultisigData', data })
+}
+
+const loginWithKeychain = async () => {
+  const selectedKey = await actions.keychain.login('BTCMultisig')
+
+  const pubkey = Buffer.from(`03${selectedKey.substr(0, 64)}`, 'hex')
+  const keyPair = bitcoin.ECPair.fromPublicKeyBuffer(pubkey, btc.network)
+  const address = keyPair.getAddress()
+
+  const data = {
+    address,
+    publicKey: selectedKey,
+  }
+
+  window.getBtcMultisigAddress = () => data.address
+
+  console.info('Logged in with BitcoinMultisig', data)
+  reducers.user.setAuthData({ name: 'btcMultisigData', data })
+  localStorage.setItem(constants.privateKeyNames.btcKeychainPublicKey, selectedKey)
+  localStorage.removeItem(constants.privateKeyNames.btc)
+  await getBalance()
 }
 
 const getBalance = () => {
-  const { user: { ltcData: { address } } } = getState()
+  const { user: { btcMultisigData: { address } } } = getState()
 
-  return request.get(`${api.getApiServer('ltc')}/addr/${address}`)
+  return request.get(`${api.getApiServer('bitpay')}/addr/${address}`)
     .then(({ balance, unconfirmedBalance }) => {
-      console.log('LTC Balance: ', balance)
-      console.log('LTC unconfirmedBalance Balance: ', unconfirmedBalance)
-      reducers.user.setBalance({ name: 'ltcData', amount: balance, unconfirmedBalance })
+      console.log('BTCMultisig Balance: ', balance)
+      console.log('BTCMultisig unconfirmedBalance Balance: ', unconfirmedBalance)
+      reducers.user.setBalance({ name: 'btcMultisigData', amount: balance, unconfirmedBalance })
       return balance
     })
     .catch((e) => {
-      reducers.user.setBalanceError({ name: 'ltcData' })
+      reducers.user.setBalanceError({ name: 'btcMultisigData' })
     })
 }
 
 const fetchBalance = (address) =>
-  request.get(`${api.getApiServer('ltc')}/addr/${address}`)
+  request.get(`${api.getApiServer('bitpay')}/addr/${address}`)
     .then(({ balance }) => balance)
 
 const fetchTx = (hash) =>
-  request.get(`${api.getApiServer('ltc')}/tx/${hash}`)
+  request.get(`${api.getApiServer('bitpay')}/tx/${hash}`)
     .then(({ fees, ...rest }) => ({
       fees: BigNumber(fees).multipliedBy(1e8),
       ...rest,
@@ -81,24 +103,9 @@ const fetchTxInfo = (hash) =>
 
 const getTransaction = () =>
   new Promise((resolve) => {
-    const { user: { ltcData: { address } } } = getState()
+    const { user: { btcData: { address } } } = getState()
 
-    const url = `${api.getApiServer('ltc')}/txs/?address=${address}`
-
-    function getValue(item) {
-      if (item.vin.filter(item => item.addr === address).length
-          === item.vin.length
-          && item.vout.filter(item => item.scriptPubKey.addresses[0] === address).length
-          === item.vout.length) {
-        return (parseFloat(item.valueIn) - parseFloat(item.valueOut)).toFixed(8)  // eslint-disable-next-line
-      } else {
-        return item.vin.filter(item => item.addr === address).length > 0
-          ? item.vout.filter(item => item.scriptPubKey.addresses[0] !== address)
-            .reduce((sum, current) =>  sum + parseFloat(current.value), 0)
-          : item.vout.filter(item => item.scriptPubKey.addresses[0] === address)
-            .reduce((sum, current) =>  sum + parseFloat(current.value), 0)
-      }
-    }
+    const url = `${api.getApiServer('bitpay')}/txs/?address=${address}`
 
     return request.get(url)
       .then((res) => {
@@ -110,7 +117,7 @@ const getTransaction = () =>
             ).length === item.vout.length
 
           return ({
-            type: 'ltc',
+            type: 'btc',
             hash: item.txid,
             confirmations: item.confirmations,
             value: isSelf
@@ -134,12 +141,9 @@ const getTransaction = () =>
   })
 
 const send = async ({ from, to, amount, feeValue, speed } = {}) => {
-  const { user: { ltcData: { privateKey } } } = getState()
-  const keyPair = bitcoin.ECPair.fromWIF(privateKey, ltc.network)
+  feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed })
 
-  feeValue = feeValue || await ltc.estimateFeeValue({ inSatoshis: true, speed })
-
-  const tx            = new bitcoin.TransactionBuilder(ltc.network)
+  const tx            = new bitcoin.TransactionBuilder(btc.network)
   const unspents      = await fetchUnspents(from)
 
   const fundValue     = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
@@ -153,22 +157,41 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
     tx.addOutput(from, skipValue)
   }
 
-  tx.inputs.forEach((input, index) => {
-    tx.sign(index, keyPair)
-  })
-
-  const txRaw = tx.buildIncomplete()
+  const keychainActivated = !!localStorage.getItem(constants.privateKeyNames.btcKeychainPublicKey)
+  const txRaw = keychainActivated ? await signAndBuildKeychain(tx, unspents) : signAndBuild(tx)
 
   await broadcastTx(txRaw.toHex())
 
   return txRaw
 }
 
+const signAndBuild = (transactionBuilder) => {
+  const { user: { btcData: { privateKey } } } = getState()
+  const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
+
+  transactionBuilder.inputs.forEach((input, index) => {
+    transactionBuilder.sign(index, keyPair)
+  })
+  return transactionBuilder.buildIncomplete()
+}
+
+const signAndBuildKeychain = async (transactionBuilder, unspents) => {
+  const txRaw = transactionBuilder.buildIncomplete()
+  unspents.forEach(({ scriptPubKey }, index) => txRaw.ins[index].script = Buffer.from(scriptPubKey, 'hex'))
+  const keychain = await Keychain.create()
+  const rawHex = await keychain.signTrx(
+    txRaw.toHex(),
+    localStorage.getItem(constants.privateKeyNames.btcKeychainPublicKey),
+    'bitcoin'
+  )
+  return { ...txRaw, toHex: () => rawHex.result }
+}
+
 const fetchUnspents = (address) =>
-  request.get(`${api.getApiServer('ltc')}/addr/${address}/utxo`)
+  request.get(`${api.getApiServer('bitpay')}/addr/${address}/utxo`, { cacheResponse: 5000 })
 
 const broadcastTx = (txRaw) =>
-  request.post(`${api.getApiServer('ltc')}/tx/send`, {
+  request.post(`${api.getApiServer('bitpay')}/tx/send`, {
     body: {
       rawtx: txRaw,
     },
@@ -185,7 +208,7 @@ const signMessage = (message, encodedPrivateKey) => {
 
 const getReputation = () =>
   new Promise(async (resolve, reject) => {
-    const { user: { ltcData: { address, privateKey } } } = getState()
+    const { user: { btcData: { address, privateKey } } } = getState()
     const addressOwnerSignature = signMessage(address, privateKey)
 
     request.post(`${api.getApiServer('swapsExplorer')}/reputation`, {
@@ -197,7 +220,7 @@ const getReputation = () =>
     }).then((response) => {
       const { reputation, reputationOracleSignature } = response
 
-      reducers.user.setReputation({ name: 'ltcData', reputation, reputationOracleSignature })
+      reducers.user.setReputation({ name: 'btcMultisigData', reputation, reputationOracleSignature })
       resolve(reputation)
     }).catch((error) => {
       reject(error)
@@ -206,6 +229,7 @@ const getReputation = () =>
 
 export default {
   login,
+  loginWithKeychain,
   getBalance,
   getTransaction,
   send,

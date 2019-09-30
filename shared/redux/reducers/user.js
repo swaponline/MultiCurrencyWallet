@@ -13,6 +13,13 @@ export const initialState = {
     fullName: 'Bitcoin',
     balanceError: null,
   },
+  btcMultisigData: {
+    balance: 0,
+    isBalanceFetched: false,
+    currency: 'BTC (Multisig)',
+    fullName: 'Bitcoin (Multisig)',
+    balanceError: null,
+  },
   bchData: {
     balance: 0,
     isBalanceFetched: false,

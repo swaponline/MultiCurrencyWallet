@@ -32,6 +32,13 @@ const initialState = {
       fullTitle: 'bitcoin',
     },
     {
+      name: 'BTCMultisig',
+      title: 'BTCMultisig',
+      icon: 'btc',
+      value: 'btcMultisig',
+      fullTitle: 'bitcoinMultisig',
+    },
+    {
       name: 'QTUM',
       title: 'QTUM',
       icon: 'qtum',

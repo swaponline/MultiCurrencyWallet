@@ -3,7 +3,7 @@ import { BigNumber } from 'bignumber.js'
 import config from 'app-config'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
-import bitcoin from 'bitcoinjs-lib'
+import * as bitcoin from 'bitcoinjs-lib'
 import { btc, request, constants, api } from 'helpers'
 
 
@@ -14,7 +14,7 @@ const login = (privateKey) => {
     const hash  = bitcoin.crypto.sha256(privateKey)
     const d     = BigInteger.fromBuffer(hash)
 
-    keyPair     = new bitcoin.ECPair(d, null, { network: btc.network })
+    keyPair     = bitcoin.ECPair.fromWIF(privateKey, btc.network)
   }
   else {
     console.info('Created account Bitcoin ...')
@@ -22,7 +22,7 @@ const login = (privateKey) => {
     privateKey  = keyPair.toWIF()
   }
 
-  const account     = new bitcoin.ECPair.fromWIF(privateKey, btc.network) // eslint-disable-line
+  const account     = bitcoin.ECPair.fromWIF(privateKey, btc.network) // eslint-disable-line
   const address     = account.getAddress()
   const publicKey   = account.getPublicKeyBuffer().toString('hex')
 

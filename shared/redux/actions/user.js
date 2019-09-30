@@ -9,18 +9,21 @@ import reducers from 'redux/core/reducers'
 
 
 const sign = async () => {
-  const btcPrivateKey   = localStorage.getItem(constants.privateKeyNames.btc)
-  const bchPrivateKey   = localStorage.getItem(constants.privateKeyNames.bch)
-  const ltcPrivateKey   = localStorage.getItem(constants.privateKeyNames.ltc)
-  const ethPrivateKey   = localStorage.getItem(constants.privateKeyNames.eth)
-  const qtumPrivateKey  = localStorage.getItem(constants.privateKeyNames.qtum)
+  const btcPrivateKey         = localStorage.getItem(constants.privateKeyNames.btc)
+  const btcMultisigPrivateKey = localStorage.getItem(constants.privateKeyNames.btcMultisig)
+  const bchPrivateKey         = localStorage.getItem(constants.privateKeyNames.bch)
+  const ltcPrivateKey         = localStorage.getItem(constants.privateKeyNames.ltc)
+  const ethPrivateKey         = localStorage.getItem(constants.privateKeyNames.eth)
+  const qtumPrivateKey        = localStorage.getItem(constants.privateKeyNames.qtum)
   // const xlmPrivateKey = localStorage.getItem(constants.privateKeyNames.xlm)
 
   const isEthKeychainActivated = !!localStorage.getItem(constants.privateKeyNames.ethKeychainPublicKey)
   const isBtcKeychainActivated = !!localStorage.getItem(constants.privateKeyNames.btcKeychainPublicKey)
+  const isBtcMultisigKeychainActivated = !!localStorage.getItem(constants.privateKeyNames.btcMultisigKeychainPublicKey)
 
   const _ethPrivateKey = isEthKeychainActivated ? await actions.eth.loginWithKeychain() : actions.eth.login(ethPrivateKey)
   const _btcPrivateKey = isBtcKeychainActivated ? await actions.btc.loginWithKeychain() : actions.btc.login(btcPrivateKey)
+  const _btcMultisigPrivateKey = isBtcMultisigKeychainActivated ? await actions.btcmultisig.loginWithKeychain() : actions.btcmultisig.login(btcMultisigPrivateKey)
 
   actions.bch.login(bchPrivateKey)
   // actions.usdt.login(btcPrivateKey)
@@ -98,6 +101,7 @@ const getReputation = async () => {
 const getBalances = () => {
   actions.eth.getBalance()
   actions.btc.getBalance()
+  actions.btcmultisig.getBalance()
   actions.bch.getBalance()
   actions.ltc.getBalance()
   // actions.usdt.getBalance()

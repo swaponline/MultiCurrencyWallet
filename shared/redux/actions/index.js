@@ -11,6 +11,7 @@ import core from './core'
 import filter from './filter'
 
 import btc from './btc'
+import btcmultisig from './btcmultisig'
 import bch from './bch'
 import ltc from './ltc'
 import eth from './eth'
@@ -51,6 +52,7 @@ export default {
   ltc,
   bch,
   btc,
+  btcmultisig,
   eth,
   tlos,
   eos,

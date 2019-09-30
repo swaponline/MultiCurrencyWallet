@@ -34,6 +34,7 @@ import { BigNumber } from 'bignumber.js'
   user: {
     ethData,
     btcData,
+    btcMultisigData,
     bchData,
     eosData,
     telosData,
@@ -49,6 +50,7 @@ import { BigNumber } from 'bignumber.js'
   currencies,
   item: [
     btcData,
+    btcMultisigData,
     ethData,
     eosData,
     telosData,
@@ -572,16 +574,6 @@ export default class Row extends Component {
                 <i className="fas fa-arrow-alt-circle-right" />
                 <FormattedMessage id="Row328" defaultMessage="Send" />
               </BtnTooltip>
-              {
-                currency === 'BTC' &&
-                (
-                  <div styleName="additionalWithdrawing">
-                    <WithdrawButton onClick={() => this.handleWithdraw('bitcoinMultisig')} disable={isBalanceEmpty} >
-                      <FormattedMessage id="Row3281" defaultMessage="Multisig sending" />
-                    </WithdrawButton>
-                  </div>
-                )
-              }
             </span>
             {
               tradeAllowed && (
