@@ -23,6 +23,7 @@ import dcn from './dcn.svg'
 
 export default {
   btc,
+  'btc (multisig)': btc,
   dcn,
   bxb,
   kn,
