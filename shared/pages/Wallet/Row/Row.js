@@ -140,7 +140,7 @@ export default class Row extends Component {
 
     const { item: { currency } } = this.props
 
-    await actions[currency.toLowerCase()].getBalance(currency.toLowerCase())
+    await actions[currency.toLowerCase().replace(/[\s()]/g, '')].getBalance(currency.toLowerCase())
 
     this.setState(() => ({
       isBalanceFetching: false,

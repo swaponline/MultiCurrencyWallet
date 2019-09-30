@@ -20,7 +20,7 @@ import eos from './eos'
 import tlos from './tlos'
 import token from './token'
 import nimiq from './nimiq'
-import qtum from './qtum'
+// import qtum from './qtum'
 // import xlm from './xlm'
 // import usdt from './usdt'
 
@@ -57,7 +57,7 @@ export default {
   tlos,
   eos,
   nimiq,
-  qtum,
+  // qtum,
   // xlm,
   // usdt,
 

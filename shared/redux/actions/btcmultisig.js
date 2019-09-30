@@ -28,7 +28,7 @@ const login = (privateKey) => {
   localStorage.setItem(constants.privateKeyNames.btcMultisig, privateKey)
 
   const account       = bitcoin.ECPair.fromWIF(privateKey, btc.network) // eslint-disable-line
-  const { address }   = bitcoin.payments.p2wpkh({ pubkey: account.publicKey })
+  const { address }   = bitcoin.payments.p2wpkh({ pubkey: account.publicKey, network: btc.network })
   const { publicKey } = account
 
   const data = {
@@ -69,7 +69,8 @@ const loginWithKeychain = async () => {
 }
 
 const getBalance = () => {
-  const { user: { btcMultisigData: { address } } } = getState()
+  const account = bitcoin.ECPair.fromWIF(localStorage.getItem(constants.privateKeyNames.btcMultisig), btc.network) // eslint-disable-line
+  const { address } = bitcoin.payments.p2pkh({ pubkey: account.publicKey, network: btc.network })
 
   return request.get(`${api.getApiServer('bitpay')}/addr/${address}`)
     .then(({ balance, unconfirmedBalance }) => {

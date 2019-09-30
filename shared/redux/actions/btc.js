@@ -27,8 +27,8 @@ const login = (privateKey) => {
 
   localStorage.setItem(constants.privateKeyNames.btc, privateKey)
 
-  const account     = bitcoin.ECPair.fromWIF(privateKey, btc.network) // eslint-disable-line
-  const { address } = bitcoin.payments.p2pkh({ pubkey: account.publicKey })
+  const account         = bitcoin.ECPair.fromWIF(privateKey, btc.network) // eslint-disable-line
+  const { address }     = bitcoin.payments.p2pkh({ pubkey: account.publicKey, network: btc.network })
   const { publicKey }   = account
 
   const data = {
@@ -197,9 +197,9 @@ const broadcastTx = (txRaw) =>
 
 const signMessage = (message, encodedPrivateKey) => {
   const keyPair = bitcoin.ECPair.fromWIF(encodedPrivateKey, [bitcoin.networks.bitcoin, bitcoin.networks.testnet])
-  const privateKey = keyPair.d.toBuffer(32)
+  const privateKeyBuff = keyPair
 
-  const signature = bitcoinMessage.sign(message, privateKey, keyPair.compressed)
+  const signature = bitcoinMessage.sign(message, privateKeyBuff, keyPair.compressed)
 
   return signature.toString('base64')
 }

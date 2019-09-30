@@ -7,7 +7,6 @@ import request from './request'
 import BigNumber from 'bignumber.js'
 
 
-console.log(bitcoin)
 
 const network = process.env.MAINNET
   ? bitcoin.networks.bitcoin

@@ -77,13 +77,6 @@ const initialState = {
       fullTitle: 'bitcoin',
     },
     {
-      name: 'QTUM',
-      title: 'QTUM',
-      icon: 'qtum',
-      value: 'qtum',
-      fullTitle: 'qtum',
-    },
-    {
       name: 'BCH',
       title: 'BCH',
       icon: 'bch',

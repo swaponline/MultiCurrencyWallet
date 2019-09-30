@@ -14,7 +14,7 @@ const sign = async () => {
   const bchPrivateKey         = localStorage.getItem(constants.privateKeyNames.bch)
   const ltcPrivateKey         = localStorage.getItem(constants.privateKeyNames.ltc)
   const ethPrivateKey         = localStorage.getItem(constants.privateKeyNames.eth)
-  const qtumPrivateKey        = localStorage.getItem(constants.privateKeyNames.qtum)
+  // const qtumPrivateKey        = localStorage.getItem(constants.privateKeyNames.qtum)
   // const xlmPrivateKey = localStorage.getItem(constants.privateKeyNames.xlm)
 
   const isEthKeychainActivated = !!localStorage.getItem(constants.privateKeyNames.ethKeychainPublicKey)
@@ -28,7 +28,7 @@ const sign = async () => {
   actions.bch.login(bchPrivateKey)
   // actions.usdt.login(btcPrivateKey)
   actions.ltc.login(ltcPrivateKey)
-  actions.qtum.login(qtumPrivateKey)
+  // actions.qtum.login(qtumPrivateKey)
   // actions.xlm.login(xlmPrivateKey)
 
   // if inside actions.token.login to call web3.eth.accounts.privateKeyToAccount passing public key instead of private key
@@ -107,7 +107,7 @@ const getBalances = () => {
   // actions.usdt.getBalance()
   actions.eos.getBalance()
   actions.tlos.getBalance()
-  actions.qtum.getBalance()
+  // actions.qtum.getBalance()
   // actions.xlm.getBalance()
 
   Object.keys(config.erc20)
