@@ -12,22 +12,13 @@ import { FormattedMessage } from 'react-intl'
 import Explanation from '../Explanation'
 import icons from '../images'
 
-
-const subHeaderText = () => (
-  <FormattedMessage
-    id="createWalletSubHeader1"
-    defaultMessage="Choose the wallets currency"
-  />
-)
-
-/* eslint-disable */
-const cupture = () => (
-  <FormattedMessage
-    id="createWalletCapture1"
-    defaultMessage="To choose Bitcoin, Ethereum, USDT, EUROS, Swap  or all at once"
-  />
-)
-/* eslint-enable */
+import { subHeaderText1,
+  cupture1,
+  subHeaderText2,
+  cupture2,
+  subHeaderText3,
+  cupture3,
+} from './texts'
 
 
 const CreateWallet = ({ onClick, error, setError }) => {
@@ -56,32 +47,44 @@ const CreateWallet = ({ onClick, error, setError }) => {
   return (
     <div>
       <div>
-        <Explanation subHeaderText={subHeaderText()}>
-          {cupture()}
-        </Explanation>
-        <div styleName="currencyChooserWrapper">
-          {coins.map(el => {
-            const { name, capture } = el
-            return (
-              <div styleName={`card ${border[name] ? 'purpleBorder' : ''}`} onClick={() => handleClick(name)}>
-                <img
-                  styleName={`logo ${name}`}
-                  src={icons[name]}
-                  alt={`${name} icon`}
-                  role="image"
-                />
-                <div styleName="listGroup">
-                  <li><b>{name.toUpperCase()}</b></li>
-                  <li>{capture}</li>
+        <div>
+          <Explanation step={1} subHeaderText={subHeaderText1()}>
+            {cupture1()}
+          </Explanation>
+          <div styleName="currencyChooserWrapper">
+            {coins.map(el => {
+              const { name, capture } = el
+              return (
+                <div styleName={`card ${border[name] ? 'purpleBorder' : ''}`} onClick={() => handleClick(name)}>
+                  <img
+                    styleName={`logo ${name}`}
+                    src={icons[name]}
+                    alt={`${name} icon`}
+                    role="image"
+                  />
+                  <div styleName="listGroup">
+                    <li><b>{name.toUpperCase()}</b></li>
+                    <li>{capture}</li>
+                  </div>
                 </div>
-              </div>
-            )
-          })}
+              )
+            })}
+          </div>
         </div>
+        <button styleName="continue" onClick={onClick} disabled={error}>
+          <FormattedMessage id="createWalletButton1" defaultMessage="Continue" />
+        </button>
       </div>
-      <button styleName="continue" onClick={onClick} disabled={error}>
-        <FormattedMessage id="createWalletButton1" defaultMessage="Continue" />
-      </button>
+      {!isMobile &&
+        <div>
+          <Explanation step={2} subHeaderText={subHeaderText2()} notMain>
+            {cupture2()}
+          </Explanation>
+          <Explanation step={3} subHeaderText={subHeaderText3()} notMain>
+            {cupture3()}
+          </Explanation>
+        </div>
+      }
     </div>
   )
 }

@@ -9,14 +9,16 @@ import ReactTooltip from 'react-tooltip'
 import { FormattedMessage, injectIntl } from 'react-intl'
 
 import Explanation from '../Explanation'
+import { isMobile } from 'react-device-detect'
 
+import { subHeaderText1,
+  cupture1,
+  subHeaderText2,
+  cupture2,
+  subHeaderText3,
+  cupture3,
+} from './texts'
 
-const subHeaderText = () => (
-  <FormattedMessage
-    id="createWalletSubHeader2"
-    defaultMessage="Enter the user name and e-mail"
-  />
-)
 
 const CreateWallet = (props) => {
   const { intl: { locale }, onClick, error, setError } = props
@@ -39,26 +41,41 @@ const CreateWallet = (props) => {
 
   return (
     <div>
-      <div>
-        <Explanation subHeaderText={subHeaderText()}>
-          <FormattedMessage
-            id="createWalletCapture2"
-            defaultMessage="You will receive notifications of completed transactions from your wallet"
-          />
+      {!isMobile &&
+        <Explanation step={1} subHeaderText={subHeaderText1()} notMain>
+          {cupture1()}
         </Explanation>
-        <div styleName="inputWrapper">
-          {inputs.map(el => {
-            const { name, placeHolder } = el
-            return (
-              <input name={name} onChange={onChange} styleName="secondStepInput" placeholder={placeHolder} type="email" />
-            )
-          })}
-          {error && <b styleName="error">{error}</b>}
+      }
+      <div>
+        <div>
+          <Explanation step={2} subHeaderText={subHeaderText2()}>
+            {cupture2()}
+          </Explanation>
+          <div styleName="inputWrapper">
+            {inputs.map(el => {
+              const { name, placeHolder } = el
+              return (
+                <input name={name} onChange={onChange} styleName="secondStepInput" placeholder={placeHolder} type="email" />
+              )
+            })}
+            {error && <b styleName="error">{error}</b>}
+          </div>
         </div>
+        <button styleName="continue" onClick={onClick} disabled={error}>
+          <FormattedMessage id="createWalletButton1" defaultMessage="Continue" />
+        </button>
+        <br />
+        {!isMobile &&
+          <div styleName="notYet" onClick={onClick}>
+            <FormattedMessage id="createWalleLater" defaultMessage="not yet" />
+          </div>
+        }
       </div>
-      <button styleName="continue" onClick={onClick} disabled={error}>
-        <FormattedMessage id="createWalletButton1" defaultMessage="Continue" />
-      </button>
+      {!isMobile &&
+        <Explanation step={3} subHeaderText={subHeaderText3()} notMain>
+          {cupture3()}
+        </Explanation>
+      }
     </div>
   )
 }

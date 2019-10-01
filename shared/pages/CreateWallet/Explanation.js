@@ -11,11 +11,11 @@ import { color } from './chooseColor'
 import check from './images/check'
 
 
-const CreateWallet = ({ subHeaderText, children, step, createWallet: { step: stepNum } }) => (
-  <div styleName="inLine">
+const Explanation = ({ subHeaderText, children, step, createWallet: { step: stepNum }, notMain }) => (
+  <div styleName={`inLine ${notMain ? 'notMain' : ''}`}>
     {!isMobile &&
       <div styleName={`stepNumber ${color(step, stepNum)}`}>
-        {step > stepNum ? check() : stepNum}
+        {stepNum > step ? check() : step}
       </div>
     }
     <div styleName={`subHeader ${step === '3' ? 'third' : ''}`}>
@@ -30,4 +30,4 @@ const CreateWallet = ({ subHeaderText, children, step, createWallet: { step: ste
 )
 export default connect({
   createWallet: 'createWallet',
-})(CSSModules(CreateWallet, styles, { allowMultiple: true }))
+})(CSSModules(Explanation, styles, { allowMultiple: true }))

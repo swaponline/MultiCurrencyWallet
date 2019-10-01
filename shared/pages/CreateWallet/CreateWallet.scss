@@ -4,6 +4,12 @@
   margin: 0 auto;
 }
 
+.notYet {
+  text-align: center;
+  padding-top: 5px;
+  color: #6144e5;
+}
+
 .wrapper h2 {
   width: 400px;
   margin-bottom: 60px;
@@ -14,8 +20,27 @@
   margin: 0 16px;
 }
 
+.inputWrapper,
+.currencyChooserWrapper,
 .inLine {
   display: flex;
+}
+
+.inputWrapper {
+  justify-content: center;
+  margin: 50px 0;
+}
+
+.notMain {
+  height: 40px;
+  margin: 40px 0;
+}
+
+.secureChooserWrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  margin: 20px auto;
 }
 
 .stepNumber {
@@ -69,10 +94,8 @@
 }
 
 .continue {
-  position: absolute;
-  right: 21px;
+  position: relative;
   margin: 0 auto;
-  width: 89%;
   border-radius: 2px;
   text-align: center;
   font-weight: 800;
@@ -81,6 +104,8 @@
   background: #6144E5;
   color: white;
   height: 45px;
+  width: 92%;
+  left: 4%;
 }
 
 .continue:disabled {
@@ -106,8 +131,10 @@
 }
 
 .currencyChooserWrapper {
-  display: flex;
   justify-content: space-between;
+}
+
+.currencyChooserWrapper {
   padding: 30px;
 }
 
@@ -141,6 +168,19 @@
   }
 }
 
+.secondStepInput {
+  height: 50px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  width: 335px;
+  padding: 10px;
+  margin: 20px 30px;
+}
+
+.secureSize {
+  height: 160px;
+  width: 140px;
+}
+
 @media screen and (max-width: 568px){
   .wrapper {
     margin: 125px auto;
@@ -149,7 +189,19 @@
 
 @media screen and (max-width: 480px) {
   .continue {
+    position: absolute;
+    right: 21px;
+    width: 89%;
     top: 92vh;
+  }
+
+  .secondStepInput {
+    height: 50px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    width: 100%;
+    padding: 10px;
+    margin: 0;
+    margin-bottom: 20px;
   }
 
   .wrapper {
@@ -157,6 +209,7 @@
     width: 100%;
     height: 100vh;
     margin: 0;
+    padding-top: 0;
   }
 
   .wrapper h2 {
@@ -200,9 +253,13 @@
 
   .inLine {
     display: flex;
-    width: 135px;
+    width: 100%;
     justify-content: space-between;
     margin-bottom: 16px;
+  }
+
+  .steps {
+    width: 150px
   }
 
   .logo {
@@ -213,10 +270,15 @@
     margin: auto 10px;
   }
 
+  .secureSize,
+  .card {
+    height: 53px;
+    width: 100%;
+  }
+
   .card {
     margin-bottom: 8px;
     padding: 10px;
-    height: 53px;
     list-style: none;
     display: flex;
 
@@ -241,23 +303,18 @@
 
   .inputWrapper {
     display: block;
+    margin: 0;
   }
 
   .currencyChooserWrapper{
     overflow-y: auto;
+    display: block;
+    padding: 0;
   }
 
   .inputWrapper,
   .currencyChooserWrapper{
     height: 265px;
-  }
-
-  .secondStepInput {
-    height: 50px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
   }
 
   .thirdPageIcons {
@@ -273,6 +330,11 @@
 
   .formBody {
     margin: 100px 16px;
+  }
+
+  .secureChooserWrapper {
+    display: block;
+    width: 100%;
   }
 
   .secureChooserWrapper,

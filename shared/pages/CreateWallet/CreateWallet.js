@@ -34,8 +34,6 @@ const CreateWallet = (props) => {
 
 
   const handleClick = () => {
-    reducers.createWallet.newWalletData({ ...createWallet, step })
-
     setError(null)
 
     if (step === 2) {
@@ -43,6 +41,7 @@ const CreateWallet = (props) => {
     }
 
     if (step !== 3) {
+      reducers.createWallet.newWalletData({ type: 'step', data: step + 1 })
       return setStep(step + 1)
     }
     history.push(localisedUrl(locale, '/wallet'))
@@ -76,7 +75,7 @@ const CreateWallet = (props) => {
           <FormattedMessage id="createWalletHeader1" defaultMessage="Create the wallet by 3 simple steps?" />
         </h2>
         {isMobile &&
-          <div styleName="inLine">
+          <div styleName="inLine steps">
             {steps.map(el => (
               <div styleName={`stepNumber ${color(step, el)}`}>
                 {step > el ? check() : el}

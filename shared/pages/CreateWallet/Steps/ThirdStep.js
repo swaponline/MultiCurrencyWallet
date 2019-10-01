@@ -8,17 +8,18 @@ import reducers from 'redux/core/reducers'
 
 import ReactTooltip from 'react-tooltip'
 import { FormattedMessage, injectIntl } from 'react-intl'
+import { isMobile } from 'react-device-detect'
 
 import Explanation from '../Explanation'
 import icons from '../images'
+import { subHeaderText1,
+  cupture1,
+  subHeaderText2,
+  cupture2,
+  subHeaderText3,
+  cupture3,
+} from './texts'
 
-
-const subHeaderText = () => (
-  <FormattedMessage
-    id="createWalletSubHeader3"
-    defaultMessage="Choose wallet protection level"
-  />
-)
 
 const CreateWallet = (props) => {
   const { intl: { locale }, onClick, error, setError } = props
@@ -70,36 +71,45 @@ const CreateWallet = (props) => {
 
   return (
     <div>
-      <div>
-        <Explanation subHeaderText={subHeaderText()} step="3">
-          <FormattedMessage
-            id="createWalletCapture3"
-            defaultMessage="No protection, sms, google auth, multisig"
-          />
-        </Explanation>
-        <div styleName="secureChooserWrapper">
-          {coins.map(el => {
-            const { name, capture, text } = el
-            return (
-              <div styleName={`card thirdCard ${border.color[name] ? 'purpleBorder' : ''}`} onClick={() => handleClick(name)}>
-                <img
-                  styleName="logo thirdPageIcons"
-                  src={icons[name]}
-                  alt={`${name} icon`}
-                  role="image"
-                />
-                <div styleName="listGroup">
-                  <li><b>{text}</b></li>
-                  <li>{capture}</li>
-                </div>
-              </div>
-            )
-          })}
+      {!isMobile &&
+        <div>
+          <Explanation subHeaderText={subHeaderText1()} step={1} notMain>
+            {cupture1()}
+          </Explanation>
+          <Explanation subHeaderText={subHeaderText2()} step={2} notMain>
+            {cupture2()}
+          </Explanation>
         </div>
+      }
+      <div>
+        <div>
+          <Explanation subHeaderText={subHeaderText3()} step={3}>
+            {cupture3()}
+          </Explanation>
+          <div styleName="secureChooserWrapper">
+            {coins.map(el => {
+              const { name, capture, text } = el
+              return (
+                <div styleName={`card secureSize thirdCard ${border.color[name] ? 'purpleBorder' : ''}`} onClick={() => handleClick(name)}>
+                  <img
+                    styleName="logo thirdPageIcons"
+                    src={icons[name]}
+                    alt={`${name} icon`}
+                    role="image"
+                  />
+                  <div styleName="listGroup">
+                    <li><b>{text}</b></li>
+                    <li>{capture}</li>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+        <button styleName="continue" onClick={onClick} disabled={error}>
+          <FormattedMessage id="createWalletButton3" defaultMessage="Create Wallet" />
+        </button>
       </div>
-      <button styleName="continue" onClick={onClick} disabled={error}>
-        <FormattedMessage id="createWalletButton3" defaultMessage="Create Wallet" />
-      </button>
     </div>
   )
 }
