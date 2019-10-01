@@ -1,25 +1,21 @@
 .wrapper {
-  min-width: 375px;
-  max-width: 375px;
-  min-height: 600px;
-  margin: 40px auto;
+  padding-top: 160px;
+  width: 800px;
+  margin: 0 auto;
 }
 
+.wrapper h2 {
+  width: 400px;
+  margin-bottom: 60px;
+}
+
+.mobileFormBody,
 .formBody {
   margin: 0 16px;
 }
 
-.wrapper h2 {
-  width: 320px;
-  height: 68px;
-  right: 39px;
-  top: 93px;
-  margin-bottom: 40px;
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 800;
-  font-size: 28px;
-  line-height: 120%;
+.inLine {
+  display: flex;
 }
 
 .stepNumber {
@@ -32,135 +28,17 @@
   color: #6144E5;
   border: 1px solid #f0eefd;
   font-weight: bold;
-}
-
-.purple {
-  background-color: #6144E5;
-  color: #f0eefd
-}
-
-.purpleBorder {
-  border-color: #6144E5 !important;
-}
-.green {
-  background-color: #0ccf14;
-}
-
-.subHeader {
-  width: 320px;
-  height: 61px;
-  margin-bottom: 25px;
-}
-
-.third {
-  height: 59px;
-  margin-bottom: 0px;
-}
-
-.subHeader h5 {
-  font-family: Inter;
-  font-style: normal;
-  font-weight: 800;
-  font-size: 18px;
-  margin-bottom: 10px;
-}
-
-.capture {
-  font-weight: 800;
-  font-size: 13px;
-  line-height: 18px;
-  color: #8E9AA3;
-}
-
-.inLine {
-  display: flex;
-  width: 135px;
-  justify-content: space-between;
-  margin-bottom: 16px;
-}
-
-.continue {
-  border-radius: 2px;
-  text-align: center;
-  font-weight: 800;
-  font-size: 15px;
-  line-height: 150%;
-  background: #6144E5;
-  color: white;
-  width: 100%;
-  height: 45px;
-  margin-top: 40px;
-}
-
-.continue:disabled {
-  background-color: #f0eefd;
-  color: #6144E5;
-}
-
-
-.listGroup {
-  margin: auto 10px;
-}
-
-.card {
-  background: #FFFFFF;
-  border: 1px solid rgba(142, 154, 163, 0.16);
-  box-sizing: border-box;
-  box-shadow: 0px 2px 12px rgba(142, 154, 163, 0.08);
-  border-radius: 4px;
-  margin-bottom: 8px;
-  padding: 10px;
-  height: 53px;
-  list-style: none;
-  display: flex;
-
-  b {
-    font-weight: bolder;
-    font-size: 16px;
-    color: #1F2D48;
-  }
-
-  li {
-    font-weight: 100;
-    color: #8E9AA3;
-    font-size: 11px;
-    font-family: Inter;
-    line-height: 15px;
-  }
-}
-
-.thirdCard {
-  height: 65px;
-}
-
-.inputWrapper {
-  display: block;
-}
-
-.currencyChooserWrapper{
-  overflow-y: auto;
-}
-
-.inputWrapper,
-.currencyChooserWrapper{
-  height: 265px;
-}
-
-.secondStepInput {
-  height: 50px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 20px;
+  margin-right: 10px;
 }
 
 .logo {
   border-radius: 50%;
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 35px;
   padding: 7px;
-  margin: auto 0;
+  margin: auto;
 }
+
 .btc {
   background: orange;
 }
@@ -177,15 +55,90 @@
   background: #775cf1;
 }
 
-.thirdPageIcons {
-  background: #f0eefd;
+.purple {
+  background-color: #6144E5;
+  color: #f0eefd
 }
 
-.error {
-  color: red;
+.purpleBorder {
+  border-color: #6144E5 !important;
+}
+
+.green {
+  background-color: #0ccf14;
+}
+
+.continue {
+  position: absolute;
+  right: 21px;
+  margin: 0 auto;
+  width: 89%;
+  border-radius: 2px;
+  text-align: center;
+  font-weight: 800;
+  font-size: 15px;
+  line-height: 150%;
+  background: #6144E5;
+  color: white;
+  height: 45px;
+}
+
+.continue:disabled {
+  background-color: #f0eefd;
+  color: #6144E5;
+}
+
+.subHeader {
+  top: 5px;
   position: relative;
-  bottom: 20px;
-  font-size: 12px;
+}
+
+.subHeader h5 {
+  font-size: 15px;
+  font-weight: 900;
+  margin-bottom: 0;
+}
+
+.subHeader p {
+  font-size: 10px;
+  margin-bottom: 7px;
+  color: #8E9AA3;
+}
+
+.currencyChooserWrapper {
+  display: flex;
+  justify-content: space-between;
+  padding: 30px;
+}
+
+.card {
+  background: #FFFFFF;
+  border: 1px solid rgba(142, 154, 163, 0.16);
+  box-sizing: border-box;
+  box-shadow: 0px 2px 12px rgba(142, 154, 163, 0.08);
+  border-radius: 4px;
+  margin-bottom: 8px;
+  padding: 10px;
+  height: 53px;
+  list-style: none;
+    display: grid;
+      height: 140px;
+  width: 110px;
+
+  b {
+    font-weight: bolder;
+    font-size: 16px;
+    color: #1F2D48;
+  }
+
+  li {
+    font-weight: 100;
+    color: #8E9AA3;
+    font-size: 11px;
+    font-family: Inter;
+    line-height: 20px;
+    text-align: center;
+  }
 }
 
 @media screen and (max-width: 568px){
@@ -194,7 +147,11 @@
   }
 }
 
-@media screen and (max-width: 480px){
+@media screen and (max-width: 480px) {
+  .continue {
+    top: 92vh;
+  }
+
   .wrapper {
     min-width: 0;
     width: 100%;
@@ -205,20 +162,117 @@
   .wrapper h2 {
     width: 100%;
     height: 45px;
+    right: 39px;
+    top: 93px;
+    margin-bottom: 40px;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 800;
     font-size: 23px;
+    line-height: 120%;
   }
 
   .subHeader {
     width: 100%;
+    height: 61px;
     margin: 0;
   }
+
+  .third {
+    height: 59px;
+    margin-bottom: 0px;
+  }
+
   .subHeader h5 {
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 800;
     font-size: 16px;
     margin-bottom: 5px;
   }
+
   .capture {
     font-size: 11px;
     line-height: 14px;
+    font-weight: 800;
+    color: #8E9AA3;
+  }
+
+  .inLine {
+    display: flex;
+    width: 135px;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .logo {
+    margin: auto 0;
+  }
+
+  .listGroup {
+    margin: auto 10px;
+  }
+
+  .card {
+    margin-bottom: 8px;
+    padding: 10px;
+    height: 53px;
+    list-style: none;
+    display: flex;
+
+    b {
+      font-weight: bolder;
+      font-size: 16px;
+      color: #1F2D48;
+    }
+
+    li {
+      font-weight: 100;
+      color: #8E9AA3;
+      font-size: 11px;
+      font-family: Inter;
+      line-height: 15px;
+    }
+  }
+
+  .thirdCard {
+    height: 65px;
+  }
+
+  .inputWrapper {
+    display: block;
+  }
+
+  .currencyChooserWrapper{
+    overflow-y: auto;
+  }
+
+  .inputWrapper,
+  .currencyChooserWrapper{
+    height: 265px;
+  }
+
+  .secondStepInput {
+    height: 50px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+
+  .thirdPageIcons {
+    background: #f0eefd;
+  }
+
+  .error {
+    color: red;
+    position: relative;
+    bottom: 20px;
+    font-size: 12px;
+  }
+
+  .formBody {
+    margin: 100px 16px;
   }
 
   .secureChooserWrapper,
@@ -230,14 +284,6 @@
 
   .card li {
     font-size: 9px;
-  }
-
-  .continue {
-    position: absolute;
-    top: 92vh;
-    right: 21px;
-    margin: 0 auto;
-    width: 89%;
   }
 }
 

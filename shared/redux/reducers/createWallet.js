@@ -10,6 +10,7 @@ export const initialState = {
     eMail: '',
   },
   secure: '',
+  step: 1,
 }
 
 

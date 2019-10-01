@@ -7,6 +7,9 @@ import { connect } from 'redaction'
 
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { withRouter } from 'react-router-dom'
+import { isMobile } from 'react-device-detect'
+import reducers from 'redux/core/reducers'
+
 import links from 'helpers/links'
 import { localisedUrl } from 'helpers/locale'
 
@@ -15,21 +18,14 @@ import FirstStep from './Steps/FirstStep'
 import SecondStep from './Steps/SecondStep'
 import ThirdStep from './Steps/ThirdStep'
 
+import { color } from './chooseColor'
 
-const color = (step, el) => {
-  if (step === el) {
-    return 'purple'
-  } else if (step > el) {
-    return 'green'
-  }
-  return ''
-}
 
 const styleBtn = { backgroundColor: '#f0eefd', color: '#6144E5' }
 const defaultColors = { backgroundColor: '#6144E5' }
 
 const CreateWallet = (props) => {
-  const { history, intl: { locale }, createWallet: { usersData: { eMail }, currencies, secure } } = props
+  const { history, intl: { locale }, createWallet: { usersData: { eMail }, currencies, secure }, createWallet } = props
 
   const [step, setStep] = useState(1)
   const [error, setError] = useState('Choose something')
@@ -38,6 +34,8 @@ const CreateWallet = (props) => {
 
 
   const handleClick = () => {
+    reducers.createWallet.newWalletData({ ...createWallet, step })
+
     setError(null)
 
     if (step === 2) {
@@ -73,17 +71,19 @@ const CreateWallet = (props) => {
 
   return (
     <div styleName="wrapper">
-      <div styleName="formBody">
+      <div styleName={isMobile ? 'mobileFormBody' : 'formBody'}>
         <h2>
           <FormattedMessage id="createWalletHeader1" defaultMessage="Create the wallet by 3 simple steps?" />
         </h2>
-        <div styleName="inLine">
-          {steps.map(el => (
-            <div styleName={`stepNumber ${color(step, el)}`}>
-              {step > el ? check() : el}
-            </div>
-          ))}
-        </div>
+        {isMobile &&
+          <div styleName="inLine">
+            {steps.map(el => (
+              <div styleName={`stepNumber ${color(step, el)}`}>
+                {step > el ? check() : el}
+              </div>
+            ))}
+          </div>
+        }
         <div>
           {step === 1 && <FirstStep error={error} onClick={validate} setError={setError} />}
           {step === 2 && <SecondStep error={error} onClick={validate} setError={setError} />}

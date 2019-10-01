@@ -4,6 +4,7 @@ import CSSModules from 'react-css-modules'
 import styles from '../CreateWallet.scss'
 
 import reducers from 'redux/core/reducers'
+import { isMobile } from 'react-device-detect'
 
 import ReactTooltip from 'react-tooltip'
 import { FormattedMessage } from 'react-intl'
