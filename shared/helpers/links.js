@@ -11,6 +11,7 @@ const linksManager = {
   test: 'https://testnet.swap.online',
   main: 'https://swap.online/',
   ieo: '/IEO',
+  newwallet: '/newwallet',
   coins: '/coins',
   partial: '/partial',
   notFound: '/NotFound',

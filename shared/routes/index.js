@@ -10,6 +10,7 @@ import Wallet           from 'pages/Wallet/Wallet'
 import History          from 'pages/History/History'
 import NotFound         from 'pages/NotFound/NotFound'
 import About            from 'pages/About/About'
+import NewWallet        from 'pages/NewWallet/NewWallet'
 import Currency         from 'pages/Currency/Currency'
 import PartialClosure   from 'pages/PartialClosure/PartialClosure'
 import CurrencyWallet   from 'pages/CurrencyWallet/CurrencyWallet'
@@ -33,6 +34,7 @@ const routes = (
       <Route path={`${localisePrefix}${links.exchange}`} component={PartialClosure} />
 
       <Route path={`${localisePrefix}${links.aboutus}`} component={About} />
+      <Route path={`${localisePrefix}${links.newwallet}`} component={NewWallet} />
       <Route path={`${localisePrefix}${links.history}`} component={History} />
 
       <Route path={`${localisePrefix}${links.ieo}`} component={IEO} />
