@@ -1,6 +1,6 @@
 .wrapper {
-  padding-top: 160px;
-  width: 800px;
+  padding-top: 30px;
+  max-width: 800px;
   margin: 0 auto;
 }
 
@@ -148,8 +148,8 @@
   padding: 10px;
   height: 53px;
   list-style: none;
-    display: grid;
-      height: 140px;
+  display: grid;
+  height: 140px;
   width: 110px;
 
   b {
@@ -181,9 +181,16 @@
   width: 140px;
 }
 
+@media screen and (max-width: 700px){
+  .card {
+    width: 85px
+  }
+}
+
 @media screen and (max-width: 568px){
   .wrapper {
     margin: 125px auto;
+    padding: 0;
   }
 }
 
@@ -346,6 +353,12 @@
 
   .card li {
     font-size: 9px;
+  }
+}
+
+@media screen and (max-width: 420px){
+  .stepNumber {
+    width: 45px;
   }
 }
 
