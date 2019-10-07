@@ -871,7 +871,7 @@ export default class PartialClosure extends Component {
     }
 
     const desclineOrders = decline.map(swapId => actions.core.getSwapById(swapId)).filter(el => {
-      const { isFinished, isRefunded, isStoppedSwap } = el.state
+      const { isFinished, isRefunded, isStoppedSwap } = el.flow.state
       // if timeout - skip this swap. for refund, if need - use history page
       const lifeTimeout = el.checkTimeout(60 *60 * 3)
       return isFinished || isRefunded || isStoppedSwap || lifeTimeout
