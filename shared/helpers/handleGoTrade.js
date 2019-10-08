@@ -12,37 +12,37 @@ const getSwapByIdSafe = (swapID) => {
   }
 }
 const getDeclinedExistedSwapIndex = ({ currency, decline }) => {
-
   const date = Date.now() / 1000
 
   const indexOfDecline = decline.length - 1
-  const declineSwap = getSwapByIdSafe(decline[indexOfDecline])
 
-  if (!declineSwap) return false
+  if (indexOfDecline >= 0) {
+    for (let i = 0; i <= indexOfDecline; i++) {
+      const declineSwap = getSwapByIdSafe(decline[i])
 
-  const itemState = declineSwap.flow.state
-  const values = itemState.btcScriptValues
-    || itemState.bchScriptValues
-    || itemState.ltcScriptValues
-    // || itemState.usdtOmniScriptValues
-    || itemState.scriptValues
+      if (declineSwap) {
+        const itemState = declineSwap.flow.state
+        const values = itemState.btcScriptValues
+          || itemState.bchScriptValues
+          || itemState.ltcScriptValues
+          // || itemState.usdtOmniScriptValues
+          || itemState.scriptValues
 
-  if (values === undefined) {
-    return false
-  }
+        if (values) {
+          const { isFinished, isRefunded, isStoppedSwap } = itemState
 
-  const lockTime = moment.unix(values.lockTime || date)._i / 1000
-  const timeSinceLock = date - lockTime
+          const lockTime = moment.unix(values.lockTime || date)._i / 1000
+          const timeSinceLock = date - lockTime
 
-  for (let i = 0; i <= indexOfDecline; i++) {
-    if (declineSwap.flow.state.isFinished === true || timeSinceLock > 259200) { // 259200 3 дня в секундах
-      actions.core.forgetOrders(decline[i])
-    } else if (declineSwap.sellCurrency === currency.toUpperCase()
-      && !declineSwap.isSwapExist
-      && !declineSwap.isMy) {
-      return indexOfDecline
-    } else {
-      return false
+          if (isFinished || isRefunded || isStoppedSwap || timeSinceLock > 259200) { // 259200 3 дня в секундах
+            actions.core.forgetOrders(decline[i])
+          } else if (declineSwap.sellCurrency === currency.toUpperCase()
+            && !declineSwap.isSwapExist
+            && !declineSwap.isMy) {
+            return i
+          }
+        }
+      }
     }
   }
   return false
