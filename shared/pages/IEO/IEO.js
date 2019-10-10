@@ -38,6 +38,7 @@ class IEO extends React.Component {
        reddit,
      } = this.state
 
+     /*
      const twitterRegex = /https:\/\/twitter.com\/(?<id>.+(\b))\/?/i
      const twitterId = twitter.match(twitterRegex) !== null ? twitter.match(twitterRegex).groups.id : twitter
 
@@ -60,7 +61,7 @@ class IEO extends React.Component {
        reddit: redditId,
        github: githubId,
      })
-
+      */
    }
 
    render() {
