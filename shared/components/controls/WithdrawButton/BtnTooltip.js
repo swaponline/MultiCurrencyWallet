@@ -12,7 +12,7 @@ import { FormattedMessage } from 'react-intl'
       disable,
       id,
       text,
-      ...rest,
+      ...rest
     } = props
 
     return (
