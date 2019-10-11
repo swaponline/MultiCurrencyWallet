@@ -31,7 +31,7 @@ export default [
         /async-iterator-last/,
         /async-iterator-first/,
         /async-iterator-batch/,
-      ]
+      ],
     },
     use: {
       loader: 'babel-loader',
