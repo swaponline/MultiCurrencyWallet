@@ -120,6 +120,8 @@ export default class PartialClosure extends Component {
     orders: [],
   }
 
+  static usdRates = {}
+
   isPeerBanned(peerID) {
     if (bannedPeers[peerID]
       && (bannedPeers[peerID] > Math.floor(new Date().getTime() / 1000))
@@ -217,7 +219,7 @@ export default class PartialClosure extends Component {
       .forEach(item => this.state.estimatedFeeValues[item] = constants.minAmountOffer[item])
 
     let timer
-    let usdRates
+    // usdRates
 
     if (config.isWidget) {
       this.state.getCurrency = config.erc20token
@@ -231,7 +233,7 @@ export default class PartialClosure extends Component {
     this.checkPair()
     this.updateAllowedBalance()
 
-    this.usdRates = {}
+    //this.usdRates = {}
     this.getUsdBalance()
 
     this.timer = setInterval(() => {
@@ -351,8 +353,9 @@ export default class PartialClosure extends Component {
         exGetRate,
       }))
     } catch (e) {
-      const exHaveRate = (this.usdRates[haveCurrency] !== undefined) ? this.usdRates[haveCurrency] : 0
-      const exGetRate = (this.usdRates[getCurrency] !== undefined) ? this.usdRates[getCurrency] : 0
+      console.log('usdRates', this.usdRates)
+      const exHaveRate = (this.usdRates && this.usdRates[haveCurrency] !== undefined) ? this.usdRates[haveCurrency] : 0
+      const exGetRate = (this.usdRates && this.usdRates[getCurrency] !== undefined) ? this.usdRates[getCurrency] : 0
       this.setState(() => ({
         exHaveRate,
         exGetRate,
