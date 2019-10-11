@@ -19,7 +19,8 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import ReactTooltip from 'react-tooltip'
 import { isMobile } from 'react-device-detect'
 
-import { isCoinAddress } from 'swap.app/util/typeforce'
+// import isCoinAddress from 'swap.app/util/typeforce'
+import typeforce from 'swap.app/util/typeforce'
 import minAmount from 'helpers/constants/minAmount'
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 
@@ -260,11 +261,12 @@ export default class WithdrawModal extends React.Component {
       const { data: { currency } } = this.props
       const { address, isEthToken } = this.state
 
+      // console.log(typeforce.isCoinAddress)
       if (isEthToken) {
-        return isCoinAddress.ETH(address)
+        return typeforce.isCoinAddress.ETH(address)
       }
 
-      return isCoinAddress[currency.toUpperCase()](address)
+      return typeforce.isCoinAddress[currency.toUpperCase()](address)
     }
 
     render() {
