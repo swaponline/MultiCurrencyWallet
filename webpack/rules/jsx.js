@@ -13,6 +13,7 @@
 // ]
 import config from 'app-config'
 
+
 export default [
   {
     test: /\.(js|jsx)$/,
