@@ -152,7 +152,7 @@ export default class WithdrawModal extends React.Component {
 
     const exCurrencyRate = await actions.user.getExchangeRate(currency, 'usd')
 
-    this.usdRates[currency] = exCurrencyRate
+    //this.usdRates[currency] = exCurrencyRate
 
     this.setState(() => ({
       exCurrencyRate,

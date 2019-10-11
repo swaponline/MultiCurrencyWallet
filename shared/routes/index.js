@@ -33,8 +33,8 @@ const routes = (
       <Route path={`${localisePrefix}${links.exchange}/:sell-to-:buy`} component={PartialClosure} />
       <Route path={`${localisePrefix}${links.exchange}`} component={PartialClosure} />
 
-      <Route path={`${localisePrefix}${links.aboutus}`} component={About} />
-      <Route path={`${localisePrefix}${links.newwallet}`} component={NewWallet} />
+      <Route path={`${localisePrefix}${links.aboutUs}`} component={About} />
+      <Route path={`${localisePrefix}${links.newWallet}`} component={NewWallet} />
       <Route path={`${localisePrefix}${links.history}`} component={History} />
 
       <Route path={`${localisePrefix}${links.ieo}`} component={IEO} />
