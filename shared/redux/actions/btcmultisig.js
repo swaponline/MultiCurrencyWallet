@@ -28,16 +28,29 @@ const login = (privateKey) => {
   localStorage.setItem(constants.privateKeyNames.btcMultisig, privateKey)
 
   const account       = bitcoin.ECPair.fromWIF(privateKey, btc.network) // eslint-disable-line
-  const { address }   = bitcoin.payments.p2wpkh({ pubkey: account.publicKey, network: btc.network })
+  const publicKeys = [
+    account.publicKey.toString('hex'),
+    process.env.MAINNET
+      ? '03f5155df7238d64475267a63a8d70f14e1b1ceefe2b8816c1a86b8a1d03d177cb'
+      : '033587f9e0cbe1d5ffa28efd7f6d3351da1fc1ac4655f2c23006911b18f3f142ea',
+  ].map(hex => Buffer.from(hex, 'hex'))
+  const { address } = bitcoin.payments.p2sh({
+    redeem: bitcoin.payments.p2wsh({
+      redeem: bitcoin.payments.p2ms({ m: 2, pubkeys: publicKeys }),
+    }),
+  })
+  const { addressOfMyOwnWallet }   = bitcoin.payments.p2wpkh({ pubkey: account.publicKey, network: btc.network })
   const { publicKey } = account
 
   const data = {
     account,
     keyPair,
     address,
+    addressOfMyOwnWallet,
     currency: 'BTC (Multisig)',
     fullName: 'Bitcoin (Multisig)',
     privateKey,
+    publicKeys,
     publicKey,
   }
 
