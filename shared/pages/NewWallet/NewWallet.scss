@@ -9,6 +9,11 @@
     color: #1F2D48;
 }
 
+.newWalletTable {
+    width: 100%;
+}
+  
+
 .newWalletNav {
     padding: 0;
     margin-top: 30px;
@@ -53,60 +58,6 @@
 .newWalletContent {
     display: flex;
     justify-content: space-between;
-}
-
-.notifyBlock {
-    height: 88px;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 24px;
-    > div {
-        display: flex;
-        align-items: center;
-        button {
-            margin-left: 10px;
-            font-weight: bold;
-        }
-    }
-
-}
-
-.notifyBlockSaveKeys {
-    background: linear-gradient(265.47deg, #6144E5 0%, #7359EA 100%);
-    > div {
-        color: #6144E5;
-    }
-}
-
-.notifyBlockSignUp {
-    background: linear-gradient(265.47deg, #FF6B00 0%, #F88736 100%);
-    > div {
-        color: #F1771F;
-    }
-}   
-
-.notifyBlockIcon {
-    background: rgba(255, 255, 255, 0.1);
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 7px;
-}
-
-.notifyBlockDescr {
-    margin-left: 10px;
-    color: #fff;
-    p {
-        margin-bottom: 0;
-    }
-    p:last-child {
-        opacity: 0.8;
-    }
 }
 
 .yourAssets,
@@ -216,107 +167,4 @@
     a {
         cursor: pointer;
     }
-}
-
-
-.assetsTable {
-    position: relative;
-    button {
-        margin-top: 20px;
-    }
-}
-
-.assetsTableRow {
-    position: relative;
-    height: 80px;
-    padding-top: 18px;
-    &:last-child {
-        &:before {
-            display: none;
-        }
-    }
-    &:before {
-        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-        content: '';
-        width: 100%;
-        position: absolute;
-        width: 92%;
-        right: 0;
-        bottom: 0px;
-    }
-}
-
-.assetsTableCurrency {
-    position: relative;
-    display: flex;
-}
-
-.assetsTableIcon {
-    background: rgba(97, 68, 229, 0.1);
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 15px;
-}
-
-.assetsTableValue {
-    position: absolute;
-    right: 60px;
-    top: 0;
-    svg {
-        margin-top: -3px;
-        margin-right: 7px;
-    }
-    p {
-        font-size: 15px;
-        line-height: 21px;
-        color: #1F2D48;
-        font-weight: bold;
-        display: inline-block;
-        margin-bottom: 0;
-    }
-    span {
-        display: block;
-        font-size: 13px;
-        line-height: 13px;
-        text-align: right;
-        font-weight: bold;
-        color: #6144E5;
-        margin-top: 2px;
-    }
-}
-
-.assetsTableInfo {
-    font-weight: bold;
-    p {
-        color: #6144E5;
-        font-size: 13px;
-        margin-bottom: 1px;
-    }
-    span {
-        font-size: 15px;
-        line-height: 18px;
-        color: #1F2D48;
-    }
-    strong {
-        font-size: 15px;
-        line-height: 21px;
-        color: #8E9AA3;
-        text-transform: uppercase;
-        font-weight: bold;
-        margin-left: 25px;
-    }
-}
-
-.assetsTableDots {
-    position: absolute;
-    right: 5px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    z-index: 111;
-    width: 20px;
 }

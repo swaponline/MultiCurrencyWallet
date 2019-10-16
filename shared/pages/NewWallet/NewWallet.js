@@ -8,7 +8,12 @@ import cssModules from 'react-css-modules'
 import styles from './NewWallet.scss'
 import NewButton from 'components/controls/NewButton/NewButton'
 import History from 'pages/History/History'
+import Wallet from 'pages/Wallet/Wallet'
 import Input from 'components/forms/Input/Input'
+import Row from './Row/Row'
+import Table from 'components/tables/Table/Table'
+
+import NotifyBlock from './components/NotityBlock/NotifyBock'
 
 import security from './images/security.svg'
 import mail from './images/mail.svg'
@@ -17,10 +22,94 @@ import { links, constants } from 'helpers'
 
 import { FormattedMessage, injectIntl } from 'react-intl'
 
+import config from 'app-config'
+import { withRouter } from 'react-router'
+
 const newWalletNav = ['My balances', 'Transactions'];
 
 
+@connect(({
+  core: { hiddenCoinsList },
+  user: {
+    ethData,
+    btcData,
+    bchData,
+    tokensData,
+    eosData,
+    telosData,
+    ltcData,
+    qtumData,
+    // usdtOmniData,
+    // nimData,
+    // xlmData,
+  },
+  currencies: { items: currencies },
+}) => {
+  const tokens = (
+    config && config.isWidget
+      ? [ config.erc20token.toUpperCase() ]
+      : Object.keys(tokensData).map(k => tokensData[k].currency)
+  )
+
+  const items = (
+    config && config.isWidget ? [
+      btcData,
+      ethData,
+      // usdtOmniData,
+    ] : [
+      btcData,
+      bchData,
+      ethData,
+      eosData,
+      telosData,
+      ltcData,
+      qtumData,
+      // usdtOmniData,
+      // nimData,
+      // xlmData,
+    ]
+  )
+    .map(data => data.currency)
+
+  const currencyBalance = [
+    btcData,
+    bchData,
+    ethData,
+    eosData,
+    telosData,
+    ltcData,
+    qtumData,
+    // usdtOmniData,
+    // nimData,
+    // xlmData,
+    ...Object.keys(tokensData).map(k => tokensData[k]),
+  ]
+    .map(({ balance, currency }) => ({
+      balance,
+      name: currency,
+    }))
+
+  return {
+    tokens,
+    items,
+    currencyBalance,
+    currencies,
+    hiddenCoinsList: config && config.isWidget ? [] : hiddenCoinsList,
+    userEthAddress: ethData.address,
+    tokensData: {
+      ethData,
+      btcData,
+      bchData,
+      ltcData,
+      eosData,
+      telosData,
+      qtumData,
+      // usdtOmniData,
+    },
+  }
+})
 @injectIntl
+@withRouter
 @connect(({ signUp: { isSigned } }) => ({
   isSigned
 }))
@@ -29,6 +118,12 @@ export default class NewWallet extends Component {
 
   state = {
     activeView: 0,
+    isFetching: false,
+    usdBalance: 0
+  }
+
+  componentDidMount = () => {
+    this.showPercentChange1H();
   }
 
   handleNavItemClick = (index) => {
@@ -37,9 +132,55 @@ export default class NewWallet extends Component {
     })
   }
 
+  getCurrencyUsd = (usd) => {
+    this.setState({
+      usdBalance: this.state.usdBalance + usd
+    });
+  }
+
+  showPercentChange1H = () => {
+    const { currencies } = this.props
+    let infoAboutCurrency = []
+
+    fetch('https://noxon.io/cursAll.php')
+      .then(res => res.json())
+      .then(
+        (result) => {
+          const itemsName = currencies.map(el => el.name)
+          console.log('result', result)
+          result.map(res => {
+            if (itemsName.includes(res.symbol)) {
+              infoAboutCurrency.push({
+                name: res.symbol,
+                change: res.percent_change_1h,
+                price_btc: res.price_btc
+              })
+            }
+          })
+          this.setState({
+            infoAboutCurrency,
+            isFetching: true
+          })
+        },
+        (error) => {
+          console.log('error on fetch data from api')
+        }
+      )
+  }
+
   render() {
-    const {swapHistory, isSigned} = this.props;
-    const {activeView} = this.state;
+    const {activeView, infoAboutCurrency, isFetching, usdBalance} = this.state;
+    const {
+      items,
+      tokens,
+      currencies,
+      hiddenCoinsList,
+      intl,
+      isSigned,
+      location,
+    } = this.props
+
+    const tableRows = [ ...items, ...tokens ].filter(currency => !hiddenCoinsList.includes(currency))
     
     return (
       <section styleName="newWallet">
@@ -49,47 +190,21 @@ export default class NewWallet extends Component {
         </ul>
 
         {
-          isSigned ? (
-            <div styleName="notifyBlock notifyBlockSaveKeys">
-              <div>
-                <div styleName="notifyBlockIcon">
-                  <img src={security} alt=""/>
-                </div>
-                <div styleName="notifyBlockDescr">
-                  <p>Before you continue be sure to save your private keys!</p>
-                  <p>We do not store your private keys and will not be able to restore them</p>
-                </div>
-              </div>
-              <div>
-                <NewButton white>
-                  Show my keys
-                </NewButton>
-                <NewButton transparent>
-                  I saved my keys
-                </NewButton>
-              </div>
-            </div>   
-          ) : (
-            <div styleName="notifyBlock notifyBlockSignUp">
-              <div>
-                <div styleName="notifyBlockIcon">
-                  <img src={mail} alt=""/>
-                </div>
-                <div styleName="notifyBlockDescr">
-                  <p>Sign up and get your free cryptocurrency for test!</p>
-                  <p>You will also be able to receive notifications regarding updates with your account</p>
-                </div>
-              </div>
-              <div>
-                <NewButton white btn-text-blue>
-                  Sign Up
-                </NewButton>
-                <NewButton transparent>
-                  I’ll do this later
-                </NewButton>
-              </div>
-            </div>
-          )
+          isSigned ? 
+            <NotifyBlock 
+              className="notifyBlockSaveKeys"
+              descr="Before you continue be sure to save your private keys!" 
+              tooltip="We do not store your private keys and will not be able to restore them<" 
+              icon={security}
+              firstBtn="Show my keys"
+              secondBtn="I saved my keys" /> :
+            <NotifyBlock 
+              className="notifyBlockSignUp"
+              descr="Sign up and get your free cryptocurrency for test!" 
+              tooltip="You will also be able to receive notifications regarding updates with your account" 
+              icon={mail}
+              firstBtn="Sign Up"
+              secondBtn="I’ll do this later" />
         }
         <div styleName="newWalletContent">
           <div styleName="newWalletBalance yourBalance">
@@ -99,7 +214,7 @@ export default class NewWallet extends Component {
                 <svg width="9" height="14" viewBox="0 0 9 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M8.6748 9.88867C8.6748 10.2051 8.61328 10.5156 8.49023 10.8203C8.36719 11.1191 8.19141 11.3975 7.96289 11.6553C7.74023 11.9131 7.46484 12.1445 7.13672 12.3496C6.81445 12.5547 6.45117 12.7129 6.04688 12.8242V13.9141H5.08008V12.9824C5.00391 12.9941 4.92773 13 4.85156 13H4.37695V13.9141H3.40137V12.8418C3.02051 12.7363 2.67188 12.584 2.35547 12.3848C2.03906 12.1855 1.76367 11.9453 1.5293 11.6641C1.29492 11.377 1.11328 11.0518 0.984375 10.6885C0.855469 10.3193 0.791016 9.91504 0.791016 9.47559H2.45215C2.45215 9.84473 2.53125 10.1963 2.68945 10.5303C2.85352 10.8643 3.09082 11.1367 3.40137 11.3477V7.40137C3.02051 7.27832 2.66895 7.13477 2.34668 6.9707C2.02441 6.80664 1.74609 6.61035 1.51172 6.38184C1.27734 6.15332 1.0957 5.88672 0.966797 5.58203C0.837891 5.27734 0.773438 4.92285 0.773438 4.51855C0.773438 4.14355 0.837891 3.80371 0.966797 3.49902C1.0957 3.19434 1.27441 2.9248 1.50293 2.69043C1.7373 2.4502 2.01562 2.25098 2.33789 2.09277C2.66016 1.92871 3.01465 1.80273 3.40137 1.71484V0.651367H4.37695V1.5918H4.88672C4.95117 1.5918 5.01562 1.59766 5.08008 1.60938V0.651367H6.04688V1.75C6.38672 1.83789 6.70312 1.96387 6.99609 2.12793C7.28906 2.28613 7.54688 2.48242 7.76953 2.7168C7.99219 2.94531 8.17383 3.20898 8.31445 3.50781C8.45508 3.80664 8.5459 4.1377 8.58691 4.50098H7.11035C7.05762 4.20215 6.94043 3.92969 6.75879 3.68359C6.57715 3.43164 6.33984 3.22656 6.04688 3.06836V6.78613C6.90234 7.0791 7.55273 7.4834 7.99805 7.99902C8.44922 8.51465 8.6748 9.14453 8.6748 9.88867ZM5.08008 7.86719L4.37695 7.65625V11.708C4.42383 11.7197 4.46777 11.7256 4.50879 11.7256H4.86035C4.93066 11.7256 5.00391 11.7197 5.08008 11.708V7.86719ZM5.08008 6.50488C5.08008 6.1123 5.07715 5.72266 5.07129 5.33594C5.07129 4.94922 5.06836 4.5918 5.0625 4.26367C5.0625 3.92969 5.05664 3.63379 5.04492 3.37598C5.03906 3.1123 5.03027 2.90723 5.01855 2.76074H4.97461C4.91602 2.74902 4.86035 2.74023 4.80762 2.73438C4.75488 2.72852 4.69922 2.72559 4.64062 2.72559H4.37695V6.26758C4.48242 6.31445 4.59375 6.35547 4.71094 6.39062C4.82812 6.42578 4.95117 6.46387 5.08008 6.50488ZM3.40137 2.9541C3.08496 3.10645 2.85352 3.31738 2.70703 3.58691C2.56055 3.85059 2.4873 4.14355 2.4873 4.46582C2.4873 4.61816 2.49902 4.75879 2.52246 4.8877C2.55176 5.01074 2.60156 5.13086 2.67188 5.24805C2.74219 5.35938 2.83594 5.46777 2.95312 5.57324C3.07031 5.67285 3.21973 5.77246 3.40137 5.87207V2.9541ZM6.89062 9.77441C6.89062 9.49316 6.82617 9.23535 6.69727 9.00098C6.57422 8.76074 6.35742 8.54102 6.04688 8.3418V11.3652C6.3457 11.1777 6.55957 10.9404 6.68848 10.6533C6.82324 10.3662 6.89062 10.0732 6.89062 9.77441Z" fill="#8E9AA3"/>
                 </svg>
-                <p>0.00</p>
+                <p>{usdBalance.toFixed(2)}</p>
                 <span>+0.0%</span>
               </div>
               <div styleName="yourBalanceCurrencies">
@@ -128,92 +243,23 @@ export default class NewWallet extends Component {
           <div styleName="yourAssets" styleName={`yourAssets ${activeView === 0 ? 'active' : ''}`}>
             <h3 styleName="yourAssetsHeading">Your Assets</h3>
             <p styleName="yourAssetsDescr">Here you can safely store and promptly exchange Bitcoin, Ethereum, <br /> EOS, USD, Tether, BCH, and numerous ERC-20 tokens</p>
-            <div styleName="yourAssetsTable assetsTable">
-              <div styleName="assetsTableRow">
-                <div styleName="assetsTableCurrency">
-                  <div styleName="assetsTableIcon">
-                    <svg width="13" height="16" viewBox="0 0 13 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M12.2922 6.29024C12.5308 4.69337 11.3149 3.83487 9.65215 3.26221L10.1922 1.09917L8.87501 0.771081L8.34891 2.87725C8.00307 2.79108 7.64762 2.70924 7.29433 2.62908L7.82234 0.508995L6.50651 0.180908L5.96805 2.34311L3.31215 1.68526L2.96174 3.09181C2.96174 3.09181 3.9388 3.31574 3.91816 3.32966C4.45146 3.46286 4.54818 3.81567 4.53186 4.09551L3.05414 10.0212C2.98886 10.1832 2.82349 10.4261 2.45076 10.3332C2.46397 10.3524 1.49362 10.0932 1.49362 10.0932L0.839844 11.6028L3.49191 12.2724L2.94686 14.4606L4.26209 14.7887L4.8021 12.624C5.16211 12.7214 5.51012 12.8114 5.85117 12.8961L5.31332 15.0508L6.63023 15.3789L7.17528 13.1948C9.4209 13.6196 11.1096 13.4483 11.8194 11.4188C12.3921 9.78376 11.7913 8.84054 10.6098 8.22516C11.4702 8.02596 12.1182 7.46027 12.2911 6.29108L12.2922 6.29024ZM9.28254 10.5094C8.87453 12.1444 6.12226 11.2609 5.2292 11.0389L5.95233 8.1402C6.84492 8.36292 9.70711 8.80405 9.28302 10.5092L9.28254 10.5094ZM9.69103 6.26708C9.31974 7.75511 7.02804 6.9991 6.28426 6.81357L6.939 4.18383C7.68302 4.3696 10.0772 4.71545 9.69007 6.26696" fill="#6144E5"/>
-                    </svg>
-                  </div>
-                  <div styleName="assetsTableInfo">
-                    <p>Bitcoin</p>
-                    <span>0.00000000</span>
-                    <strong>BTC</strong>
-                  </div>
-                  <div styleName="assetsTableValue">
-                    <svg width="9" height="14" viewBox="0 0 9 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M8.6748 9.88867C8.6748 10.2051 8.61328 10.5156 8.49023 10.8203C8.36719 11.1191 8.19141 11.3975 7.96289 11.6553C7.74023 11.9131 7.46484 12.1445 7.13672 12.3496C6.81445 12.5547 6.45117 12.7129 6.04688 12.8242V13.9141H5.08008V12.9824C5.00391 12.9941 4.92773 13 4.85156 13H4.37695V13.9141H3.40137V12.8418C3.02051 12.7363 2.67188 12.584 2.35547 12.3848C2.03906 12.1855 1.76367 11.9453 1.5293 11.6641C1.29492 11.377 1.11328 11.0518 0.984375 10.6885C0.855469 10.3193 0.791016 9.91504 0.791016 9.47559H2.45215C2.45215 9.84473 2.53125 10.1963 2.68945 10.5303C2.85352 10.8643 3.09082 11.1367 3.40137 11.3477V7.40137C3.02051 7.27832 2.66895 7.13477 2.34668 6.9707C2.02441 6.80664 1.74609 6.61035 1.51172 6.38184C1.27734 6.15332 1.0957 5.88672 0.966797 5.58203C0.837891 5.27734 0.773438 4.92285 0.773438 4.51855C0.773438 4.14355 0.837891 3.80371 0.966797 3.49902C1.0957 3.19434 1.27441 2.9248 1.50293 2.69043C1.7373 2.4502 2.01562 2.25098 2.33789 2.09277C2.66016 1.92871 3.01465 1.80273 3.40137 1.71484V0.651367H4.37695V1.5918H4.88672C4.95117 1.5918 5.01562 1.59766 5.08008 1.60938V0.651367H6.04688V1.75C6.38672 1.83789 6.70312 1.96387 6.99609 2.12793C7.28906 2.28613 7.54688 2.48242 7.76953 2.7168C7.99219 2.94531 8.17383 3.20898 8.31445 3.50781C8.45508 3.80664 8.5459 4.1377 8.58691 4.50098H7.11035C7.05762 4.20215 6.94043 3.92969 6.75879 3.68359C6.57715 3.43164 6.33984 3.22656 6.04688 3.06836V6.78613C6.90234 7.0791 7.55273 7.4834 7.99805 7.99902C8.44922 8.51465 8.6748 9.14453 8.6748 9.88867ZM5.08008 7.86719L4.37695 7.65625V11.708C4.42383 11.7197 4.46777 11.7256 4.50879 11.7256H4.86035C4.93066 11.7256 5.00391 11.7197 5.08008 11.708V7.86719ZM5.08008 6.50488C5.08008 6.1123 5.07715 5.72266 5.07129 5.33594C5.07129 4.94922 5.06836 4.5918 5.0625 4.26367C5.0625 3.92969 5.05664 3.63379 5.04492 3.37598C5.03906 3.1123 5.03027 2.90723 5.01855 2.76074H4.97461C4.91602 2.74902 4.86035 2.74023 4.80762 2.73438C4.75488 2.72852 4.69922 2.72559 4.64062 2.72559H4.37695V6.26758C4.48242 6.31445 4.59375 6.35547 4.71094 6.39062C4.82812 6.42578 4.95117 6.46387 5.08008 6.50488ZM3.40137 2.9541C3.08496 3.10645 2.85352 3.31738 2.70703 3.58691C2.56055 3.85059 2.4873 4.14355 2.4873 4.46582C2.4873 4.61816 2.49902 4.75879 2.52246 4.8877C2.55176 5.01074 2.60156 5.13086 2.67188 5.24805C2.74219 5.35938 2.83594 5.46777 2.95312 5.57324C3.07031 5.67285 3.21973 5.77246 3.40137 5.87207V2.9541ZM6.89062 9.77441C6.89062 9.49316 6.82617 9.23535 6.69727 9.00098C6.57422 8.76074 6.35742 8.54102 6.04688 8.3418V11.3652C6.3457 11.1777 6.55957 10.9404 6.68848 10.6533C6.82324 10.3662 6.89062 10.0732 6.89062 9.77441Z" fill="#8E9AA3"/>
-                    </svg>
-                    <p>0.00</p>
-                    <span>+0.0%</span>
-                  </div>
-                  <div styleName="assetsTableDots">
-                    <svg width="4" height="14" viewBox="0 0 4 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <circle cx="2" cy="2" r="1.5" fill="#1F2D48"/>
-                      <circle cx="2" cy="7" r="1.5" fill="#1F2D48"/>
-                      <circle cx="2" cy="12" r="1.5" fill="#1F2D48"/>
-                    </svg>
-                  </div>
-                </div>
-              </div>
-              <div styleName="assetsTableRow">
-                <div styleName="assetsTableCurrency">
-                  <div styleName="assetsTableIcon">
-                    <svg width="13" height="16" viewBox="0 0 13 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M12.2922 6.29024C12.5308 4.69337 11.3149 3.83487 9.65215 3.26221L10.1922 1.09917L8.87501 0.771081L8.34891 2.87725C8.00307 2.79108 7.64762 2.70924 7.29433 2.62908L7.82234 0.508995L6.50651 0.180908L5.96805 2.34311L3.31215 1.68526L2.96174 3.09181C2.96174 3.09181 3.9388 3.31574 3.91816 3.32966C4.45146 3.46286 4.54818 3.81567 4.53186 4.09551L3.05414 10.0212C2.98886 10.1832 2.82349 10.4261 2.45076 10.3332C2.46397 10.3524 1.49362 10.0932 1.49362 10.0932L0.839844 11.6028L3.49191 12.2724L2.94686 14.4606L4.26209 14.7887L4.8021 12.624C5.16211 12.7214 5.51012 12.8114 5.85117 12.8961L5.31332 15.0508L6.63023 15.3789L7.17528 13.1948C9.4209 13.6196 11.1096 13.4483 11.8194 11.4188C12.3921 9.78376 11.7913 8.84054 10.6098 8.22516C11.4702 8.02596 12.1182 7.46027 12.2911 6.29108L12.2922 6.29024ZM9.28254 10.5094C8.87453 12.1444 6.12226 11.2609 5.2292 11.0389L5.95233 8.1402C6.84492 8.36292 9.70711 8.80405 9.28302 10.5092L9.28254 10.5094ZM9.69103 6.26708C9.31974 7.75511 7.02804 6.9991 6.28426 6.81357L6.939 4.18383C7.68302 4.3696 10.0772 4.71545 9.69007 6.26696" fill="#6144E5"/>
-                    </svg>
-                  </div>
-                  <div styleName="assetsTableInfo">
-                    <p>Bitcoin</p>
-                    <span>0.00000000</span>
-                    <strong>BTC</strong>
-                  </div>
-                  <div styleName="assetsTableValue">
-                    <svg width="9" height="14" viewBox="0 0 9 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M8.6748 9.88867C8.6748 10.2051 8.61328 10.5156 8.49023 10.8203C8.36719 11.1191 8.19141 11.3975 7.96289 11.6553C7.74023 11.9131 7.46484 12.1445 7.13672 12.3496C6.81445 12.5547 6.45117 12.7129 6.04688 12.8242V13.9141H5.08008V12.9824C5.00391 12.9941 4.92773 13 4.85156 13H4.37695V13.9141H3.40137V12.8418C3.02051 12.7363 2.67188 12.584 2.35547 12.3848C2.03906 12.1855 1.76367 11.9453 1.5293 11.6641C1.29492 11.377 1.11328 11.0518 0.984375 10.6885C0.855469 10.3193 0.791016 9.91504 0.791016 9.47559H2.45215C2.45215 9.84473 2.53125 10.1963 2.68945 10.5303C2.85352 10.8643 3.09082 11.1367 3.40137 11.3477V7.40137C3.02051 7.27832 2.66895 7.13477 2.34668 6.9707C2.02441 6.80664 1.74609 6.61035 1.51172 6.38184C1.27734 6.15332 1.0957 5.88672 0.966797 5.58203C0.837891 5.27734 0.773438 4.92285 0.773438 4.51855C0.773438 4.14355 0.837891 3.80371 0.966797 3.49902C1.0957 3.19434 1.27441 2.9248 1.50293 2.69043C1.7373 2.4502 2.01562 2.25098 2.33789 2.09277C2.66016 1.92871 3.01465 1.80273 3.40137 1.71484V0.651367H4.37695V1.5918H4.88672C4.95117 1.5918 5.01562 1.59766 5.08008 1.60938V0.651367H6.04688V1.75C6.38672 1.83789 6.70312 1.96387 6.99609 2.12793C7.28906 2.28613 7.54688 2.48242 7.76953 2.7168C7.99219 2.94531 8.17383 3.20898 8.31445 3.50781C8.45508 3.80664 8.5459 4.1377 8.58691 4.50098H7.11035C7.05762 4.20215 6.94043 3.92969 6.75879 3.68359C6.57715 3.43164 6.33984 3.22656 6.04688 3.06836V6.78613C6.90234 7.0791 7.55273 7.4834 7.99805 7.99902C8.44922 8.51465 8.6748 9.14453 8.6748 9.88867ZM5.08008 7.86719L4.37695 7.65625V11.708C4.42383 11.7197 4.46777 11.7256 4.50879 11.7256H4.86035C4.93066 11.7256 5.00391 11.7197 5.08008 11.708V7.86719ZM5.08008 6.50488C5.08008 6.1123 5.07715 5.72266 5.07129 5.33594C5.07129 4.94922 5.06836 4.5918 5.0625 4.26367C5.0625 3.92969 5.05664 3.63379 5.04492 3.37598C5.03906 3.1123 5.03027 2.90723 5.01855 2.76074H4.97461C4.91602 2.74902 4.86035 2.74023 4.80762 2.73438C4.75488 2.72852 4.69922 2.72559 4.64062 2.72559H4.37695V6.26758C4.48242 6.31445 4.59375 6.35547 4.71094 6.39062C4.82812 6.42578 4.95117 6.46387 5.08008 6.50488ZM3.40137 2.9541C3.08496 3.10645 2.85352 3.31738 2.70703 3.58691C2.56055 3.85059 2.4873 4.14355 2.4873 4.46582C2.4873 4.61816 2.49902 4.75879 2.52246 4.8877C2.55176 5.01074 2.60156 5.13086 2.67188 5.24805C2.74219 5.35938 2.83594 5.46777 2.95312 5.57324C3.07031 5.67285 3.21973 5.77246 3.40137 5.87207V2.9541ZM6.89062 9.77441C6.89062 9.49316 6.82617 9.23535 6.69727 9.00098C6.57422 8.76074 6.35742 8.54102 6.04688 8.3418V11.3652C6.3457 11.1777 6.55957 10.9404 6.68848 10.6533C6.82324 10.3662 6.89062 10.0732 6.89062 9.77441Z" fill="#8E9AA3"/>
-                    </svg>
-                    <p>0.00</p>
-                    <span>+0.0%</span>
-                  </div>
-                  <div styleName="assetsTableDots">
-                    <svg width="4" height="14" viewBox="0 0 4 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <circle cx="2" cy="2" r="1.5" fill="#1F2D48"/>
-                      <circle cx="2" cy="7" r="1.5" fill="#1F2D48"/>
-                      <circle cx="2" cy="12" r="1.5" fill="#1F2D48"/>
-                    </svg>
-                  </div>
-                </div>
-              </div>
-              <div styleName="assetsTableRow">
-                <div styleName="assetsTableCurrency">
-                  <div styleName="assetsTableIcon">
-                    <svg width="13" height="16" viewBox="0 0 13 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M12.2922 6.29024C12.5308 4.69337 11.3149 3.83487 9.65215 3.26221L10.1922 1.09917L8.87501 0.771081L8.34891 2.87725C8.00307 2.79108 7.64762 2.70924 7.29433 2.62908L7.82234 0.508995L6.50651 0.180908L5.96805 2.34311L3.31215 1.68526L2.96174 3.09181C2.96174 3.09181 3.9388 3.31574 3.91816 3.32966C4.45146 3.46286 4.54818 3.81567 4.53186 4.09551L3.05414 10.0212C2.98886 10.1832 2.82349 10.4261 2.45076 10.3332C2.46397 10.3524 1.49362 10.0932 1.49362 10.0932L0.839844 11.6028L3.49191 12.2724L2.94686 14.4606L4.26209 14.7887L4.8021 12.624C5.16211 12.7214 5.51012 12.8114 5.85117 12.8961L5.31332 15.0508L6.63023 15.3789L7.17528 13.1948C9.4209 13.6196 11.1096 13.4483 11.8194 11.4188C12.3921 9.78376 11.7913 8.84054 10.6098 8.22516C11.4702 8.02596 12.1182 7.46027 12.2911 6.29108L12.2922 6.29024ZM9.28254 10.5094C8.87453 12.1444 6.12226 11.2609 5.2292 11.0389L5.95233 8.1402C6.84492 8.36292 9.70711 8.80405 9.28302 10.5092L9.28254 10.5094ZM9.69103 6.26708C9.31974 7.75511 7.02804 6.9991 6.28426 6.81357L6.939 4.18383C7.68302 4.3696 10.0772 4.71545 9.69007 6.26696" fill="#6144E5"/>
-                    </svg>
-                  </div>
-                  <div styleName="assetsTableInfo">
-                    <p>Bitcoin</p>
-                    <span>0.00000000</span>
-                    <strong>BTC</strong>
-                  </div>
-                  <div styleName="assetsTableValue">
-                    <svg width="9" height="14" viewBox="0 0 9 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M8.6748 9.88867C8.6748 10.2051 8.61328 10.5156 8.49023 10.8203C8.36719 11.1191 8.19141 11.3975 7.96289 11.6553C7.74023 11.9131 7.46484 12.1445 7.13672 12.3496C6.81445 12.5547 6.45117 12.7129 6.04688 12.8242V13.9141H5.08008V12.9824C5.00391 12.9941 4.92773 13 4.85156 13H4.37695V13.9141H3.40137V12.8418C3.02051 12.7363 2.67188 12.584 2.35547 12.3848C2.03906 12.1855 1.76367 11.9453 1.5293 11.6641C1.29492 11.377 1.11328 11.0518 0.984375 10.6885C0.855469 10.3193 0.791016 9.91504 0.791016 9.47559H2.45215C2.45215 9.84473 2.53125 10.1963 2.68945 10.5303C2.85352 10.8643 3.09082 11.1367 3.40137 11.3477V7.40137C3.02051 7.27832 2.66895 7.13477 2.34668 6.9707C2.02441 6.80664 1.74609 6.61035 1.51172 6.38184C1.27734 6.15332 1.0957 5.88672 0.966797 5.58203C0.837891 5.27734 0.773438 4.92285 0.773438 4.51855C0.773438 4.14355 0.837891 3.80371 0.966797 3.49902C1.0957 3.19434 1.27441 2.9248 1.50293 2.69043C1.7373 2.4502 2.01562 2.25098 2.33789 2.09277C2.66016 1.92871 3.01465 1.80273 3.40137 1.71484V0.651367H4.37695V1.5918H4.88672C4.95117 1.5918 5.01562 1.59766 5.08008 1.60938V0.651367H6.04688V1.75C6.38672 1.83789 6.70312 1.96387 6.99609 2.12793C7.28906 2.28613 7.54688 2.48242 7.76953 2.7168C7.99219 2.94531 8.17383 3.20898 8.31445 3.50781C8.45508 3.80664 8.5459 4.1377 8.58691 4.50098H7.11035C7.05762 4.20215 6.94043 3.92969 6.75879 3.68359C6.57715 3.43164 6.33984 3.22656 6.04688 3.06836V6.78613C6.90234 7.0791 7.55273 7.4834 7.99805 7.99902C8.44922 8.51465 8.6748 9.14453 8.6748 9.88867ZM5.08008 7.86719L4.37695 7.65625V11.708C4.42383 11.7197 4.46777 11.7256 4.50879 11.7256H4.86035C4.93066 11.7256 5.00391 11.7197 5.08008 11.708V7.86719ZM5.08008 6.50488C5.08008 6.1123 5.07715 5.72266 5.07129 5.33594C5.07129 4.94922 5.06836 4.5918 5.0625 4.26367C5.0625 3.92969 5.05664 3.63379 5.04492 3.37598C5.03906 3.1123 5.03027 2.90723 5.01855 2.76074H4.97461C4.91602 2.74902 4.86035 2.74023 4.80762 2.73438C4.75488 2.72852 4.69922 2.72559 4.64062 2.72559H4.37695V6.26758C4.48242 6.31445 4.59375 6.35547 4.71094 6.39062C4.82812 6.42578 4.95117 6.46387 5.08008 6.50488ZM3.40137 2.9541C3.08496 3.10645 2.85352 3.31738 2.70703 3.58691C2.56055 3.85059 2.4873 4.14355 2.4873 4.46582C2.4873 4.61816 2.49902 4.75879 2.52246 4.8877C2.55176 5.01074 2.60156 5.13086 2.67188 5.24805C2.74219 5.35938 2.83594 5.46777 2.95312 5.57324C3.07031 5.67285 3.21973 5.77246 3.40137 5.87207V2.9541ZM6.89062 9.77441C6.89062 9.49316 6.82617 9.23535 6.69727 9.00098C6.57422 8.76074 6.35742 8.54102 6.04688 8.3418V11.3652C6.3457 11.1777 6.55957 10.9404 6.68848 10.6533C6.82324 10.3662 6.89062 10.0732 6.89062 9.77441Z" fill="#8E9AA3"/>
-                    </svg>
-                    <p>0.00</p>
-                    <span>+0.0%</span>
-                  </div>
-                  <div styleName="assetsTableDots">
-                    <svg width="4" height="14" viewBox="0 0 4 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <circle cx="2" cy="2" r="1.5" fill="#1F2D48"/>
-                      <circle cx="2" cy="7" r="1.5" fill="#1F2D48"/>
-                      <circle cx="2" cy="12" r="1.5" fill="#1F2D48"/>
-                    </svg>
-                  </div>
-                </div>
-              </div>
-            </div>
+            {isFetching && <Table
+              className={styles.newWalletTable}
+              rows={tableRows}
+              rowRender={(row, index, selectId, handleSelectId) => (
+                <Row
+                  key={row}
+                  index={index}
+                  getCurrencyUsd={(usd) => this.getCurrencyUsd(usd)}
+                  currency={row}
+                  currencies={currencies}
+                  infoAboutCurrency={infoAboutCurrency}
+                  hiddenCoinsList={hiddenCoinsList}
+                  selectId={selectId}
+                  handleSelectId={handleSelectId}
+                />
+              )}
+            />}
             <NewButton blue transparent fullWidth>
               Add Asset
              </NewButton>
