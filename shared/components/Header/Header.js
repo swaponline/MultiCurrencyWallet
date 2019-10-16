@@ -448,7 +448,7 @@ export default class Header extends Component {
           )
         }
         <WidthContainer styleName="container">
-          <LogoTooltip withLink isExchange={isExchange} />
+          <LogoTooltip withLink isColored isExchange={isExchange} />
           <Nav menu={menuItems} />
           <Logo withLink mobile />
           {isPartialTourOpen && <TourPartial isTourOpen={isPartialTourOpen} />}

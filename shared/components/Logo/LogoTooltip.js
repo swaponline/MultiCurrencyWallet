@@ -8,7 +8,7 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 
 const LogoTooltip = (props) => (
   <Fragment>
-    <Logo withLink isExchange={props.isExchange} />
+    <Logo withLink isColored={props.isColored} isExchange={props.isExchange} />
     <ReactTooltip id="logo" type="light" effect="solid">
       <FormattedMessage id="logo29" defaultMessage="Go Home" />
     </ReactTooltip>

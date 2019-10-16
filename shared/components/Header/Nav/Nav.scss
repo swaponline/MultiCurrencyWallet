@@ -1,4 +1,4 @@
-$textColor: #dccef7;
+$textColor: #1F2D48;
 $exchangeBorder: #512ed0;
 
 .nav {
@@ -7,6 +7,8 @@ $exchangeBorder: #512ed0;
   flex: auto 1 1;
   display: flex;
   align-items: center;
+  right: 120px;
+  position: absolute;
 }
 
 .mainMenu {
@@ -27,9 +29,12 @@ $exchangeBorder: #512ed0;
   font-weight: 500;
   font-size: 16px;
   text-decoration: none;
-  color: rgba($textColor, 1);
   cursor: pointer;
   transition: color 0.1s ease;
+  font-weight: 800;
+  font-size: 15px;
+  line-height: 140%;
+  color: #8E9AA3;
 
   &:first-child {
     margin-left: 0px;
@@ -37,7 +42,7 @@ $exchangeBorder: #512ed0;
   }
 
   &:hover {
-    color: white;
+    color: rgba($textColor, 1);
     img {
       filter: none;
       transform: rotate(180deg);
@@ -45,8 +50,7 @@ $exchangeBorder: #512ed0;
   }
 
   &.active {
-    color: white;
-    border-bottom: 2px solid white;
+    color: rgba($textColor, 1);
     &_exchange {
       border-color: $exchangeBorder;
     }
