@@ -194,7 +194,7 @@ export default class NewWallet extends Component {
             <NotifyBlock 
               className="notifyBlockSaveKeys"
               descr="Before you continue be sure to save your private keys!" 
-              tooltip="We do not store your private keys and will not be able to restore them<" 
+              tooltip="We do not store your private keys and will not be able to restore them" 
               icon={security}
               firstBtn="Show my keys"
               secondBtn="I saved my keys" /> :

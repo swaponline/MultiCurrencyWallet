@@ -375,7 +375,8 @@ export default class Row extends Component {
       telosAccountActivated,
       telosActivePublicKey,
       showButtons,
-      exCurrencyRate
+      exCurrencyRate,
+      currencyUsdBalance
     } = this.state
 
     const {
@@ -401,10 +402,6 @@ export default class Row extends Component {
       eosActivationPaymentSent = this.props.item.isActivationPaymentSent
     }
 
-   // alert('render')
-
-    console.log(this.props.infoAboutCurrency)
-
     let inneedData = null
     let getBtcPrice = null
 
@@ -415,7 +412,6 @@ export default class Row extends Component {
     if(inneedData) {
       getBtcPrice = BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString() * inneedData.price_btc;
     }
-
 
     return (
       <tr>
@@ -453,8 +449,9 @@ export default class Row extends Component {
                     <span>
                       {
                         balanceError ? '?' : BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString()
-                      }{' '}{currency}
+                      }{' '}
                     </span>
+                    <span>{currency}</span>
                     { currency === 'BTC' && unconfirmedBalance !== 0 && (
                       <Fragment>
                         <br />
@@ -499,7 +496,7 @@ export default class Row extends Component {
             </div>
             <div styleName="assetsTableValue">
               <img src={dollar}/>
-              <p>{this.state.currencyUsdBalance || '0.00'}</p>
+              <p>{currencyUsdBalance && currencyUsdBalance.toFixed(2) || '0.00'}</p>
               {inneedData && <span>   {`${inneedData.change} %`} </span>}
             </div>
             <div styleName="assetsTableDots">

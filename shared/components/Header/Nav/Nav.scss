@@ -7,7 +7,7 @@ $exchangeBorder: #512ed0;
   flex: auto 1 1;
   display: flex;
   align-items: center;
-  right: 120px;
+  left: 120px;
   position: absolute;
 }
 
@@ -33,6 +33,7 @@ $exchangeBorder: #512ed0;
   transition: color 0.1s ease;
   font-weight: 800;
   font-size: 15px;
+  font-family: 'Inter-Bold', sans-serif;
   line-height: 140%;
   color: #8E9AA3;
 
@@ -57,17 +58,6 @@ $exchangeBorder: #512ed0;
   }
 }
 
-.exchangeMenuLink {
-  color: rgba(0, 0, 0, 0.6);
-
-  &:hover {
-    color: #512ed0;
-  }
-
-  &.active {
-    color: #512ed0;
-  }
-}
 
 .container {
   cursor: pointer;

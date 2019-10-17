@@ -89,7 +89,7 @@ export default class History extends Component {
               <FormattedMessage id="history72" defaultMessage="All transactions sent and received" />
             </span>
           </ReactTooltip> */}
-          <Filter />
+          {/* <Filter /> */}
           <InfiniteScrollTable
             className={styles.history}
             titles={titles}

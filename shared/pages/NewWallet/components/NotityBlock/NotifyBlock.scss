@@ -44,10 +44,13 @@
 .notifyBlockDescr {
     margin-left: 10px;
     color: #fff;
+    font-family: 'Manrope-Bold',sans-serif;
     p {
         margin-bottom: 0;
     }
     p:last-child {
         opacity: 0.8;
+        font-size: 13px;
+        font-family: 'Manrope-Medium',sans-serif;
     }
 }
