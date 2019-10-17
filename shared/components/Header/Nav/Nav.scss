@@ -7,7 +7,8 @@ $exchangeBorder: #512ed0;
   flex: auto 1 1;
   display: flex;
   align-items: center;
-  left: 120px;
+  left: 50%;
+  transform: translateX(-50%);
   position: absolute;
 }
 

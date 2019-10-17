@@ -191,19 +191,19 @@ export default class Header extends Component {
           icon: 'products',
           currentPageFlag: true,
         },
-        {
-          title: props.intl.formatMessage(messages.history),
-          link: links.history,
-          icon: 'history',
-          haveSubmenu: false,
-          displayNone: !didWalletCreated,
-        },
-        {
-          title: props.intl.formatMessage(messages.IEO),
-          link: links.ieo,
-          icon: 'IEO',
-          haveSubmenu: false,
-        },
+        // {
+        //   title: props.intl.formatMessage(messages.history),
+        //   link: links.history,
+        //   icon: 'history',
+        //   haveSubmenu: false,
+        //   displayNone: !didWalletCreated,
+        // },
+        // {
+        //   title: props.intl.formatMessage(messages.IEO),
+        //   link: links.ieo,
+        //   icon: 'IEO',
+        //   haveSubmenu: false,
+        // },
       ])
       : ([
         {
@@ -222,13 +222,13 @@ export default class Header extends Component {
           icon: 'products',
           currentPageFlag: true,
         },
-        {
-          title: props.intl.formatMessage(messages.history),
-          link: links.history,
-          icon: 'history',
-          haveSubmenu: false,
-          displayNone: !didWalletCreated,
-        },
+        // {
+        //   title: props.intl.formatMessage(messages.history),
+        //   link: links.history,
+        //   icon: 'history',
+        //   haveSubmenu: false,
+        //   displayNone: !didWalletCreated,
+        // },
       ])
 
   getMenuItemsMobile = (props, didWalletCreated, dinamicPath) => ([
@@ -246,13 +246,13 @@ export default class Header extends Component {
       haveSubmenu: true,
       icon: 'products',
     },
-    {
-      title: props.intl.formatMessage(messages.history),
-      link: links.history,
-      icon: 'history',
-      haveSubmenu: false,
-      displayNone: !didWalletCreated,
-    },
+    // {
+    //   title: props.intl.formatMessage(messages.history),
+    //   link: links.history,
+    //   icon: 'history',
+    //   haveSubmenu: false,
+    //   displayNone: !didWalletCreated,
+    // },
   ])
 
   tapCreateWalletButton = (customProps) => new Promise((resolve) => {
