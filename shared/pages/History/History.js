@@ -70,8 +70,12 @@ export default class History extends Component {
 
   render() {
     const { items, swapHistory, intl } = this.props
-    const titles = [];
-    
+    const titles = [
+      <FormattedMessage id="Coin61" defaultMessage="Coin" />,
+      <FormattedMessage id="Status61" defaultMessage="Status" />,
+      <FormattedMessage id="Statement61" defaultMessage="Statement" />,
+      <FormattedMessage id="Amount61" defaultMessage="Amount" />,
+    ]
 
     console.warn('swapHistory', swapHistory)
     console.warn('items', items)
@@ -79,17 +83,17 @@ export default class History extends Component {
     return (
       items.length ?
         <section styleName="history">
-          {/* <PageHeadline subTitle={intl.formatMessage(subTitle.subTitleHistory)} /> */}
-          {/* { swapHistory.length > 0 && <SwapsHistory showSubtitle="true" orders={swapHistory.filter(item => item.step >= 4)} /> } */}
-          {/* <h3 data-tip data-for="transactions" style={{ width:'210px' }}>
+          <PageHeadline subTitle={intl.formatMessage(subTitle.subTitleHistory)} />
+          { swapHistory.length > 0 && <SwapsHistory showSubtitle="true" orders={swapHistory.filter(item => item.step >= 4)} /> }
+          <h3 data-tip data-for="transactions" style={{ width:'210px' }}>
             <FormattedMessage id="history68" defaultMessage="All transactions" />
-          </h3> */}
-          {/* <ReactTooltip id="transactions" type="light" effect="solid">
+          </h3>
+          <ReactTooltip id="transactions" type="light" effect="solid">
             <span>
               <FormattedMessage id="history72" defaultMessage="All transactions sent and received" />
             </span>
-          </ReactTooltip> */}
-          {/* <Filter /> */}
+          </ReactTooltip>
+          <Filter />
           <InfiniteScrollTable
             className={styles.history}
             titles={titles}

@@ -94,7 +94,7 @@ export default class Header extends Component {
   }
 
   static getDerivedStateFromProps({ history: { location: { pathname } } }) {
-    if  (pathname === '/ru' || pathname === '/' || pathname === links.newWallet) {
+    if  (pathname === '/ru' || pathname === '/' || pathname === links.currencyWallet) {
       return { path: true }
     }
     return { path: false }
@@ -113,8 +113,8 @@ export default class Header extends Component {
 
     const didWalletCreated = localStorage.getItem(constants.localStorage.didWalletCreated)
 
-    const isWalletPage = props.location.pathname === links.newWallet
-      || props.location.pathname === `/ru${links.newWallet}`
+    const isWalletPage = props.location.pathname === links.currencyWallet
+      || props.location.pathname === `/ru${links.currencyWallet}`
 
     this.state = {
       isPartialTourOpen: false,
@@ -177,7 +177,7 @@ export default class Header extends Component {
       ? ([
         {
           title: props.intl.formatMessage(didWalletCreated ? messages.wallet : messages.createWallet),
-          link: links.newWallet,
+          link: links.currencyWallet,
           exact: true,
           haveSubmenu: true,
           icon: 'products',
@@ -191,24 +191,24 @@ export default class Header extends Component {
           icon: 'products',
           currentPageFlag: true,
         },
-        // {
-        //   title: props.intl.formatMessage(messages.history),
-        //   link: links.history,
-        //   icon: 'history',
-        //   haveSubmenu: false,
-        //   displayNone: !didWalletCreated,
-        // },
-        // {
-        //   title: props.intl.formatMessage(messages.IEO),
-        //   link: links.ieo,
-        //   icon: 'IEO',
-        //   haveSubmenu: false,
-        // },
+        {
+          title: props.intl.formatMessage(messages.history),
+          link: links.history,
+          icon: 'history',
+          haveSubmenu: false,
+          displayNone: !didWalletCreated,
+        },
+        {
+          title: props.intl.formatMessage(messages.IEO),
+          link: links.ieo,
+          icon: 'IEO',
+          haveSubmenu: false,
+        },
       ])
       : ([
         {
           title: props.intl.formatMessage(didWalletCreated ? messages.wallet : messages.createWallet),
-          link: links.newWallet,
+          link: links.currencyWallet,
           exact: true,
           haveSubmenu: true,
           icon: 'products',
@@ -222,19 +222,19 @@ export default class Header extends Component {
           icon: 'products',
           currentPageFlag: true,
         },
-        // {
-        //   title: props.intl.formatMessage(messages.history),
-        //   link: links.history,
-        //   icon: 'history',
-        //   haveSubmenu: false,
-        //   displayNone: !didWalletCreated,
-        // },
+        {
+          title: props.intl.formatMessage(messages.history),
+          link: links.history,
+          icon: 'history',
+          haveSubmenu: false,
+          displayNone: !didWalletCreated,
+        },
       ])
 
   getMenuItemsMobile = (props, didWalletCreated, dinamicPath) => ([
     {
       title: props.intl.formatMessage(didWalletCreated ? messages.wallet : messages.createWallet),
-      link: links.newWallet,
+      link: links.currencyWallet,
       exact: true,
       haveSubmenu: true,
       icon: 'products',
@@ -246,13 +246,13 @@ export default class Header extends Component {
       haveSubmenu: true,
       icon: 'products',
     },
-    // {
-    //   title: props.intl.formatMessage(messages.history),
-    //   link: links.history,
-    //   icon: 'history',
-    //   haveSubmenu: false,
-    //   displayNone: !didWalletCreated,
-    // },
+    {
+      title: props.intl.formatMessage(messages.history),
+      link: links.history,
+      icon: 'history',
+      haveSubmenu: false,
+      displayNone: !didWalletCreated,
+    },
   ])
 
   tapCreateWalletButton = (customProps) => new Promise((resolve) => {
@@ -266,8 +266,8 @@ export default class Header extends Component {
 
     let didWalletCreated = localStorage.getItem(constants.localStorage.didWalletCreated)
 
-    const isWalletPage = location.pathname === links.newWallet
-      || location.pathname === `/ru${links.newWallet}`
+    const isWalletPage = location.pathname === links.currencyWallet
+      || location.pathname === `/ru${links.currencyWallet}`
 
     if (isWalletPage && !didWalletCreated) {
       localStorage.setItem(constants.localStorage.didWalletCreated, true)
@@ -304,8 +304,8 @@ export default class Header extends Component {
       return
     }
 
-    const isWalletPage = location.pathname === links.newWallet
-      || location.pathname === `/ru${links.newWallet}`
+    const isWalletPage = location.pathname === links.currencyWallet
+      || location.pathname === `/ru${links.currencyWallet}`
 
     const isPartialPage = location.pathname.includes(links.exchange)
       || location.pathname === '/'
@@ -448,7 +448,7 @@ export default class Header extends Component {
           )
         }
         <WidthContainer styleName="container">
-          <LogoTooltip withLink isColored isExchange={isExchange} />
+          <LogoTooltip withLink isExchange={isExchange} />
           <Nav menu={menuItems} />
           <Logo withLink mobile />
           {isPartialTourOpen && <TourPartial isTourOpen={isPartialTourOpen} />}

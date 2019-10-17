@@ -1,46 +1,17 @@
 .status {
-  font-size: 15px;
-  font-weight: bold;
-  line-height: 1.5;
+  font-size: 16px;
+
   &.in {
-    .arrowWrap {
-      svg {
-        transform: rotate(180deg);
-        margin-top: 4px;
-        path {
-          stroke: #0CCF14;
-        }
-      }
-    }
-    .amount {
-      color: #0CCF14;
-    }
+    color: #3bb33b;
   }
 
   &.out {
-    font-weight: bold;
-    .amount {
-      color: #EE5B51;
-    }
+    color: #ff4e34;
   }
 
   &.self {
-    font-weight: bold;
+    color: #ffb434;
   }
-}
-
-.arrowWrap {
-    width: 36px;
-    height: 36px;
-    background: rgba(142, 154, 163, 0.1);
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 12px;
-    svg {
-      fill: transparent;
-    }
 }
 
 .cell {
@@ -54,24 +25,10 @@
 }
 
 .confirm {
-  color: #8E9AA3;
+  color: #ffffff;
+  background: rgba(61, 226, 91, 0.7);
   text-align: center;
-  height: auto;
-  background: rgba(142, 154, 163, 0.1);
-  font-weight: 800;
-  font-size: 8px;
-  line-height: 10px;
-  width: auto;
-  text-transform: uppercase;
-  padding: 3px 10px;
-  border-radius: 2px;
-  margin-left: 10px;
-  position: relative;
-  top: -2px;
-}
-
-.directionHeading {
-  position: relative;
+  width: 200px;
 }
 
 .unconfirmed {
@@ -82,9 +39,9 @@
 }
 
 .date {
-  font-size: 12px;
-  font-weight: bold;
-  color: #8E9AA3;
+  font-size: 14px;
+  font-weight: 500;
+  color: #aaa;
 }
 
 .address {
@@ -93,36 +50,11 @@
 }
 
 .amount {
-  font-weight: 800;
-  font-size: 15px;
-  line-height: 18px;
-  text-align: right;
-  right: 15px;
-  top: 15px;
-  position: absolute;
-}
-
-.amountUsd {
-  font-weight: 600;
-  font-size: 12px;
-  color: #8E9AA3;
-  line-height: 15px;
-  position: absolute;
-  right: 15px;
-  bottom: 12px;
-}
-
-tr.historyRow {
-  display: block;
-  margin-bottom: 10px;
-  width: 100%;
-  height: 64px;
-  position: relative;
-  background: #FFFFFF;
-  border: 1px solid rgba(142, 154, 163, 0.16)!important;
-  box-shadow: 0px 2px 12px rgba(142, 154, 163, 0.08);
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  padding: 15px;
+  @include inline-block;
+  height: 40px;
+  background-color: #f2f2f2;
+  padding: 0 25px;
+  line-height: 40px;
+  font-size: 16px;
+  border-radius: 20px;
 }

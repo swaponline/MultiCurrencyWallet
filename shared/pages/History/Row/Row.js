@@ -11,30 +11,8 @@ import { FormattedMessage } from 'react-intl'
 
 
 class Row extends React.PureComponent {
-
-  state = {
-    exCurrencyRate: 0,
-  }
-
-  componentDidMount() {
-    this.getUsdBalance()
-  }
-  
-  getUsdBalance = async () => {
-    const { type }  = this.props
-    const exCurrencyRate = await actions.user.getExchangeRate(type, 'usd')
-
-    this.setState(() => ({
-      exCurrencyRate
-    }))
-  }
-
-
   render() {
     const { type, date, direction, hash, value, confirmations } = this.props
-    const { exCurrencyRate } = this.state;
-
-    const getUsd = value * exCurrencyRate;
 
     const statusStyleName = cx('status', {
       'in': direction === 'in',
@@ -43,41 +21,37 @@ class Row extends React.PureComponent {
     })
 
     return (
-      <tr styleName="historyRow">
+      <tr>
+        <td>
+          <Coin name={type} size={40} />
+        </td>
+        <td>
           <div styleName={statusStyleName}>
-            <div styleName="arrowWrap">
-              <svg width="12" height="15" viewBox="0 0 12 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M6 15V3" stroke="#8E9AA3" stroke-width="2"/>
-                <path d="M11 7L6 2L1 7" stroke="#8E9AA3" stroke-width="2"/>
-              </svg>
-            </div>
+            {
+              direction === 'in'
+                ? <FormattedMessage id="RowHistory281" defaultMessage="Received" />
+                : (
+                  direction !== 'self'
+                    ? <FormattedMessage id="RowHistory282" defaultMessage="Sent" />
+                    : <FormattedMessage id="RowHistory283" defaultMessage="Self" />
+                )
+            }
           </div>
-          <div styleName={statusStyleName}>
-            <div styleName="directionHeading">
-              {
-                direction === 'in'
-                  ? <FormattedMessage id="RowHistory281" defaultMessage="Received" />
-                  : (
-                    direction !== 'self'
-                      ? <FormattedMessage id="RowHistory282" defaultMessage="Sent" />
-                      : <FormattedMessage id="RowHistory283" defaultMessage="Self" />
-                  )
-              }
-              <div styleName={confirmations > 0 ? 'confirm cell' : 'unconfirmed cell'}>
-                {confirmations > 0 ? confirmations > 6 ?
-                  <FormattedMessage id="RowHistory34" defaultMessage="Received" /> :
-                  <a href><FormattedMessage id="RowHistory341" defaultMessage="Confirm" /> {confirmations} </a> :
-                  <FormattedMessage id="RowHistory342" defaultMessage="Unconfirmed" />
-                }
-              </div>
-            </div>
-            <div styleName="date">{moment(date).format('LLLL')}</div>
+          <div styleName="date">{moment(date).format('LLLL')}</div>
+          <LinkTransaction type={type} styleName="address" hash={hash} >{hash}</LinkTransaction>
+        </td>
+        <td>
+          <div styleName={confirmations > 0 ? 'confirm cell' : 'unconfirmed cell'}>
+            {confirmations > 0 ? confirmations > 6 ?
+              <FormattedMessage id="RowHistory34" defaultMessage="Received" /> :
+              <a><FormattedMessage id="RowHistory341" defaultMessage="Confirm" /> {confirmations} </a> :
+              <FormattedMessage id="RowHistory342" defaultMessage="Unconfirmed" />
+            }
           </div>
-          <div styleName={statusStyleName}>
-            {direction === 'in' ? <div styleName="amount">{`+ ${parseFloat(Number(value).toFixed(5))}`} {type.toUpperCase()}</div> : <div styleName="amount">{`- ${parseFloat(Number(value).toFixed(5))}`} {type.toUpperCase()}</div>}
-            <span styleName="amountUsd">{`~ $${getUsd.toFixed(2)}`}</span>
-          </div>
-          {/* <LinkTransaction type={type} styleName="address" hash={hash} >{hash}</LinkTransaction> */}
+        </td>
+        <td>
+          <div styleName="amount">{value} {type.toUpperCase()}</div>
+        </td>
       </tr>
     )
   }
