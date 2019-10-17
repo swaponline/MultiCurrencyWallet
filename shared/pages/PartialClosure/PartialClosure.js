@@ -922,6 +922,8 @@ export default class PartialClosure extends Component {
     const haveUsd = BigNumber(exHaveRate).times(haveAmount).dp(2, BigNumber.ROUND_CEIL)
     const getUsd  = BigNumber(exGetRate).times(getAmount).dp(2, BigNumber.ROUND_CEIL)
 
+    console.log('getddfdUSD', getUsd)
+
     const haveCurrencyData = currenciesData.find(item => item.currency === haveCurrency.toUpperCase())
     const haveTokenData = tokensData.find(item => item.currency === haveCurrency.toUpperCase())
     const currentCurrency = haveCurrencyData || haveTokenData
@@ -972,6 +974,9 @@ export default class PartialClosure extends Component {
       id: 'PartialClosureMetaDescrTag',
       defaultMessage: 'Best exchange rate for {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}). Swap.Online wallet provides instant exchange using Atomic Swap Protocol.', // eslint-disable-line
     }, SeoValues)
+
+
+    console.log('usd', (maxAmount > 0 && isNonOffers) ? 0 : haveUsd)
 
     const Form = (
       <div styleName={`${isWidgetBuild ? '' : 'section'}`} className={isWidgetLink ? 'section' : ''} >

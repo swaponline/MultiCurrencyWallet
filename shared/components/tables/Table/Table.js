@@ -96,4 +96,5 @@ export default class Table extends React.Component {
 Table.defaultProps = {
   textIfEmpty: <FormattedMessage id="Table95" defaultMessage="The table is empty" />,
   loadingText: <FormattedMessage id="Table96" defaultMessage="Loading..." />,
+  titles: []
 }
