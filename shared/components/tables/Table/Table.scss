@@ -109,6 +109,14 @@ $walletPaddingTop: 41px;
   }
 }
 
+.table.history {
+  width: 100%;
+  margin-top: 20px;
+  thead {
+    border: none;
+  }
+}
+
 @include media-tablet-landscape-and-lower {
   table {
     display: block;
