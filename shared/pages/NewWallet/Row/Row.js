@@ -14,7 +14,7 @@ import CopyToClipboard from 'react-copy-to-clipboard'
 import Coin from 'components/Coin/Coin'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import BtnTooltip from 'components/controls/WithdrawButton/BtnTooltip'
-
+import DropdownMenu from 'components/ui/DropdownMenu/DropdownMenu'
 // import LinkAccount from '../LinkAccount/LinkAcount'
 // import KeychainStatus from '../KeychainStatus/KeychainStatus'
 import { withRouter } from 'react-router'
@@ -26,7 +26,6 @@ import SwapApp from 'swap.app'
 import { BigNumber } from 'bignumber.js'
 
 import dollar from '../images/dollar.svg'
-import dots from '../images/dots.svg'
 
 @injectIntl
 @withRouter
@@ -82,6 +81,7 @@ export default class Row extends Component {
     exCurrencyRate: 0,
     usdBalance: 0,
     existUnfinished: false,
+    isDropdownOpen: false
   }
 
   static getDerivedStateFromProps({ item: { balance } }) {
@@ -191,6 +191,10 @@ export default class Row extends Component {
       ...getComparableProps(this.props),
       ...this.state,
     })
+  }
+
+  handleSend = () => {
+    alert('send')
   }
 
   getUsdBalance = async () => {
@@ -359,6 +363,12 @@ export default class Row extends Component {
       showButtons: false,
     }))
   }
+
+  handleOpenDropdown = () => {
+    this.setState({
+      isDropdownOpen: true
+    })
+  }
   
 
   deleteThisSwap = () => {
@@ -376,7 +386,8 @@ export default class Row extends Component {
       telosActivePublicKey,
       showButtons,
       exCurrencyRate,
-      currencyUsdBalance
+      currencyUsdBalance,
+      isDropdownOpen
     } = this.state
 
     const {
@@ -499,8 +510,23 @@ export default class Row extends Component {
               <p>{currencyUsdBalance && currencyUsdBalance.toFixed(2) || '0.00'}</p>
               {inneedData && <span>   {`${inneedData.change} %`} </span>}
             </div>
-            <div styleName="assetsTableDots">
-              <img src={dots}/>
+            <div onClick={this.handleOpenDropdown} styleName="assetsTableDots">
+              <DropdownMenu
+                size="regular"
+                position="top-left"
+                items={[
+                  {
+                    title: 'Deposit',
+                    action: this.handleReceive,
+                    disabled: isBalanceEmpty
+                  },
+                  {
+                    title: 'Send',
+                    action: this.handleWithdraw,
+                    disabled: false
+                  }
+                ]}
+              />
             </div>
           </div>
         </div>
@@ -508,3 +534,5 @@ export default class Row extends Component {
     )
   }
 }
+
+
