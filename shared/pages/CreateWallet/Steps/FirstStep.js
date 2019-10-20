@@ -72,7 +72,7 @@ const CreateWallet = ({ onClick, error, setError }) => {
           </div>
         </div>
         <button styleName="continue" onClick={onClick} disabled={error}>
-          <FormattedMessage id="createWalletButton1" defaultMessage="Continue" />
+          <FormattedMessage id="createWalletButton1" defaultMessage="Продолжить" />
         </button>
       </div>
       {!isMobile &&

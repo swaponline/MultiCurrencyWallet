@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl'
 export const subHeaderText1 = () => (
   <FormattedMessage
     id="createWalletSubHeader1"
-    defaultMessage="Choose the wallets currency"
+    defaultMessage="Укажите валюту кошелька"
   />
 )
 
@@ -13,34 +13,34 @@ export const subHeaderText1 = () => (
 export const cupture1 = () => (
   <FormattedMessage
     id="createWalletCapture1"
-    defaultMessage="To choose Bitcoin, Ethereum, USDT, EUROS, Swap  or all at once"
+    defaultMessage="На выбор Bitcoin, Ethereum, USDT, EUROS, Swap или все сразу"
   />
 )
 
 export const subHeaderText2 = () => (
   <FormattedMessage
     id="createWalletSubHeader2"
-    defaultMessage="Enter the user name and e-mail"
+    defaultMessage="Введите Email и подпишитесь на уведомления"
   />
 )
 export const cupture2 = () => (
   <FormattedMessage
     id="createWalletCapture2"
-    defaultMessage="You will receive notifications of completed transactions from your wallet"
+    defaultMessage="Вам будут приходить уведомления о совершаемых транзакциях с вашими кошельками"
   />
 )
 
 export const subHeaderText3 = () => (
   <FormattedMessage
     id="createWalletSubHeader3"
-    defaultMessage="Choose wallet protection level"
+    defaultMessage="Выберите уровень защиты вашего кошелька"
   />
 )
 
 export const cupture3 = () => (
   <FormattedMessage
     id="createWalletCapture3"
-    defaultMessage="No protection, sms, google auth, multisig"
+    defaultMessage="Без защиты, sms, google auth, мультисиг"
   />
 )
 /* eslint-enable */

@@ -62,12 +62,12 @@ const CreateWallet = (props) => {
           </div>
         </div>
         <button styleName="continue" onClick={onClick} disabled={error}>
-          <FormattedMessage id="createWalletButton1" defaultMessage="Continue" />
+          <FormattedMessage id="createWalletButton1" defaultMessage="Продолжить" />
         </button>
         <br />
         {!isMobile &&
           <div styleName="notYet" onClick={onClick}>
-            <FormattedMessage id="createWalleLater" defaultMessage="not yet" />
+            <FormattedMessage id="createWalleLater" defaultMessage="Не сейчас" />
           </div>
         }
       </div>

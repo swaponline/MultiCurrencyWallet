@@ -72,7 +72,10 @@ const CreateWallet = (props) => {
     <div styleName="wrapper">
       <div styleName={isMobile ? 'mobileFormBody' : 'formBody'}>
         <h2>
-          <FormattedMessage id="createWalletHeader1" defaultMessage="Create the wallet by 3 simple steps?" />
+          <FormattedMessage
+            id="createWalletHeader1"
+            defaultMessage="Создайте кошелек  в три простых шага?" 
+          />
         </h2>
         {isMobile &&
           <div styleName="inLine steps">
