@@ -1,0 +1,370 @@
+.wrapper {
+  padding-top: 30px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.notYet {
+  text-align: center;
+  padding-top: 5px;
+  color: #6144e5;
+}
+
+.wrapper h2 {
+  width: 400px;
+  margin-bottom: 60px;
+}
+
+.mobileFormBody,
+.formBody {
+  margin: 0 16px;
+}
+
+.inputWrapper,
+.currencyChooserWrapper,
+.inLine {
+  display: flex;
+}
+
+.inputWrapper {
+  justify-content: center;
+  margin: 50px 0;
+}
+
+.notMain {
+  height: 40px;
+  margin: 40px 0;
+}
+
+.secureChooserWrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  margin: 20px auto;
+}
+
+.stepNumber {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  line-height: 2.5;
+  text-align: center;
+  background-color: #f0eefd;
+  color: #6144E5;
+  border: 1px solid #f0eefd;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.logo {
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  padding: 7px;
+  margin: auto;
+}
+
+.btc {
+  background: orange;
+}
+
+.eth {
+  background: black;
+}
+
+.usdt {
+  background: #0ccf14;
+}
+
+.swap {
+  background: #775cf1;
+}
+
+.purple {
+  background-color: #6144E5;
+  color: #f0eefd
+}
+
+.purpleBorder {
+  border-color: #6144E5 !important;
+}
+
+.green {
+  background-color: #0ccf14;
+}
+
+.continue {
+  position: relative;
+  margin: 0 auto;
+  border-radius: 2px;
+  text-align: center;
+  font-weight: 800;
+  font-size: 15px;
+  line-height: 150%;
+  background: #6144E5;
+  color: white;
+  height: 45px;
+  width: 92%;
+  left: 4%;
+}
+
+.continue:disabled {
+  background-color: #f0eefd;
+  color: #6144E5;
+}
+
+.subHeader {
+  top: 5px;
+  position: relative;
+}
+
+.subHeader h5 {
+  font-size: 15px;
+  font-weight: 900;
+  margin-bottom: 0;
+}
+
+.subHeader p {
+  font-size: 10px;
+  margin-bottom: 7px;
+  color: #8E9AA3;
+}
+
+.currencyChooserWrapper {
+  justify-content: space-between;
+}
+
+.currencyChooserWrapper {
+  padding: 30px;
+}
+
+.card {
+  background: #FFFFFF;
+  border: 1px solid rgba(142, 154, 163, 0.16);
+  box-sizing: border-box;
+  box-shadow: 0px 2px 12px rgba(142, 154, 163, 0.08);
+  border-radius: 4px;
+  margin-bottom: 8px;
+  padding: 10px;
+  height: 53px;
+  list-style: none;
+  display: grid;
+  height: 140px;
+  width: 110px;
+
+  b {
+    font-weight: bolder;
+    font-size: 16px;
+    color: #1F2D48;
+  }
+
+  li {
+    font-weight: 100;
+    color: #8E9AA3;
+    font-size: 11px;
+    font-family: Inter;
+    line-height: 20px;
+    text-align: center;
+  }
+}
+
+.secondStepInput {
+  height: 50px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  width: 335px;
+  padding: 10px;
+  margin: 20px 30px;
+}
+
+.secureSize {
+  height: 160px;
+  width: 140px;
+}
+
+@media screen and (max-width: 700px){
+  .card {
+    width: 85px
+  }
+}
+
+@media screen and (max-width: 568px){
+  .wrapper {
+    margin: 125px auto;
+    padding: 0;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .continue {
+    position: absolute;
+    right: 21px;
+    width: 89%;
+    top: 92vh;
+  }
+
+  .secondStepInput {
+    height: 50px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    width: 100%;
+    padding: 10px;
+    margin: 0;
+    margin-bottom: 20px;
+  }
+
+  .wrapper {
+    min-width: 0;
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    padding-top: 0;
+  }
+
+  .wrapper h2 {
+    width: 100%;
+    height: 45px;
+    right: 39px;
+    top: 93px;
+    margin-bottom: 40px;
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 23px;
+    line-height: 120%;
+  }
+
+  .subHeader {
+    width: 100%;
+    height: 61px;
+    margin: 0;
+  }
+
+  .third {
+    height: 59px;
+    margin-bottom: 0px;
+  }
+
+  .subHeader h5 {
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 800;
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+
+  .capture {
+    font-size: 11px;
+    line-height: 14px;
+    font-weight: 800;
+    color: #8E9AA3;
+  }
+
+  .inLine {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .steps {
+    width: 150px
+  }
+
+  .logo {
+    margin: auto 0;
+  }
+
+  .listGroup {
+    margin: auto 10px;
+  }
+
+  .secureSize,
+  .card {
+    height: 53px;
+    width: 100%;
+  }
+
+  .card {
+    margin-bottom: 8px;
+    padding: 10px;
+    list-style: none;
+    display: flex;
+
+    b {
+      font-weight: bolder;
+      font-size: 16px;
+      color: #1F2D48;
+    }
+
+    li {
+      font-weight: 100;
+      color: #8E9AA3;
+      font-size: 11px;
+      font-family: Inter;
+      line-height: 15px;
+    }
+  }
+
+  .thirdCard {
+    height: 65px;
+  }
+
+  .inputWrapper {
+    display: block;
+    margin: 0;
+  }
+
+  .currencyChooserWrapper{
+    overflow-y: auto;
+    display: block;
+    padding: 0;
+  }
+
+  .inputWrapper,
+  .currencyChooserWrapper{
+    height: 265px;
+  }
+
+  .thirdPageIcons {
+    background: #f0eefd;
+  }
+
+  .error {
+    color: red;
+    position: relative;
+    bottom: 20px;
+    font-size: 12px;
+  }
+
+  .formBody {
+    margin: 100px 16px;
+  }
+
+  .secureChooserWrapper {
+    display: block;
+    width: 100%;
+  }
+
+  .secureChooserWrapper,
+  .inputWrapper,
+  .currencyChooserWrapper {
+    height: 50%;
+    overflow-y: auto;
+  }
+
+  .card li {
+    font-size: 9px;
+  }
+}
+
+@media screen and (max-width: 420px){
+  .stepNumber {
+    width: 45px;
+  }
+}
+
+@media screen and (max-width: 320px){
+  .continue {
+    top: 91vh;
+    width: 87%;
+  }
+}

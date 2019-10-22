@@ -2,6 +2,8 @@ const linksManager = {
   home: '/',
   exchange: '/exchange',
   history: '/history',
+  createWallet: '/createWallet',
+
   wallets: '/wallets',
   currencyWallet: '/wallet',
   swap: '/swaps',

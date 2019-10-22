@@ -415,7 +415,9 @@ export default class Header extends Component {
         />
       )
     }
-
+    if (history.location.pathname.includes('/createWallet') && isMobile) {
+      return <span />
+    }
     if (isMobile) {
       return (
         <div styleName={isInputActive ? 'header-mobile header-mobile__hidden' : 'header-mobile'}>
