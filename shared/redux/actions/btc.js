@@ -167,7 +167,7 @@ const signAndBuild = (transactionBuilder) => {
   const { user: { btcData: { privateKey } } } = getState()
   const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
 
-  transactionBuilder.inputs.forEach((input, index) => {
+  transactionBuilder.__INPUTS.forEach((input, index) => {
     transactionBuilder.sign(index, keyPair)
   })
   return transactionBuilder.buildIncomplete()

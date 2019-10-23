@@ -406,7 +406,10 @@ export default class Row extends Component {
                 <span>
                   {
                     balanceError ? '?' : BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString()
-                  }{' '}{currency}
+                  }{' '}
+                  <span styleName={currency.includes('Multisig') ? 'littleText' : ''}>
+                    {currency}
+                  </span>
                 </span>
                 { currency === 'BTC' && unconfirmedBalance !== 0 && (
                   <Fragment>
@@ -570,7 +573,7 @@ export default class Row extends Component {
               <FormattedMessage id="Row313" defaultMessage="Deposit" />
             </CurrencyButton>
             <span styleName="withdrawBtn">
-              <BtnTooltip onClick={this.handleWithdraw} disable={isBalanceEmpty} id={`row${currency}`}>
+              <BtnTooltip onClick={() => this.handleWithdraw(currency.includes('Multisig') ? 'bitcoinMultisig' : undefined)} disable={isBalanceEmpty} id={`row${currency}`}>
                 <i className="fas fa-arrow-alt-circle-right" />
                 <FormattedMessage id="Row328" defaultMessage="Send" />
               </BtnTooltip>

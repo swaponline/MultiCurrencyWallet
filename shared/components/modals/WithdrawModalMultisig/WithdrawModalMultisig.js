@@ -28,10 +28,10 @@ import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 @connect(
   ({
     currencies,
-    user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, ltcData, qtumData /* usdtOmniData, nimData */ },
+    user: { ethData, btcData, btcMultisigData, bchData, tokensData, eosData, telosData, nimData, ltcData /* usdtOmniData, nimData */ },
   }) => ({
     currencies: currencies.items,
-    items: [ ethData, btcData, eosData, telosData, bchData, ltcData, qtumData /* usdtOmniData, nimData */ ],
+    items: [ ethData, btcData, btcMultisigData, eosData, telosData, bchData, ltcData /* usdtOmniData, nimData */ ],
     tokenItems: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
   })
 )
@@ -48,7 +48,7 @@ export default class WithdrawModalMultisig extends React.Component {
 
     const { data: { currency }, items, tokenItems } = data
 
-    const currentDecimals = constants.tokenDecimals[currency.toLowerCase()]
+    const currentDecimals = constants.tokenDecimals.btcmultisig
     const allCurrencyies = items.concat(tokenItems)
     const selectedItem = allCurrencyies.filter(item => item.currency === currency)[0]
 
@@ -136,7 +136,7 @@ export default class WithdrawModalMultisig extends React.Component {
   setBalanceOnState = async (currency) => {
     const { data: { unconfirmedBalance } } = this.props
 
-    const balance = await actions[currency.toLowerCase()].getBalance(currency.toLowerCase())
+    const balance = await actions.btcmultisig.getBalance()
 
     const finalBalance = unconfirmedBalance !== undefined && unconfirmedBalance < 0
       ? new BigNumber(balance).plus(unconfirmedBalance).toString()
@@ -187,10 +187,10 @@ export default class WithdrawModalMultisig extends React.Component {
       }
     }
 
-    await actions[currency.toLowerCase()].send(sendOptions)
+    await actions.btcmultisig.send(sendOptions)
       .then((txRaw) => {
         actions.loader.hide()
-        actions[currency.toLowerCase()].getBalance(currency)
+        actions.btcmultisig.getBalance(currency)
         this.setBalanceOnState(currency)
 
         actions.notifications.show(constants.notifications.SuccessWithdraw, {
@@ -237,7 +237,7 @@ export default class WithdrawModalMultisig extends React.Component {
       const { amount, balance, currency, isEthToken } = this.state
       const { data } = this.props
 
-      const minFee = isEthToken ? 0 : minAmount[data.currency.toLowerCase()]
+      const minFee = minAmount.btc
 
       const balanceMiner = balance
         ? balance !== 0
@@ -266,7 +266,7 @@ export default class WithdrawModalMultisig extends React.Component {
         return isCoinAddress.ETH(address)
       }
 
-      return isCoinAddress[currency.toUpperCase()](address)
+      return isCoinAddress.BTC(address)
     }
 
     render() {
@@ -276,7 +276,7 @@ export default class WithdrawModalMultisig extends React.Component {
 
       const linked = Link.all(this, 'address', 'amount', 'code')
 
-      const min = minAmount[currency.toLowerCase()]
+      const min = minAmount.btcmultisig
       const dataCurrency = isEthToken ? 'ETH' : currency.toUpperCase()
 
       const isDisabled =

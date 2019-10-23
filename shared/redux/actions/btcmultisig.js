@@ -36,7 +36,8 @@ const login = (privateKey) => {
   ].map(hex => Buffer.from(hex, 'hex'))
   const { address } = bitcoin.payments.p2sh({
     redeem: bitcoin.payments.p2wsh({
-      redeem: bitcoin.payments.p2ms({ m: 2, pubkeys: publicKeys }),
+      redeem: bitcoin.payments.p2ms({ m: 2, pubkeys: publicKeys, network: btc.network }),
+      network: btc.network,
     }),
   })
   const { addressOfMyOwnWallet }   = bitcoin.payments.p2wpkh({ pubkey: account.publicKey, network: btc.network })
@@ -82,8 +83,7 @@ const loginWithKeychain = async () => {
 }
 
 const getBalance = () => {
-  const account = bitcoin.ECPair.fromWIF(localStorage.getItem(constants.privateKeyNames.btcMultisig), btc.network) // eslint-disable-line
-  const { address } = bitcoin.payments.p2pkh({ pubkey: account.publicKey, network: btc.network })
+  const { user: { btcMultisigData: { address, privateKey } } } = getState()
 
   return request.get(`${api.getApiServer('bitpay')}/addr/${address}`)
     .then(({ balance, unconfirmedBalance }) => {
@@ -156,27 +156,30 @@ const getTransaction = () =>
 
 const send = async ({ from, to, amount, feeValue, speed } = {}) => {
   feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed })
+  const { user: { btcMultisigData: { address, privateKey, publicKeys, publicKey } } } = getState()
 
-  const tx            = new bitcoin.TransactionBuilder(btc.network)
   const unspents      = await fetchUnspents(from)
 
   const fundValue     = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
   const totalUnspent  = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
   const skipValue     = totalUnspent - fundValue - feeValue
 
-  unspents.forEach(({ txid, vout }) => tx.addInput(txid, vout, 0xfffffffe))
-  tx.addOutput(to, fundValue)
+  const p2ms = bitcoin.payments.p2ms({
+    m: 2,
+    pubkeys: publicKeys,
+    network: btc.network,
+  })
+  const p2sh = bitcoin.payments.p2sh({ redeem: p2ms, network: btc.network })
+  let txb1 = new bitcoin.TransactionBuilder(btc.network)
+  unspents.forEach(({ txid, vout }) => txb1.addInput(txid, vout))
+  txb1.addOutput(to, fundValue)
+  txb1.__INPUTS.forEach((input, index) => {
+    txb1.sign(index, bitcoin.ECPair.fromWIF(privateKey, btc.network), p2sh.redeem.output)
+    txb1.sign(index, bitcoin.ECPair.fromWIF('myBigPrivateKey', btc.network), p2sh.redeem.output)
+  })
 
-  if (skipValue > 546) {
-    tx.addOutput(from, skipValue)
-  }
-
-  const keychainActivated = !!localStorage.getItem(constants.privateKeyNames.btcKeychainPublicKey)
-  const txRaw = keychainActivated ? await signAndBuildKeychain(tx, unspents) : signAndBuild(tx)
-
-  await broadcastTx(txRaw.toHex())
-
-  return txRaw
+  let tx1 = txb1.build()
+  return tx1.toHex()
 }
 
 const signAndBuild = (transactionBuilder) => {
@@ -222,7 +225,7 @@ const signMessage = (message, encodedPrivateKey) => {
 
 const getReputation = () =>
   new Promise(async (resolve, reject) => {
-    const { user: { btcData: { address, privateKey } } } = getState()
+    const { user: { btcMultisigData: { address, privateKey } } } = getState()
     const addressOwnerSignature = signMessage(address, privateKey)
 
     request.post(`${api.getApiServer('swapsExplorer')}/reputation`, {
