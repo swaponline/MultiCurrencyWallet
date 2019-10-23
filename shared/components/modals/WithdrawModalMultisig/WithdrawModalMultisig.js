@@ -19,7 +19,8 @@ import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import ReactTooltip from 'react-tooltip'
 import { isMobile } from 'react-device-detect'
 
-import { isCoinAddress } from 'swap.app/util/typeforce'
+import typeforce from 'swap.app/util/typeforce'
+// import { isCoinAddress } from 'swap.app/util/typeforce'
 import minAmount from 'helpers/constants/minAmount'
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 
@@ -262,11 +263,7 @@ export default class WithdrawModalMultisig extends React.Component {
       const { data: { currency } } = this.props
       const { address, isEthToken } = this.state
 
-      if (isEthToken) {
-        return isCoinAddress.ETH(address)
-      }
-
-      return isCoinAddress.BTC(address)
+      return typeforce.isCoinAddress.BTC(address)
     }
 
     render() {
