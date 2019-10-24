@@ -193,10 +193,6 @@ export default class Row extends Component {
     })
   }
 
-  handleSend = () => {
-    alert('send')
-  }
-
   getUsdBalance = async () => {
     const { currency }  = this.props
     const exCurrencyRate = await actions.user.getExchangeRate(currency, 'usd')

@@ -414,40 +414,7 @@
       font-size: 13px!important;
     }
   }
-  
-  @media all and (min-width: 320px) and (max-width: 570px) {
-    .yourAddress {
-      display: none;
-    }
-    tr.showButtons {
-        .yourAddress {
-          display: none;
-      }
-    }
-    .yourAddressWithOptions {
-      position: absolute;
-      right: -90px;
-      bottom: 50px;
-      width: 100%!important;
-      .notContractAddress {
-        display: none !important;
-      }
-    }
-    .buttonActivate {
-      width: 75px;
-      height: 26px!important;
-      // padding: 0!important;
-      position: absolute;
-      left: 16px;
-      top: -17px!important;
-      font-size: 10px !important;
-    }
-    .buttonUseAnother {
-      width: 100px;
-      display: none!important;
-    }
-  }
-  
+
   .assetsTable {
     position: relative;
     button {
@@ -482,7 +449,7 @@
 
 .assetsTableIcon {
     // background: rgba(97, 68, 229, 0.1);
-    width: 40px;
+    min-width: 40px;
     height: 40px;
     border-radius: 50%;
     display: flex;
@@ -493,7 +460,7 @@
 
 .assetsTableValue {
     position: absolute;
-    right: 60px;
+    right: 50px;
     top: 0;
     img {
         margin-top: -3px;
@@ -560,5 +527,95 @@
 .assetsTableDots {
   position: absolute;
   right: 0;
+}
+
+
+@media all and (min-width: 320px) and (max-width: 570px) {
+  .yourAddress {
+    display: none;
+  }
+  tr.showButtons {
+      .yourAddress {
+        display: none;
+    }
+  }
+  .yourAddressWithOptions {
+    position: absolute;
+    right: -90px;
+    bottom: 50px;
+    width: 100%!important;
+    .notContractAddress {
+      display: none !important;
+    }
+  }
+  .buttonActivate {
+    width: 75px;
+    height: 26px!important;
+    // padding: 0!important;
+    position: absolute;
+    left: 16px;
+    top: -17px!important;
+    font-size: 10px !important;
+  }
+  .buttonUseAnother {
+    width: 100px;
+    display: none!important;
+  }
+}
+
+@media all and (min-width: 993px) {
+  .assetsTableInfo {
+    position: relative;
+    > span {
+      position: absolute;
+      top: 25px;
+      left: 0;
+      > div {
+        right: auto;
+        top: 0;
+      }
+    }
+  }
+}
+
+@media all and (min-width: 768px) and (max-width: 992px) {
+  .assetsTableValue {
+    right: 35px;
+  }
+  .assetsTableInfo {
+    position: relative;
+    > span {
+      position: absolute;
+      top: 0;
+      left: 0;
+      > div {
+        right: auto;
+      }
+    }
+  }
+}
+
+
+@media all and (min-width: 320px) and (max-width: 767px) {
+  .notifyBlock {
+    flex-direction: column;
+  }
+  .assetsTableValue {
+    right: 20px;
+  }
+  .assetsTableDots {
+    right: -10px;
+  }
+  .assetsTableInfo {
+    position: relative;
+    > span {
+      position: absolute;
+      top: 0;
+      left: 0;
+      > div {
+        right: auto;
+      }
+    }
+  }
 }
 

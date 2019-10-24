@@ -126,3 +126,20 @@ tr.historyRow {
   align-items: center;
   padding: 15px;
 }
+
+
+@media all and (min-width: 320px) and (max-width: 570px) {
+  tr.historyRow {
+    height: 120px;
+    align-items: flex-start;
+  }
+  .amountUsd {
+    right: 15px;
+    bottom: 38px;
+  }
+  .amount {
+    right: 15px;
+    bottom: 15px;
+    top: auto;
+  }
+}

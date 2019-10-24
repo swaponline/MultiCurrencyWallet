@@ -113,10 +113,11 @@
 .yourBalanceValue {
     display: flex;
     align-items: end;
-    width: 145px;
+    width: 155px;
     justify-content: space-between;   
-    svg {
+    img {
         margin-top: 10px;
+        width: 10px;
     }
     p {
         font-size: 32px;
@@ -166,9 +167,53 @@
     justify-content: space-between;
     display: flex;
     span {
-        margin-top: 2px;
+        width: 1px;
+        height: 16px;
+        background: rgba(0, 0, 0, 0.1);
+        display: inline-block;
+        margin-top: 6px;
     }
-    a {
+    button {
+        padding: 0;
         cursor: pointer;
+    }
+    button.active {
+        filter: brightness(0);
+    }
+}
+
+@media all and (min-width: 993px) {
+    .newWalletTable {
+        display: inline-table;
+    }
+}
+
+@media all and (min-width: 768px) and (max-width: 992px) {
+    .yourBalance {
+        width: 45%;
+    }
+    .yourAssets {
+        width: 53%;
+    }
+    .activity {
+        width: 53%;
+    }
+    .newWalletTable {
+        display: inline-table;
+    }
+}
+
+
+@media all and (min-width: 320px) and (max-width: 767px) {
+    .newWalletContent {
+        flex-direction: column;
+    }
+    .yourBalance,
+    .yourAssets,
+    .activity {
+        width: 100%;
+    }
+    .newWalletTable {
+        display: inline-table;
     }
 }
