@@ -79,7 +79,6 @@ export default class Row extends Component {
     telosRegister: false,
     showButtons: false,
     exCurrencyRate: 0,
-    usdBalance: 0,
     existUnfinished: false,
     isDropdownOpen: false
   }
@@ -125,36 +124,11 @@ export default class Row extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     const { item: { currency, balance } } = this.props
-    const { exCurrencyRate, isBalanceFetching } = this.state;
-
-    if (!prevState.exCurrencyRate && this.state.exCurrencyRate) {
-      this.setUsdBalance();
-    }
-
     
     if (balance > 0) {
       actions.analytics.balanceEvent({ action: 'have', currency, balance })
     }
   }
-
-  setUsdBalance = () => {
-    const {
-      item: {
-        balance,
-      }
-    } = this.props
-
-    const { exCurrencyRate } = this.state;
-
-    const currencyUsdBalance = BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString() * exCurrencyRate
-
-    this.props.getCurrencyUsd(currencyUsdBalance)
-
-    this.setState({
-      currencyUsdBalance
-    })
-  }
-  
 
   handleReloadBalance = async () => {
     const { isBalanceFetching } = this.state
@@ -175,7 +149,6 @@ export default class Row extends Component {
       isBalanceFetching: false,
     }))
 
-    this.setUsdBalance();
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -382,7 +355,6 @@ export default class Row extends Component {
       telosActivePublicKey,
       showButtons,
       exCurrencyRate,
-      currencyUsdBalance,
       isDropdownOpen
     } = this.state
 
@@ -410,14 +382,11 @@ export default class Row extends Component {
     }
 
     let inneedData = null
-    let getBtcPrice = null
+
+    const currencyUsdBalance = BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString() * exCurrencyRate;
 
     if (infoAboutCurrency) {
       inneedData = infoAboutCurrency.find(el => el.name === currency)
-    }
-
-    if(inneedData) {
-      getBtcPrice = BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString() * inneedData.price_btc;
     }
 
     return (

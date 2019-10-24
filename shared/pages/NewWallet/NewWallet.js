@@ -137,62 +137,6 @@ export default class NewWallet extends Component {
     })
   }
 
-  getBtcBalance = () => {
-    const {currencyBalance, currencies} = this.props;
-    const {infoAboutCurrency} = this.state;
-    console.log('currencyBalance', currencyBalance)
-    console.log('infoAboutCurrency', infoAboutCurrency)
-
-    const haha = [];
-
-    const itemsName = infoAboutCurrency.map(el => el.name);
-
-    console.log('itemName', itemsName)
-
-    
-
-    currencyBalance.map(res => {
-      if (itemsName.includes(res.name)) {
-        haha.push({
-          name: res.name,
-          balance: res.balance,
-          price: res.price_btc
-        })
-      } else {
-        haha.push({
-          name: res.name,
-          balance: res.balance,
-          price: 0
-        })
-      }
-    })
-
-    console.log('haha', haha)
-
-    // var found = currencyBalance.find(function(element, index) { 
-    //   return element.name === infoAboutCurrency[i].name; 
-    // }); 
-
-    // console.log('found', found)
-
-    // currencyBalance.map((item, i) => {
-    //   console.log('currencyBalanceItem', item.balance)
-    //   console.log('infoAboutCurrency[i]', infoAboutCurrency[i].name)
-    //   if(infoAboutCurrency[i].name === item.name) {
-    //     alert('2')
-    //   } 
-      
-    // })
-
-    //alert('gett');
-  }
-
-  getCurrencyUsd = (usd) => {
-    this.setState({
-      usdBalance: usd
-    });
-  }
-
   showPercentChange1H = () => {
     const { currencies } = this.props
     let infoAboutCurrency = []
@@ -276,7 +220,7 @@ export default class NewWallet extends Component {
               <p styleName="yourBalanceDescr">Your total balance</p>
               <div styleName="yourBalanceValue">
                 {activeCurrency === 'usd' ? <img src={dollar}/> : <img src={btcIcon}/> }
-                {activeCurrency === 'usd' ? <p>0.00</p> : <p>1.11</p>}
+                {activeCurrency === 'usd' ? <p>{usdBalance}</p> : <p>1.11</p>}
                 <span>+0.0%</span>
               </div>
               <div styleName="yourBalanceCurrencies">
