@@ -113,7 +113,7 @@
 .yourBalanceValue {
     display: flex;
     align-items: end;
-    width: 155px;
+    width: max-content;
     justify-content: space-between;   
     img {
         margin-top: 10px;
@@ -124,6 +124,7 @@
         line-height: 44px;
         color: #1F2D48;
         font-weight: bold;
+        margin: 0 10px;
     }
     span {
         font-size: 18px;

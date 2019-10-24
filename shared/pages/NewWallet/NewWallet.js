@@ -138,7 +138,7 @@ export default class NewWallet extends Component {
   }
 
   showPercentChange1H = () => {
-    const { currencies } = this.props
+    const { currencies, currencyBalance } = this.props
     let infoAboutCurrency = []
 
     fetch('https://noxon.io/cursAll.php')
@@ -146,13 +146,14 @@ export default class NewWallet extends Component {
       .then(
         (result) => {
           const itemsName = currencies.map(el => el.name)
-          console.log('result', result)
           result.map(res => {
+            const btcBalance = currencyBalance.find(item => item.name === res.symbol)
             if (itemsName.includes(res.symbol)) {
               infoAboutCurrency.push({
                 name: res.symbol,
                 change: res.percent_change_1h,
-                price_btc: res.price_btc
+                price_btc: res.price_btc,
+                balance: btcBalance.balance * res.price_btc
               }
              )
             }
@@ -161,8 +162,6 @@ export default class NewWallet extends Component {
             infoAboutCurrency,
             isFetching: true
           })
-
-          this.getBtcBalance();
         },
         (error) => {
           console.log('error on fetch data from api')
@@ -188,7 +187,15 @@ export default class NewWallet extends Component {
       location,
     } = this.props
 
+    let btcBalance = 0;
+
     const tableRows = [ ...items, ...tokens ].filter(currency => !hiddenCoinsList.includes(currency))
+
+    if(infoAboutCurrency) {
+      infoAboutCurrency.forEach(item => {
+        btcBalance += item.balance
+      })
+    }
     
     return (
       <section styleName="newWallet">
@@ -220,7 +227,7 @@ export default class NewWallet extends Component {
               <p styleName="yourBalanceDescr">Your total balance</p>
               <div styleName="yourBalanceValue">
                 {activeCurrency === 'usd' ? <img src={dollar}/> : <img src={btcIcon}/> }
-                {activeCurrency === 'usd' ? <p>{usdBalance}</p> : <p>1.11</p>}
+                {activeCurrency === 'usd' ? <p>{usdBalance}</p> : <p>{parseFloat(btcBalance).toFixed(5)}</p>}
                 <span>+0.0%</span>
               </div>
               <div styleName="yourBalanceCurrencies">
