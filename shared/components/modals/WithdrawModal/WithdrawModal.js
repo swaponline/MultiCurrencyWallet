@@ -57,7 +57,6 @@ export default class WithdrawModal extends React.Component {
     this.state = {
       isShipped: false,
       openScanCam: '',
-      qrAddress: '',
       address: '',
       amount: '',
       minus: '',
@@ -285,23 +284,18 @@ export default class WithdrawModal extends React.Component {
     handleScan = data => {
       if (data) {
         this.setState(() => ({
-          qrAddress: data.includes(':') ? data.split(':')[1] : data,
+          address: data.includes(':') ? data.split(':')[1] : data,
         }))
         this.openScan()
       }
     }
 
     render() {
-      const { address: inputAdress, amount, balance, isShipped, minus, ethBalance, openScanCam,
-        isEthToken, exCurrencyRate, currentDecimals, error, qrAddress } = this.state
+      const { address, amount, balance, isShipped, minus, ethBalance, openScanCam,
+        isEthToken, exCurrencyRate, currentDecimals, error } = this.state
       const { name, data: { currency }, tokenItems, items, intl } = this.props
 
-      const address = inputAdress || qrAddress
       const linked = Link.all(this, 'address', 'amount')
-
-      if(!linked.address.amount) {
-        linked.address.value = qrAddress
-      }
 
       const min = minAmount[currency.toLowerCase()]
       const dataCurrency = isEthToken ? 'ETH' : currency.toUpperCase()

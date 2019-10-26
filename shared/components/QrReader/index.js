@@ -6,19 +6,21 @@ import styles from './styles.scss'
 import { FormattedMessage } from 'react-intl'
 import QrReader from 'react-qr-scanner'
 
-
+/* eslint-disable */
 const QR = ({ openScan, handleScan, handleError }) => (
   <div styleName="scan">
     <span styleName="close" onClick={openScan}>
-      <FormattedMessage id="closeIcon1241" defaultMessage="+" />
+      &times;
     </span>
     <QrReader
-      delay={300}
+      delay={10}
       onError={handleError}
       onScan={handleScan}
       style={{ width: '100%' }}
     />
   </div>
 )
+
+/* eslint-enable */
 
 export default CSSModules(QR, styles, { allowMultiple: true })
