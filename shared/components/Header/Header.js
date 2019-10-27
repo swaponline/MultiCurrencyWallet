@@ -173,7 +173,7 @@ export default class Header extends Component {
   getMenuItems = (props, didWalletCreated, dinamicPath) =>
     (Number.isInteger(this.props.reputation) && this.props.reputation !== 0)
     || this.props.isSigned
-    || window.localStorage.getItem('didOpenSignUpModal') === 'true'
+    || window.localStorage.getItem('isWalletCreate') === 'true'
       ? ([
         {
           title: props.intl.formatMessage(didWalletCreated ? messages.wallet : messages.createWallet),
@@ -264,7 +264,7 @@ export default class Header extends Component {
       ? `${unlocalisedUrl(intl.locale, location.pathname)}`
       : `${links.home}`
 
-    let didWalletCreated = localStorage.getItem(constants.localStorage.didWalletCreated)
+    let didWalletCreated = localStorage.getItem(constants.localStorage.isWalletCreate)
 
     const isWalletPage = location.pathname === links.newWallet
       || location.pathname === `/ru${links.newWallet}`
@@ -311,7 +311,7 @@ export default class Header extends Component {
       || location.pathname === '/'
       || location.pathname === '/ru'
 
-    const didOpenSignUpModal = localStorage.getItem(constants.localStorage.didOpenSignUpModal)
+    const didOpenWalletCreate = localStorage.getItem(constants.localStorage.isWalletCreate)
 
     const wasOnWallet = localStorage.getItem(constants.localStorage.wasOnWallet)
     const wasOnExchange = localStorage.getItem(constants.localStorage.wasOnExchange)
@@ -330,8 +330,8 @@ export default class Header extends Component {
       default: return
     }
 
-    if (!didOpenSignUpModal && isWalletPage) {
-      this.openSignUpModal({ onClose: tourEvent })
+    if (!didOpenWalletCreate && isWalletPage) {
+      this.openCreateWallet({ onClose: tourEvent })
       return
     }
 
@@ -384,9 +384,10 @@ export default class Header extends Component {
     this.setState(() => ({ isTourOpen: false }))
   }
 
-  openSignUpModal = (options) => {
-    localStorage.setItem(constants.localStorage.didOpenSignUpModal, true)
-    actions.modals.open(constants.modals.SignUp, options)
+  openCreateWallet = (options) => {
+    const { history, intl: { locale } } = this.props
+    localStorage.setItem(constants.localStorage.isWalletCreate, true)
+    history.push(localisedUrl(locale, `createWallet`))
   }
 
   openWalletTour = () => {
