@@ -54,7 +54,7 @@ export default class DropdownMenu extends Component {
 	render() {
 		const {
 			items,
-			position,
+			className,
             size,
             disabled
 		} = this.props;
@@ -66,7 +66,7 @@ export default class DropdownMenu extends Component {
                 <button type="button" onClick={this.handleClick}>
                     <img src={dots}/>
                 </button>
-				<div styleName={classNames('menu', position, open && 'open')}>
+				<div styleName={classNames('menu', className, open && 'open')}>
 					{
 						items.map(item => (
 							<div styleName="dropdownMenuItem">

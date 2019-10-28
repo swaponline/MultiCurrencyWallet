@@ -208,13 +208,42 @@
 @media all and (min-width: 320px) and (max-width: 767px) {
     .newWalletContent {
         flex-direction: column;
+        margin: 0px -20px;
     }
     .yourBalance,
     .yourAssets,
     .activity {
+        box-shadow: none;
         width: 100%;
     }
     .newWalletTable {
         display: inline-table;
+    }
+    .yourBalanceBottom {
+        &:before {
+            display: none;
+        }
+    }
+    .yourAssets {
+        padding: 0;
+        button {
+            width: calc(100% - 65px);
+            margin: auto;
+            margin-top: 15px;
+        }
+    }
+    .yourBalance,
+    .yourBalanceCurrencies {
+        background: rgb(253, 253, 253);
+    }
+    .yourAssetsHeading,
+    .yourAssetsDescr {
+        padding: 0 25px;
+    }
+    .yourBalance {
+        display: none;
+    }
+    .yourBalance.active {
+        display: block;
     }
 }

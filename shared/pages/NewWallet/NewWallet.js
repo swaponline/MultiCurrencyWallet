@@ -9,10 +9,8 @@ import styles from './NewWallet.scss'
 import NewButton from 'components/controls/NewButton/NewButton'
 import History from 'pages/History/History'
 import Wallet from 'pages/Wallet/Wallet'
-import Input from 'components/forms/Input/Input'
 import Row from './Row/Row'
 import Table from 'components/tables/Table/Table'
-
 import NotifyBlock from './components/NotityBlock/NotifyBock'
 
 import security from './images/security.svg'
@@ -22,6 +20,7 @@ import dollar2 from './images/dollar2.svg'
 import btcIcon from './images/btcIcon.svg'
 
 import { links, constants } from 'helpers'
+import ReactTooltip from 'react-tooltip'
 
 import { FormattedMessage, injectIntl } from 'react-intl'
 
@@ -137,6 +136,18 @@ export default class NewWallet extends Component {
     })
   }
 
+  handleDeposit = () => {
+    actions.modals.open(constants.modals.Withdraw, {
+      currency,
+      address,
+      contractAddress,
+      decimals,
+      token,
+      balance,
+      unconfirmedBalance,
+    })
+  }
+
   showPercentChange1H = () => {
     const { currencies, currencyBalance } = this.props
     let infoAboutCurrency = []
@@ -222,7 +233,7 @@ export default class NewWallet extends Component {
               secondBtn="I’ll do this later" />
         }
         <div styleName="newWalletContent">
-          <div styleName="newWalletBalance yourBalance">
+          <div styleName={`newWalletBalance yourBalance ${activeView === 0 ? 'active' : ''}`}>
             <div styleName="yourBalanceTop">
               <p styleName="yourBalanceDescr">Your total balance</p>
               <div styleName="yourBalanceValue">
@@ -241,12 +252,22 @@ export default class NewWallet extends Component {
               </div>
             </div>
             <div styleName="yourBalanceBottom">
-            <NewButton blue>
-                Deposit
-              </NewButton>
-              <NewButton transparent disabled>
-                Send
-              </NewButton>
+              <Fragment>
+                <NewButton blue id="depositBtn">
+                  Deposit
+                </NewButton>
+                <ReactTooltip id="depositBtn" type="light" effect="solid">
+                  <FormattedMessage id="depositBtn" defaultMessage="To deposit a currency, click three dots opposite the asset" />
+                </ReactTooltip>
+              </Fragment>
+              <Fragment>
+                <NewButton blue id="sendBtn">
+                  Send
+                </NewButton>
+                <ReactTooltip id="sendBtn" type="light" effect="solid">
+                  <FormattedMessage id="sendBtn" defaultMessage="To send a currency, click three dots opposite the asset" />
+                </ReactTooltip>
+              </Fragment>
             </div>
           </div>
           <div styleName="yourAssets" styleName={`yourAssets ${activeView === 0 ? 'active' : ''}`}>

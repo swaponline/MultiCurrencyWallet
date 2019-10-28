@@ -418,7 +418,9 @@ export default class Row extends Component {
               <span>
               {
                 !isBalanceFetched || isBalanceFetching ? (
-                  <InlineLoader />
+                  <div styleName="loader">
+                    <InlineLoader />
+                  </div>
                 ) : (
                   <div styleName="no-select-inline" onClick={this.handleReloadBalance} >
                     <i className="fas fa-sync-alt" styleName="icon" />
@@ -478,7 +480,7 @@ export default class Row extends Component {
             <div onClick={this.handleOpenDropdown} styleName="assetsTableDots">
               <DropdownMenu
                 size="regular"
-                position="top-left"
+                className="walletControls"
                 items={[
                   {
                     title: 'Deposit',

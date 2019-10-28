@@ -529,6 +529,10 @@
   right: 0;
 }
 
+.loader {
+  margin-left: -5px;
+}
+
 
 @media all and (min-width: 320px) and (max-width: 570px) {
   .yourAddress {
@@ -585,9 +589,6 @@
   .assetsTableInfo {
     position: relative;
     > span {
-      position: absolute;
-      top: 0;
-      left: 0;
       > div {
         right: auto;
       }
@@ -606,12 +607,13 @@
   .assetsTableDots {
     right: -10px;
   }
+  .assetsTableRow {
+    height: 65px;
+    padding: 13px 25px;
+  }
   .assetsTableInfo {
     position: relative;
     > span {
-      position: absolute;
-      top: 0;
-      left: 0;
       > div {
         right: auto;
       }
