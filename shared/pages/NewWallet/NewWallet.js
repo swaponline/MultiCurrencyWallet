@@ -257,7 +257,7 @@ export default class NewWallet extends Component {
                   Deposit
                 </NewButton>
                 <ReactTooltip id="depositBtn" type="light" effect="solid">
-                  <FormattedMessage id="depositBtn" defaultMessage="To deposit a currency, click three dots opposite the asset" />
+                  <FormattedMessage id="depositBtn" defaultMessage="Для пополнения валюты нажмите три точки напротив нужного актива" />
                 </ReactTooltip>
               </Fragment>
               <Fragment>
@@ -265,7 +265,7 @@ export default class NewWallet extends Component {
                   Send
                 </NewButton>
                 <ReactTooltip id="sendBtn" type="light" effect="solid">
-                  <FormattedMessage id="sendBtn" defaultMessage="To send a currency, click three dots opposite the asset" />
+                  <FormattedMessage id="sendBtn" defaultMessage="Для отправки валюты нажмите три точки напротив нужного актива" />
                 </ReactTooltip>
               </Fragment>
             </div>
