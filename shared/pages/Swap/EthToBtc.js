@@ -134,8 +134,6 @@ export default class EthToBtc extends Component {
     })
   }
 
-
-
   render() {
     const {
       tokenItems,
@@ -156,35 +154,37 @@ export default class EthToBtc extends Component {
     return (
       <div>
         <div styleName="swapContainer" style={(isMobile && (windowWidth < 569)) ? { paddingTop: paddingContainerValue } : { paddingTop: 0 }}>
-          <div styleName="swapInfo">
-            {this.swap.id &&
-              (
-                <strong>
-                  {this.swap.sellAmount.toFixed(6)}
-                  {' '}
-                  {this.swap.sellCurrency} &#10230; {' '}
-                  {this.swap.buyAmount.toFixed(6)}
-                  {' '}
-                  {this.swap.buyCurrency}
-                </strong>
+          <div>
+            <div styleName="swapInfo">
+              {this.swap.id &&
+                (
+                  <strong>
+                    {this.swap.sellAmount.toFixed(6)}
+                    {' '}
+                    {this.swap.sellCurrency} &#10230; {' '}
+                    {this.swap.buyAmount.toFixed(6)}
+                    {' '}
+                    {this.swap.buyCurrency}
+                  </strong>
+                )
+              }
+            </div>
+            {!enoughBalance && flow.step === 4
+              ? (
+                <div styleName="swapDepositWindow">
+                  <DepositWindow currencyData={currencyData} swap={swap} flow={flow} tokenItems={tokenItems} />
+                </div>
+              )
+              : (
+                <Fragment>
+                  {!continueSwap
+                    ? <FeeControler ethAddress={ethAddress} requestToFaucetSended={requestToFaucetSended} />
+                    : <SwapProgress flow={flow} name="EthToBtc" swap={swap}  history={history} signed={signed} locale={locale} wallets={wallets} tokenItems={tokenItems} />
+                  }
+                </Fragment>
               )
             }
           </div>
-          {!enoughBalance && flow.step === 4
-            ? (
-              <div styleName="swapDepositWindow">
-                <DepositWindow currencyData={currencyData} swap={swap} flow={flow} tokenItems={tokenItems} />
-              </div>
-            )
-            : (
-              <Fragment>
-                {!continueSwap
-                  ? <FeeControler ethAddress={ethAddress} requestToFaucetSended={requestToFaucetSended} />
-                  : <SwapProgress flow={flow} name="EthToBtc" swap={swap}  history={history} signed={signed} locale={locale} wallets={wallets} tokenItems={tokenItems} />
-                }
-              </Fragment>
-            )
-          }
           <SwapList enoughBalance={enoughBalance} flow={flow} name={swap.sellCurrency} windowWidth={windowWidth} onClickCancelSwap={onClickCancelSwap} swap={swap} />
           <div styleName="swapContainerInfo">{children}</div>
         </div>

@@ -3993,7 +3993,7 @@
   },
   {
     "id": "deposit297",
-    "message": "link to explorer",
+    "message": "view in explorer",
     "files": [
       "shared/pages/Swap/DepositWindow/DepositWindow.js"
     ]
@@ -5273,7 +5273,7 @@
   },
   {
     "id": "IEO_title_1",
-    "message": "Get up to 5 SWAP for each action:",
+    "message": "We are planning IEO, you can get bonuses by following these steps::",
     "files": [
       "shared/pages/IEO/IEO.js"
     ]

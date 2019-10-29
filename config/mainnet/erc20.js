@@ -44,4 +44,14 @@ export default {
     decimals: 6,
     fullName: 'usdt',
   },
+  snm: {
+    address: '0x983f6d60db79ea8ca4eb9968c6aff8cfa04b3c63',
+    decimals: 18,
+    fullName: 'snm',
+  },
+  ton: {
+    address: '0x14a52cf6B4F68431bd5D9524E4fcD6F41ce4ADe9',
+    decimals: 18,
+    fullName: 'TON',
+  },
 }

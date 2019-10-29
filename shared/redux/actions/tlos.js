@@ -143,6 +143,6 @@ const activateAccount = async (accountName, activePrivateKey, activePublicKey) =
   }
 }
 
-module.exports = {
+export default {
   register, login, getBalance, send, loginWithNewAccount, activateAccount,
 }

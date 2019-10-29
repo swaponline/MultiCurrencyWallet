@@ -9,4 +9,9 @@ export default {
     decimals: 4,
     fullName: 'HDP',
   },
+  usdt: {
+    address: '0xaf3C38A810670786D2FBD1A40Adea7f9dC6e8746',
+    decimals: 6,
+    fullName: 'usdt',
+  },
 }

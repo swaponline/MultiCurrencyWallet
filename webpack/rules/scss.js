@@ -25,9 +25,9 @@ export default [
           // [compile]: true,
           sourceMap: true,
           modules: true,
-          localIdentName,
+          // localIdentName,
           // importLoaders: 1,
-          minimize: config.env === 'production'
+          // minimize: config.env === 'production'
         },
       },
       {

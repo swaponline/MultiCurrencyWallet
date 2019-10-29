@@ -25,10 +25,7 @@ export default class DropDown extends Component {
       PropTypes.string,
       PropTypes.number,
     ]),
-    selectedValue: PropTypes.objectOf([
-      PropTypes.string,
-      PropTypes.number,
-    ]),
+    selectedValue: PropTypes.string.isRequired,
     items: PropTypes.arrayOf(PropTypes.any).isRequired,
     selectedItemRender: PropTypes.func,
     itemRender: PropTypes.func,

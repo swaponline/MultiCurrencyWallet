@@ -336,7 +336,7 @@ export default class DepositWindow extends Component {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <FormattedMessage id="deposit297" defaultMessage="link to explorer" />
+                    <FormattedMessage id="deposit297" defaultMessage="view in explorer" />
                   </a>
                 </strong>
               </div>
@@ -414,10 +414,7 @@ export default class DepositWindow extends Component {
           {flow.btcScriptValues !== null &&
           <div styleName="lockTime">
             <i className="far fa-clock" />
-            <FormattedMessage
-              id="Deposit52"
-              defaultMessage="You have {timer} min to make the payment"
-              values={{ timer: <Timer lockTime={flow.btcScriptValues.lockTime * 1000} defaultMessage={false} /> }} />
+            <Timer cancelTime={(flow.btcScriptValues.lockTime - 7200) * 1000} lockTime={flow.btcScriptValues.lockTime * 1000} />
           </div>}
         </div>
       </Fragment>

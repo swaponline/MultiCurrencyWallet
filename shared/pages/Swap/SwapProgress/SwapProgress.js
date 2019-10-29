@@ -135,21 +135,22 @@ export default class SwapProgress extends Component {
 
   componentWillUnmount() {
     this.swap.off('state update', this.handleFlowStateUpdate)
+    clearTimeout(this.timer)
   }
 
   reloadPage = () => {
-    this.timer =  setInterval(() => {
+    this.timer =  setTimeout(() => {
       const startSwapTime = localStorage.getItem(constants.localStorage.startSwap)
 
       if(this.swap.flow.isFinished) {
-        clearInterval(this.timer)
+        clearTimeout(this.timer)
       }
 
       const isSwapPage = window.location.pathname.includes("swaps")
-      if ((Date.now() - startSwapTime) > 600 * 1000 && isSwapPage) {
+      if (((Date.now() - startSwapTime) > 600 * 1000) && isSwapPage) {
         console.warn('UPS!!! SWAP IS FROZEN - RELOAD')
         localStorage.removeItem(constants.localStorage.startSwap)
-        clearInterval(this.timer)
+        clearTimeout(this.timer)
         window.location.reload()
       }
     }, 1000)
@@ -379,7 +380,9 @@ export default class SwapProgress extends Component {
                       : (
                           <div styleName="timerRefund">
                             <Timer
+                              isRefund
                               lockTime={flow.btcScriptValues.lockTime * 1000}
+                              cancelTime={(flow.btcScriptValues.lockTime - 7200) * 1000}
                               enabledButton={() => this.setState(() => ({ enabledButton: true }))}
                             />
                           </div>

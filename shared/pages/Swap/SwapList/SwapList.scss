@@ -20,7 +20,7 @@
   position: relative;
   font-size: 17px;
   cursor: pointer;
-  color: #FD6B65;
+  color: #fd6b65;
   height: 40px;
   line-height: 40px;
   border-radius: 20px;
@@ -37,9 +37,9 @@
 }
 
 .stepList {
-  margin-left: 50px;
-  margin-top: 30px;
-  margin-bottom: 25px;
+  width: 37%;
+  height: 100%;
+  margin-top: 100px;
 }
 
 .stepItem {
@@ -105,13 +105,19 @@
   }
 }
 
+@media all and (max-width: 1000px) {
+  .stepList {
+    width: 100%;
+    margin-top: 30px;
+  }
+}
 
 @include media-tablet {
   .stepList {
     margin-left: 0;
     order: 4;
   }
-  .stepList.isMobile  {
+  .stepList.isMobile {
     margin-left: 0px;
     margin-bottom: 25px;
     align-items: baseline;

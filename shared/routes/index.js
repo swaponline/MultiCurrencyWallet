@@ -8,6 +8,7 @@ import SwapComponent    from 'pages/Swap/Swap'
 import Home             from 'pages/Home/Home'
 import Wallet           from 'pages/Wallet/Wallet'
 import History          from 'pages/History/History'
+import CreateWallet     from 'pages/CreateWallet/CreateWallet'
 import NotFound         from 'pages/NotFound/NotFound'
 import About            from 'pages/About/About'
 import NewWallet        from 'pages/NewWallet/NewWallet'
@@ -36,6 +37,8 @@ const routes = (
       <Route path={`${localisePrefix}${links.aboutUs}`} component={About} />
       <Route path={`${localisePrefix}${links.newWallet}`} component={NewWallet} />
       <Route path={`${localisePrefix}${links.history}`} component={History} />
+      <Route path={`${localisePrefix}${links.createWallet}`} component={CreateWallet} />
+
 
       <Route path={`${localisePrefix}${links.ieo}`} component={IEO} />
       <Route exact path={`${localisePrefix}${links.notFound}`} component={NotFound} />

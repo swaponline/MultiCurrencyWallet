@@ -77,7 +77,7 @@ export default class History extends Component {
     console.warn('items', items)
 
     return (
-      items.length ?
+      items.length || swapHistory.length ?
         <section styleName="history">
           {/* <PageHeadline subTitle={intl.formatMessage(subTitle.subTitleHistory)} /> */}
           {/* { swapHistory.length > 0 && <SwapsHistory showSubtitle="true" orders={swapHistory.filter(item => item.step >= 4)} /> } */}

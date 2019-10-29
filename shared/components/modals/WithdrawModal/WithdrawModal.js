@@ -18,8 +18,10 @@ import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import ReactTooltip from 'react-tooltip'
 import { isMobile } from 'react-device-detect'
+import QrReader from 'components/QrReader'
 
-import { isCoinAddress } from 'swap.app/util/typeforce'
+// import isCoinAddress from 'swap.app/util/typeforce'
+import typeforce from 'swap.app/util/typeforce'
 import minAmount from 'helpers/constants/minAmount'
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 
@@ -54,6 +56,7 @@ export default class WithdrawModal extends React.Component {
 
     this.state = {
       isShipped: false,
+      openScanCam: '',
       address: '',
       amount: '',
       minus: '',
@@ -258,15 +261,37 @@ export default class WithdrawModal extends React.Component {
       const { data: { currency } } = this.props
       const { address, isEthToken } = this.state
 
+      // console.log(typeforce.isCoinAddress)
       if (isEthToken) {
-        return isCoinAddress.ETH(address)
+        return typeforce.isCoinAddress.ETH(address)
       }
 
-      return isCoinAddress[currency.toUpperCase()](address)
+      return typeforce.isCoinAddress[currency.toUpperCase()](address)
+    }
+
+    openScan = () => {
+      const { openScanCam } = this.state
+
+      this.setState(() => ({
+        openScanCam: !openScanCam,
+      }))
+    }
+
+    handleError = err => {
+      console.error(err)
+    }
+
+    handleScan = data => {
+      if (data) {
+        this.setState(() => ({
+          address: data.includes(':') ? data.split(':')[1] : data,
+        }))
+        this.openScan()
+      }
     }
 
     render() {
-      const { address, amount, balance, isShipped, minus, ethBalance,
+      const { address, amount, balance, isShipped, minus, ethBalance, openScanCam,
         isEthToken, exCurrencyRate, currentDecimals, error } = this.state
       const { name, data: { currency }, tokenItems, items, intl } = this.props
 
@@ -315,6 +340,13 @@ export default class WithdrawModal extends React.Component {
 
       return (
         <Modal name={name} title={`${intl.formatMessage(title.withdrowModal)}${' '}${currency.toUpperCase()}`}>
+          {openScanCam &&
+            <QrReader
+              openScan={this.openScan}
+              handleError={this.handleError}
+              handleScan={this.handleScan}
+            />
+          }
           <p styleName={isEthToken ? 'rednotes' : 'notice'}>
             <FormattedMessage
               id="Withdrow213"
@@ -337,7 +369,13 @@ export default class WithdrawModal extends React.Component {
                 </div>
               </Tooltip>
             </FieldLabel>
-            <Input valueLink={linked.address} focusOnInit pattern="0-9a-zA-Z:" placeholder={`Enter ${currency.toUpperCase()} address to transfer`} />
+            <Input
+              valueLink={linked.address}
+              focusOnInit pattern="0-9a-zA-Z:"
+              placeholder={`Enter ${currency.toUpperCase()} address to transfer`}
+              qr
+              openScan={this.openScan}
+            />
             {address && !this.addressIsCorrect() && (
               <div styleName="rednote">
                 <FormattedMessage

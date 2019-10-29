@@ -21,13 +21,15 @@
 
 .icon {
   margin-right: 5px;
+  font-size: 20px;
+  width: 22px;
 }
 
 .notActiveLink {
   font-size: 12px;
   color: #c9c9c9;
   position: absolute;
-  bottom: -2px;
+  bottom: -20px;
 }
 
 .disableWth {
@@ -58,7 +60,7 @@
 .notContractAddress {
   float: left;
   position: relative;
-  height: 40px;
+  height: 23px;
 }
 
 .button {

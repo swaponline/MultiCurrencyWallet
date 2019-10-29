@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment }  from 'react'
 import PropTypes from 'prop-types'
 
 import CSSModules from 'react-css-modules'
@@ -11,16 +11,19 @@ export default class Timer extends React.Component {
 
   static propTypes = {
     lockTime: PropTypes.number,
+    cancelTime: PropTypes.number,
   }
 
   timer = null
 
-  constructor({ lockTime }) {
+  constructor({ lockTime, cancelTime }) {
     super()
 
     this.state = {
       lockTime,
+      cancelTime,
       timeLeft: null,
+      cancelTimeLeft: null,
     }
   }
 
@@ -29,20 +32,23 @@ export default class Timer extends React.Component {
   }
 
   componentWillMount() {
-    const { lockTime } = this.state
+    const { lockTime, cancelTime } = this.state
 
     const dateNow = new Date().getTime()
     const timeLeft = lockTime - dateNow
+    const cancelTimeLeft = cancelTime - dateNow
 
     this.setState({
       timeLeft,
+      cancelTimeLeft,
     })
   }
 
   tick = () => {
-    const { timeLeft } = this.state
+    const { timeLeft, cancelTimeLeft } = this.state
     const { enabledButton } = this.props
     const newTimeLeft = timeLeft - 1000
+    const newCancelTimeLeft = cancelTimeLeft - 1000
 
     if (newTimeLeft <= 0 && typeof enabledButton === 'function') {
       enabledButton()
@@ -51,35 +57,61 @@ export default class Timer extends React.Component {
       this.timer = setTimeout(this.tick, 1000)
       this.setState({
         timeLeft: newTimeLeft,
+        cancelTimeLeft: newCancelTimeLeft,
       })
     }
   }
 
   render() {
-    const { timeLeft } = this.state
+    const { timeLeft, cancelTimeLeft, cancelTime } = this.state
+    const { isRefund } = this.props
     const min = Math.ceil(timeLeft / 1000 / 60)
+    const minToCancel = Math.ceil(cancelTimeLeft / 1000 / 60)
 
     return (
-      <div styleName="timer">
+      <Fragment>
         {
-          this.props.defaultMessage === false ? (
-            <span>{min}</span>
+          (cancelTime && (cancelTimeLeft > 0) && !isRefund) ? (
+            <div styleName="timer">
+              <FormattedMessage
+                id="timerTimeToCancel"
+                defaultMessage="You have {min} min to make a payment"
+                values={{ min: `${minToCancel}` }}
+              />
+            </div>
           ) : (
-            min > 0 ? (
-              <span>
-                <FormattedMessage
-                  id="timer671"
-                  defaultMessage="minute left for refund"
-                  values={{ min: `${min}` }}
-                />
-              </span>
-            ) : (
-              <FormattedMessage id="timer68" defaultMessage="refund ready" />
-            )
+            <Fragment>
+              {
+                (cancelTime && (cancelTimeLeft <= 0)) && (
+                  <div styleName="timer">
+                    <FormattedMessage id="timerSwapIsCancelled" defaultMessage="Swap canceled due to time out" />
+                  </div>
+                )
+              }
+              <br />
+              <div styleName="timer">
+                {
+                  this.props.defaultMessage === false ? (
+                    <span>{min}</span>
+                  ) : (
+                    min > 0 ? (
+                      <span>
+                        <FormattedMessage
+                          id="timer671"
+                          defaultMessage="minute left for refund"
+                          values={{ min: `${min}` }}
+                        />
+                      </span>
+                    ) : (
+                      <FormattedMessage id="timer68" defaultMessage="refund ready" />
+                    )
+                  )
+                }
+              </div>
+            </Fragment>
           )
         }
-
-      </div>
+      </Fragment>
     )
   }
 

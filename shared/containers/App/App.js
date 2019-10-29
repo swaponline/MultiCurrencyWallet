@@ -105,7 +105,7 @@ export default class App extends React.Component {
     window.prerenderReady = true
   }
 
-  componentWillUnmount() {
+  componentDidUpdate() {
     if (process.env.MAINNET) {
       firebase.setUserLastOnline()
     }
@@ -120,7 +120,6 @@ export default class App extends React.Component {
     const isCalledFromIframe = window.location !== window.parent.location
     const isWidgetBuild = config && config.isWidget
 
-    const isNew = history.location.pathname.includes('/+NewPage')
     if (isWidgetBuild && localStorage.getItem(constants.localStorage.didWidgetsDataSend) !== 'true') {
       firebase.submitUserDataWidget('usersData')
       localStorage.setItem(constants.localStorage.didWidgetsDataSend, true)
@@ -149,7 +148,7 @@ export default class App extends React.Component {
           <Seo location={history.location} />
           <Header />
           <Wrapper>
-            <WidthContainer styleName={isWidgetBuild ? 'main main_widget' : 'main'}>
+            <WidthContainer id="swapComponentWrapper" styleName={isWidgetBuild ? 'main main_widget' : 'main'}>
               <main>
                 {children}
               </main>
@@ -163,25 +162,10 @@ export default class App extends React.Component {
         </Fragment>
       )
 
-    const newMain = (
-      <Fragment>
-        <Seo location={history.location} />
-        { /* <Header /> */ }
-        <main>
-          {children}
-        </main>
-        <Core />
-        { /* !isMobile && <Footer /> */ }
-        <RequestLoader />
-        <ModalConductor />
-        <NotificationConductor />
-      </Fragment>
-    )
-
     return (
       process.env.LOCAL === 'local'
-        ? (<HashRouter>{!isNew ? mainContent : newMain}</HashRouter>)
-        : !isNew ? mainContent : newMain
+        ? (<HashRouter>{mainContent}</HashRouter>)
+        : mainContent
     )
   }
 }

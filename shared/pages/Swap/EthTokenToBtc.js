@@ -176,67 +176,69 @@ export default class EthTokenToBtc extends Component {
       tokenItems,
       signed,
       paddingContainerValue,
-      swap
+      swap,
     } = this.state
 
-    const { canCreateEthTransaction, isFailedTransaction, gasAmountNeeded } = flow
+    const { canCreateEthTransaction, isFailedTransaction, isFailedTransactionError, gasAmountNeeded } = flow
 
     return (
       <div>
         <div styleName="swapContainer">
-          <div styleName="swapInfo">
-            {this.swap.id &&
-              (
-                <strong>
-                  {this.swap.sellAmount.toFixed(6)}
-                  {' '}
-                  {this.swap.sellCurrency} &#10230; {' '}
-                  {this.swap.buyAmount.toFixed(6)}
-                  {' '}
-                  {this.swap.buyCurrency}
-                </strong>
+          <div>
+            <div styleName="swapInfo">
+              {this.swap.id &&
+                (
+                  <strong>
+                    {this.swap.sellAmount.toFixed(6)}
+                    {' '}
+                    {this.swap.sellCurrency} &#10230; {' '}
+                    {this.swap.buyAmount.toFixed(6)}
+                    {' '}
+                    {this.swap.buyCurrency}
+                  </strong>
+                )
+              }
+            </div>
+            {!enoughBalance && flow.step === 4
+              ? (
+                <div styleName="swapDepositWindow">
+                  <DepositWindow currencyData={currencyData} swap={swap} flow={flow} tokenItems={tokenItems} />
+                </div>
+              )
+              : (
+                <Fragment>
+                  {!continueSwap
+                    ? (
+                      <Fragment>
+                        {
+                          !canCreateEthTransaction && (
+                            <FeeControler ethAddress={ethAddress} gasAmountNeeded={gasAmountNeeded} />
+                          )
+                        }
+                        {
+                          isFailedTransaction && (
+                            <FailControler ethAddress={ethAddress} message={isFailedTransactionError} />
+                          )
+                        }
+                      </Fragment>
+                    )
+                    : (
+                      <SwapProgress
+                        flow={flow}
+                        name="EthTokensToBtc"
+                        swap={swap}
+                        tokenItems={tokenItems}
+                        history={history}
+                        locale={locale}
+                        wallets={wallets}
+                        signed={signed}
+                      />
+                    )
+                  }
+                </Fragment>
               )
             }
           </div>
-          {!enoughBalance && flow.step === 4
-            ? (
-              <div styleName="swapDepositWindow">
-                <DepositWindow currencyData={currencyData} swap={swap} flow={flow} tokenItems={tokenItems} />
-              </div>
-            )
-            : (
-              <Fragment>
-                {!continueSwap
-                  ? (
-                    <Fragment>
-                      {
-                        !canCreateEthTransaction && (
-                          <FeeControler ethAddress={ethAddress} gasAmountNeeded={gasAmountNeeded} />
-                        )
-                      }
-                      {
-                        isFailedTransaction && (
-                          <FailControler ethAddress={ethAddress} />
-                        )
-                      }
-                    </Fragment>
-                  )
-                  : (
-                    <SwapProgress
-                      flow={flow}
-                      name="EthTokensToBtc"
-                      swap={swap}
-                      tokenItems={tokenItems}
-                      history={history}
-                      locale={locale}
-                      wallets={wallets}
-                      signed={signed}
-                    />
-                  )
-                }
-              </Fragment>
-            )
-          }
           <SwapList enoughBalance={enoughBalance} flow={flow} swap={swap} onClickCancelSwap={onClickCancelSwap} />
         </div>
         <div styleName="swapContainerInfo">{children}</div>

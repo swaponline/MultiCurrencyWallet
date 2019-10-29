@@ -63,8 +63,8 @@ export default class Input extends Component {
 
   render() {
     const {
-      className, inputContainerClassName, inputClassName, errorStyle,
-      valueLink: { error }, valueLink, dontDisplayError,
+      className, inputContainerClassName, inputClassName, errorStyle, openScan, qr,
+      valueLink: { error }, valueLink, dontDisplayError, inputCustomStyle,
       multiline, focusOnInit, disabled, readOnly, type, usd, ...rest
     } = this.props
 
@@ -85,6 +85,7 @@ export default class Input extends Component {
               ...ignoreProps(rest, 'styles'),
               styleName: errorStyle ? 'input inputError' : 'input',
               className: inputClassName,
+              style: inputCustomStyle,
               valueLink,
               type,
               disabled: disabled || readOnly,
@@ -95,7 +96,12 @@ export default class Input extends Component {
             })
           }
           { usd > 0 &&
-            <p styleName="textUsd" >{`~${usd}`}$</p>
+            <p styleName="rightEl" >{`~${usd}`}$</p>
+          }
+          { qr &&
+            <p styleName="rightEl qr" >
+              <i className="fas fa-qrcode" onClick={openScan} />
+            </p>
           }
         </div>
         {
