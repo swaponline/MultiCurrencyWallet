@@ -54,20 +54,22 @@
 }
 
 .confirm {
-  color: #8E9AA3;
   text-align: center;
   height: auto;
-  background: rgba(142, 154, 163, 0.1);
+  background: rgba(97, 68, 229, 0.1);
   font-weight: 800;
   font-size: 8px;
   line-height: 10px;
+  color: #6144E5;
   width: auto;
   text-transform: uppercase;
   padding: 3px 10px;
   border-radius: 2px;
   margin-left: 10px;
   position: relative;
-  top: -2px;
+  top: -2px; a {
+    font-size: inherit;
+  }
 }
 
 .directionHeading {
@@ -75,8 +77,8 @@
 }
 
 .unconfirmed {
-  color: #ff354b;
-  background: rgba(255, 53, 75, 0.4);
+  color: #8E9AA3;
+  background: rgba(142, 154, 163, 0.1);
   text-align: center;
   width: 200px;
 }

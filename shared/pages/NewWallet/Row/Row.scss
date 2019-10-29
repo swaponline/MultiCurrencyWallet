@@ -46,15 +46,6 @@
   
   }
   
-  .unconfirmedBalance {
-    font-size: 12px;
-    color: #c9c9c9;
-    span {
-      margin-bottom: -5px;
-      display: block;
-    }
-  }
-  
   .notContractAddress {
     float: left;
     position: relative;
@@ -375,15 +366,6 @@
         }
       }
     }
-    .unconfirmedBalance {
-      position: absolute;
-      right: 0;
-      top: 23px;
-      span {
-        display: inline-block;
-        margin-right: 5px;
-      }
-    }
     .buttonActivate {
       right: 0;
       height: 22px;
@@ -424,8 +406,8 @@
 
 .assetsTableRow {
     position: relative;
-    height: 80px;
-    padding-top: 18px;
+    padding: 11px 0px;
+    height: max-content;
     &:last-child {
         &:before {
             display: none;
@@ -487,6 +469,12 @@
 
 .assetsTableInfo {
     font-weight: bold;
+    > span { 
+      > div {
+        position: relative;
+        top: 0;
+      }
+    }
     p {
         color: #6144E5;
         font-size: 13px;
@@ -522,11 +510,25 @@
         }
       }
     }
+    .unconfirmedBalance {
+      font-size: 11px;
+      color: #c9c9c9;
+      margin-top: 0px;
+      display: block;
+      margin-bottom: -30px;
+      > span {
+        font-size: 11px;
+        color: #c9c9c9;
+        margin-right: 5px;
+      }
+    }  
 }
 
 .assetsTableDots {
   position: absolute;
   right: 0;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .loader {
@@ -571,9 +573,6 @@
   .assetsTableInfo {
     position: relative;
     > span {
-      position: absolute;
-      top: 25px;
-      left: 0;
       > div {
         right: auto;
         top: 0;
@@ -608,8 +607,7 @@
     right: -10px;
   }
   .assetsTableRow {
-    height: 65px;
-    padding: 13px 25px;
+    padding: 11px 25px;
   }
   .assetsTableInfo {
     position: relative;

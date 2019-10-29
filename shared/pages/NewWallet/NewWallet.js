@@ -126,8 +126,13 @@ export default class NewWallet extends Component {
     activeCurrency: 'usd'
   }
 
-  componentDidMount = () => {
+  componentWillMount() {
+    actions.user.getBalances()
+  }
+
+  componentDidMount() {
     this.showPercentChange1H();
+    this.setTotalUsdBalance()
   }
 
   handleNavItemClick = (index) => {
@@ -146,6 +151,23 @@ export default class NewWallet extends Component {
       balance,
       unconfirmedBalance,
     })
+  }
+
+  setTotalUsdBalance = () => {
+    const { currencyBalance } = this.props
+
+    currencyBalance.map(item => {
+      const currencyUsdBalance = this.getUsdBalance(item.name)
+      currencyUsdBalance.then(result =>  {
+        this.setState({
+          usdBalance: this.state.usdBalance + result * item.balance
+        })
+      });
+    })
+  }
+
+  getUsdBalance = async (currency) => {
+    return await actions.user.getExchangeRate(currency, 'usd')
   }
 
   showPercentChange1H = () => {
@@ -211,10 +233,6 @@ export default class NewWallet extends Component {
     return (
       <section styleName="newWallet">
         <h3 styleName="newWalletHeading">Wallet</h3>
-        <ul styleName="newWalletNav">
-          {newWalletNav.map((item, index) => <li styleName={`newWalletNavItem ${activeView === index ? 'active' : ''}`} onClick={() => this.handleNavItemClick(index)}><a href styleName="newWalletNavItemLink">{item}</a></li>)}
-        </ul>
-
         {
           isSigned ? 
             <NotifyBlock 
@@ -232,13 +250,16 @@ export default class NewWallet extends Component {
               firstBtn="Sign Up"
               secondBtn="I’ll do this later" />
         }
+        <ul styleName="newWalletNav">
+          {newWalletNav.map((item, index) => <li key={index} styleName={`newWalletNavItem ${activeView === index ? 'active' : ''}`} onClick={() => this.handleNavItemClick(index)}><a href styleName="newWalletNavItemLink">{item}</a></li>)}
+        </ul>
         <div styleName="newWalletContent">
           <div styleName={`newWalletBalance yourBalance ${activeView === 0 ? 'active' : ''}`}>
             <div styleName="yourBalanceTop">
               <p styleName="yourBalanceDescr">Your total balance</p>
               <div styleName="yourBalanceValue">
                 {activeCurrency === 'usd' ? <img src={dollar}/> : <img src={btcIcon}/> }
-                {activeCurrency === 'usd' ? <p>{usdBalance}</p> : <p>{parseFloat(btcBalance).toFixed(5)}</p>}
+                {activeCurrency === 'usd' ? <p>{usdBalance.toFixed(2)}</p> : <p>{parseFloat(btcBalance).toFixed(5)}</p>}
                 <span>+0.0%</span>
               </div>
               <div styleName="yourBalanceCurrencies">

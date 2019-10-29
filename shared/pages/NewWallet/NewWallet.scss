@@ -8,17 +8,21 @@
     font-size: 40px;
     line-height: 120%;
     color: #1F2D48;
+    margin-bottom: 30px;
 }
 
 .newWalletTable {
     width: 100%;
+    td:first-child {
+        padding-left: 0;
+    }
 }
   
 
 .newWalletNav {
     padding: 0;
-    margin-top: 30px;
-    margin-bottom: 70px;
+    margin-top: 60px;
+    margin-bottom: 0px;
 }
 
 .newWalletNavItem {
@@ -37,7 +41,7 @@
     cursor: pointer;
     font-size: 15px;
     line-height: 140%;
-    padding-bottom: 25px;
+    padding-bottom: 10px;
     color: #8E9AA3!important;
 }
 
@@ -69,9 +73,6 @@
     padding: 25px;
     margin-top: 40px;
     width: 66%;
-    button {
-        margin-top: 20px;
-    }
 }
 
 .yourAssetsHeading,
@@ -197,10 +198,19 @@
         width: 53%;
     }
     .activity {
-        width: 53%;
+        width: 100%;
     }
     .newWalletTable {
         display: inline-table;
+        td:first-child {
+            padding-left: 0px;
+        }
+    }
+    .yourBalance {
+        display: none;
+    }
+    .yourBalance.active {
+        display: block;
     }
 }
 
@@ -218,6 +228,10 @@
     }
     .newWalletTable {
         display: inline-table;
+        td:first-child {
+            padding-left: 25px;
+            left: auto;
+        }
     }
     .yourBalanceBottom {
         &:before {
@@ -229,7 +243,6 @@
         button {
             width: calc(100% - 65px);
             margin: auto;
-            margin-top: 15px;
         }
     }
     .yourBalance,

@@ -391,7 +391,7 @@ export default class Row extends Component {
 
     return (
       <tr>
-        <div styleName="assetsTableRow">
+        <td styleName="assetsTableRow">
           <div styleName="assetsTableCurrency">
             <Link to={localisedUrl(locale, `/${fullName}-wallet`)} title={`Online ${fullName} wallet`}>
               <Coin className={styles.assetsTableIcon} name={currency} />
@@ -483,20 +483,22 @@ export default class Row extends Component {
                 className="walletControls"
                 items={[
                   {
+                    id: 1,
                     title: 'Deposit',
                     action: this.handleReceive,
-                    disabled: isBalanceEmpty
+                    disabled: false
                   },
                   {
+                    id: 2,
                     title: 'Send',
                     action: this.handleWithdraw,
-                    disabled: false
+                    disabled: isBalanceEmpty
                   }
                 ]}
               />
             </div>
           </div>
-        </div>
+        </td>
       </tr>
     )
   }

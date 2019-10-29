@@ -66,10 +66,10 @@ export default class DropdownMenu extends Component {
                 <button type="button" onClick={this.handleClick}>
                     <img src={dots}/>
                 </button>
-				<div styleName={classNames('menu', className, open && 'open')}>
+				<div styleName={classNames('menu', className, {open})}>
 					{
-						items.map(item => (
-							<div styleName="dropdownMenuItem">
+						items.map((item, index) => (
+							<div key={index} styleName="dropdownMenuItem">
                                 <button disabled={item.disabled} key={shortid.generate()} type="button" onClick={() => this.handleItemClick(item.action)}>{item.title}</button>
                             </div>
 						))
