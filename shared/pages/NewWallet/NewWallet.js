@@ -121,7 +121,6 @@ export default class NewWallet extends Component {
   state = {
     activeView: 0,
     isFetching: false,
-    usdBalance: 0,
     btcBalance: 0,
     activeCurrency: 'usd'
   }
@@ -132,7 +131,7 @@ export default class NewWallet extends Component {
 
   componentDidMount() {
     this.showPercentChange1H();
-    this.setTotalUsdBalance()
+    this.getUsdBalance()
   }
 
   handleNavItemClick = (index) => {
@@ -153,21 +152,13 @@ export default class NewWallet extends Component {
     })
   }
 
-  setTotalUsdBalance = () => {
-    const { currencyBalance } = this.props
 
-    currencyBalance.map(item => {
-      const currencyUsdBalance = this.getUsdBalance(item.name)
-      currencyUsdBalance.then(result =>  {
-        this.setState({
-          usdBalance: this.state.usdBalance + result * item.balance
-        })
-      });
-    })
-  }
-
-  getUsdBalance = async (currency) => {
-    return await actions.user.getExchangeRate(currency, 'usd')
+  getUsdBalance = async () => {
+    const exCurrencyRate = await actions.user.getExchangeRate('BTC', 'usd')
+  
+    this.setState(() => ({
+      exCurrencyRate
+    }))
   }
 
   showPercentChange1H = () => {
@@ -207,8 +198,8 @@ export default class NewWallet extends Component {
       activeView, 
       infoAboutCurrency, 
       isFetching, 
-      usdBalance,
-      activeCurrency
+      activeCurrency,
+      exCurrencyRate
     } = this.state;
     const {
       items,
@@ -221,15 +212,17 @@ export default class NewWallet extends Component {
     } = this.props
 
     let btcBalance = 0;
+    let usdBalance = 0;
 
     const tableRows = [ ...items, ...tokens ].filter(currency => !hiddenCoinsList.includes(currency))
 
     if(infoAboutCurrency) {
       infoAboutCurrency.forEach(item => {
         btcBalance += item.balance
+        usdBalance = btcBalance * exCurrencyRate;
       })
     }
-    
+
     return (
       <section styleName="newWallet">
         <h3 styleName="newWalletHeading">Wallet</h3>
@@ -289,7 +282,7 @@ export default class NewWallet extends Component {
                   <FormattedMessage id="sendBtn" defaultMessage="Для отправки валюты нажмите три точки напротив нужного актива" />
                 </ReactTooltip>
               </Fragment>
-            </div>
+             </div>
           </div>
           <div styleName="yourAssets" styleName={`yourAssets ${activeView === 0 ? 'active' : ''}`}>
             <h3 styleName="yourAssetsHeading">Your Assets</h3>
