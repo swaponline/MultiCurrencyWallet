@@ -46,15 +46,6 @@
   
   }
   
-  .unconfirmedBalance {
-    font-size: 12px;
-    color: #c9c9c9;
-    span {
-      margin-bottom: -5px;
-      display: block;
-    }
-  }
-  
   .notContractAddress {
     float: left;
     position: relative;
@@ -375,15 +366,6 @@
         }
       }
     }
-    .unconfirmedBalance {
-      position: absolute;
-      right: 0;
-      top: 23px;
-      span {
-        display: inline-block;
-        margin-right: 5px;
-      }
-    }
     .buttonActivate {
       right: 0;
       height: 22px;
@@ -414,40 +396,7 @@
       font-size: 13px!important;
     }
   }
-  
-  @media all and (min-width: 320px) and (max-width: 570px) {
-    .yourAddress {
-      display: none;
-    }
-    tr.showButtons {
-        .yourAddress {
-          display: none;
-      }
-    }
-    .yourAddressWithOptions {
-      position: absolute;
-      right: -90px;
-      bottom: 50px;
-      width: 100%!important;
-      .notContractAddress {
-        display: none !important;
-      }
-    }
-    .buttonActivate {
-      width: 75px;
-      height: 26px!important;
-      // padding: 0!important;
-      position: absolute;
-      left: 16px;
-      top: -17px!important;
-      font-size: 10px !important;
-    }
-    .buttonUseAnother {
-      width: 100px;
-      display: none!important;
-    }
-  }
-  
+
   .assetsTable {
     position: relative;
     button {
@@ -457,8 +406,8 @@
 
 .assetsTableRow {
     position: relative;
-    height: 80px;
-    padding-top: 18px;
+    padding: 11px 0px;
+    height: max-content;
     &:last-child {
         &:before {
             display: none;
@@ -482,7 +431,7 @@
 
 .assetsTableIcon {
     // background: rgba(97, 68, 229, 0.1);
-    width: 40px;
+    min-width: 40px;
     height: 40px;
     border-radius: 50%;
     display: flex;
@@ -493,7 +442,7 @@
 
 .assetsTableValue {
     position: absolute;
-    right: 60px;
+    right: 50px;
     top: 0;
     img {
         margin-top: -3px;
@@ -520,6 +469,12 @@
 
 .assetsTableInfo {
     font-weight: bold;
+    > span { 
+      > div {
+        position: relative;
+        top: 0;
+      }
+    }
     p {
         color: #6144E5;
         font-size: 13px;
@@ -555,15 +510,112 @@
         }
       }
     }
+    .unconfirmedBalance {
+      font-size: 11px;
+      color: #c9c9c9;
+      margin-top: 0px;
+      display: block;
+      margin-bottom: -30px;
+      > span {
+        font-size: 11px;
+        color: #c9c9c9;
+        margin-right: 5px;
+      }
+    }  
 }
 
 .assetsTableDots {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.loader {
+  margin-left: -5px;
+}
+
+
+@media all and (min-width: 320px) and (max-width: 570px) {
+  .yourAddress {
+    display: none;
+  }
+  tr.showButtons {
+      .yourAddress {
+        display: none;
+    }
+  }
+  .yourAddressWithOptions {
     position: absolute;
-    right: 5px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    z-index: 111;
-    width: 20px;
+    right: -90px;
+    bottom: 50px;
+    width: 100%!important;
+    .notContractAddress {
+      display: none !important;
+    }
+  }
+  .buttonActivate {
+    width: 75px;
+    height: 26px!important;
+    // padding: 0!important;
+    position: absolute;
+    left: 16px;
+    top: -17px!important;
+    font-size: 10px !important;
+  }
+  .buttonUseAnother {
+    width: 100px;
+    display: none!important;
+  }
+}
+
+@media all and (min-width: 993px) {
+  .assetsTableInfo {
+    position: relative;
+    > span {
+      > div {
+        right: auto;
+        top: 0;
+      }
+    }
+  }
+}
+
+@media all and (min-width: 768px) and (max-width: 992px) {
+  .assetsTableValue {
+    right: 35px;
+  }
+  .assetsTableInfo {
+    position: relative;
+    > span {
+      > div {
+        right: auto;
+      }
+    }
+  }
+}
+
+
+@media all and (min-width: 320px) and (max-width: 767px) {
+  .notifyBlock {
+    flex-direction: column;
+  }
+  .assetsTableValue {
+    right: 20px;
+  }
+  .assetsTableDots {
+    right: -10px;
+  }
+  .assetsTableRow {
+    padding: 11px 25px;
+  }
+  .assetsTableInfo {
+    position: relative;
+    > span {
+      > div {
+        right: auto;
+      }
+    }
+  }
 }
 

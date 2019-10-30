@@ -14,7 +14,7 @@ import CopyToClipboard from 'react-copy-to-clipboard'
 import Coin from 'components/Coin/Coin'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import BtnTooltip from 'components/controls/WithdrawButton/BtnTooltip'
-
+import DropdownMenu from 'components/ui/DropdownMenu/DropdownMenu'
 // import LinkAccount from '../LinkAccount/LinkAcount'
 // import KeychainStatus from '../KeychainStatus/KeychainStatus'
 import { withRouter } from 'react-router'
@@ -26,7 +26,6 @@ import SwapApp from 'swap.app'
 import { BigNumber } from 'bignumber.js'
 
 import dollar from '../images/dollar.svg'
-import dots from '../images/dots.svg'
 
 @injectIntl
 @withRouter
@@ -80,8 +79,8 @@ export default class Row extends Component {
     telosRegister: false,
     showButtons: false,
     exCurrencyRate: 0,
-    usdBalance: 0,
     existUnfinished: false,
+    isDropdownOpen: false
   }
 
   static getDerivedStateFromProps({ item: { balance } }) {
@@ -125,36 +124,11 @@ export default class Row extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     const { item: { currency, balance } } = this.props
-    const { exCurrencyRate, isBalanceFetching } = this.state;
-
-    if (!prevState.exCurrencyRate && this.state.exCurrencyRate) {
-      this.setUsdBalance();
-    }
-
     
     if (balance > 0) {
       actions.analytics.balanceEvent({ action: 'have', currency, balance })
     }
   }
-
-  setUsdBalance = () => {
-    const {
-      item: {
-        balance,
-      }
-    } = this.props
-
-    const { exCurrencyRate } = this.state;
-
-    const currencyUsdBalance = BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString() * exCurrencyRate
-
-    this.props.getCurrencyUsd(currencyUsdBalance)
-
-    this.setState({
-      currencyUsdBalance
-    })
-  }
-  
 
   handleReloadBalance = async () => {
     const { isBalanceFetching } = this.state
@@ -175,7 +149,6 @@ export default class Row extends Component {
       isBalanceFetching: false,
     }))
 
-    this.setUsdBalance();
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -359,6 +332,12 @@ export default class Row extends Component {
       showButtons: false,
     }))
   }
+
+  handleOpenDropdown = () => {
+    this.setState({
+      isDropdownOpen: true
+    })
+  }
   
 
   deleteThisSwap = () => {
@@ -376,7 +355,7 @@ export default class Row extends Component {
       telosActivePublicKey,
       showButtons,
       exCurrencyRate,
-      currencyUsdBalance
+      isDropdownOpen
     } = this.state
 
     const {
@@ -403,19 +382,16 @@ export default class Row extends Component {
     }
 
     let inneedData = null
-    let getBtcPrice = null
+
+    const currencyUsdBalance = BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString() * exCurrencyRate;
 
     if (infoAboutCurrency) {
       inneedData = infoAboutCurrency.find(el => el.name === currency)
     }
 
-    if(inneedData) {
-      getBtcPrice = BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString() * inneedData.price_btc;
-    }
-
     return (
       <tr>
-        <div styleName="assetsTableRow">
+        <td styleName="assetsTableRow">
           <div styleName="assetsTableCurrency">
             <Link to={localisedUrl(locale, `/${fullName}-wallet`)} title={`Online ${fullName} wallet`}>
               <Coin className={styles.assetsTableIcon} name={currency} />
@@ -442,7 +418,9 @@ export default class Row extends Component {
               <span>
               {
                 !isBalanceFetched || isBalanceFetching ? (
-                  <InlineLoader />
+                  <div styleName="loader">
+                    <InlineLoader />
+                  </div>
                 ) : (
                   <div styleName="no-select-inline" onClick={this.handleReloadBalance} >
                     <i className="fas fa-sync-alt" styleName="icon" />
@@ -499,12 +477,31 @@ export default class Row extends Component {
               <p>{currencyUsdBalance && currencyUsdBalance.toFixed(2) || '0.00'}</p>
               {inneedData && <span>   {`${inneedData.change} %`} </span>}
             </div>
-            <div styleName="assetsTableDots">
-              <img src={dots}/>
+            <div onClick={this.handleOpenDropdown} styleName="assetsTableDots">
+              <DropdownMenu
+                size="regular"
+                className="walletControls"
+                items={[
+                  {
+                    id: 1,
+                    title: 'Deposit',
+                    action: this.handleReceive,
+                    disabled: false
+                  },
+                  {
+                    id: 2,
+                    title: 'Send',
+                    action: this.handleWithdraw,
+                    disabled: isBalanceEmpty
+                  }
+                ]}
+              />
             </div>
           </div>
-        </div>
+        </td>
       </tr>
     )
   }
 }
+
+
