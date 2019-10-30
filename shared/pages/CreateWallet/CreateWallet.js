@@ -4,6 +4,7 @@ import CSSModules from 'react-css-modules'
 import styles from './CreateWallet.scss'
 
 import { connect } from 'redaction'
+import actions from 'redux/actions'
 
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { withRouter } from 'react-router-dom'
@@ -51,6 +52,7 @@ const CreateWallet = (props) => {
     setError(null)
     if (!Object.values(currencies).includes(true) && step === 1) {
       setError('Choose something')
+
       return
     }
 
@@ -65,6 +67,13 @@ const CreateWallet = (props) => {
       setError('Choose something')
       return
     }
+    if (step === 1) {
+      Object.keys(currencies).forEach(el => {
+        if (currencies[el]) {
+          actions.core.markCoinAsVisible(el.toUpperCase())
+        }
+      })
+    }
     handleClick()
   }
 
@@ -74,7 +83,7 @@ const CreateWallet = (props) => {
         <h2>
           <FormattedMessage
             id="createWalletHeader1"
-            defaultMessage="Создайте кошелек  в три простых шага?" 
+            defaultMessage="Создайте кошелек  в три простых шага?"
           />
         </h2>
         {isMobile &&
