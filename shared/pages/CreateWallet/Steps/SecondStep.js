@@ -32,8 +32,8 @@ const CreateWallet = (props) => {
     selected: '',
   })
 
-  const handleClick = name => {
-
+  const handleClick = (name, index) => {
+    if (index > 0) return
     const colors = border.color
 
     Object.keys(border.color).forEach(el => {
@@ -82,10 +82,20 @@ const CreateWallet = (props) => {
             {cupture2()}
           </Explanation>
           <div styleName="currencyChooserWrapper currencyChooserWrapperSecond">
-            {coins.map(el => {
+            {coins.map((el, index) => {
               const { name, capture, text } = el
               return (
-                <div styleName={`card secureSize thirdCard ${border.color[name] ? 'purpleBorder' : ''}`} onClick={() => handleClick(name)}>
+                <div
+                  styleName={
+                    `card secureSize thirdCard ${border.color[name] && index === 0 ? 'purpleBorder' : ''} ${index > 0 ? 'cardDisabled' : ''}`
+                  }
+                  onClick={() => handleClick(name, index)}
+                >
+                  {index > 0 &&
+                    <em>
+                      <FormattedMessage id="createWalletSoon" defaultMessage="Soon!" />
+                    </em>
+                  }
                   <img
                     styleName="logo thirdPageIcons"
                     src={icons[name]}
@@ -93,7 +103,9 @@ const CreateWallet = (props) => {
                     role="image"
                   />
                   <div styleName="listGroup">
-                    <li><b>{text}</b></li>
+                    <li>
+                      <b>{text}</b>
+                    </li>
                     <li>{capture}</li>
                   </div>
                 </div>
