@@ -44,6 +44,7 @@ class Row extends React.PureComponent {
 
     return (
       <tr styleName="historyRow">
+        <td>
           <div styleName={statusStyleName}>
             <div styleName="arrowWrap">
               <svg width="12" height="15" viewBox="0 0 12 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -78,6 +79,7 @@ class Row extends React.PureComponent {
             <span styleName="amountUsd">{`~ $${getUsd.toFixed(2)}`}</span>
           </div>
           {/* <LinkTransaction type={type} styleName="address" hash={hash} >{hash}</LinkTransaction> */}
+        </td>
       </tr>
     )
   }

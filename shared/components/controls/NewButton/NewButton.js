@@ -32,6 +32,7 @@ const NewButton = (props) => {
       onClick={onClick}
       id={id}
       disabled={disabled}
+      data-tip data-for={id}
     >
       {children}
     </button>
