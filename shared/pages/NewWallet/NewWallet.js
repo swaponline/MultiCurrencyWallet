@@ -20,6 +20,7 @@ import dollar2 from './images/dollar2.svg'
 import btcIcon from './images/btcIcon.svg'
 
 import { links, constants } from 'helpers'
+import { localisedUrl } from 'helpers/locale'
 import ReactTooltip from 'react-tooltip'
 
 import { FormattedMessage, injectIntl } from 'react-intl'
@@ -193,6 +194,11 @@ export default class NewWallet extends Component {
       )
   }
 
+   goToRegister = () => {
+     const { history, intl: { locale } } = this.props
+     history.push(localisedUrl(locale, '/createWallet'))
+   }
+
   render() {
     const {
       activeView, 
@@ -227,18 +233,18 @@ export default class NewWallet extends Component {
       <section styleName="newWallet">
         <h3 styleName="newWalletHeading">Wallet</h3>
         {
-          isSigned ? 
-            <NotifyBlock 
+          isSigned ?
+            <NotifyBlock
               className="notifyBlockSaveKeys"
-              descr="Before you continue be sure to save your private keys!" 
-              tooltip="We do not store your private keys and will not be able to restore them" 
+              descr="Before you continue be sure to save your private keys!"
+              tooltip="We do not store your private keys and will not be able to restore them"
               icon={security}
               firstBtn="Show my keys"
               secondBtn="I saved my keys" /> :
-            <NotifyBlock 
+            <NotifyBlock
               className="notifyBlockSignUp"
-              descr="Sign up and get your free cryptocurrency for test!" 
-              tooltip="You will also be able to receive notifications regarding updates with your account" 
+              descr="Sign up and get your free cryptocurrency for test!"
+              tooltip="You will also be able to receive notifications regarding updates with your account"
               icon={mail}
               firstBtn="Sign Up"
               secondBtn="I’ll do this later" />
@@ -304,7 +310,7 @@ export default class NewWallet extends Component {
                 />
               )}
             />}
-            <NewButton blue transparent fullWidth>
+            <NewButton onClick={this.goToRegister} blue transparent fullWidth>
               Add Asset
              </NewButton>
           </div>
