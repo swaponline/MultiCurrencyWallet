@@ -17,7 +17,6 @@ import { localisedUrl } from 'helpers/locale'
 import check from './images/check'
 import FirstStep from './Steps/FirstStep'
 import SecondStep from './Steps/SecondStep'
-import ThirdStep from './Steps/ThirdStep'
 
 import { color } from './chooseColor'
 
@@ -31,21 +30,17 @@ const CreateWallet = (props) => {
   const [step, setStep] = useState(1)
   const [error, setError] = useState('Choose something')
 
-  const steps = [1, 2, 3]
+  const steps = [1, 2]
 
 
   const handleClick = () => {
     setError(null)
 
-    if (step === 2) {
-      setError('Choose something')
-    }
-
-    if (step !== 3) {
+    if (step !== 2) {
       reducers.createWallet.newWalletData({ type: 'step', data: step + 1 })
       return setStep(step + 1)
     }
-    history.push(localisedUrl(locale, '/wallet'))
+    history.push(localisedUrl(locale, '/newWallet'))
   }
 
   const validate = () => {
@@ -56,14 +51,7 @@ const CreateWallet = (props) => {
       return
     }
 
-    if (step === 2 && eMail.length) {
-      if (!/.+@.+\.[A-Za-z]+$/.test(eMail)) {
-        setError('Invalid e-mail')
-        return
-      }
-    }
-
-    if (!secure.length && step === 3) {
+    if (!secure.length && step === 2) {
       setError('Choose something')
       return
     }
@@ -98,7 +86,6 @@ const CreateWallet = (props) => {
         <div>
           {step === 1 && <FirstStep error={error} onClick={validate} setError={setError} />}
           {step === 2 && <SecondStep error={error} onClick={validate} setError={setError} />}
-          {step === 3 && <ThirdStep error={error} onClick={validate} setError={setError} />}
         </div>
       </div>
     </div>
