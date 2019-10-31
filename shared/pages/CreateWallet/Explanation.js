@@ -18,7 +18,7 @@ const Explanation = ({ subHeaderText, children, step, createWallet: { step: step
         {stepNum > step ? check() : step}
       </div>
     }
-    <div styleName={`subHeader ${step === '3' ? 'third' : ''}`}>
+    <div styleName={`subHeader ${step === '2' ? 'second' : ''}`}>
       <h5>
         {subHeaderText}
       </h5>

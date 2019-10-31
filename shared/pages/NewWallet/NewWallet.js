@@ -19,6 +19,7 @@ import security from './images/security.svg'
 import mail from './images/mail.svg'
 
 import { links, constants } from 'helpers'
+import { localisedUrl } from 'helpers/locale'
 
 import { FormattedMessage, injectIntl } from 'react-intl'
 
@@ -168,6 +169,11 @@ export default class NewWallet extends Component {
       )
   }
 
+   goToRegister = () => {
+     const { history, intl: { locale } } = this.props
+     history.push(localisedUrl(locale, '/createWallet'))
+   }
+
   render() {
     const {activeView, infoAboutCurrency, isFetching, usdBalance} = this.state;
     const {
@@ -181,7 +187,7 @@ export default class NewWallet extends Component {
     } = this.props
 
     const tableRows = [ ...items, ...tokens ].filter(currency => !hiddenCoinsList.includes(currency))
-    
+
     return (
       <section styleName="newWallet">
         <h3 styleName="newWalletHeading">Wallet</h3>
@@ -190,18 +196,18 @@ export default class NewWallet extends Component {
         </ul>
 
         {
-          isSigned ? 
-            <NotifyBlock 
+          isSigned ?
+            <NotifyBlock
               className="notifyBlockSaveKeys"
-              descr="Before you continue be sure to save your private keys!" 
-              tooltip="We do not store your private keys and will not be able to restore them" 
+              descr="Before you continue be sure to save your private keys!"
+              tooltip="We do not store your private keys and will not be able to restore them"
               icon={security}
               firstBtn="Show my keys"
               secondBtn="I saved my keys" /> :
-            <NotifyBlock 
+            <NotifyBlock
               className="notifyBlockSignUp"
-              descr="Sign up and get your free cryptocurrency for test!" 
-              tooltip="You will also be able to receive notifications regarding updates with your account" 
+              descr="Sign up and get your free cryptocurrency for test!"
+              tooltip="You will also be able to receive notifications regarding updates with your account"
               icon={mail}
               firstBtn="Sign Up"
               secondBtn="I’ll do this later" />
@@ -260,7 +266,7 @@ export default class NewWallet extends Component {
                 />
               )}
             />}
-            <NewButton blue transparent fullWidth>
+            <NewButton onClick={this.goToRegister} blue transparent fullWidth>
               Add Asset
              </NewButton>
           </div>
