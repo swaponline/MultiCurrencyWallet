@@ -11,6 +11,7 @@ import reducers from 'redux/core/reducers'
 const sign = async () => {
   const btcPrivateKey         = localStorage.getItem(constants.privateKeyNames.btc)
   const btcMultisigPrivateKey = localStorage.getItem(constants.privateKeyNames.btcMultisig)
+  const btcMultisigOwnerKey   = localStorage.getItem(constants.privateKeyNames.btcMultisigOtherOwnerKey)
   const bchPrivateKey         = localStorage.getItem(constants.privateKeyNames.bch)
   const ltcPrivateKey         = localStorage.getItem(constants.privateKeyNames.ltc)
   const ethPrivateKey         = localStorage.getItem(constants.privateKeyNames.eth)
@@ -23,7 +24,7 @@ const sign = async () => {
 
   const _ethPrivateKey = isEthKeychainActivated ? await actions.eth.loginWithKeychain() : actions.eth.login(ethPrivateKey)
   const _btcPrivateKey = isBtcKeychainActivated ? await actions.btc.loginWithKeychain() : actions.btc.login(btcPrivateKey)
-  const _btcMultisigPrivateKey = isBtcMultisigKeychainActivated ? await actions.btcmultisig.loginWithKeychain() : actions.btcmultisig.login(btcMultisigPrivateKey)
+  const _btcMultisigPrivateKey = isBtcMultisigKeychainActivated ? await actions.btcmultisig.loginWithKeychain() : actions.btcmultisig.login(btcPrivateKey, btcMultisigOwnerKey)
 
   actions.bch.login(bchPrivateKey)
   // actions.usdt.login(btcPrivateKey)

@@ -5,12 +5,20 @@ import * as bitcoin from 'bitcoinjs-lib'
 import bitcoinMessage from 'bitcoinjs-message'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
-import { btc, request, constants, api } from 'helpers'
+import { request, constants, api } from 'helpers'
+import btc from 'helpers/btc'
 import { Keychain } from 'keychain.js'
 import actions from 'redux/actions'
 
+const addWallet = (otherOwnerPublicKey) => {
+  const { user: { btcMultisigData: { address, privateKey } } } = getState()
+  createWallet(privateKey, otherOwnerPublicKey)
+}
+window.MS_addWallet = addWallet
 
-const login = (privateKey) => {
+
+const createWallet = (privateKey, otherOwnerPublicKey) => {
+  // privateKey - key of our privary one-sign btc wallet
   let keyPair
 
   if (privateKey) {
@@ -20,28 +28,29 @@ const login = (privateKey) => {
     keyPair     = bitcoin.ECPair.fromWIF(privateKey, btc.network)
   }
   else {
-    console.info('Created account BitcoinMultisig ...')
-    keyPair     = bitcoin.ECPair.makeRandom({ network: btc.network })
-    privateKey  = keyPair.toWIF()
+    console.error('Requery privateKey')
+    return false
   }
 
-  localStorage.setItem(constants.privateKeyNames.btcMultisig, privateKey)
-
+  
   const account       = bitcoin.ECPair.fromWIF(privateKey, btc.network) // eslint-disable-line
-  const publicKeys = [
-    account.publicKey.toString('hex'),
-    process.env.MAINNET
-      ? '03f5155df7238d64475267a63a8d70f14e1b1ceefe2b8816c1a86b8a1d03d177cb'
-      : '033587f9e0cbe1d5ffa28efd7f6d3351da1fc1ac4655f2c23006911b18f3f142ea',
-  ].map(hex => Buffer.from(hex, 'hex'))
-  const { address } = bitcoin.payments.p2sh({
-    redeem: bitcoin.payments.p2wsh({
-      redeem: bitcoin.payments.p2ms({ m: 2, pubkeys: publicKeys, network: btc.network }),
-      network: btc.network,
-    }),
-  })
   const { addressOfMyOwnWallet }   = bitcoin.payments.p2wpkh({ pubkey: account.publicKey, network: btc.network })
   const { publicKey } = account
+  
+  const publicKeysRaw = [ otherOwnerPublicKey,  account.publicKey.toString('hex') ].sort().reverse()
+  
+  const publicKeys = publicKeysRaw.map(hex => Buffer.from(hex, 'hex'))
+  
+  const p2ms = bitcoin.payments.p2ms({
+    m: 2,
+    n: 2,
+    pubkeys: publicKeys,
+    network: btc.network,
+  })
+  const p2sh = bitcoin.payments.p2sh({ redeem: p2ms, network: btc.network })
+  
+  const { address } = p2sh
+  
 
   const data = {
     account,
@@ -55,6 +64,86 @@ const login = (privateKey) => {
     publicKey,
   }
 
+  localStorage.setItem(constants.privateKeyNames.btcMultisigOtherOwnerKey, otherOwnerPublicKey)
+
+  
+  window.getBtcMultisigData = () => data
+  window.getBtcMultisigAddress = () => data.address
+
+  console.info('Logged in with BitcoinMultisig', data)
+  reducers.user.setAuthData({ name: 'btcMultisigData', data })
+}
+window.MS_CreateWallet = createWallet
+
+const login = (privateKey, otherOwnerPublicKey) => {
+  let keyPair
+
+  console.log('login multisig')
+  console.log(otherOwnerPublicKey)
+  
+  if (privateKey) {
+    const hash  = bitcoin.crypto.sha256(privateKey)
+    const d     = BigInteger.fromBuffer(hash)
+
+    keyPair     = bitcoin.ECPair.fromWIF(privateKey, btc.network)
+  }
+  else {
+    console.log('Requery privateKey')
+    return false
+  }
+
+ 
+  const account       = bitcoin.ECPair.fromWIF(privateKey, btc.network) // eslint-disable-line
+  const { publicKey } = account
+  const publicKey_1 = account.publicKey.toString('hex')
+  
+  // TODO - simple sort public keys by ABC - no primary and secondary
+  let _data
+  if (otherOwnerPublicKey) {
+    const publicKey_2 = otherOwnerPublicKey
+    const publicKeysRaw = [ publicKey_1, publicKey_2 ].sort().reverse()
+    console.log('Raw public keys')
+    const publicKeys = publicKeysRaw.map(hex => Buffer.from(hex, 'hex'))
+    const p2ms = bitcoin.payments.p2ms({
+      m: 2,
+      n: 2,
+      pubkeys: publicKeys,
+      network: btc.network,
+    })
+    const p2sh = bitcoin.payments.p2sh({ redeem: p2ms, network: btc.network })
+    
+    const { address } = p2sh
+    
+    const { addressOfMyOwnWallet }   = bitcoin.payments.p2wpkh({ pubkey: account.publicKey, network: btc.network })
+    
+
+    _data = {
+      account,
+      keyPair,
+      address,
+      addressOfMyOwnWallet,
+      currency: 'BTC (Multisig)',
+      fullName: 'Bitcoin (Multisig)',
+      privateKey,
+      publicKeys,
+      publicKey,
+    }
+  } else {
+    _data = {
+      account,
+      keyPair,
+      address: 'Not jointed',
+      addressOfMyOwnWallet: 'Not jointed',
+      currency: 'BTC (Multisig)',
+      fullName: 'Bitcoin (Multisig)',
+      privateKey,
+      publicKeys: [],
+      publicKey,
+    }
+  }
+  
+  const data = _data
+  window.getBtcMultisigData = () => data
   window.getBtcMultisigAddress = () => data.address
 
   console.info('Logged in with BitcoinMultisig', data)
@@ -62,6 +151,7 @@ const login = (privateKey) => {
 }
 
 const loginWithKeychain = async () => {
+  console.log('Loggin with keychain')
   const selectedKey = await actions.keychain.login('BTCMultisig')
 
   const pubkey = Buffer.from(`03${selectedKey.substr(0, 64)}`, 'hex')
@@ -163,31 +253,86 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
   const fundValue     = new BigNumber(String(amount)).multipliedBy(1e8).integerValue().toNumber()
   const totalUnspent  = unspents.reduce((summ, { satoshis }) => summ + satoshis, 0)
   const skipValue     = totalUnspent - fundValue - feeValue
-
+  
   const p2ms = bitcoin.payments.p2ms({
     m: 2,
+    n: 2,
     pubkeys: publicKeys,
     network: btc.network,
   })
   const p2sh = bitcoin.payments.p2sh({ redeem: p2ms, network: btc.network })
+  
+  console.log('P2SH Address:',p2sh.address)
+  console.log('P2SH Script')
+  console.log(bitcoin.script.toASM(p2sh.redeem.output))
+  console.log(publicKey.toString('Hex'))
+  console.log(bitcoin.ECPair.fromWIF(privateKey, btc.network).publicKey.toString('Hex'))
+
+
   let txb1 = new bitcoin.TransactionBuilder(btc.network)
-  unspents.forEach(({ txid, vout }) => txb1.addInput(txid, vout))
+
+  unspents.forEach(({ txid, vout }) => txb1.addInput(txid, vout, 0xfffffffe))
   txb1.addOutput(to, fundValue)
+
+  if (skipValue > 546) {
+    txb1.addOutput(from, skipValue)
+  }
+  
   txb1.__INPUTS.forEach((input, index) => {
     txb1.sign(index, bitcoin.ECPair.fromWIF(privateKey, btc.network), p2sh.redeem.output)
-    txb1.sign(index, bitcoin.ECPair.fromWIF('myBigPrivateKey', btc.network), p2sh.redeem.output)
   })
 
+  let txRaw = txb1.buildIncomplete()
+  console.log('Multisig transaction ready')
+  console.log('Your key:', publicKey.toString('Hex'))
+  console.log('TX Hash:', txRaw.toHex())
+  console.log('Send it to other owner for sign and broadcast')
+  return txRaw.toHex()
   let tx1 = txb1.build()
   return tx1.toHex()
 }
 
-const signAndBuild = (transactionBuilder) => {
+const signMultiSign = async ( txHash ) => {
+  const { user: { btcMultisigData: { privateKey, publicKey , publicKeys } } } = getState()
+  
+  // restore transaction from hex
+  let txb = bitcoin.TransactionBuilder.fromTransaction(
+    bitcoin.Transaction.fromHex(txHash),
+    btc.network
+  );
+
+  const p2ms = bitcoin.payments.p2ms({
+    m: 2,
+    n: 2,
+    pubkeys: publicKeys,
+    network: btc.network,
+  })
+
+  const p2sh = bitcoin.payments.p2sh({ redeem: p2ms, network: btc.network })
+  
+  console.log('P2SH Address' ,p2sh.address)
+  console.log('P2SH Script')
+  console.log(bitcoin.script.toASM(p2sh.redeem.output))
+  console.log(publicKey.toString('Hex'))
+  console.log(bitcoin.ECPair.fromWIF(privateKey, btc.network).publicKey.toString('Hex'))
+  // sign transaction with our key
+  txb.__INPUTS.forEach((input, index) => {
+    txb.sign(index, bitcoin.ECPair.fromWIF(privateKey, btc.network), p2sh.redeem.output)
+  })
+
+  let tx = await txb.build()
+  
+  window.multiSignTx = txb
+  return tx.toHex()
+}
+window.MS_Sign = signMultiSign
+
+const signAndBuild = (transactionBuilder, p2sh) => {
   const { user: { btcData: { privateKey } } } = getState()
   const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
 
-  transactionBuilder.inputs.forEach((input, index) => {
-    transactionBuilder.sign(index, keyPair)
+  transactionBuilder.__INPUTS.forEach((input, index) => {
+    transactionBuilder.sign(index, keyPair, p2sh)
   })
   return transactionBuilder.buildIncomplete()
 }
@@ -213,6 +358,7 @@ const broadcastTx = (txRaw) =>
       rawtx: txRaw,
     },
   })
+window.MS_broadcastTx = broadcastTx
 
 const signMessage = (message, encodedPrivateKey) => {
   const keyPair = bitcoin.ECPair.fromWIF(encodedPrivateKey, [bitcoin.networks.bitcoin, bitcoin.networks.testnet])
@@ -237,7 +383,7 @@ const getReputation = () =>
     }).then((response) => {
       const { reputation, reputationOracleSignature } = response
 
-      reducers.user.setReputation({ name: 'btcMultisigData', reputation, reputationOracleSignature })
+      //reducers.user.setReputation({ name: 'btcMultisigData', reputation, reputationOracleSignature })
       resolve(reputation)
     }).catch((error) => {
       reject(error)
