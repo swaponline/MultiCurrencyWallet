@@ -31,12 +31,13 @@ $purple: #510ed8;
   z-index: 1001;
   transition: position 0.3s ease;
   position: absolute;
-  background: rgba($purple, 1);
 }
 
 .container {
   margin: auto;
+  height: 88px;
 }
+
 @include media-mobile {
   .header {
 	  display: flex;

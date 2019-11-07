@@ -71,7 +71,7 @@ export default class Timer extends React.Component {
     return (
       <Fragment>
         {
-          (cancelTime && (minToCancel > 0) && !isRefund) ? (
+          (cancelTime && (cancelTimeLeft > 0) && !isRefund) ? (
             <div styleName="timer">
               <FormattedMessage
                 id="timerTimeToCancel"
@@ -82,7 +82,7 @@ export default class Timer extends React.Component {
           ) : (
             <Fragment>
               {
-                (cancelTime) && (
+                (cancelTime && (cancelTimeLeft <= 0)) && (
                   <div styleName="timer">
                     <FormattedMessage id="timerSwapIsCancelled" defaultMessage="Swap canceled due to time out" />
                   </div>

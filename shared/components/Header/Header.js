@@ -173,7 +173,7 @@ export default class Header extends Component {
   getMenuItems = (props, didWalletCreated, dinamicPath) =>
     (Number.isInteger(this.props.reputation) && this.props.reputation !== 0)
     || this.props.isSigned
-    || window.localStorage.getItem('didOpenSignUpModal') === 'true'
+    || window.localStorage.getItem('isWalletCreate') === 'true'
       ? ([
         {
           title: props.intl.formatMessage(didWalletCreated ? messages.wallet : messages.createWallet),
@@ -191,19 +191,19 @@ export default class Header extends Component {
           icon: 'products',
           currentPageFlag: true,
         },
-        {
-          title: props.intl.formatMessage(messages.history),
-          link: links.history,
-          icon: 'history',
-          haveSubmenu: false,
-          displayNone: !didWalletCreated,
-        },
-        {
-          title: props.intl.formatMessage(messages.IEO),
-          link: links.ieo,
-          icon: 'IEO',
-          haveSubmenu: false,
-        },
+        // {
+        //   title: props.intl.formatMessage(messages.history),
+        //   link: links.history,
+        //   icon: 'history',
+        //   haveSubmenu: false,
+        //   displayNone: !didWalletCreated,
+        // },
+        // {
+        //   title: props.intl.formatMessage(messages.IEO),
+        //   link: links.ieo,
+        //   icon: 'IEO',
+        //   haveSubmenu: false,
+        // },
       ])
       : ([
         {
@@ -222,13 +222,13 @@ export default class Header extends Component {
           icon: 'products',
           currentPageFlag: true,
         },
-        {
-          title: props.intl.formatMessage(messages.history),
-          link: links.history,
-          icon: 'history',
-          haveSubmenu: false,
-          displayNone: !didWalletCreated,
-        },
+        // {
+        //   title: props.intl.formatMessage(messages.history),
+        //   link: links.history,
+        //   icon: 'history',
+        //   haveSubmenu: false,
+        //   displayNone: !didWalletCreated,
+        // },
       ])
 
   getMenuItemsMobile = (props, didWalletCreated, dinamicPath) => ([
@@ -246,13 +246,13 @@ export default class Header extends Component {
       haveSubmenu: true,
       icon: 'products',
     },
-    {
-      title: props.intl.formatMessage(messages.history),
-      link: links.history,
-      icon: 'history',
-      haveSubmenu: false,
-      displayNone: !didWalletCreated,
-    },
+    // {
+    //   title: props.intl.formatMessage(messages.history),
+    //   link: links.history,
+    //   icon: 'history',
+    //   haveSubmenu: false,
+    //   displayNone: !didWalletCreated,
+    // },
   ])
 
   tapCreateWalletButton = (customProps) => new Promise((resolve) => {
@@ -264,7 +264,7 @@ export default class Header extends Component {
       ? `${unlocalisedUrl(intl.locale, location.pathname)}`
       : `${links.home}`
 
-    let didWalletCreated = localStorage.getItem(constants.localStorage.didWalletCreated)
+    let didWalletCreated = localStorage.getItem(constants.localStorage.isWalletCreate)
 
     const isWalletPage = location.pathname === links.currencyWallet
       || location.pathname === `/ru${links.currencyWallet}`
@@ -311,7 +311,7 @@ export default class Header extends Component {
       || location.pathname === '/'
       || location.pathname === '/ru'
 
-    const didOpenSignUpModal = localStorage.getItem(constants.localStorage.didOpenSignUpModal)
+    const didOpenWalletCreate = localStorage.getItem(constants.localStorage.isWalletCreate)
 
     const wasOnWallet = localStorage.getItem(constants.localStorage.wasOnWallet)
     const wasOnExchange = localStorage.getItem(constants.localStorage.wasOnExchange)
@@ -330,8 +330,8 @@ export default class Header extends Component {
       default: return
     }
 
-    if (!didOpenSignUpModal && isWalletPage) {
-      this.openSignUpModal({ onClose: tourEvent })
+    if (!didOpenWalletCreate && isWalletPage) {
+      this.openCreateWallet({ onClose: tourEvent })
       return
     }
 
@@ -384,9 +384,10 @@ export default class Header extends Component {
     this.setState(() => ({ isTourOpen: false }))
   }
 
-  openSignUpModal = (options) => {
-    localStorage.setItem(constants.localStorage.didOpenSignUpModal, true)
-    actions.modals.open(constants.modals.SignUp, options)
+  openCreateWallet = (options) => {
+    const { history, intl: { locale } } = this.props
+    localStorage.setItem(constants.localStorage.isWalletCreate, true)
+    history.push(localisedUrl(locale, `createWallet`))
   }
 
   openWalletTour = () => {
@@ -415,7 +416,9 @@ export default class Header extends Component {
         />
       )
     }
-
+    if (history.location.pathname.includes('/createWallet') && isMobile) {
+      return <span />
+    }
     if (isMobile) {
       return (
         <div styleName={isInputActive ? 'header-mobile header-mobile__hidden' : 'header-mobile'}>
@@ -448,7 +451,7 @@ export default class Header extends Component {
           )
         }
         <WidthContainer styleName="container">
-          <LogoTooltip withLink isExchange={isExchange} />
+          <LogoTooltip withLink isColored isExchange={isExchange} />
           <Nav menu={menuItems} />
           <Logo withLink mobile />
           {isPartialTourOpen && <TourPartial isTourOpen={isPartialTourOpen} />}

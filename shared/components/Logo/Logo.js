@@ -8,7 +8,7 @@ import CSSModules from 'react-css-modules'
 import styles from './Logo.scss'
 
 import logoImage from './images/logo.svg'
-import coloredLogoImage from './images/logo-colored.svg'
+import coloredLogoImage from './images/logo-blue.svg'
 import { injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 
@@ -36,7 +36,7 @@ export default class Logo extends Component {
       <Fragment>
         {withLink ?
           (
-            <Link styleName={`${mobile ? 'mobile' : 'logo'} ${!isExchange ? 'whiteFill' : ''}`} data-tip data-for="logo" to={localisedUrl(locale, links.home)}>
+            <Link styleName={`${mobile ? 'mobile' : 'logo'}`} data-tip data-for="logo" to={localisedUrl(locale, links.home)}>
               {imgNode}
             </Link>
           ) : (<div styleName={`${!isExchange && 'whiteFill'}`} >{imgNode}</div>)
