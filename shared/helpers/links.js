@@ -13,7 +13,8 @@ const linksManager = {
   test: 'https://testnet.swap.online',
   main: 'https://swap.online/',
   ieo: '/IEO',
-  newWallet: '/newWallet',
+  wallet: '/wallet',
+  oldWallet: 'oldWallet',
   coins: '/coins',
   partial: '/partial',
   notFound: '/NotFound',
@@ -134,9 +135,9 @@ const linksManager = {
 }
 
 linksManager.getFaqLink = (faqID) => {
-  for (var i = 0; i < linksManager.faq.length; i++) {
+  for (let i = 0; i < linksManager.faq.length; i++) {
     if (linksManager.faq[i].id
-      && (linksManager.faq[i].id == faqID)
+      && (linksManager.faq[i].id === faqID)
     ) {
       return linksManager.faq[i].link
     }
