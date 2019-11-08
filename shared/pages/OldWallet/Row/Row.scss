@@ -177,38 +177,6 @@ tr button[disabled]:hover {
   }
 }
 
-.withdrawBtn {
-  position: relative;
-  &:hover {
-    .additionalWithdrawing {
-      visibility: visible;
-      opacity: 1;
-      transition: opacity 0.2s ease;
-    }
-  }
-}
-
-.littleText {
-  font-size: 10px;
-}
-
-.additionalWithdrawing {
-  visibility: hidden;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  position: absolute;
-  bottom: -70px;
-  left: 50%;
-  height: 51px;
-  transform: translateX(-50%);
-  opacity: 0;
-  z-index: 1;
-  button {
-    box-shadow: 0 0 5px rgba(black, 0.2);
-  }
-}
-
 .actButton {
   button {
     color: #ffffff;
