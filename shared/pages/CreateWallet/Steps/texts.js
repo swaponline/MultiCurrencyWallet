@@ -20,26 +20,13 @@ export const cupture1 = () => (
 export const subHeaderText2 = () => (
   <FormattedMessage
     id="createWalletSubHeader2"
-    defaultMessage="Введите Email и подпишитесь на уведомления"
-  />
-)
-export const cupture2 = () => (
-  <FormattedMessage
-    id="createWalletCapture2"
-    defaultMessage="Вам будут приходить уведомления о совершаемых транзакциях с вашими кошельками"
-  />
-)
-
-export const subHeaderText3 = () => (
-  <FormattedMessage
-    id="createWalletSubHeader3"
     defaultMessage="Выберите уровень защиты вашего кошелька"
   />
 )
 
-export const cupture3 = () => (
+export const cupture2 = () => (
   <FormattedMessage
-    id="createWalletCapture3"
+    id="createWalletCapture2"
     defaultMessage="Без защиты, sms, google auth, мультисиг"
   />
 )

@@ -46,7 +46,7 @@ const titles = [
 
 @injectIntl
 @withRouter
-@CSSModules(styles)
+@CSSModules(styles, { allowMultiple: true })
 export default class CurrencyWallet extends Component {
 
   constructor() {
@@ -258,10 +258,10 @@ export default class CurrencyWallet extends Component {
           }
         </div>
         { swapHistory.length > 0 && <SwapsHistory orders={swapHistory.filter(item => item.step >= 4)} /> }
-        <h2 style={{ marginTop: '20px' }} >
+        <h1 style={{ marginTop: '20px' }} >
           <FormattedMessage id="CurrencyWallet110" defaultMessage="History your transactions" />
-        </h2>
-        {txHistory && (<Table titles={titles} rows={txHistory} styleName="table" rowRender={this.rowRender} />)}
+        </h1>
+        {txHistory && (<Table rows={txHistory} styleName="table history" rowRender={this.rowRender} />)}
         {
           seoPage && seoPage.footer && <div>{seoPage.footer}</div>
         }

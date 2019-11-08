@@ -4,12 +4,6 @@
   margin: 0 auto;
 }
 
-.notYet {
-  text-align: center;
-  padding-top: 5px;
-  color: #6144e5;
-}
-
 .wrapper h2 {
   width: 400px;
   margin-bottom: 60px;
@@ -19,16 +13,9 @@
 .formBody {
   margin: 0 16px;
 }
-
-.inputWrapper,
 .currencyChooserWrapper,
 .inLine {
   display: flex;
-}
-
-.inputWrapper {
-  justify-content: center;
-  margin: 50px 0;
 }
 
 .notMain {
@@ -132,10 +119,8 @@
 
 .currencyChooserWrapper {
   justify-content: space-between;
-}
-
-.currencyChooserWrapper {
   padding: 30px;
+
 }
 
 .card {
@@ -151,6 +136,15 @@
   display: grid;
   height: 140px;
   width: 110px;
+
+  em {
+    position: absolute;
+    text-align: right;
+    padding-left: auto;
+    width: 120px;
+    font-size: 10px;
+    color: #9b58b6;
+  }
 
   b {
     font-weight: bolder;
@@ -168,6 +162,10 @@
   }
 }
 
+.cardDisabled {
+  opacity: 0.7 !important;
+}
+
 .secondStepInput {
   height: 50px;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -181,9 +179,35 @@
   width: 140px;
 }
 
+@media screen and (max-width: 750px){
+  .secureSize {
+    width: 100% !important;
+    height: 95px !important;
+
+  }
+  .currencyChooserWrapperSecond{
+    overflow-y: auto;
+    display: block;
+    padding: 0;
+  }
+
+  .currencyChooserWrapperSecond{
+    height: 225px;
+    margin: 10px 0;
+  }
+
+  .card {
+    em {
+      position: relative;
+      width: 100%;
+      height: 0;
+    }
+  }
+}
+
 @media screen and (max-width: 700px){
   .card {
-    width: 85px
+    width: 85px;
   }
 }
 
@@ -196,10 +220,12 @@
 
 @media screen and (max-width: 480px) {
   .continue {
-    position: absolute;
+    position: fixed;
+    z-index: 999999;
     right: 21px;
-    width: 89%;
-    top: 92vh;
+    width: 100%;
+    top: 95vh;
+    left: 0;
   }
 
   .secondStepInput {
@@ -238,7 +264,17 @@
     margin: 0;
   }
 
-  .third {
+  .currencyChooserWrapper {
+    overflow-y: auto;
+    display: block;
+    padding: 0;
+  }
+
+  .currencyChooserWrapper {
+    height: 50%;
+  }
+
+  .second {
     height: 59px;
     margin-bottom: 0px;
   }
@@ -266,7 +302,7 @@
   }
 
   .steps {
-    width: 150px
+    width: 100px
   }
 
   .logo {
@@ -274,13 +310,18 @@
   }
 
   .listGroup {
-    margin: auto 10px;
+    margin: auto;
   }
 
   .secureSize,
   .card {
     height: 53px;
     width: 100%;
+
+    em {
+      position: absolute;
+      width: 70%;
+    }
   }
 
   .card {
@@ -308,22 +349,6 @@
     height: 65px;
   }
 
-  .inputWrapper {
-    display: block;
-    margin: 0;
-  }
-
-  .currencyChooserWrapper{
-    overflow-y: auto;
-    display: block;
-    padding: 0;
-  }
-
-  .inputWrapper,
-  .currencyChooserWrapper{
-    height: 265px;
-  }
-
   .thirdPageIcons {
     background: #f0eefd;
   }
@@ -345,9 +370,7 @@
   }
 
   .secureChooserWrapper,
-  .inputWrapper,
   .currencyChooserWrapper {
-    height: 50%;
     overflow-y: auto;
   }
 
@@ -364,7 +387,8 @@
 
 @media screen and (max-width: 320px){
   .continue {
-    top: 91vh;
-    width: 87%;
+    top: 92vh;
+    width: 100%;
+    left: 0;
   }
 }

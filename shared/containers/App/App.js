@@ -35,12 +35,15 @@ const userLanguage = (navigator.userLanguage || navigator.language || 'en-gb').s
 moment.locale(userLanguage)
 
 @withRouter
-@connect({
+@connect(({
+  currencies: { items: currencies },
+}) => ({
+  currencies,
   isVisible: 'loader.isVisible',
   ethAddress: 'user.ethData.address',
   btcAddress: 'user.btcData.address',
   tokenAddress: 'user.tokensData.swap.address',
-})
+}))
 @CSSModules(styles, { allowMultiple: true })
 export default class App extends React.Component {
 
@@ -61,6 +64,7 @@ export default class App extends React.Component {
   }
 
   componentWillMount() {
+    const { currencies } = this.props
     const myId = Date.now().toString()
     localStorage.setItem(constants.localStorage.enter, myId)
     const enterSub = localStorage.subscribe(constants.localStorage.enter, () => {
@@ -74,6 +78,16 @@ export default class App extends React.Component {
         localStorage.removeItem(constants.localStorage.reject)
       }
     })
+
+    const isWalletCreate = localStorage.getItem(constants.localStorage.isWalletCreate)
+
+    if(!isWalletCreate) {
+      currencies.forEach(({ name }) => {
+        if(name !== "BTC") {
+          actions.core.markCoinAsHidden(name)
+        }
+      })
+    }
 
     if (!localStorage.getItem(constants.localStorage.demoMoneyReceived)) {
       actions.user.getDemoMoney()
