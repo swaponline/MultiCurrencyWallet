@@ -40,7 +40,7 @@ const CreateWallet = (props) => {
       reducers.createWallet.newWalletData({ type: 'step', data: step + 1 })
       return setStep(step + 1)
     }
-    history.push(localisedUrl(locale, '/newWallet'))
+    history.push(localisedUrl(locale, '/wallet'))
   }
 
   const validate = () => {
