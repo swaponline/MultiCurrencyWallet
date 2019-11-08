@@ -16,6 +16,8 @@ import { subHeaderText1,
   cupture1,
   subHeaderText2,
   cupture2,
+  subHeaderText3,
+  cupture3,
 } from './texts'
 
 
@@ -77,6 +79,9 @@ const CreateWallet = ({ onClick, error, setError }) => {
         <div>
           <Explanation step={2} subHeaderText={subHeaderText2()} notMain>
             {cupture2()}
+          </Explanation>
+          <Explanation step={3} subHeaderText={subHeaderText3()} notMain>
+            {cupture3()}
           </Explanation>
         </div>
       }

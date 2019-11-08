@@ -3,120 +3,79 @@ import React, { useState } from 'react'
 import CSSModules from 'react-css-modules'
 import styles from '../CreateWallet.scss'
 
-import { connect } from 'redaction'
 import reducers from 'redux/core/reducers'
 
 import ReactTooltip from 'react-tooltip'
 import { FormattedMessage, injectIntl } from 'react-intl'
-import { isMobile } from 'react-device-detect'
 
 import Explanation from '../Explanation'
-import icons from '../images'
+import { isMobile } from 'react-device-detect'
+
 import { subHeaderText1,
   cupture1,
   subHeaderText2,
   cupture2,
+  subHeaderText3,
+  cupture3,
 } from './texts'
 
 
 const CreateWallet = (props) => {
   const { intl: { locale }, onClick, error, setError } = props
-
-  const [border, setBorder] = useState({
-    color: {
-      withoutSecure: false,
-      sms: false,
-      google2FA: false,
-      multisignature: false,
-    },
-    selected: '',
+  const [inputValue, setInputValue] = useState({
+    userName: '',
+    eMail: '',
   })
-
-  const handleClick = (name, index) => {
-    if (index > 0) return
-    const colors = border.color
-
-    Object.keys(border.color).forEach(el => {
-      if (el !== name) {
-        colors[el] = false
-      } else {
-        colors[el] = true
-      }
-    })
-    setBorder({ color: colors, selected: name })
-    reducers.createWallet.newWalletData({ type: 'secure', data: name })
-    setError(null)
-  }
-
-  const coins = [
-    { text: locale === 'en' ? 'Without Secure' : 'Без защиты', name: 'withoutSecure', capture: locale === 'en' ? 'suitable for small amounts' : 'Подходит для небольших сумм' },
-    { text: 'SMS', name: 'sms', capture: locale === 'en' ? 'transactions are confirmed by SMS code' : 'Транзакции подтверждаются кодом по SMS' },
-    {
-      text: 'Google 2FA',
-      name: 'google2FA',
-      capture: locale === 'en' ?
-        'Transactions are verified through the Google Authenticator app' :
-        'Транзакции подтверждаются через приложение Google Authenticator',
-    },
-    {
-      text: 'Multisignature',
-      name: 'multisignature',
-      capture: locale === 'en' ?
-        'Transactions are confirmed from another device and / or by another person.' :
-        'Транзакции подтверждаются с другого устройства и/или другим человеком',
-    },
+  const inputs = [
+    { name: 'userName', placeHolder: locale === 'en' ? 'User name' : 'Имя пользователя' },
+    { name: 'eMail', placeHolder: locale === 'en' ? 'e-Mail' : 'Эл. почта' },
   ]
+
+  const onChange = e => {
+    const { target: { value, name } } = e
+    const dataToReturn = { ...inputValue, [name]: value }
+    setError(null)
+    setInputValue(dataToReturn)
+    reducers.createWallet.newWalletData({ type: 'usersData', data: dataToReturn })
+  }
 
   return (
     <div>
       {!isMobile &&
-        <div>
-          <Explanation subHeaderText={subHeaderText1()} step={1} notMain>
-            {cupture1()}
-          </Explanation>
-        </div>
+        <Explanation step={1} subHeaderText={subHeaderText1()} notMain>
+          {cupture1()}
+        </Explanation>
       }
       <div>
         <div>
-          <Explanation subHeaderText={subHeaderText2()} step={2}>
+          <Explanation step={2} subHeaderText={subHeaderText2()}>
             {cupture2()}
           </Explanation>
-          <div styleName="currencyChooserWrapper currencyChooserWrapperSecond">
-            {coins.map((el, index) => {
-              const { name, capture, text } = el
+          <div styleName="inputWrapper">
+            {inputs.map(el => {
+              const { name, placeHolder } = el
               return (
-                <div
-                  styleName={
-                    `card secureSize thirdCard ${border.color[name] && index === 0 ? 'purpleBorder' : ''} ${index > 0 ? 'cardDisabled' : ''}`
-                  }
-                  onClick={() => handleClick(name, index)}
-                >
-                  {index > 0 &&
-                    <em>
-                      <FormattedMessage id="createWalletSoon" defaultMessage="Soon!" />
-                    </em>
-                  }
-                  <img
-                    styleName="logo thirdPageIcons"
-                    src={icons[name]}
-                    alt={`${name} icon`}
-                    role="image"
-                  />
-                  <div styleName="listGroup">
-                    <li>
-                      <b>{text}</b>
-                    </li>
-                    <li>{capture}</li>
-                  </div>
-                </div>
+                <input name={name} onChange={onChange} styleName="secondStepInput" placeholder={placeHolder} type="email" />
               )
             })}
+            {error && <b styleName="error">{error}</b>}
           </div>
         </div>
         <button styleName="continue" onClick={onClick} disabled={error}>
-          <FormattedMessage id="createWalletButton3" defaultMessage="Create Wallet" />
+          <FormattedMessage id="createWalletButton1" defaultMessage="Продолжить" />
         </button>
+        <br />
+        {!isMobile &&
+          <div styleName="notYet" onClick={onClick}>
+            <FormattedMessage id="createWalleLater" defaultMessage="Не сейчас" />
+          </div>
+        }
       </div>
+      {!isMobile &&
+        <Explanation step={3} subHeaderText={subHeaderText3()} notMain>
+          {cupture3()}
+        </Explanation>
+      }
     </div>
   )
 }

@@ -15,7 +15,7 @@ export default {
   telosRegistrated: 'telosRegistrated',
   demoMoneyReceived: 'demoMoneyReceived',
   wasOnExchange: 'wasOnExchange',
-  isWalletCreate: 'isWalletCreate',
+  didOpenSignUpModal: 'didOpenSignUpModal',
   eosAccountActivated: `${process.env.ENTRY}:eos:activationFlag`,
   telosAccountActivated: `${process.env.ENTRY}:telos:activationFlag`,
   eosActivationPayment: `${process.env.ENTRY}:eos:activationPayment`,

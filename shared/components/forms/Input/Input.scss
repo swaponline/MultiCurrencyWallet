@@ -29,7 +29,7 @@ input, textarea {
 }
 
 
-.rightEl {
+.textUsd {
   position: absolute;
   top: 13px;
   right: 10px;
@@ -38,10 +38,6 @@ input, textarea {
   background: white;
   padding: 5px;
   box-shadow: -20px 0px 20px -15px rgba(0,0,0, 0.5);
-}
-
-.qr {
-  top: 20px;
 }
 
 .input {
@@ -113,7 +109,7 @@ textarea.input {
   .root {
     width: 95%;
   }
-  .rightEl {
+  .textUsd {
     top: 15px;
     font-size: 14px;
   }

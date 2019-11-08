@@ -1,0 +1,56 @@
+.notifyBlock {
+    height: 88px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px;
+    > div {
+        display: flex;
+        align-items: center;
+        button {
+            margin-left: 10px;
+            font-weight: bold;
+        }
+    }
+
+}
+
+.notifyBlockSaveKeys {
+    background: linear-gradient(265.47deg, #6144E5 0%, #7359EA 100%);
+    > div {
+        color: #6144E5;
+    }
+}
+
+.notifyBlockSignUp {
+    background: linear-gradient(265.47deg, #FF6B00 0%, #F88736 100%);
+    > div {
+        color: #F1771F;
+    }
+}   
+
+.notifyBlockIcon {
+    background: rgba(255, 255, 255, 0.1);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 7px;
+}
+
+.notifyBlockDescr {
+    margin-left: 10px;
+    color: #fff;
+    font-family: 'Manrope-Bold',sans-serif;
+    p {
+        margin-bottom: 0;
+    }
+    p:last-child {
+        opacity: 0.8;
+        font-size: 13px;
+        font-family: 'Manrope-Medium',sans-serif;
+    }
+}

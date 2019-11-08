@@ -71,6 +71,10 @@ export default class History extends Component {
   render() {
     const { items, swapHistory, intl } = this.props
     const titles = [];
+    
+
+    console.warn('swapHistory', swapHistory)
+    console.warn('items', items)
 
     return (
       items.length || swapHistory.length ?

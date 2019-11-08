@@ -35,7 +35,7 @@ import { localisedUrl } from 'helpers/locale'
 import { isCoinAddress } from 'swap.app/util/typeforce'
 import config from 'app-config'
 import SwapApp, { util } from 'swap.app'
-import QrReader from 'components/QrReader'
+import QrReader from 'react-qr-scanner'
 
 import helpers, { constants, links, ethToken } from 'helpers'
 import { animate } from 'helpers/domUtils'
@@ -922,6 +922,8 @@ export default class PartialClosure extends Component {
     const haveUsd = BigNumber(exHaveRate).times(haveAmount).dp(2, BigNumber.ROUND_CEIL)
     const getUsd  = BigNumber(exGetRate).times(getAmount).dp(2, BigNumber.ROUND_CEIL)
 
+    console.log('getddfdUSD', getUsd)
+
     const haveCurrencyData = currenciesData.find(item => item.currency === haveCurrency.toUpperCase())
     const haveTokenData = tokensData.find(item => item.currency === haveCurrency.toUpperCase())
     const currentCurrency = haveCurrencyData || haveTokenData
@@ -1245,11 +1247,17 @@ export default class PartialClosure extends Component {
             </div>
 
             {openScanCam &&
-              <QrReader
-                openScan={this.openScan}
-                handleError={this.handleError}
-                handleScan={this.handleScan}
-              />
+              <div styleName="scan">
+                <span styleName="close" onClick={this.openScan}>
+                  <FormattedMessage id="closeIcon1241" defaultMessage="x" />
+                </span>
+                <QrReader
+                  delay={300}
+                  onError={this.handleError}
+                  onScan={this.handleScan}
+                  style={{ width: '100%' }}
+                />
+              </div>
             }
             <Fragment>
               <div styleName="container alignCenter">
