@@ -20,6 +20,8 @@ import MobMenu from './MobMenu/MobMenu'
 import Confirm from './Confirm/Confirm'
 import ConfirmBeginSwap from './ConfirmBeginSwap/ConfirmBeginSwap'
 
+import RegisterSMSProtected from './RegisterSMSProtected/RegisterSMSProtected'
+
 
 export default {
   DeclineOrdersModal,
@@ -42,4 +44,5 @@ export default {
   Confirm,
   MobMenu,
   ConfirmBeginSwap,
+  RegisterSMSProtected,
 }

@@ -19,4 +19,5 @@ export default {
   IncompletedSwaps: 'IncompletedSwaps',
   MobMenu: 'MobMenu',
   ConfirmBeginSwap: 'ConfirmBeginSwap',
+  RegisterSMSProtected: 'RegisterSMSProtected',
 }

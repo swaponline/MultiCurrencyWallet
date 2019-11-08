@@ -22,4 +22,5 @@ export default {
   lastCheckBalance: 'lastCheckBalance',
   IEO_signed: 'IEO_signed',
   startSwap: 'startSwap',
+  didProtectedBtcCreated: 'protectedBtcCreated',
 }

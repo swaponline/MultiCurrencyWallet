@@ -207,6 +207,10 @@ export default class Row extends Component {
     actions.modals.open(constants.modals.EosBuyAccount)
   }
 
+  handleRegisterSMSProtected = () => {
+    actions.modals.open( constants.modals.RegisterSMSProtected, {} )
+  }
+
   handleWithdraw = (specificator = undefined) => {
     const {
       item: {
@@ -407,7 +411,7 @@ export default class Row extends Component {
                   {
                     balanceError ? '?' : BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString()
                   }{' '}
-                  <span styleName={currency.includes('Multisig') ? 'littleText' : ''}>
+                  <span styleName={this.props.item.isSmsProtected ? 'littleText' : ''}>
                     {currency}
                   </span>
                 </span>
@@ -563,28 +567,39 @@ export default class Row extends Component {
         </Fragment>
         <td>
           <div styleName={currency === 'EOS' && !eosAccountActivated ? 'notActivated' : ''}>
-            <CurrencyButton
-              onClick={this.handleReceive}
-              dataTooltip={{
-                id: `deposit${currency}`,
-                deposit: true,
-              }}
-              wallet="true">
-              <FormattedMessage id="Row313" defaultMessage="Deposit" />
-            </CurrencyButton>
-            <span styleName="withdrawBtn">
-              <BtnTooltip onClick={() => this.handleWithdraw(currency.includes('Multisig') ? 'bitcoinMultisig' : undefined)} disable={isBalanceEmpty} id={`row${currency}`}>
-                <i className="fas fa-arrow-alt-circle-right" />
-                <FormattedMessage id="Row328" defaultMessage="Send" />
+            { this.props.item.isSmsProtected && !this.props.item.isRegistered && 
+              <BtnTooltip
+                onClick={this.handleRegisterSMSProtected}
+                >
+                <FormattedMessage id="SMSProtectedRegister" defaultMessage="Activate wallet" />
               </BtnTooltip>
-            </span>
-            {
-              tradeAllowed && (
-                <BtnTooltip onClick={() => this.handleGoTrade(currency)} styleName={isBalanceEmpty && 'disableWth'}>
-                  <i className="fas fa-exchange-alt" />
-                  <FormattedMessage id="Row334" defaultMessage="Exchange" />
-                </BtnTooltip>
-              )
+            }
+            { (!this.props.item.isSmsProtected || this.props.item.isRegistered) &&
+              <Fragment>
+                <CurrencyButton
+                  onClick={this.handleReceive}
+                  dataTooltip={{
+                    id: `deposit${currency}`,
+                    deposit: true,
+                  }}
+                  wallet="true">
+                  <FormattedMessage id="Row313" defaultMessage="Deposit" />
+                </CurrencyButton>
+                <span styleName="withdrawBtn">
+                  <BtnTooltip onClick={() => this.handleWithdraw(this.props.item.isSmsProtected ? 'bitcoinMultisig' : undefined)} disable={isBalanceEmpty} id={`row${currency}`}>
+                    <i className="fas fa-arrow-alt-circle-right" />
+                    <FormattedMessage id="Row328" defaultMessage="Send" />
+                  </BtnTooltip>
+                </span>
+                {
+                  tradeAllowed && (
+                    <BtnTooltip onClick={() => this.handleGoTrade(currency)} styleName={isBalanceEmpty && 'disableWth'}>
+                      <i className="fas fa-exchange-alt" />
+                      <FormattedMessage id="Row334" defaultMessage="Exchange" />
+                    </BtnTooltip>
+                  )
+                }
+              </Fragment>
             }
           </div>
         </td>
