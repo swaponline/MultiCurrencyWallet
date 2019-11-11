@@ -160,7 +160,7 @@ export default class PartialClosure extends Component {
     if (sell && buy && !isRootPage) {
       if (!allCurrencyies.map(item => item.name).includes(sell.toUpperCase())
         || !allCurrencyies.map(item => item.name).includes(buy.toUpperCase())) {
-        history.push(localisedUrl(locale, `${links.exchange}/swap-to-btc`))
+        history.push(localisedUrl(locale, `${links.exchange}/usdt-to-btc`))
       }
     }
 
