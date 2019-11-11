@@ -165,7 +165,7 @@ export default class PartialClosure extends Component {
     }
 
     const sellToken = sell || ((!isWidgetBuild) ? 'btc' : 'btc')
-    const buyToken = buy || ((!isWidgetBuild) ? 'eth' : config.erc20token)
+    const buyToken = buy || ((!isWidgetBuild) ? 'usdt' : config.erc20token)
 
     this.returnNeedCurrency(sellToken, buyToken)
 
