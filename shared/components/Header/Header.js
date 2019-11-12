@@ -94,7 +94,7 @@ export default class Header extends Component {
   }
 
   static getDerivedStateFromProps({ history: { location: { pathname } } }) {
-    if  (pathname === '/ru' || pathname === '/' || pathname === links.currencyWallet) {
+    if (pathname === '/ru' || pathname === '/' || pathname === links.currencyWallet) {
       return { path: true }
     }
     return { path: false }
@@ -103,18 +103,19 @@ export default class Header extends Component {
   constructor(props) {
     super(props)
 
-    if (localStorage.getItem(constants.localStorage.lastCheckBalance) || localStorage.getItem(constants.localStorage.wasCautionPassed)) {
-      localStorage.setItem(constants.localStorage.didWalletCreated, true)
+    const { lastCheckBalance, wasCautionPassed, didWalletCreated: didCreated } = constants.localStorage
+    const { location: { pathname }, intl: { locale, formatMessage } } = props
+    const { exchange, currencyWallet, home } = links
+
+    if (localStorage.getItem(lastCheckBalance) || localStorage.getItem(wasCautionPassed)) {
+      localStorage.setItem(didCreated, true)
     }
 
-    const dinamicPath = props.location.pathname.includes(links.exchange)
-      ? `${unlocalisedUrl(props.intl.locale, props.location.pathname)}`
-      : `${links.home}`
+    const dinamicPath = pathname.includes(exchange) ? `${unlocalisedUrl(locale, pathname)}` : `${home}`
 
-    const didWalletCreated = localStorage.getItem(constants.localStorage.didWalletCreated)
+    const didWalletCreated = localStorage.getItem(didCreated)
 
-    const isWalletPage = props.location.pathname === links.currencyWallet
-      || props.location.pathname === `/ru${links.currencyWallet}`
+    const isWalletPage = pathname === currencyWallet || pathname === `/ru${currencyWallet}`
 
     this.state = {
       isPartialTourOpen: false,
@@ -125,7 +126,7 @@ export default class Header extends Component {
       isWallet: false,
       menuItemsFill: [
         {
-          title: props.intl.formatMessage(messages.products),
+          title: formatMessage(messages.products),
           link: 'openMySesamPlease',
           exact: true,
           haveSubmenu: true,
@@ -172,8 +173,8 @@ export default class Header extends Component {
 
   getMenuItems = (props, didWalletCreated, dinamicPath) =>
     (Number.isInteger(this.props.reputation) && this.props.reputation !== 0)
-    || this.props.isSigned
-    || window.localStorage.getItem('isWalletCreate') === 'true'
+      || this.props.isSigned
+      || window.localStorage.getItem('isWalletCreate') === 'true'
       ? ([
         {
           title: props.intl.formatMessage(didWalletCreated ? messages.wallet : messages.createWallet),
@@ -316,7 +317,7 @@ export default class Header extends Component {
     const wasOnWallet = localStorage.getItem(constants.localStorage.wasOnWallet)
     const wasOnExchange = localStorage.getItem(constants.localStorage.wasOnExchange)
 
-    let tourEvent = () => {}
+    let tourEvent = () => { }
 
     switch (true) {
       case isWalletPage && !wasOnWallet:
@@ -357,7 +358,7 @@ export default class Header extends Component {
     await history.push(localisedUrl(locale, link))
   }
 
-  handleScroll = () =>  {
+  handleScroll = () => {
     if (this.props.history.location.pathname === '/') {
       this.setState(() => ({
         sticky: false,
