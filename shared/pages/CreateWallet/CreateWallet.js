@@ -19,7 +19,7 @@ import FirstStep from './Steps/FirstStep'
 import SecondStep from './Steps/SecondStep'
 
 import { color } from './chooseColor'
-
+import { constants, localStorage } from 'helpers'
 
 const styleBtn = { backgroundColor: '#f0eefd', color: '#6144E5' }
 const defaultColors = { backgroundColor: '#6144E5' }
@@ -40,6 +40,7 @@ const CreateWallet = (props) => {
       reducers.createWallet.newWalletData({ type: 'step', data: step + 1 })
       return setStep(step + 1)
     }
+    localStorage.setItem(constants.localStorage.isWalletCreate,true)
     history.push(localisedUrl(locale, '/wallet'))
   }
 
