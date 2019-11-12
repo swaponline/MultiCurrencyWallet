@@ -32,8 +32,8 @@ const initialState = {
       fullTitle: 'bitcoin',
     },
     {
-      name: 'BTCMultisig',
-      title: 'BTCMultisig',
+      name: 'BTC (SMS-Protected)',
+      title: 'BTC (SMS-Protected)',
       icon: 'btc',
       value: 'btcMultisig',
       fullTitle: 'bitcoinMultisig',

@@ -55,13 +55,23 @@ const CreateWallet = (props) => {
       setError('Choose something')
       return
     }
-    if (step === 1) {
-      Object.keys(currencies).forEach(el => {
-        if (currencies[el]) {
-          actions.core.markCoinAsVisible(el.toUpperCase())
-        }
-      })
+    if (step === 2) {
+      switch (secure) {
+        case 'withoutSecure':
+          Object.keys(currencies).forEach(el => {
+            if (currencies[el]) {
+              actions.core.markCoinAsVisible(el.toUpperCase())
+            }
+          })
+          break;
+        case 'sms':
+          if (currencies.btc) {
+            actions.core.markCoinAsVisible('BTC (SMS-Protected)')
+          }
+          break;
+      }
     }
+
     handleClick()
   }
 
@@ -85,7 +95,7 @@ const CreateWallet = (props) => {
         }
         <div>
           {step === 1 && <FirstStep error={error} onClick={validate} setError={setError} />}
-          {step === 2 && <SecondStep error={error} onClick={validate} setError={setError} />}
+          {step === 2 && <SecondStep error={error} onClick={validate} currencies={currencies} setError={setError} />}
         </div>
       </div>
     </div>

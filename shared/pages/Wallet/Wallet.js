@@ -104,6 +104,7 @@ const walletNav = ['My balances', 'Transactions'];
     tokensData: {
       ethData,
       btcData,
+      btcMultisigData,
       bchData,
       ltcData,
       eosData,
@@ -129,6 +130,8 @@ export default class Wallet extends Component {
   }
 
   componentWillMount() {
+    console.log(this.props)
+    console.log('BTC-Protected',this.props.btcMultisigData)
     actions.user.getBalances()
   }
 
@@ -176,13 +179,14 @@ export default class Wallet extends Component {
           result.map(res => {
             const btcBalance = currencyBalance.find(item => item.name === res.symbol)
             if (itemsName.includes(res.symbol)) {
-              infoAboutCurrency.push({
-                name: res.symbol,
-                change: res.percent_change_1h,
-                price_btc: res.price_btc,
-                balance: btcBalance.balance * res.price_btc
-              }
-             )
+              try {
+                infoAboutCurrency.push({
+                  name: res.symbol,
+                  change: res.percent_change_1h,
+                  price_btc: res.price_btc,
+                  balance: btcBalance.balance * res.price_btc
+                })
+              } catch (e) {}
             }
           })
           this.setState({
@@ -222,6 +226,7 @@ export default class Wallet extends Component {
     let btcBalance = 0;
     let usdBalance = 0;
 
+    
     const tableRows = [ ...items, ...tokens ].filter(currency => !hiddenCoinsList.includes(currency))
 
     if(infoAboutCurrency) {
