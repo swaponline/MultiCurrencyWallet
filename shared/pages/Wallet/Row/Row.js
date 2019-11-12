@@ -240,8 +240,10 @@ export default class Row extends Component {
       },
     } = this.props
 
-    // actions.analytics.dataEvent(`balances-withdraw-${currency.toLowerCase()}`)
-    actions.modals.open(constants.modals.Withdraw, {
+    let withdrawModalType = constants.modals.Withdraw
+    if (currency === 'BTC (SMS-Protected)') withdrawModalType = constants.modals.WithdrawMultisig
+
+    actions.modals.open(withdrawModalType, {
       currency,
       address,
       contractAddress,
@@ -306,6 +308,10 @@ export default class Row extends Component {
     actions.core.markCoinAsHidden(coin)
   }
 
+  handleActivateProtected = async () => {
+    actions.modals.open( constants.modals.RegisterSMSProtected, {} )
+  }
+
   handleTelosActivate = async () => {
     const telosActivePrivateKey = localStorage.getItem(constants.privateKeyNames.telosPrivateKey)
     const telosActivePublicKey = localStorage.getItem(constants.privateKeyNames.telosPublicKey)
@@ -364,7 +370,7 @@ export default class Row extends Component {
       exCurrencyRate,
       isDropdownOpen
     } = this.state
-console.log(this.props)
+
     const {
       item: {
         currency,
@@ -381,6 +387,7 @@ console.log(this.props)
       infoAboutCurrency,
     } = this.props
 
+    let currencyView = currency
     let eosAccountActivated = false
     let eosActivationPaymentSent = false
     if (currency === 'EOS') {
@@ -395,6 +402,32 @@ console.log(this.props)
     if (infoAboutCurrency) {
       inneedData = infoAboutCurrency.find(el => el.name === currency)
     }
+
+    let dropDownMenuItems = [
+      {
+        id: 1,
+        title: 'Deposit',
+        action: this.handleReceive,
+        disabled: false,
+      },
+      {
+        id: 2,
+        title: 'Send',
+        action: this.handleWithdraw,
+        disabled: isBalanceEmpty,
+      },
+    ]
+
+    if (this.props.item.isSmsProtected && !this.props.item.isRegistered) {
+      currencyView = 'Not activated'
+      dropDownMenuItems = [{
+        id: 1,
+        title: 'Activate',
+        action: this.handleActivateProtected,
+        disabled: false,
+      }]
+    }
+    if (currencyView == 'BTC (SMS-Protected)') currencyView = 'BTC'
 
     return (
       <tr>
@@ -436,8 +469,8 @@ console.log(this.props)
                         balanceError ? '?' : BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString()
                       }{' '}
                     </span>
-                    <span>{currency}</span>
-                    { currency === 'BTC' && unconfirmedBalance !== 0 && (
+                    <span>{currencyView}</span>
+                    {(currency === 'BTC' || currency === 'BTC (SMS-Protected)') && unconfirmedBalance !== 0 && (
                       <Fragment>
                         <br />
                         <span styleName="unconfirmedBalance">
@@ -488,20 +521,7 @@ console.log(this.props)
               <DropdownMenu
                 size="regular"
                 className="walletControls"
-                items={[
-                  {
-                    id: 1,
-                    title: 'Deposit',
-                    action: this.handleReceive,
-                    disabled: false
-                  },
-                  {
-                    id: 2,
-                    title: 'Send',
-                    action: this.handleWithdraw,
-                    disabled: isBalanceEmpty
-                  }
-                ]}
+                items={dropDownMenuItems}
               />
             </div>
           </div>
