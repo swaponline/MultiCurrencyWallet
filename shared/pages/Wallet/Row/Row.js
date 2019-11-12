@@ -84,12 +84,12 @@ export default class Row extends Component {
     existUnfinished: false,
     isDropdownOpen: false
   }
-/*
+
   static getDerivedStateFromProps({ item: { balance } }) {
     return {
       isBalanceEmpty: balance === 0,
     }
-  }*/
+  }
 
   constructor(props) {
     super(props)
