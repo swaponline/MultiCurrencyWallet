@@ -186,6 +186,15 @@ export default class Wallet extends Component {
                   price_btc: res.price_btc,
                   balance: btcBalance.balance * res.price_btc
                 })
+                /* SMS Protected and Multisign */
+                if (res.symbol === 'BTC') {
+                  infoAboutCurrency.push({
+                    name: 'BTC (SMS-Protected)',
+                    change: res.percent_change_1h,
+                    price_btc: res.price_btc,
+                    balance: btcBalance.balance * res.price_btc
+                  })
+                }
               } catch (e) {}
             }
           })

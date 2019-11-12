@@ -170,7 +170,12 @@ export default class Row extends Component {
 
   getUsdBalance = async () => {
     const { currency }  = this.props
-    const exCurrencyRate = await actions.user.getExchangeRate(currency, 'usd')
+    let currencySymbol = currency
+    // BTC SMS Protected and BTC-Multisign
+    if (currencySymbol === 'BTC (SMS-Protected)') currencySymbol = 'BTC'
+    if (currencySymbol === 'BTC (Multisign)') currencySymbol = 'BTC'
+
+    const exCurrencyRate = await actions.user.getExchangeRate(currencySymbol, 'usd')
 
     this.setState(() => ({
       exCurrencyRate
