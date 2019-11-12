@@ -134,7 +134,7 @@ export default class Header extends Component {
         },
         {
           title: props.intl.formatMessage(messages.invest),
-          link: 'exchange/btc-to-swap',
+          link: 'exchange/btc-to-usdt',
           icon: 'invest',
           haveSubmenu: false,
         },
