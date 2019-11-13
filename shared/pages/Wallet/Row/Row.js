@@ -144,8 +144,11 @@ export default class Row extends Component {
     })
 
     const { item: { currency } } = this.props
+    let actionProcessor = currency.toLowerCase()
+    if (currency === 'BTC (SMS-Protected)') actionProcessor = 'btc'
+    if (currency === 'BTC (Multisign)') actionProcessor = 'btc'
 
-    await actions[currency.toLowerCase()].getBalance(currency.toLowerCase())
+    await actions[actionProcessor].getBalance(currency.toLowerCase())
 
     this.setState(() => ({
       isBalanceFetching: false,
