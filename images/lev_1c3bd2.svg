@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="0 0 173.03418 173.03467"
+><defs>
+    <style>.cls-1{isolation:isolate;}.cls-2{fill:#ffffff;}.cls-3{fill:#ffffff;}.cls-4{fill:url(#linear-gradient);}.cls-5{fill:url(#linear-gradient-2);}.cls-6{fill:#ffffff;}
+    </style>
+    <linearGradient id="linear-gradient" x1="39.8514" y1="154.59521" x2="111.1131" y2="83.33351" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#ffffff"/><stop offset="0.08518" stop-color="#ffffff"/>
+        <stop offset="0.33554" stop-color="#ffffff"/><stop offset="0.56114" stop-color="#ffffff"/>
+        <stop offset="0.75403" stop-color="#ffffff"/><stop offset="0.90662" stop-color="#ffffff"/>
+        <stop offset="1" stop-color="#ffffff"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="61.92099" y1="89.70117" x2="133.1827" y2="18.43947" xlink:href="#linear-gradient"/>
+</defs><title>LogoAloneCircleColor.2</title><g class="cls-1"><g id="Layer_1" data-name="Layer 1"><path class="cls-2" d="M180.09125,286.11613A86.51733,86.51733,0,1,1,266.60834,199.599,86.61523,86.61523,0,0,1,180.09125,286.11613Zm0-170.03467A83.51733,83.51733,0,1,0,263.60834,199.599,83.61205,83.61205,0,0,0,180.09125,116.08146Z" transform="translate(-93.57416 -113.08146)"/><polygon class="cls-3" points="75.482 47.703 23.315 138.059 127.649 138.059 75.482 47.703"/><polygon class="cls-4" points="75.482 47.703 23.315 138.059 127.649 138.059 75.482 47.703"/><polygon class="cls-2" points="97.552 125.332 149.719 34.976 45.385 34.976 97.552 125.332"/><polygon class="cls-5" points="97.552 125.332 149.719 34.976 45.385 34.976 97.552 125.332"/><polygon class="cls-6" points="97.552 125.332 108.927 105.63 75.482 47.703 64.107 67.404 97.552 125.332"/></g></g></svg>
