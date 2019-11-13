@@ -69,11 +69,13 @@ export default class RegisterSMSProtected extends React.Component {
   handleCheckSMS = async () => {
     this.setState( { isShipped : true, error: false } )
     const result = await actions.btcmultisig.confirmRegister( this.state.phone, this.state.smsCode )
-    console.log(result)
+    
     if (result && result.answer && result.answer=='ok') {
+      localStorage.setItem(constants.localStorage.didProtectedBtcCreated, "1")
       this.setState( { isShipped: false, step: 'ready' } )
     } else {
       if (result.error == 'Already registered') {
+        localStorage.setItem(constants.localStorage.didProtectedBtcCreated, "1")
         this.setState( { isShipped: false, step: 'ready' } )
       } else {
         this.setState( { isShipped: false, error: (result.error) ? result.error : 'Unknown error' } )
