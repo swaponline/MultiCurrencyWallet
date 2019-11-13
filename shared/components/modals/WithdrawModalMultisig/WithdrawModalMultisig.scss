@@ -1,0 +1,166 @@
+.note {
+  font-size: 14px;
+  color: #aaa;
+  padding-top: 10px;
+}
+
+.r-tooltip {
+  max-width: 80vw;
+}
+
+.link {
+  color: $color-brand;
+}
+
+.error {
+  margin-top: 20px;
+}
+
+.rednote {
+  font-size: 12px;
+  color: #aaa;
+  height: 0px;
+  color: $color-f-error;
+}
+
+.groupField {
+  width: 100%;
+  display: inline-flex;
+  vertical-align: center;
+  border-radius: 6px;
+  text-align: center;
+  position: relative;
+}
+
+.balance {
+  position: absolute;
+  right: 6em;
+  top: -0.2em;
+  padding: 0 10px 0 25px;
+  background-color: white;
+  text-align: left;
+  font-size: 13px;
+  z-index: 1;
+  color: #b5b5b5;
+  font-family: 'Roboto Mono', monospace;
+}
+
+.notice {
+  font-size: 16px;
+  text-align: center;
+}
+
+.rednotes {
+  font-size: 16px;
+  text-align: center;
+  color: $color-f-error;
+}
+
+.buttonFull {
+  margin-top: 55px;
+  display: block;
+}
+
+.cell {
+  color: #3b95ff;
+  cursor: pointer;
+  display: block;
+
+  &:hover {
+    color: darken(#3b95ff, 1)
+  }
+}
+
+.group {
+  width: 100%;
+  display: inline-flex;
+  height: 60px;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.input {
+  width: 100%;
+  text-align: left;
+  display: block;
+}
+
+.button {
+  height: 68px;
+  width: 80px;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  color: #7c1de9;
+  background: #f8f3fe;
+  box-shadow: rgba(0, 0, 0, 0.08) 0 3px 9px 0;
+  cursor: pointer;
+  line-height: 60px;
+  text-transform: uppercase;
+  text-align: center;
+  border-color: black;
+  display: block;
+  font-size: 18px;
+  border-radius: 3px;
+
+  &_sms {
+    flex: 1 140px;
+  }
+
+  &:hover {
+    color: #7c1de9;
+    background: #dfc5ff;
+  }
+}
+
+.inputName {
+  white-space: nowrap;
+}
+
+.downLabel {
+  position: absolute;
+  top: 0.5em;
+}
+
+.highLevel {
+  top: 3em;
+  position: relative;
+  padding-bottom: 5em;
+}
+
+.lowLevel {
+  position: relative;
+  padding-bottom: 7%;
+}
+
+@include media-mobile {
+  .button {
+    height: 100%;
+  }
+
+  .mobileFont {
+    font-size: 16px !important;
+  }
+
+  .balance {
+    position: absolute;
+    right: 7em;
+    top: 0.5em;
+    font-size: 10px;
+    padding: 0 5px 0 10px;
+  }
+
+  .downLabel {
+    top: 0.8em;
+  }
+
+  .input {
+    font-size: 11px;
+  }
+
+  .notice {
+    position: absolute;
+    top: 10px;
+    font-size: 70%;
+    text-align: center;
+  }
+}

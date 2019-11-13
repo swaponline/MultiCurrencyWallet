@@ -34,6 +34,7 @@ import dollar from '../images/dollar.svg'
   user: {
     ethData,
     btcData,
+    btcMultisigData,
     bchData,
     eosData,
     telosData,
@@ -49,6 +50,7 @@ import dollar from '../images/dollar.svg'
   currencies,
   item: [
     btcData,
+    btcMultisigData,
     ethData,
     eosData,
     telosData,
@@ -168,7 +170,12 @@ export default class Row extends Component {
 
   getUsdBalance = async () => {
     const { currency }  = this.props
-    const exCurrencyRate = await actions.user.getExchangeRate(currency, 'usd')
+    let currencySymbol = currency
+    // BTC SMS Protected and BTC-Multisign
+    if (currencySymbol === 'BTC (SMS-Protected)') currencySymbol = 'BTC'
+    if (currencySymbol === 'BTC (Multisign)') currencySymbol = 'BTC'
+
+    const exCurrencyRate = await actions.user.getExchangeRate(currencySymbol, 'usd')
 
     this.setState(() => ({
       exCurrencyRate
@@ -233,8 +240,10 @@ export default class Row extends Component {
       },
     } = this.props
 
-    // actions.analytics.dataEvent(`balances-withdraw-${currency.toLowerCase()}`)
-    actions.modals.open(constants.modals.Withdraw, {
+    let withdrawModalType = constants.modals.Withdraw
+    if (currency === 'BTC (SMS-Protected)') withdrawModalType = constants.modals.WithdrawMultisig
+
+    actions.modals.open(withdrawModalType, {
       currency,
       address,
       contractAddress,
@@ -297,6 +306,10 @@ export default class Row extends Component {
 
   handleMarkCoinAsHidden = (coin) => {
     actions.core.markCoinAsHidden(coin)
+  }
+
+  handleActivateProtected = async () => {
+    actions.modals.open( constants.modals.RegisterSMSProtected, {} )
   }
 
   handleTelosActivate = async () => {
@@ -374,6 +387,7 @@ export default class Row extends Component {
       infoAboutCurrency,
     } = this.props
 
+    let currencyView = currency
     let eosAccountActivated = false
     let eosActivationPaymentSent = false
     if (currency === 'EOS') {
@@ -388,6 +402,32 @@ export default class Row extends Component {
     if (infoAboutCurrency) {
       inneedData = infoAboutCurrency.find(el => el.name === currency)
     }
+
+    let dropDownMenuItems = [
+      {
+        id: 1,
+        title: 'Deposit',
+        action: this.handleReceive,
+        disabled: false,
+      },
+      {
+        id: 2,
+        title: 'Send',
+        action: this.handleWithdraw,
+        disabled: isBalanceEmpty,
+      },
+    ]
+
+    if (this.props.item.isSmsProtected && !this.props.item.isRegistered) {
+      currencyView = 'Not activated'
+      dropDownMenuItems = [{
+        id: 1,
+        title: 'Activate',
+        action: this.handleActivateProtected,
+        disabled: false,
+      }]
+    }
+    if (currencyView == 'BTC (SMS-Protected)') currencyView = 'BTC'
 
     return (
       <tr>
@@ -429,8 +469,8 @@ export default class Row extends Component {
                         balanceError ? '?' : BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString()
                       }{' '}
                     </span>
-                    <span>{currency}</span>
-                    { currency === 'BTC' && unconfirmedBalance !== 0 && (
+                    <span>{currencyView}</span>
+                    {(currency === 'BTC' || currency === 'BTC (SMS-Protected)') && unconfirmedBalance !== 0 && (
                       <Fragment>
                         <br />
                         <span styleName="unconfirmedBalance">
@@ -481,20 +521,7 @@ export default class Row extends Component {
               <DropdownMenu
                 size="regular"
                 className="walletControls"
-                items={[
-                  {
-                    id: 1,
-                    title: 'Deposit',
-                    action: this.handleReceive,
-                    disabled: false
-                  },
-                  {
-                    id: 2,
-                    title: 'Send',
-                    action: this.handleWithdraw,
-                    disabled: isBalanceEmpty
-                  }
-                ]}
+                items={dropDownMenuItems}
               />
             </div>
           </div>
@@ -503,5 +530,4 @@ export default class Row extends Component {
     )
   }
 }
-
 

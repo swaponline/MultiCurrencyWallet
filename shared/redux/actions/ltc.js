@@ -1,7 +1,7 @@
 import BigInteger from 'bigi'
 
 import { BigNumber } from 'bignumber.js'
-import bitcoin from 'bitcoinjs-lib'
+import * as bitcoin from 'bitcoinjs-lib'
 import bitcoinMessage from 'bitcoinjs-message'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
@@ -14,8 +14,8 @@ const login = (privateKey) => {
   if (privateKey) {
     const hash  = bitcoin.crypto.sha256(privateKey)
     const d     = BigInteger.fromBuffer(hash)
-
-    keyPair     = new bitcoin.ECPair(d, null, { network: ltc.network })
+    
+    keyPair     = bitcoin.ECPair.fromWIF(privateKey, ltc.network)
   }
   else {
     console.info('Created account Litecoin ...')
@@ -25,9 +25,12 @@ const login = (privateKey) => {
 
   localStorage.setItem(constants.privateKeyNames.ltc, privateKey)
 
-  const account     = new bitcoin.ECPair.fromWIF(privateKey, ltc.network) // eslint-disable-line
-  const address     = account.getAddress()
-  const publicKey   = account.getPublicKeyBuffer().toString('hex')
+  const account       = bitcoin.ECPair.fromWIF(privateKey, ltc.network) // eslint-disable-line
+  const { publicKey } = account
+  const { address }   = bitcoin.payments.p2pkh({
+    pubkey: account.publicKey,
+    network: ltc.network,
+  })
 
   const data = {
     account,
