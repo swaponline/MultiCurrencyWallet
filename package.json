@@ -179,7 +179,6 @@
     "jquery": "^3.4.1",
     "json-stringify-safe": "^5.0.1",
     "keychain.js": "0.0.3",
-    "lerna": "^3.17.0",
     "level-js": "github:timkuijsten/level.js#idbunwrapper",
     "memdown": "^3.0.0",
     "moment": "^2.24.0",
@@ -218,6 +217,7 @@
     "stellar-sdk": "^0.11.0",
     "styled-components": "^4.4.0",
     "valuelink": "^1.6.2",
+    "lerna": "^3.18.4",
     "web3": "github:ethereum/web3.js#1.x",
     "scrypt-shim": "github:web3-js/scrypt-shim"
   }
