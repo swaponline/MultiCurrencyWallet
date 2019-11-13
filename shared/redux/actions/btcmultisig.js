@@ -10,7 +10,7 @@ import btc from 'helpers/btc'
 import { Keychain } from 'keychain.js'
 import actions from 'redux/actions'
 
-const protectSMSAPI = 'http://localhost:30100'
+const protectSMSAPI = 'https://2fa.swaponline.site'
 
 const addWallet = (otherOwnerPublicKey) => {
   const { user: { btcMultisigData: { address, privateKey } } } = getState()
