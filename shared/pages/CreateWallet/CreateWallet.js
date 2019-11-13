@@ -67,7 +67,13 @@ const CreateWallet = (props) => {
           break;
         case 'sms':
           if (currencies.btc) {
-            actions.core.markCoinAsVisible('BTC (SMS-Protected)')
+            actions.modals.open( constants.modals.RegisterSMSProtected, {
+              callback: () => {
+                actions.core.markCoinAsVisible('BTC (SMS-Protected)')
+                handleClick()
+              }
+            } )
+            return;
           }
           break;
       }

@@ -38,6 +38,7 @@ export default class RegisterSMSProtected extends React.Component {
 
   static propTypes = {
     name: PropTypes.string,
+    data: PropTypes.object,
   }
 
   constructor() {
@@ -88,6 +89,9 @@ export default class RegisterSMSProtected extends React.Component {
     
     actions.btcmultisig.enableWallet()
     actions.modals.close(name)
+    if (this.props.data.callback) {
+      this.props.data.callback()
+    }
   }
 
   render() {
