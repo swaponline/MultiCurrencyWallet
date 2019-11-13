@@ -12,6 +12,7 @@ import { isMobile } from 'react-device-detect'
 
 import config from 'app-config'
 import { constants } from 'helpers'
+import actions from 'redux/actions'
 
 import Explanation from '../Explanation'
 import icons from '../images'
@@ -43,9 +44,10 @@ const CreateWallet = (props) => {
     multisign: {},
   }
 
-  if (currencies.btc) _protection.sms.btc = true
-
-  if (localStorage.getItem(constants.localStorage.didProtectedBtcCreated) === '1') _activated.sms.btc = true
+  if (currencies.btc) {
+    _protection.sms.btc = true
+    _activated.sms.btc = actions.btcmultisig.checkSMSActivated()
+  }
 
   const [border, setBorder] = useState({
     color: {
