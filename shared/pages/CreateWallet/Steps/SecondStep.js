@@ -20,7 +20,11 @@ import { subHeaderText1,
 
 
 const CreateWallet = (props) => {
-  const { intl: { locale }, onClick, error, setError } = props
+  const { intl: { locale }, onClick, currencies, error, setError } = props
+
+  let smsProtectionEnabled = false
+
+  if (currencies.btc) smsProtectionEnabled = true
 
   const [border, setBorder] = useState({
     color: {
@@ -32,8 +36,8 @@ const CreateWallet = (props) => {
     selected: '',
   })
 
-  const handleClick = (name, index) => {
-    if (index > 0) return
+  const handleClick = (name, index, enabled) => {
+    if (!enabled) return
     const colors = border.color
 
     Object.keys(border.color).forEach(el => {
@@ -49,14 +53,25 @@ const CreateWallet = (props) => {
   }
 
   const coins = [
-    { text: locale === 'en' ? 'Without Secure' : 'Без защиты', name: 'withoutSecure', capture: locale === 'en' ? 'suitable for small amounts' : 'Подходит для небольших сумм' },
-    { text: 'SMS', name: 'sms', capture: locale === 'en' ? 'transactions are confirmed by SMS code' : 'Транзакции подтверждаются кодом по SMS' },
+    {
+      text: locale === 'en' ? 'Without Secure' : 'Без защиты',
+      name: 'withoutSecure',
+      capture: locale === 'en' ? 'suitable for small amounts' : 'Подходит для небольших сумм',
+      enabled: true,
+    },
+    { 
+      text: 'SMS',
+      name: 'sms',
+      capture: locale === 'en' ? 'transactions are confirmed by SMS code' : 'Транзакции подтверждаются кодом по SMS',
+      enabled: smsProtectionEnabled,
+    },
     {
       text: 'Google 2FA',
       name: 'google2FA',
       capture: locale === 'en' ?
         'Transactions are verified through the Google Authenticator app' :
         'Транзакции подтверждаются через приложение Google Authenticator',
+      enabled: false,
     },
     {
       text: 'Multisignature',
@@ -64,6 +79,7 @@ const CreateWallet = (props) => {
       capture: locale === 'en' ?
         'Transactions are confirmed from another device and / or by another person.' :
         'Транзакции подтверждаются с другого устройства и/или другим человеком',
+      enabled: false,
     },
   ]
 
@@ -83,15 +99,15 @@ const CreateWallet = (props) => {
           </Explanation>
           <div styleName="currencyChooserWrapper currencyChooserWrapperSecond">
             {coins.map((el, index) => {
-              const { name, capture, text } = el
+              const { name, capture, text, enabled } = el
               return (
                 <div
                   styleName={
-                    `card secureSize thirdCard ${border.color[name] && index === 0 ? 'purpleBorder' : ''} ${index > 0 ? 'cardDisabled' : ''}`
+                    `card secureSize thirdCard ${border.color[name] && enabled ? 'purpleBorder' : ''} ${!enabled ? 'cardDisabled' : ''}`
                   }
-                  onClick={() => handleClick(name, index)}
+                  onClick={() => handleClick(name, index, enabled)}
                 >
-                  {index > 0 &&
+                  {!enabled &&
                     <em>
                       <FormattedMessage id="createWalletSoon" defaultMessage="Soon!" />
                     </em>

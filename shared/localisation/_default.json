@@ -2638,7 +2638,7 @@
   },
   {
     "id": "Orders141",
-    "message": "No such ticker. Redirecting to SWAP-BTC exchange... ",
+    "message": "No such ticker. Redirecting to USDT-BTC exchange... ",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]
