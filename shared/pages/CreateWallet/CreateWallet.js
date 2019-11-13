@@ -19,7 +19,7 @@ import FirstStep from './Steps/FirstStep'
 import SecondStep from './Steps/SecondStep'
 
 import { color } from './chooseColor'
-
+import { constants, localStorage } from 'helpers'
 
 const styleBtn = { backgroundColor: '#f0eefd', color: '#6144E5' }
 const defaultColors = { backgroundColor: '#6144E5' }
@@ -40,7 +40,8 @@ const CreateWallet = (props) => {
       reducers.createWallet.newWalletData({ type: 'step', data: step + 1 })
       return setStep(step + 1)
     }
-    history.push(localisedUrl(locale, '/newWallet'))
+    localStorage.setItem(constants.localStorage.isWalletCreate,true)
+    history.push(localisedUrl(locale, '/wallet'))
   }
 
   const validate = () => {
@@ -55,13 +56,23 @@ const CreateWallet = (props) => {
       setError('Choose something')
       return
     }
-    if (step === 1) {
-      Object.keys(currencies).forEach(el => {
-        if (currencies[el]) {
-          actions.core.markCoinAsVisible(el.toUpperCase())
-        }
-      })
+    if (step === 2) {
+      switch (secure) {
+        case 'withoutSecure':
+          Object.keys(currencies).forEach(el => {
+            if (currencies[el]) {
+              actions.core.markCoinAsVisible(el.toUpperCase())
+            }
+          })
+          break;
+        case 'sms':
+          if (currencies.btc) {
+            actions.core.markCoinAsVisible('BTC (SMS-Protected)')
+          }
+          break;
+      }
     }
+
     handleClick()
   }
 
@@ -85,7 +96,7 @@ const CreateWallet = (props) => {
         }
         <div>
           {step === 1 && <FirstStep error={error} onClick={validate} setError={setError} />}
-          {step === 2 && <SecondStep error={error} onClick={validate} setError={setError} />}
+          {step === 2 && <SecondStep error={error} onClick={validate} currencies={currencies} setError={setError} />}
         </div>
       </div>
     </div>

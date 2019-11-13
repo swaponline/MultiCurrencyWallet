@@ -11,6 +11,7 @@ import core from './core'
 import filter from './filter'
 
 import btc from './btc'
+import btcmultisig from './btcmultisig'
 import bch from './bch'
 import ltc from './ltc'
 import eth from './eth'
@@ -19,7 +20,7 @@ import eos from './eos'
 import tlos from './tlos'
 import token from './token'
 import nimiq from './nimiq'
-import qtum from './qtum'
+// import qtum from './qtum'
 // import xlm from './xlm'
 // import usdt from './usdt'
 
@@ -51,11 +52,12 @@ export default {
   ltc,
   bch,
   btc,
+  btcmultisig,
   eth,
   tlos,
   eos,
   nimiq,
-  qtum,
+  // qtum,
   // xlm,
   // usdt,
 

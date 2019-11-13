@@ -32,6 +32,13 @@ const initialState = {
       fullTitle: 'bitcoin',
     },
     {
+      name: 'BTC (SMS-Protected)',
+      title: 'BTC (SMS-Protected)',
+      icon: 'btc',
+      value: 'btcMultisig',
+      fullTitle: 'bitcoinMultisig',
+    },
+    {
       name: 'QTUM',
       title: 'QTUM',
       icon: 'qtum',
@@ -68,13 +75,6 @@ const initialState = {
       icon: 'btc',
       value: 'btc',
       fullTitle: 'bitcoin',
-    },
-    {
-      name: 'QTUM',
-      title: 'QTUM',
-      icon: 'qtum',
-      value: 'qtum',
-      fullTitle: 'qtum',
     },
     {
       name: 'BCH',

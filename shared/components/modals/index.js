@@ -1,6 +1,7 @@
 import SignUpModal from './SignUpModal/SignUpModal'
 import OfferModal from './OfferModal/OfferModal'
 import WithdrawModal from './WithdrawModal/WithdrawModal'
+import WithdrawModalMultisig from './WithdrawModalMultisig/WithdrawModalMultisig'
 import PrivateKeysModal from './PrivateKeysModal/PrivateKeysModal'
 import EosRegisterModal from './EosRegisterModal/EosRegisterModal'
 import EosBuyAccountModal from './EosBuyAccountModal/EosBuyAccountModal'
@@ -19,12 +20,15 @@ import MobMenu from './MobMenu/MobMenu'
 import Confirm from './Confirm/Confirm'
 import ConfirmBeginSwap from './ConfirmBeginSwap/ConfirmBeginSwap'
 
+import RegisterSMSProtected from './RegisterSMSProtected/RegisterSMSProtected'
+
 
 export default {
   DeclineOrdersModal,
   SignUpModal,
   OfferModal,
   WithdrawModal,
+  WithdrawModalMultisig,
   PrivateKeysModal,
   ImportKeys,
   ShowMoreCoins,
@@ -40,4 +44,5 @@ export default {
   Confirm,
   MobMenu,
   ConfirmBeginSwap,
+  RegisterSMSProtected,
 }

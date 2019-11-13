@@ -13,6 +13,13 @@ export const initialState = {
     fullName: 'Bitcoin',
     balanceError: null,
   },
+  btcMultisigData: {
+    balance: 0,
+    isBalanceFetched: false,
+    currency: 'BTC (Multisig)',
+    fullName: 'Bitcoin (Multisig)',
+    balanceError: null,
+  },
   bchData: {
     balance: 0,
     isBalanceFetched: false,
@@ -69,13 +76,6 @@ export const initialState = {
     isBalanceFetched: true,
     currency: 'TLOS',
     fullName: 'Telos',
-    balanceError: null,
-  },
-  qtumData: {
-    balance: 0,
-    isBalanceFetched: false,
-    currency: 'QTUM',
-    fullName: 'Qtum',
     balanceError: null,
   },
   tokensData: {},
