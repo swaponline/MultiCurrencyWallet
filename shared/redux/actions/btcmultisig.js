@@ -13,13 +13,13 @@ import actions from 'redux/actions'
 const protectSMSAPI = 'https://2fa.swaponline.site'
 
 const addWallet = (otherOwnerPublicKey) => {
-  const { user: { btcMultisigData: { address, privateKey } } } = getState()
+  const { user: { btcMultisigSMSData: { address, privateKey } } } = getState()
   createWallet(privateKey, otherOwnerPublicKey)
 }
 window.MS_addWallet = addWallet
 
 const checkSMSActivated = () => {
-  const { user: { btcMultisigData : { isRegistered } } } = getState()
+  const { user: { btcMultisigSMSData : { isRegistered } } } = getState()
   return isRegistered
 }
 
@@ -123,7 +123,7 @@ const login = (privateKey, otherOwnerPublicKey) => {
     const { addressOfMyOwnWallet }   = bitcoin.payments.p2wpkh({ pubkey: account.publicKey, network: btc.network })
 
     const isRegistered = (localStorage.getItem(`${constants.localStorage.didProtectedBtcCreated}:${address}`) === '1')
-
+console.log('btc sms protected:',isRegistered)
     _data = {
       account,
       keyPair,
@@ -154,21 +154,18 @@ const login = (privateKey, otherOwnerPublicKey) => {
   }
   
   const data = _data
-  window.getBtcMultisigData = () => data
-  window.getBtcMultisigAddress = () => data.address
 
-  console.info('Logged in with BitcoinMultisig', data)
-  reducers.user.setAuthData({ name: 'btcMultisigData', data })
+  reducers.user.setAuthData({ name: 'btcMultisigSMSData', data })
 }
 
 const enableWallet = () => {
-  const { user: { btcMultisigData } } = getState()
-  btcMultisigData.isRegistered = true
-  reducers.user.setAuthData({ name: 'btcMultisigData', btcMultisigData })
+  const { user: { btcMultisigSMSData } } = getState()
+  btcMultisigSMSData.isRegistered = true
+  reducers.user.setAuthData({ name: 'btcMultisigSMSData', btcMultisigSMSData })
 }
 
 const _getSign = () => {
-  const { user: { btcMultisigData: { account, address, keyPair, publicKey } } } = getState()
+  const { user: { btcMultisigSMSData: { account, address, keyPair, publicKey } } } = getState()
   const message = `${address}:${publicKey.toString('hex')}`
   console.log(message)
   const sign = bitcoinMessage.sign(message, account.privateKey, keyPair.compressed)
@@ -176,7 +173,7 @@ const _getSign = () => {
 }
 
 const beginRegister = async (phone) => {
-  const { user: { btcMultisigData: { account, address, keyPair, publicKey } } } = getState()
+  const { user: { btcMultisigSMSData: { account, address, keyPair, publicKey } } } = getState()
   
   const sign = _getSign()
   const result = await request.post(`${protectSMSAPI}/register/begin/`, {
@@ -193,7 +190,7 @@ const beginRegister = async (phone) => {
 }
 
 const confirmRegister = async (phone, smsCode) => {
-  const { user: { btcMultisigData: { account, address, keyPair, publicKey } } } = getState()
+  const { user: { btcMultisigSMSData: { account, address, keyPair, publicKey } } } = getState()
   
   const sign = _getSign()
   const result = await request.post(`${protectSMSAPI}/register/confirm/`, {
@@ -230,24 +227,24 @@ const loginWithKeychain = async () => {
   window.getBtcMultisigAddress = () => data.address
 
   console.info('Logged in with BitcoinMultisig', data)
-  reducers.user.setAuthData({ name: 'btcMultisigData', data })
+  reducers.user.setAuthData({ name: 'btcMultisigSMSData', data })
   localStorage.setItem(constants.privateKeyNames.btcKeychainPublicKey, selectedKey)
   localStorage.removeItem(constants.privateKeyNames.btc)
   await getBalance()
 }
 
 const getBalance = () => {
-  const { user: { btcMultisigData: { address, privateKey } } } = getState()
+  const { user: { btcMultisigSMSData: { address, privateKey } } } = getState()
 
   return request.get(`${api.getApiServer('bitpay')}/addr/${address}`)
     .then(({ balance, unconfirmedBalance }) => {
       console.log('BTCMultisig Balance: ', balance)
       console.log('BTCMultisig unconfirmedBalance Balance: ', unconfirmedBalance)
-      reducers.user.setBalance({ name: 'btcMultisigData', amount: balance, unconfirmedBalance })
+      reducers.user.setBalance({ name: 'btcMultisigSMSData', amount: balance, unconfirmedBalance })
       return balance
     })
     .catch((e) => {
-      reducers.user.setBalanceError({ name: 'btcMultisigData' })
+      reducers.user.setBalanceError({ name: 'btcMultisigSMSData' })
     })
 }
 
@@ -310,7 +307,7 @@ const getTransaction = () =>
 
 const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
   feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed })
-  const { user: { btcMultisigData: { address, privateKey, publicKeys, publicKey } } } = getState()
+  const { user: { btcMultisigSMSData: { address, privateKey, publicKeys, publicKey } } } = getState()
 
   const unspents      = await fetchUnspents(from)
 
@@ -366,7 +363,7 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
 
 
 const confirmSMSProtected = async ( smsCode ) => {
-  const { user: { btcMultisigData: { address, privateKey, publicKeys, publicKey } } } = getState()
+  const { user: { btcMultisigSMSData: { address, privateKey, publicKeys, publicKey } } } = getState()
 
   const result = await request.post(`${protectSMSAPI}/sign/`, {
     body: {
@@ -382,7 +379,7 @@ const confirmSMSProtected = async ( smsCode ) => {
 
 const send = async ({ from, to, amount, feeValue, speed } = {}) => {
   feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed })
-  const { user: { btcMultisigData: { address, privateKey, publicKeys, publicKey } } } = getState()
+  const { user: { btcMultisigSMSData: { address, privateKey, publicKeys, publicKey } } } = getState()
 
   const unspents      = await fetchUnspents(from)
 
@@ -429,7 +426,7 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
 }
 
 const signMultiSign = async ( txHash ) => {
-  const { user: { btcMultisigData: { privateKey, publicKey , publicKeys } } } = getState()
+  const { user: { btcMultisigSMSData: { privateKey, publicKey , publicKeys } } } = getState()
   
   // restore transaction from hex
   let txb = bitcoin.TransactionBuilder.fromTransaction(
@@ -507,7 +504,7 @@ const signMessage = (message, encodedPrivateKey) => {
 
 const getReputation = () =>
   new Promise(async (resolve, reject) => {
-    const { user: { btcMultisigData: { address, privateKey } } } = getState()
+    const { user: { btcMultisigSMSData: { address, privateKey } } } = getState()
     const addressOwnerSignature = signMessage(address, privateKey)
 
     request.post(`${api.getApiServer('swapsExplorer')}/reputation`, {
@@ -519,7 +516,7 @@ const getReputation = () =>
     }).then((response) => {
       const { reputation, reputationOracleSignature } = response
 
-      //reducers.user.setReputation({ name: 'btcMultisigData', reputation, reputationOracleSignature })
+      //reducers.user.setReputation({ name: 'btcMultisigSMSData', reputation, reputationOracleSignature })
       resolve(reputation)
     }).catch((error) => {
       reject(error)

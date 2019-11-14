@@ -28,9 +28,9 @@ import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 @injectIntl
 @connect(
   ({
-    user: { btcMultisigData },
+    user: { btcMultisigSMSData },
   }) => ({
-    items: [ btcMultisigData ],
+    items: [ btcMultisigSMSData ],
   })
 )
 @cssModules(styles, { allowMultiple: true })
