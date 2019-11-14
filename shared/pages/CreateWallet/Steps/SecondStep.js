@@ -10,6 +10,10 @@ import ReactTooltip from 'react-tooltip'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { isMobile } from 'react-device-detect'
 
+import config from 'app-config'
+import { constants } from 'helpers'
+import actions from 'redux/actions'
+
 import Explanation from '../Explanation'
 import icons from '../images'
 import { subHeaderText1,
@@ -22,9 +26,28 @@ import { subHeaderText1,
 const CreateWallet = (props) => {
   const { intl: { locale }, onClick, currencies, error, setError } = props
 
-  let smsProtectionEnabled = false
+  const _protection = {
+    nothing: {
+      btc: true,
+      eth: true,
+      erc: true,
+    },
+    sms: {},
+    g2fa: {},
+    multisign: {},
+  }
 
-  if (currencies.btc) smsProtectionEnabled = true
+  const _activated = {
+    nothing: {},
+    sms: {},
+    g2fa: {},
+    multisign: {},
+  }
+
+  if (currencies.btc) {
+    _protection.sms.btc = true
+    _activated.sms.btc = actions.btcmultisig.checkSMSActivated()
+  }
 
   const [border, setBorder] = useState({
     color: {
@@ -36,8 +59,10 @@ const CreateWallet = (props) => {
     selected: '',
   })
 
-  const handleClick = (name, index, enabled) => {
+  const handleClick = (index, el) => {
+    const { name, enabled, activated } = el
     if (!enabled) return
+    if (activated) return
     const colors = border.color
 
     Object.keys(border.color).forEach(el => {
@@ -58,12 +83,14 @@ const CreateWallet = (props) => {
       name: 'withoutSecure',
       capture: locale === 'en' ? 'suitable for small amounts' : 'Подходит для небольших сумм',
       enabled: true,
+      activated: false,
     },
     { 
       text: 'SMS',
       name: 'sms',
       capture: locale === 'en' ? 'transactions are confirmed by SMS code' : 'Транзакции подтверждаются кодом по SMS',
-      enabled: smsProtectionEnabled,
+      enabled: _protection.sms.btc /* || _protection.sms.eth || _protection.sms.erc */,
+      activated: _activated.sms.btc /* || _activated.sms.eth || _activated.sms.erc */,
     },
     {
       text: 'Google 2FA',
@@ -72,6 +99,7 @@ const CreateWallet = (props) => {
         'Transactions are verified through the Google Authenticator app' :
         'Транзакции подтверждаются через приложение Google Authenticator',
       enabled: false,
+      activated: false,
     },
     {
       text: 'Multisignature',
@@ -80,6 +108,7 @@ const CreateWallet = (props) => {
         'Transactions are confirmed from another device and / or by another person.' :
         'Транзакции подтверждаются с другого устройства и/или другим человеком',
       enabled: false,
+      activated: false,
     },
   ]
 
@@ -99,17 +128,25 @@ const CreateWallet = (props) => {
           </Explanation>
           <div styleName="currencyChooserWrapper currencyChooserWrapperSecond">
             {coins.map((el, index) => {
-              const { name, capture, text, enabled } = el
+              const { name, capture, text, enabled, activated } = el
+
+              const cardStyle = [ 'card', 'secureSize', 'thirdCard' ]
+
+              if (border.color[name] && enabled) cardStyle.push('purpleBorder')
+              if (!enabled) cardStyle.push('cardDisabled')
+
+              if (activated) cardStyle.push('cardActivated')
+              const cardStyle_ = cardStyle.join(' ')
+
               return (
                 <div
-                  styleName={
-                    `card secureSize thirdCard ${border.color[name] && enabled ? 'purpleBorder' : ''} ${!enabled ? 'cardDisabled' : ''}`
-                  }
-                  onClick={() => handleClick(name, index, enabled)}
+                  styleName={`${cardStyle_}`}
+                  onClick={() => handleClick(index, el)}
                 >
-                  {!enabled &&
+                  {(!enabled || activated) &&
                     <em>
-                      <FormattedMessage id="createWalletSoon" defaultMessage="Soon!" />
+                      {!activated && <FormattedMessage id="createWalletSoon" defaultMessage="Soon!" /> }
+                      {activated && <FormattedMessage id="createWalletActivated" defaultMessage="Activated!" /> }
                     </em>
                   }
                   <img

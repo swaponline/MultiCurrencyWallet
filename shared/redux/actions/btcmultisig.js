@@ -18,6 +18,10 @@ const addWallet = (otherOwnerPublicKey) => {
 }
 window.MS_addWallet = addWallet
 
+const checkSMSActivated = () => {
+  const { user: { btcMultisigData : { isRegistered } } } = getState()
+  return isRegistered
+}
 
 const createWallet = (privateKey, otherOwnerPublicKey) => {
   // privateKey - key of our privary one-sign btc wallet
@@ -117,7 +121,8 @@ const login = (privateKey, otherOwnerPublicKey) => {
     const { address } = p2sh
     
     const { addressOfMyOwnWallet }   = bitcoin.payments.p2wpkh({ pubkey: account.publicKey, network: btc.network })
-    const isRegistered = (localStorage.getItem(constants.localStorage.didProtectedBtcCreated) == "1") ? true : false
+
+    const isRegistered = (localStorage.getItem(`${constants.localStorage.didProtectedBtcCreated}:${address}`) === '1')
 
     _data = {
       account,
@@ -201,6 +206,11 @@ const confirmRegister = async (phone, smsCode) => {
       mainnet: process.env.MAINNET ? true : false,
     },
   })
+
+  if ((result && result.answer && result.answer === 'ok') || (result.error === 'Already registered')) {
+    localStorage.setItem(`${constants.localStorage.didProtectedBtcCreated}:${address}`, '1')
+  }
+
   return result
 }
 
@@ -519,6 +529,7 @@ const getReputation = () =>
 export default {
   beginRegister,
   confirmRegister,
+  checkSMSActivated,
   login,
   loginWithKeychain,
   getBalance,
