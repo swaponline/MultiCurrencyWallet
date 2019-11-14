@@ -30,8 +30,8 @@ export const initialState = {
   btcMultisigUserData: {
     balance: 0,
     isBalanceFetched: false,
-    currency: 'BTC (Multisign)',
-    fullName: 'Bitcoin (Multisign)',
+    currency: 'BTC (Multisig)',
+    fullName: 'Bitcoin (Multisig)',
     balanceError: null,
   },
   bchData: {

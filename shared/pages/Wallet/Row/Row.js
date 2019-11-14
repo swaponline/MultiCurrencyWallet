@@ -35,6 +35,7 @@ import dollar from '../images/dollar.svg'
     ethData,
     btcData,
     btcMultisigSMSData,
+    btcMultisigUserData,
     bchData,
     eosData,
     telosData,
@@ -51,6 +52,7 @@ import dollar from '../images/dollar.svg'
   item: [
     btcData,
     btcMultisigSMSData,
+    btcMultisigUserData,
     ethData,
     eosData,
     telosData,
@@ -146,7 +148,7 @@ export default class Row extends Component {
     const { item: { currency } } = this.props
     let actionProcessor = currency.toLowerCase()
     if (currency === 'BTC (SMS-Protected)') actionProcessor = 'btc'
-    if (currency === 'BTC (Multisign)') actionProcessor = 'btc'
+    if (currency === 'BTC (Multisig)') actionProcessor = 'btc'
 
     await actions[actionProcessor].getBalance(currency.toLowerCase())
 
@@ -176,7 +178,7 @@ export default class Row extends Component {
     let currencySymbol = currency
     // BTC SMS Protected and BTC-Multisign
     if (currencySymbol === 'BTC (SMS-Protected)') currencySymbol = 'BTC'
-    if (currencySymbol === 'BTC (Multisign)') currencySymbol = 'BTC'
+    if (currencySymbol === 'BTC (Multisig)') currencySymbol = 'BTC'
 
     const exCurrencyRate = await actions.user.getExchangeRate(currencySymbol, 'usd')
 

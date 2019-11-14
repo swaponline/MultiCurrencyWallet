@@ -36,6 +36,7 @@ const walletNav = ['My balances', 'Transactions'];
     ethData,
     btcData,
     btcMultisigSMSData,
+    btcMultisigUserData,
     bchData,
     tokensData,
     eosData,
@@ -62,6 +63,7 @@ const walletNav = ['My balances', 'Transactions'];
     ] : [
       btcData,
       btcMultisigSMSData,
+      btcMultisigUserData,
       bchData,
       ethData,
       eosData,
@@ -78,6 +80,7 @@ const walletNav = ['My balances', 'Transactions'];
   const currencyBalance = [
     btcData,
     btcMultisigSMSData,
+    btcMultisigUserData,
     bchData,
     ethData,
     eosData,
@@ -105,6 +108,7 @@ const walletNav = ['My balances', 'Transactions'];
       ethData,
       btcData,
       btcMultisigSMSData,
+      btcMultisigUserData,
       bchData,
       ltcData,
       eosData,

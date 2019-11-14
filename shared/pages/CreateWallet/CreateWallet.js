@@ -76,6 +76,12 @@ const CreateWallet = (props) => {
             return;
           }
           break;
+        case 'multisignature':
+          if (currencies.btc) {
+            actions.core.markCoinAsVisible('BTC (Multisig)')
+            handleClick()
+          }
+          break;
       }
     }
 
