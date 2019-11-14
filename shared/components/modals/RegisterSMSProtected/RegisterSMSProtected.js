@@ -7,7 +7,7 @@ import { connect } from 'redaction'
 import config from 'app-config'
 
 import cssModules from 'react-css-modules'
-import styles from './RegisterSMSProtected.scss'
+import styles from '../Styles/default.scss'
 
 import { BigNumber } from 'bignumber.js'
 import Modal from 'components/modal/Modal/Modal'
