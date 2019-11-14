@@ -21,6 +21,7 @@ import Confirm from './Confirm/Confirm'
 import ConfirmBeginSwap from './ConfirmBeginSwap/ConfirmBeginSwap'
 
 import RegisterSMSProtected from './RegisterSMSProtected/RegisterSMSProtected'
+import MultisignJoinLink from './MultisignJoinLink/MultisignJoinLink'
 
 
 export default {
@@ -45,4 +46,5 @@ export default {
   MobMenu,
   ConfirmBeginSwap,
   RegisterSMSProtected,
+  MultisignJoinLink,
 }

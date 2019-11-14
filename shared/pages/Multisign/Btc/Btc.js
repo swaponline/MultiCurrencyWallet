@@ -42,7 +42,7 @@ export default class Btc extends PureComponent {
 
   componentWillMount() {
     let { match : { params : { action, data } }, history, location: { pathname } } = this.props
-    if ((action !== 'connect') && (action !== 'confirm')) {
+    if ((action !== 'join') && (action !== 'confirm')) {
       this.props.history.push(localisedUrl(links.notFound))
       return
     }

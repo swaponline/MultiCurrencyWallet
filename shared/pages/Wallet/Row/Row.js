@@ -317,6 +317,10 @@ export default class Row extends Component {
     actions.modals.open( constants.modals.RegisterSMSProtected, {} )
   }
 
+  handleGenerateMultisignLink = async () => {
+    actions.modals.open( constants.modals.MultisignJoinLink, {} )
+  }
+
   handleTelosActivate = async () => {
     const telosActivePrivateKey = localStorage.getItem(constants.privateKeyNames.telosPrivateKey)
     const telosActivePublicKey = localStorage.getItem(constants.privateKeyNames.telosPublicKey)
@@ -423,6 +427,7 @@ export default class Row extends Component {
       },
     ]
 
+    console.log(this.props.item)
     if (this.props.item.isSmsProtected && !this.props.item.isRegistered) {
       currencyView = 'Not activated'
       dropDownMenuItems = [{
@@ -432,6 +437,17 @@ export default class Row extends Component {
         disabled: false,
       }]
     }
+    if (this.props.item.isUserProtected && !this.props.item.active) {
+      currencyView = 'Not joined'
+      dropDownMenuItems = [{
+        id: 1,
+        title: 'Generate join link',
+        action: this.handleGenerateMultisignLink,
+        disabled: false,
+      }]
+    }
+    
+    if (currencyView == 'BTC (Multisig)') currencyView = 'BTC'
     if (currencyView == 'BTC (SMS-Protected)') currencyView = 'BTC'
 
     return (
@@ -463,9 +479,15 @@ export default class Row extends Component {
               <span>
               {
                 !isBalanceFetched || isBalanceFetching ? (
-                  <div styleName="loader">
-                    <InlineLoader />
-                  </div>
+                  this.props.item.isUserProtected && !this.props.item.active ? (
+                    <span>
+                      <FormattedMessage id="walletMultisignNotJoined" defaultMessage="Not joined" />
+                    </span>
+                  ) : (
+                    <div styleName="loader">
+                      <InlineLoader />
+                    </div>
+                  )
                 ) : (
                   <div styleName="no-select-inline" onClick={this.handleReloadBalance} >
                     <i className="fas fa-sync-alt" styleName="icon" />

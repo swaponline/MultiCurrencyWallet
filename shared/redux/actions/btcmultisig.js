@@ -173,6 +173,7 @@ const login_ = (privateKey, otherOwnerPublicKey, sortKeys) => {
       privateKey,
       publicKeys,
       publicKey,
+      active: true,
     }
   } else {
     _data = {
@@ -185,6 +186,7 @@ const login_ = (privateKey, otherOwnerPublicKey, sortKeys) => {
       privateKey,
       publicKeys: [],
       publicKey,
+      active: false,
     }
   }
   
