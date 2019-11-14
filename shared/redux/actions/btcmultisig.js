@@ -23,6 +23,14 @@ const checkSMSActivated = () => {
   return isRegistered
 }
 
+const checkG2PAActivated = () => {
+  return false
+}
+
+const checkUserActivated = () => {
+  return false
+}
+
 const createWallet = (privateKey, otherOwnerPublicKey) => {
   // privateKey - key of our privary one-sign btc wallet
   let keyPair
@@ -81,12 +89,43 @@ const createWallet = (privateKey, otherOwnerPublicKey) => {
 }
 window.MS_CreateWallet = createWallet
 
-const login = (privateKey, otherOwnerPublicKey) => {
+const login_SMS = (privateKey, otherOwnerPublicKey) => {
+  const data = login_(privateKey, otherOwnerPublicKey, false)
+
+  const isRegistered = (localStorage.getItem(`${constants.localStorage.didProtectedBtcCreated}:${data.address}`) === '1')
+
+  data.currency = 'BTC (SMS-Protected)'
+  data.fullName = 'Bitcoin (SMS-Protected)'
+  data.isRegistered = isRegistered
+  data.isSmsProtected = true
+
+  reducers.user.setAuthData({ name: 'btcMultisigSMSData', data })
+}
+
+const login_G2PA = (privateKey, otherOwnerPublicKey) => {
+  const data = login_(privateKey, otherOwnerPublicKey, false)
+
+  const isRegistered = (localStorage.getItem(`${constants.localStorage.didProtectedBtcG2PACreated}:${data.address}`) === '1')
+  
+  data.currency = 'BTC (Google 2PA)'
+  data.fullName = 'Bitcoin (Google 2PA)'
+  data.isRegistered = isRegistered
+  data.isG2PAProtected = true
+
+  reducers.user.setAuthData({ name: 'btcMultisigG2PAData', data })
+}
+
+const login_USER = (privateKey, otherOwnerPublicKey) => {
+  const data = login_(privateKey, otherOwnerPublicKey, true)
+
+  data.isUserProtected = true
+
+  reducers.user.setAuthData({ name: 'btcMultisigUserData', data })
+}
+
+const login_ = (privateKey, otherOwnerPublicKey, sortKeys) => {
   let keyPair
 
-  console.log('login multisig')
-  console.log(otherOwnerPublicKey)
-  
   if (privateKey) {
     const hash  = bitcoin.crypto.sha256(privateKey)
     const d     = BigInteger.fromBuffer(hash)
@@ -107,8 +146,10 @@ const login = (privateKey, otherOwnerPublicKey) => {
   let _data
   if (otherOwnerPublicKey) {
     const publicKey_2 = otherOwnerPublicKey
-    const publicKeysRaw = [ publicKey_2, publicKey_1 ]
-    console.log('Raw public keys')
+    let publicKeysRaw = [ publicKey_2, publicKey_1 ]
+
+    if (sortKeys) publicKeysRaw = publicKeysRaw.sort()
+
     const publicKeys = publicKeysRaw.map(hex => Buffer.from(hex, 'hex'))
     const p2ms = bitcoin.payments.p2ms({
       m: 2,
@@ -122,20 +163,16 @@ const login = (privateKey, otherOwnerPublicKey) => {
     
     const { addressOfMyOwnWallet }   = bitcoin.payments.p2wpkh({ pubkey: account.publicKey, network: btc.network })
 
-    const isRegistered = (localStorage.getItem(`${constants.localStorage.didProtectedBtcCreated}:${address}`) === '1')
-console.log('btc sms protected:',isRegistered)
     _data = {
       account,
       keyPair,
       address,
       addressOfMyOwnWallet,
-      currency: 'BTC (SMS-Protected)',
-      fullName: 'Bitcoin (SMS-Protected)',
+      currency: 'BTC (Multisig)',
+      fullName: 'Bitcoin (Multisig)',
       privateKey,
       publicKeys,
       publicKey,
-      isSmsProtected: true,
-      isRegistered,
     }
   } else {
     _data = {
@@ -143,25 +180,30 @@ console.log('btc sms protected:',isRegistered)
       keyPair,
       address: 'Not jointed',
       addressOfMyOwnWallet: 'Not jointed',
-      currency: 'BTC (SMS-Protected)',
-      fullName: 'Bitcoin (SMS-Protected)',
+      currency: 'BTC (Multisig)',
+      fullName: 'Bitcoin (Multisig)',
       privateKey,
       publicKeys: [],
       publicKey,
-      isSmsProtected: true,
-      isRegistered: false,
     }
   }
   
-  const data = _data
-
-  reducers.user.setAuthData({ name: 'btcMultisigSMSData', data })
+  return _data
 }
 
-const enableWallet = () => {
+const enableWalletSMS = () => {
   const { user: { btcMultisigSMSData } } = getState()
   btcMultisigSMSData.isRegistered = true
   reducers.user.setAuthData({ name: 'btcMultisigSMSData', btcMultisigSMSData })
+}
+
+const enableWalletG2PA = () => {
+  const { user: { btcMultisigG2PAData } } = getState()
+  btcMultisigG2PAData.isRegistered = true
+  reducers.user.setAuthData({ name: 'btcMultisigG2PAData', btcMultisigG2PAData })
+}
+
+const enableWalletUSER = () => {
 }
 
 const _getSign = () => {
@@ -172,7 +214,7 @@ const _getSign = () => {
   return sign.toString('base64')
 }
 
-const beginRegister = async (phone) => {
+const beginRegisterSMS = async (phone) => {
   const { user: { btcMultisigSMSData: { account, address, keyPair, publicKey } } } = getState()
   
   const sign = _getSign()
@@ -189,7 +231,7 @@ const beginRegister = async (phone) => {
   return result
 }
 
-const confirmRegister = async (phone, smsCode) => {
+const confirmRegisterSMS = async (phone, smsCode) => {
   const { user: { btcMultisigSMSData: { account, address, keyPair, publicKey } } } = getState()
   
   const sign = _getSign()
@@ -212,25 +254,7 @@ const confirmRegister = async (phone, smsCode) => {
 }
 
 const loginWithKeychain = async () => {
-  console.log('Loggin with keychain')
-  const selectedKey = await actions.keychain.login('BTCMultisig')
-
-  const pubkey = Buffer.from(`03${selectedKey.substr(0, 64)}`, 'hex')
-  const keyPair = bitcoin.ECPair.fromPublicKeyBuffer(pubkey, btc.network)
-  const address = keyPair.getAddress()
-
-  const data = {
-    address,
-    publicKey: selectedKey,
-  }
-
-  window.getBtcMultisigAddress = () => data.address
-
-  console.info('Logged in with BitcoinMultisig', data)
-  reducers.user.setAuthData({ name: 'btcMultisigSMSData', data })
-  localStorage.setItem(constants.privateKeyNames.btcKeychainPublicKey, selectedKey)
-  localStorage.removeItem(constants.privateKeyNames.btc)
-  await getBalance()
+  console.warn('Not implements')
 }
 
 const getBalance = () => {
@@ -524,10 +548,14 @@ const getReputation = () =>
   })
 
 export default {
-  beginRegister,
-  confirmRegister,
+  beginRegisterSMS,
+  confirmRegisterSMS,
   checkSMSActivated,
-  login,
+  checkG2PAActivated,
+  checkUserActivated,
+  login_SMS,
+  login_G2PA,
+  login_USER,
   loginWithKeychain,
   getBalance,
   getTransaction,
@@ -541,5 +569,7 @@ export default {
   fetchBalance,
   signMessage,
   getReputation,
-  enableWallet,
+  enableWalletSMS,
+  enableWalletG2PA,
+  enableWalletUSER,
 }

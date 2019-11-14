@@ -58,7 +58,7 @@ export default class RegisterSMSProtected extends React.Component {
 
   handleSendSMS = async () => {
     this.setState( { isShipped : true, error: false } )
-    const result = await actions.btcmultisig.beginRegister( this.state.phone )
+    const result = await actions.btcmultisig.beginRegisterSMS( this.state.phone )
     console.log(result)
     if (result && result.answer && result.answer=='ok') {
       this.setState( { isShipped: false, step: 'enterCode' } )
@@ -69,7 +69,7 @@ export default class RegisterSMSProtected extends React.Component {
 
   handleCheckSMS = async () => {
     this.setState( { isShipped : true, error: false } )
-    const result = await actions.btcmultisig.confirmRegister( this.state.phone, this.state.smsCode )
+    const result = await actions.btcmultisig.confirmRegisterSMS( this.state.phone, this.state.smsCode )
     
     if (result && result.answer && result.answer=='ok') {
       this.setState( { isShipped: false, step: 'ready' } )
@@ -85,7 +85,7 @@ export default class RegisterSMSProtected extends React.Component {
   handleFinish = async () => {
     const { name } = this.props
     
-    actions.btcmultisig.enableWallet()
+    actions.btcmultisig.enableWalletSMS()
     actions.modals.close(name)
     if (this.props.data.callback) {
       this.props.data.callback()

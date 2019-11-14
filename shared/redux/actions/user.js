@@ -24,7 +24,7 @@ const sign = async () => {
 
   const _ethPrivateKey = isEthKeychainActivated ? await actions.eth.loginWithKeychain() : actions.eth.login(ethPrivateKey)
   const _btcPrivateKey = isBtcKeychainActivated ? await actions.btc.loginWithKeychain() : actions.btc.login(btcPrivateKey)
-  const _btcMultisigPrivateKey = actions.btcmultisig.login(btcPrivateKey, btcMultisigOwnerKey)
+  const _btcMultisigPrivateKey = actions.btcmultisig.login_SMS(btcPrivateKey, btcMultisigOwnerKey)
 
   actions.bch.login(bchPrivateKey)
   // actions.usdt.login(btcPrivateKey)
