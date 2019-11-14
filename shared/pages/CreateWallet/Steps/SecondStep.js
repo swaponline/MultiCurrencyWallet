@@ -46,7 +46,11 @@ const CreateWallet = (props) => {
 
   if (currencies.btc) {
     _protection.sms.btc = true
+    _protection.g2fa.btc = true
+    _protection.multisign.btc = true
     _activated.sms.btc = actions.btcmultisig.checkSMSActivated()
+    _activated.g2fa.btc = actions.btcmultisig.checkG2FAActivated()
+    _activated.multisign.btc = actions.btcmultisig.checkUserActivated()
   }
 
   const [border, setBorder] = useState({

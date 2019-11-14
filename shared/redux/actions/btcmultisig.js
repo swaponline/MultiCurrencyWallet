@@ -23,7 +23,7 @@ const checkSMSActivated = () => {
   return isRegistered
 }
 
-const checkG2PAActivated = () => {
+const checkG2FAActivated = () => {
   return false
 }
 
@@ -102,17 +102,17 @@ const login_SMS = (privateKey, otherOwnerPublicKey) => {
   reducers.user.setAuthData({ name: 'btcMultisigSMSData', data })
 }
 
-const login_G2PA = (privateKey, otherOwnerPublicKey) => {
+const login_G2FA = (privateKey, otherOwnerPublicKey) => {
   const data = login_(privateKey, otherOwnerPublicKey, false)
 
-  const isRegistered = (localStorage.getItem(`${constants.localStorage.didProtectedBtcG2PACreated}:${data.address}`) === '1')
+  const isRegistered = (localStorage.getItem(`${constants.localStorage.didProtectedBtcG2FACreated}:${data.address}`) === '1')
   
-  data.currency = 'BTC (Google 2PA)'
-  data.fullName = 'Bitcoin (Google 2PA)'
+  data.currency = 'BTC (Google 2FA)'
+  data.fullName = 'Bitcoin (Google 2FA)'
   data.isRegistered = isRegistered
-  data.isG2PAProtected = true
+  data.isG2FAProtected = true
 
-  reducers.user.setAuthData({ name: 'btcMultisigG2PAData', data })
+  reducers.user.setAuthData({ name: 'btcMultisigG2FAData', data })
 }
 
 const login_USER = (privateKey, otherOwnerPublicKey) => {
@@ -197,10 +197,10 @@ const enableWalletSMS = () => {
   reducers.user.setAuthData({ name: 'btcMultisigSMSData', btcMultisigSMSData })
 }
 
-const enableWalletG2PA = () => {
-  const { user: { btcMultisigG2PAData } } = getState()
-  btcMultisigG2PAData.isRegistered = true
-  reducers.user.setAuthData({ name: 'btcMultisigG2PAData', btcMultisigG2PAData })
+const enableWalletG2FA = () => {
+  const { user: { btcMultisigG2FAData } } = getState()
+  btcMultisigG2FAData.isRegistered = true
+  reducers.user.setAuthData({ name: 'btcMultisigG2FAData', btcMultisigG2FAData })
 }
 
 const enableWalletUSER = () => {
@@ -551,10 +551,10 @@ export default {
   beginRegisterSMS,
   confirmRegisterSMS,
   checkSMSActivated,
-  checkG2PAActivated,
+  checkG2FAActivated,
   checkUserActivated,
   login_SMS,
-  login_G2PA,
+  login_G2FA,
   login_USER,
   loginWithKeychain,
   getBalance,
@@ -570,6 +570,6 @@ export default {
   signMessage,
   getReputation,
   enableWalletSMS,
-  enableWalletG2PA,
+  enableWalletG2FA,
   enableWalletUSER,
 }

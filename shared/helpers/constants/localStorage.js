@@ -23,5 +23,5 @@ export default {
   IEO_signed: 'IEO_signed',
   startSwap: 'startSwap',
   didProtectedBtcCreated: 'protectedBtcCreated',
-  didProtectedBtcG2PACreated: 'protectedBtcG2PA',
+  didProtectedBtcG2FACreated: 'protectedBtcG2FA',
 }

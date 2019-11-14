@@ -20,11 +20,11 @@ export const initialState = {
     fullName: 'Bitcoin (SMS-Protected)',
     balanceError: null,
   },
-  btcMultisigG2PAData: {
+  btcMultisigG2FAData: {
     balance: 0,
     isBalanceFetched: false,
-    currency: 'BTC (Google 2PA)',
-    fullName: 'Bitcoin (Google 2PA)',
+    currency: 'BTC (Google 2FA)',
+    fullName: 'Bitcoin (Google 2FA)',
     balanceError: null,
   },
   btcMultisigUserData: {
