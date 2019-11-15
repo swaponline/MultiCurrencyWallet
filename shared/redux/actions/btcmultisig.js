@@ -115,10 +115,11 @@ const login_G2FA = (privateKey, otherOwnerPublicKey) => {
   reducers.user.setAuthData({ name: 'btcMultisigG2FAData', data })
 }
 
-const login_USER = (privateKey, otherOwnerPublicKey) => {
+const login_USER = (privateKey, otherOwnerPublicKey ,onlyCheck) => {
   const data = login_(privateKey, otherOwnerPublicKey, true)
 
   data.isUserProtected = true
+  if (onlyCheck) return data
 
   reducers.user.setAuthData({ name: 'btcMultisigUserData', data })
 }
