@@ -21,4 +21,6 @@ export default {
   ConfirmBeginSwap: 'ConfirmBeginSwap',
   RegisterSMSProtected: 'RegisterSMSProtected',
   MultisignJoinLink: 'MultisignJoinLink',
+  WithdrawMultisigSMS: 'WithdrawModalMultisig',
+  WithdrawMultisigUser: 'WithdrawModalMultisigUser',
 }

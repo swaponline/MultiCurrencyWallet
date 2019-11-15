@@ -2,6 +2,7 @@ import SignUpModal from './SignUpModal/SignUpModal'
 import OfferModal from './OfferModal/OfferModal'
 import WithdrawModal from './WithdrawModal/WithdrawModal'
 import WithdrawModalMultisig from './WithdrawModalMultisig/WithdrawModalMultisig'
+import WithdrawModalMultisigUser from './WithdrawModalMultisig/WithdrawModalMultisigUser'
 import PrivateKeysModal from './PrivateKeysModal/PrivateKeysModal'
 import EosRegisterModal from './EosRegisterModal/EosRegisterModal'
 import EosBuyAccountModal from './EosBuyAccountModal/EosBuyAccountModal'
@@ -30,6 +31,7 @@ export default {
   OfferModal,
   WithdrawModal,
   WithdrawModalMultisig,
+  WithdrawModalMultisigUser,
   PrivateKeysModal,
   ImportKeys,
   ShowMoreCoins,

@@ -252,7 +252,8 @@ export default class Row extends Component {
     } = this.props
 
     let withdrawModalType = constants.modals.Withdraw
-    if (currency === 'BTC (SMS-Protected)') withdrawModalType = constants.modals.WithdrawMultisig
+    if (currency === 'BTC (SMS-Protected)') withdrawModalType = constants.modals.WithdrawMultisigSMS
+    if (currency === 'BTC (Multisig)') withdrawModalType = constants.modals.WithdrawMultisigUser
 
     actions.modals.open(withdrawModalType, {
       currency,
@@ -288,7 +289,7 @@ export default class Row extends Component {
   handleGoTrade = (currency) => {
     const { intl: { locale }, decline } = this.props
 
-    const pair = currency.toUpperCase() === 'btc' ? 'eth' : 'btc'
+    const pair = currency.toLowerCase() === 'btc' ? 'eth' : 'btc'
 
     if (decline.length === 0) {
       window.scrollTo(0, 0)
