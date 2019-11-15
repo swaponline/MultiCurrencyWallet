@@ -66,7 +66,7 @@ const CreateWallet = (props) => {
   const handleClick = (index, el) => {
     const { name, enabled, activated } = el
     if (!enabled) return
-    if (activated) return
+    //if (activated) return
     const colors = border.color
 
     Object.keys(border.color).forEach(el => {

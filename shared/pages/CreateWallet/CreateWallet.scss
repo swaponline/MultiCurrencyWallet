@@ -72,10 +72,6 @@
   color: #f0eefd
 }
 
-.purpleBorder {
-  border-color: #6144E5 !important;
-}
-
 .green {
   background-color: #0ccf14;
 }
@@ -166,6 +162,10 @@
   opacity: 0.7 !important;
 }
 
+.purpleBorder {
+  border-color: #6144E5 !important;
+}
+
 .cardActivated {
   border: 1px solid rgba(102, 204, 87, 0.64) !important;
   div, img {
@@ -173,6 +173,16 @@
   }
   em {
     color: #48ca2f !important;
+  }
+}
+
+.cardActivated.purpleBorder {
+  border-color: #6144E5 !important;
+  div, img {
+    opacity: 1 !important;
+  }
+  em {
+    color: #9b58b6 !important;
   }
 }
 
