@@ -145,12 +145,18 @@ export default class Row extends Component {
       isBalanceFetching: true,
     })
 
-    const { item: { currency } } = this.props
-    let actionProcessor = currency.toLowerCase()
-    if (currency === 'BTC (SMS-Protected)') actionProcessor = 'btc'
-    if (currency === 'BTC (Multisig)') actionProcessor = 'btc'
+    const { item: { currency, address } } = this.props
 
-    await actions[actionProcessor].getBalance(currency.toLowerCase())
+    switch (currency) {
+      case 'BTC (SMS-Protected)':
+        await actions.btcmultisig.getBalance()
+        break;
+      case 'BTC (Multisig)':
+        await actions.btcmultisig.getBalanceUser()
+        break
+      default:
+        await actions[currency.toLowerCase()].getBalance(currency.toLowerCase(), address)
+    }
 
     this.setState(() => ({
       isBalanceFetching: false,
@@ -437,14 +443,17 @@ export default class Row extends Component {
         disabled: false,
       }]
     }
-    if (this.props.item.isUserProtected && !this.props.item.active) {
-      currencyView = 'Not joined'
-      dropDownMenuItems = [{
-        id: 1,
+    if (this.props.item.isUserProtected) {
+      if (!this.props.item.active) {
+        currencyView = 'Not joined'
+        dropDownMenuItems = []
+      }
+      dropDownMenuItems.push({
+        id: 3,
         title: 'Generate join link',
         action: this.handleGenerateMultisignLink,
         disabled: false,
-      }]
+      })
     }
     
     if (currencyView == 'BTC (Multisig)') currencyView = 'BTC'

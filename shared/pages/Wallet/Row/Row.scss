@@ -425,8 +425,9 @@
 }
 
 .assetsTableCurrency {
-    position: relative;
-    display: flex;
+  position: relative;
+  display: flex;
+  z-index: 1;
 }
 
 .assetsTableIcon {

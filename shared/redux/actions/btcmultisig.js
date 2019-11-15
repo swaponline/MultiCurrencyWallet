@@ -28,7 +28,8 @@ const checkG2FAActivated = () => {
 }
 
 const checkUserActivated = () => {
-  return false
+  const { user: { btcMultisigUserData : { active } } } = getState()
+  return active
 }
 
 const createWallet = (privateKey, otherOwnerPublicKey) => {
@@ -260,19 +261,24 @@ const loginWithKeychain = async () => {
   console.warn('Not implements')
 }
 
-const getBalance = () => {
-  const { user: { btcMultisigSMSData: { address, privateKey } } } = getState()
-
-  return request.get(`${api.getApiServer('bitpay')}/addr/${address}`)
+const getBalance = (ownAddress, ownDataKey) => {
+  const { user: { btcMultisigSMSData: { address } } } = getState()
+  const checkAddress = (ownAddress) ? ownAddress : address
+  const dataKey = (ownDataKey) ? ownDataKey : 'btcMultisigSMSData'
+  
+  return request.get(`${api.getApiServer('bitpay')}/addr/${checkAddress}`)
     .then(({ balance, unconfirmedBalance }) => {
-      console.log('BTCMultisig Balance: ', balance)
-      console.log('BTCMultisig unconfirmedBalance Balance: ', unconfirmedBalance)
-      reducers.user.setBalance({ name: 'btcMultisigSMSData', amount: balance, unconfirmedBalance })
+      reducers.user.setBalance({ name: dataKey, amount: balance, unconfirmedBalance })
       return balance
     })
     .catch((e) => {
-      reducers.user.setBalanceError({ name: 'btcMultisigSMSData' })
+      reducers.user.setBalanceError({ name: dataKey })
     })
+}
+
+const getBalanceUser = () => {
+  const { user: { btcMultisigUserData: { address } } } = getState()
+  return getBalance(address, 'btcMultisigUserData')
 }
 
 const fetchBalance = (address) =>
@@ -561,6 +567,7 @@ export default {
   login_USER,
   loginWithKeychain,
   getBalance,
+  getBalanceUser,
   getTransaction,
   send,
   sendSMSProtected,

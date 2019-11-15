@@ -104,7 +104,8 @@ const getReputation = async () => {
 const getBalances = () => {
   actions.eth.getBalance()
   actions.btc.getBalance()
-  actions.btcmultisig.getBalance()
+  actions.btcmultisig.getBalance() // SMS-Protected
+  actions.btcmultisig.getBalanceUser() //Other user confirm
   actions.bch.getBalance()
   actions.ltc.getBalance()
   // actions.usdt.getBalance()
