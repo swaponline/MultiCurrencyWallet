@@ -16,7 +16,7 @@ const addWallet = (otherOwnerPublicKey) => {
   const { user: { btcMultisigSMSData: { address, privateKey } } } = getState()
   createWallet(privateKey, otherOwnerPublicKey)
 }
-window.MS_addWallet = addWallet
+window.bitcoinjs = bitcoin
 
 const checkSMSActivated = () => {
   const { user: { btcMultisigSMSData : { isRegistered } } } = getState()
@@ -458,6 +458,30 @@ const send = async ({ from, to, amount, feeValue, speed } = {}) => {
   return tx1.toHex()
 }
 
+const parseRawTX =  async ( txHash ) => {
+  const txb = await bitcoin.TransactionBuilder.fromTransaction(
+    bitcoin.Transaction.fromHex(txHash),
+    btc.network
+  );
+  const parsedTX = {
+    txb,
+    output: [],
+  }
+  txb.__TX.outs.forEach((out) => {
+    let address
+    try {
+      address = bitcoin.address.fromOutputScript(out.script, btc.network)
+    } catch (e) {}
+
+    parsedTX.output.push( {
+      address,
+      valueSatoshi: out.value,
+      value: new BigNumber(out.value).dividedBy(1e8).toNumber(),
+    } )
+  })
+  return parsedTX
+}
+
 const signMultiSign = async ( txHash ) => {
   const { user: { btcMultisigSMSData: { privateKey, publicKey , publicKeys } } } = getState()
   
@@ -582,4 +606,5 @@ export default {
   enableWalletSMS,
   enableWalletG2FA,
   enableWalletUSER,
+  parseRawTX,
 }

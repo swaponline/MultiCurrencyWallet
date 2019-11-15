@@ -75,6 +75,15 @@ export default class Btc extends PureComponent {
         this.props.history.push(localisedUrl(links.notFound))
       }
     }
+    if (action === 'confirm') {
+      if (data && data.length) {
+        //try {
+          window.testtx = await actions.btcmultisig.parseRawTX(data)
+        //} catch (e) {
+          //console.log('Bad tx raw data')
+        //}
+      }
+    }
     console.log('Btc mulsign processor')
     console.log('action',action)
     console.log('data',data)
@@ -96,6 +105,7 @@ export default class Btc extends PureComponent {
 
   render() {
     const { action } = this.state
+
     const { wallet, walletBalance, joinLink } = this.state
 
     return (
