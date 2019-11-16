@@ -465,8 +465,17 @@ const parseRawTX =  async ( txHash ) => {
   );
   const parsedTX = {
     txb,
+    input: [],
     output: [],
   }
+  
+  txb.__INPUTS.forEach((input) => {
+    parsedTX.input.push( {
+      script: bitcoin.script.decode(input.redeemScript),
+      publicKeys: input.pubkeys,
+    } )
+  })
+
   txb.__TX.outs.forEach((out) => {
     let address
     try {

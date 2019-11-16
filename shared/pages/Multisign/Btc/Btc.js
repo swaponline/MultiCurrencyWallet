@@ -77,11 +77,15 @@ export default class Btc extends PureComponent {
     }
     if (action === 'confirm') {
       if (data && data.length) {
-        //try {
-          window.testtx = await actions.btcmultisig.parseRawTX(data)
-        //} catch (e) {
-          //console.log('Bad tx raw data')
-        //}
+        try {
+          this.setState({
+            action,
+            txData: await actions.btcmultisig.parseRawTX(data),
+            txRaw: data,
+          })
+        } catch (e) {
+          console.log('Bad tx raw data')
+        }
       }
     }
     console.log('Btc mulsign processor')
@@ -123,6 +127,18 @@ export default class Btc extends PureComponent {
             <strong>{walletBalance} BTC</strong>
           </div>
           <Button brand onClick={this.handleAddWallet}>Add wallet</Button>
+        </Fragment>
+        }
+        { (action=='confirm') && 
+        <Fragment>
+          <h1>Confirm BTC-multisignature transaction</h1>
+          <pre>
+            <code>
+              {
+                JSON.stringify(this.state.txData, false, 4)
+              }
+            </code>
+          </pre>
         </Fragment>
         }
         { (action === 'linkready' || action === 'ready') && 
