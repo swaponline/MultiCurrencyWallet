@@ -412,7 +412,7 @@ const confirmSMSProtected = async ( smsCode ) => {
 
 const send = async ({ from, to, amount, feeValue, speed } = {}) => {
   feeValue = feeValue || await btc.estimateFeeValue({ inSatoshis: true, speed })
-  const { user: { btcMultisigSMSData: { address, privateKey, publicKeys, publicKey } } } = getState()
+  const { user: { btcMultisigUserData: { address, privateKey, publicKeys, publicKey } } } = getState()
 
   const unspents      = await fetchUnspents(from)
 
@@ -471,8 +471,8 @@ const parseRawTX =  async ( txHash ) => {
   
   txb.__INPUTS.forEach((input) => {
     parsedTX.input.push( {
-      script: bitcoin.script.decode(input.redeemScript),
-      publicKeys: input.pubkeys,
+      script: bitcoin.script.toASM(input.redeemScript),
+      publicKeys: input.pubkeys.map(buf => buf.toString('hex')),
     } )
   })
 
@@ -492,7 +492,7 @@ const parseRawTX =  async ( txHash ) => {
 }
 
 const signMultiSign = async ( txHash ) => {
-  const { user: { btcMultisigSMSData: { privateKey, publicKey , publicKeys } } } = getState()
+  const { user: { btcMultisigUserData: { privateKey, publicKey , publicKeys } } } = getState()
   
   // restore transaction from hex
   let txb = bitcoin.TransactionBuilder.fromTransaction(
@@ -616,4 +616,5 @@ export default {
   enableWalletG2FA,
   enableWalletUSER,
   parseRawTX,
+  signMultiSign,
 }

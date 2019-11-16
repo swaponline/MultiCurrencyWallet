@@ -107,10 +107,23 @@ export default class Btc extends PureComponent {
     this.props.history.push(localisedUrl(links.currencyWallet))
   }
 
+  handleConfirm = async() => {
+    const { txRaw } = this.state
+    this.setState( { isConfirming : true } )
+    const signedTX = await actions.btcmultisig.signMultiSign( txRaw )
+    const txID = await actions.btcmultisig.broadcastTx( signedTX )
+    this.setState( {
+      txID,
+      action: 'confirmready',
+    } )
+  }
+
   render() {
     const { action } = this.state
 
     const { wallet, walletBalance, joinLink } = this.state
+    
+    const { debugShowTXB, debugShowInput, debugShowOutput } = this.state
 
     return (
       <section>
@@ -132,13 +145,56 @@ export default class Btc extends PureComponent {
         { (action=='confirm') && 
         <Fragment>
           <h1>Confirm BTC-multisignature transaction</h1>
+          <h3><button onClick={ () => { this.setState({debugShowTXB: !debugShowTXB}) } }>Toggle TXB</button></h3>
+          {debugShowTXB &&
           <pre>
             <code>
               {
-                JSON.stringify(this.state.txData, false, 4)
+                JSON.stringify(this.state.txData.txb, false, 4)
               }
             </code>
           </pre>
+          }
+          <h3><button onClick={ () => { this.setState({debugShowInput: !debugShowInput}) } }>Toggle Inputs</button></h3>
+          {debugShowInput &&
+          <pre>
+            <code>
+              {
+                JSON.stringify(this.state.txData.input, false, 4)
+              }
+            </code>
+          </pre>
+          }
+          <h3><button onClick={ () => { this.setState({debugShowOutput: !debugShowOutput}) } }>Toggle Outputs</button></h3>
+          {debugShowOutput &&
+          <pre>
+            <code>
+              {
+                JSON.stringify(this.state.txData.output, false, 4)
+              }
+            </code>
+          </pre>
+          }
+          <div>
+            <Button brand onClick={this.handleConfirm}>Confirm transaction</Button>
+          </div>
+        </Fragment>
+        }
+        { (action === 'confirmready') && 
+        <Fragment>
+          <h1>Confirm BTC-multisignature transaction</h1>
+          <h2>Ready</h2>
+          <div>
+            <Button brand onClick={this.handleGoToWallet}>Ready. Go to wallet</Button>
+          </div>
+          <pre>
+            <code>
+              {
+                JSON.stringify(this.state.txID, false, 4)
+              }
+            </code>
+          </pre>
+          
         </Fragment>
         }
         { (action === 'linkready' || action === 'ready') && 
