@@ -83,7 +83,7 @@ export default class Modal extends Component {
               <div styleName="header">
                 <WidthContainer styleName="headerContent">
                   {
-                    showLogo && <Logo isColored={!whiteLogo} />
+                    showLogo && <Logo withLink isColored={!whiteLogo} />
                   }
                   <div styleName={titleStyleName} role="title">{title}</div>
                   {

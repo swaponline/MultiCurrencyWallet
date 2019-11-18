@@ -338,6 +338,11 @@ export default class Row extends Component {
       isDropdownOpen: true
     })
   }
+
+  goToHistory = () => {
+    const { history, intl: { locale } } = this.props
+    history.push(localisedUrl(locale, '/history'))
+  }
   
 
   deleteThisSwap = () => {
@@ -493,6 +498,12 @@ export default class Row extends Component {
                     title: 'Send',
                     action: this.handleWithdraw,
                     disabled: isBalanceEmpty
+                  },
+                  {
+                    id: 3,
+                    title: 'History',
+                    action: this.goToHistory,
+                    disabled: false
                   }
                 ]}
               />
