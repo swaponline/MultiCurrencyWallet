@@ -160,12 +160,12 @@ export default class PartialClosure extends Component {
     if (sell && buy && !isRootPage) {
       if (!allCurrencyies.map(item => item.name).includes(sell.toUpperCase())
         || !allCurrencyies.map(item => item.name).includes(buy.toUpperCase())) {
-        history.push(localisedUrl(locale, `${links.exchange}/swap-to-btc`))
+        history.push(localisedUrl(locale, `${links.exchange}/usdt-to-btc`))
       }
     }
 
     const sellToken = sell || ((!isWidgetBuild) ? 'btc' : 'btc')
-    const buyToken = buy || ((!isWidgetBuild) ? 'eth' : config.erc20token)
+    const buyToken = buy || ((!isWidgetBuild) ? 'usdt' : config.erc20token)
 
     this.returnNeedCurrency(sellToken, buyToken)
 

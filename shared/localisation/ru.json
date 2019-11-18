@@ -2729,7 +2729,7 @@
   },
   {
     "id": "Orders141",
-    "message": "Данная валютная пара не существует перенаправляем на SWAP-BTC... ",
+    "message": "Данная валютная пара не существует перенаправляем на USDT-BTC... ",
     "files": [
       "shared/pages/Home/Orders/Orders.js"
     ]

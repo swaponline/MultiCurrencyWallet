@@ -124,7 +124,7 @@ class IEO extends React.Component {
              />
            </SubTitle>
            <div styleName="href">
-             <a href="https://swap.online/exchange/swap-to-btc" target="_blank" rel="noopener noreferrer">
+             <a href="https://swap.online/exchange/usdt-to-btc" target="_blank" rel="noopener noreferrer">
                <FormattedMessage id="IEOHref" defaultMessage="You can change SWAP to BTC here" />
              </a>
            </div>

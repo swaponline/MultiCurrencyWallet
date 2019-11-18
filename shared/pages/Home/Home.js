@@ -119,10 +119,10 @@ export default class Home extends Component {
     } else if (constants.tradeTicker.includes(`${buy}-${sell}`)) {
       this.setFilter(`${buy}-${sell}`)
     } else {
-      this.setFilter('swap-btc')
+      this.setFilter('usdt-btc')
       this.setState(() => ({
         sellCurrency: 'btc',
-        buyCurrency: 'swap',
+        buyCurrency: 'usdt',
         invalidPair: true,
       }))
     }

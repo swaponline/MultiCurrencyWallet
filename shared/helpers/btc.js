@@ -1,10 +1,11 @@
-import bitcoin from 'bitcoinjs-lib'
+import * as bitcoin from 'bitcoinjs-lib'
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
 import config from 'app-config'
 import constants from './constants'
 import request from './request'
 import BigNumber from 'bignumber.js'
+
 
 
 const network = process.env.MAINNET
