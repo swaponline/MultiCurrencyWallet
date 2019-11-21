@@ -46,6 +46,8 @@
   height: 20px;
   opacity: 0.5;
   transition: opacity .33s $ease-out-quadratic;
+  position: absolute;
+  right: 0;
 
   &:hover {
     opacity: 1;

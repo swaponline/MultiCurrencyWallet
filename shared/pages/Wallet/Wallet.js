@@ -146,6 +146,10 @@ export default class Wallet extends Component {
     })
   }
 
+  handleSaveKeys = () => {
+    actions.modals.open(constants.modals.PrivateKeys)
+  }
+
   handleDeposit = () => {
     actions.modals.open(constants.modals.Withdraw, {
       currency,
@@ -158,6 +162,9 @@ export default class Wallet extends Component {
     })
   }
 
+  handleShowKeys = () => {
+    actions.modals.open(constants.modals.DownloadModal)
+  }
 
   getUsdBalance = async () => {
     const exCurrencyRate = await actions.user.getExchangeRate('BTC', 'usd')
@@ -165,6 +172,14 @@ export default class Wallet extends Component {
     this.setState(() => ({
       exCurrencyRate
     }))
+  }
+
+  handleSignUp = () => {
+    actions.modals.open(constants.modals.SignUp, {})
+  }
+
+  handleNotifyBlockClose = () => {
+    alert('close')
   }
 
   showPercentChange1H = () => {
@@ -245,25 +260,35 @@ export default class Wallet extends Component {
       })
     }
 
+    const isPrivateKeysSaved = localStorage.getItem(constants.localStorage.privateKeysSaved)
+
     return (
       <section styleName="wallet">
         <h3 styleName="walletHeading">Wallet</h3>
         {
-          isSigned ?
+          isSigned && !isPrivateKeysSaved &&
             <NotifyBlock
               className="notifyBlockSaveKeys"
               descr="Before you continue be sure to save your private keys!"
               tooltip="We do not store your private keys and will not be able to restore them"
               icon={security}
               firstBtn="Show my keys"
-              secondBtn="I saved my keys" /> :
-            <NotifyBlock
+              firstFunc={this.handleShowKeys}
+              secondBtn="I saved my keys" 
+              secondFunc={this.handleSaveKeys}
+              /> 
+        }
+        {
+          !isSigned && <NotifyBlock
               className="notifyBlockSignUp"
               descr="Sign up and get your free cryptocurrency for test!"
               tooltip="You will also be able to receive notifications regarding updates with your account"
               icon={mail}
               firstBtn="Sign Up"
-              secondBtn="I’ll do this later" />
+              firstFunc={this.handleSignUp}
+              secondBtn="I’ll do this later"
+              secondFunc={this.handleNotifyBlockClose} />
+              
         }
         <ul styleName="walletNav">
           {walletNav.map((item, index) => <li key={index} styleName={`walletNavItem ${activeView === index ? 'active' : ''}`} onClick={() => this.handleNavItemClick(index)}><a href styleName="walletNavItemLink">{item}</a></li>)}

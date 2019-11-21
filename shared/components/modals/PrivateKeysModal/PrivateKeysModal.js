@@ -143,76 +143,9 @@ export default class PrivateKeysModal extends React.PureComponent {
       <Modal
         styleName="modal"
         name={name}
-        showCloseButton={false}
-        showLogo={false}
         title={intl.formatMessage(title.PrivateKeysModal)}
       >
         <div styleName="content">
-          {
-            view === views.saveKeys ? (
-              <Fragment>
-                <div styleName="title">
-                  <FormattedMessage
-                    id="PrivateKeysModal991"
-                    defaultMessage="Before you continue be sure to save your private keys! Security of private keys is only in your hands. "
-                  />
-                  <span styleName="skipField">
-                    <FormattedMessage
-                      id="PrivateKeysModal663"
-                      defaultMessage="We don't recommend, but you can {skipBtn}"
-                      values={{
-                        skipBtn: (
-                          <button onClick={() => this.setState({ skipAlertShown: true })}>
-                            <FormattedMessage
-                              id="PrivateKeysModal623"
-                              defaultMessage="{skipIt} and go to the site."
-                              values={{
-                                skipIt: (
-                                  <span style={{ color: '#007bff' }}>
-                                    <FormattedMessage
-                                      id="PrivateKeysModal624"
-                                      defaultMessage="skip it"
-                                    />
-                                  </span>
-                                ),
-                              }}
-                            />
-                          </button>
-                        ),
-                      }}
-                    />
-                  </span>
-                </div>
-                <div styleName="subTitle">
-                  <FormattedMessage id="PrivateKeysModal106" defaultMessage="We do not store your private keys and will not be able to restore them!" />
-                </div>
-                <div styleName="buttonContainer">
-                  <div styleName="buttonSubContainer">
-                    <span styleName="text">
-                      <FormattedMessage id="PrivateKeysModal110" defaultMessage="1. Click here to save your private keys" />
-                    </span>
-                    <br />
-                    <Button brand styleName="button" onClick={this.handleShowKeys}>
-                      <FormattedMessage id="PrivateKeysModal113" defaultMessage="Show keys" />
-                    </Button>
-                  </div>
-                  <div styleName="buttonSubContainer">
-                    <span styleName="text">
-                      <FormattedMessage id="PrivateKeysModal118" defaultMessage="2. Then click here if you have saved your private keys in a secure place (or two)" />
-                    </span>
-                    <br />
-                    <Button brand styleName="button" onClick={this.handleNext} >
-                      <FormattedMessage id="PrivateKeysModal121" defaultMessage="I saved my keys!" />
-                    </Button>
-                  </div>
-                </div>
-                <FormattedMessage id="PrivateKeysModal122" defaultMessage="Continuing you agree with our " />
-                <a styleName="fontSizeFixA" href="https://drive.google.com/file/d/1LdsCOfX_pOJAMqlL4g6DfUpZrGF5eRe9/view">
-                  <FormattedMessage id="PrivateKeysModal123" defaultMessage="privacy policy" />
-                </a>
-                {/* <Button brand styleName="button" onClick={this.handleSendByEmail}>Send by email</Button> */}
-              </Fragment>
-            ) : (
               <Fragment>
                 <div styleName="title">
                   <FormattedMessage
@@ -261,11 +194,11 @@ export default class PrivateKeysModal extends React.PureComponent {
                   privateKey={btcData.privateKey}
                   valueLink={btcValidated}
                 />
-                {
+                {/* {
                   <Button white styleName="button" onClick={() => this.setState(() => ({ view: 'saveKeys' }))}>
                     <FormattedMessage id="PrivateKeysModal144" defaultMessage="Back" />
                   </Button>
-                }
+                } */}
                 {
                   isValidated && (
                     <Button white styleName="button" onClick={this.handleKeysSubmit}>
@@ -274,8 +207,6 @@ export default class PrivateKeysModal extends React.PureComponent {
                   )
                 }
               </Fragment>
-            )
-          }
           <br />
           <br />
           <br />

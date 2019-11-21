@@ -354,6 +354,11 @@ export default class Row extends Component {
       isDropdownOpen: true
     })
   }
+
+  goToHistory = () => {
+    const { history, intl: { locale } } = this.props
+    history.push(localisedUrl(locale, '/history'))
+  }
   
 
   deleteThisSwap = () => {
@@ -524,7 +529,26 @@ export default class Row extends Component {
               <DropdownMenu
                 size="regular"
                 className="walletControls"
-                items={dropDownMenuItems}
+                items={[
+                  {
+                    id: 1,
+                    title: 'Deposit',
+                    action: this.handleReceive,
+                    disabled: false
+                  },
+                  {
+                    id: 2,
+                    title: 'Send',
+                    action: this.handleWithdraw,
+                    disabled: isBalanceEmpty
+                  },
+                  {
+                    id: 3,
+                    title: 'History',
+                    action: this.goToHistory,
+                    disabled: false
+                  }
+                ]}
               />
             </div>
           </div>
