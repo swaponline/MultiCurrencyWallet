@@ -39,7 +39,7 @@ import dollar from '../images/dollar.svg'
     eosData,
     telosData,
     nimData,
-    qtumData,
+    //qtumData,
     ltcData,
     // xlmData,
     // usdtOmniData,
