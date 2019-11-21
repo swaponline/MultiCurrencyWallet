@@ -64,6 +64,10 @@ export default class Core extends Component {
           .on('peer joined', actions.ipfs.userJoined)
           .on('peer left', actions.ipfs.userLeft)
 
+        // BTC Multisign
+        SwapApp.shared().services.room.on('btc multisig join', actions.btcmultisig.onUserMultisigJoin)
+        SwapApp.shared().services.room.on('btc multisig send', actions.btcmultisig.onUserMultisigSend)
+
         clearInterval(ipfsLoadingInterval)
 
         actions.ipfs.set({

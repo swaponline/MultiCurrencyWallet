@@ -10,6 +10,8 @@ import btc from 'helpers/btc'
 import { Keychain } from 'keychain.js'
 import actions from 'redux/actions'
 
+import SwapApp from 'swap.app'
+
 const protectSMSAPI = 'https://2fa.swaponline.site'
 
 const addWallet = (otherOwnerPublicKey) => {
@@ -208,6 +210,26 @@ const enableWalletG2FA = () => {
 }
 
 const enableWalletUSER = () => {
+}
+
+const onUserMultisigJoin = (data) => {
+  console.log('on user multisig join',data)
+  const { user: { btcMultisigUserData } } = getState()
+  const { fromPeer, checkKey, publicKey } = data
+  if (checkKey === btcMultisigUserData.publicKey.toString('hex') && publicKey && (publicKey.length === 66)) {
+    console.log('checks ok - connect')
+    const { privateKey } = btcMultisigUserData
+    localStorage.setItem(constants.privateKeyNames.btcMultisigOtherOwnerKey, publicKey)
+    login_USER(privateKey, publicKey)
+    SwapApp.shared().services.room.sendMessagePeer( fromPeer, {
+      event: 'btc multisig join ready',
+      data: {}
+    })
+  }
+}
+
+const onUserMultisigSend = (data) => {
+  console.log('on user multisig send', data)
 }
 
 const _getSign = () => {
@@ -617,4 +639,6 @@ export default {
   enableWalletUSER,
   parseRawTX,
   signMultiSign,
+  onUserMultisigJoin,
+  onUserMultisigSend,
 }

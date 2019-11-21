@@ -25,6 +25,7 @@ import typeforce from 'swap.app/util/typeforce'
 import minAmount from 'helpers/constants/minAmount'
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 import links from 'helpers/links'
+import SwapApp from 'swap.app'
 
 
 @injectIntl
@@ -56,7 +57,7 @@ export default class MultisignJoinLink extends React.Component {
     const publicKey = this.props.data.publicKey.toString('hex')
 
     this.setState({
-      joinLink: `${location.origin}${links.multisign}/btc/join/${publicKey}`
+      joinLink: `${location.origin}${links.multisign}/btc/join/${publicKey}/${SwapApp.shared().services.room.peer}`
     })
   }
 

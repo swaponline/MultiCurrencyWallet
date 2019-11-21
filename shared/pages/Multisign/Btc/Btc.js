@@ -15,8 +15,9 @@ import moment from 'moment'
 
 import CSSModules from 'react-css-modules'
 import styles from './Btc.scss'
-
+import SwapApp from 'swap.app'
 import config from 'app-config'
+
 
 @connect(({
   user: {
@@ -37,10 +38,13 @@ export default class Btc extends PureComponent {
     intl: PropTypes.object.isRequired,
   };
 
+  
+
   constructor() {
     console.log('Btc mulsign connected')
     super()
     
+    this.timerWaitOnlineJoin = false
     this.state = {
       action: 'none',
       wallet: {},
@@ -50,7 +54,7 @@ export default class Btc extends PureComponent {
   }
 
   async componentWillMount() {
-    let { match : { params : { action, data } }, history, location: { pathname } } = this.props
+    let { match : { params : { action, data, peer } }, history, location: { pathname } } = this.props
     if ((action !== 'join') && (action !== 'connect') && (action !== 'confirm')) {
       this.props.history.push(localisedUrl(links.notFound))
       return
@@ -67,8 +71,10 @@ export default class Btc extends PureComponent {
           action,
           wallet: walletData,
           walletBalance: balance,
+          peer,
           privateKey,
           publicKey,
+          myPublicKey,
           joinLink: `${location.origin}${links.multisign}/btc/connect/${myPublicKey}`,
         })
       } else {
@@ -91,16 +97,60 @@ export default class Btc extends PureComponent {
     console.log('Btc mulsign processor')
     console.log('action',action)
     console.log('data',data)
+    console.log('peer',peer)
   }
 
-  handleAddWallet = async() => {
-    const { privateKey, publicKey, action } = this.state
+  async componentWillUnMount() {
+    SwapApp.shared().services.room.unsubscribe('btc multisig join ready', this.handleOnlineWalletConnect)
+    clearTimeout(this.timerWaitOnlineJoin)
+  }
+
+  connectWallet = (action) => {
+    const { privateKey, publicKey } = this.state
     localStorage.setItem(constants.privateKeyNames.btcMultisigOtherOwnerKey, publicKey)
     actions.btcmultisig.login_USER(privateKey, publicKey)
 
     this.setState({
       action: (action === 'join') ? 'linkready' : 'ready'
     })
+  }
+
+  handleOnlineWalletConnect = async (_data) => {
+    console.log('btc multisig join ready', _data)
+    const { fromPeer, data } = _data
+    const { peer } = this.state
+    if ( fromPeer === peer ) {
+      SwapApp.shared().services.room.unsubscribe('btc multisig join ready', this.handleOnlineWalletConnect)
+      clearTimeout(this.timerWaitOnlineJoin)
+      this.connectWallet('ready')
+    }
+  }
+
+  handleAddWallet = async() => {
+    const { action, myPublicKey, publicKey, peer } = this.state
+
+    //If peer is online - try connect via ipfs
+
+    if (SwapApp.shared().services.room.connection.hasPeer(peer)) {
+      this.setState({
+        action: 'onlinejoin',
+      })
+      SwapApp.shared().services.room.subscribe('btc multisig join ready', this.handleOnlineWalletConnect)
+      SwapApp.shared().services.room.sendMessagePeer( peer, {
+        event: 'btc multisig join',
+        data: {
+          publicKey: myPublicKey,
+          checkKey: publicKey,
+        }
+      })
+      this.timerWaitOnlineJoin = setTimeout( () => {
+        SwapApp.shared().services.room.unsubscribe('btc multisig join ready', this.handleOnlineWalletConnect)
+        console.log('online join failed - timeout')
+        this.connectWallet(action)
+      }, 10000)
+    } else {
+      this.connectWallet(action)
+    }
   }
 
   handleGoToWallet = async() => {
@@ -127,6 +177,12 @@ export default class Btc extends PureComponent {
 
     return (
       <section>
+        { (action === 'onlinejoin') &&
+        <Fragment>
+          <h1>Create BTC-multisignature wallet</h1>
+          <h3>Wait other side...</h3>
+        </Fragment>
+        }
         { (action === 'join' || action === 'connect') && 
         <Fragment>
           <h1>Create BTC-multisignature wallet</h1>
