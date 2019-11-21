@@ -426,16 +426,22 @@ export default class Row extends Component {
 
     let dropDownMenuItems = [
       {
-        id: 1,
+        id: 1001,
         title: 'Deposit',
         action: this.handleReceive,
         disabled: false,
       },
       {
-        id: 2,
+        id: 1002,
         title: 'Send',
         action: this.handleWithdraw,
         disabled: isBalanceEmpty,
+      },
+      {
+        id: 1003,
+        title: 'History',
+        action: this.goToHistory,
+        disabled: false
       },
     ]
 
@@ -563,26 +569,7 @@ export default class Row extends Component {
               <DropdownMenu
                 size="regular"
                 className="walletControls"
-                items={[
-                  {
-                    id: 1,
-                    title: 'Deposit',
-                    action: this.handleReceive,
-                    disabled: false
-                  },
-                  {
-                    id: 2,
-                    title: 'Send',
-                    action: this.handleWithdraw,
-                    disabled: isBalanceEmpty
-                  },
-                  {
-                    id: 3,
-                    title: 'History',
-                    action: this.goToHistory,
-                    disabled: false
-                  }
-                ]}
+                items={dropDownMenuItems}
               />
             </div>
           </div>
