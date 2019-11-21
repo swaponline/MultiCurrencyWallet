@@ -56,7 +56,7 @@ import dollar from '../images/dollar.svg'
     telosData,
     bchData,
     ltcData,
-    qtumData,
+    //qtumData,
     // xlmData,
     // usdtOmniData,
     ...Object.keys(tokensData).map(k => (tokensData[k])),
@@ -424,6 +424,12 @@ export default class Row extends Component {
         action: this.handleWithdraw,
         disabled: isBalanceEmpty,
       },
+      {
+        id: 3,
+        title: 'History',
+        action: this.goToHistory,
+        disabled: false
+      }
     ]
 
     if (this.props.item.isSmsProtected && !this.props.item.isRegistered) {
@@ -529,26 +535,7 @@ export default class Row extends Component {
               <DropdownMenu
                 size="regular"
                 className="walletControls"
-                items={[
-                  {
-                    id: 1,
-                    title: 'Deposit',
-                    action: this.handleReceive,
-                    disabled: false
-                  },
-                  {
-                    id: 2,
-                    title: 'Send',
-                    action: this.handleWithdraw,
-                    disabled: isBalanceEmpty
-                  },
-                  {
-                    id: 3,
-                    title: 'History',
-                    action: this.goToHistory,
-                    disabled: false
-                  }
-                ]}
+                items={dropDownMenuItems}
               />
             </div>
           </div>
