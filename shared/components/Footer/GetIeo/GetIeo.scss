@@ -133,6 +133,12 @@
   }
 }
 
+@include media-mobile {
+  .container {
+    display: none;
+  }
+}
+
 @media screen and (max-width: 480px) {
   .container {
     padding-top: 60px;

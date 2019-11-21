@@ -6,7 +6,7 @@ import NewButton from 'components/controls/NewButton/NewButton'
 import styles from './NotifyBlock.scss'
 
 
-const NotifyBlock = ({ className, icon, descr, tooltip, firstBtn, secondBtn }) => (
+const NotifyBlock = ({ className, icon, descr, tooltip, firstBtn, secondBtn, firstFunc, secondFunc }) => (
     <div styleName={`notifyBlock ${className}`}>
     <div>
       <div styleName="notifyBlockIcon">
@@ -18,10 +18,10 @@ const NotifyBlock = ({ className, icon, descr, tooltip, firstBtn, secondBtn }) =
       </div>
     </div>
     <div>
-      <NewButton white>
+      <NewButton white onClick={firstFunc}>
         {firstBtn}
       </NewButton>
-      <NewButton transparent>
+      <NewButton transparent onClick={secondFunc}>
         {secondBtn}
       </NewButton>
     </div>

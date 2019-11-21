@@ -27,8 +27,12 @@
     display: none;
     button {
         font-size: 10px;
+        width: 100%;
+        padding: 7px 6px;
+        text-align: left;
         margin: 0;
-        margin-bottom: 5px;
+        display: block;
+        font-family: 'Manrope-Medium';
     }
     button[disabled] {
         color: #8e9aa2;
@@ -47,7 +51,7 @@
 .walletControls {
     position: absolute;
     right: 12px;
-    top: -30px;
+    top: -45px;
     z-index: 111111;
     padding: 0 5px;
 }
