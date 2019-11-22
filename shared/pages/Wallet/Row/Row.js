@@ -40,7 +40,7 @@ import dollar from '../images/dollar.svg'
     eosData,
     telosData,
     nimData,
-    // qtumData,
+    //qtumData,
     ltcData,
     // xlmData,
     // usdtOmniData,
@@ -58,7 +58,7 @@ import dollar from '../images/dollar.svg'
     telosData,
     bchData,
     ltcData,
-    // qtumData,
+    //qtumData,
     // xlmData,
     // usdtOmniData,
     ...Object.keys(tokensData).map(k => (tokensData[k])),
@@ -442,7 +442,7 @@ export default class Row extends Component {
         title: 'History',
         action: this.goToHistory,
         disabled: false
-      },
+      }
     ]
 
     console.log(this.props.item)
