@@ -50,6 +50,7 @@ export default class Btc extends PureComponent {
       wallet: {},
       walletBalance: 0,
       publicKey: '',
+      addWalletEnabled: false,
     }
   }
 
@@ -76,6 +77,11 @@ export default class Btc extends PureComponent {
           publicKey,
           myPublicKey,
           joinLink: `${location.origin}${links.multisign}/btc/connect/${myPublicKey}`,
+        })
+        actions.ipfs.onReady( () => {
+          this.setState({
+            addWalletEnabled: true,
+          })
         })
       } else {
         this.props.history.push(localisedUrl(links.notFound))
@@ -131,26 +137,35 @@ export default class Btc extends PureComponent {
 
     //If peer is online - try connect via ipfs
 
-    if (SwapApp.shared().services.room.connection.hasPeer(peer)) {
-      this.setState({
-        action: 'onlinejoin',
-      })
-      SwapApp.shared().services.room.subscribe('btc multisig join ready', this.handleOnlineWalletConnect)
-      SwapApp.shared().services.room.sendMessagePeer( peer, {
-        event: 'btc multisig join',
-        data: {
-          publicKey: myPublicKey,
-          checkKey: publicKey,
-        }
-      })
-      this.timerWaitOnlineJoin = setTimeout( () => {
-        SwapApp.shared().services.room.unsubscribe('btc multisig join ready', this.handleOnlineWalletConnect)
-        console.log('online join failed - timeout')
+    this.setState({
+      waitCreateWallet: true
+    })
+
+    actions.ipfs.waitPeer(
+      peer,
+      () => {
+        this.setState({
+          action: 'onlinejoin',
+        })
+        SwapApp.shared().services.room.subscribe('btc multisig join ready', this.handleOnlineWalletConnect)
+        SwapApp.shared().services.room.sendMessagePeer( peer, {
+          event: 'btc multisig join',
+          data: {
+            publicKey: myPublicKey,
+            checkKey: publicKey,
+          }
+        })
+        this.timerWaitOnlineJoin = setTimeout( () => {
+          SwapApp.shared().services.room.unsubscribe('btc multisig join ready', this.handleOnlineWalletConnect)
+          console.log('online join failed - timeout')
+          this.connectWallet(action)
+        }, 10000)
+      },
+      () => {
         this.connectWallet(action)
-      }, 10000)
-    } else {
-      this.connectWallet(action)
-    }
+      },
+      10000
+    )
   }
 
   handleGoToWallet = async() => {
@@ -171,7 +186,7 @@ export default class Btc extends PureComponent {
   render() {
     const { action } = this.state
 
-    const { wallet, walletBalance, joinLink } = this.state
+    const { wallet, walletBalance, joinLink, addWalletEnabled, waitCreateWallet } = this.state
     
     const { debugShowTXB, debugShowInput, debugShowOutput } = this.state
 
@@ -195,7 +210,14 @@ export default class Btc extends PureComponent {
             <label>Wallet balance:</label>
             <strong>{walletBalance} BTC</strong>
           </div>
-          <Button brand onClick={this.handleAddWallet}>Add wallet</Button>
+          { addWalletEnabled ?
+              waitCreateWallet ?
+              <Button brand>Please wait...</Button>
+              :
+              <Button brand onClick={this.handleAddWallet}>Add wallet</Button>
+            :
+            <Button brand>Loading... Please wait</Button>
+          }
         </Fragment>
         }
         { (action=='confirm') && 
