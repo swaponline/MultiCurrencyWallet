@@ -228,8 +228,14 @@ const onUserMultisigJoin = (data) => {
   }
 }
 
+// Получили транзакцию из комнаты -  проверяем, наш это кошелек и если да. Записываем в историю транзакций с поменткой - нужно подтвердить
 const onUserMultisigSend = (data) => {
   console.log('on user multisig send', data)
+}
+
+// Рассылает транзакцию в комнате, если второй владелец в сети. То он сразу увидит, что ему нужно подтвердить транзакцию без передачи ссылки
+const broadcastTX2Room = (cbSuccess, cbFail) => {
+  
 }
 
 const _getSign = () => {
@@ -303,6 +309,9 @@ const getBalanceUser = () => {
   return getBalance(address, 'btcMultisigUserData')
 }
 
+const getBalanceG2FA = () => {
+}
+
 const fetchBalance = (address) =>
   request.get(`${api.getApiServer('bitpay')}/addr/${address}`)
     .then(({ balance }) => balance)
@@ -321,23 +330,33 @@ const fetchTxInfo = (hash) =>
       ...rest,
     }))
 
-const getTransaction = () =>
-  new Promise((resolve) => {
-    const { user: { btcData: { address } } } = getState()
+const getTransactionUser = () => {
+  const { user: { btcMultisigUserData: { address } } } = getState()
+  return getTransaction(address, 'btc (multisig)')
+}
 
-    const url = `${api.getApiServer('bitpay')}/txs/?address=${address}`
+const getTransactionSMS = () => { return getTransaction() }
+
+const getTransactionG2FA = () => {}
+
+const getTransaction = (ownAddress, ownType) =>
+  new Promise((resolve) => {
+    const { user: { btcMultisigSMSData: { address } } } = getState()
+    const checkAddress = (ownAddress) ? ownAddress : address
+    const type = (ownType) ? ownType : 'btc (sms-protected)'
+    const url = `${api.getApiServer('bitpay')}/txs/?address=${checkAddress}`
 
     return request.get(url)
       .then((res) => {
         const transactions = res.txs.map((item) => {
-          const direction = item.vin[0].addr !== address ? 'in' : 'out'
+          const direction = item.vin[0].addr !== checkAddress ? 'in' : 'out'
           const isSelf = direction === 'out'
             && item.vout.filter((item) =>
-              item.scriptPubKey.addresses[0] === address
+              item.scriptPubKey.addresses[0] === checkAddress
             ).length === item.vout.length
 
           return ({
-            type: 'btc',
+            type,
             hash: item.txid,
             confirmations: item.confirmations,
             value: isSelf
@@ -346,8 +365,8 @@ const getTransaction = () =>
                 const currentAddress = item.scriptPubKey.addresses[0]
 
                 return direction === 'in'
-                  ? (currentAddress === address)
-                  : (currentAddress !== address)
+                  ? (currentAddress === checkAddress)
+                  : (currentAddress !== checkAddress)
               })[0].value,
             date: item.time * 1000,
             direction: isSelf ? 'self' : direction,
@@ -623,7 +642,11 @@ export default {
   loginWithKeychain,
   getBalance,
   getBalanceUser,
+  getBalanceG2FA,
   getTransaction,
+  getTransactionSMS,
+  getTransactionUser,
+  getTransactionG2FA,
   send,
   sendSMSProtected,
   confirmSMSProtected,

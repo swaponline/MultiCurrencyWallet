@@ -518,7 +518,7 @@ export default class Row extends Component {
                       }{' '}
                     </span>
                     <span>{currencyView}</span>
-                    {(currency === 'BTC' || currency === 'BTC (SMS-Protected)') && unconfirmedBalance !== 0 && (
+                    { unconfirmedBalance > 0 && (
                       <Fragment>
                         <br />
                         <span styleName="unconfirmedBalance">
@@ -527,33 +527,6 @@ export default class Row extends Component {
                         </span>
                       </Fragment>
                     ) }
-                    { currency === 'BCH' && unconfirmedBalance !== 0 && (
-                      <Fragment>
-                        <br />
-                        <span styleName="unconfirmedBalance">
-                          <FormattedMessage id="RowWallet181" defaultMessage="Unconfirmed balance" />
-                          {unconfirmedBalance} {' '}
-                        </span>
-                      </Fragment>
-                    ) }
-                    { currency === 'LTC' && unconfirmedBalance !== 0 && (
-                      <Fragment>
-                        <br />
-                        <span styleName="unconfirmedBalance">
-                          <FormattedMessage id="RowWallet189" defaultMessage="Unconfirmed balance" />
-                          {unconfirmedBalance}
-                        </span>
-                      </Fragment>
-                    ) }
-                    {/* currency === 'USDT' && unconfirmedBalance !== 0 && (
-                      <Fragment>
-                        <br />
-                        <span styleName="unconfirmedBalance">
-                          <FormattedMessage id="RowWallet197" defaultMessage="Unconfirmed balance" />
-                          {unconfirmedBalance}
-                        </span>
-                      </Fragment>
-                    ) */}
                   </div>
                 )
               }
