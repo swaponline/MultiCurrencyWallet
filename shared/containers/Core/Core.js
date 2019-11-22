@@ -66,7 +66,6 @@ export default class Core extends Component {
 
         // BTC Multisign
         SwapApp.shared().services.room.on('btc multisig join', actions.btcmultisig.onUserMultisigJoin)
-        SwapApp.shared().services.room.on('btc multisig send', actions.btcmultisig.onUserMultisigSend)
 
         clearInterval(ipfsLoadingInterval)
 

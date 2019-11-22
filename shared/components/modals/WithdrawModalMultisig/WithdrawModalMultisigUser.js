@@ -56,6 +56,8 @@ export default class WithdrawModalMultisigUser extends React.Component {
     const allCurrencyies = items.concat(tokenItems)
     const selectedItem = allCurrencyies.filter(item => item.currency === currency)[0]
 
+    this.broadcastCancelFunc = false
+
     this.state = {
       step: 'fillform',
       isShipped: false,
@@ -88,6 +90,11 @@ export default class WithdrawModalMultisigUser extends React.Component {
 
   componentWillUpdate(nextProps, nextState) {
     nextState.amount = this.fixDecimalCountETH(nextState.amount)
+  }
+
+  componentWillUnmount() {
+    console.log('withdraw unmount')
+    if (this.broadcastCancelFunc) this.broadcastCancelFunc()
   }
 
   fixDecimalCountETH = (amount) => {
@@ -232,11 +239,30 @@ export default class WithdrawModalMultisigUser extends React.Component {
 
     const result = await actions.btcmultisig.send(sendOptions)
     
-    this.setState({
-      step: 'rawlink',
-      txRaw: result,
-      isShipped: false,
-    })
+    this.broadcastCancelFunc = actions.btcmultisig.broadcastTX2Room(
+      {
+        txRaw: result,
+        address: to,
+        amount,
+        currency: 'BTC'
+      },
+      () => {
+        console.log('Accepted')
+        this.setState({
+          step: 'rawlink',
+          txRaw: result,
+          isShipped: false,
+        })
+      },
+      () => {
+        console.log('Fail - need manual confirm')
+        this.setState({
+          step: 'rawlink',
+          txRaw: result,
+          isShipped: false,
+        })
+      }
+    )
   }
 
     sellAllBalance = async () => {

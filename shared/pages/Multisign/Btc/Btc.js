@@ -106,7 +106,7 @@ export default class Btc extends PureComponent {
     console.log('peer',peer)
   }
 
-  async componentWillUnMount() {
+  async componentWillUnmount() {
     SwapApp.shared().services.room.unsubscribe('btc multisig join ready', this.handleOnlineWalletConnect)
     clearTimeout(this.timerWaitOnlineJoin)
   }

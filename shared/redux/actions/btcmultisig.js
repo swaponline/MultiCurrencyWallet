@@ -18,7 +18,6 @@ const addWallet = (otherOwnerPublicKey) => {
   const { user: { btcMultisigSMSData: { address, privateKey } } } = getState()
   createWallet(privateKey, otherOwnerPublicKey)
 }
-window.bitcoinjs = bitcoin
 
 const checkSMSActivated = () => {
   const { user: { btcMultisigSMSData : { isRegistered } } } = getState()
@@ -90,7 +89,6 @@ const createWallet = (privateKey, otherOwnerPublicKey) => {
   console.info('Logged in with BitcoinMultisig', data)
   reducers.user.setAuthData({ name: 'btcMultisigData', data })
 }
-window.MS_CreateWallet = createWallet
 
 const login_SMS = (privateKey, otherOwnerPublicKey) => {
   const data = login_(privateKey, otherOwnerPublicKey, false)
@@ -125,6 +123,26 @@ const login_USER = (privateKey, otherOwnerPublicKey ,onlyCheck) => {
   if (onlyCheck) return data
 
   reducers.user.setAuthData({ name: 'btcMultisigUserData', data })
+
+  // Setup IPFS sign request
+  actions.ipfs.onReady(() => {
+    console.log('BTCMS - IPFS Ready')
+    const { user: { btcMultisigUserData: { address } } } = getState()
+    const onRequestEventName = `btc multisig request sign ${address}`
+    SwapApp.shared().services.room.subscribe( onRequestEventName, (_data) => {
+      const { txData } = _data
+      if (txData && txData.address && txData.amount && txData.currency && txData.txRaw) {
+        SwapApp.shared().services.room.sendMessagePeer(
+          _data.fromPeer,
+          {
+            event :`btc multisig accept tx ${address}`,
+            data: {}
+          }
+        )
+        actions.notifications.show('BTCMultisignRequest', txData)
+      }
+    })
+  })
 }
 
 const login_ = (privateKey, otherOwnerPublicKey, sortKeys) => {
@@ -234,9 +252,48 @@ const onUserMultisigSend = (data) => {
 }
 
 // Рассылает транзакцию в комнате, если второй владелец в сети. То он сразу увидит, что ему нужно подтвердить транзакцию без передачи ссылки
-const broadcastTX2Room = (cbSuccess, cbFail) => {
+const broadcastTX2Room = (txData, cbSuccess, cbFail) => {
+  const { user: { btcMultisigUserData: { publicKey, address } } } = getState()
+
+  const onSuccessEventName = `btc multisig accept tx ${address}`
+  let failTimer = false
+
+  const onSuccessEvent = (data) => {
+    console.log('broadcast sucess', data)
+    clearTimeout(failTimer)
+    SwapApp.shared().services.room.unsubscribe(onSuccessEventName, onSuccessEvent)
+    if (cbSuccess) cbSuccess()
+  }
+
+  const cancelFunc = () => {
+    console.log('broadcast multisig canceled')
+    clearTimeout(failTimer)
+    SwapApp.shared().services.room.unsubscribe(onSuccessEventName, onSuccessEvent)
+  }
+
+  const onFailTimer = () => {
+    console.log('broadcast multisig fail timer')
+    clearTimeout(failTimer)
+    SwapApp.shared().services.room.unsubscribe(onSuccessEventName, onSuccessEvent)
+    if (cbFail) cbFail()
+  }
   
+  failTimer = setTimeout(onFailTimer, 30000)
+
+  SwapApp.shared().services.room.subscribe(onSuccessEventName, onSuccessEvent)
+
+  // Broadcast TX
+  SwapApp.shared().services.room.sendMessageRoom({
+    event: `btc multisig request sign ${address}`,
+    data: {
+      txData,
+      publicKey: publicKey.toString('hex')
+    },
+  })
+  return cancelFunc
 }
+
+window.broadcastTX2Room = broadcastTX2Room
 
 const _getSign = () => {
   const { user: { btcMultisigSMSData: { account, address, keyPair, publicKey } } } = getState()
@@ -652,6 +709,7 @@ export default {
   confirmSMSProtected,
   fetchUnspents,
   broadcastTx,
+  broadcastTX2Room,
   fetchTx,
   fetchTxInfo,
   fetchBalance,
