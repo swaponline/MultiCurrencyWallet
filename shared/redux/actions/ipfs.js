@@ -1,5 +1,6 @@
 import reducers from 'redux/core/reducers'
 import { getState } from 'redux/core'
+import SwapApp from 'swap.app'
 
 
 const set = payload => {
@@ -30,6 +31,28 @@ const onReady = (cb) => {
   _checkFunc()
 }
 
+const waitPeer = (peer, cbSuccess, cbFail, timeOut) => {
+  onReady(() => {
+    let isWaiting = true
+
+    const failtTimer = setTimeout( () => {
+      isWaiting = false
+      if (cbFail) cbFail()
+    } , timeOut )
+
+    const waitFunc = () => {
+      if (isWaiting) {
+        if (SwapApp.shared().services.room.connection.hasPeer(peer)) {
+          clearTimeout( failtTimer )
+          if (cbSuccess) cbSuccess()
+        } else {
+          setTimeout( waitFunc, 100 )
+        }
+      }
+    }
+    waitFunc()
+  })
+}
 
 export default {
   set,
@@ -37,4 +60,5 @@ export default {
   userLeft,
   allPeersLoaded,
   onReady,
+  waitPeer,
 }
