@@ -50,6 +50,11 @@ export default class Notification extends Component {
     })
   }
 
+  handleClick = () => {
+    this.close()
+    if (this.props.onClick) this.props.onClick()
+  }
+
   soundClick = () => {
     let audio = new Audio()
     audio.src = Sound
@@ -73,7 +78,7 @@ export default class Notification extends Component {
 
     return (
       <div styleName={containerStyleName}>
-        <div styleName={notificationStyleName} onClick={this.close}>
+        <div styleName={notificationStyleName} onClick={this.handleClick}>
           <div styleName="content" className={className}>
             {children}
           </div>
