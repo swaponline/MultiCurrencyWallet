@@ -75,7 +75,7 @@ export default class MultisignJoinLink extends React.Component {
     const title = defineMessages({
       multiSignJoinLink: {
         id: 'multiSignJoinLink',
-        defaultMessage: `BTC-Multisign join link`,
+        defaultMessage: `Создание BTC-Multisign кошелька`,
       },
     })
 
@@ -85,7 +85,7 @@ export default class MultisignJoinLink extends React.Component {
           <div styleName="highLevel">
             <FieldLabel>
               <span style={{ fontSize: '16px' }}>
-                <FormattedMessage id="multiSignJoinLinkMessage" defaultMessage="Send this link to other owner of multisignature BTC wallet" />
+                <FormattedMessage id="multiSignJoinLinkMessage" defaultMessage="Отправьте эту ссылку второму владельцу кошелька" />
               </span>
             </FieldLabel>
             <FieldLabel>
@@ -96,7 +96,7 @@ export default class MultisignJoinLink extends React.Component {
           </div>
           <Button styleName="buttonFull" brand fullWidth onClick={this.handleFinish}>
             <Fragment>
-              <FormattedMessage id="multiSignJoinLinkReady" defaultMessage="Ready" />
+              <FormattedMessage id="multiSignJoinLinkReady" defaultMessage="Готово" />
             </Fragment>
           </Button>
         </Fragment>

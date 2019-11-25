@@ -100,10 +100,6 @@ export default class Btc extends PureComponent {
         }
       }
     }
-    console.log('Btc mulsign processor')
-    console.log('action',action)
-    console.log('data',data)
-    console.log('peer',peer)
   }
 
   async componentWillUnmount() {
@@ -157,7 +153,6 @@ export default class Btc extends PureComponent {
         })
         this.timerWaitOnlineJoin = setTimeout( () => {
           SwapApp.shared().services.room.unsubscribe('btc multisig join ready', this.handleOnlineWalletConnect)
-          console.log('online join failed - timeout')
           this.connectWallet(action)
         }, 10000)
       },
@@ -194,46 +189,58 @@ export default class Btc extends PureComponent {
       <section>
         { (action === 'onlinejoin') &&
         <Fragment>
-          <h1>Create BTC-multisignature wallet</h1>
-          <h3>Wait other side...</h3>
+          <h1>
+            <FormattedMessage id="BTCMS_CreateWalletTitle" defaultMessage="Создание BTC-multisignature кошелька" />
+          </h1>
+          <h3>
+            <FormattedMessage id="BTCMS_WaitOtherSide" defaultMessage="Ожидание второй стороны..." />
+          </h3>
         </Fragment>
         }
         { (action === 'join' || action === 'connect') && 
         <Fragment>
-          <h1>Create BTC-multisignature wallet</h1>
+          <h1>
+            <FormattedMessage id="BTCMS_CreateWalletTitle" defaultMessage="Создание BTC-multisignature кошелька" />
+          </h1>
           
           <div>
-            <label>Wallet address:</label>
+            <label>
+              <FormattedMessage id="BTCMS_WalletAddress" defaultMessage="Адрес кошелька:" />
+            </label>
             <strong>{wallet.address}</strong>
           </div>
           <div>
-            <label>Wallet balance:</label>
+            <label>
+              <FormattedMessage id="BTCMS_WalletBalance" defaultMessage="Баланс" />
+            </label>
             <strong>{walletBalance} BTC</strong>
           </div>
           { addWalletEnabled ?
               waitCreateWallet ?
-              <Button brand>Please wait...</Button>
+              <Button brand>
+                <FormattedMessage id="BTCMS_CreateWalletWait" defaultMessage="Создание кошелька... Подождите немного" />
+              </Button>
               :
-              <Button brand onClick={this.handleAddWallet}>Add wallet</Button>
+              <Button brand onClick={this.handleAddWallet}>
+                <FormattedMessage id="BTCMS_CreateWalletAdd" defaultMessage="Добавить этот кошелек" />
+              </Button>
             :
-            <Button brand>Loading... Please wait</Button>
+            <Button brand>
+              <FormattedMessage id="BTCMS_CreateWalletLoading" defaultMessage="Загрузка... Подождите немного" />
+            </Button>
           }
         </Fragment>
         }
         { (action=='confirm') && 
         <Fragment>
-          <h1>Confirm BTC-multisignature transaction</h1>
-          <h3><button onClick={ () => { this.setState({debugShowTXB: !debugShowTXB}) } }>Toggle TXB</button></h3>
-          {debugShowTXB &&
-          <pre>
-            <code>
-              {
-                JSON.stringify(this.state.txData.txb, false, 4)
-              }
-            </code>
-          </pre>
-          }
-          <h3><button onClick={ () => { this.setState({debugShowInput: !debugShowInput}) } }>Toggle Inputs</button></h3>
+          <h1>
+            <FormattedMessage id="BTCMS_ConfirmTxTitle" defaultMessage="Подтверждение транзакции" />
+          </h1>
+          <h3>
+            <button onClick={ () => { this.setState({debugShowInput: !debugShowInput}) } }>
+              <FormattedMessage id="BTCMS_ConfirmTxInputs" defaultMessage="Входы транзакции" />
+            </button>
+          </h3>
           {debugShowInput &&
           <pre>
             <code>
@@ -243,7 +250,11 @@ export default class Btc extends PureComponent {
             </code>
           </pre>
           }
-          <h3><button onClick={ () => { this.setState({debugShowOutput: !debugShowOutput}) } }>Toggle Outputs</button></h3>
+          <h3>
+            <button onClick={ () => { this.setState({debugShowOutput: !debugShowOutput}) } }>
+              <FormattedMessage id="BTCMS_ConfirmTxOutputs" defaultMessage="Выходы транзакции" />
+            </button>
+          </h3>
           {debugShowOutput &&
           <pre>
             <code>
@@ -254,16 +265,22 @@ export default class Btc extends PureComponent {
           </pre>
           }
           <div>
-            <Button brand onClick={this.handleConfirm}>Confirm transaction</Button>
+            <Button brand onClick={this.handleConfirm}>
+              <FormattedMessage id="BTCMS_ConfirmTxSign" defaultMessage="Подписать транзакцию" />
+            </Button>
           </div>
         </Fragment>
         }
         { (action === 'confirmready') && 
         <Fragment>
-          <h1>Confirm BTC-multisignature transaction</h1>
-          <h2>Ready</h2>
+          <FormattedMessage id="BTCMS_ConfirmTxTitle" defaultMessage="Подтверждение транзакции" />
+          <h2>
+            <FormattedMessage id="BTCMS_ConfirmTxReady" defaultMessage="Транзакция подписана и отправлена в блокчейн" />
+          </h2>
           <div>
-            <Button brand onClick={this.handleGoToWallet}>Ready. Go to wallet</Button>
+            <Button brand onClick={this.handleGoToWallet}>
+              <FormattedMessage id="BTCMS_ConfirmTxGoToWallet" defaultMessage="Перейти в кошелек" />
+            </Button>
           </div>
           <pre>
             <code>
@@ -277,12 +294,16 @@ export default class Btc extends PureComponent {
         }
         { (action === 'linkready' || action === 'ready') && 
         <Fragment>
-          <h1>Create BTC-multisignature wallet</h1>
-          { action === 'linkready' && <h2>Wallet created. Send this link to other owner for confirm</h2> }
-          { action === 'ready' && <h2>Wallet created.</h2> }
+          <h1>
+            <FormattedMessage id="BTCMS_CreateWalletTitle" defaultMessage="Создание BTC-multisignature кошелька" />
+          </h1>
+          { action === 'linkready' && <h2><FormattedMessage id="BTCMS_CreateWalletLinkReady" defaultMessage="Кошелек создан. Отправьте эту ссылку второму владельцу для подтверждения" /></h2> }
+          { action === 'ready' && <h2><FormattedMessage id="BTCMS_CreateWalletReady" defaultMessage="Кошелек создан" /></h2> }
           { action === 'linkready' && <span>{joinLink}</span> }
           <div>
-            <Button brand onClick={this.handleGoToWallet}>Ready. Go to wallet</Button>
+            <Button brand onClick={this.handleGoToWallet}>
+              <FormattedMessage id="BTCMS_CreateWalletReadyButton" defaultMessage="Готово. Открыть кошелек" />
+            </Button>
           </div>
         </Fragment>
         }

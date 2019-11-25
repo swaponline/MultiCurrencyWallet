@@ -88,34 +88,8 @@ export default class WithdrawModalMultisigUser extends React.Component {
     this.actualyMinAmount()
   }
 
-  componentWillUpdate(nextProps, nextState) {
-    nextState.amount = this.fixDecimalCountETH(nextState.amount)
-  }
-
   componentWillUnmount() {
-    console.log('withdraw unmount')
     if (this.broadcastCancelFunc) this.broadcastCancelFunc()
-  }
-
-  fixDecimalCountETH = (amount) => {
-    if (this.props.data.currency === 'ETH' && BigNumber(amount).dp() > 18) {
-      const amountInt = BigNumber(amount).integerValue()
-      const amountDecimal = BigNumber(amount).mod(1)
-
-      const amountIntStr = amountInt.toString()
-      const amountDecimalStr = BigNumber(BigNumber(amountDecimal).toPrecision(15)).toString().substring(1)
-      const regexr = /[e+-]/g
-
-      const result = amountIntStr + amountDecimalStr
-
-      console.warn("To avoid [ethjs-unit]error: while converting number with more then 18 decimals to wei - you can't afford yourself add more than 18 decimals") // eslint-disable-line
-      if (regexr.test(result)) {
-        console.warn('And ofcourse you can not write number which can not be saved without an exponential notation in JS')
-        return 0
-      }
-      return result
-    }
-    return amount
   }
 
   getMinAmountForEthToken = () => {
@@ -132,18 +106,8 @@ export default class WithdrawModalMultisigUser extends React.Component {
   }
 
   actualyMinAmount = async () => {
-    const { data: { currency } } = this.props
-    const { isEthToken } = this.state
-
-    const currentCoin = currency.toLowerCase()
-
-    if (isEthToken) {
-      minAmount[currentCoin] = this.getMinAmountForEthToken()
-      minAmount.eth = await helpers.eth.estimateFeeValue({ method: 'send', speed: 'fast' })
-    }
-
-    if (constants.coinsWithDynamicFee.includes(currentCoin)) {
-      minAmount[currentCoin] = await helpers[currentCoin].estimateFeeValue({ method: 'send', speed: 'fast' })
+    if (constants.coinsWithDynamicFee.includes('btc')) {
+      minAmount['btc'] = await helpers['btc'].estimateFeeValue({ method: 'send', speed: 'fast' })
     }
   }
 
@@ -155,7 +119,6 @@ export default class WithdrawModalMultisigUser extends React.Component {
     const finalBalance = unconfirmedBalance !== undefined && unconfirmedBalance < 0
       ? new BigNumber(balance).plus(unconfirmedBalance).toString()
       : balance
-    const ethBalance = await actions.eth.getBalance()
 
     this.setState(() => ({
       balance: finalBalance,
@@ -173,42 +136,6 @@ export default class WithdrawModalMultisigUser extends React.Component {
     this.setState(() => ({
       exCurrencyRate,
     }))
-  }
-
-  handleConfirmSMS = async () => {
-    const { code } = this.state
-    const { address: to, amount } = this.state
-    const { data: { currency, address, balance }, name } = this.props
-    
-    const result = await actions.btcmultisig.confirmSMSProtected(code)
-    if (result && result.txid) {
-      actions.loader.hide()
-
-      actions.notifications.show(constants.notifications.SuccessWithdraw, {
-        amount,
-        currency,
-        address: to,
-      })
-      
-      actions.modals.close(name)
-    } else {
-      if (result
-        && result.error
-        && (result.error=='Fail broadcast')
-        && result.rawTX
-      ) {
-        const resBroatcast = await actions.btcmultisig.broadcastTx(result.rawTX)
-        actions.loader.hide()
-
-        actions.notifications.show(constants.notifications.SuccessWithdraw, {
-          amount,
-          currency,
-          address: to,
-        })
-        
-        actions.modals.close(name)
-      }
-    }
   }
 
   handleSubmit = async () => {
@@ -247,7 +174,6 @@ export default class WithdrawModalMultisigUser extends React.Component {
         currency: 'BTC'
       },
       () => {
-        console.log('Accepted')
         this.setState({
           step: 'rawlink',
           txRaw: result,
@@ -255,7 +181,6 @@ export default class WithdrawModalMultisigUser extends React.Component {
         })
       },
       () => {
-        console.log('Fail - need manual confirm')
         this.setState({
           step: 'rawlink',
           txRaw: result,
@@ -266,7 +191,7 @@ export default class WithdrawModalMultisigUser extends React.Component {
   }
 
     sellAllBalance = async () => {
-      const { amount, balance, currency, isEthToken } = this.state
+      const { amount, balance, currency } = this.state
       const { data } = this.props
 
       const minFee = minAmount.btc
@@ -282,17 +207,9 @@ export default class WithdrawModalMultisigUser extends React.Component {
       })
     }
 
-    isEthOrERC20() {
-      const { name, data, tokenItems }  = this.props
-      const { currency, ethBalance, isEthToken } = this.state
-      return (
-        (isEthToken === true && ethBalance < minAmount.eth) ? ethBalance < minAmount.eth : false
-      )
-    }
-
     addressIsCorrect() {
       const { data: { currency } } = this.props
-      const { address, isEthToken } = this.state
+      const { address } = this.state
 
       return typeforce.isCoinAddress.BTC(address)
     }
@@ -309,7 +226,7 @@ export default class WithdrawModalMultisigUser extends React.Component {
       })
     }
     render() {
-      const { address, amount, code, balance, isShipped, minus, ethBalance,
+      const { address, amount, code, balance, isShipped, minus,
         isEthToken, exCurrencyRate, currentDecimals, error, step, txRaw,
         isLinkCopied } = this.state
       const { name, data: { currency }, tokenItems, items, intl } = this.props
@@ -325,7 +242,7 @@ export default class WithdrawModalMultisigUser extends React.Component {
         || !this.addressIsCorrect()
         || BigNumber(amount).isGreaterThan(balance)
         || BigNumber(amount).dp() > currentDecimals
-        || this.isEthOrERC20()
+
       const NanReplacement = balance || '...'
       const getUsd = amount * exCurrencyRate
 
@@ -432,13 +349,6 @@ export default class WithdrawModalMultisigUser extends React.Component {
                   !linked.amount.error && (
                     <div styleName={minus ? 'rednote' : 'note'}>
                       <FormattedMessage id="WithdrawModal256" defaultMessage="No less than {minAmount}" values={{ minAmount: `${min}` }} />
-                    </div>
-                  )
-                }
-                {
-                  this.isEthOrERC20() && (
-                    <div styleName="rednote">
-                      <FormattedMessage id="WithdrawModal263" defaultMessage="You need {minAmount} ETH on your balance" values={{ minAmount: `${minAmount.eth}` }} />
                     </div>
                   )
                 }

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import cssModules from 'react-css-modules'
 import styles from './BTCMultisignRequest.scss'
-import { injectIntl } from 'react-intl'
+import { FormattedMessage, injectIntl } from 'react-intl'
 import Notification from 'components/notification/Notification/Notification'
 import { links }    from 'helpers'
 import actions from 'redux/actions'
@@ -24,8 +24,17 @@ export default class BTCMultisignRequest extends Component {
 
     return (
       <Notification name={name} onClick={this.handleClick}>
-        <div>BTC Multisig withdraw request incomming!</div>
-        Transfer <span styleName="value">{amount} {currency}</span> to {address}!
+        <div>
+          <FormattedMessage id="BTCMS_WithdrawRequest" defaultMessage="Запрос на отправку с кошелька BTC-multisign" />
+        </div>
+        <FormattedMessage 
+          id="BTCMS_WithdrawRequestInfo" 
+          defaultMessage="Отправка {amount} {currency} на кошелек {address}" 
+          values={{
+            amount,
+            currency,
+            address,
+          }} />
       </Notification>
     )
   }
