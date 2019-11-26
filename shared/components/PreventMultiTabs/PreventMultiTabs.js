@@ -45,6 +45,8 @@ export default class PreventMultiTabs extends Component {
             />
           )
         }
+        <br />
+        <br />
         <Button brand fullWidth onClick={this.handleSwitchClick}>
           <FormattedMessage
             id="PreventMultiTabsSwitchApp"
