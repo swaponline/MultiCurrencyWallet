@@ -56,6 +56,12 @@ export default class App extends React.Component {
 
     this.localStorageListener = null
 
+    this.prvMultiTab = {
+      reject: null,
+      enter: null,
+      switch: null,
+    }
+
     this.state = {
       fetching: false,
       multiTabs: false,
@@ -63,26 +69,72 @@ export default class App extends React.Component {
     }
   }
 
-  componentWillMount() {
-    const { currencies } = this.props
-    const myId = Date.now().toString()
-    localStorage.setItem(constants.localStorage.enter, myId)
+  generadeId(callback) {
+    const newId = Date.now().toString()
 
     this.setState({
-      appID: myId,
+      appID: newId,
+    }, () => {
+      callback(newId)
+    })
+  }
+
+  preventMultiTabs(isSwitch) {
+    this.generadeId((newId) => {
+      if (isSwitch) {
+        localStorage.setItem(constants.localStorage.switch, newId)
+      }
+
+      const onRejectHandle = () => {
+        const { appID } = this.state
+        const id = localStorage.getItem(constants.localStorage.reject)
+
+        if (id && id !== appID) {
+          this.setState({ multiTabs: true })
+          localStorage.unsubscribe(this.prvMultiTab.reject)
+          localStorage.unsubscribe(this.prvMultiTab.enter)
+          localStorage.unsubscribe(this.prvMultiTab.switch)
+          localStorage.removeItem(constants.localStorage.reject)
+        }
+      }
+
+      const onEnterHandle = () => {
+        const { appID } = this.state
+        const id = localStorage.getItem(constants.localStorage.enter)
+        const switchId = localStorage.getItem(constants.localStorage.switch)
+
+        if (switchId && switchId === id) return
+
+        localStorage.setItem(constants.localStorage.reject, appID)
+      }
+
+      const onSwitchHangle = () => {
+        const switchId = localStorage.getItem(constants.localStorage.switch)
+        const { appID } = this.state
+
+        if (appID !== switchId) {
+          this.setState({
+            multiTabs: true,
+          })
+          localStorage.unsubscribe(this.prvMultiTab.reject)
+          localStorage.unsubscribe(this.prvMultiTab.enter)
+          localStorage.unsubscribe(this.prvMultiTab.switch)
+        }
+      }
+
+      this.prvMultiTab.reject = localStorage.subscribe(constants.localStorage.reject, onRejectHandle)
+      this.prvMultiTab.enter = localStorage.subscribe(constants.localStorage.enter, onEnterHandle)
+      this.prvMultiTab.switch = localStorage.subscribe(constants.localStorage.switch, onSwitchHangle)
+      
+      localStorage.setItem(constants.localStorage.enter, newId)
     })
 
-    const enterSub = localStorage.subscribe(constants.localStorage.enter, () => {
-      localStorage.setItem(constants.localStorage.reject, myId)
-    })
-    const rejectSub = localStorage.subscribe(constants.localStorage.reject, (id) => {
-      if (id && id !== myId) {
-        this.setState({ multiTabs: true })
-        localStorage.unsubscribe(rejectSub)
-        localStorage.unsubscribe(enterSub)
-        localStorage.removeItem(constants.localStorage.reject)
-      }
-    })
+  }
+
+  componentWillMount() {
+    const { currencies } = this.props
+    
+    this.preventMultiTabs()
 
     const isWalletCreate = localStorage.getItem(constants.localStorage.isWalletCreate)
 
@@ -130,6 +182,13 @@ export default class App extends React.Component {
     }
   }
 
+  handleSwitchTab = () => {
+    this.setState({
+      multiTabs: false,
+    })
+    this.preventMultiTabs(true)
+  }
+
   render() {
     const { fetching, multiTabs, error } = this.state
     const { children, ethAddress, btcAddress, tokenAddress, history /* eosAddress */ } = this.props
@@ -145,7 +204,7 @@ export default class App extends React.Component {
     }
 
     if (multiTabs) {
-      return <PreventMultiTabs />
+      return <PreventMultiTabs onSwitchTab={this.handleSwitchTab} />
     }
 
     if (isFetching) {
