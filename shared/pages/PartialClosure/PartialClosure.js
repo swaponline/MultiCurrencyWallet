@@ -974,7 +974,7 @@ export default class PartialClosure extends Component {
     }, SeoValues)
 
 
-    console.log('usd', (maxAmount > 0 && isNonOffers) ? 0 : haveUsd)
+    //console.log('usd', (maxAmount > 0 && isNonOffers) ? 0 : haveUsd)
 
     const Form = (
       <div styleName={`${isWidgetBuild ? '' : 'section'}`} className={isWidgetLink ? 'section' : ''} >
