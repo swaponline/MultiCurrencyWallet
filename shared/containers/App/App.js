@@ -176,10 +176,6 @@ export default class App extends React.Component {
         </Fragment>
       )
 
-    return (
-      process.env.LOCAL === 'local'
-        ? (<HashRouter>{mainContent}</HashRouter>)
-        : mainContent
-    )
+    return <HashRouter>{mainContent}</HashRouter>
   }
 }
