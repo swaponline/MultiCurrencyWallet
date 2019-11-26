@@ -1,6 +1,7 @@
 export default {
   enter: 'enter',
   reject: 'reject',
+  destroy: 'destroy',
   wasOnWallet: 'wasOnWallet',
   didWalletCreated: 'didWalletCreated',
   savedOrders: 'savedOrders',

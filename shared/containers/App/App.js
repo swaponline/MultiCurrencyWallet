@@ -67,6 +67,11 @@ export default class App extends React.Component {
     const { currencies } = this.props
     const myId = Date.now().toString()
     localStorage.setItem(constants.localStorage.enter, myId)
+
+    this.setState({
+      appID: myId,
+    })
+
     const enterSub = localStorage.subscribe(constants.localStorage.enter, () => {
       localStorage.setItem(constants.localStorage.reject, myId)
     })

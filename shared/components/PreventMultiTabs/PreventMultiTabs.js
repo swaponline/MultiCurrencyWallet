@@ -2,11 +2,15 @@ import React from 'react'
 
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import { FormattedMessage } from 'react-intl'
-
+import Button from 'components/controls/Button/Button'
 import config from 'app-config'
 
 
 const isWidgetBuild = config && config.isWidget
+
+const handleSwitchApp = () => {
+  console.log('swith app tab')
+}
 
 const PreventMultiTabs = () => (
   <WidthContainer>
@@ -29,6 +33,12 @@ const PreventMultiTabs = () => (
         />
       )
     }
+    <Button brand fullWidth onClick={handleSwitchApp}>
+      <FormattedMessage
+        id="PreventMultiTabsSwitchApp"
+        defaultMessage="Закрыть другие вкладки и продолжить тут"
+      />
+    </Button>
   </WidthContainer>
 )
 export default PreventMultiTabs
