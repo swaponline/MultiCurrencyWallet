@@ -9,8 +9,9 @@ import { request, constants, api } from 'helpers'
 import btc from 'helpers/btc'
 import { Keychain } from 'keychain.js'
 import actions from 'redux/actions'
+import config from 'app-config'
 
-const protectSMSAPI = 'https://2fa.swaponline.site'
+
 
 const addWallet = (otherOwnerPublicKey) => {
   const { user: { btcMultisigData: { address, privateKey } } } = getState()
@@ -179,7 +180,7 @@ const beginRegister = async (phone) => {
   const { user: { btcMultisigData: { account, address, keyPair, publicKey } } } = getState()
   
   const sign = _getSign()
-  const result = await request.post(`${protectSMSAPI}/register/begin/`, {
+  const result = await request.post(`${config.api.btc2FAProtected}/register/begin/`, {
     body: {
       phone,
       address,
@@ -196,7 +197,7 @@ const confirmRegister = async (phone, smsCode) => {
   const { user: { btcMultisigData: { account, address, keyPair, publicKey } } } = getState()
   
   const sign = _getSign()
-  const result = await request.post(`${protectSMSAPI}/register/confirm/`, {
+  const result = await request.post(`${config.api.btc2FAProtected}/register/confirm/`, {
     body: {
       phone,
       address,
@@ -352,7 +353,7 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
   console.log('TX Hash:', txRaw.toHex())
   console.log('Send it to other owner for sign and broadcast')
   
-  const result = await request.post(`${protectSMSAPI}/push/`, {
+  const result = await request.post(`${config.api.btc2FAProtected}/push/`, {
     body: {
       address,
       publicKey: publicKey.toString('hex'),
@@ -368,7 +369,7 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
 const confirmSMSProtected = async ( smsCode ) => {
   const { user: { btcMultisigData: { address, privateKey, publicKeys, publicKey } } } = getState()
 
-  const result = await request.post(`${protectSMSAPI}/sign/`, {
+  const result = await request.post(`${config.api.btc2FAProtected}/sign/`, {
     body: {
       address,
       publicKey: publicKey.toString('hex'),
