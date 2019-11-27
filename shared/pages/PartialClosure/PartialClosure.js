@@ -99,15 +99,15 @@ const bannedPeers = {} // Пиры, которые отклонили запро
   addPartialItems,
   history: { swapHistory },
   core: { orders, hiddenCoinsList },
-  user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, ltcData /* usdtOmniData */},
+  user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, ltcData /* usdtOmniData */ },
 }) => ({
   currencies: isExchangeAllowed(currencies.partialItems),
   allCurrencyies: currencies.items,
   addSelectedItems: isExchangeAllowed(currencies.addPartialItems),
   orders: filterIsPartial(orders),
   allOrders: orders,
-  currenciesData: [ ethData, btcData, eosData, telosData, bchData, ltcData /* nimData, usdtOmniData */ ],
-  tokensData: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
+  currenciesData: [ethData, btcData, eosData, telosData, bchData, ltcData /* nimData, usdtOmniData */],
+  tokensData: [...Object.keys(tokensData).map(k => (tokensData[k]))],
   decline: rememberedOrders.savedOrders,
   hiddenCoinsList,
   userEthAddress: ethData.address,
@@ -136,7 +136,7 @@ export default class PartialClosure extends Component {
     bannedPeers[peerID] = Math.floor(new Date().getTime() / 1000) + bannedPeersTimeout
   }
 
-  static getDerivedStateFromProps({ allOrders, orders, history, match: { params: { buy, sell, locale } } }, { haveCurrency, getCurrency }) {
+  static getDerivedStateFromProps({ orders, match: { params } }, { haveCurrency, getCurrency }) {
 
     if (!Array.isArray(orders)) { return }
 
@@ -149,28 +149,31 @@ export default class PartialClosure extends Component {
     }
   }
 
-  constructor({ tokensData, allCurrencyies, currenciesData, match: { params: { buy, sell } }, intl: { locale }, history, decline, ...props }) {
-
+  constructor(props) {
+    const { tokensData, allCurrencyies, currenciesData, match, intl: { locale }, history, decline } = props
     super()
 
-    this.onRequestAnswer = (newOrder, isAccepted) => {}
+    this.onRequestAnswer = (newOrder, isAccepted) => { }
 
     const isRootPage = history.location.pathname === '/' || history.location.pathname === '/ru'
+    const { url, params: { buy, sell } } = match || { params: { buy: 'btc', sell: 'usdt' } }
 
     if (sell && buy && !isRootPage) {
+      console.log("come to 1st condition")
       if (!allCurrencyies.map(item => item.name).includes(sell.toUpperCase())
         || !allCurrencyies.map(item => item.name).includes(buy.toUpperCase())) {
         history.push(localisedUrl(locale, `${links.exchange}/usdt-to-btc`))
       }
     }
-
     const sellToken = sell || ((!isWidgetBuild) ? 'btc' : 'btc')
     const buyToken = buy || ((!isWidgetBuild) ? 'usdt' : config.erc20token)
 
     this.returnNeedCurrency(sellToken, buyToken)
 
     if (!(buy && sell) && !props.location.hash.includes('#widget') && !isRootPage) {
-      history.push(localisedUrl(locale, `${links.exchange}/${sellToken}-to-${buyToken}`))
+      if (url !== "/wallet") {
+        history.push(localisedUrl(locale, `${links.exchange}/${sellToken}-to-${buyToken}`))
+      }
     }
 
     this.wallets = {}
@@ -271,7 +274,7 @@ export default class PartialClosure extends Component {
   }
 
   checkUrl = () => {
-    const { match: { params }  } = this.props
+    const { match: { params } } = this.props
     const { getCurrency, haveCurrency } = this.state
 
     const buyValue = params.buy
@@ -414,7 +417,7 @@ export default class PartialClosure extends Component {
       this.banPeer(peer)
       this.getLinkTodeclineSwap(peer)
       this.setDeclinedOffer()
-    }, requestTimeoutLenght*1000 ) // 45 seconds wait until not skip and ban peer
+    }, requestTimeoutLenght * 1000) // 45 seconds wait until not skip and ban peer
 
     this.onRequestAnswer = (newOrder, isAccepted) => {
       clearTimeout(requestTimeout)
@@ -819,7 +822,7 @@ export default class PartialClosure extends Component {
     return this.doesComissionPreventThisOrder()
       && BigNumber(this.state.getAmount).isGreaterThan(0)
       && (this.state.haveAmount
-      && this.state.getAmount)
+        && this.state.getAmount)
   }
 
   changeBalance = (value) => {
@@ -876,7 +879,7 @@ export default class PartialClosure extends Component {
     const desclineOrders = decline.map(swapId => actions.core.getSwapById(swapId)).filter(el => {
       const { isFinished, isRefunded, isStoppedSwap } = el.flow.state
       // if timeout - skip this swap. for refund, if need - use history page
-      const lifeTimeout = el.checkTimeout(60 *60 * 3)
+      const lifeTimeout = el.checkTimeout(60 * 60 * 3)
       return isFinished || isRefunded || isStoppedSwap || lifeTimeout
     })
 
@@ -920,7 +923,7 @@ export default class PartialClosure extends Component {
     } = this.state
 
     const haveUsd = BigNumber(exHaveRate).times(haveAmount).dp(2, BigNumber.ROUND_CEIL)
-    const getUsd  = BigNumber(exGetRate).times(getAmount).dp(2, BigNumber.ROUND_CEIL)
+    const getUsd = BigNumber(exGetRate).times(getAmount).dp(2, BigNumber.ROUND_CEIL)
 
     const haveCurrencyData = currenciesData.find(item => item.currency === haveCurrency.toUpperCase())
     const haveTokenData = tokensData.find(item => item.currency === haveCurrency.toUpperCase())
@@ -1092,16 +1095,16 @@ export default class PartialClosure extends Component {
             && BigNumber(getAmount).isGreaterThan(0)
             && (this.state.haveAmount && this.state.getAmount)
           ) && (
-            <p styleName="error" className={isWidget ? 'error' : ''} >
-              <FormattedMessage
-                id="ErrorBtcLowAmount"
-                defaultMessage="This amount is too low"
-                values={{
-                  btcAmount: this.state.haveCurrency === 'btc' ? this.state.haveAmount : this.state.getAmount,
-                }}
-              />
-            </p>
-          )}
+              <p styleName="error" className={isWidget ? 'error' : ''} >
+                <FormattedMessage
+                  id="ErrorBtcLowAmount"
+                  defaultMessage="This amount is too low"
+                  values={{
+                    btcAmount: this.state.haveCurrency === 'btc' ? this.state.haveAmount : this.state.getAmount,
+                  }}
+                />
+              </p>
+            )}
           {
             BigNumber(estimatedFeeValues[haveCurrency]).isGreaterThan(0)
             && BigNumber(haveAmount).isGreaterThan(0)
@@ -1120,7 +1123,7 @@ export default class PartialClosure extends Component {
                   />
                   {
                     BigNumber(estimatedFeeValues[getCurrency]).isGreaterThan(0)
-                  && BigNumber(getAmount).isGreaterThan(0)
+                      && BigNumber(getAmount).isGreaterThan(0)
                       ? (
                         <Fragment>
                           {` `}
@@ -1219,7 +1222,7 @@ export default class PartialClosure extends Component {
               <FormattedMessage id="partial544" defaultMessage="Order book" />
             </Button>
           </div>
-          <a href="https://seven.swap.online/widget-service/generator/" target="_blank"  rel="noopener noreferrer" styleName="widgetLink">
+          <a href="https://seven.swap.online/widget-service/generator/" target="_blank" rel="noopener noreferrer" styleName="widgetLink">
             <FormattedMessage id="partial1021" defaultMessage="Embed on website" />
           </a>
         </div>
@@ -1263,7 +1266,7 @@ export default class PartialClosure extends Component {
           <Quote />
           <FAQ />
           <div styleName="referralText">
-            <Referral address={userEthAddress}/>
+            <Referral address={userEthAddress} />
           </div>
         </div >
       )
