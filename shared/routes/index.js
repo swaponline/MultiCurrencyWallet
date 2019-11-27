@@ -1,7 +1,7 @@
-import React        from 'react'
-import { Route }    from 'react-router'
-import { Switch }   from 'react-router-dom'
-import { links }    from 'helpers'
+import React from 'react'
+import { Route } from 'react-router'
+import { Switch } from 'react-router-dom'
+import { links } from 'helpers'
 import { localisePrefix } from 'helpers/locale'
 
 import SwapComponent    from 'pages/Swap/Swap'
@@ -16,6 +16,7 @@ import Currency         from 'pages/Currency/Currency'
 import PartialClosure   from 'pages/PartialClosure/PartialClosure'
 import CurrencyWallet   from 'pages/CurrencyWallet/CurrencyWallet'
 import IEO   from 'pages/IEO/IEO'
+import BtcMultisignProcessor from 'pages/Multisign/Btc/Btc'
 
 import config from 'app-config'
 
@@ -38,7 +39,10 @@ const routes = (
       <Route path={`${localisePrefix}${links.wallet}`} component={Wallet} />
       <Route path={`${localisePrefix}${links.history}`} component={History} />
       <Route path={`${localisePrefix}${links.createWallet}`} component={CreateWallet} />
+      <Route path={`${localisePrefix}${links.createWallet}${links.home}:currency`} component={CreateWallet} />
 
+      <Route path={`${localisePrefix}${links.multisign}/btc/:action/:data/:peer`} component={BtcMultisignProcessor} />
+      <Route path={`${localisePrefix}${links.multisign}/btc/:action/:data`} component={BtcMultisignProcessor} />
 
       <Route path={`${localisePrefix}${links.ieo}`} component={IEO} />
       <Route exact path={`${localisePrefix}${links.notFound}`} component={NotFound} />

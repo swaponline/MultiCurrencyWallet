@@ -34,7 +34,8 @@ import dollar from '../images/dollar.svg'
   user: {
     ethData,
     btcData,
-    btcMultisigData,
+    btcMultisigSMSData,
+    btcMultisigUserData,
     bchData,
     eosData,
     telosData,
@@ -50,7 +51,8 @@ import dollar from '../images/dollar.svg'
   currencies,
   item: [
     btcData,
-    btcMultisigData,
+    btcMultisigSMSData,
+    btcMultisigUserData,
     ethData,
     eosData,
     telosData,
@@ -143,12 +145,18 @@ export default class Row extends Component {
       isBalanceFetching: true,
     })
 
-    const { item: { currency } } = this.props
-    let actionProcessor = currency.toLowerCase()
-    if (currency === 'BTC (SMS-Protected)') actionProcessor = 'btc'
-    if (currency === 'BTC (Multisign)') actionProcessor = 'btc'
+    const { item: { currency, address } } = this.props
 
-    await actions[actionProcessor].getBalance(currency.toLowerCase())
+    switch (currency) {
+      case 'BTC (SMS-Protected)':
+        await actions.btcmultisig.getBalance()
+        break;
+      case 'BTC (Multisig)':
+        await actions.btcmultisig.getBalanceUser()
+        break
+      default:
+        await actions[currency.toLowerCase()].getBalance(currency.toLowerCase(), address)
+    }
 
     this.setState(() => ({
       isBalanceFetching: false,
@@ -176,7 +184,7 @@ export default class Row extends Component {
     let currencySymbol = currency
     // BTC SMS Protected and BTC-Multisign
     if (currencySymbol === 'BTC (SMS-Protected)') currencySymbol = 'BTC'
-    if (currencySymbol === 'BTC (Multisign)') currencySymbol = 'BTC'
+    if (currencySymbol === 'BTC (Multisig)') currencySymbol = 'BTC'
 
     const exCurrencyRate = await actions.user.getExchangeRate(currencySymbol, 'usd')
 
@@ -244,7 +252,8 @@ export default class Row extends Component {
     } = this.props
 
     let withdrawModalType = constants.modals.Withdraw
-    if (currency === 'BTC (SMS-Protected)') withdrawModalType = constants.modals.WithdrawMultisig
+    if (currency === 'BTC (SMS-Protected)') withdrawModalType = constants.modals.WithdrawMultisigSMS
+    if (currency === 'BTC (Multisig)') withdrawModalType = constants.modals.WithdrawMultisigUser
 
     actions.modals.open(withdrawModalType, {
       currency,
@@ -280,7 +289,7 @@ export default class Row extends Component {
   handleGoTrade = (currency) => {
     const { intl: { locale }, decline } = this.props
 
-    const pair = currency.toUpperCase() === 'btc' ? 'eth' : 'btc'
+    const pair = currency.toLowerCase() === 'btc' ? 'eth' : 'btc'
 
     if (decline.length === 0) {
       window.scrollTo(0, 0)
@@ -313,6 +322,10 @@ export default class Row extends Component {
 
   handleActivateProtected = async () => {
     actions.modals.open( constants.modals.RegisterSMSProtected, {} )
+  }
+
+  handleGenerateMultisignLink = async () => {
+    actions.modals.open( constants.modals.MultisignJoinLink, {} )
   }
 
   handleTelosActivate = async () => {
@@ -413,25 +426,26 @@ export default class Row extends Component {
 
     let dropDownMenuItems = [
       {
-        id: 1,
+        id: 1001,
         title: 'Deposit',
         action: this.handleReceive,
         disabled: false,
       },
       {
-        id: 2,
+        id: 1002,
         title: 'Send',
         action: this.handleWithdraw,
         disabled: isBalanceEmpty,
       },
       {
-        id: 3,
+        id: 1003,
         title: 'History',
         action: this.goToHistory,
         disabled: false
       }
     ]
 
+    console.log(this.props.item)
     if (this.props.item.isSmsProtected && !this.props.item.isRegistered) {
       currencyView = 'Not activated'
       dropDownMenuItems = [{
@@ -441,6 +455,20 @@ export default class Row extends Component {
         disabled: false,
       }]
     }
+    if (this.props.item.isUserProtected) {
+      if (!this.props.item.active) {
+        currencyView = 'Not joined'
+        dropDownMenuItems = []
+      }
+      dropDownMenuItems.push({
+        id: 3,
+        title: 'Generate join link',
+        action: this.handleGenerateMultisignLink,
+        disabled: false,
+      })
+    }
+    
+    if (currencyView == 'BTC (Multisig)') currencyView = 'BTC'
     if (currencyView == 'BTC (SMS-Protected)') currencyView = 'BTC'
 
     return (
@@ -472,9 +500,15 @@ export default class Row extends Component {
               <span>
               {
                 !isBalanceFetched || isBalanceFetching ? (
-                  <div styleName="loader">
-                    <InlineLoader />
-                  </div>
+                  this.props.item.isUserProtected && !this.props.item.active ? (
+                    <span>
+                      <FormattedMessage id="walletMultisignNotJoined" defaultMessage="Not joined" />
+                    </span>
+                  ) : (
+                    <div styleName="loader">
+                      <InlineLoader />
+                    </div>
+                  )
                 ) : (
                   <div styleName="no-select-inline" onClick={this.handleReloadBalance} >
                     <i className="fas fa-sync-alt" styleName="icon" />
@@ -484,7 +518,7 @@ export default class Row extends Component {
                       }{' '}
                     </span>
                     <span>{currencyView}</span>
-                    {(currency === 'BTC' || currency === 'BTC (SMS-Protected)') && unconfirmedBalance !== 0 && (
+                    { unconfirmedBalance > 0 && (
                       <Fragment>
                         <br />
                         <span styleName="unconfirmedBalance">
@@ -493,33 +527,6 @@ export default class Row extends Component {
                         </span>
                       </Fragment>
                     ) }
-                    { currency === 'BCH' && unconfirmedBalance !== 0 && (
-                      <Fragment>
-                        <br />
-                        <span styleName="unconfirmedBalance">
-                          <FormattedMessage id="RowWallet181" defaultMessage="Unconfirmed balance" />
-                          {unconfirmedBalance} {' '}
-                        </span>
-                      </Fragment>
-                    ) }
-                    { currency === 'LTC' && unconfirmedBalance !== 0 && (
-                      <Fragment>
-                        <br />
-                        <span styleName="unconfirmedBalance">
-                          <FormattedMessage id="RowWallet189" defaultMessage="Unconfirmed balance" />
-                          {unconfirmedBalance}
-                        </span>
-                      </Fragment>
-                    ) }
-                    {/* currency === 'USDT' && unconfirmedBalance !== 0 && (
-                      <Fragment>
-                        <br />
-                        <span styleName="unconfirmedBalance">
-                          <FormattedMessage id="RowWallet197" defaultMessage="Unconfirmed balance" />
-                          {unconfirmedBalance}
-                        </span>
-                      </Fragment>
-                    ) */}
                   </div>
                 )
               }

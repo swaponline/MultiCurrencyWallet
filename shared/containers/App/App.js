@@ -125,7 +125,7 @@ export default class App extends React.Component {
       this.prvMultiTab.reject = localStorage.subscribe(constants.localStorage.reject, onRejectHandle)
       this.prvMultiTab.enter = localStorage.subscribe(constants.localStorage.enter, onEnterHandle)
       this.prvMultiTab.switch = localStorage.subscribe(constants.localStorage.switch, onSwitchHangle)
-      
+
       localStorage.setItem(constants.localStorage.enter, newId)
     })
 
@@ -133,14 +133,14 @@ export default class App extends React.Component {
 
   componentWillMount() {
     const { currencies } = this.props
-    
+
     this.preventMultiTabs()
 
     const isWalletCreate = localStorage.getItem(constants.localStorage.isWalletCreate)
 
-    if(!isWalletCreate) {
+    if (!isWalletCreate) {
       currencies.forEach(({ name }) => {
-        if(name !== "BTC") {
+        if (name !== "BTC") {
           actions.core.markCoinAsHidden(name)
         }
       })
@@ -218,7 +218,7 @@ export default class App extends React.Component {
           <Core />
           <RequestLoader />
           <ModalConductor />
-          <NotificationConductor />
+          <NotificationConductor history={history} />
         </Fragment>
       )
       : (
@@ -236,7 +236,7 @@ export default class App extends React.Component {
           <Footer />
           <RequestLoader />
           <ModalConductor />
-          <NotificationConductor />
+          <NotificationConductor history={history} />
         </Fragment>
       )
 

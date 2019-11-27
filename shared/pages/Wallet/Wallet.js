@@ -38,7 +38,8 @@ const walletNav = ['My balances', 'Transactions'];
   user: {
     ethData,
     btcData,
-    btcMultisigData,
+    btcMultisigSMSData,
+    btcMultisigUserData,
     bchData,
     tokensData,
     eosData,
@@ -63,24 +64,26 @@ const walletNav = ['My balances', 'Transactions'];
       ethData,
       // usdtOmniData,
     ] : [
-        btcData,
-        btcMultisigData,
-        bchData,
-        ethData,
-        eosData,
-        telosData,
-        ltcData,
-        // qtumData,
-        // usdtOmniData,
-        // nimData,
-        // xlmData,
-      ]
+      btcData,
+      btcMultisigSMSData,
+      btcMultisigUserData,
+      bchData,
+      ethData,
+      eosData,
+      telosData,
+      ltcData,
+      // qtumData,
+      // usdtOmniData,
+      // nimData,
+      // xlmData,
+    ]
   )
     .map(data => data.currency)
 
   const currencyBalance = [
     btcData,
-    btcMultisigData,
+    btcMultisigSMSData,
+    btcMultisigUserData,
     bchData,
     ethData,
     eosData,
@@ -107,7 +110,8 @@ const walletNav = ['My balances', 'Transactions'];
     tokensData: {
       ethData,
       btcData,
-      btcMultisigData,
+      btcMultisigSMSData,
+      btcMultisigUserData,
       bchData,
       ltcData,
       eosData,
@@ -133,7 +137,6 @@ export default class Wallet extends Component {
   }
 
   componentWillMount() {
-    console.log(this.props)
     console.log('BTC-Protected', this.props.btcMultisigData)
     actions.user.getBalances()
   }

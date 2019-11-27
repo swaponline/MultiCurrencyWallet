@@ -12,6 +12,8 @@ export const open = (state, { name, data = {} }) => ({
   },
 })
 
+export const closeAll = (state) => { return {} }
+
 export const close = (state, name) => {
   const { [name]: closingModal, ...otherModals } = state
 
