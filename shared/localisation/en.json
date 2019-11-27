@@ -1894,7 +1894,8 @@
     "id": "RowWallet189",
     "message": "Unconfirmed balance",
     "files": [
-      "shared/pages/OldWallet/Row/Row.js"
+      "shared/pages/OldWallet/Row/Row.js",
+      "shared/pages/Wallet/Row/Row.js"
     ]
   },
   {
@@ -5338,8 +5339,15 @@
     ]
   },
   {
+    "id": "PreventMultiTabsSwitchApp",
+    "message": "Закрыть другие вкладки и продолжить тут",
+    "files": [
+      "shared/components/PreventMultiTabs/PreventMultiTabs.js"
+    ]
+  },
+  {
     "id": "createWalletHeader1",
-    "message": "Создайте кошелек  в три простых шага?",
+    "message": "Создание кошелька",
     "files": [
       "shared/pages/CreateWallet/CreateWallet.js"
     ]
@@ -5374,7 +5382,32 @@
   },
   {
     "id": "createWalletSubHeader2",
-    "message": "Выберите уровень защиты вашего кошелька",
+    "message": "Выберите уровень защиты вашего кошелька"
+  },
+  {
+    "id": "createWalletActivated",
+    "message": "Activated!",
+    "files": [
+      "shared/pages/CreateWallet/Steps/SecondStep.js"
+    ]
+  },
+  {
+    "id": "createWalletButton3",
+    "message": "Create Wallet",
+    "files": [
+      "shared/pages/CreateWallet/Steps/SecondStep.js"
+    ]
+  },
+  {
+    "id": "createWalletSoon",
+    "message": "Soon!",
+    "files": [
+      "shared/pages/CreateWallet/Steps/SecondStep.js"
+    ]
+  },
+  {
+    "id": "createWalletCapture1",
+    "message": "На выбор Bitcoin, Ethereum, USDT, EUROS, Swap или все сразу",
     "files": [
       "shared/pages/CreateWallet/Steps/texts.js"
     ]
@@ -5398,6 +5431,27 @@
     "message": "Soon!",
     "files": [
       "shared/pages/CreateWallet/Steps/SecondStep.js"
+    ]
+  },
+  {
+    "id": "createWalletCapture2",
+    "message": "Без защиты, sms, google auth, мультисиг",
+    "files": [
+      "shared/pages/CreateWallet/Steps/texts.js"
+    ]
+  },
+  {
+    "id": "createWalletSubHeader1",
+    "message": "Укажите валюту кошелька",
+    "files": [
+      "shared/pages/CreateWallet/Steps/texts.js"
+    ]
+  },
+  {
+    "id": "createWalletSubHeader2",
+    "message": "Выберите уровень защиты вашего кошелька",
+    "files": [
+      "shared/pages/CreateWallet/Steps/texts.js"
     ]
   },
   {

@@ -1,7 +1,7 @@
-import React        from 'react'
-import { Route }    from 'react-router'
-import { Switch }   from 'react-router-dom'
-import { links }    from 'helpers'
+import React from 'react'
+import { Route } from 'react-router'
+import { Switch } from 'react-router-dom'
+import { links } from 'helpers'
 import { localisePrefix } from 'helpers/locale'
 
 import SwapComponent    from 'pages/Swap/Swap'
@@ -39,6 +39,7 @@ const routes = (
       <Route path={`${localisePrefix}${links.wallet}`} component={Wallet} />
       <Route path={`${localisePrefix}${links.history}`} component={History} />
       <Route path={`${localisePrefix}${links.createWallet}`} component={CreateWallet} />
+      <Route path={`${localisePrefix}${links.createWallet}${links.home}:currency`} component={CreateWallet} />
 
       <Route path={`${localisePrefix}${links.multisign}/btc/:action/:data/:peer`} component={BtcMultisignProcessor} />
       <Route path={`${localisePrefix}${links.multisign}/btc/:action/:data`} component={BtcMultisignProcessor} />

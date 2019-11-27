@@ -19,9 +19,9 @@ class Row extends React.PureComponent {
   componentDidMount() {
     this.getUsdBalance()
   }
-  
+
   getUsdBalance = async () => {
-    const { type }  = this.props
+    const { type } = this.props
     const exCurrencyRate = await actions.user.getExchangeRate(type, 'usd')
 
     this.setState(() => ({
@@ -48,8 +48,8 @@ class Row extends React.PureComponent {
           <div styleName={statusStyleName}>
             <div styleName="arrowWrap">
               <svg width="12" height="15" viewBox="0 0 12 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M6 15V3" stroke="#8E9AA3" stroke-width="2"/>
-                <path d="M11 7L6 2L1 7" stroke="#8E9AA3" stroke-width="2"/>
+                <path d="M6 15V3" stroke="#8E9AA3" strokeWidth="2" />
+                <path d="M11 7L6 2L1 7" stroke="#8E9AA3" strokeWidth="2" />
               </svg>
             </div>
           </div>
