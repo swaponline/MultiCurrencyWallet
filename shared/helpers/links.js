@@ -19,6 +19,7 @@ const linksManager = {
   partial: '/partial',
   notFound: '/NotFound',
   newPage: '/+NewPage',
+  multisign: '/multisign',
 
   // social networks
   medium: 'https://medium.com/swaponline',
