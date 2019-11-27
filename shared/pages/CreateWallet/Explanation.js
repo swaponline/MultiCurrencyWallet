@@ -11,9 +11,9 @@ import { color } from './chooseColor'
 import check from './images/check'
 
 
-const Explanation = ({ subHeaderText, children, step, createWallet: { step: stepNum }, notMain }) => (
+const Explanation = ({ subHeaderText, children, step, createWallet: { step: stepNum }, notMain, isShow }) => (
   <div styleName={`inLine ${notMain ? 'notMain' : ''}`}>
-    {!isMobile &&
+    {!isMobile && !isShow &&
       <div styleName={`stepNumber ${color(step, stepNum)}`}>
         {stepNum > step ? check() : step}
       </div>
