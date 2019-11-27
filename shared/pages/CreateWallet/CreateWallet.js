@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import CSSModules from 'react-css-modules'
 import styles from './CreateWallet.scss'
@@ -21,26 +21,42 @@ import SecondStep from './Steps/SecondStep'
 import { color } from './chooseColor'
 import { constants, localStorage } from 'helpers'
 
+
 const styleBtn = { backgroundColor: '#f0eefd', color: '#6144E5' }
 const defaultColors = { backgroundColor: '#6144E5' }
 
 const CreateWallet = (props) => {
-  const { history, intl: { locale }, createWallet: { usersData: { eMail }, currencies, secure }, createWallet } = props
+  const { history, intl: { locale }, createWallet: { usersData: { eMail }, currencies, secure }, location: { pathname } } = props
+  const allCurrencies = props.currencies.items
+
+  useEffect(
+    () => {
+      const singleCurrecny = pathname.split('/')[2]
+
+      if (singleCurrecny) {
+
+        const hiddenList = localStorage.getItem('hiddenCoinsList')
+
+        if (!hiddenList.includes(singleCurrecny.toUpperCase())) {
+          setExist(true)
+        }
+      }
+    },
+    [pathname],
+  )
 
   const [step, setStep] = useState(1)
   const [error, setError] = useState('Choose something')
-
+  const [isExist, setExist] = useState(false)
   const steps = [1, 2]
-
 
   const handleClick = () => {
     setError(null)
-
-    if (step !== 2) {
+    if (step !== 2 && !singleCurrecnyData) {
       reducers.createWallet.newWalletData({ type: 'step', data: step + 1 })
       return setStep(step + 1)
     }
-    localStorage.setItem(constants.localStorage.isWalletCreate,true)
+    localStorage.setItem(constants.localStorage.isWalletCreate, true)
     history.push(localisedUrl(locale, '/wallet'))
   }
 
@@ -52,11 +68,12 @@ const CreateWallet = (props) => {
       return
     }
 
-    if (!secure.length && step === 2) {
+    if (!secure.length && (step === 2 || singleCurrecnyData)) {
       setError('Choose something')
       return
     }
-    if (step === 2) {
+    if (step === 2 || singleCurrecnyData) {
+
       switch (secure) {
         case 'withoutSecure':
           Object.keys(currencies).forEach(el => {
@@ -64,31 +81,50 @@ const CreateWallet = (props) => {
               actions.core.markCoinAsVisible(el.toUpperCase())
             }
           })
-          break;
+          handleClick()
+          break
         case 'sms':
           if (currencies.btc) {
-            actions.modals.open( constants.modals.RegisterSMSProtected, {
+            actions.modals.open(constants.modals.RegisterSMSProtected, {
               callback: () => {
                 actions.core.markCoinAsVisible('BTC (SMS-Protected)')
                 handleClick()
-              }
-            } )
-            return;
+              },
+            })
+            return
           }
-          break;
+          break
+        default:
+          console.warn('unconnected secure type')
       }
     }
-
     handleClick()
   }
 
+  const singleCurrecny = pathname.split('/')[2]
+  let singleCurrecnyData
+
+  if (singleCurrecny) {
+    singleCurrecnyData = allCurrencies.find(({ name }) => name === singleCurrecny.toUpperCase())
+    if (singleCurrecnyData) {
+      currencies[singleCurrecny.toLowerCase()] = true
+    }
+  }
+
+  if (isExist) {
+    return (
+      <div styleName="isExist">
+        <FormattedMessage id="createWalletIsExist" defaultMessage="Вы уже создали кошелек" />
+      </div>
+    )
+  }
   return (
     <div styleName="wrapper">
       <div styleName={isMobile ? 'mobileFormBody' : 'formBody'}>
         <h2>
           <FormattedMessage
             id="createWalletHeader1"
-            defaultMessage="Создайте кошелек  в три простых шага?"
+            defaultMessage="Создание кошелька"
           />
         </h2>
         {isMobile &&
@@ -100,14 +136,18 @@ const CreateWallet = (props) => {
             ))}
           </div>
         }
-        <div>
-          {step === 1 && <FirstStep error={error} onClick={validate} setError={setError} />}
-          {step === 2 && <SecondStep error={error} onClick={validate} currencies={currencies} setError={setError} />}
-        </div>
+        {singleCurrecnyData ?
+          <SecondStep error={error} onClick={validate} currencies={currencies} setError={setError} singleCurrecnyData /> :
+          <div>
+            {step === 1 && <FirstStep error={error} onClick={validate} setError={setError} />}
+            {step === 2 && <SecondStep error={error} onClick={validate} currencies={currencies} setError={setError} />}
+          </div>
+        }
       </div>
     </div>
   )
 }
 export default connect({
   createWallet: 'createWallet',
+  currencies: 'currencies',
 })(injectIntl(withRouter(CSSModules(CreateWallet, styles, { allowMultiple: true }))))

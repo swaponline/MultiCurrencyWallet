@@ -16,7 +16,8 @@ import actions from 'redux/actions'
 
 import Explanation from '../Explanation'
 import icons from '../images'
-import { subHeaderText1,
+import {
+  subHeaderText1,
   cupture1,
   subHeaderText2,
   cupture2,
@@ -24,7 +25,7 @@ import { subHeaderText1,
 
 
 const CreateWallet = (props) => {
-  const { intl: { locale }, onClick, currencies, error, setError } = props
+  const { intl: { locale }, onClick, currencies, error, setError, singleCurrecnyData } = props
 
   const _protection = {
     nothing: {
@@ -85,7 +86,7 @@ const CreateWallet = (props) => {
       enabled: true,
       activated: false,
     },
-    { 
+    {
       text: 'SMS',
       name: 'sms',
       capture: locale === 'en' ? 'transactions are confirmed by SMS code' : 'Транзакции подтверждаются кодом по SMS',
@@ -114,7 +115,7 @@ const CreateWallet = (props) => {
 
   return (
     <div>
-      {!isMobile &&
+      {!isMobile && !singleCurrecnyData &&
         <div>
           <Explanation subHeaderText={subHeaderText1()} step={1} notMain>
             {cupture1()}
@@ -123,14 +124,14 @@ const CreateWallet = (props) => {
       }
       <div>
         <div>
-          <Explanation subHeaderText={subHeaderText2()} step={2}>
+          <Explanation subHeaderText={subHeaderText2()} step={2} isShow={singleCurrecnyData}>
             {cupture2()}
           </Explanation>
           <div styleName="currencyChooserWrapper currencyChooserWrapperSecond">
             {coins.map((el, index) => {
               const { name, capture, text, enabled, activated } = el
 
-              const cardStyle = [ 'card', 'secureSize', 'thirdCard' ]
+              const cardStyle = ['card', 'secureSize', 'thirdCard']
 
               if (border.color[name] && enabled) cardStyle.push('purpleBorder')
               if (!enabled) cardStyle.push('cardDisabled')
@@ -145,8 +146,8 @@ const CreateWallet = (props) => {
                 >
                   {(!enabled || activated) &&
                     <em>
-                      {!activated && <FormattedMessage id="createWalletSoon" defaultMessage="Soon!" /> }
-                      {activated && <FormattedMessage id="createWalletActivated" defaultMessage="Activated!" /> }
+                      {!activated && <FormattedMessage id="createWalletSoon" defaultMessage="Soon!" />}
+                      {activated && <FormattedMessage id="createWalletActivated" defaultMessage="Activated!" />}
                     </em>
                   }
                   <img
