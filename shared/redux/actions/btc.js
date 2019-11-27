@@ -9,6 +9,7 @@ import { btc, request, constants, api } from 'helpers'
 import { Keychain } from 'keychain.js'
 import actions from 'redux/actions'
 
+window.bitcoinjs = bitcoin
 
 const login = (privateKey) => {
   let keyPair
@@ -40,6 +41,7 @@ const login = (privateKey) => {
   }
 
   window.getBtcAddress = () => data.address
+  window.getBtcData = () => data
 
   console.info('Logged in with Bitcoin', data)
   reducers.user.setAuthData({ name: 'btcData', data })
