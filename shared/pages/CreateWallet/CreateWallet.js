@@ -87,9 +87,11 @@ const CreateWallet = (props) => {
   }
 
   const singleCurrecny = pathname.split('/')[2]
-  const singleCurrecnyData = allCurrencies.find(({ name }) => name === singleCurrecny && singleCurrecny.toUpperCase())
+  let singleCurrecnyData
 
-  if (singleCurrecnyData) {
+  if (singleCurrecny) {
+    singleCurrecnyData = allCurrencies.find(({ name }) => name === singleCurrecny.toUpperCase())
+
     currencies[singleCurrecny.toLowerCase()] = true
   }
 
