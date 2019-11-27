@@ -1,21 +1,21 @@
-import React        from 'react'
-import { Route }    from 'react-router'
-import { Switch }   from 'react-router-dom'
-import { links }    from 'helpers'
+import React from 'react'
+import { Route } from 'react-router'
+import { Switch } from 'react-router-dom'
+import { links } from 'helpers'
 import { localisePrefix } from 'helpers/locale'
 
-import SwapComponent    from 'pages/Swap/Swap'
-import Home             from 'pages/Home/Home'
-import OldWallet        from 'pages/OldWallet/Wallet'
-import History          from 'pages/History/History'
-import CreateWallet     from 'pages/CreateWallet/CreateWallet'
-import NotFound         from 'pages/NotFound/NotFound'
-import About            from 'pages/About/About'
-import Wallet           from 'pages/Wallet/Wallet'
-import Currency         from 'pages/Currency/Currency'
-import PartialClosure   from 'pages/PartialClosure/PartialClosure'
-import CurrencyWallet   from 'pages/CurrencyWallet/CurrencyWallet'
-import IEO   from 'pages/IEO/IEO'
+import SwapComponent from 'pages/Swap/Swap'
+import Home from 'pages/Home/Home'
+import OldWallet from 'pages/OldWallet/Wallet'
+import History from 'pages/History/History'
+import CreateWallet from 'pages/CreateWallet/CreateWallet'
+import NotFound from 'pages/NotFound/NotFound'
+import About from 'pages/About/About'
+import Wallet from 'pages/Wallet/Wallet'
+import Currency from 'pages/Currency/Currency'
+import PartialClosure from 'pages/PartialClosure/PartialClosure'
+import CurrencyWallet from 'pages/CurrencyWallet/CurrencyWallet'
+import IEO from 'pages/IEO/IEO'
 
 import config from 'app-config'
 
@@ -38,6 +38,7 @@ const routes = (
       <Route path={`${localisePrefix}${links.wallet}`} component={Wallet} />
       <Route path={`${localisePrefix}${links.history}`} component={History} />
       <Route path={`${localisePrefix}${links.createWallet}`} component={CreateWallet} />
+      <Route path={`${localisePrefix}${links.createWallet}${links.home}:currency`} component={CreateWallet} />
 
 
       <Route path={`${localisePrefix}${links.ieo}`} component={IEO} />

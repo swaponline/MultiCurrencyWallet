@@ -50,7 +50,7 @@ const walletNav = ['My balances', 'Transactions'];
 }) => {
   const tokens = (
     config && config.isWidget
-      ? [ config.erc20token.toUpperCase() ]
+      ? [config.erc20token.toUpperCase()]
       : Object.keys(tokensData).map(k => tokensData[k].currency)
   )
 
@@ -60,18 +60,18 @@ const walletNav = ['My balances', 'Transactions'];
       ethData,
       // usdtOmniData,
     ] : [
-      btcData,
-      btcMultisigData,
-      bchData,
-      ethData,
-      eosData,
-      telosData,
-      ltcData,
-      // qtumData,
-      // usdtOmniData,
-      // nimData,
-      // xlmData,
-    ]
+        btcData,
+        btcMultisigData,
+        bchData,
+        ethData,
+        eosData,
+        telosData,
+        ltcData,
+        // qtumData,
+        // usdtOmniData,
+        // nimData,
+        // xlmData,
+      ]
   )
     .map(data => data.currency)
 
@@ -130,8 +130,7 @@ export default class Wallet extends Component {
   }
 
   componentWillMount() {
-    console.log(this.props)
-    console.log('BTC-Protected',this.props.btcMultisigData)
+    console.log('BTC-Protected', this.props.btcMultisigData)
     actions.user.getBalances()
   }
 
@@ -210,7 +209,7 @@ export default class Wallet extends Component {
                     balance: btcBalance.balance * res.price_btc
                   })
                 }
-              } catch (e) {}
+              } catch (e) { }
             }
           })
           this.setState({
@@ -224,10 +223,10 @@ export default class Wallet extends Component {
       )
   }
 
-   goToRegister = () => {
-     const { history, intl: { locale } } = this.props
-     history.push(localisedUrl(locale, '/createWallet'))
-   }
+  goToRegister = () => {
+    const { history, intl: { locale } } = this.props
+    history.push(localisedUrl(locale, '/createWallet'))
+  }
 
   render() {
     const {
@@ -250,10 +249,10 @@ export default class Wallet extends Component {
     let btcBalance = 0;
     let usdBalance = 0;
 
-    
-    const tableRows = [ ...items, ...tokens ].filter(currency => !hiddenCoinsList.includes(currency))
 
-    if(infoAboutCurrency) {
+    const tableRows = [...items, ...tokens].filter(currency => !hiddenCoinsList.includes(currency))
+
+    if (infoAboutCurrency) {
       infoAboutCurrency.forEach(item => {
         btcBalance += item.balance
         usdBalance = btcBalance * exCurrencyRate;
@@ -267,28 +266,28 @@ export default class Wallet extends Component {
         <h3 styleName="walletHeading">Wallet</h3>
         {
           isSigned && !isPrivateKeysSaved &&
-            <NotifyBlock
-              className="notifyBlockSaveKeys"
-              descr="Before you continue be sure to save your private keys!"
-              tooltip="We do not store your private keys and will not be able to restore them"
-              icon={security}
-              firstBtn="Show my keys"
-              firstFunc={this.handleShowKeys}
-              secondBtn="I saved my keys" 
-              secondFunc={this.handleSaveKeys}
-              /> 
+          <NotifyBlock
+            className="notifyBlockSaveKeys"
+            descr="Before you continue be sure to save your private keys!"
+            tooltip="We do not store your private keys and will not be able to restore them"
+            icon={security}
+            firstBtn="Show my keys"
+            firstFunc={this.handleShowKeys}
+            secondBtn="I saved my keys"
+            secondFunc={this.handleSaveKeys}
+          />
         }
         {
           !isSigned && <NotifyBlock
-              className="notifyBlockSignUp"
-              descr="Sign up and get your free cryptocurrency for test!"
-              tooltip="You will also be able to receive notifications regarding updates with your account"
-              icon={mail}
-              firstBtn="Sign Up"
-              firstFunc={this.handleSignUp}
-              secondBtn="I’ll do this later"
-              secondFunc={this.handleNotifyBlockClose} />
-              
+            className="notifyBlockSignUp"
+            descr="Sign up and get your free cryptocurrency for test!"
+            tooltip="You will also be able to receive notifications regarding updates with your account"
+            icon={mail}
+            firstBtn="Sign Up"
+            firstFunc={this.handleSignUp}
+            secondBtn="I’ll do this later"
+            secondFunc={this.handleNotifyBlockClose} />
+
         }
         <ul styleName="walletNav">
           {walletNav.map((item, index) => <li key={index} styleName={`walletNavItem ${activeView === index ? 'active' : ''}`} onClick={() => this.handleNavItemClick(index)}><a href styleName="walletNavItemLink">{item}</a></li>)}
@@ -298,17 +297,17 @@ export default class Wallet extends Component {
             <div styleName="yourBalanceTop">
               <p styleName="yourBalanceDescr">Your total balance</p>
               <div styleName="yourBalanceValue">
-                {activeCurrency === 'usd' ? <img src={dollar}/> : <img src={btcIcon}/> }
+                {activeCurrency === 'usd' ? <img src={dollar} /> : <img src={btcIcon} />}
                 {activeCurrency === 'usd' ? <p>{usdBalance.toFixed(2)}</p> : <p>{parseFloat(btcBalance).toFixed(5)}</p>}
                 <span>+0.0%</span>
               </div>
               <div styleName="yourBalanceCurrencies">
-                <button styleName={activeCurrency === 'usd' && 'active'} onClick={() => this.setState({activeCurrency: 'usd'})}>
-                  <img src={dollar2}/>
+                <button styleName={activeCurrency === 'usd' && 'active'} onClick={() => this.setState({ activeCurrency: 'usd' })}>
+                  <img src={dollar2} />
                 </button>
                 <span></span>
-                <button styleName={activeCurrency === 'btc' && 'active'} onClick={() => this.setState({activeCurrency: 'btc'})}>
-                  <img src={btcIcon}/>
+                <button styleName={activeCurrency === 'btc' && 'active'} onClick={() => this.setState({ activeCurrency: 'btc' })}>
+                  <img src={btcIcon} />
                 </button>
               </div>
             </div>
@@ -329,7 +328,7 @@ export default class Wallet extends Component {
                   <FormattedMessage id="sendBtn" defaultMessage="Для отправки валюты нажмите три точки напротив нужного актива" />
                 </ReactTooltip>
               </Fragment>
-             </div>
+            </div>
           </div>
           <div styleName="yourAssets" styleName={`yourAssets ${activeView === 0 ? 'active' : ''}`}>
             <h3 styleName="yourAssetsHeading">Your Assets</h3>

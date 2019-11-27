@@ -5299,7 +5299,7 @@
   },
   {
     "id": "createWalletHeader1",
-    "message": "Создайте кошелек  в три простых шага?",
+    "message": "Создание кошелька",
     "files": [
       "shared/pages/CreateWallet/CreateWallet.js"
     ]
