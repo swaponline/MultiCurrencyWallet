@@ -27,6 +27,8 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 
 import config from 'app-config'
 import { withRouter } from 'react-router'
+import BalanceForm from './BalanceForm'
+import CurrenciesList from './CurrenciesList'
 
 const walletNav = ['My balances', 'Transactions'];
 
@@ -296,75 +298,16 @@ export default class Wallet extends Component {
             {walletNav.map((item, index) => <li key={index} styleName={`walletNavItem ${activeView === index ? 'active' : ''}`} onClick={() => this.handleNavItemClick(index)}><a href styleName="walletNavItemLink">{item}</a></li>)}
           </ul>
           <div styleName="walletContent">
-            <div styleName={`walletBalance yourBalance ${activeView === 0 ? 'active' : ''}`}>
-              <div styleName="yourBalanceTop">
-                <p styleName="yourBalanceDescr">Your total balance</p>
-                <div styleName="yourBalanceValue">
-                  {activeCurrency === 'usd' ? <img src={dollar} /> : <img src={btcIcon} />}
-                  {activeCurrency === 'usd' ? <p>{usdBalance.toFixed(2)}</p> : <p>{parseFloat(btcBalance).toFixed(5)}</p>}
-                  <span>+0.0%</span>
-                </div>
-                <div styleName="yourBalanceCurrencies">
-                  <button styleName={activeCurrency === 'usd' && 'active'} onClick={() => this.setState({ activeCurrency: 'usd' })}>
-                    <img src={dollar2} />
-                  </button>
-                  <span></span>
-                  <button styleName={activeCurrency === 'btc' && 'active'} onClick={() => this.setState({ activeCurrency: 'btc' })}>
-                    <img src={btcIcon} />
-                  </button>
-                </div>
-              </div>
-              <div styleName="yourBalanceBottom">
-                <Fragment>
-                  <NewButton blue id="depositBtn">
-                    Deposit
-                </NewButton>
-                  <ReactTooltip id="depositBtn" type="light" effect="solid">
-                    <FormattedMessage id="depositBtn" defaultMessage="Для пополнения валюты нажмите три точки напротив нужного актива" />
-                  </ReactTooltip>
-                </Fragment>
-                <Fragment>
-                  <NewButton blue id="sendBtn">
-                    Send
-                </NewButton>
-                  <ReactTooltip id="sendBtn" type="light" effect="solid">
-                    <FormattedMessage id="sendBtn" defaultMessage="Для отправки валюты нажмите три точки напротив нужного актива" />
-                  </ReactTooltip>
-                </Fragment>
-              </div>
+            <div style={{ width: "60%" }}>
+              <BalanceForm usdBalance={usdBalance} btcBalance={btcBalance} {...this.state} />
+              <CurrenciesList tableRows={tableRows} {...this.state} {...this.props} />
             </div>
-            <div styleName="yourAssets" styleName={`yourAssets ${activeView === 0 ? 'active' : ''}`}>
-              <h3 styleName="yourAssetsHeading">Your Assets</h3>
-              <p styleName="yourAssetsDescr">Here you can safely store and promptly exchange Bitcoin, Ethereum, <br /> EOS, USD, Tether, BCH, and numerous ERC-20 tokens</p>
-              {isFetching && <Table
-                className={styles.walletTable}
-                rows={tableRows}
-                rowRender={(row, index, selectId, handleSelectId) => (
-                  <Row
-                    key={row}
-                    index={index}
-                    getCurrencyUsd={(usd) => this.getCurrencyUsd(usd)}
-                    currency={row}
-                    currencies={currencies}
-                    infoAboutCurrency={infoAboutCurrency}
-                    hiddenCoinsList={hiddenCoinsList}
-                    selectId={selectId}
-                    handleSelectId={handleSelectId}
-                  />
-                )}
-              />}
-              <NewButton onClick={this.goToRegister} blue transparent fullWidth>
-                Add Asset
-             </NewButton>
-            </div>
+            <ParticalClosure {...this.props} isOnlyForm />
             <div styleName={`activity ${activeView === 1 ? 'active' : ''}`}>
               <h3 styleName="activityHeading">Activity</h3>
               <History></History>
             </div>
           </div>
-        </section>
-        <section>
-          <ParticalClosure {...this.props} />
         </section>
       </artical>
     )

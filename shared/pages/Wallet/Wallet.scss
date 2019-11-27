@@ -1,8 +1,6 @@
 .wallet {
     margin: 30px 0;
     font-family: 'Manrope-Bold',sans-serif;
-    height: 100vh;
-    overscroll-behavior-y: auto;
 }
 
 .walletHeading {
@@ -49,7 +47,7 @@
 
 .walletBalance {
     margin-top: 40px;
-    width: 31%;
+    width: 90%;
 }
 
 .yourAssets,
@@ -73,8 +71,8 @@
     box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.08), 0px 1px 4px rgba(0, 0, 0, 0.08);
     border-radius: 4px;
     padding: 25px;
-    margin-top: 40px;
-    width: 66%;
+    margin-top: 10px;
+    width: 90%;
 }
 
 .yourAssetsHeading,
@@ -218,6 +216,10 @@
 
 
 @media all and (min-width: 320px) and (max-width: 767px) {
+    .indent {
+        top: 100px;
+        position: relative;
+    }
     .walletContent {
         flex-direction: column;
         margin: 0px -20px;
