@@ -47,7 +47,11 @@ const CreateWallet = (props) => {
 
   if (currencies.btc) {
     _protection.sms.btc = true
+    _protection.g2fa.btc = false
+    _protection.multisign.btc = true
     _activated.sms.btc = actions.btcmultisig.checkSMSActivated()
+    _activated.g2fa.btc = actions.btcmultisig.checkG2FAActivated()
+    _activated.multisign.btc = actions.btcmultisig.checkUserActivated()
   }
 
   const [border, setBorder] = useState({
@@ -63,7 +67,7 @@ const CreateWallet = (props) => {
   const handleClick = (index, el) => {
     const { name, enabled, activated } = el
     if (!enabled) return
-    if (activated) return
+    //if (activated) return
     const colors = border.color
 
     Object.keys(border.color).forEach(el => {
@@ -99,8 +103,8 @@ const CreateWallet = (props) => {
       capture: locale === 'en' ?
         'Transactions are verified through the Google Authenticator app' :
         'Транзакции подтверждаются через приложение Google Authenticator',
-      enabled: false,
-      activated: false,
+      enabled: _protection.g2fa.btc /* || _protection.g2fa.eth || _protection.g2fa.erc */,
+      activated: _activated.g2fa.btc,
     },
     {
       text: 'Multisignature',
@@ -108,8 +112,8 @@ const CreateWallet = (props) => {
       capture: locale === 'en' ?
         'Transactions are confirmed from another device and / or by another person.' :
         'Транзакции подтверждаются с другого устройства и/или другим человеком',
-      enabled: false,
-      activated: false,
+      enabled: _protection.multisign.btc,
+      activated: _activated.multisign.btc,
     },
   ]
 
