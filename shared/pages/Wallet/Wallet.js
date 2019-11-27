@@ -363,7 +363,7 @@ export default class Wallet extends Component {
             </div>
           </div>
         </section>
-        <section>
+        <section styleName="indent">
           <ParticalClosure {...this.props} />
         </section>
       </artical>
