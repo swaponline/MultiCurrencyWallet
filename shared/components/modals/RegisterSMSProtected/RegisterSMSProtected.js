@@ -7,7 +7,7 @@ import { connect } from 'redaction'
 import config from 'app-config'
 
 import cssModules from 'react-css-modules'
-import styles from './RegisterSMSProtected.scss'
+import styles from '../Styles/default.scss'
 
 import { BigNumber } from 'bignumber.js'
 import Modal from 'components/modal/Modal/Modal'
@@ -28,9 +28,9 @@ import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 @injectIntl
 @connect(
   ({
-    user: { btcMultisigData },
+    user: { btcMultisigSMSData },
   }) => ({
-    items: [ btcMultisigData ],
+    items: [ btcMultisigSMSData ],
   })
 )
 @cssModules(styles, { allowMultiple: true })
@@ -58,7 +58,7 @@ export default class RegisterSMSProtected extends React.Component {
 
   handleSendSMS = async () => {
     this.setState( { isShipped : true, error: false } )
-    const result = await actions.btcmultisig.beginRegister( this.state.phone )
+    const result = await actions.btcmultisig.beginRegisterSMS( this.state.phone )
     console.log(result)
     if (result && result.answer && result.answer=='ok') {
       this.setState( { isShipped: false, step: 'enterCode' } )
@@ -69,7 +69,7 @@ export default class RegisterSMSProtected extends React.Component {
 
   handleCheckSMS = async () => {
     this.setState( { isShipped : true, error: false } )
-    const result = await actions.btcmultisig.confirmRegister( this.state.phone, this.state.smsCode )
+    const result = await actions.btcmultisig.confirmRegisterSMS( this.state.phone, this.state.smsCode )
     
     if (result && result.answer && result.answer=='ok') {
       this.setState( { isShipped: false, step: 'ready' } )
@@ -85,7 +85,7 @@ export default class RegisterSMSProtected extends React.Component {
   handleFinish = async () => {
     const { name } = this.props
     
-    actions.btcmultisig.enableWallet()
+    actions.btcmultisig.enableWalletSMS()
     actions.modals.close(name)
     if (this.props.data.callback) {
       this.props.data.callback()
