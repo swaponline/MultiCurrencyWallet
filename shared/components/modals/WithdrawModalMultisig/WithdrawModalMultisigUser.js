@@ -8,6 +8,7 @@ import config from 'app-config'
 
 import cssModules from 'react-css-modules'
 import styles from '../Styles/default.scss'
+import ownStyle from './WithdrawModalMultisigUser.scss'
 
 import { BigNumber } from 'bignumber.js'
 import Modal from 'components/modal/Modal/Modal'
@@ -23,21 +24,23 @@ import typeforce from 'swap.app/util/typeforce'
 // import { isCoinAddress } from 'swap.app/util/typeforce'
 import minAmount from 'helpers/constants/minAmount'
 import { inputReplaceCommaWithDot } from 'helpers/domUtils'
+import links from 'helpers/links'
+import CopyToClipboard from 'react-copy-to-clipboard'
 
 
 @injectIntl
 @connect(
   ({
     currencies,
-    user: { ethData, btcData, btcMultisigSMSData, bchData, tokensData, eosData, telosData, nimData, ltcData /* usdtOmniData, nimData */ },
+    user: { ethData, btcData, btcMultisigUserData, bchData, tokensData, eosData, telosData, nimData, ltcData /* usdtOmniData, nimData */ },
   }) => ({
     currencies: currencies.items,
-    items: [ ethData, btcData, btcMultisigSMSData, eosData, telosData, bchData, ltcData /* usdtOmniData, nimData */ ],
+    items: [ ethData, btcData, btcMultisigUserData, eosData, telosData, bchData, ltcData /* usdtOmniData, nimData */ ],
     tokenItems: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
   })
 )
-@cssModules(styles, { allowMultiple: true })
-export default class WithdrawModalMultisig extends React.Component {
+@cssModules( { ...styles, ...ownStyle }, { allowMultiple: true })
+export default class WithdrawModalMultisigUser extends React.Component {
 
   static propTypes = {
     name: PropTypes.string,
@@ -53,6 +56,8 @@ export default class WithdrawModalMultisig extends React.Component {
     const allCurrencyies = items.concat(tokenItems)
     const selectedItem = allCurrencyies.filter(item => item.currency === currency)[0]
 
+    this.broadcastCancelFunc = false
+
     this.state = {
       step: 'fillform',
       isShipped: false,
@@ -67,6 +72,8 @@ export default class WithdrawModalMultisig extends React.Component {
       getUsd: 0,
       error: false,
       smsConfirmed: false,
+      txRaw: '',
+      isLinkCopied: false,
     }
   }
 
@@ -81,29 +88,8 @@ export default class WithdrawModalMultisig extends React.Component {
     this.actualyMinAmount()
   }
 
-  componentWillUpdate(nextProps, nextState) {
-    nextState.amount = this.fixDecimalCountETH(nextState.amount)
-  }
-
-  fixDecimalCountETH = (amount) => {
-    if (this.props.data.currency === 'ETH' && BigNumber(amount).dp() > 18) {
-      const amountInt = BigNumber(amount).integerValue()
-      const amountDecimal = BigNumber(amount).mod(1)
-
-      const amountIntStr = amountInt.toString()
-      const amountDecimalStr = BigNumber(BigNumber(amountDecimal).toPrecision(15)).toString().substring(1)
-      const regexr = /[e+-]/g
-
-      const result = amountIntStr + amountDecimalStr
-
-      console.warn("To avoid [ethjs-unit]error: while converting number with more then 18 decimals to wei - you can't afford yourself add more than 18 decimals") // eslint-disable-line
-      if (regexr.test(result)) {
-        console.warn('And ofcourse you can not write number which can not be saved without an exponential notation in JS')
-        return 0
-      }
-      return result
-    }
-    return amount
+  componentWillUnmount() {
+    if (this.broadcastCancelFunc) this.broadcastCancelFunc()
   }
 
   getMinAmountForEthToken = () => {
@@ -120,30 +106,19 @@ export default class WithdrawModalMultisig extends React.Component {
   }
 
   actualyMinAmount = async () => {
-    const { data: { currency } } = this.props
-    const { isEthToken } = this.state
-
-    const currentCoin = currency.toLowerCase()
-
-    if (isEthToken) {
-      minAmount[currentCoin] = this.getMinAmountForEthToken()
-      minAmount.eth = await helpers.eth.estimateFeeValue({ method: 'send', speed: 'fast' })
-    }
-
-    if (constants.coinsWithDynamicFee.includes(currentCoin)) {
-      minAmount[currentCoin] = await helpers[currentCoin].estimateFeeValue({ method: 'send', speed: 'fast' })
+    if (constants.coinsWithDynamicFee.includes('btc')) {
+      minAmount['btc'] = await helpers['btc'].estimateFeeValue({ method: 'send', speed: 'fast' })
     }
   }
 
   setBalanceOnState = async (currency) => {
     const { data: { unconfirmedBalance } } = this.props
 
-    const balance = await actions.btcmultisig.getBalance()
+    const balance = await actions.btcmultisig.getBalanceUser()
 
     const finalBalance = unconfirmedBalance !== undefined && unconfirmedBalance < 0
       ? new BigNumber(balance).plus(unconfirmedBalance).toString()
       : balance
-    const ethBalance = await actions.eth.getBalance()
 
     this.setState(() => ({
       balance: finalBalance,
@@ -161,42 +136,6 @@ export default class WithdrawModalMultisig extends React.Component {
     this.setState(() => ({
       exCurrencyRate,
     }))
-  }
-
-  handleConfirmSMS = async () => {
-    const { code } = this.state
-    const { address: to, amount } = this.state
-    const { data: { currency, address, balance }, name } = this.props
-    
-    const result = await actions.btcmultisig.confirmSMSProtected(code)
-    if (result && result.txid) {
-      actions.loader.hide()
-
-      actions.notifications.show(constants.notifications.SuccessWithdraw, {
-        amount,
-        currency,
-        address: to,
-      })
-      
-      actions.modals.close(name)
-    } else {
-      if (result
-        && result.error
-        && (result.error=='Fail broadcast')
-        && result.rawTX
-      ) {
-        const resBroatcast = await actions.btcmultisig.broadcastTx(result.rawTX)
-        actions.loader.hide()
-
-        actions.notifications.show(constants.notifications.SuccessWithdraw, {
-          amount,
-          currency,
-          address: to,
-        })
-        
-        actions.modals.close(name)
-      }
-    }
   }
 
   handleSubmit = async () => {
@@ -225,64 +164,34 @@ export default class WithdrawModalMultisig extends React.Component {
       }
     }
 
-    const result = await actions.btcmultisig.sendSMSProtected(sendOptions)
+    const result = await actions.btcmultisig.send(sendOptions)
     
-    if (result && result.answer === 'ok') {
-      this.setState({
-        isShipped: false,
-        step: 'confirm'
-      })
-    }
-    console.log(result)
-    /*
-      .then((txRaw) => {
-        actions.loader.hide()
-        actions.btcmultisig.getBalance(currency)
-        this.setBalanceOnState(currency)
-
-        actions.notifications.show(constants.notifications.SuccessWithdraw, {
-          amount,
-          currency,
-          address: to,
-        })
-
-        this.setState(() => ({ isShipped: false, error: false }))
-      })
-      .then(() => {
-        actions.modals.close(name)
-      })
-      .catch((e) => {
-        const errorText = e.res ? e.res.text : ''
-        const error = {
-          name: {
-            id: 'Withdraw218',
-            defaultMessage: 'Withdrawal error',
-          },
-          message: {
-            id: 'ErrorNotification12',
-            defaultMessage: 'Oops, looks like something went wrong!',
-          },
-        }
-
-        if (/insufficient priority|bad-txns-inputs-duplicate/.test(errorText)) {
-          error.message = {
-            id: 'Withdraw232',
-            defaultMessage: 'There is not enough confirmation of the last transaction. Try later.',
-          }
-        }
-
-        console.error(error.name.defaultMessage, ':', e)
-
-        this.setState(() => ({
-          error,
+    this.broadcastCancelFunc = actions.btcmultisig.broadcastTX2Room(
+      {
+        txRaw: result,
+        address: to,
+        amount,
+        currency: 'BTC'
+      },
+      () => {
+        this.setState({
+          step: 'rawlink',
+          txRaw: result,
           isShipped: false,
-        }))
-      })
-      */
+        })
+      },
+      () => {
+        this.setState({
+          step: 'rawlink',
+          txRaw: result,
+          isShipped: false,
+        })
+      }
+    )
   }
 
     sellAllBalance = async () => {
-      const { amount, balance, currency, isEthToken } = this.state
+      const { amount, balance, currency } = this.state
       const { data } = this.props
 
       const minFee = minAmount.btc
@@ -298,26 +207,31 @@ export default class WithdrawModalMultisig extends React.Component {
       })
     }
 
-    isEthOrERC20() {
-      const { name, data, tokenItems }  = this.props
-      const { currency, ethBalance, isEthToken } = this.state
-      return (
-        (isEthToken === true && ethBalance < minAmount.eth) ? ethBalance < minAmount.eth : false
-      )
-    }
-
     addressIsCorrect() {
       const { data: { currency } } = this.props
-      const { address, isEthToken } = this.state
+      const { address } = this.state
 
       return typeforce.isCoinAddress.BTC(address)
     }
 
+    handleCopyLink = () => {
+      this.setState({
+        isLinkCopied: true,
+      }, () => {
+        setTimeout(() => {
+          this.setState({
+            isLinkCopied: false,
+          })
+        }, 500)
+      })
+    }
     render() {
-      const { address, amount, code, balance, isShipped, minus, ethBalance,
-        isEthToken, exCurrencyRate, currentDecimals, error, step } = this.state
+      const { address, amount, code, balance, isShipped, minus,
+        isEthToken, exCurrencyRate, currentDecimals, error, step, txRaw,
+        isLinkCopied } = this.state
       const { name, data: { currency }, tokenItems, items, intl } = this.props
 
+      const txConfirmLink = `${location.origin}${links.multisign}/btc/confirm/${txRaw}`
       const linked = Link.all(this, 'address', 'amount', 'code')
 
       const min = minAmount.btcmultisig
@@ -328,7 +242,7 @@ export default class WithdrawModalMultisig extends React.Component {
         || !this.addressIsCorrect()
         || BigNumber(amount).isGreaterThan(balance)
         || BigNumber(amount).dp() > currentDecimals
-        || this.isEthOrERC20()
+
       const NanReplacement = balance || '...'
       const getUsd = amount * exCurrencyRate
 
@@ -438,13 +352,6 @@ export default class WithdrawModalMultisig extends React.Component {
                     </div>
                   )
                 }
-                {
-                  this.isEthOrERC20() && (
-                    <div styleName="rednote">
-                      <FormattedMessage id="WithdrawModal263" defaultMessage="You need {minAmount} ETH on your balance" values={{ minAmount: `${minAmount.eth}` }} />
-                    </div>
-                  )
-                }
               </div>
               <Button styleName="buttonFull" brand fullWidth disabled={isDisabled} onClick={this.handleSubmit}>
                 { isShipped
@@ -480,40 +387,42 @@ export default class WithdrawModalMultisig extends React.Component {
               }
             </Fragment>
           }
-          { step==='confirm' && 
+          { step==='rawlink' && 
             <Fragment>
-              <div styleName="lowLevel"> {/* SMS CODE BLOCK STARTS HERE */}
-                <a styleName="link" onClick={e => e.preventDefault()}>
-                  <FormattedMessage id="Withdrow2222" defaultMessage="Send SMS code" />
-                </a>
-                <div styleName="groupField">
-                  <div styleName="downLabel">
-                    <FieldLabel inRow>
-                      <span styleName="mobileFont inputName">
-                        <FormattedMessage id="Withdrow2223" defaultMessage="SMS code" />
-                      </span>
-                    </FieldLabel>
+              <CopyToClipboard
+                text={txConfirmLink}
+                onCopy={this.handleCopyLink}
+              >
+                <div styleName="highLevel">
+                  <a styleName="link" onClick={e => e.preventDefault()}>
+                    <FormattedMessage id="WithdrawMSUserReady" defaultMessage="TX confirm link" />
+                  </a>
+                  <div styleName="groupField">
+                    <FormattedMessage id="WithdrawMSUserMessage" defaultMessage="Send this link to other wallet owner" />
+                  </div>
+                  <div styleName="multisignConfirmTxLink">
+                    {txConfirmLink}
+                  </div>
+                  <div styleName="centerAlign">
+                    <Button
+                      styleName="buttonFull"
+                      brand
+                      onClick={() => {}}
+                      disabled={isLinkCopied}
+                    >
+                      { isLinkCopied ?
+                        <FormattedMessage id="WithdrawMSLinkCopied" defaultMessage="Link copied to clipboard" />
+                        :
+                        <FormattedMessage id="WithdrawMSLinkCopy" defaultMessage="Copy to clipboard" />
+                      }
+                    </Button>
                   </div>
                 </div>
-                <div styleName="group">
-                  <Input
-                    styleName="input"
-                    valueLink={linked.code}
-                    pattern="0-9"
-                    placeholder="Enter code"
-                    onKeyDown={inputReplaceCommaWithDot}
-                  />
-                  <button styleName="button button_sms" onClick={this.handleConfirmSMS}>
-                    <FormattedMessage id="Withdrow2224" defaultMessage="Confirm" />
-                  </button>
-                </div>
-                {
-                  linked.code.error && (
-                    <div styleName="rednote error">
-                      <FormattedMessage id="WithdrawModal2225" defaultMessage="Something went wrong, enter your current code please" />
-                    </div>
-                  )
-                }
+              </CopyToClipboard>
+              <div styleName="centerAlign">
+                <Button styleName="buttonFull" brand onClick={this.handleReady}>
+                  <FormattedMessage id="WithdrawMSUserFinish" defaultMessage="Ready" />
+                </Button>
               </div>
             </Fragment>
           }

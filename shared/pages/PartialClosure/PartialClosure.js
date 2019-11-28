@@ -159,7 +159,6 @@ export default class PartialClosure extends Component {
     const { url, params: { buy, sell } } = match || { params: { buy: 'btc', sell: 'usdt' } }
 
     if (sell && buy && !isRootPage) {
-      console.log("come to 1st condition")
       if (!allCurrencyies.map(item => item.name).includes(sell.toUpperCase())
         || !allCurrencyies.map(item => item.name).includes(buy.toUpperCase())) {
         history.push(localisedUrl(locale, `${links.exchange}/usdt-to-btc`))
@@ -916,11 +915,14 @@ export default class PartialClosure extends Component {
   }
 
   render() {
-    const { currencies, addSelectedItems, currenciesData, tokensData, intl: { locale, formatMessage }, userEthAddress } = this.props
+    const { currencies, addSelectedItems, currenciesData, tokensData, intl: { locale, formatMessage }, userEthAddress, isOnlyForm } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching, desclineOrders, openScanCam,
-      isDeclinedOffer, isFetching, maxAmount, customWalletUse, customWallet, exHaveRate, exGetRate,
-      maxBuyAmount, getAmount, goodRate, isShowBalance, extendedControls, estimatedFeeValues, isToken, dynamicFee, haveAmount,
+      isDeclinedOffer, isFetching, maxAmount, customWalletUse, exHaveRate, exGetRate,
+      maxBuyAmount, getAmount, goodRate, isShowBalance, estimatedFeeValues, haveAmount,
     } = this.state
+
+
+    const isSingleForm = isOnlyForm || isWidgetBuild
 
     const haveUsd = BigNumber(exHaveRate).times(haveAmount).dp(2, BigNumber.ROUND_CEIL)
     const getUsd = BigNumber(exGetRate).times(getAmount).dp(2, BigNumber.ROUND_CEIL)
@@ -933,7 +935,6 @@ export default class PartialClosure extends Component {
     const getCurrencyData = currenciesData.find(item => item.currency === getCurrency.toUpperCase())
     const getTokenData = tokensData.find(item => item.currency === getCurrency.toUpperCase())
     const currentCurrencyGet = getCurrencyData || getTokenData
-    const { balanceGet } = currentCurrencyGet || 0
 
     const oneCryptoCost = maxBuyAmount.isLessThanOrEqualTo(0) ? BigNumber(0) : BigNumber(goodRate)
     const linked = Link.all(this, 'haveAmount', 'getAmount', 'customWallet')
@@ -1229,7 +1230,7 @@ export default class PartialClosure extends Component {
       </div>
     )
 
-    return isWidgetBuild
+    return isSingleForm
       ? Form
       : (
         <div styleName={`exchangeWrap ${isWidget ? 'widgetExchangeWrap' : ''}`}>

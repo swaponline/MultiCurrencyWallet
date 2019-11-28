@@ -16,7 +16,8 @@ import actions from 'redux/actions'
 
 import Explanation from '../Explanation'
 import icons from '../images'
-import { subHeaderText1,
+import {
+  subHeaderText1,
   cupture1,
   subHeaderText2,
   cupture2,
@@ -24,7 +25,7 @@ import { subHeaderText1,
 
 
 const CreateWallet = (props) => {
-  const { intl: { locale }, onClick, currencies, error, setError } = props
+  const { intl: { locale }, onClick, currencies, error, setError, singleCurrecnyData } = props
 
   const _protection = {
     nothing: {
@@ -46,7 +47,11 @@ const CreateWallet = (props) => {
 
   if (currencies.btc) {
     _protection.sms.btc = true
+    _protection.g2fa.btc = false
+    _protection.multisign.btc = true
     _activated.sms.btc = actions.btcmultisig.checkSMSActivated()
+    _activated.g2fa.btc = actions.btcmultisig.checkG2FAActivated()
+    _activated.multisign.btc = actions.btcmultisig.checkUserActivated()
   }
 
   const [border, setBorder] = useState({
@@ -62,7 +67,7 @@ const CreateWallet = (props) => {
   const handleClick = (index, el) => {
     const { name, enabled, activated } = el
     if (!enabled) return
-    if (activated) return
+    //if (activated) return
     const colors = border.color
 
     Object.keys(border.color).forEach(el => {
@@ -85,7 +90,7 @@ const CreateWallet = (props) => {
       enabled: true,
       activated: false,
     },
-    { 
+    {
       text: 'SMS',
       name: 'sms',
       capture: locale === 'en' ? 'transactions are confirmed by SMS code' : 'Транзакции подтверждаются кодом по SMS',
@@ -98,8 +103,8 @@ const CreateWallet = (props) => {
       capture: locale === 'en' ?
         'Transactions are verified through the Google Authenticator app' :
         'Транзакции подтверждаются через приложение Google Authenticator',
-      enabled: false,
-      activated: false,
+      enabled: _protection.g2fa.btc /* || _protection.g2fa.eth || _protection.g2fa.erc */,
+      activated: _activated.g2fa.btc,
     },
     {
       text: 'Multisignature',
@@ -107,14 +112,14 @@ const CreateWallet = (props) => {
       capture: locale === 'en' ?
         'Transactions are confirmed from another device and / or by another person.' :
         'Транзакции подтверждаются с другого устройства и/или другим человеком',
-      enabled: false,
-      activated: false,
+      enabled: _protection.multisign.btc,
+      activated: _activated.multisign.btc,
     },
   ]
 
   return (
     <div>
-      {!isMobile &&
+      {!isMobile && !singleCurrecnyData &&
         <div>
           <Explanation subHeaderText={subHeaderText1()} step={1} notMain>
             {cupture1()}
@@ -123,14 +128,14 @@ const CreateWallet = (props) => {
       }
       <div>
         <div>
-          <Explanation subHeaderText={subHeaderText2()} step={2}>
+          <Explanation subHeaderText={subHeaderText2()} step={2} isShow={singleCurrecnyData}>
             {cupture2()}
           </Explanation>
           <div styleName="currencyChooserWrapper currencyChooserWrapperSecond">
             {coins.map((el, index) => {
               const { name, capture, text, enabled, activated } = el
 
-              const cardStyle = [ 'card', 'secureSize', 'thirdCard' ]
+              const cardStyle = ['card', 'secureSize', 'thirdCard']
 
               if (border.color[name] && enabled) cardStyle.push('purpleBorder')
               if (!enabled) cardStyle.push('cardDisabled')
@@ -145,8 +150,8 @@ const CreateWallet = (props) => {
                 >
                   {(!enabled || activated) &&
                     <em>
-                      {!activated && <FormattedMessage id="createWalletSoon" defaultMessage="Soon!" /> }
-                      {activated && <FormattedMessage id="createWalletActivated" defaultMessage="Activated!" /> }
+                      {!activated && <FormattedMessage id="createWalletSoon" defaultMessage="Soon!" />}
+                      {activated && <FormattedMessage id="createWalletActivated" defaultMessage="Activated!" />}
                     </em>
                   }
                   <img
