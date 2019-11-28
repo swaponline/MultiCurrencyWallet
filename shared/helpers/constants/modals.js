@@ -20,4 +20,7 @@ export default {
   MobMenu: 'MobMenu',
   ConfirmBeginSwap: 'ConfirmBeginSwap',
   RegisterSMSProtected: 'RegisterSMSProtected',
+  MultisignJoinLink: 'MultisignJoinLink',
+  WithdrawMultisigSMS: 'WithdrawModalMultisig',
+  WithdrawMultisigUser: 'WithdrawModalMultisigUser',
 }
