@@ -133,7 +133,8 @@ export default class Wallet extends Component {
     activeView: 0,
     isFetching: false,
     btcBalance: 0,
-    activeCurrency: 'usd'
+    activeCurrency: 'usd',
+    exchangeForm: false,
   }
 
   componentWillMount() {
@@ -241,7 +242,8 @@ export default class Wallet extends Component {
       infoAboutCurrency,
       isFetching,
       activeCurrency,
-      exCurrencyRate
+      exCurrencyRate,
+      exchangeForm,
     } = this.state;
     const {
       items,
@@ -303,9 +305,11 @@ export default class Wallet extends Component {
           <div styleName="walletContent">
             <div styleName={`walletBalance ${activeView === 0 ? 'active' : ''}`}>
               <BalanceForm usdBalance={usdBalance} btcBalance={btcBalance} {...this.state} />
-              <div styleName="exchangeForm">
-                <ParticalClosure {...this.props} isOnlyForm />
-              </div>
+              { exchangeForm &&
+                <div styleName="exchangeForm">
+                  <ParticalClosure {...this.props} isOnlyForm />
+                </div>
+              }
             </div>
             <CurrenciesList tableRows={tableRows} {...this.state} {...this.props} />
             <div styleName={`activity ${activeView === 1 ? 'active' : ''}`}>
