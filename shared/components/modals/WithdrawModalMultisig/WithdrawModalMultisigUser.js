@@ -122,7 +122,6 @@ export default class WithdrawModalMultisigUser extends React.Component {
 
     this.setState(() => ({
       balance: finalBalance,
-      ethBalance,
     }))
   }
 
@@ -231,7 +230,7 @@ export default class WithdrawModalMultisigUser extends React.Component {
         isLinkCopied } = this.state
       const { name, data: { currency }, tokenItems, items, intl } = this.props
 
-      const txConfirmLink = `${location.origin}${links.multisign}/btc/confirm/${txRaw}`
+      const txConfirmLink = `${location.origin}/#${links.multisign}/btc/confirm/${txRaw}`
       const linked = Link.all(this, 'address', 'amount', 'code')
 
       const min = minAmount.btcmultisig
