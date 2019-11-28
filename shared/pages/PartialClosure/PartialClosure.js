@@ -239,12 +239,16 @@ export default class PartialClosure extends Component {
     //this.usdRates = {}
     this.getUsdBalance()
 
-    this.timer = setInterval(() => {
+    this.timer = true
+    const timerProcess = () => {
+      if (!this.timer) return
       this.setOrders()
       this.showTheFee(haveCurrency)
       this.checkUrl()
       this.getCorrectDecline()
-    }, 2000)
+      setTimeout( timerProcess, 2000 )
+    }
+    timerProcess()
 
     SwapApp.shared().services.room.on('new orders', () => this.checkPair())
     this.customWalletAllowed()
@@ -270,7 +274,7 @@ export default class PartialClosure extends Component {
   }
 
   componentWillUnmount() {
-    clearInterval(this.timer)
+    this.timer = false
   }
 
   checkUrl = () => {
@@ -315,9 +319,9 @@ export default class PartialClosure extends Component {
   }
 
   additionalPathing = (sell, buy) => {
-    const { intl: { locale } } = this.props
+    const { intl: { locale }, isOnlyForm } = this.props
 
-    if (!this.props.location.hash.includes('#widget')) {
+    if (!this.props.location.hash.includes('#widget') && !isOnlyForm) {
       this.props.history.push(localisedUrl(locale, `${links.exchange}/${sell}-to-${buy}`))
     }
   }
@@ -830,6 +834,7 @@ export default class PartialClosure extends Component {
   }
 
   updateAllowedBalance = async () => {
+    console.log('updateAllowedBalance',this.state.haveCurrency)
     await actions[this.state.haveCurrency].getBalance(this.state.haveCurrency)
   }
 
