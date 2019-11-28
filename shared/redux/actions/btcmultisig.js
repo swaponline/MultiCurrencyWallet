@@ -9,10 +9,9 @@ import { request, constants, api } from 'helpers'
 import btc from 'helpers/btc'
 import { Keychain } from 'keychain.js'
 import actions from 'redux/actions'
-
+import config from 'app-config'
 import SwapApp from 'swap.app'
 
-const protectSMSAPI = 'https://2fa.swaponline.site'
 
 const addWallet = (otherOwnerPublicKey) => {
   const { user: { btcMultisigSMSData: { address, privateKey } } } = getState()
@@ -307,7 +306,7 @@ const beginRegisterSMS = async (phone) => {
   const { user: { btcMultisigSMSData: { account, address, keyPair, publicKey } } } = getState()
   
   const sign = _getSign()
-  const result = await request.post(`${protectSMSAPI}/register/begin/`, {
+  const result = await request.post(`${config.api.btc2FAProtected}/register/begin/`, {
     body: {
       phone,
       address,
@@ -324,7 +323,7 @@ const confirmRegisterSMS = async (phone, smsCode) => {
   const { user: { btcMultisigSMSData: { account, address, keyPair, publicKey } } } = getState()
   
   const sign = _getSign()
-  const result = await request.post(`${protectSMSAPI}/register/confirm/`, {
+  const result = await request.post(`${config.api.btc2FAProtected}/register/confirm/`, {
     body: {
       phone,
       address,
@@ -480,7 +479,7 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
   console.log('TX Hash:', txRaw.toHex())
   console.log('Send it to other owner for sign and broadcast')
   
-  const result = await request.post(`${protectSMSAPI}/push/`, {
+  const result = await request.post(`${config.api.btc2FAProtected}/push/`, {
     body: {
       address,
       publicKey: publicKey.toString('hex'),
@@ -496,7 +495,7 @@ const sendSMSProtected = async ({ from, to, amount, feeValue, speed } = {}) => {
 const confirmSMSProtected = async ( smsCode ) => {
   const { user: { btcMultisigSMSData: { address, privateKey, publicKeys, publicKey } } } = getState()
 
-  const result = await request.post(`${protectSMSAPI}/sign/`, {
+  const result = await request.post(`${config.api.btc2FAProtected}/sign/`, {
     body: {
       address,
       publicKey: publicKey.toString('hex'),

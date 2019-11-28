@@ -20,4 +20,5 @@ export default {
   },
   swapsExplorer: 'https://seven.swap.online/swaps-testnet/state',
   faucet: 'https://faucet.swaponline.site/mainnet/',
+  btc2FAProtected: 'https://2fa.swaponline.site',
 }
