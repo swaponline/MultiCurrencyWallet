@@ -9,12 +9,13 @@ import dollar2 from './images/dollar2.svg'
 import btcIcon from './images/btcIcon.svg'
 
 import ReactTooltip from 'react-tooltip'
+import ParticalClosure from "../PartialClosure/PartialClosure"
 
 import { FormattedMessage } from 'react-intl'
 
 
 const BalanceForm = ({ activeView, activeCurrency, usdBalance, btcBalance }) => (
-  <div styleName={`walletBalance yourBalance ${activeView === 0 ? 'active' : ''}`}>
+  <div styleName={`yourBalance`}>
     <div styleName="yourBalanceTop">
       <p styleName="yourBalanceDescr">Your total balance</p>
       <div styleName="yourBalanceValue">

@@ -301,11 +301,13 @@ export default class Wallet extends Component {
             {walletNav.map((item, index) => <li key={index} styleName={`walletNavItem ${activeView === index ? 'active' : ''}`} onClick={() => this.handleNavItemClick(index)}><a href styleName="walletNavItemLink">{item}</a></li>)}
           </ul>
           <div styleName="walletContent">
-            <div style={{ width: "60%" }}>
+            <div styleName={`walletBalance ${activeView === 0 ? 'active' : ''}`}>
               <BalanceForm usdBalance={usdBalance} btcBalance={btcBalance} {...this.state} />
-              <CurrenciesList tableRows={tableRows} {...this.state} {...this.props} />
+              <div styleName="exchangeForm">
+                <ParticalClosure {...this.props} isOnlyForm />
+              </div>
             </div>
-            <ParticalClosure {...this.props} isOnlyForm />
+            <CurrenciesList tableRows={tableRows} {...this.state} {...this.props} />
             <div styleName={`activity ${activeView === 1 ? 'active' : ''}`}>
               <h3 styleName="activityHeading">Activity</h3>
               <History></History>
