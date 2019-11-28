@@ -221,6 +221,7 @@ export default class PartialClosure extends Component {
       .forEach(item => this.state.estimatedFeeValues[item] = constants.minAmountOffer[item])
 
     let timer
+    this.cacheDynamicFee = {}
     // usdRates
 
     if (config.isWidget) {
@@ -253,7 +254,7 @@ export default class PartialClosure extends Component {
   }
 
   rmScrollAdvice = () => {
-    if (window.scrollY > window.innerHeight * 0.7 && this.scrollTrigger !== null) {
+    if (window.scrollY > window.innerHeight * 0.7 && this.scrollTrigger) {
       this.scrollTrigger.classList.add('hidden')
       document.removeEventListener('scroll', this.rmScrollAdvice)
     }
@@ -323,18 +324,33 @@ export default class PartialClosure extends Component {
 
   showTheFee = async () => {
     const { haveCurrency } = this.state
-    const isToken = await helpers.ethToken.isEthToken({ name: haveCurrency.toLowerCase() })
-
-    if (isToken) {
-      this.setState(() => ({
-        isToken,
-      }))
+    if (this.cacheDynamicFee[haveCurrency]) {
+      this.setState({
+        isToken: this.cacheDynamicFee[haveCurrency].isToken,
+        dynamicFee: this.cacheDynamicFee[haveCurrency].dynamicFee,
+      })
     } else {
-      const dynamicFee = await helpers[haveCurrency.toLowerCase()].estimateFeeValue({ method: 'swap' })
-      this.setState(() => ({
-        dynamicFee,
-        isToken,
-      }))
+      const isToken = await helpers.ethToken.isEthToken({ name: haveCurrency.toLowerCase() })
+
+      if (isToken) {
+        this.cacheDynamicFee[haveCurrency] = {
+          isToken,
+          dynamicFee: 0,
+        }
+        this.setState(() => ({
+          isToken,
+        }))
+      } else {
+        const dynamicFee = await helpers[haveCurrency.toLowerCase()].estimateFeeValue({ method: 'swap' })
+        this.cacheDynamicFee[haveCurrency] = {
+          isToken,
+          dynamicFee,
+        }
+        this.setState(() => ({
+          dynamicFee,
+          isToken,
+        }))
+      }
     }
   }
 
@@ -981,11 +997,11 @@ export default class PartialClosure extends Component {
     //console.log('usd', (maxAmount > 0 && isNonOffers) ? 0 : haveUsd)
 
     const Form = (
-      <div styleName={`${isWidgetBuild ? '' : 'section'}`} className={(isWidgetLink) ? 'section' : ''} >
+      <div styleName={`${isSingleForm ? '' : 'section'}`} className={(isWidgetLink) ? 'section' : ''} >
         <div styleName="mobileDubleHeader">
           <PromoText subTitle={subTitle(sellTokenFullName, haveCurrency.toUpperCase(), buyTokenFullName, getCurrency.toUpperCase())} />
         </div>
-        <div styleName={isWidgetBuild ? 'formExchange_widgetBuild' : `formExchange ${isWidget ? 'widgetFormExchange' : ''}`} className={isWidget ? 'formExchange' : ''} >
+        <div styleName={isSingleForm ? 'formExchange_widgetBuild' : `formExchange ${isWidget ? 'widgetFormExchange' : ''}`} className={isWidget ? 'formExchange' : ''} >
           {desclineOrders.length ?
             <h5 role="presentation" styleName="informAbt" onClick={this.handleShowIncomplete}>
               <FormattedMessage id="continueDeclined977" defaultMessage="Click here to continue your swaps" />
