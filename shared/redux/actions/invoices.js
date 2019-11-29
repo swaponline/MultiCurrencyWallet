@@ -32,12 +32,13 @@ const addInvoice = (data) => {
     toAddress   : data.toAddress,
     fromAddress : data.fromAddress,
     amount      : data.amount,
-    labal       : (data.label) ? data.label : '',
+    label       : (data.label) ? data.label : '',
     address     : btcData.address,
     pubkey      : btcData.publicKey.toString('hex'),
-    mainnet     : (btc.network==bitcoin.network.mainnet),
+    mainnet     : (btc.network==bitcoin.networks.mainnet),
   }
-  return request.post(`${invoiceApi}/push/`, {
+  console.log(requestData)
+  return request.post(`${invoiceApi}/invoice/push/`, {
     body: requestData
   })
   /*
@@ -62,16 +63,43 @@ const markInvoice = (invoiceId, mark, txid) => {
 const getInvoices = (data) => {
   const { user: { btcData } } = getState()
   if (!data || !data.currency || !data.address) return false
-  
-  return request.post(`${invoiceApi}/history/`, {
-    body: {
-      currency: data.currency,
-      address: data.addres,
-      
-    },
+
+  return new Promise((resolve) => {
+
+    return request.post(`${invoiceApi}/invoice/fetch/`, {
+      body: {
+        currency: data.currency,
+        address: data.address,
+      }
+    }).then((res) => {
+      if (res && res.answer && res.answer === 'ok') {
+        const transactions = res.items.map((item) => {
+          const direction = item.toAddress === data.address ? 'in' : 'out'
+
+          return ({
+            type: data.currency.toLowerCase(),
+            txType: 'INVOICE',
+            invoiceData: item,
+            hash: 'no hash',
+            confirmations: 1,
+            value: item.amount,
+            date: item.uxt * 1000,
+            direction: direction,
+          })
+        })
+        resolve(transactions)
+      } else {
+        resolve([])
+      }
+    })
+    .catch(() => {
+      resolve([])
+    })
   })
 }
+window.getInvoices = getInvoices
 
 export default {
   addInvoice,
+  getInvoices,
 }
