@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import cx from 'classnames'
 import moment from 'moment-with-locales-es6'
 
@@ -31,7 +31,17 @@ class Row extends React.PureComponent {
 
 
   render() {
-    const { type, date, direction, hash, value, confirmations } = this.props
+    const {
+      type,
+      date,
+      direction,
+      hash,
+      value,
+      confirmations,
+      txType,
+      invoiceData,
+    } = this.props
+
     const { exCurrencyRate } = this.state;
 
     const getUsd = value * exCurrencyRate;
@@ -56,23 +66,45 @@ class Row extends React.PureComponent {
           <div styleName={statusStyleName}>
             <div styleName="directionHeading">
               {
-                direction === 'in'
-                  ? <FormattedMessage id="RowHistory281" defaultMessage="Received" />
-                  : (
-                    direction !== 'self'
-                      ? <FormattedMessage id="RowHistory282" defaultMessage="Sent" />
-                      : <FormattedMessage id="RowHistory283" defaultMessage="Self" />
-                  )
+                txType === 'INVOICE' ?
+                <Fragment>
+                  <FormattedMessage id="RowHistoryInvoce" defaultMessage="Инвойс" />
+                </Fragment>
+                :
+                <Fragment>
+                  {
+                    direction === 'in'
+                      ? <FormattedMessage id="RowHistory281" defaultMessage="Received" />
+                      : (
+                        direction !== 'self'
+                          ? <FormattedMessage id="RowHistory282" defaultMessage="Sent" />
+                          : <FormattedMessage id="RowHistory283" defaultMessage="Self" />
+                      )
+                  }
+                  <div styleName={confirmations > 0 ? 'confirm cell' : 'unconfirmed cell'}>
+                    {confirmations > 0 ? confirmations > 6 ?
+                      <FormattedMessage id="RowHistory34" defaultMessage="Received" /> :
+                      <a href><FormattedMessage id="RowHistory341" defaultMessage="Confirm" /> {confirmations} </a> :
+                      <FormattedMessage id="RowHistory342" defaultMessage="Unconfirmed" />
+                    }
+                  </div>
+                </Fragment>
               }
-              <div styleName={confirmations > 0 ? 'confirm cell' : 'unconfirmed cell'}>
-                {confirmations > 0 ? confirmations > 6 ?
-                  <FormattedMessage id="RowHistory34" defaultMessage="Received" /> :
-                  <a href><FormattedMessage id="RowHistory341" defaultMessage="Confirm" /> {confirmations} </a> :
-                  <FormattedMessage id="RowHistory342" defaultMessage="Unconfirmed" />
-                }
-              </div>
             </div>
             <div styleName="date">{moment(date).format('LLLL')}</div>
+            { txType === 'INVOICE' &&
+              <div className="historyInvoiceInfo">
+              { direction === 'in' &&
+                <div>Адрес для оплаты: {invoiceData.fromAddress}</div>
+              }
+              { direction === 'out' &&
+                <div>Инвойс выставлен на адрес: {invoiceData.toAddress}</div>
+              }
+              { invoiceData.label &&
+                <div>Комментарий: {invoiceData.label}</div>
+              }
+              </div>
+            }
           </div>
           <div styleName={statusStyleName}>
             {direction === 'in' ? <div styleName="amount">{`+ ${parseFloat(Number(value).toFixed(5))}`} {type.toUpperCase()}</div> : <div styleName="amount">{`- ${parseFloat(Number(value).toFixed(5))}`} {type.toUpperCase()}</div>}

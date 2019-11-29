@@ -94,7 +94,7 @@ export default class InvoiceModal extends React.Component {
   componentWillUpdate(nextProps, nextState) {}
 
   handleSubmit = async () => {
-    const { data } = this.props
+    const { name, data } = this.props
     const { address, amount, label, isShipped } = this.state
 
     if (isShipped) return
@@ -119,6 +119,9 @@ export default class InvoiceModal extends React.Component {
         amount,
         label,
       })
+      if (result && result.answer && result.answer === 'ok') {
+        actions.modals.close(name)
+      }
     } catch (e) {
       console.log('error',e)
     }
@@ -126,8 +129,6 @@ export default class InvoiceModal extends React.Component {
     this.setState({
       isShipped: false,
     })
-
-    console.log(result)
   }
 
   addressIsCorrect() {

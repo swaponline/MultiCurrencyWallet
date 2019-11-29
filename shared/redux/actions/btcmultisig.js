@@ -395,6 +395,24 @@ const getTransactionSMS = () => { return getTransaction() }
 
 const getTransactionG2FA = () => {}
 
+const getInvoicesSMS = () => {
+  const { user: { btcMultisigSMSData: { address } } } = getState()
+
+  return actions.invoices.getInvoices({
+    currency: 'BTC',
+    address,
+  })
+}
+
+const getInvoicesUser = () => {
+  const { user: { btcMultisigUserData: { address } } } = getState()
+
+  return actions.invoices.getInvoices({
+    currency: 'BTC',
+    address,
+  })
+}
+
 const getTransaction = (ownAddress, ownType) =>
   new Promise((resolve) => {
     const { user: { btcMultisigSMSData: { address } } } = getState()
@@ -721,4 +739,6 @@ export default {
   signMultiSign,
   onUserMultisigJoin,
   onUserMultisigSend,
+  getInvoicesSMS,
+  getInvoicesUser,
 }

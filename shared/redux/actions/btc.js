@@ -101,6 +101,14 @@ const fetchTxInfo = (hash) =>
       ...rest,
     }))
 
+const getInvoices = () => {
+  const { user: { btcData: { address } } } = getState()
+
+  return actions.invoices.getInvoices({
+    currency: 'BTC',
+    address,
+  })
+}
 const getTransaction = () =>
   new Promise((resolve) => {
     const { user: { btcData: { address } } } = getState()
@@ -240,4 +248,5 @@ export default {
   fetchBalance,
   signMessage,
   getReputation,
+  getInvoices,
 }
