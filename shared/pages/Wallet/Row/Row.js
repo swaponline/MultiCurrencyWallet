@@ -369,6 +369,27 @@ export default class Row extends Component {
   }
 
   handleCreateInvoice = () => {
+    const {
+      item: {
+        decimals,
+        token,
+        contractAddress,
+        unconfirmedBalance,
+        currency,
+        address,
+        balance,
+      },
+    } = this.props
+
+    actions.modals.open(constants.modals.InvoiceModal, {
+      currency,
+      address,
+      contractAddress,
+      decimals,
+      token,
+      balance,
+      unconfirmedBalance,
+    })
   }
 
   goToHistory = () => {
