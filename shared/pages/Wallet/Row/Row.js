@@ -113,6 +113,7 @@ export default class Row extends Component {
   componentDidMount() {
     const { hiddenCoinsList } = this.props
 
+
     this.handleTelosActivate()
     this.getUsdBalance()
 

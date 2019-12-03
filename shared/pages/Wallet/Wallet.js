@@ -51,6 +51,7 @@ const walletNav = ['My balances', 'Transactions'];
     // xlmData,
   },
   currencies: { items: currencies },
+  createWallet: { currencies: assets }
 }) => {
   const tokens = (
     config && config.isWidget
@@ -105,6 +106,7 @@ const walletNav = ['My balances', 'Transactions'];
     items,
     currencyBalance,
     currencies,
+    assets,
     hiddenCoinsList: config && config.isWidget ? [] : hiddenCoinsList,
     userEthAddress: ethData.address,
     tokensData: {
@@ -126,6 +128,7 @@ const walletNav = ['My balances', 'Transactions'];
 @connect(({ signUp: { isSigned } }) => ({
   isSigned
 }))
+
 @cssModules(styles, { allowMultiple: true })
 export default class Wallet extends Component {
 
@@ -157,6 +160,7 @@ export default class Wallet extends Component {
     actions.modals.open(constants.modals.PrivateKeys)
   }
 
+
   handleDeposit = () => {
     actions.modals.open(constants.modals.Withdraw, {
       currency,
@@ -186,7 +190,7 @@ export default class Wallet extends Component {
   }
 
   handleNotifyBlockClose = () => {
-    alert('close')
+    localStorage.setItem(constants.localStorage.isClosedNotifyBlock, 'true')
   }
 
   showPercentChange1H = () => {
@@ -269,6 +273,7 @@ export default class Wallet extends Component {
     }
 
     const isPrivateKeysSaved = localStorage.getItem(constants.localStorage.privateKeysSaved)
+    const isClosedNotifyBlock = localStorage.getItem(constants.localStorage.isClosedNotifyBlock)
 
     return (
       <artical>
@@ -287,8 +292,8 @@ export default class Wallet extends Component {
               secondFunc={this.handleSaveKeys}
             />
           }
-          {
-            !isSigned && <NotifyBlock
+        {
+          !isSigned && !isClosedNotifyBlock && <NotifyBlock
               className="notifyBlockSignUp"
               descr="Sign up and get your free cryptocurrency for test!"
               tooltip="You will also be able to receive notifications regarding updates with your account"
@@ -297,7 +302,6 @@ export default class Wallet extends Component {
               firstFunc={this.handleSignUp}
               secondBtn="I’ll do this later"
               secondFunc={this.handleNotifyBlockClose} />
-
           }
           <ul styleName="walletNav">
             {walletNav.map((item, index) => <li key={index} styleName={`walletNavItem ${activeView === index ? 'active' : ''}`} onClick={() => this.handleNavItemClick(index)}><a href styleName="walletNavItemLink">{item}</a></li>)}

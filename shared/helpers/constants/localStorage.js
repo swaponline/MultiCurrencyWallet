@@ -25,4 +25,5 @@ export default {
   startSwap: 'startSwap',
   didProtectedBtcCreated: 'protectedBtcCreated',
   didProtectedBtcG2FACreated: 'protectedBtcG2FA',
+  isClosedNotifyBlock: 'isClosedNotifyBlock'
 }
