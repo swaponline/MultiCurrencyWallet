@@ -179,6 +179,7 @@
     "jquery": "^3.4.1",
     "json-stringify-safe": "^5.0.1",
     "keychain.js": "0.0.3",
+    "lerna": "^3.18.4",
     "level-js": "github:timkuijsten/level.js#idbunwrapper",
     "memdown": "^3.0.0",
     "moment": "^2.24.0",
@@ -206,6 +207,7 @@
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^5.0.0-alpha.9",
+    "react-slick": "^0.25.2",
     "react-tooltip": "^3.11.1",
     "reactour": "^1.15.2",
     "rebuild": "^0.1.2",
@@ -214,11 +216,11 @@
     "rename-files": "0.0.2",
     "replace": "^1.1.1",
     "reverse": "^4.0.1",
+    "scrypt-shim": "github:web3-js/scrypt-shim",
+    "slick-carousel": "^1.8.1",
     "stellar-sdk": "^0.11.0",
     "styled-components": "^4.4.0",
     "valuelink": "^1.6.2",
-    "lerna": "^3.18.4",
-    "web3": "github:ethereum/web3.js#1.x",
-    "scrypt-shim": "github:web3-js/scrypt-shim"
+    "web3": "github:ethereum/web3.js#1.x"
   }
 }

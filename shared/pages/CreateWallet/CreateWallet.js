@@ -15,6 +15,7 @@ import links from 'helpers/links'
 import { localisedUrl } from 'helpers/locale'
 
 import check from './images/check'
+import NewButton from '../../components/controls/NewButton/NewButton'
 import FirstStep from './Steps/FirstStep'
 import SecondStep from './Steps/SecondStep'
 
@@ -58,6 +59,10 @@ const CreateWallet = (props) => {
     }
     localStorage.setItem(constants.localStorage.isWalletCreate, true)
     history.push(localisedUrl(locale, '/wallet'))
+  }
+
+  const handleImportKeys = () => {
+    actions.modals.open(constants.modals.ImportKeys, {})
   }
 
   const validate = () => {
@@ -137,6 +142,11 @@ const CreateWallet = (props) => {
             defaultMessage="Создание кошелька"
           />
         </h2>
+        <div styleName="buttonWrapper">
+          <NewButton blue onClick={handleImportKeys}>
+              Import keys
+          </NewButton>
+        </div>
         {isMobile &&
           <div styleName="inLine steps">
             {steps.map(el => (
