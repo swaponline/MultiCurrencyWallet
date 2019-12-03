@@ -4,19 +4,15 @@ import PropTypes from 'prop-types'
 import { links } from 'helpers'
 import { NavLink, withRouter } from 'react-router-dom'
 
-import SubMenu from '../SubMenu/SubMenu'
 
-import cx from 'classnames'
 import styles from './Nav.scss'
 import CSSModules from 'react-css-modules'
-import { FormattedMessage, injectIntl } from 'react-intl'
+import { injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
-
-import ArrowDown from './images/ArrowDown.svg'
 
 
 const checkOnExchange = (pathname) => {
-  if (pathname.includes(links.exchange) || pathname === '/' || pathname === '/ru') {
+  if (pathname.includes(links.wallet)) {
     return true
   }
   return false
@@ -48,9 +44,6 @@ export default class Nav extends Component {
     const { menu, intl: { locale }, location } = this.props
 
     const isExchange = location.pathname.includes(links.exchange)
-      || location.pathname === '/'
-      || location.pathname === '/ru'
-
 
     return (
       <div styleName="nav">
@@ -71,15 +64,15 @@ export default class Nav extends Component {
                       ${isExchange && styles.exchangeMenuLink}
                       ${isExchange ? ` ${styles.active_exchange}` : ''}
                       ${
-                        checkOnExchange(link) && isExchange
-                          ? ` ${styles.active}`
-                          : ''
-                      }
+                    checkOnExchange(link) && isExchange
+                      ? ` ${styles.active}`
+                      : ''
+                    }
                     `}
                   /* eslint-enable indent */
                   to={localisedUrl(locale, link)}
                   activeClassName={styles.active} // it does not work in all cases, so it duplicates in className for some cases
-                  // im hurry, so fix it, if you are here
+                // im hurry, so fix it, if you are here
                 >
                   <div>
                     {/* rest.currentPageFlag && (
