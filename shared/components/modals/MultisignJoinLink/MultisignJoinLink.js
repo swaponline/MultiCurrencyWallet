@@ -57,7 +57,7 @@ export default class MultisignJoinLink extends React.Component {
     const publicKey = this.props.data.publicKey.toString('hex')
 
     this.setState({
-      joinLink: `${location.origin}${links.multisign}/btc/join/${publicKey}/${SwapApp.shared().services.room.peer}`
+      joinLink: `${location.origin}/#${links.multisign}/btc/join/${publicKey}/${SwapApp.shared().services.room.peer}`
     })
   }
 
