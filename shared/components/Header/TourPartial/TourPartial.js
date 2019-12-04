@@ -1,71 +1,111 @@
 import React, { Component } from 'react'
 
+import Joyride, { STATUS } from 'react-joyride'
+
 import { FormattedMessage } from 'react-intl'
-import Tour from 'reactour'
+import Tooltip from 'components/TourWindow'
 
 
 export default class TourPartial extends Component {
+
   constructor(props) {
     super(props)
 
+    /* eslint-disable */
     this.state = {
-      shouldTourOpen: true,
+      run: true,
+      steps: [
+        {
+          content: <FormattedMessage id="partial-tour-1" defaultMessage="Уникальный peer-to-peer обменик, основанный на технологии Atomic Swap." />,
+          placement: 'center',
+          target: '.data-tut-have',
+        },
+        {
+          content: <FormattedMessage id="partial-tour-2" defaultMessage="В данное поле, введите сумму, которую вы хотите продать, выберите валюту для продажи. Вы также можете продать валюту с внешнего кошелька." />,
+          target: '.data-tut-have',
+        },
+        {
+          content: <FormattedMessage id="partial-tour-3" defaultMessage="В данное поле, введите сумму, которую вы хотели бы купить, выберите валюту для покупки." />,
+          floaterProps: {
+            disableAnimation: true,
+          },
+          spotlightPadding: 20,
+          target: '.data-tut-get',
+        },
+        {
+          content: <FormattedMessage id="partial-tour-4" defaultMessage="Здесь вы можете увидеть статус поиска предложений по обмену. При загрузке будет отображаться «Поиск заказов ...». Когда заказ найден, проверьте курс обмена здесь" />,
+          floaterProps: {
+            disableAnimation: true,
+          },
+          spotlightPadding: 20,
+          target: '.data-tut-status',
+        },
+        {
+          content: <FormattedMessage id="partial-tour-5" defaultMessage="Переключите эту кнопку, чтобы получать средства после обмена на внутренний кошелек на Swap.online или на другой кошелек" />,
+          floaterProps: {
+            disableAnimation: true,
+          },
+          spotlightPadding: 20,
+          target: '.data-tut-togle',
+        },
+        {
+          content: <FormattedMessage
+            id="partial-tour-6"
+            defaultMessage="Переключите эту кнопку, чтобы увидеть прямой URL операции обмена. Это возможно, когда кнопка розовая." />,
+          floaterProps: {
+            disableAnimation: true,
+          },
+          spotlightPadding: 20,
+          target: '.data-tut-Exchange',
+        },
+        {
+          content: <FormattedMessage
+            id="partial-tour-7"
+            defaultMessage="Нажмите на эту кнопку, чтобы увидеть страницу с предложениями для обмена. Предложения будут представлены для конкретных валют. Также вы можете создать собственное предложение на странице предложений." />,
+          floaterProps: {
+            disableAnimation: true,
+          },
+          spotlightPadding: 20,
+          target: '.data-tut-Orderbook',
+        },
+      ],
     }
+    /* eslint-enable */
+
   }
 
-  closeTour = () => {
-    this.setState({ shouldTourOpen: false })
-  }
+  handleJoyrideCallback = (data) => {
+    const { status } = data
+    const finishedStatuses = [STATUS.FINISHED, STATUS.SKIPPED]
+
+    if (finishedStatuses.includes(status)) {
+      this.setState({ run: false })
+    }
+  };
 
   render() {
-    const { shouldTourOpen } = this.state
-
-    const accentColor = '#510ed8'
+    const { run, steps } = this.state
+    const { closeTour, isTourOpen } = this.props
 
     return (
-      <Tour
-        steps={tourSteps}
-        onRequestClose={this.closeTour}
-        isOpen={shouldTourOpen}
-        maskClassName="mask"
-        className="helper"
-        accentColor={accentColor}
-      />
-    )
+      <div className="demo-wrapper">
+        {isTourOpen && <Joyride
+          callback={this.handleJoyrideCallback}
+          continuous
+          run={run}
+          scrollToFirstStep
+          tooltipComponent={(props) => <Tooltip closeTour={closeTour} {...props} />}
+          showProgress
+          showSkipButton
+          steps={steps}
+          styles={{
+            options: {
+              zIndex: 10000,
+              arrowColor: '#302272',
+            },
+          }}
+        />}
+      </div>
+    );
   }
 }
-/* eslint-disable */
-const tourSteps = [
-  {
-    selector: '[data-tut="have"]', //have currency
-    content: <FormattedMessage id="tourPartial94" defaultMessage="Please enter the amount you would like to sell and select the currency to sell. You can also sell currency from an external wallet." />,
-  },
-  {
-    selector: '[data-tut="get"]',
-    content: <FormattedMessage id="tourPartial99" defaultMessage="Please enter the amount you would like to buy and select the currency to buy." />,
-  },
-  {
-    selector: '[data-tut="status"]',
-    content: <FormattedMessage
-      id="tourPartial103"
-      defaultMessage="Here you can see the status of the search for exchange offers. When loading there will be `Searching orders...` shown. When the order is found, check the exchange rate here" />,
-  },
-  {
-    selector: '[data-tut="togle"]',
-    content: <FormattedMessage id="tourPartial107" defaultMessage="Switch this button to receive funds after exchanging to the internal wallet on Swap.online or to another wallet" />,
-  },
-  {
-    selector: '[data-tut="Exchange"]',
-    content: <FormattedMessage
-      id="tourPartial116"
-      defaultMessage="Switch this button to see the direct URL of the exchange operation. This is possible when the button is pink." />,
-  },
-  {
-    selector: '[data-tut="Orderbook"]',
-    content: <FormattedMessage
-      id="tourPartial128"
-      defaultMessage="Click on this button to see the page with offers for exchange. Offers will be presented for the particular currencies. Also you can create your own offer on the offer page." />,
-  },
-]
-
-/* eslint-enable */

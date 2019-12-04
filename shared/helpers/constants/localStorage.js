@@ -3,7 +3,6 @@ export default {
   reject: 'reject',
   switch: 'switch',
   wasOnWallet: 'wasOnWallet',
-  didWalletCreated: 'didWalletCreated',
   savedOrders: 'savedOrders',
   deletedOrders: 'deletedOrders',
   didWidgetsDataSend: 'didWidgetsDataSend',

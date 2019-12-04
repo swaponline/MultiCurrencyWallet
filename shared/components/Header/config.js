@@ -46,7 +46,7 @@ export const messages = defineMessages({
   },
 })
 
-export const getMenuItems = (props, didWalletCreated, dinamicPath) => {
+export const getMenuItems = (props, isWalletCreated) => {
   const { intl, reputation, isSigned } = props
 
   const { exchange: linksExchange, createWallet: create, home } = links
@@ -57,8 +57,8 @@ export const getMenuItems = (props, didWalletCreated, dinamicPath) => {
     || localStorage.getItem('isWalletCreate') === 'true'
     ? ([
       {
-        title: intl.formatMessage(didWalletCreated ? wallet : createWallet),
-        link: didWalletCreated ? home : create,
+        title: intl.formatMessage(wallet),
+        link: home,
         exact: true,
         haveSubmenu: true,
         icon: 'products',
@@ -77,7 +77,7 @@ export const getMenuItems = (props, didWalletCreated, dinamicPath) => {
       //   link: links.history,
       //   icon: 'history',
       //   haveSubmenu: false,
-      //   displayNone: !didWalletCreated,
+      //   displayNone: !isWalletCreated,
       // },
       // {
       //   title: props.intl.formatMessage(messages.IEO),
@@ -88,8 +88,8 @@ export const getMenuItems = (props, didWalletCreated, dinamicPath) => {
     ])
     : ([
       {
-        title: intl.formatMessage(didWalletCreated ? wallet : createWallet),
-        link: didWalletCreated ? home : create,
+        title: intl.formatMessage(createWallet),
+        link: create,
         exact: true,
         haveSubmenu: true,
         icon: 'products',
@@ -108,20 +108,20 @@ export const getMenuItems = (props, didWalletCreated, dinamicPath) => {
       //   link: links.history,
       //   icon: 'history',
       //   haveSubmenu: false,
-      //   displayNone: !didWalletCreated,
+      //   displayNone: !isWalletCreated,
       // },
     ])
 }
 
 
-export const getMenuItemsMobile = (props, didWalletCreated, dinamicPath) => {
+export const getMenuItemsMobile = (props, isWalletCreated, dinamicPath) => {
   const { intl } = props
   const { exchange, wallet, createWallet } = messages
   const { exchange: linksExchange } = links
 
   return ([
     {
-      title: intl.formatMessage(didWalletCreated ? wallet : createWallet),
+      title: intl.formatMessage(isWalletCreated ? wallet : createWallet),
       link: dinamicPath,
       exact: true,
       haveSubmenu: true,
@@ -139,7 +139,7 @@ export const getMenuItemsMobile = (props, didWalletCreated, dinamicPath) => {
     //   link: links.history,
     //   icon: 'history',
     //   haveSubmenu: false,
-    //   displayNone: !didWalletCreated,
+    //   displayNone: !isWalletCreated,
     // },
   ])
 }

@@ -24,6 +24,7 @@ import NavMobile from './NavMobile/NavMobile'
 import LogoTooltip from 'components/Logo/LogoTooltip'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
 import TourPartial from './TourPartial/TourPartial'
+import WalletTour from './WalletTour/WalletTour'
 
 import Logo from 'components/Logo/Logo'
 import Loader from 'components/loaders/Loader/Loader'
@@ -63,14 +64,14 @@ export default class Header extends Component {
     const { location: { pathname }, intl } = props
     const { exchange, home, wallet, history: historyLink } = links
     const { products, invest, history } = messages
-    const { lastCheckBalance, wasCautionPassed, didWalletCreated } = constants.localStorage
+    const { lastCheckBalance, wasCautionPassed, isWalletCreated } = constants.localStorage
 
     if (localStorage.getItem(lastCheckBalance) || localStorage.getItem(wasCautionPassed)) {
-      localStorage.setItem(didWalletCreated, true)
+      localStorage.setItem(isWalletCreated, true)
     }
 
     const dinamicPath = pathname.includes(exchange) ? `${unlocalisedUrl(intl.locale, pathname)}` : `${home}`
-    const lsWalletCreated = localStorage.getItem(didWalletCreated)
+    const lsWalletCreated = localStorage.getItem(isWalletCreated)
     const isWalletPage = pathname === wallet || pathname === `/ru${wallet}`
 
     this.state = {
@@ -134,26 +135,24 @@ export default class Header extends Component {
     const { pathname } = location
     const { wallet, home } = links
 
-    const dinamicPath = pathname.includes(wallet)
-      ? `${unlocalisedUrl(intl.locale, pathname)}`
-      : `${home}`
-
-    let didWalletCreated = localStorage.getItem(constants.localStorage.isWalletCreate)
+    let isWalletCreated = localStorage.getItem(constants.localStorage.isWalletCreate)
 
     const isWalletPage = pathname === wallet
       || pathname === `/ru${wallet}`
 
-    if (isWalletPage && !didWalletCreated) {
-      localStorage.setItem(constants.localStorage.didWalletCreated, true)
-      didWalletCreated = true
+    if (isWalletPage && !isWalletCreated) {
+      localStorage.setItem(constants.localStorage.isWalletCreated, true)
+      isWalletCreated = true
 
       this.setState(() => ({
-        menuItems: getMenuItems(this.props, didWalletCreated, dinamicPath),
-        menuItemsMobile: getMenuItemsMobile(this.props, didWalletCreated, dinamicPath),
+        menuItems: getMenuItems(this.props, isWalletCreated),
+        menuItemsMobile: getMenuItemsMobile(this.props, isWalletCreated),
         createdWalletLoader: true,
       }), () => {
         setTimeout(() => {
-          this.setState(() => ({ createdWalletLoader: false }))
+          this.setState(() => ({
+            createdWalletLoader: false,
+          }))
           resolve()
         }, 4000)
       })
@@ -175,6 +174,10 @@ export default class Header extends Component {
       return
     }
 
+    this.setState(() => ({
+      menuItems: getMenuItems(this.props, true),
+      menuItemsMobile: getMenuItemsMobile(this.props, true),
+    }))
 
     const path = pathname.toLowerCase()
     const isWalletPage = path.includes(wallet) || path === `/` || path === '/ru'
@@ -189,6 +192,7 @@ export default class Header extends Component {
 
     switch (true) {
       case isWalletPage && !wasOnWalletLs:
+        console.log("doooone")
         tourEvent = this.openWalletTour
         break
       case isPartialPage && !wasOnExchangeLs:
@@ -251,6 +255,10 @@ export default class Header extends Component {
     this.setState(() => ({ isTourOpen: false }))
   }
 
+  closePartialTour = () => {
+    this.setState(() => ({ isPartialTourOpen: false }))
+  }
+
   openCreateWallet = (options) => {
     const { history, intl: { locale } } = this.props
     localStorage.setItem(constants.localStorage.isWalletCreate, true)
@@ -260,15 +268,14 @@ export default class Header extends Component {
   openWalletTour = () => {
     const { wasOnWallet } = constants.localStorage
 
-    this.setState(() => ({ isTourOpen: true }))
-
+    setTimeout(() => { this.setState(() => ({ isTourOpen: true })) }, 1000)
     localStorage.setItem(wasOnWallet, true)
   }
 
   openExchangeTour = () => {
     const { wasOnExchange } = constants.localStorage
+    setTimeout(() => { this.setState(() => ({ isPartialTourOpen: true })) }, 1000)
 
-    this.setState(() => ({ isPartialTourOpen: true }))
     localStorage.setItem(wasOnExchange, true)
 
   }
@@ -283,6 +290,8 @@ export default class Header extends Component {
     const isWalletPage = pathname.includes(wallet)
       || pathname === `/ru${wallet}`
       || pathname === `/`
+
+    const isExchange = pathname.includes(exchange);
 
     if (config && config.isWidget) {
       return (
@@ -326,77 +335,20 @@ export default class Header extends Component {
             </div>
           )
         }
-        <WidthContainer styleName="container" data-tut="reactour__address">
+        <WidthContainer styleName="container" className="data-tut-preview">
           <LogoTooltip withLink isColored isExchange={isWalletPage} />
           <Nav menu={menuItems} />
           <Logo withLink mobile />
-          {isPartialTourOpen && <TourPartial isTourOpen={isPartialTourOpen} />}
+          {isPartialTourOpen && isExchange && <TourPartial isTourOpen={isPartialTourOpen} closeTour={this.closePartialTour} />}
           <User
             openTour={isWalletPage ? this.openExchangeTour : this.openWalletTour}
             path={path}
             acceptRequest={this.acceptRequest}
             declineRequest={this.declineRequest}
           />
-          {/* {isTourOpen &&
-            <Tour
-              steps={tourSteps}
-              onRequestClose={this.closeTour}
-              isOpen={isTourOpen}
-              maskClassName="mask"
-              className="helper"
-              accentColor={accentColor}
-            />
-          } */}
+          {isTourOpen && isWalletPage && <WalletTour isTourOpen={isTourOpen} closeTour={this.closeTour} />}
         </WidthContainer>
       </div>
     )
   }
 }
-
-const tourSteps = [
-  {
-    selector: '[data-tut="reactour__address"]',
-    content: <FormattedMessage
-      id="tour-step-1"
-      defaultMessage="Баланс по выбранной валюте показывается в конце строки, напротив валюты. Вы можете закрыть браузер, перезагрузить компьютер. Ваш баланс не изменится, только не забудте сохранить ключи" />,
-  },
-  // {
-  //   selector: '[data-tut="reactour__save"]',
-  //   content: <FormattedMessage id="tour-step-2" defaultMessage="Swap Online does NOT store your private keys, please download and keep them in a secured place" />,
-  // },
-  {
-    selector: '[data-tut="reactour__store"]',
-    content: <FormattedMessage id="tour-step-2" defaultMessage="Вы можете хранить валюты разных блокчейнов, таких как: Bitcoin, Ethereum, EOS, Bitcoin Cash, Litecoin и различные токены" />,
-  },
-  {
-    selector: '[data-tut="reactour__exchange"]',
-    content: <FormattedMessage id="tour-step-3" defaultMessage="Наша уникальная функция peer-to-peer обмена доступна в нашем кольке, основанном на технологии Atomic Swap. Вы можете разместить вашу криптовалюту в нашем кошельке." />,
-  },
-  {
-    selector: '[data-tut="reactour__sign-up"]',
-    content: <FormattedMessage
-      id="tour-step-4"
-      defaultMessage="Вы будете получать уведомления об обновлениях с вашей учетной записью (заказы, транзакции) и ежемесячные обновления о нашем проекте" />,
-  },
-  {
-    selector: '[data-tut="reactour__goTo"]',
-    content: ({ goTo }) => (
-      <div>
-        <strong><FormattedMessage id="Header194" defaultMessage="Do not forget to save your keys" /></strong>
-        <button
-          style={{
-            border: '1px solid #f7f7f7',
-            background: 'none',
-            padding: '.3em .7em',
-            fontSize: 'inherit',
-            display: 'block',
-            cursor: 'pointer',
-            margin: '1em auto',
-          }}
-          onClick={() => goTo(1)}
-        >
-          <FormattedMessage id="Header207" defaultMessage="show how to save" />
-        </button>
-      </div>),
-  },
-]

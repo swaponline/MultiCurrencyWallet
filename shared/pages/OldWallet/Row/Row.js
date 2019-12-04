@@ -356,12 +356,11 @@ export default class Row extends Component {
 
     return (
       <tr
-        data-tut="reactour__store"
         styleName={this.props.index === this.props.selectId || !isMobile ? 'showButtons' : 'hidden'}
         onClick={() => { this.props.handleSelectId(this.props.index) }}
         onTouchEnd={this.handleTouchClear}
         onTouchMove={this.handleTouch}
-        style={isTouch && this.props.index !== this.props.selectId ?  { background: '#f5f5f5' } : { background: '#fff' }}
+        style={isTouch && this.props.index !== this.props.selectId ? { background: '#f5f5f5' } : { background: '#fff' }}
         onMouseEnter={this.showButtons}
         onMouseLeave={this.hideButtons}
       >
@@ -375,17 +374,17 @@ export default class Row extends Component {
             {fullName}
           </Link>
           {balanceError &&
-          <div className={styles.errorMessage}>
-            {fullName}
-            <FormattedMessage
-              id="RowWallet276"
-              defaultMessage=" node is down (You can not perform transactions). " />
-            <a href="https://wiki.swap.online/faq/bitcoin-node-is-down-you-cannot-make-transactions/">
+            <div className={styles.errorMessage}>
+              {fullName}
               <FormattedMessage
-                id="RowWallet282"
-                defaultMessage="Need help?" />
-            </a>
-          </div>
+                id="RowWallet276"
+                defaultMessage=" node is down (You can not perform transactions). " />
+              <a href="https://wiki.swap.online/faq/bitcoin-node-is-down-you-cannot-make-transactions/">
+                <FormattedMessage
+                  id="RowWallet282"
+                  defaultMessage="Need help?" />
+              </a>
+            </div>
           }
         </td>
         <td styleName="table_balance-cell" data-tut="reactour__balance">
@@ -393,41 +392,41 @@ export default class Row extends Component {
             !isBalanceFetched || isBalanceFetching ? (
               <InlineLoader />
             ) : (
-              <div styleName="no-select-inline" onClick={this.handleReloadBalance} >
-                <i className="fas fa-sync-alt" styleName="icon" />
-                <span>
-                  {
-                    balanceError ? '?' : BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString()
-                  }{' '}{currency}
-                </span>
-                { currency === 'BTC' && unconfirmedBalance !== 0 && (
-                  <Fragment>
-                    <br />
-                    <span styleName="unconfirmedBalance">
-                      <FormattedMessage id="RowWallet181" defaultMessage="Unconfirmed balance" />
-                      {unconfirmedBalance} {' '}
-                    </span>
-                  </Fragment>
-                ) }
-                { currency === 'BCH' && unconfirmedBalance !== 0 && (
-                  <Fragment>
-                    <br />
-                    <span styleName="unconfirmedBalance">
-                      <FormattedMessage id="RowWallet181" defaultMessage="Unconfirmed balance" />
-                      {unconfirmedBalance} {' '}
-                    </span>
-                  </Fragment>
-                ) }
-                { currency === 'LTC' && unconfirmedBalance !== 0 && (
-                  <Fragment>
-                    <br />
-                    <span styleName="unconfirmedBalance">
-                      <FormattedMessage id="RowWallet189" defaultMessage="Unconfirmed balance" />
-                      {unconfirmedBalance}
-                    </span>
-                  </Fragment>
-                ) }
-                {/* currency === 'USDT' && unconfirmedBalance !== 0 && (
+                <div styleName="no-select-inline" onClick={this.handleReloadBalance} >
+                  <i className="fas fa-sync-alt" styleName="icon" />
+                  <span>
+                    {
+                      balanceError ? '?' : BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString()
+                    }{' '}{currency}
+                  </span>
+                  {currency === 'BTC' && unconfirmedBalance !== 0 && (
+                    <Fragment>
+                      <br />
+                      <span styleName="unconfirmedBalance">
+                        <FormattedMessage id="RowWallet181" defaultMessage="Unconfirmed balance" />
+                        {unconfirmedBalance} {' '}
+                      </span>
+                    </Fragment>
+                  )}
+                  {currency === 'BCH' && unconfirmedBalance !== 0 && (
+                    <Fragment>
+                      <br />
+                      <span styleName="unconfirmedBalance">
+                        <FormattedMessage id="RowWallet181" defaultMessage="Unconfirmed balance" />
+                        {unconfirmedBalance} {' '}
+                      </span>
+                    </Fragment>
+                  )}
+                  {currency === 'LTC' && unconfirmedBalance !== 0 && (
+                    <Fragment>
+                      <br />
+                      <span styleName="unconfirmedBalance">
+                        <FormattedMessage id="RowWallet189" defaultMessage="Unconfirmed balance" />
+                        {unconfirmedBalance}
+                      </span>
+                    </Fragment>
+                  )}
+                  {/* currency === 'USDT' && unconfirmedBalance !== 0 && (
                   <Fragment>
                     <br />
                     <span styleName="unconfirmedBalance">
@@ -436,13 +435,13 @@ export default class Row extends Component {
                     </span>
                   </Fragment>
                 ) */}
-              </div>
-            )
+                </div>
+              )
           }
           <span styleName="mobileName">{fullName}</span>
         </td>
         <Fragment>
-          <CopyToClipboard text={address} data-tut="reactour__address" onCopy={this.handleCopyAddress}>
+          <CopyToClipboard text={address} onCopy={this.handleCopyAddress}>
             <td styleName={currency === 'EOS' && !eosAccountActivated ? 'yourAddressWithOptions' : 'yourAddress'}>
               {
                 !contractAddress ? (
@@ -456,12 +455,12 @@ export default class Row extends Component {
                         <FormattedMessage id="Row235" defaultMessage="Copy" />
                       </span>
                     </ReactTooltip>
-                    { currency === 'EOS' && !eosAccountActivated && (
+                    {currency === 'EOS' && !eosAccountActivated && (
                       <Fragment>
                         <br />
                         <span styleName="notActiveLink">
-                          { eosActivationPaymentSent && <InlineLoader /> }
-                          { !eosActivationPaymentSent && <FormattedMessage id="Row268" defaultMessage="not activated" /> }
+                          {eosActivationPaymentSent && <InlineLoader />}
+                          {!eosActivationPaymentSent && <FormattedMessage id="Row268" defaultMessage="not activated" />}
                         </span>
                       </Fragment>
                     )
@@ -475,22 +474,22 @@ export default class Row extends Component {
                       </Fragment>
                     )
                     */}
-                    { (currency === 'BTC' || currency === 'ETH') && (<KeychainStatus currency={currency} />)
+                    {(currency === 'BTC' || currency === 'ETH') && (<KeychainStatus currency={currency} />)
                     }
                   </div>
                 ) : (
-                  <Fragment>
-                    <i className="far fa-copy" styleName="icon" data-tip data-for="Copy" style={{ width: '14px' }} />
-                    <LinkAccount type={currency} contractAddress={contractAddress} address={address} >{this.handleSliceAddress()}</LinkAccount>
-                  </Fragment>
-                )
+                    <Fragment>
+                      <i className="far fa-copy" styleName="icon" data-tip data-for="Copy" style={{ width: '14px' }} />
+                      <LinkAccount type={currency} contractAddress={contractAddress} address={address} >{this.handleSliceAddress()}</LinkAccount>
+                    </Fragment>
+                  )
               }
               <ReactTooltip id="Use" type="light" effect="solid">
                 <span>
                   <FormattedMessage id="Row346" defaultMessage="Login with your existing eos account" />
                 </span>
               </ReactTooltip>
-              { isAddressCopied &&
+              {isAddressCopied &&
                 <p styleName="copied" >
                   <FormattedMessage id="Row293" defaultMessage="Address copied to clipboard" />
                 </p>
