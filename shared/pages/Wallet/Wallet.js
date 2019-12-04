@@ -1,14 +1,13 @@
 import React, { Component, Fragment } from 'react'
 import Slider from 'react-slick';
 import PropTypes from 'prop-types'
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 
 import { connect } from 'redaction'
 import actions from 'redux/actions'
 
 import cssModules from 'react-css-modules'
 import styles from './Wallet.scss'
+
 import History from 'pages/History/History'
 import NotifyBlock from './components/NotityBlock/NotifyBock'
 
@@ -273,7 +272,7 @@ export default class Wallet extends Component {
       infinite: true,
       speed: 500,
       autoplay: true,
-      autoplaySpeed: 2000,
+      autoplaySpeed: 1500,
       fade: true,
       slidesToShow: 1,
       slidesToScroll: 1
