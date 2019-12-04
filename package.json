@@ -214,7 +214,6 @@
     "rename-files": "0.0.2",
     "replace": "^1.1.1",
     "reverse": "^4.0.1",
-    "stellar-sdk": "^0.11.0",
     "styled-components": "^4.4.0",
     "valuelink": "^1.6.2",
     "lerna": "^3.19.0",
