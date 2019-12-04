@@ -11,7 +11,6 @@ import actions from 'redux/actions'
 import { constants, firebase } from 'helpers'
 import config from 'app-config'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
-import Tour from 'reactour'
 
 import CSSModules from 'react-css-modules'
 import styles from './Header.scss'
