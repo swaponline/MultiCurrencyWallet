@@ -3,7 +3,6 @@ cache:
   - node_modules
   - "~/.cache"
   - "~/.npm"
-  yarn:        true
 language:      node_js
 node_js:
 - '10'
@@ -18,36 +17,33 @@ before_script:
 #- yarn add jest --save-dev
 #- yarn add react-test-renderer --save-dev
 #- yarn add ignore-styles --save-dev
-- yarn add lint-diff --save-dev
-- echo "_________YARN install___________"
-- yarn install
-- echo "__________YARN start____________"
-- yarn start &
+
+- echo "________NPM install___________"
+- npm i
+- echo "__________NPM start____________"
+- npm run eslint &
 script:
 - echo "____________TEST________________"
 #Uncomment this when enable covaralls
 #- yarn test:unit -- --coverage
 #- yarn test:snapshot -- --coverage
 - echo "____________LINT________________"
-- yarn validate $TRAVIS_COMMIT_RANGE
+- npm run validate $TRAVIS_COMMIT_RANGE
 - echo "________Build mainnet___________"
-- yarn build:mainnet
-- echo "________Build testnet___________"
-- yarn build:testnet
-- echo "________Build Github Pages___________"
-- yarn build:pages
+- npm run build:mainnet
+
 - ls
 after_script:
 #Uncomment this when enable covaralls
 #- COVERALLS_REPO_TOKEN=$coveralls_repo_token yarn coveralls
-- tar -cvzf build-mainnet.tgz build-mainnet/
-- tar -cvzf build-testnet.tgz build-testnet/
+#- tar -cvzf build-mainnet.tgz build-mainnet/
+#- tar -cvzf build-testnet.tgz build-testnet/
 
 deploy:
   provider: pages
   skip-cleanup: true
   keep-history: true
-  local-dir: build-mainnet-pages
+  local-dir: build-testnet
   github-token: $GITHUB_TOKEN
   on:
     branch: develop

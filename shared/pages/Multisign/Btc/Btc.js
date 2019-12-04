@@ -76,7 +76,7 @@ export default class Btc extends PureComponent {
           privateKey,
           publicKey,
           myPublicKey,
-          joinLink: `${location.origin}${links.multisign}/btc/connect/${myPublicKey}`,
+          joinLink: `${location.origin}/#${links.multisign}/btc/connect/${myPublicKey}`,
         })
         actions.ipfs.onReady( () => {
           this.setState({
