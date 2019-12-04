@@ -8,7 +8,6 @@ node_js:
 - '10'
 before_script:
 - git submodule update --init --recursive
-- yarn add lerna
 #Uncomment this when enable covaralls
 #- yarn add coveralls --save-dev
 #- yarn add mocha --save-dev
