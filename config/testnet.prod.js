@@ -9,8 +9,8 @@ export default {
   local: 'online',
   dir: 'testnet',
 
-  base: 'https://testnet.swap.online/',
-  publicPath: `https://testnet.swap.online${baseConfig.publicPath}`,
+  base: './',
+  publicPath: `./`,
 
   time: moment(Date.now()).format('LLLL'),
 
