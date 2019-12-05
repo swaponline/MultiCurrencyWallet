@@ -64,19 +64,19 @@ const walletNav = ['My balances', 'Transactions'];
       ethData,
       // usdtOmniData,
     ] : [
-      btcData,
-      btcMultisigSMSData,
-      btcMultisigUserData,
-      bchData,
-      ethData,
-      eosData,
-      telosData,
-      ltcData,
-      // qtumData,
-      // usdtOmniData,
-      // nimData,
-      // xlmData,
-    ]
+        btcData,
+        btcMultisigSMSData,
+        btcMultisigUserData,
+        bchData,
+        ethData,
+        eosData,
+        telosData,
+        ltcData,
+        // qtumData,
+        // usdtOmniData,
+        // nimData,
+        // xlmData,
+      ]
   )
     .map(data => data.currency)
 
@@ -302,10 +302,10 @@ export default class Wallet extends Component {
           <ul styleName="walletNav">
             {walletNav.map((item, index) => <li key={index} styleName={`walletNavItem ${activeView === index ? 'active' : ''}`} onClick={() => this.handleNavItemClick(index)}><a href styleName="walletNavItemLink">{item}</a></li>)}
           </ul>
-          <div styleName="walletContent">
+          <div className="data-tut-store" styleName="walletContent" >
             <div styleName={`walletBalance ${activeView === 0 ? 'active' : ''}`}>
               <BalanceForm usdBalance={usdBalance} btcBalance={btcBalance} {...this.state} />
-              { exchangeForm &&
+              {exchangeForm &&
                 <div styleName="exchangeForm">
                   <ParticalClosure {...this.props} isOnlyForm />
                 </div>

@@ -28,21 +28,22 @@ const SignUpButton = ({ mobile }) => (
             </span>
           </ReactTooltip>
         </Fragment>
-      ) : (
-        <Fragment>
-          <button styleName="button" data-tut="reactour__sign-up" onClick={handleSignUp} /* eslint-disable-line */ data-tip data-for="sign-up" >
-            <FormattedMessage id="ADDoffer29" defaultMessage="Sign up (get up to 10$ bonus)" />
-          </button>
-          <ReactTooltip id="sign-up" type="light" effect="solid">
-            <span>
-              <FormattedMessage id="ADDoffer33" defaultMessage="Get subscribed for the Swap.Online news" />
-            </span>
-          </ReactTooltip>
-          <button styleName="buttonMobile" onClick={handleSignUp} /* eslint-disable-line */ >
-            <i className="fa fa-bell" aria-hidden="true" />
-          </button>
-        </Fragment>
-      )
+      ) :
+        (
+          <Fragment>
+            <button styleName="button" className="data-tut-sign-up" onClick={handleSignUp} /* eslint-disable-line */ data-tip data-for="sign-up" >
+              <FormattedMessage id="ADDoffer29" defaultMessage="Sign up (get up to 10$ bonus)" />
+            </button>
+            <ReactTooltip id="sign-up" type="light" effect="solid">
+              <span>
+                <FormattedMessage id="ADDoffer33" defaultMessage="Get subscribed for the Swap.Online news" />
+              </span>
+            </ReactTooltip>
+            <button styleName="buttonMobile" onClick={handleSignUp} /* eslint-disable-line */ >
+              <i className="fa fa-bell" aria-hidden="true" />
+            </button>
+          </Fragment>
+        )
     }
   </div>
 )

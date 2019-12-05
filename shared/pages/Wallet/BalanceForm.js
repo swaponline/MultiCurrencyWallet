@@ -15,7 +15,7 @@ import { FormattedMessage } from 'react-intl'
 
 
 const BalanceForm = ({ activeView, activeCurrency, usdBalance, btcBalance }) => (
-  <div styleName={`yourBalance`}>
+  <div styleName={`yourBalance`} className="data-tut-all-balance">
     <div styleName="yourBalanceTop">
       <p styleName="yourBalanceDescr">Your total balance</p>
       <div styleName="yourBalanceValue">
@@ -35,7 +35,7 @@ const BalanceForm = ({ activeView, activeCurrency, usdBalance, btcBalance }) => 
     </div>
     <div styleName="yourBalanceBottom">
       <Fragment>
-        <NewButton blue id="depositBtn">
+        <NewButton className="data-tut-all-deposit" blue id="depositBtn">
           Deposit
         </NewButton>
         <ReactTooltip id="depositBtn" type="light" effect="solid">
