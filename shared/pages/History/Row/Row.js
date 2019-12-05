@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import cx from 'classnames'
 import moment from 'moment-with-locales-es6'
+import { connect } from 'redaction'
 
 import cssModules from 'react-css-modules'
 import styles from './Row.scss'
@@ -8,6 +9,8 @@ import styles from './Row.scss'
 import Coin from 'components/Coin/Coin'
 import LinkTransaction from '../LinkTransaction/LinkTransaction'
 import { FormattedMessage } from 'react-intl'
+import actions from 'redux/actions'
+import { constants } from 'helpers'
 
 
 class Row extends React.PureComponent {
@@ -29,6 +32,28 @@ class Row extends React.PureComponent {
     }))
   }
 
+  handlePayInvoice = async () => {
+    const { invoiceData } = this.props
+
+    let withdrawModalType = constants.modals.Withdraw
+    const btcData = actions.btcmultisig.isBTCAddress(invoiceData.toAddress)
+
+    if (btcData) {
+      const { currency } = btcData
+
+      if (currency === 'BTC (SMS-Protected)') withdrawModalType = constants.modals.WithdrawMultisigSMS
+      if (currency === 'BTC (Multisig)') withdrawModalType = constants.modals.WithdrawMultisigUser
+      
+      actions.modals.open(withdrawModalType, {
+        currency,
+        address: invoiceData.toAddress,
+        balance: btcData.balance,
+        unconfirmedBalance: btcData.unconfirmedBalance,
+        toAddress: invoiceData.fromAddress,
+        amount: invoiceData.amount,
+      })
+    }
+  }
 
   render() {
     const {
@@ -92,18 +117,16 @@ class Row extends React.PureComponent {
               }
             </div>
             <div styleName="date">{moment(date).format('LLLL')}</div>
-            { txType === 'INVOICE' &&
-              <div className="historyInvoiceInfo">
-              { direction === 'in' &&
-                <div>Адрес для оплаты: {invoiceData.fromAddress}</div>
-              }
-              { direction === 'out' &&
-                <div>Инвойс выставлен на адрес: {invoiceData.toAddress}</div>
-              }
-              { invoiceData.label &&
-                <div>Комментарий: {invoiceData.label}</div>
-              }
-              </div>
+            { invoiceData && invoiceData.label &&
+              <div styleName="date">{invoiceData.label}</div>
+            }
+            { txType === 'INVOICE' && direction === 'in' &&
+              <div styleName="date">Адрес для оплаты: {invoiceData.fromAddress}</div>
+            }
+            { invoiceData && !invoiceData.txid && direction === 'in' && 
+              <button onClick={this.handlePayInvoice}>
+                <FormattedMessage id="RowHistoryPayInvoice" defaultMessage="Оплатить" />
+              </button>
             }
           </div>
           <div styleName={statusStyleName}>
