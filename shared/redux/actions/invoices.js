@@ -8,8 +8,8 @@ import reducers from 'redux/core/reducers'
 import { btc, request, constants, api } from 'helpers'
 import { Keychain } from 'keychain.js'
 import actions from 'redux/actions'
+import config from 'app-config'
 
-const invoiceApi = 'http://localhost:30150'
 
 const validateData = (data) => {
   if (!data) return false
@@ -37,22 +37,10 @@ const addInvoice = (data) => {
     pubkey      : btcData.publicKey.toString('hex'),
     mainnet     : (btc.network==bitcoin.networks.mainnet),
   }
-  console.log(requestData)
-  return request.post(`${invoiceApi}/invoice/push/`, {
+
+  return request.post(`${config.api.invoiceApi}/invoice/push/`, {
     body: requestData
   })
-  /*
-  return request.get(`${api.getApiServer('bitpay')}/addr/${address}`)
-    .then(({ balance, unconfirmedBalance }) => {
-      console.log('BTC Balance: ', balance)
-      console.log('BTC unconfirmedBalance Balance: ', unconfirmedBalance)
-      reducers.user.setBalance({ name: 'btcData', amount: balance, unconfirmedBalance })
-      return balance
-    })
-    .catch((e) => {
-      reducers.user.setBalanceError({ name: 'btcData' })
-    })
-    */
 }
 
 const markInvoice = (invoiceId, mark, txid) => {
@@ -66,10 +54,11 @@ const getInvoices = (data) => {
 
   return new Promise((resolve) => {
 
-    return request.post(`${invoiceApi}/invoice/fetch/`, {
+    return request.post(`${config.api.invoiceApi}/invoice/fetch/`, {
       body: {
         currency: data.currency,
         address: data.address,
+        mainnet: (btc.network==bitcoin.networks.mainnet),
       }
     }).then((res) => {
       if (res && res.answer && res.answer === 'ok') {
@@ -83,10 +72,11 @@ const getInvoices = (data) => {
             hash: 'no hash',
             confirmations: 1,
             value: item.amount,
-            date: item.uxt * 1000,
+            date: item.utx * 1000,
             direction: direction,
           })
         })
+
         resolve(transactions)
       } else {
         resolve([])
@@ -97,7 +87,6 @@ const getInvoices = (data) => {
     })
   })
 }
-window.getInvoices = getInvoices
 
 export default {
   addInvoice,
