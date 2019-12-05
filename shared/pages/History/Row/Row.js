@@ -76,6 +76,15 @@ class Row extends React.PureComponent {
       'out': direction !== 'in',
       'self': direction === 'self',
     })
+    let statusStyleAmount = statusStyleName
+
+    if (invoiceData) {
+      statusStyleAmount = cx('status', {
+        'in': direction !== 'in',
+        'out': direction === 'in',
+        'self': direction === 'self',
+      })
+    }
 
     return (
       <tr styleName="historyRow">
@@ -123,14 +132,23 @@ class Row extends React.PureComponent {
             { txType === 'INVOICE' && direction === 'in' &&
               <div styleName="date">Адрес для оплаты: {invoiceData.fromAddress}</div>
             }
-            { invoiceData && !invoiceData.txid && direction === 'in' && 
+            { invoiceData && !invoiceData.txid && direction === 'in' && invoiceData.status === 'new' &&
               <button onClick={this.handlePayInvoice}>
                 <FormattedMessage id="RowHistoryPayInvoice" defaultMessage="Оплатить" />
               </button>
             }
           </div>
-          <div styleName={statusStyleName}>
-            {direction === 'in' ? <div styleName="amount">{`+ ${parseFloat(Number(value).toFixed(5))}`} {type.toUpperCase()}</div> : <div styleName="amount">{`- ${parseFloat(Number(value).toFixed(5))}`} {type.toUpperCase()}</div>}
+          <div styleName={statusStyleAmount}>
+            { invoiceData && 
+              <Fragment>
+                {direction === 'out' ? <div styleName="amount">{`+ ${parseFloat(Number(value).toFixed(5))}`} {type.toUpperCase()}</div> : <div styleName="amount">{`- ${parseFloat(Number(value).toFixed(5))}`} {type.toUpperCase()}</div>}
+              </Fragment>
+            }
+            {!invoiceData &&
+              <Fragment>
+                {direction === 'in' ? <div styleName="amount">{`+ ${parseFloat(Number(value).toFixed(5))}`} {type.toUpperCase()}</div> : <div styleName="amount">{`- ${parseFloat(Number(value).toFixed(5))}`} {type.toUpperCase()}</div>}
+              </Fragment>
+            }
             <span styleName="amountUsd">{`~ $${getUsd.toFixed(2)}`}</span>
           </div>
           {/* <LinkTransaction type={type} styleName="address" hash={hash} >{hash}</LinkTransaction> */}
