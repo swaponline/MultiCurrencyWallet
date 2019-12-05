@@ -161,8 +161,11 @@ const setTransactions = async () => {
   try {
     const mainTokens = await Promise.all([
       actions.btc.getTransaction(),
+      actions.btc.getInvoices(),
       actions.btcmultisig.getTransactionSMS(),
+      actions.btcmultisig.getInvoicesSMS(),
       actions.btcmultisig.getTransactionUser(),
+      actions.btcmultisig.getInvoicesUser(),
       actions.bch.getTransaction(),
       // actions.usdt.getTransaction(),
       actions.eth.getTransaction(),

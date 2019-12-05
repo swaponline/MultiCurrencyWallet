@@ -23,4 +23,5 @@ export default {
   MultisignJoinLink: 'MultisignJoinLink',
   WithdrawMultisigSMS: 'WithdrawModalMultisig',
   WithdrawMultisigUser: 'WithdrawModalMultisigUser',
+  InvoiceModal: 'InvoiceModal',
 }
