@@ -368,6 +368,30 @@ export default class Row extends Component {
     })
   }
 
+  handleCreateInvoice = () => {
+    const {
+      item: {
+        decimals,
+        token,
+        contractAddress,
+        unconfirmedBalance,
+        currency,
+        address,
+        balance,
+      },
+    } = this.props
+
+    actions.modals.open(constants.modals.InvoiceModal, {
+      currency,
+      address,
+      contractAddress,
+      decimals,
+      token,
+      balance,
+      unconfirmedBalance,
+    })
+  }
+
   goToHistory = () => {
     const { history, intl: { locale } } = this.props
     history.push(localisedUrl(locale, '/history'))
@@ -427,29 +451,41 @@ export default class Row extends Component {
     let dropDownMenuItems = [
       {
         id: 1001,
-        title: 'Deposit',
+        title: <FormattedMessage id='WalletRow_Menu_Deposit' defaultMessage='Deposit' />,
         action: this.handleReceive,
         disabled: false,
       },
       {
         id: 1002,
-        title: 'Send',
+        title: <FormattedMessage id='WalletRow_Menu_Send' defaultMessage='Send' />,
         action: this.handleWithdraw,
         disabled: isBalanceEmpty,
       },
       {
         id: 1003,
-        title: 'History',
+        title: <FormattedMessage id='WalletRow_Menu_History' defaultMessage='History' />,
         action: this.goToHistory,
         disabled: false
       }
     ]
 
+    if (currencyView == 'BTC (Multisig)') currencyView = 'BTC'
+    if (currencyView == 'BTC (SMS-Protected)') currencyView = 'BTC'
+
+    if (currencyView == 'BTC') {
+      dropDownMenuItems.push({
+        id: 1004,
+        title: <FormattedMessage id='WalletRow_Menu_Invoice' defaultMessage='Выставить счет' />,
+        action: this.handleCreateInvoice,
+        disable: false,
+      })
+    }
+
     if (this.props.item.isSmsProtected && !this.props.item.isRegistered) {
       currencyView = 'Not activated'
       dropDownMenuItems = [{
         id: 1,
-        title: 'Activate',
+        title: <FormattedMessage id='WalletRow_Menu_ActivateSMSProtected' defaultMessage='Activate' />,
         action: this.handleActivateProtected,
         disabled: false,
       }]
@@ -461,14 +497,11 @@ export default class Row extends Component {
       }
       dropDownMenuItems.push({
         id: 3,
-        title: 'Generate join link',
+        title: <FormattedMessage id='WalletRow_Menu_BTCMS_GenerateJoinLink' defaultMessage='Generate join link' />,
         action: this.handleGenerateMultisignLink,
         disabled: false,
       })
     }
-
-    if (currencyView == 'BTC (Multisig)') currencyView = 'BTC'
-    if (currencyView == 'BTC (SMS-Protected)') currencyView = 'BTC'
 
     return (
       <tr>
