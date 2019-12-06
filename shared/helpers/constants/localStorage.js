@@ -25,5 +25,6 @@ export default {
   didProtectedBtcCreated: 'protectedBtcCreated',
   didProtectedBtcG2FACreated: 'protectedBtcG2FA',
   isClosedNotifyBlockSignUp: 'isClosedNotifyBlockSignUp',
-  isClosedNotifyBlockBanner: 'isClosedNotifyBlockBanner'
+  isClosedNotifyBlockBanner: 'isClosedNotifyBlockBanner',
+  walletTitle: 'walletTitle'
 }
