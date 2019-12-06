@@ -8,7 +8,7 @@ import Row from './Row/Row'
 import Table from 'components/tables/Table/Table'
 
 
-const CurrenciesList = ({ activeView, isFetching, tableRows, currencies, infoAboutCurrency, hiddenCoinsList }) => (
+const CurrenciesList = ({ activeView, isFetching, tableRows, currencies, infoAboutCurrency, hiddenCoinsList, goToСreateWallet }) => (
   <div styleName={`yourAssets ${activeView === 0 ? 'active' : ''}`}>
     <h3 styleName="yourAssetsHeading">Your Assets</h3>
     <p styleName="yourAssetsDescr">Here you can safely store and promptly exchange Bitcoin, Ethereum, <br /> EOS, USD, Tether, BCH, and numerous ERC-20 tokens</p>
@@ -29,7 +29,7 @@ const CurrenciesList = ({ activeView, isFetching, tableRows, currencies, infoAbo
         />
       )}
     />}
-    <NewButton onClick={this.goToRegister} blue transparent fullWidth>
+    <NewButton onClick={goToСreateWallet} blue transparent fullWidth>
       Add Asset
     </NewButton>
   </div>

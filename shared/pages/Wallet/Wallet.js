@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react'
+import Slider from 'react-slick';
 import PropTypes from 'prop-types'
 
 import { connect } from 'redaction'
@@ -6,17 +7,13 @@ import actions from 'redux/actions'
 
 import cssModules from 'react-css-modules'
 import styles from './Wallet.scss'
-import NewButton from 'components/controls/NewButton/NewButton'
+
 import History from 'pages/History/History'
-import Row from './Row/Row'
-import Table from 'components/tables/Table/Table'
 import NotifyBlock from './components/NotityBlock/NotifyBock'
 
 import security from './images/security.svg'
 import mail from './images/mail.svg'
-import dollar from './images/dollar.svg'
-import dollar2 from './images/dollar2.svg'
-import btcIcon from './images/btcIcon.svg'
+import info from './images/info-solid.svg'
 
 import { links, constants } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
@@ -51,11 +48,16 @@ const walletNav = ['My balances', 'Transactions'];
     // xlmData,
   },
   currencies: { items: currencies },
+  createWallet: { currencies: assets }
 }) => {
   const tokens = (
     config && config.isWidget
       ? [config.erc20token.toUpperCase()]
       : Object.keys(tokensData).map(k => tokensData[k].currency)
+  )
+
+  const tokensItems = (
+    Object.keys(tokensData).map(k => tokensData[k])
   )
 
   const items = (
@@ -93,7 +95,6 @@ const walletNav = ['My balances', 'Transactions'];
     // usdtOmniData,
     // nimData,
     // xlmData,
-    ...Object.keys(tokensData).map(k => tokensData[k]),
   ]
     .map(({ balance, currency }) => ({
       balance,
@@ -103,8 +104,10 @@ const walletNav = ['My balances', 'Transactions'];
   return {
     tokens,
     items,
+    tokensItems,
     currencyBalance,
     currencies,
+    assets,
     hiddenCoinsList: config && config.isWidget ? [] : hiddenCoinsList,
     userEthAddress: ethData.address,
     tokensData: {
@@ -126,6 +129,7 @@ const walletNav = ['My balances', 'Transactions'];
 @connect(({ signUp: { isSigned } }) => ({
   isSigned
 }))
+
 @cssModules(styles, { allowMultiple: true })
 export default class Wallet extends Component {
 
@@ -138,13 +142,20 @@ export default class Wallet extends Component {
   }
 
   componentWillMount() {
-    console.log('BTC-Protected', this.props.btcMultisigData)
     actions.user.getBalances()
   }
 
   componentDidMount() {
     this.showPercentChange1H();
-    this.getUsdBalance()
+    this.getUsdBalance();
+
+    const isClosedNotifyBlockBanner = localStorage.getItem(constants.localStorage.isClosedNotifyBlockBanner);
+    const isClosedNotifyBlockSignUp = localStorage.getItem(constants.localStorage.isClosedNotifyBlockSignUp);
+
+    this.setState({
+      isClosedNotifyBlockBanner,
+      isClosedNotifyBlockSignUp
+    })
   }
 
   handleNavItemClick = (index) => {
@@ -157,6 +168,7 @@ export default class Wallet extends Component {
     actions.modals.open(constants.modals.PrivateKeys)
   }
 
+
   handleDeposit = () => {
     actions.modals.open(constants.modals.Withdraw, {
       currency,
@@ -168,6 +180,8 @@ export default class Wallet extends Component {
       unconfirmedBalance,
     })
   }
+
+  tableRows = (items, tokens, hiddenCoinsList) => [...items, ...tokens].filter(currency => !hiddenCoinsList.includes(currency))
 
   handleShowKeys = () => {
     actions.modals.open(constants.modals.DownloadModal)
@@ -182,11 +196,14 @@ export default class Wallet extends Component {
   }
 
   handleSignUp = () => {
-    actions.modals.open(constants.modals.SignUp, {})
+    actions.modals.open(constants.modals.SignUp)
   }
 
-  handleNotifyBlockClose = () => {
-    alert('close')
+  handleNotifyBlockClose = (state) => {
+    this.setState({
+      [state]: true
+    })
+    localStorage.setItem(constants.localStorage[state], 'true')
   }
 
   showPercentChange1H = () => {
@@ -231,9 +248,31 @@ export default class Wallet extends Component {
       )
   }
 
-  goToRegister = () => {
+  goToСreateWallet = () => {
     const { history, intl: { locale } } = this.props
     history.push(localisedUrl(locale, '/createWallet'))
+  }
+
+
+  handleModalOpen = (context) => {
+    const {
+      items,
+      tokensData,
+      tokensItems,
+      tokens,
+      hiddenCoinsList
+    } = this.props;
+
+    
+    const currencyTokenData = [...Object.keys(tokensData).map(k => (tokensData[k])), ...tokensItems]
+
+    const tableRows = [...items, ...tokens].filter(currency => !hiddenCoinsList.includes(currency))
+
+    const currencies = tableRows.map(currency => {
+      return currencyTokenData.find(item => item.currency === currency);
+    })
+
+    actions.modals.open(constants.modals.CurrencyAction, {currencies, context})
   }
 
   render() {
@@ -244,6 +283,8 @@ export default class Wallet extends Component {
       activeCurrency,
       exCurrencyRate,
       exchangeForm,
+      isClosedNotifyBlockBanner,
+      isClosedNotifyBlockSignUp
     } = this.state;
     const {
       items,
@@ -255,11 +296,22 @@ export default class Wallet extends Component {
       location,
     } = this.props
 
+
+    let settings = {
+      infinite: true,
+      speed: 500,
+      autoplay: true,
+      autoplaySpeed: 6000,
+      fade: true,
+      slidesToShow: 1,
+      slidesToScroll: 1
+    };
+
     let btcBalance = 0;
     let usdBalance = 0;
 
-
     const tableRows = [...items, ...tokens].filter(currency => !hiddenCoinsList.includes(currency))
+
 
     if (infoAboutCurrency) {
       infoAboutCurrency.forEach(item => {
@@ -270,48 +322,58 @@ export default class Wallet extends Component {
 
     const isPrivateKeysSaved = localStorage.getItem(constants.localStorage.privateKeysSaved)
 
+
     return (
       <artical>
         <section styleName="wallet">
           <h3 styleName="walletHeading">Wallet</h3>
-          {
-            isSigned && !isPrivateKeysSaved &&
-            <NotifyBlock
-              className="notifyBlockSaveKeys"
-              descr="Before you continue be sure to save your private keys!"
-              tooltip="We do not store your private keys and will not be able to restore them"
-              icon={security}
-              firstBtn="Show my keys"
-              firstFunc={this.handleShowKeys}
-              secondBtn="I saved my keys"
-              secondFunc={this.handleSaveKeys}
-            />
-          }
-          {
-            !isSigned && <NotifyBlock
-              className="notifyBlockSignUp"
-              descr="Sign up and get your free cryptocurrency for test!"
-              tooltip="You will also be able to receive notifications regarding updates with your account"
-              icon={mail}
-              firstBtn="Sign Up"
-              firstFunc={this.handleSignUp}
-              secondBtn="I’ll do this later"
-              secondFunc={this.handleNotifyBlockClose} />
-
-          }
+          <Slider {...settings}>
+            {
+              !isPrivateKeysSaved && <NotifyBlock
+                className="notifyBlockSaveKeys"
+                descr="Before you continue be sure to save your private keys!"
+                tooltip="We do not store your private keys and will not be able to restore them"
+                icon={security}
+                firstBtn="Show my keys"
+                firstFunc={this.handleShowKeys}
+                secondBtn="I saved my keys"
+                secondFunc={this.handleSaveKeys}
+              />
+            }
+            {
+              !isSigned && !isClosedNotifyBlockSignUp && <NotifyBlock
+                  className="notifyBlockSignUp"
+                  descr="Sign up and get your free cryptocurrency for test!"
+                  tooltip="You will also be able to receive notifications regarding updates with your account"
+                  icon={mail}
+                  firstBtn="Sign Up"
+                  firstFunc={this.handleSignUp}
+                  secondBtn="I’ll do this later"
+                  secondFunc={() => this.handleNotifyBlockClose('isClosedNotifyBlockSignUp')} />
+            }
+            {
+              !isClosedNotifyBlockBanner && <NotifyBlock
+                className="notifyBlockBanner"
+                descr="Updates"
+                tooltip="Let us notify you that the main domain name for Swap.online exchange service will be changed from swap.online to swaponline.io."
+                icon={info}
+                secondBtn="Close"
+                secondFunc={() => this.handleNotifyBlockClose('isClosedNotifyBlockBanner')} />
+            }
+        </Slider>
           <ul styleName="walletNav">
             {walletNav.map((item, index) => <li key={index} styleName={`walletNavItem ${activeView === index ? 'active' : ''}`} onClick={() => this.handleNavItemClick(index)}><a href styleName="walletNavItemLink">{item}</a></li>)}
           </ul>
           <div className="data-tut-store" styleName="walletContent" >
             <div styleName={`walletBalance ${activeView === 0 ? 'active' : ''}`}>
-              <BalanceForm usdBalance={usdBalance} btcBalance={btcBalance} {...this.state} />
+              <BalanceForm usdBalance={usdBalance} btcBalance={btcBalance} {...this.state} handleModalOpen={this.handleModalOpen}/>
               {exchangeForm &&
                 <div styleName="exchangeForm">
                   <ParticalClosure {...this.props} isOnlyForm />
                 </div>
               }
             </div>
-            <CurrenciesList tableRows={tableRows} {...this.state} {...this.props} />
+            <CurrenciesList tableRows={tableRows} {...this.state} {...this.props} goToСreateWallet={this.goToСreateWallet}/>
             <div styleName={`activity ${activeView === 1 ? 'active' : ''}`}>
               <h3 styleName="activityHeading">Activity</h3>
               <History></History>
