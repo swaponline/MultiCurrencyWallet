@@ -90,10 +90,12 @@ export default class CurrencyAction extends React.Component {
                   iconName = 'btc'
                   itemTitle = 'BTC (MTS)'
                   itemFullTitle = 'BTC (MTS)'
+                  break;
                  case 'BTC (SMS-Protected)':
-                   iconName = 'btc'
-                   itemTitle = 'BTC (SMS)'
-                   itemFullTitle = 'BTC (SMS)'
+                  iconName = 'btc'
+                  itemTitle = 'BTC (SMS)'
+                  itemFullTitle = 'BTC (SMS)'
+                  break;
                }
 
                return (
