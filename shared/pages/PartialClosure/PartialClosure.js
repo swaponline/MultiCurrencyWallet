@@ -9,17 +9,12 @@ import { connect } from 'redaction'
 import actions from 'redux/actions'
 import { BigNumber } from 'bignumber.js'
 import { Redirect } from 'react-router-dom'
-import { Helmet } from 'react-helmet'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
-import { isMobile } from 'react-device-detect'
 
 import SelectGroup from './SelectGroup/SelectGroup'
-import Select from 'components/modals/OfferModal/AddOffer/Select/Select'
-import Advantages from './PureComponents/Advantages'
-import { Button, Toggle, Flip } from 'components/controls'
+import { Button, Toggle } from 'components/controls'
 import Input from 'components/forms/Input/Input'
-import FieldLabel from 'components/forms/FieldLabel/FieldLabel'
 import Promo from './Promo/Promo'
 import FAQ from './FAQ/FAQ'
 import Quote from './Quote'
@@ -27,8 +22,6 @@ import PromoText from './PromoText/PromoText'
 import HowItWorks from './HowItWorks/HowItWorks'
 import VideoAndFeatures from './VideoAndFeatures/VideoAndFeatures'
 import Tooltip from 'components/ui/Tooltip/Tooltip'
-import Referral from 'components/Footer/Referral/Referral'
-import PageHeadline from 'components/PageHeadline/PageHeadline'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
@@ -246,7 +239,7 @@ export default class PartialClosure extends Component {
       this.showTheFee(haveCurrency)
       this.checkUrl()
       this.getCorrectDecline()
-      setTimeout( timerProcess, 2000 )
+      setTimeout(timerProcess, 2000)
     }
     timerProcess()
 
@@ -834,7 +827,7 @@ export default class PartialClosure extends Component {
   }
 
   updateAllowedBalance = async () => {
-    console.log('updateAllowedBalance',this.state.haveCurrency)
+    console.log('updateAllowedBalance', this.state.haveCurrency)
     await actions[this.state.haveCurrency].getBalance(this.state.haveCurrency)
   }
 
@@ -1013,7 +1006,7 @@ export default class PartialClosure extends Component {
             </h5>
             : <span />
           }
-          <div data-tut="have" styleName="selectWrap">
+          <div className="data-tut-have" styleName="selectWrap">
             <SelectGroup
               switchBalanceFunc={this.switchBalance}
               inputValueLink={linked.haveAmount.pipe(this.setAmount)}
@@ -1041,7 +1034,7 @@ export default class PartialClosure extends Component {
           <div styleName="switchButton">
             <Switching noneBorder onClick={this.handleFlipCurrency} />
           </div>
-          <div data-tut="get" styleName="selectWrap">
+          <div className="data-tut-get" styleName="selectWrap">
             <SelectGroup
               dataTut="get"
               switchBalanceFunc={this.switchBalance}
@@ -1066,7 +1059,7 @@ export default class PartialClosure extends Component {
               </div>
             )}
           </div>
-          <div data-tut="status">
+          <div className="data-tut-status">
             {
               (isSearching || (isNonOffers && maxAmount === 0)) && (
                 <span className={isWidget ? 'searching' : ''} styleName="IsSearching">
@@ -1213,8 +1206,8 @@ export default class PartialClosure extends Component {
             (this.customWalletAllowed()) && (
               <Fragment>
                 <div styleName="walletToggle walletToggle_site">
-                  <div styleName="walletOpenSide">
-                    <Toggle dataTut="togle" checked={!customWalletUse} onChange={this.handleCustomWalletUse} />
+                  <div styleName="walletOpenSide" className="data-tut-togle">
+                    <Toggle checked={!customWalletUse} onChange={this.handleCustomWalletUse} />
                     <span styleName="specify">
                       <FormattedMessage id="UseAnotherWallet" defaultMessage="Specify the receiving wallet address" />
                     </span>
@@ -1237,10 +1230,10 @@ export default class PartialClosure extends Component {
             )
           }
           <div styleName="rowBtn" className={isWidget ? 'rowBtn' : ''}>
-            <Button dataTut="Exchange" styleName="button" brand onClick={this.handleGoTrade} disabled={!canDoOrder}>
+            <Button className="data-tut-Exchange" styleName="button" brand onClick={this.handleGoTrade} disabled={!canDoOrder}>
               <FormattedMessage id="partial541" defaultMessage="Exchange now" />
             </Button>
-            <Button dataTut="Orderbook" styleName="button buttonOrders" gray onClick={() => this.handlePush(isWidgetLink)} >
+            <Button className="data-tut-Orderbook" styleName="button buttonOrders" gray onClick={() => this.handlePush(isWidgetLink)} >
               <FormattedMessage id="partial544" defaultMessage="Order book" />
             </Button>
           </div>
@@ -1287,9 +1280,6 @@ export default class PartialClosure extends Component {
           <VideoAndFeatures />
           <Quote />
           <FAQ />
-          <div styleName="referralText">
-            <Referral address={userEthAddress} />
-          </div>
         </div >
       )
   }

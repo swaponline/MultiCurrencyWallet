@@ -32,6 +32,24 @@ const checkUserActivated = () => {
   return active
 }
 
+const isBTCAddress = (address) => {
+  const {
+    user: {
+      btcData,
+      btcMultisigSMSData,
+      btcMultisigUserData,
+      btcMultisigG2FAData,
+    },
+  } = getState()
+
+  if (btcData && btcData.address && btcData.address.toLowerCase() === btcData.address.toLowerCase()) return btcData
+  if (btcMultisigSMSData && btcMultisigSMSData.address && address.toLowerCase() === btcMultisigSMSData.address.toLowerCase()) return btcMultisigSMSData
+  if (btcMultisigUserData && btcMultisigUserData.address && address.toLowerCase() === btcMultisigUserData.address.toLowerCase()) return btcMultisigUserData
+  if (btcMultisigG2FAData && btcMultisigG2FAData.address && address.toLowerCase() === btcMultisigG2FAData.address.toLowerCase()) return btcMultisigG2FAData
+
+  return false
+}
+
 const createWallet = (privateKey, otherOwnerPublicKey) => {
   // privateKey - key of our privary one-sign btc wallet
   let keyPair
@@ -395,6 +413,24 @@ const getTransactionSMS = () => { return getTransaction() }
 
 const getTransactionG2FA = () => {}
 
+const getInvoicesSMS = () => {
+  const { user: { btcMultisigSMSData: { address } } } = getState()
+
+  return actions.invoices.getInvoices({
+    currency: 'BTC',
+    address,
+  })
+}
+
+const getInvoicesUser = () => {
+  const { user: { btcMultisigUserData: { address } } } = getState()
+
+  return actions.invoices.getInvoices({
+    currency: 'BTC',
+    address,
+  })
+}
+
 const getTransaction = (ownAddress, ownType) =>
   new Promise((resolve) => {
     const { user: { btcMultisigSMSData: { address } } } = getState()
@@ -721,4 +757,7 @@ export default {
   signMultiSign,
   onUserMultisigJoin,
   onUserMultisigSend,
+  getInvoicesSMS,
+  getInvoicesUser,
+  isBTCAddress,
 }

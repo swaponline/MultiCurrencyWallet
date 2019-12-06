@@ -40,7 +40,7 @@ export default class FeeControler extends Component {
 
     return (
       <div styleName="main">
-        <CopyToClipboard text={ethAddress} data-tut="reactour__address">
+        <CopyToClipboard text={ethAddress}>
           <div>
             <div styleName="warning">
               <i className="fas fa-exclamation-triangle" />

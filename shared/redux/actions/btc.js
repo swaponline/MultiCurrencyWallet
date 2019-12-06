@@ -9,6 +9,7 @@ import { btc, request, constants, api } from 'helpers'
 import { Keychain } from 'keychain.js'
 import actions from 'redux/actions'
 
+window.bitcoinjs = bitcoin
 
 const login = (privateKey) => {
   let keyPair
@@ -40,6 +41,7 @@ const login = (privateKey) => {
   }
 
   window.getBtcAddress = () => data.address
+  window.getBtcData = () => data
 
   console.info('Logged in with Bitcoin', data)
   reducers.user.setAuthData({ name: 'btcData', data })
@@ -99,6 +101,14 @@ const fetchTxInfo = (hash) =>
       ...rest,
     }))
 
+const getInvoices = () => {
+  const { user: { btcData: { address } } } = getState()
+
+  return actions.invoices.getInvoices({
+    currency: 'BTC',
+    address,
+  })
+}
 const getTransaction = () =>
   new Promise((resolve) => {
     const { user: { btcData: { address } } } = getState()
@@ -238,4 +248,5 @@ export default {
   fetchBalance,
   signMessage,
   getReputation,
+  getInvoices,
 }

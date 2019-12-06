@@ -25,6 +25,8 @@ import ConfirmBeginSwap from './ConfirmBeginSwap/ConfirmBeginSwap'
 import RegisterSMSProtected from './RegisterSMSProtected/RegisterSMSProtected'
 import MultisignJoinLink from './MultisignJoinLink/MultisignJoinLink'
 
+import InvoiceModal from './InvoiceModal/InvoiceModal'
+
 
 export default {
   DeclineOrdersModal,
@@ -51,4 +53,5 @@ export default {
   RegisterSMSProtected,
   MultisignJoinLink,
   CurrencyAction,
+  InvoiceModal,
 }

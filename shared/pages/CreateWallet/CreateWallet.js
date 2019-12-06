@@ -51,6 +51,10 @@ const CreateWallet = (props) => {
   const [isExist, setExist] = useState(false)
   const steps = [1, 2]
 
+  const goHome = () => {
+    history.push(localisedUrl(locale, '/wallet'))
+  }
+
   const handleClick = () => {
     setError(null)
     if (step !== 2 && !singleCurrecnyData) {
@@ -58,7 +62,7 @@ const CreateWallet = (props) => {
       return setStep(step + 1)
     }
     localStorage.setItem(constants.localStorage.isWalletCreate, true)
-    history.push(localisedUrl(locale, '/wallet'))
+    goHome()
   }
 
   const handleImportKeys = () => {
@@ -91,13 +95,12 @@ const CreateWallet = (props) => {
         case 'sms':
           if (currencies.btc) {
             if (!actions.btcmultisig.checkSMSActivated()) {
-              actions.modals.open( constants.modals.RegisterSMSProtected, {
+              actions.modals.open(constants.modals.RegisterSMSProtected, {
                 callback: () => {
                   actions.core.markCoinAsVisible('BTC (SMS-Protected)')
                   handleClick()
-                }
-              } )
-              return;
+                },
+              })
             } else {
               actions.core.markCoinAsVisible('BTC (SMS-Protected)')
             }
@@ -127,11 +130,7 @@ const CreateWallet = (props) => {
   }
 
   if (isExist) {
-    return (
-      <div styleName="isExist">
-        <FormattedMessage id="createWalletIsExist" defaultMessage="Вы уже создали кошелек" />
-      </div>
-    )
+    goHome()
   }
   return (
     <div styleName="wrapper">
@@ -141,6 +140,7 @@ const CreateWallet = (props) => {
             id="createWalletHeader1"
             defaultMessage="Создание кошелька"
           />
+          {' '}{singleCurrecny && singleCurrecny.toUpperCase()}
         </h2>
         <div styleName="buttonWrapper">
           <NewButton blue onClick={handleImportKeys}>

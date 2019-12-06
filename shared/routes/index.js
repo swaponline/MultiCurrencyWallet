@@ -4,18 +4,18 @@ import { Switch } from 'react-router-dom'
 import { links } from 'helpers'
 import { localisePrefix } from 'helpers/locale'
 
-import SwapComponent    from 'pages/Swap/Swap'
-import Home             from 'pages/Home/Home'
-import OldWallet        from 'pages/OldWallet/Wallet'
-import History          from 'pages/History/History'
-import CreateWallet     from 'pages/CreateWallet/CreateWallet'
-import NotFound         from 'pages/NotFound/NotFound'
-import About            from 'pages/About/About'
-import Wallet           from 'pages/Wallet/Wallet'
-import Currency         from 'pages/Currency/Currency'
-import PartialClosure   from 'pages/PartialClosure/PartialClosure'
-import CurrencyWallet   from 'pages/CurrencyWallet/CurrencyWallet'
-import IEO   from 'pages/IEO/IEO'
+import SwapComponent from 'pages/Swap/Swap'
+import Home from 'pages/Home/Home'
+import OldWallet from 'pages/OldWallet/Wallet'
+import History from 'pages/History/History'
+import CreateWallet from 'pages/CreateWallet/CreateWallet'
+import NotFound from 'pages/NotFound/NotFound'
+import About from 'pages/About/About'
+import Wallet from 'pages/Wallet/Wallet'
+import Currency from 'pages/Currency/Currency'
+import PartialClosure from 'pages/PartialClosure/PartialClosure'
+import CurrencyWallet from 'pages/CurrencyWallet/CurrencyWallet'
+import IEO from 'pages/IEO/IEO'
 import BtcMultisignProcessor from 'pages/Multisign/Btc/Btc'
 
 import config from 'app-config'
@@ -46,7 +46,7 @@ const routes = (
 
       <Route path={`${localisePrefix}${links.ieo}`} component={IEO} />
       <Route exact path={`${localisePrefix}${links.notFound}`} component={NotFound} />
-      <Route exact path={`${localisePrefix}${links.home}`} component={PartialClosure} />
+      <Route exact path={`${localisePrefix}${links.home}`} component={Wallet} />
 
       <Route path={`${localisePrefix}${links.currencyWallet}`} component={Wallet} />
       <Route path={`${localisePrefix}${links.oldWallet}`} component={OldWallet} />

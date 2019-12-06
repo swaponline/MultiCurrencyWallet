@@ -13,7 +13,7 @@ const CurrenciesList = ({ activeView, isFetching, tableRows, currencies, infoAbo
     <h3 styleName="yourAssetsHeading">Your Assets</h3>
     <p styleName="yourAssetsDescr">Here you can safely store and promptly exchange Bitcoin, Ethereum, <br /> EOS, USD, Tether, BCH, and numerous ERC-20 tokens</p>
     {isFetching && <Table
-      className={styles.walletTable}
+      className={`${styles.walletTable} data-tut-address`}
       rows={tableRows}
       rowRender={(row, index, selectId, handleSelectId) => (
         <Row

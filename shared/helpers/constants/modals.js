@@ -23,5 +23,6 @@ export default {
   MultisignJoinLink: 'MultisignJoinLink',
   WithdrawMultisigSMS: 'WithdrawModalMultisig',
   WithdrawMultisigUser: 'WithdrawModalMultisigUser',
-  CurrencyAction: 'CurrencyAction'
+  CurrencyAction: 'CurrencyAction',
+  InvoiceModal: 'InvoiceModal',
 }
