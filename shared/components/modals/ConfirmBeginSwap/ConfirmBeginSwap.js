@@ -45,8 +45,8 @@ const defaultLanguage = defineMessages({
 @connect(({
   user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, ltcData /* usdtOmniData */ },
 }) => ({
-  currenciesData: [ ethData, btcData, eosData, telosData, bchData, ltcData /* usdtOmniData, nimData */],
-  tokensData: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
+  currenciesData: [ethData, btcData, eosData, telosData, bchData, ltcData /* usdtOmniData, nimData */],
+  tokensData: [...Object.keys(tokensData).map(k => (tokensData[k]))],
 }))
 @CSSModules(styles, { allowMultiple: true })
 export default class ConfirmBeginSwap extends React.Component {
@@ -202,7 +202,7 @@ export default class ConfirmBeginSwap extends React.Component {
                   }
                   <div styleName="walletToggle walletToggle_site">
                     <div styleName="walletOpenSide">
-                      <Toggle dataTut="togle" checked={customWalletUse} onChange={this.handleCustomWalletUse} />
+                      <Toggle checked={customWalletUse} onChange={this.handleCustomWalletUse} />
                       <span styleName="specify">
                         <FormattedMessage id="UseAnotherWallet" defaultMessage="Specify the receiving wallet address" />
                       </span>

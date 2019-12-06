@@ -19,7 +19,7 @@ export default class NotificationConductor extends Component {
   }
 
   render() {
-    const { notifications } = this.props
+    const { notifications, history } = this.props
 
     const notificationNames = Object.keys(notifications)
     const areNotificationsExist = Boolean(notificationNames.length)
@@ -34,6 +34,7 @@ export default class NotificationConductor extends Component {
               key: name,
               name,
               data,
+              history,
             })
           })
         }

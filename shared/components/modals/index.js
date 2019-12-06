@@ -1,6 +1,8 @@
 import SignUpModal from './SignUpModal/SignUpModal'
 import OfferModal from './OfferModal/OfferModal'
 import WithdrawModal from './WithdrawModal/WithdrawModal'
+import WithdrawModalMultisig from './WithdrawModalMultisig/WithdrawModalMultisig'
+import WithdrawModalMultisigUser from './WithdrawModalMultisig/WithdrawModalMultisigUser'
 import PrivateKeysModal from './PrivateKeysModal/PrivateKeysModal'
 import EosRegisterModal from './EosRegisterModal/EosRegisterModal'
 import EosBuyAccountModal from './EosBuyAccountModal/EosBuyAccountModal'
@@ -15,9 +17,15 @@ import DownloadModal from './DownloadModal/DownloadModal'
 import DeclineOrdersModal from './DeclineOrdersModal/DeclineOrdersModal'
 import IncompletedSwaps from './IncompletedSwaps/IncompletedSwaps'
 import MobMenu from './MobMenu/MobMenu'
+import CurrencyAction from './CurrencyAction/CurrencyAction';
 
 import Confirm from './Confirm/Confirm'
 import ConfirmBeginSwap from './ConfirmBeginSwap/ConfirmBeginSwap'
+
+import RegisterSMSProtected from './RegisterSMSProtected/RegisterSMSProtected'
+import MultisignJoinLink from './MultisignJoinLink/MultisignJoinLink'
+
+import InvoiceModal from './InvoiceModal/InvoiceModal'
 
 
 export default {
@@ -25,6 +33,8 @@ export default {
   SignUpModal,
   OfferModal,
   WithdrawModal,
+  WithdrawModalMultisig,
+  WithdrawModalMultisigUser,
   PrivateKeysModal,
   ImportKeys,
   ShowMoreCoins,
@@ -40,4 +50,8 @@ export default {
   Confirm,
   MobMenu,
   ConfirmBeginSwap,
+  RegisterSMSProtected,
+  MultisignJoinLink,
+  CurrencyAction,
+  InvoiceModal,
 }

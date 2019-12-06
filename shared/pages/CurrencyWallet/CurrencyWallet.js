@@ -34,8 +34,21 @@ const titles = [
 ]
 
 @connect(({ core, user,  history: { transactions, swapHistory }, history,
-  user: { ethData, btcData, bchData, ltcData, tokensData, eosData, nimData, telosData/* usdtOmniData */ } }) => ({
-  items: [ ethData, btcData, bchData, eosData, ltcData, telosData, ...Object.keys(tokensData).map(k => (tokensData[k])) /* nimData, usdtOmniData */],
+  user: {
+    ethData,
+    btcData,
+    btcMultisigSMSData,
+    btcMultisigUserData,
+    bchData,
+    ltcData,
+    tokensData, eosData, nimData, telosData/* usdtOmniData */ } }) => ({
+  items: [
+    ethData,
+    btcData,
+    btcMultisigSMSData,
+    btcMultisigUserData,
+    bchData,
+    eosData, ltcData, telosData, ...Object.keys(tokensData).map(k => (tokensData[k])) /* nimData, usdtOmniData */],
   tokens: [...Object.keys(tokensData).map(k => (tokensData[k]))],
   user,
   historyTx: history,
@@ -46,7 +59,7 @@ const titles = [
 
 @injectIntl
 @withRouter
-@CSSModules(styles)
+@CSSModules(styles, { allowMultiple: true })
 export default class CurrencyWallet extends Component {
 
   constructor() {
@@ -67,7 +80,7 @@ export default class CurrencyWallet extends Component {
     const token = tokens.map(item => item.fullName).includes(fullName.toUpperCase())
 
     if (item.includes(fullName.toLowerCase())) {
-    const itemCurrency = items.filter(item => item.fullName.toLowerCase() === fullName.toLowerCase())[0]
+      const itemCurrency = items.filter(item => item.fullName.toLowerCase() === fullName.toLowerCase())[0]
 
       const {
         currency,
@@ -258,10 +271,10 @@ export default class CurrencyWallet extends Component {
           }
         </div>
         { swapHistory.length > 0 && <SwapsHistory orders={swapHistory.filter(item => item.step >= 4)} /> }
-        <h2 style={{ marginTop: '20px' }} >
+        <h1 style={{ marginTop: '20px' }} >
           <FormattedMessage id="CurrencyWallet110" defaultMessage="History your transactions" />
-        </h2>
-        {txHistory && (<Table titles={titles} rows={txHistory} styleName="table" rowRender={this.rowRender} />)}
+        </h1>
+        {txHistory && (<Table rows={txHistory} styleName="table history" rowRender={this.rowRender} />)}
         {
           seoPage && seoPage.footer && <div>{seoPage.footer}</div>
         }

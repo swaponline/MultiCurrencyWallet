@@ -1,8 +1,8 @@
 export default {
   enter: 'enter',
   reject: 'reject',
+  switch: 'switch',
   wasOnWallet: 'wasOnWallet',
-  didWalletCreated: 'didWalletCreated',
   savedOrders: 'savedOrders',
   deletedOrders: 'deletedOrders',
   didWidgetsDataSend: 'didWidgetsDataSend',
@@ -15,11 +15,15 @@ export default {
   telosRegistrated: 'telosRegistrated',
   demoMoneyReceived: 'demoMoneyReceived',
   wasOnExchange: 'wasOnExchange',
-  didOpenSignUpModal: 'didOpenSignUpModal',
+  isWalletCreate: 'isWalletCreate',
   eosAccountActivated: `${process.env.ENTRY}:eos:activationFlag`,
   telosAccountActivated: `${process.env.ENTRY}:telos:activationFlag`,
   eosActivationPayment: `${process.env.ENTRY}:eos:activationPayment`,
   lastCheckBalance: 'lastCheckBalance',
   IEO_signed: 'IEO_signed',
   startSwap: 'startSwap',
+  didProtectedBtcCreated: 'protectedBtcCreated',
+  didProtectedBtcG2FACreated: 'protectedBtcG2FA',
+  isClosedNotifyBlockSignUp: 'isClosedNotifyBlockSignUp',
+  isClosedNotifyBlockBanner: 'isClosedNotifyBlockBanner'
 }

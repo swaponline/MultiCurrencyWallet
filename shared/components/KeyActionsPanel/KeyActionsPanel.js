@@ -46,6 +46,9 @@ export default class KeyActionsPanel extends Component {
 
   getFlowById = (swapId) => JSON.parse(localStorage.getItem(`swap:flow.${swapId}`) || 0)
   getSwapById = (swapId) => JSON.parse(localStorage.getItem(`swap:swap.${swapId}`) || 0)
+  checkSwapTimeout = (swapData, timeoutUTS) => {
+    return !((swapData.createUnixTimeStamp + timeoutUTS) > Math.floor(new Date().getTime() / 1000))
+  }
 
   getCorrectDecline = () => {
     const { decline, swapHistory } = this.props
@@ -86,7 +89,8 @@ export default class KeyActionsPanel extends Component {
 
         const isCurrencyEthOrEthToken = ethToken.isEthOrEthToken({ name: sellCurrency })
 
-        const isIncompleteSwap = !(isRefunded || isFinished || isStoppedSwap)
+        const isSwapTimeout = this.checkSwapTimeout( swap, 60 * 60 * 3)
+        const isIncompleteSwap = !(isRefunded || isFinished || isStoppedSwap || isSwapTimeout)
         const isStartedSwap = isCurrencyEthOrEthToken
           ? step >= 4 && btcScriptCreatingTransactionHash
           : step >= 5 && ethSwapCreationTransactionHash

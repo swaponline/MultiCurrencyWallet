@@ -38,18 +38,17 @@ class IEO extends React.Component {
        reddit,
      } = this.state
 
-     const twitterRegex = /https:\/\/twitter.com\/(?<id>.+(\b))\/?/i
+     const twitterRegex = /https:\/\/twitter\.com\/(?<id>.+(\b))\/?/i
      const twitterId = twitter.match(twitterRegex) !== null ? twitter.match(twitterRegex).groups.id : twitter
 
-     const facebookRegex = /https:\/\/www.facebook.com\/profile.php\?id=(?<id>.+(\b))\/?/i
+     const facebookRegex = /https:\/\/www\.facebook\.com\/profile\.php\?id=(?<id>.+(\b))\/?/i
      const facebookId = facebook.match(facebookRegex) !== null ? facebook.match(facebookRegex).groups.id : facebook
 
-     const redditRegex = /https:\/\/www.reddit.com\/user\/(?<id>.+(\b))\/?/i
+     const redditRegex = /https:\/\/www\.reddit\.com\/user\/(?<id>.+(\b))\/?/i
      const redditId = reddit.match(redditRegex) !== null ? reddit.match(redditRegex).groups.id : reddit
 
-     const githubRegex = /https:\/\/github.com\/(?<id>.+(\b))\/?/i
+     const githubRegex = /https:\/\/github\.com\/(?<id>.+(\b))\/?/i
      const githubId = reddit.match(githubRegex) !== null ? reddit.match(githubRegex).groups.id : github
-
 
      localStorage.setItem(constants.localStorage.IEO_signed, true)
      this.setState({ isSaved: true })
@@ -60,7 +59,6 @@ class IEO extends React.Component {
        reddit: redditId,
        github: githubId,
      })
-
    }
 
    render() {
@@ -126,7 +124,7 @@ class IEO extends React.Component {
              />
            </SubTitle>
            <div styleName="href">
-             <a href="https://swap.online/exchange/swap-to-btc" target="_blank" rel="noopener noreferrer">
+             <a href="https://swap.online/exchange/usdt-to-btc" target="_blank" rel="noopener noreferrer">
                <FormattedMessage id="IEOHref" defaultMessage="You can change SWAP to BTC here" />
              </a>
            </div>

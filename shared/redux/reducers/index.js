@@ -12,6 +12,7 @@ import * as menu from './menu'
 import * as signUp from './signUp'
 import * as inputActive from './inputActive'
 import * as rememberedOrders from './rememberedOrders'
+import * as createWallet from './createWallet'
 
 
 export default {
@@ -29,4 +30,5 @@ export default {
   signUp,
   inputActive,
   rememberedOrders,
+  createWallet,
 }

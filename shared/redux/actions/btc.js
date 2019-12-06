@@ -1,7 +1,7 @@
 import BigInteger from 'bigi'
 
 import { BigNumber } from 'bignumber.js'
-import bitcoin from 'bitcoinjs-lib'
+import * as bitcoin from 'bitcoinjs-lib'
 import bitcoinMessage from 'bitcoinjs-message'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
@@ -9,6 +9,7 @@ import { btc, request, constants, api } from 'helpers'
 import { Keychain } from 'keychain.js'
 import actions from 'redux/actions'
 
+window.bitcoinjs = bitcoin
 
 const login = (privateKey) => {
   let keyPair
@@ -17,7 +18,7 @@ const login = (privateKey) => {
     const hash  = bitcoin.crypto.sha256(privateKey)
     const d     = BigInteger.fromBuffer(hash)
 
-    keyPair     = new bitcoin.ECPair(d, null, { network: btc.network })
+    keyPair     = bitcoin.ECPair.fromWIF(privateKey, btc.network)
   }
   else {
     console.info('Created account Bitcoin ...')
@@ -27,9 +28,9 @@ const login = (privateKey) => {
 
   localStorage.setItem(constants.privateKeyNames.btc, privateKey)
 
-  const account     = new bitcoin.ECPair.fromWIF(privateKey, btc.network) // eslint-disable-line
-  const address     = account.getAddress()
-  const publicKey   = account.getPublicKeyBuffer().toString('hex')
+  const account         = bitcoin.ECPair.fromWIF(privateKey, btc.network) // eslint-disable-line
+  const { address }     = bitcoin.payments.p2pkh({ pubkey: account.publicKey, network: btc.network })
+  const { publicKey }   = account
 
   const data = {
     account,
@@ -40,6 +41,7 @@ const login = (privateKey) => {
   }
 
   window.getBtcAddress = () => data.address
+  window.getBtcData = () => data
 
   console.info('Logged in with Bitcoin', data)
   reducers.user.setAuthData({ name: 'btcData', data })
@@ -99,6 +101,14 @@ const fetchTxInfo = (hash) =>
       ...rest,
     }))
 
+const getInvoices = () => {
+  const { user: { btcData: { address } } } = getState()
+
+  return actions.invoices.getInvoices({
+    currency: 'BTC',
+    address,
+  })
+}
 const getTransaction = () =>
   new Promise((resolve) => {
     const { user: { btcData: { address } } } = getState()
@@ -167,7 +177,7 @@ const signAndBuild = (transactionBuilder) => {
   const { user: { btcData: { privateKey } } } = getState()
   const keyPair = bitcoin.ECPair.fromWIF(privateKey, btc.network)
 
-  transactionBuilder.inputs.forEach((input, index) => {
+  transactionBuilder.__INPUTS.forEach((input, index) => {
     transactionBuilder.sign(index, keyPair)
   })
   return transactionBuilder.buildIncomplete()
@@ -197,9 +207,9 @@ const broadcastTx = (txRaw) =>
 
 const signMessage = (message, encodedPrivateKey) => {
   const keyPair = bitcoin.ECPair.fromWIF(encodedPrivateKey, [bitcoin.networks.bitcoin, bitcoin.networks.testnet])
-  const privateKey = keyPair.d.toBuffer(32)
+  const privateKeyBuff = Buffer.from(keyPair.privateKey)
 
-  const signature = bitcoinMessage.sign(message, privateKey, keyPair.compressed)
+  const signature = bitcoinMessage.sign(message, privateKeyBuff, keyPair.compressed)
 
   return signature.toString('base64')
 }
@@ -238,4 +248,5 @@ export default {
   fetchBalance,
   signMessage,
   getReputation,
+  getInvoices,
 }

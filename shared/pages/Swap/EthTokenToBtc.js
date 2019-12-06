@@ -179,7 +179,7 @@ export default class EthTokenToBtc extends Component {
       swap,
     } = this.state
 
-    const { canCreateEthTransaction, isFailedTransaction, gasAmountNeeded } = flow
+    const { canCreateEthTransaction, isFailedTransaction, isFailedTransactionError, gasAmountNeeded } = flow
 
     return (
       <div>
@@ -217,7 +217,7 @@ export default class EthTokenToBtc extends Component {
                         }
                         {
                           isFailedTransaction && (
-                            <FailControler ethAddress={ethAddress} />
+                            <FailControler ethAddress={ethAddress} message={isFailedTransactionError} />
                           )
                         }
                       </Fragment>

@@ -1,6 +1,7 @@
 export default {
   SignUp: 'SignUpModal',
   Withdraw: 'WithdrawModal',
+  WithdrawMultisig: 'WithdrawModalMultisig',
   Offer: 'OfferModal',
   PrivateKeys: 'PrivateKeysModal',
   EosRegister: 'EosRegisterModal',
@@ -18,4 +19,10 @@ export default {
   IncompletedSwaps: 'IncompletedSwaps',
   MobMenu: 'MobMenu',
   ConfirmBeginSwap: 'ConfirmBeginSwap',
+  RegisterSMSProtected: 'RegisterSMSProtected',
+  MultisignJoinLink: 'MultisignJoinLink',
+  WithdrawMultisigSMS: 'WithdrawModalMultisig',
+  WithdrawMultisigUser: 'WithdrawModalMultisigUser',
+  CurrencyAction: 'CurrencyAction',
+  InvoiceModal: 'InvoiceModal',
 }

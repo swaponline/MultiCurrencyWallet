@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router'
 
-import bell from './images/avatar.svg'
+import bell from './images/avatar.jpg'
 import styles from './UserAvatar.scss'
 import CSSModules from 'react-css-modules'
 

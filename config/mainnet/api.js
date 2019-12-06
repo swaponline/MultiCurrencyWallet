@@ -19,5 +19,7 @@ export default {
     registerEndpoint: 'https://seven.swap.online/telos-testnet/newaccount',
   },
   swapsExplorer: 'https://seven.swap.online/swaps-testnet/state',
-  faucet: 'https://seven.swap.online/faucet/mainnet/faucet/',
+  faucet: 'https://faucet.swaponline.site/mainnet/',
+  btc2FAProtected: 'https://2fa.swaponline.site',
+  invoiceApi: 'https://invoices.swaponline.site',
 }

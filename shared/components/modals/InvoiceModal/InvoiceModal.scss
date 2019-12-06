@@ -1,0 +1,10 @@
+.invoiceModalHolder {
+  min-width: 400px;
+}
+
+@include media-mobile {
+  .invoiceModalHolder {
+    min-width: auto;
+  }
+}
+

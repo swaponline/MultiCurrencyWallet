@@ -1,17 +1,46 @@
 .status {
-  font-size: 16px;
-
+  font-size: 15px;
+  font-weight: bold;
+  line-height: 1.5;
   &.in {
-    color: #3bb33b;
+    .arrowWrap {
+      svg {
+        transform: rotate(180deg);
+        margin-top: 4px;
+        path {
+          stroke: #0CCF14;
+        }
+      }
+    }
+    .amount {
+      color: #0CCF14;
+    }
   }
 
   &.out {
-    color: #ff4e34;
+    font-weight: bold;
+    .amount {
+      color: #EE5B51;
+    }
   }
 
   &.self {
-    color: #ffb434;
+    font-weight: bold;
   }
+}
+
+.arrowWrap {
+    width: 36px;
+    height: 36px;
+    background: rgba(142, 154, 163, 0.1);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 12px;
+    svg {
+      fill: transparent;
+    }
 }
 
 .cell {
@@ -25,23 +54,39 @@
 }
 
 .confirm {
-  color: #ffffff;
-  background: rgba(61, 226, 91, 0.7);
   text-align: center;
-  width: 200px;
+  height: auto;
+  background: rgba(97, 68, 229, 0.1);
+  font-weight: 800;
+  font-size: 8px;
+  line-height: 10px;
+  color: #6144E5;
+  width: auto;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 2px;
+  margin-left: 10px;
+  position: relative;
+  top: -2px; a {
+    font-size: inherit;
+  }
+}
+
+.directionHeading {
+  position: relative;
 }
 
 .unconfirmed {
-  color: #ff354b;
-  background: rgba(255, 53, 75, 0.4);
+  color: #8E9AA3;
+  background: rgba(142, 154, 163, 0.1);
   text-align: center;
   width: 200px;
 }
 
 .date {
-  font-size: 14px;
-  font-weight: 500;
-  color: #aaa;
+  font-size: 12px;
+  font-weight: bold;
+  color: #8E9AA3;
 }
 
 .address {
@@ -50,11 +95,60 @@
 }
 
 .amount {
-  @include inline-block;
-  height: 40px;
-  background-color: #f2f2f2;
-  padding: 0 25px;
-  line-height: 40px;
-  font-size: 16px;
-  border-radius: 20px;
+  font-weight: 800;
+  font-size: 15px;
+  line-height: 18px;
+  text-align: right;
+  right: 15px;
+  top: 15px;
+  position: absolute;
+}
+
+.amountUsd {
+  font-weight: 600;
+  font-size: 12px;
+  color: #8E9AA3;
+  line-height: 15px;
+  position: absolute;
+  right: 15px;
+  bottom: 12px;
+}
+
+tr.historyRow {
+  display: block;
+  margin-bottom: 10px;
+  width: 100%;
+  min-height: 64px;
+  position: relative;
+  background: #FFFFFF;
+  border: 1px solid rgba(142, 154, 163, 0.16)!important;
+  box-shadow: 0px 2px 12px rgba(142, 154, 163, 0.08);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  padding: 15px;
+}
+
+.historyInvoiceInfo {
+  outline: 1px solid red;
+  div {
+    display: block;
+    font-size: 10pt;
+  }
+}
+
+@media all and (min-width: 320px) and (max-width: 570px) {
+  tr.historyRow {
+    height: 120px;
+    align-items: flex-start;
+  }
+  .amountUsd {
+    right: 15px;
+    bottom: 38px;
+  }
+  .amount {
+    right: 15px;
+    bottom: 15px;
+    top: auto;
+  }
 }

@@ -109,6 +109,21 @@ $walletPaddingTop: 41px;
   }
 }
 
+.history {
+  width: 100%;
+  margin-top: 20px;
+  display: inline-table;
+  thead {
+    border: none;
+  }
+  td,
+  td:first-child {
+    display: flex;
+    align-items: center;
+    padding: 0;
+  }
+}
+
 @include media-tablet-landscape-and-lower {
   table {
     display: block;
@@ -254,32 +269,6 @@ $walletPaddingTop: 41px;
         display: block;
         margin-left: 40px;
       }
-    }
-
-    & td {
-      &:first-child {
-        position: absolute;
-        z-index: 2;
-        background: #fff;
-        display: flex;
-        align-items: center;
-      }
-
-      &:nth-child(2) {
-        display: block;
-        margin-left: 40px;
-      }
-    }
-
-    td:first-child {
-      height: 109px;
-      left: -0.5em;
-
-    }
-
-    & tr:first-child td:first-child {
-      height: 104px;
-      margin-top: 5px;
     }
   }
 }

@@ -1,0 +1,50 @@
+.button{
+  height: 56px;
+  padding: 0 0.89em;
+  @include inline-block;
+  cursor: pointer;
+  line-height: 56px;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 18px;
+  border: none;
+  margin-right: 10px;
+  border-radius: 6px;
+  background-color: #f8f3fe;
+  box-shadow: 0px 0px 0px #929292;
+  color: #7c1de9;
+  @include no-user-select;
+  transition:
+    background-color 0.23s ease,
+    color 0.23s ease;
+  &:hover {
+    color: #7c1de9;
+    background: #dfc5ff;
+  }
+}
+
+.disable {
+  background-color: #dbdbdb !important;
+  cursor: default !important;
+  color: #626262 !important;
+}
+
+  .wallet {
+    @include inline-block;
+    height: 40px;
+    background: #f8f3fe;
+    padding: 0 25px;
+    line-height: 40px;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 20px;
+    text-transform: none;
+
+     &:disable {
+       background-color: #F2F2F2;
+       color: #000;
+       &:hover {
+         background-color: darken(#F2F2F2, 10%);
+       }
+     }
+  }

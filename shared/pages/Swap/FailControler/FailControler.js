@@ -18,11 +18,11 @@ const isWidgetBuild = config && config.isWidget
 @cssModules(styles)
 export default class FailControler extends Component {
   render() {
-    const { ethAddress } = this.props
+    const { ethAddress, message } = this.props
 
     return (
       <div styleName="main">
-        <CopyToClipboard text={ethAddress} data-tut="reactour__address">
+        <CopyToClipboard text={ethAddress}>
           <div>
             <div styleName="warning">
               <i className="fas fa-exclamation-triangle" />
@@ -31,9 +31,10 @@ export default class FailControler extends Component {
               <h3 styleName="failHeading">
                 <FormattedMessage
                   id="FailControler68"
-                  defaultMessage="Error in the execution of the token contract!{br}{br}Perhaps there is an additional commission on the contract side or the error occured for another reason"
+                  defaultMessage="Error in the execution of the token contract!{br}{br}Perhaps there is an additional commission on the contract side or the error occured for another reason{br}{br}{message}"
                   values={{
                     br: <br />,
+                    message: message,
                   }}
                 />
               </h3>
