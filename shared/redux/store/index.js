@@ -19,7 +19,7 @@ const store = createStore({
     middleware,
     selectiveSaver,
   ].concat(process.env.NODE_ENV === 'production' ? [] : [
-    createLogger(),
+    //createLogger(),
   ]),
   enhancers: [
     devTools,

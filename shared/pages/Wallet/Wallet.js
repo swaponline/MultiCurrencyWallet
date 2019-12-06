@@ -56,6 +56,10 @@ const walletNav = ['My balances', 'Transactions'];
       : Object.keys(tokensData).map(k => tokensData[k].currency)
   )
 
+  const tokensItems = (
+    Object.keys(tokensData).map(k => tokensData[k])
+  )
+
   const items = (
     config && config.isWidget ? [
       btcData,
@@ -91,7 +95,6 @@ const walletNav = ['My balances', 'Transactions'];
     // usdtOmniData,
     // nimData,
     // xlmData,
-    ...Object.keys(tokensData).map(k => tokensData[k]),
   ]
     .map(({ balance, currency }) => ({
       balance,
@@ -101,6 +104,7 @@ const walletNav = ['My balances', 'Transactions'];
   return {
     tokens,
     items,
+    tokensItems,
     currencyBalance,
     currencies,
     assets,
@@ -138,15 +142,16 @@ export default class Wallet extends Component {
   }
 
   componentWillMount() {
-    console.log('BTC-Protected', this.props.btcMultisigData)
     actions.user.getBalances()
   }
 
   componentDidMount() {
     this.showPercentChange1H();
-    this.getUsdBalance()
-    const isClosedNotifyBlockBanner = localStorage.getItem(constants.localStorage.isClosedNotifyBlockBanner)
-    const isClosedNotifyBlockSignUp = localStorage.getItem(constants.localStorage.isClosedNotifyBlockSignUp)
+    this.getUsdBalance();
+
+    const isClosedNotifyBlockBanner = localStorage.getItem(constants.localStorage.isClosedNotifyBlockBanner);
+    const isClosedNotifyBlockSignUp = localStorage.getItem(constants.localStorage.isClosedNotifyBlockSignUp);
+
     this.setState({
       isClosedNotifyBlockBanner,
       isClosedNotifyBlockSignUp
@@ -176,6 +181,8 @@ export default class Wallet extends Component {
     })
   }
 
+  tableRows = (items, tokens, hiddenCoinsList) => [...items, ...tokens].filter(currency => !hiddenCoinsList.includes(currency))
+
   handleShowKeys = () => {
     actions.modals.open(constants.modals.DownloadModal)
   }
@@ -189,7 +196,7 @@ export default class Wallet extends Component {
   }
 
   handleSignUp = () => {
-    actions.modals.open(constants.modals.SignUp, {})
+    actions.modals.open(constants.modals.SignUp)
   }
 
   handleNotifyBlockClose = (state) => {
@@ -246,6 +253,28 @@ export default class Wallet extends Component {
     history.push(localisedUrl(locale, '/createWallet'))
   }
 
+
+  handleModalOpen = (context) => {
+    const {
+      items,
+      tokensData,
+      tokensItems,
+      tokens,
+      hiddenCoinsList
+    } = this.props;
+
+    
+    const currencyTokenData = [...Object.keys(tokensData).map(k => (tokensData[k])), ...tokensItems]
+
+    const tableRows = [...items, ...tokens].filter(currency => !hiddenCoinsList.includes(currency))
+
+    const currencies = tableRows.map(currency => {
+      return currencyTokenData.find(item => item.currency === currency);
+    })
+
+    actions.modals.open(constants.modals.CurrencyAction, {currencies, context})
+  }
+
   render() {
     const {
       activeView,
@@ -272,7 +301,7 @@ export default class Wallet extends Component {
       infinite: true,
       speed: 500,
       autoplay: true,
-      autoplaySpeed: 1500,
+      autoplaySpeed: 6000,
       fade: true,
       slidesToShow: 1,
       slidesToScroll: 1
@@ -281,8 +310,8 @@ export default class Wallet extends Component {
     let btcBalance = 0;
     let usdBalance = 0;
 
-
     const tableRows = [...items, ...tokens].filter(currency => !hiddenCoinsList.includes(currency))
+
 
     if (infoAboutCurrency) {
       infoAboutCurrency.forEach(item => {
@@ -337,7 +366,7 @@ export default class Wallet extends Component {
           </ul>
           <div styleName="walletContent">
             <div styleName={`walletBalance ${activeView === 0 ? 'active' : ''}`}>
-              <BalanceForm usdBalance={usdBalance} btcBalance={btcBalance} {...this.state} />
+              <BalanceForm usdBalance={usdBalance} btcBalance={btcBalance} {...this.state} handleModalOpen={this.handleModalOpen}/>
               { exchangeForm &&
                 <div styleName="exchangeForm">
                   <ParticalClosure {...this.props} isOnlyForm />

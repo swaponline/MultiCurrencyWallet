@@ -11,7 +11,7 @@ import ReactTooltip from 'react-tooltip'
 
 import { FormattedMessage } from 'react-intl'
 
-function BalanceForm({usdBalance, btcBalance}) {
+function BalanceForm({usdBalance, btcBalance, handleModalOpen}) {
   const [activeCurrency, setActiveCurrency] = useState('usd');
 
   return (
@@ -35,20 +35,14 @@ function BalanceForm({usdBalance, btcBalance}) {
       </div>
       <div styleName="yourBalanceBottom">
         <Fragment>
-          <NewButton blue id="depositBtn">
+          <NewButton blue id="depositBtn" onClick={() => handleModalOpen('Deposit')}>
             Deposit
           </NewButton>
-          <ReactTooltip id="depositBtn" type="light" effect="solid">
-            <FormattedMessage id="depositBtn" defaultMessage="Для пополнения валюты нажмите три точки напротив нужного актива" />
-          </ReactTooltip>
         </Fragment>
         <Fragment>
-          <NewButton blue id="sendBtn">
+          <NewButton blue id="sendBtn" onClick={() => handleModalOpen('Send')}>
             Send
           </NewButton>
-          <ReactTooltip id="sendBtn" type="light" effect="solid">
-            <FormattedMessage id="sendBtn" defaultMessage="Для отправки валюты нажмите три точки напротив нужного актива" />
-          </ReactTooltip>
         </Fragment>
       </div>
     </div>
