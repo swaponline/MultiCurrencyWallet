@@ -3,7 +3,8 @@
     font-family: 'Manrope-Bold',sans-serif;
 }
 
-.walletHeading {
+.walletHeading,
+.inputTitle {
     font-weight: 800;
     font-size: 40px;
     line-height: 120%;
@@ -196,7 +197,7 @@
 }
 
 @media all and (min-width: 768px) and (max-width: 992px) {
-    .yourBalance {
+    .walletBalance {
         width: 45%;
     }
     .yourAssets {
@@ -210,9 +211,6 @@
         td:first-child {
             padding-left: 0px;
         }
-    }
-    .yourBalance {
-        display: none;
     }
     .yourBalance.active {
         display: block;
@@ -258,11 +256,19 @@
     .yourAssetsDescr {
         padding: 0 25px;
     }
+    .walletBalance {
+        width: 100%;
+    }
     .yourBalance {
         display: none;
     }
-    .yourBalance.active {
-        display: block;
+    .walletBalance.active {
+        .yourBalance {
+            display: block;
+        }
+    }
+    .activityHeading {
+        margin-top: -60px;
     }
 }
 

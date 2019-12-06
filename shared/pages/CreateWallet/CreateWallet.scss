@@ -129,6 +129,12 @@
 
 }
 
+.buttonWrapper {
+  position: absolute;
+  right: 0;
+  top: 33px;
+}
+
 .card {
   background: #FFFFFF;
   border: 1px solid rgba(142, 154, 163, 0.16);
@@ -339,8 +345,19 @@
     margin: auto 0;
   }
 
+  .buttonWrapper {
+    top: 30px;
+    right: auto;
+  }
+
   .listGroup {
-    margin: auto;
+    margin-left: 10px;
+    margin-top: 3px;
+  }
+
+  .wrapper h2 {
+    padding-top: 105px;
+    margin-bottom: 50px;
   }
 
   .secureSize,
@@ -372,6 +389,7 @@
       font-size: 11px;
       font-family: Inter;
       line-height: 15px;
+      text-align: left;
     }
   }
 
@@ -407,12 +425,6 @@
   .card li {
     font-size: 9px;
   }
-}
-
-.buttonWrapper {
-  position: absolute;
-  right: 0;
-  top: 33px;
 }
 
 @media screen and (max-width: 420px){

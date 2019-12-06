@@ -28,7 +28,7 @@
     button {
         font-size: 10px;
         width: 100%;
-        padding: 7px 6px;
+        padding: 10px 6px;
         text-align: left;
         margin: 0;
         display: block;
@@ -50,10 +50,13 @@
 
 .walletControls {
     position: absolute;
-    right: 12px;
-    bottom: -20px;
-    z-index: 111111;
+    right: 30px;
+    top: 50%;
     padding: 0 5px;
+    transform: translateY(-50%);
+    z-index: 111111111111;
+    padding: 0 5px;
+    height: max-content;
 }
 
 .regular {
@@ -62,8 +65,9 @@
 
 @media all and (min-width: 320px) and (max-width: 767px) {
     .walletControls {
-        top: -30px;
+        top: 50%;
         padding: 0 5px;
+        transform: translateY(-50%);
     }
 }
 

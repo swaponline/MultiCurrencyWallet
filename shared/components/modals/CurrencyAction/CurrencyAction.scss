@@ -165,7 +165,7 @@
     background: #fff;
     padding: 32px;
     width: 100%;
-    max-width: 570px;
+    max-width: max-content;
     height: auto;
     border-radius: 4px;
     box-shadow: 0 0 5px rgba(0, 0, 0, .4);
@@ -220,3 +220,20 @@
     }
   }
   
+
+@media all and (min-width: 320px) and (max-width: 767px) {
+  .header {
+    padding: 15px 0 25px;
+  }
+  .currenciesWrapper {
+    flex-direction: column;;
+  }
+  .modal {
+    overflow: scroll;
+  }
+  .card {
+    &:last-child {
+      margin-bottom: 50px;
+    }
+  }
+}
