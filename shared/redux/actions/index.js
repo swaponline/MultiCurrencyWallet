@@ -31,6 +31,8 @@ import analytics from './analytics'
 
 import ipfs from './ipfs'
 
+import invoices from './invoices'
+
 
 const tokens = {}
 
@@ -69,4 +71,5 @@ export default {
   ipfs,
   api,
   pairs,
+  invoices,
 }

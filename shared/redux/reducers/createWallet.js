@@ -16,10 +16,7 @@ export const initialState = {
 
 export const newWalletData = (state, payload) => {
   const { type, data } = payload
-  console.log(({
-    ...state,
-    [type]: data,
-  }))
+
   return ({
     ...state,
     [type]: data,

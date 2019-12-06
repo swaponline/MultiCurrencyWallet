@@ -48,7 +48,7 @@ export default class WithdrawModal extends React.Component {
   constructor(data) {
     super()
 
-    const { data: { currency }, items, tokenItems } = data
+    const { data: { amount, toAddress, currency }, items, tokenItems } = data
 
     const currentDecimals = constants.tokenDecimals[currency.toLowerCase()]
     const allCurrencyies = items.concat(tokenItems)
@@ -57,8 +57,8 @@ export default class WithdrawModal extends React.Component {
     this.state = {
       isShipped: false,
       openScanCam: '',
-      address: '',
-      amount: '',
+      address: (toAddress) ? toAddress : '',
+      amount: (amount) ? amount : '',
       minus: '',
       balance: selectedItem.balance || 0,
       ethBalance: null,

@@ -14,56 +14,58 @@ import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 
 // TODO to split data and view this component
 
-const SelectGroup = ({ dynamicFee, isToken, extendedControls, selectedValue, onSelect,
-  currencies, usd, placeholder, label, disabled, className, switchBalanceFunc, inputValueLink, tooltip, balance, error,
-  id, idFee, tooltipAboutFee, haveAmount, ...props
-}) => (
-  <div>
-    <FieldLabel inRow>
-      <strong>
-        {label}
-      </strong>
-      &nbsp;
-      <div styleName="smallTooltip">
-        <Tooltip id={id}>
-          {tooltip}
-        </Tooltip>
+const SelectGroup = (props) => {
+  const { dynamicFee, isToken, extendedControls, selectedValue, onSelect,
+    currencies, usd, placeholder, label, disabled, className, switchBalanceFunc, inputValueLink, tooltip, balance, error,
+    id, idFee, tooltipAboutFee, haveAmount,
+  } = props
+  return (
+    <div>
+      <FieldLabel inRow>
+        <strong>
+          {label}
+        </strong>
+        &nbsp;
+        <div styleName="smallTooltip">
+          <Tooltip id={id}>
+            {tooltip}
+          </Tooltip>
+        </div>
+      </FieldLabel>
+      <div styleName="groupField" className={className}>
+        <Input
+          styleName="inputRoot"
+          inputContainerClassName="inputContainer"
+          valueLink={inputValueLink}
+          type="number"
+          placeholder={placeholder}
+          pattern="0-9\."
+          errorStyle={error}
+          disabled={disabled}
+          onFocus={props.onFocus ? props.onFocus : () => { }}
+          onBlur={props.onBlur ? props.onBlur : () => { }}
+          onKeyDown={inputReplaceCommaWithDot}
+        />
+        {
+          (selectedValue === 'eth' || selectedValue === 'btc' || selectedValue === 'bch') && usd > 0 &&
+          <p styleName="textUsd" >{`~${usd}`} USD</p>
+        }
+        <CurrencySelect
+          name="All"
+          label={label}
+          tooltip={tooltip}
+          switchBalanceFunc={switchBalanceFunc}
+          id={id}
+          styleName="currencySelect"
+          placeholder="Enter the name of token"
+          selectedValue={selectedValue}
+          onSelect={onSelect}
+          currencies={currencies}
+        />
       </div>
-    </FieldLabel>
-    <div styleName="groupField" className={className}>
-      <Input
-        styleName="inputRoot"
-        inputContainerClassName="inputContainer"
-        valueLink={inputValueLink}
-        type="number"
-        placeholder={placeholder}
-        pattern="0-9\."
-        errorStyle={error}
-        disabled={disabled}
-        onFocus={props.onFocus ? props.onFocus : () => {}}
-        onBlur={props.onBlur ? props.onBlur : () => {}}
-        onKeyDown={inputReplaceCommaWithDot}
-      />
-      {
-        (selectedValue === 'eth' || selectedValue === 'btc' || selectedValue === 'bch') && usd > 0 &&
-        <p styleName="textUsd" >{`~${usd}`} USD</p>
-      }
-      <CurrencySelect
-        name="All"
-        label={label}
-        tooltip={tooltip}
-        switchBalanceFunc={switchBalanceFunc}
-        id={id}
-        styleName="currencySelect"
-        placeholder="Enter the name of token"
-        selectedValue={selectedValue}
-        onSelect={onSelect}
-        currencies={currencies}
-      />
-    </div>
-    {label.props.defaultMessage === 'You sell' && !extendedControls &&
-      (balance > 0 ?
-        !isToken &&
+      {label.props.defaultMessage === 'You sell' && !extendedControls &&
+        (balance > 0 ?
+          !isToken &&
           <span
             styleName={
               (BigNumber(haveAmount).isLessThanOrEqualTo(balance)
@@ -73,22 +75,22 @@ const SelectGroup = ({ dynamicFee, isToken, extendedControls, selectedValue, onS
                 : 'balance'
             }
           >
-            {<FormattedMessage
+            <FormattedMessage
               id="select75"
               defaultMessage="Available for exchange: {availableBalance} {tooltip}"
               values={{
                 availableBalance: `${BigNumber(balance).minus(dynamicFee)} ${selectedValue.toUpperCase()}`,
                 tooltip: <Tooltip id={idFee}> {tooltipAboutFee}</Tooltip>,
               }} />
-            }
           </span> :
-        <span styleName="textForNull">
-          <FormattedMessage id="selected53" defaultMessage="You can use an external wallet to perform a swap" />
-        </span>
-      )
-    }
-  </div>
-)
+          <span styleName="textForNull">
+            <FormattedMessage id="selected53" defaultMessage="You can use an external wallet to perform a swap" />
+          </span>
+        )
+      }
+    </div>
+  )
+}
 
 
 export default injectIntl(CSSModules(SelectGroup, styles, { allowMultiple: true }))
