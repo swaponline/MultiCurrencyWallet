@@ -563,13 +563,13 @@ export default class Row extends Component {
               <p>{currencyUsdBalance && currencyUsdBalance.toFixed(2) || '0.00'}</p>
               {inneedData && <span>   {`${inneedData.change} %`} </span>}
             </div>
-            <div onClick={this.handleOpenDropdown} styleName="assetsTableDots">
+          </div>
+          <div onClick={this.handleOpenDropdown} styleName="assetsTableDots">
               <DropdownMenu
                 size="regular"
                 className="walletControls"
                 items={dropDownMenuItems}
               />
-            </div>
           </div>
         </td>
       </tr>

@@ -526,8 +526,9 @@
 
 .assetsTableDots {
   position: absolute;
-  right: 0;
+  right: 30px;
   top: 50%;
+  z-index: 111;
   transform: translateY(-50%);
 }
 
@@ -604,7 +605,7 @@
     right: 20px;
   }
   .assetsTableDots {
-    right: -10px;
+    right: 0px;
   }
   .assetsTableRow {
     padding: 11px 25px;
