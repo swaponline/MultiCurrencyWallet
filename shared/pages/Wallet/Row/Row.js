@@ -113,6 +113,7 @@ export default class Row extends Component {
   componentDidMount() {
     const { hiddenCoinsList } = this.props
 
+
     this.handleTelosActivate()
     this.getUsdBalance()
 
@@ -241,29 +242,18 @@ export default class Row extends Component {
   handleWithdraw = () => {
     const {
       item: {
-        decimals,
-        token,
-        contractAddress,
-        unconfirmedBalance,
         currency,
-        address,
-        balance,
       },
+      item
     } = this.props
 
-    let withdrawModalType = constants.modals.Withdraw
-    if (currency === 'BTC (SMS-Protected)') withdrawModalType = constants.modals.WithdrawMultisigSMS
-    if (currency === 'BTC (Multisig)') withdrawModalType = constants.modals.WithdrawMultisigUser
+    const { Withdraw, WithdrawMultisigSMS, WithdrawMultisigUser } = constants.modals;
 
-    actions.modals.open(withdrawModalType, {
-      currency,
-      address,
-      contractAddress,
-      decimals,
-      token,
-      balance,
-      unconfirmedBalance,
-    })
+    let withdrawModalType = Withdraw;
+    if (currency === 'BTC (SMS-Protected)') withdrawModalType = WithdrawMultisigSMS;
+    if (currency === 'BTC (Multisig)') withdrawModalType = WithdrawMultisigUser;
+
+    actions.modals.open(withdrawModalType, item)
   }
 
   handleReceive = () => {

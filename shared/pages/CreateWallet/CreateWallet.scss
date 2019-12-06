@@ -2,6 +2,7 @@
   padding-top: 30px;
   max-width: 800px;
   margin: 0 auto;
+  position: relative;
 }
 
 .isExist {
@@ -406,6 +407,12 @@
   .card li {
     font-size: 9px;
   }
+}
+
+.buttonWrapper {
+  position: absolute;
+  right: 0;
+  top: 33px;
 }
 
 @media screen and (max-width: 420px){

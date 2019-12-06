@@ -17,6 +17,7 @@ import DownloadModal from './DownloadModal/DownloadModal'
 import DeclineOrdersModal from './DeclineOrdersModal/DeclineOrdersModal'
 import IncompletedSwaps from './IncompletedSwaps/IncompletedSwaps'
 import MobMenu from './MobMenu/MobMenu'
+import CurrencyAction from './CurrencyAction/CurrencyAction';
 
 import Confirm from './Confirm/Confirm'
 import ConfirmBeginSwap from './ConfirmBeginSwap/ConfirmBeginSwap'
@@ -51,5 +52,6 @@ export default {
   ConfirmBeginSwap,
   RegisterSMSProtected,
   MultisignJoinLink,
+  CurrencyAction,
   InvoiceModal,
 }

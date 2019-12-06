@@ -18,12 +18,17 @@ const NotifyBlock = ({ className, icon, descr, tooltip, firstBtn, secondBtn, fir
       </div>
     </div>
     <div>
-      <NewButton white onClick={firstFunc}>
-        {firstBtn}
-      </NewButton>
-      <NewButton transparent onClick={secondFunc}>
-        {secondBtn}
-      </NewButton>
+      {
+        firstBtn && <NewButton white onClick={firstFunc}>
+          {firstBtn}
+        </NewButton>
+      }
+      {
+        secondBtn && <NewButton transparent onClick={secondFunc}>
+          {secondBtn}
+        </NewButton>
+      }
+ 
     </div>
   </div>   
 )
