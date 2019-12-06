@@ -55,8 +55,6 @@
     "rename-assets-manifest-link": "replace 'assets/manifest.json' 'assets/android-manifest.json' ./build-chrome-extension/application/index.html"
   },
   "keywords": [],
-  "author": "@nikdementev",
-  "license": "ISC",
   "devDependencies": {
     "@babel/cli": "^7.6.3",
     "@babel/core": "^7.6.3",

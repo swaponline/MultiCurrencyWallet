@@ -431,6 +431,7 @@ export default class Row extends Component {
     }
 
     let inneedData = null
+    let nodeDownErrorShow = true
 
     const currencyUsdBalance = BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString() * exCurrencyRate;
 
@@ -473,6 +474,7 @@ export default class Row extends Component {
 
     if (this.props.item.isSmsProtected && !this.props.item.isRegistered) {
       currencyView = 'Not activated'
+      nodeDownErrorShow = false
       dropDownMenuItems = [{
         id: 1,
         title: <FormattedMessage id='WalletRow_Menu_ActivateSMSProtected' defaultMessage='Activate' />,
@@ -483,6 +485,7 @@ export default class Row extends Component {
     if (this.props.item.isUserProtected) {
       if (!this.props.item.active) {
         currencyView = 'Not joined'
+        nodeDownErrorShow = false
         dropDownMenuItems = []
       }
       dropDownMenuItems.push({
@@ -504,7 +507,7 @@ export default class Row extends Component {
               <Link to={localisedUrl(locale, `/${fullName}-wallet`)} title={`Online ${fullName} wallet`}>
                 <p>
                   {
-                    balanceError &&
+                    balanceError && nodeDownErrorShow &&
                     <div className={styles.errorMessage}>
                       {fullName}
                       <FormattedMessage

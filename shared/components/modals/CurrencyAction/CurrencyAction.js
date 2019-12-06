@@ -81,17 +81,34 @@ export default class CurrencyAction extends React.Component {
           </p>
           <div styleName="currenciesWrapper">
              {currencies.map(item => {
+               let iconName = item.currency.toLowerCase()
+               let itemTitle = item.currency
+               let itemFullTitle = item.fullName
+
+               switch (item.currency) {
+                 case 'BTC (Multisig)':
+                  iconName = 'btc'
+                  itemTitle = 'BTC (MTS)'
+                  itemFullTitle = 'BTC (MTS)'
+                  break;
+                 case 'BTC (SMS-Protected)':
+                  iconName = 'btc'
+                  itemTitle = 'BTC (SMS)'
+                  itemFullTitle = 'BTC (SMS)'
+                  break;
+               }
+
                return (
                  <div styleName="card" key={item} onClick={() => this.handleClickCurrency(item)}>
-                   <div styleName={`circle ${[item.currency === 'BTC (Multisig)' ? 'btc' : item.currency.toLowerCase()]}`}> 
+                   <div styleName={`circle ${iconName}`}> 
                     <img
-                      src={icons[item.currency === 'BTC (Multisig)' ? 'btc' : item.currency.toLowerCase()]}
+                      src={icons[iconName]}
                       alt={`${name} icon`}
                       role="image"
                     />
                    </div>
-                   <b>{item.currency === 'BTC (Multisig)' ? 'BTC (MTS)' : item.currency}</b>
-                   <span>{item.fullName === 'Bitcoin (Multisig)' ? 'BTC (MTS)' : item.fullName}</span>
+                   <b>{itemTitle}</b>
+                   <span>{itemFullTitle}</span>
                  </div>
                )
              })}
