@@ -139,6 +139,7 @@ export default class Wallet extends Component {
     btcBalance: 0,
     activeCurrency: 'usd',
     exchangeForm: false,
+    walletTitle: 'Wallet'
   }
 
   componentWillMount() {
@@ -151,10 +152,12 @@ export default class Wallet extends Component {
 
     const isClosedNotifyBlockBanner = localStorage.getItem(constants.localStorage.isClosedNotifyBlockBanner);
     const isClosedNotifyBlockSignUp = localStorage.getItem(constants.localStorage.isClosedNotifyBlockSignUp);
+    const walletTitle = localStorage.getItem(constants.localStorage.walletTitle);
 
     this.setState({
       isClosedNotifyBlockBanner,
-      isClosedNotifyBlockSignUp
+      isClosedNotifyBlockSignUp,
+      walletTitle
     })
   }
 
@@ -253,6 +256,19 @@ export default class Wallet extends Component {
     history.push(localisedUrl(locale, '/createWallet'))
   }
 
+  handleEditTitle = () => {
+    this.setState({
+      editTitle: true
+    })
+  }
+
+  handleChangeTitle = (e) => {
+    this.setState({
+      walletTitle: e.target.value
+    })
+    localStorage.setItem(constants.localStorage.walletTitle, e.target.value)
+  }
+
 
   handleModalOpen = (context) => {
     const {
@@ -284,7 +300,9 @@ export default class Wallet extends Component {
       exCurrencyRate,
       exchangeForm,
       isClosedNotifyBlockBanner,
-      isClosedNotifyBlockSignUp
+      isClosedNotifyBlockSignUp,
+      editTitle,
+      walletTitle
     } = this.state;
     const {
       items,
@@ -326,7 +344,7 @@ export default class Wallet extends Component {
     return (
       <artical>
         <section styleName="wallet">
-          <h3 styleName="walletHeading">Wallet</h3>
+          {!editTitle ? <h3 styleName="walletHeading" onDoubleClick={this.handleEditTitle}>{walletTitle}</h3> : <input styleName="inputTitle" onChange={(e) => this.handleChangeTitle(e)} value={walletTitle} />}
           <Slider {...settings}>
             {
               !isPrivateKeysSaved && <NotifyBlock
