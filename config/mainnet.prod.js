@@ -8,8 +8,8 @@ export default {
   local: 'online',
   dir: 'mainnet',
 
-  base: 'https://swap.online/',
-  publicPath: `https://swap.online${baseConfig.publicPath}`,
+  base: './',
+  publicPath: `./`,
 
   ...config,
 }
