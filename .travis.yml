@@ -15,15 +15,15 @@ before_script:
 - echo "________NPM install___________"
 - npm i
 - echo "__________NPM start____________"
-- npm run eslint &
+# - npm run eslint &
 script:
 - echo "____________TEST________________"
 #Uncomment this when enable covaralls
 #- yarn test:unit -- --coverage
 #- yarn test:snapshot -- --coverage
-- echo "____________LINT________________"
-- npm run validate $TRAVIS_COMMIT_RANGE
-- echo "________Build mainnet___________"
+#- echo "____________LINT________________"
+#- npm run validate $TRAVIS_COMMIT_RANGE
+#- echo "________Build mainnet___________"
 - npm run build:mainnet
 
 - ls
@@ -33,14 +33,7 @@ after_script:
 #- tar -cvzf build-mainnet.tgz build-mainnet/
 #- tar -cvzf build-testnet.tgz build-testnet/
 
-deploy:
-  provider: pages
-  skip-cleanup: true
-  keep-history: true
-  local-dir: build-testnet
-  github-token: $GITHUB_TOKEN
-  on:
-    branch: develop
+
 
 # deploy:
 #   provider:    releases
