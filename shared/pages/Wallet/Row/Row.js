@@ -111,7 +111,7 @@ export default class Row extends Component {
   }
 
   componentDidMount() {
-    const { hiddenCoinsList } = this.props
+    const { hiddenCoinsList, currencies } = this.props
 
 
     this.handleTelosActivate()
@@ -119,10 +119,11 @@ export default class Row extends Component {
 
     window.addEventListener('resize', this.handleSliceAddress)
 
-    Object.keys(config.erc20)
-      .forEach(name => {
-        if (!hiddenCoinsList.includes(name.toUpperCase())) {
-          actions.core.markCoinAsVisible(name.toUpperCase())
+    console.log("hiddenCoinsList", hiddenCoinsList)
+    currencies
+      .forEach(({ name }) => {
+        if (!hiddenCoinsList.includes(name)) {
+          actions.core.markCoinAsVisible(name)
         }
       })
   }
@@ -565,11 +566,11 @@ export default class Row extends Component {
             </div>
           </div>
           <div onClick={this.handleOpenDropdown} styleName="assetsTableDots">
-              <DropdownMenu
-                size="regular"
-                className="walletControls"
-                items={dropDownMenuItems}
-              />
+            <DropdownMenu
+              size="regular"
+              className="walletControls"
+              items={dropDownMenuItems}
+            />
           </div>
         </td>
       </tr>

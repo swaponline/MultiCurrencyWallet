@@ -176,12 +176,14 @@ export default class PartialClosure extends Component {
       this.wallets[item.currency] = item.address
     })
 
-    Array.of(sellToken, buyToken).forEach((item) => {
-      const currency = item.toUpperCase()
-      if (props.hiddenCoinsList.includes(currency)) {
-        actions.core.markCoinAsVisible(currency)
-      }
-    })
+    // WHO KNOW WHY DID THIS SHIT WAS ADD? PM me plz
+    // Array.of(sellToken, buyToken).forEach((item) => {
+    //   const currency = item.toUpperCase()
+    //   if (props.hiddenCoinsList.includes(currency)) {
+    //     console.log("!@3")
+    //     actions.core.markCoinAsVisible(currency)
+    //   }
+    // })
 
     this.state = {
       isToken: false,

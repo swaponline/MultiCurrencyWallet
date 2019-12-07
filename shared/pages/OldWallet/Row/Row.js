@@ -111,6 +111,7 @@ export default class Row extends Component {
     Object.keys(config.erc20)
       .forEach(name => {
         if (!hiddenCoinsList.includes(name.toUpperCase())) {
+          console.log("wtf")
           actions.core.markCoinAsVisible(name.toUpperCase())
         }
       })

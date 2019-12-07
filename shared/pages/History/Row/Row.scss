@@ -114,6 +114,8 @@
   bottom: 12px;
 }
 
+
+.addCommentRow,
 tr.historyRow {
   display: block;
   margin-bottom: 10px;
@@ -127,6 +129,24 @@ tr.historyRow {
   display: flex;
   align-items: center;
   padding: 15px;
+}
+
+.addCommentRow  {
+ td {
+  width: 90%;
+  margin: 0 auto;
+  display: block;
+ }
+
+ textarea {
+  width: 100%;
+  resize: none;
+ }
+
+ div {
+  width: 100%;
+  text-align: right;
+ }
 }
 
 .historyInvoiceInfo {
