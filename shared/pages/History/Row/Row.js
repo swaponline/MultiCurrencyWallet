@@ -73,7 +73,7 @@ class Row extends React.PureComponent {
 
   returnDefaultComment = (hash) => {
     const comment = localStorage.getItem('historyComments')
-    console.log(JSON.parse(comment)[hash])
+
     return comment ? JSON.parse(comment)[hash] || '' : ''
   }
 
