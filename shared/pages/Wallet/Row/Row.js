@@ -119,7 +119,6 @@ export default class Row extends Component {
 
     window.addEventListener('resize', this.handleSliceAddress)
 
-    console.log("hiddenCoinsList", hiddenCoinsList)
     currencies
       .forEach(({ name }) => {
         if (!hiddenCoinsList.includes(name)) {

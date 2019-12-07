@@ -206,7 +206,6 @@ export default class CurrencyWallet extends Component {
     })
 
     if (hiddenCoinsList.includes(currency)) {
-      console.log("wtf")
       actions.core.markCoinAsVisible(currency)
     }
 

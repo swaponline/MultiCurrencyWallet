@@ -160,12 +160,12 @@ class Row extends React.PureComponent {
                       }
                     </div>
                   </>}
-                {!comment ? <span role="presentation" onClick={() => this.toggleComment(!isOpen)}>
+                {!comment ? <span styleName="icon" role="presentation" onClick={() => this.toggleComment(!isOpen)}>
                   &#x270E;
                 </span> :
                   <>
                     <span data-tip data-for={hash} onClick={() => this.toggleComment(!isOpen)}>
-                      <img src="https://img.icons8.com/cotton/64/000000/secured-letter--v3.png" />
+                      <img styleName="icon" src="https://img.icons8.com/cotton/64/000000/secured-letter--v3.png" />
                     </span>
                     <ReactTooltip id={hash} type="light" effect="solid">
                       {comment}
