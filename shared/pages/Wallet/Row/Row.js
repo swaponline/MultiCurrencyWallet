@@ -111,7 +111,7 @@ export default class Row extends Component {
   }
 
   componentDidMount() {
-    const { hiddenCoinsList, currencies } = this.props
+    const { hiddenCoinsList, balance } = this.props
 
 
     this.handleTelosActivate()
@@ -119,12 +119,9 @@ export default class Row extends Component {
 
     window.addEventListener('resize', this.handleSliceAddress)
 
-    currencies
-      .forEach(({ name }) => {
-        if (!hiddenCoinsList.includes(name)) {
-          actions.core.markCoinAsVisible(name)
-        }
-      })
+    if (!hiddenCoinsList.includes(name) || BigNumber(balance).isGreaterThan(0)) {
+      actions.core.markCoinAsVisible(name)
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
