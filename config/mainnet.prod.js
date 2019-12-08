@@ -9,7 +9,7 @@ export default {
   dir: 'mainnet',
 
   base: './',
-  publicPath: `./`,
+  publicPath: process.argv[2] || `./`, // call build like: `npm run build:mainnet https://swaponline.github.io/` to add different origin
 
   ...config,
 }
