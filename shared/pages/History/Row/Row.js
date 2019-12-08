@@ -19,11 +19,11 @@ class Row extends React.PureComponent {
 
   constructor(props) {
     super()
-    const { hash } = props
+    const { hash, type } = props
 
     this.state = {
       exCurrencyRate: 0,
-      comment: this.returnDefaultComment(hash),
+      comment: this.returnDefaultComment(hash, type),
     }
   }
 
@@ -71,16 +71,30 @@ class Row extends React.PureComponent {
     this.setState(() => ({ comment: value }))
   }
 
-  returnDefaultComment = (hash) => {
-    const comment = localStorage.getItem('historyComments')
+  returnDefaultComment = (hash, type) => {
 
-    return comment ? JSON.parse(comment)[hash] || '' : ''
+    let comment = localStorage.getItem('historyComments')
+
+    if (comment) {
+      comment = JSON.parse(comment)
+    }
+    const newData = comment ? comment[`${hash}-${type}`] || '' : ''
+
+    return newData
   }
 
   commentCancel = () => {
-    const { hash } = this.props
+    const { hash, date, type } = this.props
+    const commentDate = moment(date).format('LLLL')
 
-    this.setState(() => ({ comment: this.returnDefaultComment(hash) }))
+    this.setState(() => ({ comment: commentDate }))
+    let comment = localStorage.getItem('historyComments')
+
+    if (comment) {
+      comment = { ...JSON.parse(comment), [`${hash}-${type}`]: commentDate }
+
+      localStorage.setItem('historyComments', JSON.stringify(comment))
+    }
     this.toggleComment(false)
   }
 
@@ -102,7 +116,6 @@ class Row extends React.PureComponent {
       confirmations,
       txType,
       invoiceData,
-      hash
     } = this.props
 
     const { exCurrencyRate, isOpen, comment } = this.state
@@ -123,6 +136,7 @@ class Row extends React.PureComponent {
         'self': direction === 'self',
       })
     }
+
     /* eslint-disable */
     return (
       <>
@@ -160,20 +174,15 @@ class Row extends React.PureComponent {
                       }
                     </div>
                   </>}
-                {!comment ? <span styleName="icon" role="presentation" onClick={() => this.toggleComment(!isOpen)}>
-                  &#x270E;
-                </span> :
-                  <>
-                    <span data-tip data-for={hash} onClick={() => this.toggleComment(!isOpen)}>
-                      <img styleName="icon" src="https://img.icons8.com/cotton/64/000000/secured-letter--v3.png" />
-                    </span>
-                    <ReactTooltip id={hash} type="light" effect="solid">
-                      {comment}
-                    </ReactTooltip>
-                  </>
-                }
               </div>
-              <div styleName='date'>{moment(date).format('LLLL')}</div>
+              <CommentRow
+                isOpen={isOpen}
+                comment={comment}
+                commentCancel={this.commentCancel}
+                changeComment={this.changeComment}
+                toggleComment={this.toggleComment}
+                {...this.props}
+              />
               {invoiceData && invoiceData.label &&
                 <div styleName='date'>{invoiceData.label}</div>
               }
@@ -193,13 +202,6 @@ class Row extends React.PureComponent {
             {/* <LinkTransaction type={type} styleName='address' hash={hash} >{hash}</LinkTransaction> */}
           </td>
         </tr>
-        {isOpen && <CommentRow
-          comment={comment}
-          commentCancel={this.commentCancel}
-          changeComment={this.changeComment}
-          toggleComment={this.toggleComment}
-          {...this.props}
-        />}
       </>
     )
   }

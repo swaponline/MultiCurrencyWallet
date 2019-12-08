@@ -65,7 +65,7 @@ export default class History extends Component {
   }
 
   rowRender = (row) => (
-    <Row key={row.hash} {...row} />
+    <Row key={row.hash - row.type} {...row} />
   )
 
   render() {

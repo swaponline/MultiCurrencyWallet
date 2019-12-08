@@ -120,7 +120,6 @@
   margin-left: 10px;
 }
 
-.addCommentRow,
 tr.historyRow {
   display: block;
   margin-bottom: 10px;
@@ -136,23 +135,18 @@ tr.historyRow {
   padding: 15px;
 }
 
-.addCommentRow  {
- td {
-  width: 90%;
-  margin: 0 auto;
-  display: block;
- }
+  .input {
+    font-size: 12px;
+    color: #8e9aa3;
+    border-bottom: 1px solid #8e9aa3;
 
- textarea {
-  width: 100%;
-  resize: none;
- }
-
- div {
-  width: 100%;
-  text-align: right;
- }
-}
+    input {
+      min-width: 250px;
+    }
+    span {
+      color: #EE5B51;
+    }
+  }
 
 .historyInvoiceInfo {
   outline: 1px solid red;
