@@ -513,7 +513,7 @@
   }
   .alignCenter {
     height: auto;
-    padding: 15px 0 90px;
+    padding: 50px 0 90px;
   }
 }
 @media all and (min-width: 320px) and (max-width: 830px) {
@@ -548,6 +548,12 @@
   }
   .TitleHolder {
     width: 100%;
+  }
+}
+
+@media all and (max-width: 570px) {
+  .section {
+    padding-top: 210px;
   }
 }
 
@@ -597,6 +603,7 @@
         display: block;
         margin: auto;
         width: 90%;
+        text-align: center;
       }
     }
   }
