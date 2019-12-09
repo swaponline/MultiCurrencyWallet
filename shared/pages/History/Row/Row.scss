@@ -87,6 +87,7 @@
   font-size: 12px;
   font-weight: bold;
   color: #8E9AA3;
+  cursor: pointer;
 }
 
 .address {
@@ -145,6 +146,12 @@ tr.historyRow {
     }
     span {
       color: #EE5B51;
+    }
+
+    .green {
+      color: #0CCF14;
+      margin-right: 5px;
+      font-size: 10px;
     }
   }
 

@@ -16,11 +16,12 @@ class Row extends React.PureComponent {
 
   constructor(props) {
     super()
-    const { hash, type } = props
-
+    const { hash, type, hiddenList } = props
+    const ind = `${hash}-${type}`
     this.state = {
+      ind,
       exCurrencyRate: 0,
-      comment: actions.comments.returnDefaultComment(hash, type),
+      comment: actions.comments.returnDefaultComment(hiddenList, ind),
     }
   }
 
@@ -62,18 +63,18 @@ class Row extends React.PureComponent {
     this.setState(() => ({ isOpen: val }))
   }
 
-  changeComment = (e) => {
-    const { value } = e.target
-
-    this.setState(() => ({ comment: value }))
+  changeComment = (val) => {
+    this.setState(() => ({ comment: val }))
   }
 
   commentCancel = () => {
-    const { hash, date, type } = this.props
+    const { date, hiddenList, onSubmit } = this.props
+    const { ind } = this.state
 
     const commentDate = moment(date).format('LLLL')
+    onSubmit({ ...hiddenList, [ind]: commentDate })
+    this.changeComment(commentDate)
     this.toggleComment(false)
-    actions.comments.commentCancel(hash, date, type, commentDate)
   }
 
   parseFloat = (direction, value, directionType, type) => (
@@ -88,13 +89,15 @@ class Row extends React.PureComponent {
   render() {
     const {
       type,
-      date,
       direction,
       value,
       confirmations,
       txType,
       invoiceData,
+      onSubmit,
     } = this.props
+
+    const { ind } = this.state
 
     const { exCurrencyRate, isOpen, comment } = this.state
 
@@ -157,7 +160,8 @@ class Row extends React.PureComponent {
                 isOpen={isOpen}
                 comment={comment}
                 commentCancel={this.commentCancel}
-                changeComment={this.changeComment}
+                submit={onSubmit}
+                changeComment={({ target }) => this.changeComment(target.value, ind)}
                 toggleComment={this.toggleComment}
                 {...this.props}
               />

@@ -7,17 +7,12 @@ import actions from 'redux/actions'
 import styles from './Row.scss'
 
 
-const submitComment = (e, { hash, comment, toggleComment, type }) => {
+const submitComment = (e, { hash, comment, toggleComment, type, onSubmit, hiddenList }) => {
   e.preventDefault()
-  let comments = actions.comments.getComment()
-  if (comments) {
-    comments = JSON.parse(comments)
-  } else {
-    comments = {}
-  }
 
-  comments = { ...comments, [`${hash}-${type}`]: comment }
-  actions.comments.setComment(comments)
+  const comments = { ...hiddenList, [`${hash}-${type}`]: comment }
+
+  onSubmit(comments)
   toggleComment(false)
 }
 
@@ -26,6 +21,7 @@ const CommentRow = (props) => {
   return isOpen ?
     <form styleName="input" onSubmit={(e) => submitComment(e, props)}>
       <input type="text" defaultValue={comment || moment(date).format('LLLL')} onChange={changeComment} />
+      <span styleName="green" onClick={(e) => submitComment(e, props)}>&#10004;</span>
       <span onClick={commentCancel}>&times;</span>
     </form> :
     <div styleName="date" onDoubleClick={() => toggleComment(true)}>{comment || moment(date).format('LLLL')}</div>
