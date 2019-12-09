@@ -22,6 +22,7 @@ npm i
 3) Do `git submodule update` in swap.react directory
 
 4) For dev mode `npm run start`, for prod `npm run build`
+   > If you need to deploy it on your own origin - run build like: `npm run build:mainnet https://your.cool.origin/`
 
 ```
 npm run start
