@@ -6,13 +6,10 @@ import { connect } from 'redaction'
 import cssModules from 'react-css-modules'
 import styles from './Row.scss'
 
-import Coin from 'components/Coin/Coin'
-import LinkTransaction from '../LinkTransaction/LinkTransaction'
 import { FormattedMessage } from 'react-intl'
 import actions from 'redux/actions'
 import { constants } from 'helpers'
 import CommentRow from './Comment'
-import ReactTooltip from 'react-tooltip'
 
 
 class Row extends React.PureComponent {
@@ -23,7 +20,7 @@ class Row extends React.PureComponent {
 
     this.state = {
       exCurrencyRate: 0,
-      comment: this.returnDefaultComment(hash, type),
+      comment: actions.comments.returnDefaultComment(hash, type),
     }
   }
 
@@ -71,31 +68,12 @@ class Row extends React.PureComponent {
     this.setState(() => ({ comment: value }))
   }
 
-  returnDefaultComment = (hash, type) => {
-
-    let comment = localStorage.getItem('historyComments')
-
-    if (comment) {
-      comment = JSON.parse(comment)
-    }
-    const newData = comment ? comment[`${hash}-${type}`] || '' : ''
-
-    return newData
-  }
-
   commentCancel = () => {
     const { hash, date, type } = this.props
+
     const commentDate = moment(date).format('LLLL')
-
-    this.setState(() => ({ comment: commentDate }))
-    let comment = localStorage.getItem('historyComments')
-
-    if (comment) {
-      comment = { ...JSON.parse(comment), [`${hash}-${type}`]: commentDate }
-
-      localStorage.setItem('historyComments', JSON.stringify(comment))
-    }
     this.toggleComment(false)
+    actions.comments.commentCancel(hash, date, type, commentDate)
   }
 
   parseFloat = (direction, value, directionType, type) => (

@@ -1,15 +1,15 @@
-import React from "react"
+import React from 'react'
 
 import cssModules from 'react-css-modules'
-import { FormattedMessage } from 'react-intl'
 import moment from 'moment-with-locales-es6'
+import actions from 'redux/actions'
 
 import styles from './Row.scss'
 
 
 const submitComment = (e, { hash, comment, toggleComment, type }) => {
   e.preventDefault()
-  let comments = localStorage.getItem('historyComments')
+  let comments = actions.comments.getComment()
   if (comments) {
     comments = JSON.parse(comments)
   } else {
@@ -17,8 +17,7 @@ const submitComment = (e, { hash, comment, toggleComment, type }) => {
   }
 
   comments = { ...comments, [`${hash}-${type}`]: comment }
-
-  localStorage.setItem('historyComments', JSON.stringify(comments))
+  actions.comments.setComment(comments)
   toggleComment(false)
 }
 
