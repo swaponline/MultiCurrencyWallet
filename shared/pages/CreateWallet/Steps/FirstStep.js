@@ -12,7 +12,8 @@ import { FormattedMessage } from 'react-intl'
 import Explanation from '../Explanation'
 import icons from '../images'
 
-import { subHeaderText1,
+import {
+  subHeaderText1,
   cupture1,
   subHeaderText2,
   cupture2,
@@ -36,7 +37,7 @@ const CreateWallet = ({ onClick, error, setError }) => {
   ]
 
   const handleClick = name => {
-    const dataToReturn = { ...border, [name]: !border[name]  }
+    const dataToReturn = { ...border, [name]: !border[name] }
     setBorder(dataToReturn)
     reducers.createWallet.newWalletData({ type: 'currencies', data: dataToReturn })
     setError(null)
@@ -53,7 +54,7 @@ const CreateWallet = ({ onClick, error, setError }) => {
             {coins.map(el => {
               const { name, capture } = el
               return (
-                <div styleName={`card ${border[name] ? 'purpleBorder' : ''}`} onClick={() => handleClick(name)}>
+                <div styleName={`card flex ${border[name] ? 'purpleBorder' : ''}`} onClick={() => handleClick(name)}>
                   <img
                     styleName={`logo ${name}`}
                     src={icons[name]}
