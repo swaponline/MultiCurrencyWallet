@@ -33,6 +33,7 @@ const CreateWallet = ({ onClick, error, setError }) => {
     { name: 'eth', capture: 'Ethereum' },
     { name: 'usdt', capture: 'Stablecoin' },
     { name: 'swap', capture: 'Swap' },
+    { name: 'bch', capture: 'Bitcoin Cash' },
   ]
 
   const handleClick = name => {
@@ -54,12 +55,13 @@ const CreateWallet = ({ onClick, error, setError }) => {
               const { name, capture } = el
               return (
                 <div styleName={`card ${border[name] ? 'purpleBorder' : ''}`} onClick={() => handleClick(name)}>
-                  <img
-                    styleName={`logo ${name}`}
-                    src={icons[name]}
-                    alt={`${name} icon`}
-                    role="image"
-                  />
+                  <div styleName={`logo ${name}`}>
+                    <img
+                      src={icons[name]}
+                      alt={`${name} icon`}
+                      role="image"
+                    />
+                  </div>
                   <div styleName="listGroup">
                     <li><b>{name.toUpperCase()}</b></li>
                     <li>{capture}</li>

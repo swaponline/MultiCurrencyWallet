@@ -58,7 +58,9 @@
   width: 35px;
   height: 35px;
   padding: 7px;
+  justify-content: center;
   margin: auto;
+  display: flex;
 }
 
 .btc {
@@ -80,6 +82,10 @@
 .purple {
   background-color: #6144E5;
   color: #f0eefd
+}
+
+.bch {
+  background: #4ac745;
 }
 
 .green {
