@@ -78,7 +78,8 @@
         line-height: 16px;
         text-align: center;
         color: #1F2D48;
-        margin-top: 10px;
+        margin-top: 5px;
+        margin-bottom: -1px;
         font-family: 'Inter-Bold';
     }
 
@@ -126,6 +127,10 @@
     background: #775cf1;
   }
 
+  .bch {
+    background: #4ac745;
+  }
+
   .circle {
     width: 36px;
     height: 36px;
@@ -133,6 +138,7 @@
     justify-content: center;
     border-radius: 50%;
     margin: auto;
+    align-items: center;
   }
 
   .closeButton {
