@@ -41,4 +41,59 @@ tar czf my-widget.tar.gz build-mainnet-widget
 <iframe src="build-mainnet-widget/index.html" border=0 style="botder:0;width:800px;height:700px"></iframe>
 ```
  
-```
+## Как менять картинки и цвета
+
+### 1. как помененять логотип
+swap.react/shared/components/Logo
+* в папке `images` перенести свои свг файлы
+* в файле `Logo.js` изменить alt на свой  
+
+    ```const imgNode = React.createElement('img', {
+      styleName: !withLink && 'logo',
+      src: isColored ? coloredLogoImage : logoImage,
+      alt: 'swap.online logo', // измененить на свой
+    })
+    ```
+* для изменения цвета иконки валюты нужно перейти в `swap.react/shared/components/ui/CurrencyIcon/images`
+    заменить на свою иконку, важно чтоб имя свг файла соответствовало имени валюты
+* для изменения свг файлов в слайдере валют, нужно изменить свг в файл в `/swap.react/shared/pages/PartialClosure/CurrencySlider/images`
+
+### 2. как поменять ссылки на соц сети
+    `swap.react/shared/helpers/links.js`
+* в папке `links` меняем ссылки на свои
+
+### 3.  как поменять текст
+   Для предотвращения любых конфликтов в будущем 
+   * находим в тексе интересующий нас текст, например: 
+        ``` <FormattedMessage id="Row313" defaultMessage="Deposit" />  ```
+
+   * в папке `swap.react/shared/localisation`
+     В зависимости от интересующего нас языка (если английский то в файле en) 
+     находим текст с интересующим нас id ("Row313")
+
+      ```
+        {
+            "id": "Row313",
+            "message": "Deposit",
+            "files": [
+            "shared/pages/Currency/Currency.js",
+            "shared/pages/CurrencyWallet/CurrencyWallet.js",
+            "shared/pages/OldWallet/Row/Row.js"
+            ]
+        },
+      ```
+
+   * меняем текст в `message`
+
+### 4. как добавить токен
+
+   * переходим в `swap.react/config/mainnet/erc20.js`
+   * добавляем все необходимые поля (адрес, количество знаков после запятой, название)
+   * переходим в `swap.react/swap.core/src/swap.app/constants/COINS.js` добавляем тот же токен
+
+
+
+
+ 
+
+
