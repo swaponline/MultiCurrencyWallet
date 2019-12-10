@@ -376,7 +376,7 @@ export default class Wallet extends Component {
             !isFetching && !isNaN(usdBalance) ? (
               <div className="data-tut-store" styleName="walletContent" >
                 <div styleName={`walletBalance ${activeView === 0 ? 'active' : ''}`}>
-                  <BalanceForm usdBalance={usdBalance} currencyBalance={btcBalance} {...this.state} handleReceive={this.handleReceive} handleWithdraw={this.handleWithdraw} isFetching={isFetching}/>
+                  <BalanceForm usdBalance={usdBalance} currencyBalance={btcBalance} {...this.state} handleReceive={this.handleModalOpen} handleWithdraw={this.handleModalOpen}/>
                   {exchangeForm &&
                     <div styleName="exchangeForm">
                       <ParticalClosure {...this.props} isOnlyForm />

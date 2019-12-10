@@ -10,6 +10,7 @@ import btcIcon from './images/btcIcon.svg'
 function BalanceForm({usdBalance, currencyBalance, handleReceive, handleWithdraw}) {
   const [activeCurrency, setActiveCurrency] = useState('usd');
 
+
   return (
     <div styleName={`yourBalance`}>
       <div styleName="yourBalanceTop">
@@ -29,7 +30,7 @@ function BalanceForm({usdBalance, currencyBalance, handleReceive, handleWithdraw
           )
         }
         {
-          usdBalance && (
+          usdBalance ? (
             <div styleName="yourBalanceCurrencies">
               <button styleName={activeCurrency === 'usd' && 'active'} onClick={() => setActiveCurrency('usd')}>
                 <img src={dollar2} />
@@ -39,7 +40,7 @@ function BalanceForm({usdBalance, currencyBalance, handleReceive, handleWithdraw
                 <img src={btcIcon} />
               </button>
             </div>
-          )
+          ) : ''
         }
       </div>
       <div styleName="yourBalanceBottom">
