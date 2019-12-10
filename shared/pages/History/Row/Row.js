@@ -17,7 +17,8 @@ class Row extends React.PureComponent {
   constructor(props) {
     super()
     const { hash, type, hiddenList, invoiceData } = props
-    const ind = `${invoiceData || hash}-${type}`
+    const dataInd = invoiceData && invoiceData.id
+    const ind = `${dataInd || hash}-${type}`
     this.state = {
       ind,
       exCurrencyRate: 0,
