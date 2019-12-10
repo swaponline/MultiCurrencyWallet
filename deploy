@@ -5,7 +5,7 @@ npm run build:mainnet
 
 # update repo or clone
 
-git clone https://caffeinum:$GITHUB_TOKEN@github.com/swaponline/mainnet.build.git
+git clone https://caffeinum:$GITHUB_TOKEN@github.com/swaponline/swaponline.github.io.git
 cd mainnet.build
 git checkout deploy
 git fetch origin
@@ -34,13 +34,10 @@ cd ..
 
 echo "Create pull request at"
 echo
-echo "    https://github.com/swaponline/mainnet.build/compare/master...deploy"
+echo "    https://github.com/swaponline/swaponline.github.io/compare/master...deploy"
 echo
 
-if [ $BOT_TOKEN ]; then
-  curl https://api.telegram.org/bot$BOT_TOKEN/sendMessage?chat_id=-329333490\&text="https://github.com/swaponline/mainnet.build/compare/master...deploy"
-fi
 
 if [ $GITHUB_TOKEN ]; then
-  curl -u caffeinum:$GITHUB_TOKEN -X POST https://api.github.com/repos/swaponline/mainnet.build/pulls -d '{"title":"build","head":"deploy","base":"master"}'
+  curl -u caffeinum:$GITHUB_TOKEN -X POST https://api.github.com/repos/swaponline.github.io/mainnet.build/pulls -d '{"title":"build","head":"deploy","base":"master"}'
 fi
