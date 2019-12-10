@@ -24,7 +24,7 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 
 import config from 'app-config'
 import { withRouter } from 'react-router'
-import BalanceForm from './BalanceForm'
+import BalanceForm from './components/BalanceForm/BalanceForm'
 import CurrenciesList from './CurrenciesList'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 

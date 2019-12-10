@@ -22,7 +22,7 @@ import ReactTooltip from 'react-tooltip'
 import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
 import { localisedUrl } from 'helpers/locale'
 import config from 'app-config'
-import BalanceForm from 'pages/Wallet/BalanceForm'
+import BalanceForm from 'pages/Wallet/components/BalanceForm/BalanceForm'
 
 
 
@@ -230,7 +230,7 @@ export default class CurrencyWallet extends Component {
         />
         <div styleName="currencyWalletWrapper">
           <div styleName="currencyWalletBalance">
-            <BalanceForm currencyBalance={balance} usdBalance={false} handleReceive={this.handleReceive} handleWithdraw={this.handleWithdraw} />
+            <BalanceForm currencyBalance={balance} usdBalance={false} handleReceive={this.handleReceive} handleWithdraw={this.handleWithdraw} currency={currency.toLowerCase()}/>
           </div>
           { swapHistory.length > 0 && <SwapsHistory orders={swapHistory.filter(item => item.step >= 4)} /> }
           <div styleName="currencyWalletActivity">

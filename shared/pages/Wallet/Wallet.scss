@@ -3,6 +3,38 @@
     font-family: 'Manrope-Bold',sans-serif;
 }
 
+.circle {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    justify-content: center;
+    display: flex;
+    position: absolute;
+    right: 0;
+    top: 25px;
+    right: 25px;
+}
+
+.btc {
+    background: orange;
+  }
+
+  .eth {
+    background: black;
+  }
+  
+  .usdt {
+    background: #0ccf14;
+  }
+  
+  .swap {
+    background: #775cf1;
+  }
+
+  .bch {
+    background: #4ac745;
+  }
+
 .walletHeading,
 .inputTitle {
     font-weight: 800;
