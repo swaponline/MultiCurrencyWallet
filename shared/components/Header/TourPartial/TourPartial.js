@@ -41,7 +41,7 @@ export default class TourPartial extends Component {
           target: '.data-tut-status',
         },
         {
-          content: <FormattedMessage id="partial-tour-5" defaultMessage="Переключите эту кнопку, чтобы получать средства после обмена на внутренний кошелек на Swap.online или на другой кошелек" />,
+          content: <FormattedMessage id="partial-tour-5" defaultMessage="Переключите эту кнопку, чтобы получать средства после обмена на внутренний кошелек на  AtomicSwapWallet.io или на другой кошелек" />,
           floaterProps: {
             disableAnimation: true,
           },

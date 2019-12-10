@@ -34,8 +34,8 @@ import coinsWithDynamicFee from 'helpers/constants/coinsWithDynamicFee'
   }) => ({
     currencies: currencies.items,
     addSelectedItems: currencies.addSelectedItems,
-    items: [ ethData, btcData, eosData, telosData, bchData, ltcData /* usdtOmniData, nimData */ ],
-    tokenItems: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
+    items: [ethData, btcData, eosData, telosData, bchData, ltcData /* usdtOmniData, nimData */],
+    tokenItems: [...Object.keys(tokensData).map(k => (tokensData[k]))],
   })
 )
 @cssModules(styles, { allowMultiple: true })
@@ -257,7 +257,7 @@ export default class AddOffer extends Component {
     */
 
     switch (type) {
-      case 'sell':  {
+      case 'sell': {
         /*
           S++ -> XR++ -> B (Manual Rate)
           S++ -> XR -> B++ (Auto Rate)
@@ -284,7 +284,7 @@ export default class AddOffer extends Component {
         break
       }
 
-      case 'buy':  {
+      case 'buy': {
         /*
           B++ -> XR-- -> S (Manual Rate)
           B++ -> XR -> S++ (Auto Rate)
@@ -319,7 +319,7 @@ export default class AddOffer extends Component {
             XR++ -> S -> B--
           */
 
-          const newBuyAmount  = new BigNumber(sellAmount).dividedBy(value || 0)
+          const newBuyAmount = new BigNumber(sellAmount).dividedBy(value || 0)
 
           this.setState({
             buyAmount: newBuyAmount.toString(),
@@ -456,7 +456,7 @@ export default class AddOffer extends Component {
           switchBalanceFunc={this.switching}
           styleName="sellGroup"
           label={<FormattedMessage id="addoffer381" defaultMessage="Sell" />}
-          tooltip={<FormattedMessage id="partial462" defaultMessage="The amount you have on swap.online or an external wallet that you want to exchange" />}
+          tooltip={<FormattedMessage id="partial462" defaultMessage="The amount you have on  AtomicSwapWallet.io or an external wallet that you want to exchange" />}
           inputValueLink={linked.sellAmount.pipe(this.handleSellAmountChange)}
           dontDisplayError
           selectedValue={sellCurrency}

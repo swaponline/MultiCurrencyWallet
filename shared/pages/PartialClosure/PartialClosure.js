@@ -55,7 +55,7 @@ const filterIsPartial = (orders) => orders
 
 const text = [
   <FormattedMessage id="partial223" defaultMessage="To change default wallet for buy currency. " />,
-  <FormattedMessage id="partial224" defaultMessage="Leave empty for use Swap.Online wallet " />,
+  <FormattedMessage id="partial224" defaultMessage="Leave empty for use  AtomicSwapWallet.io wallet " />,
 ]
 
 const subTitle = (sell, sellTicker, buy, buyTicker) => (
@@ -981,7 +981,7 @@ export default class PartialClosure extends Component {
     }, SeoValues)
     const MetaDescriptionString = formatMessage({
       id: 'PartialClosureMetaDescrTag',
-      defaultMessage: 'Best exchange rate for {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}). Swap.Online wallet provides instant exchange using Atomic Swap Protocol.', // eslint-disable-line
+      defaultMessage: 'Best exchange rate for {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}).  AtomicSwapWallet.io wallet provides instant exchange using Atomic Swap Protocol.', // eslint-disable-line
     }, SeoValues)
 
 
@@ -1007,7 +1007,7 @@ export default class PartialClosure extends Component {
               onSelect={this.handleSetHaveValue}
               label={<FormattedMessage id="partial243" defaultMessage="You sell" />}
               id="partialClosure456"
-              tooltip={<FormattedMessage id="partial462" defaultMessage="The amount you have on swap.online or an external wallet that you want to exchange" />}
+              tooltip={<FormattedMessage id="partial462" defaultMessage="The amount you have on  AtomicSwapWallet.io or an external wallet that you want to exchange" />}
               placeholder="0.00000000"
               usd={(maxAmount > 0 && isNonOffers) ? 0 : haveUsd}
               currencies={currencies}

@@ -9,19 +9,19 @@ import config from 'app-config'
 const isWidgetBuild = config && config.isWidget
 
 export default class PreventMultiTabs extends Component {
-  
+
   constructor() {
     super()
 
   }
 
-  handleSwitchClick = () =>  {
+  handleSwitchClick = () => {
     const { onSwitchTab } = this.props
     if (onSwitchTab instanceof Function) {
       onSwitchTab()
     }
   }
-  
+
   render() {
     console.log(this.props)
     return (
@@ -41,7 +41,7 @@ export default class PreventMultiTabs extends Component {
           !isWidgetBuild && (
             <FormattedMessage
               id="PreventMultiTabs12"
-              defaultMessage="Swap.Online supports only one active tab. Please reload this page to continue using this tab or close it"
+              defaultMessage=" AtomicSwapWallet.io supports only one active tab. Please reload this page to continue using this tab or close it"
             />
           )
         }

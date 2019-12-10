@@ -419,7 +419,7 @@ export default class EthToBch extends Component {
                         <FormattedMessage id="EthToBtc387" defaultMessage="8. BCH was transferred to your wallet. Check the balance." />
                       </h3>
                       <h3 style={headingStyle}>
-                        <FormattedMessage id="EthToBtc390" defaultMessage="Thank you for using Swap.Online!" />
+                        <FormattedMessage id="EthToBtc390" defaultMessage="Thank you for using  AtomicSwapWallet.io!" />
                       </h3>
                     </Fragment>
                   )

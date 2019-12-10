@@ -406,7 +406,7 @@ export default class LtcToBtc extends Component {
                       <FormattedMessage id="LTCTOBTC396" defaultMessage="7. BTC was transferred to your wallet. Check the balance." />
                     </h3>
                     <h2>
-                      <FormattedMessage id="Thank" defaultMessage="Thank you for using Swap.Online!" />
+                      <FormattedMessage id="Thank" defaultMessage="Thank you for using  AtomicSwapWallet.io!" />
                     </h2>
                   </Fragment>
                 )

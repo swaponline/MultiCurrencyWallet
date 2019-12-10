@@ -23,8 +23,8 @@ import { color } from './chooseColor'
 import { constants, localStorage } from 'helpers'
 
 
-const styleBtn = { backgroundColor: '#f0eefd', color: '#6144E5' }
-const defaultColors = { backgroundColor: '#6144E5' }
+const styleBtn = { backgroundColor: '#f0eefd', color: 'black' }
+const defaultColors = { backgroundColor: 'black' }
 
 const CreateWallet = (props) => {
   const { history, intl: { locale }, createWallet: { usersData: { eMail }, currencies, secure }, location: { pathname } } = props
@@ -144,7 +144,7 @@ const CreateWallet = (props) => {
         </h2>
         <div styleName="buttonWrapper">
           <NewButton blue onClick={handleImportKeys}>
-              Import keys
+            Import keys
           </NewButton>
         </div>
         {isMobile &&

@@ -18,7 +18,7 @@ export default class WalletTour extends Component {
         {
           content: <FormattedMessage
             id="tour-step-0"
-            defaultMessage="Ваш Swap.Online крипто-кошелек" />,
+            defaultMessage="Ваш AtomicSwapWallet.io крипто-кошелек" />,
           placement: 'center',
           target: '.data-tut-preview',
         },

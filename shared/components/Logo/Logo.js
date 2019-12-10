@@ -7,14 +7,13 @@ import { links } from 'helpers'
 import CSSModules from 'react-css-modules'
 import styles from './Logo.scss'
 
-import logoImage from './images/logo.svg'
-import coloredLogoImage from './images/logo-blue.svg'
+import logoImage from './images/logoAtomic.png'
 import { injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 
 
 @injectIntl
-@CSSModules(styles, { allowMultiple: true })
+@CSSModules(styles, Logo)
 export default class Logo extends Component {
 
   static propTypes = {
@@ -24,22 +23,23 @@ export default class Logo extends Component {
   }
 
   render() {
-    const { isColored, withLink, mobile, intl: { locale }, isExchange } = this.props
+    const { isColored, withLink, mobile, intl: { locale } } = this.props
 
     const imgNode = React.createElement('img', {
       styleName: !withLink && 'logo',
-      src: isColored ? coloredLogoImage : logoImage,
-      alt: 'swap.online logo',
+      src: logoImage,
+      alt: 'Atomicswapwallet.io logo',
+      style: { width: "30px" }
     })
 
     return (
       <Fragment>
         {withLink ?
           (
-            <Link styleName={`${mobile ? 'mobile' : 'logo'}`} data-tip data-for="logo" to={localisedUrl(locale, links.home)}>
+            <a styleName={mobile ? 'mobile' : 'logo'} data-tip data-for="logo" href="/">
               {imgNode}
-            </Link>
-          ) : (<div styleName={`${!isExchange && 'whiteFill'}`} >{imgNode}</div>)
+            </a>
+          ) : (<div>{imgNode}</div>)
         }
       </Fragment>
     )

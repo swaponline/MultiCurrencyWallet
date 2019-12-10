@@ -373,7 +373,7 @@ export default class Wallet extends Component {
               !isClosedNotifyBlockBanner && <NotifyBlock
                 className="notifyBlockBanner"
                 descr="Updates"
-                tooltip="Let us notify you that the main domain name for Swap.online exchange service will be changed from swap.online to swaponline.io."
+                tooltip="Let us notify you that the main domain name for  AtomicSwapWallet.io exchange service will be changed from  AtomicSwapWallet.io to swaponline.io."
                 icon={info}
                 secondBtn="Close"
                 secondFunc={() => this.handleNotifyBlockClose('isClosedNotifyBlockBanner')} />

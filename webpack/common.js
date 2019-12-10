@@ -80,7 +80,7 @@ const webpackConfig = {
       path: config.base,
     }),
     new HtmlWebpackPlugin({
-      title: 'Swap.Online - Cryptocurrency Wallet with Atomic Swap Exchange',
+      title: ' AtomicSwapWallet.io - Cryptocurrency Wallet with Atomic Swap Exchange',
       template: config.paths.client('index.html'),
       hash: false,
       filename: 'index.html',

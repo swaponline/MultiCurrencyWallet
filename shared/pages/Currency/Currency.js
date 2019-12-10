@@ -133,11 +133,11 @@ export default class Currency extends Component {
     }
     const MetaDescriptionString = formatMessage({
       id: 'CurrencyMetaDescrTag1',
-      defaultMessage: 'Find out actual price of {fullName}, its ticker name is ({tickerName}). Swap.Online is the best way to safely store your cryptocurrecy.', // eslint-disable-line
+      defaultMessage: 'Find out actual price of {fullName}, its ticker name is ({tickerName}).  AtomicSwapWallet.io is the best way to safely store your cryptocurrecy.', // eslint-disable-line
     }, SeoValues)
     const TitleTagString = formatMessage({
       id: 'CurrencyTitleSeo1',
-      defaultMessage: '{fullName} ({tickerName}) Price, Description & Exchange Rates. Store & Exchange {fullName} ({tickerName}) Anonymously on Swap.Online.',
+      defaultMessage: '{fullName} ({tickerName}) Price, Description & Exchange Rates. Store & Exchange {fullName} ({tickerName}) Anonymously on  AtomicSwapWallet.io.',
     }, SeoValues)
 
     return (

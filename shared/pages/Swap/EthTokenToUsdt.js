@@ -394,7 +394,7 @@ export default class EthTokenToUsdt extends Component {
                       <FormattedMessage id="EthTokenToUsdt377" defaultMessage="7. USDT was transferred to your wallet. Check the balance." />
                     </h3>
                     <h2>
-                      <FormattedMessage id="EthTokenToUsdt380" defaultMessage="Thank you for using Swap.Online!" />
+                      <FormattedMessage id="EthTokenToUsdt380" defaultMessage="Thank you for using  AtomicSwapWallet.io!" />
                     </h2>
                   </Fragment>
                 )

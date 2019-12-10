@@ -47,11 +47,11 @@ export default class EthToBtc extends Component {
         )
       case 8:
         return (
-          <FormattedMessage id="ethToBtcText44" defaultMessage="Thank you for using Swap.Online" />
+          <FormattedMessage id="ethToBtcText44" defaultMessage="Thank you for using  AtomicSwapWallet.io" />
         )
       case 9:
         return (
-          <FormattedMessage id="ethToBtcText48" defaultMessage="Thank you for using Swap.Online!" />
+          <FormattedMessage id="ethToBtcText48" defaultMessage="Thank you for using  AtomicSwapWallet.io!" />
         )
       default:
         return null
