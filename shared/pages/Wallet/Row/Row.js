@@ -111,17 +111,11 @@ export default class Row extends Component {
   }
 
   componentDidMount() {
-    const { hiddenCoinsList, balance } = this.props
-
 
     this.handleTelosActivate()
     this.getUsdBalance()
 
     window.addEventListener('resize', this.handleSliceAddress)
-
-    if (!hiddenCoinsList.includes(name) || BigNumber(balance).isGreaterThan(0)) {
-      actions.core.markCoinAsVisible(name)
-    }
   }
 
   componentDidUpdate(prevProps, prevState) {

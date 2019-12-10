@@ -6,24 +6,25 @@ import { connect } from 'redaction'
 import cssModules from 'react-css-modules'
 import styles from './Row.scss'
 
-import Coin from 'components/Coin/Coin'
-import LinkTransaction from '../LinkTransaction/LinkTransaction'
 import { FormattedMessage } from 'react-intl'
 import actions from 'redux/actions'
 import { constants } from 'helpers'
 import CommentRow from './Comment'
-import ReactTooltip from 'react-tooltip'
+
 
 
 class Row extends React.PureComponent {
 
   constructor(props) {
     super()
-    const { hash } = props
 
+    const { hash, type, hiddenList, invoiceData } = props
+    const dataInd = invoiceData && invoiceData.id
+    const ind = `${dataInd || hash}-${type}`
     this.state = {
+      ind,
       exCurrencyRate: 0,
-      comment: this.returnDefaultComment(hash),
+      comment: actions.comments.returnDefaultComment(hiddenList, ind),
     }
   }
 
@@ -65,22 +66,17 @@ class Row extends React.PureComponent {
     this.setState(() => ({ isOpen: val }))
   }
 
-  changeComment = (e) => {
-    const { value } = e.target
-
-    this.setState(() => ({ comment: value }))
-  }
-
-  returnDefaultComment = (hash) => {
-    const comment = localStorage.getItem('historyComments')
-
-    return comment ? JSON.parse(comment)[hash] || '' : ''
+  changeComment = (val) => {
+    this.setState(() => ({ comment: val }))
   }
 
   commentCancel = () => {
-    const { hash } = this.props
+    const { date, hiddenList, onSubmit } = this.props
+    const { ind } = this.state
 
-    this.setState(() => ({ comment: this.returnDefaultComment(hash) }))
+    const commentDate = moment(date).format('LLLL')
+    onSubmit({ ...hiddenList, [ind]: commentDate })
+    this.changeComment(commentDate)
     this.toggleComment(false)
   }
 
@@ -96,14 +92,15 @@ class Row extends React.PureComponent {
   render() {
     const {
       type,
-      date,
       direction,
       value,
       confirmations,
       txType,
       invoiceData,
-      hash
+      onSubmit,
     } = this.props
+
+    const { ind } = this.state
 
     const { exCurrencyRate, isOpen, comment } = this.state
 
@@ -123,6 +120,7 @@ class Row extends React.PureComponent {
         'self': direction === 'self',
       })
     }
+
     /* eslint-disable */
     return (
       <>
@@ -160,20 +158,17 @@ class Row extends React.PureComponent {
                       }
                     </div>
                   </>}
-                {!comment ? <span styleName="icon" role="presentation" onClick={() => this.toggleComment(!isOpen)}>
-                  &#x270E;
-                </span> :
-                  <>
-                    <span data-tip data-for={hash} onClick={() => this.toggleComment(!isOpen)}>
-                      <img styleName="icon" src="https://img.icons8.com/cotton/64/000000/secured-letter--v3.png" />
-                    </span>
-                    <ReactTooltip id={hash} type="light" effect="solid">
-                      {comment}
-                    </ReactTooltip>
-                  </>
-                }
               </div>
-              <div styleName='date'>{moment(date).format('LLLL')}</div>
+              <CommentRow
+                isOpen={isOpen}
+                comment={comment}
+                commentCancel={this.commentCancel}
+                ind={ind}
+                submit={onSubmit}
+                changeComment={({ target }) => this.changeComment(target.value, ind)}
+                toggleComment={this.toggleComment}
+                {...this.props}
+              />
               {invoiceData && invoiceData.label &&
                 <div styleName='date'>{invoiceData.label}</div>
               }
@@ -193,13 +188,6 @@ class Row extends React.PureComponent {
             {/* <LinkTransaction type={type} styleName='address' hash={hash} >{hash}</LinkTransaction> */}
           </td>
         </tr>
-        {isOpen && <CommentRow
-          comment={comment}
-          commentCancel={this.commentCancel}
-          changeComment={this.changeComment}
-          toggleComment={this.toggleComment}
-          {...this.props}
-        />}
       </>
     )
   }
