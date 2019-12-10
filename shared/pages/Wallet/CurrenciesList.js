@@ -1,6 +1,5 @@
 import React from 'react'
 
-
 import CSSModules from 'react-css-modules'
 import styles from './Wallet.scss'
 import NewButton from 'components/controls/NewButton/NewButton'

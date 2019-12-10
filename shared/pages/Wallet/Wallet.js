@@ -11,9 +11,9 @@ import styles from './Wallet.scss'
 import History from 'pages/History/History'
 import NotifyBlock from './components/NotityBlock/NotifyBock'
 
-import security from './images/security.svg'
-import mail from './images/mail.svg'
-import info from './images/info-solid.svg'
+import security from './components/NotityBlock/images/security.svg'
+import mail from './components/NotityBlock/images/mail.svg'
+import info from './components/NotityBlock/images/info-solid.svg'
 
 import { links, constants } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
@@ -140,7 +140,8 @@ export default class Wallet extends Component {
     btcBalance: 0,
     activeCurrency: 'usd',
     exchangeForm: false,
-    walletTitle: 'Wallet'
+    walletTitle: 'Wallet',
+    editTitle: false
   }
 
   componentWillMount() {
@@ -334,7 +335,7 @@ export default class Wallet extends Component {
     return (
       <artical>
         <section styleName="wallet">
-          {!editTitle ? <h3 styleName="walletHeading" onDoubleClick={this.handleEditTitle}>{walletTitle}</h3> : <input styleName="inputTitle" onChange={(e) => this.handleChangeTitle(e)} value={walletTitle} />}
+        {(walletTitle === '' || editTitle) ? <input styleName="inputTitle" onChange={(e) => this.handleChangeTitle(e)} value={walletTitle} /> : <h3 styleName="walletHeading" onDoubleClick={this.handleEditTitle}>{walletTitle}</h3>} 
           <Slider {...settings}>
             {
               !isPrivateKeysSaved && <NotifyBlock
@@ -376,7 +377,7 @@ export default class Wallet extends Component {
             !isFetching && !isNaN(usdBalance) ? (
               <div className="data-tut-store" styleName="walletContent" >
                 <div styleName={`walletBalance ${activeView === 0 ? 'active' : ''}`}>
-                  <BalanceForm usdBalance={usdBalance} currencyBalance={btcBalance} {...this.state} handleReceive={this.handleModalOpen} handleWithdraw={this.handleModalOpen}/>
+                  <BalanceForm usdBalance={usdBalance} currencyBalance={btcBalance} {...this.state} handleReceive={this.handleModalOpen} handleWithdraw={this.handleModalOpen} currency="btc" />
                   {exchangeForm &&
                     <div styleName="exchangeForm">
                       <ParticalClosure {...this.props} isOnlyForm />

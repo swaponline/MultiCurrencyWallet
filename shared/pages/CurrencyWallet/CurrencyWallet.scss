@@ -1,6 +1,7 @@
 .root {
   position: static;
   width: 100%;
+  margin-top: 30px;
 }
 
 .currencyWalletWrapper {
@@ -137,4 +138,9 @@
       font-size: 15px;
     }
   }
+}
+
+.loader {
+  position: relative;
+  margin: 15% 40%;
 }
