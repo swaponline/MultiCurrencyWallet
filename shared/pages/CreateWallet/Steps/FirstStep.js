@@ -38,6 +38,7 @@ const CreateWallet = ({ onClick, error, setError }) => {
   ]
 
   const handleClick = name => {
+
     const dataToReturn = { ...border, [name]: !border[name] }
     setBorder(dataToReturn)
     reducers.createWallet.newWalletData({ type: 'currencies', data: dataToReturn })

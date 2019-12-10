@@ -87,6 +87,7 @@
   font-size: 12px;
   font-weight: bold;
   color: #8E9AA3;
+  cursor: pointer;
 }
 
 .address {
@@ -114,6 +115,12 @@
   bottom: 12px;
 }
 
+.icon {
+  border-style: none;
+  width: 14px;
+  margin-left: 10px;
+}
+
 tr.historyRow {
   display: block;
   margin-bottom: 10px;
@@ -128,6 +135,25 @@ tr.historyRow {
   align-items: center;
   padding: 15px;
 }
+
+  .input {
+    font-size: 12px;
+    color: #8e9aa3;
+    border-bottom: 1px solid #8e9aa3;
+
+    input {
+      min-width: 250px;
+    }
+    span {
+      color: #EE5B51;
+    }
+
+    .green {
+      color: #0CCF14;
+      margin-right: 5px;
+      font-size: 10px;
+    }
+  }
 
 .historyInvoiceInfo {
   outline: 1px solid red;
