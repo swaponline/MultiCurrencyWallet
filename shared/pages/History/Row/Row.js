@@ -16,8 +16,8 @@ class Row extends React.PureComponent {
 
   constructor(props) {
     super()
-    const { hash, type, hiddenList } = props
-    const ind = `${hash}-${type}`
+    const { hash, type, hiddenList, invoiceData } = props
+    const ind = `${invoiceData || hash}-${type}`
     this.state = {
       ind,
       exCurrencyRate: 0,
@@ -160,6 +160,7 @@ class Row extends React.PureComponent {
                 isOpen={isOpen}
                 comment={comment}
                 commentCancel={this.commentCancel}
+                ind={ind}
                 submit={onSubmit}
                 changeComment={({ target }) => this.changeComment(target.value, ind)}
                 toggleComment={this.toggleComment}
