@@ -1,5 +1,10 @@
-const getComment = () => localStorage.getItem('historyComments')
-const setComment = (comment) => localStorage.setItem('historyComments', JSON.stringify(comment))
+let storageComments = JSON.parse(localStorage.getItem('historyComments'))
+const getComment = () => storageComments
+const setComment = (comment) => {
+  const newComment = JSON.stringify(comment)
+  storageComments = comment
+  localStorage.setItem('historyComments', newComment)
+}
 
 const returnDefaultComment = (hiddenList, ind) => {
   const newData = hiddenList ? hiddenList[ind] || '' : ''

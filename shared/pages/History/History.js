@@ -50,7 +50,7 @@ export default class History extends Component {
     const commentsList = actions.comments.getComment()
     this.state = {
       renderedItems: 10,
-      commentsList: commentsList ? JSON.parse(commentsList) : null
+      commentsList: commentsList || null
     }
   }
 
