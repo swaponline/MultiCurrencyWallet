@@ -29,13 +29,13 @@ import BalanceForm from 'pages/Wallet/BalanceForm'
 const isWidgetBuild = config && config.isWidget
 
 const titles = [
-  <FormattedMessage id="currencyWallet27"  defaultMessage="Coin" />,
-  <FormattedMessage id="currencyWallet28"  defaultMessage="Status" />,
-  <FormattedMessage id="currencyWallet29"  defaultMessage="Statement" />,
-  <FormattedMessage id="currencyWallet30"  defaultMessage="Amount" />,
+  <FormattedMessage id="currencyWallet27" defaultMessage="Coin" />,
+  <FormattedMessage id="currencyWallet28" defaultMessage="Status" />,
+  <FormattedMessage id="currencyWallet29" defaultMessage="Statement" />,
+  <FormattedMessage id="currencyWallet30" defaultMessage="Amount" />,
 ]
 
-@connect(({ core, user,  history: { transactions, swapHistory }, history,
+@connect(({ core, user, history: { transactions, swapHistory }, history,
   user: {
     ethData,
     btcData,
@@ -44,20 +44,20 @@ const titles = [
     bchData,
     ltcData,
     tokensData, eosData, nimData, telosData/* usdtOmniData */ } }) => ({
-  items: [
-    ethData,
-    btcData,
-    btcMultisigSMSData,
-    btcMultisigUserData,
-    bchData,
-    eosData, ltcData, telosData, ...Object.keys(tokensData).map(k => (tokensData[k])) /* nimData, usdtOmniData */],
-  tokens: [...Object.keys(tokensData).map(k => (tokensData[k]))],
-  user,
-  historyTx: history,
-  hiddenCoinsList: core.hiddenCoinsList,
-  txHistory: transactions,
-  swapHistory,
-}))
+      items: [
+        ethData,
+        btcData,
+        btcMultisigSMSData,
+        btcMultisigUserData,
+        bchData,
+        eosData, ltcData, telosData, ...Object.keys(tokensData).map(k => (tokensData[k])) /* nimData, usdtOmniData */],
+      tokens: [...Object.keys(tokensData).map(k => (tokensData[k]))],
+      user,
+      historyTx: history,
+      hiddenCoinsList: core.hiddenCoinsList,
+      txHistory: transactions,
+      swapHistory,
+    }))
 
 @injectIntl
 @withRouter
@@ -129,7 +129,7 @@ export default class CurrencyWallet extends Component {
   }
 
   handleWithdraw = () => {
-    let { match:{ params: { fullName } }, items } = this.props
+    let { match: { params: { fullName } }, items } = this.props
     const {
       currency,
       address,
@@ -166,7 +166,7 @@ export default class CurrencyWallet extends Component {
 
   render() {
 
-    let { swapHistory, txHistory, location, match:{ params: { fullName } },  intl, hiddenCoinsList } = this.props
+    let { swapHistory, txHistory, location, match: { params: { fullName } }, intl, hiddenCoinsList } = this.props
     const {
       currency,
       address,
@@ -219,13 +219,13 @@ export default class CurrencyWallet extends Component {
       <div className="root">
         <PageSeo
           location={location}
-          defaultTitle={intl.formatMessage(title.metaTitle, { fullName, currency  })}
-          defaultDescription={intl.formatMessage(description.metaDescription, { fullName, currency  })} />
+          defaultTitle={intl.formatMessage(title.metaTitle, { fullName, currency })}
+          defaultDescription={intl.formatMessage(description.metaDescription, { fullName, currency })} />
         <PageHeadline
           styleName="title"
           subTitle={!!seoPage
             ? seoPage.h1
-            : intl.formatMessage(title.metaTitle, { fullName, currency  })
+            : intl.formatMessage(title.metaTitle, { fullName, currency })
           }
         />
         <div styleName="currencyWalletWrapper">

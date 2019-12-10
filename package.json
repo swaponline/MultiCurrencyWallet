@@ -12,7 +12,7 @@
     ]
   },
   "scripts": {
-    "test": "cypress open",
+    "test": "",
     "eslint": "eslint --fix --cache ./shared --ext js",
     "validate": "lint-diff",
     "start": "npm run dev",
@@ -104,7 +104,7 @@
     "core-js": "^2.6.9",
     "cross-env": "^5.2.1",
     "css-loader": "^3.2.0",
-    "cypress": "^3.4.1",
+						
     "debug": "^3.1.0",
     "empty-module": "0.0.2",
     "eosjs": "16.0.8",
@@ -167,6 +167,7 @@
     "bitcoinjs-lib": "^5.1.6",
     "bitcoinjs-message": "^2.1.0",
     "bootstrap": "^4.3.1",
+    "cids": "0.7.1",
     "classnames": "^2.2.5",
     "coininfo": "^5.1.0",
     "copy-dir-cli": "0.0.3",
@@ -183,6 +184,7 @@
     "moment": "^2.24.0",
     "moment-with-locales-es6": "^1.0.1",
     "mortice": "1.2.1",
+    "multicodec": "^0.2.7",
     "node-gyp": "^3.8.0",
     "qtumjs-ethjs-abi": "^1.0.3",
     "qtumjs-wallet": "^0.2.1",
@@ -198,6 +200,7 @@
     "react-input-mask": "^2.0.1",
     "react-intl": "^2.9.0",
     "react-items-carousel": "^2.7.0",
+    "react-joyride": "^2.1.1",
     "react-paginate": "^5.2.3",
     "react-qr-reader": "^2.2.1",
     "react-qr-scanner": "0.0.8",
@@ -207,7 +210,7 @@
     "react-router-redux": "^5.0.0-alpha.9",
     "react-slick": "^0.25.2",
     "react-tooltip": "^3.11.1",
-    "react-joyride": "^2.1.1",
+							  
     "rebuild": "^0.1.2",
     "redaction": "^4.5.4",
     "redux": "^4.0.4",

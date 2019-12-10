@@ -3,6 +3,7 @@ $purple: #510ed8;
 .container {
   display: flex;
   align-items: center;
+  position: relative;
 }
 
 .buttonLan {
@@ -81,4 +82,9 @@ $purple: #510ed8;
         opacity: 1;
         transform: translateY(0);
     }
+}
+@media all and (max-width: 480px) {
+  .container {
+    display: none;
+  }
 }

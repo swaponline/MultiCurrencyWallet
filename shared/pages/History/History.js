@@ -43,9 +43,17 @@ const subTitle = defineMessages({
 }))
 @CSSModules(stylesHere, { allowMultiple: true })
 export default class History extends Component {
-  state = {
-    renderedItems: 10,
+
+  constructor(props) {
+    super()
+
+    const commentsList = actions.comments.getComment()
+    this.state = {
+      renderedItems: 10,
+      commentsList: commentsList || null
+    }
   }
+
 
   componentDidMount() {
     // actions.analytics.dataEvent('open-page-history')
@@ -64,9 +72,17 @@ export default class History extends Component {
     }
   }
 
-  rowRender = (row) => (
-    <Row key={row.hash} {...row} />
-  )
+  onSubmit = (obj) => {
+    this.setState(() => ({ commentsList: obj }))
+    actions.comments.setComment(obj)
+  }
+
+  rowRender = (row) => {
+    const { commentsList } = this.state
+    return (
+      <Row key={row.hash - row.type} hiddenList={commentsList} onSubmit={this.onSubmit} {...row} />
+    )
+  }
 
   render() {
     const { items, swapHistory, intl } = this.props
