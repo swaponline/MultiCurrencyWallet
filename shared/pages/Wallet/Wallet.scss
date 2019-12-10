@@ -101,6 +101,7 @@
     box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.08), 0px 1px 4px rgba(0, 0, 0, 0.08);
     border-radius: 4px;
     height: fit-content;
+    font-family: 'Manrope-Bold',sans-serif;
 }
 
 .yourBalanceTop {
@@ -139,6 +140,12 @@
         color: #6144E5;
         font-weight: bold;
         margin-top: 5px;
+    }
+}
+
+.withoutImg {
+    p {
+        margin-left: 0;
     }
 }
 
@@ -271,5 +278,10 @@
         margin-top: -60px;
     }
 }
+
+.loader {
+    position: relative;
+    margin: 15% 40%;
+  }
 
 

@@ -26,6 +26,7 @@ import config from 'app-config'
 import { withRouter } from 'react-router'
 import BalanceForm from './BalanceForm'
 import CurrenciesList from './CurrenciesList'
+import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 
 const walletNav = ['My balances', 'Transactions'];
 
@@ -149,16 +150,7 @@ export default class Wallet extends Component {
   componentDidMount() {
     this.showPercentChange1H();
     this.getUsdBalance();
-
-    const isClosedNotifyBlockBanner = localStorage.getItem(constants.localStorage.isClosedNotifyBlockBanner);
-    const isClosedNotifyBlockSignUp = localStorage.getItem(constants.localStorage.isClosedNotifyBlockSignUp);
-    const walletTitle = localStorage.getItem(constants.localStorage.walletTitle);
-
-    this.setState({
-      isClosedNotifyBlockBanner,
-      isClosedNotifyBlockSignUp,
-      walletTitle
-    })
+    this.setLocalStorageItems();
   }
 
   handleNavItemClick = (index) => {
@@ -172,22 +164,22 @@ export default class Wallet extends Component {
   }
 
 
-  handleDeposit = () => {
-    actions.modals.open(constants.modals.Withdraw, {
-      currency,
-      address,
-      contractAddress,
-      decimals,
-      token,
-      balance,
-      unconfirmedBalance,
-    })
-  }
-
-  tableRows = (items, tokens, hiddenCoinsList) => [...items, ...tokens].filter(currency => !hiddenCoinsList.includes(currency))
-
   handleShowKeys = () => {
     actions.modals.open(constants.modals.DownloadModal)
+  }
+
+  setLocalStorageItems = () => {
+    const isClosedNotifyBlockBanner = localStorage.getItem(constants.localStorage.isClosedNotifyBlockBanner);
+    const isClosedNotifyBlockSignUp = localStorage.getItem(constants.localStorage.isClosedNotifyBlockSignUp);
+    const isPrivateKeysSaved = localStorage.getItem(constants.localStorage.privateKeysSaved)
+    const walletTitle = localStorage.getItem(constants.localStorage.walletTitle);
+
+    this.setState({
+      isClosedNotifyBlockBanner,
+      isClosedNotifyBlockSignUp,
+      walletTitle,
+      isPrivateKeysSaved
+    })
   }
 
   getUsdBalance = async () => {
@@ -212,6 +204,10 @@ export default class Wallet extends Component {
   showPercentChange1H = () => {
     const { currencies, currencyBalance } = this.props
     let infoAboutCurrency = []
+
+    this.setState({
+      isFetching: true
+    })
 
     fetch('https://noxon.io/cursAll.php')
       .then(res => res.json())
@@ -239,10 +235,10 @@ export default class Wallet extends Component {
                 }
               } catch (e) { }
             }
-          })
-          this.setState({
-            infoAboutCurrency,
-            isFetching: true
+            this.setState({
+              infoAboutCurrency,
+              isFetching: false
+            })
           })
         },
         (error) => {
@@ -296,22 +292,19 @@ export default class Wallet extends Component {
       activeView,
       infoAboutCurrency,
       isFetching,
-      activeCurrency,
       exCurrencyRate,
       exchangeForm,
       isClosedNotifyBlockBanner,
       isClosedNotifyBlockSignUp,
       editTitle,
-      walletTitle
+      walletTitle,
+      isPrivateKeysSaved
     } = this.state;
     const {
       items,
       tokens,
-      currencies,
       hiddenCoinsList,
-      intl,
       isSigned,
-      location,
     } = this.props
 
 
@@ -325,8 +318,8 @@ export default class Wallet extends Component {
       slidesToScroll: 1
     };
 
-    let btcBalance = 0;
-    let usdBalance = 0;
+    let btcBalance = null;
+    let usdBalance = null;
 
     const tableRows = [...items, ...tokens].filter(currency => !hiddenCoinsList.includes(currency))
 
@@ -337,10 +330,7 @@ export default class Wallet extends Component {
         usdBalance = btcBalance * exCurrencyRate;
       })
     }
-
-    const isPrivateKeysSaved = localStorage.getItem(constants.localStorage.privateKeysSaved)
-
-
+    
     return (
       <artical>
         <section styleName="wallet">
@@ -382,21 +372,31 @@ export default class Wallet extends Component {
           <ul styleName="walletNav">
             {walletNav.map((item, index) => <li key={index} styleName={`walletNavItem ${activeView === index ? 'active' : ''}`} onClick={() => this.handleNavItemClick(index)}><a href styleName="walletNavItemLink">{item}</a></li>)}
           </ul>
-          <div className="data-tut-store" styleName="walletContent" >
-            <div styleName={`walletBalance ${activeView === 0 ? 'active' : ''}`}>
-              <BalanceForm usdBalance={usdBalance} btcBalance={btcBalance} {...this.state} handleModalOpen={this.handleModalOpen}/>
-              {exchangeForm &&
-                <div styleName="exchangeForm">
-                  <ParticalClosure {...this.props} isOnlyForm />
+          {
+            !isFetching && !isNaN(usdBalance) ? (
+              <div className="data-tut-store" styleName="walletContent" >
+                <div styleName={`walletBalance ${activeView === 0 ? 'active' : ''}`}>
+                  <BalanceForm usdBalance={usdBalance} currencyBalance={btcBalance} {...this.state} handleReceive={this.handleReceive} handleWithdraw={this.handleWithdraw} isFetching={isFetching}/>
+                  {exchangeForm &&
+                    <div styleName="exchangeForm">
+                      <ParticalClosure {...this.props} isOnlyForm />
+                    </div>
+                  }
                 </div>
-              }
-            </div>
-            <CurrenciesList tableRows={tableRows} {...this.state} {...this.props} goToСreateWallet={this.goToСreateWallet}/>
-            <div styleName={`activity ${activeView === 1 ? 'active' : ''}`}>
-              <h3 styleName="activityHeading">Activity</h3>
-              <History></History>
-            </div>
-          </div>
+                <CurrenciesList tableRows={tableRows} {...this.state} {...this.props} goToСreateWallet={this.goToСreateWallet}/>
+                <div styleName={`activity ${activeView === 1 ? 'active' : ''}`}>
+                  <h3 styleName="activityHeading">Activity</h3>
+                  <History></History>
+                </div>
+              </div>
+            ) : (
+              <div styleName="loader">
+                <FormattedMessage id="history107" defaultMessage="Loading" />
+                <InlineLoader />
+              </div>
+            )
+          }
+
         </section>
       </artical>
     )

@@ -12,7 +12,7 @@ const CurrenciesList = ({ activeView, isFetching, tableRows, currencies, infoAbo
   <div styleName={`yourAssets ${activeView === 0 ? 'active' : ''}`}>
     <h3 styleName="yourAssetsHeading">Your Assets</h3>
     <p styleName="yourAssetsDescr">Here you can safely store and promptly exchange Bitcoin, Ethereum, <br /> EOS, USD, Tether, BCH, and numerous ERC-20 tokens</p>
-    {isFetching && <Table
+    <Table
       className={`${styles.walletTable} data-tut-address`}
       rows={tableRows}
       rowRender={(row, index, selectId, handleSelectId) => (
@@ -28,7 +28,7 @@ const CurrenciesList = ({ activeView, isFetching, tableRows, currencies, infoAbo
           handleSelectId={handleSelectId}
         />
       )}
-    />}
+    />
     <NewButton onClick={goToСreateWallet} blue transparent fullWidth>
       Add Asset
     </NewButton>

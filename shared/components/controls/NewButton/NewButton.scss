@@ -68,22 +68,18 @@
   }
 }
 
-.disabled {
-  background-color: #dbdbdb !important;
-  cursor: default !important;
-  color: #626262 !important;
-}
-
 .transparent.blue {
   background: rgba(97, 68, 229, 0.1);
   font-weight: bold;
   color: #6144E5;
 }
 
-.disabled.transparent {
-  background: rgba(97, 68, 229, 0.1)!important;
-  color: rgba(97, 68, 229, 0.5)!important;
+.disabled{
+  background: rgba(97, 68, 229, 0.15);
+  font-weight: bold;
+  color: rgba(97, 68, 229, 0.5);
 }
+
 
 @include media-mobile {
   .button {

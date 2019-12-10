@@ -3,8 +3,41 @@
   width: 100%;
 }
 
+.currencyWalletWrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 100px;
+  font-family: 'Manrope-Bold',sans-serif;
+}
+
+.currencyWalletBalance {
+  width: 31%;
+  margin-top: 40px;
+}
+
+.currencyWalletActivity {
+  background: #fff;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.08), 0px 1px 4px rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+  padding: 25px;
+  margin-top: 40px;
+  width: 66%;
+  h3 {
+    color: #1F2D48;
+    font-size: 24px;
+    line-height: 33px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+}
+
+
 .title {
   padding: 1px 0 1px;
+  margin-top: 100px;
+  h1 {
+    margin: 0;
+  }
 }
 
 .heading {
@@ -13,13 +46,39 @@
 }
 
 .history {
-  display: table;
+  width: 100%;
+  margin-top: 20px;
+  display: inline-table;
+  thead {
+    border: none;
+  }
+  td,
+  td:first-child {
+    display: flex;
+    align-items: center;
+    padding: 0;
+  }
+}
+
+.btc {
+  color: #000;
 }
 
 .subtitle {
   margin: 0;
   font-size: 18px;
   font-weight: bold;
+  color: #8E9AA3;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 17px;
+  line-height: 1.7;
+  font-family: 'Manrope-Bold',sans-serif;
+  p {
+    color: #1F2D48;
+    display: inline;
+    font-size: 16px;
+  }
 }
 
 .table {
@@ -29,8 +88,13 @@
 .inRow {
   margin-top: 20px;
   display: flex;
-  width: 220px;
+  width: 445px;
   justify-content:space-between;
+  font-family: 'Manrope-Bold',sans-serif;
+  button {
+    width: 140px;
+    font-size: 15px;
+  }
 }
 .inRowru {
   margin-top: 20px;

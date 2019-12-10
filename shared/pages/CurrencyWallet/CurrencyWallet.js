@@ -13,7 +13,7 @@ import Row from 'pages/History/Row/Row'
 import SwapsHistory from 'pages/History/SwapsHistory/SwapsHistory'
 
 import Table from 'components/tables/Table/Table'
-import { Button } from 'components/controls'
+import NewButton from 'components/controls/NewButton/NewButton'
 import PageHeadline from 'components/PageHeadline/PageHeadline'
 import PageSeo from 'components/Seo/PageSeo'
 import { getSeoPage } from 'helpers/seo'
@@ -22,6 +22,8 @@ import ReactTooltip from 'react-tooltip'
 import CurrencyButton from 'components/controls/CurrencyButton/CurrencyButton'
 import { localisedUrl } from 'helpers/locale'
 import config from 'app-config'
+import BalanceForm from 'pages/Wallet/BalanceForm'
+
 
 
 const isWidgetBuild = config && config.isWidget
@@ -226,55 +228,16 @@ export default class CurrencyWallet extends Component {
             : intl.formatMessage(title.metaTitle, { fullName, currency  })
           }
         />
-        <h3 styleName="subtitle">
-          <FormattedMessage
-            id="CurrencyWallet168"
-            defaultMessage={`Your address: {address}{br}Your {fullName} balance: {balance} {currency}`}
-            values={{
-              address:  <span>{address}</span>,
-              br: <br />,
-              fullName: `${fullName}`,
-              balance: `${balance}`,
-              currency: `${currency}`,
-            }}
-          />
-        </h3>
-        {currency === 'EOS' && !eosAccountActivated && (<Button onClick={this.handleEosBuyAccount} gray>
-          <FormattedMessage id="CurrencyWallet105" defaultMessage="Activate account" />
-        </Button>)}
-        <div styleName="inRow">
-          <CurrencyButton
-            onClick={this.handleReceive}
-            dataTooltip={{
-              id: `deposit${currency}`,
-              deposit: 'true',
-            }}
-          >
-            <FormattedMessage id="Row313" defaultMessage="Deposit" />
-          </CurrencyButton>
-          <CurrencyButton
-            onClick={this.handleWithdraw}
-            disable={isBalanceEmpty}
-            dataTooltip={{
-              id: `send${currency}`,
-              isActive: isBalanceEmpty,
-            }}
-          >
-            <FormattedMessage id="CurrencyWallet100" defaultMessage="Send" />
-          </CurrencyButton>
-          {
-            !isBlockedCoin && (
-              <Button gray onClick={() => this.handleGoTrade(currency)}>
-                <FormattedMessage id="CurrencyWallet104" defaultMessage="Exchange" />
-              </Button>
-            )
-          }
+        <div styleName="currencyWalletWrapper">
+          <div styleName="currencyWalletBalance">
+            <BalanceForm currencyBalance={balance} usdBalance={false} handleReceive={this.handleReceive} handleWithdraw={this.handleWithdraw} />
+          </div>
+          { swapHistory.length > 0 && <SwapsHistory orders={swapHistory.filter(item => item.step >= 4)} /> }
+          <div styleName="currencyWalletActivity">
+            <h3>Activity</h3>
+          {txHistory && (<Table rows={txHistory} styleName="history" rowRender={this.rowRender} />)}
+          </div>
         </div>
-        { swapHistory.length > 0 && <SwapsHistory orders={swapHistory.filter(item => item.step >= 4)} /> }
-        <h1 style={{ marginTop: '20px' }} >
-          <FormattedMessage id="CurrencyWallet110" defaultMessage="History your transactions" />
-        </h1>
-        {txHistory && (<Table rows={txHistory} styleName="table history" rowRender={this.rowRender} />)}
         {
           seoPage && seoPage.footer && <div>{seoPage.footer}</div>
         }
@@ -282,3 +245,18 @@ export default class CurrencyWallet extends Component {
     )
   }
 }
+        {/* <div styleName="currencyWallet">
+
+          {currency === 'EOS' && !eosAccountActivated && (<Button onClick={this.handleEosBuyAccount} gray>
+            <FormattedMessage id="CurrencyWallet105" defaultMessage="Activate account" />
+          </Button>)}
+          <div styleName="inRow">
+            {
+              !isBlockedCoin && (
+                <NewButton blue onClick={() => this.handleGoTrade(currency)}>
+                  <FormattedMessage id="CurrencyWallet104" defaultMessage="Exchange" />
+                </NewButton>
+              )
+            }
+          </div>
+        </div> */}
