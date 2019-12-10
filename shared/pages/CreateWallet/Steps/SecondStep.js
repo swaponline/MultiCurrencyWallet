@@ -148,25 +148,30 @@ const CreateWallet = (props) => {
                   styleName={`${cardStyle_}`}
                   onClick={() => handleClick(index, el)}
                 >
-                  {(!enabled || activated) &&
-                    <em>
-                      {!activated && <FormattedMessage id="createWalletSoon" defaultMessage="Soon!" />}
-                      {activated && <FormattedMessage id="createWalletActivated" defaultMessage="Activated!" />}
-                    </em>
-                  }
-                  <img
-                    styleName="logo thirdPageIcons"
-                    src={icons[name]}
-                    alt={`${name} icon`}
-                    role="image"
-                  />
-                  <div styleName="listGroup">
-                    <li>
-                      <b>{text}</b>
-                    </li>
-                    <li>{capture}</li>
+                  <div styleName="ind">
+                    {(!enabled || activated) &&
+                      <em>
+                        {!activated && <FormattedMessage id="createWalletSoon" defaultMessage="Soon!" />}
+                        {activated && <FormattedMessage id="createWalletActivated" defaultMessage="Activated!" />}
+                      </em>
+                    }
+                  </div>
+                  <div styleName="flex">
+                    <img
+                      styleName="logo thirdPageIcons"
+                      src={icons[name]}
+                      alt={`${name} icon`}
+                      role="image"
+                    />
+                    <div styleName="listGroup">
+                      <li>
+                        <b>{text}</b>
+                      </li>
+                      <li>{capture}</li>
+                    </div>
                   </div>
                 </div>
+
               )
             })}
           </div>

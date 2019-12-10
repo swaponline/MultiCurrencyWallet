@@ -100,7 +100,7 @@ export default class CurrencyAction extends React.Component {
 
                return (
                  <div styleName="card" key={item} onClick={() => this.handleClickCurrency(item)}>
-                   <div styleName={`circle ${iconName}`}> 
+                   <div styleName={`circle ${iconName}`}>
                     <img
                       src={icons[iconName]}
                       alt={`${name} icon`}

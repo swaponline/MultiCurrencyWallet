@@ -13,6 +13,14 @@
   }
 }
 
+@media all and (max-width: 575px) and (min-width: 480px){
+  .main {
+    main {
+      padding-top: 88px !important;
+    }
+  }
+}
+
 @include media-mobile {
 	.main {
     padding-bottom: 30px;

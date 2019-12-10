@@ -111,20 +111,11 @@ export default class Row extends Component {
   }
 
   componentDidMount() {
-    const { hiddenCoinsList } = this.props
-
 
     this.handleTelosActivate()
     this.getUsdBalance()
 
     window.addEventListener('resize', this.handleSliceAddress)
-
-    Object.keys(config.erc20)
-      .forEach(name => {
-        if (!hiddenCoinsList.includes(name.toUpperCase())) {
-          actions.core.markCoinAsVisible(name.toUpperCase())
-        }
-      })
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -563,13 +554,13 @@ export default class Row extends Component {
               <p>{currencyUsdBalance && currencyUsdBalance.toFixed(2) || '0.00'}</p>
               {inneedData && <span>   {`${inneedData.change} %`} </span>}
             </div>
-            <div onClick={this.handleOpenDropdown} styleName="assetsTableDots">
-              <DropdownMenu
-                size="regular"
-                className="walletControls"
-                items={dropDownMenuItems}
-              />
-            </div>
+          </div>
+          <div onClick={this.handleOpenDropdown} styleName="assetsTableDots">
+            <DropdownMenu
+              size="regular"
+              className="walletControls"
+              items={dropDownMenuItems}
+            />
           </div>
         </td>
       </tr>
