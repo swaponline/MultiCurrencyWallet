@@ -17,7 +17,7 @@ const CurrenciesList = ({ activeView, isFetching, tableRows, currencies, infoAbo
       rows={tableRows}
       rowRender={(row, index, selectId, handleSelectId) => (
         <Row
-          key={row}
+          key={row.currency}
           index={index}
           getCurrencyUsd={(usd) => this.getCurrencyUsd(usd)}
           currency={row}

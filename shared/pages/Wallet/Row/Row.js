@@ -66,7 +66,7 @@ import dollar from '../images/dollar.svg'
     .map(({ account, keyPair, ...data }) => ({
       ...data,
     }))
-    .find((item) => item.currency === currency),
+    .find((item) => item.currency === currency.currency),
   decline: rememberedOrders.savedOrders,
 }))
 @cssModules(styles, { allowMultiple: true })
@@ -96,7 +96,7 @@ export default class Row extends Component {
   constructor(props) {
     super(props)
 
-    const { currency, currencies } = props
+    const { currency: { currency }, currencies } = props
 
     const isBlockedCoin = config.noExchangeCoins
       .map(item => item.toLowerCase())
@@ -172,7 +172,7 @@ export default class Row extends Component {
   }
 
   getUsdBalance = async () => {
-    const { currency } = this.props
+    const { currency: { currency } } = this.props
     let currencySymbol = currency
     // BTC SMS Protected and BTC-Multisign
     if (currencySymbol === 'BTC (SMS-Protected)') currencySymbol = 'BTC'
