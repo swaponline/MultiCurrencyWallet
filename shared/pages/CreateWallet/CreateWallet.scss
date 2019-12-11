@@ -57,36 +57,42 @@
   border-radius: 50%;
   width: 35px;
   height: 35px;
-  padding: 7px;
   justify-content: center;
   margin: auto;
   display: flex;
 }
 
-.btc {
-  background: orange;
-}
+// .btc {
+//   background: orange;
+// }
 
-.eth {
-  background: black;
-}
+// .eth {
+//   background: black;
+// }
 
-.usdt {
+.coinColor {
   background: #0ccf14;
 }
 
-.swap {
-  background: #775cf1;
-}
+// .swap {
+//   background: #775cf1;
+// }
 
 .purple {
   background-color: #6144E5;
   color: #f0eefd
 }
 
-.bch {
-  background: #4ac745;
+.assetsTableIcon {
+  // background: rgba(97, 68, 229, 0.1);
+  min-width: 35px;
+  height: 35px;
+  border-radius: 50%;
 }
+
+// .bch {
+//   background: #4ac745;
+// }
 
 .green {
   background-color: #0ccf14;
@@ -132,7 +138,8 @@
 .currencyChooserWrapper {
   justify-content: space-between;
   padding: 30px;
-
+  overflow-x: scroll;
+  margin: auto;
 }
 
 .buttonWrapper {
@@ -154,6 +161,8 @@
   display: grid;
   height: 140px;
   width: 110px;
+  min-width: 150px;
+  margin: 7px;
 
   em {
     position: absolute;
@@ -166,7 +175,7 @@
 
   b {
     font-weight: bolder;
-    font-size: 16px;
+    font-size: 11;
     color: #1F2D48;
   }
 
@@ -238,6 +247,7 @@
   }
 
   .card {
+    display: inline-flex
     em {
       position: relative;
       width: 100%;
@@ -359,8 +369,8 @@
   }
 
   .listGroup {
+    margin: auto 0;
     margin-left: 10px;
-    margin-top: 3px;
   }
 
   .wrapper h2 {
@@ -378,6 +388,10 @@
     margin-bottom: 8px;
     padding: 10px;
     list-style: none;
+    height: 75px;
+    width: 100%;
+    display: inline-flex;
+    max-width: 90%;
     b {
       font-weight: bolder;
       font-size: 16px;
@@ -420,6 +434,7 @@
 
   .currencyChooserWrapper {
     overflow-y: auto;
+    max-height: 80vh;
   }
 
   .card li {

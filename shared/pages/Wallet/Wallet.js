@@ -49,7 +49,7 @@ const walletNav = ['My balances', 'Transactions'];
     // xlmData,
   },
   currencies: { items: currencies },
-  createWallet: { currencies: assets }
+  createWallet: { currencies: assets },
 }) => {
   const tokens = (
     config && config.isWidget
@@ -60,6 +60,24 @@ const walletNav = ['My balances', 'Transactions'];
   const tokensItems = (
     Object.keys(tokensData).map(k => tokensData[k])
   )
+
+  const allData = [
+    btcData,
+    btcMultisigSMSData,
+    btcMultisigUserData,
+    ethData,
+    eosData,
+    telosData,
+    bchData,
+    ltcData,
+    //qtumData,
+    // xlmData,
+    // usdtOmniData,
+    ...Object.keys(tokensData).map(k => (tokensData[k])),
+  ]
+    .map(({ account, keyPair, ...data }) => ({
+      ...data,
+    }))
 
   const items = (
     config && config.isWidget ? [
@@ -105,6 +123,7 @@ const walletNav = ['My balances', 'Transactions'];
   return {
     tokens,
     items,
+    allData,
     tokensItems,
     currencyBalance,
     currencies,
@@ -276,7 +295,7 @@ export default class Wallet extends Component {
       hiddenCoinsList
     } = this.props;
 
-    
+
     const currencyTokenData = [...Object.keys(tokensData).map(k => (tokensData[k])), ...tokensItems]
 
     const tableRows = [...items, ...tokens].filter(currency => !hiddenCoinsList.includes(currency))
@@ -285,7 +304,7 @@ export default class Wallet extends Component {
       return currencyTokenData.find(item => item.currency === currency);
     })
 
-    actions.modals.open(constants.modals.CurrencyAction, {currencies, context})
+    actions.modals.open(constants.modals.CurrencyAction, { currencies, context })
   }
 
   render() {
@@ -306,6 +325,7 @@ export default class Wallet extends Component {
       tokens,
       hiddenCoinsList,
       isSigned,
+      allData,
     } = this.props
 
 
@@ -322,8 +342,7 @@ export default class Wallet extends Component {
     let btcBalance = null;
     let usdBalance = null;
 
-    const tableRows = [...items, ...tokens].filter(currency => !hiddenCoinsList.includes(currency))
-
+    const tableRows = allData.filter(({ currency, balance }) => !hiddenCoinsList.includes(currency) || balance > 0)
 
     if (infoAboutCurrency) {
       infoAboutCurrency.forEach(item => {
@@ -351,14 +370,14 @@ export default class Wallet extends Component {
             }
             {
               !isSigned && !isClosedNotifyBlockSignUp && <NotifyBlock
-                  className="notifyBlockSignUp"
-                  descr="Sign up and get your free cryptocurrency for test!"
-                  tooltip="You will also be able to receive notifications regarding updates with your account"
-                  icon={mail}
-                  firstBtn="Sign Up"
-                  firstFunc={this.handleSignUp}
-                  secondBtn="I’ll do this later"
-                  secondFunc={() => this.handleNotifyBlockClose('isClosedNotifyBlockSignUp')} />
+                className="notifyBlockSignUp"
+                descr="Sign up and get your free cryptocurrency for test!"
+                tooltip="You will also be able to receive notifications regarding updates with your account"
+                icon={mail}
+                firstBtn="Sign Up"
+                firstFunc={this.handleSignUp}
+                secondBtn="I’ll do this later"
+                secondFunc={() => this.handleNotifyBlockClose('isClosedNotifyBlockSignUp')} />
             }
             {
               !isClosedNotifyBlockBanner && <NotifyBlock
@@ -369,7 +388,7 @@ export default class Wallet extends Component {
                 secondBtn="Close"
                 secondFunc={() => this.handleNotifyBlockClose('isClosedNotifyBlockBanner')} />
             }
-        </Slider>
+          </Slider>
           <ul styleName="walletNav">
             {walletNav.map((item, index) => <li key={index} styleName={`walletNavItem ${activeView === index ? 'active' : ''}`} onClick={() => this.handleNavItemClick(index)}><a href styleName="walletNavItemLink">{item}</a></li>)}
           </ul>
@@ -397,7 +416,6 @@ export default class Wallet extends Component {
               </div>
             )
           }
-
         </section>
       </artical>
     )
