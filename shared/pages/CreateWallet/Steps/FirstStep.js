@@ -1,4 +1,6 @@
-import React, { useState } from 'react'
+import React, { Component } from 'react'
+
+import { connect } from 'redaction'
 
 import CSSModules from 'react-css-modules'
 import styles from '../CreateWallet.scss'
@@ -8,6 +10,7 @@ import { isMobile } from 'react-device-detect'
 
 import ReactTooltip from 'react-tooltip'
 import { FormattedMessage } from 'react-intl'
+import Coin from 'components/Coin/Coin'
 
 import Explanation from '../Explanation'
 import icons from '../images'
@@ -20,71 +23,112 @@ import {
 } from './texts'
 
 
-const CreateWallet = ({ onClick, error, setError }) => {
-
-  const [border, setBorder] = useState({
-    btc: false,
-    eth: false,
-    usdt: false,
-    eurs: false,
-    swap: false,
-  })
-  const coins = [
-    { name: 'btc', capture: 'Bitcoin' },
-    { name: 'eth', capture: 'Ethereum' },
-    { name: 'usdt', capture: 'Stablecoin' },
-    { name: 'swap', capture: 'Swap' },
-    { name: 'bch', capture: 'Bitcoin Cash' },
+@connect(({
+  user: {
+    ethData,
+    btcData,
+    btcMultisigSMSData,
+    btcMultisigUserData,
+    bchData,
+    tokensData,
+    eosData,
+    telosData,
+    ltcData,
+    // qtumData,
+    // usdtOmniData,
+    // nimData,
+    // xlmData,
+  },
+  currencies: { items: currencies },
+}, { currency }) => ({
+  items: [
+    btcData,
+    btcMultisigSMSData,
+    btcMultisigUserData,
+    ethData,
+    eosData,
+    telosData,
+    bchData,
+    ltcData,
+    //qtumData,
+    // xlmData,
+    // usdtOmniData,
+    ...Object.keys(tokensData).map(k => (tokensData[k])),
   ]
+    .map(({ account, keyPair, ...data }) => ({
+      ...data,
+    }))
+}))
+@CSSModules(styles, { allowMultiple: true })
+export default class CreateWallet extends Component {
 
-  const handleClick = name => {
+  constructor(props) {
+    super()
+    const { items } = props
 
-    const dataToReturn = { ...border, [name]: !border[name] }
-    setBorder(dataToReturn)
+    const coins = items.map(({ currency, fullName }) => ({ name: currency.toLowerCase(), capture: fullName }))
+    const curState = {}
+    items.forEach(({ currency }) => { curState[currency] = false })
+
+
+    this.state = {
+      curState,
+      coins
+    }
+  }
+
+
+  handleClick = name => {
+    const { setError } = this.props
+    const { curState } = this.state
+
+    const dataToReturn = { ...curState, [name]: !curState[name] }
+    this.setState(() => ({ curState: dataToReturn }))
     reducers.createWallet.newWalletData({ type: 'currencies', data: dataToReturn })
     setError(null)
   }
 
-  return (
-    <div>
+  render() {
+    const { onClick, error } = this.props
+    const { coins, curState } = this.state
+
+    return (
       <div>
         <div>
-          <Explanation step={1} subHeaderText={subHeaderText1()}>
-            {cupture1()}
-          </Explanation>
-          <div styleName="currencyChooserWrapper">
-            {coins.map(el => {
-              const { name, capture } = el
-              return (
-                <div styleName={`card ${border[name] ? 'purpleBorder' : ''}`} onClick={() => handleClick(name)}>
-                  <div styleName={`logo ${name}`}>
-                    <img
-                      src={icons[name]}
-                      alt={`${name} icon`}
-                      role="image"
-                    />
+          <div>
+            <Explanation step={1} subHeaderText={subHeaderText1()}>
+              {cupture1()}
+            </Explanation>
+            <div styleName="currencyChooserWrapper">
+              {coins.map(el => {
+                const { name, capture } = el
+                return (
+                  <div key={name} styleName={`card ${curState[name] ? 'purpleBorder' : ''}`} onClick={() => this.handleClick(name)}>
+                    <div styleName={`logo coinColor`}>
+                      <Coin styleName="assetsTableIcon" name={name} />
+                    </div>
+                    <div styleName="listGroup">
+                      <li><b>{name.toUpperCase()}</b></li>
+                      <li>{capture}</li>
+                    </div>
                   </div>
-                  <div styleName="listGroup">
-                    <li><b>{name.toUpperCase()}</b></li>
-                    <li>{capture}</li>
-                  </div>
-                </div>
-              )
-            })}
+                )
+              })}
+            </div>
           </div>
+          <button styleName="continue" onClick={onClick} disabled={error}>
+            <FormattedMessage id="createWalletButton1" defaultMessage="Продолжить" />
+          </button>
         </div>
-        <button styleName="continue" onClick={onClick} disabled={error}>
-          <FormattedMessage id="createWalletButton1" defaultMessage="Продолжить" />
-        </button>
+        {!isMobile &&
+          <div>
+            <Explanation step={2} subHeaderText={subHeaderText2()} notMain>
+              {cupture2()}
+            </Explanation>
+          </div>
+        }
       </div>
-      {!isMobile &&
-        <div>
-          <Explanation step={2} subHeaderText={subHeaderText2()} notMain>
-            {cupture2()}
-          </Explanation>
-        </div>
-      }
-    </div>
-  )
+    )
+  }
+
 }
-export default CSSModules(CreateWallet, styles, { allowMultiple: true })

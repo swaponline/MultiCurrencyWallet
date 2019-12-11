@@ -66,7 +66,7 @@ import dollar from '../images/dollar.svg'
     .map(({ account, keyPair, ...data }) => ({
       ...data,
     }))
-    .find((item) => item.currency === currency),
+    .find((item) => item.currency === currency.currency),
   decline: rememberedOrders.savedOrders,
 }))
 @cssModules(styles, { allowMultiple: true })
@@ -96,7 +96,7 @@ export default class Row extends Component {
   constructor(props) {
     super(props)
 
-    const { currency, currencies } = props
+    const { currency: { currency }, currencies } = props
 
     const isBlockedCoin = config.noExchangeCoins
       .map(item => item.toLowerCase())
@@ -172,7 +172,7 @@ export default class Row extends Component {
   }
 
   getUsdBalance = async () => {
-    const { currency } = this.props
+    const { currency: { currency } } = this.props
     let currencySymbol = currency
     // BTC SMS Protected and BTC-Multisign
     if (currencySymbol === 'BTC (SMS-Protected)') currencySymbol = 'BTC'
@@ -383,6 +383,16 @@ export default class Row extends Component {
     actions.core.forgetOrders(this.props.decline[0])
   }
 
+  hideCurrency = () => {
+    const { item: { currency } } = this.props
+    actions.core.markCoinAsHidden(currency)
+  }
+
+  copy = () => {
+    const { item: { address } } = this.props
+    navigator.clipboard.writeText(address)
+  }
+
   render() {
     const {
       isBalanceFetching,
@@ -447,6 +457,18 @@ export default class Row extends Component {
         id: 1003,
         title: <FormattedMessage id='WalletRow_Menu_History' defaultMessage='History' />,
         action: this.goToHistory,
+        disabled: false
+      },
+      {
+        id: 1011,
+        title: <FormattedMessage id='WalletRow_Menu_Hide' defaultMessage='Hide' />,
+        action: this.hideCurrency,
+        disabled: false
+      },
+      {
+        id: 1012,
+        title: <FormattedMessage id='WalletRow_Menu_Сopy' defaultMessage='Copy address' />,
+        action: this.copy,
         disabled: false
       }
     ]
