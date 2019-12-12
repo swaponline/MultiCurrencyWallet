@@ -25,4 +25,5 @@ export default {
   WithdrawMultisigUser: 'WithdrawModalMultisigUser',
   CurrencyAction: 'CurrencyAction',
   InvoiceModal: 'InvoiceModal',
+  InvoiceLinkModal: 'InvoiceLinkModal',
 }
