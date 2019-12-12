@@ -102,6 +102,14 @@ export default class CreateWallet extends Component {
             <div styleName="currencyChooserWrapper">
               {coins.map(el => {
                 const { name, capture } = el
+
+                switch (name.toLowerCase()) {
+                  case 'btc (sms-protected)':
+                  case 'btc (multisig)':
+                    return null
+                    break;
+                }
+
                 return (
                   <div key={name} styleName={`card ${curState[name] ? 'purpleBorder' : ''}`} onClick={() => this.handleClick(name)}>
                     <div styleName={`logo coinColor`}>
