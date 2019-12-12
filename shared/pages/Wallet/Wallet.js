@@ -11,9 +11,9 @@ import styles from './Wallet.scss'
 import History from 'pages/History/History'
 import NotifyBlock from './components/NotityBlock/NotifyBock'
 
-import security from './images/security.svg'
-import mail from './images/mail.svg'
-import info from './images/info-solid.svg'
+import security from './components/NotityBlock/images/security.svg'
+import mail from './components/NotityBlock/images/mail.svg'
+import info from './components/NotityBlock/images/info-solid.svg'
 
 import { links, constants } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
@@ -24,8 +24,9 @@ import { FormattedMessage, injectIntl } from 'react-intl'
 
 import config from 'app-config'
 import { withRouter } from 'react-router'
-import BalanceForm from './BalanceForm'
+import BalanceForm from './components/BalanceForm/BalanceForm'
 import CurrenciesList from './CurrenciesList'
+import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 
 const walletNav = ['My balances', 'Transactions'];
 
@@ -48,7 +49,7 @@ const walletNav = ['My balances', 'Transactions'];
     // xlmData,
   },
   currencies: { items: currencies },
-  createWallet: { currencies: assets }
+  createWallet: { currencies: assets },
 }) => {
   const tokens = (
     config && config.isWidget
@@ -59,6 +60,24 @@ const walletNav = ['My balances', 'Transactions'];
   const tokensItems = (
     Object.keys(tokensData).map(k => tokensData[k])
   )
+
+  const allData = [
+    btcData,
+    btcMultisigSMSData,
+    btcMultisigUserData,
+    ethData,
+    eosData,
+    telosData,
+    bchData,
+    ltcData,
+    //qtumData,
+    // xlmData,
+    // usdtOmniData,
+    ...Object.keys(tokensData).map(k => (tokensData[k])),
+  ]
+    .map(({ account, keyPair, ...data }) => ({
+      ...data,
+    }))
 
   const items = (
     config && config.isWidget ? [
@@ -104,6 +123,7 @@ const walletNav = ['My balances', 'Transactions'];
   return {
     tokens,
     items,
+    allData,
     tokensItems,
     currencyBalance,
     currencies,
@@ -139,7 +159,8 @@ export default class Wallet extends Component {
     btcBalance: 0,
     activeCurrency: 'usd',
     exchangeForm: false,
-    walletTitle: 'Wallet'
+    walletTitle: 'Wallet',
+    editTitle: false
   }
 
   componentWillMount() {
@@ -149,19 +170,16 @@ export default class Wallet extends Component {
   componentDidMount() {
     this.showPercentChange1H();
     this.getUsdBalance();
-
-    const isClosedNotifyBlockBanner = localStorage.getItem(constants.localStorage.isClosedNotifyBlockBanner);
-    const isClosedNotifyBlockSignUp = localStorage.getItem(constants.localStorage.isClosedNotifyBlockSignUp);
-    const walletTitle = localStorage.getItem(constants.localStorage.walletTitle);
-
-    this.setState({
-      isClosedNotifyBlockBanner,
-      isClosedNotifyBlockSignUp,
-      walletTitle
-    })
+    this.setLocalStorageItems();
   }
 
   handleNavItemClick = (index) => {
+    if (index === 1) {
+      // fetch actual tx list
+      actions.user.setTransactions()
+      actions.core.getSwapHistory()
+    }
+
     this.setState({
       activeView: index
     })
@@ -172,22 +190,22 @@ export default class Wallet extends Component {
   }
 
 
-  handleDeposit = () => {
-    actions.modals.open(constants.modals.Withdraw, {
-      currency,
-      address,
-      contractAddress,
-      decimals,
-      token,
-      balance,
-      unconfirmedBalance,
-    })
-  }
-
-  tableRows = (items, tokens, hiddenCoinsList) => [...items, ...tokens].filter(currency => !hiddenCoinsList.includes(currency))
-
   handleShowKeys = () => {
     actions.modals.open(constants.modals.DownloadModal)
+  }
+
+  setLocalStorageItems = () => {
+    const isClosedNotifyBlockBanner = localStorage.getItem(constants.localStorage.isClosedNotifyBlockBanner);
+    const isClosedNotifyBlockSignUp = localStorage.getItem(constants.localStorage.isClosedNotifyBlockSignUp);
+    const isPrivateKeysSaved = localStorage.getItem(constants.localStorage.privateKeysSaved)
+    const walletTitle = localStorage.getItem(constants.localStorage.walletTitle);
+
+    this.setState({
+      isClosedNotifyBlockBanner,
+      isClosedNotifyBlockSignUp,
+      walletTitle,
+      isPrivateKeysSaved
+    })
   }
 
   getUsdBalance = async () => {
@@ -212,6 +230,10 @@ export default class Wallet extends Component {
   showPercentChange1H = () => {
     const { currencies, currencyBalance } = this.props
     let infoAboutCurrency = []
+
+    this.setState({
+      isFetching: true
+    })
 
     fetch('https://noxon.io/cursAll.php')
       .then(res => res.json())
@@ -239,10 +261,10 @@ export default class Wallet extends Component {
                 }
               } catch (e) { }
             }
-          })
-          this.setState({
-            infoAboutCurrency,
-            isFetching: true
+            this.setState({
+              infoAboutCurrency,
+              isFetching: false
+            })
           })
         },
         (error) => {
@@ -279,7 +301,7 @@ export default class Wallet extends Component {
       hiddenCoinsList
     } = this.props;
 
-    
+
     const currencyTokenData = [...Object.keys(tokensData).map(k => (tokensData[k])), ...tokensItems]
 
     const tableRows = [...items, ...tokens].filter(currency => !hiddenCoinsList.includes(currency))
@@ -288,7 +310,7 @@ export default class Wallet extends Component {
       return currencyTokenData.find(item => item.currency === currency);
     })
 
-    actions.modals.open(constants.modals.CurrencyAction, {currencies, context})
+    actions.modals.open(constants.modals.CurrencyAction, { currencies, context })
   }
 
   render() {
@@ -296,22 +318,20 @@ export default class Wallet extends Component {
       activeView,
       infoAboutCurrency,
       isFetching,
-      activeCurrency,
       exCurrencyRate,
       exchangeForm,
       isClosedNotifyBlockBanner,
       isClosedNotifyBlockSignUp,
       editTitle,
-      walletTitle
+      walletTitle,
+      isPrivateKeysSaved
     } = this.state;
     const {
       items,
       tokens,
-      currencies,
       hiddenCoinsList,
-      intl,
       isSigned,
-      location,
+      allData,
     } = this.props
 
 
@@ -325,11 +345,10 @@ export default class Wallet extends Component {
       slidesToScroll: 1
     };
 
-    let btcBalance = 0;
-    let usdBalance = 0;
+    let btcBalance = null;
+    let usdBalance = null;
 
-    const tableRows = [...items, ...tokens].filter(currency => !hiddenCoinsList.includes(currency))
-
+    const tableRows = allData.filter(({ currency, balance }) => !hiddenCoinsList.includes(currency) || balance > 0)
 
     if (infoAboutCurrency) {
       infoAboutCurrency.forEach(item => {
@@ -337,14 +356,11 @@ export default class Wallet extends Component {
         usdBalance = btcBalance * exCurrencyRate;
       })
     }
-
-    const isPrivateKeysSaved = localStorage.getItem(constants.localStorage.privateKeysSaved)
-
-
+    
     return (
       <artical>
         <section styleName="wallet">
-          {!editTitle ? <h3 styleName="walletHeading" onDoubleClick={this.handleEditTitle}>{walletTitle}</h3> : <input styleName="inputTitle" onChange={(e) => this.handleChangeTitle(e)} value={walletTitle} />}
+        {(walletTitle === '' || editTitle) ? <input styleName="inputTitle" onChange={(e) => this.handleChangeTitle(e)} value={walletTitle} /> : <h3 styleName="walletHeading" onDoubleClick={this.handleEditTitle}>{walletTitle || 'Wallet'}</h3>} 
           <Slider {...settings}>
             {
               !isPrivateKeysSaved && <NotifyBlock
@@ -360,14 +376,14 @@ export default class Wallet extends Component {
             }
             {
               !isSigned && !isClosedNotifyBlockSignUp && <NotifyBlock
-                  className="notifyBlockSignUp"
-                  descr="Sign up and get your free cryptocurrency for test!"
-                  tooltip="You will also be able to receive notifications regarding updates with your account"
-                  icon={mail}
-                  firstBtn="Sign Up"
-                  firstFunc={this.handleSignUp}
-                  secondBtn="I’ll do this later"
-                  secondFunc={() => this.handleNotifyBlockClose('isClosedNotifyBlockSignUp')} />
+                className="notifyBlockSignUp"
+                descr="Sign up and get your free cryptocurrency for test!"
+                tooltip="You will also be able to receive notifications regarding updates with your account"
+                icon={mail}
+                firstBtn="Sign Up"
+                firstFunc={this.handleSignUp}
+                secondBtn="I’ll do this later"
+                secondFunc={() => this.handleNotifyBlockClose('isClosedNotifyBlockSignUp')} />
             }
             {
               !isClosedNotifyBlockBanner && <NotifyBlock
@@ -378,25 +394,34 @@ export default class Wallet extends Component {
                 secondBtn="Close"
                 secondFunc={() => this.handleNotifyBlockClose('isClosedNotifyBlockBanner')} />
             }
-        </Slider>
+          </Slider>
           <ul styleName="walletNav">
             {walletNav.map((item, index) => <li key={index} styleName={`walletNavItem ${activeView === index ? 'active' : ''}`} onClick={() => this.handleNavItemClick(index)}><a href styleName="walletNavItemLink">{item}</a></li>)}
           </ul>
-          <div className="data-tut-store" styleName="walletContent" >
-            <div styleName={`walletBalance ${activeView === 0 ? 'active' : ''}`}>
-              <BalanceForm usdBalance={usdBalance} btcBalance={btcBalance} {...this.state} handleModalOpen={this.handleModalOpen}/>
-              {exchangeForm &&
-                <div styleName="exchangeForm">
-                  <ParticalClosure {...this.props} isOnlyForm />
+          {
+            !isFetching && !isNaN(usdBalance) ? (
+              <div className="data-tut-store" styleName="walletContent" >
+                <div styleName={`walletBalance ${activeView === 0 ? 'active' : ''}`}>
+                  <BalanceForm usdBalance={usdBalance} currencyBalance={btcBalance} handleReceive={this.handleModalOpen} handleWithdraw={this.handleModalOpen} currency="btc" />
+                  {exchangeForm &&
+                    <div styleName="exchangeForm">
+                      <ParticalClosure {...this.props} isOnlyForm />
+                    </div>
+                  }
                 </div>
-              }
-            </div>
-            <CurrenciesList tableRows={tableRows} {...this.state} {...this.props} goToСreateWallet={this.goToСreateWallet}/>
-            <div styleName={`activity ${activeView === 1 ? 'active' : ''}`}>
-              <h3 styleName="activityHeading">Activity</h3>
-              <History></History>
-            </div>
-          </div>
+                <CurrenciesList tableRows={tableRows} {...this.state} {...this.props} goToСreateWallet={this.goToСreateWallet}/>
+                <div styleName={`activity ${activeView === 1 ? 'active' : ''}`}>
+                  <h3 styleName="activityHeading">Activity</h3>
+                  <History></History>
+                </div>
+              </div>
+            ) : (
+              <div styleName="loader">
+                <FormattedMessage id="history107" defaultMessage="Loading" />
+                <InlineLoader />
+              </div>
+            )
+          }
         </section>
       </artical>
     )

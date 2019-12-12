@@ -7,10 +7,11 @@ import actions from 'redux/actions'
 import styles from './Row.scss'
 
 
-const submitComment = (e, { hash, comment, toggleComment, type, onSubmit, hiddenList }) => {
+const submitComment = (e, props) => {
+  const { comment, toggleComment, onSubmit, hiddenList, ind } = props
   e.preventDefault()
 
-  const comments = { ...hiddenList, [`${hash}-${type}`]: comment }
+  const comments = { ...hiddenList, [ind]: comment }
 
   onSubmit(comments)
   toggleComment(false)

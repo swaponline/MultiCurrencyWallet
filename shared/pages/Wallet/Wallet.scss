@@ -3,13 +3,57 @@
     font-family: 'Manrope-Bold',sans-serif;
 }
 
+.circle {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    justify-content: center;
+    display: flex;
+    position: absolute;
+    right: 0;
+    top: 25px;
+    right: 25px;
+}
+
+.btc {
+    background: orange;
+}
+
+.eth {
+    background: black;
+}
+
+.usdt {
+    background: #0ccf14;
+}
+
+.swap {
+    background: #775cf1;
+}
+
+.bch {
+    background: #4ac745;
+}
+
+.yourBalanceImg {
+    filter: brightness(0);
+    position: absolute;
+    opacity: 0.1;
+    width: 33px;
+    bottom: 13px;
+    right: 43px;
+}
+
 .walletHeading,
 .inputTitle {
     font-weight: 800;
     font-size: 40px;
+    display: inline-block;
     line-height: 120%;
     color: #1F2D48;
     margin-bottom: 30px;
+    cursor: url('./images/pen.svg'), move;
+    //background: url('./images/pen.svg') 50% 50% no-repeat;
 }
 
 .walletTable {
@@ -18,7 +62,6 @@
         padding-left: 0;
     }
 }
-
 
 .walletNav {
     padding: 0;
@@ -101,6 +144,7 @@
     box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.08), 0px 1px 4px rgba(0, 0, 0, 0.08);
     border-radius: 4px;
     height: fit-content;
+    font-family: 'Manrope-Bold',sans-serif;
 }
 
 .yourBalanceTop {
@@ -132,6 +176,7 @@
         color: #1F2D48;
         font-weight: bold;
         margin: 0 10px;
+        margin-left: 0;
     }
     span {
         font-size: 18px;
@@ -155,7 +200,7 @@
     &:before {
         position: absolute;
         width: 100%;
-        height: 100px;
+        height: 95px;
         left: 0;
         bottom: 0;
         opacity: 0.1;
@@ -168,10 +213,9 @@
 .yourBalanceCurrencies {
     color: rgba(0, 0, 0, 0.1);
     position: absolute;
-    background-color: white;
     right: 25px;
     top: 25px;
-    width: 45px;
+    width: 70px;
     justify-content: space-between;
     display: flex;
     span {
@@ -179,13 +223,18 @@
         height: 16px;
         background: rgba(0, 0, 0, 0.1);
         display: inline-block;
-        margin-top: 6px;
+        margin-top: 1px;
     }
     button {
         padding: 0;
         cursor: pointer;
+        font-family: 'Inter-Bold', sans-serif;
+        text-transform: uppercase;
+        font-size: 13px;
+        color: rgba(142, 154, 163, 0.50)
     }
     button.active {
+        color: #1F2D48;
         filter: brightness(0);
     }
 }
@@ -270,6 +319,11 @@
     .activityHeading {
         margin-top: -60px;
     }
+}
+
+.loader {
+    position: relative;
+    margin: 15% 40%;
 }
 
 

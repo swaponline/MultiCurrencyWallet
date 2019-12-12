@@ -36,6 +36,7 @@ const addInvoice = (data) => {
     address     : btcData.address,
     pubkey      : btcData.publicKey.toString('hex'),
     mainnet     : (btc.network==bitcoin.networks.mainnet),
+    destination : (data.destination) ? data.destination : '',
   }
 
   return request.post(`${config.api.invoiceApi}/invoice/push/`, {
@@ -43,10 +44,30 @@ const addInvoice = (data) => {
   })
 }
 
-const markInvoice = (invoiceId, mark, txid) => {
-  const { user: { btcData } } = getState()
-  
-}
+const cancelInvoice = (invoiceId) => new Promise((resolve) => request.post(`${config.api.invoiceApi}/invoice/cancel/`,
+  {
+    body: {
+      invoiceId,
+    },
+  })
+  .then((res) => {
+    resolve(res && res.answer && res.answer === 'ok')
+  })
+  .catch(() => { resolve(false) }))
+
+const markInvoice = (invoiceId, mark, txid) => new Promise((resolve) => request.post(`${config.api.invoiceApi}/invoice/mark/`,
+  {
+    body: {
+      invoiceId,
+      mark,
+      txid,
+    },
+  })
+  .then((res) => {
+    resolve(res && res.answer && res.answer === 'ok')
+  })
+  .catch(() => { resolve(false) }))
+
 
 const getInvoices = (data) => {
   const { user: { btcData } } = getState()
@@ -91,4 +112,6 @@ const getInvoices = (data) => {
 export default {
   addInvoice,
   getInvoices,
+  cancelInvoice,
+  markInvoice,
 }

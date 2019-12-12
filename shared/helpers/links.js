@@ -20,6 +20,7 @@ const linksManager = {
   notFound: '/NotFound',
   newPage: '/+NewPage',
   multisign: '/multisign',
+  createInvoice: '/createinvoice',
 
   // social networks
   medium: 'https://medium.com/swaponline',

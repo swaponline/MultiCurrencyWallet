@@ -73,14 +73,15 @@ export default class InvoiceModal extends React.Component {
   constructor(data) {
     super()
 
-    const { data: { currency }, items, tokenItems } = data
+    const { data: { address, currency, toAddress }, items, tokenItems } = data
 
     const currentDecimals = constants.tokenDecimals[currency.toLowerCase()]
 
     this.state = {
       isShipped: false,
       openScanCam: '',
-      address: '',
+      address: (toAddress) ? toAddress : '',
+      destination: address,
       amount: '',
       minus: '',
       label: '',
@@ -95,7 +96,7 @@ export default class InvoiceModal extends React.Component {
 
   handleSubmit = async () => {
     const { name, data } = this.props
-    const { address, amount, label, isShipped } = this.state
+    const { address, amount, destination, label, isShipped } = this.state
 
     if (isShipped) return
 
@@ -118,9 +119,13 @@ export default class InvoiceModal extends React.Component {
         fromAddress: data.address,
         amount,
         label,
+        destination,
       })
       if (result && result.answer && result.answer === 'ok') {
         actions.modals.close(name)
+      }
+      if (data.onReady instanceof Function) {
+        data.onReady()
       }
     } catch (e) {
       console.log('error',e)
@@ -131,13 +136,13 @@ export default class InvoiceModal extends React.Component {
     })
   }
 
-  addressIsCorrect() {
+  addressIsCorrect(otherAddress) {
     const { data: { currency } } = this.props
     const { address, isEthToken } = this.state
+    const checkAddress = (otherAddress) ? otherAddress : address
 
-    // console.log(typeforce.isCoinAddress)
     if (isEthToken) {
-      return typeforce.isCoinAddress.ETH(address)
+      return typeforce.isCoinAddress.ETH(checkAddress)
     }
     let checkCurrency = currency.toUpperCase()
     switch (currency) {
@@ -147,7 +152,7 @@ export default class InvoiceModal extends React.Component {
         break;
     }
 
-    return typeforce.isCoinAddress[checkCurrency](address)
+    return typeforce.isCoinAddress[checkCurrency](checkAddress)
   }
 
   openScan = () => {
@@ -174,6 +179,7 @@ export default class InvoiceModal extends React.Component {
   render() {
     const {
       address,
+      destination,
       amount,
       label,
       isShipped,
@@ -191,10 +197,10 @@ export default class InvoiceModal extends React.Component {
       intl,
     } = this.props
 
-    const linked = Link.all(this, 'address', 'amount', 'label')
+    const linked = Link.all(this, 'address', 'destination', 'amount', 'label')
 
     const isDisabled =
-      !address || !amount || isShipped
+      !address || !amount || isShipped || !destination
       || !this.addressIsCorrect()
       || BigNumber(amount).dp() > currentDecimals
 
@@ -208,10 +214,14 @@ export default class InvoiceModal extends React.Component {
     const localeLabel = defineMessages({
       title: {
         id: 'invoiceModal_Title',
-        defaultMessage: 'Выставление счета на пополенение',
+        defaultMessage: 'Выставление счета на пополнение',
       },
       addressPlaceholder: {
         id: 'invoiceModal_addressPlaceholder',
+        defaultMessage: 'Введите адрес {currency} кошелька',
+      },
+      destiAddressPlaceholder: {
+        id: 'invoiceModal_destiAddressPlaceholder',
         defaultMessage: 'Введите адрес {currency} кошелька',
       },
       amountPlaceholder: {
@@ -225,7 +235,7 @@ export default class InvoiceModal extends React.Component {
     })
 
     return (
-      <Modal name={name} title={`${intl.formatMessage(localeLabel.title)}${' '}${currency.toUpperCase()}`}>
+      <Modal name={name} title={`${intl.formatMessage(localeLabel.title)}${' '}${currency.toUpperCase()}`} disableClose={this.props.data.disableClose}>
         {openScanCam &&
           <QrReader
             openScan={this.openScan}
@@ -251,6 +261,27 @@ export default class InvoiceModal extends React.Component {
               <div styleName="rednote">
                 <FormattedMessage
                   id="invoiceModal_IncorrectAddress"
+                  defaultMessage="Вы ввели не коректный адрес" />
+              </div>
+            )}
+          </div>
+          <div styleName="highLevel">
+            <FieldLabel inRow>
+              <span style={{ fontSize: '16px' }}>
+                <FormattedMessage id="invoiceModal_destiAddress" defaultMessage="Адрес, куда будет произведена оплата" />
+              </span>
+            </FieldLabel>
+            <Input
+              valueLink={linked.destination}
+              focusOnInit pattern="0-9a-zA-Z:"
+              placeholder={intl.formatMessage(localeLabel.destiAddressPlaceholder, { currency : currency.toUpperCase()})}
+              qr
+              openScan={this.openScan}
+            />
+            {destination && !this.addressIsCorrect(destination) && (
+              <div styleName="rednote">
+                <FormattedMessage
+                  id="invoiceModal_IncorrectDestiAddress"
                   defaultMessage="Вы ввели не коректный адрес" />
               </div>
             )}
