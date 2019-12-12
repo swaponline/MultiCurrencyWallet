@@ -26,4 +26,5 @@ export default {
   CurrencyAction: 'CurrencyAction',
   InvoiceModal: 'InvoiceModal',
   InvoiceLinkModal: 'InvoiceLinkModal',
+  AlertModal: 'AlertModal',
 }

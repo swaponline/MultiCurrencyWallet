@@ -27,6 +27,7 @@ import MultisignJoinLink from './MultisignJoinLink/MultisignJoinLink'
 
 import InvoiceModal from './InvoiceModal/InvoiceModal'
 import InvoiceLinkModal from './InvoiceLinkModal/InvoiceLinkModal'
+import AlertModal from './Alert/AlertModal'
 
 
 export default {
@@ -56,4 +57,5 @@ export default {
   CurrencyAction,
   InvoiceModal,
   InvoiceLinkModal,
+  AlertModal,
 }
