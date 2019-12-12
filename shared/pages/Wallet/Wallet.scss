@@ -48,9 +48,12 @@
 .inputTitle {
     font-weight: 800;
     font-size: 40px;
+    display: inline-block;
     line-height: 120%;
     color: #1F2D48;
     margin-bottom: 30px;
+    cursor: url('./images/pen.svg'), move;
+    //background: url('./images/pen.svg') 50% 50% no-repeat;
 }
 
 .walletTable {
