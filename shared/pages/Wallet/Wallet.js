@@ -354,7 +354,7 @@ export default class Wallet extends Component {
     return (
       <artical>
         <section styleName="wallet">
-        {(walletTitle === '' || editTitle) ? <input styleName="inputTitle" onChange={(e) => this.handleChangeTitle(e)} value={walletTitle} /> : <h3 styleName="walletHeading" onDoubleClick={this.handleEditTitle}>{walletTitle}</h3>} 
+        {(walletTitle === '' || editTitle) ? <input styleName="inputTitle" onChange={(e) => this.handleChangeTitle(e)} value={walletTitle} /> : <h3 styleName="walletHeading" onDoubleClick={this.handleEditTitle}>{walletTitle || 'Wallet'}</h3>} 
           <Slider {...settings}>
             {
               !isPrivateKeysSaved && <NotifyBlock
