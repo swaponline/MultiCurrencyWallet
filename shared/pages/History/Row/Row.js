@@ -12,6 +12,7 @@ import { constants } from 'helpers'
 import CommentRow from './Comment'
 
 
+
 class Row extends React.PureComponent {
 
   constructor(props) {
@@ -22,6 +23,8 @@ class Row extends React.PureComponent {
       ind,
       exCurrencyRate: 0,
       comment: actions.comments.returnDefaultComment(hiddenList, ind),
+      cancelled: false,
+      payed: false,
     }
   }
 
@@ -41,7 +44,7 @@ class Row extends React.PureComponent {
 
     let withdrawModalType = constants.modals.Withdraw
     const btcData = actions.btcmultisig.isBTCAddress(invoiceData.toAddress)
-
+console.log(btcData, invoiceData)
     if (btcData) {
       const { currency } = btcData
 
@@ -53,10 +56,29 @@ class Row extends React.PureComponent {
         address: invoiceData.toAddress,
         balance: btcData.balance,
         unconfirmedBalance: btcData.unconfirmedBalance,
-        toAddress: invoiceData.fromAddress,
+        toAddress: (invoiceData.destAddress) ? invoiceData.destAddress : invoiceData.fromAddress,
         amount: invoiceData.amount,
+        invoice: invoiceData,
+        onReady: () => {
+          this.setState({
+            payed: true,
+          })
+        },
       })
     }
+  }
+
+  handleCancelInvoice = async () => {
+    const { invoiceData } = this.props
+
+    actions.modals.open(constants.modals.Confirm, {
+      onAccept: async () => {
+        await actions.invoices.cancelInvoice(invoiceData.id)
+        this.setState({
+          cancelled: true,
+        })
+      },
+    })
   }
 
   toggleComment = (val) => {
@@ -99,7 +121,7 @@ class Row extends React.PureComponent {
 
     const { ind } = this.state
 
-    const { exCurrencyRate, isOpen, comment } = this.state
+    const { exCurrencyRate, isOpen, comment, cancelled, payed } = this.state
 
     const getUsd = value * exCurrencyRate
 
@@ -135,7 +157,7 @@ class Row extends React.PureComponent {
               <div styleName='directionHeading'>
                 {txType === 'INVOICE' ?
                   <>
-                    <FormattedMessage id="RowHistoryInvoce" defaultMessage="Инвойс" />
+                    <FormattedMessage id="RowHistoryInvoce" defaultMessage="Инвойс #{number}" values={{number: `${invoiceData.id}-${invoiceData.invoiceNumber}`}}/>
                   </> :
                   <>
                     {
@@ -169,12 +191,32 @@ class Row extends React.PureComponent {
                 <div styleName='date'>{invoiceData.label}</div>
               }
               {txType === 'INVOICE' && direction === 'in' &&
-                <div styleName='date'>Адрес для оплаты: {invoiceData.fromAddress}</div>
+                <div styleName='date'>
+                  <FormattedMessage
+                    id="RowHistoryInvoiceAddress"
+                    defaultMessage='Адрес для оплаты: {address}'
+                    values={{address: `${(invoiceData.destAddress) ? invoiceData.destAddress : invoiceData.fromAddress}`}} />
+                </div>
               }
-              {invoiceData && !invoiceData.txid && direction === 'in' && invoiceData.status === 'new' &&
-                <button onClick={this.handlePayInvoice}>
-                  <FormattedMessage id='RowHistoryPayInvoice' defaultMessage='Оплатить' />
-                </button>
+              {invoiceData && !invoiceData.txid && direction === 'in' && invoiceData.status === 'new' && !cancelled && !payed &&
+                <Fragment>
+                  <button onClick={this.handlePayInvoice}>
+                    <FormattedMessage id='RowHistoryPayInvoice' defaultMessage='Оплатить' />
+                  </button>
+                  <button onClick={this.handleCancelInvoice}>
+                    <FormattedMessage id='RowHistoryCancelInvoice' defaultMessage='Отклонить' />
+                  </button>
+                </Fragment>
+              }
+              {((invoiceData && invoiceData.status === 'cancelled') || cancelled) &&
+                <div styleName='date'>
+                  <FormattedMessage id="RowHistoryInvoiceCancelled" defaultMessage="Отклонен" />
+                </div>
+              }
+              {((invoiceData && invoiceData.status === 'ready') || payed) &&
+                <div styleName='date'>
+                  <FormattedMessage id='RowHistoryInvoicePayed' defaultMessage='Оплачен' />
+                </div>
               }
             </div>
             <div styleName={statusStyleAmount}>

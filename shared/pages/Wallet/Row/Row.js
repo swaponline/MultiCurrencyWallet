@@ -349,6 +349,20 @@ export default class Row extends Component {
     })
   }
 
+  handleCreateInvoiceLink = () => {
+    const {
+      item: {
+        currency,
+        address,
+      },
+    } = this.props
+
+    actions.modals.open(constants.modals.InvoiceLinkModal, {
+      currency,
+      address,
+    })
+  }
+
   handleCreateInvoice = () => {
     const {
       item: {
@@ -459,6 +473,12 @@ export default class Row extends Component {
         id: 1004,
         title: <FormattedMessage id='WalletRow_Menu_Invoice' defaultMessage='Выставить счет' />,
         action: this.handleCreateInvoice,
+        disable: false,
+      })
+      dropDownMenuItems.push({
+        id: 1005,
+        title: <FormattedMessage id='WalletRow_Menu_InvoiceLink' defaultMessage='Получить ссылку для выставления счета' />,
+        action: this.handleCreateInvoiceLink,
         disable: false,
       })
     }

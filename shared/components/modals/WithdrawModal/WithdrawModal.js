@@ -66,6 +66,7 @@ export default class WithdrawModal extends React.Component {
       currentDecimals,
       getUsd: 0,
       error: false,
+      ownTx: '',
     }
   }
 
@@ -161,8 +162,8 @@ export default class WithdrawModal extends React.Component {
   }
 
   handleSubmit = async () => {
-    const { address: to, amount } = this.state
-    const { data: { currency, address, balance }, name } = this.props
+    const { address: to, amount, ownTx } = this.state
+    const { data: { currency, address, balance, invoice, onReady }, name } = this.props
 
     this.setState(() => ({ isShipped: true }))
 
@@ -186,10 +187,28 @@ export default class WithdrawModal extends React.Component {
       }
     }
 
+    if (invoice && ownTx) {
+      await actions.invoices.markInvoice(invoice.id, 'ready', ownTx)
+      actions.loader.hide()
+      actions.notifications.show(constants.notifications.SuccessWithdraw, {
+        amount,
+        currency,
+        address: to,
+      })
+      this.setState(() => ({ isShipped: false, error: false }))
+      actions.modals.close(name)
+      if (onReady instanceof Function) {
+        onReady()
+      }
+      return
+    }
     await actions[currency.toLowerCase()].send(sendOptions)
-      .then((txRaw) => {
+      .then(async (txRaw) => {
         actions.loader.hide()
         actions[currency.toLowerCase()].getBalance(currency)
+        if (invoice) {
+          await actions.invoices.markInvoice(invoice.id, 'ready', txRaw)
+        }
         this.setBalanceOnState(currency)
 
         actions.notifications.show(constants.notifications.SuccessWithdraw, {
@@ -199,6 +218,9 @@ export default class WithdrawModal extends React.Component {
         })
 
         this.setState(() => ({ isShipped: false, error: false }))
+        if (onReady instanceof Function) {
+          onReady()
+        }
       })
       .then(() => {
         actions.modals.close(name)
@@ -292,10 +314,10 @@ export default class WithdrawModal extends React.Component {
 
     render() {
       const { address, amount, balance, isShipped, minus, ethBalance, openScanCam,
-        isEthToken, exCurrencyRate, currentDecimals, error } = this.state
-      const { name, data: { currency }, tokenItems, items, intl } = this.props
+        isEthToken, exCurrencyRate, currentDecimals, error, ownTx } = this.state
+      const { name, data: { currency, invoice }, tokenItems, items, intl } = this.props
 
-      const linked = Link.all(this, 'address', 'amount')
+      const linked = Link.all(this, 'address', 'amount', 'ownTx')
 
       const min = minAmount[currency.toLowerCase()]
       const dataCurrency = isEthToken ? 'ETH' : currency.toUpperCase()
@@ -331,15 +353,19 @@ export default class WithdrawModal extends React.Component {
         })
       }
 
-      const title = defineMessages({
+      const labels = defineMessages({
         withdrowModal: {
           id: 'withdrowTitle271',
           defaultMessage: `Withdraw`,
         },
+        ownTxPlaceholder: {
+          id: 'withdrawOwnTxPlaceholder',
+          defaultMessage: 'Если оплатили с другого источника'
+        },
       })
 
       return (
-        <Modal name={name} title={`${intl.formatMessage(title.withdrowModal)}${' '}${currency.toUpperCase()}`}>
+        <Modal name={name} title={`${intl.formatMessage(labels.withdrowModal)}${' '}${currency.toUpperCase()}`}>
           {openScanCam &&
             <QrReader
               openScan={this.openScan}
@@ -434,6 +460,26 @@ export default class WithdrawModal extends React.Component {
               )
             }
           </div>
+          { invoice && 
+            <div styleName="lowLevel">
+              <div styleName="groupField">
+                <div styleName="downLabel">
+                  <FieldLabel inRow>
+                    <span styleName="mobileFont">
+                      <FormattedMessage id="WithdrowOwnTX" defaultMessage="Или укажите TX" />
+                    </span>
+                  </FieldLabel>
+                </div>
+              </div>
+              <div styleName="group">
+                <Input
+                  styleName="input"
+                  valueLink={linked.ownTx}
+                  placeholder={`${intl.formatMessage(labels.ownTxPlaceholder)}`}
+                />
+              </div>
+            </div>
+          }
           <Button styleName="buttonFull" brand fullWidth disabled={isDisabled} onClick={this.handleSubmit}>
             { isShipped
               ? (
@@ -442,11 +488,16 @@ export default class WithdrawModal extends React.Component {
                 </Fragment>
               )
               : (
-                <Fragment>
-                  <FormattedMessage id="WithdrawModal111" defaultMessage="Withdraw" />
-                  {' '}
-                  {`${currency.toUpperCase()}`}
-                </Fragment>
+                (invoice && ownTx) ? 
+                  (
+                    <FormattedMessage id="WithdrawModalInvoiceSaveTx" defaultMessage="Отметить как оплаченный" />
+                  ) : (
+                    <Fragment>
+                      <FormattedMessage id="WithdrawModal111" defaultMessage="Withdraw" />
+                      {' '}
+                      {`${currency.toUpperCase()}`}
+                    </Fragment>
+                  )
               )
             }
           </Button>

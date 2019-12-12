@@ -67,6 +67,7 @@ export default class WithdrawModalMultisig extends React.Component {
       getUsd: 0,
       error: false,
       smsConfirmed: false,
+      ownTx: '',
     }
   }
 
@@ -166,7 +167,7 @@ export default class WithdrawModalMultisig extends React.Component {
   handleConfirmSMS = async () => {
     const { code } = this.state
     const { address: to, amount } = this.state
-    const { data: { currency, address, balance }, name } = this.props
+    const { data: { currency, address, balance, invoice, onReady }, name } = this.props
     
     const result = await actions.btcmultisig.confirmSMSProtected(code)
     if (result && result.txid) {
@@ -186,6 +187,9 @@ export default class WithdrawModalMultisig extends React.Component {
         && result.rawTX
       ) {
         const resBroatcast = await actions.btcmultisig.broadcastTx(result.rawTX)
+        if (invoice) {
+          await actions.invoices.markInvoice(invoice.id, 'ready', result.rawTX)
+        }
         actions.loader.hide()
 
         actions.notifications.show(constants.notifications.SuccessWithdraw, {
@@ -193,15 +197,19 @@ export default class WithdrawModalMultisig extends React.Component {
           currency,
           address: to,
         })
-        
+
         actions.modals.close(name)
+
+        if (onReady instanceof Function) {
+          onReady()
+        }
       }
     }
   }
 
   handleSubmit = async () => {
-    const { address: to, amount } = this.state
-    const { data: { currency, address, balance }, name } = this.props
+    const { address: to, amount, ownTx} = this.state
+    const { data: { currency, address, balance, invoice, onReady }, name } = this.props
 
     this.setState(() => ({ isShipped: true }))
 
@@ -223,6 +231,22 @@ export default class WithdrawModalMultisig extends React.Component {
         ...sendOptions,
         from: address,
       }
+    }
+
+    if (invoice && ownTx) {
+      await actions.invoices.markInvoice(invoice.id, 'ready', ownTx)
+      actions.loader.hide()
+      actions.notifications.show(constants.notifications.SuccessWithdraw, {
+        amount,
+        currency,
+        address: to,
+      })
+      this.setState(() => ({ isShipped: false, error: false }))
+      actions.modals.close(name)
+      if (onReady instanceof Function) {
+        onReady()
+      }
+      return
     }
 
     const result = await actions.btcmultisig.sendSMSProtected(sendOptions)

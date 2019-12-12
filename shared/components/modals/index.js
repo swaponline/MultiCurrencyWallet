@@ -26,6 +26,7 @@ import RegisterSMSProtected from './RegisterSMSProtected/RegisterSMSProtected'
 import MultisignJoinLink from './MultisignJoinLink/MultisignJoinLink'
 
 import InvoiceModal from './InvoiceModal/InvoiceModal'
+import InvoiceLinkModal from './InvoiceLinkModal/InvoiceLinkModal'
 
 
 export default {
@@ -54,4 +55,5 @@ export default {
   MultisignJoinLink,
   CurrencyAction,
   InvoiceModal,
+  InvoiceLinkModal,
 }
