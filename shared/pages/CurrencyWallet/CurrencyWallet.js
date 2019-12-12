@@ -15,8 +15,6 @@ import SwapsHistory from 'pages/History/SwapsHistory/SwapsHistory'
 
 import Table from 'components/tables/Table/Table'
 import NotifyBlock from 'pages/Wallet/components/NotityBlock/NotifyBock'
-import NewButton from 'components/controls/NewButton/NewButton'
-import PageHeadline from 'components/PageHeadline/PageHeadline'
 import PageSeo from 'components/Seo/PageSeo'
 import { getSeoPage } from 'helpers/seo'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'

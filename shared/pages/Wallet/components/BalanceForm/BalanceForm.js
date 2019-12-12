@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react'
 import CSSModules from 'react-css-modules'
 import styles from 'pages/Wallet/Wallet.scss'
 import NewButton from 'components/controls/NewButton/NewButton'
-import icons from './images'
+
 
 function BalanceForm({usdBalance, currencyBalance, handleReceive, handleWithdraw, currency}) {
   const [activeCurrency, setActiveCurrency] = useState('usd');
