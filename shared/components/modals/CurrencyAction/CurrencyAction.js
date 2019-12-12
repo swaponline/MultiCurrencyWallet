@@ -77,7 +77,7 @@ export default class CurrencyAction extends React.Component {
         </div>
         <div styleName="content">
           <p styleName="text">
-            <FormattedMessage defaultMessage={`Please choose a currency, which you want to ${context.toLowerCase()}`}  />
+            <FormattedMessage id="ReceiveModal200" defaultMessage={`Please choose a currency, which you want to ${context.toLowerCase()}`}  />
           </p>
           <div styleName="currenciesWrapper">
              {currencies.map(item => {
