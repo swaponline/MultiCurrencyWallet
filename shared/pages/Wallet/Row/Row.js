@@ -398,8 +398,18 @@ export default class Row extends Component {
   }
 
   hideCurrency = () => {
-    const { item: { currency } } = this.props
-    actions.core.markCoinAsHidden(currency)
+    const { item: { currency, balance } } = this.props
+
+    if (balance > 0) {
+      actions.modals.open(constants.modals.AlertModal, {
+        message: <FormattedMessage id='WalletRow_Action_HideNonZero_Message' defaultMessage='У этого кошелка положительный баланс. Его скрыть нельзя.' />
+      })
+    } else {
+      actions.core.markCoinAsHidden(currency)
+      actions.notifications.show(constants.notifications.Message, {
+        message: <FormattedMessage id='WalletRow_Action_Hidden' defaultMessage='Кошелек скрыт' />
+      })
+    }
   }
 
   copy = () => {
