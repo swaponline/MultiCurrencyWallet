@@ -39,9 +39,6 @@ const SignUpButton = ({ mobile }) => (
                 <FormattedMessage id="ADDoffer33" defaultMessage="Get subscribed for the Swap.Online news" />
               </span>
             </ReactTooltip>
-            <button styleName="buttonMobile" onClick={handleSignUp} /* eslint-disable-line */ >
-              <i className="fa fa-bell" aria-hidden="true" />
-            </button>
           </Fragment>
         )
     }
