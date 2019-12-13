@@ -18,7 +18,7 @@ const Cupture = ({ click, step }) => (
     <span styleName="cupture1">
       <FormattedMessage
         id="createWalletCapture1"
-        defaultMessage="На выбор Bitcoin, Ethereum, USDT, Swap"
+        defaultMessage="На выбор Bitcoin, Ethereum, Swap"
       />
     </span>
     <button disabled={step > 1} styleName={`etc ${step > 1 ? "" : "decorated"}`} type="button" onClick={click}>

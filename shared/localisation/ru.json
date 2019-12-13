@@ -3774,7 +3774,7 @@
   },
   {
     "id": "createWalletCapture1",
-    "message": "На выбор Bitcoin, Ethereum, USDT, EUROS, Swap или все сразу",
+    "message": "На выбор Bitcoin, Ethereum, Swap",
     "files": [
       "shared/pages/CreateWallet/Steps/texts.js"
     ]
