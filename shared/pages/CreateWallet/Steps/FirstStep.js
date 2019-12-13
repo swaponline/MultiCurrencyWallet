@@ -25,8 +25,10 @@ import Cupture
 
 const defaultStartPack = [
   { name: "BTC", capture: "Bitcoin" },
-  { name: "ETH", capture: "Etherium" },
-  { name: "SWAP", capture: "Swap" }
+  { name: "ETH", capture: "Ethereum" },
+  { name: "SWAP", capture: "Swap" },
+  { name: "USDT", capture: "Tether" },
+  { name: "EUROS", capture: "Euros" },
 ]
 
 @connect(({ currencies: { items: currencies } }) => ({ currencies }))
@@ -74,7 +76,7 @@ export default class CreateWallet extends Component {
     const { onClick, error } = this.props
     const { curState, startPack, all } = this.state
 
-    const coloredIcons = ['btc', 'eth', 'swap', 'bch']
+    const coloredIcons = ['btc', 'eth', 'swap', 'bch', 'usdt', 'euros']
     return (
       <div>
         <div>
@@ -85,6 +87,7 @@ export default class CreateWallet extends Component {
             <div styleName={`currencyChooserWrapper ${startPack.length < 4 ? "smallArr" : ""}`}>
               {startPack.map(el => {
                 const { name, capture } = el
+                console.log("name", name)
                 return (
                   <div key={name} styleName={`card ${curState[name] ? 'purpleBorder' : ''}`} onClick={() => this.handleClick(name)}>
                     <div styleName="logo">

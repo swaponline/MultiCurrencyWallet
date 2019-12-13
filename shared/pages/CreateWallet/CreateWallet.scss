@@ -47,7 +47,7 @@
   line-height: 2.5;
   text-align: center;
   background-color: #f0eefd;
-  color: #6144E5;
+  color: #6144e5;
   border: 1px solid #f0eefd;
   font-weight: bold;
   margin-right: 10px;
@@ -71,7 +71,15 @@
 }
 
 .coinColor {
-  background: black
+  background: black;
+}
+
+.usdt {
+  background: #33a681;
+}
+
+.euros {
+  background: #2760aa;
 }
 
 .swap {
@@ -79,15 +87,8 @@
 }
 
 .purple {
-  background-color: #6144E5;
-  color: #f0eefd
-}
-
-.assetsTableIcon {
-  // background: rgba(97, 68, 229, 0.1);
-  min-width: 35px;
-  height: 35px;
-  border-radius: 50%;
+  background-color: #6144e5;
+  color: #f0eefd;
 }
 
 .bch {
@@ -96,6 +97,12 @@
 
 .green {
   background-color: #0ccf14;
+}
+.assetsTableIcon {
+  // background: rgba(97, 68, 229, 0.1);
+  min-width: 35px;
+  height: 35px;
+  border-radius: 50%;
 }
 
 .continue {
@@ -106,7 +113,7 @@
   font-weight: 800;
   font-size: 15px;
   line-height: 150%;
-  background: #6144E5;
+  background: #6144e5;
   color: white;
   height: 45px;
   width: 92%;
@@ -115,7 +122,7 @@
 
 .continue:disabled {
   background-color: #f0eefd;
-  color: #6144E5;
+  color: #6144e5;
 }
 
 .subHeader {
@@ -132,13 +139,13 @@
 .subHeader p {
   font-size: 10px;
   margin-bottom: 7px;
-  color: #8E9AA3;
+  color: #8e9aa3;
 }
 
 .currencyChooserWrapper {
   justify-content: space-between;
   padding: 30px;
-  overflow-x: scroll;
+  overflow-x: auto;
   margin: auto;
 }
 
@@ -153,7 +160,7 @@
 }
 
 .card {
-  background: #FFFFFF;
+  background: #ffffff;
   border: 1px solid rgba(142, 154, 163, 0.16);
   box-sizing: border-box;
   box-shadow: 0px 2px 12px rgba(142, 154, 163, 0.08);
@@ -179,12 +186,12 @@
   b {
     font-weight: bolder;
     font-size: 11;
-    color: #1F2D48;
+    color: #1f2d48;
   }
 
   li {
     font-weight: 100;
-    color: #8E9AA3;
+    color: #8e9aa3;
     font-size: 11px;
     font-family: Inter;
     line-height: 20px;
@@ -199,23 +206,22 @@
   padding: 0;
 }
 
-.decorated :hover {
+.decorated {
   text-decoration: underline;
 }
-
-
 
 .cardDisabled {
   opacity: 0.7 !important;
 }
 
 .purpleBorder {
-  border-color: #6144E5 !important;
+  border-color: #6144e5 !important;
 }
 
 .cardActivated {
   border: 1px solid rgba(102, 204, 87, 0.64) !important;
-  div, img {
+  div,
+  img {
     opacity: 0.5 !important;
   }
   em {
@@ -224,8 +230,9 @@
 }
 
 .cardActivated.purpleBorder {
-  border-color: #6144E5 !important;
-  div, img {
+  border-color: #6144e5 !important;
+  div,
+  img {
     opacity: 1 !important;
   }
   em {
@@ -244,27 +251,26 @@
 .secureSize {
   height: 160px;
   width: 140px;
-  text-align: center; 
+  text-align: center;
 }
 
-@media screen and (max-width: 750px){
+@media screen and (max-width: 750px) {
   .secureSize {
     width: 100% !important;
   }
-  .currencyChooserWrapperSecond{
+  .currencyChooserWrapperSecond {
     display: block;
     padding: 0;
   }
 
-  .currencyChooserWrapperSecond{
+  .currencyChooserWrapperSecond {
     height: 285px;
     margin: 10px 0;
     overflow-y: scroll;
   }
 
   .card {
-    display: inline-flex
-    em {
+    display: inline-flex em {
       position: relative;
       width: 100%;
       height: 0;
@@ -272,7 +278,7 @@
   }
 }
 
-@media screen and (max-width: 568px){
+@media screen and (max-width: 568px) {
   .wrapper {
     margin: 125px auto;
     padding: 0;
@@ -280,16 +286,15 @@
 }
 
 @media screen and (max-width: 480px) {
-
   .flex {
     display: flex;
   }
 
   .ind {
     height: 0px;
-      text-align: right;
-      top: -15px;
-      position: relative;
+    text-align: right;
+    top: -15px;
+    position: relative;
   }
   .continue {
     width: 100%;
@@ -355,7 +360,7 @@
     font-size: 11px;
     line-height: 14px;
     font-weight: 800;
-    color: #8E9AA3;
+    color: #8e9aa3;
   }
 
   .inLine {
@@ -366,7 +371,7 @@
   }
 
   .steps {
-    width: 100px
+    width: 100px;
   }
 
   .logo {
@@ -405,12 +410,12 @@
     b {
       font-weight: bolder;
       font-size: 16px;
-      color: #1F2D48;
+      color: #1f2d48;
     }
 
     li {
       font-weight: 100;
-      color: #8E9AA3;
+      color: #8e9aa3;
       font-size: 11px;
       font-family: Inter;
       line-height: 15px;
@@ -452,9 +457,8 @@
   }
 }
 
-@media screen and (max-width: 420px){
+@media screen and (max-width: 420px) {
   .stepNumber {
     width: 45px;
   }
 }
-

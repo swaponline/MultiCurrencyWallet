@@ -19,6 +19,7 @@ import lev from './lev.svg'
 import ltc from './ltc.svg'
 import bxb from './bxb.svg'
 import dcn from './dcn.svg'
+import euros from './euros.svg'
 
 
 export default {
@@ -44,4 +45,5 @@ export default {
   eos,
   yup,
   nim,
+  euros,
 }

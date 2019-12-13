@@ -63,14 +63,14 @@ export default class Header extends Component {
     const { location: { pathname }, intl } = props
     const { exchange, home, wallet, history: historyLink } = links
     const { products, invest, history } = messages
-    const { lastCheckBalance, wasCautionPassed, isWalletCreated } = constants.localStorage
+    const { lastCheckBalance, wasCautionPassed, isWalletCreate } = constants.localStorage
 
     if (localStorage.getItem(lastCheckBalance) || localStorage.getItem(wasCautionPassed)) {
-      localStorage.setItem(isWalletCreated, true)
+      localStorage.setItem(isWalletCreate, true)
     }
 
     const dinamicPath = pathname.includes(exchange) ? `${unlocalisedUrl(intl.locale, pathname)}` : `${home}`
-    const lsWalletCreated = localStorage.getItem(isWalletCreated)
+    const lsWalletCreated = localStorage.getItem(isWalletCreate)
     const isWalletPage = pathname === wallet || pathname === `/ru${wallet}`
 
     this.state = {
@@ -134,18 +134,17 @@ export default class Header extends Component {
     const { pathname } = location
     const { wallet, home } = links
 
-    let isWalletCreated = localStorage.getItem(constants.localStorage.isWalletCreate)
+    let isWalletCreate = localStorage.getItem(constants.localStorage.isWalletCreate)
 
     const isWalletPage = pathname === wallet
       || pathname === `/ru${wallet}`
 
-    if (isWalletPage && !isWalletCreated) {
-      localStorage.setItem(constants.localStorage.isWalletCreated, true)
-      isWalletCreated = true
+    if (isWalletPage && !isWalletCreate) {
+      isWalletCreate = true
 
       this.setState(() => ({
-        menuItems: getMenuItems(this.props, isWalletCreated),
-        menuItemsMobile: getMenuItemsMobile(this.props, isWalletCreated),
+        menuItems: getMenuItems(this.props, isWalletCreate),
+        menuItemsMobile: getMenuItemsMobile(this.props, isWalletCreate),
         createdWalletLoader: true,
       }), () => {
         setTimeout(() => {
@@ -260,7 +259,6 @@ export default class Header extends Component {
 
   openCreateWallet = (options) => {
     const { history, intl: { locale } } = this.props
-    localStorage.setItem(constants.localStorage.isWalletCreate, true)
     history.push(localisedUrl(locale, `createWallet`))
   }
 
