@@ -62,21 +62,21 @@
   display: flex;
 }
 
-// .btc {
-//   background: orange;
-// }
-
-// .eth {
-//   background: black;
-// }
-
-.coinColor {
-  background: #0ccf14;
+.btc {
+  background: orange;
 }
 
-// .swap {
-//   background: #775cf1;
-// }
+.eth {
+  background: black;
+}
+
+.coinColor {
+  background: black
+}
+
+.swap {
+  background: #775cf1;
+}
 
 .purple {
   background-color: #6144E5;
@@ -90,9 +90,9 @@
   border-radius: 50%;
 }
 
-// .bch {
-//   background: #4ac745;
-// }
+.bch {
+  background: #4ac745;
+}
 
 .green {
   background-color: #0ccf14;
@@ -142,6 +142,10 @@
   margin: auto;
 }
 
+.smallArr {
+  justify-content: center;
+}
+
 .buttonWrapper {
   position: absolute;
   right: 0;
@@ -160,8 +164,7 @@
   list-style: none;
   display: grid;
   height: 140px;
-  width: 110px;
-  min-width: 150px;
+  min-width: 110px;
   margin: 7px;
 
   em {
@@ -188,6 +191,19 @@
     text-align: center;
   }
 }
+
+.cupture1 {
+  margin-right: 5px;
+}
+.etc {
+  padding: 0;
+}
+
+.decorated :hover {
+  text-decoration: underline;
+}
+
+
 
 .cardDisabled {
   opacity: 0.7 !important;
@@ -253,12 +269,6 @@
       width: 100%;
       height: 0;
     }
-  }
-}
-
-@media screen and (max-width: 700px){
-  .card {
-    width: 85px;
   }
 }
 
@@ -434,7 +444,7 @@
 
   .currencyChooserWrapper {
     overflow-y: auto;
-    max-height: 80vh;
+    max-height: 65vh;
   }
 
   .card li {

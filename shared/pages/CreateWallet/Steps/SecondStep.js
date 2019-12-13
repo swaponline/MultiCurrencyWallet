@@ -16,9 +16,9 @@ import actions from 'redux/actions'
 
 import Explanation from '../Explanation'
 import icons from '../images'
-import {
+import Cupture,
+{
   subHeaderText1,
-  cupture1,
   subHeaderText2,
   cupture2,
 } from './texts'
@@ -45,7 +45,7 @@ const CreateWallet = (props) => {
     multisign: {},
   }
 
-  if (currencies.btc) {
+  if (currencies.BTC) {
     _protection.sms.btc = true
     _protection.g2fa.btc = false
     _protection.multisign.btc = true
@@ -122,7 +122,7 @@ const CreateWallet = (props) => {
       {!isMobile && !singleCurrecnyData &&
         <div>
           <Explanation subHeaderText={subHeaderText1()} step={1} notMain>
-            {cupture1()}
+            <Cupture click={this.etcClick} step={2} />
           </Explanation>
         </div>
       }

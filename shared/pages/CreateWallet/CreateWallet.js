@@ -93,7 +93,7 @@ const CreateWallet = (props) => {
           handleClick()
           break
         case 'sms':
-          if (currencies.btc) {
+          if (currencies.BTC) {
             if (!actions.btcmultisig.checkSMSActivated()) {
               actions.modals.open(constants.modals.RegisterSMSProtected, {
                 callback: () => {
@@ -107,7 +107,7 @@ const CreateWallet = (props) => {
           }
           break;
         case 'multisignature':
-          if (currencies.btc) {
+          if (currencies.BTC) {
             actions.core.markCoinAsVisible('BTC (Multisig)')
             handleClick()
           }
