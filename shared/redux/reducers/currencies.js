@@ -9,6 +9,7 @@ const initialState = {
       icon: 'eos',
       value: 'eos',
       fullTitle: 'EOS',
+      addAssets: true,
     },
     {
       name: 'ETH',
@@ -16,6 +17,7 @@ const initialState = {
       icon: 'eth',
       value: 'eth',
       fullTitle: 'ethereum',
+      addAssets: true,
     },
     {
       name: 'LTC',
@@ -23,6 +25,7 @@ const initialState = {
       icon: 'ltc',
       value: 'ltc',
       fullTitle: 'litecoin',
+      addAssets: true,
     },
     {
       name: 'BTC',
@@ -30,6 +33,7 @@ const initialState = {
       icon: 'btc',
       value: 'btc',
       fullTitle: 'bitcoin',
+      addAssets: true,
     },
     {
       name: 'BTC (SMS-Protected)',
@@ -37,6 +41,7 @@ const initialState = {
       icon: 'btc',
       value: 'btcMultisig',
       fullTitle: 'bitcoinMultisig',
+      addAssets: false,
     },
     {
       name: 'BTC (Multisig)',
@@ -44,6 +49,7 @@ const initialState = {
       icon: 'btc',
       value: 'btcMultisig',
       fullTitle: 'bitcoinMultisig',
+      addAssets: false,
     },
     {
       name: 'QTUM',
@@ -51,6 +57,7 @@ const initialState = {
       icon: 'qtum',
       value: 'qtum',
       fullTitle: 'qtum',
+      addAssets: true,
     },
     ...(Object.keys(config.erc20)
       .map(key => ({
@@ -59,6 +66,7 @@ const initialState = {
         icon: key,
         value: key,
         fullTitle: key,
+        addAssets: true,
       }))),
   ],
   partialItems: [
@@ -176,6 +184,7 @@ process.env.TESTNET && initialState.items.unshift({
   icon: 'bch',
   value: 'bch',
   fullTitle: 'bitcoin cash',
+  addAssets: true,
 })
 
 const addSelectedItems = (state, payload) => ({

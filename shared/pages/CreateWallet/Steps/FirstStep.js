@@ -15,66 +15,39 @@ import Coin from 'components/Coin/Coin'
 import Explanation from '../Explanation'
 import icons from '../images'
 
-import {
+import Cupture
+, {
   subHeaderText1,
-  cupture1,
   subHeaderText2,
   cupture2,
 } from './texts'
 
 
-@connect(({
-  user: {
-    ethData,
-    btcData,
-    btcMultisigSMSData,
-    btcMultisigUserData,
-    bchData,
-    tokensData,
-    eosData,
-    telosData,
-    ltcData,
-    // qtumData,
-    // usdtOmniData,
-    // nimData,
-    // xlmData,
-  },
-  currencies: { items: currencies },
-}, { currency }) => ({
-  items: [
-    btcData,
-    btcMultisigSMSData,
-    btcMultisigUserData,
-    ethData,
-    eosData,
-    telosData,
-    bchData,
-    ltcData,
-    //qtumData,
-    // xlmData,
-    // usdtOmniData,
-    ...Object.keys(tokensData).map(k => (tokensData[k])),
-  ]
-    .map(({ account, keyPair, ...data }) => ({
-      ...data,
-    }))
-}))
+const defaultStartPack = [
+  { name: "BTC", capture: "Bitcoin" },
+  { name: "ETH", capture: "Etherium" },
+  { name: "SWAP", capture: "Swap" }
+]
+
+@connect(({ currencies: { items: currencies } }) => ({ currencies }))
 @CSSModules(styles, { allowMultiple: true })
 export default class CreateWallet extends Component {
 
   constructor(props) {
     super()
-    const { items } = props
+    const { currencies } = props
 
-    const coins = items.map(({ currency, fullName }) => ({ name: currency.toLowerCase(), capture: fullName }))
+    const items = currencies.filter(({ addAssets, name }) => addAssets)
+    const untouchable = defaultStartPack.map(({ name }) => name)
+
+    const coins = items
+      .map(({ name, fullTitle }) => ({ name, capture: fullTitle }))
+      .filter(({ name }) => !untouchable.includes(name))
+
     const curState = {}
     items.forEach(({ currency }) => { curState[currency] = false })
 
-
-    this.state = {
-      curState,
-      coins
-    }
+    this.state = { curState, coins, startPack: defaultStartPack }
   }
 
 
@@ -82,33 +55,43 @@ export default class CreateWallet extends Component {
     const { setError } = this.props
     const { curState } = this.state
 
-    const dataToReturn = { ...curState, [name]: !curState[name] }
+    const dataToReturn = { [name]: !curState[name] }
     this.setState(() => ({ curState: dataToReturn }))
     reducers.createWallet.newWalletData({ type: 'currencies', data: dataToReturn })
     setError(null)
   }
 
+  etcClick = () => {
+    const { coins, startPack, all } = this.state
+    let newStartPack = defaultStartPack
+    if (!all) {
+      newStartPack = [...startPack, ...coins]
+    }
+    this.setState(() => ({ startPack: newStartPack, all: !all }))
+  }
+
   render() {
     const { onClick, error } = this.props
-    const { coins, curState } = this.state
+    const { curState, startPack, all } = this.state
 
+    const coloredIcons = ['btc', 'eth', 'swap', 'bch']
     return (
       <div>
         <div>
           <div>
             <Explanation step={1} subHeaderText={subHeaderText1()}>
-              {cupture1()}
+              <Cupture click={this.etcClick} step={1} />
             </Explanation>
-            <div styleName="currencyChooserWrapper">
-              {coins.map(el => {
+            <div styleName={`currencyChooserWrapper ${startPack.length < 4 ? "smallArr" : ""}`}>
+              {startPack.map(el => {
                 const { name, capture } = el
                 return (
                   <div key={name} styleName={`card ${curState[name] ? 'purpleBorder' : ''}`} onClick={() => this.handleClick(name)}>
-                    <div styleName={`logo coinColor`}>
-                      <Coin styleName="assetsTableIcon" name={name} />
+                    <div styleName="logo">
+                      <Coin styleName={`assetsTableIcon ${coloredIcons.includes(name.toLowerCase()) ? name.toLowerCase() : "coinColor"}`} name={name} />
                     </div>
                     <div styleName="listGroup">
-                      <li><b>{name.toUpperCase()}</b></li>
+                      <li><b>{name}</b></li>
                       <li>{capture}</li>
                     </div>
                   </div>
@@ -120,14 +103,15 @@ export default class CreateWallet extends Component {
             <FormattedMessage id="createWalletButton1" defaultMessage="Продолжить" />
           </button>
         </div>
-        {!isMobile &&
+        {
+          !isMobile &&
           <div>
             <Explanation step={2} subHeaderText={subHeaderText2()} notMain>
               {cupture2()}
             </Explanation>
           </div>
         }
-      </div>
+      </div >
     )
   }
 

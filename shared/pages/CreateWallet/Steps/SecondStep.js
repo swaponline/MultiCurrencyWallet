@@ -16,9 +16,9 @@ import actions from 'redux/actions'
 
 import Explanation from '../Explanation'
 import icons from '../images'
-import {
+import Cupture,
+{
   subHeaderText1,
-  cupture1,
   subHeaderText2,
   cupture2,
 } from './texts'
@@ -122,7 +122,7 @@ const CreateWallet = (props) => {
       {!isMobile && !singleCurrecnyData &&
         <div>
           <Explanation subHeaderText={subHeaderText1()} step={1} notMain>
-            {cupture1()}
+            <Cupture click={this.etcClick} step={2} />
           </Explanation>
         </div>
       }
