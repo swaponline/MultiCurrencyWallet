@@ -1,4 +1,4 @@
-.button, .buttonMobile {
+.button {
   display: flex;
   align-items: center;
   min-width: 40px;
@@ -18,16 +18,7 @@
   }
 }
 
-.buttonMobile {
-  padding: 0;
-  display: none;
-}
-
 @media (max-width: 860px){
-  .buttonMobile {
-    display: block;
-  }
-
   .button {
     display: none;
   }
@@ -41,7 +32,7 @@
   z-index: 10;
 }
 
-.mobile .buttonMobile {
+.mobile {
   min-width: 48px;
   height: 48px;
   line-height: 48px;
