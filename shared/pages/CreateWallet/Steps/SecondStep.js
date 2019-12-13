@@ -45,7 +45,7 @@ const CreateWallet = (props) => {
     multisign: {},
   }
 
-  if (currencies.btc) {
+  if (currencies.BTC) {
     _protection.sms.btc = true
     _protection.g2fa.btc = false
     _protection.multisign.btc = true
