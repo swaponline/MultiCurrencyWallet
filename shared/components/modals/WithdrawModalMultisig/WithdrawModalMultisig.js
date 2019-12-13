@@ -257,52 +257,6 @@ export default class WithdrawModalMultisig extends React.Component {
         step: 'confirm'
       })
     }
-    console.log(result)
-    /*
-      .then((txRaw) => {
-        actions.loader.hide()
-        actions.btcmultisig.getBalance(currency)
-        this.setBalanceOnState(currency)
-
-        actions.notifications.show(constants.notifications.SuccessWithdraw, {
-          amount,
-          currency,
-          address: to,
-        })
-
-        this.setState(() => ({ isShipped: false, error: false }))
-      })
-      .then(() => {
-        actions.modals.close(name)
-      })
-      .catch((e) => {
-        const errorText = e.res ? e.res.text : ''
-        const error = {
-          name: {
-            id: 'Withdraw218',
-            defaultMessage: 'Withdrawal error',
-          },
-          message: {
-            id: 'ErrorNotification12',
-            defaultMessage: 'Oops, looks like something went wrong!',
-          },
-        }
-
-        if (/insufficient priority|bad-txns-inputs-duplicate/.test(errorText)) {
-          error.message = {
-            id: 'Withdraw232',
-            defaultMessage: 'There is not enough confirmation of the last transaction. Try later.',
-          }
-        }
-
-        console.error(error.name.defaultMessage, ':', e)
-
-        this.setState(() => ({
-          error,
-          isShipped: false,
-        }))
-      })
-      */
   }
 
     sellAllBalance = async () => {
@@ -339,10 +293,10 @@ export default class WithdrawModalMultisig extends React.Component {
 
     render() {
       const { address, amount, code, balance, isShipped, minus, ethBalance,
-        isEthToken, exCurrencyRate, currentDecimals, error, step } = this.state
-      const { name, data: { currency }, tokenItems, items, intl } = this.props
+        isEthToken, exCurrencyRate, currentDecimals, error, step, ownTx } = this.state
+      const { name, data: { currency, invoice }, tokenItems, items, intl } = this.props
 
-      const linked = Link.all(this, 'address', 'amount', 'code')
+      const linked = Link.all(this, 'address', 'amount', 'code', 'ownTx')
 
       const min = minAmount.btcmultisig
       const dataCurrency = isEthToken ? 'ETH' : currency.toUpperCase()
@@ -378,15 +332,19 @@ export default class WithdrawModalMultisig extends React.Component {
         })
       }
 
-      const title = defineMessages({
+      const labels = defineMessages({
         withdrowModal: {
           id: 'withdrowTitle271',
           defaultMessage: `Withdraw`,
         },
+        ownTxPlaceholder: {
+          id: 'withdrawOwnTxPlaceholder',
+          defaultMessage: 'Если оплатили с другого источника'
+        },
       })
 
       return (
-        <Modal name={name} title={`${intl.formatMessage(title.withdrowModal)}${' '}${currency.toUpperCase()}`}>
+        <Modal name={name} title={`${intl.formatMessage(labels.withdrowModal)}${' '}${currency.toUpperCase()}`}>
           { step==='fillform' && 
             <Fragment>
               <p styleName={isEthToken ? 'rednotes' : 'notice'}>
@@ -470,6 +428,26 @@ export default class WithdrawModalMultisig extends React.Component {
                   )
                 }
               </div>
+              { invoice && 
+                <div styleName="lowLevel">
+                  <div styleName="groupField">
+                    <div styleName="downLabel">
+                      <FieldLabel inRow>
+                        <span styleName="mobileFont">
+                          <FormattedMessage id="WithdrowOwnTX" defaultMessage="Или укажите TX" />
+                        </span>
+                      </FieldLabel>
+                    </div>
+                  </div>
+                  <div styleName="group">
+                    <Input
+                      styleName="input"
+                      valueLink={linked.ownTx}
+                      placeholder={`${intl.formatMessage(labels.ownTxPlaceholder)}`}
+                    />
+                  </div>
+                </div>
+              }
               <Button styleName="buttonFull" brand fullWidth disabled={isDisabled} onClick={this.handleSubmit}>
                 { isShipped
                   ? (
@@ -478,11 +456,16 @@ export default class WithdrawModalMultisig extends React.Component {
                     </Fragment>
                   )
                   : (
-                    <Fragment>
-                      <FormattedMessage id="WithdrawModal111" defaultMessage="Withdraw" />
-                      {' '}
-                      {`${currency.toUpperCase()}`}
-                    </Fragment>
+                    (invoice && ownTx) ? 
+                      (
+                        <FormattedMessage id="WithdrawModalInvoiceSaveTx" defaultMessage="Отметить как оплаченный" />
+                      ) : (
+                        <Fragment>
+                          <FormattedMessage id="WithdrawModal111" defaultMessage="Withdraw" />
+                          {' '}
+                          {`${currency.toUpperCase()}`}
+                        </Fragment>
+                      )
                   )
                 }
               </Button>

@@ -50,7 +50,7 @@ export default class WithdrawModalMultisigUser extends React.Component {
   constructor(data) {
     super()
 
-    const { data: { currency }, items, tokenItems } = data
+    const { data: { currency, amount, toAddress }, items, tokenItems } = data
 
     const currentDecimals = constants.tokenDecimals.btcmultisig
     const allCurrencyies = items.concat(tokenItems)
@@ -61,8 +61,8 @@ export default class WithdrawModalMultisigUser extends React.Component {
     this.state = {
       step: 'fillform',
       isShipped: false,
-      address: '',
-      amount: '',
+      address: (toAddress) ? toAddress : '',
+      amount: (amount) ? amount : '',
       code: '',
       minus: '',
       balance: selectedItem.balance || 0,
@@ -74,6 +74,7 @@ export default class WithdrawModalMultisigUser extends React.Component {
       smsConfirmed: false,
       txRaw: '',
       isLinkCopied: false,
+      ownTx: '',
     }
   }
 
@@ -138,8 +139,8 @@ export default class WithdrawModalMultisigUser extends React.Component {
   }
 
   handleSubmit = async () => {
-    const { address: to, amount } = this.state
-    const { data: { currency, address, balance }, name } = this.props
+    const { address: to, amount, ownTx } = this.state
+    const { data: { currency, address, balance, invoice }, name } = this.props
 
     this.setState(() => ({ isShipped: true }))
 
@@ -149,6 +150,22 @@ export default class WithdrawModalMultisigUser extends React.Component {
       to,
       amount,
       speed: 'fast',
+    }
+
+    if (invoice && ownTx) {
+      await actions.invoices.markInvoice(invoice.id, 'ready', ownTx)
+      actions.loader.hide()
+      actions.notifications.show(constants.notifications.SuccessWithdraw, {
+        amount,
+        currency,
+        address: to,
+      })
+      this.setState(() => ({ isShipped: false, error: false }))
+      actions.modals.close(name)
+      if (onReady instanceof Function) {
+        onReady()
+      }
+      return
     }
 
     if (helpers.ethToken.isEthToken({ name: currency.toLowerCase() })) {
@@ -170,7 +187,8 @@ export default class WithdrawModalMultisigUser extends React.Component {
         txRaw: result,
         address: to,
         amount,
-        currency: 'BTC'
+        currency: 'BTC',
+        invoice,
       },
       () => {
         this.setState({
@@ -227,11 +245,14 @@ export default class WithdrawModalMultisigUser extends React.Component {
     render() {
       const { address, amount, code, balance, isShipped, minus,
         isEthToken, exCurrencyRate, currentDecimals, error, step, txRaw,
-        isLinkCopied } = this.state
-      const { name, data: { currency }, tokenItems, items, intl } = this.props
+        isLinkCopied, ownTx } = this.state
+      const { name, data: { currency, invoice }, tokenItems, items, intl } = this.props
 
-      const txConfirmLink = `${location.origin}/#${links.multisign}/btc/confirm/${txRaw}`
-      const linked = Link.all(this, 'address', 'amount', 'code')
+      let txConfirmLink = `${location.origin}/#${links.multisign}/btc/confirm/${txRaw}`
+      if (invoice) {
+        txConfirmLink = `${location.origin}/#${links.multisign}/btc/confirminvoice/${invoice.id}|${txRaw}`
+      }
+      const linked = Link.all(this, 'address', 'amount', 'code', 'ownTx' )
 
       const min = minAmount.btcmultisig
       const dataCurrency = isEthToken ? 'ETH' : currency.toUpperCase()
@@ -267,15 +288,19 @@ export default class WithdrawModalMultisigUser extends React.Component {
         })
       }
 
-      const title = defineMessages({
+      const labels = defineMessages({
         withdrowModal: {
           id: 'withdrowTitle271',
           defaultMessage: `Withdraw`,
         },
+        ownTxPlaceholder: {
+          id: 'withdrawOwnTxPlaceholder',
+          defaultMessage: 'Если оплатили с другого источника'
+        },
       })
 
       return (
-        <Modal name={name} title={`${intl.formatMessage(title.withdrowModal)}${' '}${currency.toUpperCase()}`}>
+        <Modal name={name} title={`${intl.formatMessage(labels.withdrowModal)}${' '}${currency.toUpperCase()}`}>
           { step==='fillform' && 
             <Fragment>
               <p styleName={isEthToken ? 'rednotes' : 'notice'}>
@@ -352,6 +377,26 @@ export default class WithdrawModalMultisigUser extends React.Component {
                   )
                 }
               </div>
+              { invoice && 
+                <div styleName="lowLevel">
+                  <div styleName="groupField">
+                    <div styleName="downLabel">
+                      <FieldLabel inRow>
+                        <span styleName="mobileFont">
+                          <FormattedMessage id="WithdrowOwnTX" defaultMessage="Или укажите TX" />
+                        </span>
+                      </FieldLabel>
+                    </div>
+                  </div>
+                  <div styleName="group">
+                    <Input
+                      styleName="input"
+                      valueLink={linked.ownTx}
+                      placeholder={`${intl.formatMessage(labels.ownTxPlaceholder)}`}
+                    />
+                  </div>
+                </div>
+              }
               <Button styleName="buttonFull" brand fullWidth disabled={isDisabled} onClick={this.handleSubmit}>
                 { isShipped
                   ? (
@@ -360,11 +405,16 @@ export default class WithdrawModalMultisigUser extends React.Component {
                     </Fragment>
                   )
                   : (
-                    <Fragment>
-                      <FormattedMessage id="WithdrawModal111" defaultMessage="Withdraw" />
-                      {' '}
-                      {`${currency.toUpperCase()}`}
-                    </Fragment>
+                    (invoice && ownTx) ? 
+                      (
+                        <FormattedMessage id="WithdrawModalInvoiceSaveTx" defaultMessage="Отметить как оплаченный" />
+                      ) : (
+                        <Fragment>
+                          <FormattedMessage id="WithdrawModal111" defaultMessage="Withdraw" />
+                          {' '}
+                          {`${currency.toUpperCase()}`}
+                        </Fragment>
+                      )
                   )
                 }
               </Button>
