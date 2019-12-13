@@ -43,9 +43,9 @@ const isBTCAddress = (address) => {
   } = getState()
 
   if (btcData && btcData.address && btcData.address.toLowerCase() === address.toLowerCase()) return btcData
-  if (btcMultisigSMSData && btcMultisigSMSData.address && address.toLowerCase() === address.toLowerCase()) return btcMultisigSMSData
-  if (btcMultisigUserData && btcMultisigUserData.address && address.toLowerCase() === address.toLowerCase()) return btcMultisigUserData
-  if (btcMultisigG2FAData && btcMultisigG2FAData.address && address.toLowerCase() === address.toLowerCase()) return btcMultisigG2FAData
+  if (btcMultisigSMSData && btcMultisigSMSData.address && btcMultisigSMSData.address.toLowerCase() === address.toLowerCase()) return btcMultisigSMSData
+  if (btcMultisigUserData && btcMultisigUserData.address && btcMultisigUserData.address.toLowerCase() === address.toLowerCase()) return btcMultisigUserData
+  if (btcMultisigG2FAData && btcMultisigG2FAData.address && btcMultisigG2FAData.address.toLowerCase() === address.toLowerCase()) return btcMultisigG2FAData
 
   return false
 }
