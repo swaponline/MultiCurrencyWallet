@@ -56,7 +56,7 @@ export default class Btc extends PureComponent {
 
   async componentWillMount() {
     let { match : { params : { action, data, peer } }, history, location: { pathname } } = this.props
-    if ((action !== 'join') && (action !== 'connect') && (action !== 'confirm')) {
+    if ((action !== 'join') && (action !== 'connect') && (action !== 'confirm') && (action !== 'confirminvoice')) {
       this.props.history.push(localisedUrl(links.notFound))
       return
     }
@@ -87,13 +87,25 @@ export default class Btc extends PureComponent {
         this.props.history.push(localisedUrl(links.notFound))
       }
     }
-    if (action === 'confirm') {
+    if (action === 'confirm' || action === 'confirminvoice') {
       if (data && data.length) {
+        let txRaw = data
+        let invoice = false
+        if (action === 'confirminvoice') {
+          const dataParts = data.split('|')
+          if (dataParts.length === 2) {
+            invoice = dataParts[0]
+            txRaw = dataParts[1]
+          } else {
+            console.log('Bad tx raw and invoiceid data')
+          }
+        }
         try {
           this.setState({
             action,
-            txData: await actions.btcmultisig.parseRawTX(data),
-            txRaw: data,
+            txData: await actions.btcmultisig.parseRawTX(txRaw),
+            invoice,
+            txRaw: txRaw,
           })
         } catch (e) {
           console.log('Bad tx raw data')
@@ -168,10 +180,13 @@ export default class Btc extends PureComponent {
   }
 
   handleConfirm = async() => {
-    const { txRaw } = this.state
+    const { txRaw, invoice } = this.state
     this.setState( { isConfirming : true } )
     const signedTX = await actions.btcmultisig.signMultiSign( txRaw )
     const txID = await actions.btcmultisig.broadcastTx( signedTX )
+    if (invoice) {
+      await actions.invoices.markInvoice(invoice, 'ready', txID)
+    }
     this.setState( {
       txID,
       action: 'confirmready',
@@ -231,7 +246,7 @@ export default class Btc extends PureComponent {
           }
         </Fragment>
         }
-        { (action=='confirm') && 
+        { (action=='confirm' || action==='confirminvoice') && 
         <Fragment>
           <h1>
             <FormattedMessage id="BTCMS_ConfirmTxTitle" defaultMessage="Подтверждение транзакции" />

@@ -50,7 +50,7 @@ export default class WithdrawModalMultisigUser extends React.Component {
   constructor(data) {
     super()
 
-    const { data: { currency }, items, tokenItems } = data
+    const { data: { currency, amount, toAddress }, items, tokenItems } = data
 
     const currentDecimals = constants.tokenDecimals.btcmultisig
     const allCurrencyies = items.concat(tokenItems)
@@ -61,8 +61,8 @@ export default class WithdrawModalMultisigUser extends React.Component {
     this.state = {
       step: 'fillform',
       isShipped: false,
-      address: '',
-      amount: '',
+      address: (toAddress) ? toAddress : '',
+      amount: (amount) ? amount : '',
       code: '',
       minus: '',
       balance: selectedItem.balance || 0,
@@ -248,7 +248,10 @@ export default class WithdrawModalMultisigUser extends React.Component {
         isLinkCopied, ownTx } = this.state
       const { name, data: { currency, invoice }, tokenItems, items, intl } = this.props
 
-      const txConfirmLink = `${location.origin}/#${links.multisign}/btc/confirm/${txRaw}`
+      let txConfirmLink = `${location.origin}/#${links.multisign}/btc/confirm/${txRaw}`
+      if (invoice) {
+        txConfirmLink = `${location.origin}/#${links.multisign}/btc/confirminvoice/${invoice.id}|${txRaw}`
+      }
       const linked = Link.all(this, 'address', 'amount', 'code', 'ownTx' )
 
       const min = minAmount.btcmultisig
