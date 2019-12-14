@@ -26,6 +26,7 @@ import SwapApp from 'swap.app'
 import { BigNumber } from 'bignumber.js'
 
 import dollar from '../images/dollar.svg'
+import PartOfAddress from '../components/PartOfAddress'
 
 @injectIntl
 @withRouter
@@ -111,7 +112,6 @@ export default class Row extends Component {
   }
 
   componentDidMount() {
-
     this.handleTelosActivate()
     this.getUsdBalance()
 
@@ -432,20 +432,20 @@ export default class Row extends Component {
     } = this.state
 
     const {
-      item: {
-        currency,
-        balance,
-        isBalanceFetched,
-        address,
-        fullName,
-        title,
-        unconfirmedBalance,
-        contractAddress,
-        balanceError,
-      },
+      item,
       intl: { locale },
       infoAboutCurrency,
     } = this.props
+
+    const {
+      currency,
+      balance,
+      isBalanceFetched,
+      fullName,
+      title,
+      unconfirmedBalance,
+      balanceError,
+    } = item
 
     let currencyView = currency
     let eosAccountActivated = false
@@ -548,7 +548,7 @@ export default class Row extends Component {
             </Link>
             <div styleName="assetsTableInfo">
               <Link to={localisedUrl(locale, `/${fullName}-wallet`)} title={`Online ${fullName} wallet`}>
-                <p>
+                <div styleName="nameRow">
                   {
                     balanceError && nodeDownErrorShow &&
                     <div className={styles.errorMessage}>
@@ -563,7 +563,8 @@ export default class Row extends Component {
                       </a>
                     </div> || fullName
                   }
-                </p>
+                  <PartOfAddress {...item} />
+                </div>
               </Link>
               <span>
                 {

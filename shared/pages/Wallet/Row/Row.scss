@@ -70,6 +70,25 @@
       background: #dfc5ff;
     }
   }
+
+  .nameRow {
+    display: flex;
+    div {
+      top: -2px;
+      position: relative;
+      margin-left: 10px;
+
+      span {
+        font-size: 9px;
+        color: #919ca5;
+        vertical-align: middle;
+      }
+
+      :hover {
+        text-decoration: underline;
+      }
+    }
+  }
   
   .disbutton {
     onClick: none;
