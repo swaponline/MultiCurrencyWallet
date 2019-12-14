@@ -14,4 +14,9 @@ export default {
     decimals: 6,
     fullName: 'usdt',
   },
+  eurs: {
+    address: '0xdb25f211ab05b1c97d595516f45794528a807ad8',
+    decimals: 2,
+    fullName: 'EURS',
+  },
 }
