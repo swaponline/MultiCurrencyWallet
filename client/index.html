@@ -1,15 +1,20 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-  <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
   <title><%= htmlWebpackPlugin.options.title %></title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta property="og:image" content="https://screenshots.wpmix.net/chrome_2019-03-28_18-55-506746c4c5-44e6-4bb5-89cb-52ce8fabcedf.png">
+  <meta property="og:image"
+    content="https://screenshots.wpmix.net/chrome_2019-03-28_18-55-506746c4c5-44e6-4bb5-89cb-52ce8fabcedf.png">
   <link rel="stylesheet" href="https://swap.online/dist/css/bootstrap.min.css" />
-  <link rel="stylesheet" type="text/css" charset="UTF-8" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" />
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" />
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" charset="UTF-8"
+    href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" />
+  <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css"
+    integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 
   <meta property="og:url" content="https://swap.online">
 
@@ -37,7 +42,7 @@
 
       window.dataLayer = window.dataLayer || [];
 
-      window.gtag = function() {
+      window.gtag = function () {
         window.dataLayer.push(arguments);
       }
 
@@ -50,28 +55,244 @@
   </script>
   <!-- /Google Analytics -->
 
-  <style>@keyframes loader1{0%{opacity:0;transform:translate3d(25%,-50%,0) rotateY(-77deg)}30%{opacity:1}60%{opacity:1;transform:translate3d(-15%,-50%,0) rotateY(-37deg)}75%{opacity:0}100%{opacity:0;transform:translate3d(-15%,-50%,0) rotateY(-37deg)}}@keyframes loader2{0%{opacity:0;transform:translate3d(20%,-50%,0) rotateY(-107deg)}30%{opacity:1}60%{opacity:1;transform:translate3d(-60%,-50%,0) rotateY(-57deg)}75%{opacity:0}100%{opacity:0;transform:translate3d(-60%,-50%,0) rotateY(-57deg)}}@keyframes loader3{0%{opacity:0;transform:translate3d(50%,-50%,0)}30%{opacity:1}60%{opacity:1;transform:translate3d(0,-50%,0)}75%{opacity:0}100%{opacity:0;transform:translate3d(0,-50%,0)}}.overlay{display:flex;justify-content:center;align-items:center;flex-direction:column;background-color:white;position:fixed;top:0;left:0;right:0;bottom:0;z-index:1000}.loader{width:100px;height:100px;perspective:60px;perspective-origin:7% 57%;margin:auto}.loader.small{width:50px;height:50px;-webkit-perspective:30px;perspective:30px}.loader1,.loader2,.loader3{position:absolute;opacity:0;will-change:transform,opacity}.loader1:first-child,.loader2:first-child,.loader3:first-child{margin-left:0}.loader1{width:28%;height:80%;background:linear-gradient(#6829df,#5124d5);left:0;top:50%;transform:translate3d(25%,-50%,0) rotateY(-77deg);animation:loader1 1.6s infinite}.loader2{width:20%;height:63%;background:linear-gradient(#702be1,#623ad9);left:48%;top:50%;transform:translate3d(20%,-50%,0) rotateY(-107deg);animation:loader2 1.6s infinite;animation-delay:0.2s}.loader3{width:28%;height:33%;right:0;top:47%;overflow:hidden;transform:translate3d(50%,-50%,0);animation:loader3 1.6s infinite;animation-delay:0.4s}.loader3::after{content:"";display:block;width:100%;height:140%;background:linear-gradient(155deg,#802cf6,#5023d5);position:absolute;top:0;left:0;transform:translate3d(-37%,-37%,0) rotate(40deg)}.text{margin-top:20px;font-size:16px;top:65%;text-align:center}.link{margin-top:10px;font-size:16px;top:70%;text-align:center}.over{text-transform:uppercase}.tips{margin-top:25px;font-size:16px;text-align:center;padding:0 5px}.usersInform{text-align:center;position:relative;top:100px;}.Firefox .loader div{opacity:1;animation:none}.Firefox .loader1{transform:translate3d(-15%,-50%,0) rotateY(-37deg)}.Firefox .loader2{transform:translate3d(-60%,-50%,0) rotateY(-57deg)}.Firefox .loader3{transform:translate3d(0,-50%,0)}</style>
+  <style>
+    @keyframes loader1 {
+      0% {
+        opacity: 0;
+        transform: translate3d(25%, -50%, 0) rotateY(-77deg)
+      }
+
+      30% {
+        opacity: 1
+      }
+
+      60% {
+        opacity: 1;
+        transform: translate3d(-15%, -50%, 0) rotateY(-37deg)
+      }
+
+      75% {
+        opacity: 0
+      }
+
+      100% {
+        opacity: 0;
+        transform: translate3d(-15%, -50%, 0) rotateY(-37deg)
+      }
+    }
+
+    @keyframes loader2 {
+      0% {
+        opacity: 0;
+        transform: translate3d(20%, -50%, 0) rotateY(-107deg)
+      }
+
+      30% {
+        opacity: 1
+      }
+
+      60% {
+        opacity: 1;
+        transform: translate3d(-60%, -50%, 0) rotateY(-57deg)
+      }
+
+      75% {
+        opacity: 0
+      }
+
+      100% {
+        opacity: 0;
+        transform: translate3d(-60%, -50%, 0) rotateY(-57deg)
+      }
+    }
+
+    @keyframes loader3 {
+      0% {
+        opacity: 0;
+        transform: translate3d(50%, -50%, 0)
+      }
+
+      30% {
+        opacity: 1
+      }
+
+      60% {
+        opacity: 1;
+        transform: translate3d(0, -50%, 0)
+      }
+
+      75% {
+        opacity: 0
+      }
+
+      100% {
+        opacity: 0;
+        transform: translate3d(0, -50%, 0)
+      }
+    }
+
+    .overlay {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      background-color: white;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1000
+    }
+
+    .loader {
+      width: 100px;
+      height: 100px;
+      perspective: 60px;
+      perspective-origin: 7% 57%;
+      margin: auto
+    }
+
+    .loader.small {
+      width: 50px;
+      height: 50px;
+      -webkit-perspective: 30px;
+      perspective: 30px
+    }
+
+    .loader1,
+    .loader2,
+    .loader3 {
+      position: absolute;
+      opacity: 0;
+      will-change: transform, opacity
+    }
+
+    .loader1:first-child,
+    .loader2:first-child,
+    .loader3:first-child {
+      margin-left: 0
+    }
+
+    .loader1 {
+      width: 28%;
+      height: 80%;
+      background: linear-gradient(#6829df, #5124d5);
+      left: 0;
+      top: 50%;
+      transform: translate3d(25%, -50%, 0) rotateY(-77deg);
+      animation: loader1 1.6s infinite
+    }
+
+    .loader2 {
+      width: 20%;
+      height: 63%;
+      background: linear-gradient(#702be1, #623ad9);
+      left: 48%;
+      top: 50%;
+      transform: translate3d(20%, -50%, 0) rotateY(-107deg);
+      animation: loader2 1.6s infinite;
+      animation-delay: 0.2s
+    }
+
+    .loader3 {
+      width: 28%;
+      height: 33%;
+      right: 0;
+      top: 47%;
+      overflow: hidden;
+      transform: translate3d(50%, -50%, 0);
+      animation: loader3 1.6s infinite;
+      animation-delay: 0.4s
+    }
+
+    .loader3::after {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 140%;
+      background: linear-gradient(155deg, #802cf6, #5023d5);
+      position: absolute;
+      top: 0;
+      left: 0;
+      transform: translate3d(-37%, -37%, 0) rotate(40deg)
+    }
+
+    .text {
+      margin-top: 20px;
+      font-size: 16px;
+      top: 65%;
+      text-align: center
+    }
+
+    .link {
+      margin-top: 10px;
+      font-size: 16px;
+      top: 70%;
+      text-align: center
+    }
+
+    .over {
+      text-transform: uppercase
+    }
+
+    .tips {
+      margin-top: 25px;
+      font-size: 16px;
+      text-align: center;
+      padding: 0 5px
+    }
+
+    .usersInform {
+      text-align: center;
+      position: relative;
+      top: 100px;
+    }
+
+    .Firefox .loader div {
+      opacity: 1;
+      animation: none
+    }
+
+    .Firefox .loader1 {
+      transform: translate3d(-15%, -50%, 0) rotateY(-37deg)
+    }
+
+    .Firefox .loader2 {
+      transform: translate3d(-60%, -50%, 0) rotateY(-57deg)
+    }
+
+    .Firefox .loader3 {
+      transform: translate3d(0, -50%, 0)
+    }
+  </style>
 
   <link rel="stylesheet" href="https://swap.online/dist/css/swap.css?v=1.93">
- 
+
 </head>
+
 <body>
-  
+
   <div class="starter-modal d-none" id="starter-modal">
     <div class="container">
-     <div class="starter-modal-container d-flex flex-column h-100 justify-content-around">
-       <div class="text-center mb-4 mt-4 position-relative">
-        <span class="swap-wait-loading" id="swap-wait-loading">
-          <div class="swap-ellipsis"><div></div><div></div><div></div><div></div></div>
-          <span id="swap-loading-text">Loading... It may take one minute (next time it will be faster)</span>
-        </span>
-       </div>
-     </div>
+      <div class="starter-modal-container d-flex flex-column h-100 justify-content-around">
+        <div class="text-center mb-4 mt-4 position-relative">
+          <span class="swap-wait-loading" id="swap-wait-loading">
+            <div class="swap-ellipsis">
+              <div></div>
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+            <span id="swap-loading-text">Loading... It may take one minute (next time it will be faster)</span>
+          </span>
+        </div>
+      </div>
     </div>
   </div>
 
   <div id="root">
-  <!-- Loader before any JS -->
+    <!-- Loader before any JS -->
     <div class="overlay">
       <div class="center">
         <div class="loader">
@@ -100,7 +321,7 @@
         information.innerText = 'Генерация приватных ключей для вашего мультивалютного кошелька прямо сейчас, \n то может занять одну минуту';
       }
 
-      if(localStorage.length === 0) {
+      if (localStorage.length === 0) {
         console.log(window.location.pathname.split('/')[1] === 'ru')
         information.innerText = window.location.pathname.split('/')[1] !== 'ru'
           ? 'Please wait while the application is loading,\n it may take one minute...'
@@ -115,11 +336,12 @@
 
     </script>
     <script>window.prerenderReady = false;</script>
-  <!-- /Loader before any JS -->
+    <!-- /Loader before any JS -->
   </div>
   <div id="portal"></div>
-  
+
   <script src="https://swap.online/dist/js/swap.js?ver=1.93"></script>
 
 </body>
+
 </html>

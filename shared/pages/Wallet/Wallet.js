@@ -168,6 +168,12 @@ export default class Wallet extends Component {
   }
 
   componentDidMount() {
+    const { params, url } = this.props.match
+
+    if (url.includes('withdraw')) {
+      this.handleWithdraw(params)
+    }
+
     this.showPercentChange1H();
     this.getUsdBalance();
     this.setLocalStorageItems();
@@ -273,6 +279,14 @@ export default class Wallet extends Component {
       )
   }
 
+  handleWithdraw = (params) => {
+    const { allData } = this.props
+    const { address, amount } = params
+    const item = allData.find(({ currency }) => currency.toLowerCase() === params.currency.toLowerCase())
+
+    actions.modals.open(constants.modals.Withdraw, { ...item, toAddress: address, amount })
+  }
+
   goToСreateWallet = () => {
     const { history, intl: { locale } } = this.props
     history.push(localisedUrl(locale, '/createWallet'))
@@ -356,11 +370,11 @@ export default class Wallet extends Component {
         usdBalance = btcBalance * exCurrencyRate;
       })
     }
-    
+
     return (
       <artical>
         <section styleName="wallet">
-        {(walletTitle === '' || editTitle) ? <input styleName="inputTitle" onChange={(e) => this.handleChangeTitle(e)} value={walletTitle} /> : <h3 styleName="walletHeading" onDoubleClick={this.handleEditTitle}>{walletTitle || 'Wallet'}</h3>} 
+          {(walletTitle === '' || editTitle) ? <input styleName="inputTitle" onChange={(e) => this.handleChangeTitle(e)} value={walletTitle} /> : <h3 styleName="walletHeading" onDoubleClick={this.handleEditTitle}>{walletTitle || 'Wallet'}</h3>}
           <Slider {...settings}>
             {
               !isPrivateKeysSaved && <NotifyBlock

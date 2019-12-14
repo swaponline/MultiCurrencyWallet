@@ -5,6 +5,7 @@ const linksManager = {
   createWallet: '/createWallet',
 
   wallets: '/wallets',
+  send: '/withdraw',
   currencyWallet: '/wallet',
   swap: '/swaps',
   feed: '/feed',
@@ -113,7 +114,7 @@ const linksManager = {
   ],
   // footer new links
   footer: {
-    exchange : 'https://swap.online/exchange',
+    exchange: 'https://swap.online/exchange',
     wallet: 'https://swap.online',
     widget: 'https://widget.swap.online/',
     chromeextantion: 'https://chrome.google.com/webstore/detail/swaponline/oldojieloelkkfeacfinhcngmbkepnlm',
