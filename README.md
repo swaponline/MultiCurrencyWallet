@@ -8,6 +8,8 @@ Atomic swap cryptocurrency protocol. Live version here: https://swap.online. Ato
 
 ### Install
 
+#### Eng
+
 1) Clone repository with submodules (swap.core)
 ```
 git clone --recurse-submodules https://github.com/swaponline/swap.react.git
@@ -23,6 +25,28 @@ npm i
 
 4) For dev mode `npm run start`, for prod `npm run build`
    > If you need to deploy it on your own origin - run build like: `npm run build:mainnet https://your.cool.origin/`
+
+```
+npm run start
+```
+
+#### Ru
+
+1) Склонируйте репозиторий со вложенными модулями (swap.core)
+```
+git clone --recurse-submodules https://github.com/swaponline/swap.react.git
+```
+
+2) Установите зависимости с помощью пакетного менеджера `npm i` <br />
+```
+cd swap.react
+npm i
+```
+
+3) Обновите вложенные модули с помощью `git submodule update` в папке swap.react
+
+4) Чтобы начать разработку - запустите `npm run start`, для сборки продуктовой версии - `npm run build`
+   > Если нужно поместить сборку на ваш собственный домен - запустите сборку с указанием вашего домена: `npm run build:mainnet https://your.cool.origin/`
 
 ```
 npm run start
