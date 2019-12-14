@@ -25,6 +25,7 @@ import config from 'app-config'
 import BalanceForm from 'pages/Wallet/components/BalanceForm/BalanceForm'
 import { BigNumber } from 'bignumber.js'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
+import EmptyTransactions from 'components/EmptyTransactions/EmptyTransactions'
 
 import security from 'pages/Wallet/components/NotityBlock/images/security.svg'
 import mail from 'pages/Wallet/components/NotityBlock/images/mail.svg'
@@ -215,8 +216,11 @@ export default class CurrencyWallet extends Component {
       exCurrencyRate
     } = this.state
 
-    txHistory = txHistory
+    if (txHistory) {
+      txHistory = txHistory
       .filter(tx => tx.type.toLowerCase() === currency.toLowerCase())
+    }
+
 
     swapHistory = Object.keys(swapHistory)
       .map(key => swapHistory[key])
@@ -267,6 +271,8 @@ export default class CurrencyWallet extends Component {
         slidesToScroll: 1
     };
 
+    console.log('tHISTORy', txHistory)
+
     return (
       <div styleName="root">
         <PageSeo
@@ -307,30 +313,33 @@ export default class CurrencyWallet extends Component {
                 secondFunc={() => this.handleNotifyBlockClose('isClosedNotifyBlockBanner')} />
             }
         </Slider>
-        {
-          exCurrencyRate ? (
-            <Fragment>
-              <div styleName="currencyWalletWrapper">
-                <div styleName="currencyWalletBalance">
-                  <BalanceForm currencyBalance={balance} usdBalance={currencyUsdBalance} handleReceive={this.handleReceive} handleWithdraw={this.handleWithdraw} currency={currency.toLowerCase()}/>
-                </div>
-                { swapHistory.length > 0 && <SwapsHistory orders={swapHistory.filter(item => item.step >= 4)} /> }
-                <div styleName="currencyWalletActivity">
-                  <h3>Activity</h3>
-                {txHistory && (<Table rows={txHistory} styleName="history" rowRender={this.rowRender} />)}
-                </div>
+          <Fragment>
+            <div styleName="currencyWalletWrapper">
+              <div styleName="currencyWalletBalance">
+                <BalanceForm currencyBalance={balance} usdBalance={currencyUsdBalance} handleReceive={this.handleReceive} handleWithdraw={this.handleWithdraw} currency={currency.toLowerCase()}/>
               </div>
-              {
-                seoPage && seoPage.footer && <div>{seoPage.footer}</div>
-              }
-            </Fragment>
-          ) : (
-            <div styleName="loader">
-              <FormattedMessage id="history107" defaultMessage="Loading" />
-              <InlineLoader />
+              { swapHistory.length > 0 && <SwapsHistory orders={swapHistory.filter(item => item.step >= 4)} /> }
+              <div styleName="currencyWalletActivity">
+                <h3>Activity</h3>
+                {!txHistory ? (
+                  <div styleName="loader">
+                    <FormattedMessage id="history107" defaultMessage="Loading" />
+                    <InlineLoader />
+                  </div>
+                ) : (
+        
+                    txHistory.length > 0 ? (
+                      <Table rows={txHistory} styleName="history" rowRender={this.rowRender} />
+                    ) : (
+                      <EmptyTransactions />
+                    )
+                )}
+              </div>
             </div>
-          )
-        }
+            {
+              seoPage && seoPage.footer && <div>{seoPage.footer}</div>
+            }
+          </Fragment>
       </div>
     )
   }
