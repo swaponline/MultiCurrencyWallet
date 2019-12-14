@@ -271,8 +271,6 @@ export default class CurrencyWallet extends Component {
         slidesToScroll: 1
     };
 
-    console.log('tHISTORy', txHistory)
-
     return (
       <div styleName="root">
         <PageSeo
@@ -344,18 +342,3 @@ export default class CurrencyWallet extends Component {
     )
   }
 }
-        {/* <div styleName="currencyWallet">
-
-          {currency === 'EOS' && !eosAccountActivated && (<Button onClick={this.handleEosBuyAccount} gray>
-            <FormattedMessage id="CurrencyWallet105" defaultMessage="Activate account" />
-          </Button>)}
-          <div styleName="inRow">
-            {
-              !isBlockedCoin && (
-                <NewButton blue onClick={() => this.handleGoTrade(currency)}>
-                  <FormattedMessage id="CurrencyWallet104" defaultMessage="Exchange" />
-                </NewButton>
-              )
-            }
-          </div>
-        </div> */}
