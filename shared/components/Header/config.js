@@ -115,32 +115,52 @@ export const getMenuItems = (props, isWalletCreate) => {
 
 
 export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
-  const { intl } = props
-  const { exchange, wallet, createWallet } = messages
-  const { exchange: linksExchange } = links
+  const { intl, reputation, isSigned } = props
 
-  return ([
-    {
-      title: intl.formatMessage(isWalletCreate ? wallet : createWallet),
-      link: dinamicPath,
-      exact: true,
-      haveSubmenu: true,
-      icon: 'products',
-    },
-    {
-      title: intl.formatMessage(exchange),
-      link: linksExchange,
-      exact: true,
-      haveSubmenu: true,
-      icon: 'products',
-    },
-    {
-      title: props.intl.formatMessage(messages.history),
-      link: links.history,
-      icon: 'history',
-      haveSubmenu: false,
-      displayNone: !isWalletCreate,
-    },
-  ])
+  const { exchange: linksExchange, createWallet: create, home } = links
+  const { exchange, wallet, createWallet } = messages
+
+  return (Number.isInteger(reputation) && reputation !== 0) || isSigned
+    || localStorage.getItem('isWalletCreate') === 'true'
+    ? ([
+      {
+        title: intl.formatMessage(isWalletCreate ? wallet : createWallet),
+        link: dinamicPath,
+        exact: true,
+        haveSubmenu: true,
+        icon: 'products',
+      },
+      {
+        title: intl.formatMessage(exchange),
+        link: linksExchange,
+        exact: true,
+        haveSubmenu: true,
+        icon: 'products',
+      },
+      {
+        title: props.intl.formatMessage(messages.history),
+        link: links.history,
+        icon: 'history',
+        haveSubmenu: false,
+        displayNone: !isWalletCreate,
+      },
+    ])
+    : ([
+      {
+        title: intl.formatMessage(createWallet),
+        link: create,
+        exact: true,
+        haveSubmenu: true,
+        icon: 'products',
+        currentPageFlag: true,
+      },
+      {
+        title: intl.formatMessage(exchange),
+        link: linksExchange,
+        exact: true,
+        haveSubmenu: true,
+        icon: 'products',
+      },
+    ])
 }
 
