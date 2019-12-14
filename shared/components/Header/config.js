@@ -128,21 +128,21 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
         link: dinamicPath,
         exact: true,
         haveSubmenu: true,
-        icon: 'products',
+        icon: <i className="fa fa-home" aria-hidden="true" />,
+      },
+      {
+        title: props.intl.formatMessage(messages.history),
+        link: links.history,
+        haveSubmenu: false,
+        displayNone: !isWalletCreate,
+        icon: <i className="fas fa-exchange-alt" aria-hidden="true" />,
       },
       {
         title: intl.formatMessage(exchange),
         link: linksExchange,
         exact: true,
         haveSubmenu: true,
-        icon: 'products',
-      },
-      {
-        title: props.intl.formatMessage(messages.history),
-        link: links.history,
-        icon: 'history',
-        haveSubmenu: false,
-        displayNone: !isWalletCreate,
+        icon: <i className="fas fa-sync-alt" aria-hidden="true" />,
       },
     ])
     : ([
@@ -151,7 +151,7 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
         link: create,
         exact: true,
         haveSubmenu: true,
-        icon: 'products',
+        icon: <i className="fas fa-wallet" aria-hidden="true" />,
         currentPageFlag: true,
       },
       {
@@ -159,7 +159,7 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
         link: linksExchange,
         exact: true,
         haveSubmenu: true,
-        icon: 'products',
+        icon: <i className="fas fa-sync-alt" aria-hidden="true" />,
       },
     ])
 }
