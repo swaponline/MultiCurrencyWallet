@@ -7,6 +7,7 @@ import actions from 'redux/actions'
 
 import cssModules from 'react-css-modules'
 import styles from './Wallet.scss'
+import { isMobile } from 'react-device-detect'
 
 import History from 'pages/History/History'
 import NotifyBlock from './components/NotityBlock/NotifyBock'
@@ -356,11 +357,10 @@ export default class Wallet extends Component {
         usdBalance = btcBalance * exCurrencyRate;
       })
     }
-    
     return (
       <artical>
         <section styleName="wallet">
-        {(walletTitle === '' || editTitle) ? <input styleName="inputTitle" onChange={(e) => this.handleChangeTitle(e)} value={walletTitle} /> : <h3 styleName="walletHeading" onDoubleClick={this.handleEditTitle}>{walletTitle || 'Wallet'}</h3>} 
+          {(walletTitle === '' || editTitle) ? <input styleName="inputTitle" onChange={(e) => this.handleChangeTitle(e)} value={walletTitle} /> : <h3 styleName="walletHeading" onDoubleClick={this.handleEditTitle}>{walletTitle || 'Wallet'}</h3>}
           <Slider {...settings}>
             {
               !isPrivateKeysSaved && <NotifyBlock
@@ -395,9 +395,18 @@ export default class Wallet extends Component {
                 secondFunc={() => this.handleNotifyBlockClose('isClosedNotifyBlockBanner')} />
             }
           </Slider>
-          <ul styleName="walletNav">
-            {walletNav.map((item, index) => <li key={index} styleName={`walletNavItem ${activeView === index ? 'active' : ''}`} onClick={() => this.handleNavItemClick(index)}><a href styleName="walletNavItemLink">{item}</a></li>)}
-          </ul>
+          {!isMobile && <ul styleName="walletNav">
+            {walletNav.map((item, index) => (
+              <li
+                key={item}
+                styleName={`walletNavItem ${activeView === index ? 'active' : ''}`}
+                onClick={() => this.handleNavItemClick(index)}
+              >
+                <a href styleName="walletNavItemLink">
+                  {item}
+                </a>
+              </li>))}
+          </ul>}
           {
             !isFetching && !isNaN(usdBalance) ? (
               <div className="data-tut-store" styleName="walletContent" >
@@ -409,18 +418,18 @@ export default class Wallet extends Component {
                     </div>
                   }
                 </div>
-                <CurrenciesList tableRows={tableRows} {...this.state} {...this.props} goToСreateWallet={this.goToСreateWallet}/>
+                <CurrenciesList tableRows={tableRows} {...this.state} {...this.props} goToСreateWallet={this.goToСreateWallet} />
                 <div styleName={`activity ${activeView === 1 ? 'active' : ''}`}>
                   <h3 styleName="activityHeading">Activity</h3>
                   <History></History>
                 </div>
               </div>
             ) : (
-              <div styleName="loader">
-                <FormattedMessage id="history107" defaultMessage="Loading" />
-                <InlineLoader />
-              </div>
-            )
+                <div styleName="loader">
+                  <FormattedMessage id="history107" defaultMessage="Loading" />
+                  <InlineLoader />
+                </div>
+              )
           }
         </section>
       </artical>

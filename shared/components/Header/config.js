@@ -27,7 +27,7 @@ export const messages = defineMessages({
   history: {
     id: 'menu.history',
     description: 'Menu item "History"',
-    defaultMessage: 'My history',
+    defaultMessage: 'Transactions',
   },
   IEO: {
     id: 'menu.IEO',
@@ -36,12 +36,12 @@ export const messages = defineMessages({
   },
   invest: {
     id: 'menu.invest',
-    description: 'Menu item "My History"',
+    description: 'Menu item "Transactions"',
     defaultMessage: 'How to invest?',
   },
   investMobile: {
     id: 'menu.invest',
-    description: 'Menu item "My History"',
+    description: 'Menu item "Transactions"',
     defaultMessage: 'Invest',
   },
 })
@@ -134,13 +134,13 @@ export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
       haveSubmenu: true,
       icon: 'products',
     },
-    // {
-    //   title: props.intl.formatMessage(messages.history),
-    //   link: links.history,
-    //   icon: 'history',
-    //   haveSubmenu: false,
-    //   displayNone: !isWalletCreate,
-    // },
+    {
+      title: props.intl.formatMessage(messages.history),
+      link: links.history,
+      icon: 'history',
+      haveSubmenu: false,
+      displayNone: !isWalletCreate,
+    },
   ])
 }
 
