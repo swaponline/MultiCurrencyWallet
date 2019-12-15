@@ -412,30 +412,21 @@ export default class Wallet extends Component {
           <ul styleName="walletNav">
             {walletNav.map((item, index) => <li key={index} styleName={`walletNavItem ${activeView === index ? 'active' : ''}`} onClick={() => this.handleNavItemClick(index)}><a href styleName="walletNavItemLink">{item}</a></li>)}
           </ul>
-          {
-            !isFetching && !isNaN(usdBalance) ? (
-              <div className="data-tut-store" styleName="walletContent" >
-                <div styleName={`walletBalance ${activeView === 0 ? 'active' : ''}`}>
-                  <BalanceForm usdBalance={usdBalance} currencyBalance={btcBalance} handleReceive={this.handleModalOpen} handleWithdraw={this.handleModalOpen} currency="btc" />
-                  {exchangeForm &&
-                    <div styleName="exchangeForm">
-                      <ParticalClosure {...this.props} isOnlyForm />
-                    </div>
-                  }
+          <div className="data-tut-store" styleName="walletContent" >
+            <div styleName={`walletBalance ${activeView === 0 ? 'active' : ''}`}>
+              <BalanceForm usdBalance={usdBalance} currencyBalance={btcBalance} handleReceive={this.handleModalOpen} handleWithdraw={this.handleModalOpen} currency="btc" />
+              {exchangeForm &&
+                <div styleName="exchangeForm">
+                  <ParticalClosure {...this.props} isOnlyForm />
                 </div>
-                <CurrenciesList tableRows={tableRows} {...this.state} {...this.props} goToСreateWallet={this.goToСreateWallet} />
-                <div styleName={`activity ${activeView === 1 ? 'active' : ''}`}>
-                  <h3 styleName="activityHeading">Activity</h3>
-                  <History></History>
-                </div>
-              </div>
-            ) : (
-                <div styleName="loader">
-                  <FormattedMessage id="history107" defaultMessage="Loading" />
-                  <InlineLoader />
-                </div>
-              )
-          }
+              }
+            </div>
+            <CurrenciesList tableRows={tableRows} {...this.state} {...this.props} goToСreateWallet={this.goToСreateWallet}/>
+            <div styleName={`activity ${activeView === 1 ? 'active' : ''}`}>
+              <h3 styleName="activityHeading">Activity</h3>
+              <History></History>
+            </div>
+          </div>
         </section>
       </artical>
     )

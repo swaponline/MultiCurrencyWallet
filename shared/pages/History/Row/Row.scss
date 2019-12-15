@@ -86,6 +86,7 @@
 .date {
   font-size: 12px;
   font-weight: bold;
+  font-family: 'Inter-Regular', sans-serif;
   color: #8E9AA3;
   white-space: pre-wrap;
   cursor: pointer;
@@ -113,7 +114,44 @@
   line-height: 15px;
   position: absolute;
   right: 15px;
-  bottom: 12px;
+  top: 45px;
+}
+
+.historyInfo {
+  margin-left: 50px;
+  margin-top: -37px;
+}
+
+.info {
+  color: #000;
+  span {
+    position: absolute;
+    font-size: 12px;
+    font-family: 'Inter-Medium', sans-serif;
+    bottom: 20px;
+    left: 24px;
+    color: #8E9AA3;
+  }
+}
+
+.comment {
+  color: #000;
+}
+
+.btnWrapper {
+  border-top: 1px solid #eee;
+  text-align: right;
+  height: 40px;
+  line-height: 48px;
+  margin-top: 15px;
+  font-family: 'Inter-Bold', sans-serif;
+  button:first-child {
+    color: #6144E5;
+  }
+  button:last-child {
+    color: #1F2D48;
+    margin-left: 10px;
+  }
 }
 
 .icon {

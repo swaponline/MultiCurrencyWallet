@@ -1,0 +1,28 @@
+.emptyTransactions {
+    background: url('./images/list.png') no-repeat;
+    height: 356px;
+    position: relative;
+}
+
+.textBlock {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    p {
+        font-size: 18px;
+        line-height: 25px;
+        text-align: center;
+        color: #1F2D48;
+        margin-bottom: 5px;
+    }
+    span {
+        font-size: 13px;
+        line-height: 150%;
+        text-align: center;
+        color: #8E9AA3;
+        display: inline-block;
+        font-family: 'Manrope-Medium',sans-serif;
+        width: 100%;
+    }
+}

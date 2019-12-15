@@ -1,5 +1,5 @@
 export const initialState = {
-  transactions: [],
+  transactions: null,
   filter: 'all',
   swapHistory: {},
 }

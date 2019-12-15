@@ -154,7 +154,7 @@ console.log(btcData, invoiceData)
                 </svg>
               </div>
             </div>
-            <div styleName={statusStyleName}>
+            <div styleName="historyInfo">
               <div styleName='directionHeading'>
                 {txType === 'INVOICE' ?
                   <>
@@ -189,26 +189,17 @@ console.log(btcData, invoiceData)
                 toggleComment={this.toggleComment}
                 {...this.props}
               />
-              {invoiceData && invoiceData.label &&
-                <div styleName='date'>{invoiceData.label}</div>
-              }
               {txType === 'INVOICE' && direction === 'in' &&
-                <div styleName='date'>
+                <div styleName='info'>
+                  {/* {
+                    invoiceData && invoiceData.label && <div styleName='comment'>{invoiceData.label}</div>
+                  } */}
                   <FormattedMessage
+                    styleName="address"
                     id="RowHistoryInvoiceAddress"
                     defaultMessage='Адрес для оплаты: {address}'
                     values={{address: `${(invoiceData.destAddress) ? invoiceData.destAddress : invoiceData.fromAddress}`}} />
                 </div>
-              }
-              {invoiceData && !invoiceData.txid && direction === 'in' && invoiceData.status === 'new' && !cancelled && !payed &&
-                <Fragment>
-                  <button onClick={this.handlePayInvoice}>
-                    <FormattedMessage id='RowHistoryPayInvoice' defaultMessage='Оплатить' />
-                  </button>
-                  <button onClick={this.handleCancelInvoice}>
-                    <FormattedMessage id='RowHistoryCancelInvoice' defaultMessage='Отклонить' />
-                  </button>
-                </Fragment>
               }
               {((invoiceData && invoiceData.status === 'cancelled') || cancelled) &&
                 <div styleName='date'>
@@ -221,6 +212,16 @@ console.log(btcData, invoiceData)
                 </div>
               }
             </div>
+            {invoiceData && !invoiceData.txid && direction === 'in' && invoiceData.status === 'new' && !cancelled && !payed &&
+                <div styleName="btnWrapper">
+                  <button onClick={this.handlePayInvoice}>
+                    <FormattedMessage id='RowHistoryPayInvoice' defaultMessage='Оплатить' />
+                  </button>
+                  <button onClick={this.handleCancelInvoice}>
+                    <FormattedMessage id='RowHistoryCancelInvoice' defaultMessage='Отклонить' />
+                  </button>
+                </div>
+            }
             <div styleName={statusStyleAmount}>
               {invoiceData ? this.parseFloat(direction, value, 'out', type) : this.parseFloat(direction, value, 'in', type)}
               <span styleName='amountUsd'>{`~ $${getUsd.toFixed(2)}`}</span>
