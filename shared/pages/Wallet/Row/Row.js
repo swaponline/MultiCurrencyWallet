@@ -38,8 +38,6 @@ import PartOfAddress from '../components/PartOfAddress'
     btcMultisigSMSData,
     btcMultisigUserData,
     bchData,
-    eosData,
-    telosData,
     nimData,
     //qtumData,
     ltcData,
@@ -55,8 +53,6 @@ import PartOfAddress from '../components/PartOfAddress'
     btcMultisigSMSData,
     btcMultisigUserData,
     ethData,
-    eosData,
-    telosData,
     bchData,
     ltcData,
     //qtumData,
@@ -81,7 +77,6 @@ export default class Row extends Component {
     isAddressCopied: false,
     isTouch: false,
     isBalanceEmpty: true,
-    telosRegister: false,
     showButtons: false,
     exCurrencyRate: 0,
     existUnfinished: false,
@@ -112,7 +107,6 @@ export default class Row extends Component {
   }
 
   componentDidMount() {
-    this.handleTelosActivate()
     this.getUsdBalance()
 
     window.addEventListener('resize', this.handleSliceAddress)
@@ -218,18 +212,6 @@ export default class Row extends Component {
     })
   }
 
-  handleEosRegister = () => {
-    actions.modals.open(constants.modals.EosRegister, {})
-  }
-
-  handleTelosChangeAccount = () => {
-    actions.modals.open(constants.modals.TelosChangeAccount, {})
-  }
-
-  handleEosBuyAccount = async () => {
-    actions.modals.open(constants.modals.EosBuyAccount)
-  }
-
   handleWithdraw = () => {
     const {
       item: {
@@ -307,28 +289,6 @@ export default class Row extends Component {
 
   handleGenerateMultisignLink = async () => {
     actions.modals.open(constants.modals.MultisignJoinLink, {})
-  }
-
-  handleTelosActivate = async () => {
-    const telosActivePrivateKey = localStorage.getItem(constants.privateKeyNames.telosPrivateKey)
-    const telosActivePublicKey = localStorage.getItem(constants.privateKeyNames.telosPublicKey)
-    const telosAccount = localStorage.getItem(constants.privateKeyNames.telosAccount)
-    const telosAccountActivated = localStorage.getItem(constants.localStorage.telosAccountActivated) === 'true'
-    const telosRegistrated = localStorage.getItem(constants.localStorage.telosRegistrated) === 'true'
-
-    this.setState(() => ({
-      telosAccountActivated,
-      telosActivePublicKey,
-      telosRegistrated,
-    }))
-
-    if (!telosAccountActivated && !telosRegistrated) {
-      const { accountName, activePrivateKey, activePublicKey } = await actions.tlos.loginWithNewAccount()
-      localStorage.setItem(constants.localStorage.telosRegistrated, true)
-    }
-    // if (telosRegistrated) {
-    //   await actions.tlos.activateAccount(telosAccount, telosActivePrivateKey, telosActivePublicKey)
-    // } на время проблем с работой сервера
   }
 
   showButtons = () => {
@@ -424,8 +384,6 @@ export default class Row extends Component {
       isAddressCopied,
       isTouch,
       isBalanceEmpty,
-      telosAccountActivated,
-      telosActivePublicKey,
       showButtons,
       exCurrencyRate,
       isDropdownOpen
@@ -448,12 +406,6 @@ export default class Row extends Component {
     } = item
 
     let currencyView = currency
-    let eosAccountActivated = false
-    let eosActivationPaymentSent = false
-    if (currency === 'EOS') {
-      eosAccountActivated = this.props.item.isAccountActivated
-      eosActivationPaymentSent = this.props.item.isActivationPaymentSent
-    }
 
     let inneedData = null
     let nodeDownErrorShow = true

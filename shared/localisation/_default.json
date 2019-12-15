@@ -169,34 +169,6 @@
     ]
   },
   {
-    "id": "EosRegAccountModal54",
-    "message": "Account name ",
-    "files": [
-      "shared/components/modals/EosRegisterModal/EosRegisterModal.js"
-    ]
-  },
-  {
-    "id": "EosRegAccountModal58",
-    "message": "Active private key ",
-    "files": [
-      "shared/components/modals/EosRegisterModal/EosRegisterModal.js"
-    ]
-  },
-  {
-    "id": "EosRegAccountModal63",
-    "message": "Sorry, error occurred during activation ",
-    "files": [
-      "shared/components/modals/EosRegisterModal/EosRegisterModal.js"
-    ]
-  },
-  {
-    "id": "EosRegAccountModal70",
-    "message": "Login ",
-    "files": [
-      "shared/components/modals/EosRegisterModal/EosRegisterModal.js"
-    ]
-  },
-  {
     "id": "Approve70",
     "message": "Please set the amount limit that the swap smart contract can deduct from your account. We do not recommend setting any limits. ",
     "files": [
@@ -215,55 +187,6 @@
     "message": "Approve",
     "files": [
       "shared/components/modals/Approve/Approve.js"
-    ]
-  },
-  {
-    "id": "EosBuyAccountModal103",
-    "message": "Sorry, error occurred during activation, try again",
-    "files": [
-      "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
-    ]
-  },
-  {
-    "id": "EosBuyAccountModal109",
-    "message": "Payment transaction: ",
-    "files": [
-      "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
-    ]
-  },
-  {
-    "id": "EosBuyAccountModal114",
-    "message": "Create account",
-    "files": [
-      "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
-    ]
-  },
-  {
-    "id": "EosBuyAccountModal72",
-    "message": "Account name",
-    "files": [
-      "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
-    ]
-  },
-  {
-    "id": "EosBuyAccountModal78",
-    "message": "Private key",
-    "files": [
-      "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
-    ]
-  },
-  {
-    "id": "EosBuyAccountModal84",
-    "message": "Public key",
-    "files": [
-      "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
-    ]
-  },
-  {
-    "id": "EosBuyAccountModal90",
-    "message": "Price (BTC)",
-    "files": [
-      "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
     ]
   },
   {
@@ -382,34 +305,6 @@
     "message": "Other coins",
     "files": [
       "shared/components/modals/ShowMoreCoins/ShowMoreCoins.js"
-    ]
-  },
-  {
-    "id": "TelosRegister55",
-    "message": "Account name",
-    "files": [
-      "shared/components/modals/TelosChangeAccountModal/TelosChangeAccountModal.js"
-    ]
-  },
-  {
-    "id": "TelosRegister59",
-    "message": "Private key",
-    "files": [
-      "shared/components/modals/TelosChangeAccountModal/TelosChangeAccountModal.js"
-    ]
-  },
-  {
-    "id": "TelosRegister64",
-    "message": "Sorry, error occurred during activation",
-    "files": [
-      "shared/components/modals/TelosChangeAccountModal/TelosChangeAccountModal.js"
-    ]
-  },
-  {
-    "id": "TelosRegister69",
-    "message": "Login",
-    "files": [
-      "shared/components/modals/TelosChangeAccountModal/TelosChangeAccountModal.js"
     ]
   },
   {
@@ -832,66 +727,6 @@
     ]
   },
   {
-    "id": "BtcToEos101",
-    "message": "3. Request to open EOS contract",
-    "files": [
-      "shared/pages/Swap/BtcToEos.js"
-    ]
-  },
-  {
-    "id": "BtcToEos115",
-    "message": "4. Withdraw EOS from contract",
-    "files": [
-      "shared/pages/Swap/BtcToEos.js"
-    ]
-  },
-  {
-    "id": "BtcToEos126",
-    "message": "TRY REFUND",
-    "files": [
-      "shared/pages/Swap/BtcToEos.js"
-    ]
-  },
-  {
-    "id": "BtcToEos140",
-    "message": "5. Request to withdraw BTC from script"
-  },
-  {
-    "id": "BtcToEos63",
-    "message": "1. Generate secret key",
-    "files": [
-      "shared/pages/Swap/BtcToEos.js"
-    ]
-  },
-  {
-    "id": "BtcToEos67",
-    "message": "Send secret",
-    "files": [
-      "shared/pages/Swap/BtcToEos.js"
-    ]
-  },
-  {
-    "id": "BtcToEos74",
-    "message": "Secret: ",
-    "files": [
-      "shared/pages/Swap/BtcToEos.js"
-    ]
-  },
-  {
-    "id": "BtcToEos77",
-    "message": "Hash: ",
-    "files": [
-      "shared/pages/Swap/BtcToEos.js"
-    ]
-  },
-  {
-    "id": "BtcToEos87",
-    "message": "2. Fund BTC script",
-    "files": [
-      "shared/pages/Swap/BtcToEos.js"
-    ]
-  },
-  {
     "id": "BtcToEthToken108",
     "message": "Confirm"
   },
@@ -946,48 +781,6 @@
   {
     "id": "BtcToEthToken87",
     "message": "1. Waiting participant confirm this swap"
-  },
-  {
-    "id": "EosToBtc107",
-    "message": "TRY REFUND",
-    "files": [
-      "shared/pages/Swap/EosToBtc.js"
-    ]
-  },
-  {
-    "id": "EosToBtc127",
-    "message": "5. Withdraw BTC from script",
-    "files": [
-      "shared/pages/Swap/EosToBtc.js"
-    ]
-  },
-  {
-    "id": "EosToBtc59",
-    "message": "1. Request to fund BTC script",
-    "files": [
-      "shared/pages/Swap/EosToBtc.js"
-    ]
-  },
-  {
-    "id": "EosToBtc73",
-    "message": "2. Verify BTC script",
-    "files": [
-      "shared/pages/Swap/EosToBtc.js"
-    ]
-  },
-  {
-    "id": "EosToBtc82",
-    "message": "3. Open EOS contract",
-    "files": [
-      "shared/pages/Swap/EosToBtc.js"
-    ]
-  },
-  {
-    "id": "EosToBtc97",
-    "message": "4. Request to withdraw EOS from contract",
-    "files": [
-      "shared/pages/Swap/EosToBtc.js"
-    ]
   },
   {
     "id": "EmergencySave",
@@ -2890,66 +2683,10 @@
     ]
   },
   {
-    "id": "Eos71",
-    "message": "This account will be registered in EOS blockchain",
-    "files": [
-      "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
-    ]
-  },
-  {
-    "id": "Eos75",
-    "message": "Private key for active and owner permissions",
-    "files": [
-      "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
-    ]
-  },
-  {
-    "id": "Eos79",
-    "message": "Public key associated with account",
-    "files": [
-      "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
-    ]
-  },
-  {
-    "id": "Eos83",
-    "message": "This amount will be withdrawn from your BTC wallet",
-    "files": [
-      "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
-    ]
-  },
-  {
-    "id": "Eos53",
-    "message": "Enter your EOS account name",
-    "files": [
-      "shared/components/modals/EosRegisterModal/EosRegisterModal.js"
-    ]
-  },
-  {
-    "id": "Eos57",
-    "message": "Enter private key for active permission",
-    "files": [
-      "shared/components/modals/EosRegisterModal/EosRegisterModal.js"
-    ]
-  },
-  {
     "id": "add408",
     "message": "To change the exchange rate",
     "files": [
       "shared/components/modals/OfferModal/AddOffer/AddOffer.js"
-    ]
-  },
-  {
-    "id": "TelosRegister46",
-    "message": "Enter TELOS account name",
-    "files": [
-      "shared/components/modals/TelosChangeAccountModal/TelosChangeAccountModal.js"
-    ]
-  },
-  {
-    "id": "TelosRegister52",
-    "message": "Enter your TELOS secret key",
-    "files": [
-      "shared/components/modals/TelosChangeAccountModal/TelosChangeAccountModal.js"
     ]
   },
   {
@@ -2973,20 +2710,6 @@
     "message": "Approve token",
     "files": [
       "shared/components/modals/Approve/Approve.js"
-    ]
-  },
-  {
-    "id": "Eos87",
-    "message": "EOS Register",
-    "files": [
-      "shared/components/modals/EosBuyAccountModal/EosBuyAccountModal.js"
-    ]
-  },
-  {
-    "id": "Eos61",
-    "message": "EOS Login",
-    "files": [
-      "shared/components/modals/EosRegisterModal/EosRegisterModal.js"
     ]
   },
   {
@@ -3033,13 +2756,6 @@
     "message": "Show More Coins",
     "files": [
       "shared/components/modals/ShowMoreCoins/ShowMoreCoins.js"
-    ]
-  },
-  {
-    "id": "TELOSLogin",
-    "message": "TELOS Login",
-    "files": [
-      "shared/components/modals/TelosChangeAccountModal/TelosChangeAccountModal.js"
     ]
   },
   {
@@ -3127,7 +2843,7 @@
   },
   {
     "id": "Header196",
-    "message": "You can store crypto of different blockchains including Bitcoin, Ethereum, EOS, Bitcoin Cash, Litecoin and various token"
+    "message": "You can store crypto of different blockchains including Bitcoin, Ethereum, Bitcoin Cash, Litecoin and various token"
   },
   {
     "id": "Header200",
@@ -3727,14 +3443,14 @@
   },
   {
     "id": "Wallet156",
-    "message": "Welcome to Swap.Online, a decentralized cross-chain wallet based on Atomic Swap technology.{br}Here you can safely store and promptly exchange Bitcoin, Ethereum, EOS, USD, Tether, BCH, and numerous ERC-20 tokens.{br}{br}Swap.Online doesn’t store your keys or tokens. Our wallet operates directly within your browser, so no additional installations or downloads are required.{br}The Swap.Online service is fully decentralized.  All operations with tokens are executed via the IPFS network.{br}{br}Our team was the first to finalize Atomic Swaps with USDT and EOS in September 2018 and Litecoin blockchain was added in October 2018.{br}Our wallet addresses real multi-chain integration with a decentralized order book - no third party involved in the exchange, no proxy-token and no token wrapping.{br}We can integrate any ERC-20 token of a project for free!  We just ask for a mutually beneficial PR announcement!{br}{br}In addition, we developed Swap.Button, a b2b-solution to exchange all kinds of tokens for Bitcoin and Ethereum.{br}Install Swap.Button html widget on your site and collect crypto investments for your project.{br}{br}Start using https://swap.online/ today and enjoy the power of true decentralization.",
+    "message": "Welcome to Swap.Online, a decentralized cross-chain wallet based on Atomic Swap technology.{br}Here you can safely store and promptly exchange Bitcoin, Ethereum, , USD, Tether, BCH, and numerous ERC-20 tokens.{br}{br}Swap.Online doesn’t store your keys or tokens. Our wallet operates directly within your browser, so no additional installations or downloads are required.{br}The Swap.Online service is fully decentralized.  All operations with tokens are executed via the IPFS network.{br}{br}Our team was the first to finalize Atomic Swaps with USDT in September 2018 and Litecoin blockchain was added in October 2018.{br}Our wallet addresses real multi-chain integration with a decentralized order book - no third party involved in the exchange, no proxy-token and no token wrapping.{br}We can integrate any ERC-20 token of a project for free!  We just ask for a mutually beneficial PR announcement!{br}{br}In addition, we developed Swap.Button, a b2b-solution to exchange all kinds of tokens for Bitcoin and Ethereum.{br}Install Swap.Button html widget on your site and collect crypto investments for your project.{br}{br}Start using https://swap.online/ today and enjoy the power of true decentralization.",
     "files": [
       "shared/pages/OldWallet/Wallet.js"
     ]
   },
   {
     "id": "PartialClosure562",
-    "message": "Swap.Online is the decentralized in-browser hot wallet based on the Atomic Swaps technology. {br}As in our wallet all blockchains interact decentralized and no-third-party way, we offer our users to exchange Bitcoin, Ethereum, USD Tether, BCH and EOS for free in a couple of seconds. {br}{br}At the time, Swap.Online charges no commision for the order making and taking. {br}The exchange of crypto and tokens on Swap.Online is conducted in truly decentralized manner as we use the Atomic Swaps technology of peer-to-peer cross-chain interaction. {br}{br}Swap.Online uses IPFS-network for all the operational processes which results in no need for centralized server. {br}The interface of exchange seems to look like that of crypto broker, not of ordinary DEX or CEX. In a couple of clicks, the user can place and take the offer, customizing the price of sent token. {br}{br}Also, the user can exchange the given percentage of his or her amount of tokens available (e.g. ½, ¼ etc.). {br}{br}One more advantage of the Swap.Online exchange service is the usage of one key for the full range of ERC-20 tokens. {br}By the way, if case you’re not interested in exchange of some tokens, you can hide it from the list. {br}Thus, use Swap.Online as your basic exchange for every crypto you’re holding!"
+    "message": "Swap.Online is the decentralized in-browser hot wallet based on the Atomic Swaps technology. {br}As in our wallet all blockchains interact decentralized and no-third-party way, we offer our users to exchange Bitcoin, Ethereum, USD Tether, BCH for free in a couple of seconds. {br}{br}At the time, Swap.Online charges no commision for the order making and taking. {br}The exchange of crypto and tokens on Swap.Online is conducted in truly decentralized manner as we use the Atomic Swaps technology of peer-to-peer cross-chain interaction. {br}{br}Swap.Online uses IPFS-network for all the operational processes which results in no need for centralized server. {br}The interface of exchange seems to look like that of crypto broker, not of ordinary DEX or CEX. In a couple of clicks, the user can place and take the offer, customizing the price of sent token. {br}{br}Also, the user can exchange the given percentage of his or her amount of tokens available (e.g. ½, ¼ etc.). {br}{br}One more advantage of the Swap.Online exchange service is the usage of one key for the full range of ERC-20 tokens. {br}By the way, if case you’re not interested in exchange of some tokens, you can hide it from the list. {br}Thus, use Swap.Online as your basic exchange for every crypto you’re holding!"
   },
   {
     "id": "RowWallet276",
@@ -4349,27 +4065,6 @@
   {
     "id": "Row420",
     "message": "Use another"
-  },
-  {
-    "id": "Row426",
-    "message": "Login with your existing EOS account",
-    "files": [
-      "shared/pages/OldWallet/Row/Row.js"
-    ]
-  },
-  {
-    "id": "Row431",
-    "message": "Login with your existing TLOS account",
-    "files": [
-      "shared/pages/OldWallet/Row/Row.js"
-    ]
-  },
-  {
-    "id": "Row440",
-    "message": "Create Telos account in 1 click",
-    "files": [
-      "shared/pages/OldWallet/Row/Row.js"
-    ]
   },
   {
     "id": "withdrowTitle271",
@@ -5472,7 +5167,7 @@
   },
   {
     "id": "Quote",
-    "message": "The swap.online project realizes swaps among Bitcoin-like, Ethereum-like, and EOS cryptocurrencies, and made a product for users to execute swaps",
+    "message": "The swap.online project realizes swaps among Bitcoin-like, Ethereum-like, and made a product for users to execute swaps",
     "files": [
       "shared/pages/PartialClosure/Quote/index.js"
     ]

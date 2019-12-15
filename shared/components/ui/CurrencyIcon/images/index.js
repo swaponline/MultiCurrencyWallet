@@ -6,7 +6,6 @@ import xrp from './xrp.svg'
 import xlm from './xlm.svg'
 import bch from './bch.svg'
 import nim from './nim.svg'
-import eos from './eos.svg'
 import swap from './swap.svg'
 import usdt from './usdt.svg'
 import syc2 from './syc2.svg'
@@ -42,7 +41,6 @@ export default {
   swap,
   waves,
   xrp,
-  eos,
   yup,
   nim,
   eurs,
