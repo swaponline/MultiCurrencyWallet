@@ -28,9 +28,8 @@ const defaultStartPack = [
   { name: "ETH", capture: "Ethereum" },
   { name: "SWAP", capture: "Swap" },
   { name: "USDT", capture: "Tether" },
-  { name: "EUROS", capture: "Euros" },
+  { name: "EURS", capture: "Eurs" },
 ]
-
 @connect(({ currencies: { items: currencies } }) => ({ currencies }))
 @CSSModules(styles, { allowMultiple: true })
 export default class CreateWallet extends Component {
@@ -76,7 +75,7 @@ export default class CreateWallet extends Component {
     const { onClick, error } = this.props
     const { curState, startPack, all } = this.state
 
-    const coloredIcons = ['btc', 'eth', 'swap', 'bch', 'usdt', 'euros']
+    const coloredIcons = ['btc', 'eth', 'swap', 'bch', 'usdt', 'eurs']
     return (
       <div>
         <div>

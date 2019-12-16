@@ -169,6 +169,12 @@ export default class Wallet extends Component {
   }
 
   componentDidMount() {
+    const { params, url } = this.props.match
+
+    if (url.includes('withdraw')) {
+      this.handleWithdraw(params)
+    }
+
     this.showPercentChange1H();
     this.getUsdBalance();
     this.setLocalStorageItems();
@@ -274,6 +280,14 @@ export default class Wallet extends Component {
       )
   }
 
+  handleWithdraw = (params) => {
+    const { allData } = this.props
+    const { address, amount } = params
+    const item = allData.find(({ currency }) => currency.toLowerCase() === params.currency.toLowerCase())
+
+    actions.modals.open(constants.modals.Withdraw, { ...item, toAddress: address, amount })
+  }
+
   goToСreateWallet = () => {
     const { history, intl: { locale } } = this.props
     history.push(localisedUrl(locale, '/createWallet'))
@@ -357,6 +371,7 @@ export default class Wallet extends Component {
         usdBalance = btcBalance * exCurrencyRate;
       })
     }
+
     return (
       <artical>
         <section styleName="wallet">
@@ -407,30 +422,21 @@ export default class Wallet extends Component {
                 </a>
               </li>))}
           </ul>}
-          {
-            !isFetching && !isNaN(usdBalance) ? (
-              <div className="data-tut-store" styleName="walletContent" >
-                <div styleName={`walletBalance ${activeView === 0 ? 'active' : ''}`}>
-                  <BalanceForm usdBalance={usdBalance} currencyBalance={btcBalance} handleReceive={this.handleModalOpen} handleWithdraw={this.handleModalOpen} currency="btc" />
-                  {exchangeForm &&
-                    <div styleName="exchangeForm">
-                      <ParticalClosure {...this.props} isOnlyForm />
-                    </div>
-                  }
+          <div className="data-tut-store" styleName="walletContent" >
+            <div styleName={`walletBalance ${activeView === 0 ? 'active' : ''}`}>
+              <BalanceForm usdBalance={usdBalance} currencyBalance={btcBalance} handleReceive={this.handleModalOpen} handleWithdraw={this.handleModalOpen} currency="btc" />
+              {exchangeForm &&
+                <div styleName="exchangeForm">
+                  <ParticalClosure {...this.props} isOnlyForm />
                 </div>
-                <CurrenciesList tableRows={tableRows} {...this.state} {...this.props} goToСreateWallet={this.goToСreateWallet} />
-                <div styleName={`activity ${activeView === 1 ? 'active' : ''}`}>
-                  <h3 styleName="activityHeading">Activity</h3>
-                  <History></History>
-                </div>
-              </div>
-            ) : (
-                <div styleName="loader">
-                  <FormattedMessage id="history107" defaultMessage="Loading" />
-                  <InlineLoader />
-                </div>
-              )
-          }
+              }
+            </div>
+            <CurrenciesList tableRows={tableRows} {...this.state} {...this.props} goToСreateWallet={this.goToСreateWallet}/>
+            <div styleName={`activity ${activeView === 1 ? 'active' : ''}`}>
+              <h3 styleName="activityHeading">Activity</h3>
+              <History></History>
+            </div>
+          </div>
         </section>
       </artical>
     )
