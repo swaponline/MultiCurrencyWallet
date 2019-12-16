@@ -104,7 +104,6 @@
     "core-js": "^2.6.9",
     "cross-env": "^5.2.1",
     "css-loader": "^3.2.0",
-						
     "debug": "^3.1.0",
     "empty-module": "0.0.2",
     "eosjs": "16.0.8",
@@ -210,7 +209,6 @@
     "react-router-redux": "^5.0.0-alpha.9",
     "react-slick": "^0.25.2",
     "react-tooltip": "^3.11.1",
-							  
     "rebuild": "^0.1.2",
     "redaction": "^4.5.4",
     "redux": "^4.0.4",

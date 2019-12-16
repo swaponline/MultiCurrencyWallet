@@ -90,6 +90,7 @@
   color: #8E9AA3;
   white-space: pre-wrap;
   cursor: pointer;
+  width: 75%;
 }
 
 .address {
@@ -123,7 +124,6 @@
 }
 
 .info {
-  color: #000;
   span {
     position: absolute;
     font-size: 12px;
@@ -179,18 +179,30 @@ tr.historyRow {
     font-size: 12px;
     color: #8e9aa3;
     border-bottom: 1px solid #8e9aa3;
+    width: 75%;
+    padding-bottom: 5px;
+    position: relative;
 
     input {
-      min-width: 250px;
-    }
-    span {
-      color: #EE5B51;
+      width: 85%;
+      font-family: 'Inter-Regular', sans-serif;
     }
 
-    .green {
+    .submit {
       color: #0CCF14;
+      position: absolute;
+      font-size: 16px;
+      right: 22px;
+      top: -1px;
+    }
+
+    .close {
+      color: #EE5B51;
       margin-right: 5px;
-      font-size: 10px;
+      font-size: 22px;
+      position: absolute;
+      right: -6px;
+      top: -7px;
     }
   }
 
@@ -204,16 +216,35 @@ tr.historyRow {
 
 @media all and (min-width: 320px) and (max-width: 570px) {
   tr.historyRow {
-    height: 120px;
+    height: max-content;
     align-items: flex-start;
+  }
+}
+
+
+@media all and (min-width: 320px) and (max-width: 767px) {
+  .info {
+    span {
+      display: none;
+    }
+  }
+  .date {
+    width: 65%;
   }
   .amountUsd {
     right: 15px;
-    bottom: 38px;
+    top: 39px;
   }
   .amount {
     right: 15px;
-    bottom: 15px;
-    top: auto;
+    top: 17px;
+  }
+  .historyInfo {
+    margin-left: 0px;
+    margin-top: 0px;
+  }
+  .circleIcon {
+    display: none;
   }
 }
+

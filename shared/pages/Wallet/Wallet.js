@@ -233,6 +233,8 @@ export default class Wallet extends Component {
     localStorage.setItem(constants.localStorage[state], 'true')
   }
 
+
+
   showPercentChange1H = () => {
     const { currencies, currencyBalance } = this.props
     let infoAboutCurrency = []
@@ -343,6 +345,7 @@ export default class Wallet extends Component {
     const {
       items,
       tokens,
+      currencyBalance,
       hiddenCoinsList,
       isSigned,
       allData,
@@ -360,12 +363,12 @@ export default class Wallet extends Component {
     };
 
     let btcBalance = null;
-    let usdBalance = null;
+    let usdBalance = 0;
 
     const tableRows = allData.filter(({ currency, balance }) => !hiddenCoinsList.includes(currency) || balance > 0)
 
-    if (infoAboutCurrency) {
-      infoAboutCurrency.forEach(item => {
+    if (currencyBalance) {
+      currencyBalance.forEach(item => {
         btcBalance += item.balance
         usdBalance = btcBalance * exCurrencyRate;
       })
@@ -414,7 +417,7 @@ export default class Wallet extends Component {
           </ul>
           <div className="data-tut-store" styleName="walletContent" >
             <div styleName={`walletBalance ${activeView === 0 ? 'active' : ''}`}>
-              <BalanceForm usdBalance={usdBalance} currencyBalance={btcBalance} handleReceive={this.handleModalOpen} handleWithdraw={this.handleModalOpen} currency="btc" />
+              <BalanceForm usdBalance={usdBalance} currencyBalance={btcBalance} handleReceive={this.handleModalOpen} handleWithdraw={this.handleModalOpen} currency="btc" infoAboutCurrency={infoAboutCurrency} />
               {exchangeForm &&
                 <div styleName="exchangeForm">
                   <ParticalClosure {...this.props} isOnlyForm />

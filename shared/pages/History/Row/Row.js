@@ -45,7 +45,6 @@ class Row extends React.PureComponent {
 
     let withdrawModalType = constants.modals.Withdraw
     const btcData = actions.btcmultisig.isBTCAddress(invoiceData.toAddress)
-console.log(btcData, invoiceData)
     if (btcData) {
       const { currency } = btcData
 
@@ -91,12 +90,14 @@ console.log(btcData, invoiceData)
   }
 
   commentCancel = () => {
-    const { date, hiddenList, onSubmit } = this.props
+    const { date, hiddenList, onSubmit, invoiceData } = this.props
     const { ind } = this.state
 
     const commentDate = moment(date).format('LLLL')
-    onSubmit({ ...hiddenList, [ind]: commentDate })
-    this.changeComment(commentDate)
+    const commentLabel = invoiceData && invoiceData.label;
+    const fullComment = `${commentDate}  ${commentLabel}`;
+    onSubmit({ ...hiddenList, [ind]: fullComment})
+    this.changeComment(fullComment)
     this.toggleComment(false)
   }
 
@@ -146,7 +147,7 @@ console.log(btcData, invoiceData)
       <>
         <tr styleName='historyRow'>
           <td>
-            <div styleName={statusStyleName}>
+          <div styleName={`${statusStyleAmount} circleIcon`}>
               <div styleName='arrowWrap'>
                 <svg width='12' height='15' viewBox='0 0 12 15' fill='none' xmlns='http://www.w3.org/2000/svg'>
                   <path d='M6 15V3' stroke='#8E9AA3' strokeWidth='2' />
@@ -182,6 +183,7 @@ console.log(btcData, invoiceData)
               <CommentRow
                 isOpen={isOpen}
                 comment={comment}
+                label={invoiceData && invoiceData.label}
                 commentCancel={this.commentCancel}
                 ind={ind}
                 submit={onSubmit}
