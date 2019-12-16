@@ -461,4 +461,8 @@
   .stepNumber {
     width: 45px;
   }
+  .currencyChooserWrapper {
+    overflow-y: auto;
+    max-height: 50vh;
+  }
 }

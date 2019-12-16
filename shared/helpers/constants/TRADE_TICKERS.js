@@ -9,7 +9,6 @@ const swap = (config && config.isWidget) ?
     'ETH-LTC',
     'LTC-BTC',
     'ETH-BCH',
-    'EOS-BTC',
   ]
 
 Object.keys(config.erc20)

@@ -16,8 +16,6 @@ import bch from './bch'
 import ltc from './ltc'
 import eth from './eth'
 import keychain from './keychain'
-import eos from './eos'
-import tlos from './tlos'
 import token from './token'
 import nimiq from './nimiq'
 // import qtum from './qtum'
@@ -56,8 +54,6 @@ export default {
   btc,
   btcmultisig,
   eth,
-  tlos,
-  eos,
   nimiq,
   // qtum,
   // xlm,

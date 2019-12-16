@@ -54,14 +54,14 @@ const titles = [
     btcMultisigUserData,
     bchData,
     ltcData,
-    tokensData, eosData, nimData, telosData/* usdtOmniData */ } }) => ({
+    tokensData, nimData/* usdtOmniData */ } }) => ({
       items: [
         ethData,
         btcData,
         btcMultisigSMSData,
         btcMultisigUserData,
         bchData,
-        eosData, ltcData, telosData, ...Object.keys(tokensData).map(k => (tokensData[k])) /* nimData, usdtOmniData */],
+        ltcData, ...Object.keys(tokensData).map(k => (tokensData[k])) /* nimData, usdtOmniData */],
       tokens: [...Object.keys(tokensData).map(k => (tokensData[k]))],
       user,
       historyTx: history,
@@ -196,10 +196,6 @@ export default class CurrencyWallet extends Component {
     this.props.history.push(localisedUrl(locale, `${links.exchange}/${currency.toLowerCase()}-to-${whatDoUserProbablyWantToBuy}`))
   }
 
-  handleEosBuyAccount = async () => {
-    actions.modals.open(constants.modals.EosBuyAccount)
-  }
-
   rowRender = (row) => (
     <Row key={row.hash} {...row} />
   )
@@ -227,7 +223,6 @@ export default class CurrencyWallet extends Component {
       .filter(swap => swap.sellCurrency === currency || swap.buyCurrency === currency)
 
     const seoPage = getSeoPage(location.pathname)
-    const eosAccountActivated = localStorage.getItem(constants.localStorage.eosAccountActivated) === 'true'
 
     const titleSwapOnline = defineMessages({
       metaTitle: {
@@ -262,13 +257,13 @@ export default class CurrencyWallet extends Component {
     const currencyUsdBalance = BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString() * exCurrencyRate;
 
     let settings = {
-        infinite: true,
-        speed: 500,
-        autoplay: true,
-        autoplaySpeed: 6000,
-        fade: true,
-        slidesToShow: 1,
-        slidesToScroll: 1
+      infinite: true,
+      speed: 500,
+      autoplay: true,
+      autoplaySpeed: 6000,
+      fade: true,
+      slidesToShow: 1,
+      slidesToScroll: 1
     };
 
     return (
@@ -278,38 +273,38 @@ export default class CurrencyWallet extends Component {
           defaultTitle={intl.formatMessage(title.metaTitle, { fullName, currency })}
           defaultDescription={intl.formatMessage(description.metaDescription, { fullName, currency })} />
         <Slider {...settings}>
-            {
-              !isPrivateKeysSaved && <NotifyBlock
-                className="notifyBlockSaveKeys"
-                descr="Before you continue be sure to save your private keys!"
-                tooltip="We do not store your private keys and will not be able to restore them"
-                icon={security}
-                firstBtn="Show my keys"
-                firstFunc={this.handleShowKeys}
-                secondBtn="I saved my keys"
-                secondFunc={this.handleSaveKeys}
-              />
-            }
-            {
-              !isSigned && !isClosedNotifyBlockSignUp && <NotifyBlock
-                  className="notifyBlockSignUp"
-                  descr="Sign up and get your free cryptocurrency for test!"
-                  tooltip="You will also be able to receive notifications regarding updates with your account"
-                  icon={mail}
-                  firstBtn="Sign Up"
-                  firstFunc={this.handleSignUp}
-                  secondBtn="I’ll do this later"
-                  secondFunc={() => this.handleNotifyBlockClose('isClosedNotifyBlockSignUp')} />
-            }
-            {
-              !isClosedNotifyBlockBanner && <NotifyBlock
-                className="notifyBlockBanner"
-                descr="Updates"
-                tooltip="Let us notify you that the main domain name for Swap.online exchange service will be changed from swap.online to swaponline.io."
-                icon={info}
-                secondBtn="Close"
-                secondFunc={() => this.handleNotifyBlockClose('isClosedNotifyBlockBanner')} />
-            }
+          {
+            !isPrivateKeysSaved && <NotifyBlock
+              className="notifyBlockSaveKeys"
+              descr="Before you continue be sure to save your private keys!"
+              tooltip="We do not store your private keys and will not be able to restore them"
+              icon={security}
+              firstBtn="Show my keys"
+              firstFunc={this.handleShowKeys}
+              secondBtn="I saved my keys"
+              secondFunc={this.handleSaveKeys}
+            />
+          }
+          {
+            !isSigned && !isClosedNotifyBlockSignUp && <NotifyBlock
+              className="notifyBlockSignUp"
+              descr="Sign up and get your free cryptocurrency for test!"
+              tooltip="You will also be able to receive notifications regarding updates with your account"
+              icon={mail}
+              firstBtn="Sign Up"
+              firstFunc={this.handleSignUp}
+              secondBtn="I’ll do this later"
+              secondFunc={() => this.handleNotifyBlockClose('isClosedNotifyBlockSignUp')} />
+          }
+          {
+            !isClosedNotifyBlockBanner && <NotifyBlock
+              className="notifyBlockBanner"
+              descr="Updates"
+              tooltip="Let us notify you that the main domain name for Swap.online exchange service will be changed from swap.online to swaponline.io."
+              icon={info}
+              secondBtn="Close"
+              secondFunc={() => this.handleNotifyBlockClose('isClosedNotifyBlockBanner')} />
+          }
         </Slider>
           <Fragment>
             <div styleName="currencyWalletWrapper">

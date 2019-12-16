@@ -1,4 +1,3 @@
-import eos from './eos'
 import btc from './btc'
 import eth from './eth'
 import ethToken from './ethToken'
@@ -32,7 +31,6 @@ import { cacheStorageGet, cacheStorageSet } from './cache'
 
 
 export default {
-  eos,
   // xlm,
   bch,
   btc,
@@ -44,7 +42,6 @@ export default {
 }
 
 export {
-  eos,
   // xlm,
   bch,
   tips,

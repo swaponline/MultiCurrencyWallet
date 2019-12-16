@@ -1,5 +1,4 @@
 export default [
-  'TLOS',
   'DEB',
   'YUP',
   'JOT',
@@ -53,7 +52,6 @@ export default [
   'BTC (Multisig)',
   'BCH',
   'ETH',
-  'EOS',
   'LTC',
   'SWAP',
   'HDP',
@@ -62,5 +60,4 @@ export default [
   'RURSBER',
   'RURCASH',
   'USDSWIFT',
-  'TLOS',
 ]

@@ -27,9 +27,9 @@ const title = defineMessages({
 @withRouter
 @connect(
   ({
-    user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, ltcData /* usdtOmniData */},
+    user: { ethData, btcData, bchData, tokensData, nimData, ltcData /* usdtOmniData */ },
   }) => ({
-    items: [ ethData, btcData, eosData, telosData, bchData, ltcData /* usdtOmniData, nimData */ ],
+    items: [ethData, btcData, bchData, ltcData /* usdtOmniData, nimData */],
   })
 )
 @cssModules(styles)
@@ -61,7 +61,7 @@ export default class DownloadModal extends React.Component {
   }
 
   checkLang = () => {
-    const { match:{ params:{ locale } } } = this.props
+    const { match: { params: { locale } } } = this.props
     if (locale === 'ru') {
       this.setState({
         Ru: true,
@@ -71,7 +71,7 @@ export default class DownloadModal extends React.Component {
 
   render() {
     const { isTextCopied, Ru } = this.state
-    const { items, name, match:{ params:{ locale } }, intl } = this.props
+    const { items, name, match: { params: { locale } }, intl } = this.props
 
     const textToCopy = actions.user.getText()
 
@@ -81,11 +81,7 @@ export default class DownloadModal extends React.Component {
           <a>
             {item.fullName}
             {' '}
-            {
-              `${item.currency}` === 'EOS' || `${item.currency}` === 'TLOS'
-                ? <FormattedMessage id="downloadModal73" defaultMessage="Account name:" />
-                : <FormattedMessage id="downloadModal75" defaultMessage="Address:" />
-            }
+            <FormattedMessage id="downloadModal75" defaultMessage="Address:" />
           </a>
           <p>{item.address}</p>
           <a>
@@ -96,11 +92,7 @@ export default class DownloadModal extends React.Component {
           </a>
 
           <p>
-            {
-              `${item.currency}` === 'EOS' || `${item.currency}` === 'TLOS'
-                ? item.activePrivateKey
-                : item.privateKey
-            }
+            {item.privateKey}
           </p>
         </Fragment>
       ))
@@ -117,7 +109,7 @@ export default class DownloadModal extends React.Component {
         <div styleName="buttonsContainer">
           <CopyToClipboard text={textToCopy} onCopy={this.handleCopyText}>
             <Button styleName="button" brand disabled={isTextCopied}>
-              { isTextCopied ?
+              {isTextCopied ?
                 <FormattedMessage id="down64" defaultMessage="Address copied to clipboard" /> :
                 <FormattedMessage id="down65" defaultMessage="Copy to clipboard" />
               }

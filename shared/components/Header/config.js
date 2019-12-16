@@ -27,7 +27,7 @@ export const messages = defineMessages({
   history: {
     id: 'menu.history',
     description: 'Menu item "History"',
-    defaultMessage: 'My history',
+    defaultMessage: 'Transactions',
   },
   IEO: {
     id: 'menu.IEO',
@@ -36,12 +36,12 @@ export const messages = defineMessages({
   },
   invest: {
     id: 'menu.invest',
-    description: 'Menu item "My History"',
+    description: 'Menu item "Transactions"',
     defaultMessage: 'How to invest?',
   },
   investMobile: {
     id: 'menu.invest',
-    description: 'Menu item "My History"',
+    description: 'Menu item "Transactions"',
     defaultMessage: 'Invest',
   },
 })
@@ -115,32 +115,52 @@ export const getMenuItems = (props, isWalletCreate) => {
 
 
 export const getMenuItemsMobile = (props, isWalletCreate, dinamicPath) => {
-  const { intl } = props
-  const { exchange, wallet, createWallet } = messages
-  const { exchange: linksExchange } = links
+  const { intl, reputation, isSigned } = props
 
-  return ([
-    {
-      title: intl.formatMessage(isWalletCreate ? wallet : createWallet),
-      link: dinamicPath,
-      exact: true,
-      haveSubmenu: true,
-      icon: 'products',
-    },
-    {
-      title: intl.formatMessage(exchange),
-      link: linksExchange,
-      exact: true,
-      haveSubmenu: true,
-      icon: 'products',
-    },
-    // {
-    //   title: props.intl.formatMessage(messages.history),
-    //   link: links.history,
-    //   icon: 'history',
-    //   haveSubmenu: false,
-    //   displayNone: !isWalletCreate,
-    // },
-  ])
+  const { exchange: linksExchange, createWallet: create, home } = links
+  const { exchange, wallet, createWallet } = messages
+
+  return (Number.isInteger(reputation) && reputation !== 0) || isSigned
+    || localStorage.getItem('isWalletCreate') === 'true'
+    ? ([
+      {
+        title: intl.formatMessage(isWalletCreate ? wallet : createWallet),
+        link: dinamicPath,
+        exact: true,
+        haveSubmenu: true,
+        icon: <i className="fa fa-home" aria-hidden="true" />,
+      },
+      {
+        title: props.intl.formatMessage(messages.history),
+        link: links.history,
+        haveSubmenu: false,
+        displayNone: !isWalletCreate,
+        icon: <i className="fas fa-exchange-alt" aria-hidden="true" />,
+      },
+      {
+        title: intl.formatMessage(exchange),
+        link: linksExchange,
+        exact: true,
+        haveSubmenu: true,
+        icon: <i className="fas fa-sync-alt" aria-hidden="true" />,
+      },
+    ])
+    : ([
+      {
+        title: intl.formatMessage(createWallet),
+        link: create,
+        exact: true,
+        haveSubmenu: true,
+        icon: <i className="fas fa-wallet" aria-hidden="true" />,
+        currentPageFlag: true,
+      },
+      {
+        title: intl.formatMessage(exchange),
+        link: linksExchange,
+        exact: true,
+        haveSubmenu: true,
+        icon: <i className="fas fa-sync-alt" aria-hidden="true" />,
+      },
+    ])
 }
 

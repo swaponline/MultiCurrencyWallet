@@ -7,6 +7,7 @@ import actions from 'redux/actions'
 
 import cssModules from 'react-css-modules'
 import styles from './Wallet.scss'
+import { isMobile } from 'react-device-detect'
 
 import History from 'pages/History/History'
 import NotifyBlock from './components/NotityBlock/NotifyBock'
@@ -40,8 +41,6 @@ const walletNav = ['My balances', 'Transactions'];
     btcMultisigUserData,
     bchData,
     tokensData,
-    eosData,
-    telosData,
     ltcData,
     // qtumData,
     // usdtOmniData,
@@ -66,8 +65,6 @@ const walletNav = ['My balances', 'Transactions'];
     btcMultisigSMSData,
     btcMultisigUserData,
     ethData,
-    eosData,
-    telosData,
     bchData,
     ltcData,
     //qtumData,
@@ -90,8 +87,6 @@ const walletNav = ['My balances', 'Transactions'];
         btcMultisigUserData,
         bchData,
         ethData,
-        eosData,
-        telosData,
         ltcData,
         // qtumData,
         // usdtOmniData,
@@ -107,8 +102,6 @@ const walletNav = ['My balances', 'Transactions'];
     btcMultisigUserData,
     bchData,
     ethData,
-    eosData,
-    telosData,
     ltcData,
     // qtumData,
     // usdtOmniData,
@@ -137,8 +130,6 @@ const walletNav = ['My balances', 'Transactions'];
       btcMultisigUserData,
       bchData,
       ltcData,
-      eosData,
-      telosData,
       // qtumData,
       // usdtOmniData,
     },
@@ -412,9 +403,18 @@ export default class Wallet extends Component {
                 secondFunc={() => this.handleNotifyBlockClose('isClosedNotifyBlockBanner')} />
             }
           </Slider>
-          <ul styleName="walletNav">
-            {walletNav.map((item, index) => <li key={index} styleName={`walletNavItem ${activeView === index ? 'active' : ''}`} onClick={() => this.handleNavItemClick(index)}><a href styleName="walletNavItemLink">{item}</a></li>)}
-          </ul>
+          {!isMobile && <ul styleName="walletNav">
+            {walletNav.map((item, index) => (
+              <li
+                key={item}
+                styleName={`walletNavItem ${activeView === index ? 'active' : ''}`}
+                onClick={() => this.handleNavItemClick(index)}
+              >
+                <a href styleName="walletNavItemLink">
+                  {item}
+                </a>
+              </li>))}
+          </ul>}
           <div className="data-tut-store" styleName="walletContent" >
             <div styleName={`walletBalance ${activeView === 0 ? 'active' : ''}`}>
               <BalanceForm usdBalance={usdBalance} currencyBalance={btcBalance} handleReceive={this.handleModalOpen} handleWithdraw={this.handleModalOpen} currency="btc" infoAboutCurrency={infoAboutCurrency} />

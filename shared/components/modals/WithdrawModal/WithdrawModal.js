@@ -30,10 +30,10 @@ import { inputReplaceCommaWithDot } from 'helpers/domUtils'
 @connect(
   ({
     currencies,
-    user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, ltcData /* usdtOmniData, nimData */ },
+    user: { ethData, btcData, bchData, tokensData, nimData, ltcData /* usdtOmniData, nimData */ },
   }) => ({
     currencies: currencies.items,
-    items: [ethData, btcData, eosData, telosData, bchData, ltcData /* usdtOmniData, nimData */],
+    items: [ethData, btcData, bchData, ltcData /* usdtOmniData, nimData */],
     tokenItems: [...Object.keys(tokensData).map(k => (tokensData[k]))],
   })
 )

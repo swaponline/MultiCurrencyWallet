@@ -38,8 +38,6 @@ import { inputReplaceCommaWithDot } from 'helpers/domUtils'
       btcMultisigUserData,
       bchData,
       tokensData,
-      eosData,
-      telosData,
       nimData,
       ltcData,
       // usdtOmniData,
@@ -52,17 +50,15 @@ import { inputReplaceCommaWithDot } from 'helpers/domUtils'
       btcData,
       btcMultisigSMSData,
       btcMultisigUserData,
-      eosData,
-      telosData,
       bchData,
       ltcData,
       // usdtOmniData,
       // nimData,
     ],
-    tokenItems: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
+    tokenItems: [...Object.keys(tokensData).map(k => (tokensData[k]))],
   })
 )
-@cssModules( { ...styles, ...ownStyle }, { allowMultiple: true })
+@cssModules({ ...styles, ...ownStyle }, { allowMultiple: true })
 export default class InvoiceModal extends React.Component {
 
   static propTypes = {
@@ -90,9 +86,9 @@ export default class InvoiceModal extends React.Component {
     }
   }
 
-  componentDidMount() {}
+  componentDidMount() { }
 
-  componentWillUpdate(nextProps, nextState) {}
+  componentWillUpdate(nextProps, nextState) { }
 
   handleSubmit = async () => {
     const { name, data } = this.props
@@ -128,7 +124,7 @@ export default class InvoiceModal extends React.Component {
         data.onReady()
       }
     } catch (e) {
-      console.log('error',e)
+      console.log('error', e)
     }
 
     this.setState({
@@ -253,7 +249,7 @@ export default class InvoiceModal extends React.Component {
             <Input
               valueLink={linked.address}
               focusOnInit pattern="0-9a-zA-Z:"
-              placeholder={intl.formatMessage(localeLabel.addressPlaceholder, { currency : currency.toUpperCase()})}
+              placeholder={intl.formatMessage(localeLabel.addressPlaceholder, { currency: currency.toUpperCase() })}
               qr
               openScan={this.openScan}
             />
@@ -274,7 +270,7 @@ export default class InvoiceModal extends React.Component {
             <Input
               valueLink={linked.destination}
               focusOnInit pattern="0-9a-zA-Z:"
-              placeholder={intl.formatMessage(localeLabel.destiAddressPlaceholder, { currency : currency.toUpperCase()})}
+              placeholder={intl.formatMessage(localeLabel.destiAddressPlaceholder, { currency: currency.toUpperCase() })}
               qr
               openScan={this.openScan}
             />
@@ -319,6 +315,7 @@ export default class InvoiceModal extends React.Component {
             <div styleName="group">
               <Input
                 styleName="input"
+                srollingForm={true}
                 valueLink={linked.label}
                 pattern="0-9\."
                 multiline="true"
@@ -327,7 +324,7 @@ export default class InvoiceModal extends React.Component {
             </div>
           </div>
           <Button styleName="buttonFull" brand fullWidth disabled={isDisabled} onClick={this.handleSubmit}>
-            { isShipped
+            {isShipped
               ? (
                 <Fragment>
                   <FormattedMessage id="invoiceModal_Processing" defaultMessage="Обработка ..." />
