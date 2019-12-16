@@ -166,6 +166,7 @@
     align-items: end;
     width: max-content;
     justify-content: space-between;
+    height: 44px;
     img {
         margin-top: 10px;
         width: 10px;
@@ -248,6 +249,7 @@
 @media all and (min-width: 768px) and (max-width: 992px) {
     .walletBalance {
         width: 45%;
+        display: none;
     }
     .yourAssets {
         width: 53%;
@@ -261,8 +263,14 @@
             padding-left: 0px;
         }
     }
-    .yourBalance.active {
+    .yourBalance {
+        display: none;
+    }
+    .walletBalance.active {
         display: block;
+        .yourBalance {
+            display: block;
+        }
     }
 }
 

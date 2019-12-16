@@ -4,8 +4,10 @@ import styles from 'pages/Wallet/Wallet.scss'
 import NewButton from 'components/controls/NewButton/NewButton'
 
 
-function BalanceForm({usdBalance, currencyBalance, handleReceive, handleWithdraw, currency}) {
+function BalanceForm({usdBalance, currencyBalance, handleReceive, handleWithdraw, currency, infoAboutCurrency}) {
   const [activeCurrency, setActiveCurrency] = useState('usd');
+
+  console.log('usdBalane', usdBalance)
 
   return (
     <div styleName={`yourBalance`}>
@@ -18,8 +20,8 @@ function BalanceForm({usdBalance, currencyBalance, handleReceive, handleWithdraw
         /> */}
         <p styleName="yourBalanceDescr">Your total balance</p>
         <div styleName="yourBalanceValue">
-          {activeCurrency === 'usd' ? <p>{usdBalance !== null ? usdBalance.toFixed(2) : 0}</p> : <p>{parseFloat(currencyBalance).toFixed(5)}</p>}
-          <span>+0.0%</span>
+          {activeCurrency === 'usd' ? <p>{!isNaN(usdBalance) ? usdBalance.toFixed(2) : ''}</p> : <p>{parseFloat(currencyBalance).toFixed(5)}</p>}
+          {infoAboutCurrency ? <span>+0.0%</span> : ''}
         </div>
         <div styleName="yourBalanceCurrencies">
           <button styleName={activeCurrency === 'usd' && 'active'} onClick={() => setActiveCurrency('usd')}>

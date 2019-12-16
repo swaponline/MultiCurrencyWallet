@@ -73,13 +73,15 @@
 
   .nameRow {
     display: flex;
+    font-size: 13px;
+    color: #6144E5;
     div {
       top: -2px;
       position: relative;
       margin-left: 10px;
 
       span {
-        font-size: 9px;
+        font-size: 10px;
         color: #919ca5;
         vertical-align: middle;
       }
@@ -493,7 +495,7 @@
 
 .assetsTableDots {
   position: absolute;
-  right: 30px;
+  right: 10px;
   top: 50%;
   z-index: 111;
   transform: translateY(-50%);
