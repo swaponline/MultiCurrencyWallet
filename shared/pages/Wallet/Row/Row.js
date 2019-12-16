@@ -499,8 +499,8 @@ export default class Row extends Component {
               <Coin className={styles.assetsTableIcon} name={currency} />
             </Link>
             <div styleName="assetsTableInfo">
-              <Link to={localisedUrl(locale, `/${fullName}-wallet`)} title={`Online ${fullName} wallet`}>
-                <div styleName="nameRow">
+              <div styleName="nameRow">
+                <Link to={localisedUrl(locale, `/${fullName}-wallet`)} title={`Online ${fullName} wallet`}>
                   {
                     balanceError && nodeDownErrorShow &&
                     <div className={styles.errorMessage}>
@@ -515,9 +515,9 @@ export default class Row extends Component {
                       </a>
                     </div> || fullName
                   }
-                  <PartOfAddress {...item} />
-                </div>
-              </Link>
+                </Link>
+                <PartOfAddress {...item} />
+              </div>
               <span>
                 {
                   !isBalanceFetched || isBalanceFetching ? (
