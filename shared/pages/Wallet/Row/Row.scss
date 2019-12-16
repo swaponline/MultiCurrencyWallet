@@ -96,17 +96,6 @@
   .buttonActivate {
     margin-left: 15px;
   }
-  
-  .buttonActivateTlos {
-    position: relative;
-    left: 18px;
-  }
-  
-  .buttonUseAnotherTLOS {
-    position: relative;
-    left: 18px;
-  }
-  
   .marginRight {
     margin-right: 10px;
   }
@@ -229,45 +218,6 @@
     display: none;
    }
   
-   .actButtonTelos {
-     button {
-       color: #ffffff;
-       width: auto;
-       background: rgba(61, 226, 91, 0.7);
-       height: 25px;
-       line-height: 25px;
-       padding: 0px 25px;
-       margin: 0;
-       margin-bottom: 0;
-       font-size: 16px;
-       margin-right: 10px;
-       margin-left: 60px;
-       height: 40px;
-       &:hover {
-         color: #ffffff;
-         background: rgba(61, 226, 91, 0.8);
-       }
-     }
-   }
-   .useButtonTelos {
-     button {
-       background: #ffffff;
-       color: #8c8c8c;
-       border: 1px solid #dbdbdb;
-       height: 25px;
-       line-height: 15px;
-       padding: 0 25px;
-       font-size: 16px;
-       height: 40px;
-       margin-right: -10px;
-       &:hover {
-         background: #ffffff;
-         color: #8c8c8c;
-         border: 1px solid #dbdbdb;
-       }
-     }
-   }
-  
    .addressExist {
      position: relative;
      left: 51%;
@@ -275,14 +225,12 @@
   
   
   @media all and (min-width: 570px) and (max-width:1024px) {
-    .buttonActivateTelos,
     .buttonActivate {
       margin-left: 0px;
     }
     .yourAddress {
       display: table-cell;
     }
-    .buttonActivateTelos,
     .buttonActivate {
       top: auto;
     }

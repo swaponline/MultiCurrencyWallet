@@ -4,14 +4,6 @@ import config from 'app-config'
 const initialState = {
   items: [
     {
-      name: 'EOS',
-      title: 'EOS',
-      icon: 'eos',
-      value: 'eos',
-      fullTitle: 'EOS',
-      addAssets: true,
-    },
-    {
       name: 'ETH',
       title: 'ETH',
       icon: 'eth',

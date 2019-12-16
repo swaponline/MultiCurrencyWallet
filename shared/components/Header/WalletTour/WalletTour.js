@@ -49,7 +49,7 @@ export default class WalletTour extends Component {
           target: '.reactour-exchange',
         },
         {
-          content: <FormattedMessage id="tour-step-2" defaultMessage="Вы можете хранить валюты разных блокчейнов, таких как: Bitcoin, Ethereum, EOS, Bitcoin Cash, Litecoin и различные токены" />,
+          content: <FormattedMessage id="tour-step-2" defaultMessage="Вы можете хранить валюты разных блокчейнов, таких как: Bitcoin, Ethereum, Bitcoin Cash, Litecoin и различные токены" />,
           placement: 'center',
           target: '.data-tut-store',
         },

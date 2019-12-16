@@ -10,7 +10,7 @@ import Table from 'components/tables/Table/Table'
 const CurrenciesList = ({ activeView, isFetching, tableRows, currencies, infoAboutCurrency, hiddenCoinsList, goToСreateWallet }) => (
   <div styleName={`yourAssets ${activeView === 0 ? 'active' : ''}`}>
     <h3 styleName="yourAssetsHeading">Your Assets</h3>
-    <p styleName="yourAssetsDescr">Here you can safely store and promptly exchange Bitcoin, Ethereum, <br /> EOS, USD, Tether, BCH, and numerous ERC-20 tokens</p>
+    <p styleName="yourAssetsDescr">Here you can safely store and promptly exchange Bitcoin, Ethereum, <br /> USD, Tether, BCH, and numerous ERC-20 tokens</p>
     <Table
       className={`${styles.walletTable} data-tut-address`}
       rows={tableRows}
