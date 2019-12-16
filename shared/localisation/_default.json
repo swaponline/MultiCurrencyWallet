@@ -9,7 +9,7 @@
   },
   {
     "id": "menu.history",
-    "message": "My History"
+    "message": "Transactions"
   },
   {
     "id": "menu.wallet",
@@ -2660,7 +2660,7 @@
   },
   {
     "id": "Amount68",
-    "message": "My History",
+    "message": "Transactions",
     "files": [
       "shared/pages/History/History.js"
     ]

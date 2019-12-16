@@ -47,7 +47,12 @@
 @media all and (min-width: 320px) and (max-width: 570px) {
   .navbar {
     a {
-      font-size: 15px;
+      font-size: 12px;
+      padding: 7px;
+
+      i {
+        font-size: 18px;
+      }
     }
   }
 }
