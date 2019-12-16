@@ -7,7 +7,7 @@ npm run build:mainnet
 
 git clone https://caffeinum:$GITHUB_TOKEN@github.com/swaponline/swaponline.github.io.git
 cd swaponline.github.io
-git checkout deploy
+git checkout master
 git fetch origin
 git reset --hard origin/master
 
