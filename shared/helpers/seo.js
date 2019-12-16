@@ -64,8 +64,8 @@ const seo = {
     },
     {
       uri: '/history',
-      title: 'My History',
-      description: 'My History',
+      title: 'Transactions',
+      description: 'Transactions',
     },
     {
       uri: '/aboutus',

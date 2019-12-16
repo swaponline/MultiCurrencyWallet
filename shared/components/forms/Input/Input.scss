@@ -5,6 +5,12 @@ input, textarea {
   border-radius: 0;
 }
 
+.srollingForm {
+  height: 100px !important;
+  overflow-y: auto !important;;
+}
+
+
 .root {
   display: block;
   width: 100%;

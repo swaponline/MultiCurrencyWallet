@@ -18,6 +18,7 @@ const submitComment = (e, props) => {
 }
 
 const CommentRow = (props) => {
+
   const { comment, toggleComment, changeComment, date, isOpen, commentCancel } = props
   return isOpen ?
     <form styleName="input" onSubmit={(e) => submitComment(e, props)}>

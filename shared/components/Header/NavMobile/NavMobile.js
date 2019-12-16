@@ -35,6 +35,7 @@ export default class NavMobile extends Component {
                     onClick={() => actions.modals.open(constants.modals.MobMenu, {})}
                     tabIndex="-1"
                   >
+                    {icon}
                     <span className={isBold && styles.bold}>{title}</span>
                   </a>
                 )
@@ -43,8 +44,10 @@ export default class NavMobile extends Component {
                     key={title}
                     exact={exact}
                     to={localisedUrl(locale, link)}
-                    activeClassName={styles.active}
+                    activeC
+                    lassName={styles.active}
                   >
+                    {icon}
                     <span className={isBold && styles.bold}>{title}</span>
                   </NavLink>
                 )

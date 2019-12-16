@@ -118,9 +118,9 @@ $walletPaddingTop: 41px;
   }
   td,
   td:first-child {
-    display: flex;
-    align-items: center;
+    width: 100%;
     padding: 0;
+    font-family: 'Inter-Bold', sans-serif;
   }
 }
 

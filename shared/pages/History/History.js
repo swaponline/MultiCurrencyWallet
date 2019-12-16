@@ -15,6 +15,7 @@ import PageHeadline from 'components/PageHeadline/PageHeadline'
 import InfiniteScrollTable from 'components/tables/InfiniteScrollTable/InfiniteScrollTable'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
+import EmptyTransactions from 'components/EmptyTransactions/EmptyTransactions'
 
 
 const filterHistory = (items, filter) => {
@@ -32,7 +33,7 @@ const filterHistory = (items, filter) => {
 const subTitle = defineMessages({
   subTitleHistory: {
     id: 'Amount68',
-    defaultMessage: 'My History',
+    defaultMessage: 'Transactions',
   },
 })
 
@@ -89,29 +90,25 @@ export default class History extends Component {
     const titles = [];
 
     return (
-      items.length || swapHistory.length ?
+      items ? (
         <section styleName="history">
-          {/* <PageHeadline subTitle={intl.formatMessage(subTitle.subTitleHistory)} /> */}
-          {/* { swapHistory.length > 0 && <SwapsHistory showSubtitle="true" orders={swapHistory.filter(item => item.step >= 4)} /> } */}
-          {/* <h3 data-tip data-for="transactions" style={{ width:'210px' }}>
-            <FormattedMessage id="history68" defaultMessage="All transactions" />
-          </h3> */}
-          {/* <ReactTooltip id="transactions" type="light" effect="solid">
-            <span>
-              <FormattedMessage id="history72" defaultMessage="All transactions sent and received" />
-            </span>
-          </ReactTooltip> */}
-          {/* <Filter /> */}
-          <InfiniteScrollTable
-            className={styles.history}
-            titles={titles}
-            bottomOffset={400}
-            getMore={this.loadMore}
-            itemsCount={items.length}
-            items={items.slice(0, this.state.renderedItems)}
-            rowRender={this.rowRender}
-          />
-        </section> :
+          {
+            items.length > 0 ? (
+              <InfiniteScrollTable
+                className={styles.history}
+                titles={titles}
+                bottomOffset={400}
+                getMore={this.loadMore}
+                itemsCount={items.length}
+                items={items.slice(0, this.state.renderedItems)}
+                rowRender={this.rowRender}
+              /> 
+            ) : (
+                <EmptyTransactions />
+            )
+          }
+        </section>
+      ) :
         <div styleName="loader">
           <FormattedMessage id="history107" defaultMessage="Loading" />
           <InlineLoader />

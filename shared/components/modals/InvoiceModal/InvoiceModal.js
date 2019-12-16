@@ -315,6 +315,7 @@ export default class InvoiceModal extends React.Component {
             <div styleName="group">
               <Input
                 styleName="input"
+                srollingForm={true}
                 valueLink={linked.label}
                 pattern="0-9\."
                 multiline="true"

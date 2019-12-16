@@ -203,9 +203,9 @@ Private key: ${ltcData.privateKey}\r\n
 3. Go to settings > addresses > import\r\n
 4. paste private key and click "Ok"\r\n
 \r\n
-# BITCOINCACHE\r\n
+# BITCOINCASH\r\n
 \r\n
-BitcoinCache address: ${bchData.address}\r\n
+Bitcoin Cash address: ${bchData.address}\r\n
 Private key: ${bchData.privateKey}\r\n
 \r\n
 1. Go to blockchain.info\r\n
