@@ -11,8 +11,10 @@ import logoImage from './images/logo.svg'
 import coloredLogoImage from './images/logo-blue.svg'
 import { injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
+import images from "./images"
 
 
+@withRouter
 @injectIntl
 @CSSModules(styles, { allowMultiple: true })
 export default class Logo extends Component {
@@ -26,10 +28,14 @@ export default class Logo extends Component {
   render() {
     const { isColored, withLink, mobile, intl: { locale }, isExchange } = this.props
 
+    const srcFiles = isColored ? images.colored : images.common
+    const { host, href } = window.location
+    const file = Object.keys(srcFiles).find(el => window.location.href.includes(el)) || 'base'
+
     const imgNode = React.createElement('img', {
       styleName: !withLink && 'logo',
-      src: isColored ? coloredLogoImage : logoImage,
-      alt: 'swap.online logo',
+      src: srcFiles[file],
+      alt: `${host}`,
     })
 
     return (
