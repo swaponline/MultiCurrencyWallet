@@ -19,7 +19,6 @@ export default ({ currency, contractAddress, address }) => {
           {endOfAddress}
         </span>
       </LinkAccount>
-
     </div>
   )
   /* eslint-enable */
