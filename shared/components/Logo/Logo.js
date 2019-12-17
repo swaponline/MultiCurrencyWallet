@@ -7,8 +7,6 @@ import { links } from 'helpers'
 import CSSModules from 'react-css-modules'
 import styles from './Logo.scss'
 
-import logoImage from './images/logo.svg'
-import coloredLogoImage from './images/logo-blue.svg'
 import { injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
 import images from "./images"

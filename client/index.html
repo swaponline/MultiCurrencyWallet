@@ -48,89 +48,12 @@
 
       gtag('js', new Date());
       gtag('config', gtagId);
-
-
     }
 
   </script>
   <!-- /Google Analytics -->
 
   <style>
-    @keyframes loader1 {
-      0% {
-        opacity: 0;
-        transform: translate3d(25%, -50%, 0) rotateY(-77deg)
-      }
-
-      30% {
-        opacity: 1
-      }
-
-      60% {
-        opacity: 1;
-        transform: translate3d(-15%, -50%, 0) rotateY(-37deg)
-      }
-
-      75% {
-        opacity: 0
-      }
-
-      100% {
-        opacity: 0;
-        transform: translate3d(-15%, -50%, 0) rotateY(-37deg)
-      }
-    }
-
-    @keyframes loader2 {
-      0% {
-        opacity: 0;
-        transform: translate3d(20%, -50%, 0) rotateY(-107deg)
-      }
-
-      30% {
-        opacity: 1
-      }
-
-      60% {
-        opacity: 1;
-        transform: translate3d(-60%, -50%, 0) rotateY(-57deg)
-      }
-
-      75% {
-        opacity: 0
-      }
-
-      100% {
-        opacity: 0;
-        transform: translate3d(-60%, -50%, 0) rotateY(-57deg)
-      }
-    }
-
-    @keyframes loader3 {
-      0% {
-        opacity: 0;
-        transform: translate3d(50%, -50%, 0)
-      }
-
-      30% {
-        opacity: 1
-      }
-
-      60% {
-        opacity: 1;
-        transform: translate3d(0, -50%, 0)
-      }
-
-      75% {
-        opacity: 0
-      }
-
-      100% {
-        opacity: 0;
-        transform: translate3d(0, -50%, 0)
-      }
-    }
-
     .overlay {
       display: flex;
       justify-content: center;
@@ -143,79 +66,6 @@
       right: 0;
       bottom: 0;
       z-index: 1000
-    }
-
-    .loader {
-      width: 100px;
-      height: 100px;
-      perspective: 60px;
-      perspective-origin: 7% 57%;
-      margin: auto
-    }
-
-    .loader.small {
-      width: 50px;
-      height: 50px;
-      -webkit-perspective: 30px;
-      perspective: 30px
-    }
-
-    .loader1,
-    .loader2,
-    .loader3 {
-      position: absolute;
-      opacity: 0;
-      will-change: transform, opacity
-    }
-
-    .loader1:first-child,
-    .loader2:first-child,
-    .loader3:first-child {
-      margin-left: 0
-    }
-
-    .loader1 {
-      width: 28%;
-      height: 80%;
-      background: linear-gradient(#6829df, #5124d5);
-      left: 0;
-      top: 50%;
-      transform: translate3d(25%, -50%, 0) rotateY(-77deg);
-      animation: loader1 1.6s infinite
-    }
-
-    .loader2 {
-      width: 20%;
-      height: 63%;
-      background: linear-gradient(#702be1, #623ad9);
-      left: 48%;
-      top: 50%;
-      transform: translate3d(20%, -50%, 0) rotateY(-107deg);
-      animation: loader2 1.6s infinite;
-      animation-delay: 0.2s
-    }
-
-    .loader3 {
-      width: 28%;
-      height: 33%;
-      right: 0;
-      top: 47%;
-      overflow: hidden;
-      transform: translate3d(50%, -50%, 0);
-      animation: loader3 1.6s infinite;
-      animation-delay: 0.4s
-    }
-
-    .loader3::after {
-      content: "";
-      display: block;
-      width: 100%;
-      height: 140%;
-      background: linear-gradient(155deg, #802cf6, #5023d5);
-      position: absolute;
-      top: 0;
-      left: 0;
-      transform: translate3d(-37%, -37%, 0) rotate(40deg)
     }
 
     .text {
@@ -248,23 +98,6 @@
       position: relative;
       top: 100px;
     }
-
-    .Firefox .loader div {
-      opacity: 1;
-      animation: none
-    }
-
-    .Firefox .loader1 {
-      transform: translate3d(-15%, -50%, 0) rotateY(-37deg)
-    }
-
-    .Firefox .loader2 {
-      transform: translate3d(-60%, -50%, 0) rotateY(-57deg)
-    }
-
-    .Firefox .loader3 {
-      transform: translate3d(0, -50%, 0)
-    }
   </style>
 
   <link rel="stylesheet" href="https://swap.online/dist/css/swap.css?v=1.93">
@@ -295,10 +128,8 @@
     <!-- Loader before any JS -->
     <div class="overlay">
       <div class="center">
-        <div class="loader">
-          <div class="loader1"></div>
-          <div class="loader2"></div>
-          <div class="loader3"></div>
+        <div id="loader">
+          <img src="https://wiki.swap.online/assets/swap-logo.png" />
         </div>
         <div id="beforeJSTip" class="tips">
           Do not forget to save your private keys!
@@ -309,6 +140,7 @@
       </div>
     </div>
     <script>
+
       var advice = document.getElementById('beforeJSTip');
 
       if (window.location.pathname.split('/')[1] === 'ru') {
@@ -330,9 +162,6 @@
 
 
       var styleKostilFirefox = document.createElement('style');
-
-      styleKostilFirefox.innerHTML = ".loader div{animation: none;opacity:1;}.loader1{transform:translate3d(-15%,-50%,0) rotateY(-37deg)}.loader2{transform:translate3d(-60%,-50%,0) rotateY(-57deg)}.loader3{transform:translate3d(0,-50%,0)}"
-      document.body.appendChild(styleKostilFirefox);
 
     </script>
     <script>window.prerenderReady = false;</script>

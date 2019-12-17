@@ -8,7 +8,7 @@ import swapOnlineColored from './swapOnlineColored.svg'
 export default {
   colored: {
     base: baseColored,
-    localhost: swapOnlineColored,
+    localhost: base,
     'swap.online': swapOnlineColored,
   },
   common: {
