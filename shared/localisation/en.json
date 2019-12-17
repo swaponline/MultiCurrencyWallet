@@ -5148,6 +5148,20 @@
     ]
   },
   {
+    "id": "createWalletButton2",
+    "message": "Импортировать ключи",
+    "files": [
+      "shared/pages/CreateWallet/Steps/FirstStep.js"
+    ]
+  },
+  {
+    "id": "createWalletButton4",
+    "message": "Обмен",
+    "files": [
+      "shared/pages/CreateWallet/Steps/FirstStep.js"
+    ]
+  },
+  {
     "id": "createWalletCapture1",
     "message": "На выбор Bitcoin, Ethereum, Swap",
     "files": [

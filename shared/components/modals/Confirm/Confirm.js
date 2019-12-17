@@ -14,8 +14,6 @@ import { Button } from 'components/controls'
 import { FieldLabel, Input } from 'components/forms'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
-import Logo from 'components/Logo/Logo'
-import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 
 
 const defaultLanguage = defineMessages({

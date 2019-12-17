@@ -1,5 +1,5 @@
 .navbar {
-  background-color: #333;
+  background-color: #6144E5;
   overflow: hidden;
   position: fixed;
   bottom: 0;
@@ -16,10 +16,11 @@
     flex: 1;
     padding: 14px 7px;
     text-align: center;
-    color: #a7a7a7;
+    color: #fff;
     text-decoration: none;
     display: flex;
     flex-direction: column;
+    border-right: 1px solid #fff;
 
     &.active {
       font-weight: 700;
@@ -29,8 +30,8 @@
     i {
       padding: 5px 0;
     }
-    &:first-child {
-      border-right: 1px solid #fff;
+    &:last-child {
+      border-right: none;
     }
   }
 }

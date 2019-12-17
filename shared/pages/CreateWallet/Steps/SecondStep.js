@@ -158,12 +158,13 @@ const CreateWallet = (props) => {
                     }
                   </div>
                   <div styleName="flex">
-                    <img
-                      styleName="logo thirdPageIcons"
-                      src={icons[name]}
-                      alt={`${name} icon`}
-                      role="image"
-                    />
+                    <div styleName="logo thirdPageIcons">
+                      <img
+                        src={icons[name]}
+                        alt={`${name} icon`}
+                        role="image"
+                      />
+                    </div>
                     <div styleName="listGroup">
                       <li>
                         <b>{text}</b>
