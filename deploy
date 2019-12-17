@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # build
-npm run build:mainnet swaponline.github.io
+npm run build:mainnet swaponline.github.io/
 
 # update repo or clone
 
