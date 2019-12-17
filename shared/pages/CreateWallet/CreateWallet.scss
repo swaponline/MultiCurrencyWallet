@@ -166,7 +166,17 @@
 .buttonWrapper {
   position: absolute;
   right: 0;
-  top: 33px;
+  top: 45px;
+  button {
+    color: #6144E5;
+    font-family: 'Inter-Bold', sans-serif;
+    font-size: 14px;
+    text-decoration: underline;
+    padding: 0;
+    &:last-child {
+      display: none;
+    }
+  }
 }
 
 .card {
@@ -396,13 +406,16 @@
     top: 30px;
     right: auto;
     display: flex;
-    width: 56%;
     justify-content: space-between;
     button {
       color: #6144E5;
       font-family: 'Inter-Bold', sans-serif;
       font-size: 14px;
       text-decoration: underline;
+      &:last-child {
+        margin-left: 20px;
+        display: block;
+      }
     }
   }
 

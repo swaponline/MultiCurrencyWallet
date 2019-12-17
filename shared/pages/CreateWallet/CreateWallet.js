@@ -148,10 +148,16 @@ const CreateWallet = (props) => {
         </h2>
         <div styleName="buttonWrapper">
           <button onClick={handleImportKeys}>
-              Import keys
+            <FormattedMessage
+              id="createWalletButton2"
+              defaultMessage="Import keys"
+            />
           </button>
           <button onClick={goToExchange}>
-            Exchange
+            <FormattedMessage
+              id="createWalletButton4"
+              defaultMessage="Exchange"
+            />
           </button>
         </div>
         {isMobile &&
