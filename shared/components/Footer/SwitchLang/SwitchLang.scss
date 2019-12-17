@@ -1,5 +1,7 @@
 .langSwitcher {
-  display: none;
+  a {
+    font-size: 14px;
+  }
 }
 
 .language {
@@ -9,3 +11,4 @@
   font-weight: bolder;
   padding: 0 3px 0 3px
 }
+

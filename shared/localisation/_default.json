@@ -5163,28 +5163,28 @@
   },
   {
     "id": "createWalletActivated",
-    "message": "Activated!",
+    "message": "Активировано!",
     "files": [
       "shared/pages/CreateWallet/Steps/SecondStep.js"
     ]
   },
   {
     "id": "createWalletButton3",
-    "message": "Create Wallet",
+    "message": "Создание кошелька",
     "files": [
       "shared/pages/CreateWallet/Steps/SecondStep.js"
     ]
   },
   {
     "id": "createWalletSoon",
-    "message": "Soon!",
+    "message": " Скоро!",
     "files": [
       "shared/pages/CreateWallet/Steps/SecondStep.js"
     ]
   },
   {
     "id": "history107",
-    "message": "Loading",
+    "message": "Загрузка",
     "files": [
       "shared/pages/CurrencyWallet/CurrencyWallet.js",
       "shared/pages/History/History.js"
@@ -6487,7 +6487,7 @@
   },
   {
     "id": "ImportKeysBtn",
-    "message": "Import keys",
+    "message": "Импортировать",
     "files": [
       "shared/pages/CreateWallet/CreateWallet.js"
     ]

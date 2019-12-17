@@ -146,7 +146,7 @@ const CreateWallet = (props) => {
           <NewButton blue onClick={handleImportKeys}>
             <FormattedMessage
               id="ImportKeysBtn"
-              defaultMessage="Import keys"
+              defaultMessage="Импортировать"
             />
           </NewButton>
         </div>

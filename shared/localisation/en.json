@@ -6487,7 +6487,7 @@
   },
   {
     "id": "ImportKeysBtn",
-    "message": "Import keys",
+    "message": "Импортировать",
     "files": [
       "shared/pages/CreateWallet/CreateWallet.js"
     ]
