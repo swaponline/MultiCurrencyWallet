@@ -66,7 +66,7 @@ const CreateWallet = (props) => {
 
   const handleClick = (index, el) => {
     const { name, enabled, activated } = el
-    if (!enabled) return
+    if (!enabled || activated) return
     //if (activated) return
     const colors = border.color
 
@@ -157,12 +157,13 @@ const CreateWallet = (props) => {
                     }
                   </div>
                   <div styleName="flex">
-                    <img
-                      styleName="logo thirdPageIcons"
-                      src={icons[name]}
-                      alt={`${name} icon`}
-                      role="image"
-                    />
+                    <div styleName="logo thirdPageIcons">
+                      <img
+                        src={icons[name]}
+                        alt={`${name} icon`}
+                        role="image"
+                      />
+                    </div>
                     <div styleName="listGroup">
                       <li>
                         <b>{text}</b>

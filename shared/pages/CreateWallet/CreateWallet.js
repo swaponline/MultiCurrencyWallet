@@ -69,6 +69,10 @@ const CreateWallet = (props) => {
     actions.modals.open(constants.modals.ImportKeys, {})
   }
 
+  const goToExchange = () => {
+    history.push(localisedUrl(locale, '/exchange'))
+  }
+
   const validate = () => {
     setError(null)
     if (!Object.values(currencies).includes(true) && step === 1) {
@@ -143,9 +147,18 @@ const CreateWallet = (props) => {
           {' '}{singleCurrecny && singleCurrecny.toUpperCase()}
         </h2>
         <div styleName="buttonWrapper">
-          <NewButton blue onClick={handleImportKeys}>
-              Import keys
-          </NewButton>
+          <button onClick={handleImportKeys}>
+            <FormattedMessage
+              id="createWalletButton2"
+              defaultMessage="Import keys"
+            />
+          </button>
+          <button onClick={goToExchange}>
+            <FormattedMessage
+              id="createWalletButton4"
+              defaultMessage="Exchange"
+            />
+          </button>
         </div>
         {isMobile &&
           <div styleName="inLine steps">
