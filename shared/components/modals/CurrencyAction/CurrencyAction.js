@@ -12,6 +12,7 @@ import { Modal } from 'components/modal'
 import { Button } from 'components/controls'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 import { ConsoleView } from 'react-device-detect'
+import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 import icons from './images'
 
 
@@ -70,10 +71,11 @@ export default class CurrencyAction extends React.Component {
     const { props: { data: { currencies, context } } } = this
 
     return (
-      <div styleName="modal-overlay" onClick={this.handleClose}>
+      <div styleName="modal-overlay">
       <div styleName="modal">
         <div styleName="header">
           <p styleName="title">{context}</p>
+            <CloseIcon styleName="closeButton" onClick={this.handleClose} data-testid="modalCloseIcon" />
         </div>
         <div styleName="content">
           <p styleName="text">
