@@ -236,15 +236,15 @@ export default class ImportKeys extends Component {
     }
 
     if (isSubmittedBch) {
-      linked.bchKey.check((value) => value !== '', <FormattedMessage id="importkeys118" defaultMessage="Please enter BCH private key" />)
-      linked.bchKey.check((value) => value.length > 27, <FormattedMessage id="importkeys119" defaultMessage="Please valid BCH private key" />)
+      linked.bchKey.check((value) => value !== '', <FormattedMessage id="importkeys239" defaultMessage="Please enter BCH private key" />)
+      linked.bchKey.check((value) => value.length > 27, <FormattedMessage id="importkeys240" defaultMessage="Please valid BCH private key" />)
       linked.bchKey.check(() =>
         this.handleBchImportKey(), <FormattedMessage id="importkeys190" defaultMessage="Something went wrong. Check your private key, network of this address and etc." />)
     }
 
     if (isSubmittedLtc) {
       linked.ltcKey.check((value) => value !== '', <FormattedMessage id="importkeys200" defaultMessage="Please enter LTC private key" />)
-      linked.ltcKey.check((value) => value.length > 27,  <FormattedMessage id="importkeys201" defaultMessage="Please valid LTC private key" />)
+      linked.ltcKey.check((value) => value.length > 27, <FormattedMessage id="importkeys201" defaultMessage="Please valid LTC private key" />)
       linked.ltcKey.check(() =>
         this.handleLtcImportKey(), <FormattedMessage id="importkeys190" defaultMessage="Something went wrong. Check your private key, network of this address and etc." />)
     }
@@ -296,17 +296,17 @@ export default class ImportKeys extends Component {
             onClick={this.handleLtcImportKey}
           />
           {
-          /*
-          <FormattedMessage id="ImportKeys176" defaultMessage="Please enter xlm private key">
-            {message => <FieldLabel>{message}</FieldLabel>}
-          </FormattedMessage>
-          <Group
-            inputLink={linked.xlmKey}
-            placeholder="Key"
-            disabled={isImportedXlm}
-            onClick={this.handleXlmImportKey}
-          />
-          */
+            /*
+            <FormattedMessage id="ImportKeys176" defaultMessage="Please enter xlm private key">
+              {message => <FieldLabel>{message}</FieldLabel>}
+            </FormattedMessage>
+            <Group
+              inputLink={linked.xlmKey}
+              placeholder="Key"
+              disabled={isImportedXlm}
+              onClick={this.handleXlmImportKey}
+            />
+            */
           }
           {
             !keySave && (
