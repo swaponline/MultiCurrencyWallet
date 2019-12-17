@@ -131,6 +131,10 @@
     background: #4ac745;
   }
 
+  .sber {
+    background: black;
+  }
+
   .circle {
     width: 36px;
     height: 36px;
@@ -239,6 +243,7 @@
   }
   .modal {
     overflow: scroll;
+    min-width: 100%;
   }
   .card {
     &:last-child {

@@ -15,8 +15,11 @@
 }
 
 .wrapper h2 {
-  width: 400px;
+  width: 450px;
   margin-bottom: 60px;
+  font-size: 40px;
+  font-family: 'Inter-Bold', sans-serif;
+  line-height: 120%;
 }
 
 .mobileFormBody,
@@ -58,8 +61,12 @@
   width: 35px;
   height: 35px;
   justify-content: center;
+  align-items: center;
   margin: auto;
   display: flex;
+  img {
+    width: 20px;
+  }
 }
 
 .btc {
@@ -116,8 +123,7 @@
   background: #6144e5;
   color: white;
   height: 45px;
-  width: 92%;
-  left: 4%;
+  width: 100%;
 }
 
 .continue:disabled {
@@ -131,20 +137,24 @@
 }
 
 .subHeader h5 {
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 900;
   margin-bottom: 0;
+  font-family: 'Inter-Bold', sans-serif;
+  margin-bottom: 5px;
 }
 
 .subHeader p {
-  font-size: 10px;
+  font-size: 13px;
   margin-bottom: 7px;
   color: #8e9aa3;
+  font-family: 'Inter-Bold', sans-serif;
+  line-height: 140%;
 }
 
 .currencyChooserWrapper {
   justify-content: space-between;
-  padding: 30px;
+  padding: 30px 0;
   overflow-x: auto;
   margin: auto;
 }
@@ -173,11 +183,13 @@
   height: 140px;
   min-width: 110px;
   margin: 7px;
+  position: relative;
 
   em {
     position: absolute;
     text-align: right;
-    padding-left: auto;
+    right: 15px;
+    top: 10px;
     width: 60px;
     font-size: 10px;
     color: #9b58b6;
@@ -185,7 +197,7 @@
 
   b {
     font-weight: bolder;
-    font-size: 11;
+    font-size: 13px;
     color: #1f2d48;
   }
 
@@ -193,8 +205,8 @@
     font-weight: 100;
     color: #8e9aa3;
     font-size: 11px;
-    font-family: Inter;
-    line-height: 20px;
+    font-family: 'Inter-Bold', sans-serif;
+    line-height: 18px;
     text-align: center;
   }
 }
@@ -265,7 +277,7 @@
 
   .currencyChooserWrapperSecond {
     height: 285px;
-    margin: 10px 0;
+    margin: 25px 0;
     overflow-y: scroll;
   }
 
@@ -293,12 +305,14 @@
   .ind {
     height: 0px;
     text-align: right;
-    top: -15px;
-    position: relative;
   }
   .continue {
     width: 100%;
     left: 0;
+    position: fixed;
+    bottom: 0;
+    height: 65px;
+    z-index: 1111111;
   }
 
   .secondStepInput {
@@ -313,7 +327,6 @@
   .wrapper {
     min-width: 0;
     width: 100%;
-    height: 100vh;
     margin: 0;
     padding-top: 0;
   }
@@ -341,6 +354,7 @@
     overflow-y: auto;
     display: block;
     padding: 0;
+    height: 360px;
   }
 
   .second {
@@ -352,7 +366,7 @@
     font-family: Inter;
     font-style: normal;
     font-weight: 800;
-    font-size: 16px;
+    font-size: 18px;
     margin-bottom: 5px;
   }
 
@@ -367,7 +381,7 @@
     display: flex;
     width: 100%;
     justify-content: space-between;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
   }
 
   .steps {
@@ -381,16 +395,25 @@
   .buttonWrapper {
     top: 30px;
     right: auto;
+    display: flex;
+    width: 56%;
+    justify-content: space-between;
+    button {
+      color: #6144E5;
+      font-family: 'Inter-Bold', sans-serif;
+      font-size: 14px;
+      text-decoration: underline;
+    }
   }
 
   .listGroup {
-    margin: auto 0;
     margin-left: 10px;
+    flex-basis: 83%;
   }
 
   .wrapper h2 {
-    padding-top: 105px;
-    margin-bottom: 50px;
+    padding-top: 100px;
+    margin-bottom: 60px;
   }
 
   .secureSize,
@@ -405,11 +428,13 @@
     list-style: none;
     height: 75px;
     width: 100%;
+    position: relative;
+    align-items: center;
     display: inline-flex;
-    max-width: 90%;
+    max-width: 100%;
     b {
       font-weight: bolder;
-      font-size: 16px;
+      font-size: 13px;
       color: #1f2d48;
     }
 
@@ -417,14 +442,14 @@
       font-weight: 100;
       color: #8e9aa3;
       font-size: 11px;
-      font-family: Inter;
-      line-height: 15px;
+      font-family: 'Inter-Bold', sans-serif;
+      line-height: 18px;
       text-align: left;
     }
   }
 
   .thirdCard {
-    height: 65px;
+    height: max-content;
   }
 
   .thirdPageIcons {
@@ -446,23 +471,21 @@
     display: block;
     width: 100%;
   }
-
-  .currencyChooserWrapper {
-    overflow-y: auto;
-    max-height: 65vh;
-  }
-
-  .card li {
-    font-size: 9px;
-  }
 }
 
 @media screen and (max-width: 420px) {
   .stepNumber {
     width: 45px;
   }
-  .currencyChooserWrapper {
-    overflow-y: auto;
-    max-height: 50vh;
+}
+
+
+@media all and (min-width: 320px) and (max-width: 767px) {
+  .mobileFormBody,
+  .formBody {
+    margin: 0px;
+  }
+  .card {
+    margin: 7px 0;
   }
 }

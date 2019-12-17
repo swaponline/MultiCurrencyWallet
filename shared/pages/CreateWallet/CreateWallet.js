@@ -143,9 +143,12 @@ const CreateWallet = (props) => {
           {' '}{singleCurrecny && singleCurrecny.toUpperCase()}
         </h2>
         <div styleName="buttonWrapper">
-          <NewButton blue onClick={handleImportKeys}>
+          <button onClick={handleImportKeys}>
               Import keys
-          </NewButton>
+          </button>
+          <button onClick={handleImportKeys}>
+            Exchange
+          </button>
         </div>
         {isMobile &&
           <div styleName="inLine steps">
