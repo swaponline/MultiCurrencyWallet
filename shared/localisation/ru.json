@@ -6496,5 +6496,12 @@
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
+  },
+  {
+    "id": "ImportKeysBtn",
+    "message": "Импортировать",
+    "files": [
+      "shared/pages/CreateWallet/CreateWallet.js"
+    ]
   }
 ]

@@ -6484,5 +6484,12 @@
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
+  },
+  {
+    "id": "ImportKeysBtn",
+    "message": "Import keys",
+    "files": [
+      "shared/pages/CreateWallet/CreateWallet.js"
+    ]
   }
 ]

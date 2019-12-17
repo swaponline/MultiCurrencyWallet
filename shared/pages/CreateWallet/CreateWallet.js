@@ -144,7 +144,10 @@ const CreateWallet = (props) => {
         </h2>
         <div styleName="buttonWrapper">
           <NewButton blue onClick={handleImportKeys}>
-              Import keys
+            <FormattedMessage
+              id="ImportKeysBtn"
+              defaultMessage="Import keys"
+            />
           </NewButton>
         </div>
         {isMobile &&

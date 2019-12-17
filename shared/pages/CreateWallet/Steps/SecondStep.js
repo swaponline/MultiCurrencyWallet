@@ -82,6 +82,7 @@ const CreateWallet = (props) => {
     setError(null)
   }
 
+  console.log("locale", locale)
   const coins = [
     {
       text: locale === 'en' ? 'Without Secure' : 'Без защиты',
