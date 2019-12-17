@@ -208,8 +208,6 @@ export default class Wallet extends Component {
   getUsdBalance = async () => {
     const exCurrencyRate = await actions.user.getExchangeRate('BTC', 'usd')
 
-    console.log('exCurrencyRate', exCurrencyRate);
-
     this.setState(() => ({
       exCurrencyRate
     }))
