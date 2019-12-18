@@ -94,7 +94,6 @@ const CreateWallet = (props) => {
               actions.core.markCoinAsVisible(el.toUpperCase())
             }
           })
-          handleClick()
           break
         case 'sms':
           if (currencies.BTC) {
@@ -105,26 +104,22 @@ const CreateWallet = (props) => {
                   handleClick()
                 },
               })
+              return
             } else {
               actions.core.markCoinAsVisible('BTC (SMS-Protected)')
-              handleClick()
             }
-          } else {
-            handleClick()
           }
           break;
         case 'multisignature':
           if (currencies.BTC) {
             actions.core.markCoinAsVisible('BTC (Multisig)')
           }
-          handleClick()
           break
         default:
           console.warn('unconnected secure type')
-          handleClick()
       }
     }
-    if (step === 1) handleClick()
+    handleClick()
   }
 
   const singleCurrecny = pathname.split('/')[2]
