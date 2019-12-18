@@ -180,15 +180,6 @@ export default class Wallet extends Component {
     })
   }
 
-  handleSaveKeys = () => {
-    actions.modals.open(constants.modals.PrivateKeys)
-  }
-
-
-  handleShowKeys = () => {
-    actions.modals.open(constants.modals.DownloadModal)
-  }
-
   setLocalStorageItems = () => {
     const isClosedNotifyBlockBanner = localStorage.getItem(constants.localStorage.isClosedNotifyBlockBanner);
     const isClosedNotifyBlockSignUp = localStorage.getItem(constants.localStorage.isClosedNotifyBlockSignUp);
@@ -211,18 +202,12 @@ export default class Wallet extends Component {
     }))
   }
 
-  handleSignUp = () => {
-    actions.modals.open(constants.modals.SignUp)
-  }
-
   handleNotifyBlockClose = (state) => {
     this.setState({
       [state]: true
     })
     localStorage.setItem(constants.localStorage[state], 'true')
   }
-
-
 
   showPercentChange1H = () => {
     const { currencies, currencyBalance } = this.props
@@ -236,24 +221,24 @@ export default class Wallet extends Component {
       .then(res => res.json())
       .then(
         (result) => {
-          const itemsName = currencies.map(el => el.name)
-          result.map(res => {
-            const btcBalance = currencyBalance.find(item => item.name === res.symbol)
-            if (itemsName.includes(res.symbol)) {
+          const itemsName = currencies.map(({ name }) => name)
+          result.map(({ symbol, percent_change_1h, price_btc }) => {
+            const btcBalance = currencyBalance.find(({ name }) => name === res.symbol)
+            if (itemsName.includes(symbol)) {
               try {
                 infoAboutCurrency.push({
-                  name: res.symbol,
-                  change: res.percent_change_1h,
-                  price_btc: res.price_btc,
-                  balance: btcBalance.balance * res.price_btc
+                  name: symbol,
+                  change: percent_change_1h,
+                  price_btc,
+                  balance: btcBalance.balance * price_btc
                 })
                 /* SMS Protected and Multisign */
                 if (res.symbol === 'BTC') {
                   infoAboutCurrency.push({
                     name: 'BTC (SMS-Protected)',
-                    change: res.percent_change_1h,
-                    price_btc: res.price_btc,
-                    balance: btcBalance.balance * res.price_btc
+                    change: percent_change_1h,
+                    price_btc,
+                    balance: btcBalance.balance * price_btc
                   })
                 }
               } catch (e) { }
