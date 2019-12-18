@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 
 import { connect } from 'redaction'
 import actions from 'redux/actions'
-import Slider from 'react-slick';
+import Slider from 'pages/Wallet/components/WallerSlider';
 import { Link, withRouter } from 'react-router-dom'
 
 import { links, constants } from 'helpers'
@@ -26,12 +26,6 @@ import BalanceForm from 'pages/Wallet/components/BalanceForm/BalanceForm'
 import { BigNumber } from 'bignumber.js'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import EmptyTransactions from 'components/EmptyTransactions/EmptyTransactions'
-
-import security from 'pages/Wallet/components/NotityBlock/images/security.svg'
-import mail from 'pages/Wallet/components/NotityBlock/images/mail.svg'
-import info from 'pages/Wallet/components/NotityBlock/images/info-solid.svg'
-
-
 
 const isWidgetBuild = config && config.isWidget
 
@@ -272,42 +266,12 @@ export default class CurrencyWallet extends Component {
           location={location}
           defaultTitle={intl.formatMessage(title.metaTitle, { fullName, currency })}
           defaultDescription={intl.formatMessage(description.metaDescription, { fullName, currency })} />
-        <Slider {...settings}>
-          {
-            !isPrivateKeysSaved && <NotifyBlock
-              className="notifyBlockSaveKeys"
-              descr={<FormattedMessage id="descr279" defaultMessage="Before you continue be sure to save your private keys!" />}
-              tooltip={<FormattedMessage id="descr280" defaultMessage="We do not store your private keys and will not be able to restore them" />}
-              icon={security}
-              firstBtn={<FormattedMessage id="descr282" defaultMessage="Show my keys" />}
-              firstFunc={this.handleShowKeys}
-              secondBtn={<FormattedMessage id="descr284" defaultMessage="I saved my keys" />}
-              secondFunc={this.handleSaveKeys}
-            />
-          }
-          {
-            !isSigned && !isClosedNotifyBlockSignUp && <NotifyBlock
-              className="notifyBlockSignUp"
-              descr={<FormattedMessage id="descr291" defaultMessage="Sign up and get your free cryptocurrency for test!" />}
-              tooltip={<FormattedMessage id="descr292" defaultMessage="You will also be able to receive notifications regarding updates with your account" />}
-              firstBtn={<FormattedMessage id="descr293" defaultMessage="Sign Up" />}
-              secondBtn={<FormattedMessage id="descr294" defaultMessage="I’ll do this later" />}
-              icon={mail}
-              firstFunc={this.handleSignUp}
-              secondFunc={() => this.handleNotifyBlockClose('isClosedNotifyBlockSignUp')} />
-          }
-          {
-            !isClosedNotifyBlockBanner && <NotifyBlock
-              descr={<FormattedMessage id="descr301" defaultMessage="Updates" />}
-              tooltip={<FormattedMessage id="descr302" defaultMessage="Let us notify you that the main domain name for Swap.online exchange service will be changed from swap.online to swaponline.io." />}
-              secondBtn={<FormattedMessage id="descr303" defaultMessage="Close" />}
-
-              className="notifyBlockBanner"
-              icon={info}
-              secondBtn="Close"
-              secondFunc={() => this.handleNotifyBlockClose('isClosedNotifyBlockBanner')} />
-          }
-        </Slider>
+        <Slider
+          settings={settings}
+          isSigned={isSigned}
+          handleNotifyBlockClose={this.handleNotifyBlockClose}
+          {...this.state}
+        />
         <Fragment>
           <div styleName="currencyWalletWrapper">
             <div styleName="currencyWalletBalance">

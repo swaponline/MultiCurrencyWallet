@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import Slider from 'react-slick';
+import Slider from './components/WallerSlider';
 import PropTypes from 'prop-types'
 
 import { connect } from 'redaction'
@@ -10,11 +10,6 @@ import styles from './Wallet.scss'
 import { isMobile } from 'react-device-detect'
 
 import History from 'pages/History/History'
-import NotifyBlock from './components/NotityBlock/NotifyBock'
-
-import security from './components/NotityBlock/images/security.svg'
-import mail from './components/NotityBlock/images/mail.svg'
-import info from './components/NotityBlock/images/info-solid.svg'
 
 import { links, constants } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
@@ -328,18 +323,12 @@ export default class Wallet extends Component {
     const {
       activeView,
       infoAboutCurrency,
-      isFetching,
       exCurrencyRate,
       exchangeForm,
-      isClosedNotifyBlockBanner,
-      isClosedNotifyBlockSignUp,
       editTitle,
       walletTitle,
-      isPrivateKeysSaved
     } = this.state;
     const {
-      items,
-      tokens,
       currencyBalance,
       hiddenCoinsList,
       isSigned,
@@ -373,40 +362,12 @@ export default class Wallet extends Component {
       <artical>
         <section styleName="wallet">
           {(walletTitle === '' || editTitle) ? <input styleName="inputTitle" onChange={(e) => this.handleChangeTitle(e)} value={walletTitle} /> : <h3 styleName="walletHeading" onDoubleClick={this.handleEditTitle}>{walletTitle || 'Wallet'}</h3>}
-          <Slider {...settings}>
-            {
-              !isPrivateKeysSaved && <NotifyBlock
-                className="notifyBlockSaveKeys"
-                descr="Before you continue be sure to save your private keys!"
-                tooltip="We do not store your private keys and will not be able to restore them"
-                icon={security}
-                firstBtn="Show my keys"
-                firstFunc={this.handleShowKeys}
-                secondBtn="I saved my keys"
-                secondFunc={this.handleSaveKeys}
-              />
-            }
-            {
-              !isSigned && !isClosedNotifyBlockSignUp && <NotifyBlock
-                className="notifyBlockSignUp"
-                descr="Sign up and get your free cryptocurrency for test!"
-                tooltip="You will also be able to receive notifications regarding updates with your account"
-                icon={mail}
-                firstBtn="Sign Up"
-                firstFunc={this.handleSignUp}
-                secondBtn="I’ll do this later"
-                secondFunc={() => this.handleNotifyBlockClose('isClosedNotifyBlockSignUp')} />
-            }
-            {
-              !isClosedNotifyBlockBanner && <NotifyBlock
-                className="notifyBlockBanner"
-                descr="Updates"
-                tooltip="Let us notify you that the main domain name for Swap.online exchange service will be changed from swap.online to swaponline.io."
-                icon={info}
-                secondBtn="Close"
-                secondFunc={() => this.handleNotifyBlockClose('isClosedNotifyBlockBanner')} />
-            }
-          </Slider>
+          <Slider
+            settings={settings}
+            isSigned={isSigned}
+            handleNotifyBlockClose={this.handleNotifyBlockClose}
+            {...this.state}
+          />
           {!isMobile && <ul styleName="walletNav">
             {walletNav.map(({ key, text }, index) => (
               <li
@@ -437,7 +398,7 @@ export default class Wallet extends Component {
             </div>
           </div>
         </section>
-      </artical>
+      </artical >
     )
   }
 }
