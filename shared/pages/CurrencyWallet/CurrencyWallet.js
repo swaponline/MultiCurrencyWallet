@@ -214,7 +214,7 @@ export default class CurrencyWallet extends Component {
 
     if (txHistory) {
       txHistory = txHistory
-      .filter(tx => tx.type.toLowerCase() === currency.toLowerCase())
+        .filter(tx => tx.type.toLowerCase() === currency.toLowerCase())
     }
 
 
@@ -276,63 +276,67 @@ export default class CurrencyWallet extends Component {
           {
             !isPrivateKeysSaved && <NotifyBlock
               className="notifyBlockSaveKeys"
-              descr="Before you continue be sure to save your private keys!"
-              tooltip="We do not store your private keys and will not be able to restore them"
+              descr={<FormattedMessage id="descr279" defaultMessage="Before you continue be sure to save your private keys!" />}
+              tooltip={<FormattedMessage id="descr280" defaultMessage="We do not store your private keys and will not be able to restore them" />}
               icon={security}
-              firstBtn="Show my keys"
+              firstBtn={<FormattedMessage id="descr282" defaultMessage="Show my keys" />}
               firstFunc={this.handleShowKeys}
-              secondBtn="I saved my keys"
+              secondBtn={<FormattedMessage id="descr284" defaultMessage="I saved my keys" />}
               secondFunc={this.handleSaveKeys}
             />
           }
           {
             !isSigned && !isClosedNotifyBlockSignUp && <NotifyBlock
               className="notifyBlockSignUp"
-              descr="Sign up and get your free cryptocurrency for test!"
-              tooltip="You will also be able to receive notifications regarding updates with your account"
+              descr={<FormattedMessage id="descr291" defaultMessage="Sign up and get your free cryptocurrency for test!" />}
+              tooltip={<FormattedMessage id="descr292" defaultMessage="You will also be able to receive notifications regarding updates with your account" />}
+              firstBtn={<FormattedMessage id="descr293" defaultMessage="Sign Up" />}
+              secondBtn={<FormattedMessage id="descr294" defaultMessage="I’ll do this later" />}
               icon={mail}
-              firstBtn="Sign Up"
               firstFunc={this.handleSignUp}
-              secondBtn="I’ll do this later"
               secondFunc={() => this.handleNotifyBlockClose('isClosedNotifyBlockSignUp')} />
           }
           {
             !isClosedNotifyBlockBanner && <NotifyBlock
+              descr={<FormattedMessage id="descr301" defaultMessage="Updates" />}
+              tooltip={<FormattedMessage id="descr302" defaultMessage="Let us notify you that the main domain name for Swap.online exchange service will be changed from swap.online to swaponline.io." />}
+              secondBtn={<FormattedMessage id="descr303" defaultMessage="Close" />}
+
               className="notifyBlockBanner"
-              descr="Updates"
-              tooltip="Let us notify you that the main domain name for Swap.online exchange service will be changed from swap.online to swaponline.io."
               icon={info}
               secondBtn="Close"
               secondFunc={() => this.handleNotifyBlockClose('isClosedNotifyBlockBanner')} />
           }
         </Slider>
-          <Fragment>
-            <div styleName="currencyWalletWrapper">
-              <div styleName="currencyWalletBalance">
-                <BalanceForm currencyBalance={balance} usdBalance={currencyUsdBalance} handleReceive={this.handleReceive} handleWithdraw={this.handleWithdraw} currency={currency.toLowerCase()}/>
-              </div>
-              { swapHistory.length > 0 && <SwapsHistory orders={swapHistory.filter(item => item.step >= 4)} /> }
-              <div styleName="currencyWalletActivity">
-                <h3>Activity</h3>
-                {!txHistory ? (
-                  <div styleName="loader">
-                    <FormattedMessage id="history107" defaultMessage="Loading" />
-                    <InlineLoader />
-                  </div>
-                ) : (
-        
-                    txHistory.length > 0 ? (
-                      <Table rows={txHistory} styleName="history" rowRender={this.rowRender} />
-                    ) : (
+        <Fragment>
+          <div styleName="currencyWalletWrapper">
+            <div styleName="currencyWalletBalance">
+              <BalanceForm currencyBalance={balance} usdBalance={currencyUsdBalance} handleReceive={this.handleReceive} handleWithdraw={this.handleWithdraw} currency={currency.toLowerCase()} />
+            </div>
+            {swapHistory.length > 0 && <SwapsHistory orders={swapHistory.filter(item => item.step >= 4)} />}
+            <div styleName="currencyWalletActivity">
+              <h3>
+                <FormattedMessage id="historyActivity" defaultMessage="Активность" />
+              </h3>
+              {!txHistory ? (
+                <div styleName="loader">
+                  <FormattedMessage id="history107" defaultMessage="Loading" />
+                  <InlineLoader />
+                </div>
+              ) : (
+
+                  txHistory.length > 0 ? (
+                    <Table rows={txHistory} styleName="history" rowRender={this.rowRender} />
+                  ) : (
                       <EmptyTransactions />
                     )
                 )}
-              </div>
             </div>
-            {
-              seoPage && seoPage.footer && <div>{seoPage.footer}</div>
-            }
-          </Fragment>
+          </div>
+          {
+            seoPage && seoPage.footer && <div>{seoPage.footer}</div>
+          }
+        </Fragment>
       </div>
     )
   }

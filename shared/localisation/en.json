@@ -5149,17 +5149,11 @@
   },
   {
     "id": "createWalletButton2",
-    "message": "Импортировать ключи",
-    "files": [
-      "shared/pages/CreateWallet/Steps/FirstStep.js"
-    ]
+    "message": "Импортировать ключи"
   },
   {
     "id": "createWalletButton4",
-    "message": "Обмен",
-    "files": [
-      "shared/pages/CreateWallet/Steps/FirstStep.js"
-    ]
+    "message": "Обмен"
   },
   {
     "id": "createWalletCapture1",
@@ -6504,6 +6498,139 @@
     "message": "Импортировать",
     "files": [
       "shared/pages/CreateWallet/CreateWallet.js"
+    ]
+  },
+  {
+    "id": "ExchangeBtn",
+    "message": "Обмен",
+    "files": [
+      "shared/pages/CreateWallet/CreateWallet.js"
+    ]
+  },
+  {
+    "id": "Yourtotalbalance",
+    "message": "Ваш общий баланс",
+    "files": [
+      "shared/pages/Wallet/components/BalanceForm/BalanceForm.js"
+    ]
+  },
+  {
+    "id": "YourtotalbalanceDeposit",
+    "message": "Пополнить",
+    "files": [
+      "shared/pages/Wallet/components/BalanceForm/BalanceForm.js"
+    ]
+  },
+  {
+    "id": "YourtotalbalanceSend",
+    "message": "Отправить",
+    "files": [
+      "shared/pages/Wallet/components/BalanceForm/BalanceForm.js"
+    ]
+  },
+  {
+    "id": "YourAssets",
+    "message": "Your Assets",
+    "files": [
+      "shared/pages/Wallet/CurrenciesList.js"
+    ]
+  },
+  {
+    "id": "YourAssetsDescription",
+    "message": "Здесь вы можете безопасно хранить и быстро обменивать Bitcoin, Ethereum, {br} USD, Tether, BCH и многочисленные токены ERC-20.",
+    "files": [
+      "shared/pages/Wallet/CurrenciesList.js"
+    ]
+  },
+  {
+    "id": "addAsset",
+    "message": "Добавить валюту",
+    "files": [
+      "shared/pages/Wallet/CurrenciesList.js"
+    ]
+  },
+  {
+    "id": "MybalanceswalletNav",
+    "message": "Мой баланс",
+    "files": [
+      "shared/pages/Wallet/Wallet.js"
+    ]
+  },
+  {
+    "id": "TransactionswalletNav",
+    "message": "Переводы",
+    "files": [
+      "shared/pages/Wallet/Wallet.js"
+    ]
+  },
+  {
+    "id": "walletHistoryActivity",
+    "message": "Activity",
+    "files": [
+      "shared/pages/Wallet/Wallet.js"
+    ]
+  },
+  {
+    "id": "descr279",
+    "message": "Before you continue be sure to save your private keys!",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "descr280",
+    "message": "We do not store your private keys and will not be able to restore them",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "descr282",
+    "message": "Show my keys",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "descr284",
+    "message": "I saved my keys",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "descr291",
+    "message": "Sign up and get your free cryptocurrency for test!",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "descr292",
+    "message": "You will also be able to receive notifications regarding updates with your account",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "descr293",
+    "message": "Sign Up",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "descr294",
+    "message": "I’ll do this later",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "historyActivity",
+    "message": "Activity",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
     ]
   }
 ]

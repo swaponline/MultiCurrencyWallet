@@ -29,7 +29,10 @@ import BalanceForm from './components/BalanceForm/BalanceForm'
 import CurrenciesList from './CurrenciesList'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 
-const walletNav = ['My balances', 'Transactions'];
+const walletNav = [
+  { key: 'My balances', text: <FormattedMessage id="MybalanceswalletNav" defaultMessage="Мой баланс" /> },
+  { key: 'Transactions', text: <FormattedMessage id="TransactionswalletNav" defaultMessage="Переводы" /> }
+];
 
 
 @connect(({
@@ -405,14 +408,14 @@ export default class Wallet extends Component {
             }
           </Slider>
           {!isMobile && <ul styleName="walletNav">
-            {walletNav.map((item, index) => (
+            {walletNav.map(({ key, text }, index) => (
               <li
-                key={item}
+                key={key}
                 styleName={`walletNavItem ${activeView === index ? 'active' : ''}`}
                 onClick={() => this.handleNavItemClick(index)}
               >
                 <a href styleName="walletNavItemLink">
-                  {item}
+                  {text}
                 </a>
               </li>))}
           </ul>}
@@ -427,7 +430,9 @@ export default class Wallet extends Component {
             </div>
             <CurrenciesList tableRows={tableRows} {...this.state} {...this.props} goToСreateWallet={this.goToСreateWallet} />
             <div styleName={`activity ${activeView === 1 ? 'active' : ''}`}>
-              <h3 styleName="activityHeading">Activity</h3>
+              <h3 styleName="activityHeading">
+                <FormattedMessage id="walletHistoryActivity" defaultMessage="Активность" />
+              </h3>
               <History></History>
             </div>
           </div>

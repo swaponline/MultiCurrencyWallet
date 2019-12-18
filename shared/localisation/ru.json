@@ -6471,28 +6471,28 @@
   },
   {
     "id": "PartialHowItWorks10",
-    "message": "How it works?",
+    "message": "Как это работает?",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
   },
   {
     "id": "PartialPriceSellMax",
-    "message": "Maximum available amount for sell:",
+    "message": "Максимально доступная сумма для продажи:",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
   },
   {
     "id": "continueDeclined977",
-    "message": "Click here to continue your swaps",
+    "message": "Нажмите здесь, чтобы продолжить обмен",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
   },
   {
     "id": "partial1021",
-    "message": "Embed on website",
+    "message": "Вставить на сайт",
     "files": [
       "shared/pages/PartialClosure/PartialClosure.js"
     ]
@@ -6502,6 +6502,139 @@
     "message": "Импортировать",
     "files": [
       "shared/pages/CreateWallet/CreateWallet.js"
+    ]
+  },
+  {
+    "id": "ExchangeBtn",
+    "message": "Обмен",
+    "files": [
+      "shared/pages/CreateWallet/CreateWallet.js"
+    ]
+  },
+  {
+    "id": "Yourtotalbalance",
+    "message": "Ваш общий баланс",
+    "files": [
+      "shared/pages/Wallet/components/BalanceForm/BalanceForm.js"
+    ]
+  },
+  {
+    "id": "YourtotalbalanceDeposit",
+    "message": "Пополнить",
+    "files": [
+      "shared/pages/Wallet/components/BalanceForm/BalanceForm.js"
+    ]
+  },
+  {
+    "id": "YourtotalbalanceSend",
+    "message": "Отправить",
+    "files": [
+      "shared/pages/Wallet/components/BalanceForm/BalanceForm.js"
+    ]
+  },
+  {
+    "id": "YourAssets",
+    "message": "Ваши валюты",
+    "files": [
+      "shared/pages/Wallet/CurrenciesList.js"
+    ]
+  },
+  {
+    "id": "YourAssetsDescription",
+    "message": "Здесь вы можете безопасно хранить и быстро обменивать Bitcoin, Ethereum, {br} USD, Tether, BCH и многочисленные токены ERC-20.",
+    "files": [
+      "shared/pages/Wallet/CurrenciesList.js"
+    ]
+  },
+  {
+    "id": "addAsset",
+    "message": "Добавить валюту",
+    "files": [
+      "shared/pages/Wallet/CurrenciesList.js"
+    ]
+  },
+  {
+    "id": "MybalanceswalletNav",
+    "message": "Мой баланс",
+    "files": [
+      "shared/pages/Wallet/Wallet.js"
+    ]
+  },
+  {
+    "id": "TransactionswalletNav",
+    "message": "Переводы",
+    "files": [
+      "shared/pages/Wallet/Wallet.js"
+    ]
+  },
+  {
+    "id": "walletHistoryActivity",
+    "message": "Активность",
+    "files": [
+      "shared/pages/Wallet/Wallet.js"
+    ]
+  },
+  {
+    "id": "descr279",
+    "message": "Прежде чем продолжить, обязательно сохраните свои ключи!",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "descr280",
+    "message": "Мы не храним ваши ключи и не сможем их восстановить",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "descr282",
+    "message": "Показать мои ключи",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "descr284",
+    "message": "Я сохранил свои ключи",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "descr291",
+    "message": "Зарегистрируйтесь и получите бесплатную криптовалюту для тестирования!",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "descr292",
+    "message": "Вы также сможете получать уведомления об обновлениях с вашей учетной записью",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "descr293",
+    "message": "Зарегистрироваться",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "descr294",
+    "message": "Я сделаю это позже",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
+    ]
+  },
+  {
+    "id": "historyActivity",
+    "message": "Активность",
+    "files": [
+      "shared/pages/CurrencyWallet/CurrencyWallet.js"
     ]
   }
 ]
