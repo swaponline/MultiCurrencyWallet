@@ -12,6 +12,7 @@ import { Modal } from 'components/modal'
 import { Button } from 'components/controls'
 import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 import { ConsoleView } from 'react-device-detect'
+import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 import icons from './images'
 
 
@@ -70,52 +71,54 @@ export default class CurrencyAction extends React.Component {
     const { props: { data: { currencies, context } } } = this
 
     return (
-      <div styleName="modal-overlay" onClick={this.handleClose}>
-        <div styleName="modal">
-          <div styleName="header">
-            <p styleName="title">{context}</p>
-          </div>
-          <div styleName="content">
-            <FormattedMessage
+      <div styleName="modal-overlay">
+      <div styleName="modal">
+        <div styleName="header">
+          <p styleName="title">{context}</p>
+            <CloseIcon styleName="closeButton" onClick={this.handleClose} data-testid="modalCloseIcon" />
+        </div>
+        <div styleName="content">
+          <p styleName="text">
+  <FormattedMessage
               id="currencyAction81"
               defaultMessage="Please choose a currency, which you want to {context}"
               values={{ context: context.toLowerCase() }}
             />
-            <div styleName="currenciesWrapper">
-              {currencies.map(item => {
-                let iconName = item.currency.toLowerCase()
-                let itemTitle = item.currency
-                let itemFullTitle = item.fullName
+          </p>
+          <div styleName="currenciesWrapper">
+             {currencies.map(item => {
+               let iconName = item.currency.toLowerCase()
+               let itemTitle = item.currency
+               let itemFullTitle = item.fullName
 
-                switch (item.currency) {
-                  case 'BTC (Multisig)':
-                    iconName = 'btc'
-                    itemTitle = 'BTC (MTS)'
-                    itemFullTitle = 'BTC (MTS)'
-                    break;
-                  case 'BTC (SMS-Protected)':
-                    iconName = 'btc'
-                    itemTitle = 'BTC (SMS)'
-                    itemFullTitle = 'BTC (SMS)'
-                    break;
-                }
+               switch (item.currency) {
+                 case 'BTC (Multisig)':
+                  iconName = 'btc'
+                  itemTitle = 'BTC (MTS)'
+                  itemFullTitle = 'BTC (MTS)'
+                  break;
+                 case 'BTC (SMS-Protected)':
+                  iconName = 'btc'
+                  itemTitle = 'BTC (SMS)'
+                  itemFullTitle = 'BTC (SMS)'
+                  break;
+               }
 
-                return (
-                  <div styleName="card" key={item} onClick={() => this.handleClickCurrency(item)}>
-                    <div styleName={`circle ${iconName}`}>
-                      <img
-                        src={icons[iconName]}
-                        alt={`${name} icon`}
-                        role="image"
-                      />
-                    </div>
-                    <b>{itemTitle}</b>
-                    <span>{itemFullTitle}</span>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
+               return (
+                 <div styleName="card" key={item} onClick={() => this.handleClickCurrency(item)}>
+                   <div styleName={`circle ${iconName}`}>
+                    <img
+                      src={icons[iconName]}
+                      alt={`${name} icon`}
+                      role="image"
+                    />
+                   </div>
+                   <b>{itemTitle}</b>
+                   <span>{itemFullTitle}</span>
+                 </div>
+               )
+             })}
+           </div>
         </div>
       </div>
     )

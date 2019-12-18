@@ -71,14 +71,26 @@ tar czf my-widget.tar.gz build-mainnet-widget
 ### 1. как помененять логотип
 swap.react/shared/components/Logo
 * в папке `images` перенести свои свг файлы
-* в файле `Logo.js` изменить alt на свой  
-
-    ```const imgNode = React.createElement('img', {
-      styleName: !withLink && 'logo',
-      src: isColored ? coloredLogoImage : logoImage,
-      alt: 'swap.online logo', // измененить на свой
-    })
-    ```
+* в файле index.js в объекте указать свой урл и присвоить ему изображение
+```
+export default {
+  colored: {
+    свой урл: имя картинки,
+    localhost: base,
+    'swap.online': swapOnlineColored,
+  },
+  common: {
+    свой урл: имя картинки,
+    'swap.online': swapOnline,
+  },
+}
+```
+* для изменения прилодера в client/index.html заменить урл на урл своей картинки
+```
+  <div id="loader">
+      <img src="https://wiki.swap.online/assets/swap-logo.png" />
+  </div>
+```
 * для изменения цвета иконки валюты нужно перейти в `swap.react/shared/components/ui/CurrencyIcon/images`
     заменить на свою иконку, важно чтоб имя свг файла соответствовало имени валюты
 * для изменения свг файлов в слайдере валют, нужно изменить свг в файл в `/swap.react/shared/pages/PartialClosure/CurrencySlider/images`

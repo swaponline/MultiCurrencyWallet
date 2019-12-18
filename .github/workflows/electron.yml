@@ -9,7 +9,7 @@ jobs:
     # Platforms to build on/for
     strategy:
       matrix:
-        os: [windows-2019, ubuntu-18.04]
+        os: [ubuntu-18.04]
 
     steps:
       - name: Check out Git repository
@@ -19,7 +19,8 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 10
-
+      - name: Checkout submodules
+        uses: textbook/git-checkout-submodule-action@2.0.0
       - name: Build/release Electron app
         uses: samuelmeuli/action-electron-builder@v1
         with:
@@ -28,8 +29,8 @@ jobs:
           github_token: ${{ secrets.github_token }}
 
           # macOS code signing certificate
-          #mac_certs: ${{ secrets.mac_certs }}
-          #mac_certs_password: ${{ secrets.mac_certs_password }}
+          mac_certs: ${{ secrets.mac_certs }}
+          mac_certs_password: ${{ secrets.mac_certs_password }}
 
           # If the commit is tagged with a version (e.g. "v1.0.0"),
           # release the app after building
