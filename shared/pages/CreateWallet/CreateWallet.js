@@ -107,20 +107,24 @@ const CreateWallet = (props) => {
               })
             } else {
               actions.core.markCoinAsVisible('BTC (SMS-Protected)')
+              handleClick()
             }
+          } else {
+            handleClick()
           }
           break;
         case 'multisignature':
           if (currencies.BTC) {
             actions.core.markCoinAsVisible('BTC (Multisig)')
-            handleClick()
           }
+          handleClick()
           break
         default:
           console.warn('unconnected secure type')
+          handleClick()
       }
     }
-    handleClick()
+    if (step === 1) handleClick()
   }
 
   const singleCurrecny = pathname.split('/')[2]
