@@ -171,11 +171,11 @@ export default class WithdrawModalMultisig extends React.Component {
     const { data: { currency, address, balance, invoice, onReady }, name } = this.props
 
     const result = await actions.btcmultisig.confirmSMSProtected(code)
-    if (result && result.txid) {
+    if (result && result.txID) {
       actions.loader.hide()
 
       if (invoice) {
-        await actions.invoices.markInvoice(invoice.id, 'ready', result.txid)
+        await actions.invoices.markInvoice(invoice.id, 'ready', result.txID)
       }
 
       actions.notifications.show(constants.notifications.SuccessWithdraw, {
