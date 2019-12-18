@@ -142,6 +142,17 @@ class Row extends React.PureComponent {
       })
     }
 
+    const hasInvoiceButtons = (invoiceData && !invoiceData.txid && direction === 'in' && invoiceData.status === 'new' && !cancelled && !payed)
+    let invoiceStatusClass = 'confirm green'
+    let invoiceStatusText = <FormattedMessage id="HistoryRowInvoiceStatusNew" defaultMessage="Пока не оплачен" />
+    if (invoiceData && (invoiceData.status === 'ready' || payed)) {
+      invoiceStatusClass = 'confirm'
+      invoiceStatusText = <FormattedMessage id="RowHistoryInvoicePayed" defaultMessage="Оплачен" />
+    }
+    if (invoiceData && (invoiceData.status === 'cancelled' || cancelled)) {
+      invoiceStatusClass = 'confirm red'
+      invoiceStatusText = <FormattedMessage id="RowHistoryInvoiceCancelled" defaultMessage="Отклонен" />
+    }
     /* eslint-disable */
     return (
       <>
@@ -160,6 +171,9 @@ class Row extends React.PureComponent {
                 {txType === 'INVOICE' ?
                   <>
                     <FormattedMessage id="RowHistoryInvoce" defaultMessage="Инвойс #{number}" values={{number: `${invoiceData.id}-${invoiceData.invoiceNumber}`}}/>
+                    <div styleName={`${invoiceStatusClass} cell`}>
+                      {invoiceStatusText}
+                    </div>
                   </> :
                   <>
                     {
@@ -192,7 +206,7 @@ class Row extends React.PureComponent {
                 {...this.props}
               />
               {txType === 'INVOICE' && direction === 'in' &&
-                <div styleName='info'>
+                <div styleName={(hasInvoiceButtons) ? 'info' : 'info noButtons'}>
                   {/* {
                     invoiceData && invoiceData.label && <div styleName='comment'>{invoiceData.label}</div>
                   } */}
@@ -203,18 +217,8 @@ class Row extends React.PureComponent {
                     values={{address: `${(invoiceData.destAddress) ? invoiceData.destAddress : invoiceData.fromAddress}`}} />
                 </div>
               }
-              {((invoiceData && invoiceData.status === 'cancelled') || cancelled) &&
-                <div styleName='date'>
-                  <FormattedMessage id="RowHistoryInvoiceCancelled" defaultMessage="Отклонен" />
-                </div>
-              }
-              {((invoiceData && invoiceData.status === 'ready') || payed) &&
-                <div styleName='date'>
-                  <FormattedMessage id='RowHistoryInvoicePayed' defaultMessage='Оплачен' />
-                </div>
-              }
             </div>
-            {invoiceData && !invoiceData.txid && direction === 'in' && invoiceData.status === 'new' && !cancelled && !payed &&
+            {hasInvoiceButtons &&
                 <div styleName="btnWrapper">
                   <button onClick={this.handlePayInvoice}>
                     <FormattedMessage id='RowHistoryPayInvoice' defaultMessage='Оплатить' />

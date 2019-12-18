@@ -19,6 +19,7 @@ import Tooltip from 'components/ui/Tooltip/Tooltip'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import ReactTooltip from 'react-tooltip'
 import { isMobile } from 'react-device-detect'
+import InvoiceInfoBlock from 'components/InvoiceInfoBlock/InvoiceInfoBlock'
 
 import typeforce from 'swap.app/util/typeforce'
 // import { isCoinAddress } from 'swap.app/util/typeforce'
@@ -140,7 +141,7 @@ export default class WithdrawModalMultisigUser extends React.Component {
 
   handleSubmit = async () => {
     const { address: to, amount, ownTx } = this.state
-    const { data: { currency, address, balance, invoice }, name } = this.props
+    const { data: { currency, address, balance, invoice, onReady }, name } = this.props
 
     this.setState(() => ({ isShipped: true }))
 
@@ -301,6 +302,9 @@ export default class WithdrawModalMultisigUser extends React.Component {
 
     return (
       <Modal name={name} title={`${intl.formatMessage(labels.withdrowModal)}${' '}${currency.toUpperCase()}`}>
+        {invoice &&
+          <InvoiceInfoBlock invoiceData={invoice} />
+        }
         {step === 'fillform' &&
           <Fragment>
             <p styleName={isEthToken ? 'rednotes' : 'notice'}>
@@ -377,26 +381,6 @@ export default class WithdrawModalMultisigUser extends React.Component {
                 )
               }
             </div>
-            {invoice &&
-              <div styleName="lowLevel">
-                <div styleName="groupField">
-                  <div styleName="downLabel">
-                    <FieldLabel inRow>
-                      <span styleName="mobileFont">
-                        <FormattedMessage id="WithdrowOwnTX" defaultMessage="Или укажите TX" />
-                      </span>
-                    </FieldLabel>
-                  </div>
-                </div>
-                <div styleName="group">
-                  <Input
-                    styleName="input"
-                    valueLink={linked.ownTx}
-                    placeholder={`${intl.formatMessage(labels.ownTxPlaceholder)}`}
-                  />
-                </div>
-              </div>
-            }
             <Button styleName="buttonFull" brand fullWidth disabled={isDisabled} onClick={this.handleSubmit}>
               {isShipped
                 ? (
@@ -405,16 +389,11 @@ export default class WithdrawModalMultisigUser extends React.Component {
                   </Fragment>
                 )
                 : (
-                  (invoice && ownTx) ?
-                    (
-                      <FormattedMessage id="WithdrawModalInvoiceSaveTx" defaultMessage="Отметить как оплаченный" />
-                    ) : (
-                      <Fragment>
-                        <FormattedMessage id="WithdrawModal111" defaultMessage="Withdraw" />
-                        {' '}
-                        {`${currency.toUpperCase()}`}
-                      </Fragment>
-                    )
+                  <Fragment>
+                    <FormattedMessage id="WithdrawModal111" defaultMessage="Withdraw" />
+                    {' '}
+                    {`${currency.toUpperCase()}`}
+                  </Fragment>
                 )
               }
             </Button>
@@ -433,6 +412,41 @@ export default class WithdrawModalMultisigUser extends React.Component {
                   />
                 </div>
               )
+            }
+            {invoice && 
+              <Fragment>
+                <hr />
+                <div styleName="lowLevel">
+                  <div styleName="groupField">
+                    <div styleName="downLabel">
+                      <FieldLabel inRow>
+                        <span styleName="mobileFont">
+                          <FormattedMessage id="WithdrowOwnTX" defaultMessage="Или укажите TX" />
+                        </span>
+                      </FieldLabel>
+                    </div>
+                  </div>
+                  <div styleName="group">
+                    <Input
+                      styleName="input"
+                      valueLink={linked.ownTx}
+                      placeholder={`${intl.formatMessage(labels.ownTxPlaceholder)}`}
+                    />
+                  </div>
+                </div>
+                <Button styleName="buttonFull" brand fullWidth disabled={(!(ownTx) || isShipped)} onClick={this.handleSubmit}>
+                  {isShipped
+                    ? (
+                      <Fragment>
+                        <FormattedMessage id="WithdrawModal11212" defaultMessage="Processing ..." />
+                      </Fragment>
+                    )
+                    : (
+                      <FormattedMessage id="WithdrawModalInvoiceSaveTx" defaultMessage="Отметить как оплаченный" />
+                    )
+                  }
+                </Button>
+              </Fragment>
             }
           </Fragment>
         }
