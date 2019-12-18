@@ -4,9 +4,6 @@ import WithdrawModal from './WithdrawModal/WithdrawModal'
 import WithdrawModalMultisig from './WithdrawModalMultisig/WithdrawModalMultisig'
 import WithdrawModalMultisigUser from './WithdrawModalMultisig/WithdrawModalMultisigUser'
 import PrivateKeysModal from './PrivateKeysModal/PrivateKeysModal'
-import EosRegisterModal from './EosRegisterModal/EosRegisterModal'
-import EosBuyAccountModal from './EosBuyAccountModal/EosBuyAccountModal'
-import TelosChangeAccountModal from './TelosChangeAccountModal/TelosChangeAccountModal'
 import Approve from './Approve/Approve'
 import ImportKeys from './ImportKeys/ImportKeys'
 import ShowMoreCoins from './ShowMoreCoins/ShowMoreCoins'
@@ -27,6 +24,7 @@ import MultisignJoinLink from './MultisignJoinLink/MultisignJoinLink'
 
 import InvoiceModal from './InvoiceModal/InvoiceModal'
 import InvoiceLinkModal from './InvoiceLinkModal/InvoiceLinkModal'
+import AlertModal from './Alert/AlertModal'
 
 
 export default {
@@ -39,9 +37,6 @@ export default {
   PrivateKeysModal,
   ImportKeys,
   ShowMoreCoins,
-  EosBuyAccountModal,
-  EosRegisterModal,
-  TelosChangeAccountModal,
   Approve,
   EthChecker,
   Keychain,
@@ -56,4 +51,5 @@ export default {
   CurrencyAction,
   InvoiceModal,
   InvoiceLinkModal,
+  AlertModal,
 }

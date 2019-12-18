@@ -45,7 +45,6 @@ class Row extends React.PureComponent {
 
     let withdrawModalType = constants.modals.Withdraw
     const btcData = actions.btcmultisig.isBTCAddress(invoiceData.toAddress)
-console.log(btcData, invoiceData)
     if (btcData) {
       const { currency } = btcData
 
@@ -91,12 +90,14 @@ console.log(btcData, invoiceData)
   }
 
   commentCancel = () => {
-    const { date, hiddenList, onSubmit } = this.props
+    const { date, hiddenList, onSubmit, invoiceData } = this.props
     const { ind } = this.state
 
     const commentDate = moment(date).format('LLLL')
-    onSubmit({ ...hiddenList, [ind]: commentDate })
-    this.changeComment(commentDate)
+    const commentLabel = invoiceData && invoiceData.label;
+    const fullComment = `${commentDate}  ${commentLabel}`;
+    onSubmit({ ...hiddenList, [ind]: fullComment})
+    this.changeComment(fullComment)
     this.toggleComment(false)
   }
 
@@ -146,7 +147,7 @@ console.log(btcData, invoiceData)
       <>
         <tr styleName='historyRow'>
           <td>
-            <div styleName={statusStyleName}>
+          <div styleName={`${statusStyleAmount} circleIcon`}>
               <div styleName='arrowWrap'>
                 <svg width='12' height='15' viewBox='0 0 12 15' fill='none' xmlns='http://www.w3.org/2000/svg'>
                   <path d='M6 15V3' stroke='#8E9AA3' strokeWidth='2' />
@@ -154,7 +155,7 @@ console.log(btcData, invoiceData)
                 </svg>
               </div>
             </div>
-            <div styleName={statusStyleName}>
+            <div styleName="historyInfo">
               <div styleName='directionHeading'>
                 {txType === 'INVOICE' ?
                   <>
@@ -182,6 +183,7 @@ console.log(btcData, invoiceData)
               <CommentRow
                 isOpen={isOpen}
                 comment={comment}
+                label={invoiceData && invoiceData.label}
                 commentCancel={this.commentCancel}
                 ind={ind}
                 submit={onSubmit}
@@ -189,26 +191,17 @@ console.log(btcData, invoiceData)
                 toggleComment={this.toggleComment}
                 {...this.props}
               />
-              {invoiceData && invoiceData.label &&
-                <div styleName='date'>{invoiceData.label}</div>
-              }
               {txType === 'INVOICE' && direction === 'in' &&
-                <div styleName='date'>
+                <div styleName='info'>
+                  {/* {
+                    invoiceData && invoiceData.label && <div styleName='comment'>{invoiceData.label}</div>
+                  } */}
                   <FormattedMessage
+                    styleName="address"
                     id="RowHistoryInvoiceAddress"
                     defaultMessage='Адрес для оплаты: {address}'
                     values={{address: `${(invoiceData.destAddress) ? invoiceData.destAddress : invoiceData.fromAddress}`}} />
                 </div>
-              }
-              {invoiceData && !invoiceData.txid && direction === 'in' && invoiceData.status === 'new' && !cancelled && !payed &&
-                <Fragment>
-                  <button onClick={this.handlePayInvoice}>
-                    <FormattedMessage id='RowHistoryPayInvoice' defaultMessage='Оплатить' />
-                  </button>
-                  <button onClick={this.handleCancelInvoice}>
-                    <FormattedMessage id='RowHistoryCancelInvoice' defaultMessage='Отклонить' />
-                  </button>
-                </Fragment>
               }
               {((invoiceData && invoiceData.status === 'cancelled') || cancelled) &&
                 <div styleName='date'>
@@ -221,6 +214,16 @@ console.log(btcData, invoiceData)
                 </div>
               }
             </div>
+            {invoiceData && !invoiceData.txid && direction === 'in' && invoiceData.status === 'new' && !cancelled && !payed &&
+                <div styleName="btnWrapper">
+                  <button onClick={this.handlePayInvoice}>
+                    <FormattedMessage id='RowHistoryPayInvoice' defaultMessage='Оплатить' />
+                  </button>
+                  <button onClick={this.handleCancelInvoice}>
+                    <FormattedMessage id='RowHistoryCancelInvoice' defaultMessage='Отклонить' />
+                  </button>
+                </div>
+            }
             <div styleName={statusStyleAmount}>
               {invoiceData ? this.parseFloat(direction, value, 'out', type) : this.parseFloat(direction, value, 'in', type)}
               <span styleName='amountUsd'>{`~ $${getUsd.toFixed(2)}`}</span>

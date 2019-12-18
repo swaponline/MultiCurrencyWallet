@@ -4,9 +4,6 @@ export default {
   WithdrawMultisig: 'WithdrawModalMultisig',
   Offer: 'OfferModal',
   PrivateKeys: 'PrivateKeysModal',
-  EosRegister: 'EosRegisterModal',
-  EosBuyAccount: 'EosBuyAccountModal',
-  TelosChangeAccount: 'TelosChangeAccountModal',
   Approve: 'Approve',
   ImportKeys: 'ImportKeys',
   ShowMoreCoins: 'ShowMoreCoins',
@@ -26,4 +23,5 @@ export default {
   CurrencyAction: 'CurrencyAction',
   InvoiceModal: 'InvoiceModal',
   InvoiceLinkModal: 'InvoiceLinkModal',
+  AlertModal: 'AlertModal',
 }

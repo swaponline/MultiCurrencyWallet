@@ -7,6 +7,7 @@ import actions from 'redux/actions'
 
 import cssModules from 'react-css-modules'
 import styles from './Wallet.scss'
+import { isMobile } from 'react-device-detect'
 
 import History from 'pages/History/History'
 import NotifyBlock from './components/NotityBlock/NotifyBock'
@@ -40,8 +41,6 @@ const walletNav = ['My balances', 'Transactions'];
     btcMultisigUserData,
     bchData,
     tokensData,
-    eosData,
-    telosData,
     ltcData,
     // qtumData,
     // usdtOmniData,
@@ -66,8 +65,6 @@ const walletNav = ['My balances', 'Transactions'];
     btcMultisigSMSData,
     btcMultisigUserData,
     ethData,
-    eosData,
-    telosData,
     bchData,
     ltcData,
     //qtumData,
@@ -90,8 +87,6 @@ const walletNav = ['My balances', 'Transactions'];
         btcMultisigUserData,
         bchData,
         ethData,
-        eosData,
-        telosData,
         ltcData,
         // qtumData,
         // usdtOmniData,
@@ -107,8 +102,6 @@ const walletNav = ['My balances', 'Transactions'];
     btcMultisigUserData,
     bchData,
     ethData,
-    eosData,
-    telosData,
     ltcData,
     // qtumData,
     // usdtOmniData,
@@ -137,8 +130,6 @@ const walletNav = ['My balances', 'Transactions'];
       btcMultisigUserData,
       bchData,
       ltcData,
-      eosData,
-      telosData,
       // qtumData,
       // usdtOmniData,
     },
@@ -168,6 +159,12 @@ export default class Wallet extends Component {
   }
 
   componentDidMount() {
+    const { params, url } = this.props.match
+
+    if (url.includes('withdraw')) {
+      this.handleWithdraw(params)
+    }
+
     this.showPercentChange1H();
     this.getUsdBalance();
     this.setLocalStorageItems();
@@ -227,6 +224,8 @@ export default class Wallet extends Component {
     localStorage.setItem(constants.localStorage[state], 'true')
   }
 
+
+
   showPercentChange1H = () => {
     const { currencies, currencyBalance } = this.props
     let infoAboutCurrency = []
@@ -271,6 +270,14 @@ export default class Wallet extends Component {
           console.log('error on fetch data from api')
         }
       )
+  }
+
+  handleWithdraw = (params) => {
+    const { allData } = this.props
+    const { address, amount } = params
+    const item = allData.find(({ currency }) => currency.toLowerCase() === params.currency.toLowerCase())
+
+    actions.modals.open(constants.modals.Withdraw, { ...item, toAddress: address, amount })
   }
 
   goToСreateWallet = () => {
@@ -329,6 +336,7 @@ export default class Wallet extends Component {
     const {
       items,
       tokens,
+      currencyBalance,
       hiddenCoinsList,
       isSigned,
       allData,
@@ -346,21 +354,21 @@ export default class Wallet extends Component {
     };
 
     let btcBalance = null;
-    let usdBalance = null;
+    let usdBalance = 0;
 
     const tableRows = allData.filter(({ currency, balance }) => !hiddenCoinsList.includes(currency) || balance > 0)
 
-    if (infoAboutCurrency) {
-      infoAboutCurrency.forEach(item => {
+    if (currencyBalance) {
+      currencyBalance.forEach(item => {
         btcBalance += item.balance
         usdBalance = btcBalance * exCurrencyRate;
       })
     }
-    
+
     return (
       <artical>
         <section styleName="wallet">
-        {(walletTitle === '' || editTitle) ? <input styleName="inputTitle" onChange={(e) => this.handleChangeTitle(e)} value={walletTitle} /> : <h3 styleName="walletHeading" onDoubleClick={this.handleEditTitle}>{walletTitle || 'Wallet'}</h3>} 
+          {(walletTitle === '' || editTitle) ? <input styleName="inputTitle" onChange={(e) => this.handleChangeTitle(e)} value={walletTitle} /> : <h3 styleName="walletHeading" onDoubleClick={this.handleEditTitle}>{walletTitle || 'Wallet'}</h3>}
           <Slider {...settings}>
             {
               !isPrivateKeysSaved && <NotifyBlock
@@ -395,33 +403,33 @@ export default class Wallet extends Component {
                 secondFunc={() => this.handleNotifyBlockClose('isClosedNotifyBlockBanner')} />
             }
           </Slider>
-          <ul styleName="walletNav">
-            {walletNav.map((item, index) => <li key={index} styleName={`walletNavItem ${activeView === index ? 'active' : ''}`} onClick={() => this.handleNavItemClick(index)}><a href styleName="walletNavItemLink">{item}</a></li>)}
-          </ul>
-          {
-            !isFetching && !isNaN(usdBalance) ? (
-              <div className="data-tut-store" styleName="walletContent" >
-                <div styleName={`walletBalance ${activeView === 0 ? 'active' : ''}`}>
-                  <BalanceForm usdBalance={usdBalance} currencyBalance={btcBalance} handleReceive={this.handleModalOpen} handleWithdraw={this.handleModalOpen} currency="btc" />
-                  {exchangeForm &&
-                    <div styleName="exchangeForm">
-                      <ParticalClosure {...this.props} isOnlyForm />
-                    </div>
-                  }
+          {!isMobile && <ul styleName="walletNav">
+            {walletNav.map((item, index) => (
+              <li
+                key={item}
+                styleName={`walletNavItem ${activeView === index ? 'active' : ''}`}
+                onClick={() => this.handleNavItemClick(index)}
+              >
+                <a href styleName="walletNavItemLink">
+                  {item}
+                </a>
+              </li>))}
+          </ul>}
+          <div className="data-tut-store" styleName="walletContent" >
+            <div styleName={`walletBalance ${activeView === 0 ? 'active' : ''}`}>
+              <BalanceForm usdBalance={usdBalance} currencyBalance={btcBalance} handleReceive={this.handleModalOpen} handleWithdraw={this.handleModalOpen} currency="btc" infoAboutCurrency={infoAboutCurrency} />
+              {exchangeForm &&
+                <div styleName="exchangeForm">
+                  <ParticalClosure {...this.props} isOnlyForm />
                 </div>
-                <CurrenciesList tableRows={tableRows} {...this.state} {...this.props} goToСreateWallet={this.goToСreateWallet}/>
-                <div styleName={`activity ${activeView === 1 ? 'active' : ''}`}>
-                  <h3 styleName="activityHeading">Activity</h3>
-                  <History></History>
-                </div>
-              </div>
-            ) : (
-              <div styleName="loader">
-                <FormattedMessage id="history107" defaultMessage="Loading" />
-                <InlineLoader />
-              </div>
-            )
-          }
+              }
+            </div>
+            <CurrenciesList tableRows={tableRows} {...this.state} {...this.props} goToСreateWallet={this.goToСreateWallet}/>
+            <div styleName={`activity ${activeView === 1 ? 'active' : ''}`}>
+              <h3 styleName="activityHeading">Activity</h3>
+              <History></History>
+            </div>
+          </div>
         </section>
       </artical>
     )

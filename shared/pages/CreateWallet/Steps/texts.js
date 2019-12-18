@@ -1,5 +1,8 @@
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
+import CSSModules from 'react-css-modules'
+
+import styles from '../CreateWallet.scss'
 
 
 export const subHeaderText1 = () => (
@@ -10,12 +13,24 @@ export const subHeaderText1 = () => (
 )
 
 /* eslint-disable */
-export const cupture1 = () => (
-  <FormattedMessage
-    id="createWalletCapture1"
-    defaultMessage="На выбор Bitcoin, Ethereum, USDT, EUROS, Swap или все сразу"
-  />
+const Cupture = ({ click, step }) => (
+  <>
+    <span styleName="cupture1">
+      <FormattedMessage
+        id="createWalletCapture1"
+        defaultMessage="На выбор Bitcoin, Ethereum, Swap"
+      />
+    </span>
+    <button disabled={step > 1} styleName={`etc ${step > 1 ? "" : "decorated"}`} type="button" onClick={click}>
+      <FormattedMessage
+        id="createWalletCaptureOthers"
+        defaultMessage="или другие"
+      />
+    </button>
+  </>
 )
+
+export default CSSModules(Cupture, styles, { allowMultiple: true })
 
 export const subHeaderText2 = () => (
   <FormattedMessage

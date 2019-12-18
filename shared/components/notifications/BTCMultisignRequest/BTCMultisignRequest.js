@@ -14,9 +14,13 @@ import { localisedUrl } from 'helpers/locale'
 export default class BTCMultisignRequest extends Component {
 
   handleClick = () => {
-    const { history, data: { txRaw } } = this.props
+    const { history, data: { txRaw, invoice } } = this.props
     actions.modals.closeAll()
-    history.push(localisedUrl(`${links.multisign}/btc/confirm/${txRaw}`))
+    if (invoice && invoice.id) {
+      location.hash = `#${links.multisign}/btc/confirminvoice/${invoice.id}|${txRaw}`
+    } else {
+      location.hash = `#${links.multisign}/btc/confirm/${txRaw}`
+    }
   }
 
   render() {

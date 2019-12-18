@@ -12,13 +12,9 @@ export default {
   wasCautionPassed: 'wasCautionPassed',
   hiddenCoinsList: 'hiddenCoinsList',
   privateKeysSaved: 'privateKeysSaved',
-  telosRegistrated: 'telosRegistrated',
   demoMoneyReceived: 'demoMoneyReceived',
   wasOnExchange: 'wasOnExchange',
   isWalletCreate: 'isWalletCreate',
-  eosAccountActivated: `${process.env.ENTRY}:eos:activationFlag`,
-  telosAccountActivated: `${process.env.ENTRY}:telos:activationFlag`,
-  eosActivationPayment: `${process.env.ENTRY}:eos:activationPayment`,
   lastCheckBalance: 'lastCheckBalance',
   IEO_signed: 'IEO_signed',
   startSwap: 'startSwap',
@@ -26,5 +22,5 @@ export default {
   didProtectedBtcG2FACreated: 'protectedBtcG2FA',
   isClosedNotifyBlockSignUp: 'isClosedNotifyBlockSignUp',
   isClosedNotifyBlockBanner: 'isClosedNotifyBlockBanner',
-  walletTitle: 'walletTitle'
+  walletTitle: 'walletTitle',
 }

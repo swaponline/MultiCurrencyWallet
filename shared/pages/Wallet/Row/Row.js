@@ -26,6 +26,7 @@ import SwapApp from 'swap.app'
 import { BigNumber } from 'bignumber.js'
 
 import dollar from '../images/dollar.svg'
+import PartOfAddress from '../components/PartOfAddress'
 
 @injectIntl
 @withRouter
@@ -37,8 +38,6 @@ import dollar from '../images/dollar.svg'
     btcMultisigSMSData,
     btcMultisigUserData,
     bchData,
-    eosData,
-    telosData,
     nimData,
     //qtumData,
     ltcData,
@@ -54,8 +53,6 @@ import dollar from '../images/dollar.svg'
     btcMultisigSMSData,
     btcMultisigUserData,
     ethData,
-    eosData,
-    telosData,
     bchData,
     ltcData,
     //qtumData,
@@ -80,7 +77,6 @@ export default class Row extends Component {
     isAddressCopied: false,
     isTouch: false,
     isBalanceEmpty: true,
-    telosRegister: false,
     showButtons: false,
     exCurrencyRate: 0,
     existUnfinished: false,
@@ -111,8 +107,6 @@ export default class Row extends Component {
   }
 
   componentDidMount() {
-
-    this.handleTelosActivate()
     this.getUsdBalance()
 
     window.addEventListener('resize', this.handleSliceAddress)
@@ -218,18 +212,6 @@ export default class Row extends Component {
     })
   }
 
-  handleEosRegister = () => {
-    actions.modals.open(constants.modals.EosRegister, {})
-  }
-
-  handleTelosChangeAccount = () => {
-    actions.modals.open(constants.modals.TelosChangeAccount, {})
-  }
-
-  handleEosBuyAccount = async () => {
-    actions.modals.open(constants.modals.EosBuyAccount)
-  }
-
   handleWithdraw = () => {
     const {
       item: {
@@ -309,28 +291,6 @@ export default class Row extends Component {
     actions.modals.open(constants.modals.MultisignJoinLink, {})
   }
 
-  handleTelosActivate = async () => {
-    const telosActivePrivateKey = localStorage.getItem(constants.privateKeyNames.telosPrivateKey)
-    const telosActivePublicKey = localStorage.getItem(constants.privateKeyNames.telosPublicKey)
-    const telosAccount = localStorage.getItem(constants.privateKeyNames.telosAccount)
-    const telosAccountActivated = localStorage.getItem(constants.localStorage.telosAccountActivated) === 'true'
-    const telosRegistrated = localStorage.getItem(constants.localStorage.telosRegistrated) === 'true'
-
-    this.setState(() => ({
-      telosAccountActivated,
-      telosActivePublicKey,
-      telosRegistrated,
-    }))
-
-    if (!telosAccountActivated && !telosRegistrated) {
-      const { accountName, activePrivateKey, activePublicKey } = await actions.tlos.loginWithNewAccount()
-      localStorage.setItem(constants.localStorage.telosRegistrated, true)
-    }
-    // if (telosRegistrated) {
-    //   await actions.tlos.activateAccount(telosAccount, telosActivePrivateKey, telosActivePublicKey)
-    // } на время проблем с работой сервера
-  }
-
   showButtons = () => {
     this.setState(() => ({
       showButtons: true,
@@ -398,8 +358,18 @@ export default class Row extends Component {
   }
 
   hideCurrency = () => {
-    const { item: { currency } } = this.props
-    actions.core.markCoinAsHidden(currency)
+    const { item: { currency, balance } } = this.props
+
+    if (balance > 0) {
+      actions.modals.open(constants.modals.AlertModal, {
+        message: <FormattedMessage id='WalletRow_Action_HideNonZero_Message' defaultMessage='У этого кошелка положительный баланс. Его скрыть нельзя.' />
+      })
+    } else {
+      actions.core.markCoinAsHidden(currency)
+      actions.notifications.show(constants.notifications.Message, {
+        message: <FormattedMessage id='WalletRow_Action_Hidden' defaultMessage='Кошелек скрыт' />
+      })
+    }
   }
 
   copy = () => {
@@ -414,36 +384,28 @@ export default class Row extends Component {
       isAddressCopied,
       isTouch,
       isBalanceEmpty,
-      telosAccountActivated,
-      telosActivePublicKey,
       showButtons,
       exCurrencyRate,
       isDropdownOpen
     } = this.state
 
     const {
-      item: {
-        currency,
-        balance,
-        isBalanceFetched,
-        address,
-        fullName,
-        title,
-        unconfirmedBalance,
-        contractAddress,
-        balanceError,
-      },
+      item,
       intl: { locale },
       infoAboutCurrency,
     } = this.props
 
+    const {
+      currency,
+      balance,
+      isBalanceFetched,
+      fullName,
+      title,
+      unconfirmedBalance,
+      balanceError,
+    } = item
+
     let currencyView = currency
-    let eosAccountActivated = false
-    let eosActivationPaymentSent = false
-    if (currency === 'EOS') {
-      eosAccountActivated = this.props.item.isAccountActivated
-      eosActivationPaymentSent = this.props.item.isActivationPaymentSent
-    }
 
     let inneedData = null
     let nodeDownErrorShow = true
@@ -537,8 +499,8 @@ export default class Row extends Component {
               <Coin className={styles.assetsTableIcon} name={currency} />
             </Link>
             <div styleName="assetsTableInfo">
-              <Link to={localisedUrl(locale, `/${fullName}-wallet`)} title={`Online ${fullName} wallet`}>
-                <p>
+              <div styleName="nameRow">
+                <Link to={localisedUrl(locale, `/${fullName}-wallet`)} title={`Online ${fullName} wallet`}>
                   {
                     balanceError && nodeDownErrorShow &&
                     <div className={styles.errorMessage}>
@@ -553,8 +515,9 @@ export default class Row extends Component {
                       </a>
                     </div> || fullName
                   }
-                </p>
-              </Link>
+                </Link>
+                <PartOfAddress {...item} />
+              </div>
               <span>
                 {
                   !isBalanceFetched || isBalanceFetching ? (

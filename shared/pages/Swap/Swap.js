@@ -29,14 +29,14 @@ const isWidgetBuild = config && config.isWidget
 
 @injectIntl
 @connect(({
-  user: { ethData, btcData, bchData, tokensData, eosData, telosData, nimData, ltcData /* usdtOmniData */},
+  user: { ethData, btcData, bchData, tokensData, nimData, ltcData /* usdtOmniData */ },
   ipfs: { peer },
   rememberedOrders,
 }) => ({
-  items: [ ethData, btcData, eosData, telosData, bchData, ltcData /* nimData, usdtOmniData */ ],
-  tokenItems: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
-  currenciesData: [ ethData, btcData, eosData, telosData, bchData, ltcData /* nimData, usdtOmniData */ ],
-  tokensData: [ ...Object.keys(tokensData).map(k => (tokensData[k])) ],
+  items: [ethData, btcData, bchData, ltcData /* nimData, usdtOmniData */],
+  tokenItems: [...Object.keys(tokensData).map(k => (tokensData[k]))],
+  currenciesData: [ethData, btcData, bchData, ltcData /* nimData, usdtOmniData */],
+  tokensData: [...Object.keys(tokensData).map(k => (tokensData[k]))],
   errors: 'api.errors',
   checked: 'api.checked',
   decline: rememberedOrders.savedOrders,
@@ -73,7 +73,7 @@ export default class SwapComponent extends PureComponent {
 
   componentWillMount() {
     const { items, tokenItems, currenciesData, tokensData, intl: { locale }, deletedOrders } = this.props
-    let { match : { params : { orderId } }, history, location: { pathname } } = this.props
+    let { match: { params: { orderId } }, history, location: { pathname } } = this.props
 
     if (!!window.performance && window.performance.navigation.type === 2) {
       window.location.reload()
@@ -244,7 +244,7 @@ export default class SwapComponent extends PureComponent {
   }
 
   isBalanceEnough = () => {
-    const { swap  } = this.state
+    const { swap } = this.state
     const { flow, sellCurrency } = swap
     const { step, balance, isBalanceEnough } = flow.state
 

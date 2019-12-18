@@ -74,24 +74,6 @@ export const initialState = {
     fullName: 'Nimiq',
     balanceError: null,
   },
-  eosData: {
-    balance: 0,
-    address: '',
-    isAccountActivated: false,
-    isActivationPaymentSent: false,
-    isBalanceFetched: true,
-    currency: 'EOS',
-    fullName: 'Eos',
-    balanceError: null,
-  },
-  telosData: {
-    balance: 0,
-    address: '',
-    isBalanceFetched: true,
-    currency: 'TLOS',
-    fullName: 'Telos',
-    balanceError: null,
-  },
   tokensData: {},
 }
 

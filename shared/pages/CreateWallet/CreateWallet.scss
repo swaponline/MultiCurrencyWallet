@@ -15,8 +15,11 @@
 }
 
 .wrapper h2 {
-  width: 400px;
+  width: 450px;
   margin-bottom: 60px;
+  font-size: 40px;
+  font-family: 'Inter-Bold', sans-serif;
+  line-height: 120%;
 }
 
 .mobileFormBody,
@@ -47,7 +50,7 @@
   line-height: 2.5;
   text-align: center;
   background-color: #f0eefd;
-  color: #6144E5;
+  color: #6144e5;
   border: 1px solid #f0eefd;
   font-weight: bold;
   margin-right: 10px;
@@ -58,44 +61,55 @@
   width: 35px;
   height: 35px;
   justify-content: center;
+  align-items: center;
   margin: auto;
   display: flex;
+  img {
+    width: 20px;
+  }
 }
 
-// .btc {
-//   background: orange;
-// }
+.btc {
+  background: orange;
+}
 
-// .eth {
-//   background: black;
-// }
+.eth {
+  background: black;
+}
 
 .coinColor {
-  background: #0ccf14;
+  background: black;
 }
 
-// .swap {
-//   background: #775cf1;
-// }
+.usdt {
+  background: #33a681;
+}
+
+.eurs {
+  background: #2760aa;
+}
+
+.swap {
+  background: #775cf1;
+}
 
 .purple {
-  background-color: #6144E5;
-  color: #f0eefd
+  background-color: #6144e5;
+  color: #f0eefd;
 }
 
+.bch {
+  background: #4ac745;
+}
+
+.green {
+  background-color: #0ccf14;
+}
 .assetsTableIcon {
   // background: rgba(97, 68, 229, 0.1);
   min-width: 35px;
   height: 35px;
   border-radius: 50%;
-}
-
-// .bch {
-//   background: #4ac745;
-// }
-
-.green {
-  background-color: #0ccf14;
 }
 
 .continue {
@@ -106,16 +120,15 @@
   font-weight: 800;
   font-size: 15px;
   line-height: 150%;
-  background: #6144E5;
+  background: #6144e5;
   color: white;
   height: 45px;
-  width: 92%;
-  left: 4%;
+  width: 100%;
 }
 
 .continue:disabled {
   background-color: #f0eefd;
-  color: #6144E5;
+  color: #6144e5;
 }
 
 .subHeader {
@@ -124,32 +137,50 @@
 }
 
 .subHeader h5 {
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 900;
   margin-bottom: 0;
+  font-family: 'Inter-Bold', sans-serif;
+  margin-bottom: 5px;
 }
 
 .subHeader p {
-  font-size: 10px;
+  font-size: 13px;
   margin-bottom: 7px;
-  color: #8E9AA3;
+  color: #8e9aa3;
+  font-family: 'Inter-Bold', sans-serif;
+  line-height: 140%;
 }
 
 .currencyChooserWrapper {
   justify-content: space-between;
-  padding: 30px;
-  overflow-x: scroll;
+  padding: 30px 0;
+  overflow-x: auto;
   margin: auto;
+}
+
+.smallArr {
+  justify-content: center;
 }
 
 .buttonWrapper {
   position: absolute;
   right: 0;
-  top: 33px;
+  top: 45px;
+  button {
+    color: #6144E5;
+    font-family: 'Inter-Bold', sans-serif;
+    font-size: 14px;
+    text-decoration: underline;
+    padding: 0;
+    &:last-child {
+      display: none;
+    }
+  }
 }
 
 .card {
-  background: #FFFFFF;
+  background: #ffffff;
   border: 1px solid rgba(142, 154, 163, 0.16);
   box-sizing: border-box;
   box-shadow: 0px 2px 12px rgba(142, 154, 163, 0.08);
@@ -160,14 +191,15 @@
   list-style: none;
   display: grid;
   height: 140px;
-  width: 110px;
-  min-width: 150px;
+  min-width: 110px;
   margin: 7px;
+  position: relative;
 
   em {
     position: absolute;
     text-align: right;
-    padding-left: auto;
+    right: 15px;
+    top: 10px;
     width: 60px;
     font-size: 10px;
     color: #9b58b6;
@@ -175,18 +207,29 @@
 
   b {
     font-weight: bolder;
-    font-size: 11;
-    color: #1F2D48;
+    font-size: 13px;
+    color: #1f2d48;
   }
 
   li {
     font-weight: 100;
-    color: #8E9AA3;
+    color: #8e9aa3;
     font-size: 11px;
-    font-family: Inter;
-    line-height: 20px;
+    font-family: 'Inter-Bold', sans-serif;
+    line-height: 18px;
     text-align: center;
   }
+}
+
+.cupture1 {
+  margin-right: 5px;
+}
+.etc {
+  padding: 0;
+}
+
+.decorated {
+  text-decoration: underline;
 }
 
 .cardDisabled {
@@ -194,12 +237,13 @@
 }
 
 .purpleBorder {
-  border-color: #6144E5 !important;
+  border-color: #6144e5 !important;
 }
 
 .cardActivated {
   border: 1px solid rgba(102, 204, 87, 0.64) !important;
-  div, img {
+  div,
+  img {
     opacity: 0.5 !important;
   }
   em {
@@ -208,8 +252,9 @@
 }
 
 .cardActivated.purpleBorder {
-  border-color: #6144E5 !important;
-  div, img {
+  border-color: #6144e5 !important;
+  div,
+  img {
     opacity: 1 !important;
   }
   em {
@@ -228,27 +273,26 @@
 .secureSize {
   height: 160px;
   width: 140px;
-  text-align: center; 
+  text-align: center;
 }
 
-@media screen and (max-width: 750px){
+@media screen and (max-width: 750px) {
   .secureSize {
     width: 100% !important;
   }
-  .currencyChooserWrapperSecond{
+  .currencyChooserWrapperSecond {
     display: block;
     padding: 0;
   }
 
-  .currencyChooserWrapperSecond{
+  .currencyChooserWrapperSecond {
     height: 285px;
-    margin: 10px 0;
+    margin: 25px 0;
     overflow-y: scroll;
   }
 
   .card {
-    display: inline-flex
-    em {
+    display: inline-flex em {
       position: relative;
       width: 100%;
       height: 0;
@@ -256,13 +300,7 @@
   }
 }
 
-@media screen and (max-width: 700px){
-  .card {
-    width: 85px;
-  }
-}
-
-@media screen and (max-width: 568px){
+@media screen and (max-width: 568px) {
   .wrapper {
     margin: 125px auto;
     padding: 0;
@@ -270,20 +308,21 @@
 }
 
 @media screen and (max-width: 480px) {
-
   .flex {
     display: flex;
   }
 
   .ind {
     height: 0px;
-      text-align: right;
-      top: -15px;
-      position: relative;
+    text-align: right;
   }
   .continue {
     width: 100%;
     left: 0;
+    position: fixed;
+    bottom: 0;
+    height: 65px;
+    z-index: 1111111;
   }
 
   .secondStepInput {
@@ -298,7 +337,6 @@
   .wrapper {
     min-width: 0;
     width: 100%;
-    height: 100vh;
     margin: 0;
     padding-top: 0;
   }
@@ -326,6 +364,7 @@
     overflow-y: auto;
     display: block;
     padding: 0;
+    height: 360px;
   }
 
   .second {
@@ -337,7 +376,7 @@
     font-family: Inter;
     font-style: normal;
     font-weight: 800;
-    font-size: 16px;
+    font-size: 18px;
     margin-bottom: 5px;
   }
 
@@ -345,18 +384,18 @@
     font-size: 11px;
     line-height: 14px;
     font-weight: 800;
-    color: #8E9AA3;
+    color: #8e9aa3;
   }
 
   .inLine {
     display: flex;
     width: 100%;
     justify-content: space-between;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
   }
 
   .steps {
-    width: 100px
+    width: 100px;
   }
 
   .logo {
@@ -366,16 +405,28 @@
   .buttonWrapper {
     top: 30px;
     right: auto;
+    display: flex;
+    justify-content: space-between;
+    button {
+      color: #6144E5;
+      font-family: 'Inter-Bold', sans-serif;
+      font-size: 14px;
+      text-decoration: underline;
+      &:last-child {
+        margin-left: 20px;
+        display: block;
+      }
+    }
   }
 
   .listGroup {
-    margin: auto 0;
     margin-left: 10px;
+    flex-basis: 83%;
   }
 
   .wrapper h2 {
-    padding-top: 105px;
-    margin-bottom: 50px;
+    padding-top: 100px;
+    margin-bottom: 60px;
   }
 
   .secureSize,
@@ -390,26 +441,28 @@
     list-style: none;
     height: 75px;
     width: 100%;
+    position: relative;
+    align-items: center;
     display: inline-flex;
-    max-width: 90%;
+    max-width: 100%;
     b {
       font-weight: bolder;
-      font-size: 16px;
-      color: #1F2D48;
+      font-size: 13px;
+      color: #1f2d48;
     }
 
     li {
       font-weight: 100;
-      color: #8E9AA3;
+      color: #8e9aa3;
       font-size: 11px;
-      font-family: Inter;
-      line-height: 15px;
+      font-family: 'Inter-Bold', sans-serif;
+      line-height: 18px;
       text-align: left;
     }
   }
 
   .thirdCard {
-    height: 65px;
+    height: max-content;
   }
 
   .thirdPageIcons {
@@ -431,20 +484,21 @@
     display: block;
     width: 100%;
   }
-
-  .currencyChooserWrapper {
-    overflow-y: auto;
-    max-height: 80vh;
-  }
-
-  .card li {
-    font-size: 9px;
-  }
 }
 
-@media screen and (max-width: 420px){
+@media screen and (max-width: 420px) {
   .stepNumber {
     width: 45px;
   }
 }
 
+
+@media all and (min-width: 320px) and (max-width: 767px) {
+  .mobileFormBody,
+  .formBody {
+    margin: 0px;
+  }
+  .card {
+    margin: 7px 0;
+  }
+}

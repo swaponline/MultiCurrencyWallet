@@ -37,6 +37,7 @@ const routes = (
       <Route path={`${localisePrefix}${links.exchange}`} component={PartialClosure} />
 
       <Route path={`${localisePrefix}${links.aboutUs}`} component={About} />
+      <Route path={`${localisePrefix}${links.send}/:currency/:address/:amount`} component={Wallet} />
       <Route path={`${localisePrefix}${links.wallet}`} component={Wallet} />
       <Route path={`${localisePrefix}${links.history}`} component={History} />
       <Route path={`${localisePrefix}${links.createWallet}`} component={CreateWallet} />

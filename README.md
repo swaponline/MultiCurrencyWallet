@@ -8,6 +8,8 @@ Atomic swap cryptocurrency protocol. Live version here: https://swap.online. Ato
 
 ### Install
 
+#### Eng
+
 1) Clone repository with submodules (swap.core)
 ```
 git clone --recurse-submodules https://github.com/swaponline/swap.react.git
@@ -23,6 +25,28 @@ npm i
 
 4) For dev mode `npm run start`, for prod `npm run build`
    > If you need to deploy it on your own origin - run build like: `npm run build:mainnet https://your.cool.origin/`
+
+```
+npm run start
+```
+
+#### Ru
+
+1) Склонируйте репозиторий со вложенными модулями (swap.core)
+```
+git clone --recurse-submodules https://github.com/swaponline/swap.react.git
+```
+
+2) Установите зависимости с помощью пакетного менеджера `npm i` <br />
+```
+cd swap.react
+npm i
+```
+
+3) Обновите вложенные модули с помощью `git submodule update` в папке swap.react
+
+4) Чтобы начать разработку - запустите `npm run start`, для сборки продуктовой версии - `npm run build`
+   > Если нужно поместить сборку на ваш собственный домен - запустите сборку с указанием вашего домена: `npm run build:mainnet https://your.cool.origin/`
 
 ```
 npm run start
@@ -47,14 +71,26 @@ tar czf my-widget.tar.gz build-mainnet-widget
 ### 1. как помененять логотип
 swap.react/shared/components/Logo
 * в папке `images` перенести свои свг файлы
-* в файле `Logo.js` изменить alt на свой  
-
-    ```const imgNode = React.createElement('img', {
-      styleName: !withLink && 'logo',
-      src: isColored ? coloredLogoImage : logoImage,
-      alt: 'swap.online logo', // измененить на свой
-    })
-    ```
+* в файле index.js в объекте указать свой урл и присвоить ему изображение
+```
+export default {
+  colored: {
+    свой урл: имя картинки,
+    localhost: base,
+    'swap.online': swapOnlineColored,
+  },
+  common: {
+    свой урл: имя картинки,
+    'swap.online': swapOnline,
+  },
+}
+```
+* для изменения прилодера в client/index.html заменить урл на урл своей картинки
+```
+  <div id="loader">
+      <img src="https://wiki.swap.online/assets/swap-logo.png" />
+  </div>
+```
 * для изменения цвета иконки валюты нужно перейти в `swap.react/shared/components/ui/CurrencyIcon/images`
     заменить на свою иконку, важно чтоб имя свг файла соответствовало имени валюты
 * для изменения свг файлов в слайдере валют, нужно изменить свг в файл в `/swap.react/shared/pages/PartialClosure/CurrencySlider/images`
@@ -91,6 +127,13 @@ swap.react/shared/components/Logo
    * переходим в `swap.react/config/mainnet/erc20.js`
    * добавляем все необходимые поля (адрес, количество знаков после запятой, название)
    * переходим в `swap.react/swap.core/src/swap.app/constants/COINS.js` добавляем тот же токен
+
+### 5. Добавление кошелька
+
+* если вы хотите, чтоб валюту нельзя было доабвить в кошелек, то 
+в `shared/redux/reducers/currencies.js` в объекте описывающем валюту ставим `addAssets: false,` или не ставим вовсе, 
+если хотите, чтоб можно было добавить то ставим тот же ключ со значением `true`
+все токены по дефолту добавляются в этот список
 
 
 
