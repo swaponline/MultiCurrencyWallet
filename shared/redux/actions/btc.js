@@ -45,6 +45,7 @@ const login = (privateKey) => {
 
   console.info('Logged in with Bitcoin', data)
   reducers.user.setAuthData({ name: 'btcData', data })
+  return privateKey
 }
 
 const loginWithKeychain = async () => {
