@@ -40,7 +40,7 @@ const routes = (
       <Route path={`${localisePrefix}${links.send}/:currency/:address/:amount`} component={Wallet} />
       <Route path={`${localisePrefix}${links.wallet}`} component={Wallet} />
       <Route path={`${localisePrefix}${links.history}`} component={History} />
-      <Route path={`${localisePrefix}${links.createWallet}`} component={CreateWallet} />
+      <Route exact path={`${localisePrefix}${links.createWallet}`} component={CreateWallet} />
       <Route path={`${localisePrefix}${links.createWallet}${links.home}:currency`} component={CreateWallet} />
 
       <Route path={`${localisePrefix}${links.multisign}/btc/:action/:data/:peer`} component={BtcMultisignProcessor} />

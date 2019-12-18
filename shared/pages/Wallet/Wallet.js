@@ -282,6 +282,7 @@ export default class Wallet extends Component {
 
   goToСreateWallet = () => {
     const { history, intl: { locale } } = this.props
+
     history.push(localisedUrl(locale, '/createWallet'))
   }
 
@@ -424,7 +425,7 @@ export default class Wallet extends Component {
                 </div>
               }
             </div>
-            <CurrenciesList tableRows={tableRows} {...this.state} {...this.props} goToСreateWallet={this.goToСreateWallet}/>
+            <CurrenciesList tableRows={tableRows} {...this.state} {...this.props} goToСreateWallet={this.goToСreateWallet} />
             <div styleName={`activity ${activeView === 1 ? 'active' : ''}`}>
               <h3 styleName="activityHeading">Activity</h3>
               <History></History>
