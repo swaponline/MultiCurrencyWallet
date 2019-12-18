@@ -145,11 +145,11 @@ class Row extends React.PureComponent {
     const hasInvoiceButtons = (invoiceData && !invoiceData.txid && direction === 'in' && invoiceData.status === 'new' && !cancelled && !payed)
     let invoiceStatusClass = 'confirm green'
     let invoiceStatusText = <FormattedMessage id="HistoryRowInvoiceStatusNew" defaultMessage="Пока не оплачен" />
-    if (invoiceData && (invoiceData.status === 'ready' || payed)) {
+    if (invoiceData && ((invoiceData.status === 'ready') || payed)) {
       invoiceStatusClass = 'confirm'
       invoiceStatusText = <FormattedMessage id="RowHistoryInvoicePayed" defaultMessage="Оплачен" />
     }
-    if (invoiceData && (invoiceData.status === 'cancelled' || cancelled)) {
+    if (invoiceData && ((invoiceData.status === 'cancelled') || cancelled)) {
       invoiceStatusClass = 'confirm red'
       invoiceStatusText = <FormattedMessage id="RowHistoryInvoiceCancelled" defaultMessage="Отклонен" />
     }

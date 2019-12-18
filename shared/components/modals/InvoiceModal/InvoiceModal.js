@@ -323,7 +323,7 @@ export default class InvoiceModal extends React.Component {
               />
             </div>
           </div>
-          <Button styleName="buttonFull" brand fullWidth disabled={isDisabled} onClick={this.handleSubmit}>
+          <Button styleName="buttonFullMargin" brand fullWidth disabled={isDisabled} onClick={this.handleSubmit}>
             {isShipped
               ? (
                 <Fragment>
