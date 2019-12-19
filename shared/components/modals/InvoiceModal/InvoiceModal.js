@@ -80,6 +80,7 @@ export default class InvoiceModal extends React.Component {
       destination: address,
       amount: '',
       minus: '',
+      contact: '',
       label: '',
       currentDecimals,
       error: false,
@@ -92,7 +93,7 @@ export default class InvoiceModal extends React.Component {
 
   handleSubmit = async () => {
     const { name, data } = this.props
-    const { address, amount, destination, label, isShipped } = this.state
+    const { address, amount, destination, contact, label, isShipped } = this.state
 
     if (isShipped) return
 
@@ -109,12 +110,13 @@ export default class InvoiceModal extends React.Component {
     }
 
     try {
+      const message = `${contact}\r\n${label}`
       const result = await actions.invoices.addInvoice({
         currency,
         toAddress: address,
         fromAddress: data.address,
         amount,
-        label,
+        label: message,
         destination,
       })
       if (result && result.answer && result.answer === 'ok') {
@@ -177,6 +179,7 @@ export default class InvoiceModal extends React.Component {
       address,
       destination,
       amount,
+      contact,
       label,
       isShipped,
       minus,
@@ -193,10 +196,10 @@ export default class InvoiceModal extends React.Component {
       intl,
     } = this.props
 
-    const linked = Link.all(this, 'address', 'destination', 'amount', 'label')
+    const linked = Link.all(this, 'address', 'destination', 'amount', 'contact', 'label')
 
     const isDisabled =
-      !address || !amount || isShipped || !destination
+      !address || !amount || isShipped || !destination || !contact
       || !this.addressIsCorrect()
       || BigNumber(amount).dp() > currentDecimals
 
@@ -223,6 +226,10 @@ export default class InvoiceModal extends React.Component {
       amountPlaceholder: {
         id: 'invoiceModal_amountPlaceholder',
         defaultMessage: 'Введите сумму'
+      },
+      contactPlaceholder: {
+        id: 'invoiceModal_contactPlaceholder',
+        defaultMessage: 'Обязательное поле',
       },
       labelPlaceholder: {
         id: 'invoiceModal_labelPlaceholder',
@@ -307,6 +314,24 @@ export default class InvoiceModal extends React.Component {
               <div styleName="downLabel">
                 <FieldLabel inRow>
                   <span styleName="mobileFont">
+                    <FormattedMessage id="invoiceModal_Contact" defaultMessage="Ваш контакт (емейл или @никнейм)" />
+                  </span>
+                </FieldLabel>
+              </div>
+            </div>
+            <div styleName="group">
+              <Input
+                styleName="input"
+                valueLink={linked.contact}
+                placeholder={intl.formatMessage(localeLabel.contactPlaceholder)}
+              />
+            </div>
+          </div>
+          <div styleName="lowLevel">
+            <div styleName="groupField">
+              <div styleName="downLabel">
+                <FieldLabel inRow>
+                  <span styleName="mobileFont">
                     <FormattedMessage id="invoiceModal_Label" defaultMessage="Комментарий" />
                   </span>
                 </FieldLabel>
@@ -317,7 +342,6 @@ export default class InvoiceModal extends React.Component {
                 styleName="input"
                 srollingForm={true}
                 valueLink={linked.label}
-                pattern="0-9\."
                 multiline="true"
                 placeholder={intl.formatMessage(localeLabel.labelPlaceholder)}
               />
