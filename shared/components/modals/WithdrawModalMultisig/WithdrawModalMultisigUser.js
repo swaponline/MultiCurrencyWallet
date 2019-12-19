@@ -259,7 +259,7 @@ export default class WithdrawModalMultisigUser extends React.Component {
     const dataCurrency = isEthToken ? 'ETH' : currency.toUpperCase()
 
     const isDisabled =
-      !address || !amount || isShipped
+      !address || !amount || isShipped || ownTx
       || !this.addressIsCorrect()
       || BigNumber(amount).isGreaterThan(balance)
       || BigNumber(amount).dp() > currentDecimals
