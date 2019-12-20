@@ -151,19 +151,22 @@
 
       var advice = document.getElementById('beforeJSTip');
 
-      if (window.location.pathname.split('/')[1] === 'ru') {
+      const locale = navigator.language.split('-')[0]
+      const locationName = window.location.pathname.split('/')[1]
+
+      if (locationName === 'ru' || locale === 'ru' && locationName !== 'en') {
         advice.innerText = 'Не забудьте сохранить свои приватные ключи от кошелька!';
       }
 
       var information = document.getElementById('usersInform');
 
-      if (window.location.pathname.split('/')[1] === 'ru' && localStorage.length === 0) {
+      if ((locationName === 'ru' || locale === 'ru' && locationName !== 'en') && localStorage.length === 0) {
         information.innerText = 'Генерация приватных ключей для вашего мультивалютного кошелька прямо сейчас, \n то может занять одну минуту';
       }
 
       if (localStorage.length === 0) {
-        console.log(window.location.pathname.split('/')[1] === 'ru')
-        information.innerText = window.location.pathname.split('/')[1] !== 'ru'
+
+        information.innerText = locationName !== 'ru' || locale !== 'ru'
           ? 'Please wait while the application is loading,\n it may take one minute...'
           : 'Пожалуйста подождите пока приложение запускается,\n это не займет больше минуты...';
       }

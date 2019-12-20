@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 
 import { connect } from 'redaction'
 import actions from 'redux/actions'
-import Slider from 'react-slick';
+import Slider from 'pages/Wallet/components/WallerSlider';
 import { Link, withRouter } from 'react-router-dom'
 
 import { links, constants } from 'helpers'
@@ -26,12 +26,6 @@ import BalanceForm from 'pages/Wallet/components/BalanceForm/BalanceForm'
 import { BigNumber } from 'bignumber.js'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import EmptyTransactions from 'components/EmptyTransactions/EmptyTransactions'
-
-import security from 'pages/Wallet/components/NotityBlock/images/security.svg'
-import mail from 'pages/Wallet/components/NotityBlock/images/mail.svg'
-import info from 'pages/Wallet/components/NotityBlock/images/info-solid.svg'
-
-
 
 const isWidgetBuild = config && config.isWidget
 
@@ -214,7 +208,7 @@ export default class CurrencyWallet extends Component {
 
     if (txHistory) {
       txHistory = txHistory
-      .filter(tx => tx.type.toLowerCase() === currency.toLowerCase())
+        .filter(tx => tx.type.toLowerCase() === currency.toLowerCase())
     }
 
 
@@ -272,67 +266,41 @@ export default class CurrencyWallet extends Component {
           location={location}
           defaultTitle={intl.formatMessage(title.metaTitle, { fullName, currency })}
           defaultDescription={intl.formatMessage(description.metaDescription, { fullName, currency })} />
-        <Slider {...settings}>
-          {
-            !isPrivateKeysSaved && <NotifyBlock
-              className="notifyBlockSaveKeys"
-              descr="Before you continue be sure to save your private keys!"
-              tooltip="We do not store your private keys and will not be able to restore them"
-              icon={security}
-              firstBtn="Show my keys"
-              firstFunc={this.handleShowKeys}
-              secondBtn="I saved my keys"
-              secondFunc={this.handleSaveKeys}
-            />
-          }
-          {
-            !isSigned && !isClosedNotifyBlockSignUp && <NotifyBlock
-              className="notifyBlockSignUp"
-              descr="Sign up and get your free cryptocurrency for test!"
-              tooltip="You will also be able to receive notifications regarding updates with your account"
-              icon={mail}
-              firstBtn="Sign Up"
-              firstFunc={this.handleSignUp}
-              secondBtn="I’ll do this later"
-              secondFunc={() => this.handleNotifyBlockClose('isClosedNotifyBlockSignUp')} />
-          }
-          {
-            !isClosedNotifyBlockBanner && <NotifyBlock
-              className="notifyBlockBanner"
-              descr="Updates"
-              tooltip="Let us notify you that the main domain name for Swap.online exchange service will be changed from swap.online to swaponline.io."
-              icon={info}
-              secondBtn="Close"
-              secondFunc={() => this.handleNotifyBlockClose('isClosedNotifyBlockBanner')} />
-          }
-        </Slider>
-          <Fragment>
-            <div styleName="currencyWalletWrapper">
-              <div styleName="currencyWalletBalance">
-                <BalanceForm currencyBalance={balance} usdBalance={currencyUsdBalance} handleReceive={this.handleReceive} handleWithdraw={this.handleWithdraw} currency={currency.toLowerCase()}/>
-              </div>
-              { swapHistory.length > 0 && <SwapsHistory orders={swapHistory.filter(item => item.step >= 4)} /> }
-              <div styleName="currencyWalletActivity">
-                <h3>Activity</h3>
-                {!txHistory ? (
-                  <div styleName="loader">
-                    <FormattedMessage id="history107" defaultMessage="Loading" />
-                    <InlineLoader />
-                  </div>
-                ) : (
-        
-                    txHistory.length > 0 ? (
-                      <Table rows={txHistory} styleName="history" rowRender={this.rowRender} />
-                    ) : (
+        <Slider
+          settings={settings}
+          isSigned={isSigned}
+          handleNotifyBlockClose={this.handleNotifyBlockClose}
+          {...this.state}
+        />
+        <Fragment>
+          <div styleName="currencyWalletWrapper">
+            <div styleName="currencyWalletBalance">
+              <BalanceForm currencyBalance={balance} usdBalance={currencyUsdBalance} handleReceive={this.handleReceive} handleWithdraw={this.handleWithdraw} currency={currency.toLowerCase()} />
+            </div>
+            {swapHistory.length > 0 && <SwapsHistory orders={swapHistory.filter(item => item.step >= 4)} />}
+            <div styleName="currencyWalletActivity">
+              <h3>
+                <FormattedMessage id="historyActivity" defaultMessage="Активность" />
+              </h3>
+              {!txHistory ? (
+                <div styleName="loader">
+                  <FormattedMessage id="history107" defaultMessage="Loading" />
+                  <InlineLoader />
+                </div>
+              ) : (
+
+                  txHistory.length > 0 ? (
+                    <Table rows={txHistory} styleName="history" rowRender={this.rowRender} />
+                  ) : (
                       <EmptyTransactions />
                     )
                 )}
-              </div>
             </div>
-            {
-              seoPage && seoPage.footer && <div>{seoPage.footer}</div>
-            }
-          </Fragment>
+          </div>
+          {
+            seoPage && seoPage.footer && <div>{seoPage.footer}</div>
+          }
+        </Fragment>
       </div>
     )
   }
