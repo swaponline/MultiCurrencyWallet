@@ -21,10 +21,14 @@ import config from 'app-config'
 @connect(({
   user: {
     btcData,
+    ethData,
   },
 }) => {
   return {
-    data: btcData,
+    data: {
+      btc: btcData,
+      eth: ethData,
+    }
   }
 })
 @injectIntl
@@ -52,9 +56,11 @@ export default class CreateInvoice extends PureComponent {
   }
 
   async componentWillMount() {
-    let { match : { params : { type, wallet } }, history, location: { pathname } , data : { address } } = this.props
-    console.log(this.props)
-    if (type && wallet && type === 'btc') {
+    let { match : { params : { type, wallet } }, history, location: { pathname } , data } = this.props
+
+    if (type && wallet && ['btc','eth'].includes(type) && data[type]) {
+      const address = data[type].address
+
       actions.modals.open(constants.modals.InvoiceModal, {
         currency: type,
         toAddress: wallet,

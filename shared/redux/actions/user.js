@@ -138,6 +138,7 @@ const setTransactions = async () => {
       actions.bch.getTransaction(),
       // actions.usdt.getTransaction(),
       actions.eth.getTransaction(),
+      actions.eth.getInvoices(),
       actions.ltc.getTransaction(),
     ])
 

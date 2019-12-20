@@ -22,9 +22,11 @@ const InvoiceInfoBlock = (props) => {
       {invoiceData.label && 
         <span>{invoiceData.label}</span>
       }
-      <a href={bip0020link}>
-        <FormattedMessage id="InvoiceInfoBlockOpenDesktopApp" defaultMessage="Оплатить с внешнего кошелька" />
-      </a>
+      {invoiceData.type === 'BTC' &&
+        <a href={bip0020link}>
+          <FormattedMessage id="InvoiceInfoBlockOpenDesktopApp" defaultMessage="Оплатить с внешнего кошелька" />
+        </a>
+      }
       <hr />
     </div>
   )

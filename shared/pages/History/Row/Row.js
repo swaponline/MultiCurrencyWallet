@@ -43,19 +43,31 @@ class Row extends React.PureComponent {
   handlePayInvoice = async () => {
     const { invoiceData } = this.props
 
-    let withdrawModalType = constants.modals.Withdraw
+    let withdrawModalType = null
+    let data = null
     const btcData = actions.btcmultisig.isBTCAddress(invoiceData.toAddress)
+
     if (btcData) {
+      data = btcData
+      withdrawModalType = constants.modals.Withdraw
       const { currency } = btcData
 
       if (currency === 'BTC (SMS-Protected)') withdrawModalType = constants.modals.WithdrawMultisigSMS
       if (currency === 'BTC (Multisig)') withdrawModalType = constants.modals.WithdrawMultisigUser
+    }
 
+    const ethData = actions.eth.isETHAddress(invoiceData.toAddress)
+    if (ethData) {
+      withdrawModalType = constants.modals.Withdraw
+      data = ethData
+    }
+
+    if (withdrawModalType) {
       actions.modals.open(withdrawModalType, {
-        currency,
+        currency: data.currency,
         address: invoiceData.toAddress,
-        balance: btcData.balance,
-        unconfirmedBalance: btcData.unconfirmedBalance,
+        balance: data.balance,
+        unconfirmedBalance: data.unconfirmedBalance,
         toAddress: (invoiceData.destAddress) ? invoiceData.destAddress : invoiceData.fromAddress,
         amount: invoiceData.amount,
         invoice: invoiceData,
