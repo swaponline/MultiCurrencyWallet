@@ -409,17 +409,17 @@ export default class Wallet extends Component {
               </h3>
               <History></History>
             </div>
-            {(isWidgetBuild && activeView === 0) &&
-              <div styleName="keysExportImport">
-                <NewButton gray onClick={this.handleShowKeys}>
-                  <FormattedMessage id="WalletPage_ExportKeys" defaultMessage="Показать ключи" />
-                </NewButton>
-                <NewButton gray onClick={this.handleImportKeys}>
-                  <FormattedMessage id="WalletPage_ImportKeys" defaultMessage="Импортировать ключи" />
-                </NewButton>
-              </div>
-            }
           </div>
+          {(isWidgetBuild && activeView === 0) &&
+            <div styleName="keysExportImport">
+              <NewButton gray onClick={this.handleShowKeys}>
+                <FormattedMessage id="WalletPage_ExportKeys" defaultMessage="Показать ключи" />
+              </NewButton>
+              <NewButton gray onClick={this.handleImportKeys}>
+                <FormattedMessage id="WalletPage_ImportKeys" defaultMessage="Импортировать ключи" />
+              </NewButton>
+            </div>
+          }
         </section>
       </artical >
     )
