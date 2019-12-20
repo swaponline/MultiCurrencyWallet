@@ -334,4 +334,89 @@
     margin: 15% 40%;
 }
 
+.keysExportImport {
+  justify-content: space-between;
+  display: flex;
+  width: 95%;
+  margin: 0 auto;
+  button {
+    width: 48%;
+    cursor: pointer;
+    z-index: 1;
+    font-size: 12px;
+    height: 24px;
+    line-height: 24px;
+  }
+}
 
+.wallet.widgetBuild {
+  margin-top: -70px;
+  H3 {
+    margin-bottom: 10px;
+  }
+  .walletNav {
+    margin-top: 10px;
+  }
+  .walletContent {
+    flex-direction: column;
+    margin: 0px -20px;
+  }
+  .yourBalance,
+  .yourAssets,
+  .activity {
+    box-shadow: none;
+    width: 100%;
+  }
+  .walletTable {
+    display: inline-table;
+    td:first-child {
+      padding-left: 25px;
+      left: auto;
+    }
+  }
+  .yourBalanceTop {
+    padding: 10px 25px;
+  }
+  .yourBalanceBottom {
+    padding: 10px;
+    height: 52px;
+    &:before {
+      display: none;
+    }
+    button {
+      width: 30%;
+      font-size: 14px;
+      height: 32px;
+      line-height: 32px;
+    }
+  }
+  .yourAssets {
+    padding: 0;
+    button {
+      width: calc(100% - 65px);
+      margin: unset;
+    }
+  }
+  .yourBalance,
+  .yourBalanceCurrencies {
+    background: rgb(253, 253, 253);
+  }
+  .yourAssetsHeading,
+  .yourAssetsDescr {
+    padding: 0 25px;
+  }
+  .walletBalance {
+    width: 100%;
+  }
+  .yourBalance {
+    display: none;
+  }
+  .walletBalance.active {
+    .yourBalance {
+      display: block;
+    }
+  }
+  .activityHeading {
+    margin-top: -60px;
+  }
+}

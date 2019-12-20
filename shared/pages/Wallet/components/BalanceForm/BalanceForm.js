@@ -4,10 +4,12 @@ import CSSModules from 'react-css-modules'
 import styles from 'pages/Wallet/Wallet.scss'
 import NewButton from 'components/controls/NewButton/NewButton'
 import { BigNumber } from 'bignumber.js'
+import config from 'app-config'
 
 
-function BalanceForm({usdBalance, currencyBalance, handleReceive, handleWithdraw, currency, infoAboutCurrency}) {
+function BalanceForm({ usdBalance, currencyBalance, handleReceive, handleWithdraw, handleExchange, currency, infoAboutCurrency }) {
   const [activeCurrency, setActiveCurrency] = useState('usd');
+  const isWidgetBuild = (config && config.isWidget)
 
   return (
     <div styleName={`yourBalance`}>
@@ -38,6 +40,11 @@ function BalanceForm({usdBalance, currencyBalance, handleReceive, handleWithdraw
             Send
           </NewButton>
         </Fragment>
+        {isWidgetBuild &&
+          <NewButton brand id="exchangeBtn" onClick={() => handleExchange()}>
+            Exchange
+          </NewButton>
+        }
       </div>
     </div>
   );

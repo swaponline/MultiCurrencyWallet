@@ -5,6 +5,7 @@ import styles from './Wallet.scss'
 import NewButton from 'components/controls/NewButton/NewButton'
 import Row from './Row/Row'
 import Table from 'components/tables/Table/Table'
+import config from 'app-config'
 
 
 const CurrenciesList = ({ activeView, isFetching, tableRows, currencies, infoAboutCurrency, hiddenCoinsList, goToСreateWallet }) => (
@@ -28,9 +29,11 @@ const CurrenciesList = ({ activeView, isFetching, tableRows, currencies, infoAbo
         />
       )}
     />
-    <NewButton onClick={goToСreateWallet} blue transparent fullWidth>
-      Add Asset
-    </NewButton>
+    {!(config && config.isWidget) &&
+      <NewButton onClick={goToСreateWallet} blue transparent fullWidth>
+        Add Asset
+      </NewButton>
+    }
   </div>
 )
 

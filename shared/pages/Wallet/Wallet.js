@@ -11,6 +11,7 @@ import { isMobile } from 'react-device-detect'
 
 import History from 'pages/History/History'
 import NotifyBlock from './components/NotityBlock/NotifyBock'
+import NewButton from 'components/controls/NewButton/NewButton'
 
 import security from './components/NotityBlock/images/security.svg'
 import mail from './components/NotityBlock/images/mail.svg'
@@ -191,6 +192,10 @@ export default class Wallet extends Component {
     actions.modals.open(constants.modals.DownloadModal)
   }
 
+  handleImportKeys = () => {
+    actions.modals.open(constants.modals.ImportKeys, {})
+  }
+
   setLocalStorageItems = () => {
     const isClosedNotifyBlockBanner = localStorage.getItem(constants.localStorage.isClosedNotifyBlockBanner);
     const isClosedNotifyBlockSignUp = localStorage.getItem(constants.localStorage.isClosedNotifyBlockSignUp);
@@ -285,6 +290,11 @@ export default class Wallet extends Component {
     history.push(localisedUrl(locale, '/createWallet'))
   }
 
+  handleGoExchange = () => {
+    const { history, intl: { locale } } = this.props
+    history.push(localisedUrl(locale, links.exchange))
+  }
+
   handleEditTitle = () => {
     this.setState({
       editTitle: true
@@ -356,18 +366,27 @@ export default class Wallet extends Component {
     let btcBalance = null;
     let usdBalance = 0;
 
-    const tableRows = allData.filter(({ currency, balance }) => !hiddenCoinsList.includes(currency) || balance > 0)
+    const isWidgetBuild = (config && config.isWidget)
+    const widgetCurrencies = (isWidgetBuild) ? ['BTC', 'ETH', config.erc20token.toUpperCase()] : []
+
+    let tableRows = allData.filter(({ currency, balance }) => !hiddenCoinsList.includes(currency) || balance > 0)
+    if (isWidgetBuild) {
+      tableRows = allData.filter(({ currency }) => widgetCurrencies.includes(currency))
+    }
 
     if (currencyBalance) {
       currencyBalance.forEach(item => {
-        btcBalance += item.balance
-        usdBalance = btcBalance * exCurrencyRate;
+        if (!isWidgetBuild || widgetCurrencies.includes(item.name)) {
+          // WTF - Сумирует балансы без конвертации в бтц
+          btcBalance += item.balance
+          usdBalance = btcBalance * exCurrencyRate;
+        }
       })
     }
 
     return (
       <artical>
-        <section styleName="wallet">
+        <section styleName={(isWidgetBuild) ? 'wallet widgetBuild' : 'wallet'}>
           {(walletTitle === '' || editTitle) ? <input styleName="inputTitle" onChange={(e) => this.handleChangeTitle(e)} value={walletTitle} /> : <h3 styleName="walletHeading" onDoubleClick={this.handleEditTitle}>{walletTitle || 'Wallet'}</h3>}
           <Slider {...settings}>
             {
@@ -403,7 +422,7 @@ export default class Wallet extends Component {
                 secondFunc={() => this.handleNotifyBlockClose('isClosedNotifyBlockBanner')} />
             }
           </Slider>
-          {!isMobile && <ul styleName="walletNav">
+          <ul styleName="walletNav">
             {walletNav.map((item, index) => (
               <li
                 key={item}
@@ -414,10 +433,10 @@ export default class Wallet extends Component {
                   {item}
                 </a>
               </li>))}
-          </ul>}
+          </ul>
           <div className="data-tut-store" styleName="walletContent" >
             <div styleName={`walletBalance ${activeView === 0 ? 'active' : ''}`}>
-              <BalanceForm usdBalance={usdBalance} currencyBalance={btcBalance} handleReceive={this.handleModalOpen} handleWithdraw={this.handleModalOpen} currency="btc" infoAboutCurrency={infoAboutCurrency} />
+              <BalanceForm usdBalance={usdBalance} currencyBalance={btcBalance} handleReceive={this.handleModalOpen} handleWithdraw={this.handleModalOpen} handleExchange={this.handleGoExchange} currency="btc" infoAboutCurrency={infoAboutCurrency} />
               {exchangeForm &&
                 <div styleName="exchangeForm">
                   <ParticalClosure {...this.props} isOnlyForm />
@@ -429,6 +448,16 @@ export default class Wallet extends Component {
               <h3 styleName="activityHeading">Activity</h3>
               <History></History>
             </div>
+            {(isWidgetBuild && activeView === 0) &&
+              <div styleName="keysExportImport">
+                <NewButton gray onClick={this.handleShowKeys}>
+                  <FormattedMessage id="WalletPage_ExportKeys" defaultMessage="Показать ключи" />
+                </NewButton>
+                <NewButton gray onClick={this.handleImportKeys}>
+                  <FormattedMessage id="WalletPage_ImportKeys" defaultMessage="Импортировать ключи" />
+                </NewButton>
+              </div>
+            }
           </div>
         </section>
       </artical>
