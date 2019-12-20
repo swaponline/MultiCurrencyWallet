@@ -148,14 +148,14 @@ const CreateWallet = (props) => {
         <div styleName="buttonWrapper">
           <button onClick={handleImportKeys}>
             <FormattedMessage
-              id="createWalletButton2"
-              defaultMessage="Import keys"
+              id="ImportKeysBtn"
+              defaultMessage="Импортировать"
             />
           </button>
           <button onClick={goToExchange}>
             <FormattedMessage
-              id="createWalletButton4"
-              defaultMessage="Exchange"
+              id="ExchangeBtn"
+              defaultMessage="Обмен"
             />
           </button>
         </div>

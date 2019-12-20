@@ -30,7 +30,7 @@ import { inputReplaceCommaWithDot } from 'helpers/domUtils'
   ({
     user: { btcMultisigSMSData },
   }) => ({
-    items: [ btcMultisigSMSData ],
+    items: [btcMultisigSMSData],
   })
 )
 @cssModules(styles, { allowMultiple: true })
@@ -57,34 +57,34 @@ export default class RegisterSMSProtected extends React.Component {
   }
 
   handleSendSMS = async () => {
-    this.setState( { isShipped : true, error: false } )
-    const result = await actions.btcmultisig.beginRegisterSMS( this.state.phone )
+    this.setState({ isShipped: true, error: false })
+    const result = await actions.btcmultisig.beginRegisterSMS(this.state.phone)
     console.log(result)
-    if (result && result.answer && result.answer=='ok') {
-      this.setState( { isShipped: false, step: 'enterCode' } )
+    if (result && result.answer && result.answer == 'ok') {
+      this.setState({ isShipped: false, step: 'enterCode' })
     } else {
-      this.setState( { isShipped: false, error: (result.error) ? result.error : 'Unknown error' } )
+      this.setState({ isShipped: false, error: (result.error) ? result.error : 'Unknown error' })
     }
   }
 
   handleCheckSMS = async () => {
-    this.setState( { isShipped : true, error: false } )
-    const result = await actions.btcmultisig.confirmRegisterSMS( this.state.phone, this.state.smsCode )
-    
-    if (result && result.answer && result.answer=='ok') {
-      this.setState( { isShipped: false, step: 'ready' } )
+    this.setState({ isShipped: true, error: false })
+    const result = await actions.btcmultisig.confirmRegisterSMS(this.state.phone, this.state.smsCode)
+
+    if (result && result.answer && result.answer == 'ok') {
+      this.setState({ isShipped: false, step: 'ready' })
     } else {
       if (result.error == 'Already registered') {
-        this.setState( { isShipped: false, step: 'ready' } )
+        this.setState({ isShipped: false, step: 'ready' })
       } else {
-        this.setState( { isShipped: false, error: (result.error) ? result.error : 'Unknown error' } )
+        this.setState({ isShipped: false, error: (result.error) ? result.error : 'Unknown error' })
       }
     }
   }
 
   handleFinish = async () => {
     const { name } = this.props
-    
+
     actions.btcmultisig.enableWalletSMS()
     actions.modals.close(name)
     if (this.props.data.callback) {
@@ -96,7 +96,7 @@ export default class RegisterSMSProtected extends React.Component {
     const { phone, step, error, smsCode, smsConfirmed, isShipped } = this.state
     const { name, intl } = this.props
 
-    const linked = Link.all(this, 'phone','smsCode')
+    const linked = Link.all(this, 'phone', 'smsCode')
 
     const title = defineMessages({
       registerSMSModal: {
@@ -107,7 +107,7 @@ export default class RegisterSMSProtected extends React.Component {
 
     return (
       <Modal name={name} title={`${intl.formatMessage(title.registerSMSModal)}`}>
-        { (step === 'enterPhone') && 
+        {(step === 'enterPhone') &&
           <Fragment>
             <div styleName="highLevel">
               <FieldLabel inRow>
@@ -115,15 +115,15 @@ export default class RegisterSMSProtected extends React.Component {
                   <FormattedMessage id="registerSMSModalPhone" defaultMessage="You phone " />
                 </span>
               </FieldLabel>
-              <Input valueLink={linked.phone} focusOnInit  placeholder={`Enter your phone`} />
-              { error && 
+              <Input valueLink={linked.phone} focusOnInit placeholder={`Enter your phone`} />
+              {error &&
                 <div styleName="rednote">
                   `${error}`
                 </div>
               }
             </div>
             <Button styleName="buttonFull" brand fullWidth disabled={isShipped} onClick={this.handleSendSMS}>
-              { isShipped
+              {isShipped
                 ? (
                   <Fragment>
                     <FormattedMessage id="registerSMSModalProcess" defaultMessage="Processing ..." />
@@ -138,7 +138,7 @@ export default class RegisterSMSProtected extends React.Component {
             </Button>
           </Fragment>
         }
-        { (step === 'enterCode') &&
+        {(step === 'enterCode') &&
           <Fragment>
             <div styleName="highLevel">
               <FieldLabel inRow>
@@ -146,15 +146,15 @@ export default class RegisterSMSProtected extends React.Component {
                   <FormattedMessage id="registerSMSModalCode" defaultMessage="Code from SMS " />
                 </span>
               </FieldLabel>
-              <Input valueLink={linked.smsCode} focusOnInit  placeholder={`Enter code from SMS`} />
-              { error && 
+              <Input valueLink={linked.smsCode} focusOnInit placeholder={`Enter code from SMS`} />
+              {error &&
                 <div styleName="rednote">
                   {error}
                 </div>
               }
             </div>
             <Button styleName="buttonFull" brand fullWidth disabled={isShipped} onClick={this.handleCheckSMS}>
-              { isShipped
+              {isShipped
                 ? (
                   <Fragment>
                     <FormattedMessage id="registerSMSModalProcess" defaultMessage="Processing ..." />
@@ -162,14 +162,14 @@ export default class RegisterSMSProtected extends React.Component {
                 )
                 : (
                   <Fragment>
-                    <FormattedMessage id="registerSMSModalSendSMS" defaultMessage="Confirm" />
+                    <FormattedMessage id="registerSMSModalSendSMS165" defaultMessage="Confirm" />
                   </Fragment>
                 )
               }
             </Button>
           </Fragment>
         }
-        { (step === 'ready') &&
+        {(step === 'ready') &&
           <Fragment>
             <div styleName="highLevel">
               <FieldLabel inRow>

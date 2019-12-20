@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import Slider from 'react-slick';
+import Slider from './components/WallerSlider';
 import PropTypes from 'prop-types'
 
 import { connect } from 'redaction'
@@ -10,11 +10,6 @@ import styles from './Wallet.scss'
 import { isMobile } from 'react-device-detect'
 
 import History from 'pages/History/History'
-import NotifyBlock from './components/NotityBlock/NotifyBock'
-
-import security from './components/NotityBlock/images/security.svg'
-import mail from './components/NotityBlock/images/mail.svg'
-import info from './components/NotityBlock/images/info-solid.svg'
 
 import { links, constants } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
@@ -29,7 +24,10 @@ import BalanceForm from './components/BalanceForm/BalanceForm'
 import CurrenciesList from './CurrenciesList'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 
-const walletNav = ['My balances', 'Transactions'];
+const walletNav = [
+  { key: 'My balances', text: <FormattedMessage id="MybalanceswalletNav" defaultMessage="Мой баланс" /> },
+  { key: 'Transactions', text: <FormattedMessage id="TransactionswalletNav" defaultMessage="Переводы" /> }
+];
 
 
 @connect(({
@@ -182,15 +180,6 @@ export default class Wallet extends Component {
     })
   }
 
-  handleSaveKeys = () => {
-    actions.modals.open(constants.modals.PrivateKeys)
-  }
-
-
-  handleShowKeys = () => {
-    actions.modals.open(constants.modals.DownloadModal)
-  }
-
   setLocalStorageItems = () => {
     const isClosedNotifyBlockBanner = localStorage.getItem(constants.localStorage.isClosedNotifyBlockBanner);
     const isClosedNotifyBlockSignUp = localStorage.getItem(constants.localStorage.isClosedNotifyBlockSignUp);
@@ -213,18 +202,12 @@ export default class Wallet extends Component {
     }))
   }
 
-  handleSignUp = () => {
-    actions.modals.open(constants.modals.SignUp)
-  }
-
   handleNotifyBlockClose = (state) => {
     this.setState({
       [state]: true
     })
     localStorage.setItem(constants.localStorage[state], 'true')
   }
-
-
 
   showPercentChange1H = () => {
     const { currencies, currencyBalance } = this.props
@@ -238,24 +221,24 @@ export default class Wallet extends Component {
       .then(res => res.json())
       .then(
         (result) => {
-          const itemsName = currencies.map(el => el.name)
-          result.map(res => {
-            const btcBalance = currencyBalance.find(item => item.name === res.symbol)
-            if (itemsName.includes(res.symbol)) {
+          const itemsName = currencies.map(({ name }) => name)
+          result.map(({ symbol, percent_change_1h, price_btc }) => {
+            const btcBalance = currencyBalance.find(({ name }) => name === res.symbol)
+            if (itemsName.includes(symbol)) {
               try {
                 infoAboutCurrency.push({
-                  name: res.symbol,
-                  change: res.percent_change_1h,
-                  price_btc: res.price_btc,
-                  balance: btcBalance.balance * res.price_btc
+                  name: symbol,
+                  change: percent_change_1h,
+                  price_btc,
+                  balance: btcBalance.balance * price_btc
                 })
                 /* SMS Protected and Multisign */
                 if (res.symbol === 'BTC') {
                   infoAboutCurrency.push({
                     name: 'BTC (SMS-Protected)',
-                    change: res.percent_change_1h,
-                    price_btc: res.price_btc,
-                    balance: btcBalance.balance * res.price_btc
+                    change: percent_change_1h,
+                    price_btc,
+                    balance: btcBalance.balance * price_btc
                   })
                 }
               } catch (e) { }
@@ -282,6 +265,7 @@ export default class Wallet extends Component {
 
   goToСreateWallet = () => {
     const { history, intl: { locale } } = this.props
+
     history.push(localisedUrl(locale, '/createWallet'))
   }
 
@@ -324,18 +308,12 @@ export default class Wallet extends Component {
     const {
       activeView,
       infoAboutCurrency,
-      isFetching,
       exCurrencyRate,
       exchangeForm,
-      isClosedNotifyBlockBanner,
-      isClosedNotifyBlockSignUp,
       editTitle,
       walletTitle,
-      isPrivateKeysSaved
     } = this.state;
     const {
-      items,
-      tokens,
       currencyBalance,
       hiddenCoinsList,
       isSigned,
@@ -369,49 +347,21 @@ export default class Wallet extends Component {
       <artical>
         <section styleName="wallet">
           {(walletTitle === '' || editTitle) ? <input styleName="inputTitle" onChange={(e) => this.handleChangeTitle(e)} value={walletTitle} /> : <h3 styleName="walletHeading" onDoubleClick={this.handleEditTitle}>{walletTitle || 'Wallet'}</h3>}
-          <Slider {...settings}>
-            {
-              !isPrivateKeysSaved && <NotifyBlock
-                className="notifyBlockSaveKeys"
-                descr="Before you continue be sure to save your private keys!"
-                tooltip="We do not store your private keys and will not be able to restore them"
-                icon={security}
-                firstBtn="Show my keys"
-                firstFunc={this.handleShowKeys}
-                secondBtn="I saved my keys"
-                secondFunc={this.handleSaveKeys}
-              />
-            }
-            {
-              !isSigned && !isClosedNotifyBlockSignUp && <NotifyBlock
-                className="notifyBlockSignUp"
-                descr="Sign up and get your free cryptocurrency for test!"
-                tooltip="You will also be able to receive notifications regarding updates with your account"
-                icon={mail}
-                firstBtn="Sign Up"
-                firstFunc={this.handleSignUp}
-                secondBtn="I’ll do this later"
-                secondFunc={() => this.handleNotifyBlockClose('isClosedNotifyBlockSignUp')} />
-            }
-            {
-              !isClosedNotifyBlockBanner && <NotifyBlock
-                className="notifyBlockBanner"
-                descr="Updates"
-                tooltip="Let us notify you that the main domain name for Swap.online exchange service will be changed from swap.online to swaponline.io."
-                icon={info}
-                secondBtn="Close"
-                secondFunc={() => this.handleNotifyBlockClose('isClosedNotifyBlockBanner')} />
-            }
-          </Slider>
+          <Slider
+            settings={settings}
+            isSigned={isSigned}
+            handleNotifyBlockClose={this.handleNotifyBlockClose}
+            {...this.state}
+          />
           {!isMobile && <ul styleName="walletNav">
-            {walletNav.map((item, index) => (
+            {walletNav.map(({ key, text }, index) => (
               <li
-                key={item}
+                key={key}
                 styleName={`walletNavItem ${activeView === index ? 'active' : ''}`}
                 onClick={() => this.handleNavItemClick(index)}
               >
                 <a href styleName="walletNavItemLink">
-                  {item}
+                  {text}
                 </a>
               </li>))}
           </ul>}
@@ -424,14 +374,16 @@ export default class Wallet extends Component {
                 </div>
               }
             </div>
-            <CurrenciesList tableRows={tableRows} {...this.state} {...this.props} goToСreateWallet={this.goToСreateWallet}/>
+            <CurrenciesList tableRows={tableRows} {...this.state} {...this.props} goToСreateWallet={this.goToСreateWallet} />
             <div styleName={`activity ${activeView === 1 ? 'active' : ''}`}>
-              <h3 styleName="activityHeading">Activity</h3>
+              <h3 styleName="activityHeading">
+                <FormattedMessage id="walletHistoryActivity" defaultMessage="Активность" />
+              </h3>
               <History></History>
             </div>
           </div>
         </section>
-      </artical>
+      </artical >
     )
   }
 }
