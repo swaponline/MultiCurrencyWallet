@@ -5,6 +5,7 @@ import styles from 'pages/Wallet/Wallet.scss'
 import NewButton from 'components/controls/NewButton/NewButton'
 import { BigNumber } from 'bignumber.js'
 import config from 'app-config'
+import { FormattedMessage } from 'react-intl'
 
 
 function BalanceForm({ usdBalance, currencyBalance, handleReceive, handleWithdraw, handleExchange, currency, infoAboutCurrency }) {
@@ -14,7 +15,9 @@ function BalanceForm({ usdBalance, currencyBalance, handleReceive, handleWithdra
   return (
     <div styleName={`yourBalance`}>
       <div styleName="yourBalanceTop">
-        <p styleName="yourBalanceDescr">Your total balance</p>
+        <p styleName="yourBalanceDescr">
+          <FormattedMessage id="Yourtotalbalance" defaultMessage="Ваш общий баланс" />
+        </p>
         <div styleName="yourBalanceValue">
           {activeCurrency === 'usd' ? <p>{!isNaN(usdBalance) ? BigNumber(usdBalance).dp(2, BigNumber.ROUND_FLOOR).toString() : ''}</p> : <p>{BigNumber(currencyBalance).dp(5, BigNumber.ROUND_FLOOR).toString()}</p>}
           {infoAboutCurrency ? <span>+0.0%</span> : ''}
@@ -32,12 +35,12 @@ function BalanceForm({ usdBalance, currencyBalance, handleReceive, handleWithdra
       <div styleName="yourBalanceBottom">
         <Fragment>
           <NewButton blue id="depositBtn" onClick={() => handleReceive('Deposit')}>
-            Deposit
+            <FormattedMessage id="YourtotalbalanceDeposit" defaultMessage="Пополнить" />
           </NewButton>
         </Fragment>
         <Fragment>
           <NewButton blue disabled={!currencyBalance} id="sendBtn" onClick={() => handleWithdraw('Send')}>
-            Send
+            <FormattedMessage id="YourtotalbalanceSend" defaultMessage="Отправить" />
           </NewButton>
         </Fragment>
         {isWidgetBuild &&

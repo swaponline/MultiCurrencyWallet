@@ -38,7 +38,10 @@ const Tooltip = (props) => {
           </button>
         )}
         <button {...primaryProps} onClick={clickPrimary}>
-          <FormattedMessage id={continuous ? 'next' : 'close'} defaultMessage={continuous ? 'Далее' : 'Закрыть'} />
+          {continuous ?
+            <FormattedMessage id="nextTourWindow" defaultMessage="Далее" />
+            :
+            <FormattedMessage id="closeTourWindow" defaultMessage="Закрыть" />}
         </button>
       </div>
     </div>

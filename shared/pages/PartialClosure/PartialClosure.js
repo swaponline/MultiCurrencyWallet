@@ -1145,7 +1145,7 @@ export default class PartialClosure extends Component {
                           />
                           {` `}
                           <FormattedMessage
-                            id="PartialFeeValueWarn2"
+                            id="PartialFeeValueWarn3"
                             defaultMessage="= {estimatedFeeValue}$"
                             values={{
                               estimatedFeeValue: BigNumber(exHaveRate).times(estimatedFeeValues[haveCurrency])
@@ -1250,7 +1250,7 @@ export default class PartialClosure extends Component {
               }, 100)}
             >
               <span styleName="scrollAdvice" >
-                <FormattedMessage id="HowItWorks10" defaultMessage="How it works?" />
+                <FormattedMessage id="PartialHowItWorks10" defaultMessage="How it works?" />
               </span>
               <span styleName="scrollTrigger" />
             </div>

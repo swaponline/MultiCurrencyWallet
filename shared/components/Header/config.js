@@ -35,7 +35,7 @@ export const messages = defineMessages({
     defaultMessage: 'Earn',
   },
   invest: {
-    id: 'menu.invest',
+    id: 'menu.invest.info',
     description: 'Menu item "Transactions"',
     defaultMessage: 'How to invest?',
   },
