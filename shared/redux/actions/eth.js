@@ -57,6 +57,11 @@ const loginWithKeychain = async () => {
   return selectedKey
 }
 
+const isETHAddress = (address) => {
+  const { user: { ethData } } = getState()
+  if (ethData && ethData.address && ethData.address.toLowerCase() === address.toLowerCase()) return ethData
+}
+
 const getBalance = () => {
   const { user: { ethData: { address } } } = getState()
 
@@ -103,6 +108,15 @@ const fetchBalance = (address) =>
     .catch((e) => {
       console.log('Web3 doesn\'t work please again later ', e.error)
     })
+
+const getInvoices = () => {
+  const { user: { ethData: { address } } } = getState()
+
+  return actions.invoices.getInvoices({
+    currency: 'ETH',
+    address,
+  })
+}
 
 const getTransaction = () =>
   new Promise((resolve) => {
@@ -167,4 +181,6 @@ export default {
   fetchBalance,
   getTransaction,
   getReputation,
+  getInvoices,
+  isETHAddress,
 }
