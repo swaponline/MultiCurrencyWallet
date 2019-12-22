@@ -23,7 +23,7 @@ import getPageOffset from './getPageOffset'
 import getScrollBarWidth from './getScrollBarWidth'
 import paddingForSwapList from './paddingForSwapList'
 import estimateFeeValue from './estimateFeeValue'
-
+import getSiteData from './getSiteData'
 import { migrate } from './migrations/'
 
 import getUnixTimeStamp from './getUnixTimeStamp'
@@ -68,6 +68,7 @@ export {
   getPageOffset,
   getScrollBarWidth,
   paddingForSwapList,
+  getSiteData,
 
   getUnixTimeStamp,
   cacheStorageGet,

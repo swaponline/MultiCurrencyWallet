@@ -5,6 +5,8 @@ import { isMobile } from 'react-device-detect'
 import { connect } from 'redaction'
 import { constants } from 'helpers'
 import { localisedUrl } from 'helpers/locale'
+import { getSiteData } from 'helpers'
+
 import firestore from 'helpers/firebase/firestore'
 import actions from 'redux/actions'
 import { withRouter } from 'react-router'
@@ -55,7 +57,7 @@ const isWidgetBuild = config && config.isWidget
 }) => {
   const tokens = (
     config && config.isWidget
-      ? [ config.erc20token.toUpperCase() ]
+      ? [config.erc20token.toUpperCase()]
       : Object.keys(tokensData).map(k => tokensData[k].currency)
   )
 
@@ -65,17 +67,17 @@ const isWidgetBuild = config && config.isWidget
       ethData,
       // usdtOmniData,
     ] : [
-      btcData,
-      bchData,
-      ethData,
-      eosData,
-      telosData,
-      ltcData,
-      qtumData,
-      // usdtOmniData,
-      // nimData,
-      // xlmData,
-    ]
+        btcData,
+        bchData,
+        ethData,
+        eosData,
+        telosData,
+        ltcData,
+        qtumData,
+        // usdtOmniData,
+        // nimData,
+        // xlmData,
+      ]
   )
     .map(data => data.currency)
 
@@ -131,11 +133,20 @@ export default class Wallet extends Component {
     intl: PropTypes.object.isRequired,
   };
 
-  state = {
-    saveKeys: false,
-    openModal: false,
-    isShowingPromoText: false,
-  };
+  constructor() {
+    super()
+
+    const { projectName } = getSiteData()
+
+    this.state = {
+      projectName,
+      saveKeys: false,
+      openModal: false,
+      isShowingPromoText: false,
+    };
+
+  }
+
 
   componentWillMount() {
     actions.user.getBalances()
@@ -278,7 +289,7 @@ export default class Wallet extends Component {
       intl,
       location,
     } = this.props
-    const { isShowingPromoText } = this.state
+    const { isShowingPromoText, projectName } = this.state
 
     this.checkBalance()
     const titles = [
@@ -289,15 +300,15 @@ export default class Wallet extends Component {
       isMobile ? (
         <FormattedMessage id="Wallet118" defaultMessage="Send, receive, swap" />
       ) : (
-        <FormattedMessage id="Wallet119" defaultMessage="Actions" />
-      ),
+          <FormattedMessage id="Wallet119" defaultMessage="Actions" />
+        ),
     ]
 
     const titleSwapOnline = defineMessages({
       metaTitle: {
         id: 'Wallet140',
         defaultMessage:
-          'Swap.Online - Cryptocurrency Wallet with Atomic Swap Exchange',
+          '{projectName} - Cryptocurrency Wallet with Atomic Swap Exchange',
       },
     })
     const titleWidgetBuild = defineMessages({
@@ -322,7 +333,7 @@ export default class Wallet extends Component {
 
     this.forceCautionUserSaveMoney()
 
-    const tableRows = [ ...items, ...tokens ].filter(currency => !hiddenCoinsList.includes(currency))
+    const tableRows = [...items, ...tokens].filter(currency => !hiddenCoinsList.includes(currency))
 
     return (
       <section
@@ -387,9 +398,10 @@ export default class Wallet extends Component {
             <FormattedMessage
               id="Wallet156"
               // eslint-disable-next-line
-              defaultMessage="Welcome to Swap.Online, a decentralized cross-chain wallet based on Atomic Swap technology.{br}Here you can safely store and promptly exchange Bitcoin, Ethereum, EOS, USD, Tether, BCH, and numerous ERC-20 tokens.{br}{br}Swap.Online doesn’t store your keys or tokens. Our wallet operates directly within your browser, so no additional installations or downloads are required.{br}The Swap.Online service is fully decentralized.  All operations with tokens are executed via the IPFS network.{br}{br}Our team was the first to finalize Atomic Swaps with USDT and EOS in September 2018 and Litecoin blockchain was added in October 2018.{br}Our wallet addresses real multi-chain integration with a decentralized order book - no third party involved in the exchange, no proxy-token and no token wrapping.{br}We can integrate any ERC-20 token of a project for free!  We just ask for a mutually beneficial PR announcement!{br}{br}In addition, we developed Swap.Button, a b2b-solution to exchange all kinds of tokens for Bitcoin and Ethereum.{br}Install Swap.Button html widget on your site and collect crypto investments for your project.{br}{br}Start using https://swap.online/ today and enjoy the power of true decentralization."
+              defaultMessage="Welcome to {project}, a decentralized cross-chain wallet based on Atomic Swap technology.{br}Here you can safely store and promptly exchange Bitcoin, Ethereum, EOS, USD, Tether, BCH, and numerous ERC-20 tokens.{br}{br}{project} doesn’t store your keys or tokens. Our wallet operates directly within your browser, so no additional installations or downloads are required.{br}The {project} service is fully decentralized.  All operations with tokens are executed via the IPFS network.{br}{br}Our team was the first to finalize Atomic Swaps with USDT and EOS in September 2018 and Litecoin blockchain was added in October 2018.{br}Our wallet addresses real multi-chain integration with a decentralized order book - no third party involved in the exchange, no proxy-token and no token wrapping.{br}We can integrate any ERC-20 token of a project for free!  We just ask for a mutually beneficial PR announcement!{br}{br}In addition, we developed Swap.Button, a b2b-solution to exchange all kinds of tokens for Bitcoin and Ethereum.{br}Install Swap.Button html widget on your site and collect crypto investments for your project.{br}{br}Start using https://swap.online/ today and enjoy the power of true decentralization."
               values={{
                 br: <br />,
+                project: projectName,
               }}
             />
           </div>

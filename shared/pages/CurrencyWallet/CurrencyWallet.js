@@ -5,7 +5,7 @@ import actions from 'redux/actions'
 import Slider from 'pages/Wallet/components/WallerSlider';
 import { Link, withRouter } from 'react-router-dom'
 
-import { links, constants } from 'helpers'
+import { links, constants, getSiteData } from 'helpers'
 
 import CSSModules from 'react-css-modules'
 import styles from './CurrencyWallet.scss'
@@ -71,6 +71,7 @@ export default class CurrencyWallet extends Component {
 
   constructor() {
     super()
+    const { projectName } = getSiteData()
 
     this.state = {
       currency: null,
@@ -79,6 +80,7 @@ export default class CurrencyWallet extends Component {
       decimals: null,
       balance: null,
       isBalanceEmpty: false,
+      projectName
     }
   }
 
@@ -203,7 +205,8 @@ export default class CurrencyWallet extends Component {
       isClosedNotifyBlockBanner,
       isClosedNotifyBlockSignUp,
       isPrivateKeysSaved,
-      exCurrencyRate
+      exCurrencyRate,
+      projectName
     } = this.state
 
     if (txHistory) {
@@ -221,7 +224,7 @@ export default class CurrencyWallet extends Component {
     const titleSwapOnline = defineMessages({
       metaTitle: {
         id: 'CurrencyWalletTitle',
-        defaultMessage: 'Swap.Online - {fullName} ({currency}) Web Wallet with Atomic Swap.',
+        defaultMessage: '{projectName} - {fullName} ({currency}) Web Wallet with Atomic Swap.',
       },
     })
     const titleWidgetBuild = defineMessages({

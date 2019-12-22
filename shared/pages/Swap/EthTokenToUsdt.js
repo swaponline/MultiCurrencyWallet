@@ -8,6 +8,7 @@ import TimerButton from 'components/controls/TimerButton/TimerButton'
 import Button from 'components/controls/Button/Button'
 import Timer from './Timer/Timer'
 import { FormattedMessage } from 'react-intl'
+import { getSiteData } from 'helpers'
 
 
 export default class EthTokenToUsdt extends Component {
@@ -16,8 +17,10 @@ export default class EthTokenToUsdt extends Component {
     super()
 
     this.swap = swap
+    const { projectName } = getSiteData()
 
     this.state = {
+      projectName,
       currencyAddress: currencyData.address,
       flow: this.swap.flow.state,
       enabledButton: false,
@@ -62,14 +65,14 @@ export default class EthTokenToUsdt extends Component {
   }
 
   addGasPrice = () => {
-    const gwei =  new BigNumber(String(this.swap.flow.ethTokenSwap.gasPrice)).plus(new BigNumber(1e10))
+    const gwei = new BigNumber(String(this.swap.flow.ethTokenSwap.gasPrice)).plus(new BigNumber(1e10))
     this.swap.flow.ethTokenSwap.addGasPrice(gwei)
     this.swap.flow.restartStep()
   }
 
   render() {
-    const { children, disabledTimer }  = this.props
-    const { currencyAddress, flow, enabledButton, isShowingBitcoinScript } = this.state
+    const { children, disabledTimer } = this.props
+    const { currencyAddress, flow, enabledButton, isShowingBitcoinScript, projectName } = this.state
 
     return (
       <div>
@@ -193,12 +196,12 @@ export default class EthTokenToUsdt extends Component {
                     </div>
                     <br />
                     <Fragment>
-                      { flow.usdtScriptValues &&
+                      {flow.usdtScriptValues &&
                         <span onClick={this.toggleBitcoinScript}>
                           <FormattedMessage id="EthTokenToUsdt192" defaultMessage="Show bitcoin script " />
                         </span>
                       }
-                      { isShowingBitcoinScript && (
+                      {isShowingBitcoinScript && (
                         <pre>
                           <code>{`
   bitcoinjs.script.compile([
@@ -394,7 +397,7 @@ export default class EthTokenToUsdt extends Component {
                       <FormattedMessage id="EthTokenToUsdt377" defaultMessage="7. USDT was transferred to your wallet. Check the balance." />
                     </h3>
                     <h2>
-                      <FormattedMessage id="EthTokenToUsdt380" defaultMessage="Thank you for using Swap.Online!" />
+                      <FormattedMessage id="EthTokenToUsdt400" defaultMessage="Thank you for using {project}!" values={{ project: projectName }} />
                     </h2>
                   </Fragment>
                 )
@@ -402,10 +405,10 @@ export default class EthTokenToUsdt extends Component {
               {
                 flow.step >= 6 && !flow.isFinished && (
                   <div style={{ display: 'flex', alignItems: 'center' }}>
-                    { enabledButton && !flow.isBtcWithdrawn &&
-                    <Button brand onClick={this.tryRefund}>
-                      <FormattedMessage id="EthTokenToUsdt390" defaultMessage="TRY REFUND" />
-                    </Button>
+                    {enabledButton && !flow.isBtcWithdrawn &&
+                      <Button brand onClick={this.tryRefund}>
+                        <FormattedMessage id="EthTokenToUsdt390" defaultMessage="TRY REFUND" />
+                      </Button>
                     }
                     <Timer
                       lockTime={(flow.usdtScriptValues.lockTime - 5400) * 1000}
@@ -419,7 +422,7 @@ export default class EthTokenToUsdt extends Component {
         }
         <br />
         {/* { !flow.isFinished && <Button white onClick={this.addGasPrice}>Add gas price</Button> } */}
-        { children }
+        {children}
       </div>
     )
   }

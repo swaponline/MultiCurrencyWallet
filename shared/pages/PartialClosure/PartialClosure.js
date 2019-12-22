@@ -25,6 +25,8 @@ import Tooltip from 'components/ui/Tooltip/Tooltip'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { FormattedMessage, injectIntl } from 'react-intl'
 import { localisedUrl } from 'helpers/locale'
+import { getSiteData } from 'helpers'
+
 import { isCoinAddress } from 'swap.app/util/typeforce'
 import config from 'app-config'
 import SwapApp, { util } from 'swap.app'
@@ -52,11 +54,6 @@ const filterIsPartial = (orders) => orders
   .filter(order => order.isPartial && !order.isProcessing && !order.isHidden)
   .filter(order => (order.sellAmount !== 0) && order.sellAmount.isGreaterThan(0)) // WTF sellAmount can be not BigNumber
   .filter(order => (order.buyAmount !== 0) && order.buyAmount.isGreaterThan(0)) // WTF buyAmount can be not BigNumber too - need fix this
-
-const text = [
-  <FormattedMessage id="partial223" defaultMessage="To change default wallet for buy currency. " />,
-  <FormattedMessage id="partial224" defaultMessage="Leave empty for use Swap.Online wallet " />,
-]
 
 const subTitle = (sell, sellTicker, buy, buyTicker) => (
   <div>
@@ -148,6 +145,8 @@ export default class PartialClosure extends Component {
 
     this.onRequestAnswer = (newOrder, isAccepted) => { }
 
+    const { projectName } = getSiteData()
+
     const isRootPage = history.location.pathname === '/' || history.location.pathname === '/ru'
     const { url, params: { buy, sell } } = match || { params: { buy: 'btc', sell: 'usdt' } }
 
@@ -177,6 +176,7 @@ export default class PartialClosure extends Component {
     })
 
     this.state = {
+      projectName,
       isToken: false,
       dynamicFee: 0,
       haveCurrency: sellToken,
@@ -925,7 +925,7 @@ export default class PartialClosure extends Component {
     const { currencies, addSelectedItems, currenciesData, tokensData, intl: { locale, formatMessage }, userEthAddress, isOnlyForm } = this.props
     const { haveCurrency, getCurrency, isNonOffers, redirect, orderId, isSearching, desclineOrders, openScanCam,
       isDeclinedOffer, isFetching, maxAmount, customWalletUse, exHaveRate, exGetRate,
-      maxBuyAmount, getAmount, goodRate, isShowBalance, estimatedFeeValues, haveAmount,
+      maxBuyAmount, getAmount, goodRate, isShowBalance, estimatedFeeValues, haveAmount, projectName,
     } = this.state
 
 
@@ -980,8 +980,8 @@ export default class PartialClosure extends Component {
       defaultMessage: 'Atomic Swap {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}) Instant Exchange',
     }, SeoValues)
     const MetaDescriptionString = formatMessage({
-      id: 'PartialClosureMetaDescrTag',
-      defaultMessage: 'Best exchange rate for {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}). Swap.Online wallet provides instant exchange using Atomic Swap Protocol.', // eslint-disable-line
+      id: 'PartialClosureMetaDescrTag983',
+      defaultMessage: 'Best exchange rate for {full_name1} ({ticker_name1}) to {full_name2} ({ticker_name2}). {projectName} wallet provides instant exchange using Atomic Swap Protocol.', // eslint-disable-line
     }, SeoValues)
 
 
@@ -1007,7 +1007,7 @@ export default class PartialClosure extends Component {
               onSelect={this.handleSetHaveValue}
               label={<FormattedMessage id="partial243" defaultMessage="You sell" />}
               id="partialClosure456"
-              tooltip={<FormattedMessage id="partial462" defaultMessage="The amount you have on swap.online or an external wallet that you want to exchange" />}
+              tooltip={<FormattedMessage id="partial1010" defaultMessage="The amount you have on {projectName} or an external wallet that you want to exchange" />}
               placeholder="0.00000000"
               usd={(maxAmount > 0 && isNonOffers) ? 0 : haveUsd}
               currencies={currencies}

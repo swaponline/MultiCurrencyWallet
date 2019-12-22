@@ -12,6 +12,8 @@ import Button from 'components/controls/Button/Button'
 import Timer from './Timer/Timer'
 import { FormattedMessage } from 'react-intl'
 
+import { getSiteData } from 'helpers'
+
 
 export default class EthToBch extends Component {
 
@@ -19,8 +21,10 @@ export default class EthToBch extends Component {
     super()
 
     this.swap = swap
+    const { projectName } = getSiteData()
 
     this.state = {
+      projectName,
       depositWindow,
       enabledButton: false,
       isAddressCopied: false,
@@ -93,14 +97,15 @@ export default class EthToBch extends Component {
 
   render() {
     const { children } = this.props
-    const { currencyAddress, flow, enabledButton, isShowingBitcoinScript, isAddressCopied } = this.state
+    const { currencyAddress, flow, enabledButton, isShowingBitcoinScript, isAddressCopied, projectName } = this.state
     const headingStyle = {
       color: '#5100dc',
       textTransform: 'uppercase',
       fontSize: '20px',
       marginTop: '20px',
       borderTop: '1px solid #5100dc',
-      paddingTop: '20px' }
+      paddingTop: '20px'
+    }
 
     return (
       <div>
@@ -124,13 +129,13 @@ export default class EthToBch extends Component {
                   <FormattedMessage id="EthToBtc99" defaultMessage="This order doesn&apos;t have a buyer" />
                 </h3>
               ) : (
-                <Fragment>
-                  <h3>
-                    <FormattedMessage id="EthToBtc104" defaultMessage="Waiting the order creator" />
-                  </h3>
-                  <InlineLoader />
-                </Fragment>
-              )
+                  <Fragment>
+                    <h3>
+                      <FormattedMessage id="EthToBtc104" defaultMessage="Waiting the order creator" />
+                    </h3>
+                    <InlineLoader />
+                  </Fragment>
+                )
             )
           }
           {
@@ -231,12 +236,12 @@ export default class EthToBch extends Component {
                       </div>
                       <br />
                       <Fragment>
-                        { flow.bchScriptValues &&
+                        {flow.bchScriptValues &&
                           <span onClick={this.toggleBitcoinScript}>
                             <FormattedMessage id="EthToBtc204" defaultMessage="Show bitcoin cash script" />
                           </span>
                         }
-                        { isShowingBitcoinScript && (
+                        {isShowingBitcoinScript && (
                           <pre>
                             <code>{`
     bitcoincashjs.script.compile([
@@ -419,7 +424,7 @@ export default class EthToBch extends Component {
                         <FormattedMessage id="EthToBtc387" defaultMessage="8. BCH was transferred to your wallet. Check the balance." />
                       </h3>
                       <h3 style={headingStyle}>
-                        <FormattedMessage id="EthToBtc390" defaultMessage="Thank you for using Swap.Online!" />
+                        <FormattedMessage id="EthToBtc427" defaultMessage="Thank you for using {project}!" values={{ project: projectName }} />
                       </h3>
                     </Fragment>
                   )
@@ -427,7 +432,7 @@ export default class EthToBch extends Component {
                 {
                   flow.step >= 6 && !flow.isFinished && (
                     <div style={{ display: 'flex', alignItems: 'center' }}>
-                      { enabledButton && !flow.isBchWithdrawn && (
+                      {enabledButton && !flow.isBchWithdrawn && (
                         <Button brand onClick={this.tryRefund}>
                           <FormattedMessage id="EthToBtc400" defaultMessage="TRY REFUND" />
                         </Button>
