@@ -103,6 +103,7 @@ const getDemoMoney = process.env.MAINNET ? () => { } : () => {
 }
 
 const getExchangeRate = (sellCurrency, buyCurrency) =>
+
   new Promise((resolve, reject) => {
     const url = `https://api.cryptonator.com/api/full/${sellCurrency}-${buyCurrency}`
 

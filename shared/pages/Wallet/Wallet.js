@@ -7,7 +7,7 @@ import actions from 'redux/actions'
 
 import cssModules from 'react-css-modules'
 import styles from './Wallet.scss'
-import { isMobile } from 'react-device-detect'
+import { isMobile, ConsoleView } from 'react-device-detect'
 
 import History from 'pages/History/History'
 import NotifyBlock from './components/NotityBlock/NotifyBock'
@@ -27,6 +27,8 @@ import config from 'app-config'
 import { withRouter } from 'react-router'
 import BalanceForm from './components/BalanceForm/BalanceForm'
 import CurrenciesList from './CurrenciesList'
+import LoaderBalanceForm from './components/LoaderBalanceForm/LoaderBalanceForm'
+import LoaderTransaction from './components/LoaderTransaction/LoaderTransaction'
 import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 
 const walletNav = ['My balances', 'Transactions'];
@@ -151,7 +153,8 @@ export default class Wallet extends Component {
     activeCurrency: 'usd',
     exchangeForm: false,
     walletTitle: 'Wallet',
-    editTitle: false
+    editTitle: false,
+    exCurrencyRate: null
   }
 
   componentWillMount() {
@@ -166,7 +169,7 @@ export default class Wallet extends Component {
     }
 
     this.showPercentChange1H();
-    this.getUsdBalance();
+    this.onLoadeOn(this.getUsdBalance);
     this.setLocalStorageItems();
   }
 
@@ -205,12 +208,25 @@ export default class Wallet extends Component {
     })
   }
 
+  onLoadeOn = (fn) => {
+    this.setState({
+      isFetching: true
+    })
+
+    fn();
+  }
+
   getUsdBalance = async () => {
     const exCurrencyRate = await actions.user.getExchangeRate('BTC', 'usd')
 
-    this.setState(() => ({
-      exCurrencyRate
-    }))
+    if (exCurrencyRate) {
+      this.setState({
+        exCurrencyRate, 
+        isFetching: true
+      })
+    } else {
+      this.getUsdBalance();
+    }
   }
 
   handleSignUp = () => {
@@ -417,7 +433,17 @@ export default class Wallet extends Component {
           </ul>}
           <div className="data-tut-store" styleName="walletContent" >
             <div styleName={`walletBalance ${activeView === 0 ? 'active' : ''}`}>
-              <BalanceForm usdBalance={usdBalance} currencyBalance={btcBalance} handleReceive={this.handleModalOpen} handleWithdraw={this.handleModalOpen} currency="btc" infoAboutCurrency={infoAboutCurrency} />
+              {
+              !isFetching ? 
+                <BalanceForm 
+                  usdBalance={usdBalance} 
+                  currencyBalance={btcBalance} 
+                  handleReceive={this.handleModalOpen} 
+                  handleWithdraw={this.handleModalOpen} 
+                  currency="btc" 
+                  infoAboutCurrency={infoAboutCurrency} 
+              /> : <LoaderBalanceForm />
+              }
               {exchangeForm &&
                 <div styleName="exchangeForm">
                   <ParticalClosure {...this.props} isOnlyForm />
@@ -427,7 +453,7 @@ export default class Wallet extends Component {
             <CurrenciesList tableRows={tableRows} {...this.state} {...this.props} goToСreateWallet={this.goToСreateWallet}/>
             <div styleName={`activity ${activeView === 1 ? 'active' : ''}`}>
               <h3 styleName="activityHeading">Activity</h3>
-              <History></History>
+              {!isFetching ? <History></History> : <LoaderTransaction />}
             </div>
           </div>
         </section>
