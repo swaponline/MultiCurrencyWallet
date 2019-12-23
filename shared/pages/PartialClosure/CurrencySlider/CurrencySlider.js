@@ -13,11 +13,6 @@ import { FormattedMessage } from 'react-intl'
 import images from './images'
 
 
-const symbol = (data) => (
-  <a href="#" styleName="currencyAdd">
-    <FormattedMessage id="CurrencySlider36" defaultMessage={data} />
-  </a>
-)
 // 'usdtOmni' to arr
 const names = ['btc', 'bch', 'ltc', 'eth', 'swap']
 

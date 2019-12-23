@@ -315,6 +315,7 @@ window.broadcastTX2Room = broadcastTX2Room
 const _getSign = () => {
   const { user: { btcMultisigSMSData: { account, address, keyPair, publicKey } } } = getState()
   const message = `${address}:${publicKey.toString('hex')}`
+  
   console.log(message)
   const sign = bitcoinMessage.sign(message, account.privateKey, keyPair.compressed)
   return sign.toString('base64')

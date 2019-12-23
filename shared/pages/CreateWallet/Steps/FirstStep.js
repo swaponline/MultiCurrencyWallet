@@ -86,7 +86,7 @@ export default class CreateWallet extends Component {
             <div styleName={`currencyChooserWrapper ${startPack.length < 4 ? "smallArr" : ""}`}>
               {startPack.map(el => {
                 const { name, capture } = el
-                console.log("name", name)
+
                 return (
                   <div key={name} styleName={`card ${curState[name] ? 'purpleBorder' : ''}`} onClick={() => this.handleClick(name)}>
                     <div styleName="logo">

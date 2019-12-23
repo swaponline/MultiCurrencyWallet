@@ -30,6 +30,7 @@ export default class IntlProviderContainer extends Component {
           render={props => {
             const currentLocale = props.match.params.locale || defaultLocale()
             const messages = translations[currentLocale]
+
             return (
               <IntlProvider {...props} key={currentLocale} locale={currentLocale} defaultLocale={defaultLocale()} messages={messages}>
                 {children}

@@ -21,10 +21,14 @@ import config from 'app-config'
 @connect(({
   user: {
     btcData,
+    ethData,
   },
 }) => {
   return {
-    data: btcData,
+    data: {
+      btc: btcData,
+      eth: ethData,
+    }
   }
 })
 @injectIntl
@@ -47,18 +51,21 @@ export default class CreateInvoice extends PureComponent {
     }
   }
 
+  handleGoHome = () => {
+    this.props.history.push(localisedUrl(links.home))
+  }
+
   async componentWillMount() {
-    let { match : { params : { type, wallet } }, history, location: { pathname } , data : { address } } = this.props
-    console.log(this.props)
-    if (type && wallet && type === 'btc') {
+    let { match : { params : { type, wallet } }, history, location: { pathname } , data } = this.props
+
+    if (type && wallet && ['btc','eth'].includes(type) && data[type]) {
+      const address = data[type].address
+
       actions.modals.open(constants.modals.InvoiceModal, {
         currency: type,
         toAddress: wallet,
         address,
         disableClose: true,
-        onReady: () => {
-          this.props.history.push(localisedUrl(links.home))
-        },
       })
     } else {
       this.props.history.push(localisedUrl(links.notFound))
@@ -68,6 +75,13 @@ export default class CreateInvoice extends PureComponent {
   async componentWillUnmount() {}
 
   render() {
-    return <div></div>
+    return (
+      <div styleName="createInvoice">
+        <h2><FormattedMessage id="CreateInvoiceReady" defaultMessage="Спасибо, инвойс выставлен" /></h2>
+        <Button brand onClick={this.handleGoHome}>
+          <FormattedMessage id="CreateInvoiceGoHome" defaultMessage="Перейти на главную" />
+        </Button>
+      </div>
+    )
   }
 }

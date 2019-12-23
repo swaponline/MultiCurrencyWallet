@@ -452,7 +452,7 @@ export default class Row extends Component {
     if (currencyView == 'BTC (Multisig)') currencyView = 'BTC'
     if (currencyView == 'BTC (SMS-Protected)') currencyView = 'BTC'
 
-    if (currencyView == 'BTC') {
+    if (['BTC','ETH'].includes(currencyView)) {
       dropDownMenuItems.push({
         id: 1004,
         title: <FormattedMessage id='WalletRow_Menu_Invoice' defaultMessage='Выставить счет' />,

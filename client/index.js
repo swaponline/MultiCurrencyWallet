@@ -8,16 +8,18 @@ import Loader from 'components/loaders/Loader/Loader'
 import { migrate } from 'helpers'
 import ErrorPageNoSSL from 'components/ErrorPageNoSSL/ErrorPageNoSSL'
 
-{window.location.protocol === 'http:' && window.location.hostname !== 'localhost'
+
+{
+  window.location.protocol === 'http:' && window.location.hostname !== 'localhost'
   ? (ReactDOM.render(
-      <ErrorPageNoSSL />,
-      document.getElementById('root')
-    ))
+    <ErrorPageNoSSL />,
+    document.getElementById('root')
+  ))
   : (migrate().finally(() => setTimeout(() => {
-      ReactDOM.render(
-        <Root history={history} store={store} routes={routes} />,
-        document.getElementById('root')
-      )
-    }, 1000))
+    ReactDOM.render(
+      <Root history={history} store={store} routes={routes} />,
+      document.getElementById('root')
+    )
+  }, 1000))
   )
 }

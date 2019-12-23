@@ -15,8 +15,6 @@ import { Button, Toggle } from 'components/controls'
 import { FieldLabel, Input } from 'components/forms'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import WidthContainer from 'components/layout/WidthContainer/WidthContainer'
-import Logo from 'components/Logo/Logo'
-import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 import { isCoinAddress } from 'swap.app/util/typeforce'
 
 import config from 'app-config'
