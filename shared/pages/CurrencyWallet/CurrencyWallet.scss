@@ -61,6 +61,10 @@
   }
 }
 
+.historyContent {
+  display: block;
+}
+
 .btc {
   color: #000;
 }
@@ -140,66 +144,16 @@
   }
 }
 
-.loader {
-  position: relative;
-  margin: 15% 40%;
-}@media all and (min-width: 320px) and (max-width: 767px) {
-    .walletContent {
-        flex-direction: column;
-        margin: 0px -20px;
-    }
-    .yourBalance,
-    .yourAssets,
-    .activity {
-        box-shadow: none;
-        width: 100%;
-    }
-    .walletTable {
-        display: inline-table;
-        td:first-child {
-            padding-left: 25px;
-            left: auto;
-        }
-    }
-    .yourBalanceBottom {
-        &:before {
-            display: none;
-        }
-    }
-    .yourAssets {
-        padding: 0;
-        button {
-            width: calc(100% - 65px);
-            margin: auto;
-        }
-    }
-    .yourBalance,
-    .yourBalanceCurrencies {
-        background: rgb(253, 253, 253);
-    }
-    .yourAssetsHeading,
-    .yourAssetsDescr {
-        padding: 0 25px;
-    }
-    .walletBalance {
-        width: 100%;
-    }
-    .yourBalance {
-        display: none;
-    }
-    .walletBalance.active {
-        .yourBalance {
-            display: block;
-        }
-    }
-    .activityHeading {
-        margin-top: -60px;
-    }
-}
-
-.loader {
-    position: relative;
-    margin: 15% 40%;
+@media all and (min-width: 768px) and (max-width: 992px) {
+  .currencyWalletActivity,
+  .currencyWalletBalance {
+    width: 100%;
+    box-shadow: none;
+    padding: 0;
+  }
+  .currencyWalletWrapper {
+    flex-direction: column;
+  }
 }
 
 @media all and (min-width: 320px) and (max-width: 767px) {
@@ -217,10 +171,8 @@
       display: block;
     }
   }
-}
-
-.loader {
-  position: relative;
-  margin: 15% 40%;
+  .historyContent {
+    margin: -40px -20px;
+  }
 }
 

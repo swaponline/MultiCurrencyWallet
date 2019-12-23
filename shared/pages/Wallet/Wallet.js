@@ -22,9 +22,8 @@ import config from 'app-config'
 import { withRouter } from 'react-router'
 import BalanceForm from './components/BalanceForm/BalanceForm'
 import CurrenciesList from './CurrenciesList'
-import LoaderBalanceForm from './components/LoaderBalanceForm/LoaderBalanceForm'
-import LoaderTransaction from './components/LoaderTransaction/LoaderTransaction'
-import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
+import ContentLoader from '../../components/loaders/ContentLoader/ContentLoader'
+
 
 const walletNav = [
   { key: 'My balances', text: <FormattedMessage id="MybalanceswalletNav" defaultMessage="Мой баланс" /> },
@@ -211,7 +210,7 @@ export default class Wallet extends Component {
     if (exCurrencyRate) {
       this.setState({
         exCurrencyRate, 
-        isFetching: true
+        isFetching: false
       })
     } else {
       this.getUsdBalance();
@@ -327,6 +326,7 @@ export default class Wallet extends Component {
       exCurrencyRate,
       exchangeForm,
       editTitle,
+      isFetching,
       walletTitle,
     } = this.state;
     const {
@@ -384,15 +384,15 @@ export default class Wallet extends Component {
           <div className="data-tut-store" styleName="walletContent" >
             <div styleName={`walletBalance ${activeView === 0 ? 'active' : ''}`}>
               {
-              !isFetching ? 
-                <BalanceForm 
-                  usdBalance={usdBalance} 
-                  currencyBalance={btcBalance} 
-                  handleReceive={this.handleModalOpen} 
-                  handleWithdraw={this.handleModalOpen} 
-                  currency="btc" 
-                  infoAboutCurrency={infoAboutCurrency} 
-              /> : <LoaderBalanceForm />
+                !isFetching ? 
+                  <BalanceForm 
+                    usdBalance={usdBalance} 
+                    currencyBalance={btcBalance} 
+                    handleReceive={this.handleModalOpen} 
+                    handleWithdraw={this.handleModalOpen} 
+                    currency="btc" 
+                    infoAboutCurrency={infoAboutCurrency} 
+                /> : <ContentLoader leftSideContent />
               }
               {exchangeForm &&
                 <div styleName="exchangeForm">
@@ -400,10 +400,17 @@ export default class Wallet extends Component {
                 </div>
               }
             </div>
-            <CurrenciesList tableRows={tableRows} {...this.state} {...this.props} goToСreateWallet={this.goToСreateWallet} />
+            <div styleName={`yourAssetsWrapper ${activeView === 0 ? 'active' : ''}`}>
+              {
+                !isFetching ? 
+                  <CurrenciesList 
+                    tableRows={tableRows} {...this.state} {...this.props} 
+                    goToСreateWallet={this.goToСreateWallet}
+                  /> : <ContentLoader rideSideContent />
+              }
+            </div>
             <div styleName={`activity ${activeView === 1 ? 'active' : ''}`}>
-              <h3 styleName="activityHeading">Activity</h3>
-              {!isFetching ? <History></History> : <LoaderTransaction />}
+              <History />
             </div>
           </div>
         </section>

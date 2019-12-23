@@ -24,8 +24,7 @@ import { localisedUrl } from 'helpers/locale'
 import config from 'app-config'
 import BalanceForm from 'pages/Wallet/components/BalanceForm/BalanceForm'
 import { BigNumber } from 'bignumber.js'
-import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
-import EmptyTransactions from 'components/EmptyTransactions/EmptyTransactions'
+import ContentLoader from 'components/loaders/ContentLoader/ContentLoader'
 
 const isWidgetBuild = config && config.isWidget
 
@@ -283,16 +282,17 @@ export default class CurrencyWallet extends Component {
                 <FormattedMessage id="historyActivity" defaultMessage="Активность" />
               </h3>
               {!txHistory ? (
-                <div styleName="loader">
-                  <FormattedMessage id="history107" defaultMessage="Loading" />
-                  <InlineLoader />
+                <div styleName="historyContent">
+                  <ContentLoader rideSideContent />
                 </div>
               ) : (
 
                   txHistory.length > 0 ? (
                     <Table rows={txHistory} styleName="history" rowRender={this.rowRender} />
                   ) : (
-                      <EmptyTransactions />
+                    <div styleName="historyContent">
+                      <ContentLoader rideSideContent />
+                    </div>
                     )
                 )}
             </div>
