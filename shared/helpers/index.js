@@ -29,6 +29,8 @@ import { migrate } from './migrations/'
 import getUnixTimeStamp from './getUnixTimeStamp'
 import { cacheStorageGet, cacheStorageSet } from './cache'
 
+import apiLooper from './apiLooper'
+
 
 export default {
   // xlm,
@@ -72,4 +74,6 @@ export {
   getUnixTimeStamp,
   cacheStorageGet,
   cacheStorageSet,
+
+  apiLooper,
 }
