@@ -43,19 +43,31 @@ class Row extends React.PureComponent {
   handlePayInvoice = async () => {
     const { invoiceData } = this.props
 
-    let withdrawModalType = constants.modals.Withdraw
+    let withdrawModalType = null
+    let data = null
     const btcData = actions.btcmultisig.isBTCAddress(invoiceData.toAddress)
+
     if (btcData) {
+      data = btcData
+      withdrawModalType = constants.modals.Withdraw
       const { currency } = btcData
 
       if (currency === 'BTC (SMS-Protected)') withdrawModalType = constants.modals.WithdrawMultisigSMS
       if (currency === 'BTC (Multisig)') withdrawModalType = constants.modals.WithdrawMultisigUser
+    }
 
+    const ethData = actions.eth.isETHAddress(invoiceData.toAddress)
+    if (ethData) {
+      withdrawModalType = constants.modals.Withdraw
+      data = ethData
+    }
+
+    if (withdrawModalType) {
       actions.modals.open(withdrawModalType, {
-        currency,
+        currency: data.currency,
         address: invoiceData.toAddress,
-        balance: btcData.balance,
-        unconfirmedBalance: btcData.unconfirmedBalance,
+        balance: data.balance,
+        unconfirmedBalance: data.unconfirmedBalance,
         toAddress: (invoiceData.destAddress) ? invoiceData.destAddress : invoiceData.fromAddress,
         amount: invoiceData.amount,
         invoice: invoiceData,
@@ -142,6 +154,17 @@ class Row extends React.PureComponent {
       })
     }
 
+    const hasInvoiceButtons = (invoiceData && !invoiceData.txid && direction === 'in' && invoiceData.status === 'new' && !cancelled && !payed)
+    let invoiceStatusClass = 'confirm green'
+    let invoiceStatusText = <FormattedMessage id="HistoryRowInvoiceStatusNew" defaultMessage="Пока не оплачен" />
+    if (invoiceData && ((invoiceData.status === 'ready') || payed)) {
+      invoiceStatusClass = 'confirm'
+      invoiceStatusText = <FormattedMessage id="RowHistoryInvoicePayed" defaultMessage="Оплачен" />
+    }
+    if (invoiceData && ((invoiceData.status === 'cancelled') || cancelled)) {
+      invoiceStatusClass = 'confirm red'
+      invoiceStatusText = <FormattedMessage id="RowHistoryInvoiceCancelled" defaultMessage="Отклонен" />
+    }
     /* eslint-disable */
     return (
       <>
@@ -160,6 +183,9 @@ class Row extends React.PureComponent {
                 {txType === 'INVOICE' ?
                   <>
                     <FormattedMessage id="RowHistoryInvoce" defaultMessage="Инвойс #{number}" values={{number: `${invoiceData.id}-${invoiceData.invoiceNumber}`}}/>
+                    <div styleName={`${invoiceStatusClass} cell`}>
+                      {invoiceStatusText}
+                    </div>
                   </> :
                   <>
                     {
@@ -192,7 +218,7 @@ class Row extends React.PureComponent {
                 {...this.props}
               />
               {txType === 'INVOICE' && direction === 'in' &&
-                <div styleName='info'>
+                <div styleName={(hasInvoiceButtons) ? 'info' : 'info noButtons'}>
                   {/* {
                     invoiceData && invoiceData.label && <div styleName='comment'>{invoiceData.label}</div>
                   } */}
@@ -203,18 +229,8 @@ class Row extends React.PureComponent {
                     values={{address: `${(invoiceData.destAddress) ? invoiceData.destAddress : invoiceData.fromAddress}`}} />
                 </div>
               }
-              {((invoiceData && invoiceData.status === 'cancelled') || cancelled) &&
-                <div styleName='date'>
-                  <FormattedMessage id="RowHistoryInvoiceCancelled" defaultMessage="Отклонен" />
-                </div>
-              }
-              {((invoiceData && invoiceData.status === 'ready') || payed) &&
-                <div styleName='date'>
-                  <FormattedMessage id='RowHistoryInvoicePayed' defaultMessage='Оплачен' />
-                </div>
-              }
             </div>
-            {invoiceData && !invoiceData.txid && direction === 'in' && invoiceData.status === 'new' && !cancelled && !payed &&
+            {hasInvoiceButtons &&
                 <div styleName="btnWrapper">
                   <button onClick={this.handlePayInvoice}>
                     <FormattedMessage id='RowHistoryPayInvoice' defaultMessage='Оплатить' />

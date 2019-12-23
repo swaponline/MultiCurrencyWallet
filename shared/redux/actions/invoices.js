@@ -26,7 +26,7 @@ const addInvoice = (data) => {
   const { user: { btcData } } = getState()
 
   if (!validateData(data)) return false
-
+console.log(btc.network)
   const requestData = {
     currency    : data.currency,
     toAddress   : data.toAddress,
@@ -35,7 +35,7 @@ const addInvoice = (data) => {
     label       : (data.label) ? data.label : '',
     address     : btcData.address,
     pubkey      : btcData.publicKey.toString('hex'),
-    mainnet     : (btc.network==bitcoin.networks.mainnet),
+    mainnet     : (process.env.MAINNET) ? '1' : '0',
     destination : (data.destination) ? data.destination : '',
   }
 
@@ -83,7 +83,7 @@ const getInvoices = (data) => {
       body: {
         currency: data.currency,
         address: data.address,
-        mainnet: (btc.network==bitcoin.networks.mainnet),
+        mainnet: (process.env.MAINNET) ? '1' : '0',
       }
     }).then((res) => {
       if (res && res.answer && res.answer === 'ok') {
