@@ -65,6 +65,17 @@ const apiLooper = (method, api, endpoint, options) => {
           const url = `${currentEndpoint.url}${endpoint}`
           request[method](url, options)
             .then( (answer) => {
+              if (options && options.checkStatus instanceof Function) {
+                if (!options.checkStatus(answer)) {
+                  console.error('Endpoint ', currentEndpoint.url, ' check status failed. May be down. Switch next')
+                  if (switchNext(api)) {
+                    doRequest()
+                  } else {
+                    error('All endpoints of api is offline')
+                  }
+                  return
+                }
+              }
               resolve(answer)
             })
             .catch( () => {

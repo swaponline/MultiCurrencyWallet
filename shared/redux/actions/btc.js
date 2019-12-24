@@ -72,8 +72,14 @@ const loginWithKeychain = async () => {
 const getBalance = () => {
   const { user: { btcData: { address } } } = getState()
 
-  return apiLooper.get('bitpay', `/addr/${address}`)
-    .then(({ balance, unconfirmedBalance }) => {
+  return apiLooper.get('bitpay', `/addr/${address}`, {
+    checkStatus: (answer) => {
+      try {
+        if (answer && answer.balance !== undefined) return true
+      } catch (e) { /* */ }
+      return false
+    },
+  }).then(({ balance, unconfirmedBalance }) => {
       console.log('BTC Balance: ', balance)
       console.log('BTC unconfirmedBalance Balance: ', unconfirmedBalance)
       reducers.user.setBalance({ name: 'btcData', amount: balance, unconfirmedBalance })
@@ -85,12 +91,24 @@ const getBalance = () => {
 }
 
 const fetchBalance = (address) =>
-  apiLooper.get('bitpay', `/addr/${address}`)
-    .then(({ balance }) => balance)
+  apiLooper.get('bitpay', `/addr/${address}`, {
+    checkStatus: (answer) => {
+      try {
+        if (answer && answer.balance !== undefined) return true
+      } catch (e) { /* */ }
+      return false
+    },
+  }).then(({ balance }) => balance)
 
 const fetchTx = (hash) =>
-  apiLooper.get('bitpay', `/tx/${hash}`)
-    .then(({ fees, ...rest }) => ({
+  apiLooper.get('bitpay', `/tx/${hash}`, {
+    checkStatus: (answer) => {
+      try {
+        if (answer && answer.fees !== undefined) return true
+      } catch (e) { /* */ }
+      return false
+    },
+  }).then(({ fees, ...rest }) => ({
       fees: BigNumber(fees).multipliedBy(1e8),
       ...rest,
     }))
@@ -116,8 +134,14 @@ const getTransaction = () =>
 
     const url = `/txs/?address=${address}`
 
-    return apiLooper.get('bitpay', url)
-      .then((res) => {
+    return apiLooper.get('bitpay', url, {
+      checkStatus: (answer) => {
+        try {
+          if (answer && answer.txs !== undefined) return true
+        } catch (e) { /* */ }
+        return false
+      },
+    }).then((res) => {
         const transactions = res.txs.map((item) => {
           const direction = item.vin[0].addr !== address ? 'in' : 'out'
           const isSelf = direction === 'out'
