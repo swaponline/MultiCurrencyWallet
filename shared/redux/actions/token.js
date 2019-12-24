@@ -1,5 +1,5 @@
 import ERC20_ABI from 'human-standard-token-abi'
-import helpers, { request, constants, cacheStorageGet, cacheStorageSet } from 'helpers'
+import helpers, { apiLooper, constants, cacheStorageGet, cacheStorageSet } from 'helpers'
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
 import web3 from 'helpers/web3'
@@ -91,14 +91,14 @@ const getTransaction = (currency) =>
     console.log('currency', address, contractAddress)
 
     const url = [
-      `${config.api.etherscan}?module=account&action=tokentx`,
+      `?module=account&action=tokentx`,
       `&contractaddress=${contractAddress}`,
       `&address=${address}`,
       `&startblock=0&endblock=99999999`,
       `&sort=asc&apikey=RHHFPNMAZMD6I4ZWBZBF6FA11CMW9AXZNM`,
     ].join('')
 
-    return request.get(url)
+    return apiLooper.get('etherscan', url)
       .then((res) => {
         const transactions = res.result
           .filter((item) => item.value > 0).map((item) => ({

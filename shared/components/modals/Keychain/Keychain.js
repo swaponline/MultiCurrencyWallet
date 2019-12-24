@@ -11,7 +11,7 @@ import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
 import { FormattedMessage, injectIntl, defineMessages } from 'react-intl'
 import * as keychainjs from 'keychain.js'
 import { getState } from 'redux/core'
-import { constants, web3, api, request } from 'helpers'
+import { constants, web3, api, apiLooper } from 'helpers'
 
 
 const title = defineMessages({
@@ -46,7 +46,7 @@ export default class Keychain extends Component {
         .then(result => web3.utils.fromWei(result))
     }
     const { address } = getState().user.btcData
-    return request.get(`${api.getApiServer('bitpay')}/addr/${address}`)
+    return apiLooper.get('bitpay', `/addr/${address}`)
       .then(({ balance }) => balance)
   }
 

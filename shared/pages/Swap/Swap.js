@@ -7,7 +7,7 @@ import cssModules from 'react-css-modules'
 import styles from './Swap.scss'
 
 import { connect } from 'redaction'
-import helpers, { links, constants, request } from 'helpers'
+import helpers, { links, constants, request, apiLooper } from 'helpers'
 import { isMobile } from 'react-device-detect'
 import actions from 'redux/actions'
 import { Link } from 'react-router-dom'
@@ -316,7 +316,7 @@ export default class SwapComponent extends PureComponent {
       isFaucetRequested: true,
     }))
 
-    request.post(`${config.api.faucet}`, {
+    apiLooper.post('faucet', '', {
       body: {
         eth: this.state.ethAddress,
         buyCurrency,
