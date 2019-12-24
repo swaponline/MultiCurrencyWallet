@@ -8,6 +8,7 @@
   display: flex;
   flex-direction: row;
   font-family: 'Inter-Bold', sans-serif;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.08), 0px 1px 4px rgba(0, 0, 0, 0.08);
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#510ed8+0,510ed8+70,8821ee+100 */
 
   a {
@@ -24,7 +25,7 @@
 
     &.active {
       font-weight: 700;
-      color: #fff;
+      color: #1F2D48;
     }
 
     i {
@@ -38,7 +39,7 @@
 
 .active {
   font-weight: 700;
-  color: #fff;
+  background: #fff;
 }
 
 .bold {
