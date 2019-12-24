@@ -54,7 +54,7 @@ export default class NavMobile extends Component {
                     
                   >
                     {icon} 
-                    <span className={isBold && styles.bold}>{title} хуй</span>
+                    <span className={isBold && styles.bold}>{title}</span>
                   </a>
                 )
                 : (

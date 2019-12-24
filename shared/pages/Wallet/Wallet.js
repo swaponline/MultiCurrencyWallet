@@ -7,7 +7,7 @@ import actions from 'redux/actions'
 
 import cssModules from 'react-css-modules'
 import styles from './Wallet.scss'
-import { isMobile, ConsoleView } from 'react-device-detect'
+import { isMobile } from 'react-device-detect'
 
 import History from 'pages/History/History'
 
