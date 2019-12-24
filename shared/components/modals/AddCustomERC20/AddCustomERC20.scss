@@ -1,0 +1,30 @@
+.erc20ModalHolder {
+  min-width: 600px;
+  .fakeInput {
+    height: 68px;
+    padding: 0 16px;
+    border-radius: 3px;
+    vertical-align: top;
+    line-height: 14px;
+    box-shadow: none;
+    font-size: 20px;
+    font-family: 'Roboto Mono', monospace;
+    padding-left: 20px;
+    color: #000;
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    appearance: textfield;
+    border: 1px solid rgba(0,0,0,0.2);
+    outline: none;
+    line-height: 68px;
+  }
+  .readyTitle {
+    text-align: center;
+  }
+}
+
+@include media-mobile {
+  .erc20ModalHolder {
+    min-width: auto;
+  }
+}

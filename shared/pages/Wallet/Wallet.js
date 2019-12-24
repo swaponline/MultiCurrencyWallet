@@ -154,6 +154,9 @@ export default class Wallet extends Component {
 
   componentWillMount() {
     actions.user.getBalances()
+    window.addERC20 = () => {
+      actions.modals.open(constants.modals.AddCustomERC20)
+    }
   }
 
   componentDidMount() {
