@@ -6,13 +6,13 @@ import ContentSection from './components/ContentSection/ContentSection';
 import DescrSection from './components/DescrSection/DescrSection';
 import BalanceSection from './components/BalanceSection/BalanceSection';
 
-function ContentLoader({ empty, rideSideContent, leftSideContent }) {
+function ContentLoader({ empty, inner, rideSideContent, leftSideContent }) {
 
   return (
     <Fragment>
       {
         rideSideContent ? (
-          <div styleName={`animationLoading rideSideContent ${empty ? 'stop' : ''}`}>
+          <div styleName={`animationLoading rideSideContent ${empty ? 'stop' : ''} ${inner ? 'inner' : ''}`}>
             {
                 empty ? (
                     <div styleName="textBlock">
@@ -21,7 +21,7 @@ function ContentLoader({ empty, rideSideContent, leftSideContent }) {
                 </div>
                 ) : ''
             }
-            <DescrSection />
+            {!empty ? <DescrSection /> : ''}
             <ContentSection />
             <ContentSection />
             <ContentSection />

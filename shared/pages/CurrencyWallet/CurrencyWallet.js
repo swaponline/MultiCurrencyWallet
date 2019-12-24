@@ -121,6 +121,7 @@ export default class CurrencyWallet extends Component {
 
     this.setLocalStorageItems();
     this.getUsdBalance();
+    this.onLoadeOn(this.getUsdBalance);
 
     actions.user.setTransactions()
     actions.core.getSwapHistory()
@@ -140,16 +141,25 @@ export default class CurrencyWallet extends Component {
     })
   }
 
+  onLoadeOn = (fn) => {
+    this.setState({
+      isFetching: true
+    })
+
+    fn();
+  }
+
   getUsdBalance = async () => {
-    const { currency } = this.state;
+    const exCurrencyRate = await actions.user.getExchangeRate('BTC', 'usd')
 
-    const exCurrencyRate = await actions.user.getExchangeRate(currency, 'usd')
-
-    console.log('exCurrencyRate', exCurrencyRate)
-
-    this.setState(() => ({
-      exCurrencyRate
-    }))
+    if (exCurrencyRate) {
+      this.setState({
+        exCurrencyRate, 
+        isFetching: false
+      })
+    } else {
+      this.getUsdBalance();
+    }
   }
 
   handleReceive = () => {
@@ -199,9 +209,7 @@ export default class CurrencyWallet extends Component {
     const {
       currency,
       balance,
-      isClosedNotifyBlockBanner,
-      isClosedNotifyBlockSignUp,
-      isPrivateKeysSaved,
+      isFetching,
       exCurrencyRate
     } = this.state
 
@@ -274,27 +282,33 @@ export default class CurrencyWallet extends Component {
         <Fragment>
           <div styleName="currencyWalletWrapper">
             <div styleName="currencyWalletBalance">
-              <BalanceForm currencyBalance={balance} usdBalance={currencyUsdBalance} handleReceive={this.handleReceive} handleWithdraw={this.handleWithdraw} currency={currency.toLowerCase()} />
+              {
+                !isFetching ? 
+                  <BalanceForm 
+                  currencyBalance={balance} 
+                  usdBalance={currencyUsdBalance} 
+                  handleReceive={this.handleReceive} 
+                  handleWithdraw={this.handleWithdraw} 
+                  currency={currency.toLowerCase()} 
+                /> : <ContentLoader leftSideContent />
+              }
             </div>
             {swapHistory.length > 0 && <SwapsHistory orders={swapHistory.filter(item => item.step >= 4)} />}
-            <div styleName="currencyWalletActivity">
-              <h3>
-                <FormattedMessage id="historyActivity" defaultMessage="Активность" />
-              </h3>
-              {!txHistory ? (
-                <div styleName="historyContent">
-                  <ContentLoader rideSideContent />
-                </div>
-              ) : (
-
-                  txHistory.length > 0 ? (
-                    <Table rows={txHistory} styleName="history" rowRender={this.rowRender} />
-                  ) : (
-                    <div styleName="historyContent">
-                      <ContentLoader rideSideContent />
-                    </div>
-                    )
-                )}
+            <div styleName="currencyWalletActivityWrapper">
+              {
+                !isFetching && txHistory ? (
+                  <div styleName="currencyWalletActivity">
+                    <h3>
+                      <FormattedMessage id="historyActivity" defaultMessage="Активность" />
+                    </h3>
+                    {
+                      txHistory.length > 0 ? (
+                          <Table rows={txHistory} styleName="history" rowRender={this.rowRender} />
+                      ) : <ContentLoader rideSideContent empty inner />
+                    }
+                  </div>
+                ) : <ContentLoader rideSideContent />
+              }
             </div>
           </div>
           {
