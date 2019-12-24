@@ -5,7 +5,7 @@ import * as bitcoin from 'bitcoinjs-lib'
 import bitcoinMessage from 'bitcoinjs-message'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
-import { btc, request, constants, api } from 'helpers'
+import { btc, apiLooper, constants, api } from 'helpers'
 import { Keychain } from 'keychain.js'
 import actions from 'redux/actions'
 import config from 'app-config'
@@ -39,12 +39,12 @@ console.log(btc.network)
     destination : (data.destination) ? data.destination : '',
   }
 
-  return request.post(`${config.api.invoiceApi}/invoice/push/`, {
+  return apiLooper.post('invoiceApi', `/invoice/push/`, {
     body: requestData
   })
 }
 
-const cancelInvoice = (invoiceId) => new Promise((resolve) => request.post(`${config.api.invoiceApi}/invoice/cancel/`,
+const cancelInvoice = (invoiceId) => new Promise((resolve) => apiLooper.post('invoiceApi', `/invoice/cancel/`,
   {
     body: {
       invoiceId,
@@ -55,7 +55,7 @@ const cancelInvoice = (invoiceId) => new Promise((resolve) => request.post(`${co
   })
   .catch(() => { resolve(false) }))
 
-const markInvoice = (invoiceId, mark, txid) => new Promise((resolve) => request.post(`${config.api.invoiceApi}/invoice/mark/`,
+const markInvoice = (invoiceId, mark, txid) => new Promise((resolve) => apiLooper.post('invoiceApi', `/invoice/mark/`,
   {
     body: {
       invoiceId,
@@ -75,7 +75,7 @@ const getInvoices = (data) => {
 
   return new Promise((resolve) => {
 
-    return request.post(`${config.api.invoiceApi}/invoice/fetch/`, {
+    return apiLooper.post('invoiceApi', `/invoice/fetch/`, {
       body: {
         currency: data.currency,
         address: data.address,
