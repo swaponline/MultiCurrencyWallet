@@ -22,7 +22,8 @@ import config from 'app-config'
 import { withRouter } from 'react-router'
 import BalanceForm from './components/BalanceForm/BalanceForm'
 import CurrenciesList from './CurrenciesList'
-import InlineLoader from 'components/loaders/InlineLoader/InlineLoader'
+import ContentLoader from '../../components/loaders/ContentLoader/ContentLoader'
+
 
 const walletNav = [
   { key: 'My balances', text: <FormattedMessage id="MybalanceswalletNav" defaultMessage="Мой баланс" /> },
@@ -149,7 +150,8 @@ export default class Wallet extends Component {
     activeCurrency: 'usd',
     exchangeForm: false,
     walletTitle: 'Wallet',
-    editTitle: false
+    editTitle: false,
+    exCurrencyRate: null
   }
 
   componentWillMount() {
@@ -164,7 +166,7 @@ export default class Wallet extends Component {
     }
 
     this.showPercentChange1H();
-    this.getUsdBalance();
+    this.onLoadeOn(this.getUsdBalance);
     this.setLocalStorageItems();
   }
 
@@ -194,12 +196,25 @@ export default class Wallet extends Component {
     })
   }
 
+  onLoadeOn = (fn) => {
+    this.setState({
+      isFetching: true
+    })
+
+    fn();
+  }
+
   getUsdBalance = async () => {
     const exCurrencyRate = await actions.user.getExchangeRate('BTC', 'usd')
 
-    this.setState(() => ({
-      exCurrencyRate
-    }))
+    if (exCurrencyRate) {
+      this.setState({
+        exCurrencyRate, 
+        isFetching: false
+      })
+    } else {
+      this.getUsdBalance();
+    }
   }
 
   handleNotifyBlockClose = (state) => {
@@ -311,6 +326,7 @@ export default class Wallet extends Component {
       exCurrencyRate,
       exchangeForm,
       editTitle,
+      isFetching,
       walletTitle,
     } = this.state;
     const {
@@ -367,19 +383,34 @@ export default class Wallet extends Component {
           </ul>}
           <div className="data-tut-store" styleName="walletContent" >
             <div styleName={`walletBalance ${activeView === 0 ? 'active' : ''}`}>
-              <BalanceForm usdBalance={usdBalance} currencyBalance={btcBalance} handleReceive={this.handleModalOpen} handleWithdraw={this.handleModalOpen} currency="btc" infoAboutCurrency={infoAboutCurrency} />
+              {
+                !isFetching ? 
+                  <BalanceForm 
+                    usdBalance={usdBalance} 
+                    currencyBalance={btcBalance} 
+                    handleReceive={this.handleModalOpen} 
+                    handleWithdraw={this.handleModalOpen} 
+                    currency="btc" 
+                    infoAboutCurrency={infoAboutCurrency} 
+                /> : <ContentLoader leftSideContent />
+              }
               {exchangeForm &&
                 <div styleName="exchangeForm">
                   <ParticalClosure {...this.props} isOnlyForm />
                 </div>
               }
             </div>
-            <CurrenciesList tableRows={tableRows} {...this.state} {...this.props} goToСreateWallet={this.goToСreateWallet} />
+            <div styleName={`yourAssetsWrapper ${activeView === 0 ? 'active' : ''}`}>
+              {
+                !isFetching ? 
+                  <CurrenciesList 
+                    tableRows={tableRows} {...this.state} {...this.props} 
+                    goToСreateWallet={this.goToСreateWallet}
+                  /> : <ContentLoader rideSideContent />
+              }
+            </div>
             <div styleName={`activity ${activeView === 1 ? 'active' : ''}`}>
-              <h3 styleName="activityHeading">
-                <FormattedMessage id="walletHistoryActivity" defaultMessage="Активность" />
-              </h3>
-              <History></History>
+              <History />
             </div>
           </div>
         </section>
