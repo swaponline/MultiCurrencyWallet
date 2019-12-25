@@ -9,8 +9,8 @@ import config from 'app-config'
 import { FormattedMessage } from 'react-intl'
 
 
-const CurrenciesList = ({ activeView, isFetching, tableRows, currencies, infoAboutCurrency, hiddenCoinsList, goToСreateWallet }) => (
-  <div styleName={`yourAssets ${activeView === 0 ? 'active' : ''}`}>
+const CurrenciesList = ({ tableRows, currencies, infoAboutCurrency, hiddenCoinsList, goToСreateWallet }) => (
+  <div styleName="yourAssets">
     <h3 styleName="yourAssetsHeading">
       <FormattedMessage id="YourAssets" defaultMessage="Ваши валюты" />
     </h3>

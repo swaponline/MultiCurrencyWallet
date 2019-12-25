@@ -94,12 +94,12 @@
     width: 31%;
 }
 
-.yourAssets,
+.yourAssetsWrapper,
 .activity {
    display: none;
 }
 
-.yourAssets.active,
+.yourAssetsWrapper.active,
 .activity.active {
     display: block;
 }
@@ -107,15 +107,22 @@
 .walletContent {
     display: flex;
     justify-content: space-between;
+    position: relative;
 }
 
-.yourAssets,
-.activity {
+.yourAssetsWrapper {
+    width: 66%;
+}
+
+.yourAssets {
     background: #FFFFFF;
     box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.08), 0px 1px 4px rgba(0, 0, 0, 0.08);
     border-radius: 4px;
     padding: 25px;
     margin-top: 40px;
+}
+
+.activity {
     width: 66%;
 }
 
@@ -290,12 +297,14 @@
   }
 }
 @media all and (min-width: 768px) and (max-width: 992px) {
-    .walletBalance {
-        width: 45%;
-        display: none;
+    .walletContent {
+        flex-direction: column;
     }
-    .yourAssets {
-        width: 53%;
+    .yourAssetsWrapper {
+        width: 100%;
+    }
+    .walletBalance {
+        width: 100%;
     }
     .keysExportImport {
       width: 53%;
@@ -313,9 +322,6 @@
             padding-left: 0px;
         }
     }
-    .yourBalance {
-        display: none;
-    }
     .walletBalance.active {
         display: block;
         .yourBalance {
@@ -330,6 +336,9 @@
     .walletContent {
         flex-direction: column;
         margin: 0px -20px;
+    }
+    .yourAssetsWrapper {
+        width: 100%;
     }
     .yourBalance,
     .yourAssets,
@@ -386,11 +395,6 @@
     .activityHeading {
         margin-top: -60px;
     }
-}
-
-.loader {
-    position: relative;
-    margin: 15% 40%;
 }
 
 
