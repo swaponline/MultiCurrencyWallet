@@ -70,6 +70,10 @@ const markInvoice = (invoiceId, mark, txid) => new Promise((resolve) => apiLoope
 
 
 const getInvoices = (data) => {
+  if (config && config.isWidget) {
+    return new Promise((resolve) => { resolve([]) })
+  }
+
   const { user: { btcData } } = getState()
   if (!data || !data.currency || !data.address) return false
 
