@@ -418,6 +418,7 @@ export default class Wallet extends Component {
                     currencyBalance={btcBalance} 
                     handleReceive={this.handleModalOpen} 
                     handleWithdraw={this.handleModalOpen} 
+                    handleExchange={this.handleGoExchange)
                     currency="btc" 
                     infoAboutCurrency={infoAboutCurrency} 
                 /> : <ContentLoader leftSideContent />
