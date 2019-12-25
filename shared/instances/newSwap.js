@@ -34,6 +34,7 @@ if (config && config.isWidget) {
   if (!constants.COINS[config.erc20token]) {
     console.log('init token', config.erc20token, config.erc20)
     util.erc20.register(config.erc20token, config.erc20[config.erc20token].decimals)
+    actions[config.erc20token] = actions.token
   }
 } else {
   // Add to swap.core not exists tokens
@@ -41,6 +42,7 @@ if (config && config.isWidget) {
     if (!constants.COINS[tokenCode]) {
       console.info('Add token to swap.core', tokenCode, config.erc20[tokenCode].address, config.erc20[tokenCode].decimals, config.erc20[tokenCode].fullName)
       util.erc20.register(tokenCode, config.erc20[tokenCode].decimals)
+      actions[tokenCode] = actions.token
     }
   })
 }
