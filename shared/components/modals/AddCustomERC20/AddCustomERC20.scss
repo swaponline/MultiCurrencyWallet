@@ -26,5 +26,8 @@
 @include media-mobile {
   .erc20ModalHolder {
     min-width: auto;
+    .fakeInput {
+      overflow: auto;
+    }
   }
 }
