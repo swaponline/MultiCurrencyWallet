@@ -6,7 +6,7 @@ import bitcoincash from 'bitcoincashjs-lib'
 import bchaddr from 'bchaddrjs'
 import { getState } from 'redux/core'
 import reducers from 'redux/core/reducers'
-import { bch, request, constants, api } from 'helpers'
+import { bch, apiLooper, constants, api } from 'helpers'
 import { Keychain } from 'keychain.js'
 import actions from 'redux/actions'
 
@@ -51,7 +51,7 @@ const login = (privateKey) => {
 const getBalance = () => {
   const { user: { bchData: { address } } } = getState()
 
-  return request.get(`${api.getApiServer('bch')}/address/details/${address}`)
+  return apiLooper.get('bch', `/address/details/${address}`)
     .then(({ balance, unconfirmedBalance }) => {
       console.log('BCH Balance: ', balance)
       console.log('BCH unconfirmedBalance Balance: ', unconfirmedBalance)
@@ -64,11 +64,11 @@ const getBalance = () => {
 }
 
 const fetchBalance = (address) =>
-  request.get(`${api.getApiServer('bch')}/address/details/${address}`)
+  apiLooper.get('bch', `/address/details/${address}`)
     .then(({ balance }) => balance)
 
 const fetchTx = (hash) =>
-  request.get(`${api.getApiServer('bch')}/transaction/details/${hash}`)
+  apiLooper.get('bch', `/transaction/details/${hash}`)
     .then(({ fees, ...rest }) => ({
       fees: BigNumber(fees).multipliedBy(1e8),
       ...rest,
@@ -85,10 +85,10 @@ const getTransaction = () =>
   new Promise((resolve) => {
     const { user: { bchData: { address } } } = getState()
 
-    const url = `${api.getApiServer('bch')}/address/transactions/${address}`
+    const url = `/address/transactions/${address}`
     const legacyAddress = bchaddr.toLegacyAddress(address)
 
-    return request.get(url)
+    return apiLooper.get('bch', url)
       .then((res) => {
         const transactions = res.txs.map((item) => {
           console.warn('item', item)
@@ -170,11 +170,11 @@ const signAndBuild = (transactionBuilder, unspents) => {
 }
 
 const fetchUnspents = (address) =>
-  request.get(`${api.getApiServer('bch')}/address/utxo/${address}`, { cacheResponse: 5000 })
+  apiLooper.get('bch', `/address/utxo/${address}`, { cacheResponse: 5000 })
     .then(({ utxos }) => utxos)
 
 const broadcastTx = (txRaw) =>
-  request.post(`${api.getApiServer('bch')}/rawtransactions/sendRawTransaction`, {
+  apiLooper.post('bch', `/rawtransactions/sendRawTransaction`, {
     body: {
       hexes: [
         txRaw,
@@ -196,7 +196,7 @@ const getReputation = () =>
     const { user: { bchData: { address, privateKey } } } = getState()
     const addressOwnerSignature = signMessage(address, privateKey)
 
-    request.post(`${api.getApiServer('swapsExplorer')}/reputation`, {
+    apiLooper.post('swapsExplorer', `/reputation`, {
       json: true,
       body: {
         address,

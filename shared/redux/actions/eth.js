@@ -1,4 +1,4 @@
-import helpers, { request, constants, api, cacheStorageGet, cacheStorageSet } from 'helpers'
+import helpers, { apiLooper, constants, api, cacheStorageGet, cacheStorageSet } from 'helpers'
 import { getState } from 'redux/core'
 import actions from 'redux/actions'
 import web3 from 'helpers/web3'
@@ -86,7 +86,7 @@ const getReputation = () =>
     const { user: { ethData: { address, privateKey } } } = getState()
     const addressOwnerSignature = web3.eth.accounts.sign(address, privateKey)
 
-    request.post(`${api.getApiServer('swapsExplorer')}/reputation`, {
+    apiLooper.post('swapsExplorer', `/reputation`, {
       json: true,
       body: {
         address,
@@ -122,9 +122,9 @@ const getTransaction = () =>
   new Promise((resolve) => {
     const { user: { ethData: { address } } } = getState()
 
-    const url = `${api.getApiServer('etherscan')}?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=RHHFPNMAZMD6I4ZWBZBF6FA11CMW9AXZNM`
+    const url = `?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=RHHFPNMAZMD6I4ZWBZBF6FA11CMW9AXZNM`
 
-    return request.get(url)
+    return apiLooper.get('etherscan', url)
       .then((res) => {
         const transactions = res.result
           .filter((item) => item.value > 0).map((item) => ({
