@@ -28,6 +28,7 @@ import { BigNumber } from 'bignumber.js'
 import dollar from '../images/dollar.svg'
 import PartOfAddress from '../components/PartOfAddress'
 
+
 @injectIntl
 @withRouter
 @connect(({
@@ -410,6 +411,8 @@ export default class Row extends Component {
     let inneedData = null
     let nodeDownErrorShow = true
 
+    const isWidgetBuild = (config && config.isWidget)
+
     const currencyUsdBalance = BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString() * exCurrencyRate;
 
     if (infoAboutCurrency) {
@@ -436,12 +439,6 @@ export default class Row extends Component {
         disabled: false
       },
       {
-        id: 1011,
-        title: <FormattedMessage id='WalletRow_Menu_Hide' defaultMessage='Hide' />,
-        action: this.hideCurrency,
-        disabled: false
-      },
-      {
         id: 1012,
         title: <FormattedMessage id='WalletRow_Menu_Сopy' defaultMessage='Copy address' />,
         action: this.copy,
@@ -449,10 +446,19 @@ export default class Row extends Component {
       }
     ]
 
+    if (!isWidgetBuild) {
+      dropDownMenuItems.push({
+        id: 1011,
+        title: <FormattedMessage id='WalletRow_Menu_Hide' defaultMessage='Hide' />,
+        action: this.hideCurrency,
+        disabled: false
+      })
+    }
+
     if (currencyView == 'BTC (Multisig)') currencyView = 'BTC'
     if (currencyView == 'BTC (SMS-Protected)') currencyView = 'BTC'
 
-    if (['BTC','ETH'].includes(currencyView)) {
+    if (['BTC','ETH'].includes(currencyView) && !isWidgetBuild) {
       dropDownMenuItems.push({
         id: 1004,
         title: <FormattedMessage id='WalletRow_Menu_Invoice' defaultMessage='Выставить счет' />,
