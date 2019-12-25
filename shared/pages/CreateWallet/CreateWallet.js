@@ -87,6 +87,7 @@ const CreateWallet = (props) => {
     }
     if (step === 2 || singleCurrecnyData) {
       if (currencies['Custom ERC20']) {
+        goHome()
         actions.modals.open(constants.modals.AddCustomERC20)
         return
       }
