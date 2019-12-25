@@ -14,6 +14,7 @@ import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 import { ConsoleView } from 'react-device-detect'
 import CloseIcon from 'components/ui/CloseIcon/CloseIcon'
 import icons from './images'
+import config from 'app-config'
 
 
 const title = defineMessages({
@@ -102,6 +103,13 @@ export default class CurrencyAction extends React.Component {
                     itemTitle = 'BTC (SMS)'
                     itemFullTitle = 'BTC (SMS)'
                     break;
+                }
+
+                if (!icons[iconName] || !styles[iconName]) {
+                  iconName = 'eth' // Нужно нарисовать картинку для не известной валюты чтобы все это дело не падало в чертям из-за какой-то картинки-стиля, которых нет
+                  if (config && config.isWidget) {
+                    iconName = 'eth' // Нужно нарисовать картинку для erc20 токена
+                  }
                 }
 
                 return (

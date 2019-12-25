@@ -247,12 +247,55 @@
     }
 }
 
+.wallet.widgetBuild {
+  .yourBalanceBottom {
+    button {
+      width: 30%;
+    }
+  }
+}
+.keysExportImport {
+  display: block;
+  width: 66%;
+  margin-left: auto;
+  text-align: center;
+  white-space: nowrap;
+  button {
+    width: 210px;
+    cursor: pointer;
+    z-index: 1;
+    font-size: 12px;
+    height: 24px;
+    line-height: 24px;
+    display: inline;
+    margin: 10px 10px 0px;
+  }
+}
+
 @media all and (min-width: 993px) {
     .walletTable {
         display: inline-table;
     }
 }
 
+@media all and (min-width: 767px) {
+  .wallet.widgetBuild {
+    .yourBalanceBottom {
+      flex-wrap: wrap;
+      height: auto;
+      &:before {
+        height: 136px;
+      }
+      button {
+        width: 48%;
+      }
+      button[id="exchangeBtn"] {
+        width: 100%;
+        margin-top: 10px;
+      }
+    }
+  }
+}
 @media all and (min-width: 768px) and (max-width: 992px) {
     .walletContent {
         flex-direction: column;
@@ -262,6 +305,13 @@
     }
     .walletBalance {
         width: 100%;
+    }
+    .keysExportImport {
+      width: 53%;
+      button {
+        width: 45%;
+        margin: 10px 5px 0px;
+      }
     }
     .activity {
         width: 100%;
@@ -278,10 +328,11 @@
             display: block;
         }
     }
+    
 }
 
 
-@media all and (min-width: 320px) and (max-width: 767px) {
+@media all and (max-width: 767px) {
     .walletContent {
         flex-direction: column;
         margin: 0px -20px;
@@ -294,6 +345,14 @@
     .activity {
         box-shadow: none;
         width: 100%;
+    }
+    .keysExportImport {
+      width: 95%;
+      margin: 0 auto;
+      button {
+        width: 45%;
+        margin: 0 5px;
+      }
     }
     .walletTable {
         display: inline-table;
@@ -337,5 +396,7 @@
         margin-top: -60px;
     }
 }
+
+
 
 
