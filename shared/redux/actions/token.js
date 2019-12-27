@@ -8,6 +8,32 @@ import config from 'app-config'
 import { BigNumber } from 'bignumber.js'
 
 
+const AddCustomERC20 = (contract, symbol, decimals) => {
+  const configStorage = (process.env.MAINNET) ? 'mainnet' : 'testnet'
+
+  let tokensInfo = JSON.parse(localStorage.getItem(constants.localStorage.customERC))
+  if (!tokensInfo) {
+    tokensInfo = {
+      mainnet: {},
+      testnet: {},
+    }
+  }
+  tokensInfo[configStorage][contract] = {
+    address: contract,
+    symbol,
+    decimals,
+  }
+  localStorage.setItem(constants.localStorage.customERC, JSON.stringify(tokensInfo))
+}
+
+const GetCustromERC20 = () => {
+  const configStorage = (process.env.MAINNET) ? 'mainnet' : 'testnet'
+
+  let tokensInfo = JSON.parse(localStorage.getItem(constants.localStorage.customERC))
+  if (!tokensInfo || !tokensInfo[configStorage]) return {}
+  return tokensInfo[configStorage]
+}
+
 const login = (privateKey, contractAddress, nameContract, decimals, fullName) => {
   let data
   if (privateKey) {
@@ -229,4 +255,6 @@ export default {
   approve,
   setAllowanceForToken,
   fetchBalance,
+  AddCustomERC20,
+  GetCustromERC20,
 }

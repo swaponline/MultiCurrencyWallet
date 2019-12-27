@@ -26,6 +26,8 @@ import InvoiceModal from './InvoiceModal/InvoiceModal'
 import InvoiceLinkModal from './InvoiceLinkModal/InvoiceLinkModal'
 import AlertModal from './Alert/AlertModal'
 
+import AddCustomERC20 from './AddCustomERC20/AddCustomERC20'
+
 
 export default {
   DeclineOrdersModal,
@@ -52,4 +54,5 @@ export default {
   InvoiceModal,
   InvoiceLinkModal,
   AlertModal,
+  AddCustomERC20,
 }

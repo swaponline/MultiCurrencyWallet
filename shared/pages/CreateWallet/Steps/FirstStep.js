@@ -66,7 +66,10 @@ export default class CreateWallet extends Component {
     const { coins, startPack, all } = this.state
     let newStartPack = defaultStartPack
     if (!all) {
-      newStartPack = [...startPack, ...coins]
+      newStartPack = [{
+        name: 'Custom ERC20',
+        capture: <FormattedMessage id="createWallet_customERC20" defaultMessage="Подключить токен" />,
+      }, ...startPack, ...coins]
     }
     this.setState(() => ({ startPack: newStartPack, all: !all }))
   }
