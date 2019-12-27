@@ -205,11 +205,10 @@ export default class CurrencyWallet extends Component {
 
   render() {
 
-    let { swapHistory, txHistory, location, match: { params: { fullName } }, intl, hiddenCoinsList, isSigned } = this.props
+    let { swapHistory, txHistory, isFetching, location, match: { params: { fullName } }, intl, hiddenCoinsList, isSigned } = this.props
     const {
       currency,
       balance,
-      isFetching,
       exCurrencyRate
     } = this.state
 

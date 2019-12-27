@@ -38,6 +38,7 @@ const setupContract = (ethAddress, contractAddress, nameContract, decimals, full
     currency: nameContract.toUpperCase(),
     contractAddress,
     decimals,
+    currencyRate: 1
   }
 
   reducers.user.setTokenAuthData({ name: data.name, data })

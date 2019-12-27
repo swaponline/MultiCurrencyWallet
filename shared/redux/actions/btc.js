@@ -273,5 +273,5 @@ export default {
   fetchBalance,
   signMessage,
   getReputation,
-  getInvoices,
+  getInvoices
 }
