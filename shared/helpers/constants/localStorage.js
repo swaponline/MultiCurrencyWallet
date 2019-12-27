@@ -23,4 +23,5 @@ export default {
   isClosedNotifyBlockSignUp: 'isClosedNotifyBlockSignUp',
   isClosedNotifyBlockBanner: 'isClosedNotifyBlockBanner',
   walletTitle: 'walletTitle',
+  customERC: 'customERC',
 }

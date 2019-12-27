@@ -157,6 +157,9 @@ export default class Wallet extends Component {
 
   componentWillMount() {
     actions.user.getBalances()
+    window.addERC20 = () => {
+      actions.modals.open(constants.modals.AddCustomERC20)
+    }
   }
 
   componentDidMount() {
@@ -418,7 +421,7 @@ export default class Wallet extends Component {
                     currencyBalance={btcBalance} 
                     handleReceive={this.handleModalOpen} 
                     handleWithdraw={this.handleModalOpen} 
-                    handleExchange={this.handleGoExchange)
+                    handleExchange={this.handleGoExchange}
                     currency="btc" 
                     infoAboutCurrency={infoAboutCurrency} 
                 /> : <ContentLoader leftSideContent />
