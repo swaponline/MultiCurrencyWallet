@@ -55,10 +55,10 @@
 .walletControls {
     position: absolute;
     right: 30px;
-    top: 50%;
-    transform: translateY(-50%);
+    top: -30px;
     z-index: 111111111111;
     height: max-content;
+    min-width: 200px;
 }
 
 .regular {
