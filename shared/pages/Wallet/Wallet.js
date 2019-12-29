@@ -109,9 +109,9 @@ const walletNav = [
     // nimData,
     // xlmData,
   ]
-    .map(({ balance, currency, currencyRate }) => ({
+    .map(({ balance, currency, infoAboutCurrency }) => ({
       balance,
-      currencyRate,
+      infoAboutCurrency,
       name: currency,
     }))
 
@@ -313,6 +313,7 @@ export default class Wallet extends Component {
 
     let btcBalance = 0;
     let usdBalance = 0;
+    let changePercent = 0;
 
     const isWidgetBuild = (config && config.isWidget)
     const widgetCurrencies = (isWidgetBuild) ? ['BTC', 'ETH', config.erc20token.toUpperCase()] : []
@@ -325,10 +326,9 @@ export default class Wallet extends Component {
     if (currencyBalance) {
       currencyBalance.forEach(item => {
         if (!isWidgetBuild || widgetCurrencies.includes(item.name)) {
-          // WTF - Сумирует балансы без конвертации в бтц
-          // btcBalance += item.balance * item.currencyRate;
-          // console.log(btcBalance)
-          // usdBalance = btcBalance * exCurrencyRate;
+          btcBalance += item.balance * item.infoAboutCurrency.price_btc;
+          usdBalance = btcBalance * item.infoAboutCurrency.price_usd;
+          changePercent = item.infoAboutCurrency.percent_change_1h;
         }
       })
     }
@@ -362,6 +362,7 @@ export default class Wallet extends Component {
                   <BalanceForm 
                     usdBalance={usdBalance} 
                     currencyBalance={btcBalance} 
+                    changePercent={changePercent}
                     handleReceive={this.handleModalOpen} 
                     handleWithdraw={this.handleModalOpen} 
                     handleExchange={this.handleGoExchange}
