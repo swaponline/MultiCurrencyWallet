@@ -37,6 +37,17 @@ if (config && config.isWidget) {
     actions[config.erc20token] = actions.token
   }
 } else {
+  // Add custom tokens
+  const customERC = actions.token.GetCustromERC20()
+
+  Object.keys(customERC).forEach((tokenContract) => {
+    config.erc20[customERC[tokenContract].symbol.toLowerCase()] = {
+      address: customERC[tokenContract].address,
+      decimals: customERC[tokenContract].decimals,
+      fullName: customERC[tokenContract].symbol,
+    }
+  })
+
   // Add to swap.core not exists tokens
   Object.keys(config.erc20).forEach((tokenCode) => {
     if (!constants.COINS[tokenCode]) {
@@ -45,6 +56,7 @@ if (config && config.isWidget) {
       actions[tokenCode] = actions.token
     }
   })
+
 }
 
 const createSwapApp = () => {
