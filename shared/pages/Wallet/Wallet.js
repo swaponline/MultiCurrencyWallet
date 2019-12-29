@@ -325,7 +325,7 @@ export default class Wallet extends Component {
     
     if (currencyBalance) {
       currencyBalance.forEach(item => {
-        if (!isWidgetBuild || widgetCurrencies.includes(item.name)) {
+        if ((!isWidgetBuild || widgetCurrencies.includes(item.name)) && item.infoAboutCurrency) {
           btcBalance += item.balance * item.infoAboutCurrency.price_btc;
           usdBalance = btcBalance * item.infoAboutCurrency.price_usd;
           changePercent = item.infoAboutCurrency.percent_change_1h;
