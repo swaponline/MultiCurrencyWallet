@@ -390,6 +390,11 @@ const getBalanceUser = () => {
   return getBalance(address, 'btcMultisigUserData')
 }
 
+const getRate = async () => {
+  const exCurrencyRate = await actions.user.getExchangeRate('BTC', 'usd')
+  reducers.user.setCurrencyRate({ name: 'btcData', currencyRate: exCurrencyRate })
+}
+
 const getBalanceG2FA = () => {
 }
 

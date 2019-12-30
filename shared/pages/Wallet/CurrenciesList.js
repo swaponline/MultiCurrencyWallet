@@ -9,7 +9,7 @@ import config from 'app-config'
 import { FormattedMessage } from 'react-intl'
 
 
-const CurrenciesList = ({ tableRows, currencies, infoAboutCurrency, hiddenCoinsList, goToСreateWallet }) => (
+const CurrenciesList = ({ tableRows, currencies, infoAboutCurrency, hiddenCoinsList, goToСreateWallet, getExCurrencyRate }) => (
   <div styleName="yourAssets">
     <h3 styleName="yourAssetsHeading">
       <FormattedMessage id="YourAssets" defaultMessage="Ваши валюты" />
@@ -32,6 +32,7 @@ const CurrenciesList = ({ tableRows, currencies, infoAboutCurrency, hiddenCoinsL
           currency={row}
           currencies={currencies}
           infoAboutCurrency={infoAboutCurrency}
+          getExCurrencyRate={(currencySymbol, rate) => getExCurrencyRate(currencySymbol, rate)}
           hiddenCoinsList={hiddenCoinsList}
           selectId={selectId}
           handleSelectId={handleSelectId}

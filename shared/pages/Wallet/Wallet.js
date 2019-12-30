@@ -46,6 +46,7 @@ const walletNav = [
     // usdtOmniData,
     // nimData,
     // xlmData,
+    isFetching
   },
   currencies: { items: currencies },
   createWallet: { currencies: assets },
@@ -108,8 +109,9 @@ const walletNav = [
     // nimData,
     // xlmData,
   ]
-    .map(({ balance, currency }) => ({
+    .map(({ balance, currency, infoAboutCurrency }) => ({
       balance,
+      infoAboutCurrency,
       name: currency,
     }))
 
@@ -121,6 +123,7 @@ const walletNav = [
     currencyBalance,
     currencies,
     assets,
+    isFetching,
     hiddenCoinsList: config && config.isWidget ? [] : hiddenCoinsList,
     userEthAddress: ethData.address,
     tokensData: {
@@ -146,13 +149,11 @@ export default class Wallet extends Component {
 
   state = {
     activeView: 0,
-    isFetching: false,
     btcBalance: 0,
     activeCurrency: 'usd',
     exchangeForm: false,
     walletTitle: 'Wallet',
     editTitle: false,
-    exCurrencyRate: null
   }
 
   componentWillMount() {
@@ -168,10 +169,15 @@ export default class Wallet extends Component {
     if (url.includes('withdraw')) {
       this.handleWithdraw(params)
     }
-
-    this.showPercentChange1H();
-    this.onLoadeOn(this.getUsdBalance);
+    this.getInfoAboutCurrency();
     this.setLocalStorageItems();
+  }
+
+  getInfoAboutCurrency = async () => {
+    const { currencies } = this.props;
+    const currencyNames = currencies.map(({ name }) => name)
+
+    await actions.user.getInfoAboutCurrency(currencyNames);
   }
 
   handleNavItemClick = (index) => {
@@ -189,7 +195,6 @@ export default class Wallet extends Component {
   handleSaveKeys = () => {
     actions.modals.open(constants.modals.PrivateKeys)
   }
-
 
   handleShowKeys = () => {
     actions.modals.open(constants.modals.DownloadModal)
@@ -221,70 +226,11 @@ export default class Wallet extends Component {
     fn();
   }
 
-  getUsdBalance = async () => {
-    const exCurrencyRate = await actions.user.getExchangeRate('BTC', 'usd')
-
-    if (exCurrencyRate) {
-      this.setState({
-        exCurrencyRate, 
-        isFetching: false
-      })
-    } else {
-      this.getUsdBalance();
-    }
-  }
-
   handleNotifyBlockClose = (state) => {
     this.setState({
       [state]: true
     })
     localStorage.setItem(constants.localStorage[state], 'true')
-  }
-
-  showPercentChange1H = () => {
-    const { currencies, currencyBalance } = this.props
-    let infoAboutCurrency = []
-
-    this.setState({
-      isFetching: true
-    })
-
-    fetch('https://noxon.io/cursAll.php')
-      .then(res => res.json())
-      .then(
-        (result) => {
-          const itemsName = currencies.map(({ name }) => name)
-          result.map(({ symbol, percent_change_1h, price_btc }) => {
-            const btcBalance = currencyBalance.find(({ name }) => name === res.symbol)
-            if (itemsName.includes(symbol)) {
-              try {
-                infoAboutCurrency.push({
-                  name: symbol,
-                  change: percent_change_1h,
-                  price_btc,
-                  balance: btcBalance.balance * price_btc
-                })
-                /* SMS Protected and Multisign */
-                if (res.symbol === 'BTC') {
-                  infoAboutCurrency.push({
-                    name: 'BTC (SMS-Protected)',
-                    change: percent_change_1h,
-                    price_btc,
-                    balance: btcBalance.balance * price_btc
-                  })
-                }
-              } catch (e) { }
-            }
-            this.setState({
-              infoAboutCurrency,
-              isFetching: false
-            })
-          })
-        },
-        (error) => {
-          console.log('error on fetch data from api')
-        }
-      )
   }
 
   handleWithdraw = (params) => {
@@ -345,10 +291,8 @@ export default class Wallet extends Component {
     const {
       activeView,
       infoAboutCurrency,
-      exCurrencyRate,
       exchangeForm,
       editTitle,
-      isFetching,
       walletTitle,
     } = this.state;
     const {
@@ -356,6 +300,7 @@ export default class Wallet extends Component {
       hiddenCoinsList,
       isSigned,
       allData,
+      isFetching,
     } = this.props
 
 
@@ -369,8 +314,9 @@ export default class Wallet extends Component {
       slidesToScroll: 1
     };
 
-    let btcBalance = null;
+    let btcBalance = 0;
     let usdBalance = 0;
+    let changePercent = 0;
 
     const isWidgetBuild = (config && config.isWidget)
     const widgetCurrencies = (isWidgetBuild) ? ['BTC', 'ETH', config.erc20token.toUpperCase()] : []
@@ -379,13 +325,13 @@ export default class Wallet extends Component {
     if (isWidgetBuild) {
       tableRows = allData.filter(({ currency }) => widgetCurrencies.includes(currency))
     }
-
+    
     if (currencyBalance) {
       currencyBalance.forEach(item => {
-        if (!isWidgetBuild || widgetCurrencies.includes(item.name)) {
-          // WTF - Сумирует балансы без конвертации в бтц
-          btcBalance += item.balance
-          usdBalance = btcBalance * exCurrencyRate;
+        if ((!isWidgetBuild || widgetCurrencies.includes(item.name)) && item.infoAboutCurrency) {
+          btcBalance += item.balance * item.infoAboutCurrency.price_btc;
+          usdBalance = btcBalance * item.infoAboutCurrency.price_usd;
+          changePercent = item.infoAboutCurrency.percent_change_1h;
         }
       })
     }
@@ -419,6 +365,7 @@ export default class Wallet extends Component {
                   <BalanceForm 
                     usdBalance={usdBalance} 
                     currencyBalance={btcBalance} 
+                    changePercent={changePercent}
                     handleReceive={this.handleModalOpen} 
                     handleWithdraw={this.handleModalOpen} 
                     handleExchange={this.handleGoExchange}
@@ -438,6 +385,7 @@ export default class Wallet extends Component {
                   <CurrenciesList 
                     tableRows={tableRows} {...this.state} {...this.props} 
                     goToСreateWallet={this.goToСreateWallet}
+                    getExCurrencyRate={(currencySymbol, rate) => this.getExCurrencyRate(currencySymbol, rate)}
                   /> : <ContentLoader rideSideContent />
               }
             </div>

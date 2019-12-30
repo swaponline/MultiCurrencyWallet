@@ -8,7 +8,7 @@ import config from 'app-config'
 import { FormattedMessage } from 'react-intl'
 
 
-function BalanceForm({ usdBalance, currencyBalance, handleReceive, handleWithdraw, handleExchange, currency, infoAboutCurrency }) {
+function BalanceForm({ usdBalance, currencyBalance, handleReceive, handleWithdraw, handleExchange, currency, infoAboutCurrency, changePercent }) {
   const [activeCurrency, setActiveCurrency] = useState('usd');
   const isWidgetBuild = (config && config.isWidget)
 
@@ -19,8 +19,13 @@ function BalanceForm({ usdBalance, currencyBalance, handleReceive, handleWithdra
           <FormattedMessage id="Yourtotalbalance" defaultMessage="Ваш общий баланс" />
         </p>
         <div styleName="yourBalanceValue">
-          {activeCurrency === 'usd' ? <p>{!isNaN(usdBalance) ? BigNumber(usdBalance).dp(2, BigNumber.ROUND_FLOOR).toString() : ''}</p> : <p>{BigNumber(currencyBalance).dp(5, BigNumber.ROUND_FLOOR).toString()}</p>}
-          {infoAboutCurrency ? <span>+0.0%</span> : ''}
+          {activeCurrency === 'usd' ? <p>{!isNaN(usdBalance) ? 
+            BigNumber(usdBalance).dp(2, BigNumber.ROUND_FLOOR).toString() : ''}</p> : 
+            <p>
+              {BigNumber(currencyBalance).dp(5, BigNumber.ROUND_FLOOR).toString()}
+              {changePercent ? <span styleName={changePercent > 0 ? 'green' : 'red'}>{`${changePercent > 0 ? `+${changePercent}` : `-${changePercent}`}`}%</span> : ''}
+            </p>
+          }
         </div>
         <div styleName="yourBalanceCurrencies">
           <button styleName={activeCurrency === 'usd' && 'active'} onClick={() => setActiveCurrency('usd')}>
