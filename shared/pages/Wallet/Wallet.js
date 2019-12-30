@@ -315,6 +315,7 @@ export default class Wallet extends Component {
     };
 
     let btcBalance = 0;
+    let btcPriceUSD = 1;
     let usdBalance = 0;
     let changePercent = 0;
 
@@ -329,11 +330,14 @@ export default class Wallet extends Component {
     if (currencyBalance) {
       currencyBalance.forEach(item => {
         if ((!isWidgetBuild || widgetCurrencies.includes(item.name)) && item.infoAboutCurrency) {
+          if (item.name === 'BTC') {
+            btcPriceUSD = item.infoAboutCurrency.price_usd
+            changePercent = item.infoAboutCurrency.percent_change_1h;
+          }
           btcBalance += item.balance * item.infoAboutCurrency.price_btc;
-          usdBalance = btcBalance * item.infoAboutCurrency.price_usd;
-          changePercent = item.infoAboutCurrency.percent_change_1h;
         }
       })
+      usdBalance = btcBalance * btcPriceUSD
     }
 
     return (
