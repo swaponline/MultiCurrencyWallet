@@ -103,6 +103,41 @@ const getDemoMoney = process.env.MAINNET ? () => { } : () => {
     })
 }
 
+const getExchangeRate = (sellCurrency, buyCurrency) => {
+  if (buyCurrency.toLowerCase() === 'usd') {
+    return new Promise((resolve, reject) => {
+      let dataKey = sellCurrency.toLowerCase()
+      switch (sellCurrency.toLowerCase()) {
+        case 'btc (sms-protected)':
+        case 'btc (multisig)':
+          dataKey = 'btc'
+          break
+        default:
+      }
+      const { user } = getState()
+      if (user[`${dataKey}Data`] && user[`${dataKey}Data`].infoAboutCurrency) {
+        const currencyData = user[`${dataKey}Data`]
+        resolve(currencyData.infoAboutCurrency.price_usd)
+      } else {
+        resolve(1)
+      }
+    })
+  }
+  return new Promise((resolve, reject) => {
+    const url = `https://api.cryptonator.com/api/full/${sellCurrency}-${buyCurrency}`
+
+    request.get(url, { cacheResponse: 60000 }).then(({ ticker: { price: exchangeRate } }) => {
+      resolve(exchangeRate)
+    })
+      .catch(() => {
+        if (constants.customEcxchangeRate[sellCurrency.toLowerCase()] !== undefined) {
+          resolve(constants.customEcxchangeRate[sellCurrency])
+        } else {
+          resolve(1)
+        }
+      })
+  })
+}
 
 const getInfoAboutCurrency = (currencyNames) => 
 
@@ -264,6 +299,7 @@ window.downloadPrivateKeys = downloadPrivateKeys
 export default {
   sign,
   getBalances,
+  getExchangeRate,
   getDemoMoney,
   setTransactions,
   downloadPrivateKeys,
