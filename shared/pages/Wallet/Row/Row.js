@@ -108,8 +108,6 @@ export default class Row extends Component {
   }
 
   componentDidMount() {
-    this.getUsdBalance()
-
     window.addEventListener('resize', this.handleSliceAddress)
   }
 
@@ -164,20 +162,6 @@ export default class Row extends Component {
       ...getComparableProps(this.props),
       ...this.state,
     })
-  }
-
-  getUsdBalance = async () => {
-    const { currency: { currency } } = this.props
-    let currencySymbol = currency
-    // BTC SMS Protected and BTC-Multisign
-    if (currencySymbol === 'BTC (SMS-Protected)') currencySymbol = 'BTC'
-    if (currencySymbol === 'BTC (Multisig)') currencySymbol = 'BTC'
-
-    const exCurrencyRate = await actions.user.getExchangeRate(currencySymbol, 'usd')
-
-    this.setState(() => ({
-      exCurrencyRate
-    }))
   }
 
   handleTouch = (e) => {
@@ -393,7 +377,6 @@ export default class Row extends Component {
     const {
       item,
       intl: { locale },
-      infoAboutCurrency,
     } = this.props
 
     const {
@@ -410,13 +393,14 @@ export default class Row extends Component {
 
     let inneedData = null
     let nodeDownErrorShow = true
+    let currencyUsdBalance = 0;
 
     const isWidgetBuild = (config && config.isWidget)
 
-    const currencyUsdBalance = BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString() * exCurrencyRate;
+    
 
-    if (infoAboutCurrency) {
-      inneedData = infoAboutCurrency.find(el => el.name === currency)
+    if(item.infoAboutCurrency) {
+      currencyUsdBalance = BigNumber(balance).dp(5, BigNumber.ROUND_FLOOR).toString() * item.infoAboutCurrency.price_usd;
     }
 
     let dropDownMenuItems = [
@@ -563,7 +547,7 @@ export default class Row extends Component {
             <div styleName="assetsTableValue">
               <img src={dollar} />
               <p>{currencyUsdBalance && currencyUsdBalance.toFixed(2) || '0.00'}</p>
-              {inneedData && <span>   {`${inneedData.change} %`} </span>}
+              {/* {inneedData && <span>   {`${inneedData.change} %`} </span>} */}
             </div>
           </div>
           <div onClick={this.handleOpenDropdown} styleName="assetsTableDots">

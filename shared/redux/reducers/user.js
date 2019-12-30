@@ -5,6 +5,7 @@ export const initialState = {
     currency: 'ETH',
     fullName: 'Ethereum',
     balanceError: null,
+    infoAboutCurrency: null
   },
   btcData: {
     balance: 0,
@@ -12,6 +13,7 @@ export const initialState = {
     currency: 'BTC',
     fullName: 'Bitcoin',
     balanceError: null,
+    infoAboutCurrency: null
   },
   btcMultisigSMSData: {
     balance: 0,
@@ -19,6 +21,7 @@ export const initialState = {
     currency: 'BTC (SMS-Protected)',
     fullName: 'Bitcoin (SMS-Protected)',
     balanceError: null,
+    infoAboutCurrency: null
   },
   btcMultisigG2FAData: {
     balance: 0,
@@ -26,6 +29,7 @@ export const initialState = {
     currency: 'BTC (Google 2FA)',
     fullName: 'Bitcoin (Google 2FA)',
     balanceError: null,
+    infoAboutCurrency: null
   },
   btcMultisigUserData: {
     balance: 0,
@@ -33,6 +37,7 @@ export const initialState = {
     currency: 'BTC (Multisig)',
     fullName: 'Bitcoin (Multisig)',
     balanceError: null,
+    infoAboutCurrency: null
   },
   bchData: {
     balance: 0,
@@ -40,6 +45,7 @@ export const initialState = {
     currency: 'BCH',
     fullName: 'BitcoinCash',
     balanceError: null,
+    infoAboutCurrency: null
   },
   /*
   xlmData: {
@@ -55,6 +61,7 @@ export const initialState = {
     currency: 'LTC',
     fullName: 'Litecoin',
     balanceError: null,
+    infoAboutCurrency: null
   },
   /*
   usdtData: {
@@ -73,8 +80,10 @@ export const initialState = {
     currency: 'NIM',
     fullName: 'Nimiq',
     balanceError: null,
+    infoAboutCurrency: null
   },
   tokensData: {},
+  isFetching: false
 }
 
 export const setAuthData = (state, { name, data }) => ({
@@ -110,6 +119,18 @@ export const setBalance = (state, { name, amount, unconfirmedBalance }) => ({
     unconfirmedBalance,
     isBalanceFetched: true,
     balanceError: false,
+  },
+})
+
+
+export const setInfoAboutCurrency = (state, { name, infoAboutCurrency }) => ({
+  ...state,
+  tokensData: {
+    ...state.tokensData,
+  },
+  [name]: {
+    ...state[name],
+    infoAboutCurrency
   },
 })
 
@@ -154,6 +175,11 @@ export const setTokenApprove = (state, { name, approve }) => ({
       approve,
     },
   },
+})
+
+export const setIsFetching = (state, { isFetching }) => ({
+  ...state,
+  isFetching
 })
 
 export const setReputation = (state, { name, reputation, reputationOracleSignature }) => ({

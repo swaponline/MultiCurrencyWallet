@@ -22,17 +22,21 @@
     background: #FFFFFF;
     box-shadow: 0px 4px 16px rgba(0,0,0,0.08), 0px 1px 4px rgba(0,0,0,0.08);
     border-radius: 4px;
-    padding: 5px 10px;
+    padding: 5px 0px;
     min-width: 100px;
     display: none;
     font-family: 'Inter-Regular', sans-serif;
     button {
-        font-size: 10px;
+        font-size: 12px;
         width: 100%;
-        padding: 10px 6px;
+        padding: 10px;
         text-align: left;
         margin: 0;
         display: block;
+        &:hover {
+            background: #6144E5;
+            color: white;
+        }
     }
     button[disabled] {
         color: #8e9aa2;
@@ -51,12 +55,10 @@
 .walletControls {
     position: absolute;
     right: 30px;
-    top: 50%;
-    padding: 0 5px;
-    transform: translateY(-50%);
+    top: -30px;
     z-index: 111111111111;
-    padding: 0 5px;
     height: max-content;
+    min-width: 200px;
 }
 
 .regular {

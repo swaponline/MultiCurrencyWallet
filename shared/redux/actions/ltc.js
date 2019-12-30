@@ -215,5 +215,5 @@ export default {
   fetchTxInfo,
   fetchBalance,
   signMessage,
-  getReputation,
+  getReputation
 }

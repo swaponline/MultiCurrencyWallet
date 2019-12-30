@@ -182,5 +182,5 @@ export default {
   getTransaction,
   getReputation,
   getInvoices,
-  isETHAddress,
+  isETHAddress
 }
