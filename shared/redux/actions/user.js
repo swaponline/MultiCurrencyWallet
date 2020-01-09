@@ -72,6 +72,7 @@ const getReputation = async () => {
     })
 }
 
+
 const getBalances = () => {
   actions.eth.getBalance()
   actions.btc.getBalance()
@@ -102,23 +103,34 @@ const getDemoMoney = process.env.MAINNET ? () => { } : () => {
     })
 }
 
-const getExchangeRate = (sellCurrency, buyCurrency) =>
+
+const getInfoAboutCurrency = (currencyNames) => 
 
   new Promise((resolve, reject) => {
-    const url = `https://api.cryptonator.com/api/full/${sellCurrency}-${buyCurrency}`
+    const url = 'https://noxon.io/cursAll.php';
+    reducers.user.setIsFetching({ isFetching: true })
 
-    request.get(url).then(({ ticker: { price: exchangeRate } }) => {
-      resolve(exchangeRate)
-    })
-      .catch(() => {
-        if (constants.customEcxchangeRate[sellCurrency.toLowerCase()] !== undefined) {
-          resolve(constants.customEcxchangeRate[sellCurrency])
-        } else {
-          resolve(1)
+    request.get(url).then((data) => {
+      data.map(currencyInfoItem => {
+        if (currencyNames.includes(currencyInfoItem.symbol)) {
+          switch(currencyInfoItem.symbol) {
+            case 'BTC': {
+              reducers.user.setInfoAboutCurrency({name: 'btcData', infoAboutCurrency: currencyInfoItem})
+              reducers.user.setInfoAboutCurrency({name: 'btcMultisigSMSData', infoAboutCurrency: currencyInfoItem})
+              reducers.user.setInfoAboutCurrency({name: 'btcMultisigUserData', infoAboutCurrency: currencyInfoItem})
+              reducers.user.setInfoAboutCurrency({name: 'btcMultisigG2FAData', infoAboutCurrency: currencyInfoItem})
+              break;
+            }
+            default: reducers.user.setInfoAboutCurrency({name: `${currencyInfoItem.symbol.toLowerCase()}Data`, infoAboutCurrency: currencyInfoItem})
+          }
         }
       })
+      reducers.user.setIsFetching({ isFetching: false })
+      resolve(true);
+    }).catch((error) => {
+      reject(error)
+    })
   })
-
 
 const pullTransactions = transactions => {
   let data = [].concat([], ...transactions).sort((a, b) => b.date - a.date)
@@ -253,9 +265,9 @@ export default {
   sign,
   getBalances,
   getDemoMoney,
-  getExchangeRate,
   setTransactions,
   downloadPrivateKeys,
   getText,
   getReputation,
+  getInfoAboutCurrency
 }
