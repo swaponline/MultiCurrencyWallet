@@ -64,12 +64,3 @@
 .regular {
     color: #000;
 }
-
-@media all and (min-width: 320px) and (max-width: 767px) {
-    .walletControls {
-        top: 50%;
-        padding: 0 5px;
-        transform: translateY(-50%);
-    }
-}
-
