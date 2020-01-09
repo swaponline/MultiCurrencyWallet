@@ -331,7 +331,9 @@ export default class Wallet extends Component {
         if ((!isWidgetBuild || widgetCurrencies.includes(item.name)) && item.infoAboutCurrency && item.balance !== 0) {
           btcBalance += item.balance * item.infoAboutCurrency.price_btc;
           usdBalance += item.balance * item.infoAboutCurrency.price_usd;
-          changePercent = item.infoAboutCurrency.percent_change_1h;
+          if (item.name === 'BTC') {
+            changePercent = item.infoAboutCurrency.percent_change_1h;
+          }
         }
       })
     }
@@ -365,7 +367,7 @@ export default class Wallet extends Component {
                 !isFetching ? 
                   <BalanceForm 
                     usdBalance={usdBalance} 
-                    currencyBalance={btcBalance} 
+                    currencyBalance={btcBalance}
                     changePercent={changePercent}
                     handleReceive={this.handleModalOpen} 
                     handleWithdraw={this.handleModalOpen} 
