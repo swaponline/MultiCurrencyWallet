@@ -23,7 +23,7 @@ function BalanceForm({ usdBalance, currencyBalance, handleReceive, handleWithdra
             BigNumber(usdBalance).dp(2, BigNumber.ROUND_FLOOR).toString() : ''}</p> : 
             <p>
               {BigNumber(currencyBalance).dp(5, BigNumber.ROUND_FLOOR).toString()}
-              {changePercent ? <span styleName={changePercent > 0 ? 'green' : 'red'}>{`${changePercent > 0 ? `+${changePercent}` : `-${changePercent}`}`}%</span> : ''}
+              {changePercent ? <span styleName={changePercent > 0 ? 'green' : 'red'}>{`${changePercent > 0 ? `+${changePercent}` : `${changePercent}`}`}%</span> : ''}
             </p>
           }
         </div>
