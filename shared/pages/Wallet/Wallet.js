@@ -328,13 +328,14 @@ export default class Wallet extends Component {
     
     if (currencyBalance) {
       currencyBalance.forEach(item => {
-        if ((!isWidgetBuild || widgetCurrencies.includes(item.name)) && item.infoAboutCurrency) {
+        if ((!isWidgetBuild || widgetCurrencies.includes(item.name)) && item.infoAboutCurrency && item.balance !== 0) {
           btcBalance += item.balance * item.infoAboutCurrency.price_btc;
-          usdBalance = btcBalance * item.infoAboutCurrency.price_usd;
+          usdBalance += item.balance * item.infoAboutCurrency.price_usd;
           changePercent = item.infoAboutCurrency.percent_change_1h;
         }
       })
     }
+
 
     return (
       <artical>
