@@ -29,17 +29,6 @@ class Row extends React.PureComponent {
     }
   }
 
-  componentDidMount() {
-    this.getUsdBalance()
-  }
-
-  getUsdBalance = async () => {
-    const { type } = this.props
-    const exCurrencyRate = await actions.user.getExchangeRate(type, 'usd')
-
-    this.setState(() => ({ exCurrencyRate }))
-  }
-
   handlePayInvoice = async () => {
     const { invoiceData } = this.props
 
