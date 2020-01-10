@@ -17,11 +17,11 @@
 }
 .delete {
   position: absolute;
-  right: 7px;
+  right: -20px;
   font-size: 25px;
+  margin-top: 1px;
   top: 50%;
-  color: #e91db4;
-  opacity: 0.5;
+  color: #F93F3F;
   transform: translateY(-50%);
 }
 
@@ -31,13 +31,11 @@ td {
 
 .img {
   width: 18px;
-  margin-top: -2px;
   margin-right: 12px;
   position: absolute;
   cursor: pointer;
   top: 0;
-  right: 33px;
-  top: 52%;
+  top: 50%;
   transform: translateY(-50%);
 }
 
@@ -86,7 +84,7 @@ td {
 }
 .bigContainer {
   display: flex;
-  width: 75%;
+  width: 100%;
   justify-content: space-between;
   align-items: center;
 }

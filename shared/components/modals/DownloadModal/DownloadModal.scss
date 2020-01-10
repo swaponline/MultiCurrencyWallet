@@ -22,7 +22,8 @@ a {
 }
 p {
   font-size: 14px;
-  margin-bottom: 7px;
+  color: #8E9AA3;
+  margin-top: -5px;
 }
 
 @include media-mobile {
@@ -39,6 +40,6 @@ p {
   }
 
   p {
-    font-size: 9.5px;
+    font-size: 12px;
   }
 }
