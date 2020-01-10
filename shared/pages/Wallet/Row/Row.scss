@@ -622,8 +622,9 @@
       a {
         span {
           left: auto;
-          right: 0;
-          top: 0;
+          top: 0px;
+          font-size: 13px;
+          margin-left: 10px;
           z-index: 1111111111;
         }
       }

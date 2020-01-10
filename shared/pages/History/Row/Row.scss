@@ -53,7 +53,8 @@
   display: inline-block;
 }
 
-.confirm {
+.confirm,
+.unconfirmed {
   text-align: center;
   height: auto;
   background: rgba(97, 68, 229, 0.1);
@@ -87,8 +88,6 @@
 .unconfirmed {
   color: #8E9AA3;
   background: rgba(142, 154, 163, 0.1);
-  text-align: center;
-  width: 200px;
 }
 
 .date {

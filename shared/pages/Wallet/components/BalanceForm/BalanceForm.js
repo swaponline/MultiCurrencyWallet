@@ -8,9 +8,15 @@ import config from 'app-config'
 import { FormattedMessage } from 'react-intl'
 
 
-function BalanceForm({ usdBalance, currencyBalance, handleReceive, handleWithdraw, handleExchange, currency, infoAboutCurrency, changePercent }) {
+function BalanceForm({ usdBalance, currencyBalance, handleReceive, handleWithdraw, handleExchange, currency, changePercent }) {
   const [activeCurrency, setActiveCurrency] = useState('usd');
   const isWidgetBuild = (config && config.isWidget)
+
+  switch (currency) {
+    case 'btc (sms-protected)': currency = 'BTC SMS'
+    case 'btc (multisig)': currency = 'BTC MULTISIG'
+      break;
+  }
 
   return (
     <div styleName={`yourBalance`}>
@@ -38,7 +44,7 @@ function BalanceForm({ usdBalance, currencyBalance, handleReceive, handleWithdra
         </div>
       </div>
       <div styleName="yourBalanceBottom">
-        <Fragment>
+        <Fragment>            
           <NewButton blue id="depositBtn" onClick={() => handleReceive('Deposit')}>
             <FormattedMessage id="YourtotalbalanceDeposit" defaultMessage="Пополнить" />
           </NewButton>
